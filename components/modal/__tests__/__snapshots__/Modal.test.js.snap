@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Modal render correctly 1`] = `
+<div>
+  <div />
+</div>
+`;
+
+exports[`Modal render without footer 1`] = `
+<div>
+  <div />
+</div>
+`;

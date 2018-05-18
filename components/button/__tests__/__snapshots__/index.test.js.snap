@@ -1,0 +1,115 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button fixbug renders {0} , 0 and {false} 1`] = `
+<button
+  class="ant-btn ant-btn-flat"
+  type="button"
+>
+  0
+  <div
+    class="ant-ripple-wrapper"
+  />
+</button>
+`;
+
+exports[`Button fixbug renders {0} , 0 and {false} 2`] = `
+<button
+  class="ant-btn ant-btn-flat"
+  type="button"
+>
+  <span>
+    0
+  </span>
+  <div
+    class="ant-ripple-wrapper"
+  />
+</button>
+`;
+
+exports[`Button fixbug renders {0} , 0 and {false} 3`] = `
+<button
+  class="ant-btn ant-btn-flat"
+  type="button"
+>
+  <div
+    class="ant-ripple-wrapper"
+  />
+</button>
+`;
+
+exports[`Button renders Chinese characters correctly 1`] = `
+<button
+  class="ant-btn ant-btn-flat"
+  type="button"
+>
+  <span>
+    按钮
+  </span>
+  <div
+    class="ant-ripple-wrapper"
+  />
+</button>
+`;
+
+exports[`Button renders Chinese characters correctly 2`] = `
+<button
+  class="ant-btn ant-btn-flat"
+  type="button"
+>
+  <i
+    class="icon icon-search"
+  />
+  <span>
+    按钮
+  </span>
+  <div
+    class="ant-ripple-wrapper"
+  />
+</button>
+`;
+
+exports[`Button renders Chinese characters correctly 3`] = `
+<button
+  class="ant-btn ant-btn-flat"
+  type="button"
+>
+  <i
+    class="icon icon-search"
+  />
+  <span>
+    按钮
+  </span>
+  <div
+    class="ant-ripple-wrapper"
+  />
+</button>
+`;
+
+exports[`Button renders correctly 1`] = `
+<button
+  class="ant-btn ant-btn-flat"
+  type="button"
+>
+  <span>
+    Follow
+  </span>
+  <div
+    class="ant-ripple-wrapper"
+  />
+</button>
+`;
+
+exports[`Button should support link button 1`] = `
+<a
+  class="ant-btn ant-btn-flat"
+  href="http://ant.design"
+  target="_blank"
+>
+  <span>
+    link button
+  </span>
+  <div
+    class="ant-ripple-wrapper"
+  />
+</a>
+`;

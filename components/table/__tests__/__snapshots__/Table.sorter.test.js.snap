@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Table.sorter renders sorter icon correctly 1`] = `
+<thead
+  class="ant-table-thead"
+>
+  <tr>
+    <th
+      class="ant-table-column-has-filters"
+      tabindex="-1"
+    >
+      <span>
+        Name
+        <i
+          class="icon icon-arrow_upward ant-table-sort-icon"
+        />
+      </span>
+    </th>
+  </tr>
+</thead>
+`;

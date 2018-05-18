@@ -1,0 +1,517 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders ./components/auto-complete/demo/basic.md correctly 1`] = `
+<div
+  class="ant-select-show-search ant-select-auto-complete ant-select ant-select-combobox ant-select-enabled"
+  style="width:200px"
+>
+  <div
+    aria-autocomplete="list"
+    aria-expanded="false"
+    aria-haspopup="true"
+    class="ant-select-selection
+            ant-select-selection--single"
+    role="combobox"
+  >
+    <div
+      class="ant-select-selection__rendered"
+    >
+      <div
+        class="ant-select-selection__placeholder"
+        style="display:inline-block;user-select:none;-webkit-user-select:none"
+        unselectable="unselectable"
+      >
+        input here
+      </div>
+      <div
+        class="ant-select-search ant-select-search--inline"
+        style="display:inline-block"
+      >
+        <div
+          class="ant-select-search__field__wrap"
+        >
+          <span
+            class="ant-input-wrapper"
+          >
+            <div
+              class="ant-input-content"
+            >
+              <div
+                class="ant-input-rendered-wrapper"
+              >
+                <div
+                  class="ant-input-rendered"
+                >
+                  <div
+                    class="ant-input-placeholder"
+                  />
+                  <input
+                    class="ant-input ant-select-search__field"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="ant-input-underline"
+            >
+              <span
+                class="ant-input-ripple"
+              />
+            </div>
+          </span>
+          <span
+            class="ant-select-search__field__mirror"
+          >
+             
+          </span>
+        </div>
+      </div>
+      <span
+        class="ant-select-arrow"
+        style="user-select:none;-webkit-user-select:none"
+        unselectable="unselectable"
+      >
+        <i
+          class="icon icon-arrow_drop_down"
+        />
+        <b />
+      </span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders ./components/auto-complete/demo/certain-category.md correctly 1`] = `
+<div
+  class="certain-category-search-wrapper"
+  style="width:250px"
+>
+  <div
+    class="certain-category-search ant-select-show-search ant-select-auto-complete ant-select ant-select-combobox ant-select-enabled"
+    style="width:100%"
+  >
+    <div
+      aria-autocomplete="list"
+      aria-expanded="false"
+      aria-haspopup="true"
+      class="ant-select-selection
+            ant-select-selection--single"
+      role="combobox"
+    >
+      <div
+        class="ant-select-selection__rendered"
+      >
+        <div
+          class="ant-select-selection__placeholder"
+          style="display:inline-block;user-select:none;-webkit-user-select:none"
+          unselectable="unselectable"
+        >
+          input here
+        </div>
+        <div
+          class="ant-select-search ant-select-search--inline"
+          style="display:inline-block"
+        >
+          <div
+            class="ant-select-search__field__wrap"
+          >
+            <span
+              class="ant-input-wrapper ant-input-has-suffix"
+            >
+              <div
+                class="ant-input-content"
+              >
+                <div
+                  class="ant-input-rendered-wrapper"
+                >
+                  <div
+                    class="ant-input-rendered"
+                  >
+                    <div
+                      class="ant-input-placeholder"
+                    />
+                    <input
+                      class="ant-input ant-select-search__field"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                  <span
+                    class="ant-input-suffix"
+                  >
+                    <button
+                      class="ant-btn ant-btn-circle ant-btn-sm ant-btn-icon-only ant-btn-flat"
+                      type="button"
+                    >
+                      <i
+                        class="icon icon-search"
+                      />
+                      <div
+                        class="ant-ripple-wrapper"
+                      />
+                    </button>
+                  </span>
+                </div>
+              </div>
+              <div
+                class="ant-input-underline"
+              >
+                <span
+                  class="ant-input-ripple"
+                />
+              </div>
+            </span>
+            <span
+              class="ant-select-search__field__mirror"
+            >
+               
+            </span>
+          </div>
+        </div>
+        <span
+          class="ant-select-arrow"
+          style="user-select:none;-webkit-user-select:none"
+          unselectable="unselectable"
+        >
+          <i
+            class="icon icon-arrow_drop_down"
+          />
+          <b />
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders ./components/auto-complete/demo/custom.md correctly 1`] = `
+<div
+  class="ant-select-show-search ant-select-auto-complete ant-select ant-select-combobox ant-select-enabled"
+  style="width:200px"
+>
+  <div
+    aria-autocomplete="list"
+    aria-expanded="false"
+    aria-haspopup="true"
+    class="ant-select-selection
+            ant-select-selection--single"
+    role="combobox"
+  >
+    <div
+      class="ant-select-selection__rendered"
+    >
+      <div
+        class="ant-select-search ant-select-search--inline"
+        style="display:inline-block"
+      >
+        <div
+          class="ant-select-search__field__wrap"
+        >
+          <span
+            class="ant-input-wrapper ant-input-textarea"
+          >
+            <textarea
+              class="ant-input custom ant-select-search__field"
+              placeholder="input here"
+            />
+            <div>
+              <hr
+                class="ant-input-border"
+              />
+              <hr
+                class="ant-input-border-active"
+              />
+            </div>
+          </span>
+          <span
+            class="ant-select-search__field__mirror"
+          >
+             
+          </span>
+        </div>
+      </div>
+      <span
+        class="ant-select-arrow"
+        style="user-select:none;-webkit-user-select:none"
+        unselectable="unselectable"
+      >
+        <i
+          class="icon icon-arrow_drop_down"
+        />
+        <b />
+      </span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders ./components/auto-complete/demo/non-case-sensitive.md correctly 1`] = `
+<div
+  class="ant-select-show-search ant-select-auto-complete ant-select ant-select-combobox ant-select-enabled"
+  style="width:200px"
+>
+  <div
+    aria-autocomplete="list"
+    aria-expanded="false"
+    aria-haspopup="true"
+    class="ant-select-selection
+            ant-select-selection--single"
+    role="combobox"
+  >
+    <div
+      class="ant-select-selection__rendered"
+    >
+      <div
+        class="ant-select-selection__placeholder"
+        style="display:inline-block;user-select:none;-webkit-user-select:none"
+        unselectable="unselectable"
+      >
+        try to type \`b\`
+      </div>
+      <div
+        class="ant-select-search ant-select-search--inline"
+        style="display:inline-block"
+      >
+        <div
+          class="ant-select-search__field__wrap"
+        >
+          <span
+            class="ant-input-wrapper"
+          >
+            <div
+              class="ant-input-content"
+            >
+              <div
+                class="ant-input-rendered-wrapper"
+              >
+                <div
+                  class="ant-input-rendered"
+                >
+                  <div
+                    class="ant-input-placeholder"
+                  />
+                  <input
+                    class="ant-input ant-select-search__field"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="ant-input-underline"
+            >
+              <span
+                class="ant-input-ripple"
+              />
+            </div>
+          </span>
+          <span
+            class="ant-select-search__field__mirror"
+          >
+             
+          </span>
+        </div>
+      </div>
+      <span
+        class="ant-select-arrow"
+        style="user-select:none;-webkit-user-select:none"
+        unselectable="unselectable"
+      >
+        <i
+          class="icon icon-arrow_drop_down"
+        />
+        <b />
+      </span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders ./components/auto-complete/demo/options.md correctly 1`] = `
+<div
+  class="ant-select-show-search ant-select-auto-complete ant-select ant-select-combobox ant-select-enabled"
+  style="width:200px"
+>
+  <div
+    aria-autocomplete="list"
+    aria-expanded="false"
+    aria-haspopup="true"
+    class="ant-select-selection
+            ant-select-selection--single"
+    role="combobox"
+  >
+    <div
+      class="ant-select-selection__rendered"
+    >
+      <div
+        class="ant-select-selection__placeholder"
+        style="display:inline-block;user-select:none;-webkit-user-select:none"
+        unselectable="unselectable"
+      >
+        input here
+      </div>
+      <div
+        class="ant-select-search ant-select-search--inline"
+        style="display:inline-block"
+      >
+        <div
+          class="ant-select-search__field__wrap"
+        >
+          <span
+            class="ant-input-wrapper"
+          >
+            <div
+              class="ant-input-content"
+            >
+              <div
+                class="ant-input-rendered-wrapper"
+              >
+                <div
+                  class="ant-input-rendered"
+                >
+                  <div
+                    class="ant-input-placeholder"
+                  />
+                  <input
+                    class="ant-input ant-select-search__field"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="ant-input-underline"
+            >
+              <span
+                class="ant-input-ripple"
+              />
+            </div>
+          </span>
+          <span
+            class="ant-select-search__field__mirror"
+          >
+             
+          </span>
+        </div>
+      </div>
+      <span
+        class="ant-select-arrow"
+        style="user-select:none;-webkit-user-select:none"
+        unselectable="unselectable"
+      >
+        <i
+          class="icon icon-arrow_drop_down"
+        />
+        <b />
+      </span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders ./components/auto-complete/demo/uncertain-category.md correctly 1`] = `
+<div
+  class="global-search-wrapper"
+  style="width:300px"
+>
+  <div
+    class="global-search ant-select-show-search ant-select-auto-complete ant-select ant-select-combobox ant-select-enabled"
+    style="width:100%"
+  >
+    <div
+      aria-autocomplete="list"
+      aria-expanded="false"
+      aria-haspopup="true"
+      class="ant-select-selection
+            ant-select-selection--single"
+      role="combobox"
+    >
+      <div
+        class="ant-select-selection__rendered"
+      >
+        <div
+          class="ant-select-selection__placeholder"
+          style="display:inline-block;user-select:none;-webkit-user-select:none"
+          unselectable="unselectable"
+        >
+          input here
+        </div>
+        <div
+          class="ant-select-search ant-select-search--inline"
+          style="display:inline-block"
+        >
+          <div
+            class="ant-select-search__field__wrap"
+          >
+            <span
+              class="ant-input-wrapper ant-input-has-suffix"
+            >
+              <div
+                class="ant-input-content"
+              >
+                <div
+                  class="ant-input-rendered-wrapper"
+                >
+                  <div
+                    class="ant-input-rendered"
+                  >
+                    <div
+                      class="ant-input-placeholder"
+                    />
+                    <input
+                      class="ant-input ant-select-search__field"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                  <span
+                    class="ant-input-suffix"
+                  >
+                    <button
+                      class="ant-btn ant-btn-primary ant-btn-circle ant-btn-sm ant-btn-icon-only ant-btn-flat"
+                      type="button"
+                    >
+                      <i
+                        class="icon icon-search"
+                      />
+                      <div
+                        class="ant-ripple-wrapper"
+                      />
+                    </button>
+                  </span>
+                </div>
+              </div>
+              <div
+                class="ant-input-underline"
+              >
+                <span
+                  class="ant-input-ripple"
+                />
+              </div>
+            </span>
+            <span
+              class="ant-select-search__field__mirror"
+            >
+               
+            </span>
+          </div>
+        </div>
+        <span
+          class="ant-select-arrow"
+          style="user-select:none;-webkit-user-select:none"
+          unselectable="unselectable"
+        >
+          <i
+            class="icon icon-arrow_drop_down"
+          />
+          <b />
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+`;

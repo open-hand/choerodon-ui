@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tooltip should hide when mouse leave choerodon-ui disabled Button 1`] = `
+<span
+  style="display: inline-block; cursor: not-allowed;"
+>
+  <button
+    class="ant-btn ant-btn-flat"
+    disabled=""
+    style="pointer-events: none;"
+    type="button"
+  >
+    <span>
+      Hello world!
+    </span>
+    <div
+      class="ant-ripple-wrapper"
+    />
+  </button>
+</span>
+`;

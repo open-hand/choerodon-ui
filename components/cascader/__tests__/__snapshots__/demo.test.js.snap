@@ -1,0 +1,571 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders ./components/cascader/demo/basic.md correctly 1`] = `
+<span
+  class="ant-cascader-picker"
+  tabindex="0"
+>
+  <span
+    class="ant-cascader-picker-label"
+  />
+  <span
+    class="ant-input-wrapper ant-input-has-label"
+  >
+    <div
+      class="ant-input-content"
+    >
+      <div
+        class="ant-input-label"
+      >
+        cascader
+      </div>
+      <div
+        class="ant-input-rendered-wrapper"
+      >
+        <div
+          class="ant-input-rendered"
+        >
+          <div
+            class="ant-input-placeholder"
+          >
+            Please select
+          </div>
+          <input
+            autocomplete="off"
+            class="ant-input ant-cascader-input "
+            readonly=""
+            type="text"
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="ant-input-underline"
+    >
+      <span
+        class="ant-input-ripple"
+      />
+    </div>
+  </span>
+  <i
+    class="icon icon-arrow_drop_down ant-cascader-picker-arrow"
+  />
+</span>
+`;
+
+exports[`renders ./components/cascader/demo/change-on-select.md correctly 1`] = `
+<span
+  class="ant-cascader-picker"
+  tabindex="0"
+>
+  <span
+    class="ant-cascader-picker-label"
+  />
+  <span
+    class="ant-input-wrapper"
+  >
+    <div
+      class="ant-input-content"
+    >
+      <div
+        class="ant-input-rendered-wrapper"
+      >
+        <div
+          class="ant-input-rendered"
+        >
+          <div
+            class="ant-input-placeholder"
+          >
+            Please select
+          </div>
+          <input
+            autocomplete="off"
+            class="ant-input ant-cascader-input "
+            readonly=""
+            type="text"
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="ant-input-underline"
+    >
+      <span
+        class="ant-input-ripple"
+      />
+    </div>
+  </span>
+  <i
+    class="icon icon-arrow_drop_down ant-cascader-picker-arrow"
+  />
+</span>
+`;
+
+exports[`renders ./components/cascader/demo/custom-render.md correctly 1`] = `
+<span
+  class="ant-cascader-picker ant-input-has-value"
+  style="width:100%"
+  tabindex="0"
+>
+  <span
+    class="ant-cascader-picker-label"
+  >
+    <span>
+      Zhejiang / 
+    </span>
+    <span>
+      Hangzhou / 
+    </span>
+    <span>
+      West Lake (
+      <a>
+        752100
+      </a>
+      )
+    </span>
+  </span>
+  <span
+    class="ant-input-wrapper"
+  >
+    <div
+      class="ant-input-content"
+    >
+      <div
+        class="ant-input-rendered-wrapper"
+      >
+        <div
+          class="ant-input-rendered"
+        >
+          <div
+            class="ant-input-placeholder"
+          />
+          <input
+            autocomplete="off"
+            class="ant-input ant-cascader-input "
+            readonly=""
+            type="text"
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="ant-input-underline"
+    >
+      <span
+        class="ant-input-ripple"
+      />
+    </div>
+  </span>
+  <i
+    class="icon icon-arrow_drop_down ant-cascader-picker-arrow"
+  />
+</span>
+`;
+
+exports[`renders ./components/cascader/demo/custom-trigger.md correctly 1`] = `
+<span>
+  Unselect 
+  <a
+    href="#"
+    tabindex="0"
+  >
+    Change city
+  </a>
+</span>
+`;
+
+exports[`renders ./components/cascader/demo/default-value.md correctly 1`] = `
+<span
+  class="ant-cascader-picker ant-input-has-value"
+  tabindex="0"
+>
+  <span
+    class="ant-cascader-picker-label"
+  >
+    Zhejiang / Hangzhou / West Lake
+  </span>
+  <span
+    class="ant-input-wrapper"
+  >
+    <div
+      class="ant-input-content"
+    >
+      <div
+        class="ant-input-rendered-wrapper"
+      >
+        <div
+          class="ant-input-rendered"
+        >
+          <div
+            class="ant-input-placeholder"
+          />
+          <input
+            autocomplete="off"
+            class="ant-input ant-cascader-input "
+            readonly=""
+            type="text"
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="ant-input-underline"
+    >
+      <span
+        class="ant-input-ripple"
+      />
+    </div>
+  </span>
+  <i
+    class="icon icon-arrow_drop_down ant-cascader-picker-arrow"
+  />
+</span>
+`;
+
+exports[`renders ./components/cascader/demo/disabled-option.md correctly 1`] = `
+<span
+  class="ant-cascader-picker"
+  tabindex="0"
+>
+  <span
+    class="ant-cascader-picker-label"
+  />
+  <span
+    class="ant-input-wrapper"
+  >
+    <div
+      class="ant-input-content"
+    >
+      <div
+        class="ant-input-rendered-wrapper"
+      >
+        <div
+          class="ant-input-rendered"
+        >
+          <div
+            class="ant-input-placeholder"
+          >
+            Please select
+          </div>
+          <input
+            autocomplete="off"
+            class="ant-input ant-cascader-input "
+            readonly=""
+            type="text"
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="ant-input-underline"
+    >
+      <span
+        class="ant-input-ripple"
+      />
+    </div>
+  </span>
+  <i
+    class="icon icon-arrow_drop_down ant-cascader-picker-arrow"
+  />
+</span>
+`;
+
+exports[`renders ./components/cascader/demo/hover.md correctly 1`] = `
+<span
+  class="ant-cascader-picker"
+  tabindex="0"
+>
+  <span
+    class="ant-cascader-picker-label"
+  />
+  <span
+    class="ant-input-wrapper"
+  >
+    <div
+      class="ant-input-content"
+    >
+      <div
+        class="ant-input-rendered-wrapper"
+      >
+        <div
+          class="ant-input-rendered"
+        >
+          <div
+            class="ant-input-placeholder"
+          >
+            Please select
+          </div>
+          <input
+            autocomplete="off"
+            class="ant-input ant-cascader-input "
+            readonly=""
+            type="text"
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="ant-input-underline"
+    >
+      <span
+        class="ant-input-ripple"
+      />
+    </div>
+  </span>
+  <i
+    class="icon icon-arrow_drop_down ant-cascader-picker-arrow"
+  />
+</span>
+`;
+
+exports[`renders ./components/cascader/demo/lazy.md correctly 1`] = `
+<span
+  class="ant-cascader-picker"
+  tabindex="0"
+>
+  <span
+    class="ant-cascader-picker-label"
+  />
+  <span
+    class="ant-input-wrapper"
+  >
+    <div
+      class="ant-input-content"
+    >
+      <div
+        class="ant-input-rendered-wrapper"
+      >
+        <div
+          class="ant-input-rendered"
+        >
+          <div
+            class="ant-input-placeholder"
+          >
+            Please select
+          </div>
+          <input
+            autocomplete="off"
+            class="ant-input ant-cascader-input "
+            readonly=""
+            type="text"
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="ant-input-underline"
+    >
+      <span
+        class="ant-input-ripple"
+      />
+    </div>
+  </span>
+  <i
+    class="icon icon-arrow_drop_down ant-cascader-picker-arrow"
+  />
+</span>
+`;
+
+exports[`renders ./components/cascader/demo/search.md correctly 1`] = `
+<span
+  class="ant-cascader-picker"
+  tabindex="0"
+>
+  <span
+    class="ant-cascader-picker-label"
+  />
+  <span
+    class="ant-input-wrapper"
+  >
+    <div
+      class="ant-input-content"
+    >
+      <div
+        class="ant-input-rendered-wrapper"
+      >
+        <div
+          class="ant-input-rendered"
+        >
+          <div
+            class="ant-input-placeholder"
+          >
+            Please select
+          </div>
+          <input
+            autocomplete="off"
+            class="ant-input ant-cascader-input "
+            type="text"
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="ant-input-underline"
+    >
+      <span
+        class="ant-input-ripple"
+      />
+    </div>
+  </span>
+  <i
+    class="icon icon-arrow_drop_down ant-cascader-picker-arrow"
+  />
+</span>
+`;
+
+exports[`renders ./components/cascader/demo/size.md correctly 1`] = `
+<div>
+  <span
+    class="ant-cascader-picker ant-cascader-picker-large"
+    tabindex="0"
+  >
+    <span
+      class="ant-cascader-picker-label"
+    />
+    <span
+      class="ant-input-wrapper"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Please select
+            </div>
+            <input
+              autocomplete="off"
+              class="ant-input ant-cascader-input ant-input-lg"
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
+    <i
+      class="icon icon-arrow_drop_down ant-cascader-picker-arrow"
+    />
+  </span>
+  <br />
+  <br />
+  <span
+    class="ant-cascader-picker"
+    tabindex="0"
+  >
+    <span
+      class="ant-cascader-picker-label"
+    />
+    <span
+      class="ant-input-wrapper"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Please select
+            </div>
+            <input
+              autocomplete="off"
+              class="ant-input ant-cascader-input "
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
+    <i
+      class="icon icon-arrow_drop_down ant-cascader-picker-arrow"
+    />
+  </span>
+  <br />
+  <br />
+  <span
+    class="ant-cascader-picker ant-cascader-picker-small"
+    tabindex="0"
+  >
+    <span
+      class="ant-cascader-picker-label"
+    />
+    <span
+      class="ant-input-wrapper"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Please select
+            </div>
+            <input
+              autocomplete="off"
+              class="ant-input ant-cascader-input ant-input-sm"
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
+    <i
+      class="icon icon-arrow_drop_down ant-cascader-picker-arrow"
+    />
+  </span>
+  <br />
+  <br />
+</div>
+`;

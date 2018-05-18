@@ -1,0 +1,244 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders ./components/dropdown/demo/basic.md correctly 1`] = `
+<div>
+  <a
+    class="ant-dropdown-link ant-dropdown-trigger"
+    href="#"
+  >
+    Hover me 
+    <i
+      class="icon icon-arrow_drop_down"
+    />
+  </a>
+</div>
+`;
+
+exports[`renders ./components/dropdown/demo/context-menu.md correctly 1`] = `
+<span
+  class="ant-dropdown-trigger"
+  style="user-select:none"
+>
+  Right Click on Me
+</span>
+`;
+
+exports[`renders ./components/dropdown/demo/dropdown-button.md correctly 1`] = `
+<div>
+  <div
+    class="ant-btn-group ant-dropdown-button"
+  >
+    <button
+      class="ant-btn ant-btn-default ant-btn-flat"
+      type="button"
+    >
+      <span>
+        Dropdown
+      </span>
+      <div
+        class="ant-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="ant-btn ant-dropdown-trigger ant-btn-default ant-btn-flat"
+      type="button"
+    >
+      <i
+        class="icon icon-arrow_drop_down"
+      />
+      <div
+        class="ant-ripple-wrapper"
+      />
+    </button>
+  </div>
+  <div
+    class="ant-btn-group ant-dropdown-button"
+    style="margin-left:8px"
+  >
+    <button
+      class="ant-btn ant-btn-default ant-btn-flat"
+      disabled=""
+      type="button"
+    >
+      <span>
+        Dropdown
+      </span>
+      <div
+        class="ant-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="ant-btn ant-dropdown-trigger ant-btn-default ant-btn-flat"
+      disabled=""
+      type="button"
+    >
+      <i
+        class="icon icon-arrow_drop_down"
+      />
+      <div
+        class="ant-ripple-wrapper"
+      />
+    </button>
+  </div>
+  <button
+    class="ant-btn ant-dropdown-trigger ant-btn-flat"
+    style="margin-left:8px"
+    type="button"
+  >
+    <span>
+      Button 
+    </span>
+    <i
+      class="icon icon-arrow_drop_down"
+    />
+    <div
+      class="ant-ripple-wrapper"
+    />
+  </button>
+</div>
+`;
+
+exports[`renders ./components/dropdown/demo/event.md correctly 1`] = `
+<a
+  class="ant-dropdown-link ant-dropdown-trigger"
+  href="#"
+>
+  Hover me, Click menu item 
+  <i
+    class="icon icon-arrow_drop_down"
+  />
+</a>
+`;
+
+exports[`renders ./components/dropdown/demo/item.md correctly 1`] = `
+<a
+  class="ant-dropdown-link ant-dropdown-trigger"
+  href="#"
+>
+  Hover me 
+  <i
+    class="icon icon-arrow_drop_down"
+  />
+</a>
+`;
+
+exports[`renders ./components/dropdown/demo/overlay-visible.md correctly 1`] = `
+<a
+  class="ant-dropdown-link ant-dropdown-trigger"
+  href="#"
+>
+  Hover me 
+  <i
+    class="icon icon-arrow_drop_down"
+  />
+</a>
+`;
+
+exports[`renders ./components/dropdown/demo/placement.md correctly 1`] = `
+<div>
+  <button
+    class="ant-btn ant-dropdown-trigger ant-btn-flat"
+    type="button"
+  >
+    <span>
+      bottomLeft
+    </span>
+    <div
+      class="ant-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="ant-btn ant-dropdown-trigger ant-btn-flat"
+    type="button"
+  >
+    <span>
+      bottomCenter
+    </span>
+    <div
+      class="ant-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="ant-btn ant-dropdown-trigger ant-btn-flat"
+    type="button"
+  >
+    <span>
+      bottomRight
+    </span>
+    <div
+      class="ant-ripple-wrapper"
+    />
+  </button>
+  <br />
+  <button
+    class="ant-btn ant-dropdown-trigger ant-btn-flat"
+    type="button"
+  >
+    <span>
+      topLeft
+    </span>
+    <div
+      class="ant-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="ant-btn ant-dropdown-trigger ant-btn-flat"
+    type="button"
+  >
+    <span>
+      topCenter
+    </span>
+    <div
+      class="ant-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="ant-btn ant-dropdown-trigger ant-btn-flat"
+    type="button"
+  >
+    <span>
+      topRight
+    </span>
+    <div
+      class="ant-ripple-wrapper"
+    />
+  </button>
+</div>
+`;
+
+exports[`renders ./components/dropdown/demo/sub-menu.md correctly 1`] = `
+<a
+  class="ant-dropdown-link ant-dropdown-trigger"
+  href="#"
+>
+  Cascading menu 
+  <i
+    class="icon icon-arrow_drop_down"
+  />
+</a>
+`;
+
+exports[`renders ./components/dropdown/demo/trigger.md correctly 1`] = `
+<div>
+  <a
+    class="ant-dropdown-link ant-dropdown-trigger"
+    href="#"
+  >
+    Click me 
+    <i
+      class="icon icon-arrow_drop_down"
+    />
+  </a>
+  <button
+    class="ant-btn ant-dropdown-trigger ant-btn-circle ant-btn-icon-only ant-btn-flat"
+    type="button"
+  >
+    <i
+      class="icon icon-more_vert"
+    />
+    <div
+      class="ant-ripple-wrapper"
+    />
+  </button>
+</div>
+`;

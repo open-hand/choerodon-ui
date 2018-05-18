@@ -1,0 +1,23 @@
+@import "../../style/themes/default";
+
+@btn-prefix-cls: ~"@{ant-prefix}-btn";
+@ripple-prefix-cls: ~"@{ant-prefix}-ripple";
+
+.@{btn-prefix-cls}-raised {
+  & .@{ripple-prefix-cls} {
+    background-color: fade(#000, 10%);
+  }
+  &.@{btn-prefix-cls}-primary,
+  &.@{btn-prefix-cls}-dashed,
+  &.@{btn-prefix-cls}-danger {
+    .@{ripple-prefix-cls} {
+      background-color: fade(#fff, 30%);
+    }
+  }
+  &-loading .@{ripple-prefix-cls}-wrapper {
+    background-color: fade(#fff, 15%);
+  }
+  &.ripple-primary .@{ripple-prefix-cls} {
+    background-color: fade(#3367d6, 10%);
+  }
+}

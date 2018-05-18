@@ -1,0 +1,756 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders ./components/button/demo/basic.md correctly 1`] = `
+<div>
+  <button
+    class="ant-btn ant-btn-raised"
+    type="button"
+  >
+    <span>
+      Rasied
+    </span>
+    <div
+      class="ant-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="ant-btn ant-btn-flat"
+    type="button"
+  >
+    <span>
+      Flat
+    </span>
+    <div
+      class="ant-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="ant-btn ant-btn-circle ant-btn-icon-only ant-btn-flat"
+    type="button"
+  >
+    <i
+      class="icon icon-search"
+    />
+    <div
+      class="ant-ripple-wrapper"
+    />
+  </button>
+</div>
+`;
+
+exports[`renders ./components/button/demo/button-group.md correctly 1`] = `
+<div>
+  <h4>
+    Basic
+  </h4>
+  <div
+    class="ant-btn-group"
+  >
+    <button
+      class="ant-btn ant-btn-flat"
+      type="button"
+    >
+      <span>
+        Cancel
+      </span>
+      <div
+        class="ant-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="ant-btn ant-btn-flat"
+      type="button"
+    >
+      <span>
+        OK
+      </span>
+      <div
+        class="ant-ripple-wrapper"
+      />
+    </button>
+  </div>
+  <div
+    class="ant-btn-group"
+  >
+    <button
+      class="ant-btn ant-btn-flat"
+      disabled=""
+      type="button"
+    >
+      <span>
+        L
+      </span>
+      <div
+        class="ant-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="ant-btn ant-btn-flat"
+      disabled=""
+      type="button"
+    >
+      <span>
+        M
+      </span>
+      <div
+        class="ant-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="ant-btn ant-btn-flat"
+      disabled=""
+      type="button"
+    >
+      <span>
+        R
+      </span>
+      <div
+        class="ant-ripple-wrapper"
+      />
+    </button>
+  </div>
+  <div
+    class="ant-btn-group"
+  >
+    <button
+      class="ant-btn ant-btn-flat"
+      type="button"
+    >
+      <span>
+        L
+      </span>
+      <div
+        class="ant-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="ant-btn ant-btn-flat"
+      type="button"
+    >
+      <span>
+        M
+      </span>
+      <div
+        class="ant-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="ant-btn ant-btn-flat"
+      type="button"
+    >
+      <span>
+        R
+      </span>
+      <div
+        class="ant-ripple-wrapper"
+      />
+    </button>
+  </div>
+  <h4>
+    With Icon
+  </h4>
+  <div
+    class="ant-btn-group"
+  >
+    <button
+      class="ant-btn ant-btn-primary ant-btn-flat"
+      type="button"
+    >
+      <i
+        class="icon icon-left"
+      />
+      <span>
+        Go back
+      </span>
+      <div
+        class="ant-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="ant-btn ant-btn-primary ant-btn-flat"
+      type="button"
+    >
+      <span>
+        Go forward
+      </span>
+      <i
+        class="icon icon-right"
+      />
+      <div
+        class="ant-ripple-wrapper"
+      />
+    </button>
+  </div>
+  <div
+    class="ant-btn-group"
+  >
+    <button
+      class="ant-btn ant-btn-primary ant-btn-icon-only ant-btn-flat"
+      type="button"
+    >
+      <i
+        class="icon icon-cloud"
+      />
+      <div
+        class="ant-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="ant-btn ant-btn-primary ant-btn-icon-only ant-btn-flat"
+      type="button"
+    >
+      <i
+        class="icon icon-cloud-download"
+      />
+      <div
+        class="ant-ripple-wrapper"
+      />
+    </button>
+  </div>
+</div>
+`;
+
+exports[`renders ./components/button/demo/disabled.md correctly 1`] = `
+<div>
+  <button
+    class="ant-btn ant-btn-primary ant-btn-raised"
+    type="button"
+  >
+    <span>
+      Primary
+    </span>
+    <div
+      class="ant-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="ant-btn ant-btn-primary ant-btn-flat"
+    disabled=""
+    type="button"
+  >
+    <span>
+      Primary(disabled)
+    </span>
+    <div
+      class="ant-ripple-wrapper"
+    />
+  </button>
+  <br />
+  <button
+    class="ant-btn ant-btn-flat"
+    type="button"
+  >
+    <span>
+      Default
+    </span>
+    <div
+      class="ant-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="ant-btn ant-btn-flat"
+    disabled=""
+    type="button"
+  >
+    <span>
+      Default(disabled)
+    </span>
+    <div
+      class="ant-ripple-wrapper"
+    />
+  </button>
+  <br />
+  <button
+    class="ant-btn ant-btn-flat"
+    type="button"
+  >
+    <span>
+      Ghost
+    </span>
+    <div
+      class="ant-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="ant-btn ant-btn-flat"
+    disabled=""
+    type="button"
+  >
+    <span>
+      Ghost(disabled)
+    </span>
+    <div
+      class="ant-ripple-wrapper"
+    />
+  </button>
+  <br />
+  <button
+    class="ant-btn ant-btn-dashed ant-btn-flat"
+    type="button"
+  >
+    <span>
+      Dashed
+    </span>
+    <div
+      class="ant-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="ant-btn ant-btn-dashed ant-btn-flat"
+    disabled=""
+    type="button"
+  >
+    <span>
+      Dashed(disabled)
+    </span>
+    <div
+      class="ant-ripple-wrapper"
+    />
+  </button>
+</div>
+`;
+
+exports[`renders ./components/button/demo/ghost.md correctly 1`] = `
+<div
+  style="background:rgb(190, 200, 200);padding:26px 16px 16px"
+>
+  <button
+    class="ant-btn ant-btn-primary ant-btn-background-ghost ant-btn-flat"
+    type="button"
+  >
+    <span>
+      Primary
+    </span>
+    <div
+      class="ant-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="ant-btn ant-btn-background-ghost ant-btn-flat"
+    type="button"
+  >
+    <span>
+      Default
+    </span>
+    <div
+      class="ant-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="ant-btn ant-btn-dashed ant-btn-background-ghost ant-btn-flat"
+    type="button"
+  >
+    <span>
+      Dashed
+    </span>
+    <div
+      class="ant-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="ant-btn ant-btn-danger ant-btn-background-ghost ant-btn-flat"
+    type="button"
+  >
+    <span>
+      danger
+    </span>
+    <div
+      class="ant-ripple-wrapper"
+    />
+  </button>
+</div>
+`;
+
+exports[`renders ./components/button/demo/icon.md correctly 1`] = `
+<div>
+  <button
+    class="ant-btn ant-btn-primary ant-btn-circle ant-btn-icon-only ant-btn-raised"
+    type="button"
+  >
+    <i
+      class="icon icon-search"
+    />
+    <div
+      class="ant-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="ant-btn ant-btn-primary ant-btn-raised"
+    type="button"
+  >
+    <i
+      class="icon icon-search"
+    />
+    <span>
+      Search
+    </span>
+    <div
+      class="ant-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="ant-btn ant-btn-primary ant-btn-circle ant-btn-icon-only ant-btn-flat"
+    type="button"
+  >
+    <i
+      class="icon icon-search"
+    />
+    <div
+      class="ant-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="ant-btn ant-btn-primary ant-btn-flat"
+    type="button"
+  >
+    <i
+      class="icon icon-search"
+    />
+    <span>
+      Search
+    </span>
+    <div
+      class="ant-ripple-wrapper"
+    />
+  </button>
+</div>
+`;
+
+exports[`renders ./components/button/demo/loading.md correctly 1`] = `
+<span>
+  <button
+    class="ant-btn ant-btn-primary ant-btn-loading ant-btn-flat"
+    type="button"
+  >
+    <div
+      class="btn-loading"
+    >
+      <span
+        class="dot1"
+      />
+      <span
+        class="dot2"
+      />
+      <span
+        class="dot3"
+      />
+    </div>
+    <span>
+      Loading
+    </span>
+    <div
+      class="ant-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="ant-btn ant-btn-primary ant-btn-loading ant-btn-raised"
+    type="button"
+  >
+    <div
+      class="btn-loading"
+    >
+      <span
+        class="dot1"
+      />
+      <span
+        class="dot2"
+      />
+      <span
+        class="dot3"
+      />
+    </div>
+    <span>
+      Loading
+    </span>
+    <div
+      class="ant-ripple-wrapper"
+    />
+  </button>
+  <br />
+  <button
+    class="ant-btn ant-btn-primary ant-btn-flat"
+    type="button"
+  >
+    <span>
+      Click me!
+    </span>
+    <div
+      class="ant-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="ant-btn ant-btn-primary ant-btn-flat"
+    type="button"
+  >
+    <i
+      class="icon icon-poweroff"
+    />
+    <span>
+      Click me!
+    </span>
+    <div
+      class="ant-ripple-wrapper"
+    />
+  </button>
+  <br />
+  <button
+    class="ant-btn ant-btn-circle ant-btn-loading ant-btn-flat"
+    type="button"
+  >
+    <div
+      class="btn-loading"
+    >
+      <span
+        class="dot1"
+      />
+      <span
+        class="dot2"
+      />
+      <span
+        class="dot3"
+      />
+    </div>
+    <div
+      class="ant-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="ant-btn ant-btn-primary ant-btn-circle ant-btn-loading ant-btn-flat"
+    type="button"
+  >
+    <div
+      class="btn-loading"
+    >
+      <span
+        class="dot1"
+      />
+      <span
+        class="dot2"
+      />
+      <span
+        class="dot3"
+      />
+    </div>
+    <div
+      class="ant-ripple-wrapper"
+    />
+  </button>
+</span>
+`;
+
+exports[`renders ./components/button/demo/multiple.md correctly 1`] = `
+<div>
+  <button
+    class="ant-btn ant-btn-primary ant-btn-flat"
+    type="button"
+  >
+    <span>
+      primary
+    </span>
+    <div
+      class="ant-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="ant-btn ant-btn-flat"
+    type="button"
+  >
+    <span>
+      secondary
+    </span>
+    <div
+      class="ant-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="ant-btn ant-dropdown-trigger ant-btn-flat"
+    type="button"
+  >
+    <span>
+      Actions 
+    </span>
+    <i
+      class="icon icon-down"
+    />
+    <div
+      class="ant-ripple-wrapper"
+    />
+  </button>
+</div>
+`;
+
+exports[`renders ./components/button/demo/size.md correctly 1`] = `
+<div>
+  <div
+    class="ant-radio-group-wrapper"
+  >
+    <div
+      class="ant-radio-group"
+    >
+      <label
+        class="ant-radio-button-wrapper ant-radio-button-wrapper-checked"
+      >
+        <span
+          class="ant-radio-button ant-radio-button-checked"
+        >
+          <input
+            checked=""
+            class="ant-radio-button-input"
+            type="radio"
+            value="large"
+          />
+          <span
+            class="ant-radio-button-inner"
+          />
+        </span>
+        <span>
+          Large
+        </span>
+      </label>
+      <label
+        class="ant-radio-button-wrapper"
+      >
+        <span
+          class="ant-radio-button"
+        >
+          <input
+            class="ant-radio-button-input"
+            type="radio"
+            value="default"
+          />
+          <span
+            class="ant-radio-button-inner"
+          />
+        </span>
+        <span>
+          Default
+        </span>
+      </label>
+      <label
+        class="ant-radio-button-wrapper"
+      >
+        <span
+          class="ant-radio-button"
+        >
+          <input
+            class="ant-radio-button-input"
+            type="radio"
+            value="small"
+          />
+          <span
+            class="ant-radio-button-inner"
+          />
+        </span>
+        <span>
+          Small
+        </span>
+      </label>
+    </div>
+  </div>
+  <br />
+  <br />
+  <button
+    class="ant-btn ant-btn-primary ant-btn-lg ant-btn-flat"
+    type="button"
+  >
+    <span>
+      默认
+    </span>
+    <div
+      class="ant-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="ant-btn ant-btn-lg ant-btn-flat"
+    type="button"
+  >
+    <span>
+      Normal
+    </span>
+    <div
+      class="ant-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="ant-btn ant-btn-dashed ant-btn-lg ant-btn-flat"
+    type="button"
+  >
+    <span>
+      Dashed
+    </span>
+    <div
+      class="ant-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="ant-btn ant-btn-danger ant-btn-lg ant-btn-flat"
+    type="button"
+  >
+    <span>
+      Danger
+    </span>
+    <div
+      class="ant-ripple-wrapper"
+    />
+  </button>
+  <br />
+  <button
+    class="ant-btn ant-btn-primary ant-btn-circle ant-btn-lg ant-btn-icon-only ant-btn-flat"
+    type="button"
+  >
+    <i
+      class="icon icon-cloud_queue"
+    />
+    <div
+      class="ant-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="ant-btn ant-btn-primary ant-btn-lg ant-btn-flat"
+    type="button"
+  >
+    <i
+      class="icon icon-cloud_queue"
+    />
+    <span>
+      Download
+    </span>
+    <div
+      class="ant-ripple-wrapper"
+    />
+  </button>
+  <br />
+  <div
+    class="ant-btn-group ant-btn-group-lg"
+  >
+    <button
+      class="ant-btn ant-btn-primary ant-btn-flat"
+      type="button"
+    >
+      <i
+        class="icon icon-keyboard_arrow_left"
+      />
+      <span>
+        Backward
+      </span>
+      <div
+        class="ant-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="ant-btn ant-btn-primary ant-btn-flat"
+      type="button"
+    >
+      <span>
+        Forward
+      </span>
+      <i
+        class="icon icon-keyboard_arrow_right"
+      />
+      <div
+        class="ant-ripple-wrapper"
+      />
+    </button>
+  </div>
+</div>
+`;

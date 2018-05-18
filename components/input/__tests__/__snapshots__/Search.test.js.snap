@@ -1,0 +1,91 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Input.Search should support custom Button 1`] = `
+<span
+  class="ant-input-wrapper ant-input-has-suffix"
+>
+  <div
+    class="ant-input-content"
+  >
+    <div
+      class="ant-input-rendered-wrapper"
+    >
+      <div
+        class="ant-input-rendered ant-input-rendered-sm"
+        style="margin: 0px 0px 0px 0px;"
+      >
+        <div
+          class="ant-input-placeholder"
+        />
+        <input
+          class="ant-input ant-input-sm ant-input-search ant-input-search-enter-button ant-input-search-small"
+          type="text"
+        />
+      </div>
+      <span
+        class="ant-input-suffix ant-input-suffix-sm"
+      >
+        <button
+          class="ant-btn ant-input-search-button ant-btn-sm ant-btn-flat"
+          type="button"
+        >
+          <span>
+            ok
+          </span>
+          <div
+            class="ant-ripple-wrapper"
+          />
+        </button>
+      </span>
+    </div>
+  </div>
+  <div
+    class="ant-input-underline"
+  >
+    <span
+      class="ant-input-ripple"
+    />
+  </div>
+</span>
+`;
+
+exports[`Input.Search should support custom button 1`] = `
+<span
+  class="ant-input-wrapper ant-input-has-suffix"
+>
+  <div
+    class="ant-input-content"
+  >
+    <div
+      class="ant-input-rendered-wrapper"
+    >
+      <div
+        class="ant-input-rendered ant-input-rendered-sm"
+        style="margin: 0px 0px 0px 0px;"
+      >
+        <div
+          class="ant-input-placeholder"
+        />
+        <input
+          class="ant-input ant-input-sm ant-input-search ant-input-search-enter-button ant-input-search-small"
+          type="text"
+        />
+      </div>
+      <span
+        class="ant-input-suffix ant-input-suffix-sm"
+      >
+        <button>
+          ok
+        </button>
+      </span>
+    </div>
+  </div>
+  <div
+    class="ant-input-underline"
+  >
+    <span
+      class="ant-input-ripple"
+    />
+  </div>
+</span>
+`;

@@ -1,0 +1,193 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders ./components/popconfirm/demo/basic.md correctly 1`] = `
+<a
+  href="#"
+>
+  Delete
+</a>
+`;
+
+exports[`renders ./components/popconfirm/demo/dynamic-trigger.md correctly 1`] = `
+<div>
+  <a
+    href="#"
+  >
+    Delete a task
+  </a>
+  <br />
+  <br />
+  Whether directly execute：
+  <span
+    class="ant-switch ant-switch-checked"
+    tabindex="0"
+  >
+    <span
+      class="ant-switch-inner"
+    />
+  </span>
+</div>
+`;
+
+exports[`renders ./components/popconfirm/demo/locale.md correctly 1`] = `
+<a
+  href="#"
+>
+  Delete
+</a>
+`;
+
+exports[`renders ./components/popconfirm/demo/placement.md correctly 1`] = `
+<div
+  class="demo"
+>
+  <div
+    style="margin-left:70px;white-space:nowrap"
+  >
+    <button
+      class="ant-btn ant-btn-flat"
+      type="button"
+    >
+      <span>
+        TL
+      </span>
+      <div
+        class="ant-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="ant-btn ant-btn-flat"
+      type="button"
+    >
+      <span>
+        Top
+      </span>
+      <div
+        class="ant-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="ant-btn ant-btn-flat"
+      type="button"
+    >
+      <span>
+        TR
+      </span>
+      <div
+        class="ant-ripple-wrapper"
+      />
+    </button>
+  </div>
+  <div
+    style="width:70px;float:left"
+  >
+    <button
+      class="ant-btn ant-btn-flat"
+      type="button"
+    >
+      <span>
+        LT
+      </span>
+      <div
+        class="ant-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="ant-btn ant-btn-flat"
+      type="button"
+    >
+      <span>
+        Left
+      </span>
+      <div
+        class="ant-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="ant-btn ant-btn-flat"
+      type="button"
+    >
+      <span>
+        LB
+      </span>
+      <div
+        class="ant-ripple-wrapper"
+      />
+    </button>
+  </div>
+  <div
+    style="width:70px;margin-left:304px"
+  >
+    <button
+      class="ant-btn ant-btn-flat"
+      type="button"
+    >
+      <span>
+        RT
+      </span>
+      <div
+        class="ant-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="ant-btn ant-btn-flat"
+      type="button"
+    >
+      <span>
+        Right
+      </span>
+      <div
+        class="ant-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="ant-btn ant-btn-flat"
+      type="button"
+    >
+      <span>
+        RB
+      </span>
+      <div
+        class="ant-ripple-wrapper"
+      />
+    </button>
+  </div>
+  <div
+    style="margin-left:70px;clear:both;white-space:nowrap"
+  >
+    <button
+      class="ant-btn ant-btn-flat"
+      type="button"
+    >
+      <span>
+        BL
+      </span>
+      <div
+        class="ant-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="ant-btn ant-btn-flat"
+      type="button"
+    >
+      <span>
+        Bottom
+      </span>
+      <div
+        class="ant-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="ant-btn ant-btn-flat"
+      type="button"
+    >
+      <span>
+        BR
+      </span>
+      <div
+        class="ant-ripple-wrapper"
+      />
+    </button>
+  </div>
+</div>
+`;

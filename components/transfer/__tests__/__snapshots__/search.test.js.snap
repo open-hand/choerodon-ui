@@ -1,0 +1,137 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Search should show cross icon when input value exists 1`] = `
+<Search
+  placeholder=""
+  value=""
+>
+  <div>
+    <Input
+      disabled={false}
+      onChange={[Function]}
+      placeholder=""
+      prefixCls="ant-input"
+      type="text"
+      value=""
+    >
+      <span
+        className="ant-input-wrapper"
+      >
+        <div
+          className="ant-input-content"
+        >
+          <div
+            className="ant-input-rendered-wrapper"
+          >
+            <div
+              className="ant-input-rendered"
+            >
+              <div
+                className="ant-input-placeholder"
+              />
+              <input
+                className="ant-input"
+                disabled={false}
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onInput={[Function]}
+                onKeyDown={[Function]}
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          className="ant-input-underline"
+        >
+          <span
+            className="ant-input-ripple"
+          />
+        </div>
+      </span>
+    </Input>
+    <span
+      className="undefined-action"
+    >
+      <Icon
+        type="search"
+      >
+        <i
+          className="icon icon-search"
+        />
+      </Icon>
+    </span>
+  </div>
+</Search>
+`;
+
+exports[`Search should show cross icon when input value exists 2`] = `
+<Search
+  placeholder=""
+  value="a"
+>
+  <div>
+    <Input
+      disabled={false}
+      onChange={[Function]}
+      placeholder=""
+      prefixCls="ant-input"
+      type="text"
+      value="a"
+    >
+      <span
+        className="ant-input-wrapper ant-input-has-value"
+      >
+        <div
+          className="ant-input-content"
+        >
+          <div
+            className="ant-input-rendered-wrapper"
+          >
+            <div
+              className="ant-input-rendered"
+            >
+              <div
+                className="ant-input-placeholder"
+              />
+              <input
+                className="ant-input"
+                disabled={false}
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onInput={[Function]}
+                onKeyDown={[Function]}
+                type="text"
+                value="a"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          className="ant-input-underline"
+        >
+          <span
+            className="ant-input-ripple"
+          />
+        </div>
+      </span>
+    </Input>
+    <a
+      className="undefined-action"
+      href="#"
+      onClick={[Function]}
+    >
+      <Icon
+        type="cross-circle"
+      >
+        <i
+          className="icon icon-cross-circle"
+        />
+      </Icon>
+    </a>
+  </div>
+</Search>
+`;

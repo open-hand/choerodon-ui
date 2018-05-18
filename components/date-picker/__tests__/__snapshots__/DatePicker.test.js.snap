@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DatePicker prop locale should works 1`] = `
+<span
+  class="ant-calendar-picker"
+>
+  <div
+    style=""
+  >
+    <input
+      class="ant-calendar-picker-input ant-input"
+      placeholder="Избери дата"
+      readonly=""
+      value="2000-01-01"
+    />
+    <i
+      class="icon icon-cross-circle ant-calendar-picker-clear"
+    />
+    <span
+      class="ant-calendar-picker-icon"
+    />
+  </div>
+</span>
+`;

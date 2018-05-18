@@ -1,0 +1,938 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders ./components/transfer/demo/advanced.md correctly 1`] = `
+<div
+  class="ant-transfer"
+>
+  <div
+    class="ant-transfer-list ant-transfer-list-with-footer"
+    style="width:250px;height:300px"
+  >
+    <div
+      class="ant-transfer-list-header"
+    >
+      <label
+        class="ant-checkbox-wrapper"
+      >
+        <span
+          class="ant-checkbox"
+        >
+          <input
+            class="ant-checkbox-input"
+            type="checkbox"
+          />
+          <span
+            class="ant-checkbox-inner"
+          />
+        </span>
+      </label>
+      <span
+        class="ant-transfer-list-header-selected"
+      >
+        <span>
+          0 item
+        </span>
+        <span
+          class="ant-transfer-list-header-title"
+        />
+      </span>
+    </div>
+    <div
+      class="ant-transfer-list-body ant-transfer-list-body-with-search"
+    >
+      <div
+        class="ant-transfer-list-body-search-wrapper"
+      >
+        <div>
+          <span
+            class="ant-input-wrapper"
+          >
+            <div
+              class="ant-input-content"
+            >
+              <div
+                class="ant-input-rendered-wrapper"
+              >
+                <div
+                  class="ant-input-rendered"
+                >
+                  <div
+                    class="ant-input-placeholder"
+                  >
+                    Search here
+                  </div>
+                  <input
+                    class="ant-input ant-transfer-list-search"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="ant-input-underline"
+            >
+              <span
+                class="ant-input-ripple"
+              />
+            </div>
+          </span>
+          <span
+            class="ant-transfer-list-search-action"
+          >
+            <i
+              class="icon icon-search"
+            />
+          </span>
+        </div>
+      </div>
+      <ul
+        class="ant-transfer-list-content"
+      />
+      <div
+        class="ant-transfer-list-body-not-found"
+      >
+        Not Found
+      </div>
+    </div>
+    <div
+      class="ant-transfer-list-footer"
+    >
+      <button
+        class="ant-btn ant-btn-sm ant-btn-flat"
+        style="float:right;margin:5px"
+        type="button"
+      >
+        <span>
+          reload
+        </span>
+        <div
+          class="ant-ripple-wrapper"
+        />
+      </button>
+    </div>
+  </div>
+  <div
+    class="ant-transfer-operation"
+  >
+    <button
+      class="ant-btn ant-btn-primary ant-btn-sm ant-btn-flat"
+      disabled=""
+      type="button"
+    >
+      <i
+        class="icon icon-left"
+      />
+      <span>
+        to left
+      </span>
+      <div
+        class="ant-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="ant-btn ant-btn-primary ant-btn-sm ant-btn-flat"
+      disabled=""
+      type="button"
+    >
+      <i
+        class="icon icon-right"
+      />
+      <span>
+        to right
+      </span>
+      <div
+        class="ant-ripple-wrapper"
+      />
+    </button>
+  </div>
+  <div
+    class="ant-transfer-list ant-transfer-list-with-footer"
+    style="width:250px;height:300px"
+  >
+    <div
+      class="ant-transfer-list-header"
+    >
+      <label
+        class="ant-checkbox-wrapper"
+      >
+        <span
+          class="ant-checkbox"
+        >
+          <input
+            class="ant-checkbox-input"
+            type="checkbox"
+          />
+          <span
+            class="ant-checkbox-inner"
+          />
+        </span>
+      </label>
+      <span
+        class="ant-transfer-list-header-selected"
+      >
+        <span>
+          0 item
+        </span>
+        <span
+          class="ant-transfer-list-header-title"
+        />
+      </span>
+    </div>
+    <div
+      class="ant-transfer-list-body ant-transfer-list-body-with-search"
+    >
+      <div
+        class="ant-transfer-list-body-search-wrapper"
+      >
+        <div>
+          <span
+            class="ant-input-wrapper"
+          >
+            <div
+              class="ant-input-content"
+            >
+              <div
+                class="ant-input-rendered-wrapper"
+              >
+                <div
+                  class="ant-input-rendered"
+                >
+                  <div
+                    class="ant-input-placeholder"
+                  >
+                    Search here
+                  </div>
+                  <input
+                    class="ant-input ant-transfer-list-search"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="ant-input-underline"
+            >
+              <span
+                class="ant-input-ripple"
+              />
+            </div>
+          </span>
+          <span
+            class="ant-transfer-list-search-action"
+          >
+            <i
+              class="icon icon-search"
+            />
+          </span>
+        </div>
+      </div>
+      <ul
+        class="ant-transfer-list-content"
+      />
+      <div
+        class="ant-transfer-list-body-not-found"
+      >
+        Not Found
+      </div>
+    </div>
+    <div
+      class="ant-transfer-list-footer"
+    >
+      <button
+        class="ant-btn ant-btn-sm ant-btn-flat"
+        style="float:right;margin:5px"
+        type="button"
+      >
+        <span>
+          reload
+        </span>
+        <div
+          class="ant-ripple-wrapper"
+        />
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders ./components/transfer/demo/basic.md correctly 1`] = `
+<div
+  class="ant-transfer"
+>
+  <div
+    class="ant-transfer-list"
+  >
+    <div
+      class="ant-transfer-list-header"
+    >
+      <label
+        class="ant-checkbox-wrapper"
+      >
+        <span
+          class="ant-checkbox"
+        >
+          <input
+            class="ant-checkbox-input"
+            type="checkbox"
+          />
+          <span
+            class="ant-checkbox-inner"
+          />
+        </span>
+      </label>
+      <span
+        class="ant-transfer-list-header-selected"
+      >
+        <span>
+          14 items
+        </span>
+        <span
+          class="ant-transfer-list-header-title"
+        >
+          Source
+        </span>
+      </span>
+    </div>
+    <div
+      class="ant-transfer-list-body"
+    >
+      <ul
+        class="ant-transfer-list-content"
+      >
+        <div
+          class="LazyLoad"
+          style="height:32px"
+        />
+        <div
+          class="LazyLoad"
+          style="height:32px"
+        />
+        <div
+          class="LazyLoad"
+          style="height:32px"
+        />
+        <div
+          class="LazyLoad"
+          style="height:32px"
+        />
+        <div
+          class="LazyLoad"
+          style="height:32px"
+        />
+        <div
+          class="LazyLoad"
+          style="height:32px"
+        />
+        <div
+          class="LazyLoad"
+          style="height:32px"
+        />
+        <div
+          class="LazyLoad"
+          style="height:32px"
+        />
+        <div
+          class="LazyLoad"
+          style="height:32px"
+        />
+        <div
+          class="LazyLoad"
+          style="height:32px"
+        />
+        <div
+          class="LazyLoad"
+          style="height:32px"
+        />
+        <div
+          class="LazyLoad"
+          style="height:32px"
+        />
+        <div
+          class="LazyLoad"
+          style="height:32px"
+        />
+        <div
+          class="LazyLoad"
+          style="height:32px"
+        />
+      </ul>
+      <div
+        class="ant-transfer-list-body-not-found"
+      >
+        Not Found
+      </div>
+    </div>
+  </div>
+  <div
+    class="ant-transfer-operation"
+  >
+    <button
+      class="ant-btn ant-btn-primary ant-btn-sm ant-btn-icon-only ant-btn-flat"
+      disabled=""
+      type="button"
+    >
+      <i
+        class="icon icon-left"
+      />
+      <div
+        class="ant-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="ant-btn ant-btn-primary ant-btn-sm ant-btn-icon-only ant-btn-flat"
+      disabled=""
+      type="button"
+    >
+      <i
+        class="icon icon-right"
+      />
+      <div
+        class="ant-ripple-wrapper"
+      />
+    </button>
+  </div>
+  <div
+    class="ant-transfer-list"
+  >
+    <div
+      class="ant-transfer-list-header"
+    >
+      <label
+        class="ant-checkbox-wrapper"
+      >
+        <span
+          class="ant-checkbox"
+        >
+          <input
+            class="ant-checkbox-input"
+            type="checkbox"
+          />
+          <span
+            class="ant-checkbox-inner"
+          />
+        </span>
+      </label>
+      <span
+        class="ant-transfer-list-header-selected"
+      >
+        <span>
+          6 items
+        </span>
+        <span
+          class="ant-transfer-list-header-title"
+        >
+          Target
+        </span>
+      </span>
+    </div>
+    <div
+      class="ant-transfer-list-body"
+    >
+      <ul
+        class="ant-transfer-list-content"
+      >
+        <div
+          class="LazyLoad"
+          style="height:32px"
+        />
+        <div
+          class="LazyLoad"
+          style="height:32px"
+        />
+        <div
+          class="LazyLoad"
+          style="height:32px"
+        />
+        <div
+          class="LazyLoad"
+          style="height:32px"
+        />
+        <div
+          class="LazyLoad"
+          style="height:32px"
+        />
+        <div
+          class="LazyLoad"
+          style="height:32px"
+        />
+      </ul>
+      <div
+        class="ant-transfer-list-body-not-found"
+      >
+        Not Found
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders ./components/transfer/demo/custom-item.md correctly 1`] = `
+<div
+  class="ant-transfer"
+>
+  <div
+    class="ant-transfer-list"
+    style="width:300px;height:300px"
+  >
+    <div
+      class="ant-transfer-list-header"
+    >
+      <label
+        class="ant-checkbox-wrapper"
+      >
+        <span
+          class="ant-checkbox"
+        >
+          <input
+            class="ant-checkbox-input"
+            type="checkbox"
+          />
+          <span
+            class="ant-checkbox-inner"
+          />
+        </span>
+      </label>
+      <span
+        class="ant-transfer-list-header-selected"
+      >
+        <span>
+          0 item
+        </span>
+        <span
+          class="ant-transfer-list-header-title"
+        />
+      </span>
+    </div>
+    <div
+      class="ant-transfer-list-body"
+    >
+      <ul
+        class="ant-transfer-list-content"
+      />
+      <div
+        class="ant-transfer-list-body-not-found"
+      >
+        Not Found
+      </div>
+    </div>
+  </div>
+  <div
+    class="ant-transfer-operation"
+  >
+    <button
+      class="ant-btn ant-btn-primary ant-btn-sm ant-btn-icon-only ant-btn-flat"
+      disabled=""
+      type="button"
+    >
+      <i
+        class="icon icon-left"
+      />
+      <div
+        class="ant-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="ant-btn ant-btn-primary ant-btn-sm ant-btn-icon-only ant-btn-flat"
+      disabled=""
+      type="button"
+    >
+      <i
+        class="icon icon-right"
+      />
+      <div
+        class="ant-ripple-wrapper"
+      />
+    </button>
+  </div>
+  <div
+    class="ant-transfer-list"
+    style="width:300px;height:300px"
+  >
+    <div
+      class="ant-transfer-list-header"
+    >
+      <label
+        class="ant-checkbox-wrapper"
+      >
+        <span
+          class="ant-checkbox"
+        >
+          <input
+            class="ant-checkbox-input"
+            type="checkbox"
+          />
+          <span
+            class="ant-checkbox-inner"
+          />
+        </span>
+      </label>
+      <span
+        class="ant-transfer-list-header-selected"
+      >
+        <span>
+          0 item
+        </span>
+        <span
+          class="ant-transfer-list-header-title"
+        />
+      </span>
+    </div>
+    <div
+      class="ant-transfer-list-body"
+    >
+      <ul
+        class="ant-transfer-list-content"
+      />
+      <div
+        class="ant-transfer-list-body-not-found"
+      >
+        Not Found
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders ./components/transfer/demo/large-data.md correctly 1`] = `
+<div
+  class="ant-transfer"
+>
+  <div
+    class="ant-transfer-list"
+  >
+    <div
+      class="ant-transfer-list-header"
+    >
+      <label
+        class="ant-checkbox-wrapper"
+      >
+        <span
+          class="ant-checkbox"
+        >
+          <input
+            class="ant-checkbox-input"
+            type="checkbox"
+          />
+          <span
+            class="ant-checkbox-inner"
+          />
+        </span>
+      </label>
+      <span
+        class="ant-transfer-list-header-selected"
+      >
+        <span>
+          0 item
+        </span>
+        <span
+          class="ant-transfer-list-header-title"
+        />
+      </span>
+    </div>
+    <div
+      class="ant-transfer-list-body"
+    >
+      <ul
+        class="ant-transfer-list-content"
+      />
+      <div
+        class="ant-transfer-list-body-not-found"
+      >
+        Not Found
+      </div>
+    </div>
+  </div>
+  <div
+    class="ant-transfer-operation"
+  >
+    <button
+      class="ant-btn ant-btn-primary ant-btn-sm ant-btn-icon-only ant-btn-flat"
+      disabled=""
+      type="button"
+    >
+      <i
+        class="icon icon-left"
+      />
+      <div
+        class="ant-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="ant-btn ant-btn-primary ant-btn-sm ant-btn-icon-only ant-btn-flat"
+      disabled=""
+      type="button"
+    >
+      <i
+        class="icon icon-right"
+      />
+      <div
+        class="ant-ripple-wrapper"
+      />
+    </button>
+  </div>
+  <div
+    class="ant-transfer-list"
+  >
+    <div
+      class="ant-transfer-list-header"
+    >
+      <label
+        class="ant-checkbox-wrapper"
+      >
+        <span
+          class="ant-checkbox"
+        >
+          <input
+            class="ant-checkbox-input"
+            type="checkbox"
+          />
+          <span
+            class="ant-checkbox-inner"
+          />
+        </span>
+      </label>
+      <span
+        class="ant-transfer-list-header-selected"
+      >
+        <span>
+          0 item
+        </span>
+        <span
+          class="ant-transfer-list-header-title"
+        />
+      </span>
+    </div>
+    <div
+      class="ant-transfer-list-body"
+    >
+      <ul
+        class="ant-transfer-list-content"
+      />
+      <div
+        class="ant-transfer-list-body-not-found"
+      >
+        Not Found
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders ./components/transfer/demo/search.md correctly 1`] = `
+<div
+  class="ant-transfer"
+>
+  <div
+    class="ant-transfer-list"
+  >
+    <div
+      class="ant-transfer-list-header"
+    >
+      <label
+        class="ant-checkbox-wrapper"
+      >
+        <span
+          class="ant-checkbox"
+        >
+          <input
+            class="ant-checkbox-input"
+            type="checkbox"
+          />
+          <span
+            class="ant-checkbox-inner"
+          />
+        </span>
+      </label>
+      <span
+        class="ant-transfer-list-header-selected"
+      >
+        <span>
+          0 item
+        </span>
+        <span
+          class="ant-transfer-list-header-title"
+        />
+      </span>
+    </div>
+    <div
+      class="ant-transfer-list-body ant-transfer-list-body-with-search"
+    >
+      <div
+        class="ant-transfer-list-body-search-wrapper"
+      >
+        <div>
+          <span
+            class="ant-input-wrapper"
+          >
+            <div
+              class="ant-input-content"
+            >
+              <div
+                class="ant-input-rendered-wrapper"
+              >
+                <div
+                  class="ant-input-rendered"
+                >
+                  <div
+                    class="ant-input-placeholder"
+                  >
+                    Search here
+                  </div>
+                  <input
+                    class="ant-input ant-transfer-list-search"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="ant-input-underline"
+            >
+              <span
+                class="ant-input-ripple"
+              />
+            </div>
+          </span>
+          <span
+            class="ant-transfer-list-search-action"
+          >
+            <i
+              class="icon icon-search"
+            />
+          </span>
+        </div>
+      </div>
+      <ul
+        class="ant-transfer-list-content"
+      />
+      <div
+        class="ant-transfer-list-body-not-found"
+      >
+        Not Found
+      </div>
+    </div>
+  </div>
+  <div
+    class="ant-transfer-operation"
+  >
+    <button
+      class="ant-btn ant-btn-primary ant-btn-sm ant-btn-icon-only ant-btn-flat"
+      disabled=""
+      type="button"
+    >
+      <i
+        class="icon icon-left"
+      />
+      <div
+        class="ant-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="ant-btn ant-btn-primary ant-btn-sm ant-btn-icon-only ant-btn-flat"
+      disabled=""
+      type="button"
+    >
+      <i
+        class="icon icon-right"
+      />
+      <div
+        class="ant-ripple-wrapper"
+      />
+    </button>
+  </div>
+  <div
+    class="ant-transfer-list"
+  >
+    <div
+      class="ant-transfer-list-header"
+    >
+      <label
+        class="ant-checkbox-wrapper"
+      >
+        <span
+          class="ant-checkbox"
+        >
+          <input
+            class="ant-checkbox-input"
+            type="checkbox"
+          />
+          <span
+            class="ant-checkbox-inner"
+          />
+        </span>
+      </label>
+      <span
+        class="ant-transfer-list-header-selected"
+      >
+        <span>
+          0 item
+        </span>
+        <span
+          class="ant-transfer-list-header-title"
+        />
+      </span>
+    </div>
+    <div
+      class="ant-transfer-list-body ant-transfer-list-body-with-search"
+    >
+      <div
+        class="ant-transfer-list-body-search-wrapper"
+      >
+        <div>
+          <span
+            class="ant-input-wrapper"
+          >
+            <div
+              class="ant-input-content"
+            >
+              <div
+                class="ant-input-rendered-wrapper"
+              >
+                <div
+                  class="ant-input-rendered"
+                >
+                  <div
+                    class="ant-input-placeholder"
+                  >
+                    Search here
+                  </div>
+                  <input
+                    class="ant-input ant-transfer-list-search"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="ant-input-underline"
+            >
+              <span
+                class="ant-input-ripple"
+              />
+            </div>
+          </span>
+          <span
+            class="ant-transfer-list-search-action"
+          >
+            <i
+              class="icon icon-search"
+            />
+          </span>
+        </div>
+      </div>
+      <ul
+        class="ant-transfer-list-content"
+      />
+      <div
+        class="ant-transfer-list-body-not-found"
+      >
+        Not Found
+      </div>
+    </div>
+  </div>
+</div>
+`;

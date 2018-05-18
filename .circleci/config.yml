@@ -1,0 +1,58 @@
+version: 2
+jobs:
+  dev_build:
+    docker:
+      - image: circleci/node:7.10
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          - v1-dependencies-
+      - run: yarn install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+  release_publish:
+    docker:
+      - image: circleci/node:7.10
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          - v1-dependencies-
+      - run: yarn install
+      - run: npm install tslint
+      - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+      - run: npm run pub
+
+workflows:
+  version: 2
+  release:
+    jobs:
+      - release_publish:
+          context: org-global
+          filters:
+            tags:
+              only: /^.*/
+            branches:
+              only:
+                - /^release-.*$/
+                - /^hotfix-.*$/
+  daily:
+    jobs:
+      - dev_build:
+          context: org-global
+          filters:
+            branches:
+              only:
+               - /^.*$/

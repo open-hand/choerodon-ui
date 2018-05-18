@@ -1,0 +1,44 @@
+import * as React from 'react';
+import FilterSelect from './FilterSelect';
+import ColumnFilter from './ColumnFilter';
+import { ColumnProps, TableStateFilters } from './interface';
+
+export interface FilterBarProps<T> {
+  prefixCls?: string;
+  placeholder?: string;
+  dataSource?: T[];
+  filters?: string[];
+  columnFilters?: TableStateFilters;
+  multiple?: boolean;
+  columns?: ColumnProps<T>[];
+  onFilterSelectChange?: (filters?: any[]) => void;
+  onFilterSelectClear?: () => void;
+  onColumnFilterChange?: (columns?: ColumnProps<T>[]) => void;
+  onFilter?: (column: ColumnProps<T>, nextFilters: string[]) => void;
+}
+
+export default class FilterBar<T> extends React.Component<FilterBarProps<T>, any> {
+  render() {
+    const {
+      prefixCls, columns, onColumnFilterChange, onFilterSelectChange, onFilterSelectClear, onFilter,
+      dataSource, filters, columnFilters, placeholder, multiple,
+    } = this.props;
+    return (
+      <div className={`${prefixCls}-filter-bar`}>
+        <FilterSelect
+          prefixCls={prefixCls}
+          placeholder={placeholder}
+          columns={columns}
+          dataSource={dataSource}
+          onChange={onFilterSelectChange}
+          onClear={onFilterSelectClear}
+          onFilter={onFilter}
+          filters={filters}
+          columnFilters={columnFilters}
+          multiple={multiple}
+        />
+        <ColumnFilter prefixCls={prefixCls} columns={columns} onColumnFilterChange={onColumnFilterChange} />
+      </div>
+    );
+  }
+};

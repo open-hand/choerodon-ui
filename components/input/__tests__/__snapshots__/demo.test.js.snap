@@ -1,0 +1,1545 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders ./components/input/demo/addon.md correctly 1`] = `
+<div>
+  <div
+    style="margin-bottom:16px"
+  >
+    <span
+      class="ant-input-wrapper"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+          >
+            <div
+              class="ant-input-placeholder"
+            />
+            <input
+              class="ant-input"
+              maxlength="30"
+              type="text"
+              value="mysite"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+      <div
+        class="ant-input-length-info"
+      >
+        0/30
+      </div>
+    </span>
+  </div>
+  <div
+    style="margin-bottom:16px"
+  >
+    <span
+      class="ant-input-wrapper"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+          >
+            <div
+              class="ant-input-placeholder"
+            />
+            <input
+              class="ant-input"
+              type="text"
+              value="mysite"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
+  </div>
+  <div
+    style="margin-bottom:16px"
+  >
+    <span
+      class="ant-input-wrapper ant-input-has-label"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-label"
+        >
+          mysite
+        </div>
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+          >
+            <div
+              class="ant-input-placeholder"
+            />
+            <input
+              class="ant-input"
+              type="text"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
+  </div>
+</div>
+`;
+
+exports[`renders ./components/input/demo/autosize-textarea.md correctly 1`] = `
+<div>
+  <span
+    class="ant-input-wrapper ant-input-textarea"
+  >
+    <textarea
+      class="ant-input"
+      placeholder="Autosize height based on content lines"
+    />
+    <div>
+      <hr
+        class="ant-input-border"
+      />
+      <hr
+        class="ant-input-border-active"
+      />
+    </div>
+  </span>
+  <div
+    style="margin:24px 0"
+  />
+  <span
+    class="ant-input-wrapper ant-input-textarea"
+  >
+    <textarea
+      class="ant-input"
+      placeholder="Autosize height with minimum and maximum number of lines"
+    />
+    <div>
+      <hr
+        class="ant-input-border"
+      />
+      <hr
+        class="ant-input-border-active"
+      />
+    </div>
+  </span>
+</div>
+`;
+
+exports[`renders ./components/input/demo/basic.md correctly 1`] = `
+<div
+  class="ant-row"
+  style="margin-left:-4px;margin-right:-4px"
+>
+  <div
+    class="ant-col-12"
+    style="padding-left:4px;padding-right:4px"
+  >
+    <span
+      class="ant-input-wrapper ant-input-has-label"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-label"
+        >
+          Basic
+        </div>
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Basic usage
+            </div>
+            <input
+              class="ant-input ant-input-has-copy"
+              maxlength="50"
+              required=""
+              type="text"
+            />
+            <span
+              class="ant-input-icon"
+            >
+              <i
+                class="icon icon-library_books ant-input-icon-copy"
+              />
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+      <div
+        class="ant-input-length-info"
+      >
+        0/50
+      </div>
+    </span>
+  </div>
+  <div
+    class="ant-col-12"
+    style="padding-left:4px;padding-right:4px"
+  >
+    <span
+      class="ant-input-wrapper ant-input-disabled ant-input-has-label"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-label"
+        >
+          Basic
+        </div>
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Basic usage
+            </div>
+            <input
+              class="ant-input"
+              disabled=""
+              maxlength="20"
+              required=""
+              type="text"
+              value="123"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+      <div
+        class="ant-input-length-info"
+      >
+        0/20
+      </div>
+    </span>
+  </div>
+</div>
+`;
+
+exports[`renders ./components/input/demo/group.md correctly 1`] = `
+<div>
+  <span
+    class="ant-input-group ant-input-group-lg"
+  >
+    <div
+      class="ant-col-5"
+    >
+      <span
+        class="ant-input-wrapper"
+      >
+        <div
+          class="ant-input-content"
+        >
+          <div
+            class="ant-input-rendered-wrapper"
+          >
+            <div
+              class="ant-input-rendered"
+            >
+              <div
+                class="ant-input-placeholder"
+              />
+              <input
+                class="ant-input"
+                type="text"
+                value="0571"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="ant-input-underline"
+        >
+          <span
+            class="ant-input-ripple"
+          />
+        </div>
+      </span>
+    </div>
+    <div
+      class="ant-col-8"
+    >
+      <span
+        class="ant-input-wrapper"
+      >
+        <div
+          class="ant-input-content"
+        >
+          <div
+            class="ant-input-rendered-wrapper"
+          >
+            <div
+              class="ant-input-rendered"
+            >
+              <div
+                class="ant-input-placeholder"
+              />
+              <input
+                class="ant-input"
+                type="text"
+                value="26888888"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="ant-input-underline"
+        >
+          <span
+            class="ant-input-ripple"
+          />
+        </div>
+      </span>
+    </div>
+  </span>
+  <br />
+  <span
+    class="ant-input-group ant-input-group-compact"
+  >
+    <span
+      class="ant-input-wrapper"
+      style="width:20%"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+          >
+            <div
+              class="ant-input-placeholder"
+            />
+            <input
+              class="ant-input"
+              type="text"
+              value="0571"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
+    <span
+      class="ant-input-wrapper"
+      style="width:30%"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+          >
+            <div
+              class="ant-input-placeholder"
+            />
+            <input
+              class="ant-input"
+              type="text"
+              value="26888888"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
+  </span>
+  <br />
+  <span
+    class="ant-input-group ant-input-group-compact"
+  >
+    <div
+      class="ant-select ant-select-has-value ant-select-enabled"
+    >
+      <div
+        aria-autocomplete="list"
+        aria-expanded="false"
+        aria-haspopup="true"
+        class="ant-select-selection
+            ant-select-selection--single"
+        role="combobox"
+        tabindex="0"
+      >
+        <div
+          class="ant-select-selection__rendered"
+        >
+          <div
+            class="ant-select-selection-selected-value"
+            style="opacity:1"
+            title="Zhejiang"
+          >
+            Zhejiang
+          </div>
+          <span
+            class="ant-select-arrow"
+            style="user-select:none;-webkit-user-select:none"
+            unselectable="unselectable"
+          >
+            <i
+              class="icon icon-arrow_drop_down"
+            />
+            <b />
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-select-underline"
+      >
+        <span
+          class="ant-select-ripple"
+        />
+      </div>
+    </div>
+    <span
+      class="ant-input-wrapper"
+      style="width:50%"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+          >
+            <div
+              class="ant-input-placeholder"
+            />
+            <input
+              class="ant-input"
+              type="text"
+              value="Xihu District, Hangzhou"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
+  </span>
+  <br />
+  <span
+    class="ant-input-group ant-input-group-compact"
+  >
+    <div
+      class="ant-select ant-select-has-value ant-select-enabled"
+    >
+      <div
+        aria-autocomplete="list"
+        aria-expanded="false"
+        aria-haspopup="true"
+        class="ant-select-selection
+            ant-select-selection--single"
+        role="combobox"
+        tabindex="0"
+      >
+        <div
+          class="ant-select-selection__rendered"
+        >
+          <div
+            class="ant-select-selection-selected-value"
+            style="opacity:1"
+            title="Option1"
+          >
+            Option1
+          </div>
+          <span
+            class="ant-select-arrow"
+            style="user-select:none;-webkit-user-select:none"
+            unselectable="unselectable"
+          >
+            <i
+              class="icon icon-arrow_drop_down"
+            />
+            <b />
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-select-underline"
+      >
+        <span
+          class="ant-select-ripple"
+        />
+      </div>
+    </div>
+    <span
+      class="ant-input-wrapper"
+      style="width:50%"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+          >
+            <div
+              class="ant-input-placeholder"
+            />
+            <input
+              class="ant-input"
+              type="text"
+              value="input content"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
+    <div
+      class="ant-input-number"
+    >
+      <div
+        class="ant-input-number-handler-wrap"
+      >
+        <span
+          aria-disabled="false"
+          aria-label="Increase Value"
+          class="ant-input-number-handler ant-input-number-handler-up "
+          role="button"
+          unselectable="unselectable"
+        >
+          <span
+            class="ant-input-number-handler-up-inner"
+            unselectable="unselectable"
+          />
+        </span>
+        <span
+          aria-disabled="false"
+          aria-label="Decrease Value"
+          class="ant-input-number-handler ant-input-number-handler-down "
+          role="button"
+          unselectable="unselectable"
+        >
+          <span
+            class="ant-input-number-handler-down-inner"
+            unselectable="unselectable"
+          />
+        </span>
+      </div>
+      <div
+        aria-valuemin="-9007199254740991"
+        class="ant-input-number-input-wrap"
+        role="spinbutton"
+      >
+        <input
+          autocomplete="off"
+          class="ant-input-number-input"
+          min="-9007199254740991"
+          step="1"
+          value=""
+        />
+      </div>
+    </div>
+  </span>
+  <br />
+  <span
+    class="ant-input-group ant-input-group-compact"
+  >
+    <span
+      class="ant-input-wrapper"
+      style="width:50%"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+          >
+            <div
+              class="ant-input-placeholder"
+            />
+            <input
+              class="ant-input"
+              type="text"
+              value="input content"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
+    <span
+      class="ant-calendar-picker"
+    >
+      <div>
+        <input
+          class="ant-calendar-picker-input ant-input"
+          placeholder="Select date"
+          readonly=""
+          value=""
+        />
+        <span
+          class="ant-calendar-picker-icon"
+        />
+      </div>
+    </span>
+  </span>
+  <br />
+  <span
+    class="ant-input-group ant-input-group-compact"
+  >
+    <div
+      class="ant-select ant-select-has-value ant-select-enabled"
+    >
+      <div
+        aria-autocomplete="list"
+        aria-expanded="false"
+        aria-haspopup="true"
+        class="ant-select-selection
+            ant-select-selection--single"
+        role="combobox"
+        tabindex="0"
+      >
+        <div
+          class="ant-select-selection__rendered"
+        >
+          <div
+            class="ant-select-selection-selected-value"
+            style="opacity:1"
+            title="Option1-1"
+          >
+            Option1-1
+          </div>
+          <span
+            class="ant-select-arrow"
+            style="user-select:none;-webkit-user-select:none"
+            unselectable="unselectable"
+          >
+            <i
+              class="icon icon-arrow_drop_down"
+            />
+            <b />
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-select-underline"
+      >
+        <span
+          class="ant-select-ripple"
+        />
+      </div>
+    </div>
+    <div
+      class="ant-select ant-select-has-value ant-select-enabled"
+    >
+      <div
+        aria-autocomplete="list"
+        aria-expanded="false"
+        aria-haspopup="true"
+        class="ant-select-selection
+            ant-select-selection--single"
+        role="combobox"
+        tabindex="0"
+      >
+        <div
+          class="ant-select-selection__rendered"
+        >
+          <div
+            class="ant-select-selection-selected-value"
+            style="opacity:1"
+            title="Option2-2"
+          >
+            Option2-2
+          </div>
+          <span
+            class="ant-select-arrow"
+            style="user-select:none;-webkit-user-select:none"
+            unselectable="unselectable"
+          >
+            <i
+              class="icon icon-arrow_drop_down"
+            />
+            <b />
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-select-underline"
+      >
+        <span
+          class="ant-select-ripple"
+        />
+      </div>
+    </div>
+  </span>
+  <br />
+  <span
+    class="ant-input-group ant-input-group-compact"
+  >
+    <div
+      class="ant-select ant-select-has-value ant-select-enabled"
+    >
+      <div
+        aria-autocomplete="list"
+        aria-expanded="false"
+        aria-haspopup="true"
+        class="ant-select-selection
+            ant-select-selection--single"
+        role="combobox"
+        tabindex="0"
+      >
+        <div
+          class="ant-select-selection__rendered"
+        >
+          <div
+            class="ant-select-selection-selected-value"
+            style="opacity:1"
+            title="Between"
+          >
+            Between
+          </div>
+          <span
+            class="ant-select-arrow"
+            style="user-select:none;-webkit-user-select:none"
+            unselectable="unselectable"
+          >
+            <i
+              class="icon icon-arrow_drop_down"
+            />
+            <b />
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-select-underline"
+      >
+        <span
+          class="ant-select-ripple"
+        />
+      </div>
+    </div>
+    <span
+      class="ant-input-wrapper"
+      style="width:100px;text-align:center"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Minimum
+            </div>
+            <input
+              class="ant-input"
+              type="text"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
+    <span
+      class="ant-input-wrapper ant-input-disabled"
+      style="width:30px;border-left:0;pointer-events:none;background-color:#fff"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+          >
+            <div
+              class="ant-input-placeholder"
+            />
+            <input
+              class="ant-input"
+              disabled=""
+              type="text"
+              value="~"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
+    <span
+      class="ant-input-wrapper"
+      style="width:100px;text-align:center;border-left:0"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Maximum
+            </div>
+            <input
+              class="ant-input"
+              type="text"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
+  </span>
+  <br />
+  <span
+    class="ant-input-group ant-input-group-compact"
+  >
+    <div
+      class="ant-select ant-select-has-value ant-select-enabled"
+    >
+      <div
+        aria-autocomplete="list"
+        aria-expanded="false"
+        aria-haspopup="true"
+        class="ant-select-selection
+            ant-select-selection--single"
+        role="combobox"
+        tabindex="0"
+      >
+        <div
+          class="ant-select-selection__rendered"
+        >
+          <div
+            class="ant-select-selection-selected-value"
+            style="opacity:1"
+            title="Sign Up"
+          >
+            Sign Up
+          </div>
+          <span
+            class="ant-select-arrow"
+            style="user-select:none;-webkit-user-select:none"
+            unselectable="unselectable"
+          >
+            <i
+              class="icon icon-arrow_drop_down"
+            />
+            <b />
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-select-underline"
+      >
+        <span
+          class="ant-select-ripple"
+        />
+      </div>
+    </div>
+    <div
+      class="ant-select-show-search ant-select-auto-complete ant-select ant-select-combobox ant-select-enabled"
+      style="width:200px"
+    >
+      <div
+        aria-autocomplete="list"
+        aria-expanded="false"
+        aria-haspopup="true"
+        class="ant-select-selection
+            ant-select-selection--single"
+        role="combobox"
+      >
+        <div
+          class="ant-select-selection__rendered"
+        >
+          <div
+            class="ant-select-selection__placeholder"
+            style="display:inline-block;user-select:none;-webkit-user-select:none"
+            unselectable="unselectable"
+          >
+            Email
+          </div>
+          <div
+            class="ant-select-search ant-select-search--inline"
+            style="display:inline-block"
+          >
+            <div
+              class="ant-select-search__field__wrap"
+            >
+              <span
+                class="ant-input-wrapper"
+              >
+                <div
+                  class="ant-input-content"
+                >
+                  <div
+                    class="ant-input-rendered-wrapper"
+                  >
+                    <div
+                      class="ant-input-rendered"
+                    >
+                      <div
+                        class="ant-input-placeholder"
+                      />
+                      <input
+                        class="ant-input ant-select-search__field"
+                        type="text"
+                        value=""
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="ant-input-underline"
+                >
+                  <span
+                    class="ant-input-ripple"
+                  />
+                </div>
+              </span>
+              <span
+                class="ant-select-search__field__mirror"
+              >
+                 
+              </span>
+            </div>
+          </div>
+          <span
+            class="ant-select-arrow"
+            style="user-select:none;-webkit-user-select:none"
+            unselectable="unselectable"
+          >
+            <i
+              class="icon icon-arrow_drop_down"
+            />
+            <b />
+          </span>
+        </div>
+      </div>
+    </div>
+  </span>
+  <br />
+  <span
+    class="ant-input-group ant-input-group-compact"
+  >
+    <div
+      class="ant-select ant-select-has-value ant-select-enabled"
+      style="width:30%"
+    >
+      <div
+        aria-autocomplete="list"
+        aria-expanded="false"
+        aria-haspopup="true"
+        class="ant-select-selection
+            ant-select-selection--single"
+        role="combobox"
+        tabindex="0"
+      >
+        <div
+          class="ant-select-selection__rendered"
+        >
+          <div
+            class="ant-select-selection-selected-value"
+            style="opacity:1"
+            title="Home"
+          >
+            Home
+          </div>
+          <span
+            class="ant-select-arrow"
+            style="user-select:none;-webkit-user-select:none"
+            unselectable="unselectable"
+          >
+            <i
+              class="icon icon-arrow_drop_down"
+            />
+            <b />
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-select-underline"
+      >
+        <span
+          class="ant-select-ripple"
+        />
+      </div>
+    </div>
+    <span
+      class="ant-cascader-picker"
+      style="width:70%"
+      tabindex="0"
+    >
+      <span
+        class="ant-cascader-picker-label"
+      />
+      <span
+        class="ant-input-wrapper"
+      >
+        <div
+          class="ant-input-content"
+        >
+          <div
+            class="ant-input-rendered-wrapper"
+          >
+            <div
+              class="ant-input-rendered"
+            >
+              <div
+                class="ant-input-placeholder"
+              >
+                Select Address
+              </div>
+              <input
+                autocomplete="off"
+                class="ant-input ant-cascader-input "
+                readonly=""
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="ant-input-underline"
+        >
+          <span
+            class="ant-input-ripple"
+          />
+        </div>
+      </span>
+      <i
+        class="icon icon-arrow_drop_down ant-cascader-picker-arrow"
+      />
+    </span>
+  </span>
+</div>
+`;
+
+exports[`renders ./components/input/demo/presuffix.md correctly 1`] = `
+<span
+  class="ant-input-wrapper ant-input-has-label ant-input-has-prefix ant-input-has-suffix"
+>
+  <div
+    class="ant-input-content"
+  >
+    <div
+      class="ant-input-label"
+    >
+      username
+    </div>
+    <div
+      class="ant-input-rendered-wrapper"
+    >
+      <span
+        class="ant-input-prefix"
+      >
+        input-
+      </span>
+      <div
+        class="ant-input-rendered"
+      >
+        <div
+          class="ant-input-placeholder"
+        >
+          Enter your username
+        </div>
+        <input
+          class="ant-input ant-input-has-copy"
+          type="text"
+          value="xxx"
+        />
+        <span
+          class="ant-input-icon"
+        >
+          <i
+            class="icon icon-library_books ant-input-icon-copy"
+          />
+        </span>
+      </div>
+      <span
+        class="ant-input-suffix"
+      >
+        <i
+          class="icon icon-close"
+        />
+      </span>
+    </div>
+  </div>
+  <div
+    class="ant-input-underline"
+  >
+    <span
+      class="ant-input-ripple"
+    />
+  </div>
+</span>
+`;
+
+exports[`renders ./components/input/demo/search-input.md correctly 1`] = `
+<div>
+  <span
+    class="ant-input-wrapper ant-input-has-suffix"
+    style="width:200px"
+  >
+    <div
+      class="ant-input-content"
+    >
+      <div
+        class="ant-input-rendered-wrapper"
+      >
+        <div
+          class="ant-input-rendered ant-input-rendered-sm"
+        >
+          <div
+            class="ant-input-placeholder"
+          >
+            input search text
+          </div>
+          <input
+            class="ant-input ant-input-sm ant-input-search ant-input-search-small"
+            type="text"
+          />
+        </div>
+        <span
+          class="ant-input-suffix ant-input-suffix-sm"
+        >
+          <button
+            class="ant-btn ant-btn-primary ant-btn-circle ant-btn-sm ant-btn-icon-only ant-btn-flat"
+            type="button"
+          >
+            <i
+              class="icon icon-search"
+            />
+            <div
+              class="ant-ripple-wrapper"
+            />
+          </button>
+        </span>
+      </div>
+    </div>
+    <div
+      class="ant-input-underline"
+    >
+      <span
+        class="ant-input-ripple"
+      />
+    </div>
+  </span>
+  <br />
+  <br />
+  <span
+    class="ant-input-wrapper ant-input-has-suffix"
+  >
+    <div
+      class="ant-input-content"
+    >
+      <div
+        class="ant-input-rendered-wrapper"
+      >
+        <div
+          class="ant-input-rendered ant-input-rendered-sm"
+        >
+          <div
+            class="ant-input-placeholder"
+          >
+            input search text
+          </div>
+          <input
+            class="ant-input ant-input-sm ant-input-search ant-input-search-enter-button ant-input-search-small"
+            type="text"
+          />
+        </div>
+        <span
+          class="ant-input-suffix ant-input-suffix-sm"
+        >
+          <button
+            class="ant-btn ant-btn-primary ant-btn-circle ant-btn-sm ant-btn-icon-only ant-btn-flat"
+            type="button"
+          >
+            <i
+              class="icon icon-search"
+            />
+            <div
+              class="ant-ripple-wrapper"
+            />
+          </button>
+        </span>
+      </div>
+    </div>
+    <div
+      class="ant-input-underline"
+    >
+      <span
+        class="ant-input-ripple"
+      />
+    </div>
+  </span>
+  <br />
+  <br />
+  <span
+    class="ant-input-wrapper ant-input-has-suffix"
+  >
+    <div
+      class="ant-input-content"
+    >
+      <div
+        class="ant-input-rendered-wrapper"
+      >
+        <div
+          class="ant-input-rendered ant-input-rendered-lg"
+        >
+          <div
+            class="ant-input-placeholder"
+          >
+            input search text
+          </div>
+          <input
+            class="ant-input ant-input-lg ant-input-search ant-input-search-enter-button ant-input-search-large"
+            type="text"
+          />
+        </div>
+        <span
+          class="ant-input-suffix ant-input-suffix-lg"
+        >
+          <button
+            class="ant-btn ant-btn-primary ant-btn-lg ant-btn-flat"
+            type="button"
+          >
+            <span>
+              Search
+            </span>
+            <div
+              class="ant-ripple-wrapper"
+            />
+          </button>
+        </span>
+      </div>
+    </div>
+    <div
+      class="ant-input-underline"
+    >
+      <span
+        class="ant-input-ripple"
+      />
+    </div>
+  </span>
+</div>
+`;
+
+exports[`renders ./components/input/demo/size.md correctly 1`] = `
+<div
+  class="example-input"
+>
+  <span
+    class="ant-input-wrapper ant-input-has-label"
+  >
+    <div
+      class="ant-input-content"
+    >
+      <div
+        class="ant-input-label"
+      >
+        Large
+      </div>
+      <div
+        class="ant-input-rendered-wrapper"
+      >
+        <div
+          class="ant-input-rendered ant-input-rendered-lg"
+        >
+          <div
+            class="ant-input-placeholder"
+          >
+            large size
+          </div>
+          <input
+            class="ant-input ant-input-lg"
+            maxlength="20"
+            type="text"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="ant-input-underline"
+    >
+      <span
+        class="ant-input-ripple"
+      />
+    </div>
+    <div
+      class="ant-input-length-info"
+    >
+      0/20
+    </div>
+  </span>
+  <span
+    class="ant-input-wrapper"
+  >
+    <div
+      class="ant-input-content"
+    >
+      <div
+        class="ant-input-rendered-wrapper"
+      >
+        <div
+          class="ant-input-rendered"
+        >
+          <div
+            class="ant-input-placeholder"
+          >
+            default size
+          </div>
+          <input
+            class="ant-input"
+            type="text"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="ant-input-underline"
+    >
+      <span
+        class="ant-input-ripple"
+      />
+    </div>
+  </span>
+  <span
+    class="ant-input-wrapper ant-input-has-label"
+  >
+    <div
+      class="ant-input-content"
+    >
+      <div
+        class="ant-input-label"
+      >
+        small
+      </div>
+      <div
+        class="ant-input-rendered-wrapper"
+      >
+        <div
+          class="ant-input-rendered ant-input-rendered-sm"
+        >
+          <div
+            class="ant-input-placeholder"
+          >
+            small size
+          </div>
+          <input
+            class="ant-input ant-input-sm"
+            type="text"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="ant-input-underline"
+    >
+      <span
+        class="ant-input-ripple"
+      />
+    </div>
+  </span>
+</div>
+`;
+
+exports[`renders ./components/input/demo/textarea.md correctly 1`] = `
+<span
+  class="ant-input-wrapper ant-input-textarea ant-input-has-label"
+>
+  <div
+    class="ant-input-rendered"
+  >
+    <div
+      class="ant-input-label"
+    >
+      textarea
+    </div>
+  </div>
+  <textarea
+    class="ant-input"
+    label="textarea"
+    maxlength="20"
+    placeholder=""
+    rows="4"
+  />
+  <div>
+    <hr
+      class="ant-input-border"
+    />
+    <hr
+      class="ant-input-border-active"
+    />
+  </div>
+  <div
+    class="ant-input-length-info"
+  >
+    0/20
+  </div>
+</span>
+`;
+
+exports[`renders ./components/input/demo/tooltip.md correctly 1`] = `
+<span
+  class="ant-input-wrapper"
+  style="width:120px"
+>
+  <div
+    class="ant-input-content"
+  >
+    <div
+      class="ant-input-rendered-wrapper"
+    >
+      <div
+        class="ant-input-rendered"
+      >
+        <div
+          class="ant-input-placeholder"
+        >
+          Input a number
+        </div>
+        <input
+          class="ant-input"
+          maxlength="25"
+          type="text"
+          value=""
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    class="ant-input-underline"
+  >
+    <span
+      class="ant-input-ripple"
+    />
+  </div>
+  <div
+    class="ant-input-length-info"
+  >
+    0/25
+  </div>
+</span>
+`;

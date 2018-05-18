@@ -1,0 +1,580 @@
+@import "../../style/themes/default";
+@import "../../style/mixins/index";
+
+@input-affix-width: 19px;
+
+// size mixins for input
+.input-lg() {
+  // padding: @input-padding-vertical-lg @input-padding-horizontal-lg;
+  font-size: @font-size-lg;
+}
+
+.input-sm() {
+  font-size: @font-size-sm;
+}
+
+// input status
+// == when focus or actived
+.active(@color: @outline-color) {
+  border-color: ~`colorPalette("@{color}", 5)`;
+  outline: 0;
+  // box-shadow: 0 0 @outline-blur-size @outline-width fade(@color, 20%);
+}
+
+// == when hoverd
+.hover(@color: @input-hover-border-color) {
+  border-color: ~`colorPalette("@{color}", 5)`;
+}
+
+.disabled() {
+  opacity: 1;
+  color: @input-disabled-color;
+  &:hover {
+    .hover(@input-border-color);
+  }
+}
+
+// Basic style for input
+.input() {
+  &-group:not(&-group-compact) &-wrapper {
+    display: inline-grid;
+  }
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  font-size: @font-size-base;
+  line-height: @line-height-base;
+  color: @input-color;
+  background-color: @input-bg;
+  background-image: none;
+  border: none;
+  .placeholder(); // Reset placeholder
+  transition: all .3s;
+
+  // input-wrapper
+  &-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 3px;
+  }
+
+  // input-rendered
+  &-content {
+    position: relative;
+  }
+  &-has-label &-content {
+    padding-top: 15px;
+  }
+
+  &-rendered-wrapper {
+    width: 100%;
+    display: block;
+    box-sizing: content-box;
+    position: relative;
+  }
+
+  &-rendered {
+    position: relative;
+    width: 100%;
+    display: inline-block;
+  }
+
+  // input-label
+  &-label {
+    color: @label-color;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 2;
+    transform-origin: 0 0;
+    width: 100%;
+    pointer-events: none;
+    transition: transform 400ms @ease-out, color 400ms @ease-out, background-color 400ms @ease-out;
+    .is-required &:after {
+      display: inline-block;
+      margin-left: 4px;
+      content: "*";
+      font-family: SimSun;
+      line-height: 1;
+      font-size: @font-size-base;
+      color: @label-required-color;
+    }
+  }
+  &-has-value &-label {
+    transform: scale(.75) translateY(-20px) translateZ(0.001px);
+    color: rgba(0, 0, 0, 0.6);
+  }
+  // input-icon copy-icon
+  &-icon {
+    &-copy {
+      display: none;
+    }
+  }
+
+  &-has-copy {
+    padding-right: @icon-font-size-base + 2px;
+  }
+
+  &-has-value &-icon {
+    position: absolute;
+    right: 0;
+    display: inline-block;
+    background: none;
+    border: none;
+    cursor: pointer;
+    &-copy {
+      display: inline-block;
+      vertical-align: text-bottom;
+    }
+  }
+
+  &-suffix,
+  &-prefix {
+    position: absolute !important;
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
+    color: rgba(0, 0, 0, 0.26);
+    > i.icon {
+      vertical-align: text-bottom;
+    }
+  }
+  &-suffix {
+    right: 0;
+  }
+  &-prefix {
+    left: 0;
+  }
+  &-suffix&-suffix-lg,
+  &-prefix&-prefix-lg {
+    top: -5px;
+  }
+
+  &-focus &-label {
+    transform: scale(.75) translateY(-20px) translateZ(0.001px);
+    color: @primary-color;
+    transition: transform 300ms @ease-out, color 100ms @ease-out, background-color 300ms @ease-out;
+  }
+
+  &-focus &-border-active {
+    opacity: 1;
+    transform: scaleX(1);
+    transition: transform 300ms @ease-out, opacity 100ms @ease-out, background-color 300ms @ease-out;
+  }
+
+  &-border {
+    border: none;
+    height: @border-width-base;
+    background: @input-border-color;
+    margin: 0;
+    padding: 0;
+    &-active {
+      height: 2px;
+      opacity: 0;
+      border: none;
+      transform: scaleX(0.5);
+      background-color: @primary-color;
+      margin: -1px 0 0 0;
+      padding: 0;
+    }
+  }
+
+  .has-error &-border {
+    background: @error-color;
+    &-active {
+      background-color: @error-color;
+    }
+  }
+
+  &-disabled &-border {
+    background-position: 0;
+    background-color: transparent;
+    background-image:
+      linear-gradient(
+        to right,
+      rgba(0, 0, 0, 0.42) 0%,
+      rgba(0, 0, 0, 0.42) 33%,
+        transparent 0%);
+    background-size: 4px 1px;
+    background-repeat: repeat-x;
+  }
+
+  &-has-label &-placeholder,
+  &-has-label &-suffix,
+  &-has-label &-prefix {
+    display: none;
+  }
+
+  &-placeholder {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    pointer-events: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+    color: #bfbfbf;
+  }
+
+  &-focus &-placeholder,
+  &-focus &-suffix,
+  &-focus &-prefix {
+    display: inline-block;
+    transition: all 300ms @ease-out;
+  }
+
+  &-has-value &-suffix,
+  &-has-value &-prefix {
+    display: inline-block;
+  }
+
+  &-has-value &-placeholder {
+    display: none;
+  }
+
+  &-length-info {
+    float: right;
+    color: @input-border-color;
+    font-size: @font-size-sm;
+    letter-spacing: 2px;
+    margin-top: 1px;
+  }
+
+  &:hover {
+    .hover();
+  }
+
+  &:focus {
+    .active();
+  }
+
+  &-disabled {
+    .disabled();
+  }
+
+  &-disabled &,
+  &-disabled &-label,
+  &-disabled &-placeholder,
+  &-disabled &-prefix,
+  &-disabled &-suffix {
+    color: @input-disabled-color;
+  }
+
+// underline
+  //default underline
+  &-underline {
+    position: absolute;
+    height: 0;
+    width: 100%;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: rgba(0, 0, 0, 0.54);
+  }
+
+  &-ripple {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    transform-origin: 50%;
+    transform: scaleX(0.5);
+    opacity: 0;
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
+    transition: border-color 300ms cubic-bezier(0.55, 0, 0.55, 0.2);
+    border-color: #3367d6;
+    height: 0;
+  }
+  //disabled underline
+  &-disabled &-underline {
+    border-bottom: 1px dotted rgba(0, 0, 0, 0.42);
+  }
+  // focused underline
+  &-focus &-underline &-ripple {
+    opacity: 1;
+    transform: scaleX(1);
+    transition: transform 300ms cubic-bezier(0.25, 0.8, 0.25, 1), opacity 100ms cubic-bezier(0.25, 0.8, 0.25, 1), border-color 300ms cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+
+  .has-error &-underline {
+    border-color: #d50000;
+  }
+  // Reset height for `textarea`s
+  textarea& {
+    max-width: 100%; // prevent textearea resize from coming out of its container
+    height: auto;
+    vertical-align: bottom;
+    transition: all .3s, height 0s;
+    min-height: @input-height-base;
+  }
+
+  // Size
+  &-lg {
+    .input-lg();
+  }
+  &-lg &-has-copy {
+    padding-right: @icon-font-size-lg + 2px;
+  }
+  &-sm {
+    .input-sm();
+  }
+  &-sm &-has-copy {
+    padding-right: @icon-font-size-sm + 2px;
+  }
+}
+
+// label input
+.input-group(@inputClass) {
+  position: relative;
+  display: inline-block;
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+
+  // Undo padding and float of grid classes
+  &[class*="col-"] {
+    float: none;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  > [class*="col-"] {
+    padding-right: 8px;
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+
+  &-addon,
+  &-wrap,
+  > .@{inputClass} {
+    display: inline-block;
+
+    &:not(:first-child):not(:last-child) {
+      border-radius: 0;
+    }
+  }
+
+  &-addon,
+  &-wrap {
+    width: 1px; // To make addon/wrap as small as possible
+    white-space: nowrap;
+    vertical-align: middle;
+  }
+
+  &-wrap > * {
+    display: block !important;
+  }
+
+  .@{inputClass} {
+    width: 100%;
+    margin-bottom: 0;
+    &:focus {
+      z-index: 1; // Fix https://gw.alipayobjects.com/zos/rmsportal/DHNpoqfMXSfrSnlZvhsJ.png
+    }
+  }
+
+  &-addon {
+    font-size: @font-size-base;
+    font-weight: normal;
+    line-height: 1;
+    color: @input-color;
+    text-align: center;
+    background-color: @input-addon-bg;
+    border: @border-width-base @border-style-base @input-border-color;
+    border-radius: @border-radius-base;
+    position: relative;
+    transition: all .3s;
+
+    // Reset Select's style in addon
+    .@{ant-prefix}-select {
+      margin: -(@input-padding-vertical-base + 1px) (-@input-padding-horizontal-base);  // lesshint spaceAroundOperator: false
+
+      .@{ant-prefix}-select-selection {
+        background-color: inherit;
+        margin: -1px;
+        border: @border-width-base @border-style-base transparent;
+        box-shadow: none;
+      }
+
+      &-open,
+      &-focused {
+        .@{ant-prefix}-select-selection {
+          color: @primary-color;
+        }
+      }
+    }
+
+    // Expand addon icon click area
+    // https://github.com/ant-design/ant-design/issues/3714
+    > i:only-child:after {
+      position: absolute;
+      content: '';
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+  }
+
+  // Reset rounded corners
+  > .@{inputClass}:first-child,
+  &-addon:first-child {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+
+    // Reset Select's style in addon
+    .@{ant-prefix}-select .@{ant-prefix}-select-selection {
+      border-bottom-right-radius: 0;
+      border-top-right-radius: 0;
+    }
+  }
+
+  > .@{inputClass}-affix-wrapper {
+    &:not(:first-child) .@{inputClass} {
+      border-bottom-left-radius: 0;
+      border-top-left-radius: 0;
+    }
+
+    &:not(:last-child) .@{inputClass} {
+      border-bottom-right-radius: 0;
+      border-top-right-radius: 0;
+    }
+  }
+
+  &-addon:first-child {
+    border-right: 0;
+  }
+  &-addon:last-child {
+    border-left: 0;
+  }
+
+  > .@{inputClass}:last-child,
+  &-addon:last-child {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+
+    // Reset Select's style in addon
+    .@{ant-prefix}-select .@{ant-prefix}-select-selection {
+      border-bottom-left-radius: 0;
+      border-top-left-radius: 0;
+    }
+  }
+
+  // Sizing options
+  &-lg .@{inputClass},
+  &-lg > &-addon {
+    .input-lg();
+  }
+
+  &-sm .@{inputClass},
+  &-sm > &-addon {
+    .input-sm();
+  }
+
+  // Fix https://github.com/ant-design/ant-design/issues/5754
+  &-lg .@{ant-prefix}-select-selection--single {
+    height: @input-height-lg;
+  }
+
+  &-sm .@{ant-prefix}-select-selection--single {
+    height: @input-height-sm;
+  }
+
+  .@{inputClass}-affix-wrapper {
+    width: 100%;
+    float: left;
+  }
+
+  &&-compact {
+    display: block;
+    .clearfix;
+
+    & > * {
+      border-radius: 0;
+      border-right-width: 0;
+      vertical-align: top; // https://github.com/ant-design/ant-design-pro/issues/139
+      float: none;
+      display: inline-block;
+    }
+
+    // Undo float for .ant-input-group .ant-input
+    .@{inputClass} {
+      float: none;
+      z-index: auto;
+    }
+
+    // reset border for Select, DatePicker, AutoComplete, Cascader, Mention, TimePicker
+    & > .@{ant-prefix}-select > .@{ant-prefix}-select-selection,
+    & > .@{ant-prefix}-calendar-picker .@{ant-prefix}-input,
+    & > .@{ant-prefix}-select-auto-complete .@{ant-prefix}-input,
+    & > .@{ant-prefix}-cascader-picker .@{ant-prefix}-input,
+    & > .@{ant-prefix}-mention-wrapper .@{ant-prefix}-mention-editor,
+    & > .@{ant-prefix}-time-picker .@{ant-prefix}-time-picker-input {
+      border-radius: 0;
+      border-right-width: 0;
+    }
+
+    & > *:first-child,
+    & > .@{ant-prefix}-select:first-child > .@{ant-prefix}-select-selection,
+    & > .@{ant-prefix}-calendar-picker:first-child .@{ant-prefix}-input,
+    & > .@{ant-prefix}-select-auto-complete:first-child .@{ant-prefix}-input,
+    & > .@{ant-prefix}-cascader-picker:first-child .@{ant-prefix}-input,
+    & > .@{ant-prefix}-mention-wrapper:first-child .@{ant-prefix}-mention-editor,
+    & > .@{ant-prefix}-time-picker:first-child .@{ant-prefix}-time-picker-input {
+      border-top-left-radius: @border-radius-base;
+      border-bottom-left-radius: @border-radius-base;
+    }
+
+    & > *:last-child,
+    & > .@{ant-prefix}-select:last-child > .@{ant-prefix}-select-selection,
+    & > .@{ant-prefix}-calendar-picker:last-child .@{ant-prefix}-input,
+    & > .@{ant-prefix}-select-auto-complete:last-child .@{ant-prefix}-input,
+    & > .@{ant-prefix}-cascader-picker:last-child .@{ant-prefix}-input,
+    & > .@{ant-prefix}-mention-wrapper:last-child .@{ant-prefix}-mention-editor,
+    & > .@{ant-prefix}-time-picker:last-child .@{ant-prefix}-time-picker-input {
+      border-top-right-radius: @border-radius-base;
+      border-bottom-right-radius: @border-radius-base;
+      border-right-width: 1px;
+    }
+  }
+}
+
+.input-affix-wrapper(@inputClass) {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+
+  .@{inputClass} {
+    z-index: 1;
+  }
+
+  &:hover .@{inputClass}:not(.@{inputClass}-disabled) {
+    .hover();
+  }
+
+  .@{inputClass}-prefix,
+  .@{inputClass}-suffix {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    line-height: 0;
+    color: @input-color;
+    :not(.anticon) {
+      line-height: @line-height-base;
+    }
+  }
+
+  .@{inputClass}-suffix {
+    right: @input-padding-horizontal-base + 1px;
+  }
+
+  .@{inputClass}:not(:first-child) {
+    padding-left: @input-padding-horizontal-base + @input-affix-width;
+  }
+
+  .@{inputClass}:not(:last-child) {
+    padding-right: @input-padding-horizontal-base + @input-affix-width;
+  }
+}

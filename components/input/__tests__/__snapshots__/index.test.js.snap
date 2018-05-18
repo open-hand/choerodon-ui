@@ -1,0 +1,251 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Input should support maxLength 1`] = `
+<Input
+  disabled={false}
+  maxLength="3"
+  prefixCls="ant-input"
+  type="text"
+>
+  <span
+    className="ant-input-wrapper"
+  >
+    <div
+      className="ant-input-content"
+    >
+      <div
+        className="ant-input-rendered-wrapper"
+      >
+        <div
+          className="ant-input-rendered"
+        >
+          <div
+            className="ant-input-placeholder"
+          />
+          <input
+            className="ant-input"
+            disabled={false}
+            maxLength="3"
+            onBlur={[Function]}
+            onFocus={[Function]}
+            onInput={[Function]}
+            onKeyDown={[Function]}
+            type="text"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      className="ant-input-underline"
+    >
+      <span
+        className="ant-input-ripple"
+      />
+    </div>
+    <div
+      className="ant-input-length-info"
+    >
+      0/3
+    </div>
+  </span>
+</Input>
+`;
+
+exports[`Input.Search should support suffix 1`] = `
+<Search
+  enterButton={false}
+  inputPrefixCls="ant-input"
+  prefixCls="ant-input-search"
+  size="small"
+  suffix="suffix"
+>
+  <Input
+    className="ant-input-search ant-input-search-small"
+    disabled={false}
+    onPressEnter={[Function]}
+    prefixCls="ant-input"
+    size="small"
+    suffix={
+      Array [
+        "suffix",
+        <Button
+          funcType="flat"
+          ghost={false}
+          icon="search"
+          loading={false}
+          prefixCls="ant-btn"
+          shape="circle"
+          size="small"
+          type="primary"
+        />,
+      ]
+    }
+    type="text"
+  >
+    <span
+      className="ant-input-wrapper ant-input-has-suffix"
+    >
+      <div
+        className="ant-input-content"
+      >
+        <div
+          className="ant-input-rendered-wrapper"
+        >
+          <div
+            className="ant-input-rendered ant-input-rendered-sm"
+          >
+            <div
+              className="ant-input-placeholder"
+            />
+            <input
+              className="ant-input ant-input-sm ant-input-search ant-input-search-small"
+              disabled={false}
+              onBlur={[Function]}
+              onFocus={[Function]}
+              onInput={[Function]}
+              onKeyDown={[Function]}
+              size="small"
+              type="text"
+            />
+          </div>
+          <span
+            className="ant-input-suffix ant-input-suffix-sm"
+          >
+            suffix
+            <Button
+              funcType="flat"
+              ghost={false}
+              icon="search"
+              loading={false}
+              prefixCls="ant-btn"
+              shape="circle"
+              size="small"
+              type="primary"
+            >
+              <Ripple
+                prefixCls="ant-ripple"
+              >
+                <RippleChild
+                  key=".0"
+                  prefixCls="ant-ripple"
+                >
+                  <MouseDown>
+                    <button
+                      className="ant-btn ant-btn-primary ant-btn-circle ant-btn-sm ant-btn-icon-only ant-btn-flat"
+                      onClick={[Function]}
+                      onMouseDown={[Function]}
+                      type="button"
+                    >
+                      <Icon
+                        type="search"
+                      >
+                        <i
+                          className="icon icon-search"
+                        />
+                      </Icon>
+                      <Animate
+                        animation={Object {}}
+                        component="div"
+                        componentProps={
+                          Object {
+                            "className": "ant-ripple-wrapper",
+                          }
+                        }
+                        key="ripple"
+                        onAppear={[Function]}
+                        onEnd={[Function]}
+                        onEnter={[Function]}
+                        onLeave={[Function]}
+                        transitionAppear={false}
+                        transitionEnter={true}
+                        transitionLeave={true}
+                        transitionName="fade"
+                      >
+                        <div
+                          className="ant-ripple-wrapper"
+                        />
+                      </Animate>
+                    </button>
+                  </MouseDown>
+                </RippleChild>
+              </Ripple>
+            </Button>
+          </span>
+        </div>
+      </div>
+      <div
+        className="ant-input-underline"
+      >
+        <span
+          className="ant-input-ripple"
+        />
+      </div>
+    </span>
+  </Input>
+</Search>
+`;
+
+exports[`TextArea should support disabled 1`] = `
+<TextArea
+  disabled={true}
+  prefixCls="ant-input"
+>
+  <span
+    className="ant-input-wrapper ant-input-textarea ant-input-disabled"
+  >
+    <textarea
+      className="ant-input"
+      disabled={true}
+      onBlur={[Function]}
+      onChange={[Function]}
+      onFocus={[Function]}
+      onInput={[Function]}
+      onKeyDown={[Function]}
+      style={Object {}}
+    />
+    <div>
+      <hr
+        className="ant-input-border"
+      />
+      <hr
+        className="ant-input-border-active"
+      />
+    </div>
+  </span>
+</TextArea>
+`;
+
+exports[`TextArea should support maxLength 1`] = `
+<TextArea
+  maxLength="10"
+  prefixCls="ant-input"
+>
+  <span
+    className="ant-input-wrapper ant-input-textarea"
+  >
+    <textarea
+      className="ant-input"
+      maxLength="10"
+      onBlur={[Function]}
+      onChange={[Function]}
+      onFocus={[Function]}
+      onInput={[Function]}
+      onKeyDown={[Function]}
+      style={Object {}}
+    />
+    <div>
+      <hr
+        className="ant-input-border"
+      />
+      <hr
+        className="ant-input-border-active"
+      />
+    </div>
+    <div
+      className="ant-input-length-info"
+    >
+      0/10
+    </div>
+  </span>
+</TextArea>
+`;

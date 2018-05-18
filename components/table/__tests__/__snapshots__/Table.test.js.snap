@@ -1,0 +1,212 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Table renders JSX correctly 1`] = `
+<div
+  class="ant-table-wrapper"
+>
+  <div
+    class="ant-spin-nested-loading"
+  >
+    <div
+      class="ant-spin-container"
+    >
+      <div
+        class="ant-table-filter-bar"
+      >
+        <div
+          class="ant-table-filter-select"
+        >
+          <div
+            class="ant-table-filter-select-icon"
+          >
+            <i
+              class="icon icon-filter_list"
+            />
+          </div>
+          <div
+            class="ant-select ant-select-enabled ant-select-allow-clear ant-select-tags"
+          >
+            <div
+              aria-autocomplete="list"
+              aria-expanded="false"
+              aria-haspopup="true"
+              class="ant-select-selection
+            ant-select-selection--multiple"
+              role="combobox"
+            >
+              <div
+                class="ant-select-selection__rendered"
+              >
+                <ul>
+                  <li
+                    class="ant-select-search ant-select-search--inline"
+                  >
+                    <div
+                      class="ant-select-search__field__wrap"
+                    >
+                      <input
+                        autocomplete="off"
+                        class="ant-select-search__field"
+                        value=""
+                      />
+                      <span
+                        class="ant-select-search__field__mirror"
+                      >
+                         
+                      </span>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div
+              class="ant-select-underline"
+            >
+              <span
+                class="ant-select-ripple"
+              />
+            </div>
+          </div>
+          <div
+            class="ant-table-filter-select-columns"
+          />
+        </div>
+        <div
+          class="ant-table-columns-chooser"
+        >
+          <button
+            class="ant-btn ant-btn-circle ant-btn-sm ant-btn-icon-only ant-btn-flat"
+            type="button"
+          >
+            <i
+              class="icon icon-view_column"
+            />
+            <div
+              class="ant-ripple-wrapper"
+            />
+          </button>
+        </div>
+      </div>
+      <div
+        class="ant-table ant-table-middle ant-table-scroll-position-left"
+      >
+        <div
+          class="ant-table-content"
+        >
+          <div
+            class="ant-table-body"
+          >
+            <table
+              class=""
+            >
+              <colgroup>
+                <col />
+                <col />
+                <col />
+              </colgroup>
+              <thead
+                class="ant-table-thead"
+              >
+                <tr>
+                  <th
+                    class=""
+                    colspan="2"
+                    tabindex="-1"
+                  >
+                    <span>
+                      Name
+                    </span>
+                  </th>
+                  <th
+                    class=""
+                    rowspan="2"
+                    tabindex="-1"
+                  >
+                    <span>
+                      Age
+                    </span>
+                  </th>
+                </tr>
+                <tr>
+                  <th
+                    class=""
+                    tabindex="-1"
+                  >
+                    <span>
+                      First Name
+                    </span>
+                  </th>
+                  <th
+                    class=""
+                    tabindex="-1"
+                  >
+                    <span>
+                      Last Name
+                    </span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody
+                class="ant-table-tbody"
+              >
+                <tr
+                  class="ant-table-row  ant-table-row-level-0"
+                >
+                  <td
+                    class=""
+                    tabindex="-1"
+                  >
+                    <span
+                      class="ant-table-row-indent indent-level-0"
+                      style="padding-left:0px"
+                    />
+                    John
+                  </td>
+                  <td
+                    class=""
+                    tabindex="-1"
+                  >
+                    Brown
+                  </td>
+                  <td
+                    class=""
+                    tabindex="-1"
+                  >
+                    32
+                  </td>
+                </tr>
+                <tr
+                  class="ant-table-row  ant-table-row-level-0"
+                >
+                  <td
+                    class=""
+                    tabindex="-1"
+                  >
+                    <span
+                      class="ant-table-row-indent indent-level-0"
+                      style="padding-left:0px"
+                    />
+                    Jim
+                  </td>
+                  <td
+                    class=""
+                    tabindex="-1"
+                  >
+                    Green
+                  </td>
+                  <td
+                    class=""
+                    tabindex="-1"
+                  >
+                    42
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
