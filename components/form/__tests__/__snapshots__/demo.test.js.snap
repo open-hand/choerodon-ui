@@ -2702,29 +2702,27 @@ exports[`renders ./components/form/demo/validate-other.md correctly 1`] = `
                 >
                   Please select favourite colors
                 </div>
-                <div
-                  class="ant-select-selection-selected-value"
-                />
-                <div
-                  class="ant-select-search ant-select-search--inline"
-                  style="display:none"
-                >
-                  <div
-                    class="ant-select-search__field__wrap"
+                <ul>
+                  <li
+                    class="ant-select-search ant-select-search--inline"
                   >
-                    <input
-                      autocomplete="off"
-                      class="ant-select-search__field"
-                      id="select-multiple"
-                      value=""
-                    />
-                    <span
-                      class="ant-select-search__field__mirror"
+                    <div
+                      class="ant-select-search__field__wrap"
                     >
-                       
-                    </span>
-                  </div>
-                </div>
+                      <input
+                        autocomplete="off"
+                        class="ant-select-search__field"
+                        id="select-multiple"
+                        value=""
+                      />
+                      <span
+                        class="ant-select-search__field__mirror"
+                      >
+                         
+                      </span>
+                    </div>
+                  </li>
+                </ul>
                 <span
                   class="ant-select-arrow"
                   style="user-select:none;-webkit-user-select:none"

@@ -383,28 +383,26 @@ exports[`renders ./components/select/demo/multiple.md correctly 1`] = `
     <div
       class="ant-select-selection__rendered"
     >
-      <div
-        class="ant-select-selection-selected-value"
-      />
-      <div
-        class="ant-select-search ant-select-search--inline"
-        style="display:none"
-      >
-        <div
-          class="ant-select-search__field__wrap"
+      <ul>
+        <li
+          class="ant-select-search ant-select-search--inline"
         >
-          <input
-            autocomplete="off"
-            class="ant-select-search__field"
-            value=""
-          />
-          <span
-            class="ant-select-search__field__mirror"
+          <div
+            class="ant-select-search__field__wrap"
           >
-             
-          </span>
-        </div>
-      </div>
+            <input
+              autocomplete="off"
+              class="ant-select-search__field"
+              value=""
+            />
+            <span
+              class="ant-select-search__field__mirror"
+            >
+               
+            </span>
+          </div>
+        </li>
+      </ul>
       <span
         class="ant-select-arrow"
         style="user-select:none;-webkit-user-select:none"
@@ -768,30 +766,56 @@ exports[`renders ./components/select/demo/size.md correctly 1`] = `
         >
           Please select
         </div>
-        <div
-          class="ant-select-selection-selected-value"
-        >
-          a10、 c12、 
-        </div>
-        <div
-          class="ant-select-search ant-select-search--inline"
-          style="display:none"
-        >
-          <div
-            class="ant-select-search__field__wrap"
+        <ul>
+          <li
+            class="ant-select-selection__choice"
+            style="user-select:none;-webkit-user-select:none"
+            title="a10"
+            unselectable="unselectable"
           >
-            <input
-              autocomplete="off"
-              class="ant-select-search__field"
-              value=""
-            />
-            <span
-              class="ant-select-search__field__mirror"
+            <div
+              class="ant-select-selection__choice__content"
             >
-               
-            </span>
-          </div>
-        </div>
+              a10
+            </div>
+            <div
+              class="ant-ripple-wrapper"
+            />
+          </li>
+          <li
+            class="ant-select-selection__choice"
+            style="user-select:none;-webkit-user-select:none"
+            title="c12"
+            unselectable="unselectable"
+          >
+            <div
+              class="ant-select-selection__choice__content"
+            >
+              c12
+            </div>
+            <div
+              class="ant-ripple-wrapper"
+            />
+          </li>
+          <li
+            class="ant-select-search ant-select-search--inline"
+          >
+            <div
+              class="ant-select-search__field__wrap"
+            >
+              <input
+                autocomplete="off"
+                class="ant-select-search__field"
+                value=""
+              />
+              <span
+                class="ant-select-search__field__mirror"
+              >
+                 
+              </span>
+            </div>
+          </li>
+        </ul>
         <span
           class="ant-select-arrow"
           style="user-select:none;-webkit-user-select:none"
