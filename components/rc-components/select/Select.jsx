@@ -1208,7 +1208,7 @@ export default class Select extends React.Component {
           <div className={`${prefixCls}-selection__choice__content`}>{content}</div>
         </li>);
       }
-      if (isTags(props)) {
+      if (isMultipleOrTags(props)) {
         selectedValueNodes = limitedCountValue.map((singleValue, index) => {
           const info = this.getOptionInfoBySingleValue(singleValue);
           let content = info.label;
@@ -1235,7 +1235,7 @@ export default class Select extends React.Component {
             <div className={`${prefixCls}-selection__choice__content`}>
               {content}
             </div>
-            {disabled ? null : (
+            {disabled || isMultiple(props) ? null : (
               <span
                 className={`${prefixCls}-selection__choice__remove`}
                 onClick={this.removeSelected.bind(this, singleValue, index)}
@@ -1260,31 +1260,6 @@ export default class Select extends React.Component {
             {this.getInputElement()}
           </li>,
         );
-      } else if (isMultiple(props)) {
-        let strings = '';
-        limitedCountValue.forEach((singleValue, index) => {
-          const info = this.getOptionInfoBySingleValue(singleValue);
-          let content = info.label;
-          strings = strings + content + '、 ';
-        });
-        const selectValues = (
-          <div
-            key="values"
-            className={`${prefixCls}-selection-selected-value`}
-          >
-            {strings}
-          </div>
-        );
-        selectedValueNodes.push(selectValues);
-        selectedValueNodes.push(
-          <div
-            className={`${prefixCls}-search ${prefixCls}-search--inline`}
-            key="__input"
-            style={{ display: 'none' }}
-          >
-            {this.getInputElement()}
-          </div>,
-        );
       } else {
         selectedValueNodes.push(
           <div
@@ -1297,7 +1272,7 @@ export default class Select extends React.Component {
         );
       }
 
-      if (isTags(props)) {
+      if (isMultipleOrTags(props)) {
         innerNode = (
           <ul>
             {selectedValueNodes}

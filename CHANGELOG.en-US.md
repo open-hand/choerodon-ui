@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 💄 `Select`: Adjust the style of multiple。
+
 ## 0.2.0
 
 `2018-05-18`
