@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 💄 `Pagination`: Adjust the style of select.
 - 💄 `Select`: Adjust the style of multiple.
 
 ## 0.2.1
