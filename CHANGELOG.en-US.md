@@ -15,11 +15,13 @@ timeline: true
 
 ---
 
+- 💄 `Select`: Adjust the style of multiple.
+
 ## 0.2.1
 
 `2018-05-28`
 
-- 💄 `Select`: Adjust the style of multiple。
+- 💄 `Select`: Adjust the style of multiple.
 
 ## 0.2.0
 
