@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 💄 `Radio`: Adjust the style of disabled.
 - 💄 `Pagination`: Adjust the style of select.
 - 💄 `Select`: Adjust the style of multiple.
 

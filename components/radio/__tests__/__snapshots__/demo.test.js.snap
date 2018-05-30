@@ -361,7 +361,7 @@ exports[`renders ./components/radio/demo/radiogroup.md correctly 1`] = `
   class="ant-radio-group-wrapper ant-radio-group-has-label"
 >
   <span
-    class="ant-radio-group-label"
+    class="ant-radio-group-label label-disabled"
   >
     这是一个label
   </span>
@@ -369,14 +369,15 @@ exports[`renders ./components/radio/demo/radiogroup.md correctly 1`] = `
     class="ant-radio-group"
   >
     <label
-      class="ant-radio-wrapper ant-radio-wrapper-checked"
+      class="ant-radio-wrapper ant-radio-wrapper-checked ant-radio-wrapper-disabled"
     >
       <span
-        class="ant-radio ant-radio-checked"
+        class="ant-radio ant-radio-checked ant-radio-disabled"
       >
         <input
           checked=""
           class="ant-radio-input"
+          disabled=""
           type="radio"
           value="1"
         />
@@ -389,13 +390,14 @@ exports[`renders ./components/radio/demo/radiogroup.md correctly 1`] = `
       </span>
     </label>
     <label
-      class="ant-radio-wrapper"
+      class="ant-radio-wrapper ant-radio-wrapper-disabled"
     >
       <span
-        class="ant-radio"
+        class="ant-radio ant-radio-disabled"
       >
         <input
           class="ant-radio-input"
+          disabled=""
           type="radio"
           value="2"
         />
@@ -408,13 +410,14 @@ exports[`renders ./components/radio/demo/radiogroup.md correctly 1`] = `
       </span>
     </label>
     <label
-      class="ant-radio-wrapper"
+      class="ant-radio-wrapper ant-radio-wrapper-disabled"
     >
       <span
-        class="ant-radio"
+        class="ant-radio ant-radio-disabled"
       >
         <input
           class="ant-radio-input"
+          disabled=""
           type="radio"
           value="3"
         />
@@ -427,13 +430,14 @@ exports[`renders ./components/radio/demo/radiogroup.md correctly 1`] = `
       </span>
     </label>
     <label
-      class="ant-radio-wrapper"
+      class="ant-radio-wrapper ant-radio-wrapper-disabled"
     >
       <span
-        class="ant-radio"
+        class="ant-radio ant-radio-disabled"
       >
         <input
           class="ant-radio-input"
+          disabled=""
           type="radio"
           value="4"
         />

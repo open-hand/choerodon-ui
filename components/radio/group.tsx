@@ -97,7 +97,9 @@ export default class RadioGroup extends React.Component<RadioGroupProps, RadioGr
       [`${prefixCls}-wrapper`]: true,
       [`${prefixCls}-has-label`]: props.label,
     });
-
+    const labelClassString = classNames(`${prefixCls}-label`, {
+      'label-disabled': props.disabled,
+   });
     let children: React.ReactChildren[] | React.ReactElement<any>[] | React.ReactNode = props.children;
 
     // 如果存在 options, 优先使用
@@ -133,7 +135,7 @@ export default class RadioGroup extends React.Component<RadioGroupProps, RadioGr
 
     return (
       <div className={wrapperClassString}>
-        {props.label ? (<span className={`${prefixCls}-label`}>{props.label}</span>) : null}
+        {props.label ? (<span className={labelClassString}>{props.label}</span>) : null}
         <div
           className={classString}
           style={props.style}
