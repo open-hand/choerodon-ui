@@ -20,6 +20,9 @@
   &-wrapper&-has-label & {
     padding-top: 17px;
   }
+  &-wrapper &-label.label-disabled {
+    color: rgba(0, 0, 0, 0.54);
+  }
   &-wrapper &-label {
     color: rgba(0, 0, 0, 0.6);
     position: absolute;
@@ -73,7 +76,7 @@
     border-width: 1px;
     border-style: solid;
     border-radius: 50%;
-    border-color: @border-color-base;
+    border-color: @radio-border-color;
     background-color: @radio-button-bg;
     transition: all @radio-duration;
   }
@@ -99,14 +102,15 @@
     padding: 2px;
   }
 }
-
+.@{radio-prefix-cls}-disabled.@{radio-prefix-cls}-checked {
+  .@{radio-inner-prefix-cls} {
+    border-color: @radio-border-color;
+    background-color: @radio-disabled-check-bg;
+  }
+}
 .@{radio-prefix-cls}-disabled {
   .@{radio-inner-prefix-cls} {
-    border-color: @border-color-base !important;
-    background-color: @input-disabled-bg;
-    &:after {
-      background-color: #ccc;
-    }
+    background-color: @radio-disabled-bg;
   }
 
   .@{radio-prefix-cls}-input {
@@ -114,7 +118,7 @@
   }
 
   & + span {
-    color: @disabled-color;
+    color: @input-disabled-color;
     cursor: not-allowed;
   }
 }

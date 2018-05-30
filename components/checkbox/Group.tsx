@@ -137,9 +137,12 @@ export default class CheckboxGroup extends React.Component<CheckboxGroupProps, C
       [`${prefixCls}-wrapper`]: true,
       [`${prefixCls}-has-label`]: props.label,
     });
+    const labelClassString = classNames(`${prefixCls}-label`, {
+      'label-disabled': props.disabled,
+    });
     return (
       <div className={wrapperClassString}>
-        {props.label ? (<span className={`${prefixCls}-label`}>{props.label}</span>) : null}
+        {props.label ? (<span className={labelClassString}>{props.label}</span>) : null}
         <div className={classString} style={style}>
           {children}
         </div>

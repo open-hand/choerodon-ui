@@ -134,7 +134,7 @@
     }
 
     & + span {
-      color: @disabled-color;
+      color: @input-disabled-color;
       cursor: not-allowed;
     }
   }
@@ -176,6 +176,9 @@
     }
     &-wrapper&-has-label & {
       padding-top: 17px;
+    }
+    &-wrapper &-label.label-disabled {
+      color: rgba(0, 0, 0, 0.54);
     }
     &-wrapper &-label {
       color: rgba(0, 0, 0, 0.6);

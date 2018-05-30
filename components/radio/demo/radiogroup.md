@@ -29,7 +29,7 @@ class App extends React.Component {
   }
   render() {
     return (
-      <RadioGroup label="这是一个label" onChange={this.onChange} value={this.state.value}>
+      <RadioGroup label="这是一个label" onChange={this.onChange} value={this.state.value} disabled>
         <Radio value={1}>A</Radio>
         <Radio value={2}>B</Radio>
         <Radio value={3}>C</Radio>
