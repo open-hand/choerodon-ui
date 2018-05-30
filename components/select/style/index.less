@@ -170,8 +170,10 @@
     border-bottom: 1px dotted rgba(0, 0, 0, 0.42);
   }
 
-  &-disabled&-tags &-selection--multiple &-selection__choice {
+  &-disabled&-tags &-selection--multiple &-selection__choice,
+  &-disabled&-multiple &-selection--multiple &-selection__choice {
     background: rgba(0, 0, 0, 0.26);
+    color: @tag-default-color;
   }
 
   &-selection--single {
@@ -304,13 +306,16 @@
   }
 
   &-multiple &-selection--multiple &-selection__choice {
-    background-color: rgba(0, 0, 0, 0.26);
+    background-color: rgba(0, 0, 0, 0.04);
     padding: 0 8px 0 8px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    color: rgba(0, 0, 0, 0.2);
   }
 
   &-tags &-selection--multiple &-selection__choice {
     background-color: @tag-default-bg;
     padding: 0 32px 0 8px;
+    color: @tag-default-color;
   }
 
   &-tags,
@@ -362,7 +367,6 @@
         position: relative;
         overflow: hidden;
         transition: padding .3s @ease-in-out;
-        color: @tag-default-color;
         margin-right: 8px;
         &__disabled {
           padding: 0 10px;
