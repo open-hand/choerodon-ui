@@ -973,8 +973,6 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
         >
           <div
             class="ant-select-selection__placeholder"
-            style="display:inline-block;user-select:none;-webkit-user-select:none"
-            unselectable="unselectable"
           >
             Email
           </div>

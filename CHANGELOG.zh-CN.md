@@ -15,9 +15,14 @@ timeline: true
 
 ---
 
-- 💄 `Radio`: 禁用样式调整.
-- 💄 `Pagination`: 下选框样式调整.
+## 0.2.2
+
+`2018-05-31`
+
+- 💄 `Radio`: 禁用样式调整。
+- 💄 `Pagination`: 下选框样式调整。
 - 💄 `Select`: 多选样式调整。
+- 🐞 `Select`: 修复没有数据时不能选中输入值。
 
 ## 0.2.1
 
@@ -51,14 +56,14 @@ timeline: true
 
 - 💄 `Form`: 调整校验反馈时的图标。
 - 💄 `Popover`: 调整图标。
-- 🐞 `Table`: 修正当`column`的 `filters` 属性中 `value` 不是字符串时，过滤条选中的值显示错误.
+- 🐞 `Table`: 修正当`column`的 `filters` 属性中 `value` 不是字符串时，过滤条选中的值显示错误。
 - 🌟 `Table`: `column` 增加 `filterTitle` 属性。
 
 ## 0.1.8
 
 `2018-05-12`
 
-- 🐞 `Table`: 修正当`childrenColumnName`属性不是`children`，所有数据中第一层的选择框禁用而其他数据的选择框是启用的时候, 全选选择框为禁用状态.
+- 🐞 `Table`: 修正当`childrenColumnName`属性不是`children`，所有数据中第一层的选择框禁用而其他数据的选择框是启用的时候, 全选选择框为禁用状态。
 - 🐞 `Select`: Form下全选拿不到值。
 
 ## 0.1.7

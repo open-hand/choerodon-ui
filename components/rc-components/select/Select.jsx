@@ -383,12 +383,6 @@ export default class Select extends React.Component {
     }
   };
 
-  onPlaceholderClick = () => {
-    if (this.getInputDOMNode()) {
-      this.getInputDOMNode().focus();
-    }
-  };
-
   onOuterFocus = (e) => {
     if (this.props.disabled) {
       e.preventDefault();
@@ -627,37 +621,28 @@ export default class Select extends React.Component {
 
   getPlaceholderElement = () => {
     const { props, state } = this;
-    let hidden = false;
+    // let hidden = false;
 
-    if (props.label) {
-      hidden = true;
-    }
-    if (state.open) {
-      hidden = false;
-    }
-    if (state.inputValue) {
-      hidden = true;
-    }
-    if (state.value.length) {
-      hidden = true;
-    }
-    if (isCombobox(props) && state.value.length === 1 && !state.value[0]) {
-      hidden = false;
-    }
+    // if (props.label) {
+    //   hidden = true;
+    // }
+    // if (state.open) {
+    //   hidden = false;
+    // }
+    // if (state.inputValue) {
+    //   hidden = true;
+    // }
+    // if (state.value.length) {
+    //   hidden = true;
+    // }
+    // if (isCombobox(props) && state.value.length === 1 && !state.value[0]) {
+    //   hidden = false;
+    // }
 
     const placeholder = props.placeholder;
     if (placeholder) {
       return (
-        <div
-          onMouseDown={preventDefaultEvent}
-          style={{
-            display: hidden ? 'none' : 'inline-block',
-            ...UNSELECTABLE_STYLE,
-          }}
-          {...UNSELECTABLE_ATTRIBUTE}
-          onClick={this.onPlaceholderClick}
-          className={`${props.prefixCls}-selection__placeholder`}
-        >
+        <div className={`${props.prefixCls}-selection__placeholder`}>
           {placeholder}
         </div>
       );
@@ -1045,6 +1030,7 @@ export default class Select extends React.Component {
               style={UNSELECTABLE_STYLE}
               attribute={UNSELECTABLE_ATTRIBUTE}
               value={inputValue}
+              onMouseDown={preventDefaultEvent}
               key={inputValue}
             >
               {inputValue}
@@ -1388,27 +1374,34 @@ export default class Select extends React.Component {
 
   render() {
     const props = this.props;
-    const multiple = isMultipleOrTags(props);
-    const tags = isTags(props);
     const state = this.state;
-    const { className, disabled, prefixCls, label, placeholder, defaultValue } = props;
+    const { 
+      className, 
+      disabled, 
+      prefixCls, 
+      label, 
+      placeholder, 
+      defaultValue,
+    } = props;
+    const { open, value, inputValue } = this.state;
+    const multiple = isMultipleOrTags(props);
     const ctrlNode = this.renderTopControlNode();
     let extraSelectionProps = {};
-    const { open, value } = this.state;
     const options = this._options;
     if (!isMultipleOrTagsOrCombobox(props)) {
       extraSelectionProps = {
         onKeyDown: this.onKeyDown,
-        tabIndex: props.disabled ? -1 : 0,
+        tabIndex: disabled ? -1 : 0,
       };
     }
+  
     const rootCls = {
       [className]: !!className,
       [prefixCls]: 1,
       [`${prefixCls}-open`]: open,
       [`${prefixCls}-focused`]: !isMultiple(props) && this._focused,
-      [`${prefixCls}-has-value`]: value.length,
-      [`${prefixCls}-has-label`]: props.label,
+      [`${prefixCls}-has-value`]: inputValue || (value.length && value[0]),
+      [`${prefixCls}-has-label`]: label,
       [`${prefixCls}-combobox`]: isCombobox(props),
       [`${prefixCls}-disabled`]: disabled,
       [`${prefixCls}-enabled`]: !disabled,
@@ -1435,7 +1428,6 @@ export default class Select extends React.Component {
         showSearch={props.showSearch}
         options={options}
         multiple={multiple}
-        tags={tags}
         disabled={disabled}
         visible={open}
         inputValue={state.inputValue}

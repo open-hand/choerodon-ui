@@ -18,8 +18,6 @@ exports[`renders ./components/auto-complete/demo/basic.md correctly 1`] = `
     >
       <div
         class="ant-select-selection__placeholder"
-        style="display:inline-block;user-select:none;-webkit-user-select:none"
-        unselectable="unselectable"
       >
         input here
       </div>
@@ -105,8 +103,6 @@ exports[`renders ./components/auto-complete/demo/certain-category.md correctly 1
       >
         <div
           class="ant-select-selection__placeholder"
-          style="display:inline-block;user-select:none;-webkit-user-select:none"
-          unselectable="unselectable"
         >
           input here
         </div>
@@ -265,8 +261,6 @@ exports[`renders ./components/auto-complete/demo/non-case-sensitive.md correctly
     >
       <div
         class="ant-select-selection__placeholder"
-        style="display:inline-block;user-select:none;-webkit-user-select:none"
-        unselectable="unselectable"
       >
         try to type \`b\`
       </div>
@@ -348,8 +342,6 @@ exports[`renders ./components/auto-complete/demo/options.md correctly 1`] = `
     >
       <div
         class="ant-select-selection__placeholder"
-        style="display:inline-block;user-select:none;-webkit-user-select:none"
-        unselectable="unselectable"
       >
         input here
       </div>
@@ -435,8 +427,6 @@ exports[`renders ./components/auto-complete/demo/uncertain-category.md correctly
       >
         <div
           class="ant-select-selection__placeholder"
-          style="display:inline-block;user-select:none;-webkit-user-select:none"
-          unselectable="unselectable"
         >
           input here
         </div>

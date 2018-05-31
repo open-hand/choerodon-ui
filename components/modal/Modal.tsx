@@ -162,6 +162,7 @@ export default class Modal extends React.Component<ModalProps, {}> {
     return (
       <div>
         <Button
+          disabled={confirmLoading}
           onClick={this.handleCancel}
           funcType={funcType}
         >
