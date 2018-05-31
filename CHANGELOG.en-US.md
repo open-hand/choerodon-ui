@@ -15,9 +15,14 @@ timeline: true
 
 ---
 
+## 0.2.2
+
+`2018-05-31`
+
 - 💄 `Radio`: Adjust the style of disabled.
 - 💄 `Pagination`: Adjust the style of select.
 - 💄 `Select`: Adjust the style of multiple.
+- 🐞 `Select`: Fixed can't select input value without data.
 
 ## 0.2.1
 
@@ -29,7 +34,7 @@ timeline: true
 
 `2018-05-18`
 
-- 🌟 migrate to npmjs
+- 🌟 migrate to npmjs.
 
 ## 0.1.11
 

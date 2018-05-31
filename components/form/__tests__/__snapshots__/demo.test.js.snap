@@ -712,8 +712,6 @@ exports[`renders ./components/form/demo/coordinated.md correctly 1`] = `
               >
                 <div
                   class="ant-select-selection__placeholder"
-                  style="display:inline-block;user-select:none;-webkit-user-select:none"
-                  unselectable="unselectable"
                 >
                   Select a option and change input text above
                 </div>
@@ -2100,8 +2098,6 @@ exports[`renders ./components/form/demo/register.md correctly 1`] = `
               >
                 <div
                   class="ant-select-selection__placeholder"
-                  style="display:none;user-select:none;-webkit-user-select:none"
-                  unselectable="unselectable"
                 >
                   website
                 </div>
@@ -2636,8 +2632,6 @@ exports[`renders ./components/form/demo/validate-other.md correctly 1`] = `
               >
                 <div
                   class="ant-select-selection__placeholder"
-                  style="display:inline-block;user-select:none;-webkit-user-select:none"
-                  unselectable="unselectable"
                 >
                   Please select a country
                 </div>
@@ -2697,8 +2691,6 @@ exports[`renders ./components/form/demo/validate-other.md correctly 1`] = `
               >
                 <div
                   class="ant-select-selection__placeholder"
-                  style="display:inline-block;user-select:none;-webkit-user-select:none"
-                  unselectable="unselectable"
                 >
                   Please select favourite colors
                 </div>

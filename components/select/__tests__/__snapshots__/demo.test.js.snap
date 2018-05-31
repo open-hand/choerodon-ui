@@ -73,8 +73,6 @@ exports[`renders ./components/select/demo/basic.md correctly 1`] = `
       >
         <div
           class="ant-select-selection__placeholder"
-          style="display:none;user-select:none;-webkit-user-select:none"
-          unselectable="unselectable"
         >
           Please Select
         </div>
@@ -179,8 +177,6 @@ exports[`renders ./components/select/demo/combobox.md correctly 1`] = `
     >
       <div
         class="ant-select-selection__placeholder"
-        style="display:inline-block;user-select:none;-webkit-user-select:none"
-        unselectable="unselectable"
       >
         Enter the account name
       </div>
@@ -490,8 +486,6 @@ exports[`renders ./components/select/demo/search.md correctly 1`] = `
     >
       <div
         class="ant-select-selection__placeholder"
-        style="display:inline-block;user-select:none;-webkit-user-select:none"
-        unselectable="unselectable"
       >
         Select a person
       </div>
@@ -523,7 +517,7 @@ exports[`renders ./components/select/demo/search.md correctly 1`] = `
 
 exports[`renders ./components/select/demo/search-box.md correctly 1`] = `
 <div
-  class="ant-select ant-select-has-value ant-select-combobox ant-select-enabled"
+  class="ant-select ant-select-combobox ant-select-enabled"
   style="width:200px"
 >
   <div
@@ -539,8 +533,6 @@ exports[`renders ./components/select/demo/search-box.md correctly 1`] = `
     >
       <div
         class="ant-select-selection__placeholder"
-        style="display:inline-block;user-select:none;-webkit-user-select:none"
-        unselectable="unselectable"
       >
         input search text
       </div>
@@ -761,8 +753,6 @@ exports[`renders ./components/select/demo/size.md correctly 1`] = `
       >
         <div
           class="ant-select-selection__placeholder"
-          style="display:none;user-select:none;-webkit-user-select:none"
-          unselectable="unselectable"
         >
           Please select
         </div>
@@ -854,8 +844,6 @@ exports[`renders ./components/select/demo/size.md correctly 1`] = `
       >
         <div
           class="ant-select-selection__placeholder"
-          style="display:none;user-select:none;-webkit-user-select:none"
-          unselectable="unselectable"
         >
           Please select
         </div>
@@ -951,8 +939,6 @@ exports[`renders ./components/select/demo/tags.md correctly 1`] = `
     >
       <div
         class="ant-select-selection__placeholder"
-        style="display:none;user-select:none;-webkit-user-select:none"
-        unselectable="unselectable"
       >
         tags
       </div>

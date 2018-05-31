@@ -36,6 +36,7 @@ const MenuItem = createReactClass({
       onSelect: noop,
       onMouseEnter: noop,
       onMouseLeave: noop,
+      onMouseDown: noop,
     };
   },
 
@@ -142,6 +143,7 @@ const MenuItem = createReactClass({
         onClick: this.onClick,
         onMouseLeave: this.onMouseLeave,
         onMouseEnter: this.onMouseEnter,
+        onMouseDown: this.props.onMouseDown,
       };
     }
     const style = {
