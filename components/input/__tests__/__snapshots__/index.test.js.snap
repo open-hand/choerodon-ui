@@ -6,6 +6,7 @@ exports[`Input should support maxLength 1`] = `
   maxLength="3"
   prefixCls="ant-input"
   type="text"
+  underline={true}
 >
   <span
     className="ant-input-wrapper"
@@ -81,6 +82,7 @@ exports[`Input.Search should support suffix 1`] = `
       ]
     }
     type="text"
+    underline={true}
   >
     <span
       className="ant-input-wrapper ant-input-has-suffix"
@@ -189,6 +191,7 @@ exports[`TextArea should support disabled 1`] = `
 <TextArea
   disabled={true}
   prefixCls="ant-input"
+  underline={true}
 >
   <span
     className="ant-input-wrapper ant-input-textarea ant-input-disabled"
@@ -219,6 +222,7 @@ exports[`TextArea should support maxLength 1`] = `
 <TextArea
   maxLength="10"
   prefixCls="ant-input"
+  underline={true}
 >
   <span
     className="ant-input-wrapper ant-input-textarea"

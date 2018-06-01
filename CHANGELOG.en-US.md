@@ -15,6 +15,14 @@ timeline: true
 
 ---
 
+## 0.2.3
+
+`2018-06-01`
+
+- 💄 `Select`: Adjust the style of icon.
+- 💄 `Input`: Adjust the style of icon.
+- 🌟 `Icon`: Added new icons.
+
 ## 0.2.2
 
 `2018-05-31`

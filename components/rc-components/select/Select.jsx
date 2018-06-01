@@ -1318,7 +1318,7 @@ export default class Select extends React.Component {
   checkAll = (event) => {
     const name = event.target.getAttribute('name');
     const props = this.props;
-    const state = this.state;
+    const state = this.state; 
     const filterInput = this.selectTriggerRef.getFilterInput();
     if (props.disabled) {
       return;
@@ -1328,8 +1328,7 @@ export default class Select extends React.Component {
       filterInput.clearInputValue();
     }
     if (name === 'check-all') {
-      const options = this.getOptionsFromChildren(props.children) || [];
-      const values = options.map((option) => {
+      const values = this._options.map((option) => {
         return getValuePropValue(option);
       });
       this.fireChange(values);

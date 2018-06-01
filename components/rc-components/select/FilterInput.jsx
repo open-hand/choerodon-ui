@@ -37,7 +37,7 @@ class FilterInput extends Component {
   }
 
   render() {
-    const { prefixCls,placeholder } = this.props;
+    const { prefixCls,placeholder, underline } = this.props;
     const { value } = this.state;
     const suffix = value ? <Button size='small' onClick={this.clearInputValue} shape="circle" icon="close" /> : null;
     return (
@@ -49,6 +49,7 @@ class FilterInput extends Component {
             prefix={<Icon type="search" />}
             suffix={suffix}
             onChange={this.handleChange}
+            underline={underline}
             ref={saveRef(this, 'inputRef')}
           />
         </span>

@@ -31,6 +31,7 @@ title: Input
 | onPressEnter | 按下回车的回调 | function(e) |  |
 | copy | 显示复制按钮 | boolean | false |
 | onCopy | 点击复制按钮的回调 | function(copyValue) |  |
+| underline | input 下划线 | boolean | true |
 
 > 如果 `Input` 在 `Form.Item` 内，并且 `Form.Item` 设置了 `id` 和 `options` 属性，则 `value` `defaultValue` 和 `id` 属性会被自动设置。
 

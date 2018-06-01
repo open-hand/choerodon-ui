@@ -32,6 +32,7 @@ ReactDOM.render(
     style={{ width: '100%' }}
     label="多选用例"
     onChange={handleChange}
+    optionFilterProp="children"
     footer={<Button funcType="raised" type="primary">这里是footer</Button>}
     filter
     allowClear
