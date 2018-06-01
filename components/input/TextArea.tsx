@@ -41,6 +41,7 @@ export type HTMLTextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement
 export default class TextArea extends React.Component<TextAreaProps & HTMLTextareaProps, TextAreaState> {
   static defaultProps = {
     prefixCls: 'ant-input',
+    underline: true,
   };
 
   nextFrameActionId: number;
@@ -182,6 +183,7 @@ export default class TextArea extends React.Component<TextAreaProps & HTMLTextar
       'onPressEnter',
       'autosize',
       'placeholder',
+      'underline',
     ]);
     const style = {
       ...props.style,
@@ -198,12 +200,12 @@ export default class TextArea extends React.Component<TextAreaProps & HTMLTextar
       <div className={`${props.prefixCls}-length-info`}>{`${this.state.inputLength}/${props.maxLength}`}</div>
     ) : null;
 
-    const border = (
+    const border = props.underline ? (
       <div>
         <hr className={`${props.prefixCls}-border`} />
         <hr className={`${props.prefixCls}-border-active`}/>
       </div>
-    );
+    ) : null;
     const label = props.label ? (
         <div className={`${this.props.prefixCls}-rendered`}>
           <div className={`${this.props.prefixCls}-label`}>{props.label}</div>

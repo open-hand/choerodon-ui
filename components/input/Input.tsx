@@ -22,6 +22,7 @@ export interface AbstractInputProps {
   tabIndex?: number;
   style?: React.CSSProperties;
   label?: React.ReactNode;
+  underline?: boolean;
 }
 
 export interface InputProps extends AbstractInputProps {
@@ -66,6 +67,7 @@ export default class Input extends React.Component<InputProps, any> {
     prefixCls: 'ant-input',
     type: 'text',
     disabled: false,
+    underline: true,
   };
 
   static propTypes = {
@@ -97,6 +99,7 @@ export default class Input extends React.Component<InputProps, any> {
     suffix: PropTypes.node,
     copy: PropTypes.bool,
     onCopy: PropTypes.func,
+    underline: PropTypes.bool,
   };
 
   state: InputState = {
@@ -337,6 +340,7 @@ export default class Input extends React.Component<InputProps, any> {
       'label',
       'copy',
       'style',
+      'underline',
     ]);
 
     if ('value' in this.props) {
@@ -371,12 +375,12 @@ export default class Input extends React.Component<InputProps, any> {
   }
 
   getUnderLine() {
-    const { prefixCls } = this.props;
-    return (
+    const { prefixCls, underline } = this.props;
+    return underline ? (
       <div className={`${prefixCls}-underline`}>
         <span className={`${prefixCls}-ripple`} />
       </div>
-    );
+    ) : null;
   }
 
   getSizeClassName(name: string) {

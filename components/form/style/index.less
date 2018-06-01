@@ -6,6 +6,8 @@
 @import "./mixin";
 
 @form-prefix-cls: ~"@{ant-prefix}-form";
+@input-prefix-cls: ~"@{ant-prefix}-input";
+@select-prefix-cls: ~"@{ant-prefix}-select";
 @form-component-height: @input-height-base;
 @form-component-max-height: @input-height-lg;
 @form-feedback-icon-size: 14px;
@@ -544,11 +546,21 @@ form {
 }
 
 .is-validating {
-  &.has-feedback .@{form-prefix-cls}-item-children:after {
-    display: inline-block;
-    animation: loadingCircle 1s infinite linear;
-    content: "\e917";
-    color: @primary-color;
+  &.has-feedback .@{form-prefix-cls}-item-children {
+    &:after {
+      display: inline-block;
+      animation: loadingCircle 1s infinite linear;
+      content: "\e917";
+      color: @primary-color;
+    }
+    .@{input-prefix-cls}-suffix,
+    .@{input-prefix-cls}-icon {
+      display: none;
+    }
+    .@{select-prefix-cls}-arrow,
+    .@{select-prefix-cls}-clear {
+      display: none;
+    }
   }
 }
 

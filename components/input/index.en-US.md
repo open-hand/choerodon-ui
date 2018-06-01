@@ -31,6 +31,7 @@ Keyboard and mouse can be used for providing or changing data.
 | onPressEnter | The callback function that is triggered when Enter key is pressed. | function(e) |  |
 | copy | Whether the copy button is shown. | boolean | false |
 | onCopy | The callback function that is triggered when Copy button is clicked. | function(copyValue) |  |
+| underline | The Input underLine | boolean | true |
 
 > When `Input` is used in a `Form.Item` context, if the `Form.Item` has the `id` and `options` props defined
 > then `value`, `defaultValue`, and `id` props of `Input` are automatically set.
