@@ -15,6 +15,14 @@ timeline: true
 
 ---
 
+## 0.2.5
+
+`2018-06-04`
+
+- 🌟 `Select`: Added loading.
+- 💄 `Collapse`: Adjust the style of icon.
+- 💄 `Modal`: Adjust the style of footer's button.
+
 ## 0.2.4
 
 `2018-06-01`

@@ -145,6 +145,7 @@ export default class SelectTrigger extends React.Component {
       dropdownStyle,
       dropdownMatchSelectWidth,
       filter,
+      loading,
     } = props;
     const dropdownPrefixCls = this.getDropdownPrefixCls();
     const popupClassName = {
@@ -158,6 +159,7 @@ export default class SelectTrigger extends React.Component {
       inputValue,
       visible,
       filter,
+      loading,
     });
 
     const popupStyle = { ...dropdownStyle };

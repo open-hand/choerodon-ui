@@ -60,6 +60,7 @@ Select component to select value from options.
 | footer | drop-down menu footer content | string\| ReactNode | - |
 | choiceRender | Only used `tags`, function returned value is `Select` show Content | function(liDom, value) | - |
 | filter | `Select` query input | boolean | false |
+| loading | data's loading | boolean\|[object](https://ant.design/components/spin-cn/#API) ([更多]
 
 ### Select Methods
 

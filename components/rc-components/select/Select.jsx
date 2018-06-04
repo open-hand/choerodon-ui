@@ -140,6 +140,7 @@ export default class Select extends React.Component {
     label: '',
     filterPlaceholder: '输入文字以进行过滤',
     showCheckAll: true,
+    loading: false,
   };
 
   constructor(props) {
@@ -1039,7 +1040,12 @@ export default class Select extends React.Component {
         }
       }
     }
-
+    let loading = this.props.loading;
+    if (typeof loading === 'boolean') {
+      loading = {
+        spinning: loading,
+      };
+    }
     if (!options.length && notFoundContent) {
       options = [
         <MenuItem
@@ -1049,7 +1055,7 @@ export default class Select extends React.Component {
           value="NOT_FOUND"
           key="NOT_FOUND"
         >
-          {notFoundContent}
+          {loading.spinning ? '' : notFoundContent}
         </MenuItem>,
       ];
     }
@@ -1381,6 +1387,7 @@ export default class Select extends React.Component {
       label, 
       placeholder, 
       defaultValue,
+      loading,
     } = props;
     const { open, value, inputValue } = this.state;
     const multiple = isMultipleOrTags(props);
@@ -1393,7 +1400,7 @@ export default class Select extends React.Component {
         tabIndex: disabled ? -1 : 0,
       };
     }
-  
+
     const rootCls = {
       [className]: !!className,
       [prefixCls]: 1,
@@ -1431,6 +1438,7 @@ export default class Select extends React.Component {
         visible={open}
         inputValue={state.inputValue}
         value={state.value}
+        loading={loading}
         filter={props.filter}
         backfillValue={state.backfillValue}
         firstActiveValue={props.firstActiveValue}

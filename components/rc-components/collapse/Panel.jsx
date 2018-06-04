@@ -34,6 +34,11 @@ class CollapsePanel extends Component {
       [`${prefixCls}-item-active`]: isActive,
       [`${prefixCls}-item-disabled`]: disabled,
     }, className);
+    const iconCls = classNames({
+      [`${prefixCls}-expand-icon`]: true,
+      [`${prefixCls}-expanded`]: isActive,
+      [`${prefixCls}-collapsed`]: !isActive,
+    })
     return (
       <div className={itemCls} style={style} id={id} role="tablist">
         <div
@@ -42,7 +47,7 @@ class CollapsePanel extends Component {
           role="tab"
           aria-expanded={isActive}
         >
-          {showArrow && <i className="arrow" />}
+          {showArrow && <i className={iconCls} />}
           {header}
         </div>
         <Animate
