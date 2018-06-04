@@ -8,7 +8,6 @@ export { ModalProps, ModalFuncProps } from './Modal';
 Modal.info = function (props: ModalFuncProps) {
   const config = {
     type: 'info',
-    iconType: 'info',
     okCancel: false,
     ...props,
   };

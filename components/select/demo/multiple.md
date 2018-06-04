@@ -26,18 +26,40 @@ function handleChange(value) {
   console.log(`selected ${value}`);
 }
 
-ReactDOM.render(
-  <Select
-    mode="multiple"
-    style={{ width: '100%' }}
-    label="多选用例"
-    onChange={handleChange}
-    optionFilterProp="children"
-    footer={<Button funcType="raised" type="primary">这里是footer</Button>}
-    filter
-    allowClear
-  >
-    {children}
-  </Select>
-, mountNode);
+class SelectMulitpleDemo extends React.Component {
+  state = {
+    loading: true,
+    options: [],
+  };
+  componentDidMount() {
+    this.getOptions();
+  }
+  getOptions = () => {
+    setTimeout(() => {
+      this.setState({
+        options: children,
+        loading: false,
+      });
+    }, 5000);
+  }
+  render() {
+    const { options, loading } = this.state;
+    return (
+      <Select
+        mode="multiple"
+        style={{ width: '100%' }}
+        label="多选用例"
+        onChange={handleChange}
+        optionFilterProp="children"
+        footer={<Button funcType="raised" type="primary">这里是footer</Button>}
+        loading={loading}
+        filter
+        allowClear
+      >
+        {options}
+      </Select>
+    );
+  }
+};
+ReactDOM.render(<SelectMulitpleDemo />, mountNode);
 ````

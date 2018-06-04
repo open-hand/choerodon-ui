@@ -93,4 +93,8 @@ export const SelectPropTypes = {
     PropTypes.string,
   ]),
   choiceRender: PropTypes.func,
+  loading: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.object,
+  ]),
 };

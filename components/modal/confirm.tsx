@@ -15,7 +15,7 @@ const IS_REACT_16 = !!ReactDOM.createPortal;
 
 const ConfirmDialog = (props: ConfirmDialogProps) => {
   const { onCancel, onOk, close, zIndex, afterClose, visible, keyboard } = props;
-  const iconType = props.iconType || 'question_answer';
+  const iconType = props.iconType || undefined;
   const okType = props.okType || 'primary';
   const prefixCls = props.prefixCls || 'ant-confirm';
   // 默认为 true，保持向下兼容
@@ -28,19 +28,26 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
   const okText = props.okText ||
     (okCancel ? runtimeLocale.okText : runtimeLocale.justOkText);
   const cancelText = props.cancelText || runtimeLocale.cancelText;
-
   const classString = classNames(
     prefixCls,
     `${prefixCls}-${props.type}`,
     props.className,
   );
-
-  const cancelButton = okCancel && (
-    <ActionButton actionFn={onCancel} closeModal={close}>
-      {cancelText}
-    </ActionButton>
-  );
-
+  const actionButtonProps: any = {
+    okProps: {
+      text: okText,
+      type: okType,
+      actionFn: onOk,
+      closeModal: close,
+    },
+  };
+  if (okCancel) {
+    actionButtonProps.cancelProps = {
+      text: cancelText,
+      actionFn: onCancel,
+      closeModal: close,
+    };
+  }
   return (
     <Dialog
       className={classString}
@@ -59,15 +66,12 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
     >
       <div className={`${prefixCls}-body-wrapper`}>
         <div className={`${prefixCls}-body`}>
-          <Icon type={iconType!} />
+          {iconType ? <Icon type={iconType!} /> : null}
           <span className={`${prefixCls}-title`}>{props.title}</span>
           <div className={`${prefixCls}-content`}>{props.content}</div>
         </div>
         <div className={`${prefixCls}-btns`}>
-          {cancelButton}
-          <ActionButton type={okType} actionFn={onOk} closeModal={close} autoFocus>
-            {okText}
-          </ActionButton>
+          <ActionButton {...actionButtonProps} />
         </div>
       </div>
     </Dialog>

@@ -37,10 +37,13 @@
     }
 
     .@{confirm-prefix-cls}-content {
-      margin-left: 38px;
       font-size: @font-size-base;
       color: @text-color;
       margin-top: 8px;
+    }
+
+    i + span + .@{confirm-prefix-cls}-content {
+      margin-left: 40px;
     }
 
     > .@{iconfont-css-prefix} {

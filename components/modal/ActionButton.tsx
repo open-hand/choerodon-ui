@@ -1,20 +1,16 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import Button from '../button';
-import { ButtonType, ButtonFuncType } from '../button/button';
 
 export interface ActionButtonProps {
-  type?: ButtonType;
-  actionFn?: (...args: any[]) => any | PromiseLike<any>;
-  closeModal: Function;
+  okProps?: any;
+  cancelProps?: any;
   autoFocus?: boolean;
-  funcType?: ButtonFuncType;
 }
 
 export interface ActionButtonState {
   loading: boolean;
 }
-
 export default class ActionButton extends React.Component<ActionButtonProps, ActionButtonState> {
   timeoutId: number;
 
@@ -24,6 +20,7 @@ export default class ActionButton extends React.Component<ActionButtonProps, Act
       loading: false,
     };
   }
+
   componentDidMount() {
     if (this.props.autoFocus) {
       const $this = ReactDOM.findDOMNode(this) as HTMLInputElement;
@@ -33,8 +30,8 @@ export default class ActionButton extends React.Component<ActionButtonProps, Act
   componentWillUnmount() {
     clearTimeout(this.timeoutId);
   }
-  onClick = () => {
-    const { actionFn, closeModal } = this.props;
+  onClick = (props: any) => {
+    const { actionFn, closeModal } = props;
     if (actionFn) {
       let ret;
       if (actionFn.length) {
@@ -60,19 +57,26 @@ export default class ActionButton extends React.Component<ActionButtonProps, Act
       closeModal();
     }
   }
-
   render() {
-    const { type, children, funcType } = this.props;
-    const loading = this.state.loading;
+    const { okProps, cancelProps } = this.props;
+    const { loading } = this.state;
+    const cancelButton = cancelProps && (<Button
+      disabled={loading}
+      onClick={() => {this.onClick(cancelProps)}}
+    >
+      {cancelProps.text}
+    </Button>);
     return (
-      <Button
-        type={type}
-        onClick={this.onClick}
-        loading={loading}
-        funcType={funcType}
-      >
-        {children}
-      </Button>
+      <div>
+        {cancelButton}
+        <Button
+          loading={loading}
+          type={okProps.type}
+          onClick={() => {this.onClick(okProps)}}
+        >
+        {okProps.text}
+        </Button>
+      </div>
     );
   }
 }
