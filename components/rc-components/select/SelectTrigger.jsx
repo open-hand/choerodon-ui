@@ -112,7 +112,7 @@ export default class SelectTrigger extends React.Component {
         firstActiveValue={props.firstActiveValue}
         defaultActiveFirstOption={props.defaultActiveFirstOption}
         dropdownMenuStyle={props.dropdownMenuStyle}
-        onFilterInputChange={props.onFilterInputChange}
+        onFilterChange={props.onFilterChange}
         footer={props.footer}
         onMouseDown={props.onDropdownMouseDown}
       />
@@ -146,6 +146,7 @@ export default class SelectTrigger extends React.Component {
       dropdownMatchSelectWidth,
       filter,
       loading,
+      filterValue,
     } = props;
     const dropdownPrefixCls = this.getDropdownPrefixCls();
     const popupClassName = {
@@ -160,6 +161,7 @@ export default class SelectTrigger extends React.Component {
       visible,
       filter,
       loading,
+      filterValue,
     });
 
     const popupStyle = { ...dropdownStyle };

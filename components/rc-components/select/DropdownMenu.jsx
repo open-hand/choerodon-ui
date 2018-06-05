@@ -176,11 +176,12 @@ export default class DropdownMenu extends React.Component {
   }
 
   renderFilterInput() {
-    const { prefixCls, filter, placeholder, onFilterInputChange } = this.props;
+    const { prefixCls, filter, placeholder, onFilterChange , filterValue} = this.props;
     const props = {
+      filterValue,
       prefixCls,
       placeholder,
-      onChange: onFilterInputChange,
+      onChange: onFilterChange,
       underline: false,
     };
     return filter ? <FilterInput {...props} ref={saveRef(this, 'filterRef')} /> : null;

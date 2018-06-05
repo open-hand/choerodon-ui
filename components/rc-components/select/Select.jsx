@@ -157,11 +157,13 @@ export default class Select extends React.Component {
     if (open === undefined) {
       open = props.defaultOpen;
     }
+    const filterValue = props.filterValue || '';
     this.state = {
       value,
       inputValue,
       open,
       optionsInfo,
+      filterValue,
     };
     this.adjustOpenState();
   }
@@ -189,6 +191,11 @@ export default class Select extends React.Component {
             : '',
         });
       }
+    }
+    if ('filterValue' in nextProps) {
+      this.setState({
+        filterValue: nextProps.filterValue,
+      });
     }
   };
 
@@ -220,6 +227,17 @@ export default class Select extends React.Component {
       ReactDOM.unmountComponentAtNode(this.dropdownContainer);
       document.body.removeChild(this.dropdownContainer);
       this.dropdownContainer = null;
+    }
+  }
+
+  onFilterChange = (val = '') => {
+    const { onFilterChange } = this.props;
+    this.onInputValueChange(val);
+    this.setState({
+      filterValue: val,
+    });
+    if (onFilterChange) {
+      onFilterChange(val);
     }
   }
 
@@ -261,9 +279,8 @@ export default class Select extends React.Component {
       this._focused = true;
       this.updateFocusClassName();
     }
-    if (!open && filter) {
-      const filterInput = this.selectTriggerRef.getFilterInput();
-      filterInput.clearInputValue();
+    if (filter) {
+      this.onFilterChange('');
     }
     this.setOpenState(open);
   };
@@ -1173,7 +1190,7 @@ export default class Select extends React.Component {
             opacity,
           }}
         >
-          {label}
+         {choiceRender ? choiceRender(label) : label}
         </div>
       );
       innerNode = [selectedValue];
@@ -1325,13 +1342,8 @@ export default class Select extends React.Component {
     const name = event.target.getAttribute('name');
     const props = this.props;
     const state = this.state; 
-    const filterInput = this.selectTriggerRef.getFilterInput();
     if (props.disabled) {
       return;
-    }
-    this.setInputValue('');
-    if (filterInput) {
-      filterInput.clearInputValue();
     }
     if (name === 'check-all') {
       const values = this._options.map((option) => {
@@ -1342,8 +1354,6 @@ export default class Select extends React.Component {
       this.fireChange([]);
       this.focus();
     }
-   
-    
   };
 
   renderClear() {
@@ -1440,8 +1450,10 @@ export default class Select extends React.Component {
         value={state.value}
         loading={loading}
         filter={props.filter}
+        filterValue={state.filterValue}
         backfillValue={state.backfillValue}
         firstActiveValue={props.firstActiveValue}
+        onFilterChange={this.onFilterChange}
         onDropdownVisibleChange={this.onDropdownVisibleChange}
         onDropdownMouseDown={props.onDropdownMouseDown}
         getPopupContainer={props.getPopupContainer}
@@ -1449,7 +1461,6 @@ export default class Select extends React.Component {
         onMenuSelect={this.onMenuSelect}
         onMenuDeselect={this.onMenuDeselect}
         onPopupScroll={props.onPopupScroll}
-        onFilterInputChange={this.onInputValueChange}
         filterPlaceholder={props.filterPlaceholder}
         builtinPlacements={this.getBuiltinPlacements()}
         footer={props.footer}

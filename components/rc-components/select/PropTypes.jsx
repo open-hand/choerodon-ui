@@ -97,4 +97,6 @@ export const SelectPropTypes = {
     PropTypes.bool,
     PropTypes.object,
   ]),
+  filterValue: PropTypes.string,
+  onFilterChange: PropTypes.func,
 };

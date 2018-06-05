@@ -25,7 +25,6 @@ export interface AbstractSelectProps {
   onDropdownMouseDown?: (e: React.MouseEvent<any>) => void;
   onSearch?: (value: string) => any;
   filterOption?: boolean | ((inputValue: string, option: React.ReactElement<OptionProps>) => any);
-  filter?: boolean;
 }
 
 export interface LabeledValue {
@@ -62,6 +61,10 @@ export interface SelectProps extends AbstractSelectProps {
   showNotFindSelectedItem?: boolean;
   getRootDomNode?: () => HTMLElement;
   showCheckAll?: boolean;
+  filter?: boolean;
+  footer?: React.ReactNode | string,
+  choiceRender?: (liDom: HTMLElement, value: SelectValue) => any,
+  loading?: boolean | object;
 }
 
 export interface OptionProps {
@@ -70,6 +73,7 @@ export interface OptionProps {
   title?: string;
   children?: React.ReactNode;
   className?: string;
+  style?: object;
 }
 
 export interface OptGroupProps {
@@ -94,6 +98,17 @@ const SelectPropTypes = {
   showNotFindSelectedItem: PropTypes.bool,
   filter: PropTypes.bool,
   showCheckAll: PropTypes.bool,
+  footer: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.string,
+  ]),
+  choiceRender: PropTypes.func,
+  loading: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.object,
+  ]),
+  filterValue: PropTypes.string,
+  onFilterChange: PropTypes.func,
 };
 
 // => It is needless to export the declaration of below two inner components.
