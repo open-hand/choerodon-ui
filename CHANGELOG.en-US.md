@@ -23,6 +23,8 @@ timeline: true
 - 💄 `Collapse`: Adjust the style of icon.
 - 💄 `Modal`: Adjust the style of footer's button.
 - 🌟 Added component `IconSelect`.
+- 💄 `Table`: Adjust `FilterSelect` function.
+- 💄 `Table`:  Adjust the position of Popup.
 
 ## 0.2.4
 

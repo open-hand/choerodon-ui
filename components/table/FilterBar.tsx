@@ -15,13 +15,14 @@ export interface FilterBarProps<T> {
   onFilterSelectClear?: () => void;
   onColumnFilterChange?: (columns?: ColumnProps<T>[]) => void;
   onFilter?: (column: ColumnProps<T>, nextFilters: string[]) => void;
+  getPopupContainer?: (triggerNode?: Element) => HTMLElement;
 }
 
 export default class FilterBar<T> extends React.Component<FilterBarProps<T>, any> {
   render() {
     const {
       prefixCls, columns, onColumnFilterChange, onFilterSelectChange, onFilterSelectClear, onFilter,
-      dataSource, filters, columnFilters, placeholder, multiple,
+      dataSource, filters, columnFilters, placeholder, multiple, getPopupContainer,
     } = this.props;
     return (
       <div className={`${prefixCls}-filter-bar`}>
@@ -35,9 +36,15 @@ export default class FilterBar<T> extends React.Component<FilterBarProps<T>, any
           onFilter={onFilter}
           filters={filters}
           columnFilters={columnFilters}
+          getPopupContainer={getPopupContainer}
           multiple={multiple}
         />
-        <ColumnFilter prefixCls={prefixCls} columns={columns} onColumnFilterChange={onColumnFilterChange} />
+        <ColumnFilter
+          prefixCls={prefixCls}
+          columns={columns}
+          onColumnFilterChange={onColumnFilterChange}
+          getPopupContainer={getPopupContainer}
+        />
       </div>
     );
   }

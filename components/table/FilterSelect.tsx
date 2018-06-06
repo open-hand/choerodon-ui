@@ -40,6 +40,7 @@ export interface FilterSelectProps<T> {
   onChange?: (filters?: any[]) => void;
   onClear?: () => void;
   multiple?: boolean;
+  getPopupContainer?: (triggerNode?: Element) => HTMLElement;
 }
 
 export interface FilterSelectState<T> {
@@ -123,6 +124,7 @@ export default class FilterSelect<T> extends React.Component<FilterSelectProps<T
           getRootDomNode={this.getRootDomNode}
           showCheckAll={false}
           onChoiceItemClick={this.handleChoiceItemClick}
+          getPopupContainer={this.props.getPopupContainer}
           allowClear
           labelInValue
         >
@@ -172,8 +174,11 @@ export default class FilterSelect<T> extends React.Component<FilterSelectProps<T
       if (selectColumn) {
         const key = getColumnKey(selectColumn);
         if (key) {
-          const filterValue = columnFilters[key] = value.split(this.getColumnTitle(selectColumn)).slice(1);
-          this.fireColumnFilterChange(key, filterValue);
+          const { filters: columFilters } = selectColumn;
+          const filterText = columnFilters[key] = value.split(this.getColumnTitle(selectColumn)).slice(1);
+          const found = columFilters && columFilters.find(filter => filter.text === filterText[0]);
+          const filterValue = found ? String(found.value) : filterText;
+          this.fireColumnFilterChange(key, [filterValue]);
         }
       } else {
         filters.push(value);

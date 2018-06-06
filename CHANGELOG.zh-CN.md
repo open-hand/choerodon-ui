@@ -23,6 +23,8 @@ timeline: true
 - 💄 `Collapse`:修改 icon 图标样式。
 - 💄 `Modal`: 调整 footer 的 button 样式。
 - 🌟 增加 `IconSelect` 组件。
+- 💄 `Table`: 调整 `FilterSelect` 功能。
+- 💄 `Table`: 调整弹出窗位置。
 
 ## 0.2.4
 
