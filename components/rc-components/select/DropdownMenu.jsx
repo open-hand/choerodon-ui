@@ -6,7 +6,6 @@ import Menu from '../menu';
 import scrollIntoView from 'dom-scroll-into-view';
 import { getSelectKeys, preventDefaultEvent, saveRef } from './util';
 import FilterInput from './FilterInput';
-import Spin from '../../spin';
 
 
 export default class DropdownMenu extends React.Component {
@@ -30,14 +29,9 @@ export default class DropdownMenu extends React.Component {
       PropTypes.node,
       PropTypes.string,
     ]),
-    loading: PropTypes.oneOfType([
-      PropTypes.bool,
-      PropTypes.object,
-    ]),
   };
 
   static defaultProps = {
-    loading: false,
     footer: null,
   };
 
@@ -176,11 +170,12 @@ export default class DropdownMenu extends React.Component {
   }
 
   renderFilterInput() {
-    const { prefixCls, filter, placeholder, onFilterInputChange } = this.props;
+    const { prefixCls, filter, placeholder, onFilterChange , filterValue} = this.props;
     const props = {
+      filterValue,
       prefixCls,
       placeholder,
-      onChange: onFilterInputChange,
+      onChange: onFilterChange,
       underline: false,
     };
     return filter ? <FilterInput {...props} ref={saveRef(this, 'filterRef')} /> : null;
@@ -208,25 +203,17 @@ export default class DropdownMenu extends React.Component {
         </div>
       );
     }
-    let loading = this.props.loading;
-    if (typeof loading === 'boolean') {
-      loading = {
-        spinning: loading,
-      };
-    }
     return (
       <div onMouseDown={onMouseDown}>
-        <Spin {...loading}>
-          {filterInput}
-          {selectOpt}
-          <div
-            style={{ overflow: 'auto' }}
-            onScroll={this.props.onPopupScroll}
-          >
-            {renderMenu}
-          </div>
-          {this.getFooter()}
-        </Spin>
+        {filterInput}
+        {selectOpt}
+        <div
+          style={{ overflow: 'auto' }}
+          onScroll={this.props.onPopupScroll}
+        >
+          {renderMenu}
+        </div>
+        {this.getFooter()}
       </div>
     );
   }

@@ -15,8 +15,18 @@ class FilterInput extends Component {
 
   constructor(props) {
     super(props);
+    const value = props.filterValue || '';
     this.state = {
-      value: '',
+      value,
+    }
+  }
+
+  componentWillReceiveProps = nextProps => {
+    if ('filterValue' in nextProps) {
+      const value = nextProps.filterValue;
+      this.setState({
+        value,
+      });
     }
   }
 
@@ -31,15 +41,12 @@ class FilterInput extends Component {
   clearInputValue = () => {
     const { onChange } = this.props;
     onChange('');
-    this.setState({
-      value: ''
-    });
   }
 
   render() {
-    const { prefixCls,placeholder, underline } = this.props;
+    const { prefixCls, placeholder, underline } = this.props;
     const { value } = this.state;
-    const suffix = value ? <Button size='small' onClick={this.clearInputValue} shape="circle" icon="close" /> : null;
+    const suffix = value && <Button size='small' onClick={this.clearInputValue} shape="circle" icon="close" />;
     return (
       <div className={`${prefixCls}-filter`}>
         <span className={`${prefixCls}-filter-input`}>
@@ -50,7 +57,7 @@ class FilterInput extends Component {
             suffix={suffix}
             onChange={this.handleChange}
             underline={underline}
-            ref={saveRef(this, 'inputRef')}
+            ref={saveRef(this, 'filterInputRef')}
           />
         </span>
       </div>

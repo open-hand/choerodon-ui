@@ -312,6 +312,39 @@ exports[`renders ./components/select/demo/coordinate.md correctly 1`] = `
 </div>
 `;
 
+exports[`renders ./components/select/demo/iconselect.md correctly 1`] = `
+<div
+  class="ant-icon-select ant-select ant-select-enabled"
+  style="width:300px"
+>
+  <div
+    aria-autocomplete="list"
+    aria-expanded="false"
+    aria-haspopup="true"
+    class="ant-select-selection
+            ant-select-selection--single"
+    role="combobox"
+    tabindex="0"
+  >
+    <div
+      class="ant-select-selection__rendered"
+    >
+      <div
+        class="ant-select-selection-selected-value"
+        style="opacity:1"
+      />
+    </div>
+  </div>
+  <div
+    class="ant-select-underline"
+  >
+    <span
+      class="ant-select-ripple"
+    />
+  </div>
+</div>
+`;
+
 exports[`renders ./components/select/demo/label-in-value.md correctly 1`] = `
 <div
   class="ant-select ant-select-has-value ant-select-enabled"

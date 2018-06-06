@@ -1064,6 +1064,7 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
           filters={filters}
           columnFilters={this.state.filters}
           multiple={filterBarMultiple}
+          getPopupContainer={this.getPopupContainer}
         />
       );
       return [bar, table];

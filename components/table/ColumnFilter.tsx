@@ -10,6 +10,7 @@ export interface ColumnFilterProps<T> {
   prefixCls?: string;
   columns?: ColumnProps<T>[];
   onColumnFilterChange?: () => void;
+  getPopupContainer?: (triggerNode?: Element) => HTMLElement;
 }
 
 export interface ColumnFilterState {
@@ -32,6 +33,7 @@ export default class ColumnFilter<T> extends React.Component<ColumnFilterProps<T
           showAction={['click']}
           options={this.getOptions()}
           value={this.getVisibleColumns()}
+          getPopupContainer={this.props.getPopupContainer}
           multiple
           onDropdownVisibleChange={this.onDropdownVisibleChange}
           onMenuSelect={this.onMenuSelect}
