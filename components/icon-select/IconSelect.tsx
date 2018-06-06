@@ -210,7 +210,7 @@ export default class IconSelect extends React.Component<IconSelectProps, IconSel
     });
   }
 
-  handleRender = (label: any) => {
+  handleRender = (label: React.ReactElement<any>) => {
     if (!label) {
       return;
     }
