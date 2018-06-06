@@ -5,6 +5,7 @@ import classnames from 'classnames';
 import DropdownMenu from './DropdownMenu';
 import ReactDOM from 'react-dom';
 import { isSingleMode, saveRef } from './util';
+import Spin from '../../spin';
 
 Trigger.displayName = 'Trigger';
 
@@ -97,25 +98,34 @@ export default class SelectTrigger extends React.Component {
 
   getDropdownElement = newProps => {
     const props = this.props;
+    let loading = props.loading;
+    if (typeof loading === 'boolean') {
+      loading = {
+        spinning: loading,
+      };
+    }
     return (
-      <DropdownMenu
-        ref={saveRef(this, 'dropdownMenuRef')}
-        {...newProps}
-        prefixCls={this.getDropdownPrefixCls()}
-        onMenuSelect={props.onMenuSelect}
-        onMenuDeselect={props.onMenuDeselect}
-        onPopupScroll={props.onPopupScroll}
-        value={props.value}
-        placeholder={props.filterPlaceholder}
-        checkAll={props.checkAll}
-        backfillValue={props.backfillValue}
-        firstActiveValue={props.firstActiveValue}
-        defaultActiveFirstOption={props.defaultActiveFirstOption}
-        dropdownMenuStyle={props.dropdownMenuStyle}
-        onFilterChange={props.onFilterChange}
-        footer={props.footer}
-        onMouseDown={props.onDropdownMouseDown}
-      />
+      <Spin {...loading}>
+        <DropdownMenu
+          ref={saveRef(this, 'dropdownMenuRef')}
+          {...newProps}
+          prefixCls={this.getDropdownPrefixCls()}
+          onMenuSelect={props.onMenuSelect}
+          onMenuDeselect={props.onMenuDeselect}
+          onPopupScroll={props.onPopupScroll}
+          value={props.value}
+          placeholder={props.filterPlaceholder}
+          checkAll={props.checkAll}
+          backfillValue={props.backfillValue}
+          firstActiveValue={props.firstActiveValue}
+          defaultActiveFirstOption={props.defaultActiveFirstOption}
+          dropdownMenuStyle={props.dropdownMenuStyle}
+          onFilterChange={props.onFilterChange}
+          footer={props.footer}
+          onMouseDown={props.onDropdownMouseDown}
+      />  
+      </Spin>
+      
     );
   };
 
@@ -145,7 +155,6 @@ export default class SelectTrigger extends React.Component {
       dropdownStyle,
       dropdownMatchSelectWidth,
       filter,
-      loading,
       filterValue,
     } = props;
     const dropdownPrefixCls = this.getDropdownPrefixCls();
@@ -160,7 +169,6 @@ export default class SelectTrigger extends React.Component {
       inputValue,
       visible,
       filter,
-      loading,
       filterValue,
     });
 
