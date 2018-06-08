@@ -314,7 +314,7 @@ exports[`renders ./components/select/demo/coordinate.md correctly 1`] = `
 
 exports[`renders ./components/select/demo/iconselect.md correctly 1`] = `
 <div
-  class="ant-icon-select ant-select ant-select-enabled"
+  class="ant-icon-select ant-select ant-select-has-value ant-select-enabled"
   style="width:300px"
 >
   <div
@@ -332,7 +332,15 @@ exports[`renders ./components/select/demo/iconselect.md correctly 1`] = `
       <div
         class="ant-select-selection-selected-value"
         style="opacity:1"
-      />
+        title="root"
+      >
+        <span>
+          <i
+            class="icon icon-root"
+          />
+           root
+        </span>
+      </div>
     </div>
   </div>
   <div

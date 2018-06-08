@@ -177,7 +177,7 @@ export default class FilterSelect<T> extends React.Component<FilterSelectProps<T
           const { filters: columFilters } = selectColumn;
           const filterText = columnFilters[key] = value.split(this.getColumnTitle(selectColumn)).slice(1);
           const found = columFilters && columFilters.find(filter => filter.text === filterText[0]);
-          const filterValue = found ? String(found.value) : filterText;
+          const filterValue = found ? String(found.value) : filterText[0];
           this.fireColumnFilterChange(key, [filterValue]);
         }
       } else {

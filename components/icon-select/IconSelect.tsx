@@ -212,7 +212,7 @@ export default class IconSelect extends React.Component<IconSelectProps, IconSel
 
   handleRender = (label: React.ReactElement<any>) => {
     if (typeof label === 'string' && label) {
-      return <span><Icon type={label}/>{label}</span>;
+      return <span><Icon type={label}/> {label}</span>;
     } else if (typeof label === 'object' && label.props) {
       const { children } = label.props;
       return children ? React.cloneElement(<span/>, {}, children) : null;
