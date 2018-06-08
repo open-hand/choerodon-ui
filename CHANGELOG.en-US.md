@@ -15,6 +15,12 @@ timeline: true
 
 ---
 
+## 0.3.1
+
+`2018-06-08`
+
+- 🐞 `Table`: Fixed select dropDown of Column which is always loading.
+
 ## 0.3.0
 
 `2018-06-08`

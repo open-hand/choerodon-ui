@@ -59,10 +59,15 @@ export default class SelectTrigger extends React.Component {
     filter: PropTypes.bool,
     builtinPlacements: PropTypes.any,
     getRootDomNode: PropTypes.func,
+    loading: PropTypes.oneOfType([
+      PropTypes.bool,
+      PropTypes.object,
+    ]),
   };
 
   static defaultProps = {
     popupPlacement: 'bottomLeft',
+    loading: false,
   };
 
   state = {
