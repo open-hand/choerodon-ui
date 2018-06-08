@@ -15,9 +15,9 @@ timeline: true
 
 ---
 
-## 0.2.5
+## 0.3.0
 
-`2018-06-04`
+`2018-06-08`
 
 - 🌟 `Select`: Added loading.
 - 💄 `Collapse`: Adjust the style of icon.

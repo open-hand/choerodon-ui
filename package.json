@@ -1,6 +1,6 @@
 {
   "name": "choerodon-ui",
-  "version": "0.2.5",
+  "version": "0.3.0",
   "title": "Choerodon UI",
   "description": "An enterprise-class UI design language and React-based implementation",
   "homepage": "",
@@ -163,6 +163,7 @@
     "test": "jest --config .jest.js --debug",
     "test-node": "jest --config .jest.node.js",
     "test-all": "sh ./scripts/test-all.sh",
+    "test-all-skip": "sh ./scripts/test-all.sh --skip",
     "ts-lint": "tslint -c tslint.json components/**/*.tsx",
     "ts-lint-fix": "tslint -c tslint.json components/**/*.tsx --fix",
     "lint": "npm run lint:ts && npm run lint:es && npm run lint:demo && npm run lint:style",
