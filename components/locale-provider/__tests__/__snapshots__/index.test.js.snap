@@ -5,22 +5,65 @@ exports[`Locale Provider set moment locale when locale changes 1`] = `
   <span
     class="ant-calendar-picker"
   >
-    <div
+    <span
+      class="ant-input-wrapper ant-input-has-value ant-input-has-suffix"
       style=""
     >
-      <input
-        class="ant-calendar-picker-input ant-input"
-        placeholder="请选择日期"
-        readonly=""
-        value="2017-09-18"
-      />
-      <i
-        class="icon icon-cross-circle ant-calendar-picker-clear"
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
-    </div>
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              请选择日期
+            </div>
+            <input
+              class="ant-input ant-calendar-picker-input ant-input"
+              readonly=""
+              type="text"
+              value="2017-09-18"
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <span
+              class="ant-calendar-picker-icon-wrapper"
+              style="min-width: 42px;"
+            >
+              <button
+                class="ant-btn ant-calendar-picker-clear ant-btn-circle ant-btn-sm ant-btn-icon-only ant-btn-flat"
+                type="button"
+              >
+                <i
+                  class="icon icon-close"
+                />
+                <div
+                  class="ant-ripple-wrapper"
+                />
+              </button>
+              <i
+                class="icon icon-date_range ant-calendar-picker-icon"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
 </div>
 `;
@@ -30,22 +73,65 @@ exports[`Locale Provider set moment locale when locale changes 2`] = `
   <span
     class="ant-calendar-picker"
   >
-    <div
+    <span
+      class="ant-input-wrapper ant-input-has-value ant-input-has-suffix"
       style=""
     >
-      <input
-        class="ant-calendar-picker-input ant-input"
-        placeholder="Sélectionner une date"
-        readonly=""
-        value="2017-09-18"
-      />
-      <i
-        class="icon icon-cross-circle ant-calendar-picker-clear"
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
-    </div>
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Sélectionner une date
+            </div>
+            <input
+              class="ant-input ant-calendar-picker-input ant-input"
+              readonly=""
+              type="text"
+              value="2017-09-18"
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <span
+              class="ant-calendar-picker-icon-wrapper"
+              style="min-width: 42px;"
+            >
+              <button
+                class="ant-btn ant-calendar-picker-clear ant-btn-circle ant-btn-sm ant-btn-icon-only ant-btn-flat"
+                type="button"
+              >
+                <i
+                  class="icon icon-close"
+                />
+                <div
+                  class="ant-ripple-wrapper"
+                />
+              </button>
+              <i
+                class="icon icon-date_range ant-calendar-picker-icon"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
 </div>
 `;
@@ -55,22 +141,65 @@ exports[`Locale Provider set moment locale when locale changes 3`] = `
   <span
     class="ant-calendar-picker"
   >
-    <div
+    <span
+      class="ant-input-wrapper ant-input-has-value ant-input-has-suffix"
       style=""
     >
-      <input
-        class="ant-calendar-picker-input ant-input"
-        placeholder="Select date"
-        readonly=""
-        value="2017-09-18"
-      />
-      <i
-        class="icon icon-cross-circle ant-calendar-picker-clear"
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
-    </div>
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Select date
+            </div>
+            <input
+              class="ant-input ant-calendar-picker-input ant-input"
+              readonly=""
+              type="text"
+              value="2017-09-18"
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <span
+              class="ant-calendar-picker-icon-wrapper"
+              style="min-width: 42px;"
+            >
+              <button
+                class="ant-btn ant-calendar-picker-clear ant-btn-circle ant-btn-sm ant-btn-icon-only ant-btn-flat"
+                type="button"
+              >
+                <i
+                  class="icon icon-close"
+                />
+                <div
+                  class="ant-ripple-wrapper"
+                />
+              </button>
+              <i
+                class="icon icon-date_range ant-calendar-picker-icon"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
 </div>
 `;
@@ -251,34 +380,102 @@ exports[`Locale Provider should display the text as ar 1`] = `
   <span
     class="ant-calendar-picker"
   >
-    <div
+    <span
+      class="ant-input-wrapper ant-input-has-suffix"
       style=""
     >
-      <input
-        class="ant-calendar-picker-input ant-input"
-        placeholder="اختيار التاريخ"
-        readonly=""
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
-    </div>
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              اختيار التاريخ
+            </div>
+            <input
+              class="ant-input ant-calendar-picker-input ant-input"
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <span
+              class="ant-calendar-picker-icon-wrapper"
+              style="min-width: 18px;"
+            >
+              <i
+                class="icon icon-date_range ant-calendar-picker-icon"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-time-picker "
     style=""
   >
-    <input
-      class="ant-time-picker-input"
-      id=""
-      placeholder="اختيار الوقت"
-      type="text"
-      value=""
-    />
     <span
-      class="ant-time-picker-icon"
-    />
+      class="ant-input-wrapper ant-input-focus ant-input-has-suffix"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              اختيار الوقت
+            </div>
+            <input
+              class="ant-input ant-time-picker-input"
+              id=""
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <i
+              class="icon icon-av_timer ant-time-picker-icon"
+            />
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-calendar-picker"
@@ -286,31 +483,42 @@ exports[`Locale Provider should display the text as ar 1`] = `
     tabindex="0"
   >
     <span
-      class="ant-calendar-picker-input ant-input"
+      class="ant-calendar-range-picker"
       style=""
     >
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="البداية"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
       <span
-        class="ant-calendar-range-picker-separator"
+        class="ant-calendar-picker-input ant-input"
       >
-         ~ 
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="البداية"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <span
+          class="ant-calendar-range-picker-separator"
+        >
+           ~ 
+        </span>
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="النهاية"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <i
+          class="icon icon-date_range ant-calendar-picker-icon"
+        />
       </span>
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="النهاية"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
+      <div
+        class="ant-calendar-underline"
+      >
+        <span
+          class="ant-calendar-ripple"
+        />
+      </div>
     </span>
   </span>
   <a
@@ -1883,34 +2091,102 @@ exports[`Locale Provider should display the text as bg 1`] = `
   <span
     class="ant-calendar-picker"
   >
-    <div
+    <span
+      class="ant-input-wrapper ant-input-has-suffix"
       style=""
     >
-      <input
-        class="ant-calendar-picker-input ant-input"
-        placeholder="Избор на дата"
-        readonly=""
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
-    </div>
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Избор на дата
+            </div>
+            <input
+              class="ant-input ant-calendar-picker-input ant-input"
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <span
+              class="ant-calendar-picker-icon-wrapper"
+              style="min-width: 18px;"
+            >
+              <i
+                class="icon icon-date_range ant-calendar-picker-icon"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-time-picker "
     style=""
   >
-    <input
-      class="ant-time-picker-input"
-      id=""
-      placeholder="Избор на час"
-      type="text"
-      value=""
-    />
     <span
-      class="ant-time-picker-icon"
-    />
+      class="ant-input-wrapper ant-input-focus ant-input-has-suffix"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Избор на час
+            </div>
+            <input
+              class="ant-input ant-time-picker-input"
+              id=""
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <i
+              class="icon icon-av_timer ant-time-picker-icon"
+            />
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-calendar-picker"
@@ -1918,31 +2194,42 @@ exports[`Locale Provider should display the text as bg 1`] = `
     tabindex="0"
   >
     <span
-      class="ant-calendar-picker-input ant-input"
+      class="ant-calendar-range-picker"
       style=""
     >
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Начална"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
       <span
-        class="ant-calendar-range-picker-separator"
+        class="ant-calendar-picker-input ant-input"
       >
-         ~ 
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Начална"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <span
+          class="ant-calendar-range-picker-separator"
+        >
+           ~ 
+        </span>
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Крайна"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <i
+          class="icon icon-date_range ant-calendar-picker-icon"
+        />
       </span>
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Крайна"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
+      <div
+        class="ant-calendar-underline"
+      >
+        <span
+          class="ant-calendar-ripple"
+        />
+      </div>
     </span>
   </span>
   <a
@@ -3515,34 +3802,102 @@ exports[`Locale Provider should display the text as ca 1`] = `
   <span
     class="ant-calendar-picker"
   >
-    <div
+    <span
+      class="ant-input-wrapper ant-input-has-suffix"
       style=""
     >
-      <input
-        class="ant-calendar-picker-input ant-input"
-        placeholder="Seleccionar data"
-        readonly=""
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
-    </div>
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Seleccionar data
+            </div>
+            <input
+              class="ant-input ant-calendar-picker-input ant-input"
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <span
+              class="ant-calendar-picker-icon-wrapper"
+              style="min-width: 18px;"
+            >
+              <i
+                class="icon icon-date_range ant-calendar-picker-icon"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-time-picker "
     style=""
   >
-    <input
-      class="ant-time-picker-input"
-      id=""
-      placeholder="Seleccionar hora"
-      type="text"
-      value=""
-    />
     <span
-      class="ant-time-picker-icon"
-    />
+      class="ant-input-wrapper ant-input-focus ant-input-has-suffix"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Seleccionar hora
+            </div>
+            <input
+              class="ant-input ant-time-picker-input"
+              id=""
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <i
+              class="icon icon-av_timer ant-time-picker-icon"
+            />
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-calendar-picker"
@@ -3550,31 +3905,42 @@ exports[`Locale Provider should display the text as ca 1`] = `
     tabindex="0"
   >
     <span
-      class="ant-calendar-picker-input ant-input"
+      class="ant-calendar-range-picker"
       style=""
     >
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Data inicial"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
       <span
-        class="ant-calendar-range-picker-separator"
+        class="ant-calendar-picker-input ant-input"
       >
-         ~ 
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Data inicial"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <span
+          class="ant-calendar-range-picker-separator"
+        >
+           ~ 
+        </span>
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Data final"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <i
+          class="icon icon-date_range ant-calendar-picker-icon"
+        />
       </span>
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Data final"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
+      <div
+        class="ant-calendar-underline"
+      >
+        <span
+          class="ant-calendar-ripple"
+        />
+      </div>
     </span>
   </span>
   <a
@@ -5147,34 +5513,102 @@ exports[`Locale Provider should display the text as cs 1`] = `
   <span
     class="ant-calendar-picker"
   >
-    <div
+    <span
+      class="ant-input-wrapper ant-input-has-suffix"
       style=""
     >
-      <input
-        class="ant-calendar-picker-input ant-input"
-        placeholder="Vybrat datum"
-        readonly=""
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
-    </div>
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Vybrat datum
+            </div>
+            <input
+              class="ant-input ant-calendar-picker-input ant-input"
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <span
+              class="ant-calendar-picker-icon-wrapper"
+              style="min-width: 18px;"
+            >
+              <i
+                class="icon icon-date_range ant-calendar-picker-icon"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-time-picker "
     style=""
   >
-    <input
-      class="ant-time-picker-input"
-      id=""
-      placeholder="Vybrat čas"
-      type="text"
-      value=""
-    />
     <span
-      class="ant-time-picker-icon"
-    />
+      class="ant-input-wrapper ant-input-focus ant-input-has-suffix"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Vybrat čas
+            </div>
+            <input
+              class="ant-input ant-time-picker-input"
+              id=""
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <i
+              class="icon icon-av_timer ant-time-picker-icon"
+            />
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-calendar-picker"
@@ -5182,31 +5616,42 @@ exports[`Locale Provider should display the text as cs 1`] = `
     tabindex="0"
   >
     <span
-      class="ant-calendar-picker-input ant-input"
+      class="ant-calendar-range-picker"
       style=""
     >
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Od"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
       <span
-        class="ant-calendar-range-picker-separator"
+        class="ant-calendar-picker-input ant-input"
       >
-         ~ 
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Od"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <span
+          class="ant-calendar-range-picker-separator"
+        >
+           ~ 
+        </span>
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Do"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <i
+          class="icon icon-date_range ant-calendar-picker-icon"
+        />
       </span>
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Do"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
+      <div
+        class="ant-calendar-underline"
+      >
+        <span
+          class="ant-calendar-ripple"
+        />
+      </div>
     </span>
   </span>
   <a
@@ -6779,34 +7224,102 @@ exports[`Locale Provider should display the text as de 1`] = `
   <span
     class="ant-calendar-picker"
   >
-    <div
+    <span
+      class="ant-input-wrapper ant-input-has-suffix"
       style=""
     >
-      <input
-        class="ant-calendar-picker-input ant-input"
-        placeholder="Datum auswählen"
-        readonly=""
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
-    </div>
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Datum auswählen
+            </div>
+            <input
+              class="ant-input ant-calendar-picker-input ant-input"
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <span
+              class="ant-calendar-picker-icon-wrapper"
+              style="min-width: 18px;"
+            >
+              <i
+                class="icon icon-date_range ant-calendar-picker-icon"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-time-picker "
     style=""
   >
-    <input
-      class="ant-time-picker-input"
-      id=""
-      placeholder="Zeit auswählen"
-      type="text"
-      value=""
-    />
     <span
-      class="ant-time-picker-icon"
-    />
+      class="ant-input-wrapper ant-input-focus ant-input-has-suffix"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Zeit auswählen
+            </div>
+            <input
+              class="ant-input ant-time-picker-input"
+              id=""
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <i
+              class="icon icon-av_timer ant-time-picker-icon"
+            />
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-calendar-picker"
@@ -6814,31 +7327,42 @@ exports[`Locale Provider should display the text as de 1`] = `
     tabindex="0"
   >
     <span
-      class="ant-calendar-picker-input ant-input"
+      class="ant-calendar-range-picker"
       style=""
     >
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Startdatum"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
       <span
-        class="ant-calendar-range-picker-separator"
+        class="ant-calendar-picker-input ant-input"
       >
-         ~ 
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Startdatum"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <span
+          class="ant-calendar-range-picker-separator"
+        >
+           ~ 
+        </span>
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Enddatum"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <i
+          class="icon icon-date_range ant-calendar-picker-icon"
+        />
       </span>
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Enddatum"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
+      <div
+        class="ant-calendar-underline"
+      >
+        <span
+          class="ant-calendar-ripple"
+        />
+      </div>
     </span>
   </span>
   <a
@@ -8411,34 +8935,102 @@ exports[`Locale Provider should display the text as el 1`] = `
   <span
     class="ant-calendar-picker"
   >
-    <div
+    <span
+      class="ant-input-wrapper ant-input-has-suffix"
       style=""
     >
-      <input
-        class="ant-calendar-picker-input ant-input"
-        placeholder="Επιλέξτε ημερομηνία"
-        readonly=""
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
-    </div>
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Επιλέξτε ημερομηνία
+            </div>
+            <input
+              class="ant-input ant-calendar-picker-input ant-input"
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <span
+              class="ant-calendar-picker-icon-wrapper"
+              style="min-width: 18px;"
+            >
+              <i
+                class="icon icon-date_range ant-calendar-picker-icon"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-time-picker "
     style=""
   >
-    <input
-      class="ant-time-picker-input"
-      id=""
-      placeholder="Επιλέξτε ώρα"
-      type="text"
-      value=""
-    />
     <span
-      class="ant-time-picker-icon"
-    />
+      class="ant-input-wrapper ant-input-focus ant-input-has-suffix"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Επιλέξτε ώρα
+            </div>
+            <input
+              class="ant-input ant-time-picker-input"
+              id=""
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <i
+              class="icon icon-av_timer ant-time-picker-icon"
+            />
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-calendar-picker"
@@ -8446,31 +9038,42 @@ exports[`Locale Provider should display the text as el 1`] = `
     tabindex="0"
   >
     <span
-      class="ant-calendar-picker-input ant-input"
+      class="ant-calendar-range-picker"
       style=""
     >
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Αρχική ημερομηνία"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
       <span
-        class="ant-calendar-range-picker-separator"
+        class="ant-calendar-picker-input ant-input"
       >
-         ~ 
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Αρχική ημερομηνία"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <span
+          class="ant-calendar-range-picker-separator"
+        >
+           ~ 
+        </span>
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Τελική ημερομηνία"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <i
+          class="icon icon-date_range ant-calendar-picker-icon"
+        />
       </span>
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Τελική ημερομηνία"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
+      <div
+        class="ant-calendar-underline"
+      >
+        <span
+          class="ant-calendar-ripple"
+        />
+      </div>
     </span>
   </span>
   <a
@@ -10043,34 +10646,102 @@ exports[`Locale Provider should display the text as en 1`] = `
   <span
     class="ant-calendar-picker"
   >
-    <div
+    <span
+      class="ant-input-wrapper ant-input-has-suffix"
       style=""
     >
-      <input
-        class="ant-calendar-picker-input ant-input"
-        placeholder="Select date"
-        readonly=""
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
-    </div>
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Select date
+            </div>
+            <input
+              class="ant-input ant-calendar-picker-input ant-input"
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <span
+              class="ant-calendar-picker-icon-wrapper"
+              style="min-width: 18px;"
+            >
+              <i
+                class="icon icon-date_range ant-calendar-picker-icon"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-time-picker "
     style=""
   >
-    <input
-      class="ant-time-picker-input"
-      id=""
-      placeholder="Select time"
-      type="text"
-      value=""
-    />
     <span
-      class="ant-time-picker-icon"
-    />
+      class="ant-input-wrapper ant-input-focus ant-input-has-suffix"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Select time
+            </div>
+            <input
+              class="ant-input ant-time-picker-input"
+              id=""
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <i
+              class="icon icon-av_timer ant-time-picker-icon"
+            />
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-calendar-picker"
@@ -10078,31 +10749,42 @@ exports[`Locale Provider should display the text as en 1`] = `
     tabindex="0"
   >
     <span
-      class="ant-calendar-picker-input ant-input"
+      class="ant-calendar-range-picker"
       style=""
     >
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Start date"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
       <span
-        class="ant-calendar-range-picker-separator"
+        class="ant-calendar-picker-input ant-input"
       >
-         ~ 
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Start date"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <span
+          class="ant-calendar-range-picker-separator"
+        >
+           ~ 
+        </span>
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="End date"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <i
+          class="icon icon-date_range ant-calendar-picker-icon"
+        />
       </span>
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="End date"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
+      <div
+        class="ant-calendar-underline"
+      >
+        <span
+          class="ant-calendar-ripple"
+        />
+      </div>
     </span>
   </span>
   <a
@@ -11675,34 +12357,102 @@ exports[`Locale Provider should display the text as en-gb 1`] = `
   <span
     class="ant-calendar-picker"
   >
-    <div
+    <span
+      class="ant-input-wrapper ant-input-has-suffix"
       style=""
     >
-      <input
-        class="ant-calendar-picker-input ant-input"
-        placeholder="Select date"
-        readonly=""
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
-    </div>
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Select date
+            </div>
+            <input
+              class="ant-input ant-calendar-picker-input ant-input"
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <span
+              class="ant-calendar-picker-icon-wrapper"
+              style="min-width: 18px;"
+            >
+              <i
+                class="icon icon-date_range ant-calendar-picker-icon"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-time-picker "
     style=""
   >
-    <input
-      class="ant-time-picker-input"
-      id=""
-      placeholder="Select time"
-      type="text"
-      value=""
-    />
     <span
-      class="ant-time-picker-icon"
-    />
+      class="ant-input-wrapper ant-input-focus ant-input-has-suffix"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Select time
+            </div>
+            <input
+              class="ant-input ant-time-picker-input"
+              id=""
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <i
+              class="icon icon-av_timer ant-time-picker-icon"
+            />
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-calendar-picker"
@@ -11710,31 +12460,42 @@ exports[`Locale Provider should display the text as en-gb 1`] = `
     tabindex="0"
   >
     <span
-      class="ant-calendar-picker-input ant-input"
+      class="ant-calendar-range-picker"
       style=""
     >
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Start date"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
       <span
-        class="ant-calendar-range-picker-separator"
+        class="ant-calendar-picker-input ant-input"
       >
-         ~ 
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Start date"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <span
+          class="ant-calendar-range-picker-separator"
+        >
+           ~ 
+        </span>
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="End date"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <i
+          class="icon icon-date_range ant-calendar-picker-icon"
+        />
       </span>
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="End date"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
+      <div
+        class="ant-calendar-underline"
+      >
+        <span
+          class="ant-calendar-ripple"
+        />
+      </div>
     </span>
   </span>
   <a
@@ -13307,34 +14068,102 @@ exports[`Locale Provider should display the text as es 1`] = `
   <span
     class="ant-calendar-picker"
   >
-    <div
+    <span
+      class="ant-input-wrapper ant-input-has-suffix"
       style=""
     >
-      <input
-        class="ant-calendar-picker-input ant-input"
-        placeholder="Seleccionar fecha"
-        readonly=""
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
-    </div>
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Seleccionar fecha
+            </div>
+            <input
+              class="ant-input ant-calendar-picker-input ant-input"
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <span
+              class="ant-calendar-picker-icon-wrapper"
+              style="min-width: 18px;"
+            >
+              <i
+                class="icon icon-date_range ant-calendar-picker-icon"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-time-picker "
     style=""
   >
-    <input
-      class="ant-time-picker-input"
-      id=""
-      placeholder="Seleccionar hora"
-      type="text"
-      value=""
-    />
     <span
-      class="ant-time-picker-icon"
-    />
+      class="ant-input-wrapper ant-input-focus ant-input-has-suffix"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Seleccionar hora
+            </div>
+            <input
+              class="ant-input ant-time-picker-input"
+              id=""
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <i
+              class="icon icon-av_timer ant-time-picker-icon"
+            />
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-calendar-picker"
@@ -13342,31 +14171,42 @@ exports[`Locale Provider should display the text as es 1`] = `
     tabindex="0"
   >
     <span
-      class="ant-calendar-picker-input ant-input"
+      class="ant-calendar-range-picker"
       style=""
     >
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Fecha inicial"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
       <span
-        class="ant-calendar-range-picker-separator"
+        class="ant-calendar-picker-input ant-input"
       >
-         ~ 
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Fecha inicial"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <span
+          class="ant-calendar-range-picker-separator"
+        >
+           ~ 
+        </span>
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Fecha final"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <i
+          class="icon icon-date_range ant-calendar-picker-icon"
+        />
       </span>
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Fecha final"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
+      <div
+        class="ant-calendar-underline"
+      >
+        <span
+          class="ant-calendar-ripple"
+        />
+      </div>
     </span>
   </span>
   <a
@@ -14939,34 +15779,102 @@ exports[`Locale Provider should display the text as et 1`] = `
   <span
     class="ant-calendar-picker"
   >
-    <div
+    <span
+      class="ant-input-wrapper ant-input-has-suffix"
       style=""
     >
-      <input
-        class="ant-calendar-picker-input ant-input"
-        placeholder="Vali kuupäev"
-        readonly=""
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
-    </div>
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Vali kuupäev
+            </div>
+            <input
+              class="ant-input ant-calendar-picker-input ant-input"
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <span
+              class="ant-calendar-picker-icon-wrapper"
+              style="min-width: 18px;"
+            >
+              <i
+                class="icon icon-date_range ant-calendar-picker-icon"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-time-picker "
     style=""
   >
-    <input
-      class="ant-time-picker-input"
-      id=""
-      placeholder="Vali aeg"
-      type="text"
-      value=""
-    />
     <span
-      class="ant-time-picker-icon"
-    />
+      class="ant-input-wrapper ant-input-focus ant-input-has-suffix"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Vali aeg
+            </div>
+            <input
+              class="ant-input ant-time-picker-input"
+              id=""
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <i
+              class="icon icon-av_timer ant-time-picker-icon"
+            />
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-calendar-picker"
@@ -14974,31 +15882,42 @@ exports[`Locale Provider should display the text as et 1`] = `
     tabindex="0"
   >
     <span
-      class="ant-calendar-picker-input ant-input"
+      class="ant-calendar-range-picker"
       style=""
     >
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Algus kuupäev"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
       <span
-        class="ant-calendar-range-picker-separator"
+        class="ant-calendar-picker-input ant-input"
       >
-         ~ 
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Algus kuupäev"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <span
+          class="ant-calendar-range-picker-separator"
+        >
+           ~ 
+        </span>
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Lõpu kuupäev"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <i
+          class="icon icon-date_range ant-calendar-picker-icon"
+        />
       </span>
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Lõpu kuupäev"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
+      <div
+        class="ant-calendar-underline"
+      >
+        <span
+          class="ant-calendar-ripple"
+        />
+      </div>
     </span>
   </span>
   <a
@@ -16571,34 +17490,102 @@ exports[`Locale Provider should display the text as fa 1`] = `
   <span
     class="ant-calendar-picker"
   >
-    <div
+    <span
+      class="ant-input-wrapper ant-input-has-suffix"
       style=""
     >
-      <input
-        class="ant-calendar-picker-input ant-input"
-        placeholder="انتخاب تاریخ"
-        readonly=""
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
-    </div>
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              انتخاب تاریخ
+            </div>
+            <input
+              class="ant-input ant-calendar-picker-input ant-input"
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <span
+              class="ant-calendar-picker-icon-wrapper"
+              style="min-width: 18px;"
+            >
+              <i
+                class="icon icon-date_range ant-calendar-picker-icon"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-time-picker "
     style=""
   >
-    <input
-      class="ant-time-picker-input"
-      id=""
-      placeholder="انتخاب زمان"
-      type="text"
-      value=""
-    />
     <span
-      class="ant-time-picker-icon"
-    />
+      class="ant-input-wrapper ant-input-focus ant-input-has-suffix"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              انتخاب زمان
+            </div>
+            <input
+              class="ant-input ant-time-picker-input"
+              id=""
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <i
+              class="icon icon-av_timer ant-time-picker-icon"
+            />
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-calendar-picker"
@@ -16606,31 +17593,42 @@ exports[`Locale Provider should display the text as fa 1`] = `
     tabindex="0"
   >
     <span
-      class="ant-calendar-picker-input ant-input"
+      class="ant-calendar-range-picker"
       style=""
     >
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="تاریخ شروع"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
       <span
-        class="ant-calendar-range-picker-separator"
+        class="ant-calendar-picker-input ant-input"
       >
-         ~ 
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="تاریخ شروع"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <span
+          class="ant-calendar-range-picker-separator"
+        >
+           ~ 
+        </span>
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="تاریخ پایان"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <i
+          class="icon icon-date_range ant-calendar-picker-icon"
+        />
       </span>
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="تاریخ پایان"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
+      <div
+        class="ant-calendar-underline"
+      >
+        <span
+          class="ant-calendar-ripple"
+        />
+      </div>
     </span>
   </span>
   <a
@@ -18203,34 +19201,102 @@ exports[`Locale Provider should display the text as fi 1`] = `
   <span
     class="ant-calendar-picker"
   >
-    <div
+    <span
+      class="ant-input-wrapper ant-input-has-suffix"
       style=""
     >
-      <input
-        class="ant-calendar-picker-input ant-input"
-        placeholder="Valitse päivä"
-        readonly=""
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
-    </div>
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Valitse päivä
+            </div>
+            <input
+              class="ant-input ant-calendar-picker-input ant-input"
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <span
+              class="ant-calendar-picker-icon-wrapper"
+              style="min-width: 18px;"
+            >
+              <i
+                class="icon icon-date_range ant-calendar-picker-icon"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-time-picker "
     style=""
   >
-    <input
-      class="ant-time-picker-input"
-      id=""
-      placeholder="Valitse aika"
-      type="text"
-      value=""
-    />
     <span
-      class="ant-time-picker-icon"
-    />
+      class="ant-input-wrapper ant-input-focus ant-input-has-suffix"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Valitse aika
+            </div>
+            <input
+              class="ant-input ant-time-picker-input"
+              id=""
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <i
+              class="icon icon-av_timer ant-time-picker-icon"
+            />
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-calendar-picker"
@@ -18238,31 +19304,42 @@ exports[`Locale Provider should display the text as fi 1`] = `
     tabindex="0"
   >
     <span
-      class="ant-calendar-picker-input ant-input"
+      class="ant-calendar-range-picker"
       style=""
     >
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Alku päivä"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
       <span
-        class="ant-calendar-range-picker-separator"
+        class="ant-calendar-picker-input ant-input"
       >
-         ~ 
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Alku päivä"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <span
+          class="ant-calendar-range-picker-separator"
+        >
+           ~ 
+        </span>
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Loppu päivä"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <i
+          class="icon icon-date_range ant-calendar-picker-icon"
+        />
       </span>
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Loppu päivä"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
+      <div
+        class="ant-calendar-underline"
+      >
+        <span
+          class="ant-calendar-ripple"
+        />
+      </div>
     </span>
   </span>
   <a
@@ -19835,34 +20912,102 @@ exports[`Locale Provider should display the text as fr 1`] = `
   <span
     class="ant-calendar-picker"
   >
-    <div
+    <span
+      class="ant-input-wrapper ant-input-has-suffix"
       style=""
     >
-      <input
-        class="ant-calendar-picker-input ant-input"
-        placeholder="Sélectionner une date"
-        readonly=""
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
-    </div>
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Sélectionner une date
+            </div>
+            <input
+              class="ant-input ant-calendar-picker-input ant-input"
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <span
+              class="ant-calendar-picker-icon-wrapper"
+              style="min-width: 18px;"
+            >
+              <i
+                class="icon icon-date_range ant-calendar-picker-icon"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-time-picker "
     style=""
   >
-    <input
-      class="ant-time-picker-input"
-      id=""
-      placeholder="Sélectionner l'heure"
-      type="text"
-      value=""
-    />
     <span
-      class="ant-time-picker-icon"
-    />
+      class="ant-input-wrapper ant-input-focus ant-input-has-suffix"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Sélectionner l'heure
+            </div>
+            <input
+              class="ant-input ant-time-picker-input"
+              id=""
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <i
+              class="icon icon-av_timer ant-time-picker-icon"
+            />
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-calendar-picker"
@@ -19870,31 +21015,42 @@ exports[`Locale Provider should display the text as fr 1`] = `
     tabindex="0"
   >
     <span
-      class="ant-calendar-picker-input ant-input"
+      class="ant-calendar-range-picker"
       style=""
     >
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Date de début"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
       <span
-        class="ant-calendar-range-picker-separator"
+        class="ant-calendar-picker-input ant-input"
       >
-         ~ 
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Date de début"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <span
+          class="ant-calendar-range-picker-separator"
+        >
+           ~ 
+        </span>
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Date de fin"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <i
+          class="icon icon-date_range ant-calendar-picker-icon"
+        />
       </span>
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Date de fin"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
+      <div
+        class="ant-calendar-underline"
+      >
+        <span
+          class="ant-calendar-ripple"
+        />
+      </div>
     </span>
   </span>
   <a
@@ -21467,34 +22623,102 @@ exports[`Locale Provider should display the text as fr 2`] = `
   <span
     class="ant-calendar-picker"
   >
-    <div
+    <span
+      class="ant-input-wrapper ant-input-has-suffix"
       style=""
     >
-      <input
-        class="ant-calendar-picker-input ant-input"
-        placeholder="Sélectionner une date"
-        readonly=""
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
-    </div>
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Sélectionner une date
+            </div>
+            <input
+              class="ant-input ant-calendar-picker-input ant-input"
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <span
+              class="ant-calendar-picker-icon-wrapper"
+              style="min-width: 18px;"
+            >
+              <i
+                class="icon icon-date_range ant-calendar-picker-icon"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-time-picker "
     style=""
   >
-    <input
-      class="ant-time-picker-input"
-      id=""
-      placeholder="Sélectionner l'heure"
-      type="text"
-      value=""
-    />
     <span
-      class="ant-time-picker-icon"
-    />
+      class="ant-input-wrapper ant-input-focus ant-input-has-suffix"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Sélectionner l'heure
+            </div>
+            <input
+              class="ant-input ant-time-picker-input"
+              id=""
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <i
+              class="icon icon-av_timer ant-time-picker-icon"
+            />
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-calendar-picker"
@@ -21502,31 +22726,42 @@ exports[`Locale Provider should display the text as fr 2`] = `
     tabindex="0"
   >
     <span
-      class="ant-calendar-picker-input ant-input"
+      class="ant-calendar-range-picker"
       style=""
     >
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Date de début"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
       <span
-        class="ant-calendar-range-picker-separator"
+        class="ant-calendar-picker-input ant-input"
       >
-         ~ 
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Date de début"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <span
+          class="ant-calendar-range-picker-separator"
+        >
+           ~ 
+        </span>
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Date de fin"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <i
+          class="icon icon-date_range ant-calendar-picker-icon"
+        />
       </span>
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Date de fin"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
+      <div
+        class="ant-calendar-underline"
+      >
+        <span
+          class="ant-calendar-ripple"
+        />
+      </div>
     </span>
   </span>
   <a
@@ -23099,34 +24334,102 @@ exports[`Locale Provider should display the text as is 1`] = `
   <span
     class="ant-calendar-picker"
   >
-    <div
+    <span
+      class="ant-input-wrapper ant-input-has-suffix"
       style=""
     >
-      <input
-        class="ant-calendar-picker-input ant-input"
-        placeholder="Veldu dag"
-        readonly=""
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
-    </div>
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Veldu dag
+            </div>
+            <input
+              class="ant-input ant-calendar-picker-input ant-input"
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <span
+              class="ant-calendar-picker-icon-wrapper"
+              style="min-width: 18px;"
+            >
+              <i
+                class="icon icon-date_range ant-calendar-picker-icon"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-time-picker "
     style=""
   >
-    <input
-      class="ant-time-picker-input"
-      id=""
-      placeholder="Velja tíma"
-      type="text"
-      value=""
-    />
     <span
-      class="ant-time-picker-icon"
-    />
+      class="ant-input-wrapper ant-input-focus ant-input-has-suffix"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Velja tíma
+            </div>
+            <input
+              class="ant-input ant-time-picker-input"
+              id=""
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <i
+              class="icon icon-av_timer ant-time-picker-icon"
+            />
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-calendar-picker"
@@ -23134,31 +24437,42 @@ exports[`Locale Provider should display the text as is 1`] = `
     tabindex="0"
   >
     <span
-      class="ant-calendar-picker-input ant-input"
+      class="ant-calendar-range-picker"
       style=""
     >
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Upphafsdagur"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
       <span
-        class="ant-calendar-range-picker-separator"
+        class="ant-calendar-picker-input ant-input"
       >
-         ~ 
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Upphafsdagur"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <span
+          class="ant-calendar-range-picker-separator"
+        >
+           ~ 
+        </span>
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Lokadagur"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <i
+          class="icon icon-date_range ant-calendar-picker-icon"
+        />
       </span>
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Lokadagur"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
+      <div
+        class="ant-calendar-underline"
+      >
+        <span
+          class="ant-calendar-ripple"
+        />
+      </div>
     </span>
   </span>
   <a
@@ -24731,34 +26045,102 @@ exports[`Locale Provider should display the text as it 1`] = `
   <span
     class="ant-calendar-picker"
   >
-    <div
+    <span
+      class="ant-input-wrapper ant-input-has-suffix"
       style=""
     >
-      <input
-        class="ant-calendar-picker-input ant-input"
-        placeholder="Selezionare la data"
-        readonly=""
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
-    </div>
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Selezionare la data
+            </div>
+            <input
+              class="ant-input ant-calendar-picker-input ant-input"
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <span
+              class="ant-calendar-picker-icon-wrapper"
+              style="min-width: 18px;"
+            >
+              <i
+                class="icon icon-date_range ant-calendar-picker-icon"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-time-picker "
     style=""
   >
-    <input
-      class="ant-time-picker-input"
-      id=""
-      placeholder="Selezionare il tempo"
-      type="text"
-      value=""
-    />
     <span
-      class="ant-time-picker-icon"
-    />
+      class="ant-input-wrapper ant-input-focus ant-input-has-suffix"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Selezionare il tempo
+            </div>
+            <input
+              class="ant-input ant-time-picker-input"
+              id=""
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <i
+              class="icon icon-av_timer ant-time-picker-icon"
+            />
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-calendar-picker"
@@ -24766,31 +26148,42 @@ exports[`Locale Provider should display the text as it 1`] = `
     tabindex="0"
   >
     <span
-      class="ant-calendar-picker-input ant-input"
+      class="ant-calendar-range-picker"
       style=""
     >
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Data d'inizio"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
       <span
-        class="ant-calendar-range-picker-separator"
+        class="ant-calendar-picker-input ant-input"
       >
-         ~ 
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Data d'inizio"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <span
+          class="ant-calendar-range-picker-separator"
+        >
+           ~ 
+        </span>
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Data di fine"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <i
+          class="icon icon-date_range ant-calendar-picker-icon"
+        />
       </span>
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Data di fine"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
+      <div
+        class="ant-calendar-underline"
+      >
+        <span
+          class="ant-calendar-ripple"
+        />
+      </div>
     </span>
   </span>
   <a
@@ -26363,34 +27756,102 @@ exports[`Locale Provider should display the text as ja 1`] = `
   <span
     class="ant-calendar-picker"
   >
-    <div
+    <span
+      class="ant-input-wrapper ant-input-has-suffix"
       style=""
     >
-      <input
-        class="ant-calendar-picker-input ant-input"
-        placeholder="日付を選択"
-        readonly=""
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
-    </div>
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              日付を選択
+            </div>
+            <input
+              class="ant-input ant-calendar-picker-input ant-input"
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <span
+              class="ant-calendar-picker-icon-wrapper"
+              style="min-width: 18px;"
+            >
+              <i
+                class="icon icon-date_range ant-calendar-picker-icon"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-time-picker "
     style=""
   >
-    <input
-      class="ant-time-picker-input"
-      id=""
-      placeholder="時刻を選択"
-      type="text"
-      value=""
-    />
     <span
-      class="ant-time-picker-icon"
-    />
+      class="ant-input-wrapper ant-input-focus ant-input-has-suffix"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              時刻を選択
+            </div>
+            <input
+              class="ant-input ant-time-picker-input"
+              id=""
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <i
+              class="icon icon-av_timer ant-time-picker-icon"
+            />
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-calendar-picker"
@@ -26398,31 +27859,42 @@ exports[`Locale Provider should display the text as ja 1`] = `
     tabindex="0"
   >
     <span
-      class="ant-calendar-picker-input ant-input"
+      class="ant-calendar-range-picker"
       style=""
     >
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="開始日付"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
       <span
-        class="ant-calendar-range-picker-separator"
+        class="ant-calendar-picker-input ant-input"
       >
-         ~ 
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="開始日付"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <span
+          class="ant-calendar-range-picker-separator"
+        >
+           ~ 
+        </span>
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="終了日付"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <i
+          class="icon icon-date_range ant-calendar-picker-icon"
+        />
       </span>
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="終了日付"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
+      <div
+        class="ant-calendar-underline"
+      >
+        <span
+          class="ant-calendar-ripple"
+        />
+      </div>
     </span>
   </span>
   <a
@@ -27995,34 +29467,102 @@ exports[`Locale Provider should display the text as ko 1`] = `
   <span
     class="ant-calendar-picker"
   >
-    <div
+    <span
+      class="ant-input-wrapper ant-input-has-suffix"
       style=""
     >
-      <input
-        class="ant-calendar-picker-input ant-input"
-        placeholder="날짜 선택"
-        readonly=""
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
-    </div>
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              날짜 선택
+            </div>
+            <input
+              class="ant-input ant-calendar-picker-input ant-input"
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <span
+              class="ant-calendar-picker-icon-wrapper"
+              style="min-width: 18px;"
+            >
+              <i
+                class="icon icon-date_range ant-calendar-picker-icon"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-time-picker "
     style=""
   >
-    <input
-      class="ant-time-picker-input"
-      id=""
-      placeholder="날짜 선택"
-      type="text"
-      value=""
-    />
     <span
-      class="ant-time-picker-icon"
-    />
+      class="ant-input-wrapper ant-input-focus ant-input-has-suffix"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              날짜 선택
+            </div>
+            <input
+              class="ant-input ant-time-picker-input"
+              id=""
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <i
+              class="icon icon-av_timer ant-time-picker-icon"
+            />
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-calendar-picker"
@@ -28030,31 +29570,42 @@ exports[`Locale Provider should display the text as ko 1`] = `
     tabindex="0"
   >
     <span
-      class="ant-calendar-picker-input ant-input"
+      class="ant-calendar-range-picker"
       style=""
     >
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="시작일"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
       <span
-        class="ant-calendar-range-picker-separator"
+        class="ant-calendar-picker-input ant-input"
       >
-         ~ 
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="시작일"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <span
+          class="ant-calendar-range-picker-separator"
+        >
+           ~ 
+        </span>
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="종료일"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <i
+          class="icon icon-date_range ant-calendar-picker-icon"
+        />
       </span>
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="종료일"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
+      <div
+        class="ant-calendar-underline"
+      >
+        <span
+          class="ant-calendar-ripple"
+        />
+      </div>
     </span>
   </span>
   <a
@@ -29627,34 +31178,102 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
   <span
     class="ant-calendar-picker"
   >
-    <div
+    <span
+      class="ant-input-wrapper ant-input-has-suffix"
       style=""
     >
-      <input
-        class="ant-calendar-picker-input ant-input"
-        placeholder="Dîrok hilbijêre"
-        readonly=""
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
-    </div>
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Dîrok hilbijêre
+            </div>
+            <input
+              class="ant-input ant-calendar-picker-input ant-input"
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <span
+              class="ant-calendar-picker-icon-wrapper"
+              style="min-width: 18px;"
+            >
+              <i
+                class="icon icon-date_range ant-calendar-picker-icon"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-time-picker "
     style=""
   >
-    <input
-      class="ant-time-picker-input"
-      id=""
-      placeholder="Demê hilbijêre"
-      type="text"
-      value=""
-    />
     <span
-      class="ant-time-picker-icon"
-    />
+      class="ant-input-wrapper ant-input-focus ant-input-has-suffix"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Demê hilbijêre
+            </div>
+            <input
+              class="ant-input ant-time-picker-input"
+              id=""
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <i
+              class="icon icon-av_timer ant-time-picker-icon"
+            />
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-calendar-picker"
@@ -29662,31 +31281,42 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
     tabindex="0"
   >
     <span
-      class="ant-calendar-picker-input ant-input"
+      class="ant-calendar-range-picker"
       style=""
     >
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Dîroka destpêkê"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
       <span
-        class="ant-calendar-range-picker-separator"
+        class="ant-calendar-picker-input ant-input"
       >
-         ~ 
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Dîroka destpêkê"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <span
+          class="ant-calendar-range-picker-separator"
+        >
+           ~ 
+        </span>
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Dîroka dawîn"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <i
+          class="icon icon-date_range ant-calendar-picker-icon"
+        />
       </span>
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Dîroka dawîn"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
+      <div
+        class="ant-calendar-underline"
+      >
+        <span
+          class="ant-calendar-ripple"
+        />
+      </div>
     </span>
   </span>
   <a
@@ -31259,34 +32889,102 @@ exports[`Locale Provider should display the text as nb 1`] = `
   <span
     class="ant-calendar-picker"
   >
-    <div
+    <span
+      class="ant-input-wrapper ant-input-has-suffix"
       style=""
     >
-      <input
-        class="ant-calendar-picker-input ant-input"
-        placeholder="Velg dato"
-        readonly=""
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
-    </div>
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Velg dato
+            </div>
+            <input
+              class="ant-input ant-calendar-picker-input ant-input"
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <span
+              class="ant-calendar-picker-icon-wrapper"
+              style="min-width: 18px;"
+            >
+              <i
+                class="icon icon-date_range ant-calendar-picker-icon"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-time-picker "
     style=""
   >
-    <input
-      class="ant-time-picker-input"
-      id=""
-      placeholder="Velg tid"
-      type="text"
-      value=""
-    />
     <span
-      class="ant-time-picker-icon"
-    />
+      class="ant-input-wrapper ant-input-focus ant-input-has-suffix"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Velg tid
+            </div>
+            <input
+              class="ant-input ant-time-picker-input"
+              id=""
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <i
+              class="icon icon-av_timer ant-time-picker-icon"
+            />
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-calendar-picker"
@@ -31294,31 +32992,42 @@ exports[`Locale Provider should display the text as nb 1`] = `
     tabindex="0"
   >
     <span
-      class="ant-calendar-picker-input ant-input"
+      class="ant-calendar-range-picker"
       style=""
     >
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Startdato"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
       <span
-        class="ant-calendar-range-picker-separator"
+        class="ant-calendar-picker-input ant-input"
       >
-         ~ 
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Startdato"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <span
+          class="ant-calendar-range-picker-separator"
+        >
+           ~ 
+        </span>
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Sluttdato"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <i
+          class="icon icon-date_range ant-calendar-picker-icon"
+        />
       </span>
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Sluttdato"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
+      <div
+        class="ant-calendar-underline"
+      >
+        <span
+          class="ant-calendar-ripple"
+        />
+      </div>
     </span>
   </span>
   <a
@@ -32891,34 +34600,102 @@ exports[`Locale Provider should display the text as nl 1`] = `
   <span
     class="ant-calendar-picker"
   >
-    <div
+    <span
+      class="ant-input-wrapper ant-input-has-suffix"
       style=""
     >
-      <input
-        class="ant-calendar-picker-input ant-input"
-        placeholder="Selecteer datum"
-        readonly=""
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
-    </div>
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Selecteer datum
+            </div>
+            <input
+              class="ant-input ant-calendar-picker-input ant-input"
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <span
+              class="ant-calendar-picker-icon-wrapper"
+              style="min-width: 18px;"
+            >
+              <i
+                class="icon icon-date_range ant-calendar-picker-icon"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-time-picker "
     style=""
   >
-    <input
-      class="ant-time-picker-input"
-      id=""
-      placeholder="Selecteer tijd"
-      type="text"
-      value=""
-    />
     <span
-      class="ant-time-picker-icon"
-    />
+      class="ant-input-wrapper ant-input-focus ant-input-has-suffix"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Selecteer tijd
+            </div>
+            <input
+              class="ant-input ant-time-picker-input"
+              id=""
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <i
+              class="icon icon-av_timer ant-time-picker-icon"
+            />
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-calendar-picker"
@@ -32926,31 +34703,42 @@ exports[`Locale Provider should display the text as nl 1`] = `
     tabindex="0"
   >
     <span
-      class="ant-calendar-picker-input ant-input"
+      class="ant-calendar-range-picker"
       style=""
     >
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Begin datum"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
       <span
-        class="ant-calendar-range-picker-separator"
+        class="ant-calendar-picker-input ant-input"
       >
-         ~ 
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Begin datum"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <span
+          class="ant-calendar-range-picker-separator"
+        >
+           ~ 
+        </span>
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Eind datum"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <i
+          class="icon icon-date_range ant-calendar-picker-icon"
+        />
       </span>
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Eind datum"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
+      <div
+        class="ant-calendar-underline"
+      >
+        <span
+          class="ant-calendar-ripple"
+        />
+      </div>
     </span>
   </span>
   <a
@@ -34523,34 +36311,102 @@ exports[`Locale Provider should display the text as nl-be 1`] = `
   <span
     class="ant-calendar-picker"
   >
-    <div
+    <span
+      class="ant-input-wrapper ant-input-has-suffix"
       style=""
     >
-      <input
-        class="ant-calendar-picker-input ant-input"
-        placeholder="Selecteer datum"
-        readonly=""
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
-    </div>
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Selecteer datum
+            </div>
+            <input
+              class="ant-input ant-calendar-picker-input ant-input"
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <span
+              class="ant-calendar-picker-icon-wrapper"
+              style="min-width: 18px;"
+            >
+              <i
+                class="icon icon-date_range ant-calendar-picker-icon"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-time-picker "
     style=""
   >
-    <input
-      class="ant-time-picker-input"
-      id=""
-      placeholder="Selecteer tijd"
-      type="text"
-      value=""
-    />
     <span
-      class="ant-time-picker-icon"
-    />
+      class="ant-input-wrapper ant-input-focus ant-input-has-suffix"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Selecteer tijd
+            </div>
+            <input
+              class="ant-input ant-time-picker-input"
+              id=""
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <i
+              class="icon icon-av_timer ant-time-picker-icon"
+            />
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-calendar-picker"
@@ -34558,31 +36414,42 @@ exports[`Locale Provider should display the text as nl-be 1`] = `
     tabindex="0"
   >
     <span
-      class="ant-calendar-picker-input ant-input"
+      class="ant-calendar-range-picker"
       style=""
     >
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Begin datum"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
       <span
-        class="ant-calendar-range-picker-separator"
+        class="ant-calendar-picker-input ant-input"
       >
-         ~ 
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Begin datum"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <span
+          class="ant-calendar-range-picker-separator"
+        >
+           ~ 
+        </span>
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Eind datum"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <i
+          class="icon icon-date_range ant-calendar-picker-icon"
+        />
       </span>
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Eind datum"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
+      <div
+        class="ant-calendar-underline"
+      >
+        <span
+          class="ant-calendar-ripple"
+        />
+      </div>
     </span>
   </span>
   <a
@@ -36155,34 +38022,102 @@ exports[`Locale Provider should display the text as pl 1`] = `
   <span
     class="ant-calendar-picker"
   >
-    <div
+    <span
+      class="ant-input-wrapper ant-input-has-suffix"
       style=""
     >
-      <input
-        class="ant-calendar-picker-input ant-input"
-        placeholder="Wybierz datę"
-        readonly=""
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
-    </div>
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Wybierz datę
+            </div>
+            <input
+              class="ant-input ant-calendar-picker-input ant-input"
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <span
+              class="ant-calendar-picker-icon-wrapper"
+              style="min-width: 18px;"
+            >
+              <i
+                class="icon icon-date_range ant-calendar-picker-icon"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-time-picker "
     style=""
   >
-    <input
-      class="ant-time-picker-input"
-      id=""
-      placeholder="Wybierz godzinę"
-      type="text"
-      value=""
-    />
     <span
-      class="ant-time-picker-icon"
-    />
+      class="ant-input-wrapper ant-input-focus ant-input-has-suffix"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Wybierz godzinę
+            </div>
+            <input
+              class="ant-input ant-time-picker-input"
+              id=""
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <i
+              class="icon icon-av_timer ant-time-picker-icon"
+            />
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-calendar-picker"
@@ -36190,31 +38125,42 @@ exports[`Locale Provider should display the text as pl 1`] = `
     tabindex="0"
   >
     <span
-      class="ant-calendar-picker-input ant-input"
+      class="ant-calendar-range-picker"
       style=""
     >
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Data początkowa"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
       <span
-        class="ant-calendar-range-picker-separator"
+        class="ant-calendar-picker-input ant-input"
       >
-         ~ 
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Data początkowa"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <span
+          class="ant-calendar-range-picker-separator"
+        >
+           ~ 
+        </span>
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Data końcowa"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <i
+          class="icon icon-date_range ant-calendar-picker-icon"
+        />
       </span>
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Data końcowa"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
+      <div
+        class="ant-calendar-underline"
+      >
+        <span
+          class="ant-calendar-ripple"
+        />
+      </div>
     </span>
   </span>
   <a
@@ -37787,34 +39733,102 @@ exports[`Locale Provider should display the text as pt 1`] = `
   <span
     class="ant-calendar-picker"
   >
-    <div
+    <span
+      class="ant-input-wrapper ant-input-has-suffix"
       style=""
     >
-      <input
-        class="ant-calendar-picker-input ant-input"
-        placeholder="Data"
-        readonly=""
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
-    </div>
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Data
+            </div>
+            <input
+              class="ant-input ant-calendar-picker-input ant-input"
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <span
+              class="ant-calendar-picker-icon-wrapper"
+              style="min-width: 18px;"
+            >
+              <i
+                class="icon icon-date_range ant-calendar-picker-icon"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-time-picker "
     style=""
   >
-    <input
-      class="ant-time-picker-input"
-      id=""
-      placeholder="Hora"
-      type="text"
-      value=""
-    />
     <span
-      class="ant-time-picker-icon"
-    />
+      class="ant-input-wrapper ant-input-focus ant-input-has-suffix"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Hora
+            </div>
+            <input
+              class="ant-input ant-time-picker-input"
+              id=""
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <i
+              class="icon icon-av_timer ant-time-picker-icon"
+            />
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-calendar-picker"
@@ -37822,31 +39836,42 @@ exports[`Locale Provider should display the text as pt 1`] = `
     tabindex="0"
   >
     <span
-      class="ant-calendar-picker-input ant-input"
+      class="ant-calendar-range-picker"
       style=""
     >
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Data inicial"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
       <span
-        class="ant-calendar-range-picker-separator"
+        class="ant-calendar-picker-input ant-input"
       >
-         ~ 
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Data inicial"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <span
+          class="ant-calendar-range-picker-separator"
+        >
+           ~ 
+        </span>
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Data final"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <i
+          class="icon icon-date_range ant-calendar-picker-icon"
+        />
       </span>
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Data final"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
+      <div
+        class="ant-calendar-underline"
+      >
+        <span
+          class="ant-calendar-ripple"
+        />
+      </div>
     </span>
   </span>
   <a
@@ -39419,34 +41444,102 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
   <span
     class="ant-calendar-picker"
   >
-    <div
+    <span
+      class="ant-input-wrapper ant-input-has-suffix"
       style=""
     >
-      <input
-        class="ant-calendar-picker-input ant-input"
-        placeholder="Selecionar data"
-        readonly=""
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
-    </div>
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Selecionar data
+            </div>
+            <input
+              class="ant-input ant-calendar-picker-input ant-input"
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <span
+              class="ant-calendar-picker-icon-wrapper"
+              style="min-width: 18px;"
+            >
+              <i
+                class="icon icon-date_range ant-calendar-picker-icon"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-time-picker "
     style=""
   >
-    <input
-      class="ant-time-picker-input"
-      id=""
-      placeholder="Hora"
-      type="text"
-      value=""
-    />
     <span
-      class="ant-time-picker-icon"
-    />
+      class="ant-input-wrapper ant-input-focus ant-input-has-suffix"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Hora
+            </div>
+            <input
+              class="ant-input ant-time-picker-input"
+              id=""
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <i
+              class="icon icon-av_timer ant-time-picker-icon"
+            />
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-calendar-picker"
@@ -39454,31 +41547,42 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
     tabindex="0"
   >
     <span
-      class="ant-calendar-picker-input ant-input"
+      class="ant-calendar-range-picker"
       style=""
     >
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Data de início"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
       <span
-        class="ant-calendar-range-picker-separator"
+        class="ant-calendar-picker-input ant-input"
       >
-         ~ 
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Data de início"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <span
+          class="ant-calendar-range-picker-separator"
+        >
+           ~ 
+        </span>
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Data de fim"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <i
+          class="icon icon-date_range ant-calendar-picker-icon"
+        />
       </span>
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Data de fim"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
+      <div
+        class="ant-calendar-underline"
+      >
+        <span
+          class="ant-calendar-ripple"
+        />
+      </div>
     </span>
   </span>
   <a
@@ -41051,34 +43155,102 @@ exports[`Locale Provider should display the text as ru 1`] = `
   <span
     class="ant-calendar-picker"
   >
-    <div
+    <span
+      class="ant-input-wrapper ant-input-has-suffix"
       style=""
     >
-      <input
-        class="ant-calendar-picker-input ant-input"
-        placeholder="Выберите дату"
-        readonly=""
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
-    </div>
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Выберите дату
+            </div>
+            <input
+              class="ant-input ant-calendar-picker-input ant-input"
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <span
+              class="ant-calendar-picker-icon-wrapper"
+              style="min-width: 18px;"
+            >
+              <i
+                class="icon icon-date_range ant-calendar-picker-icon"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-time-picker "
     style=""
   >
-    <input
-      class="ant-time-picker-input"
-      id=""
-      placeholder="Выберите время"
-      type="text"
-      value=""
-    />
     <span
-      class="ant-time-picker-icon"
-    />
+      class="ant-input-wrapper ant-input-focus ant-input-has-suffix"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Выберите время
+            </div>
+            <input
+              class="ant-input ant-time-picker-input"
+              id=""
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <i
+              class="icon icon-av_timer ant-time-picker-icon"
+            />
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-calendar-picker"
@@ -41086,31 +43258,42 @@ exports[`Locale Provider should display the text as ru 1`] = `
     tabindex="0"
   >
     <span
-      class="ant-calendar-picker-input ant-input"
+      class="ant-calendar-range-picker"
       style=""
     >
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Начальная дата"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
       <span
-        class="ant-calendar-range-picker-separator"
+        class="ant-calendar-picker-input ant-input"
       >
-         ~ 
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Начальная дата"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <span
+          class="ant-calendar-range-picker-separator"
+        >
+           ~ 
+        </span>
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Конечная дата"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <i
+          class="icon icon-date_range ant-calendar-picker-icon"
+        />
       </span>
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Конечная дата"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
+      <div
+        class="ant-calendar-underline"
+      >
+        <span
+          class="ant-calendar-ripple"
+        />
+      </div>
     </span>
   </span>
   <a
@@ -42683,34 +44866,102 @@ exports[`Locale Provider should display the text as sk 1`] = `
   <span
     class="ant-calendar-picker"
   >
-    <div
+    <span
+      class="ant-input-wrapper ant-input-has-suffix"
       style=""
     >
-      <input
-        class="ant-calendar-picker-input ant-input"
-        placeholder="Vybrať dátum"
-        readonly=""
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
-    </div>
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Vybrať dátum
+            </div>
+            <input
+              class="ant-input ant-calendar-picker-input ant-input"
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <span
+              class="ant-calendar-picker-icon-wrapper"
+              style="min-width: 18px;"
+            >
+              <i
+                class="icon icon-date_range ant-calendar-picker-icon"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-time-picker "
     style=""
   >
-    <input
-      class="ant-time-picker-input"
-      id=""
-      placeholder="Vybrať čas"
-      type="text"
-      value=""
-    />
     <span
-      class="ant-time-picker-icon"
-    />
+      class="ant-input-wrapper ant-input-focus ant-input-has-suffix"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Vybrať čas
+            </div>
+            <input
+              class="ant-input ant-time-picker-input"
+              id=""
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <i
+              class="icon icon-av_timer ant-time-picker-icon"
+            />
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-calendar-picker"
@@ -42718,31 +44969,42 @@ exports[`Locale Provider should display the text as sk 1`] = `
     tabindex="0"
   >
     <span
-      class="ant-calendar-picker-input ant-input"
+      class="ant-calendar-range-picker"
       style=""
     >
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Od"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
       <span
-        class="ant-calendar-range-picker-separator"
+        class="ant-calendar-picker-input ant-input"
       >
-         ~ 
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Od"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <span
+          class="ant-calendar-range-picker-separator"
+        >
+           ~ 
+        </span>
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Do"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <i
+          class="icon icon-date_range ant-calendar-picker-icon"
+        />
       </span>
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Do"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
+      <div
+        class="ant-calendar-underline"
+      >
+        <span
+          class="ant-calendar-ripple"
+        />
+      </div>
     </span>
   </span>
   <a
@@ -44315,34 +46577,102 @@ exports[`Locale Provider should display the text as sl 1`] = `
   <span
     class="ant-calendar-picker"
   >
-    <div
+    <span
+      class="ant-input-wrapper ant-input-has-suffix"
       style=""
     >
-      <input
-        class="ant-calendar-picker-input ant-input"
-        placeholder="Izberite datum"
-        readonly=""
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
-    </div>
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Izberite datum
+            </div>
+            <input
+              class="ant-input ant-calendar-picker-input ant-input"
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <span
+              class="ant-calendar-picker-icon-wrapper"
+              style="min-width: 18px;"
+            >
+              <i
+                class="icon icon-date_range ant-calendar-picker-icon"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-time-picker "
     style=""
   >
-    <input
-      class="ant-time-picker-input"
-      id=""
-      placeholder="Izberite čas"
-      type="text"
-      value=""
-    />
     <span
-      class="ant-time-picker-icon"
-    />
+      class="ant-input-wrapper ant-input-focus ant-input-has-suffix"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Izberite čas
+            </div>
+            <input
+              class="ant-input ant-time-picker-input"
+              id=""
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <i
+              class="icon icon-av_timer ant-time-picker-icon"
+            />
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-calendar-picker"
@@ -44350,31 +46680,42 @@ exports[`Locale Provider should display the text as sl 1`] = `
     tabindex="0"
   >
     <span
-      class="ant-calendar-picker-input ant-input"
+      class="ant-calendar-range-picker"
       style=""
     >
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Začetni datum"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
       <span
-        class="ant-calendar-range-picker-separator"
+        class="ant-calendar-picker-input ant-input"
       >
-         ~ 
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Začetni datum"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <span
+          class="ant-calendar-range-picker-separator"
+        >
+           ~ 
+        </span>
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Končni datum"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <i
+          class="icon icon-date_range ant-calendar-picker-icon"
+        />
       </span>
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Končni datum"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
+      <div
+        class="ant-calendar-underline"
+      >
+        <span
+          class="ant-calendar-ripple"
+        />
+      </div>
     </span>
   </span>
   <a
@@ -45947,34 +48288,102 @@ exports[`Locale Provider should display the text as sr 1`] = `
   <span
     class="ant-calendar-picker"
   >
-    <div
+    <span
+      class="ant-input-wrapper ant-input-has-suffix"
       style=""
     >
-      <input
-        class="ant-calendar-picker-input ant-input"
-        placeholder="Izaberite datum"
-        readonly=""
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
-    </div>
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Izaberite datum
+            </div>
+            <input
+              class="ant-input ant-calendar-picker-input ant-input"
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <span
+              class="ant-calendar-picker-icon-wrapper"
+              style="min-width: 18px;"
+            >
+              <i
+                class="icon icon-date_range ant-calendar-picker-icon"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-time-picker "
     style=""
   >
-    <input
-      class="ant-time-picker-input"
-      id=""
-      placeholder="Izaberite vreme"
-      type="text"
-      value=""
-    />
     <span
-      class="ant-time-picker-icon"
-    />
+      class="ant-input-wrapper ant-input-focus ant-input-has-suffix"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Izaberite vreme
+            </div>
+            <input
+              class="ant-input ant-time-picker-input"
+              id=""
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <i
+              class="icon icon-av_timer ant-time-picker-icon"
+            />
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-calendar-picker"
@@ -45982,31 +48391,42 @@ exports[`Locale Provider should display the text as sr 1`] = `
     tabindex="0"
   >
     <span
-      class="ant-calendar-picker-input ant-input"
+      class="ant-calendar-range-picker"
       style=""
     >
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Početni datum"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
       <span
-        class="ant-calendar-range-picker-separator"
+        class="ant-calendar-picker-input ant-input"
       >
-         ~ 
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Početni datum"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <span
+          class="ant-calendar-range-picker-separator"
+        >
+           ~ 
+        </span>
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Krajnji datum"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <i
+          class="icon icon-date_range ant-calendar-picker-icon"
+        />
       </span>
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Krajnji datum"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
+      <div
+        class="ant-calendar-underline"
+      >
+        <span
+          class="ant-calendar-ripple"
+        />
+      </div>
     </span>
   </span>
   <a
@@ -47579,34 +49999,102 @@ exports[`Locale Provider should display the text as sv 1`] = `
   <span
     class="ant-calendar-picker"
   >
-    <div
+    <span
+      class="ant-input-wrapper ant-input-has-suffix"
       style=""
     >
-      <input
-        class="ant-calendar-picker-input ant-input"
-        placeholder="Välj datum"
-        readonly=""
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
-    </div>
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Välj datum
+            </div>
+            <input
+              class="ant-input ant-calendar-picker-input ant-input"
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <span
+              class="ant-calendar-picker-icon-wrapper"
+              style="min-width: 18px;"
+            >
+              <i
+                class="icon icon-date_range ant-calendar-picker-icon"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-time-picker "
     style=""
   >
-    <input
-      class="ant-time-picker-input"
-      id=""
-      placeholder="Välj tid"
-      type="text"
-      value=""
-    />
     <span
-      class="ant-time-picker-icon"
-    />
+      class="ant-input-wrapper ant-input-focus ant-input-has-suffix"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Välj tid
+            </div>
+            <input
+              class="ant-input ant-time-picker-input"
+              id=""
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <i
+              class="icon icon-av_timer ant-time-picker-icon"
+            />
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-calendar-picker"
@@ -47614,31 +50102,42 @@ exports[`Locale Provider should display the text as sv 1`] = `
     tabindex="0"
   >
     <span
-      class="ant-calendar-picker-input ant-input"
+      class="ant-calendar-range-picker"
       style=""
     >
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Startdatum"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
       <span
-        class="ant-calendar-range-picker-separator"
+        class="ant-calendar-picker-input ant-input"
       >
-         ~ 
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Startdatum"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <span
+          class="ant-calendar-range-picker-separator"
+        >
+           ~ 
+        </span>
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Slutdatum"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <i
+          class="icon icon-date_range ant-calendar-picker-icon"
+        />
       </span>
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Slutdatum"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
+      <div
+        class="ant-calendar-underline"
+      >
+        <span
+          class="ant-calendar-ripple"
+        />
+      </div>
     </span>
   </span>
   <a
@@ -49211,34 +51710,102 @@ exports[`Locale Provider should display the text as th 1`] = `
   <span
     class="ant-calendar-picker"
   >
-    <div
+    <span
+      class="ant-input-wrapper ant-input-has-suffix"
       style=""
     >
-      <input
-        class="ant-calendar-picker-input ant-input"
-        placeholder="เลือกวันที่"
-        readonly=""
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
-    </div>
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              เลือกวันที่
+            </div>
+            <input
+              class="ant-input ant-calendar-picker-input ant-input"
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <span
+              class="ant-calendar-picker-icon-wrapper"
+              style="min-width: 18px;"
+            >
+              <i
+                class="icon icon-date_range ant-calendar-picker-icon"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-time-picker "
     style=""
   >
-    <input
-      class="ant-time-picker-input"
-      id=""
-      placeholder="เลือกเวลา"
-      type="text"
-      value=""
-    />
     <span
-      class="ant-time-picker-icon"
-    />
+      class="ant-input-wrapper ant-input-focus ant-input-has-suffix"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              เลือกเวลา
+            </div>
+            <input
+              class="ant-input ant-time-picker-input"
+              id=""
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <i
+              class="icon icon-av_timer ant-time-picker-icon"
+            />
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-calendar-picker"
@@ -49246,31 +51813,42 @@ exports[`Locale Provider should display the text as th 1`] = `
     tabindex="0"
   >
     <span
-      class="ant-calendar-picker-input ant-input"
+      class="ant-calendar-range-picker"
       style=""
     >
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="วันเริ่มต้น"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
       <span
-        class="ant-calendar-range-picker-separator"
+        class="ant-calendar-picker-input ant-input"
       >
-         ~ 
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="วันเริ่มต้น"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <span
+          class="ant-calendar-range-picker-separator"
+        >
+           ~ 
+        </span>
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="วันสิ้นสุด"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <i
+          class="icon icon-date_range ant-calendar-picker-icon"
+        />
       </span>
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="วันสิ้นสุด"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
+      <div
+        class="ant-calendar-underline"
+      >
+        <span
+          class="ant-calendar-ripple"
+        />
+      </div>
     </span>
   </span>
   <a
@@ -50843,34 +53421,102 @@ exports[`Locale Provider should display the text as tr 1`] = `
   <span
     class="ant-calendar-picker"
   >
-    <div
+    <span
+      class="ant-input-wrapper ant-input-has-suffix"
       style=""
     >
-      <input
-        class="ant-calendar-picker-input ant-input"
-        placeholder="Tarih Seç"
-        readonly=""
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
-    </div>
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Tarih Seç
+            </div>
+            <input
+              class="ant-input ant-calendar-picker-input ant-input"
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <span
+              class="ant-calendar-picker-icon-wrapper"
+              style="min-width: 18px;"
+            >
+              <i
+                class="icon icon-date_range ant-calendar-picker-icon"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-time-picker "
     style=""
   >
-    <input
-      class="ant-time-picker-input"
-      id=""
-      placeholder="Zaman Seç"
-      type="text"
-      value=""
-    />
     <span
-      class="ant-time-picker-icon"
-    />
+      class="ant-input-wrapper ant-input-focus ant-input-has-suffix"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Zaman Seç
+            </div>
+            <input
+              class="ant-input ant-time-picker-input"
+              id=""
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <i
+              class="icon icon-av_timer ant-time-picker-icon"
+            />
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-calendar-picker"
@@ -50878,31 +53524,42 @@ exports[`Locale Provider should display the text as tr 1`] = `
     tabindex="0"
   >
     <span
-      class="ant-calendar-picker-input ant-input"
+      class="ant-calendar-range-picker"
       style=""
     >
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Başlangıç Tarihi"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
       <span
-        class="ant-calendar-range-picker-separator"
+        class="ant-calendar-picker-input ant-input"
       >
-         ~ 
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Başlangıç Tarihi"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <span
+          class="ant-calendar-range-picker-separator"
+        >
+           ~ 
+        </span>
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Bitiş Tarihi"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <i
+          class="icon icon-date_range ant-calendar-picker-icon"
+        />
       </span>
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Bitiş Tarihi"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
+      <div
+        class="ant-calendar-underline"
+      >
+        <span
+          class="ant-calendar-ripple"
+        />
+      </div>
     </span>
   </span>
   <a
@@ -52475,34 +55132,102 @@ exports[`Locale Provider should display the text as uk 1`] = `
   <span
     class="ant-calendar-picker"
   >
-    <div
+    <span
+      class="ant-input-wrapper ant-input-has-suffix"
       style=""
     >
-      <input
-        class="ant-calendar-picker-input ant-input"
-        placeholder="Оберіть дату"
-        readonly=""
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
-    </div>
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Оберіть дату
+            </div>
+            <input
+              class="ant-input ant-calendar-picker-input ant-input"
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <span
+              class="ant-calendar-picker-icon-wrapper"
+              style="min-width: 18px;"
+            >
+              <i
+                class="icon icon-date_range ant-calendar-picker-icon"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-time-picker "
     style=""
   >
-    <input
-      class="ant-time-picker-input"
-      id=""
-      placeholder="Оберіть час"
-      type="text"
-      value=""
-    />
     <span
-      class="ant-time-picker-icon"
-    />
+      class="ant-input-wrapper ant-input-focus ant-input-has-suffix"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Оберіть час
+            </div>
+            <input
+              class="ant-input ant-time-picker-input"
+              id=""
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <i
+              class="icon icon-av_timer ant-time-picker-icon"
+            />
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-calendar-picker"
@@ -52510,31 +55235,42 @@ exports[`Locale Provider should display the text as uk 1`] = `
     tabindex="0"
   >
     <span
-      class="ant-calendar-picker-input ant-input"
+      class="ant-calendar-range-picker"
       style=""
     >
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Початкова дата"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
       <span
-        class="ant-calendar-range-picker-separator"
+        class="ant-calendar-picker-input ant-input"
       >
-         ~ 
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Початкова дата"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <span
+          class="ant-calendar-range-picker-separator"
+        >
+           ~ 
+        </span>
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Кінцева дата"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <i
+          class="icon icon-date_range ant-calendar-picker-icon"
+        />
       </span>
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Кінцева дата"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
+      <div
+        class="ant-calendar-underline"
+      >
+        <span
+          class="ant-calendar-ripple"
+        />
+      </div>
     </span>
   </span>
   <a
@@ -54107,34 +56843,102 @@ exports[`Locale Provider should display the text as vi 1`] = `
   <span
     class="ant-calendar-picker"
   >
-    <div
+    <span
+      class="ant-input-wrapper ant-input-has-suffix"
       style=""
     >
-      <input
-        class="ant-calendar-picker-input ant-input"
-        placeholder="Chọn thời điểm"
-        readonly=""
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
-    </div>
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Chọn thời điểm
+            </div>
+            <input
+              class="ant-input ant-calendar-picker-input ant-input"
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <span
+              class="ant-calendar-picker-icon-wrapper"
+              style="min-width: 18px;"
+            >
+              <i
+                class="icon icon-date_range ant-calendar-picker-icon"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-time-picker "
     style=""
   >
-    <input
-      class="ant-time-picker-input"
-      id=""
-      placeholder="Chọn thời gian"
-      type="text"
-      value=""
-    />
     <span
-      class="ant-time-picker-icon"
-    />
+      class="ant-input-wrapper ant-input-focus ant-input-has-suffix"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              Chọn thời gian
+            </div>
+            <input
+              class="ant-input ant-time-picker-input"
+              id=""
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <i
+              class="icon icon-av_timer ant-time-picker-icon"
+            />
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-calendar-picker"
@@ -54142,31 +56946,42 @@ exports[`Locale Provider should display the text as vi 1`] = `
     tabindex="0"
   >
     <span
-      class="ant-calendar-picker-input ant-input"
+      class="ant-calendar-range-picker"
       style=""
     >
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Ngày bắt đầu"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
       <span
-        class="ant-calendar-range-picker-separator"
+        class="ant-calendar-picker-input ant-input"
       >
-         ~ 
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Ngày bắt đầu"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <span
+          class="ant-calendar-range-picker-separator"
+        >
+           ~ 
+        </span>
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="Ngày kết thúc"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <i
+          class="icon icon-date_range ant-calendar-picker-icon"
+        />
       </span>
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="Ngày kết thúc"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
+      <div
+        class="ant-calendar-underline"
+      >
+        <span
+          class="ant-calendar-ripple"
+        />
+      </div>
     </span>
   </span>
   <a
@@ -55739,34 +58554,102 @@ exports[`Locale Provider should display the text as zh-cn 1`] = `
   <span
     class="ant-calendar-picker"
   >
-    <div
+    <span
+      class="ant-input-wrapper ant-input-has-suffix"
       style=""
     >
-      <input
-        class="ant-calendar-picker-input ant-input"
-        placeholder="请选择日期"
-        readonly=""
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
-    </div>
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              请选择日期
+            </div>
+            <input
+              class="ant-input ant-calendar-picker-input ant-input"
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <span
+              class="ant-calendar-picker-icon-wrapper"
+              style="min-width: 18px;"
+            >
+              <i
+                class="icon icon-date_range ant-calendar-picker-icon"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-time-picker "
     style=""
   >
-    <input
-      class="ant-time-picker-input"
-      id=""
-      placeholder="请选择时间"
-      type="text"
-      value=""
-    />
     <span
-      class="ant-time-picker-icon"
-    />
+      class="ant-input-wrapper ant-input-focus ant-input-has-suffix"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              请选择时间
+            </div>
+            <input
+              class="ant-input ant-time-picker-input"
+              id=""
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <i
+              class="icon icon-av_timer ant-time-picker-icon"
+            />
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-calendar-picker"
@@ -55774,31 +58657,42 @@ exports[`Locale Provider should display the text as zh-cn 1`] = `
     tabindex="0"
   >
     <span
-      class="ant-calendar-picker-input ant-input"
+      class="ant-calendar-range-picker"
       style=""
     >
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="开始日期"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
       <span
-        class="ant-calendar-range-picker-separator"
+        class="ant-calendar-picker-input ant-input"
       >
-         ~ 
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="开始日期"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <span
+          class="ant-calendar-range-picker-separator"
+        >
+           ~ 
+        </span>
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="结束日期"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <i
+          class="icon icon-date_range ant-calendar-picker-icon"
+        />
       </span>
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="结束日期"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
+      <div
+        class="ant-calendar-underline"
+      >
+        <span
+          class="ant-calendar-ripple"
+        />
+      </div>
     </span>
   </span>
   <a
@@ -57371,34 +60265,102 @@ exports[`Locale Provider should display the text as zh-tw 1`] = `
   <span
     class="ant-calendar-picker"
   >
-    <div
+    <span
+      class="ant-input-wrapper ant-input-has-suffix"
       style=""
     >
-      <input
-        class="ant-calendar-picker-input ant-input"
-        placeholder="請選擇日期"
-        readonly=""
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
-    </div>
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              請選擇日期
+            </div>
+            <input
+              class="ant-input ant-calendar-picker-input ant-input"
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <span
+              class="ant-calendar-picker-icon-wrapper"
+              style="min-width: 18px;"
+            >
+              <i
+                class="icon icon-date_range ant-calendar-picker-icon"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-time-picker "
     style=""
   >
-    <input
-      class="ant-time-picker-input"
-      id=""
-      placeholder="請選擇時間"
-      type="text"
-      value=""
-    />
     <span
-      class="ant-time-picker-icon"
-    />
+      class="ant-input-wrapper ant-input-focus ant-input-has-suffix"
+    >
+      <div
+        class="ant-input-content"
+      >
+        <div
+          class="ant-input-rendered-wrapper"
+        >
+          <div
+            class="ant-input-rendered"
+            style="margin: 0px 0px 0px 0px;"
+          >
+            <div
+              class="ant-input-placeholder"
+            >
+              請選擇時間
+            </div>
+            <input
+              class="ant-input ant-time-picker-input"
+              id=""
+              readonly=""
+              type="text"
+              value=""
+            />
+          </div>
+          <span
+            class="ant-input-suffix"
+          >
+            <i
+              class="icon icon-av_timer ant-time-picker-icon"
+            />
+          </span>
+        </div>
+      </div>
+      <div
+        class="ant-input-underline"
+      >
+        <span
+          class="ant-input-ripple"
+        />
+      </div>
+    </span>
   </span>
   <span
     class="ant-calendar-picker"
@@ -57406,31 +60368,42 @@ exports[`Locale Provider should display the text as zh-tw 1`] = `
     tabindex="0"
   >
     <span
-      class="ant-calendar-picker-input ant-input"
+      class="ant-calendar-range-picker"
       style=""
     >
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="開始日期"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
       <span
-        class="ant-calendar-range-picker-separator"
+        class="ant-calendar-picker-input ant-input"
       >
-         ~ 
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="開始日期"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <span
+          class="ant-calendar-range-picker-separator"
+        >
+           ~ 
+        </span>
+        <input
+          class="ant-calendar-range-picker-input"
+          placeholder="結束日期"
+          readonly=""
+          tabindex="-1"
+          value=""
+        />
+        <i
+          class="icon icon-date_range ant-calendar-picker-icon"
+        />
       </span>
-      <input
-        class="ant-calendar-range-picker-input"
-        placeholder="結束日期"
-        readonly=""
-        tabindex="-1"
-        value=""
-      />
-      <span
-        class="ant-calendar-picker-icon"
-      />
+      <div
+        class="ant-calendar-underline"
+      >
+        <span
+          class="ant-calendar-ripple"
+        />
+      </div>
     </span>
   </span>
   <a

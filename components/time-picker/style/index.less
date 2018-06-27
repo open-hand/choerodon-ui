@@ -2,6 +2,7 @@
 @import "../../style/mixins/index";
 @import "../../input/style/mixin";
 
+@input-prefix-cls: ~"@{ant-prefix}-input";
 @timepicker-prefix-cls: ~"@{ant-prefix}-time-picker";
 @timepicker-item-height: 32px;
 
@@ -201,18 +202,18 @@
     opacity: 0;
   }
 
+  .@{input-prefix-cls}-suffix {
+    display: block !important;
+    height: 18px;
+  }
+
+  .@{input-prefix-cls}-disabled &-icon {
+    color: @input-disabled-color;
+  }
+
   &-icon {
-    position: absolute;
-    user-select: none;
-    transition: all .3s @ease-in-out;
-    width: 14px;
-    height: 14px;
-    line-height: 14px;
-    right: @control-padding-horizontal - 1px;
-    color: @disabled-color;
-    top: 50%;
-    margin-top: -7px;
-    .iconfont-font("\e01b");
+    color: #000;
+    cursor: pointer;
   }
 
   &-large &-input {

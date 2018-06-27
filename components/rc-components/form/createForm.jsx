@@ -21,6 +21,8 @@ export const mixin = {
       submit: this.submit,
       validateFields: this.validateFields,
       resetFields: this.resetFields,
+      isModifiedFields: this.fieldsStore.isModifiedFields,
+      isModifiedField: this.fieldsStore.isModifiedField,
     };
   },
 };

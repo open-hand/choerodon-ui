@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Trigger from '../trigger';
 import Panel from './Panel';
-import placements from './placements';
+import placements, { getPlacements } from './placements';
 import moment from 'moment';
+import Icon from '../../icon';
+import Input from '../../input';
 
 function noop() {
 }
@@ -56,6 +58,10 @@ export default class Picker extends Component {
     onKeyDown: PropTypes.func,
     autoFocus: PropTypes.bool,
     id: PropTypes.string,
+    label: PropTypes.oneOfType([
+      PropTypes.node,
+      PropTypes.string,
+    ]),
   };
 
   static defaultProps = {
@@ -231,6 +237,18 @@ export default class Picker extends Component {
     return popupClassName;
   }
 
+  getBuiltInPlacements() {
+    const { label } = this.props;
+    const placement_haslabel = {
+      'bottomLeft': [0, -19],
+      'bottomRight': [0, -19],
+    };
+    if (label) {
+      return getPlacements(placement_haslabel);
+    }
+    return placements;
+  }
+
   setOpen(open) {
     const { onOpen, onClose } = this.props;
     if (this.state.open !== open) {
@@ -257,7 +275,7 @@ export default class Picker extends Component {
     const {
       prefixCls, placeholder, placement, align, id,
       disabled, transitionName, style, className, getPopupContainer, name, autoComplete,
-      onFocus, onBlur, autoFocus, inputReadOnly,
+      onFocus, onBlur, autoFocus, inputReadOnly, label
     } = this.props;
     const { open, value } = this.state;
     const popupClassName = this.getPopupClassName();
@@ -267,7 +285,7 @@ export default class Picker extends Component {
         popupClassName={popupClassName}
         popup={this.getPanelElement()}
         popupAlign={align}
-        builtinPlacements={placements}
+        builtinPlacements={this.getBuiltInPlacements()}
         popupPlacement={placement}
         action={disabled ? [] : ['click']}
         destroyPopupOnHide
@@ -277,10 +295,11 @@ export default class Picker extends Component {
         onPopupVisibleChange={this.onVisibleChange}
       >
         <span className={`${prefixCls} ${className}`} style={style}>
-          <input
+          <Input
             className={`${prefixCls}-input`}
             ref={this.saveInputRef}
             type="text"
+            label={label}
             placeholder={placeholder}
             name={name}
             onKeyDown={this.onKeyDown}
@@ -289,12 +308,13 @@ export default class Picker extends Component {
             autoComplete={autoComplete}
             onFocus={onFocus}
             onBlur={onBlur}
+            suffix={<Icon type="av_timer" className={`${prefixCls}-icon`}/>}
             autoFocus={autoFocus}
+            focused={open}
             onChange={noop}
-            readOnly={!!inputReadOnly}
+            readOnly
             id={id}
           />
-          <span className={`${prefixCls}-icon`}/>
         </span>
       </Trigger>
     );

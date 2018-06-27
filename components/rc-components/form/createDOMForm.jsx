@@ -61,7 +61,7 @@ const mixin = {
   validateFieldsAndScroll(ns, opt, cb) {
     const { names, callback, options } = getParams(ns, opt, cb);
 
-    const newCb = (error, values) => {
+    const newCb = (error, values, modify) => {
       if (error) {
         const validNames = this.fieldsStore.getValidFieldsName();
         let firstNode;
@@ -89,7 +89,7 @@ const mixin = {
       }
 
       if (typeof callback === 'function') {
-        callback(error, values);
+        callback(error, values, modify);
       }
     };
 

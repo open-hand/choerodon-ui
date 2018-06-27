@@ -26,6 +26,33 @@
   width: 552px;
   overflow: hidden;
 
+  &-picker {
+    .@{calendar-prefix-cls}-picker-input {
+      margin-bottom: 3px;
+    }
+    .@{calendar-prefix-cls}-underline {
+      position: absolute;
+      height: 0;
+      width: 100%;
+      border-bottom-width: 1px;
+      border-bottom-style: solid;
+      border-bottom-color: rgba(0, 0, 0, 0.54);
+    }
+    .@{calendar-prefix-cls}-ripple {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      transform-origin: 50%;
+      transform: scaleX(0.5);
+      opacity: 0;
+      border-bottom-width: 2px;
+      border-bottom-style: solid;
+      transition: border-color 300ms cubic-bezier(0.55, 0, 0.55, 0.2);
+      border-color: #3367d6;
+      height: 0;
+    }
+  }
+
   .@{calendar-prefix-cls}-date-panel {
     &::after {
       content: ".";

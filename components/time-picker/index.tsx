@@ -48,6 +48,7 @@ export interface TimePickerProps {
   clearText?: string;
   defaultOpenValue?: moment.Moment;
   popupClassName?: string;
+  label?: any;
 }
 
 export interface TimePickerLocale {

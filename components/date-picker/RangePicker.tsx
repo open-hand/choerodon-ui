@@ -2,6 +2,7 @@
 import * as React from 'react';
 import * as moment from 'moment';
 import classNames from 'classnames';
+import Button from '../button';
 import Icon from '../icon';
 import warning from '../_util/warning';
 import interopDefault from '../_util/interopDefault';
@@ -229,6 +230,15 @@ export default class RangePicker extends React.Component<any, RangePickerState> 
     return [rangeNode, customFooter];
   }
 
+  renderUnderLine() {
+    const { prefixCls } = this.props;
+    return (
+      <div className={`${prefixCls}-underline`}>
+        <span className={`${prefixCls}-ripple`} />
+      </div>
+    );
+  }
+
   render() {
     const { state, props } = this;
     const { value, showDate, hoverValue, open } = state;
@@ -303,10 +313,12 @@ export default class RangePicker extends React.Component<any, RangePickerState> 
     }
 
     const clearIcon = (!props.disabled && props.allowClear && value && (value[0] || value[1])) ? (
-      <Icon
-        type="cross-circle"
-        className={`${prefixCls}-picker-clear`}
+      <Button
+        shape="circle"
+        size="small"
         onClick={this.clearSelection}
+        className={`${prefixCls}-picker-clear`}
+        icon="close"
       />
     ) : null;
 
@@ -314,26 +326,29 @@ export default class RangePicker extends React.Component<any, RangePickerState> 
       const start = inputValue[0];
       const end = inputValue[1];
       return (
-        <span className={props.pickerInputClass}>
-          <input
-            disabled={props.disabled}
-            readOnly
-            value={(start && start.format(props.format)) || ''}
-            placeholder={startPlaceholder}
-            className={`${prefixCls}-range-picker-input`}
-            tabIndex={-1}
-          />
-          <span className={`${prefixCls}-range-picker-separator`}> ~ </span>
-          <input
-            disabled={props.disabled}
-            readOnly
-            value={(end && end.format(props.format)) || ''}
-            placeholder={endPlaceholder}
-            className={`${prefixCls}-range-picker-input`}
-            tabIndex={-1}
-          />
-          {clearIcon}
-          <span className={`${prefixCls}-picker-icon`} />
+        <span className={`${prefixCls}-range-picker`}>
+          <span className={props.pickerInputClass}>
+            <input
+              disabled={props.disabled}
+              readOnly
+              value={(start && start.format(props.format)) || ''}
+              placeholder={startPlaceholder}
+              className={`${prefixCls}-range-picker-input`}
+              tabIndex={-1}
+            />
+            <span className={`${prefixCls}-range-picker-separator`}> ~ </span>
+            <input
+              disabled={props.disabled}
+              readOnly
+              value={(end && end.format(props.format)) || ''}
+              placeholder={endPlaceholder}
+              className={`${prefixCls}-range-picker-input`}
+              tabIndex={-1}
+            />
+            {clearIcon}
+            <Icon type="date_range" className={`${prefixCls}-picker-icon`} />
+          </span>
+          {this.renderUnderLine()}
         </span>
       );
     };

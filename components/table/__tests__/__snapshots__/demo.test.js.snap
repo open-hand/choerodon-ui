@@ -199,6 +199,11 @@ exports[`renders ./components/table/demo/basic.md correctly 1`] = `
               <div
                 class="ant-select-selection__rendered"
               >
+                <div
+                  class="ant-select-selection__placeholder"
+                >
+                  过滤表
+                </div>
                 <ul>
                   <li
                     class="ant-select-search ant-select-search--inline"
@@ -12875,7 +12880,11 @@ exports[`renders ./components/table/demo/reset-filter.md correctly 1`] = `
                       </div>
                       <span
                         class="ant-select-selection__choice__remove"
-                      />
+                      >
+                        <i
+                          class="icon icon-highlight_off"
+                        />
+                      </span>
                       <div
                         class="ant-ripple-wrapper"
                       />
@@ -12893,7 +12902,11 @@ exports[`renders ./components/table/demo/reset-filter.md correctly 1`] = `
                       </div>
                       <span
                         class="ant-select-selection__choice__remove"
-                      />
+                      >
+                        <i
+                          class="icon icon-highlight_off"
+                        />
+                      </span>
                       <div
                         class="ant-ripple-wrapper"
                       />
@@ -12911,7 +12924,11 @@ exports[`renders ./components/table/demo/reset-filter.md correctly 1`] = `
                       </div>
                       <span
                         class="ant-select-selection__choice__remove"
-                      />
+                      >
+                        <i
+                          class="icon icon-highlight_off"
+                        />
+                      </span>
                       <div
                         class="ant-ripple-wrapper"
                       />

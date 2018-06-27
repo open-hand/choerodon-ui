@@ -1,4 +1,5 @@
 import set from 'lodash/set';
+import isEqual from 'lodash/isEqual';
 import createFormField, { isFormField } from './createFormField';
 import {
   flattenFields,
@@ -254,6 +255,36 @@ class FieldsStore {
     delete this.fields[name];
     delete this.fieldsMeta[name];
   }
+
+  isModifiedField = (name) => {
+    const value = this.getFieldValue(name);
+    const fieldMeta = this.getFieldMeta(name);
+    const initialValue =  fieldMeta && fieldMeta.initialValue;
+    if (!value && !initialValue) {
+      return false;
+    }
+    if (!isEqual(value, initialValue)) {
+      return true;
+    }
+    return false;
+  }
+
+  isModifiedFields = (names) => {
+    let i;
+    let length;
+    const fieldNames = names ?
+          this.getValidFieldsFullName(names) :
+          this.getValidFieldsName();
+    if (fieldNames && Array.isArray(fieldNames)) {
+      for (i = 0, length = fieldNames.length; i < length; i++) {
+        if (this.isModifiedField(fieldNames[i])) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
 }
 
 export default function createFieldsStore(fields) {

@@ -53,6 +53,7 @@ class SelectMulitpleDemo extends React.Component {
         optionFilterProp="children"
         footer={<Button funcType="raised" type="primary">这里是footer</Button>}
         loading={loading}
+        choiceRemove={false}
         filter
         allowClear
       >

@@ -108,14 +108,11 @@
     background-color: @radio-disabled-check-bg;
   }
 }
+.@{radio-prefix-cls}-wrapper-disabled {
+  cursor: not-allowed;
+}
 .@{radio-prefix-cls}-disabled {
-  .@{radio-inner-prefix-cls} {
-    background-color: @radio-disabled-bg;
-  }
-
-  .@{radio-prefix-cls}-input {
-    cursor: not-allowed;
-  }
+  cursor: not-allowed;
 
   & + span {
     color: @input-disabled-color;

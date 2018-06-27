@@ -22,7 +22,11 @@ function onChange(time, timeString) {
 }
 
 ReactDOM.render(
-  <TimePicker onChange={onChange} defaultOpenValue={moment('00:00:00', 'HH:mm:ss')} />,
+  <TimePicker
+    label="时间选择框"
+    onChange={onChange}
+    defaultOpenValue={moment('00:00:00', 'HH:mm:ss')}
+  />,
   mountNode
 );
 ````

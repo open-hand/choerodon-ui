@@ -50,6 +50,7 @@ export interface InputProps extends AbstractInputProps {
   suffix?: React.ReactNode;
   spellCheck?: boolean;
   autoFocus?: boolean;
+  focused?: boolean;
 }
 
 export interface InputState {
@@ -68,6 +69,8 @@ export default class Input extends React.Component<InputProps, any> {
     type: 'text',
     disabled: false,
     underline: true,
+    readOnly: false,
+    focused: false,
   };
 
   static propTypes = {
@@ -100,6 +103,8 @@ export default class Input extends React.Component<InputProps, any> {
     copy: PropTypes.bool,
     onCopy: PropTypes.func,
     underline: PropTypes.bool,
+    readOnly: PropTypes.bool,
+    focused: PropTypes.bool,
   };
 
   state: InputState = {
@@ -125,6 +130,7 @@ export default class Input extends React.Component<InputProps, any> {
 
   componentDidMount() {
     const { inputLength } = this.state;
+    const { focused } = this.props;
     const inputValueLength = this.input.value.length;
     if (inputValueLength !== inputLength) {
       this.setState({
@@ -134,6 +140,11 @@ export default class Input extends React.Component<InputProps, any> {
     if (this.props.autoFocus) {
       this.setState({
         focused: true,
+      });
+    }
+    if (typeof focused === 'boolean') {
+      this.setState({
+        focused: focused,
       });
     }
     this.setRenderedStyle();
@@ -149,6 +160,11 @@ export default class Input extends React.Component<InputProps, any> {
     if (nextProps.autoFocus) {
       this.setState({
         focused: true,
+      });
+    }
+    if (typeof nextProps.focused === 'boolean') {
+      this.setState({
+        focused: nextProps.focused,
       });
     }
   }
@@ -191,10 +207,12 @@ export default class Input extends React.Component<InputProps, any> {
   }
 
   handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
-    const { onFocus } = this.props;
-    this.setState({
-      focused: true,
-    });
+    const { onFocus, readOnly } = this.props;
+    if (!readOnly) {
+      this.setState({
+        focused: true,
+      });
+    }
     if (onFocus) {
       onFocus(e);
     }
@@ -207,10 +225,12 @@ export default class Input extends React.Component<InputProps, any> {
   };
 
   handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    const { onBlur } = this.props;
-    this.setState({
-      focused: false,
-    });
+    const { onBlur, readOnly } = this.props;
+    if (!readOnly) {
+      this.setState({
+        focused: false,
+      });
+    }
     if (onBlur) {
       onBlur(e);
     }
@@ -341,6 +361,7 @@ export default class Input extends React.Component<InputProps, any> {
       'copy',
       'style',
       'underline',
+      'focused',
     ]);
 
     if ('value' in this.props) {

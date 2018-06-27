@@ -22,18 +22,20 @@
   > i,
   > span {
     pointer-events: none;
+    display: inline-block;
+    vertical-align: middle;
   }
 
   > div.btn-loading {
     display: inline-block;
     width: 32px;
     margin-right: 4px;
-    vertical-align: text-bottom;
 
     > span {
       background: #000;
       border-color: #000;
       display: inline-block;
+      vertical-align: middle;
       border-radius: 50%;
       width: 7px;
       height: 7px;
@@ -172,12 +174,6 @@
   &:focus > span,
   &:active > span {
     position: relative;
-  }
-
-  // To ensure that a space will be placed between character and `Icon`.
-  > .@{iconfont-css-prefix} + span,
-  > span + .@{iconfont-css-prefix} {
-    margin-left: 8px;
   }
 
   &-clicked:after {
