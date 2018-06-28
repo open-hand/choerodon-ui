@@ -28,7 +28,7 @@
     display: inline-block;
     vertical-align: middle;
     height: @pagination-item-size;
-    line-height: @pagination-item-size - 2px;
+    line-height: @pagination-item-size;
     margin-right: 24px;
   }
 
@@ -203,11 +203,14 @@
     display: inline-block;
     vertical-align: middle;
     margin-left: 16px;
+    height: @pagination-item-size;
+    line-height: @pagination-item-size;
 
     &-size-changer.@{ant-prefix}-select {
-      display: inline-block;
       width: auto;
-      vertical-align: text-bottom;
+      height: @pagination-item-size;
+      float: right;
+      line-height: @pagination-item-size - 3px;
 
       .@{ant-prefix}-select-selection {
         padding-top: 0;
@@ -226,6 +229,9 @@
         .@{ant-prefix}-select-arrow {
           display: inline-block;
           vertical-align: inherit;
+          > i.icon {
+            vertical-align: text-bottom;
+          }
         }
       }
       .@{ant-prefix}-select-underline {
@@ -249,8 +255,8 @@
     &-label {
       color: rgba(0, 0, 0, 0.66);
       letter-spacing: .01em;
-      line-height: 20px;
       margin-right: 4px;
+      display: inline-block;
     }
   }
 

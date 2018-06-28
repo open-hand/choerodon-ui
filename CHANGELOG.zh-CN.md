@@ -17,8 +17,9 @@ timeline: true
 
 ## 0.3.2
 
-`2018-06-27`
+`2018-06-28`
 
+- 🌟 `Icon`: 增加新的图标。
 - 🌟 `Form`: 增加 `isModifiedFields` `isModifiedField` 方法。
 - 💄 `Table`: 排序图标样式调整。
 - 💄 `Select` `Input` `Radio` `DatePicker`: 样式调整。
