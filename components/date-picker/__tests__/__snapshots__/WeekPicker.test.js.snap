@@ -4,17 +4,53 @@ exports[`WeekPicker should support style prop 1`] = `
 <span
   class="ant-calendar-picker"
 >
-  <span>
-    <input
-      class="ant-calendar-picker-input ant-input"
-      placeholder="Select date"
-      readonly=""
-      style="width: 400px;"
-      value=""
-    />
-    <span
-      class="ant-calendar-picker-icon"
-    />
+  <span
+    class="ant-input-wrapper ant-input-has-suffix"
+    style="width: 400px;"
+  >
+    <div
+      class="ant-input-content"
+    >
+      <div
+        class="ant-input-rendered-wrapper"
+      >
+        <div
+          class="ant-input-rendered"
+          style="margin: 0px 0px 0px 0px;"
+        >
+          <div
+            class="ant-input-placeholder"
+          >
+            Select date
+          </div>
+          <input
+            class="ant-input ant-calendar-picker-input ant-input"
+            readonly=""
+            type="text"
+            value=""
+          />
+        </div>
+        <span
+          class="ant-input-suffix"
+        >
+          <span
+            class="ant-calendar-picker-icon-wrapper"
+            style="min-width: 18px;"
+          >
+            <i
+              class="icon icon-date_range ant-calendar-picker-icon"
+            />
+          </span>
+        </span>
+      </div>
+    </div>
+    <div
+      class="ant-input-underline"
+    >
+      <span
+        class="ant-input-ripple"
+      />
+    </div>
   </span>
 </span>
 `;

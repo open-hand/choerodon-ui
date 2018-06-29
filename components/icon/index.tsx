@@ -1,6 +1,7 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import omit from 'omit.js';
+import icons from './icons';
 
 export interface IconProps {
   type: string;
@@ -10,13 +11,16 @@ export interface IconProps {
   style?: React.CSSProperties;
 }
 
-const Icon = (props: IconProps) => {
-  const { type, className = '' } = props;
-  const classString = classNames({
-    'icon': true,
-    [`icon-${type}`]: true,
-  }, className);
-  return <i {...omit(props, ['type', 'spin'])} className={classString} />;
-};
+class Icon extends React.Component<IconProps, {}> {
+  static icons = icons;
+  render() {
+    const { type, className = '' } = this.props;
+    const classString = classNames({
+      'icon': true,
+      [`icon-${type}`]: true,
+    }, className);
+    return <i {...omit(this.props, ['type', 'spin'])} className={classString} />;
+  }
+}
 
 export default Icon;

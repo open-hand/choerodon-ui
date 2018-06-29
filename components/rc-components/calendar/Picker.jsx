@@ -4,7 +4,7 @@ import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import createChainedFunction from '../util/createChainedFunction';
 import KeyCode from '../util/KeyCode';
-import placements from './picker/placements';
+import placements, { getPlacements } from './picker/placements';
 import Trigger from '../trigger';
 
 function noop() {
@@ -186,6 +186,18 @@ const Picker = createReactClass({
     }
   },
 
+  getBuiltInPlacements() {
+    const { label } = this.props;
+    const placement_haslabel = {
+      'bottomLeft': [0, -19],
+      'bottomRight': [0, -19],
+    };
+    if (label) {
+      return getPlacements(placement_haslabel);
+    }
+    return placements;
+  },
+
   render() {
     const props = this.props;
     const {
@@ -197,10 +209,11 @@ const Picker = createReactClass({
       transitionName, children,
     } = props;
     const state = this.state;
+    const getBuiltInPlacements = this.getBuiltInPlacements();
     return (<Trigger
       popup={this.getCalendarElement()}
       popupAlign={align}
-      builtinPlacements={placements}
+      builtinPlacements={this.getBuiltInPlacements()}
       popupPlacement={placement}
       action={(disabled && !state.open) ? [] : ['click']}
       destroyPopupOnHide

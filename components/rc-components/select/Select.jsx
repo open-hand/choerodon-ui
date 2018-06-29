@@ -1157,6 +1157,7 @@ export default class Select extends React.Component {
       maxTagPlaceholder,
       showSearch,
       choiceRender,
+      choiceRemove,
     } = props;
     const className = `${prefixCls}-selection__rendered`;
     // search input is inside topControlNode in single, multiple & combobox. 2016/04/13
@@ -1244,11 +1245,13 @@ export default class Select extends React.Component {
             <div className={`${prefixCls}-selection__choice__content`}>
               {content}
             </div>
-            {disabled || isMultiple(props) ? null : (
+            {disabled || !choiceRemove ? null : (
               <span
                 className={`${prefixCls}-selection__choice__remove`}
                 onClick={this.removeSelected.bind(this, singleValue, index)}
-              />)}
+              >
+                <i className="icon icon-highlight_off" />
+              </span>)}
           </li>);
           return (
             <Ripple

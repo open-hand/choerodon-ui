@@ -15,6 +15,15 @@ timeline: true
 
 ---
 
+## 0.3.2
+
+`2018-06-28`
+
+- 🌟 `Icon`: Added new icons.
+- 🌟 `Form`: Added `isModifiedFields` `isModifiedField`.
+- 💄 `Table`: Adjust the style of sort's icon.
+- 💄 `Select` `Input` `Radio` `DatePicker`: Adjust the style.
+
 ## 0.3.1
 
 `2018-06-08`

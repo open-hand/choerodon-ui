@@ -4,21 +4,64 @@ exports[`DatePicker prop locale should works 1`] = `
 <span
   class="ant-calendar-picker"
 >
-  <div
+  <span
+    class="ant-input-wrapper ant-input-has-value ant-input-has-suffix"
     style=""
   >
-    <input
-      class="ant-calendar-picker-input ant-input"
-      placeholder="Избери дата"
-      readonly=""
-      value="2000-01-01"
-    />
-    <i
-      class="icon icon-cross-circle ant-calendar-picker-clear"
-    />
-    <span
-      class="ant-calendar-picker-icon"
-    />
-  </div>
+    <div
+      class="ant-input-content"
+    >
+      <div
+        class="ant-input-rendered-wrapper"
+      >
+        <div
+          class="ant-input-rendered"
+          style="margin: 0px 0px 0px 0px;"
+        >
+          <div
+            class="ant-input-placeholder"
+          >
+            Избери дата
+          </div>
+          <input
+            class="ant-input ant-calendar-picker-input ant-input"
+            readonly=""
+            type="text"
+            value="2000-01-01"
+          />
+        </div>
+        <span
+          class="ant-input-suffix"
+        >
+          <span
+            class="ant-calendar-picker-icon-wrapper"
+            style="min-width: 42px;"
+          >
+            <button
+              class="ant-btn ant-calendar-picker-clear ant-btn-circle ant-btn-sm ant-btn-icon-only ant-btn-flat"
+              type="button"
+            >
+              <i
+                class="icon icon-close"
+              />
+              <div
+                class="ant-ripple-wrapper"
+              />
+            </button>
+            <i
+              class="icon icon-date_range ant-calendar-picker-icon"
+            />
+          </span>
+        </span>
+      </div>
+    </div>
+    <div
+      class="ant-input-underline"
+    >
+      <span
+        class="ant-input-ripple"
+      />
+    </div>
+  </span>
 </span>
 `;

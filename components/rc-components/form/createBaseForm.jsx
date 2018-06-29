@@ -55,7 +55,9 @@ function createBaseForm(option = {}, mixins = []) {
          'isFieldValidating',
          'isFieldsValidating',
          'isFieldsTouched',
-         'isFieldTouched'].forEach(key => this[key] = (...args) => {
+         'isFieldTouched',
+         'isModifiedFields',
+         'isModifiedFields'].forEach(key => this[key] = (...args) => {
            if (process.env.NODE_ENV !== 'production') {
              warning(
                false,
@@ -373,7 +375,8 @@ function createBaseForm(option = {}, mixins = []) {
         });
         if (callback && isEmptyObject(allFields)) {
           callback(isEmptyObject(alreadyErrors) ? null : alreadyErrors,
-            this.fieldsStore.getFieldsValue(fieldNames));
+            this.fieldsStore.getFieldsValue(fieldNames),
+            this.fieldsStore.isModifiedFields(fieldNames));
           return;
         }
         const validator = new AsyncValidator(allRules);
@@ -428,7 +431,8 @@ function createBaseForm(option = {}, mixins = []) {
             }
 
             callback(isEmptyObject(errorsGroup) ? null : errorsGroup,
-              this.fieldsStore.getFieldsValue(fieldNames));
+              this.fieldsStore.getFieldsValue(fieldNames),
+              this.fieldsStore.isModifiedFields(fieldNames));
           }
         });
       },
@@ -449,7 +453,9 @@ function createBaseForm(option = {}, mixins = []) {
           });
         if (!fields.length) {
           if (callback) {
-            callback(null, this.fieldsStore.getFieldsValue(fieldNames));
+            callback(null,
+              this.fieldsStore.getFieldsValue(fieldNames),
+              this.fieldsStore.isModifiedFields(fieldNames));
           }
           return;
         }

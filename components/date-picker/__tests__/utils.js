@@ -12,7 +12,7 @@ export function hasSelected(wrapper, date) {
 }
 
 export function openPanel(wrapper) {
-  wrapper.find('.ant-calendar-picker-input').simulate('click');
+  wrapper.find('.ant-calendar-picker-input').hostNodes().simulate('click');
 }
 
 export function clearInput(wrapper) {

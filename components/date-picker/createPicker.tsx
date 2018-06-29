@@ -2,7 +2,9 @@ import * as React from 'react';
 import * as moment from 'moment';
 import classNames from 'classnames';
 import omit from 'omit.js';
+import Button from '../button';
 import Icon from '../icon';
+import Input from '../input';
 import warning from '../_util/warning';
 import interopDefault from '../_util/interopDefault';
 import MonthCalendar from '../rc-components/calendar/MonthCalendar';
@@ -22,7 +24,7 @@ export default function createPicker(TheCalendar: React.ComponentClass): any {
     };
 
     private input: any;
-
+    private picker: any;
     constructor(props: any) {
       super(props);
       const value = props.value || props.defaultValue;
@@ -35,6 +37,7 @@ export default function createPicker(TheCalendar: React.ComponentClass): any {
       this.state = {
         value,
         showDate: value,
+        focused: false,
       };
     }
 
@@ -62,6 +65,13 @@ export default function createPicker(TheCalendar: React.ComponentClass): any {
       this.handleChange(null);
     }
 
+    onPickerIconClick = (e: React.MouseEvent<HTMLElement>) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const { focused } = this.state;
+      this.picker.setOpen(!focused);
+    }
+
     handleChange = (value: moment.Moment | null) => {
       const props = this.props;
       if (!('value' in props)) {
@@ -77,6 +87,19 @@ export default function createPicker(TheCalendar: React.ComponentClass): any {
       this.setState({ showDate: value });
     }
 
+    handleOpenChange = (status: boolean) => {
+      const { onOpenChange } = this.props;
+      const { focused } = this.state;
+      if (status !== focused) {
+        this.setState({
+          focused: status,
+        });
+      }
+      if (onOpenChange) {
+        onOpenChange(status);
+      }
+    }
+
     focus() {
       this.input.focus();
     }
@@ -89,10 +112,14 @@ export default function createPicker(TheCalendar: React.ComponentClass): any {
       this.input = node;
     }
 
+    savePicker = (node: any) => {
+      this.picker = node;
+    }
+
     render() {
-      const { value, showDate } = this.state;
+      const { value, showDate, focused } = this.state;
       const props = omit(this.props, ['onChange']);
-      const { prefixCls, locale, localeCode } = props;
+      const { prefixCls, label, disabled, pickerInputClass, locale, localeCode } = props;
 
       const placeholder = ('placeholder' in props)
         ? props.placeholder : locale.lang.placeholder;
@@ -149,26 +176,40 @@ export default function createPicker(TheCalendar: React.ComponentClass): any {
       );
 
       const clearIcon = (!props.disabled && props.allowClear && value) ? (
-        <Icon
-          type="cross-circle"
+        <Button
           className={`${prefixCls}-picker-clear`}
           onClick={this.clearSelection}
+          shape="circle"
+          icon="close"
+          size="small"
         />
       ) : null;
 
+      const suffix = (<span
+        className={`${prefixCls}-picker-icon-wrapper`}
+        style={{ minWidth: clearIcon ? '42px' : '18px' }}
+        onClick={this.onPickerIconClick}
+      >
+        {clearIcon}
+        <Icon type="date_range" className={`${prefixCls}-picker-icon`} />
+      </span>);
+
+      const inputProps = {
+        label,
+        disabled,
+        placeholder,
+        suffix,
+        focused,
+      };
+
       const input = ({ value: inputValue }: { value: moment.Moment | null }) => (
-        <div>
-          <input
-            ref={this.saveInput}
-            disabled={props.disabled}
-            readOnly
-            value={(inputValue && inputValue.format(props.format)) || ''}
-            placeholder={placeholder}
-            className={props.pickerInputClass}
-          />
-          {clearIcon}
-          <span className={`${prefixCls}-picker-icon`} />
-        </div>
+        <Input
+          {...inputProps}
+          ref={this.saveInput}
+          value={(inputValue && inputValue.format(props.format)) || ''}
+          className={pickerInputClass}
+          readOnly
+        />
       );
 
       return (
@@ -182,10 +223,12 @@ export default function createPicker(TheCalendar: React.ComponentClass): any {
           <RcDatePicker
             {...props}
             {...pickerProps}
+            onOpenChange={this.handleOpenChange}
             calendar={calendar}
             value={value}
             prefixCls={`${prefixCls}-picker-container`}
             style={props.popupStyle}
+            ref={this.savePicker}
           >
             {input}
           </RcDatePicker>

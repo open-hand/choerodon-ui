@@ -3,8 +3,10 @@
 exports[`Input should support maxLength 1`] = `
 <Input
   disabled={false}
+  focused={false}
   maxLength="3"
   prefixCls="ant-input"
+  readOnly={false}
   type="text"
   underline={true}
 >
@@ -31,6 +33,7 @@ exports[`Input should support maxLength 1`] = `
             onFocus={[Function]}
             onInput={[Function]}
             onKeyDown={[Function]}
+            readOnly={false}
             type="text"
           />
         </div>
@@ -63,8 +66,10 @@ exports[`Input.Search should support suffix 1`] = `
   <Input
     className="ant-input-search ant-input-search-small"
     disabled={false}
+    focused={false}
     onPressEnter={[Function]}
     prefixCls="ant-input"
+    readOnly={false}
     size="small"
     suffix={
       Array [
@@ -106,6 +111,7 @@ exports[`Input.Search should support suffix 1`] = `
               onFocus={[Function]}
               onInput={[Function]}
               onKeyDown={[Function]}
+              readOnly={false}
               size="small"
               type="text"
             />

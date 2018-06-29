@@ -50,7 +50,7 @@
     .@{table-prefix-cls}-sort-icon {
       position: relative;
       margin-left: 8px;
-      font-size: @font-size-base;
+      font-size: @font-size-base + 2px;
       cursor: pointer;
       color: @table-header-icon-color;
       transition: all .3s;
@@ -176,13 +176,15 @@
   &-thead > tr > th.@{table-prefix-cls}-selection-column-custom {
     padding-left: 16px;
     padding-right: 0;
+    min-width: 62px !important;
+    width: 62px !important;
   }
 
   &-thead > tr > th.@{table-prefix-cls}-selection-column,
   &-tbody > tr > td.@{table-prefix-cls}-selection-column {
     text-align: center;
-    min-width: 62px;
-    width: 62px;
+    min-width: 20px;
+    width: 20px;
     .@{ant-prefix}-radio-wrapper {
       margin-right: 0;
     }
@@ -422,13 +424,13 @@
     padding: 2.5px 57px 2px 0;
   }
   &-filter-select {
-    padding-left: 48px;
+    padding-left: 41px;
     vertical-align: middle;
     &-icon {
       position: absolute;
       top: 0;
       bottom: 0;
-      left: 23px;
+      left: 16px;
       height: 18px;
       margin: auto 0;
       color: @text-color;

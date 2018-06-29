@@ -62,6 +62,10 @@
   // input-rendered
   &-content {
     position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    width: 100%;
+    margin-bottom: 3px;
   }
   &-has-label &-content {
     padding-top: 15px;
@@ -293,7 +297,10 @@
   &-focus &-underline &-ripple {
     opacity: 1;
     transform: scaleX(1);
-    transition: transform 300ms cubic-bezier(0.25, 0.8, 0.25, 1), opacity 100ms cubic-bezier(0.25, 0.8, 0.25, 1), border-color 300ms cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition:
+      transform 300ms cubic-bezier(0.25, 0.8, 0.25, 1),
+      opacity 100ms cubic-bezier(0.25, 0.8, 0.25, 1),
+      border-color 300ms cubic-bezier(0.25, 0.8, 0.25, 1);
   }
 
   .has-error &-underline {

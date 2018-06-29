@@ -2341,17 +2341,52 @@ exports[`renders ./components/form/demo/time-related-controls.md correctly 1`] =
             class="ant-calendar-picker"
             id="date-picker"
           >
-            <div>
-              <input
-                class="ant-calendar-picker-input ant-input"
-                placeholder="Select date"
-                readonly=""
-                value=""
-              />
-              <span
-                class="ant-calendar-picker-icon"
-              />
-            </div>
+            <span
+              class="ant-input-wrapper ant-input-has-suffix"
+            >
+              <div
+                class="ant-input-content"
+              >
+                <div
+                  class="ant-input-rendered-wrapper"
+                >
+                  <div
+                    class="ant-input-rendered"
+                  >
+                    <div
+                      class="ant-input-placeholder"
+                    >
+                      Select date
+                    </div>
+                    <input
+                      class="ant-input ant-calendar-picker-input ant-input"
+                      readonly=""
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                  <span
+                    class="ant-input-suffix"
+                  >
+                    <span
+                      class="ant-calendar-picker-icon-wrapper"
+                      style="min-width:18px"
+                    >
+                      <i
+                        class="icon icon-date_range ant-calendar-picker-icon"
+                      />
+                    </span>
+                  </span>
+                </div>
+              </div>
+              <div
+                class="ant-input-underline"
+              >
+                <span
+                  class="ant-input-ripple"
+                />
+              </div>
+            </span>
           </span>
         </span>
       </div>
@@ -2373,17 +2408,52 @@ exports[`renders ./components/form/demo/time-related-controls.md correctly 1`] =
             class="ant-calendar-picker"
             id="date-time-picker"
           >
-            <div>
-              <input
-                class="ant-calendar-picker-input ant-input"
-                placeholder="Select date"
-                readonly=""
-                value=""
-              />
-              <span
-                class="ant-calendar-picker-icon"
-              />
-            </div>
+            <span
+              class="ant-input-wrapper ant-input-has-suffix"
+            >
+              <div
+                class="ant-input-content"
+              >
+                <div
+                  class="ant-input-rendered-wrapper"
+                >
+                  <div
+                    class="ant-input-rendered"
+                  >
+                    <div
+                      class="ant-input-placeholder"
+                    >
+                      Select date
+                    </div>
+                    <input
+                      class="ant-input ant-calendar-picker-input ant-input"
+                      readonly=""
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                  <span
+                    class="ant-input-suffix"
+                  >
+                    <span
+                      class="ant-calendar-picker-icon-wrapper"
+                      style="min-width:18px"
+                    >
+                      <i
+                        class="icon icon-date_range ant-calendar-picker-icon"
+                      />
+                    </span>
+                  </span>
+                </div>
+              </div>
+              <div
+                class="ant-input-underline"
+              >
+                <span
+                  class="ant-input-ripple"
+                />
+              </div>
+            </span>
           </span>
         </span>
       </div>
@@ -2405,17 +2475,52 @@ exports[`renders ./components/form/demo/time-related-controls.md correctly 1`] =
             class="ant-calendar-picker"
             id="month-picker"
           >
-            <div>
-              <input
-                class="ant-calendar-picker-input ant-input"
-                placeholder="Select date"
-                readonly=""
-                value=""
-              />
-              <span
-                class="ant-calendar-picker-icon"
-              />
-            </div>
+            <span
+              class="ant-input-wrapper ant-input-has-suffix"
+            >
+              <div
+                class="ant-input-content"
+              >
+                <div
+                  class="ant-input-rendered-wrapper"
+                >
+                  <div
+                    class="ant-input-rendered"
+                  >
+                    <div
+                      class="ant-input-placeholder"
+                    >
+                      Select date
+                    </div>
+                    <input
+                      class="ant-input ant-calendar-picker-input ant-input"
+                      readonly=""
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                  <span
+                    class="ant-input-suffix"
+                  >
+                    <span
+                      class="ant-calendar-picker-icon-wrapper"
+                      style="min-width:18px"
+                    >
+                      <i
+                        class="icon icon-date_range ant-calendar-picker-icon"
+                      />
+                    </span>
+                  </span>
+                </div>
+              </div>
+              <div
+                class="ant-input-underline"
+              >
+                <span
+                  class="ant-input-ripple"
+                />
+              </div>
+            </span>
           </span>
         </span>
       </div>
@@ -2439,30 +2544,41 @@ exports[`renders ./components/form/demo/time-related-controls.md correctly 1`] =
             tabindex="0"
           >
             <span
-              class="ant-calendar-picker-input ant-input"
+              class="ant-calendar-range-picker"
             >
-              <input
-                class="ant-calendar-range-picker-input"
-                placeholder="Start date"
-                readonly=""
-                tabindex="-1"
-                value=""
-              />
               <span
-                class="ant-calendar-range-picker-separator"
+                class="ant-calendar-picker-input ant-input"
               >
-                 ~ 
+                <input
+                  class="ant-calendar-range-picker-input"
+                  placeholder="Start date"
+                  readonly=""
+                  tabindex="-1"
+                  value=""
+                />
+                <span
+                  class="ant-calendar-range-picker-separator"
+                >
+                   ~ 
+                </span>
+                <input
+                  class="ant-calendar-range-picker-input"
+                  placeholder="End date"
+                  readonly=""
+                  tabindex="-1"
+                  value=""
+                />
+                <i
+                  class="icon icon-date_range ant-calendar-picker-icon"
+                />
               </span>
-              <input
-                class="ant-calendar-range-picker-input"
-                placeholder="End date"
-                readonly=""
-                tabindex="-1"
-                value=""
-              />
-              <span
-                class="ant-calendar-picker-icon"
-              />
+              <div
+                class="ant-calendar-underline"
+              >
+                <span
+                  class="ant-calendar-ripple"
+                />
+              </div>
             </span>
           </span>
         </span>
@@ -2488,30 +2604,41 @@ exports[`renders ./components/form/demo/time-related-controls.md correctly 1`] =
             tabindex="0"
           >
             <span
-              class="ant-calendar-picker-input ant-input"
+              class="ant-calendar-range-picker"
             >
-              <input
-                class="ant-calendar-range-picker-input"
-                placeholder="Start date"
-                readonly=""
-                tabindex="-1"
-                value=""
-              />
               <span
-                class="ant-calendar-range-picker-separator"
+                class="ant-calendar-picker-input ant-input"
               >
-                 ~ 
+                <input
+                  class="ant-calendar-range-picker-input"
+                  placeholder="Start date"
+                  readonly=""
+                  tabindex="-1"
+                  value=""
+                />
+                <span
+                  class="ant-calendar-range-picker-separator"
+                >
+                   ~ 
+                </span>
+                <input
+                  class="ant-calendar-range-picker-input"
+                  placeholder="End date"
+                  readonly=""
+                  tabindex="-1"
+                  value=""
+                />
+                <i
+                  class="icon icon-date_range ant-calendar-picker-icon"
+                />
               </span>
-              <input
-                class="ant-calendar-range-picker-input"
-                placeholder="End date"
-                readonly=""
-                tabindex="-1"
-                value=""
-              />
-              <span
-                class="ant-calendar-picker-icon"
-              />
+              <div
+                class="ant-calendar-underline"
+              >
+                <span
+                  class="ant-calendar-ripple"
+                />
+              </div>
             </span>
           </span>
         </span>
@@ -2533,16 +2660,48 @@ exports[`renders ./components/form/demo/time-related-controls.md correctly 1`] =
           <span
             class="ant-time-picker "
           >
-            <input
-              class="ant-time-picker-input"
-              id="time-picker"
-              placeholder="Select time"
-              type="text"
-              value=""
-            />
             <span
-              class="ant-time-picker-icon"
-            />
+              class="ant-input-wrapper ant-input-has-suffix"
+            >
+              <div
+                class="ant-input-content"
+              >
+                <div
+                  class="ant-input-rendered-wrapper"
+                >
+                  <div
+                    class="ant-input-rendered"
+                  >
+                    <div
+                      class="ant-input-placeholder"
+                    >
+                      Select time
+                    </div>
+                    <input
+                      class="ant-input ant-time-picker-input"
+                      id="time-picker"
+                      readonly=""
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                  <span
+                    class="ant-input-suffix"
+                  >
+                    <i
+                      class="icon icon-av_timer ant-time-picker-icon"
+                    />
+                  </span>
+                </div>
+              </div>
+              <div
+                class="ant-input-underline"
+              >
+                <span
+                  class="ant-input-ripple"
+                />
+              </div>
+            </span>
           </span>
         </span>
       </div>
@@ -3637,17 +3796,52 @@ exports[`renders ./components/form/demo/validate-static.md correctly 1`] = `
             class="ant-calendar-picker"
             style="width:100%"
           >
-            <div>
-              <input
-                class="ant-calendar-picker-input ant-input"
-                placeholder="Select date"
-                readonly=""
-                value=""
-              />
-              <span
-                class="ant-calendar-picker-icon"
-              />
-            </div>
+            <span
+              class="ant-input-wrapper ant-input-has-suffix"
+            >
+              <div
+                class="ant-input-content"
+              >
+                <div
+                  class="ant-input-rendered-wrapper"
+                >
+                  <div
+                    class="ant-input-rendered"
+                  >
+                    <div
+                      class="ant-input-placeholder"
+                    >
+                      Select date
+                    </div>
+                    <input
+                      class="ant-input ant-calendar-picker-input ant-input"
+                      readonly=""
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                  <span
+                    class="ant-input-suffix"
+                  >
+                    <span
+                      class="ant-calendar-picker-icon-wrapper"
+                      style="min-width:18px"
+                    >
+                      <i
+                        class="icon icon-date_range ant-calendar-picker-icon"
+                      />
+                    </span>
+                  </span>
+                </div>
+              </div>
+              <div
+                class="ant-input-underline"
+              >
+                <span
+                  class="ant-input-ripple"
+                />
+              </div>
+            </span>
           </span>
         </span>
       </div>
@@ -3669,16 +3863,48 @@ exports[`renders ./components/form/demo/validate-static.md correctly 1`] = `
             class="ant-time-picker "
             style="width:100%"
           >
-            <input
-              class="ant-time-picker-input"
-              id=""
-              placeholder="Select time"
-              type="text"
-              value=""
-            />
             <span
-              class="ant-time-picker-icon"
-            />
+              class="ant-input-wrapper ant-input-has-suffix"
+            >
+              <div
+                class="ant-input-content"
+              >
+                <div
+                  class="ant-input-rendered-wrapper"
+                >
+                  <div
+                    class="ant-input-rendered"
+                  >
+                    <div
+                      class="ant-input-placeholder"
+                    >
+                      Select time
+                    </div>
+                    <input
+                      class="ant-input ant-time-picker-input"
+                      id=""
+                      readonly=""
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                  <span
+                    class="ant-input-suffix"
+                  >
+                    <i
+                      class="icon icon-av_timer ant-time-picker-icon"
+                    />
+                  </span>
+                </div>
+              </div>
+              <div
+                class="ant-input-underline"
+              >
+                <span
+                  class="ant-input-ripple"
+                />
+              </div>
+            </span>
           </span>
         </span>
       </div>
@@ -3837,17 +4063,52 @@ exports[`renders ./components/form/demo/validate-static.md correctly 1`] = `
                     <span
                       class="ant-calendar-picker"
                     >
-                      <div>
-                        <input
-                          class="ant-calendar-picker-input ant-input"
-                          placeholder="Select date"
-                          readonly=""
-                          value=""
-                        />
-                        <span
-                          class="ant-calendar-picker-icon"
-                        />
-                      </div>
+                      <span
+                        class="ant-input-wrapper ant-input-has-suffix"
+                      >
+                        <div
+                          class="ant-input-content"
+                        >
+                          <div
+                            class="ant-input-rendered-wrapper"
+                          >
+                            <div
+                              class="ant-input-rendered"
+                            >
+                              <div
+                                class="ant-input-placeholder"
+                              >
+                                Select date
+                              </div>
+                              <input
+                                class="ant-input ant-calendar-picker-input ant-input"
+                                readonly=""
+                                type="text"
+                                value=""
+                              />
+                            </div>
+                            <span
+                              class="ant-input-suffix"
+                            >
+                              <span
+                                class="ant-calendar-picker-icon-wrapper"
+                                style="min-width:18px"
+                              >
+                                <i
+                                  class="icon icon-date_range ant-calendar-picker-icon"
+                                />
+                              </span>
+                            </span>
+                          </div>
+                        </div>
+                        <div
+                          class="ant-input-underline"
+                        >
+                          <span
+                            class="ant-input-ripple"
+                          />
+                        </div>
+                      </span>
                     </span>
                   </span>
                   <div
@@ -3886,17 +4147,52 @@ exports[`renders ./components/form/demo/validate-static.md correctly 1`] = `
                     <span
                       class="ant-calendar-picker"
                     >
-                      <div>
-                        <input
-                          class="ant-calendar-picker-input ant-input"
-                          placeholder="Select date"
-                          readonly=""
-                          value=""
-                        />
-                        <span
-                          class="ant-calendar-picker-icon"
-                        />
-                      </div>
+                      <span
+                        class="ant-input-wrapper ant-input-has-suffix"
+                      >
+                        <div
+                          class="ant-input-content"
+                        >
+                          <div
+                            class="ant-input-rendered-wrapper"
+                          >
+                            <div
+                              class="ant-input-rendered"
+                            >
+                              <div
+                                class="ant-input-placeholder"
+                              >
+                                Select date
+                              </div>
+                              <input
+                                class="ant-input ant-calendar-picker-input ant-input"
+                                readonly=""
+                                type="text"
+                                value=""
+                              />
+                            </div>
+                            <span
+                              class="ant-input-suffix"
+                            >
+                              <span
+                                class="ant-calendar-picker-icon-wrapper"
+                                style="min-width:18px"
+                              >
+                                <i
+                                  class="icon icon-date_range ant-calendar-picker-icon"
+                                />
+                              </span>
+                            </span>
+                          </div>
+                        </div>
+                        <div
+                          class="ant-input-underline"
+                        >
+                          <span
+                            class="ant-input-ripple"
+                          />
+                        </div>
+                      </span>
                     </span>
                   </span>
                 </div>

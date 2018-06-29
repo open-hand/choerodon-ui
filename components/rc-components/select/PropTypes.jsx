@@ -83,7 +83,10 @@ export const SelectPropTypes = {
   getInputElement: PropTypes.func,
   getRootDomNode: PropTypes.func,
   showAction: PropTypes.arrayOf(PropTypes.string),
-  label: PropTypes.node,
+  label: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.string,
+  ]),
   placeholder: PropTypes.string,
   filter: PropTypes.bool,
   builtinPlacements: PropTypes.any,
@@ -99,4 +102,5 @@ export const SelectPropTypes = {
   ]),
   filterValue: PropTypes.string,
   onFilterChange: PropTypes.func,
+  choiceRemove: PropTypes.bool,
 };

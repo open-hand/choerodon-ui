@@ -809,6 +809,13 @@ exports[`renders ./components/select/demo/size.md correctly 1`] = `
             >
               a10
             </div>
+            <span
+              class="ant-select-selection__choice__remove"
+            >
+              <i
+                class="icon icon-highlight_off"
+              />
+            </span>
             <div
               class="ant-ripple-wrapper"
             />
@@ -824,6 +831,13 @@ exports[`renders ./components/select/demo/size.md correctly 1`] = `
             >
               c12
             </div>
+            <span
+              class="ant-select-selection__choice__remove"
+            >
+              <i
+                class="icon icon-highlight_off"
+              />
+            </span>
             <div
               class="ant-ripple-wrapper"
             />
@@ -902,7 +916,11 @@ exports[`renders ./components/select/demo/size.md correctly 1`] = `
             </div>
             <span
               class="ant-select-selection__choice__remove"
-            />
+            >
+              <i
+                class="icon icon-highlight_off"
+              />
+            </span>
             <div
               class="ant-ripple-wrapper"
             />
@@ -920,7 +938,11 @@ exports[`renders ./components/select/demo/size.md correctly 1`] = `
             </div>
             <span
               class="ant-select-selection__choice__remove"
-            />
+            >
+              <i
+                class="icon icon-highlight_off"
+              />
+            </span>
             <div
               class="ant-ripple-wrapper"
             />

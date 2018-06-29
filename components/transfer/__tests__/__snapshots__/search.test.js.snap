@@ -8,9 +8,11 @@ exports[`Search should show cross icon when input value exists 1`] = `
   <div>
     <Input
       disabled={false}
+      focused={false}
       onChange={[Function]}
       placeholder=""
       prefixCls="ant-input"
+      readOnly={false}
       type="text"
       underline={true}
       value=""
@@ -38,6 +40,7 @@ exports[`Search should show cross icon when input value exists 1`] = `
                 onFocus={[Function]}
                 onInput={[Function]}
                 onKeyDown={[Function]}
+                readOnly={false}
                 type="text"
                 value=""
               />
@@ -76,9 +79,11 @@ exports[`Search should show cross icon when input value exists 2`] = `
   <div>
     <Input
       disabled={false}
+      focused={false}
       onChange={[Function]}
       placeholder=""
       prefixCls="ant-input"
+      readOnly={false}
       type="text"
       underline={true}
       value="a"
@@ -106,6 +111,7 @@ exports[`Search should show cross icon when input value exists 2`] = `
                 onFocus={[Function]}
                 onInput={[Function]}
                 onKeyDown={[Function]}
+                readOnly={false}
                 type="text"
                 value="a"
               />

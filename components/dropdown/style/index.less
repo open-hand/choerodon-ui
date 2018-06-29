@@ -14,17 +14,13 @@
   &-wrap {
     position: relative;
 
-    .@{ant-prefix}-btn > .@{iconfont-css-prefix}-down {
-      .iconfont-size-under-12px(10px);
-    }
-
-    .@{iconfont-css-prefix}-down:before {
+    .@{iconfont-css-prefix}-arrow_drop_down:before {
       transition: transform .2s;
     }
   }
 
   &-wrap-open {
-    .@{iconfont-css-prefix}-down:before {
+    .@{iconfont-css-prefix}-arrow_drop_down:before {
       transform: rotate(180deg);
     }
   }
@@ -219,10 +215,9 @@
   }
 }
 
-.@{dropdown-prefix-cls}-trigger,
-.@{dropdown-prefix-cls}-link {
-  .@{iconfont-css-prefix}-down {
-    .iconfont-size-under-12px(10px);
+.@{dropdown-prefix-cls}-trigger.@{dropdown-prefix-cls}-link {
+  .@{iconfont-css-prefix}-arrow_drop_down {
+    vertical-align: text-bottom;
   }
 }
 
@@ -232,9 +227,6 @@
   &.@{ant-prefix}-btn-group > .@{ant-prefix}-btn:last-child:not(:first-child) {
     padding-left: @padding-xs;
     padding-right: @padding-xs;
-  }
-  .@{iconfont-css-prefix}-down {
-    .iconfont-size-under-12px(10px);
   }
 }
 

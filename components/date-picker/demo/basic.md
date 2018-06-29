@@ -23,13 +23,13 @@ function onChange(date, dateString) {
 
 ReactDOM.render(
   <div>
-    <DatePicker onChange={onChange} />
+    <DatePicker onChange={onChange} label="日期框" />
     <br />
     <MonthPicker onChange={onChange} placeholder="Select month" />
     <br />
     <RangePicker onChange={onChange} />
     <br />
-    <WeekPicker onChange={onChange} placeholder="Select week" />
+    <WeekPicker onChange={onChange} placeholder="Select week" label="选择周" />
   </div>
 , mountNode);
 ````

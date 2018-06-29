@@ -76,8 +76,10 @@ If the form has been decorated by `Form.create` then it has `this.props.form` pr
 | setFields | Set the value and error of a field. [Code Sample](https://github.com/react-component/form/blob/3b9959b57ab30b41d8890ff30c79a7e7c383cad3/examples/server-validate.js#L74-L79) | Function({ [fieldName]&#x3A; { value: any, errors: [Error] } }) |
 | setFields |  | Function(obj: object) |
 | setFieldsValue | Set the value of a field.(Note: please don't use it in `componentWillReceiveProps`, otherwise, it will cause an endless loop, [more](https://github.com/ant-design/ant-design/issues/2985)) | Function({ [fieldName]&#x3A; value } |
-| validateFields | Validate the specified fields and get theirs values and errors. If you don't specify the parameter of fieldNames, you will vaildate all fields. | Function(\[fieldNames: string\[]], [options: object], callback: Function(errors, values)) |
+| validateFields | Validate the specified fields and get theirs values and errors. If you don't specify the parameter of fieldNames, you will vaildate all fields. | Function(\[fieldNames: string\[]], [options: object], callback: Function(errors, values, modify)) |
 | validateFieldsAndScroll | This function is similar to `validateFields`, but after validation, if the target field is not in visible area of form, form will be automatically scrolled to the target field area. | same as `validateFields` |
+| isModifiedFields | Check whether any of fields is modified | (names?: string\[]) => boolean |
+| isModifiedField | Check whether a field is modified | (name: string) => boolean |
 
 ### this.props.form.validateFields/validateFieldsAndScroll(\[fieldNames: string\[]], [options: object], callback: Function(errors, values))
 

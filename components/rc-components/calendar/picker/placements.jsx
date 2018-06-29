@@ -1,3 +1,5 @@
+import cloneDeep from 'lodash/cloneDeep';
+
 const autoAdjustOverflow = {
   adjustX: 1,
   adjustY: 1,
@@ -31,5 +33,17 @@ const placements = {
     targetOffset,
   },
 };
+
+export const getPlacements = (placement) => {
+  const copyPlacements = cloneDeep(placements);
+  if (typeof placement === 'object') {
+    for (let offset in placement) {
+      if (copyPlacements[offset]) {
+        copyPlacements[offset].targetOffset = placement[offset];
+      }
+    }
+  }
+  return copyPlacements;
+}
 
 export default placements;

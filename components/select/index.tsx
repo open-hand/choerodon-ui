@@ -65,6 +65,7 @@ export interface SelectProps extends AbstractSelectProps {
   footer?: React.ReactNode | string,
   choiceRender?: (liDom: HTMLElement, value: SelectValue) => any,
   loading?: boolean | object;
+  choiceRemove?: boolean;
 }
 
 export interface OptionProps {
@@ -109,6 +110,7 @@ const SelectPropTypes = {
   ]),
   filterValue: PropTypes.string,
   onFilterChange: PropTypes.func,
+  choiceRemove: PropTypes.bool,
 };
 
 // => It is needless to export the declaration of below two inner components.
@@ -125,6 +127,7 @@ export default class Select extends React.Component<SelectProps, {}> {
     choiceTransitionName: 'zoom',
     filter: false,
     showCheckAll: true,
+    choiceRemove: true,
   };
 
   static propTypes = SelectPropTypes;
