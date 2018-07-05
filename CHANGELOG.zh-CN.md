@@ -15,6 +15,22 @@ timeline: true
 
 ---
 
+## 0.3.3
+
+`2018-07-05`
+
+- 🌟 `Select`: 增加 `onChoiceRemove` 属性。
+- 🌟 `Input`: 增加 `showLengthInfo` 属性。
+- 🌟 `Modal`: 增加 `center` 属性。
+- 💄 `Select`: 样式调整。
+- 💄 `Tree`: 样式调整。
+- 💄 `Modal.Sidebar`: 样式调整。
+- 💄 `InputNumber`: 样式调整。
+- 💄 `Select`: 实现 `filterInput` 自动获取焦点。
+- 🐞 `Table`: 修复 `onChange` 返回值错误.
+- 🐞 `Select`: 修复点击下拉按钮不能触发focus.
+- 🐞 `Table`: 修复过滤框无法弹出默认过滤内容.
+
 ## 0.3.2
 
 `2018-06-28`

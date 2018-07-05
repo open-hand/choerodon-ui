@@ -102,5 +102,9 @@ export const SelectPropTypes = {
   ]),
   filterValue: PropTypes.string,
   onFilterChange: PropTypes.func,
-  choiceRemove: PropTypes.bool,
+  choiceRemove: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.func,
+  ]),
+  onChoiceRemove: PropTypes.func,
 };

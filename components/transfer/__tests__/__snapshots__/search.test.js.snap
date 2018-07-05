@@ -8,11 +8,11 @@ exports[`Search should show cross icon when input value exists 1`] = `
   <div>
     <Input
       disabled={false}
-      focused={false}
       onChange={[Function]}
       placeholder=""
       prefixCls="ant-input"
       readOnly={false}
+      showLengthInfo={true}
       type="text"
       underline={true}
       value=""
@@ -79,11 +79,11 @@ exports[`Search should show cross icon when input value exists 2`] = `
   <div>
     <Input
       disabled={false}
-      focused={false}
       onChange={[Function]}
       placeholder=""
       prefixCls="ant-input"
       readOnly={false}
+      showLengthInfo={true}
       type="text"
       underline={true}
       value="a"

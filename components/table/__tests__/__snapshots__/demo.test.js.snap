@@ -12882,7 +12882,7 @@ exports[`renders ./components/table/demo/reset-filter.md correctly 1`] = `
                         class="ant-select-selection__choice__remove"
                       >
                         <i
-                          class="icon icon-highlight_off"
+                          class="icon icon-cancel"
                         />
                       </span>
                       <div
@@ -12904,7 +12904,7 @@ exports[`renders ./components/table/demo/reset-filter.md correctly 1`] = `
                         class="ant-select-selection__choice__remove"
                       >
                         <i
-                          class="icon icon-highlight_off"
+                          class="icon icon-cancel"
                         />
                       </span>
                       <div
@@ -12926,7 +12926,7 @@ exports[`renders ./components/table/demo/reset-filter.md correctly 1`] = `
                         class="ant-select-selection__choice__remove"
                       >
                         <i
-                          class="icon icon-highlight_off"
+                          class="icon icon-cancel"
                         />
                       </span>
                       <div

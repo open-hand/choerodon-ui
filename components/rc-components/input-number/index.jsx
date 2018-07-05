@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import isNegativeZero from 'is-negative-zero';
 import InputHandler from './InputHandler';
+import Icon from '../../icon';
+import Input from '../../input';
 
 function noop() {
 }
@@ -70,6 +72,10 @@ export default class InputNumber extends React.Component {
     precision: PropTypes.number,
     required: PropTypes.bool,
     pattern: PropTypes.string,
+    label: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.node,
+    ]),
   }
 
   static defaultProps = {
@@ -456,15 +462,9 @@ export default class InputNumber extends React.Component {
     this.input = node;
   }
 
-  render() {
+  renderSuffix = () => {
     const props = { ...this.props };
     const { prefixCls, disabled, readOnly, useTouch } = props;
-    const classes = classNames({
-      [prefixCls]: true,
-      [props.className]: !!props.className,
-      [`${prefixCls}-disabled`]: disabled,
-      [`${prefixCls}-focused`]: this.state.focused,
-    });
     let upDisabledClass = '';
     let downDisabledClass = '';
     const { value } = this.state;
@@ -482,22 +482,7 @@ export default class InputNumber extends React.Component {
         downDisabledClass = `${prefixCls}-handler-down-disabled`;
       }
     }
-
     const editable = !props.readOnly && !props.disabled;
-
-    // focus state, show input value
-    // unfocus state, show valid value
-    let inputDisplayValue;
-    if (this.state.focused) {
-      inputDisplayValue = this.state.inputValue;
-    } else {
-      inputDisplayValue = this.toPrecisionAsStep(this.state.value);
-    }
-
-    if (inputDisplayValue === undefined || inputDisplayValue === null) {
-      inputDisplayValue = '';
-    }
-
     let upEvents;
     let downEvents;
     if (useTouch) {
@@ -521,9 +506,68 @@ export default class InputNumber extends React.Component {
         onMouseLeave: this.stop,
       };
     }
-    const inputDisplayValueFormat = this.formatWrapper(inputDisplayValue);
     const isUpDisabled = !!upDisabledClass || disabled || readOnly;
     const isDownDisabled = !!downDisabledClass || disabled || readOnly;
+    return (<div className={`${prefixCls}-handler-wrap`}>
+    <InputHandler
+      ref="up"
+      disabled={isUpDisabled}
+      prefixCls={prefixCls}
+      unselectable="unselectable"
+      {...upEvents}
+      role="button"
+      aria-label="Increase Value"
+      aria-disabled={!!isUpDisabled}
+      className={`${prefixCls}-handler ${prefixCls}-handler-up ${upDisabledClass}`}
+    >
+      {this.props.upHandler || <Icon
+        unselectable="unselectable"
+        type="baseline-arrow_drop_up"
+        className={`${prefixCls}-handler-up-inner`}
+        onClick={preventDefault}
+      />}
+    </InputHandler>
+    <InputHandler
+      ref="down"
+      disabled={isDownDisabled}
+      prefixCls={prefixCls}
+      unselectable="unselectable"
+      {...downEvents}
+      role="button"
+      aria-label="Decrease Value"
+      aria-disabled={!!isDownDisabled}
+      className={`${prefixCls}-handler ${prefixCls}-handler-down ${downDisabledClass}`}
+    >
+      {this.props.downHandler || <Icon
+        unselectable="unselectable"
+        type="baseline-arrow_drop_down"
+        className={`${prefixCls}-handler-down-inner`}
+        onClick={preventDefault}
+      />}
+    </InputHandler>
+  </div>);
+  }
+  render() {
+    const props = { ...this.props };
+    const { prefixCls, disabled, readOnly, useTouch } = props;
+    const classes = classNames({
+      [prefixCls]: true,
+      [props.className]: !!props.className,
+    });
+    const editable = !props.readOnly && !props.disabled;
+    // focus state, show input value
+    // unfocus state, show valid value
+    let inputDisplayValue;
+    if (this.state.focused) {
+      inputDisplayValue = this.state.inputValue;
+    } else {
+      inputDisplayValue = this.toPrecisionAsStep(this.state.value);
+    }
+
+    if (inputDisplayValue === undefined || inputDisplayValue === null) {
+      inputDisplayValue = '';
+    }
+    const inputDisplayValueFormat = this.formatWrapper(inputDisplayValue);
     // ref for test
     return (
       <div
@@ -534,76 +578,33 @@ export default class InputNumber extends React.Component {
         onMouseOver={props.onMouseOver}
         onMouseOut={props.onMouseOut}
       >
-        <div className={`${prefixCls}-handler-wrap`}>
-          <InputHandler
-            ref="up"
-            disabled={isUpDisabled}
-            prefixCls={prefixCls}
-            unselectable="unselectable"
-            {...upEvents}
-            role="button"
-            aria-label="Increase Value"
-            aria-disabled={!!isUpDisabled}
-            className={`${prefixCls}-handler ${prefixCls}-handler-up ${upDisabledClass}`}
-          >
-            {this.props.upHandler || <span
-              unselectable="unselectable"
-              className={`${prefixCls}-handler-up-inner`}
-              onClick={preventDefault}
-            />}
-          </InputHandler>
-          <InputHandler
-            ref="down"
-            disabled={isDownDisabled}
-            prefixCls={prefixCls}
-            unselectable="unselectable"
-            {...downEvents}
-            role="button"
-            aria-label="Decrease Value"
-            aria-disabled={!!isDownDisabled}
-            className={`${prefixCls}-handler ${prefixCls}-handler-down ${downDisabledClass}`}
-          >
-            {this.props.downHandler || <span
-              unselectable="unselectable"
-              className={`${prefixCls}-handler-down-inner`}
-              onClick={preventDefault}
-            />}
-          </InputHandler>
-        </div>
-        <div
-          className={`${prefixCls}-input-wrap`}
-          role="spinbutton"
-          aria-valuemin={props.min}
-          aria-valuemax={props.max}
-          aria-valuenow={value}
-        >
-          <input
-            required={props.required}
-            type={props.type}
-            placeholder={props.placeholder}
-            onClick={props.onClick}
-            className={`${prefixCls}-input`}
-            tabIndex={props.tabIndex}
-            autoComplete="off"
-            onFocus={this.onFocus}
-            onBlur={this.onBlur}
-            onKeyDown={editable ? this.onKeyDown : noop}
-            onKeyUp={editable ? this.onKeyUp : noop}
-            autoFocus={props.autoFocus}
-            maxLength={props.maxLength}
-            readOnly={props.readOnly}
-            disabled={props.disabled}
-            max={props.max}
-            min={props.min}
-            step={props.step}
-            name={props.name}
-            id={props.id}
-            onChange={this.onChange}
-            ref={this.saveInput}
-            value={inputDisplayValueFormat}
-            pattern={props.pattern}
-          />
-        </div>
+        <Input
+          required={props.required}
+          type={props.type}
+          placeholder={props.placeholder}
+          onClick={props.onClick}
+          tabIndex={props.tabIndex}
+          autoComplete="off"
+          onFocus={this.onFocus}
+          onBlur={this.onBlur}
+          onKeyDown={editable ? this.onKeyDown : noop}
+          onKeyUp={editable ? this.onKeyUp : noop}
+          autoFocus={props.autoFocus}
+          maxLength={props.maxLength}
+          readOnly={props.readOnly}
+          disabled={props.disabled}
+          max={props.max}
+          min={props.min}
+          step={props.step}
+          name={props.name}
+          id={props.id}
+          onChange={this.onChange}
+          ref={this.saveInput}
+          value={inputDisplayValueFormat}
+          pattern={props.pattern}
+          suffix={this.renderSuffix()}
+          label={props.label}
+        /> 
       </div>
     );
   }

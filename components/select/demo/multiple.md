@@ -22,10 +22,6 @@ for (let i = 10; i < 36; i++) {
   children.push(<Option key={i}>{i.toString(36) + i}</Option>);
 }
 
-function handleChange(value) {
-  console.log(`selected ${value}`);
-}
-
 class SelectMulitpleDemo extends React.Component {
   state = {
     loading: true,
@@ -40,7 +36,10 @@ class SelectMulitpleDemo extends React.Component {
         options: children,
         loading: false,
       });
-    }, 5000);
+    }, 3000);
+  }
+  handleChoiceRemove = (value) => {
+    return value >= 15;
   }
   render() {
     const { options, loading } = this.state;
@@ -49,11 +48,10 @@ class SelectMulitpleDemo extends React.Component {
         mode="multiple"
         style={{ width: '100%' }}
         label="多选用例"
-        onChange={handleChange}
         optionFilterProp="children"
         footer={<Button funcType="raised" type="primary">这里是footer</Button>}
         loading={loading}
-        choiceRemove={false}
+        choiceRemove={this.handleChoiceRemove}
         filter
         allowClear
       >

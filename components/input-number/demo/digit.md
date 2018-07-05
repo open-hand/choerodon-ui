@@ -1,5 +1,5 @@
 ---
-order: 3
+order: 1
 title:
     zh-CN: 小数
     en-US: Decimals
@@ -21,6 +21,6 @@ function onChange(value) {
 }
 
 ReactDOM.render(
-  <InputNumber min={0} max={10} step={0.1} onChange={onChange} />
+  <InputNumber label="小数" min={0} max={10} step={0.1} onChange={onChange} />
 , mountNode);
 ````

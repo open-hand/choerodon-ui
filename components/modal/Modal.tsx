@@ -51,6 +51,7 @@ export interface ModalProps {
   mask?: boolean;
   keyboard?: boolean;
   funcType?: ButtonFuncType;
+  center?: boolean;
 }
 
 export interface ModalFuncProps {
@@ -106,6 +107,7 @@ export default class Modal extends React.Component<ModalProps, {}> {
     confirmLoading: false,
     visible: false,
     okType: 'primary',
+    center: false,
   };
 
   static propTypes = {
@@ -123,6 +125,7 @@ export default class Modal extends React.Component<ModalProps, {}> {
     closable: PropTypes.bool,
     transitionName: PropTypes.string,
     funcType: PropTypes.string,
+    center: PropTypes.bool,
   };
 
   handleCancel = (e: any) => {
@@ -182,7 +185,6 @@ export default class Modal extends React.Component<ModalProps, {}> {
 
   render() {
     const { footer, visible } = this.props;
-
     const defaultFooter = (
       <LocaleReceiver
         componentName="Modal"
@@ -191,7 +193,6 @@ export default class Modal extends React.Component<ModalProps, {}> {
         {this.renderFooter}
       </LocaleReceiver>
     );
-
     return (
       <Dialog
         {...this.props}

@@ -1,8 +1,9 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import RcInputNumber from '../rc-components/input-number';
+import { AbstractInputProps } from '../input/Input';
 
-export interface InputNumberProps {
+export interface InputNumberProps extends AbstractInputProps {
   prefixCls?: string;
   min?: number;
   max?: number;

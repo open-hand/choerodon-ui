@@ -6,6 +6,7 @@ import Icon from '../../icon';
 import Animate from '../animate';
 import getScrollBarSize from '../util/getScrollBarSize';
 import KeyCode from '../util/KeyCode';
+import addEventListener from '../util/Dom/addEventListener';
 
 let uuid = 0;
 let openCount = 0;
@@ -56,6 +57,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     maskClosable: true,
     destroyOnClose: false,
     prefixCls: 'rc-dialog',
+    center: false,
   };
 
   private inTransition: boolean;
@@ -67,6 +69,8 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
   private sentinel: HTMLElement;
   private bodyIsOverflowing: boolean;
   private scrollbarWidth: number;
+  private scrollEvent: any;
+  private resizeEvent: any;
 
   componentWillMount() {
     this.inTransition = false;
@@ -74,6 +78,15 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
   }
 
   componentDidMount() {
+    const { center } = this.props;
+    const dialogNode: any = ReactDOM.findDOMNode(this.dialog);
+    if (center && dialogNode) {
+      const { style } = dialogNode;
+      this.center();
+      style.margin = '0';
+      style.padding = '0';
+      this.addEventListener();
+    }
     this.componentDidUpdate({});
   }
 
@@ -113,8 +126,32 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     if (this.props.visible || this.inTransition) {
       this.removeScrollingEffect();
     }
+    if (this.props.center) {
+      this.removeEventListener();
+    }
   }
-
+  center = () => {
+    const { center } = this.props;
+    const dialogNode: any = ReactDOM.findDOMNode(this.dialog);
+    if (center && dialogNode && typeof window !== undefined) {
+      const { clientWidth: docWidth, clientHeight: docHeight } = window.document.documentElement;
+      const { offsetWidth: width, offsetHeight: height, style } = dialogNode;
+      style.left = `${(docWidth - width) / 2}px`;
+      style.top = `${(docHeight - height) / 2}px`;
+    }
+  }
+  addEventListener = () => {
+    if (typeof window !== undefined) {
+      this.resizeEvent = addEventListener(window, 'resize', this.center);
+      this.scrollEvent = addEventListener(window, 'scroll', this.center);
+    }
+  }
+  removeEventListener = () => {
+    if (typeof window !== undefined) {
+      this.resizeEvent.remove();
+      this.scrollEvent.remove();
+    }
+  }
   onAnimateLeave = () => {
     const { afterClose } = this.props;
     // need demo?
@@ -167,14 +204,13 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     const props = this.props;
     const closable = props.closable;
     const prefixCls = props.prefixCls;
-    const dest: any = {};
+    let dest: any = {};
     if (props.width !== undefined) {
       dest.width = props.width;
     }
     if (props.height !== undefined) {
       dest.height = props.height;
     }
-
     let footer;
     if (props.footer) {
       footer = (

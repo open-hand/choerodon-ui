@@ -21,6 +21,6 @@ function onChange(value) {
 }
 
 ReactDOM.render(
-  <InputNumber min={1} max={10} defaultValue={3} onChange={onChange} />
+  <InputNumber label="数字" min={1} max={10} defaultValue={3} onChange={onChange} />
 , mountNode);
 ````

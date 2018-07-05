@@ -35,6 +35,7 @@ interface IDialogPropTypes {
   maskProps?: any;
   wrapProps?: any;
   getContainer?: (instance: ReactInstance) => HTMLElement;
+  center?: boolean;
 }
 
 export default IDialogPropTypes;

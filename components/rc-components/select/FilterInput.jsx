@@ -43,6 +43,14 @@ class FilterInput extends Component {
     onChange('');
   }
 
+  focus = () => {
+    this.filterInputRef.focus();
+  }
+
+  blur = () => {
+    this.filterInputRef.blur();
+  }
+
   render() {
     const { prefixCls, placeholder, underline } = this.props;
     const { value } = this.state;

@@ -14,7 +14,7 @@ title:
 Fill in this form to create a new account for you.
 
 ````jsx
-import { Form, Input, Tooltip, Icon, Cascader, Row, Col, Checkbox, Button, AutoComplete } from 'choerodon-ui';
+import { Form, Input, Tooltip, Icon, Cascader, Row, Col, Checkbox, Button, AutoComplete, InputNumber } from 'choerodon-ui';
 const FormItem = Form.Item;
 const AutoCompleteOption = AutoComplete.Option;
 
@@ -45,11 +45,17 @@ const residences = [{
 class RegistrationForm extends React.Component {
   state = {
     confirmDirty: false,
+    showLengthInfo: true,
     autoCompleteResult: [],
   };
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
+      if (err.nickname) {
+        this.setState({
+          showLengthInfo: false,
+        });
+      }
       if (!err) {
         console.log('Received values of form: ', values);
       }
@@ -83,9 +89,17 @@ class RegistrationForm extends React.Component {
     }
     this.setState({ autoCompleteResult });
   }
+  handleNickName = () => {
+    const { showLengthInfo } = this.state;
+    if (!showLengthInfo) {
+      this.setState({
+        showLengthInfo: true,
+      });
+    }
+  }
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { autoCompleteResult } = this.state;
+    const { autoCompleteResult, showLengthInfo } = this.state;
 
     const formItemLayout = {
       labelCol: {
@@ -172,7 +186,27 @@ class RegistrationForm extends React.Component {
           {getFieldDecorator('nickname', {
             rules: [{ required: true, message: 'Please input your nickname!', whitespace: true }],
           })(
-            <Input label="名称" />
+            <Input
+              maxLength={20}
+              label="名称"
+              showLengthInfo={showLengthInfo}
+              onChange={this.handleNickName}
+            />
+          )}
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+        >
+          {getFieldDecorator('age', {
+            rules: [{
+              required: true,
+              message: 'Please input your age!',
+              type: 'number',
+              whitespace: true,
+            }],
+            initialValue: 20,
+          })(
+            <InputNumber label="Age" min={1} max={100} />
           )}
         </FormItem>
         <FormItem

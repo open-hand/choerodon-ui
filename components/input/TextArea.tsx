@@ -42,6 +42,7 @@ export default class TextArea extends React.Component<TextAreaProps & HTMLTextar
   static defaultProps = {
     prefixCls: 'ant-input',
     underline: true,
+    showLengthInfo: true,
   };
 
   nextFrameActionId: number;
@@ -184,6 +185,8 @@ export default class TextArea extends React.Component<TextAreaProps & HTMLTextar
       'autosize',
       'placeholder',
       'underline',
+      'focused',
+      `showLengthInfo`,
     ]);
     const style = {
       ...props.style,
@@ -196,7 +199,7 @@ export default class TextArea extends React.Component<TextAreaProps & HTMLTextar
     }
     otherProps.onInput = this.handleInput;
 
-    const lengthInfo = props.maxLength ? (
+    const lengthInfo = props.maxLength && props.showLengthInfo ? (
       <div className={`${props.prefixCls}-length-info`}>{`${this.state.inputLength}/${props.maxLength}`}</div>
     ) : null;
 

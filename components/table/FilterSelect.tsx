@@ -290,6 +290,7 @@ export default class FilterSelect<T> extends React.Component<FilterSelectProps<T
           filters.push(value.label as string);
         }
         this.setState({
+          selectColumn: undefined,
           inputValue: '',
           filters,
         });
@@ -407,7 +408,13 @@ export default class FilterSelect<T> extends React.Component<FilterSelectProps<T
         onClear();
       }
     }
-    return removeDoubleOr(changedValue).map(value => value.label as string);
+    return removeDoubleOr(changedValue).map(item => {
+      const label: any = item.label;
+      if (label.constructor === Array) {
+        return label && label[0];
+      }
+      return label;
+    });
   }
 
   getColumnFiltersValues() {

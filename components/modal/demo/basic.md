@@ -44,6 +44,7 @@ class App extends React.Component {
           visible={this.state.visible}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
+          center
         >
           <p>Some contents...</p>
           <p>Some contents...</p>
