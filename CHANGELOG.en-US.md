@@ -17,7 +17,7 @@ timeline: true
 
 ## 0.3.3
 
-`2018-07-05`
+`2018-07-06`
 
 - 🌟 `Select`: Added `onChoiceRemove`.
 - 🌟 `Input`: Added `showLengthInfo`.

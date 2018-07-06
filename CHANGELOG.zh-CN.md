@@ -17,7 +17,7 @@ timeline: true
 
 ## 0.3.3
 
-`2018-07-05`
+`2018-07-06`
 
 - 🌟 `Select`: 增加 `onChoiceRemove` 属性。
 - 🌟 `Input`: 增加 `showLengthInfo` 属性。

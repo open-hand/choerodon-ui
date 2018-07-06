@@ -14,20 +14,15 @@
     line-height: 0;
     height: 10px;
     overflow: hidden;
-    color: @text-color-secondary;
     position: relative;
     transition: all 0.1s linear;
     display: block;
     width: 100%;
     font-weight: bold;
     cursor: pointer;
-    &:active {
-      background: #f4f4f4;
-    }
     &:hover &-up-inner,
     &:hover &-down-inner {
       color: @primary-5;
-      background: #f4f4f4;
     }
   }
 
@@ -35,7 +30,6 @@
   &-handler-down-inner {
     user-select: none;
     transition: all 0.1s linear;
-    color: @text-color-secondary;
     cursor: pointer;
   }
 
@@ -57,10 +51,10 @@
   }
 
   &-handler-wrap {
-    border-left: @border-width-base @border-style-base @border-color-base;
     width: 22px;
     height: 100%;
     background: @component-background;
+    color: #000;
     position: absolute;
     top: 0;
     right: 0;
