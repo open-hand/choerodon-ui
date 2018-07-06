@@ -69,7 +69,6 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
   private sentinel: HTMLElement;
   private bodyIsOverflowing: boolean;
   private scrollbarWidth: number;
-  private scrollEvent: any;
   private resizeEvent: any;
 
   componentWillMount() {
@@ -96,6 +95,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     if (props.visible) {
       // first show
       if (!prevProps.visible) {
+        this.center();
         this.openTime = Date.now();
         this.lastOutSideFocusNode = document.activeElement as HTMLElement;
         this.addScrollingEffect();
@@ -134,22 +134,23 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     const { center } = this.props;
     const dialogNode: any = ReactDOM.findDOMNode(this.dialog);
     if (center && dialogNode && typeof window !== undefined) {
-      const { clientWidth: docWidth, clientHeight: docHeight } = window.document.documentElement;
+      const {
+        clientWidth: docWidth,
+        clientHeight: docHeight,
+        } = window.document.documentElement;
       const { offsetWidth: width, offsetHeight: height, style } = dialogNode;
-      style.left = `${(docWidth - width) / 2}px`;
-      style.top = `${(docHeight - height) / 2}px`;
+      style.left = `${Math.max((docWidth - width) / 2, 0)}px`;
+      style.top = `${Math.max((docHeight - height) / 2, 0)}px`;
     }
   }
   addEventListener = () => {
     if (typeof window !== undefined) {
       this.resizeEvent = addEventListener(window, 'resize', this.center);
-      this.scrollEvent = addEventListener(window, 'scroll', this.center);
     }
   }
   removeEventListener = () => {
     if (typeof window !== undefined) {
       this.resizeEvent.remove();
-      this.scrollEvent.remove();
     }
   }
   onAnimateLeave = () => {
