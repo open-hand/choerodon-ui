@@ -5,6 +5,8 @@ import warning from 'warning';
 import Animate from '../animate';
 import toArray from '../util/Children/toArray';
 import { contextTypes } from './Tree';
+import Icon from '../../icon';
+import Progress from '../../progress';
 import { getPosition, getNodeChildren, isCheckDisabled, traverseTreeNodes } from './util';
 
 const ICON_OPEN = 'open';
@@ -390,10 +392,9 @@ class TreeNode extends React.Component {
 
     return (
       <span
-        className={classNames(
-          `${prefixCls}-switcher`,
-          `${prefixCls}-switcher_${expanded ? ICON_OPEN : ICON_CLOSE}`,
-        )}
+        className={classNames(`${prefixCls}-switcher`, {
+          [`${prefixCls}-switcher-expanded`]: expanded,
+        })}
         onClick={this.onExpand}
       />
     );
@@ -429,12 +430,16 @@ class TreeNode extends React.Component {
     const { loadStatus } = this.state;
     const { rcTree: { prefixCls } } = this.context;
 
-    return (
+    return loadStatus === LOAD_STATUS_LOADING ? (
+      <Progress
+        type="loading"
+        width={14}
+        className={`${prefixCls}-icon_loading`}
+      />) : (
       <span
         className={classNames(
           `${prefixCls}-iconEle`,
           `${prefixCls}-icon__${this.getNodeState() || 'docu'}`,
-          (loadStatus === LOAD_STATUS_LOADING) && `${prefixCls}-icon_loading`,
         )}
       />
     );

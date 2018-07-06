@@ -62,8 +62,9 @@ Select component to select value from options.
 | filter | `Select` query input | boolean | false |
 | filterValue | `Select` query input value | string | - |
 | onFilterChange | `Select` query input change | function(value) | - |
-| loading | data's loading | boolean\|[object](https://ant.design/components/spin-cn/#API) ([更多]
-| choiceRemove | Only used `tags` and `multiple` ,Quicky remove value | boolean | true |
+| loading | data's loading | boolean\|[object](https://ant.design/components/spin-cn/#API) ([More]
+| choiceRemove | Only used `tags` and `multiple` ,Quicky remove value | boolean \| function(value) | true \| (value) => true |
+| onChoiceRemove | Only used `tags` and `multiple` ,Quicky remove value callback | function(value) | - |
 
 ### Select Methods
 

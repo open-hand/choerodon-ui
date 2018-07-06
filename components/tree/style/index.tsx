@@ -3,3 +3,4 @@ import './index.less';
 
 // style dependencies
 import '../../checkbox/style';
+import '../../pagination/style';

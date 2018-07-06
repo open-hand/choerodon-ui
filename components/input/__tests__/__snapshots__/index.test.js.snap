@@ -3,10 +3,10 @@
 exports[`Input should support maxLength 1`] = `
 <Input
   disabled={false}
-  focused={false}
   maxLength="3"
   prefixCls="ant-input"
   readOnly={false}
+  showLengthInfo={true}
   type="text"
   underline={true}
 >
@@ -66,10 +66,10 @@ exports[`Input.Search should support suffix 1`] = `
   <Input
     className="ant-input-search ant-input-search-small"
     disabled={false}
-    focused={false}
     onPressEnter={[Function]}
     prefixCls="ant-input"
     readOnly={false}
+    showLengthInfo={true}
     size="small"
     suffix={
       Array [
@@ -197,6 +197,7 @@ exports[`TextArea should support disabled 1`] = `
 <TextArea
   disabled={true}
   prefixCls="ant-input"
+  showLengthInfo={true}
   underline={true}
 >
   <span
@@ -228,6 +229,7 @@ exports[`TextArea should support maxLength 1`] = `
 <TextArea
   maxLength="10"
   prefixCls="ant-input"
+  showLengthInfo={true}
   underline={true}
 >
   <span

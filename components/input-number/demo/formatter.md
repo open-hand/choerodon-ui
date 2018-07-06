@@ -1,5 +1,5 @@
 ---
-order: 4
+order: 3
 title:
     zh-CN: 格式化展示
     en-US: Formatter
@@ -24,12 +24,14 @@ ReactDOM.render(
   <div>
     <InputNumber
       defaultValue={1000}
+      label="金额"
       formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
       parser={value => value.replace(/\$\s?|(,*)/g, '')}
       onChange={onChange}
     />
     <InputNumber
       defaultValue={100}
+      label="百分比"
       min={0}
       max={100}
       formatter={value => `${value}%`}

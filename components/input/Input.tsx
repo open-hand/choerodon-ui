@@ -23,6 +23,7 @@ export interface AbstractInputProps {
   style?: React.CSSProperties;
   label?: React.ReactNode;
   underline?: boolean;
+  showLengthInfo?: boolean;
 }
 
 export interface InputProps extends AbstractInputProps {
@@ -57,6 +58,7 @@ export interface InputState {
   inputLength?: number;
   focused?: boolean;
   renderedStyle?: {};
+  showLengthInfo?: boolean;
 }
 
 export default class Input extends React.Component<InputProps, any> {
@@ -70,7 +72,7 @@ export default class Input extends React.Component<InputProps, any> {
     disabled: false,
     underline: true,
     readOnly: false,
-    focused: false,
+    showLengthInfo: true,
   };
 
   static propTypes = {
@@ -105,6 +107,7 @@ export default class Input extends React.Component<InputProps, any> {
     underline: PropTypes.bool,
     readOnly: PropTypes.bool,
     focused: PropTypes.bool,
+    showLengthInfo: PropTypes.bool,
   };
 
   state: InputState = {
@@ -114,6 +117,7 @@ export default class Input extends React.Component<InputProps, any> {
       width: '100%',
       margin: 0,
     },
+    showLengthInfo: true,
   };
 
   input: HTMLInputElement;
@@ -165,6 +169,11 @@ export default class Input extends React.Component<InputProps, any> {
     if (typeof nextProps.focused === 'boolean') {
       this.setState({
         focused: nextProps.focused,
+      });
+    }
+    if ('showLengthInfo' in nextProps) {
+      this.setState({
+        showLengthInfo: nextProps.showLengthInfo,
       });
     }
   }
@@ -266,78 +275,6 @@ export default class Input extends React.Component<InputProps, any> {
     this.input = node;
   };
 
-  renderLabeledInput(children: React.ReactElement<any>) {
-    const props = this.props;
-    // Not wrap when there is not addons
-    // if ((!props.addonBefore && !props.addonAfter)) {
-    //   return children;
-    // }
-
-    const wrapperClassName = `${props.prefixCls}-group`;
-    const addonClassName = `${wrapperClassName}-addon`;
-    const addonBefore = props.addonBefore ? (
-      <span className={addonClassName}>
-        {props.addonBefore}
-      </span>
-    ) : null;
-
-    const addonAfter = props.copy ? (
-      <span className={`${addonClassName} ${addonClassName}-copy`} onClick={this.handleCopy}>
-        <Icon type="library_books" />
-      </span>
-    ) : props.addonAfter ? (
-      <span className={addonClassName}>
-        {props.addonAfter}
-      </span>
-    ) : null;
-
-    const className = classNames(`${props.prefixCls}-wrapper`, {
-      [wrapperClassName]: (addonBefore || addonAfter),
-      [`${props.prefixCls}-has-value`]: this.state.inputLength !== 0,
-      [`${props.prefixCls}-focus`]: this.state.focused,
-      [`${props.prefixCls}-disabled`]: props.disabled,
-    });
-
-    const lengthInfo = props.maxLength ? (
-      <div className={`${props.prefixCls}-length-info`}>{`${this.state.inputLength}/${props.maxLength}`}</div>
-    ) : null;
-
-    const border = (
-      <div className={`${props.prefixCls}-border-wrapper`}>
-        <hr className={`${props.prefixCls}-border`} />
-        <hr className={`${props.prefixCls}-border-active`} />
-      </div>
-    );
-
-    // // Need another wrapper for changing display:table to display:inline-block
-    // // and put style prop in wrapper
-    // if (addonBefore || addonAfter) {
-    //   return (
-    //     <span
-    //       className={groupClassName}
-    //       style={props.style}
-    //     >
-    //       <span className={className}>
-    //         {addonBefore}
-    //         {React.cloneElement(children, { style: null })}
-    //         {addonAfter}
-    //       </span>
-    //       {border}
-    //       {lengthInfo}
-    //     </span>
-    //   );
-    // }
-    return (
-      <span className={className}>
-        {addonBefore}
-        {children}
-        {addonAfter}
-        {border}
-        {lengthInfo}
-      </span>
-    );
-  }
-
   renderCopyIcon() {
     const { prefixCls, copy } = this.props;
     return copy ? (
@@ -362,6 +299,7 @@ export default class Input extends React.Component<InputProps, any> {
       'style',
       'underline',
       'focused',
+      'showLengthInfo',
     ]);
 
     if ('value' in this.props) {
@@ -389,8 +327,8 @@ export default class Input extends React.Component<InputProps, any> {
 
   getLengthInfo() {
     const { prefixCls, maxLength } = this.props;
-    const { inputLength } = this.state;
-    return maxLength ? (
+    const { inputLength, showLengthInfo } = this.state;
+    return maxLength && showLengthInfo ? (
       <div className={`${prefixCls}-length-info`}>{`${inputLength}/${maxLength}`}</div>
     ) : null;
   }

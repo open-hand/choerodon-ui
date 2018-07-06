@@ -57,12 +57,23 @@ export default class Sidebar extends React.Component<SidebarProps, {}> {
     const cancelText = props.cancelText || runtimeLocale.cancelText;
 
     const  cancalBtn = okCancel ? (
-      <Button disabled={confirmLoading} funcType={funcType} onClick={onCancel}>
+      <Button
+        className={`${prefixCls}-btn-cancel`}
+        disabled={confirmLoading}
+        funcType={funcType}
+        onClick={onCancel}
+      >
         {cancelText}
       </Button>) : null;
     return (
       <div className={`${prefixCls}-btns`}>
-        <Button loading={confirmLoading} funcType={funcType} type={okType} onClick={onOk}>
+        <Button
+          className={`${prefixCls}-btn-ok`}
+          loading={confirmLoading}
+          funcType={funcType}
+          type={okType}
+          onClick={onOk}
+        >
           {okText}
         </Button>
         {cancalBtn}

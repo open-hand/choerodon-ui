@@ -282,6 +282,12 @@ export default class Select extends React.Component {
     if (filter) {
       this.onFilterChange('');
     }
+    if (open && filter) {
+      setTimeout(() => {
+        const filterInput = this.selectTriggerRef.getFilterInput();
+        filterInput && filterInput.focus();
+      }, 20);
+    }
     this.setOpenState(open);
   };
 
@@ -397,7 +403,7 @@ export default class Select extends React.Component {
     e.stopPropagation();
     e.preventDefault();
     if (!this.props.disabled) {
-      this.setOpenState(!this.state.open, !this.state.open);
+      this.onDropdownVisibleChange(!this.state.open);
     }
   };
 
@@ -928,6 +934,9 @@ export default class Select extends React.Component {
         };
       }
       props.onDeselect(event, this.getOptionBySingleValue(selectedKey), index);
+      if (typeof props.onChoiceRemove === 'function') {
+        props.onChoiceRemove(selectedKey);
+      }
     }
     this.fireChange(value);
   };
@@ -1145,6 +1154,14 @@ export default class Select extends React.Component {
     return sel;
   };
 
+  isChoiceRemove = (selectedKey) => {
+    const { choiceRemove } = this.props;
+    if (typeof choiceRemove === 'function') {
+      return choiceRemove(selectedKey);
+    }
+    return choiceRemove;
+  }
+
   renderTopControlNode = () => {
     const { value, open, inputValue } = this.state;
     const props = this.props;
@@ -1157,7 +1174,6 @@ export default class Select extends React.Component {
       maxTagPlaceholder,
       showSearch,
       choiceRender,
-      choiceRemove,
     } = props;
     const className = `${prefixCls}-selection__rendered`;
     // search input is inside topControlNode in single, multiple & combobox. 2016/04/13
@@ -1245,12 +1261,12 @@ export default class Select extends React.Component {
             <div className={`${prefixCls}-selection__choice__content`}>
               {content}
             </div>
-            {disabled || !choiceRemove ? null : (
+            {disabled || !this.isChoiceRemove(singleValue) ? null : (
               <span
                 className={`${prefixCls}-selection__choice__remove`}
                 onClick={this.removeSelected.bind(this, singleValue, index)}
               >
-                <i className="icon icon-highlight_off" />
+                <i className="icon icon-cancel" />
               </span>)}
           </li>);
           return (

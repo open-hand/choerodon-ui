@@ -813,7 +813,7 @@ exports[`renders ./components/select/demo/size.md correctly 1`] = `
               class="ant-select-selection__choice__remove"
             >
               <i
-                class="icon icon-highlight_off"
+                class="icon icon-cancel"
               />
             </span>
             <div
@@ -835,7 +835,7 @@ exports[`renders ./components/select/demo/size.md correctly 1`] = `
               class="ant-select-selection__choice__remove"
             >
               <i
-                class="icon icon-highlight_off"
+                class="icon icon-cancel"
               />
             </span>
             <div
@@ -918,7 +918,7 @@ exports[`renders ./components/select/demo/size.md correctly 1`] = `
               class="ant-select-selection__choice__remove"
             >
               <i
-                class="icon icon-highlight_off"
+                class="icon icon-cancel"
               />
             </span>
             <div
@@ -940,7 +940,7 @@ exports[`renders ./components/select/demo/size.md correctly 1`] = `
               class="ant-select-selection__choice__remove"
             >
               <i
-                class="icon icon-highlight_off"
+                class="icon icon-cancel"
               />
             </span>
             <div

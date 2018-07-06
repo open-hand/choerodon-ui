@@ -15,6 +15,22 @@ timeline: true
 
 ---
 
+## 0.3.3
+
+`2018-07-06`
+
+- 🌟 `Select`: Added `onChoiceRemove`.
+- 🌟 `Input`: Added `showLengthInfo`.
+- 🌟 `Modal`: Added `center`.
+- 💄 `Select`: Adjust the style.
+- 💄 `Tree`: Adjust the style.
+- 💄 `Modal.Sidebar`: Adjust the style.
+- 💄 `InputNumber`: Adjust the style.
+- 💄 `Select`: `filterInput` autoFocus.
+- 🐞 `Table`: Fixed `onChange` returned value mistake.
+- 🐞 `Select`: Fixed clicked the dropdown's icon can't trigger focus.
+- 🐞 `Table`: Fixed the popup of default filters.
+
 ## 0.3.2
 
 `2018-06-28`
