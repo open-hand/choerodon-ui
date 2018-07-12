@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="An enterprise-class UI design language and React-based implementation with a set of high-quality React components, one of best React UI library for enterprises">
+    <title>Choerodon UI - A UI Design Language</title>
+    <!-- Polyfills -->
+    <!--[if IE]>
+    <script src="https://as.alipayobjects.com/g/component/??es6-shim/0.35.1/es6-sham.min.js,es6-shim/0.35.1/es6-shim.min.js"></script>
+    <![endif]-->
+    <script>
+    (function() {
+      function isLocalStorageNameSupported() {
+        var testKey = 'test';
+        var storage = window.localStorage;
+        try {
+          storage.setItem(testKey, '1');
+          storage.removeItem(testKey);
+          return true;
+        } catch (error) {
+          return false;
+        }
+      }
+      // 优先级提高到所有静态资源的前面，语言不对，加载其他静态资源没意义
+      var pathname = location.pathname;
+
+      function isZhCN(pathname) {
+        return /-cn\/?$/.test(pathname);
+      }
+      function getLocalizedPathname(path, zhCN) {
+        var pathname = path.startsWith('/') ? path : '/' + path;
+        if (!zhCN) { // to enUS
+          return /\/?index-cn/.test(pathname) ? '/' : pathname.replace('-cn', '');
+        } else if (pathname === '/') {
+          return '/index-cn';
+        } else if (pathname.endsWith('/')) {
+          return pathname.replace(/\/$/, '-cn/');
+        }
+        return pathname + '-cn';
+      }
+
+      // 兼容旧的 URL， `?locale=...`
+      var queryString = location.search;
+      if (queryString) {
+        var isZhCNConfig = queryString.indexOf('zh-CN') > -1;
+        if (isZhCNConfig && !isZhCN(pathname)) {
+          location.pathname = getLocalizedPathname(pathname, isZhCNConfig)
+        }
+      }
+
+      // 首页无视链接里面的语言设置 https://github.com/ant-design/ant-design/issues/4552
+      if (isLocalStorageNameSupported() && (pathname === '/' || pathname === '/index-cn')) {
+        var lang = (window.localStorage && localStorage.getItem('locale')) || ((navigator.language || navigator.browserLanguage).toLowerCase() === 'zh-cn' ? 'zh-CN' : 'en-US');
+        // safari is 'zh-cn', while other browser is 'zh-CN';
+        if ((lang === 'zh-CN') !== isZhCN(pathname)) {
+          location.pathname = getLocalizedPathname(pathname, lang === 'zh-CN');
+        }
+      }
+      document.documentElement.className += isZhCN(pathname) ? 'zh-cn' : 'en-us';
+    })()
+    </script>
+    <!--<link rel="icon" href="https://gw.alipayobjects.com/zos/rmsportal/rlpTLlbMzTNYuZGGCVYM.png" type="image/x-icon">-->
+    <link rel="stylesheet" type="text/css" href="/index-1.css"/>
+    <link rel="stylesheet" type="text/css" href="/index-2.css"/>
+    <link rel="stylesheet/less" type="text/css" href="/color.less"/>
+    <style id="nprogress-style">
+      #nprogress { display: none }
+    </style>
+    <!--[if lte IE 10]>
+      <script
+        src="https://as.alipayobjects.com/g/component/??console-polyfill/0.2.2/index.js,media-match/2.0.2/media.match.min.js"></script>
+    <![endif]-->
+    <script>
+    if (!window.Intl) {
+      document.writeln('<script src="https://as.alipayobjects.com/g/component/intl/1.0.1/??Intl.js,locale-data/jsonp/en.js,locale-data/jsonp/zh.js">' + '<' + '/script>');
+    }
+    if (!window.Promise) {
+      document.writeln('<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"' + '>' + '<' + '/' + 'script>');
+    }
+    </script>
+    <!-- Hotjar Tracking Code for ant.design -->
+    <script>
+//    (function(h,o,t,j,a,r){
+//      h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+//      h._hjSettings={hjid:473408,hjsv:5};
+//      a=o.getElementsByTagName('head')[0];
+//      r=o.createElement('script');r.async=1;
+//      r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+//      a.appendChild(r);
+//    })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
+    </script>
+    <!-- Deer Tracking Code for ant.design -->
+    <script>
+//    !function(t,e,a,r,c){t.TracertCmdCache=t.TracertCmdCache||[],t[c]=window[c]||
+//      {_isInit:!0,call:function(){t.TracertCmdCache.push(arguments)},
+//      start:function(t){this.call('start',t)}},t[c].l=new Date;
+//      var n=e.createElement(a),s=e.getElementsByTagName(a)[0];
+//      n.async=!0,n.src=r,s.parentNode.insertBefore(n,s)}
+//      (window,document,'script','https://tracert.alipay.com/tracert.js','Tracert');
+//      Tracert.start({
+//        spmAPos: 'a513',
+//        spmBPos: 'b5776',
+//      });
+    </script>
+  </head>
+  <body>
+    <div id="react-content">
+      <div class="page-wrapper" data-reactroot=""><header id="header" class="clearfix"><div class="ant-row"><div class="ant-col-xs-24 ant-col-sm-24 ant-col-md-6 ant-col-lg-5 ant-col-xl-5 ant-col-xxl-4"><a id="logo" href="/index-cn"><h1>Choerodon UI</h1></a></div><div class="ant-col-xs-0 ant-col-sm-0 ant-col-md-18 ant-col-lg-19 ant-col-xl-19 ant-col-xxl-20"><button type="button" class="ant-btn header-lang-button ant-btn-sm ant-btn-background-ghost ant-btn-flat"><span>English</span><div class="ant-ripple-wrapper"></div></button><div class="ant-select-sm version ant-select ant-select-has-value ant-select-enabled"><div class="ant-select-selection
+            ant-select-selection--single" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="false" tabindex="0"><div class="ant-select-selection__rendered"><div class="ant-select-selection-selected-value" title="0.3.4" style="opacity:1">0.3.4</div><span class="ant-select-arrow" style="user-select:none;-webkit-user-select:none" unselectable="unselectable"><i class="icon icon-arrow_drop_down"></i><b></b></span></div></div><div class="ant-select-underline"><span class="ant-select-ripple"></span></div></div><ul class="ant-menu menu-site ant-menu-root ant-menu-horizontal" role="menu" aria-activedescendant="" id="nav" tabindex="0"><li class="ant-menu-item" role="menuitem" aria-selected="false"><a href="/index-cn"><span>首页</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item ant-menu-item-selected" role="menuitem" aria-selected="true"><a href="/docs/react/introduce-cn"><span>组件</span></a><div class="ant-ripple-wrapper"></div></li></ul></div></div><style>
+    #header .ant-select-selection {
+      height: 24px;
+      padding-top: 0;
+    }
+  </style></header><div class="main-wrapper"><div class="ant-row"><div class="main-menu ant-col-xs-24 ant-col-sm-24 ant-col-md-24 ant-col-lg-6 ant-col-xl-5 ant-col-xxl-4"><ul class="ant-menu aside-container menu-site ant-menu-root ant-menu-inline" role="menu" aria-activedescendant="" tabindex="0"><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:40px"><a href="/docs/react/introduce-cn">Choerodon UI of React</a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:40px"><a href="/docs/react/getting-started-cn">快速上手</a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item ant-menu-item-selected" role="menuitem" aria-selected="true" style="padding-left:40px"><a href="/docs/react/practical-projects-cn">项目实战</a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:40px"><a href="/docs/react/use-with-create-react-app-cn">在 create-react-app 中使用</a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:40px"><a href="/docs/react/use-in-typescript-cn">在 TypeScript 中使用</a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:40px"><a href="/docs/react/customize-theme-cn">定制主题</a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:40px"><a href="/changelog-cn">更新日志</a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:40px"><a href="/docs/react/recommendation-cn">社区精选组件</a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:40px"><a href="/docs/react/i18n-cn">国际化</a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-submenu ant-menu-submenu-inline ant-menu-submenu-open"><div style="padding-left:40px" class="ant-menu-submenu-title" aria-expanded="true" aria-owns="Components$Menu" aria-haspopup="true"><h4>Components</h4><i class="ant-menu-submenu-arrow"></i></div><ul class="ant-menu  ant-menu-sub ant-menu-inline" role="menu" aria-activedescendant="" id="Components$Menu"><li class=" ant-menu-item-group"><div class="ant-menu-item-group-title" title="General">General</div><ul class="ant-menu-item-group-list"><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/button-cn/"><span>Button</span><span class="chinese">按钮</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/icon-cn/"><span>Icon</span><span class="chinese">图标</span></a><div class="ant-ripple-wrapper"></div></li></ul></li><li class=" ant-menu-item-group"><div class="ant-menu-item-group-title" title="Layout">Layout</div><ul class="ant-menu-item-group-list"><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/grid-cn/"><span>Grid</span><span class="chinese">栅格</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/layout-cn/"><span>Layout</span><span class="chinese">布局</span></a><div class="ant-ripple-wrapper"></div></li></ul></li><li class=" ant-menu-item-group"><div class="ant-menu-item-group-title" title="Navigation">Navigation</div><ul class="ant-menu-item-group-list"><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/affix-cn/"><span>Affix</span><span class="chinese">固钉</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/breadcrumb-cn/"><span>Breadcrumb</span><span class="chinese">面包屑</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/dropdown-cn/"><span>Dropdown</span><span class="chinese">下拉菜单</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/menu-cn/"><span>Menu</span><span class="chinese">导航菜单</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/pagination-cn/"><span>Pagination</span><span class="chinese">分页</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/steps-cn/"><span>Steps</span><span class="chinese">步骤条</span></a><div class="ant-ripple-wrapper"></div></li></ul></li><li class=" ant-menu-item-group"><div class="ant-menu-item-group-title" title="Data Entry">Data Entry</div><ul class="ant-menu-item-group-list"><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/auto-complete-cn/"><span>AutoComplete</span><span class="chinese">自动完成</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/cascader-cn/"><span>Cascader</span><span class="chinese">级联选择</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/checkbox-cn/"><span>Checkbox</span><span class="chinese">多选框</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/date-picker-cn/"><span>DatePicker</span><span class="chinese">日期选择框</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/form-cn/"><span>Form</span><span class="chinese">表单</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/input-number-cn/"><span>InputNumber</span><span class="chinese">数字输入框</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/input-cn/"><span>Input</span><span class="chinese">输入框</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/mention-cn/"><span>Mention</span><span class="chinese">提及</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/rate-cn/"><span>Rate</span><span class="chinese">评分</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/radio-cn/"><span>Radio</span><span class="chinese">单选框</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/select-cn/"><span>Select</span><span class="chinese">选择器</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/slider-cn/"><span>Slider</span><span class="chinese">滑动输入条</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/switch-cn/"><span>Switch</span><span class="chinese">开关</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/tree-select-cn/"><span>TreeSelect</span><span class="chinese">树选择</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/time-picker-cn/"><span>TimePicker</span><span class="chinese">时间选择框</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/transfer-cn/"><span>Transfer</span><span class="chinese">穿梭框</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/upload-cn/"><span>Upload</span><span class="chinese">上传</span></a><div class="ant-ripple-wrapper"></div></li></ul></li><li class=" ant-menu-item-group"><div class="ant-menu-item-group-title" title="Data Display">Data Display</div><ul class="ant-menu-item-group-list"><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/avatar-cn/"><span>Avatar</span><span class="chinese">头像</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/badge-cn/"><span>Badge</span><span class="chinese">徽标数</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/calendar-cn/"><span>Calendar</span><span class="chinese">日历</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/card-cn/"><span>Card</span><span class="chinese">卡片</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/carousel-cn/"><span>Carousel</span><span class="chinese">走马灯</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/collapse-cn/"><span>Collapse</span><span class="chinese">折叠面板</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/list-cn/"><span>List</span><span class="chinese">列表</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/popover-cn/"><span>Popover</span><span class="chinese">气泡卡片</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/tooltip-cn/"><span>Tooltip</span><span class="chinese">文字提示</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/table-cn/"><span>Table</span><span class="chinese">表格</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/tabs-cn/"><span>Tabs</span><span class="chinese">标签页</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/tag-cn/"><span>Tag</span><span class="chinese">标签</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/timeline-cn/"><span>Timeline</span><span class="chinese">时间轴</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/tree-cn/"><span>Tree</span><span class="chinese">树形控件</span></a><div class="ant-ripple-wrapper"></div></li></ul></li><li class=" ant-menu-item-group"><div class="ant-menu-item-group-title" title="Feedback">Feedback</div><ul class="ant-menu-item-group-list"><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/alert-cn/"><span>Alert</span><span class="chinese">警告提示</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/modal-cn/"><span>Modal</span><span class="chinese">对话框</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/message-cn/"><span>Message</span><span class="chinese">全局提示</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/notification-cn/"><span>Notification</span><span class="chinese">通知提醒框</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/progress-cn/"><span>Progress</span><span class="chinese">进度条</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/popconfirm-cn/"><span>Popconfirm</span><span class="chinese">气泡确认框</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/spin-cn/"><span>Spin</span><span class="chinese">加载中</span></a><div class="ant-ripple-wrapper"></div></li></ul></li><li class=" ant-menu-item-group"><div class="ant-menu-item-group-title" title="Other">Other</div><ul class="ant-menu-item-group-list"><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/anchor-cn/"><span>Anchor</span><span class="chinese">锚点</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/back-top-cn/"><span>BackTop</span><span class="chinese">回到顶部</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/divider-cn/"><span>Divider</span><span class="chinese">分割线</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false" style="padding-left:80px"><a href="/components/locale-provider-cn/"><span>LocaleProvider</span><span class="chinese">国际化</span></a><div class="ant-ripple-wrapper"></div></li></ul></li></ul></li></ul></div><div class="main-container ant-col-xs-24 ant-col-sm-24 ant-col-md-24 ant-col-lg-18 ant-col-xl-19 ant-col-xxl-20"><article class="markdown"><h1>项目实战<a class="edit-button" href="https://github.com/ant-design/ant-design/edit/master/docs/react/practical-projects.zh-CN.md" target="_blank"><i class="icon icon-edit"></i></a></h1><section class="markdown"><p>在真实项目开发中，你可能会需要 Redux 或者 MobX 这样的数据应用框架，Ant Design React 作为一个 UI 库，可以和任何 React 生态圈内的应用框架搭配使用。我们也基于 Redux 推出了自己的最佳实践 dva，推荐你在项目中使用。</p><p><a href="https://github.com/dvajs/dva">dva</a> 是一个基于 React 和 Redux 的轻量应用框架，概念来自 elm，支持 side effects、热替换、动态加载、react-native、SSR 等，已在生产环境广泛应用。</p><p>本文会引导你使用 dva 和 antd 从 0 开始创建一个简单应用。</p><p>会包含以下内容：</p></section><div class="toc-affix"><div class=""><ul class="toc"><li><a class="bisheng-toc-h2" href="#安装-dva-cli" title="安装 dva-cli">安装 dva-cli</a></li><li><a class="bisheng-toc-h2" href="#创建新应用" title="创建新应用">创建新应用</a></li><li><a class="bisheng-toc-h2" href="#使用-choerodon-ui" title="使用 choerodon-ui">使用 choerodon-ui</a></li><li><a class="bisheng-toc-h2" href="#定义路由" title="定义路由">定义路由</a></li><li><a class="bisheng-toc-h2" href="#编写-UI-Component" title="编写 UI Component">编写 UI Component</a></li><li><a class="bisheng-toc-h2" href="#定义-Model" title="定义 Model">定义 Model</a></li><li><a class="bisheng-toc-h2" href="#connect-起来" title="connect 起来">connect 起来</a></li><li><a class="bisheng-toc-h2" href="#构建应用" title="构建应用">构建应用</a></li><li><a class="bisheng-toc-h2" href="#下一步" title="下一步">下一步</a></li></ul></div></div><section class="markdown"><h2 id="安装-dva-cli"><span>安装 dva-cli</span><a href="#安装-dva-cli" class="anchor">#</a></h2><p>通过 npm 安装 dva-cli 并确保版本是 <code>0.9.1</code> 或以上。</p><pre class="language-bash"><code>$ <span class="token function">npm</span> <span class="token function">install</span> dva-cli -g
+$ dva -v
+dva-cli version 0.9.1</code></pre><h2 id="创建新应用"><span>创建新应用</span><a href="#创建新应用" class="anchor">#</a></h2><p>安装完 dva-cli 之后，就可以在命令行里访问到 <code>dva</code> 命令（<a href="http://stackoverflow.com/questions/15054388/global-node-modules-not-installing-correctly-command-not-found">不能访问？</a>）。现在，你可以通过 <code>dva new</code> 创建新应用。</p><pre class="language-bash"><code>$ dva new dva-quickstart</code></pre><p>这会创建 <code>dva-quickstart</code> 目录，包含项目初始化目录和文件，并提供开发服务器、构建脚本、数据 mock 服务、代理服务器等功能。</p><p>然后我们 <code>cd</code> 进入 <code>dva-quickstart</code> 目录，并启动开发服务器：</p><pre class="language-bash"><code>$ <span class="token function">cd</span> dva-quickstart
+$ <span class="token function">npm</span> start</code></pre><p>几秒钟后，你会看到以下输出：</p><pre class="language-bash"><code>Compiled successfully<span class="token operator">!</span>
+
+The app is running at:
+
+  http://localhost:8000/
+
+Note that the development build is not optimized.
+To create a production build, use <span class="token function">npm</span> run build.</code></pre><p>在浏览器里打开 <a href="http://localhost:8000">http://localhost:8000</a> ，你会看到 dva 的欢迎界面。</p><h2 id="使用-choerodon-ui"><span>使用 choerodon-ui</span><a href="#使用-choerodon-ui" class="anchor">#</a></h2><p>通过 npm 安装 <code>choerodon-ui</code> 和 <code>babel-plugin-import</code> 。<code>babel-plugin-import</code> 是用来按需加载 choerodon-ui 的脚本和样式的，详见 <a href="https://github.com/ant-design/babel-plugin-import">repo</a> 。</p><pre class="language-bash"><code>$ <span class="token function">npm</span> <span class="token function">install</span> choerodon-ui babel-plugin-import --save</code></pre><p>编辑 <code>.webpackrc</code>，使 <code>babel-plugin-import</code> 插件生效。</p><pre class="language-diff"><code>{
+<span class="token inserted">+  "extraBabelPlugins": [</span>
+<span class="token inserted">+    ["import", { "libraryName": "choerodon-ui", "libraryDirectory": "es", "style": "css" }]</span>
+<span class="token inserted">+  ]</span>
+}</code></pre><blockquote><p>注：dva-cli 基于 roadhog 实现 build 和 dev，更多 <code>.webpackrc</code> 的配置详见 <a href="https://github.com/sorrycc/roadhog#配置">roadhog#配置</a></p></blockquote><h2 id="定义路由"><span>定义路由</span><a href="#定义路由" class="anchor">#</a></h2><p>我们要写个应用来先显示产品列表。首先第一步是创建路由，路由可以想象成是组成应用的不同页面。</p><p>新建 route component <code>routes/Products.js</code>，内容如下：</p><pre class="language-javascript"><code><span class="token keyword">import</span> React <span class="token keyword">from</span> <span class="token string">'react'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> Products <span class="token operator">=</span> <span class="token punctuation">(</span>props<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">(</span>
+  <span class="token operator">&lt;</span>h2<span class="token operator">></span>List <span class="token keyword">of</span> Products<span class="token operator">&lt;</span><span class="token operator">/</span>h2<span class="token operator">></span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> Products<span class="token punctuation">;</span></code></pre><p>添加路由信息到路由表，编辑 <code>router.js</code> :</p><pre class="language-diff"><code><span class="token inserted">+ import Products from './routes/Products';</span>
+...
+<span class="token inserted">+ &lt;Route path="/products" exact component={Products} /></span></code></pre><p>然后在浏览器里打开 <a href="http://localhost:8000/#/products">http://localhost:8000/#/products</a> ，你应该能看到前面定义的 <code>&lt;h2&gt;</code> 标签。</p><h2 id="编写-UI-Component"><span>编写 UI Component</span><a href="#编写-UI-Component" class="anchor">#</a></h2><p>随着应用的发展，你会需要在多个页面分享 UI 元素 (或在一个页面使用多次)，在 dva 里你可以把这部分抽成 component 。</p><p>我们来编写一个 <code>ProductList</code> component，这样就能在不同的地方显示产品列表了。</p><p>新建 <code>components/ProductList.js</code> 文件：</p><pre class="language-javascript"><code><span class="token keyword">import</span> React <span class="token keyword">from</span> <span class="token string">'react'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> PropTypes <span class="token keyword">from</span> <span class="token string">'prop-types'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> Table<span class="token punctuation">,</span> Popconfirm<span class="token punctuation">,</span> Button <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'choerodon-ui'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> ProductList <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">{</span> onDelete<span class="token punctuation">,</span> products <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> columns <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
+    title<span class="token punctuation">:</span> <span class="token string">'Name'</span><span class="token punctuation">,</span>
+    dataIndex<span class="token punctuation">:</span> <span class="token string">'name'</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+    title<span class="token punctuation">:</span> <span class="token string">'Actions'</span><span class="token punctuation">,</span>
+    render<span class="token punctuation">:</span> <span class="token punctuation">(</span>text<span class="token punctuation">,</span> record<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+      <span class="token keyword">return</span> <span class="token punctuation">(</span>
+        <span class="token operator">&lt;</span>Popconfirm title<span class="token operator">=</span><span class="token string">"Delete?"</span> onConfirm<span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token function">onDelete</span><span class="token punctuation">(</span>record<span class="token punctuation">.</span>id<span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token operator">></span>
+          <span class="token operator">&lt;</span>Button<span class="token operator">></span>Delete<span class="token operator">&lt;</span><span class="token operator">/</span>Button<span class="token operator">></span>
+        <span class="token operator">&lt;</span><span class="token operator">/</span>Popconfirm<span class="token operator">></span>
+      <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token punctuation">(</span>
+    <span class="token operator">&lt;</span>Table
+      dataSource<span class="token operator">=</span><span class="token punctuation">{</span>products<span class="token punctuation">}</span>
+      columns<span class="token operator">=</span><span class="token punctuation">{</span>columns<span class="token punctuation">}</span>
+    <span class="token operator">/</span><span class="token operator">></span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+ProductList<span class="token punctuation">.</span>propTypes <span class="token operator">=</span> <span class="token punctuation">{</span>
+  onDelete<span class="token punctuation">:</span> PropTypes<span class="token punctuation">.</span>func<span class="token punctuation">.</span>isRequired<span class="token punctuation">,</span>
+  products<span class="token punctuation">:</span> PropTypes<span class="token punctuation">.</span>array<span class="token punctuation">.</span>isRequired<span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> ProductList<span class="token punctuation">;</span></code></pre><h2 id="定义-Model"><span>定义 Model</span><a href="#定义-Model" class="anchor">#</a></h2><p>完成 UI 后，现在开始处理数据和逻辑。</p><p>dva 通过 model 的概念把一个领域的模型管理起来，包含同步更新 state 的 reducers，处理异步逻辑的 effects，订阅数据源的 subscriptions 。</p><p>新建 model <code>models/products.js</code> ：</p><pre class="language-javascript"><code><span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+  namespace<span class="token punctuation">:</span> <span class="token string">'products'</span><span class="token punctuation">,</span>
+  state<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  reducers<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    <span class="token string">'delete'</span><span class="token punctuation">(</span>state<span class="token punctuation">,</span> <span class="token punctuation">{</span> payload<span class="token punctuation">:</span> id <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">return</span> state<span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>item <span class="token operator">=</span><span class="token operator">></span> item<span class="token punctuation">.</span>id <span class="token operator">!==</span> id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre><p>这个 model 里：</p><ul><li><p><code>namespace</code> 表示在全局 state 上的 key</p></li><li><p><code>state</code> 是初始值，在这里是空数组</p></li><li><p><code>reducers</code> 等同于 redux 里的 reducer，接收 action，同步更新 state</p></li></ul><p>然后别忘记在 <code>index.js</code> 里载入他：</p><pre class="language-diff"><code>// 3. Model
+<span class="token inserted">+ app.model(require('./models/products').default);</span></code></pre><h2 id="connect-起来"><span>connect 起来</span><a href="#connect-起来" class="anchor">#</a></h2><p>到这里，我们已经单独完成了 model 和 component，那么他们如何串联起来呢?</p><p>dva 提供了 connect 方法。如果你熟悉 redux，这个 connect 就是 react-redux 的 connect 。</p><p>编辑 <code>routes/Products.js</code>，替换为以下内容：</p><pre class="language-javascript"><code><span class="token keyword">import</span> React <span class="token keyword">from</span> <span class="token string">'react'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> connect <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'dva'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> ProductList <span class="token keyword">from</span> <span class="token string">'../components/ProductList'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> Products <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">{</span> dispatch<span class="token punctuation">,</span> products <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+  <span class="token keyword">function</span> <span class="token function">handleDelete</span><span class="token punctuation">(</span>id<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">dispatch</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+      type<span class="token punctuation">:</span> <span class="token string">'products/delete'</span><span class="token punctuation">,</span>
+      payload<span class="token punctuation">:</span> id<span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">return</span> <span class="token punctuation">(</span>
+    <span class="token operator">&lt;</span>div<span class="token operator">></span>
+      <span class="token operator">&lt;</span>h2<span class="token operator">></span>List <span class="token keyword">of</span> Products<span class="token operator">&lt;</span><span class="token operator">/</span>h2<span class="token operator">></span>
+      <span class="token operator">&lt;</span>ProductList onDelete<span class="token operator">=</span><span class="token punctuation">{</span>handleDelete<span class="token punctuation">}</span> products<span class="token operator">=</span><span class="token punctuation">{</span>products<span class="token punctuation">}</span> <span class="token operator">/</span><span class="token operator">></span>
+    <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// export default Products;</span>
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token function">connect</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">{</span> products <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">(</span><span class="token punctuation">{</span>
+  products<span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">(</span>Products<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre><p>最后，我们还需要一些初始数据让这个应用 run 起来。编辑 <code>index.js</code>：</p><pre class="language-diff"><code><span class="token deleted">- const app = dva();</span>
+<span class="token inserted">+ const app = dva({</span>
+<span class="token inserted">+   initialState: {</span>
+<span class="token inserted">+     products: [</span>
+<span class="token inserted">+       { name: 'dva', id: 1 },</span>
+<span class="token inserted">+       { name: 'antd', id: 2 },</span>
+<span class="token inserted">+     ],</span>
+<span class="token inserted">+   },</span>
+<span class="token inserted">+ });</span></code></pre><p>刷新浏览器，应该能看到以下效果：</p><p style="text-align:center"><img src="https://zos.alipayobjects.com/rmsportal/GQJeDDeUCSTRMMg.gif"/></p><h2 id="构建应用"><span>构建应用</span><a href="#构建应用" class="anchor">#</a></h2><p>完成开发并且在开发环境验证之后，就需要部署给我们的用户了。先执行下面的命令：</p><pre class="language-bash"><code>$ <span class="token function">npm</span> run build</code></pre><p>几秒后，输出应该如下：</p><pre class="language-bash"><code><span class="token operator">></span> @ build /private/tmp/myapp
+<span class="token operator">></span> roadhog build
+
+Creating an optimized production build<span class="token punctuation">..</span>.
+Compiled successfully.
+
+File sizes after gzip:
+
+  82.98 KB  dist/index.js
+  270 B     dist/index.css</code></pre><p><code>build</code> 命令会打包所有的资源，包含 JavaScript, CSS, web fonts, images, html 等。然后你可以在 <code>dist/</code> 目录下找到这些文件。</p><h2 id="下一步"><span>下一步</span><a href="#下一步" class="anchor">#</a></h2><p>我们已经完成了一个简单应用，你可能还有很多疑问，比如：</p><ul><li><p>如何处理异步请求</p></li><li><p>如何优雅地加载初始数据</p></li><li><p>如何统一处理出错，以及特定操作的出错</p></li><li><p>如何动态加载路由和 Model，以加速页面载入速度</p></li><li><p>如何实现 hmr</p></li><li><p>如何 mock 数据</p></li><li><p>等等</p></li></ul><p>你可以：</p><ul><li><p>访问 <a href="https://github.com/dvajs/dva">dva 官网</a></p></li><li><p>理解 dva 的 <a href="https://github.com/dvajs/dva/blob/master/docs/Concepts_zh-CN.md">8 个概念</a> ，以及他们是如何串起来的</p></li><li><p>掌握 dva 的<a href="https://github.com/dvajs/dva/blob/master/docs/API_zh-CN.md">所有 API</a></p></li><li><p>查看 <a href="https://github.com/dvajs/dva-knowledgemap">dva 知识地图</a> ，包含 ES6, React, dva 等所有基础知识</p></li><li><p>查看 <a href="https://github.com/dvajs/dva/issues?q=is%3Aissue+is%3Aclosed+label%3Afaq">更多 FAQ</a>，看看别人通常会遇到什么问题</p></li><li><p>如果你基于 dva-cli 创建项目，最好了解他的 <a href="https://github.com/sorrycc/roadhog/blob/master/README_zh-cn.md#配置">配置方式</a></p></li></ul></section><section class="markdown api-container"></section></article></div></div><div class="ant-row"><div class="ant-col-xs-24 ant-col-sm-24 ant-col-md-24 ant-col-lg-18 ant-col-lg-offset-6 ant-col-xl-19 ant-col-xl-offset-5 ant-col-xxl-20 ant-col-xxl-offset-4"><section class="prev-next-nav"><a class="prev-page" href="/docs/react/getting-started-cn">快速上手</a><a class="next-page" href="/docs/react/use-with-create-react-app-cn">在 create-react-app 中使用</a></section></div></div></div><footer id="footer"><div class="footer-wrap"><div class="ant-row"><div class="ant-col-xs-24 ant-col-sm-24 ant-col-md-6"><div class="footer-center"><h2><span>相关资源</span></h2><div><a href="http://ant-design.gitee.io/">Ant Design</a></div><div><a href="http://scaffold.ant.design">Scaffolds</a><span> - </span><span>脚手架市场</span></div><div><a target="_blank" rel="noopener noreferrer" href="https://github.com/dvajs/dva">dva</a> - <span>应用框架</span></div><div><a target="_blank" rel="noopener noreferrer" href="http://motion.ant.design">Ant Motion</a><span> - </span><span>设计动效</span></div><div><a target="_blank" rel="noopener noreferrer" href="http://library.ant.design/">Axure Library</a><span> - </span><span>Axure 部件库</span></div><div><a target="_blank" rel="noopener noreferrer" href="http://ux.ant.design">Ant UX</a><span> - </span><span>页面逻辑素材</span></div></div></div><div class="ant-col-xs-24 ant-col-sm-24 ant-col-md-6"><div class="footer-center"><h2><span>帮助</span></h2><div><a target="_blank " href="https://github.com/choerodon/choerodon-ui">GitLab</a></div><div><a href="/changelog"><span>更新记录</span></a></div><div><a target="_blank" rel="noopener noreferrer" href="https://github.com/choerodon/choerodon-ui/issues"><span>讨论列表</span></a></div></div></div></div></div><div class="ant-row bottom-bar"><div class="ant-col-sm-24 ant-col-md-4"></div><div class="ant-col-sm-24 ant-col-md-20"><span style="line-height:16px;padding-right:12px;margin-right:11px;border-right:1px solid rgba(255, 255, 255, 0.55)"><a href="https://docs.alipay.com/policies/privacy/antfin" rel="noopener noreferrer" target="_blank"><span>隐私权政策</span></a></span><span style="margin-right:24px"><a href="https://render.alipay.com/p/f/fd-izto3cem/index.html" rel="noopener noreferrer" target="_blank"><span>权益保障承诺书</span></a></span><span style="margin-right:12px">ICP 证浙 B2-2-100257</span><span style="margin-right:12px">Copyright © <span>蚂蚁金融服务集团</span></span></div></div></footer></div>
+    </div>
+    <script src="/common.js"></script>
+    <script src="/index.js"></script>
+  </body>
+</html>

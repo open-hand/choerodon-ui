@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="An enterprise-class UI design language and React-based implementation with a set of high-quality React components, one of best React UI library for enterprises">
+    <title>Choerodon UI - A UI Design Language</title>
+    <!-- Polyfills -->
+    <!--[if IE]>
+    <script src="https://as.alipayobjects.com/g/component/??es6-shim/0.35.1/es6-sham.min.js,es6-shim/0.35.1/es6-shim.min.js"></script>
+    <![endif]-->
+    <script>
+    (function() {
+      function isLocalStorageNameSupported() {
+        var testKey = 'test';
+        var storage = window.localStorage;
+        try {
+          storage.setItem(testKey, '1');
+          storage.removeItem(testKey);
+          return true;
+        } catch (error) {
+          return false;
+        }
+      }
+      // 优先级提高到所有静态资源的前面，语言不对，加载其他静态资源没意义
+      var pathname = location.pathname;
+
+      function isZhCN(pathname) {
+        return /-cn\/?$/.test(pathname);
+      }
+      function getLocalizedPathname(path, zhCN) {
+        var pathname = path.startsWith('/') ? path : '/' + path;
+        if (!zhCN) { // to enUS
+          return /\/?index-cn/.test(pathname) ? '/' : pathname.replace('-cn', '');
+        } else if (pathname === '/') {
+          return '/index-cn';
+        } else if (pathname.endsWith('/')) {
+          return pathname.replace(/\/$/, '-cn/');
+        }
+        return pathname + '-cn';
+      }
+
+      // 兼容旧的 URL， `?locale=...`
+      var queryString = location.search;
+      if (queryString) {
+        var isZhCNConfig = queryString.indexOf('zh-CN') > -1;
+        if (isZhCNConfig && !isZhCN(pathname)) {
+          location.pathname = getLocalizedPathname(pathname, isZhCNConfig)
+        }
+      }
+
+      // 首页无视链接里面的语言设置 https://github.com/ant-design/ant-design/issues/4552
+      if (isLocalStorageNameSupported() && (pathname === '/' || pathname === '/index-cn')) {
+        var lang = (window.localStorage && localStorage.getItem('locale')) || ((navigator.language || navigator.browserLanguage).toLowerCase() === 'zh-cn' ? 'zh-CN' : 'en-US');
+        // safari is 'zh-cn', while other browser is 'zh-CN';
+        if ((lang === 'zh-CN') !== isZhCN(pathname)) {
+          location.pathname = getLocalizedPathname(pathname, lang === 'zh-CN');
+        }
+      }
+      document.documentElement.className += isZhCN(pathname) ? 'zh-cn' : 'en-us';
+    })()
+    </script>
+    <!--<link rel="icon" href="https://gw.alipayobjects.com/zos/rmsportal/rlpTLlbMzTNYuZGGCVYM.png" type="image/x-icon">-->
+    <link rel="stylesheet" type="text/css" href="/index-1.css"/>
+    <link rel="stylesheet" type="text/css" href="/index-2.css"/>
+    <link rel="stylesheet/less" type="text/css" href="/color.less"/>
+    <style id="nprogress-style">
+      #nprogress { display: none }
+    </style>
+    <!--[if lte IE 10]>
+      <script
+        src="https://as.alipayobjects.com/g/component/??console-polyfill/0.2.2/index.js,media-match/2.0.2/media.match.min.js"></script>
+    <![endif]-->
+    <script>
+    if (!window.Intl) {
+      document.writeln('<script src="https://as.alipayobjects.com/g/component/intl/1.0.1/??Intl.js,locale-data/jsonp/en.js,locale-data/jsonp/zh.js">' + '<' + '/script>');
+    }
+    if (!window.Promise) {
+      document.writeln('<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"' + '>' + '<' + '/' + 'script>');
+    }
+    </script>
+    <!-- Hotjar Tracking Code for ant.design -->
+    <script>
+//    (function(h,o,t,j,a,r){
+//      h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+//      h._hjSettings={hjid:473408,hjsv:5};
+//      a=o.getElementsByTagName('head')[0];
+//      r=o.createElement('script');r.async=1;
+//      r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+//      a.appendChild(r);
+//    })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
+    </script>
+    <!-- Deer Tracking Code for ant.design -->
+    <script>
+//    !function(t,e,a,r,c){t.TracertCmdCache=t.TracertCmdCache||[],t[c]=window[c]||
+//      {_isInit:!0,call:function(){t.TracertCmdCache.push(arguments)},
+//      start:function(t){this.call('start',t)}},t[c].l=new Date;
+//      var n=e.createElement(a),s=e.getElementsByTagName(a)[0];
+//      n.async=!0,n.src=r,s.parentNode.insertBefore(n,s)}
+//      (window,document,'script','https://tracert.alipay.com/tracert.js','Tracert');
+//      Tracert.start({
+//        spmAPos: 'a513',
+//        spmBPos: 'b5776',
+//      });
+    </script>
+  </head>
+  <body>
+    <div id="react-content">
+      <div class="page-wrapper" data-reactroot=""><header id="header" class="clearfix"><div class="ant-row"><div class="ant-col-xs-24 ant-col-sm-24 ant-col-md-6 ant-col-lg-5 ant-col-xl-5 ant-col-xxl-4"><a id="logo" href="/"><h1>Choerodon UI</h1></a></div><div class="ant-col-xs-0 ant-col-sm-0 ant-col-md-18 ant-col-lg-19 ant-col-xl-19 ant-col-xxl-20"><button type="button" class="ant-btn header-lang-button ant-btn-sm ant-btn-background-ghost ant-btn-flat"><span>中文</span><div class="ant-ripple-wrapper"></div></button><div class="ant-select-sm version ant-select ant-select-has-value ant-select-enabled"><div class="ant-select-selection
+            ant-select-selection--single" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="false" tabindex="0"><div class="ant-select-selection__rendered"><div class="ant-select-selection-selected-value" title="0.3.4" style="opacity:1">0.3.4</div><span class="ant-select-arrow" style="user-select:none;-webkit-user-select:none" unselectable="unselectable"><i class="icon icon-arrow_drop_down"></i><b></b></span></div></div><div class="ant-select-underline"><span class="ant-select-ripple"></span></div></div><ul class="ant-menu menu-site ant-menu-root ant-menu-horizontal" role="menu" aria-activedescendant="" id="nav" tabindex="0"><li class="ant-menu-item ant-menu-item-selected" role="menuitem" aria-selected="true"><a href="/"><span>Home</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false"><a href="/docs/react/introduce"><span>Components</span></a><div class="ant-ripple-wrapper"></div></li></ul></div></div><style>
+    #header .ant-select-selection {
+      height: 24px;
+      padding-top: 0;
+    }
+  </style></header><div class="main-wrapper"><div class="home-page-wrapper banner-wrapper" id="banner"><div class="banner page"></div></div><div class="home-page-wrapper page1"><div class="page"><h2>Choerodon UI <span>Feature</span></h2><div><div class="ant-row"></div></div></div></div><style>
+    .main-wrapper {
+      padding: 0;
+    }
+    #header {
+      box-shadow: none;
+      max-width: 1200px;
+      width: 100%;
+      margin: 20px auto 0;
+      padding: 0 24px;
+    }
+    #header,
+    #header .ant-select-selection,
+    #header .ant-menu {
+      background: transparent;
+    }
+    #header #logo {
+      padding: 0;
+    }
+    #header .ant-row > div:last-child .ant-select,
+    #header .ant-row > div:last-child .ant-menu,
+    #header .nav-phone-icon {
+      display: none;
+    }
+    #header .ant-row > div:last-child .header-lang-button {
+      margin-right: 0;
+    }
+    footer .footer-wrap {
+      width: 100%;
+      padding: 0;
+    }
+    footer .bottom-bar {
+      margin: auto;
+      max-width: 1200px;
+      padding: 16px 24px;
+    }
+    footer  .bottom-bar {
+      border-top: none;
+    }
+    footer .footer-wrap .ant-row {
+      width: 100%;
+      max-width: 1200px;
+      padding: 86px 24px 93px 24px;
+      margin: auto;
+    }
+    @media only screen and (max-width: 767.99px) {
+      #footer .footer-wrap{
+        padding: 40px 24px
+      }
+      footer .footer-wrap .ant-row {
+        padding: 0;
+      }
+    }
+  </style></div><footer id="footer"><div class="footer-wrap"><div class="ant-row"><div class="ant-col-xs-24 ant-col-sm-24 ant-col-md-6"><div class="footer-center"><h2><span>Resources</span></h2><div><a href="http://ant-design.gitee.io/">Ant Design</a></div><div><a href="http://scaffold.ant.design">Scaffolds</a><span> - </span><span>Scaffold Market</span></div><div><a target="_blank" rel="noopener noreferrer" href="https://github.com/dvajs/dva">dva</a> - <span>Framework</span></div><div><a target="_blank" rel="noopener noreferrer" href="http://motion.ant.design">Ant Motion</a><span> - </span><span>Motion Solution</span></div><div><a target="_blank" rel="noopener noreferrer" href="http://library.ant.design/">Axure Library</a><span> - </span><span>Axure library</span></div><div><a target="_blank" rel="noopener noreferrer" href="http://ux.ant.design">Ant UX</a><span> - </span><span>Sitemap Template</span></div></div></div><div class="ant-col-xs-24 ant-col-sm-24 ant-col-md-6"><div class="footer-center"><h2><span>Help</span></h2><div><a target="_blank " href="https://github.com/choerodon/choerodon-ui">GitLab</a></div><div><a href="/changelog"><span>Change Log</span></a></div><div><a target="_blank" rel="noopener noreferrer" href="https://github.com/choerodon/choerodon-ui/issues"><span>Issues</span></a></div></div></div></div></div><div class="ant-row bottom-bar"><div class="ant-col-sm-24 ant-col-md-4"></div><div class="ant-col-sm-24 ant-col-md-20"><span style="line-height:16px;padding-right:12px;margin-right:11px;border-right:1px solid rgba(255, 255, 255, 0.55)"><a href="https://docs.alipay.com/policies/privacy/antfin" rel="noopener noreferrer" target="_blank"><span>Privacy Policy</span></a></span><span style="margin-right:24px"><a href="https://render.alipay.com/p/f/fd-izto3cem/index.html" rel="noopener noreferrer" target="_blank"><span>Our Commitment to Customer Protection</span></a></span><span style="margin-right:12px">ICP 证浙 B2-2-100257</span><span style="margin-right:12px">Copyright © <span>Ant Financial</span></span></div></div></footer></div>
+    </div>
+    <script src="/common.js"></script>
+    <script src="/index.js"></script>
+  </body>
+</html>
