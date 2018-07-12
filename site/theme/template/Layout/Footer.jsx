@@ -1,18 +1,13 @@
 import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { Modal, message, Row, Col } from 'choerodon-ui';
-import { isLocalStorageNameSupported, loadScript } from '../utils';
-import ColorPicker from '../Color/ColorPicker';
+import { Modal, Row, Col } from 'choerodon-ui';
+import { isLocalStorageNameSupported } from '../utils';
 
 class Footer extends React.Component {
   constructor(props) {
     super(props);
 
     this.lessLoaded = false;
-
-    this.state = {
-      color: '#1890ff',
-    };
   }
 
   componentDidMount() {
@@ -31,32 +26,6 @@ class Footer extends React.Component {
       this.infoNewVersion();
     }
   }
-
-  handleColorChange = (color) => {
-    const changeColor = () => {
-      const { messages } = this.props.intl;
-      window.less.modifyVars({
-        '@primary-color': color,
-      }).then(() => {
-        message.success(messages['app.footer.primary-color-changed']);
-        this.setState({ color });
-      });
-    };
-
-    const lessUrl = 'https://cdnjs.cloudflare.com/ajax/libs/less.js/2.7.2/less.min.js';
-
-    if (this.lessLoaded) {
-      changeColor();
-    } else {
-      window.less = {
-        async: true,
-      };
-      loadScript(lessUrl).then(() => {
-        this.lessLoaded = true;
-        changeColor();
-      });
-    }
-  };
 
   infoNewVersion() {
     const { messages } = this.props.intl;
@@ -135,29 +104,6 @@ class Footer extends React.Component {
                   <a target="_blank" rel="noopener noreferrer" href="https://github.com/choerodon/choerodon-ui/issues">
                     <FormattedMessage id="app.footer.issues" />
                   </a>
-                </div>
-                <div style={{ marginTop: 20 }}>
-                  <ColorPicker
-                    type="sketch"
-                    small
-                    color={this.state.color}
-                    position="top"
-                    presetColors={[
-                      '#F5222D',
-                      '#FA541C',
-                      '#FA8C16',
-                      '#FAAD14',
-                      '#FADB14',
-                      '#A0D911',
-                      '#52C41A',
-                      '#13C2C2',
-                      '#1890FF',
-                      '#2F54EB',
-                      '#722ED1',
-                      '#EB2F96',
-                    ]}
-                    onChangeComplete={this.handleColorChange}
-                  />
                 </div>
               </div>
             </Col>

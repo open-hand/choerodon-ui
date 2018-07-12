@@ -1,5 +1,6 @@
 const icons = {
   default: [
+    'quality', 'appmarket', 'folder_open2', 'merge_request',
     'APItest', 'relation', 'relate', 'manage_project', 'book', 'contact_support',
     'ballot', 'play_90', 'replay_90', 'table_chart', 'test', 'priority', 'compass',
     'explicit-outline', 'explicit2', 'framework', 'inbox_content', 'visits', 'work_log',

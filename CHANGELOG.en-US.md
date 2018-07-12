@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `Icon`: Added new icons.
+
 ## 0.3.3
 
 `2018-07-06`
