@@ -4,8 +4,7 @@ import DocumentTitle from 'react-document-title';
 import PropTypes from 'prop-types';
 import Banner from './Banner';
 import Page1 from './Page1';
-import Page2 from './Page2';
-import Page3 from './Page3';
+// import Page2 from './Page2';
 // To store style which is only for Home and has conflicts with others.
 function getStyle() {
   return `
@@ -78,8 +77,7 @@ class Home extends React.Component {
         <div className="main-wrapper">
           <Banner {...childProps} />
           <Page1 {...childProps} />
-          <Page2 {...childProps} />
-          <Page3 {...childProps} />
+          {/* <Page2 {...childProps} /> */}
           <style dangerouslySetInnerHTML={{ __html: getStyle() }} />
         </div>
       </DocumentTitle>
