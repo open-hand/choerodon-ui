@@ -73,7 +73,7 @@ class Home extends React.Component {
     const { isMobile, intl } = this.context;
     const childProps = { ...this.props, isMobile, locale: intl.locale };
     return (
-      <DocumentTitle title={`Ant Design - ${this.props.intl.formatMessage({ id: 'app.home.slogan' })}`}>
+      <DocumentTitle title="Choerodon UI">
         <div className="main-wrapper">
           <Banner {...childProps} />
           <Page1 {...childProps} />
