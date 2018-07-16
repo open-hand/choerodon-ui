@@ -21,11 +21,13 @@ class Sider extends React.Component {
   state = {
     mode: 'inline',
   }
+
   changeMode = (value) => {
     this.setState({
       mode: value ? 'vertical' : 'inline',
     });
   }
+
   render() {
     return (
       <div>

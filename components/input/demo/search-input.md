@@ -32,6 +32,6 @@ ReactDOM.render(
     />
     <br /><br />
     <Search placeholder="input search text" enterButton="Search" size="large" />
-  </div>
-, mountNode);
+  </div>,
+  mountNode);
 ````

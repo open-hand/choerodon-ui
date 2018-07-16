@@ -50,6 +50,7 @@ class CompactDemo extends React.Component {
   state = {
     dataSource: [],
   }
+
   handleChange = (value) => {
     this.setState({
       dataSource: !value || value.indexOf('@') >= 0 ? [] : [
@@ -59,6 +60,7 @@ class CompactDemo extends React.Component {
       ],
     });
   }
+
   render() {
     return (
       <div>

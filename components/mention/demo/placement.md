@@ -32,6 +32,6 @@ ReactDOM.render(
     suggestions={['afc163', 'benjycui', 'yiminghe', 'RaoHai', '中文', 'にほんご']}
     onSelect={onSelect}
     placement="top"
-  />
-, mountNode);
+  />,
+  mountNode);
 ````

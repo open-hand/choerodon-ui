@@ -74,7 +74,9 @@ exports[`Input.Search should support custom button 1`] = `
       <span
         class="ant-input-suffix ant-input-suffix-sm"
       >
-        <button>
+        <button
+          type="button"
+        >
           ok
         </button>
       </span>

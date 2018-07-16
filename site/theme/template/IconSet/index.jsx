@@ -8,6 +8,7 @@ const { icons } = Icon;
 export default class IconSet extends React.Component {
   static defaultProps = {};
   // Show badges
+
   newIcons = [];
 
   render() {

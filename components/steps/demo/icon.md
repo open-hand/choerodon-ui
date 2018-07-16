@@ -23,6 +23,6 @@ ReactDOM.render(
     <Step status="finish" title="Verification" icon={<Icon type="panorama_vertical" />} />
     <Step status="process" title="Pay" icon={<Icon type="schedule" />} />
     <Step status="wait" title="Done" icon={<Icon type="tag_faces" />} />
-  </Steps>
-, mountNode);
+  </Steps>,
+  mountNode);
 ````

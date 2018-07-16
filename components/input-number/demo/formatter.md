@@ -38,6 +38,6 @@ ReactDOM.render(
       parser={value => value.replace('%', '')}
       onChange={onChange}
     />
-  </div>
-, mountNode);
+  </div>,
+  mountNode);
 ````

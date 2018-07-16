@@ -10,16 +10,18 @@ class Banner extends React.PureComponent {
   static contextTypes = {
     intl: PropTypes.object.isRequired,
   };
+
   static propTypes = {
     className: PropTypes.string,
   };
+
   static defaultProps = {
     className: 'banner',
   };
 
   render() {
     const { className, isMobile } = this.props;
-    const { locale } = this.context.intl;
+    const { intl: { locale } } = this.context;
     const isZhCN = locale === 'zh-CN';
     return (
       <div className="home-page-wrapper banner-wrapper" id="banner">
@@ -47,7 +49,7 @@ class Banner extends React.PureComponent {
                 <Link className="banner-btn components" to={utils.getLocalizedPathname('/docs/react/introduce', isZhCN)}>
                   <FormattedMessage id="app.home.getting-started" />
                 </Link>
-                <a className="banner-btn github" target="_black" rel="noopener noreferrer" href="https://github.com/choerodon/choerodon-ui" >
+                <a className="banner-btn github" target="_black" rel="noopener noreferrer" href="https://github.com/choerodon/choerodon-ui">
                   Github
                 </a>
               </div>

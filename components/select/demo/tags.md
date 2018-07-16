@@ -46,6 +46,6 @@ ReactDOM.render(
     allowClear
   >
     {children}
-  </Select>
-, mountNode);
+  </Select>,
+  mountNode);
 ````

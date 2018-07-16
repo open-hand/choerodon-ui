@@ -25,7 +25,9 @@ title: Calendar
 <Calendar
   dateCellRender={dateCellRender}
   monthCellRender={monthCellRender}
+
   onPanelChange={onPanelChange}
+
   onSelect={onSelect}
 />
 ```

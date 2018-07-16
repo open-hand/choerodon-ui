@@ -62,13 +62,15 @@ export default class Page1 extends React.PureComponent {
       });
     }
     return (
-      <g key={i.toString()} >
+      <g key={i.toString()}>
         {React.cloneElement(item, props)}
       </g>
     );
   });
+
   render() {
-    const isZhCN = this.props.locale === 'zh-CN';
+    const { locale } = this.props;
+    const isZhCN = locale === 'zh-CN';
     const children = page1Data.map((item) => {
       return (
         <Col key={item.nameEn} md={8} xs={24}>
@@ -79,7 +81,7 @@ export default class Page1 extends React.PureComponent {
             <div className="page1-image">
               <div className={item.imgCls} />
             </div>
-            <h3 >{isZhCN ? item.name : item.nameEn}</h3>
+            <h3>{isZhCN ? item.name : item.nameEn}</h3>
             <p>{isZhCN ? item.desc : item.descEn}</p>
           </QueueAnim>
         </Col>
@@ -87,7 +89,7 @@ export default class Page1 extends React.PureComponent {
     });
     return (
       <div className="home-page-wrapper page1">
-        <div className="page" >
+        <div className="page">
           <h2>Choerodon UI <FormattedMessage id="app.home.feature" /></h2>
           <ScrollOverPack playScale="0.3">
             <QueueAnim

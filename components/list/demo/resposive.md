@@ -1,7 +1,7 @@
 ---
 order: 5
 title:
-  zh-CN: 响应式的栅格列表 
+  zh-CN: 响应式的栅格列表
   en-US: Responsive grid list
 ---
 
@@ -46,6 +46,6 @@ ReactDOM.render(
         <Card title={item.title}>Card content</Card>
       </List.Item>
     )}
-  />
-, mountNode);
+  />,
+  mountNode);
 ````

@@ -27,6 +27,6 @@ ReactDOM.render(
     onChange={onChange}
     suggestions={['afc163', 'benjycui', 'yiminghe', 'jljsj33', 'dqaria', 'RaoHai']}
     multiLines
-  />
-, mountNode);
+  />,
+  mountNode);
 ````

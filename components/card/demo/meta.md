@@ -28,6 +28,6 @@ ReactDOM.render(
       title="Card title"
       description="This is the description"
     />
-  </Card>
-, mountNode);
+  </Card>,
+  mountNode);
 ````

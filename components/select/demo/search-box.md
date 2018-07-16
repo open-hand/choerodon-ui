@@ -59,10 +59,12 @@ class SearchInput extends React.Component {
     data: [],
     value: '',
   }
+
   handleChange = (value) => {
     this.setState({ value });
     fetch(value, data => this.setState({ data }));
   }
+
   render() {
     const options = this.state.data.map(d => <Option key={d.value}>{d.text}</Option>);
     return (
@@ -83,6 +85,6 @@ class SearchInput extends React.Component {
 }
 
 ReactDOM.render(
-  <SearchInput placeholder="input search text" style={{ width: 200 }} />
-, mountNode);
+  <SearchInput placeholder="input search text" style={{ width: 200 }} />,
+  mountNode);
 ````

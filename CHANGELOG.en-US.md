@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.3.4
+
+`2018-07-16`
+
 - 🌟 `Icon`: Added new icons.
 
 ## 0.3.3
@@ -156,7 +160,7 @@ timeline: true
 `2018-05-07`
 
 - 🌟 `Model.Sidebar`: Add footer
-- 💄 `Spin`: Adjust the rotation effect. 
+- 💄 `Spin`: Adjust the rotation effect.
 - 🐞 `Table`: Fixed filter bar errors when column filter fails to filter columns without dataIndex property.
 
 ## 0.1.2

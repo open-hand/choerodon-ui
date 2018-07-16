@@ -78,10 +78,12 @@ class App extends React.Component {
       date: '',
     };
   }
+
   handleChange(date) {
     message.info('Selected Date: ' + date.toString());
     this.setState({ date });
   }
+
   render() {
     return (
       <LocaleProvider locale={frFR}>

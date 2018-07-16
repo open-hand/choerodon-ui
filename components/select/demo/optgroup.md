@@ -34,6 +34,6 @@ ReactDOM.render(
     <OptGroup label="Engineer">
       <Option value="Yiminghe">yiminghe</Option>
     </OptGroup>
-  </Select>
-, mountNode);
+  </Select>,
+  mountNode);
 ````

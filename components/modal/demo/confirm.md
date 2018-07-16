@@ -54,6 +54,6 @@ ReactDOM.render(
     <Button onClick={showDeleteConfirm} type="dashed">
       Delete
     </Button>
-  </div>
-, mountNode);
+  </div>,
+  mountNode);
 ````

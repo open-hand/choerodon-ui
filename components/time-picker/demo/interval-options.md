@@ -16,6 +16,6 @@ Show stepped options by `hourStep` `minuteStep` `secondStep`.
 import { TimePicker } from 'choerodon-ui';
 
 ReactDOM.render(
-  <TimePicker minuteStep={15} secondStep={10} />
-, mountNode);
+  <TimePicker minuteStep={15} secondStep={10} />,
+  mountNode);
 ````

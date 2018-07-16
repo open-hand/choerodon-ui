@@ -18,10 +18,12 @@ import { Tabs, Radio } from 'choerodon-ui';
 const { TabPane } = Tabs;
 
 class Demo extends React.Component {
-  state = { size: 'small' };
+  state = { size: 'small' }
+
   onChange = (e) => {
     this.setState({ size: e.target.value });
   }
+
   render() {
     const { size } = this.state;
     return (

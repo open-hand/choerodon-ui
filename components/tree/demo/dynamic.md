@@ -25,6 +25,7 @@ class Demo extends React.Component {
       { title: 'Tree Node', key: '2', isLeaf: true },
     ],
   }
+
   onLoadData = (treeNode) => {
     return new Promise((resolve) => {
       if (treeNode.props.children) {
@@ -43,6 +44,7 @@ class Demo extends React.Component {
       }, 1000);
     });
   }
+
   renderTreeNodes = (data) => {
     return data.map((item) => {
       if (item.children) {
@@ -55,6 +57,7 @@ class Demo extends React.Component {
       return <TreeNode {...item} dataRef={item} />;
     });
   }
+
   render() {
     return (
       <Tree loadData={this.onLoadData}>

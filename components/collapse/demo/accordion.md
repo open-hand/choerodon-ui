@@ -34,6 +34,6 @@ ReactDOM.render(
     <Panel header="This is panel header 3" key="3">
       <p>{text}</p>
     </Panel>
-  </Collapse>
-, mountNode);
+  </Collapse>,
+  mountNode);
 ````

@@ -26,6 +26,6 @@ const App = () => (
 ReactDOM.render(
   <LocaleProvider locale={enUS}>
     <App />
-  </LocaleProvider>
-, mountNode);
+  </LocaleProvider>,
+  mountNode);
 ````

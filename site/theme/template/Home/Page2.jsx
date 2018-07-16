@@ -9,8 +9,8 @@ export default function Page2({ locale }) {
   return (
     <div className="home-page-wrapper page2" id="page2">
       <div className="page2-bg">
-        <div className="page" >
-          <h2>Let’s Pro</h2>
+        <div className="page">
+          <h2>{'Let\'s Pro'}</h2>
           <h3 className="label"><FormattedMessage id="app.home.pro-label" /></h3>
           <ScrollOverPack component={Row} className="page2-content" playScale="0.4">
             <QueueAnim

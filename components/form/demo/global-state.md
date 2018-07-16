@@ -56,12 +56,14 @@ class Demo extends React.Component {
         value: 'benjycui',
       },
     },
-  };
+  }
+
   handleFormChange = (changedFields) => {
     this.setState(({ fields }) => ({
       fields: { ...fields, ...changedFields },
     }));
   }
+
   render() {
     const fields = this.state.fields;
     return (

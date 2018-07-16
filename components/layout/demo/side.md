@@ -28,11 +28,13 @@ const SubMenu = Menu.SubMenu;
 class SiderDemo extends React.Component {
   state = {
     collapsed: false,
-  };
+  }
+
   onCollapse = (collapsed) => {
     console.log(collapsed);
     this.setState({ collapsed });
   }
+
   render() {
     return (
       <Layout style={{ minHeight: '100vh' }}>

@@ -49,10 +49,12 @@ class Demo extends React.Component {
   state = {
     value: ['0-0-0'],
   }
+
   onChange = (value) => {
     console.log('onChange ', value, arguments);
     this.setState({ value });
   }
+
   render() {
     const tProps = {
       treeData,

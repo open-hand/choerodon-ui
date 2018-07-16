@@ -69,6 +69,7 @@ class Home extends React.Component {
     intl: PropTypes.object.isRequired,
     isMobile: PropTypes.bool.isRequired,
   }
+
   render() {
     const { isMobile, intl } = this.context;
     const childProps = { ...this.props, isMobile, locale: intl.locale };

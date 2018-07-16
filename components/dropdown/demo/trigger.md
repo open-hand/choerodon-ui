@@ -39,6 +39,6 @@ ReactDOM.render(
     <Dropdown overlay={menu} trigger="click">
       <Button shape="circle" icon="more_vert" />
     </Dropdown>
-  </div>
-, mountNode);
+  </div>,
+  mountNode);
 ````

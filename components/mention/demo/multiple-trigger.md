@@ -35,6 +35,7 @@ class App extends React.Component {
       suggestions: [],
     };
   }
+
   onSearchChange = (value, trigger) => {
     console.log('onSearchChange', value, trigger);
     const dataSource = trigger === '@' ? users : tags;
@@ -42,6 +43,7 @@ class App extends React.Component {
       suggestions: dataSource.filter(item => item.indexOf(value) !== -1),
     });
   }
+
   render() {
     return (
       <Mention
@@ -58,6 +60,6 @@ class App extends React.Component {
 }
 
 ReactDOM.render(
-  <App />
-, mountNode);
+  <App />,
+  mountNode);
 ````

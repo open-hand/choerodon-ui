@@ -41,11 +41,13 @@ for (let i = 0; i < 46; i++) {
 class App extends React.Component {
   state = {
     selectedRowKeys: [], // Check here to configure the default column
-  };
+  }
+
   onSelectChange = (selectedRowKeys) => {
     console.log('selectedRowKeys changed: ', selectedRowKeys);
     this.setState({ selectedRowKeys });
   }
+
   render() {
     const { selectedRowKeys } = this.state;
     const rowSelection = {

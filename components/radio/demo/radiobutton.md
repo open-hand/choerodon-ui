@@ -48,6 +48,6 @@ ReactDOM.render(
         <RadioButton value="d">Chengdu</RadioButton>
       </RadioGroup>
     </div>
-  </div>
-, mountNode);
+  </div>,
+  mountNode);
 ```

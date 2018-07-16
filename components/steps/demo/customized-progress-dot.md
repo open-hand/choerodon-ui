@@ -29,6 +29,6 @@ ReactDOM.render(
     <Step title="In Progress" description="You can hover on the dot." />
     <Step title="Waiting" description="You can hover on the dot." />
     <Step title="Waiting" description="You can hover on the dot." />
-  </Steps>
-, mountNode);
+  </Steps>,
+  mountNode);
 ````

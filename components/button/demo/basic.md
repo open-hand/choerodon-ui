@@ -25,6 +25,6 @@ ReactDOM.render(
     <Button funcType="raised">Rasied</Button>
     <Button funcType="flat">Flat</Button>
     <Button shape="circle" funcType="flat" icon="search" />
-  </div>
-, mountNode);
+  </div>,
+  mountNode);
 ````

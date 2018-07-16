@@ -26,6 +26,7 @@ class App extends React.Component {
   state = {
     options: [],
   }
+
   handleChange = (value) => {
     let options;
     if (!value || value.indexOf('@') >= 0) {
@@ -38,6 +39,7 @@ class App extends React.Component {
     }
     this.setState({ options });
   }
+
   render() {
     // filterOption needs to be false，as the value is dynamically generated
     return (

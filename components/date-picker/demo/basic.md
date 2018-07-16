@@ -30,6 +30,6 @@ ReactDOM.render(
     <RangePicker onChange={onChange} />
     <br />
     <WeekPicker onChange={onChange} placeholder="Select week" label="选择周" />
-  </div>
-, mountNode);
+  </div>,
+  mountNode);
 ````

@@ -61,13 +61,13 @@ class EditableTable extends React.Component {
         return (
           <div className="editable-row-operations">
             {
-              editable ?
+              editable ? (
                 <span>
                   <a onClick={() => this.save(record.key)}>Save</a>
                   <Popconfirm title="Sure to cancel?" onConfirm={() => this.cancel(record.key)}>
                     <a>Cancel</a>
                   </Popconfirm>
-                </span>
+                </span>)
                 : <a onClick={() => this.edit(record.key)}>Edit</a>
             }
           </div>
@@ -77,6 +77,7 @@ class EditableTable extends React.Component {
     this.state = { data };
     this.cacheData = data.map(item => ({ ...item }));
   }
+
   renderColumns(text, record, column) {
     return (
       <EditableCell
@@ -86,6 +87,7 @@ class EditableTable extends React.Component {
       />
     );
   }
+
   handleChange(value, key, column) {
     const newData = [...this.state.data];
     const target = newData.filter(item => key === item.key)[0];
@@ -94,6 +96,7 @@ class EditableTable extends React.Component {
       this.setState({ data: newData });
     }
   }
+
   edit(key) {
     const newData = [...this.state.data];
     const target = newData.filter(item => key === item.key)[0];
@@ -102,6 +105,7 @@ class EditableTable extends React.Component {
       this.setState({ data: newData });
     }
   }
+
   save(key) {
     const newData = [...this.state.data];
     const target = newData.filter(item => key === item.key)[0];
@@ -111,6 +115,7 @@ class EditableTable extends React.Component {
       this.cacheData = newData.map(item => ({ ...item }));
     }
   }
+
   cancel(key) {
     const newData = [...this.state.data];
     const target = newData.filter(item => key === item.key)[0];
@@ -120,6 +125,7 @@ class EditableTable extends React.Component {
       this.setState({ data: newData });
     }
   }
+
   render() {
     return <Table bordered dataSource={this.state.data} columns={this.columns} />;
   }

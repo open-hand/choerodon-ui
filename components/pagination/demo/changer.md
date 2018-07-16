@@ -28,6 +28,6 @@ ReactDOM.render(
     onShowSizeChange={onShowSizeChange}
     defaultCurrent={3}
     total={500}
-  />
-, mountNode);
+  />,
+  mountNode);
 ````

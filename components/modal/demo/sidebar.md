@@ -19,21 +19,25 @@ const { Sidebar } = Modal;
 
 class App extends React.Component {
   state = { visible: false }
+
   showModal = () => {
     this.setState({
       visible: true,
     });
   }
+
   handleOk = () => {
     this.setState({
       visible: false,
     });
   }
+
   handleCancel = () => {
     this.setState({
       visible: false,
     });
   }
+
   render() {
     return (
       <div>

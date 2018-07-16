@@ -24,7 +24,9 @@ When data is in the form of dates, such as schedules, timetables, prices calenda
 <Calendar
   dateCellRender={dateCellRender}
   monthCellRender={monthCellRender}
+
   onPanelChange={onPanelChange}
+
   onSelect={onSelect}
 />
 ```

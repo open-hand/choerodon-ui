@@ -1,6 +1,6 @@
 ---
 order: 2
-title: 
+title:
   zh-CN: 容器
   en-US: Inside a container
 ---
@@ -19,8 +19,8 @@ import { Spin } from 'choerodon-ui';
 ReactDOM.render(
   <div className="example">
     <Spin />
-  </div>
-, mountNode);
+  </div>,
+  mountNode);
 ````
 
 ````css

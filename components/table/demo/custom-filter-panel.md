@@ -44,10 +44,12 @@ class App extends React.Component {
     data,
     searchText: '',
     filtered: false,
-  };
+  }
+
   onInputChange = (e) => {
     this.setState({ searchText: e.target.value });
   }
+
   onSearch = () => {
     const { searchText } = this.state;
     const reg = new RegExp(searchText, 'gi');
@@ -72,6 +74,7 @@ class App extends React.Component {
       }).filter(record => !!record),
     });
   }
+
   render() {
     const columns = [{
       title: 'Name',

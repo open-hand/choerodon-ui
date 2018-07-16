@@ -18,7 +18,7 @@ import { Button } from 'choerodon-ui';
 
 ReactDOM.render(
   <div>
-    <Button type="primary" funcType="raised" >Primary</Button>
+    <Button type="primary" funcType="raised">Primary</Button>
     <Button type="primary" disabled>Primary(disabled)</Button>
     <br />
     <Button>Default</Button>

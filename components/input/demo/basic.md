@@ -24,6 +24,6 @@ ReactDOM.render(
     <Col span={12}>
       <Input defaultValue="123" placeholder="Basic usage" maxLength={20} required label="Basic" disabled />
     </Col>
-  </Row>
-  , mountNode);
+  </Row>,
+  mountNode);
 ````

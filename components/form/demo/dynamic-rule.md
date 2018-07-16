@@ -29,6 +29,7 @@ class DynamicRule extends React.Component {
   state = {
     checkNick: false,
   };
+
   check = () => {
     this.props.form.validateFields(
       (err) => {
@@ -38,6 +39,7 @@ class DynamicRule extends React.Component {
       },
     );
   }
+
   handleChange = (e) => {
     this.setState({
       checkNick: e.target.checked,
@@ -45,6 +47,7 @@ class DynamicRule extends React.Component {
       this.props.form.validateFields(['nickname'], { force: true });
     });
   }
+
   render() {
     const { getFieldDecorator } = this.props.form;
     return (

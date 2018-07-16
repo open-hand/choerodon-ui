@@ -95,6 +95,7 @@ Same as `onRow` `onHeaderRow` `onCell` `onHeaderCell`
       onXxxx...
     };
   }}
+
   onHeaderRow={(column) => {
     return {
       onClick: () => {},        // click header row

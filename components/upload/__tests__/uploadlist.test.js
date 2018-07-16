@@ -25,7 +25,7 @@ describe('Upload List', () => {
   it('should use file.thumbUrl for <img /> in priority', () => {
     const wrapper = mount(
       <Upload defaultFileList={fileList} listType="picture">
-        <button>upload</button>
+        <button type="button">upload</button>
       </Upload>
     );
     fileList.forEach((file, i) => {
@@ -53,7 +53,7 @@ describe('Upload List', () => {
     }];
     const wrapper = mount(
       <Upload defaultFileList={list}>
-        <button>upload</button>
+        <button type="button">upload</button>
       </Upload>
     );
     expect(wrapper.find('.ant-upload-list-item').length).toBe(2);
@@ -80,7 +80,7 @@ describe('Upload List', () => {
         onChange={onChange}
         customRequest={successRequest}
       >
-        <button>upload</button>
+        <button type="button">upload</button>
       </Upload>
     );
     wrapper.find('input').simulate('change', {
@@ -106,7 +106,7 @@ describe('Upload List', () => {
         onChange={onChange}
         customRequest={errorRequest}
       >
-        <button>upload</button>
+        <button type="button">upload</button>
       </Upload>
     );
     wrapper.find('input').simulate('change', {
@@ -127,7 +127,7 @@ describe('Upload List', () => {
         onChange={handleChange}
         beforeUpload={() => false}
       >
-        <button>upload</button>
+        <button type="button">upload</button>
       </Upload>
     );
 
@@ -148,14 +148,14 @@ describe('Upload List', () => {
     let errors;
     class TestForm extends React.Component {
       handleSubmit = () => {
-        const { validateFields } = this.props.form;
+        const { form: { validateFields } } = this.props;
         validateFields((err) => {
           errors = err;
         });
       }
 
       render() {
-        const { getFieldDecorator } = this.props.form;
+        const { form: { getFieldDecorator } } = this.props;
 
         return (
           <Form onSubmit={this.handleSubmit}>
@@ -179,7 +179,7 @@ describe('Upload List', () => {
                 <Upload
                   beforeUpload={() => false}
                 >
-                  <button>upload</button>
+                  <button type="button">upload</button>
                 </Upload>
               )}
             </Form.Item>
@@ -212,7 +212,7 @@ describe('Upload List', () => {
         defaultFileList={fileList}
         onPreview={handlePreview}
       >
-        <button>upload</button>
+        <button type="button">upload</button>
       </Upload>
     );
     wrapper.find('.icon-visibility').at(0).simulate('click');
@@ -231,7 +231,7 @@ describe('Upload List', () => {
         onRemove={handleRemove}
         onChange={handleChange}
       >
-        <button>upload</button>
+        <button type="button">upload</button>
       </Upload>
     );
     wrapper.find('.icon-delete').at(0).simulate('click');
@@ -254,7 +254,7 @@ describe('Upload List', () => {
         defaultFileList={newFileList}
         onPreview={handlePreview}
       >
-        <button>upload</button>
+        <button type="button">upload</button>
       </Upload>
     );
     wrapper.setState({});
@@ -278,7 +278,7 @@ describe('Upload List', () => {
         listType="picture"
         defaultFileList={list}
       >
-        <button>upload</button>
+        <button type="button">upload</button>
       </Upload>
     );
     expect(wrapper.render()).toMatchSnapshot();

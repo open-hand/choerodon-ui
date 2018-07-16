@@ -20,9 +20,11 @@ class App extends React.Component {
   state = {
     visiable: true,
   }
+
   handleClose = () => {
     this.setState({ visiable: false });
   }
+
   render() {
     return (
       <div>
@@ -43,6 +45,6 @@ class App extends React.Component {
 }
 
 ReactDOM.render(
-  <App />
-, mountNode);
+  <App />,
+  mountNode);
 ````

@@ -35,6 +35,6 @@ ReactDOM.render(
       tiny={false}
       showSizeChanger={false}
     />
-  </div>
-, mountNode);
+  </div>,
+  mountNode);
 ````

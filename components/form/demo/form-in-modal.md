@@ -62,12 +62,15 @@ class CollectionsPage extends React.Component {
   state = {
     visible: false,
   };
+
   showModal = () => {
     this.setState({ visible: true });
   }
+
   handleCancel = () => {
     this.setState({ visible: false });
   }
+
   handleCreate = () => {
     const form = this.formRef.props.form;
     form.validateFields((err, values) => {
@@ -80,9 +83,11 @@ class CollectionsPage extends React.Component {
       this.setState({ visible: false });
     });
   }
+
   saveFormRef = (formRef) => {
     this.formRef = formRef;
   }
+
   render() {
     return (
       <div>

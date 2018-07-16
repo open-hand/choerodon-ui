@@ -34,15 +34,18 @@ class Demo extends React.Component {
   onChange = (activeKey) => {
     this.setState({ activeKey });
   }
+
   onEdit = (targetKey, action) => {
     this[action](targetKey);
   }
+
   add = () => {
     const panes = this.state.panes;
     const activeKey = `newTab${this.newTabIndex++}`;
     panes.push({ title: 'New Tab', content: 'New Tab Pane', key: activeKey });
     this.setState({ panes, activeKey });
   }
+
   remove = (targetKey) => {
     let activeKey = this.state.activeKey;
     let lastIndex;
@@ -57,6 +60,7 @@ class Demo extends React.Component {
     }
     this.setState({ panes, activeKey });
   }
+
   render() {
     return (
       <div>

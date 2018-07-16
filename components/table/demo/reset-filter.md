@@ -56,7 +56,8 @@ class App extends React.Component {
     filteredInfo: { name: ['1'], address: ['a'] },
     barFilters: ['No. 1'],
     sortedInfo: null,
-  };
+  }
+
   handleChange = (pagination, filters, sorter, barFilters) => {
     console.log('Various parameters', pagination, filters, sorter, barFilters);
     this.setState({
@@ -65,15 +66,18 @@ class App extends React.Component {
       barFilters,
     });
   }
+
   clearFilters = () => {
     this.setState({ filteredInfo: null });
   }
+
   clearAll = () => {
     this.setState({
       filteredInfo: null,
       sortedInfo: null,
     });
   }
+
   setAgeSort = () => {
     this.setState({
       sortedInfo: {
@@ -82,6 +86,7 @@ class App extends React.Component {
       },
     });
   }
+
   render() {
     let { sortedInfo, filteredInfo, barFilters } = this.state;
     sortedInfo = sortedInfo || {};

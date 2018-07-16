@@ -28,6 +28,6 @@ ReactDOM.render(
       title="Europe Street beat"
       description="www.instagram.com"
     />
-  </Card>
-, mountNode);
+  </Card>,
+  mountNode);
 ````

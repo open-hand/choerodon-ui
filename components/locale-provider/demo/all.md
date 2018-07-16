@@ -40,12 +40,15 @@ class Page extends React.Component {
   state = {
     visible: false,
   }
+
   showModal = () => {
     this.setState({ visible: true });
   }
+
   hideModal = () => {
     this.setState({ visible: false });
   }
+
   render() {
     const info = () => {
       Modal.info({
@@ -111,6 +114,7 @@ class App extends React.Component {
       locale: null,
     };
   }
+
   changeLocale = (e) => {
     const localeValue = e.target.value;
     this.setState({ locale: localeValue });
@@ -120,6 +124,7 @@ class App extends React.Component {
       moment.locale('zh-cn');
     }
   }
+
   render() {
     return (
       <div>

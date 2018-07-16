@@ -21,25 +21,29 @@ class EditableCell extends React.Component {
     value: this.props.value,
     editable: false,
   }
+
   handleChange = (e) => {
     const value = e.target.value;
     this.setState({ value });
   }
+
   check = () => {
     this.setState({ editable: false });
     if (this.props.onChange) {
       this.props.onChange(this.state.value);
     }
   }
+
   edit = () => {
     this.setState({ editable: true });
   }
+
   render() {
     const { value, editable } = this.state;
     return (
       <div className="editable-cell">
         {
-          editable ?
+          editable ? (
             <div className="editable-cell-input-wrapper">
               <Input
                 value={value}
@@ -51,16 +55,15 @@ class EditableCell extends React.Component {
                 className="editable-cell-icon-check"
                 onClick={this.check}
               />
-            </div>
-            :
-            <div className="editable-cell-text-wrapper">
-              {value || ' '}
-              <Icon
-                type="edit"
-                className="editable-cell-icon"
-                onClick={this.edit}
-              />
-            </div>
+            </div>) : (
+              <div className="editable-cell-text-wrapper">
+                {value || ' '}
+                <Icon
+                  type="edit"
+                  className="editable-cell-icon"
+                  onClick={this.edit}
+                />
+              </div>)
         }
       </div>
     );
@@ -91,8 +94,8 @@ class EditableTable extends React.Component {
       dataIndex: 'operation',
       render: (text, record) => {
         return (
-          this.state.dataSource.length > 1 ?
-          (
+          this.state.dataSource.length > 1
+          ? (
             <Popconfirm title="Sure to delete?" onConfirm={() => this.onDelete(record.key)}>
               <a href="#">Delete</a>
             </Popconfirm>
@@ -116,6 +119,7 @@ class EditableTable extends React.Component {
       count: 2,
     };
   }
+
   onCellChange = (key, dataIndex) => {
     return (value) => {
       const dataSource = [...this.state.dataSource];
@@ -126,10 +130,12 @@ class EditableTable extends React.Component {
       }
     };
   }
+
   onDelete = (key) => {
     const dataSource = [...this.state.dataSource];
     this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
   }
+
   handleAdd = () => {
     const { count, dataSource } = this.state;
     const newData = {
@@ -143,6 +149,7 @@ class EditableTable extends React.Component {
       count: count + 1,
     });
   }
+
   render() {
     const { dataSource } = this.state;
     const columns = this.columns;

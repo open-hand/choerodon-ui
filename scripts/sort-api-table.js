@@ -55,8 +55,8 @@ function alphabetSort(nodes) {
 function sizeSort(nodes) {
   return nodes.sort((...comparison) => {
     return asciiSort(
-      ...comparison.map(val =>
-        sizeBreakPoints.indexOf(getCellValue(val).toLowerCase())
+      ...comparison.map(
+        val => sizeBreakPoints.indexOf(getCellValue(val).toLowerCase())
       )
     );
   });

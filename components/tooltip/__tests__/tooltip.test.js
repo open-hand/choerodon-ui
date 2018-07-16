@@ -60,7 +60,7 @@ describe('Tooltip', () => {
         mouseLeaveDelay={0}
         onVisibleChange={onVisibleChange}
       >
-        <button disabled>Hello world!</button>
+        <button type="button" disabled>Hello world!</button>
       </Tooltip>
     );
 
@@ -122,7 +122,7 @@ describe('Tooltip', () => {
         mouseEnterDelay={0}
         mouseLeaveDelay={0}
       >
-        <button disabled>Hello world!</button>
+        <button type="button" disabled>Hello world!</button>
       </Tooltip>
     );
 
@@ -143,7 +143,7 @@ describe('Tooltip', () => {
           mouseLeaveDelay={0}
           placement="bottomLeft"
         >
-          <button style={{ width: triggerWidth }}>
+          <button type="button" style={{ width: triggerWidth }}>
             Hello world!
           </button>
         </Tooltip>
@@ -160,7 +160,7 @@ describe('Tooltip', () => {
           placement="bottomLeft"
           arrowPointAtCenter
         >
-          <button style={{ width: triggerWidth }}>
+          <button type="button" style={{ width: triggerWidth }}>
             Hello world!
           </button>
         </Tooltip>

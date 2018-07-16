@@ -19,6 +19,6 @@ import { Card } from 'choerodon-ui';
 ReactDOM.render(
   <Card loading title="Card title" style={{ width: '34%' }}>
     Whatever content
-  </Card>
-, mountNode);
+  </Card>,
+  mountNode);
 ````

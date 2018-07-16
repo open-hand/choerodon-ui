@@ -40,6 +40,6 @@ ReactDOM.render(
     <CheckboxGroup options={options} defaultValue={['Pear']} onChange={onChange} />
     <br /><br />
     <CheckboxGroup options={optionsWithDisabled} disabled defaultValue={['Apple']} onChange={onChange} />
-  </div>
-, mountNode);
+  </div>,
+  mountNode);
 ````

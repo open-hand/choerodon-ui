@@ -26,10 +26,12 @@ class SelectMulitpleDemo extends React.Component {
   state = {
     loading: true,
     options: [],
-  };
+  }
+
   componentDidMount() {
     this.getOptions();
   }
+
   getOptions = () => {
     setTimeout(() => {
       this.setState({
@@ -38,9 +40,11 @@ class SelectMulitpleDemo extends React.Component {
       });
     }, 3000);
   }
+
   handleChoiceRemove = (value) => {
     return value >= 15;
   }
+
   render() {
     const { options, loading } = this.state;
     return (
@@ -59,6 +63,7 @@ class SelectMulitpleDemo extends React.Component {
       </Select>
     );
   }
-};
+}
+
 ReactDOM.render(<SelectMulitpleDemo />, mountNode);
 ````

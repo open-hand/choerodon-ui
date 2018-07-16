@@ -22,26 +22,35 @@ export default class ColorPicker extends Component {
       color: props.color,
     };
   }
+
   componentWillReceiveProps(nextProps) {
     this.setState({ color: nextProps.color });
   }
+
   handleClick = () => {
-    this.setState({ displayColorPicker: !this.state.displayColorPicker });
+    const { displayColorPicker } = this.state;
+    this.setState({ displayColorPicker });
   };
+
   handleClose = () => {
     this.setState({ displayColorPicker: false });
   };
+
   handleChange = (color) => {
+    const { onChange } = this.props;
     this.setState({ color: color.hex });
-    this.props.onChange(color.hex);
+    onChange(color.hex);
   };
+
   handleChangeComplete = (color) => {
+    const { onChangeComplete } = this.props;
     this.setState({ color: color.hex });
-    this.props.onChangeComplete(color.hex);
+    onChangeComplete(color.hex);
   };
+
   render() {
     const { small, type, position } = this.props;
-
+    const { color, displayColorPicker } = this.state;
     const Picker = pickers[type];
 
     const styles = {
@@ -49,7 +58,7 @@ export default class ColorPicker extends Component {
         width: small ? '80px' : '120px',
         height: small ? '16px' : '24px',
         borderRadius: '2px',
-        background: this.state.color,
+        background: color,
       },
       swatch: {
         padding: '4px',
@@ -86,13 +95,13 @@ export default class ColorPicker extends Component {
         <div style={styles.color} />
       </div>
     );
-    const picker = this.state.displayColorPicker ? (
+    const picker = displayColorPicker ? (
       <div style={styles.popover}>
         <div style={styles.cover} onClick={this.handleClose} />
         <div style={styles.wrapper}>
           <Picker
             {...this.props}
-            color={this.state.color}
+            color={color}
             onChange={this.handleChange}
             onChangeComplete={this.handleChangeComplete}
           />

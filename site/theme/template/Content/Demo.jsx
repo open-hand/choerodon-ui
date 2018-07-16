@@ -43,9 +43,11 @@ export default class Demo extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    return (this.state.codeExpand || this.props.expand) !== (nextState.codeExpand || nextProps.expand)
-      || this.state.copied !== nextState.copied
-      || this.state.copyTooltipVisible !== nextState.copyTooltipVisible;
+    const { expand } = this.props;
+    const { codeExpand, copied, copyTooltipVisible } = this.state;
+    return (codeExpand || expand) !== (nextState.codeExpand || nextProps.expand)
+      || copied !== nextState.copied
+      || copyTooltipVisible !== nextState.copyTooltipVisible;
   }
 
   componentDidMount() {
@@ -65,16 +67,17 @@ export default class Demo extends React.Component {
   }
 
   handleCodeExpand = () => {
-    this.setState({ codeExpand: !this.state.codeExpand });
-  }
+    const { codeExpand } = this.state;
+    this.setState({ codeExpand });
+  };
 
   saveAnchor = (anchor) => {
     this.anchor = anchor;
-  }
+  };
 
   handleCodeCopied = () => {
     this.setState({ copied: true });
-  }
+  };
 
   onCopyTooltipVisibleChange = (visible) => {
     if (visible) {
@@ -87,7 +90,7 @@ export default class Demo extends React.Component {
     this.setState({
       copyTooltipVisible: visible,
     });
-  }
+  };
 
   render() {
     const { state } = this;
@@ -113,7 +116,7 @@ export default class Demo extends React.Component {
       expand: codeExpand,
     });
 
-    const { locale } = this.context.intl;
+    const { intl: { locale } } = this.context;
     const localizedTitle = meta.title[locale] || meta.title;
     const localizeIntro = content[locale] || content;
     const introChildren = props.utils
@@ -186,9 +189,9 @@ ${state.sourceCode.replace('mountNode', 'document.getElementById(\'container\')'
         <section className="code-box-demo">
           {this.liveDemo}
           {
-            style ?
-              <style dangerouslySetInnerHTML={{ __html: style }} /> :
-              null
+            style
+              ? <style dangerouslySetInnerHTML={{ __html: style }} />
+              : null
           }
         </section>
         <section className="code-box-meta markdown">
@@ -222,7 +225,7 @@ ${state.sourceCode.replace('mountNode', 'document.getElementById(\'container\')'
         >
           <div className="highlight">
             <div className="code-box-actions">
-              {this.state.showRiddleButton ? (
+              {state.showRiddleButton ? (
                 <form action="//riddle.alibaba-inc.com/riddles/define" method="POST" target="_blank">
                   <input type="hidden" name="data" value={JSON.stringify(riddlePrefillConfig)} />
                   <Tooltip title={<FormattedMessage id="app.demo.riddle" />}>
@@ -249,11 +252,7 @@ ${state.sourceCode.replace('mountNode', 'document.getElementById(\'container\')'
                 <Tooltip
                   visible={state.copyTooltipVisible}
                   onVisibleChange={this.onCopyTooltipVisibleChange}
-                  title={
-                    <FormattedMessage
-                      id={`app.demo.${state.copied ? 'copied' : 'copy'}`}
-                    />
-                  }
+                  title={<FormattedMessage id={`app.demo.${state.copied ? 'copied' : 'copy'}`} />}
                 >
                   <Icon
                     type={(state.copied && state.copyTooltipVisible) ? 'check' : 'copy'}
@@ -265,13 +264,14 @@ ${state.sourceCode.replace('mountNode', 'document.getElementById(\'container\')'
             {props.utils.toReactComponent(highlightedCode)}
           </div>
           {
-            highlightedStyle ?
-              <div key="style" className="highlight">
-                <pre>
-                  <code className="css" dangerouslySetInnerHTML={{ __html: highlightedStyle }} />
-                </pre>
-              </div> :
-              null
+            highlightedStyle
+              ? (
+                <div key="style" className="highlight">
+                  <pre>
+                    <code className="css" dangerouslySetInnerHTML={{ __html: highlightedStyle }} />
+                  </pre>
+                </div>
+              ) : null
           }
         </section>
       </section>

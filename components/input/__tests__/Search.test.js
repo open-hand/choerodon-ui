@@ -9,7 +9,7 @@ describe('Input.Search', () => {
 
   it('should support custom button', () => {
     const wrapper = mount(
-      <Search enterButton={<button>ok</button>} />
+      <Search enterButton={<button type="button">ok</button>} />
     );
     expect(wrapper.render()).toMatchSnapshot();
   });

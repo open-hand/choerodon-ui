@@ -77,6 +77,6 @@ ReactDOM.render(
     <ControlledDatePicker />
     <br />
     <ControlledRangePicker />
-  </div>
-, mountNode);
+  </div>,
+  mountNode);
 ````

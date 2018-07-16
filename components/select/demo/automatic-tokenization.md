@@ -34,6 +34,6 @@ ReactDOM.render(
     tokenSeparators={[',']}
   >
     {children}
-  </Select>
-, mountNode);
+  </Select>,
+  mountNode);
 ````

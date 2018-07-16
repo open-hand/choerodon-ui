@@ -21,6 +21,6 @@ function onChange(value) {
 }
 
 ReactDOM.render(
-  <InputNumber label="小数" min={0} max={10} step={0.1} onChange={onChange} />
-, mountNode);
+  <InputNumber label="小数" min={0} max={10} step={0.1} onChange={onChange} />,
+  mountNode);
 ````

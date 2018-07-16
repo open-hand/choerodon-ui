@@ -34,6 +34,6 @@ function showConfirm() {
 ReactDOM.render(
   <Button onClick={showConfirm}>
     Confirm
-  </Button>
-, mountNode);
+  </Button>,
+  mountNode);
 ````

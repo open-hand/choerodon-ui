@@ -43,6 +43,6 @@ ReactDOM.render(
     <div style={{ marginBottom: 16 }}>
       <Input addonAfter={<Icon type="setting" />} label="mysite" />
     </div>
-  </div>
-, mountNode);
+  </div>,
+  mountNode);
 ````

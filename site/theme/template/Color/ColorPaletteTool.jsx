@@ -17,6 +17,7 @@ export default class ColorPaletteTool extends Component {
   }
 
   render() {
+    const { primaryColor } = this.state;
     return (
       <div style={{ margin: '0 auto', textAlign: 'center' }}>
         <div className="color-palette-horizontal">
@@ -24,15 +25,15 @@ export default class ColorPaletteTool extends Component {
             <FormattedMessage id="app.docs.color.pick-primary" />
             <div className="color-palette-picker">
               <span style={{ display: 'inline-block' }}>
-                <ColorPicker type="chrome" color={this.state.primaryColor} onChange={this.handleChangeColor} />
+                <ColorPicker type="chrome" color={primaryColor} onChange={this.handleChangeColor} />
               </span>
               <div className="color-palette-picker-value">
-                {this.state.primaryColor}
+                {primaryColor}
               </div>
             </div>
           </div>
           <div className="main-color">
-            <ColorPalettes color={this.state.primaryColor} />
+            <ColorPalettes color={primaryColor} />
           </div>
         </div>
       </div>

@@ -22,10 +22,12 @@ class App extends React.Component {
   state = {
     initValue: toContentState('@afc163'),
   }
+
   handleReset = (e) => {
     e.preventDefault();
     this.props.form.resetFields();
   }
+
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((errors, values) => {
@@ -37,8 +39,9 @@ class App extends React.Component {
       console.log(values);
     });
   }
+
   checkMention = (rule, value, callback) => {
-    const { getFieldValue } = this.props.form;
+    const { form: { getFieldValue } } = this.props;
     const mentions = getMentions(getFieldValue('mention'));
     if (mentions.length < 2) {
       callback(new Error('More than one must be selected!'));
@@ -46,6 +49,7 @@ class App extends React.Component {
       callback();
     }
   }
+
   render() {
     const { getFieldDecorator, getFieldValue } = this.props.form;
     console.log('>> render', getFieldValue('mention') === this.state.initValue);

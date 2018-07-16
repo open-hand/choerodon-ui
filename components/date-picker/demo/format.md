@@ -30,6 +30,6 @@ ReactDOM.render(
       defaultValue={[moment('2015/01/01', dateFormat), moment('2015/01/01', dateFormat)]}
       format={dateFormat}
     />
-  </div>
-, mountNode);
+  </div>,
+  mountNode);
 ````

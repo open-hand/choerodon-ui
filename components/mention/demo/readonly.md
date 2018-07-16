@@ -48,6 +48,6 @@ function App() {
 
 
 ReactDOM.render(
-  <App />
-, mountNode);
+  <App />,
+  mountNode);
 ````

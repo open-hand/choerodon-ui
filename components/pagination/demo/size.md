@@ -28,8 +28,8 @@ ReactDOM.render(
     <Pagination tiny={false} size="small" total={50} showTotal={false} showSizeChanger={false} />
     <Pagination tiny={false} size="small" total={50} showTotal={false} showSizeChanger showQuickJumper />
     <Pagination tiny={false} size="small" total={50} showTotal={showTotal} showSizeChanger={false} />
-  </div>
-, mountNode);
+  </div>,
+  mountNode);
 ````
 
 <style>

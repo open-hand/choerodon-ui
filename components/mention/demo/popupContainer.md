@@ -29,11 +29,13 @@ class PopoverContainer extends React.Component {
   getSuggestionContainer = () => {
     return this.popover.getPopupDomNode();
   }
+
   visibleChange = (visible) => {
     if (visible && this.mention) {
       this.mention.focus();
     }
   }
+
   render() {
     const mention = (
       <Mention

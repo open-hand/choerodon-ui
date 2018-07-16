@@ -35,6 +35,6 @@ ReactDOM.render(
     <Panel showArrow={false} header="This is panel header with no arrow icon" key="2">
       <p>{text}</p>
     </Panel>
-  </Collapse>
-, mountNode);
+  </Collapse>,
+  mountNode);
 ````

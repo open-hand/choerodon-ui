@@ -1,7 +1,7 @@
 ---
 order: 4
 title:
-  zh-CN: 栅格列表 
+  zh-CN: 栅格列表
   en-US: Grid
 ---
 
@@ -40,6 +40,6 @@ ReactDOM.render(
         <Card title={item.title}>Card content</Card>
       </List.Item>
     )}
-  />
-, mountNode);
+  />,
+  mountNode);
 ````

@@ -21,10 +21,12 @@ class Demo extends React.Component {
   state = {
     value: undefined,
   }
+
   onChange = (value) => {
     console.log(arguments);
     this.setState({ value });
   }
+
   render() {
     return (
       <TreeSelect

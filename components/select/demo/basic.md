@@ -32,6 +32,6 @@ ReactDOM.render(
     <Select defaultValue="lucy" style={{ width: 200 }} allowClear disabled>
       <Option value="lucy">Lucy</Option>
     </Select>
-  </div>
-, mountNode);
+  </div>,
+  mountNode);
 ````

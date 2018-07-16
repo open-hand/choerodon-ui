@@ -40,6 +40,6 @@ ReactDOM.render(
     <Button onClick={() => { handleClick('bottomLeft'); }}>bottomLeft</Button>
     <Button onClick={() => { handleClick('bottom'); }}>bottom</Button>
     <Button onClick={() => { handleClick('bottomRight'); }}>bottomRight</Button>
-  </div>
-, mountNode);
+  </div>,
+  mountNode);
 ````

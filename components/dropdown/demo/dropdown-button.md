@@ -52,6 +52,6 @@ ReactDOM.render(
         Button <Icon type="arrow_drop_down" />
       </Button>
     </Dropdown>
-  </div>
-, mountNode);
+  </div>,
+  mountNode);
 ````

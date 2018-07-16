@@ -25,11 +25,13 @@ class App extends React.Component {
   state = {
     collapsed: false,
   }
+
   toggleCollapsed = () => {
     this.setState({
       collapsed: !this.state.collapsed,
     });
   }
+
   render() {
     return (
       <div style={{ width: 256 }}>

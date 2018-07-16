@@ -80,10 +80,12 @@ class App extends React.Component {
       date: '',
     };
   }
+
   handleChange(date) {
     message.info('您选择的日期是: ' + date.toString());
     this.setState({ date });
   }
+
   render() {
     return (
       <LocaleProvider locale={zhCN}>

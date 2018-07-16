@@ -21,6 +21,7 @@ class App extends React.Component {
   state = {
     percent: 0,
   }
+
   increase = () => {
     let percent = this.state.percent + 10;
     if (percent > 100) {
@@ -28,6 +29,7 @@ class App extends React.Component {
     }
     this.setState({ percent });
   }
+
   decline = () => {
     let percent = this.state.percent - 10;
     if (percent < 0) {
@@ -35,6 +37,7 @@ class App extends React.Component {
     }
     this.setState({ percent });
   }
+
   render() {
     return (
       <div>

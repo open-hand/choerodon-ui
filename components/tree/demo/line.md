@@ -21,6 +21,7 @@ class Demo extends React.Component {
   onSelect = (selectedKeys, info) => {
     console.log('selected', selectedKeys, info);
   }
+
   render() {
     return (
       <Tree

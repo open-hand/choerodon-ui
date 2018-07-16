@@ -32,6 +32,7 @@ class Demo extends React.Component {
       }
     });
   }
+
   normFile = (e) => {
     console.log('Upload event:', e);
     if (Array.isArray(e)) {
@@ -39,6 +40,7 @@ class Demo extends React.Component {
     }
     return e && e.fileList;
   }
+
   render() {
     const { getFieldDecorator } = this.props.form;
     const formItemLayout = {

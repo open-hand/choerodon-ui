@@ -59,8 +59,8 @@ ReactDOM.render(
         Ant Design ©2016 Created by Ant UED
       </Footer>
     </Layout>
-  </Layout>
-, mountNode);
+  </Layout>,
+  mountNode);
 ````
 
 ````css

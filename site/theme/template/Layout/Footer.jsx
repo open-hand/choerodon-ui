@@ -20,15 +20,15 @@ class Footer extends React.Component {
     //   1. 点击『知道了』之后不再提示
     //   2. 超过截止日期后不再提示
     if (
-      localStorage.getItem('antd@3.0.0-notification-sent') !== 'true' &&
-      Date.now() < new Date('2017/12/20').getTime()
+      localStorage.getItem('antd@3.0.0-notification-sent') !== 'true'
+      && Date.now() < new Date('2017/12/20').getTime()
     ) {
       this.infoNewVersion();
     }
   }
 
   infoNewVersion() {
-    const { messages } = this.props.intl;
+    const { intl: { messages } } = this.props;
     Modal.info({
       title: messages['app.publish.title'],
       content: (

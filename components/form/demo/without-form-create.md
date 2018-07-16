@@ -35,7 +35,8 @@ class RawForm extends React.Component {
     number: {
       value: 11,
     },
-  };
+  }
+
   handleNumberChange = (value) => {
     this.setState({
       number: {
@@ -44,6 +45,7 @@ class RawForm extends React.Component {
       },
     });
   }
+
   render() {
     const formItemLayout = {
       labelCol: { span: 7 },

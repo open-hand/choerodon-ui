@@ -51,8 +51,8 @@ ReactDOM.render(
         <Footer>Footer</Footer>
       </Layout>
     </Layout>
-  </div>
-, mountNode);
+  </div>,
+  mountNode);
 ````
 
 <style>

@@ -24,10 +24,12 @@ class SlidingTabsDemo extends React.Component {
       mode: 'top',
     };
   }
+
   handleModeChange = (e) => {
     const mode = e.target.value;
     this.setState({ mode });
   }
+
   render() {
     const { mode } = this.state;
     return (

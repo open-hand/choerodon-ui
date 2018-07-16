@@ -19,6 +19,6 @@ import { Popconfirm } from 'choerodon-ui';
 ReactDOM.render(
   <Popconfirm title="Are you sure？" okText="Yes" cancelText="No">
     <a href="#">Delete</a>
-  </Popconfirm>
-, mountNode);
+  </Popconfirm>,
+  mountNode);
 ````

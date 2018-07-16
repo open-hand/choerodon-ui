@@ -18,23 +18,27 @@ import { Modal, Button } from 'choerodon-ui';
 
 class App extends React.Component {
   state = { visible: false }
+
   showModal = () => {
     this.setState({
       visible: true,
     });
   }
+
   handleOk = (e) => {
     console.log(e);
     this.setState({
       visible: false,
     });
   }
+
   handleCancel = (e) => {
     console.log(e);
     this.setState({
       visible: false,
     });
   }
+
   render() {
     return (
       <div>

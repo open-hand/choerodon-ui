@@ -23,13 +23,16 @@ class App extends React.Component {
       userName: 'xxx',
     };
   }
+
   emitEmpty = () => {
     this.userNameInput.focus();
     this.setState({ userName: '' });
   }
+
   onChangeUserName = (e) => {
     this.setState({ userName: e.target.value });
   }
+
   render() {
     const { userName } = this.state;
     const suffix = userName ? <Icon type="close" onClick={this.emitEmpty} /> : null;

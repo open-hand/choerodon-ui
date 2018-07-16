@@ -38,8 +38,8 @@ ReactDOM.render(
     <Panel header="This is panel header 3" key="3" disabled>
       <p>{text}</p>
     </Panel>
-  </Collapse>
-, mountNode);
+  </Collapse>,
+  mountNode);
 ````
 
 <style>

@@ -22,6 +22,6 @@ ReactDOM.render(
     <Step title="Finished" />
     <Step title="In Progress" />
     <Step title="Waiting" />
-  </Steps>
-, mountNode);
+  </Steps>,
+  mountNode);
 ````

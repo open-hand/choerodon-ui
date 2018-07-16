@@ -18,9 +18,11 @@ import { Spin, Switch, Alert } from 'choerodon-ui';
 
 class Card extends React.Component {
   state = { loading: false }
+
   toggle = (value) => {
     this.setState({ loading: value });
   }
+
   render() {
     return (
       <div>

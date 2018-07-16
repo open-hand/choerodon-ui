@@ -164,6 +164,6 @@ ReactDOM.render(
     >
       <InputNumber style={{ width: '100%' }} />
     </FormItem>
-  </Form>
-, mountNode);
+  </Form>,
+  mountNode);
 ````

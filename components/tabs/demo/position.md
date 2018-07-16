@@ -23,9 +23,11 @@ class Demo extends React.Component {
   state = {
     tabPosition: 'top',
   }
+
   changeTabPosition = (tabPosition) => {
     this.setState({ tabPosition });
   }
+
   render() {
     return (
       <div>

@@ -26,10 +26,10 @@ const reducePlugin = postcss.plugin('reducePlugin', () => {
     let removeRule = true;
     rule.walkDecls((decl) => {
       if (
-        !decl.prop.includes('color') &&
-        !decl.prop.includes('background') &&
-        !decl.prop.includes('border') &&
-        !decl.prop.includes('box-shadow')
+        !decl.prop.includes('color')
+        && !decl.prop.includes('background')
+        && !decl.prop.includes('border')
+        && !decl.prop.includes('box-shadow')
       ) {
         decl.remove();
       } else {

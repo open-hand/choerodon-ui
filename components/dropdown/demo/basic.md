@@ -37,6 +37,6 @@ ReactDOM.render(
         Hover me <Icon type="arrow_drop_down" />
       </a>
     </Dropdown>
-  </div>
-, mountNode);
+  </div>,
+  mountNode);
 ````

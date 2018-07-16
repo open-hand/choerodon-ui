@@ -72,15 +72,15 @@ ReactDOM.render(
         </Content>
       </Layout>
     </Layout>
-  </Layout>
-, mountNode);
+  </Layout>,
+  mountNode);
 ````
 
 ````css
 #components-layout-demo-top-side-2 .logo {
   width: 120px;
   height: 31px;
-  background: rgba(255,255,255,.2);  
+  background: rgba(255,255,255,.2);
   margin: 16px 28px 16px 0;
   float: left;
 }
