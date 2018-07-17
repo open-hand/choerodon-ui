@@ -5,10 +5,10 @@
 footer {
   clear: both;
   font-size: 18px;
-  background-color: #353743;
+  background-color: #fff;
   position: relative;
   z-index: 100;
-  color: rgba(255, 255, 255, 0.65);
+  color: #666;
   box-shadow: 0 1000px 0 1000px #fff;
   .ant-row {
     text-align: center;
@@ -17,7 +17,7 @@ footer {
       text-align: left;
       > h2 {
         font-size: 20px;
-        margin: 0 auto 24px;
+        margin: 0 auto 17px;
         font-weight: 500;
         position: relative;
 
@@ -33,39 +33,34 @@ footer {
           color: #aaa;
         }
       }
-      > div {
-        margin: 12px 0;
+      > div + div {
+        margin-top: 14px;
       }
     }
   }
   .footer-wrap {
     position: relative;
-    padding: 86px @padding-space 93px @padding-space;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+    border-bottom: 1px solid #d8d8d8;
+    border-top: 1px solid #d8d8d8;
+    .ant-row {
+      padding: 21px 24px 20px 24px;
+    }
   }
   .bottom-bar {
     text-align: right;
     padding: 16px @padding-space;
     margin: 0;
-    line-height: 32px;
+    line-height: 28px;
     overflow: hidden;
-    a {
-      color: rgba(255, 255, 255, 0.65);
-      &:hover {
-        color: #fff;
-      }
-    }
-    .translate-button {
-      text-align: left;
-    }
+    color: #333;
   }
   a {
-    color: rgba(255, 255, 255, 0.9);
+    color: #333;
   }
   h2 {
-    color: rgba(255, 255, 255, 1);
+    color: #333;
     & > span {
-      color: rgba(255, 255, 255, 1);
+      color: #333;
     }
   }
 }

@@ -15,7 +15,7 @@ function getStyle() {
       box-shadow: none;
       max-width: 1200px;
       width: 100%;
-      margin: 20px auto 0;
+      margin: 0px auto 0;
       padding: 0 24px;
     }
     #header,
@@ -26,13 +26,19 @@ function getStyle() {
     #header #logo {
       padding: 0;
     }
+    #header #logo h1 {
+      font-size: 24px;
+    }
     #header .ant-row > div:last-child .ant-select,
     #header .ant-row > div:last-child .ant-menu,
     #header .nav-phone-icon {
       display: none;
     }
-    #header .ant-row > div:last-child .header-lang-button {
+    #header .ant-row > div:last-child .header-lang-button span{
       margin-right: 0;
+      height: 64px;
+      line-height: 64px;
+      font-size: 24px;
     }
     footer .footer-wrap {
       width: 100%;
@@ -49,7 +55,6 @@ function getStyle() {
     footer .footer-wrap .ant-row {
       width: 100%;
       max-width: 1200px;
-      padding: 86px 24px 93px 24px;
       margin: auto;
     }
     @media only screen and (max-width: 767.99px) {

@@ -29,7 +29,7 @@ module.exports = {
     'app.demo.riddle': '在 Riddle 中打开',
     'app.home.slogan': '一个 UI 设计语言',
     'app.home.based-on-ant-design': '——基于Ant Design@3.4.0',
-    'app.home.introduce': '一个服务于企业级产品的设计体系。基于『确定』和『自然』的设计价值观，通过模块化的解决方案，让设计者专注于更好的用户体验。',
+    'app.home.introduce': 'Choerodon UI 是一组基于 Ant Design Components 实现谷歌的 Material Design 的 React 组件，用于开发和服务于企业级后台产品。',
     'app.home.design-language': '设计语言',
     'app.home.feature': '特性',
     'app.home.pro-label': '命令行运行下列命令，快速启动开发服务',

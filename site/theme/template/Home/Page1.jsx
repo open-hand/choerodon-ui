@@ -23,7 +23,7 @@ const page1Data = [
     imgCls: 'feature-3',
     name: '最新技术栈',
     nameEn: 'Latest technology stack',
-    desc: '使用 React/dav/antd 等 前端前沿技术开发',
+    desc: '使用 React/dav/antd 等前端前沿技术开发',
     descEn: 'Developed with front-end technology such as React/dav/antd',
   },
   {

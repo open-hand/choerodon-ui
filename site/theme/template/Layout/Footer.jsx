@@ -60,6 +60,9 @@ class Footer extends React.Component {
               <div className="footer-center">
                 <h2><FormattedMessage id="app.footer.resources" /></h2>
                 <div>
+                  <a href="http://choerodon.io/">Choerodon</a>
+                </div>
+                <div>
                   <a href="http://ant-design.gitee.io/">Ant Design</a>
                 </div>
                 <div>

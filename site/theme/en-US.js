@@ -27,7 +27,7 @@ module.exports = {
     'app.demo.riddle': 'Open in Riddle',
     'app.home.slogan': 'A UI Design Language',
     'app.home.based-on-ant-design': '——based on Ant Design@3.4.0',
-    'app.home.introduce': 'A design system with values of Nature and Determinacy for better user experience of enterprise applications',
+    'app.home.introduce': 'Choerodon UI is a set of React components based on Ant Design Components that implement Google\'s material design for developing and serving enterprise back-end products.',
     'app.home.design-language': 'Design Language',
     'app.home.feature': 'Feature',
     'app.home.pro-label': 'Run the following command to quickly start the development service',
