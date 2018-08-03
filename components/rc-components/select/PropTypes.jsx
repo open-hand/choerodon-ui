@@ -87,7 +87,6 @@ export const SelectPropTypes = {
     PropTypes.node,
     PropTypes.string,
   ]),
-  placeholder: PropTypes.string,
   filter: PropTypes.bool,
   builtinPlacements: PropTypes.any,
   showCheckAll: PropTypes.bool,

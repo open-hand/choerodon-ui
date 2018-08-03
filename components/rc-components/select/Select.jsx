@@ -115,7 +115,6 @@ export default class Select extends React.Component {
     defaultActiveFirstOption: true,
     showSearch: true,
     allowClear: false,
-    placeholder: '',
     onInput: noop,
     onChange: noop,
     onFocus: noop,
@@ -138,7 +137,7 @@ export default class Select extends React.Component {
     showNotFindSelectedItem: true,
     placeholder: '',
     label: '',
-    filterPlaceholder: '输入文字以进行过滤',
+    filterPlaceholder: 'Input for filter',
     showCheckAll: true,
     loading: false,
   };
@@ -1340,7 +1339,7 @@ export default class Select extends React.Component {
         return BUILT_IN_PLACEMENTS_LABEL;
       }
       return BUILT_IN_PLACEMENTS;
-    } 
+    }
   }
 
   getUnderLine() {
@@ -1360,7 +1359,7 @@ export default class Select extends React.Component {
   checkAll = (event) => {
     const name = event.target.getAttribute('name');
     const props = this.props;
-    const state = this.state; 
+    const state = this.state;
     if (props.disabled) {
       return;
     }
@@ -1409,12 +1408,12 @@ export default class Select extends React.Component {
   render() {
     const props = this.props;
     const state = this.state;
-    const { 
-      className, 
-      disabled, 
-      prefixCls, 
-      label, 
-      placeholder, 
+    const {
+      className,
+      disabled,
+      prefixCls,
+      label,
+      placeholder,
       defaultValue,
       loading,
     } = props;

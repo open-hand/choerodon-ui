@@ -1,7 +1,7 @@
 ---
 order: 2
 title:
-  zh-CN: 文字和图标
+  zh-CN: 文字
   en-US: Text & icon
 ---
 
@@ -14,15 +14,13 @@ title:
 With text and icon.
 
 ````jsx
-import { Switch, Icon } from 'choerodon-ui';
+import { Switch } from 'choerodon-ui';
 
 ReactDOM.render(
   <div>
     <Switch checkedChildren="开" unCheckedChildren="关" defaultChecked />
     <br />
     <Switch checkedChildren="1" unCheckedChildren="0" />
-    <br />
-    <Switch checkedChildren={<Icon type="check" />} unCheckedChildren={<Icon type="cross" />} defaultChecked />
   </div>,
   mountNode);
 ````

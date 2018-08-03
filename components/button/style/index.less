@@ -13,19 +13,25 @@
 // Button styles
 // -----------------------------
 .@{btn-prefix-cls} {
-   line-height: @line-height-base;
+   line-height: @btn-height-base;
   .btn;
   .btn-default;
   // Make sure that the target of Button's click event always be `button`
   // Ref: https://github.com/ant-design/ant-design/issues/7034
 
-  > i,
-  > span {
+  > i.icon {
     pointer-events: none;
     display: inline-block;
-    vertical-align: middle;
+    vertical-align: top;
+    line-height: inherit;
   }
-
+  > span {
+    display: inline-block;
+  }
+  > i.icon + span,
+  > span + i.icon {
+    margin-left: 4px;
+  }
   > div.btn-loading {
     display: inline-block;
     width: 32px;
@@ -35,7 +41,6 @@
       background: #000;
       border-color: #000;
       display: inline-block;
-      vertical-align: middle;
       border-radius: 50%;
       width: 7px;
       height: 7px;
@@ -123,6 +128,7 @@
 
   &-dashed {
     .btn-dashed;
+    line-height: @btn-height-base - 4px;
   }
 
   &-danger {

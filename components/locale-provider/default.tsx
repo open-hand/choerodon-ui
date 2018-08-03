@@ -35,6 +35,9 @@ export default {
   },
   Select: {
     notFoundContent: 'Not Found',
+    selectAll: 'Select All',
+    selectNone: 'None',
+    filterPlaceholder: 'Input for filter',
   },
   Upload: {
     uploading: 'Uploading...',

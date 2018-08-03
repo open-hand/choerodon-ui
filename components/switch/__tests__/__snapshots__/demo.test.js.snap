@@ -103,18 +103,5 @@ exports[`renders ./components/switch/demo/text.md correctly 1`] = `
       0
     </span>
   </span>
-  <br />
-  <span
-    class="ant-switch ant-switch-checked"
-    tabindex="0"
-  >
-    <span
-      class="ant-switch-inner"
-    >
-      <i
-        class="icon icon-check"
-      />
-    </span>
-  </span>
 </div>
 `;

@@ -9,13 +9,13 @@
   position: relative;
   display: inline-block;
   box-sizing: border-box;
-  height: @switch-height;
-  min-width: 44px;
-  line-height: @switch-height - 2px;
+  height: @switch-height - 4px;
+  min-width: 36px;
+  line-height: @switch-height - 6px;
   vertical-align: middle;
   border-radius: 100px;
   border: 1px solid transparent;
-  background-color: @disabled-color;
+  background-color: rgba(0, 0, 0, 0.38);
   cursor: pointer;
   transition: all @switch-duration;
   user-select: none;
@@ -31,10 +31,10 @@
   &:before,
   &:after {
     position: absolute;
-    width: @switch-height - 4px;
-    height: @switch-height - 4px;
-    left: 1px;
-    top: 1px;
+    width: @switch-height;
+    height: @switch-height;
+    left: -1px;
+    top: -3px;
     border-radius: 18px;
     background-color: @component-background;
     content: " ";
@@ -43,7 +43,10 @@
   }
 
   &:after {
-    box-shadow: 0 2px 4px 0 rgba(0, 35, 11, .2);
+    box-shadow:
+      0 2px 1px -1px rgba(0, 0, 0, 0.20),
+      0 1px 1px 0 rgba(0, 0, 0, 0.14),
+      0 1px 3px 0 rgba(0, 0, 0, 0.12);
   }
 
   &:active:before,
@@ -81,9 +84,9 @@
   }
 
   &-small {
-    height: @switch-sm-height;
+    height: @switch-sm-height - 4px;
     min-width: 28px;
-    line-height: @switch-sm-height - 2px;
+    line-height: @switch-sm-height - 6px;
 
     .@{switch-prefix-cls}-inner {
       margin-left: 18px;
@@ -93,8 +96,8 @@
 
     &:before,
     &:after {
-      width: @switch-sm-height - 4px;
-      height: @switch-sm-height - 4px;
+      width: @switch-sm-height;
+      height: @switch-sm-height;
     }
 
     &:active:before,
@@ -138,6 +141,7 @@
     &:after {
       left: 100%;
       margin-left: -19px;
+      background-color: @switch-checked-color;
     }
 
     &:active:before,

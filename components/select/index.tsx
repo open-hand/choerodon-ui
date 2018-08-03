@@ -83,6 +83,7 @@ export interface OptGroupProps {
 
 export interface SelectLocale {
   notFoundContent?: string;
+  filterPlaceholder?: string;
 }
 
 const SelectPropTypes = {
@@ -193,6 +194,7 @@ export default class Select extends React.Component<SelectProps, {}> {
         prefixCls={prefixCls}
         className={cls}
         optionLabelProp={optionLabelProp || 'children'}
+        filterPlaceholder={locale.filterPlaceholder}
         notFoundContent={this.getNotFoundContent(locale)}
         ref={this.saveSelect}
       />

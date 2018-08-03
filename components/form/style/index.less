@@ -409,7 +409,7 @@ form {
     width: @form-component-height;
     height: 20px;
     line-height: 20px;
-    margin-top: -10px;
+    margin-top: -8px;
     text-align: center;
     font-size: @form-feedback-icon-size;
     animation: zoomIn .3s @ease-out-back;
@@ -419,10 +419,21 @@ form {
 }
 
 .has-success {
-  &.has-feedback .@{form-prefix-cls}-item-children:after {
-    animation-name: diffZoomIn1 !important;
-    content: '\e86c';
-    color: @success-color;
+  &.has-feedback .@{form-prefix-cls}-item-children {
+    &:after {
+      animation-name: diffZoomIn1 !important;
+      content: '\e86c';
+      color: @success-color;
+    }
+
+    .@{input-prefix-cls}-suffix,
+    .@{input-prefix-cls}-icon {
+      display: none !important;
+    }
+    .@{select-prefix-cls}-arrow,
+    .@{select-prefix-cls}-clear {
+      display: none !important;
+    }
   }
 }
 
@@ -555,11 +566,11 @@ form {
     }
     .@{input-prefix-cls}-suffix,
     .@{input-prefix-cls}-icon {
-      display: none;
+      display: none !important;
     }
     .@{select-prefix-cls}-arrow,
     .@{select-prefix-cls}-clear {
-      display: none;
+      display: none !important;
     }
   }
 }

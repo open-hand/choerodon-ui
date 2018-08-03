@@ -15,6 +15,13 @@ timeline: true
 
 ---
 
+## 0.3.5
+
+`2018-08-03`
+
+- 💄 `Switch`: Adjust the style.
+- 🌟 `Icon`: Added new icons.
+
 ## 0.3.4
 
 `2018-07-19`

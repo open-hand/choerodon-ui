@@ -249,10 +249,13 @@
     i.icon {
       font-size: 24px;
     }
-
-    .@{select-prefix-cls}-selection--multiple {
-      .@{select-prefix-cls}-selection__rendered {
-        li {
+    &.@{select-prefix-cls}-tags,
+    &.@{select-prefix-cls}-multiple {
+      .@{select-prefix-cls}-selection--multiple {
+        min-height: @input-height-lg;
+        > ul > li,
+        .@{select-prefix-cls}-selection__rendered > ul > li,
+        .@{select-prefix-cls}-selection__choice__remove > i.icon {
           height: @input-height-lg - 8px;
           line-height: @input-height-lg - 8px;
         }
@@ -264,11 +267,15 @@
     i.icon {
       font-size: 16px;
     }
-    .@{select-prefix-cls}-selection--multiple {
-      .@{select-prefix-cls}-selection__rendered {
-        li {
+    &.@{select-prefix-cls}-tags,
+    &.@{select-prefix-cls}-multiple {
+      .@{select-prefix-cls}-selection--multiple {
+        min-height: @input-height-sm;
+        > ul > li,
+        .@{select-prefix-cls}-selection__rendered > ul > li,
+        .@{select-prefix-cls}-selection__choice__remove > i.icon {
           height: @input-height-sm - 8px;
-          line-height: @input-height-sm - 10px;
+          line-height: @input-height-sm - 8px;
         }
       }
     }
@@ -333,8 +340,8 @@
   &-tags,
   &-multiple {
     .@{select-prefix-cls}-selection--multiple {
-      min-height: @input-height-base;
       cursor: text;
+      min-height: 28px;
       .clearfix;
 
       .@{select-prefix-cls}-search--inline {
@@ -351,7 +358,7 @@
       }
 
       .@{select-prefix-cls}-selection-label {
-        margin-top: 9px;
+        margin-top: 5px;
       }
 
       .@{select-prefix-cls}-selection__rendered {
@@ -361,10 +368,15 @@
         padding: 0;
       }
 
+      .@{select-prefix-cls}-selection__placeholder,
+      .@{select-prefix-cls}-search__field__placeholder { // for TreeSelect compatibility
+        margin-top: 0;
+      }
+
       > ul > li,
       .@{select-prefix-cls}-selection__rendered > ul > li { // for tree-select
-        height: @input-height-base - 8px;
-        line-height: @input-height-base - 8px;
+        height: 20px;
+        line-height: 20px;
         box-sizing: content-box;
       }
 
@@ -397,8 +409,8 @@
           margin-left: 8px;
           > i.icon {
             float: right;
-            height: @input-height-base - 8px;
-            line-height: @input-height-base - 8px;
+            height: 20px;
+            line-height: 19px;
           }
         }
       }
@@ -408,9 +420,8 @@
   &-multiple {
     .@{select-prefix-cls}-selection--multiple {
       .@{select-prefix-cls}-selection__choice {
-        background-color: rgba(0, 0, 0, 0.04);
+        background-color: rgba(0, 0, 0, 0.08);
         padding: 0 8px 0 8px;
-        border: 1px solid rgba(0, 0, 0, 0.08);
         &__remove {
           color: rgba(0, 0, 0, 0.54);
         }

@@ -6,7 +6,8 @@ import Menu from '../menu';
 import scrollIntoView from 'dom-scroll-into-view';
 import { getSelectKeys, preventDefaultEvent, saveRef } from './util';
 import FilterInput from './FilterInput';
-
+import LocaleReceiver from '../../locale-provider/LocaleReceiver';
+import defaultLocale from '../../locale-provider/default';
 
 export default class DropdownMenu extends React.Component {
   static propTypes = {
@@ -189,18 +190,30 @@ export default class DropdownMenu extends React.Component {
       </div>) : null;
   }
 
+  renderCheckLabel = (locale) => {
+    const { prefixCls, checkAll } = this.props;
+    return (
+      <div className={`${prefixCls}-select-all-none`}>
+        <span name="check-all" onClick={checkAll}>{locale.selectAll}</span>
+        <span name="check-none" onClick={checkAll}>{locale.selectNone}</span>
+      </div>
+    );
+  }
+
   render() {
     const renderMenu = this.renderMenu();
     const filterInput = this.renderFilterInput();
-    const { prefixCls, multiple, menuItems, checkAll, onMouseDown } = this.props;
+    const { multiple, menuItems, checkAll, onMouseDown } = this.props;
 
     let selectOpt = null;
     if (checkAll && multiple && menuItems.length && menuItems[0].key !== 'NOT_FOUND') {
       selectOpt = (
-        <div className={`${prefixCls}-select-all-none`}>
-          <span name="check-all" onClick={checkAll}>全选</span>
-          <span name="check-none" onClick={checkAll}>无</span>
-        </div>
+        <LocaleReceiver
+          componentName="Select"
+          defaultLocale={defaultLocale.Select}
+        >
+          {this.renderCheckLabel}
+        </LocaleReceiver>
       );
     }
     return (

@@ -78,7 +78,7 @@
   display: inline-block;
   > .@{btnClassName} {
     position: relative;
-    line-height: @btn-height-base - 2px;
+    line-height: @btn-height-base;
 
     &:hover,
     &:focus,
@@ -95,19 +95,21 @@
   // size
   &-lg > .@{btnClassName} {
     .button-size(@btn-height-lg; @btn-padding-lg; @btn-font-size-lg; @btn-border-radius-base);
-    line-height: @btn-height-lg - 2px;
+    line-height: @btn-height-lg;
     > .@{iconfont-css-prefix} {
       margin-right: @btn-height-lg / 8px;
       font-size: @icon-font-size-lg;
+      line-height: @btn-height-lg;
     }
   }
 
   &-sm > .@{btnClassName} {
     .button-size(@btn-height-sm; @btn-padding-sm; @font-size-base; @btn-border-radius-sm);
-    line-height: @btn-height-sm - 2px;
+    line-height: @btn-height-sm;
     > .@{iconfont-css-prefix} {
       font-size: @icon-font-size-sm;
       margin-right: @btn-height-sm / 8px;
+      line-height: @btn-height-sm;
     }
   }
 }
@@ -159,19 +161,34 @@
     }
   }
 
-  &-lg {
+  &&-lg {
     .button-size(@btn-height-lg; @btn-padding-lg; @btn-font-size-lg; @btn-border-radius-base);
+    line-height: @btn-height-lg;
     > .@{iconfont-css-prefix} {
       margin-right: @btn-height-lg / 8px;
       font-size: @icon-font-size-lg;
     }
   }
+  &&-lg&-dashed {
+    line-height: @btn-height-lg - 4px;
+    > .@{iconfont-css-prefix} {
+      line-height: @btn-height-lg - 4px;
+    }
+  }
 
-  &-sm {
+  &&-sm {
     .button-size(@btn-height-sm; @btn-padding-sm; @btn-font-size-sm; @btn-border-radius-sm);
+    line-height: @btn-height-sm;
     > .@{iconfont-css-prefix} {
       margin-right: @btn-height-sm / 8px;
       font-size: @icon-font-size-sm;
+    }
+  }
+
+  &&-sm&-dashed {
+    line-height: @btn-height-sm - 4px;
+    > .@{iconfont-css-prefix} {
+      line-height: @btn-height-sm - 4px;
     }
   }
 }
@@ -225,6 +242,7 @@
     .button-size(@btn-circle-size-lg; 0; @btn-font-size-lg + 2px; 50%);
     > .@{iconfont-css-prefix} {
       font-size: @icon-font-size-lg;
+      margin-right: 0;
     }
   }
 
@@ -233,6 +251,7 @@
     .button-size(@btn-circle-size-sm; 0; @font-size-base; 50%);
     > .@{iconfont-css-prefix} {
       font-size: @icon-font-size-sm;
+      margin-right: 0;
     }
   }
 

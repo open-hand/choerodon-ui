@@ -66,6 +66,9 @@
       right: 0;
       content: '';
     }
+    > span {
+      display: inline-block;
+    }
   }
 
   &-item-divider {
@@ -158,9 +161,10 @@
       min-width: 14px;
       margin-right: 10px;
       transition: font-size .15s @ease-out, margin .3s @ease-in-out;
+      vertical-align: top;
+      line-height: inherit;
       + span {
         display: inline-block;
-        vertical-align: middle;
         transition: opacity .3s @ease-in-out, width .3s @ease-in-out;
         opacity: 1;
       }
@@ -287,6 +291,9 @@
         &:before {
           bottom: -2px;
         }
+        > span {
+          display: inline-block;
+        }
       }
     }
 
@@ -359,7 +366,6 @@
         + span {
           max-width: 0;
           display: inline-block;
-          vertical-align: middle;
           opacity: 0;
         }
       }

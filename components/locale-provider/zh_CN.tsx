@@ -34,6 +34,9 @@ export default {
   },
   Select: {
     notFoundContent: '无匹配结果',
+    selectAll: '全选',
+    selectNone: '无',
+    filterPlaceholder: '输入文字以进行过滤',
   },
   Upload: {
     uploading: '文件上传中',
