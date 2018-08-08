@@ -1,5 +1,8 @@
 const icons = {
   default: [
+    'pass', 'operation_bug', 'operation_change', 'operation_event', 'operation_help',
+    'operation_new_feature', 'operation_problem', 'operation_service_request',
+    'operation_subtask', 'operation_task', 'port', 'aim_port',
     'saga_define', 'role_tag', 'agile', 'quality', 'appmarket', 'folder_open2', 'merge_request',
     'APItest', 'relation', 'relate', 'manage_project', 'book', 'contact_support',
     'ballot', 'play_90', 'replay_90', 'table_chart', 'test', 'priority', 'compass',
