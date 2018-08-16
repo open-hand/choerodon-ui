@@ -17,7 +17,7 @@ timeline: true
 
 ##
 
-`2018-08-08`
+`2018-08-16`
 
 - 🌟 `Icon`: Added new icons.
 
