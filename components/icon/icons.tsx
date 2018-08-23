@@ -1,6 +1,7 @@
 const icons = {
   default: [
-    'IP_out', 'message_notification', 'all_read', 'inmail_template', 'mail_set', 'export_EOT', 'export_html',
+    'icon-git', 'icon-project_list', 'icon-domain_list', 'IP_out', 'message_notification',
+    'all_read', 'inmail_template', 'mail_set', 'export_EOT', 'export_html',
     'export_PDF', 'export_RTF', 'export_XAR', 'mail_modal', 'message_modal', 'message2', 'usermap', 'document',
     'pass', 'operation_bug', 'operation_change', 'operation_event', 'operation_help',
     'operation_new_feature', 'operation_problem', 'operation_service_request',
