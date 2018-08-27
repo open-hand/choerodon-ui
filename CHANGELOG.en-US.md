@@ -15,7 +15,13 @@ timeline: true
 
 ---
 
-##
+## 0.3.7
+
+- 💄 `Table`: Adjust the style.
+- 💄 `Input`: Show default ban icon while hover Input
+- 💄 `Spin`: Fixed Spin layer.
+
+## 0.3.6
 
 `2018-08-16`
 

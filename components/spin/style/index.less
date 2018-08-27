@@ -22,7 +22,7 @@
 
   &-nested-loading {
     position: relative;
-    > div > .@{spin-prefix-cls} {
+    > .@{spin-prefix-cls} {
       position: absolute;
       height: 100%;
       max-height: 320px;
@@ -46,7 +46,7 @@
       }
     }
 
-    > div > .@{spin-prefix-cls}-sm {
+    > .@{spin-prefix-cls}-sm {
       .@{spin-prefix-cls}-dot {
         margin: -@spin-dot-size-sm / 2;
       }
@@ -58,7 +58,7 @@
       }
     }
 
-    > div > .@{spin-prefix-cls}-lg {
+    > .@{spin-prefix-cls}-lg {
       .@{spin-prefix-cls}-dot {
         margin: -@spin-dot-size-lg / 2;
       }
@@ -128,9 +128,9 @@
       animation: antSpinMove 1s infinite linear alternate;
       transform-origin: 50% 50%;
       &:nth-child(1) {
-        left: 0;
-        top: 0;
-      }
+         left: 0;
+         top: 0;
+       }
       &:nth-child(2) {
         right: 0;
         top: 0;
