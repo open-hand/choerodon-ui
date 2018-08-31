@@ -15,6 +15,14 @@ timeline: true
 
 ---
 
+## 0.3.8
+
+`2018-08-31`
+ 
+- 🌟 `Icon`: Added new icons.
+- 💄 `Input`: Adjust the style.
+- 💄 `FormItem`: Adjust the style.
+
 ## 0.3.7
 
 - 💄 `Table`: Adjust the style.
