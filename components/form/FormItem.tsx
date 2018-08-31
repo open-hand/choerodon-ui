@@ -195,14 +195,9 @@ export default class FormItem extends React.Component<FormItemProps, any> {
         'is-validating': validateStatus === 'validating',
       });
     }
-    let inputControl = this.getControls(c1, false)[0];
-    let element = null;
-    if ( inputControl ) {
-      element = React.cloneElement(inputControl, { showLengthInfo: validateStatus !== 'error' })
-    }
     return (
       <div className={classes}>
-        <span className={`${this.props.prefixCls}-item-children`}>{element}</span>
+        <span className={`${this.props.prefixCls}-item-children`}>{c1}</span>
         {c2}{c3}
       </div>
     );
