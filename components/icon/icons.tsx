@@ -1,8 +1,8 @@
 const icons = {
   default: [
-    'icon-unallocated_question', 'icon-unfinished_question', 'icon-all_reports', 'icon-burnout_map',
-    'icon-iterative_workbench', 'icon-outstanding_tasks', 'icon-report_overview', 'icon-test_execute',
-    'icon-test_planning', 'icon-git', 'icon-project_list', 'icon-domain_list', 'IP_out', 'message_notification',
+    'unallocated_question', 'unfinished_question', 'all_reports', 'burnout_map',
+    'iterative_workbench', 'outstanding_tasks', 'report_overview', 'test_execute',
+    'test_planning', 'git', 'project_list', 'domain_list', 'IP_out', 'message_notification',
     'all_read', 'inmail_template', 'mail_set', 'export_EOT', 'export_html',
     'export_PDF', 'export_RTF', 'export_XAR', 'mail_modal', 'message_modal', 'message2', 'usermap', 'document',
     'pass', 'operation_bug', 'operation_change', 'operation_event', 'operation_help',
