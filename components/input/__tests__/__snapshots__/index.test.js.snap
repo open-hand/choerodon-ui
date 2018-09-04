@@ -7,6 +7,7 @@ exports[`Input should support maxLength 1`] = `
   prefixCls="ant-input"
   readOnly={false}
   showLengthInfo={true}
+  showPasswordEye={false}
   type="text"
   underline={true}
 >
@@ -70,6 +71,7 @@ exports[`Input.Search should support suffix 1`] = `
     prefixCls="ant-input"
     readOnly={false}
     showLengthInfo={true}
+    showPasswordEye={false}
     size="small"
     suffix={
       Array [
