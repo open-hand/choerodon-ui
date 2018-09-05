@@ -28,6 +28,15 @@ exports[`renders ./components/input/demo/addon.md correctly 1`] = `
             />
           </div>
         </div>
+        <span
+          class="ant-input-icon"
+        >
+          <span
+            class="ant-input-icon-copy ant-input-length-info"
+          >
+            0/30
+          </span>
+        </span>
       </div>
       <div
         class="ant-input-underline"
@@ -35,11 +44,6 @@ exports[`renders ./components/input/demo/addon.md correctly 1`] = `
         <span
           class="ant-input-ripple"
         />
-      </div>
-      <div
-        class="ant-input-length-info"
-      >
-        0/30
       </div>
     </span>
   </div>
@@ -206,6 +210,15 @@ exports[`renders ./components/input/demo/basic.md correctly 1`] = `
             </span>
           </div>
         </div>
+        <span
+          class="ant-input-icon"
+        >
+          <span
+            class="ant-input-icon-copy ant-input-length-info"
+          >
+            0/50
+          </span>
+        </span>
       </div>
       <div
         class="ant-input-underline"
@@ -213,11 +226,6 @@ exports[`renders ./components/input/demo/basic.md correctly 1`] = `
         <span
           class="ant-input-ripple"
         />
-      </div>
-      <div
-        class="ant-input-length-info"
-      >
-        0/50
       </div>
     </span>
   </div>
@@ -257,6 +265,15 @@ exports[`renders ./components/input/demo/basic.md correctly 1`] = `
             />
           </div>
         </div>
+        <span
+          class="ant-input-icon"
+        >
+          <span
+            class="ant-input-icon-copy ant-input-length-info"
+          >
+            0/20
+          </span>
+        </span>
       </div>
       <div
         class="ant-input-underline"
@@ -264,11 +281,6 @@ exports[`renders ./components/input/demo/basic.md correctly 1`] = `
         <span
           class="ant-input-ripple"
         />
-      </div>
-      <div
-        class="ant-input-length-info"
-      >
-        0/20
       </div>
     </span>
   </div>
@@ -1232,6 +1244,15 @@ exports[`renders ./components/input/demo/password.md correctly 1`] = `
             />
           </div>
         </div>
+        <span
+          class="ant-input-icon"
+        >
+          <span
+            class="ant-input-icon-copy ant-input-length-info"
+          >
+            0/50
+          </span>
+        </span>
       </div>
       <div
         class="ant-input-underline"
@@ -1239,11 +1260,6 @@ exports[`renders ./components/input/demo/password.md correctly 1`] = `
         <span
           class="ant-input-ripple"
         />
-      </div>
-      <div
-        class="ant-input-length-info"
-      >
-        0/50
       </div>
     </span>
   </div>
@@ -1281,6 +1297,15 @@ exports[`renders ./components/input/demo/password.md correctly 1`] = `
             />
           </div>
         </div>
+        <span
+          class="ant-input-icon"
+        >
+          <span
+            class="ant-input-icon-copy ant-input-length-info"
+          >
+            0/20
+          </span>
+        </span>
       </div>
       <div
         class="ant-input-underline"
@@ -1288,11 +1313,6 @@ exports[`renders ./components/input/demo/password.md correctly 1`] = `
         <span
           class="ant-input-ripple"
         />
-      </div>
-      <div
-        class="ant-input-length-info"
-      >
-        0/20
       </div>
     </span>
   </div>
@@ -1337,6 +1357,15 @@ exports[`renders ./components/input/demo/password.md correctly 1`] = `
             </span>
           </div>
         </div>
+        <span
+          class="ant-input-icon"
+        >
+          <span
+            class="ant-input-icon-copy ant-input-length-info"
+          >
+            0/20
+          </span>
+        </span>
       </div>
       <div
         class="ant-input-underline"
@@ -1344,11 +1373,6 @@ exports[`renders ./components/input/demo/password.md correctly 1`] = `
         <span
           class="ant-input-ripple"
         />
-      </div>
-      <div
-        class="ant-input-length-info"
-      >
-        0/20
       </div>
     </span>
   </div>
@@ -1599,6 +1623,15 @@ exports[`renders ./components/input/demo/size.md correctly 1`] = `
           />
         </div>
       </div>
+      <span
+        class="ant-input-icon"
+      >
+        <span
+          class="ant-input-icon-copy ant-input-length-info"
+        >
+          0/20
+        </span>
+      </span>
     </div>
     <div
       class="ant-input-underline"
@@ -1606,11 +1639,6 @@ exports[`renders ./components/input/demo/size.md correctly 1`] = `
       <span
         class="ant-input-ripple"
       />
-    </div>
-    <div
-      class="ant-input-length-info"
-    >
-      0/20
     </div>
   </span>
   <span
@@ -1748,6 +1776,15 @@ exports[`renders ./components/input/demo/tooltip.md correctly 1`] = `
         />
       </div>
     </div>
+    <span
+      class="ant-input-icon"
+    >
+      <span
+        class="ant-input-icon-copy ant-input-length-info"
+      >
+        0/25
+      </span>
+    </span>
   </div>
   <div
     class="ant-input-underline"
@@ -1755,11 +1792,6 @@ exports[`renders ./components/input/demo/tooltip.md correctly 1`] = `
     <span
       class="ant-input-ripple"
     />
-  </div>
-  <div
-    class="ant-input-length-info"
-  >
-    0/25
   </div>
 </span>
 `;
