@@ -1,6 +1,6 @@
 const icons = {
   default: [
-    'unallocated_question', 'unfinished_question', 'all_reports', 'burnout_map',
+    'classname', 'state_over', 'task_schedule', 'unallocated_question', 'unfinished_question', 'all_reports', 'burnout_map',
     'iterative_workbench', 'outstanding_tasks', 'report_overview', 'test_execute',
     'test_planning', 'git', 'project_list', 'domain_list', 'IP_out', 'message_notification',
     'all_read', 'inmail_template', 'mail_set', 'export_EOT', 'export_html',
