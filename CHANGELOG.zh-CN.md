@@ -17,6 +17,13 @@ timeline: true
 
 ## 0.3.9
 
+`2018-09-07`
+
+- 🌟 `Icon`: 增加新的图标。
+- 🌟 `Card`: Card添加`onHeadClick`属性。
+- 💄 `Input`: 修复input有字数限制且在formitem中存在验证时formitem之间上下间距不对。
+- 💄 `Sidebar`: 修复Sidebar没有`getContainer`属性的bug。
+
 `2018-09-04`
 
 - 🌟 `Input`: Input添加`showPasswordEye`属性用来控制显示密码的控件。
