@@ -7,6 +7,7 @@ exports[`Input should support maxLength 1`] = `
   prefixCls="ant-input"
   readOnly={false}
   showLengthInfo={true}
+  showPasswordEye={false}
   type="text"
   underline={true}
 >
@@ -38,6 +39,15 @@ exports[`Input should support maxLength 1`] = `
           />
         </div>
       </div>
+      <span
+        className="ant-input-icon"
+      >
+        <span
+          className="ant-input-icon-copy ant-input-length-info"
+        >
+          0/3
+        </span>
+      </span>
     </div>
     <div
       className="ant-input-underline"
@@ -45,11 +55,6 @@ exports[`Input should support maxLength 1`] = `
       <span
         className="ant-input-ripple"
       />
-    </div>
-    <div
-      className="ant-input-length-info"
-    >
-      0/3
     </div>
   </span>
 </Input>
@@ -70,6 +75,7 @@ exports[`Input.Search should support suffix 1`] = `
     prefixCls="ant-input"
     readOnly={false}
     showLengthInfo={true}
+    showPasswordEye={false}
     size="small"
     suffix={
       Array [

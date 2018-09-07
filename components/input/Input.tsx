@@ -24,6 +24,7 @@ export interface AbstractInputProps {
   label?: React.ReactNode;
   underline?: boolean;
   showLengthInfo?: boolean;
+  showPasswordEye?: boolean;
 }
 
 export interface InputProps extends AbstractInputProps {
@@ -59,6 +60,9 @@ export interface InputState {
   focused?: boolean;
   renderedStyle?: {};
   showLengthInfo?: boolean;
+  showPasswordEye?: boolean;
+  type?: string;
+  showPassword?: boolean;
 }
 
 export default class Input extends React.Component<InputProps, any> {
@@ -73,6 +77,7 @@ export default class Input extends React.Component<InputProps, any> {
     underline: true,
     readOnly: false,
     showLengthInfo: true,
+    showPasswordEye: false,
   };
 
   static propTypes = {
@@ -108,6 +113,7 @@ export default class Input extends React.Component<InputProps, any> {
     readOnly: PropTypes.bool,
     focused: PropTypes.bool,
     showLengthInfo: PropTypes.bool,
+    showPasswordEye: PropTypes.bool,
   };
 
   state: InputState = {
@@ -118,6 +124,8 @@ export default class Input extends React.Component<InputProps, any> {
       margin: 0,
     },
     showLengthInfo: true,
+    showPassword: false,
+    type: 'text',
   };
 
   input: HTMLInputElement;
@@ -151,6 +159,9 @@ export default class Input extends React.Component<InputProps, any> {
         focused: focused,
       });
     }
+    this.setState({
+      type: this.props.type,
+    });
     this.setRenderedStyle();
   }
 
@@ -176,6 +187,9 @@ export default class Input extends React.Component<InputProps, any> {
         showLengthInfo: nextProps.showLengthInfo,
       });
     }
+    this.setState({
+      type: nextProps.type,
+    });
   }
 
   componentDidUpdate() {
@@ -254,6 +268,20 @@ export default class Input extends React.Component<InputProps, any> {
     }
   };
 
+  handleShowPassword = () => {
+    this.setState({
+      type: 'text',
+      showPassword: true,
+    })
+  };
+
+  handleHidePassword = () => {
+    this.setState({
+      type: 'password',
+      showPassword: false,
+    })
+  };
+
   focus() {
     this.input.focus();
   }
@@ -283,6 +311,20 @@ export default class Input extends React.Component<InputProps, any> {
       </span>) : null;
   }
 
+  renderShowPassword() {
+    const { prefixCls, type } = this.props;
+    const { showPassword } = this.state;
+    return type === 'password' ? (
+      <span
+        className={`${prefixCls}-icon`}
+        onMouseDown={this.handleShowPassword}
+        onMouseLeave={this.handleHidePassword}
+        onMouseUp={this.handleHidePassword}
+      >
+        <Icon className={`${prefixCls}-icon-copy`} type={showPassword ? 'visibility' : 'visibility_off'} />
+      </span>) : null;
+  }
+
   renderInput() {
     const { value, className, label } = this.props;
     // Fix https://fb.me/react-unknown-prop
@@ -300,6 +342,7 @@ export default class Input extends React.Component<InputProps, any> {
       'underline',
       'focused',
       'showLengthInfo',
+      'showPasswordEye',
     ]);
 
     if ('value' in this.props) {
@@ -321,6 +364,7 @@ export default class Input extends React.Component<InputProps, any> {
         ref={this.saveInput}
         onFocus={this.handleFocus}
         onBlur={this.handleBlur}
+        type={this.state.type}
       />
     );
   }
@@ -329,7 +373,9 @@ export default class Input extends React.Component<InputProps, any> {
     const { prefixCls, maxLength } = this.props;
     const { inputLength, showLengthInfo } = this.state;
     return maxLength && showLengthInfo ? (
-      <div className={`${prefixCls}-length-info`}>{`${inputLength}/${maxLength}`}</div>
+      <span className={`${prefixCls}-icon`}>
+        <span className={`${prefixCls}-icon-copy ${prefixCls}-length-info`}>{`${inputLength}/${maxLength}`}</span>
+      </span>
     ) : null;
   }
 
@@ -352,7 +398,7 @@ export default class Input extends React.Component<InputProps, any> {
 
   render() {
     const props = this.props;
-    const { prefixCls, disabled, label, style, placeholder } = this.props;
+    const { prefixCls, disabled, label, style, placeholder, showPasswordEye } = this.props;
     const { inputLength, focused } = this.state;
     const prefix = props.prefix ? (
       <span ref="prefix" className={this.getSizeClassName('prefix')}>
@@ -384,12 +430,13 @@ export default class Input extends React.Component<InputProps, any> {
               <div className={`${prefixCls}-placeholder`}>{placeholder}</div>
               {this.renderInput()}
               {this.renderCopyIcon()}
+              {showPasswordEye ? this.renderShowPassword() : null}
             </div>
             {suffix}
           </div>
+          {this.getLengthInfo()}
         </div>
         {this.getUnderLine()}
-        {this.getLengthInfo()}
       </span>
     );
   }

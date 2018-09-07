@@ -100,6 +100,7 @@ export default class Sidebar extends React.Component<SidebarProps, {}> {
 
     return (
         <Dialog
+          {...this.props}
           animationEnd={this.handleStatus}
           width={props.width}
           className={classString}

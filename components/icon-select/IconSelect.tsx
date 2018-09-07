@@ -49,7 +49,7 @@ export default class IconSelect extends React.Component<IconSelectProps, IconSel
     let items = icons.default;
     if (filterValue) {
       items = icons.default.filter((name) => {
-        return name.indexOf(filterValue) !== -1;
+        return name.toLowerCase().indexOf(filterValue.toLowerCase()) !== -1;
       });
     }
     const total = items.length || 0;

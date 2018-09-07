@@ -35,6 +35,7 @@ cols: 1
 | title | 卡片标题 | string\|ReactNode | - |
 | type | 卡片类型，可设置为 `inner` 或 不设置 | string | - |
 | onTabChange | 页签切换的回调 | (key) => void | - |
+| onHeadClick | 卡片头部的点击事件 | React.MouseEventHandler<any> | - |
 
 ### Card.Grid
 

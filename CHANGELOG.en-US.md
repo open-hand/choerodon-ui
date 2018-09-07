@@ -15,6 +15,20 @@ timeline: true
 
 ---
 
+## 0.3.9
+
+`2018-09-07`
+
+- 🌟 `Icon`: Added new icons.
+- 🌟 `Card`: Add `onHeadClick`.
+- 💄 `Input`: Adjust the style.
+- 💄 `Sidebar`: Fix props without `getContainer` error.
+
+`2018-09-04`
+
+- 🌟 `Input`: Add `showPasswordEye`.
+- 💄 `IconSelect`: Change search not case sensitive.
+
 ## 0.3.8
 
 `2018-08-31`

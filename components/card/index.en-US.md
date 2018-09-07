@@ -34,6 +34,7 @@ A card can be used to display content related to a single subject. The content c
 | title | Card title | string\|ReactNode | - |
 | type | Card style type, can be set to `inner` or not set | string | - |
 | onTabChange | Callback when tab is switched | (key) => void | - |
+| onHeadClick | Callback while Click Card head | React.MouseEventHandler<any> | - |
 
 ### Card.Grid
 

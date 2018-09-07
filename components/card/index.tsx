@@ -36,6 +36,7 @@ export interface CardProps {
   actions?: Array<React.ReactNode>;
   tabList?: CardTabListType[];
   onTabChange?: (key: string) => void;
+  onHeadClick?: React.MouseEventHandler<any>;
   activeTabKey?: string;
   defaultActiveTabKey?: string;
 }
@@ -125,7 +126,7 @@ export default class Card extends React.Component<CardProps, {}> {
   render() {
     const {
       prefixCls = 'ant-card', className, extra, bodyStyle, noHovering, hoverable, title, loading,
-      bordered = true, type, cover, actions, tabList, children, activeTabKey, defaultActiveTabKey, ...others,
+      bordered = true, type, cover, actions, tabList, children, activeTabKey, defaultActiveTabKey, onHeadClick, ...others,
     } = this.props;
 
     const classString = classNames(prefixCls, className, {
@@ -182,7 +183,7 @@ export default class Card extends React.Component<CardProps, {}> {
     ) : null;
     if (title || extra || tabs) {
       head = (
-        <div className={`${prefixCls}-head`}>
+        <div className={`${prefixCls}-head`} onClick={onHeadClick}>
           <div className={`${prefixCls}-head-wrapper`}>
             {title && <div className={`${prefixCls}-head-title`}>{title}</div>}
             {extra && <div className={`${prefixCls}-extra`}>{extra}</div>}
