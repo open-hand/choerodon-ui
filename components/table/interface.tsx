@@ -11,6 +11,7 @@ export type ColumnFilterItem = { text: string; value: string, children?: ColumnF
 export interface ColumnProps<T> {
   title?: React.ReactNode;
   filterTitle?: React.ReactNode;
+  empty?: React.ReactNode;
   key?: React.Key;
   dataIndex?: string;
   render?: (text: any, record: T, index: number) => React.ReactNode;
@@ -112,6 +113,7 @@ export interface TableProps<T> {
   showHeader?: boolean;
   footer?: (currentPageData: Object[]) => React.ReactNode;
   title?: (currentPageData: Object[]) => React.ReactNode;
+  empty?: (currentPageData: Object[]) => React.ReactNode;
   scroll?: { x?: boolean | number | string, y?: boolean | number | string };
   childrenColumnName?: string;
   bodyStyle?: React.CSSProperties;
