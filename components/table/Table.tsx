@@ -62,6 +62,7 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
 
   static propTypes = {
     dataSource: PropTypes.array,
+    empty: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
     columns: PropTypes.array,
     prefixCls: PropTypes.string,
     useFixedHeader: PropTypes.bool,
@@ -83,6 +84,7 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
 
   static defaultProps = {
     dataSource: [],
+    empty: null,
     prefixCls: 'ant-table',
     useFixedHeader: false,
     rowSelection: null,
@@ -1008,7 +1010,7 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
 
   renderTable = (contextLocale: TableLocale, loading: SpinProps): React.ReactNode => {
     const locale = { ...contextLocale, ...this.props.locale };
-    const { filterBarMultiple, prefixCls, filterBarPlaceholder, showHeader, filterBar, dataSource, filters, ...restProps } = this.props;
+    const { filterBarMultiple, prefixCls, filterBarPlaceholder, showHeader, filterBar, dataSource, filters, empty, ...restProps } = this.props;
     const data = this.getCurrentPageData();
     const expandIconAsCell = this.props.expandedRowRender && this.props.expandIconAsCell !== false;
 
@@ -1046,7 +1048,7 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
         className={classString}
         expandIconColumnIndex={expandIconColumnIndex}
         expandIconAsCell={expandIconAsCell}
-        emptyText={!loading.spinning && locale.emptyText}
+        emptyText={!loading.spinning && (empty || locale.emptyText)}
       />
     );
     if (filterBar) {

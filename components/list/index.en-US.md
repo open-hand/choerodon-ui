@@ -19,6 +19,7 @@ A list can be used to display content related to a single subject. The content c
 | -------- | ----------- | ---- | ------- |
 | bordered | Toggles rendering of the border around the list | boolean | false |
 | footer | List footer renderer | string\|ReactNode | - |
+| empty | display while dataSource has't data | string\|ReactNode | - |
 | grid | The grid type of list. You can set grid to something like {gutter: 16, column: 4} | object | - |
 | header | List header renderer | string\|ReactNode | - |
 | itemLayout | The layout of list, default is `horizontal`, If a vertical list is desired, set the itemLayout property to `vertical` | string | - |

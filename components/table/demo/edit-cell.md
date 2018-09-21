@@ -59,7 +59,7 @@ class EditableCell extends React.Component {
               <div className="editable-cell-text-wrapper">
                 {value || ' '}
                 <Icon
-                  type="edit"
+                  type="mode_edit"
                   className="editable-cell-icon"
                   onClick={this.edit}
                 />
