@@ -4007,7 +4007,7 @@ exports[`renders ./components/table/demo/edit-cell.md correctly 1`] = `
                         >
                           Edward King 0
                           <i
-                            class="icon icon-edit editable-cell-icon"
+                            class="icon icon-mode_edit editable-cell-icon"
                           />
                         </div>
                       </div>
@@ -4054,7 +4054,7 @@ exports[`renders ./components/table/demo/edit-cell.md correctly 1`] = `
                         >
                           Edward King 1
                           <i
-                            class="icon icon-edit editable-cell-icon"
+                            class="icon icon-mode_edit editable-cell-icon"
                           />
                         </div>
                       </div>
