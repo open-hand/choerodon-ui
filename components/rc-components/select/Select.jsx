@@ -1226,7 +1226,7 @@ export default class Select extends React.Component {
           style={UNSELECTABLE_STYLE}
           {...UNSELECTABLE_ATTRIBUTE}
           onMouseDown={preventDefaultEvent}
-          className={`${prefixCls}-selection__choice ${prefixCls}-selection__choice__disabled`}
+          className={`${prefixCls}-selection__choice ${prefixCls}-selection__choice__disabled ${prefixCls}-selection__max`}
           key={'maxTagPlaceholder'}
           title={content}
         >
