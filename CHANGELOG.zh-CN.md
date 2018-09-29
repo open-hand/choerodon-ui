@@ -15,6 +15,14 @@ timeline: true
 
 ---
 
+## 0.4.0
+
+`2018-09-28`
+
+- 🌟 `Select`: select有maxTagCount且超出限制时显示的标签可以自定样式,且去除默认的背景颜色。
+- 💄 `Input`: 修复input的showLengthInfo为false时在某些情况下仍显示字数限制信息的问题。
+- 💄 `Select`: 回滚select的部分样式至0.3.4版本。
+
 ## 0.3.10
 
 `2018-09-14`
