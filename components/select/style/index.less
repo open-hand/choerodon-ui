@@ -375,8 +375,8 @@
 
       > ul > li,
       .@{select-prefix-cls}-selection__rendered > ul > li { // for tree-select
-        height: 20px;
-        line-height: 20px;
+        height: @input-height-base - 8px;
+        line-height: @input-height-base - 8px;
         box-sizing: content-box;
       }
 
@@ -409,8 +409,8 @@
           margin-left: 8px;
           > i.icon {
             float: right;
-            height: 20px;
-            line-height: 19px;
+            height: @input-height-base - 8px;
+            line-height: @input-height-base - 8px;
           }
         }
       }
@@ -424,6 +424,9 @@
         padding: 0 8px 0 8px;
         &__remove {
           color: rgba(0, 0, 0, 0.54);
+        }
+        &.@{select-prefix-cls}-selection__max {
+          background-color: rgba(0, 0, 0, 0);
         }
       }
     }

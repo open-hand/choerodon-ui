@@ -142,11 +142,12 @@ export default class Input extends React.Component<InputProps, any> {
 
   componentDidMount() {
     const { inputLength } = this.state;
-    const { focused } = this.props;
+    const { focused, showLengthInfo } = this.props;
     const inputValueLength = this.input.value.length;
     if (inputValueLength !== inputLength) {
       this.setState({
         inputLength: inputValueLength,
+        showLengthInfo,
       });
     }
     if (this.props.autoFocus) {

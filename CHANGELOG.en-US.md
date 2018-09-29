@@ -15,6 +15,14 @@ timeline: true
 
 ---
 
+## 0.4.0
+
+`2018-09-28`
+
+- 🌟 `Select`: Improve the customization ability of `maxTagCount`.
+- 💄 `Input`: Adjust the style.
+- 💄 `Select`: Adjust the style.
+
 ## 0.3.10
 
 `2018-09-21`
