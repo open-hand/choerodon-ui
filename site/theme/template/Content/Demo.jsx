@@ -68,7 +68,7 @@ export default class Demo extends React.Component {
 
   handleCodeExpand = () => {
     const { codeExpand } = this.state;
-    this.setState({ codeExpand });
+    this.setState({ codeExpand: !codeExpand });
   };
 
   saveAnchor = (anchor) => {
