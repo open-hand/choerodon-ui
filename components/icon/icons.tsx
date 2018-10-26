@@ -1,6 +1,8 @@
 const icons = {
   default: [
-    'devops_chart', 'agile_chart', 'test_chart', 'bar_chart', 'unlock', 'classname',
+    'authority', 'develop_console', 'frame', 'record_test',
+    'agile_epic', 'agile_fault', 'agile_story', 'agile_subtask', 'agile_task', 'auto_test', 'devops_chart',
+    'agile_chart', 'test_chart', 'bar_chart', 'unlock', 'classname',
     'state_over', 'task_schedule', 'unallocated_question', 'unfinished_question', 'all_reports', 'burnout_map',
     'iterative_workbench', 'outstanding_tasks', 'report_overview', 'test_execute',
     'test_planning', 'git', 'project_list', 'domain_list', 'IP_out', 'message_notification',
