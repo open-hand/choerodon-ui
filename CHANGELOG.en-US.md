@@ -15,6 +15,13 @@ timeline: true
 
 ---
 
+## 0.4.1
+
+`2018-10-26`
+
+- 🌟 `Icon`: Add new icons.
+- 💄 `Demo`: Fix bisheng demo site can't expand code by click the button。
+
 ## 0.4.0
 
 `2018-09-28`
