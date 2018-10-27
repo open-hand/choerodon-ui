@@ -20,6 +20,7 @@ timeline: true
 `2018-10-26`
 
 - 🌟 `Icon`: Add new icons.
+- 🌟 `Table`: Add onColumnFilterChange. Callback executed when ColumnFilter is changed.
 - 💄 `Demo`: Fix bisheng demo site can't expand code by click the button。
 
 ## 0.4.0

@@ -63,6 +63,7 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
   static propTypes = {
     dataSource: PropTypes.array,
     empty: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+    onColumnFilterChange: PropTypes.func,
     columns: PropTypes.array,
     prefixCls: PropTypes.string,
     useFixedHeader: PropTypes.bool,
@@ -463,7 +464,11 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
     });
   };
 
-  handleColumnFilterChange = () => {
+  handleColumnFilterChange = (e?: any) => {
+    const { onColumnFilterChange } = this.props;
+    if (onColumnFilterChange) {
+      onColumnFilterChange(e);
+    }
     this.forceUpdate();
   };
 

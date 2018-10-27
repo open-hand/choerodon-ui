@@ -18,6 +18,7 @@ export interface ColumnProps<T> {
   align?: 'left' | 'right' | 'center';
   filters?: ColumnFilterItem[];
   onFilter?: (value: any, record: T, filters?: ColumnFilterItem[]) => boolean;
+  onColumnFilterChange?: (item: any) => void;
   filterMultiple?: boolean;
   filterDropdown?: React.ReactNode;
   filterDropdownVisible?: boolean;
@@ -103,6 +104,7 @@ export interface TableProps<T> {
   onExpandedRowsChange?: (expandedRowKeys: string[] | number[]) => void;
   onExpand?: (expanded: boolean, record: T) => void;
   onChange?: (pagination: TablePaginationConfig | boolean, filters: string[], sorter: Object) => any;
+  onColumnFilterChange?: (item: any) => void;
   loading?: boolean | SpinProps;
   locale?: Object;
   indentSize?: number;
