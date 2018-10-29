@@ -22,6 +22,7 @@ timeline: true
 - 🌟 `Icon`: 增加新的图标。
 - 🌟 `Table`: 增加onColumnFilterChange，在表格列过滤器变化时触发。
 - 💄 `Demo`: 修复使用bisheng生成的文档网站无法展开样例代码的bug。
+- 💄 `Avatar`: 修复头像中文字定位不准确。
 
 ## 0.4.0
 

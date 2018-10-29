@@ -22,6 +22,7 @@ timeline: true
 - 🌟 `Icon`: Add new icons.
 - 🌟 `Table`: Add onColumnFilterChange. Callback executed when ColumnFilter is changed.
 - 💄 `Demo`: Fix bisheng demo site can't expand code by click the button。
+- 💄 `Avatar`: Fix avatar Chinese text positioning is not accurate.
 
 ## 0.4.0
 
