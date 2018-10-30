@@ -76,7 +76,7 @@ export default class ColumnFilter<T> extends React.Component<ColumnFilterProps<T
 
   getOptions() {
     let options: any = [];
-    (this.props.columns || []).map((column, i) => {
+    (this.props.columns || []).filter((column) => !column.notDisplay).map((column, i) => {
       const item = column.title ? (
         <MenuItem
           style={UNSELECTABLE_STYLE}
@@ -96,5 +96,4 @@ export default class ColumnFilter<T> extends React.Component<ColumnFilterProps<T
   getVisibleColumns() {
     return (this.props.columns || []).filter((column) => !column.hidden);
   }
-
 }
