@@ -87,6 +87,7 @@ export interface TableRowSelection<T> {
 export interface TableProps<T> {
   prefixCls?: string;
   dropdownPrefixCls?: string;
+  noFilter?: boolean;
   rowSelection?: TableRowSelection<T>;
   pagination?: TablePaginationConfig | false;
   size?: 'default' | 'middle' | 'small';
@@ -105,6 +106,7 @@ export interface TableProps<T> {
   onExpandedRowsChange?: (expandedRowKeys: string[] | number[]) => void;
   onExpand?: (expanded: boolean, record: T) => void;
   onChange?: (pagination: TablePaginationConfig | boolean, filters: string[], sorter: Object) => any;
+  onFilterSelectChange?: (item: any) => void;
   onColumnFilterChange?: (item: any) => void;
   loading?: boolean | SpinProps;
   locale?: Object;

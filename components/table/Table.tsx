@@ -81,6 +81,8 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
     filterBar: PropTypes.bool,
     filters: PropTypes.array,
     filterBarPlaceholder: PropTypes.string,
+    onFilterSelectChange: PropTypes.func,
+    noFilter: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -98,6 +100,7 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
     rowKey: 'key',
     showHeader: true,
     filterBar: true,
+    noFilter: false,
   };
 
   CheckboxPropsCache: {
@@ -459,6 +462,10 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
   };
 
   handleFilterSelectChange = (barFilters: any[]) => {
+    const { onFilterSelectChange } = this.props;
+    if (onFilterSelectChange) {
+      onFilterSelectChange(barFilters);
+    }
     this.setNewFilterState({
       barFilters,
     });
@@ -940,7 +947,7 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
   }
 
   getLocalData() {
-    const { dataSource } = this.props;
+    const { dataSource, noFilter } = this.props;
     if (dataSource) {
       const state = this.state;
       const { filters, barFilters } = state;
@@ -980,6 +987,9 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
             isOr = false;
           }
         });
+      }
+      if (noFilter) {
+        return data;
       }
       return filteredData;
     } else {
