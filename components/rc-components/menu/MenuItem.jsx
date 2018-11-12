@@ -154,7 +154,7 @@ const MenuItem = createReactClass({
     }
 
     const notFound = props.eventKey === 'NOT_FOUND';
-    const checkbox = props.multiple && !notFound ? <Checkbox checked={props.isSelected} /> : null;
+    const checkbox = props.multiple && !notFound ? <Checkbox disabled={props.disabled} checked={props.isSelected} /> : null;
     return (
       <Ripple>
         <li
