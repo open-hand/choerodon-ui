@@ -1,5 +1,6 @@
 const icons = {
   default: [
+    'cluster', 'kubernetes_cluster', 'disconnect', 'running', 'notification_setting',
     'authority', 'develop_console', 'frame', 'record_test',
     'agile_epic', 'agile_fault', 'agile_story', 'agile_subtask', 'agile_task', 'auto_test', 'devops_chart',
     'agile_chart', 'test_chart', 'bar_chart', 'unlock', 'classname',
