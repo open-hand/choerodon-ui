@@ -15,6 +15,16 @@ timeline: true
 
 ---
 
+## 0.4.2
+
+`2018-11-13`
+
+- 🌟 `Icon`: Add new icons.
+- 🌟 `Table`: Add `noFilters`, Used to block the default filtering.
+- 🌟 `Table.Column`: Add `disableClick` to disable the check for the `Table` filter.
+- 💄 `Tag`: Fix hot label display issues.
+- 💄 `Select`: all-select and no logic optimization.
+
 ## 0.4.1
 
 `2018-10-26`

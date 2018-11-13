@@ -83,6 +83,7 @@ const columns = [{
 | onRow | 设置行属性 | Function(record, index) | - |
 | filterBar | 显示过滤条，设置为false时，在列头上会显示过滤菜单按钮 | boolean | true |
 | filters | <受控>过滤条中的过滤条件，例：`[{ name: 'Jom' }, 'OR', { name: 'Jim' }]`，`name` 为列的 `key` 或 `dataIndex` | any\[] | - |
+| noFilters |
 | filterBarPlaceholder | 过滤条的占位文本 | string |  |
 
 
