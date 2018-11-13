@@ -466,6 +466,21 @@ mark {
   width: 16px;
   height: 16px;
 }
+.icon-cluster:before {
+  content: "\E9C1";
+}
+.icon-kubernetes_cluster:before {
+  content: "\E9C4";
+}
+.icon-disconnect:before {
+  content: "\E9C5";
+}
+.icon-running:before {
+  content: "\E9C6";
+}
+.icon-notification_setting:before {
+  content: "\E9C7";
+}
 .icon-authority:before {
   content: "\E9C3";
 }
@@ -7946,13 +7961,20 @@ a.ant-btn-sm {
   width: 32px;
   height: 32px;
   line-height: 32px;
-  border-radius: 16px;
+  border-radius: 50%;
 }
 .ant-avatar-image {
   background: transparent;
 }
 .ant-avatar > * {
   line-height: 32px;
+}
+.ant-avatar-string {
+  position: absolute;
+  left: 50%;
+  -webkit-transform-origin: 0 center;
+      -ms-transform-origin: 0 center;
+          transform-origin: 0 center;
 }
 .ant-avatar.ant-avatar-icon {
   font-size: 18px;
@@ -7961,10 +7983,17 @@ a.ant-btn-sm {
   width: 40px;
   height: 40px;
   line-height: 40px;
-  border-radius: 20px;
+  border-radius: 50%;
 }
 .ant-avatar-lg > * {
   line-height: 40px;
+}
+.ant-avatar-lg-string {
+  position: absolute;
+  left: 50%;
+  -webkit-transform-origin: 0 center;
+      -ms-transform-origin: 0 center;
+          transform-origin: 0 center;
 }
 .ant-avatar-lg.ant-avatar-icon {
   font-size: 24px;
@@ -7973,10 +8002,17 @@ a.ant-btn-sm {
   width: 24px;
   height: 24px;
   line-height: 24px;
-  border-radius: 12px;
+  border-radius: 50%;
 }
 .ant-avatar-sm > * {
   line-height: 24px;
+}
+.ant-avatar-sm-string {
+  position: absolute;
+  left: 50%;
+  -webkit-transform-origin: 0 center;
+      -ms-transform-origin: 0 center;
+          transform-origin: 0 center;
 }
 .ant-avatar-sm.ant-avatar-icon {
   font-size: 14px;
