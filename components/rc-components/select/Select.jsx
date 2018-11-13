@@ -1371,7 +1371,7 @@ export default class Select extends React.Component {
     if (name === 'check-all') {
       newValues = new Set(state.value.concat(values));
       this.fireChange(Array.from(newValues));
-    } else if (name === 'check-none') {``
+    } else if (name === 'check-none') {
       newValues = state.value.filter((e) => values.indexOf(e) < 0);
       this.fireChange(newValues);
       this.focus();
