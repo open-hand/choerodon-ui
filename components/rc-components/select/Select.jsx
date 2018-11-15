@@ -1363,13 +1363,17 @@ export default class Select extends React.Component {
     if (props.disabled) {
       return;
     }
+
+    let newValues;
+    const values = this._options.map((option) => {
+      return getValuePropValue(option);
+    });
     if (name === 'check-all') {
-      const values = this._options.map((option) => {
-        return getValuePropValue(option);
-      });
-      this.fireChange(values);
+      newValues = new Set(state.value.concat(values));
+      this.fireChange(Array.from(newValues));
     } else if (name === 'check-none') {
-      this.fireChange([]);
+      newValues = state.value.filter((e) => values.indexOf(e) < 0);
+      this.fireChange(newValues);
       this.focus();
     }
   };
