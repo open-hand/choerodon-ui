@@ -142,6 +142,8 @@ export default class Select extends React.Component {
     loading: false,
   };
 
+  needExpand = true;
+
   constructor(props) {
     super(props);
     const value = this.getValueFromProps(props);
@@ -257,6 +259,7 @@ export default class Select extends React.Component {
       return;
     }
     this.setInputValue(val);
+    console.log('onInputValueChange');
     this.setState({
       open: true,
     });
@@ -272,22 +275,24 @@ export default class Select extends React.Component {
 
   onDropdownVisibleChange = open => {
     const { filter } = this.props;
-    if (open && !this._focused) {
-      this.clearBlurTime();
-      this.timeoutFocus();
-      this._focused = true;
-      this.updateFocusClassName();
+    if (this.needExpand) {
+      if (open && !this._focused) {
+        this.clearBlurTime();
+        this.timeoutFocus();
+        this._focused = true;
+        this.updateFocusClassName();
+      }
+      if (filter) {
+        this.onFilterChange('');
+      }
+      if (open && filter) {
+        setTimeout(() => {
+          const filterInput = this.selectTriggerRef.getFilterInput();
+          filterInput && filterInput.focus();
+        }, 20);
+      }
+      this.setOpenState(open);
     }
-    if (filter) {
-      this.onFilterChange('');
-    }
-    if (open && filter) {
-      setTimeout(() => {
-        const filterInput = this.selectTriggerRef.getFilterInput();
-        filterInput && filterInput.focus();
-      }, 20);
-    }
-    this.setOpenState(open);
   };
 
   // combobox ignore
@@ -912,6 +917,11 @@ export default class Select extends React.Component {
   };
 
   removeSelected = (selectedKey, index, e) => {
+    debugger
+    this.needExpand = false;
+    setTimeout(() => {
+      this.needExpand = true;
+    }, 100);
     if (e) {
       e.preventDefault();
     }
