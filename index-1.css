@@ -5609,6 +5609,7 @@ mark {
 }
 .ant-select-clear {
   position: absolute !important;
+  top: 0;
   right: 20px;
   bottom: -2px;
   margin: 0;
@@ -7405,7 +7406,7 @@ textarea.ant-input {
 }
 .ant-btn-danger {
   color: #d50000;
-  background-color: #f5f5f5;
+  background-color: rgba(0, 0, 0, 0);
   border-color: rgba(0, 0, 0, 0.12);
 }
 .ant-btn-danger > a:only-child {
