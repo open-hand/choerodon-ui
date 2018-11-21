@@ -30,7 +30,6 @@ export default class DropdownMenu extends React.Component {
       PropTypes.node,
       PropTypes.string,
     ]),
-    firstActiveValue: PropTypes.string,
     onKeyDown: PropTypes.func,
   };
 

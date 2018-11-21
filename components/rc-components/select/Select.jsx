@@ -259,7 +259,6 @@ export default class Select extends React.Component {
       return;
     }
     this.setInputValue(val);
-    console.log('onInputValueChange');
     this.setState({
       open: true,
     });
@@ -297,26 +296,16 @@ export default class Select extends React.Component {
 
   // combobox ignore
   onKeyDown = event => {
-    const { open } = this.state;
-    const { disabled } = this.props;
-    if (disabled) {
+    const props = this.props;
+    if (props.disabled) {
       return;
     }
     const keyCode = event.keyCode;
-    if (open && !this.getInputDOMNode()) {
+    if (this.state.open && !this.getInputDOMNode()) {
       this.onInputKeyDown(event);
-    } else if (
-      keyCode === KeyCode.ENTER ||
-      keyCode === KeyCode.DOWN
-    ) {
-      if (!open) this.setOpenState(true);
+    } else if (keyCode === KeyCode.ENTER || keyCode === KeyCode.DOWN) {
+      this.setOpenState(true);
       event.preventDefault();
-    } else if (keyCode === KeyCode.SPACE) {
-      // Not block space if popup is shown
-      if (!open) {
-        this.setOpenState(true);
-        event.preventDefault();
-      }
     }
   };
 
@@ -335,7 +324,7 @@ export default class Select extends React.Component {
       event.preventDefault();
       const { value } = state;
       if (value.length) {
-        this.removeSelected(value[value.length - 1]);
+        this.removeSelected(value[value.length - 1], value.length - 1);
       }
       return;
     }
@@ -346,10 +335,6 @@ export default class Select extends React.Component {
         event.stopPropagation();
         return;
       }
-    } else if (keyCode === KeyCode.ENTER && state.open) {
-      // Aviod trigger form submit when select item
-      // https://github.com/ant-design/ant-design/issues/10861
-      event.preventDefault();
     } else if (keyCode === KeyCode.ESC) {
       if (state.open) {
         this.setOpenState(false);
@@ -359,7 +344,7 @@ export default class Select extends React.Component {
       return;
     }
 
-    if (this.getRealOpenState(state)) {
+    if (state.open) {
       const menu = this.selectTriggerRef.getInnerMenu();
       if (menu && menu.onKeyDown(event, this.handleBackfill)) {
         event.preventDefault();
@@ -369,26 +354,27 @@ export default class Select extends React.Component {
   };
 
   onMenuSelect = ({ item }) => {
-    if (!item) {
-      return;
-    }
-
     let value = this.state.value;
     const props = this.props;
     const selectedValue = getValuePropValue(item);
     const lastValue = value[value.length - 1];
-    this.fireSelect(selectedValue);
+    if (this.fireSelect(selectedValue) === false) {
+      return;
+    }
     if (isMultipleOrTags(props)) {
       if (findIndexInValueBySingleValue(value, selectedValue) !== -1) {
         return;
       }
       value = value.concat([selectedValue]);
     } else {
-      if (
-        lastValue !== undefined &&
-        lastValue === selectedValue &&
-        selectedValue !== this.state.backfillValue
-      ) {
+      if (isCombobox(props)) {
+        this.skipAdjustOpen = true;
+        this.clearAdjustTimer();
+        this.skipAdjustOpenTimer = setTimeout(() => {
+          this.skipAdjustOpen = false;
+        }, 0);
+      }
+      if (lastValue && lastValue === selectedValue && selectedValue !== this.state.backfillValue) {
         this.setOpenState(false, true);
         return;
       }
@@ -402,18 +388,18 @@ export default class Select extends React.Component {
     } else {
       inputValue = '';
     }
-    if (props.autoClearSearchValue) {
-      this.setInputValue(inputValue, false);
+    if (!this.props.filter) {
+      this.setInputValue(inputValue, true);
     }
   };
 
   onMenuDeselect = ({ item, domEvent }) => {
     if (domEvent.type === 'keydown' && domEvent.keyCode === KeyCode.ENTER) {
-      this.removeSelected(getValuePropValue(item));
+      this.removeSelected(getValuePropValue(item), null);
       return;
     }
     if (domEvent.type === 'click') {
-      this.removeSelected(getValuePropValue(item));
+      this.removeSelected(getValuePropValue(item), null);
     }
     const { props } = this;
     if (props.autoClearSearchValue) {

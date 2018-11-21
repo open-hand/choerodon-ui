@@ -28,6 +28,12 @@ ReactDOM.render(
     <Option value="jack">Jack</Option>
     <Option value="lucy">Lucy</Option>
     <Option value="tom">Tom</Option>
+    <Option value="jack1">Jack1</Option>
+    <Option value="lucy1">Lucy1</Option>
+    <Option value="tom1">Tom1</Option>
+    <Option value="jack2">Jack2</Option>
+    <Option value="lucy2">Lucy2</Option>
+    <Option value="tom2">Tom2</Option>
   </Select>,
   mountNode);
 ````
