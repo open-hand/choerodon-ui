@@ -297,16 +297,26 @@ export default class Select extends React.Component {
 
   // combobox ignore
   onKeyDown = event => {
-    const props = this.props;
-    if (props.disabled) {
+    const { open } = this.state;
+    const { disabled } = this.props;
+    if (disabled) {
       return;
     }
     const keyCode = event.keyCode;
-    if (this.state.open && !this.getInputDOMNode()) {
+    if (open && !this.getInputDOMNode()) {
       this.onInputKeyDown(event);
-    } else if (keyCode === KeyCode.ENTER || keyCode === KeyCode.DOWN) {
-      this.setOpenState(true);
+    } else if (
+      keyCode === KeyCode.ENTER ||
+      keyCode === KeyCode.DOWN
+    ) {
+      if (!open) this.setOpenState(true);
       event.preventDefault();
+    } else if (keyCode === KeyCode.SPACE) {
+      // Not block space if popup is shown
+      if (!open) {
+        this.setOpenState(true);
+        event.preventDefault();
+      }
     }
   };
 
@@ -325,7 +335,7 @@ export default class Select extends React.Component {
       event.preventDefault();
       const { value } = state;
       if (value.length) {
-        this.removeSelected(value[value.length - 1], value.length - 1);
+        this.removeSelected(value[value.length - 1]);
       }
       return;
     }
@@ -336,6 +346,10 @@ export default class Select extends React.Component {
         event.stopPropagation();
         return;
       }
+    } else if (keyCode === KeyCode.ENTER && state.open) {
+      // Aviod trigger form submit when select item
+      // https://github.com/ant-design/ant-design/issues/10861
+      event.preventDefault();
     } else if (keyCode === KeyCode.ESC) {
       if (state.open) {
         this.setOpenState(false);
@@ -345,7 +359,7 @@ export default class Select extends React.Component {
       return;
     }
 
-    if (state.open) {
+    if (this.getRealOpenState(state)) {
       const menu = this.selectTriggerRef.getInnerMenu();
       if (menu && menu.onKeyDown(event, this.handleBackfill)) {
         event.preventDefault();
@@ -355,27 +369,26 @@ export default class Select extends React.Component {
   };
 
   onMenuSelect = ({ item }) => {
+    if (!item) {
+      return;
+    }
+
     let value = this.state.value;
     const props = this.props;
     const selectedValue = getValuePropValue(item);
     const lastValue = value[value.length - 1];
-    if (this.fireSelect(selectedValue) === false) {
-      return;
-    }
+    this.fireSelect(selectedValue);
     if (isMultipleOrTags(props)) {
       if (findIndexInValueBySingleValue(value, selectedValue) !== -1) {
         return;
       }
       value = value.concat([selectedValue]);
     } else {
-      if (isCombobox(props)) {
-        this.skipAdjustOpen = true;
-        this.clearAdjustTimer();
-        this.skipAdjustOpenTimer = setTimeout(() => {
-          this.skipAdjustOpen = false;
-        }, 0);
-      }
-      if (lastValue && lastValue === selectedValue && selectedValue !== this.state.backfillValue) {
+      if (
+        lastValue !== undefined &&
+        lastValue === selectedValue &&
+        selectedValue !== this.state.backfillValue
+      ) {
         this.setOpenState(false, true);
         return;
       }
@@ -389,17 +402,22 @@ export default class Select extends React.Component {
     } else {
       inputValue = '';
     }
-    if (!this.props.filter) {
-      this.setInputValue(inputValue, true);
+    if (props.autoClearSearchValue) {
+      this.setInputValue(inputValue, false);
     }
   };
 
   onMenuDeselect = ({ item, domEvent }) => {
-    if (domEvent.type === 'click') {
-      this.removeSelected(getValuePropValue(item), null);
+    if (domEvent.type === 'keydown' && domEvent.keyCode === KeyCode.ENTER) {
+      this.removeSelected(getValuePropValue(item));
+      return;
     }
-    if (!this.props.filter) {
-      this.setInputValue('', true);
+    if (domEvent.type === 'click') {
+      this.removeSelected(getValuePropValue(item));
+    }
+    const { props } = this;
+    if (props.autoClearSearchValue) {
+      this.setInputValue('', false);
     }
   };
 
@@ -428,7 +446,10 @@ export default class Select extends React.Component {
     }
     this._focused = true;
     this.updateFocusClassName();
-    this.timeoutFocus();
+    // only effect multiple or tag mode
+    if (!isMultipleOrTags(this.props) || !this._mouseDown) {
+      this.timeoutFocus();
+    }
   };
 
   onPopupFocus = () => {
@@ -790,6 +811,21 @@ export default class Select extends React.Component {
     return hasNewValue ? nextValue : undefined;
   };
 
+  getRealOpenState = (state) => {
+    const { open: _open } = this.props;
+    if (typeof _open === 'boolean') {
+      return _open;
+    }
+    let open = (state || this.state).open;
+    const options = this._options || [];
+    if (isMultipleOrTagsOrCombobox(this.props) || !this.props.showSearch) {
+      if (open && !options.length) {
+        open = false;
+      }
+    }
+    return open;
+  };
+
   focus = () => {
     if (isSingleMode(this.props)) {
       this.selectionRef.focus();
@@ -917,7 +953,6 @@ export default class Select extends React.Component {
   };
 
   removeSelected = (selectedKey, index, e) => {
-    debugger
     this.needExpand = false;
     setTimeout(() => {
       this.needExpand = true;
@@ -1438,6 +1473,7 @@ export default class Select extends React.Component {
     const options = this._options;
     if (!isMultipleOrTagsOrCombobox(props)) {
       extraSelectionProps = {
+        ...extraSelectionProps,
         onKeyDown: this.onKeyDown,
         tabIndex: disabled ? -1 : 0,
       };
@@ -1493,6 +1529,10 @@ export default class Select extends React.Component {
         onMenuSelect={this.onMenuSelect}
         onMenuDeselect={this.onMenuDeselect}
         onPopupScroll={props.onPopupScroll}
+        onKeyDown={chaining(
+          this.onInputKeyDown,
+          this.props.onInputKeyDown,
+        )}
         filterPlaceholder={props.filterPlaceholder}
         builtinPlacements={this.getBuiltinPlacements()}
         footer={props.footer}

@@ -30,6 +30,8 @@ export default class DropdownMenu extends React.Component {
       PropTypes.node,
       PropTypes.string,
     ]),
+    firstActiveValue: PropTypes.string,
+    onKeyDown: PropTypes.func,
   };
 
   static defaultProps = {
@@ -171,13 +173,14 @@ export default class DropdownMenu extends React.Component {
   }
 
   renderFilterInput() {
-    const { prefixCls, filter, placeholder, onFilterChange , filterValue} = this.props;
+    const { prefixCls, filter, placeholder, onFilterChange , filterValue, onKeyDown } = this.props;
     const props = {
       filterValue,
       prefixCls,
       placeholder,
       onChange: onFilterChange,
       underline: false,
+      onKeyDown: onKeyDown,
     };
     return filter ? <FilterInput {...props} ref={saveRef(this, 'filterRef')} /> : null;
   }
