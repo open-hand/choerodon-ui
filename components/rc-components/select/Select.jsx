@@ -1259,7 +1259,7 @@ export default class Select extends React.Component {
           onMouseDown={preventDefaultEvent}
           className={`${prefixCls}-selection__choice ${prefixCls}-selection__choice__disabled ${prefixCls}-selection__max`}
           key={'maxTagPlaceholder'}
-          title={content}
+          // title={content}
         >
           <div className={`${prefixCls}-selection__choice__content`}>{content}</div>
         </li>);
@@ -1286,7 +1286,7 @@ export default class Select extends React.Component {
             onMouseDown={preventDefaultEvent}
             onClick={this.handleChoiceItemClick.bind(this, singleValue)}
             className={choiceClassName}
-            title={title}
+            // title={title}
           >
             <div className={`${prefixCls}-selection__choice__content`}>
               {content}
