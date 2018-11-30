@@ -15,6 +15,16 @@ timeline: true
 
 ---
 
+## 0.4.3
+
+`2018-11-29`
+
+- 🌟 `Select`: Add`onPopupFocus`，Callback executed when Popup is focus.
+- 💄 `Select`: In the select search box, you can use the up and down selection and then press Enter to confirm.
+- 💄 `Select`: Multi-select box: delete the label, do not open the select box.
+- 💄 `Select`: Remove the title information after the tag is hovered in the select.
+- 💄 `Menu`: Upgrade the rc-menu component to the community version.
+
 ## 0.4.2
 
 `2018-11-13`
