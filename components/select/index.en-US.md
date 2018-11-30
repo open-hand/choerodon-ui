@@ -54,6 +54,7 @@ Select component to select value from options.
 | onMouseEnter | Called when mouse enter | function | - |
 | onMouseLeave | Called when mouse leave | function | - |
 | onPopupScroll | Called when dropdown scrolls | function | - |
+| onPopupFocus | Called when dropdown focus | function | - |
 | onSearch | Callback function that is fired when input changed. | function(value: string) |  |
 | onSelect | Called when a option is selected, the params are option's value (or key) and option instance. | function(value, option:Option) | - |
 | showCheckAll | Whether to show the check-all button of drop-down menu | boolean |  true |

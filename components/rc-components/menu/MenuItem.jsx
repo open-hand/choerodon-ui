@@ -54,6 +54,13 @@ const MenuItem = createReactClass({
     }
   },
 
+  componentDidUpdate() {
+    // invoke customized ref to expose component to mixin
+    if (this.props.manualRef) {
+      this.props.manualRef(this);
+    }
+  },
+
   onKeyDown(e) {
     const keyCode = e.keyCode;
     if (keyCode === KeyCode.ENTER) {

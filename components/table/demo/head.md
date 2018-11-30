@@ -44,7 +44,7 @@ const columns = [{
   defaultSortOrder: 'descend',
   sorter: (a, b) => a.age - b.age,
   filters: [],
-  onFilter: (value, record) => record.name.indexOf(value) === 0,
+  onFilter: (value, record) => record.age.toString().indexOf(value) === 0,
 }, {
   title: 'Address',
   dataIndex: 'address',

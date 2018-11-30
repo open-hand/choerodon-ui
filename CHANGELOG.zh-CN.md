@@ -15,6 +15,16 @@ timeline: true
 
 ---
 
+## 0.4.3
+
+`2018-11-29`
+
+- 🌟 `Select`: 增加`onPopupFocus`，在下拉弹出框被focus时调用。
+- 💄 `Select`: select搜索框内可以使用上下选择然后回车确定。
+- 💄 `Select`: 多选框：删除标签，不打开select弹框。
+- 💄 `Select`: 去除select中标签悬停后的title信息。
+- 💄 `Menu`: 升级rc-menu组件为社区版。
+
 ## 0.4.2
 
 `2018-11-13`
