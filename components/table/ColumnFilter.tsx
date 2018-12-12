@@ -76,7 +76,7 @@ export default class ColumnFilter<T> extends React.Component<ColumnFilterProps<T
 
   getOptions() {
     let options: any = [];
-    (this.props.columns || []).map((column, i) => {
+    (this.props.columns || []).filter((column) => !column.notDisplay).map((column, i) => {
       const item = column.title ? (
         <MenuItem
           disabled={column.disableClick}
