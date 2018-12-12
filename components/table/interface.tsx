@@ -36,6 +36,7 @@ export interface ColumnProps<T> {
   onCell?: (record: T) => any;
   onHeaderCell?: (props: ColumnProps<T>) => any;
   hidden?: boolean;
+  notDisplay?: boolean;
 }
 
 export interface TableComponents {
