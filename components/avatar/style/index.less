@@ -43,10 +43,16 @@
   width: @size;
   height: @size;
   line-height: @size;
-  border-radius: @size / 2;
+  border-radius: 50%;
 
   & > * {
     line-height: @size;
+  }
+
+  &-string {
+    position: absolute;
+    left: 50%;
+    transform-origin: 0 center;
   }
 
   &.@{avatar-prefix-cls}-icon {

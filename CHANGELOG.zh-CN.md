@@ -15,6 +15,35 @@ timeline: true
 
 ---
 
+## 0.4.3
+
+`2018-11-29`
+
+- 🌟 `Select`: 增加`onPopupFocus`，在下拉弹出框被focus时调用。
+- 💄 `Select`: select搜索框内可以使用上下选择然后回车确定。
+- 💄 `Select`: 多选框：删除标签，不打开select弹框。
+- 💄 `Select`: 去除select中标签悬停后的title信息。
+- 💄 `Menu`: 升级rc-menu组件为社区版。
+
+## 0.4.2
+
+`2018-11-13`
+
+- 🌟 `Icon`: 增加新的图标。
+- 🌟 `Table`: 增加`noFilters`，用于阻止默认的过滤筛选功能。
+- 🌟 `Table.Column`: 增加`disableClick`, 用于 `Table` 筛选项禁用勾选。
+- 💄 `Tag`: 修复热门标签显示问题。
+- 💄 `Select`: Select全选和无的逻辑优化。
+
+## 0.4.1
+
+`2018-10-26`
+
+- 🌟 `Icon`: 增加新的图标。
+- 🌟 `Table`: 增加onColumnFilterChange，在表格列过滤器变化时触发。
+- 💄 `Demo`: 修复使用bisheng生成的文档网站无法展开样例代码的bug。
+- 💄 `Avatar`: 修复头像中文字定位不准确。
+
 ## 0.4.0
 
 `2018-09-28`

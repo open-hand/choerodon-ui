@@ -15,6 +15,35 @@ timeline: true
 
 ---
 
+## 0.4.3
+
+`2018-11-29`
+
+- 🌟 `Select`: Add`onPopupFocus`，Callback executed when Popup is focus.
+- 💄 `Select`: In the select search box, you can use the up and down selection and then press Enter to confirm.
+- 💄 `Select`: Multi-select box: delete the label, do not open the select box.
+- 💄 `Select`: Remove the title information after the tag is hovered in the select.
+- 💄 `Menu`: Upgrade the rc-menu component to the community version.
+
+## 0.4.2
+
+`2018-11-13`
+
+- 🌟 `Icon`: Add new icons.
+- 🌟 `Table`: Add `noFilters`, Used to block the default filtering.
+- 🌟 `Table.Column`: Add `disableClick` to disable the check for the `Table` filter.
+- 💄 `Tag`: Fix hot label display issues.
+- 💄 `Select`: all-select and no logic optimization.
+
+## 0.4.1
+
+`2018-10-26`
+
+- 🌟 `Icon`: Add new icons.
+- 🌟 `Table`: Add onColumnFilterChange. Callback executed when ColumnFilter is changed.
+- 💄 `Demo`: Fix bisheng demo site can't expand code by click the button。
+- 💄 `Avatar`: Fix avatar Chinese text positioning is not accurate.
+
 ## 0.4.0
 
 `2018-09-28`

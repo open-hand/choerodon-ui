@@ -76,7 +76,7 @@ export function findColumnByFilterValue<T>(record: T, columns: ColumnProps<T>[],
     const key = getColumnKey(col);
     if (key) {
       let value = (record as any)[key];
-      if (value) {
+      if (value && (typeof value !== 'object')) {
         value = value.toString();
         if (value.toLowerCase().indexOf(inputValue.toLowerCase()) !== -1) {
           return true;

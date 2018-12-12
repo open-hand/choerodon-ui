@@ -10,6 +10,7 @@ class FilterInput extends Component {
     prefixCls: PropTypes.string,
     placeholder: PropTypes.string,
     onChange: PropTypes.func,
+    onKeyDown: PropTypes.func,
   };
 
   constructor(props) {
@@ -63,6 +64,7 @@ class FilterInput extends Component {
             prefix={<Icon type="search" />}
             suffix={suffix}
             onChange={this.handleChange}
+            onKeyDown={this.props.onKeyDown}
             underline={underline}
             ref={saveRef(this, 'filterInputRef')}
           />

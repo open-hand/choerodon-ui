@@ -76,12 +76,14 @@ const columns = [{
 | size | 正常或迷你类型，`default` or `small` | string | default |
 | title | 表格标题 | Function(currentPageData) |  |
 | onChange | 分页、排序、筛选变化时触发 | Function(pagination, filters, sorter) |  |
+| onColumnFilterChange | 右上角行过滤按钮中选项变化时触发 | Function(item) | |
 | onExpand | 点击展开图标时触发 | Function(expanded, record) |  |
 | onExpandedRowsChange | 展开的行变化时触发 | Function(expandedRows) |  |
 | onHeaderRow | 设置头部行属性 | Function(column, index) | - |
 | onRow | 设置行属性 | Function(record, index) | - |
 | filterBar | 显示过滤条，设置为false时，在列头上会显示过滤菜单按钮 | boolean | true |
 | filters | <受控>过滤条中的过滤条件，例：`[{ name: 'Jom' }, 'OR', { name: 'Jim' }]`，`name` 为列的 `key` 或 `dataIndex` | any\[] | - |
+| noFilters | 去掉组件自带的模糊搜索 | boolean | false |
 | filterBarPlaceholder | 过滤条的占位文本 | string |  |
 
 
@@ -116,6 +118,7 @@ const columns = [{
 | className | 列的 className | string | - |
 | colSpan | 表头列合并,设置为 0 时，不渲染 | number |  |
 | dataIndex | 列数据在数据项中对应的 key，支持 `a.b.c` 的嵌套写法 | string | - |
+| disableClick | 禁用点击列表筛选项 | boolean | false |
 | filterDropdown | 可以自定义筛选菜单，此函数只负责渲染图层，需要自行编写各种交互 | ReactNode | - |
 | filterDropdownVisible | 用于控制自定义筛选菜单是否可见 | boolean | - |
 | filtered | 标识数据是否经过过滤，筛选图标会高亮 | boolean | false |
