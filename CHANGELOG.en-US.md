@@ -15,6 +15,19 @@ timeline: true
 
 ---
 
+## 0.4.5
+
+`2018-12-11`
+
+- 🌟 `Icon`: Add new icons.
+- 💄 `Select`: `all` and `no` button change to not valid for disabled options
+
+## 0.4.4
+
+`2018-12-3`
+
+- 💄 `Menu`: Fixed a dependency error.
+
 ## 0.4.3
 
 `2018-11-29`
