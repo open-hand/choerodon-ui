@@ -19,8 +19,8 @@ timeline: true
 
 `2018-12-11`
 
-- 🌟 `Icon`: 增加新的图标。
-- 💄 `Select`: select全选和无更改为不对禁用的选项生效
+- 🌟 `Icon`: Add new icons.
+- 💄 `Select`: `all` and `no` button change to not valid for disabled options
 
 ## 0.4.4
 

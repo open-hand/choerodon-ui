@@ -94,7 +94,7 @@ import 'choerodon-ui/dist/antd.css';  // or 'choerodon-ui/dist/antd.less'
 
 ## 链接
 
-- [首页](/)
+- [首页](/index)
 - [组件库](/docs/react/introduce)
 - [更新日志](/changelog)
 - [脚手架市场](http://scaffold.ant.design)
