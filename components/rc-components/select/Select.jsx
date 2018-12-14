@@ -1396,7 +1396,10 @@ export default class Select extends React.Component {
     }
 
     let newValues;
-    const values = this._options.map((option) => {
+    const values = this._options.filter((option) => {
+      // 当这个选项为禁用时，全选和无不对这个选项做处理
+      return option.props.disabled !== true;
+    }).map((option) => {
       return getValuePropValue(option);
     });
     if (name === 'check-all') {
