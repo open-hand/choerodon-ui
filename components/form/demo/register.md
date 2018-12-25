@@ -162,7 +162,7 @@ class RegistrationForm extends React.Component {
               validator: this.validateToNextPassword,
             }],
           })(
-            <Input label="password" type="password" />
+            <Input showPasswordEye label="password" type="password" />
           )}
         </FormItem>
         <FormItem
@@ -176,7 +176,7 @@ class RegistrationForm extends React.Component {
               validator: this.compareToFirstPassword,
             }],
           })(
-            <Input label="password" type="password" onBlur={this.handleConfirmBlur} />
+            <Input showPasswordEye label="password" type="password" onBlur={this.handleConfirmBlur} />
           )}
         </FormItem>
         <FormItem

@@ -38,6 +38,21 @@ import RcTable from '../rc-components/table';
 function noop() {
 }
 
+function findBodyDom(dom: Element | HTMLDivElement): any {
+  if (dom.childElementCount > 0) {
+    for (let i = 0; i < dom.childElementCount; i += 1) {
+      if (/ant-table-body/.test(dom.children[i].className)) {
+        return dom.children[i];
+      } else if (dom.childElementCount > 0) {
+        if (findBodyDom(dom.children[i]) !== null) {
+          return findBodyDom(dom.children[i]);
+        }
+      }
+    }
+  }
+  return null;
+}
+
 function stopPropagation(e: React.SyntheticEvent<any>) {
   e.stopPropagation();
   if (e.nativeEvent.stopImmediatePropagation) {
@@ -83,6 +98,7 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
     filterBarPlaceholder: PropTypes.string,
     onFilterSelectChange: PropTypes.func,
     noFilter: PropTypes.bool,
+    autoScroll: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -101,6 +117,7 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
     showHeader: true,
     filterBar: true,
     noFilter: false,
+    autoScroll: true,
   };
 
   CheckboxPropsCache: {
@@ -109,6 +126,7 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
   store: Store;
   columns: ColumnProps<T>[];
   components: TableComponents;
+  private refTable: HTMLDivElement | null;
 
   constructor(props: TableProps<T>) {
     super(props);
@@ -614,6 +632,23 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
   handlePageChange = (current: number, ...otherArguments: any[]) => {
     const props = this.props;
     let pagination = { ...this.state.pagination };
+    if (props.autoScroll) {
+      setTimeout(() => {
+        if (this.refTable) {
+          // @ts-ignore
+          this.refTable.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+          });
+        }
+      }, 10);
+      if (this.refTable) {
+        const dom = findBodyDom(this.refTable);
+        if (dom !== null && dom.scroll) {
+          dom.scrollTop = 0;
+        }
+      }
+    }
     if (current) {
       pagination.current = current;
     } else {
@@ -1118,6 +1153,7 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
       <div
         className={classNames(`${prefixCls}-wrapper`, className)}
         style={style}
+        ref={ref => { this.refTable = ref; }}
       >
         <Spin
           {...loading}
