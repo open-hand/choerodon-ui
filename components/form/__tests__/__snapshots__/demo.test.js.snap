@@ -1875,6 +1875,13 @@ exports[`renders ./components/form/demo/register.md correctly 1`] = `
                     type="text"
                     value=""
                   />
+                  <span
+                    class="ant-input-icon"
+                  >
+                    <i
+                      class="icon icon-visibility_off ant-input-icon-copy"
+                    />
+                  </span>
                 </div>
               </div>
             </div>
@@ -1930,6 +1937,13 @@ exports[`renders ./components/form/demo/register.md correctly 1`] = `
                     type="text"
                     value=""
                   />
+                  <span
+                    class="ant-input-icon"
+                  >
+                    <i
+                      class="icon icon-visibility_off ant-input-icon-copy"
+                    />
+                  </span>
                 </div>
               </div>
             </div>
