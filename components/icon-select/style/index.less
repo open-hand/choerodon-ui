@@ -10,6 +10,27 @@
   }
   &-dropdown {
     min-width: 512px;
+    .@{select-prefix-cls}-dropdown-menu {
+      max-height: 300px;
+      i {
+        font-size: 30px;
+        width: 100%;
+        text-align: center;
+        margin-top: 5px;
+        display: inline-block;
+      }
+      .text {
+        text-align: center;
+        text-overflow: ellipsis;
+        line-height: 18px;
+        overflow: hidden;
+        margin-bottom: 5px;
+        display: block;
+      }
+      li {
+        padding: 0 5px !important;
+      }
+    }
     .@{select-prefix-cls}-dropdown-filter + div > .@{select-prefix-cls}-dropdown-menu li {
       width: 85px;
       line-height: 28px;
