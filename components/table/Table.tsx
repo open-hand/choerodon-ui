@@ -637,7 +637,6 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
         if (this.refTable) {
           // @ts-ignore
           this.refTable.scrollIntoView({
-            behavior: 'smooth',
             block: 'start',
           });
         }
