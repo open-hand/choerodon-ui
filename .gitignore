@@ -35,6 +35,7 @@ yarn.lock
 package-lock.json
 components/**/*.js
 components/**/*.jsx
+components/style/core/fonts
 !components/rc-components/**/*.jsx
 !components/rc-components/**/*.js
 components/rc-components/dialog/*.jsx
