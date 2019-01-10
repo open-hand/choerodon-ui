@@ -89,6 +89,7 @@ export interface TableProps<T> {
   prefixCls?: string;
   dropdownPrefixCls?: string;
   noFilter?: boolean;
+  autoScroll?: boolean;
   rowSelection?: TableRowSelection<T>;
   pagination?: TablePaginationConfig | false;
   size?: 'default' | 'middle' | 'small';

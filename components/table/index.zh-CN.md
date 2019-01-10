@@ -53,6 +53,7 @@ const columns = [{
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
+| autoScroll | 是否在翻页时自动滚动到表格可视区域，并滚动到第一条 | boolean | true |
 | bordered | 是否展示外边框和列边框 | boolean | false |
 | columns | 表格列的配置描述，具体项见下表 | [ColumnProps](https://git.io/vMMXC)\[] | - |
 | components | 覆盖默认的 table 元素 | object | - |
