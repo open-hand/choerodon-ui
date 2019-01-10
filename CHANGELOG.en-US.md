@@ -15,6 +15,14 @@ timeline: true
 
 ---
 
+## 0.5.0
+
+`2018-01-10`
+
+- Change the source of the icon font file to change it from the npm library and package it locally.
+- 💄 `IconSelect`:  Optimize IconSelect, the icon is larger, and only the common icons are retained.
+- 💄 `table`: Optimize the table to automatically return to the first element when turning pages.
+
 ## 0.4.5
 
 `2018-12-11`
