@@ -146,16 +146,18 @@ export default class MainContent extends React.Component {
         disabled={disabled}
       >
         {text}
-      </Link>) : (
-        <a
-          href={item.link}
-          target="_blank"
-          rel="noopener noreferrer"
-          disabled={disabled}
-          className="menu-item-link-outside"
-        >
-          {text} <Icon type="export" />
-        </a>);
+      </Link>
+    ) : (
+      <a
+        href={item.link}
+        target="_blank"
+        rel="noopener noreferrer"
+        disabled={disabled}
+        className="menu-item-link-outside"
+      >
+        {text} <Icon type="export" />
+      </a>
+    );
 
     return (
       <Menu.Item key={key.toLowerCase()} disabled={disabled}>
@@ -241,7 +243,8 @@ export default class MainContent extends React.Component {
         onOpenChange={this.handleMenuOpenChange}
       >
         {menuItems}
-      </Menu>);
+      </Menu>
+    );
     return (
       <div className="main-wrapper">
         <Row>
@@ -252,10 +255,11 @@ export default class MainContent extends React.Component {
               wrapperClassName="drawer-wrapper"
             >
               {menuChild}
-            </MobileMenu>) : (
-              <Col xxl={4} xl={5} lg={6} md={24} sm={24} xs={24} className="main-menu">
-                {menuChild}
-              </Col>
+            </MobileMenu>
+          ) : (
+            <Col xxl={4} xl={5} lg={6} md={24} sm={24} xs={24} className="main-menu">
+              {menuChild}
+            </Col>
           )}
           <Col xxl={20} xl={19} lg={18} md={24} sm={24} xs={24} className={mainContainerClass}>
             {
