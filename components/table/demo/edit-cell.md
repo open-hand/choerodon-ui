@@ -55,15 +55,17 @@ class EditableCell extends React.Component {
                 className="editable-cell-icon-check"
                 onClick={this.check}
               />
-            </div>) : (
-              <div className="editable-cell-text-wrapper">
-                {value || ' '}
-                <Icon
-                  type="mode_edit"
-                  className="editable-cell-icon"
-                  onClick={this.edit}
-                />
-              </div>)
+            </div>
+          ) : (
+            <div className="editable-cell-text-wrapper">
+              {value || ' '}
+              <Icon
+                type="mode_edit"
+                className="editable-cell-icon"
+                onClick={this.edit}
+              />
+            </div>
+          )
         }
       </div>
     );

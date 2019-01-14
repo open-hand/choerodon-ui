@@ -58,10 +58,11 @@ export default function Page3({ locale }) {
           item.to ? (
             <Link to={utils.getLocalizedPathname(item.to, isZhCN)}>
               {child}
-            </Link>) : (
-              <a href={item.link} target="_black">
-                {child}
-              </a>
+            </Link>
+          ) : (
+            <a href={item.link} target="_black">
+              {child}
+            </a>
           )
         }
       </Col>

@@ -112,7 +112,8 @@ export default class Article extends React.Component {
                       ['ul', { className: 'toc' }].concat(getChildren(content.toc))
                     )
                   }
-                </Affix>)
+                </Affix>
+              )
           }
           {
             this.getArticle(props.utils.toReactComponent(
