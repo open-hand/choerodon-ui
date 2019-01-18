@@ -1,3 +1,16 @@
+Choerodon-ui authors
+
+DouglasDong <ad546971975@gmail.com>
+HughHzWu <99571603@qq.com>
+陈彬杰 <binjie.chen@hand-china.com>
+Vink Dong <dong@wenqi.us>
+binjie chen <binjie.chen@hand-china.com>
+binjie09 <binjie09@gmail.com>
+fan <fan@choerodon.io>
+hulingfangzi <hulingfangzi@163.com>
+xuhailin <xuhailin_xhl@sina.com>
+
+Antd authors:
 778758944 <778758944@qq.com>
 Aaron Planell López <aaronplanell@gmail.com>
 Adrian Dimitrov <dimitrov.adrian@gmail.com>

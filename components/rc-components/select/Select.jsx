@@ -469,13 +469,7 @@ export default class Select extends React.Component {
           }
         }
       } else if (isMultipleOrTags(props) && inputValue) {
-        // why not use setState?
-        this.state.inputValue = this.getInputDOMNode().value = '';
-
         value = this.getValueByInput(inputValue);
-        if (value !== undefined) {
-          this.fireChange(value);
-        }
       }
       props.onBlur(this.getVLForOnChange(value));
 
