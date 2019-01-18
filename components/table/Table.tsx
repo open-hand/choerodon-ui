@@ -636,7 +636,7 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
       setTimeout(() => {
         if (this.refTable) {
           // @ts-ignore
-          this.refTable.scrollIntoView({
+          this.refTable.scrollIntoViewIfNeeded({
             block: 'start',
           });
         }
