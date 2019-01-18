@@ -37,7 +37,6 @@ Catalin Miron <mironcatalin@gmail.com>
 Cee Cirno <i@cee.moe>
 Chang Wang <cheapsteak@gmail.com>
 Chikara Chan <chenhongtu@51xianqu.net>
-Chris Kelly <cjke.7777@gmail.com>
 ChrisFan <chris.fan.dev@gmail.com>
 Christopher Deutsch <cd@cdeutsch.com>
 Chuang Yu <cyu9960@gmail.com>
