@@ -48,6 +48,7 @@ export interface SelectProps extends AbstractSelectProps {
   onPopupScroll?: () => any;
   onInputKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   onChoiceItemClick?: (value: SelectValue, option: React.ReactElement<any>) => void;
+  onClear?: () => any;
   maxTagCount?: number;
   maxTagPlaceholder?: React.ReactNode | ((omittedValues: SelectValue[]) => React.ReactNode);
   dropdownMatchSelectWidth?: boolean;
@@ -116,6 +117,7 @@ const SelectPropTypes = {
     PropTypes.func,
   ]),
   onChoiceRemove: PropTypes.func,
+  onClear: PropTypes.func,
 };
 
 // => It is needless to export the declaration of below two inner components.

@@ -124,6 +124,7 @@ export default class Select extends React.Component {
     onDeselect: noop,
     onInputKeyDown: noop,
     onChoiceItemClick: noop,
+    onClear: noop,
     showArrow: true,
     dropdownMatchSelectWidth: true,
     dropdownStyle: {},
@@ -485,6 +486,7 @@ export default class Select extends React.Component {
     const { inputValue, value } = state;
     event.stopPropagation();
     if (inputValue || value.length) {
+      props.onClear();
       if (value.length) {
         this.fireChange([]);
       }

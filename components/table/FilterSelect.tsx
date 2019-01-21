@@ -111,6 +111,7 @@ export default class FilterSelect<T> extends React.Component<FilterSelectProps<T
           onSelect={multiple ? this.handleSelect : undefined}
           onInput={this.handleInput}
           onInputKeyDown={this.handleInputKeyDown}
+          onClear={this.handleClear}
           value={this.getValue()}
           placeholder={this.props.placeholder}
           notFoundContent={false}
@@ -274,6 +275,10 @@ export default class FilterSelect<T> extends React.Component<FilterSelectProps<T
         });
       }
     }
+  };
+
+  handleClear = () => {
+    this.setState({ selectColumn: undefined });
   };
 
   handleChange = (changedValue: LabeledValue[]) => {
