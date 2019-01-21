@@ -634,7 +634,11 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
     let pagination = { ...this.state.pagination };
     if (props.autoScroll) {
       setTimeout(() => {
-        if (this.refTable) {
+        if (this.refTable && this.refTable.clientHeight > document.body.clientHeight) {
+          this.refTable.scrollIntoView({
+            block: 'start',
+          });
+        } else if (this.refTable) {
           // @ts-ignore
           this.refTable.scrollIntoViewIfNeeded({
             block: 'start',
