@@ -233,7 +233,7 @@ export default class FilterSelect<T> extends React.Component<FilterSelectProps<T
     const { checked, selectColumn } = this.state;
     if (key === '__ok__') {
       this.handleMultiCheckConfirm();
-    } else {
+    } else if (key !== `${selectColumn && selectColumn.title}:`) {
       const index = checked.indexOf(key);
       if (index === -1) {
         checked.push(key);
