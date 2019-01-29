@@ -51,8 +51,8 @@ export default class Dropdown extends React.Component<DropDownProps, any> {
   render() {
     const { children, prefixCls, overlay: overlayElements, trigger, disabled } = this.props;
 
-    const child = React.Children.only(children);
-    const overlay = React.Children.only(overlayElements);
+    const child = React.Children.only(children) as React.ReactElement<any>;
+    const overlay = React.Children.only(overlayElements) as React.ReactElement<any>;
 
     const dropdownTrigger = React.cloneElement(child, {
       className: classNames(child.props.className, `${prefixCls}-trigger`),
