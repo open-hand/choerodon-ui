@@ -35,6 +35,7 @@ export interface LabeledValue {
 export type SelectValue = string | any[] | LabeledValue | LabeledValue[];
 
 export interface SelectProps extends AbstractSelectProps {
+  blurChange?: boolean;
   value?: SelectValue;
   defaultValue?: SelectValue;
   mode?: 'default' | 'multiple' | 'tags' | 'combobox';
@@ -128,6 +129,7 @@ export default class Select extends React.Component<SelectProps, {}> {
   static OptGroup = OptGroup as React.ClassicComponentClass<OptGroupProps>;
 
   static defaultProps = {
+    blurChange: true,
     prefixCls: 'ant-select',
     showSearch: false,
     transitionName: 'slide-up',

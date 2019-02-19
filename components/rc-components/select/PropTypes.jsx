@@ -41,6 +41,7 @@ function valueType(props, propName, componentName) {
 }
 
 export const SelectPropTypes = {
+  blurChange: PropTypes.bool,
   defaultActiveFirstOption: PropTypes.bool,
   multiple: PropTypes.bool,
   filterOption: PropTypes.any,

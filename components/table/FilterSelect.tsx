@@ -128,6 +128,7 @@ export default class FilterSelect<T> extends React.Component<FilterSelectProps<T
           getPopupContainer={this.props.getPopupContainer}
           allowClear
           labelInValue
+          blurChange={false}
         >
           {this.getOptions()}
         </Select>
