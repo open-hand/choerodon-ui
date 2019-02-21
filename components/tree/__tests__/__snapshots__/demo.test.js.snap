@@ -186,6 +186,7 @@ exports[`renders ./components/tree/demo/basic-controlled.md correctly 1`] = `
       class="ant-tree-switcher ant-tree-switcher_open"
     >
       <i
+        aria-label="icon: caret-down"
         class="anticon anticon-caret-down ant-tree-switcher-icon"
       >
         <svg
@@ -233,6 +234,7 @@ exports[`renders ./components/tree/demo/basic-controlled.md correctly 1`] = `
           class="ant-tree-switcher ant-tree-switcher_open"
         >
           <i
+            aria-label="icon: caret-down"
             class="anticon anticon-caret-down ant-tree-switcher-icon"
           >
             <svg
@@ -357,6 +359,7 @@ exports[`renders ./components/tree/demo/basic-controlled.md correctly 1`] = `
           class="ant-tree-switcher ant-tree-switcher_open"
         >
           <i
+            aria-label="icon: caret-down"
             class="anticon anticon-caret-down ant-tree-switcher-icon"
           >
             <svg
@@ -508,6 +511,7 @@ exports[`renders ./components/tree/demo/basic-controlled.md correctly 1`] = `
       class="ant-tree-switcher ant-tree-switcher_close"
     >
       <i
+        aria-label="icon: caret-down"
         class="anticon anticon-caret-down ant-tree-switcher-icon"
       >
         <svg

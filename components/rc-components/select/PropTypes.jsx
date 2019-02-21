@@ -41,6 +41,7 @@ function valueType(props, propName, componentName) {
 }
 
 export const SelectPropTypes = {
+  blurChange: PropTypes.bool,
   defaultActiveFirstOption: PropTypes.bool,
   multiple: PropTypes.bool,
   filterOption: PropTypes.any,
@@ -58,6 +59,7 @@ export const SelectPropTypes = {
   animation: PropTypes.string,
   choiceTransitionName: PropTypes.string,
   onChange: PropTypes.func,
+  onClear: PropTypes.func,
   onBlur: PropTypes.func,
   onFocus: PropTypes.func,
   onSelect: PropTypes.func,

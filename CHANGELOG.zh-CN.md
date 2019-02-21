@@ -15,6 +15,16 @@ timeline: true
 
 ---
 
+## 0.5.1
+
+`2018-02-19`
+
+- 💄 `Form.Item`:  Form.Item验证为error时不隐藏后缀图标。
+- 💄 `Table`:  Table过滤失去焦点后不清空。
+- 💄 `Table`:  Table过滤的清空icon在有内容时就显示。
+- 💄 `Table`:  Table中过滤的确认按钮固定在选择框底部。
+- 🌟 `Icon`: 增加新的图标。
+
 ## 0.5.0
 
 `2018-01-10`

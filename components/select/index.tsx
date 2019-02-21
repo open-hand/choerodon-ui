@@ -35,6 +35,7 @@ export interface LabeledValue {
 export type SelectValue = string | any[] | LabeledValue | LabeledValue[];
 
 export interface SelectProps extends AbstractSelectProps {
+  blurChange?: boolean;
   value?: SelectValue;
   defaultValue?: SelectValue;
   mode?: 'default' | 'multiple' | 'tags' | 'combobox';
@@ -48,6 +49,7 @@ export interface SelectProps extends AbstractSelectProps {
   onPopupScroll?: () => any;
   onInputKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   onChoiceItemClick?: (value: SelectValue, option: React.ReactElement<any>) => void;
+  onClear?: () => any;
   maxTagCount?: number;
   maxTagPlaceholder?: React.ReactNode | ((omittedValues: SelectValue[]) => React.ReactNode);
   dropdownMatchSelectWidth?: boolean;
@@ -116,6 +118,7 @@ const SelectPropTypes = {
     PropTypes.func,
   ]),
   onChoiceRemove: PropTypes.func,
+  onClear: PropTypes.func,
 };
 
 // => It is needless to export the declaration of below two inner components.
@@ -126,6 +129,7 @@ export default class Select extends React.Component<SelectProps, {}> {
   static OptGroup = OptGroup as React.ClassicComponentClass<OptGroupProps>;
 
   static defaultProps = {
+    blurChange: true,
     prefixCls: 'ant-select',
     showSearch: false,
     transitionName: 'slide-up',

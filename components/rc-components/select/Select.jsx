@@ -109,6 +109,7 @@ export default class Select extends React.Component {
   static propTypes = SelectPropTypes;
 
   static defaultProps = {
+    blurChange: true,
     prefixCls: 'rc-select',
     defaultOpen: false,
     labelInValue: false,
@@ -124,6 +125,7 @@ export default class Select extends React.Component {
     onDeselect: noop,
     onInputKeyDown: noop,
     onChoiceItemClick: noop,
+    onClear: noop,
     showArrow: true,
     dropdownMatchSelectWidth: true,
     dropdownStyle: {},
@@ -469,7 +471,15 @@ export default class Select extends React.Component {
           }
         }
       } else if (isMultipleOrTags(props) && inputValue) {
+        if (this.props.blurChange) {
+          // why not use setState?
+          this.state.inputValue = this.getInputDOMNode().value = '';
+        }
+
         value = this.getValueByInput(inputValue);
+        if (value !== undefined && this.props.blurChange) {
+          this.fireChange(value);
+        }
       }
       props.onBlur(this.getVLForOnChange(value));
 
@@ -485,6 +495,7 @@ export default class Select extends React.Component {
     const { inputValue, value } = state;
     event.stopPropagation();
     if (inputValue || value.length) {
+      props.onClear();
       if (value.length) {
         this.fireChange([]);
       }
