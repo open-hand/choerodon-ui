@@ -14,6 +14,15 @@ timeline: true
 * Major version release is not included in this schedule for breaking change and new features.
 
 ---
+## 0.5.1
+
+`2018-02-19`
+
+- 💄 `Form.Item`:  The suffix icon is not hidden when Form.Item is verified as error.
+- 💄 `Table`:  Table filter does not clear after blur.
+- 💄 `Table`:  Table filter clear icon is displayed when there is content.
+- 💄 `Table`:  The confirmation button filtered in the Table is fixed at the bottom of the selection box.
+- 🌟 `Icon`: Add new icons.
 
 ## 0.5.0
 
