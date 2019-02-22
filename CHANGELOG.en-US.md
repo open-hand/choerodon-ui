@@ -14,6 +14,13 @@ timeline: true
 * Major version release is not included in this schedule for breaking change and new features.
 
 ---
+## 0.5.2
+
+`2018-02-22`
+
+- 💄 `Table`:  The confirmation button for the filter in the repair table is fixed at the bottom of the selection box and the style is overwritten.
+- 🌟 `Sidebar`: add `alwaysCanCancel`.
+
 ## 0.5.1
 
 `2018-02-19`
