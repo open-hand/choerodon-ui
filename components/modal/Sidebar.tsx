@@ -10,6 +10,7 @@ export interface SidebarState {
 
 export interface SidebarProps extends ModalFuncProps {
   close?: (...args: any[]) => void;
+  alwaysCanCancel?: boolean;
 }
 
 export default class Sidebar extends React.Component<SidebarProps, {}> {
@@ -20,6 +21,7 @@ export default class Sidebar extends React.Component<SidebarProps, {}> {
     transitionName: 'slide-right',
     maskTransitionName: 'fade',
     confirmLoading: false,
+    alwaysCanCancel: false,
     visible: false,
     okType: 'primary',
     funcType: 'raised',
@@ -49,7 +51,7 @@ export default class Sidebar extends React.Component<SidebarProps, {}> {
 
   renderFooter = () => {
     const props = this.props;
-    const { prefixCls, onCancel, onOk, okType, funcType, confirmLoading } = props;
+    const { prefixCls, onCancel, onOk, okType, funcType, confirmLoading, alwaysCanCancel } = props;
     const okCancel = ('okCancel' in props) ? props.okCancel! : true;
     const runtimeLocale = getConfirmLocale();
     const okText = props.okText ||
@@ -59,7 +61,7 @@ export default class Sidebar extends React.Component<SidebarProps, {}> {
     const  cancalBtn = okCancel ? (
       <Button
         className={`${prefixCls}-btn-cancel`}
-        disabled={confirmLoading}
+        disabled={!alwaysCanCancel && confirmLoading}
         funcType={funcType}
         onClick={onCancel}
       >
@@ -86,7 +88,7 @@ export default class Sidebar extends React.Component<SidebarProps, {}> {
     this.setState({
       open: !open,
     })
-  }
+  };
 
   render() {
     const props = this.props;
