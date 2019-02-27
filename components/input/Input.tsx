@@ -373,7 +373,7 @@ export default class Input extends React.Component<InputProps, any> {
   getLengthInfo() {
     const { prefixCls, maxLength } = this.props;
     const { inputLength, showLengthInfo } = this.state;
-    return maxLength && showLengthInfo ? (
+    return (maxLength && showLengthInfo) || (maxLength && maxLength > 0 && inputLength === maxLength ) ? (
       <span className={`${prefixCls}-icon`}>
         <span className={`${prefixCls}-icon-copy ${prefixCls}-length-info`}>{`${inputLength}/${maxLength}`}</span>
       </span>
