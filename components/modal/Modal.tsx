@@ -16,6 +16,10 @@ export interface ModalProps {
   visible?: boolean;
   /** 确定按钮 loading*/
   confirmLoading?: boolean;
+  /** ok按钮是否禁用 loading*/
+  disableOk?: boolean;
+  /** Cancel按钮是否禁用 loading*/
+  disableCancel?: boolean;
   /** 标题*/
   title?: React.ReactNode | string;
   /** 是否显示右上角的关闭按钮*/
@@ -77,6 +81,8 @@ export interface ModalFuncProps {
   transitionName?: string;
   funcType?: ButtonFuncType;
   confirmLoading?: boolean,
+  disableOk?: boolean,
+  disableCancel?: boolean,
   footer?: React.ReactNode;
 }
 
@@ -105,6 +111,8 @@ export default class Modal extends React.Component<ModalProps, {}> {
     transitionName: 'zoom',
     maskTransitionName: 'fade',
     confirmLoading: false,
+    disableOk: false,
+    disableCancel: false,
     visible: false,
     okType: 'primary',
     center: false,
@@ -161,11 +169,11 @@ export default class Modal extends React.Component<ModalProps, {}> {
   }
 
   renderFooter = (locale: ModalLocale) => {
-    const { okText, okType, cancelText, confirmLoading, funcType } = this.props;
+    const { okText, okType, cancelText, confirmLoading, funcType, disableOk, disableCancel } = this.props;
     return (
       <div>
         <Button
-          disabled={confirmLoading}
+          disabled={disableCancel || confirmLoading}
           onClick={this.handleCancel}
           funcType={funcType}
         >
@@ -174,8 +182,10 @@ export default class Modal extends React.Component<ModalProps, {}> {
         <Button
           type={okType}
           funcType={funcType}
+          disabled={disableOk}
           loading={confirmLoading}
           onClick={this.handleOk}
+
         >
           {okText || locale.okText}
         </Button>
