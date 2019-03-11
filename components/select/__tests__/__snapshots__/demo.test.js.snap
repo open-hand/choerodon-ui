@@ -801,7 +801,6 @@ exports[`renders ./components/select/demo/size.md correctly 1`] = `
           <li
             class="ant-select-selection__choice"
             style="user-select:none;-webkit-user-select:none"
-            title="a10"
             unselectable="unselectable"
           >
             <div
@@ -823,7 +822,6 @@ exports[`renders ./components/select/demo/size.md correctly 1`] = `
           <li
             class="ant-select-selection__choice"
             style="user-select:none;-webkit-user-select:none"
-            title="c12"
             unselectable="unselectable"
           >
             <div
@@ -906,7 +904,6 @@ exports[`renders ./components/select/demo/size.md correctly 1`] = `
           <li
             class="ant-select-selection__choice"
             style="user-select:none;-webkit-user-select:none"
-            title="a10"
             unselectable="unselectable"
           >
             <div
@@ -928,7 +925,6 @@ exports[`renders ./components/select/demo/size.md correctly 1`] = `
           <li
             class="ant-select-selection__choice"
             style="user-select:none;-webkit-user-select:none"
-            title="c12"
             unselectable="unselectable"
           >
             <div

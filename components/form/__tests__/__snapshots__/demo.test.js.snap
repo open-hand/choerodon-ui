@@ -792,7 +792,7 @@ exports[`renders ./components/form/demo/customized-form-controls.md correctly 1`
           <span>
             <span
               class="ant-input-wrapper"
-              style="width:65%;margin-right:3%"
+              style="width:65%;margin-right:3%;line-height:1.7"
             >
               <div
                 class="ant-input-content"
@@ -1326,7 +1326,7 @@ exports[`renders ./components/form/demo/horizontal-login.md correctly 1`] = `
                     data-__field="[object Object]"
                     data-__meta="[object Object]"
                     id="password"
-                    type="password"
+                    type="text"
                     value=""
                   />
                 </div>
@@ -1694,7 +1694,7 @@ exports[`renders ./components/form/demo/normal-login.md correctly 1`] = `
                     data-__field="[object Object]"
                     data-__meta="[object Object]"
                     id="password"
-                    type="password"
+                    type="text"
                     value=""
                   />
                 </div>
@@ -1872,9 +1872,16 @@ exports[`renders ./components/form/demo/register.md correctly 1`] = `
                     data-__field="[object Object]"
                     data-__meta="[object Object]"
                     id="password"
-                    type="password"
+                    type="text"
                     value=""
                   />
+                  <span
+                    class="ant-input-icon"
+                  >
+                    <i
+                      class="icon icon-visibility_off ant-input-icon-copy"
+                    />
+                  </span>
                 </div>
               </div>
             </div>
@@ -1927,9 +1934,16 @@ exports[`renders ./components/form/demo/register.md correctly 1`] = `
                     data-__field="[object Object]"
                     data-__meta="[object Object]"
                     id="confirm"
-                    type="password"
+                    type="text"
                     value=""
                   />
+                  <span
+                    class="ant-input-icon"
+                  >
+                    <i
+                      class="icon icon-visibility_off ant-input-icon-copy"
+                    />
+                  </span>
                 </div>
               </div>
             </div>
@@ -1988,6 +2002,15 @@ exports[`renders ./components/form/demo/register.md correctly 1`] = `
                   />
                 </div>
               </div>
+              <span
+                class="ant-input-icon"
+              >
+                <span
+                  class="ant-input-icon-copy ant-input-length-info"
+                >
+                  0/20
+                </span>
+              </span>
             </div>
             <div
               class="ant-input-underline"
@@ -1995,11 +2018,6 @@ exports[`renders ./components/form/demo/register.md correctly 1`] = `
               <span
                 class="ant-input-ripple"
               />
-            </div>
-            <div
-              class="ant-input-length-info"
-            >
-              0/20
             </div>
           </span>
         </span>

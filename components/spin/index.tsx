@@ -139,7 +139,7 @@ export default class Spin extends React.Component<SpinProps, SpinState> {
     ]);
 
     const spinElement = (
-      <div {...divProps} className={spinClassName}>
+      <div {...divProps} className={spinClassName} key="loading">
         {this.renderIndicator()}
         {tip ? <div className={`${prefixCls}-text`}>{tip}</div> : null}
       </div>
@@ -161,7 +161,7 @@ export default class Spin extends React.Component<SpinProps, SpinState> {
           style={null}
           transitionName="fade"
         >
-          {spinning && <div key="loading">{spinElement}</div>}
+          {spinning && spinElement}
           <div className={containerClassName} key="container">
             {children}
           </div>

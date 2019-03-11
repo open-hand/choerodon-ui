@@ -20,6 +20,7 @@ cols: 1
 | --- | --- | --- | --- |
 | bordered | 是否展示边框 | boolean | false |
 | footer | 列表底部 | string\|ReactNode | - |
+| empty | 当数据源为空时显示的内容 | string\|ReactNode | - |
 | grid | 列表栅格配置 | object | - |
 | header | 列表头部 | string\|ReactNode | - |
 | itemLayout | 设置 `List.Item` 布局, 设置成 `vertical` 则竖直样式显示, 默认横排 | string | - |

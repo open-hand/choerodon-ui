@@ -12,7 +12,7 @@ export default class RippleChild extends React.Component<RippleChildProps> {
   currentStyle: any;
 
   render() {
-    return this.ripple(React.Children.only(this.props.children));
+    return this.ripple(React.Children.only(this.props.children) as React.ReactElement<any>);
   }
 
   handleMouseDown(child: React.ReactElement<any>, size?: Size) {

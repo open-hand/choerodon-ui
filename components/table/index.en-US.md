@@ -62,6 +62,7 @@ const columns = [{
 | expandedRowRender | Expanded container render for each row | Function(record):ReactNode | - |
 | expandRowByClick | Whether to expand row by clicking anywhere in the whole row | boolean | `false` |
 | footer | Table footer renderer | Function(currentPageData) |  |
+| empty | Display while dataSource has't data | ReactNode | - |
 | indentSize | Indent size in pixels of tree data | number | 15 |
 | loading | Loading status of table | boolean\|[object](https://ant.design/components/spin-cn/#API) ([more](https://github.com/ant-design/ant-design/issues/4544#issuecomment-271533135)) | `false` |
 | locale | i18n text including filter, sort, empty text, etc | object | filterConfirm: 'Ok' <br> filterReset: 'Reset' <br> emptyText: 'No Data' <br> [Default](https://github.com/ant-design/ant-design/issues/575#issuecomment-159169511) |
@@ -74,6 +75,7 @@ const columns = [{
 | size | Size of table | `default` \| `middle` \| `small` | `default` |
 | title | Table title renderer | Function(currentPageData) |  |
 | onChange | Callback executed when pagination, filters or sorter is changed | Function(pagination, filters, sorter) |  |
+| onColumnFilterChange | Callback executed when ColumnFilter is changed | Function(item) | |
 | onExpand | Callback executed when the row expand icon is clicked | Function(expanded, record) |  |
 | onExpandedRowsChange | Callback executed when the expanded rows change | Function(expandedRows) |  |
 | onHeaderRow | Set props on per header row | Function(column, index) | - |

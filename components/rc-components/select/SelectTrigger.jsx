@@ -63,6 +63,7 @@ export default class SelectTrigger extends React.Component {
       PropTypes.bool,
       PropTypes.object,
     ]),
+    onKeyDown: PropTypes.func,
   };
 
   static defaultProps = {
@@ -118,6 +119,7 @@ export default class SelectTrigger extends React.Component {
           onMenuSelect={props.onMenuSelect}
           onMenuDeselect={props.onMenuDeselect}
           onPopupScroll={props.onPopupScroll}
+          onKeyDown={props.onKeyDown}
           value={props.value}
           placeholder={props.filterPlaceholder}
           checkAll={props.checkAll}

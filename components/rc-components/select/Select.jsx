@@ -109,6 +109,7 @@ export default class Select extends React.Component {
   static propTypes = SelectPropTypes;
 
   static defaultProps = {
+    blurChange: true,
     prefixCls: 'rc-select',
     defaultOpen: false,
     labelInValue: false,
@@ -124,6 +125,7 @@ export default class Select extends React.Component {
     onDeselect: noop,
     onInputKeyDown: noop,
     onChoiceItemClick: noop,
+    onClear: noop,
     showArrow: true,
     dropdownMatchSelectWidth: true,
     dropdownStyle: {},
@@ -141,6 +143,8 @@ export default class Select extends React.Component {
     showCheckAll: true,
     loading: false,
   };
+
+  needExpand = true;
 
   constructor(props) {
     super(props);
@@ -272,22 +276,24 @@ export default class Select extends React.Component {
 
   onDropdownVisibleChange = open => {
     const { filter } = this.props;
-    if (open && !this._focused) {
-      this.clearBlurTime();
-      this.timeoutFocus();
-      this._focused = true;
-      this.updateFocusClassName();
+    if (this.needExpand) {
+      if (open && !this._focused) {
+        this.clearBlurTime();
+        this.timeoutFocus();
+        this._focused = true;
+        this.updateFocusClassName();
+      }
+      if (filter) {
+        this.onFilterChange('');
+      }
+      if (open && filter) {
+        setTimeout(() => {
+          const filterInput = this.selectTriggerRef.getFilterInput();
+          filterInput && filterInput.focus();
+        }, 20);
+      }
+      this.setOpenState(open);
     }
-    if (filter) {
-      this.onFilterChange('');
-    }
-    if (open && filter) {
-      setTimeout(() => {
-        const filterInput = this.selectTriggerRef.getFilterInput();
-        filterInput && filterInput.focus();
-      }, 20);
-    }
-    this.setOpenState(open);
   };
 
   // combobox ignore
@@ -390,11 +396,16 @@ export default class Select extends React.Component {
   };
 
   onMenuDeselect = ({ item, domEvent }) => {
+    if (domEvent.type === 'keydown' && domEvent.keyCode === KeyCode.ENTER) {
+      this.removeSelected(getValuePropValue(item), null);
+      return;
+    }
     if (domEvent.type === 'click') {
       this.removeSelected(getValuePropValue(item), null);
     }
-    if (!this.props.filter) {
-      this.setInputValue('', true);
+    const { props } = this;
+    if (props.autoClearSearchValue) {
+      this.setInputValue('', false);
     }
   };
 
@@ -423,7 +434,10 @@ export default class Select extends React.Component {
     }
     this._focused = true;
     this.updateFocusClassName();
-    this.timeoutFocus();
+    // only effect multiple or tag mode
+    if (!isMultipleOrTags(this.props) || !this._mouseDown) {
+      this.timeoutFocus();
+    }
   };
 
   onPopupFocus = () => {
@@ -457,11 +471,13 @@ export default class Select extends React.Component {
           }
         }
       } else if (isMultipleOrTags(props) && inputValue) {
-        // why not use setState?
-        this.state.inputValue = this.getInputDOMNode().value = '';
+        if (this.props.blurChange) {
+          // why not use setState?
+          this.state.inputValue = this.getInputDOMNode().value = '';
+        }
 
         value = this.getValueByInput(inputValue);
-        if (value !== undefined) {
+        if (value !== undefined && this.props.blurChange) {
           this.fireChange(value);
         }
       }
@@ -479,6 +495,7 @@ export default class Select extends React.Component {
     const { inputValue, value } = state;
     event.stopPropagation();
     if (inputValue || value.length) {
+      props.onClear();
       if (value.length) {
         this.fireChange([]);
       }
@@ -785,6 +802,21 @@ export default class Select extends React.Component {
     return hasNewValue ? nextValue : undefined;
   };
 
+  getRealOpenState = (state) => {
+    const { open: _open } = this.props;
+    if (typeof _open === 'boolean') {
+      return _open;
+    }
+    let open = (state || this.state).open;
+    const options = this._options || [];
+    if (isMultipleOrTagsOrCombobox(this.props) || !this.props.showSearch) {
+      if (open && !options.length) {
+        open = false;
+      }
+    }
+    return open;
+  };
+
   focus = () => {
     if (isSingleMode(this.props)) {
       this.selectionRef.focus();
@@ -912,6 +944,10 @@ export default class Select extends React.Component {
   };
 
   removeSelected = (selectedKey, index, e) => {
+    this.needExpand = false;
+    setTimeout(() => {
+      this.needExpand = true;
+    }, 100);
     if (e) {
       e.preventDefault();
     }
@@ -1226,9 +1262,9 @@ export default class Select extends React.Component {
           style={UNSELECTABLE_STYLE}
           {...UNSELECTABLE_ATTRIBUTE}
           onMouseDown={preventDefaultEvent}
-          className={`${prefixCls}-selection__choice ${prefixCls}-selection__choice__disabled`}
+          className={`${prefixCls}-selection__choice ${prefixCls}-selection__choice__disabled ${prefixCls}-selection__max`}
           key={'maxTagPlaceholder'}
-          title={content}
+          // title={content}
         >
           <div className={`${prefixCls}-selection__choice__content`}>{content}</div>
         </li>);
@@ -1255,7 +1291,7 @@ export default class Select extends React.Component {
             onMouseDown={preventDefaultEvent}
             onClick={this.handleChoiceItemClick.bind(this, singleValue)}
             className={choiceClassName}
-            title={title}
+            // title={title}
           >
             <div className={`${prefixCls}-selection__choice__content`}>
               {content}
@@ -1363,13 +1399,20 @@ export default class Select extends React.Component {
     if (props.disabled) {
       return;
     }
+
+    let newValues;
+    const values = this._options.filter((option) => {
+      // 当这个选项为禁用时，全选和无不对这个选项做处理
+      return option.props.disabled !== true;
+    }).map((option) => {
+      return getValuePropValue(option);
+    });
     if (name === 'check-all') {
-      const values = this._options.map((option) => {
-        return getValuePropValue(option);
-      });
-      this.fireChange(values);
+      newValues = new Set(state.value.concat(values));
+      this.fireChange(Array.from(newValues));
     } else if (name === 'check-none') {
-      this.fireChange([]);
+      newValues = state.value.filter((e) => values.indexOf(e) < 0);
+      this.fireChange(newValues);
       this.focus();
     }
   };
@@ -1424,6 +1467,7 @@ export default class Select extends React.Component {
     const options = this._options;
     if (!isMultipleOrTagsOrCombobox(props)) {
       extraSelectionProps = {
+        ...extraSelectionProps,
         onKeyDown: this.onKeyDown,
         tabIndex: disabled ? -1 : 0,
       };
@@ -1479,6 +1523,10 @@ export default class Select extends React.Component {
         onMenuSelect={this.onMenuSelect}
         onMenuDeselect={this.onMenuDeselect}
         onPopupScroll={props.onPopupScroll}
+        onKeyDown={chaining(
+          this.onInputKeyDown,
+          this.props.onInputKeyDown,
+        )}
         filterPlaceholder={props.filterPlaceholder}
         builtinPlacements={this.getBuiltinPlacements()}
         footer={props.footer}

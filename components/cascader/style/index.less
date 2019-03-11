@@ -56,10 +56,14 @@
       width: 100%;
     }
 
+    .ant-input-has-label .ant-input-content {
+      padding-top: 0;
+    }
+
     &-clear {
       display: none;
       position: absolute;
-      right: @control-padding-horizontal;
+      right: 0;
       z-index: 2;
       background: @component-background;
       top: 50%;
@@ -76,7 +80,7 @@
       position: absolute;
       z-index: 1;
       top: 50%;
-      right: @control-padding-horizontal;
+      right: 0;
       margin-top: -8px;
       width: 20px;
       height: 20px;
@@ -94,7 +98,7 @@
 
   &-picker-small &-picker-clear,
   &-picker-small &-picker-arrow {
-    right: @control-padding-horizontal-sm;
+    right: 0;
   }
 
   &-menus {

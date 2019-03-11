@@ -9,7 +9,7 @@ import { getColumnKey } from './util';
 export interface ColumnFilterProps<T> {
   prefixCls?: string;
   columns?: ColumnProps<T>[];
-  onColumnFilterChange?: () => void;
+  onColumnFilterChange?: (item?: any) => void;
   getPopupContainer?: (triggerNode?: Element) => HTMLElement;
 }
 
@@ -51,12 +51,12 @@ export default class ColumnFilter<T> extends React.Component<ColumnFilterProps<T
 
   onMenuSelect = (item: any) => {
     item.item.props.value.hidden = false;
-    this.fireChange();
+    this.fireChange(item);
   };
 
   onMenuDeselect = (item: any) => {
     item.item.props.value.hidden = true;
-    this.fireChange();
+    this.fireChange(item);
   };
 
   onDropdownVisibleChange = (open: boolean) => {
@@ -67,18 +67,19 @@ export default class ColumnFilter<T> extends React.Component<ColumnFilterProps<T
     }
   };
 
-  fireChange() {
+  fireChange(item?: any) {
     const { onColumnFilterChange } = this.props;
     if (onColumnFilterChange) {
-      onColumnFilterChange();
+      onColumnFilterChange(item);
     }
   }
 
   getOptions() {
     let options: any = [];
-    (this.props.columns || []).map((column, i) => {
+    (this.props.columns || []).filter((column) => !column.notDisplay).map((column, i) => {
       const item = column.title ? (
         <MenuItem
+          disabled={column.disableClick}
           style={UNSELECTABLE_STYLE}
           attribute={UNSELECTABLE_ATTRIBUTE}
           value={column}
@@ -96,5 +97,4 @@ export default class ColumnFilter<T> extends React.Component<ColumnFilterProps<T
   getVisibleColumns() {
     return (this.props.columns || []).filter((column) => !column.hidden);
   }
-
 }

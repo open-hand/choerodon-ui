@@ -38,6 +38,21 @@ import RcTable from '../rc-components/table';
 function noop() {
 }
 
+function findBodyDom(dom: Element | HTMLDivElement): any {
+  if (dom.childElementCount > 0) {
+    for (let i = 0; i < dom.childElementCount; i += 1) {
+      if (/ant-table-body/.test(dom.children[i].className)) {
+        return dom.children[i];
+      } else if (dom.childElementCount > 0) {
+        if (findBodyDom(dom.children[i]) !== null) {
+          return findBodyDom(dom.children[i]);
+        }
+      }
+    }
+  }
+  return null;
+}
+
 function stopPropagation(e: React.SyntheticEvent<any>) {
   e.stopPropagation();
   if (e.nativeEvent.stopImmediatePropagation) {
@@ -62,6 +77,8 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
 
   static propTypes = {
     dataSource: PropTypes.array,
+    empty: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+    onColumnFilterChange: PropTypes.func,
     columns: PropTypes.array,
     prefixCls: PropTypes.string,
     useFixedHeader: PropTypes.bool,
@@ -79,10 +96,14 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
     filterBar: PropTypes.bool,
     filters: PropTypes.array,
     filterBarPlaceholder: PropTypes.string,
+    onFilterSelectChange: PropTypes.func,
+    noFilter: PropTypes.bool,
+    autoScroll: PropTypes.bool,
   };
 
   static defaultProps = {
     dataSource: [],
+    empty: null,
     prefixCls: 'ant-table',
     useFixedHeader: false,
     rowSelection: null,
@@ -95,6 +116,8 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
     rowKey: 'key',
     showHeader: true,
     filterBar: true,
+    noFilter: false,
+    autoScroll: true,
   };
 
   CheckboxPropsCache: {
@@ -103,6 +126,7 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
   store: Store;
   columns: ColumnProps<T>[];
   components: TableComponents;
+  private refTable: HTMLDivElement | null;
 
   constructor(props: TableProps<T>) {
     super(props);
@@ -456,12 +480,20 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
   };
 
   handleFilterSelectChange = (barFilters: any[]) => {
+    const { onFilterSelectChange } = this.props;
+    if (onFilterSelectChange) {
+      onFilterSelectChange(barFilters);
+    }
     this.setNewFilterState({
       barFilters,
     });
   };
 
-  handleColumnFilterChange = () => {
+  handleColumnFilterChange = (e?: any) => {
+    const { onColumnFilterChange } = this.props;
+    if (onColumnFilterChange) {
+      onColumnFilterChange(e);
+    }
     this.forceUpdate();
   };
 
@@ -600,6 +632,26 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
   handlePageChange = (current: number, ...otherArguments: any[]) => {
     const props = this.props;
     let pagination = { ...this.state.pagination };
+    if (props.autoScroll) {
+      setTimeout(() => {
+        if (this.refTable && this.refTable.clientHeight > document.body.clientHeight) {
+          this.refTable.scrollIntoView({
+            block: 'start',
+          });
+        } else if (this.refTable) {
+          // @ts-ignore
+          this.refTable.scrollIntoViewIfNeeded({
+            block: 'start',
+          });
+        }
+      }, 10);
+      if (this.refTable) {
+        const dom = findBodyDom(this.refTable);
+        if (dom !== null && dom.scroll) {
+          dom.scrollTop = 0;
+        }
+      }
+    }
     if (current) {
       pagination.current = current;
     } else {
@@ -933,7 +985,7 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
   }
 
   getLocalData() {
-    const { dataSource } = this.props;
+    const { dataSource, noFilter } = this.props;
     if (dataSource) {
       const state = this.state;
       const { filters, barFilters } = state;
@@ -974,6 +1026,9 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
           }
         });
       }
+      if (noFilter) {
+        return data;
+      }
       return filteredData;
     } else {
       return [];
@@ -1008,7 +1063,7 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
 
   renderTable = (contextLocale: TableLocale, loading: SpinProps): React.ReactNode => {
     const locale = { ...contextLocale, ...this.props.locale };
-    const { filterBarMultiple, prefixCls, filterBarPlaceholder, showHeader, filterBar, dataSource, filters, ...restProps } = this.props;
+    const { filterBarMultiple, prefixCls, filterBarPlaceholder, showHeader, filterBar, dataSource, filters, empty, ...restProps } = this.props;
     const data = this.getCurrentPageData();
     const expandIconAsCell = this.props.expandedRowRender && this.props.expandIconAsCell !== false;
 
@@ -1046,7 +1101,7 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
         className={classString}
         expandIconColumnIndex={expandIconColumnIndex}
         expandIconAsCell={expandIconAsCell}
-        emptyText={!loading.spinning && locale.emptyText}
+        emptyText={!loading.spinning && (empty || locale.emptyText)}
       />
     );
     if (filterBar) {
@@ -1101,6 +1156,7 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
       <div
         className={classNames(`${prefixCls}-wrapper`, className)}
         style={style}
+        ref={ref => { this.refTable = ref; }}
       >
         <Spin
           {...loading}

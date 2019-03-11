@@ -29,7 +29,8 @@ class Banner extends React.PureComponent {
           {isMobile && (
             <div className="img-wrapper" key="image">
               <div className="banner-image" />
-            </div>)}
+            </div>
+          )}
           <QueueAnim
             className="text-wrapper"
             key="text"
@@ -58,7 +59,8 @@ class Banner extends React.PureComponent {
           {!isMobile && (
             <div className="img-wrapper" key="image">
               <div className="banner-image" />
-            </div>)}
+            </div>
+          )}
         </QueueAnim>
       </div>
     );

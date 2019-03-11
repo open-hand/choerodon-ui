@@ -46,10 +46,10 @@ export default class IconSelect extends React.Component<IconSelectProps, IconSel
   initIcon(current: number = 1, pageSize: number = 20, filterValue: string = '') {
     const minIndex = (current - 1) * pageSize;
     const maxIndex = current * pageSize;
-    let items = icons.default;
+    let items = icons.favorite;
     if (filterValue) {
-      items = icons.default.filter((name) => {
-        return name.indexOf(filterValue) !== -1;
+      items = icons.favorite.filter((name) => {
+        return name.toLowerCase().indexOf(filterValue.toLowerCase()) !== -1;
       });
     }
     const total = items.length || 0;
@@ -71,7 +71,8 @@ export default class IconSelect extends React.Component<IconSelectProps, IconSel
       return (
         <Option key={icon} value={icon}>
           <Tooltip placement="bottomLeft" title={icon}>
-            <Icon type={icon} /> {icon}
+            <Icon type={icon} />
+            <span className="text">{icon}</span>
           </Tooltip>
         </Option>
       );
@@ -107,14 +108,17 @@ export default class IconSelect extends React.Component<IconSelectProps, IconSel
   renderFooter() {
     const { total, pageSize, current } = this.state;
     return (
-      <Pagination
-        total={total}
-        onChange={this.handlePageChange}
-        pageSizeOptions={['20', '40', '80']}
-        pageSize={pageSize}
-        onShowSizeChange={this.handlePageChange}
-        current={current}
-      />
+      <React.Fragment>
+        <Pagination
+          total={total}
+          onChange={this.handlePageChange}
+          pageSizeOptions={['20', '40', '80']}
+          pageSize={pageSize}
+          onShowSizeChange={this.handlePageChange}
+          current={current}
+        />
+      </React.Fragment>
+
     );
   }
   render() {

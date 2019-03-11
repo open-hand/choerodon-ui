@@ -14,6 +14,123 @@ timeline: true
 * 主版本号：含有破坏性更新和新特性，不在发布周期内。
 
 ---
+## 0.5.2
+
+`2018-02-22`
+
+- 💄 `Table`:  修复Table中过滤的确认按钮固定在选择框底部样式被覆盖。
+- 🌟 `Sidebar`: 增加属性alwaysCanCancel。
+
+## 0.5.1
+
+`2018-02-19`
+
+- 💄 `Form.Item`:  Form.Item验证为error时不隐藏后缀图标。
+- 💄 `Table`:  Table过滤失去焦点后不清空。
+- 💄 `Table`:  Table过滤的清空icon在有内容时就显示。
+- 💄 `Table`:  Table中过滤的确认按钮固定在选择框底部。
+- 🌟 `Icon`: 增加新的图标。
+
+## 0.5.0
+
+`2018-01-10`
+
+- 更改图标字体文件的来源，更改为从npm库中获取并打包到本地。
+- 💄 `IconSelect`:  优化了图标选择器，图标更大，且只保留常用图标.
+- 💄 `table`: 优化table翻页时自动回到第一条元素
+
+## 0.4.5
+
+- 🌟 `Icon`: 增加新的图标。
+- 💄 `Select`: select全选和无更改为不对禁用的选项生效
+
+## 0.4.4
+
+`2018-12-3`
+
+- 💄 `Menu`: 修复了一个依赖错误。
+
+## 0.4.3
+
+`2018-11-29`
+
+- 🌟 `Select`: 增加`onPopupFocus`，在下拉弹出框被focus时调用。
+- 💄 `Select`: select搜索框内可以使用上下选择然后回车确定。
+- 💄 `Select`: 多选框：删除标签，不打开select弹框。
+- 💄 `Select`: 去除select中标签悬停后的title信息。
+- 💄 `Menu`: 升级rc-menu组件为社区版。
+
+## 0.4.2
+
+`2018-11-13`
+
+- 🌟 `Icon`: 增加新的图标。
+- 🌟 `Table`: 增加`noFilters`，用于阻止默认的过滤筛选功能。
+- 🌟 `Table.Column`: 增加`disableClick`, 用于 `Table` 筛选项禁用勾选。
+- 💄 `Tag`: 修复热门标签显示问题。
+- 💄 `Select`: Select全选和无的逻辑优化。
+
+## 0.4.1
+
+`2018-10-26`
+
+- 🌟 `Icon`: 增加新的图标。
+- 🌟 `Table`: 增加onColumnFilterChange，在表格列过滤器变化时触发。
+- 💄 `Demo`: 修复使用bisheng生成的文档网站无法展开样例代码的bug。
+- 💄 `Avatar`: 修复头像中文字定位不准确。
+
+## 0.4.0
+
+`2018-09-28`
+
+- 🌟 `Select`: select有maxTagCount且超出限制时显示的标签可以自定样式,且去除默认的背景颜色。
+- 💄 `Input`: 修复input的showLengthInfo为false时在某些情况下仍显示字数限制信息的问题。
+- 💄 `Select`: 回滚select的部分样式至0.3.4版本。
+
+## 0.3.10
+
+`2018-09-14`
+
+- 🌟 `List`: List添加`empty`属性。
+- 🌟 `Table`: Table添加`empty`属性。
+- 🌟 `Icon`: 增加新的图标。
+- 💄 `Select`: 修复Select使用方向键选择时样式缺失的bug。
+- 💄 `Cascader`: 级联选择器 修复样式问题。
+- 💄 `Table`: 修复可编辑单元格示例无法编辑单元格的bug。
+
+## 0.3.9
+
+`2018-09-07`
+
+- 🌟 `Icon`: 增加新的图标。
+- 🌟 `Card`: Card添加`onHeadClick`属性。
+- 💄 `Input`: 修复input有字数限制且在formitem中存在验证时formitem之间上下间距不对。
+- 💄 `Sidebar`: 修复Sidebar没有`getContainer`属性的bug。
+
+`2018-09-04`
+
+- 🌟 `Input`: Input添加`showPasswordEye`属性用来控制显示密码的控件。
+- 💄 `IconSelect`: IconSelect现在的搜索不区分大小写了。
+
+## 0.3.8
+
+`2018-08-31`
+ 
+- 🌟 `Icon`: 增加新的图标。。
+- 💄 `Input`: Input和select在compact模式和正常模式下都能对齐了。
+- 💄 `FormItem`: 表单输入框带有字数限制时，优化为报错提示时报错信息与横线无间距，且隐藏字数限制提示。
+
+## 0.3.7
+
+- 💄 `Table`: 样式修改
+- 💄 `Input`: input框禁用时hover上去显示默认禁用图标
+- 💄 `Spin`: 修复加载图标未置于顶层的问题。
+
+## 0.3.6
+
+`2018-08-16`
+
+- 🌟 `Icon`: 增加新的图标。
 
 ## 0.3.5
 

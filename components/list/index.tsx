@@ -49,6 +49,7 @@ export interface ListProps {
   split?: boolean;
   header?: React.ReactNode;
   footer?: React.ReactNode;
+  empty?: React.ReactNode;
   locale?: Object;
 }
 
@@ -128,6 +129,7 @@ export default class List extends React.Component<ListProps> {
       renderItem,
       header,
       footer,
+      empty,
       loading,
       ...rest,
     } = this.props;
@@ -181,7 +183,7 @@ export default class List extends React.Component<ListProps> {
       childrenContent = grid ? (
         <Row gutter={grid.gutter}>{childrenList}</Row>
       ) : childrenList;
-    } else if (!children && !isLoading) {
+    } else if (!children && !isLoading && !empty) {
       childrenContent = (
         <LocaleReceiver
           componentName="Table"
@@ -190,6 +192,8 @@ export default class List extends React.Component<ListProps> {
           {this.renderEmpty}
         </LocaleReceiver>
       );
+    } else {
+      childrenContent = empty;
     }
 
     const content = (

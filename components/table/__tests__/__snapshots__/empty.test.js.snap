@@ -721,30 +721,28 @@ exports[`Table renders empty table without emptyText when loading 1`] = `
   <div
     class="ant-spin-nested-loading"
   >
-    <div>
+    <div
+      class="ant-spin ant-spin-spinning ant-table-without-pagination ant-table-spin-holder"
+    >
       <div
-        class="ant-spin ant-spin-spinning ant-table-without-pagination ant-table-spin-holder"
+        class="ant-progress ant-progress-loading ant-progress-status-normal ant-progress-show-info ant-progress-default ant-spin-dot"
       >
         <div
-          class="ant-progress ant-progress-loading ant-progress-status-normal ant-progress-show-info ant-progress-default ant-spin-dot"
+          class="ant-progress-inner"
+          style="width:30px;height:30px"
         >
-          <div
-            class="ant-progress-inner"
-            style="width:30px;height:30px"
+          <svg
+            viewBox="0 0 50 50"
           >
-            <svg
-              viewBox="0 0 50 50"
-            >
-              <circle
-                cx="25"
-                cy="25"
-                fill="none"
-                r="20"
-                stroke="#3367d6"
-                stroke-width="4"
-              />
-            </svg>
-          </div>
+            <circle
+              cx="25"
+              cy="25"
+              fill="none"
+              r="20"
+              stroke="#3367d6"
+              stroke-width="4"
+            />
+          </svg>
         </div>
       </div>
     </div>

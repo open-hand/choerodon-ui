@@ -198,11 +198,11 @@ exports[`Table.filter renders menu correctly 1`] = `
         </li>
         <li
           class="ant-dropdown-menu-submenu ant-dropdown-menu-submenu-vertical"
+          role="menuitem"
         >
           <div
             aria-expanded="false"
             aria-haspopup="true"
-            aria-owns="title$Menu"
             class="ant-dropdown-menu-submenu-title"
             title="Title"
           >
@@ -302,11 +302,11 @@ exports[`Table.filter renders radio filter correctly 1`] = `
         </li>
         <li
           class="ant-dropdown-menu-submenu ant-dropdown-menu-submenu-vertical"
+          role="menuitem"
         >
           <div
             aria-expanded="false"
             aria-haspopup="true"
-            aria-owns="title$Menu"
             class="ant-dropdown-menu-submenu-title"
             title="Title"
           >

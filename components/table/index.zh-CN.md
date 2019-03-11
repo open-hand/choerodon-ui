@@ -53,6 +53,7 @@ const columns = [{
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
+| autoScroll | 是否在翻页时自动滚动到表格可视区域，并滚动到第一条 | boolean | true |
 | bordered | 是否展示外边框和列边框 | boolean | false |
 | columns | 表格列的配置描述，具体项见下表 | [ColumnProps](https://git.io/vMMXC)\[] | - |
 | components | 覆盖默认的 table 元素 | object | - |
@@ -63,6 +64,7 @@ const columns = [{
 | expandedRowRender | 额外的展开行 | Function(record):ReactNode | - |
 | expandRowByClick | 通过点击行来展开子行 | boolean | `false` |
 | footer | 表格尾部 | Function(currentPageData) |  |
+| empty | 当数据源为空时显示的内容 | ReactNode | - |
 | indentSize | 展示树形数据时，每层缩进的宽度，以 px 为单位 | number | 15 |
 | loading | 页面是否加载中 | boolean\|[object](https://ant.design/components/spin-cn/#API) ([更多](https://github.com/ant-design/ant-design/issues/4544#issuecomment-271533135)) | false |
 | locale | 默认文案设置，目前包括排序、过滤、空数据文案 | object | filterConfirm: '确定' <br> filterReset: '重置' <br> emptyText: '暂无数据' <br> [默认值](https://github.com/ant-design/ant-design/issues/575#issuecomment-159169511) |
@@ -75,12 +77,14 @@ const columns = [{
 | size | 正常或迷你类型，`default` or `small` | string | default |
 | title | 表格标题 | Function(currentPageData) |  |
 | onChange | 分页、排序、筛选变化时触发 | Function(pagination, filters, sorter) |  |
+| onColumnFilterChange | 右上角行过滤按钮中选项变化时触发 | Function(item) | |
 | onExpand | 点击展开图标时触发 | Function(expanded, record) |  |
 | onExpandedRowsChange | 展开的行变化时触发 | Function(expandedRows) |  |
 | onHeaderRow | 设置头部行属性 | Function(column, index) | - |
 | onRow | 设置行属性 | Function(record, index) | - |
 | filterBar | 显示过滤条，设置为false时，在列头上会显示过滤菜单按钮 | boolean | true |
 | filters | <受控>过滤条中的过滤条件，例：`[{ name: 'Jom' }, 'OR', { name: 'Jim' }]`，`name` 为列的 `key` 或 `dataIndex` | any\[] | - |
+| noFilters | 去掉组件自带的模糊搜索 | boolean | false |
 | filterBarPlaceholder | 过滤条的占位文本 | string |  |
 
 
@@ -115,6 +119,7 @@ const columns = [{
 | className | 列的 className | string | - |
 | colSpan | 表头列合并,设置为 0 时，不渲染 | number |  |
 | dataIndex | 列数据在数据项中对应的 key，支持 `a.b.c` 的嵌套写法 | string | - |
+| disableClick | 禁用点击列表筛选项 | boolean | false |
 | filterDropdown | 可以自定义筛选菜单，此函数只负责渲染图层，需要自行编写各种交互 | ReactNode | - |
 | filterDropdownVisible | 用于控制自定义筛选菜单是否可见 | boolean | - |
 | filtered | 标识数据是否经过过滤，筛选图标会高亮 | boolean | false |

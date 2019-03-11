@@ -846,6 +846,7 @@ exports[`Locale Provider should display the text as ar 1`] = `
               class="ant-radio-button ant-radio-button-checked"
             >
               <input
+                checked=""
                 class="ant-radio-button-input"
                 type="radio"
                 value="date"
@@ -2557,6 +2558,7 @@ exports[`Locale Provider should display the text as bg 1`] = `
               class="ant-radio-button ant-radio-button-checked"
             >
               <input
+                checked=""
                 class="ant-radio-button-input"
                 type="radio"
                 value="date"
@@ -4268,6 +4270,7 @@ exports[`Locale Provider should display the text as ca 1`] = `
               class="ant-radio-button ant-radio-button-checked"
             >
               <input
+                checked=""
                 class="ant-radio-button-input"
                 type="radio"
                 value="date"
@@ -5979,6 +5982,7 @@ exports[`Locale Provider should display the text as cs 1`] = `
               class="ant-radio-button ant-radio-button-checked"
             >
               <input
+                checked=""
                 class="ant-radio-button-input"
                 type="radio"
                 value="date"
@@ -7690,6 +7694,7 @@ exports[`Locale Provider should display the text as de 1`] = `
               class="ant-radio-button ant-radio-button-checked"
             >
               <input
+                checked=""
                 class="ant-radio-button-input"
                 type="radio"
                 value="date"
@@ -9401,6 +9406,7 @@ exports[`Locale Provider should display the text as el 1`] = `
               class="ant-radio-button ant-radio-button-checked"
             >
               <input
+                checked=""
                 class="ant-radio-button-input"
                 type="radio"
                 value="date"
@@ -11112,6 +11118,7 @@ exports[`Locale Provider should display the text as en 1`] = `
               class="ant-radio-button ant-radio-button-checked"
             >
               <input
+                checked=""
                 class="ant-radio-button-input"
                 type="radio"
                 value="date"
@@ -12823,6 +12830,7 @@ exports[`Locale Provider should display the text as en-gb 1`] = `
               class="ant-radio-button ant-radio-button-checked"
             >
               <input
+                checked=""
                 class="ant-radio-button-input"
                 type="radio"
                 value="date"
@@ -14534,6 +14542,7 @@ exports[`Locale Provider should display the text as es 1`] = `
               class="ant-radio-button ant-radio-button-checked"
             >
               <input
+                checked=""
                 class="ant-radio-button-input"
                 type="radio"
                 value="date"
@@ -16245,6 +16254,7 @@ exports[`Locale Provider should display the text as et 1`] = `
               class="ant-radio-button ant-radio-button-checked"
             >
               <input
+                checked=""
                 class="ant-radio-button-input"
                 type="radio"
                 value="date"
@@ -17956,6 +17966,7 @@ exports[`Locale Provider should display the text as fa 1`] = `
               class="ant-radio-button ant-radio-button-checked"
             >
               <input
+                checked=""
                 class="ant-radio-button-input"
                 type="radio"
                 value="date"
@@ -19667,6 +19678,7 @@ exports[`Locale Provider should display the text as fi 1`] = `
               class="ant-radio-button ant-radio-button-checked"
             >
               <input
+                checked=""
                 class="ant-radio-button-input"
                 type="radio"
                 value="date"
@@ -21378,6 +21390,7 @@ exports[`Locale Provider should display the text as fr 1`] = `
               class="ant-radio-button ant-radio-button-checked"
             >
               <input
+                checked=""
                 class="ant-radio-button-input"
                 type="radio"
                 value="date"
@@ -23089,6 +23102,7 @@ exports[`Locale Provider should display the text as fr 2`] = `
               class="ant-radio-button ant-radio-button-checked"
             >
               <input
+                checked=""
                 class="ant-radio-button-input"
                 type="radio"
                 value="date"
@@ -24800,6 +24814,7 @@ exports[`Locale Provider should display the text as is 1`] = `
               class="ant-radio-button ant-radio-button-checked"
             >
               <input
+                checked=""
                 class="ant-radio-button-input"
                 type="radio"
                 value="date"
@@ -26511,6 +26526,7 @@ exports[`Locale Provider should display the text as it 1`] = `
               class="ant-radio-button ant-radio-button-checked"
             >
               <input
+                checked=""
                 class="ant-radio-button-input"
                 type="radio"
                 value="date"
@@ -28222,6 +28238,7 @@ exports[`Locale Provider should display the text as ja 1`] = `
               class="ant-radio-button ant-radio-button-checked"
             >
               <input
+                checked=""
                 class="ant-radio-button-input"
                 type="radio"
                 value="date"
@@ -29933,6 +29950,7 @@ exports[`Locale Provider should display the text as ko 1`] = `
               class="ant-radio-button ant-radio-button-checked"
             >
               <input
+                checked=""
                 class="ant-radio-button-input"
                 type="radio"
                 value="date"
@@ -31608,9 +31626,9 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
             <div
               class="ant-select-selection-selected-value"
               style="opacity: 1;"
-              title="9月"
+              title="ئەیلوول"
             >
-              9月
+              ئەیلوول
             </div>
             <span
               class="ant-select-arrow"
@@ -31644,6 +31662,7 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
               class="ant-radio-button ant-radio-button-checked"
             >
               <input
+                checked=""
                 class="ant-radio-button-input"
                 type="radio"
                 value="date"
@@ -31697,78 +31716,78 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
               <th
                 class="ant-fullcalendar-column-header"
                 role="columnheader"
-                title="周一"
+                title="شه‌ممه‌"
               >
                 <span
                   class="ant-fullcalendar-column-header-inner"
                 >
-                  一
+                  ش
                 </span>
               </th>
               <th
                 class="ant-fullcalendar-column-header"
                 role="columnheader"
-                title="周二"
+                title="یه‌كشه‌م"
               >
                 <span
                   class="ant-fullcalendar-column-header-inner"
                 >
-                  二
+                  ی
                 </span>
               </th>
               <th
                 class="ant-fullcalendar-column-header"
                 role="columnheader"
-                title="周三"
+                title="دووشه‌م"
               >
                 <span
                   class="ant-fullcalendar-column-header-inner"
                 >
-                  三
+                  د
                 </span>
               </th>
               <th
                 class="ant-fullcalendar-column-header"
                 role="columnheader"
-                title="周四"
+                title="سێشه‌م"
               >
                 <span
                   class="ant-fullcalendar-column-header-inner"
                 >
-                  四
+                  س
                 </span>
               </th>
               <th
                 class="ant-fullcalendar-column-header"
                 role="columnheader"
-                title="周五"
+                title="چوارشه‌م"
               >
                 <span
                   class="ant-fullcalendar-column-header-inner"
                 >
-                  五
+                  چ
                 </span>
               </th>
               <th
                 class="ant-fullcalendar-column-header"
                 role="columnheader"
-                title="周六"
+                title="پێنجشه‌م"
               >
                 <span
                   class="ant-fullcalendar-column-header-inner"
                 >
-                  六
+                  پ
                 </span>
               </th>
               <th
                 class="ant-fullcalendar-column-header"
                 role="columnheader"
-                title="周日"
+                title="هه‌ینی"
               >
                 <span
                   class="ant-fullcalendar-column-header-inner"
                 >
-                  日
+                  ه
                 </span>
               </th>
             </tr>
@@ -31783,7 +31802,43 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
               <td
                 class="ant-fullcalendar-cell ant-fullcalendar-last-month-cell"
                 role="gridcell"
-                title="2017年8月28日"
+                title="٢٦ ئاب ٢٠١٧"
+              >
+                <div
+                  class="ant-fullcalendar-date"
+                >
+                  <div
+                    class="ant-fullcalendar-value"
+                  >
+                    26
+                  </div>
+                  <div
+                    class="ant-fullcalendar-content"
+                  />
+                </div>
+              </td>
+              <td
+                class="ant-fullcalendar-cell ant-fullcalendar-last-month-cell"
+                role="gridcell"
+                title="٢٧ ئاب ٢٠١٧"
+              >
+                <div
+                  class="ant-fullcalendar-date"
+                >
+                  <div
+                    class="ant-fullcalendar-value"
+                  >
+                    27
+                  </div>
+                  <div
+                    class="ant-fullcalendar-content"
+                  />
+                </div>
+              </td>
+              <td
+                class="ant-fullcalendar-cell ant-fullcalendar-last-month-cell"
+                role="gridcell"
+                title="٢٨ ئاب ٢٠١٧"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -31801,7 +31856,7 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
               <td
                 class="ant-fullcalendar-cell ant-fullcalendar-last-month-cell"
                 role="gridcell"
-                title="2017年8月29日"
+                title="٢٩ ئاب ٢٠١٧"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -31819,7 +31874,7 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
               <td
                 class="ant-fullcalendar-cell ant-fullcalendar-last-month-cell"
                 role="gridcell"
-                title="2017年8月30日"
+                title="٣٠ ئاب ٢٠١٧"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -31837,7 +31892,7 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
               <td
                 class="ant-fullcalendar-cell ant-fullcalendar-last-month-cell ant-fullcalendar-last-day-of-month"
                 role="gridcell"
-                title="2017年8月31日"
+                title="٣١ ئاب ٢٠١٧"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -31855,7 +31910,7 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="2017年9月1日"
+                title="١ ئەیلوول ٢٠١٧"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -31870,10 +31925,15 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
                   />
                 </div>
               </td>
+            </tr>
+            <tr
+              class=""
+              role="row"
+            >
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="2017年9月2日"
+                title="٢ ئەیلوول ٢٠١٧"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -31891,7 +31951,7 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="2017年9月3日"
+                title="٣ ئەیلوول ٢٠١٧"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -31906,15 +31966,10 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
                   />
                 </div>
               </td>
-            </tr>
-            <tr
-              class=""
-              role="row"
-            >
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="2017年9月4日"
+                title="٤ ئەیلوول ٢٠١٧"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -31932,7 +31987,7 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="2017年9月5日"
+                title="٥ ئەیلوول ٢٠١٧"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -31950,7 +32005,7 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="2017年9月6日"
+                title="٦ ئەیلوول ٢٠١٧"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -31968,7 +32023,7 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="2017年9月7日"
+                title="٧ ئەیلوول ٢٠١٧"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -31986,7 +32041,7 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="2017年9月8日"
+                title="٨ ئەیلوول ٢٠١٧"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -32001,10 +32056,15 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
                   />
                 </div>
               </td>
+            </tr>
+            <tr
+              class=""
+              role="row"
+            >
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="2017年9月9日"
+                title="٩ ئەیلوول ٢٠١٧"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -32022,7 +32082,7 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="2017年9月10日"
+                title="١٠ ئەیلوول ٢٠١٧"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -32037,15 +32097,10 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
                   />
                 </div>
               </td>
-            </tr>
-            <tr
-              class=""
-              role="row"
-            >
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="2017年9月11日"
+                title="١١ ئەیلوول ٢٠١٧"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -32063,7 +32118,7 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="2017年9月12日"
+                title="١٢ ئەیلوول ٢٠١٧"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -32081,7 +32136,7 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="2017年9月13日"
+                title="١٣ ئەیلوول ٢٠١٧"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -32099,7 +32154,7 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="2017年9月14日"
+                title="١٤ ئەیلوول ٢٠١٧"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -32117,7 +32172,7 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="2017年9月15日"
+                title="١٥ ئەیلوول ٢٠١٧"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -32132,10 +32187,15 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
                   />
                 </div>
               </td>
+            </tr>
+            <tr
+              class="ant-fullcalendar-current-week ant-fullcalendar-active-week"
+              role="row"
+            >
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="2017年9月16日"
+                title="١٦ ئەیلوول ٢٠١٧"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -32153,7 +32213,7 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="2017年9月17日"
+                title="١٧ ئەیلوول ٢٠١٧"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -32168,15 +32228,10 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
                   />
                 </div>
               </td>
-            </tr>
-            <tr
-              class="ant-fullcalendar-current-week ant-fullcalendar-active-week"
-              role="row"
-            >
               <td
                 class="ant-fullcalendar-cell ant-fullcalendar-today ant-fullcalendar-selected-day"
                 role="gridcell"
-                title="2017年9月18日"
+                title="١٨ ئەیلوول ٢٠١٧"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -32194,7 +32249,7 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="2017年9月19日"
+                title="١٩ ئەیلوول ٢٠١٧"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -32212,7 +32267,7 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="2017年9月20日"
+                title="٢٠ ئەیلوول ٢٠١٧"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -32230,7 +32285,7 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="2017年9月21日"
+                title="٢١ ئەیلوول ٢٠١٧"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -32248,7 +32303,7 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="2017年9月22日"
+                title="٢٢ ئەیلوول ٢٠١٧"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -32263,10 +32318,15 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
                   />
                 </div>
               </td>
+            </tr>
+            <tr
+              class=""
+              role="row"
+            >
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="2017年9月23日"
+                title="٢٣ ئەیلوول ٢٠١٧"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -32284,7 +32344,7 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="2017年9月24日"
+                title="٢٤ ئەیلوول ٢٠١٧"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -32299,15 +32359,10 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
                   />
                 </div>
               </td>
-            </tr>
-            <tr
-              class=""
-              role="row"
-            >
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="2017年9月25日"
+                title="٢٥ ئەیلوول ٢٠١٧"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -32325,7 +32380,7 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="2017年9月26日"
+                title="٢٦ ئەیلوول ٢٠١٧"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -32343,7 +32398,7 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="2017年9月27日"
+                title="٢٧ ئەیلوول ٢٠١٧"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -32361,7 +32416,7 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="2017年9月28日"
+                title="٢٨ ئەیلوول ٢٠١٧"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -32379,7 +32434,7 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="2017年9月29日"
+                title="٢٩ ئەیلوول ٢٠١٧"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -32394,10 +32449,15 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
                   />
                 </div>
               </td>
+            </tr>
+            <tr
+              class=""
+              role="row"
+            >
               <td
                 class="ant-fullcalendar-cell ant-fullcalendar-last-day-of-month"
                 role="gridcell"
-                title="2017年9月30日"
+                title="٣٠ ئەیلوول ٢٠١٧"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -32415,7 +32475,7 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
               <td
                 class="ant-fullcalendar-cell ant-fullcalendar-next-month-btn-day"
                 role="gridcell"
-                title="2017年10月1日"
+                title="١ تشرینی یەكەم ٢٠١٧"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -32430,15 +32490,10 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
                   />
                 </div>
               </td>
-            </tr>
-            <tr
-              class=""
-              role="row"
-            >
               <td
                 class="ant-fullcalendar-cell ant-fullcalendar-next-month-btn-day"
                 role="gridcell"
-                title="2017年10月2日"
+                title="٢ تشرینی یەكەم ٢٠١٧"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -32456,7 +32511,7 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
               <td
                 class="ant-fullcalendar-cell ant-fullcalendar-next-month-btn-day"
                 role="gridcell"
-                title="2017年10月3日"
+                title="٣ تشرینی یەكەم ٢٠١٧"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -32474,7 +32529,7 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
               <td
                 class="ant-fullcalendar-cell ant-fullcalendar-next-month-btn-day"
                 role="gridcell"
-                title="2017年10月4日"
+                title="٤ تشرینی یەكەم ٢٠١٧"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -32492,7 +32547,7 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
               <td
                 class="ant-fullcalendar-cell ant-fullcalendar-next-month-btn-day"
                 role="gridcell"
-                title="2017年10月5日"
+                title="٥ تشرینی یەكەم ٢٠١٧"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -32510,7 +32565,7 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
               <td
                 class="ant-fullcalendar-cell ant-fullcalendar-next-month-btn-day"
                 role="gridcell"
-                title="2017年10月6日"
+                title="٦ تشرینی یەكەم ٢٠١٧"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -32519,42 +32574,6 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
                     class="ant-fullcalendar-value"
                   >
                     06
-                  </div>
-                  <div
-                    class="ant-fullcalendar-content"
-                  />
-                </div>
-              </td>
-              <td
-                class="ant-fullcalendar-cell ant-fullcalendar-next-month-btn-day"
-                role="gridcell"
-                title="2017年10月7日"
-              >
-                <div
-                  class="ant-fullcalendar-date"
-                >
-                  <div
-                    class="ant-fullcalendar-value"
-                  >
-                    07
-                  </div>
-                  <div
-                    class="ant-fullcalendar-content"
-                  />
-                </div>
-              </td>
-              <td
-                class="ant-fullcalendar-cell ant-fullcalendar-next-month-btn-day"
-                role="gridcell"
-                title="2017年10月8日"
-              >
-                <div
-                  class="ant-fullcalendar-date"
-                >
-                  <div
-                    class="ant-fullcalendar-value"
-                  >
-                    08
                   </div>
                   <div
                     class="ant-fullcalendar-content"
@@ -33355,6 +33374,7 @@ exports[`Locale Provider should display the text as nb 1`] = `
               class="ant-radio-button ant-radio-button-checked"
             >
               <input
+                checked=""
                 class="ant-radio-button-input"
                 type="radio"
                 value="date"
@@ -35066,6 +35086,7 @@ exports[`Locale Provider should display the text as nl 1`] = `
               class="ant-radio-button ant-radio-button-checked"
             >
               <input
+                checked=""
                 class="ant-radio-button-input"
                 type="radio"
                 value="date"
@@ -36777,6 +36798,7 @@ exports[`Locale Provider should display the text as nl-be 1`] = `
               class="ant-radio-button ant-radio-button-checked"
             >
               <input
+                checked=""
                 class="ant-radio-button-input"
                 type="radio"
                 value="date"
@@ -38488,6 +38510,7 @@ exports[`Locale Provider should display the text as pl 1`] = `
               class="ant-radio-button ant-radio-button-checked"
             >
               <input
+                checked=""
                 class="ant-radio-button-input"
                 type="radio"
                 value="date"
@@ -40163,9 +40186,9 @@ exports[`Locale Provider should display the text as pt 1`] = `
             <div
               class="ant-select-selection-selected-value"
               style="opacity: 1;"
-              title="set"
+              title="Set"
             >
-              set
+              Set
             </div>
             <span
               class="ant-select-arrow"
@@ -40199,6 +40222,7 @@ exports[`Locale Provider should display the text as pt 1`] = `
               class="ant-radio-button ant-radio-button-checked"
             >
               <input
+                checked=""
                 class="ant-radio-button-input"
                 type="radio"
                 value="date"
@@ -40338,7 +40362,7 @@ exports[`Locale Provider should display the text as pt 1`] = `
               <td
                 class="ant-fullcalendar-cell ant-fullcalendar-last-month-cell"
                 role="gridcell"
-                title="28 de agosto de 2017"
+                title="28 de Agosto de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -40356,7 +40380,7 @@ exports[`Locale Provider should display the text as pt 1`] = `
               <td
                 class="ant-fullcalendar-cell ant-fullcalendar-last-month-cell"
                 role="gridcell"
-                title="29 de agosto de 2017"
+                title="29 de Agosto de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -40374,7 +40398,7 @@ exports[`Locale Provider should display the text as pt 1`] = `
               <td
                 class="ant-fullcalendar-cell ant-fullcalendar-last-month-cell"
                 role="gridcell"
-                title="30 de agosto de 2017"
+                title="30 de Agosto de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -40392,7 +40416,7 @@ exports[`Locale Provider should display the text as pt 1`] = `
               <td
                 class="ant-fullcalendar-cell ant-fullcalendar-last-month-cell ant-fullcalendar-last-day-of-month"
                 role="gridcell"
-                title="31 de agosto de 2017"
+                title="31 de Agosto de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -40410,7 +40434,7 @@ exports[`Locale Provider should display the text as pt 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="1 de setembro de 2017"
+                title="1 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -40428,7 +40452,7 @@ exports[`Locale Provider should display the text as pt 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="2 de setembro de 2017"
+                title="2 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -40446,7 +40470,7 @@ exports[`Locale Provider should display the text as pt 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="3 de setembro de 2017"
+                title="3 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -40469,7 +40493,7 @@ exports[`Locale Provider should display the text as pt 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="4 de setembro de 2017"
+                title="4 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -40487,7 +40511,7 @@ exports[`Locale Provider should display the text as pt 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="5 de setembro de 2017"
+                title="5 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -40505,7 +40529,7 @@ exports[`Locale Provider should display the text as pt 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="6 de setembro de 2017"
+                title="6 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -40523,7 +40547,7 @@ exports[`Locale Provider should display the text as pt 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="7 de setembro de 2017"
+                title="7 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -40541,7 +40565,7 @@ exports[`Locale Provider should display the text as pt 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="8 de setembro de 2017"
+                title="8 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -40559,7 +40583,7 @@ exports[`Locale Provider should display the text as pt 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="9 de setembro de 2017"
+                title="9 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -40577,7 +40601,7 @@ exports[`Locale Provider should display the text as pt 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="10 de setembro de 2017"
+                title="10 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -40600,7 +40624,7 @@ exports[`Locale Provider should display the text as pt 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="11 de setembro de 2017"
+                title="11 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -40618,7 +40642,7 @@ exports[`Locale Provider should display the text as pt 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="12 de setembro de 2017"
+                title="12 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -40636,7 +40660,7 @@ exports[`Locale Provider should display the text as pt 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="13 de setembro de 2017"
+                title="13 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -40654,7 +40678,7 @@ exports[`Locale Provider should display the text as pt 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="14 de setembro de 2017"
+                title="14 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -40672,7 +40696,7 @@ exports[`Locale Provider should display the text as pt 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="15 de setembro de 2017"
+                title="15 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -40690,7 +40714,7 @@ exports[`Locale Provider should display the text as pt 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="16 de setembro de 2017"
+                title="16 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -40708,7 +40732,7 @@ exports[`Locale Provider should display the text as pt 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="17 de setembro de 2017"
+                title="17 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -40731,7 +40755,7 @@ exports[`Locale Provider should display the text as pt 1`] = `
               <td
                 class="ant-fullcalendar-cell ant-fullcalendar-today ant-fullcalendar-selected-day"
                 role="gridcell"
-                title="18 de setembro de 2017"
+                title="18 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -40749,7 +40773,7 @@ exports[`Locale Provider should display the text as pt 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="19 de setembro de 2017"
+                title="19 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -40767,7 +40791,7 @@ exports[`Locale Provider should display the text as pt 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="20 de setembro de 2017"
+                title="20 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -40785,7 +40809,7 @@ exports[`Locale Provider should display the text as pt 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="21 de setembro de 2017"
+                title="21 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -40803,7 +40827,7 @@ exports[`Locale Provider should display the text as pt 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="22 de setembro de 2017"
+                title="22 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -40821,7 +40845,7 @@ exports[`Locale Provider should display the text as pt 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="23 de setembro de 2017"
+                title="23 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -40839,7 +40863,7 @@ exports[`Locale Provider should display the text as pt 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="24 de setembro de 2017"
+                title="24 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -40862,7 +40886,7 @@ exports[`Locale Provider should display the text as pt 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="25 de setembro de 2017"
+                title="25 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -40880,7 +40904,7 @@ exports[`Locale Provider should display the text as pt 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="26 de setembro de 2017"
+                title="26 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -40898,7 +40922,7 @@ exports[`Locale Provider should display the text as pt 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="27 de setembro de 2017"
+                title="27 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -40916,7 +40940,7 @@ exports[`Locale Provider should display the text as pt 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="28 de setembro de 2017"
+                title="28 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -40934,7 +40958,7 @@ exports[`Locale Provider should display the text as pt 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="29 de setembro de 2017"
+                title="29 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -40952,7 +40976,7 @@ exports[`Locale Provider should display the text as pt 1`] = `
               <td
                 class="ant-fullcalendar-cell ant-fullcalendar-last-day-of-month"
                 role="gridcell"
-                title="30 de setembro de 2017"
+                title="30 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -40970,7 +40994,7 @@ exports[`Locale Provider should display the text as pt 1`] = `
               <td
                 class="ant-fullcalendar-cell ant-fullcalendar-next-month-btn-day"
                 role="gridcell"
-                title="1 de outubro de 2017"
+                title="1 de Outubro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -40993,7 +41017,7 @@ exports[`Locale Provider should display the text as pt 1`] = `
               <td
                 class="ant-fullcalendar-cell ant-fullcalendar-next-month-btn-day"
                 role="gridcell"
-                title="2 de outubro de 2017"
+                title="2 de Outubro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -41011,7 +41035,7 @@ exports[`Locale Provider should display the text as pt 1`] = `
               <td
                 class="ant-fullcalendar-cell ant-fullcalendar-next-month-btn-day"
                 role="gridcell"
-                title="3 de outubro de 2017"
+                title="3 de Outubro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -41029,7 +41053,7 @@ exports[`Locale Provider should display the text as pt 1`] = `
               <td
                 class="ant-fullcalendar-cell ant-fullcalendar-next-month-btn-day"
                 role="gridcell"
-                title="4 de outubro de 2017"
+                title="4 de Outubro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -41047,7 +41071,7 @@ exports[`Locale Provider should display the text as pt 1`] = `
               <td
                 class="ant-fullcalendar-cell ant-fullcalendar-next-month-btn-day"
                 role="gridcell"
-                title="5 de outubro de 2017"
+                title="5 de Outubro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -41065,7 +41089,7 @@ exports[`Locale Provider should display the text as pt 1`] = `
               <td
                 class="ant-fullcalendar-cell ant-fullcalendar-next-month-btn-day"
                 role="gridcell"
-                title="6 de outubro de 2017"
+                title="6 de Outubro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -41083,7 +41107,7 @@ exports[`Locale Provider should display the text as pt 1`] = `
               <td
                 class="ant-fullcalendar-cell ant-fullcalendar-next-month-btn-day"
                 role="gridcell"
-                title="7 de outubro de 2017"
+                title="7 de Outubro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -41101,7 +41125,7 @@ exports[`Locale Provider should display the text as pt 1`] = `
               <td
                 class="ant-fullcalendar-cell ant-fullcalendar-next-month-btn-day"
                 role="gridcell"
-                title="8 de outubro de 2017"
+                title="8 de Outubro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -41874,9 +41898,9 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
             <div
               class="ant-select-selection-selected-value"
               style="opacity: 1;"
-              title="set"
+              title="Set"
             >
-              set
+              Set
             </div>
             <span
               class="ant-select-arrow"
@@ -41910,6 +41934,7 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
               class="ant-radio-button ant-radio-button-checked"
             >
               <input
+                checked=""
                 class="ant-radio-button-input"
                 type="radio"
                 value="date"
@@ -42049,7 +42074,7 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
               <td
                 class="ant-fullcalendar-cell ant-fullcalendar-last-month-cell"
                 role="gridcell"
-                title="27 de agosto de 2017"
+                title="27 de Agosto de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -42067,7 +42092,7 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
               <td
                 class="ant-fullcalendar-cell ant-fullcalendar-last-month-cell"
                 role="gridcell"
-                title="28 de agosto de 2017"
+                title="28 de Agosto de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -42085,7 +42110,7 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
               <td
                 class="ant-fullcalendar-cell ant-fullcalendar-last-month-cell"
                 role="gridcell"
-                title="29 de agosto de 2017"
+                title="29 de Agosto de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -42103,7 +42128,7 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
               <td
                 class="ant-fullcalendar-cell ant-fullcalendar-last-month-cell"
                 role="gridcell"
-                title="30 de agosto de 2017"
+                title="30 de Agosto de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -42121,7 +42146,7 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
               <td
                 class="ant-fullcalendar-cell ant-fullcalendar-last-month-cell ant-fullcalendar-last-day-of-month"
                 role="gridcell"
-                title="31 de agosto de 2017"
+                title="31 de Agosto de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -42139,7 +42164,7 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="1 de setembro de 2017"
+                title="1 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -42157,7 +42182,7 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="2 de setembro de 2017"
+                title="2 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -42180,7 +42205,7 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="3 de setembro de 2017"
+                title="3 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -42198,7 +42223,7 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="4 de setembro de 2017"
+                title="4 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -42216,7 +42241,7 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="5 de setembro de 2017"
+                title="5 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -42234,7 +42259,7 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="6 de setembro de 2017"
+                title="6 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -42252,7 +42277,7 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="7 de setembro de 2017"
+                title="7 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -42270,7 +42295,7 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="8 de setembro de 2017"
+                title="8 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -42288,7 +42313,7 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="9 de setembro de 2017"
+                title="9 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -42311,7 +42336,7 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="10 de setembro de 2017"
+                title="10 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -42329,7 +42354,7 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="11 de setembro de 2017"
+                title="11 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -42347,7 +42372,7 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="12 de setembro de 2017"
+                title="12 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -42365,7 +42390,7 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="13 de setembro de 2017"
+                title="13 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -42383,7 +42408,7 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="14 de setembro de 2017"
+                title="14 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -42401,7 +42426,7 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="15 de setembro de 2017"
+                title="15 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -42419,7 +42444,7 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="16 de setembro de 2017"
+                title="16 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -42442,7 +42467,7 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="17 de setembro de 2017"
+                title="17 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -42460,7 +42485,7 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
               <td
                 class="ant-fullcalendar-cell ant-fullcalendar-today ant-fullcalendar-selected-day"
                 role="gridcell"
-                title="18 de setembro de 2017"
+                title="18 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -42478,7 +42503,7 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="19 de setembro de 2017"
+                title="19 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -42496,7 +42521,7 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="20 de setembro de 2017"
+                title="20 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -42514,7 +42539,7 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="21 de setembro de 2017"
+                title="21 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -42532,7 +42557,7 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="22 de setembro de 2017"
+                title="22 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -42550,7 +42575,7 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="23 de setembro de 2017"
+                title="23 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -42573,7 +42598,7 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="24 de setembro de 2017"
+                title="24 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -42591,7 +42616,7 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="25 de setembro de 2017"
+                title="25 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -42609,7 +42634,7 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="26 de setembro de 2017"
+                title="26 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -42627,7 +42652,7 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="27 de setembro de 2017"
+                title="27 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -42645,7 +42670,7 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="28 de setembro de 2017"
+                title="28 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -42663,7 +42688,7 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
               <td
                 class="ant-fullcalendar-cell"
                 role="gridcell"
-                title="29 de setembro de 2017"
+                title="29 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -42681,7 +42706,7 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
               <td
                 class="ant-fullcalendar-cell ant-fullcalendar-last-day-of-month"
                 role="gridcell"
-                title="30 de setembro de 2017"
+                title="30 de Setembro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -42704,7 +42729,7 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
               <td
                 class="ant-fullcalendar-cell ant-fullcalendar-next-month-btn-day"
                 role="gridcell"
-                title="1 de outubro de 2017"
+                title="1 de Outubro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -42722,7 +42747,7 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
               <td
                 class="ant-fullcalendar-cell ant-fullcalendar-next-month-btn-day"
                 role="gridcell"
-                title="2 de outubro de 2017"
+                title="2 de Outubro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -42740,7 +42765,7 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
               <td
                 class="ant-fullcalendar-cell ant-fullcalendar-next-month-btn-day"
                 role="gridcell"
-                title="3 de outubro de 2017"
+                title="3 de Outubro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -42758,7 +42783,7 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
               <td
                 class="ant-fullcalendar-cell ant-fullcalendar-next-month-btn-day"
                 role="gridcell"
-                title="4 de outubro de 2017"
+                title="4 de Outubro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -42776,7 +42801,7 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
               <td
                 class="ant-fullcalendar-cell ant-fullcalendar-next-month-btn-day"
                 role="gridcell"
-                title="5 de outubro de 2017"
+                title="5 de Outubro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -42794,7 +42819,7 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
               <td
                 class="ant-fullcalendar-cell ant-fullcalendar-next-month-btn-day"
                 role="gridcell"
-                title="6 de outubro de 2017"
+                title="6 de Outubro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -42812,7 +42837,7 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
               <td
                 class="ant-fullcalendar-cell ant-fullcalendar-next-month-btn-day"
                 role="gridcell"
-                title="7 de outubro de 2017"
+                title="7 de Outubro de 2017"
               >
                 <div
                   class="ant-fullcalendar-date"
@@ -43621,6 +43646,7 @@ exports[`Locale Provider should display the text as ru 1`] = `
               class="ant-radio-button ant-radio-button-checked"
             >
               <input
+                checked=""
                 class="ant-radio-button-input"
                 type="radio"
                 value="date"
@@ -45332,6 +45358,7 @@ exports[`Locale Provider should display the text as sk 1`] = `
               class="ant-radio-button ant-radio-button-checked"
             >
               <input
+                checked=""
                 class="ant-radio-button-input"
                 type="radio"
                 value="date"
@@ -47043,6 +47070,7 @@ exports[`Locale Provider should display the text as sl 1`] = `
               class="ant-radio-button ant-radio-button-checked"
             >
               <input
+                checked=""
                 class="ant-radio-button-input"
                 type="radio"
                 value="date"
@@ -48754,6 +48782,7 @@ exports[`Locale Provider should display the text as sr 1`] = `
               class="ant-radio-button ant-radio-button-checked"
             >
               <input
+                checked=""
                 class="ant-radio-button-input"
                 type="radio"
                 value="date"
@@ -50465,6 +50494,7 @@ exports[`Locale Provider should display the text as sv 1`] = `
               class="ant-radio-button ant-radio-button-checked"
             >
               <input
+                checked=""
                 class="ant-radio-button-input"
                 type="radio"
                 value="date"
@@ -52176,6 +52206,7 @@ exports[`Locale Provider should display the text as th 1`] = `
               class="ant-radio-button ant-radio-button-checked"
             >
               <input
+                checked=""
                 class="ant-radio-button-input"
                 type="radio"
                 value="date"
@@ -53887,6 +53918,7 @@ exports[`Locale Provider should display the text as tr 1`] = `
               class="ant-radio-button ant-radio-button-checked"
             >
               <input
+                checked=""
                 class="ant-radio-button-input"
                 type="radio"
                 value="date"
@@ -55598,6 +55630,7 @@ exports[`Locale Provider should display the text as uk 1`] = `
               class="ant-radio-button ant-radio-button-checked"
             >
               <input
+                checked=""
                 class="ant-radio-button-input"
                 type="radio"
                 value="date"
@@ -57309,6 +57342,7 @@ exports[`Locale Provider should display the text as vi 1`] = `
               class="ant-radio-button ant-radio-button-checked"
             >
               <input
+                checked=""
                 class="ant-radio-button-input"
                 type="radio"
                 value="date"
@@ -59020,6 +59054,7 @@ exports[`Locale Provider should display the text as zh-cn 1`] = `
               class="ant-radio-button ant-radio-button-checked"
             >
               <input
+                checked=""
                 class="ant-radio-button-input"
                 type="radio"
                 value="date"
@@ -60731,6 +60766,7 @@ exports[`Locale Provider should display the text as zh-tw 1`] = `
               class="ant-radio-button ant-radio-button-checked"
             >
               <input
+                checked=""
                 class="ant-radio-button-input"
                 type="radio"
                 value="date"

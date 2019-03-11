@@ -347,6 +347,7 @@
   &-pagination.@{ant-prefix}-pagination {
     float: right;
     line-height: 32px;
+    margin-top: 16px;
   }
 
   &-filter-dropdown {
@@ -447,7 +448,16 @@
       }
     }
     &-ok-btn {
+      position: absolute !important;
+      bottom: 0;
+      right: 0;
+      padding: 10px 20px !important;
+      background-color: #fff;
+      width: 100%;
       text-align: right;
+      &:hover {
+        background-color: #f5f5f5 !important;
+      }
     }
     &-columns {
       display: none;
@@ -545,6 +555,7 @@
 
   .@{table-prefix-cls}-row-indent + .@{table-prefix-cls}-row-expand-icon {
     margin-right: 8px;
+    vertical-align: top;
   }
 
   &-scroll {

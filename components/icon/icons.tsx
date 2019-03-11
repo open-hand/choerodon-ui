@@ -1,5 +1,22 @@
 const icons = {
+  /* tslint:disable-next-line */
+  favorite: ['routeroutline', 'role_tag', 'hdr_strong', 'bar_chart', 'reply', 'class', 'manage_project', 'transfer_within_a_station', 'room_service', 'publish2', 'laptop_mac', 'developer_board', 'CI', 'content_copy', 'book', 'wrench', 'view_day', 'date_range', 'extension', 'filter_vintage', 'hdr_weak', 'dashboard', 'Operation-monitoring', 'application_model', 'folder_shared', 'delete', 'develop_console', 'agile', 'merge_request', 'task_schedule', 'link', 'settings', 'baseline-drag_indicator', 'apps', 'account_box', 'test_planning', 'donut_small', 'agile_fault', 'person', 'view_list', 'directions_run', 'instance_outline', 'password', 'inmail_template', 'error', 'vpn_key', 'classname', 'assignment_ind', 'contact_mail', 'work_log', 'speaker_notes', 'format_list_numbered', 'shuffle', 'API', 'linear_scale', 'device_hub', 'saga_define', 'devops_chart', 'table_chart', 'settings_input_composite', 'event_available', 'flip_to_back', 'kubernetes', 'notifications', 'hearing', 'authority', 'cluster', 'public', 'devops', 'account_balance', 'mail_set', 'person_add', 'record_test', 'folder', 'usermap', 'assignment_late', 'micro', 'secret', 'appmarket', 'brightness_low', 'IAM', 'test', 'message', 'project', 'local_offer', 'domain', 'router', 'settings_applications', 'style', 'polymer', 'manage_organization', 'microservice', 'description', 'jsfiddle', 'manage_person', 'transform', 'subject', 'compare_arrows', 'branch', 'root', 'auto_test', 'strikethrough_s', 'center', 'widgets', 'volume_up', 'link2', 'Development-monitoring', 'whatshot', 'message_notification', 'insert_drive_file', 'accessibility', 'youtube_searched_for', 'test_execution', 'baseline-list_alt', 'cloud_upload', 'APItest', 'build', 'assignment', 'language', 'home', 'favorite', 'filter_drama', 'flare', 'folder_special', 'tag_faces', 'lightbulb_outline', 'loyalty', 'star_border'],
+
   default: [
+    'sync_records', 'sync_user', 'test-case', 'test-automation', 'token', 'change_size',
+    'add_crt', 'add_branch', 'line', 'secret', 'recover', 'table', 'test_execution', 'test_progress',
+    'test_record', 'execution_schedule', 'cluster', 'kubernetes_cluster', 'disconnect',
+    'running', 'notification_setting', 'authority', 'develop_console', 'frame', 'record_test',
+    'agile_epic', 'agile_fault', 'agile_story', 'agile_subtask', 'agile_task', 'auto_test', 'devops_chart',
+    'agile_chart', 'test_chart', 'bar_chart', 'unlock', 'classname',
+    'state_over', 'task_schedule', 'unallocated_question', 'unfinished_question', 'all_reports', 'burnout_map',
+    'iterative_workbench', 'outstanding_tasks', 'report_overview', 'test_execute',
+    'test_planning', 'git', 'project_list', 'domain_list', 'IP_out', 'message_notification',
+    'all_read', 'inmail_template', 'mail_set', 'export_EOT', 'export_html',
+    'export_PDF', 'export_RTF', 'export_XAR', 'mail_modal', 'message_modal', 'message2', 'usermap', 'document',
+    'pass', 'operation_bug', 'operation_change', 'operation_event', 'operation_help',
+    'operation_new_feature', 'operation_problem', 'operation_service_request',
+    'operation_subtask', 'operation_task', 'port', 'aim_port',
     'saga_define', 'role_tag', 'agile', 'quality', 'appmarket', 'folder_open2', 'merge_request',
     'APItest', 'relation', 'relate', 'manage_project', 'book', 'contact_support',
     'ballot', 'play_90', 'replay_90', 'table_chart', 'test', 'priority', 'compass',

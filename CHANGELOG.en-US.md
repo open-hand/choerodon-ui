@@ -14,6 +14,125 @@ timeline: true
 * Major version release is not included in this schedule for breaking change and new features.
 
 ---
+## 0.5.2
+
+`2018-02-22`
+
+- 💄 `Table`:  The confirmation button for the filter in the repair table is fixed at the bottom of the selection box and the style is overwritten.
+- 🌟 `Sidebar`: add `alwaysCanCancel`.
+
+## 0.5.1
+
+`2018-02-19`
+
+- 💄 `Form.Item`:  The suffix icon is not hidden when Form.Item is verified as error.
+- 💄 `Table`:  Table filter does not clear after blur.
+- 💄 `Table`:  Table filter clear icon is displayed when there is content.
+- 💄 `Table`:  The confirmation button filtered in the Table is fixed at the bottom of the selection box.
+- 🌟 `Icon`: Add new icons.
+
+## 0.5.0
+
+`2018-01-10`
+
+- Change the source of the icon font file to change it from the npm library and package it locally.
+- 💄 `IconSelect`:  Optimize IconSelect, the icon is larger, and only the common icons are retained.
+- 💄 `table`: Optimize the table to automatically return to the first element when turning pages.
+
+## 0.4.5
+
+`2018-12-11`
+
+- 🌟 `Icon`: Add new icons.
+- 💄 `Select`: `all` and `no` button change to not valid for disabled options
+
+## 0.4.4
+
+`2018-12-3`
+
+- 💄 `Menu`: Fixed a dependency error.
+
+## 0.4.3
+
+`2018-11-29`
+
+- 🌟 `Select`: Add`onPopupFocus`，Callback executed when Popup is focus.
+- 💄 `Select`: In the select search box, you can use the up and down selection and then press Enter to confirm.
+- 💄 `Select`: Multi-select box: delete the label, do not open the select box.
+- 💄 `Select`: Remove the title information after the tag is hovered in the select.
+- 💄 `Menu`: Upgrade the rc-menu component to the community version.
+
+## 0.4.2
+
+`2018-11-13`
+
+- 🌟 `Icon`: Add new icons.
+- 🌟 `Table`: Add `noFilters`, Used to block the default filtering.
+- 🌟 `Table.Column`: Add `disableClick` to disable the check for the `Table` filter.
+- 💄 `Tag`: Fix hot label display issues.
+- 💄 `Select`: all-select and no logic optimization.
+
+## 0.4.1
+
+`2018-10-26`
+
+- 🌟 `Icon`: Add new icons.
+- 🌟 `Table`: Add onColumnFilterChange. Callback executed when ColumnFilter is changed.
+- 💄 `Demo`: Fix bisheng demo site can't expand code by click the button。
+- 💄 `Avatar`: Fix avatar Chinese text positioning is not accurate.
+
+## 0.4.0
+
+`2018-09-28`
+
+- 🌟 `Select`: Improve the customization ability of `maxTagCount`.
+- 💄 `Input`: Adjust the style.
+- 💄 `Select`: Adjust the style.
+
+## 0.3.10
+
+`2018-09-21`
+
+- 🌟 `List`: List add `empty`.
+- 🌟 `Table`: Table add `empty`.
+- 🌟 `Icon`: Added new icons.
+- 💄 `Select`: Adjust the style.
+- 💄 `Cascader`: Adjust the style.
+- 💄 `Table`: Fixed a bug where the editable cell example could not edit the cell.
+
+## 0.3.9
+
+`2018-09-07`
+
+- 🌟 `Icon`: Added new icons.
+- 🌟 `Card`: Add `onHeadClick`.
+- 💄 `Input`: Adjust the style.
+- 💄 `Sidebar`: Fix props without `getContainer` error.
+
+`2018-09-04`
+
+- 🌟 `Input`: Add `showPasswordEye`.
+- 💄 `IconSelect`: Change search not case sensitive.
+
+## 0.3.8
+
+`2018-08-31`
+ 
+- 🌟 `Icon`: Added new icons.
+- 💄 `Input`: Adjust the style.
+- 💄 `FormItem`: Adjust the style.
+
+## 0.3.7
+
+- 💄 `Table`: Adjust the style.
+- 💄 `Input`: Show default ban icon while hover Input
+- 💄 `Spin`: Fixed Spin layer.
+
+## 0.3.6
+
+`2018-08-16`
+
+- 🌟 `Icon`: Added new icons.
 
 ## 0.3.5
 

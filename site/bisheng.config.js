@@ -24,6 +24,7 @@ function alertBabelConfig(rules) {
 
 module.exports = {
   port: 8001,
+  root: '/choerodon-ui/',
   source: {
     components: './components',
     docs: './docs',

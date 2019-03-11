@@ -46,7 +46,10 @@ title: Modal
 
 ### Modal.SideBar
 
-侧边栏弹出窗，API同Modal
+侧边栏弹出窗，表中无说明的API同Modal
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| alwaysCanCancel | 取消按钮是否一直可按，无论是否有confirmLoading | boolean | false |
 
 ### Modal.method()
 
