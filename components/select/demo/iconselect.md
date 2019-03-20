@@ -17,6 +17,6 @@ Icon Select.
 import { IconSelect } from 'choerodon-ui';
 
 ReactDOM.render(
-  <IconSelect style={{ width: '300px' }} defaultValue={['root']} />,
+  <IconSelect showAll style={{ width: '300px' }} defaultValue={['root']} />,
   mountNode);
 ````
