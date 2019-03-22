@@ -35,6 +35,7 @@ class TreeNode extends React.Component {
     className: PropTypes.string,
     root: PropTypes.object,
     onSelect: PropTypes.func,
+    wrapper: PropTypes.func,
 
     // By parent
     expanded: PropTypes.bool,
@@ -536,6 +537,12 @@ class TreeNode extends React.Component {
 
     let $children;
     if (expanded) {
+      let treeNodes = React.Children.map(nodeList, (node, index) => (
+        renderTreeNode(node, index, pos)
+      ));
+      if (this.props.wrapper) {
+        treeNodes = this.props.wrapper(treeNodes);
+      }
       $children = (
         <ul
           className={classNames(
@@ -544,9 +551,7 @@ class TreeNode extends React.Component {
           )}
           data-expanded={expanded}
         >
-          {React.Children.map(nodeList, (node, index) => (
-            renderTreeNode(node, index, pos)
-          ))}
+          {treeNodes}
         </ul>
       );
     }

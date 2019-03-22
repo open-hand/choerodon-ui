@@ -14,6 +14,16 @@ timeline: true
 * 主版本号：含有破坏性更新和新特性，不在发布周期内。
 
 ---
+## 0.5.3
+
+`2018-03-20`
+
+- 💄 `Input`:  Input输入到达字符限制时显示提示。
+- 🌟 `Modal`:  Modal添加disableOk和disableCancel属性。
+- 🌟 `TreeNode`:  TreeNode添加wrapper属性。
+- 🌟 `Icon`:  增加新的图标。
+- 🌟 `IconSelect`:  增加showAll属性。
+
 ## 0.5.2
 
 `2018-02-22`
