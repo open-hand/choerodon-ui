@@ -1,7 +1,7 @@
-import React, { cloneElement } from 'react';
+import React, { Children, cloneElement } from 'react';
 import classnames from 'classnames';
-import warning from 'warning';
 import { getDataAttr } from './utils';
+import warning from '../../_util/warning';
 import Ripple from '../../ripple';
 
 export default {
@@ -17,7 +17,7 @@ export default {
     const { panels: children, activeKey, prefixCls, tabBarGutter } = this.props;
     const rst = [];
 
-    React.Children.forEach(children, (child, index) => {
+    Children.forEach(children, (child, index) => {
       if (!child) {
         return;
       }

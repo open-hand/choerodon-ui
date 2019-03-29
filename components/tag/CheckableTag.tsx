@@ -1,5 +1,6 @@
-import * as React from 'react';
+import React, { Component } from 'react';
 import classNames from 'classnames';
+import { getPrefixCls } from '../configure';
 
 export interface CheckableTagProps {
   prefixCls?: string;
@@ -8,15 +9,18 @@ export interface CheckableTagProps {
   onChange?: (checked: boolean) => void;
 }
 
-export default class CheckableTag extends React.Component<CheckableTagProps> {
+export default class CheckableTag extends Component<CheckableTagProps> {
+  static displayName = 'CheckableTag';
   handleClick = () => {
     const { checked, onChange } = this.props;
     if (onChange) {
       onChange(!checked);
     }
-  }
+  };
+
   render() {
-    const { prefixCls = 'ant-tag', className, checked, ...restProps } = this.props;
+    const { prefixCls: customizePrefixCls, className, checked, ...restProps } = this.props;
+    const prefixCls = getPrefixCls('tag', customizePrefixCls);
     const cls = classNames(prefixCls, {
       [`${prefixCls}-checkable`]: true,
       [`${prefixCls}-checkable-checked`]: checked,

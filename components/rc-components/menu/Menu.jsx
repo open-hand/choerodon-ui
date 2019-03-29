@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
-import { Provider, create } from 'mini-store';
+import { create, Provider } from 'mini-store';
+import noop from 'lodash/noop';
 import { default as MenuMixin, getActiveKey } from './MenuMixin';
-import { noop } from './util';
 
 const Menu = createReactClass({
   displayName: 'Menu',

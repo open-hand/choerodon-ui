@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { Component, ReactNode } from 'react';
 import Checkbox, { CheckboxChangeEvent } from '../checkbox';
 import Dropdown from '../dropdown';
 import Menu from '../menu';
@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import { SelectionCheckboxAllProps, SelectionCheckboxAllState, SelectionItem } from './interface';
 
 export default class SelectionCheckboxAll<T> extends
-  React.Component<SelectionCheckboxAllProps<T>, SelectionCheckboxAllState> {
+  Component<SelectionCheckboxAllProps<T>, SelectionCheckboxAllState> {
   unsubscribe: () => void;
   defaultSelections: SelectionItem[];
 
@@ -140,7 +140,7 @@ export default class SelectionCheckboxAll<T> extends
 
     let selectionPrefixCls = `${prefixCls}-selection`;
 
-    let customSelections: React.ReactNode = null;
+    let customSelections: ReactNode = null;
 
     if (selections) {
       let newSelections = Array.isArray(selections) ? this.defaultSelections.concat(selections)

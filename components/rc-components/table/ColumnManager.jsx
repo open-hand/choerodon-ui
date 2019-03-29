@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Children, isValidElement } from 'react';
 
 export default class ColumnManager {
-  _cached = {}
+  _cached = {};
 
   constructor(columns, elements) {
     this.columns = columns || this.normalize(elements);
@@ -16,7 +16,7 @@ export default class ColumnManager {
   isAnyColumnsLeftFixed() {
     return this._cache('isAnyColumnsLeftFixed', () => {
       return this.columns.some(
-        column => column.fixed === 'left' || column.fixed === true
+        column => column.fixed === 'left' || column.fixed === true,
       );
     });
   }
@@ -24,7 +24,7 @@ export default class ColumnManager {
   isAnyColumnsRightFixed() {
     return this._cache('isAnyColumnsRightFixed', () => {
       return this.columns.some(
-        column => column.fixed === 'right'
+        column => column.fixed === 'right',
       );
     });
   }
@@ -38,7 +38,7 @@ export default class ColumnManager {
   leftColumns() {
     return this._cache('leftColumns', () => {
       return this.groupedColumns().filter(
-        column => column.fixed === 'left' || column.fixed === true
+        column => column.fixed === 'left' || column.fixed === true,
       );
     });
   }
@@ -46,26 +46,26 @@ export default class ColumnManager {
   rightColumns() {
     return this._cache('rightColumns', () => {
       return this.groupedColumns().filter(
-        column => column.fixed === 'right'
+        column => column.fixed === 'right',
       );
     });
   }
 
   leafColumns() {
     return this._cache('leafColumns', () =>
-      this._leafColumns(this.columns)
+      this._leafColumns(this.columns),
     );
   }
 
   leftLeafColumns() {
     return this._cache('leftLeafColumns', () =>
-      this._leafColumns(this.leftColumns())
+      this._leafColumns(this.leftColumns()),
     );
   }
 
   rightLeafColumns() {
     return this._cache('rightLeafColumns', () =>
-      this._leafColumns(this.rightColumns())
+      this._leafColumns(this.rightColumns()),
     );
   }
 
@@ -114,8 +114,8 @@ export default class ColumnManager {
 
   normalize(elements) {
     const columns = [];
-    React.Children.forEach(elements, element => {
-      if (!React.isValidElement(element)) {
+    Children.forEach(elements, element => {
+      if (!isValidElement(element)) {
         return;
       }
       const column = { ...element.props };

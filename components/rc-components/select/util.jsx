@@ -1,4 +1,4 @@
-import React from 'react';
+import { Children } from 'react';
 
 export function getValuePropValue(child) {
   const props = child.props;
@@ -12,7 +12,7 @@ export function getValuePropValue(child) {
     return props.label;
   }
   throw new Error(
-    `Need at least a key or a value or a label (only for OptGroup) for ${child}`
+    `Need at least a key or a value or a label (only for OptGroup) for ${child}`,
   );
 }
 
@@ -93,10 +93,10 @@ export function getSelectKeys(menuItems, value) {
     return [];
   }
   let selectedKeys = [];
-  React.Children.forEach(menuItems, item => {
+  Children.forEach(menuItems, item => {
     if (item.type.isMenuItemGroup) {
       selectedKeys = selectedKeys.concat(
-        getSelectKeys(item.props.children, value)
+        getSelectKeys(item.props.children, value),
       );
     } else {
       const itemValue = getValuePropValue(item);
@@ -164,7 +164,7 @@ export function validateOptionValue(value, props) {
   if (typeof value !== 'string') {
     throw new Error(
       `Invalid \`value\` of type \`${typeof value}\` supplied to Option, ` +
-      `expected \`string\` when \`tags/combobox\` is \`true\`.`
+      `expected \`string\` when \`tags/combobox\` is \`true\`.`,
     );
   }
 }

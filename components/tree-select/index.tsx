@@ -1,21 +1,23 @@
-import * as React from 'react';
+import React, { Component } from 'react';
 import classNames from 'classnames';
 import { TreeSelectProps } from './interface';
 import { SelectLocale } from '../select';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import warning from '../_util/warning';
 import RcTreeSelect, { SHOW_ALL, SHOW_CHILD, SHOW_PARENT, TreeNode } from '../rc-components/tree-select';
+import { Size } from '../_util/enum';
+import { getPrefixCls } from '../configure';
 
 export { TreeData, TreeSelectProps } from './interface';
 
-export default class TreeSelect extends React.Component<TreeSelectProps, any> {
+export default class TreeSelect extends Component<TreeSelectProps, any> {
+  static displayName = 'TreeSelect';
   static TreeNode = TreeNode;
   static SHOW_ALL = SHOW_ALL;
   static SHOW_PARENT = SHOW_PARENT;
   static SHOW_CHILD = SHOW_CHILD;
 
   static defaultProps = {
-    prefixCls: 'ant-select',
     transitionName: 'slide-up',
     choiceTransitionName: 'zoom',
     showSearch: false,
@@ -46,7 +48,7 @@ export default class TreeSelect extends React.Component<TreeSelectProps, any> {
 
   renderTreeSelect = (locale: SelectLocale) => {
     const {
-      prefixCls,
+      prefixCls: customizePrefixCls,
       className,
       size,
       notFoundContent,
@@ -55,9 +57,10 @@ export default class TreeSelect extends React.Component<TreeSelectProps, any> {
       ...restProps,
     } = this.props;
 
+    const prefixCls = getPrefixCls('select', customizePrefixCls);
     const cls = classNames({
-      [`${prefixCls}-lg`]: size === 'large',
-      [`${prefixCls}-sm`]: size === 'small',
+      [`${prefixCls}-lg`]: size === Size.large,
+      [`${prefixCls}-sm`]: size === Size.small,
     }, className);
 
     let checkable = restProps.treeCheckable;

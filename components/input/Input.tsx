@@ -1,11 +1,13 @@
-import * as React from 'react';
+import React, { ChangeEventHandler, Component, CSSProperties, FocusEvent, FormEventHandler, KeyboardEvent, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import omit from 'omit.js';
+import omit from 'lodash/omit';
 import Group from './Group';
 import Search from './Search';
 import TextArea from './TextArea';
 import Icon from '../icon';
+import { Size } from '../_util/enum';
+import { getPrefixCls } from '../configure';
 
 function fixControlledValue(value: undefined | null | string) {
   if (typeof value === 'undefined' || value === null) {
@@ -20,8 +22,8 @@ export interface AbstractInputProps {
   defaultValue?: any;
   value?: any;
   tabIndex?: number;
-  style?: React.CSSProperties;
-  label?: React.ReactNode;
+  style?: CSSProperties;
+  label?: ReactNode;
   underline?: boolean;
   showLengthInfo?: boolean;
   showPasswordEye?: boolean;
@@ -31,25 +33,26 @@ export interface InputProps extends AbstractInputProps {
   placeholder?: string;
   copy?: boolean;
   type?: string;
-  id?: number | string;
+  id?: string;
   name?: string;
-  size?: 'large' | 'default' | 'small';
-  maxLength?: number | string;
+  size?: Size;
+  maxLength?: number;
   disabled?: boolean;
   readOnly?: boolean;
-  addonBefore?: React.ReactNode;
-  addonAfter?: React.ReactNode;
-  onPressEnter?: React.FormEventHandler<HTMLInputElement>;
-  onKeyDown?: React.FormEventHandler<HTMLInputElement>;
-  onKeyUp?: React.FormEventHandler<HTMLInputElement>;
-  onChange?: React.ChangeEventHandler<HTMLInputElement>;
-  onClick?: React.FormEventHandler<HTMLInputElement>;
-  onFocus?: React.FormEventHandler<HTMLInputElement>;
-  onBlur?: React.FormEventHandler<HTMLInputElement>;
+  addonBefore?: ReactNode;
+  addonAfter?: ReactNode;
+  onPressEnter?: FormEventHandler<HTMLInputElement>;
+  onKeyDown?: FormEventHandler<HTMLInputElement>;
+  onKeyUp?: FormEventHandler<HTMLInputElement>;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
+  onClick?: FormEventHandler<HTMLInputElement>;
+  onFocus?: FormEventHandler<HTMLInputElement>;
+  onBlur?: FormEventHandler<HTMLInputElement>;
+  onInput?: FormEventHandler<HTMLInputElement>
   onCopy?: (value: any) => void;
   autoComplete?: string;
-  prefix?: React.ReactNode;
-  suffix?: React.ReactNode;
+  prefix?: ReactNode;
+  suffix?: ReactNode;
   spellCheck?: boolean;
   autoFocus?: boolean;
   focused?: boolean;
@@ -65,13 +68,13 @@ export interface InputState {
   showPassword?: boolean;
 }
 
-export default class Input extends React.Component<InputProps, any> {
+export default class Input extends Component<InputProps, any> {
+  static displayName = 'Input';
   static Group: typeof Group;
   static Search: typeof Search;
   static TextArea: typeof TextArea;
 
   static defaultProps = {
-    prefixCls: 'ant-input',
     type: 'text',
     disabled: false,
     underline: true,
@@ -87,7 +90,7 @@ export default class Input extends React.Component<InputProps, any> {
       PropTypes.number,
     ]),
     label: PropTypes.node,
-    size: PropTypes.oneOf(['small', 'default', 'large']),
+    size: PropTypes.oneOf([Size.small, Size.default, Size.large]),
     maxLength: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number,
@@ -130,7 +133,7 @@ export default class Input extends React.Component<InputProps, any> {
 
   input: HTMLInputElement;
 
-  handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     const { onPressEnter, onKeyDown } = this.props;
     if (e.keyCode === 13 && onPressEnter) {
       onPressEnter(e);
@@ -230,7 +233,7 @@ export default class Input extends React.Component<InputProps, any> {
     rendered.style.width = width;
   }
 
-  handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+  handleFocus = (e: FocusEvent<HTMLInputElement>) => {
     const { onFocus, readOnly } = this.props;
     if (!readOnly) {
       this.setState({
@@ -242,13 +245,17 @@ export default class Input extends React.Component<InputProps, any> {
     }
   };
 
-  handleInput = () => {
+  handleInput = (e) => {
+    const { onInput } = this.props;
     this.setState({
       inputLength: this.input.value.length,
     });
+    if (onInput) {
+      onInput(e);
+    }
   };
 
-  handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+  handleBlur = (e: FocusEvent<HTMLInputElement>) => {
     const { onBlur, readOnly } = this.props;
     if (!readOnly) {
       this.setState({
@@ -273,14 +280,14 @@ export default class Input extends React.Component<InputProps, any> {
     this.setState({
       type: 'text',
       showPassword: true,
-    })
+    });
   };
 
   handleHidePassword = () => {
     this.setState({
       type: 'password',
       showPassword: false,
-    })
+    });
   };
 
   focus() {
@@ -291,11 +298,16 @@ export default class Input extends React.Component<InputProps, any> {
     this.input.blur();
   }
 
+  getPrefixCls() {
+    return getPrefixCls('input', this.props.prefixCls);
+  }
+
   getInputClassName() {
-    const { prefixCls, size, copy } = this.props;
+    const { size, copy } = this.props;
+    const prefixCls = this.getPrefixCls();
     return classNames(prefixCls, {
-      [`${prefixCls}-sm`]: size === 'small',
-      [`${prefixCls}-lg`]: size === 'large',
+      [`${prefixCls}-sm`]: size === Size.small,
+      [`${prefixCls}-lg`]: size === Size.large,
       [`${prefixCls}-has-copy`]: copy,
     });
   }
@@ -305,7 +317,8 @@ export default class Input extends React.Component<InputProps, any> {
   };
 
   renderCopyIcon() {
-    const { prefixCls, copy } = this.props;
+    const { copy } = this.props;
+    const prefixCls = this.getPrefixCls();
     return copy ? (
       <span className={`${prefixCls}-icon`} onClick={this.handleCopy}>
         <Icon className={`${prefixCls}-icon-copy`} type="library_books" />
@@ -313,7 +326,8 @@ export default class Input extends React.Component<InputProps, any> {
   }
 
   renderShowPassword() {
-    const { prefixCls, type } = this.props;
+    const { type } = this.props;
+    const prefixCls = this.getPrefixCls();
     const { showPassword } = this.state;
     return type === 'password' ? (
       <span
@@ -327,24 +341,27 @@ export default class Input extends React.Component<InputProps, any> {
   }
 
   renderInput() {
-    const { value, className, label } = this.props;
+    const { value, className } = this.props;
     // Fix https://fb.me/react-unknown-prop
-    const otherProps = omit(this.props, [
-      'placeholder',
-      'prefixCls',
-      'onPressEnter',
-      'addonBefore',
-      'addonAfter',
-      'prefix',
-      'suffix',
-      'label',
-      'copy',
-      'style',
-      'underline',
-      'focused',
-      'showLengthInfo',
-      'showPasswordEye',
-    ]);
+    const otherProps = omit<InputProps, 'placeholder' | 'prefixCls' | 'onPressEnter' | 'addonBefore' | 'addonAfter' | 'prefix' |
+      'suffix' | 'label' | 'copy' | 'style' | 'underline' | 'focused' | 'showLengthInfo' | 'showPasswordEye' | 'size'>(
+      this.props, [
+        'placeholder',
+        'prefixCls',
+        'onPressEnter',
+        'addonBefore',
+        'addonAfter',
+        'prefix',
+        'suffix',
+        'label',
+        'copy',
+        'style',
+        'underline',
+        'focused',
+        'showLengthInfo',
+        'showPasswordEye',
+        'size',
+      ]);
 
     if ('value' in this.props) {
       otherProps.value = fixControlledValue(value);
@@ -354,9 +371,6 @@ export default class Input extends React.Component<InputProps, any> {
     }
     otherProps.onInput = this.handleInput;
 
-    if ('placeholder' in this.props && label) {
-      delete otherProps.placeholder;
-    }
     return (
       <input
         {...otherProps}
@@ -371,7 +385,8 @@ export default class Input extends React.Component<InputProps, any> {
   }
 
   getLengthInfo() {
-    const { prefixCls, maxLength } = this.props;
+    const { maxLength } = this.props;
+    const prefixCls = this.getPrefixCls();
     const { inputLength, showLengthInfo } = this.state;
     return (maxLength && showLengthInfo) || (maxLength && maxLength > 0 && inputLength === maxLength ) ? (
       <span className={`${prefixCls}-icon`}>
@@ -381,7 +396,8 @@ export default class Input extends React.Component<InputProps, any> {
   }
 
   getUnderLine() {
-    const { prefixCls, underline } = this.props;
+    const { underline } = this.props;
+    const prefixCls = this.getPrefixCls();
     return underline ? (
       <div className={`${prefixCls}-underline`}>
         <span className={`${prefixCls}-ripple`} />
@@ -390,16 +406,18 @@ export default class Input extends React.Component<InputProps, any> {
   }
 
   getSizeClassName(name: string) {
-    const { prefixCls, size } = this.props;
+    const { size } = this.props;
+    const prefixCls = this.getPrefixCls();
     return classNames(`${prefixCls}-${name}`, {
-      [`${prefixCls}-${name}-sm`]: size === 'small',
-      [`${prefixCls}-${name}-lg`]: size === 'large',
+      [`${prefixCls}-${name}-sm`]: size === Size.small,
+      [`${prefixCls}-${name}-lg`]: size === Size.large,
     });
   }
 
   render() {
     const props = this.props;
-    const { prefixCls, disabled, label, style, placeholder, showPasswordEye } = this.props;
+    const { disabled, label, style, placeholder, showPasswordEye } = this.props;
+    const prefixCls = this.getPrefixCls();
     const { inputLength, focused } = this.state;
     const prefix = props.prefix ? (
       <span ref="prefix" className={this.getSizeClassName('prefix')}>
@@ -414,7 +432,7 @@ export default class Input extends React.Component<InputProps, any> {
 
     const className = classNames(`${prefixCls}-wrapper`, {
       [`${prefixCls}-has-value`]: inputLength !== 0,
-      [`${prefixCls}-focus`]: focused,
+      [`${prefixCls}-focused`]: focused,
       [`${prefixCls}-disabled`]: disabled,
       [`${prefixCls}-has-label`]: !!label,
       [`${prefixCls}-has-prefix`]: !!prefix,

@@ -50,33 +50,15 @@ export function isZhCN(pathname) {
 export function getLocalizedPathname(path, zhCN) {
   const pathname = path.startsWith('/') ? path : `/${path}`;
   if (!zhCN) { // to enUS
-    return /\/?index-cn/.test(pathname) ? '/choerodon-ui/' : pathname.replace('-cn', '');
+    return /\/?index-cn/.test(pathname) ? '/' : pathname.replace('-cn', '');
   }
   if (pathname === '/') {
-    return '/choerodon-ui/index-cn';
+    return '/index-cn';
   }
   if (pathname.endsWith('/')) {
     return pathname.replace(/\/$/, '-cn/');
   }
   return `${pathname}-cn`;
-}
-
-export function ping(callback) {
-  // eslint-disable-next-line
-  const url = 'https://private-a' + 'lipay' + 'objects.alip' + 'ay.com/alip' + 'ay-rmsdeploy-image/rmsportal/RKuAiriJqrUhyqW.png';
-  const img = new Image();
-  let done;
-  const finish = (status) => {
-    if (!done) {
-      done = true;
-      img.src = '';
-      callback(status);
-    }
-  };
-  img.onload = () => finish('responded');
-  img.onerror = () => finish('error');
-  img.src = url;
-  return setTimeout(() => finish('timeout'), 1500);
 }
 
 export function isLocalStorageNameSupported() {

@@ -40,8 +40,6 @@ The rest of the props of Input are exactly the same as the original [input](http
 
 ### Input.TextArea
 
-> If you are using `antd@<2.12`, please use `Input[type=textarea]`.
-
 | Property | Description | Type | Default |
 | -------- | ----------- | ---- | ------- |
 | autosize | Height autosize feature, can be set to `true|false` or an object `{ minRows: 2, maxRows: 6 }` | boolean\|object | false |

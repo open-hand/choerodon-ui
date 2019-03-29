@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+
 const ROW = 4;
 const COL = 3;
 
@@ -19,8 +20,18 @@ function chooseYear(year) {
   this.props.onSelect(value);
 }
 
-export default
-class YearPanel extends React.Component {
+export default class YearPanel extends Component {
+  static propTypes = {
+    rootPrefixCls: PropTypes.string,
+    value: PropTypes.object,
+    defaultValue: PropTypes.object,
+  };
+
+  static defaultProps = {
+    onSelect() {
+    },
+  };
+
   constructor(props) {
     super(props);
     this.prefixCls = `${props.rootPrefixCls}-year-panel`;
@@ -137,14 +148,3 @@ class YearPanel extends React.Component {
       </div>);
   }
 }
-
-YearPanel.propTypes = {
-  rootPrefixCls: PropTypes.string,
-  value: PropTypes.object,
-  defaultValue: PropTypes.object,
-};
-
-YearPanel.defaultProps = {
-  onSelect() {
-  },
-};

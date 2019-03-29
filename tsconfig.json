@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "strictNullChecks": true,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
@@ -7,15 +8,22 @@
     "jsx": "preserve",
     "noUnusedParameters": true,
     "noUnusedLocals": true,
-    "noImplicitAny": true,
     "target": "es6",
     "lib": [
       "dom",
-      "es7"
-    ]
+      "dom.iterable",
+      "es7",
+      "es2017.object"
+    ],
+    "paths": {
+      "choerodon-ui/lib/*": [
+        "./components/*"
+      ]
+    }
   },
   "exclude": [
     "node_modules",
+    "pro",
     "lib",
     "es"
   ]

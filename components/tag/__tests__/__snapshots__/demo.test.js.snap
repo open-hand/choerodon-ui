@@ -3,37 +3,33 @@
 exports[`renders ./components/tag/demo/basic.md correctly 1`] = `
 <div>
   <div
-    class="ant-tag"
-    data-show="true"
+    class="c7n-tag"
   >
     Tag 1
   </div>
   <div
-    class="ant-tag"
-    data-show="true"
+    class="c7n-tag"
   >
     <a
-      href="https://github.com/ant-design/ant-design/issues/1862"
+      href="https://github.com/choerodon/choerodon-ui"
     >
       Link
     </a>
   </div>
   <div
-    class="ant-tag"
-    data-show="true"
+    class="c7n-tag"
   >
     Tag 2
     <i
-      class="icon icon-cross"
+      class="icon icon-close"
     />
   </div>
   <div
-    class="ant-tag"
-    data-show="true"
+    class="c7n-tag"
   >
     Prevent Default
     <i
-      class="icon icon-cross"
+      class="icon icon-close"
     />
   </div>
 </div>
@@ -42,17 +38,17 @@ exports[`renders ./components/tag/demo/basic.md correctly 1`] = `
 exports[`renders ./components/tag/demo/checkable.md correctly 1`] = `
 <div>
   <div
-    class="ant-tag ant-tag-checkable ant-tag-checkable-checked"
+    class="c7n-tag c7n-tag-checkable c7n-tag-checkable-checked"
   >
     Tag1
   </div>
   <div
-    class="ant-tag ant-tag-checkable ant-tag-checkable-checked"
+    class="c7n-tag c7n-tag-checkable c7n-tag-checkable-checked"
   >
     Tag2
   </div>
   <div
-    class="ant-tag ant-tag-checkable ant-tag-checkable-checked"
+    class="c7n-tag c7n-tag-checkable c7n-tag-checkable-checked"
   >
     Tag3
   </div>
@@ -68,68 +64,57 @@ exports[`renders ./components/tag/demo/colorful.md correctly 1`] = `
   </h4>
   <div>
     <div
-      class="ant-tag ant-tag-magenta"
-      data-show="true"
+      class="c7n-tag c7n-tag-magenta"
     >
       magenta
     </div>
     <div
-      class="ant-tag ant-tag-red"
-      data-show="true"
+      class="c7n-tag c7n-tag-red"
     >
       red
     </div>
     <div
-      class="ant-tag ant-tag-volcano"
-      data-show="true"
+      class="c7n-tag c7n-tag-volcano"
     >
       volcano
     </div>
     <div
-      class="ant-tag ant-tag-orange"
-      data-show="true"
+      class="c7n-tag c7n-tag-orange"
     >
       orange
     </div>
     <div
-      class="ant-tag ant-tag-gold"
-      data-show="true"
+      class="c7n-tag c7n-tag-gold"
     >
       gold
     </div>
     <div
-      class="ant-tag ant-tag-lime"
-      data-show="true"
+      class="c7n-tag c7n-tag-lime"
     >
       lime
     </div>
     <div
-      class="ant-tag ant-tag-green"
-      data-show="true"
+      class="c7n-tag c7n-tag-green"
     >
       green
     </div>
     <div
-      class="ant-tag ant-tag-cyan"
-      data-show="true"
+      class="c7n-tag c7n-tag-cyan"
     >
       cyan
     </div>
     <div
-      class="ant-tag ant-tag-blue"
-      data-show="true"
+      class="c7n-tag c7n-tag-blue"
     >
       blue
     </div>
     <div
-      class="ant-tag ant-tag-geekblue"
-      data-show="true"
+      class="c7n-tag c7n-tag-geekblue"
     >
       geekblue
     </div>
     <div
-      class="ant-tag ant-tag-purple"
-      data-show="true"
+      class="c7n-tag c7n-tag-purple"
     >
       purple
     </div>
@@ -141,29 +126,25 @@ exports[`renders ./components/tag/demo/colorful.md correctly 1`] = `
   </h4>
   <div>
     <div
-      class="ant-tag ant-tag-has-color"
-      data-show="true"
+      class="c7n-tag c7n-tag-has-color"
       style="background-color:#f50"
     >
       #f50
     </div>
     <div
-      class="ant-tag ant-tag-has-color"
-      data-show="true"
+      class="c7n-tag c7n-tag-has-color"
       style="background-color:#2db7f5"
     >
       #2db7f5
     </div>
     <div
-      class="ant-tag ant-tag-has-color"
-      data-show="true"
+      class="c7n-tag c7n-tag-has-color"
       style="background-color:#87d068"
     >
       #87d068
     </div>
     <div
-      class="ant-tag ant-tag-has-color"
-      data-show="true"
+      class="c7n-tag c7n-tag-has-color"
       style="background-color:#108ee9"
     >
       #108ee9
@@ -175,32 +156,28 @@ exports[`renders ./components/tag/demo/colorful.md correctly 1`] = `
 exports[`renders ./components/tag/demo/control.md correctly 1`] = `
 <div>
   <div
-    class="ant-tag"
-    data-show="true"
+    class="c7n-tag"
   >
     Unremovable
   </div>
   <div
-    class="ant-tag"
-    data-show="true"
+    class="c7n-tag"
   >
     Tag 2
     <i
-      class="icon icon-cross"
+      class="icon icon-close"
     />
   </div>
   <div
-    class="ant-tag"
-    data-show="true"
+    class="c7n-tag"
   >
     Tag 3
     <i
-      class="icon icon-cross"
+      class="icon icon-close"
     />
   </div>
   <div
-    class="ant-tag"
-    data-show="true"
+    class="c7n-tag"
     style="background:#fff;border-style:dashed"
   >
     <i
@@ -219,22 +196,22 @@ exports[`renders ./components/tag/demo/hot-tags.md correctly 1`] = `
     Categories:
   </h6>
   <div
-    class="ant-tag ant-tag-checkable"
+    class="c7n-tag c7n-tag-checkable"
   >
     Movies
   </div>
   <div
-    class="ant-tag ant-tag-checkable"
+    class="c7n-tag c7n-tag-checkable"
   >
     Books
   </div>
   <div
-    class="ant-tag ant-tag-checkable"
+    class="c7n-tag c7n-tag-checkable"
   >
     Music
   </div>
   <div
-    class="ant-tag ant-tag-checkable"
+    class="c7n-tag c7n-tag-checkable"
   >
     Sports
   </div>

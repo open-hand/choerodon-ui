@@ -1,0 +1,390 @@
+@import "../../../components/style/themes/default";
+@import "../../../components/style/mixins/index";
+@import "../../field/style/mixin";
+
+@input-affix-width: .17rem;
+@input-button-width: .24rem;
+
+// size mixins for input
+.input-lg() {
+  padding: @input-padding-vertical-lg @input-padding-horizontal;
+  height: @input-height-lg;
+}
+
+.input-sm() {
+  padding: @input-padding-vertical-sm @input-padding-horizontal;
+  height: @input-height-sm;
+}
+
+// input status
+// == when focus or actived
+.active(@color: @outline-color) {
+  border-color: ~`colorPalette("@{color}", 5)`;
+  outline: 0;
+  color: @input-active-color;
+  // box-shadow: 0 0 @outline-blur-size @outline-width fade(@color, 20%);
+}
+
+// == when hoverd
+.hover(@color: @input-hover-border-color) {
+  border-color: ~`colorPalette("@{color}", 5)`;
+}
+
+.disabled() {
+  background-color: @input-disabled-bg;
+  opacity: 1;
+  cursor: not-allowed;
+  color: @disabled-color;
+  &,
+  &:hover {
+    border-color: @input-border-color;
+  }
+}
+
+// Placeholder text
+.placeholder(@color: @input-placeholder-color) {
+  // Firefox
+  &::-moz-placeholder {
+    text-align: left;
+    color: @color;
+    opacity: 1; // Override Firefox's unusual default opacity; see https://github.com/twbs/bootstrap/pull/11526
+  }
+  // Internet Explorer 10+
+  &:-ms-input-placeholder {
+    text-align: left;
+    color: @color;
+  }
+  // Safari and Chrome
+  &::-webkit-input-placeholder {
+    text-align: left;
+    color: @color;
+  }
+}
+
+// Basic style for input
+.input() {
+  position: relative;
+  display: inline-block;
+  padding: @input-padding-vertical-base @input-padding-horizontal;
+  width: 100%;
+  height: @input-height-base;
+  cursor: text;
+  font-size: inherit;
+  line-height: 1;
+  color: @input-color;
+  background-color: transparent;
+  background-image: none;
+  border: @border-width-base @border-style-base @input-border-color;
+  border-radius: @border-radius-base;
+  .placeholder(); // Reset placeholder
+  transition: all .3s;
+
+  label:hover &,
+  &:hover {
+    .hover();
+  }
+
+  &:focus,
+  &-focus & {
+    .active();
+  }
+
+  &-disabled &,
+  &-disabled label:hover &,
+  &:disabled {
+    .disabled();
+  }
+
+  &-disabled &-prefix,
+  &-disabled &-suffix,
+  &-disabled&-suffix-button &-suffix,
+  &-disabled &-inner-button,
+  &-disabled input {
+    cursor: not-allowed;
+  }
+
+  &-not-editable & {
+    cursor: default;
+  }
+
+  &-placeholder {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    height: .2rem;
+    line-height: .2rem;
+    margin: auto 0;
+    white-space: nowrap;
+    padding: 0 @input-padding-horizontal;
+    color: @input-placeholder-color;
+    opacity: 0;
+    transition: all .3s;
+  }
+
+  // Reset height for `textarea`s
+  textarea& {
+    max-width: 100%; // prevent textearea resize from coming out of its container
+    height: auto;
+    vertical-align: bottom;
+  }
+
+  // Size
+  &-lg {
+    .input-lg();
+  }
+
+  &-sm {
+    .input-sm();
+  }
+
+  &-wrapper {
+    position: relative;
+    display: inline-block;
+    background-color: @input-wrapper-bg;
+    vertical-align: top; // <-- use 'top' for styling addonBefore/addonAfter & queryBar's TextField
+    line-height: 1;
+    label {
+      position: relative;
+      display: block;
+    }
+  }
+
+  &-prefix,
+  &-suffix,
+  &-inner-button {
+    position: absolute;
+    z-index: 1;
+    top: .01rem;
+    bottom: .01rem;
+    width: @input-button-width;
+    // width: .3rem;
+    height: .2rem;
+    // height: 100%;
+    text-align: center;
+    margin: auto 0;
+    line-height: 1;
+
+    // & > * {
+    //   position: absolute;
+    //   top: 50%;
+    //   left: 50%;
+    //   transform: translate(-50%, -50%);
+    // }
+  }
+
+  &-prefix {
+    left: .01rem;
+  }
+
+  &-suffix,
+  &-inner-button {
+    right: .01rem;
+  }
+
+  &-suffix-button &-inner-button {
+    right: @input-button-width;
+  }
+
+  &-suffix-button &-suffix {
+    cursor: pointer;
+  }
+
+  &-inner-button {
+    cursor: pointer;
+    opacity: 0;
+    z-index: 1;
+    transition: opacity .3s;
+    + * {
+      transition: opacity .3s;
+    }
+  }
+
+  &:not(textarea):not(:last-child) {
+    padding-right: @input-button-width;
+  }
+
+  &:not(textarea):not(:first-child) {
+    padding-left: @input-button-width;
+  }
+
+  &-wrapper:hover &-inner-button,
+  &-focus &-inner-button {
+    opacity: 1;
+    z-index: 2;
+    &-clear-button {
+      right: @input-button-width;
+    }
+  }
+
+  &-wrapper:hover &-suffix-button &-suffix,
+  &-focus&-suffix-button &-suffix {
+    opacity: 1;
+  }
+
+  &-clear-button {
+    background: linear-gradient(to right, rgba(255, 255, 255, 0), #fff 20%, #fff);
+    &:hover {
+      color: @primary-5;
+    }
+    &:active {
+      color: @primary-3;
+    }
+  }
+
+  &-empty &-clear-button {
+    display: none;
+    & + * {
+      opacity: 1 !important;
+    }
+  }
+  &-empty &-placeholder {
+    opacity: 1;
+  }
+
+  > ul {
+    position: relative;
+    margin: 0;
+    padding: .02rem 0 0 0;
+    overflow: hidden auto;
+    > li {
+      height: .24rem;
+      line-height: .22rem;
+      display: inline-block;
+      max-width: 99%;
+      vertical-align: middle;
+      margin-bottom: .02rem;
+    }
+  }
+
+  &-multiple {
+    width: 1.72rem;
+  }
+
+  &-multiple & {
+    height: auto;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    margin: 0;
+    input {
+      width: .05rem;
+      height: 100%;
+      border: none;
+      outline: 0;
+      background-color: transparent;
+      float: left;
+      max-width: 100%;
+      margin-left: .04rem;
+    }
+  }
+
+  &-multiple &:not(:last-child) {
+    padding-right: @input-button-width * 2;
+  }
+
+  &-multiple-block {
+    .tag-block;
+    cursor: default;
+    position: relative;
+    padding-right: .25rem;
+    .@{iconfont-css-prefix} {
+      line-height: inherit;
+      cursor: pointer;
+      transition: all .3s;
+      position: absolute;
+      right: .04rem;
+      top: .02rem;
+      opacity: .85;
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+
+  &-group {
+    display: flex;
+
+    &-group-wrapper {
+      display: inline-block;
+      width: 100%;
+    }
+    &-before, &-after, &-help {
+      background-color: @input-addon-bg;
+      padding-left: .05rem;
+      padding-right: .05rem;
+      border: .01rem solid @input-border-color;
+      border-radius: @border-radius-base;
+      display: flex;
+      align-items: center;
+      word-break: keep-all;
+    }
+    &-before {
+      border-right: none;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+    &-after, &-help {
+      border-left: none;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+    &-help:not(:last-child) {
+      border-radius: 0;
+    }
+    &-input {
+      flex: 1;
+
+      &:first-child:not(:last-child) {
+        input {
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+      }
+      &:not(:first-child):last-child {
+        input {
+          border-top-left-radius: 0;
+          border-bottom-left-radius: 0;
+        }
+      }
+      &:not(:first-child):not(:last-child) {
+        input {
+          border-radius: 0;
+        }
+      }
+    }
+  }
+
+  &-group-input &-wrapper {
+    width: 100%;
+  }
+
+  .validation;
+}
+
+.tag-block() {
+  display: inline-block;
+  color: @tag-default-color;
+  background-color: @tag-default-bg;
+  border-radius: @border-radius-base;
+  padding: 0 .1rem;
+  overflow: hidden;
+  max-width: 99%;
+  margin: 0 .02rem;
+  line-height: @line-height-base;
+  > div {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    vertical-align: middle;
+  }
+  &-invalid {
+    background-color: @error-color;
+  }
+  &-disabled {
+    background-color: @disabled-color;
+    padding-right: .1rem;
+    cursor: not-allowed;
+  }
+}

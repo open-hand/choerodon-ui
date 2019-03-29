@@ -1,4 +1,5 @@
 import canUseDOM from './canUseDom';
+
 const animationEndEventNames = {
   WebkitAnimation: 'webkitAnimationEnd',
   OAnimation: 'oAnimationEnd',

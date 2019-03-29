@@ -1,22 +1,27 @@
-import * as React from 'react';
+import React, { ReactNode } from 'react';
 import Icon from '../icon';
 import Notification from '../rc-components/notification';
 import { getPlacementStyle, getPlacementTransitionName } from './util';
+import { getPrefixCls } from '../configure';
 
 let defaultDuration = 3;
 let defaultTop: number = 24;
 let defaultBottom: number = 24;
 let messageInstance: any;
 let key = 1;
-let prefixCls = 'ant-message';
+let customizePrefixCls;
 let transitionName = 'move-up';
 let defaultPlacement: Placement = 'top';
 let getContainer: () => HTMLElement;
 
 type NoticeType = 'info' | 'success' | 'error' | 'warning' | 'loading';
-type Placement =  'top' | 'left' | 'right' | 'bottom' |
+type Placement = 'top' | 'left' | 'right' | 'bottom' |
   'topRight' | 'topLeft' | 'bottomRight' | 'bottomLeft' |
   'rightTop' | 'leftTop' | 'rightBottom' | 'leftBottom';
+
+function getCustomizePrefixCls() {
+  return getPrefixCls('message', customizePrefixCls);
+}
 
 function getMessageInstance(placement: Placement, callback: (i: any) => void) {
   if (messageInstance) {
@@ -24,7 +29,7 @@ function getMessageInstance(placement: Placement, callback: (i: any) => void) {
     return;
   }
   Notification.newInstance({
-    prefixCls,
+    prefixCls: getCustomizePrefixCls(),
     style: getPlacementStyle(placement, defaultTop, defaultBottom),
     transitionName: getPlacementTransitionName(placement, transitionName),
     getContainer,
@@ -38,7 +43,7 @@ function getMessageInstance(placement: Placement, callback: (i: any) => void) {
   });
 }
 
-function notice(content: React.ReactNode,
+function notice(content: ReactNode,
                 duration: (() => void) | number = defaultDuration,
                 type: NoticeType,
                 onClose?: () => void, placement?: Placement) {
@@ -59,6 +64,7 @@ function notice(content: React.ReactNode,
     defaultPlacement = placement;
   }
   const target = key++;
+  const prefixCls = getCustomizePrefixCls();
   getMessageInstance(defaultPlacement, (instance) => {
     instance.notice({
       key: target,
@@ -75,12 +81,12 @@ function notice(content: React.ReactNode,
   });
   return () => {
     if (messageInstance) {
-       messageInstance.removeNotice(target);
+      messageInstance.removeNotice(target);
     }
   };
 }
 
-type ConfigContent = React.ReactNode | string;
+type ConfigContent = ReactNode | string;
 type ConfigDuration = number | (() => void);
 export type ConfigOnClose = () => void;
 
@@ -129,7 +135,7 @@ export default {
       defaultDuration = options.duration;
     }
     if (options.prefixCls !== undefined) {
-      prefixCls = options.prefixCls;
+      customizePrefixCls = options.prefixCls;
     }
     if (options.getContainer !== undefined) {
       getContainer = options.getContainer;

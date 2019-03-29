@@ -1,10 +1,12 @@
-import * as React from 'react';
+import React, { Component, CSSProperties, SyntheticEvent } from 'react';
 import Icon from '../icon';
 import Tooltip from '../tooltip';
 import Progress from '../progress';
 import classNames from 'classnames';
 import { UploadFile, UploadListProps } from './interface';
-import Animate from '../rc-components/animate';
+import Animate from '../animate';
+import { ProgressType } from '../progress/enum';
+import { getPrefixCls } from '../configure';
 
 // https://developer.mozilla.org/en-US/docs/Web/API/FileReader/readAsDataURL
 const previewFile = (file: File, callback: Function) => {
@@ -17,14 +19,14 @@ const isImageUrl = (url: string): boolean => {
   return /^data:image\//.test(url) || /\.(webp|svg|png|gif|jpg|jpeg)$/.test(url);
 };
 
-export default class UploadList extends React.Component<UploadListProps, any> {
+export default class UploadList extends Component<UploadListProps, any> {
+  static displayName = 'UploadList';
   static defaultProps = {
     listType: 'text',  // or picture
     progressAttr: {
       strokeWidth: 2,
       showInfo: false,
     },
-    prefixCls: 'ant-upload',
     showRemoveIcon: true,
     showPreviewIcon: true,
   };
@@ -36,7 +38,7 @@ export default class UploadList extends React.Component<UploadListProps, any> {
     }
   };
 
-  handlePreview = (file: UploadFile, e: React.SyntheticEvent<HTMLElement>) => {
+  handlePreview = (file: UploadFile, e: SyntheticEvent<HTMLElement>) => {
     const { onPreview } = this.props;
     if (!onPreview) {
       return;
@@ -70,7 +72,8 @@ export default class UploadList extends React.Component<UploadListProps, any> {
   }
 
   render() {
-    const { prefixCls, items = [], listType, showPreviewIcon, showRemoveIcon, locale } = this.props;
+    const { prefixCls: customizePrefixCls, items = [], listType, showPreviewIcon, showRemoveIcon, locale } = this.props;
+    const prefixCls = getPrefixCls('upload', customizePrefixCls);
     const list = items.map(file => {
       let progress;
       let icon = <Icon type={file.status === 'uploading' ? 'loading' : 'attach_file'} />;
@@ -106,7 +109,7 @@ export default class UploadList extends React.Component<UploadListProps, any> {
       if (file.status === 'uploading') {
         // show loading icon if upload progress listener is disabled
         const loadingProgress = ('percent' in file) ? (
-          <Progress type="line" {...this.props.progressAttr} percent={file.percent} />
+          <Progress type={ProgressType.line} {...this.props.progressAttr} percent={file.percent} />
         ) : null;
 
         progress = (
@@ -143,7 +146,7 @@ export default class UploadList extends React.Component<UploadListProps, any> {
       const style = (file.url || file.thumbUrl) ? undefined : {
         pointerEvents: 'none',
         opacity: 0.5,
-      } as React.CSSProperties;
+      } as CSSProperties;
       const previewIcon = showPreviewIcon ? (
         <a
           href={file.url || file.thumbUrl}

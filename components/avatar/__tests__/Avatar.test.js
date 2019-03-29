@@ -5,7 +5,7 @@ import Avatar from '..';
 describe('Avatar Render', () => {
   it('Render long string correctly', () => {
     const wrapper = mount(<Avatar>TestString</Avatar>);
-    const children = wrapper.find('.ant-avatar-string');
+    const children = wrapper.find('.c7n-avatar-string');
     expect(children.length).toBe(1);
   });
 
@@ -18,11 +18,11 @@ describe('Avatar Render', () => {
 
     wrapper.find('img').simulate('error');
 
-    const children = wrapper.find('.ant-avatar-string');
+    const children = wrapper.find('.c7n-avatar-string');
     expect(children.length).toBe(1);
     expect(children.text()).toBe('Fallback');
     expect(wrapper.instance().setScale).toBeCalled();
-    expect(div.querySelector('.ant-avatar-string').style.transform).toContain('scale(0.5)');
+    expect(div.querySelector('.c7n-avatar-string').style.transform).toContain('scale(0.5)');
 
     wrapper.detach();
     global.document.body.removeChild(div);

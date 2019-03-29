@@ -64,15 +64,15 @@ ReactDOM.render(
 
 ````css
 /* tile uploaded pictures */
-.upload-list-inline .ant-upload-list-item {
+.upload-list-inline .c7n-upload-list-item {
   float: left;
   width: 200px;
   margin-right: 8px;
 }
-.upload-list-inline .ant-upload-animate-enter {
+.upload-list-inline .c7n-upload-animate-enter {
   animation-name: uploadAnimateInlineIn;
 }
-.upload-list-inline .ant-upload-animate-leave {
+.upload-list-inline .c7n-upload-animate-leave {
   animation-name: uploadAnimateInlineOut;
 }
 ````

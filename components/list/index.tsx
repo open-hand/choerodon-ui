@@ -1,15 +1,15 @@
-import * as React from 'react';
+import React, { Children, cloneElement, Component, ReactElement, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { SpinProps } from '../spin';
+import omit from 'lodash/omit';
+import Spin, { SpinProps } from '../spin';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import defaultLocale from '../locale-provider/default';
-
-import Spin from '../spin';
+import { Size } from '../_util/enum';
 import Pagination from '../pagination';
 import { Row } from '../grid';
-
 import Item from './Item';
+import { getPrefixCls } from '../configure';
 
 export { ListItemProps, ListItemMetaProps } from './Item';
 
@@ -28,28 +28,26 @@ export interface ListGridType {
   xxl?: ColumnCount;
 }
 
-export type ListSize = 'small' | 'default' | 'large';
-
 export interface ListProps {
   bordered?: boolean;
   className?: string;
-  children?: React.ReactNode;
+  children?: ReactNode;
   dataSource: any;
-  extra?: React.ReactNode;
+  extra?: ReactNode;
   grid?: ListGridType;
   id?: string;
   itemLayout?: string;
   loading?: boolean | SpinProps;
-  loadMore?: React.ReactNode;
+  loadMore?: ReactNode;
   pagination?: any;
   prefixCls?: string;
   rowKey?: any;
   renderItem: any;
-  size?: ListSize;
+  size?: Size;
   split?: boolean;
-  header?: React.ReactNode;
-  footer?: React.ReactNode;
-  empty?: React.ReactNode;
+  header?: ReactNode;
+  footer?: ReactNode;
+  empty?: ReactNode;
   locale?: Object;
 }
 
@@ -57,7 +55,8 @@ export interface ListLocale {
   emptyText: string;
 }
 
-export default class List extends React.Component<ListProps> {
+export default class List extends Component<ListProps> {
+  static displayName = 'List';
   static Item: typeof Item = Item;
 
   static childContextTypes = {
@@ -66,14 +65,13 @@ export default class List extends React.Component<ListProps> {
 
   static defaultProps = {
     dataSource: [],
-    prefixCls: 'ant-list',
     bordered: false,
     split: true,
     loading: false,
     pagination: false,
   };
 
-  private keys: {[key: string]: string} = {};
+  private keys: { [key: string]: string } = {};
 
   getChildContext() {
     return {
@@ -81,7 +79,7 @@ export default class List extends React.Component<ListProps> {
     };
   }
 
-  renderItem = (item: React.ReactElement<any>, index: number) => {
+  renderItem = (item: ReactElement<any>, index: number) => {
     const { dataSource, renderItem, rowKey } = this.props;
     let key;
 
@@ -100,7 +98,7 @@ export default class List extends React.Component<ListProps> {
     this.keys[index] = key;
 
     return renderItem(item, index);
-  }
+  };
 
   isSomethingAfterLastTtem() {
     const { loadMore, pagination, footer } = this.props;
@@ -109,7 +107,11 @@ export default class List extends React.Component<ListProps> {
 
   renderEmpty = (contextLocale: ListLocale) => {
     const locale = { ...contextLocale, ...this.props.locale };
-    return <div className={`${this.props.prefixCls}-empty-text`}>{locale.emptyText}</div>;
+    return <div className={`${this.getPrefixCls()}-empty-text`}>{locale.emptyText}</div>;
+  };
+
+  getPrefixCls() {
+    return getPrefixCls('list', this.props.prefixCls);
   }
 
   render() {
@@ -121,19 +123,16 @@ export default class List extends React.Component<ListProps> {
       itemLayout,
       loadMore,
       pagination,
-      prefixCls,
       grid,
       dataSource,
       size,
-      rowKey,
-      renderItem,
       header,
       footer,
       empty,
       loading,
       ...rest,
     } = this.props;
-
+    const prefixCls = this.getPrefixCls();
     let loadingProp = loading;
     if (typeof loadingProp === 'boolean') {
       loadingProp = {
@@ -146,10 +145,10 @@ export default class List extends React.Component<ListProps> {
     // small => sm
     let sizeCls = '';
     switch (size) {
-      case 'large':
+      case Size.large:
         sizeCls = 'lg';
         break;
-      case 'small':
+      case Size.small:
         sizeCls = 'sm';
       default:
         break;
@@ -175,7 +174,7 @@ export default class List extends React.Component<ListProps> {
     childrenContent = isLoading && (<div style={{ minHeight: 53 }} />);
     if (dataSource.length > 0) {
       const items = dataSource.map((item: any, index: number) => this.renderItem(item, index));
-      const childrenList = React.Children.map(items, (child: any, index) => React.cloneElement(child, {
+      const childrenList = Children.map(items, (child: any, index) => cloneElement(child, {
           key: this.keys[index],
         }),
       );
@@ -205,7 +204,7 @@ export default class List extends React.Component<ListProps> {
     );
 
     return (
-      <div className={classString} {...rest}>
+      <div className={classString} {...omit(rest, ['prefixCls', 'rowKey', 'renderItem'])}>
         {header && <div className={`${prefixCls}-header`}>{header}</div>}
         {content}
         {children}

@@ -1,18 +1,20 @@
-import * as React from 'react';
-import Tooltip, { AbstractTooltipProps }  from '../tooltip';
+import React, { Component, MouseEvent, ReactNode } from 'react';
+import Tooltip, { AbstractTooltipProps } from '../tooltip';
 import Icon from '../icon';
 import Button from '../button';
-import { ButtonType } from '../button/button';
+import { ButtonType } from '../button/Button';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import defaultLocale from '../locale-provider/default';
+import { Size } from '../_util/enum';
+import { getPrefixCls } from '../configure';
 
 export interface PopconfirmProps extends AbstractTooltipProps {
-  title: React.ReactNode;
-  onConfirm?: (e: React.MouseEvent<any>) => void;
-  onCancel?: (e: React.MouseEvent<any>) => void;
-  okText?: React.ReactNode;
+  title: ReactNode;
+  onConfirm?: (e: MouseEvent<any>) => void;
+  onCancel?: (e: MouseEvent<any>) => void;
+  okText?: ReactNode;
   okType?: ButtonType;
-  cancelText?: React.ReactNode;
+  cancelText?: ReactNode;
 }
 
 export interface PopconfirmState {
@@ -24,9 +26,9 @@ export interface PopconfirmLocale {
   cancelText: string;
 }
 
-export default class Popconfirm extends React.Component<PopconfirmProps, PopconfirmState> {
+export default class Popconfirm extends Component<PopconfirmProps, PopconfirmState> {
+  static displayName = 'Popconfirm';
   static defaultProps = {
-    prefixCls: 'ant-popover',
     transitionName: 'zoom-big',
     placement: 'top',
     trigger: 'click',
@@ -53,27 +55,27 @@ export default class Popconfirm extends React.Component<PopconfirmProps, Popconf
     return this.tooltip.getPopupDomNode();
   }
 
-  onConfirm = (e: React.MouseEvent<HTMLButtonElement>) => {
+  onConfirm = (e: MouseEvent<HTMLButtonElement>) => {
     this.setVisible(false);
 
     const { onConfirm } = this.props;
     if (onConfirm) {
       onConfirm.call(this, e);
     }
-  }
+  };
 
-  onCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
+  onCancel = (e: MouseEvent<HTMLButtonElement>) => {
     this.setVisible(false);
 
     const { onCancel } = this.props;
     if (onCancel) {
       onCancel.call(this, e);
     }
-  }
+  };
 
   onVisibleChange = (visible: boolean) => {
     this.setVisible(visible);
-  }
+  };
 
   setVisible(visible: boolean) {
     const props = this.props;
@@ -89,10 +91,11 @@ export default class Popconfirm extends React.Component<PopconfirmProps, Popconf
 
   saveTooltip = (node: any) => {
     this.tooltip = node;
-  }
+  };
 
   renderOverlay = (popconfirmLocale: PopconfirmLocale) => {
-    const { prefixCls, title, cancelText, okText, okType } = this.props;
+    const { title, cancelText, okText, okType } = this.props;
+    const prefixCls = this.getPrefixCls();
     return (
       <div>
         <div className={`${prefixCls}-inner-content`}>
@@ -101,21 +104,24 @@ export default class Popconfirm extends React.Component<PopconfirmProps, Popconf
             <div className={`${prefixCls}-message-title`}>{title}</div>
           </div>
           <div className={`${prefixCls}-buttons`}>
-            <Button onClick={this.onCancel} size="small">
+            <Button onClick={this.onCancel} size={Size.small}>
               {cancelText || popconfirmLocale.cancelText}
             </Button>
-            <Button onClick={this.onConfirm} type={okType} size="small">
+            <Button onClick={this.onConfirm} type={okType} size={Size.small}>
               {okText || popconfirmLocale.okText}
             </Button>
           </div>
         </div>
       </div>
     );
+  };
+
+  getPrefixCls() {
+    return getPrefixCls('popover', this.props.prefixCls);
   }
 
   render() {
-    const { prefixCls, placement, ...restProps } = this.props;
-
+    const { placement, ...restProps } = this.props;
     const overlay = (
       <LocaleReceiver
         componentName="Popconfirm"
@@ -128,7 +134,7 @@ export default class Popconfirm extends React.Component<PopconfirmProps, Popconf
     return (
       <Tooltip
         {...restProps}
-        prefixCls={prefixCls}
+        prefixCls={this.getPrefixCls()}
         placement={placement}
         onVisibleChange={this.onVisibleChange}
         visible={this.state.visible}

@@ -1,20 +1,21 @@
-import * as React from 'react';
+import React, { cloneElement, Component, ReactElement, ReactNode } from 'react';
 import classNames from 'classnames';
 import Input, { InputProps } from './Input';
 import Button from '../button';
+import { Size } from '../_util/enum';
+import { getPrefixCls } from '../configure';
 
 export interface SearchProps extends InputProps {
   inputPrefixCls?: string;
   onSearch?: (value: string) => any;
-  enterButton?: boolean | React.ReactNode;
+  enterButton?: boolean | ReactNode;
 }
 
-export default class Search extends React.Component<SearchProps, any> {
+export default class Search extends Component<SearchProps, any> {
+  static displayName = 'Search';
   static defaultProps = {
-    inputPrefixCls: 'ant-input',
-    prefixCls: 'ant-input-search',
     enterButton: false,
-    size: 'small',
+    size: Size.small,
   };
 
   private input: Input;
@@ -25,7 +26,7 @@ export default class Search extends React.Component<SearchProps, any> {
       onSearch(this.input.input.value);
     }
     this.input.focus();
-  }
+  };
 
   focus() {
     this.input.focus();
@@ -37,22 +38,28 @@ export default class Search extends React.Component<SearchProps, any> {
 
   saveInput = (node: Input) => {
     this.input = node;
+  };
+
+  getPrefixCls() {
+    return getPrefixCls('input-search', this.props.prefixCls);
   }
 
   getButtonOrIcon() {
-    const { enterButton, prefixCls, size } = this.props;
+    const { enterButton, size } = this.props;
     if (!enterButton) {
-      return (<Button
-        type="primary"
-        size={size}
-        shape="circle"
-        icon="search"
-      />)
+      return (
+        <Button
+          type="primary"
+          size={size}
+          shape="circle"
+          icon="search"
+        />
+      );
     }
-    const enterButtonAsElement = enterButton as React.ReactElement<any>;
+    const enterButtonAsElement = enterButton as ReactElement<any>;
     if (enterButtonAsElement.type === Button || enterButtonAsElement.type === 'button') {
-      return React.cloneElement(enterButtonAsElement, enterButtonAsElement.type === Button ? {
-        className: `${prefixCls}-button`,
+      return cloneElement(enterButtonAsElement, enterButtonAsElement.type === Button ? {
+        className: `${this.getPrefixCls()}-button`,
         size,
         onClick: this.onSearch,
       } : {
@@ -68,7 +75,7 @@ export default class Search extends React.Component<SearchProps, any> {
           onClick={this.onSearch}
           icon="search"
         />
-      )
+      );
     } else {
       return (
         <Button
@@ -84,8 +91,10 @@ export default class Search extends React.Component<SearchProps, any> {
   }
 
   render() {
-    const { className, prefixCls, inputPrefixCls, size, suffix,  enterButton, ...others } = this.props;
+    const { className, inputPrefixCls, size, suffix, enterButton, ...others } = this.props;
+    const prefixCls = this.getPrefixCls();
     delete (others as any).onSearch;
+    delete (others as any).prefixCls;
     const buttonOrIcon = this.getButtonOrIcon();
     const searchSuffix = suffix ? [suffix, buttonOrIcon] : buttonOrIcon;
     const inputClassName = classNames(prefixCls, className, {
@@ -98,7 +107,7 @@ export default class Search extends React.Component<SearchProps, any> {
         {...others}
         size={size}
         className={inputClassName}
-        prefixCls={inputPrefixCls}
+        prefixCls={getPrefixCls('input', inputPrefixCls)}
         suffix={searchSuffix}
         ref={this.saveInput}
       />

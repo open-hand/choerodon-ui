@@ -1,11 +1,34 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-const classNames = require('classnames');
+import noop from 'lodash/noop';
+import classNames from 'classnames';
 
-function noop() {
-}
+export default class Switch extends Component {
+  static propTypes = {
+    className: PropTypes.string,
+    prefixCls: PropTypes.string,
+    disabled: PropTypes.bool,
+    checkedChildren: PropTypes.any,
+    unCheckedChildren: PropTypes.any,
+    onChange: PropTypes.func,
+    onMouseUp: PropTypes.func,
+    onClick: PropTypes.func,
+    tabIndex: PropTypes.number,
+    checked: PropTypes.bool,
+    defaultChecked: PropTypes.bool,
+    autoFocus: PropTypes.bool,
+  };
 
-class Switch extends Component {
+  static defaultProps = {
+    prefixCls: 'rc-switch',
+    checkedChildren: null,
+    unCheckedChildren: null,
+    className: '',
+    defaultChecked: false,
+    onChange: noop,
+    onClick: noop,
+  };
+
   constructor(props) {
     super(props);
 
@@ -50,7 +73,7 @@ class Switch extends Component {
     const checked = !this.state.checked;
     this.setChecked(checked);
     onClick(checked);
-  }
+  };
 
   handleKeyDown = (e) => {
     if (e.keyCode === 37) { // Left
@@ -60,7 +83,7 @@ class Switch extends Component {
     } else if (e.keyCode === 32 || e.keyCode === 13) { // Space, Enter
       this.toggle();
     }
-  }
+  };
 
   // Handle auto focus when click switch in Chrome
   handleMouseUp = (e) => {
@@ -70,7 +93,7 @@ class Switch extends Component {
     if (this.props.onMouseUp) {
       this.props.onMouseUp(e);
     }
-  }
+  };
 
   focus() {
     this.node.focus();
@@ -82,11 +105,13 @@ class Switch extends Component {
 
   saveNode = (node) => {
     this.node = node;
-  }
+  };
 
   render() {
-    const { className, prefixCls, disabled,
-      checkedChildren, tabIndex, unCheckedChildren, ...restProps } = this.props;
+    const {
+      className, prefixCls, disabled,
+      checkedChildren, tabIndex, unCheckedChildren, ...restProps
+    } = this.props;
     const checked = this.state.checked;
     const switchTabIndex = disabled ? -1 : (tabIndex || 0);
     const switchClassName = classNames({
@@ -112,30 +137,3 @@ class Switch extends Component {
     );
   }
 }
-
-Switch.propTypes = {
-  className: PropTypes.string,
-  prefixCls: PropTypes.string,
-  disabled: PropTypes.bool,
-  checkedChildren: PropTypes.any,
-  unCheckedChildren: PropTypes.any,
-  onChange: PropTypes.func,
-  onMouseUp: PropTypes.func,
-  onClick: PropTypes.func,
-  tabIndex: PropTypes.number,
-  checked: PropTypes.bool,
-  defaultChecked: PropTypes.bool,
-  autoFocus: PropTypes.bool,
-};
-
-Switch.defaultProps = {
-  prefixCls: 'rc-switch',
-  checkedChildren: null,
-  unCheckedChildren: null,
-  className: '',
-  defaultChecked: false,
-  onChange: noop,
-  onClick: noop,
-};
-
-export default Switch;

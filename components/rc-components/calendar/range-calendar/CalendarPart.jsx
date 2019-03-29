@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { cloneElement } from 'react';
 import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import CalendarHeader from '../calendar/CalendarHeader';
@@ -52,7 +52,7 @@ const CalendarPart = createReactClass({
     };
     const index = direction === 'left' ? 0 : 1;
     const timePickerEle = shouldShowTimePicker &&
-      React.cloneElement(timePicker, {
+      cloneElement(timePicker, {
         showHour: true,
         showMinute: true,
         showSecond: true,

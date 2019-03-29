@@ -27,7 +27,7 @@ ReactDOM.render(
           style.borderRadius = '50%';
         }
         return (
-          <div className="ant-calendar-date" style={style}>
+          <div className="c7n-calendar-date" style={style}>
             {current.date()}
           </div>
         );
@@ -41,7 +41,7 @@ ReactDOM.render(
           style.borderRadius = '50%';
         }
         return (
-          <div className="ant-calendar-date" style={style}>
+          <div className="c7n-calendar-date" style={style}>
             {current.date()}
           </div>
         );

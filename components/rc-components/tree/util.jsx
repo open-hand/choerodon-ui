@@ -1,6 +1,6 @@
 /* eslint no-loop-func: 0*/
 import { Children } from 'react';
-import warning from 'warning';
+import warning from '../../_util/warning';
 
 export function arrDel(list, value) {
   const clone = list.slice();

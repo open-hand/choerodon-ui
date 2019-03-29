@@ -20,7 +20,7 @@ import { BackTop } from 'choerodon-ui';
 ReactDOM.render(
   <div>
     <BackTop>
-      <div className="ant-back-top-inner">UP</div>
+      <div className="c7n-back-top-inner">UP</div>
     </BackTop>
     Scroll down to see the bottom-right
     <strong style={{ color: '#1088e9' }}> blue </strong>
@@ -31,10 +31,10 @@ ReactDOM.render(
 ````
 
 ````css
-#components-back-top-demo-custom .ant-back-top {
+#components-back-top-demo-custom .c7n-back-top {
   bottom: 100px;
 }
-#components-back-top-demo-custom .ant-back-top-inner {
+#components-back-top-demo-custom .c7n-back-top-inner {
   height: 40px;
   width: 40px;
   line-height: 40px;

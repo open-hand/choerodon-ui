@@ -1,16 +1,4 @@
-declare module 'classnames';
-
-declare module 'object-assign';
-
-declare module 'omit.js';
-
-declare module 'shallowequal';
-
-declare module 'warning';
-
 declare module 'css-animation';
-
-declare module 'react-slick';
 
 declare module 'array-tree-filter';
 
@@ -18,12 +6,13 @@ declare module 'react-lazy-load';
 
 declare module 'dom-closest';
 
+declare module 'lodash/noop' {
+  const noop: (...args: any[]) => any;
+  export default noop;
+}
+
 declare module '*.json' {
   const value: any;
   export const version: string;
   export default value;
 }
-
-declare module 'lodash/debounce';
-
-declare module 'lodash/uniqBy';

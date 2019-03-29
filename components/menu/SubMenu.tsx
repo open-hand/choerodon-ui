@@ -1,14 +1,14 @@
-import * as React from 'react';
+import React, { Component, MouseEvent } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { SubMenu as RcSubMenu } from '../rc-components/menu';
 
-class SubMenu extends React.Component<any, any> {
+class SubMenu extends Component<any, any> {
   static contextTypes = {
-    antdMenuTheme: PropTypes.string,
+    menuTheme: PropTypes.string,
   };
   private subMenu: any;
-  onKeyDown = (e: React.MouseEvent<HTMLElement>) => {
+  onKeyDown = (e: MouseEvent<HTMLElement>) => {
     this.subMenu.onKeyDown(e);
   };
   saveSubMenu = (subMenu: any) => {
@@ -17,7 +17,7 @@ class SubMenu extends React.Component<any, any> {
 
   render() {
     const { rootPrefixCls, className } = this.props;
-    const theme = this.context.antdMenuTheme;
+    const theme = this.context.menuTheme;
     return (
       <RcSubMenu
         {...this.props}

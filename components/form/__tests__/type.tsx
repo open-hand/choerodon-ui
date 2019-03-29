@@ -1,9 +1,9 @@
 /* tslint:disable */
-import * as React from 'react';
+import React, { Component } from 'react';
 import Form, { FormComponentProps, FormCreateOption } from '../Form';
 
 // test Form.create on component without own props
-class WithoutOwnProps extends React.Component<any, any> {
+class WithoutOwnProps extends Component<any, any> {
   state = {
     foo: 'bar',
   };
@@ -21,7 +21,7 @@ interface WithOwnPropsProps extends FormComponentProps {
   name: string;
 }
 
-class WithOwnProps extends React.Component<WithOwnPropsProps, any> {
+class WithOwnProps extends Component<WithOwnPropsProps, any> {
   state = {
     foo: 'bar',
   };
@@ -40,7 +40,7 @@ interface WithCreateOptionsProps extends FormComponentProps {
   username: string;
 }
 
-class WithCreateOptions extends React.Component<WithCreateOptionsProps, {}> {
+class WithCreateOptions extends Component<WithCreateOptionsProps, {}> {
   render() {
     return <div>foo</div>;
   }

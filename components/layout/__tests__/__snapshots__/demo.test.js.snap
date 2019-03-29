@@ -3,118 +3,118 @@
 exports[`renders ./components/layout/demo/basic.md correctly 1`] = `
 <div>
   <div
-    class="ant-layout"
+    class="c7n-layout"
   >
     <div
-      class="ant-layout-header"
+      class="c7n-layout-header"
     >
       Header
     </div>
     <div
-      class="ant-layout-content"
+      class="c7n-layout-content"
     >
       Content
     </div>
     <div
-      class="ant-layout-footer"
+      class="c7n-layout-footer"
     >
       Footer
     </div>
   </div>
   <div
-    class="ant-layout"
+    class="c7n-layout"
   >
     <div
-      class="ant-layout-header"
+      class="c7n-layout-header"
     >
       Header
     </div>
     <div
-      class="ant-layout"
+      class="c7n-layout"
     >
       <div
-        class="ant-layout-sider"
+        class="c7n-layout-sider"
         style="flex:0 0 200px;max-width:200px;min-width:200px;width:200px"
       >
         <div
-          class="ant-layout-sider-children"
+          class="c7n-layout-sider-children"
         >
           Sider
         </div>
       </div>
       <div
-        class="ant-layout-content"
+        class="c7n-layout-content"
       >
         Content
       </div>
     </div>
     <div
-      class="ant-layout-footer"
+      class="c7n-layout-footer"
     >
       Footer
     </div>
   </div>
   <div
-    class="ant-layout"
+    class="c7n-layout"
   >
     <div
-      class="ant-layout-header"
+      class="c7n-layout-header"
     >
       Header
     </div>
     <div
-      class="ant-layout"
+      class="c7n-layout"
     >
       <div
-        class="ant-layout-content"
+        class="c7n-layout-content"
       >
         Content
       </div>
       <div
-        class="ant-layout-sider"
+        class="c7n-layout-sider"
         style="flex:0 0 200px;max-width:200px;min-width:200px;width:200px"
       >
         <div
-          class="ant-layout-sider-children"
+          class="c7n-layout-sider-children"
         >
           Sider
         </div>
       </div>
     </div>
     <div
-      class="ant-layout-footer"
+      class="c7n-layout-footer"
     >
       Footer
     </div>
   </div>
   <div
-    class="ant-layout"
+    class="c7n-layout"
   >
     <div
-      class="ant-layout-sider"
+      class="c7n-layout-sider"
       style="flex:0 0 200px;max-width:200px;min-width:200px;width:200px"
     >
       <div
-        class="ant-layout-sider-children"
+        class="c7n-layout-sider-children"
       >
         Sider
       </div>
     </div>
     <div
-      class="ant-layout"
+      class="c7n-layout"
     >
       <div
-        class="ant-layout-header"
+        class="c7n-layout-header"
       >
         Header
       </div>
       <div
-        class="ant-layout-content"
+        class="c7n-layout-content"
       >
         Content
       </div>
       <div
-        class="ant-layout-footer"
+        class="c7n-layout-footer"
       >
         Footer
       </div>
@@ -125,27 +125,27 @@ exports[`renders ./components/layout/demo/basic.md correctly 1`] = `
 
 exports[`renders ./components/layout/demo/custom-trigger.md correctly 1`] = `
 <div
-  class="ant-layout"
+  class="c7n-layout"
 >
   <div
-    class="ant-layout-sider"
+    class="c7n-layout-sider"
     style="flex:0 0 200px;max-width:200px;min-width:200px;width:200px"
   >
     <div
-      class="ant-layout-sider-children"
+      class="c7n-layout-sider-children"
     >
       <div
         class="logo"
       />
       <ul
         aria-activedescendant=""
-        class="ant-menu  ant-menu-root ant-menu-inline"
+        class="c7n-menu  c7n-menu-root c7n-menu-inline"
         role="menu"
         tabindex="0"
       >
         <li
           aria-selected="true"
-          class="ant-menu-item ant-menu-item-selected"
+          class="c7n-menu-item c7n-menu-item-selected"
           role="menuitem"
           style="padding-left:24px"
         >
@@ -156,12 +156,12 @@ exports[`renders ./components/layout/demo/custom-trigger.md correctly 1`] = `
             nav 1
           </span>
           <div
-            class="ant-ripple-wrapper"
+            class="c7n-ripple-wrapper"
           />
         </li>
         <li
           aria-selected="false"
-          class="ant-menu-item"
+          class="c7n-menu-item"
           role="menuitem"
           style="padding-left:24px"
         >
@@ -172,12 +172,12 @@ exports[`renders ./components/layout/demo/custom-trigger.md correctly 1`] = `
             nav 2
           </span>
           <div
-            class="ant-ripple-wrapper"
+            class="c7n-ripple-wrapper"
           />
         </li>
         <li
           aria-selected="false"
-          class="ant-menu-item"
+          class="c7n-menu-item"
           role="menuitem"
           style="padding-left:24px"
         >
@@ -188,17 +188,17 @@ exports[`renders ./components/layout/demo/custom-trigger.md correctly 1`] = `
             nav 3
           </span>
           <div
-            class="ant-ripple-wrapper"
+            class="c7n-ripple-wrapper"
           />
         </li>
       </ul>
     </div>
   </div>
   <div
-    class="ant-layout"
+    class="c7n-layout"
   >
     <div
-      class="ant-layout-header"
+      class="c7n-layout-header"
       style="background:#fff;padding:0"
     >
       <i
@@ -206,7 +206,7 @@ exports[`renders ./components/layout/demo/custom-trigger.md correctly 1`] = `
       />
     </div>
     <div
-      class="ant-layout-content"
+      class="c7n-layout-content"
       style="margin:24px 16px;padding:24px;background:#fff;min-height:280px"
     >
       Content
@@ -217,10 +217,10 @@ exports[`renders ./components/layout/demo/custom-trigger.md correctly 1`] = `
 
 exports[`renders ./components/layout/demo/fixed.md correctly 1`] = `
 <div
-  class="ant-layout"
+  class="c7n-layout"
 >
   <div
-    class="ant-layout-header"
+    class="c7n-layout-header"
     style="position:fixed;width:100%"
   >
     <div
@@ -228,83 +228,83 @@ exports[`renders ./components/layout/demo/fixed.md correctly 1`] = `
     />
     <ul
       aria-activedescendant=""
-      class="ant-menu  ant-menu-root ant-menu-horizontal"
+      class="c7n-menu  c7n-menu-root c7n-menu-horizontal"
       role="menu"
       style="line-height:64px"
       tabindex="0"
     >
       <li
         aria-selected="false"
-        class="ant-menu-item"
+        class="c7n-menu-item"
         role="menuitem"
       >
         nav 1
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </li>
       <li
         aria-selected="true"
-        class="ant-menu-item ant-menu-item-selected"
+        class="c7n-menu-item c7n-menu-item-selected"
         role="menuitem"
       >
         nav 2
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </li>
       <li
         aria-selected="false"
-        class="ant-menu-item"
+        class="c7n-menu-item"
         role="menuitem"
       >
         nav 3
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </li>
     </ul>
   </div>
   <div
-    class="ant-layout-content"
+    class="c7n-layout-content"
     style="padding:0 50px;margin-top:64px"
   >
     <div
-      class="ant-breadcrumb"
+      class="c7n-breadcrumb"
       style="margin:16px 0"
     >
       <span>
         <span
-          class="ant-breadcrumb-link"
+          class="c7n-breadcrumb-link"
         >
           Home
         </span>
         <span
-          class="ant-breadcrumb-separator"
+          class="c7n-breadcrumb-separator"
         >
           /
         </span>
       </span>
       <span>
         <span
-          class="ant-breadcrumb-link"
+          class="c7n-breadcrumb-link"
         >
           List
         </span>
         <span
-          class="ant-breadcrumb-separator"
+          class="c7n-breadcrumb-separator"
         >
           /
         </span>
       </span>
       <span>
         <span
-          class="ant-breadcrumb-link"
+          class="c7n-breadcrumb-link"
         >
           App
         </span>
         <span
-          class="ant-breadcrumb-separator"
+          class="c7n-breadcrumb-separator"
         >
           /
         </span>
@@ -317,7 +317,7 @@ exports[`renders ./components/layout/demo/fixed.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-layout-footer"
+    class="c7n-layout-footer"
     style="text-align:center"
   >
     Ant Design ©2016 Created by Ant UED
@@ -327,27 +327,27 @@ exports[`renders ./components/layout/demo/fixed.md correctly 1`] = `
 
 exports[`renders ./components/layout/demo/fixed-sider.md correctly 1`] = `
 <div
-  class="ant-layout"
+  class="c7n-layout"
 >
   <div
-    class="ant-layout-sider"
+    class="c7n-layout-sider"
     style="overflow:auto;height:100vh;position:fixed;left:0;flex:0 0 200px;max-width:200px;min-width:200px;width:200px"
   >
     <div
-      class="ant-layout-sider-children"
+      class="c7n-layout-sider-children"
     >
       <div
         class="logo"
       />
       <ul
         aria-activedescendant=""
-        class="ant-menu  ant-menu-root ant-menu-inline"
+        class="c7n-menu  c7n-menu-root c7n-menu-inline"
         role="menu"
         tabindex="0"
       >
         <li
           aria-selected="false"
-          class="ant-menu-item"
+          class="c7n-menu-item"
           role="menuitem"
           style="padding-left:24px"
         >
@@ -360,12 +360,12 @@ exports[`renders ./components/layout/demo/fixed-sider.md correctly 1`] = `
             nav 1
           </span>
           <div
-            class="ant-ripple-wrapper"
+            class="c7n-ripple-wrapper"
           />
         </li>
         <li
           aria-selected="false"
-          class="ant-menu-item"
+          class="c7n-menu-item"
           role="menuitem"
           style="padding-left:24px"
         >
@@ -378,12 +378,12 @@ exports[`renders ./components/layout/demo/fixed-sider.md correctly 1`] = `
             nav 2
           </span>
           <div
-            class="ant-ripple-wrapper"
+            class="c7n-ripple-wrapper"
           />
         </li>
         <li
           aria-selected="false"
-          class="ant-menu-item"
+          class="c7n-menu-item"
           role="menuitem"
           style="padding-left:24px"
         >
@@ -396,12 +396,12 @@ exports[`renders ./components/layout/demo/fixed-sider.md correctly 1`] = `
             nav 3
           </span>
           <div
-            class="ant-ripple-wrapper"
+            class="c7n-ripple-wrapper"
           />
         </li>
         <li
           aria-selected="true"
-          class="ant-menu-item ant-menu-item-selected"
+          class="c7n-menu-item c7n-menu-item-selected"
           role="menuitem"
           style="padding-left:24px"
         >
@@ -414,12 +414,12 @@ exports[`renders ./components/layout/demo/fixed-sider.md correctly 1`] = `
             nav 4
           </span>
           <div
-            class="ant-ripple-wrapper"
+            class="c7n-ripple-wrapper"
           />
         </li>
         <li
           aria-selected="false"
-          class="ant-menu-item"
+          class="c7n-menu-item"
           role="menuitem"
           style="padding-left:24px"
         >
@@ -432,12 +432,12 @@ exports[`renders ./components/layout/demo/fixed-sider.md correctly 1`] = `
             nav 5
           </span>
           <div
-            class="ant-ripple-wrapper"
+            class="c7n-ripple-wrapper"
           />
         </li>
         <li
           aria-selected="false"
-          class="ant-menu-item"
+          class="c7n-menu-item"
           role="menuitem"
           style="padding-left:24px"
         >
@@ -450,12 +450,12 @@ exports[`renders ./components/layout/demo/fixed-sider.md correctly 1`] = `
             nav 6
           </span>
           <div
-            class="ant-ripple-wrapper"
+            class="c7n-ripple-wrapper"
           />
         </li>
         <li
           aria-selected="false"
-          class="ant-menu-item"
+          class="c7n-menu-item"
           role="menuitem"
           style="padding-left:24px"
         >
@@ -468,12 +468,12 @@ exports[`renders ./components/layout/demo/fixed-sider.md correctly 1`] = `
             nav 7
           </span>
           <div
-            class="ant-ripple-wrapper"
+            class="c7n-ripple-wrapper"
           />
         </li>
         <li
           aria-selected="false"
-          class="ant-menu-item"
+          class="c7n-menu-item"
           role="menuitem"
           style="padding-left:24px"
         >
@@ -486,22 +486,22 @@ exports[`renders ./components/layout/demo/fixed-sider.md correctly 1`] = `
             nav 8
           </span>
           <div
-            class="ant-ripple-wrapper"
+            class="c7n-ripple-wrapper"
           />
         </li>
       </ul>
     </div>
   </div>
   <div
-    class="ant-layout"
+    class="c7n-layout"
     style="margin-left:200px"
   >
     <div
-      class="ant-layout-header"
+      class="c7n-layout-header"
       style="background:#fff;padding:0"
     />
     <div
-      class="ant-layout-content"
+      class="c7n-layout-content"
       style="margin:24px 16px 0;overflow:initial"
     >
       <div
@@ -605,7 +605,7 @@ exports[`renders ./components/layout/demo/fixed-sider.md correctly 1`] = `
       </div>
     </div>
     <div
-      class="ant-layout-footer"
+      class="c7n-layout-footer"
       style="text-align:center"
     >
       Ant Design ©2016 Created by Ant UED
@@ -616,27 +616,27 @@ exports[`renders ./components/layout/demo/fixed-sider.md correctly 1`] = `
 
 exports[`renders ./components/layout/demo/responsive.md correctly 1`] = `
 <div
-  class="ant-layout"
+  class="c7n-layout"
 >
   <div
-    class="ant-layout-sider"
+    class="c7n-layout-sider"
     style="flex:0 0 200px;max-width:200px;min-width:200px;width:200px"
   >
     <div
-      class="ant-layout-sider-children"
+      class="c7n-layout-sider-children"
     >
       <div
         class="logo"
       />
       <ul
         aria-activedescendant=""
-        class="ant-menu  ant-menu-root ant-menu-inline"
+        class="c7n-menu  c7n-menu-root c7n-menu-inline"
         role="menu"
         tabindex="0"
       >
         <li
           aria-selected="false"
-          class="ant-menu-item"
+          class="c7n-menu-item"
           role="menuitem"
           style="padding-left:24px"
         >
@@ -649,12 +649,12 @@ exports[`renders ./components/layout/demo/responsive.md correctly 1`] = `
             nav 1
           </span>
           <div
-            class="ant-ripple-wrapper"
+            class="c7n-ripple-wrapper"
           />
         </li>
         <li
           aria-selected="false"
-          class="ant-menu-item"
+          class="c7n-menu-item"
           role="menuitem"
           style="padding-left:24px"
         >
@@ -667,12 +667,12 @@ exports[`renders ./components/layout/demo/responsive.md correctly 1`] = `
             nav 2
           </span>
           <div
-            class="ant-ripple-wrapper"
+            class="c7n-ripple-wrapper"
           />
         </li>
         <li
           aria-selected="false"
-          class="ant-menu-item"
+          class="c7n-menu-item"
           role="menuitem"
           style="padding-left:24px"
         >
@@ -685,12 +685,12 @@ exports[`renders ./components/layout/demo/responsive.md correctly 1`] = `
             nav 3
           </span>
           <div
-            class="ant-ripple-wrapper"
+            class="c7n-ripple-wrapper"
           />
         </li>
         <li
           aria-selected="true"
-          class="ant-menu-item ant-menu-item-selected"
+          class="c7n-menu-item c7n-menu-item-selected"
           role="menuitem"
           style="padding-left:24px"
         >
@@ -703,21 +703,21 @@ exports[`renders ./components/layout/demo/responsive.md correctly 1`] = `
             nav 4
           </span>
           <div
-            class="ant-ripple-wrapper"
+            class="c7n-ripple-wrapper"
           />
         </li>
       </ul>
     </div>
   </div>
   <div
-    class="ant-layout"
+    class="c7n-layout"
   >
     <div
-      class="ant-layout-header"
+      class="c7n-layout-header"
       style="background:#fff;padding:0"
     />
     <div
-      class="ant-layout-content"
+      class="c7n-layout-content"
       style="margin:24px 16px 0"
     >
       <div
@@ -727,7 +727,7 @@ exports[`renders ./components/layout/demo/responsive.md correctly 1`] = `
       </div>
     </div>
     <div
-      class="ant-layout-footer"
+      class="c7n-layout-footer"
       style="text-align:center"
     >
       Ant Design ©2016 Created by Ant UED
@@ -738,28 +738,28 @@ exports[`renders ./components/layout/demo/responsive.md correctly 1`] = `
 
 exports[`renders ./components/layout/demo/side.md correctly 1`] = `
 <div
-  class="ant-layout"
+  class="c7n-layout"
   style="min-height:100vh"
 >
   <div
-    class="ant-layout-sider ant-layout-sider-has-trigger"
+    class="c7n-layout-sider c7n-layout-sider-has-trigger"
     style="flex:0 0 200px;max-width:200px;min-width:200px;width:200px"
   >
     <div
-      class="ant-layout-sider-children"
+      class="c7n-layout-sider-children"
     >
       <div
         class="logo"
       />
       <ul
         aria-activedescendant=""
-        class="ant-menu  ant-menu-root ant-menu-inline"
+        class="c7n-menu  c7n-menu-root c7n-menu-inline"
         role="menu"
         tabindex="0"
       >
         <li
           aria-selected="true"
-          class="ant-menu-item ant-menu-item-selected"
+          class="c7n-menu-item c7n-menu-item-selected"
           role="menuitem"
           style="padding-left:24px"
         >
@@ -770,12 +770,12 @@ exports[`renders ./components/layout/demo/side.md correctly 1`] = `
             Option 1
           </span>
           <div
-            class="ant-ripple-wrapper"
+            class="c7n-ripple-wrapper"
           />
         </li>
         <li
           aria-selected="false"
-          class="ant-menu-item"
+          class="c7n-menu-item"
           role="menuitem"
           style="padding-left:24px"
         >
@@ -786,17 +786,17 @@ exports[`renders ./components/layout/demo/side.md correctly 1`] = `
             Option 2
           </span>
           <div
-            class="ant-ripple-wrapper"
+            class="c7n-ripple-wrapper"
           />
         </li>
         <li
-          class="ant-menu-submenu ant-menu-submenu-inline"
+          class="c7n-menu-submenu c7n-menu-submenu-inline"
           role="menuitem"
         >
           <div
             aria-expanded="false"
             aria-haspopup="true"
-            class="ant-menu-submenu-title"
+            class="c7n-menu-submenu-title"
             style="padding-left:24px"
           >
             <span>
@@ -808,19 +808,19 @@ exports[`renders ./components/layout/demo/side.md correctly 1`] = `
               </span>
             </span>
             <i
-              class="ant-menu-submenu-arrow"
+              class="c7n-menu-submenu-arrow"
             />
           </div>
           <div />
         </li>
         <li
-          class="ant-menu-submenu ant-menu-submenu-inline"
+          class="c7n-menu-submenu c7n-menu-submenu-inline"
           role="menuitem"
         >
           <div
             aria-expanded="false"
             aria-haspopup="true"
-            class="ant-menu-submenu-title"
+            class="c7n-menu-submenu-title"
             style="padding-left:24px"
           >
             <span>
@@ -832,14 +832,14 @@ exports[`renders ./components/layout/demo/side.md correctly 1`] = `
               </span>
             </span>
             <i
-              class="ant-menu-submenu-arrow"
+              class="c7n-menu-submenu-arrow"
             />
           </div>
           <div />
         </li>
         <li
           aria-selected="false"
-          class="ant-menu-item"
+          class="c7n-menu-item"
           role="menuitem"
           style="padding-left:24px"
         >
@@ -850,13 +850,13 @@ exports[`renders ./components/layout/demo/side.md correctly 1`] = `
             File
           </span>
           <div
-            class="ant-ripple-wrapper"
+            class="c7n-ripple-wrapper"
           />
         </li>
       </ul>
     </div>
     <div
-      class="ant-layout-sider-trigger"
+      class="c7n-layout-sider-trigger"
       style="width:200px"
     >
       <i
@@ -865,40 +865,40 @@ exports[`renders ./components/layout/demo/side.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-layout"
+    class="c7n-layout"
   >
     <div
-      class="ant-layout-header"
+      class="c7n-layout-header"
       style="background:#fff;padding:0"
     />
     <div
-      class="ant-layout-content"
+      class="c7n-layout-content"
       style="margin:0 16px"
     >
       <div
-        class="ant-breadcrumb"
+        class="c7n-breadcrumb"
         style="margin:16px 0"
       >
         <span>
           <span
-            class="ant-breadcrumb-link"
+            class="c7n-breadcrumb-link"
           >
             User
           </span>
           <span
-            class="ant-breadcrumb-separator"
+            class="c7n-breadcrumb-separator"
           >
             /
           </span>
         </span>
         <span>
           <span
-            class="ant-breadcrumb-link"
+            class="c7n-breadcrumb-link"
           >
             Bill
           </span>
           <span
-            class="ant-breadcrumb-separator"
+            class="c7n-breadcrumb-separator"
           >
             /
           </span>
@@ -911,7 +911,7 @@ exports[`renders ./components/layout/demo/side.md correctly 1`] = `
       </div>
     </div>
     <div
-      class="ant-layout-footer"
+      class="c7n-layout-footer"
       style="text-align:center"
     >
       Ant Design ©2016 Created by Ant UED
@@ -922,93 +922,93 @@ exports[`renders ./components/layout/demo/side.md correctly 1`] = `
 
 exports[`renders ./components/layout/demo/top.md correctly 1`] = `
 <div
-  class="layout ant-layout"
+  class="layout c7n-layout"
 >
   <div
-    class="ant-layout-header"
+    class="c7n-layout-header"
   >
     <div
       class="logo"
     />
     <ul
       aria-activedescendant=""
-      class="ant-menu  ant-menu-root ant-menu-horizontal"
+      class="c7n-menu  c7n-menu-root c7n-menu-horizontal"
       role="menu"
       style="line-height:64px"
       tabindex="0"
     >
       <li
         aria-selected="false"
-        class="ant-menu-item"
+        class="c7n-menu-item"
         role="menuitem"
       >
         nav 1
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </li>
       <li
         aria-selected="true"
-        class="ant-menu-item ant-menu-item-selected"
+        class="c7n-menu-item c7n-menu-item-selected"
         role="menuitem"
       >
         nav 2
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </li>
       <li
         aria-selected="false"
-        class="ant-menu-item"
+        class="c7n-menu-item"
         role="menuitem"
       >
         nav 3
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </li>
     </ul>
   </div>
   <div
-    class="ant-layout-content"
+    class="c7n-layout-content"
     style="padding:0 50px"
   >
     <div
-      class="ant-breadcrumb"
+      class="c7n-breadcrumb"
       style="margin:16px 0"
     >
       <span>
         <span
-          class="ant-breadcrumb-link"
+          class="c7n-breadcrumb-link"
         >
           Home
         </span>
         <span
-          class="ant-breadcrumb-separator"
+          class="c7n-breadcrumb-separator"
         >
           /
         </span>
       </span>
       <span>
         <span
-          class="ant-breadcrumb-link"
+          class="c7n-breadcrumb-link"
         >
           List
         </span>
         <span
-          class="ant-breadcrumb-separator"
+          class="c7n-breadcrumb-separator"
         >
           /
         </span>
       </span>
       <span>
         <span
-          class="ant-breadcrumb-link"
+          class="c7n-breadcrumb-link"
         >
           App
         </span>
         <span
-          class="ant-breadcrumb-separator"
+          class="c7n-breadcrumb-separator"
         >
           /
         </span>
@@ -1021,7 +1021,7 @@ exports[`renders ./components/layout/demo/top.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-layout-footer"
+    class="c7n-layout-footer"
     style="text-align:center"
   >
     Ant Design ©2016 Created by Ant UED
@@ -1031,125 +1031,125 @@ exports[`renders ./components/layout/demo/top.md correctly 1`] = `
 
 exports[`renders ./components/layout/demo/top-side.md correctly 1`] = `
 <div
-  class="ant-layout"
+  class="c7n-layout"
 >
   <div
-    class="header ant-layout-header"
+    class="header c7n-layout-header"
   >
     <div
       class="logo"
     />
     <ul
       aria-activedescendant=""
-      class="ant-menu  ant-menu-root ant-menu-horizontal"
+      class="c7n-menu  c7n-menu-root c7n-menu-horizontal"
       role="menu"
       style="line-height:64px"
       tabindex="0"
     >
       <li
         aria-selected="false"
-        class="ant-menu-item"
+        class="c7n-menu-item"
         role="menuitem"
       >
         nav 1
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </li>
       <li
         aria-selected="true"
-        class="ant-menu-item ant-menu-item-selected"
+        class="c7n-menu-item c7n-menu-item-selected"
         role="menuitem"
       >
         nav 2
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </li>
       <li
         aria-selected="false"
-        class="ant-menu-item"
+        class="c7n-menu-item"
         role="menuitem"
       >
         nav 3
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </li>
     </ul>
   </div>
   <div
-    class="ant-layout-content"
+    class="c7n-layout-content"
     style="padding:0 50px"
   >
     <div
-      class="ant-breadcrumb"
+      class="c7n-breadcrumb"
       style="margin:16px 0"
     >
       <span>
         <span
-          class="ant-breadcrumb-link"
+          class="c7n-breadcrumb-link"
         >
           Home
         </span>
         <span
-          class="ant-breadcrumb-separator"
+          class="c7n-breadcrumb-separator"
         >
           /
         </span>
       </span>
       <span>
         <span
-          class="ant-breadcrumb-link"
+          class="c7n-breadcrumb-link"
         >
           List
         </span>
         <span
-          class="ant-breadcrumb-separator"
+          class="c7n-breadcrumb-separator"
         >
           /
         </span>
       </span>
       <span>
         <span
-          class="ant-breadcrumb-link"
+          class="c7n-breadcrumb-link"
         >
           App
         </span>
         <span
-          class="ant-breadcrumb-separator"
+          class="c7n-breadcrumb-separator"
         >
           /
         </span>
       </span>
     </div>
     <div
-      class="ant-layout"
+      class="c7n-layout"
       style="padding:24px 0;background:#fff"
     >
       <div
-        class="ant-layout-sider"
+        class="c7n-layout-sider"
         style="background:#fff;flex:0 0 200px;max-width:200px;min-width:200px;width:200px"
       >
         <div
-          class="ant-layout-sider-children"
+          class="c7n-layout-sider-children"
         >
           <ul
             aria-activedescendant=""
-            class="ant-menu  ant-menu-root ant-menu-inline"
+            class="c7n-menu  c7n-menu-root c7n-menu-inline"
             role="menu"
             style="height:100%"
             tabindex="0"
           >
             <li
-              class="ant-menu-submenu ant-menu-submenu-inline ant-menu-submenu-open ant-menu-submenu-selected"
+              class="c7n-menu-submenu c7n-menu-submenu-inline c7n-menu-submenu-open c7n-menu-submenu-selected"
               role="menuitem"
             >
               <div
                 aria-expanded="true"
                 aria-haspopup="true"
                 aria-owns="sub1$Menu"
-                class="ant-menu-submenu-title"
+                class="c7n-menu-submenu-title"
                 style="padding-left:24px"
               >
                 <span>
@@ -1159,68 +1159,68 @@ exports[`renders ./components/layout/demo/top-side.md correctly 1`] = `
                   subnav 1
                 </span>
                 <i
-                  class="ant-menu-submenu-arrow"
+                  class="c7n-menu-submenu-arrow"
                 />
               </div>
               <ul
-                class="ant-menu  ant-menu-sub ant-menu-inline"
+                class="c7n-menu  c7n-menu-sub c7n-menu-inline"
                 id="sub1$Menu"
                 role="menu"
               >
                 <li
                   aria-selected="true"
-                  class="ant-menu-item ant-menu-item-selected"
+                  class="c7n-menu-item c7n-menu-item-selected"
                   role="menuitem"
                   style="padding-left:48px"
                 >
                   option1
                   <div
-                    class="ant-ripple-wrapper"
+                    class="c7n-ripple-wrapper"
                   />
                 </li>
                 <li
                   aria-selected="false"
-                  class="ant-menu-item"
+                  class="c7n-menu-item"
                   role="menuitem"
                   style="padding-left:48px"
                 >
                   option2
                   <div
-                    class="ant-ripple-wrapper"
+                    class="c7n-ripple-wrapper"
                   />
                 </li>
                 <li
                   aria-selected="false"
-                  class="ant-menu-item"
+                  class="c7n-menu-item"
                   role="menuitem"
                   style="padding-left:48px"
                 >
                   option3
                   <div
-                    class="ant-ripple-wrapper"
+                    class="c7n-ripple-wrapper"
                   />
                 </li>
                 <li
                   aria-selected="false"
-                  class="ant-menu-item"
+                  class="c7n-menu-item"
                   role="menuitem"
                   style="padding-left:48px"
                 >
                   option4
                   <div
-                    class="ant-ripple-wrapper"
+                    class="c7n-ripple-wrapper"
                   />
                 </li>
               </ul>
             </li>
             <li
-              class="ant-menu-submenu ant-menu-submenu-inline"
+              class="c7n-menu-submenu c7n-menu-submenu-inline"
               role="menuitem"
             >
               <div
                 aria-expanded="false"
                 aria-haspopup="true"
-                class="ant-menu-submenu-title"
+                class="c7n-menu-submenu-title"
                 style="padding-left:24px"
               >
                 <span>
@@ -1230,19 +1230,19 @@ exports[`renders ./components/layout/demo/top-side.md correctly 1`] = `
                   subnav 2
                 </span>
                 <i
-                  class="ant-menu-submenu-arrow"
+                  class="c7n-menu-submenu-arrow"
                 />
               </div>
               <div />
             </li>
             <li
-              class="ant-menu-submenu ant-menu-submenu-inline"
+              class="c7n-menu-submenu c7n-menu-submenu-inline"
               role="menuitem"
             >
               <div
                 aria-expanded="false"
                 aria-haspopup="true"
-                class="ant-menu-submenu-title"
+                class="c7n-menu-submenu-title"
                 style="padding-left:24px"
               >
                 <span>
@@ -1252,7 +1252,7 @@ exports[`renders ./components/layout/demo/top-side.md correctly 1`] = `
                   subnav 3
                 </span>
                 <i
-                  class="ant-menu-submenu-arrow"
+                  class="c7n-menu-submenu-arrow"
                 />
               </div>
               <div />
@@ -1261,7 +1261,7 @@ exports[`renders ./components/layout/demo/top-side.md correctly 1`] = `
         </div>
       </div>
       <div
-        class="ant-layout-content"
+        class="c7n-layout-content"
         style="padding:0 24px;min-height:280px"
       >
         Content
@@ -1269,7 +1269,7 @@ exports[`renders ./components/layout/demo/top-side.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-layout-footer"
+    class="c7n-layout-footer"
     style="text-align:center"
   >
     Ant Design ©2016 Created by Ant UED
@@ -1279,79 +1279,79 @@ exports[`renders ./components/layout/demo/top-side.md correctly 1`] = `
 
 exports[`renders ./components/layout/demo/top-side-2.md correctly 1`] = `
 <div
-  class="ant-layout"
+  class="c7n-layout"
 >
   <div
-    class="header ant-layout-header"
+    class="header c7n-layout-header"
   >
     <div
       class="logo"
     />
     <ul
       aria-activedescendant=""
-      class="ant-menu  ant-menu-root ant-menu-horizontal"
+      class="c7n-menu  c7n-menu-root c7n-menu-horizontal"
       role="menu"
       style="line-height:64px"
       tabindex="0"
     >
       <li
         aria-selected="false"
-        class="ant-menu-item"
+        class="c7n-menu-item"
         role="menuitem"
       >
         nav 1
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </li>
       <li
         aria-selected="true"
-        class="ant-menu-item ant-menu-item-selected"
+        class="c7n-menu-item c7n-menu-item-selected"
         role="menuitem"
       >
         nav 2
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </li>
       <li
         aria-selected="false"
-        class="ant-menu-item"
+        class="c7n-menu-item"
         role="menuitem"
       >
         nav 3
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </li>
     </ul>
   </div>
   <div
-    class="ant-layout"
+    class="c7n-layout"
   >
     <div
-      class="ant-layout-sider"
+      class="c7n-layout-sider"
       style="background:#fff;flex:0 0 200px;max-width:200px;min-width:200px;width:200px"
     >
       <div
-        class="ant-layout-sider-children"
+        class="c7n-layout-sider-children"
       >
         <ul
           aria-activedescendant=""
-          class="ant-menu  ant-menu-root ant-menu-inline"
+          class="c7n-menu  c7n-menu-root c7n-menu-inline"
           role="menu"
           style="height:100%;border-right:0"
           tabindex="0"
         >
           <li
-            class="ant-menu-submenu ant-menu-submenu-inline ant-menu-submenu-open ant-menu-submenu-selected"
+            class="c7n-menu-submenu c7n-menu-submenu-inline c7n-menu-submenu-open c7n-menu-submenu-selected"
             role="menuitem"
           >
             <div
               aria-expanded="true"
               aria-haspopup="true"
               aria-owns="sub1$Menu"
-              class="ant-menu-submenu-title"
+              class="c7n-menu-submenu-title"
               style="padding-left:24px"
             >
               <span>
@@ -1361,68 +1361,68 @@ exports[`renders ./components/layout/demo/top-side-2.md correctly 1`] = `
                 subnav 1
               </span>
               <i
-                class="ant-menu-submenu-arrow"
+                class="c7n-menu-submenu-arrow"
               />
             </div>
             <ul
-              class="ant-menu  ant-menu-sub ant-menu-inline"
+              class="c7n-menu  c7n-menu-sub c7n-menu-inline"
               id="sub1$Menu"
               role="menu"
             >
               <li
                 aria-selected="true"
-                class="ant-menu-item ant-menu-item-selected"
+                class="c7n-menu-item c7n-menu-item-selected"
                 role="menuitem"
                 style="padding-left:48px"
               >
                 option1
                 <div
-                  class="ant-ripple-wrapper"
+                  class="c7n-ripple-wrapper"
                 />
               </li>
               <li
                 aria-selected="false"
-                class="ant-menu-item"
+                class="c7n-menu-item"
                 role="menuitem"
                 style="padding-left:48px"
               >
                 option2
                 <div
-                  class="ant-ripple-wrapper"
+                  class="c7n-ripple-wrapper"
                 />
               </li>
               <li
                 aria-selected="false"
-                class="ant-menu-item"
+                class="c7n-menu-item"
                 role="menuitem"
                 style="padding-left:48px"
               >
                 option3
                 <div
-                  class="ant-ripple-wrapper"
+                  class="c7n-ripple-wrapper"
                 />
               </li>
               <li
                 aria-selected="false"
-                class="ant-menu-item"
+                class="c7n-menu-item"
                 role="menuitem"
                 style="padding-left:48px"
               >
                 option4
                 <div
-                  class="ant-ripple-wrapper"
+                  class="c7n-ripple-wrapper"
                 />
               </li>
             </ul>
           </li>
           <li
-            class="ant-menu-submenu ant-menu-submenu-inline"
+            class="c7n-menu-submenu c7n-menu-submenu-inline"
             role="menuitem"
           >
             <div
               aria-expanded="false"
               aria-haspopup="true"
-              class="ant-menu-submenu-title"
+              class="c7n-menu-submenu-title"
               style="padding-left:24px"
             >
               <span>
@@ -1432,19 +1432,19 @@ exports[`renders ./components/layout/demo/top-side-2.md correctly 1`] = `
                 subnav 2
               </span>
               <i
-                class="ant-menu-submenu-arrow"
+                class="c7n-menu-submenu-arrow"
               />
             </div>
             <div />
           </li>
           <li
-            class="ant-menu-submenu ant-menu-submenu-inline"
+            class="c7n-menu-submenu c7n-menu-submenu-inline"
             role="menuitem"
           >
             <div
               aria-expanded="false"
               aria-haspopup="true"
-              class="ant-menu-submenu-title"
+              class="c7n-menu-submenu-title"
               style="padding-left:24px"
             >
               <span>
@@ -1454,7 +1454,7 @@ exports[`renders ./components/layout/demo/top-side-2.md correctly 1`] = `
                 subnav 3
               </span>
               <i
-                class="ant-menu-submenu-arrow"
+                class="c7n-menu-submenu-arrow"
               />
             </div>
             <div />
@@ -1463,52 +1463,52 @@ exports[`renders ./components/layout/demo/top-side-2.md correctly 1`] = `
       </div>
     </div>
     <div
-      class="ant-layout"
+      class="c7n-layout"
       style="padding:0 24px 24px"
     >
       <div
-        class="ant-breadcrumb"
+        class="c7n-breadcrumb"
         style="margin:16px 0"
       >
         <span>
           <span
-            class="ant-breadcrumb-link"
+            class="c7n-breadcrumb-link"
           >
             Home
           </span>
           <span
-            class="ant-breadcrumb-separator"
+            class="c7n-breadcrumb-separator"
           >
             /
           </span>
         </span>
         <span>
           <span
-            class="ant-breadcrumb-link"
+            class="c7n-breadcrumb-link"
           >
             List
           </span>
           <span
-            class="ant-breadcrumb-separator"
+            class="c7n-breadcrumb-separator"
           >
             /
           </span>
         </span>
         <span>
           <span
-            class="ant-breadcrumb-link"
+            class="c7n-breadcrumb-link"
           >
             App
           </span>
           <span
-            class="ant-breadcrumb-separator"
+            class="c7n-breadcrumb-separator"
           >
             /
           </span>
         </span>
       </div>
       <div
-        class="ant-layout-content"
+        class="c7n-layout-content"
         style="background:#fff;padding:24px;margin:0;min-height:280px"
       >
         Content

@@ -1,4 +1,5 @@
-import * as React from 'react';
+import { Component, ComponentState } from 'react';
 import { ColumnProps } from './interface';
 
-export default class Column<T> extends React.Component<ColumnProps<T>, React.ComponentState> {}
+export default class Column<T> extends Component<ColumnProps<T>, ComponentState> {
+}

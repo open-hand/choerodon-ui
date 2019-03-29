@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
+
 const ROW = 4;
 const COL = 3;
-import classnames from 'classnames';
 
 function goYear(direction) {
   const next = this.state.value.clone();
@@ -20,8 +21,19 @@ function chooseDecade(year, event) {
   event.preventDefault();
 }
 
-export default
-class DecadePanel extends React.Component {
+export default class DecadePanel extends Component {
+  static propTypes = {
+    locale: PropTypes.object,
+    value: PropTypes.object,
+    defaultValue: PropTypes.object,
+    rootPrefixCls: PropTypes.string,
+  };
+
+  static defaultProps = {
+    onSelect() {
+    },
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -125,15 +137,3 @@ class DecadePanel extends React.Component {
       </div>);
   }
 }
-
-DecadePanel.propTypes = {
-  locale: PropTypes.object,
-  value: PropTypes.object,
-  defaultValue: PropTypes.object,
-  rootPrefixCls: PropTypes.string,
-};
-
-DecadePanel.defaultProps = {
-  onSelect() {
-  },
-};

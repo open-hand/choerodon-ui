@@ -1,38 +1,40 @@
-import * as React from 'react';
+import React, { Children, Component, CSSProperties, ReactElement, ReactNode, SFC } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Col } from '../grid';
-import { ListGridType, ColumnType } from './index';
+import { ColumnType, ListGridType } from './index';
+import { getPrefixCls } from '../configure';
 
 export interface ListItemProps {
   className?: string;
-  children?: React.ReactNode;
+  children?: ReactNode;
   prefixCls?: string;
-  style?: React.CSSProperties;
-  extra?: React.ReactNode;
-  actions?: Array<React.ReactNode>;
+  style?: CSSProperties;
+  extra?: ReactNode;
+  actions?: Array<ReactNode>;
   grid?: ListGridType;
 }
 
 export interface ListItemMetaProps {
-  avatar?: React.ReactNode;
+  avatar?: ReactNode;
   className?: string;
-  children?: React.ReactNode;
-  description?: React.ReactNode;
+  children?: ReactNode;
+  description?: ReactNode;
   prefixCls?: string;
-  style?: React.CSSProperties;
-  title?: React.ReactNode;
+  style?: CSSProperties;
+  title?: ReactNode;
 }
 
-export const Meta = (props: ListItemMetaProps) => {
+export const Meta: SFC<ListItemMetaProps> = (props) => {
   const {
-    prefixCls = 'ant-list',
+    prefixCls: customizePrefixCls,
     className,
     avatar,
     title,
     description,
     ...others,
   } = props;
+  const prefixCls = getPrefixCls('list', customizePrefixCls);
 
   const classString = classNames(`${prefixCls}-item-meta`, className);
 
@@ -51,13 +53,16 @@ export const Meta = (props: ListItemMetaProps) => {
   );
 };
 
+Meta.displayName = 'ListMeta';
+
 function getGrid(grid: ListGridType, t: ColumnType) {
   return grid[t] && Math.floor(24 / grid[t]!);
 }
 
 const GridColumns = ['', 1, 2, 3, 4, 6, 8, 12, 24];
 
-export default class Item extends React.Component<ListItemProps, any> {
+export default class Item extends Component<ListItemProps, any> {
+  static displayName = 'ListItem';
   static Meta: typeof Meta = Meta;
 
   static propTypes = {
@@ -76,13 +81,14 @@ export default class Item extends React.Component<ListItemProps, any> {
 
   render() {
     const { grid } = this.context;
-    const { prefixCls = 'ant-list', children, actions, extra, className, ...others } = this.props;
+    const { prefixCls: customizePrefixCls, children, actions, extra, className, ...others } = this.props;
+    const prefixCls = getPrefixCls('list', customizePrefixCls);
     const classString = classNames(`${prefixCls}-item`, className);
 
-    const metaContent: React.ReactElement<any>[] = [];
-    const otherContent: React.ReactElement<any>[] = [];
+    const metaContent: ReactElement<any>[] = [];
+    const otherContent: ReactElement<any>[] = [];
 
-    React.Children.forEach(children, (element: React.ReactElement<any>) => {
+    Children.forEach(children, (element: ReactElement<any>) => {
       if (element && element.type && element.type === Meta) {
         metaContent.push(element);
       } else {
@@ -100,10 +106,10 @@ export default class Item extends React.Component<ListItemProps, any> {
 
     let actionsContent;
     if (actions && actions.length > 0) {
-      const actionsContentItem = (action: React.ReactNode, i: number) => (
+      const actionsContentItem = (action: ReactNode, i: number) => (
         <li key={`${prefixCls}-item-action-${i}`}>
           {action}
-          {i !== (actions.length - 1) && <em className={`${prefixCls}-item-action-split`}/>}
+          {i !== (actions.length - 1) && <em className={`${prefixCls}-item-action-split`} />}
         </li>
       );
       actionsContent = (

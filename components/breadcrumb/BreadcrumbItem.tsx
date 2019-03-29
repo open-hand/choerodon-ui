@@ -1,17 +1,18 @@
-import * as React from 'react';
+import React, { Component, ReactNode } from 'react';
 import PropTypes from 'prop-types';
+import { getPrefixCls } from '../configure';
 
 export interface BreadcrumbItemProps {
   prefixCls?: string;
-  separator?: React.ReactNode;
+  separator?: ReactNode;
   href?: string;
 }
 
-export default class BreadcrumbItem extends React.Component<BreadcrumbItemProps, any> {
+export default class BreadcrumbItem extends Component<BreadcrumbItemProps, any> {
+  static displayName = 'BreadcrumbItem';
   static __ANT_BREADCRUMB_ITEM = true;
 
   static defaultProps = {
-    prefixCls: 'ant-breadcrumb',
     separator: '/',
   };
 
@@ -25,7 +26,8 @@ export default class BreadcrumbItem extends React.Component<BreadcrumbItemProps,
   };
 
   render() {
-    const { prefixCls, separator, children, ...restProps } = this.props;
+    const { prefixCls: customizePrefixCls, separator, children, ...restProps } = this.props;
+    const prefixCls = getPrefixCls('breadcrumb', customizePrefixCls);
     let link;
     if ('href' in this.props) {
       link = <a className={`${prefixCls}-link`} {...restProps}>{children}</a>;

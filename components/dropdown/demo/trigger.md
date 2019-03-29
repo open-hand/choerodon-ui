@@ -19,10 +19,10 @@ import { Menu, Dropdown, Icon, Button } from 'choerodon-ui';
 const menu = (
   <Menu>
     <Menu.Item key="0">
-      <a href="http://www.alipay.com/">1st menu item</a>
+      <a href="https://choerodon.io/">1st menu item</a>
     </Menu.Item>
     <Menu.Item key="1">
-      <a href="http://www.taobao.com/">2nd menu item</a>
+      <a href="https://choerodon.io/">2nd menu item</a>
     </Menu.Item>
     <Menu.Divider />
     <Menu.Item key="3">3rd menu item</Menu.Item>
@@ -32,7 +32,7 @@ const menu = (
 ReactDOM.render(
   <div>
     <Dropdown overlay={menu} trigger={['click']}>
-      <a className="ant-dropdown-link" href="#">
+      <a className="c7n-dropdown-link" href="#">
         Click me <Icon type="arrow_drop_down" />
       </a>
     </Dropdown>

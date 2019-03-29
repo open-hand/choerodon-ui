@@ -17,7 +17,7 @@ describe('message', () => {
       top: 100,
     });
     message.info('whatever');
-    expect(document.querySelectorAll('.ant-message')[0].style.top).toBe('100px');
+    expect(document.querySelectorAll('.c7n-message')[0].style.top).toBe('100px');
   });
 
   it('should be able to config getContainer', () => {
@@ -36,23 +36,23 @@ describe('message', () => {
   it('should be able to hide manually', () => {
     const hide1 = message.info('whatever', 0);
     const hide2 = message.info('whatever', 0);
-    expect(document.querySelectorAll('.ant-message-notice').length).toBe(2);
+    expect(document.querySelectorAll('.c7n-message-notice').length).toBe(2);
     hide1();
     jest.runAllTimers();
-    expect(document.querySelectorAll('.ant-message-notice').length).toBe(1);
+    expect(document.querySelectorAll('.c7n-message-notice').length).toBe(1);
     hide2();
     jest.runAllTimers();
-    expect(document.querySelectorAll('.ant-message-notice').length).toBe(0);
+    expect(document.querySelectorAll('.c7n-message-notice').length).toBe(0);
   });
 
   it('should be able to destroy globally', () => {
     message.info('whatever', 0);
     message.info('whatever', 0);
-    expect(document.querySelectorAll('.ant-message').length).toBe(1);
-    expect(document.querySelectorAll('.ant-message-notice').length).toBe(2);
+    expect(document.querySelectorAll('.c7n-message').length).toBe(1);
+    expect(document.querySelectorAll('.c7n-message-notice').length).toBe(2);
     message.destroy();
-    expect(document.querySelectorAll('.ant-message').length).toBe(0);
-    expect(document.querySelectorAll('.ant-message-notice').length).toBe(0);
+    expect(document.querySelectorAll('.c7n-message').length).toBe(0);
+    expect(document.querySelectorAll('.c7n-message-notice').length).toBe(0);
   });
 
   it('should not need to use duration argument when using the onClose arguments', () => {
@@ -71,7 +71,6 @@ describe('message', () => {
     });
   });
 
-  // https://github.com/ant-design/ant-design/issues/8201
   it('should hide message correctly', () => {
     let hide;
     class Test extends React.Component {
@@ -84,13 +83,12 @@ describe('message', () => {
       }
     }
     mount(<Test />);
-    expect(document.querySelectorAll('.ant-message-notice').length).toBe(1);
+    expect(document.querySelectorAll('.c7n-message-notice').length).toBe(1);
     hide();
     jest.runAllTimers();
-    expect(document.querySelectorAll('.ant-message-notice').length).toBe(0);
+    expect(document.querySelectorAll('.c7n-message-notice').length).toBe(0);
   });
 
-  // https://github.com/ant-design/ant-design/issues/8201
   it('should destroy messages correctly', () => {
     // eslint-disable-next-line
     class Test extends React.Component {
@@ -105,8 +103,8 @@ describe('message', () => {
       }
     }
     mount(<Test />);
-    expect(document.querySelectorAll('.ant-message-notice').length).toBe(2);
+    expect(document.querySelectorAll('.c7n-message-notice').length).toBe(2);
     jest.runAllTimers();
-    expect(document.querySelectorAll('.ant-message-notice').length).toBe(0);
+    expect(document.querySelectorAll('.c7n-message-notice').length).toBe(0);
   });
 });

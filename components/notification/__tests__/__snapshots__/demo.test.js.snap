@@ -2,56 +2,56 @@
 
 exports[`renders ./components/notification/demo/basic.md correctly 1`] = `
 <button
-  class="ant-btn ant-btn-primary ant-btn-flat"
+  class="c7n-btn c7n-btn-primary c7n-btn-flat"
   type="button"
 >
   <span>
     Open the notification box
   </span>
   <div
-    class="ant-ripple-wrapper"
+    class="c7n-ripple-wrapper"
   />
 </button>
 `;
 
 exports[`renders ./components/notification/demo/custom-icon.md correctly 1`] = `
 <button
-  class="ant-btn ant-btn-primary ant-btn-flat"
+  class="c7n-btn c7n-btn-primary c7n-btn-flat"
   type="button"
 >
   <span>
     Open the notification box
   </span>
   <div
-    class="ant-ripple-wrapper"
+    class="c7n-ripple-wrapper"
   />
 </button>
 `;
 
 exports[`renders ./components/notification/demo/custom-style.md correctly 1`] = `
 <button
-  class="ant-btn ant-btn-primary ant-btn-flat"
+  class="c7n-btn c7n-btn-primary c7n-btn-flat"
   type="button"
 >
   <span>
     Open the notification box
   </span>
   <div
-    class="ant-ripple-wrapper"
+    class="c7n-ripple-wrapper"
   />
 </button>
 `;
 
 exports[`renders ./components/notification/demo/duration.md correctly 1`] = `
 <button
-  class="ant-btn ant-btn-primary ant-btn-flat"
+  class="c7n-btn c7n-btn-primary c7n-btn-flat"
   type="button"
 >
   <span>
     Open the notification box
   </span>
   <div
-    class="ant-ripple-wrapper"
+    class="c7n-ripple-wrapper"
   />
 </button>
 `;
@@ -59,30 +59,30 @@ exports[`renders ./components/notification/demo/duration.md correctly 1`] = `
 exports[`renders ./components/notification/demo/placement.md correctly 1`] = `
 <div>
   <div
-    class="ant-select ant-select-has-value ant-select-enabled"
+    class="c7n-select c7n-select-has-value c7n-select-enabled"
     style="width:120px;margin-right:10px"
   >
     <div
       aria-autocomplete="list"
       aria-expanded="false"
       aria-haspopup="true"
-      class="ant-select-selection
-            ant-select-selection--single"
+      class="c7n-select-selection
+            c7n-select-selection--single"
       role="combobox"
       tabindex="0"
     >
       <div
-        class="ant-select-selection__rendered"
+        class="c7n-select-selection__rendered"
       >
         <div
-          class="ant-select-selection-selected-value"
+          class="c7n-select-selection-selected-value"
           style="opacity:1"
           title="topRight"
         >
           topRight
         </div>
         <span
-          class="ant-select-arrow"
+          class="c7n-select-arrow"
           style="user-select:none;-webkit-user-select:none"
           unselectable="unselectable"
         >
@@ -94,22 +94,22 @@ exports[`renders ./components/notification/demo/placement.md correctly 1`] = `
       </div>
     </div>
     <div
-      class="ant-select-underline"
+      class="c7n-select-underline"
     >
       <span
-        class="ant-select-ripple"
+        class="c7n-select-ripple"
       />
     </div>
   </div>
   <button
-    class="ant-btn ant-btn-primary ant-btn-flat"
+    class="c7n-btn c7n-btn-primary c7n-btn-flat"
     type="button"
   >
     <span>
       Open the notification box
     </span>
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
 </div>
@@ -117,14 +117,14 @@ exports[`renders ./components/notification/demo/placement.md correctly 1`] = `
 
 exports[`renders ./components/notification/demo/with-btn.md correctly 1`] = `
 <button
-  class="ant-btn ant-btn-primary ant-btn-flat"
+  class="c7n-btn c7n-btn-primary c7n-btn-flat"
   type="button"
 >
   <span>
     Open the notification box
   </span>
   <div
-    class="ant-ripple-wrapper"
+    class="c7n-ripple-wrapper"
   />
 </button>
 `;
@@ -132,47 +132,47 @@ exports[`renders ./components/notification/demo/with-btn.md correctly 1`] = `
 exports[`renders ./components/notification/demo/with-icon.md correctly 1`] = `
 <div>
   <button
-    class="ant-btn ant-btn-flat"
+    class="c7n-btn c7n-btn-flat"
     type="button"
   >
     <span>
       Success
     </span>
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
   <button
-    class="ant-btn ant-btn-flat"
+    class="c7n-btn c7n-btn-flat"
     type="button"
   >
     <span>
       Info
     </span>
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
   <button
-    class="ant-btn ant-btn-flat"
+    class="c7n-btn c7n-btn-flat"
     type="button"
   >
     <span>
       Warning
     </span>
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
   <button
-    class="ant-btn ant-btn-flat"
+    class="c7n-btn c7n-btn-flat"
     type="button"
   >
     <span>
       Error
     </span>
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
 </div>

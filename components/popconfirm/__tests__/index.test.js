@@ -41,7 +41,7 @@ describe('Popconfirm', () => {
 
     const popup = popconfirm.instance().getPopupDomNode();
     expect(popup).not.toBe(null);
-    expect(popup.className).toContain('ant-popover-placement-top');
+    expect(popup.className).toContain('c7n-popover-placement-top');
     expect(popup.innerHTML).toMatchSnapshot();
     expect(popup.innerHTML).toMatchSnapshot();
   });

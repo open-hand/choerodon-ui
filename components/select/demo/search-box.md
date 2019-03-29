@@ -16,7 +16,7 @@ Autocomplete with remote ajax data.
 ````jsx
 import { Select } from 'choerodon-ui';
 import jsonp from 'fetch-jsonp';
-import querystring from 'querystring';
+import queryString from 'querystringify';
 const Option = Select.Option;
 
 let timeout;
@@ -30,7 +30,7 @@ function fetch(value, callback) {
   currentValue = value;
 
   function fake() {
-    const str = querystring.encode({
+    const str = queryString.stringify({
       code: 'utf-8',
       q: value,
     });

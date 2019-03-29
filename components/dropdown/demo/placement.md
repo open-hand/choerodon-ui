@@ -19,13 +19,13 @@ import { Menu, Dropdown, Button } from 'choerodon-ui';
 const menu = (
   <Menu>
     <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">1st menu item</a>
+      <a target="_blank" rel="noopener noreferrer" href="https://choerodon.io/">1st menu item</a>
     </Menu.Item>
     <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">2nd menu item</a>
+      <a target="_blank" rel="noopener noreferrer" href="https://choerodon.io/">2nd menu item</a>
     </Menu.Item>
     <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">3rd menu item</a>
+      <a target="_blank" rel="noopener noreferrer" href="https://choerodon.io/">3rd menu item</a>
     </Menu.Item>
   </Menu>
 );
@@ -56,7 +56,7 @@ ReactDOM.render(
 ````
 
 ````css
-#components-dropdown-demo-placement .ant-btn {
+#components-dropdown-demo-placement .c7n-btn {
   margin-right: 8px;
   margin-bottom: 8px;
 }

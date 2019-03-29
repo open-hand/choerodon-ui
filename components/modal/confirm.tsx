@@ -1,10 +1,11 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import React from 'react';
+import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import Icon from '../icon';
 import Dialog, { ModalFuncProps } from './Modal';
 import ActionButton from './ActionButton';
 import { getConfirmLocale } from './locale';
+import { getPrefixCls } from '../configure';
 
 interface ConfirmDialogProps extends ModalFuncProps {
   afterClose?: () => void;
@@ -17,7 +18,7 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
   const { onCancel, onOk, close, zIndex, afterClose, visible, keyboard } = props;
   const iconType = props.iconType || undefined;
   const okType = props.okType || 'primary';
-  const prefixCls = props.prefixCls || 'ant-confirm';
+  const prefixCls = getPrefixCls('confirm', props.prefixCls);
   // 默认为 true，保持向下兼容
   const okCancel = ('okCancel' in props) ? props.okCancel! : true;
   const width = props.width || 416;

@@ -1,14 +1,15 @@
-import * as React from 'react';
+import React, { Children, Component, ReactChildren, ReactElement, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import shallowEqual from 'shallowequal';
+import shallowEqual from 'lodash/isEqual';
 import Radio from './radio';
-import { RadioGroupProps, RadioGroupState, RadioChangeEvent } from './interface';
+import { RadioChangeEvent, RadioGroupProps, RadioGroupState } from './interface';
+import { getPrefixCls } from '../configure';
 
-function getCheckedValue(children: React.ReactNode) {
+function getCheckedValue(children: ReactNode) {
   let value = null;
   let matched = false;
-  React.Children.forEach(children, (radio: any) => {
+  Children.forEach(children, (radio: any) => {
     if (radio && radio.props && radio.props.checked) {
       value = radio.props.value;
       matched = true;
@@ -17,7 +18,8 @@ function getCheckedValue(children: React.ReactNode) {
   return matched ? { value } : undefined;
 }
 
-export default class RadioGroup extends React.Component<RadioGroupProps, RadioGroupState> {
+export default class RadioGroup extends Component<RadioGroupProps, RadioGroupState> {
+  static displayName = 'RadioGroup';
   static defaultProps = {
     disabled: false,
   };
@@ -86,10 +88,12 @@ export default class RadioGroup extends React.Component<RadioGroupProps, RadioGr
     if (onChange && value !== lastValue) {
       onChange(ev);
     }
-  }
+  };
+
   render() {
     const props = this.props;
-    const { prefixCls = 'ant-radio-group', className = '', options } = props;
+    const { prefixCls: customizePrefixCls, className = '', options } = props;
+    const prefixCls = getPrefixCls('radio-group', customizePrefixCls);
     const classString = classNames(prefixCls, {
       [`${prefixCls}-${props.size}`]: props.size,
     }, className);
@@ -99,8 +103,8 @@ export default class RadioGroup extends React.Component<RadioGroupProps, RadioGr
     });
     const labelClassString = classNames(`${prefixCls}-label`, {
       'label-disabled': props.disabled,
-   });
-    let children: React.ReactChildren[] | React.ReactElement<any>[] | React.ReactNode = props.children;
+    });
+    let children: ReactChildren[] | ReactElement<any>[] | ReactNode = props.children;
 
     // 如果存在 options, 优先使用
     if (options && options.length > 0) {

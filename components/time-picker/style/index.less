@@ -2,9 +2,9 @@
 @import "../../style/mixins/index";
 @import "../../input/style/mixin";
 
-@input-prefix-cls: ~"@{ant-prefix}-input";
-@timepicker-prefix-cls: ~"@{ant-prefix}-time-picker";
-@timepicker-item-height: 32px;
+@input-prefix-cls: ~"@{c7n-prefix}-input";
+@timepicker-prefix-cls: ~"@{c7n-prefix}-time-picker";
+@timepicker-item-height: .32rem;
 
 .@{timepicker-prefix-cls}-panel {
   .reset-component;
@@ -22,7 +22,7 @@
     box-shadow: @box-shadow-base;
     background-clip: padding-box;
     overflow: hidden;
-    left: -2px;
+    left: -.02rem;
   }
 
   &-input {
@@ -38,7 +38,7 @@
     &-wrap {
       box-sizing: border-box;
       position: relative;
-      padding: 7px 2px 7px @control-padding-horizontal;
+      padding: .07rem .02rem .07rem @control-padding-horizontal;
       border-bottom: @border-width-base @border-style-base @border-color-split;
     }
 
@@ -49,24 +49,24 @@
 
   &-clear-btn {
     position: absolute;
-    right: 8px;
+    right: .08rem;
     cursor: pointer;
     overflow: hidden;
-    width: 20px;
-    height: 20px;
+    width: .2rem;
+    height: .2rem;
     text-align: center;
-    line-height: 20px;
-    top: 7px;
+    line-height: .2rem;
+    top: .07rem;
     margin: 0;
   }
 
   &-clear-btn:after {
-    font-size: @font-size-base - 2px;
+    font-size: @font-size-base - .02rem;
     color: @disabled-color;
     display: inline-block;
     line-height: 1;
-    width: 18px;
-    height: 18px;
+    width: .18rem;
+    height: .18rem;
     transition: color 0.3s ease;
     .iconfont-font("\e62e");
   }
@@ -154,7 +154,7 @@
   }
 
   &-addon {
-    padding: 8px;
+    padding: .08rem;
     border-top: @border-width-base @border-style-base @border-color-split;
   }
 
@@ -189,7 +189,7 @@
   display: inline-block;
   outline: none;
   transition: opacity .3s;
-  width: 128px;
+  width: 1.28rem;
 
   &-input {
     .input;
@@ -204,7 +204,7 @@
 
   .@{input-prefix-cls}-suffix {
     display: block !important;
-    height: 18px;
+    height: .18rem;
   }
 
   .@{input-prefix-cls}-disabled &-icon {
@@ -225,6 +225,6 @@
   }
 
   &-small &-icon {
-    right: @control-padding-horizontal-sm - 1px;
+    right: @control-padding-horizontal-sm - .01rem;
   }
 }

@@ -19,10 +19,10 @@ import { List, Avatar, Icon } from 'choerodon-ui';
 const listData = [];
 for (let i = 0; i < 5; i++) {
   listData.push({
-    href: 'http://ant.design',
-    title: `ant design part ${i}`,
+    href: 'https://choerodon.github.io/choerodon-ui/',
+    title: `choerodon ui part ${i}`,
     avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-    description: 'Ant Design, a design language for background applications, is refined by Ant UED Team.',
+    description: 'Choerodon UI, An enterprise-class UI design language and React-based implementation.',
     content: 'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
   });
 }

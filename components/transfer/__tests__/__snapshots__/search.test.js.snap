@@ -10,7 +10,6 @@ exports[`Search should show cross icon when input value exists 1`] = `
       disabled={false}
       onChange={[Function]}
       placeholder=""
-      prefixCls="ant-input"
       readOnly={false}
       showLengthInfo={true}
       showPasswordEye={false}
@@ -19,22 +18,22 @@ exports[`Search should show cross icon when input value exists 1`] = `
       value=""
     >
       <span
-        className="ant-input-wrapper"
+        className="c7n-input-wrapper"
       >
         <div
-          className="ant-input-content"
+          className="c7n-input-content"
         >
           <div
-            className="ant-input-rendered-wrapper"
+            className="c7n-input-rendered-wrapper"
           >
             <div
-              className="ant-input-rendered"
+              className="c7n-input-rendered"
             >
               <div
-                className="ant-input-placeholder"
+                className="c7n-input-placeholder"
               />
               <input
-                className="ant-input"
+                className="c7n-input"
                 disabled={false}
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -49,10 +48,10 @@ exports[`Search should show cross icon when input value exists 1`] = `
           </div>
         </div>
         <div
-          className="ant-input-underline"
+          className="c7n-input-underline"
         >
           <span
-            className="ant-input-ripple"
+            className="c7n-input-ripple"
           />
         </div>
       </span>
@@ -82,7 +81,6 @@ exports[`Search should show cross icon when input value exists 2`] = `
       disabled={false}
       onChange={[Function]}
       placeholder=""
-      prefixCls="ant-input"
       readOnly={false}
       showLengthInfo={true}
       showPasswordEye={false}
@@ -91,22 +89,22 @@ exports[`Search should show cross icon when input value exists 2`] = `
       value="a"
     >
       <span
-        className="ant-input-wrapper ant-input-has-value"
+        className="c7n-input-wrapper c7n-input-has-value"
       >
         <div
-          className="ant-input-content"
+          className="c7n-input-content"
         >
           <div
-            className="ant-input-rendered-wrapper"
+            className="c7n-input-rendered-wrapper"
           >
             <div
-              className="ant-input-rendered"
+              className="c7n-input-rendered"
             >
               <div
-                className="ant-input-placeholder"
+                className="c7n-input-placeholder"
               />
               <input
-                className="ant-input"
+                className="c7n-input"
                 disabled={false}
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -121,10 +119,10 @@ exports[`Search should show cross icon when input value exists 2`] = `
           </div>
         </div>
         <div
-          className="ant-input-underline"
+          className="c7n-input-underline"
         >
           <span
-            className="ant-input-ripple"
+            className="c7n-input-ripple"
           />
         </div>
       </span>

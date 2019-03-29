@@ -23,7 +23,7 @@ The difference with the `confirm` modal dialog is that it's more lightweight tha
 | onCancel | callback of cancel | function(e) | - |
 | onConfirm | callback of confirmation | function(e) | - |
 
-Consult [Tooltip's documentation](https://ant.design/components/tooltip/#API) to find more APIs.
+Consult [Tooltip's documentation](/components/tooltip/#API) to find more APIs.
 
 ## Note
 

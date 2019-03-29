@@ -26,7 +26,7 @@ ReactDOM.render(
 ````
 
 <style>
-.ant-spin {
+.c7n-spin {
   margin-right: 16px;
 }
 </style>

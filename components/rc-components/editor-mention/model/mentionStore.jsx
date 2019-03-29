@@ -1,9 +1,8 @@
-/* eslint new-cap: [2, {capIsNewExceptions: ["Map"]}] */
-import { Map } from 'immutable';
+import Map from 'core-js/es6/map';
 
-let offset = Map();
+let offset = new Map();
 const mentionStore = {
-  offset: Map(),
+  offset,
   getOffset() {
     return offset;
   },
@@ -12,15 +11,15 @@ const mentionStore = {
     return currentOffset && currentOffset.trigger;
   },
   activeSuggestion({ offsetKey }) {
-    offset = offset.set(offsetKey, {
+    offset.set(offsetKey, {
       offsetKey,
     });
   },
   inActiveSuggestion({ offsetKey }) {
-    offset = offset.delete(offsetKey);
+    offset.delete(offsetKey);
   },
   updateSuggestion({ offsetKey, position, trigger }) {
-    offset = offset.set(offsetKey, {
+    offset.set(offsetKey, {
       offsetKey,
       position,
       trigger,

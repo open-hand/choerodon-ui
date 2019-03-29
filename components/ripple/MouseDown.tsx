@@ -1,36 +1,42 @@
-import * as React from 'react';
+import { cloneElement, MouseEvent, PureComponent, ReactElement } from 'react';
+import PropTypes from 'prop-types';
 
 export type Size = { x: number, y: number, width: number, height: number, position: string };
 
 export interface MouseDownProps {
-  children: (size?: Size) => React.ReactElement<any>;
+  children: (child: ReactElement<any>, size?: Size) => ReactElement<any>;
+  rippleChild: ReactElement<any>
 }
 
 export interface MouseDownState {
   size?: Size;
 }
 
-export default class MouseDown extends React.Component<MouseDownProps> {
+export default class MouseDown extends PureComponent<MouseDownProps> {
+  static displayName = 'MouseDown';
+
+  static propTypes = { rippleChild: PropTypes.node };
 
   state: MouseDownState = {};
 
   render() {
-    const element = this.props.children(this.state.size);
-    const { visible } = element.props;
+    const { children, rippleChild } = this.props;
+    const { size } = this.state;
+    const element = children(rippleChild, size);
     const newProps = {
       onMouseDown: wrapEvent(element, 'onMouseDown', this.show),
     };
-    if (visible) {
+    if (size) {
       Object.assign(newProps, {
         onMouseUp: wrapEvent(element, 'onMouseUp', this.hide),
         onMouseLeave: wrapEvent(element, 'onMouseLeave', this.hide),
         onDragEnd: wrapEvent(element, 'onDragEnd', this.hide),
       });
     }
-    return React.cloneElement(element, newProps);
+    return cloneElement(element, newProps);
   }
 
-  show = (e: React.MouseEvent<HTMLElement>) => {
+  show = (e: MouseEvent<HTMLElement>) => {
     const { currentTarget } = e;
     const pos: ClientRect = currentTarget.getBoundingClientRect();
     this.setState({
@@ -46,13 +52,13 @@ export default class MouseDown extends React.Component<MouseDownProps> {
 
   hide = () => {
     this.setState({
-      size: undefined,
+      size: void 0,
     });
   };
 }
 
-function wrapEvent(element: React.ReactElement<any>, eventName: string, callback: (e: React.MouseEvent<HTMLElement>) => void) {
-  return (e: React.MouseEvent<HTMLElement>) => {
+function wrapEvent(element: ReactElement<any>, eventName: string, callback: (e: MouseEvent<HTMLElement>) => void) {
+  return (e: MouseEvent<HTMLElement>) => {
     const originalEvent = element.props[eventName];
     if (originalEvent) {
       originalEvent(e);

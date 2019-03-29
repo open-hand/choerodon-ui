@@ -1,19 +1,19 @@
-import * as React from 'react';
+import React, { Component, CSSProperties, ReactNode } from 'react';
 import classNames from 'classnames';
 import RcCollapse from '../rc-components/collapse';
 
 export interface CollapsePanelProps {
   key: string;
-  header: React.ReactNode;
+  header: ReactNode;
   disabled?: boolean;
   className?: string;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   showArrow?: boolean;
   prefixCls?: string;
   forceRender?: boolean;
 }
 
-export default class CollapsePanel extends React.Component<CollapsePanelProps, {}> {
+export default class CollapsePanel extends Component<CollapsePanelProps, {}> {
   render() {
     const { prefixCls, className = '', showArrow = true } = this.props;
     const collapsePanelClassName = classNames({

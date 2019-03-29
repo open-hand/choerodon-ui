@@ -18,7 +18,7 @@ describe('Select', () => {
     const wrapper = mount(
       <Select mode="multiple" />
     );
-    wrapper.find('.ant-select').simulate('click');
+    wrapper.find('.c7n-select').simulate('click');
     jest.runAllTimers();
     const dropdownWrapper = mount(wrapper.find('Trigger').instance().getComponent());
     expect(dropdownWrapper.find('MenuItem').length).toBe(1);
@@ -29,7 +29,7 @@ describe('Select', () => {
     const wrapper = mount(
       <Select mode="multiple" notFoundContent={null} />
     );
-    wrapper.find('.ant-select').simulate('click');
+    wrapper.find('.c7n-select').simulate('click');
     jest.runAllTimers();
     const dropdownWrapper = mount(wrapper.find('Trigger').instance().getComponent());
     expect(dropdownWrapper.find('MenuItem').length).toBe(0);
@@ -39,7 +39,7 @@ describe('Select', () => {
     const wrapper = mount(
       <Select mode="combobox" />
     );
-    wrapper.find('.ant-select').simulate('click');
+    wrapper.find('.c7n-select').simulate('click');
     jest.runAllTimers();
     const dropdownWrapper = mount(wrapper.find('Trigger').instance().getComponent());
     expect(dropdownWrapper.find('MenuItem').length).toBe(0);
@@ -49,7 +49,7 @@ describe('Select', () => {
     const wrapper = mount(
       <Select mode="combobox" notFoundContent="not at all" />
     );
-    wrapper.find('.ant-select').simulate('click');
+    wrapper.find('.c7n-select').simulate('click');
     jest.runAllTimers();
     const dropdownWrapper = mount(wrapper.find('Trigger').instance().getComponent());
     expect(dropdownWrapper.find('MenuItem').length).toBe(1);

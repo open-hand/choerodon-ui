@@ -21,7 +21,7 @@ See more design detail at [here](/docs/spec/icon).
 
 ## How To Use
 
-Use tag <Icon /> to create an icon and set its type in the type prop, for example:
+Use tag `<Icon />` to create an icon and set its type in the type prop, for example:
 
 ```html
 <Icon type="add_location" />
@@ -46,16 +46,16 @@ You can set `style` and `className` for size and color of icons because they are
 
 | Property | Description | Type | Default |
 | -------- | ----------- | ---- | ------- |
-| type | Type of ant design icon | string | - |
+| type | Type of choerodon ui icon | string | - |
 
 <style>
-.ant-icon-block {
+.c7n-icon-block {
   display: inline-block;
   width: 200px;
   text-align: center;
   font-size: 14px;
 }
-.ant-icon-block .icon {
+.c7n-icon-block .icon {
   line-height: 80px;
   transition: font-size .2s;
 }

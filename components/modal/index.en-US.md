@@ -11,7 +11,7 @@ Modal dialogs.
 When requiring users to interact with the application, but without jumping to a new page and interrupting
 the user's workflow, you can use `Modal` to create a new floating layer over the current page to get user
 feedback or display information.
-Additionally, if you need show a simple confirmation dialog, you can use `antd.Modal.confirm()`,
+Additionally, if you need show a simple confirmation dialog, you can use `Modal.confirm()`,
 and so on.
 
 ## API
@@ -85,7 +85,7 @@ ref.destroy();
 ```
 
 <style>
-.code-box-demo .ant-btn {
+.code-box-demo .c7n-btn {
   margin-right: 8px;
 }
 </style>

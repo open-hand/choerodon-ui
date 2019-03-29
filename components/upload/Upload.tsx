@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { Component, DragEvent } from 'react';
 import classNames from 'classnames';
 import uniqBy from 'lodash/uniqBy';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
@@ -8,14 +8,15 @@ import UploadList from './UploadList';
 import { UploadChangeParam, UploadFile, UploadLocale, UploadProps, UploadState } from './interface';
 import { fileToObject, genPercentAdd, getFileItem, removeFileItem, T } from './utils';
 import RcUpload from '../rc-components/upload';
+import { getPrefixCls } from '../configure';
 
 export { UploadProps };
 
-export default class Upload extends React.Component<UploadProps, UploadState> {
+export default class Upload extends Component<UploadProps, UploadState> {
+  static displayName = 'Upload';
   static Dragger: typeof Dragger;
 
   static defaultProps = {
-    prefixCls: 'ant-upload',
     type: 'select',
     multiple: false,
     action: '',
@@ -173,7 +174,7 @@ export default class Upload extends React.Component<UploadProps, UploadState> {
     }
   }
 
-  onFileDrop = (e: React.DragEvent<HTMLDivElement>) => {
+  onFileDrop = (e: DragEvent<HTMLDivElement>) => {
     this.setState({
       dragState: e.type,
     });
@@ -222,7 +223,7 @@ export default class Upload extends React.Component<UploadProps, UploadState> {
 
   render() {
     const {
-      prefixCls = '',
+      prefixCls: customizePrefixCls,
       className,
       showUploadList,
       listType,
@@ -231,6 +232,8 @@ export default class Upload extends React.Component<UploadProps, UploadState> {
       children,
     } = this.props;
 
+    const prefixCls = getPrefixCls('upload', customizePrefixCls);
+
     const rcUploadProps = {
       onStart: this.onStart,
       onError: this.onError,
@@ -238,6 +241,7 @@ export default class Upload extends React.Component<UploadProps, UploadState> {
       onSuccess: this.onSuccess,
       ...this.props,
       beforeUpload: this.beforeUpload,
+      prefixCls,
     };
 
     delete rcUploadProps.className;

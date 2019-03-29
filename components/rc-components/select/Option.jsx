@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-export default class Option extends React.Component {
+export default class Option extends Component {
   static propTypes = {
     value: PropTypes.oneOfType([
       PropTypes.string,

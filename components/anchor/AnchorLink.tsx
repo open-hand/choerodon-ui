@@ -1,48 +1,50 @@
-import * as React from 'react';
+import React, { Component, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { getPrefixCls } from '../configure';
 
 export interface AnchorLinkProps {
   prefixCls?: string;
   href: string;
-  title: React.ReactNode;
+  title: ReactNode;
   children?: any;
 }
 
-export default class AnchorLink extends React.Component<AnchorLinkProps, any> {
+export default class AnchorLink extends Component<AnchorLinkProps, any> {
+  static displayName = 'AnchorLink';
   static defaultProps = {
-    prefixCls: 'ant-anchor',
     href: '#',
   };
 
   static contextTypes = {
-    antAnchor: PropTypes.object,
+    c7nAnchor: PropTypes.object,
   };
 
   context: {
-    antAnchor: any;
+    c7nAnchor: any;
   };
 
   componentDidMount() {
-    this.context.antAnchor.registerLink(this.props.href);
+    this.context.c7nAnchor.registerLink(this.props.href);
   }
 
   componentWillUnmount() {
-    this.context.antAnchor.unregisterLink(this.props.href);
+    this.context.c7nAnchor.unregisterLink(this.props.href);
   }
 
   handleClick = () => {
-    this.context.antAnchor.scrollTo(this.props.href);
-  }
+    this.context.c7nAnchor.scrollTo(this.props.href);
+  };
 
   render() {
     const {
-      prefixCls,
+      prefixCls: customizePrefixCls,
       href,
       title,
       children,
     } = this.props;
-    const active = this.context.antAnchor.activeLink === href;
+    const prefixCls = getPrefixCls('anchor', customizePrefixCls);
+    const active = this.context.c7nAnchor.activeLink === href;
     const wrapperClassName = classNames(`${prefixCls}-link`, {
       [`${prefixCls}-link-active`]: active,
     });

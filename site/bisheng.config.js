@@ -1,10 +1,11 @@
 const path = require('path');
+const webpack = require('webpack');
 const CSSSplitWebpackPlugin = require('css-split-webpack-plugin').default;
-const replaceLib = require('antd-tools/lib/replaceLib');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const babelOptions = require('bisheng/lib/config/getBabelCommonConfig').default();
+const replaceLib = require('../tools/replaceLib');
 
 const isDev = process.env.NODE_ENV === 'development';
-const usePreact = process.env.REACT_ENV === 'preact';
 const rcPath = path.resolve(process.cwd(), 'components', 'rc-components');
 
 function alertBabelConfig(rules) {
@@ -14,7 +15,7 @@ function alertBabelConfig(rules) {
         rule.options.plugins.push(replaceLib);
       }
       rule.options.plugins = rule.options.plugins.filter(
-        plugin => !plugin.indexOf || plugin.indexOf('babel-plugin-add-module-exports') === -1
+        plugin => !plugin.indexOf || plugin.indexOf('babel-plugin-add-module-exports') === -1,
       );
     } else if (rule.use) {
       alertBabelConfig(rule.use);
@@ -27,6 +28,7 @@ module.exports = {
   root: '/choerodon-ui/',
   source: {
     components: './components',
+    'components-pro': './components-pro',
     docs: './docs',
     changelog: [
       'CHANGELOG.zh-CN.md',
@@ -46,19 +48,19 @@ module.exports = {
       Patterns: 3,
       其他: 6,
       Other: 6,
+      'Pro Components': 99,
       Components: 100,
     },
     typeOrder: {
-      General: 0,
-      Layout: 1,
-      Navigation: 2,
-      'Data Entry': 3,
-      'Data Display': 4,
-      Feedback: 5,
-      Localization: 6,
-      Other: 7,
-    },
-    docVersions: {
+      Abstract: 0,
+      General: 1,
+      Layout: 2,
+      Navigation: 3,
+      'Data Entry': 4,
+      'Data Display': 5,
+      Feedback: 6,
+      Localization: 7,
+      Other: 8,
     },
   },
   filePathMapper(filePath) {
@@ -79,6 +81,8 @@ module.exports = {
   },
   webpackConfig(config) {
     config.resolve.alias = {
+      'choerodon-ui/pro/lib': path.join(process.cwd(), 'components-pro'),
+      'choerodon-ui/pro': path.join(process.cwd(), 'index-pro'),
       'choerodon-ui/lib': path.join(process.cwd(), 'components'),
       'choerodon-ui': path.join(process.cwd(), 'index'),
       site: path.join(process.cwd(), 'site'),
@@ -88,19 +92,6 @@ module.exports = {
     config.externals = {
       'react-router-dom': 'ReactRouterDOM',
     };
-
-    if (usePreact) {
-      config.resolve.alias = Object.assign({}, config.resolve.alias, {
-        react: 'preact-compat',
-        'react-dom': 'preact-compat',
-        'create-react-class': 'preact-compat/lib/create-react-class',
-        'react-router': 'react-router',
-      });
-    }
-
-    if (isDev) {
-      config.devtool = 'source-map';
-    }
 
     config.module.rules.forEach((rule) => {
       if (rule.loader && rule.loader === 'babel-loader') {
@@ -125,16 +116,39 @@ module.exports = {
 
     rcComponentsRule.options.plugins.push(
       require.resolve('babel-plugin-transform-proto-to-assign'),
-      [require.resolve('babel-plugin-transform-es2015-classes'), { loose: true }]
+      [require.resolve('babel-plugin-transform-es2015-classes'), { loose: true }],
     );
 
-    config.plugins.push(new CSSSplitWebpackPlugin({ size: 4000 }));
+    config.plugins.push(
+      new CSSSplitWebpackPlugin({ size: 4000 }),
+      new webpack.DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+      }),
+    );
+
+    if (isDev) {
+      config.devtool = '#source-map';
+    } else {
+      config.plugins.push(
+        new UglifyJsPlugin({
+          parallel: true,
+          cache: true,
+          uglifyOptions: {
+            output: {
+              comments: false,
+            },
+            compress: {
+              warnings: false,
+            },
+          },
+        }),
+      );
+    }
+    const { push } = config.plugins;
+    config.plugins.push = function (...rest) {
+      push.apply(this, rest.filter(plugin => Object.getPrototypeOf(plugin).constructor.name !== 'UglifyJsPlugin'));
+    };
 
     return config;
-  },
-
-  htmlTemplateExtraData: {
-    isDev,
-    usePreact,
   },
 };

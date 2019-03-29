@@ -1,0 +1,346 @@
+import queryString from 'querystringify';
+import moment, { isDate, isMoment } from 'moment';
+import { isArrayLike } from 'mobx';
+import isBoolean from 'lodash/isBoolean';
+import isObject from 'lodash/isObject';
+import isString from 'lodash/isString';
+import isArray from 'lodash/isArray';
+import isNumber from 'lodash/isNumber';
+import isEqual from 'lodash/isEqual';
+import warning from 'choerodon-ui/lib/_util/warning';
+import Field, { FieldProps, Fields } from './Field';
+import { BooleanValue, FieldType, SortOrder } from './enum';
+import DataSet from './DataSet';
+import Record from './Record';
+import Constants from './Constants';
+import { Supports } from '../locale-context/supports';
+import isEmpty from '../_util/isEmpty';
+import { $l } from '../locale-context';
+
+export function append(url: string, suffix?: object) {
+  if (suffix) {
+    return url + queryString.stringify(suffix, url.indexOf('?') === -1);
+  } else {
+    return url;
+  }
+}
+
+export function getOrderFields(fields: Fields): Field[] {
+  const result: Field[] = [];
+  for (const field of fields.values()) {
+    if (field.order) {
+      result.push(field);
+    }
+  }
+  return result;
+}
+
+export function processToJSON(value) {
+  if (isDate(value)) {
+    value = moment(value);
+  }
+  if (isMoment(value)) {
+    value = value.format(Constants.DATE_JSON_FORMAT);
+  }
+  return value;
+}
+
+function processOne(value: any, field: Field) {
+  if (!isEmpty(value)) {
+    if (value instanceof Date) {
+      value = moment(value, Constants.DATE_JSON_FORMAT);
+    } else if (!isObject(value)) {
+      switch (field.type) {
+        case FieldType.boolean:
+          const trueValue = field.get(BooleanValue.trueValue);
+          const falseValue = field.get(BooleanValue.falseValue);
+          if (value !== trueValue) {
+            value = falseValue;
+          }
+          break;
+        case FieldType.number:
+          if (!isNaN(value)) {
+            value = Number(value);
+          } else {
+            value = '';
+          }
+          break;
+        case FieldType.string:
+        case FieldType.intl:
+        case FieldType.email:
+        case FieldType.url:
+          value = String(value);
+          break;
+        case FieldType.date:
+        case FieldType.dateTime:
+        case FieldType.time:
+        case FieldType.week:
+        case FieldType.month:
+        case FieldType.year:
+          value = moment(value, Constants.DATE_JSON_FORMAT);
+          break;
+        default:
+      }
+    }
+  }
+  return value;
+}
+
+export function processValue(value: any, field?: Field): any {
+  if (field) {
+    const multiple = field.get('multiple');
+    if (multiple) {
+      if (isEmpty(value)) {
+        value = [];
+      } else if (!isArray(value)) {
+        if (isString(multiple) && isString(value)) {
+          value = value.split(multiple);
+        } else {
+          value = [value];
+        }
+      }
+    }
+    if (isArray(value)) {
+      return value.map(item => processOne(item, field));
+    }
+    return processOne(value, field);
+  }
+  return value;
+}
+
+export function childrenInfoForDelete(json: {}, children: { [key: string]: DataSet }): {} {
+  for (const name of Object.keys(children)) {
+    const child = children[name];
+    if (child) {
+      json[name] = [childrenInfoForDelete({}, child.children)];
+    }
+  }
+  return json;
+}
+
+export function sortTree(children: Record[], orderField: Field): Record[] {
+  if (orderField && children.length > 0) {
+    const { name, order } = orderField;
+    const m = Number.MIN_SAFE_INTEGER;
+    children.sort((record1, record2) => {
+      const a = record1.get(name) || m;
+      const b = record2.get(name) || m;
+      if (isString(a) || isString(b)) {
+        return order === SortOrder.asc ?
+          String(a).localeCompare(String(b)) : String(b).localeCompare(String(a));
+      } else {
+        return order === SortOrder.asc ? a - b : b - a;
+      }
+    });
+    // children.forEach((record) => {
+    //   if (record.children) {
+    //     sortTree(record.children, orderField);
+    //   }
+    // });
+  }
+  return children;
+}
+
+export function mergeTlsFields(fields: Fields, supports: Supports, fieldNames: string[]): (FieldProps & { [key: string]: any })[] {
+  const newFields: (FieldProps & { [key: string]: any })[] = [];
+  const langs = Object.keys(supports);
+  fieldNames.forEach((fieldName) => {
+    const field = fields.get(fieldName);
+    if (field) {
+      const props = field.getProps();
+      newFields.push({ ...props, name: fieldName });
+      langs.forEach((lang) => {
+        newFields.push({ ...props, name: `${fieldName}.${lang}`, label: langs[lang] });
+      });
+    }
+  });
+  return newFields;
+}
+
+export function checkParentByInsert({ parent }: DataSet) {
+  if (parent && !parent.current) {
+    throw new Error($l('Utils', 'no_new_row_when_head_unselected'));
+  }
+}
+
+export function isSame(newValue, oldValue) {
+  return (isEmpty(newValue) && isEmpty(oldValue))
+    || isEqual(newValue, oldValue);
+}
+
+export function isSameLike(newValue, oldValue) {
+  /* tslint:disable */
+  return isSame(newValue, oldValue) || newValue == oldValue;
+  /* tslint:enable */
+}
+
+function getBaseType(type: FieldType): FieldType {
+  switch (type) {
+    case FieldType.dateTime:
+    case FieldType.time:
+    case FieldType.week:
+    case FieldType.month:
+    case FieldType.year:
+      return FieldType.date;
+    case FieldType.intl:
+    case FieldType.url:
+    case FieldType.email:
+      return FieldType.string;
+    default:
+      return type;
+  }
+}
+
+function getValueType(value: any): FieldType {
+  return isBoolean(value) ? FieldType.boolean
+    : isNumber(value) ? FieldType.number
+      : isString(value) ? FieldType.string
+        : isMoment(value) ? FieldType.date
+          : isObject(value) ? FieldType.object
+            : FieldType.auto;
+}
+
+export function checkFieldType(value: any, field: Field): boolean {
+  if (process.env.NODE_ENV !== 'production') {
+    if (!isEmpty(value)) {
+      if (isArrayLike(value)) {
+        return value.every(item => checkFieldType(item, field));
+      } else {
+        const fieldType = getBaseType(field.type);
+        const valueType = getValueType(value);
+        if (fieldType !== FieldType.auto && fieldType !== valueType) {
+          warning(false,
+            `Value type error: The value<${value}>'s type is ${valueType}, but the field<${field.name}>'s type is ${fieldType}.`,
+          );
+          return false;
+        }
+      }
+    }
+  }
+  return true;
+}
+
+let iframe;
+
+export function doExport(url, data) {
+  if (!iframe) {
+    iframe = document.createElement('iframe');
+    iframe.id = '_export_window';
+    iframe.name = '_export_window';
+    iframe.style.cssText = 'position:absolute;left:-10000px;top:-10000px;width:1px;height:1px;display:none';
+    document.body.appendChild(iframe);
+  }
+
+  const form = document.createElement('form');
+  form.target = '_export_window';
+  form.method = 'post';
+  form.action = url;
+  const s = document.createElement('input');
+  s.id = '_request_data';
+  s.type = 'hidden';
+  s.name = '_request_data';
+  s.value = data;
+  form.appendChild(s);
+  document.body.appendChild(form);
+  form.submit();
+  document.body.removeChild(form);
+}
+
+export function getLookupUrl(code) {
+  return `/common/code/${code}/`;
+}
+
+export function findBindFieldBy(myField: Field, fields: Fields, prop: string): Field | undefined {
+  const value = myField.get(prop);
+  const myName = myField.name;
+  for (const field of fields.values()) {
+    const bind = field.get('bind');
+    if (bind && bind === `${myName}.${value}`) {
+      return field;
+    }
+  }
+}
+
+export function findBindFields(myField: Field, fields: Fields): Field[] {
+  const bindFields: Field[] = [myField];
+  const myName = myField.name;
+  const myBind = myField.get('bind');
+  for (const field of fields.values()) {
+    if (field !== myField) {
+      const bind = field.get('bind');
+      if (bind && bind.startsWith(`${myName}.`)) {
+        bindFields.push(field);
+      } else if (myBind && myBind.startsWith(`${field.name}.`)) {
+        bindFields.push(field);
+      }
+    }
+  }
+  return bindFields;
+}
+
+export function findInvalidField(field: Field): Field {
+  const { record } = field;
+  if (record) {
+    return findBindFields(field, record.fields).find(oneField => !oneField.validator.validity.valid) || field;
+  }
+  return field;
+}
+
+function numberSorter(a, b) {
+  return a - b;
+}
+
+function stringSorter(a, b) {
+  return String(a || '').localeCompare(String(b || ''));
+}
+
+export function getFieldSorter(field: Field) {
+  const { name } = field;
+
+  switch (field.type) {
+    case FieldType.number:
+    case FieldType.currency:
+    case FieldType.date:
+    case FieldType.dateTime:
+    case FieldType.week:
+    case FieldType.month:
+    case FieldType.year:
+    case FieldType.time:
+      return field.order === SortOrder.asc
+        ? (a, b) => numberSorter(a.get(name), b.get(name))
+        : (a, b) => numberSorter(b.get(name), a.get(name));
+    default:
+      return field.order === SortOrder.asc
+        ? (a, b) => stringSorter(a.get(name), b.get(name))
+        : (a, b) => stringSorter(b.get(name), a.get(name));
+  }
+}
+
+export function getDateFormatByFieldType(type: FieldType) {
+  switch (type) {
+    case FieldType.date:
+      return Constants.DATE_FORMAT;
+    case FieldType.dateTime:
+      return Constants.DATE_TIME_FORMAT;
+    case FieldType.week:
+      return Constants.WEEK_FORMAT;
+    case FieldType.month:
+      return Constants.MONTH_FORMAT;
+    case FieldType.year:
+      return Constants.YEAR_FORMAT;
+    case FieldType.time:
+      return Constants.TIME_FORMAT;
+    default:
+      return Constants.DATE_FORMAT;
+  }
+}
+
+export function getDateFormatByField(field?: Field, type?: FieldType): string {
+  if (field) {
+    return field.get('format') || getDateFormatByFieldType(type || field.type);
+  }
+  if (type) {
+    return getDateFormatByFieldType(type);
+  }
+  return Constants.DATE_JSON_FORMAT;
+}

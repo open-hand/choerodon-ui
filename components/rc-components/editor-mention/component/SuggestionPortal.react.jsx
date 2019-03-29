@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import getOffset from '../utils/getOffset';
 
-export default class SuggestionPortal extends React.Component {
+export default class SuggestionPortal extends Component {
   static propTypes = {
     offsetKey: PropTypes.any,
     mentionStore: PropTypes.object,
@@ -10,10 +10,12 @@ export default class SuggestionPortal extends React.Component {
     children: PropTypes.any,
     callbacks: PropTypes.any,
     suggestionRegex: PropTypes.any,
-  }
+  };
+
   componentWillMount() {
     this.matchDecorates(this.props);
   }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.decoratedText !== this.props.decoratedText) {
       this.matchDecorates(nextProps);
@@ -27,12 +29,13 @@ export default class SuggestionPortal extends React.Component {
     this.trigger = matches[2];
     this.updatePortalPosition(this.props);
     callbacks.setEditorState(callbacks.getEditorState());
-  }
+  };
 
   componentWillUnmount() {
     const { offsetKey, mentionStore } = this.props;
     mentionStore.inActiveSuggestion({ offsetKey });
   }
+
   updatePortalPosition(props) {
     const { offsetKey, mentionStore } = props;
     mentionStore.updateSuggestion({
@@ -50,9 +53,12 @@ export default class SuggestionPortal extends React.Component {
       },
     });
   }
+
   render() {
     return (
-      <span ref={(node) => { this.searchPortal = node; }} style={this.props.style}>
+      <span ref={(node) => {
+        this.searchPortal = node;
+      }} style={this.props.style}>
         {this.props.children}
       </span>
     );

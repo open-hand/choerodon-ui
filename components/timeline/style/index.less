@@ -1,7 +1,7 @@
 @import "../../style/themes/default";
 @import "../../style/mixins/index";
 
-@timeline-prefix-cls: ~"@{ant-prefix}-timeline";
+@timeline-prefix-cls: ~"@{c7n-prefix}-timeline";
 @timeline-color: @border-color-split;
 
 .@{timeline-prefix-cls} {
@@ -12,17 +12,17 @@
 
   &-item {
     position: relative;
-    padding: 0 0 20px;
+    padding: 0 0 .2rem;
     list-style: none;
     margin: 0;
     font-size: @font-size-base;
 
     &-tail {
       position: absolute;
-      left: 4px;
-      top: 0.75em;
+      left: .04rem;
+      top: .75em;
       height: 100%;
-      border-left: 2px solid @timeline-color;
+      border-left: .02rem solid @timeline-color;
     }
 
     &-pending &-head {
@@ -35,11 +35,11 @@
 
     &-head {
       position: absolute;
-      width: 10px;
-      height: 10px;
+      width: .1rem;
+      height: .1rem;
       background-color: @component-background;
-      border-radius: 100px;
-      border: 2px solid transparent;
+      border-radius: 1rem;
+      border: .02rem solid transparent;
 
       &-blue {
         border-color: @primary-color;
@@ -63,26 +63,26 @@
       border: 0;
       height: auto;
       border-radius: 0;
-      padding: 3px 1px;
+      padding: .03rem .01rem;
       transform: translate(-50%, -50%);
-      top: 5px;
-      left: 5px;
+      top: .05rem;
+      left: .05rem;
       width: auto;
     }
 
     &-content {
-      padding: 0 0 0 18px;
+      padding: 0 0 0 .18rem;
       position: relative;
-      top: -(@font-size-base * @line-height-base - @font-size-base) + 1px;
+      top: -(@font-size-base * @line-height-base - @font-size-base) + .01rem;
     }
 
     &-last {
       .@{timeline-prefix-cls}-item-tail {
-        border-left: 2px dotted @timeline-color;
+        border-left: .02rem dotted @timeline-color;
         display: none;
       }
       .@{timeline-prefix-cls}-item-content {
-        min-height: 48px;
+        min-height: .48rem;
       }
     }
   }

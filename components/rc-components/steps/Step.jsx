@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
@@ -6,7 +6,7 @@ function isString(str) {
   return typeof str === 'string';
 }
 
-export default class Step extends React.Component {
+export default class Step extends Component {
   static propTypes = {
     className: PropTypes.string,
     prefixCls: PropTypes.string,

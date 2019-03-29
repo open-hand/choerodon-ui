@@ -3,7 +3,7 @@
 exports[`Table.filter renders custom content correctly 1`] = `
 <div>
   <div
-    class="ant-dropdown  ant-dropdown-placement-bottomLeft  ant-dropdown-hidden"
+    class="c7n-dropdown  c7n-dropdown-placement-bottomLeft  c7n-dropdown-hidden"
   >
     <div>
       <div
@@ -18,22 +18,22 @@ exports[`Table.filter renders custom content correctly 1`] = `
 
 exports[`Table.filter renders filter correctly 1`] = `
 <div
-  class="ant-table-wrapper"
+  class="c7n-table-wrapper"
 >
   <div
-    class="ant-spin-nested-loading"
+    class="c7n-spin-nested-loading"
   >
     <div
-      class="ant-spin-container"
+      class="c7n-spin-container"
     >
       <div
-        class="ant-table ant-table-middle ant-table-scroll-position-left"
+        class="c7n-table c7n-table-default c7n-table-scroll-position-left"
       >
         <div
-          class="ant-table-content"
+          class="c7n-table-content"
         >
           <div
-            class="ant-table-body"
+            class="c7n-table-body"
           >
             <table
               class=""
@@ -42,17 +42,17 @@ exports[`Table.filter renders filter correctly 1`] = `
                 <col />
               </colgroup>
               <thead
-                class="ant-table-thead"
+                class="c7n-table-thead"
               >
                 <tr>
                   <th
-                    class="ant-table-column-has-filters"
+                    class="c7n-table-column-has-filters"
                     tabindex="-1"
                   >
                     <span>
                       Name
                       <i
-                        class="icon icon-filter_list ant-dropdown-trigger"
+                        class="icon icon-filter_list c7n-dropdown-trigger"
                         title="Filter menu"
                       />
                     </span>
@@ -60,59 +60,59 @@ exports[`Table.filter renders filter correctly 1`] = `
                 </tr>
               </thead>
               <tbody
-                class="ant-table-tbody"
+                class="c7n-table-tbody"
               >
                 <tr
-                  class="ant-table-row  ant-table-row-level-0"
+                  class="c7n-table-row  c7n-table-row-level-0"
                 >
                   <td
-                    class="ant-table-column-has-filters"
+                    class="c7n-table-column-has-filters"
                     tabindex="-1"
                   >
                     <span
-                      class="ant-table-row-indent indent-level-0"
+                      class="c7n-table-row-indent indent-level-0"
                       style="padding-left:0px"
                     />
                     Jack
                   </td>
                 </tr>
                 <tr
-                  class="ant-table-row  ant-table-row-level-0"
+                  class="c7n-table-row  c7n-table-row-level-0"
                 >
                   <td
-                    class="ant-table-column-has-filters"
+                    class="c7n-table-column-has-filters"
                     tabindex="-1"
                   >
                     <span
-                      class="ant-table-row-indent indent-level-0"
+                      class="c7n-table-row-indent indent-level-0"
                       style="padding-left:0px"
                     />
                     Lucy
                   </td>
                 </tr>
                 <tr
-                  class="ant-table-row  ant-table-row-level-0"
+                  class="c7n-table-row  c7n-table-row-level-0"
                 >
                   <td
-                    class="ant-table-column-has-filters"
+                    class="c7n-table-column-has-filters"
                     tabindex="-1"
                   >
                     <span
-                      class="ant-table-row-indent indent-level-0"
+                      class="c7n-table-row-indent indent-level-0"
                       style="padding-left:0px"
                     />
                     Tom
                   </td>
                 </tr>
                 <tr
-                  class="ant-table-row  ant-table-row-level-0"
+                  class="c7n-table-row  c7n-table-row-level-0"
                 >
                   <td
-                    class="ant-table-column-has-filters"
+                    class="c7n-table-column-has-filters"
                     tabindex="-1"
                   >
                     <span
-                      class="ant-table-row-indent indent-level-0"
+                      class="c7n-table-row-indent indent-level-0"
                       style="padding-left:0px"
                     />
                     Jerry
@@ -131,34 +131,34 @@ exports[`Table.filter renders filter correctly 1`] = `
 exports[`Table.filter renders menu correctly 1`] = `
 <div>
   <div
-    class="ant-dropdown  ant-dropdown-placement-bottomLeft  ant-dropdown-hidden"
+    class="c7n-dropdown  c7n-dropdown-placement-bottomLeft  c7n-dropdown-hidden"
   >
     <div
-      class="ant-table-filter-dropdown"
+      class="c7n-table-filter-dropdown"
     >
       <ul
         aria-activedescendant=""
-        class="ant-dropdown-menu  ant-dropdown-menu-root ant-dropdown-menu-vertical"
+        class="c7n-dropdown-menu  c7n-dropdown-menu-root c7n-dropdown-menu-vertical"
         role="menu"
         tabindex="0"
       >
         <li
           aria-selected="false"
-          class="ant-dropdown-menu-item"
+          class="c7n-dropdown-menu-item"
           role="menuitem"
         >
           <label
-            class="ant-radio-wrapper"
+            class="c7n-radio-wrapper"
           >
             <span
-              class="ant-radio"
+              class="c7n-radio"
             >
               <input
-                class="ant-radio-input"
+                class="c7n-radio-input"
                 type="radio"
               />
               <span
-                class="ant-radio-inner"
+                class="c7n-radio-inner"
               />
             </span>
           </label>
@@ -166,26 +166,26 @@ exports[`Table.filter renders menu correctly 1`] = `
             Boy
           </span>
           <div
-            class="ant-ripple-wrapper"
+            class="c7n-ripple-wrapper"
           />
         </li>
         <li
           aria-selected="false"
-          class="ant-dropdown-menu-item"
+          class="c7n-dropdown-menu-item"
           role="menuitem"
         >
           <label
-            class="ant-radio-wrapper"
+            class="c7n-radio-wrapper"
           >
             <span
-              class="ant-radio"
+              class="c7n-radio"
             >
               <input
-                class="ant-radio-input"
+                class="c7n-radio-input"
                 type="radio"
               />
               <span
-                class="ant-radio-inner"
+                class="c7n-radio-inner"
               />
             </span>
           </label>
@@ -193,36 +193,36 @@ exports[`Table.filter renders menu correctly 1`] = `
             Girl
           </span>
           <div
-            class="ant-ripple-wrapper"
+            class="c7n-ripple-wrapper"
           />
         </li>
         <li
-          class="ant-dropdown-menu-submenu ant-dropdown-menu-submenu-vertical"
+          class="c7n-dropdown-menu-submenu c7n-dropdown-menu-submenu-vertical"
           role="menuitem"
         >
           <div
             aria-expanded="false"
             aria-haspopup="true"
-            class="ant-dropdown-menu-submenu-title"
+            class="c7n-dropdown-menu-submenu-title"
             title="Title"
           >
             Title
             <i
-              class="ant-dropdown-menu-submenu-arrow"
+              class="c7n-dropdown-menu-submenu-arrow"
             />
           </div>
         </li>
       </ul>
       <div
-        class="ant-table-filter-dropdown-btns"
+        class="c7n-table-filter-dropdown-btns"
       >
         <a
-          class="ant-table-filter-dropdown-link confirm"
+          class="c7n-table-filter-dropdown-link confirm"
         >
           OK
         </a>
         <a
-          class="ant-table-filter-dropdown-link clear"
+          class="c7n-table-filter-dropdown-link clear"
         >
           Reset
         </a>
@@ -235,34 +235,34 @@ exports[`Table.filter renders menu correctly 1`] = `
 exports[`Table.filter renders radio filter correctly 1`] = `
 <div>
   <div
-    class="ant-dropdown  ant-dropdown-placement-bottomLeft  ant-dropdown-hidden"
+    class="c7n-dropdown  c7n-dropdown-placement-bottomLeft  c7n-dropdown-hidden"
   >
     <div
-      class="ant-table-filter-dropdown"
+      class="c7n-table-filter-dropdown"
     >
       <ul
         aria-activedescendant=""
-        class="ant-dropdown-menu  ant-dropdown-menu-root ant-dropdown-menu-vertical"
+        class="c7n-dropdown-menu  c7n-dropdown-menu-root c7n-dropdown-menu-vertical"
         role="menu"
         tabindex="0"
       >
         <li
           aria-selected="false"
-          class="ant-dropdown-menu-item"
+          class="c7n-dropdown-menu-item"
           role="menuitem"
         >
           <label
-            class="ant-radio-wrapper"
+            class="c7n-radio-wrapper"
           >
             <span
-              class="ant-radio"
+              class="c7n-radio"
             >
               <input
-                class="ant-radio-input"
+                class="c7n-radio-input"
                 type="radio"
               />
               <span
-                class="ant-radio-inner"
+                class="c7n-radio-inner"
               />
             </span>
           </label>
@@ -270,26 +270,26 @@ exports[`Table.filter renders radio filter correctly 1`] = `
             Boy
           </span>
           <div
-            class="ant-ripple-wrapper"
+            class="c7n-ripple-wrapper"
           />
         </li>
         <li
           aria-selected="false"
-          class="ant-dropdown-menu-item"
+          class="c7n-dropdown-menu-item"
           role="menuitem"
         >
           <label
-            class="ant-radio-wrapper"
+            class="c7n-radio-wrapper"
           >
             <span
-              class="ant-radio"
+              class="c7n-radio"
             >
               <input
-                class="ant-radio-input"
+                class="c7n-radio-input"
                 type="radio"
               />
               <span
-                class="ant-radio-inner"
+                class="c7n-radio-inner"
               />
             </span>
           </label>
@@ -297,36 +297,36 @@ exports[`Table.filter renders radio filter correctly 1`] = `
             Girl
           </span>
           <div
-            class="ant-ripple-wrapper"
+            class="c7n-ripple-wrapper"
           />
         </li>
         <li
-          class="ant-dropdown-menu-submenu ant-dropdown-menu-submenu-vertical"
+          class="c7n-dropdown-menu-submenu c7n-dropdown-menu-submenu-vertical"
           role="menuitem"
         >
           <div
             aria-expanded="false"
             aria-haspopup="true"
-            class="ant-dropdown-menu-submenu-title"
+            class="c7n-dropdown-menu-submenu-title"
             title="Title"
           >
             Title
             <i
-              class="ant-dropdown-menu-submenu-arrow"
+              class="c7n-dropdown-menu-submenu-arrow"
             />
           </div>
         </li>
       </ul>
       <div
-        class="ant-table-filter-dropdown-btns"
+        class="c7n-table-filter-dropdown-btns"
       >
         <a
-          class="ant-table-filter-dropdown-link confirm"
+          class="c7n-table-filter-dropdown-link confirm"
         >
           OK
         </a>
         <a
-          class="ant-table-filter-dropdown-link clear"
+          class="c7n-table-filter-dropdown-link clear"
         >
           Reset
         </a>

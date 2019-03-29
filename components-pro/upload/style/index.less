@@ -1,0 +1,89 @@
+@import "../../../components/style/themes/default";
+@import "../../../components/style/mixins/index";
+
+@upload-prefix-cls: ~"@{c7n-prefix}-pro-upload";
+@uploadlist-prefix-cls: ~"@{c7n-prefix}-pro-upload-list";
+
+.@{upload-prefix-cls} {
+  display: inline-block;
+
+  .flex-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &-select {
+    display: flex;
+    // min-width: 1.5rem; // <-- FIXME: hard code for now
+    margin-right: .1rem;
+  }
+
+  &-select input {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+  }
+
+  &-name {
+    margin-left: .05rem;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.@{uploadlist-prefix-cls} {
+  border-radius: @btn-border-radius-base;
+  border: @border-width-base @border-style-base @border-color-base;
+  border-bottom: none;
+  margin-top: .05rem;
+
+  &-empty {
+    display: none;
+  }
+
+  &-item {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    border-bottom: @border-width-base @border-style-base @border-color-base;
+    padding: .05rem .1rem;
+
+    &-name {
+      padding-left: .2rem;
+    }
+
+    &-progress {
+      width: 100%;
+      display: inline-block;
+      padding-left: .2rem;
+    }
+
+    &-icon {
+      // position: absolute;
+      top: .09rem;
+    }
+
+    &-remove {
+      cursor: pointer;
+      right: .1rem;
+      margin-left: auto;
+    }
+
+    &-error {
+      color: @error-color;
+    }
+
+    &-success {
+      color: @success-color;
+    }
+  }
+}

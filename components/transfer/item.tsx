@@ -1,10 +1,10 @@
-import * as React from 'react';
+import React, { Component } from 'react';
 import classNames from 'classnames';
 import Lazyload from 'react-lazy-load';
 import Checkbox from '../checkbox';
 import PureRenderMixin from '../rc-components/util/PureRenderMixin';
 
-export default class Item extends React.Component<any, any> {
+export default class Item extends Component<any, any> {
   shouldComponentUpdate(...args: any[]) {
     return PureRenderMixin.shouldComponentUpdate.apply(this, args);
   }

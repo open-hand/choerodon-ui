@@ -2,49 +2,49 @@
 
 exports[`renders ./components/collapse/demo/accordion.md correctly 1`] = `
 <div
-  class="ant-collapse"
+  class="c7n-collapse"
 >
   <div
-    class="ant-collapse-item"
+    class="c7n-collapse-item"
     role="tablist"
   >
     <div
       aria-expanded="false"
-      class="ant-collapse-header"
+      class="c7n-collapse-header"
       role="tab"
     >
       <i
-        class="ant-collapse-expand-icon ant-collapse-collapsed"
+        class="c7n-collapse-expand-icon c7n-collapse-collapsed"
       />
       This is panel header 1
     </div>
   </div>
   <div
-    class="ant-collapse-item"
+    class="c7n-collapse-item"
     role="tablist"
   >
     <div
       aria-expanded="false"
-      class="ant-collapse-header"
+      class="c7n-collapse-header"
       role="tab"
     >
       <i
-        class="ant-collapse-expand-icon ant-collapse-collapsed"
+        class="c7n-collapse-expand-icon c7n-collapse-collapsed"
       />
       This is panel header 2
     </div>
   </div>
   <div
-    class="ant-collapse-item"
+    class="c7n-collapse-item"
     role="tablist"
   >
     <div
       aria-expanded="false"
-      class="ant-collapse-header"
+      class="c7n-collapse-header"
       role="tab"
     >
       <i
-        class="ant-collapse-expand-icon ant-collapse-collapsed"
+        class="c7n-collapse-expand-icon c7n-collapse-collapsed"
       />
       This is panel header 3
     </div>
@@ -54,28 +54,28 @@ exports[`renders ./components/collapse/demo/accordion.md correctly 1`] = `
 
 exports[`renders ./components/collapse/demo/basic.md correctly 1`] = `
 <div
-  class="ant-collapse"
+  class="c7n-collapse"
 >
   <div
-    class="ant-collapse-item ant-collapse-item-active"
+    class="c7n-collapse-item c7n-collapse-item-active"
     role="tablist"
   >
     <div
       aria-expanded="true"
-      class="ant-collapse-header"
+      class="c7n-collapse-header"
       role="tab"
     >
       <i
-        class="ant-collapse-expand-icon ant-collapse-expanded"
+        class="c7n-collapse-expand-icon c7n-collapse-expanded"
       />
       This is panel header 1
     </div>
     <div
-      class="ant-collapse-content ant-collapse-content-active"
+      class="c7n-collapse-content c7n-collapse-content-active"
       role="tabpanel"
     >
       <div
-        class="ant-collapse-content-box"
+        class="c7n-collapse-content-box"
       >
         <p>
           
@@ -88,31 +88,31 @@ exports[`renders ./components/collapse/demo/basic.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-collapse-item"
+    class="c7n-collapse-item"
     role="tablist"
   >
     <div
       aria-expanded="false"
-      class="ant-collapse-header"
+      class="c7n-collapse-header"
       role="tab"
     >
       <i
-        class="ant-collapse-expand-icon ant-collapse-collapsed"
+        class="c7n-collapse-expand-icon c7n-collapse-collapsed"
       />
       This is panel header 2
     </div>
   </div>
   <div
-    class="ant-collapse-item ant-collapse-item-disabled"
+    class="c7n-collapse-item c7n-collapse-item-disabled"
     role="tablist"
   >
     <div
       aria-expanded="false"
-      class="ant-collapse-header"
+      class="c7n-collapse-header"
       role="tab"
     >
       <i
-        class="ant-collapse-expand-icon ant-collapse-collapsed"
+        class="c7n-collapse-expand-icon c7n-collapse-collapsed"
       />
       This is panel header 3
     </div>
@@ -122,28 +122,28 @@ exports[`renders ./components/collapse/demo/basic.md correctly 1`] = `
 
 exports[`renders ./components/collapse/demo/borderless.md correctly 1`] = `
 <div
-  class="ant-collapse ant-collapse-borderless"
+  class="c7n-collapse c7n-collapse-borderless"
 >
   <div
-    class="ant-collapse-item ant-collapse-item-active"
+    class="c7n-collapse-item c7n-collapse-item-active"
     role="tablist"
   >
     <div
       aria-expanded="true"
-      class="ant-collapse-header"
+      class="c7n-collapse-header"
       role="tab"
     >
       <i
-        class="ant-collapse-expand-icon ant-collapse-expanded"
+        class="c7n-collapse-expand-icon c7n-collapse-expanded"
       />
       This is panel header 1
     </div>
     <div
-      class="ant-collapse-content ant-collapse-content-active"
+      class="c7n-collapse-content c7n-collapse-content-active"
       role="tabpanel"
     >
       <div
-        class="ant-collapse-content-box"
+        class="c7n-collapse-content-box"
       >
         <p
           style="padding-left:24px"
@@ -154,31 +154,31 @@ exports[`renders ./components/collapse/demo/borderless.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-collapse-item"
+    class="c7n-collapse-item"
     role="tablist"
   >
     <div
       aria-expanded="false"
-      class="ant-collapse-header"
+      class="c7n-collapse-header"
       role="tab"
     >
       <i
-        class="ant-collapse-expand-icon ant-collapse-collapsed"
+        class="c7n-collapse-expand-icon c7n-collapse-collapsed"
       />
       This is panel header 2
     </div>
   </div>
   <div
-    class="ant-collapse-item"
+    class="c7n-collapse-item"
     role="tablist"
   >
     <div
       aria-expanded="false"
-      class="ant-collapse-header"
+      class="c7n-collapse-header"
       role="tab"
     >
       <i
-        class="ant-collapse-expand-icon ant-collapse-collapsed"
+        class="c7n-collapse-expand-icon c7n-collapse-collapsed"
       />
       This is panel header 3
     </div>
@@ -188,29 +188,29 @@ exports[`renders ./components/collapse/demo/borderless.md correctly 1`] = `
 
 exports[`renders ./components/collapse/demo/custom.md correctly 1`] = `
 <div
-  class="ant-collapse ant-collapse-borderless"
+  class="c7n-collapse c7n-collapse-borderless"
 >
   <div
-    class="ant-collapse-item ant-collapse-item-active"
+    class="c7n-collapse-item c7n-collapse-item-active"
     role="tablist"
     style="background:#f7f7f7;border-radius:4px;margin-bottom:24px;border:0;overflow:hidden"
   >
     <div
       aria-expanded="true"
-      class="ant-collapse-header"
+      class="c7n-collapse-header"
       role="tab"
     >
       <i
-        class="ant-collapse-expand-icon ant-collapse-expanded"
+        class="c7n-collapse-expand-icon c7n-collapse-expanded"
       />
       This is panel header 1
     </div>
     <div
-      class="ant-collapse-content ant-collapse-content-active"
+      class="c7n-collapse-content c7n-collapse-content-active"
       role="tabpanel"
     >
       <div
-        class="ant-collapse-content-box"
+        class="c7n-collapse-content-box"
       >
         <p>
           
@@ -223,33 +223,33 @@ exports[`renders ./components/collapse/demo/custom.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-collapse-item"
+    class="c7n-collapse-item"
     role="tablist"
     style="background:#f7f7f7;border-radius:4px;margin-bottom:24px;border:0;overflow:hidden"
   >
     <div
       aria-expanded="false"
-      class="ant-collapse-header"
+      class="c7n-collapse-header"
       role="tab"
     >
       <i
-        class="ant-collapse-expand-icon ant-collapse-collapsed"
+        class="c7n-collapse-expand-icon c7n-collapse-collapsed"
       />
       This is panel header 2
     </div>
   </div>
   <div
-    class="ant-collapse-item"
+    class="c7n-collapse-item"
     role="tablist"
     style="background:#f7f7f7;border-radius:4px;margin-bottom:24px;border:0;overflow:hidden"
   >
     <div
       aria-expanded="false"
-      class="ant-collapse-header"
+      class="c7n-collapse-header"
       role="tab"
     >
       <i
-        class="ant-collapse-expand-icon ant-collapse-collapsed"
+        class="c7n-collapse-expand-icon c7n-collapse-collapsed"
       />
       This is panel header 3
     </div>
@@ -259,49 +259,49 @@ exports[`renders ./components/collapse/demo/custom.md correctly 1`] = `
 
 exports[`renders ./components/collapse/demo/mix.md correctly 1`] = `
 <div
-  class="ant-collapse"
+  class="c7n-collapse"
 >
   <div
-    class="ant-collapse-item"
+    class="c7n-collapse-item"
     role="tablist"
   >
     <div
       aria-expanded="false"
-      class="ant-collapse-header"
+      class="c7n-collapse-header"
       role="tab"
     >
       <i
-        class="ant-collapse-expand-icon ant-collapse-collapsed"
+        class="c7n-collapse-expand-icon c7n-collapse-collapsed"
       />
       This is panel header 1
     </div>
   </div>
   <div
-    class="ant-collapse-item"
+    class="c7n-collapse-item"
     role="tablist"
   >
     <div
       aria-expanded="false"
-      class="ant-collapse-header"
+      class="c7n-collapse-header"
       role="tab"
     >
       <i
-        class="ant-collapse-expand-icon ant-collapse-collapsed"
+        class="c7n-collapse-expand-icon c7n-collapse-collapsed"
       />
       This is panel header 2
     </div>
   </div>
   <div
-    class="ant-collapse-item"
+    class="c7n-collapse-item"
     role="tablist"
   >
     <div
       aria-expanded="false"
-      class="ant-collapse-header"
+      class="c7n-collapse-header"
       role="tab"
     >
       <i
-        class="ant-collapse-expand-icon ant-collapse-collapsed"
+        class="c7n-collapse-expand-icon c7n-collapse-collapsed"
       />
       This is panel header 3
     </div>
@@ -311,28 +311,28 @@ exports[`renders ./components/collapse/demo/mix.md correctly 1`] = `
 
 exports[`renders ./components/collapse/demo/noarrow.md correctly 1`] = `
 <div
-  class="ant-collapse"
+  class="c7n-collapse"
 >
   <div
-    class="ant-collapse-item ant-collapse-item-active"
+    class="c7n-collapse-item c7n-collapse-item-active"
     role="tablist"
   >
     <div
       aria-expanded="true"
-      class="ant-collapse-header"
+      class="c7n-collapse-header"
       role="tab"
     >
       <i
-        class="ant-collapse-expand-icon ant-collapse-expanded"
+        class="c7n-collapse-expand-icon c7n-collapse-expanded"
       />
       This is panel header with arrow icon
     </div>
     <div
-      class="ant-collapse-content ant-collapse-content-active"
+      class="c7n-collapse-content c7n-collapse-content-active"
       role="tabpanel"
     >
       <div
-        class="ant-collapse-content-box"
+        class="c7n-collapse-content-box"
       >
         <p>
           
@@ -345,12 +345,12 @@ exports[`renders ./components/collapse/demo/noarrow.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-collapse-item ant-collapse-no-arrow"
+    class="c7n-collapse-item c7n-collapse-no-arrow"
     role="tablist"
   >
     <div
       aria-expanded="false"
-      class="ant-collapse-header"
+      class="c7n-collapse-header"
       role="tab"
     >
       This is panel header with no arrow icon

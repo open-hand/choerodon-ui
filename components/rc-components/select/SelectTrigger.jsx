@@ -1,5 +1,5 @@
 import Trigger from '../trigger';
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import DropdownMenu from './DropdownMenu';
@@ -36,7 +36,7 @@ const BUILT_IN_PLACEMENTS = {
   },
 };
 
-export default class SelectTrigger extends React.Component {
+export default class SelectTrigger extends Component {
   static propTypes = {
     onPopupFocus: PropTypes.func,
     onPopupScroll: PropTypes.func,
@@ -130,9 +130,9 @@ export default class SelectTrigger extends React.Component {
           onFilterChange={props.onFilterChange}
           footer={props.footer}
           onMouseDown={props.onDropdownMouseDown}
-      />  
+      />
       </Spin>
-      
+
     );
   };
 

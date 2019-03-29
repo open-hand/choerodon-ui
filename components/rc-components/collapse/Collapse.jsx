@@ -1,8 +1,8 @@
-import React, { Component, Children } from 'react';
+import React, { Children, cloneElement, Component } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import CollapsePanel from './Panel';
 import openAnimationFactory from './openAnimationFactory';
-import classNames from 'classnames';
 
 function toArray(activeKey) {
   let currentActiveKey = activeKey;
@@ -12,7 +12,36 @@ function toArray(activeKey) {
   return currentActiveKey;
 }
 
-class Collapse extends Component {
+export default class Collapse extends Component {
+  static propTypes = {
+    children: PropTypes.any,
+    prefixCls: PropTypes.string,
+    activeKey: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string),
+    ]),
+    defaultActiveKey: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string),
+    ]),
+    openAnimation: PropTypes.object,
+    onChange: PropTypes.func,
+    accordion: PropTypes.bool,
+    className: PropTypes.string,
+    style: PropTypes.object,
+    destroyInactivePanel: PropTypes.bool,
+  };
+
+  static defaultProps = {
+    prefixCls: 'rc-collapse',
+    onChange() {
+    },
+    accordion: false,
+    destroyInactivePanel: false,
+  };
+
+  static Panel = CollapsePanel;
+
   constructor(props) {
     super(props);
 
@@ -88,7 +117,7 @@ class Collapse extends Component {
         onItemClick: disabled ? null : () => this.onClickItem(key),
       };
 
-      newChildren.push(React.cloneElement(child, props));
+      newChildren.push(cloneElement(child, props));
     });
 
     return newChildren;
@@ -114,33 +143,3 @@ class Collapse extends Component {
     );
   }
 }
-
-Collapse.propTypes = {
-  children: PropTypes.any,
-  prefixCls: PropTypes.string,
-  activeKey: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.arrayOf(PropTypes.string),
-  ]),
-  defaultActiveKey: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.arrayOf(PropTypes.string),
-  ]),
-  openAnimation: PropTypes.object,
-  onChange: PropTypes.func,
-  accordion: PropTypes.bool,
-  className: PropTypes.string,
-  style: PropTypes.object,
-  destroyInactivePanel: PropTypes.bool,
-};
-
-Collapse.defaultProps = {
-  prefixCls: 'rc-collapse',
-  onChange() {},
-  accordion: false,
-  destroyInactivePanel: false,
-};
-
-Collapse.Panel = CollapsePanel;
-
-export default Collapse;

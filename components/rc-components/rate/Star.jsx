@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-export default class Star extends React.Component {
+export default class Star extends Component {
   static propTypes = {
     value: PropTypes.number,
     index: PropTypes.number,

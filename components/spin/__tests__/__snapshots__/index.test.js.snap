@@ -2,10 +2,10 @@
 
 exports[`Spin should render custom indicator when it's set 1`] = `
 <div
-  class="ant-spin ant-spin-spinning"
+  class="c7n-spin c7n-spin-spinning"
 >
   <div
-    class="custom-indicator ant-spin-dot"
+    class="custom-indicator c7n-spin-dot"
   />
 </div>
 `;

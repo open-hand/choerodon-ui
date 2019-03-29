@@ -1,7 +1,7 @@
 @import "../../style/themes/default";
 @import "../../style/mixins/index";
 
-@input-affix-width: 19px;
+@input-affix-width: .19rem;
 
 // size mixins for input
 .input-lg() {
@@ -30,7 +30,7 @@
   opacity: 1;
   color: @input-disabled-color;
   &:hover {
-    .hover(@input-border-color);
+    .hover(@input-baseline-color);
   }
 }
 
@@ -56,11 +56,11 @@
     position: relative;
     display: inline-block;
     width: 100%;
-    margin-bottom: 3px;
+    margin-bottom: .03rem;
   }
 
   &-group-compact &-content {
-    margin-bottom: 4px;
+    margin-bottom: .04rem;
   }
 
   // input-rendered
@@ -69,10 +69,10 @@
     display: inline-block;
     vertical-align: middle;
     width: 100%;
-    margin-bottom: 2px;
+    margin-bottom: .02rem;
   }
   &-has-label &-content {
-    padding-top: 15px;
+    padding-top: .15rem;
   }
 
   &-rendered-wrapper {
@@ -101,7 +101,7 @@
     transition: transform 400ms @ease-out, color 400ms @ease-out, background-color 400ms @ease-out;
     .is-required &:after {
       display: inline-block;
-      margin-left: 4px;
+      margin-left: .04rem;
       content: "*";
       font-family: SimSun;
       line-height: 1;
@@ -110,18 +110,15 @@
     }
   }
   &-has-value &-label {
-    transform: scale(.75) translateY(-20px) translateZ(0.001px);
+    transform: scale(.75) translateY(-.2rem) translateZ(.00001rem);
     color: rgba(0, 0, 0, 0.6);
   }
-  // input-icon copy-icon
-  &-icon {
-    &-copy {
-      display: none;
-    }
+  &-icon &-icon-copy {
+    display: none;
   }
 
   &-has-copy {
-    padding-right: @icon-font-size-base + 2px;
+    padding-right: @icon-font-size-base + .02rem;
   }
 
   &-has-value &-icon {
@@ -144,7 +141,7 @@
     bottom: 0;
     margin: auto 0;
     color: rgba(0, 0, 0, 0.26);
-    > i.icon {
+    > i.@{iconfont-css-prefix} {
       vertical-align: text-bottom;
     }
   }
@@ -156,16 +153,16 @@
   }
   &-suffix&-suffix-lg,
   &-prefix&-prefix-lg {
-    top: -5px;
+    top: -.05rem;
   }
 
-  &-focus &-label {
-    transform: scale(.75) translateY(-20px) translateZ(0.001px);
+  &-focused &-label {
+    transform: scale(.75) translateY(-.2rem) translateZ(.00001rem);
     color: @primary-color;
     transition: transform 300ms @ease-out, color 100ms @ease-out, background-color 300ms @ease-out;
   }
 
-  &-focus &-border-active {
+  &-focused &-border-active {
     opacity: 1;
     transform: scaleX(1);
     transition: transform 300ms @ease-out, opacity 100ms @ease-out, background-color 300ms @ease-out;
@@ -174,16 +171,16 @@
   &-border {
     border: none;
     height: @border-width-base;
-    background: @input-border-color;
+    background: @input-baseline-color;
     margin: 0;
     padding: 0;
     &-active {
-      height: 2px;
+      height: .02rem;
       opacity: 0;
       border: none;
       transform: scaleX(0.5);
       background-color: @primary-color;
-      margin: -1px 0 0 0;
+      margin: -.01rem 0 0 0;
       padding: 0;
     }
   }
@@ -198,13 +195,8 @@
   &-disabled &-border {
     background-position: 0;
     background-color: transparent;
-    background-image:
-      linear-gradient(
-        to right,
-      rgba(0, 0, 0, 0.42) 0%,
-      rgba(0, 0, 0, 0.42) 33%,
-        transparent 0%);
-    background-size: 4px 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.42) 0%, rgba(0, 0, 0, 0.42) 33%, transparent 0%);
+    background-size: .04rem .01rem;
     background-repeat: repeat-x;
   }
 
@@ -225,9 +217,9 @@
     color: #bfbfbf;
   }
 
-  &-focus &-placeholder,
-  &-focus &-suffix,
-  &-focus &-prefix {
+  &-focused &-placeholder,
+  &-focused &-suffix,
+  &-focused &-prefix {
     display: inline-block;
     transition: all 300ms @ease-out;
   }
@@ -243,10 +235,10 @@
 
   &-length-info {
     float: right;
-    color: @input-border-color;
+    color: @input-baseline-color;
     font-size: @font-size-sm;
-    letter-spacing: 2px;
-    margin-top: 2px;
+    letter-spacing: .02rem;
+    margin-top: .02rem;
   }
 
   &:hover {
@@ -270,47 +262,8 @@
     cursor: not-allowed;
   }
 
-// underline
-  //default underline
-  &-underline {
-    position: absolute;
-    height: 0;
-    width: 100%;
-    border-bottom-width: 1px;
-    border-bottom-style: solid;
-    border-bottom-color: rgba(0, 0, 0, 0.54);
-  }
+  .input-underline;
 
-  &-ripple {
-    position: absolute;
-    left: 0;
-    width: 100%;
-    transform-origin: 50%;
-    transform: scaleX(0.5);
-    opacity: 0;
-    border-bottom-width: 2px;
-    border-bottom-style: solid;
-    transition: border-color 300ms cubic-bezier(0.55, 0, 0.55, 0.2);
-    border-color: #3367d6;
-    height: 0;
-  }
-  //disabled underline
-  &-disabled &-underline {
-    border-bottom: 1px dotted rgba(0, 0, 0, 0.42);
-  }
-  // focused underline
-  &-focus &-underline &-ripple {
-    opacity: 1;
-    transform: scaleX(1);
-    transition:
-      transform 300ms cubic-bezier(0.25, 0.8, 0.25, 1),
-      opacity 100ms cubic-bezier(0.25, 0.8, 0.25, 1),
-      border-color 300ms cubic-bezier(0.25, 0.8, 0.25, 1);
-  }
-
-  .has-error &-underline {
-    border-color: #d50000;
-  }
   // Reset height for `textarea`s
   textarea& {
     max-width: 100%; // prevent textearea resize from coming out of its container
@@ -325,13 +278,50 @@
     .input-lg();
   }
   &-lg &-has-copy {
-    padding-right: @icon-font-size-lg + 2px;
+    padding-right: @icon-font-size-lg + .02rem;
   }
   &-sm {
     .input-sm();
   }
   &-sm &-has-copy {
-    padding-right: @icon-font-size-sm + 2px;
+    padding-right: @icon-font-size-sm + .02rem;
+  }
+}
+
+.input-underline() {
+  // underline
+  //default underline
+  &-underline {
+    position: absolute;
+    height: 0;
+    width: 100%;
+    border-bottom: @border-width-base @border-style-base @input-baseline-color;
+  }
+
+  &-ripple {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    transform-origin: 50%;
+    transform: scaleX(0.5);
+    opacity: 0;
+    border-bottom: .02rem @border-style-base @primary-color;
+    transition: border-color 300ms cubic-bezier(0.55, 0, 0.55, 0.2);
+    height: 0;
+  }
+  //disabled underline
+  &-disabled &-underline {
+    border-bottom: @border-width-base dotted rgba(0, 0, 0, 0.42);
+  }
+  // focused underline
+  &-focused &-underline &-ripple {
+    opacity: 1;
+    transform: scaleX(1);
+    transition: transform 300ms cubic-bezier(0.25, 0.8, 0.25, 1), opacity 100ms cubic-bezier(0.25, 0.8, 0.25, 1), border-color 300ms cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+
+  .has-error &-underline {
+    border-color: @error-color;
   }
 }
 
@@ -351,7 +341,7 @@
   }
 
   > [class*="col-"] {
-    padding-right: 8px;
+    padding-right: .08rem;
     &:last-child {
       padding-right: 0;
     }
@@ -369,7 +359,7 @@
 
   &-addon,
   &-wrap {
-    width: 1px; // To make addon/wrap as small as possible
+    width: .01rem; // To make addon/wrap as small as possible
     white-space: nowrap;
     vertical-align: middle;
   }
@@ -393,32 +383,31 @@
     color: @input-color;
     text-align: center;
     background-color: @input-addon-bg;
-    border: @border-width-base @border-style-base @input-border-color;
+    border: @border-width-base @border-style-base @input-baseline-color;
     border-radius: @border-radius-base;
     position: relative;
     transition: all .3s;
 
     // Reset Select's style in addon
-    .@{ant-prefix}-select {
-      margin: -(@input-padding-vertical-base + 1px) (-@input-padding-horizontal-base);  // lesshint spaceAroundOperator: false
+    .@{c7n-prefix}-select {
+      margin: -(@input-padding-vertical-base + .01rem) (-@input-padding-horizontal-base); // lesshint spaceAroundOperator: false
 
-      .@{ant-prefix}-select-selection {
+      .@{c7n-prefix}-select-selection {
         background-color: inherit;
-        margin: -1px;
+        margin: -.01rem;
         border: @border-width-base @border-style-base transparent;
         box-shadow: none;
       }
 
       &-open,
       &-focused {
-        .@{ant-prefix}-select-selection {
+        .@{c7n-prefix}-select-selection {
           color: @primary-color;
         }
       }
     }
 
     // Expand addon icon click area
-    // https://github.com/ant-design/ant-design/issues/3714
     > i:only-child:after {
       position: absolute;
       content: '';
@@ -436,7 +425,7 @@
     border-top-right-radius: 0;
 
     // Reset Select's style in addon
-    .@{ant-prefix}-select .@{ant-prefix}-select-selection {
+    .@{c7n-prefix}-select .@{c7n-prefix}-select-selection {
       border-bottom-right-radius: 0;
       border-top-right-radius: 0;
     }
@@ -467,7 +456,7 @@
     border-top-left-radius: 0;
 
     // Reset Select's style in addon
-    .@{ant-prefix}-select .@{ant-prefix}-select-selection {
+    .@{c7n-prefix}-select .@{c7n-prefix}-select-selection {
       border-bottom-left-radius: 0;
       border-top-left-radius: 0;
     }
@@ -483,13 +472,11 @@
   &-sm > &-addon {
     .input-sm();
   }
-
-  // Fix https://github.com/ant-design/ant-design/issues/5754
-  &-lg .@{ant-prefix}-select-selection--single {
+  &-lg .@{c7n-prefix}-select-selection--single {
     height: @input-height-lg;
   }
 
-  &-sm .@{ant-prefix}-select-selection--single {
+  &-sm .@{c7n-prefix}-select-selection--single {
     height: @input-height-sm;
   }
 
@@ -505,49 +492,48 @@
     & > * {
       border-radius: 0;
       border-right-width: 0;
-      vertical-align: top; // https://github.com/ant-design/ant-design-pro/issues/139
+      vertical-align: top;
       float: none;
       display: inline-block;
     }
 
-    // Undo float for .ant-input-group .ant-input
     .@{inputClass} {
       float: none;
       z-index: auto;
     }
 
     // reset border for Select, DatePicker, AutoComplete, Cascader, Mention, TimePicker
-    & > .@{ant-prefix}-select > .@{ant-prefix}-select-selection,
-    & > .@{ant-prefix}-calendar-picker .@{ant-prefix}-input,
-    & > .@{ant-prefix}-select-auto-complete .@{ant-prefix}-input,
-    & > .@{ant-prefix}-cascader-picker .@{ant-prefix}-input,
-    & > .@{ant-prefix}-mention-wrapper .@{ant-prefix}-mention-editor,
-    & > .@{ant-prefix}-time-picker .@{ant-prefix}-time-picker-input {
+    & > .@{c7n-prefix}-select > .@{c7n-prefix}-select-selection,
+    & > .@{c7n-prefix}-calendar-picker .@{c7n-prefix}-input,
+    & > .@{c7n-prefix}-select-auto-complete .@{c7n-prefix}-input,
+    & > .@{c7n-prefix}-cascader-picker .@{c7n-prefix}-input,
+    & > .@{c7n-prefix}-mention-wrapper .@{c7n-prefix}-mention-editor,
+    & > .@{c7n-prefix}-time-picker .@{c7n-prefix}-time-picker-input {
       border-radius: 0;
       border-right-width: 0;
     }
 
     & > *:first-child,
-    & > .@{ant-prefix}-select:first-child > .@{ant-prefix}-select-selection,
-    & > .@{ant-prefix}-calendar-picker:first-child .@{ant-prefix}-input,
-    & > .@{ant-prefix}-select-auto-complete:first-child .@{ant-prefix}-input,
-    & > .@{ant-prefix}-cascader-picker:first-child .@{ant-prefix}-input,
-    & > .@{ant-prefix}-mention-wrapper:first-child .@{ant-prefix}-mention-editor,
-    & > .@{ant-prefix}-time-picker:first-child .@{ant-prefix}-time-picker-input {
+    & > .@{c7n-prefix}-select:first-child > .@{c7n-prefix}-select-selection,
+    & > .@{c7n-prefix}-calendar-picker:first-child .@{c7n-prefix}-input,
+    & > .@{c7n-prefix}-select-auto-complete:first-child .@{c7n-prefix}-input,
+    & > .@{c7n-prefix}-cascader-picker:first-child .@{c7n-prefix}-input,
+    & > .@{c7n-prefix}-mention-wrapper:first-child .@{c7n-prefix}-mention-editor,
+    & > .@{c7n-prefix}-time-picker:first-child .@{c7n-prefix}-time-picker-input {
       border-top-left-radius: @border-radius-base;
       border-bottom-left-radius: @border-radius-base;
     }
 
     & > *:last-child,
-    & > .@{ant-prefix}-select:last-child > .@{ant-prefix}-select-selection,
-    & > .@{ant-prefix}-calendar-picker:last-child .@{ant-prefix}-input,
-    & > .@{ant-prefix}-select-auto-complete:last-child .@{ant-prefix}-input,
-    & > .@{ant-prefix}-cascader-picker:last-child .@{ant-prefix}-input,
-    & > .@{ant-prefix}-mention-wrapper:last-child .@{ant-prefix}-mention-editor,
-    & > .@{ant-prefix}-time-picker:last-child .@{ant-prefix}-time-picker-input {
+    & > .@{c7n-prefix}-select:last-child > .@{c7n-prefix}-select-selection,
+    & > .@{c7n-prefix}-calendar-picker:last-child .@{c7n-prefix}-input,
+    & > .@{c7n-prefix}-select-auto-complete:last-child .@{c7n-prefix}-input,
+    & > .@{c7n-prefix}-cascader-picker:last-child .@{c7n-prefix}-input,
+    & > .@{c7n-prefix}-mention-wrapper:last-child .@{c7n-prefix}-mention-editor,
+    & > .@{c7n-prefix}-time-picker:last-child .@{c7n-prefix}-time-picker-input {
       border-top-right-radius: @border-radius-base;
       border-bottom-right-radius: @border-radius-base;
-      border-right-width: 1px;
+      border-right-width: .01rem;
     }
   }
 }
@@ -579,7 +565,7 @@
   }
 
   .@{inputClass}-suffix {
-    right: @input-padding-horizontal-base + 1px;
+    right: @input-padding-horizontal-base + .01rem;
   }
 
   .@{inputClass}:not(:first-child) {

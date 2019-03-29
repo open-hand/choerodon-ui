@@ -6,22 +6,21 @@ exports[`renders ./components/avatar/demo/badge.md correctly 1`] = `
     style="margin-right:24px"
   >
     <span
-      class="ant-badge"
+      class="c7n-badge"
     >
       <span
-        class="ant-avatar ant-avatar-square ant-avatar-icon"
+        class="c7n-avatar c7n-avatar-square c7n-avatar-icon"
       >
         <i
-          class="icon icon-user"
+          class="icon icon-person"
         />
       </span>
       <sup
-        class="ant-scroll-number ant-badge-count"
-        data-show="true"
+        class="c7n-scroll-number c7n-badge-count"
         title="1"
       >
         <span
-          class="ant-scroll-number-only"
+          class="c7n-scroll-number-only"
           style="transition:none;-ms-transform:translateY(-1100%);-webkit-transform:translateY(-1100%);transform:translateY(-1100%)"
         >
           <p
@@ -180,18 +179,17 @@ exports[`renders ./components/avatar/demo/badge.md correctly 1`] = `
   </span>
   <span>
     <span
-      class="ant-badge"
+      class="c7n-badge"
     >
       <span
-        class="ant-avatar ant-avatar-square ant-avatar-icon"
+        class="c7n-avatar c7n-avatar-square c7n-avatar-icon"
       >
         <i
-          class="icon icon-user"
+          class="icon icon-person"
         />
       </span>
       <sup
-        class="ant-scroll-number ant-badge-dot"
-        data-show="true"
+        class="c7n-scroll-number c7n-badge-dot"
       />
     </span>
   </span>
@@ -202,63 +200,63 @@ exports[`renders ./components/avatar/demo/basic.md correctly 1`] = `
 <div>
   <div>
     <span
-      class="ant-avatar ant-avatar-circle ant-avatar-icon"
+      class="c7n-avatar c7n-avatar-circle c7n-avatar-icon"
       style="width:64px;height:64px;line-height:64px;font-size:32px"
     >
       <i
-        class="icon icon-user"
+        class="icon icon-person"
       />
     </span>
     <span
-      class="ant-avatar ant-avatar-lg ant-avatar-circle ant-avatar-icon"
+      class="c7n-avatar c7n-avatar-lg c7n-avatar-circle c7n-avatar-icon"
     >
       <i
-        class="icon icon-user"
+        class="icon icon-person"
       />
     </span>
     <span
-      class="ant-avatar ant-avatar-circle ant-avatar-icon"
+      class="c7n-avatar c7n-avatar-circle c7n-avatar-icon"
     >
       <i
-        class="icon icon-user"
+        class="icon icon-person"
       />
     </span>
     <span
-      class="ant-avatar ant-avatar-sm ant-avatar-circle ant-avatar-icon"
+      class="c7n-avatar c7n-avatar-sm c7n-avatar-circle c7n-avatar-icon"
     >
       <i
-        class="icon icon-user"
+        class="icon icon-person"
       />
     </span>
   </div>
   <div>
     <span
-      class="ant-avatar ant-avatar-square ant-avatar-icon"
+      class="c7n-avatar c7n-avatar-square c7n-avatar-icon"
       style="width:64px;height:64px;line-height:64px;font-size:32px"
     >
       <i
-        class="icon icon-user"
+        class="icon icon-person"
       />
     </span>
     <span
-      class="ant-avatar ant-avatar-lg ant-avatar-square ant-avatar-icon"
+      class="c7n-avatar c7n-avatar-lg c7n-avatar-square c7n-avatar-icon"
     >
       <i
-        class="icon icon-user"
+        class="icon icon-person"
       />
     </span>
     <span
-      class="ant-avatar ant-avatar-square ant-avatar-icon"
+      class="c7n-avatar c7n-avatar-square c7n-avatar-icon"
     >
       <i
-        class="icon icon-user"
+        class="icon icon-person"
       />
     </span>
     <span
-      class="ant-avatar ant-avatar-sm ant-avatar-square ant-avatar-icon"
+      class="c7n-avatar c7n-avatar-sm c7n-avatar-square c7n-avatar-icon"
     >
       <i
-        class="icon icon-user"
+        class="icon icon-person"
       />
     </span>
   </div>
@@ -268,17 +266,17 @@ exports[`renders ./components/avatar/demo/basic.md correctly 1`] = `
 exports[`renders ./components/avatar/demo/dynamic.md correctly 1`] = `
 <div>
   <span
-    class="ant-avatar ant-avatar-lg ant-avatar-circle"
+    class="c7n-avatar c7n-avatar-lg c7n-avatar-circle"
     style="background-color:#f56a00;vertical-align:middle"
   >
     <span
-      class="ant-avatar-string"
+      class="c7n-avatar-string"
     >
       U
     </span>
   </span>
   <button
-    class="ant-btn ant-btn-sm ant-btn-flat"
+    class="c7n-btn c7n-btn-sm c7n-btn-flat"
     style="margin-left:16px;vertical-align:middle"
     type="button"
   >
@@ -286,7 +284,7 @@ exports[`renders ./components/avatar/demo/dynamic.md correctly 1`] = `
       Change
     </span>
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
 </div>
@@ -295,49 +293,49 @@ exports[`renders ./components/avatar/demo/dynamic.md correctly 1`] = `
 exports[`renders ./components/avatar/demo/type.md correctly 1`] = `
 <div>
   <span
-    class="ant-avatar ant-avatar-circle ant-avatar-icon"
+    class="c7n-avatar c7n-avatar-circle c7n-avatar-icon"
   >
     <i
-      class="icon icon-user"
+      class="icon icon-person"
     />
   </span>
   <span
-    class="ant-avatar ant-avatar-circle"
+    class="c7n-avatar c7n-avatar-circle"
   >
     <span
-      class="ant-avatar-string"
+      class="c7n-avatar-string"
     >
       U
     </span>
   </span>
   <span
-    class="ant-avatar ant-avatar-circle"
+    class="c7n-avatar c7n-avatar-circle"
   >
     <span
-      class="ant-avatar-string"
+      class="c7n-avatar-string"
     >
       USER
     </span>
   </span>
   <span
-    class="ant-avatar ant-avatar-circle ant-avatar-image"
+    class="c7n-avatar c7n-avatar-circle c7n-avatar-image"
   >
     <img
       src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
     />
   </span>
   <span
-    class="ant-avatar ant-avatar-circle"
+    class="c7n-avatar c7n-avatar-circle"
     style="color:#f56a00;background-color:#fde3cf"
   >
     <span
-      class="ant-avatar-string"
+      class="c7n-avatar-string"
     >
       U
     </span>
   </span>
   <span
-    class="ant-avatar ant-avatar-circle ant-avatar-icon"
+    class="c7n-avatar c7n-avatar-circle c7n-avatar-icon"
     style="background-color:#87d068"
   >
     <i

@@ -61,7 +61,7 @@ subtitle: 级联选择
 | focus() | 获取焦点 |
 
 <style>
-.ant-cascader-picker {
+.c7n-cascader-picker {
   width: 300px;
 }
 </style>

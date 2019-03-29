@@ -1,15 +1,12 @@
-import React from 'react';
+import React, { Children, cloneElement, Component, isValidElement } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { decode } from 'draft-js/lib/DraftOffsetKey';
-import Animate from '../../animate';
-
 import cx from 'classnames';
 import scrollIntoView from 'dom-scroll-into-view';
-
+import Animate from '../../../animate';
 import Nav from './Nav.react';
 import SuggetionWrapper from './SuggestionWrapper.react';
-
 import insertMention from '../utils/insertMention';
 import clearMention from '../utils/clearMention';
 import getOffset from '../utils/getOffset';
@@ -18,9 +15,26 @@ import getSearchWord from '../utils/getSearchWord';
 
 const isNotFalse = i => i !== false;
 
-export default class Suggestions extends React.Component {
-  constructor() {
-    super();
+export default class Suggestions extends Component {
+  static propTypes = {
+    callbacks: PropTypes.object,
+    suggestions: PropTypes.array,
+    store: PropTypes.object,
+    onSearchChange: PropTypes.func,
+    prefixCls: PropTypes.string,
+    mode: PropTypes.string,
+    style: PropTypes.object,
+    onSelect: PropTypes.func,
+    getSuggestionContainer: PropTypes.func,
+    notFoundContent: PropTypes.any,
+    getSuggestionStyle: PropTypes.func,
+    className: PropTypes.string,
+    noRedup: PropTypes.bool,
+    placement: PropTypes.string,
+  };
+
+  constructor(props) {
+    super(props);
     this.state = {
       isActive: false,
       focusedIndex: 0,
@@ -31,6 +45,7 @@ export default class Suggestions extends React.Component {
   componentDidMount() {
     this.props.callbacks.onChange = this.onEditorStateChange;
   }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.suggestions.length !== this.props.suggestions.length) {
       this.setState({
@@ -100,14 +115,14 @@ export default class Suggestions extends React.Component {
       this.props.onSearchChange(searchValue, trigger);
     }
     if (!this.state.active) {
-      // 特例处理 https://github.com/ant-design/ant-design/issues/7838
       // 暂时没有更优雅的方法
       if (!trigger || word.indexOf(trigger) !== -1) {
         this.openDropDown();
       }
     }
     return editorState;
-  }
+  };
+
   onMentionSelect(mention, data) {
     const editorState = this.props.callbacks.getEditorState();
     const { store, onSelect } = this.props;
@@ -132,6 +147,7 @@ export default class Suggestions extends React.Component {
       , true);
     this.closeDropDown();
   }
+
   onUpArrow = (ev) => {
     ev.preventDefault();
     if (this.props.suggestions.length > 0) {
@@ -140,18 +156,19 @@ export default class Suggestions extends React.Component {
         focusedIndex: Math.max(newIndex, 0),
       });
     }
-  }
+  };
   onBlur = (ev) => {
     ev.preventDefault();
     this.closeDropDown();
-  }
+  };
   onDownArrow = (ev) => {
     ev.preventDefault();
     const newIndex = this.state.focusedIndex + 1;
     this.setState({
       focusedIndex: newIndex >= this.props.suggestions.length ? 0 : newIndex,
     });
-  }
+  };
+
   getPositionStyle(isActive, position) {
     if (this.props.getSuggestionStyle) {
       return this.props.getSuggestionStyle(isActive, position);
@@ -165,6 +182,7 @@ export default class Suggestions extends React.Component {
       ...this.props.style,
     } : {};
   }
+
   getContainer = () => {
     const popupContainer = document.createElement('div');
     let mountNode;
@@ -176,15 +194,15 @@ export default class Suggestions extends React.Component {
     }
     mountNode.appendChild(popupContainer);
     return popupContainer;
-  }
+  };
   handleKeyBinding = (command) => {
     return command === 'split-block';
-  }
+  };
   handleReturn = (ev) => {
     ev.preventDefault();
     const selectedSuggestion = this.props.suggestions[this.state.focusedIndex];
     if (selectedSuggestion) {
-      if (React.isValidElement(selectedSuggestion)) {
+      if (isValidElement(selectedSuggestion)) {
         this.onMentionSelect(selectedSuggestion.props.value, selectedSuggestion.props.data);
       } else {
         this.onMentionSelect(selectedSuggestion);
@@ -194,7 +212,8 @@ export default class Suggestions extends React.Component {
       return true;
     }
     return false;
-  }
+  };
+
   openDropDown() {
     this.props.callbacks.onUpArrow = this.onUpArrow;
     this.props.callbacks.handleReturn = this.handleReturn;
@@ -206,6 +225,7 @@ export default class Suggestions extends React.Component {
       container: this.state.container || this.getContainer(),
     });
   }
+
   closeDropDown() {
     this.props.callbacks.onUpArrow = null;
     this.props.callbacks.handleReturn = null;
@@ -216,6 +236,7 @@ export default class Suggestions extends React.Component {
       active: false,
     });
   }
+
   renderReady = () => {
     const container = this.dropdownContainer;
     if (!container) {
@@ -257,13 +278,13 @@ export default class Suggestions extends React.Component {
       ReactDOM.findDOMNode(this.focusItem),
       container, {
         onlyScrollIfNeeded: true,
-      }
+      },
     );
-  }
+  };
   getNavigations = () => {
     const { prefixCls, suggestions } = this.props;
     const { focusedIndex } = this.state;
-    return suggestions.length ? React.Children.map(suggestions, (element, index) => {
+    return suggestions.length ? Children.map(suggestions, (element, index) => {
       const focusItem = index === focusedIndex;
       const ref = focusItem ? (node) => {
         this.focusItem = node;
@@ -271,8 +292,8 @@ export default class Suggestions extends React.Component {
       const mentionClass = cx(`${prefixCls}-dropdown-item`, {
         focus: focusItem,
       });
-      if (React.isValidElement(element)) {
-        return React.cloneElement(element, {
+      if (isValidElement(element)) {
+        return cloneElement(element, {
           className: mentionClass,
           onMouseDown: () => this.onMentionSelect(element.props.value, element.props.data),
           ref,
@@ -287,11 +308,13 @@ export default class Suggestions extends React.Component {
           {element}
         </Nav>
       );
-    }, this) :
-    <div className={`${prefixCls}-dropdown-notfound ${prefixCls}-dropdown-item`}>
-      {this.props.notFoundContent}
-    </div>;
-  }
+    }, this) : (
+      <div className={`${prefixCls}-dropdown-notfound ${prefixCls}-dropdown-item`}>
+        {this.props.notFoundContent}
+      </div>
+    );
+  };
+
   render() {
     const { prefixCls, className, placement } = this.props;
     const { container, active } = this.state;
@@ -308,7 +331,9 @@ export default class Suggestions extends React.Component {
       <SuggetionWrapper renderReady={this.renderReady} container={container}>
         <Animate transitionName={transitionName}>
           {active ? (
-            <div className={cls} ref={(node) => { this.dropdownContainer = node; }}>
+            <div className={cls} ref={(node) => {
+              this.dropdownContainer = node;
+            }}>
               {navigations}
             </div>
           ) : null}
@@ -317,20 +342,3 @@ export default class Suggestions extends React.Component {
     ) : null;
   }
 }
-
-Suggestions.propTypes = {
-  callbacks: PropTypes.object,
-  suggestions: PropTypes.array,
-  store: PropTypes.object,
-  onSearchChange: PropTypes.func,
-  prefixCls: PropTypes.string,
-  mode: PropTypes.string,
-  style: PropTypes.object,
-  onSelect: PropTypes.func,
-  getSuggestionContainer: PropTypes.func,
-  notFoundContent: PropTypes.any,
-  getSuggestionStyle: PropTypes.func,
-  className: PropTypes.string,
-  noRedup: PropTypes.bool,
-  placement: PropTypes.string,
-};

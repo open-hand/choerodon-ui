@@ -3,27 +3,27 @@
 exports[`renders ./components/time-picker/demo/12hours.md correctly 1`] = `
 <div>
   <span
-    class="ant-time-picker "
+    class="c7n-time-picker "
   >
     <span
-      class="ant-input-wrapper ant-input-has-suffix"
+      class="c7n-input-wrapper c7n-input-has-suffix"
     >
       <div
-        class="ant-input-content"
+        class="c7n-input-content"
       >
         <div
-          class="ant-input-rendered-wrapper"
+          class="c7n-input-rendered-wrapper"
         >
           <div
-            class="ant-input-rendered"
+            class="c7n-input-rendered"
           >
             <div
-              class="ant-input-placeholder"
+              class="c7n-input-placeholder"
             >
               Select time
             </div>
             <input
-              class="ant-input ant-time-picker-input"
+              class="c7n-input c7n-time-picker-input"
               id=""
               readonly=""
               type="text"
@@ -31,45 +31,45 @@ exports[`renders ./components/time-picker/demo/12hours.md correctly 1`] = `
             />
           </div>
           <span
-            class="ant-input-suffix"
+            class="c7n-input-suffix"
           >
             <i
-              class="icon icon-av_timer ant-time-picker-icon"
+              class="icon icon-av_timer c7n-time-picker-icon"
             />
           </span>
         </div>
       </div>
       <div
-        class="ant-input-underline"
+        class="c7n-input-underline"
       >
         <span
-          class="ant-input-ripple"
+          class="c7n-input-ripple"
         />
       </div>
     </span>
   </span>
   <span
-    class="ant-time-picker "
+    class="c7n-time-picker "
   >
     <span
-      class="ant-input-wrapper ant-input-has-suffix"
+      class="c7n-input-wrapper c7n-input-has-suffix"
     >
       <div
-        class="ant-input-content"
+        class="c7n-input-content"
       >
         <div
-          class="ant-input-rendered-wrapper"
+          class="c7n-input-rendered-wrapper"
         >
           <div
-            class="ant-input-rendered"
+            class="c7n-input-rendered"
           >
             <div
-              class="ant-input-placeholder"
+              class="c7n-input-placeholder"
             >
               Select time
             </div>
             <input
-              class="ant-input ant-time-picker-input"
+              class="c7n-input c7n-time-picker-input"
               id=""
               readonly=""
               type="text"
@@ -77,45 +77,45 @@ exports[`renders ./components/time-picker/demo/12hours.md correctly 1`] = `
             />
           </div>
           <span
-            class="ant-input-suffix"
+            class="c7n-input-suffix"
           >
             <i
-              class="icon icon-av_timer ant-time-picker-icon"
+              class="icon icon-av_timer c7n-time-picker-icon"
             />
           </span>
         </div>
       </div>
       <div
-        class="ant-input-underline"
+        class="c7n-input-underline"
       >
         <span
-          class="ant-input-ripple"
+          class="c7n-input-ripple"
         />
       </div>
     </span>
   </span>
   <span
-    class="ant-time-picker "
+    class="c7n-time-picker "
   >
     <span
-      class="ant-input-wrapper ant-input-has-suffix"
+      class="c7n-input-wrapper c7n-input-has-suffix"
     >
       <div
-        class="ant-input-content"
+        class="c7n-input-content"
       >
         <div
-          class="ant-input-rendered-wrapper"
+          class="c7n-input-rendered-wrapper"
         >
           <div
-            class="ant-input-rendered"
+            class="c7n-input-rendered"
           >
             <div
-              class="ant-input-placeholder"
+              class="c7n-input-placeholder"
             >
               Select time
             </div>
             <input
-              class="ant-input ant-time-picker-input"
+              class="c7n-input c7n-time-picker-input"
               id=""
               readonly=""
               type="text"
@@ -123,19 +123,19 @@ exports[`renders ./components/time-picker/demo/12hours.md correctly 1`] = `
             />
           </div>
           <span
-            class="ant-input-suffix"
+            class="c7n-input-suffix"
           >
             <i
-              class="icon icon-av_timer ant-time-picker-icon"
+              class="icon icon-av_timer c7n-time-picker-icon"
             />
           </span>
         </div>
       </div>
       <div
-        class="ant-input-underline"
+        class="c7n-input-underline"
       >
         <span
-          class="ant-input-ripple"
+          class="c7n-input-ripple"
         />
       </div>
     </span>
@@ -145,27 +145,27 @@ exports[`renders ./components/time-picker/demo/12hours.md correctly 1`] = `
 
 exports[`renders ./components/time-picker/demo/addon.md correctly 1`] = `
 <span
-  class="ant-time-picker "
+  class="c7n-time-picker "
 >
   <span
-    class="ant-input-wrapper ant-input-has-suffix"
+    class="c7n-input-wrapper c7n-input-has-suffix"
   >
     <div
-      class="ant-input-content"
+      class="c7n-input-content"
     >
       <div
-        class="ant-input-rendered-wrapper"
+        class="c7n-input-rendered-wrapper"
       >
         <div
-          class="ant-input-rendered"
+          class="c7n-input-rendered"
         >
           <div
-            class="ant-input-placeholder"
+            class="c7n-input-placeholder"
           >
             Select time
           </div>
           <input
-            class="ant-input ant-time-picker-input"
+            class="c7n-input c7n-time-picker-input"
             id=""
             readonly=""
             type="text"
@@ -173,19 +173,19 @@ exports[`renders ./components/time-picker/demo/addon.md correctly 1`] = `
           />
         </div>
         <span
-          class="ant-input-suffix"
+          class="c7n-input-suffix"
         >
           <i
-            class="icon icon-av_timer ant-time-picker-icon"
+            class="icon icon-av_timer c7n-time-picker-icon"
           />
         </span>
       </div>
     </div>
     <div
-      class="ant-input-underline"
+      class="c7n-input-underline"
     >
       <span
-        class="ant-input-ripple"
+        class="c7n-input-ripple"
       />
     </div>
   </span>
@@ -194,32 +194,32 @@ exports[`renders ./components/time-picker/demo/addon.md correctly 1`] = `
 
 exports[`renders ./components/time-picker/demo/basic.md correctly 1`] = `
 <span
-  class="ant-time-picker "
+  class="c7n-time-picker "
 >
   <span
-    class="ant-input-wrapper ant-input-has-label ant-input-has-suffix"
+    class="c7n-input-wrapper c7n-input-has-label c7n-input-has-suffix"
   >
     <div
-      class="ant-input-content"
+      class="c7n-input-content"
     >
       <div
-        class="ant-input-label"
+        class="c7n-input-label"
       >
         时间选择框
       </div>
       <div
-        class="ant-input-rendered-wrapper"
+        class="c7n-input-rendered-wrapper"
       >
         <div
-          class="ant-input-rendered"
+          class="c7n-input-rendered"
         >
           <div
-            class="ant-input-placeholder"
+            class="c7n-input-placeholder"
           >
             Select time
           </div>
           <input
-            class="ant-input ant-time-picker-input"
+            class="c7n-input c7n-time-picker-input"
             id=""
             readonly=""
             type="text"
@@ -227,19 +227,19 @@ exports[`renders ./components/time-picker/demo/basic.md correctly 1`] = `
           />
         </div>
         <span
-          class="ant-input-suffix"
+          class="c7n-input-suffix"
         >
           <i
-            class="icon icon-av_timer ant-time-picker-icon"
+            class="icon icon-av_timer c7n-time-picker-icon"
           />
         </span>
       </div>
     </div>
     <div
-      class="ant-input-underline"
+      class="c7n-input-underline"
     >
       <span
-        class="ant-input-ripple"
+        class="c7n-input-ripple"
       />
     </div>
   </span>
@@ -248,27 +248,27 @@ exports[`renders ./components/time-picker/demo/basic.md correctly 1`] = `
 
 exports[`renders ./components/time-picker/demo/disabled.md correctly 1`] = `
 <span
-  class="ant-time-picker "
+  class="c7n-time-picker "
 >
   <span
-    class="ant-input-wrapper ant-input-disabled ant-input-has-suffix"
+    class="c7n-input-wrapper c7n-input-disabled c7n-input-has-suffix"
   >
     <div
-      class="ant-input-content"
+      class="c7n-input-content"
     >
       <div
-        class="ant-input-rendered-wrapper"
+        class="c7n-input-rendered-wrapper"
       >
         <div
-          class="ant-input-rendered"
+          class="c7n-input-rendered"
         >
           <div
-            class="ant-input-placeholder"
+            class="c7n-input-placeholder"
           >
             Select time
           </div>
           <input
-            class="ant-input ant-time-picker-input"
+            class="c7n-input c7n-time-picker-input"
             disabled=""
             id=""
             readonly=""
@@ -277,19 +277,19 @@ exports[`renders ./components/time-picker/demo/disabled.md correctly 1`] = `
           />
         </div>
         <span
-          class="ant-input-suffix"
+          class="c7n-input-suffix"
         >
           <i
-            class="icon icon-av_timer ant-time-picker-icon"
+            class="icon icon-av_timer c7n-time-picker-icon"
           />
         </span>
       </div>
     </div>
     <div
-      class="ant-input-underline"
+      class="c7n-input-underline"
     >
       <span
-        class="ant-input-ripple"
+        class="c7n-input-ripple"
       />
     </div>
   </span>
@@ -298,27 +298,27 @@ exports[`renders ./components/time-picker/demo/disabled.md correctly 1`] = `
 
 exports[`renders ./components/time-picker/demo/hide-column.md correctly 1`] = `
 <span
-  class="ant-time-picker "
+  class="c7n-time-picker "
 >
   <span
-    class="ant-input-wrapper ant-input-has-suffix"
+    class="c7n-input-wrapper c7n-input-has-suffix"
   >
     <div
-      class="ant-input-content"
+      class="c7n-input-content"
     >
       <div
-        class="ant-input-rendered-wrapper"
+        class="c7n-input-rendered-wrapper"
       >
         <div
-          class="ant-input-rendered"
+          class="c7n-input-rendered"
         >
           <div
-            class="ant-input-placeholder"
+            class="c7n-input-placeholder"
           >
             Select time
           </div>
           <input
-            class="ant-input ant-time-picker-input"
+            class="c7n-input c7n-time-picker-input"
             id=""
             readonly=""
             type="text"
@@ -326,19 +326,19 @@ exports[`renders ./components/time-picker/demo/hide-column.md correctly 1`] = `
           />
         </div>
         <span
-          class="ant-input-suffix"
+          class="c7n-input-suffix"
         >
           <i
-            class="icon icon-av_timer ant-time-picker-icon"
+            class="icon icon-av_timer c7n-time-picker-icon"
           />
         </span>
       </div>
     </div>
     <div
-      class="ant-input-underline"
+      class="c7n-input-underline"
     >
       <span
-        class="ant-input-ripple"
+        class="c7n-input-ripple"
       />
     </div>
   </span>
@@ -347,27 +347,27 @@ exports[`renders ./components/time-picker/demo/hide-column.md correctly 1`] = `
 
 exports[`renders ./components/time-picker/demo/interval-options.md correctly 1`] = `
 <span
-  class="ant-time-picker "
+  class="c7n-time-picker "
 >
   <span
-    class="ant-input-wrapper ant-input-has-suffix"
+    class="c7n-input-wrapper c7n-input-has-suffix"
   >
     <div
-      class="ant-input-content"
+      class="c7n-input-content"
     >
       <div
-        class="ant-input-rendered-wrapper"
+        class="c7n-input-rendered-wrapper"
       >
         <div
-          class="ant-input-rendered"
+          class="c7n-input-rendered"
         >
           <div
-            class="ant-input-placeholder"
+            class="c7n-input-placeholder"
           >
             Select time
           </div>
           <input
-            class="ant-input ant-time-picker-input"
+            class="c7n-input c7n-time-picker-input"
             id=""
             readonly=""
             type="text"
@@ -375,19 +375,19 @@ exports[`renders ./components/time-picker/demo/interval-options.md correctly 1`]
           />
         </div>
         <span
-          class="ant-input-suffix"
+          class="c7n-input-suffix"
         >
           <i
-            class="icon icon-av_timer ant-time-picker-icon"
+            class="icon icon-av_timer c7n-time-picker-icon"
           />
         </span>
       </div>
     </div>
     <div
-      class="ant-input-underline"
+      class="c7n-input-underline"
     >
       <span
-        class="ant-input-ripple"
+        class="c7n-input-ripple"
       />
     </div>
   </span>
@@ -397,27 +397,27 @@ exports[`renders ./components/time-picker/demo/interval-options.md correctly 1`]
 exports[`renders ./components/time-picker/demo/size.md correctly 1`] = `
 <div>
   <span
-    class="ant-time-picker ant-time-picker-large"
+    class="c7n-time-picker c7n-time-picker-large"
   >
     <span
-      class="ant-input-wrapper ant-input-has-suffix"
+      class="c7n-input-wrapper c7n-input-has-suffix"
     >
       <div
-        class="ant-input-content"
+        class="c7n-input-content"
       >
         <div
-          class="ant-input-rendered-wrapper"
+          class="c7n-input-rendered-wrapper"
         >
           <div
-            class="ant-input-rendered"
+            class="c7n-input-rendered"
           >
             <div
-              class="ant-input-placeholder"
+              class="c7n-input-placeholder"
             >
               Select time
             </div>
             <input
-              class="ant-input ant-time-picker-input"
+              class="c7n-input c7n-time-picker-input"
               id=""
               readonly=""
               type="text"
@@ -425,45 +425,45 @@ exports[`renders ./components/time-picker/demo/size.md correctly 1`] = `
             />
           </div>
           <span
-            class="ant-input-suffix"
+            class="c7n-input-suffix"
           >
             <i
-              class="icon icon-av_timer ant-time-picker-icon"
+              class="icon icon-av_timer c7n-time-picker-icon"
             />
           </span>
         </div>
       </div>
       <div
-        class="ant-input-underline"
+        class="c7n-input-underline"
       >
         <span
-          class="ant-input-ripple"
+          class="c7n-input-ripple"
         />
       </div>
     </span>
   </span>
   <span
-    class="ant-time-picker "
+    class="c7n-time-picker "
   >
     <span
-      class="ant-input-wrapper ant-input-has-suffix"
+      class="c7n-input-wrapper c7n-input-has-suffix"
     >
       <div
-        class="ant-input-content"
+        class="c7n-input-content"
       >
         <div
-          class="ant-input-rendered-wrapper"
+          class="c7n-input-rendered-wrapper"
         >
           <div
-            class="ant-input-rendered"
+            class="c7n-input-rendered"
           >
             <div
-              class="ant-input-placeholder"
+              class="c7n-input-placeholder"
             >
               Select time
             </div>
             <input
-              class="ant-input ant-time-picker-input"
+              class="c7n-input c7n-time-picker-input"
               id=""
               readonly=""
               type="text"
@@ -471,45 +471,45 @@ exports[`renders ./components/time-picker/demo/size.md correctly 1`] = `
             />
           </div>
           <span
-            class="ant-input-suffix"
+            class="c7n-input-suffix"
           >
             <i
-              class="icon icon-av_timer ant-time-picker-icon"
+              class="icon icon-av_timer c7n-time-picker-icon"
             />
           </span>
         </div>
       </div>
       <div
-        class="ant-input-underline"
+        class="c7n-input-underline"
       >
         <span
-          class="ant-input-ripple"
+          class="c7n-input-ripple"
         />
       </div>
     </span>
   </span>
   <span
-    class="ant-time-picker ant-time-picker-small"
+    class="c7n-time-picker c7n-time-picker-small"
   >
     <span
-      class="ant-input-wrapper ant-input-has-suffix"
+      class="c7n-input-wrapper c7n-input-has-suffix"
     >
       <div
-        class="ant-input-content"
+        class="c7n-input-content"
       >
         <div
-          class="ant-input-rendered-wrapper"
+          class="c7n-input-rendered-wrapper"
         >
           <div
-            class="ant-input-rendered"
+            class="c7n-input-rendered"
           >
             <div
-              class="ant-input-placeholder"
+              class="c7n-input-placeholder"
             >
               Select time
             </div>
             <input
-              class="ant-input ant-time-picker-input"
+              class="c7n-input c7n-time-picker-input"
               id=""
               readonly=""
               type="text"
@@ -517,19 +517,19 @@ exports[`renders ./components/time-picker/demo/size.md correctly 1`] = `
             />
           </div>
           <span
-            class="ant-input-suffix"
+            class="c7n-input-suffix"
           >
             <i
-              class="icon icon-av_timer ant-time-picker-icon"
+              class="icon icon-av_timer c7n-time-picker-icon"
             />
           </span>
         </div>
       </div>
       <div
-        class="ant-input-underline"
+        class="c7n-input-underline"
       >
         <span
-          class="ant-input-ripple"
+          class="c7n-input-ripple"
         />
       </div>
     </span>
@@ -539,27 +539,27 @@ exports[`renders ./components/time-picker/demo/size.md correctly 1`] = `
 
 exports[`renders ./components/time-picker/demo/value.md correctly 1`] = `
 <span
-  class="ant-time-picker "
+  class="c7n-time-picker "
 >
   <span
-    class="ant-input-wrapper ant-input-has-suffix"
+    class="c7n-input-wrapper c7n-input-has-suffix"
   >
     <div
-      class="ant-input-content"
+      class="c7n-input-content"
     >
       <div
-        class="ant-input-rendered-wrapper"
+        class="c7n-input-rendered-wrapper"
       >
         <div
-          class="ant-input-rendered"
+          class="c7n-input-rendered"
         >
           <div
-            class="ant-input-placeholder"
+            class="c7n-input-placeholder"
           >
             Select time
           </div>
           <input
-            class="ant-input ant-time-picker-input"
+            class="c7n-input c7n-time-picker-input"
             id=""
             readonly=""
             type="text"
@@ -567,19 +567,19 @@ exports[`renders ./components/time-picker/demo/value.md correctly 1`] = `
           />
         </div>
         <span
-          class="ant-input-suffix"
+          class="c7n-input-suffix"
         >
           <i
-            class="icon icon-av_timer ant-time-picker-icon"
+            class="icon icon-av_timer c7n-time-picker-icon"
           />
         </span>
       </div>
     </div>
     <div
-      class="ant-input-underline"
+      class="c7n-input-underline"
     >
       <span
-        class="ant-input-ripple"
+        class="c7n-input-ripple"
       />
     </div>
   </span>

@@ -2,26 +2,26 @@
 
 exports[`renders ./components/list/demo/basic.md correctly 1`] = `
 <div
-  class="ant-list ant-list-split"
+  class="c7n-list c7n-list-split"
 >
   <div>
     <div
-      class="ant-spin-nested-loading"
+      class="c7n-spin-nested-loading"
     >
       <div
-        class="ant-spin-container"
+        class="c7n-spin-container"
       >
         <div
-          class="ant-list-item"
+          class="c7n-list-item"
         >
           <div
-            class="ant-list-item-meta"
+            class="c7n-list-item-meta"
           >
             <div
-              class="ant-list-item-meta-avatar"
+              class="c7n-list-item-meta-avatar"
             >
               <span
-                class="ant-avatar ant-avatar-circle ant-avatar-image"
+                class="c7n-avatar c7n-avatar-circle c7n-avatar-image"
               >
                 <img
                   src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
@@ -29,19 +29,19 @@ exports[`renders ./components/list/demo/basic.md correctly 1`] = `
               </span>
             </div>
             <div
-              class="ant-list-item-meta-content"
+              class="c7n-list-item-meta-content"
             >
               <h4
-                class="ant-list-item-meta-title"
+                class="c7n-list-item-meta-title"
               >
                 <a
-                  href="https://ant.design"
+                  href="https://choerodon.github.io/choerodon-ui/"
                 >
                   Ant Design Title 1
                 </a>
               </h4>
               <div
-                class="ant-list-item-meta-description"
+                class="c7n-list-item-meta-description"
               >
                 Ant Design, a design language for background applications, is refined by Ant UED Team
               </div>
@@ -49,16 +49,16 @@ exports[`renders ./components/list/demo/basic.md correctly 1`] = `
           </div>
         </div>
         <div
-          class="ant-list-item"
+          class="c7n-list-item"
         >
           <div
-            class="ant-list-item-meta"
+            class="c7n-list-item-meta"
           >
             <div
-              class="ant-list-item-meta-avatar"
+              class="c7n-list-item-meta-avatar"
             >
               <span
-                class="ant-avatar ant-avatar-circle ant-avatar-image"
+                class="c7n-avatar c7n-avatar-circle c7n-avatar-image"
               >
                 <img
                   src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
@@ -66,19 +66,19 @@ exports[`renders ./components/list/demo/basic.md correctly 1`] = `
               </span>
             </div>
             <div
-              class="ant-list-item-meta-content"
+              class="c7n-list-item-meta-content"
             >
               <h4
-                class="ant-list-item-meta-title"
+                class="c7n-list-item-meta-title"
               >
                 <a
-                  href="https://ant.design"
+                  href="https://choerodon.github.io/choerodon-ui/"
                 >
                   Ant Design Title 2
                 </a>
               </h4>
               <div
-                class="ant-list-item-meta-description"
+                class="c7n-list-item-meta-description"
               >
                 Ant Design, a design language for background applications, is refined by Ant UED Team
               </div>
@@ -86,16 +86,16 @@ exports[`renders ./components/list/demo/basic.md correctly 1`] = `
           </div>
         </div>
         <div
-          class="ant-list-item"
+          class="c7n-list-item"
         >
           <div
-            class="ant-list-item-meta"
+            class="c7n-list-item-meta"
           >
             <div
-              class="ant-list-item-meta-avatar"
+              class="c7n-list-item-meta-avatar"
             >
               <span
-                class="ant-avatar ant-avatar-circle ant-avatar-image"
+                class="c7n-avatar c7n-avatar-circle c7n-avatar-image"
               >
                 <img
                   src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
@@ -103,19 +103,19 @@ exports[`renders ./components/list/demo/basic.md correctly 1`] = `
               </span>
             </div>
             <div
-              class="ant-list-item-meta-content"
+              class="c7n-list-item-meta-content"
             >
               <h4
-                class="ant-list-item-meta-title"
+                class="c7n-list-item-meta-title"
               >
                 <a
-                  href="https://ant.design"
+                  href="https://choerodon.github.io/choerodon-ui/"
                 >
                   Ant Design Title 3
                 </a>
               </h4>
               <div
-                class="ant-list-item-meta-description"
+                class="c7n-list-item-meta-description"
               >
                 Ant Design, a design language for background applications, is refined by Ant UED Team
               </div>
@@ -123,16 +123,16 @@ exports[`renders ./components/list/demo/basic.md correctly 1`] = `
           </div>
         </div>
         <div
-          class="ant-list-item"
+          class="c7n-list-item"
         >
           <div
-            class="ant-list-item-meta"
+            class="c7n-list-item-meta"
           >
             <div
-              class="ant-list-item-meta-avatar"
+              class="c7n-list-item-meta-avatar"
             >
               <span
-                class="ant-avatar ant-avatar-circle ant-avatar-image"
+                class="c7n-avatar c7n-avatar-circle c7n-avatar-image"
               >
                 <img
                   src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
@@ -140,19 +140,19 @@ exports[`renders ./components/list/demo/basic.md correctly 1`] = `
               </span>
             </div>
             <div
-              class="ant-list-item-meta-content"
+              class="c7n-list-item-meta-content"
             >
               <h4
-                class="ant-list-item-meta-title"
+                class="c7n-list-item-meta-title"
               >
                 <a
-                  href="https://ant.design"
+                  href="https://choerodon.github.io/choerodon-ui/"
                 >
                   Ant Design Title 4
                 </a>
               </h4>
               <div
-                class="ant-list-item-meta-description"
+                class="c7n-list-item-meta-description"
               >
                 Ant Design, a design language for background applications, is refined by Ant UED Team
               </div>
@@ -167,47 +167,47 @@ exports[`renders ./components/list/demo/basic.md correctly 1`] = `
 
 exports[`renders ./components/list/demo/grid.md correctly 1`] = `
 <div
-  class="ant-list ant-list-split ant-list-grid"
+  class="c7n-list c7n-list-split c7n-list-grid"
 >
   <div>
     <div
-      class="ant-spin-nested-loading"
+      class="c7n-spin-nested-loading"
     >
       <div
-        class="ant-spin-container"
+        class="c7n-spin-container"
       >
         <div
-          class="ant-row"
+          class="c7n-row"
           style="margin-left:-8px;margin-right:-8px"
         >
           <div
-            class="ant-col-6"
+            class="c7n-col-6"
           >
             <div
-              class="ant-list-item"
+              class="c7n-list-item"
               style="padding-left:8px;padding-right:8px"
             >
               <div
-                class="ant-list-item-content ant-list-item-content-single"
+                class="c7n-list-item-content c7n-list-item-content-single"
               >
                 <div
-                  class="ant-card ant-card-bordered"
+                  class="c7n-card c7n-card-bordered"
                 >
                   <div
-                    class="ant-card-head"
+                    class="c7n-card-head"
                   >
                     <div
-                      class="ant-card-head-wrapper"
+                      class="c7n-card-head-wrapper"
                     >
                       <div
-                        class="ant-card-head-title"
+                        class="c7n-card-head-title"
                       >
                         Title 1
                       </div>
                     </div>
                   </div>
                   <div
-                    class="ant-card-body"
+                    class="c7n-card-body"
                   >
                     Card content
                   </div>
@@ -216,33 +216,33 @@ exports[`renders ./components/list/demo/grid.md correctly 1`] = `
             </div>
           </div>
           <div
-            class="ant-col-6"
+            class="c7n-col-6"
           >
             <div
-              class="ant-list-item"
+              class="c7n-list-item"
               style="padding-left:8px;padding-right:8px"
             >
               <div
-                class="ant-list-item-content ant-list-item-content-single"
+                class="c7n-list-item-content c7n-list-item-content-single"
               >
                 <div
-                  class="ant-card ant-card-bordered"
+                  class="c7n-card c7n-card-bordered"
                 >
                   <div
-                    class="ant-card-head"
+                    class="c7n-card-head"
                   >
                     <div
-                      class="ant-card-head-wrapper"
+                      class="c7n-card-head-wrapper"
                     >
                       <div
-                        class="ant-card-head-title"
+                        class="c7n-card-head-title"
                       >
                         Title 2
                       </div>
                     </div>
                   </div>
                   <div
-                    class="ant-card-body"
+                    class="c7n-card-body"
                   >
                     Card content
                   </div>
@@ -251,33 +251,33 @@ exports[`renders ./components/list/demo/grid.md correctly 1`] = `
             </div>
           </div>
           <div
-            class="ant-col-6"
+            class="c7n-col-6"
           >
             <div
-              class="ant-list-item"
+              class="c7n-list-item"
               style="padding-left:8px;padding-right:8px"
             >
               <div
-                class="ant-list-item-content ant-list-item-content-single"
+                class="c7n-list-item-content c7n-list-item-content-single"
               >
                 <div
-                  class="ant-card ant-card-bordered"
+                  class="c7n-card c7n-card-bordered"
                 >
                   <div
-                    class="ant-card-head"
+                    class="c7n-card-head"
                   >
                     <div
-                      class="ant-card-head-wrapper"
+                      class="c7n-card-head-wrapper"
                     >
                       <div
-                        class="ant-card-head-title"
+                        class="c7n-card-head-title"
                       >
                         Title 3
                       </div>
                     </div>
                   </div>
                   <div
-                    class="ant-card-body"
+                    class="c7n-card-body"
                   >
                     Card content
                   </div>
@@ -286,33 +286,33 @@ exports[`renders ./components/list/demo/grid.md correctly 1`] = `
             </div>
           </div>
           <div
-            class="ant-col-6"
+            class="c7n-col-6"
           >
             <div
-              class="ant-list-item"
+              class="c7n-list-item"
               style="padding-left:8px;padding-right:8px"
             >
               <div
-                class="ant-list-item-content ant-list-item-content-single"
+                class="c7n-list-item-content c7n-list-item-content-single"
               >
                 <div
-                  class="ant-card ant-card-bordered"
+                  class="c7n-card c7n-card-bordered"
                 >
                   <div
-                    class="ant-card-head"
+                    class="c7n-card-head"
                   >
                     <div
-                      class="ant-card-head-wrapper"
+                      class="c7n-card-head-wrapper"
                     >
                       <div
-                        class="ant-card-head-title"
+                        class="c7n-card-head-title"
                       >
                         Title 4
                       </div>
                     </div>
                   </div>
                   <div
-                    class="ant-card-body"
+                    class="c7n-card-body"
                   >
                     Card content
                   </div>
@@ -333,17 +333,17 @@ exports[`renders ./components/list/demo/infinite-load.md correctly 1`] = `
 >
   <div>
     <div
-      class="ant-list ant-list-split"
+      class="c7n-list c7n-list-split"
     >
       <div>
         <div
-          class="ant-spin-nested-loading"
+          class="c7n-spin-nested-loading"
         >
           <div
-            class="ant-spin-container"
+            class="c7n-spin-container"
           >
             <div
-              class="ant-list-empty-text"
+              class="c7n-list-empty-text"
             >
               No data
             </div>
@@ -357,18 +357,17 @@ exports[`renders ./components/list/demo/infinite-load.md correctly 1`] = `
 
 exports[`renders ./components/list/demo/infinite-virtualized-load.md correctly 1`] = `
 <div
-  class="ant-list ant-list-split"
+  class="c7n-list c7n-list-split"
 >
   <div>
     <div
-      class="ant-spin"
+      class="c7n-spin"
     >
       <div
-        class="ant-progress ant-progress-loading ant-progress-status-normal ant-progress-show-info ant-progress-default ant-spin-dot"
+        class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-default c7n-spin-dot"
       >
         <div
-          class="ant-progress-inner"
-          style="width:30px;height:30px"
+          class="c7n-progress-inner"
         >
           <svg
             viewBox="0 0 50 50"
@@ -376,10 +375,7 @@ exports[`renders ./components/list/demo/infinite-virtualized-load.md correctly 1
             <circle
               cx="25"
               cy="25"
-              fill="none"
               r="20"
-              stroke="#3367d6"
-              stroke-width="4"
             />
           </svg>
         </div>
@@ -391,18 +387,17 @@ exports[`renders ./components/list/demo/infinite-virtualized-load.md correctly 1
 
 exports[`renders ./components/list/demo/loadmore.md correctly 1`] = `
 <div
-  class="ant-list demo-loadmore-list ant-list-split ant-list-loading ant-list-something-after-last-item"
+  class="c7n-list demo-loadmore-list c7n-list-split c7n-list-loading c7n-list-something-after-last-item"
 >
   <div>
     <div
-      class="ant-spin ant-spin-spinning"
+      class="c7n-spin c7n-spin-spinning"
     >
       <div
-        class="ant-progress ant-progress-loading ant-progress-status-normal ant-progress-show-info ant-progress-default ant-spin-dot"
+        class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-default c7n-spin-dot"
       >
         <div
-          class="ant-progress-inner"
-          style="width:30px;height:30px"
+          class="c7n-progress-inner"
         >
           <svg
             viewBox="0 0 50 50"
@@ -410,10 +405,7 @@ exports[`renders ./components/list/demo/loadmore.md correctly 1`] = `
             <circle
               cx="25"
               cy="25"
-              fill="none"
               r="20"
-              stroke="#3367d6"
-              stroke-width="4"
             />
           </svg>
         </div>
@@ -423,14 +415,14 @@ exports[`renders ./components/list/demo/loadmore.md correctly 1`] = `
       style="text-align:center;margin-top:12px;height:32px;line-height:32px"
     >
       <button
-        class="ant-btn ant-btn-flat"
+        class="c7n-btn c7n-btn-flat"
         type="button"
       >
         <span>
           loading more
         </span>
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </div>
@@ -440,47 +432,47 @@ exports[`renders ./components/list/demo/loadmore.md correctly 1`] = `
 
 exports[`renders ./components/list/demo/resposive.md correctly 1`] = `
 <div
-  class="ant-list ant-list-split ant-list-grid"
+  class="c7n-list c7n-list-split c7n-list-grid"
 >
   <div>
     <div
-      class="ant-spin-nested-loading"
+      class="c7n-spin-nested-loading"
     >
       <div
-        class="ant-spin-container"
+        class="c7n-spin-container"
       >
         <div
-          class="ant-row"
+          class="c7n-row"
           style="margin-left:-8px;margin-right:-8px"
         >
           <div
-            class="ant-col-xs-24 ant-col-sm-12 ant-col-md-6 ant-col-lg-6 ant-col-xl-4 ant-col-xxl-8"
+            class="c7n-col-xs-24 c7n-col-sm-12 c7n-col-md-6 c7n-col-lg-6 c7n-col-xl-4 c7n-col-xxl-8"
           >
             <div
-              class="ant-list-item"
+              class="c7n-list-item"
               style="padding-left:8px;padding-right:8px"
             >
               <div
-                class="ant-list-item-content ant-list-item-content-single"
+                class="c7n-list-item-content c7n-list-item-content-single"
               >
                 <div
-                  class="ant-card ant-card-bordered"
+                  class="c7n-card c7n-card-bordered"
                 >
                   <div
-                    class="ant-card-head"
+                    class="c7n-card-head"
                   >
                     <div
-                      class="ant-card-head-wrapper"
+                      class="c7n-card-head-wrapper"
                     >
                       <div
-                        class="ant-card-head-title"
+                        class="c7n-card-head-title"
                       >
                         Title 1
                       </div>
                     </div>
                   </div>
                   <div
-                    class="ant-card-body"
+                    class="c7n-card-body"
                   >
                     Card content
                   </div>
@@ -489,33 +481,33 @@ exports[`renders ./components/list/demo/resposive.md correctly 1`] = `
             </div>
           </div>
           <div
-            class="ant-col-xs-24 ant-col-sm-12 ant-col-md-6 ant-col-lg-6 ant-col-xl-4 ant-col-xxl-8"
+            class="c7n-col-xs-24 c7n-col-sm-12 c7n-col-md-6 c7n-col-lg-6 c7n-col-xl-4 c7n-col-xxl-8"
           >
             <div
-              class="ant-list-item"
+              class="c7n-list-item"
               style="padding-left:8px;padding-right:8px"
             >
               <div
-                class="ant-list-item-content ant-list-item-content-single"
+                class="c7n-list-item-content c7n-list-item-content-single"
               >
                 <div
-                  class="ant-card ant-card-bordered"
+                  class="c7n-card c7n-card-bordered"
                 >
                   <div
-                    class="ant-card-head"
+                    class="c7n-card-head"
                   >
                     <div
-                      class="ant-card-head-wrapper"
+                      class="c7n-card-head-wrapper"
                     >
                       <div
-                        class="ant-card-head-title"
+                        class="c7n-card-head-title"
                       >
                         Title 2
                       </div>
                     </div>
                   </div>
                   <div
-                    class="ant-card-body"
+                    class="c7n-card-body"
                   >
                     Card content
                   </div>
@@ -524,33 +516,33 @@ exports[`renders ./components/list/demo/resposive.md correctly 1`] = `
             </div>
           </div>
           <div
-            class="ant-col-xs-24 ant-col-sm-12 ant-col-md-6 ant-col-lg-6 ant-col-xl-4 ant-col-xxl-8"
+            class="c7n-col-xs-24 c7n-col-sm-12 c7n-col-md-6 c7n-col-lg-6 c7n-col-xl-4 c7n-col-xxl-8"
           >
             <div
-              class="ant-list-item"
+              class="c7n-list-item"
               style="padding-left:8px;padding-right:8px"
             >
               <div
-                class="ant-list-item-content ant-list-item-content-single"
+                class="c7n-list-item-content c7n-list-item-content-single"
               >
                 <div
-                  class="ant-card ant-card-bordered"
+                  class="c7n-card c7n-card-bordered"
                 >
                   <div
-                    class="ant-card-head"
+                    class="c7n-card-head"
                   >
                     <div
-                      class="ant-card-head-wrapper"
+                      class="c7n-card-head-wrapper"
                     >
                       <div
-                        class="ant-card-head-title"
+                        class="c7n-card-head-title"
                       >
                         Title 3
                       </div>
                     </div>
                   </div>
                   <div
-                    class="ant-card-body"
+                    class="c7n-card-body"
                   >
                     Card content
                   </div>
@@ -559,33 +551,33 @@ exports[`renders ./components/list/demo/resposive.md correctly 1`] = `
             </div>
           </div>
           <div
-            class="ant-col-xs-24 ant-col-sm-12 ant-col-md-6 ant-col-lg-6 ant-col-xl-4 ant-col-xxl-8"
+            class="c7n-col-xs-24 c7n-col-sm-12 c7n-col-md-6 c7n-col-lg-6 c7n-col-xl-4 c7n-col-xxl-8"
           >
             <div
-              class="ant-list-item"
+              class="c7n-list-item"
               style="padding-left:8px;padding-right:8px"
             >
               <div
-                class="ant-list-item-content ant-list-item-content-single"
+                class="c7n-list-item-content c7n-list-item-content-single"
               >
                 <div
-                  class="ant-card ant-card-bordered"
+                  class="c7n-card c7n-card-bordered"
                 >
                   <div
-                    class="ant-card-head"
+                    class="c7n-card-head"
                   >
                     <div
-                      class="ant-card-head-wrapper"
+                      class="c7n-card-head-wrapper"
                     >
                       <div
-                        class="ant-card-head-title"
+                        class="c7n-card-head-title"
                       >
                         Title 4
                       </div>
                     </div>
                   </div>
                   <div
-                    class="ant-card-body"
+                    class="c7n-card-body"
                   >
                     Card content
                   </div>
@@ -594,33 +586,33 @@ exports[`renders ./components/list/demo/resposive.md correctly 1`] = `
             </div>
           </div>
           <div
-            class="ant-col-xs-24 ant-col-sm-12 ant-col-md-6 ant-col-lg-6 ant-col-xl-4 ant-col-xxl-8"
+            class="c7n-col-xs-24 c7n-col-sm-12 c7n-col-md-6 c7n-col-lg-6 c7n-col-xl-4 c7n-col-xxl-8"
           >
             <div
-              class="ant-list-item"
+              class="c7n-list-item"
               style="padding-left:8px;padding-right:8px"
             >
               <div
-                class="ant-list-item-content ant-list-item-content-single"
+                class="c7n-list-item-content c7n-list-item-content-single"
               >
                 <div
-                  class="ant-card ant-card-bordered"
+                  class="c7n-card c7n-card-bordered"
                 >
                   <div
-                    class="ant-card-head"
+                    class="c7n-card-head"
                   >
                     <div
-                      class="ant-card-head-wrapper"
+                      class="c7n-card-head-wrapper"
                     >
                       <div
-                        class="ant-card-head-title"
+                        class="c7n-card-head-title"
                       >
                         Title 5
                       </div>
                     </div>
                   </div>
                   <div
-                    class="ant-card-body"
+                    class="c7n-card-body"
                   >
                     Card content
                   </div>
@@ -629,33 +621,33 @@ exports[`renders ./components/list/demo/resposive.md correctly 1`] = `
             </div>
           </div>
           <div
-            class="ant-col-xs-24 ant-col-sm-12 ant-col-md-6 ant-col-lg-6 ant-col-xl-4 ant-col-xxl-8"
+            class="c7n-col-xs-24 c7n-col-sm-12 c7n-col-md-6 c7n-col-lg-6 c7n-col-xl-4 c7n-col-xxl-8"
           >
             <div
-              class="ant-list-item"
+              class="c7n-list-item"
               style="padding-left:8px;padding-right:8px"
             >
               <div
-                class="ant-list-item-content ant-list-item-content-single"
+                class="c7n-list-item-content c7n-list-item-content-single"
               >
                 <div
-                  class="ant-card ant-card-bordered"
+                  class="c7n-card c7n-card-bordered"
                 >
                   <div
-                    class="ant-card-head"
+                    class="c7n-card-head"
                   >
                     <div
-                      class="ant-card-head-wrapper"
+                      class="c7n-card-head-wrapper"
                     >
                       <div
-                        class="ant-card-head-title"
+                        class="c7n-card-head-title"
                       >
                         Title 6
                       </div>
                     </div>
                   </div>
                   <div
-                    class="ant-card-body"
+                    class="c7n-card-body"
                   >
                     Card content
                   </div>
@@ -678,10 +670,10 @@ exports[`renders ./components/list/demo/simple.md correctly 1`] = `
     Default Size
   </h3>
   <div
-    class="ant-list ant-list-split ant-list-bordered ant-list-something-after-last-item"
+    class="c7n-list c7n-list-split c7n-list-bordered c7n-list-something-after-last-item"
   >
     <div
-      class="ant-list-header"
+      class="c7n-list-header"
     >
       <div>
         Header
@@ -689,52 +681,52 @@ exports[`renders ./components/list/demo/simple.md correctly 1`] = `
     </div>
     <div>
       <div
-        class="ant-spin-nested-loading"
+        class="c7n-spin-nested-loading"
       >
         <div
-          class="ant-spin-container"
+          class="c7n-spin-container"
         >
           <div
-            class="ant-list-item"
+            class="c7n-list-item"
           >
             <div
-              class="ant-list-item-content ant-list-item-content-single"
+              class="c7n-list-item-content c7n-list-item-content-single"
             >
               Racing car sprays burning fuel into crowd.
             </div>
           </div>
           <div
-            class="ant-list-item"
+            class="c7n-list-item"
           >
             <div
-              class="ant-list-item-content ant-list-item-content-single"
+              class="c7n-list-item-content c7n-list-item-content-single"
             >
               Japanese princess to wed commoner.
             </div>
           </div>
           <div
-            class="ant-list-item"
+            class="c7n-list-item"
           >
             <div
-              class="ant-list-item-content ant-list-item-content-single"
+              class="c7n-list-item-content c7n-list-item-content-single"
             >
               Australian walks 100km after outback crash.
             </div>
           </div>
           <div
-            class="ant-list-item"
+            class="c7n-list-item"
           >
             <div
-              class="ant-list-item-content ant-list-item-content-single"
+              class="c7n-list-item-content c7n-list-item-content-single"
             >
               Man charged over missing wedding girl.
             </div>
           </div>
           <div
-            class="ant-list-item"
+            class="c7n-list-item"
           >
             <div
-              class="ant-list-item-content ant-list-item-content-single"
+              class="c7n-list-item-content c7n-list-item-content-single"
             >
               Los Angeles battles huge wildfires.
             </div>
@@ -743,7 +735,7 @@ exports[`renders ./components/list/demo/simple.md correctly 1`] = `
       </div>
     </div>
     <div
-      class="ant-list-footer"
+      class="c7n-list-footer"
     >
       <div>
         Footer
@@ -756,10 +748,10 @@ exports[`renders ./components/list/demo/simple.md correctly 1`] = `
     Small Size
   </h3>
   <div
-    class="ant-list ant-list-sm ant-list-split ant-list-bordered ant-list-something-after-last-item"
+    class="c7n-list c7n-list-sm c7n-list-split c7n-list-bordered c7n-list-something-after-last-item"
   >
     <div
-      class="ant-list-header"
+      class="c7n-list-header"
     >
       <div>
         Header
@@ -767,52 +759,52 @@ exports[`renders ./components/list/demo/simple.md correctly 1`] = `
     </div>
     <div>
       <div
-        class="ant-spin-nested-loading"
+        class="c7n-spin-nested-loading"
       >
         <div
-          class="ant-spin-container"
+          class="c7n-spin-container"
         >
           <div
-            class="ant-list-item"
+            class="c7n-list-item"
           >
             <div
-              class="ant-list-item-content ant-list-item-content-single"
+              class="c7n-list-item-content c7n-list-item-content-single"
             >
               Racing car sprays burning fuel into crowd.
             </div>
           </div>
           <div
-            class="ant-list-item"
+            class="c7n-list-item"
           >
             <div
-              class="ant-list-item-content ant-list-item-content-single"
+              class="c7n-list-item-content c7n-list-item-content-single"
             >
               Japanese princess to wed commoner.
             </div>
           </div>
           <div
-            class="ant-list-item"
+            class="c7n-list-item"
           >
             <div
-              class="ant-list-item-content ant-list-item-content-single"
+              class="c7n-list-item-content c7n-list-item-content-single"
             >
               Australian walks 100km after outback crash.
             </div>
           </div>
           <div
-            class="ant-list-item"
+            class="c7n-list-item"
           >
             <div
-              class="ant-list-item-content ant-list-item-content-single"
+              class="c7n-list-item-content c7n-list-item-content-single"
             >
               Man charged over missing wedding girl.
             </div>
           </div>
           <div
-            class="ant-list-item"
+            class="c7n-list-item"
           >
             <div
-              class="ant-list-item-content ant-list-item-content-single"
+              class="c7n-list-item-content c7n-list-item-content-single"
             >
               Los Angeles battles huge wildfires.
             </div>
@@ -821,7 +813,7 @@ exports[`renders ./components/list/demo/simple.md correctly 1`] = `
       </div>
     </div>
     <div
-      class="ant-list-footer"
+      class="c7n-list-footer"
     >
       <div>
         Footer
@@ -834,10 +826,10 @@ exports[`renders ./components/list/demo/simple.md correctly 1`] = `
     Large Size
   </h3>
   <div
-    class="ant-list ant-list-lg ant-list-split ant-list-bordered ant-list-something-after-last-item"
+    class="c7n-list c7n-list-lg c7n-list-split c7n-list-bordered c7n-list-something-after-last-item"
   >
     <div
-      class="ant-list-header"
+      class="c7n-list-header"
     >
       <div>
         Header
@@ -845,52 +837,52 @@ exports[`renders ./components/list/demo/simple.md correctly 1`] = `
     </div>
     <div>
       <div
-        class="ant-spin-nested-loading"
+        class="c7n-spin-nested-loading"
       >
         <div
-          class="ant-spin-container"
+          class="c7n-spin-container"
         >
           <div
-            class="ant-list-item"
+            class="c7n-list-item"
           >
             <div
-              class="ant-list-item-content ant-list-item-content-single"
+              class="c7n-list-item-content c7n-list-item-content-single"
             >
               Racing car sprays burning fuel into crowd.
             </div>
           </div>
           <div
-            class="ant-list-item"
+            class="c7n-list-item"
           >
             <div
-              class="ant-list-item-content ant-list-item-content-single"
+              class="c7n-list-item-content c7n-list-item-content-single"
             >
               Japanese princess to wed commoner.
             </div>
           </div>
           <div
-            class="ant-list-item"
+            class="c7n-list-item"
           >
             <div
-              class="ant-list-item-content ant-list-item-content-single"
+              class="c7n-list-item-content c7n-list-item-content-single"
             >
               Australian walks 100km after outback crash.
             </div>
           </div>
           <div
-            class="ant-list-item"
+            class="c7n-list-item"
           >
             <div
-              class="ant-list-item-content ant-list-item-content-single"
+              class="c7n-list-item-content c7n-list-item-content-single"
             >
               Man charged over missing wedding girl.
             </div>
           </div>
           <div
-            class="ant-list-item"
+            class="c7n-list-item"
           >
             <div
-              class="ant-list-item-content ant-list-item-content-single"
+              class="c7n-list-item-content c7n-list-item-content-single"
             >
               Los Angeles battles huge wildfires.
             </div>
@@ -899,7 +891,7 @@ exports[`renders ./components/list/demo/simple.md correctly 1`] = `
       </div>
     </div>
     <div
-      class="ant-list-footer"
+      class="c7n-list-footer"
     >
       <div>
         Footer
@@ -911,32 +903,32 @@ exports[`renders ./components/list/demo/simple.md correctly 1`] = `
 
 exports[`renders ./components/list/demo/vertical.md correctly 1`] = `
 <div
-  class="ant-list ant-list-vertical ant-list-lg ant-list-split ant-list-something-after-last-item"
+  class="c7n-list c7n-list-vertical c7n-list-lg c7n-list-split c7n-list-something-after-last-item"
 >
   <div>
     <div
-      class="ant-spin-nested-loading"
+      class="c7n-spin-nested-loading"
     >
       <div
-        class="ant-spin-container"
+        class="c7n-spin-container"
       >
         <div
-          class="ant-list-item"
+          class="c7n-list-item"
         >
           <div
-            class="ant-list-item-extra-wrap"
+            class="c7n-list-item-extra-wrap"
           >
             <div
-              class="ant-list-item-main"
+              class="c7n-list-item-main"
             >
               <div
-                class="ant-list-item-meta"
+                class="c7n-list-item-meta"
               >
                 <div
-                  class="ant-list-item-meta-avatar"
+                  class="c7n-list-item-meta-avatar"
                 >
                   <span
-                    class="ant-avatar ant-avatar-circle ant-avatar-image"
+                    class="c7n-avatar c7n-avatar-circle c7n-avatar-image"
                   >
                     <img
                       src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
@@ -944,31 +936,31 @@ exports[`renders ./components/list/demo/vertical.md correctly 1`] = `
                   </span>
                 </div>
                 <div
-                  class="ant-list-item-meta-content"
+                  class="c7n-list-item-meta-content"
                 >
                   <h4
-                    class="ant-list-item-meta-title"
+                    class="c7n-list-item-meta-title"
                   >
                     <a
-                      href="http://ant.design"
+                      href="https://choerodon.github.io/choerodon-ui/"
                     >
-                      ant design part 0
+                      choerodon ui part 0
                     </a>
                   </h4>
                   <div
-                    class="ant-list-item-meta-description"
+                    class="c7n-list-item-meta-description"
                   >
-                    Ant Design, a design language for background applications, is refined by Ant UED Team.
+                    Choerodon UI, An enterprise-class UI design language and React-based implementation.
                   </div>
                 </div>
               </div>
               <div
-                class="ant-list-item-content"
+                class="c7n-list-item-content"
               >
                 We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.
               </div>
               <ul
-                class="ant-list-item-action"
+                class="c7n-list-item-action"
               >
                 <li>
                   <span>
@@ -979,7 +971,7 @@ exports[`renders ./components/list/demo/vertical.md correctly 1`] = `
                     156
                   </span>
                   <em
-                    class="ant-list-item-action-split"
+                    class="c7n-list-item-action-split"
                   />
                 </li>
                 <li>
@@ -991,7 +983,7 @@ exports[`renders ./components/list/demo/vertical.md correctly 1`] = `
                     156
                   </span>
                   <em
-                    class="ant-list-item-action-split"
+                    class="c7n-list-item-action-split"
                   />
                 </li>
                 <li>
@@ -1006,7 +998,7 @@ exports[`renders ./components/list/demo/vertical.md correctly 1`] = `
               </ul>
             </div>
             <div
-              class="ant-list-item-extra"
+              class="c7n-list-item-extra"
             >
               <img
                 alt="logo"
@@ -1017,22 +1009,22 @@ exports[`renders ./components/list/demo/vertical.md correctly 1`] = `
           </div>
         </div>
         <div
-          class="ant-list-item"
+          class="c7n-list-item"
         >
           <div
-            class="ant-list-item-extra-wrap"
+            class="c7n-list-item-extra-wrap"
           >
             <div
-              class="ant-list-item-main"
+              class="c7n-list-item-main"
             >
               <div
-                class="ant-list-item-meta"
+                class="c7n-list-item-meta"
               >
                 <div
-                  class="ant-list-item-meta-avatar"
+                  class="c7n-list-item-meta-avatar"
                 >
                   <span
-                    class="ant-avatar ant-avatar-circle ant-avatar-image"
+                    class="c7n-avatar c7n-avatar-circle c7n-avatar-image"
                   >
                     <img
                       src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
@@ -1040,31 +1032,31 @@ exports[`renders ./components/list/demo/vertical.md correctly 1`] = `
                   </span>
                 </div>
                 <div
-                  class="ant-list-item-meta-content"
+                  class="c7n-list-item-meta-content"
                 >
                   <h4
-                    class="ant-list-item-meta-title"
+                    class="c7n-list-item-meta-title"
                   >
                     <a
-                      href="http://ant.design"
+                      href="https://choerodon.github.io/choerodon-ui/"
                     >
-                      ant design part 1
+                      choerodon ui part 1
                     </a>
                   </h4>
                   <div
-                    class="ant-list-item-meta-description"
+                    class="c7n-list-item-meta-description"
                   >
-                    Ant Design, a design language for background applications, is refined by Ant UED Team.
+                    Choerodon UI, An enterprise-class UI design language and React-based implementation.
                   </div>
                 </div>
               </div>
               <div
-                class="ant-list-item-content"
+                class="c7n-list-item-content"
               >
                 We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.
               </div>
               <ul
-                class="ant-list-item-action"
+                class="c7n-list-item-action"
               >
                 <li>
                   <span>
@@ -1075,7 +1067,7 @@ exports[`renders ./components/list/demo/vertical.md correctly 1`] = `
                     156
                   </span>
                   <em
-                    class="ant-list-item-action-split"
+                    class="c7n-list-item-action-split"
                   />
                 </li>
                 <li>
@@ -1087,7 +1079,7 @@ exports[`renders ./components/list/demo/vertical.md correctly 1`] = `
                     156
                   </span>
                   <em
-                    class="ant-list-item-action-split"
+                    class="c7n-list-item-action-split"
                   />
                 </li>
                 <li>
@@ -1102,7 +1094,7 @@ exports[`renders ./components/list/demo/vertical.md correctly 1`] = `
               </ul>
             </div>
             <div
-              class="ant-list-item-extra"
+              class="c7n-list-item-extra"
             >
               <img
                 alt="logo"
@@ -1113,22 +1105,22 @@ exports[`renders ./components/list/demo/vertical.md correctly 1`] = `
           </div>
         </div>
         <div
-          class="ant-list-item"
+          class="c7n-list-item"
         >
           <div
-            class="ant-list-item-extra-wrap"
+            class="c7n-list-item-extra-wrap"
           >
             <div
-              class="ant-list-item-main"
+              class="c7n-list-item-main"
             >
               <div
-                class="ant-list-item-meta"
+                class="c7n-list-item-meta"
               >
                 <div
-                  class="ant-list-item-meta-avatar"
+                  class="c7n-list-item-meta-avatar"
                 >
                   <span
-                    class="ant-avatar ant-avatar-circle ant-avatar-image"
+                    class="c7n-avatar c7n-avatar-circle c7n-avatar-image"
                   >
                     <img
                       src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
@@ -1136,31 +1128,31 @@ exports[`renders ./components/list/demo/vertical.md correctly 1`] = `
                   </span>
                 </div>
                 <div
-                  class="ant-list-item-meta-content"
+                  class="c7n-list-item-meta-content"
                 >
                   <h4
-                    class="ant-list-item-meta-title"
+                    class="c7n-list-item-meta-title"
                   >
                     <a
-                      href="http://ant.design"
+                      href="https://choerodon.github.io/choerodon-ui/"
                     >
-                      ant design part 2
+                      choerodon ui part 2
                     </a>
                   </h4>
                   <div
-                    class="ant-list-item-meta-description"
+                    class="c7n-list-item-meta-description"
                   >
-                    Ant Design, a design language for background applications, is refined by Ant UED Team.
+                    Choerodon UI, An enterprise-class UI design language and React-based implementation.
                   </div>
                 </div>
               </div>
               <div
-                class="ant-list-item-content"
+                class="c7n-list-item-content"
               >
                 We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.
               </div>
               <ul
-                class="ant-list-item-action"
+                class="c7n-list-item-action"
               >
                 <li>
                   <span>
@@ -1171,7 +1163,7 @@ exports[`renders ./components/list/demo/vertical.md correctly 1`] = `
                     156
                   </span>
                   <em
-                    class="ant-list-item-action-split"
+                    class="c7n-list-item-action-split"
                   />
                 </li>
                 <li>
@@ -1183,7 +1175,7 @@ exports[`renders ./components/list/demo/vertical.md correctly 1`] = `
                     156
                   </span>
                   <em
-                    class="ant-list-item-action-split"
+                    class="c7n-list-item-action-split"
                   />
                 </li>
                 <li>
@@ -1198,7 +1190,7 @@ exports[`renders ./components/list/demo/vertical.md correctly 1`] = `
               </ul>
             </div>
             <div
-              class="ant-list-item-extra"
+              class="c7n-list-item-extra"
             >
               <img
                 alt="logo"
@@ -1209,22 +1201,22 @@ exports[`renders ./components/list/demo/vertical.md correctly 1`] = `
           </div>
         </div>
         <div
-          class="ant-list-item"
+          class="c7n-list-item"
         >
           <div
-            class="ant-list-item-extra-wrap"
+            class="c7n-list-item-extra-wrap"
           >
             <div
-              class="ant-list-item-main"
+              class="c7n-list-item-main"
             >
               <div
-                class="ant-list-item-meta"
+                class="c7n-list-item-meta"
               >
                 <div
-                  class="ant-list-item-meta-avatar"
+                  class="c7n-list-item-meta-avatar"
                 >
                   <span
-                    class="ant-avatar ant-avatar-circle ant-avatar-image"
+                    class="c7n-avatar c7n-avatar-circle c7n-avatar-image"
                   >
                     <img
                       src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
@@ -1232,31 +1224,31 @@ exports[`renders ./components/list/demo/vertical.md correctly 1`] = `
                   </span>
                 </div>
                 <div
-                  class="ant-list-item-meta-content"
+                  class="c7n-list-item-meta-content"
                 >
                   <h4
-                    class="ant-list-item-meta-title"
+                    class="c7n-list-item-meta-title"
                   >
                     <a
-                      href="http://ant.design"
+                      href="https://choerodon.github.io/choerodon-ui/"
                     >
-                      ant design part 3
+                      choerodon ui part 3
                     </a>
                   </h4>
                   <div
-                    class="ant-list-item-meta-description"
+                    class="c7n-list-item-meta-description"
                   >
-                    Ant Design, a design language for background applications, is refined by Ant UED Team.
+                    Choerodon UI, An enterprise-class UI design language and React-based implementation.
                   </div>
                 </div>
               </div>
               <div
-                class="ant-list-item-content"
+                class="c7n-list-item-content"
               >
                 We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.
               </div>
               <ul
-                class="ant-list-item-action"
+                class="c7n-list-item-action"
               >
                 <li>
                   <span>
@@ -1267,7 +1259,7 @@ exports[`renders ./components/list/demo/vertical.md correctly 1`] = `
                     156
                   </span>
                   <em
-                    class="ant-list-item-action-split"
+                    class="c7n-list-item-action-split"
                   />
                 </li>
                 <li>
@@ -1279,7 +1271,7 @@ exports[`renders ./components/list/demo/vertical.md correctly 1`] = `
                     156
                   </span>
                   <em
-                    class="ant-list-item-action-split"
+                    class="c7n-list-item-action-split"
                   />
                 </li>
                 <li>
@@ -1294,7 +1286,7 @@ exports[`renders ./components/list/demo/vertical.md correctly 1`] = `
               </ul>
             </div>
             <div
-              class="ant-list-item-extra"
+              class="c7n-list-item-extra"
             >
               <img
                 alt="logo"
@@ -1305,22 +1297,22 @@ exports[`renders ./components/list/demo/vertical.md correctly 1`] = `
           </div>
         </div>
         <div
-          class="ant-list-item"
+          class="c7n-list-item"
         >
           <div
-            class="ant-list-item-extra-wrap"
+            class="c7n-list-item-extra-wrap"
           >
             <div
-              class="ant-list-item-main"
+              class="c7n-list-item-main"
             >
               <div
-                class="ant-list-item-meta"
+                class="c7n-list-item-meta"
               >
                 <div
-                  class="ant-list-item-meta-avatar"
+                  class="c7n-list-item-meta-avatar"
                 >
                   <span
-                    class="ant-avatar ant-avatar-circle ant-avatar-image"
+                    class="c7n-avatar c7n-avatar-circle c7n-avatar-image"
                   >
                     <img
                       src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
@@ -1328,31 +1320,31 @@ exports[`renders ./components/list/demo/vertical.md correctly 1`] = `
                   </span>
                 </div>
                 <div
-                  class="ant-list-item-meta-content"
+                  class="c7n-list-item-meta-content"
                 >
                   <h4
-                    class="ant-list-item-meta-title"
+                    class="c7n-list-item-meta-title"
                   >
                     <a
-                      href="http://ant.design"
+                      href="https://choerodon.github.io/choerodon-ui/"
                     >
-                      ant design part 4
+                      choerodon ui part 4
                     </a>
                   </h4>
                   <div
-                    class="ant-list-item-meta-description"
+                    class="c7n-list-item-meta-description"
                   >
-                    Ant Design, a design language for background applications, is refined by Ant UED Team.
+                    Choerodon UI, An enterprise-class UI design language and React-based implementation.
                   </div>
                 </div>
               </div>
               <div
-                class="ant-list-item-content"
+                class="c7n-list-item-content"
               >
                 We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.
               </div>
               <ul
-                class="ant-list-item-action"
+                class="c7n-list-item-action"
               >
                 <li>
                   <span>
@@ -1363,7 +1355,7 @@ exports[`renders ./components/list/demo/vertical.md correctly 1`] = `
                     156
                   </span>
                   <em
-                    class="ant-list-item-action-split"
+                    class="c7n-list-item-action-split"
                   />
                 </li>
                 <li>
@@ -1375,7 +1367,7 @@ exports[`renders ./components/list/demo/vertical.md correctly 1`] = `
                     156
                   </span>
                   <em
-                    class="ant-list-item-action-split"
+                    class="c7n-list-item-action-split"
                   />
                 </li>
                 <li>
@@ -1390,7 +1382,7 @@ exports[`renders ./components/list/demo/vertical.md correctly 1`] = `
               </ul>
             </div>
             <div
-              class="ant-list-item-extra"
+              class="c7n-list-item-extra"
             >
               <img
                 alt="logo"
@@ -1403,44 +1395,44 @@ exports[`renders ./components/list/demo/vertical.md correctly 1`] = `
       </div>
     </div>
     <div
-      class="ant-list-pagination"
+      class="c7n-list-pagination"
     >
       <ul
-        class="ant-pagination ant-pagination-tiny"
+        class="c7n-pagination c7n-pagination-tiny"
         unselectable="unselectable"
       >
         <li
-          class="ant-pagination-options"
+          class="c7n-pagination-options"
         >
           <span
-            class="ant-pagination-options-label"
+            class="c7n-pagination-options-label"
           >
             Items / page
           </span>
           <div
-            class="ant-pagination-options-size-changer ant-select ant-select-has-value ant-select-enabled"
+            class="c7n-pagination-options-size-changer c7n-select c7n-select-has-value c7n-select-enabled"
           >
             <div
               aria-autocomplete="list"
               aria-expanded="false"
               aria-haspopup="true"
-              class="ant-select-selection
-            ant-select-selection--single"
+              class="c7n-select-selection
+            c7n-select-selection--single"
               role="combobox"
               tabindex="0"
             >
               <div
-                class="ant-select-selection__rendered"
+                class="c7n-select-selection__rendered"
               >
                 <div
-                  class="ant-select-selection-selected-value"
+                  class="c7n-select-selection-selected-value"
                   style="opacity:1"
                   title="10"
                 >
                   10
                 </div>
                 <span
-                  class="ant-select-arrow"
+                  class="c7n-select-arrow"
                   style="user-select:none;-webkit-user-select:none"
                   unselectable="unselectable"
                 >
@@ -1452,26 +1444,26 @@ exports[`renders ./components/list/demo/vertical.md correctly 1`] = `
               </div>
             </div>
             <div
-              class="ant-select-underline"
+              class="c7n-select-underline"
             >
               <span
-                class="ant-select-ripple"
+                class="c7n-select-ripple"
               />
             </div>
           </div>
         </li>
         <li
-          class="ant-pagination-total-text"
+          class="c7n-pagination-total-text"
         >
           1 - 5 / 5
         </li>
         <li
           aria-disabled="true"
-          class="ant-pagination-disabled ant-pagination-first"
+          class="c7n-pagination-disabled c7n-pagination-first"
           title="First Page"
         >
           <button
-            class="ant-btn ant-btn-circle ant-btn-icon-only ant-btn-flat"
+            class="c7n-btn c7n-btn-circle c7n-btn-icon-only c7n-btn-flat"
             disabled=""
             type="button"
           >
@@ -1479,17 +1471,17 @@ exports[`renders ./components/list/demo/vertical.md correctly 1`] = `
               class="icon icon-first_page"
             />
             <div
-              class="ant-ripple-wrapper"
+              class="c7n-ripple-wrapper"
             />
           </button>
         </li>
         <li
           aria-disabled="true"
-          class="ant-pagination-disabled ant-pagination-prev"
+          class="c7n-pagination-disabled c7n-pagination-prev"
           title="Previous Page"
         >
           <button
-            class="ant-btn ant-btn-circle ant-btn-icon-only ant-btn-flat"
+            class="c7n-btn c7n-btn-circle c7n-btn-icon-only c7n-btn-flat"
             disabled=""
             type="button"
           >
@@ -1497,17 +1489,17 @@ exports[`renders ./components/list/demo/vertical.md correctly 1`] = `
               class="icon icon-navigate_before"
             />
             <div
-              class="ant-ripple-wrapper"
+              class="c7n-ripple-wrapper"
             />
           </button>
         </li>
         <li
           aria-disabled="true"
-          class="ant-pagination-disabled ant-pagination-next"
+          class="c7n-pagination-disabled c7n-pagination-next"
           title="Next Page"
         >
           <button
-            class="ant-btn ant-btn-circle ant-btn-icon-only ant-btn-flat"
+            class="c7n-btn c7n-btn-circle c7n-btn-icon-only c7n-btn-flat"
             disabled=""
             type="button"
           >
@@ -1515,17 +1507,17 @@ exports[`renders ./components/list/demo/vertical.md correctly 1`] = `
               class="icon icon-navigate_next"
             />
             <div
-              class="ant-ripple-wrapper"
+              class="c7n-ripple-wrapper"
             />
           </button>
         </li>
         <li
           aria-disabled="true"
-          class="ant-pagination-disabled ant-pagination-last"
+          class="c7n-pagination-disabled c7n-pagination-last"
           title="Last Page"
         >
           <button
-            class="ant-btn ant-btn-circle ant-btn-icon-only ant-btn-flat"
+            class="c7n-btn c7n-btn-circle c7n-btn-icon-only c7n-btn-flat"
             disabled=""
             type="button"
           >
@@ -1533,7 +1525,7 @@ exports[`renders ./components/list/demo/vertical.md correctly 1`] = `
               class="icon icon-last_page"
             />
             <div
-              class="ant-ripple-wrapper"
+              class="c7n-ripple-wrapper"
             />
           </button>
         </li>

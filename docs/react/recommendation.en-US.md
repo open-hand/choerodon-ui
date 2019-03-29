@@ -3,8 +3,7 @@ order: 7
 title: Third-Party Libraries
 ---
 
-`antd` is designed to provide high-quality React UI components which follow the Ant Design Specification. So, we are not going to implement other functions which are not relative to `antd`'s target, and recommend using the excellent third-party library which have come from the React community:
-
+`choerodon-ui` is Choerodon's UI component library, as well as the enterprise-level component library `choerodon-ui/pro`. In order to minimize the need to build wheels, we recommend using the excellent implementations of the following communities to complement choerodon-ui:
 Category | Recommended Components
 ---------|-----------------------
 Router | [react-router](https://github.com/ReactTraining/react-router)

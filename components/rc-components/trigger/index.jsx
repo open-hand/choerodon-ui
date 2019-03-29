@@ -1,15 +1,13 @@
-import React from 'react';
+import React, { Children, cloneElement, Component } from 'react';
 import PropTypes from 'prop-types';
-import { findDOMNode, createPortal } from 'react-dom';
+import { createPortal, findDOMNode } from 'react-dom';
+import noop from 'lodash/noop';
 import contains from '../util/Dom/contains';
-import addEventListener from '../util/Dom/addEventListener';
+import addEventListener from '../../_util/addEventListener';
 import Popup from './Popup';
 import { getAlignFromPlacement, getPopupClassNameFromAlign } from './utils';
 import ContainerRender from '../util/ContainerRender';
 import Portal from '../util/Portal';
-
-function noop() {
-}
 
 function returnEmptyString() {
   return '';
@@ -24,7 +22,7 @@ const ALL_HANDLERS = ['onClick', 'onMouseDown', 'onTouchStart', 'onMouseEnter',
 
 const IS_REACT_16 = !!createPortal;
 
-export default class Trigger extends React.Component {
+export default class Trigger extends Component {
   static propTypes = {
     children: PropTypes.any,
     action: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
@@ -148,7 +146,6 @@ export default class Trigger extends React.Component {
     this.prevPopupVisible = prevState.popupVisible;
 
     // We must listen to `mousedown` or `touchstart`, edge case:
-    // https://github.com/ant-design/ant-design/issues/5804
     // https://github.com/react-component/calendar/issues/250
     // https://github.com/react-component/trigger/issues/50
     if (state.popupVisible) {
@@ -307,7 +304,7 @@ export default class Trigger extends React.Component {
     }
   };
 
-  getPopupClassNameFromAlign = (align) => {
+  getPopupClassFromAlign = (align) => {
     const className = [];
     const props = this.props;
     const { popupPlacement, builtinPlacements, prefixCls } = props;
@@ -357,7 +354,7 @@ export default class Trigger extends React.Component {
         align={align}
         onAlign={onPopupAlign}
         animation={popupAnimation}
-        getClassNameFromAlign={this.getPopupClassNameFromAlign}
+        getClassNameFromAlign={this.getPopupClassFromAlign}
         {...mouseProps}
         stretch={stretch}
         getRootDomNode={this.getRootDomNode}
@@ -383,8 +380,7 @@ export default class Trigger extends React.Component {
     popupContainer.style.top = '0';
     popupContainer.style.left = '0';
     popupContainer.style.width = '100%';
-    const mountNode = props.getPopupContainer ?
-      props.getPopupContainer(findDOMNode(this)) : props.getDocument().body;
+    const mountNode = props.getPopupContainer ? props.getPopupContainer(findDOMNode(this)) : props.getDocument().body;
     mountNode.appendChild(popupContainer);
     return popupContainer;
   };
@@ -522,7 +518,7 @@ export default class Trigger extends React.Component {
     const { popupVisible } = this.state;
     const props = this.props;
     const children = props.children;
-    const child = React.Children.only(children);
+    const child = Children.only(children);
     const newChildProps = { key: 'trigger' };
 
     if (this.isContextMenuToShow()) {
@@ -558,7 +554,7 @@ export default class Trigger extends React.Component {
       newChildProps.onBlur = this.createTwoChains('onBlur');
     }
 
-    const trigger = React.cloneElement(child, newChildProps);
+    const trigger = cloneElement(child, newChildProps);
 
     if (!IS_REACT_16) {
       return (

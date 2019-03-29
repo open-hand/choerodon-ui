@@ -1,7 +1,7 @@
 @import "../../style/themes/default";
 @import "../../style/mixins/index";
 
-@full-calendar-prefix-cls: ~"@{ant-prefix}-fullcalendar";
+@full-calendar-prefix-cls: ~"@{c7n-prefix}-fullcalendar";
 
 .@{full-calendar-prefix-cls} {
   .reset-component;
@@ -9,26 +9,26 @@
   border-top: @border-width-base @border-style-base @border-color-base;
 
   &-month-select {
-    margin-left: 5px;
+    margin-left: .05rem;
   }
 
   &-header {
-    padding: 11px 16px 11px 0;
+    padding: .11rem .16rem .11rem 0;
     text-align: right;
 
-    .@{ant-prefix}-select-dropdown {
+    .@{c7n-prefix}-select-dropdown {
       text-align: left;
     }
 
-    .@{ant-prefix}-radio-group {
-      margin-left: 8px;
+    .@{c7n-prefix}-radio-group {
+      margin-left: .08rem;
       text-align: left;
     }
 
-    label.@{ant-prefix}-radio-button {
-      height: 22px;
-      line-height: 20px;
-      padding: 0 10px;
+    label.@{c7n-prefix}-radio-button {
+      height: .22rem;
+      line-height: .2rem;
+      padding: 0 .1rem;
     }
   }
 
@@ -38,7 +38,7 @@
   }
 
   &-calendar-body {
-    padding: 8px 12px;
+    padding: .08rem .12rem;
   }
 
   table {
@@ -46,7 +46,7 @@
     max-width: 100%;
     background-color: transparent;
     width: 100%;
-    height: 256px;
+    height: 2.56rem;
   }
 
   table,
@@ -65,9 +65,9 @@
   }
 
   &-column-header {
-    line-height: 18px;
+    line-height: .18rem;
     padding: 0;
-    width: 33px;
+    width: .33rem;
     text-align: center;
     .@{full-calendar-prefix-cls}-column-header-inner {
       display: block;
@@ -92,11 +92,11 @@
     margin: 0 auto;
     color: @text-color;
     border-radius: @border-radius-sm;
-    width: 24px;
-    height: 24px;
+    width: .24rem;
+    height: .24rem;
     padding: 0;
     background: transparent;
-    line-height: 24px;
+    line-height: .24rem;
     transition: all .3s;
 
     &:hover {
@@ -111,12 +111,12 @@
   }
 
   &-month-panel-cell &-value {
-    width: 48px;
+    width: .48rem;
   }
 
   &-today &-value,
   &-month-panel-current-cell &-value {
-    box-shadow: 0 0 0 1px @primary-color inset;
+    box-shadow: 0 0 0 .01rem @primary-color inset;
   }
 
   &-selected-day &-value,
@@ -150,7 +150,7 @@
     position: absolute;
     width: 100%;
     left: 0;
-    bottom: -9px;
+    bottom: -.09rem;
   }
 
   &-fullscreen {
@@ -162,24 +162,24 @@
   }
 
   &-fullscreen &-header {
-    .@{ant-prefix}-radio-group {
-      margin-left: 16px;
+    .@{c7n-prefix}-radio-group {
+      margin-left: .16rem;
     }
-    label.@{ant-prefix}-radio-button {
+    label.@{c7n-prefix}-radio-button {
       height: @input-height-base;
-      line-height: @input-height-base - 2px;
+      line-height: @input-height-base - .02rem;
     }
   }
 
   &-fullscreen &-month,
   &-fullscreen &-date {
     text-align: left;
-    margin: 0 4px;
+    margin: 0 .04rem;
     display: block;
     color: @text-color;
-    height: 116px;
-    padding: 4px 8px;
-    border-top: 2px solid @border-color-split;
+    height: 1.16rem;
+    padding: .04rem .08rem;
+    border-top: .02rem solid @border-color-split;
     transition: background .3s;
 
     &:hover {
@@ -194,8 +194,8 @@
 
   &-fullscreen &-column-header {
     text-align: right;
-    padding-right: 12px;
-    padding-bottom: 5px;
+    padding-right: .12rem;
+    padding-bottom: .05rem;
   }
 
   &-fullscreen &-value {
@@ -235,7 +235,7 @@
   }
 
   &-fullscreen &-content {
-    height: 90px;
+    height: .9rem;
     overflow-y: auto;
     position: static;
     width: auto;

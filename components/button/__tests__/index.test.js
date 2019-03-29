@@ -28,24 +28,6 @@ describe('Button', () => {
     expect(wrapper2).toMatchSnapshot();
   });
 
-  // it('renders Chinese characters correctly in HOC', () => {
-  //   const Text = props => <span>{props.children}</span>;
-  //   const wrapper = mount(
-  //     <Button><Text>按钮</Text></Button>
-  //   );
-  //   expect(wrapper.find('.ant-btn').hasClass('ant-btn-two-chinese-chars')).toBe(true);
-  //   wrapper.setProps({
-  //     children: <Text>大按钮</Text>,
-  //   });
-  //   wrapper.update();
-  //   expect(wrapper.find('.ant-btn').hasClass('ant-btn-two-chinese-chars')).toBe(false);
-  //   wrapper.setProps({
-  //     children: <Text>按钮</Text>,
-  //   });
-  //   wrapper.update();
-  //   expect(wrapper.find('.ant-btn').hasClass('ant-btn-two-chinese-chars')).toBe(true);
-  // });
-
   it('have static perperty for type detecting', () => {
     const wrapper = mount(
       <Button>Button Text</Button>
@@ -56,7 +38,7 @@ describe('Button', () => {
 
   it('should support link button', () => {
     const wrapper = mount(
-      <Button target="_blank" href="http://ant.design">link button</Button>
+      <Button target="_blank" href="https://choerodon.github.io/choerodon-ui/">link button</Button>
     );
     expect(wrapper.render()).toMatchSnapshot();
   });

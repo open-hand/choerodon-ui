@@ -11,7 +11,7 @@ import EditButton from './EditButton';
 export default class ComponentDoc extends React.Component {
   static contextTypes = {
     intl: PropTypes.object,
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -24,7 +24,7 @@ export default class ComponentDoc extends React.Component {
   handleExpandToggle = () => {
     const { expandAll } = this.state;
     this.setState({ expandAll });
-  }
+  };
 
   render() {
     const { props } = this;
@@ -76,7 +76,7 @@ export default class ComponentDoc extends React.Component {
 
     const { title, subtitle, filename } = meta;
     return (
-      <DocumentTitle title={`${subtitle || ''} ${title[locale] || title} - Ant Design`}>
+      <DocumentTitle title={`${subtitle || ''} ${title[locale] || title} - Choerodon UI`}>
         <article>
           <Affix className="toc-affix" offsetTop={16}>
             <ul id="demo-toc" className="toc">
@@ -94,7 +94,7 @@ export default class ComponentDoc extends React.Component {
             {
               props.utils.toReactComponent(
                 ['section', { className: 'markdown' }]
-                  .concat(getChildren(content))
+                  .concat(getChildren(content)),
               )
             }
             <h2>
@@ -124,7 +124,7 @@ export default class ComponentDoc extends React.Component {
             props.utils.toReactComponent(
               ['section', {
                 className: 'markdown api-container',
-              }].concat(getChildren(doc.api || ['placeholder']))
+              }].concat(getChildren(doc.api || ['placeholder'])),
             )
           }
         </article>

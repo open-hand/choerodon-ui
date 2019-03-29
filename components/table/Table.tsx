@@ -1,8 +1,8 @@
-import * as React from 'react';
-import { SyntheticEvent } from 'react';
-import * as ReactDOM from 'react-dom';
+import React, { Component, ReactChildren, ReactNode, SyntheticEvent } from 'react';
+import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import noop from 'lodash/noop';
 import Pagination from '../pagination';
 import Icon from '../icon';
 import Spin, { SpinProps } from '../spin';
@@ -34,18 +34,18 @@ import { CheckboxChangeEvent } from '../checkbox';
 import FilterBar from './FilterBar';
 import { VALUE_OR } from './FilterSelect';
 import RcTable from '../rc-components/table';
+import { Size } from '../_util/enum';
+import { getPrefixCls } from '../configure';
 
-function noop() {
-}
-
-function findBodyDom(dom: Element | HTMLDivElement): any {
+function findBodyDom(dom: Element | HTMLDivElement, reg: RegExp): any {
   if (dom.childElementCount > 0) {
     for (let i = 0; i < dom.childElementCount; i += 1) {
-      if (/ant-table-body/.test(dom.children[i].className)) {
+      if (reg.test(dom.children[i].className)) {
         return dom.children[i];
       } else if (dom.childElementCount > 0) {
-        if (findBodyDom(dom.children[i]) !== null) {
-          return findBodyDom(dom.children[i]);
+        const childFound = findBodyDom(dom.children[i], reg);
+        if (childFound !== null) {
+          return childFound;
         }
       }
     }
@@ -53,7 +53,7 @@ function findBodyDom(dom: Element | HTMLDivElement): any {
   return null;
 }
 
-function stopPropagation(e: React.SyntheticEvent<any>) {
+function stopPropagation(e: SyntheticEvent<any>) {
   e.stopPropagation();
   if (e.nativeEvent.stopImmediatePropagation) {
     e.nativeEvent.stopImmediatePropagation();
@@ -71,7 +71,8 @@ const defaultPagination = {
  */
 const emptyObject = {};
 
-export default class Table<T> extends React.Component<TableProps<T>, TableState<T>> {
+export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
+  static displayName = 'Table';
   static Column = Column;
   static ColumnGroup = ColumnGroup;
 
@@ -84,7 +85,7 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
     useFixedHeader: PropTypes.bool,
     rowSelection: PropTypes.object,
     className: PropTypes.string,
-    size: PropTypes.string,
+    size: PropTypes.oneOf([Size.large, Size.default, Size.small]),
     loading: PropTypes.oneOfType([
       PropTypes.bool,
       PropTypes.object,
@@ -104,11 +105,10 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
   static defaultProps = {
     dataSource: [],
     empty: null,
-    prefixCls: 'ant-table',
     useFixedHeader: false,
     rowSelection: null,
     className: '',
-    size: 'middle',
+    size: Size.default,
     loading: false,
     bordered: false,
     indentSize: 20,
@@ -133,11 +133,10 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
 
     warning(
       !('columnsPageRange' in props || 'columnsPageSize' in props),
-      '`columnsPageRange` and `columnsPageSize` are removed, please use ' +
-      'fixed columns instead, see: https://u.ant.design/fixed-columns.',
+      '`columnsPageRange` and `columnsPageSize` are removed, please use fixed columns instead',
     );
 
-    this.columns = props.columns || normalizeColumns(props.children as React.ReactChildren);
+    this.columns = props.columns || normalizeColumns(props.children as ReactChildren);
 
     this.createComponents(props.components);
 
@@ -157,6 +156,10 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
     });
   }
 
+  saveRef = ref => {
+    this.refTable = ref;
+  };
+
   getCheckboxPropsByItem = (item: T, index: number) => {
     const { rowSelection = {} } = this.props;
     if (!rowSelection.getCheckboxProps) {
@@ -169,6 +172,10 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
     }
     return this.CheckboxPropsCache[key];
   };
+
+  getPrefixCls() {
+    return getPrefixCls('table', this.props.prefixCls);
+  }
 
   getDefaultSelection() {
     const { rowSelection = {} } = this.props;
@@ -193,7 +200,7 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
   }
 
   componentWillReceiveProps(nextProps: TableProps<T>) {
-    this.columns = nextProps.columns || normalizeColumns(nextProps.children as React.ReactChildren);
+    this.columns = nextProps.columns || normalizeColumns(nextProps.children as ReactChildren);
     if ('pagination' in nextProps || 'pagination' in this.props) {
       this.setState(previousState => {
         const newPagination = {
@@ -257,7 +264,8 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
   }
 
   onRow = (record: T, index: number) => {
-    const { onRow, prefixCls } = this.props;
+    const { onRow } = this.props;
+    const prefixCls = this.getPrefixCls();
     const custom = onRow ? onRow(record, index) : {};
     return {
       ...custom,
@@ -646,7 +654,7 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
         }
       }, 10);
       if (this.refTable) {
-        const dom = findBodyDom(this.refTable);
+        const dom = findBodyDom(this.refTable, new RegExp(`${this.getPrefixCls()}-body`));
         if (dom !== null && dom.scroll) {
           dom.scrollTop = 0;
         }
@@ -716,18 +724,18 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
     const recordKey = (typeof rowKey === 'function') ?
       rowKey(record, index) : (record as any)[rowKey as string];
     warning(recordKey !== undefined,
-      'Each record in dataSource of table should have a unique `key` prop, or set `rowKey` to an unique primary key,' +
-      'see https://u.ant.design/table-row-key',
+      'Each record in dataSource of table should have a unique `key` prop, or set `rowKey` to an unique primary key',
     );
     return recordKey === undefined ? index : recordKey;
   };
 
   getPopupContainer = () => {
-    return ReactDOM.findDOMNode(this) as HTMLElement;
+    return findDOMNode(this) as HTMLElement;
   };
 
   renderRowSelection(locale: TableLocale) {
-    const { prefixCls, rowSelection } = this.props;
+    const { rowSelection } = this.props;
+    const prefixCls = this.getPrefixCls();
     const columns = this.columns.concat();
     if (rowSelection) {
       const data = this.getFlatCurrentPageData().filter((item, index) => {
@@ -799,7 +807,9 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
   }
 
   renderColumnsDropdown(columns: ColumnProps<T>[], locale: TableLocale) {
-    const { prefixCls, dropdownPrefixCls, filterBar } = this.props;
+    const { dropdownPrefixCls: customizeDropdownPrefixCls, filterBar } = this.props;
+    const prefixCls = this.getPrefixCls();
+    const dropdownPrefixCls = getPrefixCls('dropdown', customizeDropdownPrefixCls);
     const { sortOrder } = this.state;
     return treeMap(columns, (originColumn, i) => {
       let column = { ...originColumn };
@@ -815,7 +825,7 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
             selectedKeys={colFilters}
             confirmFilter={this.handleFilter}
             prefixCls={`${prefixCls}-filter`}
-            dropdownPrefixCls={dropdownPrefixCls || 'ant-dropdown'}
+            dropdownPrefixCls={dropdownPrefixCls}
             getPopupContainer={this.getPopupContainer}
           />
         );
@@ -889,23 +899,18 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
     if (!this.hasPagination()) {
       return null;
     }
-    let size = 'default';
     const { pagination } = this.state;
-    if (pagination.size) {
-      size = pagination.size;
-    } else if (this.props.size as string === 'middle' || this.props.size === 'small') {
-      size = 'small';
-    }
+    const prefixCls = this.getPrefixCls();
     let position = pagination.position || 'bottom';
     let total = pagination.total || this.getLocalData().length;
     return (total > 0 && (position === paginationPosition || position === 'both')) ? (
       <Pagination
         key={`pagination-${paginationPosition}`}
         {...pagination}
-        className={classNames(pagination.className, `${this.props.prefixCls}-pagination`)}
+        className={classNames(pagination.className, `${prefixCls}-pagination`)}
         onChange={this.handlePageChange}
         total={total}
-        size={size}
+        size={pagination.size || this.props.size}
         current={this.getMaxCurrent(total)}
         onShowSizeChange={this.handleShowSizeChange}
       />
@@ -1061,9 +1066,10 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
     }
   }
 
-  renderTable = (contextLocale: TableLocale, loading: SpinProps): React.ReactNode => {
+  renderTable = (contextLocale: TableLocale, loading: SpinProps): ReactNode => {
     const locale = { ...contextLocale, ...this.props.locale };
-    const { filterBarMultiple, prefixCls, filterBarPlaceholder, showHeader, filterBar, dataSource, filters, empty, ...restProps } = this.props;
+    const { filterBarMultiple, filterBarPlaceholder, showHeader, filterBar, dataSource, filters, empty, ...restProps } = this.props;
+    const prefixCls = this.getPrefixCls();
     const data = this.getCurrentPageData();
     const expandIconAsCell = this.props.expandedRowRender && this.props.expandIconAsCell !== false;
 
@@ -1128,7 +1134,8 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
   };
 
   render() {
-    const { style, className, prefixCls } = this.props;
+    const { style, className } = this.props;
+    const prefixCls = this.getPrefixCls();
     const data = this.getCurrentPageData();
 
     let loading = this.props.loading as SpinProps;
@@ -1156,7 +1163,7 @@ export default class Table<T> extends React.Component<TableProps<T>, TableState<
       <div
         className={classNames(`${prefixCls}-wrapper`, className)}
         style={style}
-        ref={ref => { this.refTable = ref; }}
+        ref={this.saveRef}
       >
         <Spin
           {...loading}

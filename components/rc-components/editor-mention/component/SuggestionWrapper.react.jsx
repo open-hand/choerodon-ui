@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { createPortal, unstable_renderSubtreeIntoContainer } from 'react-dom';
 
 const IS_REACT_16 = !!createPortal;
 
-export default class SuggestionWrapper extends React.Component {
+export default class SuggestionWrapper extends Component {
+  static propTypes = {
+    children: PropTypes.any,
+    renderReady: PropTypes.func,
+    container: PropTypes.any,
+  };
+
   componentDidMount() {
     this.renderOrReady();
   }
@@ -31,7 +37,7 @@ export default class SuggestionWrapper extends React.Component {
         if (renderReady) {
           renderReady.call(this);
         }
-    });
+      });
   }
 
   render() {
@@ -42,9 +48,3 @@ export default class SuggestionWrapper extends React.Component {
     return null;
   }
 }
-
-SuggestionWrapper.propTypes = {
-  children: PropTypes.any,
-  renderReady: PropTypes.func,
-  container: PropTypes.any,
-};

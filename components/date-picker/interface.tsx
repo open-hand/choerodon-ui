@@ -1,6 +1,7 @@
-import * as React from 'react';
-import * as moment from 'moment';
+import { ClassicComponentClass, CSSProperties, ReactNode } from 'react';
+import { Moment } from 'moment';
 import { TimePickerProps } from '../time-picker';
+import { Size } from '../_util/enum';
 
 export interface PickerProps {
   id?: number | string;
@@ -10,24 +11,24 @@ export interface PickerProps {
   disabled?: boolean;
   allowClear?: boolean;
   className?: string;
-  style?: React.CSSProperties;
-  popupStyle?: React.CSSProperties;
+  style?: CSSProperties;
+  popupStyle?: CSSProperties;
   dropdownClassName?: string;
   locale?: any;
-  size?: 'large' | 'small' | 'default';
+  size?: Size;
   getCalendarContainer?: (triggerNode: Element) => HTMLElement;
   open?: boolean;
   onOpenChange?: (status: boolean) => void;
-  disabledDate?: (current: moment.Moment) => boolean;
-  renderExtraFooter?: () => React.ReactNode;
-  dateRender?: (current: moment.Moment, today: moment.Moment) => React.ReactNode;
+  disabledDate?: (current: Moment) => boolean;
+  renderExtraFooter?: () => ReactNode;
+  dateRender?: (current: Moment, today: Moment) => ReactNode;
 }
 
 export interface SinglePickerProps {
-  value?: moment.Moment;
-  defaultValue?: moment.Moment;
-  defaultPickerValue?: moment.Moment;
-  onChange?: (date: moment.Moment, dateString: string) => void;
+  value?: Moment;
+  defaultValue?: Moment;
+  defaultPickerValue?: Moment;
+  onChange?: (date: Moment, dateString: string) => void;
 }
 
 export interface DatePickerProps extends PickerProps, SinglePickerProps {
@@ -35,13 +36,13 @@ export interface DatePickerProps extends PickerProps, SinglePickerProps {
   showTime?: TimePickerProps | boolean;
   showToday?: boolean;
   open?: boolean;
-  disabledTime?: (current: moment.Moment) => {
+  disabledTime?: (current: Moment) => {
     disabledHours?: () => number[],
     disabledMinutes?: () => number[],
     disabledSeconds?: () => number[],
   };
   onOpenChange?: (status: boolean) => void;
-  onOk?: (selectedTime: moment.Moment) => void;
+  onOk?: (selectedTime: Moment) => void;
   placeholder?: string;
 }
 
@@ -52,9 +53,9 @@ export interface MonthPickerProps extends PickerProps, SinglePickerProps {
 
 export type RangePickerValue =
   undefined[] |
-  [moment.Moment] |
-  [undefined, moment.Moment] |
-  [moment.Moment, moment.Moment];
+  [Moment] |
+  [undefined, Moment] |
+  [Moment, Moment];
 export type RangePickerPresetRange = RangePickerValue | (() => RangePickerValue);
 
 export interface RangePickerProps extends PickerProps {
@@ -64,14 +65,14 @@ export interface RangePickerProps extends PickerProps {
   defaultPickerValue?: RangePickerValue;
   onChange?: (dates: RangePickerValue, dateStrings: [string, string]) => void;
   onCalendarChange?: (dates: RangePickerValue, dateStrings: [string, string]) => void;
-  onOk?: (selectedTime: moment.Moment) => void;
+  onOk?: (selectedTime: Moment) => void;
   showTime?: TimePickerProps | boolean;
   ranges?: {
     [range: string]: RangePickerPresetRange,
   };
   placeholder?: [string, string];
   mode?: string | string[];
-  disabledTime?: (current: moment.Moment, type: string) => {
+  disabledTime?: (current: Moment, type: string) => {
     disabledHours?: () => number[],
     disabledMinutes?: () => number[],
     disabledSeconds?: () => number[],
@@ -84,8 +85,8 @@ export interface WeekPickerProps extends PickerProps, SinglePickerProps {
   placeholder?: string;
 }
 
-export interface DatePickerDecorator extends React.ClassicComponentClass<DatePickerProps> {
-  RangePicker: React.ClassicComponentClass<RangePickerProps>;
-  MonthPicker: React.ClassicComponentClass<MonthPickerProps>;
-  WeekPicker: React.ClassicComponentClass<WeekPickerProps>;
+export interface DatePickerDecorator extends ClassicComponentClass<DatePickerProps> {
+  RangePicker: ClassicComponentClass<RangePickerProps>;
+  MonthPicker: ClassicComponentClass<MonthPickerProps>;
+  WeekPicker: ClassicComponentClass<WeekPickerProps>;
 }

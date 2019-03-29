@@ -2,67 +2,67 @@
 
 exports[`renders ./components/transfer/demo/advanced.md correctly 1`] = `
 <div
-  class="ant-transfer"
+  class="c7n-transfer"
 >
   <div
-    class="ant-transfer-list ant-transfer-list-with-footer"
+    class="c7n-transfer-list c7n-transfer-list-with-footer"
     style="width:250px;height:300px"
   >
     <div
-      class="ant-transfer-list-header"
+      class="c7n-transfer-list-header"
     >
       <label
-        class="ant-checkbox-wrapper"
+        class="c7n-checkbox-wrapper"
       >
         <span
-          class="ant-checkbox"
+          class="c7n-checkbox"
         >
           <input
-            class="ant-checkbox-input"
+            class="c7n-checkbox-input"
             type="checkbox"
           />
           <span
-            class="ant-checkbox-inner"
+            class="c7n-checkbox-inner"
           />
         </span>
       </label>
       <span
-        class="ant-transfer-list-header-selected"
+        class="c7n-transfer-list-header-selected"
       >
         <span>
           0 item
         </span>
         <span
-          class="ant-transfer-list-header-title"
+          class="c7n-transfer-list-header-title"
         />
       </span>
     </div>
     <div
-      class="ant-transfer-list-body ant-transfer-list-body-with-search"
+      class="c7n-transfer-list-body c7n-transfer-list-body-with-search"
     >
       <div
-        class="ant-transfer-list-body-search-wrapper"
+        class="c7n-transfer-list-body-search-wrapper"
       >
         <div>
           <span
-            class="ant-input-wrapper"
+            class="c7n-input-wrapper"
           >
             <div
-              class="ant-input-content"
+              class="c7n-input-content"
             >
               <div
-                class="ant-input-rendered-wrapper"
+                class="c7n-input-rendered-wrapper"
               >
                 <div
-                  class="ant-input-rendered"
+                  class="c7n-input-rendered"
                 >
                   <div
-                    class="ant-input-placeholder"
+                    class="c7n-input-placeholder"
                   >
                     Search here
                   </div>
                   <input
-                    class="ant-input ant-transfer-list-search"
+                    class="c7n-input c7n-transfer-list-search"
                     type="text"
                     value=""
                   />
@@ -70,15 +70,15 @@ exports[`renders ./components/transfer/demo/advanced.md correctly 1`] = `
               </div>
             </div>
             <div
-              class="ant-input-underline"
+              class="c7n-input-underline"
             >
               <span
-                class="ant-input-ripple"
+                class="c7n-input-ripple"
               />
             </div>
           </span>
           <span
-            class="ant-transfer-list-search-action"
+            class="c7n-transfer-list-search-action"
           >
             <i
               class="icon icon-search"
@@ -87,19 +87,19 @@ exports[`renders ./components/transfer/demo/advanced.md correctly 1`] = `
         </div>
       </div>
       <ul
-        class="ant-transfer-list-content"
+        class="c7n-transfer-list-content"
       />
       <div
-        class="ant-transfer-list-body-not-found"
+        class="c7n-transfer-list-body-not-found"
       >
         Not Found
       </div>
     </div>
     <div
-      class="ant-transfer-list-footer"
+      class="c7n-transfer-list-footer"
     >
       <button
-        class="ant-btn ant-btn-sm ant-btn-flat"
+        class="c7n-btn c7n-btn-sm c7n-btn-flat"
         style="float:right;margin:5px"
         type="button"
       >
@@ -107,16 +107,16 @@ exports[`renders ./components/transfer/demo/advanced.md correctly 1`] = `
           reload
         </span>
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </div>
   </div>
   <div
-    class="ant-transfer-operation"
+    class="c7n-transfer-operation"
   >
     <button
-      class="ant-btn ant-btn-primary ant-btn-sm ant-btn-flat"
+      class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-flat"
       disabled=""
       type="button"
     >
@@ -127,11 +127,11 @@ exports[`renders ./components/transfer/demo/advanced.md correctly 1`] = `
         to left
       </span>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
     <button
-      class="ant-btn ant-btn-primary ant-btn-sm ant-btn-flat"
+      class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-flat"
       disabled=""
       type="button"
     >
@@ -142,69 +142,69 @@ exports[`renders ./components/transfer/demo/advanced.md correctly 1`] = `
         to right
       </span>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </div>
   <div
-    class="ant-transfer-list ant-transfer-list-with-footer"
+    class="c7n-transfer-list c7n-transfer-list-with-footer"
     style="width:250px;height:300px"
   >
     <div
-      class="ant-transfer-list-header"
+      class="c7n-transfer-list-header"
     >
       <label
-        class="ant-checkbox-wrapper"
+        class="c7n-checkbox-wrapper"
       >
         <span
-          class="ant-checkbox"
+          class="c7n-checkbox"
         >
           <input
-            class="ant-checkbox-input"
+            class="c7n-checkbox-input"
             type="checkbox"
           />
           <span
-            class="ant-checkbox-inner"
+            class="c7n-checkbox-inner"
           />
         </span>
       </label>
       <span
-        class="ant-transfer-list-header-selected"
+        class="c7n-transfer-list-header-selected"
       >
         <span>
           0 item
         </span>
         <span
-          class="ant-transfer-list-header-title"
+          class="c7n-transfer-list-header-title"
         />
       </span>
     </div>
     <div
-      class="ant-transfer-list-body ant-transfer-list-body-with-search"
+      class="c7n-transfer-list-body c7n-transfer-list-body-with-search"
     >
       <div
-        class="ant-transfer-list-body-search-wrapper"
+        class="c7n-transfer-list-body-search-wrapper"
       >
         <div>
           <span
-            class="ant-input-wrapper"
+            class="c7n-input-wrapper"
           >
             <div
-              class="ant-input-content"
+              class="c7n-input-content"
             >
               <div
-                class="ant-input-rendered-wrapper"
+                class="c7n-input-rendered-wrapper"
               >
                 <div
-                  class="ant-input-rendered"
+                  class="c7n-input-rendered"
                 >
                   <div
-                    class="ant-input-placeholder"
+                    class="c7n-input-placeholder"
                   >
                     Search here
                   </div>
                   <input
-                    class="ant-input ant-transfer-list-search"
+                    class="c7n-input c7n-transfer-list-search"
                     type="text"
                     value=""
                   />
@@ -212,15 +212,15 @@ exports[`renders ./components/transfer/demo/advanced.md correctly 1`] = `
               </div>
             </div>
             <div
-              class="ant-input-underline"
+              class="c7n-input-underline"
             >
               <span
-                class="ant-input-ripple"
+                class="c7n-input-ripple"
               />
             </div>
           </span>
           <span
-            class="ant-transfer-list-search-action"
+            class="c7n-transfer-list-search-action"
           >
             <i
               class="icon icon-search"
@@ -229,19 +229,19 @@ exports[`renders ./components/transfer/demo/advanced.md correctly 1`] = `
         </div>
       </div>
       <ul
-        class="ant-transfer-list-content"
+        class="c7n-transfer-list-content"
       />
       <div
-        class="ant-transfer-list-body-not-found"
+        class="c7n-transfer-list-body-not-found"
       >
         Not Found
       </div>
     </div>
     <div
-      class="ant-transfer-list-footer"
+      class="c7n-transfer-list-footer"
     >
       <button
-        class="ant-btn ant-btn-sm ant-btn-flat"
+        class="c7n-btn c7n-btn-sm c7n-btn-flat"
         style="float:right;margin:5px"
         type="button"
       >
@@ -249,7 +249,7 @@ exports[`renders ./components/transfer/demo/advanced.md correctly 1`] = `
           reload
         </span>
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </div>
@@ -259,47 +259,47 @@ exports[`renders ./components/transfer/demo/advanced.md correctly 1`] = `
 
 exports[`renders ./components/transfer/demo/basic.md correctly 1`] = `
 <div
-  class="ant-transfer"
+  class="c7n-transfer"
 >
   <div
-    class="ant-transfer-list"
+    class="c7n-transfer-list"
   >
     <div
-      class="ant-transfer-list-header"
+      class="c7n-transfer-list-header"
     >
       <label
-        class="ant-checkbox-wrapper"
+        class="c7n-checkbox-wrapper"
       >
         <span
-          class="ant-checkbox"
+          class="c7n-checkbox"
         >
           <input
-            class="ant-checkbox-input"
+            class="c7n-checkbox-input"
             type="checkbox"
           />
           <span
-            class="ant-checkbox-inner"
+            class="c7n-checkbox-inner"
           />
         </span>
       </label>
       <span
-        class="ant-transfer-list-header-selected"
+        class="c7n-transfer-list-header-selected"
       >
         <span>
           14 items
         </span>
         <span
-          class="ant-transfer-list-header-title"
+          class="c7n-transfer-list-header-title"
         >
           Source
         </span>
       </span>
     </div>
     <div
-      class="ant-transfer-list-body"
+      class="c7n-transfer-list-body"
     >
       <ul
-        class="ant-transfer-list-content"
+        class="c7n-transfer-list-content"
       >
         <div
           class="LazyLoad"
@@ -359,17 +359,17 @@ exports[`renders ./components/transfer/demo/basic.md correctly 1`] = `
         />
       </ul>
       <div
-        class="ant-transfer-list-body-not-found"
+        class="c7n-transfer-list-body-not-found"
       >
         Not Found
       </div>
     </div>
   </div>
   <div
-    class="ant-transfer-operation"
+    class="c7n-transfer-operation"
   >
     <button
-      class="ant-btn ant-btn-primary ant-btn-sm ant-btn-icon-only ant-btn-flat"
+      class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
       disabled=""
       type="button"
     >
@@ -377,11 +377,11 @@ exports[`renders ./components/transfer/demo/basic.md correctly 1`] = `
         class="icon icon-left"
       />
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
     <button
-      class="ant-btn ant-btn-primary ant-btn-sm ant-btn-icon-only ant-btn-flat"
+      class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
       disabled=""
       type="button"
     >
@@ -389,49 +389,49 @@ exports[`renders ./components/transfer/demo/basic.md correctly 1`] = `
         class="icon icon-right"
       />
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </div>
   <div
-    class="ant-transfer-list"
+    class="c7n-transfer-list"
   >
     <div
-      class="ant-transfer-list-header"
+      class="c7n-transfer-list-header"
     >
       <label
-        class="ant-checkbox-wrapper"
+        class="c7n-checkbox-wrapper"
       >
         <span
-          class="ant-checkbox"
+          class="c7n-checkbox"
         >
           <input
-            class="ant-checkbox-input"
+            class="c7n-checkbox-input"
             type="checkbox"
           />
           <span
-            class="ant-checkbox-inner"
+            class="c7n-checkbox-inner"
           />
         </span>
       </label>
       <span
-        class="ant-transfer-list-header-selected"
+        class="c7n-transfer-list-header-selected"
       >
         <span>
           6 items
         </span>
         <span
-          class="ant-transfer-list-header-title"
+          class="c7n-transfer-list-header-title"
         >
           Target
         </span>
       </span>
     </div>
     <div
-      class="ant-transfer-list-body"
+      class="c7n-transfer-list-body"
     >
       <ul
-        class="ant-transfer-list-content"
+        class="c7n-transfer-list-content"
       >
         <div
           class="LazyLoad"
@@ -459,7 +459,7 @@ exports[`renders ./components/transfer/demo/basic.md correctly 1`] = `
         />
       </ul>
       <div
-        class="ant-transfer-list-body-not-found"
+        class="c7n-transfer-list-body-not-found"
       >
         Not Found
       </div>
@@ -470,59 +470,59 @@ exports[`renders ./components/transfer/demo/basic.md correctly 1`] = `
 
 exports[`renders ./components/transfer/demo/custom-item.md correctly 1`] = `
 <div
-  class="ant-transfer"
+  class="c7n-transfer"
 >
   <div
-    class="ant-transfer-list"
+    class="c7n-transfer-list"
     style="width:300px;height:300px"
   >
     <div
-      class="ant-transfer-list-header"
+      class="c7n-transfer-list-header"
     >
       <label
-        class="ant-checkbox-wrapper"
+        class="c7n-checkbox-wrapper"
       >
         <span
-          class="ant-checkbox"
+          class="c7n-checkbox"
         >
           <input
-            class="ant-checkbox-input"
+            class="c7n-checkbox-input"
             type="checkbox"
           />
           <span
-            class="ant-checkbox-inner"
+            class="c7n-checkbox-inner"
           />
         </span>
       </label>
       <span
-        class="ant-transfer-list-header-selected"
+        class="c7n-transfer-list-header-selected"
       >
         <span>
           0 item
         </span>
         <span
-          class="ant-transfer-list-header-title"
+          class="c7n-transfer-list-header-title"
         />
       </span>
     </div>
     <div
-      class="ant-transfer-list-body"
+      class="c7n-transfer-list-body"
     >
       <ul
-        class="ant-transfer-list-content"
+        class="c7n-transfer-list-content"
       />
       <div
-        class="ant-transfer-list-body-not-found"
+        class="c7n-transfer-list-body-not-found"
       >
         Not Found
       </div>
     </div>
   </div>
   <div
-    class="ant-transfer-operation"
+    class="c7n-transfer-operation"
   >
     <button
-      class="ant-btn ant-btn-primary ant-btn-sm ant-btn-icon-only ant-btn-flat"
+      class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
       disabled=""
       type="button"
     >
@@ -530,11 +530,11 @@ exports[`renders ./components/transfer/demo/custom-item.md correctly 1`] = `
         class="icon icon-left"
       />
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
     <button
-      class="ant-btn ant-btn-primary ant-btn-sm ant-btn-icon-only ant-btn-flat"
+      class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
       disabled=""
       type="button"
     >
@@ -542,51 +542,51 @@ exports[`renders ./components/transfer/demo/custom-item.md correctly 1`] = `
         class="icon icon-right"
       />
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </div>
   <div
-    class="ant-transfer-list"
+    class="c7n-transfer-list"
     style="width:300px;height:300px"
   >
     <div
-      class="ant-transfer-list-header"
+      class="c7n-transfer-list-header"
     >
       <label
-        class="ant-checkbox-wrapper"
+        class="c7n-checkbox-wrapper"
       >
         <span
-          class="ant-checkbox"
+          class="c7n-checkbox"
         >
           <input
-            class="ant-checkbox-input"
+            class="c7n-checkbox-input"
             type="checkbox"
           />
           <span
-            class="ant-checkbox-inner"
+            class="c7n-checkbox-inner"
           />
         </span>
       </label>
       <span
-        class="ant-transfer-list-header-selected"
+        class="c7n-transfer-list-header-selected"
       >
         <span>
           0 item
         </span>
         <span
-          class="ant-transfer-list-header-title"
+          class="c7n-transfer-list-header-title"
         />
       </span>
     </div>
     <div
-      class="ant-transfer-list-body"
+      class="c7n-transfer-list-body"
     >
       <ul
-        class="ant-transfer-list-content"
+        class="c7n-transfer-list-content"
       />
       <div
-        class="ant-transfer-list-body-not-found"
+        class="c7n-transfer-list-body-not-found"
       >
         Not Found
       </div>
@@ -597,58 +597,58 @@ exports[`renders ./components/transfer/demo/custom-item.md correctly 1`] = `
 
 exports[`renders ./components/transfer/demo/large-data.md correctly 1`] = `
 <div
-  class="ant-transfer"
+  class="c7n-transfer"
 >
   <div
-    class="ant-transfer-list"
+    class="c7n-transfer-list"
   >
     <div
-      class="ant-transfer-list-header"
+      class="c7n-transfer-list-header"
     >
       <label
-        class="ant-checkbox-wrapper"
+        class="c7n-checkbox-wrapper"
       >
         <span
-          class="ant-checkbox"
+          class="c7n-checkbox"
         >
           <input
-            class="ant-checkbox-input"
+            class="c7n-checkbox-input"
             type="checkbox"
           />
           <span
-            class="ant-checkbox-inner"
+            class="c7n-checkbox-inner"
           />
         </span>
       </label>
       <span
-        class="ant-transfer-list-header-selected"
+        class="c7n-transfer-list-header-selected"
       >
         <span>
           0 item
         </span>
         <span
-          class="ant-transfer-list-header-title"
+          class="c7n-transfer-list-header-title"
         />
       </span>
     </div>
     <div
-      class="ant-transfer-list-body"
+      class="c7n-transfer-list-body"
     >
       <ul
-        class="ant-transfer-list-content"
+        class="c7n-transfer-list-content"
       />
       <div
-        class="ant-transfer-list-body-not-found"
+        class="c7n-transfer-list-body-not-found"
       >
         Not Found
       </div>
     </div>
   </div>
   <div
-    class="ant-transfer-operation"
+    class="c7n-transfer-operation"
   >
     <button
-      class="ant-btn ant-btn-primary ant-btn-sm ant-btn-icon-only ant-btn-flat"
+      class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
       disabled=""
       type="button"
     >
@@ -656,11 +656,11 @@ exports[`renders ./components/transfer/demo/large-data.md correctly 1`] = `
         class="icon icon-left"
       />
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
     <button
-      class="ant-btn ant-btn-primary ant-btn-sm ant-btn-icon-only ant-btn-flat"
+      class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
       disabled=""
       type="button"
     >
@@ -668,50 +668,50 @@ exports[`renders ./components/transfer/demo/large-data.md correctly 1`] = `
         class="icon icon-right"
       />
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </div>
   <div
-    class="ant-transfer-list"
+    class="c7n-transfer-list"
   >
     <div
-      class="ant-transfer-list-header"
+      class="c7n-transfer-list-header"
     >
       <label
-        class="ant-checkbox-wrapper"
+        class="c7n-checkbox-wrapper"
       >
         <span
-          class="ant-checkbox"
+          class="c7n-checkbox"
         >
           <input
-            class="ant-checkbox-input"
+            class="c7n-checkbox-input"
             type="checkbox"
           />
           <span
-            class="ant-checkbox-inner"
+            class="c7n-checkbox-inner"
           />
         </span>
       </label>
       <span
-        class="ant-transfer-list-header-selected"
+        class="c7n-transfer-list-header-selected"
       >
         <span>
           0 item
         </span>
         <span
-          class="ant-transfer-list-header-title"
+          class="c7n-transfer-list-header-title"
         />
       </span>
     </div>
     <div
-      class="ant-transfer-list-body"
+      class="c7n-transfer-list-body"
     >
       <ul
-        class="ant-transfer-list-content"
+        class="c7n-transfer-list-content"
       />
       <div
-        class="ant-transfer-list-body-not-found"
+        class="c7n-transfer-list-body-not-found"
       >
         Not Found
       </div>
@@ -722,66 +722,66 @@ exports[`renders ./components/transfer/demo/large-data.md correctly 1`] = `
 
 exports[`renders ./components/transfer/demo/search.md correctly 1`] = `
 <div
-  class="ant-transfer"
+  class="c7n-transfer"
 >
   <div
-    class="ant-transfer-list"
+    class="c7n-transfer-list"
   >
     <div
-      class="ant-transfer-list-header"
+      class="c7n-transfer-list-header"
     >
       <label
-        class="ant-checkbox-wrapper"
+        class="c7n-checkbox-wrapper"
       >
         <span
-          class="ant-checkbox"
+          class="c7n-checkbox"
         >
           <input
-            class="ant-checkbox-input"
+            class="c7n-checkbox-input"
             type="checkbox"
           />
           <span
-            class="ant-checkbox-inner"
+            class="c7n-checkbox-inner"
           />
         </span>
       </label>
       <span
-        class="ant-transfer-list-header-selected"
+        class="c7n-transfer-list-header-selected"
       >
         <span>
           0 item
         </span>
         <span
-          class="ant-transfer-list-header-title"
+          class="c7n-transfer-list-header-title"
         />
       </span>
     </div>
     <div
-      class="ant-transfer-list-body ant-transfer-list-body-with-search"
+      class="c7n-transfer-list-body c7n-transfer-list-body-with-search"
     >
       <div
-        class="ant-transfer-list-body-search-wrapper"
+        class="c7n-transfer-list-body-search-wrapper"
       >
         <div>
           <span
-            class="ant-input-wrapper"
+            class="c7n-input-wrapper"
           >
             <div
-              class="ant-input-content"
+              class="c7n-input-content"
             >
               <div
-                class="ant-input-rendered-wrapper"
+                class="c7n-input-rendered-wrapper"
               >
                 <div
-                  class="ant-input-rendered"
+                  class="c7n-input-rendered"
                 >
                   <div
-                    class="ant-input-placeholder"
+                    class="c7n-input-placeholder"
                   >
                     Search here
                   </div>
                   <input
-                    class="ant-input ant-transfer-list-search"
+                    class="c7n-input c7n-transfer-list-search"
                     type="text"
                     value=""
                   />
@@ -789,15 +789,15 @@ exports[`renders ./components/transfer/demo/search.md correctly 1`] = `
               </div>
             </div>
             <div
-              class="ant-input-underline"
+              class="c7n-input-underline"
             >
               <span
-                class="ant-input-ripple"
+                class="c7n-input-ripple"
               />
             </div>
           </span>
           <span
-            class="ant-transfer-list-search-action"
+            class="c7n-transfer-list-search-action"
           >
             <i
               class="icon icon-search"
@@ -806,20 +806,20 @@ exports[`renders ./components/transfer/demo/search.md correctly 1`] = `
         </div>
       </div>
       <ul
-        class="ant-transfer-list-content"
+        class="c7n-transfer-list-content"
       />
       <div
-        class="ant-transfer-list-body-not-found"
+        class="c7n-transfer-list-body-not-found"
       >
         Not Found
       </div>
     </div>
   </div>
   <div
-    class="ant-transfer-operation"
+    class="c7n-transfer-operation"
   >
     <button
-      class="ant-btn ant-btn-primary ant-btn-sm ant-btn-icon-only ant-btn-flat"
+      class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
       disabled=""
       type="button"
     >
@@ -827,11 +827,11 @@ exports[`renders ./components/transfer/demo/search.md correctly 1`] = `
         class="icon icon-left"
       />
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
     <button
-      class="ant-btn ant-btn-primary ant-btn-sm ant-btn-icon-only ant-btn-flat"
+      class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
       disabled=""
       type="button"
     >
@@ -839,68 +839,68 @@ exports[`renders ./components/transfer/demo/search.md correctly 1`] = `
         class="icon icon-right"
       />
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </div>
   <div
-    class="ant-transfer-list"
+    class="c7n-transfer-list"
   >
     <div
-      class="ant-transfer-list-header"
+      class="c7n-transfer-list-header"
     >
       <label
-        class="ant-checkbox-wrapper"
+        class="c7n-checkbox-wrapper"
       >
         <span
-          class="ant-checkbox"
+          class="c7n-checkbox"
         >
           <input
-            class="ant-checkbox-input"
+            class="c7n-checkbox-input"
             type="checkbox"
           />
           <span
-            class="ant-checkbox-inner"
+            class="c7n-checkbox-inner"
           />
         </span>
       </label>
       <span
-        class="ant-transfer-list-header-selected"
+        class="c7n-transfer-list-header-selected"
       >
         <span>
           0 item
         </span>
         <span
-          class="ant-transfer-list-header-title"
+          class="c7n-transfer-list-header-title"
         />
       </span>
     </div>
     <div
-      class="ant-transfer-list-body ant-transfer-list-body-with-search"
+      class="c7n-transfer-list-body c7n-transfer-list-body-with-search"
     >
       <div
-        class="ant-transfer-list-body-search-wrapper"
+        class="c7n-transfer-list-body-search-wrapper"
       >
         <div>
           <span
-            class="ant-input-wrapper"
+            class="c7n-input-wrapper"
           >
             <div
-              class="ant-input-content"
+              class="c7n-input-content"
             >
               <div
-                class="ant-input-rendered-wrapper"
+                class="c7n-input-rendered-wrapper"
               >
                 <div
-                  class="ant-input-rendered"
+                  class="c7n-input-rendered"
                 >
                   <div
-                    class="ant-input-placeholder"
+                    class="c7n-input-placeholder"
                   >
                     Search here
                   </div>
                   <input
-                    class="ant-input ant-transfer-list-search"
+                    class="c7n-input c7n-transfer-list-search"
                     type="text"
                     value=""
                   />
@@ -908,15 +908,15 @@ exports[`renders ./components/transfer/demo/search.md correctly 1`] = `
               </div>
             </div>
             <div
-              class="ant-input-underline"
+              class="c7n-input-underline"
             >
               <span
-                class="ant-input-ripple"
+                class="c7n-input-ripple"
               />
             </div>
           </span>
           <span
-            class="ant-transfer-list-search-action"
+            class="c7n-transfer-list-search-action"
           >
             <i
               class="icon icon-search"
@@ -925,10 +925,10 @@ exports[`renders ./components/transfer/demo/search.md correctly 1`] = `
         </div>
       </div>
       <ul
-        class="ant-transfer-list-content"
+        class="c7n-transfer-list-content"
       />
       <div
-        class="ant-transfer-list-body-not-found"
+        class="c7n-transfer-list-body-not-found"
       >
         Not Found
       </div>

@@ -1,12 +1,12 @@
-@dialog-prefix-cls: ~"@{ant-prefix}-modal";
+@dialog-prefix-cls: ~"@{c7n-prefix}-modal";
 
 .@{dialog-prefix-cls} {
   .reset-component;
   position: relative;
   width: auto;
   margin: 0 auto;
-  top: 100px;
-  padding-bottom: 24px;
+  top: 1rem;
+  padding-bottom: .24rem;
 
   &-wrap {
     position: fixed;
@@ -26,7 +26,7 @@
     color: @heading-color;
     font-weight: 400;
     letter-spacing: 0;
-    line-height: 32px;
+    line-height: .32rem;
   }
 
   &-content {
@@ -36,7 +36,7 @@
     border-radius: @border-radius-base;
     background-clip: padding-box;
     box-shadow: @modal-content-shadow;
-    padding: 24px;
+    padding: .24rem;
   }
 
   &-close {
@@ -62,9 +62,9 @@
       text-align: center;
       text-transform: none;
       text-rendering: auto;
-      width: 56px;
-      height: 56px;
-      line-height: 56px;
+      width: .56rem;
+      height: .56rem;
+      line-height: .56rem;
     }
 
     &:focus,
@@ -87,11 +87,11 @@
 
   &-footer {
     text-align: right;
-    margin-bottom: -24px;
-    padding: 12px 0;
+    margin-bottom: -.24rem;
+    padding: .12rem 0;
     border-radius: 0 0 @border-radius-base @border-radius-base;
     button + button {
-      margin-left: 8px;
+      margin-left: .08rem;
       margin-bottom: 0;
     }
   }
@@ -128,7 +128,7 @@
 @media (max-width: @screen-md) {
   .@{dialog-prefix-cls} {
     width: auto !important;
-    margin: 10px;
+    margin: .1rem;
   }
   .vertical-center-modal {
     .@{dialog-prefix-cls} {

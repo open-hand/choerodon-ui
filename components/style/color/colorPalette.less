@@ -7,7 +7,7 @@
 // and create an entire color palette magicly by inputing just a single primary color.
 // We are using bezier-curve easing function and some color manipulations like tint/shade/darken/spin
 .colorPaletteMixin() {
-@functions: ~`(function() {
+  @functions: ~`(function() {
   var hueStep = 2;
   var saturationStep = 16;
   var saturationStep2 = 5;
@@ -69,7 +69,7 @@
   };
 })()`;
 }
+
 // It is hacky way to make this function will be compiled preferentially by less
 // resolve error: `ReferenceError: colorPalette is not defined`
-// https://github.com/ant-design/ant-motion/issues/44
 .colorPaletteMixin();

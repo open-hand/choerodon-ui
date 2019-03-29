@@ -1,15 +1,14 @@
-import * as React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { AbstractCheckboxProps } from '../checkbox/Checkbox';
 import Radio from './radio';
 import { RadioChangeEvent } from './interface';
+import { getPrefixCls } from '../configure';
 
 export type RadioButtonProps = AbstractCheckboxProps<RadioChangeEvent>;
 
-export default class RadioButton extends React.Component<RadioButtonProps, any> {
-  static defaultProps = {
-    prefixCls: 'ant-radio-button',
-  };
+export default class RadioButton extends Component<RadioButtonProps, any> {
+  static displayName = 'RadioButton';
 
   static contextTypes = {
     radioGroup: PropTypes.any,
@@ -24,7 +23,7 @@ export default class RadioButton extends React.Component<RadioButtonProps, any> 
     }
 
     return (
-      <Radio {...radioProps} />
+      <Radio prefixCls={getPrefixCls('radio-button')} {...radioProps} />
     );
   }
 }

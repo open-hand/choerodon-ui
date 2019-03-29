@@ -1,18 +1,20 @@
-import * as React from 'react';
+import React, { Component, CSSProperties, ReactNode } from 'react';
 import classNames from 'classnames';
+import { Size } from '../_util/enum';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import Select from '../select';
 import MiniSelect from './MiniSelect';
 import LargeSelect from './LargeSelect';
 import RcPagination from '../rc-components/pagination';
 import enUS from '../rc-components/pagination/locale/en_US';
-import Button from '../button/button';
+import Button from '../button/Button';
+import { getPrefixCls } from '../configure';
 
-function getSelect(size?: string) {
+function getSelect(size?: Size) {
   switch (size) {
-    case 'small':
+    case Size.small:
       return MiniSelect;
-    case 'large':
+    case Size.large:
       return LargeSelect;
     default:
       return Select;
@@ -34,8 +36,7 @@ function getIcon(type: string) {
   }
 }
 
-function itemRender(page: number, type: string, item: React.ReactNode, disabled: boolean, size?: any) {
-  size = size === 'middle' ? 'default' : size;
+function itemRender(page: number, type: string, item: ReactNode, disabled: boolean, size?: Size) {
   if (page !== undefined) {
     if (type === 'page' || type === 'jump-prev' || type === 'jump-next') {
       return <Button size={size} shape="circle">{item}</Button>;
@@ -57,23 +58,22 @@ export interface PaginationProps {
   pageSizeOptions?: string[];
   onShowSizeChange?: (current: number, size: number) => void;
   showQuickJumper?: boolean;
-  showTotal?: (total: number, range: [number, number]) => React.ReactNode;
-  size?: string;
+  showTotal?: (total: number, range: [number, number]) => ReactNode;
+  size?: Size;
   simple?: boolean;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   locale?: Object;
   className?: string;
   prefixCls?: string;
   selectPrefixCls?: string;
-  itemRender?: (page: number, type: 'page' | 'first' | 'last' | 'prev' | 'next' | 'jump-prev' | 'jump-next') => React.ReactNode;
+  itemRender?: (page: number, type: 'page' | 'first' | 'last' | 'prev' | 'next' | 'jump-prev' | 'jump-next') => ReactNode;
 }
 
 export type PaginationLocale = any;
 
-export default class Pagination extends React.Component<PaginationProps, {}> {
+export default class Pagination extends Component<PaginationProps, {}> {
+  static displayName = 'Pagination';
   static defaultProps = {
-    prefixCls: 'ant-pagination',
-    selectPrefixCls: 'ant-select',
     showSizeChanger: true,
     showSizeChangerLabel: true,
     tiny: true,
@@ -84,10 +84,13 @@ export default class Pagination extends React.Component<PaginationProps, {}> {
   };
 
   renderPagination = (locale: PaginationLocale) => {
-    const { className, size, prefixCls, ...restProps } = this.props;
+    const { className, size, prefixCls: customizePrefixCls, selectPrefixCls: customizeSelectPrefixCls, ...restProps } = this.props;
+    const prefixCls = getPrefixCls('pagination', customizePrefixCls);
+    const selectPrefixCls = getPrefixCls('select', customizeSelectPrefixCls);
     return (
       <RcPagination
         {...restProps}
+        selectPrefixCls={selectPrefixCls}
         prefixCls={prefixCls}
         size={size}
         className={classNames(className, { [`${prefixCls}-${size}`]: size })}

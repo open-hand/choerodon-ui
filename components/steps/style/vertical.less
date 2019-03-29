@@ -5,10 +5,10 @@
     overflow: visible;
     &-icon {
       float: left;
-      margin-right: 16px;
+      margin-right: .16rem;
     }
     &-content {
-      min-height: 48px;
+      min-height: .48rem;
       overflow: hidden;
       display: block;
     }
@@ -16,20 +16,20 @@
       line-height: @steps-icon-size;
     }
     &-description {
-      padding-bottom: 12px;
+      padding-bottom: .12rem;
     }
   }
 
   > .@{steps-prefix-cls}-item > .@{steps-prefix-cls}-item-tail {
     position: absolute;
-    left: 16px;
+    left: .16rem;
     top: 0;
     height: 100%;
-    width: 1px;
-    padding: @steps-icon-size + 6px 0 6px;
+    width: .01rem;
+    padding: @steps-icon-size + .06rem 0 .06rem;
     &:after {
       height: 100%;
-      width: 1px;
+      width: .01rem;
     }
   }
 
@@ -46,9 +46,9 @@
   &.@{steps-prefix-cls}-small {
     .@{steps-prefix-cls}-item-tail {
       position: absolute;
-      left: 12px;
+      left: .12rem;
       top: 0;
-      padding: @steps-small-icon-size + 6px 0 6px;
+      padding: @steps-small-icon-size + .06rem 0 .06rem;
     }
     .@{steps-prefix-cls}-item-title {
       line-height: @steps-small-icon-size;

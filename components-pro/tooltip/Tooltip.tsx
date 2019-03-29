@@ -1,0 +1,241 @@
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { getPrefixCls } from 'choerodon-ui/lib/configure';
+import Trigger from '../trigger/Trigger';
+import { Action } from '../trigger/enum';
+import getPlacements, { AdjustOverflow } from './placements';
+
+export type TooltipPlacement =
+  'top' | 'left' | 'right' | 'bottom' |
+  'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight' |
+  'leftTop' | 'leftBottom' | 'rightTop' | 'rightBottom';
+
+export type TooltipTheme = 'light' | 'dark';
+
+export type RenderFunction = () => React.ReactNode;
+
+export interface TooltipProps {
+  prefixCls?: string;
+  suffixCls?: string;
+  overlayClassName?: string;
+  style?: React.CSSProperties;
+  overlayStyle?: React.CSSProperties;
+  placement?: TooltipPlacement;
+  builtinPlacements?: Object;
+  hidden?: boolean;
+  defaultHidden?: boolean;
+  onHiddenChange?: (hidden: boolean) => void;
+  mouseEnterDelay?: number;
+  mouseLeaveDelay?: number;
+  transitionName?: string;
+  trigger?: 'hover' | 'focus' | 'click' | 'contextMenu';
+  openClassName?: string;
+  arrowPointAtCenter?: boolean;
+  autoAdjustOverflow?: boolean | AdjustOverflow;
+  title?: React.ReactNode | RenderFunction;
+  overlay?: React.ReactNode | RenderFunction;
+  theme?: TooltipTheme;
+}
+
+export default class Tooltip extends Component<TooltipProps, any> {
+
+  static displayName = 'Tooltip';
+  static propTypes = {
+    title: PropTypes.any,
+    arrowPointAtCenter: PropTypes.bool,
+    autoAdjustOverflow: PropTypes.bool,
+    defaultHidden: PropTypes.bool,
+    mouseEnterDelay: PropTypes.number,
+    mouseLeaveDelay: PropTypes.number,
+    placement: PropTypes.oneOf([
+      'top',
+      'topLeft',
+      'topRight',
+      'bottom',
+      'bottomLeft',
+      'bottomRight',
+      'left',
+      'leftTop',
+      'leftBottom',
+      'right',
+      'rightTop',
+      'rightBottom',
+    ]),
+    trigger: PropTypes.oneOf([
+      'click',
+      'hover',
+      'contextMenu',
+      'focus',
+    ]),
+    hidden: PropTypes.bool,
+    onHiddenChange: PropTypes.func,
+  };
+
+  static defaultProps = {
+    suffixCls: 'pro-tooltip',
+    placement: 'bottom',
+    transitionName: 'zoom-big-fast',
+    mouseEnterDelay: 100,
+    mouseLeaveDelay: 100,
+    arrowPointAtCenter: false,
+    autoAdjustOverflow: true,
+    theme: 'dark',
+    defaultHidden: true,
+  };
+
+  state = {
+    hidden: true,
+  };
+
+  get prefixCls(): string {
+    const { suffixCls, prefixCls } = this.props;
+    return getPrefixCls(suffixCls!, prefixCls);
+  }
+
+  componentDidMount() {
+    const { hidden, defaultHidden } = this.props;
+
+    let initialHidden = defaultHidden;
+    if (hidden !== undefined) {
+      initialHidden = hidden;
+    }
+    if (initialHidden !== this.state.hidden) {
+      this.setState({
+        hidden: initialHidden,
+      });
+    }
+  }
+
+  componentWillReceiveProps(nextProps: TooltipProps) {
+    const { hidden } = nextProps;
+    if (hidden !== undefined) {
+      this.setState({
+        hidden,
+      });
+    }
+  }
+
+  handlePopupHiddenChange = (hidden: boolean) => {
+    const { onHiddenChange } = this.props;
+
+    this.setState({
+      hidden: hidden,
+    });
+
+    if (onHiddenChange) {
+      onHiddenChange(hidden);
+    }
+  };
+
+  /**
+   * 将表示触发方式的字符串转换为枚举对象
+   *
+   * @readonly
+   * @memberof Tooltip
+   */
+  get triggerAction() {
+    const { trigger, hidden } = this.props;
+    let actionArr: Action[] = [];
+    switch (trigger) {
+      case 'click':
+        actionArr.push(Action.click);
+        break;
+      case 'focus':
+        actionArr.push(Action.focus);
+        break;
+      case 'contextMenu':
+        actionArr.push(Action.contextMenu);
+        break;
+      case 'hover':
+      default:
+        actionArr.push(Action.hover);
+        break;
+    }
+
+    if (hidden !== undefined) {
+      actionArr = [];
+    }
+
+    return actionArr;
+  }
+
+  get popupContent() {
+    const { title } = this.props;
+    if (!title) {
+      return null;
+    }
+    const { prefixCls, props: { overlay, theme } } = this;
+
+    let content: any = '';
+    if (typeof overlay === 'function') {
+      content = overlay();
+    } else if (overlay) {
+      content = overlay;
+    } else {
+      content = title || '';
+    }
+
+    const arrowCls = `${prefixCls}-popup-arrow`;
+    const contentCls = `${prefixCls}-popup-inner`;
+
+    return (
+      <div>
+        <div className={`${arrowCls} ${arrowCls}-${theme}`} key="arrow" />
+        <div className={`${contentCls} ${contentCls}-${theme}`} key="content">
+          {content}
+        </div>
+      </div>
+    );
+  }
+
+  get placements() {
+    const { builtinPlacements, arrowPointAtCenter, autoAdjustOverflow } = this.props;
+    return builtinPlacements || getPlacements({
+      arrowPointAtCenter,
+      verticalArrowShift: 8,
+      autoAdjustOverflow,
+    });
+  }
+
+  /**
+   * FIXME: Tooltip首次渲染错位
+   * placement === 'bottom* / right*'时没有错位，其他情况有
+   *
+   * @returns
+   * @memberof Tooltip
+   */
+  render() {
+    const {
+      prefixCls,
+      props: {
+        children,
+        placement,
+        mouseEnterDelay,
+        mouseLeaveDelay,
+        transitionName,
+      },
+    } = this;
+
+    const {
+      hidden,
+    } = this.state;
+
+    return (
+      <Trigger
+        prefixCls={prefixCls}
+        popupStyle={{ backgroundColor: 'transparent' }}
+        action={this.triggerAction}
+        builtinPlacements={this.placements}
+        popupPlacement={placement}
+        popupContent={this.popupContent}
+        onPopupHiddenChange={this.handlePopupHiddenChange}
+        mouseEnterDelay={mouseEnterDelay}
+        mouseLeaveDelay={mouseLeaveDelay}
+        popupHidden={hidden}
+        transitionName={transitionName}
+      >
+        {children}
+      </Trigger>
+    );
+  }
+}

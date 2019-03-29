@@ -19,23 +19,23 @@ import { Avatar } from 'choerodon-ui';
 ReactDOM.render(
   <div>
     <div>
-      <Avatar size={64} icon="user" />
-      <Avatar size="large" icon="user" />
-      <Avatar icon="user" />
-      <Avatar size="small" icon="user" />
+      <Avatar size={64} icon="person" />
+      <Avatar size="large" icon="person" />
+      <Avatar icon="person" />
+      <Avatar size="small" icon="person" />
     </div>
     <div>
-      <Avatar shape="square" size={64} icon="user" />
-      <Avatar shape="square" size="large" icon="user" />
-      <Avatar shape="square" icon="user" />
-      <Avatar shape="square" size="small" icon="user" />
+      <Avatar shape="square" size={64} icon="person" />
+      <Avatar shape="square" size="large" icon="person" />
+      <Avatar shape="square" icon="person" />
+      <Avatar shape="square" size="small" icon="person" />
     </div>
   </div>,
   mountNode);
 ````
 
 <style>
-#components-avatar-demo-basic .ant-avatar {
+#components-avatar-demo-basic .c7n-avatar {
   margin-top: 16px;
   margin-right: 16px;
 }

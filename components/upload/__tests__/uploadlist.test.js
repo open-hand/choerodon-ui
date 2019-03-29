@@ -21,7 +21,6 @@ const fileList = [{
 }];
 
 describe('Upload List', () => {
-  // https://github.com/ant-design/ant-design/issues/4653
   it('should use file.thumbUrl for <img /> in priority', () => {
     const wrapper = mount(
       <Upload defaultFileList={fileList} listType="picture">
@@ -29,14 +28,13 @@ describe('Upload List', () => {
       </Upload>
     );
     fileList.forEach((file, i) => {
-      const linkNode = wrapper.find('.ant-upload-list-item-thumbnail').at(i);
-      const imgNode = wrapper.find('.ant-upload-list-item-thumbnail img').at(i);
+      const linkNode = wrapper.find('.c7n-upload-list-item-thumbnail').at(i);
+      const imgNode = wrapper.find('.c7n-upload-list-item-thumbnail img').at(i);
       expect(linkNode.prop('href')).toBe(file.url);
       expect(imgNode.prop('src')).toBe(file.thumbUrl);
     });
   });
 
-  // https://github.com/ant-design/ant-design/issues/7269
   it('should remove correct item when uid is 0', async () => {
     const list = [{
       uid: 0,
@@ -56,11 +54,11 @@ describe('Upload List', () => {
         <button type="button">upload</button>
       </Upload>
     );
-    expect(wrapper.find('.ant-upload-list-item').length).toBe(2);
-    wrapper.find('.ant-upload-list-item').at(0).find('.icon-close').simulate('click');
+    expect(wrapper.find('.c7n-upload-list-item').length).toBe(2);
+    wrapper.find('.c7n-upload-list-item').at(0).find('.icon-close').simulate('click');
     await delay(400);
     wrapper.update();
-    expect(wrapper.find('.ant-upload-list-item').hostNodes().length).toBe(1);
+    expect(wrapper.find('.c7n-upload-list-item').hostNodes().length).toBe(1);
   });
 
   it('should be uploading when upload a file', (done) => {
@@ -143,7 +141,6 @@ describe('Upload List', () => {
     expect(handleChange.mock.calls[0][0].fileList).toHaveLength(3);
   });
 
-  // https://github.com/ant-design/ant-design/issues/7762
   it('work with form validation', () => {
     let errors;
     class TestForm extends React.Component {

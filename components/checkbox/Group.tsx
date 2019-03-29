@@ -1,8 +1,9 @@
-import * as React from 'react';
+import React, { Component, CSSProperties } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import shallowEqual from 'shallowequal';
+import shallowEqual from 'lodash/isEqual';
 import Checkbox from './Checkbox';
+import { getPrefixCls } from '../configure';
 
 export type CheckboxValueType = string | number;
 
@@ -17,7 +18,7 @@ export interface AbstractCheckboxGroupProps {
   className?: string;
   options?: Array<CheckboxOptionType | string>;
   disabled?: boolean;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
 }
 
 export interface CheckboxGroupProps extends AbstractCheckboxGroupProps {
@@ -39,10 +40,10 @@ export interface CheckboxGroupContext {
   };
 }
 
-export default class CheckboxGroup extends React.Component<CheckboxGroupProps, CheckboxGroupState> {
+export default class CheckboxGroup extends Component<CheckboxGroupProps, CheckboxGroupState> {
+  static displayName = 'CheckboxGroup';
   static defaultProps = {
     options: [],
-    prefixCls: 'ant-checkbox-group',
   };
 
   static propTypes = {
@@ -60,7 +61,7 @@ export default class CheckboxGroup extends React.Component<CheckboxGroupProps, C
     super(props);
     this.state = {
       value: props.value || props.defaultValue || [],
-     };
+    };
   }
 
   getChildContext() {
@@ -80,10 +81,12 @@ export default class CheckboxGroup extends React.Component<CheckboxGroupProps, C
       });
     }
   }
+
   shouldComponentUpdate(nextProps: CheckboxGroupProps, nextState: CheckboxGroupState) {
     return !shallowEqual(this.props, nextProps) ||
       !shallowEqual(this.state, nextState);
   }
+
   getOptions() {
     const { options } = this.props;
     // https://github.com/Microsoft/TypeScript/issues/7960
@@ -97,10 +100,11 @@ export default class CheckboxGroup extends React.Component<CheckboxGroupProps, C
       return option;
     });
   }
+
   toggleOption = (option: CheckboxOptionType) => {
     const optionIndex = this.state.value.indexOf(option.value);
     const value = [...this.state.value];
-    if (optionIndex === - 1) {
+    if (optionIndex === -1) {
       value.push(option.value);
     } else {
       value.splice(optionIndex, 1);
@@ -112,10 +116,12 @@ export default class CheckboxGroup extends React.Component<CheckboxGroupProps, C
     if (onChange) {
       onChange(value);
     }
-  }
+  };
+
   render() {
     const { props, state } = this;
-    const { prefixCls, className, style, options } = props;
+    const { prefixCls: customizePrefixCls, className, style, options } = props;
+    const prefixCls = getPrefixCls('checkbox-group', customizePrefixCls);
     let children = props.children;
     if (options && options.length > 0) {
       children = this.getOptions().map(option => (

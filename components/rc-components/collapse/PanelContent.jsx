@@ -2,24 +2,31 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
-class PanelContent extends Component {
+export default class PanelContent extends Component {
+  static propTypes = {
+    prefixCls: PropTypes.string,
+    isInactive: PropTypes.bool,
+    children: PropTypes.any,
+    destroyInactivePanel: PropTypes.bool,
+    forceRender: PropTypes.bool,
+  };
+
   shouldComponentUpdate(nextProps) {
-    return this.props.isActive || nextProps.isActive;
+    return !this.props.isInactive || !nextProps.isInactive;
   }
 
   render() {
-    this._isActived = this.props.forceRender || this._isActived || this.props.isActive;
+    this._isActived = this.props.forceRender || this._isActived || !this.props.isInactive;
     if (!this._isActived) {
       return null;
     }
-    const { prefixCls, isActive, children, destroyInactivePanel, forceRender } = this.props;
+    const { prefixCls, isInactive, children, destroyInactivePanel, forceRender } = this.props;
     const contentCls = classnames({
       [`${prefixCls}-content`]: true,
-      [`${prefixCls}-content-active`]: isActive,
-      [`${prefixCls}-content-inactive`]: !isActive,
+      [`${prefixCls}-content-active`]: !isInactive,
+      [`${prefixCls}-content-inactive`]: isInactive,
     });
-    const child = !forceRender && !isActive && destroyInactivePanel ? null :
-      <div className={`${prefixCls}-content-box`}>{children}</div>;
+    const child = !forceRender && isInactive && destroyInactivePanel ? null : <div className={`${prefixCls}-content-box`}>{children}</div>;
     return (
       <div
         className={contentCls}
@@ -28,13 +35,3 @@ class PanelContent extends Component {
     );
   }
 }
-
-PanelContent.propTypes = {
-  prefixCls: PropTypes.string,
-  isActive: PropTypes.bool,
-  children: PropTypes.any,
-  destroyInactivePanel: PropTypes.bool,
-  forceRender: PropTypes.bool,
-};
-
-export default PanelContent;

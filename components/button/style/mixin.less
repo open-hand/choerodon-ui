@@ -68,7 +68,7 @@
       background: transparent;
     }
   }
-  > i.icon {
+  > i.@{iconfont-css-prefix} {
     color: currentColor;
   }
 }
@@ -97,7 +97,7 @@
     .button-size(@btn-height-lg; @btn-padding-lg; @btn-font-size-lg; @btn-border-radius-base);
     line-height: @btn-height-lg;
     > .@{iconfont-css-prefix} {
-      margin-right: @btn-height-lg / 8px;
+      margin-right: @btn-height-lg / 8;
       font-size: @icon-font-size-lg;
       line-height: @btn-height-lg;
     }
@@ -108,7 +108,7 @@
     line-height: @btn-height-sm;
     > .@{iconfont-css-prefix} {
       font-size: @icon-font-size-sm;
-      margin-right: @btn-height-sm / 8px;
+      margin-right: @btn-height-sm / 8;
       line-height: @btn-height-sm;
     }
   }
@@ -134,7 +134,7 @@
   box-sizing: border-box;
 
   > .@{iconfont-css-prefix} {
-    margin-right: @btn-height-base / 8px;
+    margin-right: @btn-height-base / 8;
     font-size: @icon-font-size-base;
   }
 
@@ -165,14 +165,14 @@
     .button-size(@btn-height-lg; @btn-padding-lg; @btn-font-size-lg; @btn-border-radius-base);
     line-height: @btn-height-lg;
     > .@{iconfont-css-prefix} {
-      margin-right: @btn-height-lg / 8px;
+      margin-right: @btn-height-lg / 8;
       font-size: @icon-font-size-lg;
     }
   }
   &&-lg&-dashed {
-    line-height: @btn-height-lg - 4px;
+    line-height: @btn-height-lg - .04rem;
     > .@{iconfont-css-prefix} {
-      line-height: @btn-height-lg - 4px;
+      line-height: @btn-height-lg - .04rem;
     }
   }
 
@@ -180,15 +180,15 @@
     .button-size(@btn-height-sm; @btn-padding-sm; @btn-font-size-sm; @btn-border-radius-sm);
     line-height: @btn-height-sm;
     > .@{iconfont-css-prefix} {
-      margin-right: @btn-height-sm / 8px;
+      margin-right: @btn-height-sm / 8;
       font-size: @icon-font-size-sm;
     }
   }
 
   &&-sm&-dashed {
-    line-height: @btn-height-sm - 4px;
+    line-height: @btn-height-sm - .04rem;
     > .@{iconfont-css-prefix} {
-      line-height: @btn-height-sm - 4px;
+      line-height: @btn-height-sm - .04rem;
     }
   }
 }
@@ -235,11 +235,11 @@
 .btn-circle(@btnClassName: btn) {
 
   .square(@btn-circle-size);
-  .button-size(@btn-circle-size; 0; @font-size-base + 2px; 50%);
+  .button-size(@btn-circle-size; 0; @font-size-base + .02rem; 50%);
 
   &.@{btnClassName}-lg {
     .square(@btn-circle-size-lg);
-    .button-size(@btn-circle-size-lg; 0; @btn-font-size-lg + 2px; 50%);
+    .button-size(@btn-circle-size-lg; 0; @btn-font-size-lg + .02rem; 50%);
     > .@{iconfont-css-prefix} {
       font-size: @icon-font-size-lg;
       margin-right: 0;
@@ -271,7 +271,7 @@
   .@{btnClassName} + span,
   & + .@{btnClassName},
   & + & {
-    margin-left: -1px;
+    margin-left: -.01rem;
   }
 
   .@{btnClassName}:not(:first-child):not(:last-child) {
@@ -307,13 +307,13 @@
     > .@{btnClassName}:last-child {
       border-bottom-right-radius: 0;
       border-top-right-radius: 0;
-      padding-right: 8px;
+      padding-right: .08rem;
     }
   }
 
   & > &:last-child:not(:first-child) > .@{btnClassName}:first-child {
     border-bottom-left-radius: 0;
     border-top-left-radius: 0;
-    padding-left: 8px;
+    padding-left: .08rem;
   }
 }

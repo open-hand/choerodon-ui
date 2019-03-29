@@ -28,7 +28,7 @@ title: Upload
 | data | 上传所需参数或返回上传参数的方法 | object\|function(file) | 无 |
 | defaultFileList | 默认已经上传的文件列表 | object\[] | 无 |
 | disabled | 是否禁用 | boolean | false |
-| fileList | 已经上传的文件列表（受控），使用此参数时，如果遇到 `onChange` 只调用一次的问题，请参考 [#2423](https://github.com/ant-design/ant-design/issues/2423) | object\[] | 无 |
+| fileList | 已经上传的文件列表（受控） | object\[] | 无 |
 | headers | 设置上传的请求头部，IE10 以上有效 | object | 无 |
 | listType | 上传列表的内建样式，支持三种基本样式 `text`, `picture` 和 `picture-card` | string | 'text' |
 | multiple | 是否支持多选文件，`ie10+` 支持。开启后按住 ctrl 可选择多个文件。 | boolean | false |
@@ -65,8 +65,6 @@ title: Upload
       linkProps: '{"download": "image"}', // 下载链接额外的 HTML 属性
    }
    ```
-
-   > `antd@1.9.0` 之前，multiple 模式下，此参数为一个对象数组 `[file, ...]`，`antd@1.9.0` 开始无论是否多选，均为一个对象。
 
 2. `fileList` 当前的文件列表。
 3. `event` 上传中的服务端响应内容，包含了上传进度等信息，高级浏览器支持。

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { cloneElement, Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import Trigger from '../trigger';
@@ -38,7 +38,7 @@ export default class Dropdown extends Component {
     onVisibleChange() {
     },
     placement: 'bottomLeft',
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -76,7 +76,7 @@ export default class Dropdown extends Component {
     if (overlayProps.onClick) {
       overlayProps.onClick(e);
     }
-  }
+  };
 
   onVisibleChange = (visible) => {
     const props = this.props;
@@ -86,7 +86,7 @@ export default class Dropdown extends Component {
       });
     }
     props.onVisibleChange(visible);
-  }
+  };
 
   getMenuElement() {
     const { overlay, prefixCls } = this.props;
@@ -97,7 +97,7 @@ export default class Dropdown extends Component {
     if (typeof overlay.type === 'string') {
       delete extraOverlayProps.prefixCls;
     }
-    return React.cloneElement(overlay, extraOverlayProps);
+    return cloneElement(overlay, extraOverlayProps);
   }
 
   getPopupDomNode() {
@@ -111,17 +111,17 @@ export default class Dropdown extends Component {
       if (rootNode && overlayNode && rootNode.offsetWidth > overlayNode.offsetWidth) {
         overlayNode.style.minWidth = `${rootNode.offsetWidth}px`;
         if (this.trigger &&
-            this.trigger._component &&
-            this.trigger._component.alignInstance) {
+          this.trigger._component &&
+          this.trigger._component.alignInstance) {
           this.trigger._component.alignInstance.forceAlign();
         }
       }
     }
-  }
+  };
 
   saveTrigger = (node) => {
     this.trigger = node;
-  }
+  };
 
   render() {
     const {

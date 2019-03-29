@@ -1,5 +1,5 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import React, { Component, ReactElement } from 'react';
+import ReactDOM from 'react-dom';
 import Dialog from './Dialog';
 import IDialogPropTypes from './IDialogPropTypes';
 import ContainerRender from '../util/ContainerRender';
@@ -7,12 +7,12 @@ import Portal from '../util/Portal';
 
 const IS_REACT_16 = 'createPortal' in ReactDOM;
 
-class DialogWrap extends React.Component<IDialogPropTypes, any> {
+class DialogWrap extends Component<IDialogPropTypes, any> {
   static defaultProps = {
     visible: false,
   };
 
-  _component: React.ReactElement<any>;
+  _component: ReactElement<any>;
 
   renderComponent: (props: any) => void;
 

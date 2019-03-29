@@ -3,8 +3,8 @@
 @import "../../button/style/ripple";
 @import "./card-style";
 
-@tab-prefix-cls: ~"@{ant-prefix}-tabs";
-@ripple-prefix-cls: ~"@{ant-prefix}-ripple";
+@tab-prefix-cls: ~"@{c7n-prefix}-tabs";
+@ripple-prefix-cls: ~"@{c7n-prefix}-ripple";
 
 .@{tab-prefix-cls} {
   .reset-component;
@@ -16,9 +16,9 @@
     z-index: 1;
     position: absolute;
     left: 0;
-    bottom: 1px;
+    bottom: .01rem;
     box-sizing: border-box;
-    height: 2px;
+    height: .02rem;
     background-color: @tabs-ink-bar-bg-color;
     transform-origin: 0 0;
   }
@@ -37,7 +37,7 @@
     box-sizing: border-box;
     position: relative;
     white-space: nowrap;
-    margin-bottom: -1px;
+    margin-bottom: -.01rem;
     transition: padding .3s @ease-in-out;
     .clearfix;
 
@@ -46,8 +46,6 @@
       padding-right: @tab-scrolling-size;
     }
   }
-
-  // https://github.com/ant-design/ant-design/issues/9104
   &-bottom &-bar {
     border-bottom: none;
     border-top: @border-width-base @border-style-base @border-color-split;
@@ -55,12 +53,12 @@
 
   &-bottom &-ink-bar {
     bottom: auto;
-    top: 1px;
+    top: .01rem;
   }
 
   &-bottom &-nav-container {
     margin-bottom: 0;
-    margin-top: -1px;
+    margin-top: -.01rem;
   }
 
   &-tab-prev,
@@ -102,8 +100,8 @@
       text-align: center;
       text-transform: none;
       .iconfont-mixin();
-      width: 18px;
-      height: 18px;
+      width: .18rem;
+      height: .18rem;
     }
   }
 
@@ -116,7 +114,7 @@
   }
 
   &-tab-next {
-    right: 2px;
+    right: .02rem;
 
     &-icon:before {
       content: "\e409";
@@ -135,7 +133,7 @@
 
   &-nav-wrap {
     overflow: hidden;
-    margin-bottom: -1px;
+    margin-bottom: -.01rem;
   }
 
   &-nav-scroll {
@@ -196,7 +194,7 @@
       }
 
       .@{iconfont-css-prefix} {
-        margin-right: 8px;
+        margin-right: .08rem;
       }
     }
 
@@ -211,7 +209,7 @@
   }
 
   &-large &-tab {
-    padding: 16px;
+    padding: .16rem;
   }
 
   &-small &-nav-container {
@@ -219,7 +217,7 @@
   }
 
   &-small &-tab {
-    padding: 8px 16px;
+    padding: .08rem .16rem;
   }
 
   &:not(&-vertical) {
@@ -304,7 +302,7 @@
       }
 
       .@{tab-prefix-cls}-ink-bar {
-        width: 2px;
+        width: .02rem;
         left: auto;
         height: auto;
         top: 0;
@@ -340,23 +338,23 @@
     > .@{tab-prefix-cls}-bar {
       float: left;
       border-right: @border-width-base @border-style-base @border-color-split;
-      margin-right: -1px;
+      margin-right: -.01rem;
       margin-bottom: 0;
       .@{tab-prefix-cls}-tab {
         text-align: right;
       }
       .@{tab-prefix-cls}-nav-container {
-        margin-right: -1px;
+        margin-right: -.01rem;
       }
       .@{tab-prefix-cls}-nav-wrap {
-        margin-right: -1px;
+        margin-right: -.01rem;
       }
       .@{tab-prefix-cls}-ink-bar {
-        right: 1px;
+        right: .01rem;
       }
     }
     > .@{tab-prefix-cls}-content {
-      padding-left: 24px;
+      padding-left: .24rem;
       border-left: @border-width-base @border-style-base @border-color-split;
     }
   }
@@ -365,27 +363,27 @@
     > .@{tab-prefix-cls}-bar {
       float: right;
       border-left: @border-width-base @border-style-base @border-color-split;
-      margin-left: -1px;
+      margin-left: -.01rem;
       margin-bottom: 0;
       .@{tab-prefix-cls}-nav-container {
-        margin-left: -1px;
+        margin-left: -.01rem;
       }
       .@{tab-prefix-cls}-nav-wrap {
-        margin-left: -1px;
+        margin-left: -.01rem;
       }
       .@{tab-prefix-cls}-ink-bar {
-        left: 1px;
+        left: .01rem;
       }
     }
     > .@{tab-prefix-cls}-content {
-      padding-right: 24px;
+      padding-right: .24rem;
       border-right: @border-width-base @border-style-base @border-color-split;
     }
   }
 
   &-bottom > &-bar {
     margin-bottom: 0;
-    margin-top: 16px;
+    margin-top: .16rem;
   }
 }
 

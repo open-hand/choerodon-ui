@@ -1,0 +1,308 @@
+@import "../../../components/style/themes/default";
+
+@btn-prefix-cls: ~"@{c7n-prefix}-pro-btn";
+
+@progress-cls: ~"ant-progress";
+
+.@{btn-prefix-cls} {
+  background-color: @btn-default-bg;
+  border: none;
+  box-shadow: @btn-box-shadow;
+  border-radius: @border-radius-base;
+  cursor: pointer;
+  display: inline-block;
+  outline: none;
+  padding: .03rem .1rem .04rem .1rem;
+  position: relative;
+  text-align: center;
+  user-select: none;
+  vertical-align: text-bottom;
+  transition: all .3s ease-out;
+  line-height: 1.5;
+
+  &:focus {
+    box-shadow: @btn-focus-box-shadow;
+  }
+
+  &:enabled:active {
+    box-shadow: @btn-active-box-shadow;
+  }
+
+  > .@{iconfont-css-prefix} {
+    margin-right: .05rem;
+    font-size: @btn-icon-size;
+  }
+
+  &::-moz-focus-inner {
+    padding: 0;
+    border: 0;
+  }
+
+  &-icon-only {
+    padding: 0;
+    border-radius: 50%;
+    width: @btn-circle-size;
+    height: @btn-circle-size;
+    > .@{iconfont-css-prefix} {
+      font-size: @btn-icon-size + .06rem;
+      line-height: 1.5;
+      margin-right: 0;
+    }
+    &.@{btn-prefix-cls}-sm {
+      padding: 0;
+      width: @btn-circle-size-sm;
+      height: @btn-circle-size-sm;
+      > .@{iconfont-css-prefix} {
+        font-size: @btn-icon-size;
+      }
+    }
+    &.@{btn-prefix-cls}-lg {
+      padding: 0;
+      width: @btn-circle-size-lg;
+      height: @btn-circle-size-lg;
+      > .@{iconfont-css-prefix} {
+        font-size: @btn-icon-size + .1rem;
+      }
+    }
+  }
+
+  &-lg {
+    font-size: @font-size-lg;
+    padding: .07rem .12rem;
+    .@{c7n-prefix}-pro-icon {
+      font-size: @font-size-lg;
+    }
+  }
+
+  &-sm {
+    font-size: @font-size-sm;
+    padding: 0 .08rem;
+    .@{c7n-prefix}-pro-icon {
+      font-size: @font-size-sm;
+    }
+  }
+
+  &-flat {
+    background: transparent;
+    box-shadow: none;
+    &:enabled:hover,
+    &:enabled:focus {
+      background-color: @btn-hover-default-color;
+      box-shadow: none;
+    }
+    &:enabled:active {
+      box-shadow: none;
+    }
+  }
+  &-raised,
+  &-raised:disabled {
+    color: #fff;
+
+    .@{progress-cls} circle {
+      stroke: #fff;
+    }
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    &:before {
+      position: absolute;
+      top: -.01rem;
+      left: -.01rem;
+      bottom: -.01rem;
+      right: -.01rem;
+      background: #fff;
+      opacity: .35;
+      content: "";
+      border-radius: inherit;
+      z-index: 1;
+      transition: opacity .2s;
+      pointer-events: none;
+    }
+  }
+
+  // gray
+  &-gray {
+    &.@{btn-prefix-cls}-raised {
+      color: @btn-default-color;
+      background-color: #f5f5f5;
+      &:enabled:hover,
+      &:enabled:focus {
+        background-color: #e6e6e6;
+      }
+      &:disabled {
+        color: @disabled-color;
+      }
+    }
+    &.@{btn-prefix-cls}-flat {
+      color: #d0d0d0;
+
+      .@{progress-cls} circle {
+        stroke: #d0d0d0;
+      }
+    }
+  }
+
+  // blue
+  &-blue {
+    &.@{btn-prefix-cls}-raised {
+      background-color: @blue-6;
+      &:enabled:hover,
+      &:enabled:focus {
+        background-color: @blue-7;
+      }
+      .@{c7n-prefix}-pro-ripple {
+        background-color: @ripple-light-color;
+      }
+    }
+    &.@{btn-prefix-cls}-flat {
+      color: @blue-6;
+
+      .@{progress-cls} circle {
+        stroke: @blue-6;
+      }
+    }
+  }
+
+  // green
+  &-green {
+    &.@{btn-prefix-cls}-raised {
+      background-color: @green-6;
+      &:enabled:hover,
+      &:enabled:focus {
+        background-color: @green-7;
+      }
+      .@{c7n-prefix}-pro-ripple {
+        background-color: @ripple-light-color;
+      }
+    }
+    &.@{btn-prefix-cls}-flat {
+      color: @green-6;
+
+      .@{progress-cls} circle {
+        stroke: @green-6;
+      }
+    }
+  }
+
+  // red
+  &-red {
+    &.@{btn-prefix-cls}-raised {
+      background-color: @red-6;
+      &:enabled:hover,
+      &:enabled:focus {
+        background-color: @red-7;
+      }
+      .@{c7n-prefix}-pro-ripple {
+        background-color: @ripple-light-color;
+      }
+    }
+    &.@{btn-prefix-cls}-flat {
+      color: @red-6;
+
+      .@{progress-cls} circle {
+        stroke: @red-6;
+      }
+    }
+  }
+
+  // yellow
+  &-yellow {
+    &.@{btn-prefix-cls}-raised {
+      background-color: @yellow-6;
+      &:enabled:hover,
+      &:enabled:focus {
+        background-color: @yellow-7;
+      }
+      .@{c7n-prefix}-pro-ripple {
+        background-color: @ripple-light-color;
+      }
+    }
+    &.@{btn-prefix-cls}-flat {
+      color: @yellow-6;
+
+      .@{progress-cls} circle {
+        stroke: @yellow-6;
+      }
+    }
+  }
+
+  // purple
+  &-purple {
+    &.@{btn-prefix-cls}-raised {
+      background-color: @purple-6;
+      &:enabled:hover,
+      &:enabled:focus {
+        background-color: @purple-7;
+      }
+      .@{c7n-prefix}-pro-ripple {
+        background-color: @ripple-light-color;
+      }
+    }
+    &.@{btn-prefix-cls}-flat {
+      color: @purple-6;
+
+      .@{progress-cls} circle {
+        stroke: @purple-6;
+      }
+    }
+  }
+
+  // dark
+  &-dark {
+    &.@{btn-prefix-cls}-raised {
+      background-color: @dark-4;
+      &:enabled:hover,
+      &:enabled:focus {
+        background-color: @dark-5;
+      }
+      .@{c7n-prefix}-pro-ripple {
+        background-color: @ripple-light-color;
+      }
+    }
+    &.@{btn-prefix-cls}-flat {
+      color: @dark-6;
+
+      .@{progress-cls} circle {
+        stroke: @dark-6;
+      }
+    }
+  }
+
+  &-default {
+    color: @btn-default-color;
+    .@{progress-cls} circle {
+      stroke: @btn-default-color;
+    }
+    &.@{btn-prefix-cls}-raised:disabled {
+      color: @disabled-color;
+      .@{progress-cls} circle {
+        stroke: @disabled-color;
+      }
+    }
+    &:focus {
+      color: @primary-color;
+    }
+  }
+
+  .@{progress-cls}.@{progress-cls}-loading {
+    line-height: 1;
+    margin-right: .01rem;
+
+    & + span {
+      margin-left: .05rem;
+    }
+    .@{progress-cls}-inner {
+      width: .15rem;
+      height: .15rem;
+    }
+  }
+
+  & + & {
+    margin-left: .1rem;
+  }
+
+  > * {
+    vertical-align: middle;
+  }
+}

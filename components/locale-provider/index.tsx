@@ -1,8 +1,8 @@
-import * as React from 'react';
+import { Children, Component, ReactElement } from 'react';
 import PropTypes from 'prop-types';
-import * as moment from 'moment';
+import moment from 'moment';
 import interopDefault from '../_util/interopDefault';
-import { ModalLocale, changeConfirmLocale } from '../modal/locale';
+import { changeConfirmLocale, ModalLocale } from '../modal/locale';
 
 export interface Locale {
   locale: string;
@@ -20,7 +20,7 @@ export interface Locale {
 
 export interface LocaleProviderProps {
   locale: Locale;
-  children?: React.ReactElement<any>;
+  children?: ReactElement<any>;
 }
 
 function setMomentLocale(locale: Locale) {
@@ -31,7 +31,7 @@ function setMomentLocale(locale: Locale) {
   }
 }
 
-export default class LocaleProvider extends React.Component<LocaleProviderProps, any> {
+export default class LocaleProvider extends Component<LocaleProviderProps, any> {
   static propTypes = {
     locale: PropTypes.object,
   };
@@ -41,12 +41,12 @@ export default class LocaleProvider extends React.Component<LocaleProviderProps,
   };
 
   static childContextTypes = {
-    antLocale: PropTypes.object,
+    c7nLocale: PropTypes.object,
   };
 
   getChildContext() {
     return {
-      antLocale: {
+      c7nLocale: {
         ...this.props.locale,
         exist: true,
       },
@@ -76,6 +76,6 @@ export default class LocaleProvider extends React.Component<LocaleProviderProps,
   }
 
   render() {
-    return React.Children.only(this.props.children);
+    return Children.only(this.props.children);
   }
 }

@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
-import KeyCode from '../util/KeyCode';
+import KeyCode from '../../_util/KeyCode';
 import classNames from 'classnames';
 import { connect } from 'mini-store';
-import { noop } from './util';
+import noop from 'lodash/noop';
 import Checkbox from '../../checkbox/Checkbox';
 import Ripple from '../../ripple';
 /* eslint react/no-is-mounted:0 */

@@ -1,16 +1,15 @@
-import React from 'react';
+import React, { createElement } from 'react';
 import { EditorState, Modifier } from 'draft-js';
+import noop from 'lodash/noop';
 import Suggestions from '../component/Suggestions.react';
 import mentionStore from '../model/mentionStore';
 import exportContent from '../utils/exportContent';
-
-function noop() {}
 
 const MentionContentComponent = (props) => {
   const { entityKey, tag, callbacks } = props;
   const contentState = callbacks.getEditorState().getCurrentContent();
   const data = contentState.getEntity(entityKey).getData();
-  return React.createElement(tag, { ...props, data });
+  return createElement(tag, { ...props, data });
 };
 
 function mentionContentStrategy(contentBlock, callback, contentState) {
@@ -59,7 +58,7 @@ export default function createImmutableMention() {
           }),
           '@',
           null,
-          currentContent.getLastCreatedEntityKey()
+          currentContent.getLastCreatedEntityKey(),
         );
         return EditorState.push(editorState, updatedContent, 'insert-mention');
       }

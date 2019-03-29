@@ -1,8 +1,10 @@
-import * as React from 'react';
-import * as moment from 'moment';
-import { PREFIX_CLS } from './Constants';
+import React, { Component, ReactElement } from 'react';
+import { Moment } from 'moment';
+import { Size } from '../_util/enum';
 import Select from '../select';
-import { Group, Button, RadioChangeEvent } from '../radio';
+import { Button, Group, RadioChangeEvent } from '../radio';
+import { getPrefixCls } from '../configure';
+
 const Option = Select.Option;
 
 export interface HeaderProps {
@@ -12,30 +14,34 @@ export interface HeaderProps {
   yearSelectOffset?: number;
   yearSelectTotal?: number;
   type?: string;
-  onValueChange?: (value: moment.Moment) => void;
+  onValueChange?: (value: Moment) => void;
   onTypeChange?: (type: string) => void;
   value: any;
-  validRange ?: [moment.Moment, moment.Moment];
+  validRange ?: [Moment, Moment];
 }
 
-export default class Header extends React.Component<HeaderProps, any> {
+export default class Header extends Component<HeaderProps, any> {
+  static displayName = 'Header';
   static defaultProps = {
-    prefixCls: `${PREFIX_CLS}-header`,
     yearSelectOffset: 10,
     yearSelectTotal: 20,
   };
 
   private calenderHeaderNode: HTMLDivElement;
 
+  getPrefixCls() {
+    return getPrefixCls('fullcalendar-header', this.props.prefixCls);
+  }
+
   getYearSelectElement(year: number) {
     const {
       yearSelectOffset,
       yearSelectTotal,
       locale,
-      prefixCls,
       fullscreen,
       validRange,
     } = this.props;
+    const prefixCls = this.getPrefixCls();
     let start = year - (yearSelectOffset as number);
     let end = start + (yearSelectTotal as number);
     if (validRange) {
@@ -43,13 +49,13 @@ export default class Header extends React.Component<HeaderProps, any> {
       end = validRange[1].get('year') + 1;
     }
     const suffix = locale.year === '年' ? '年' : '';
-    const options: React.ReactElement<any>[] = [];
+    const options: ReactElement<any>[] = [];
     for (let index = start; index < end; index++) {
       options.push(<Option key={`${index}`}>{index + suffix}</Option>);
     }
     return (
       <Select
-        size={fullscreen ? 'default' : 'small'}
+        size={fullscreen ? Size.default : Size.small}
         dropdownMatchSelectWidth={false}
         className={`${prefixCls}-year-select`}
         onChange={this.onYearChange}
@@ -61,7 +67,7 @@ export default class Header extends React.Component<HeaderProps, any> {
     );
   }
 
-  getMonthsLocale(value: moment.Moment) {
+  getMonthsLocale(value: Moment) {
     const current = value.clone();
     const localeData = value.localeData();
     const months: any[] = [];
@@ -74,8 +80,9 @@ export default class Header extends React.Component<HeaderProps, any> {
 
   getMonthSelectElement(month: number, months: number[]) {
     const props = this.props;
-    const { prefixCls, fullscreen, validRange, value } = props;
-    const options: React.ReactElement<any>[] = [];
+    const { fullscreen, validRange, value } = props;
+    const prefixCls = this.getPrefixCls();
+    const options: ReactElement<any>[] = [];
     let start = 0;
     let end = 12;
     if (validRange) {
@@ -92,7 +99,7 @@ export default class Header extends React.Component<HeaderProps, any> {
     }
     return (
       <Select
-        size={fullscreen ? 'default' : 'small'}
+        size={fullscreen ? Size.default : Size.small}
         dropdownMatchSelectWidth={false}
         className={`${prefixCls}-month-select`}
         value={String(month)}
@@ -110,7 +117,7 @@ export default class Header extends React.Component<HeaderProps, any> {
     newValue.year(parseInt(year, 10));
     // switch the month so that it remains within range when year changes
     if (validRange) {
-      const [ start, end ] = validRange;
+      const [start, end] = validRange;
       const newYear = newValue.get('year');
       const newMonth = newValue.get('month');
       if (newYear === end.get('year') && newMonth > end.get('month')) {
@@ -125,7 +132,7 @@ export default class Header extends React.Component<HeaderProps, any> {
     if (onValueChange) {
       onValueChange(newValue);
     }
-  }
+  };
 
   onMonthChange = (month: string) => {
     const newValue = this.props.value.clone();
@@ -134,27 +141,27 @@ export default class Header extends React.Component<HeaderProps, any> {
     if (onValueChange) {
       onValueChange(newValue);
     }
-  }
+  };
 
   onTypeChange = (e: RadioChangeEvent) => {
     const onTypeChange = this.props.onTypeChange;
     if (onTypeChange) {
       onTypeChange(e.target.value);
     }
-  }
+  };
 
   getCalenderHeaderNode = (node: HTMLDivElement) => {
     this.calenderHeaderNode = node;
-  }
+  };
 
   render() {
-    const { type, value, prefixCls, locale, fullscreen } = this.props;
+    const { type, value, locale, fullscreen } = this.props;
+    const prefixCls = this.getPrefixCls();
     const yearSelect = this.getYearSelectElement(value.year());
     const monthSelect = type === 'date' ?
       this.getMonthSelectElement(value.month(), this.getMonthsLocale(value)) : null;
-    const size = (fullscreen ? 'default' : 'small') as any;
     const typeSwitch = (
-      <Group onChange={this.onTypeChange} value={type} size={size}>
+      <Group onChange={this.onTypeChange} value={type} size={fullscreen ? Size.default : Size.small}>
         <Button value="date">{locale.month}</Button>
         <Button value="month">{locale.year}</Button>
       </Group>

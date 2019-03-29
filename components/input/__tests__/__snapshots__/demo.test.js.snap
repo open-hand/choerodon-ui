@@ -6,22 +6,22 @@ exports[`renders ./components/input/demo/addon.md correctly 1`] = `
     style="margin-bottom:16px"
   >
     <span
-      class="ant-input-wrapper"
+      class="c7n-input-wrapper"
     >
       <div
-        class="ant-input-content"
+        class="c7n-input-content"
       >
         <div
-          class="ant-input-rendered-wrapper"
+          class="c7n-input-rendered-wrapper"
         >
           <div
-            class="ant-input-rendered"
+            class="c7n-input-rendered"
           >
             <div
-              class="ant-input-placeholder"
+              class="c7n-input-placeholder"
             />
             <input
-              class="ant-input"
+              class="c7n-input"
               maxlength="30"
               type="text"
               value="mysite"
@@ -29,20 +29,20 @@ exports[`renders ./components/input/demo/addon.md correctly 1`] = `
           </div>
         </div>
         <span
-          class="ant-input-icon"
+          class="c7n-input-icon"
         >
           <span
-            class="ant-input-icon-copy ant-input-length-info"
+            class="c7n-input-icon-copy c7n-input-length-info"
           >
             0/30
           </span>
         </span>
       </div>
       <div
-        class="ant-input-underline"
+        class="c7n-input-underline"
       >
         <span
-          class="ant-input-ripple"
+          class="c7n-input-ripple"
         />
       </div>
     </span>
@@ -51,22 +51,22 @@ exports[`renders ./components/input/demo/addon.md correctly 1`] = `
     style="margin-bottom:16px"
   >
     <span
-      class="ant-input-wrapper"
+      class="c7n-input-wrapper"
     >
       <div
-        class="ant-input-content"
+        class="c7n-input-content"
       >
         <div
-          class="ant-input-rendered-wrapper"
+          class="c7n-input-rendered-wrapper"
         >
           <div
-            class="ant-input-rendered"
+            class="c7n-input-rendered"
           >
             <div
-              class="ant-input-placeholder"
+              class="c7n-input-placeholder"
             />
             <input
-              class="ant-input"
+              class="c7n-input"
               type="text"
               value="mysite"
             />
@@ -74,10 +74,10 @@ exports[`renders ./components/input/demo/addon.md correctly 1`] = `
         </div>
       </div>
       <div
-        class="ant-input-underline"
+        class="c7n-input-underline"
       >
         <span
-          class="ant-input-ripple"
+          class="c7n-input-ripple"
         />
       </div>
     </span>
@@ -86,37 +86,37 @@ exports[`renders ./components/input/demo/addon.md correctly 1`] = `
     style="margin-bottom:16px"
   >
     <span
-      class="ant-input-wrapper ant-input-has-label"
+      class="c7n-input-wrapper c7n-input-has-label"
     >
       <div
-        class="ant-input-content"
+        class="c7n-input-content"
       >
         <div
-          class="ant-input-label"
+          class="c7n-input-label"
         >
           mysite
         </div>
         <div
-          class="ant-input-rendered-wrapper"
+          class="c7n-input-rendered-wrapper"
         >
           <div
-            class="ant-input-rendered"
+            class="c7n-input-rendered"
           >
             <div
-              class="ant-input-placeholder"
+              class="c7n-input-placeholder"
             />
             <input
-              class="ant-input"
+              class="c7n-input"
               type="text"
             />
           </div>
         </div>
       </div>
       <div
-        class="ant-input-underline"
+        class="c7n-input-underline"
       >
         <span
-          class="ant-input-ripple"
+          class="c7n-input-ripple"
         />
       </div>
     </span>
@@ -127,18 +127,18 @@ exports[`renders ./components/input/demo/addon.md correctly 1`] = `
 exports[`renders ./components/input/demo/autosize-textarea.md correctly 1`] = `
 <div>
   <span
-    class="ant-input-wrapper ant-input-textarea"
+    class="c7n-input-wrapper c7n-input-textarea"
   >
     <textarea
-      class="ant-input"
+      class="c7n-input"
       placeholder="Autosize height based on content lines"
     />
     <div>
       <hr
-        class="ant-input-border"
+        class="c7n-input-border"
       />
       <hr
-        class="ant-input-border-active"
+        class="c7n-input-border-active"
       />
     </div>
   </span>
@@ -146,18 +146,18 @@ exports[`renders ./components/input/demo/autosize-textarea.md correctly 1`] = `
     style="margin:24px 0"
   />
   <span
-    class="ant-input-wrapper ant-input-textarea"
+    class="c7n-input-wrapper c7n-input-textarea"
   >
     <textarea
-      class="ant-input"
+      class="c7n-input"
       placeholder="Autosize height with minimum and maximum number of lines"
     />
     <div>
       <hr
-        class="ant-input-border"
+        class="c7n-input-border"
       />
       <hr
-        class="ant-input-border-active"
+        class="c7n-input-border-active"
       />
     </div>
   </span>
@@ -166,97 +166,97 @@ exports[`renders ./components/input/demo/autosize-textarea.md correctly 1`] = `
 
 exports[`renders ./components/input/demo/basic.md correctly 1`] = `
 <div
-  class="ant-row"
+  class="c7n-row"
   style="margin-left:-4px;margin-right:-4px"
 >
   <div
-    class="ant-col-12"
+    class="c7n-col-12"
     style="padding-left:4px;padding-right:4px"
   >
     <span
-      class="ant-input-wrapper ant-input-has-label"
+      class="c7n-input-wrapper c7n-input-has-label"
     >
       <div
-        class="ant-input-content"
+        class="c7n-input-content"
       >
         <div
-          class="ant-input-label"
+          class="c7n-input-label"
         >
           Basic
         </div>
         <div
-          class="ant-input-rendered-wrapper"
+          class="c7n-input-rendered-wrapper"
         >
           <div
-            class="ant-input-rendered"
+            class="c7n-input-rendered"
           >
             <div
-              class="ant-input-placeholder"
+              class="c7n-input-placeholder"
             >
               Basic usage
             </div>
             <input
-              class="ant-input ant-input-has-copy"
+              class="c7n-input c7n-input-has-copy"
               maxlength="50"
               required=""
               type="text"
             />
             <span
-              class="ant-input-icon"
+              class="c7n-input-icon"
             >
               <i
-                class="icon icon-library_books ant-input-icon-copy"
+                class="icon icon-library_books c7n-input-icon-copy"
               />
             </span>
           </div>
         </div>
         <span
-          class="ant-input-icon"
+          class="c7n-input-icon"
         >
           <span
-            class="ant-input-icon-copy ant-input-length-info"
+            class="c7n-input-icon-copy c7n-input-length-info"
           >
             0/50
           </span>
         </span>
       </div>
       <div
-        class="ant-input-underline"
+        class="c7n-input-underline"
       >
         <span
-          class="ant-input-ripple"
+          class="c7n-input-ripple"
         />
       </div>
     </span>
   </div>
   <div
-    class="ant-col-12"
+    class="c7n-col-12"
     style="padding-left:4px;padding-right:4px"
   >
     <span
-      class="ant-input-wrapper ant-input-disabled ant-input-has-label"
+      class="c7n-input-wrapper c7n-input-disabled c7n-input-has-label"
     >
       <div
-        class="ant-input-content"
+        class="c7n-input-content"
       >
         <div
-          class="ant-input-label"
+          class="c7n-input-label"
         >
           Basic
         </div>
         <div
-          class="ant-input-rendered-wrapper"
+          class="c7n-input-rendered-wrapper"
         >
           <div
-            class="ant-input-rendered"
+            class="c7n-input-rendered"
           >
             <div
-              class="ant-input-placeholder"
+              class="c7n-input-placeholder"
             >
               Basic usage
             </div>
             <input
-              class="ant-input"
+              class="c7n-input"
               disabled=""
               maxlength="20"
               required=""
@@ -266,20 +266,20 @@ exports[`renders ./components/input/demo/basic.md correctly 1`] = `
           </div>
         </div>
         <span
-          class="ant-input-icon"
+          class="c7n-input-icon"
         >
           <span
-            class="ant-input-icon-copy ant-input-length-info"
+            class="c7n-input-icon-copy c7n-input-length-info"
           >
             0/20
           </span>
         </span>
       </div>
       <div
-        class="ant-input-underline"
+        class="c7n-input-underline"
       >
         <span
-          class="ant-input-ripple"
+          class="c7n-input-ripple"
         />
       </div>
     </span>
@@ -290,28 +290,28 @@ exports[`renders ./components/input/demo/basic.md correctly 1`] = `
 exports[`renders ./components/input/demo/group.md correctly 1`] = `
 <div>
   <span
-    class="ant-input-group ant-input-group-lg"
+    class="c7n-input-group c7n-input-group-lg"
   >
     <div
-      class="ant-col-5"
+      class="c7n-col-5"
     >
       <span
-        class="ant-input-wrapper"
+        class="c7n-input-wrapper"
       >
         <div
-          class="ant-input-content"
+          class="c7n-input-content"
         >
           <div
-            class="ant-input-rendered-wrapper"
+            class="c7n-input-rendered-wrapper"
           >
             <div
-              class="ant-input-rendered"
+              class="c7n-input-rendered"
             >
               <div
-                class="ant-input-placeholder"
+                class="c7n-input-placeholder"
               />
               <input
-                class="ant-input"
+                class="c7n-input"
                 type="text"
                 value="0571"
               />
@@ -319,34 +319,34 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
           </div>
         </div>
         <div
-          class="ant-input-underline"
+          class="c7n-input-underline"
         >
           <span
-            class="ant-input-ripple"
+            class="c7n-input-ripple"
           />
         </div>
       </span>
     </div>
     <div
-      class="ant-col-8"
+      class="c7n-col-8"
     >
       <span
-        class="ant-input-wrapper"
+        class="c7n-input-wrapper"
       >
         <div
-          class="ant-input-content"
+          class="c7n-input-content"
         >
           <div
-            class="ant-input-rendered-wrapper"
+            class="c7n-input-rendered-wrapper"
           >
             <div
-              class="ant-input-rendered"
+              class="c7n-input-rendered"
             >
               <div
-                class="ant-input-placeholder"
+                class="c7n-input-placeholder"
               />
               <input
-                class="ant-input"
+                class="c7n-input"
                 type="text"
                 value="26888888"
               />
@@ -354,10 +354,10 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
           </div>
         </div>
         <div
-          class="ant-input-underline"
+          class="c7n-input-underline"
         >
           <span
-            class="ant-input-ripple"
+            class="c7n-input-ripple"
           />
         </div>
       </span>
@@ -365,26 +365,26 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
   </span>
   <br />
   <span
-    class="ant-input-group ant-input-group-compact"
+    class="c7n-input-group c7n-input-group-compact"
   >
     <span
-      class="ant-input-wrapper"
+      class="c7n-input-wrapper"
       style="width:20%"
     >
       <div
-        class="ant-input-content"
+        class="c7n-input-content"
       >
         <div
-          class="ant-input-rendered-wrapper"
+          class="c7n-input-rendered-wrapper"
         >
           <div
-            class="ant-input-rendered"
+            class="c7n-input-rendered"
           >
             <div
-              class="ant-input-placeholder"
+              class="c7n-input-placeholder"
             />
             <input
-              class="ant-input"
+              class="c7n-input"
               type="text"
               value="0571"
             />
@@ -392,31 +392,31 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
         </div>
       </div>
       <div
-        class="ant-input-underline"
+        class="c7n-input-underline"
       >
         <span
-          class="ant-input-ripple"
+          class="c7n-input-ripple"
         />
       </div>
     </span>
     <span
-      class="ant-input-wrapper"
+      class="c7n-input-wrapper"
       style="width:30%"
     >
       <div
-        class="ant-input-content"
+        class="c7n-input-content"
       >
         <div
-          class="ant-input-rendered-wrapper"
+          class="c7n-input-rendered-wrapper"
         >
           <div
-            class="ant-input-rendered"
+            class="c7n-input-rendered"
           >
             <div
-              class="ant-input-placeholder"
+              class="c7n-input-placeholder"
             />
             <input
-              class="ant-input"
+              class="c7n-input"
               type="text"
               value="26888888"
             />
@@ -424,42 +424,42 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
         </div>
       </div>
       <div
-        class="ant-input-underline"
+        class="c7n-input-underline"
       >
         <span
-          class="ant-input-ripple"
+          class="c7n-input-ripple"
         />
       </div>
     </span>
   </span>
   <br />
   <span
-    class="ant-input-group ant-input-group-compact"
+    class="c7n-input-group c7n-input-group-compact"
   >
     <div
-      class="ant-select ant-select-has-value ant-select-enabled"
+      class="c7n-select c7n-select-has-value c7n-select-enabled"
     >
       <div
         aria-autocomplete="list"
         aria-expanded="false"
         aria-haspopup="true"
-        class="ant-select-selection
-            ant-select-selection--single"
+        class="c7n-select-selection
+            c7n-select-selection--single"
         role="combobox"
         tabindex="0"
       >
         <div
-          class="ant-select-selection__rendered"
+          class="c7n-select-selection__rendered"
         >
           <div
-            class="ant-select-selection-selected-value"
+            class="c7n-select-selection-selected-value"
             style="opacity:1"
             title="Zhejiang"
           >
             Zhejiang
           </div>
           <span
-            class="ant-select-arrow"
+            class="c7n-select-arrow"
             style="user-select:none;-webkit-user-select:none"
             unselectable="unselectable"
           >
@@ -471,31 +471,31 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
         </div>
       </div>
       <div
-        class="ant-select-underline"
+        class="c7n-select-underline"
       >
         <span
-          class="ant-select-ripple"
+          class="c7n-select-ripple"
         />
       </div>
     </div>
     <span
-      class="ant-input-wrapper"
+      class="c7n-input-wrapper"
       style="width:50%"
     >
       <div
-        class="ant-input-content"
+        class="c7n-input-content"
       >
         <div
-          class="ant-input-rendered-wrapper"
+          class="c7n-input-rendered-wrapper"
         >
           <div
-            class="ant-input-rendered"
+            class="c7n-input-rendered"
           >
             <div
-              class="ant-input-placeholder"
+              class="c7n-input-placeholder"
             />
             <input
-              class="ant-input"
+              class="c7n-input"
               type="text"
               value="Xihu District, Hangzhou"
             />
@@ -503,42 +503,42 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
         </div>
       </div>
       <div
-        class="ant-input-underline"
+        class="c7n-input-underline"
       >
         <span
-          class="ant-input-ripple"
+          class="c7n-input-ripple"
         />
       </div>
     </span>
   </span>
   <br />
   <span
-    class="ant-input-group ant-input-group-compact"
+    class="c7n-input-group c7n-input-group-compact"
   >
     <div
-      class="ant-select ant-select-has-value ant-select-enabled"
+      class="c7n-select c7n-select-has-value c7n-select-enabled"
     >
       <div
         aria-autocomplete="list"
         aria-expanded="false"
         aria-haspopup="true"
-        class="ant-select-selection
-            ant-select-selection--single"
+        class="c7n-select-selection
+            c7n-select-selection--single"
         role="combobox"
         tabindex="0"
       >
         <div
-          class="ant-select-selection__rendered"
+          class="c7n-select-selection__rendered"
         >
           <div
-            class="ant-select-selection-selected-value"
+            class="c7n-select-selection-selected-value"
             style="opacity:1"
             title="Option1"
           >
             Option1
           </div>
           <span
-            class="ant-select-arrow"
+            class="c7n-select-arrow"
             style="user-select:none;-webkit-user-select:none"
             unselectable="unselectable"
           >
@@ -550,31 +550,31 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
         </div>
       </div>
       <div
-        class="ant-select-underline"
+        class="c7n-select-underline"
       >
         <span
-          class="ant-select-ripple"
+          class="c7n-select-ripple"
         />
       </div>
     </div>
     <span
-      class="ant-input-wrapper"
+      class="c7n-input-wrapper"
       style="width:50%"
     >
       <div
-        class="ant-input-content"
+        class="c7n-input-content"
       >
         <div
-          class="ant-input-rendered-wrapper"
+          class="c7n-input-rendered-wrapper"
         >
           <div
-            class="ant-input-rendered"
+            class="c7n-input-rendered"
           >
             <div
-              class="ant-input-placeholder"
+              class="c7n-input-placeholder"
             />
             <input
-              class="ant-input"
+              class="c7n-input"
               type="text"
               value="input content"
             />
@@ -582,34 +582,34 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
         </div>
       </div>
       <div
-        class="ant-input-underline"
+        class="c7n-input-underline"
       >
         <span
-          class="ant-input-ripple"
+          class="c7n-input-ripple"
         />
       </div>
     </span>
     <div
-      class="ant-input-number"
+      class="c7n-input-number"
     >
       <span
-        class="ant-input-wrapper ant-input-has-suffix"
+        class="c7n-input-wrapper c7n-input-has-suffix"
       >
         <div
-          class="ant-input-content"
+          class="c7n-input-content"
         >
           <div
-            class="ant-input-rendered-wrapper"
+            class="c7n-input-rendered-wrapper"
           >
             <div
-              class="ant-input-rendered"
+              class="c7n-input-rendered"
             >
               <div
-                class="ant-input-placeholder"
+                class="c7n-input-placeholder"
               />
               <input
                 autocomplete="off"
-                class="ant-input"
+                class="c7n-input"
                 min="-9007199254740991"
                 step="1"
                 type="text"
@@ -617,32 +617,32 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
               />
             </div>
             <span
-              class="ant-input-suffix"
+              class="c7n-input-suffix"
             >
               <div
-                class="ant-input-number-handler-wrap"
+                class="c7n-input-number-handler-wrap"
               >
                 <span
                   aria-disabled="false"
                   aria-label="Increase Value"
-                  class="ant-input-number-handler ant-input-number-handler-up "
+                  class="c7n-input-number-handler c7n-input-number-handler-up "
                   role="button"
                   unselectable="unselectable"
                 >
                   <i
-                    class="icon icon-baseline-arrow_drop_up ant-input-number-handler-up-inner"
+                    class="icon icon-baseline-arrow_drop_up c7n-input-number-handler-up-inner"
                     unselectable="unselectable"
                   />
                 </span>
                 <span
                   aria-disabled="false"
                   aria-label="Decrease Value"
-                  class="ant-input-number-handler ant-input-number-handler-down "
+                  class="c7n-input-number-handler c7n-input-number-handler-down "
                   role="button"
                   unselectable="unselectable"
                 >
                   <i
-                    class="icon icon-baseline-arrow_drop_down ant-input-number-handler-down-inner"
+                    class="icon icon-baseline-arrow_drop_down c7n-input-number-handler-down-inner"
                     unselectable="unselectable"
                   />
                 </span>
@@ -651,10 +651,10 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
           </div>
         </div>
         <div
-          class="ant-input-underline"
+          class="c7n-input-underline"
         >
           <span
-            class="ant-input-ripple"
+            class="c7n-input-ripple"
           />
         </div>
       </span>
@@ -662,26 +662,26 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
   </span>
   <br />
   <span
-    class="ant-input-group ant-input-group-compact"
+    class="c7n-input-group c7n-input-group-compact"
   >
     <span
-      class="ant-input-wrapper"
+      class="c7n-input-wrapper"
       style="width:50%"
     >
       <div
-        class="ant-input-content"
+        class="c7n-input-content"
       >
         <div
-          class="ant-input-rendered-wrapper"
+          class="c7n-input-rendered-wrapper"
         >
           <div
-            class="ant-input-rendered"
+            class="c7n-input-rendered"
           >
             <div
-              class="ant-input-placeholder"
+              class="c7n-input-placeholder"
             />
             <input
-              class="ant-input"
+              class="c7n-input"
               type="text"
               value="input content"
             />
@@ -689,59 +689,59 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
         </div>
       </div>
       <div
-        class="ant-input-underline"
+        class="c7n-input-underline"
       >
         <span
-          class="ant-input-ripple"
+          class="c7n-input-ripple"
         />
       </div>
     </span>
     <span
-      class="ant-calendar-picker"
+      class="c7n-calendar-picker"
     >
       <span
-        class="ant-input-wrapper ant-input-has-suffix"
+        class="c7n-input-wrapper c7n-input-has-suffix"
       >
         <div
-          class="ant-input-content"
+          class="c7n-input-content"
         >
           <div
-            class="ant-input-rendered-wrapper"
+            class="c7n-input-rendered-wrapper"
           >
             <div
-              class="ant-input-rendered"
+              class="c7n-input-rendered"
             >
               <div
-                class="ant-input-placeholder"
+                class="c7n-input-placeholder"
               >
                 Select date
               </div>
               <input
-                class="ant-input ant-calendar-picker-input ant-input"
+                class="c7n-input c7n-calendar-picker-input c7n-input"
                 readonly=""
                 type="text"
                 value=""
               />
             </div>
             <span
-              class="ant-input-suffix"
+              class="c7n-input-suffix"
             >
               <span
-                class="ant-calendar-picker-icon-wrapper"
+                class="c7n-calendar-picker-icon-wrapper"
                 style="min-width:18px"
               >
                 <i
-                  class="icon icon-date_range ant-calendar-picker-icon"
+                  class="icon icon-date_range c7n-calendar-picker-icon"
                 />
               </span>
             </span>
           </div>
         </div>
         <div
-          class="ant-input-underline"
+          class="c7n-input-underline"
         >
           <span
-            class="ant-input-ripple"
+            class="c7n-input-ripple"
           />
         </div>
       </span>
@@ -749,32 +749,32 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
   </span>
   <br />
   <span
-    class="ant-input-group ant-input-group-compact"
+    class="c7n-input-group c7n-input-group-compact"
   >
     <div
-      class="ant-select ant-select-has-value ant-select-enabled"
+      class="c7n-select c7n-select-has-value c7n-select-enabled"
     >
       <div
         aria-autocomplete="list"
         aria-expanded="false"
         aria-haspopup="true"
-        class="ant-select-selection
-            ant-select-selection--single"
+        class="c7n-select-selection
+            c7n-select-selection--single"
         role="combobox"
         tabindex="0"
       >
         <div
-          class="ant-select-selection__rendered"
+          class="c7n-select-selection__rendered"
         >
           <div
-            class="ant-select-selection-selected-value"
+            class="c7n-select-selection-selected-value"
             style="opacity:1"
             title="Option1-1"
           >
             Option1-1
           </div>
           <span
-            class="ant-select-arrow"
+            class="c7n-select-arrow"
             style="user-select:none;-webkit-user-select:none"
             unselectable="unselectable"
           >
@@ -786,37 +786,37 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
         </div>
       </div>
       <div
-        class="ant-select-underline"
+        class="c7n-select-underline"
       >
         <span
-          class="ant-select-ripple"
+          class="c7n-select-ripple"
         />
       </div>
     </div>
     <div
-      class="ant-select ant-select-has-value ant-select-enabled"
+      class="c7n-select c7n-select-has-value c7n-select-enabled"
     >
       <div
         aria-autocomplete="list"
         aria-expanded="false"
         aria-haspopup="true"
-        class="ant-select-selection
-            ant-select-selection--single"
+        class="c7n-select-selection
+            c7n-select-selection--single"
         role="combobox"
         tabindex="0"
       >
         <div
-          class="ant-select-selection__rendered"
+          class="c7n-select-selection__rendered"
         >
           <div
-            class="ant-select-selection-selected-value"
+            class="c7n-select-selection-selected-value"
             style="opacity:1"
             title="Option2-2"
           >
             Option2-2
           </div>
           <span
-            class="ant-select-arrow"
+            class="c7n-select-arrow"
             style="user-select:none;-webkit-user-select:none"
             unselectable="unselectable"
           >
@@ -828,42 +828,42 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
         </div>
       </div>
       <div
-        class="ant-select-underline"
+        class="c7n-select-underline"
       >
         <span
-          class="ant-select-ripple"
+          class="c7n-select-ripple"
         />
       </div>
     </div>
   </span>
   <br />
   <span
-    class="ant-input-group ant-input-group-compact"
+    class="c7n-input-group c7n-input-group-compact"
   >
     <div
-      class="ant-select ant-select-has-value ant-select-enabled"
+      class="c7n-select c7n-select-has-value c7n-select-enabled"
     >
       <div
         aria-autocomplete="list"
         aria-expanded="false"
         aria-haspopup="true"
-        class="ant-select-selection
-            ant-select-selection--single"
+        class="c7n-select-selection
+            c7n-select-selection--single"
         role="combobox"
         tabindex="0"
       >
         <div
-          class="ant-select-selection__rendered"
+          class="c7n-select-selection__rendered"
         >
           <div
-            class="ant-select-selection-selected-value"
+            class="c7n-select-selection-selected-value"
             style="opacity:1"
             title="Between"
           >
             Between
           </div>
           <span
-            class="ant-select-arrow"
+            class="c7n-select-arrow"
             style="user-select:none;-webkit-user-select:none"
             unselectable="unselectable"
           >
@@ -875,64 +875,64 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
         </div>
       </div>
       <div
-        class="ant-select-underline"
+        class="c7n-select-underline"
       >
         <span
-          class="ant-select-ripple"
+          class="c7n-select-ripple"
         />
       </div>
     </div>
     <span
-      class="ant-input-wrapper"
+      class="c7n-input-wrapper"
       style="width:100px;text-align:center"
     >
       <div
-        class="ant-input-content"
+        class="c7n-input-content"
       >
         <div
-          class="ant-input-rendered-wrapper"
+          class="c7n-input-rendered-wrapper"
         >
           <div
-            class="ant-input-rendered"
+            class="c7n-input-rendered"
           >
             <div
-              class="ant-input-placeholder"
+              class="c7n-input-placeholder"
             >
               Minimum
             </div>
             <input
-              class="ant-input"
+              class="c7n-input"
               type="text"
             />
           </div>
         </div>
       </div>
       <div
-        class="ant-input-underline"
+        class="c7n-input-underline"
       >
         <span
-          class="ant-input-ripple"
+          class="c7n-input-ripple"
         />
       </div>
     </span>
     <span
-      class="ant-input-wrapper ant-input-disabled"
+      class="c7n-input-wrapper c7n-input-disabled"
       style="width:30px;border-left:0;pointer-events:none;background-color:#fff"
     >
       <div
-        class="ant-input-content"
+        class="c7n-input-content"
       >
         <div
-          class="ant-input-rendered-wrapper"
+          class="c7n-input-rendered-wrapper"
         >
           <div
-            class="ant-input-rendered"
+            class="c7n-input-rendered"
           >
             <div
-              class="ant-input-placeholder"
+              class="c7n-input-placeholder"
             />
             <input
-              class="ant-input"
+              class="c7n-input"
               disabled=""
               type="text"
               value="~"
@@ -941,75 +941,75 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
         </div>
       </div>
       <div
-        class="ant-input-underline"
+        class="c7n-input-underline"
       >
         <span
-          class="ant-input-ripple"
+          class="c7n-input-ripple"
         />
       </div>
     </span>
     <span
-      class="ant-input-wrapper"
+      class="c7n-input-wrapper"
       style="width:100px;text-align:center;border-left:0"
     >
       <div
-        class="ant-input-content"
+        class="c7n-input-content"
       >
         <div
-          class="ant-input-rendered-wrapper"
+          class="c7n-input-rendered-wrapper"
         >
           <div
-            class="ant-input-rendered"
+            class="c7n-input-rendered"
           >
             <div
-              class="ant-input-placeholder"
+              class="c7n-input-placeholder"
             >
               Maximum
             </div>
             <input
-              class="ant-input"
+              class="c7n-input"
               type="text"
             />
           </div>
         </div>
       </div>
       <div
-        class="ant-input-underline"
+        class="c7n-input-underline"
       >
         <span
-          class="ant-input-ripple"
+          class="c7n-input-ripple"
         />
       </div>
     </span>
   </span>
   <br />
   <span
-    class="ant-input-group ant-input-group-compact"
+    class="c7n-input-group c7n-input-group-compact"
   >
     <div
-      class="ant-select ant-select-has-value ant-select-enabled"
+      class="c7n-select c7n-select-has-value c7n-select-enabled"
     >
       <div
         aria-autocomplete="list"
         aria-expanded="false"
         aria-haspopup="true"
-        class="ant-select-selection
-            ant-select-selection--single"
+        class="c7n-select-selection
+            c7n-select-selection--single"
         role="combobox"
         tabindex="0"
       >
         <div
-          class="ant-select-selection__rendered"
+          class="c7n-select-selection__rendered"
         >
           <div
-            class="ant-select-selection-selected-value"
+            class="c7n-select-selection-selected-value"
             style="opacity:1"
             title="Sign Up"
           >
             Sign Up
           </div>
           <span
-            class="ant-select-arrow"
+            class="c7n-select-arrow"
             style="user-select:none;-webkit-user-select:none"
             unselectable="unselectable"
           >
@@ -1021,57 +1021,57 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
         </div>
       </div>
       <div
-        class="ant-select-underline"
+        class="c7n-select-underline"
       >
         <span
-          class="ant-select-ripple"
+          class="c7n-select-ripple"
         />
       </div>
     </div>
     <div
-      class="ant-select-show-search ant-select-auto-complete ant-select ant-select-combobox ant-select-enabled"
+      class="c7n-select-show-search c7n-select-auto-complete c7n-select c7n-select-combobox c7n-select-enabled"
       style="width:200px"
     >
       <div
         aria-autocomplete="list"
         aria-expanded="false"
         aria-haspopup="true"
-        class="ant-select-selection
-            ant-select-selection--single"
+        class="c7n-select-selection
+            c7n-select-selection--single"
         role="combobox"
       >
         <div
-          class="ant-select-selection__rendered"
+          class="c7n-select-selection__rendered"
         >
           <div
-            class="ant-select-selection__placeholder"
+            class="c7n-select-selection__placeholder"
           >
             Email
           </div>
           <div
-            class="ant-select-search ant-select-search--inline"
+            class="c7n-select-search c7n-select-search--inline"
             style="display:inline-block"
           >
             <div
-              class="ant-select-search__field__wrap"
+              class="c7n-select-search__field__wrap"
             >
               <span
-                class="ant-input-wrapper"
+                class="c7n-input-wrapper"
               >
                 <div
-                  class="ant-input-content"
+                  class="c7n-input-content"
                 >
                   <div
-                    class="ant-input-rendered-wrapper"
+                    class="c7n-input-rendered-wrapper"
                   >
                     <div
-                      class="ant-input-rendered"
+                      class="c7n-input-rendered"
                     >
                       <div
-                        class="ant-input-placeholder"
+                        class="c7n-input-placeholder"
                       />
                       <input
-                        class="ant-input ant-select-search__field"
+                        class="c7n-input c7n-select-search__field"
                         type="text"
                         value=""
                       />
@@ -1079,22 +1079,22 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
                   </div>
                 </div>
                 <div
-                  class="ant-input-underline"
+                  class="c7n-input-underline"
                 >
                   <span
-                    class="ant-input-ripple"
+                    class="c7n-input-ripple"
                   />
                 </div>
               </span>
               <span
-                class="ant-select-search__field__mirror"
+                class="c7n-select-search__field__mirror"
               >
                  
               </span>
             </div>
           </div>
           <span
-            class="ant-select-arrow"
+            class="c7n-select-arrow"
             style="user-select:none;-webkit-user-select:none"
             unselectable="unselectable"
           >
@@ -1109,33 +1109,33 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
   </span>
   <br />
   <span
-    class="ant-input-group ant-input-group-compact"
+    class="c7n-input-group c7n-input-group-compact"
   >
     <div
-      class="ant-select ant-select-has-value ant-select-enabled"
+      class="c7n-select c7n-select-has-value c7n-select-enabled"
       style="width:30%"
     >
       <div
         aria-autocomplete="list"
         aria-expanded="false"
         aria-haspopup="true"
-        class="ant-select-selection
-            ant-select-selection--single"
+        class="c7n-select-selection
+            c7n-select-selection--single"
         role="combobox"
         tabindex="0"
       >
         <div
-          class="ant-select-selection__rendered"
+          class="c7n-select-selection__rendered"
         >
           <div
-            class="ant-select-selection-selected-value"
+            class="c7n-select-selection-selected-value"
             style="opacity:1"
             title="Home"
           >
             Home
           </div>
           <span
-            class="ant-select-arrow"
+            class="c7n-select-arrow"
             style="user-select:none;-webkit-user-select:none"
             unselectable="unselectable"
           >
@@ -1147,41 +1147,41 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
         </div>
       </div>
       <div
-        class="ant-select-underline"
+        class="c7n-select-underline"
       >
         <span
-          class="ant-select-ripple"
+          class="c7n-select-ripple"
         />
       </div>
     </div>
     <span
-      class="ant-cascader-picker"
+      class="c7n-cascader-picker"
       style="width:70%"
       tabindex="0"
     >
       <span
-        class="ant-cascader-picker-label"
+        class="c7n-cascader-picker-label"
       />
       <span
-        class="ant-input-wrapper"
+        class="c7n-input-wrapper"
       >
         <div
-          class="ant-input-content"
+          class="c7n-input-content"
         >
           <div
-            class="ant-input-rendered-wrapper"
+            class="c7n-input-rendered-wrapper"
           >
             <div
-              class="ant-input-rendered"
+              class="c7n-input-rendered"
             >
               <div
-                class="ant-input-placeholder"
+                class="c7n-input-placeholder"
               >
                 Select Address
               </div>
               <input
                 autocomplete="off"
-                class="ant-input ant-cascader-input "
+                class="c7n-input c7n-cascader-input "
                 readonly=""
                 type="text"
                 value=""
@@ -1190,15 +1190,15 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
           </div>
         </div>
         <div
-          class="ant-input-underline"
+          class="c7n-input-underline"
         >
           <span
-            class="ant-input-ripple"
+            class="c7n-input-ripple"
           />
         </div>
       </span>
       <i
-        class="icon icon-arrow_drop_down ant-cascader-picker-arrow"
+        class="icon icon-arrow_drop_down c7n-cascader-picker-arrow"
       />
     </span>
   </span>
@@ -1207,37 +1207,37 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
 
 exports[`renders ./components/input/demo/password.md correctly 1`] = `
 <div
-  class="ant-row"
+  class="c7n-row"
   style="margin-left:-4px;margin-right:-4px"
 >
   <div
-    class="ant-col-8"
+    class="c7n-col-8"
     style="padding-left:4px;padding-right:4px"
   >
     <span
-      class="ant-input-wrapper ant-input-has-label"
+      class="c7n-input-wrapper c7n-input-has-label"
     >
       <div
-        class="ant-input-content"
+        class="c7n-input-content"
       >
         <div
-          class="ant-input-label"
+          class="c7n-input-label"
         >
           username
         </div>
         <div
-          class="ant-input-rendered-wrapper"
+          class="c7n-input-rendered-wrapper"
         >
           <div
-            class="ant-input-rendered"
+            class="c7n-input-rendered"
           >
             <div
-              class="ant-input-placeholder"
+              class="c7n-input-placeholder"
             >
               username
             </div>
             <input
-              class="ant-input"
+              class="c7n-input"
               maxlength="50"
               required=""
               type="text"
@@ -1245,52 +1245,52 @@ exports[`renders ./components/input/demo/password.md correctly 1`] = `
           </div>
         </div>
         <span
-          class="ant-input-icon"
+          class="c7n-input-icon"
         >
           <span
-            class="ant-input-icon-copy ant-input-length-info"
+            class="c7n-input-icon-copy c7n-input-length-info"
           >
             0/50
           </span>
         </span>
       </div>
       <div
-        class="ant-input-underline"
+        class="c7n-input-underline"
       >
         <span
-          class="ant-input-ripple"
+          class="c7n-input-ripple"
         />
       </div>
     </span>
   </div>
   <div
-    class="ant-col-8"
+    class="c7n-col-8"
     style="padding-left:4px;padding-right:4px"
   >
     <span
-      class="ant-input-wrapper ant-input-has-label"
+      class="c7n-input-wrapper c7n-input-has-label"
     >
       <div
-        class="ant-input-content"
+        class="c7n-input-content"
       >
         <div
-          class="ant-input-label"
+          class="c7n-input-label"
         >
           password
         </div>
         <div
-          class="ant-input-rendered-wrapper"
+          class="c7n-input-rendered-wrapper"
         >
           <div
-            class="ant-input-rendered"
+            class="c7n-input-rendered"
           >
             <div
-              class="ant-input-placeholder"
+              class="c7n-input-placeholder"
             >
               password
             </div>
             <input
-              class="ant-input"
+              class="c7n-input"
               maxlength="20"
               required=""
               type="text"
@@ -1298,80 +1298,80 @@ exports[`renders ./components/input/demo/password.md correctly 1`] = `
           </div>
         </div>
         <span
-          class="ant-input-icon"
+          class="c7n-input-icon"
         >
           <span
-            class="ant-input-icon-copy ant-input-length-info"
+            class="c7n-input-icon-copy c7n-input-length-info"
           >
             0/20
           </span>
         </span>
       </div>
       <div
-        class="ant-input-underline"
+        class="c7n-input-underline"
       >
         <span
-          class="ant-input-ripple"
+          class="c7n-input-ripple"
         />
       </div>
     </span>
   </div>
   <div
-    class="ant-col-8"
+    class="c7n-col-8"
     style="padding-left:4px;padding-right:4px"
   >
     <span
-      class="ant-input-wrapper ant-input-has-label"
+      class="c7n-input-wrapper c7n-input-has-label"
     >
       <div
-        class="ant-input-content"
+        class="c7n-input-content"
       >
         <div
-          class="ant-input-label"
+          class="c7n-input-label"
         >
           password
         </div>
         <div
-          class="ant-input-rendered-wrapper"
+          class="c7n-input-rendered-wrapper"
         >
           <div
-            class="ant-input-rendered"
+            class="c7n-input-rendered"
           >
             <div
-              class="ant-input-placeholder"
+              class="c7n-input-placeholder"
             >
               password
             </div>
             <input
-              class="ant-input"
+              class="c7n-input"
               maxlength="20"
               required=""
               type="text"
             />
             <span
-              class="ant-input-icon"
+              class="c7n-input-icon"
             >
               <i
-                class="icon icon-visibility_off ant-input-icon-copy"
+                class="icon icon-visibility_off c7n-input-icon-copy"
               />
             </span>
           </div>
         </div>
         <span
-          class="ant-input-icon"
+          class="c7n-input-icon"
         >
           <span
-            class="ant-input-icon-copy ant-input-length-info"
+            class="c7n-input-icon-copy c7n-input-length-info"
           >
             0/20
           </span>
         </span>
       </div>
       <div
-        class="ant-input-underline"
+        class="c7n-input-underline"
       >
         <span
-          class="ant-input-ripple"
+          class="c7n-input-ripple"
         />
       </div>
     </span>
@@ -1381,47 +1381,47 @@ exports[`renders ./components/input/demo/password.md correctly 1`] = `
 
 exports[`renders ./components/input/demo/presuffix.md correctly 1`] = `
 <span
-  class="ant-input-wrapper ant-input-has-label ant-input-has-prefix ant-input-has-suffix"
+  class="c7n-input-wrapper c7n-input-has-label c7n-input-has-prefix c7n-input-has-suffix"
 >
   <div
-    class="ant-input-content"
+    class="c7n-input-content"
   >
     <div
-      class="ant-input-label"
+      class="c7n-input-label"
     >
       username
     </div>
     <div
-      class="ant-input-rendered-wrapper"
+      class="c7n-input-rendered-wrapper"
     >
       <span
-        class="ant-input-prefix"
+        class="c7n-input-prefix"
       >
         input-
       </span>
       <div
-        class="ant-input-rendered"
+        class="c7n-input-rendered"
       >
         <div
-          class="ant-input-placeholder"
+          class="c7n-input-placeholder"
         >
           Enter your username
         </div>
         <input
-          class="ant-input ant-input-has-copy"
+          class="c7n-input c7n-input-has-copy"
           type="text"
           value="xxx"
         />
         <span
-          class="ant-input-icon"
+          class="c7n-input-icon"
         >
           <i
-            class="icon icon-library_books ant-input-icon-copy"
+            class="icon icon-library_books c7n-input-icon-copy"
           />
         </span>
       </div>
       <span
-        class="ant-input-suffix"
+        class="c7n-input-suffix"
       >
         <i
           class="icon icon-close"
@@ -1430,10 +1430,10 @@ exports[`renders ./components/input/demo/presuffix.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-input-underline"
+    class="c7n-input-underline"
   >
     <span
-      class="ant-input-ripple"
+      class="c7n-input-ripple"
     />
   </div>
 </span>
@@ -1442,148 +1442,148 @@ exports[`renders ./components/input/demo/presuffix.md correctly 1`] = `
 exports[`renders ./components/input/demo/search-input.md correctly 1`] = `
 <div>
   <span
-    class="ant-input-wrapper ant-input-has-suffix"
+    class="c7n-input-wrapper c7n-input-has-suffix"
     style="width:200px"
   >
     <div
-      class="ant-input-content"
+      class="c7n-input-content"
     >
       <div
-        class="ant-input-rendered-wrapper"
+        class="c7n-input-rendered-wrapper"
       >
         <div
-          class="ant-input-rendered ant-input-rendered-sm"
+          class="c7n-input-rendered c7n-input-rendered-sm"
         >
           <div
-            class="ant-input-placeholder"
+            class="c7n-input-placeholder"
           >
             input search text
           </div>
           <input
-            class="ant-input ant-input-sm ant-input-search ant-input-search-small"
+            class="c7n-input c7n-input-sm c7n-input-search c7n-input-search-small"
             type="text"
           />
         </div>
         <span
-          class="ant-input-suffix ant-input-suffix-sm"
+          class="c7n-input-suffix c7n-input-suffix-sm"
         >
           <button
-            class="ant-btn ant-btn-primary ant-btn-circle ant-btn-sm ant-btn-icon-only ant-btn-flat"
+            class="c7n-btn c7n-btn-primary c7n-btn-circle c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
             type="button"
           >
             <i
               class="icon icon-search"
             />
             <div
-              class="ant-ripple-wrapper"
+              class="c7n-ripple-wrapper"
             />
           </button>
         </span>
       </div>
     </div>
     <div
-      class="ant-input-underline"
+      class="c7n-input-underline"
     >
       <span
-        class="ant-input-ripple"
+        class="c7n-input-ripple"
       />
     </div>
   </span>
   <br />
   <br />
   <span
-    class="ant-input-wrapper ant-input-has-suffix"
+    class="c7n-input-wrapper c7n-input-has-suffix"
   >
     <div
-      class="ant-input-content"
+      class="c7n-input-content"
     >
       <div
-        class="ant-input-rendered-wrapper"
+        class="c7n-input-rendered-wrapper"
       >
         <div
-          class="ant-input-rendered ant-input-rendered-sm"
+          class="c7n-input-rendered c7n-input-rendered-sm"
         >
           <div
-            class="ant-input-placeholder"
+            class="c7n-input-placeholder"
           >
             input search text
           </div>
           <input
-            class="ant-input ant-input-sm ant-input-search ant-input-search-enter-button ant-input-search-small"
+            class="c7n-input c7n-input-sm c7n-input-search c7n-input-search-enter-button c7n-input-search-small"
             type="text"
           />
         </div>
         <span
-          class="ant-input-suffix ant-input-suffix-sm"
+          class="c7n-input-suffix c7n-input-suffix-sm"
         >
           <button
-            class="ant-btn ant-btn-primary ant-btn-circle ant-btn-sm ant-btn-icon-only ant-btn-flat"
+            class="c7n-btn c7n-btn-primary c7n-btn-circle c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
             type="button"
           >
             <i
               class="icon icon-search"
             />
             <div
-              class="ant-ripple-wrapper"
+              class="c7n-ripple-wrapper"
             />
           </button>
         </span>
       </div>
     </div>
     <div
-      class="ant-input-underline"
+      class="c7n-input-underline"
     >
       <span
-        class="ant-input-ripple"
+        class="c7n-input-ripple"
       />
     </div>
   </span>
   <br />
   <br />
   <span
-    class="ant-input-wrapper ant-input-has-suffix"
+    class="c7n-input-wrapper c7n-input-has-suffix"
   >
     <div
-      class="ant-input-content"
+      class="c7n-input-content"
     >
       <div
-        class="ant-input-rendered-wrapper"
+        class="c7n-input-rendered-wrapper"
       >
         <div
-          class="ant-input-rendered ant-input-rendered-lg"
+          class="c7n-input-rendered c7n-input-rendered-lg"
         >
           <div
-            class="ant-input-placeholder"
+            class="c7n-input-placeholder"
           >
             input search text
           </div>
           <input
-            class="ant-input ant-input-lg ant-input-search ant-input-search-enter-button ant-input-search-large"
+            class="c7n-input c7n-input-lg c7n-input-search c7n-input-search-enter-button c7n-input-search-large"
             type="text"
           />
         </div>
         <span
-          class="ant-input-suffix ant-input-suffix-lg"
+          class="c7n-input-suffix c7n-input-suffix-lg"
         >
           <button
-            class="ant-btn ant-btn-primary ant-btn-lg ant-btn-flat"
+            class="c7n-btn c7n-btn-primary c7n-btn-lg c7n-btn-flat"
             type="button"
           >
             <span>
               Search
             </span>
             <div
-              class="ant-ripple-wrapper"
+              class="c7n-ripple-wrapper"
             />
           </button>
         </span>
       </div>
     </div>
     <div
-      class="ant-input-underline"
+      class="c7n-input-underline"
     >
       <span
-        class="ant-input-ripple"
+        class="c7n-input-ripple"
       />
     </div>
   </span>
@@ -1595,118 +1595,118 @@ exports[`renders ./components/input/demo/size.md correctly 1`] = `
   class="example-input"
 >
   <span
-    class="ant-input-wrapper ant-input-has-label"
+    class="c7n-input-wrapper c7n-input-has-label"
   >
     <div
-      class="ant-input-content"
+      class="c7n-input-content"
     >
       <div
-        class="ant-input-label"
+        class="c7n-input-label"
       >
         Large
       </div>
       <div
-        class="ant-input-rendered-wrapper"
+        class="c7n-input-rendered-wrapper"
       >
         <div
-          class="ant-input-rendered ant-input-rendered-lg"
+          class="c7n-input-rendered c7n-input-rendered-lg"
         >
           <div
-            class="ant-input-placeholder"
+            class="c7n-input-placeholder"
           >
             large size
           </div>
           <input
-            class="ant-input ant-input-lg"
+            class="c7n-input c7n-input-lg"
             maxlength="20"
             type="text"
           />
         </div>
       </div>
       <span
-        class="ant-input-icon"
+        class="c7n-input-icon"
       >
         <span
-          class="ant-input-icon-copy ant-input-length-info"
+          class="c7n-input-icon-copy c7n-input-length-info"
         >
           0/20
         </span>
       </span>
     </div>
     <div
-      class="ant-input-underline"
+      class="c7n-input-underline"
     >
       <span
-        class="ant-input-ripple"
+        class="c7n-input-ripple"
       />
     </div>
   </span>
   <span
-    class="ant-input-wrapper"
+    class="c7n-input-wrapper"
   >
     <div
-      class="ant-input-content"
+      class="c7n-input-content"
     >
       <div
-        class="ant-input-rendered-wrapper"
+        class="c7n-input-rendered-wrapper"
       >
         <div
-          class="ant-input-rendered"
+          class="c7n-input-rendered"
         >
           <div
-            class="ant-input-placeholder"
+            class="c7n-input-placeholder"
           >
             default size
           </div>
           <input
-            class="ant-input"
+            class="c7n-input"
             type="text"
           />
         </div>
       </div>
     </div>
     <div
-      class="ant-input-underline"
+      class="c7n-input-underline"
     >
       <span
-        class="ant-input-ripple"
+        class="c7n-input-ripple"
       />
     </div>
   </span>
   <span
-    class="ant-input-wrapper ant-input-has-label"
+    class="c7n-input-wrapper c7n-input-has-label"
   >
     <div
-      class="ant-input-content"
+      class="c7n-input-content"
     >
       <div
-        class="ant-input-label"
+        class="c7n-input-label"
       >
         small
       </div>
       <div
-        class="ant-input-rendered-wrapper"
+        class="c7n-input-rendered-wrapper"
       >
         <div
-          class="ant-input-rendered ant-input-rendered-sm"
+          class="c7n-input-rendered c7n-input-rendered-sm"
         >
           <div
-            class="ant-input-placeholder"
+            class="c7n-input-placeholder"
           >
             small size
           </div>
           <input
-            class="ant-input ant-input-sm"
+            class="c7n-input c7n-input-sm"
             type="text"
           />
         </div>
       </div>
     </div>
     <div
-      class="ant-input-underline"
+      class="c7n-input-underline"
     >
       <span
-        class="ant-input-ripple"
+        class="c7n-input-ripple"
       />
     </div>
   </span>
@@ -1715,19 +1715,19 @@ exports[`renders ./components/input/demo/size.md correctly 1`] = `
 
 exports[`renders ./components/input/demo/textarea.md correctly 1`] = `
 <span
-  class="ant-input-wrapper ant-input-textarea ant-input-has-label"
+  class="c7n-input-wrapper c7n-input-textarea c7n-input-has-label"
 >
   <div
-    class="ant-input-rendered"
+    class="c7n-input-rendered"
   >
     <div
-      class="ant-input-label"
+      class="c7n-input-label"
     >
       textarea
     </div>
   </div>
   <textarea
-    class="ant-input"
+    class="c7n-input"
     label="textarea"
     maxlength="20"
     placeholder=""
@@ -1735,14 +1735,14 @@ exports[`renders ./components/input/demo/textarea.md correctly 1`] = `
   />
   <div>
     <hr
-      class="ant-input-border"
+      class="c7n-input-border"
     />
     <hr
-      class="ant-input-border-active"
+      class="c7n-input-border-active"
     />
   </div>
   <div
-    class="ant-input-length-info"
+    class="c7n-input-length-info"
   >
     0/20
   </div>
@@ -1751,25 +1751,25 @@ exports[`renders ./components/input/demo/textarea.md correctly 1`] = `
 
 exports[`renders ./components/input/demo/tooltip.md correctly 1`] = `
 <span
-  class="ant-input-wrapper"
+  class="c7n-input-wrapper"
   style="width:120px"
 >
   <div
-    class="ant-input-content"
+    class="c7n-input-content"
   >
     <div
-      class="ant-input-rendered-wrapper"
+      class="c7n-input-rendered-wrapper"
     >
       <div
-        class="ant-input-rendered"
+        class="c7n-input-rendered"
       >
         <div
-          class="ant-input-placeholder"
+          class="c7n-input-placeholder"
         >
           Input a number
         </div>
         <input
-          class="ant-input"
+          class="c7n-input"
           maxlength="25"
           type="text"
           value=""
@@ -1777,20 +1777,20 @@ exports[`renders ./components/input/demo/tooltip.md correctly 1`] = `
       </div>
     </div>
     <span
-      class="ant-input-icon"
+      class="c7n-input-icon"
     >
       <span
-        class="ant-input-icon-copy ant-input-length-info"
+        class="c7n-input-icon-copy c7n-input-length-info"
       >
         0/25
       </span>
     </span>
   </div>
   <div
-    class="ant-input-underline"
+    class="c7n-input-underline"
   >
     <span
-      class="ant-input-ripple"
+      class="c7n-input-ripple"
     />
   </div>
 </span>

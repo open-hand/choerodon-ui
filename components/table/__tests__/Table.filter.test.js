@@ -116,7 +116,7 @@ describe('Table.filter', () => {
       }],
     }));
 
-    wrapper.find('.ant-dropdown-trigger').first().simulate('click');
+    wrapper.find('.c7n-dropdown-trigger').first().simulate('click');
 
     expect(handleChange).toBeCalledWith(true);
   });
@@ -198,10 +198,10 @@ describe('Table.filter', () => {
     }));
     jest.useFakeTimers();
     const dropdownWrapper = mount(wrapper.find('Trigger').at(0).instance().getComponent());
-    dropdownWrapper.find('.ant-dropdown-menu-submenu-title').at(0).simulate('mouseEnter');
+    dropdownWrapper.find('.c7n-dropdown-menu-submenu-title').at(0).simulate('mouseEnter');
     jest.runAllTimers();
     dropdownWrapper.update();
-    dropdownWrapper.find('.ant-dropdown-menu-submenu-title').at(1).simulate('mouseEnter');
+    dropdownWrapper.find('.c7n-dropdown-menu-submenu-title').at(1).simulate('mouseEnter');
     jest.runAllTimers();
     dropdownWrapper.update();
     dropdownWrapper.find('MenuItem').last().simulate('click');
@@ -307,9 +307,9 @@ describe('Table.filter', () => {
       onChange: handleChange,
     }));
 
-    wrapper.find('.ant-dropdown-trigger').first().simulate('click');
-    wrapper.find('.ant-dropdown-menu-item').first().simulate('click');
-    wrapper.find('.ant-dropdown-trigger').first().simulate('click');
+    wrapper.find('.c7n-dropdown-trigger').first().simulate('click');
+    wrapper.find('.c7n-dropdown-menu-item').first().simulate('click');
+    wrapper.find('.c7n-dropdown-trigger').first().simulate('click');
 
     expect(handleChange).toBeCalled();
   });

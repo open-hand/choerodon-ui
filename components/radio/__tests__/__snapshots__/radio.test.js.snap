@@ -2,17 +2,17 @@
 
 exports[`Radio should render correctly 1`] = `
 <label
-  class="customized ant-radio-wrapper"
+  class="customized c7n-radio-wrapper"
 >
   <span
-    class="ant-radio"
+    class="c7n-radio"
   >
     <input
-      class="ant-radio-input"
+      class="c7n-radio-input"
       type="radio"
     />
     <span
-      class="ant-radio-inner"
+      class="c7n-radio-inner"
     />
   </span>
   <span>

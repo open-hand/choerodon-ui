@@ -1,4 +1,4 @@
-import React from 'react';
+import { Children } from 'react';
 
 function mirror(o) {
   return o;
@@ -6,5 +6,5 @@ function mirror(o) {
 
 export default function mapSelf(children) {
   // return ReactFragment
-  return React.Children.map(children, mirror);
+  return Children.map(children, mirror);
 }

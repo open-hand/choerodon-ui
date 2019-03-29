@@ -18,7 +18,7 @@ $ npm install -g create-react-app yarn
 然后新建一个项目。
 
 ```bash
-$ create-react-app antd-demo
+$ create-react-app choerodon-ui-demo
 ```
 
 工具会自动初始化一个脚手架并安装 React 项目的各种必要依赖，如果在过程中出现网络问题，请尝试配置代理或使用其他 npm registry。
@@ -26,13 +26,13 @@ $ create-react-app antd-demo
 然后我们进入项目并启动。
 
 ```bash
-$ cd antd-demo
+$ cd choerodon-ui-demo
 $ yarn start
 ```
 
 此时浏览器会访问 http://localhost:3000/ ，看到 `Welcome to React` 的界面就算成功了。
 
-## 引入 antd
+## 引入 choerodon-ui
 
 这是 create-react-app 生成的默认目录结构。
 
@@ -52,13 +52,13 @@ $ yarn start
 └── yarn.lock
 ```
 
-现在从 yarn 或 npm 安装并引入 antd。
+现在从 yarn 或 npm 安装并引入 choerodon-ui。
 
 ```bash
-$ yarn add antd
+$ yarn add choerodon-ui
 ```
 
-修改 `src/App.js`，引入 antd 的按钮组件。
+修改 `src/App.js`，引入 choerodon-ui 的按钮组件。
 
 ```jsx
 import React, { Component } from 'react';
@@ -78,10 +78,10 @@ class App extends Component {
 export default App;
 ```
 
-修改 `src/App.css`，在文件顶部引入 `antd/dist/antd.css`。
+修改 `src/App.css`，在文件顶部引入 `choerodon-ui/dist/choerodon-ui.css`。
 
 ```css
-@import '~antd/dist/antd.css';
+@import '~choerodon-ui/dist/choerodon-ui.css';
 
 .App {
   text-align: center;
@@ -90,11 +90,11 @@ export default App;
 ...
 ```
 
-好了，现在你应该能看到页面上已经有了 antd 的蓝色按钮组件，接下来就可以继续选用其他组件开发应用了。其他开发流程你可以参考 create-react-app 的[官方文档](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md)。
+好了，现在你应该能看到页面上已经有了 choerodon-ui 的蓝色按钮组件，接下来就可以继续选用其他组件开发应用了。其他开发流程你可以参考 create-react-app 的[官方文档](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md)。
 
 ## 高级配置
 
-我们现在已经把组件成功运行起来了，但是在实际开发过程中还有很多问题，例如上面的例子实际上加载了全部的 antd 组件的样式（对前端性能是个隐患）。
+我们现在已经把组件成功运行起来了，但是在实际开发过程中还有很多问题，例如上面的例子实际上加载了全部的 choerodon-ui 组件的样式（对前端性能是个隐患）。
 
 此时我们需要对 create-react-app 的默认配置进行自定义，这里我们使用 [react-app-rewired](https://github.com/timarney/react-app-rewired) （一个对 create-react-app 进行自定义配置的社区解决方案）。
 
@@ -137,12 +137,12 @@ $ yarn add babel-plugin-import --dev
 + const { injectBabelPlugin } = require('react-app-rewired');
 
   module.exports = function override(config, env) {
-+   config = injectBabelPlugin(['import', { libraryName: 'antd', libraryDirectory: 'es', style: 'css' }], config);
++   config = injectBabelPlugin(['import', { libraryName: 'choerodon-ui', libraryDirectory: 'es', style: 'css' }], config);
     return config;
   };
 ```
 
-然后移除前面在 `src/App.css` 里全量添加的 `@import '~antd/dist/antd.css';` 样式代码，并且按下面的格式引入模块。
+然后移除前面在 `src/App.css` 里全量添加的 `@import '~choerodon-ui/dist/choerodon-ui.css';` 样式代码，并且按下面的格式引入模块。
 
 ```diff
   // src/App.js
@@ -164,7 +164,7 @@ $ yarn add babel-plugin-import --dev
   export default App;
 ```
 
-最后重启 `yarn start` 访问页面，antd 组件的 js 和 css 代码都会按需加载，你在控制台也不会看到这样的[警告信息](https://zos.alipayobjects.com/rmsportal/vgcHJRVZFmPjAawwVoXK.png)。关于按需加载的原理和其他方式可以阅读[这里](/docs/react/getting-started#按需加载)。
+最后重启 `yarn start` 访问页面，choerodon-ui 组件的 js 和 css 代码都会按需加载，你在控制台也不会看到这样的[警告信息](https://zos.alipayobjects.com/rmsportal/vgcHJRVZFmPjAawwVoXK.png)。关于按需加载的原理和其他方式可以阅读[这里](/docs/react/getting-started#按需加载)。
 
 ### 自定义主题
 
@@ -179,8 +179,8 @@ $ yarn add react-app-rewire-less --dev
 + const rewireLess = require('react-app-rewire-less');
 
   module.exports = function override(config, env) {
--   config = injectBabelPlugin(['import', { libraryName: 'antd', style: 'css' }], config);
-+   config = injectBabelPlugin(['import', { libraryName: 'antd', style: true }], config);
+-   config = injectBabelPlugin(['import', { libraryName: 'choerodon-ui', style: 'css' }], config);
++   config = injectBabelPlugin(['import', { libraryName: 'choerodon-ui', style: true }], config);
 +   config = rewireLess.withLoaderOptions({
 +     modifyVars: { "@primary-color": "#1DA57A" },
 +   })(config, env);
@@ -196,16 +196,3 @@ $ yarn add react-app-rewire-less --dev
 ## eject
 
 你也可以使用 create-react-app 提供的 [yarn run eject](https://github.com/facebookincubator/create-react-app#converting-to-a-custom-setup) 命令将所有内建的配置暴露出来。不过这种配置方式需要你自行探索，不在本文讨论范围内。
-
-## 源码和其他脚手架
-
-以上是在 create-react-app 中使用 antd 的相关实践，你也可以借鉴此文的做法在自己的 webpack 工作流中使用 antd，更多 webpack 配置可参考 [atool-build](https://github.com/ant-tool/atool-build/blob/master/src/getWebpackCommonConfig.js)。（例如加入 [moment noParse](https://github.com/ant-tool/atool-build/blob/e4bd2959689b6a95cb5c1c854a5db8c98676bdb3/src/getWebpackCommonConfig.js#L90) 避免加载所有语言文件）
-
-React 生态圈中还有很多优秀的脚手架，使用它们并引入 antd 时，你可能会遇到一些问题，下面是一些著名脚手架使用 antd 的范例，包括本文的 create-react-app。
-
-- [react-boilerplate/react-boilerplate](https://github.com/ant-design/react-boilerplate)
-- [kriasoft/react-starter-kit](https://github.com/ant-design/react-starter-kit)
-- [create-react-app-antd](https://github.com/ant-design/create-react-app-antd)
-- [cra-ts-antd](https://github.com/comerc/cra-ts-antd)
-- [next.js](https://github.com/zeit/next.js/tree/master/examples/with-ant-design)
-- [nwb](https://github.com/insin/nwb-examples/tree/master/react-app-antd)

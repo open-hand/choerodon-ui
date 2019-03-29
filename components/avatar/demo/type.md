@@ -18,7 +18,7 @@ import { Avatar } from 'choerodon-ui';
 
 ReactDOM.render(
   <div>
-    <Avatar icon="user" />
+    <Avatar icon="person" />
     <Avatar>U</Avatar>
     <Avatar>USER</Avatar>
     <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
@@ -29,7 +29,7 @@ ReactDOM.render(
 ````
 
 <style>
-#components-avatar-demo-type .ant-avatar {
+#components-avatar-demo-type .c7n-avatar {
   margin-top: 16px;
   margin-right: 16px;
 }

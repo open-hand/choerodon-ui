@@ -2,17 +2,17 @@
 
 exports[`Table.sorter renders sorter icon correctly 1`] = `
 <thead
-  class="ant-table-thead"
+  class="c7n-table-thead"
 >
   <tr>
     <th
-      class="ant-table-column-has-filters"
+      class="c7n-table-column-has-filters"
       tabindex="-1"
     >
       <span>
         Name
         <i
-          class="icon icon-arrow_upward ant-table-sort-icon"
+          class="icon icon-arrow_upward c7n-table-sort-icon"
         />
       </span>
     </th>

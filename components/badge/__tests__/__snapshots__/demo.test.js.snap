@@ -3,19 +3,18 @@
 exports[`renders ./components/badge/demo/basic.md correctly 1`] = `
 <div>
   <span
-    class="ant-badge"
+    class="c7n-badge"
   >
     <a
       class="head-example"
       href="#"
     />
     <sup
-      class="ant-scroll-number ant-badge-count"
-      data-show="true"
+      class="c7n-scroll-number c7n-badge-count"
       title="5"
     >
       <span
-        class="ant-scroll-number-only"
+        class="c7n-scroll-number-only"
         style="transition:none;-ms-transform:translateY(-1500%);-webkit-transform:translateY(-1500%);transform:translateY(-1500%)"
       >
         <p
@@ -172,15 +171,14 @@ exports[`renders ./components/badge/demo/basic.md correctly 1`] = `
     </sup>
   </span>
   <span
-    class="ant-badge"
+    class="c7n-badge"
   >
     <a
       class="head-example"
       href="#"
     />
     <sup
-      class="ant-scroll-number ant-badge-count"
-      data-show="true"
+      class="c7n-scroll-number c7n-badge-count"
       title="0"
     >
       0
@@ -193,19 +191,18 @@ exports[`renders ./components/badge/demo/change.md correctly 1`] = `
 <div>
   <div>
     <span
-      class="ant-badge"
+      class="c7n-badge"
     >
       <a
         class="head-example"
         href="#"
       />
       <sup
-        class="ant-scroll-number ant-badge-count"
-        data-show="true"
+        class="c7n-scroll-number c7n-badge-count"
         title="5"
       >
         <span
-          class="ant-scroll-number-only"
+          class="c7n-scroll-number-only"
           style="transition:none;-ms-transform:translateY(-1500%);-webkit-transform:translateY(-1500%);transform:translateY(-1500%)"
         >
           <p
@@ -362,28 +359,28 @@ exports[`renders ./components/badge/demo/change.md correctly 1`] = `
       </sup>
     </span>
     <div
-      class="ant-btn-group"
+      class="c7n-btn-group"
     >
       <button
-        class="ant-btn ant-btn-flat"
+        class="c7n-btn c7n-btn-flat"
         type="button"
       >
         <i
           class="icon icon-minus"
         />
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
       <button
-        class="ant-btn ant-btn-flat"
+        class="c7n-btn c7n-btn-flat"
         type="button"
       >
         <i
           class="icon icon-plus"
         />
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </div>
@@ -392,24 +389,23 @@ exports[`renders ./components/badge/demo/change.md correctly 1`] = `
     style="margin-top:10px"
   >
     <span
-      class="ant-badge"
+      class="c7n-badge"
     >
       <a
         class="head-example"
         href="#"
       />
       <sup
-        class="ant-scroll-number ant-badge-dot"
-        data-show="true"
+        class="c7n-scroll-number c7n-badge-dot"
       />
     </span>
     <span
       checked=""
-      class="ant-switch ant-switch-checked"
+      class="c7n-switch c7n-switch-checked"
       tabindex="0"
     >
       <span
-        class="ant-switch-inner"
+        class="c7n-switch-inner"
       />
     </span>
   </div>
@@ -419,25 +415,24 @@ exports[`renders ./components/badge/demo/change.md correctly 1`] = `
 exports[`renders ./components/badge/demo/dot.md correctly 1`] = `
 <div>
   <span
-    class="ant-badge"
+    class="c7n-badge"
   >
     <i
       class="icon icon-notification"
     />
     <sup
-      class="ant-scroll-number ant-badge-dot"
-      data-show="true"
+      class="c7n-scroll-number c7n-badge-dot"
     />
   </span>
   <span
-    class="ant-badge"
+    class="c7n-badge"
   >
     <i
       class="icon icon-notification"
     />
   </span>
   <span
-    class="ant-badge"
+    class="c7n-badge"
   >
     <a
       href="#"
@@ -445,8 +440,7 @@ exports[`renders ./components/badge/demo/dot.md correctly 1`] = `
       Link something
     </a>
     <sup
-      class="ant-scroll-number ant-badge-dot"
-      data-show="true"
+      class="c7n-scroll-number c7n-badge-dot"
     />
   </span>
 </div>
@@ -457,18 +451,17 @@ exports[`renders ./components/badge/demo/link.md correctly 1`] = `
   href="#"
 >
   <span
-    class="ant-badge"
+    class="c7n-badge"
   >
     <span
       class="head-example"
     />
     <sup
-      class="ant-scroll-number ant-badge-count"
-      data-show="true"
+      class="c7n-scroll-number c7n-badge-count"
       title="5"
     >
       <span
-        class="ant-scroll-number-only"
+        class="c7n-scroll-number-only"
         style="transition:none;-ms-transform:translateY(-1500%);-webkit-transform:translateY(-1500%);transform:translateY(-1500%)"
       >
         <p
@@ -630,15 +623,14 @@ exports[`renders ./components/badge/demo/link.md correctly 1`] = `
 exports[`renders ./components/badge/demo/no-wrapper.md correctly 1`] = `
 <div>
   <span
-    class="ant-badge ant-badge-not-a-wrapper"
+    class="c7n-badge c7n-badge-not-a-wrapper"
   >
     <sup
-      class="ant-scroll-number ant-badge-count ant-badge-multiple-words"
-      data-show="true"
+      class="c7n-scroll-number c7n-badge-count c7n-badge-multiple-words"
       title="25"
     >
       <span
-        class="ant-scroll-number-only"
+        class="c7n-scroll-number-only"
         style="transition:none;-ms-transform:translateY(-1200%);-webkit-transform:translateY(-1200%);transform:translateY(-1200%)"
       >
         <p
@@ -793,7 +785,7 @@ exports[`renders ./components/badge/demo/no-wrapper.md correctly 1`] = `
         </p>
       </span>
       <span
-        class="ant-scroll-number-only"
+        class="c7n-scroll-number-only"
         style="transition:none;-ms-transform:translateY(-1500%);-webkit-transform:translateY(-1500%);transform:translateY(-1500%)"
       >
         <p
@@ -950,16 +942,15 @@ exports[`renders ./components/badge/demo/no-wrapper.md correctly 1`] = `
     </sup>
   </span>
   <span
-    class="ant-badge ant-badge-not-a-wrapper"
+    class="c7n-badge c7n-badge-not-a-wrapper"
   >
     <sup
-      class="ant-scroll-number ant-badge-count"
-      data-show="true"
+      class="c7n-scroll-number c7n-badge-count"
       style="background-color:#fff;color:#999;box-shadow:0 0 0 1px #d9d9d9 inset"
       title="4"
     >
       <span
-        class="ant-scroll-number-only"
+        class="c7n-scroll-number-only"
         style="transition:none;-ms-transform:translateY(-1400%);-webkit-transform:translateY(-1400%);transform:translateY(-1400%)"
       >
         <p
@@ -1116,11 +1107,10 @@ exports[`renders ./components/badge/demo/no-wrapper.md correctly 1`] = `
     </sup>
   </span>
   <span
-    class="ant-badge ant-badge-not-a-wrapper"
+    class="c7n-badge c7n-badge-not-a-wrapper"
   >
     <sup
-      class="ant-scroll-number ant-badge-count ant-badge-multiple-words"
-      data-show="true"
+      class="c7n-scroll-number c7n-badge-count c7n-badge-multiple-words"
       style="background-color:#52c41a"
       title="109"
     >
@@ -1133,19 +1123,18 @@ exports[`renders ./components/badge/demo/no-wrapper.md correctly 1`] = `
 exports[`renders ./components/badge/demo/overflow.md correctly 1`] = `
 <div>
   <span
-    class="ant-badge"
+    class="c7n-badge"
   >
     <a
       class="head-example"
       href="#"
     />
     <sup
-      class="ant-scroll-number ant-badge-count ant-badge-multiple-words"
-      data-show="true"
+      class="c7n-scroll-number c7n-badge-count c7n-badge-multiple-words"
       title="99"
     >
       <span
-        class="ant-scroll-number-only"
+        class="c7n-scroll-number-only"
         style="transition:none;-ms-transform:translateY(-1900%);-webkit-transform:translateY(-1900%);transform:translateY(-1900%)"
       >
         <p
@@ -1300,7 +1289,7 @@ exports[`renders ./components/badge/demo/overflow.md correctly 1`] = `
         </p>
       </span>
       <span
-        class="ant-scroll-number-only"
+        class="c7n-scroll-number-only"
         style="transition:none;-ms-transform:translateY(-1900%);-webkit-transform:translateY(-1900%);transform:translateY(-1900%)"
       >
         <p
@@ -1457,45 +1446,42 @@ exports[`renders ./components/badge/demo/overflow.md correctly 1`] = `
     </sup>
   </span>
   <span
-    class="ant-badge"
+    class="c7n-badge"
   >
     <a
       class="head-example"
       href="#"
     />
     <sup
-      class="ant-scroll-number ant-badge-count ant-badge-multiple-words"
-      data-show="true"
+      class="c7n-scroll-number c7n-badge-count c7n-badge-multiple-words"
       title="100"
     >
       99+
     </sup>
   </span>
   <span
-    class="ant-badge"
+    class="c7n-badge"
   >
     <a
       class="head-example"
       href="#"
     />
     <sup
-      class="ant-scroll-number ant-badge-count ant-badge-multiple-words"
-      data-show="true"
+      class="c7n-scroll-number c7n-badge-count c7n-badge-multiple-words"
       title="99"
     >
       10+
     </sup>
   </span>
   <span
-    class="ant-badge"
+    class="c7n-badge"
   >
     <a
       class="head-example"
       href="#"
     />
     <sup
-      class="ant-scroll-number ant-badge-count ant-badge-multiple-words"
-      data-show="true"
+      class="c7n-scroll-number c7n-badge-count c7n-badge-multiple-words"
       title="1000"
     >
       999+
@@ -1507,116 +1493,116 @@ exports[`renders ./components/badge/demo/overflow.md correctly 1`] = `
 exports[`renders ./components/badge/demo/status.md correctly 1`] = `
 <div>
   <span
-    class="ant-badge ant-badge-status ant-badge-not-a-wrapper"
+    class="c7n-badge c7n-badge-status c7n-badge-not-a-wrapper"
   >
     <span
-      class="ant-badge-status-dot ant-badge-status-success"
+      class="c7n-badge-status-dot c7n-badge-status-success"
     />
     <span
-      class="ant-badge-status-text"
+      class="c7n-badge-status-text"
     />
   </span>
   <span
-    class="ant-badge ant-badge-status ant-badge-not-a-wrapper"
+    class="c7n-badge c7n-badge-status c7n-badge-not-a-wrapper"
   >
     <span
-      class="ant-badge-status-dot ant-badge-status-error"
+      class="c7n-badge-status-dot c7n-badge-status-error"
     />
     <span
-      class="ant-badge-status-text"
+      class="c7n-badge-status-text"
     />
   </span>
   <span
-    class="ant-badge ant-badge-status ant-badge-not-a-wrapper"
+    class="c7n-badge c7n-badge-status c7n-badge-not-a-wrapper"
   >
     <span
-      class="ant-badge-status-dot ant-badge-status-default"
+      class="c7n-badge-status-dot c7n-badge-status-default"
     />
     <span
-      class="ant-badge-status-text"
+      class="c7n-badge-status-text"
     />
   </span>
   <span
-    class="ant-badge ant-badge-status ant-badge-not-a-wrapper"
+    class="c7n-badge c7n-badge-status c7n-badge-not-a-wrapper"
   >
     <span
-      class="ant-badge-status-dot ant-badge-status-processing"
+      class="c7n-badge-status-dot c7n-badge-status-processing"
     />
     <span
-      class="ant-badge-status-text"
+      class="c7n-badge-status-text"
     />
   </span>
   <span
-    class="ant-badge ant-badge-status ant-badge-not-a-wrapper"
+    class="c7n-badge c7n-badge-status c7n-badge-not-a-wrapper"
   >
     <span
-      class="ant-badge-status-dot ant-badge-status-warning"
+      class="c7n-badge-status-dot c7n-badge-status-warning"
     />
     <span
-      class="ant-badge-status-text"
+      class="c7n-badge-status-text"
     />
   </span>
   <br />
   <span
-    class="ant-badge ant-badge-status ant-badge-not-a-wrapper"
+    class="c7n-badge c7n-badge-status c7n-badge-not-a-wrapper"
   >
     <span
-      class="ant-badge-status-dot ant-badge-status-success"
+      class="c7n-badge-status-dot c7n-badge-status-success"
     />
     <span
-      class="ant-badge-status-text"
+      class="c7n-badge-status-text"
     >
       Success
     </span>
   </span>
   <br />
   <span
-    class="ant-badge ant-badge-status ant-badge-not-a-wrapper"
+    class="c7n-badge c7n-badge-status c7n-badge-not-a-wrapper"
   >
     <span
-      class="ant-badge-status-dot ant-badge-status-error"
+      class="c7n-badge-status-dot c7n-badge-status-error"
     />
     <span
-      class="ant-badge-status-text"
+      class="c7n-badge-status-text"
     >
       Error
     </span>
   </span>
   <br />
   <span
-    class="ant-badge ant-badge-status ant-badge-not-a-wrapper"
+    class="c7n-badge c7n-badge-status c7n-badge-not-a-wrapper"
   >
     <span
-      class="ant-badge-status-dot ant-badge-status-default"
+      class="c7n-badge-status-dot c7n-badge-status-default"
     />
     <span
-      class="ant-badge-status-text"
+      class="c7n-badge-status-text"
     >
       Default
     </span>
   </span>
   <br />
   <span
-    class="ant-badge ant-badge-status ant-badge-not-a-wrapper"
+    class="c7n-badge c7n-badge-status c7n-badge-not-a-wrapper"
   >
     <span
-      class="ant-badge-status-dot ant-badge-status-processing"
+      class="c7n-badge-status-dot c7n-badge-status-processing"
     />
     <span
-      class="ant-badge-status-text"
+      class="c7n-badge-status-text"
     >
       Processing
     </span>
   </span>
   <br />
   <span
-    class="ant-badge ant-badge-status ant-badge-not-a-wrapper"
+    class="c7n-badge c7n-badge-status c7n-badge-not-a-wrapper"
   >
     <span
-      class="ant-badge-status-dot ant-badge-status-warning"
+      class="c7n-badge-status-dot c7n-badge-status-warning"
     />
     <span
-      class="ant-badge-status-text"
+      class="c7n-badge-status-text"
     >
       Warning
     </span>

@@ -1,5 +1,7 @@
 // matchMedia polyfill for
 // https://github.com/WickyNilliams/enquire.js/issues/82
+import { getPrefixCls } from '../configure';
+
 let enquire: any;
 if (typeof window !== 'undefined') {
   const matchMediaPolyfill = (mediaQuery: string): MediaQueryList => {
@@ -16,8 +18,7 @@ if (typeof window !== 'undefined') {
   enquire = require('enquire.js');
 }
 
-import * as React from 'react';
-import { Children, cloneElement } from 'react';
+import React, { Children, cloneElement, Component, HTMLAttributes, ReactElement } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
@@ -31,7 +32,7 @@ export type BreakpointMap = {
   xxl?: string
 };
 
-export interface RowProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface RowProps extends HTMLAttributes<HTMLDivElement> {
   gutter?: number | BreakpointMap;
   type?: 'flex';
   align?: 'top' | 'middle' | 'bottom';
@@ -54,7 +55,8 @@ const responsiveMap: BreakpointMap = {
   xxl: '(min-width: 1600px)',
 };
 
-export default class Row extends React.Component<RowProps, RowState> {
+export default class Row extends Component<RowProps, RowState> {
+  static displayName = 'Row';
   static defaultProps = {
     gutter: 0,
   };
@@ -99,14 +101,17 @@ export default class Row extends React.Component<RowProps, RowState> {
             }));
           },
           // Keep a empty destory to avoid triggering unmatch when unregister
-          destroy() {},
+          destroy() {
+          },
         },
       ));
   }
+
   componentWillUnmount() {
     Object.keys(responsiveMap)
       .map((screen: Breakpoint) => enquire.unregister(responsiveMap[screen]));
   }
+
   getGutter() {
     const { gutter } = this.props;
     if (typeof gutter === 'object') {
@@ -119,11 +124,13 @@ export default class Row extends React.Component<RowProps, RowState> {
     }
     return gutter;
   }
+
   render() {
     const {
       type, justify, align, className, style, children,
-      prefixCls = 'ant-row', ...others,
+      prefixCls: customizePrefixCls, ...others,
     } = this.props;
+    const prefixCls = getPrefixCls('row', customizePrefixCls);
     const gutter = this.getGutter();
     const classes = classNames({
       [prefixCls]: !type,
@@ -136,7 +143,7 @@ export default class Row extends React.Component<RowProps, RowState> {
       marginRight: (gutter as number) / -2,
       ...style,
     } : style;
-    const cols = Children.map(children, (col: React.ReactElement<HTMLDivElement>) => {
+    const cols = Children.map(children, (col: ReactElement<HTMLDivElement>) => {
       if (!col) {
         return null;
       }

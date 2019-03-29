@@ -4,15 +4,7 @@ import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import Hammer from '../hammerjs';
 import ReactDOM from 'react-dom';
-import {
-  isVertical,
-  getActiveIndex,
-  getTransformByIndex,
-  setTransform,
-  getActiveKey,
-  toArray,
-  setTransition,
-} from './utils';
+import { getActiveIndex, getActiveKey, getTransformByIndex, isVertical, setTransform, setTransition, toArray, } from './utils';
 
 const RESISTANCE_COEF = 0.6;
 

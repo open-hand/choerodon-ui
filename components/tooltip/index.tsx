@@ -1,9 +1,9 @@
-import * as React from 'react';
-import { cloneElement } from 'react';
+import React, { cloneElement, Component, CSSProperties, isValidElement, ReactElement, ReactNode } from 'react';
 import classNames from 'classnames';
 import getPlacements, { AdjustOverflow, PlacementsConfig } from './placements';
 import Button from '../button/index';
 import RcTooltip from '../rc-components/tooltip';
+import { getPrefixCls } from '../configure';
 
 export { AdjustOverflow, PlacementsConfig };
 
@@ -15,8 +15,8 @@ export type TooltipPlacement =
 export interface AbstractTooltipProps {
   prefixCls?: string;
   overlayClassName?: string;
-  style?: React.CSSProperties;
-  overlayStyle?: React.CSSProperties;
+  style?: CSSProperties;
+  overlayStyle?: CSSProperties;
   placement?: TooltipPlacement;
   builtinPlacements?: Object;
   defaultVisible?: boolean;
@@ -32,14 +32,14 @@ export interface AbstractTooltipProps {
   // getTooltipContainer had been rename to getPopupContainer
   getTooltipContainer?: (triggerNode: Element) => HTMLElement;
   getPopupContainer?: (triggerNode: Element) => HTMLElement;
-  children?: React.ReactNode;
+  children?: ReactNode;
 }
 
-export type RenderFunction = () => React.ReactNode;
+export type RenderFunction = () => ReactNode;
 
 export interface TooltipProps extends AbstractTooltipProps {
-  title?: React.ReactNode | RenderFunction;
-  overlay?: React.ReactNode | RenderFunction;
+  title?: ReactNode | RenderFunction;
+  overlay?: ReactNode | RenderFunction;
 }
 
 const splitObject = (obj: any, keys: string[]) => {
@@ -54,9 +54,9 @@ const splitObject = (obj: any, keys: string[]) => {
   return { picked, omited };
 };
 
-export default class Tooltip extends React.Component<TooltipProps, any> {
+export default class Tooltip extends Component<TooltipProps, any> {
+  static displayName = 'Tooltip';
   static defaultProps = {
-    prefixCls: 'ant-tooltip',
     placement: 'top',
     transitionName: 'zoom-big-fast',
     mouseEnterDelay: 0.1,
@@ -118,11 +118,11 @@ export default class Tooltip extends React.Component<TooltipProps, any> {
   // Fix Tooltip won't hide at disabled button
   // mouse events don't trigger at disabled button in Chrome
   // https://github.com/react-component/tooltip/issues/18
-  getDisabledCompatibleChildren(element: React.ReactElement<any>) {
+  getDisabledCompatibleChildren(element: ReactElement<any>) {
     if (((element.type as typeof Button).__ANT_BUTTON || element.type === 'button') &&
       element.props.disabled && this.isHoverTrigger()) {
       // Pick some layout related style properties up to span
-      // Prevent layout bugs like https://github.com/ant-design/ant-design/issues/5254
+
       const { picked, omited } = splitObject(
         element.props.style,
         ['position', 'left', 'right', 'top', 'bottom', 'float', 'display', 'zIndex'],
@@ -192,8 +192,9 @@ export default class Tooltip extends React.Component<TooltipProps, any> {
 
   render() {
     const { props, state } = this;
-    const { prefixCls, title, overlay, openClassName, getPopupContainer, getTooltipContainer } = props;
-    const children = props.children as React.ReactElement<any>;
+    const { prefixCls: customizePrefixCls, title, overlay, openClassName, getPopupContainer, getTooltipContainer } = props;
+    const prefixCls = getPrefixCls('tooltip', customizePrefixCls);
+    const children = props.children as ReactElement<any>;
     let visible = state.visible;
     // Hide tooltip when there is no title
     if (!('visible' in props) && this.isNoTitle()) {
@@ -201,7 +202,7 @@ export default class Tooltip extends React.Component<TooltipProps, any> {
     }
 
     const child = this.getDisabledCompatibleChildren(
-      React.isValidElement(children) ? children : <span>{children}</span>,
+      isValidElement(children) ? children : <span>{children}</span>,
     );
     const childProps = child.props;
     const childCls = classNames(childProps.className, {
@@ -211,6 +212,7 @@ export default class Tooltip extends React.Component<TooltipProps, any> {
     return (
       <RcTooltip
         {...this.props}
+        prefixCls={prefixCls}
         getTooltipContainer={getPopupContainer || getTooltipContainer}
         ref={this.saveTooltip}
         builtinPlacements={this.getPlacements()}

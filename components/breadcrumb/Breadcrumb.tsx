@@ -1,9 +1,10 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
+import React, { Children, Component, CSSProperties, ReactNode } from 'react';
 import { cloneElement } from 'react';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import warning from '../_util/warning';
 import BreadcrumbItem from './BreadcrumbItem';
-import classNames from 'classnames';
+import { getPrefixCls } from '../configure';
 
 export interface Route {
   path: string;
@@ -14,9 +15,9 @@ export interface BreadcrumbProps {
   prefixCls?: string;
   routes?: Route[];
   params?: any;
-  separator?: React.ReactNode;
-  itemRender?: (route: any, params: any, routes: Array<any>, paths: Array<string>) => React.ReactNode;
-  style?: React.CSSProperties;
+  separator?: ReactNode;
+  itemRender?: (route: any, params: any, routes: Array<any>, paths: Array<string>) => ReactNode;
+  style?: CSSProperties;
   className?: string;
 }
 
@@ -40,11 +41,11 @@ function defaultItemRender(route: Route, params: any, routes: Route[], paths: st
     : <a href={`#/${paths.join('/')}`}>{name}</a>;
 }
 
-export default class Breadcrumb extends React.Component<BreadcrumbProps, any> {
+export default class Breadcrumb extends Component<BreadcrumbProps, any> {
+  static displayName = 'Breadcrumb';
   static Item: any;
 
   static defaultProps = {
-    prefixCls: 'ant-breadcrumb',
     separator: '/',
   };
 
@@ -61,8 +62,7 @@ export default class Breadcrumb extends React.Component<BreadcrumbProps, any> {
     const props = this.props;
     warning(
       !('linkRender' in props || 'nameRender' in props),
-      '`linkRender` and `nameRender` are removed, please use `itemRender` instead, ' +
-      'see: https://u.ant.design/item-render.',
+      '`linkRender` and `nameRender` are removed, please use `itemRender` instead',
     );
   }
 
@@ -90,7 +90,7 @@ export default class Breadcrumb extends React.Component<BreadcrumbProps, any> {
         );
       });
     } else if (children) {
-      crumbs = React.Children.map(children, (element: any, index) => {
+      crumbs = Children.map(children, (element: any, index) => {
         if (!element) {
           return element;
         }
@@ -105,7 +105,7 @@ export default class Breadcrumb extends React.Component<BreadcrumbProps, any> {
       });
     }
     return (
-      <div className={classNames(className, prefixCls)} style={style}>
+      <div className={classNames(className, getPrefixCls('breadcrumb', prefixCls))} style={style}>
         {crumbs}
       </div>
     );

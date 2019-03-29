@@ -1,8 +1,8 @@
 /* stylelint-disable at-rule-empty-line-before,at-rule-name-space-after,at-rule-no-unknown */
 @import "../color/colors";
 
-// The prefix to use on all css classes from ant.
-@ant-prefix: ant;
+// The prefix to use on all css classes from c7n.
+@c7n-prefix: c7n;
 
 // -------- Colors -----------
 @primary-color: @blue-6;
@@ -10,6 +10,7 @@
 @success-color: @green-6;
 @processing-color: @primary-color;
 @error-color: @red-6;
+@error-bg-color: #fcebeb;
 @highlight-color: @red-6;
 @warning-color: @gold-6;
 @normal-color: #d9d9d9;
@@ -43,19 +44,19 @@
 @heading-color-dark: fade(#fff, 100%);
 @text-color-dark: fade(#fff, 85%);
 @text-color-secondary-dark: fade(#fff, 65%);
-@font-size-base: 13px;
-@font-size-lg: @font-size-base + 3px;
-@font-size-sm: @font-size-base - 3px;
+@font-size-base: .13rem;
+@font-size-lg: @font-size-base + .03rem;
+@font-size-sm: @font-size-base - .01rem;
 @line-height-base: 1.5;
-@border-radius-lg: 10px;
-@border-radius-base: 2px;
-@border-radius-sm: 2px;
+@border-radius-lg: .1rem;
+@border-radius-base: .02rem;
+@border-radius-sm: .02rem;
 
 // vertical paddings
-@padding-lg: 24px; // containers
-@padding-md: 16px; // small containers and buttons
-@padding-sm: 12px; // Form controls and items
-@padding-xs: 8px; // small items
+@padding-lg: .24rem; // containers
+@padding-md: .16rem; // small containers and buttons
+@padding-sm: .12rem; // Form controls and items
+@padding-xs: .08rem; // small items
 
 // vertical padding for all form controls
 @control-padding-horizontal: @padding-sm;
@@ -63,12 +64,12 @@
 
 // The background colors for active and hover states for things like
 // list items or table cells.
-@item-active-bg: rgba(0, 0, 0, 0.04);
+@item-active-bg: rgba(140, 158, 255, .12);
 @item-hover-bg: rgba(0, 0, 0, 0.04);
 @item-focus-bg: rgba(0, 0, 0, 0.04);
 // ICONFONT
 @iconfont-css-prefix: icon;
-@icon-url: "fonts/icomoon";
+@icon-url: "~choerodon-ui-font/fonts/icomoon";
 
 // LINK
 @link-color: @primary-color;
@@ -94,12 +95,12 @@
 // Border color
 @border-color-base: fade(#000, 12%); // base border outline a component
 @border-color-split: hsv(0, 0, 91%); // split border inside a component
-@border-width-base: 1px; // width of the border for a component
+@border-width-base: .01rem; // width of the border for a component
 @border-style-base: solid; // style of a components border
 
 // Outline
 @outline-blur-size: 0;
-@outline-width: 2px;
+@outline-width: .02rem;
 @outline-color: @primary-color;
 
 @background-color-light: fade(#000, 4%); // background of header and selected item
@@ -113,11 +114,13 @@
 // Shadow
 @shadow-color: rgba(0, 0, 0, .12);
 @box-shadow-base: @shadow-1-down;
-@shadow-1-up: 0 2px 8px @shadow-color;
-@shadow-1-down: 0 2px 8px @shadow-color;
-@shadow-1-left: -2px 0 8px @shadow-color;
-@shadow-1-right: 2px 0 8px @shadow-color;
-@shadow-2: 0 4px 12px @shadow-color;
+@shadow-1-up: 0 -.02rem .08rem @shadow-color;
+@shadow-1-down: 0 .02rem .08rem @shadow-color;
+@shadow-1-left: -.02rem 0 .08rem @shadow-color;
+@shadow-1-right: .02rem 0 .08rem @shadow-color;
+@shadow-2: 0 .04rem .12rem @shadow-color;
+@shadow-3: 0 0 0 .01rem @component-background;
+@shadow-4: 0 .05rem .05rem -.03rem rgba(0, 0, 0, .2), 0 .08rem .1rem .01rem rgba(0, 0, 0, .14), 0 .03rem .14rem .02rem rgba(0, 0, 0, .12);
 
 // Buttons
 @btn-font-weight: 500;
@@ -142,34 +145,37 @@
 @btn-disable-bg: transparent;
 @btn-disable-border: @border-color-base;
 
-@btn-padding-base: 0 @padding-md - 1px;
+@btn-padding-base: 0 @padding-md - .01rem;
 @btn-font-size-lg: @font-size-lg;
 @btn-font-size-sm: @font-size-sm;
 @btn-padding-lg: @btn-padding-base;
-@btn-padding-sm: 0 @padding-xs - 1px;
+@btn-padding-sm: 0 @padding-xs - .01rem;
 
-@btn-height-base: 32px;
-@btn-height-lg: 40px;
-@btn-height-sm: 24px;
+@btn-height-base: .3rem;
+@btn-height-lg: .4rem;
+@btn-height-sm: .2rem;
 
 @btn-circle-size: @btn-height-base;
 @btn-circle-size-lg: @btn-height-lg;
 @btn-circle-size-sm: @btn-height-sm;
 
 @btn-group-border: @primary-5;
-@btn-box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
-@btn-active-box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+@btn-box-shadow: 0 .03rem .01rem -.02rem rgba(0, 0, 0, .2), 0 .02rem .02rem 0 rgba(0, 0, 0, .14), 0 .01rem .05rem 0 rgba(0, 0, 0, .12);
+@btn-focus-box-shadow: 0 .04rem .03rem -.02rem rgba(0, 0, 0, .2), 0 .03rem .03rem 0 rgba(0, 0, 0, .14), 0 .03rem .08rem 0 rgba(0, 0, 0, .12);
+@btn-active-box-shadow: @shadow-4;
+@btn-icon-size: .14rem;
 // Checkbox
-@checkbox-size: 16px;
+@checkbox-size: .16rem;
 @checkbox-color: @primary-color;
-@checkbox-border-width: 2px;
+@checkbox-border-color: fade(#000, 65%);
+@checkbox-border-width: .02rem;
 
 // Radio
 @radio-border-color: rgba(0, 0, 0, .24);
 @radio-disabled-color: rgba(0, 0, 0, .54);
 @radio-disabled-bg: rgba(0, 0, 0, .12);
 @radio-disabled-check-bg: rgba(0, 0, 0, .24);
-@radio-size: 16px;
+@radio-size: .14rem;
 @radio-dot-color: @primary-color;
 
 // Radio buttons
@@ -218,23 +224,25 @@
 @layout-body-background: #f0f2f5;
 @layout-header-background: #001529;
 @layout-footer-background: @layout-body-background;
-@layout-header-height: 64px;
-@layout-header-padding: 0 50px;
-@layout-footer-padding: 24px 50px;
+@layout-header-height: .64rem;
+@layout-header-padding: 0 .5rem;
+@layout-footer-padding: .24rem .5rem;
 @layout-sider-background: @layout-header-background;
-@layout-trigger-height: 48px;
+@layout-trigger-height: .48rem;
 @layout-trigger-background: #002140;
 @layout-trigger-color: #fff;
-@layout-zero-trigger-width: 36px;
-@layout-zero-trigger-height: 42px;
+@layout-zero-trigger-width: .36rem;
+@layout-zero-trigger-height: .42rem;
 
 // z-index list
+@zindex-modal-container: 1000;
+@zindex-popup-container: 1030;
 @zindex-affix: 10;
 @zindex-back-top: 10;
 @zindex-modal-mask: 1000;
 @zindex-modal: 1000;
-@zindex-notification: 1010;
-@zindex-message: 1010;
+@zindex-notification: 1030;
+@zindex-message: 1030;
 @zindex-popover: 1030;
 @zindex-picker: 1050;
 @zindex-dropdown: 1050;
@@ -250,36 +258,41 @@
 // ---
 @label-required-color: @highlight-color;
 @label-color: rgba(0, 0, 0, 60%);
-@form-item-margin-bottom: 24px;
+@field-help-color: rgba(0, 0, 0, 40%);
+@form-item-margin-bottom: .24rem;
 @form-item-trailing-colon: true;
-@form-vertical-label-padding: 0 0 8px;
+@form-vertical-label-padding: 0 0 .08rem;
 @form-vertical-label-margin: 0;
 
 // Input
 // ---
-@input-height-base: 32px;
-@input-height-lg: 40px;
-@input-height-sm: 24px;
-@input-padding-horizontal: @control-padding-horizontal - 1px;
+@input-height-base: .3rem;
+@input-height-lg: .4rem;
+@input-height-sm: .24rem;
+@input-padding-horizontal: @control-padding-horizontal - .02rem;
 @input-padding-horizontal-base: @input-padding-horizontal;
-@input-padding-horizontal-sm: @control-padding-horizontal-sm - 1px;
+@input-padding-horizontal-sm: @control-padding-horizontal-sm - .02rem;
 @input-padding-horizontal-lg: @input-padding-horizontal;
-@input-padding-vertical-base: 4px;
-@input-padding-vertical-sm: 1px;
-@input-padding-vertical-lg: 6px;
+@input-padding-vertical-base: .01rem;
+@input-padding-vertical-sm: .01rem;
+@input-padding-vertical-lg: .06rem;
 @input-placeholder-color: hsv(0, 0, 75%);
-@input-color: @text-color;
+@input-color: fade(@text-color, 54%);
+@input-active-color: @text-color;
 // @input-color                 : rgb(0,0,0);
 // @input-border-color: @border-color-base;
-@input-border-color: rgba(0, 0, 0, 0.54);
+@input-baseline-color: rgba(0, 0, 0, 0.54);
+@input-border-color: rgba(0, 0, 0, 0.2);
+@input-wrapper-bg: @component-background;
 @input-bg: transparent;
 @input-addon-bg: @background-color-light;
 @input-hover-border-color: @primary-color;
 @input-disabled-bg: @disabled-bg;
 @input-disabled-color: rgba(0, 0, 0, 0.54);
-@input-icon-width-base: 20px;
-@input-icon-width-lg: 30px;
-@input-icon-width-sm: 20px;
+@input-icon-width-base: .2rem;
+@input-icon-width-lg: .3rem;
+@input-icon-width-sm: .2rem;
+@input-addon-bg: #eee;
 
 //step
 @step-border-color: rgba(0, 0, 0, 0.26);
@@ -287,17 +300,21 @@
 // Tooltip
 // ---
 //* Tooltip max width
-@tooltip-max-width: 250px;
+@tooltip-max-width: 2.5rem;
 //** Tooltip text color
 @tooltip-color: #fff;
 //** Tooltip background color
 @tooltip-bg: rgba(0, 0, 0, .75);
 //** Tooltip arrow width
-@tooltip-arrow-width: 5px;
+@tooltip-arrow-width: .05rem;
 //** Tooltip distance with trigger
-@tooltip-distance: @tooltip-arrow-width - 1px + 4px;
+@tooltip-distance: @tooltip-arrow-width + .03rem;
 //** Tooltip arrow color
 @tooltip-arrow-color: @tooltip-bg;
+//** Tooltip light theme colors
+@tooltip-color-light: #000;
+@tooltip-bg-light: #fff;
+@tooltip-arrow-color-light: @tooltip-bg-light;
 
 // Popover
 // ---
@@ -306,27 +323,27 @@
 //** Popover text color
 @popover-color: @text-color;
 //** Popover maximum width
-@popover-min-width: 177px;
+@popover-min-width: 1.77rem;
 //** Popover arrow width
-@popover-arrow-width: 5px;
+@popover-arrow-width: .05rem;
 //** Popover arrow color
 @popover-arrow-color: @popover-bg;
 //** Popover outer arrow width
 //** Popover outer arrow color
 @popover-arrow-outer-color: @popover-bg;
 //** Popover distance with trigger
-@popover-distance: @popover-arrow-width + 4px;
+@popover-distance: @popover-arrow-width + .04rem;
 
 // Modal
 // --
-@modal-font-size-lg: 20px;
+@modal-font-size-lg: .2rem;
 @modal-mask-bg: rgba(0, 0, 0, 0.288);
-@modal-content-shadow: 0 11px 15px -7px rgba(0, 0, 0, 0.2),
-0 24px 38px 3px rgba(0, 0, 0, 0.14),
-0 9px 46px 8px rgba(0, 0, 0, 0.12);
+@modal-content-shadow: @shadow-2;
+
 // Sidebar
-@sidebar-font-size-lg: 18px;
-@sidebar-header-height: 65px;
+@sidebar-font-size-lg: .18rem;
+@sidebar-header-height: .65rem;
+
 // Progress
 // --
 @progress-default-color: @processing-color;
@@ -334,9 +351,9 @@
 
 // Menu
 // ---
-@menu-inline-toplevel-item-height: 40px;
-@menu-item-height: 40px;
-@menu-collapsed-width: 80px;
+@menu-inline-toplevel-item-height: .4rem;
+@menu-item-height: .4rem;
+@menu-collapsed-width: .8rem;
 @menu-bg: @component-background;
 @menu-item-color: @text-color;
 @menu-highlight-color: @primary-color;
@@ -352,46 +369,48 @@
 
 // Spin
 // ---
-@spin-dot-size-sm: 20px;
-@spin-dot-size: 30px;
-@spin-dot-size-lg: 50px;
+@spin-dot-size-sm: .2rem;
+@spin-dot-size: .3rem;
+@spin-dot-size-lg: .5rem;
 
 // Table
 // --
 @table-header-bg: @background-color-light;
 @table-header-sort-bg: @background-color-base;
 @table-row-hover-bg: @background-color-light;
+@table-current-row-bg: @item-active-bg;
 @table-cell-focus-bg: fade(#000, 8%);
 @table-selected-row-bg: fade(#a1c2fa, 16%);
 @table-expanded-row-bg: #fbfbfb;
-@table-padding-vertical: 5px;
-@table-padding-horizontal: 16px;
+@table-padding-vertical: .05rem;
+@table-padding-horizontal: @input-padding-horizontal;
+@table-split-color: @primary-color;
 
 // Tag
 // --
-@tag-default-bg: #3b78e7;
+@tag-default-bg: @primary-color;
 @tag-default-color: #fff;
 @tag-font-size: @font-size-sm;
 
 // TimePicker
 // ---
-@time-picker-panel-column-width: 56px;
+@time-picker-panel-column-width: .56rem;
 @time-picker-panel-width: @time-picker-panel-column-width * 3;
 @time-picker-selected-bg: @background-color-base;
 
 // Carousel
 // ---
-@carousel-dot-width: 16px;
-@carousel-dot-height: 3px;
-@carousel-dot-active-width: 24px;
+@carousel-dot-width: .16rem;
+@carousel-dot-height: .03rem;
+@carousel-dot-active-width: .24rem;
 
 // Badge
 // ---
-@badge-height: 20px;
-@badge-dot-size: 6px;
+@badge-height: .2rem;
+@badge-dot-size: .06rem;
 @badge-font-size: @font-size-sm;
 @badge-font-weight: normal;
-@badge-status-size: 6px;
+@badge-status-size: .06rem;
 
 // Rate
 // ---
@@ -402,28 +421,28 @@
 // ---
 @card-head-color: @heading-color;
 @card-head-background: @component-background;
-@card-head-padding: 16px;
-@card-inner-head-padding: 12px;
-@card-padding-base: 24px;
-@card-padding-wider: 32px;
+@card-head-padding: .16rem;
+@card-inner-head-padding: .12rem;
+@card-padding-base: .24rem;
+@card-padding-wider: .32rem;
 @card-actions-background: @background-color-light;
-@card-shadow: 0 2px 8px rgba(0, 0, 0, .09);
+@card-shadow: 0 .02rem .08rem rgba(0, 0, 0, .09);
 
 // Tabs
 // ---
 @tabs-card-head-background: @background-color-light;
-@tabs-card-height: 40px;
+@tabs-card-height: .4rem;
 @tabs-card-active-color: @primary-color;
 @tabs-title-font-size: @font-size-base;
 @tabs-title-font-size-lg: @font-size-lg;
 @tabs-title-font-size-sm: @font-size-base;
 @tabs-ink-bar-bg-color: @primary-color;
-@tab-bar-margin: 0 0 16px 0;
-@tab-horizontal-margin: 0 32px 0 0;
-@tab-vertical-margin: 0 0 16px 0;
-@tab-horizontal-padding: 12px 16px;
-@tab-vertical-padding: 8px 24px;
-@tab-scrolling-size: 32px;
+@tab-bar-margin: 0 0 .16rem 0;
+@tab-horizontal-margin: 0 .32rem 0 0;
+@tab-vertical-margin: 0 0 .16rem 0;
+@tab-horizontal-padding: .12rem .16rem;
+@tab-vertical-padding: .08rem .24rem;
+@tab-scrolling-size: .32rem;
 @tab-highlight-color: @primary-color;
 @tab-hover-color: @primary-5;
 @tab-active-color: @primary-7;
@@ -436,30 +455,30 @@
 
 // Avatar
 // ---
-@avatar-size-base: 32px;
-@avatar-size-lg: 40px;
-@avatar-size-sm: 24px;
-@avatar-font-size-base: 18px;
-@avatar-font-size-lg: 24px;
-@avatar-font-size-sm: 14px;
+@avatar-size-base: .32rem;
+@avatar-size-lg: .4rem;
+@avatar-size-sm: .24rem;
+@avatar-font-size-base: .18rem;
+@avatar-font-size-lg: .24rem;
+@avatar-font-size-sm: .14rem;
 @avatar-bg: #ccc;
 @avatar-color: #fff;
 @avatar-border-radius: @border-radius-base;
 
 // Switch
 // ---
-@switch-height: 20px;
-@switch-sm-height: 16px;
-@switch-sm-checked-margin-left: -(@switch-sm-height - 3px);
+@switch-height: .22rem;
+@switch-sm-height: .16rem;
+@switch-sm-checked-margin-left: .03rem - @switch-sm-height;
 @switch-disabled-opacity: 0.4;
 @switch-checked-color: @primary-color;
 @switch-color: @primary-3;
 
 // Pagination
 // ---
-@pagination-item-size: 32px;
-@pagination-item-size-sm: 20px;
-@pagination-item-size-lg: 40px;
+@pagination-item-size: .32rem;
+@pagination-item-size-sm: .2rem;
+@pagination-item-size-lg: .4rem;
 @pagination-font-family: Arial;
 @pagination-font-weight-active: 500;
 
@@ -476,13 +495,13 @@
 
 // Slider
 // ---
-@slider-margin: 14px 6px 10px;
+@slider-margin: .14rem .06rem .1rem;
 @slider-rail-background-color: @background-color-base;
 @slider-rail-background-color-hover: #e1e1e1;
-@slider-track-background-color: @primary-3;
-@slider-track-background-color-hover: @primary-4;
-@slider-handle-color: @primary-3;
-@slider-handle-color-hover: @primary-4;
+@slider-track-background-color: @primary-color;
+@slider-track-background-color-hover: @primary-7;
+@slider-handle-color: @primary-color;
+@slider-handle-color-hover: @primary-7;
 @slider-handle-color-focus: tint(@primary-color, 20%);
 @slider-handle-color-focus-shadow: tint(@primary-color, 50%);
 @slider-handle-color-tooltip-open: @primary-color;
@@ -492,7 +511,14 @@
 @slider-disabled-background-color: @component-background;
 
 //Icon
-@icon-font-size-base: 18px;
-@icon-font-size-sm: 16px;
-@icon-font-size-lg: 20px;
+@icon-font-size-base: .18rem;
+@icon-font-size-sm: .16rem;
+@icon-font-size-lg: .2rem;
 
+//Ripple
+@ripple-dark-color: fade(#000, 10%);
+@ripple-light-color: fade(#fff, 10%);
+
+// CodeArea
+// ---
+@codearea-border: @border-width-base @border-style-base @border-color-base;

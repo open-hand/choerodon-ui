@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import KEYCODE from './KeyCode';
 
@@ -29,7 +29,7 @@ const BUILT_IN_PLACEMENTS = {
   },
 };
 
-class Options extends React.Component {
+export default class Options extends Component {
   static propTypes = {
     changeSize: PropTypes.func,
     quickGo: PropTypes.func,
@@ -181,5 +181,3 @@ class Options extends React.Component {
     );
   }
 }
-
-export default Options;

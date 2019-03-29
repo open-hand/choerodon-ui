@@ -69,7 +69,6 @@ describe('DatePicker', () => {
     expect(wrapper.render()).toMatchSnapshot();
   });
 
-  // Fix https://github.com/ant-design/ant-design/issues/8885
   it('control value after panel closed', () => {
     class Test extends React.Component {
       state = {
@@ -110,9 +109,9 @@ describe('DatePicker', () => {
     clearInput(wrapper);
     openPanel(wrapper);
     selectDate(wrapper, moment('2016-11-13'));
-    expect(wrapper.find('.ant-calendar-input').getDOMNode().value).toBe('2016-11-13 12:12:12');
+    expect(wrapper.find('.c7n-calendar-input').getDOMNode().value).toBe('2016-11-13 12:12:12');
     selectDate(wrapper, moment('2016-11-14'));
-    expect(wrapper.find('.ant-calendar-input').getDOMNode().value).toBe('2016-11-14 12:12:12');
+    expect(wrapper.find('.c7n-calendar-input').getDOMNode().value).toBe('2016-11-14 12:12:12');
   });
 
   it('triggers onChange only when date was selected', () => {

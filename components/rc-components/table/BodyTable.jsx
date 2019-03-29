@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { measureScrollbar } from './utils';
+import measureScrollbar from '../../_util/measureScrollbar';
 import BaseTable from './BaseTable';
 
 export default function BodyTable(props, { table }) {
@@ -22,7 +22,6 @@ export default function BodyTable(props, { table }) {
   if (scroll.x || fixed) {
     bodyStyle.overflowX = bodyStyle.overflowX || 'auto';
     // Fix weired webkit render bug
-    // https://github.com/ant-design/ant-design/issues/7783
     bodyStyle.WebkitTransform = 'translate3d (0, 0, 0)';
   }
 

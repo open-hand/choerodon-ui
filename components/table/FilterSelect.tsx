@@ -1,11 +1,12 @@
-import * as React from 'react';
-import { Key, ReactElement } from 'react';
-import Icon from '../icon/index';
+import React, { Component, Key, MouseEvent, ReactElement } from 'react';
+import { findDOMNode } from 'react-dom';
+import Icon from '../icon';
 import { ColumnProps, TableStateFilters } from './interface';
 import Select, { LabeledValue, OptionProps } from '../select';
 import { filterByInputValue, getColumnKey } from './util';
-import { findDOMNode } from 'react-dom';
 import Checkbox from '../checkbox/Checkbox';
+import { SelectMode } from '../select/enum';
+import { getPrefixCls } from '../configure';
 
 const { Option, OptGroup } = Select;
 const PAIR_SPLIT = ':';
@@ -56,7 +57,7 @@ function removeDoubleOr(filters: LabeledValue[]): LabeledValue[] {
   return filters.filter(({ label }, index) => label !== VALUE_OR || label !== filters[index + 1]);
 }
 
-export default class FilterSelect<T> extends React.Component<FilterSelectProps<T>, FilterSelectState<T>> {
+export default class FilterSelect<T> extends Component<FilterSelectProps<T>, FilterSelectState<T>> {
 
   state: FilterSelectState<T> = {
     columns: this.getColumnsWidthFilters(),
@@ -90,7 +91,7 @@ export default class FilterSelect<T> extends React.Component<FilterSelectProps<T
     return `${this.props.prefixCls}-filter-select`;
   }
 
-  handleDropdownMouseDown = (e: React.MouseEvent<any>) => {
+  handleDropdownMouseDown = (e: MouseEvent<any>) => {
     e.preventDefault();
     this.rcSelect.focus();
   };
@@ -105,7 +106,7 @@ export default class FilterSelect<T> extends React.Component<FilterSelectProps<T
         </div>
         <Select
           ref={this.saveRef}
-          mode="tags"
+          mode={SelectMode.tags}
           filterOption={false}
           onChange={this.handleChange}
           onSelect={multiple ? this.handleSelect : undefined}
@@ -541,7 +542,7 @@ export default class FilterSelect<T> extends React.Component<FilterSelectProps<T
   };
 
   getRootDomNode = (): HTMLElement => {
-    return (findDOMNode(this) as HTMLElement).querySelector('.ant-select-search__field') as HTMLElement;
+    return (findDOMNode(this) as HTMLElement).querySelector(`.${getPrefixCls('select')}-search__field`) as HTMLElement;
   };
 
   getColumnTitle(column: ColumnProps<T>) {

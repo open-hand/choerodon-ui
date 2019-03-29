@@ -2,10 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import moment from 'moment';
-import { isAllowedDate, getTodayTime } from '../util/index';
-
-function noop() {
-}
+import noop from 'lodash/noop';
+import { getTodayTime, isAllowedDate } from '../util';
 
 function getNow() {
   return moment();

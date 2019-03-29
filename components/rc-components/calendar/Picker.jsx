@@ -1,14 +1,12 @@
-import React from 'react';
+import React, { cloneElement } from 'react';
 import ReactDOM from 'react-dom';
 import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
+import noop from 'lodash/noop';
 import createChainedFunction from '../util/createChainedFunction';
-import KeyCode from '../util/KeyCode';
+import KeyCode from '../../_util/KeyCode';
 import placements, { getPlacements } from './picker/placements';
 import Trigger from '../trigger';
-
-function noop() {
-}
 
 function refFn(field, component) {
   this[field] = component;
@@ -151,7 +149,7 @@ const Picker = createReactClass({
       onClear: createChainedFunction(calendarProps.onClear, this.onCalendarClear),
     };
 
-    return React.cloneElement(props.calendar, extraProps);
+    return cloneElement(props.calendar, extraProps);
   },
 
   setOpen(open, callback) {
@@ -226,7 +224,7 @@ const Picker = createReactClass({
       prefixCls={prefixCls}
       popupClassName={dropdownClassName}
     >
-      {React.cloneElement(children(state, props), { onKeyDown: this.onKeyDown })}
+      {cloneElement(children(state, props), { onKeyDown: this.onKeyDown })}
     </Trigger>);
   },
 });

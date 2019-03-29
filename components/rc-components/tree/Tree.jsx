@@ -1,13 +1,20 @@
-import React from 'react';
+import React, { Children, cloneElement, Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import warning from 'warning';
+import warning from '../../_util/warning';
 import {
-  traverseTreeNodes, getStrictlyValue,
-  getFullKeyList, getPosition, getDragNodesKeys,
-  calcExpandedKeys, calcSelectedKeys,
-  calcCheckedKeys, calcDropPosition,
-  arrAdd, arrDel, posToArr,
+  arrAdd,
+  arrDel,
+  calcCheckedKeys,
+  calcDropPosition,
+  calcExpandedKeys,
+  calcSelectedKeys,
+  getDragNodesKeys,
+  getFullKeyList,
+  getPosition,
+  getStrictlyValue,
+  posToArr,
+  traverseTreeNodes,
 } from './util';
 
 /**
@@ -21,6 +28,7 @@ export const contextTypes = {
     prefixCls: PropTypes.string,
     selectable: PropTypes.bool,
     showIcon: PropTypes.bool,
+    icon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
     draggable: PropTypes.bool,
     checkable: PropTypes.oneOfType([
       PropTypes.bool,
@@ -53,13 +61,14 @@ export const contextTypes = {
   }),
 };
 
-class Tree extends React.Component {
+class Tree extends Component {
   static propTypes = {
     prefixCls: PropTypes.string,
     className: PropTypes.string,
     children: PropTypes.any,
     showLine: PropTypes.bool,
     showIcon: PropTypes.bool,
+    icon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
     focusable: PropTypes.bool,
     selectable: PropTypes.bool,
     disabled: PropTypes.bool,
@@ -98,6 +107,7 @@ class Tree extends React.Component {
     filterTreeNode: PropTypes.func,
     openTransitionName: PropTypes.string,
     openAnimation: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    switcherIcon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   };
 
   static childContextTypes = contextTypes;
@@ -145,7 +155,7 @@ class Tree extends React.Component {
 
     // Sync state with props
     const { checkedKeys = [], halfCheckedKeys = [] } =
-      calcCheckedKeys(defaultCheckedKeys, props) || {};
+    calcCheckedKeys(defaultCheckedKeys, props) || {};
 
     const state = {
       selectedKeys: calcSelectedKeys(defaultSelectedKeys, props),
@@ -172,9 +182,10 @@ class Tree extends React.Component {
 
   getChildContext() {
     const {
-      prefixCls, selectable, showIcon, draggable, checkable, checkStrictly, disabled,
+      prefixCls, selectable, showIcon, icon, draggable, checkable, checkStrictly, disabled,
       loadData, filterTreeNode,
       openTransitionName, openAnimation,
+      switcherIcon,
     } = this.props;
 
     return {
@@ -184,6 +195,8 @@ class Tree extends React.Component {
         prefixCls,
         selectable,
         showIcon,
+        icon,
+        switcherIcon,
         draggable,
         checkable,
         checkStrictly,
@@ -411,7 +424,7 @@ class Tree extends React.Component {
       };
       warning(
         false,
-        'Checked batch not init. This should be a bug. Please fire a issue.'
+        'Checked batch not init. This should be a bug. Please fire a issue.',
       );
     }
 
@@ -505,7 +518,7 @@ class Tree extends React.Component {
 
     warning(
       (expanded && index !== -1) || (!expanded && index === -1)
-    , 'Expand state not sync with index check');
+      , 'Expand state not sync with index check');
 
     if (targetExpanded) {
       expandedKeys = arrAdd(expandedKeys, eventKey);
@@ -572,15 +585,14 @@ class Tree extends React.Component {
     // And no need to check when prev props not provided
     if (prevProps && checkSync('children')) {
       const { checkedKeys = [], halfCheckedKeys = [] } =
-        calcCheckedKeys(props.checkedKeys || this.state.checkedKeys, props) || {};
+      calcCheckedKeys(props.checkedKeys || this.state.checkedKeys, props) || {};
       newState.checkedKeys = checkedKeys;
       newState.halfCheckedKeys = halfCheckedKeys;
     }
 
     // Re-calculate when autoExpandParent or expandedKeys changed
     if (prevProps && (checkSync('autoExpandParent') || checkSync('expandedKeys'))) {
-      newState.expandedKeys = props.autoExpandParent ?
-        calcExpandedKeys(props.expandedKeys, props) : props.expandedKeys;
+      newState.expandedKeys = props.autoExpandParent ? calcExpandedKeys(props.expandedKeys, props) : props.expandedKeys;
     }
 
     if (checkSync('selectedKeys')) {
@@ -632,7 +644,7 @@ class Tree extends React.Component {
     const pos = getPosition(level, index);
     const key = child.key || pos;
 
-    return React.cloneElement(child, {
+    return cloneElement(child, {
       eventKey: key,
       expanded: expandedKeys.indexOf(key) !== -1,
       selected: selectedKeys.indexOf(key) !== -1,
@@ -670,7 +682,7 @@ class Tree extends React.Component {
         role="tree-node"
         unselectable="on"
       >
-        {React.Children.map(children, this.renderTreeNode, this)}
+        {Children.map(children, this.renderTreeNode, this)}
       </ul>
     );
   }

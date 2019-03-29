@@ -1,17 +1,17 @@
-import * as React from 'react';
+import { Children, isValidElement, ReactElement, ReactNode } from 'react';
 
-function getInnerText(node: React.ReactNode): string {
+function getInnerText(node: ReactNode): string {
   if (typeof node === 'number') {
     return node.toString();
   } else if (node) {
     let children;
-    if (React.isValidElement(node)) {
-      children = (node as React.ReactElement<any>).props.children;
+    if (isValidElement(node)) {
+      children = (node as ReactElement<any>).props.children;
     } else if (node instanceof Array) {
       children = node;
     }
     if (children) {
-      return React.Children.map(children, (child) => getInnerText(child)).join('');
+      return Children.map(children, (child) => getInnerText(child)).join('');
     } else {
       return node.toString();
     }

@@ -1,32 +1,22 @@
-import React from 'react';
+import React, { Component } from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
-import { Icon, Badge } from 'choerodon-ui';
+import { Icon } from 'choerodon-ui';
 
-export default class CopyableIcon extends React.Component {
-  state = {
-    justCopied: false,
+export default class CopyableIcon extends Component {
+  handleCopy = (text) => {
+    const { type, onCopied } = this.props;
+    onCopied(type, text);
   };
 
-  onCopied = () => {
-    this.setState({ justCopied: true }, () => {
-      setTimeout(() => {
-        this.setState({ justCopied: false });
-      }, 2000);
-    });
-  }
-
   render() {
-    const { type, isNew } = this.props;
-    const { justCopied } = this.state;
+    const { type, justCopied } = this.props;
     const text = `<Icon type="${type}" />`;
     return (
-      <CopyToClipboard text={text} onCopy={this.onCopied}>
+      <CopyToClipboard text={text} onCopy={this.handleCopy}>
         <li className={justCopied ? 'copied' : ''}>
           <Icon type={type} />
-          <span className="anticon-class">
-            <Badge dot={isNew}>
-              {type}
-            </Badge>
+          <span className="c7nicon-class">
+            {type}
           </span>
         </li>
       </CopyToClipboard>

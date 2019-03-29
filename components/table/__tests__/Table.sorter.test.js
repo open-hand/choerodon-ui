@@ -59,7 +59,7 @@ describe('Table.sorter', () => {
 
   it('sort records', () => {
     const wrapper = mount(createTable());
-    const columnHead = wrapper.find('th.ant-table-column-has-filters');
+    const columnHead = wrapper.find('th.c7n-table-column-has-filters');
     columnHead.simulate('click');
     expect(renderedNames(wrapper)).toEqual(['Jack', 'Jerry', 'Lucy', 'Tom']);
 
@@ -78,7 +78,7 @@ describe('Table.sorter', () => {
     const handleChange = jest.fn();
     const wrapper = mount(createTable({ onChange: handleChange }));
 
-    wrapper.find('th.ant-table-column-has-filters').simulate('click');
+    wrapper.find('th.c7n-table-column-has-filters').simulate('click');
 
     const sorter = handleChange.mock.calls[0][2];
     expect(sorter.column.dataIndex).toBe('name');

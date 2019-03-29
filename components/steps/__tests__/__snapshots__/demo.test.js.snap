@@ -2,131 +2,131 @@
 
 exports[`renders ./components/steps/demo/customized-progress-dot.md correctly 1`] = `
 <div
-  class="ant-steps ant-steps-horizontal ant-steps-label-vertical ant-steps-dot"
+  class="c7n-steps c7n-steps-horizontal c7n-steps-label-vertical c7n-steps-dot"
 >
   <div
-    class="ant-steps-item ant-steps-item-finish"
+    class="c7n-steps-item c7n-steps-item-finish"
   >
     <div
-      class="ant-steps-item-tail"
+      class="c7n-steps-item-tail"
     />
     <div
-      class="ant-steps-item-icon"
+      class="c7n-steps-item-icon"
     >
       <span
-        class="ant-steps-icon"
+        class="c7n-steps-icon"
       >
         <span
-          class="ant-steps-icon-dot"
+          class="c7n-steps-icon-dot"
         />
       </span>
     </div>
     <div
-      class="ant-steps-item-content"
+      class="c7n-steps-item-content"
     >
       <div
-        class="ant-steps-item-title"
+        class="c7n-steps-item-title"
       >
         Finished
       </div>
       <div
-        class="ant-steps-item-description"
+        class="c7n-steps-item-description"
       >
         You can hover on the dot.
       </div>
     </div>
   </div>
   <div
-    class="ant-steps-item ant-steps-item-process"
+    class="c7n-steps-item c7n-steps-item-process"
   >
     <div
-      class="ant-steps-item-tail"
+      class="c7n-steps-item-tail"
     />
     <div
-      class="ant-steps-item-icon"
+      class="c7n-steps-item-icon"
     >
       <span
-        class="ant-steps-icon"
+        class="c7n-steps-icon"
       >
         <span
-          class="ant-steps-icon-dot"
+          class="c7n-steps-icon-dot"
         />
       </span>
     </div>
     <div
-      class="ant-steps-item-content"
+      class="c7n-steps-item-content"
     >
       <div
-        class="ant-steps-item-title"
+        class="c7n-steps-item-title"
       >
         In Progress
       </div>
       <div
-        class="ant-steps-item-description"
+        class="c7n-steps-item-description"
       >
         You can hover on the dot.
       </div>
     </div>
   </div>
   <div
-    class="ant-steps-item ant-steps-item-wait"
+    class="c7n-steps-item c7n-steps-item-wait"
   >
     <div
-      class="ant-steps-item-tail"
+      class="c7n-steps-item-tail"
     />
     <div
-      class="ant-steps-item-icon"
+      class="c7n-steps-item-icon"
     >
       <span
-        class="ant-steps-icon"
+        class="c7n-steps-icon"
       >
         <span
-          class="ant-steps-icon-dot"
+          class="c7n-steps-icon-dot"
         />
       </span>
     </div>
     <div
-      class="ant-steps-item-content"
+      class="c7n-steps-item-content"
     >
       <div
-        class="ant-steps-item-title"
+        class="c7n-steps-item-title"
       >
         Waiting
       </div>
       <div
-        class="ant-steps-item-description"
+        class="c7n-steps-item-description"
       >
         You can hover on the dot.
       </div>
     </div>
   </div>
   <div
-    class="ant-steps-item ant-steps-item-wait"
+    class="c7n-steps-item c7n-steps-item-wait"
   >
     <div
-      class="ant-steps-item-tail"
+      class="c7n-steps-item-tail"
     />
     <div
-      class="ant-steps-item-icon"
+      class="c7n-steps-item-icon"
     >
       <span
-        class="ant-steps-icon"
+        class="c7n-steps-icon"
       >
         <span
-          class="ant-steps-icon-dot"
+          class="c7n-steps-icon-dot"
         />
       </span>
     </div>
     <div
-      class="ant-steps-item-content"
+      class="c7n-steps-item-content"
     >
       <div
-        class="ant-steps-item-title"
+        class="c7n-steps-item-title"
       >
         Waiting
       </div>
       <div
-        class="ant-steps-item-description"
+        class="c7n-steps-item-description"
       >
         You can hover on the dot.
       </div>
@@ -137,89 +137,89 @@ exports[`renders ./components/steps/demo/customized-progress-dot.md correctly 1`
 
 exports[`renders ./components/steps/demo/error.md correctly 1`] = `
 <div
-  class="ant-steps ant-steps-horizontal ant-steps-label-horizontal"
+  class="c7n-steps c7n-steps-horizontal c7n-steps-label-horizontal"
 >
   <div
-    class="ant-steps-item ant-steps-item-finish ant-steps-next-error"
+    class="c7n-steps-item c7n-steps-item-finish c7n-steps-next-error"
   >
     <div
-      class="ant-steps-item-tail"
+      class="c7n-steps-item-tail"
     />
     <div
-      class="ant-steps-item-icon"
+      class="c7n-steps-item-icon"
     >
       <span
         class="icon icon-check"
       />
     </div>
     <div
-      class="ant-steps-item-content"
+      class="c7n-steps-item-content"
     >
       <div
-        class="ant-steps-item-title"
+        class="c7n-steps-item-title"
       >
         Finished
       </div>
       <div
-        class="ant-steps-item-description"
+        class="c7n-steps-item-description"
       >
         This is a description
       </div>
     </div>
   </div>
   <div
-    class="ant-steps-item ant-steps-item-error"
+    class="c7n-steps-item c7n-steps-item-error"
   >
     <div
-      class="ant-steps-item-tail"
+      class="c7n-steps-item-tail"
     />
     <div
-      class="ant-steps-item-icon"
+      class="c7n-steps-item-icon"
     >
       <span
         class="icon icon-close"
       />
     </div>
     <div
-      class="ant-steps-item-content"
+      class="c7n-steps-item-content"
     >
       <div
-        class="ant-steps-item-title"
+        class="c7n-steps-item-title"
       >
         In Process
       </div>
       <div
-        class="ant-steps-item-description"
+        class="c7n-steps-item-description"
       >
         This is a description
       </div>
     </div>
   </div>
   <div
-    class="ant-steps-item ant-steps-item-wait"
+    class="c7n-steps-item c7n-steps-item-wait"
   >
     <div
-      class="ant-steps-item-tail"
+      class="c7n-steps-item-tail"
     />
     <div
-      class="ant-steps-item-icon"
+      class="c7n-steps-item-icon"
     >
       <span
-        class="ant-steps-icon"
+        class="c7n-steps-icon"
       >
         3
       </span>
     </div>
     <div
-      class="ant-steps-item-content"
+      class="c7n-steps-item-content"
     >
       <div
-        class="ant-steps-item-title"
+        class="c7n-steps-item-title"
       >
         Waiting
       </div>
       <div
-        class="ant-steps-item-description"
+        class="c7n-steps-item-description"
       >
         This is a description
       </div>
@@ -230,19 +230,19 @@ exports[`renders ./components/steps/demo/error.md correctly 1`] = `
 
 exports[`renders ./components/steps/demo/icon.md correctly 1`] = `
 <div
-  class="ant-steps ant-steps-horizontal ant-steps-label-horizontal"
+  class="c7n-steps c7n-steps-horizontal c7n-steps-label-horizontal"
 >
   <div
-    class="ant-steps-item ant-steps-item-finish ant-steps-item-custom"
+    class="c7n-steps-item c7n-steps-item-finish c7n-steps-item-custom"
   >
     <div
-      class="ant-steps-item-tail"
+      class="c7n-steps-item-tail"
     />
     <div
-      class="ant-steps-item-icon"
+      class="c7n-steps-item-icon"
     >
       <span
-        class="ant-steps-icon"
+        class="c7n-steps-icon"
       >
         <i
           class="icon icon-person_outline"
@@ -250,26 +250,26 @@ exports[`renders ./components/steps/demo/icon.md correctly 1`] = `
       </span>
     </div>
     <div
-      class="ant-steps-item-content"
+      class="c7n-steps-item-content"
     >
       <div
-        class="ant-steps-item-title"
+        class="c7n-steps-item-title"
       >
         Login
       </div>
     </div>
   </div>
   <div
-    class="ant-steps-item ant-steps-item-finish ant-steps-item-custom"
+    class="c7n-steps-item c7n-steps-item-finish c7n-steps-item-custom"
   >
     <div
-      class="ant-steps-item-tail"
+      class="c7n-steps-item-tail"
     />
     <div
-      class="ant-steps-item-icon"
+      class="c7n-steps-item-icon"
     >
       <span
-        class="ant-steps-icon"
+        class="c7n-steps-icon"
       >
         <i
           class="icon icon-panorama_vertical"
@@ -277,26 +277,26 @@ exports[`renders ./components/steps/demo/icon.md correctly 1`] = `
       </span>
     </div>
     <div
-      class="ant-steps-item-content"
+      class="c7n-steps-item-content"
     >
       <div
-        class="ant-steps-item-title"
+        class="c7n-steps-item-title"
       >
         Verification
       </div>
     </div>
   </div>
   <div
-    class="ant-steps-item ant-steps-item-process ant-steps-item-custom"
+    class="c7n-steps-item c7n-steps-item-process c7n-steps-item-custom"
   >
     <div
-      class="ant-steps-item-tail"
+      class="c7n-steps-item-tail"
     />
     <div
-      class="ant-steps-item-icon"
+      class="c7n-steps-item-icon"
     >
       <span
-        class="ant-steps-icon"
+        class="c7n-steps-icon"
       >
         <i
           class="icon icon-schedule"
@@ -304,26 +304,26 @@ exports[`renders ./components/steps/demo/icon.md correctly 1`] = `
       </span>
     </div>
     <div
-      class="ant-steps-item-content"
+      class="c7n-steps-item-content"
     >
       <div
-        class="ant-steps-item-title"
+        class="c7n-steps-item-title"
       >
         Pay
       </div>
     </div>
   </div>
   <div
-    class="ant-steps-item ant-steps-item-wait ant-steps-item-custom"
+    class="c7n-steps-item c7n-steps-item-wait c7n-steps-item-custom"
   >
     <div
-      class="ant-steps-item-tail"
+      class="c7n-steps-item-tail"
     />
     <div
-      class="ant-steps-item-icon"
+      class="c7n-steps-item-icon"
     >
       <span
-        class="ant-steps-icon"
+        class="c7n-steps-icon"
       >
         <i
           class="icon icon-tag_faces"
@@ -331,10 +331,10 @@ exports[`renders ./components/steps/demo/icon.md correctly 1`] = `
       </span>
     </div>
     <div
-      class="ant-steps-item-content"
+      class="c7n-steps-item-content"
     >
       <div
-        class="ant-steps-item-title"
+        class="c7n-steps-item-title"
       >
         Done
       </div>
@@ -345,99 +345,99 @@ exports[`renders ./components/steps/demo/icon.md correctly 1`] = `
 
 exports[`renders ./components/steps/demo/progress-dot.md correctly 1`] = `
 <div
-  class="ant-steps ant-steps-horizontal ant-steps-label-vertical ant-steps-dot"
+  class="c7n-steps c7n-steps-horizontal c7n-steps-label-vertical c7n-steps-dot"
 >
   <div
-    class="ant-steps-item ant-steps-item-finish"
+    class="c7n-steps-item c7n-steps-item-finish"
   >
     <div
-      class="ant-steps-item-tail"
+      class="c7n-steps-item-tail"
     />
     <div
-      class="ant-steps-item-icon"
+      class="c7n-steps-item-icon"
     >
       <span
-        class="ant-steps-icon"
+        class="c7n-steps-icon"
       >
         <span
-          class="ant-steps-icon-dot"
+          class="c7n-steps-icon-dot"
         />
       </span>
     </div>
     <div
-      class="ant-steps-item-content"
+      class="c7n-steps-item-content"
     >
       <div
-        class="ant-steps-item-title"
+        class="c7n-steps-item-title"
       >
         Finished
       </div>
       <div
-        class="ant-steps-item-description"
+        class="c7n-steps-item-description"
       >
         This is a description.
       </div>
     </div>
   </div>
   <div
-    class="ant-steps-item ant-steps-item-process"
+    class="c7n-steps-item c7n-steps-item-process"
   >
     <div
-      class="ant-steps-item-tail"
+      class="c7n-steps-item-tail"
     />
     <div
-      class="ant-steps-item-icon"
+      class="c7n-steps-item-icon"
     >
       <span
-        class="ant-steps-icon"
+        class="c7n-steps-icon"
       >
         <span
-          class="ant-steps-icon-dot"
+          class="c7n-steps-icon-dot"
         />
       </span>
     </div>
     <div
-      class="ant-steps-item-content"
+      class="c7n-steps-item-content"
     >
       <div
-        class="ant-steps-item-title"
+        class="c7n-steps-item-title"
       >
         In Progress
       </div>
       <div
-        class="ant-steps-item-description"
+        class="c7n-steps-item-description"
       >
         This is a description.
       </div>
     </div>
   </div>
   <div
-    class="ant-steps-item ant-steps-item-wait"
+    class="c7n-steps-item c7n-steps-item-wait"
   >
     <div
-      class="ant-steps-item-tail"
+      class="c7n-steps-item-tail"
     />
     <div
-      class="ant-steps-item-icon"
+      class="c7n-steps-item-icon"
     >
       <span
-        class="ant-steps-icon"
+        class="c7n-steps-icon"
       >
         <span
-          class="ant-steps-icon-dot"
+          class="c7n-steps-icon-dot"
         />
       </span>
     </div>
     <div
-      class="ant-steps-item-content"
+      class="c7n-steps-item-content"
     >
       <div
-        class="ant-steps-item-title"
+        class="c7n-steps-item-title"
       >
         Waiting
       </div>
       <div
-        class="ant-steps-item-description"
+        class="c7n-steps-item-description"
       >
         This is a description.
       </div>
@@ -448,91 +448,91 @@ exports[`renders ./components/steps/demo/progress-dot.md correctly 1`] = `
 
 exports[`renders ./components/steps/demo/simple.md correctly 1`] = `
 <div
-  class="ant-steps ant-steps-horizontal ant-steps-label-horizontal"
+  class="c7n-steps c7n-steps-horizontal c7n-steps-label-horizontal"
 >
   <div
-    class="ant-steps-item ant-steps-item-finish"
+    class="c7n-steps-item c7n-steps-item-finish"
   >
     <div
-      class="ant-steps-item-tail"
+      class="c7n-steps-item-tail"
     />
     <div
-      class="ant-steps-item-icon"
+      class="c7n-steps-item-icon"
     >
       <span
         class="icon icon-check"
       />
     </div>
     <div
-      class="ant-steps-item-content"
+      class="c7n-steps-item-content"
     >
       <div
-        class="ant-steps-item-title"
+        class="c7n-steps-item-title"
       >
         Finished
       </div>
       <div
-        class="ant-steps-item-description"
+        class="c7n-steps-item-description"
       >
         This is a description.
       </div>
     </div>
   </div>
   <div
-    class="ant-steps-item ant-steps-item-process"
+    class="c7n-steps-item c7n-steps-item-process"
   >
     <div
-      class="ant-steps-item-tail"
+      class="c7n-steps-item-tail"
     />
     <div
-      class="ant-steps-item-icon"
+      class="c7n-steps-item-icon"
     >
       <span
-        class="ant-steps-icon"
+        class="c7n-steps-icon"
       >
         2
       </span>
     </div>
     <div
-      class="ant-steps-item-content"
+      class="c7n-steps-item-content"
     >
       <div
-        class="ant-steps-item-title"
+        class="c7n-steps-item-title"
       >
         In Progress
       </div>
       <div
-        class="ant-steps-item-description"
+        class="c7n-steps-item-description"
       >
         This is a description.
       </div>
     </div>
   </div>
   <div
-    class="ant-steps-item ant-steps-item-wait"
+    class="c7n-steps-item c7n-steps-item-wait"
   >
     <div
-      class="ant-steps-item-tail"
+      class="c7n-steps-item-tail"
     />
     <div
-      class="ant-steps-item-icon"
+      class="c7n-steps-item-icon"
     >
       <span
-        class="ant-steps-icon"
+        class="c7n-steps-icon"
       >
         3
       </span>
     </div>
     <div
-      class="ant-steps-item-content"
+      class="c7n-steps-item-content"
     >
       <div
-        class="ant-steps-item-title"
+        class="c7n-steps-item-title"
       >
         Waiting
       </div>
       <div
-        class="ant-steps-item-description"
+        class="c7n-steps-item-description"
       >
         This is a description.
       </div>
@@ -543,76 +543,76 @@ exports[`renders ./components/steps/demo/simple.md correctly 1`] = `
 
 exports[`renders ./components/steps/demo/small-size.md correctly 1`] = `
 <div
-  class="ant-steps ant-steps-horizontal ant-steps-small ant-steps-label-horizontal"
+  class="c7n-steps c7n-steps-horizontal c7n-steps-small c7n-steps-label-horizontal"
 >
   <div
-    class="ant-steps-item ant-steps-item-finish"
+    class="c7n-steps-item c7n-steps-item-finish"
   >
     <div
-      class="ant-steps-item-tail"
+      class="c7n-steps-item-tail"
     />
     <div
-      class="ant-steps-item-icon"
+      class="c7n-steps-item-icon"
     >
       <span
         class="icon icon-check"
       />
     </div>
     <div
-      class="ant-steps-item-content"
+      class="c7n-steps-item-content"
     >
       <div
-        class="ant-steps-item-title"
+        class="c7n-steps-item-title"
       >
         Finished
       </div>
     </div>
   </div>
   <div
-    class="ant-steps-item ant-steps-item-process"
+    class="c7n-steps-item c7n-steps-item-process"
   >
     <div
-      class="ant-steps-item-tail"
+      class="c7n-steps-item-tail"
     />
     <div
-      class="ant-steps-item-icon"
+      class="c7n-steps-item-icon"
     >
       <span
-        class="ant-steps-icon"
+        class="c7n-steps-icon"
       >
         2
       </span>
     </div>
     <div
-      class="ant-steps-item-content"
+      class="c7n-steps-item-content"
     >
       <div
-        class="ant-steps-item-title"
+        class="c7n-steps-item-title"
       >
         In Progress
       </div>
     </div>
   </div>
   <div
-    class="ant-steps-item ant-steps-item-wait"
+    class="c7n-steps-item c7n-steps-item-wait"
   >
     <div
-      class="ant-steps-item-tail"
+      class="c7n-steps-item-tail"
     />
     <div
-      class="ant-steps-item-icon"
+      class="c7n-steps-item-icon"
     >
       <span
-        class="ant-steps-icon"
+        class="c7n-steps-icon"
       >
         3
       </span>
     </div>
     <div
-      class="ant-steps-item-content"
+      class="c7n-steps-item-content"
     >
       <div
-        class="ant-steps-item-title"
+        class="c7n-steps-item-title"
       >
         Waiting
       </div>
@@ -624,78 +624,78 @@ exports[`renders ./components/steps/demo/small-size.md correctly 1`] = `
 exports[`renders ./components/steps/demo/step-next.md correctly 1`] = `
 <div>
   <div
-    class="ant-steps ant-steps-horizontal ant-steps-label-horizontal"
+    class="c7n-steps c7n-steps-horizontal c7n-steps-label-horizontal"
   >
     <div
-      class="ant-steps-item ant-steps-item-process"
+      class="c7n-steps-item c7n-steps-item-process"
     >
       <div
-        class="ant-steps-item-tail"
+        class="c7n-steps-item-tail"
       />
       <div
-        class="ant-steps-item-icon"
+        class="c7n-steps-item-icon"
       >
         <span
-          class="ant-steps-icon"
+          class="c7n-steps-icon"
         >
           1
         </span>
       </div>
       <div
-        class="ant-steps-item-content"
+        class="c7n-steps-item-content"
       >
         <div
-          class="ant-steps-item-title"
+          class="c7n-steps-item-title"
         >
           First
         </div>
       </div>
     </div>
     <div
-      class="ant-steps-item ant-steps-item-wait"
+      class="c7n-steps-item c7n-steps-item-wait"
     >
       <div
-        class="ant-steps-item-tail"
+        class="c7n-steps-item-tail"
       />
       <div
-        class="ant-steps-item-icon"
+        class="c7n-steps-item-icon"
       >
         <span
-          class="ant-steps-icon"
+          class="c7n-steps-icon"
         >
           2
         </span>
       </div>
       <div
-        class="ant-steps-item-content"
+        class="c7n-steps-item-content"
       >
         <div
-          class="ant-steps-item-title"
+          class="c7n-steps-item-title"
         >
           Second
         </div>
       </div>
     </div>
     <div
-      class="ant-steps-item ant-steps-item-wait"
+      class="c7n-steps-item c7n-steps-item-wait"
     >
       <div
-        class="ant-steps-item-tail"
+        class="c7n-steps-item-tail"
       />
       <div
-        class="ant-steps-item-icon"
+        class="c7n-steps-item-icon"
       >
         <span
-          class="ant-steps-icon"
+          class="c7n-steps-icon"
         >
           3
         </span>
       </div>
       <div
-        class="ant-steps-item-content"
+        class="c7n-steps-item-content"
       >
         <div
-          class="ant-steps-item-title"
+          class="c7n-steps-item-title"
         >
           Last
         </div>
@@ -711,14 +711,14 @@ exports[`renders ./components/steps/demo/step-next.md correctly 1`] = `
     class="steps-action"
   >
     <button
-      class="ant-btn ant-btn-primary ant-btn-flat"
+      class="c7n-btn c7n-btn-primary c7n-btn-flat"
       type="button"
     >
       <span>
         Next
       </span>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </div>
@@ -727,91 +727,91 @@ exports[`renders ./components/steps/demo/step-next.md correctly 1`] = `
 
 exports[`renders ./components/steps/demo/vertical.md correctly 1`] = `
 <div
-  class="ant-steps ant-steps-vertical"
+  class="c7n-steps c7n-steps-vertical"
 >
   <div
-    class="ant-steps-item ant-steps-item-finish"
+    class="c7n-steps-item c7n-steps-item-finish"
   >
     <div
-      class="ant-steps-item-tail"
+      class="c7n-steps-item-tail"
     />
     <div
-      class="ant-steps-item-icon"
+      class="c7n-steps-item-icon"
     >
       <span
         class="icon icon-check"
       />
     </div>
     <div
-      class="ant-steps-item-content"
+      class="c7n-steps-item-content"
     >
       <div
-        class="ant-steps-item-title"
+        class="c7n-steps-item-title"
       >
         Finished
       </div>
       <div
-        class="ant-steps-item-description"
+        class="c7n-steps-item-description"
       >
         This is a description.
       </div>
     </div>
   </div>
   <div
-    class="ant-steps-item ant-steps-item-process"
+    class="c7n-steps-item c7n-steps-item-process"
   >
     <div
-      class="ant-steps-item-tail"
+      class="c7n-steps-item-tail"
     />
     <div
-      class="ant-steps-item-icon"
+      class="c7n-steps-item-icon"
     >
       <span
-        class="ant-steps-icon"
+        class="c7n-steps-icon"
       >
         2
       </span>
     </div>
     <div
-      class="ant-steps-item-content"
+      class="c7n-steps-item-content"
     >
       <div
-        class="ant-steps-item-title"
+        class="c7n-steps-item-title"
       >
         In Progress
       </div>
       <div
-        class="ant-steps-item-description"
+        class="c7n-steps-item-description"
       >
         This is a description.
       </div>
     </div>
   </div>
   <div
-    class="ant-steps-item ant-steps-item-wait"
+    class="c7n-steps-item c7n-steps-item-wait"
   >
     <div
-      class="ant-steps-item-tail"
+      class="c7n-steps-item-tail"
     />
     <div
-      class="ant-steps-item-icon"
+      class="c7n-steps-item-icon"
     >
       <span
-        class="ant-steps-icon"
+        class="c7n-steps-icon"
       >
         3
       </span>
     </div>
     <div
-      class="ant-steps-item-content"
+      class="c7n-steps-item-content"
     >
       <div
-        class="ant-steps-item-title"
+        class="c7n-steps-item-title"
       >
         Waiting
       </div>
       <div
-        class="ant-steps-item-description"
+        class="c7n-steps-item-description"
       >
         This is a description.
       </div>
@@ -822,91 +822,91 @@ exports[`renders ./components/steps/demo/vertical.md correctly 1`] = `
 
 exports[`renders ./components/steps/demo/vertical-small.md correctly 1`] = `
 <div
-  class="ant-steps ant-steps-vertical ant-steps-small"
+  class="c7n-steps c7n-steps-vertical c7n-steps-small"
 >
   <div
-    class="ant-steps-item ant-steps-item-finish"
+    class="c7n-steps-item c7n-steps-item-finish"
   >
     <div
-      class="ant-steps-item-tail"
+      class="c7n-steps-item-tail"
     />
     <div
-      class="ant-steps-item-icon"
+      class="c7n-steps-item-icon"
     >
       <span
         class="icon icon-check"
       />
     </div>
     <div
-      class="ant-steps-item-content"
+      class="c7n-steps-item-content"
     >
       <div
-        class="ant-steps-item-title"
+        class="c7n-steps-item-title"
       >
         Finished
       </div>
       <div
-        class="ant-steps-item-description"
+        class="c7n-steps-item-description"
       >
         This is a description.
       </div>
     </div>
   </div>
   <div
-    class="ant-steps-item ant-steps-item-process"
+    class="c7n-steps-item c7n-steps-item-process"
   >
     <div
-      class="ant-steps-item-tail"
+      class="c7n-steps-item-tail"
     />
     <div
-      class="ant-steps-item-icon"
+      class="c7n-steps-item-icon"
     >
       <span
-        class="ant-steps-icon"
+        class="c7n-steps-icon"
       >
         2
       </span>
     </div>
     <div
-      class="ant-steps-item-content"
+      class="c7n-steps-item-content"
     >
       <div
-        class="ant-steps-item-title"
+        class="c7n-steps-item-title"
       >
         In Progress
       </div>
       <div
-        class="ant-steps-item-description"
+        class="c7n-steps-item-description"
       >
         This is a description.
       </div>
     </div>
   </div>
   <div
-    class="ant-steps-item ant-steps-item-wait"
+    class="c7n-steps-item c7n-steps-item-wait"
   >
     <div
-      class="ant-steps-item-tail"
+      class="c7n-steps-item-tail"
     />
     <div
-      class="ant-steps-item-icon"
+      class="c7n-steps-item-icon"
     >
       <span
-        class="ant-steps-icon"
+        class="c7n-steps-icon"
       >
         3
       </span>
     </div>
     <div
-      class="ant-steps-item-content"
+      class="c7n-steps-item-content"
     >
       <div
-        class="ant-steps-item-title"
+        class="c7n-steps-item-title"
       >
         Waiting
       </div>
       <div
-        class="ant-steps-item-description"
+        class="c7n-steps-item-description"
       >
         This is a description.
       </div>

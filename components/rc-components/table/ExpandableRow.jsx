@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'mini-store';
 import ExpandIcon from './ExpandIcon';
 
-class ExpandableRow extends React.Component {
+class ExpandableRow extends Component {
   static propTypes = {
     prefixCls: PropTypes.string.isRequired,
     rowKey: PropTypes.oneOfType([

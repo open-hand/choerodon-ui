@@ -3,25 +3,25 @@
 exports[`renders ./components/popover/demo/arrow-point-at-center.md correctly 1`] = `
 <div>
   <button
-    class="ant-btn ant-btn-flat"
+    class="c7n-btn c7n-btn-flat"
     type="button"
   >
     <span>
       Align edge / 边缘对齐
     </span>
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
   <button
-    class="ant-btn ant-btn-flat"
+    class="c7n-btn c7n-btn-flat"
     type="button"
   >
     <span>
       Arrow points to center / 箭头指向中心
     </span>
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
 </div>
@@ -29,28 +29,28 @@ exports[`renders ./components/popover/demo/arrow-point-at-center.md correctly 1`
 
 exports[`renders ./components/popover/demo/basic.md correctly 1`] = `
 <button
-  class="ant-btn ant-btn-primary ant-btn-flat"
+  class="c7n-btn c7n-btn-primary c7n-btn-flat"
   type="button"
 >
   <span>
     Hover me
   </span>
   <div
-    class="ant-ripple-wrapper"
+    class="c7n-ripple-wrapper"
   />
 </button>
 `;
 
 exports[`renders ./components/popover/demo/control.md correctly 1`] = `
 <button
-  class="ant-btn ant-btn-primary ant-btn-flat"
+  class="c7n-btn c7n-btn-primary c7n-btn-flat"
   type="button"
 >
   <span>
     Click me
   </span>
   <div
-    class="ant-ripple-wrapper"
+    class="c7n-ripple-wrapper"
   />
 </button>
 `;
@@ -63,36 +63,36 @@ exports[`renders ./components/popover/demo/placement.md correctly 1`] = `
     style="margin-left:70px;white-space:nowrap"
   >
     <button
-      class="ant-btn ant-btn-flat"
+      class="c7n-btn c7n-btn-flat"
       type="button"
     >
       <span>
         TL
       </span>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
     <button
-      class="ant-btn ant-btn-flat"
+      class="c7n-btn c7n-btn-flat"
       type="button"
     >
       <span>
         Top
       </span>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
     <button
-      class="ant-btn ant-btn-flat"
+      class="c7n-btn c7n-btn-flat"
       type="button"
     >
       <span>
         TR
       </span>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </div>
@@ -100,36 +100,36 @@ exports[`renders ./components/popover/demo/placement.md correctly 1`] = `
     style="width:70px;float:left"
   >
     <button
-      class="ant-btn ant-btn-flat"
+      class="c7n-btn c7n-btn-flat"
       type="button"
     >
       <span>
         LT
       </span>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
     <button
-      class="ant-btn ant-btn-flat"
+      class="c7n-btn c7n-btn-flat"
       type="button"
     >
       <span>
         Left
       </span>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
     <button
-      class="ant-btn ant-btn-flat"
+      class="c7n-btn c7n-btn-flat"
       type="button"
     >
       <span>
         LB
       </span>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </div>
@@ -137,36 +137,36 @@ exports[`renders ./components/popover/demo/placement.md correctly 1`] = `
     style="width:70px;margin-left:304px"
   >
     <button
-      class="ant-btn ant-btn-flat"
+      class="c7n-btn c7n-btn-flat"
       type="button"
     >
       <span>
         RT
       </span>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
     <button
-      class="ant-btn ant-btn-flat"
+      class="c7n-btn c7n-btn-flat"
       type="button"
     >
       <span>
         Right
       </span>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
     <button
-      class="ant-btn ant-btn-flat"
+      class="c7n-btn c7n-btn-flat"
       type="button"
     >
       <span>
         RB
       </span>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </div>
@@ -174,36 +174,36 @@ exports[`renders ./components/popover/demo/placement.md correctly 1`] = `
     style="margin-left:70px;clear:both;white-space:nowrap"
   >
     <button
-      class="ant-btn ant-btn-flat"
+      class="c7n-btn c7n-btn-flat"
       type="button"
     >
       <span>
         BL
       </span>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
     <button
-      class="ant-btn ant-btn-flat"
+      class="c7n-btn c7n-btn-flat"
       type="button"
     >
       <span>
         Bottom
       </span>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
     <button
-      class="ant-btn ant-btn-flat"
+      class="c7n-btn c7n-btn-flat"
       type="button"
     >
       <span>
         BR
       </span>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </div>
@@ -213,36 +213,36 @@ exports[`renders ./components/popover/demo/placement.md correctly 1`] = `
 exports[`renders ./components/popover/demo/triggerType.md correctly 1`] = `
 <div>
   <button
-    class="ant-btn ant-btn-flat"
+    class="c7n-btn c7n-btn-flat"
     type="button"
   >
     <span>
       Hover me
     </span>
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
   <button
-    class="ant-btn ant-btn-flat"
+    class="c7n-btn c7n-btn-flat"
     type="button"
   >
     <span>
       Focus me
     </span>
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
   <button
-    class="ant-btn ant-btn-flat"
+    class="c7n-btn c7n-btn-flat"
     type="button"
   >
     <span>
       Click me
     </span>
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
 </div>

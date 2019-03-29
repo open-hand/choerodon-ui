@@ -1,5 +1,5 @@
-import * as React from 'react';
-import * as moment from 'moment';
+import React, { Component, MouseEvent } from 'react';
+import moment, { Moment } from 'moment';
 import classNames from 'classnames';
 import Icon from '../icon';
 import Input from '../input';
@@ -7,12 +7,13 @@ import Button from '../button';
 import interopDefault from '../_util/interopDefault';
 import Calendar from '../rc-components/calendar';
 import RcDatePicker from '../rc-components/calendar/Picker';
+import { Size } from '../_util/enum';
 
-function formatValue(value: moment.Moment | null, format: string): string {
+function formatValue(value: Moment | null, format: string): string {
   return (value && value.format(format)) || '';
 }
 
-export default class WeekPicker extends React.Component<any, any> {
+export default class WeekPicker extends Component<any, any> {
   static defaultProps = {
     format: 'gggg-wo',
     allowClear: true,
@@ -20,13 +21,13 @@ export default class WeekPicker extends React.Component<any, any> {
 
   private input: any;
   private picker: any;
+
   constructor(props: any) {
     super(props);
     const value = props.value || props.defaultValue;
     if (value && !interopDefault(moment).isMoment(value)) {
       throw new Error(
-        'The value/defaultValue of DatePicker or MonthPicker must be ' +
-        'a moment object after `antd@2.0`, see: https://u.ant.design/date-picker-value',
+        'The value/defaultValue of DatePicker or MonthPicker must be a moment object',
       );
     }
     this.state = {
@@ -34,11 +35,13 @@ export default class WeekPicker extends React.Component<any, any> {
       focused: false,
     };
   }
+
   componentWillReceiveProps(nextProps: any) {
     if ('value' in nextProps) {
       this.setState({ value: nextProps.value });
     }
   }
+
   weekDateRender = (current: any) => {
     const selectedValue = this.state.value;
     const { prefixCls } = this.props;
@@ -58,7 +61,7 @@ export default class WeekPicker extends React.Component<any, any> {
         {current.date()}
       </div>
     );
-  }
+  };
   handleOpenChange = (status: boolean) => {
     const { onOpenChange } = this.props;
     const { focused } = this.state;
@@ -70,24 +73,25 @@ export default class WeekPicker extends React.Component<any, any> {
     if (onOpenChange) {
       onOpenChange(status);
     }
-  }
-  handleChange = (value: moment.Moment | null) => {
+  };
+  handleChange = (value: Moment | null) => {
     if (!('value' in this.props)) {
       this.setState({ value });
     }
     this.props.onChange(value, formatValue(value, this.props.format));
-  }
-  clearSelection = (e: React.MouseEvent<HTMLElement>) => {
+  };
+  clearSelection = (e: MouseEvent<HTMLElement>) => {
     e.preventDefault();
     e.stopPropagation();
     this.handleChange(null);
-  }
-  onPickerIconClick = (e: React.MouseEvent<HTMLElement>) => {
+  };
+  onPickerIconClick = (e: MouseEvent<HTMLElement>) => {
     e.preventDefault();
     e.stopPropagation();
     const { focused } = this.state;
     this.picker.setOpen(!focused);
-  }
+  };
+
   focus() {
     this.input.focus();
   }
@@ -98,10 +102,11 @@ export default class WeekPicker extends React.Component<any, any> {
 
   saveInput = (node: any) => {
     this.input = node;
-  }
+  };
   savePicker = (node: any) => {
     this.picker = node;
-  }
+  };
+
   render() {
     const { focused } = this.state;
     const {
@@ -136,7 +141,7 @@ export default class WeekPicker extends React.Component<any, any> {
         onClick={this.clearSelection}
         shape="circle"
         icon="close"
-        size="small"
+        size={Size.small}
       />
     ) : null;
 
@@ -146,9 +151,9 @@ export default class WeekPicker extends React.Component<any, any> {
       onClick={this.onPickerIconClick}
     >
       {clearIcon}
-      <Icon type="date_range" className={`${prefixCls}-picker-icon`}/>
+      <Icon type="date_range" className={`${prefixCls}-picker-icon`} />
     </span>);
-    const input = ({ value }: {  value: moment.Moment | undefined }) => (
+    const input = ({ value }: { value: Moment | undefined }) => (
       <Input
         ref={this.saveInput}
         disabled={disabled}

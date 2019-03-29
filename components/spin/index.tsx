@@ -1,19 +1,22 @@
-import * as React from 'react';
+import React, { cloneElement, Component, CSSProperties, isValidElement, ReactElement } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import isCssAnimationSupported from '../_util/isCssAnimationSupported';
-import omit from 'omit.js';
-import Animate from '../rc-components/animate';
+import omit from 'lodash/omit';
+import Animate from '../animate';
 import Progress from '../progress/progress';
+import { Size } from '../_util/enum';
+import { ProgressType } from '../progress/enum';
+import { getPrefixCls } from '../configure';
 
-export type SpinIndicator = React.ReactElement<any>;
+export type SpinIndicator = ReactElement<any>;
 
 export interface SpinProps {
   prefixCls?: string;
   className?: string;
   spinning?: boolean;
-  style?: React.CSSProperties;
-  size?: 'small' | 'default' | 'large';
+  style?: CSSProperties;
+  size?: Size;
   tip?: string;
   delay?: number;
   wrapperClassName?: string;
@@ -25,11 +28,11 @@ export interface SpinState {
   notCssAnimationSupported?: boolean;
 }
 
-export default class Spin extends React.Component<SpinProps, SpinState> {
+export default class Spin extends Component<SpinProps, SpinState> {
+  static displayName = 'Spin';
   static defaultProps = {
-    prefixCls: 'ant-spin',
     spinning: true,
-    size: 'default',
+    size: Size.default,
     wrapperClassName: '',
   };
 
@@ -37,7 +40,7 @@ export default class Spin extends React.Component<SpinProps, SpinState> {
     prefixCls: PropTypes.string,
     className: PropTypes.string,
     spinning: PropTypes.bool,
-    size: PropTypes.oneOf(['small', 'default', 'large']),
+    size: PropTypes.oneOf([Size.small, Size.default, Size.large]),
     wrapperClassName: PropTypes.string,
     indicator: PropTypes.node,
   };
@@ -96,37 +99,38 @@ export default class Spin extends React.Component<SpinProps, SpinState> {
     }
   }
 
-  getIndicatorWidth(size?: string) {
+  getIndicatorWidth(size?: Size) {
     switch (size) {
-      case 'small':
+      case Size.small:
         return 20;
-      case 'large':
+      case Size.large:
         return 50;
       default :
         return 30;
     }
   }
 
-  renderIndicator() {
-    const { prefixCls, indicator, size } = this.props;
+  renderIndicator(prefixCls) {
+    const { indicator, size } = this.props;
     const dotClassName = `${prefixCls}-dot`;
-    if (React.isValidElement(indicator)) {
-      return React.cloneElement((indicator as SpinIndicator), {
+    if (isValidElement(indicator)) {
+      return cloneElement((indicator as SpinIndicator), {
         className: classNames((indicator as SpinIndicator).props.className, dotClassName),
       });
     }
     return (
-      <Progress width={this.getIndicatorWidth(size)} className={dotClassName} type="loading" />
+      <Progress width={this.getIndicatorWidth(size)} className={dotClassName} type={ProgressType.loading} />
     );
   }
 
   render() {
-    const { className, size, prefixCls, tip, wrapperClassName, children, ...restProps } = this.props;
+    const { className, size, prefixCls: customizePrefixCls, tip, wrapperClassName, children, style, ...restProps } = this.props;
     const { spinning, notCssAnimationSupported } = this.state;
+    const prefixCls = getPrefixCls('spin', customizePrefixCls);
 
     const spinClassName = classNames(prefixCls, {
-      [`${prefixCls}-sm`]: size === 'small',
-      [`${prefixCls}-lg`]: size === 'large',
+      [`${prefixCls}-sm`]: size === Size.small,
+      [`${prefixCls}-lg`]: size === Size.large,
       [`${prefixCls}-spinning`]: spinning,
       [`${prefixCls}-show-text`]: !!tip || notCssAnimationSupported,
     }, className);
@@ -139,8 +143,8 @@ export default class Spin extends React.Component<SpinProps, SpinState> {
     ]);
 
     const spinElement = (
-      <div {...divProps} className={spinClassName} key="loading">
-        {this.renderIndicator()}
+      <div {...divProps} className={spinClassName} style={style} key="loading">
+        {this.renderIndicator(prefixCls)}
         {tip ? <div className={`${prefixCls}-text`}>{tip}</div> : null}
       </div>
     );
@@ -158,7 +162,6 @@ export default class Spin extends React.Component<SpinProps, SpinState> {
           {...divProps}
           component="div"
           className={animateClassName}
-          style={null}
           transitionName="fade"
         >
           {spinning && spinElement}

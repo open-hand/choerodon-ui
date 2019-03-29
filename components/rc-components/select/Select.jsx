@@ -1,12 +1,14 @@
 /* eslint func-names: 1 */
-import React from 'react';
-import ReactDOM from 'react-dom';
-import KeyCode from '../util/KeyCode';
-import childrenToArray from '../util/Children/toArray';
+import Set from 'core-js/es6/set';
+import React, { Children, cloneElement, Component } from 'react';
+import { unmountComponentAtNode } from 'react-dom';
 import classnames from 'classnames';
 import classes from 'component-classes';
+import warning from '../../_util/warning';
+import noop from 'lodash/noop';
+import KeyCode from '../../_util/KeyCode';
+import childrenToArray from '../util/Children/toArray';
 import { Item as MenuItem, ItemGroup as MenuItemGroup } from '../menu';
-import warning from 'warning';
 import Option from './Option';
 import Button from '../../button';
 import Ripple from '../../ripple';
@@ -36,9 +38,6 @@ import {
 } from './util';
 import SelectTrigger from './SelectTrigger';
 import { SelectPropTypes } from './PropTypes';
-
-function noop() {
-}
 
 function chaining(...fns) {
   return function (...args) { // eslint-disable-line
@@ -105,7 +104,7 @@ const BUILT_IN_PLACEMENTS_LABEL = {
   },
 };
 
-export default class Select extends React.Component {
+export default class Select extends Component {
   static propTypes = SelectPropTypes;
 
   static defaultProps = {
@@ -227,7 +226,7 @@ export default class Select extends React.Component {
     this.clearBlurTime();
     this.clearAdjustTimer();
     if (this.dropdownContainer) {
-      ReactDOM.unmountComponentAtNode(this.dropdownContainer);
+      unmountComponentAtNode(this.dropdownContainer);
       document.body.removeChild(this.dropdownContainer);
       this.dropdownContainer = null;
     }
@@ -242,7 +241,7 @@ export default class Select extends React.Component {
     if (onFilterChange) {
       onFilterChange(val);
     }
-  }
+  };
 
   onInputValueChange = (val) => {
     const { tokenSeparators, onInput } = this.props;
@@ -589,7 +588,7 @@ export default class Select extends React.Component {
   };
 
   getOptionsFromChildren = (children, options = []) => {
-    React.Children.forEach(children, child => {
+    Children.forEach(children, child => {
       if (!child) {
         return;
       }
@@ -660,25 +659,7 @@ export default class Select extends React.Component {
   };
 
   getPlaceholderElement = () => {
-    const { props, state } = this;
-    // let hidden = false;
-
-    // if (props.label) {
-    //   hidden = true;
-    // }
-    // if (state.open) {
-    //   hidden = false;
-    // }
-    // if (state.inputValue) {
-    //   hidden = true;
-    // }
-    // if (state.value.length) {
-    //   hidden = true;
-    // }
-    // if (isCombobox(props) && state.value.length === 1 && !state.value[0]) {
-    //   hidden = false;
-    // }
-
+    const { props } = this;
     const placeholder = props.placeholder;
     if (placeholder) {
       return (
@@ -698,11 +679,10 @@ export default class Select extends React.Component {
     const inputCls = classnames(inputElement.props.className, {
       [`${props.prefixCls}-search__field`]: true,
     });
-    // https://github.com/ant-design/ant-design/issues/4992#issuecomment-281542159
     // Add space to the end of the inputValue as the width measurement tolerance
     return (
       <div className={`${props.prefixCls}-search__field__wrap`}>
-        {React.cloneElement(inputElement, {
+        {cloneElement(inputElement, {
           ref: saveRef(this, 'inputRef'),
           onChange: this.onInputChange,
           onKeyDown: chaining(
@@ -978,7 +958,7 @@ export default class Select extends React.Component {
 
   openIfHasChildren = () => {
     const props = this.props;
-    if (React.Children.count(props.children) || isSingleMode(props)) {
+    if (Children.count(props.children) || isSingleMode(props)) {
       this.setOpenState(true);
     }
   };
@@ -1128,7 +1108,7 @@ export default class Select extends React.Component {
     const props = this.props;
     const { inputValue } = this.state;
     const tags = props.tags;
-    React.Children.forEach(children, child => {
+    Children.forEach(children, child => {
       if (!child) {
         return;
       }
@@ -1195,14 +1175,13 @@ export default class Select extends React.Component {
       return choiceRemove(selectedKey);
     }
     return choiceRemove;
-  }
+  };
 
   renderTopControlNode = () => {
     const { value, open, inputValue } = this.state;
     const props = this.props;
     const tags = isTags(props);
     const {
-      choiceTransitionName,
       prefixCls,
       maxTagTextLength,
       maxTagCount,
@@ -1218,16 +1197,10 @@ export default class Select extends React.Component {
       let opacity = 1;
       if (value.length) {
         let showSelectedValue = false;
-        if (!showSearch) {
-          showSelectedValue = true;
-        } else {
-          if (open) {
-            showSelectedValue = !inputValue;
-            if (showSelectedValue) {
-              opacity = 0.4;
-            }
-          } else {
-            showSelectedValue = true;
+        if (showSearch && open) {
+          showSelectedValue = !inputValue;
+          if (showSelectedValue) {
+            opacity = 0.4;
           }
         }
       }
@@ -1242,7 +1215,7 @@ export default class Select extends React.Component {
             opacity,
           }}
         >
-         {choiceRender ? choiceRender(label) : label}
+          {choiceRender ? choiceRender(label) : label}
         </div>
       );
       innerNode = [selectedValue];
@@ -1255,8 +1228,7 @@ export default class Select extends React.Component {
         const omittedValues = this.getVLForOnChange(value.slice(maxTagCount, value.length));
         let content = `+ ${value.length - maxTagCount} ...`;
         if (maxTagPlaceholder) {
-          content = typeof maxTagPlaceholder === 'function' ?
-            maxTagPlaceholder(omittedValues) : maxTagPlaceholder;
+          content = typeof maxTagPlaceholder === 'function' ? maxTagPlaceholder(omittedValues) : maxTagPlaceholder;
         }
         maxTagPlaceholderEl = (<li
           style={UNSELECTABLE_STYLE}
@@ -1360,7 +1332,8 @@ export default class Select extends React.Component {
           >
           <i className="icon icon-arrow_drop_down"></i>
           <b />
-          </span>)}
+          </span>
+        )}
       </div>
     );
   };

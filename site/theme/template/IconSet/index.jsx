@@ -1,29 +1,23 @@
 import React from 'react';
-import classNames from 'classnames';
 import { Icon } from 'choerodon-ui';
-import CopyableIcon from './CopyableIcon';
+import Category from './Category';
 
-const { icons } = Icon;
-
-export default class IconSet extends React.Component {
-  static defaultProps = {};
-  // Show badges
-
-  newIcons = [];
-
-  render() {
-    const { className, catigory = 'default' } = this.props;
-    const listClassName = classNames({
-      'anticons-list': true,
-      clearfix: true,
-      [className]: !!className,
-    });
-    return (
-      <ul className={listClassName}>
-        {icons[catigory].map(type => (
-          <CopyableIcon key={type} type={type} isNew={this.newIcons.indexOf(type) >= 0} />
-        ))}
-      </ul>
-    );
-  }
+function renderCategories() {
+  const { categories } = Icon;
+  return Object.keys(categories)
+    .map(category => (
+      <Category
+        key={category}
+        title={category}
+        icons={categories[category]}
+      />
+    ));
 }
+
+const IconSet = () => (
+  <div>
+    {renderCategories()}
+  </div>
+);
+
+export default IconSet;

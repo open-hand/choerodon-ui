@@ -2,21 +2,21 @@
 
 exports[`renders ./components/rate/demo/basic.md correctly 1`] = `
 <ul
-  class="ant-rate"
+  class="c7n-rate"
   tabindex="0"
 >
   <li
-    class="ant-rate-star ant-rate-star-zero"
+    class="c7n-rate-star c7n-rate-star-zero"
   >
     <div
-      class="ant-rate-star-first"
+      class="c7n-rate-star-first"
     >
       <i
         class="icon icon-star"
       />
     </div>
     <div
-      class="ant-rate-star-second"
+      class="c7n-rate-star-second"
     >
       <i
         class="icon icon-star"
@@ -24,17 +24,17 @@ exports[`renders ./components/rate/demo/basic.md correctly 1`] = `
     </div>
   </li>
   <li
-    class="ant-rate-star ant-rate-star-zero"
+    class="c7n-rate-star c7n-rate-star-zero"
   >
     <div
-      class="ant-rate-star-first"
+      class="c7n-rate-star-first"
     >
       <i
         class="icon icon-star"
       />
     </div>
     <div
-      class="ant-rate-star-second"
+      class="c7n-rate-star-second"
     >
       <i
         class="icon icon-star"
@@ -42,17 +42,17 @@ exports[`renders ./components/rate/demo/basic.md correctly 1`] = `
     </div>
   </li>
   <li
-    class="ant-rate-star ant-rate-star-zero"
+    class="c7n-rate-star c7n-rate-star-zero"
   >
     <div
-      class="ant-rate-star-first"
+      class="c7n-rate-star-first"
     >
       <i
         class="icon icon-star"
       />
     </div>
     <div
-      class="ant-rate-star-second"
+      class="c7n-rate-star-second"
     >
       <i
         class="icon icon-star"
@@ -60,17 +60,17 @@ exports[`renders ./components/rate/demo/basic.md correctly 1`] = `
     </div>
   </li>
   <li
-    class="ant-rate-star ant-rate-star-zero"
+    class="c7n-rate-star c7n-rate-star-zero"
   >
     <div
-      class="ant-rate-star-first"
+      class="c7n-rate-star-first"
     >
       <i
         class="icon icon-star"
       />
     </div>
     <div
-      class="ant-rate-star-second"
+      class="c7n-rate-star-second"
     >
       <i
         class="icon icon-star"
@@ -78,17 +78,17 @@ exports[`renders ./components/rate/demo/basic.md correctly 1`] = `
     </div>
   </li>
   <li
-    class="ant-rate-star ant-rate-star-zero"
+    class="c7n-rate-star c7n-rate-star-zero"
   >
     <div
-      class="ant-rate-star-first"
+      class="c7n-rate-star-first"
     >
       <i
         class="icon icon-star"
       />
     </div>
     <div
-      class="ant-rate-star-second"
+      class="c7n-rate-star-second"
     >
       <i
         class="icon icon-star"
@@ -101,21 +101,21 @@ exports[`renders ./components/rate/demo/basic.md correctly 1`] = `
 exports[`renders ./components/rate/demo/character.md correctly 1`] = `
 <div>
   <ul
-    class="ant-rate"
+    class="c7n-rate"
     tabindex="0"
   >
     <li
-      class="ant-rate-star ant-rate-star-zero"
+      class="c7n-rate-star c7n-rate-star-zero"
     >
       <div
-        class="ant-rate-star-first"
+        class="c7n-rate-star-first"
       >
         <i
           class="icon icon-heart"
         />
       </div>
       <div
-        class="ant-rate-star-second"
+        class="c7n-rate-star-second"
       >
         <i
           class="icon icon-heart"
@@ -123,17 +123,17 @@ exports[`renders ./components/rate/demo/character.md correctly 1`] = `
       </div>
     </li>
     <li
-      class="ant-rate-star ant-rate-star-zero"
+      class="c7n-rate-star c7n-rate-star-zero"
     >
       <div
-        class="ant-rate-star-first"
+        class="c7n-rate-star-first"
       >
         <i
           class="icon icon-heart"
         />
       </div>
       <div
-        class="ant-rate-star-second"
+        class="c7n-rate-star-second"
       >
         <i
           class="icon icon-heart"
@@ -141,17 +141,17 @@ exports[`renders ./components/rate/demo/character.md correctly 1`] = `
       </div>
     </li>
     <li
-      class="ant-rate-star ant-rate-star-zero"
+      class="c7n-rate-star c7n-rate-star-zero"
     >
       <div
-        class="ant-rate-star-first"
+        class="c7n-rate-star-first"
       >
         <i
           class="icon icon-heart"
         />
       </div>
       <div
-        class="ant-rate-star-second"
+        class="c7n-rate-star-second"
       >
         <i
           class="icon icon-heart"
@@ -159,17 +159,17 @@ exports[`renders ./components/rate/demo/character.md correctly 1`] = `
       </div>
     </li>
     <li
-      class="ant-rate-star ant-rate-star-zero"
+      class="c7n-rate-star c7n-rate-star-zero"
     >
       <div
-        class="ant-rate-star-first"
+        class="c7n-rate-star-first"
       >
         <i
           class="icon icon-heart"
         />
       </div>
       <div
-        class="ant-rate-star-second"
+        class="c7n-rate-star-second"
       >
         <i
           class="icon icon-heart"
@@ -177,17 +177,17 @@ exports[`renders ./components/rate/demo/character.md correctly 1`] = `
       </div>
     </li>
     <li
-      class="ant-rate-star ant-rate-star-zero"
+      class="c7n-rate-star c7n-rate-star-zero"
     >
       <div
-        class="ant-rate-star-first"
+        class="c7n-rate-star-first"
       >
         <i
           class="icon icon-heart"
         />
       </div>
       <div
-        class="ant-rate-star-second"
+        class="c7n-rate-star-second"
       >
         <i
           class="icon icon-heart"
@@ -197,76 +197,76 @@ exports[`renders ./components/rate/demo/character.md correctly 1`] = `
   </ul>
   <br />
   <ul
-    class="ant-rate"
+    class="c7n-rate"
     style="font-size:36px"
     tabindex="0"
   >
     <li
-      class="ant-rate-star ant-rate-star-zero"
+      class="c7n-rate-star c7n-rate-star-zero"
     >
       <div
-        class="ant-rate-star-first"
+        class="c7n-rate-star-first"
       >
         A
       </div>
       <div
-        class="ant-rate-star-second"
+        class="c7n-rate-star-second"
       >
         A
       </div>
     </li>
     <li
-      class="ant-rate-star ant-rate-star-zero"
+      class="c7n-rate-star c7n-rate-star-zero"
     >
       <div
-        class="ant-rate-star-first"
+        class="c7n-rate-star-first"
       >
         A
       </div>
       <div
-        class="ant-rate-star-second"
+        class="c7n-rate-star-second"
       >
         A
       </div>
     </li>
     <li
-      class="ant-rate-star ant-rate-star-zero"
+      class="c7n-rate-star c7n-rate-star-zero"
     >
       <div
-        class="ant-rate-star-first"
+        class="c7n-rate-star-first"
       >
         A
       </div>
       <div
-        class="ant-rate-star-second"
+        class="c7n-rate-star-second"
       >
         A
       </div>
     </li>
     <li
-      class="ant-rate-star ant-rate-star-zero"
+      class="c7n-rate-star c7n-rate-star-zero"
     >
       <div
-        class="ant-rate-star-first"
+        class="c7n-rate-star-first"
       >
         A
       </div>
       <div
-        class="ant-rate-star-second"
+        class="c7n-rate-star-second"
       >
         A
       </div>
     </li>
     <li
-      class="ant-rate-star ant-rate-star-zero"
+      class="c7n-rate-star c7n-rate-star-zero"
     >
       <div
-        class="ant-rate-star-first"
+        class="c7n-rate-star-first"
       >
         A
       </div>
       <div
-        class="ant-rate-star-second"
+        class="c7n-rate-star-second"
       >
         A
       </div>
@@ -274,75 +274,75 @@ exports[`renders ./components/rate/demo/character.md correctly 1`] = `
   </ul>
   <br />
   <ul
-    class="ant-rate"
+    class="c7n-rate"
     tabindex="0"
   >
     <li
-      class="ant-rate-star ant-rate-star-zero"
+      class="c7n-rate-star c7n-rate-star-zero"
     >
       <div
-        class="ant-rate-star-first"
+        class="c7n-rate-star-first"
       >
         好
       </div>
       <div
-        class="ant-rate-star-second"
+        class="c7n-rate-star-second"
       >
         好
       </div>
     </li>
     <li
-      class="ant-rate-star ant-rate-star-zero"
+      class="c7n-rate-star c7n-rate-star-zero"
     >
       <div
-        class="ant-rate-star-first"
+        class="c7n-rate-star-first"
       >
         好
       </div>
       <div
-        class="ant-rate-star-second"
+        class="c7n-rate-star-second"
       >
         好
       </div>
     </li>
     <li
-      class="ant-rate-star ant-rate-star-zero"
+      class="c7n-rate-star c7n-rate-star-zero"
     >
       <div
-        class="ant-rate-star-first"
+        class="c7n-rate-star-first"
       >
         好
       </div>
       <div
-        class="ant-rate-star-second"
+        class="c7n-rate-star-second"
       >
         好
       </div>
     </li>
     <li
-      class="ant-rate-star ant-rate-star-zero"
+      class="c7n-rate-star c7n-rate-star-zero"
     >
       <div
-        class="ant-rate-star-first"
+        class="c7n-rate-star-first"
       >
         好
       </div>
       <div
-        class="ant-rate-star-second"
+        class="c7n-rate-star-second"
       >
         好
       </div>
     </li>
     <li
-      class="ant-rate-star ant-rate-star-zero"
+      class="c7n-rate-star c7n-rate-star-zero"
     >
       <div
-        class="ant-rate-star-first"
+        class="c7n-rate-star-first"
       >
         好
       </div>
       <div
-        class="ant-rate-star-second"
+        class="c7n-rate-star-second"
       >
         好
       </div>
@@ -354,21 +354,21 @@ exports[`renders ./components/rate/demo/character.md correctly 1`] = `
 exports[`renders ./components/rate/demo/clear.md correctly 1`] = `
 <div>
   <ul
-    class="ant-rate"
+    class="c7n-rate"
     tabindex="0"
   >
     <li
-      class="ant-rate-star ant-rate-star-full"
+      class="c7n-rate-star c7n-rate-star-full"
     >
       <div
-        class="ant-rate-star-first"
+        class="c7n-rate-star-first"
       >
         <i
           class="icon icon-star"
         />
       </div>
       <div
-        class="ant-rate-star-second"
+        class="c7n-rate-star-second"
       >
         <i
           class="icon icon-star"
@@ -376,17 +376,17 @@ exports[`renders ./components/rate/demo/clear.md correctly 1`] = `
       </div>
     </li>
     <li
-      class="ant-rate-star ant-rate-star-full"
+      class="c7n-rate-star c7n-rate-star-full"
     >
       <div
-        class="ant-rate-star-first"
+        class="c7n-rate-star-first"
       >
         <i
           class="icon icon-star"
         />
       </div>
       <div
-        class="ant-rate-star-second"
+        class="c7n-rate-star-second"
       >
         <i
           class="icon icon-star"
@@ -394,17 +394,17 @@ exports[`renders ./components/rate/demo/clear.md correctly 1`] = `
       </div>
     </li>
     <li
-      class="ant-rate-star ant-rate-star-full"
+      class="c7n-rate-star c7n-rate-star-full"
     >
       <div
-        class="ant-rate-star-first"
+        class="c7n-rate-star-first"
       >
         <i
           class="icon icon-star"
         />
       </div>
       <div
-        class="ant-rate-star-second"
+        class="c7n-rate-star-second"
       >
         <i
           class="icon icon-star"
@@ -412,17 +412,17 @@ exports[`renders ./components/rate/demo/clear.md correctly 1`] = `
       </div>
     </li>
     <li
-      class="ant-rate-star ant-rate-star-zero"
+      class="c7n-rate-star c7n-rate-star-zero"
     >
       <div
-        class="ant-rate-star-first"
+        class="c7n-rate-star-first"
       >
         <i
           class="icon icon-star"
         />
       </div>
       <div
-        class="ant-rate-star-second"
+        class="c7n-rate-star-second"
       >
         <i
           class="icon icon-star"
@@ -430,17 +430,17 @@ exports[`renders ./components/rate/demo/clear.md correctly 1`] = `
       </div>
     </li>
     <li
-      class="ant-rate-star ant-rate-star-zero"
+      class="c7n-rate-star c7n-rate-star-zero"
     >
       <div
-        class="ant-rate-star-first"
+        class="c7n-rate-star-first"
       >
         <i
           class="icon icon-star"
         />
       </div>
       <div
-        class="ant-rate-star-second"
+        class="c7n-rate-star-second"
       >
         <i
           class="icon icon-star"
@@ -451,21 +451,21 @@ exports[`renders ./components/rate/demo/clear.md correctly 1`] = `
    allowClear: true
   <br />
   <ul
-    class="ant-rate"
+    class="c7n-rate"
     tabindex="0"
   >
     <li
-      class="ant-rate-star ant-rate-star-full"
+      class="c7n-rate-star c7n-rate-star-full"
     >
       <div
-        class="ant-rate-star-first"
+        class="c7n-rate-star-first"
       >
         <i
           class="icon icon-star"
         />
       </div>
       <div
-        class="ant-rate-star-second"
+        class="c7n-rate-star-second"
       >
         <i
           class="icon icon-star"
@@ -473,17 +473,17 @@ exports[`renders ./components/rate/demo/clear.md correctly 1`] = `
       </div>
     </li>
     <li
-      class="ant-rate-star ant-rate-star-full"
+      class="c7n-rate-star c7n-rate-star-full"
     >
       <div
-        class="ant-rate-star-first"
+        class="c7n-rate-star-first"
       >
         <i
           class="icon icon-star"
         />
       </div>
       <div
-        class="ant-rate-star-second"
+        class="c7n-rate-star-second"
       >
         <i
           class="icon icon-star"
@@ -491,17 +491,17 @@ exports[`renders ./components/rate/demo/clear.md correctly 1`] = `
       </div>
     </li>
     <li
-      class="ant-rate-star ant-rate-star-full"
+      class="c7n-rate-star c7n-rate-star-full"
     >
       <div
-        class="ant-rate-star-first"
+        class="c7n-rate-star-first"
       >
         <i
           class="icon icon-star"
         />
       </div>
       <div
-        class="ant-rate-star-second"
+        class="c7n-rate-star-second"
       >
         <i
           class="icon icon-star"
@@ -509,17 +509,17 @@ exports[`renders ./components/rate/demo/clear.md correctly 1`] = `
       </div>
     </li>
     <li
-      class="ant-rate-star ant-rate-star-zero"
+      class="c7n-rate-star c7n-rate-star-zero"
     >
       <div
-        class="ant-rate-star-first"
+        class="c7n-rate-star-first"
       >
         <i
           class="icon icon-star"
         />
       </div>
       <div
-        class="ant-rate-star-second"
+        class="c7n-rate-star-second"
       >
         <i
           class="icon icon-star"
@@ -527,17 +527,17 @@ exports[`renders ./components/rate/demo/clear.md correctly 1`] = `
       </div>
     </li>
     <li
-      class="ant-rate-star ant-rate-star-zero"
+      class="c7n-rate-star c7n-rate-star-zero"
     >
       <div
-        class="ant-rate-star-first"
+        class="c7n-rate-star-first"
       >
         <i
           class="icon icon-star"
         />
       </div>
       <div
-        class="ant-rate-star-second"
+        class="c7n-rate-star-second"
       >
         <i
           class="icon icon-star"
@@ -551,21 +551,21 @@ exports[`renders ./components/rate/demo/clear.md correctly 1`] = `
 
 exports[`renders ./components/rate/demo/disabled.md correctly 1`] = `
 <ul
-  class="ant-rate ant-rate-disabled"
+  class="c7n-rate c7n-rate-disabled"
   tabindex="-1"
 >
   <li
-    class="ant-rate-star ant-rate-star-full"
+    class="c7n-rate-star c7n-rate-star-full"
   >
     <div
-      class="ant-rate-star-first"
+      class="c7n-rate-star-first"
     >
       <i
         class="icon icon-star"
       />
     </div>
     <div
-      class="ant-rate-star-second"
+      class="c7n-rate-star-second"
     >
       <i
         class="icon icon-star"
@@ -573,17 +573,17 @@ exports[`renders ./components/rate/demo/disabled.md correctly 1`] = `
     </div>
   </li>
   <li
-    class="ant-rate-star ant-rate-star-full"
+    class="c7n-rate-star c7n-rate-star-full"
   >
     <div
-      class="ant-rate-star-first"
+      class="c7n-rate-star-first"
     >
       <i
         class="icon icon-star"
       />
     </div>
     <div
-      class="ant-rate-star-second"
+      class="c7n-rate-star-second"
     >
       <i
         class="icon icon-star"
@@ -591,17 +591,17 @@ exports[`renders ./components/rate/demo/disabled.md correctly 1`] = `
     </div>
   </li>
   <li
-    class="ant-rate-star ant-rate-star-zero"
+    class="c7n-rate-star c7n-rate-star-zero"
   >
     <div
-      class="ant-rate-star-first"
+      class="c7n-rate-star-first"
     >
       <i
         class="icon icon-star"
       />
     </div>
     <div
-      class="ant-rate-star-second"
+      class="c7n-rate-star-second"
     >
       <i
         class="icon icon-star"
@@ -609,17 +609,17 @@ exports[`renders ./components/rate/demo/disabled.md correctly 1`] = `
     </div>
   </li>
   <li
-    class="ant-rate-star ant-rate-star-zero"
+    class="c7n-rate-star c7n-rate-star-zero"
   >
     <div
-      class="ant-rate-star-first"
+      class="c7n-rate-star-first"
     >
       <i
         class="icon icon-star"
       />
     </div>
     <div
-      class="ant-rate-star-second"
+      class="c7n-rate-star-second"
     >
       <i
         class="icon icon-star"
@@ -627,17 +627,17 @@ exports[`renders ./components/rate/demo/disabled.md correctly 1`] = `
     </div>
   </li>
   <li
-    class="ant-rate-star ant-rate-star-zero"
+    class="c7n-rate-star c7n-rate-star-zero"
   >
     <div
-      class="ant-rate-star-first"
+      class="c7n-rate-star-first"
     >
       <i
         class="icon icon-star"
       />
     </div>
     <div
-      class="ant-rate-star-second"
+      class="c7n-rate-star-second"
     >
       <i
         class="icon icon-star"
@@ -649,21 +649,21 @@ exports[`renders ./components/rate/demo/disabled.md correctly 1`] = `
 
 exports[`renders ./components/rate/demo/half.md correctly 1`] = `
 <ul
-  class="ant-rate"
+  class="c7n-rate"
   tabindex="0"
 >
   <li
-    class="ant-rate-star ant-rate-star-full"
+    class="c7n-rate-star c7n-rate-star-full"
   >
     <div
-      class="ant-rate-star-first"
+      class="c7n-rate-star-first"
     >
       <i
         class="icon icon-star"
       />
     </div>
     <div
-      class="ant-rate-star-second"
+      class="c7n-rate-star-second"
     >
       <i
         class="icon icon-star"
@@ -671,17 +671,17 @@ exports[`renders ./components/rate/demo/half.md correctly 1`] = `
     </div>
   </li>
   <li
-    class="ant-rate-star ant-rate-star-full"
+    class="c7n-rate-star c7n-rate-star-full"
   >
     <div
-      class="ant-rate-star-first"
+      class="c7n-rate-star-first"
     >
       <i
         class="icon icon-star"
       />
     </div>
     <div
-      class="ant-rate-star-second"
+      class="c7n-rate-star-second"
     >
       <i
         class="icon icon-star"
@@ -689,17 +689,17 @@ exports[`renders ./components/rate/demo/half.md correctly 1`] = `
     </div>
   </li>
   <li
-    class="ant-rate-star ant-rate-star-half ant-rate-star-active"
+    class="c7n-rate-star c7n-rate-star-half c7n-rate-star-active"
   >
     <div
-      class="ant-rate-star-first"
+      class="c7n-rate-star-first"
     >
       <i
         class="icon icon-star"
       />
     </div>
     <div
-      class="ant-rate-star-second"
+      class="c7n-rate-star-second"
     >
       <i
         class="icon icon-star"
@@ -707,17 +707,17 @@ exports[`renders ./components/rate/demo/half.md correctly 1`] = `
     </div>
   </li>
   <li
-    class="ant-rate-star ant-rate-star-zero"
+    class="c7n-rate-star c7n-rate-star-zero"
   >
     <div
-      class="ant-rate-star-first"
+      class="c7n-rate-star-first"
     >
       <i
         class="icon icon-star"
       />
     </div>
     <div
-      class="ant-rate-star-second"
+      class="c7n-rate-star-second"
     >
       <i
         class="icon icon-star"
@@ -725,17 +725,17 @@ exports[`renders ./components/rate/demo/half.md correctly 1`] = `
     </div>
   </li>
   <li
-    class="ant-rate-star ant-rate-star-zero"
+    class="c7n-rate-star c7n-rate-star-zero"
   >
     <div
-      class="ant-rate-star-first"
+      class="c7n-rate-star-first"
     >
       <i
         class="icon icon-star"
       />
     </div>
     <div
-      class="ant-rate-star-second"
+      class="c7n-rate-star-second"
     >
       <i
         class="icon icon-star"
@@ -748,21 +748,21 @@ exports[`renders ./components/rate/demo/half.md correctly 1`] = `
 exports[`renders ./components/rate/demo/text.md correctly 1`] = `
 <span>
   <ul
-    class="ant-rate"
+    class="c7n-rate"
     tabindex="0"
   >
     <li
-      class="ant-rate-star ant-rate-star-full"
+      class="c7n-rate-star c7n-rate-star-full"
     >
       <div
-        class="ant-rate-star-first"
+        class="c7n-rate-star-first"
       >
         <i
           class="icon icon-star"
         />
       </div>
       <div
-        class="ant-rate-star-second"
+        class="c7n-rate-star-second"
       >
         <i
           class="icon icon-star"
@@ -770,17 +770,17 @@ exports[`renders ./components/rate/demo/text.md correctly 1`] = `
       </div>
     </li>
     <li
-      class="ant-rate-star ant-rate-star-full"
+      class="c7n-rate-star c7n-rate-star-full"
     >
       <div
-        class="ant-rate-star-first"
+        class="c7n-rate-star-first"
       >
         <i
           class="icon icon-star"
         />
       </div>
       <div
-        class="ant-rate-star-second"
+        class="c7n-rate-star-second"
       >
         <i
           class="icon icon-star"
@@ -788,17 +788,17 @@ exports[`renders ./components/rate/demo/text.md correctly 1`] = `
       </div>
     </li>
     <li
-      class="ant-rate-star ant-rate-star-full"
+      class="c7n-rate-star c7n-rate-star-full"
     >
       <div
-        class="ant-rate-star-first"
+        class="c7n-rate-star-first"
       >
         <i
           class="icon icon-star"
         />
       </div>
       <div
-        class="ant-rate-star-second"
+        class="c7n-rate-star-second"
       >
         <i
           class="icon icon-star"
@@ -806,17 +806,17 @@ exports[`renders ./components/rate/demo/text.md correctly 1`] = `
       </div>
     </li>
     <li
-      class="ant-rate-star ant-rate-star-zero"
+      class="c7n-rate-star c7n-rate-star-zero"
     >
       <div
-        class="ant-rate-star-first"
+        class="c7n-rate-star-first"
       >
         <i
           class="icon icon-star"
         />
       </div>
       <div
-        class="ant-rate-star-second"
+        class="c7n-rate-star-second"
       >
         <i
           class="icon icon-star"
@@ -824,17 +824,17 @@ exports[`renders ./components/rate/demo/text.md correctly 1`] = `
       </div>
     </li>
     <li
-      class="ant-rate-star ant-rate-star-zero"
+      class="c7n-rate-star c7n-rate-star-zero"
     >
       <div
-        class="ant-rate-star-first"
+        class="c7n-rate-star-first"
       >
         <i
           class="icon icon-star"
         />
       </div>
       <div
-        class="ant-rate-star-second"
+        class="c7n-rate-star-second"
       >
         <i
           class="icon icon-star"
@@ -843,7 +843,7 @@ exports[`renders ./components/rate/demo/text.md correctly 1`] = `
     </li>
   </ul>
   <span
-    class="ant-rate-text"
+    class="c7n-rate-text"
   >
     3 stars
   </span>

@@ -1,10 +1,11 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import React, { Component, CSSProperties, MouseEvent } from 'react';
+import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
-import omit from 'omit.js';
+import omit from 'lodash/omit';
 import Icon from '../icon';
 import CheckableTag from './CheckableTag';
-import Animate from '../rc-components/animate';
+import Animate from '../animate';
+import { getPrefixCls } from '../configure';
 
 export { CheckableTagProps } from './CheckableTag';
 
@@ -18,7 +19,7 @@ export interface TagProps {
   onClose?: Function;
   /** 动画关闭后的回调 */
   afterClose?: Function;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
 }
 
 export interface TagState {
@@ -26,23 +27,19 @@ export interface TagState {
   closed: boolean;
 }
 
-export default class Tag extends React.Component<TagProps, TagState> {
+export default class Tag extends Component<TagProps, TagState> {
+  static displayName = 'Tag';
   static CheckableTag = CheckableTag;
   static defaultProps = {
-    prefixCls: 'ant-tag',
     closable: false,
   };
 
-  constructor(props: TagProps) {
-    super(props);
+  state = {
+    closing: false,
+    closed: false,
+  };
 
-    this.state = {
-      closing: false,
-      closed: false,
-    };
-  }
-
-  close = (e: React.MouseEvent<HTMLElement>) => {
+  close = (e: MouseEvent<HTMLElement>) => {
     const onClose = this.props.onClose;
     if (onClose) {
       onClose(e);
@@ -50,7 +47,7 @@ export default class Tag extends React.Component<TagProps, TagState> {
     if (e.defaultPrevented) {
       return;
     }
-    const dom = ReactDOM.findDOMNode(this) as HTMLElement;
+    const dom = findDOMNode(this) as HTMLElement;
     dom.style.width = `${dom.getBoundingClientRect().width}px`;
     // It's Magic Code, don't know why
     dom.style.width = `${dom.getBoundingClientRect().width}px`;
@@ -84,26 +81,30 @@ export default class Tag extends React.Component<TagProps, TagState> {
   }
 
   render() {
-    const { prefixCls, closable, color, className, children, style, ...otherProps } = this.props;
-    const closeIcon = closable ? <Icon type="cross" onClick={this.close} /> : '';
+    const { prefixCls: customizePrefixCls, closable, color, className, children, style, ...otherProps } = this.props;
+    const prefixCls = getPrefixCls('tag', customizePrefixCls);
+    const { closing, closed } = this.state;
+    const closeIcon = closable ? <Icon type="close" onClick={this.close} /> : '';
     const isPresetColor = this.isPresetColor(color);
     const classString = classNames(prefixCls, {
       [`${prefixCls}-${color}`]: isPresetColor,
       [`${prefixCls}-has-color`]: (color && !isPresetColor),
-      [`${prefixCls}-close`]: this.state.closing,
+      [`${prefixCls}-close`]: closing,
     }, className);
     // fix https://fb.me/react-unknown-prop
     const divProps = omit(otherProps, [
       'onClose',
       'afterClose',
     ]);
-    const tagStyle = {
-      backgroundColor: (color && !isPresetColor) ? color : null,
+    const tagStyle: CSSProperties = {
       ...style,
     };
-    const tag = this.state.closed ? null : (
+    if (color && !isPresetColor) {
+      tagStyle.backgroundColor = color;
+    }
+    const tag = closed ? null : (
       <div
-        data-show={!this.state.closing}
+        hidden={closing}
         {...divProps}
         className={classString}
         style={tagStyle}
@@ -115,7 +116,7 @@ export default class Tag extends React.Component<TagProps, TagState> {
     return (
       <Animate
         component=""
-        showProp="data-show"
+        hiddenProp="hidden"
         transitionName={`${prefixCls}-zoom`}
         transitionAppear
         onEnd={this.animationEnd}

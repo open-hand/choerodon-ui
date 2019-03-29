@@ -1,24 +1,33 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import KeyCode from '../util/KeyCode';
+import React, { Children, Component } from 'react';
+import { unmountComponentAtNode } from 'react-dom';
 import classnames from 'classnames';
-import Animate from '../animate';
+import noop from 'lodash/noop';
+import KeyCode from '../../_util/KeyCode';
+import Animate from '../../animate';
 import {
-  getPropValue, getValuePropValue,
-  isMultiple, toArray,
-  UNSELECTABLE_ATTRIBUTE, UNSELECTABLE_STYLE,
+  filterAllCheckedData,
+  filterParentPosition,
+  flatToHierarchy,
+  getPropValue,
+  getTreeNodesStates,
+  getValuePropValue,
+  isMultiple,
+  isPositionPrefix,
+  labelCompatible,
+  loopAllChildren,
   preventDefaultEvent,
-  getTreeNodesStates, flatToHierarchy, filterParentPosition,
-  isPositionPrefix, labelCompatible, loopAllChildren, filterAllCheckedData,
-  processSimpleTreeData, saveRef,
+  processSimpleTreeData,
+  saveRef,
+  toArray,
+  UNSELECTABLE_ATTRIBUTE,
+  UNSELECTABLE_STYLE,
 } from './util';
 import SelectTrigger from './SelectTrigger';
 import _TreeNode from './TreeNode';
-import { SHOW_ALL, SHOW_PARENT, SHOW_CHILD } from './strategies';
+import { SHOW_ALL, SHOW_CHILD, SHOW_PARENT } from './strategies';
 import { SelectPropTypes } from './PropTypes';
-
-function noop() {
-}
+import Button from '../../button/Button';
+import { getLabelFromPropsValue, getMapKey } from '../select/util';
 
 function filterFn(input, child) {
   return String(getPropValue(child, labelCompatible(this.props.treeNodeFilterProp)))
@@ -52,13 +61,13 @@ function loopTreeData(data, level = 0, treeCheckable) {
     if (children && children.length) {
       ret = (<_TreeNode {...props}>{loopTreeData(children, pos, treeCheckable)}</_TreeNode>);
     } else {
-      ret = (<_TreeNode {...props} isLeaf={isLeaf}/>);
+      ret = (<_TreeNode {...props} isLeaf={isLeaf} />);
     }
     return ret;
   });
 }
 
-class Select extends Component {
+export default class Select extends Component {
   static propTypes = SelectPropTypes;
 
   static defaultProps = {
@@ -77,7 +86,10 @@ class Select extends Component {
     showArrow: true,
     dropdownMatchSelectWidth: true,
     dropdownStyle: {},
-    onDropdownVisibleChange: () => { return true; },
+    onDropdownVisibleChange: () => {
+      return true;
+    },
+    optionLabelProp: 'value',
     notFoundContent: 'Not Found',
     showCheckedStrategy: SHOW_CHILD,
     // skipHandleInitValue: false, // Deprecated (use treeCheckStrictly)
@@ -90,6 +102,10 @@ class Select extends Component {
     treeNodeFilterProp: 'value',
     treeNodeLabelProp: 'title',
   };
+
+  static SHOW_ALL = SHOW_ALL;
+  static SHOW_PARENT = SHOW_PARENT;
+  static SHOW_CHILD = SHOW_CHILD;
 
   constructor(props) {
     super(props);
@@ -137,14 +153,14 @@ class Select extends Component {
     // Detecting whether the object of `onChange`'s argument  is old ref.
     // Better to do a deep equal later.
     this._cacheTreeNodesStates = this._cacheTreeNodesStates !== 'no' &&
-                                 this._savedValue &&
-                                 nextProps.value === this._savedValue;
+      this._savedValue &&
+      nextProps.value === this._savedValue;
     if (this.props.treeData !== nextProps.treeData ||
       this.props.children !== nextProps.children) {
       // refresh this._treeNodesStates cache
       this._treeNodesStates = getTreeNodesStates(
         this.renderedTreeData || nextProps.children,
-        this.state.value.map(item => item.value)
+        this.state.value.map(item => item.value),
       );
     }
     if ('value' in nextProps) {
@@ -198,7 +214,7 @@ class Select extends Component {
   componentWillUnmount() {
     this.clearDelayTimer();
     if (this.dropdownContainer) {
-      ReactDOM.unmountComponentAtNode(this.dropdownContainer);
+      unmountComponentAtNode(this.dropdownContainer);
       document.body.removeChild(this.dropdownContainer);
       this.dropdownContainer = null;
     }
@@ -217,7 +233,7 @@ class Select extends Component {
       });
     }
     props.onSearch(val);
-  }
+  };
 
   onDropdownVisibleChange = (open) => {
     // selection inside combobox cause click
@@ -229,7 +245,7 @@ class Select extends Component {
     setTimeout(() => {
       this.setOpenState(open, undefined, !open);
     }, 10);
-  }
+  };
 
   // combobox ignore
   onKeyDown = (event) => {
@@ -244,7 +260,7 @@ class Select extends Component {
       this.setOpenState(true);
       event.preventDefault();
     }
-  }
+  };
 
   onInputKeyDown = (event) => {
     const props = this.props;
@@ -276,7 +292,7 @@ class Select extends Component {
       }
       return;
     }
-  }
+  };
 
   onSelect = (selectedKeys, info) => {
     const item = info.node;
@@ -336,8 +352,7 @@ class Select extends Component {
     if (checkEvt) {
       extraInfo.checked = info.checked;
       // if inputValue existing, tree is checkStrictly
-      extraInfo.allCheckedNodes = props.treeCheckStrictly || this.state.inputValue ?
-        info.checkedNodes : flatToHierarchy(info.checkedNodesPositions);
+      extraInfo.allCheckedNodes = props.treeCheckStrictly || this.state.inputValue ? info.checkedNodes : flatToHierarchy(info.checkedNodesPositions);
       this._checkedNodes = info.checkedNodesPositions;
       const _tree = this.trigger.popupEle;
       this._treeNodesStates = _tree.checkKeys;
@@ -351,7 +366,7 @@ class Select extends Component {
         inputValue: '',
       });
     }
-  }
+  };
 
   onDeselect = (info) => {
     this.removeSelected(getValuePropValue(info.node));
@@ -360,11 +375,11 @@ class Select extends Component {
     } else {
       this.clearSearchInput();
     }
-  }
+  };
 
   onPlaceholderClick = () => {
     this.getInputDOMNode().focus();
-  }
+  };
 
   onClearSelection = (event) => {
     const props = this.props;
@@ -387,11 +402,11 @@ class Select extends Component {
         this.fireChange([]);
       }
     }
-  }
+  };
 
   onChoiceAnimationLeave = () => {
     this.trigger.trigger.forcePopupAlign();
-  }
+  };
 
   getLabelFromNode(child) {
     return getPropValue(child, this.props.treeNodeLabelProp);
@@ -485,7 +500,7 @@ class Select extends Component {
     // if inputValue existing, tree is checkStrictly
     const _strict = init === '__strict' ||
       init && (this.state && this.state.inputValue ||
-      this.props.inputValue !== _props.inputValue);
+        this.props.inputValue !== _props.inputValue);
     if (_props.treeCheckable &&
       (_props.treeCheckStrictly || _strict)) {
       this.halfCheckedValues = [];
@@ -519,7 +534,7 @@ class Select extends Component {
       // getTreeNodesStates is not effective.
       this._treeNodesStates = getTreeNodesStates(
         this.renderedTreeData || _props.children,
-        value.map(item => item.value)
+        value.map(item => item.value),
       );
       this.checkedTreeNodes = checkedTreeNodes = this._treeNodesStates.checkedNodes;
     }
@@ -536,7 +551,7 @@ class Select extends Component {
     } else if (props.showCheckedStrategy === SHOW_PARENT) {
       const posArr = filterParentPosition(checkedTreeNodes.map(itemObj => itemObj.pos));
       checkedValues = mapLabVal(checkedTreeNodes.filter(
-        itemObj => posArr.indexOf(itemObj.pos) !== -1
+        itemObj => posArr.indexOf(itemObj.pos) !== -1,
       ));
     } else {
       checkedValues = mapLabVal(checkedTreeNodes.filter(itemObj => !itemObj.node.props.children));
@@ -701,7 +716,7 @@ class Select extends Component {
 
   openIfHasChildren() {
     const props = this.props;
-    if (React.Children.count(props.children) || !isMultiple(props)) {
+    if (Children.count(props.children) || !isMultiple(props)) {
       this.setOpenState(true);
     }
   }
@@ -797,32 +812,90 @@ class Select extends Component {
     }
   }
 
+  renderClear() {
+    const { prefixCls, allowClear } = this.props;
+    const { value, inputValue } = this.state;
+    const clear = (
+      <Button
+        key="clear"
+        className={`${prefixCls}-clear`}
+        style={UNSELECTABLE_STYLE}
+        {...UNSELECTABLE_ATTRIBUTE}
+        shape="circle"
+        icon="close"
+        size="small"
+        onClick={this.onClearSelection}
+        onMouseDown={preventDefaultEvent}
+      />
+    );
+    if (!allowClear) {
+      return null;
+    }
+    if (inputValue || value.length) {
+      return clear;
+    }
+    return null;
+  }
+
+  onArrowClick = e => {
+    e.stopPropagation();
+    e.preventDefault();
+    if (!this.props.disabled) {
+      this.onDropdownVisibleChange(!this.state.open);
+    }
+  };
+
+  getPlaceholderElement = () => {
+    const { props, state } = this;
+    const placeholder = props.placeholder;
+    if (placeholder) {
+      return (
+        <div className={`${props.prefixCls}-selection__placeholder`}>
+          {placeholder}
+        </div>
+      );
+    }
+    return null;
+  };
+
   renderTopControlNode() {
     const { value } = this.state;
     const props = this.props;
-    const { choiceTransitionName, prefixCls, maxTagTextLength } = props;
+    const { choiceTransitionName, prefixCls, maxTagTextLength, choiceRender } = props;
     const multiple = isMultiple(props);
 
     // single and not combobox, input is inside dropdown
     if (!multiple) {
-      let innerNode = (<span
-        key="placeholder"
-        className={`${prefixCls}-selection__placeholder`}
-      >
-        {props.placeholder}
-      </span>);
-      if (value.length) {
-        innerNode = (<span
+      const singleValue = value && value[0];
+      const { label } = singleValue || {};
+      const innerNode = (
+        <span
           key="value"
-          title={value[0].label}
+          title={label}
           className={`${prefixCls}-selection-selected-value`}
         >
-          {value[0].label}
-        </span>);
-      }
-      return (<span className={`${prefixCls}-selection__rendered`}>
-        {innerNode}
-      </span>);
+         {choiceRender ? choiceRender(label) : label}
+        </span>
+      );
+      return (
+        <div className={`${prefixCls}-selection__rendered`}>
+          {this.getPlaceholderElement()}
+          {innerNode}
+          {this.renderClear()}
+          {multiple || !props.showArrow ? null : (
+            <span
+              key="arrow"
+              className={`${prefixCls}-arrow`}
+              style={UNSELECTABLE_STYLE}
+              {...UNSELECTABLE_ATTRIBUTE}
+              onClick={this.onArrowClick}
+            >
+              <i className="icon icon-arrow_drop_down"></i>
+              <b />
+            </span>
+          )}
+        </div>
+      );
     }
 
     const selectedValueNodes = value.map((singleValue) => {
@@ -857,14 +930,16 @@ class Select extends Component {
     </li>);
     const className = `${prefixCls}-selection__rendered`;
     if (choiceTransitionName) {
-      return (<Animate
-        className={className}
-        component="ul"
-        transitionName={choiceTransitionName}
-        onLeave={this.onChoiceAnimationLeave}
-      >
-        {selectedValueNodes}
-      </Animate>);
+      return (
+        <Animate
+          className={className}
+          component="ul"
+          transitionName={choiceTransitionName}
+          onLeave={this.onChoiceAnimationLeave}
+        >
+          {selectedValueNodes}
+        </Animate>
+      );
     }
     return (<ul className={className}>{selectedValueNodes}</ul>);
   }
@@ -895,11 +970,25 @@ class Select extends Component {
     }
   }
 
+  getUnderLine() {
+    const { prefixCls, className } = this.props;
+
+    if (className && className.includes(`${prefixCls}-auto-complete`)) {
+      return null;
+    }
+
+    return (
+      <div className={`${prefixCls}-underline`}>
+        <span className={`${prefixCls}-ripple`} />
+      </div>
+    );
+  }
+
   render() {
     const props = this.props;
     const multiple = isMultiple(props);
-    const state = this.state;
-    const { className, disabled, allowClear, prefixCls } = props;
+    const { open, focused, inputValue, value } = this.state;
+    const { className, disabled, label, prefixCls } = props;
     const ctrlNode = this.renderTopControlNode();
     let extraSelectionProps = {};
     if (!multiple) {
@@ -911,19 +1000,16 @@ class Select extends Component {
     const rootCls = {
       [className]: !!className,
       [prefixCls]: 1,
-      [`${prefixCls}-open`]: state.open,
-      [`${prefixCls}-focused`]: state.open || state.focused,
+      [`${prefixCls}-open`]: open,
+      [`${prefixCls}-focused`]: open || focused,
+      [`${prefixCls}-has-value`]: inputValue || (value.length && value[0]),
+      [`${prefixCls}-has-label`]: label,
       // [`${prefixCls}-combobox`]: isCombobox(props),
       [`${prefixCls}-disabled`]: disabled,
       [`${prefixCls}-enabled`]: !disabled,
       [`${prefixCls}-allow-clear`]: !!props.allowClear,
     };
 
-    const clear = (<span
-      key="clear"
-      className={`${prefixCls}-selection__clear`}
-      onClick={this.onClearSelection}
-    />);
     return (
       <SelectTrigger {...props}
         treeNodes={props.children}
@@ -933,23 +1019,23 @@ class Select extends Component {
         halfCheckedValues={this.halfCheckedValues}
         multiple={multiple}
         disabled={disabled}
-        visible={state.open}
-        inputValue={state.inputValue}
+        visible={open}
+        inputValue={inputValue}
         inputElement={this.getInputElement()}
-        value={state.value}
+        value={value}
         onDropdownVisibleChange={this.onDropdownVisibleChange}
         getPopupContainer={props.getPopupContainer}
         onSelect={this.onSelect}
         ref={saveRef(this, 'trigger')}
       >
-        <span
+        <div
           style={props.style}
           onClick={props.onClick}
           className={classnames(rootCls)}
           onBlur={props.onBlur}
           onFocus={props.onFocus}
         >
-          <span
+          <div
             ref={saveRef(this, 'selection')}
             key="selection"
             className={`${prefixCls}-selection
@@ -957,32 +1043,15 @@ class Select extends Component {
             role="combobox"
             aria-autocomplete="list"
             aria-haspopup="true"
-            aria-expanded={state.open}
+            aria-expanded={open}
             {...extraSelectionProps}
           >
-          {ctrlNode}
-          {allowClear && this.state.value.length &&
-          this.state.value[0].value ? clear : null}
-            {multiple || !props.showArrow ? null :
-              (<span
-                key="arrow"
-                className={`${prefixCls}-arrow`}
-                style={{ outline: 'none' }}
-              >
-              <b/>
-            </span>)}
-            {multiple ?
-              this.getSearchPlaceholderElement(!!this.state.inputValue || this.state.value.length) :
-              null}
-          </span>
-        </span>
+            {ctrlNode}
+            {multiple ? this.getSearchPlaceholderElement(!!inputValue || value.length) : null}
+          </div>
+          {this.getUnderLine()}
+        </div>
       </SelectTrigger>
     );
   }
 }
-
-Select.SHOW_ALL = SHOW_ALL;
-Select.SHOW_PARENT = SHOW_PARENT;
-Select.SHOW_CHILD = SHOW_CHILD;
-
-export default Select;

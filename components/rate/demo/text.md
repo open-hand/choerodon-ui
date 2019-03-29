@@ -30,7 +30,7 @@ class Rater extends React.Component {
     return (
       <span>
         <Rate onChange={this.handleChange} value={value} />
-        {value && <span className="ant-rate-text">{value} stars</span>}
+        {value && <span className="c7n-rate-text">{value} stars</span>}
       </span>
     );
   }

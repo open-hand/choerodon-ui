@@ -1,10 +1,10 @@
-import * as React from 'react';
+import { CSSProperties, ReactNode } from 'react';
 import { AbstractSelectProps } from '../select';
 
 export interface TreeData {
   key: string;
   value: string;
-  label: React.ReactNode;
+  label: ReactNode;
   children?: TreeData[];
 }
 
@@ -16,10 +16,10 @@ export interface TreeSelectProps extends AbstractSelectProps {
   onChange?: (value: any, label: any) => void;
   onSearch?: (value: any) => void;
   searchPlaceholder?: string;
-  dropdownStyle?: React.CSSProperties;
+  dropdownStyle?: CSSProperties;
   dropdownMatchSelectWidth?: boolean;
   treeDefaultExpandAll?: boolean;
-  treeCheckable?: boolean | React.ReactNode;
+  treeCheckable?: boolean | ReactNode;
   treeDefaultExpandedKeys?: Array<string>;
   filterTreeNode?: (inputValue: string, treeNode: any) => boolean | boolean;
   treeNodeFilterProp?: string;

@@ -2,8 +2,8 @@
 @import "../../style/mixins/index";
 @import "../../input/style/mixin";
 
-@select-prefix-cls: ~"@{ant-prefix}-select";
-@checkbox-prefix-cls: ~"@{ant-prefix}-checkbox";
+@select-prefix-cls: ~"@{c7n-prefix}-select";
+@checkbox-prefix-cls: ~"@{c7n-prefix}-checkbox";
 
 .@{select-prefix-cls} {
   .reset-component;
@@ -22,30 +22,8 @@
     background-color: @component-background;
   }
 
-// underline
-  //default underline
-  &-underline {
-    position: absolute;
-    height: 0;
-    width: 100%;
-    border-bottom-width: 1px;
-    border-bottom-style: solid;
-    border-bottom-color: rgba(0, 0, 0, 0.54);
-  }
+  .input-underline;
 
-  &-ripple {
-    position: absolute;
-    left: 0;
-    width: 100%;
-    transform-origin: 50%;
-    transform: scaleX(0.5);
-    opacity: 0;
-    border-bottom-width: 2px;
-    border-bottom-style: solid;
-    transition: border-color 300ms cubic-bezier(0.55, 0, 0.55, 0.2);
-    border-color: #3367d6;
-    height: 0;
-  }
   &-arrow {
     position: absolute !important;
     right: 0;
@@ -58,8 +36,8 @@
   &-clear {
     position: absolute !important;
     top: 0;
-    right: 20px;
-    bottom: -2px;
+    right: .2rem;
+    bottom: -.02rem;
     margin: 0;
     opacity: 1;
     transition: opacity 0.15s ease;
@@ -73,7 +51,7 @@
   &-multiple&-open {
     .@{select-prefix-cls}-selection-label {
       margin-top: 0 !important;
-      transform: scale(.75) translateY(-20px) translateZ(0.001px);
+      transform: scale(.75) translateY(-.2rem) translateZ(.00001rem);
       color: @primary-color;
       transition: transform 300ms @ease-out, color 100ms @ease-out, background-color 300ms @ease-out;
     }
@@ -81,7 +59,7 @@
 
   &&-has-label {
     .@{select-prefix-cls}-selection {
-      padding-top: 15px;
+      padding-top: .15rem;
       &__placeholder {
         display: none;
       }
@@ -89,20 +67,10 @@
   }
 
   &&-focused {
-
-    & .@{select-prefix-cls}-ripple {
-      opacity: 1;
-      transform: scaleX(1);
-      transition:
-        transform 300ms cubic-bezier(0.25, 0.8, 0.25, 1),
-        opacity 100ms cubic-bezier(0.25, 0.8, 0.25, 1),
-        border-color 300ms cubic-bezier(0.25, 0.8, 0.25, 1);
-   }
-
     .@{select-prefix-cls}-selection {
       &-label {
         margin-top: 0 !important;
-        transform: scale(.75) translateY(-20px) translateZ(0.001px);
+        transform: scale(.75) translateY(-.2rem) translateZ(.00001rem);
         color: @primary-color;
         transition: transform 300ms @ease-out, color 100ms @ease-out, background-color 300ms @ease-out;
       }
@@ -116,7 +84,7 @@
     .@{select-prefix-cls}-selection {
       &-label {
         margin-top: 0 !important;
-        transform: scale(.75) translateY(-20px) translateZ(0.001px);
+        transform: scale(.75) translateY(-.2rem) translateZ(.00001rem);
       }
       &__placeholder {
         display: none;
@@ -131,7 +99,7 @@
     background-color: @input-bg;
     // strange align fix for chrome but works
     // https://gw.alipayobjects.com/zos/rmsportal/VFTfKXJuogBAXcvfAUWJ.gif
-    border-top-width: @border-width-base + 0.02px;
+    border-top-width: @border-width-base + .0002rem;
     transition: all .3s @ease-in-out;
     color: #000;
     letter-spacing: .01em;
@@ -140,7 +108,7 @@
     display: block;
     max-width: 100%;
     width: 100%;
-    min-width: 50px;
+    min-width: .5rem;
     position: relative;
 
     &--single {
@@ -152,8 +120,8 @@
       display: inline-block;
       width: 100%;
       position: relative;
-      padding-right: 20px;
-      margin-bottom: 3px;
+      padding-right: .2rem;
+      margin-bottom: .03rem;
     }
 
     &-selected-value {
@@ -174,8 +142,8 @@
       color: @label-color;
       position: absolute;
       left: 0;
-      top: 15px;
-      margin-top: 2px;
+      top: .15rem;
+      margin-top: .02rem;
       z-index: 1;
       transform-origin: 0 0;
       width: 100%;
@@ -183,7 +151,7 @@
       transition: transform 400ms @ease-out, color 400ms @ease-out, background-color 400ms @ease-out;
       .is-required &:after {
         display: inline-block;
-        margin-left: 4px;
+        margin-left: .04rem;
         content: "*";
         font-family: SimSun;
         line-height: 1;
@@ -228,10 +196,6 @@
       pointer-events: none;
     }
 
-    .@{select-prefix-cls}-underline {
-      border-bottom: 1px dotted rgba(0, 0, 0, 0.42);
-    }
-
     &.@{select-prefix-cls}-tags,
     &.@{select-prefix-cls}-multiple {
       .@{select-prefix-cls}-selection--multiple &-selection__choice {
@@ -241,14 +205,10 @@
     }
   }
 
-  .has-error &-underline {
-    border-bottom-color: #d50000;
-  }
-
   &-lg {
     font-size: @font-size-lg;
-    i.icon {
-      font-size: 24px;
+    i.@{iconfont-css-prefix} {
+      font-size: .24rem;
     }
     &.@{select-prefix-cls}-tags,
     &.@{select-prefix-cls}-multiple {
@@ -256,17 +216,17 @@
         min-height: @input-height-lg;
         > ul > li,
         .@{select-prefix-cls}-selection__rendered > ul > li,
-        .@{select-prefix-cls}-selection__choice__remove > i.icon {
-          height: @input-height-lg - 8px;
-          line-height: @input-height-lg - 8px;
+        .@{select-prefix-cls}-selection__choice__remove > i.@{iconfont-css-prefix} {
+          height: @input-height-lg - .08rem;
+          line-height: @input-height-lg - .08rem;
         }
       }
     }
   }
 
   &-sm {
-    i.icon {
-      font-size: 16px;
+    i.@{iconfont-css-prefix} {
+      font-size: .16rem;
     }
     &.@{select-prefix-cls}-tags,
     &.@{select-prefix-cls}-multiple {
@@ -274,9 +234,9 @@
         min-height: @input-height-sm;
         > ul > li,
         .@{select-prefix-cls}-selection__rendered > ul > li,
-        .@{select-prefix-cls}-selection__choice__remove > i.icon {
-          height: @input-height-sm - 8px;
-          line-height: @input-height-sm - 8px;
+        .@{select-prefix-cls}-selection__choice__remove > i.@{iconfont-css-prefix} {
+          height: @input-height-sm - .08rem;
+          line-height: @input-height-sm - .08rem;
         }
       }
     }
@@ -290,7 +250,7 @@
   &-selection__placeholder,
   &-search__field__placeholder { // for TreeSelect compatibility
     position: absolute;
-    margin-top: 2px;
+    margin-top: .02rem;
     left: 0;
     z-index: 1;
     width: 100%;
@@ -305,7 +265,7 @@
   &-search__field__mirror {
     position: absolute;
     top: 0;
-    left: -9999px;
+    left: -99.99rem;
     white-space: pre;
     pointer-events: none;
   }
@@ -342,7 +302,7 @@
   &-multiple {
     .@{select-prefix-cls}-selection--multiple {
       cursor: text;
-      min-height: 28px;
+      min-height: .28rem;
       .clearfix;
 
       .@{select-prefix-cls}-search--inline {
@@ -359,12 +319,12 @@
       }
 
       .@{select-prefix-cls}-selection-label {
-        margin-top: 5px;
+        margin-top: .05rem;
       }
 
       .@{select-prefix-cls}-selection__rendered {
-        margin-top: 4px;
-        margin-bottom: -3px;
+        margin-top: .04rem;
+        margin-bottom: -.03rem;
         height: auto;
         padding: 0;
       }
@@ -376,8 +336,8 @@
 
       > ul > li,
       .@{select-prefix-cls}-selection__rendered > ul > li { // for tree-select
-        height: @input-height-base - 8px;
-        line-height: @input-height-base - 8px;
+        height: @input-height-base - .08rem;
+        line-height: @input-height-base - .08rem;
         box-sizing: content-box;
       }
 
@@ -389,9 +349,9 @@
         position: relative;
         overflow: hidden;
         transition: padding .3s @ease-in-out;
-        margin: 0 8px 3px 0;
+        margin: 0 .08rem .03rem 0;
         &__disabled {
-          padding: 0 10px;
+          padding: 0 .1rem;
         }
         &__content {
           white-space: nowrap;
@@ -407,11 +367,11 @@
         &__remove {
           color: @tag-default-color;
           cursor: pointer;
-          margin-left: 8px;
-          > i.icon {
+          margin-left: .08rem;
+          > i.@{iconfont-css-prefix} {
             float: right;
-            height: @input-height-base - 8px;
-            line-height: @input-height-base - 8px;
+            height: @input-height-base - .08rem;
+            line-height: @input-height-base - .08rem;
           }
         }
       }
@@ -422,7 +382,7 @@
     .@{select-prefix-cls}-selection--multiple {
       .@{select-prefix-cls}-selection__choice {
         background-color: rgba(0, 0, 0, 0.08);
-        padding: 0 8px 0 8px;
+        padding: 0 .08rem 0 .08rem;
         &__remove {
           color: rgba(0, 0, 0, 0.54);
         }
@@ -433,9 +393,9 @@
     }
     &.@{select-prefix-cls}-allow-clear {
       .@{select-prefix-cls}-selection__rendered {
-        padding-right: 44px;
+        padding-right: .44rem;
         .@{select-prefix-cls}-clear {
-          right: 20px;
+          right: .2rem;
         }
       }
     }
@@ -445,13 +405,13 @@
     .@{select-prefix-cls}-selection--multiple {
       .@{select-prefix-cls}-selection__choice {
         background-color: @tag-default-bg;
-        padding: 0 8px 0 8px;
+        padding: 0 .08rem 0 .08rem;
         color: @tag-default-color;
       }
     }
     &.@{select-prefix-cls}-allow-clear {
       .@{select-prefix-cls}-selection__rendered {
-        padding-right: 24px;
+        padding-right: .24rem;
         .@{select-prefix-cls}-clear {
           right: 0;
         }
@@ -484,7 +444,7 @@
     }
     &.@{select-prefix-cls}-allow-clear {
       .@{select-prefix-cls}-selection__rendered {
-        padding-right: 24px;
+        padding-right: .24rem;
       }
     }
 
@@ -545,21 +505,21 @@
   border-radius: @border-radius-base;
   box-sizing: border-box;
   z-index: @zindex-dropdown;
-  left: -9999px;
-  top: -9999px;
+  left: -99.99rem;
+  top: -99.99rem;
   position: absolute;
   outline: none;
   font-size: @font-size-base;
-  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+  box-shadow: @shadow-4;
 
   &-filter {
-    padding: 23px 16px 8px 16px;
+    padding: .23rem .16rem .08rem .16rem;
     background-color: #fafafa;
     border-bottom: @border-width-base @border-style-base @border-color-base;
-    .@{ant-prefix}-input-suffix {
-      height: 24px;
+    .@{c7n-prefix}-input-suffix {
+      height: .24rem;
     }
-    i.icon {
+    i.@{iconfont-css-prefix} {
       color: rgba(0, 0, 0, 0.66);
     }
     &-input {
@@ -569,33 +529,33 @@
   }
   &-select-all-none {
     font-size: @font-size-sm;
-    padding: 8px 16px;
+    padding: .08rem .16rem;
     border-bottom: @border-width-base @border-style-base @border-color-base;
     span {
       cursor: pointer;
       color: @primary-color;
     }
     span + span {
-      margin-left: 20px;
+      margin-left: .2rem;
     }
   }
 
   &-footer {
-    padding: 16px;
+    padding: .16rem;
     background-color: #fafafa;
-    border-top: 1px solid rgba(0, 0, 0, 0.12);
+    border-top: @border-width-base @border-style-base @border-color-base;
   }
 
   &-menu {
     outline: none;
     margin-bottom: 0;
     list-style: none;
-    max-height: 250px;
+    max-height: 2.5rem;
     overflow: auto;
-    padding: 8px 0;
+    padding: .08rem 0;
     &-item-group {
-      padding-top: 4px;
-      padding-bottom: 4px;
+      padding-top: .04rem;
+      padding-bottom: .04rem;
       &:not(:last-child) {
         border-bottom: @border-width-base @border-style-base @border-color-base;
       }
@@ -605,7 +565,7 @@
       padding: 0;
 
       > .@{select-prefix-cls}-dropdown-menu-item {
-        padding-left: 20px;
+        padding-left: .2rem;
       }
     }
     &-item-group-no-title > .@{select-prefix-cls}-dropdown-menu-item {
@@ -615,16 +575,16 @@
     &-item-group-title {
       color: @text-color-secondary;
       padding: 0 @control-padding-horizontal;
-      height: 32px;
-      line-height: 32px;
+      height: .32rem;
+      line-height: .32rem;
       font-size: @font-size-sm;
     }
 
     &-item {
       position: relative;
       display: block;
-      padding: 4px @control-padding-horizontal;
-      line-height: 20px;
+      padding: .04rem @control-padding-horizontal;
+      line-height: .2rem;
       font-weight: normal;
       color: @text-color;
       white-space: nowrap;
@@ -667,8 +627,8 @@
       }
 
       &-divider {
-        height: 1px;
-        margin: 1px 0;
+        height: .01rem;
+        margin: .01rem 0;
         overflow: hidden;
         background-color: @border-color-split;
         line-height: 0;
@@ -680,7 +640,7 @@
     .@{select-prefix-cls}-dropdown-menu-item {
       .@{checkbox-prefix-cls}-wrapper {
         user-select: none;
-        margin-right: 8px;
+        margin-right: .08rem;
       }
 
       &:hover {

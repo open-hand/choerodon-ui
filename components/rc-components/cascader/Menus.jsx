@@ -1,9 +1,31 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import arrayTreeFilter from 'array-tree-filter';
 import { findDOMNode } from 'react-dom';
 
-class Menus extends React.Component {
+export default class Menus extends Component {
+  static defaultProps = {
+    options: [],
+    value: [],
+    activeValue: [],
+    onSelect() {
+    },
+    prefixCls: 'rc-cascader-menus',
+    visible: false,
+    expandTrigger: 'click',
+  };
+
+  static propTypes = {
+    value: PropTypes.array,
+    activeValue: PropTypes.array,
+    options: PropTypes.array.isRequired,
+    prefixCls: PropTypes.string,
+    expandTrigger: PropTypes.string,
+    onSelect: PropTypes.func,
+    visible: PropTypes.bool,
+    dropdownMenuColumnStyle: PropTypes.object,
+  };
+
   constructor(props) {
     super(props);
 
@@ -113,7 +135,7 @@ class Menus extends React.Component {
 
   saveMenuItem = (index) => (node) => {
     this.menuItems[index] = node;
-  }
+  };
 
   render() {
     const { prefixCls, dropdownMenuColumnStyle } = this.props;
@@ -122,32 +144,9 @@ class Menus extends React.Component {
         {this.getShowOptions().map((options, menuIndex) =>
           <ul className={`${prefixCls}-menu`} key={menuIndex} style={dropdownMenuColumnStyle}>
             {options.map(option => this.getOption(option, menuIndex))}
-          </ul>
+          </ul>,
         )}
       </div>
     );
   }
 }
-
-Menus.defaultProps = {
-  options: [],
-  value: [],
-  activeValue: [],
-  onSelect() {},
-  prefixCls: 'rc-cascader-menus',
-  visible: false,
-  expandTrigger: 'click',
-};
-
-Menus.propTypes = {
-  value: PropTypes.array,
-  activeValue: PropTypes.array,
-  options: PropTypes.array.isRequired,
-  prefixCls: PropTypes.string,
-  expandTrigger: PropTypes.string,
-  onSelect: PropTypes.func,
-  visible: PropTypes.bool,
-  dropdownMenuColumnStyle: PropTypes.object,
-};
-
-export default Menus;

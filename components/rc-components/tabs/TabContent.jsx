@@ -1,13 +1,8 @@
-import React from 'react';
+import React, { Children, cloneElement } from 'react';
 import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import {
-  getTransformByIndex,
-  getActiveIndex,
-  getTransformPropValue,
-  getMarginStyle,
-} from './utils';
+import { getActiveIndex, getMarginStyle, getTransformByIndex, getTransformPropValue } from './utils';
 
 const TabContent = createReactClass({
   displayName: 'TabContent',
@@ -31,13 +26,13 @@ const TabContent = createReactClass({
     const children = props.children;
     const newChildren = [];
 
-    React.Children.forEach(children, (child) => {
+    Children.forEach(children, (child) => {
       if (!child) {
         return;
       }
       const key = child.key;
       const active = activeKey === key;
-      newChildren.push(React.cloneElement(child, {
+      newChildren.push(cloneElement(child, {
         active,
         destroyInactiveTabPane: props.destroyInactiveTabPane,
         rootPrefixCls: props.prefixCls,

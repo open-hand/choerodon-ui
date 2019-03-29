@@ -1,10 +1,10 @@
-import React, { Component, cloneElement } from 'react';
+import React, { cloneElement, Component } from 'react';
 import PropTypes from 'prop-types';
+import arrayTreeFilter from 'array-tree-filter';
+import isEqual from 'lodash/isEqual';
 import Trigger from '../trigger';
 import Menus from './Menus';
-import KeyCode from '../util/KeyCode';
-import arrayTreeFilter from 'array-tree-filter';
-import shallowEqualArrays from 'shallow-equal/arrays';
+import KeyCode from '../../_util/KeyCode';
 
 const BUILT_IN_PLACEMENTS = {
   bottomLeft: {
@@ -41,7 +41,43 @@ const BUILT_IN_PLACEMENTS = {
   },
 };
 
-class Cascader extends Component {
+export default class Cascader extends Component {
+  static defaultProps = {
+    options: [],
+    onChange() {
+    },
+    onPopupVisibleChange() {
+    },
+    disabled: false,
+    transitionName: '',
+    prefixCls: 'rc-cascader',
+    popupClassName: '',
+    popupPlacement: 'bottomLeft',
+    builtinPlacements: BUILT_IN_PLACEMENTS,
+    expandTrigger: 'click',
+  };
+
+  static propTypes = {
+    value: PropTypes.array,
+    defaultValue: PropTypes.array,
+    options: PropTypes.array.isRequired,
+    onChange: PropTypes.func,
+    onPopupVisibleChange: PropTypes.func,
+    popupVisible: PropTypes.bool,
+    disabled: PropTypes.bool,
+    transitionName: PropTypes.string,
+    popupClassName: PropTypes.string,
+    popupPlacement: PropTypes.string,
+    prefixCls: PropTypes.string,
+    dropdownMenuColumnStyle: PropTypes.object,
+    builtinPlacements: PropTypes.object,
+    loadData: PropTypes.func,
+    changeOnSelect: PropTypes.bool,
+    children: PropTypes.node,
+    onKeyDown: PropTypes.func,
+    expandTrigger: PropTypes.string,
+  };
+
   constructor(props) {
     super(props);
     let initialValue = [];
@@ -57,14 +93,14 @@ class Cascader extends Component {
       value: initialValue,
     };
   }
+
   componentWillReceiveProps(nextProps) {
-    if ('value' in nextProps && !shallowEqualArrays(this.props.value, nextProps.value)) {
+    if ('value' in nextProps && !isEqual(this.props.value, nextProps.value)) {
       const newValues = {
         value: nextProps.value || [],
         activeValue: nextProps.value || [],
       };
       // allow activeValue diff from value
-      // https://github.com/ant-design/ant-design/issues/2767
       if ('loadData' in nextProps) {
         delete newValues.activeValue;
       }
@@ -76,9 +112,11 @@ class Cascader extends Component {
       });
     }
   }
+
   getPopupDOMNode() {
     return this.trigger.getPopupDomNode();
   }
+
   getCurrentLevelOptions() {
     const { options } = this.props;
     const { activeValue = [] } = this.state;
@@ -88,9 +126,11 @@ class Cascader extends Component {
     }
     return [...options].filter(o => !o.disabled);
   }
+
   getActiveOptions(activeValue) {
     return arrayTreeFilter(this.props.options, (o, level) => o.value === activeValue[level]);
   }
+
   setPopupVisible = (popupVisible) => {
     if (!('popupVisible' in this.props)) {
       this.setState({ popupVisible });
@@ -102,16 +142,16 @@ class Cascader extends Component {
       });
     }
     this.props.onPopupVisibleChange(popupVisible);
-  }
+  };
   handleChange = (options, setProps, e) => {
     if (e.type !== 'keydown' || e.keyCode === KeyCode.ENTER) {
       this.props.onChange(options.map(o => o.value), options);
       this.setPopupVisible(setProps.visible);
     }
-  }
+  };
   handlePopupVisibleChange = (popupVisible) => {
     this.setPopupVisible(popupVisible);
-  }
+  };
   handleMenuSelect = (targetOption, menuIndex, e) => {
     // Keep focused state for keyboard support
     const triggerNode = this.trigger.getRootDomNode();
@@ -152,14 +192,13 @@ class Cascader extends Component {
     newState.activeValue = activeValue;
     //  not change the value by keyboard
     if ('value' in this.props ||
-        (e.type === 'keydown' && e.keyCode !== KeyCode.ENTER)) {
+      (e.type === 'keydown' && e.keyCode !== KeyCode.ENTER)) {
       delete newState.value;
     }
     this.setState(newState);
-  }
+  };
   handleKeyDown = (e) => {
     const { children } = this.props;
-    // https://github.com/ant-design/ant-design/issues/6717
     // Don't bind keyboard support when children specify the onKeyDown
     if (children && children.props.onKeyDown) {
       children.props.onKeyDown(e);
@@ -170,20 +209,20 @@ class Cascader extends Component {
     const currentOptions = this.getCurrentLevelOptions();
     const currentIndex = currentOptions.map(o => o.value).indexOf(activeValue[currentLevel]);
     if (e.keyCode !== KeyCode.DOWN &&
-        e.keyCode !== KeyCode.UP &&
-        e.keyCode !== KeyCode.LEFT &&
-        e.keyCode !== KeyCode.RIGHT &&
-        e.keyCode !== KeyCode.ENTER &&
-        e.keyCode !== KeyCode.BACKSPACE &&
-        e.keyCode !== KeyCode.ESC) {
+      e.keyCode !== KeyCode.UP &&
+      e.keyCode !== KeyCode.LEFT &&
+      e.keyCode !== KeyCode.RIGHT &&
+      e.keyCode !== KeyCode.ENTER &&
+      e.keyCode !== KeyCode.BACKSPACE &&
+      e.keyCode !== KeyCode.ESC) {
       return;
     }
     // Press any keys above to reopen menu
     if (!this.state.popupVisible &&
-        e.keyCode !== KeyCode.BACKSPACE &&
-        e.keyCode !== KeyCode.LEFT &&
-        e.keyCode !== KeyCode.RIGHT &&
-        e.keyCode !== KeyCode.ESC) {
+      e.keyCode !== KeyCode.BACKSPACE &&
+      e.keyCode !== KeyCode.LEFT &&
+      e.keyCode !== KeyCode.RIGHT &&
+      e.keyCode !== KeyCode.ESC) {
       this.setPopupVisible(true);
       return;
     }
@@ -221,11 +260,11 @@ class Cascader extends Component {
     if (this.props.onKeyDown) {
       this.props.onKeyDown(e);
     }
-  }
+  };
 
   saveTrigger = (node) => {
     this.trigger = node;
-  }
+  };
 
   render() {
     const {
@@ -272,39 +311,3 @@ class Cascader extends Component {
     );
   }
 }
-
-Cascader.defaultProps = {
-  options: [],
-  onChange() {},
-  onPopupVisibleChange() {},
-  disabled: false,
-  transitionName: '',
-  prefixCls: 'rc-cascader',
-  popupClassName: '',
-  popupPlacement: 'bottomLeft',
-  builtinPlacements: BUILT_IN_PLACEMENTS,
-  expandTrigger: 'click',
-};
-
-Cascader.propTypes = {
-  value: PropTypes.array,
-  defaultValue: PropTypes.array,
-  options: PropTypes.array.isRequired,
-  onChange: PropTypes.func,
-  onPopupVisibleChange: PropTypes.func,
-  popupVisible: PropTypes.bool,
-  disabled: PropTypes.bool,
-  transitionName: PropTypes.string,
-  popupClassName: PropTypes.string,
-  popupPlacement: PropTypes.string,
-  prefixCls: PropTypes.string,
-  dropdownMenuColumnStyle: PropTypes.object,
-  builtinPlacements: PropTypes.object,
-  loadData: PropTypes.func,
-  changeOnSelect: PropTypes.bool,
-  children: PropTypes.node,
-  onKeyDown: PropTypes.func,
-  expandTrigger: PropTypes.string,
-};
-
-export default Cascader;

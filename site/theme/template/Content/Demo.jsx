@@ -9,7 +9,6 @@ import LZString from 'lz-string';
 import { Icon, Tooltip } from 'choerodon-ui';
 import EditButton from './EditButton';
 import BrowserFrame from '../BrowserFrame';
-import { ping } from '../utils';
 
 function compress(string) {
   return LZString.compressToBase64(string)
@@ -21,7 +20,7 @@ function compress(string) {
 export default class Demo extends React.Component {
   static contextTypes = {
     intl: PropTypes.object,
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -31,7 +30,7 @@ export default class Demo extends React.Component {
       sourceCode: '',
       copied: false,
       copyTooltipVisible: false,
-      showRiddleButton: false,
+      refreshKey: Date.now(),
     };
   }
 
@@ -44,8 +43,9 @@ export default class Demo extends React.Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     const { expand } = this.props;
-    const { codeExpand, copied, copyTooltipVisible } = this.state;
-    return (codeExpand || expand) !== (nextState.codeExpand || nextProps.expand)
+    const { codeExpand, copied, copyTooltipVisible, refreshKey } = this.state;
+    return refreshKey !== nextState.refreshKey
+      || (codeExpand || expand) !== (nextState.codeExpand || nextProps.expand)
       || copied !== nextState.copied
       || copyTooltipVisible !== nextState.copyTooltipVisible;
   }
@@ -56,14 +56,6 @@ export default class Demo extends React.Component {
       this.anchor.click();
     }
     this.componentWillReceiveProps(this.props);
-
-    this.pingTimer = ping((status) => {
-      if (status !== 'timeout' && status !== 'error') {
-        this.setState({
-          showRiddleButton: true,
-        });
-      }
-    });
   }
 
   handleCodeExpand = () => {
@@ -77,6 +69,12 @@ export default class Demo extends React.Component {
 
   handleCodeCopied = () => {
     this.setState({ copied: true });
+  };
+
+  refresh = () => {
+    this.setState({
+      refreshKey: Date.now(),
+    });
   };
 
   onCopyTooltipVisibleChange = (visible) => {
@@ -107,7 +105,11 @@ export default class Demo extends React.Component {
     } = props;
     if (!this.liveDemo) {
       this.liveDemo = meta.iframe
-        ? <BrowserFrame><iframe src={src} height={meta.iframe} title="demo" /></BrowserFrame>
+        ? (
+          <BrowserFrame>
+            <iframe src={src} height={meta.iframe} title="demo" />
+          </BrowserFrame>
+        )
         : preview(React, ReactDOM);
     }
     const codeExpand = state.codeExpand || expand;
@@ -127,31 +129,28 @@ export default class Demo extends React.Component {
       'highlight-wrapper-expand': codeExpand,
     });
 
-    const prefillStyle = `@import 'antd/dist/antd.css';\n\n${style || ''}`.replace(new RegExp(`#${meta.id}\\s*`, 'g'), '');
+    const prefillStyle = `@import 'choerodon-ui/dist/choerodon-ui.css';\n\n${style || ''}`.replace(new RegExp(`#${meta.id}\\s*`, 'g'), '');
     const html = `<div id="container" style="padding: 24px"></div>
 <script>
   var mountNode = document.getElementById('container');
 </script>`;
 
     const codepenPrefillConfig = {
-      title: `${localizedTitle} - Ant Design Demo`,
+      title: `${localizedTitle} - Choerodon UI Demo`,
       html,
-      js: state.sourceCode.replace(/import\s+\{\s+(.*)\s+\}\s+from\s+'antd';/, 'const { $1 } = antd;'),
+      js: state.sourceCode.replace(/import\s+\{\s+(.*)\s+\}\s+from\s+'choerodon-ui';/, 'const { $1 } = window["choerodon-ui"];'),
       css: prefillStyle,
       editors: '001',
-      css_external: 'https://unpkg.com/antd/dist/antd.css',
+      css_external: 'https://unpkg.com/choerodon-ui/dist/choerodon-ui.css',
       js_external: [
-        'react@15.x/dist/react.js',
-        'react-dom@15.x/dist/react-dom.js',
-        'moment/min/moment-with-locales.js',
-        'antd/dist/antd-with-locales.js',
+        'react@16.6.x/umd/react.production.min.js',
+        'react-dom@16.6.x/umd/react-dom.production.min.js',
+        'moment/min/moment-with-locales.min.js',
+        'mobx@4.7.0/lib/mobx.umd.min.js',
+        'mobx-react@5.1.x/index.min.js',
+        'choerodon-ui/dist/choerodon-ui-with-locales.js',
       ].map(url => `https://unpkg.com/${url}`).join(';'),
       js_pre_processor: 'typescript',
-    };
-    const riddlePrefillConfig = {
-      title: `${localizedTitle} - Ant Design Demo`,
-      js: state.sourceCode,
-      css: prefillStyle,
     };
     const dependencies = state.sourceCode.split('\n').reduce((acc, line) => {
       const matches = line.match(/import .+? from '(.+)';$/);
@@ -159,7 +158,7 @@ export default class Demo extends React.Component {
         acc[matches[1]] = 'latest';
       }
       return acc;
-    }, { react: 'latest', 'react-dom': 'latest' });
+    }, { react: 'latest', 'react-dom': 'latest', moment: 'latest', mobx: '4.7.0', 'mobx-react': '5.1.2' });
     const codesanboxPrefillConfig = {
       files: {
         'package.json': {
@@ -174,7 +173,7 @@ export default class Demo extends React.Component {
           content: `
 import React from 'react';
 import ReactDOM from 'react-dom';
-import 'antd/dist/antd.css';
+import 'choerodon-ui/dist/choerodon-ui.css';
 import './index.css';
 ${state.sourceCode.replace('mountNode', 'document.getElementById(\'container\')')}
           `,
@@ -187,7 +186,7 @@ ${state.sourceCode.replace('mountNode', 'document.getElementById(\'container\')'
     return (
       <section className={codeBoxClass} id={meta.id}>
         <section className="code-box-demo">
-          {this.liveDemo}
+          {React.cloneElement(this.liveDemo, { key: state.refreshKey })}
           {
             style
               ? <style dangerouslySetInnerHTML={{ __html: style }} />
@@ -202,6 +201,9 @@ ${state.sourceCode.replace('mountNode', 'document.getElementById(\'container\')'
             <EditButton title={<FormattedMessage id="app.content.edit-page" />} filename={meta.filename} />
           </div>
           {introChildren}
+          <Tooltip title="Refresh Demo">
+            <Icon type="refresh" onClick={this.refresh} className="code-refresh-icon" />
+          </Tooltip>
           <Tooltip title={codeExpand ? 'Hide Code' : 'Show Code'}>
             <span className="code-expand-icon">
               <img
@@ -225,14 +227,6 @@ ${state.sourceCode.replace('mountNode', 'document.getElementById(\'container\')'
         >
           <div className="highlight">
             <div className="code-box-actions">
-              {state.showRiddleButton ? (
-                <form action="//riddle.alibaba-inc.com/riddles/define" method="POST" target="_blank">
-                  <input type="hidden" name="data" value={JSON.stringify(riddlePrefillConfig)} />
-                  <Tooltip title={<FormattedMessage id="app.demo.riddle" />}>
-                    <input type="submit" value="Create New Riddle with Prefilled Data" className="code-box-riddle" />
-                  </Tooltip>
-                </form>
-              ) : null}
               <form action="https://codepen.io/pen/define" method="POST" target="_blank">
                 <input type="hidden" name="data" value={JSON.stringify(codepenPrefillConfig)} />
                 <Tooltip title={<FormattedMessage id="app.demo.codepen" />}>

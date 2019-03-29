@@ -75,7 +75,7 @@ ReactDOM.render(
           <Divider type="vertical" />
           <a href="#">Delete</a>
           <Divider type="vertical" />
-          <a href="#" className="ant-dropdown-link">
+          <a href="#" className="c7n-dropdown-link">
             More actions <Icon type="down" />
           </a>
         </span>

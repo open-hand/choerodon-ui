@@ -60,7 +60,7 @@ Fields in `showSearch`:
 | focus() | get focus |
 
 <style>
-.ant-cascader-picker {
+.c7n-cascader-picker {
   width: 300px;
 }
 </style>

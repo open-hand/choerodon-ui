@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import getUid from './uid';
-import warning from 'warning';
+import warning from '../../_util/warning';
 
 const IFRAME_STYLE = {
   position: 'absolute',

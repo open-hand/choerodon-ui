@@ -1,16 +1,16 @@
-import * as React from 'react';
-import Tooltip from '../tooltip';
-import { AbstractTooltipProps } from '../tooltip';
+import React, { Component, ReactNode } from 'react';
+import Tooltip, { AbstractTooltipProps } from '../tooltip';
 import warning from '../_util/warning';
+import { getPrefixCls } from '../configure';
 
 export interface PopoverProps extends AbstractTooltipProps {
-   title?: React.ReactNode;
-   content?: React.ReactNode;
+  title?: ReactNode;
+  content?: ReactNode;
 }
 
-export default class Popover extends React.Component<PopoverProps, {}> {
+export default class Popover extends Component<PopoverProps, {}> {
+  static displayName = 'Popover';
   static defaultProps = {
-    prefixCls: 'ant-popover',
     placement: 'top',
     transitionName: 'zoom-big',
     trigger: 'hover',
@@ -26,11 +26,11 @@ export default class Popover extends React.Component<PopoverProps, {}> {
   }
 
   getOverlay() {
-    const { title, prefixCls, content } = this.props;
+    const { title, content } = this.props;
+    const prefixCls = this.getPrefixCls();
     warning(
       !('overlay' in this.props),
-      'Popover[overlay] is removed, please use Popover[content] instead, ' +
-      'see: https://u.ant.design/popover-content',
+      'Popover[overlay] is removed, please use Popover[content] instead',
     );
     return (
       <div>
@@ -44,6 +44,10 @@ export default class Popover extends React.Component<PopoverProps, {}> {
 
   saveTooltip = (node: any) => {
     this.tooltip = node;
+  };
+
+  getPrefixCls() {
+    return getPrefixCls('popover', this.props.prefixCls);
   }
 
   render() {
@@ -52,6 +56,7 @@ export default class Popover extends React.Component<PopoverProps, {}> {
     return (
       <Tooltip
         {...props}
+        prefixCls={this.getPrefixCls()}
         ref={this.saveTooltip}
         overlay={this.getOverlay()}
       />

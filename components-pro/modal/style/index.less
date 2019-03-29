@@ -1,0 +1,168 @@
+@import "../../../components/style/themes/default";
+@import "../../../components/style/mixins/index";
+
+@modal-prefix-cls: ~"@{c7n-prefix}-pro-modal";
+
+.@{modal-prefix-cls} {
+  position: fixed;
+  width: 5.2rem;
+  top: 1rem;
+  margin: 0 auto;
+  // min-height: 2.4rem;
+
+  &-center {
+    left: 0;
+    right: 0;
+  }
+
+  &-fullscreen {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: auto;
+    .@{modal-prefix-cls}-footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+  }
+
+  &-content {
+    position: relative;
+    background-color: @component-background;
+    border: 0;
+    border-radius: @border-radius-base;
+    background-clip: padding-box;
+    box-shadow: @modal-content-shadow;
+    height: 100%;
+    min-height: inherit;
+  }
+
+  &-title {
+    margin: 0;
+    font-size: @font-size-base + .05rem;
+    line-height: .24rem;
+    font-weight: 500;
+    color: @heading-color;
+  }
+
+  &-header {
+    position: relative;
+    padding: .18rem .24rem;
+    border-radius: @border-radius-base @border-radius-base 0 0;
+    background: @component-background;
+    color: @text-color;
+    border-bottom: @border-width-base @border-style-base @border-color-split;
+  }
+
+  &-body {
+    padding: .24rem;
+    font-size: @font-size-base;
+    line-height: @line-height-base;
+    max-height: ~"calc(100vh - 1.2rem)";
+    overflow: auto;
+  }
+
+  &-footer {
+    border-top: @border-width-base @border-style-base @border-color-split;
+    padding: .15rem .16rem .15rem .24rem;
+    text-align: right;
+    border-radius: 0 0 @border-radius-base @border-radius-base;
+    button + button {
+      margin-left: .08rem;
+      margin-bottom: 0;
+    }
+    &-drawer {
+      text-align: left;
+    }
+    &-without-border {
+      border-top: none;
+      padding-top: 0;
+    }
+  }
+
+  &-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: @zindex-modal-container;
+  }
+
+  &-active {
+    z-index: 2;
+  }
+
+  &-drawer {
+    height: 100vh;
+    top: 0;
+    left: unset;
+    right: 0;
+    transition: margin-right @animation-duration-slow @ease-in-out;
+  }
+
+  &-header-buttons {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+  }
+  &-header-button {
+    cursor: pointer;
+    border: 0;
+    background: transparent;
+    font-weight: 700;
+    line-height: 1;
+    text-decoration: none;
+    transition: color .3s;
+    color: @text-color-secondary;
+    outline: 0;
+    padding: 0;
+    width: .55rem;
+    height: 100%;
+    font-size: @font-size-lg;
+
+    &:focus,
+    &:hover {
+      color: #444;
+    }
+  }
+  &-movable {
+    cursor: move;
+    user-select: none;
+  }
+}
+
+.@{c7n-prefix}-pro-confirm {
+  &-icon {
+    // font-size: .44rem;
+    padding-right: .16rem;
+  }
+  &-info {
+    color: @info-color;
+  }
+  &-confirm,
+  &-warning {
+    color: @warning-color;
+  }
+  &-success {
+    color: @success-color;
+  }
+  &-error {
+    color: @error-color;
+  }
+  .@{iconfont-css-prefix} {
+    font-size: .32rem;
+  }
+}
+
+.@{c7n-prefix}-pro-mask {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: @modal-mask-bg;
+  z-index: 1;
+}

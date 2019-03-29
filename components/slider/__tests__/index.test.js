@@ -7,9 +7,9 @@ describe('Slider', () => {
     const wrapper = mount(
       <Slider defaultValue={30} />
     );
-    wrapper.find('.ant-slider-handle').at(0).simulate('mouseEnter');
+    wrapper.find('.c7n-slider-handle').at(0).simulate('mouseEnter');
     expect(render(wrapper.find('Trigger').instance().getComponent())).toMatchSnapshot();
-    wrapper.find('.ant-slider-handle').at(0).simulate('mouseLeave');
+    wrapper.find('.c7n-slider-handle').at(0).simulate('mouseLeave');
     expect(render(wrapper.find('Trigger').instance().getComponent())).toMatchSnapshot();
   });
 });

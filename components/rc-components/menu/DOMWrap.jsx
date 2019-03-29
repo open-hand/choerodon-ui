@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { cloneElement, Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import ResizeObserver from 'resize-observer-polyfill';
 import SubMenu from './SubMenu';
-import { getWidth, setStyle, menuAllProps } from './util';
+import { getWidth, menuAllProps, setStyle } from './util';
 
 const canUseDOM = !!(
   typeof window !== 'undefined' &&
@@ -18,7 +18,26 @@ if (canUseDOM) {
   require('mutationobserver-shim');
 }
 
-class DOMWrap extends React.Component {
+export default class DOMWrap extends Component {
+  static propTypes = {
+    className: PropTypes.string,
+    children: PropTypes.node,
+    mode: PropTypes.oneOf(['horizontal', 'vertical', 'vertical-left', 'vertical-right', 'inline']),
+    prefixCls: PropTypes.string,
+    level: PropTypes.number,
+    theme: PropTypes.string,
+    overflowedIndicator: PropTypes.node,
+    hidden: PropTypes.bool,
+    hiddenClassName: PropTypes.string,
+    tag: PropTypes.string,
+    style: PropTypes.object,
+  };
+
+  static defaultProps = {
+    tag: 'div',
+    className: '',
+  };
+
   state = {
     lastVisibleIndex: undefined,
   };
@@ -48,7 +67,7 @@ class DOMWrap extends React.Component {
         });
         this.mutationObserver.observe(
           menuUl,
-          { attributes: false, childList: true, subTree: false }
+          { attributes: false, childList: true, subTree: false },
         );
       }
     }
@@ -76,7 +95,7 @@ class DOMWrap extends React.Component {
       .filter(node => {
         return node.className.split(' ').indexOf(`${prefixCls}-overflowed-submenu`) < 0;
       });
-  }
+  };
 
   getOverflowedSubMenuItem = (keyPrefix, overflowedItems, renderPlaceholder) => {
     const { overflowedIndicator, level, mode, prefixCls, theme, style: propStyle } = this.props;
@@ -128,7 +147,7 @@ class DOMWrap extends React.Component {
         {overflowedItems}
       </SubMenu>
     );
-  }
+  };
 
   // memorize rendered menuSize
   setChildrenWidthAndResize = () => {
@@ -174,7 +193,7 @@ class DOMWrap extends React.Component {
     this.handleResize();
     // prevent the overflowed indicator from taking space;
     setStyle(lastOverflowedIndicatorPlaceholder, 'display', 'none');
-  }
+  };
 
   resizeObserver = null;
   mutationObserver = null;
@@ -217,7 +236,7 @@ class DOMWrap extends React.Component {
     }
 
     this.setState({ lastVisibleIndex });
-  }
+  };
 
   renderChildren(children) {
     // need to take care of overflowed items in horizontal mode
@@ -231,7 +250,7 @@ class DOMWrap extends React.Component {
           this.props.className.indexOf(`${this.props.prefixCls}-root`) !== -1
         ) {
           if (index > lastVisibleIndex) {
-            item = React.cloneElement(
+            item = cloneElement(
               childNode,
               // 这里修改 eventKey 是为了防止隐藏状态下还会触发 openkeys 事件
               {
@@ -243,7 +262,7 @@ class DOMWrap extends React.Component {
           }
           if (index === lastVisibleIndex + 1) {
             this.overflowedItems = children.slice(lastVisibleIndex + 1).map(c => {
-              return React.cloneElement(
+              return cloneElement(
                 c,
                 // children[index].key will become '.$key' in clone by default,
                 // we have to overwrite with the correct key explicitly
@@ -273,7 +292,7 @@ class DOMWrap extends React.Component {
   render() {
     const {
       hiddenClassName,
-      visible,
+      hidden,
       prefixCls,
       overflowedIndicator,
       mode,
@@ -284,7 +303,7 @@ class DOMWrap extends React.Component {
       ...rest,
     } = this.props;
 
-    if (!visible) {
+    if (hidden) {
       rest.className += ` ${hiddenClassName}`;
     }
 
@@ -295,24 +314,3 @@ class DOMWrap extends React.Component {
     );
   }
 }
-
-DOMWrap.propTypes = {
-  className: PropTypes.string,
-  children: PropTypes.node,
-  mode: PropTypes.oneOf(['horizontal', 'vertical', 'vertical-left', 'vertical-right', 'inline']),
-  prefixCls: PropTypes.string,
-  level: PropTypes.number,
-  theme: PropTypes.string,
-  overflowedIndicator: PropTypes.node,
-  visible: PropTypes.bool,
-  hiddenClassName: PropTypes.string,
-  tag: PropTypes.string,
-  style: PropTypes.object,
-};
-
-DOMWrap.defaultProps = {
-  tag: 'div',
-  className: '',
-};
-
-export default DOMWrap;

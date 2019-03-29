@@ -1,7 +1,7 @@
 @import "../../style/themes/default";
 @import "../../style/mixins/index";
 
-@input-number-prefix-cls: ~"@{ant-prefix}-input-number";
+@input-number-prefix-cls: ~"@{c7n-prefix}-input-number";
 
 .@{input-number-prefix-cls} {
   margin: 0;
@@ -12,7 +12,7 @@
   &-handler {
     text-align: center;
     line-height: 0;
-    height: 10px;
+    height: .1rem;
     overflow: hidden;
     position: relative;
     transition: all 0.1s linear;
@@ -35,13 +35,13 @@
 
   &-handler-up-inner {
     position: absolute;
-    bottom: -5px;
-    right: 2px;
+    bottom: -.05rem;
+    right: .02rem;
   }
   &-handler-down-inner {
     position: absolute;
-    top: -5px;
-    right: 2px;
+    top: -.05rem;
+    right: .02rem;
   }
 
   &-disabled {
@@ -51,7 +51,7 @@
   }
 
   &-handler-wrap {
-    width: 22px;
+    width: .22rem;
     height: 100%;
     background: @component-background;
     color: #000;
@@ -61,7 +61,7 @@
     opacity: 0;
     border-radius: 0 @border-radius-base @border-radius-base 0;
     transition: opacity 0.24s linear 0.1s;
-    z-index: 2; // https://github.com/ant-design/ant-design/issues/6289
+    z-index: 2;
   }
 
   &:hover &-handler-wrap {

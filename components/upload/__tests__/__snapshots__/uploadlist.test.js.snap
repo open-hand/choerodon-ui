@@ -5,10 +5,10 @@ exports[`Upload List handle error 1`] = `
   class=""
 >
   <div
-    class="ant-upload ant-upload-select ant-upload-select-text"
+    class="c7n-upload c7n-upload-select c7n-upload-select-text"
   >
     <span
-      class="ant-upload"
+      class="c7n-upload"
       role="button"
       tabindex="0"
     >
@@ -25,20 +25,20 @@ exports[`Upload List handle error 1`] = `
     </span>
   </div>
   <div
-    class="ant-upload-list ant-upload-list-text"
+    class="c7n-upload-list c7n-upload-list-text"
   >
     <div
-      class="ant-upload-list-item ant-upload-list-item-error"
+      class="c7n-upload-list-item c7n-upload-list-item-error"
     >
       <div
-        class="ant-upload-list-item-info"
+        class="c7n-upload-list-item-info"
       >
         <span>
           <i
             class="icon icon-attach_file"
           />
           <span
-            class="ant-upload-list-item-name"
+            class="c7n-upload-list-item-name"
             title="foo.png"
           >
             foo.png
@@ -50,20 +50,20 @@ exports[`Upload List handle error 1`] = `
         title="Remove file"
       />
       <div
-        class="ant-upload-list-item-progress fade-leave"
+        class="c7n-upload-list-item-progress fade-leave"
       >
         <div
-          class="ant-progress ant-progress-line ant-progress-status-normal ant-progress-default"
+          class="c7n-progress c7n-progress-line c7n-progress-status-normal c7n-progress-default"
         >
           <div>
             <div
-              class="ant-progress-outer"
+              class="c7n-progress-outer"
             >
               <div
-                class="ant-progress-inner"
+                class="c7n-progress-inner"
               >
                 <div
-                  class="ant-progress-bg"
+                  class="c7n-progress-bg"
                   style="width: 0%; height: 2px;"
                 />
               </div>
@@ -81,10 +81,10 @@ exports[`Upload List should be uploading when upload a file 1`] = `
   class=""
 >
   <div
-    class="ant-upload ant-upload-select ant-upload-select-text"
+    class="c7n-upload c7n-upload-select c7n-upload-select-text"
   >
     <span
-      class="ant-upload"
+      class="c7n-upload"
       role="button"
       tabindex="0"
     >
@@ -101,20 +101,20 @@ exports[`Upload List should be uploading when upload a file 1`] = `
     </span>
   </div>
   <div
-    class="ant-upload-list ant-upload-list-text"
+    class="c7n-upload-list c7n-upload-list-text"
   >
     <div
-      class="ant-upload-list-item ant-upload-list-item-uploading ant-upload-animate-enter"
+      class="c7n-upload-list-item c7n-upload-list-item-uploading c7n-upload-animate-enter"
     >
       <div
-        class="ant-upload-list-item-info"
+        class="c7n-upload-list-item-info"
       >
         <span>
           <i
             class="icon icon-loading"
           />
           <span
-            class="ant-upload-list-item-name"
+            class="c7n-upload-list-item-name"
             title="foo.png"
           >
             foo.png
@@ -126,20 +126,20 @@ exports[`Upload List should be uploading when upload a file 1`] = `
         title="Remove file"
       />
       <div
-        class="ant-upload-list-item-progress"
+        class="c7n-upload-list-item-progress"
       >
         <div
-          class="ant-progress ant-progress-line ant-progress-status-normal ant-progress-default"
+          class="c7n-progress c7n-progress-line c7n-progress-status-normal c7n-progress-default"
         >
           <div>
             <div
-              class="ant-progress-outer"
+              class="c7n-progress-outer"
             >
               <div
-                class="ant-progress-inner"
+                class="c7n-progress-inner"
               >
                 <div
-                  class="ant-progress-bg"
+                  class="c7n-progress-bg"
                   style="width: 0%; height: 2px;"
                 />
               </div>
@@ -157,10 +157,10 @@ exports[`Upload List should be uploading when upload a file 2`] = `
   class=""
 >
   <div
-    class="ant-upload ant-upload-select ant-upload-select-text"
+    class="c7n-upload c7n-upload-select c7n-upload-select-text"
   >
     <span
-      class="ant-upload"
+      class="c7n-upload"
       role="button"
       tabindex="0"
     >
@@ -177,20 +177,20 @@ exports[`Upload List should be uploading when upload a file 2`] = `
     </span>
   </div>
   <div
-    class="ant-upload-list ant-upload-list-text"
+    class="c7n-upload-list c7n-upload-list-text"
   >
     <div
-      class="ant-upload-list-item ant-upload-list-item-done"
+      class="c7n-upload-list-item c7n-upload-list-item-done"
     >
       <div
-        class="ant-upload-list-item-info"
+        class="c7n-upload-list-item-info"
       >
         <span>
           <i
             class="icon icon-attach_file"
           />
           <span
-            class="ant-upload-list-item-name"
+            class="c7n-upload-list-item-name"
             title="foo.png"
           >
             foo.png
@@ -202,20 +202,20 @@ exports[`Upload List should be uploading when upload a file 2`] = `
         title="Remove file"
       />
       <div
-        class="ant-upload-list-item-progress fade-leave"
+        class="c7n-upload-list-item-progress fade-leave"
       >
         <div
-          class="ant-progress ant-progress-line ant-progress-status-normal ant-progress-default"
+          class="c7n-progress c7n-progress-line c7n-progress-status-normal c7n-progress-default"
         >
           <div>
             <div
-              class="ant-progress-outer"
+              class="c7n-progress-outer"
             >
               <div
-                class="ant-progress-inner"
+                class="c7n-progress-inner"
               >
                 <div
-                  class="ant-progress-bg"
+                  class="c7n-progress-bg"
                   style="width: 0%; height: 2px;"
                 />
               </div>
@@ -233,10 +233,10 @@ exports[`Upload List should non-image format file preview 1`] = `
   class=""
 >
   <div
-    class="ant-upload ant-upload-select ant-upload-select-picture"
+    class="c7n-upload c7n-upload-select c7n-upload-select-picture"
   >
     <span
-      class="ant-upload"
+      class="c7n-upload"
       role="button"
       tabindex="0"
     >
@@ -253,17 +253,17 @@ exports[`Upload List should non-image format file preview 1`] = `
     </span>
   </div>
   <div
-    class="ant-upload-list ant-upload-list-picture"
+    class="c7n-upload-list c7n-upload-list-picture"
   >
     <div
-      class="ant-upload-list-item ant-upload-list-item-removed"
+      class="c7n-upload-list-item c7n-upload-list-item-removed"
     >
       <div
-        class="ant-upload-list-item-info"
+        class="c7n-upload-list-item-info"
       >
         <span>
           <a
-            class="ant-upload-list-item-thumbnail"
+            class="c7n-upload-list-item-thumbnail"
             href="https://cdn.xxx.com/aaa.zip"
             rel="noopener noreferrer"
             target="_blank"
@@ -274,7 +274,7 @@ exports[`Upload List should non-image format file preview 1`] = `
             />
           </a>
           <a
-            class="ant-upload-list-item-name"
+            class="c7n-upload-list-item-name"
             href="https://cdn.xxx.com/aaa.zip"
             rel="noopener noreferrer"
             target="_blank"

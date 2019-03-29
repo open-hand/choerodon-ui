@@ -51,7 +51,7 @@ ReactDOM.render(<Demo />, mountNode);
 ````
 
 ```css
-#components-tree-demo-customized-icon .ant-tree-iconEle.ant-tree-icon__customize i.icon{
+#components-tree-demo-customized-icon .c7n-tree-iconEle.c7n-tree-icon__customize i.icon{
   float: left;
   line-height: 24px;
 }

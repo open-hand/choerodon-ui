@@ -2,55 +2,55 @@
 
 exports[`Table renders empty table 1`] = `
 <div
-  class="ant-table-wrapper"
+  class="c7n-table-wrapper"
 >
   <div
-    class="ant-spin-nested-loading"
+    class="c7n-spin-nested-loading"
   >
     <div
-      class="ant-spin-container"
+      class="c7n-spin-container"
     >
       <div
-        class="ant-table-filter-bar"
+        class="c7n-table-filter-bar"
       >
         <div
-          class="ant-table-filter-select"
+          class="c7n-table-filter-select"
         >
           <div
-            class="ant-table-filter-select-icon"
+            class="c7n-table-filter-select-icon"
           >
             <i
               class="icon icon-filter_list"
             />
           </div>
           <div
-            class="ant-select ant-select-enabled ant-select-allow-clear ant-select-tags"
+            class="c7n-select c7n-select-enabled c7n-select-allow-clear c7n-select-tags"
           >
             <div
               aria-autocomplete="list"
               aria-expanded="false"
               aria-haspopup="true"
-              class="ant-select-selection
-            ant-select-selection--multiple"
+              class="c7n-select-selection
+            c7n-select-selection--multiple"
               role="combobox"
             >
               <div
-                class="ant-select-selection__rendered"
+                class="c7n-select-selection__rendered"
               >
                 <ul>
                   <li
-                    class="ant-select-search ant-select-search--inline"
+                    class="c7n-select-search c7n-select-search--inline"
                   >
                     <div
-                      class="ant-select-search__field__wrap"
+                      class="c7n-select-search__field__wrap"
                     >
                       <input
                         autocomplete="off"
-                        class="ant-select-search__field"
+                        class="c7n-select-search__field"
                         value=""
                       />
                       <span
-                        class="ant-select-search__field__mirror"
+                        class="c7n-select-search__field__mirror"
                       >
                          
                       </span>
@@ -60,41 +60,41 @@ exports[`Table renders empty table 1`] = `
               </div>
             </div>
             <div
-              class="ant-select-underline"
+              class="c7n-select-underline"
             >
               <span
-                class="ant-select-ripple"
+                class="c7n-select-ripple"
               />
             </div>
           </div>
           <div
-            class="ant-table-filter-select-columns"
+            class="c7n-table-filter-select-columns"
           />
         </div>
         <div
-          class="ant-table-columns-chooser"
+          class="c7n-table-columns-chooser"
         >
           <button
-            class="ant-btn ant-btn-circle ant-btn-sm ant-btn-icon-only ant-btn-flat"
+            class="c7n-btn c7n-btn-circle c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
             type="button"
           >
             <i
               class="icon icon-view_column"
             />
             <div
-              class="ant-ripple-wrapper"
+              class="c7n-ripple-wrapper"
             />
           </button>
         </div>
       </div>
       <div
-        class="ant-table ant-table-middle ant-table-empty ant-table-scroll-position-left"
+        class="c7n-table c7n-table-default c7n-table-empty c7n-table-scroll-position-left"
       >
         <div
-          class="ant-table-content"
+          class="c7n-table-content"
         >
           <div
-            class="ant-table-body"
+            class="c7n-table-body"
           >
             <table
               class=""
@@ -110,7 +110,7 @@ exports[`Table renders empty table 1`] = `
                 <col />
               </colgroup>
               <thead
-                class="ant-table-thead"
+                class="c7n-table-thead"
               >
                 <tr>
                   <th
@@ -180,12 +180,12 @@ exports[`Table renders empty table 1`] = `
                 </tr>
               </thead>
               <tbody
-                class="ant-table-tbody"
+                class="c7n-table-tbody"
               />
             </table>
           </div>
           <div
-            class="ant-table-placeholder"
+            class="c7n-table-placeholder"
           >
             No data
           </div>
@@ -198,55 +198,55 @@ exports[`Table renders empty table 1`] = `
 
 exports[`Table renders empty table with custom emptyText 1`] = `
 <div
-  class="ant-table-wrapper"
+  class="c7n-table-wrapper"
 >
   <div
-    class="ant-spin-nested-loading"
+    class="c7n-spin-nested-loading"
   >
     <div
-      class="ant-spin-container"
+      class="c7n-spin-container"
     >
       <div
-        class="ant-table-filter-bar"
+        class="c7n-table-filter-bar"
       >
         <div
-          class="ant-table-filter-select"
+          class="c7n-table-filter-select"
         >
           <div
-            class="ant-table-filter-select-icon"
+            class="c7n-table-filter-select-icon"
           >
             <i
               class="icon icon-filter_list"
             />
           </div>
           <div
-            class="ant-select ant-select-enabled ant-select-allow-clear ant-select-tags"
+            class="c7n-select c7n-select-enabled c7n-select-allow-clear c7n-select-tags"
           >
             <div
               aria-autocomplete="list"
               aria-expanded="false"
               aria-haspopup="true"
-              class="ant-select-selection
-            ant-select-selection--multiple"
+              class="c7n-select-selection
+            c7n-select-selection--multiple"
               role="combobox"
             >
               <div
-                class="ant-select-selection__rendered"
+                class="c7n-select-selection__rendered"
               >
                 <ul>
                   <li
-                    class="ant-select-search ant-select-search--inline"
+                    class="c7n-select-search c7n-select-search--inline"
                   >
                     <div
-                      class="ant-select-search__field__wrap"
+                      class="c7n-select-search__field__wrap"
                     >
                       <input
                         autocomplete="off"
-                        class="ant-select-search__field"
+                        class="c7n-select-search__field"
                         value=""
                       />
                       <span
-                        class="ant-select-search__field__mirror"
+                        class="c7n-select-search__field__mirror"
                       >
                          
                       </span>
@@ -256,41 +256,41 @@ exports[`Table renders empty table with custom emptyText 1`] = `
               </div>
             </div>
             <div
-              class="ant-select-underline"
+              class="c7n-select-underline"
             >
               <span
-                class="ant-select-ripple"
+                class="c7n-select-ripple"
               />
             </div>
           </div>
           <div
-            class="ant-table-filter-select-columns"
+            class="c7n-table-filter-select-columns"
           />
         </div>
         <div
-          class="ant-table-columns-chooser"
+          class="c7n-table-columns-chooser"
         >
           <button
-            class="ant-btn ant-btn-circle ant-btn-sm ant-btn-icon-only ant-btn-flat"
+            class="c7n-btn c7n-btn-circle c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
             type="button"
           >
             <i
               class="icon icon-view_column"
             />
             <div
-              class="ant-ripple-wrapper"
+              class="c7n-ripple-wrapper"
             />
           </button>
         </div>
       </div>
       <div
-        class="ant-table ant-table-middle ant-table-empty ant-table-scroll-position-left"
+        class="c7n-table c7n-table-default c7n-table-empty c7n-table-scroll-position-left"
       >
         <div
-          class="ant-table-content"
+          class="c7n-table-content"
         >
           <div
-            class="ant-table-body"
+            class="c7n-table-body"
           >
             <table
               class=""
@@ -306,7 +306,7 @@ exports[`Table renders empty table with custom emptyText 1`] = `
                 <col />
               </colgroup>
               <thead
-                class="ant-table-thead"
+                class="c7n-table-thead"
               >
                 <tr>
                   <th
@@ -376,12 +376,12 @@ exports[`Table renders empty table with custom emptyText 1`] = `
                 </tr>
               </thead>
               <tbody
-                class="ant-table-tbody"
+                class="c7n-table-tbody"
               />
             </table>
           </div>
           <div
-            class="ant-table-placeholder"
+            class="c7n-table-placeholder"
           >
             custom empty text 
           </div>
@@ -394,55 +394,55 @@ exports[`Table renders empty table with custom emptyText 1`] = `
 
 exports[`Table renders empty table with fixed columns 1`] = `
 <div
-  class="ant-table-wrapper"
+  class="c7n-table-wrapper"
 >
   <div
-    class="ant-spin-nested-loading"
+    class="c7n-spin-nested-loading"
   >
     <div
-      class="ant-spin-container"
+      class="c7n-spin-container"
     >
       <div
-        class="ant-table-filter-bar"
+        class="c7n-table-filter-bar"
       >
         <div
-          class="ant-table-filter-select"
+          class="c7n-table-filter-select"
         >
           <div
-            class="ant-table-filter-select-icon"
+            class="c7n-table-filter-select-icon"
           >
             <i
               class="icon icon-filter_list"
             />
           </div>
           <div
-            class="ant-select ant-select-enabled ant-select-allow-clear ant-select-tags"
+            class="c7n-select c7n-select-enabled c7n-select-allow-clear c7n-select-tags"
           >
             <div
               aria-autocomplete="list"
               aria-expanded="false"
               aria-haspopup="true"
-              class="ant-select-selection
-            ant-select-selection--multiple"
+              class="c7n-select-selection
+            c7n-select-selection--multiple"
               role="combobox"
             >
               <div
-                class="ant-select-selection__rendered"
+                class="c7n-select-selection__rendered"
               >
                 <ul>
                   <li
-                    class="ant-select-search ant-select-search--inline"
+                    class="c7n-select-search c7n-select-search--inline"
                   >
                     <div
-                      class="ant-select-search__field__wrap"
+                      class="c7n-select-search__field__wrap"
                     >
                       <input
                         autocomplete="off"
-                        class="ant-select-search__field"
+                        class="c7n-select-search__field"
                         value=""
                       />
                       <span
-                        class="ant-select-search__field__mirror"
+                        class="c7n-select-search__field__mirror"
                       >
                          
                       </span>
@@ -452,44 +452,44 @@ exports[`Table renders empty table with fixed columns 1`] = `
               </div>
             </div>
             <div
-              class="ant-select-underline"
+              class="c7n-select-underline"
             >
               <span
-                class="ant-select-ripple"
+                class="c7n-select-ripple"
               />
             </div>
           </div>
           <div
-            class="ant-table-filter-select-columns"
+            class="c7n-table-filter-select-columns"
           />
         </div>
         <div
-          class="ant-table-columns-chooser"
+          class="c7n-table-columns-chooser"
         >
           <button
-            class="ant-btn ant-btn-circle ant-btn-sm ant-btn-icon-only ant-btn-flat"
+            class="c7n-btn c7n-btn-circle c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
             type="button"
           >
             <i
               class="icon icon-view_column"
             />
             <div
-              class="ant-ripple-wrapper"
+              class="c7n-ripple-wrapper"
             />
           </button>
         </div>
       </div>
       <div
-        class="ant-table ant-table-middle ant-table-empty ant-table-scroll-position-left"
+        class="c7n-table c7n-table-default c7n-table-empty c7n-table-scroll-position-left"
       >
         <div
-          class="ant-table-content"
+          class="c7n-table-content"
         >
           <div
-            class="ant-table-scroll"
+            class="c7n-table-scroll"
           >
             <div
-              class="ant-table-body"
+              class="c7n-table-body"
             >
               <table
                 class=""
@@ -514,7 +514,7 @@ exports[`Table renders empty table with fixed columns 1`] = `
                   />
                 </colgroup>
                 <thead
-                  class="ant-table-thead"
+                  class="c7n-table-thead"
                 >
                   <tr>
                     <th
@@ -608,28 +608,28 @@ exports[`Table renders empty table with fixed columns 1`] = `
                   </tr>
                 </thead>
                 <tbody
-                  class="ant-table-tbody"
+                  class="c7n-table-tbody"
                 />
               </table>
             </div>
             <div
-              class="ant-table-placeholder"
+              class="c7n-table-placeholder"
             >
               No data
             </div>
           </div>
           <div
-            class="ant-table-fixed-left"
+            class="c7n-table-fixed-left"
           >
             <div
-              class="ant-table-body-outer"
+              class="c7n-table-body-outer"
               style="-webkit-transform:translate3d (0, 0, 0)"
             >
               <div
-                class="ant-table-body-inner"
+                class="c7n-table-body-inner"
               >
                 <table
-                  class="ant-table-fixed"
+                  class="c7n-table-fixed"
                 >
                   <colgroup>
                     <col
@@ -640,7 +640,7 @@ exports[`Table renders empty table with fixed columns 1`] = `
                     />
                   </colgroup>
                   <thead
-                    class="ant-table-thead"
+                    class="c7n-table-thead"
                   >
                     <tr>
                       <th
@@ -662,24 +662,24 @@ exports[`Table renders empty table with fixed columns 1`] = `
                     </tr>
                   </thead>
                   <tbody
-                    class="ant-table-tbody"
+                    class="c7n-table-tbody"
                   />
                 </table>
               </div>
             </div>
           </div>
           <div
-            class="ant-table-fixed-right"
+            class="c7n-table-fixed-right"
           >
             <div
-              class="ant-table-body-outer"
+              class="c7n-table-body-outer"
               style="-webkit-transform:translate3d (0, 0, 0)"
             >
               <div
-                class="ant-table-body-inner"
+                class="c7n-table-body-inner"
               >
                 <table
-                  class="ant-table-fixed"
+                  class="c7n-table-fixed"
                 >
                   <colgroup>
                     <col
@@ -687,7 +687,7 @@ exports[`Table renders empty table with fixed columns 1`] = `
                     />
                   </colgroup>
                   <thead
-                    class="ant-table-thead"
+                    class="c7n-table-thead"
                   >
                     <tr>
                       <th
@@ -701,7 +701,7 @@ exports[`Table renders empty table with fixed columns 1`] = `
                     </tr>
                   </thead>
                   <tbody
-                    class="ant-table-tbody"
+                    class="c7n-table-tbody"
                   />
                 </table>
               </div>
@@ -716,20 +716,19 @@ exports[`Table renders empty table with fixed columns 1`] = `
 
 exports[`Table renders empty table without emptyText when loading 1`] = `
 <div
-  class="ant-table-wrapper"
+  class="c7n-table-wrapper"
 >
   <div
-    class="ant-spin-nested-loading"
+    class="c7n-spin-nested-loading"
   >
     <div
-      class="ant-spin ant-spin-spinning ant-table-without-pagination ant-table-spin-holder"
+      class="c7n-spin c7n-spin-spinning c7n-table-without-pagination c7n-table-spin-holder"
     >
       <div
-        class="ant-progress ant-progress-loading ant-progress-status-normal ant-progress-show-info ant-progress-default ant-spin-dot"
+        class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-default c7n-spin-dot"
       >
         <div
-          class="ant-progress-inner"
-          style="width:30px;height:30px"
+          class="c7n-progress-inner"
         >
           <svg
             viewBox="0 0 50 50"
@@ -737,59 +736,56 @@ exports[`Table renders empty table without emptyText when loading 1`] = `
             <circle
               cx="25"
               cy="25"
-              fill="none"
               r="20"
-              stroke="#3367d6"
-              stroke-width="4"
             />
           </svg>
         </div>
       </div>
     </div>
     <div
-      class="ant-spin-container ant-spin-blur"
+      class="c7n-spin-container c7n-spin-blur"
     >
       <div
-        class="ant-table-filter-bar"
+        class="c7n-table-filter-bar"
       >
         <div
-          class="ant-table-filter-select"
+          class="c7n-table-filter-select"
         >
           <div
-            class="ant-table-filter-select-icon"
+            class="c7n-table-filter-select-icon"
           >
             <i
               class="icon icon-filter_list"
             />
           </div>
           <div
-            class="ant-select ant-select-enabled ant-select-allow-clear ant-select-tags"
+            class="c7n-select c7n-select-enabled c7n-select-allow-clear c7n-select-tags"
           >
             <div
               aria-autocomplete="list"
               aria-expanded="false"
               aria-haspopup="true"
-              class="ant-select-selection
-            ant-select-selection--multiple"
+              class="c7n-select-selection
+            c7n-select-selection--multiple"
               role="combobox"
             >
               <div
-                class="ant-select-selection__rendered"
+                class="c7n-select-selection__rendered"
               >
                 <ul>
                   <li
-                    class="ant-select-search ant-select-search--inline"
+                    class="c7n-select-search c7n-select-search--inline"
                   >
                     <div
-                      class="ant-select-search__field__wrap"
+                      class="c7n-select-search__field__wrap"
                     >
                       <input
                         autocomplete="off"
-                        class="ant-select-search__field"
+                        class="c7n-select-search__field"
                         value=""
                       />
                       <span
-                        class="ant-select-search__field__mirror"
+                        class="c7n-select-search__field__mirror"
                       >
                          
                       </span>
@@ -799,41 +795,41 @@ exports[`Table renders empty table without emptyText when loading 1`] = `
               </div>
             </div>
             <div
-              class="ant-select-underline"
+              class="c7n-select-underline"
             >
               <span
-                class="ant-select-ripple"
+                class="c7n-select-ripple"
               />
             </div>
           </div>
           <div
-            class="ant-table-filter-select-columns"
+            class="c7n-table-filter-select-columns"
           />
         </div>
         <div
-          class="ant-table-columns-chooser"
+          class="c7n-table-columns-chooser"
         >
           <button
-            class="ant-btn ant-btn-circle ant-btn-sm ant-btn-icon-only ant-btn-flat"
+            class="c7n-btn c7n-btn-circle c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
             type="button"
           >
             <i
               class="icon icon-view_column"
             />
             <div
-              class="ant-ripple-wrapper"
+              class="c7n-ripple-wrapper"
             />
           </button>
         </div>
       </div>
       <div
-        class="ant-table ant-table-middle ant-table-empty ant-table-scroll-position-left"
+        class="c7n-table c7n-table-default c7n-table-empty c7n-table-scroll-position-left"
       >
         <div
-          class="ant-table-content"
+          class="c7n-table-content"
         >
           <div
-            class="ant-table-body"
+            class="c7n-table-body"
           >
             <table
               class=""
@@ -849,7 +845,7 @@ exports[`Table renders empty table without emptyText when loading 1`] = `
                 <col />
               </colgroup>
               <thead
-                class="ant-table-thead"
+                class="c7n-table-thead"
               >
                 <tr>
                   <th
@@ -919,12 +915,12 @@ exports[`Table renders empty table without emptyText when loading 1`] = `
                 </tr>
               </thead>
               <tbody
-                class="ant-table-tbody"
+                class="c7n-table-tbody"
               />
             </table>
           </div>
           <div
-            class="ant-table-placeholder"
+            class="c7n-table-placeholder"
           />
         </div>
       </div>

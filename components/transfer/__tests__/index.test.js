@@ -128,7 +128,7 @@ describe('Transfer', () => {
   it('should check all item when click on check all', () => {
     const handleSelectChange = jest.fn();
     const wrapper = mount(<Transfer {...listCommonProps} onSelectChange={handleSelectChange} />);
-    wrapper.find('.ant-transfer-list-header input[type="checkbox"]')
+    wrapper.find('.c7n-transfer-list-header input[type="checkbox"]')
       .filterWhere(n => !n.prop('checked')).simulate('change');
     expect(handleSelectChange).toHaveBeenCalledWith(['a'], ['b']);
   });
@@ -136,7 +136,7 @@ describe('Transfer', () => {
   it('should uncheck all item when click on uncheck all', () => {
     const handleSelectChange = jest.fn();
     const wrapper = mount(<Transfer {...listCommonProps} onSelectChange={handleSelectChange} />);
-    wrapper.find('.ant-transfer-list-header input[type="checkbox"]')
+    wrapper.find('.c7n-transfer-list-header input[type="checkbox"]')
       .filterWhere(n => n.prop('checked')).simulate('change');
     expect(handleSelectChange).toHaveBeenCalledWith([], []);
   });
@@ -160,7 +160,7 @@ describe('Transfer', () => {
       />
     );
     wrapper.find(TransferSearch).at(0).find('input').simulate('change', { target: { value: 'content2' } });
-    expect(wrapper.find(TransferList).at(0).find('.ant-transfer-list-header-selected > span').at(0)
+    expect(wrapper.find(TransferList).at(0).find('.c7n-transfer-list-header-selected > span').at(0)
       .first()
       .text()
       .trim()).toEqual('1 items');
@@ -181,7 +181,7 @@ describe('Transfer', () => {
     );
     wrapper.find(TransferSearch).at(0).find('input')
       .simulate('change', { target: { value: 'content2' } });
-    wrapper.find(TransferList).at(0).find('.ant-transfer-list-header input[type="checkbox"]').filterWhere(n => !n.prop('checked'))
+    wrapper.find(TransferList).at(0).find('.c7n-transfer-list-header input[type="checkbox"]').filterWhere(n => !n.prop('checked'))
       .simulate('change');
     expect(handleSelectChange).toHaveBeenCalledWith(['1'], []);
   });
@@ -207,7 +207,7 @@ describe('Transfer', () => {
     );
     wrapper.find(TransferSearch).at(0).find('input')
       .simulate('change', { target: { value: 'content2' } });
-    wrapper.find(TransferList).at(0).find('.ant-transfer-list-header input[type="checkbox"]').filterWhere(n => !n.prop('checked'))
+    wrapper.find(TransferList).at(0).find('.c7n-transfer-list-header input[type="checkbox"]').filterWhere(n => !n.prop('checked'))
       .simulate('change');
     wrapper.find(TransferOperation).find(Button).at(1).simulate('click');
     expect(handleChange).toHaveBeenCalledWith(['1', '3', '4'], 'right', ['1']);
@@ -224,9 +224,9 @@ describe('Transfer', () => {
     wrapper.find(TransferItem).filterWhere(n => n.prop('item').key === 'b').simulate('click');
     expect(handleSelectChange).toHaveBeenLastCalledWith(['b'], []);
     wrapper.find(TransferSearch).at(0).find('input').simulate('change', { target: { value: 'a' } });
-    wrapper.find(TransferList).at(0).find('.ant-transfer-list-header input[type="checkbox"]').simulate('change');
+    wrapper.find(TransferList).at(0).find('.c7n-transfer-list-header input[type="checkbox"]').simulate('change');
     expect(handleSelectChange).toHaveBeenLastCalledWith(['b', 'a'], []);
-    wrapper.find(TransferList).at(0).find('.ant-transfer-list-header input[type="checkbox"]').simulate('change');
+    wrapper.find(TransferList).at(0).find('.c7n-transfer-list-header input[type="checkbox"]').simulate('change');
     expect(handleSelectChange).toHaveBeenLastCalledWith(['b'], []);
   });
 

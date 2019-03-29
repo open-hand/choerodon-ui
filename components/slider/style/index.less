@@ -1,34 +1,34 @@
 @import "../../style/themes/default";
 @import "../../style/mixins/index";
 
-@slider-prefix-cls: ~"@{ant-prefix}-slider";
+@slider-prefix-cls: ~"@{c7n-prefix}-slider";
 
 .@{slider-prefix-cls} {
   .reset-component;
   position: relative;
   margin: @slider-margin;
-  padding: 4px 0;
-  height: 12px;
+  padding: .04rem 0;
+  height: .12rem;
   cursor: pointer;
 
   .vertical();
 
   &-with-marks {
-    margin-bottom: 28px;
+    margin-bottom: .28rem;
   }
 
   &-rail {
     position: absolute;
     width: 100%;
-    height: 4px;
-    border-radius: 2px;
+    height: .04rem;
+    border-radius: .02rem;
     background-color: @slider-rail-background-color;
     transition: background-color .3s;
   }
 
   &-track {
     position: absolute;
-    height: 4px;
+    height: .04rem;
     border-radius: @border-radius-base;
     background-color: @slider-track-background-color;
     transition: background-color 0.3s ease;
@@ -36,23 +36,23 @@
 
   &-handle {
     position: absolute;
-    margin-left: -7px;
-    margin-top: -5px;
-    width: 14px;
-    height: 14px;
+    margin-left: -.07rem;
+    margin-top: -.05rem;
+    width: .14rem;
+    height: .14rem;
     cursor: pointer;
     border-radius: 50%;
-    border: solid 2px @slider-handle-color;
+    border: .02rem @border-style-base @slider-handle-color;
     background-color: @component-background;
     transition: border-color .3s, transform .3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 
     &:focus {
       border-color: @slider-handle-color-focus;
-      box-shadow: 0 0 0 5px @slider-handle-color-focus-shadow;
+      box-shadow: 0 0 0 .05rem @slider-handle-color-focus-shadow;
       outline: none;
     }
 
-    &.@{ant-prefix}-tooltip-open {
+    &.@{c7n-prefix}-tooltip-open {
       border-color: @slider-handle-color-tooltip-open;
     }
   }
@@ -64,14 +64,14 @@
     .@{slider-prefix-cls}-track {
       background-color: @slider-track-background-color-hover;
     }
-    .@{slider-prefix-cls}-handle:not(.@{ant-prefix}-tooltip-open) {
+    .@{slider-prefix-cls}-handle:not(.@{c7n-prefix}-tooltip-open) {
       border-color: @slider-handle-color-hover;
     }
   }
 
   &-mark {
     position: absolute;
-    top: 14px;
+    top: .14rem;
     left: 0;
     width: 100%;
     font-size: @font-size-base;
@@ -93,26 +93,26 @@
   &-step {
     position: absolute;
     width: 100%;
-    height: 4px;
+    height: .04rem;
     background: transparent;
   }
 
   &-dot {
     position: absolute;
-    top: -2px;
-    margin-left: -4px;
-    width: 8px;
-    height: 8px;
-    border: 2px solid @slider-dot-border-color;
+    top: -.02rem;
+    margin-left: -.04rem;
+    width: .08rem;
+    height: .08rem;
+    border: .02rem @border-style-base @slider-dot-border-color;
     background-color: @component-background;
     cursor: pointer;
     border-radius: 50%;
     vertical-align: middle;
     &:first-child {
-      margin-left: -4px;
+      margin-left: -.04rem;
     }
     &:last-child {
-      margin-left: -4px;
+      margin-left: -.04rem;
     }
     &-active {
       border-color: @slider-dot-border-color-active;
@@ -143,46 +143,46 @@
 
 .vertical() {
   &-vertical {
-    width: 12px;
+    width: .12rem;
     height: 100%;
-    margin: 6px 10px;
-    padding: 0 4px;
+    margin: .06rem .1rem;
+    padding: 0 .04rem;
 
     .@{slider-prefix-cls}-rail {
       height: 100%;
-      width: 4px;
+      width: .04rem;
     }
 
     .@{slider-prefix-cls}-track {
-      width: 4px;
+      width: .04rem;
     }
 
     .@{slider-prefix-cls}-handle {
-      margin-left: -5px;
-      margin-bottom: -7px;
+      margin-left: -.05rem;
+      margin-bottom: -.07rem;
     }
 
     .@{slider-prefix-cls}-mark {
       top: 0;
-      left: 12px;
-      width: 18px;
+      left: .12rem;
+      width: .18rem;
       height: 100%;
     }
 
     .@{slider-prefix-cls}-mark-text {
-      left: 4px;
+      left: .04rem;
       white-space: nowrap;
     }
 
     .@{slider-prefix-cls}-step {
-      width: 4px;
+      width: .04rem;
       height: 100%;
     }
 
     .@{slider-prefix-cls}-dot {
       top: auto;
-      left: 2px;
-      margin-bottom: -4px;
+      left: .02rem;
+      margin-bottom: -.04rem;
     }
   }
 }

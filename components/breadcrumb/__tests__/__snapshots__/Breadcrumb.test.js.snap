@@ -2,16 +2,16 @@
 
 exports[`Breadcrumb should allow Breadcrumb.Item is null or undefined 1`] = `
 <div
-  class="ant-breadcrumb"
+  class="c7n-breadcrumb"
 >
   <span>
     <span
-      class="ant-breadcrumb-link"
+      class="c7n-breadcrumb-link"
     >
       Home
     </span>
     <span
-      class="ant-breadcrumb-separator"
+      class="c7n-breadcrumb-separator"
     >
       /
     </span>
@@ -21,28 +21,28 @@ exports[`Breadcrumb should allow Breadcrumb.Item is null or undefined 1`] = `
 
 exports[`Breadcrumb should not display Breadcrumb Item when its children is falsy 1`] = `
 <div
-  class="ant-breadcrumb"
+  class="c7n-breadcrumb"
 >
   <span>
     <span
-      class="ant-breadcrumb-link"
+      class="c7n-breadcrumb-link"
     >
       xxx
     </span>
     <span
-      class="ant-breadcrumb-separator"
+      class="c7n-breadcrumb-separator"
     >
       /
     </span>
   </span>
   <span>
     <span
-      class="ant-breadcrumb-link"
+      class="c7n-breadcrumb-link"
     >
       yyy
     </span>
     <span
-      class="ant-breadcrumb-separator"
+      class="c7n-breadcrumb-separator"
     >
       /
     </span>

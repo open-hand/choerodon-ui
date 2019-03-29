@@ -2,9 +2,43 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import PanelContent from './PanelContent';
-import Animate from '../animate';
+import Animate from '../../animate';
 
-class CollapsePanel extends Component {
+export default class CollapsePanel extends Component {
+  static propTypes = {
+    className: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.object,
+    ]),
+    id: PropTypes.string,
+    children: PropTypes.any,
+    openAnimation: PropTypes.object,
+    prefixCls: PropTypes.string,
+    header: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+      PropTypes.node,
+    ]),
+    headerClass: PropTypes.string,
+    showArrow: PropTypes.bool,
+    isActive: PropTypes.bool,
+    onItemClick: PropTypes.func,
+    style: PropTypes.object,
+    destroyInactivePanel: PropTypes.bool,
+    disabled: PropTypes.bool,
+    forceRender: PropTypes.bool,
+  };
+
+  static defaultProps = {
+    showArrow: true,
+    isActive: false,
+    destroyInactivePanel: false,
+    onItemClick() {
+    },
+    headerClass: '',
+    forceRender: false,
+  };
+
   handleItemClick() {
     if (this.props.onItemClick) {
       this.props.onItemClick();
@@ -38,7 +72,7 @@ class CollapsePanel extends Component {
       [`${prefixCls}-expand-icon`]: true,
       [`${prefixCls}-expanded`]: isActive,
       [`${prefixCls}-collapsed`]: !isActive,
-    })
+    });
     return (
       <div className={itemCls} style={style} id={id} role="tablist">
         <div
@@ -51,14 +85,14 @@ class CollapsePanel extends Component {
           {header}
         </div>
         <Animate
-          showProp="isActive"
+          hiddenProp="isInactive"
           exclusive
           component=""
           animation={this.props.openAnimation}
         >
           <PanelContent
             prefixCls={prefixCls}
-            isActive={isActive}
+            isInactive={!isActive}
             destroyInactivePanel={destroyInactivePanel}
             forceRender={forceRender}
           >
@@ -69,38 +103,3 @@ class CollapsePanel extends Component {
     );
   }
 }
-
-CollapsePanel.propTypes = {
-  className: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.object,
-  ]),
-  id: PropTypes.string,
-  children: PropTypes.any,
-  openAnimation: PropTypes.object,
-  prefixCls: PropTypes.string,
-  header: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-    PropTypes.node,
-  ]),
-  headerClass: PropTypes.string,
-  showArrow: PropTypes.bool,
-  isActive: PropTypes.bool,
-  onItemClick: PropTypes.func,
-  style: PropTypes.object,
-  destroyInactivePanel: PropTypes.bool,
-  disabled: PropTypes.bool,
-  forceRender: PropTypes.bool,
-};
-
-CollapsePanel.defaultProps = {
-  showArrow: true,
-  isActive: false,
-  destroyInactivePanel: false,
-  onItemClick() {},
-  headerClass: '',
-  forceRender: false,
-};
-
-export default CollapsePanel;

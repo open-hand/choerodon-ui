@@ -1,7 +1,7 @@
 @import "../../style/themes/default";
 @import "../../style/mixins/index";
 
-@list-prefix-cls: ~"@{ant-prefix}-list";
+@list-prefix-cls: ~"@{c7n-prefix}-list";
 
 .@{list-prefix-cls} {
   .reset-component;
@@ -10,48 +10,48 @@
     outline: none;
   }
   &-pagination {
-    margin-top: 24px;
+    margin-top: .24rem;
     text-align: right;
   }
   &-more {
-    margin-top: 12px;
+    margin-top: .12rem;
     text-align: center;
     button {
-      padding-left: 32px;
-      padding-right: 32px;
+      padding-left: .32rem;
+      padding-right: .32rem;
     }
   }
   &-spin {
     text-align: center;
-    min-height: 40px;
+    min-height: .4rem;
   }
   &-empty-text {
     color: @text-color-secondary;
     font-size: @font-size-base;
-    padding: 16px;
+    padding: .16rem;
     text-align: center;
   }
   &-item {
     align-items: center;
     display: flex;
-    padding-top: 12px;
-    padding-bottom: 12px;
+    padding-top: .12rem;
+    padding-bottom: .12rem;
     &-meta {
       align-items: flex-start;
       display: flex;
       flex: 1;
       font-size: 0;
       &-avatar {
-        margin-right: 16px;
+        margin-right: .16rem;
       }
       &-content {
         flex: 1 0;
       }
       &-title {
         color: @text-color;
-        margin-bottom: 4px;
+        margin-bottom: .04rem;
         font-size: @font-size-base;
-        line-height: 22px;
+        line-height: .22rem;
         > a {
           color: @text-color;
           transition: all .3s;
@@ -63,7 +63,7 @@
       &-description {
         color: @text-color-secondary;
         font-size: @font-size-base;
-        line-height: 22px;
+        line-height: .22rem;
       }
     }
     &-content {
@@ -77,17 +77,17 @@
     &-action {
       font-size: 0;
       flex: 0 0 auto;
-      margin-left: 48px;
+      margin-left: .48rem;
       padding: 0;
       list-style: none;
       & > li {
         display: inline-block;
         color: @text-color-secondary;
         cursor: pointer;
-        padding: 0 8px;
+        padding: 0 .08rem;
         position: relative;
         font-size: @font-size-base;
-        line-height: 22px;
+        line-height: .22rem;
         text-align: center;
       }
       & > li:first-child {
@@ -95,12 +95,12 @@
       }
       &-split {
         background-color: @border-color-split;
-        margin-top: -7px;
+        margin-top: -.07rem;
         position: absolute;
         top: 50%;
         right: 0;
-        width: 1px;
-        height: 14px;
+        width: .01rem;
+        height: .14rem;
       }
     }
     &-main {
@@ -111,44 +111,44 @@
 
   &-header,
   &-footer {
-    padding-top: 12px;
-    padding-bottom: 12px;
+    padding-top: .12rem;
+    padding-bottom: .12rem;
   }
 
   &-empty {
     color: @text-color-secondary;
-    padding: 16px 0;
-    font-size: 12px;
+    padding: .16rem 0;
+    font-size: .12rem;
     text-align: center;
   }
 
   &-split &-item {
-    border-bottom: 1px solid @border-color-split;
+    border-bottom: .01rem solid @border-color-split;
     &:last-child {
       border-bottom: none;
     }
   }
 
   &-split &-header {
-    border-bottom: 1px solid @border-color-split;
+    border-bottom: .01rem solid @border-color-split;
   }
 
   &-loading &-spin-nested-loading {
-    min-height: 32px;
+    min-height: .32rem;
   }
 
   &-something-after-last-item &-item:last-child {
-    border-bottom: 1px solid @border-color-split;
+    border-bottom: .01rem solid @border-color-split;
   }
 
   &-lg &-item {
-    padding-top: 16px;
-    padding-bottom: 16px;
+    padding-top: .16rem;
+    padding-bottom: .16rem;
   }
 
   &-sm &-item {
-    padding-top: 8px;
-    padding-bottom: 8px;
+    padding-top: .08rem;
+    padding-bottom: .08rem;
   }
 
   &-vertical &-item {
@@ -161,30 +161,30 @@
       flex: 1;
     }
     &-extra {
-      margin-left: 58px;
+      margin-left: .58rem;
     }
     &-meta {
-      margin-bottom: 16px;
+      margin-bottom: .16rem;
       &-avatar {
         display: none;
       }
       &-title {
         color: @heading-color;
-        margin-bottom: 12px;
+        margin-bottom: .12rem;
         font-size: @font-size-lg;
-        line-height: 24px;
+        line-height: .24rem;
       }
     }
     &-content {
       display: block;
       color: @text-color;
       font-size: @font-size-base;
-      margin-bottom: 16px;
+      margin-bottom: .16rem;
     }
     &-action {
       margin-left: auto;
       > li {
-        padding: 0 16px;
+        padding: 0 .16rem;
         &:first-child {
           padding-left: 0;
         }
@@ -196,7 +196,7 @@
     border-bottom: none;
     padding-top: 0;
     padding-bottom: 0;
-    margin-bottom: 20px;
+    margin-bottom: .2rem;
     &-content {
       display: block;
     }

@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'mini-store';
 import TableRow from './TableRow';
-import { remove } from './utils';
 
-class ExpandableTable extends React.Component {
+class ExpandableTable extends Component {
   static propTypes = {
     expandIconAsCell: PropTypes.bool,
     expandedRowKeys: PropTypes.array,
@@ -22,7 +21,7 @@ class ExpandableTable extends React.Component {
     prefixCls: PropTypes.string.isRequired,
     data: PropTypes.array,
     children: PropTypes.func.isRequired,
-  }
+  };
 
   static defaultProps = {
     expandIconAsCell: false,
@@ -32,9 +31,11 @@ class ExpandableTable extends React.Component {
     defaultExpandedRowKeys: [],
     childrenColumnName: 'children',
     indentSize: 15,
-    onExpand() {},
-    onExpandedRowsChange() {},
-  }
+    onExpand() {
+    },
+    onExpandedRowsChange() {
+    },
+  };
 
   constructor(props) {
     super(props);
@@ -94,7 +95,8 @@ class ExpandableTable extends React.Component {
       // row was collapse
       const expandedRowIndex = expandedRowKeys.indexOf(rowKey);
       if (expandedRowIndex !== -1) {
-        expandedRowKeys = remove(expandedRowKeys, rowKey);
+        debugger;
+        expandedRowKeys.splice(expandedRowIndex, 1);
       }
     }
 
@@ -106,7 +108,7 @@ class ExpandableTable extends React.Component {
     if (!destroy) {
       onExpand(expanded, record);
     }
-  }
+  };
 
   renderExpandIndentCell = (rows, fixed) => {
     const { prefixCls, expandIconAsCell } = this.props;
@@ -122,7 +124,7 @@ class ExpandableTable extends React.Component {
     };
 
     rows[0].unshift({ ...iconColumn, column: iconColumn });
-  }
+  };
 
   renderExpandedRow(record, index, render, className, ancestorKeys, indent, fixed) {
     const { prefixCls, expandIconAsCell, indentSize } = this.props;
@@ -204,7 +206,7 @@ class ExpandableTable extends React.Component {
         )
       );
     }
-  }
+  };
 
   render() {
     const { data, childrenColumnName, children } = this.props;

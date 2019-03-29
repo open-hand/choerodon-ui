@@ -6,24 +6,24 @@ exports[`renders ./components/anchor/demo/basic.md correctly 1`] = `
     class=""
   >
     <div
-      class="ant-anchor-wrapper"
+      class="c7n-anchor-wrapper"
       style="max-height:100vh"
     >
       <div
-        class="ant-anchor"
+        class="c7n-anchor"
       >
         <div
-          class="ant-anchor-ink"
+          class="c7n-anchor-ink"
         >
           <span
-            class="ant-anchor-ink-ball"
+            class="c7n-anchor-ink-ball"
           />
         </div>
         <div
-          class="ant-anchor-link"
+          class="c7n-anchor-link"
         >
           <a
-            class="ant-anchor-link-title"
+            class="c7n-anchor-link-title"
             href="#components-anchor-demo-basic"
             title="Basic demo"
           >
@@ -31,10 +31,10 @@ exports[`renders ./components/anchor/demo/basic.md correctly 1`] = `
           </a>
         </div>
         <div
-          class="ant-anchor-link"
+          class="c7n-anchor-link"
         >
           <a
-            class="ant-anchor-link-title"
+            class="c7n-anchor-link-title"
             href="#components-anchor-demo-fixed"
             title="Fixed demo"
           >
@@ -42,20 +42,20 @@ exports[`renders ./components/anchor/demo/basic.md correctly 1`] = `
           </a>
         </div>
         <div
-          class="ant-anchor-link"
+          class="c7n-anchor-link"
         >
           <a
-            class="ant-anchor-link-title"
+            class="c7n-anchor-link-title"
             href="#API"
             title="API"
           >
             API
           </a>
           <div
-            class="ant-anchor-link"
+            class="c7n-anchor-link"
           >
             <a
-              class="ant-anchor-link-title"
+              class="c7n-anchor-link-title"
               href="#Anchor-Props"
               title="Anchor Props"
             >
@@ -63,10 +63,10 @@ exports[`renders ./components/anchor/demo/basic.md correctly 1`] = `
             </a>
           </div>
           <div
-            class="ant-anchor-link"
+            class="c7n-anchor-link"
           >
             <a
-              class="ant-anchor-link-title"
+              class="c7n-anchor-link-title"
               href="#Link-Props"
               title="Link Props"
             >
@@ -82,24 +82,24 @@ exports[`renders ./components/anchor/demo/basic.md correctly 1`] = `
 
 exports[`renders ./components/anchor/demo/static.md correctly 1`] = `
 <div
-  class="ant-anchor-wrapper"
+  class="c7n-anchor-wrapper"
   style="max-height:100vh"
 >
   <div
-    class="ant-anchor fixed"
+    class="c7n-anchor fixed"
   >
     <div
-      class="ant-anchor-ink"
+      class="c7n-anchor-ink"
     >
       <span
-        class="ant-anchor-ink-ball"
+        class="c7n-anchor-ink-ball"
       />
     </div>
     <div
-      class="ant-anchor-link"
+      class="c7n-anchor-link"
     >
       <a
-        class="ant-anchor-link-title"
+        class="c7n-anchor-link-title"
         href="#components-anchor-demo-basic"
         title="Basic demo"
       >
@@ -107,10 +107,10 @@ exports[`renders ./components/anchor/demo/static.md correctly 1`] = `
       </a>
     </div>
     <div
-      class="ant-anchor-link"
+      class="c7n-anchor-link"
     >
       <a
-        class="ant-anchor-link-title"
+        class="c7n-anchor-link-title"
         href="#components-anchor-demo-fixed"
         title="Fixed demo"
       >
@@ -118,20 +118,20 @@ exports[`renders ./components/anchor/demo/static.md correctly 1`] = `
       </a>
     </div>
     <div
-      class="ant-anchor-link"
+      class="c7n-anchor-link"
     >
       <a
-        class="ant-anchor-link-title"
+        class="c7n-anchor-link-title"
         href="#API"
         title="API"
       >
         API
       </a>
       <div
-        class="ant-anchor-link"
+        class="c7n-anchor-link"
       >
         <a
-          class="ant-anchor-link-title"
+          class="c7n-anchor-link-title"
           href="#Anchor-Props"
           title="Anchor Props"
         >
@@ -139,10 +139,10 @@ exports[`renders ./components/anchor/demo/static.md correctly 1`] = `
         </a>
       </div>
       <div
-        class="ant-anchor-link"
+        class="c7n-anchor-link"
       >
         <a
-          class="ant-anchor-link-title"
+          class="c7n-anchor-link-title"
           href="#Link-Props"
           title="Link Props"
         >

@@ -1,8 +1,8 @@
-import React from 'react';
+import { Children } from 'react';
 
 export default function toArray(children) {
   const ret = [];
-  React.Children.forEach(children, (c) => {
+  Children.forEach(children, (c) => {
     ret.push(c);
   });
   return ret;

@@ -1,0 +1,101 @@
+@import "../../../components/style/themes/default";
+@import "../../../components/style/mixins/index";
+@import "../../radio/style/mixin";
+
+@switch-prefix-cls: ~"@{c7n-prefix}-pro-switch";
+@switch-duration: .36s;
+
+.@{switch-prefix-cls} {
+  .radio-btn;
+  &-wrapper {
+    padding: .03rem;
+    &.@{c7n-prefix}-pro-field {
+      width: auto;
+    }
+  }
+
+  &-label {
+    height: @switch-height - .04rem;
+    min-width: .36rem;
+    line-height: @switch-height - .06rem;
+    border-radius: @switch-height / 2;
+    color: #fff;
+    font-size: @font-size-sm;
+    display: block;
+    background-color: rgba(0, 0, 0, .38);
+    padding: 0 .05rem 0 @switch-height;
+    &:after {
+      position: absolute;
+      width: @switch-height;
+      height: @switch-height;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      margin-top: auto;
+      margin-bottom: auto;
+      border-radius: 50%;
+      background-color: @component-background;
+      content: " ";
+      cursor: inherit;
+      transition: all @switch-duration @ease-in-out-circ;
+      box-shadow: 0 .02rem .01rem -.01rem rgba(0, 0, 0, .2), 0 .01rem .01rem 0 rgba(0, 0, 0, 0.14), 0 .01rem .03rem 0 rgba(0, 0, 0, 0.12);
+    }
+  }
+
+  &:active + &-label:after {
+    width: @switch-height + .04rem;
+  }
+
+  &-focus &-label {
+    box-shadow: 0 0 0 .02rem fade(@switch-color, 20%);
+  }
+
+  &-focus:hover &-label {
+    box-shadow: none;
+  }
+
+  &:checked + &-label {
+    background-color: @switch-color;
+    padding: 0 @switch-height 0 .05rem;
+    &:after {
+      left: 100%;
+      margin-left: 0 - @switch-height;
+      background-color: @switch-checked-color;
+    }
+  }
+  &:disabled {
+    cursor: not-allowed;
+  }
+  &:disabled + &-label {
+    opacity: @switch-disabled-opacity;
+  }
+
+  &-sm {
+    padding: 0;
+  }
+
+  &-sm &-label:after {
+    width: @switch-height - .06rem;
+    height: @switch-height - .06rem;
+    left: .01rem;
+  }
+
+  &-sm &:checked + &-label:after {
+    margin-left: .05rem - @switch-height;
+  }
+
+  &-lg {
+    padding: .03rem 0;
+  }
+
+  &-lg &-label {
+    height: @switch-height + .02rem;
+    min-width: .4rem;
+    &:after {
+      left: .01rem;
+    }
+  }
+  &-lg &:checked + &-label:after {
+    margin-left: -.01rem - @switch-height;
+  }
+}

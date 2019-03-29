@@ -1,9 +1,9 @@
 @import "../../style/themes/default";
 @import "../../style/mixins/index";
 
-@upload-prefix-cls: ~"@{ant-prefix}-upload";
-@upload-item: ~"@{ant-prefix}-upload-list-item";
-@upload-pictrue-card-size: 104px;
+@upload-prefix-cls: ~"@{c7n-prefix}-upload";
+@upload-item: ~"@{c7n-prefix}-upload-list-item";
+@upload-pictrue-card-size: 1.04rem;
 
 .@{upload-prefix-cls} {
   .reset-component;
@@ -37,8 +37,8 @@
     cursor: pointer;
     transition: border-color 0.3s ease;
     vertical-align: top;
-    margin-right: 8px;
-    margin-bottom: 8px;
+    margin-right: .08rem;
+    margin-bottom: .08rem;
     display: table;
 
     > .@{upload-prefix-cls} {
@@ -47,7 +47,7 @@
       display: table-cell;
       text-align: center;
       vertical-align: middle;
-      padding: 8px;
+      padding: .08rem;
     }
 
     &:hover {
@@ -64,11 +64,11 @@
     width: 100%;
     height: 100%;
     position: relative;
-    padding: 16px 0;
+    padding: .16rem 0;
     background: @background-color-light;
 
     &.@{upload-prefix-cls}-drag-hover:not(.@{upload-prefix-cls}-disabled) {
-      border: 2px dashed @primary-5;
+      border: .02rem dashed @primary-5;
     }
 
     &.@{upload-prefix-cls}-disabled {
@@ -91,14 +91,14 @@
 
     p.@{upload-prefix-cls}-drag-icon {
       .@{iconfont-css-prefix} {
-        font-size: 48px;
+        font-size: .48rem;
         color: @primary-5;
       }
-      margin-bottom: 20px;
+      margin-bottom: .2rem;
     }
     p.@{upload-prefix-cls}-text {
       font-size: @font-size-lg;
-      margin: 0 0 4px;
+      margin: 0 0 .04rem;
       color: @heading-color;
     }
     p.@{upload-prefix-cls}-hint {
@@ -106,7 +106,7 @@
       color: @text-color-secondary;
     }
     .@{iconfont-css-prefix}-plus {
-      font-size: 30px;
+      font-size: .3rem;
       transition: all .3s;
       color: @disabled-color;
       &:hover {
@@ -123,22 +123,22 @@
   .reset-component;
   .clearfix;
   &-item {
-    margin-top: 8px;
+    margin-top: .08rem;
     font-size: @font-size-base;
     position: relative;
-    height: 22px;
+    height: .22rem;
     &-name {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      padding-left: @font-size-base + 8px;
+      padding-left: @font-size-base + .08rem;
       width: 100%;
       display: inline-block;
     }
 
     &-info {
       height: 100%;
-      padding: 0 12px 0 4px;
+      padding: 0 .12rem 0 .04rem;
       transition: background-color .3s;
 
       > span {
@@ -150,20 +150,20 @@
         font-size: @font-size-base;
         color: @text-color-secondary;
         position: absolute;
-        top: @font-size-base / 2 - 2px;
+        top: @font-size-base / 2 - .02rem;
       }
     }
 
     .@{iconfont-css-prefix}-close {
-      .iconfont-size-under-12px(10px);
+      .iconfont-size-under-12px(.1rem);
       transition: all .3s;
       opacity: 0;
       cursor: pointer;
       position: absolute;
       top: 0;
-      right: 4px;
+      right: .04rem;
       color: @text-color-secondary;
-      line-height: 22px;
+      line-height: .22rem;
       &:hover {
         color: @text-color;
       }
@@ -193,18 +193,18 @@
       font-size: @font-size-base;
       position: absolute;
       width: 100%;
-      bottom: -12px;
-      padding-left: @font-size-base + 12px;
+      bottom: -.12rem;
+      padding-left: @font-size-base + .12rem;
     }
   }
 
   &-picture,
   &-picture-card {
     .@{upload-item} {
-      padding: 8px;
+      padding: .08rem;
       border-radius: @border-radius-base;
       border: @border-width-base @border-style-base @border-color-base;
-      height: 66px;
+      height: .66rem;
       position: relative;
       &:hover {
         background: transparent;
@@ -227,23 +227,23 @@
     }
 
     .@{upload-item}-thumbnail {
-      width: 48px;
-      height: 48px;
+      width: .48rem;
+      height: .48rem;
       position: absolute;
-      top: 8px;
-      left: 8px;
+      top: .08rem;
+      left: .08rem;
     }
 
     .@{upload-item}-thumbnail img {
-      width: 48px;
-      height: 48px;
+      width: .48rem;
+      height: .48rem;
       display: block;
       overflow: hidden;
     }
 
     .@{upload-item}-thumbnail.@{iconfont-css-prefix}:before {
-      line-height: 48px;
-      font-size: 24px;
+      line-height: .48rem;
+      font-size: .24rem;
       color: @text-color-secondary;
     }
 
@@ -251,31 +251,31 @@
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      margin: 0 0 0 8px;
-      line-height: 44px;
+      margin: 0 0 0 .08rem;
+      line-height: .44rem;
       transition: all .3s;
-      padding-left: 48px;
-      padding-right: 8px;
+      padding-left: .48rem;
+      padding-right: .08rem;
       max-width: 100%;
       display: inline-block;
       box-sizing: border-box;
     }
 
     .@{upload-item}-uploading .@{upload-item}-name {
-      line-height: 28px;
+      line-height: .28rem;
     }
 
     .@{upload-item}-progress {
-      padding-left: 56px;
+      padding-left: .56rem;
       margin-top: 0;
-      bottom: 14px;
-      width: ~"calc(100% - 24px)";
+      bottom: .14rem;
+      width: ~"calc(100% - .24rem)";
     }
 
     .@{iconfont-css-prefix}-close {
       position: absolute;
-      right: 8px;
-      top: 8px;
+      right: .08rem;
+      top: .08rem;
       line-height: 1;
     }
   }
@@ -290,7 +290,7 @@
       float: left;
       width: @upload-pictrue-card-size;
       height: @upload-pictrue-card-size;
-      margin: 0 8px 8px 0;
+      margin: 0 .08rem .08rem 0;
     }
 
     .@{upload-item}-info {
@@ -329,10 +329,10 @@
         z-index: 10;
         transition: all .3s;
         cursor: pointer;
-        font-size: 16px;
-        width: 16px;
+        font-size: .16rem;
+        width: .16rem;
         color: @text-color-dark;
-        margin: 0 4px;
+        margin: 0 .04rem;
         &:hover {
           color: #fff;
         }
@@ -353,7 +353,7 @@
     }
 
     .@{upload-item}-name {
-      margin: 8px 0 0;
+      margin: .08rem 0 0;
       padding: 0;
       text-align: center;
       line-height: @line-height-base;
@@ -379,14 +379,14 @@
       }
 
       &-text {
-        margin-top: 18px;
+        margin-top: .18rem;
         color: @text-color-secondary;
       }
     }
 
     .@{upload-item}-progress {
       padding-left: 0;
-      bottom: 32px;
+      bottom: .32rem;
     }
   }
 

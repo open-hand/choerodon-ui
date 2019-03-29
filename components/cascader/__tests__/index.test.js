@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, mount } from 'enzyme';
-import KeyCode from '../../rc-components/util/KeyCode';
+import KeyCode from '../../_util/KeyCode';
 import Cascader from '..';
 import focusTest from '../../../tests/shared/focusTest';
 
@@ -68,15 +68,15 @@ describe('Cascader', () => {
     const wrapper = mount(<Cascader options={options} />);
     wrapper.find('input').simulate('click');
     let popupWrapper = mount(wrapper.find('Trigger').instance().getComponent());
-    popupWrapper.find('.ant-cascader-menu').at(0).find('.ant-cascader-menu-item').at(0)
+    popupWrapper.find('.c7n-cascader-menu').at(0).find('.c7n-cascader-menu-item').at(0)
       .simulate('click');
     expect(render(wrapper.find('Trigger').instance().getComponent())).toMatchSnapshot();
     popupWrapper = mount(wrapper.find('Trigger').instance().getComponent());
-    popupWrapper.find('.ant-cascader-menu').at(1).find('.ant-cascader-menu-item').at(0)
+    popupWrapper.find('.c7n-cascader-menu').at(1).find('.c7n-cascader-menu-item').at(0)
       .simulate('click');
     expect(render(wrapper.find('Trigger').instance().getComponent())).toMatchSnapshot();
     popupWrapper = mount(wrapper.find('Trigger').instance().getComponent());
-    popupWrapper.find('.ant-cascader-menu').at(2).find('.ant-cascader-menu-item').at(0)
+    popupWrapper.find('.c7n-cascader-menu').at(2).find('.c7n-cascader-menu-item').at(0)
       .simulate('click');
     expect(render(wrapper.find('Trigger').instance().getComponent())).toMatchSnapshot();
   });

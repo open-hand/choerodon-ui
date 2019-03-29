@@ -1,10 +1,12 @@
-import * as React from 'react';
-import Button from '../button/button';
+import React, { Component } from 'react';
+import Button from '../button/Button';
 import { ColumnProps } from './interface';
 import SelectTrigger from '../rc-components/select/SelectTrigger';
 import { Item as MenuItem } from '../rc-components/menu';
-import { UNSELECTABLE_STYLE, UNSELECTABLE_ATTRIBUTE } from '../rc-components/select/util';
+import { UNSELECTABLE_ATTRIBUTE, UNSELECTABLE_STYLE } from '../rc-components/select/util';
 import { getColumnKey } from './util';
+import { Size } from '../_util/enum';
+import { getPrefixCls } from '../configure';
 
 export interface ColumnFilterProps<T> {
   prefixCls?: string;
@@ -17,7 +19,8 @@ export interface ColumnFilterState {
   open: boolean;
 }
 
-export default class ColumnFilter<T> extends React.Component<ColumnFilterProps<T>, ColumnFilterState> {
+export default class ColumnFilter<T> extends Component<ColumnFilterProps<T>, ColumnFilterState> {
+  static displayName = 'ColumnFilter';
 
   state = {
     open: false,
@@ -29,7 +32,7 @@ export default class ColumnFilter<T> extends React.Component<ColumnFilterProps<T
     return (
       <div className={`${prefixCls}-columns-chooser`}>
         <SelectTrigger
-          prefixCls={'ant-select'}
+          prefixCls={getPrefixCls('select')}
           showAction={['click']}
           options={this.getOptions()}
           value={this.getVisibleColumns()}
@@ -43,7 +46,7 @@ export default class ColumnFilter<T> extends React.Component<ColumnFilterProps<T
           dropdownMatchSelectWidth={false}
           dropdownStyle={{ minWidth: 187 }}
         >
-          <Button shape="circle" icon="view_column" size="small" />
+          <Button shape="circle" icon="view_column" size={Size.small} />
         </SelectTrigger>
       </div>
     );

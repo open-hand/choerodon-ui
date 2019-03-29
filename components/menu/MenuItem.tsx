@@ -1,15 +1,15 @@
-import * as React from 'react';
+import React, { Component, MouseEvent } from 'react';
 import PropTypes from 'prop-types';
 import Tooltip from '../tooltip';
 import { Item } from '../rc-components/menu';
 
-class MenuItem extends React.Component<any, any> {
+class MenuItem extends Component<any, any> {
   static contextTypes = {
     inlineCollapsed: PropTypes.bool,
   };
   static isMenuItem = 1;
   private menuItem: any;
-  onKeyDown = (e: React.MouseEvent<HTMLElement>) => {
+  onKeyDown = (e: MouseEvent<HTMLElement>) => {
     this.menuItem.onKeyDown(e);
   };
   saveMenuItem = (menuItem: any) => {

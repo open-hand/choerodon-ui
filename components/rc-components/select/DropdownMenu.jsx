@@ -1,4 +1,4 @@
-import React, { cloneElement } from 'react';
+import React, { cloneElement, Component } from 'react';
 import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 import toArray from '../util/Children/toArray';
@@ -9,7 +9,7 @@ import FilterInput from './FilterInput';
 import LocaleReceiver from '../../locale-provider/LocaleReceiver';
 import defaultLocale from '../../locale-provider/default';
 
-export default class DropdownMenu extends React.Component {
+export default class DropdownMenu extends Component {
   static propTypes = {
     defaultActiveFirstOption: PropTypes.bool,
     value: PropTypes.any,
@@ -172,7 +172,7 @@ export default class DropdownMenu extends React.Component {
   }
 
   renderFilterInput() {
-    const { prefixCls, filter, placeholder, onFilterChange , filterValue, onKeyDown } = this.props;
+    const { prefixCls, filter, placeholder, onFilterChange, filterValue, onKeyDown } = this.props;
     const props = {
       filterValue,
       prefixCls,
@@ -200,7 +200,7 @@ export default class DropdownMenu extends React.Component {
         <span name="check-none" onClick={checkAll}>{locale.selectNone}</span>
       </div>
     );
-  }
+  };
 
   render() {
     const renderMenu = this.renderMenu();

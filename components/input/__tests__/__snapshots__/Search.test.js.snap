@@ -2,48 +2,48 @@
 
 exports[`Input.Search should support custom Button 1`] = `
 <span
-  class="ant-input-wrapper ant-input-has-suffix"
+  class="c7n-input-wrapper c7n-input-has-suffix"
 >
   <div
-    class="ant-input-content"
+    class="c7n-input-content"
   >
     <div
-      class="ant-input-rendered-wrapper"
+      class="c7n-input-rendered-wrapper"
     >
       <div
-        class="ant-input-rendered ant-input-rendered-sm"
+        class="c7n-input-rendered c7n-input-rendered-sm"
         style="margin: 0px 0px 0px 0px;"
       >
         <div
-          class="ant-input-placeholder"
+          class="c7n-input-placeholder"
         />
         <input
-          class="ant-input ant-input-sm ant-input-search ant-input-search-enter-button ant-input-search-small"
+          class="c7n-input c7n-input-sm c7n-input-search c7n-input-search-enter-button c7n-input-search-small"
           type="text"
         />
       </div>
       <span
-        class="ant-input-suffix ant-input-suffix-sm"
+        class="c7n-input-suffix c7n-input-suffix-sm"
       >
         <button
-          class="ant-btn ant-input-search-button ant-btn-sm ant-btn-flat"
+          class="c7n-btn c7n-input-search-button c7n-btn-sm c7n-btn-flat"
           type="button"
         >
           <span>
             ok
           </span>
           <div
-            class="ant-ripple-wrapper"
+            class="c7n-ripple-wrapper"
           />
         </button>
       </span>
     </div>
   </div>
   <div
-    class="ant-input-underline"
+    class="c7n-input-underline"
   >
     <span
-      class="ant-input-ripple"
+      class="c7n-input-ripple"
     />
   </div>
 </span>
@@ -51,28 +51,28 @@ exports[`Input.Search should support custom Button 1`] = `
 
 exports[`Input.Search should support custom button 1`] = `
 <span
-  class="ant-input-wrapper ant-input-has-suffix"
+  class="c7n-input-wrapper c7n-input-has-suffix"
 >
   <div
-    class="ant-input-content"
+    class="c7n-input-content"
   >
     <div
-      class="ant-input-rendered-wrapper"
+      class="c7n-input-rendered-wrapper"
     >
       <div
-        class="ant-input-rendered ant-input-rendered-sm"
+        class="c7n-input-rendered c7n-input-rendered-sm"
         style="margin: 0px 0px 0px 0px;"
       >
         <div
-          class="ant-input-placeholder"
+          class="c7n-input-placeholder"
         />
         <input
-          class="ant-input ant-input-sm ant-input-search ant-input-search-enter-button ant-input-search-small"
+          class="c7n-input c7n-input-sm c7n-input-search c7n-input-search-enter-button c7n-input-search-small"
           type="text"
         />
       </div>
       <span
-        class="ant-input-suffix ant-input-suffix-sm"
+        class="c7n-input-suffix c7n-input-suffix-sm"
       >
         <button
           type="button"
@@ -83,10 +83,10 @@ exports[`Input.Search should support custom button 1`] = `
     </div>
   </div>
   <div
-    class="ant-input-underline"
+    class="c7n-input-underline"
   >
     <span
-      class="ant-input-ripple"
+      class="c7n-input-ripple"
     />
   </div>
 </span>

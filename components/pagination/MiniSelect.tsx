@@ -1,10 +1,11 @@
-import * as React from 'react';
+import React, { ClassicComponentClass, Component } from 'react';
+import { Size } from '../_util/enum';
 import Select, { OptionProps } from '../select';
 
-export default class MiniSelect extends React.Component<any, any> {
-  static Option = Select.Option as React.ClassicComponentClass<OptionProps>;
+export default class MiniSelect extends Component<any, any> {
+  static Option = Select.Option as ClassicComponentClass<OptionProps>;
 
   render() {
-    return <Select size="small" {...this.props} />;
+    return <Select size={Size.small} {...this.props} />;
   }
 }

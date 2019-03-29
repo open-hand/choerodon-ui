@@ -1,5 +1,7 @@
-import * as React from 'react';
+import React, { Component, CSSProperties } from 'react';
 import debounce from 'lodash/debounce';
+import classNames from 'classnames';
+import { getPrefixCls } from '../configure';
 
 // matchMedia polyfill for
 // https://github.com/WickyNilliams/enquire.js/issues/82
@@ -18,11 +20,10 @@ if (typeof window !== 'undefined') {
 }
 // Use require over import (will be lifted up)
 // make sure matchMedia polyfill run before require('react-slick')
-// Fix https://github.com/ant-design/ant-design/issues/6560
-// Fix https://github.com/ant-design/ant-design/issues/3308
 const SlickCarousel = require('react-slick').default;
 
 export type CarouselEffect = 'scrollx' | 'fade';
+
 // Carousel
 export interface CarouselProps {
   effect?: CarouselEffect;
@@ -32,7 +33,7 @@ export interface CarouselProps {
   easing?: string;
   beforeChange?: (from: number, to: number) => void;
   afterChange?: (current: number) => void;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   prefixCls?: string;
   accessibility?: boolean;
   nextArrow?: HTMLElement | any;
@@ -66,11 +67,11 @@ export interface CarouselProps {
   slickGoTo?: number;
 }
 
-export default class Carousel extends React.Component<CarouselProps, {}> {
+export default class Carousel extends Component<CarouselProps, {}> {
+  static displayName = 'Carousel';
   static defaultProps = {
     dots: true,
     arrows: false,
-    prefixCls: 'ant-carousel',
     draggable: false,
   };
 
@@ -78,19 +79,22 @@ export default class Carousel extends React.Component<CarouselProps, {}> {
 
   private slick: any;
 
-  constructor(props: CarouselProps) {
-    super(props);
-    this.onWindowResized = debounce(this.onWindowResized, 500, {
-      leading: false,
-    });
-  }
+  private onWindowResized = debounce(() => {
+
+    const { autoplay } = this.props;
+    if (autoplay && this.slick && this.slick.innerSlider && this.slick.innerSlider.autoPlay) {
+      this.slick.innerSlider.autoPlay();
+    }
+  }, 500, {
+    leading: false,
+  });
 
   componentDidMount() {
     const { autoplay } = this.props;
     if (autoplay) {
       window.addEventListener('resize', this.onWindowResized);
     }
-    // https://github.com/ant-design/ant-design/issues/7191
+
     this.innerSlider = this.slick && this.slick.innerSlider;
   }
 
@@ -102,17 +106,9 @@ export default class Carousel extends React.Component<CarouselProps, {}> {
     }
   }
 
-  onWindowResized = () => {
-    // Fix https://github.com/ant-design/ant-design/issues/2550
-    const { autoplay } = this.props;
-    if (autoplay && this.slick && this.slick.innerSlider && this.slick.innerSlider.autoPlay) {
-      this.slick.innerSlider.autoPlay();
-    }
-  }
-
   saveSlick = (node: any) => {
     this.slick = node;
-  }
+  };
 
   next() {
     this.slick.slickNext();
@@ -127,7 +123,7 @@ export default class Carousel extends React.Component<CarouselProps, {}> {
   }
 
   render() {
-    let props = {
+    const props: CarouselProps & { children?: any } = {
       ...this.props,
     };
 
@@ -135,10 +131,11 @@ export default class Carousel extends React.Component<CarouselProps, {}> {
       props.fade = true;
     }
 
-    let className = props.prefixCls;
-    if (props.vertical) {
-      className = `${className} ${className}-vertical`;
-    }
+    const prefixCls = getPrefixCls('carousel', props.prefixCls);
+
+    const className = classNames(prefixCls, {
+      [`${prefixCls}-vertical`]: props.vertical,
+    });
 
     return (
       <div className={className}>

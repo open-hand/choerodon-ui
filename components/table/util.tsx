@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { Children, isValidElement, ReactChildren } from 'react';
 import { ColumnProps } from './interface';
 
 export function flatArray(data: any[] = [], childrenName = 'children') {
@@ -47,10 +47,10 @@ export function flatFilter<T>(tree: ColumnProps<T>[], callback: (node: ColumnPro
   }, [] as ColumnProps<T>[]);
 }
 
-export function normalizeColumns(elements: React.ReactChildren) {
+export function normalizeColumns(elements: ReactChildren) {
   const columns: any[] = [];
-  React.Children.forEach(elements, (element) => {
-    if (!React.isValidElement(element)) {
+  Children.forEach(elements, (element) => {
+    if (!isValidElement(element)) {
       return;
     }
     const column: any = {

@@ -30,7 +30,7 @@ ReactDOM.render(
 ```
 
 <style>
-.code-box-demo .ant-affix {
+.code-box-demo .c7n-affix {
   z-index: 11;
 }
 </style>

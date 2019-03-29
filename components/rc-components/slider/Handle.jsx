@@ -1,12 +1,25 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import addEventListener from '../util/Dom/addEventListener';
+import addEventListener from '../../_util/addEventListener';
 
-export default class Handle extends React.Component {
+export default class Handle extends Component {
+  static propTypes = {
+    prefixCls: PropTypes.string,
+    className: PropTypes.string,
+    vertical: PropTypes.bool,
+    offset: PropTypes.number,
+    style: PropTypes.object,
+    disabled: PropTypes.bool,
+    min: PropTypes.number,
+    max: PropTypes.number,
+    value: PropTypes.number,
+    tabIndex: PropTypes.number,
+  };
+
   state = {
     clickFocused: false,
-  }
+  };
 
   componentDidMount() {
     // mouseup won't trigger if mouse moved out of handle,
@@ -28,15 +41,15 @@ export default class Handle extends React.Component {
     if (document.activeElement === this.handle) {
       this.setClickFocus(true);
     }
-  }
+  };
 
   handleBlur = () => {
     this.setClickFocus(false);
-  }
+  };
 
   handleKeyDown = () => {
     this.setClickFocus(false);
-  }
+  };
 
   clickFocus() {
     this.setClickFocus(true);
@@ -60,7 +73,7 @@ export default class Handle extends React.Component {
       this.props.className,
       {
         [`${prefixCls}-handle-click-focused`]: this.state.clickFocused,
-      }
+      },
     );
 
     const postionStyle = vertical ? { bottom: `${offset}%` } : { left: `${offset}%` };
@@ -83,7 +96,7 @@ export default class Handle extends React.Component {
       <div
         ref={node => (this.handle = node)}
         role="slider"
-        tabIndex= {disabled ? null : (tabIndex || 0)}
+        tabIndex={disabled ? null : (tabIndex || 0)}
         {...ariaProps}
         {...restProps}
         className={className}
@@ -94,16 +107,3 @@ export default class Handle extends React.Component {
     );
   }
 }
-
-Handle.propTypes = {
-  prefixCls: PropTypes.string,
-  className: PropTypes.string,
-  vertical: PropTypes.bool,
-  offset: PropTypes.number,
-  style: PropTypes.object,
-  disabled: PropTypes.bool,
-  min: PropTypes.number,
-  max: PropTypes.number,
-  value: PropTypes.number,
-  tabIndex: PropTypes.number,
-};

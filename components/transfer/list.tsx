@@ -1,19 +1,17 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import React, { ChangeEvent, Component, CSSProperties, isValidElement, ReactNode } from 'react';
+import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
+import noop from 'lodash/noop';
 import Checkbox from '../checkbox';
 import { TransferItem } from './index';
 import Search from './search';
 import Item from './item';
 import triggerEvent from '../_util/triggerEvent';
-import Animate from '../rc-components/animate';
+import Animate from '../animate';
 import PureRenderMixin from '../rc-components/util/PureRenderMixin';
 
-function noop() {
-}
-
-function isRenderResultPlainObject(result: any) {
-  return result && !React.isValidElement(result) &&
+function isRenderResultPlainObject(result: any): result is { value, label } {
+  return result && !isValidElement(result) &&
     Object.prototype.toString.call(result) === '[object Object]';
 }
 
@@ -23,7 +21,7 @@ export interface TransferListProps {
   dataSource: TransferItem[];
   filter: string;
   filterOption?: (filterText: any, item: any) => boolean;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   checkedKeys: string[];
   handleFilter: (e: any) => void;
   handleSelect: (selectedItem: any, checked: boolean) => void;
@@ -32,7 +30,7 @@ export interface TransferListProps {
   render?: (item: any) => any;
   showSearch?: boolean;
   searchPlaceholder: string;
-  notFoundContent: React.ReactNode;
+  notFoundContent: ReactNode;
   itemUnit: string;
   itemsUnit: string;
   body?: (props: any) => any;
@@ -41,7 +39,8 @@ export interface TransferListProps {
   onScroll: Function;
 }
 
-export default class TransferList extends React.Component<TransferListProps, any> {
+export default class TransferList extends Component<TransferListProps, any> {
+  static displayName = 'TransferList';
   static defaultProps = {
     dataSource: [],
     titleText: '',
@@ -53,12 +52,9 @@ export default class TransferList extends React.Component<TransferListProps, any
   timer: number;
   triggerScrollTimer: number;
 
-  constructor(props: TransferListProps) {
-    super(props);
-    this.state = {
-      mounted: false,
-    };
-  }
+  state = {
+    mounted: false,
+  };
 
   componentDidMount() {
     this.timer = window.setTimeout(() => {
@@ -93,15 +89,15 @@ export default class TransferList extends React.Component<TransferListProps, any
     this.props.handleSelect(selectedItem, !result);
   };
 
-  handleFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
+  handleFilter = (e: ChangeEvent<HTMLInputElement>) => {
     this.props.handleFilter(e);
     if (!e.target.value) {
       return;
     }
     // Manually trigger scroll event for lazy search bug
-    // https://github.com/ant-design/ant-design/issues/5631
+
     this.triggerScrollTimer = window.setTimeout(() => {
-      const listNode = (ReactDOM.findDOMNode(this) as HTMLElement).querySelectorAll('.ant-transfer-list-content')[0];
+      const listNode = (findDOMNode(this) as HTMLElement).querySelectorAll(`${this.props.prefixCls}-content`)[0];
       if (listNode) {
         triggerEvent(listNode, 'scroll');
       }
@@ -123,10 +119,15 @@ export default class TransferList extends React.Component<TransferListProps, any
   renderItem = (item: TransferItem) => {
     const { render = noop } = this.props;
     const renderResult = render(item);
-    const isRenderResultPlain = isRenderResultPlainObject(renderResult);
+    if (isRenderResultPlainObject(renderResult)) {
+      return {
+        renderedText: renderResult.value,
+        renderedEl: renderResult.label,
+      };
+    }
     return {
-      renderedText: isRenderResultPlain ? renderResult.value : renderResult,
-      renderedEl: isRenderResultPlain ? renderResult.label : renderResult,
+      renderedText: renderResult,
+      renderedEl: renderResult,
     };
   };
 

@@ -1,8 +1,8 @@
-import Button from './button';
-import ButtonGroup from './button-group';
+import Button from './Button';
+import ButtonGroup from './ButtonGroup';
 
-export { ButtonProps, ButtonShape, ButtonSize, ButtonType, ButtonFuncType } from './button';
-export { ButtonGroupProps } from './button-group';
+export { ButtonProps, ButtonShape, ButtonType, ButtonFuncType } from './Button';
+export { ButtonGroupProps } from './ButtonGroup';
 
 Button.Group = ButtonGroup;
 export default Button;

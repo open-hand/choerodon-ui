@@ -1,5 +1,5 @@
 /* eslint no-loop-func: 0*/
-import React from 'react';
+import { Children, cloneElement } from 'react';
 
 export function getValuePropValue(child) {
   const props = child.props;
@@ -126,7 +126,7 @@ function getSiblingPosition(index, len, siblingPosition) {
 export function loopAllChildren(childs, callback, parent) {
   const loop = (children, level, _parent) => {
     const len = getChildrenlength(children);
-    React.Children.forEach(children, function handler(item, index) { // eslint-disable-line
+    Children.forEach(children, function handler(item, index) { // eslint-disable-line
       const pos = `${level}-${index}`;
       if (item && item.props.children && item.type) {
         loop(item.props.children, pos, { node: item, pos });
@@ -138,21 +138,6 @@ export function loopAllChildren(childs, callback, parent) {
   };
   loop(childs, 0, parent);
 }
-
-// export function loopAllChildren(childs, callback) {
-//   const loop = (children, level) => {
-//     React.Children.forEach(children, (item, index) => {
-//       const pos = `${level}-${index}`;
-//       if (item && item.props.children) {
-//         loop(item.props.children, pos);
-//       }
-//       if (item) {
-//         callback(item, index, pos, getValuePropValue(item));
-//       }
-//     });
-//   };
-//   loop(childs, 0);
-// }
 
 export function flatToHierarchy(arr) {
   if (!arr.length) {
@@ -229,6 +214,7 @@ export function filterParentPosition(arr) {
   });
   return nArr;
 }
+
 // console.log(filterParentPosition(
 // ['0-2', '0-3-3', '0-10', '0-10-0', '0-0-1', '0-0', '0-1-1', '0-1']
 // ));
@@ -241,6 +227,7 @@ function stripTail(str) {
   }
   return st;
 }
+
 function splitPosition(pos) {
   return pos.split('-');
 }
@@ -363,27 +350,17 @@ export function getTreeNodesStates(children, values) {
 
 // can add extra prop to every node.
 export function recursiveCloneChildren(children, cb = ch => ch) {
-  // return React.Children.map(children, child => {
   return Array.from(children).map(child => {
     const newChild = cb(child);
     if (newChild && newChild.props && newChild.props.children) {
-      return React.cloneElement(newChild, {}, recursiveCloneChildren(newChild.props.children, cb));
+      return cloneElement(newChild, {}, recursiveCloneChildren(newChild.props.children, cb));
     }
     return newChild;
   });
 }
-// const newChildren = recursiveCloneChildren(children, child => {
-//   const extraProps = {};
-//   if (child && child.type && child.type.xxx) {
-//     extraProps._prop = true;
-//     return React.cloneElement(child, extraProps);
-//   }
-//   return child;
-// });
-
 
 function recursiveGen(children, level = 0) {
-  return React.Children.map(children, (child, index) => {
+  return Children.map(children, (child, index) => {
     const pos = `${level}-${index}`;
     const { title, label, value, children: subChildren, ...rest } = child.props;
     const o = {
@@ -476,6 +453,7 @@ export function filterAllCheckedData(vs, treeNodes) {
     }
     return parent;
   }
+
   checkChildren(data);
   checkParent(data);
 
@@ -519,6 +497,7 @@ export function processSimpleTreeData(treeData, format) {
       return children;
     }
   }
+
   return unflatten2(treeData);
 }
 

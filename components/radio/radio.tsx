@@ -1,18 +1,19 @@
-import * as React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import shallowEqual from 'shallowequal';
+import shallowEqual from 'lodash/isEqual';
 import RadioGroup from './group';
 import RadioButton from './radioButton';
 import { RadioProps, RadioGroupContext } from './interface';
 import RcCheckbox from '../rc-components/checkbox';
+import { getPrefixCls } from '../configure';
 
-export default class Radio extends React.Component<RadioProps, {}> {
+export default class Radio extends Component<RadioProps, {}> {
+  static displayName = 'Radio';
   static Group: typeof RadioGroup;
   static Button: typeof RadioButton;
 
   static defaultProps = {
-    prefixCls: 'ant-radio',
     type: 'radio',
   };
 
@@ -43,12 +44,13 @@ export default class Radio extends React.Component<RadioProps, {}> {
   render() {
     const { props, context } = this;
     const {
-      prefixCls,
+      prefixCls: customizePrefixCls,
       className,
       children,
       style,
       ...restProps,
     } = props;
+    const prefixCls = getPrefixCls('radio', customizePrefixCls);
     const { radioGroup } = context;
     let radioProps: RadioProps = { ...restProps };
     if (radioGroup) {

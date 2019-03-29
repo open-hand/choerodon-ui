@@ -1,12 +1,14 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import React, { Component, CSSProperties } from 'react';
+import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import shallowequal from 'shallowequal';
-import omit from 'omit.js';
+import shallowequal from 'lodash/isEqual';
+import omit from 'lodash/omit';
+import noop from 'lodash/noop';
 import getScroll from '../_util/getScroll';
 import { throttleByAnimationFrameDecorator } from '../_util/throttleByAnimationFrame';
-import addEventListener from '../rc-components/util/Dom/addEventListener';
+import addEventListener from '../_util/addEventListener';
+import { getPrefixCls } from '../configure';
 
 function getTargetRect(target: HTMLElement | Window | null): ClientRect {
   return target !== window ?
@@ -35,9 +37,6 @@ function getOffset(element: HTMLElement, target: HTMLElement | Window | null) {
   };
 }
 
-function noop() {
-}
-
 function getDefaultTarget() {
   return typeof window !== 'undefined' ?
     window : null;
@@ -52,7 +51,7 @@ export interface AffixProps {
   offset?: number;
   /** 距离窗口底部达到指定偏移量后触发 */
   offsetBottom?: number;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   /** 固定状态改变时触发的回调函数 */
   onChange?: (affixed?: boolean) => void;
   /** 设置 Affix 需要监听其滚动事件的元素，值为一个返回对应 DOM 元素的函数 */
@@ -61,11 +60,12 @@ export interface AffixProps {
 }
 
 export interface AffixState {
-  affixStyle: React.CSSProperties | undefined;
-  placeholderStyle: React.CSSProperties | undefined;
+  affixStyle: CSSProperties | undefined;
+  placeholderStyle: CSSProperties | undefined;
 }
 
-export default class Affix extends React.Component<AffixProps, AffixState> {
+export default class Affix extends Component<AffixProps, AffixState> {
+  static displayName = 'Affix';
   static propTypes = {
     offsetTop: PropTypes.number,
     offsetBottom: PropTypes.number,
@@ -98,7 +98,7 @@ export default class Affix extends React.Component<AffixProps, AffixState> {
   private fixedNode: HTMLElement;
   private placeholderNode: HTMLElement;
 
-  setAffixStyle(e: any, affixStyle: React.CSSProperties | null) {
+  setAffixStyle(e: any, affixStyle: CSSProperties | null) {
     const { onChange = noop, target = getDefaultTarget } = this.props;
     const originalAffixStyle = this.state.affixStyle;
     const isWindow = target() === window;
@@ -108,7 +108,7 @@ export default class Affix extends React.Component<AffixProps, AffixState> {
     if (shallowequal(affixStyle, originalAffixStyle)) {
       return;
     }
-    this.setState({ affixStyle: affixStyle as React.CSSProperties }, () => {
+    this.setState({ affixStyle: affixStyle as CSSProperties }, () => {
       const affixed = !!this.state.affixStyle;
       if ((affixStyle && !originalAffixStyle) ||
         (!affixStyle && originalAffixStyle)) {
@@ -117,12 +117,12 @@ export default class Affix extends React.Component<AffixProps, AffixState> {
     });
   }
 
-  setPlaceholderStyle(placeholderStyle: React.CSSProperties | null) {
+  setPlaceholderStyle(placeholderStyle: CSSProperties | null) {
     const originalPlaceholderStyle = this.state.placeholderStyle;
     if (shallowequal(placeholderStyle, originalPlaceholderStyle)) {
       return;
     }
-    this.setState({ placeholderStyle: placeholderStyle as React.CSSProperties });
+    this.setState({ placeholderStyle: placeholderStyle as CSSProperties });
   }
 
   syncPlaceholderStyle(e: any) {
@@ -148,7 +148,7 @@ export default class Affix extends React.Component<AffixProps, AffixState> {
     // Backwards support
     offsetTop = offsetTop || offset;
     const scrollTop = getScroll(targetNode, true);
-    const affixNode = ReactDOM.findDOMNode(this) as HTMLElement;
+    const affixNode = findDOMNode(this) as HTMLElement;
     const elemOffset = getOffset(affixNode, targetNode);
     const elemSize = {
       width: this.fixedNode.offsetWidth,
@@ -271,16 +271,20 @@ export default class Affix extends React.Component<AffixProps, AffixState> {
   };
 
   render() {
+    const { prefixCls, style, children } = this.props;
+    const { affixStyle, placeholderStyle } = this.state;
     const className = classNames({
-      [this.props.prefixCls || 'ant-affix']: this.state.affixStyle,
+      [`${getPrefixCls('affix', prefixCls)}`]: affixStyle,
     });
 
-    const props = omit(this.props, ['prefixCls', 'offsetTop', 'offsetBottom', 'target', 'onChange']);
-    const placeholderStyle = { ...this.state.placeholderStyle, ...this.props.style };
+    const props = omit<AffixProps, keyof AffixProps>(
+      this.props,
+      ['prefixCls', 'offsetTop', 'offsetBottom', 'target', 'onChange'],
+    );
     return (
-      <div {...props} style={placeholderStyle} ref={this.savePlaceholderNode}>
+      <div {...props} style={{ ...placeholderStyle, ...style }} ref={this.savePlaceholderNode}>
         <div className={className} ref={this.saveFixedNode} style={this.state.affixStyle}>
-          {this.props.children}
+          {children}
         </div>
       </div>
     );

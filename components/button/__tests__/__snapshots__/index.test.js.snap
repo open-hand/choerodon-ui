@@ -2,58 +2,58 @@
 
 exports[`Button fixbug renders {0} , 0 and {false} 1`] = `
 <button
-  class="ant-btn ant-btn-flat"
+  class="c7n-btn c7n-btn-flat"
   type="button"
 >
   0
   <div
-    class="ant-ripple-wrapper"
+    class="c7n-ripple-wrapper"
   />
 </button>
 `;
 
 exports[`Button fixbug renders {0} , 0 and {false} 2`] = `
 <button
-  class="ant-btn ant-btn-flat"
+  class="c7n-btn c7n-btn-flat"
   type="button"
 >
   <span>
     0
   </span>
   <div
-    class="ant-ripple-wrapper"
+    class="c7n-ripple-wrapper"
   />
 </button>
 `;
 
 exports[`Button fixbug renders {0} , 0 and {false} 3`] = `
 <button
-  class="ant-btn ant-btn-flat"
+  class="c7n-btn c7n-btn-flat"
   type="button"
 >
   <div
-    class="ant-ripple-wrapper"
+    class="c7n-ripple-wrapper"
   />
 </button>
 `;
 
 exports[`Button renders Chinese characters correctly 1`] = `
 <button
-  class="ant-btn ant-btn-flat"
+  class="c7n-btn c7n-btn-flat"
   type="button"
 >
   <span>
     按钮
   </span>
   <div
-    class="ant-ripple-wrapper"
+    class="c7n-ripple-wrapper"
   />
 </button>
 `;
 
 exports[`Button renders Chinese characters correctly 2`] = `
 <button
-  class="ant-btn ant-btn-flat"
+  class="c7n-btn c7n-btn-flat"
   type="button"
 >
   <i
@@ -63,14 +63,14 @@ exports[`Button renders Chinese characters correctly 2`] = `
     按钮
   </span>
   <div
-    class="ant-ripple-wrapper"
+    class="c7n-ripple-wrapper"
   />
 </button>
 `;
 
 exports[`Button renders Chinese characters correctly 3`] = `
 <button
-  class="ant-btn ant-btn-flat"
+  class="c7n-btn c7n-btn-flat"
   type="button"
 >
   <i
@@ -80,36 +80,36 @@ exports[`Button renders Chinese characters correctly 3`] = `
     按钮
   </span>
   <div
-    class="ant-ripple-wrapper"
+    class="c7n-ripple-wrapper"
   />
 </button>
 `;
 
 exports[`Button renders correctly 1`] = `
 <button
-  class="ant-btn ant-btn-flat"
+  class="c7n-btn c7n-btn-flat"
   type="button"
 >
   <span>
     Follow
   </span>
   <div
-    class="ant-ripple-wrapper"
+    class="c7n-ripple-wrapper"
   />
 </button>
 `;
 
 exports[`Button should support link button 1`] = `
 <a
-  class="ant-btn ant-btn-flat"
-  href="http://ant.design"
+  class="c7n-btn c7n-btn-flat"
+  href="https://choerodon.github.io/choerodon-ui/"
   target="_blank"
 >
   <span>
     link button
   </span>
   <div
-    class="ant-ripple-wrapper"
+    class="c7n-ripple-wrapper"
   />
 </a>
 `;

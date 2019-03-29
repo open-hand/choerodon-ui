@@ -1,7 +1,7 @@
 @import "../../style/themes/default";
 @import "../../style/mixins/index";
 
-@switch-prefix-cls: ~"@{ant-prefix}-switch";
+@switch-prefix-cls: ~"@{c7n-prefix}-switch";
 @switch-duration: .36s;
 
 .@{switch-prefix-cls} {
@@ -9,12 +9,12 @@
   position: relative;
   display: inline-block;
   box-sizing: border-box;
-  height: @switch-height - 4px;
-  min-width: 36px;
-  line-height: @switch-height - 6px;
+  height: @switch-height - .04rem;
+  min-width: .36rem;
+  line-height: @switch-height - .06rem;
   vertical-align: middle;
-  border-radius: 100px;
-  border: 1px solid transparent;
+  border-radius: 1rem;
+  border: @border-width-base @border-style-base transparent;
   background-color: rgba(0, 0, 0, 0.38);
   cursor: pointer;
   transition: all @switch-duration;
@@ -23,8 +23,8 @@
   &-inner {
     color: #fff;
     font-size: @font-size-sm;
-    margin-left: 24px;
-    margin-right: 6px;
+    margin-left: .24rem;
+    margin-right: .06rem;
     display: block;
   }
 
@@ -33,9 +33,9 @@
     position: absolute;
     width: @switch-height;
     height: @switch-height;
-    left: -1px;
-    top: -3px;
-    border-radius: 18px;
+    left: -.01rem;
+    top: -.03rem;
+    border-radius: .18rem;
     background-color: @component-background;
     content: " ";
     cursor: pointer;
@@ -44,14 +44,14 @@
 
   &:after {
     box-shadow:
-      0 2px 1px -1px rgba(0, 0, 0, 0.20),
-      0 1px 1px 0 rgba(0, 0, 0, 0.14),
-      0 1px 3px 0 rgba(0, 0, 0, 0.12);
+      0 .02rem .01rem -.01rem rgba(0, 0, 0, 0.20),
+      0 .01rem .01rem 0 rgba(0, 0, 0, 0.14),
+      0 .01rem .03rem 0 rgba(0, 0, 0, 0.12);
   }
 
   &:active:before,
   &:active:after {
-    width: 24px;
+    width: .24rem;
   }
 
   &:before {
@@ -62,7 +62,7 @@
     background: transparent;
     z-index: 1;
     display: none;
-    font-size: 12px;
+    font-size: .12rem;
   }
 
   &-loading:before {
@@ -75,7 +75,7 @@
   }
 
   &:focus {
-    box-shadow: 0 0 0 2px fade(@switch-color, 20%);
+    box-shadow: 0 0 0 .02rem fade(@switch-color, 20%);
     outline: 0;
   }
 
@@ -84,13 +84,13 @@
   }
 
   &-small {
-    height: @switch-sm-height - 4px;
-    min-width: 28px;
-    line-height: @switch-sm-height - 6px;
+    height: @switch-sm-height - .04rem;
+    min-width: .28rem;
+    line-height: @switch-sm-height - .06rem;
 
     .@{switch-prefix-cls}-inner {
-      margin-left: 18px;
-      margin-right: 3px;
+      margin-left: .18rem;
+      margin-right: .03rem;
       font-size: @font-size-sm;
     }
 
@@ -102,7 +102,7 @@
 
     &:active:before,
     &:active:after {
-      width: 16px;
+      width: .16rem;
     }
   }
 
@@ -114,14 +114,14 @@
     }
 
     .@{switch-prefix-cls}-inner {
-      margin-left: 3px;
-      margin-right: 18px;
+      margin-left: .03rem;
+      margin-right: .18rem;
     }
   }
 
   &-small:active&-checked:before,
   &-small:active&-checked:after {
-    margin-left: -16.5px;
+    margin-left: -.165rem;
   }
 
   &-small&-loading:before {
@@ -133,20 +133,20 @@
     background-color: @switch-color;
 
     .@{switch-prefix-cls}-inner {
-      margin-left: 6px;
-      margin-right: 24px;
+      margin-left: .06rem;
+      margin-right: .24rem;
     }
 
     &:before,
     &:after {
       left: 100%;
-      margin-left: -19px;
+      margin-left: -.19rem;
       background-color: @switch-checked-color;
     }
 
     &:active:before,
     &:active:after {
-      margin-left: -25px;
+      margin-left: -.25rem;
     }
   }
 

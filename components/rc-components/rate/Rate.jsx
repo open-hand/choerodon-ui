@@ -1,15 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import KeyCode from '../util/KeyCode';
+import noop from 'lodash/noop';
+import KeyCode from '../../_util/KeyCode';
 import { getOffsetLeft } from './util';
 import Star from './Star';
 
-function noop() {
-}
-
-export default class Rate extends React.Component {
+export default class Rate extends Component {
   static propTypes = {
     disabled: PropTypes.bool,
     value: PropTypes.number,
@@ -87,7 +85,7 @@ export default class Rate extends React.Component {
       });
     }
     this.props.onHoverChange(hoverValue);
-  }
+  };
 
   onMouseLeave = () => {
     this.setState({
@@ -95,7 +93,7 @@ export default class Rate extends React.Component {
       cleanedValue: null,
     });
     this.props.onHoverChange(undefined);
-  }
+  };
 
   onClick = (event, index) => {
     const value = this.getStarValue(index, event.pageX);
@@ -108,7 +106,7 @@ export default class Rate extends React.Component {
     this.setState({
       cleanedValue: isReset ? value : null,
     });
-  }
+  };
 
   onFocus = () => {
     const { onFocus } = this.props;
@@ -118,7 +116,7 @@ export default class Rate extends React.Component {
     if (onFocus) {
       onFocus();
     }
-  }
+  };
 
   onBlur = () => {
     const { onBlur } = this.props;
@@ -128,7 +126,7 @@ export default class Rate extends React.Component {
     if (onBlur) {
       onBlur();
     }
-  }
+  };
 
   onKeyDown = (event) => {
     const { keyCode } = event;
@@ -154,7 +152,7 @@ export default class Rate extends React.Component {
     if (onKeyDown) {
       onKeyDown(event);
     }
-  }
+  };
 
   getStarDOM(index) {
     return ReactDOM.findDOMNode(this.stars[index]);
@@ -196,11 +194,11 @@ export default class Rate extends React.Component {
 
   saveRef = (index) => (node) => {
     this.stars[index] = node;
-  }
+  };
 
   saveRate = (node) => {
     this.rate = node;
-  }
+  };
 
   render() {
     const {
@@ -230,7 +228,7 @@ export default class Rate extends React.Component {
           key={index}
           character={character}
           focused={focused}
-        />
+        />,
       );
     }
     return (
