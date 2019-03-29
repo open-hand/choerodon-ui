@@ -11,6 +11,7 @@ const icons = Icon.icons;
 
 export interface IconSelectProps extends SelectProps {
   prefix?: string;
+  showAll?: boolean;
 }
 export interface IconSelectState {
   current: number,
@@ -25,6 +26,7 @@ export default class IconSelect extends React.Component<IconSelectProps, IconSel
     filter: true,
     showArrow: false,
     showCheckAll: false,
+    showAll: false,
   };
   icons: any;
   rcSelect: React.ReactNode | null;
@@ -44,13 +46,24 @@ export default class IconSelect extends React.Component<IconSelectProps, IconSel
   }
 
   initIcon(current: number = 1, pageSize: number = 20, filterValue: string = '') {
+    const { showAll } = this.props;
     const minIndex = (current - 1) * pageSize;
     const maxIndex = current * pageSize;
-    let items = icons.favorite;
-    if (filterValue) {
-      items = icons.favorite.filter((name) => {
-        return name.toLowerCase().indexOf(filterValue.toLowerCase()) !== -1;
-      });
+    let items;
+    if (showAll) {
+      items = icons.default;
+      if (filterValue) {
+        items = icons.favorite.filter((name) => {
+          return name.toLowerCase().indexOf(filterValue.toLowerCase()) !== -1;
+        });
+      }
+    } else {
+      items = icons.favorite;
+      if (filterValue) {
+        items = icons.favorite.filter((name) => {
+          return name.toLowerCase().indexOf(filterValue.toLowerCase()) !== -1;
+        });
+      }
     }
     const total = items.length || 0;
     const currentData = items.filter((name, index) => {
