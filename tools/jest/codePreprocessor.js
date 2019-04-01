@@ -30,8 +30,8 @@ module.exports = {
     babelConfig.plugins.push([
       require.resolve('babel-plugin-import'),
       {
-        libraryName: 'antd-mobile',
-        libraryDirectory: '../../../../components',
+        libraryName: 'choerodon-ui/pro',
+        libraryDirectory: '../../../../components-pro',
       },
     ]);
 
@@ -47,7 +47,7 @@ module.exports = {
 
     const babelJest = createTransformer(babelConfig);
     const fileName = isJavaScript ? path : 'file.js';
-    return babelJest.process(src, fileName);
+    return babelJest.process(src, fileName, config, transformOptions);
   },
 
   getCacheKey(...args) {

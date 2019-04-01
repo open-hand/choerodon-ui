@@ -71,7 +71,7 @@ function dist(done) {
 function tag() {
   console.log('tagging');
   const { version } = packageJson;
-  execSync(`git tag ${version}`);
+  execSync(`git tag v${version}`);
   execSync(`git push origin ${version}:${version}`);
   execSync('git push origin master:master');
   console.log('tagged');

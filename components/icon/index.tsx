@@ -1,8 +1,7 @@
 import React, { Component, CSSProperties, MouseEventHandler } from 'react';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
-import icons from './icons';
-import categories from './categories';
+import { icons, categories } from 'choerodon-ui-font';
 
 export interface IconProps {
   type: string;

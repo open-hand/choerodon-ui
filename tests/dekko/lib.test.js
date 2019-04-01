@@ -26,8 +26,10 @@ function check(dir) {
     .hasFile('css.js')
     .hasFile('index.js');
 
-  $(`${dir}/style`)
-    .hasFile('v2-compatible-reset.css');
+  if (dir === 'lib') {
+    $(`${dir}/style`)
+      .hasFile('v2-compatible-reset.css');
+  }
 
   // eslint-disable-next-line
   console.log(chalk.green(`✨ \`${dir}\` directory is valid.`));

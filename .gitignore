@@ -48,3 +48,4 @@ components/rc-components/dialog/*.jsx
 !components-pro/**/__tests__/*.js.snap
 /.history
 jest_*
+.jest_cache/

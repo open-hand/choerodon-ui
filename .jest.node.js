@@ -24,4 +24,5 @@ module.exports = {
       tsConfigFile: './tsconfig.test.json',
     }
   },
+  cacheDirectory: './.jest_cache'
 };

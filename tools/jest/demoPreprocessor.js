@@ -9,6 +9,11 @@ const pkg = require('../../package.json');
 
 const libDir = process.env.LIB_DIR || 'components';
 
+const libMatchPattern = /choerodon-ui\/lib\/.+/;
+const libPattern = /choerodon-ui\/lib/;
+const libProMatchPattern = /choerodon-ui\/pro\/lib\/.+/;
+const libProPattern = /choerodon-ui\/pro\/lib/;
+
 function getCode(tree) {
   let code;
   const find = (node) => {
@@ -32,7 +37,7 @@ function createDemo({ types: t }) {
           [
             t.importDefaultSpecifier(t.Identifier('React')),
           ],
-          t.StringLiteral('react')
+          t.StringLiteral('react'),
         );
         path.unshiftContainer('body', importReact);
       },
@@ -52,9 +57,10 @@ function createDemo({ types: t }) {
       },
 
       ImportDeclaration(path) {
-        const libPattern = new RegExp('choerodon-ui/lib/.+');
-        if (libPattern.test(path.node.source.value)) {
-          path.node.source.value = path.node.source.value.replace(/choerodon-ui\/lib/, '../../../components');
+        if (libMatchPattern.test(path.node.source.value)) {
+          path.node.source.value = path.node.source.value.replace(libPattern, '../../../components');
+        } else if (libProMatchPattern.test(path.node.source.value)) {
+          path.node.source.value = path.node.source.value.replace(libProPattern, '../../../components-pro');
         }
         rewriteSource(t, path, libDir);
       },
@@ -82,7 +88,11 @@ module.exports = {
           {
             libraryName: 'choerodon-ui',
             libraryDirectory: `../../../../${libDir}`,
-          }
+          },
+          {
+            libraryName: 'choerodon-ui/pro',
+            libraryDirectory: `../../../../pro/${libDir}`,
+          },
         ],
       ]);
     }

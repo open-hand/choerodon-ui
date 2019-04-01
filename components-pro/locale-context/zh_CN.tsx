@@ -94,7 +94,7 @@ export default {
   },
   Icon: {
     icons: '图标',
-    whatsNew: '新增图标',
+    whatsNew: '新增',
     direction: '方向性',
     suggestion: '提示建议性',
     edit: '编辑类',

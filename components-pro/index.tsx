@@ -82,8 +82,6 @@ export { default as Col } from './col';
 
 export { default as localeContext } from './locale-context';
 
-export { default as version } from './version';
-
 export { default as Pagination } from './pagination';
 
 export { default as Menu } from './menu';
