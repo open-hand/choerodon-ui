@@ -52,13 +52,13 @@ ReactDOM.render(<IconSet className="icons" />, mountNode);
 type | 图标类型 | string | -
 
 <style>
-.ant-icon-block {
+.c7n-icon-block {
   display: inline-block;
   width: 200px;
   text-align: center;
   font-size: 14px;
 }
-.ant-icon-block .icon {
+.c7n-icon-block .icon {
   line-height: 80px;
   transition: font-size .2s;
 }

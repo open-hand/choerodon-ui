@@ -27,7 +27,7 @@ ReactDOM.render(
 ````
 
 <style>
-.ant-switch {
+.c7n-switch {
   margin-bottom: 8px;
 }
 </style>

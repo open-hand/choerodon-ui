@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { cloneElement } from 'react';
 import ReactDOM from 'react-dom';
 import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
-import KeyCode from '../util/KeyCode';
+import noop from 'lodash/noop';
+import KeyCode from '../../_util/KeyCode';
 import DateTable from './date/DateTable';
 import CalendarHeader from './calendar/CalendarHeader';
 import CalendarFooter from './calendar/CalendarFooter';
@@ -10,9 +11,6 @@ import CalendarMixin from './mixin/CalendarMixin';
 import CommonMixin from './mixin/CommonMixin';
 import DateInput from './date/DateInput';
 import { getTimeConfig, getTodayTime, syncTime } from './util';
-
-function noop() {
-}
 
 function goStartMonth() {
   const next = this.state.value.clone();
@@ -242,7 +240,7 @@ const Calendar = createReactClass({
         timePickerProps.defaultOpenValue = timePicker.props.defaultValue;
       }
 
-      timePickerEle = React.cloneElement(timePicker, timePickerProps);
+      timePickerEle = cloneElement(timePicker, timePickerProps);
     }
 
     const dateInputElement = props.showDateInput ? (

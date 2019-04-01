@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Children } from 'react';
 import createReactClass from 'create-react-class';
 import classnames from 'classnames';
 import InkTabBarMixin from './InkTabBarMixin';
@@ -24,7 +24,7 @@ const SwipeableInkTabBar = createReactClass({
       flexBasis: _flexWidth,
     };
 
-    React.Children.forEach(children, (child) => {
+    Children.forEach(children, (child) => {
       if (!child) {
         return;
       }

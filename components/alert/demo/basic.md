@@ -22,7 +22,7 @@ ReactDOM.render(
 ````
 
 <style>
-.ant-alert {
+.c7n-alert {
   margin-bottom: 16px;
 }
 </style>

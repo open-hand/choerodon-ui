@@ -66,7 +66,7 @@ title: Select
 | filter | 下拉框顶部查询框 | boolean | false |
 | filterValue | 下拉框顶部查询框值 | string | - |
 | onFilterChange | 下拉框顶部查询框值改变回调 | function(value) | - |
-| loading | 数据是否加载中 | boolean\|[object](https://ant.design/components/spin-cn/#API) ([更多]
+| loading | 数据是否加载中 | boolean\|[object](/components/spin-cn/#API) ([更多]
 | choiceRemove | 仅适用于`tags` `multiple` 是否可以直接删除value | boolean \| function(value) | true \| (value) => true |
 | onChoiceRemove | 仅适用于`tags` `multiple` 删除每一个值的回调 | function(value) | - |
 

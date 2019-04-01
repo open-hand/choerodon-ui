@@ -1,7 +1,9 @@
-import * as React from 'react';
+import React, { Component, CSSProperties, FormEventHandler } from 'react';
 import classNames from 'classnames';
 import RcInputNumber from '../rc-components/input-number';
 import { AbstractInputProps } from '../input/Input';
+import { Size } from '../_util/enum';
+import { getPrefixCls } from '../configure';
 
 export interface InputNumberProps extends AbstractInputProps {
   prefixCls?: string;
@@ -11,36 +13,37 @@ export interface InputNumberProps extends AbstractInputProps {
   step?: number | string;
   defaultValue?: number;
   tabIndex?: number;
-  onKeyDown?: React.FormEventHandler<any>;
+  onKeyDown?: FormEventHandler<any>;
   onChange?: (value: number | string | undefined) => void;
   disabled?: boolean;
-  size?: 'large' | 'small' | 'default';
+  size?: Size;
   formatter?: (value: number | string | undefined) => string;
   parser?: (displayValue: string | undefined) => number;
   placeholder?: string;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   className?: string;
   name?: string;
   id?: string;
   precision?: number;
 }
 
-export default class InputNumber extends React.Component<InputNumberProps, any> {
+export default class InputNumber extends Component<InputNumberProps, any> {
+  static displayName = 'InputNumber';
   static defaultProps = {
-    prefixCls: 'ant-input-number',
     step: 1,
   };
 
   private inputNumberRef: any;
 
   render() {
-    const { className, size, ...others } = this.props;
+    const { className, size, prefixCls: customizePrefixCls, ...others } = this.props;
+    const prefixCls = getPrefixCls('input-number', customizePrefixCls);
     const inputNumberClass = classNames({
-      [`${this.props.prefixCls}-lg`]: size === 'large',
-      [`${this.props.prefixCls}-sm`]: size === 'small',
+      [`${prefixCls}-lg`]: size === Size.large,
+      [`${prefixCls}-sm`]: size === Size.small,
     }, className);
 
-    return <RcInputNumber ref={(c: any) => this.inputNumberRef = c} className={inputNumberClass} {...others} />;
+    return <RcInputNumber ref={(c: any) => this.inputNumberRef = c} className={inputNumberClass} prefixCls={prefixCls} {...others} />;
   }
 
   focus() {

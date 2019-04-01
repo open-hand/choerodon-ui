@@ -1,18 +1,19 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { debounce, warningOnce } from './utils';
-import shallowequal from 'shallowequal';
-import addEventListener from '../util/Dom/addEventListener';
-import { Provider, create } from 'mini-store';
+import debounce from 'lodash/debounce';
+import isEqual from 'lodash/isEqual';
 import merge from 'lodash/merge';
-import ColumnManager from './ColumnManager';
+import { create, Provider } from 'mini-store';
 import classes from 'component-classes';
+import warning from '../../_util/warning';
+import addEventListener from '../../_util/addEventListener';
+import ColumnManager from './ColumnManager';
 import HeadTable from './HeadTable';
 import BodyTable from './BodyTable';
 import FootTable from './FootTable';
 import ExpandableTable from './ExpandableTable';
 
-export default class Table extends React.Component {
+export default class Table extends Component {
   static propTypes = {
     data: PropTypes.array,
     useFixedHeader: PropTypes.bool,
@@ -57,20 +58,22 @@ export default class Table extends React.Component {
       }),
     }),
     ...ExpandableTable.PropTypes,
-  }
+  };
 
   static childContextTypes = {
     table: PropTypes.any,
     components: PropTypes.any,
-  }
+  };
 
   static defaultProps = {
     data: [],
     useFixedHeader: false,
     rowKey: 'key',
     rowClassName: () => '',
-    onRow() {},
-    onHeaderRow() {},
+    onRow() {
+    },
+    onHeaderRow() {
+    },
     prefixCls: 'rc-table',
     bodyStyle: {},
     style: {},
@@ -78,7 +81,7 @@ export default class Table extends React.Component {
     scroll: {},
     rowRef: () => null,
     emptyText: () => 'No Data',
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -90,13 +93,13 @@ export default class Table extends React.Component {
       'onRowMouseEnter',
       'onRowMouseLeave',
     ].forEach(name => {
-      warningOnce(
+      warning(
         props[name] === undefined,
         `${name} is deprecated, please use onRow instead.`,
       );
     });
 
-    warningOnce(
+    warning(
       props.getBodyWrapper === undefined,
       'getBodyWrapper is deprecated, please use custom components instead.',
     );
@@ -147,7 +150,7 @@ export default class Table extends React.Component {
     if (this.columnManager.isAnyColumnsFixed()) {
       this.handleWindowResize();
       this.resizeEvent = addEventListener(
-        window, 'resize', this.debouncedWindowResize
+        window, 'resize', this.debouncedWindowResize,
       );
     }
   }
@@ -165,7 +168,7 @@ export default class Table extends React.Component {
       this.handleWindowResize();
       if (!this.resizeEvent) {
         this.resizeEvent = addEventListener(
-          window, 'resize', this.debouncedWindowResize
+          window, 'resize', this.debouncedWindowResize,
         );
       }
     }
@@ -186,15 +189,14 @@ export default class Table extends React.Component {
 
   getRowKey = (record, index) => {
     const rowKey = this.props.rowKey;
-    const key = (typeof rowKey === 'function') ?
-      rowKey(record, index) : record[rowKey];
-    warningOnce(
+    const key = (typeof rowKey === 'function') ? rowKey(record, index) : record[rowKey];
+    warning(
       key !== undefined,
       'Each record in table should have a unique `key` prop,' +
-      'or set `rowKey` to an unique primary key.'
+      'or set `rowKey` to an unique primary key.',
     );
     return key === undefined ? index : key;
-  }
+  };
 
   setScrollPosition(position) {
     this.scrollPosition = position;
@@ -233,36 +235,31 @@ export default class Table extends React.Component {
   handleWindowResize = () => {
     this.syncFixedTableRowHeight();
     this.setScrollPositionClassName();
-  }
+  };
 
   syncFixedTableRowHeight = () => {
     const tableRect = this.tableNode.getBoundingClientRect();
     // If tableNode's height less than 0, suppose it is hidden and don't recalculate rowHeight.
-    // see: https://github.com/ant-design/ant-design/issues/4836
     if (tableRect.height !== undefined && tableRect.height <= 0) {
       return;
     }
     const { prefixCls } = this.props;
-    const headRows = this.headTable ?
-            this.headTable.querySelectorAll('thead') :
-            this.bodyTable.querySelectorAll('thead');
-    const footRows = this.footTable ?
-            this.footTable.querySelectorAll('tfoot') :
-            this.bodyTable.querySelectorAll('tfoot');
+    const headRows = this.headTable ? this.headTable.querySelectorAll('thead') : this.bodyTable.querySelectorAll('thead');
+    const footRows = this.footTable ? this.footTable.querySelectorAll('tfoot') : this.bodyTable.querySelectorAll('tfoot');
     const bodyRows = this.bodyTable.querySelectorAll(`.${prefixCls}-row`) || [];
     const fixedColumnsHeadRowsHeight = [].map.call(
-      headRows, row => row.getBoundingClientRect().height || 'auto'
+      headRows, row => row.getBoundingClientRect().height || 'auto',
     );
     const fixedColumnsFootRowsHeight = [].map.call(
-      footRows, row => row.getBoundingClientRect().height || 'auto'
+      footRows, row => row.getBoundingClientRect().height || 'auto',
     );
     const fixedColumnsBodyRowsHeight = [].map.call(
-      bodyRows, row => row.getBoundingClientRect().height || 'auto'
+      bodyRows, row => row.getBoundingClientRect().height || 'auto',
     );
     const state = this.store.getState();
-    if (shallowequal(state.fixedColumnsHeadRowsHeight, fixedColumnsHeadRowsHeight) &&
-        shallowequal(state.fixedColumnsFootRowsHeight, fixedColumnsFootRowsHeight) &&
-        shallowequal(state.fixedColumnsBodyRowsHeight, fixedColumnsBodyRowsHeight)) {
+    if (isEqual(state.fixedColumnsHeadRowsHeight, fixedColumnsHeadRowsHeight) &&
+      isEqual(state.fixedColumnsFootRowsHeight, fixedColumnsFootRowsHeight) &&
+      isEqual(state.fixedColumnsBodyRowsHeight, fixedColumnsBodyRowsHeight)) {
       return;
     }
 
@@ -271,7 +268,7 @@ export default class Table extends React.Component {
       fixedColumnsFootRowsHeight,
       fixedColumnsBodyRowsHeight,
     });
-  }
+  };
 
   resetScrollX() {
     if (this.headTable) {
@@ -291,7 +288,6 @@ export default class Table extends React.Component {
   }
 
   handleBodyScrollLeft = (e) => {
-    // Fix https://github.com/ant-design/ant-design/issues/7635
     if (e.currentTarget !== e.target) {
       return;
     }
@@ -313,7 +309,7 @@ export default class Table extends React.Component {
     }
     // Remember last scrollLeft for scroll direction detecting.
     this.lastScrollLeft = target.scrollLeft;
-  }
+  };
 
   handleBodyScrollTop = (e) => {
     const target = e.target;
@@ -333,16 +329,16 @@ export default class Table extends React.Component {
     }
     // Remember last scrollTop for scroll direction detecting.
     this.lastScrollTop = target.scrollTop;
-  }
+  };
 
   handleBodyScroll = (e) => {
     this.handleBodyScrollLeft(e);
     this.handleBodyScrollTop(e);
-  }
+  };
 
   saveRef = (name) => (node) => {
     this[name] = node;
-  }
+  };
 
   renderMainTable() {
     const { scroll, prefixCls } = this.props;

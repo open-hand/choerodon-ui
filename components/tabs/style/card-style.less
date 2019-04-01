@@ -1,7 +1,7 @@
 @import "../../style/themes/default";
 @import "../../style/mixins/index";
 
-@tab-prefix-cls: ~"@{ant-prefix}-tabs";
+@tab-prefix-cls: ~"@{c7n-prefix}-tabs";
 
 // card style
 .@{tab-prefix-cls} {
@@ -17,16 +17,16 @@
     border-bottom: 0;
     border-radius: @border-radius-base @border-radius-base 0 0;
     background: @tabs-card-head-background;
-    margin-right: 2px;
-    padding: 0 16px;
+    margin-right: .02rem;
+    padding: 0 .16rem;
     transition: all 0.3s @ease-in-out;
-    line-height: @tabs-card-height - 2px;
+    line-height: @tabs-card-height - .02rem;
   }
   &&-card > &-bar &-tab-active {
     background: @component-background;
     border-color: @border-color-split;
     color: @tabs-card-active-color;
-    padding-bottom: 1px;
+    padding-bottom: .01rem;
   }
   &&-card > &-bar &-tab-inactive {
     padding: 0;
@@ -38,12 +38,12 @@
     color: @text-color-secondary;
     transition: all .3s;
     font-size: @font-size-sm;
-    margin-left: 3px;
-    margin-right: -5px;
+    margin-left: .03rem;
+    margin-right: -.05rem;
     overflow: hidden;
     vertical-align: middle;
-    width: 16px;
-    height: 16px;
+    width: .16rem;
+    height: .16rem;
     height: @font-size-base;
     &:hover {
       color: @heading-color;
@@ -66,14 +66,14 @@
     line-height: @tabs-card-height;
 
     .@{tab-prefix-cls}-new-tab {
-      width: 20px;
-      height: 20px;
-      line-height: 20px;
+      width: .2rem;
+      height: .2rem;
+      line-height: .2rem;
       text-align: center;
       cursor: pointer;
       border-radius: @border-radius-sm;
       border: @border-width-base @border-style-base @border-color-split;
-      font-size: 12px;
+      font-size: .12rem;
       color: @text-color;
       transition: all .3s;
       &:hover {
@@ -82,20 +82,18 @@
       }
     }
   }
-
-  // https://github.com/ant-design/ant-design/issues/4669
   &-vertical&-card > .@{tab-prefix-cls}-bar {
     .@{tab-prefix-cls}-nav-container {
       height: auto;
     }
     .@{tab-prefix-cls}-tab {
       border-bottom: @border-width-base @border-style-base @border-color-split;
-      margin-bottom: 8px;
+      margin-bottom: .08rem;
       &-active {
-        padding-bottom: 4px;
+        padding-bottom: .04rem;
       }
       &:last-child {
-        margin-bottom: 8px;
+        margin-bottom: .08rem;
       }
     }
     .@{tab-prefix-cls}-new-tab {
@@ -110,10 +108,10 @@
     .@{tab-prefix-cls}-tab {
       border-right: 0;
       border-radius: @border-radius-base 0 0 @border-radius-base;
-      margin-right: 1px;
+      margin-right: .01rem;
       &-active {
-        margin-right: -1px;
-        padding-right: 18px;
+        margin-right: -.01rem;
+        padding-right: .18rem;
       }
     }
   }
@@ -125,15 +123,13 @@
     .@{tab-prefix-cls}-tab {
       border-left: 0;
       border-radius: 0 @border-radius-base @border-radius-base 0;
-      margin-left: 1px;
+      margin-left: .01rem;
       &-active {
-        margin-left: -1px;
-        padding-left: 18px;
+        margin-left: -.01rem;
+        padding-left: .18rem;
       }
     }
   }
-
-  // https://github.com/ant-design/ant-design/issues/9104
   &&-card&-bottom > &-bar &-tab {
     border-bottom: @border-width-base @border-style-base @border-color-split;
     border-top: 0;
@@ -143,6 +139,6 @@
   &&-card&-bottom > &-bar &-tab-active {
     color: @primary-color;
     padding-bottom: 0;
-    padding-top: 1px;
+    padding-top: .01rem;
   }
 }

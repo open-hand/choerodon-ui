@@ -65,7 +65,7 @@ class AdvancedSearchForm extends React.Component {
   render() {
     return (
       <Form
-        className="ant-advanced-search-form"
+        className="c7n-advanced-search-form"
         onSubmit={this.handleSearch}
       >
         <Row gutter={24}>{this.getFields()}</Row>
@@ -96,24 +96,24 @@ ReactDOM.render(
 ````
 
 ````css
-.ant-advanced-search-form {
+.c7n-advanced-search-form {
   padding: 24px;
   background: #fbfbfb;
   border: 1px solid #d9d9d9;
   border-radius: 6px;
 }
 
-.ant-advanced-search-form .ant-form-item {
+.c7n-advanced-search-form .c7n-form-item {
   display: flex;
 }
 
-.ant-advanced-search-form .ant-form-item-control-wrapper {
+.c7n-advanced-search-form .c7n-form-item-control-wrapper {
   flex: 1;
 }
 ````
 
 <style>
-#components-form-demo-advanced-search .ant-form {
+#components-form-demo-advanced-search .c7n-form {
   max-width: none;
 }
 #components-form-demo-advanced-search .search-result-list {

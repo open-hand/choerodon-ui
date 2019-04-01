@@ -1,0 +1,58 @@
+@import "../../../components/style/themes/default";
+@import "../../../components/style/mixins/index";
+
+@field-prefix-cls: ~"@{c7n-prefix}-pro-field";
+
+.@{field-prefix-cls} {
+  display: inline-block;
+  width: 100%;
+  &-label,
+  &-label-vertical {
+    vertical-align: middle;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    line-height: 28 / 13; // <-- fieldHeight / fontSize
+    label {
+      display: inline-block;
+    }
+    &-right {
+      text-align: right;
+    }
+    &-center {
+      text-align: center;
+    }
+  }
+  &-label,
+  &-wrapper {
+    padding: .1rem .05rem;
+  }
+  &-label-vertical {
+    text-align: left;
+    direction: ltr;
+    display: block;
+    padding-top: 0;
+    padding-bottom: 0;
+    & + .@{field-prefix-cls}-wrapper {
+      padding-top: 0;
+    }
+  }
+  &-label:after {
+    display: inline-block;
+    line-height: 1;
+    color: @label-required-color;
+    width: .08rem;
+    vertical-align: middle;
+    content: " ";
+  }
+  &-required&-label:after {
+    content: "*";
+  }
+  &-help {
+    color: @field-help-color;
+    font-size: small;
+    // 帮助信息相对输入框应该另起一行
+    // display: inline-block;
+    word-break: break-all;
+  }
+}

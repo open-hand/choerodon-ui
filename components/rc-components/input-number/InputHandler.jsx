@@ -2,7 +2,17 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Touchable from 'rmc-feedback';
 
-class InputHandler extends Component {
+export default class InputHandler extends Component {
+  static propTypes = {
+    prefixCls: PropTypes.string,
+    disabled: PropTypes.bool,
+    onTouchStart: PropTypes.func,
+    onTouchEnd: PropTypes.func,
+    onMouseDown: PropTypes.func,
+    onMouseUp: PropTypes.func,
+    onMouseLeave: PropTypes.func,
+  };
+
   render() {
     const {
       prefixCls, disabled, onTouchStart, onTouchEnd,
@@ -23,15 +33,3 @@ class InputHandler extends Component {
     );
   }
 }
-
-InputHandler.propTypes = {
-  prefixCls: PropTypes.string,
-  disabled: PropTypes.bool,
-  onTouchStart: PropTypes.func,
-  onTouchEnd: PropTypes.func,
-  onMouseDown: PropTypes.func,
-  onMouseUp: PropTypes.func,
-  onMouseLeave: PropTypes.func,
-};
-
-export default InputHandler;

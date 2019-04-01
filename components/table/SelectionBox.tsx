@@ -1,9 +1,9 @@
-import * as React from 'react';
+import React, { Component } from 'react';
 import Checkbox from '../checkbox';
 import Radio from '../radio';
 import { SelectionBoxProps, SelectionBoxState } from './interface';
 
-export default class SelectionBox extends React.Component<SelectionBoxProps, SelectionBoxState> {
+export default class SelectionBox extends Component<SelectionBoxProps, SelectionBoxState> {
   unsubscribe: () => void;
 
   constructor(props: SelectionBoxProps) {

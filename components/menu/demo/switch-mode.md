@@ -32,7 +32,7 @@ class Sider extends React.Component {
     return (
       <div>
         <Switch onChange={this.changeMode} /> Change Mode
-        <span className="ant-divider" style={{ margin: '0 1em' }} />
+        <span className="c7n-divider" style={{ margin: '0 1em' }} />
         <br />
         <br />
         <Menu

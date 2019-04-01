@@ -1,7 +1,7 @@
 import classnames from 'classnames';
-import { setTransform, isTransformSupported } from './utils';
+import { isTransformSupported, setTransform } from './utils';
 import React from 'react';
-import addEventListener from '../util/Dom/addEventListener';
+import addEventListener from '../../_util/addEventListener';
 import debounce from 'lodash/debounce';
 
 export default {
@@ -72,7 +72,6 @@ export default {
       next = true;
     } else {
       next = false;
-      // Fix https://github.com/ant-design/ant-design/issues/8861
       // Test with container offset which is stable
       // and set the offset of the nav wrap node
       const realOffset = navWrapNodeWH - navNodeWH;

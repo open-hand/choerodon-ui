@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { Component } from 'react';
 import FilterSelect from './FilterSelect';
 import ColumnFilter from './ColumnFilter';
 import { ColumnProps, TableStateFilters } from './interface';
@@ -18,7 +18,7 @@ export interface FilterBarProps<T> {
   getPopupContainer?: (triggerNode?: Element) => HTMLElement;
 }
 
-export default class FilterBar<T> extends React.Component<FilterBarProps<T>, any> {
+export default class FilterBar<T> extends Component<FilterBarProps<T>, any> {
   render() {
     const {
       prefixCls, columns, onColumnFilterChange, onFilterSelectChange, onFilterSelectClear, onFilter,

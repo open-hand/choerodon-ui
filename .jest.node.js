@@ -10,9 +10,9 @@ module.exports = {
     'md',
   ],
   transform: {
-    '\\.tsx?$': './tests/jest/codePreprocessor',
-    '\\.jsx?$': './tests/jest/codePreprocessor',
-    '\\.md$': './tests/jest/demoPreprocessor',
+    '\\.tsx?$': './tools/jest/codePreprocessor',
+    '\\.jsx?$': './tools/jest/codePreprocessor',
+    '\\.md$': './tools/jest/demoPreprocessor',
   },
   testRegex: 'demo\\.test\\.js$',
   testEnvironment: 'node',
@@ -24,4 +24,5 @@ module.exports = {
       tsConfigFile: './tsconfig.test.json',
     }
   },
+  cacheDirectory: './.jest_cache'
 };

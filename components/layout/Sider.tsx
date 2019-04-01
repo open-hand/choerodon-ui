@@ -1,5 +1,10 @@
-// matchMedia polyfill for
-// https://github.com/WickyNilliams/enquire.js/issues/82
+import React, { Component, HTMLAttributes, ReactNode } from 'react';
+import classNames from 'classnames';
+import omit from 'lodash/omit';
+import PropTypes from 'prop-types';
+import Icon from '../icon';
+import { getPrefixCls } from '../configure';
+
 if (typeof window !== 'undefined') {
   const matchMediaPolyfill = (mediaQuery: string): MediaQueryList => {
     return {
@@ -14,12 +19,6 @@ if (typeof window !== 'undefined') {
   window.matchMedia = window.matchMedia || matchMediaPolyfill;
 }
 
-import * as React from 'react';
-import classNames from 'classnames';
-import omit from 'omit.js';
-import PropTypes from 'prop-types';
-import Icon from '../icon';
-
 const dimensionMap = {
   xs: '480px',
   sm: '576px',
@@ -31,14 +30,14 @@ const dimensionMap = {
 
 export type CollapseType = 'clickTrigger' | 'responsive';
 
-export interface SiderProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface SiderProps extends HTMLAttributes<HTMLDivElement> {
   prefixCls?: string;
   collapsible?: boolean;
   collapsed?: boolean;
   defaultCollapsed?: boolean;
   reverseArrow?: boolean;
   onCollapse?: (collapsed: boolean, type: CollapseType) => void;
-  trigger?: React.ReactNode;
+  trigger?: ReactNode;
   width?: number | string;
   collapsedWidth?: number | string;
   breakpoint?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
@@ -62,11 +61,11 @@ const generateId = (() => {
   };
 })();
 
-export default class Sider extends React.Component<SiderProps, SiderState> {
+export default class Sider extends Component<SiderProps, SiderState> {
+  static displayName = 'LayoutSider';
   static __ANT_LAYOUT_SIDER: any = true;
 
   static defaultProps = {
-    prefixCls: 'ant-layout-sider',
     collapsible: false,
     defaultCollapsed: false,
     reverseArrow: false,
@@ -89,7 +88,7 @@ export default class Sider extends React.Component<SiderProps, SiderState> {
 
   constructor(props: SiderProps) {
     super(props);
-    this.uniqueId = generateId('ant-sider-');
+    this.uniqueId = generateId(getPrefixCls('sider-'));
     let matchMedia;
     if (typeof window !== 'undefined') {
       matchMedia = window.matchMedia;
@@ -150,7 +149,7 @@ export default class Sider extends React.Component<SiderProps, SiderState> {
     if (this.state.collapsed !== mql.matches) {
       this.setCollapsed(mql.matches, 'responsive');
     }
-  }
+  };
 
   setCollapsed = (collapsed: boolean, type: CollapseType) => {
     if (!('collapsed' in this.props)) {
@@ -162,22 +161,24 @@ export default class Sider extends React.Component<SiderProps, SiderState> {
     if (onCollapse) {
       onCollapse(collapsed, type);
     }
-  }
+  };
 
   toggle = () => {
     const collapsed = !this.state.collapsed;
     this.setCollapsed(collapsed, 'clickTrigger');
-  }
+  };
 
   belowShowChange = () => {
     this.setState({ belowShow: !this.state.belowShow });
-  }
+  };
 
   render() {
-    const { prefixCls, className,
+    const {
+      prefixCls: customizePrefixCls, className,
       collapsible, reverseArrow, trigger, style, width, collapsedWidth,
       ...others,
     } = this.props;
+    const prefixCls = getPrefixCls('layout-sider', customizePrefixCls);
     const divProps = omit(others, ['collapsed',
       'defaultCollapsed', 'onCollapse', 'breakpoint']);
     const siderWidth = this.state.collapsed ? collapsedWidth : width;
@@ -195,17 +196,17 @@ export default class Sider extends React.Component<SiderProps, SiderState> {
     const defaultTrigger = iconObj[status];
     const triggerDom = (
       trigger !== null ?
-      zeroWidthTrigger || (
-        <div className={`${prefixCls}-trigger`} onClick={this.toggle} style={{ width: siderWidth }}>
-          {trigger || defaultTrigger}
-        </div>
-      ) : null
+        zeroWidthTrigger || (
+          <div className={`${prefixCls}-trigger`} onClick={this.toggle} style={{ width: siderWidth }}>
+            {trigger || defaultTrigger}
+          </div>
+        ) : null
     );
     const divStyle = {
       ...style,
       flex: `0 0 ${siderWidth}px`,
       maxWidth: `${siderWidth}px`, // Fix width transition bug in IE11
-      minWidth: `${siderWidth}px`, // https://github.com/ant-design/ant-design/issues/6349
+      minWidth: `${siderWidth}px`,
       width: `${siderWidth}px`,
     };
     const siderCls = classNames(className, prefixCls, {

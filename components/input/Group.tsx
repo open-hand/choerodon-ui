@@ -1,20 +1,23 @@
-import * as React from 'react';
+import React, { CSSProperties, StatelessComponent } from 'react';
 import classNames from 'classnames';
+import { Size } from '../_util/enum';
+import { getPrefixCls } from '../configure';
 
 export interface GroupProps {
   className?: string;
-  size?: 'large' | 'small' | 'default';
+  size?: Size;
   children?: any;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   prefixCls?: string;
   compact?: boolean;
 }
 
-const Group: React.StatelessComponent<GroupProps> = (props) => {
-  const { prefixCls = 'ant-input-group', className = '' } = props;
+const Group: StatelessComponent<GroupProps> = (props) => {
+  const { prefixCls: customizePrefixCls, className = '' } = props;
+  const prefixCls = getPrefixCls('input-group', customizePrefixCls);
   const cls = classNames(prefixCls, {
-    [`${prefixCls}-lg`]: props.size === 'large',
-    [`${prefixCls}-sm`]: props.size === 'small',
+    [`${prefixCls}-lg`]: props.size === Size.large,
+    [`${prefixCls}-sm`]: props.size === Size.small,
     [`${prefixCls}-compact`]: props.compact,
   }, className);
   return (

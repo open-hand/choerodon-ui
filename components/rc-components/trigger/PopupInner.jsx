@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import LazyRenderBox from './LazyRenderBox';
 
-class PopupInner extends Component {
+export default class PopupInner extends Component {
   static propTypes = {
     hiddenClassName: PropTypes.string,
     className: PropTypes.string,
@@ -11,10 +11,11 @@ class PopupInner extends Component {
     onMouseLeave: PropTypes.func,
     children: PropTypes.any,
   };
+
   render() {
     const props = this.props;
     let className = props.className;
-    if (!props.visible) {
+    if (props.hidden) {
       className += ` ${props.hiddenClassName}`;
     }
     return (
@@ -24,12 +25,10 @@ class PopupInner extends Component {
         onMouseLeave={props.onMouseLeave}
         style={props.style}
       >
-        <LazyRenderBox className={`${props.prefixCls}-content`} visible={props.visible}>
+        <LazyRenderBox className={`${props.prefixCls}-content`} hidden={props.hidden}>
           {props.children}
         </LazyRenderBox>
       </div>
     );
   }
 }
-
-export default PopupInner;

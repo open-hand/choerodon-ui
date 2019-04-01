@@ -1,18 +1,18 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { EditorCore } from 'rc-editor-core';
-import { EditorState, SelectionState, ContentState, CompositeDecorator } from 'draft-js';
+import { CompositeDecorator, ContentState, EditorState, SelectionState } from 'draft-js';
 
 import createMention from '../utils/createMention';
 import exportContent from '../utils/exportContent';
 
-class Mention extends React.Component {
+class Mention extends Component {
   static propTypes = {
     value: PropTypes.object,
     suggestions: PropTypes.array,
     prefix: PropTypes.oneOfType(
-      [PropTypes.string, PropTypes.arrayOf(PropTypes.string)]
+      [PropTypes.string, PropTypes.arrayOf(PropTypes.string)],
     ),
     prefixCls: PropTypes.string,
     tag: PropTypes.element,
@@ -34,7 +34,7 @@ class Mention extends React.Component {
     noRedup: PropTypes.bool,
     mentionStyle: PropTypes.object,
     placement: PropTypes.string,
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -53,6 +53,7 @@ class Mention extends React.Component {
       suggestions: props.suggestions,
       value: props.value && EditorState.createWithContent(props.value, new CompositeDecorator(this.mention.decorators)),
       selection: SelectionState.createEmpty(),
+      focused: false,
     };
 
     if (typeof props.defaultValue === 'string') {
@@ -63,6 +64,7 @@ class Mention extends React.Component {
       this.controlledMode = true;
     }
   }
+
   componentWillReceiveProps(nextProps) {
     const { suggestions } = nextProps;
     const { selection } = this.state;
@@ -71,7 +73,7 @@ class Mention extends React.Component {
       value = EditorState.acceptSelection(
         EditorState.createWithContent(
           value,
-          this._decorator
+          this._decorator,
         ),
         selection,
       );
@@ -81,6 +83,7 @@ class Mention extends React.Component {
       value,
     });
   }
+
   onEditorChange = (editorState) => {
     const selection = editorState.getSelection();
     this._decorator = editorState.getDecorator();
@@ -98,17 +101,20 @@ class Mention extends React.Component {
         selection,
       });
     }
-  }
+  };
   onFocus = (e) => {
     if (this.props.onFocus) {
       this.props.onFocus(e);
     }
-  }
+    this.setState({ focused: true });
+  };
   onBlur = (e) => {
     if (this.props.onBlur) {
       this.props.onBlur(e);
     }
-  }
+    this.setState({ focused: false });
+  };
+
   getPrefix(props = this.props) {
     return Array.isArray(props.prefix) ? props.prefix : [props.prefix];
   }
@@ -119,17 +125,28 @@ class Mention extends React.Component {
     /*eslint-disable*/
     this._editor.Reset();
     /*eslint-enable*/
+  };
+
+  getUnderLine() {
+    const { prefixCls } = this.props;
+    return (
+      <div className={`${prefixCls}-editor-underline`}>
+        <span className={`${prefixCls}-editor-ripple`} />
+      </div>
+    );
   }
+
   render() {
     const {
       prefixCls, style, tag, multiLines,
       suggestionStyle, placeholder, defaultValue, className, notFoundContent,
       getSuggestionContainer, readOnly, disabled, placement,
     } = this.props;
-    const { suggestions } = this.state;
+    const { suggestions, focused } = this.state;
     const { Suggestions } = this;
     const editorClass = classnames(className, {
       [`${prefixCls}-wrapper`]: true,
+      [`${prefixCls}-editor-focus`]: focused,
       readonly: readOnly,
       disabled,
       multilines: multiLines,
@@ -139,39 +156,39 @@ class Mention extends React.Component {
       EditorState.createWithContent(
         typeof defaultValue === 'string' ? ContentState.createFromText(defaultValue) : defaultValue
         , this._decorator);
-    return (<div className={editorClass} style={style} ref={wrapper => this._wrapper = wrapper}>
-      <EditorCore
-        ref={editor => this._editor = editor}
-        prefixCls={prefixCls}
-        style={style}
-        multiLines={multiLines}
-        plugins={this.plugins}
-        defaultValue={defaultValueState}
-        placeholder={placeholder}
-        onFocus={this.onFocus}
-        onBlur={this.onBlur}
-        onChange={this.onEditorChange}
-        {...editorProps}
-        readOnly={readOnly || disabled}
-      >
-        <Suggestions
-          mode={tag ? 'immutable' : 'mutable'}
-          prefix={this.getPrefix()}
+    return (
+      <div className={editorClass} style={style} ref={wrapper => this._wrapper = wrapper}>
+        <EditorCore
+          ref={editor => this._editor = editor}
           prefixCls={prefixCls}
-          style={suggestionStyle}
-          placement={placement}
-          notFoundContent={notFoundContent}
-          suggestions={suggestions}
-          getSuggestionContainer={getSuggestionContainer ?
-            () => getSuggestionContainer(this._wrapper) :
-            null
-          }
-          onSearchChange={this.props.onSearchChange}
-          onSelect={this.props.onSelect}
-          noRedup={this.props.noRedup}
-        />
-      </EditorCore>
-    </div>);
+          style={style}
+          multiLines={multiLines}
+          plugins={this.plugins}
+          defaultValue={defaultValueState}
+          placeholder={placeholder}
+          onFocus={this.onFocus}
+          onBlur={this.onBlur}
+          onChange={this.onEditorChange}
+          {...editorProps}
+          readOnly={readOnly || disabled}
+        >
+          <Suggestions
+            mode={tag ? 'immutable' : 'mutable'}
+            prefix={this.getPrefix()}
+            prefixCls={prefixCls}
+            style={suggestionStyle}
+            placement={placement}
+            notFoundContent={notFoundContent}
+            suggestions={suggestions}
+            getSuggestionContainer={getSuggestionContainer ? () => getSuggestionContainer(this._wrapper) : null}
+            onSearchChange={this.props.onSearchChange}
+            onSelect={this.props.onSelect}
+            noRedup={this.props.noRedup}
+          />
+        </EditorCore>
+        {this.getUnderLine()}
+      </div>
+    );
   }
 }
 

@@ -3,29 +3,29 @@
 exports[`RangePicker show month panel according to value 1`] = `
 <div>
   <div
-    class="ant-calendar-picker-container  ant-calendar-picker-container-placement-bottomLeft "
+    class="c7n-calendar-picker-container  c7n-calendar-picker-container-placement-bottomLeft "
   >
     <div
-      class="ant-calendar-time ant-calendar ant-calendar-range"
+      class="c7n-calendar-time c7n-calendar c7n-calendar-range"
       tabindex="0"
     >
       <div
-        class="ant-calendar-panel"
+        class="c7n-calendar-panel"
       >
         <div
-          class="ant-calendar-date-panel"
+          class="c7n-calendar-date-panel"
         >
           <div
-            class="ant-calendar-range-part ant-calendar-range-left"
+            class="c7n-calendar-range-part c7n-calendar-range-left"
           >
             <div
-              class="ant-calendar-input-wrap"
+              class="c7n-calendar-input-wrap"
             >
               <div
-                class="ant-calendar-date-input-wrap"
+                class="c7n-calendar-date-input-wrap"
               >
                 <input
-                  class="ant-calendar-input "
+                  class="c7n-calendar-input "
                   placeholder="Start date"
                   value="2000/01/01"
                 />
@@ -35,33 +35,33 @@ exports[`RangePicker show month panel according to value 1`] = `
               style="outline:none"
             >
               <div
-                class="ant-calendar-header"
+                class="c7n-calendar-header"
               >
                 <div
                   style="position:relative"
                 >
                   <a
-                    class="ant-calendar-prev-year-btn"
+                    class="c7n-calendar-prev-year-btn"
                     role="button"
                     title="Last year (Control + left)"
                   />
                   <a
-                    class="ant-calendar-prev-month-btn"
+                    class="c7n-calendar-prev-month-btn"
                     role="button"
                     title="Previous month (PageUp)"
                   />
                   <span
-                    class="ant-calendar-my-select"
+                    class="c7n-calendar-my-select"
                   >
                     <a
-                      class="ant-calendar-month-select"
+                      class="c7n-calendar-month-select"
                       role="button"
                       title="Choose a month"
                     >
                       1月
                     </a>
                     <a
-                      class="ant-calendar-year-select"
+                      class="c7n-calendar-year-select"
                       role="button"
                       title="Choose a year"
                     >
@@ -71,11 +71,11 @@ exports[`RangePicker show month panel according to value 1`] = `
                 </div>
               </div>
               <div
-                class="ant-calendar-body"
+                class="c7n-calendar-body"
               >
                 <table
                   cellspacing="0"
-                  class="ant-calendar-table"
+                  class="c7n-calendar-table"
                   role="grid"
                 >
                   <thead>
@@ -83,78 +83,78 @@ exports[`RangePicker show month panel according to value 1`] = `
                       role="row"
                     >
                       <th
-                        class="ant-calendar-column-header"
+                        class="c7n-calendar-column-header"
                         role="columnheader"
                         title="周一"
                       >
                         <span
-                          class="ant-calendar-column-header-inner"
+                          class="c7n-calendar-column-header-inner"
                         >
                           一
                         </span>
                       </th>
                       <th
-                        class="ant-calendar-column-header"
+                        class="c7n-calendar-column-header"
                         role="columnheader"
                         title="周二"
                       >
                         <span
-                          class="ant-calendar-column-header-inner"
+                          class="c7n-calendar-column-header-inner"
                         >
                           二
                         </span>
                       </th>
                       <th
-                        class="ant-calendar-column-header"
+                        class="c7n-calendar-column-header"
                         role="columnheader"
                         title="周三"
                       >
                         <span
-                          class="ant-calendar-column-header-inner"
+                          class="c7n-calendar-column-header-inner"
                         >
                           三
                         </span>
                       </th>
                       <th
-                        class="ant-calendar-column-header"
+                        class="c7n-calendar-column-header"
                         role="columnheader"
                         title="周四"
                       >
                         <span
-                          class="ant-calendar-column-header-inner"
+                          class="c7n-calendar-column-header-inner"
                         >
                           四
                         </span>
                       </th>
                       <th
-                        class="ant-calendar-column-header"
+                        class="c7n-calendar-column-header"
                         role="columnheader"
                         title="周五"
                       >
                         <span
-                          class="ant-calendar-column-header-inner"
+                          class="c7n-calendar-column-header-inner"
                         >
                           五
                         </span>
                       </th>
                       <th
-                        class="ant-calendar-column-header"
+                        class="c7n-calendar-column-header"
                         role="columnheader"
                         title="周六"
                       >
                         <span
-                          class="ant-calendar-column-header-inner"
+                          class="c7n-calendar-column-header-inner"
                         >
                           六
                         </span>
                       </th>
                       <th
-                        class="ant-calendar-column-header"
+                        class="c7n-calendar-column-header"
                         role="columnheader"
                         title="周日"
                       >
                         <span
-                          class="ant-calendar-column-header-inner"
+                          class="c7n-calendar-column-header-inner"
                         >
                           日
                         </span>
@@ -162,99 +162,99 @@ exports[`RangePicker show month panel according to value 1`] = `
                     </tr>
                   </thead>
                   <tbody
-                    class="ant-calendar-tbody"
+                    class="c7n-calendar-tbody"
                   >
                     <tr
-                      class="ant-calendar-active-week"
+                      class="c7n-calendar-active-week"
                       role="row"
                     >
                       <td
-                        class="ant-calendar-cell ant-calendar-last-month-cell"
+                        class="c7n-calendar-cell c7n-calendar-last-month-cell"
                         role="gridcell"
                         title="1999年12月27日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           27
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-last-month-cell"
+                        class="c7n-calendar-cell c7n-calendar-last-month-cell"
                         role="gridcell"
                         title="1999年12月28日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           28
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-last-month-cell"
+                        class="c7n-calendar-cell c7n-calendar-last-month-cell"
                         role="gridcell"
                         title="1999年12月29日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           29
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-last-month-cell"
+                        class="c7n-calendar-cell c7n-calendar-last-month-cell"
                         role="gridcell"
                         title="1999年12月30日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           30
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-last-month-cell ant-calendar-last-day-of-month"
+                        class="c7n-calendar-cell c7n-calendar-last-month-cell c7n-calendar-last-day-of-month"
                         role="gridcell"
                         title="1999年12月31日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           31
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-selected-start-date ant-calendar-selected-end-date ant-calendar-selected-day"
+                        class="c7n-calendar-cell c7n-calendar-selected-start-date c7n-calendar-selected-end-date c7n-calendar-selected-day"
                         role="gridcell"
                         title="2000年1月1日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="true"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           1
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月2日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           2
                         </div>
@@ -265,92 +265,92 @@ exports[`RangePicker show month panel according to value 1`] = `
                       role="row"
                     >
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月3日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           3
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月4日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           4
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月5日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           5
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月6日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           6
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月7日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           7
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月8日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           8
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月9日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           9
                         </div>
@@ -361,92 +361,92 @@ exports[`RangePicker show month panel according to value 1`] = `
                       role="row"
                     >
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月10日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           10
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月11日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           11
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月12日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           12
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月13日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           13
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月14日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           14
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月15日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           15
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月16日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           16
                         </div>
@@ -457,92 +457,92 @@ exports[`RangePicker show month panel according to value 1`] = `
                       role="row"
                     >
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月17日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           17
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月18日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           18
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月19日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           19
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月20日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           20
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月21日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           21
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月22日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           22
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月23日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           23
                         </div>
@@ -553,92 +553,92 @@ exports[`RangePicker show month panel according to value 1`] = `
                       role="row"
                     >
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月24日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           24
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月25日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           25
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月26日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           26
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月27日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           27
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月28日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           28
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月29日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           29
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月30日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           30
                         </div>
@@ -649,92 +649,92 @@ exports[`RangePicker show month panel according to value 1`] = `
                       role="row"
                     >
                       <td
-                        class="ant-calendar-cell ant-calendar-last-day-of-month"
+                        class="c7n-calendar-cell c7n-calendar-last-day-of-month"
                         role="gridcell"
                         title="2000年1月31日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           31
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-next-month-btn-day"
+                        class="c7n-calendar-cell c7n-calendar-next-month-btn-day"
                         role="gridcell"
                         title="2000年2月1日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           1
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-next-month-btn-day"
+                        class="c7n-calendar-cell c7n-calendar-next-month-btn-day"
                         role="gridcell"
                         title="2000年2月2日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           2
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-next-month-btn-day"
+                        class="c7n-calendar-cell c7n-calendar-next-month-btn-day"
                         role="gridcell"
                         title="2000年2月3日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           3
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-next-month-btn-day"
+                        class="c7n-calendar-cell c7n-calendar-next-month-btn-day"
                         role="gridcell"
                         title="2000年2月4日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           4
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-next-month-btn-day"
+                        class="c7n-calendar-cell c7n-calendar-next-month-btn-day"
                         role="gridcell"
                         title="2000年2月5日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           5
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-next-month-btn-day"
+                        class="c7n-calendar-cell c7n-calendar-next-month-btn-day"
                         role="gridcell"
                         title="2000年2月6日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           6
                         </div>
@@ -746,21 +746,21 @@ exports[`RangePicker show month panel according to value 1`] = `
             </div>
           </div>
           <span
-            class="ant-calendar-range-middle"
+            class="c7n-calendar-range-middle"
           >
             ~
           </span>
           <div
-            class="ant-calendar-range-part ant-calendar-range-right"
+            class="c7n-calendar-range-part c7n-calendar-range-right"
           >
             <div
-              class="ant-calendar-input-wrap"
+              class="c7n-calendar-input-wrap"
             >
               <div
-                class="ant-calendar-date-input-wrap"
+                class="c7n-calendar-date-input-wrap"
               >
                 <input
-                  class="ant-calendar-input "
+                  class="c7n-calendar-input "
                   placeholder="End date"
                   value="2000/01/01"
                 />
@@ -770,23 +770,23 @@ exports[`RangePicker show month panel according to value 1`] = `
               style="outline:none"
             >
               <div
-                class="ant-calendar-header"
+                class="c7n-calendar-header"
               >
                 <div
                   style="position:relative"
                 >
                   <span
-                    class="ant-calendar-my-select"
+                    class="c7n-calendar-my-select"
                   >
                     <a
-                      class="ant-calendar-month-select"
+                      class="c7n-calendar-month-select"
                       role="button"
                       title="Choose a month"
                     >
                       2月
                     </a>
                     <a
-                      class="ant-calendar-year-select"
+                      class="c7n-calendar-year-select"
                       role="button"
                       title="Choose a year"
                     >
@@ -794,21 +794,21 @@ exports[`RangePicker show month panel according to value 1`] = `
                     </a>
                   </span>
                   <a
-                    class="ant-calendar-next-month-btn"
+                    class="c7n-calendar-next-month-btn"
                     title="Next month (PageDown)"
                   />
                   <a
-                    class="ant-calendar-next-year-btn"
+                    class="c7n-calendar-next-year-btn"
                     title="Next year (Control + right)"
                   />
                 </div>
               </div>
               <div
-                class="ant-calendar-body"
+                class="c7n-calendar-body"
               >
                 <table
                   cellspacing="0"
-                  class="ant-calendar-table"
+                  class="c7n-calendar-table"
                   role="grid"
                 >
                   <thead>
@@ -816,78 +816,78 @@ exports[`RangePicker show month panel according to value 1`] = `
                       role="row"
                     >
                       <th
-                        class="ant-calendar-column-header"
+                        class="c7n-calendar-column-header"
                         role="columnheader"
                         title="周一"
                       >
                         <span
-                          class="ant-calendar-column-header-inner"
+                          class="c7n-calendar-column-header-inner"
                         >
                           一
                         </span>
                       </th>
                       <th
-                        class="ant-calendar-column-header"
+                        class="c7n-calendar-column-header"
                         role="columnheader"
                         title="周二"
                       >
                         <span
-                          class="ant-calendar-column-header-inner"
+                          class="c7n-calendar-column-header-inner"
                         >
                           二
                         </span>
                       </th>
                       <th
-                        class="ant-calendar-column-header"
+                        class="c7n-calendar-column-header"
                         role="columnheader"
                         title="周三"
                       >
                         <span
-                          class="ant-calendar-column-header-inner"
+                          class="c7n-calendar-column-header-inner"
                         >
                           三
                         </span>
                       </th>
                       <th
-                        class="ant-calendar-column-header"
+                        class="c7n-calendar-column-header"
                         role="columnheader"
                         title="周四"
                       >
                         <span
-                          class="ant-calendar-column-header-inner"
+                          class="c7n-calendar-column-header-inner"
                         >
                           四
                         </span>
                       </th>
                       <th
-                        class="ant-calendar-column-header"
+                        class="c7n-calendar-column-header"
                         role="columnheader"
                         title="周五"
                       >
                         <span
-                          class="ant-calendar-column-header-inner"
+                          class="c7n-calendar-column-header-inner"
                         >
                           五
                         </span>
                       </th>
                       <th
-                        class="ant-calendar-column-header"
+                        class="c7n-calendar-column-header"
                         role="columnheader"
                         title="周六"
                       >
                         <span
-                          class="ant-calendar-column-header-inner"
+                          class="c7n-calendar-column-header-inner"
                         >
                           六
                         </span>
                       </th>
                       <th
-                        class="ant-calendar-column-header"
+                        class="c7n-calendar-column-header"
                         role="columnheader"
                         title="周日"
                       >
                         <span
-                          class="ant-calendar-column-header-inner"
+                          class="c7n-calendar-column-header-inner"
                         >
                           日
                         </span>
@@ -895,99 +895,99 @@ exports[`RangePicker show month panel according to value 1`] = `
                     </tr>
                   </thead>
                   <tbody
-                    class="ant-calendar-tbody"
+                    class="c7n-calendar-tbody"
                   >
                     <tr
                       class=""
                       role="row"
                     >
                       <td
-                        class="ant-calendar-cell ant-calendar-last-month-cell ant-calendar-last-day-of-month"
+                        class="c7n-calendar-cell c7n-calendar-last-month-cell c7n-calendar-last-day-of-month"
                         role="gridcell"
                         title="2000年1月31日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           31
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月1日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           1
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月2日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           2
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月3日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           3
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月4日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           4
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月5日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           5
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月6日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           6
                         </div>
@@ -998,92 +998,92 @@ exports[`RangePicker show month panel according to value 1`] = `
                       role="row"
                     >
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月7日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           7
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月8日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           8
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月9日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           9
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月10日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           10
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月11日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           11
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月12日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           12
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月13日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           13
                         </div>
@@ -1094,92 +1094,92 @@ exports[`RangePicker show month panel according to value 1`] = `
                       role="row"
                     >
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月14日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           14
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月15日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           15
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月16日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           16
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月17日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           17
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月18日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           18
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月19日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           19
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月20日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           20
                         </div>
@@ -1190,92 +1190,92 @@ exports[`RangePicker show month panel according to value 1`] = `
                       role="row"
                     >
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月21日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           21
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月22日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           22
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月23日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           23
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月24日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           24
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月25日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           25
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月26日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           26
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月27日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           27
                         </div>
@@ -1286,92 +1286,92 @@ exports[`RangePicker show month panel according to value 1`] = `
                       role="row"
                     >
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月28日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           28
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-last-day-of-month"
+                        class="c7n-calendar-cell c7n-calendar-last-day-of-month"
                         role="gridcell"
                         title="2000年2月29日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           29
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-next-month-btn-day"
+                        class="c7n-calendar-cell c7n-calendar-next-month-btn-day"
                         role="gridcell"
                         title="2000年3月1日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           1
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-next-month-btn-day"
+                        class="c7n-calendar-cell c7n-calendar-next-month-btn-day"
                         role="gridcell"
                         title="2000年3月2日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           2
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-next-month-btn-day"
+                        class="c7n-calendar-cell c7n-calendar-next-month-btn-day"
                         role="gridcell"
                         title="2000年3月3日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           3
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-next-month-btn-day"
+                        class="c7n-calendar-cell c7n-calendar-next-month-btn-day"
                         role="gridcell"
                         title="2000年3月4日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           4
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-next-month-btn-day"
+                        class="c7n-calendar-cell c7n-calendar-next-month-btn-day"
                         role="gridcell"
                         title="2000年3月5日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           5
                         </div>
@@ -1382,92 +1382,92 @@ exports[`RangePicker show month panel according to value 1`] = `
                       role="row"
                     >
                       <td
-                        class="ant-calendar-cell ant-calendar-next-month-btn-day"
+                        class="c7n-calendar-cell c7n-calendar-next-month-btn-day"
                         role="gridcell"
                         title="2000年3月6日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           6
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-next-month-btn-day"
+                        class="c7n-calendar-cell c7n-calendar-next-month-btn-day"
                         role="gridcell"
                         title="2000年3月7日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           7
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-next-month-btn-day"
+                        class="c7n-calendar-cell c7n-calendar-next-month-btn-day"
                         role="gridcell"
                         title="2000年3月8日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           8
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-next-month-btn-day"
+                        class="c7n-calendar-cell c7n-calendar-next-month-btn-day"
                         role="gridcell"
                         title="2000年3月9日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           9
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-next-month-btn-day"
+                        class="c7n-calendar-cell c7n-calendar-next-month-btn-day"
                         role="gridcell"
                         title="2000年3月10日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           10
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-next-month-btn-day"
+                        class="c7n-calendar-cell c7n-calendar-next-month-btn-day"
                         role="gridcell"
                         title="2000年3月11日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           11
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-next-month-btn-day"
+                        class="c7n-calendar-cell c7n-calendar-next-month-btn-day"
                         role="gridcell"
                         title="2000年3月12日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           12
                         </div>
@@ -1480,19 +1480,19 @@ exports[`RangePicker show month panel according to value 1`] = `
           </div>
         </div>
         <div
-          class="ant-calendar-footer ant-calendar-range-bottom ant-calendar-footer-show-ok"
+          class="c7n-calendar-footer c7n-calendar-range-bottom c7n-calendar-footer-show-ok"
         >
           <div
-            class="ant-calendar-footer-btn"
+            class="c7n-calendar-footer-btn"
           >
             <a
-              class="ant-calendar-time-picker-btn"
+              class="c7n-calendar-time-picker-btn"
               role="button"
             >
               Select time
             </a>
             <a
-              class="ant-calendar-ok-btn"
+              class="c7n-calendar-ok-btn"
               role="button"
             >
               Ok
@@ -1508,29 +1508,29 @@ exports[`RangePicker show month panel according to value 1`] = `
 exports[`RangePicker switch to corresponding month panel when click presetted ranges 1`] = `
 <div>
   <div
-    class="ant-calendar-picker-container  ant-calendar-picker-container-placement-bottomLeft "
+    class="c7n-calendar-picker-container  c7n-calendar-picker-container-placement-bottomLeft "
   >
     <div
-      class="ant-calendar-time ant-calendar-range-with-ranges ant-calendar ant-calendar-range"
+      class="c7n-calendar-time c7n-calendar-range-with-ranges c7n-calendar c7n-calendar-range"
       tabindex="0"
     >
       <div
-        class="ant-calendar-panel"
+        class="c7n-calendar-panel"
       >
         <div
-          class="ant-calendar-date-panel"
+          class="c7n-calendar-date-panel"
         >
           <div
-            class="ant-calendar-range-part ant-calendar-range-left"
+            class="c7n-calendar-range-part c7n-calendar-range-left"
           >
             <div
-              class="ant-calendar-input-wrap"
+              class="c7n-calendar-input-wrap"
             >
               <div
-                class="ant-calendar-date-input-wrap"
+                class="c7n-calendar-date-input-wrap"
               >
                 <input
-                  class="ant-calendar-input "
+                  class="c7n-calendar-input "
                   placeholder="Start date"
                   value="2000/01/01"
                 />
@@ -1540,33 +1540,33 @@ exports[`RangePicker switch to corresponding month panel when click presetted ra
               style="outline:none"
             >
               <div
-                class="ant-calendar-header"
+                class="c7n-calendar-header"
               >
                 <div
                   style="position:relative"
                 >
                   <a
-                    class="ant-calendar-prev-year-btn"
+                    class="c7n-calendar-prev-year-btn"
                     role="button"
                     title="Last year (Control + left)"
                   />
                   <a
-                    class="ant-calendar-prev-month-btn"
+                    class="c7n-calendar-prev-month-btn"
                     role="button"
                     title="Previous month (PageUp)"
                   />
                   <span
-                    class="ant-calendar-my-select"
+                    class="c7n-calendar-my-select"
                   >
                     <a
-                      class="ant-calendar-month-select"
+                      class="c7n-calendar-month-select"
                       role="button"
                       title="Choose a month"
                     >
                       1月
                     </a>
                     <a
-                      class="ant-calendar-year-select"
+                      class="c7n-calendar-year-select"
                       role="button"
                       title="Choose a year"
                     >
@@ -1576,11 +1576,11 @@ exports[`RangePicker switch to corresponding month panel when click presetted ra
                 </div>
               </div>
               <div
-                class="ant-calendar-body"
+                class="c7n-calendar-body"
               >
                 <table
                   cellspacing="0"
-                  class="ant-calendar-table"
+                  class="c7n-calendar-table"
                   role="grid"
                 >
                   <thead>
@@ -1588,78 +1588,78 @@ exports[`RangePicker switch to corresponding month panel when click presetted ra
                       role="row"
                     >
                       <th
-                        class="ant-calendar-column-header"
+                        class="c7n-calendar-column-header"
                         role="columnheader"
                         title="周一"
                       >
                         <span
-                          class="ant-calendar-column-header-inner"
+                          class="c7n-calendar-column-header-inner"
                         >
                           一
                         </span>
                       </th>
                       <th
-                        class="ant-calendar-column-header"
+                        class="c7n-calendar-column-header"
                         role="columnheader"
                         title="周二"
                       >
                         <span
-                          class="ant-calendar-column-header-inner"
+                          class="c7n-calendar-column-header-inner"
                         >
                           二
                         </span>
                       </th>
                       <th
-                        class="ant-calendar-column-header"
+                        class="c7n-calendar-column-header"
                         role="columnheader"
                         title="周三"
                       >
                         <span
-                          class="ant-calendar-column-header-inner"
+                          class="c7n-calendar-column-header-inner"
                         >
                           三
                         </span>
                       </th>
                       <th
-                        class="ant-calendar-column-header"
+                        class="c7n-calendar-column-header"
                         role="columnheader"
                         title="周四"
                       >
                         <span
-                          class="ant-calendar-column-header-inner"
+                          class="c7n-calendar-column-header-inner"
                         >
                           四
                         </span>
                       </th>
                       <th
-                        class="ant-calendar-column-header"
+                        class="c7n-calendar-column-header"
                         role="columnheader"
                         title="周五"
                       >
                         <span
-                          class="ant-calendar-column-header-inner"
+                          class="c7n-calendar-column-header-inner"
                         >
                           五
                         </span>
                       </th>
                       <th
-                        class="ant-calendar-column-header"
+                        class="c7n-calendar-column-header"
                         role="columnheader"
                         title="周六"
                       >
                         <span
-                          class="ant-calendar-column-header-inner"
+                          class="c7n-calendar-column-header-inner"
                         >
                           六
                         </span>
                       </th>
                       <th
-                        class="ant-calendar-column-header"
+                        class="c7n-calendar-column-header"
                         role="columnheader"
                         title="周日"
                       >
                         <span
-                          class="ant-calendar-column-header-inner"
+                          class="c7n-calendar-column-header-inner"
                         >
                           日
                         </span>
@@ -1667,99 +1667,99 @@ exports[`RangePicker switch to corresponding month panel when click presetted ra
                     </tr>
                   </thead>
                   <tbody
-                    class="ant-calendar-tbody"
+                    class="c7n-calendar-tbody"
                   >
                     <tr
-                      class="ant-calendar-active-week"
+                      class="c7n-calendar-active-week"
                       role="row"
                     >
                       <td
-                        class="ant-calendar-cell ant-calendar-last-month-cell"
+                        class="c7n-calendar-cell c7n-calendar-last-month-cell"
                         role="gridcell"
                         title="1999年12月27日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           27
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-last-month-cell"
+                        class="c7n-calendar-cell c7n-calendar-last-month-cell"
                         role="gridcell"
                         title="1999年12月28日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           28
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-last-month-cell"
+                        class="c7n-calendar-cell c7n-calendar-last-month-cell"
                         role="gridcell"
                         title="1999年12月29日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           29
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-last-month-cell"
+                        class="c7n-calendar-cell c7n-calendar-last-month-cell"
                         role="gridcell"
                         title="1999年12月30日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           30
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-last-month-cell ant-calendar-last-day-of-month"
+                        class="c7n-calendar-cell c7n-calendar-last-month-cell c7n-calendar-last-day-of-month"
                         role="gridcell"
                         title="1999年12月31日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           31
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-selected-start-date ant-calendar-selected-end-date ant-calendar-selected-day"
+                        class="c7n-calendar-cell c7n-calendar-selected-start-date c7n-calendar-selected-end-date c7n-calendar-selected-day"
                         role="gridcell"
                         title="2000年1月1日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="true"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           1
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月2日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           2
                         </div>
@@ -1770,92 +1770,92 @@ exports[`RangePicker switch to corresponding month panel when click presetted ra
                       role="row"
                     >
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月3日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           3
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月4日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           4
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月5日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           5
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月6日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           6
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月7日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           7
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月8日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           8
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月9日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           9
                         </div>
@@ -1866,92 +1866,92 @@ exports[`RangePicker switch to corresponding month panel when click presetted ra
                       role="row"
                     >
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月10日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           10
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月11日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           11
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月12日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           12
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月13日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           13
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月14日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           14
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月15日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           15
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月16日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           16
                         </div>
@@ -1962,92 +1962,92 @@ exports[`RangePicker switch to corresponding month panel when click presetted ra
                       role="row"
                     >
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月17日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           17
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月18日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           18
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月19日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           19
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月20日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           20
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月21日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           21
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月22日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           22
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月23日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           23
                         </div>
@@ -2058,92 +2058,92 @@ exports[`RangePicker switch to corresponding month panel when click presetted ra
                       role="row"
                     >
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月24日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           24
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月25日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           25
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月26日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           26
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月27日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           27
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月28日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           28
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月29日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           29
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年1月30日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           30
                         </div>
@@ -2154,92 +2154,92 @@ exports[`RangePicker switch to corresponding month panel when click presetted ra
                       role="row"
                     >
                       <td
-                        class="ant-calendar-cell ant-calendar-last-day-of-month"
+                        class="c7n-calendar-cell c7n-calendar-last-day-of-month"
                         role="gridcell"
                         title="2000年1月31日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           31
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-next-month-btn-day"
+                        class="c7n-calendar-cell c7n-calendar-next-month-btn-day"
                         role="gridcell"
                         title="2000年2月1日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           1
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-next-month-btn-day"
+                        class="c7n-calendar-cell c7n-calendar-next-month-btn-day"
                         role="gridcell"
                         title="2000年2月2日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           2
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-next-month-btn-day"
+                        class="c7n-calendar-cell c7n-calendar-next-month-btn-day"
                         role="gridcell"
                         title="2000年2月3日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           3
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-next-month-btn-day"
+                        class="c7n-calendar-cell c7n-calendar-next-month-btn-day"
                         role="gridcell"
                         title="2000年2月4日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           4
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-next-month-btn-day"
+                        class="c7n-calendar-cell c7n-calendar-next-month-btn-day"
                         role="gridcell"
                         title="2000年2月5日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           5
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-next-month-btn-day"
+                        class="c7n-calendar-cell c7n-calendar-next-month-btn-day"
                         role="gridcell"
                         title="2000年2月6日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           6
                         </div>
@@ -2251,21 +2251,21 @@ exports[`RangePicker switch to corresponding month panel when click presetted ra
             </div>
           </div>
           <span
-            class="ant-calendar-range-middle"
+            class="c7n-calendar-range-middle"
           >
             ~
           </span>
           <div
-            class="ant-calendar-range-part ant-calendar-range-right"
+            class="c7n-calendar-range-part c7n-calendar-range-right"
           >
             <div
-              class="ant-calendar-input-wrap"
+              class="c7n-calendar-input-wrap"
             >
               <div
-                class="ant-calendar-date-input-wrap"
+                class="c7n-calendar-date-input-wrap"
               >
                 <input
-                  class="ant-calendar-input "
+                  class="c7n-calendar-input "
                   placeholder="End date"
                   value="2000/01/01"
                 />
@@ -2275,23 +2275,23 @@ exports[`RangePicker switch to corresponding month panel when click presetted ra
               style="outline:none"
             >
               <div
-                class="ant-calendar-header"
+                class="c7n-calendar-header"
               >
                 <div
                   style="position:relative"
                 >
                   <span
-                    class="ant-calendar-my-select"
+                    class="c7n-calendar-my-select"
                   >
                     <a
-                      class="ant-calendar-month-select"
+                      class="c7n-calendar-month-select"
                       role="button"
                       title="Choose a month"
                     >
                       2月
                     </a>
                     <a
-                      class="ant-calendar-year-select"
+                      class="c7n-calendar-year-select"
                       role="button"
                       title="Choose a year"
                     >
@@ -2299,21 +2299,21 @@ exports[`RangePicker switch to corresponding month panel when click presetted ra
                     </a>
                   </span>
                   <a
-                    class="ant-calendar-next-month-btn"
+                    class="c7n-calendar-next-month-btn"
                     title="Next month (PageDown)"
                   />
                   <a
-                    class="ant-calendar-next-year-btn"
+                    class="c7n-calendar-next-year-btn"
                     title="Next year (Control + right)"
                   />
                 </div>
               </div>
               <div
-                class="ant-calendar-body"
+                class="c7n-calendar-body"
               >
                 <table
                   cellspacing="0"
-                  class="ant-calendar-table"
+                  class="c7n-calendar-table"
                   role="grid"
                 >
                   <thead>
@@ -2321,78 +2321,78 @@ exports[`RangePicker switch to corresponding month panel when click presetted ra
                       role="row"
                     >
                       <th
-                        class="ant-calendar-column-header"
+                        class="c7n-calendar-column-header"
                         role="columnheader"
                         title="周一"
                       >
                         <span
-                          class="ant-calendar-column-header-inner"
+                          class="c7n-calendar-column-header-inner"
                         >
                           一
                         </span>
                       </th>
                       <th
-                        class="ant-calendar-column-header"
+                        class="c7n-calendar-column-header"
                         role="columnheader"
                         title="周二"
                       >
                         <span
-                          class="ant-calendar-column-header-inner"
+                          class="c7n-calendar-column-header-inner"
                         >
                           二
                         </span>
                       </th>
                       <th
-                        class="ant-calendar-column-header"
+                        class="c7n-calendar-column-header"
                         role="columnheader"
                         title="周三"
                       >
                         <span
-                          class="ant-calendar-column-header-inner"
+                          class="c7n-calendar-column-header-inner"
                         >
                           三
                         </span>
                       </th>
                       <th
-                        class="ant-calendar-column-header"
+                        class="c7n-calendar-column-header"
                         role="columnheader"
                         title="周四"
                       >
                         <span
-                          class="ant-calendar-column-header-inner"
+                          class="c7n-calendar-column-header-inner"
                         >
                           四
                         </span>
                       </th>
                       <th
-                        class="ant-calendar-column-header"
+                        class="c7n-calendar-column-header"
                         role="columnheader"
                         title="周五"
                       >
                         <span
-                          class="ant-calendar-column-header-inner"
+                          class="c7n-calendar-column-header-inner"
                         >
                           五
                         </span>
                       </th>
                       <th
-                        class="ant-calendar-column-header"
+                        class="c7n-calendar-column-header"
                         role="columnheader"
                         title="周六"
                       >
                         <span
-                          class="ant-calendar-column-header-inner"
+                          class="c7n-calendar-column-header-inner"
                         >
                           六
                         </span>
                       </th>
                       <th
-                        class="ant-calendar-column-header"
+                        class="c7n-calendar-column-header"
                         role="columnheader"
                         title="周日"
                       >
                         <span
-                          class="ant-calendar-column-header-inner"
+                          class="c7n-calendar-column-header-inner"
                         >
                           日
                         </span>
@@ -2400,99 +2400,99 @@ exports[`RangePicker switch to corresponding month panel when click presetted ra
                     </tr>
                   </thead>
                   <tbody
-                    class="ant-calendar-tbody"
+                    class="c7n-calendar-tbody"
                   >
                     <tr
                       class=""
                       role="row"
                     >
                       <td
-                        class="ant-calendar-cell ant-calendar-last-month-cell ant-calendar-last-day-of-month"
+                        class="c7n-calendar-cell c7n-calendar-last-month-cell c7n-calendar-last-day-of-month"
                         role="gridcell"
                         title="2000年1月31日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           31
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月1日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           1
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月2日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           2
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月3日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           3
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月4日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           4
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月5日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           5
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月6日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           6
                         </div>
@@ -2503,92 +2503,92 @@ exports[`RangePicker switch to corresponding month panel when click presetted ra
                       role="row"
                     >
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月7日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           7
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月8日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           8
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月9日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           9
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月10日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           10
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月11日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           11
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月12日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           12
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月13日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           13
                         </div>
@@ -2599,92 +2599,92 @@ exports[`RangePicker switch to corresponding month panel when click presetted ra
                       role="row"
                     >
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月14日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           14
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月15日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           15
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月16日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           16
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月17日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           17
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月18日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           18
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月19日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           19
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月20日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           20
                         </div>
@@ -2695,92 +2695,92 @@ exports[`RangePicker switch to corresponding month panel when click presetted ra
                       role="row"
                     >
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月21日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           21
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月22日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           22
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月23日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           23
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月24日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           24
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月25日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           25
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月26日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           26
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月27日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           27
                         </div>
@@ -2791,92 +2791,92 @@ exports[`RangePicker switch to corresponding month panel when click presetted ra
                       role="row"
                     >
                       <td
-                        class="ant-calendar-cell"
+                        class="c7n-calendar-cell"
                         role="gridcell"
                         title="2000年2月28日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           28
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-last-day-of-month"
+                        class="c7n-calendar-cell c7n-calendar-last-day-of-month"
                         role="gridcell"
                         title="2000年2月29日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           29
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-next-month-btn-day"
+                        class="c7n-calendar-cell c7n-calendar-next-month-btn-day"
                         role="gridcell"
                         title="2000年3月1日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           1
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-next-month-btn-day"
+                        class="c7n-calendar-cell c7n-calendar-next-month-btn-day"
                         role="gridcell"
                         title="2000年3月2日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           2
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-next-month-btn-day"
+                        class="c7n-calendar-cell c7n-calendar-next-month-btn-day"
                         role="gridcell"
                         title="2000年3月3日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           3
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-next-month-btn-day"
+                        class="c7n-calendar-cell c7n-calendar-next-month-btn-day"
                         role="gridcell"
                         title="2000年3月4日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           4
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-next-month-btn-day"
+                        class="c7n-calendar-cell c7n-calendar-next-month-btn-day"
                         role="gridcell"
                         title="2000年3月5日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           5
                         </div>
@@ -2887,92 +2887,92 @@ exports[`RangePicker switch to corresponding month panel when click presetted ra
                       role="row"
                     >
                       <td
-                        class="ant-calendar-cell ant-calendar-next-month-btn-day"
+                        class="c7n-calendar-cell c7n-calendar-next-month-btn-day"
                         role="gridcell"
                         title="2000年3月6日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           6
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-next-month-btn-day"
+                        class="c7n-calendar-cell c7n-calendar-next-month-btn-day"
                         role="gridcell"
                         title="2000年3月7日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           7
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-next-month-btn-day"
+                        class="c7n-calendar-cell c7n-calendar-next-month-btn-day"
                         role="gridcell"
                         title="2000年3月8日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           8
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-next-month-btn-day"
+                        class="c7n-calendar-cell c7n-calendar-next-month-btn-day"
                         role="gridcell"
                         title="2000年3月9日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           9
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-next-month-btn-day"
+                        class="c7n-calendar-cell c7n-calendar-next-month-btn-day"
                         role="gridcell"
                         title="2000年3月10日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           10
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-next-month-btn-day"
+                        class="c7n-calendar-cell c7n-calendar-next-month-btn-day"
                         role="gridcell"
                         title="2000年3月11日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           11
                         </div>
                       </td>
                       <td
-                        class="ant-calendar-cell ant-calendar-next-month-btn-day"
+                        class="c7n-calendar-cell c7n-calendar-next-month-btn-day"
                         role="gridcell"
                         title="2000年3月12日"
                       >
                         <div
                           aria-disabled="false"
                           aria-selected="false"
-                          class="ant-calendar-date"
+                          class="c7n-calendar-date"
                         >
                           12
                         </div>
@@ -2985,26 +2985,26 @@ exports[`RangePicker switch to corresponding month panel when click presetted ra
           </div>
         </div>
         <div
-          class="ant-calendar-footer ant-calendar-range-bottom ant-calendar-footer-show-ok"
+          class="c7n-calendar-footer c7n-calendar-range-bottom c7n-calendar-footer-show-ok"
         >
           <div
-            class="ant-calendar-footer-extra ant-calendar-range-quick-selector"
+            class="c7n-calendar-footer-extra c7n-calendar-range-quick-selector"
           >
             <a>
               My Birthday
             </a>
           </div>
           <div
-            class="ant-calendar-footer-btn"
+            class="c7n-calendar-footer-btn"
           >
             <a
-              class="ant-calendar-time-picker-btn"
+              class="c7n-calendar-time-picker-btn"
               role="button"
             >
               Select time
             </a>
             <a
-              class="ant-calendar-ok-btn"
+              class="c7n-calendar-ok-btn"
               role="button"
             >
               Ok

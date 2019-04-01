@@ -1,6 +1,6 @@
 @import "../../style/mixins/index";
 
-.antCheckboxFn(@checkbox-prefix-cls: ~"@{ant-prefix}-checkbox") {
+.antCheckboxFn(@checkbox-prefix-cls: ~"@{c7n-prefix}-checkbox") {
   @checkbox-inner-prefix-cls: ~"@{checkbox-prefix-cls}-inner";
   // 一般状态
   .@{checkbox-prefix-cls} {
@@ -42,16 +42,16 @@
       transition: border-color 90ms cubic-bezier(0, 0, 0.2, 0.1), background-color 90ms cubic-bezier(0, 0, 0.2, 0.1);
 
       &:after {
-        @check-width: (@checkbox-size / 14) * 5px;
-        @check-height: (@checkbox-size / 14) * 10px;
+        @check-width: (@checkbox-size / 14) * 5;
+        @check-height: (@checkbox-size / 14) * 10;
         transform: rotate(45deg) scale(0);
         position: absolute;
-        left: (@checkbox-size - @check-width) / 2 - 1.5px * (@checkbox-size / 14);
-        top: (@checkbox-size - @check-height) / 2 - 3px * (@checkbox-size / 14);
+        left: (@checkbox-size - @check-width) / 2 - @check-width * .3;
+        top: (@checkbox-size - @check-height) / 2 - @check-height * .3;
         display: table;
         width: @check-width;
         height: @check-height;
-        border: 2px solid #fff;
+        border: .02rem solid #fff;
         border-top: 0;
         border-left: 0;
         content: ' ';
@@ -75,13 +75,13 @@
 
   // 半选状态
   .@{checkbox-prefix-cls}-indeterminate .@{checkbox-inner-prefix-cls}:after {
-    @indeterminate-width: (@checkbox-size / 14) * 8px;
-    @indeterminate-height: (@checkbox-size / 14) * 1px;
+    @indeterminate-width: (@checkbox-size / 14) * 8;
+    @indeterminate-height: @checkbox-size / 14;
     content: ' ';
     transform: scale(1);
     position: absolute;
-    left: (@checkbox-size - 3 - @indeterminate-width) / 2;
-    top: (@checkbox-size - 4 - @indeterminate-height) / 2;
+    left: (@checkbox-size - .03rem - @indeterminate-width) / 2;
+    top: (@checkbox-size - .04rem - @indeterminate-height) / 2;
     width: @indeterminate-width;
     height: @indeterminate-height;
   }
@@ -95,7 +95,7 @@
     transform: rotate(45deg) scale(1);
     position: absolute;
     display: table;
-    border: 2px solid #fff;
+    border: .02rem solid #fff;
     border-top: 0;
     border-left: 0;
     content: ' ';
@@ -145,21 +145,21 @@
     cursor: pointer;
     display: inline-block;
     & + & {
-      margin-left: 8px;
+      margin-left: .08rem;
     }
   }
 
   .@{checkbox-prefix-cls}-wrapper + span,
   .@{checkbox-prefix-cls} + span {
-    padding-left: 8px;
-    padding-right: 8px;
+    padding-left: .08rem;
+    padding-right: .08rem;
   }
 
   .@{checkbox-prefix-cls}-group {
     display: inline-block;
     &-item {
       display: inline-block;
-      margin-right: 8px;
+      margin-right: .08rem;
       &:last-child {
         margin-right: 0;
       }
@@ -175,7 +175,7 @@
       position: relative;
     }
     &-wrapper&-has-label & {
-      padding-top: 17px;
+      padding-top: .17rem;
     }
     &-wrapper &-label.label-disabled {
       color: rgba(0, 0, 0, 0.54);
@@ -186,7 +186,7 @@
       left: 0;
       width: 100%;
       transform-origin: 0 0;
-      transform: scale(0.75) translateY(0) translateZ(0.001px);
+      transform: scale(0.75) translateY(0) translateZ(.00001rem);
     }
   }
 }

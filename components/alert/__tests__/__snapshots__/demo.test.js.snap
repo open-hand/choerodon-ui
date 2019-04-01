@@ -3,39 +3,37 @@
 exports[`renders ./components/alert/demo/banner.md correctly 1`] = `
 <div>
   <div
-    class="ant-alert ant-alert-warning ant-alert-banner"
-    data-show="true"
+    class="c7n-alert c7n-alert-warning c7n-alert-banner"
   >
     <i
-      class="icon icon-exclamation-circle ant-alert-icon"
+      class="icon icon-exclamation-circle c7n-alert-icon"
     />
     <span
-      class="ant-alert-message"
+      class="c7n-alert-message"
     >
       Warning text
     </span>
     <span
-      class="ant-alert-description"
+      class="c7n-alert-description"
     />
   </div>
   <br />
   <div
-    class="ant-alert ant-alert-warning ant-alert-banner"
-    data-show="true"
+    class="c7n-alert c7n-alert-warning c7n-alert-banner"
   >
     <i
-      class="icon icon-exclamation-circle ant-alert-icon"
+      class="icon icon-exclamation-circle c7n-alert-icon"
     />
     <span
-      class="ant-alert-message"
+      class="c7n-alert-message"
     >
       Very long warning text warning text text text text text text text
     </span>
     <span
-      class="ant-alert-description"
+      class="c7n-alert-description"
     />
     <a
-      class="ant-alert-close-icon"
+      class="c7n-alert-close-icon"
     >
       <i
         class="icon icon-cross"
@@ -44,33 +42,31 @@ exports[`renders ./components/alert/demo/banner.md correctly 1`] = `
   </div>
   <br />
   <div
-    class="ant-alert ant-alert-warning ant-alert-no-icon ant-alert-banner"
-    data-show="true"
+    class="c7n-alert c7n-alert-warning c7n-alert-no-icon c7n-alert-banner"
   >
     <span
-      class="ant-alert-message"
+      class="c7n-alert-message"
     >
       Warning text without icon
     </span>
     <span
-      class="ant-alert-description"
+      class="c7n-alert-description"
     />
   </div>
   <br />
   <div
-    class="ant-alert ant-alert-error ant-alert-banner"
-    data-show="true"
+    class="c7n-alert c7n-alert-error c7n-alert-banner"
   >
     <i
-      class="icon icon-cross-circle ant-alert-icon"
+      class="icon icon-cross-circle c7n-alert-icon"
     />
     <span
-      class="ant-alert-message"
+      class="c7n-alert-message"
     >
       Error text
     </span>
     <span
-      class="ant-alert-description"
+      class="c7n-alert-description"
     />
   </div>
 </div>
@@ -78,16 +74,15 @@ exports[`renders ./components/alert/demo/banner.md correctly 1`] = `
 
 exports[`renders ./components/alert/demo/basic.md correctly 1`] = `
 <div
-  class="ant-alert ant-alert-success ant-alert-no-icon"
-  data-show="true"
+  class="c7n-alert c7n-alert-success c7n-alert-no-icon"
 >
   <span
-    class="ant-alert-message"
+    class="c7n-alert-message"
   >
     Success Text
   </span>
   <span
-    class="ant-alert-description"
+    class="c7n-alert-description"
   />
 </div>
 `;
@@ -95,19 +90,18 @@ exports[`renders ./components/alert/demo/basic.md correctly 1`] = `
 exports[`renders ./components/alert/demo/closable.md correctly 1`] = `
 <div>
   <div
-    class="ant-alert ant-alert-warning ant-alert-no-icon"
-    data-show="true"
+    class="c7n-alert c7n-alert-warning c7n-alert-no-icon"
   >
     <span
-      class="ant-alert-message"
+      class="c7n-alert-message"
     >
       Warning Text Warning Text Warning TextW arning Text Warning Text Warning TextWarning Text
     </span>
     <span
-      class="ant-alert-description"
+      class="c7n-alert-description"
     />
     <a
-      class="ant-alert-close-icon"
+      class="c7n-alert-close-icon"
     >
       <i
         class="icon icon-cross"
@@ -115,21 +109,20 @@ exports[`renders ./components/alert/demo/closable.md correctly 1`] = `
     </a>
   </div>
   <div
-    class="ant-alert ant-alert-error ant-alert-with-description ant-alert-no-icon"
-    data-show="true"
+    class="c7n-alert c7n-alert-error c7n-alert-with-description c7n-alert-no-icon"
   >
     <span
-      class="ant-alert-message"
+      class="c7n-alert-message"
     >
       Error Text
     </span>
     <span
-      class="ant-alert-description"
+      class="c7n-alert-description"
     >
       Error Description Error Description Error Description Error Description Error Description Error Description
     </span>
     <a
-      class="ant-alert-close-icon"
+      class="c7n-alert-close-icon"
     >
       <i
         class="icon icon-cross"
@@ -141,19 +134,18 @@ exports[`renders ./components/alert/demo/closable.md correctly 1`] = `
 
 exports[`renders ./components/alert/demo/close-text.md correctly 1`] = `
 <div
-  class="ant-alert ant-alert-info ant-alert-no-icon"
-  data-show="true"
+  class="c7n-alert c7n-alert-info c7n-alert-no-icon"
 >
   <span
-    class="ant-alert-message"
+    class="c7n-alert-message"
   >
     Info Text
   </span>
   <span
-    class="ant-alert-description"
+    class="c7n-alert-description"
   />
   <a
-    class="ant-alert-close-icon"
+    class="c7n-alert-close-icon"
   >
     Close Now
   </a>
@@ -163,61 +155,57 @@ exports[`renders ./components/alert/demo/close-text.md correctly 1`] = `
 exports[`renders ./components/alert/demo/description.md correctly 1`] = `
 <div>
   <div
-    class="ant-alert ant-alert-success ant-alert-with-description ant-alert-no-icon"
-    data-show="true"
+    class="c7n-alert c7n-alert-success c7n-alert-with-description c7n-alert-no-icon"
   >
     <span
-      class="ant-alert-message"
+      class="c7n-alert-message"
     >
       Success Text
     </span>
     <span
-      class="ant-alert-description"
+      class="c7n-alert-description"
     >
       Success Description Success Description Success Description
     </span>
   </div>
   <div
-    class="ant-alert ant-alert-info ant-alert-with-description ant-alert-no-icon"
-    data-show="true"
+    class="c7n-alert c7n-alert-info c7n-alert-with-description c7n-alert-no-icon"
   >
     <span
-      class="ant-alert-message"
+      class="c7n-alert-message"
     >
       Info Text
     </span>
     <span
-      class="ant-alert-description"
+      class="c7n-alert-description"
     >
       Info Description Info Description Info Description Info Description
     </span>
   </div>
   <div
-    class="ant-alert ant-alert-warning ant-alert-with-description ant-alert-no-icon"
-    data-show="true"
+    class="c7n-alert c7n-alert-warning c7n-alert-with-description c7n-alert-no-icon"
   >
     <span
-      class="ant-alert-message"
+      class="c7n-alert-message"
     >
       Warning Text
     </span>
     <span
-      class="ant-alert-description"
+      class="c7n-alert-description"
     >
       Warning Description Warning Description Warning Description Warning Description
     </span>
   </div>
   <div
-    class="ant-alert ant-alert-error ant-alert-with-description ant-alert-no-icon"
-    data-show="true"
+    class="c7n-alert c7n-alert-error c7n-alert-with-description c7n-alert-no-icon"
   >
     <span
-      class="ant-alert-message"
+      class="c7n-alert-message"
     >
       Error Text
     </span>
     <span
-      class="ant-alert-description"
+      class="c7n-alert-description"
     >
       Error Description Error Description Error Description Error Description
     </span>
@@ -228,137 +216,129 @@ exports[`renders ./components/alert/demo/description.md correctly 1`] = `
 exports[`renders ./components/alert/demo/icon.md correctly 1`] = `
 <div>
   <div
-    class="ant-alert ant-alert-success"
-    data-show="true"
+    class="c7n-alert c7n-alert-success"
   >
     <i
-      class="icon icon-check-circle ant-alert-icon"
+      class="icon icon-check-circle c7n-alert-icon"
     />
     <span
-      class="ant-alert-message"
+      class="c7n-alert-message"
     >
       Success Tips
     </span>
     <span
-      class="ant-alert-description"
+      class="c7n-alert-description"
     />
   </div>
   <div
-    class="ant-alert ant-alert-info"
-    data-show="true"
+    class="c7n-alert c7n-alert-info"
   >
     <i
-      class="icon icon-info-circle ant-alert-icon"
+      class="icon icon-info-circle c7n-alert-icon"
     />
     <span
-      class="ant-alert-message"
+      class="c7n-alert-message"
     >
       Informational Notes
     </span>
     <span
-      class="ant-alert-description"
+      class="c7n-alert-description"
     />
   </div>
   <div
-    class="ant-alert ant-alert-warning"
-    data-show="true"
+    class="c7n-alert c7n-alert-warning"
   >
     <i
-      class="icon icon-exclamation-circle ant-alert-icon"
+      class="icon icon-exclamation-circle c7n-alert-icon"
     />
     <span
-      class="ant-alert-message"
+      class="c7n-alert-message"
     >
       Warning
     </span>
     <span
-      class="ant-alert-description"
+      class="c7n-alert-description"
     />
   </div>
   <div
-    class="ant-alert ant-alert-error"
-    data-show="true"
+    class="c7n-alert c7n-alert-error"
   >
     <i
-      class="icon icon-cross-circle ant-alert-icon"
+      class="icon icon-cross-circle c7n-alert-icon"
     />
     <span
-      class="ant-alert-message"
+      class="c7n-alert-message"
     >
       Error
     </span>
     <span
-      class="ant-alert-description"
+      class="c7n-alert-description"
     />
   </div>
   <div
-    class="ant-alert ant-alert-success ant-alert-with-description"
-    data-show="true"
+    class="c7n-alert c7n-alert-success c7n-alert-with-description"
   >
     <i
-      class="icon icon-check-circle-o ant-alert-icon"
+      class="icon icon-check-circle-o c7n-alert-icon"
     />
     <span
-      class="ant-alert-message"
+      class="c7n-alert-message"
     >
       Success Tips
     </span>
     <span
-      class="ant-alert-description"
+      class="c7n-alert-description"
     >
       Detailed description and advices about successful copywriting.
     </span>
   </div>
   <div
-    class="ant-alert ant-alert-info ant-alert-with-description"
-    data-show="true"
+    class="c7n-alert c7n-alert-info c7n-alert-with-description"
   >
     <i
-      class="icon icon-info-circle-o ant-alert-icon"
+      class="icon icon-info-circle-o c7n-alert-icon"
     />
     <span
-      class="ant-alert-message"
+      class="c7n-alert-message"
     >
       Informational Notes
     </span>
     <span
-      class="ant-alert-description"
+      class="c7n-alert-description"
     >
       Additional description and informations about copywriting.
     </span>
   </div>
   <div
-    class="ant-alert ant-alert-warning ant-alert-with-description"
-    data-show="true"
+    class="c7n-alert c7n-alert-warning c7n-alert-with-description"
   >
     <i
-      class="icon icon-exclamation-circle-o ant-alert-icon"
+      class="icon icon-exclamation-circle-o c7n-alert-icon"
     />
     <span
-      class="ant-alert-message"
+      class="c7n-alert-message"
     >
       Warning
     </span>
     <span
-      class="ant-alert-description"
+      class="c7n-alert-description"
     >
       This is a warning notice about copywriting.
     </span>
   </div>
   <div
-    class="ant-alert ant-alert-error ant-alert-with-description"
-    data-show="true"
+    class="c7n-alert c7n-alert-error c7n-alert-with-description"
   >
     <i
-      class="icon icon-cross-circle-o ant-alert-icon"
+      class="icon icon-cross-circle-o c7n-alert-icon"
     />
     <span
-      class="ant-alert-message"
+      class="c7n-alert-message"
     >
       Error
     </span>
     <span
-      class="ant-alert-description"
+      class="c7n-alert-description"
     >
       This is an error message about copywriting.
     </span>
@@ -369,19 +349,18 @@ exports[`renders ./components/alert/demo/icon.md correctly 1`] = `
 exports[`renders ./components/alert/demo/smooth-closed.md correctly 1`] = `
 <div>
   <div
-    class="ant-alert ant-alert-success ant-alert-no-icon"
-    data-show="true"
+    class="c7n-alert c7n-alert-success c7n-alert-no-icon"
   >
     <span
-      class="ant-alert-message"
+      class="c7n-alert-message"
     >
       Alert Message Text
     </span>
     <span
-      class="ant-alert-description"
+      class="c7n-alert-description"
     />
     <a
-      class="ant-alert-close-icon"
+      class="c7n-alert-close-icon"
     >
       <i
         class="icon icon-cross"
@@ -397,55 +376,51 @@ exports[`renders ./components/alert/demo/smooth-closed.md correctly 1`] = `
 exports[`renders ./components/alert/demo/style.md correctly 1`] = `
 <div>
   <div
-    class="ant-alert ant-alert-success ant-alert-no-icon"
-    data-show="true"
+    class="c7n-alert c7n-alert-success c7n-alert-no-icon"
   >
     <span
-      class="ant-alert-message"
+      class="c7n-alert-message"
     >
       Success Text
     </span>
     <span
-      class="ant-alert-description"
+      class="c7n-alert-description"
     />
   </div>
   <div
-    class="ant-alert ant-alert-info ant-alert-no-icon"
-    data-show="true"
+    class="c7n-alert c7n-alert-info c7n-alert-no-icon"
   >
     <span
-      class="ant-alert-message"
+      class="c7n-alert-message"
     >
       Info Text
     </span>
     <span
-      class="ant-alert-description"
+      class="c7n-alert-description"
     />
   </div>
   <div
-    class="ant-alert ant-alert-warning ant-alert-no-icon"
-    data-show="true"
+    class="c7n-alert c7n-alert-warning c7n-alert-no-icon"
   >
     <span
-      class="ant-alert-message"
+      class="c7n-alert-message"
     >
       Warning Text
     </span>
     <span
-      class="ant-alert-description"
+      class="c7n-alert-description"
     />
   </div>
   <div
-    class="ant-alert ant-alert-error ant-alert-no-icon"
-    data-show="true"
+    class="c7n-alert c7n-alert-error c7n-alert-no-icon"
   >
     <span
-      class="ant-alert-message"
+      class="c7n-alert-message"
     >
       Error Text
     </span>
     <span
-      class="ant-alert-description"
+      class="c7n-alert-description"
     />
   </div>
 </div>

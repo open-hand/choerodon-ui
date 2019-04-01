@@ -6,7 +6,7 @@ const reqAnimFrame = getRequestAnimationFrame();
 function animate(node: HTMLElement, show: boolean, done: () => void) {
   let height: number;
   let requestAnimationFrameId: number;
-  return cssAnimation(node, 'ant-motion-collapse', {
+  return cssAnimation(node, 'c7n-motion-collapse', {
     start() {
       if (!show) {
         node.style.height = `${node.offsetHeight}px`;

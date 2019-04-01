@@ -1,0 +1,28 @@
+@import "../../../components/style/themes/default";
+@import "../../../components/style/mixins/index";
+@import "../../text-field/style/mixin";
+
+.@{c7n-prefix}-pro-password {
+  .input;
+  &-empty &-inner-button {
+    display: none;
+  }
+  &-inner-button {
+    .@{c7n-prefix}-pro-icon:before {
+      content: "\f06e";
+    }
+    &:hover {
+      color: @primary-5;
+    }
+    &:active .@{c7n-prefix}-pro-icon:before {
+      content: "\f070";
+    }
+  }
+  &-fix-autofill {
+    position: absolute;
+    left: -100rem;
+  }
+  &::-ms-reveal {
+    display: none;
+  }
+}

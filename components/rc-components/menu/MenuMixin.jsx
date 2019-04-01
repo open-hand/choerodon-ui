@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { Children, cloneElement } from 'react';
 import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
-import KeyCode from '../util/KeyCode';
-import createChainedFunction from '../util/createChainedFunction';
+import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
 import scrollIntoView from 'dom-scroll-into-view';
+import KeyCode from '../../_util/KeyCode';
+import createChainedFunction from '../util/createChainedFunction';
 import { getKeyFromChildrenIndex, loopMenuItem } from './util';
 import DOMWrap from './DOMWrap';
 
@@ -112,7 +112,7 @@ const MenuMixin = {
 
   componentDidUpdate() {
     if (this.activeItem && this.activeItem.__isMounted !== false) {
-      scrollIntoView(ReactDOM.findDOMNode(this.activeItem), ReactDOM.findDOMNode(this), {
+      scrollIntoView(findDOMNode(this.activeItem), findDOMNode(this), {
         onlyScrollIfNeeded: true,
       });
       this.activeItem = undefined;
@@ -206,8 +206,7 @@ const MenuMixin = {
       index: i,
       parentMenu: this,
       // customized ref function, need to be invoked manually in child's componentDidMount
-      manualRef: childProps.disabled ? undefined :
-        createChainedFunction(child.ref, saveRef.bind(this, i, subIndex)),
+      manualRef: childProps.disabled ? undefined : createChainedFunction(child.ref, saveRef.bind(this, i, subIndex)),
       eventKey: key,
       active: !childProps.disabled && isActive,
       multiple: props.multiple,
@@ -226,7 +225,7 @@ const MenuMixin = {
     if (props.mode === 'inline') {
       newChildProps.triggerSubMenuAction = 'click';
     }
-    return React.cloneElement(child, newChildProps);
+    return cloneElement(child, newChildProps);
   },
 
   renderRoot(props) {
@@ -254,10 +253,10 @@ const MenuMixin = {
         style={props.style}
         tag="ul"
         hiddenClassName={`${props.prefixCls}-hidden`}
-        visible={props.visible}
+        hidden={!props.visible}
         {...domProps}
       >
-        {React.Children.map(
+        {Children.map(
           props.children,
           (c, i, subIndex) => this.renderMenuItem(c, i, subIndex, props.eventKey || '0-menu-'),
         )}

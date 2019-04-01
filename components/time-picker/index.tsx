@@ -1,10 +1,12 @@
-import * as React from 'react';
-import * as moment from 'moment';
+import React, { Component, CSSProperties, ReactElement } from 'react';
+import moment, { Moment } from 'moment';
 import classNames from 'classnames';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import defaultLocale from './locale/en_US';
 import interopDefault from '../_util/interopDefault';
 import RcTimePicker from '../rc-components/time-picker';
+import { Size } from '../_util/enum';
+import { getPrefixCls } from '../configure';
 
 export function generateShowHourMinuteSecond(format: string) {
   // Ref: http://momentjs.com/docs/#/parsing/string-format/
@@ -21,12 +23,12 @@ export function generateShowHourMinuteSecond(format: string) {
 
 export interface TimePickerProps {
   className?: string;
-  size?: 'large' | 'default' | 'small';
-  value?: moment.Moment;
-  defaultValue?: moment.Moment | moment.Moment[];
+  size?: Size;
+  value?: Moment;
+  defaultValue?: Moment | Moment[];
   open?: boolean;
   format?: string;
-  onChange?: (time: moment.Moment, timeString: string) => void;
+  onChange?: (time: Moment, timeString: string) => void;
   onOpenChange?: (open: boolean) => void;
   disabled?: boolean;
   placeholder?: string;
@@ -35,7 +37,7 @@ export interface TimePickerProps {
   disabledHours?: () => number[];
   disabledMinutes?: (selectedHour: number) => number[];
   disabledSeconds?: (selectedHour: number, selectedMinute: number) => number[];
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   getPopupContainer?: (triggerNode: Element) => HTMLElement;
   addon?: Function;
   use12Hours?: boolean;
@@ -46,7 +48,7 @@ export interface TimePickerProps {
   allowEmpty?: boolean;
   inputReadOnly?: boolean;
   clearText?: string;
-  defaultOpenValue?: moment.Moment;
+  defaultOpenValue?: Moment;
   popupClassName?: string;
   label?: any;
 }
@@ -55,9 +57,9 @@ export interface TimePickerLocale {
   placeholder: string;
 }
 
-export default class TimePicker extends React.Component<TimePickerProps, any> {
+export default class TimePicker extends Component<TimePickerProps, any> {
+  static displayName = 'TimePicker';
   static defaultProps = {
-    prefixCls: 'ant-time-picker',
     align: {
       offset: [0, -2],
     },
@@ -78,8 +80,7 @@ export default class TimePicker extends React.Component<TimePickerProps, any> {
     const value = props.value || props.defaultValue;
     if (value && !interopDefault(moment).isMoment(value)) {
       throw new Error(
-        'The value/defaultValue of TimePicker must be a moment object after `antd@2.0`, ' +
-        'see: https://u.ant.design/time-picker-value',
+        'The value/defaultValue of TimePicker must be a moment object',
       );
     }
     this.state = {
@@ -93,7 +94,7 @@ export default class TimePicker extends React.Component<TimePickerProps, any> {
     }
   }
 
-  handleChange = (value: moment.Moment) => {
+  handleChange = (value: Moment) => {
     if (!('value' in this.props)) {
       this.setState({ value });
     }
@@ -133,19 +134,19 @@ export default class TimePicker extends React.Component<TimePickerProps, any> {
   }
 
   renderTimePicker = (locale: TimePickerLocale) => {
-    const props = {
+    const props: TimePickerProps & { children?: any } = {
       ...this.props,
     };
     delete props.defaultValue;
-
+    const prefixCls = getPrefixCls('time-picker', props.prefixCls);
     const format = this.getDefaultFormat();
     const className = classNames(props.className, {
-      [`${props.prefixCls}-${props.size}`]: !!props.size,
+      [`${prefixCls}-${props.size}`]: !!props.size,
     });
 
-    const addon = (panel: React.ReactElement<any>) => (
+    const addon = (panel: ReactElement<any>) => (
       props.addon ? (
-        <div className={`${props.prefixCls}-panel-addon`}>
+        <div className={`${prefixCls}-panel-addon`}>
           {props.addon(panel)}
         </div>
       ) : null
@@ -155,6 +156,7 @@ export default class TimePicker extends React.Component<TimePickerProps, any> {
       <RcTimePicker
         {...generateShowHourMinuteSecond(format)}
         {...props}
+        prefixCls={prefixCls}
         ref={this.saveTimePicker}
         format={format}
         className={className}

@@ -3,47 +3,47 @@
 exports[`renders ./components/form/demo/advanced-search.md correctly 1`] = `
 <div>
   <form
-    class="ant-form ant-form-horizontal ant-advanced-search-form"
+    class="c7n-form c7n-form-horizontal c7n-advanced-search-form"
   >
     <div
-      class="ant-row"
+      class="c7n-row"
       style="margin-left:-12px;margin-right:-12px"
     >
       <div
-        class="ant-col-8"
+        class="c7n-col-8"
         style="padding-left:12px;padding-right:12px;display:block"
       >
         <div
-          class="ant-form-item"
+          class="c7n-form-item"
         >
           <div
-            class="ant-form-item-control-wrapper"
+            class="c7n-form-item-control-wrapper"
           >
             <div
-              class="ant-form-item-control"
+              class="c7n-form-item-control"
             >
               <span
-                class="ant-form-item-children"
+                class="c7n-form-item-children"
               >
                 <span
-                  class="ant-input-wrapper"
+                  class="c7n-input-wrapper"
                 >
                   <div
-                    class="ant-input-content"
+                    class="c7n-input-content"
                   >
                     <div
-                      class="ant-input-rendered-wrapper"
+                      class="c7n-input-rendered-wrapper"
                     >
                       <div
-                        class="ant-input-rendered"
+                        class="c7n-input-rendered"
                       >
                         <div
-                          class="ant-input-placeholder"
+                          class="c7n-input-placeholder"
                         >
                           placeholder
                         </div>
                         <input
-                          class="ant-input"
+                          class="c7n-input"
                           data-__field="[object Object]"
                           data-__meta="[object Object]"
                           id="field-0"
@@ -54,10 +54,10 @@ exports[`renders ./components/form/demo/advanced-search.md correctly 1`] = `
                     </div>
                   </div>
                   <div
-                    class="ant-input-underline"
+                    class="c7n-input-underline"
                   >
                     <span
-                      class="ant-input-ripple"
+                      class="c7n-input-ripple"
                     />
                   </div>
                 </span>
@@ -67,40 +67,40 @@ exports[`renders ./components/form/demo/advanced-search.md correctly 1`] = `
         </div>
       </div>
       <div
-        class="ant-col-8"
+        class="c7n-col-8"
         style="padding-left:12px;padding-right:12px;display:block"
       >
         <div
-          class="ant-form-item"
+          class="c7n-form-item"
         >
           <div
-            class="ant-form-item-control-wrapper"
+            class="c7n-form-item-control-wrapper"
           >
             <div
-              class="ant-form-item-control"
+              class="c7n-form-item-control"
             >
               <span
-                class="ant-form-item-children"
+                class="c7n-form-item-children"
               >
                 <span
-                  class="ant-input-wrapper"
+                  class="c7n-input-wrapper"
                 >
                   <div
-                    class="ant-input-content"
+                    class="c7n-input-content"
                   >
                     <div
-                      class="ant-input-rendered-wrapper"
+                      class="c7n-input-rendered-wrapper"
                     >
                       <div
-                        class="ant-input-rendered"
+                        class="c7n-input-rendered"
                       >
                         <div
-                          class="ant-input-placeholder"
+                          class="c7n-input-placeholder"
                         >
                           placeholder
                         </div>
                         <input
-                          class="ant-input"
+                          class="c7n-input"
                           data-__field="[object Object]"
                           data-__meta="[object Object]"
                           id="field-1"
@@ -111,10 +111,10 @@ exports[`renders ./components/form/demo/advanced-search.md correctly 1`] = `
                     </div>
                   </div>
                   <div
-                    class="ant-input-underline"
+                    class="c7n-input-underline"
                   >
                     <span
-                      class="ant-input-ripple"
+                      class="c7n-input-ripple"
                     />
                   </div>
                 </span>
@@ -124,40 +124,40 @@ exports[`renders ./components/form/demo/advanced-search.md correctly 1`] = `
         </div>
       </div>
       <div
-        class="ant-col-8"
+        class="c7n-col-8"
         style="padding-left:12px;padding-right:12px;display:block"
       >
         <div
-          class="ant-form-item"
+          class="c7n-form-item"
         >
           <div
-            class="ant-form-item-control-wrapper"
+            class="c7n-form-item-control-wrapper"
           >
             <div
-              class="ant-form-item-control"
+              class="c7n-form-item-control"
             >
               <span
-                class="ant-form-item-children"
+                class="c7n-form-item-children"
               >
                 <span
-                  class="ant-input-wrapper"
+                  class="c7n-input-wrapper"
                 >
                   <div
-                    class="ant-input-content"
+                    class="c7n-input-content"
                   >
                     <div
-                      class="ant-input-rendered-wrapper"
+                      class="c7n-input-rendered-wrapper"
                     >
                       <div
-                        class="ant-input-rendered"
+                        class="c7n-input-rendered"
                       >
                         <div
-                          class="ant-input-placeholder"
+                          class="c7n-input-placeholder"
                         >
                           placeholder
                         </div>
                         <input
-                          class="ant-input"
+                          class="c7n-input"
                           data-__field="[object Object]"
                           data-__meta="[object Object]"
                           id="field-2"
@@ -168,10 +168,10 @@ exports[`renders ./components/form/demo/advanced-search.md correctly 1`] = `
                     </div>
                   </div>
                   <div
-                    class="ant-input-underline"
+                    class="c7n-input-underline"
                   >
                     <span
-                      class="ant-input-ripple"
+                      class="c7n-input-ripple"
                     />
                   </div>
                 </span>
@@ -181,40 +181,40 @@ exports[`renders ./components/form/demo/advanced-search.md correctly 1`] = `
         </div>
       </div>
       <div
-        class="ant-col-8"
+        class="c7n-col-8"
         style="padding-left:12px;padding-right:12px;display:block"
       >
         <div
-          class="ant-form-item"
+          class="c7n-form-item"
         >
           <div
-            class="ant-form-item-control-wrapper"
+            class="c7n-form-item-control-wrapper"
           >
             <div
-              class="ant-form-item-control"
+              class="c7n-form-item-control"
             >
               <span
-                class="ant-form-item-children"
+                class="c7n-form-item-children"
               >
                 <span
-                  class="ant-input-wrapper"
+                  class="c7n-input-wrapper"
                 >
                   <div
-                    class="ant-input-content"
+                    class="c7n-input-content"
                   >
                     <div
-                      class="ant-input-rendered-wrapper"
+                      class="c7n-input-rendered-wrapper"
                     >
                       <div
-                        class="ant-input-rendered"
+                        class="c7n-input-rendered"
                       >
                         <div
-                          class="ant-input-placeholder"
+                          class="c7n-input-placeholder"
                         >
                           placeholder
                         </div>
                         <input
-                          class="ant-input"
+                          class="c7n-input"
                           data-__field="[object Object]"
                           data-__meta="[object Object]"
                           id="field-3"
@@ -225,10 +225,10 @@ exports[`renders ./components/form/demo/advanced-search.md correctly 1`] = `
                     </div>
                   </div>
                   <div
-                    class="ant-input-underline"
+                    class="c7n-input-underline"
                   >
                     <span
-                      class="ant-input-ripple"
+                      class="c7n-input-ripple"
                     />
                   </div>
                 </span>
@@ -238,40 +238,40 @@ exports[`renders ./components/form/demo/advanced-search.md correctly 1`] = `
         </div>
       </div>
       <div
-        class="ant-col-8"
+        class="c7n-col-8"
         style="padding-left:12px;padding-right:12px;display:block"
       >
         <div
-          class="ant-form-item"
+          class="c7n-form-item"
         >
           <div
-            class="ant-form-item-control-wrapper"
+            class="c7n-form-item-control-wrapper"
           >
             <div
-              class="ant-form-item-control"
+              class="c7n-form-item-control"
             >
               <span
-                class="ant-form-item-children"
+                class="c7n-form-item-children"
               >
                 <span
-                  class="ant-input-wrapper"
+                  class="c7n-input-wrapper"
                 >
                   <div
-                    class="ant-input-content"
+                    class="c7n-input-content"
                   >
                     <div
-                      class="ant-input-rendered-wrapper"
+                      class="c7n-input-rendered-wrapper"
                     >
                       <div
-                        class="ant-input-rendered"
+                        class="c7n-input-rendered"
                       >
                         <div
-                          class="ant-input-placeholder"
+                          class="c7n-input-placeholder"
                         >
                           placeholder
                         </div>
                         <input
-                          class="ant-input"
+                          class="c7n-input"
                           data-__field="[object Object]"
                           data-__meta="[object Object]"
                           id="field-4"
@@ -282,10 +282,10 @@ exports[`renders ./components/form/demo/advanced-search.md correctly 1`] = `
                     </div>
                   </div>
                   <div
-                    class="ant-input-underline"
+                    class="c7n-input-underline"
                   >
                     <span
-                      class="ant-input-ripple"
+                      class="c7n-input-ripple"
                     />
                   </div>
                 </span>
@@ -295,40 +295,40 @@ exports[`renders ./components/form/demo/advanced-search.md correctly 1`] = `
         </div>
       </div>
       <div
-        class="ant-col-8"
+        class="c7n-col-8"
         style="padding-left:12px;padding-right:12px;display:block"
       >
         <div
-          class="ant-form-item"
+          class="c7n-form-item"
         >
           <div
-            class="ant-form-item-control-wrapper"
+            class="c7n-form-item-control-wrapper"
           >
             <div
-              class="ant-form-item-control"
+              class="c7n-form-item-control"
             >
               <span
-                class="ant-form-item-children"
+                class="c7n-form-item-children"
               >
                 <span
-                  class="ant-input-wrapper"
+                  class="c7n-input-wrapper"
                 >
                   <div
-                    class="ant-input-content"
+                    class="c7n-input-content"
                   >
                     <div
-                      class="ant-input-rendered-wrapper"
+                      class="c7n-input-rendered-wrapper"
                     >
                       <div
-                        class="ant-input-rendered"
+                        class="c7n-input-rendered"
                       >
                         <div
-                          class="ant-input-placeholder"
+                          class="c7n-input-placeholder"
                         >
                           placeholder
                         </div>
                         <input
-                          class="ant-input"
+                          class="c7n-input"
                           data-__field="[object Object]"
                           data-__meta="[object Object]"
                           id="field-5"
@@ -339,10 +339,10 @@ exports[`renders ./components/form/demo/advanced-search.md correctly 1`] = `
                     </div>
                   </div>
                   <div
-                    class="ant-input-underline"
+                    class="c7n-input-underline"
                   >
                     <span
-                      class="ant-input-ripple"
+                      class="c7n-input-ripple"
                     />
                   </div>
                 </span>
@@ -352,40 +352,40 @@ exports[`renders ./components/form/demo/advanced-search.md correctly 1`] = `
         </div>
       </div>
       <div
-        class="ant-col-8"
+        class="c7n-col-8"
         style="padding-left:12px;padding-right:12px;display:none"
       >
         <div
-          class="ant-form-item"
+          class="c7n-form-item"
         >
           <div
-            class="ant-form-item-control-wrapper"
+            class="c7n-form-item-control-wrapper"
           >
             <div
-              class="ant-form-item-control"
+              class="c7n-form-item-control"
             >
               <span
-                class="ant-form-item-children"
+                class="c7n-form-item-children"
               >
                 <span
-                  class="ant-input-wrapper"
+                  class="c7n-input-wrapper"
                 >
                   <div
-                    class="ant-input-content"
+                    class="c7n-input-content"
                   >
                     <div
-                      class="ant-input-rendered-wrapper"
+                      class="c7n-input-rendered-wrapper"
                     >
                       <div
-                        class="ant-input-rendered"
+                        class="c7n-input-rendered"
                       >
                         <div
-                          class="ant-input-placeholder"
+                          class="c7n-input-placeholder"
                         >
                           placeholder
                         </div>
                         <input
-                          class="ant-input"
+                          class="c7n-input"
                           data-__field="[object Object]"
                           data-__meta="[object Object]"
                           id="field-6"
@@ -396,10 +396,10 @@ exports[`renders ./components/form/demo/advanced-search.md correctly 1`] = `
                     </div>
                   </div>
                   <div
-                    class="ant-input-underline"
+                    class="c7n-input-underline"
                   >
                     <span
-                      class="ant-input-ripple"
+                      class="c7n-input-ripple"
                     />
                   </div>
                 </span>
@@ -409,40 +409,40 @@ exports[`renders ./components/form/demo/advanced-search.md correctly 1`] = `
         </div>
       </div>
       <div
-        class="ant-col-8"
+        class="c7n-col-8"
         style="padding-left:12px;padding-right:12px;display:none"
       >
         <div
-          class="ant-form-item"
+          class="c7n-form-item"
         >
           <div
-            class="ant-form-item-control-wrapper"
+            class="c7n-form-item-control-wrapper"
           >
             <div
-              class="ant-form-item-control"
+              class="c7n-form-item-control"
             >
               <span
-                class="ant-form-item-children"
+                class="c7n-form-item-children"
               >
                 <span
-                  class="ant-input-wrapper"
+                  class="c7n-input-wrapper"
                 >
                   <div
-                    class="ant-input-content"
+                    class="c7n-input-content"
                   >
                     <div
-                      class="ant-input-rendered-wrapper"
+                      class="c7n-input-rendered-wrapper"
                     >
                       <div
-                        class="ant-input-rendered"
+                        class="c7n-input-rendered"
                       >
                         <div
-                          class="ant-input-placeholder"
+                          class="c7n-input-placeholder"
                         >
                           placeholder
                         </div>
                         <input
-                          class="ant-input"
+                          class="c7n-input"
                           data-__field="[object Object]"
                           data-__meta="[object Object]"
                           id="field-7"
@@ -453,10 +453,10 @@ exports[`renders ./components/form/demo/advanced-search.md correctly 1`] = `
                     </div>
                   </div>
                   <div
-                    class="ant-input-underline"
+                    class="c7n-input-underline"
                   >
                     <span
-                      class="ant-input-ripple"
+                      class="c7n-input-ripple"
                     />
                   </div>
                 </span>
@@ -466,40 +466,40 @@ exports[`renders ./components/form/demo/advanced-search.md correctly 1`] = `
         </div>
       </div>
       <div
-        class="ant-col-8"
+        class="c7n-col-8"
         style="padding-left:12px;padding-right:12px;display:none"
       >
         <div
-          class="ant-form-item"
+          class="c7n-form-item"
         >
           <div
-            class="ant-form-item-control-wrapper"
+            class="c7n-form-item-control-wrapper"
           >
             <div
-              class="ant-form-item-control"
+              class="c7n-form-item-control"
             >
               <span
-                class="ant-form-item-children"
+                class="c7n-form-item-children"
               >
                 <span
-                  class="ant-input-wrapper"
+                  class="c7n-input-wrapper"
                 >
                   <div
-                    class="ant-input-content"
+                    class="c7n-input-content"
                   >
                     <div
-                      class="ant-input-rendered-wrapper"
+                      class="c7n-input-rendered-wrapper"
                     >
                       <div
-                        class="ant-input-rendered"
+                        class="c7n-input-rendered"
                       >
                         <div
-                          class="ant-input-placeholder"
+                          class="c7n-input-placeholder"
                         >
                           placeholder
                         </div>
                         <input
-                          class="ant-input"
+                          class="c7n-input"
                           data-__field="[object Object]"
                           data-__meta="[object Object]"
                           id="field-8"
@@ -510,10 +510,10 @@ exports[`renders ./components/form/demo/advanced-search.md correctly 1`] = `
                     </div>
                   </div>
                   <div
-                    class="ant-input-underline"
+                    class="c7n-input-underline"
                   >
                     <span
-                      class="ant-input-ripple"
+                      class="c7n-input-ripple"
                     />
                   </div>
                 </span>
@@ -523,40 +523,40 @@ exports[`renders ./components/form/demo/advanced-search.md correctly 1`] = `
         </div>
       </div>
       <div
-        class="ant-col-8"
+        class="c7n-col-8"
         style="padding-left:12px;padding-right:12px;display:none"
       >
         <div
-          class="ant-form-item"
+          class="c7n-form-item"
         >
           <div
-            class="ant-form-item-control-wrapper"
+            class="c7n-form-item-control-wrapper"
           >
             <div
-              class="ant-form-item-control"
+              class="c7n-form-item-control"
             >
               <span
-                class="ant-form-item-children"
+                class="c7n-form-item-children"
               >
                 <span
-                  class="ant-input-wrapper"
+                  class="c7n-input-wrapper"
                 >
                   <div
-                    class="ant-input-content"
+                    class="c7n-input-content"
                   >
                     <div
-                      class="ant-input-rendered-wrapper"
+                      class="c7n-input-rendered-wrapper"
                     >
                       <div
-                        class="ant-input-rendered"
+                        class="c7n-input-rendered"
                       >
                         <div
-                          class="ant-input-placeholder"
+                          class="c7n-input-placeholder"
                         >
                           placeholder
                         </div>
                         <input
-                          class="ant-input"
+                          class="c7n-input"
                           data-__field="[object Object]"
                           data-__meta="[object Object]"
                           id="field-9"
@@ -567,10 +567,10 @@ exports[`renders ./components/form/demo/advanced-search.md correctly 1`] = `
                     </div>
                   </div>
                   <div
-                    class="ant-input-underline"
+                    class="c7n-input-underline"
                   >
                     <span
-                      class="ant-input-ripple"
+                      class="c7n-input-ripple"
                     />
                   </div>
                 </span>
@@ -581,25 +581,25 @@ exports[`renders ./components/form/demo/advanced-search.md correctly 1`] = `
       </div>
     </div>
     <div
-      class="ant-row"
+      class="c7n-row"
     >
       <div
-        class="ant-col-24"
+        class="c7n-col-24"
         style="text-align:right"
       >
         <button
-          class="ant-btn ant-btn-primary ant-btn-flat"
+          class="c7n-btn c7n-btn-primary c7n-btn-flat"
           type="submit"
         >
           <span>
             Search
           </span>
           <div
-            class="ant-ripple-wrapper"
+            class="c7n-ripple-wrapper"
           />
         </button>
         <button
-          class="ant-btn ant-btn-flat"
+          class="c7n-btn c7n-btn-flat"
           style="margin-left:8px"
           type="button"
         >
@@ -607,7 +607,7 @@ exports[`renders ./components/form/demo/advanced-search.md correctly 1`] = `
             Clear
           </span>
           <div
-            class="ant-ripple-wrapper"
+            class="c7n-ripple-wrapper"
           />
         </button>
         <a
@@ -631,37 +631,37 @@ exports[`renders ./components/form/demo/advanced-search.md correctly 1`] = `
 
 exports[`renders ./components/form/demo/coordinated.md correctly 1`] = `
 <form
-  class="ant-form ant-form-horizontal"
+  class="c7n-form c7n-form-horizontal"
 >
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper is-required"
+      class="c7n-form-item-control-wrapper is-required"
     >
       <div
-        class="ant-form-item-control"
+        class="c7n-form-item-control"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <span
-            class="ant-input-wrapper"
+            class="c7n-input-wrapper"
           >
             <div
-              class="ant-input-content"
+              class="c7n-input-content"
             >
               <div
-                class="ant-input-rendered-wrapper"
+                class="c7n-input-rendered-wrapper"
               >
                 <div
-                  class="ant-input-rendered"
+                  class="c7n-input-rendered"
                 >
                   <div
-                    class="ant-input-placeholder"
+                    class="c7n-input-placeholder"
                   />
                   <input
-                    class="ant-input"
+                    class="c7n-input"
                     data-__field="[object Object]"
                     data-__meta="[object Object]"
                     id="note"
@@ -672,10 +672,10 @@ exports[`renders ./components/form/demo/coordinated.md correctly 1`] = `
               </div>
             </div>
             <div
-              class="ant-input-underline"
+              class="c7n-input-underline"
             >
               <span
-                class="ant-input-ripple"
+                class="c7n-input-ripple"
               />
             </div>
           </span>
@@ -684,43 +684,43 @@ exports[`renders ./components/form/demo/coordinated.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper is-required"
+      class="c7n-form-item-control-wrapper is-required"
     >
       <div
-        class="ant-form-item-control"
+        class="c7n-form-item-control"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <div
-            class="ant-select ant-select-enabled"
+            class="c7n-select c7n-select-enabled"
           >
             <div
               aria-autocomplete="list"
               aria-expanded="false"
               aria-haspopup="true"
-              class="ant-select-selection
-            ant-select-selection--single"
+              class="c7n-select-selection
+            c7n-select-selection--single"
               role="combobox"
               tabindex="0"
             >
               <div
-                class="ant-select-selection__rendered"
+                class="c7n-select-selection__rendered"
               >
                 <div
-                  class="ant-select-selection__placeholder"
+                  class="c7n-select-selection__placeholder"
                 >
                   Select a option and change input text above
                 </div>
                 <div
-                  class="ant-select-selection-selected-value"
+                  class="c7n-select-selection-selected-value"
                   style="opacity:1"
                 />
                 <span
-                  class="ant-select-arrow"
+                  class="c7n-select-arrow"
                   style="user-select:none;-webkit-user-select:none"
                   unselectable="unselectable"
                 >
@@ -732,10 +732,10 @@ exports[`renders ./components/form/demo/coordinated.md correctly 1`] = `
               </div>
             </div>
             <div
-              class="ant-select-underline"
+              class="c7n-select-underline"
             >
               <span
-                class="ant-select-ripple"
+                class="c7n-select-ripple"
               />
             </div>
           </div>
@@ -744,26 +744,26 @@ exports[`renders ./components/form/demo/coordinated.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper"
+      class="c7n-form-item-control-wrapper"
     >
       <div
-        class="ant-form-item-control"
+        class="c7n-form-item-control"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <button
-            class="ant-btn ant-btn-primary ant-btn-flat"
+            class="c7n-btn c7n-btn-primary c7n-btn-flat"
             type="submit"
           >
             <span>
               Submit
             </span>
             <div
-              class="ant-ripple-wrapper"
+              class="c7n-ripple-wrapper"
             />
           </button>
         </span>
@@ -775,39 +775,39 @@ exports[`renders ./components/form/demo/coordinated.md correctly 1`] = `
 
 exports[`renders ./components/form/demo/customized-form-controls.md correctly 1`] = `
 <form
-  class="ant-form ant-form-inline"
+  class="c7n-form c7n-form-inline"
 >
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper"
+      class="c7n-form-item-control-wrapper"
     >
       <div
-        class="ant-form-item-control has-success"
+        class="c7n-form-item-control has-success"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <span>
             <span
-              class="ant-input-wrapper"
+              class="c7n-input-wrapper"
               style="width:65%;margin-right:3%;line-height:1.7"
             >
               <div
-                class="ant-input-content"
+                class="c7n-input-content"
               >
                 <div
-                  class="ant-input-rendered-wrapper"
+                  class="c7n-input-rendered-wrapper"
                 >
                   <div
-                    class="ant-input-rendered"
+                    class="c7n-input-rendered"
                   >
                     <div
-                      class="ant-input-placeholder"
+                      class="c7n-input-placeholder"
                     />
                     <input
-                      class="ant-input"
+                      class="c7n-input"
                       type="text"
                       value="0"
                     />
@@ -815,38 +815,38 @@ exports[`renders ./components/form/demo/customized-form-controls.md correctly 1`
                 </div>
               </div>
               <div
-                class="ant-input-underline"
+                class="c7n-input-underline"
               >
                 <span
-                  class="ant-input-ripple"
+                  class="c7n-input-ripple"
                 />
               </div>
             </span>
             <div
-              class="ant-select ant-select-has-value ant-select-enabled"
+              class="c7n-select c7n-select-has-value c7n-select-enabled"
               style="width:32%"
             >
               <div
                 aria-autocomplete="list"
                 aria-expanded="false"
                 aria-haspopup="true"
-                class="ant-select-selection
-            ant-select-selection--single"
+                class="c7n-select-selection
+            c7n-select-selection--single"
                 role="combobox"
                 tabindex="0"
               >
                 <div
-                  class="ant-select-selection__rendered"
+                  class="c7n-select-selection__rendered"
                 >
                   <div
-                    class="ant-select-selection-selected-value"
+                    class="c7n-select-selection-selected-value"
                     style="opacity:1"
                     title="RMB"
                   >
                     RMB
                   </div>
                   <span
-                    class="ant-select-arrow"
+                    class="c7n-select-arrow"
                     style="user-select:none;-webkit-user-select:none"
                     unselectable="unselectable"
                   >
@@ -858,10 +858,10 @@ exports[`renders ./components/form/demo/customized-form-controls.md correctly 1`
                 </div>
               </div>
               <div
-                class="ant-select-underline"
+                class="c7n-select-underline"
               >
                 <span
-                  class="ant-select-ripple"
+                  class="c7n-select-ripple"
                 />
               </div>
             </div>
@@ -871,26 +871,26 @@ exports[`renders ./components/form/demo/customized-form-controls.md correctly 1`
     </div>
   </div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper"
+      class="c7n-form-item-control-wrapper"
     >
       <div
-        class="ant-form-item-control"
+        class="c7n-form-item-control"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <button
-            class="ant-btn ant-btn-primary ant-btn-flat"
+            class="c7n-btn c7n-btn-primary c7n-btn-flat"
             type="submit"
           >
             <span>
               Submit
             </span>
             <div
-              class="ant-ripple-wrapper"
+              class="c7n-ripple-wrapper"
             />
           </button>
         </span>
@@ -902,22 +902,22 @@ exports[`renders ./components/form/demo/customized-form-controls.md correctly 1`
 
 exports[`renders ./components/form/demo/dynamic-form-item.md correctly 1`] = `
 <form
-  class="ant-form ant-form-horizontal"
+  class="c7n-form c7n-form-horizontal"
 >
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper"
+      class="c7n-form-item-control-wrapper"
     >
       <div
-        class="ant-form-item-control"
+        class="c7n-form-item-control"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <button
-            class="ant-btn ant-btn-dashed ant-btn-flat"
+            class="c7n-btn c7n-btn-dashed c7n-btn-flat"
             style="width:60%"
             type="button"
           >
@@ -928,7 +928,7 @@ exports[`renders ./components/form/demo/dynamic-form-item.md correctly 1`] = `
                Add field
             </span>
             <div
-              class="ant-ripple-wrapper"
+              class="c7n-ripple-wrapper"
             />
           </button>
         </span>
@@ -936,26 +936,26 @@ exports[`renders ./components/form/demo/dynamic-form-item.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper"
+      class="c7n-form-item-control-wrapper"
     >
       <div
-        class="ant-form-item-control"
+        class="c7n-form-item-control"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <button
-            class="ant-btn ant-btn-primary ant-btn-flat"
+            class="c7n-btn c7n-btn-primary c7n-btn-flat"
             type="submit"
           >
             <span>
               Submit
             </span>
             <div
-              class="ant-ripple-wrapper"
+              class="c7n-ripple-wrapper"
             />
           </button>
         </span>
@@ -968,36 +968,36 @@ exports[`renders ./components/form/demo/dynamic-form-item.md correctly 1`] = `
 exports[`renders ./components/form/demo/dynamic-rule.md correctly 1`] = `
 <div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper is-required"
+      class="c7n-form-item-control-wrapper is-required"
     >
       <div
-        class="ant-form-item-control"
+        class="c7n-form-item-control"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <span
-            class="ant-input-wrapper"
+            class="c7n-input-wrapper"
           >
             <div
-              class="ant-input-content"
+              class="c7n-input-content"
             >
               <div
-                class="ant-input-rendered-wrapper"
+                class="c7n-input-rendered-wrapper"
               >
                 <div
-                  class="ant-input-rendered"
+                  class="c7n-input-rendered"
                 >
                   <div
-                    class="ant-input-placeholder"
+                    class="c7n-input-placeholder"
                   >
                     Please input your name
                   </div>
                   <input
-                    class="ant-input"
+                    class="c7n-input"
                     data-__field="[object Object]"
                     data-__meta="[object Object]"
                     id="username"
@@ -1008,10 +1008,10 @@ exports[`renders ./components/form/demo/dynamic-rule.md correctly 1`] = `
               </div>
             </div>
             <div
-              class="ant-input-underline"
+              class="c7n-input-underline"
             >
               <span
-                class="ant-input-ripple"
+                class="c7n-input-ripple"
               />
             </div>
           </span>
@@ -1020,36 +1020,36 @@ exports[`renders ./components/form/demo/dynamic-rule.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper"
+      class="c7n-form-item-control-wrapper"
     >
       <div
-        class="ant-form-item-control"
+        class="c7n-form-item-control"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <span
-            class="ant-input-wrapper"
+            class="c7n-input-wrapper"
           >
             <div
-              class="ant-input-content"
+              class="c7n-input-content"
             >
               <div
-                class="ant-input-rendered-wrapper"
+                class="c7n-input-rendered-wrapper"
               >
                 <div
-                  class="ant-input-rendered"
+                  class="c7n-input-rendered"
                 >
                   <div
-                    class="ant-input-placeholder"
+                    class="c7n-input-placeholder"
                   >
                     Please input your nickname
                   </div>
                   <input
-                    class="ant-input"
+                    class="c7n-input"
                     data-__field="[object Object]"
                     data-__meta="[object Object]"
                     id="nickname"
@@ -1060,10 +1060,10 @@ exports[`renders ./components/form/demo/dynamic-rule.md correctly 1`] = `
               </div>
             </div>
             <div
-              class="ant-input-underline"
+              class="c7n-input-underline"
             >
               <span
-                class="ant-input-ripple"
+                class="c7n-input-ripple"
               />
             </div>
           </span>
@@ -1072,30 +1072,30 @@ exports[`renders ./components/form/demo/dynamic-rule.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper"
+      class="c7n-form-item-control-wrapper"
     >
       <div
-        class="ant-form-item-control"
+        class="c7n-form-item-control"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <label
-            class="ant-checkbox-wrapper"
+            class="c7n-checkbox-wrapper"
           >
             <span
-              class="ant-checkbox"
+              class="c7n-checkbox"
             >
               <input
-                class="ant-checkbox-input"
+                class="c7n-checkbox-input"
                 type="checkbox"
                 value="false"
               />
               <span
-                class="ant-checkbox-inner"
+                class="c7n-checkbox-inner"
               />
             </span>
             <span>
@@ -1107,26 +1107,26 @@ exports[`renders ./components/form/demo/dynamic-rule.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper"
+      class="c7n-form-item-control-wrapper"
     >
       <div
-        class="ant-form-item-control"
+        class="c7n-form-item-control"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <button
-            class="ant-btn ant-btn-primary ant-btn-flat"
+            class="c7n-btn c7n-btn-primary c7n-btn-flat"
             type="button"
           >
             <span>
               Check
             </span>
             <div
-              class="ant-ripple-wrapper"
+              class="c7n-ripple-wrapper"
             />
           </button>
         </span>
@@ -1139,14 +1139,14 @@ exports[`renders ./components/form/demo/dynamic-rule.md correctly 1`] = `
 exports[`renders ./components/form/demo/form-in-modal.md correctly 1`] = `
 <div>
   <button
-    class="ant-btn ant-btn-primary ant-btn-flat"
+    class="c7n-btn c7n-btn-primary c7n-btn-flat"
     type="button"
   >
     <span>
       New Collection
     </span>
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
 </div>
@@ -1155,37 +1155,37 @@ exports[`renders ./components/form/demo/form-in-modal.md correctly 1`] = `
 exports[`renders ./components/form/demo/global-state.md correctly 1`] = `
 <div>
   <form
-    class="ant-form ant-form-inline"
+    class="c7n-form c7n-form-inline"
   >
     <div
-      class="ant-form-item"
+      class="c7n-form-item"
     >
       <div
-        class="ant-form-item-control-wrapper is-required"
+        class="c7n-form-item-control-wrapper is-required"
       >
         <div
-          class="ant-form-item-control has-success"
+          class="c7n-form-item-control has-success"
         >
           <span
-            class="ant-form-item-children"
+            class="c7n-form-item-children"
           >
             <span
-              class="ant-input-wrapper"
+              class="c7n-input-wrapper"
             >
               <div
-                class="ant-input-content"
+                class="c7n-input-content"
               >
                 <div
-                  class="ant-input-rendered-wrapper"
+                  class="c7n-input-rendered-wrapper"
                 >
                   <div
-                    class="ant-input-rendered"
+                    class="c7n-input-rendered"
                   >
                     <div
-                      class="ant-input-placeholder"
+                      class="c7n-input-placeholder"
                     />
                     <input
-                      class="ant-input"
+                      class="c7n-input"
                       data-__field="[object Object]"
                       data-__meta="[object Object]"
                       id="username"
@@ -1196,10 +1196,10 @@ exports[`renders ./components/form/demo/global-state.md correctly 1`] = `
                 </div>
               </div>
               <div
-                class="ant-input-underline"
+                class="c7n-input-underline"
               >
                 <span
-                  class="ant-input-ripple"
+                  class="c7n-input-ripple"
                 />
               </div>
             </span>
@@ -1222,31 +1222,31 @@ exports[`renders ./components/form/demo/global-state.md correctly 1`] = `
 
 exports[`renders ./components/form/demo/horizontal-login.md correctly 1`] = `
 <form
-  class="ant-form ant-form-inline"
+  class="c7n-form c7n-form-inline"
 >
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper is-required"
+      class="c7n-form-item-control-wrapper is-required"
     >
       <div
-        class="ant-form-item-control"
+        class="c7n-form-item-control"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <span
-            class="ant-input-wrapper ant-input-has-prefix"
+            class="c7n-input-wrapper c7n-input-has-prefix"
           >
             <div
-              class="ant-input-content"
+              class="c7n-input-content"
             >
               <div
-                class="ant-input-rendered-wrapper"
+                class="c7n-input-rendered-wrapper"
               >
                 <span
-                  class="ant-input-prefix"
+                  class="c7n-input-prefix"
                 >
                   <i
                     class="icon icon-person_outline"
@@ -1254,15 +1254,15 @@ exports[`renders ./components/form/demo/horizontal-login.md correctly 1`] = `
                   />
                 </span>
                 <div
-                  class="ant-input-rendered"
+                  class="c7n-input-rendered"
                 >
                   <div
-                    class="ant-input-placeholder"
+                    class="c7n-input-placeholder"
                   >
                     Username
                   </div>
                   <input
-                    class="ant-input"
+                    class="c7n-input"
                     data-__field="[object Object]"
                     data-__meta="[object Object]"
                     id="userName"
@@ -1273,10 +1273,10 @@ exports[`renders ./components/form/demo/horizontal-login.md correctly 1`] = `
               </div>
             </div>
             <div
-              class="ant-input-underline"
+              class="c7n-input-underline"
             >
               <span
-                class="ant-input-ripple"
+                class="c7n-input-ripple"
               />
             </div>
           </span>
@@ -1285,28 +1285,28 @@ exports[`renders ./components/form/demo/horizontal-login.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper is-required"
+      class="c7n-form-item-control-wrapper is-required"
     >
       <div
-        class="ant-form-item-control"
+        class="c7n-form-item-control"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <span
-            class="ant-input-wrapper ant-input-has-prefix"
+            class="c7n-input-wrapper c7n-input-has-prefix"
           >
             <div
-              class="ant-input-content"
+              class="c7n-input-content"
             >
               <div
-                class="ant-input-rendered-wrapper"
+                class="c7n-input-rendered-wrapper"
               >
                 <span
-                  class="ant-input-prefix"
+                  class="c7n-input-prefix"
                 >
                   <i
                     class="icon icon-lock_outline"
@@ -1314,15 +1314,15 @@ exports[`renders ./components/form/demo/horizontal-login.md correctly 1`] = `
                   />
                 </span>
                 <div
-                  class="ant-input-rendered"
+                  class="c7n-input-rendered"
                 >
                   <div
-                    class="ant-input-placeholder"
+                    class="c7n-input-placeholder"
                   >
                     Password
                   </div>
                   <input
-                    class="ant-input"
+                    class="c7n-input"
                     data-__field="[object Object]"
                     data-__meta="[object Object]"
                     id="password"
@@ -1333,10 +1333,10 @@ exports[`renders ./components/form/demo/horizontal-login.md correctly 1`] = `
               </div>
             </div>
             <div
-              class="ant-input-underline"
+              class="c7n-input-underline"
             >
               <span
-                class="ant-input-ripple"
+                class="c7n-input-ripple"
               />
             </div>
           </span>
@@ -1345,26 +1345,26 @@ exports[`renders ./components/form/demo/horizontal-login.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper"
+      class="c7n-form-item-control-wrapper"
     >
       <div
-        class="ant-form-item-control"
+        class="c7n-form-item-control"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <button
-            class="ant-btn ant-btn-primary ant-btn-flat"
+            class="c7n-btn c7n-btn-primary c7n-btn-flat"
             type="submit"
           >
             <span>
               Log in
             </span>
             <div
-              class="ant-ripple-wrapper"
+              class="c7n-ripple-wrapper"
             />
           </button>
         </span>
@@ -1377,40 +1377,40 @@ exports[`renders ./components/form/demo/horizontal-login.md correctly 1`] = `
 exports[`renders ./components/form/demo/layout.md correctly 1`] = `
 <div>
   <form
-    class="ant-form ant-form-horizontal"
+    class="c7n-form c7n-form-horizontal"
   >
     <div
-      class="ant-form-item"
+      class="c7n-form-item"
     >
       <div
-        class="ant-form-item-control-wrapper"
+        class="c7n-form-item-control-wrapper"
       >
         <div
-          class="ant-form-item-control"
+          class="c7n-form-item-control"
         >
           <span
-            class="ant-form-item-children"
+            class="c7n-form-item-children"
           >
             <div
-              class="ant-radio-group-wrapper"
+              class="c7n-radio-group-wrapper"
             >
               <div
-                class="ant-radio-group"
+                class="c7n-radio-group"
               >
                 <label
-                  class="ant-radio-button-wrapper ant-radio-button-wrapper-checked"
+                  class="c7n-radio-button-wrapper c7n-radio-button-wrapper-checked"
                 >
                   <span
-                    class="ant-radio-button ant-radio-button-checked"
+                    class="c7n-radio-button c7n-radio-button-checked"
                   >
                     <input
                       checked=""
-                      class="ant-radio-button-input"
+                      class="c7n-radio-button-input"
                       type="radio"
                       value="horizontal"
                     />
                     <span
-                      class="ant-radio-button-inner"
+                      class="c7n-radio-button-inner"
                     />
                   </span>
                   <span>
@@ -1418,18 +1418,18 @@ exports[`renders ./components/form/demo/layout.md correctly 1`] = `
                   </span>
                 </label>
                 <label
-                  class="ant-radio-button-wrapper"
+                  class="c7n-radio-button-wrapper"
                 >
                   <span
-                    class="ant-radio-button"
+                    class="c7n-radio-button"
                   >
                     <input
-                      class="ant-radio-button-input"
+                      class="c7n-radio-button-input"
                       type="radio"
                       value="vertical"
                     />
                     <span
-                      class="ant-radio-button-inner"
+                      class="c7n-radio-button-inner"
                     />
                   </span>
                   <span>
@@ -1437,18 +1437,18 @@ exports[`renders ./components/form/demo/layout.md correctly 1`] = `
                   </span>
                 </label>
                 <label
-                  class="ant-radio-button-wrapper"
+                  class="c7n-radio-button-wrapper"
                 >
                   <span
-                    class="ant-radio-button"
+                    class="c7n-radio-button"
                   >
                     <input
-                      class="ant-radio-button-input"
+                      class="c7n-radio-button-input"
                       type="radio"
                       value="inline"
                     />
                     <span
-                      class="ant-radio-button-inner"
+                      class="c7n-radio-button-inner"
                     />
                   </span>
                   <span>
@@ -1462,46 +1462,46 @@ exports[`renders ./components/form/demo/layout.md correctly 1`] = `
       </div>
     </div>
     <div
-      class="ant-form-item"
+      class="c7n-form-item"
     >
       <div
-        class="ant-form-item-control-wrapper"
+        class="c7n-form-item-control-wrapper"
       >
         <div
-          class="ant-form-item-control"
+          class="c7n-form-item-control"
         >
           <span
-            class="ant-form-item-children"
+            class="c7n-form-item-children"
           >
             <span
-              class="ant-input-wrapper"
+              class="c7n-input-wrapper"
             >
               <div
-                class="ant-input-content"
+                class="c7n-input-content"
               >
                 <div
-                  class="ant-input-rendered-wrapper"
+                  class="c7n-input-rendered-wrapper"
                 >
                   <div
-                    class="ant-input-rendered"
+                    class="c7n-input-rendered"
                   >
                     <div
-                      class="ant-input-placeholder"
+                      class="c7n-input-placeholder"
                     >
                       input placeholder
                     </div>
                     <input
-                      class="ant-input"
+                      class="c7n-input"
                       type="text"
                     />
                   </div>
                 </div>
               </div>
               <div
-                class="ant-input-underline"
+                class="c7n-input-underline"
               >
                 <span
-                  class="ant-input-ripple"
+                  class="c7n-input-ripple"
                 />
               </div>
             </span>
@@ -1510,46 +1510,46 @@ exports[`renders ./components/form/demo/layout.md correctly 1`] = `
       </div>
     </div>
     <div
-      class="ant-form-item"
+      class="c7n-form-item"
     >
       <div
-        class="ant-form-item-control-wrapper"
+        class="c7n-form-item-control-wrapper"
       >
         <div
-          class="ant-form-item-control"
+          class="c7n-form-item-control"
         >
           <span
-            class="ant-form-item-children"
+            class="c7n-form-item-children"
           >
             <span
-              class="ant-input-wrapper"
+              class="c7n-input-wrapper"
             >
               <div
-                class="ant-input-content"
+                class="c7n-input-content"
               >
                 <div
-                  class="ant-input-rendered-wrapper"
+                  class="c7n-input-rendered-wrapper"
                 >
                   <div
-                    class="ant-input-rendered"
+                    class="c7n-input-rendered"
                   >
                     <div
-                      class="ant-input-placeholder"
+                      class="c7n-input-placeholder"
                     >
                       input placeholder
                     </div>
                     <input
-                      class="ant-input"
+                      class="c7n-input"
                       type="text"
                     />
                   </div>
                 </div>
               </div>
               <div
-                class="ant-input-underline"
+                class="c7n-input-underline"
               >
                 <span
-                  class="ant-input-ripple"
+                  class="c7n-input-ripple"
                 />
               </div>
             </span>
@@ -1558,26 +1558,26 @@ exports[`renders ./components/form/demo/layout.md correctly 1`] = `
       </div>
     </div>
     <div
-      class="ant-form-item"
+      class="c7n-form-item"
     >
       <div
-        class="ant-form-item-control-wrapper"
+        class="c7n-form-item-control-wrapper"
       >
         <div
-          class="ant-form-item-control"
+          class="c7n-form-item-control"
         >
           <span
-            class="ant-form-item-children"
+            class="c7n-form-item-children"
           >
             <button
-              class="ant-btn ant-btn-primary ant-btn-flat"
+              class="c7n-btn c7n-btn-primary c7n-btn-flat"
               type="button"
             >
               <span>
                 Submit
               </span>
               <div
-                class="ant-ripple-wrapper"
+                class="c7n-ripple-wrapper"
               />
             </button>
           </span>
@@ -1590,31 +1590,31 @@ exports[`renders ./components/form/demo/layout.md correctly 1`] = `
 
 exports[`renders ./components/form/demo/normal-login.md correctly 1`] = `
 <form
-  class="ant-form ant-form-horizontal login-form"
+  class="c7n-form c7n-form-horizontal login-form"
 >
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper is-required"
+      class="c7n-form-item-control-wrapper is-required"
     >
       <div
-        class="ant-form-item-control"
+        class="c7n-form-item-control"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <span
-            class="ant-input-wrapper ant-input-has-prefix"
+            class="c7n-input-wrapper c7n-input-has-prefix"
           >
             <div
-              class="ant-input-content"
+              class="c7n-input-content"
             >
               <div
-                class="ant-input-rendered-wrapper"
+                class="c7n-input-rendered-wrapper"
               >
                 <span
-                  class="ant-input-prefix"
+                  class="c7n-input-prefix"
                 >
                   <i
                     class="icon icon-person_outline"
@@ -1622,15 +1622,15 @@ exports[`renders ./components/form/demo/normal-login.md correctly 1`] = `
                   />
                 </span>
                 <div
-                  class="ant-input-rendered"
+                  class="c7n-input-rendered"
                 >
                   <div
-                    class="ant-input-placeholder"
+                    class="c7n-input-placeholder"
                   >
                     Username
                   </div>
                   <input
-                    class="ant-input"
+                    class="c7n-input"
                     data-__field="[object Object]"
                     data-__meta="[object Object]"
                     id="userName"
@@ -1641,10 +1641,10 @@ exports[`renders ./components/form/demo/normal-login.md correctly 1`] = `
               </div>
             </div>
             <div
-              class="ant-input-underline"
+              class="c7n-input-underline"
             >
               <span
-                class="ant-input-ripple"
+                class="c7n-input-ripple"
               />
             </div>
           </span>
@@ -1653,28 +1653,28 @@ exports[`renders ./components/form/demo/normal-login.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper is-required"
+      class="c7n-form-item-control-wrapper is-required"
     >
       <div
-        class="ant-form-item-control"
+        class="c7n-form-item-control"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <span
-            class="ant-input-wrapper ant-input-has-prefix"
+            class="c7n-input-wrapper c7n-input-has-prefix"
           >
             <div
-              class="ant-input-content"
+              class="c7n-input-content"
             >
               <div
-                class="ant-input-rendered-wrapper"
+                class="c7n-input-rendered-wrapper"
               >
                 <span
-                  class="ant-input-prefix"
+                  class="c7n-input-prefix"
                 >
                   <i
                     class="icon icon-lock_outline"
@@ -1682,15 +1682,15 @@ exports[`renders ./components/form/demo/normal-login.md correctly 1`] = `
                   />
                 </span>
                 <div
-                  class="ant-input-rendered"
+                  class="c7n-input-rendered"
                 >
                   <div
-                    class="ant-input-placeholder"
+                    class="c7n-input-placeholder"
                   >
                     Password
                   </div>
                   <input
-                    class="ant-input"
+                    class="c7n-input"
                     data-__field="[object Object]"
                     data-__meta="[object Object]"
                     id="password"
@@ -1701,10 +1701,10 @@ exports[`renders ./components/form/demo/normal-login.md correctly 1`] = `
               </div>
             </div>
             <div
-              class="ant-input-underline"
+              class="c7n-input-underline"
             >
               <span
-                class="ant-input-ripple"
+                class="c7n-input-ripple"
               />
             </div>
           </span>
@@ -1713,33 +1713,33 @@ exports[`renders ./components/form/demo/normal-login.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper"
+      class="c7n-form-item-control-wrapper"
     >
       <div
-        class="ant-form-item-control has-success"
+        class="c7n-form-item-control has-success"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <label
-            class="ant-checkbox-wrapper"
+            class="c7n-checkbox-wrapper"
           >
             <span
-              class="ant-checkbox ant-checkbox-checked"
+              class="c7n-checkbox c7n-checkbox-checked"
             >
               <input
                 checked=""
-                class="ant-checkbox-input"
+                class="c7n-checkbox-input"
                 data-__field="[object Object]"
                 data-__meta="[object Object]"
                 id="remember"
                 type="checkbox"
               />
               <span
-                class="ant-checkbox-inner"
+                class="c7n-checkbox-inner"
               />
             </span>
             <span>
@@ -1753,14 +1753,14 @@ exports[`renders ./components/form/demo/normal-login.md correctly 1`] = `
             Forgot password
           </a>
           <button
-            class="ant-btn login-form-button ant-btn-primary ant-btn-raised"
+            class="c7n-btn login-form-button c7n-btn-primary c7n-btn-raised"
             type="submit"
           >
             <span>
               Log in
             </span>
             <div
-              class="ant-ripple-wrapper"
+              class="c7n-ripple-wrapper"
             />
           </button>
           Or 
@@ -1778,42 +1778,42 @@ exports[`renders ./components/form/demo/normal-login.md correctly 1`] = `
 
 exports[`renders ./components/form/demo/register.md correctly 1`] = `
 <form
-  class="ant-form ant-form-horizontal"
+  class="c7n-form c7n-form-horizontal"
 >
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper is-required"
+      class="c7n-form-item-control-wrapper is-required"
     >
       <div
-        class="ant-form-item-control"
+        class="c7n-form-item-control"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <span
-            class="ant-input-wrapper ant-input-has-label"
+            class="c7n-input-wrapper c7n-input-has-label"
           >
             <div
-              class="ant-input-content"
+              class="c7n-input-content"
             >
               <div
-                class="ant-input-label"
+                class="c7n-input-label"
               >
                 email
               </div>
               <div
-                class="ant-input-rendered-wrapper"
+                class="c7n-input-rendered-wrapper"
               >
                 <div
-                  class="ant-input-rendered"
+                  class="c7n-input-rendered"
                 >
                   <div
-                    class="ant-input-placeholder"
+                    class="c7n-input-placeholder"
                   />
                   <input
-                    class="ant-input"
+                    class="c7n-input"
                     data-__field="[object Object]"
                     data-__meta="[object Object]"
                     id="email"
@@ -1824,10 +1824,10 @@ exports[`renders ./components/form/demo/register.md correctly 1`] = `
               </div>
             </div>
             <div
-              class="ant-input-underline"
+              class="c7n-input-underline"
             >
               <span
-                class="ant-input-ripple"
+                class="c7n-input-ripple"
               />
             </div>
           </span>
@@ -1836,39 +1836,39 @@ exports[`renders ./components/form/demo/register.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper is-required"
+      class="c7n-form-item-control-wrapper is-required"
     >
       <div
-        class="ant-form-item-control"
+        class="c7n-form-item-control"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <span
-            class="ant-input-wrapper ant-input-has-label"
+            class="c7n-input-wrapper c7n-input-has-label"
           >
             <div
-              class="ant-input-content"
+              class="c7n-input-content"
             >
               <div
-                class="ant-input-label"
+                class="c7n-input-label"
               >
                 password
               </div>
               <div
-                class="ant-input-rendered-wrapper"
+                class="c7n-input-rendered-wrapper"
               >
                 <div
-                  class="ant-input-rendered"
+                  class="c7n-input-rendered"
                 >
                   <div
-                    class="ant-input-placeholder"
+                    class="c7n-input-placeholder"
                   />
                   <input
-                    class="ant-input"
+                    class="c7n-input"
                     data-__field="[object Object]"
                     data-__meta="[object Object]"
                     id="password"
@@ -1876,20 +1876,20 @@ exports[`renders ./components/form/demo/register.md correctly 1`] = `
                     value=""
                   />
                   <span
-                    class="ant-input-icon"
+                    class="c7n-input-icon"
                   >
                     <i
-                      class="icon icon-visibility_off ant-input-icon-copy"
+                      class="icon icon-visibility_off c7n-input-icon-copy"
                     />
                   </span>
                 </div>
               </div>
             </div>
             <div
-              class="ant-input-underline"
+              class="c7n-input-underline"
             >
               <span
-                class="ant-input-ripple"
+                class="c7n-input-ripple"
               />
             </div>
           </span>
@@ -1898,39 +1898,39 @@ exports[`renders ./components/form/demo/register.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper is-required"
+      class="c7n-form-item-control-wrapper is-required"
     >
       <div
-        class="ant-form-item-control"
+        class="c7n-form-item-control"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <span
-            class="ant-input-wrapper ant-input-has-label"
+            class="c7n-input-wrapper c7n-input-has-label"
           >
             <div
-              class="ant-input-content"
+              class="c7n-input-content"
             >
               <div
-                class="ant-input-label"
+                class="c7n-input-label"
               >
                 password
               </div>
               <div
-                class="ant-input-rendered-wrapper"
+                class="c7n-input-rendered-wrapper"
               >
                 <div
-                  class="ant-input-rendered"
+                  class="c7n-input-rendered"
                 >
                   <div
-                    class="ant-input-placeholder"
+                    class="c7n-input-placeholder"
                   />
                   <input
-                    class="ant-input"
+                    class="c7n-input"
                     data-__field="[object Object]"
                     data-__meta="[object Object]"
                     id="confirm"
@@ -1938,20 +1938,20 @@ exports[`renders ./components/form/demo/register.md correctly 1`] = `
                     value=""
                   />
                   <span
-                    class="ant-input-icon"
+                    class="c7n-input-icon"
                   >
                     <i
-                      class="icon icon-visibility_off ant-input-icon-copy"
+                      class="icon icon-visibility_off c7n-input-icon-copy"
                     />
                   </span>
                 </div>
               </div>
             </div>
             <div
-              class="ant-input-underline"
+              class="c7n-input-underline"
             >
               <span
-                class="ant-input-ripple"
+                class="c7n-input-ripple"
               />
             </div>
           </span>
@@ -1960,39 +1960,39 @@ exports[`renders ./components/form/demo/register.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper is-required"
+      class="c7n-form-item-control-wrapper is-required"
     >
       <div
-        class="ant-form-item-control"
+        class="c7n-form-item-control"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <span
-            class="ant-input-wrapper ant-input-has-label"
+            class="c7n-input-wrapper c7n-input-has-label"
           >
             <div
-              class="ant-input-content"
+              class="c7n-input-content"
             >
               <div
-                class="ant-input-label"
+                class="c7n-input-label"
               >
                 名称
               </div>
               <div
-                class="ant-input-rendered-wrapper"
+                class="c7n-input-rendered-wrapper"
               >
                 <div
-                  class="ant-input-rendered"
+                  class="c7n-input-rendered"
                 >
                   <div
-                    class="ant-input-placeholder"
+                    class="c7n-input-placeholder"
                   />
                   <input
-                    class="ant-input"
+                    class="c7n-input"
                     data-__field="[object Object]"
                     data-__meta="[object Object]"
                     id="nickname"
@@ -2003,20 +2003,20 @@ exports[`renders ./components/form/demo/register.md correctly 1`] = `
                 </div>
               </div>
               <span
-                class="ant-input-icon"
+                class="c7n-input-icon"
               >
                 <span
-                  class="ant-input-icon-copy ant-input-length-info"
+                  class="c7n-input-icon-copy c7n-input-length-info"
                 >
                   0/20
                 </span>
               </span>
             </div>
             <div
-              class="ant-input-underline"
+              class="c7n-input-underline"
             >
               <span
-                class="ant-input-ripple"
+                class="c7n-input-ripple"
               />
             </div>
           </span>
@@ -2025,43 +2025,43 @@ exports[`renders ./components/form/demo/register.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper is-required"
+      class="c7n-form-item-control-wrapper is-required"
     >
       <div
-        class="ant-form-item-control has-success"
+        class="c7n-form-item-control has-success"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <div
-            class="ant-input-number"
+            class="c7n-input-number"
           >
             <span
-              class="ant-input-wrapper ant-input-has-label ant-input-has-suffix"
+              class="c7n-input-wrapper c7n-input-has-label c7n-input-has-suffix"
             >
               <div
-                class="ant-input-content"
+                class="c7n-input-content"
               >
                 <div
-                  class="ant-input-label"
+                  class="c7n-input-label"
                 >
                   Age
                 </div>
                 <div
-                  class="ant-input-rendered-wrapper"
+                  class="c7n-input-rendered-wrapper"
                 >
                   <div
-                    class="ant-input-rendered"
+                    class="c7n-input-rendered"
                   >
                     <div
-                      class="ant-input-placeholder"
+                      class="c7n-input-placeholder"
                     />
                     <input
                       autocomplete="off"
-                      class="ant-input"
+                      class="c7n-input"
                       id="age"
                       max="100"
                       min="1"
@@ -2071,32 +2071,32 @@ exports[`renders ./components/form/demo/register.md correctly 1`] = `
                     />
                   </div>
                   <span
-                    class="ant-input-suffix"
+                    class="c7n-input-suffix"
                   >
                     <div
-                      class="ant-input-number-handler-wrap"
+                      class="c7n-input-number-handler-wrap"
                     >
                       <span
                         aria-disabled="false"
                         aria-label="Increase Value"
-                        class="ant-input-number-handler ant-input-number-handler-up "
+                        class="c7n-input-number-handler c7n-input-number-handler-up "
                         role="button"
                         unselectable="unselectable"
                       >
                         <i
-                          class="icon icon-baseline-arrow_drop_up ant-input-number-handler-up-inner"
+                          class="icon icon-baseline-arrow_drop_up c7n-input-number-handler-up-inner"
                           unselectable="unselectable"
                         />
                       </span>
                       <span
                         aria-disabled="false"
                         aria-label="Decrease Value"
-                        class="ant-input-number-handler ant-input-number-handler-down "
+                        class="c7n-input-number-handler c7n-input-number-handler-down "
                         role="button"
                         unselectable="unselectable"
                       >
                         <i
-                          class="icon icon-baseline-arrow_drop_down ant-input-number-handler-down-inner"
+                          class="icon icon-baseline-arrow_drop_down c7n-input-number-handler-down-inner"
                           unselectable="unselectable"
                         />
                       </span>
@@ -2105,10 +2105,10 @@ exports[`renders ./components/form/demo/register.md correctly 1`] = `
                 </div>
               </div>
               <div
-                class="ant-input-underline"
+                class="c7n-input-underline"
               >
                 <span
-                  class="ant-input-ripple"
+                  class="c7n-input-ripple"
                 />
               </div>
             </span>
@@ -2118,44 +2118,44 @@ exports[`renders ./components/form/demo/register.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper is-required"
+      class="c7n-form-item-control-wrapper is-required"
     >
       <div
-        class="ant-form-item-control has-success"
+        class="c7n-form-item-control has-success"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <span
-            class="ant-cascader-picker ant-input-has-value"
+            class="c7n-cascader-picker c7n-input-has-value"
             tabindex="0"
           >
             <span
-              class="ant-cascader-picker-label"
+              class="c7n-cascader-picker-label"
             >
               Zhejiang / Hangzhou / West Lake
             </span>
             <span
-              class="ant-input-wrapper"
+              class="c7n-input-wrapper"
             >
               <div
-                class="ant-input-content"
+                class="c7n-input-content"
               >
                 <div
-                  class="ant-input-rendered-wrapper"
+                  class="c7n-input-rendered-wrapper"
                 >
                   <div
-                    class="ant-input-rendered"
+                    class="c7n-input-rendered"
                   >
                     <div
-                      class="ant-input-placeholder"
+                      class="c7n-input-placeholder"
                     />
                     <input
                       autocomplete="off"
-                      class="ant-input ant-cascader-input "
+                      class="c7n-input c7n-cascader-input "
                       data-__field="[object Object]"
                       data-__meta="[object Object]"
                       id="residence"
@@ -2167,15 +2167,15 @@ exports[`renders ./components/form/demo/register.md correctly 1`] = `
                 </div>
               </div>
               <div
-                class="ant-input-underline"
+                class="c7n-input-underline"
               >
                 <span
-                  class="ant-input-ripple"
+                  class="c7n-input-ripple"
                 />
               </div>
             </span>
             <i
-              class="icon icon-arrow_drop_down ant-cascader-picker-arrow"
+              class="icon icon-arrow_drop_down c7n-cascader-picker-arrow"
             />
           </span>
         </span>
@@ -2183,65 +2183,65 @@ exports[`renders ./components/form/demo/register.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper is-required"
+      class="c7n-form-item-control-wrapper is-required"
     >
       <div
-        class="ant-form-item-control"
+        class="c7n-form-item-control"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <div
-            class="ant-select-show-search ant-select-auto-complete ant-select ant-select-has-label ant-select-combobox ant-select-enabled"
+            class="c7n-select-show-search c7n-select-auto-complete c7n-select c7n-select-has-label c7n-select-combobox c7n-select-enabled"
           >
             <div
               aria-autocomplete="list"
               aria-expanded="false"
               aria-haspopup="true"
-              class="ant-select-selection
-            ant-select-selection--single"
+              class="c7n-select-selection
+            c7n-select-selection--single"
               role="combobox"
             >
               <div
-                class="ant-select-selection-label"
+                class="c7n-select-selection-label"
               >
                 Website
               </div>
               <div
-                class="ant-select-selection__rendered"
+                class="c7n-select-selection__rendered"
               >
                 <div
-                  class="ant-select-selection__placeholder"
+                  class="c7n-select-selection__placeholder"
                 >
                   website
                 </div>
                 <div
-                  class="ant-select-search ant-select-search--inline"
+                  class="c7n-select-search c7n-select-search--inline"
                   style="display:inline-block"
                 >
                   <div
-                    class="ant-select-search__field__wrap"
+                    class="c7n-select-search__field__wrap"
                   >
                     <span
-                      class="ant-input-wrapper"
+                      class="c7n-input-wrapper"
                     >
                       <div
-                        class="ant-input-content"
+                        class="c7n-input-content"
                       >
                         <div
-                          class="ant-input-rendered-wrapper"
+                          class="c7n-input-rendered-wrapper"
                         >
                           <div
-                            class="ant-input-rendered"
+                            class="c7n-input-rendered"
                           >
                             <div
-                              class="ant-input-placeholder"
+                              class="c7n-input-placeholder"
                             />
                             <input
-                              class="ant-input ant-select-search__field"
+                              class="c7n-input c7n-select-search__field"
                               type="text"
                               value=""
                             />
@@ -2249,22 +2249,22 @@ exports[`renders ./components/form/demo/register.md correctly 1`] = `
                         </div>
                       </div>
                       <div
-                        class="ant-input-underline"
+                        class="c7n-input-underline"
                       >
                         <span
-                          class="ant-input-ripple"
+                          class="c7n-input-ripple"
                         />
                       </div>
                     </span>
                     <span
-                      class="ant-select-search__field__mirror"
+                      class="c7n-select-search__field__mirror"
                     >
                        
                     </span>
                   </div>
                 </div>
                 <span
-                  class="ant-select-arrow"
+                  class="c7n-select-arrow"
                   style="user-select:none;-webkit-user-select:none"
                   unselectable="unselectable"
                 >
@@ -2281,47 +2281,47 @@ exports[`renders ./components/form/demo/register.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper is-required"
+      class="c7n-form-item-control-wrapper is-required"
     >
       <div
-        class="ant-form-item-control"
+        class="c7n-form-item-control"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <div
-            class="ant-row"
+            class="c7n-row"
             style="margin-left:-4px;margin-right:-4px"
           >
             <div
-              class="ant-col-12"
+              class="c7n-col-12"
               style="padding-left:4px;padding-right:4px"
             >
               <span
-                class="ant-input-wrapper ant-input-has-label"
+                class="c7n-input-wrapper c7n-input-has-label"
               >
                 <div
-                  class="ant-input-content"
+                  class="c7n-input-content"
                 >
                   <div
-                    class="ant-input-label"
+                    class="c7n-input-label"
                   >
                     Captcha
                   </div>
                   <div
-                    class="ant-input-rendered-wrapper"
+                    class="c7n-input-rendered-wrapper"
                   >
                     <div
-                      class="ant-input-rendered"
+                      class="c7n-input-rendered"
                     >
                       <div
-                        class="ant-input-placeholder"
+                        class="c7n-input-placeholder"
                       />
                       <input
-                        class="ant-input"
+                        class="c7n-input"
                         data-__field="[object Object]"
                         data-__meta="[object Object]"
                         id="captcha"
@@ -2332,34 +2332,34 @@ exports[`renders ./components/form/demo/register.md correctly 1`] = `
                   </div>
                 </div>
                 <div
-                  class="ant-input-underline"
+                  class="c7n-input-underline"
                 >
                   <span
-                    class="ant-input-ripple"
+                    class="c7n-input-ripple"
                   />
                 </div>
               </span>
             </div>
             <div
-              class="ant-col-12"
+              class="c7n-col-12"
               style="padding-left:4px;padding-right:4px"
             >
               <button
-                class="ant-btn ant-btn-raised"
+                class="c7n-btn c7n-btn-raised"
                 type="button"
               >
                 <span>
                   Get captcha
                 </span>
                 <div
-                  class="ant-ripple-wrapper"
+                  class="c7n-ripple-wrapper"
                 />
               </button>
             </div>
           </div>
         </span>
         <div
-          class="ant-form-extra"
+          class="c7n-form-extra"
         >
           We must make sure that your are a human.
         </div>
@@ -2367,32 +2367,32 @@ exports[`renders ./components/form/demo/register.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper"
+      class="c7n-form-item-control-wrapper"
     >
       <div
-        class="ant-form-item-control"
+        class="c7n-form-item-control"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <label
-            class="ant-checkbox-wrapper"
+            class="c7n-checkbox-wrapper"
           >
             <span
-              class="ant-checkbox"
+              class="c7n-checkbox"
             >
               <input
-                class="ant-checkbox-input"
+                class="c7n-checkbox-input"
                 data-__field="[object Object]"
                 data-__meta="[object Object]"
                 id="agreement"
                 type="checkbox"
               />
               <span
-                class="ant-checkbox-inner"
+                class="c7n-checkbox-inner"
               />
             </span>
             <span>
@@ -2409,26 +2409,26 @@ exports[`renders ./components/form/demo/register.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper"
+      class="c7n-form-item-control-wrapper"
     >
       <div
-        class="ant-form-item-control"
+        class="c7n-form-item-control"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <button
-            class="ant-btn ant-btn-primary ant-btn-raised"
+            class="c7n-btn c7n-btn-primary c7n-btn-raised"
             type="submit"
           >
             <span>
               Register
             </span>
             <div
-              class="ant-ripple-wrapper"
+              class="c7n-ripple-wrapper"
             />
           </button>
         </span>
@@ -2440,67 +2440,67 @@ exports[`renders ./components/form/demo/register.md correctly 1`] = `
 
 exports[`renders ./components/form/demo/time-related-controls.md correctly 1`] = `
 <form
-  class="ant-form ant-form-horizontal"
+  class="c7n-form c7n-form-horizontal"
 >
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper is-required"
+      class="c7n-form-item-control-wrapper is-required"
     >
       <div
-        class="ant-form-item-control"
+        class="c7n-form-item-control"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <span
-            class="ant-calendar-picker"
+            class="c7n-calendar-picker"
             id="date-picker"
           >
             <span
-              class="ant-input-wrapper ant-input-has-suffix"
+              class="c7n-input-wrapper c7n-input-has-suffix"
             >
               <div
-                class="ant-input-content"
+                class="c7n-input-content"
               >
                 <div
-                  class="ant-input-rendered-wrapper"
+                  class="c7n-input-rendered-wrapper"
                 >
                   <div
-                    class="ant-input-rendered"
+                    class="c7n-input-rendered"
                   >
                     <div
-                      class="ant-input-placeholder"
+                      class="c7n-input-placeholder"
                     >
                       Select date
                     </div>
                     <input
-                      class="ant-input ant-calendar-picker-input ant-input"
+                      class="c7n-input c7n-calendar-picker-input c7n-input"
                       readonly=""
                       type="text"
                       value=""
                     />
                   </div>
                   <span
-                    class="ant-input-suffix"
+                    class="c7n-input-suffix"
                   >
                     <span
-                      class="ant-calendar-picker-icon-wrapper"
+                      class="c7n-calendar-picker-icon-wrapper"
                       style="min-width:18px"
                     >
                       <i
-                        class="icon icon-date_range ant-calendar-picker-icon"
+                        class="icon icon-date_range c7n-calendar-picker-icon"
                       />
                     </span>
                   </span>
                 </div>
               </div>
               <div
-                class="ant-input-underline"
+                class="c7n-input-underline"
               >
                 <span
-                  class="ant-input-ripple"
+                  class="c7n-input-ripple"
                 />
               </div>
             </span>
@@ -2510,64 +2510,64 @@ exports[`renders ./components/form/demo/time-related-controls.md correctly 1`] =
     </div>
   </div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper is-required"
+      class="c7n-form-item-control-wrapper is-required"
     >
       <div
-        class="ant-form-item-control"
+        class="c7n-form-item-control"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <span
-            class="ant-calendar-picker"
+            class="c7n-calendar-picker"
             id="date-time-picker"
           >
             <span
-              class="ant-input-wrapper ant-input-has-suffix"
+              class="c7n-input-wrapper c7n-input-has-suffix"
             >
               <div
-                class="ant-input-content"
+                class="c7n-input-content"
               >
                 <div
-                  class="ant-input-rendered-wrapper"
+                  class="c7n-input-rendered-wrapper"
                 >
                   <div
-                    class="ant-input-rendered"
+                    class="c7n-input-rendered"
                   >
                     <div
-                      class="ant-input-placeholder"
+                      class="c7n-input-placeholder"
                     >
                       Select date
                     </div>
                     <input
-                      class="ant-input ant-calendar-picker-input ant-input"
+                      class="c7n-input c7n-calendar-picker-input c7n-input"
                       readonly=""
                       type="text"
                       value=""
                     />
                   </div>
                   <span
-                    class="ant-input-suffix"
+                    class="c7n-input-suffix"
                   >
                     <span
-                      class="ant-calendar-picker-icon-wrapper"
+                      class="c7n-calendar-picker-icon-wrapper"
                       style="min-width:18px"
                     >
                       <i
-                        class="icon icon-date_range ant-calendar-picker-icon"
+                        class="icon icon-date_range c7n-calendar-picker-icon"
                       />
                     </span>
                   </span>
                 </div>
               </div>
               <div
-                class="ant-input-underline"
+                class="c7n-input-underline"
               >
                 <span
-                  class="ant-input-ripple"
+                  class="c7n-input-ripple"
                 />
               </div>
             </span>
@@ -2577,64 +2577,64 @@ exports[`renders ./components/form/demo/time-related-controls.md correctly 1`] =
     </div>
   </div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper is-required"
+      class="c7n-form-item-control-wrapper is-required"
     >
       <div
-        class="ant-form-item-control"
+        class="c7n-form-item-control"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <span
-            class="ant-calendar-picker"
+            class="c7n-calendar-picker"
             id="month-picker"
           >
             <span
-              class="ant-input-wrapper ant-input-has-suffix"
+              class="c7n-input-wrapper c7n-input-has-suffix"
             >
               <div
-                class="ant-input-content"
+                class="c7n-input-content"
               >
                 <div
-                  class="ant-input-rendered-wrapper"
+                  class="c7n-input-rendered-wrapper"
                 >
                   <div
-                    class="ant-input-rendered"
+                    class="c7n-input-rendered"
                   >
                     <div
-                      class="ant-input-placeholder"
+                      class="c7n-input-placeholder"
                     >
                       Select date
                     </div>
                     <input
-                      class="ant-input ant-calendar-picker-input ant-input"
+                      class="c7n-input c7n-calendar-picker-input c7n-input"
                       readonly=""
                       type="text"
                       value=""
                     />
                   </div>
                   <span
-                    class="ant-input-suffix"
+                    class="c7n-input-suffix"
                   >
                     <span
-                      class="ant-calendar-picker-icon-wrapper"
+                      class="c7n-calendar-picker-icon-wrapper"
                       style="min-width:18px"
                     >
                       <i
-                        class="icon icon-date_range ant-calendar-picker-icon"
+                        class="icon icon-date_range c7n-calendar-picker-icon"
                       />
                     </span>
                   </span>
                 </div>
               </div>
               <div
-                class="ant-input-underline"
+                class="c7n-input-underline"
               >
                 <span
-                  class="ant-input-ripple"
+                  class="c7n-input-ripple"
                 />
               </div>
             </span>
@@ -2644,56 +2644,56 @@ exports[`renders ./components/form/demo/time-related-controls.md correctly 1`] =
     </div>
   </div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper is-required"
+      class="c7n-form-item-control-wrapper is-required"
     >
       <div
-        class="ant-form-item-control"
+        class="c7n-form-item-control"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <span
-            class="ant-calendar-picker"
+            class="c7n-calendar-picker"
             id="range-picker"
             tabindex="0"
           >
             <span
-              class="ant-calendar-range-picker"
+              class="c7n-calendar-range-picker"
             >
               <span
-                class="ant-calendar-picker-input ant-input"
+                class="c7n-calendar-picker-input c7n-input"
               >
                 <input
-                  class="ant-calendar-range-picker-input"
+                  class="c7n-calendar-range-picker-input"
                   placeholder="Start date"
                   readonly=""
                   tabindex="-1"
                   value=""
                 />
                 <span
-                  class="ant-calendar-range-picker-separator"
+                  class="c7n-calendar-range-picker-separator"
                 >
                    ~ 
                 </span>
                 <input
-                  class="ant-calendar-range-picker-input"
+                  class="c7n-calendar-range-picker-input"
                   placeholder="End date"
                   readonly=""
                   tabindex="-1"
                   value=""
                 />
                 <i
-                  class="icon icon-date_range ant-calendar-picker-icon"
+                  class="icon icon-date_range c7n-calendar-picker-icon"
                 />
               </span>
               <div
-                class="ant-calendar-underline"
+                class="c7n-calendar-underline"
               >
                 <span
-                  class="ant-calendar-ripple"
+                  class="c7n-calendar-ripple"
                 />
               </div>
             </span>
@@ -2703,57 +2703,57 @@ exports[`renders ./components/form/demo/time-related-controls.md correctly 1`] =
     </div>
   </div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper is-required"
+      class="c7n-form-item-control-wrapper is-required"
     >
       <div
-        class="ant-form-item-control"
+        class="c7n-form-item-control"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <span
-            class="ant-calendar-picker"
+            class="c7n-calendar-picker"
             id="range-time-picker"
             style="width:350px"
             tabindex="0"
           >
             <span
-              class="ant-calendar-range-picker"
+              class="c7n-calendar-range-picker"
             >
               <span
-                class="ant-calendar-picker-input ant-input"
+                class="c7n-calendar-picker-input c7n-input"
               >
                 <input
-                  class="ant-calendar-range-picker-input"
+                  class="c7n-calendar-range-picker-input"
                   placeholder="Start date"
                   readonly=""
                   tabindex="-1"
                   value=""
                 />
                 <span
-                  class="ant-calendar-range-picker-separator"
+                  class="c7n-calendar-range-picker-separator"
                 >
                    ~ 
                 </span>
                 <input
-                  class="ant-calendar-range-picker-input"
+                  class="c7n-calendar-range-picker-input"
                   placeholder="End date"
                   readonly=""
                   tabindex="-1"
                   value=""
                 />
                 <i
-                  class="icon icon-date_range ant-calendar-picker-icon"
+                  class="icon icon-date_range c7n-calendar-picker-icon"
                 />
               </span>
               <div
-                class="ant-calendar-underline"
+                class="c7n-calendar-underline"
               >
                 <span
-                  class="ant-calendar-ripple"
+                  class="c7n-calendar-ripple"
                 />
               </div>
             </span>
@@ -2763,39 +2763,39 @@ exports[`renders ./components/form/demo/time-related-controls.md correctly 1`] =
     </div>
   </div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper is-required"
+      class="c7n-form-item-control-wrapper is-required"
     >
       <div
-        class="ant-form-item-control"
+        class="c7n-form-item-control"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <span
-            class="ant-time-picker "
+            class="c7n-time-picker "
           >
             <span
-              class="ant-input-wrapper ant-input-has-suffix"
+              class="c7n-input-wrapper c7n-input-has-suffix"
             >
               <div
-                class="ant-input-content"
+                class="c7n-input-content"
               >
                 <div
-                  class="ant-input-rendered-wrapper"
+                  class="c7n-input-rendered-wrapper"
                 >
                   <div
-                    class="ant-input-rendered"
+                    class="c7n-input-rendered"
                   >
                     <div
-                      class="ant-input-placeholder"
+                      class="c7n-input-placeholder"
                     >
                       Select time
                     </div>
                     <input
-                      class="ant-input ant-time-picker-input"
+                      class="c7n-input c7n-time-picker-input"
                       id="time-picker"
                       readonly=""
                       type="text"
@@ -2803,19 +2803,19 @@ exports[`renders ./components/form/demo/time-related-controls.md correctly 1`] =
                     />
                   </div>
                   <span
-                    class="ant-input-suffix"
+                    class="c7n-input-suffix"
                   >
                     <i
-                      class="icon icon-av_timer ant-time-picker-icon"
+                      class="icon icon-av_timer c7n-time-picker-icon"
                     />
                   </span>
                 </div>
               </div>
               <div
-                class="ant-input-underline"
+                class="c7n-input-underline"
               >
                 <span
-                  class="ant-input-ripple"
+                  class="c7n-input-ripple"
                 />
               </div>
             </span>
@@ -2825,26 +2825,26 @@ exports[`renders ./components/form/demo/time-related-controls.md correctly 1`] =
     </div>
   </div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper"
+      class="c7n-form-item-control-wrapper"
     >
       <div
-        class="ant-form-item-control"
+        class="c7n-form-item-control"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <button
-            class="ant-btn ant-btn-primary ant-btn-flat"
+            class="c7n-btn c7n-btn-primary c7n-btn-flat"
             type="submit"
           >
             <span>
               Submit
             </span>
             <div
-              class="ant-ripple-wrapper"
+              class="c7n-ripple-wrapper"
             />
           </button>
         </span>
@@ -2856,22 +2856,22 @@ exports[`renders ./components/form/demo/time-related-controls.md correctly 1`] =
 
 exports[`renders ./components/form/demo/validate-other.md correctly 1`] = `
 <form
-  class="ant-form ant-form-horizontal"
+  class="c7n-form c7n-form-horizontal"
 >
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper"
+      class="c7n-form-item-control-wrapper"
     >
       <div
-        class="ant-form-item-control"
+        class="c7n-form-item-control"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <span
-            class="ant-form-text"
+            class="c7n-form-text"
           >
             China
           </span>
@@ -2880,43 +2880,43 @@ exports[`renders ./components/form/demo/validate-other.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper is-required"
+      class="c7n-form-item-control-wrapper is-required"
     >
       <div
-        class="ant-form-item-control"
+        class="c7n-form-item-control"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <div
-            class="ant-select ant-select-enabled"
+            class="c7n-select c7n-select-enabled"
           >
             <div
               aria-autocomplete="list"
               aria-expanded="false"
               aria-haspopup="true"
-              class="ant-select-selection
-            ant-select-selection--single"
+              class="c7n-select-selection
+            c7n-select-selection--single"
               role="combobox"
               tabindex="0"
             >
               <div
-                class="ant-select-selection__rendered"
+                class="c7n-select-selection__rendered"
               >
                 <div
-                  class="ant-select-selection__placeholder"
+                  class="c7n-select-selection__placeholder"
                 >
                   Please select a country
                 </div>
                 <div
-                  class="ant-select-selection-selected-value"
+                  class="c7n-select-selection-selected-value"
                   style="opacity:1"
                 />
                 <span
-                  class="ant-select-arrow"
+                  class="c7n-select-arrow"
                   style="user-select:none;-webkit-user-select:none"
                   unselectable="unselectable"
                 >
@@ -2928,10 +2928,10 @@ exports[`renders ./components/form/demo/validate-other.md correctly 1`] = `
               </div>
             </div>
             <div
-              class="ant-select-underline"
+              class="c7n-select-underline"
             >
               <span
-                class="ant-select-ripple"
+                class="c7n-select-ripple"
               />
             </div>
           </div>
@@ -2940,51 +2940,51 @@ exports[`renders ./components/form/demo/validate-other.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper is-required"
+      class="c7n-form-item-control-wrapper is-required"
     >
       <div
-        class="ant-form-item-control"
+        class="c7n-form-item-control"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <div
-            class="ant-select ant-select-enabled ant-select-multiple"
+            class="c7n-select c7n-select-enabled c7n-select-multiple"
           >
             <div
               aria-autocomplete="list"
               aria-expanded="false"
               aria-haspopup="true"
-              class="ant-select-selection
-            ant-select-selection--multiple"
+              class="c7n-select-selection
+            c7n-select-selection--multiple"
               role="combobox"
             >
               <div
-                class="ant-select-selection__rendered"
+                class="c7n-select-selection__rendered"
               >
                 <div
-                  class="ant-select-selection__placeholder"
+                  class="c7n-select-selection__placeholder"
                 >
                   Please select favourite colors
                 </div>
                 <ul>
                   <li
-                    class="ant-select-search ant-select-search--inline"
+                    class="c7n-select-search c7n-select-search--inline"
                   >
                     <div
-                      class="ant-select-search__field__wrap"
+                      class="c7n-select-search__field__wrap"
                     >
                       <input
                         autocomplete="off"
-                        class="ant-select-search__field"
+                        class="c7n-select-search__field"
                         id="select-multiple"
                         value=""
                       />
                       <span
-                        class="ant-select-search__field__mirror"
+                        class="c7n-select-search__field__mirror"
                       >
                          
                       </span>
@@ -2992,7 +2992,7 @@ exports[`renders ./components/form/demo/validate-other.md correctly 1`] = `
                   </li>
                 </ul>
                 <span
-                  class="ant-select-arrow"
+                  class="c7n-select-arrow"
                   style="user-select:none;-webkit-user-select:none"
                   unselectable="unselectable"
                 >
@@ -3004,10 +3004,10 @@ exports[`renders ./components/form/demo/validate-other.md correctly 1`] = `
               </div>
             </div>
             <div
-              class="ant-select-underline"
+              class="c7n-select-underline"
             >
               <span
-                class="ant-select-ripple"
+                class="c7n-select-ripple"
               />
             </div>
           </div>
@@ -3016,38 +3016,38 @@ exports[`renders ./components/form/demo/validate-other.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper"
+      class="c7n-form-item-control-wrapper"
     >
       <div
-        class="ant-form-item-control has-success"
+        class="c7n-form-item-control has-success"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <div
-            class="ant-input-number"
+            class="c7n-input-number"
           >
             <span
-              class="ant-input-wrapper ant-input-has-suffix"
+              class="c7n-input-wrapper c7n-input-has-suffix"
             >
               <div
-                class="ant-input-content"
+                class="c7n-input-content"
               >
                 <div
-                  class="ant-input-rendered-wrapper"
+                  class="c7n-input-rendered-wrapper"
                 >
                   <div
-                    class="ant-input-rendered"
+                    class="c7n-input-rendered"
                   >
                     <div
-                      class="ant-input-placeholder"
+                      class="c7n-input-placeholder"
                     />
                     <input
                       autocomplete="off"
-                      class="ant-input"
+                      class="c7n-input"
                       id="input-number"
                       max="10"
                       min="1"
@@ -3057,32 +3057,32 @@ exports[`renders ./components/form/demo/validate-other.md correctly 1`] = `
                     />
                   </div>
                   <span
-                    class="ant-input-suffix"
+                    class="c7n-input-suffix"
                   >
                     <div
-                      class="ant-input-number-handler-wrap"
+                      class="c7n-input-number-handler-wrap"
                     >
                       <span
                         aria-disabled="false"
                         aria-label="Increase Value"
-                        class="ant-input-number-handler ant-input-number-handler-up "
+                        class="c7n-input-number-handler c7n-input-number-handler-up "
                         role="button"
                         unselectable="unselectable"
                       >
                         <i
-                          class="icon icon-baseline-arrow_drop_up ant-input-number-handler-up-inner"
+                          class="icon icon-baseline-arrow_drop_up c7n-input-number-handler-up-inner"
                           unselectable="unselectable"
                         />
                       </span>
                       <span
                         aria-disabled="false"
                         aria-label="Decrease Value"
-                        class="ant-input-number-handler ant-input-number-handler-down "
+                        class="c7n-input-number-handler c7n-input-number-handler-down "
                         role="button"
                         unselectable="unselectable"
                       >
                         <i
-                          class="icon icon-baseline-arrow_drop_down ant-input-number-handler-down-inner"
+                          class="icon icon-baseline-arrow_drop_down c7n-input-number-handler-down-inner"
                           unselectable="unselectable"
                         />
                       </span>
@@ -3091,16 +3091,16 @@ exports[`renders ./components/form/demo/validate-other.md correctly 1`] = `
                 </div>
               </div>
               <div
-                class="ant-input-underline"
+                class="c7n-input-underline"
               >
                 <span
-                  class="ant-input-ripple"
+                  class="c7n-input-ripple"
                 />
               </div>
             </span>
           </div>
           <span
-            class="ant-form-text"
+            class="c7n-form-text"
           >
              machines
           </span>
@@ -3109,26 +3109,26 @@ exports[`renders ./components/form/demo/validate-other.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper"
+      class="c7n-form-item-control-wrapper"
     >
       <div
-        class="ant-form-item-control"
+        class="c7n-form-item-control"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <span
-            class="ant-switch"
+            class="c7n-switch"
             data-__field="[object Object]"
             data-__meta="[object Object]"
             id="switch"
             tabindex="0"
           >
             <span
-              class="ant-switch-inner"
+              class="c7n-switch-inner"
             />
           </span>
         </span>
@@ -3136,52 +3136,52 @@ exports[`renders ./components/form/demo/validate-other.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper"
+      class="c7n-form-item-control-wrapper"
     >
       <div
-        class="ant-form-item-control"
+        class="c7n-form-item-control"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <div
-            class="ant-slider ant-slider-with-marks"
+            class="c7n-slider c7n-slider-with-marks"
           >
             <div
-              class="ant-slider-rail"
+              class="c7n-slider-rail"
             />
             <div
-              class="ant-slider-track"
+              class="c7n-slider-track"
               style="left:0%;width:0%"
             />
             <div
-              class="ant-slider-step"
+              class="c7n-slider-step"
             >
               <span
-                class="ant-slider-dot ant-slider-dot-active"
+                class="c7n-slider-dot c7n-slider-dot-active"
                 style="left:0%"
               />
               <span
-                class="ant-slider-dot"
+                class="c7n-slider-dot"
                 style="left:20%"
               />
               <span
-                class="ant-slider-dot"
+                class="c7n-slider-dot"
                 style="left:40%"
               />
               <span
-                class="ant-slider-dot"
+                class="c7n-slider-dot"
                 style="left:60%"
               />
               <span
-                class="ant-slider-dot"
+                class="c7n-slider-dot"
                 style="left:80%"
               />
               <span
-                class="ant-slider-dot"
+                class="c7n-slider-dot"
                 style="left:100%"
               />
             </div>
@@ -3190,46 +3190,46 @@ exports[`renders ./components/form/demo/validate-other.md correctly 1`] = `
               aria-valuemax="100"
               aria-valuemin="0"
               aria-valuenow="0"
-              class="ant-slider-handle"
+              class="c7n-slider-handle"
               role="slider"
               style="left:0%"
               tabindex="0"
             />
             <div
-              class="ant-slider-mark"
+              class="c7n-slider-mark"
             >
               <span
-                class="ant-slider-mark-text ant-slider-mark-text-active"
+                class="c7n-slider-mark-text c7n-slider-mark-text-active"
                 style="width:18%;margin-left:-9%;left:0%"
               >
                 A
               </span>
               <span
-                class="ant-slider-mark-text"
+                class="c7n-slider-mark-text"
                 style="width:18%;margin-left:-9%;left:20%"
               >
                 B
               </span>
               <span
-                class="ant-slider-mark-text"
+                class="c7n-slider-mark-text"
                 style="width:18%;margin-left:-9%;left:40%"
               >
                 C
               </span>
               <span
-                class="ant-slider-mark-text"
+                class="c7n-slider-mark-text"
                 style="width:18%;margin-left:-9%;left:60%"
               >
                 D
               </span>
               <span
-                class="ant-slider-mark-text"
+                class="c7n-slider-mark-text"
                 style="width:18%;margin-left:-9%;left:80%"
               >
                 E
               </span>
               <span
-                class="ant-slider-mark-text"
+                class="c7n-slider-mark-text"
                 style="width:18%;margin-left:-9%;left:100%"
               >
                 F
@@ -3241,37 +3241,37 @@ exports[`renders ./components/form/demo/validate-other.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper"
+      class="c7n-form-item-control-wrapper"
     >
       <div
-        class="ant-form-item-control"
+        class="c7n-form-item-control"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <div
-            class="ant-radio-group-wrapper"
+            class="c7n-radio-group-wrapper"
           >
             <div
-              class="ant-radio-group"
+              class="c7n-radio-group"
               id="radio-group"
             >
               <label
-                class="ant-radio-wrapper"
+                class="c7n-radio-wrapper"
               >
                 <span
-                  class="ant-radio"
+                  class="c7n-radio"
                 >
                   <input
-                    class="ant-radio-input"
+                    class="c7n-radio-input"
                     type="radio"
                     value="a"
                   />
                   <span
-                    class="ant-radio-inner"
+                    class="c7n-radio-inner"
                   />
                 </span>
                 <span>
@@ -3279,18 +3279,18 @@ exports[`renders ./components/form/demo/validate-other.md correctly 1`] = `
                 </span>
               </label>
               <label
-                class="ant-radio-wrapper"
+                class="c7n-radio-wrapper"
               >
                 <span
-                  class="ant-radio"
+                  class="c7n-radio"
                 >
                   <input
-                    class="ant-radio-input"
+                    class="c7n-radio-input"
                     type="radio"
                     value="b"
                   />
                   <span
-                    class="ant-radio-inner"
+                    class="c7n-radio-inner"
                   />
                 </span>
                 <span>
@@ -3298,18 +3298,18 @@ exports[`renders ./components/form/demo/validate-other.md correctly 1`] = `
                 </span>
               </label>
               <label
-                class="ant-radio-wrapper"
+                class="c7n-radio-wrapper"
               >
                 <span
-                  class="ant-radio"
+                  class="c7n-radio"
                 >
                   <input
-                    class="ant-radio-input"
+                    class="c7n-radio-input"
                     type="radio"
                     value="c"
                   />
                   <span
-                    class="ant-radio-inner"
+                    class="c7n-radio-inner"
                   />
                 </span>
                 <span>
@@ -3323,37 +3323,37 @@ exports[`renders ./components/form/demo/validate-other.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper"
+      class="c7n-form-item-control-wrapper"
     >
       <div
-        class="ant-form-item-control"
+        class="c7n-form-item-control"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <div
-            class="ant-radio-group-wrapper"
+            class="c7n-radio-group-wrapper"
           >
             <div
-              class="ant-radio-group"
+              class="c7n-radio-group"
               id="radio-button"
             >
               <label
-                class="ant-radio-button-wrapper"
+                class="c7n-radio-button-wrapper"
               >
                 <span
-                  class="ant-radio-button"
+                  class="c7n-radio-button"
                 >
                   <input
-                    class="ant-radio-button-input"
+                    class="c7n-radio-button-input"
                     type="radio"
                     value="a"
                   />
                   <span
-                    class="ant-radio-button-inner"
+                    class="c7n-radio-button-inner"
                   />
                 </span>
                 <span>
@@ -3361,18 +3361,18 @@ exports[`renders ./components/form/demo/validate-other.md correctly 1`] = `
                 </span>
               </label>
               <label
-                class="ant-radio-button-wrapper"
+                class="c7n-radio-button-wrapper"
               >
                 <span
-                  class="ant-radio-button"
+                  class="c7n-radio-button"
                 >
                   <input
-                    class="ant-radio-button-input"
+                    class="c7n-radio-button-input"
                     type="radio"
                     value="b"
                   />
                   <span
-                    class="ant-radio-button-inner"
+                    class="c7n-radio-button-inner"
                   />
                 </span>
                 <span>
@@ -3380,18 +3380,18 @@ exports[`renders ./components/form/demo/validate-other.md correctly 1`] = `
                 </span>
               </label>
               <label
-                class="ant-radio-button-wrapper"
+                class="c7n-radio-button-wrapper"
               >
                 <span
-                  class="ant-radio-button"
+                  class="c7n-radio-button"
                 >
                   <input
-                    class="ant-radio-button-input"
+                    class="c7n-radio-button-input"
                     type="radio"
                     value="c"
                   />
                   <span
-                    class="ant-radio-button-inner"
+                    class="c7n-radio-button-inner"
                   />
                 </span>
                 <span>
@@ -3405,33 +3405,33 @@ exports[`renders ./components/form/demo/validate-other.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper"
+      class="c7n-form-item-control-wrapper"
     >
       <div
-        class="ant-form-item-control has-success"
+        class="c7n-form-item-control has-success"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <ul
-            class="ant-rate"
+            class="c7n-rate"
             tabindex="0"
           >
             <li
-              class="ant-rate-star ant-rate-star-full"
+              class="c7n-rate-star c7n-rate-star-full"
             >
               <div
-                class="ant-rate-star-first"
+                class="c7n-rate-star-first"
               >
                 <i
                   class="icon icon-star"
                 />
               </div>
               <div
-                class="ant-rate-star-second"
+                class="c7n-rate-star-second"
               >
                 <i
                   class="icon icon-star"
@@ -3439,17 +3439,17 @@ exports[`renders ./components/form/demo/validate-other.md correctly 1`] = `
               </div>
             </li>
             <li
-              class="ant-rate-star ant-rate-star-full"
+              class="c7n-rate-star c7n-rate-star-full"
             >
               <div
-                class="ant-rate-star-first"
+                class="c7n-rate-star-first"
               >
                 <i
                   class="icon icon-star"
                 />
               </div>
               <div
-                class="ant-rate-star-second"
+                class="c7n-rate-star-second"
               >
                 <i
                   class="icon icon-star"
@@ -3457,17 +3457,17 @@ exports[`renders ./components/form/demo/validate-other.md correctly 1`] = `
               </div>
             </li>
             <li
-              class="ant-rate-star ant-rate-star-full"
+              class="c7n-rate-star c7n-rate-star-full"
             >
               <div
-                class="ant-rate-star-first"
+                class="c7n-rate-star-first"
               >
                 <i
                   class="icon icon-star"
                 />
               </div>
               <div
-                class="ant-rate-star-second"
+                class="c7n-rate-star-second"
               >
                 <i
                   class="icon icon-star"
@@ -3475,17 +3475,17 @@ exports[`renders ./components/form/demo/validate-other.md correctly 1`] = `
               </div>
             </li>
             <li
-              class="ant-rate-star ant-rate-star-zero"
+              class="c7n-rate-star c7n-rate-star-zero"
             >
               <div
-                class="ant-rate-star-first"
+                class="c7n-rate-star-first"
               >
                 <i
                   class="icon icon-star"
                 />
               </div>
               <div
-                class="ant-rate-star-second"
+                class="c7n-rate-star-second"
               >
                 <i
                   class="icon icon-star"
@@ -3493,17 +3493,17 @@ exports[`renders ./components/form/demo/validate-other.md correctly 1`] = `
               </div>
             </li>
             <li
-              class="ant-rate-star ant-rate-star-zero"
+              class="c7n-rate-star c7n-rate-star-zero"
             >
               <div
-                class="ant-rate-star-first"
+                class="c7n-rate-star-first"
               >
                 <i
                   class="icon icon-star"
                 />
               </div>
               <div
-                class="ant-rate-star-second"
+                class="c7n-rate-star-second"
               >
                 <i
                   class="icon icon-star"
@@ -3516,31 +3516,31 @@ exports[`renders ./components/form/demo/validate-other.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper"
+      class="c7n-form-item-control-wrapper"
     >
       <div
-        class="ant-form-item-control"
+        class="c7n-form-item-control"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <span
             class=""
           >
             <div
-              class="ant-upload ant-upload-select ant-upload-select-picture"
+              class="c7n-upload c7n-upload-select c7n-upload-select-picture"
               style="display:"
             />
             <div
-              class="ant-upload-list ant-upload-list-picture"
+              class="c7n-upload-list c7n-upload-list-picture"
             />
           </span>
         </span>
         <div
-          class="ant-form-extra"
+          class="c7n-form-extra"
         >
           longgggggggggggggggggggggggggggggggggg
         </div>
@@ -3548,16 +3548,16 @@ exports[`renders ./components/form/demo/validate-other.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper"
+      class="c7n-form-item-control-wrapper"
     >
       <div
-        class="ant-form-item-control"
+        class="c7n-form-item-control"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <div
             class="dropbox"
@@ -3566,10 +3566,10 @@ exports[`renders ./components/form/demo/validate-other.md correctly 1`] = `
               class=""
             >
               <div
-                class="ant-upload ant-upload-drag"
+                class="c7n-upload c7n-upload-drag"
               />
               <div
-                class="ant-upload-list ant-upload-list-text"
+                class="c7n-upload-list c7n-upload-list-text"
               />
             </span>
           </div>
@@ -3578,26 +3578,26 @@ exports[`renders ./components/form/demo/validate-other.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper"
+      class="c7n-form-item-control-wrapper"
     >
       <div
-        class="ant-form-item-control"
+        class="c7n-form-item-control"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <button
-            class="ant-btn ant-btn-primary ant-btn-flat"
+            class="c7n-btn c7n-btn-primary c7n-btn-flat"
             type="submit"
           >
             <span>
               Submit
             </span>
             <div
-              class="ant-ripple-wrapper"
+              class="c7n-ripple-wrapper"
             />
           </button>
         </span>
@@ -3609,39 +3609,39 @@ exports[`renders ./components/form/demo/validate-other.md correctly 1`] = `
 
 exports[`renders ./components/form/demo/validate-static.md correctly 1`] = `
 <form
-  class="ant-form ant-form-horizontal"
+  class="c7n-form c7n-form-horizontal"
 >
   <div
-    class="ant-form-item ant-form-item-with-help"
+    class="c7n-form-item c7n-form-item-with-help"
   >
     <div
-      class="ant-form-item-control-wrapper"
+      class="c7n-form-item-control-wrapper"
     >
       <div
-        class="ant-form-item-control has-error"
+        class="c7n-form-item-control has-error"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <span
-            class="ant-input-wrapper"
+            class="c7n-input-wrapper"
           >
             <div
-              class="ant-input-content"
+              class="c7n-input-content"
             >
               <div
-                class="ant-input-rendered-wrapper"
+                class="c7n-input-rendered-wrapper"
               >
                 <div
-                  class="ant-input-rendered"
+                  class="c7n-input-rendered"
                 >
                   <div
-                    class="ant-input-placeholder"
+                    class="c7n-input-placeholder"
                   >
                     unavailable choice
                   </div>
                   <input
-                    class="ant-input"
+                    class="c7n-input"
                     id="error"
                     type="text"
                   />
@@ -3649,16 +3649,16 @@ exports[`renders ./components/form/demo/validate-static.md correctly 1`] = `
               </div>
             </div>
             <div
-              class="ant-input-underline"
+              class="c7n-input-underline"
             >
               <span
-                class="ant-input-ripple"
+                class="c7n-input-ripple"
               />
             </div>
           </span>
         </span>
         <div
-          class="ant-form-explain"
+          class="c7n-form-explain"
         >
           Should be combination of numbers & alphabets
         </div>
@@ -3666,36 +3666,36 @@ exports[`renders ./components/form/demo/validate-static.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper"
+      class="c7n-form-item-control-wrapper"
     >
       <div
-        class="ant-form-item-control has-warning"
+        class="c7n-form-item-control has-warning"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <span
-            class="ant-input-wrapper"
+            class="c7n-input-wrapper"
           >
             <div
-              class="ant-input-content"
+              class="c7n-input-content"
             >
               <div
-                class="ant-input-rendered-wrapper"
+                class="c7n-input-rendered-wrapper"
               >
                 <div
-                  class="ant-input-rendered"
+                  class="c7n-input-rendered"
                 >
                   <div
-                    class="ant-input-placeholder"
+                    class="c7n-input-placeholder"
                   >
                     Warning
                   </div>
                   <input
-                    class="ant-input"
+                    class="c7n-input"
                     id="warning"
                     type="text"
                   />
@@ -3703,10 +3703,10 @@ exports[`renders ./components/form/demo/validate-static.md correctly 1`] = `
               </div>
             </div>
             <div
-              class="ant-input-underline"
+              class="c7n-input-underline"
             >
               <span
-                class="ant-input-ripple"
+                class="c7n-input-ripple"
               />
             </div>
           </span>
@@ -3715,36 +3715,36 @@ exports[`renders ./components/form/demo/validate-static.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-form-item ant-form-item-with-help"
+    class="c7n-form-item c7n-form-item-with-help"
   >
     <div
-      class="ant-form-item-control-wrapper"
+      class="c7n-form-item-control-wrapper"
     >
       <div
-        class="ant-form-item-control has-feedback is-validating"
+        class="c7n-form-item-control has-feedback is-validating"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <span
-            class="ant-input-wrapper"
+            class="c7n-input-wrapper"
           >
             <div
-              class="ant-input-content"
+              class="c7n-input-content"
             >
               <div
-                class="ant-input-rendered-wrapper"
+                class="c7n-input-rendered-wrapper"
               >
                 <div
-                  class="ant-input-rendered"
+                  class="c7n-input-rendered"
                 >
                   <div
-                    class="ant-input-placeholder"
+                    class="c7n-input-placeholder"
                   >
                     I'm the content is being validated
                   </div>
                   <input
-                    class="ant-input"
+                    class="c7n-input"
                     id="validating"
                     type="text"
                   />
@@ -3752,16 +3752,16 @@ exports[`renders ./components/form/demo/validate-static.md correctly 1`] = `
               </div>
             </div>
             <div
-              class="ant-input-underline"
+              class="c7n-input-underline"
             >
               <span
-                class="ant-input-ripple"
+                class="c7n-input-ripple"
               />
             </div>
           </span>
         </span>
         <div
-          class="ant-form-explain"
+          class="c7n-form-explain"
         >
           The information is being validated...
         </div>
@@ -3769,36 +3769,36 @@ exports[`renders ./components/form/demo/validate-static.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper"
+      class="c7n-form-item-control-wrapper"
     >
       <div
-        class="ant-form-item-control has-feedback has-success"
+        class="c7n-form-item-control has-feedback has-success"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <span
-            class="ant-input-wrapper"
+            class="c7n-input-wrapper"
           >
             <div
-              class="ant-input-content"
+              class="c7n-input-content"
             >
               <div
-                class="ant-input-rendered-wrapper"
+                class="c7n-input-rendered-wrapper"
               >
                 <div
-                  class="ant-input-rendered"
+                  class="c7n-input-rendered"
                 >
                   <div
-                    class="ant-input-placeholder"
+                    class="c7n-input-placeholder"
                   >
                     I'm the content
                   </div>
                   <input
-                    class="ant-input"
+                    class="c7n-input"
                     id="success"
                     type="text"
                   />
@@ -3806,10 +3806,10 @@ exports[`renders ./components/form/demo/validate-static.md correctly 1`] = `
               </div>
             </div>
             <div
-              class="ant-input-underline"
+              class="c7n-input-underline"
             >
               <span
-                class="ant-input-ripple"
+                class="c7n-input-ripple"
               />
             </div>
           </span>
@@ -3818,36 +3818,36 @@ exports[`renders ./components/form/demo/validate-static.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper"
+      class="c7n-form-item-control-wrapper"
     >
       <div
-        class="ant-form-item-control has-feedback has-warning"
+        class="c7n-form-item-control has-feedback has-warning"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <span
-            class="ant-input-wrapper"
+            class="c7n-input-wrapper"
           >
             <div
-              class="ant-input-content"
+              class="c7n-input-content"
             >
               <div
-                class="ant-input-rendered-wrapper"
+                class="c7n-input-rendered-wrapper"
               >
                 <div
-                  class="ant-input-rendered"
+                  class="c7n-input-rendered"
                 >
                   <div
-                    class="ant-input-placeholder"
+                    class="c7n-input-placeholder"
                   >
                     Warning
                   </div>
                   <input
-                    class="ant-input"
+                    class="c7n-input"
                     id="warning"
                     type="text"
                   />
@@ -3855,10 +3855,10 @@ exports[`renders ./components/form/demo/validate-static.md correctly 1`] = `
               </div>
             </div>
             <div
-              class="ant-input-underline"
+              class="c7n-input-underline"
             >
               <span
-                class="ant-input-ripple"
+                class="c7n-input-ripple"
               />
             </div>
           </span>
@@ -3867,36 +3867,36 @@ exports[`renders ./components/form/demo/validate-static.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-form-item ant-form-item-with-help"
+    class="c7n-form-item c7n-form-item-with-help"
   >
     <div
-      class="ant-form-item-control-wrapper"
+      class="c7n-form-item-control-wrapper"
     >
       <div
-        class="ant-form-item-control has-feedback has-error"
+        class="c7n-form-item-control has-feedback has-error"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <span
-            class="ant-input-wrapper"
+            class="c7n-input-wrapper"
           >
             <div
-              class="ant-input-content"
+              class="c7n-input-content"
             >
               <div
-                class="ant-input-rendered-wrapper"
+                class="c7n-input-rendered-wrapper"
               >
                 <div
-                  class="ant-input-rendered"
+                  class="c7n-input-rendered"
                 >
                   <div
-                    class="ant-input-placeholder"
+                    class="c7n-input-placeholder"
                   >
                     unavailable choice
                   </div>
                   <input
-                    class="ant-input"
+                    class="c7n-input"
                     id="error"
                     type="text"
                   />
@@ -3904,16 +3904,16 @@ exports[`renders ./components/form/demo/validate-static.md correctly 1`] = `
               </div>
             </div>
             <div
-              class="ant-input-underline"
+              class="c7n-input-underline"
             >
               <span
-                class="ant-input-ripple"
+                class="c7n-input-ripple"
               />
             </div>
           </span>
         </span>
         <div
-          class="ant-form-explain"
+          class="c7n-form-explain"
         >
           Should be combination of numbers & alphabets
         </div>
@@ -3921,64 +3921,64 @@ exports[`renders ./components/form/demo/validate-static.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper"
+      class="c7n-form-item-control-wrapper"
     >
       <div
-        class="ant-form-item-control has-feedback has-success"
+        class="c7n-form-item-control has-feedback has-success"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <span
-            class="ant-calendar-picker"
+            class="c7n-calendar-picker"
             style="width:100%"
           >
             <span
-              class="ant-input-wrapper ant-input-has-suffix"
+              class="c7n-input-wrapper c7n-input-has-suffix"
             >
               <div
-                class="ant-input-content"
+                class="c7n-input-content"
               >
                 <div
-                  class="ant-input-rendered-wrapper"
+                  class="c7n-input-rendered-wrapper"
                 >
                   <div
-                    class="ant-input-rendered"
+                    class="c7n-input-rendered"
                   >
                     <div
-                      class="ant-input-placeholder"
+                      class="c7n-input-placeholder"
                     >
                       Select date
                     </div>
                     <input
-                      class="ant-input ant-calendar-picker-input ant-input"
+                      class="c7n-input c7n-calendar-picker-input c7n-input"
                       readonly=""
                       type="text"
                       value=""
                     />
                   </div>
                   <span
-                    class="ant-input-suffix"
+                    class="c7n-input-suffix"
                   >
                     <span
-                      class="ant-calendar-picker-icon-wrapper"
+                      class="c7n-calendar-picker-icon-wrapper"
                       style="min-width:18px"
                     >
                       <i
-                        class="icon icon-date_range ant-calendar-picker-icon"
+                        class="icon icon-date_range c7n-calendar-picker-icon"
                       />
                     </span>
                   </span>
                 </div>
               </div>
               <div
-                class="ant-input-underline"
+                class="c7n-input-underline"
               >
                 <span
-                  class="ant-input-ripple"
+                  class="c7n-input-ripple"
                 />
               </div>
             </span>
@@ -3988,40 +3988,40 @@ exports[`renders ./components/form/demo/validate-static.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper"
+      class="c7n-form-item-control-wrapper"
     >
       <div
-        class="ant-form-item-control has-feedback has-warning"
+        class="c7n-form-item-control has-feedback has-warning"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <span
-            class="ant-time-picker "
+            class="c7n-time-picker "
             style="width:100%"
           >
             <span
-              class="ant-input-wrapper ant-input-has-suffix"
+              class="c7n-input-wrapper c7n-input-has-suffix"
             >
               <div
-                class="ant-input-content"
+                class="c7n-input-content"
               >
                 <div
-                  class="ant-input-rendered-wrapper"
+                  class="c7n-input-rendered-wrapper"
                 >
                   <div
-                    class="ant-input-rendered"
+                    class="c7n-input-rendered"
                   >
                     <div
-                      class="ant-input-placeholder"
+                      class="c7n-input-placeholder"
                     >
                       Select time
                     </div>
                     <input
-                      class="ant-input ant-time-picker-input"
+                      class="c7n-input c7n-time-picker-input"
                       id=""
                       readonly=""
                       type="text"
@@ -4029,19 +4029,19 @@ exports[`renders ./components/form/demo/validate-static.md correctly 1`] = `
                     />
                   </div>
                   <span
-                    class="ant-input-suffix"
+                    class="c7n-input-suffix"
                   >
                     <i
-                      class="icon icon-av_timer ant-time-picker-icon"
+                      class="icon icon-av_timer c7n-time-picker-icon"
                     />
                   </span>
                 </div>
               </div>
               <div
-                class="ant-input-underline"
+                class="c7n-input-underline"
               >
                 <span
-                  class="ant-input-ripple"
+                  class="c7n-input-ripple"
                 />
               </div>
             </span>
@@ -4051,41 +4051,41 @@ exports[`renders ./components/form/demo/validate-static.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper"
+      class="c7n-form-item-control-wrapper"
     >
       <div
-        class="ant-form-item-control has-feedback has-error"
+        class="c7n-form-item-control has-feedback has-error"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <div
-            class="ant-select ant-select-has-value ant-select-enabled"
+            class="c7n-select c7n-select-has-value c7n-select-enabled"
           >
             <div
               aria-autocomplete="list"
               aria-expanded="false"
               aria-haspopup="true"
-              class="ant-select-selection
-            ant-select-selection--single"
+              class="c7n-select-selection
+            c7n-select-selection--single"
               role="combobox"
               tabindex="0"
             >
               <div
-                class="ant-select-selection__rendered"
+                class="c7n-select-selection__rendered"
               >
                 <div
-                  class="ant-select-selection-selected-value"
+                  class="c7n-select-selection-selected-value"
                   style="opacity:1"
                   title="Option 1"
                 >
                   Option 1
                 </div>
                 <span
-                  class="ant-select-arrow"
+                  class="c7n-select-arrow"
                   style="user-select:none;-webkit-user-select:none"
                   unselectable="unselectable"
                 >
@@ -4097,10 +4097,10 @@ exports[`renders ./components/form/demo/validate-static.md correctly 1`] = `
               </div>
             </div>
             <div
-              class="ant-select-underline"
+              class="c7n-select-underline"
             >
               <span
-                class="ant-select-ripple"
+                class="c7n-select-ripple"
               />
             </div>
           </div>
@@ -4109,42 +4109,42 @@ exports[`renders ./components/form/demo/validate-static.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-form-item ant-form-item-with-help"
+    class="c7n-form-item c7n-form-item-with-help"
   >
     <div
-      class="ant-form-item-control-wrapper"
+      class="c7n-form-item-control-wrapper"
     >
       <div
-        class="ant-form-item-control has-feedback is-validating"
+        class="c7n-form-item-control has-feedback is-validating"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <span
-            class="ant-cascader-picker ant-input-has-value"
+            class="c7n-cascader-picker c7n-input-has-value"
             tabindex="0"
           >
             <span
-              class="ant-cascader-picker-label"
+              class="c7n-cascader-picker-label"
             />
             <span
-              class="ant-input-wrapper"
+              class="c7n-input-wrapper"
             >
               <div
-                class="ant-input-content"
+                class="c7n-input-content"
               >
                 <div
-                  class="ant-input-rendered-wrapper"
+                  class="c7n-input-rendered-wrapper"
                 >
                   <div
-                    class="ant-input-rendered"
+                    class="c7n-input-rendered"
                   >
                     <div
-                      class="ant-input-placeholder"
+                      class="c7n-input-placeholder"
                     />
                     <input
                       autocomplete="off"
-                      class="ant-input ant-cascader-input "
+                      class="c7n-input c7n-cascader-input "
                       readonly=""
                       type="text"
                       value=""
@@ -4153,20 +4153,20 @@ exports[`renders ./components/form/demo/validate-static.md correctly 1`] = `
                 </div>
               </div>
               <div
-                class="ant-input-underline"
+                class="c7n-input-underline"
               >
                 <span
-                  class="ant-input-ripple"
+                  class="c7n-input-ripple"
                 />
               </div>
             </span>
             <i
-              class="icon icon-arrow_drop_down ant-cascader-picker-arrow"
+              class="icon icon-arrow_drop_down c7n-cascader-picker-arrow"
             />
           </span>
         </span>
         <div
-          class="ant-form-explain"
+          class="c7n-form-explain"
         >
           The information is being validated...
         </div>
@@ -4174,85 +4174,85 @@ exports[`renders ./components/form/demo/validate-static.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper"
+      class="c7n-form-item-control-wrapper"
     >
       <div
-        class="ant-form-item-control"
+        class="c7n-form-item-control"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <div
-            class="ant-col-11"
+            class="c7n-col-11"
           >
             <div
-              class="ant-form-item ant-form-item-with-help"
+              class="c7n-form-item c7n-form-item-with-help"
             >
               <div
-                class="ant-form-item-control-wrapper"
+                class="c7n-form-item-control-wrapper"
               >
                 <div
-                  class="ant-form-item-control has-error"
+                  class="c7n-form-item-control has-error"
                 >
                   <span
-                    class="ant-form-item-children"
+                    class="c7n-form-item-children"
                   >
                     <span
-                      class="ant-calendar-picker"
+                      class="c7n-calendar-picker"
                     >
                       <span
-                        class="ant-input-wrapper ant-input-has-suffix"
+                        class="c7n-input-wrapper c7n-input-has-suffix"
                       >
                         <div
-                          class="ant-input-content"
+                          class="c7n-input-content"
                         >
                           <div
-                            class="ant-input-rendered-wrapper"
+                            class="c7n-input-rendered-wrapper"
                           >
                             <div
-                              class="ant-input-rendered"
+                              class="c7n-input-rendered"
                             >
                               <div
-                                class="ant-input-placeholder"
+                                class="c7n-input-placeholder"
                               >
                                 Select date
                               </div>
                               <input
-                                class="ant-input ant-calendar-picker-input ant-input"
+                                class="c7n-input c7n-calendar-picker-input c7n-input"
                                 readonly=""
                                 type="text"
                                 value=""
                               />
                             </div>
                             <span
-                              class="ant-input-suffix"
+                              class="c7n-input-suffix"
                             >
                               <span
-                                class="ant-calendar-picker-icon-wrapper"
+                                class="c7n-calendar-picker-icon-wrapper"
                                 style="min-width:18px"
                               >
                                 <i
-                                  class="icon icon-date_range ant-calendar-picker-icon"
+                                  class="icon icon-date_range c7n-calendar-picker-icon"
                                 />
                               </span>
                             </span>
                           </div>
                         </div>
                         <div
-                          class="ant-input-underline"
+                          class="c7n-input-underline"
                         >
                           <span
-                            class="ant-input-ripple"
+                            class="c7n-input-ripple"
                           />
                         </div>
                       </span>
                     </span>
                   </span>
                   <div
-                    class="ant-form-explain"
+                    class="c7n-form-explain"
                   >
                     Please select the correct date
                   </div>
@@ -4261,7 +4261,7 @@ exports[`renders ./components/form/demo/validate-static.md correctly 1`] = `
             </div>
           </div>
           <div
-            class="ant-col-2"
+            class="c7n-col-2"
           >
             <span
               style="display:inline-block;width:100%;text-align:center"
@@ -4270,66 +4270,66 @@ exports[`renders ./components/form/demo/validate-static.md correctly 1`] = `
             </span>
           </div>
           <div
-            class="ant-col-11"
+            class="c7n-col-11"
           >
             <div
-              class="ant-form-item"
+              class="c7n-form-item"
             >
               <div
-                class="ant-form-item-control-wrapper"
+                class="c7n-form-item-control-wrapper"
               >
                 <div
-                  class="ant-form-item-control"
+                  class="c7n-form-item-control"
                 >
                   <span
-                    class="ant-form-item-children"
+                    class="c7n-form-item-children"
                   >
                     <span
-                      class="ant-calendar-picker"
+                      class="c7n-calendar-picker"
                     >
                       <span
-                        class="ant-input-wrapper ant-input-has-suffix"
+                        class="c7n-input-wrapper c7n-input-has-suffix"
                       >
                         <div
-                          class="ant-input-content"
+                          class="c7n-input-content"
                         >
                           <div
-                            class="ant-input-rendered-wrapper"
+                            class="c7n-input-rendered-wrapper"
                           >
                             <div
-                              class="ant-input-rendered"
+                              class="c7n-input-rendered"
                             >
                               <div
-                                class="ant-input-placeholder"
+                                class="c7n-input-placeholder"
                               >
                                 Select date
                               </div>
                               <input
-                                class="ant-input ant-calendar-picker-input ant-input"
+                                class="c7n-input c7n-calendar-picker-input c7n-input"
                                 readonly=""
                                 type="text"
                                 value=""
                               />
                             </div>
                             <span
-                              class="ant-input-suffix"
+                              class="c7n-input-suffix"
                             >
                               <span
-                                class="ant-calendar-picker-icon-wrapper"
+                                class="c7n-calendar-picker-icon-wrapper"
                                 style="min-width:18px"
                               >
                                 <i
-                                  class="icon icon-date_range ant-calendar-picker-icon"
+                                  class="icon icon-date_range c7n-calendar-picker-icon"
                                 />
                               </span>
                             </span>
                           </div>
                         </div>
                         <div
-                          class="ant-input-underline"
+                          class="c7n-input-underline"
                         >
                           <span
-                            class="ant-input-ripple"
+                            class="c7n-input-ripple"
                           />
                         </div>
                       </span>
@@ -4344,39 +4344,39 @@ exports[`renders ./components/form/demo/validate-static.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-form-item"
+    class="c7n-form-item"
   >
     <div
-      class="ant-form-item-control-wrapper"
+      class="c7n-form-item-control-wrapper"
     >
       <div
-        class="ant-form-item-control has-feedback has-success"
+        class="c7n-form-item-control has-feedback has-success"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <div
-            class="ant-input-number"
+            class="c7n-input-number"
             style="width:100%"
           >
             <span
-              class="ant-input-wrapper ant-input-has-suffix"
+              class="c7n-input-wrapper c7n-input-has-suffix"
             >
               <div
-                class="ant-input-content"
+                class="c7n-input-content"
               >
                 <div
-                  class="ant-input-rendered-wrapper"
+                  class="c7n-input-rendered-wrapper"
                 >
                   <div
-                    class="ant-input-rendered"
+                    class="c7n-input-rendered"
                   >
                     <div
-                      class="ant-input-placeholder"
+                      class="c7n-input-placeholder"
                     />
                     <input
                       autocomplete="off"
-                      class="ant-input"
+                      class="c7n-input"
                       min="-9007199254740991"
                       step="1"
                       type="text"
@@ -4384,32 +4384,32 @@ exports[`renders ./components/form/demo/validate-static.md correctly 1`] = `
                     />
                   </div>
                   <span
-                    class="ant-input-suffix"
+                    class="c7n-input-suffix"
                   >
                     <div
-                      class="ant-input-number-handler-wrap"
+                      class="c7n-input-number-handler-wrap"
                     >
                       <span
                         aria-disabled="false"
                         aria-label="Increase Value"
-                        class="ant-input-number-handler ant-input-number-handler-up "
+                        class="c7n-input-number-handler c7n-input-number-handler-up "
                         role="button"
                         unselectable="unselectable"
                       >
                         <i
-                          class="icon icon-baseline-arrow_drop_up ant-input-number-handler-up-inner"
+                          class="icon icon-baseline-arrow_drop_up c7n-input-number-handler-up-inner"
                           unselectable="unselectable"
                         />
                       </span>
                       <span
                         aria-disabled="false"
                         aria-label="Decrease Value"
-                        class="ant-input-number-handler ant-input-number-handler-down "
+                        class="c7n-input-number-handler c7n-input-number-handler-down "
                         role="button"
                         unselectable="unselectable"
                       >
                         <i
-                          class="icon icon-baseline-arrow_drop_down ant-input-number-handler-down-inner"
+                          class="icon icon-baseline-arrow_drop_down c7n-input-number-handler-down-inner"
                           unselectable="unselectable"
                         />
                       </span>
@@ -4418,10 +4418,10 @@ exports[`renders ./components/form/demo/validate-static.md correctly 1`] = `
                 </div>
               </div>
               <div
-                class="ant-input-underline"
+                class="c7n-input-underline"
               >
                 <span
-                  class="ant-input-ripple"
+                  class="c7n-input-ripple"
                 />
               </div>
             </span>
@@ -4435,41 +4435,41 @@ exports[`renders ./components/form/demo/validate-static.md correctly 1`] = `
 
 exports[`renders ./components/form/demo/without-form-create.md correctly 1`] = `
 <form
-  class="ant-form ant-form-horizontal"
+  class="c7n-form c7n-form-horizontal"
 >
   <div
-    class="ant-form-item ant-form-item-with-help"
+    class="c7n-form-item c7n-form-item-with-help"
   >
     <div
-      class="ant-form-item-control-wrapper"
+      class="c7n-form-item-control-wrapper"
     >
       <div
-        class="ant-form-item-control"
+        class="c7n-form-item-control"
       >
         <span
-          class="ant-form-item-children"
+          class="c7n-form-item-children"
         >
           <div
-            class="ant-input-number"
+            class="c7n-input-number"
           >
             <span
-              class="ant-input-wrapper ant-input-has-suffix"
+              class="c7n-input-wrapper c7n-input-has-suffix"
             >
               <div
-                class="ant-input-content"
+                class="c7n-input-content"
               >
                 <div
-                  class="ant-input-rendered-wrapper"
+                  class="c7n-input-rendered-wrapper"
                 >
                   <div
-                    class="ant-input-rendered"
+                    class="c7n-input-rendered"
                   >
                     <div
-                      class="ant-input-placeholder"
+                      class="c7n-input-placeholder"
                     />
                     <input
                       autocomplete="off"
-                      class="ant-input"
+                      class="c7n-input"
                       max="12"
                       min="8"
                       step="1"
@@ -4478,32 +4478,32 @@ exports[`renders ./components/form/demo/without-form-create.md correctly 1`] = `
                     />
                   </div>
                   <span
-                    class="ant-input-suffix"
+                    class="c7n-input-suffix"
                   >
                     <div
-                      class="ant-input-number-handler-wrap"
+                      class="c7n-input-number-handler-wrap"
                     >
                       <span
                         aria-disabled="false"
                         aria-label="Increase Value"
-                        class="ant-input-number-handler ant-input-number-handler-up "
+                        class="c7n-input-number-handler c7n-input-number-handler-up "
                         role="button"
                         unselectable="unselectable"
                       >
                         <i
-                          class="icon icon-baseline-arrow_drop_up ant-input-number-handler-up-inner"
+                          class="icon icon-baseline-arrow_drop_up c7n-input-number-handler-up-inner"
                           unselectable="unselectable"
                         />
                       </span>
                       <span
                         aria-disabled="false"
                         aria-label="Decrease Value"
-                        class="ant-input-number-handler ant-input-number-handler-down "
+                        class="c7n-input-number-handler c7n-input-number-handler-down "
                         role="button"
                         unselectable="unselectable"
                       >
                         <i
-                          class="icon icon-baseline-arrow_drop_down ant-input-number-handler-down-inner"
+                          class="icon icon-baseline-arrow_drop_down c7n-input-number-handler-down-inner"
                           unselectable="unselectable"
                         />
                       </span>
@@ -4512,17 +4512,17 @@ exports[`renders ./components/form/demo/without-form-create.md correctly 1`] = `
                 </div>
               </div>
               <div
-                class="ant-input-underline"
+                class="c7n-input-underline"
               >
                 <span
-                  class="ant-input-ripple"
+                  class="c7n-input-ripple"
                 />
               </div>
             </span>
           </div>
         </span>
         <div
-          class="ant-form-explain"
+          class="c7n-form-explain"
         >
           A prime is a natural number greater than 1 that has no positive divisors other than 1 and itself.
         </div>

@@ -19,10 +19,10 @@ import { Avatar, Badge } from 'choerodon-ui';
 ReactDOM.render(
   <div>
     <span style={{ marginRight: 24 }}>
-      <Badge count={1}><Avatar shape="square" icon="user" /></Badge>
+      <Badge count={1}><Avatar shape="square" icon="person" /></Badge>
     </span>
     <span>
-      <Badge dot><Avatar shape="square" icon="user" /></Badge>
+      <Badge dot><Avatar shape="square" icon="person" /></Badge>
     </span>
   </div>,
   mountNode);

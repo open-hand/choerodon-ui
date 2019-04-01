@@ -1,11 +1,12 @@
-import * as React from 'react';
+import React, { Component, CSSProperties, ReactElement, ReactNode } from 'react';
 import Tooltip from '../tooltip';
-import RcSlider, { Range as RcRange, Handle as RcHandle } from '../rc-components/slider';
+import RcSlider, { Handle as RcHandle, Range as RcRange } from '../rc-components/slider';
+import { getPrefixCls } from '../configure';
 
 export interface SliderMarks {
-  [key: number]: React.ReactNode | {
-    style: React.CSSProperties,
-    label: React.ReactNode,
+  [key: number]: ReactNode | {
+    style: CSSProperties,
+    label: ReactNode,
   };
 }
 
@@ -16,7 +17,7 @@ export type HandleGeneratorFn = (info: {
   dragging: boolean,
   index: number,
   rest: any[],
-}) => React.ReactElement<any>;
+}) => ReactElement<any>;
 
 export interface SliderProps {
   prefixCls?: string;
@@ -34,7 +35,7 @@ export interface SliderProps {
   vertical?: boolean;
   onChange?: (value: SliderValue) => void;
   onAfterChange?: (value: SliderValue) => void;
-  tipFormatter?: null | ((value: number) => React.ReactNode);
+  tipFormatter?: null | ((value: number) => ReactNode);
   className?: string;
   id?: string;
 }
@@ -43,10 +44,9 @@ export interface SliderState {
   visibles: { [index: number]: boolean };
 }
 
-export default class Slider extends React.Component<SliderProps, SliderState> {
+export default class Slider extends Component<SliderProps, SliderState> {
+  static displayName = 'Slider';
   static defaultProps = {
-    prefixCls: 'ant-slider',
-    tooltipPrefixCls: 'ant-tooltip',
     tipFormatter(value: number) {
       return value.toString();
     },
@@ -70,7 +70,8 @@ export default class Slider extends React.Component<SliderProps, SliderState> {
     }));
   };
   handleWithTooltip: HandleGeneratorFn = ({ value, dragging, index, ...restProps }) => {
-    const { tooltipPrefixCls, tipFormatter } = this.props;
+    const { tooltipPrefixCls: customizeTooltipPrefixCls, tipFormatter } = this.props;
+    const tooltipPrefixCls = getPrefixCls('tooltip', customizeTooltipPrefixCls);
     const { visibles } = this.state;
     const visible = tipFormatter ? (visibles[index] || dragging) : false;
     return (
@@ -105,10 +106,11 @@ export default class Slider extends React.Component<SliderProps, SliderState> {
   };
 
   render() {
-    const { range, ...restProps } = this.props;
+    const { range, prefixCls: customizePrefixCls, ...restProps } = this.props;
+    const prefixCls = getPrefixCls('slider', customizePrefixCls);
     if (range) {
-      return <RcRange {...restProps} ref={this.saveSlider} handle={this.handleWithTooltip} />;
+      return <RcRange {...restProps} ref={this.saveSlider} handle={this.handleWithTooltip} prefixCls={prefixCls} />;
     }
-    return <RcSlider {...restProps} ref={this.saveSlider} handle={this.handleWithTooltip} />;
+    return <RcSlider {...restProps} ref={this.saveSlider} handle={this.handleWithTooltip} prefixCls={prefixCls} />;
   }
 }

@@ -3,7 +3,7 @@ order: 7
 title: 社区精选组件
 ---
 
-`antd` 是 Ant Design 设计规范的 React 实现，所以我们倾向于只提供符合该规范、且带有视觉展现的 UI 组件，也尽量不重复造轮子。我们推荐使用以下社区已有的优秀实现，与 antd 形成互补：
+`choerodon-ui` 是 Choerodon 的UI组件库，同时还包含了企业级组件库 `choerodon-ui/pro`。为了尽量不重复造轮子，我们推荐使用以下社区已有的优秀实现，与 choerodon-ui 形成互补：
 
 类型 | 推荐组件
 ----|--------

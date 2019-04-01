@@ -1,7 +1,7 @@
 @import "../../style/themes/default";
 @import "../../style/mixins/index";
 
-@steps-prefix-cls: ~"@{ant-prefix}-steps";
+@steps-prefix-cls: ~"@{c7n-prefix}-steps";
 @process-icon-color: @processing-color;
 @process-title-color: @heading-color;
 @process-description-color: @text-color;
@@ -21,11 +21,11 @@
 @error-tail-color:  @process-tail-color;
 @steps-background: @component-background;
 
-@steps-icon-size: 28px;
-@steps-small-icon-size: 24px;
-@steps-dot-size: 8px;
-@steps-current-dot-size: 10px;
-@steps-desciption-max-width: 140px;
+@steps-icon-size: .28rem;
+@steps-small-icon-size: .24rem;
+@steps-dot-size: .08rem;
+@steps-current-dot-size: .1rem;
+@steps-desciption-max-width: 1.4rem;
 
 .@{steps-prefix-cls} {
   .reset-component;
@@ -64,16 +64,16 @@
     text-align: center;
     border-radius: @steps-icon-size;
     font-size: @font-size-lg;
-    margin-right: 8px;
+    margin-right: .08rem;
     transition: background-color .3s, border-color .3s;
     font-family: @font-family-no-number;
 
     > .@{steps-prefix-cls}-icon {
       line-height: 1;
-      top: -1px;
+      top: -.01rem;
       position: relative;
     }
-    span.icon {
+    span.@{iconfont-css-prefix} {
       height: @steps-icon-size;
       width: @steps-icon-size;
       line-height: @steps-icon-size;
@@ -84,14 +84,14 @@
     position: absolute;
     left: 0;
     width: 100%;
-    top: 12px;
-    padding: 0 10px;
+    top: .12rem;
+    padding: 0 .1rem;
     &:after {
       content: '';
       display: inline-block;
       background: @step-border-color;
-      height: 1px;
-      border-radius: 1px;
+      height: .01rem;
+      border-radius: .01rem;
       width: 100%;
       transition: background .3s;
     }
@@ -100,13 +100,13 @@
     font-size: @font-size-lg;
     color: @text-color;
     display: inline-block;
-    padding-right: 16px;
+    padding-right: .16rem;
     position: relative;
     line-height: @steps-icon-size;
     &:after {
       content: '';
-      height: 1px;
-      width: 9999px;
+      height: .01rem;
+      width: 99.99rem;
       background: @wait-tail-color;
       display: block;
       position: absolute;
@@ -130,7 +130,7 @@
 
 .@{steps-prefix-cls}-horizontal:not(.@{steps-prefix-cls}-label-vertical) {
   .@{steps-prefix-cls}-item {
-    margin-right: 16px;
+    margin-right: .16rem;
     white-space: nowrap;
     &:last-child {
       margin-right: 0;

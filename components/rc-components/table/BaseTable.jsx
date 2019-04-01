@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'mini-store';
 import ColGroup from './ColGroup';
@@ -7,7 +7,7 @@ import TableFooter from './TableFooter';
 import TableRow from './TableRow';
 import ExpandableRow from './ExpandableRow';
 
-class BaseTable extends React.Component {
+class BaseTable extends Component {
   static propTypes = {
     fixed: PropTypes.oneOfType([
       PropTypes.string,
@@ -22,17 +22,17 @@ class BaseTable extends React.Component {
     expander: PropTypes.object.isRequired,
     getRowKey: PropTypes.func,
     isAnyColumnsFixed: PropTypes.bool,
-  }
+  };
 
   static contextTypes = {
     table: PropTypes.any,
-  }
+  };
 
   handleRowHover = (isHover, key) => {
     this.props.store.setState({
       currentHoverKey: isHover ? key : null,
     });
-  }
+  };
 
   renderRows = (renderData, indent, ancestorKeys = []) => {
     const { table } = this.context;
@@ -126,11 +126,11 @@ class BaseTable extends React.Component {
         indent,
         fixed,
         key,
-        ancestorKeys
+        ancestorKeys,
       );
     }
     return rows;
-  }
+  };
 
   render() {
     const { table } = this.context;
@@ -166,9 +166,9 @@ class BaseTable extends React.Component {
     return (
       <Table className={tableClassName} style={tableStyle} key="table">
         <ColGroup columns={columns} fixed={fixed} />
-        {hasHead && <TableHeader expander={expander} columns={columns} fixed={fixed} /> }
+        {hasHead && <TableHeader expander={expander} columns={columns} fixed={fixed} />}
         {body}
-        {hasFoot && <TableFooter onHover={this.handleRowHover} columns={columns} fixed={fixed} /> }
+        {hasFoot && <TableFooter onHover={this.handleRowHover} columns={columns} fixed={fixed} />}
       </Table>
     );
   }

@@ -9,7 +9,7 @@
  * @providesModule ReactComponentWithPureRenderMixin
  */
 
-const shallowEqual = require('shallowequal');
+const shallowEqual = require('lodash/isEqual');
 
 function shallowCompare(instance, nextProps, nextState) {
   return !shallowEqual(instance.props, nextProps) || !shallowEqual(instance.state, nextState);

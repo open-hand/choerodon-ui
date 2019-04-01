@@ -1,26 +1,28 @@
-import * as React from 'react';
+import React, { Component, CSSProperties, ReactNode } from 'react';
 import classNames from 'classnames';
+import { getPrefixCls } from '../configure';
 
 export interface TimeLineItemProps {
   prefixCls?: string;
   className?: string;
   color?: string;
-  dot?: React.ReactNode;
+  dot?: ReactNode;
   pending?: boolean;
   last?: boolean;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
 }
 
-export default class TimelineItem extends React.Component<TimeLineItemProps, any> {
+export default class TimelineItem extends Component<TimeLineItemProps, any> {
+  static displayName = 'TimelineItem';
   static defaultProps = {
-    prefixCls: 'ant-timeline',
     color: 'blue',
     last: false,
     pending: false,
   };
 
   render() {
-    const { prefixCls, className, color = '', last, children, pending, dot, ...restProps } = this.props;
+    const { prefixCls: customizePrefixCls, className, color = '', last, children, pending, dot, ...restProps } = this.props;
+    const prefixCls = getPrefixCls('timeline', customizePrefixCls);
 
     const itemClassName = classNames({
       [`${prefixCls}-item`]: true,

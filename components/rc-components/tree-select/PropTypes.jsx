@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { SHOW_ALL, SHOW_PARENT, SHOW_CHILD } from './strategies';
+import { SHOW_ALL, SHOW_CHILD, SHOW_PARENT } from './strategies';
 
 function nonEmptyStringType(props, propsName) {
   const value = props[propsName];

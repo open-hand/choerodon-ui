@@ -1,11 +1,7 @@
 import set from 'lodash/set';
 import isEqual from 'lodash/isEqual';
 import createFormField, { isFormField } from './createFormField';
-import {
-  flattenFields,
-  getErrorStrs,
-  startsWith,
-} from './utils';
+import { flattenFields, getErrorStrs, startsWith, } from './utils';
 
 function partOf(a, b) {
   return b.indexOf(a) === 0 && ['.', '['].indexOf(b[a.length]) !== -1;

@@ -1,39 +1,38 @@
-import * as React from 'react';
-import Animate from '../rc-components/animate';
+import React, { Children, cloneElement, isValidElement, PureComponent, ReactChild, ReactElement } from 'react';
+import Animate from '../animate';
 import MouseDown, { Size } from './MouseDown';
 
 export interface RippleChildProps {
   prefixCls?: string;
 }
 
-export default class RippleChild extends React.Component<RippleChildProps> {
+export default class RippleChild extends PureComponent<RippleChildProps> {
+  static displayName = 'RippleChild';
 
   currentCircleStyle: any;
   currentStyle: any;
 
   render() {
-    return this.ripple(React.Children.only(this.props.children) as React.ReactElement<any>);
+    return this.ripple(Children.only(this.props.children));
   }
 
-  handleMouseDown(child: React.ReactElement<any>, size?: Size) {
+  handleMouseDown = (child: ReactElement<any>, size?: Size) => {
     const { prefixCls } = this.props;
     const { children, style } = child.props;
     const componentProps: any = {
       className: `${prefixCls}-wrapper`,
     };
-    let circle;
     if (size) {
       const { x, y, width, height } = size;
       const maxWidth = Math.max(width - x, x);
       const maxHeight = Math.max(height - y, y);
       const max = Math.sqrt(maxWidth * maxWidth + maxHeight * maxHeight);
       this.currentCircleStyle = {
-        width: max * 2,
-        height: max * 2,
+        width: max + max,
+        height: max + max,
         left: x - max,
         top: y - max,
       };
-      circle = <div className={prefixCls} key="circle" style={this.currentCircleStyle} />;
     }
     const newProps: any = {
       children: [
@@ -43,26 +42,24 @@ export default class RippleChild extends React.Component<RippleChildProps> {
           component="div"
           componentProps={componentProps}
           transitionName={size ? 'zoom-small-slow' : 'fade'}
+          hiddenProp="hidden"
         >
-          {circle}
+          {this.currentCircleStyle && <div hidden={!size} className={prefixCls} key="circle" style={this.currentCircleStyle} />}
         </Animate>,
       ],
       style: this.currentStyle || style,
     };
-    if (size) {
-      newProps.visible = 'visible';
-      if (size.position === 'static') {
-        newProps.style = this.currentStyle = Object.assign({}, style, { position: 'relative' });
-      }
+    if (size && size.position === 'static') {
+      newProps.style = this.currentStyle = Object.assign({}, style, { position: 'relative' });
     }
-    return React.cloneElement(child as React.ReactElement<any>, newProps);
-  }
+    return cloneElement<any>(child, newProps);
+  };
 
-  ripple = (child: React.ReactChild) => {
-    if (React.isValidElement(child)) {
+  ripple = (child: ReactChild) => {
+    if (isValidElement<any>(child)) {
       return (
-        <MouseDown>
-          {this.handleMouseDown.bind(this, child)}
+        <MouseDown rippleChild={child}>
+          {this.handleMouseDown}
         </MouseDown>
       );
     }

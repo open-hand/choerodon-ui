@@ -50,7 +50,7 @@ describe('RangePicker', () => {
     );
 
     const rangeCalendarWrapper = mount(wrapper.find('Trigger').instance().getComponent());
-    rangeCalendarWrapper.find('.ant-calendar-range-quick-selector a')
+    rangeCalendarWrapper.find('.c7n-calendar-range-quick-selector a')
       .simulate('click');
     expect(render(wrapper.find('Trigger').instance().getComponent()))
       .toMatchSnapshot();
@@ -69,10 +69,10 @@ describe('RangePicker', () => {
     );
 
     let rangeCalendarWrapper = mount(wrapper.find('Trigger').instance().getComponent());
-    rangeCalendarWrapper.find('.ant-calendar-range-quick-selector a')
+    rangeCalendarWrapper.find('.c7n-calendar-range-quick-selector a')
       .simulate('mouseEnter');
     rangeCalendarWrapper = mount(wrapper.find('Trigger').instance().getComponent());
-    expect(rangeCalendarWrapper.find('.ant-calendar-selected-day').length).toBe(2);
+    expect(rangeCalendarWrapper.find('.c7n-calendar-selected-day').length).toBe(2);
   });
 
   it('should trigger onCalendarChange when change value', () => {
@@ -85,11 +85,10 @@ describe('RangePicker', () => {
       />
     );
     const rangeCalendarWrapper = mount(wrapper.find('Trigger').instance().getComponent());
-    rangeCalendarWrapper.find('.ant-calendar-cell').at(15).simulate('click');
+    rangeCalendarWrapper.find('.c7n-calendar-cell').at(15).simulate('click');
     expect(onCalendarChangeFn).toHaveBeenCalled();
   });
 
-  // issue: https://github.com/ant-design/ant-design/issues/5872
   it('should not throw error when value is reset to `[]`', () => {
     const birthday = moment('2000-01-01', 'YYYY-MM-DD');
     const wrapper = mount(
@@ -101,11 +100,10 @@ describe('RangePicker', () => {
     );
     wrapper.setProps({ value: [] });
     const rangeCalendarWrapper = mount(wrapper.find('Trigger').instance().getComponent());
-    expect(() => rangeCalendarWrapper.find('.ant-calendar-cell').at(15).simulate('click').simulate('click'))
+    expect(() => rangeCalendarWrapper.find('.c7n-calendar-cell').at(15).simulate('click').simulate('click'))
       .not.toThrow();
   });
 
-  // issue: https://github.com/ant-design/ant-design/issues/7077
   it('should not throw error when select after clear', () => {
     const wrapper = mount(
       <RangePicker
@@ -114,12 +112,12 @@ describe('RangePicker', () => {
       />
     );
     let rangeCalendarWrapper = mount(wrapper.find('Trigger').instance().getComponent());
-    rangeCalendarWrapper.find('.ant-calendar-cell').at(15).simulate('click').simulate('click');
+    rangeCalendarWrapper.find('.c7n-calendar-cell').at(15).simulate('click').simulate('click');
     wrapper.update();
-    wrapper.find('.ant-calendar-picker-clear').hostNodes().simulate('click');
-    wrapper.find('.ant-calendar-picker-input').simulate('click');
+    wrapper.find('.c7n-calendar-picker-clear').hostNodes().simulate('click');
+    wrapper.find('.c7n-calendar-picker-input').simulate('click');
     rangeCalendarWrapper = mount(wrapper.find('Trigger').instance().getComponent());
-    expect(() => rangeCalendarWrapper.find('.ant-calendar-cell').at(15).simulate('click').simulate('click'))
+    expect(() => rangeCalendarWrapper.find('.c7n-calendar-cell').at(15).simulate('click').simulate('click'))
       .not.toThrow();
   });
 
@@ -130,14 +128,14 @@ describe('RangePicker', () => {
         <RangePicker value={[moment(), moment().add(2, 'day')]} />
       </div>
     );
-    wrapper.find('.ant-calendar-picker-input').simulate('click');
-    wrapper.find('.ant-calendar-cell').at(25).simulate('click');
-    wrapper.find('.ant-calendar-cell').at(27).simulate('mouseEnter');
+    wrapper.find('.c7n-calendar-picker-input').simulate('click');
+    wrapper.find('.c7n-calendar-cell').at(25).simulate('click');
+    wrapper.find('.c7n-calendar-cell').at(27).simulate('mouseEnter');
     document.dispatchEvent(new MouseEvent('mousedown'));
     jest.runAllTimers();
-    wrapper.find('.ant-calendar-picker-input').simulate('click');
+    wrapper.find('.c7n-calendar-picker-input').simulate('click');
     expect(
-      wrapper.find('.ant-calendar-cell').at(23).hasClass('ant-calendar-in-range-cell')
+      wrapper.find('.c7n-calendar-cell').at(23).hasClass('c7n-calendar-in-range-cell')
     ).toBe(true);
   });
 
@@ -151,13 +149,13 @@ describe('RangePicker', () => {
           format={format}
         />
       );
-      wrapper.find('.ant-calendar-picker-input').simulate('click');
-      wrapper.find('.ant-calendar-range-quick-selector a').simulate('click');
+      wrapper.find('.c7n-calendar-picker-input').simulate('click');
+      wrapper.find('.c7n-calendar-range-quick-selector a').simulate('click');
       expect(
-        wrapper.find('.ant-calendar-range-picker-input').first().getDOMNode().value
+        wrapper.find('.c7n-calendar-range-picker-input').first().getDOMNode().value
       ).toBe(range[0].format(format));
       expect(
-        wrapper.find('.ant-calendar-range-picker-input').last().getDOMNode().value
+        wrapper.find('.c7n-calendar-range-picker-input').last().getDOMNode().value
       ).toBe(range[1].format(format));
     });
 
@@ -170,22 +168,21 @@ describe('RangePicker', () => {
           format={format}
         />
       );
-      wrapper.find('.ant-calendar-picker-input').simulate('click');
-      wrapper.find('.ant-calendar-range-quick-selector a').simulate('click');
+      wrapper.find('.c7n-calendar-picker-input').simulate('click');
+      wrapper.find('.c7n-calendar-range-quick-selector a').simulate('click');
       expect(
-        wrapper.find('.ant-calendar-range-picker-input').first().getDOMNode().value
+        wrapper.find('.c7n-calendar-range-picker-input').first().getDOMNode().value
       ).toBe(range[0].format(format));
       expect(
-        wrapper.find('.ant-calendar-range-picker-input').last().getDOMNode().value
+        wrapper.find('.c7n-calendar-range-picker-input').last().getDOMNode().value
       ).toBe(range[1].format(format));
     });
   });
 
-  // https://github.com/ant-design/ant-design/issues/6999
   it('input date manually', () => {
     const wrapper = mount(<RangePicker open />);
     const dateString = '2008-12-31';
-    const input = wrapper.find('.ant-calendar-input').first();
+    const input = wrapper.find('.c7n-calendar-input').first();
     input.simulate('change', { target: { value: dateString } });
     expect(input.getDOMNode().value).toBe(dateString);
   });
@@ -199,20 +196,19 @@ describe('RangePicker', () => {
         onOk={handleOk}
       />
     );
-    wrapper.find('.ant-calendar-picker-input').simulate('click');
-    wrapper.find('.ant-calendar-range-quick-selector a').simulate('click');
+    wrapper.find('.c7n-calendar-picker-input').simulate('click');
+    wrapper.find('.c7n-calendar-range-quick-selector a').simulate('click');
     expect(handleOk).toBeCalledWith(range);
   });
 
-  // https://github.com/ant-design/ant-design/issues/9267
   it('invali end date not throw error', () => {
     const wrapper = mount(<RangePicker />);
-    wrapper.find('.ant-calendar-picker-input').simulate('click');
+    wrapper.find('.c7n-calendar-picker-input').simulate('click');
     selectDate(wrapper, moment('2017-09-18'), 0);
     selectDate(wrapper, moment('2017-10-18'), 1);
-    wrapper.find('.ant-calendar-picker-input').simulate('click');
+    wrapper.find('.c7n-calendar-picker-input').simulate('click');
     expect(
-      () => wrapper.find('.ant-calendar-input').at(1).simulate('change', { target: { value: '2016-01-01' } })
+      () => wrapper.find('.c7n-calendar-input').at(1).simulate('change', { target: { value: '2016-01-01' } })
     ).not.toThrow();
   });
 });

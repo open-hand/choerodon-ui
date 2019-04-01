@@ -1,16 +1,14 @@
-import React from 'react';
+import React, { Children, cloneElement, Component } from 'react';
 import PropTypes from 'prop-types';
+import noop from 'lodash/noop';
+import classnames from 'classnames';
 import KeyCode from './KeyCode';
 import TabPane from './TabPane';
-import classnames from 'classnames';
 import { getDataAttr } from './utils';
-
-function noop() {
-}
 
 function getDefaultActiveKey(props) {
   let activeKey;
-  React.Children.forEach(props.children, (child) => {
+  Children.forEach(props.children, (child) => {
     if (child && !activeKey && !child.props.disabled) {
       activeKey = child.key;
     }
@@ -19,11 +17,35 @@ function getDefaultActiveKey(props) {
 }
 
 function activeKeyIsValid(props, key) {
-  const keys = React.Children.map(props.children, child => child && child.key);
+  const keys = Children.map(props.children, child => child && child.key);
   return keys.indexOf(key) >= 0;
 }
 
-export default class Tabs extends React.Component {
+export default class Tabs extends Component {
+  static propTypes = {
+    destroyInactiveTabPane: PropTypes.bool,
+    renderTabBar: PropTypes.func.isRequired,
+    renderTabContent: PropTypes.func.isRequired,
+    onChange: PropTypes.func,
+    children: PropTypes.any,
+    prefixCls: PropTypes.string,
+    className: PropTypes.string,
+    tabBarPosition: PropTypes.string,
+    style: PropTypes.object,
+    activeKey: PropTypes.string,
+    defaultActiveKey: PropTypes.string,
+  };
+
+  static defaultProps = {
+    prefixCls: 'rc-tabs',
+    destroyInactiveTabPane: false,
+    onChange: noop,
+    tabBarPosition: 'top',
+    style: {},
+  };
+
+  static TabPane = TabPane;
+
   constructor(props) {
     super(props);
 
@@ -47,7 +69,6 @@ export default class Tabs extends React.Component {
         activeKey: nextProps.activeKey,
       });
     } else if (!activeKeyIsValid(nextProps, this.state.activeKey)) {
-      // https://github.com/ant-design/ant-design/issues/7093
       this.setState({
         activeKey: getDefaultActiveKey(nextProps),
       });
@@ -59,7 +80,7 @@ export default class Tabs extends React.Component {
       this.tabBar.props.onTabClick(activeKey);
     }
     this.setActiveKey(activeKey);
-  }
+  };
 
   onNavKeyDown = (e) => {
     const eventKeyCode = e.keyCode;
@@ -72,7 +93,7 @@ export default class Tabs extends React.Component {
       const previousKey = this.getNextActiveKey(false);
       this.onTabClick(previousKey);
     }
-  }
+  };
 
   setActiveKey = (activeKey) => {
     if (this.state.activeKey !== activeKey) {
@@ -83,12 +104,12 @@ export default class Tabs extends React.Component {
       }
       this.props.onChange(activeKey);
     }
-  }
+  };
 
   getNextActiveKey = (next) => {
     const activeKey = this.state.activeKey;
     const children = [];
-    React.Children.forEach(this.props.children, (c) => {
+    Children.forEach(this.props.children, (c) => {
       if (c && !c.props.disabled) {
         if (next) {
           children.push(c);
@@ -109,7 +130,7 @@ export default class Tabs extends React.Component {
       }
     });
     return ret;
-  }
+  };
 
   render() {
     const props = this.props;
@@ -129,7 +150,7 @@ export default class Tabs extends React.Component {
 
     this.tabBar = renderTabBar();
     const contents = [
-      React.cloneElement(this.tabBar, {
+      cloneElement(this.tabBar, {
         prefixCls,
         key: 'tabBar',
         onKeyDown: this.onNavKeyDown,
@@ -138,7 +159,7 @@ export default class Tabs extends React.Component {
         panels: props.children,
         activeKey: this.state.activeKey,
       }),
-      React.cloneElement(renderTabContent(), {
+      cloneElement(renderTabContent(), {
         prefixCls,
         tabBarPosition,
         activeKey: this.state.activeKey,
@@ -162,27 +183,3 @@ export default class Tabs extends React.Component {
     );
   }
 }
-
-Tabs.propTypes = {
-  destroyInactiveTabPane: PropTypes.bool,
-  renderTabBar: PropTypes.func.isRequired,
-  renderTabContent: PropTypes.func.isRequired,
-  onChange: PropTypes.func,
-  children: PropTypes.any,
-  prefixCls: PropTypes.string,
-  className: PropTypes.string,
-  tabBarPosition: PropTypes.string,
-  style: PropTypes.object,
-  activeKey: PropTypes.string,
-  defaultActiveKey: PropTypes.string,
-};
-
-Tabs.defaultProps = {
-  prefixCls: 'rc-tabs',
-  destroyInactiveTabPane: false,
-  onChange: noop,
-  tabBarPosition: 'top',
-  style: {},
-};
-
-Tabs.TabPane = TabPane;

@@ -1,6 +1,7 @@
 // This config is for building dist files
 const webpack = require('webpack');
-const getWebpackConfig = require('antd-tools/lib/getWebpackConfig');
+const getWebpackConfig = require('./tools/getWebpackConfig');
+const pkg = require('./package.json');
 
 // noParse still leave `require('./locale' + name)` in dist files
 // ignore is better
@@ -11,11 +12,16 @@ function ignoreMomentLocale(webpackConfig) {
 }
 
 function addLocales(webpackConfig) {
-  let packageName = 'choerodon-ui-with-locales';
-  if (webpackConfig.entry['choerodon-ui.min']) {
+  let packageName = `${pkg.name}-with-locales`;
+  let packageNamePro = `${pkg.name}-pro-with-locales`;
+  if (webpackConfig.entry[`${pkg.name}.min`]) {
     packageName += '.min';
   }
+  if (webpackConfig.entry[`${pkg.name}-pro.min`]) {
+    packageNamePro += '.min';
+  }
   webpackConfig.entry[packageName] = './index-with-locales.js';
+  webpackConfig.entry[packageNamePro] = './index-pro-with-locales.js';
   webpackConfig.output.filename = '[name].js';
 }
 

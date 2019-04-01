@@ -1,0 +1,28 @@
+@import "../../../components/style/themes/default";
+@import "../../../components/style/mixins/index";
+@import "../../text-field/style/mixin";
+
+.@{c7n-prefix}-pro-input-number {
+  .input;
+  text-align: right;
+  &-plus,
+  &-minus {
+    display: block !important;
+    height: .15rem;
+    border-radius: @border-radius-base;
+    &:hover {
+      color: @primary-5;
+    }
+    &:active {
+      color: @primary-3;
+    }
+  }
+
+  &-plus {
+    margin-top: -.05rem;
+  }
+
+  &-multiple & {
+    text-align: left;
+  }
+}

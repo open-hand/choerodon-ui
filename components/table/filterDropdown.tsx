@@ -1,5 +1,5 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import React, { cloneElement, Component, ReactElement, SyntheticEvent } from 'react';
+import { findDOMNode } from 'react-dom';
 import closest from 'dom-closest';
 import classNames from 'classnames';
 import Dropdown from '../dropdown';
@@ -9,7 +9,7 @@ import FilterDropdownMenuWrapper from './FilterDropdownMenuWrapper';
 import { ColumnFilterItem, ColumnProps, FilterMenuProps, FilterMenuState } from './interface';
 import Menu, { Item as MenuItem, SubMenu } from '../rc-components/menu';
 
-export default class FilterMenu<T> extends React.Component<FilterMenuProps<T>, FilterMenuState> {
+export default class FilterMenu<T> extends Component<FilterMenuProps<T>, FilterMenuState> {
   static defaultProps = {
     handleFilter() {
     },
@@ -55,13 +55,12 @@ export default class FilterMenu<T> extends React.Component<FilterMenuProps<T>, F
   }
 
   setNeverShown = (column: ColumnProps<T>) => {
-    const rootNode = ReactDOM.findDOMNode(this);
-    const filterBelongToScrollBody = !!closest(rootNode, `.ant-table-scroll`);
+    const rootNode = findDOMNode(this);
+    const filterBelongToScrollBody = !!closest(rootNode, `${this.props.prefixCls}-scroll`);
     if (filterBelongToScrollBody) {
       // When fixed column have filters, there will be two dropdown menus
       // Filter dropdown menu inside scroll body should never be shown
-      // To fix https://github.com/ant-design/ant-design/issues/5010 and
-      // https://github.com/ant-design/ant-design/issues/7909
+
       this.neverShown = !!column.fixed;
     }
   };
@@ -124,7 +123,7 @@ export default class FilterMenu<T> extends React.Component<FilterMenuProps<T>, F
     return filters.some(item => !!(item.children && item.children.length > 0));
   }
 
-  renderMenus(items: ColumnFilterItem[]): React.ReactElement<any>[] {
+  renderMenus(items: ColumnFilterItem[]): ReactElement<any>[] {
     return items.map(item => {
       if (item.children && item.children.length > 0) {
         const { keyPathOfSelectedItem } = this.state;
@@ -142,7 +141,7 @@ export default class FilterMenu<T> extends React.Component<FilterMenuProps<T>, F
     });
   }
 
-  handleFilterDropdownMenuClick = (e: React.SyntheticEvent<any>) => {
+  handleFilterDropdownMenuClick = (e: SyntheticEvent<any>) => {
     e.preventDefault();
   };
 
@@ -166,7 +165,7 @@ export default class FilterMenu<T> extends React.Component<FilterMenuProps<T>, F
     const filterIcon = column.filterIcon as any;
     const dropdownSelectedClass = this.props.selectedKeys.length > 0 ? `${prefixCls}-selected` : '';
 
-    return filterIcon ? React.cloneElement(filterIcon as any, {
+    return filterIcon ? cloneElement(filterIcon as any, {
       title: locale.filterTitle,
       className: classNames(filterIcon.className, {
         [`${prefixCls}-icon`]: true,

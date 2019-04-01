@@ -1,33 +1,36 @@
-import * as React from 'react';
+import React, { Component, MouseEventHandler } from 'react';
 import Button from '../button';
-import { ButtonGroupProps } from '../button/button-group';
+import { ButtonGroupProps } from '../button/ButtonGroup';
 import Icon from '../icon';
 import Dropdown, { DropDownProps } from './dropdown';
 import classNames from 'classnames';
+import { getPrefixCls } from '../configure';
+
 const ButtonGroup = Button.Group;
 
 export interface DropdownButtonProps extends ButtonGroupProps, DropDownProps {
   type?: 'primary' | 'ghost' | 'dashed';
   disabled?: boolean;
-  onClick?: React.MouseEventHandler<any>;
+  onClick?: MouseEventHandler<any>;
   children?: any;
 }
 
-export default class DropdownButton extends React.Component<DropdownButtonProps, any> {
+export default class DropdownButton extends Component<DropdownButtonProps, any> {
+  static displayName = 'DropdownButton';
   static defaultProps = {
     placement: 'bottomRight',
     type: 'default',
-    prefixCls: 'ant-dropdown-button',
   };
 
   render() {
     const {
       type, disabled, onClick, children,
-      prefixCls, className, overlay, trigger, align,
+      prefixCls: customizePrefixCls, className, overlay, trigger, align,
       visible, onVisibleChange, placement, getPopupContainer,
       ...restProps,
     } = this.props;
 
+    const prefixCls = getPrefixCls('dropdown-button', customizePrefixCls);
     const dropdownProps = {
       align,
       overlay,

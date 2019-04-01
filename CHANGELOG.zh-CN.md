@@ -14,6 +14,14 @@ timeline: true
 * 主版本号：含有破坏性更新和新特性，不在发布周期内。
 
 ---
+## 0.6.0
+
+`2018-04-01`
+
+- 🌟 并入`choerodon-ui/pro` 组件库。
+- 🌟 默认ant前缀改为c7n，如要使用ant前缀，请[修改主题变量@c7n-prefix](https://choerodon.github.io/choerodon-ui/docs/react/customize-theme-cn)，并使用[全局化配置](https://choerodon.github.io/choerodon-ui/components/configure-cn)。
+- 🌟 `Icon`:  增加新的图标。
+
 ## 0.5.3
 
 `2018-03-20`

@@ -5,7 +5,7 @@ exports[`Tooltip should hide when mouse leave choerodon-ui disabled Button 1`] =
   style="display: inline-block; cursor: not-allowed;"
 >
   <button
-    class="ant-btn ant-btn-flat"
+    class="c7n-btn c7n-btn-flat"
     disabled=""
     style="pointer-events: none;"
     type="button"
@@ -14,7 +14,7 @@ exports[`Tooltip should hide when mouse leave choerodon-ui disabled Button 1`] =
       Hello world!
     </span>
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
 </span>

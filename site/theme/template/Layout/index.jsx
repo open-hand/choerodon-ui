@@ -4,12 +4,17 @@ import PropTypes from 'prop-types';
 import { enquireScreen } from 'enquire-js';
 import { addLocaleData, IntlProvider } from 'react-intl';
 import { LocaleProvider } from 'choerodon-ui';
+import { localeContext, ModalContainer } from 'choerodon-ui/pro';
 import moment from 'moment';
+import { configure } from 'mobx';
 import Header from './Header';
 import Footer from './Footer';
 import enLocale from '../../en-US';
 import cnLocale from '../../zh-CN';
 import * as utils from '../utils';
+import '../../mock';
+
+configure({ enforceActions: 'always' });
 
 if (typeof window !== 'undefined') {
   /* eslint-disable global-require */
@@ -82,9 +87,11 @@ export default class Layout extends React.Component {
 
   render() {
     const { children, ...restProps } = this.props;
+    const { location } = restProps;
     const { appLocale } = this.state;
-    const { locale, componentsLocale, messages } = appLocale;
+    const { locale, componentsLocale, proComponentsLocale, messages } = appLocale;
     moment.locale(locale);
+    localeContext.setLocale(proComponentsLocale);
     return (
       <IntlProvider locale={locale} messages={messages}>
         <LocaleProvider locale={componentsLocale}>
@@ -92,6 +99,7 @@ export default class Layout extends React.Component {
             <Header {...restProps} />
             {children}
             <Footer {...restProps} />
+            <ModalContainer location={location} />
           </div>
         </LocaleProvider>
       </IntlProvider>

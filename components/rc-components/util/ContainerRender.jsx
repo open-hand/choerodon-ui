@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
-export default class ContainerRender extends React.Component {
+export default class ContainerRender extends Component {
   static propTypes = {
     autoMount: PropTypes.bool,
     autoDestroy: PropTypes.bool,

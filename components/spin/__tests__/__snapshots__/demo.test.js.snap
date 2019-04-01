@@ -2,14 +2,13 @@
 
 exports[`renders ./components/spin/demo/basic.md correctly 1`] = `
 <div
-  class="ant-spin ant-spin-spinning"
+  class="c7n-spin c7n-spin-spinning"
 >
   <div
-    class="ant-progress ant-progress-loading ant-progress-status-normal ant-progress-show-info ant-progress-default ant-spin-dot"
+    class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-default c7n-spin-dot"
   >
     <div
-      class="ant-progress-inner"
-      style="width:30px;height:30px"
+      class="c7n-progress-inner"
     >
       <svg
         viewBox="0 0 50 50"
@@ -17,10 +16,7 @@ exports[`renders ./components/spin/demo/basic.md correctly 1`] = `
         <circle
           cx="25"
           cy="25"
-          fill="none"
           r="20"
-          stroke="#3367d6"
-          stroke-width="4"
         />
       </svg>
     </div>
@@ -29,40 +25,64 @@ exports[`renders ./components/spin/demo/basic.md correctly 1`] = `
 `;
 
 exports[`renders ./components/spin/demo/custom-indicator.md correctly 1`] = `
-<div
-  class="ant-spin ant-spin-spinning"
->
-  <span
-    class="ant-spin-dot ant-spin-dot-spin ant-spin-dot"
-    style="width:20px;height:20px"
+<div>
+  <div
+    class="c7n-spin c7n-spin-sm c7n-spin-spinning"
   >
-    <i />
-    <i />
-    <i />
-    <i />
-  </span>
+    <span
+      class="custom-spin-dot c7n-spin-dot"
+    >
+      <i />
+      <i />
+      <i />
+      <i />
+    </span>
+  </div>
+  <div
+    class="c7n-spin c7n-spin-spinning"
+  >
+    <span
+      class="custom-spin-dot c7n-spin-dot"
+    >
+      <i />
+      <i />
+      <i />
+      <i />
+    </span>
+  </div>
+  <div
+    class="c7n-spin c7n-spin-lg c7n-spin-spinning"
+  >
+    <span
+      class="custom-spin-dot c7n-spin-dot"
+    >
+      <i />
+      <i />
+      <i />
+      <i />
+    </span>
+  </div>
 </div>
 `;
 
 exports[`renders ./components/spin/demo/delayAndDebounce.md correctly 1`] = `
 <div>
   <div
-    class="ant-spin-nested-loading"
+    class="c7n-spin-nested-loading"
   >
     <div
-      class="ant-spin-container"
+      class="c7n-spin-container"
     >
       <div
-        class="ant-alert ant-alert-info ant-alert-with-description ant-alert-no-icon"
-        data-show="true"
+        class="c7n-alert c7n-alert-info c7n-alert-with-description c7n-alert-no-icon"
       >
         <span
-          class="ant-alert-message"
+          class="c7n-alert-message"
         >
           Alert message title
         </span>
         <span
-          class="ant-alert-description"
+          class="c7n-alert-description"
         >
           Further details about the context of this alert.
         </span>
@@ -74,11 +94,11 @@ exports[`renders ./components/spin/demo/delayAndDebounce.md correctly 1`] = `
   >
     Loading state：
     <span
-      class="ant-switch"
+      class="c7n-switch"
       tabindex="0"
     >
       <span
-        class="ant-switch-inner"
+        class="c7n-switch-inner"
       />
     </span>
   </div>
@@ -90,14 +110,13 @@ exports[`renders ./components/spin/demo/inside.md correctly 1`] = `
   class="example"
 >
   <div
-    class="ant-spin ant-spin-spinning"
+    class="c7n-spin c7n-spin-spinning"
   >
     <div
-      class="ant-progress ant-progress-loading ant-progress-status-normal ant-progress-show-info ant-progress-default ant-spin-dot"
+      class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-default c7n-spin-dot"
     >
       <div
-        class="ant-progress-inner"
-        style="width:30px;height:30px"
+        class="c7n-progress-inner"
       >
         <svg
           viewBox="0 0 50 50"
@@ -105,10 +124,7 @@ exports[`renders ./components/spin/demo/inside.md correctly 1`] = `
           <circle
             cx="25"
             cy="25"
-            fill="none"
             r="20"
-            stroke="#3367d6"
-            stroke-width="4"
           />
         </svg>
       </div>
@@ -120,22 +136,21 @@ exports[`renders ./components/spin/demo/inside.md correctly 1`] = `
 exports[`renders ./components/spin/demo/nested.md correctly 1`] = `
 <div>
   <div
-    class="ant-spin-nested-loading"
+    class="c7n-spin-nested-loading"
   >
     <div
-      class="ant-spin-container"
+      class="c7n-spin-container"
     >
       <div
-        class="ant-alert ant-alert-info ant-alert-with-description ant-alert-no-icon"
-        data-show="true"
+        class="c7n-alert c7n-alert-info c7n-alert-with-description c7n-alert-no-icon"
       >
         <span
-          class="ant-alert-message"
+          class="c7n-alert-message"
         >
           Alert message title
         </span>
         <span
-          class="ant-alert-description"
+          class="c7n-alert-description"
         >
           Further details about the context of this alert.
         </span>
@@ -147,11 +162,11 @@ exports[`renders ./components/spin/demo/nested.md correctly 1`] = `
   >
     Loading state：
     <span
-      class="ant-switch"
+      class="c7n-switch"
       tabindex="0"
     >
       <span
-        class="ant-switch-inner"
+        class="c7n-switch-inner"
       />
     </span>
   </div>
@@ -161,14 +176,13 @@ exports[`renders ./components/spin/demo/nested.md correctly 1`] = `
 exports[`renders ./components/spin/demo/size.md correctly 1`] = `
 <div>
   <div
-    class="ant-spin ant-spin-sm ant-spin-spinning"
+    class="c7n-spin c7n-spin-sm c7n-spin-spinning"
   >
     <div
-      class="ant-progress ant-progress-loading ant-progress-status-normal ant-progress-show-info ant-progress-default ant-spin-dot"
+      class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-default c7n-spin-dot"
     >
       <div
-        class="ant-progress-inner"
-        style="width:20px;height:20px"
+        class="c7n-progress-inner"
       >
         <svg
           viewBox="0 0 50 50"
@@ -176,24 +190,20 @@ exports[`renders ./components/spin/demo/size.md correctly 1`] = `
           <circle
             cx="25"
             cy="25"
-            fill="none"
             r="20"
-            stroke="#3367d6"
-            stroke-width="4"
           />
         </svg>
       </div>
     </div>
   </div>
   <div
-    class="ant-spin ant-spin-spinning"
+    class="c7n-spin c7n-spin-spinning"
   >
     <div
-      class="ant-progress ant-progress-loading ant-progress-status-normal ant-progress-show-info ant-progress-default ant-spin-dot"
+      class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-default c7n-spin-dot"
     >
       <div
-        class="ant-progress-inner"
-        style="width:30px;height:30px"
+        class="c7n-progress-inner"
       >
         <svg
           viewBox="0 0 50 50"
@@ -201,24 +211,20 @@ exports[`renders ./components/spin/demo/size.md correctly 1`] = `
           <circle
             cx="25"
             cy="25"
-            fill="none"
             r="20"
-            stroke="#3367d6"
-            stroke-width="4"
           />
         </svg>
       </div>
     </div>
   </div>
   <div
-    class="ant-spin ant-spin-lg ant-spin-spinning"
+    class="c7n-spin c7n-spin-lg c7n-spin-spinning"
   >
     <div
-      class="ant-progress ant-progress-loading ant-progress-status-normal ant-progress-show-info ant-progress-default ant-spin-dot"
+      class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-default c7n-spin-dot"
     >
       <div
-        class="ant-progress-inner"
-        style="width:50px;height:50px"
+        class="c7n-progress-inner"
       >
         <svg
           viewBox="0 0 50 50"
@@ -226,10 +232,7 @@ exports[`renders ./components/spin/demo/size.md correctly 1`] = `
           <circle
             cx="25"
             cy="25"
-            fill="none"
             r="20"
-            stroke="#3367d6"
-            stroke-width="4"
           />
         </svg>
       </div>
@@ -240,17 +243,16 @@ exports[`renders ./components/spin/demo/size.md correctly 1`] = `
 
 exports[`renders ./components/spin/demo/tip.md correctly 1`] = `
 <div
-  class="ant-spin-nested-loading"
+  class="c7n-spin-nested-loading"
 >
   <div
-    class="ant-spin ant-spin-spinning ant-spin-show-text"
+    class="c7n-spin c7n-spin-spinning c7n-spin-show-text"
   >
     <div
-      class="ant-progress ant-progress-loading ant-progress-status-normal ant-progress-show-info ant-progress-default ant-spin-dot"
+      class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-default c7n-spin-dot"
     >
       <div
-        class="ant-progress-inner"
-        style="width:30px;height:30px"
+        class="c7n-progress-inner"
       >
         <svg
           viewBox="0 0 50 50"
@@ -258,34 +260,30 @@ exports[`renders ./components/spin/demo/tip.md correctly 1`] = `
           <circle
             cx="25"
             cy="25"
-            fill="none"
             r="20"
-            stroke="#3367d6"
-            stroke-width="4"
           />
         </svg>
       </div>
     </div>
     <div
-      class="ant-spin-text"
+      class="c7n-spin-text"
     >
       Loading...
     </div>
   </div>
   <div
-    class="ant-spin-container ant-spin-blur"
+    class="c7n-spin-container c7n-spin-blur"
   >
     <div
-      class="ant-alert ant-alert-info ant-alert-with-description ant-alert-no-icon"
-      data-show="true"
+      class="c7n-alert c7n-alert-info c7n-alert-with-description c7n-alert-no-icon"
     >
       <span
-        class="ant-alert-message"
+        class="c7n-alert-message"
       >
         Alert message title
       </span>
       <span
-        class="ant-alert-description"
+        class="c7n-alert-description"
       >
         Further details about the context of this alert.
       </span>

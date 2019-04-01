@@ -1,26 +1,27 @@
-import * as React from 'react';
+import { CSSProperties, Key, ReactNode } from 'react';
 import { PaginationProps } from '../pagination';
 import { SpinProps } from '../spin';
 import { Store } from './createStore';
 import { RadioChangeEvent } from '../radio';
 import { CheckboxChangeEvent } from '../checkbox';
+import { Size } from '../_util/enum';
 
 export type CompareFn<T> = ((a: T, b: T) => number);
 export type ColumnFilterItem = { text: string; value: string, children?: ColumnFilterItem[] };
 
 export interface ColumnProps<T> {
-  title?: React.ReactNode;
-  filterTitle?: React.ReactNode;
-  empty?: React.ReactNode;
-  key?: React.Key;
+  title?: ReactNode;
+  filterTitle?: ReactNode;
+  empty?: ReactNode;
+  key?: Key;
   dataIndex?: string;
-  render?: (text: any, record: T, index: number) => React.ReactNode;
+  render?: (text: any, record: T, index: number) => ReactNode;
   align?: 'left' | 'right' | 'center';
   filters?: ColumnFilterItem[];
   onFilter?: (value: any, record: T, filters?: ColumnFilterItem[]) => boolean;
   onColumnFilterChange?: (item: any) => void;
   filterMultiple?: boolean;
-  filterDropdown?: React.ReactNode;
+  filterDropdown?: ReactNode;
   filterDropdownVisible?: boolean;
   onFilterDropdownVisibleChange?: (visible: boolean) => void;
   sorter?: boolean | CompareFn<T>;
@@ -29,7 +30,7 @@ export interface ColumnProps<T> {
   width?: string | number;
   className?: string;
   fixed?: boolean | ('left' | 'right');
-  filterIcon?: React.ReactNode;
+  filterIcon?: ReactNode;
   filteredValue?: any[];
   sortOrder?: boolean | ('ascend' | 'descend');
   children?: ColumnProps<T>[];
@@ -57,11 +58,11 @@ export interface TableComponents {
 
 export interface TableLocale {
   filterTitle?: string;
-  filterConfirm?: React.ReactNode;
-  filterReset?: React.ReactNode;
-  emptyText?: React.ReactNode | (() => React.ReactNode);
-  selectAll?: React.ReactNode;
-  selectInvert?: React.ReactNode;
+  filterConfirm?: ReactNode;
+  filterReset?: ReactNode;
+  emptyText?: ReactNode | (() => ReactNode);
+  selectAll?: ReactNode;
+  selectInvert?: ReactNode;
 }
 
 export type RowSelectionType = 'checkbox' | 'radio';
@@ -69,6 +70,7 @@ export type SelectionSelectFn<T> = (record: T, selected: boolean, selectedRows: 
 
 export interface TablePaginationConfig extends PaginationProps {
   position?: 'top' | 'bottom' | 'both';
+  size?: Size;
 }
 
 export interface TableRowSelection<T> {
@@ -92,7 +94,7 @@ export interface TableProps<T> {
   autoScroll?: boolean;
   rowSelection?: TableRowSelection<T>;
   pagination?: TablePaginationConfig | false;
-  size?: 'default' | 'middle' | 'small';
+  size?: Size;
   dataSource?: T[];
   components?: TableComponents;
   columns?: ColumnProps<T>[];
@@ -118,15 +120,15 @@ export interface TableProps<T> {
   useFixedHeader?: boolean;
   bordered?: boolean;
   showHeader?: boolean;
-  footer?: (currentPageData: Object[]) => React.ReactNode;
-  title?: (currentPageData: Object[]) => React.ReactNode;
-  empty?: (currentPageData: Object[]) => React.ReactNode;
+  footer?: (currentPageData: Object[]) => ReactNode;
+  title?: (currentPageData: Object[]) => ReactNode;
+  empty?: (currentPageData: Object[]) => ReactNode;
   scroll?: { x?: boolean | number | string, y?: boolean | number | string };
   childrenColumnName?: string;
-  bodyStyle?: React.CSSProperties;
+  bodyStyle?: CSSProperties;
   className?: string;
-  style?: React.CSSProperties;
-  children?: React.ReactNode;
+  style?: CSSProperties;
+  children?: ReactNode;
   filterBar?: boolean;
   filters?: string[];
   filterBarPlaceholder?: string;
@@ -149,7 +151,7 @@ export type SelectionItemSelectFn = (key: string[]) => any;
 
 export interface SelectionItem {
   key: string;
-  text: React.ReactNode;
+  text: ReactNode;
   onSelect: SelectionItemSelectFn;
 }
 

@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import enhancer from './enhancer';
-import { propTypes, defaultProps } from './types';
+import { defaultProps, propTypes } from './types';
 
 class Line extends Component {
+  static propTypes = propTypes;
+
+  static defaultProps = defaultProps;
+
   render() {
     const {
       className,
@@ -28,7 +32,7 @@ class Line extends Component {
     const center = strokeWidth / 2;
     const right = 100 - (strokeWidth / 2);
     const pathString =
-          `M ${strokeLinecap === 'round' ? center : 0},${center}
+      `M ${strokeLinecap === 'round' ? center : 0},${center}
            L ${strokeLinecap === 'round' ? right : 100},${center}`;
     const viewBoxString = `0 0 100 ${strokeWidth}`;
 
@@ -55,16 +59,14 @@ class Line extends Component {
           stroke={strokeColor}
           strokeWidth={strokeWidth}
           fillOpacity="0"
-          ref={(path) => { this.path = path; }}
+          ref={(path) => {
+            this.path = path;
+          }}
           style={pathStyle}
         />
       </svg>
     );
   }
 }
-
-Line.propTypes = propTypes;
-
-Line.defaultProps = defaultProps;
 
 export default enhancer(Line);

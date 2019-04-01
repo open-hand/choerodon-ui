@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { createElement } from 'react';
+import noop from 'lodash/noop';
 import Suggestions from '../component/Suggestions.react';
 import SuggestionPortal from '../component/SuggestionPortal.react';
 import MentionContent from '../component/MentionContent.react';
@@ -25,13 +26,11 @@ function mentionContentStrategy(contentBlock, callback, contentState) {
   }, callback);
 }
 
-function noop() {}
-
 const MentionContentComponent = (props) => {
   const { entityKey, tag, callbacks } = props;
   const contentState = callbacks.getEditorState().getCurrentContent();
   const data = contentState.getEntity(entityKey).getData();
-  return React.createElement(tag, { ...props, data });
+  return createElement(tag, { ...props, data });
 };
 
 export default function createMention(config = {}) {

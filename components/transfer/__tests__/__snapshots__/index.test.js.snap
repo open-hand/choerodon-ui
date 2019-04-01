@@ -2,84 +2,84 @@
 
 exports[`Transfer should render correctly 1`] = `
 <div
-  class="ant-transfer"
+  class="c7n-transfer"
 >
   <div
-    class="ant-transfer-list"
+    class="c7n-transfer-list"
   >
     <div
-      class="ant-transfer-list-header"
+      class="c7n-transfer-list-header"
     >
       <label
-        class="ant-checkbox-wrapper"
+        class="c7n-checkbox-wrapper"
       >
         <span
-          class="ant-checkbox ant-checkbox-checked"
+          class="c7n-checkbox c7n-checkbox-checked"
         >
           <input
             checked=""
-            class="ant-checkbox-input"
+            class="c7n-checkbox-input"
             type="checkbox"
           />
           <span
-            class="ant-checkbox-inner"
+            class="c7n-checkbox-inner"
           />
         </span>
       </label>
       <span
-        class="ant-transfer-list-header-selected"
+        class="c7n-transfer-list-header-selected"
       >
         <span>
           1/2 items
         </span>
         <span
-          class="ant-transfer-list-header-title"
+          class="c7n-transfer-list-header-title"
         />
       </span>
     </div>
     <div
-      class="ant-transfer-list-body"
+      class="c7n-transfer-list-body"
     >
       <ul
-        class="ant-transfer-list-content"
+        class="c7n-transfer-list-content"
       >
         <li
-          class="ant-transfer-list-content-item"
+          class="c7n-transfer-list-content-item"
         >
           <label
-            class="ant-checkbox-wrapper"
+            class="c7n-checkbox-wrapper"
           >
             <span
-              class="ant-checkbox ant-checkbox-checked"
+              class="c7n-checkbox c7n-checkbox-checked"
             >
               <input
                 checked=""
-                class="ant-checkbox-input"
+                class="c7n-checkbox-input"
                 type="checkbox"
               />
               <span
-                class="ant-checkbox-inner"
+                class="c7n-checkbox-inner"
               />
             </span>
           </label>
           <span />
         </li>
         <li
-          class="ant-transfer-list-content-item ant-transfer-list-content-item-disabled"
+          class="c7n-transfer-list-content-item c7n-transfer-list-content-item-disabled"
         >
           <label
-            class="ant-checkbox-wrapper"
+            class="c7n-checkbox-wrapper"
           >
             <span
-              class="ant-checkbox ant-checkbox-disabled"
+              class="c7n-checkbox c7n-checkbox-disabled"
             >
               <input
-                class="ant-checkbox-input"
+                class="c7n-checkbox-input"
                 disabled=""
                 type="checkbox"
               />
               <span
-                class="ant-checkbox-inner"
+                class="c7n-checkbox-inner"
               />
             </span>
           </label>
@@ -87,17 +87,17 @@ exports[`Transfer should render correctly 1`] = `
         </li>
       </ul>
       <div
-        class="ant-transfer-list-body-not-found"
+        class="c7n-transfer-list-body-not-found"
       >
         Not Found
       </div>
     </div>
   </div>
   <div
-    class="ant-transfer-operation"
+    class="c7n-transfer-operation"
   >
     <button
-      class="ant-btn ant-btn-primary ant-btn-sm ant-btn-icon-only ant-btn-flat"
+      class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
       disabled=""
       type="button"
     >
@@ -105,74 +105,74 @@ exports[`Transfer should render correctly 1`] = `
         class="icon icon-left"
       />
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
     <button
-      class="ant-btn ant-btn-primary ant-btn-sm ant-btn-icon-only ant-btn-flat"
+      class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
       type="button"
     >
       <i
         class="icon icon-right"
       />
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </div>
   <div
-    class="ant-transfer-list"
+    class="c7n-transfer-list"
   >
     <div
-      class="ant-transfer-list-header"
+      class="c7n-transfer-list-header"
     >
       <label
-        class="ant-checkbox-wrapper"
+        class="c7n-checkbox-wrapper"
       >
         <span
-          class="ant-checkbox"
+          class="c7n-checkbox"
         >
           <input
-            class="ant-checkbox-input"
+            class="c7n-checkbox-input"
             type="checkbox"
           />
           <span
-            class="ant-checkbox-inner"
+            class="c7n-checkbox-inner"
           />
         </span>
       </label>
       <span
-        class="ant-transfer-list-header-selected"
+        class="c7n-transfer-list-header-selected"
       >
         <span>
           1 item
         </span>
         <span
-          class="ant-transfer-list-header-title"
+          class="c7n-transfer-list-header-title"
         />
       </span>
     </div>
     <div
-      class="ant-transfer-list-body"
+      class="c7n-transfer-list-body"
     >
       <ul
-        class="ant-transfer-list-content"
+        class="c7n-transfer-list-content"
       >
         <li
-          class="ant-transfer-list-content-item"
+          class="c7n-transfer-list-content-item"
         >
           <label
-            class="ant-checkbox-wrapper"
+            class="c7n-checkbox-wrapper"
           >
             <span
-              class="ant-checkbox"
+              class="c7n-checkbox"
             >
               <input
-                class="ant-checkbox-input"
+                class="c7n-checkbox-input"
                 type="checkbox"
               />
               <span
-                class="ant-checkbox-inner"
+                class="c7n-checkbox-inner"
               />
             </span>
           </label>
@@ -180,7 +180,7 @@ exports[`Transfer should render correctly 1`] = `
         </li>
       </ul>
       <div
-        class="ant-transfer-list-body-not-found"
+        class="c7n-transfer-list-body-not-found"
       >
         Not Found
       </div>
@@ -191,62 +191,62 @@ exports[`Transfer should render correctly 1`] = `
 
 exports[`Transfer should show sorted targetkey 1`] = `
 <div
-  class="ant-transfer"
+  class="c7n-transfer"
 >
   <div
-    class="ant-transfer-list"
+    class="c7n-transfer-list"
   >
     <div
-      class="ant-transfer-list-header"
+      class="c7n-transfer-list-header"
     >
       <label
-        class="ant-checkbox-wrapper"
+        class="c7n-checkbox-wrapper"
       >
         <span
-          class="ant-checkbox"
+          class="c7n-checkbox"
         >
           <input
-            class="ant-checkbox-input"
+            class="c7n-checkbox-input"
             type="checkbox"
           />
           <span
-            class="ant-checkbox-inner"
+            class="c7n-checkbox-inner"
           />
         </span>
       </label>
       <span
-        class="ant-transfer-list-header-selected"
+        class="c7n-transfer-list-header-selected"
       >
         <span>
           1 item
         </span>
         <span
-          class="ant-transfer-list-header-title"
+          class="c7n-transfer-list-header-title"
         />
       </span>
     </div>
     <div
-      class="ant-transfer-list-body"
+      class="c7n-transfer-list-body"
     >
       <ul
-        class="ant-transfer-list-content"
+        class="c7n-transfer-list-content"
       >
         <li
-          class="ant-transfer-list-content-item"
+          class="c7n-transfer-list-content-item"
           title="a"
         >
           <label
-            class="ant-checkbox-wrapper"
+            class="c7n-checkbox-wrapper"
           >
             <span
-              class="ant-checkbox"
+              class="c7n-checkbox"
             >
               <input
-                class="ant-checkbox-input"
+                class="c7n-checkbox-input"
                 type="checkbox"
               />
               <span
-                class="ant-checkbox-inner"
+                class="c7n-checkbox-inner"
               />
             </span>
           </label>
@@ -256,17 +256,17 @@ exports[`Transfer should show sorted targetkey 1`] = `
         </li>
       </ul>
       <div
-        class="ant-transfer-list-body-not-found"
+        class="c7n-transfer-list-body-not-found"
       >
         Not Found
       </div>
     </div>
   </div>
   <div
-    class="ant-transfer-operation"
+    class="c7n-transfer-operation"
   >
     <button
-      class="ant-btn ant-btn-primary ant-btn-sm ant-btn-icon-only ant-btn-flat"
+      class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
       disabled=""
       type="button"
     >
@@ -274,11 +274,11 @@ exports[`Transfer should show sorted targetkey 1`] = `
         class="icon icon-left"
       />
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
     <button
-      class="ant-btn ant-btn-primary ant-btn-sm ant-btn-icon-only ant-btn-flat"
+      class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
       disabled=""
       type="button"
     >
@@ -286,64 +286,64 @@ exports[`Transfer should show sorted targetkey 1`] = `
         class="icon icon-right"
       />
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </div>
   <div
-    class="ant-transfer-list"
+    class="c7n-transfer-list"
   >
     <div
-      class="ant-transfer-list-header"
+      class="c7n-transfer-list-header"
     >
       <label
-        class="ant-checkbox-wrapper"
+        class="c7n-checkbox-wrapper"
       >
         <span
-          class="ant-checkbox"
+          class="c7n-checkbox"
         >
           <input
-            class="ant-checkbox-input"
+            class="c7n-checkbox-input"
             type="checkbox"
           />
           <span
-            class="ant-checkbox-inner"
+            class="c7n-checkbox-inner"
           />
         </span>
       </label>
       <span
-        class="ant-transfer-list-header-selected"
+        class="c7n-transfer-list-header-selected"
       >
         <span>
           2 items
         </span>
         <span
-          class="ant-transfer-list-header-title"
+          class="c7n-transfer-list-header-title"
         />
       </span>
     </div>
     <div
-      class="ant-transfer-list-body"
+      class="c7n-transfer-list-body"
     >
       <ul
-        class="ant-transfer-list-content"
+        class="c7n-transfer-list-content"
       >
         <li
-          class="ant-transfer-list-content-item"
+          class="c7n-transfer-list-content-item"
           title="c"
         >
           <label
-            class="ant-checkbox-wrapper"
+            class="c7n-checkbox-wrapper"
           >
             <span
-              class="ant-checkbox"
+              class="c7n-checkbox"
             >
               <input
-                class="ant-checkbox-input"
+                class="c7n-checkbox-input"
                 type="checkbox"
               />
               <span
-                class="ant-checkbox-inner"
+                class="c7n-checkbox-inner"
               />
             </span>
           </label>
@@ -352,21 +352,21 @@ exports[`Transfer should show sorted targetkey 1`] = `
           </span>
         </li>
         <li
-          class="ant-transfer-list-content-item"
+          class="c7n-transfer-list-content-item"
           title="b"
         >
           <label
-            class="ant-checkbox-wrapper"
+            class="c7n-checkbox-wrapper"
           >
             <span
-              class="ant-checkbox"
+              class="c7n-checkbox"
             >
               <input
-                class="ant-checkbox-input"
+                class="c7n-checkbox-input"
                 type="checkbox"
               />
               <span
-                class="ant-checkbox-inner"
+                class="c7n-checkbox-inner"
               />
             </span>
           </label>
@@ -376,7 +376,7 @@ exports[`Transfer should show sorted targetkey 1`] = `
         </li>
       </ul>
       <div
-        class="ant-transfer-list-body-not-found"
+        class="c7n-transfer-list-body-not-found"
       >
         Not Found
       </div>

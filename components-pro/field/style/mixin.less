@@ -1,0 +1,21 @@
+.validation() {
+
+  &-invalid &,
+  &-invalid label:hover &,
+  &-invalid &:hover {
+    border-color: @error-color;
+    color: @error-color;
+  }
+
+  &-invalid&-wrapper {
+    background-color: @error-bg-color;
+  }
+
+  &-invalid &-clear-button {
+    background: linear-gradient(to right, rgba(255, 255, 255, 0), @error-bg-color 20%, @error-bg-color) !important;
+  }
+
+  // &-invalid &:focus {
+  //   box-shadow: 0 0 @outline-blur-size @outline-width fade(@error-color, 20%);
+  // }
+}

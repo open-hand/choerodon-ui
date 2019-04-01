@@ -74,11 +74,11 @@ ReactDOM.render(
 .code-box-demo .demo {
   overflow: auto;
 }
-.code-box-demo .ant-btn {
+.code-box-demo .c7n-btn {
   margin-right: 8px;
   margin-bottom: 8px;
 }
-#components-tooltip-demo-placement .ant-btn {
+#components-tooltip-demo-placement .c7n-btn {
   width: 70px;
   text-align: center;
   padding: 0;

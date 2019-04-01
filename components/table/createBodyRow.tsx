@@ -1,6 +1,6 @@
-import * as React from 'react';
+import React, { Component, ComponentClass } from 'react';
 import classnames from 'classnames';
-import omit from 'omit.js';
+import omit from 'lodash/omit';
 import { Store } from './createStore';
 
 interface BodyRowProps {
@@ -14,10 +14,11 @@ interface BodyRowState {
   selected: boolean;
 }
 
-export interface BodyRowClass extends React.ComponentClass {}
+export interface BodyRowClass extends ComponentClass {
+}
 
-export default function createTableRow(Component = 'tr') {
-  class BodyRow extends React.Component<BodyRowProps, BodyRowState> {
+export default function createTableRow(Cmp = 'tr') {
+  class BodyRow extends Component<BodyRowProps, BodyRowState> {
     private store: Store;
     private unsubscribe: () => void;
 
@@ -63,9 +64,9 @@ export default function createTableRow(Component = 'tr') {
       );
 
       return (
-        <Component {...rowProps} className={className}>
+        <Cmp {...rowProps} className={className}>
           {this.props.children}
-        </Component>
+        </Cmp>
       );
     }
   }

@@ -1,16 +1,10 @@
-import React, { Component } from 'react';
+import React, { cloneElement, Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import Trigger from '../trigger';
-import Tree, { TreeNode } from '../tree';
-import {
-  loopAllChildren,
-  flatToHierarchy,
-  getValuePropValue,
-  labelCompatible,
-  saveRef,
-} from './util';
+import Tree, { TreeNode } from '../../tree';
+import { flatToHierarchy, getValuePropValue, labelCompatible, loopAllChildren, saveRef, } from './util';
 import toArray from '../util/Children/toArray';
 
 const BUILT_IN_PLACEMENTS = {
@@ -75,12 +69,11 @@ class SelectTrigger extends Component {
       _expandedKeys: expandedKeys,
       fireOnExpand: true,
     }, () => {
-      // Fix https://github.com/ant-design/ant-design/issues/5689
       if (this.trigger && this.trigger.forcePopupAlign) {
         this.trigger.forcePopupAlign();
       }
     });
-  }
+  };
 
   setDropdownWidth() {
     const width = ReactDOM.findDOMNode(this).offsetWidth;
@@ -117,7 +110,7 @@ class SelectTrigger extends Component {
       return props.inputValue && filterVal.indexOf(props.inputValue) > -1;
     }
     return false;
-  }
+  };
 
   filterTreeNode = (input, child) => {
     if (!input) {
@@ -131,7 +124,7 @@ class SelectTrigger extends Component {
       return false;
     }
     return filterTreeNode.call(this, input, child);
-  }
+  };
 
   processTreeNode(treeNodes) {
     const filterPoss = [];
@@ -167,7 +160,7 @@ class SelectTrigger extends Component {
     const recursive = children => {
       return children.map(child => {
         if (child.children) {
-          return React.cloneElement(child.node, {}, recursive(child.children));
+          return cloneElement(child.node, {}, recursive(child.children));
         }
         return child.node;
       });
@@ -258,7 +251,7 @@ class SelectTrigger extends Component {
           // null or String has no Prop
           return (
             <TreeNode {...child.props} key={child.key}>
-              {recursive(child.props.children) }
+              {recursive(child.props.children)}
             </TreeNode>
           );
         }

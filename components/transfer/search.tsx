@@ -1,35 +1,35 @@
-import * as React from 'react';
+import React, { ChangeEvent, Component, FormEvent, MouseEvent } from 'react';
 import Icon from '../icon';
 import Input from '../input';
 
 export interface TransferSearchProps {
   prefixCls?: string;
   placeholder?: string;
-  onChange?: (e: React.FormEvent<any>) => void;
-  handleClear?: (e: React.MouseEvent<any>) => void;
+  onChange?: (e: FormEvent<any>) => void;
+  handleClear?: (e: MouseEvent<any>) => void;
   value?: any;
 }
 
-export default class Search extends React.Component<TransferSearchProps, any> {
+export default class Search extends Component<TransferSearchProps, any> {
   static defaultProps = {
     placeholder: '',
   };
 
-  handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const onChange = this.props.onChange;
     if (onChange) {
       onChange(e);
     }
-  }
+  };
 
-  handleClear = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  handleClear = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
 
     const handleClear = this.props.handleClear;
     if (handleClear) {
       handleClear(e);
     }
-  }
+  };
 
   render() {
     const { placeholder, value, prefixCls } = this.props;

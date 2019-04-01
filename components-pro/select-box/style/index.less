@@ -1,0 +1,86 @@
+@import "../../../components/style/themes/default";
+@import "../../../components/style/mixins/index";
+@import "../../trigger-field/style/mixin";
+@import "../../field/style/mixin";
+
+@select-box-prefix: ~"@{c7n-prefix}-pro-select-box";
+@checkbox-prefix-cls: ~"@{c7n-prefix}-pro-checkbox";
+@radio-prefix-cls: ~"@{c7n-prefix}-pro-radio";
+
+.@{select-box-prefix} {
+  .validation;
+  display: inline-block;
+  line-height: 28 / 13;
+  &-wrapper,
+  &-invalid&-wrapper {
+    background-color: transparent;
+  }
+  .@{radio-prefix-cls}-button {
+    margin-left: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    + .@{radio-prefix-cls}-button {
+      margin-left: 0;
+    }
+    .@{radio-prefix-cls}-inner {
+      left: -.005rem;
+      right: -.005rem;
+      border-radius: 0;
+    }
+    &:first-child {
+      & .@{radio-prefix-cls}-inner,
+      & {
+        border-top-left-radius: @border-radius-base;
+        border-bottom-left-radius: @border-radius-base;
+      }
+    }
+    &:last-child {
+      & .@{radio-prefix-cls}-inner,
+      & {
+        border-top-right-radius: @border-radius-base;
+        border-bottom-right-radius: @border-radius-base;
+      }
+    }
+  }
+  &-invalid .@{radio-prefix-cls} .@{radio-prefix-cls}-inner,
+  &-invalid .@{checkbox-prefix-cls} .@{checkbox-prefix-cls}-inner {
+    border-color: @error-color;
+  }
+  &-vertical {
+    .@{radio-prefix-cls}-wrapper,
+    .@{checkbox-prefix-cls}-wrapper {
+      display: block;
+      margin-top: .07rem;
+      margin-bottom: .07rem;
+    }
+    .@{checkbox-prefix-cls}-button {
+      margin-left: 0;
+    }
+    .@{radio-prefix-cls}-button {
+      margin-top: 0;
+      margin-bottom: 0;
+      text-align: center;
+      .@{radio-prefix-cls}-inner {
+        top: -.005rem;
+        right: 0;
+        bottom: -.005rem;
+        left: 0;
+        border-radius: 0;
+      }
+      &:first-child {
+        & .@{radio-prefix-cls}-inner,
+        & {
+          border-top-right-radius: @border-radius-base;
+          border-bottom-left-radius: 0;
+        }
+      }
+      &:last-child {
+        & .@{radio-prefix-cls}-inner,
+        & {
+          border-top-right-radius: 0;
+          border-bottom-left-radius: @border-radius-base;
+        }
+      }
+    }
+  }
+}

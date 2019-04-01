@@ -4,7 +4,6 @@ exports[`Input should support maxLength 1`] = `
 <Input
   disabled={false}
   maxLength="3"
-  prefixCls="ant-input"
   readOnly={false}
   showLengthInfo={true}
   showPasswordEye={false}
@@ -12,22 +11,22 @@ exports[`Input should support maxLength 1`] = `
   underline={true}
 >
   <span
-    className="ant-input-wrapper"
+    className="c7n-input-wrapper"
   >
     <div
-      className="ant-input-content"
+      className="c7n-input-content"
     >
       <div
-        className="ant-input-rendered-wrapper"
+        className="c7n-input-rendered-wrapper"
       >
         <div
-          className="ant-input-rendered"
+          className="c7n-input-rendered"
         >
           <div
-            className="ant-input-placeholder"
+            className="c7n-input-placeholder"
           />
           <input
-            className="ant-input"
+            className="c7n-input"
             disabled={false}
             maxLength="3"
             onBlur={[Function]}
@@ -40,20 +39,20 @@ exports[`Input should support maxLength 1`] = `
         </div>
       </div>
       <span
-        className="ant-input-icon"
+        className="c7n-input-icon"
       >
         <span
-          className="ant-input-icon-copy ant-input-length-info"
+          className="c7n-input-icon-copy c7n-input-length-info"
         >
           0/3
         </span>
       </span>
     </div>
     <div
-      className="ant-input-underline"
+      className="c7n-input-underline"
     >
       <span
-        className="ant-input-ripple"
+        className="c7n-input-ripple"
       />
     </div>
   </span>
@@ -63,16 +62,14 @@ exports[`Input should support maxLength 1`] = `
 exports[`Input.Search should support suffix 1`] = `
 <Search
   enterButton={false}
-  inputPrefixCls="ant-input"
-  prefixCls="ant-input-search"
   size="small"
   suffix="suffix"
 >
   <Input
-    className="ant-input-search ant-input-search-small"
+    className="c7n-input-search c7n-input-search-small"
     disabled={false}
     onPressEnter={[Function]}
-    prefixCls="ant-input"
+    prefixCls="c7n-input"
     readOnly={false}
     showLengthInfo={true}
     showPasswordEye={false}
@@ -85,7 +82,6 @@ exports[`Input.Search should support suffix 1`] = `
           ghost={false}
           icon="search"
           loading={false}
-          prefixCls="ant-btn"
           shape="circle"
           size="small"
           type="primary"
@@ -96,34 +92,33 @@ exports[`Input.Search should support suffix 1`] = `
     underline={true}
   >
     <span
-      className="ant-input-wrapper ant-input-has-suffix"
+      className="c7n-input-wrapper c7n-input-has-suffix"
     >
       <div
-        className="ant-input-content"
+        className="c7n-input-content"
       >
         <div
-          className="ant-input-rendered-wrapper"
+          className="c7n-input-rendered-wrapper"
         >
           <div
-            className="ant-input-rendered ant-input-rendered-sm"
+            className="c7n-input-rendered c7n-input-rendered-sm"
           >
             <div
-              className="ant-input-placeholder"
+              className="c7n-input-placeholder"
             />
             <input
-              className="ant-input ant-input-sm ant-input-search ant-input-search-small"
+              className="c7n-input c7n-input-sm c7n-input-search c7n-input-search-small"
               disabled={false}
               onBlur={[Function]}
               onFocus={[Function]}
               onInput={[Function]}
               onKeyDown={[Function]}
               readOnly={false}
-              size="small"
               type="text"
             />
           </div>
           <span
-            className="ant-input-suffix ant-input-suffix-sm"
+            className="c7n-input-suffix c7n-input-suffix-sm"
           >
             suffix
             <Button
@@ -131,21 +126,30 @@ exports[`Input.Search should support suffix 1`] = `
               ghost={false}
               icon="search"
               loading={false}
-              prefixCls="ant-btn"
               shape="circle"
               size="small"
               type="primary"
             >
-              <Ripple
-                prefixCls="ant-ripple"
-              >
+              <Ripple>
                 <RippleChild
                   key=".0"
-                  prefixCls="ant-ripple"
+                  prefixCls="c7n-ripple"
                 >
-                  <MouseDown>
+                  <MouseDown
+                    rippleChild={
+                      <button
+                        className="c7n-btn c7n-btn-primary c7n-btn-circle c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
+                        onClick={[Function]}
+                        type="button"
+                      >
+                        <Icon
+                          type="search"
+                        />
+                      </button>
+                    }
+                  >
                     <button
-                      className="ant-btn ant-btn-primary ant-btn-circle ant-btn-sm ant-btn-icon-only ant-btn-flat"
+                      className="c7n-btn c7n-btn-primary c7n-btn-circle c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
                       onClick={[Function]}
                       onMouseDown={[Function]}
                       type="button"
@@ -162,21 +166,18 @@ exports[`Input.Search should support suffix 1`] = `
                         component="div"
                         componentProps={
                           Object {
-                            "className": "ant-ripple-wrapper",
+                            "className": "c7n-ripple-wrapper",
                           }
                         }
+                        hiddenProp="hidden"
                         key="ripple"
-                        onAppear={[Function]}
-                        onEnd={[Function]}
-                        onEnter={[Function]}
-                        onLeave={[Function]}
                         transitionAppear={false}
                         transitionEnter={true}
                         transitionLeave={true}
                         transitionName="fade"
                       >
                         <div
-                          className="ant-ripple-wrapper"
+                          className="c7n-ripple-wrapper"
                         />
                       </Animate>
                     </button>
@@ -188,10 +189,10 @@ exports[`Input.Search should support suffix 1`] = `
         </div>
       </div>
       <div
-        className="ant-input-underline"
+        className="c7n-input-underline"
       >
         <span
-          className="ant-input-ripple"
+          className="c7n-input-ripple"
         />
       </div>
     </span>
@@ -202,15 +203,14 @@ exports[`Input.Search should support suffix 1`] = `
 exports[`TextArea should support disabled 1`] = `
 <TextArea
   disabled={true}
-  prefixCls="ant-input"
   showLengthInfo={true}
   underline={true}
 >
   <span
-    className="ant-input-wrapper ant-input-textarea ant-input-disabled"
+    className="c7n-input-wrapper c7n-input-textarea c7n-input-disabled"
   >
     <textarea
-      className="ant-input"
+      className="c7n-input"
       disabled={true}
       onBlur={[Function]}
       onChange={[Function]}
@@ -221,10 +221,10 @@ exports[`TextArea should support disabled 1`] = `
     />
     <div>
       <hr
-        className="ant-input-border"
+        className="c7n-input-border"
       />
       <hr
-        className="ant-input-border-active"
+        className="c7n-input-border-active"
       />
     </div>
   </span>
@@ -234,15 +234,14 @@ exports[`TextArea should support disabled 1`] = `
 exports[`TextArea should support maxLength 1`] = `
 <TextArea
   maxLength="10"
-  prefixCls="ant-input"
   showLengthInfo={true}
   underline={true}
 >
   <span
-    className="ant-input-wrapper ant-input-textarea"
+    className="c7n-input-wrapper c7n-input-textarea"
   >
     <textarea
-      className="ant-input"
+      className="c7n-input"
       maxLength="10"
       onBlur={[Function]}
       onChange={[Function]}
@@ -253,14 +252,14 @@ exports[`TextArea should support maxLength 1`] = `
     />
     <div>
       <hr
-        className="ant-input-border"
+        className="c7n-input-border"
       />
       <hr
-        className="ant-input-border-active"
+        className="c7n-input-border-active"
       />
     </div>
     <div
-      className="ant-input-length-info"
+      className="c7n-input-length-info"
     >
       0/10
     </div>

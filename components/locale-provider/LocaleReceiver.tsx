@@ -1,27 +1,27 @@
-import * as React from 'react';
+import { Component, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 
 export interface LocaleReceiverProps {
   componentName: string;
   defaultLocale: object | Function;
-  children: (locale: object, localeCode?: string) => React.ReactNode;
+  children: (locale: object, localeCode?: string) => ReactNode;
 }
 
 export interface LocaleReceiverContext {
-  antLocale?: { [key: string]: any };
+  c7nLocale?: { [key: string]: any };
 }
 
-export default class LocaleReceiver extends React.Component<LocaleReceiverProps> {
+export default class LocaleReceiver extends Component<LocaleReceiverProps> {
   static contextTypes = {
-    antLocale: PropTypes.object,
+    c7nLocale: PropTypes.object,
   };
 
   context: LocaleReceiverContext;
 
   getLocale() {
     const { componentName, defaultLocale } = this.props;
-    const { antLocale } = this.context;
-    const localeFromContext = antLocale && antLocale[componentName];
+    const { c7nLocale } = this.context;
+    const localeFromContext = c7nLocale && c7nLocale[componentName];
     return {
       ...(typeof defaultLocale === 'function' ? defaultLocale() : defaultLocale),
       ...(localeFromContext || {}),
@@ -29,10 +29,10 @@ export default class LocaleReceiver extends React.Component<LocaleReceiverProps>
   }
 
   getLocaleCode() {
-    const { antLocale } = this.context;
-    const localeCode = antLocale && antLocale.locale;
+    const { c7nLocale } = this.context;
+    const localeCode = c7nLocale && c7nLocale.locale;
     // Had use LocaleProvide but didn't set locale
-    if (antLocale && antLocale.exist && !localeCode) {
+    if (c7nLocale && c7nLocale.exist && !localeCode) {
       return 'en-us';
     }
     return localeCode;

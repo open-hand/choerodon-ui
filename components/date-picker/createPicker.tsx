@@ -1,7 +1,7 @@
-import * as React from 'react';
-import * as moment from 'moment';
+import React, { Component, ComponentClass, MouseEvent } from 'react';
+import moment, { Moment } from 'moment';
 import classNames from 'classnames';
-import omit from 'omit.js';
+import omit from 'lodash/omit';
 import Button from '../button';
 import Icon from '../icon';
 import Input from '../input';
@@ -9,29 +9,31 @@ import warning from '../_util/warning';
 import interopDefault from '../_util/interopDefault';
 import MonthCalendar from '../rc-components/calendar/MonthCalendar';
 import RcDatePicker from '../rc-components/calendar/Picker';
+import { Size } from '../_util/enum';
+import { getPrefixCls } from '../configure';
 
 export interface PickerProps {
-  value?: moment.Moment;
+  value?: Moment;
   prefixCls: string;
 }
 
-export default function createPicker(TheCalendar: React.ComponentClass): any {
-  return class CalenderWrapper extends React.Component<any, any> {
+export default function createPicker(TheCalendar: ComponentClass): any {
+  return class CalenderWrapper extends Component<any, any> {
+    static displayName = 'CalenderWrapper';
     static defaultProps = {
-      prefixCls: 'ant-calendar',
       allowClear: true,
       showToday: true,
     };
 
     private input: any;
     private picker: any;
+
     constructor(props: any) {
       super(props);
       const value = props.value || props.defaultValue;
       if (value && !interopDefault(moment).isMoment(value)) {
         throw new Error(
-          'The value/defaultValue of DatePicker or MonthPicker must be ' +
-          'a moment object after `antd@2.0`, see: https://u.ant.design/date-picker-value',
+          'The value/defaultValue of DatePicker or MonthPicker must be a moment object',
         );
       }
       this.state = {
@@ -51,28 +53,29 @@ export default function createPicker(TheCalendar: React.ComponentClass): any {
     }
 
     renderFooter = (...args: any[]) => {
-      const { prefixCls, renderExtraFooter } = this.props;
+      const { renderExtraFooter } = this.props;
+      const prefixCls = this.getPrefixCls();
       return renderExtraFooter ? (
         <div className={`${prefixCls}-footer-extra`}>
           {renderExtraFooter(...args)}
         </div>
       ) : null;
-    }
+    };
 
-    clearSelection = (e: React.MouseEvent<HTMLElement>) => {
+    clearSelection = (e: MouseEvent<HTMLElement>) => {
       e.preventDefault();
       e.stopPropagation();
       this.handleChange(null);
-    }
+    };
 
-    onPickerIconClick = (e: React.MouseEvent<HTMLElement>) => {
+    onPickerIconClick = (e: MouseEvent<HTMLElement>) => {
       e.preventDefault();
       e.stopPropagation();
       const { focused } = this.state;
       this.picker.setOpen(!focused);
-    }
+    };
 
-    handleChange = (value: moment.Moment | null) => {
+    handleChange = (value: Moment | null) => {
       const props = this.props;
       if (!('value' in props)) {
         this.setState({
@@ -81,11 +84,11 @@ export default function createPicker(TheCalendar: React.ComponentClass): any {
         });
       }
       props.onChange(value, (value && value.format(props.format)) || '');
-    }
+    };
 
-    handleCalendarChange = (value: moment.Moment) => {
+    handleCalendarChange = (value: Moment) => {
       this.setState({ showDate: value });
-    }
+    };
 
     handleOpenChange = (status: boolean) => {
       const { onOpenChange } = this.props;
@@ -98,7 +101,7 @@ export default function createPicker(TheCalendar: React.ComponentClass): any {
       if (onOpenChange) {
         onOpenChange(status);
       }
-    }
+    };
 
     focus() {
       this.input.focus();
@@ -110,17 +113,21 @@ export default function createPicker(TheCalendar: React.ComponentClass): any {
 
     saveInput = (node: any) => {
       this.input = node;
-    }
+    };
 
     savePicker = (node: any) => {
       this.picker = node;
+    };
+
+    getPrefixCls() {
+      return getPrefixCls('calendar', this.props.prefixCls);
     }
 
     render() {
       const { value, showDate, focused } = this.state;
       const props = omit(this.props, ['onChange']);
-      const { prefixCls, label, disabled, pickerInputClass, locale, localeCode } = props;
-
+      const { label, disabled, pickerInputClass, locale, localeCode } = props;
+      const prefixCls = this.getPrefixCls();
       const placeholder = ('placeholder' in props)
         ? props.placeholder : locale.lang.placeholder;
 
@@ -139,7 +146,7 @@ export default function createPicker(TheCalendar: React.ComponentClass): any {
       let calendarProps: any = {};
       if (props.showTime) {
         calendarProps = {
-          // fix https://github.com/ant-design/ant-design/issues/1902
+
           onSelect: this.handleChange,
         };
       } else {
@@ -181,7 +188,7 @@ export default function createPicker(TheCalendar: React.ComponentClass): any {
           onClick={this.clearSelection}
           shape="circle"
           icon="close"
-          size="small"
+          size={Size.small}
         />
       ) : null;
 
@@ -202,7 +209,7 @@ export default function createPicker(TheCalendar: React.ComponentClass): any {
         focused,
       };
 
-      const input = ({ value: inputValue }: { value: moment.Moment | null }) => (
+      const input = ({ value: inputValue }: { value: Moment | null }) => (
         <Input
           {...inputProps}
           ref={this.saveInput}

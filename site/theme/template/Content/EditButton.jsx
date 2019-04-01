@@ -1,7 +1,7 @@
 import React from 'react';
 import { Tooltip, Icon } from 'choerodon-ui';
 
-const branchUrl = 'https://github.com/ant-design/ant-design/edit/master/';
+const branchUrl = 'https://github.com/choerodon/choerodon-ui/edit/master/';
 
 export default function EditButton({ title, filename }) {
   return (

@@ -1,7 +1,7 @@
 @import "../../style/themes/default";
 @import "../../style/mixins/index";
 
-@menu-prefix-cls: ~"@{ant-prefix}-menu";
+@menu-prefix-cls: ~"@{c7n-prefix}-menu";
 
 // default theme
 .@{menu-prefix-cls} {
@@ -32,7 +32,7 @@
     color: @menu-item-group-title-color;
     font-size: @font-size-base;
     line-height: @line-height-base;
-    padding: 8px 16px;
+    padding: .08rem .16rem;
     transition: all .3s;
   }
 
@@ -72,7 +72,7 @@
   }
 
   &-item-divider {
-    height: 1px;
+    height: .01rem;
     overflow: hidden;
     background-color: @border-color-split;
     line-height: 0;
@@ -88,7 +88,7 @@
 
   &-horizontal &-item,
   &-horizontal &-submenu {
-    margin-top: -1px;
+    margin-top: -.01rem;
   }
 
   &-horizontal > &-item:hover,
@@ -145,21 +145,21 @@
   &-vertical&-sub,
   &-vertical-left&-sub,
   &-vertical-right&-sub {
-    min-width: 160px;
+    min-width: 1.6rem;
   }
 
   &-item,
   &-submenu-title {
     cursor: pointer;
     margin: 0;
-    padding: 0 20px;
+    padding: 0 .2rem;
     position: relative;
     display: block;
     white-space: nowrap;
     transition: color .3s @ease-in-out, border-color .3s @ease-in-out, background .3s @ease-in-out, padding .15s @ease-in-out;
     .@{iconfont-css-prefix} {
-      min-width: 14px;
-      margin-right: 10px;
+      min-width: .14rem;
+      margin-right: .1rem;
       transition: font-size .15s @ease-out, margin .3s @ease-in-out;
       vertical-align: top;
       line-height: inherit;
@@ -172,8 +172,8 @@
   }
 
   & > &-item-divider {
-    height: 1px;
-    margin: 1px 0;
+    height: .01rem;
+    margin: .01rem 0;
     overflow: hidden;
     padding: 0;
     line-height: 0;
@@ -203,8 +203,8 @@
         transition: transform .3s @ease-in-out;
         position: absolute;
         top: 50%;
-        right: 16px;
-        width: 10px;
+        right: .16rem;
+        width: .1rem;
         &:before,
         &:after {
           content: '';
@@ -212,37 +212,37 @@
           vertical-align: baseline;
           background: #fff;
           background-image: linear-gradient(to right, @menu-item-color, @menu-item-color);
-          width: 6px;
-          height: 1.5px;
-          border-radius: 2px;
+          width: .06rem;
+          height: .015rem;
+          border-radius: .02rem;
           transition: background .3s @ease-in-out, transform .3s @ease-in-out, top .3s @ease-in-out;
         }
         &:before {
-          transform: rotate(45deg) translateY(-2px);
+          transform: rotate(45deg) translateY(-.02rem);
         }
         &:after {
-          transform: rotate(-45deg) translateY(2px);
+          transform: rotate(-45deg) translateY(.02rem);
         }
       }
     }
 
     &-inline > .@{menu-prefix-cls}-submenu-title .@{menu-prefix-cls}-submenu-arrow {
       &:before {
-        transform: rotate(-45deg) translateX(2px);
+        transform: rotate(-45deg) translateX(.02rem);
       }
       &:after {
-        transform: rotate(45deg) translateX(-2px);
+        transform: rotate(45deg) translateX(-.02rem);
       }
     }
 
     &-open {
       &.@{menu-prefix-cls}-submenu-inline > .@{menu-prefix-cls}-submenu-title .@{menu-prefix-cls}-submenu-arrow {
-        transform: translateY(-2px);
+        transform: translateY(-.02rem);
         &:after {
-          transform: rotate(-45deg) translateX(-2px);
+          transform: rotate(-45deg) translateX(-.02rem);
         }
         &:before {
-          transform: rotate(45deg) translateX(2px);
+          transform: rotate(45deg) translateX(.02rem);
         }
       }
       &-submenu-title {
@@ -265,20 +265,20 @@
     border: 0;
     border-bottom: @border-width-base @border-style-base @border-color-split;
     box-shadow: none;
-    line-height: 46px;
+    line-height: .46rem;
 
     > .@{menu-prefix-cls}-item,
     > .@{menu-prefix-cls}-submenu {
       position: relative;
-      top: 1px;
+      top: .01rem;
       float: left;
-      border-bottom: 2px solid transparent;
+      border-bottom: .02rem solid transparent;
 
       &:hover,
       &-active,
       &-open,
       &-selected {
-        border-bottom: 2px solid @menu-highlight-color;
+        border-bottom: .02rem solid @menu-highlight-color;
         color: @menu-highlight-color;
       }
 
@@ -289,7 +289,7 @@
           color: @menu-highlight-color;
         }
         &:before {
-          bottom: -2px;
+          bottom: -.02rem;
         }
         > span {
           display: inline-block;
@@ -315,7 +315,7 @@
 
     .@{menu-prefix-cls}-item,
     .@{menu-prefix-cls}-submenu-title {
-      padding: 0 16px;
+      padding: 0 .16rem;
       font-size: @font-size-base;
       line-height: @menu-item-height;
       height: @menu-item-height;
@@ -325,7 +325,7 @@
 
     // disable margin collapsed
     .@{menu-prefix-cls}-submenu {
-      padding-bottom: 0.01px;
+      padding-bottom: .0001rem;
     }
 
     > .@{menu-prefix-cls}-item,
@@ -340,11 +340,11 @@
 
     .@{menu-prefix-cls}-item,
     .@{menu-prefix-cls}-submenu-title {
-      width: ~"calc(100% + 1px)";
+      width: ~"calc(100% + .01rem)";
     }
 
     .@{menu-prefix-cls}-submenu-title {
-      padding-right: 34px;
+      padding-right: .34rem;
     }
   }
 
@@ -355,12 +355,12 @@
     > .@{menu-prefix-cls}-submenu > .@{menu-prefix-cls}-submenu-title {
       left: 0;
       text-overflow: clip;
-      padding: 0 (@menu-collapsed-width - 16px) / 2 !important;
+      padding: 0 (@menu-collapsed-width - .16rem) / 2 !important;
       .@{menu-prefix-cls}-submenu-arrow {
         display: none;
       }
       .@{iconfont-css-prefix} {
-        font-size: 16px;
+        font-size: .16rem;
         line-height: @menu-item-height;
         margin: 0;
         + span {
@@ -384,8 +384,8 @@
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
-      padding-left: 4px;
-      padding-right: 4px;
+      padding-left: .04rem;
+      padding-right: .04rem;
     }
   }
 
@@ -394,7 +394,7 @@
     padding: 0;
     .@{menu-prefix-cls}-item,
     .@{menu-prefix-cls}-submenu-title {
-      padding: 0 16px 0 28px;
+      padding: 0 .16rem 0 .28rem;
     }
   }
 
@@ -419,7 +419,7 @@
     }
 
     & .@{menu-prefix-cls}-item-group-title {
-      padding-left: 32px;
+      padding-left: .32rem;
     }
   }
 

@@ -1,17 +1,19 @@
-import * as React from 'react';
+import React, { Component, CSSProperties, MouseEvent, ReactInstance, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import Button from '../button';
-import { ButtonType, ButtonFuncType } from '../button/button';
+import { ButtonFuncType, ButtonType } from '../button/Button';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import { getConfirmLocale } from './locale';
 import Dialog from '../rc-components/dialog';
-import addEventListener from '../rc-components/util/Dom/addEventListener';
+import addEventListener from '../_util/addEventListener';
 import Sidebar from './Sidebar';
+import { getPrefixCls } from '../configure';
 
 let mousePosition: { x: number, y: number } | null;
 let mousePositionEventBinded: boolean;
 
 export interface ModalProps {
+  prefixCls?: string;
   /** 对话框是否可见*/
   visible?: boolean;
   /** 确定按钮 loading*/
@@ -21,19 +23,19 @@ export interface ModalProps {
   /** Cancel按钮是否禁用 loading*/
   disableCancel?: boolean;
   /** 标题*/
-  title?: React.ReactNode | string;
+  title?: ReactNode;
   /** 是否显示右上角的关闭按钮*/
   closable?: boolean;
   /** 点击确定回调*/
-  onOk?: (e: React.MouseEvent<any>) => void;
+  onOk?: (e: MouseEvent<any>) => void;
   /** 点击模态框右上角叉、取消按钮、Props.maskClosable 值为 true 时的遮罩层或键盘按下 Esc 时的回调*/
-  onCancel?: (e: React.MouseEvent<any>) => void;
+  onCancel?: (e: MouseEvent<any>) => void;
   afterClose?: () => void;
   animationEnd?: () => void;
   /** 宽度*/
   width?: string | number;
   /** 底部内容*/
-  footer?: React.ReactNode;
+  footer?: ReactNode;
   /** 确认按钮文字*/
   okText?: string;
   /** 确认按钮类型*/
@@ -43,15 +45,15 @@ export interface ModalProps {
   /** 点击蒙层是否允许关闭*/
   maskClosable?: boolean;
   destroyOnClose?: boolean;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   wrapClassName?: string;
   maskTransitionName?: string;
   transitionName?: string;
   className?: string;
-  getContainer?: (instance: React.ReactInstance) => HTMLElement;
+  getContainer?: (instance: ReactInstance) => HTMLElement;
   zIndex?: number;
-  bodyStyle?: React.CSSProperties;
-  maskStyle?: React.CSSProperties;
+  bodyStyle?: CSSProperties;
+  maskStyle?: CSSProperties;
   mask?: boolean;
   keyboard?: boolean;
   funcType?: ButtonFuncType;
@@ -62,8 +64,8 @@ export interface ModalFuncProps {
   prefixCls?: string;
   className?: string;
   visible?: boolean;
-  title?: React.ReactNode;
-  content?: React.ReactNode;
+  title?: ReactNode;
+  content?: ReactNode;
   onOk?: (...args: any[]) => any | PromiseLike<any>;
   onCancel?: (...args: any[]) => any | PromiseLike<any>;
   width?: string | number;
@@ -75,15 +77,15 @@ export interface ModalFuncProps {
   maskClosable?: boolean;
   zIndex?: number;
   okCancel?: boolean;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   type?: string;
   keyboard?: boolean;
   transitionName?: string;
   funcType?: ButtonFuncType;
-  confirmLoading?: boolean,
-  disableOk?: boolean,
-  disableCancel?: boolean,
-  footer?: React.ReactNode;
+  confirmLoading?: boolean;
+  disableOk?: boolean;
+  disableCancel?: boolean;
+  footer?: ReactNode;
 }
 
 export type ModalFunc = (props: ModalFuncProps) => {
@@ -96,7 +98,8 @@ export interface ModalLocale {
   justOkText: string;
 }
 
-export default class Modal extends React.Component<ModalProps, {}> {
+export default class Modal extends Component<ModalProps, {}> {
+  static displayName = 'Modal';
   static info: ModalFunc;
   static success: ModalFunc;
   static error: ModalFunc;
@@ -106,7 +109,6 @@ export default class Modal extends React.Component<ModalProps, {}> {
   static Sidebar: typeof Sidebar;
 
   static defaultProps = {
-    prefixCls: 'ant-modal',
     width: 520,
     transitionName: 'zoom',
     maskTransitionName: 'fade',
@@ -155,7 +157,7 @@ export default class Modal extends React.Component<ModalProps, {}> {
       return;
     }
     // 只有点击事件支持从鼠标位置动画展开
-    addEventListener(document.documentElement, 'click', (e: MouseEvent) => {
+    addEventListener(document.documentElement, 'click', (e: MouseEvent<any>) => {
       mousePosition = {
         x: e.pageX,
         y: e.pageY,
@@ -185,7 +187,6 @@ export default class Modal extends React.Component<ModalProps, {}> {
           disabled={disableOk}
           loading={confirmLoading}
           onClick={this.handleOk}
-
         >
           {okText || locale.okText}
         </Button>
@@ -194,7 +195,8 @@ export default class Modal extends React.Component<ModalProps, {}> {
   };
 
   render() {
-    const { footer, visible } = this.props;
+    const { footer, visible, prefixCls: customizePrefixCls } = this.props;
+    const prefixCls = getPrefixCls('modal', customizePrefixCls);
     const defaultFooter = (
       <LocaleReceiver
         componentName="Modal"
@@ -206,6 +208,7 @@ export default class Modal extends React.Component<ModalProps, {}> {
     return (
       <Dialog
         {...this.props}
+        prefixCls={prefixCls}
         footer={footer === undefined ? defaultFooter : footer}
         visible={visible}
         mousePosition={mousePosition}

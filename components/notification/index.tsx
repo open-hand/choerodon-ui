@@ -1,10 +1,11 @@
-import * as React from 'react';
+import React, { CSSProperties, ReactNode } from 'react';
 import Icon from '../icon';
 import Notification from '../rc-components/notification';
+import { getPrefixCls } from '../configure';
 
 export type NotificationPlacement = 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight';
 
-export type IconType =  'success' | 'info' | 'error' | 'warning';
+export type IconType = 'success' | 'info' | 'error' | 'warning';
 
 const notificationInstance: { [key: string]: any } = {};
 let defaultDuration = 4.5;
@@ -20,6 +21,7 @@ export interface ConfigProps {
   placement?: NotificationPlacement;
   getContainer?: () => HTMLElement;
 }
+
 function setNotificationConfig(options: ConfigProps) {
   const { duration, placement, bottom, top, getContainer } = options;
   if (duration !== undefined) {
@@ -99,25 +101,26 @@ const typeToIcon = {
 };
 
 export interface ArgsProps {
-  message: React.ReactNode;
-  description: React.ReactNode;
-  btn?: React.ReactNode;
+  message: ReactNode;
+  description: ReactNode;
+  btn?: ReactNode;
   key?: string;
   onClose?: () => void;
   duration?: number | null;
-  icon?: React.ReactNode;
+  icon?: ReactNode;
   placement?: NotificationPlacement;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   prefixCls?: string;
   className?: string;
   readonly type?: IconType;
 }
+
 function notice(args: ArgsProps) {
-  const outerPrefixCls = args.prefixCls || 'ant-notification';
+  const outerPrefixCls = getPrefixCls('notification', args.prefixCls);
   const prefixCls = `${outerPrefixCls}-notice`;
   const duration = args.duration === undefined ? defaultDuration : args.duration;
 
-  let iconNode: React.ReactNode = null;
+  let iconNode: ReactNode = null;
   if (args.icon) {
     iconNode = (
       <span className={`${prefixCls}-icon`}>
@@ -187,13 +190,22 @@ api.warn = api.warning;
 
 export interface NotificationApi {
   success(args: ArgsProps): void;
+
   error(args: ArgsProps): void;
+
   info(args: ArgsProps): void;
+
   warn(args: ArgsProps): void;
+
   warning(args: ArgsProps): void;
+
   open(args: ArgsProps): void;
+
   close(key: string): void;
+
   config(options: ConfigProps): void;
+
   destroy(): void;
 }
+
 export default api as NotificationApi;

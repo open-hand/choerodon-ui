@@ -3,7 +3,7 @@
 @import "../../button/style/mixin";
 @import "./mixin";
 
-@search-prefix: ~"@{ant-prefix}-input-search";
+@search-prefix: ~"@{c7n-prefix}-input-search";
 
 .@{search-prefix} {
   &-icon {
@@ -11,11 +11,11 @@
     color: @text-color-secondary;
   }
 
-  &:not(&-small) > .@{ant-prefix}-input-suffix {
+  &:not(&-small) > .@{c7n-prefix}-input-suffix {
     right: @control-padding-horizontal;
   }
 
-  > .@{ant-prefix}-input-suffix > .@{search-prefix}-button {
+  > .@{c7n-prefix}-input-suffix > .@{search-prefix}-button {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     > .@{iconfont-css-prefix}-search {
@@ -23,11 +23,11 @@
     }
   }
 
-  &.@{search-prefix}-enter-button > .@{ant-prefix}-input {
-    padding-right: 46px;
+  &.@{search-prefix}-enter-button > .@{c7n-prefix}-input {
+    padding-right: .46rem;
   }
 
-  &.@{search-prefix}-enter-button > .@{ant-prefix}-input-suffix {
+  &.@{search-prefix}-enter-button > .@{c7n-prefix}-input-suffix {
     right: 0;
   }
 }

@@ -53,7 +53,7 @@ class Demo extends React.Component {
           {...formItemLayout}
           label="Plain Text"
         >
-          <span className="ant-form-text">China</span>
+          <span className="c7n-form-text">China</span>
         </FormItem>
         <FormItem
           {...formItemLayout}
@@ -96,7 +96,7 @@ class Demo extends React.Component {
           {getFieldDecorator('input-number', { initialValue: 3 })(
             <InputNumber min={1} max={10} />
           )}
-          <span className="ant-form-text"> machines</span>
+          <span className="c7n-form-text"> machines</span>
         </FormItem>
 
         <FormItem
@@ -181,11 +181,11 @@ class Demo extends React.Component {
               getValueFromEvent: this.normFile,
             })(
               <Upload.Dragger name="files" action="/upload.do">
-                <p className="ant-upload-drag-icon">
+                <p className="c7n-upload-drag-icon">
                   <Icon type="inbox" />
                 </p>
-                <p className="ant-upload-text">Click or drag file to this area to upload</p>
-                <p className="ant-upload-hint">Support for a single or bulk upload.</p>
+                <p className="c7n-upload-text">Click or drag file to this area to upload</p>
+                <p className="c7n-upload-hint">Support for a single or bulk upload.</p>
               </Upload.Dragger>
             )}
           </div>

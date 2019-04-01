@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import shallowequal from 'shallowequal';
+import shallowequal from 'lodash/isEqual';
 
-export default class ExpandIcon extends React.Component {
+export default class ExpandIcon extends Component {
   static propTypes = {
     record: PropTypes.object,
     prefixCls: PropTypes.string,
@@ -10,7 +10,7 @@ export default class ExpandIcon extends React.Component {
     expanded: PropTypes.bool,
     needIndentSpaced: PropTypes.bool,
     onExpand: PropTypes.func,
-  }
+  };
 
   shouldComponentUpdate(nextProps) {
     return !shallowequal(nextProps, this.props);

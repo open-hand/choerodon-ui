@@ -1,8 +1,8 @@
 @import "../../style/themes/default";
 @import "../../style/mixins/index";
 
-@badge-prefix-cls: ~"@{ant-prefix}-badge";
-@number-prefix-cls: ~"@{ant-prefix}-scroll-number";
+@badge-prefix-cls: ~"@{c7n-prefix}-badge";
+@number-prefix-cls: ~"@{c7n-prefix}-scroll-number";
 
 .@{badge-prefix-cls} {
   .reset-component;
@@ -22,12 +22,12 @@
     color: #fff;
     line-height: @badge-height;
     text-align: center;
-    padding: 0 6px;
+    padding: 0 .06rem;
     font-size: @badge-font-size;
     font-weight: @badge-font-weight;
     white-space: nowrap;
     transform-origin: -10% center;
-    box-shadow: 0 0 0 1px #fff;
+    box-shadow: @shadow-3;
     a,
     a:hover {
       color: #fff;
@@ -35,7 +35,7 @@
   }
 
   &-multiple-words {
-    padding: 0 8px;
+    padding: 0 .08rem;
   }
 
   &-dot {
@@ -48,7 +48,7 @@
     border-radius: 100%;
     background: @highlight-color;
     z-index: 10;
-    box-shadow: 0 0 0 1px #fff;
+    box-shadow: @shadow-3;
   }
 
   &-status {
@@ -62,7 +62,7 @@
       border-radius: 50%;
       vertical-align: middle;
       position: relative;
-      top: -1px;
+      top: -.01rem;
     }
     &-success {
       background-color: @success-color;
@@ -77,9 +77,9 @@
         width: 100%;
         height: 100%;
         border-radius: 50%;
-        border: 1px solid @processing-color;
+        border: @border-width-base @border-style-base @processing-color;
         content: '';
-        animation: antStatusProcessing 1.2s infinite ease-in-out;
+        animation: c7nStatusProcessing 1.2s infinite ease-in-out;
       }
     }
     &-default {
@@ -94,22 +94,22 @@
     &-text {
       color: @text-color;
       font-size: @font-size-base;
-      margin-left: 8px;
+      margin-left: .08rem;
     }
   }
 
   &-zoom-appear,
   &-zoom-enter {
-    animation: antZoomBadgeIn .3s @ease-out-back;
+    animation: c7nZoomBadgeIn .3s @ease-out-back;
     animation-fill-mode: both;
   }
 
   &-zoom-leave {
-    animation: antZoomBadgeOut .3s @ease-in-back;
+    animation: c7nZoomBadgeOut .3s @ease-in-back;
     animation-fill-mode: both;
   }
 
-  &-not-a-wrapper .@{ant-prefix}-scroll-number {
+  &-not-a-wrapper .@{c7n-prefix}-scroll-number {
     top: auto;
     display: block;
     position: relative;
@@ -120,7 +120,7 @@
   }
 }
 
-@keyframes antStatusProcessing {
+@keyframes c7nStatusProcessing {
   0% {
     transform: scale(0.8);
     opacity: 0.5;
@@ -144,7 +144,7 @@
   }
 }
 
-@keyframes antZoomBadgeIn {
+@keyframes c7nZoomBadgeIn {
   0% {
     opacity: 0;
     transform: scale(0) translateX(-50%);
@@ -154,7 +154,7 @@
   }
 }
 
-@keyframes antZoomBadgeOut {
+@keyframes c7nZoomBadgeOut {
   0% {
     transform: scale(1) translateX(-50%);
   }

@@ -1,8 +1,9 @@
-import * as React from 'react';
+import React, { Component, CSSProperties } from 'react';
 import PropTypes from 'prop-types';
 import ScrollNumber from './ScrollNumber';
 import classNames from 'classnames';
-import Animate from '../rc-components/animate';
+import Animate from '../animate';
+import { getPrefixCls } from '../configure';
 
 export { ScrollNumberProps } from './ScrollNumber';
 
@@ -14,7 +15,7 @@ export interface BadgeProps {
   overflowCount?: number;
   /** whether to show red dot without number */
   dot?: boolean;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   prefixCls?: string;
   scrollNumberPrefixCls?: string;
   className?: string;
@@ -23,10 +24,10 @@ export interface BadgeProps {
   offset?: [number | string, number | string];
 }
 
-export default class Badge extends React.Component<BadgeProps, any> {
+export default class Badge extends Component<BadgeProps, any> {
+  static displayName = 'Badge';
+
   static defaultProps = {
-    prefixCls: 'ant-badge',
-    scrollNumberPrefixCls: 'ant-scroll-number',
     count: null,
     showZero: false,
     dot: false,
@@ -47,7 +48,7 @@ export default class Badge extends React.Component<BadgeProps, any> {
     const {
       count,
       showZero,
-      prefixCls,
+      prefixCls: customizePrefixCls,
       scrollNumberPrefixCls,
       overflowCount,
       className,
@@ -59,6 +60,7 @@ export default class Badge extends React.Component<BadgeProps, any> {
       offset,
       ...restProps,
     } = this.props;
+    const prefixCls = getPrefixCls('badge', customizePrefixCls);
     let displayCount = (count as number) > (overflowCount as number) ? `${overflowCount}+` : count;
     const isZero = displayCount === '0' || displayCount === 0;
     const isDot = (dot && !isZero) || status;
@@ -99,8 +101,8 @@ export default class Badge extends React.Component<BadgeProps, any> {
 
     const scrollNumber = hidden ? null : (
       <ScrollNumber
-        prefixCls={scrollNumberPrefixCls}
-        data-show={!hidden}
+        prefixCls={getPrefixCls('scroll-number', scrollNumberPrefixCls)}
+        hidden={hidden}
         className={scrollNumberCls}
         count={displayCount}
         title={count}
@@ -117,7 +119,7 @@ export default class Badge extends React.Component<BadgeProps, any> {
         {children}
         <Animate
           component=""
-          showProp="data-show"
+          hiddenProp="hidden"
           transitionName={children ? `${prefixCls}-zoom` : ''}
           transitionAppear
         >

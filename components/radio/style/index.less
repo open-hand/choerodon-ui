@@ -2,7 +2,7 @@
 @import "../../style/mixins/index";
 @import "../../style/mixins/index";
 
-@radio-prefix-cls: ~"@{ant-prefix}-radio";
+@radio-prefix-cls: ~"@{c7n-prefix}-radio";
 @radio-group-prefix-cls: ~"@{radio-prefix-cls}-group";
 @radio-inner-prefix-cls: ~"@{radio-prefix-cls}-inner";
 @radio-duration: .3s;
@@ -18,7 +18,7 @@
     position: relative;
   }
   &-wrapper&-has-label & {
-    padding-top: 17px;
+    padding-top: .17rem;
   }
   &-wrapper &-label.label-disabled {
     color: rgba(0, 0, 0, 0.54);
@@ -29,7 +29,7 @@
     left: 0;
     width: 100%;
     transform-origin: 0 0;
-    transform: scale(0.75) translateY(0) translateZ(0.001px);
+    transform: scale(.75) translateY(0) translateZ(.00001rem);
   }
 }
 
@@ -39,7 +39,7 @@
   display: inline-block;
   position: relative;
   white-space: nowrap;
-  margin-right: 8px;
+  margin-right: .08rem;
   cursor: pointer;
 }
 
@@ -60,7 +60,7 @@
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    border: 1px solid @radio-dot-color;
+    border: @border-width-base @border-style-base @radio-dot-color;
     content: '';
     animation-fill-mode: both;
     visibility: hidden;
@@ -73,10 +73,8 @@
     display: block;
     width: @radio-size;
     height: @radio-size;
-    border-width: 1px;
-    border-style: solid;
+    border: @border-width-base @border-style-base @radio-border-color;
     border-radius: 50%;
-    border-color: @radio-border-color;
     background-color: @radio-button-bg;
     transition: all @radio-duration;
   }
@@ -99,7 +97,7 @@
     border-color: @radio-dot-color;
     background-clip: content-box;
     background-color: @radio-dot-color;
-    padding: 2px;
+    padding: .02rem;
   }
 }
 .@{radio-prefix-cls}-disabled.@{radio-prefix-cls}-checked {
@@ -121,14 +119,14 @@
 }
 
 span.@{radio-prefix-cls} + * {
-  padding-left: 8px;
-  padding-right: 8px;
+  padding-left: .08rem;
+  padding-right: .08rem;
 }
 
 .@{radio-prefix-cls}-button-wrapper {
   margin: 0;
   height: @btn-height-base;
-  line-height: @btn-height-base - 2px;
+  line-height: @btn-height-base - .02rem;
   color: @radio-button-color;
   display: inline-block;
   transition: all 0.3s ease;
@@ -137,9 +135,9 @@ span.@{radio-prefix-cls} + * {
   border-left: 0;
   // strange align fix for chrome but works
   // https://gw.alipayobjects.com/zos/rmsportal/VFTfKXJuogBAXcvfAUWJ.gif
-  border-top-width: @border-width-base + 0.02px;
+  border-top-width: @border-width-base + .0002rem;
   background: @radio-button-bg;
-  padding: 0 @padding-md - 1px;
+  padding: 0 @padding-md - .01rem;
   position: relative;
 
   a {
@@ -155,14 +153,14 @@ span.@{radio-prefix-cls} + * {
 
   .@{radio-group-prefix-cls}-large & {
     height: @input-height-lg;
-    line-height: @input-height-lg - 2px;
+    line-height: @input-height-lg - .02rem;
     font-size: @font-size-lg;
   }
 
   .@{radio-group-prefix-cls}-small & {
     height: @input-height-sm;
-    line-height: @input-height-sm - 2px;
-    padding: 0 @control-padding-horizontal-sm - 1px;
+    line-height: @input-height-sm - .02rem;
+    padding: 0 @control-padding-horizontal-sm - .01rem;
   }
 
   &:not(:first-child) {
@@ -170,8 +168,8 @@ span.@{radio-prefix-cls} + * {
       content: "";
       display: block;
       top: 0;
-      left: -1px;
-      width: 1px;
+      left: -.01rem;
+      width: .01rem;
       height: 100%;
       position: absolute;
       background-color: @border-color-base;
@@ -202,7 +200,7 @@ span.@{radio-prefix-cls} + * {
     background: @radio-button-bg;
     border-color: @radio-dot-color;
     color: @radio-dot-color;
-    box-shadow: -1px 0 0 0 @radio-dot-color;
+    box-shadow: -.01rem 0 0 0 @radio-dot-color;
     z-index: 1;
     &::before {
       background-color: @radio-dot-color !important;
@@ -215,7 +213,7 @@ span.@{radio-prefix-cls} + * {
 
     &:active {
       border-color: @radio-button-active-color;
-      box-shadow: -1px 0 0 0 @radio-button-active-color;
+      box-shadow: -.01rem 0 0 0 @radio-button-active-color;
       color: @radio-button-active-color;
     }
   }

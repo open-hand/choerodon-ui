@@ -2,23 +2,23 @@
 
 exports[`renders ./components/breadcrumb/demo/basic.md correctly 1`] = `
 <div
-  class="ant-breadcrumb"
+  class="c7n-breadcrumb"
 >
   <span>
     <span
-      class="ant-breadcrumb-link"
+      class="c7n-breadcrumb-link"
     >
       Home
     </span>
     <span
-      class="ant-breadcrumb-separator"
+      class="c7n-breadcrumb-separator"
     >
       /
     </span>
   </span>
   <span>
     <span
-      class="ant-breadcrumb-link"
+      class="c7n-breadcrumb-link"
     >
       <a
         href=""
@@ -27,14 +27,14 @@ exports[`renders ./components/breadcrumb/demo/basic.md correctly 1`] = `
       </a>
     </span>
     <span
-      class="ant-breadcrumb-separator"
+      class="c7n-breadcrumb-separator"
     >
       /
     </span>
   </span>
   <span>
     <span
-      class="ant-breadcrumb-link"
+      class="c7n-breadcrumb-link"
     >
       <a
         href=""
@@ -43,19 +43,19 @@ exports[`renders ./components/breadcrumb/demo/basic.md correctly 1`] = `
       </a>
     </span>
     <span
-      class="ant-breadcrumb-separator"
+      class="c7n-breadcrumb-separator"
     >
       /
     </span>
   </span>
   <span>
     <span
-      class="ant-breadcrumb-link"
+      class="c7n-breadcrumb-link"
     >
       An Application
     </span>
     <span
-      class="ant-breadcrumb-separator"
+      class="c7n-breadcrumb-separator"
     >
       /
     </span>
@@ -83,32 +83,32 @@ exports[`renders ./components/breadcrumb/demo/router.md correctly 1`] = `
   </div>
   Home Page
   <div
-    class="ant-alert ant-alert-info ant-alert-no-icon"
+    class="c7n-alert c7n-alert-info c7n-alert-no-icon"
     data-show="true"
     style="margin:16px 0;"
   >
     <span
-      class="ant-alert-message"
+      class="c7n-alert-message"
     >
       Click the navigation above to switch:
     </span>
     <span
-      class="ant-alert-description"
+      class="c7n-alert-description"
     />
   </div>
   <div
-    class="ant-breadcrumb"
+    class="c7n-breadcrumb"
   >
     <span>
       <span
-        class="ant-breadcrumb-link"
+        class="c7n-breadcrumb-link"
       >
         <span>
           Home
         </span>
       </span>
       <span
-        class="ant-breadcrumb-separator"
+        class="c7n-breadcrumb-separator"
       >
         /
       </span>
@@ -137,75 +137,75 @@ exports[`renders ./components/breadcrumb/demo/router-4.md correctly 1`] = `
   </div>
   Home Page
   <div
-    class="ant-alert ant-alert-info ant-alert-no-icon"
+    class="c7n-alert c7n-alert-info c7n-alert-no-icon"
     data-show="true"
     style="margin:16px 0;"
   >
     <span
-      class="ant-alert-message"
+      class="c7n-alert-message"
     >
       Click the navigation above to switch:
     </span>
     <span
-      class="ant-alert-description"
+      class="c7n-alert-description"
     />
   </div>
   <div
-    class="ant-breadcrumb"
+    class="c7n-breadcrumb"
   />
 </div>
 `;
 
 exports[`renders ./components/breadcrumb/demo/separator.md correctly 1`] = `
 <div
-  class="ant-breadcrumb"
+  class="c7n-breadcrumb"
 >
   <span>
     <span
-      class="ant-breadcrumb-link"
+      class="c7n-breadcrumb-link"
     >
       Home
     </span>
     <span
-      class="ant-breadcrumb-separator"
+      class="c7n-breadcrumb-separator"
     >
       &gt;
     </span>
   </span>
   <span>
     <a
-      class="ant-breadcrumb-link"
+      class="c7n-breadcrumb-link"
       href=""
     >
       Application Center
     </a>
     <span
-      class="ant-breadcrumb-separator"
+      class="c7n-breadcrumb-separator"
     >
       &gt;
     </span>
   </span>
   <span>
     <a
-      class="ant-breadcrumb-link"
+      class="c7n-breadcrumb-link"
       href=""
     >
       Application List
     </a>
     <span
-      class="ant-breadcrumb-separator"
+      class="c7n-breadcrumb-separator"
     >
       &gt;
     </span>
   </span>
   <span>
     <span
-      class="ant-breadcrumb-link"
+      class="c7n-breadcrumb-link"
     >
       An Application
     </span>
     <span
-      class="ant-breadcrumb-separator"
+      class="c7n-breadcrumb-separator"
     >
       &gt;
     </span>
@@ -215,11 +215,11 @@ exports[`renders ./components/breadcrumb/demo/separator.md correctly 1`] = `
 
 exports[`renders ./components/breadcrumb/demo/withIcon.md correctly 1`] = `
 <div
-  class="ant-breadcrumb"
+  class="c7n-breadcrumb"
 >
   <span>
     <a
-      class="ant-breadcrumb-link"
+      class="c7n-breadcrumb-link"
       href=""
     >
       <i
@@ -227,14 +227,14 @@ exports[`renders ./components/breadcrumb/demo/withIcon.md correctly 1`] = `
       />
     </a>
     <span
-      class="ant-breadcrumb-separator"
+      class="c7n-breadcrumb-separator"
     >
       /
     </span>
   </span>
   <span>
     <a
-      class="ant-breadcrumb-link"
+      class="c7n-breadcrumb-link"
       href=""
     >
       <i
@@ -245,19 +245,19 @@ exports[`renders ./components/breadcrumb/demo/withIcon.md correctly 1`] = `
       </span>
     </a>
     <span
-      class="ant-breadcrumb-separator"
+      class="c7n-breadcrumb-separator"
     >
       /
     </span>
   </span>
   <span>
     <span
-      class="ant-breadcrumb-link"
+      class="c7n-breadcrumb-link"
     >
       Application
     </span>
     <span
-      class="ant-breadcrumb-separator"
+      class="c7n-breadcrumb-separator"
     >
       /
     </span>

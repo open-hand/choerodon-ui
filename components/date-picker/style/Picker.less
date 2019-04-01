@@ -42,11 +42,11 @@
     display: block;
   }
 
-  &:hover &-input:not(.@{ant-prefix}-input-disabled) {
+  &:hover &-input:not(.@{c7n-prefix}-input-disabled) {
     border-color: @primary-color;
   }
 
-  &:focus &-input:not(.@{ant-prefix}-input-disabled) {
+  &:focus &-input:not(.@{c7n-prefix}-input-disabled) {
     .active();
   }
 
@@ -66,14 +66,14 @@
     cursor: pointer;
     &-wrapper {
       display: inline-block;
-      min-width: 18px; // 24 + 18
+      min-width: .18rem;
     }
   }
 
   &-clear {
     position: absolute !important;
-    right: 20px;
-    bottom: -2px;
+    right: .2rem;
+    bottom: -.02rem;
     margin: 0;
     opacity: 0;
     transition: opacity 0.15s ease;

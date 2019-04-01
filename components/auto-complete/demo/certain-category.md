@@ -7,11 +7,11 @@ title:
 
 ## zh-CN
 
-[查询模式: 确定类目](https://ant.design/docs/spec/reaction#Lookup-Patterns) 示例。
+[查询模式: 确定类目](/docs/spec/reaction#Lookup-Patterns) 示例。
 
 ## en-US
 
-Demonstration of [Lookup Patterns: Certain Category](https://ant.design/docs/spec/reaction#Lookup-Patterns).
+Demonstration of [Lookup Patterns: Certain Category](/docs/spec/reaction#Lookup-Patterns).
 Basic Usage, set datasource of autocomplete with `dataSource` property.
 
 ````jsx
@@ -52,7 +52,7 @@ function renderTitle(title) {
       {title}
       <a
         style={{ float: 'right' }}
-        href="https://www.google.com/search?q=antd"
+        href="https://www.google.com/search?q=choerodon"
         target="_blank"
         rel="noopener noreferrer"
       >更多
@@ -76,7 +76,7 @@ const options = dataSource.map(group => (
 )).concat([
   <Option disabled key="all" className="show-all">
     <a
-      href="https://www.google.com/search?q=antd"
+      href="https://www.google.com/search?q=choerodon"
       target="_blank"
       rel="noopener noreferrer"
     >
@@ -108,29 +108,29 @@ ReactDOM.render(<Complete />, mountNode);
 ````
 
 ````css
-.certain-category-search.ant-select-auto-complete .ant-input-affix-wrapper .ant-input-suffix {
+.certain-category-search.c7n-select-auto-complete .c7n-input-affix-wrapper .c7n-input-suffix {
   right: 12px;
 }
 
-.certain-category-search-dropdown .ant-select-dropdown-menu-item-group-title {
+.certain-category-search-dropdown .c7n-select-dropdown-menu-item-group-title {
   color: #666;
   font-weight: bold;
 }
 
-.certain-category-search-dropdown .ant-select-dropdown-menu-item-group {
+.certain-category-search-dropdown .c7n-select-dropdown-menu-item-group {
   border-bottom: 1px solid #F6F6F6;
 }
 
-.certain-category-search-dropdown .ant-select-dropdown-menu-item {
+.certain-category-search-dropdown .c7n-select-dropdown-menu-item {
   padding-left: 16px;
 }
 
-.certain-category-search-dropdown .ant-select-dropdown-menu-item.show-all {
+.certain-category-search-dropdown .c7n-select-dropdown-menu-item.show-all {
   text-align: center;
   cursor: default;
 }
 
-.certain-category-search-dropdown .ant-select-dropdown-menu {
+.certain-category-search-dropdown .c7n-select-dropdown-menu {
   max-height: 300px;
 }
 
@@ -140,7 +140,7 @@ ReactDOM.render(<Complete />, mountNode);
  right: 16px;
 }
 
-.certain-category-search.ant-select-focused .certain-category-icon {
+.certain-category-search.c7n-select-focused .certain-category-icon {
   color: #108ee9;
 }
 

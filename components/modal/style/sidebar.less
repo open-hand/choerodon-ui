@@ -1,7 +1,7 @@
 @import "../../style/mixins/index";
 
-@sidebar-prefix-cls: ~"@{ant-prefix}-modal-sidebar";
-@modal-prefix-cls: ~"@{ant-prefix}-modal";
+@sidebar-prefix-cls: ~"@{c7n-prefix}-modal-sidebar";
+@modal-prefix-cls: ~"@{c7n-prefix}-modal";
 
 .@{sidebar-prefix-cls} {
   position: absolute;
@@ -18,16 +18,16 @@
     opacity: 1;
   }
   .@{modal-prefix-cls}-content {
-    left: 352px;
+    left: 3.52rem;
     position: absolute;
     height: 100%;
     padding: 0;
-    width: calc(~"100% - 352px") !important;
+    width: calc(~"100% - 3.52rem") !important;
     overflow: auto;
   }
 
   .@{modal-prefix-cls}-header {
-    padding: 0 8px;
+    padding: 0 .08rem;
     height: @sidebar-header-height;
     min-height: @sidebar-header-height;
     border-bottom: @border-width-base @border-style-base @border-color-base;
@@ -40,30 +40,30 @@
     .@{modal-prefix-cls}-title {
       font-size: @sidebar-font-size-lg;
       letter-spacing: .005em;
-      line-height: 24px;
-      margin: 0 56px 0 16px;
+      line-height: .24rem;
+      margin: 0 .56rem 0 .16rem;
     }
   }
 
   .@{modal-prefix-cls}-body {
     font-size: 100%;
-    padding: 24px;
+    padding: .24rem;
     position: relative;
     overflow: auto;
-    max-height: calc(~"100% - 121px") !important;
+    max-height: calc(~"100% - 1.21rem") !important;
   }
 
   .@{modal-prefix-cls}-footer {
-    height: 56px;
+    height: .56rem;
     display: flex;
     box-sizing: border-box;
     flex-direction: row;
     align-items: center;
     white-space: nowrap;
-    padding: 0 24px;
+    padding: 0 .24rem;
     border-top: @border-width-base @border-style-base @border-color-base;
     button + button {
-      margin-left: 12px;
+      margin-left: .12rem;
       margin-bottom: 0;
     }
     button.cancel {

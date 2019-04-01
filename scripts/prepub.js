@@ -14,39 +14,73 @@ if (fs.existsSync(path.join(__dirname, '../lib'))) {
   const versionFileContent = fs.readFileSync(versionFilePath).toString();
   fs.writeFileSync(
     versionFilePath,
-    versionFileContent.replace(`require('../../package.json')`, `{ version: '${packageInfo.version}' }`)
+    versionFileContent.replace(`require('../../package.json')`, `{ version: '${packageInfo.version}' }`),
   );
   console.log('Wrote version into lib/version/index.js');
 
   // Build package.json version to lib/version/index.d.ts
-  // prevent https://github.com/ant-design/ant-design/issues/4935
   const versionDefPath = path.join(process.cwd(), 'lib', 'version', 'index.d.ts');
   fs.writeFileSync(
     versionDefPath,
-    `declare var _default: "${packageInfo.version}";\nexport default _default;\n`
+    `declare var _default: "${packageInfo.version}";\nexport default _default;\n`,
   );
   console.log('Wrote version into lib/version/index.d.ts');
 }
 
 if (fs.existsSync(path.join(__dirname, '../dist'))) {
-  // Build a entry less file to dist/antd.less
-  const componentsPath = path.join(process.cwd(), 'components');
-  let componentsLessContent = '';
+  const distLess = function distLess(isPro) {
+    // Build a entry less file to dist/choerodon-ui.less
+    const dir = isPro ? 'components-pro' : 'components';
+    const less = isPro ? 'choerodon-ui-pro.less' : 'choerodon-ui.less';
+    const relativePath = isPro ? '../../pro/lib/' : '../';
+    const componentsPath = path.join(process.cwd(), dir);
+    let componentsLessContent = '';
 
-  // Build components in one file: lib/style/components.less
-  fs.readdir(componentsPath, function (err, files) {
-    files.forEach(function (file) {
-      if (fs.existsSync(path.join(componentsPath, file, 'style', 'index.less'))) {
-        componentsLessContent += `@import "../${path.join(file, 'style', 'index.less')}";\n`
-      }
+    // Build components in one file: lib/style/components.less
+    fs.readdir(componentsPath, function (err, files) {
+      files.forEach(function (file) {
+        if (fs.existsSync(path.join(componentsPath, file, 'style', 'index.less'))) {
+          componentsLessContent += `@import "${relativePath}${file}/style/index.less";\n`;
+        }
+      });
+      fs.writeFileSync(path.join(process.cwd(), 'lib', 'style', `${dir}.less`), componentsLessContent);
+
+      // Build less entry file: dist/choerodon-ui.less
+      fs.writeFileSync(
+        path.join(process.cwd(), 'dist', less),
+        `@import "../lib/style/index.less";\n@import "../lib/style/${dir}.less";`,
+      );
     });
-    fs.writeFileSync(path.join(process.cwd(), 'lib', 'style', 'components.less'), componentsLessContent);
+    console.log(`Built a entry less file to dist/${less}`);
+  };
 
-    // Build less entry file: dist/antd.less
-    fs.writeFileSync(
-      path.join(process.cwd(), 'dist', 'choerodon-ui.less'),
-      '@import "../lib/style/index.less";\n@import "../lib/style/components.less";'
-    );
-  });
-  console.log('Built a entry less file to dist/choerodon-ui.less');
+  distLess();
+  distLess(true);
+}
+
+if (fs.existsSync(path.join(__dirname, '../pro'))) {
+  fs.writeFileSync(
+    path.join(process.cwd(), 'pro', 'index.js'),
+    `'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var pro = require('./lib');
+
+var pro2 = pro && pro.__esModule ? pro : { 'default': pro };
+
+exports['default'] = pro2['default'];
+module.exports = exports['default'];
+`,
+  );
+  console.log('Built a index file to pro/index.js');
+
+  fs.writeFileSync(
+    path.join(process.cwd(), 'pro', 'index.d.ts'),
+    `export * from './lib';
+`,
+  );
+  console.log('Built a ts index file to pro/index.d.ts');
 }

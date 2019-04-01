@@ -1,7 +1,10 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import Icon from '../icon';
+import React, { Component, CSSProperties } from 'react';
+import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
+import isNumber from 'lodash/isNumber';
+import Icon from '../icon';
+import { Size } from '../_util/enum';
+import { getPrefixCls } from '../configure';
 
 export interface AvatarProps {
   /** Shape of avatar, options:`circle`, `square` */
@@ -10,12 +13,12 @@ export interface AvatarProps {
    * Size of avatar, options: `large`, `small`, `default`
    * or a custom number size
    * */
-  size?: 'large' | 'small' | 'default' | number;
+  size?: Size | number;
   /** Src of image avatar */
   src?: string;
   /** Type of the Icon to be used in avatar */
   icon?: string;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   prefixCls?: string;
   className?: string;
   children?: any;
@@ -30,11 +33,11 @@ export interface AvatarState {
   isImgExist: boolean;
 }
 
-export default class Avatar extends React.Component<AvatarProps, AvatarState> {
+export default class Avatar extends Component<AvatarProps, AvatarState> {
+  static displayName = 'Avatar';
   static defaultProps = {
-    prefixCls: 'ant-avatar',
     shape: 'circle',
-    size: 'default',
+    size: Size.default,
   };
 
   private avatarChildren: any;
@@ -63,7 +66,7 @@ export default class Avatar extends React.Component<AvatarProps, AvatarState> {
     const childrenNode = this.avatarChildren;
     if (childrenNode) {
       const childrenWidth = childrenNode.offsetWidth;
-      const avatarNode = ReactDOM.findDOMNode(this) as Element;
+      const avatarNode = findDOMNode(this) as Element;
       const avatarWidth = avatarNode.getBoundingClientRect().width;
       // add 4px gap for each side to get better performance
       if (avatarWidth - 8 < childrenWidth) {
@@ -76,7 +79,7 @@ export default class Avatar extends React.Component<AvatarProps, AvatarState> {
         });
       }
     }
-  }
+  };
 
   handleImgLoadError = () => {
     const { onError } = this.props;
@@ -84,18 +87,19 @@ export default class Avatar extends React.Component<AvatarProps, AvatarState> {
     if (errorFlag !== false) {
       this.setState({ isImgExist: false });
     }
-  }
+  };
 
   render() {
     const {
-      prefixCls, shape, size, src, icon, className, alt, ...others,
+      prefixCls: customizePrefixCls, shape, size, src, icon, className, alt, ...others,
     } = this.props;
+    const prefixCls = getPrefixCls('avatar', customizePrefixCls);
 
     const { isImgExist, scale } = this.state;
 
     const sizeCls = classNames({
-      [`${prefixCls}-lg`]: size === 'large',
-      [`${prefixCls}-sm`]: size === 'small',
+      [`${prefixCls}-lg`]: size === Size.large,
+      [`${prefixCls}-sm`]: size === Size.small,
     });
 
     const classString = classNames(prefixCls, className, sizeCls, {
@@ -104,7 +108,7 @@ export default class Avatar extends React.Component<AvatarProps, AvatarState> {
       [`${prefixCls}-icon`]: icon,
     });
 
-    const sizeStyle: React.CSSProperties = typeof size === 'number' ? {
+    const sizeStyle: CSSProperties = isNumber(size) ? {
       width: size,
       height: size,
       lineHeight: `${size}px`,
@@ -126,13 +130,13 @@ export default class Avatar extends React.Component<AvatarProps, AvatarState> {
       const childrenNode = this.avatarChildren;
       if (childrenNode || scale !== 1) {
         const transformString = `scale(${scale}) translateX(-50%)`;
-        const childrenStyle: React.CSSProperties = {
+        const childrenStyle: CSSProperties = {
           msTransform: transformString,
           WebkitTransform: transformString,
           transform: transformString,
         };
-        const sizeChildrenStyle: React.CSSProperties =
-          typeof size === 'number' ? {
+        const sizeChildrenStyle: CSSProperties =
+          isNumber(size) ? {
             lineHeight: `${size}px`,
           } : {};
         children = (

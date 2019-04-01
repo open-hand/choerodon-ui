@@ -1,32 +1,32 @@
-import * as React from 'react';
+import React, { Component, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import omit from 'omit.js';
+import omit from 'lodash/omit';
 import RcSwitch from '../rc-components/switch';
+import { Size } from '../_util/enum';
+import { getPrefixCls } from '../configure';
 
 export interface SwitchProps {
   prefixCls?: string;
-  size?: 'small' | 'default';
+  size?: Size;
   className?: string;
   checked?: boolean;
   defaultChecked?: boolean;
   onChange?: (checked: boolean) => any;
-  checkedChildren?: React.ReactNode;
-  unCheckedChildren?: React.ReactNode;
+  checkedChildren?: ReactNode;
+  unCheckedChildren?: ReactNode;
   disabled?: boolean;
   loading?: boolean;
 }
 
-export default class Switch extends React.Component<SwitchProps, {}> {
-  static defaultProps = {
-    prefixCls: 'ant-switch',
-  };
+export default class Switch extends Component<SwitchProps, {}> {
+  static displayName = 'Switch';
 
   static propTypes = {
     prefixCls: PropTypes.string,
-    // HACK: https://github.com/ant-design/ant-design/issues/5368
+
     // size=default and size=large are the same
-    size: PropTypes.oneOf(['small', 'default', 'large']),
+    size: PropTypes.oneOf([Size.small, Size.default, Size.large]),
     className: PropTypes.string,
   };
 
@@ -42,17 +42,19 @@ export default class Switch extends React.Component<SwitchProps, {}> {
 
   saveSwitch = (node: RcSwitch | null) => {
     this.rcSwitch = node;
-  }
+  };
 
   render() {
-    const { prefixCls, size, loading, className = '' } = this.props;
+    const { prefixCls: customizePrefixCls, size, loading, className = '' } = this.props;
+    const prefixCls = getPrefixCls('switch', customizePrefixCls);
     const classes = classNames(className, {
-      [`${prefixCls}-small`]: size === 'small',
+      [`${prefixCls}-small`]: size === Size.small,
       [`${prefixCls}-loading`]: loading,
     });
     return (
       <RcSwitch
         {...omit(this.props, ['loading'])}
+        prefixCls={prefixCls}
         className={classes}
         ref={this.saveSwitch}
       />

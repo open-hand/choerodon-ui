@@ -1,34 +1,36 @@
-import * as React from 'react';
+import React, { CSSProperties, ReactNode } from 'react';
 import classNames from 'classnames';
+import { getPrefixCls } from '../configure';
 
 export interface DividerProps {
   prefixCls?: string;
   type?: 'horizontal' | 'vertical';
   orientation?: 'left' | 'right';
   className?: string;
-  children?: React.ReactNode;
+  children?: ReactNode;
   dashed?: boolean;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
 }
 
 export default function Divider({
-  prefixCls = 'ant',
-  type = 'horizontal',
-  orientation = '',
-  className,
-  children,
-  dashed,
-  ...restProps,
-}: DividerProps) {
+                                  prefixCls: customizePrefixCls,
+                                  type = 'horizontal',
+                                  orientation = '',
+                                  className,
+                                  children,
+                                  dashed,
+                                  ...restProps,
+                                }: DividerProps) {
+  const prefixCls = getPrefixCls('divider', customizePrefixCls);
   const orientationPrefix = (orientation.length > 0) ? '-' + orientation : orientation;
   const classString = classNames(
-    className, `${prefixCls}-divider`, `${prefixCls}-divider-${type}`, {
-    [`${prefixCls}-divider-with-text${orientationPrefix}`]: children,
-    [`${prefixCls}-divider-dashed`]: !!dashed,
-  });
+    className, prefixCls, `${prefixCls}-${type}`, {
+      [`${prefixCls}-with-text${orientationPrefix}`]: children,
+      [`${prefixCls}-dashed`]: !!dashed,
+    });
   return (
     <div className={classString} {...restProps}>
-      {children && <span className={`${prefixCls}-divider-inner-text`}>{children}</span>}
+      {children && <span className={`${prefixCls}-inner-text`}>{children}</span>}
     </div>
   );
 }

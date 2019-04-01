@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types';
+import noop from 'lodash/noop';
 import enUs from '../locale/en_US';
-
-function noop() {
-}
 
 export default {
   propTypes: {

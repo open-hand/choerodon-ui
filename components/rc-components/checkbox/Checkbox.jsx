@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import PureRenderMixin from '../util/PureRenderMixin';
 import classNames from 'classnames';
 
-export default class Checkbox extends React.Component {
+export default class Checkbox extends Component {
   static propTypes = {
     prefixCls: PropTypes.string,
     className: PropTypes.string,

@@ -1,9 +1,9 @@
-import React from 'react';
+import { Children } from 'react';
 
 export function toArray(children) {
   // allow [c,[a,b]]
   const c = [];
-  React.Children.forEach(children, child => {
+  Children.forEach(children, child => {
     if (child) {
       c.push(child);
     }
@@ -43,6 +43,7 @@ export function setTransition(style, v) {
   style.webkitTransition = v;
   style.MozTransition = v;
 }
+
 export function getTransformPropValue(v) {
   return {
     transform: v,

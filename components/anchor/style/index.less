@@ -1,9 +1,9 @@
 @import "../../style/themes/default";
 @import "../../style/mixins/index";
 
-@anchor-border-width: 2px;
+@anchor-border-width: .02rem;
 
-.@{ant-prefix}-anchor {
+.@{c7n-prefix}-anchor {
   .reset-component;
   position: relative;
   padding-left: @anchor-border-width;
@@ -11,8 +11,8 @@
   &-wrapper {
     background-color: @component-background;
     overflow: auto;
-    padding-left: 4px;
-    margin-left: -4px;
+    padding-left: .04rem;
+    margin-left: -.04rem;
   }
 
   &-ink {
@@ -32,10 +32,10 @@
     &-ball {
       display: none;
       position: absolute;
-      width: 8px;
-      height: 8px;
-      border-radius: 8px;
-      border: 2px solid @primary-color;
+      width: .08rem;
+      height: .08rem;
+      border-radius: .08rem;
+      border: .02rem solid @primary-color;
       background-color: @component-background;
       left: 50%;
       transition: top .3s ease-in-out;
@@ -51,7 +51,7 @@
   }
 
   &-link {
-    padding: 8px 0 8px 16px;
+    padding: .08rem 0 .08rem .16rem;
     line-height: 1;
 
     &-title {
@@ -62,7 +62,7 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      margin-bottom: 8px;
+      margin-bottom: .08rem;
 
       &:only-child {
         margin-bottom: 0;
@@ -75,7 +75,7 @@
   }
 
   &-link &-link {
-    padding-top: 6px;
-    padding-bottom: 6px;
+    padding-top: .06rem;
+    padding-bottom: .06rem;
   }
 }

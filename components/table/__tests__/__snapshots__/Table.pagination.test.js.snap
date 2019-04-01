@@ -2,55 +2,55 @@
 
 exports[`Table.pagination renders pagination correctly 1`] = `
 <div
-  class="ant-table-wrapper"
+  class="c7n-table-wrapper"
 >
   <div
-    class="ant-spin-nested-loading"
+    class="c7n-spin-nested-loading"
   >
     <div
-      class="ant-spin-container"
+      class="c7n-spin-container"
     >
       <div
-        class="ant-table-filter-bar"
+        class="c7n-table-filter-bar"
       >
         <div
-          class="ant-table-filter-select"
+          class="c7n-table-filter-select"
         >
           <div
-            class="ant-table-filter-select-icon"
+            class="c7n-table-filter-select-icon"
           >
             <i
               class="icon icon-filter_list"
             />
           </div>
           <div
-            class="ant-select ant-select-enabled ant-select-allow-clear ant-select-tags"
+            class="c7n-select c7n-select-enabled c7n-select-allow-clear c7n-select-tags"
           >
             <div
               aria-autocomplete="list"
               aria-expanded="false"
               aria-haspopup="true"
-              class="ant-select-selection
-            ant-select-selection--multiple"
+              class="c7n-select-selection
+            c7n-select-selection--multiple"
               role="combobox"
             >
               <div
-                class="ant-select-selection__rendered"
+                class="c7n-select-selection__rendered"
               >
                 <ul>
                   <li
-                    class="ant-select-search ant-select-search--inline"
+                    class="c7n-select-search c7n-select-search--inline"
                   >
                     <div
-                      class="ant-select-search__field__wrap"
+                      class="c7n-select-search__field__wrap"
                     >
                       <input
                         autocomplete="off"
-                        class="ant-select-search__field"
+                        class="c7n-select-search__field"
                         value=""
                       />
                       <span
-                        class="ant-select-search__field__mirror"
+                        class="c7n-select-search__field__mirror"
                       >
                          
                       </span>
@@ -60,41 +60,41 @@ exports[`Table.pagination renders pagination correctly 1`] = `
               </div>
             </div>
             <div
-              class="ant-select-underline"
+              class="c7n-select-underline"
             >
               <span
-                class="ant-select-ripple"
+                class="c7n-select-ripple"
               />
             </div>
           </div>
           <div
-            class="ant-table-filter-select-columns"
+            class="c7n-table-filter-select-columns"
           />
         </div>
         <div
-          class="ant-table-columns-chooser"
+          class="c7n-table-columns-chooser"
         >
           <button
-            class="ant-btn ant-btn-circle ant-btn-sm ant-btn-icon-only ant-btn-flat"
+            class="c7n-btn c7n-btn-circle c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
             type="button"
           >
             <i
               class="icon icon-view_column"
             />
             <div
-              class="ant-ripple-wrapper"
+              class="c7n-ripple-wrapper"
             />
           </button>
         </div>
       </div>
       <div
-        class="ant-table ant-table-middle ant-table-scroll-position-left"
+        class="c7n-table c7n-table-default c7n-table-scroll-position-left"
       >
         <div
-          class="ant-table-content"
+          class="c7n-table-content"
         >
           <div
-            class="ant-table-body"
+            class="c7n-table-body"
           >
             <table
               class=""
@@ -103,7 +103,7 @@ exports[`Table.pagination renders pagination correctly 1`] = `
                 <col />
               </colgroup>
               <thead
-                class="ant-table-thead"
+                class="c7n-table-thead"
               >
                 <tr>
                   <th
@@ -117,31 +117,31 @@ exports[`Table.pagination renders pagination correctly 1`] = `
                 </tr>
               </thead>
               <tbody
-                class="ant-table-tbody"
+                class="c7n-table-tbody"
               >
                 <tr
-                  class="ant-table-row  ant-table-row-level-0"
+                  class="c7n-table-row  c7n-table-row-level-0"
                 >
                   <td
                     class=""
                     tabindex="-1"
                   >
                     <span
-                      class="ant-table-row-indent indent-level-0"
+                      class="c7n-table-row-indent indent-level-0"
                       style="padding-left:0px"
                     />
                     Jack
                   </td>
                 </tr>
                 <tr
-                  class="ant-table-row  ant-table-row-level-0"
+                  class="c7n-table-row  c7n-table-row-level-0"
                 >
                   <td
                     class=""
                     tabindex="-1"
                   >
                     <span
-                      class="ant-table-row-indent indent-level-0"
+                      class="c7n-table-row-indent indent-level-0"
                       style="padding-left:0px"
                     />
                     Lucy
@@ -153,41 +153,41 @@ exports[`Table.pagination renders pagination correctly 1`] = `
         </div>
       </div>
       <ul
-        class="ant-pagination my-page ant-table-pagination ant-pagination-middle ant-pagination-tiny"
+        class="c7n-pagination my-page c7n-table-pagination c7n-pagination-default c7n-pagination-tiny"
         unselectable="unselectable"
       >
         <li
-          class="ant-pagination-options"
+          class="c7n-pagination-options"
         >
           <span
-            class="ant-pagination-options-label"
+            class="c7n-pagination-options-label"
           >
             Items / page
           </span>
           <div
-            class="ant-pagination-options-size-changer ant-select ant-select-has-value ant-select-enabled"
+            class="c7n-pagination-options-size-changer c7n-select c7n-select-has-value c7n-select-enabled"
           >
             <div
               aria-autocomplete="list"
               aria-expanded="false"
               aria-haspopup="true"
-              class="ant-select-selection
-            ant-select-selection--single"
+              class="c7n-select-selection
+            c7n-select-selection--single"
               role="combobox"
               tabindex="0"
             >
               <div
-                class="ant-select-selection__rendered"
+                class="c7n-select-selection__rendered"
               >
                 <div
-                  class="ant-select-selection-selected-value"
+                  class="c7n-select-selection-selected-value"
                   style="opacity:1"
                   title="2"
                 >
                   2
                 </div>
                 <span
-                  class="ant-select-arrow"
+                  class="c7n-select-arrow"
                   style="user-select:none;-webkit-user-select:none"
                   unselectable="unselectable"
                 >
@@ -199,26 +199,26 @@ exports[`Table.pagination renders pagination correctly 1`] = `
               </div>
             </div>
             <div
-              class="ant-select-underline"
+              class="c7n-select-underline"
             >
               <span
-                class="ant-select-ripple"
+                class="c7n-select-ripple"
               />
             </div>
           </div>
         </li>
         <li
-          class="ant-pagination-total-text"
+          class="c7n-pagination-total-text"
         >
           1 - 2 / 4
         </li>
         <li
           aria-disabled="true"
-          class="ant-pagination-disabled ant-pagination-first"
+          class="c7n-pagination-disabled c7n-pagination-first"
           title="First Page"
         >
           <button
-            class="ant-btn ant-btn-circle ant-btn-icon-only ant-btn-flat"
+            class="c7n-btn c7n-btn-circle c7n-btn-icon-only c7n-btn-flat"
             disabled=""
             type="button"
           >
@@ -226,17 +226,17 @@ exports[`Table.pagination renders pagination correctly 1`] = `
               class="icon icon-first_page"
             />
             <div
-              class="ant-ripple-wrapper"
+              class="c7n-ripple-wrapper"
             />
           </button>
         </li>
         <li
           aria-disabled="true"
-          class="ant-pagination-disabled ant-pagination-prev"
+          class="c7n-pagination-disabled c7n-pagination-prev"
           title="Previous Page"
         >
           <button
-            class="ant-btn ant-btn-circle ant-btn-icon-only ant-btn-flat"
+            class="c7n-btn c7n-btn-circle c7n-btn-icon-only c7n-btn-flat"
             disabled=""
             type="button"
           >
@@ -244,43 +244,43 @@ exports[`Table.pagination renders pagination correctly 1`] = `
               class="icon icon-navigate_before"
             />
             <div
-              class="ant-ripple-wrapper"
+              class="c7n-ripple-wrapper"
             />
           </button>
         </li>
         <li
           aria-disabled="false"
-          class=" ant-pagination-next"
+          class=" c7n-pagination-next"
           tabindex="0"
           title="Next Page"
         >
           <button
-            class="ant-btn ant-btn-circle ant-btn-icon-only ant-btn-flat"
+            class="c7n-btn c7n-btn-circle c7n-btn-icon-only c7n-btn-flat"
             type="button"
           >
             <i
               class="icon icon-navigate_next"
             />
             <div
-              class="ant-ripple-wrapper"
+              class="c7n-ripple-wrapper"
             />
           </button>
         </li>
         <li
           aria-disabled="false"
-          class=" ant-pagination-last"
+          class=" c7n-pagination-last"
           tabindex="0"
           title="Last Page"
         >
           <button
-            class="ant-btn ant-btn-circle ant-btn-icon-only ant-btn-flat"
+            class="c7n-btn c7n-btn-circle c7n-btn-icon-only c7n-btn-flat"
             type="button"
           >
             <i
               class="icon icon-last_page"
             />
             <div
-              class="ant-ripple-wrapper"
+              class="c7n-ripple-wrapper"
             />
           </button>
         </li>

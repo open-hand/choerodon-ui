@@ -2,64 +2,64 @@
 
 exports[`DatePicker prop locale should works 1`] = `
 <span
-  class="ant-calendar-picker"
+  class="c7n-calendar-picker"
 >
   <span
-    class="ant-input-wrapper ant-input-has-value ant-input-has-suffix"
+    class="c7n-input-wrapper c7n-input-has-value c7n-input-has-suffix"
     style=""
   >
     <div
-      class="ant-input-content"
+      class="c7n-input-content"
     >
       <div
-        class="ant-input-rendered-wrapper"
+        class="c7n-input-rendered-wrapper"
       >
         <div
-          class="ant-input-rendered"
+          class="c7n-input-rendered"
           style="margin: 0px 0px 0px 0px;"
         >
           <div
-            class="ant-input-placeholder"
+            class="c7n-input-placeholder"
           >
             Избери дата
           </div>
           <input
-            class="ant-input ant-calendar-picker-input ant-input"
+            class="c7n-input c7n-calendar-picker-input c7n-input"
             readonly=""
             type="text"
             value="2000-01-01"
           />
         </div>
         <span
-          class="ant-input-suffix"
+          class="c7n-input-suffix"
         >
           <span
-            class="ant-calendar-picker-icon-wrapper"
+            class="c7n-calendar-picker-icon-wrapper"
             style="min-width: 42px;"
           >
             <button
-              class="ant-btn ant-calendar-picker-clear ant-btn-circle ant-btn-sm ant-btn-icon-only ant-btn-flat"
+              class="c7n-btn c7n-calendar-picker-clear c7n-btn-circle c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
               type="button"
             >
               <i
                 class="icon icon-close"
               />
               <div
-                class="ant-ripple-wrapper"
+                class="c7n-ripple-wrapper"
               />
             </button>
             <i
-              class="icon icon-date_range ant-calendar-picker-icon"
+              class="icon icon-date_range c7n-calendar-picker-icon"
             />
           </span>
         </span>
       </div>
     </div>
     <div
-      class="ant-input-underline"
+      class="c7n-input-underline"
     >
       <span
-        class="ant-input-ripple"
+        class="c7n-input-ripple"
       />
     </div>
   </span>

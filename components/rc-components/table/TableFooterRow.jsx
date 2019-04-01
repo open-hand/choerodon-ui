@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'mini-store';
 
@@ -9,7 +9,7 @@ function getColumnFooter(col) {
   return () => col.footer;
 }
 
-class TableFooterRow extends React.Component {
+class TableFooterRow extends Component {
   static propTypes = {
     columns: PropTypes.array,
     data: PropTypes.array,
@@ -21,24 +21,24 @@ class TableFooterRow extends React.Component {
       PropTypes.string,
       PropTypes.number,
     ]),
-  }
+  };
 
   handleMouseEnter = () => {
     const { onHover } = this.props;
     if (onHover) {
       onHover(true, FOOTER_ROW_KEY);
     }
-  }
+  };
 
   handleMouseLeave = () => {
     const { onHover } = this.props;
     if (onHover) {
       onHover(false, FOOTER_ROW_KEY);
     }
-  }
+  };
 
   render() {
-    const{ columns, data, components, prefixCls, hovered, height } = this.props;
+    const { columns, data, components, prefixCls, hovered, height } = this.props;
     const FooterRow = components.footer.row;
     const FooterCell = components.footer.cell;
 
@@ -59,7 +59,7 @@ class TableFooterRow extends React.Component {
             key={col.key || col.dataIndex}
           >
             {col.footer ? getColumnFooter(col)(data) : null}
-          </FooterCell>
+          </FooterCell>,
         )}
       </FooterRow>
     );

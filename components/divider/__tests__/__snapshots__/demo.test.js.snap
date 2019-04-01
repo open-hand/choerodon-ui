@@ -6,16 +6,16 @@ exports[`renders ./components/divider/demo/horizontal.md correctly 1`] = `
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista probare, quae sunt a te dicta? Refert tamen, quo modo.
   </p>
   <div
-    class="ant-divider ant-divider-horizontal"
+    class="c7n-divider c7n-divider-horizontal"
   />
   <p>
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista probare, quae sunt a te dicta? Refert tamen, quo modo.
   </p>
   <div
-    class="ant-divider ant-divider-horizontal ant-divider-with-text"
+    class="c7n-divider c7n-divider-horizontal c7n-divider-with-text"
   >
     <span
-      class="ant-divider-inner-text"
+      class="c7n-divider-inner-text"
     >
       With Text
     </span>
@@ -24,16 +24,16 @@ exports[`renders ./components/divider/demo/horizontal.md correctly 1`] = `
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista probare, quae sunt a te dicta? Refert tamen, quo modo.
   </p>
   <div
-    class="ant-divider ant-divider-horizontal ant-divider-dashed"
+    class="c7n-divider c7n-divider-horizontal c7n-divider-dashed"
   />
   <p>
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista probare, quae sunt a te dicta? Refert tamen, quo modo.
   </p>
   <div
-    class="ant-divider ant-divider-horizontal ant-divider-with-text-left"
+    class="c7n-divider c7n-divider-horizontal c7n-divider-with-text-left"
   >
     <span
-      class="ant-divider-inner-text"
+      class="c7n-divider-inner-text"
     >
       With Text
     </span>
@@ -42,10 +42,10 @@ exports[`renders ./components/divider/demo/horizontal.md correctly 1`] = `
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista probare, quae sunt a te dicta? Refert tamen, quo modo.
   </p>
   <div
-    class="ant-divider ant-divider-horizontal ant-divider-with-text-right"
+    class="c7n-divider c7n-divider-horizontal c7n-divider-with-text-right"
   >
     <span
-      class="ant-divider-inner-text"
+      class="c7n-divider-inner-text"
     >
       With Text
     </span>
@@ -60,7 +60,7 @@ exports[`renders ./components/divider/demo/vertical.md correctly 1`] = `
 <div>
   Text
   <div
-    class="ant-divider ant-divider-vertical"
+    class="c7n-divider c7n-divider-vertical"
   />
   <a
     href="#"
@@ -68,7 +68,7 @@ exports[`renders ./components/divider/demo/vertical.md correctly 1`] = `
     Link
   </a>
   <div
-    class="ant-divider ant-divider-vertical"
+    class="c7n-divider c7n-divider-vertical"
   />
   <a
     href="#"

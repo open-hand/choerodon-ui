@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import warning from 'warning';
+import warning from '../../../_util/warning';
 
 const calcPoints = (vertical, marks, dots, step, min, max) => {
   warning(

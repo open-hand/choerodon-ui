@@ -1,18 +1,20 @@
-import * as React from 'react';
+import React, { Component, ReactElement, ReactNode } from 'react';
 import Icon from '../icon';
 import Select, { SelectProps } from '../select';
 import Pagination from '../pagination';
 import Tooltip from '../tooltip';
 import classNames from 'classnames';
-import omit from 'omit.js';
+import omit from 'lodash/omit';
+import { getPrefixCls } from '../configure';
 
 const Option = Select.Option;
 const icons = Icon.icons;
 
 export interface IconSelectProps extends SelectProps {
-  prefix?: string;
+  prefixCls?: string;
   showAll?: boolean;
 }
+
 export interface IconSelectState {
   current: number,
   total: number,
@@ -20,16 +22,18 @@ export interface IconSelectState {
   filterValue: string,
   data: any,
 }
-export default class IconSelect extends React.Component<IconSelectProps, IconSelectState> {
+
+export default class IconSelect extends Component<IconSelectProps, IconSelectState> {
+  static displayName = 'IconSelect';
   static defaultProps = {
-    prefix: 'ant-icon-select',
     filter: true,
     showArrow: false,
     showCheckAll: false,
     showAll: false,
   };
   icons: any;
-  rcSelect: React.ReactNode | null;
+  rcSelect: ReactNode | null;
+
   constructor(props: IconSelectProps) {
     super(props);
     this.state = {
@@ -92,62 +96,57 @@ export default class IconSelect extends React.Component<IconSelectProps, IconSel
     });
   }
 
-  handleRender = (label: React.ReactElement<any>) => {
+  handleRender = (label: ReactElement<any>) => {
     if (typeof label === 'string' && label) {
-      return <span><Icon type={label}/> {label}</span>;
+      return <span><Icon type={label} /> {label}</span>;
     } else if (typeof label === 'object' && label.props) {
       const { children } = label.props;
-      return children ? React.cloneElement(<span/>, {}, children) : null;
+      return children ? <span>{children}</span> : null;
     } else {
       return null;
     }
-  }
+  };
 
   handlePageChange = (current: number, pageSize: number) => {
     const { filterValue } = this.state;
     this.initIcon(current, pageSize, filterValue);
-  }
+  };
 
   handleFilter = (value: string) => {
     this.initIcon(1, 20, value);
-  }
+  };
 
-  saveRef = (node: React.ReactNode) => {
-     if (node) {
-       this.rcSelect = node;
-     }
-  }
+  saveRef = (node: ReactNode) => {
+    if (node) {
+      this.rcSelect = node;
+    }
+  };
 
   renderFooter() {
     const { total, pageSize, current } = this.state;
     return (
-      <React.Fragment>
-        <Pagination
-          total={total}
-          onChange={this.handlePageChange}
-          pageSizeOptions={['20', '40', '80']}
-          pageSize={pageSize}
-          onShowSizeChange={this.handlePageChange}
-          current={current}
-        />
-      </React.Fragment>
-
+      <Pagination
+        total={total}
+        onChange={this.handlePageChange}
+        pageSizeOptions={['20', '40', '80']}
+        pageSize={pageSize}
+        onShowSizeChange={this.handlePageChange}
+        current={current}
+      />
     );
   }
+
   render() {
-    const { className, prefix, dropdownClassName } = this.props;
-    const selectCls = classNames(className, {
-      [`${prefix}`]: true,
-    });
-    const dropDownCls = classNames(dropdownClassName, {
-      [`${prefix}-dropdown`]: true,
-    });
+    const { className, prefixCls: customizePrefixCls, dropdownClassName } = this.props;
+    const prefixCls = getPrefixCls('icon-select', customizePrefixCls);
+    const selectCls = classNames(className, prefixCls);
+    const dropDownCls = classNames(dropdownClassName, `${prefixCls}-dropdown`);
     const selectProps = {
       ...this.props,
       className: selectCls,
       dropdownClassName: dropDownCls,
-    }
-    const otherProps = omit(selectProps, ['prefix']);
+    };
+    const otherProps = omit(selectProps, ['prefixCls']);
     return (
       <Select
         {...otherProps}

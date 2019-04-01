@@ -1,0 +1,26 @@
+---
+category: Pro Components
+subtitle: 多语言输入框
+type: Data Entry
+title: IntlField
+---
+
+表单控件。
+
+## 何时使用
+
+
+
+## API
+
+### IntlField
+
+多语言输入框
+
+更多属性请参考 [ViewComponent](/components-pro/text-field/#TextField)。
+
+<style>
+.code-box .c7n-pro-row {
+  margin-bottom: .24rem;
+}
+</style>

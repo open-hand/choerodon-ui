@@ -141,13 +141,25 @@
     }
   }
 
-  .code-expand-icon.ant-tooltip-open .code-expand-icon-show {
+  .code-expand-icon.c7n-tooltip-open .code-expand-icon-show {
     opacity: 1;
   }
 
   .code-expand-icon-hide {
     opacity: 0;
     pointer-events: none;
+  }
+
+  .code-refresh-icon {
+    position: absolute;
+    right: 40px;
+    bottom: 23px;
+    cursor: pointer;
+    opacity: 0.55;
+    transition: all 0.4s;
+    &:hover {
+      opacity: 1;
+    }
   }
 
   .highlight-wrapper {
@@ -168,7 +180,7 @@
       background: #fff;
     }
     &:not(:first-child) {
-       border-top: 1px dashed @site-border-color-split;
+      border-top: 1px dashed @site-border-color-split;
     }
   }
 

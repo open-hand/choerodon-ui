@@ -1,6 +1,6 @@
-import React from 'react';
+import { Component } from 'react';
 
-export default class SuggestionWrapper extends React.Component {
+export default class SuggestionWrapper extends Component {
   componentDidMount() {
     this.props.renderReady();
   }

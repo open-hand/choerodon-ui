@@ -7,7 +7,7 @@ describe('Form', () => {
     const wrapper = shallow(
       <Form hideRequiredMark />
     );
-    expect(wrapper.hasClass('ant-form-hide-required-mark')).toBe(true);
+    expect(wrapper.hasClass('c7n-form-hide-required-mark')).toBe(true);
   });
 
   describe('wrappedComponentRef', () => {

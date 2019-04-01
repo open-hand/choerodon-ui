@@ -1,26 +1,27 @@
-import * as React from 'react';
+import React, { Component, CSSProperties, KeyboardEventHandler, MouseEventHandler, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import shallowEqual from 'shallowequal';
+import shallowEqual from 'lodash/isEqual';
 import CheckboxGroup, { CheckboxGroupContext } from './Group';
 import RcCheckbox from '../rc-components/checkbox';
+import { getPrefixCls } from '../configure';
 
 export interface AbstractCheckboxProps<T> {
   prefixCls?: string;
   className?: string;
   defaultChecked?: boolean;
   checked?: boolean;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   disabled?: boolean;
   onChange?: (e: T) => void;
-  onMouseEnter?: React.MouseEventHandler<any>;
-  onMouseLeave?: React.MouseEventHandler<any>;
-  onKeyPress?: React.KeyboardEventHandler<any>;
-  onKeyDown?: React.KeyboardEventHandler<any>;
+  onMouseEnter?: MouseEventHandler<any>;
+  onMouseLeave?: MouseEventHandler<any>;
+  onKeyPress?: KeyboardEventHandler<any>;
+  onKeyDown?: KeyboardEventHandler<any>;
   value?: any;
   tabIndex?: number;
   name?: string;
-  children?: React.ReactNode;
+  children?: ReactNode;
 }
 
 export interface CheckboxProps extends AbstractCheckboxProps<CheckboxChangeEvent> {
@@ -38,10 +39,10 @@ export interface CheckboxChangeEvent {
   nativeEvent: MouseEvent;
 }
 
-export default class Checkbox extends React.Component<CheckboxProps, {}> {
+export default class Checkbox extends Component<CheckboxProps, {}> {
+  static displayName = 'Checkbox';
   static Group: typeof CheckboxGroup;
   static defaultProps = {
-    prefixCls: 'ant-checkbox',
     indeterminate: false,
   };
 
@@ -53,8 +54,8 @@ export default class Checkbox extends React.Component<CheckboxProps, {}> {
 
   shouldComponentUpdate(nextProps: CheckboxProps, nextState: {}, nextContext: CheckboxGroupContext) {
     return !shallowEqual(this.props, nextProps) ||
-           !shallowEqual(this.state, nextState) ||
-           !shallowEqual(this.context.checkboxGroup, nextContext.checkboxGroup);
+      !shallowEqual(this.state, nextState) ||
+      !shallowEqual(this.context.checkboxGroup, nextContext.checkboxGroup);
   }
 
   focus() {
@@ -67,12 +68,12 @@ export default class Checkbox extends React.Component<CheckboxProps, {}> {
 
   saveCheckbox = (node: any) => {
     this.rcCheckbox = node;
-  }
+  };
 
   render() {
     const { props, context } = this;
     const {
-      prefixCls,
+      prefixCls: customizePrefixCls,
       className,
       children,
       indeterminate,
@@ -81,6 +82,7 @@ export default class Checkbox extends React.Component<CheckboxProps, {}> {
       onMouseLeave,
       ...restProps,
     } = props;
+    const prefixCls = getPrefixCls('checkbox', customizePrefixCls);
     const { checkboxGroup } = context;
     let checkboxProps: CheckboxProps = { ...restProps };
     if (checkboxGroup) {

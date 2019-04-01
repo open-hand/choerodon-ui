@@ -1,12 +1,12 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import React, { Component, KeyboardEvent, MouseEvent } from 'react';
+import { findDOMNode } from 'react-dom';
 import LazyRenderBox from './LazyRenderBox';
 import IDialogPropTypes from './IDialogPropTypes';
 import Icon from '../../icon';
-import Animate from '../animate';
+import Animate from '../../animate';
 import getScrollBarSize from '../util/getScrollBarSize';
-import KeyCode from '../util/KeyCode';
-import addEventListener from '../util/Dom/addEventListener';
+import KeyCode from '../../_util/KeyCode';
+import addEventListener from '../../_util/addEventListener';
 
 let uuid = 0;
 let openCount = 0;
@@ -47,7 +47,7 @@ function offset(el: any) {
   return pos;
 }
 
-export default class Dialog extends React.Component<IDialogPropTypes, any> {
+export default class Dialog extends Component<IDialogPropTypes, any> {
   static defaultProps = {
     className: '',
     mask: true,
@@ -78,13 +78,13 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
 
   componentDidMount() {
     const { center } = this.props;
-    const dialogNode: any = ReactDOM.findDOMNode(this.dialog);
+    const dialogNode: any = findDOMNode(this.dialog);
     if (center && dialogNode) {
       const { style } = dialogNode;
       this.center();
       style.margin = '0';
       style.padding = '0';
-      this.addEventListener();
+      this.onEventListener();
     }
     this.componentDidUpdate({});
   }
@@ -100,7 +100,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
         this.lastOutSideFocusNode = document.activeElement as HTMLElement;
         this.addScrollingEffect();
         this.wrap.focus();
-        const dialogNode = ReactDOM.findDOMNode(this.dialog);
+        const dialogNode = findDOMNode(this.dialog);
         if (mousePosition) {
           const elOffset = offset(dialogNode);
           setTransformOrigin(dialogNode,
@@ -130,29 +130,30 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
       this.removeEventListener();
     }
   }
+
   center = () => {
     const { center } = this.props;
-    const dialogNode: any = ReactDOM.findDOMNode(this.dialog);
+    const dialogNode: any = findDOMNode(this.dialog);
     if (center && dialogNode && typeof window !== undefined) {
       const {
         clientWidth: docWidth,
         clientHeight: docHeight,
-        } = window.document.documentElement;
+      } = window.document.documentElement;
       const { offsetWidth: width, offsetHeight: height, style } = dialogNode;
       style.left = `${Math.max((docWidth - width) / 2, 0)}px`;
       style.top = `${Math.max((docHeight - height) / 2, 0)}px`;
     }
-  }
-  addEventListener = () => {
+  };
+  onEventListener = () => {
     if (typeof window !== undefined) {
       this.resizeEvent = addEventListener(window, 'resize', this.center);
     }
-  }
+  };
   removeEventListener = () => {
     if (typeof window !== undefined) {
       this.resizeEvent.remove();
     }
-  }
+  };
   onAnimateLeave = () => {
     const { afterClose } = this.props;
     // need demo?
@@ -171,8 +172,8 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     if (animationEnd) {
       animationEnd();
     }
-  }
-  onMaskClick = (e: React.MouseEvent<HTMLDivElement>) => {
+  };
+  onMaskClick = (e: MouseEvent<HTMLDivElement>) => {
     // android trigger click on open (fastclick??)
     if (Date.now() - this.openTime < 300) {
       return;
@@ -181,7 +182,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
       this.close(e);
     }
   };
-  onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+  onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     const props = this.props;
     if (props.keyboard && e.keyCode === KeyCode.ESC) {
       this.close(e);
@@ -253,7 +254,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
         ref={this.saveRef('dialog')}
         style={style}
         className={`${prefixCls} ${props.className || ''}`}
-        visible={props.visible}
+        hidden={!props.visible}
       >
         <div className={`${prefixCls}-content`}>
           {closer}
@@ -276,7 +277,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
     return (
       <Animate
         key="dialog"
-        showProp="visible"
+        hiddenProp="hidden"
         onEnd={this.onAnimateEnd}
         onLeave={this.onAnimateLeave}
         transitionName={transitionName}
@@ -312,7 +313,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
           key="mask"
           className={`${props.prefixCls}-mask`}
           hiddenClassName={`${props.prefixCls}-mask-hidden`}
-          visible={props.visible}
+          hidden={!props.visible}
           {...props.maskProps}
         />
       );
@@ -320,7 +321,7 @@ export default class Dialog extends React.Component<IDialogPropTypes, any> {
         maskElement = (
           <Animate
             key="mask"
-            showProp="visible"
+            hiddenProp="hidden"
             transitionAppear
             component=""
             transitionName={maskTransition}

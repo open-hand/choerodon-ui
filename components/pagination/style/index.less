@@ -2,7 +2,7 @@
 @import "../../style/mixins/index";
 @import "../../input/style/mixin";
 
-@pagination-prefix-cls: ~"@{ant-prefix}-pagination";
+@pagination-prefix-cls: ~"@{c7n-prefix}-pagination";
 
 .@{pagination-prefix-cls} {
   .reset-component;
@@ -29,7 +29,7 @@
     vertical-align: middle;
     height: @pagination-item-size;
     line-height: @pagination-item-size;
-    margin-right: 24px;
+    margin-right: .24rem;
   }
 
   &-item {
@@ -38,13 +38,13 @@
     user-select: none;
     min-width: @pagination-item-size;
     height: @pagination-item-size;
-    line-height: @pagination-item-size - 2px;
+    line-height: @pagination-item-size - .02rem;
     text-align: center;
     list-style: none;
     display: inline-block;
     vertical-align: middle;
     background-color: @component-background;
-    margin-right: 8px;
+    margin-right: .08rem;
     font-family: @pagination-font-family;
     outline: 0;
 
@@ -52,7 +52,7 @@
       text-decoration: none;
       color: @text-color;
       transition: none;
-      margin: 0 6px;
+      margin: 0 .06rem;
     }
 
     &:focus,
@@ -89,7 +89,7 @@
   &-prev,
   &-jump-prev,
   &-jump-next {
-    margin-right: 8px;
+    margin-right: .08rem;
   }
 
   &-first,
@@ -128,7 +128,7 @@
     }
 
     .@{pagination-prefix-cls}-item-link {
-      .iconfont-mixin(24px);
+      .iconfont-mixin(.24rem);
       background-color: @component-background;
       outline: none;
       display: block;
@@ -136,7 +136,7 @@
 
       &:before {
         display: block;
-        height: @pagination-item-size - 2px;
+        height: @pagination-item-size - .02rem;
         line-height: @pagination-item-size;
         text-align: center;
         font-weight: 500;
@@ -190,33 +190,33 @@
         cursor: not-allowed;
       }
     }
-    .@{ant-prefix}-btn[disabled] {
+    .@{c7n-prefix}-btn[disabled] {
       background-color: transparent;
     }
   }
 
   &-slash {
-    margin: 0 10px 0 5px;
+    margin: 0 .1rem 0 .05rem;
   }
 
   &-options {
     display: inline-block;
     vertical-align: middle;
-    margin-left: 16px;
+    margin-left: .16rem;
     height: @pagination-item-size;
     line-height: @pagination-item-size;
 
-    &-size-changer.@{ant-prefix}-select {
+    &-size-changer.@{c7n-prefix}-select {
       width: auto;
       height: @pagination-item-size;
       float: right;
-      line-height: @pagination-item-size - 3px;
+      line-height: @pagination-item-size - .03rem;
 
-      .@{ant-prefix}-select-selection {
+      .@{c7n-prefix}-select-selection {
         padding-top: 0;
         text-align: right;
         height: auto;
-        min-width: 64px;
+        min-width: .64rem;
         &__rendered {
           display: block;
         }
@@ -226,15 +226,15 @@
           vertical-align: middle;
         }
 
-        .@{ant-prefix}-select-arrow {
+        .@{c7n-prefix}-select-arrow {
           display: inline-block;
           vertical-align: inherit;
-          > i.icon {
+          > i.@{iconfont-css-prefix} {
             vertical-align: text-bottom;
           }
         }
       }
-      .@{ant-prefix}-select-underline {
+      .@{c7n-prefix}-select-underline {
         display: none;
       }
     }
@@ -247,15 +247,15 @@
 
       input {
         .input;
-        margin: 0 8px;
-        width: 50px;
+        margin: 0 .08rem;
+        width: .5rem;
       }
     }
 
     &-label {
       color: rgba(0, 0, 0, 0.66);
       letter-spacing: .01em;
-      margin-right: 4px;
+      margin-right: .04rem;
       display: inline-block;
     }
   }
@@ -277,17 +277,17 @@
 
   &-simple &-simple-pager {
     display: inline-block;
-    margin-right: 8px;
+    margin-right: .08rem;
     height: @pagination-item-size-sm;
 
     input {
-      margin-right: 8px;
+      margin-right: .08rem;
       box-sizing: border-box;
       background-color: @component-background;
       border-radius: @border-radius-base;
       border: @border-width-base @border-style-base @border-color-base;
       outline: none;
-      padding: 0 6px;
+      padding: 0 .06rem;
       height: 100%;
       text-align: center;
       transition: border-color .3s;
@@ -300,7 +300,7 @@
 
   &-tiny {
     .@{pagination-prefix-cls}-options {
-      margin-right: 16px;
+      margin-right: .16rem;
     }
   }
 
@@ -314,7 +314,7 @@
     margin: 0;
     min-width: @pagination-item-size-sm;
     height: @pagination-item-size-sm;
-    line-height: @pagination-item-size-sm - 2px;
+    line-height: @pagination-item-size-sm - .02rem;
   }
 
   &-small &-item:not(&-item-active) {
@@ -358,7 +358,7 @@
 
       input {
         .input-sm;
-        width: 44px;
+        width: .44rem;
       }
     }
   }
@@ -373,7 +373,7 @@
     margin: 0;
     min-width: @pagination-item-size-lg;
     height: @pagination-item-size-lg;
-    line-height: @pagination-item-size-lg - 2px;
+    line-height: @pagination-item-size-lg - .02rem;
   }
 
   &-large &-item:not(&-item-active) {
@@ -417,7 +417,7 @@
 
       input {
         .input-sm;
-        width: 44px;
+        width: .44rem;
       }
     }
   }

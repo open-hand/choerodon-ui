@@ -42,7 +42,7 @@ ReactDOM.render(
 ````
 
 <style>
-#components-message-demo-other .ant-btn {
+#components-message-demo-other .c7n-btn {
   margin-right: 8px;
 }
 </style>

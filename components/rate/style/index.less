@@ -1,7 +1,7 @@
 @import "../../style/themes/default";
 @import "../../style/mixins/index";
 
-@rate-prefix-cls: ~"@{ant-prefix}-rate";
+@rate-prefix-cls: ~"@{c7n-prefix}-rate";
 
 .@{rate-prefix-cls} {
   .reset-component;
@@ -9,7 +9,7 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  font-size: 20px;
+  font-size: .2rem;
   display: inline-block;
   color: @rate-star-color;
   outline: none;
@@ -25,7 +25,7 @@
     margin: 0;
     padding: 0;
     display: inline-block;
-    margin-right: 8px;
+    margin-right: .08rem;
     position: relative;
     transition: all .3s;
     color: inherit;
@@ -64,7 +64,7 @@
   }
 
   &-text {
-    margin-left: 8px;
+    margin-left: .08rem;
     display: inline-block;
     font-size: @font-size-base;
   }

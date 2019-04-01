@@ -2,11 +2,7 @@ import React from 'react';
 import classnames from 'classnames';
 import Hammer from '../hammerjs';
 import ReactDOM from 'react-dom';
-import {
-  isVertical,
-  getStyle,
-  setPxStyle,
-} from './utils';
+import { getStyle, isVertical, setPxStyle, } from './utils';
 
 export default {
   getInitialState() {

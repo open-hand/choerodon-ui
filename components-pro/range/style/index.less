@@ -1,0 +1,79 @@
+@import "../../../components/style/themes/default";
+@import "../../../components/style/mixins/index";
+
+@range-prefix-cls: ~"@{c7n-prefix}-pro-range";
+
+.@{range-prefix-cls} {
+  display: none;
+  &-wrapper {
+    white-space: nowrap;
+    outline: none;
+    padding: .04rem 0;
+    display: block;
+    position: relative;
+    width: 100%;
+  }
+
+  &-vertical {
+    padding: 0 .04rem;
+    height: 100%;
+  }
+
+  &-vertical &-track {
+    width: .04rem;
+    height: 100%;
+
+    .@{range-prefix-cls}-selection {
+      bottom: 0;
+      width: .04rem;
+      height: 0;
+    }
+    .@{range-prefix-cls}-draghandle {
+      margin: 0 0 -0.07rem 0;
+      left: -.05rem;
+      bottom: 0;
+    }
+  }
+
+  &-track {
+    position: relative;
+    height: .04rem;
+    border-radius: .04rem; /*将轨道设为圆角的*/
+    background: @normal-color;
+    cursor: pointer;
+
+    .@{range-prefix-cls}-selection {
+      position: absolute;
+      left: 0;
+      height: .04rem;
+      background: @primary-color;
+      cursor: inherit;
+    }
+
+    .@{range-prefix-cls}-draghandle {
+      position: absolute;
+      margin-left: -0.07rem;
+      z-index: 1;
+      width: .14rem;
+      height: .14rem;
+      bottom: -.05rem;
+      border-radius: 50%;
+      border: @border-width-base @border-style-base @primary-color;
+      background: #fff;
+      cursor: inherit;
+      user-select: none;
+    }
+  }
+
+  &:disabled + &-track {
+    cursor: not-allowed;
+
+    .@{range-prefix-cls}-draghandle {
+      border: @border-width-base @border-style-base @disabled-color;
+    }
+
+    .@{range-prefix-cls}-selection {
+      background: @disabled-color;
+    }
+  }
+}

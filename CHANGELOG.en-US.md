@@ -14,6 +14,24 @@ timeline: true
 * Major version release is not included in this schedule for breaking change and new features.
 
 ---
+## 0.6.0
+
+`2018-04-01`
+
+- 🌟 Incorporate the `choerodon-ui/pro` component library.
+- 🌟 The default ant prefix is changed to c7n. To use the ant prefix, please [Modify the topic variable @c7n-prefix] (https://choerodon.github.io/choerodon-ui/docs/react/customize-theme) And use [global configuration] (https://choerodon.github.io/choerodon-ui/components/configure).
+- 🌟 `Icon`: Add new icons.
+
+## 0.5.3
+
+`2018-03-20`
+
+- 💄 `Input`: The Input input shows a prompt when it reaches the character limit.
+- 🌟 `Modal`: Modal adds the `disableOk` and `disableCancel` properties.
+- 🌟 `TreeNode`: TreeNode adds the `wrapper` attribute.
+- 🌟 `Icon`: Add new icons.
+- 🌟 `IconSelect`: Add the `showAll` attribute.
+
 ## 0.5.2
 
 `2018-02-22`

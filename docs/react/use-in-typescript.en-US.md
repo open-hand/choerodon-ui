@@ -3,7 +3,7 @@ order: 5
 title: Use in TypeScript
 ---
 
-Let's create a TypeScript project by using `create-react-app`, then import `antd` step by step.
+Let's create a TypeScript project by using `create-react-app`, then import `choerodon-ui` step by step.
 
 ---
 
@@ -11,35 +11,35 @@ Let's create a TypeScript project by using `create-react-app`, then import `antd
 
 Ensure your system has installed latest version of [yarn](https://yarnpkg.com) or [npm](https://www.npmjs.com/).
 
-Create a new project named `antd-demo-ts` using yarn.
+Create a new project named `choerodon-ui-demo-ts` using yarn.
 
 ```bash
-$ yarn create react-app antd-demo-ts --scripts-version=react-scripts-ts
+$ yarn create react-app choerodon-ui-demo-ts --scripts-version=react-scripts-ts
 ```
 
 If you are using npm (we will use yarn in the following instructions, it's ok to replace yarn with npm)
 
 ```bash
 $ npm install -g create-react-app
-$ create-react-app antd-demo-ts --scripts-version=react-scripts-ts
+$ create-react-app choerodon-ui-demo-ts --scripts-version=react-scripts-ts
 ```
 
-Then we go inside `antd-demo-ts` and start it.
+Then we go inside `choerodon-ui-demo-ts` and start it.
 
 ```bash
-$ cd antd-demo-ts
+$ cd choerodon-ui-demo-ts
 $ yarn start
 ```
 
 Open browser at http://localhost:3000/, it renders a header saying "Welcome to React" on the page.
 
-## Import antd
+## Import choerodon-ui
 
 ```bash
-$ yarn add antd
+$ yarn add choerodon-ui
 ```
 
-Modify `src/App.js`, import Button component from `antd`.
+Modify `src/App.js`, import Button component from `choerodon-ui`.
 
 ```jsx
 import * as React from 'react';
@@ -59,10 +59,10 @@ class App extends React.Component {
 export default App;
 ```
 
-Add `antd/dist/antd.css` at the top of `src/App.css`.
+Add `choerodon-ui/dist/choerodon-ui.css` at the top of `src/App.css`.
 
 ```css
-@import '~antd/dist/antd.css';
+@import '~choerodon-ui/dist/choerodon-ui.css';
 
 .App {
   text-align: center;
@@ -71,11 +71,11 @@ Add `antd/dist/antd.css` at the top of `src/App.css`.
 ...
 ```
 
-Ok, reboot with `yarn start`, you should now see a blue primary button displayed on the page. Next you can choose any components of `antd` to develop your application. Visit other workflows of `create-react-app` at its [User Guide ](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
+Ok, reboot with `yarn start`, you should now see a blue primary button displayed on the page. Next you can choose any components of `choerodon-ui` to develop your application. Visit other workflows of `create-react-app` at its [User Guide ](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
 
 ## Advanced Guides
 
-We are successfully running antd components now but in the real world, there are still lots of problems about antd-demo-ts.
+We are successfully running choerodon-ui components now but in the real world, there are still lots of problems about choerodon-ui-demo-ts.
 For instance, we actually import all styles of components in the project which may be a network performance issue.
 
 Now we need to customize the default webpack config. We can achieve that by using [react-app-rewired](https://github.com/timarney/react-app-rewired) which is one of create-react-app's custom config solutions.
@@ -133,7 +133,7 @@ module.exports = function override(config, env) {
   tsLoader.options = {
     getCustomTransformers: () => ({
       before: [ tsImportPluginFactory({
-        libraryName: 'antd',
+        libraryName: 'choerodon-ui',
         libraryDirectory: 'es',
         style: 'css',
       }) ]
@@ -144,7 +144,7 @@ module.exports = function override(config, env) {
 }
 ```
 
-Remove the `@import '~antd/dist/antd.css';` statement added before because `babel-plugin-import` will import styles and import components like below:
+Remove the `@import '~choerodon-ui/dist/choerodon-ui.css';` statement added before because `babel-plugin-import` will import styles and import components like below:
 
 ```diff
 import * as React from 'react';
@@ -191,7 +191,7 @@ $ yarn add react-app-rewire-less --dev
     tsLoader.options = {
       getCustomTransformers: () => ({
         before: [ tsImportPluginFactory({
-          libraryName: 'antd',
+          libraryName: 'choerodon-ui',
           libraryDirectory: 'es',
 -         style: 'css',
 +         style: true,
@@ -208,19 +208,3 @@ $ yarn add react-app-rewire-less --dev
 ```
 
 We use `modifyVars` option of [less-loader](https://github.com/webpack/less-loader#less-options) here, you can see a green button rendered on the page after rebooting the start server.
-
-## Alternative way
-
-You can also follow instructions in [Use in create-react-app](/docs/react/use-with-create-react-app.en-US.md), then use [react-app-rewire-typescript][https://github.com/lwd-technology/react-app-rewire-typescript] to setup the TypeScript development environment by yourself.
-
-And you can use [react-scripts-ts-antd](https://www.npmjs.com/package/react-scripts-ts-antd) which includes ts-import-plugin, react-app-rewired, scss, less and etc.You can create a new project that without any configurations by running just one command.
-```bash
-$ create-react-app my-project --scripts-version=react-scripts-ts-antd
-```
-
-## FAQ
-
-### error TS2605: JSX element type Xxx is not a constructor function for JSX elements.
-
-Before antd 3, You need setting `allowSyntheticDefaultImports` to `true` in tsconfig.json.
-

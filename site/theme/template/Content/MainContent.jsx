@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'bisheng/router';
-import { Row, Col, Menu, Icon } from 'choerodon-ui';
+import { Col, Icon, Menu, Row } from 'choerodon-ui';
 import classNames from 'classnames';
 import MobileMenu from 'rc-drawer';
 import Article from './Article';
@@ -21,7 +21,7 @@ function getModuleData(props) {
   const moduleName = /^\/?components/.test(pathname)
     ? 'components' : pathname.split('/').filter(item => item).slice(0, 2).join('/');
   const moduleData = moduleName === 'components' || moduleName === 'docs/react'
-    || moduleName === 'changelog' || moduleName === 'changelog-cn'
+  || moduleName === 'changelog' || moduleName === 'changelog-cn'
     ? [...props.picked.components, ...props.picked['docs/react'], ...props.picked.changelog]
     : props.picked[moduleName];
   const excludedSuffix = utils.isZhCN(props.location.pathname) ? 'en-US.md' : 'zh-CN.md';
@@ -37,7 +37,7 @@ export default class MainContent extends React.Component {
   static contextTypes = {
     intl: PropTypes.object.isRequired,
     isMobile: PropTypes.bool.isRequired,
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -107,7 +107,7 @@ export default class MainContent extends React.Component {
 
   handleMenuOpenChange = (openKeys) => {
     this.setState({ openKeys });
-  }
+  };
 
   getSideBarOpenKeys(nextProps) {
     const { themeConfig } = nextProps;
@@ -124,7 +124,7 @@ export default class MainContent extends React.Component {
         moduleData,
         locale,
         themeConfig.categoryOrder,
-        themeConfig.typeOrder
+        themeConfig.typeOrder,
       ).map(m => m.title[locale] || m.title);
       return shouldOpenKeys;
     }
@@ -136,10 +136,10 @@ export default class MainContent extends React.Component {
     const title = item.title[locale] || item.title;
     const text = isTop ? title : [
       <span key="english">{title}</span>,
-      <span className="chinese" key="chinese">{item.subtitle}</span>,
+      locale === 'zh-CN' && <span className="chinese" key="chinese">{item.subtitle}</span>,
     ];
     const { disabled } = item;
-    const url = item.filename.replace(/(\/index)?((\.zh-CN)|(\.en-US))?\.md$/i, '').toLowerCase();
+    const url = item.ref || item.filename.replace(/(\/index)?((\.zh-CN)|(\.en-US))?\.md$/i, '').toLowerCase();
     const child = !item.link ? (
       <Link
         to={utils.getLocalizedPathname(/^components/.test(url) ? `${url}/` : url, locale === 'zh-CN')}
@@ -248,19 +248,21 @@ export default class MainContent extends React.Component {
     return (
       <div className="main-wrapper">
         <Row>
-          {isMobile ? (
-            <MobileMenu
-              iconChild={[<Icon type="menu-unfold" />, <Icon type="menu-fold" />]}
-              key="Mobile-menu"
-              wrapperClassName="drawer-wrapper"
-            >
-              {menuChild}
-            </MobileMenu>
-          ) : (
-            <Col xxl={4} xl={5} lg={6} md={24} sm={24} xs={24} className="main-menu">
-              {menuChild}
-            </Col>
-          )}
+          {
+            isMobile ? (
+              <MobileMenu
+                iconChild={[<Icon type="menu-unfold" />, <Icon type="menu-fold" />]}
+                key="Mobile-menu"
+                wrapperClassName="drawer-wrapper"
+              >
+                {menuChild}
+              </MobileMenu>
+            ) : (
+              <Col xxl={4} xl={5} lg={6} md={24} sm={24} xs={24} className="main-menu">
+                {menuChild}
+              </Col>
+            )
+          }
           <Col xxl={20} xl={19} lg={18} md={24} sm={24} xs={24} className={mainContainerClass}>
             {
               props.demos

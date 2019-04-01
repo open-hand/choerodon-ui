@@ -1,13 +1,11 @@
-import React from 'react';
+import React, { cloneElement, Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import noop from 'lodash/noop';
 import Pager from './Pager';
 import Options from './Options';
 import KEYCODE from './KeyCode';
 import LOCALE from './locale/zh_CN';
-
-function noop() {
-}
 
 function isInteger(value) {
   return typeof value === 'number' &&
@@ -19,7 +17,7 @@ function defaultItemRender(page, type, element) {
   return element;
 }
 
-export default class Pagination extends React.Component {
+export default class Pagination extends Component {
   static propTypes = {
     prefixCls: PropTypes.string,
     current: PropTypes.number,
@@ -115,7 +113,6 @@ export default class Pagination extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     // When current page change, fix focused style of prev item
-    // A hacky solution of https://github.com/ant-design/ant-design/issues/8948
     const { prefixCls } = this.props;
     if (prevState.current !== this.state.current && this.paginationNode) {
       const lastCurrentNode = this.paginationNode.querySelector(
@@ -520,13 +517,13 @@ export default class Pagination extends React.Component {
       }
 
       if (current - 1 >= pageBufferSize * 2 && current !== 1 + 2) {
-        pagerList[0] = React.cloneElement(pagerList[0], {
+        pagerList[0] = cloneElement(pagerList[0], {
           className: `${prefixCls}-item-after-jump-prev`,
         });
         pagerList.unshift(jumpPrev);
       }
       if (allPages - current >= pageBufferSize * 2 && current !== allPages - 2) {
-        pagerList[pagerList.length - 1] = React.cloneElement(pagerList[pagerList.length - 1], {
+        pagerList[pagerList.length - 1] = cloneElement(pagerList[pagerList.length - 1], {
           className: `${prefixCls}-item-before-jump-next`,
         });
         pagerList.push(jumpNext);

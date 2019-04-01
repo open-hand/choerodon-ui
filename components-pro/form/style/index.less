@@ -1,0 +1,51 @@
+@import "../../../components/style/themes/default";
+@import "../../../components/style/mixins/index";
+
+@form-prefix-cls: ~"@{c7n-prefix}-pro-form";
+@field-prefix-cls: ~"@{c7n-prefix}-pro-field";
+
+.make-form(@class: ~'') {
+  .@{form-prefix-cls} {
+    content: "@{class}";
+  }
+}
+
+.@{form-prefix-cls} {
+  &-header {
+    border-bottom: @border-width-base @border-style-base @border-color-base;
+    padding: .08rem;
+    font-size: .16rem;
+    font-weight: 400;
+    margin-bottom: .1rem;
+  }
+  > table {
+    width: 100%;
+    table-layout: fixed;
+  }
+  > table > tbody > tr > td {
+    vertical-align: top;
+  }
+}
+
+.make-form(xs);
+
+@media (min-width: @screen-sm-min) {
+  .make-form(sm);
+}
+
+@media (min-width: @screen-md-min) {
+  .make-form(md);
+}
+
+@media (min-width: @screen-lg-min) {
+  .make-form(lg);
+}
+
+@media (min-width: @screen-xl-min) {
+  .make-form(xl);
+}
+
+@media (min-width: @screen-xxl-min) {
+  .make-form(xxl);
+}
+

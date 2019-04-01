@@ -1,8 +1,9 @@
-import * as React from 'react';
-import omit from 'omit.js';
+import React, { ChangeEvent, Component, CSSProperties, FocusEvent, FormEventHandler, KeyboardEvent, TextareaHTMLAttributes } from 'react';
+import omit from 'lodash/omit';
 import classNames from 'classnames';
 import { AbstractInputProps } from './Input';
 import calculateNodeHeight from './calculateNodeHeight';
+import { getPrefixCls } from '../configure';
 
 function onNextFrame(cb: () => void) {
   if (window.requestAnimationFrame) {
@@ -26,21 +27,21 @@ export interface AutoSizeType {
 
 export interface TextAreaProps extends AbstractInputProps {
   autosize?: boolean | AutoSizeType;
-  onPressEnter?: React.FormEventHandler<any>;
+  onPressEnter?: FormEventHandler<any>;
   autoFocus?: boolean;
 }
 
 export interface TextAreaState {
-  textareaStyles?: React.CSSProperties;
+  textareaStyles?: CSSProperties;
   inputLength?: number;
   focused?: boolean;
 }
 
-export type HTMLTextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement>;
+export type HTMLTextareaProps = TextareaHTMLAttributes<HTMLTextAreaElement>;
 
-export default class TextArea extends React.Component<TextAreaProps & HTMLTextareaProps, TextAreaState> {
+export default class TextArea extends Component<TextAreaProps & HTMLTextareaProps, TextAreaState> {
+  static displayName = 'TextArea';
   static defaultProps = {
-    prefixCls: 'ant-input',
     underline: true,
     showLengthInfo: true,
   };
@@ -60,7 +61,7 @@ export default class TextArea extends React.Component<TextAreaProps & HTMLTextar
     if (this.textAreaRef.value) {
       this.setState({
         inputLength: this.textAreaRef.value.length,
-      })
+      });
     }
     if (this.props.autoFocus) {
       this.setState({
@@ -110,14 +111,18 @@ export default class TextArea extends React.Component<TextAreaProps & HTMLTextar
     const maxRows = autosize ? (autosize as AutoSizeType).maxRows : null;
     const textareaStyles = calculateNodeHeight(this.textAreaRef, false, minRows, maxRows);
     this.setState({ textareaStyles });
+  };
+
+  getPrefixCls() {
+    return getPrefixCls('input', this.props.prefixCls);
   }
 
   getTextAreaClassName() {
-    const { prefixCls, className } = this.props;
-    return classNames(prefixCls, className);
+    const { className } = this.props;
+    return classNames(this.getPrefixCls(), className);
   }
 
-  handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  handleTextareaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     if (!('value' in this.props)) {
       this.resizeTextarea();
     }
@@ -125,9 +130,9 @@ export default class TextArea extends React.Component<TextAreaProps & HTMLTextar
     if (onChange) {
       onChange(e);
     }
-  }
+  };
 
-  handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+  handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     const { onPressEnter, onKeyDown } = this.props;
     if (e.keyCode === 13 && onPressEnter) {
       onPressEnter(e);
@@ -135,64 +140,69 @@ export default class TextArea extends React.Component<TextAreaProps & HTMLTextar
     if (onKeyDown) {
       onKeyDown(e);
     }
-  }
+  };
 
   handleInput = () => {
     this.setState({
       inputLength: this.textAreaRef.value.length,
-    })
-  }
+    });
+  };
 
   saveTextAreaRef = (textArea: HTMLTextAreaElement) => {
     this.textAreaRef = textArea;
-  }
+  };
 
-  getWapperClassName() {
-    const { prefixCls, disabled, label } = this.props;
+  getWrapperClassName() {
+    const { disabled, label } = this.props;
+    const prefixCls = this.getPrefixCls();
     return classNames(`${prefixCls}-wrapper`, `${prefixCls}-textarea`, {
       [`${prefixCls}-has-value`]: this.state.inputLength !== 0,
-      [`${prefixCls}-focus`]: this.state.focused,
+      [`${prefixCls}-focused`]: this.state.focused,
       [`${prefixCls}-disabled`]: disabled,
       [`${prefixCls}-has-label`]: !!label,
     });
   }
 
-  handleFocus = (e: React.FocusEvent<HTMLTextAreaElement>) => {
+  handleFocus = (e: FocusEvent<HTMLTextAreaElement>) => {
     const { onFocus } = this.props;
     this.setState({
       focused: true,
     });
     if (onFocus) {
-      onFocus(e)
+      onFocus(e);
     }
-  }
+  };
 
-  handleBlur = (e: React.FocusEvent<HTMLTextAreaElement>) => {
+  handleBlur = (e: FocusEvent<HTMLTextAreaElement>) => {
     const { onBlur } = this.props;
     this.setState({
       focused: false,
     });
     if (onBlur) {
-      onBlur(e)
+      onBlur(e);
     }
-  }
+  };
 
   render() {
     const props = this.props;
-    const otherProps = omit(props, [
-      'prefixCls',
-      'onPressEnter',
-      'autosize',
-      'placeholder',
-      'underline',
-      'focused',
-      `showLengthInfo`,
-    ]);
+    const prefixCls = this.getPrefixCls();
+    const otherProps: TextAreaProps & HTMLTextareaProps = omit(
+      props,
+      [
+        'prefixCls',
+        'onPressEnter',
+        'autosize',
+        'placeholder',
+        'underline',
+        'focused',
+        'showLengthInfo',
+      ],
+    );
     const style = {
       ...props.style,
       ...this.state.textareaStyles,
     };
-    // Fix https://github.com/ant-design/ant-design/issues/6776
+
     // Make sure it could be reset when using form.getFieldDecorator
     if ('value' in otherProps) {
       otherProps.value = otherProps.value || '';
@@ -200,23 +210,23 @@ export default class TextArea extends React.Component<TextAreaProps & HTMLTextar
     otherProps.onInput = this.handleInput;
 
     const lengthInfo = props.maxLength && props.showLengthInfo ? (
-      <div className={`${props.prefixCls}-length-info`}>{`${this.state.inputLength}/${props.maxLength}`}</div>
+      <div className={`${prefixCls}-length-info`}>{`${this.state.inputLength}/${props.maxLength}`}</div>
     ) : null;
 
     const border = props.underline ? (
       <div>
-        <hr className={`${props.prefixCls}-border`} />
-        <hr className={`${props.prefixCls}-border-active`}/>
+        <hr className={`${prefixCls}-border`} />
+        <hr className={`${prefixCls}-border-active`} />
       </div>
     ) : null;
     const label = props.label ? (
-        <div className={`${this.props.prefixCls}-rendered`}>
-          <div className={`${this.props.prefixCls}-label`}>{props.label}</div>
-        </div>
-      ) : null;
+      <div className={`${prefixCls}-rendered`}>
+        <div className={`${prefixCls}-label`}>{props.label}</div>
+      </div>
+    ) : null;
     const placeholder = !label || this.state.focused ? props.placeholder : '';
     return (
-      <span className={this.getWapperClassName()}>
+      <span className={this.getWrapperClassName()}>
         {label}
         <textarea
           {...otherProps}

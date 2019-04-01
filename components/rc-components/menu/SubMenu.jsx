@@ -1,19 +1,15 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, { Component, createElement } from 'react';
+import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
-import Trigger from '../trigger';
-import KeyCode from '../util/KeyCode';
+import noop from 'lodash/noop';
 import classNames from 'classnames';
 import { connect } from 'mini-store';
+import Trigger from '../trigger';
+import KeyCode from '../../_util/KeyCode';
 import SubPopupMenu from './SubPopupMenu';
 import placements from './placements';
-import Animate from '../animate'
-import {
-  noop,
-  loopMenuItemRecursively,
-  getMenuIdFromSubMenuEventKey,
-  menuAllProps,
-} from './util';
+import Animate from '../../animate';
+import { getMenuIdFromSubMenuEventKey, loopMenuItemRecursively, menuAllProps, } from './util';
 
 let guid = 0;
 
@@ -35,7 +31,7 @@ const updateDefaultActiveFirst = (store, eventKey, defaultActiveFirst) => {
   });
 };
 
-export class SubMenu extends React.Component {
+export class SubMenu extends Component {
   static propTypes = {
     parentMenu: PropTypes.object,
     title: PropTypes.node,
@@ -312,24 +308,24 @@ export class SubMenu extends React.Component {
     } else {
       openChange();
     }
-  }
+  };
 
   isChildrenSelected = () => {
     const ret = { find: false };
     loopMenuItemRecursively(this.props.children, this.props.selectedKeys, ret);
     return ret.find;
-  }
+  };
 
   isOpen = () => {
     return this.props.openKeys.indexOf(this.props.eventKey) !== -1;
-  }
+  };
 
   adjustWidth = () => {
     /* istanbul ignore if */
     if (!this.subMenuTitle || !this.menuInstance) {
       return;
     }
-    const popupMenu = ReactDOM.findDOMNode(this.menuInstance);
+    const popupMenu = findDOMNode(this.menuInstance);
     if (popupMenu.offsetWidth >= this.subMenuTitle.offsetWidth) {
       return;
     }
@@ -340,13 +336,13 @@ export class SubMenu extends React.Component {
 
   saveSubMenuTitle = (subMenuTitle) => {
     this.subMenuTitle = subMenuTitle;
-  }
+  };
 
   renderChildren(children) {
     const props = this.props;
     const baseProps = {
       mode: props.mode === 'horizontal' ? 'vertical' : props.mode,
-      visible: this.props.isOpen,
+      hidden: !this.props.isOpen,
       level: props.level + 1,
       inlineIndent: props.inlineIndent,
       focusable: false,
@@ -379,16 +375,16 @@ export class SubMenu extends React.Component {
     const haveRendered = this.haveRendered;
     this.haveRendered = true;
 
-    this.haveOpened = this.haveOpened || baseProps.visible || baseProps.forceSubMenuRender;
+    this.haveOpened = this.haveOpened || !baseProps.hidden || baseProps.forceSubMenuRender;
     // never rendered not planning to, don't render
     if (!this.haveOpened) {
       return <div />;
     }
 
     // don't show transition on first rendering (no animation for opened menu)
-    // show appear transition if it's not visible (not sure why)
+    // show appear transition if it's hidden (not sure why)
     // show appear transition if it's not inline mode
-    const transitionAppear = haveRendered || !baseProps.visible || !baseProps.mode === 'inline';
+    const transitionAppear = haveRendered || baseProps.hidden || !baseProps.mode === 'inline';
 
     baseProps.className = ` ${baseProps.prefixCls}-sub`;
     const animProps = {};
@@ -405,7 +401,7 @@ export class SubMenu extends React.Component {
     return (
       <Animate
         {...animProps}
-        showProp="visible"
+        hiddenProp="hidden"
         component=""
         transitionAppear={transitionAppear}
       >
@@ -474,9 +470,9 @@ export class SubMenu extends React.Component {
     if (props.mode !== 'horizontal') {
       icon = this.props.expandIcon; // ReactNode
       if (typeof this.props.expandIcon === 'function') {
-        icon = React.createElement(
+        icon = createElement(
           this.props.expandIcon,
-          { ...this.props }
+          { ...this.props },
         );
       }
     }
@@ -499,8 +495,7 @@ export class SubMenu extends React.Component {
     );
     const children = this.renderChildren(props.children);
 
-    const getPopupContainer = props.parentMenu.isRootMenu ?
-      props.parentMenu.props.getPopupContainer : triggerNode => triggerNode.parentNode;
+    const getPopupContainer = props.parentMenu.isRootMenu ? props.parentMenu.props.getPopupContainer : triggerNode => triggerNode.parentNode;
     const popupPlacement = popupPlacementMap[props.mode];
     const popupAlign = props.popupOffset ? { offset: props.popupOffset } : {};
     const popupClassName = props.mode === 'inline' ? '' : props.popupClassName;

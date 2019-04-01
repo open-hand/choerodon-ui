@@ -2,17 +2,17 @@
 
 exports[`List renders empty list 1`] = `
 <div
-  class="ant-list ant-list-split"
+  class="c7n-list c7n-list-split"
 >
   <div>
     <div
-      class="ant-spin-nested-loading"
+      class="c7n-spin-nested-loading"
     >
       <div
-        class="ant-spin-container"
+        class="c7n-spin-container"
       >
         <div
-          class="ant-list-empty-text"
+          class="c7n-list-empty-text"
         >
           No data
         </div>

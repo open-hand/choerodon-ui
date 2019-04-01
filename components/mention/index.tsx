@@ -1,20 +1,21 @@
-import * as React from 'react';
+import React, { Component, CSSProperties, FocusEvent, FocusEventHandler } from 'react';
 import classNames from 'classnames';
-import shallowequal from 'shallowequal';
+import shallowequal from 'lodash/isEqual';
 import Icon from '../icon';
-import RcMention, { Nav, toString, toEditorState, getMentions } from '../rc-components/editor-mention';
+import RcMention, { getMentions, Nav, toEditorState, toString } from '../rc-components/editor-mention';
+import { getPrefixCls } from '../configure';
 
 export type MentionPlacement = 'top' | 'bottom';
 
 export interface MentionProps {
   prefixCls?: string;
-  suggestionStyle?: React.CSSProperties;
+  suggestionStyle?: CSSProperties;
   suggestions?: Array<any>;
   onSearchChange?: Function;
   onChange?: Function;
   notFoundContent?: any;
   loading?: Boolean;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   defaultValue?: any;
   value?: any;
   className?: string;
@@ -22,8 +23,8 @@ export interface MentionProps {
   prefix?: string;
   placeholder?: string;
   getSuggestionContainer?: (triggerNode: Element) => HTMLElement;
-  onFocus?: React.FocusEventHandler<HTMLElement>;
-  onBlur?: React.FocusEventHandler<HTMLElement>;
+  onFocus?: FocusEventHandler<HTMLElement>;
+  onBlur?: FocusEventHandler<HTMLElement>;
   readOnly?: boolean;
   disabled?: boolean;
   placement?: MentionPlacement;
@@ -34,10 +35,10 @@ export interface MentionState {
   focus?: Boolean;
 }
 
-export default class Mention extends React.Component<MentionProps, MentionState> {
+export default class Mention extends Component<MentionProps, MentionState> {
+  static displayName = 'Mention';
   static getMentions = getMentions;
   static defaultProps = {
-    prefixCls: 'ant-mention',
     notFoundContent: '无匹配结果，轻敲空格完成输入',
     loading: false,
     multiLines: false,
@@ -95,7 +96,7 @@ export default class Mention extends React.Component<MentionProps, MentionState>
     });
   }
 
-  onFocus = (ev: React.FocusEvent<HTMLElement>) => {
+  onFocus = (ev: FocusEvent<HTMLElement>) => {
     this.setState({
       focus: true,
     });
@@ -103,7 +104,7 @@ export default class Mention extends React.Component<MentionProps, MentionState>
       this.props.onFocus(ev);
     }
   };
-  onBlur = (ev: React.FocusEvent<HTMLElement>) => {
+  onBlur = (ev: FocusEvent<HTMLElement>) => {
     this.setState({
       focus: false,
     });
@@ -119,7 +120,8 @@ export default class Mention extends React.Component<MentionProps, MentionState>
   };
 
   render() {
-    const { className = '', prefixCls, loading, placement } = this.props;
+    const { className = '', prefixCls: customizePrefixCls, loading, placement } = this.props;
+    const prefixCls = getPrefixCls('mention', customizePrefixCls);
     const { suggestions, focus } = this.state;
     const cls = classNames(className, {
       [`${prefixCls}-active`]: focus,
@@ -133,6 +135,7 @@ export default class Mention extends React.Component<MentionProps, MentionState>
     return (
       <RcMention
         {...this.props}
+        prefixCls={prefixCls}
         className={cls}
         ref={this.mentionRef}
         onSearchChange={this.onSearchChange}

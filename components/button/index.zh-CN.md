@@ -36,11 +36,11 @@ subtitle: 按钮
 `<Button href="http://example.com">Hello world!</Button>` 则会渲染为 `<a href="http://example.com"><span>Hello world!</span></a>`。
 
 <style>
-[id^="components-button-demo-"] .ant-btn {
+[id^="components-button-demo-"] .c7n-btn {
   margin-right: 8px;
   margin-bottom: 12px;
 }
-[id^="components-button-demo-"] .ant-btn-group > .ant-btn {
+[id^="components-button-demo-"] .c7n-btn-group > .c7n-btn {
   margin-right: 0;
 }
 </style>

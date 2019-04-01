@@ -2,22 +2,22 @@
 
 exports[`renders ./components/card/demo/basic.md correctly 1`] = `
 <div
-  class="ant-card ant-card-bordered"
+  class="c7n-card c7n-card-bordered"
   style="width:300px"
 >
   <div
-    class="ant-card-head"
+    class="c7n-card-head"
   >
     <div
-      class="ant-card-head-wrapper"
+      class="c7n-card-head-wrapper"
     >
       <div
-        class="ant-card-head-title"
+        class="c7n-card-head-title"
       >
         Card title
       </div>
       <div
-        class="ant-card-extra"
+        class="c7n-card-extra"
       >
         <a
           href="#"
@@ -28,7 +28,7 @@ exports[`renders ./components/card/demo/basic.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="ant-card-body"
+    class="c7n-card-body"
   >
     <p>
       Card content
@@ -48,24 +48,24 @@ exports[`renders ./components/card/demo/border-less.md correctly 1`] = `
   style="background:#ECECEC;padding:30px"
 >
   <div
-    class="ant-card"
+    class="c7n-card"
     style="width:300px"
   >
     <div
-      class="ant-card-head"
+      class="c7n-card-head"
     >
       <div
-        class="ant-card-head-wrapper"
+        class="c7n-card-head-wrapper"
       >
         <div
-          class="ant-card-head-title"
+          class="c7n-card-head-title"
         >
           Card title
         </div>
       </div>
     </div>
     <div
-      class="ant-card-body"
+      class="c7n-card-body"
     >
       <p>
         Card content
@@ -83,11 +83,11 @@ exports[`renders ./components/card/demo/border-less.md correctly 1`] = `
 
 exports[`renders ./components/card/demo/flexible-content.md correctly 1`] = `
 <div
-  class="ant-card ant-card-bordered ant-card-hoverable"
+  class="c7n-card c7n-card-bordered c7n-card-hoverable"
   style="width:240px"
 >
   <div
-    class="ant-card-cover"
+    class="c7n-card-cover"
   >
     <img
       alt="example"
@@ -95,21 +95,21 @@ exports[`renders ./components/card/demo/flexible-content.md correctly 1`] = `
     />
   </div>
   <div
-    class="ant-card-body"
+    class="c7n-card-body"
   >
     <div
-      class="ant-card-meta"
+      class="c7n-card-meta"
     >
       <div
-        class="ant-card-meta-detail"
+        class="c7n-card-meta-detail"
       >
         <div
-          class="ant-card-meta-title"
+          class="c7n-card-meta-title"
         >
           Europe Street beat
         </div>
         <div
-          class="ant-card-meta-description"
+          class="c7n-card-meta-description"
         >
           www.instagram.com
         </div>
@@ -121,62 +121,62 @@ exports[`renders ./components/card/demo/flexible-content.md correctly 1`] = `
 
 exports[`renders ./components/card/demo/grid-card.md correctly 1`] = `
 <div
-  class="ant-card ant-card-bordered ant-card-contain-grid"
+  class="c7n-card c7n-card-bordered c7n-card-contain-grid"
 >
   <div
-    class="ant-card-head"
+    class="c7n-card-head"
   >
     <div
-      class="ant-card-head-wrapper"
+      class="c7n-card-head-wrapper"
     >
       <div
-        class="ant-card-head-title"
+        class="c7n-card-head-title"
       >
         Card Title
       </div>
     </div>
   </div>
   <div
-    class="ant-card-body"
+    class="c7n-card-body"
   >
     <div
-      class="ant-card-grid"
+      class="c7n-card-grid"
       style="width:25%;text-align:center"
     >
       Content
     </div>
     <div
-      class="ant-card-grid"
+      class="c7n-card-grid"
       style="width:25%;text-align:center"
     >
       Content
     </div>
     <div
-      class="ant-card-grid"
+      class="c7n-card-grid"
       style="width:25%;text-align:center"
     >
       Content
     </div>
     <div
-      class="ant-card-grid"
+      class="c7n-card-grid"
       style="width:25%;text-align:center"
     >
       Content
     </div>
     <div
-      class="ant-card-grid"
+      class="c7n-card-grid"
       style="width:25%;text-align:center"
     >
       Content
     </div>
     <div
-      class="ant-card-grid"
+      class="c7n-card-grid"
       style="width:25%;text-align:center"
     >
       Content
     </div>
     <div
-      class="ant-card-grid"
+      class="c7n-card-grid"
       style="width:25%;text-align:center"
     >
       Content
@@ -190,85 +190,85 @@ exports[`renders ./components/card/demo/in-column.md correctly 1`] = `
   style="background:#ECECEC;padding:30px"
 >
   <div
-    class="ant-row"
+    class="c7n-row"
     style="margin-left:-8px;margin-right:-8px"
   >
     <div
-      class="ant-col-8"
+      class="c7n-col-8"
       style="padding-left:8px;padding-right:8px"
     >
       <div
-        class="ant-card"
+        class="c7n-card"
       >
         <div
-          class="ant-card-head"
+          class="c7n-card-head"
         >
           <div
-            class="ant-card-head-wrapper"
+            class="c7n-card-head-wrapper"
           >
             <div
-              class="ant-card-head-title"
+              class="c7n-card-head-title"
             >
               Card title
             </div>
           </div>
         </div>
         <div
-          class="ant-card-body"
+          class="c7n-card-body"
         >
           Card content
         </div>
       </div>
     </div>
     <div
-      class="ant-col-8"
+      class="c7n-col-8"
       style="padding-left:8px;padding-right:8px"
     >
       <div
-        class="ant-card"
+        class="c7n-card"
       >
         <div
-          class="ant-card-head"
+          class="c7n-card-head"
         >
           <div
-            class="ant-card-head-wrapper"
+            class="c7n-card-head-wrapper"
           >
             <div
-              class="ant-card-head-title"
+              class="c7n-card-head-title"
             >
               Card title
             </div>
           </div>
         </div>
         <div
-          class="ant-card-body"
+          class="c7n-card-body"
         >
           Card content
         </div>
       </div>
     </div>
     <div
-      class="ant-col-8"
+      class="c7n-col-8"
       style="padding-left:8px;padding-right:8px"
     >
       <div
-        class="ant-card"
+        class="c7n-card"
       >
         <div
-          class="ant-card-head"
+          class="c7n-card-head"
         >
           <div
-            class="ant-card-head-wrapper"
+            class="c7n-card-head-wrapper"
           >
             <div
-              class="ant-card-head-title"
+              class="c7n-card-head-title"
             >
               Card title
             </div>
           </div>
         </div>
         <div
-          class="ant-card-body"
+          class="c7n-card-body"
         >
           Card content
         </div>
@@ -280,23 +280,23 @@ exports[`renders ./components/card/demo/in-column.md correctly 1`] = `
 
 exports[`renders ./components/card/demo/inner.md correctly 1`] = `
 <div
-  class="ant-card ant-card-bordered"
+  class="c7n-card c7n-card-bordered"
 >
   <div
-    class="ant-card-head"
+    class="c7n-card-head"
   >
     <div
-      class="ant-card-head-wrapper"
+      class="c7n-card-head-wrapper"
     >
       <div
-        class="ant-card-head-title"
+        class="c7n-card-head-title"
       >
         Card title
       </div>
     </div>
   </div>
   <div
-    class="ant-card-body"
+    class="c7n-card-body"
   >
     <p
       style="font-size:14px;color:rgba(0, 0, 0, 0.85);margin-bottom:16px;font-weight:500"
@@ -304,21 +304,21 @@ exports[`renders ./components/card/demo/inner.md correctly 1`] = `
       Group title
     </p>
     <div
-      class="ant-card ant-card-bordered ant-card-type-inner"
+      class="c7n-card c7n-card-bordered c7n-card-type-inner"
     >
       <div
-        class="ant-card-head"
+        class="c7n-card-head"
       >
         <div
-          class="ant-card-head-wrapper"
+          class="c7n-card-head-wrapper"
         >
           <div
-            class="ant-card-head-title"
+            class="c7n-card-head-title"
           >
             Inner Card title
           </div>
           <div
-            class="ant-card-extra"
+            class="c7n-card-extra"
           >
             <a
               href="#"
@@ -329,28 +329,28 @@ exports[`renders ./components/card/demo/inner.md correctly 1`] = `
         </div>
       </div>
       <div
-        class="ant-card-body"
+        class="c7n-card-body"
       >
         Inner Card content
       </div>
     </div>
     <div
-      class="ant-card ant-card-bordered ant-card-type-inner"
+      class="c7n-card c7n-card-bordered c7n-card-type-inner"
       style="margin-top:16px"
     >
       <div
-        class="ant-card-head"
+        class="c7n-card-head"
       >
         <div
-          class="ant-card-head-wrapper"
+          class="c7n-card-head-wrapper"
         >
           <div
-            class="ant-card-head-title"
+            class="c7n-card-head-title"
           >
             Inner Card title
           </div>
           <div
-            class="ant-card-extra"
+            class="c7n-card-extra"
           >
             <a
               href="#"
@@ -361,7 +361,7 @@ exports[`renders ./components/card/demo/inner.md correctly 1`] = `
         </div>
       </div>
       <div
-        class="ant-card-body"
+        class="c7n-card-body"
       >
         Inner Card content
       </div>
@@ -372,73 +372,73 @@ exports[`renders ./components/card/demo/inner.md correctly 1`] = `
 
 exports[`renders ./components/card/demo/loading.md correctly 1`] = `
 <div
-  class="ant-card ant-card-loading ant-card-bordered"
+  class="c7n-card c7n-card-loading c7n-card-bordered"
   style="width:34%"
 >
   <div
-    class="ant-card-head"
+    class="c7n-card-head"
   >
     <div
-      class="ant-card-head-wrapper"
+      class="c7n-card-head-wrapper"
     >
       <div
-        class="ant-card-head-title"
+        class="c7n-card-head-title"
       >
         Card title
       </div>
     </div>
   </div>
   <div
-    class="ant-card-body"
+    class="c7n-card-body"
   >
     <div
-      class="ant-card-loading-content"
+      class="c7n-card-loading-content"
     >
       <p
-        class="ant-card-loading-block"
+        class="c7n-card-loading-block"
         style="width:94%"
       />
       <p>
         <span
-          class="ant-card-loading-block"
+          class="c7n-card-loading-block"
           style="width:28%"
         />
         <span
-          class="ant-card-loading-block"
+          class="c7n-card-loading-block"
           style="width:62%"
         />
       </p>
       <p>
         <span
-          class="ant-card-loading-block"
+          class="c7n-card-loading-block"
           style="width:22%"
         />
         <span
-          class="ant-card-loading-block"
+          class="c7n-card-loading-block"
           style="width:66%"
         />
       </p>
       <p>
         <span
-          class="ant-card-loading-block"
+          class="c7n-card-loading-block"
           style="width:56%"
         />
         <span
-          class="ant-card-loading-block"
+          class="c7n-card-loading-block"
           style="width:39%"
         />
       </p>
       <p>
         <span
-          class="ant-card-loading-block"
+          class="c7n-card-loading-block"
           style="width:21%"
         />
         <span
-          class="ant-card-loading-block"
+          class="c7n-card-loading-block"
           style="width:15%"
         />
         <span
-          class="ant-card-loading-block"
+          class="c7n-card-loading-block"
           style="width:40%"
         />
       </p>
@@ -449,11 +449,11 @@ exports[`renders ./components/card/demo/loading.md correctly 1`] = `
 
 exports[`renders ./components/card/demo/meta.md correctly 1`] = `
 <div
-  class="ant-card ant-card-bordered"
+  class="c7n-card c7n-card-bordered"
   style="width:300px"
 >
   <div
-    class="ant-card-cover"
+    class="c7n-card-cover"
   >
     <img
       alt="example"
@@ -461,16 +461,16 @@ exports[`renders ./components/card/demo/meta.md correctly 1`] = `
     />
   </div>
   <div
-    class="ant-card-body"
+    class="c7n-card-body"
   >
     <div
-      class="ant-card-meta"
+      class="c7n-card-meta"
     >
       <div
-        class="ant-card-meta-avatar"
+        class="c7n-card-meta-avatar"
       >
         <span
-          class="ant-avatar ant-avatar-circle ant-avatar-image"
+          class="c7n-avatar c7n-avatar-circle c7n-avatar-image"
         >
           <img
             src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
@@ -478,15 +478,15 @@ exports[`renders ./components/card/demo/meta.md correctly 1`] = `
         </span>
       </div>
       <div
-        class="ant-card-meta-detail"
+        class="c7n-card-meta-detail"
       >
         <div
-          class="ant-card-meta-title"
+          class="c7n-card-meta-title"
         >
           Card title
         </div>
         <div
-          class="ant-card-meta-description"
+          class="c7n-card-meta-description"
         >
           This is the description
         </div>
@@ -494,7 +494,7 @@ exports[`renders ./components/card/demo/meta.md correctly 1`] = `
     </div>
   </div>
   <ul
-    class="ant-card-actions"
+    class="c7n-card-actions"
   >
     <li
       style="width:33.333333333333336%"
@@ -529,11 +529,11 @@ exports[`renders ./components/card/demo/meta.md correctly 1`] = `
 
 exports[`renders ./components/card/demo/simple.md correctly 1`] = `
 <div
-  class="ant-card ant-card-bordered"
+  class="c7n-card c7n-card-bordered"
   style="width:300px"
 >
   <div
-    class="ant-card-body"
+    class="c7n-card-body"
   >
     <p>
       Card content
@@ -551,22 +551,22 @@ exports[`renders ./components/card/demo/simple.md correctly 1`] = `
 exports[`renders ./components/card/demo/tabs.md correctly 1`] = `
 <div>
   <div
-    class="ant-card ant-card-bordered ant-card-contain-tabs"
+    class="c7n-card c7n-card-bordered c7n-card-contain-tabs"
     style="width:100%"
   >
     <div
-      class="ant-card-head"
+      class="c7n-card-head"
     >
       <div
-        class="ant-card-head-wrapper"
+        class="c7n-card-head-wrapper"
       >
         <div
-          class="ant-card-head-title"
+          class="c7n-card-head-title"
         >
           Card title
         </div>
         <div
-          class="ant-card-extra"
+          class="c7n-card-extra"
         >
           <a
             href="#"
@@ -576,64 +576,64 @@ exports[`renders ./components/card/demo/tabs.md correctly 1`] = `
         </div>
       </div>
       <div
-        class="ant-tabs ant-tabs-top ant-card-head-tabs ant-tabs-large ant-tabs-line"
+        class="c7n-tabs c7n-tabs-top c7n-card-head-tabs c7n-tabs-line c7n-tabs-large"
       >
         <div
-          class="ant-tabs-bar"
+          class="c7n-tabs-bar"
           role="tablist"
           tabindex="0"
         >
           <div
-            class="ant-tabs-nav-container"
+            class="c7n-tabs-nav-container"
           >
             <span
-              class="ant-tabs-tab-prev ant-tabs-tab-btn-disabled"
+              class="c7n-tabs-tab-prev c7n-tabs-tab-btn-disabled"
               unselectable="unselectable"
             >
               <span
-                class="ant-tabs-tab-prev-icon"
+                class="c7n-tabs-tab-prev-icon"
               />
             </span>
             <span
-              class="ant-tabs-tab-next ant-tabs-tab-btn-disabled"
+              class="c7n-tabs-tab-next c7n-tabs-tab-btn-disabled"
               unselectable="unselectable"
             >
               <span
-                class="ant-tabs-tab-next-icon"
+                class="c7n-tabs-tab-next-icon"
               />
             </span>
             <div
-              class="ant-tabs-nav-wrap"
+              class="c7n-tabs-nav-wrap"
             >
               <div
-                class="ant-tabs-nav-scroll"
+                class="c7n-tabs-nav-scroll"
               >
                 <div
-                  class="ant-tabs-nav ant-tabs-nav-animated"
+                  class="c7n-tabs-nav c7n-tabs-nav-animated"
                 >
                   <div
-                    class="ant-tabs-ink-bar ant-tabs-ink-bar-animated"
+                    class="c7n-tabs-ink-bar c7n-tabs-ink-bar-animated"
                   />
                   <div
                     aria-disabled="false"
                     aria-selected="false"
-                    class=" ant-tabs-tab"
+                    class=" c7n-tabs-tab"
                     role="tab"
                   >
                     tab1
                     <div
-                      class="ant-ripple-wrapper"
+                      class="c7n-ripple-wrapper"
                     />
                   </div>
                   <div
                     aria-disabled="false"
                     aria-selected="false"
-                    class=" ant-tabs-tab"
+                    class=" c7n-tabs-tab"
                     role="tab"
                   >
                     tab2
                     <div
-                      class="ant-ripple-wrapper"
+                      class="c7n-ripple-wrapper"
                     />
                   </div>
                 </div>
@@ -642,24 +642,24 @@ exports[`renders ./components/card/demo/tabs.md correctly 1`] = `
           </div>
         </div>
         <div
-          class="ant-tabs-content ant-tabs-content-animated"
+          class="c7n-tabs-content c7n-tabs-content-animated"
           style="display:none"
         >
           <div
             aria-hidden="true"
-            class="ant-tabs-tabpane ant-tabs-tabpane-inactive"
+            class="c7n-tabs-tabpane c7n-tabs-tabpane-inactive"
             role="tabpanel"
           />
           <div
             aria-hidden="true"
-            class="ant-tabs-tabpane ant-tabs-tabpane-inactive"
+            class="c7n-tabs-tabpane c7n-tabs-tabpane-inactive"
             role="tabpanel"
           />
         </div>
       </div>
     </div>
     <div
-      class="ant-card-body"
+      class="c7n-card-body"
     >
       <p>
         content1
@@ -669,85 +669,85 @@ exports[`renders ./components/card/demo/tabs.md correctly 1`] = `
   <br />
   <br />
   <div
-    class="ant-card ant-card-bordered ant-card-contain-tabs"
+    class="c7n-card c7n-card-bordered c7n-card-contain-tabs"
     style="width:100%"
   >
     <div
-      class="ant-card-head"
+      class="c7n-card-head"
     >
       <div
-        class="ant-card-head-wrapper"
+        class="c7n-card-head-wrapper"
       />
       <div
-        class="ant-tabs ant-tabs-top ant-card-head-tabs ant-tabs-large ant-tabs-line"
+        class="c7n-tabs c7n-tabs-top c7n-card-head-tabs c7n-tabs-line c7n-tabs-large"
       >
         <div
-          class="ant-tabs-bar"
+          class="c7n-tabs-bar"
           role="tablist"
           tabindex="0"
         >
           <div
-            class="ant-tabs-nav-container"
+            class="c7n-tabs-nav-container"
           >
             <span
-              class="ant-tabs-tab-prev ant-tabs-tab-btn-disabled"
+              class="c7n-tabs-tab-prev c7n-tabs-tab-btn-disabled"
               unselectable="unselectable"
             >
               <span
-                class="ant-tabs-tab-prev-icon"
+                class="c7n-tabs-tab-prev-icon"
               />
             </span>
             <span
-              class="ant-tabs-tab-next ant-tabs-tab-btn-disabled"
+              class="c7n-tabs-tab-next c7n-tabs-tab-btn-disabled"
               unselectable="unselectable"
             >
               <span
-                class="ant-tabs-tab-next-icon"
+                class="c7n-tabs-tab-next-icon"
               />
             </span>
             <div
-              class="ant-tabs-nav-wrap"
+              class="c7n-tabs-nav-wrap"
             >
               <div
-                class="ant-tabs-nav-scroll"
+                class="c7n-tabs-nav-scroll"
               >
                 <div
-                  class="ant-tabs-nav ant-tabs-nav-animated"
+                  class="c7n-tabs-nav c7n-tabs-nav-animated"
                 >
                   <div
-                    class="ant-tabs-ink-bar ant-tabs-ink-bar-animated"
+                    class="c7n-tabs-ink-bar c7n-tabs-ink-bar-animated"
                   />
                   <div
                     aria-disabled="false"
                     aria-selected="false"
-                    class=" ant-tabs-tab"
+                    class=" c7n-tabs-tab"
                     role="tab"
                   >
                     article
                     <div
-                      class="ant-ripple-wrapper"
+                      class="c7n-ripple-wrapper"
                     />
                   </div>
                   <div
                     aria-disabled="false"
                     aria-selected="true"
-                    class="ant-tabs-tab-active ant-tabs-tab"
+                    class="c7n-tabs-tab-active c7n-tabs-tab"
                     role="tab"
                   >
                     app
                     <div
-                      class="ant-ripple-wrapper"
+                      class="c7n-ripple-wrapper"
                     />
                   </div>
                   <div
                     aria-disabled="false"
                     aria-selected="false"
-                    class=" ant-tabs-tab"
+                    class=" c7n-tabs-tab"
                     role="tab"
                   >
                     project
                     <div
-                      class="ant-ripple-wrapper"
+                      class="c7n-ripple-wrapper"
                     />
                   </div>
                 </div>
@@ -756,29 +756,29 @@ exports[`renders ./components/card/demo/tabs.md correctly 1`] = `
           </div>
         </div>
         <div
-          class="ant-tabs-content ant-tabs-content-animated"
+          class="c7n-tabs-content c7n-tabs-content-animated"
           style="margin-left:-100%"
         >
           <div
             aria-hidden="true"
-            class="ant-tabs-tabpane ant-tabs-tabpane-inactive"
+            class="c7n-tabs-tabpane c7n-tabs-tabpane-inactive"
             role="tabpanel"
           />
           <div
             aria-hidden="false"
-            class="ant-tabs-tabpane ant-tabs-tabpane-active"
+            class="c7n-tabs-tabpane c7n-tabs-tabpane-active"
             role="tabpanel"
           />
           <div
             aria-hidden="true"
-            class="ant-tabs-tabpane ant-tabs-tabpane-inactive"
+            class="c7n-tabs-tabpane c7n-tabs-tabpane-inactive"
             role="tabpanel"
           />
         </div>
       </div>
     </div>
     <div
-      class="ant-card-body"
+      class="c7n-card-body"
     >
       <p>
         app content

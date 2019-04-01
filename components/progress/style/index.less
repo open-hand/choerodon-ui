@@ -1,7 +1,7 @@
 @import "../../style/themes/default";
 @import "../../style/mixins/index";
 
-@progress-prefix-cls: ~"@{ant-prefix}-progress";
+@progress-prefix-cls: ~"@{c7n-prefix}-progress";
 
 .@{progress-prefix-cls} {
   .reset-component;
@@ -24,8 +24,8 @@
     margin-right: 0;
     padding-right: 0;
     .@{progress-prefix-cls}-show-info & {
-      padding-right: ~"calc(2em + 8px)";
-      margin-right: ~"calc(-2em - 8px)";
+      padding-right: ~"calc(2em + .08rem)";
+      margin-right: ~"calc(-2em - .08rem)";
     }
   }
 
@@ -33,7 +33,7 @@
     display: inline-block;
     width: 100%;
     background-color: @progress-remaining-color;
-    border-radius: 100px;
+    border-radius: 1rem;
     vertical-align: middle;
     position: relative;
   }
@@ -44,12 +44,12 @@
 
   &-circle-path {
     stroke: @progress-default-color;
-    animation: ~"@{ant-prefix}-progress-appear" .3s;
+    animation: ~"@{c7n-prefix}-progress-appear" .3s;
   }
 
   &-success-bg,
   &-bg {
-    border-radius: 100px;
+    border-radius: 1rem;
     background-color: @progress-default-color;
     transition: all .4s @ease-out-circ 0s;
     position: relative;
@@ -67,52 +67,13 @@
     width: 2em;
     text-align: left;
     font-size: 1em;
-    margin-left: 8px;
+    margin-left: .08rem;
     vertical-align: middle;
     display: inline-block;
     color: @text-color-secondary;
     line-height: 1;
     .@{iconfont-css-prefix} {
       font-size: @font-size-base;
-    }
-  }
-
-  &-status-active {
-    .@{progress-prefix-cls}-bg:before {
-      content: "";
-      opacity: 0;
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: @component-background;
-      border-radius: 10px;
-      animation: ~"@{ant-prefix}-progress-active" 2.4s @ease-out-quint infinite;
-    }
-  }
-
-  &-status-exception {
-    .@{progress-prefix-cls}-bg {
-      background-color: @error-color;
-    }
-    .@{progress-prefix-cls}-text {
-      color: @error-color;
-    }
-    .@{progress-prefix-cls}-circle-path {
-      stroke: @error-color;
-    }
-  }
-
-  &-status-success {
-    .@{progress-prefix-cls}-bg {
-      background-color: @success-color;
-    }
-    .@{progress-prefix-cls}-text {
-      color: @success-color;
-    }
-    .@{progress-prefix-cls}-circle-path {
-      stroke: @success-color;
     }
   }
 
@@ -142,52 +103,104 @@
   &-loading &-inner {
     background-color: transparent;
     transform: rotate(-90deg);
+    width: .3rem;
+    height: .3rem;
   }
 
   &-loading &-inner svg {
-    animation: ~"@{ant-prefix}-progress-rotate" 1.4s linear infinite;
+    animation: ~"@{c7n-prefix}-progress-rotate" 1.4s linear infinite;
   }
 
   &-loading &-inner circle {
-    animation: ~"@{ant-prefix}-progress-loading" 1.4s ease-in-out infinite;
-    stroke-dasharray: 80px 200px;
+    animation: ~"@{c7n-prefix}-progress-loading" 1.4s ease-in-out infinite;
+    stroke-width: 4;
+    stroke-dasharray: .08rem 2rem;
     stroke-dashoffset: 0;
+    stroke: @primary-color;
+    fill: none;
   }
 
-  &-circle&-status-exception {
+  &-small&-loading &-inner {
+    width: .2rem;
+    height: .2rem;
+  }
+
+  &-large&-loading &-inner {
+    width: .5rem;
+    height: .5rem;
+  }
+
+  &-status-active {
+    .@{progress-prefix-cls}-bg:before {
+      content: "";
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: @component-background;
+      border-radius: .1rem;
+      animation: ~"@{c7n-prefix}-progress-active" 2.4s @ease-out-quint infinite;
+    }
+  }
+
+  &-status-exception {
+    .@{progress-prefix-cls}-bg {
+      background-color: @error-color;
+    }
     .@{progress-prefix-cls}-text {
       color: @error-color;
     }
+    .@{progress-prefix-cls}-circle-path {
+      stroke: @error-color;
+    }
+    .@{progress-prefix-cls}-inner circle {
+      stroke: @error-color;
+    }
   }
-  &-circle&-status-success {
+
+  &-status-success {
+    .@{progress-prefix-cls}-bg {
+      background-color: @success-color;
+    }
     .@{progress-prefix-cls}-text {
       color: @success-color;
+    }
+    .@{progress-prefix-cls}-circle-path {
+      stroke: @success-color;
+    }
+    .@{progress-prefix-cls}-inner circle {
+      stroke: @success-color;
     }
   }
 }
 
-@keyframes ~"@{ant-prefix}-progress-rotate" {
-  to {
+@keyframes ~"@{c7n-prefix}-progress-rotate" {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
     transform: rotate(360deg);
   }
 }
 
-@keyframes ~"@{ant-prefix}-progress-loading" {
+@keyframes ~"@{c7n-prefix}-progress-loading" {
   0% {
-    stroke-dasharray: 1px 200px;
+    stroke-dasharray: .01rem 2rem;
     stroke-dashoffset: 0;
   }
   30% {
-    stroke-dasharray: 100px 200px;
-    stroke-dashoffset: -15px;
+    stroke-dasharray: 1rem 2rem;
+    stroke-dashoffset: -.15rem;
   }
   100% {
-    stroke-dasharray: 100px 200px;
-    stroke-dashoffset: -120px;
+    stroke-dasharray: 1rem 2rem;
+    stroke-dashoffset: -1.2rem;
   }
 }
 
-@keyframes ~"@{ant-prefix}-progress-active" {
+@keyframes ~"@{c7n-prefix}-progress-active" {
   0% {
     opacity: 0.1;
     width: 0;

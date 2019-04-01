@@ -1,7 +1,8 @@
-import * as React from 'react';
+import React, { Component, CSSProperties, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import Icon from '../icon';
 import RcRate from '../rc-components/rate';
+import { getPrefixCls } from '../configure';
 
 export interface RateProps {
   prefixCls?: string;
@@ -13,19 +14,19 @@ export interface RateProps {
   disabled?: boolean;
   onChange?: (value: number) => any;
   onHoverChange?: (value: number) => any;
-  character?: React.ReactNode;
+  character?: ReactNode;
   className?: string;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
 }
 
-export default class Rate extends React.Component<RateProps, any> {
+export default class Rate extends Component<RateProps, any> {
+  static displayName = 'Rate';
   static propTypes = {
     prefixCls: PropTypes.string,
     character: PropTypes.node,
   };
 
   static defaultProps = {
-    prefixCls: 'ant-rate',
     character: <Icon type="star" />,
   };
 
@@ -44,6 +45,6 @@ export default class Rate extends React.Component<RateProps, any> {
   };
 
   render() {
-    return <RcRate ref={this.saveRate} {...this.props} />;
+    return <RcRate ref={this.saveRate} prefixCls={getPrefixCls('rate')} {...this.props} />;
   }
 }

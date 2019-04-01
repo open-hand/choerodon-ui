@@ -1,5 +1,5 @@
 /* eslint react/no-did-mount-set-state: 0 */
-import React, { cloneElement, Children, Component } from 'react';
+import React, { Children, cloneElement, Component } from 'react';
 import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
@@ -89,7 +89,7 @@ export default class Steps extends Component {
       ...restProps,
     } = this.props;
     const { lastStepOffsetWidth, flexSupported } = this.state;
-    const filteredChildren = React.Children.toArray(children).filter(c => !!c);
+    const filteredChildren = Children.toArray(children).filter(c => !!c);
     const lastIndex = filteredChildren.length - 1;
     const adjustedlabelPlacement = !!progressDot ? 'vertical' : labelPlacement;
     const classString = classNames(prefixCls, `${prefixCls}-${direction}`, className, {

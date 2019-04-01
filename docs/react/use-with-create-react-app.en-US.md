@@ -3,7 +3,7 @@ order: 4
 title: Use in create-react-app
 ---
 
-[create-react-app](https://github.com/facebookincubator/create-react-app) is one of the best React application development tools. We are going to use `antd` within it and modify the webpack config for some customized needs.
+[create-react-app](https://github.com/facebookincubator/create-react-app) is one of the best React application development tools. We are going to use `choerodon-ui` within it and modify the webpack config for some customized needs.
 
 ---
 
@@ -15,25 +15,25 @@ We need to install `create-react-app` first, you may need install [yarn](https:/
 $ npm install -g create-react-app yarn
 ```
 
-Create a new project named `antd-demo`.
+Create a new project named `choerodon-ui-demo`.
 
 ```bash
-$ create-react-app antd-demo
+$ create-react-app choerodon-ui-demo
 ```
 
 The tool will create and initialize environment and dependencies automatically,
 please try config your proxy setting or use another npm registry if any network errors happen during it.
 
-Then we go inside `antd-demo` and start it.
+Then we go inside `choerodon-ui-demo` and start it.
 
 ```bash
-$ cd antd-demo
+$ cd choerodon-ui-demo
 $ yarn start
 ```
 
 Open the browser at http://localhost:3000/. It renders a header saying "Welcome to React" on the page.
 
-## Import antd
+## Import choerodon-ui
 
 Below is the default directory structure.
 
@@ -53,13 +53,13 @@ Below is the default directory structure.
 └── yarn.lock
 ```
 
-Now we install `antd` from yarn or npm.
+Now we install `choerodon-ui` from yarn or npm.
 
 ```bash
-$ yarn add antd
+$ yarn add choerodon-ui
 ```
 
-Modify `src/App.js`, import Button component from `antd`.
+Modify `src/App.js`, import Button component from `choerodon-ui`.
 
 ```jsx
 import React, { Component } from 'react';
@@ -79,10 +79,10 @@ class App extends Component {
 export default App;
 ```
 
-Add `antd/dist/antd.css` at the top of `src/App.css`.
+Add `choerodon-ui/dist/choerodon-ui.css` at the top of `src/App.css`.
 
 ```css
-@import '~antd/dist/antd.css';
+@import '~choerodon-ui/dist/choerodon-ui.css';
 
 .App {
   text-align: center;
@@ -91,12 +91,12 @@ Add `antd/dist/antd.css` at the top of `src/App.css`.
 ...
 ```
 
-Ok, you should now see a blue primary button displayed on the page. Next you can choose any components of `antd` to develop your application. Visit other workflows of `create-react-app` at its [User Guide ](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
+Ok, you should now see a blue primary button displayed on the page. Next you can choose any components of `choerodon-ui` to develop your application. Visit other workflows of `create-react-app` at its [User Guide ](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
 
 
 ## Advanced Guides
 
-We are successfully running antd components now but in the real world, there are still lots of problems about antd-demo.
+We are successfully running choerodon-ui components now but in the real world, there are still lots of problems about choerodon-ui-demo.
 For instance, we actually import all styles of components in the project which may be a network performance issue.
 
 Now we need to customize the default webpack config. We can achieve that by using [react-app-rewired](https://github.com/timarney/react-app-rewired) which is one of create-react-app's custom config solutions.
@@ -140,12 +140,12 @@ $ yarn add babel-plugin-import --dev
 + const { injectBabelPlugin } = require('react-app-rewired');
 
   module.exports = function override(config, env) {
-+   config = injectBabelPlugin(['import', { libraryName: 'antd', libraryDirectory: 'es', style: 'css' }], config);
++   config = injectBabelPlugin(['import', { libraryName: 'choerodon-ui', libraryDirectory: 'es', style: 'css' }], config);
     return config;
   };
 ```
 
-Remove the `@import '~antd/dist/antd.css';` statement added before because `babel-plugin-import` will import styles and import components like below:
+Remove the `@import '~choerodon-ui/dist/choerodon-ui.css';` statement added before because `babel-plugin-import` will import styles and import components like below:
 
 ```diff
   // src/App.js
@@ -182,8 +182,8 @@ $ yarn add react-app-rewire-less --dev
 + const rewireLess = require('react-app-rewire-less');
 
   module.exports = function override(config, env) {
--   config = injectBabelPlugin(['import', { libraryName: 'antd', style: 'css' }], config);
-+   config = injectBabelPlugin(['import', { libraryName: 'antd', style: true }], config);  // change importing css to less
+-   config = injectBabelPlugin(['import', { libraryName: 'choerodon-ui', style: 'css' }], config);
++   config = injectBabelPlugin(['import', { libraryName: 'choerodon-ui', style: true }], config);  // change importing css to less
 +   config = rewireLess.withLoaderOptions({
 +     modifyVars: { "@primary-color": "#1DA57A" },
 +   })(config, env);
@@ -196,16 +196,3 @@ We use `modifyVars` option of [less-loader](https://github.com/webpack/less-load
 ## eject
 
 You can also could try [yarn run eject](https://github.com/facebookincubator/create-react-app#converting-to-a-custom-setup)  for a custom setup of create-react-app, although you should dig into it by yourself.
-
-## Source code and other boilerplates
-
-Finally, we used antd with create-react-app successfully, you can learn these practices for your own webpack workflow too, and find more webpack configs in the [atool-build](https://github.com/ant-tool/atool-build/blob/master/src/getWebpackCommonConfig.js). (For instance, add [moment noParse](https://github.com/ant-tool/atool-build/blob/e4bd2959689b6a95cb5c1c854a5db8c98676bdb3/src/getWebpackCommonConfig.js#L90) to avoid loading all language files.)
-
-There are a lot of great boilerplates like create-react-app in the React community. There are some source code samples of importing antd in them if you encounter some problems.
-
-- [create-react-app-antd](https://github.com/ant-design/create-react-app-antd)
-- [comerc/cra-ts-antd](https://github.com/comerc/cra-ts-antd)
-- [react-boilerplate/react-boilerplate](https://github.com/ant-design/react-boilerplate)
-- [kriasoft/react-starter-kit](https://github.com/ant-design/react-starter-kit)
-- [next.js](https://github.com/zeit/next.js/tree/master/examples/with-ant-design)
-- [nwb](https://github.com/insin/nwb-examples/tree/master/react-app-antd)

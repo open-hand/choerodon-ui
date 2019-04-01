@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
-import Animate from '../animate';
+import Animate from '../../animate';
 import createChainedFunction from '../util/createChainedFunction';
 import classnames from 'classnames';
 import Notice from './Notice';
@@ -13,7 +13,7 @@ function getUuid() {
   return `rcNotification_${now}_${seed++}`;
 }
 
-class Notification extends Component {
+export default class Notification extends Component {
   static propTypes = {
     prefixCls: PropTypes.string,
     transitionName: PropTypes.string,
@@ -28,6 +28,40 @@ class Notification extends Component {
       top: 65,
       left: '50%',
     },
+  };
+
+  static newInstance = function newNotificationInstance(properties, callback) {
+    const { getContainer, ...props } = properties || {};
+    const div = document.createElement('div');
+    if (getContainer) {
+      const root = getContainer();
+      root.appendChild(div);
+    } else {
+      document.body.appendChild(div);
+    }
+    let called = false;
+
+    function ref(notification) {
+      if (called) {
+        return;
+      }
+      called = true;
+      callback({
+        notice(noticeProps) {
+          notification.add(noticeProps);
+        },
+        removeNotice(key) {
+          notification.remove(key);
+        },
+        component: notification,
+        destroy() {
+          ReactDOM.unmountComponentAtNode(div);
+          div.parentNode.removeChild(div);
+        },
+      });
+    }
+
+    ReactDOM.render(<Notification {...props} ref={ref} />, div);
   };
 
   state = {
@@ -53,7 +87,7 @@ class Notification extends Component {
         };
       }
     });
-  }
+  };
 
   remove = (key) => {
     this.setState(previousState => {
@@ -61,7 +95,7 @@ class Notification extends Component {
         notices: previousState.notices.filter(notice => notice.key !== key),
       };
     });
-  }
+  };
 
   render() {
     const props = this.props;
@@ -86,37 +120,3 @@ class Notification extends Component {
     );
   }
 }
-
-Notification.newInstance = function newNotificationInstance(properties, callback) {
-  const { getContainer, ...props } = properties || {};
-  const div = document.createElement('div');
-  if (getContainer) {
-    const root = getContainer();
-    root.appendChild(div);
-  } else {
-    document.body.appendChild(div);
-  }
-  let called = false;
-  function ref(notification) {
-    if (called) {
-      return;
-    }
-    called = true;
-    callback({
-      notice(noticeProps) {
-        notification.add(noticeProps);
-      },
-      removeNotice(key) {
-        notification.remove(key);
-      },
-      component: notification,
-      destroy() {
-        ReactDOM.unmountComponentAtNode(div);
-        div.parentNode.removeChild(div);
-      },
-    });
-  }
-  ReactDOM.render(<Notification {...props} ref={ref} />, div);
-};
-
-export default Notification;

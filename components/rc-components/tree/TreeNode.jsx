@@ -1,13 +1,12 @@
-import React from 'react';
+import React, { Children, Component, createElement } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import warning from 'warning';
-import Animate from '../animate';
+import warning from '../../_util/warning';
+import Animate from '../../animate';
 import toArray from '../util/Children/toArray';
 import { contextTypes } from './Tree';
-import Icon from '../../icon';
 import Progress from '../../progress';
-import { getPosition, getNodeChildren, isCheckDisabled, traverseTreeNodes } from './util';
+import { getNodeChildren, getPosition, isCheckDisabled, traverseTreeNodes } from './util';
 
 const ICON_OPEN = 'open';
 const ICON_CLOSE = 'close';
@@ -28,7 +27,7 @@ export const nodeContextTypes = {
   }),
 };
 
-class TreeNode extends React.Component {
+export default class TreeNode extends Component {
   static propTypes = {
     eventKey: PropTypes.string, // Pass by parent `cloneElement`
     prefixCls: PropTypes.string,
@@ -55,6 +54,7 @@ class TreeNode extends React.Component {
     disabled: PropTypes.bool,
     disableCheckbox: PropTypes.bool,
     icon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+    switcherIcon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   };
 
   static contextTypes = nodeContextTypes;
@@ -64,6 +64,8 @@ class TreeNode extends React.Component {
   static defaultProps = {
     title: defaultTitle,
   };
+
+  static isTreeNode = 1;
 
   constructor(props) {
     super(props);
@@ -269,7 +271,7 @@ class TreeNode extends React.Component {
       dragNodeHighlight: false,
     });
     onNodeDragEnd(e, this);
-  }
+  };
 
   onDrop = (e) => {
     const { rcTree: { onNodeDrop } } = this.context;
@@ -304,7 +306,7 @@ class TreeNode extends React.Component {
     this.selectHandle = node;
   };
 
-  getNodeChildren = () => {
+  getNodeChildren() {
     const { children } = this.props;
     const originList = toArray(children).filter(node => node);
     const targetList = getNodeChildren(originList);
@@ -315,7 +317,7 @@ class TreeNode extends React.Component {
     }
 
     return targetList;
-  };
+  }
 
   getNodeState = () => {
     const { expanded } = this.props;
@@ -329,10 +331,8 @@ class TreeNode extends React.Component {
 
   isLeaf = () => {
     const { loadStatus } = this.state;
-    const { isLeaf } = this.props;
+    const { isLeaf, hasChildren = this.getNodeChildren().length !== 0 } = this.props;
     const { rcTree: { loadData } } = this.context;
-
-    const hasChildren = this.getNodeChildren().length !== 0;
 
     return (
       isLeaf ||
@@ -384,20 +384,32 @@ class TreeNode extends React.Component {
 
   // Switcher
   renderSwitcher = () => {
-    const { expanded } = this.props;
-    const { rcTree: { prefixCls } } = this.context;
+    const {
+      expanded,
+      switcherIcon: switcherIconFromProps,
+    } = this.props;
+    const {
+      rcTree: {
+        prefixCls,
+        switcherIcon: switcherIconFromCtx,
+      },
+    } = this.context;
+
+    const switcherIcon = switcherIconFromProps || switcherIconFromCtx;
 
     if (this.isLeaf()) {
-      return <span className={`${prefixCls}-switcher ${prefixCls}-switcher-noop`} />;
+      return (
+        <span className={classNames(`${prefixCls}-switcher`, `${prefixCls}-switcher-noop`)}>
+          {typeof switcherIcon === 'function' ? switcherIcon({ ...this.props, isLeaf: true }) : switcherIcon}
+        </span>
+      );
     }
 
+    const switcherCls = classNames(`${prefixCls}-switcher`, `${prefixCls}-switcher_${expanded ? ICON_OPEN : ICON_CLOSE}`);
     return (
-      <span
-        className={classNames(`${prefixCls}-switcher`, {
-          [`${prefixCls}-switcher-expanded`]: expanded,
-        })}
-        onClick={this.onExpand}
-      />
+      <span onClick={this.onExpand} className={switcherCls}>
+        {typeof switcherIcon === 'function' ? switcherIcon({ ...this.props, isLeaf: false }) : switcherIcon}
+      </span>
     );
   };
 
@@ -434,6 +446,7 @@ class TreeNode extends React.Component {
     return loadStatus === LOAD_STATUS_LOADING ? (
       <Progress
         type="loading"
+        size="small"
         width={14}
         className={`${prefixCls}-icon_loading`}
       />) : (
@@ -466,8 +479,7 @@ class TreeNode extends React.Component {
             `${prefixCls}-icon__customize`,
           )}
         >
-          {typeof icon === 'function' ?
-            React.createElement(icon, this.props) : icon}
+          {typeof icon === 'function' ? createElement(icon, this.props) : icon}
         </span>
       ) : this.renderIcon();
     } else if (loadData && loadStatus === LOAD_STATUS_LOADING) {
@@ -485,7 +497,7 @@ class TreeNode extends React.Component {
           `${wrapClass}`,
           `${wrapClass}-${this.getNodeState() || 'normal'}`,
           (!disabled && (selected || dragNodeHighlight)) && `${prefixCls}-node-selected`,
-          (!disabled && draggable) && 'draggable'
+          (!disabled && draggable) && 'draggable',
         )}
         draggable={(!disabled && draggable) || undefined}
         aria-grabbed={(!disabled && draggable) || undefined}
@@ -503,12 +515,14 @@ class TreeNode extends React.Component {
 
   // Children list wrapped with `Animation`
   renderChildren = () => {
-    const { expanded, pos } = this.props;
-    const { rcTree: {
-      prefixCls,
-      openTransitionName, openAnimation,
-      renderTreeNode,
-    } } = this.context;
+    const { expanded, pos, wrapper } = this.props;
+    const {
+      rcTree: {
+        prefixCls,
+        openTransitionName, openAnimation,
+        renderTreeNode,
+      },
+    } = this.context;
 
     // [Legacy] Animation control
     const renderFirst = this.renderFirst;
@@ -537,20 +551,14 @@ class TreeNode extends React.Component {
 
     let $children;
     if (expanded) {
-      let treeNodes = React.Children.map(nodeList, (node, index) => (
+      let treeNodes = Children.map(nodeList, (node, index) => (
         renderTreeNode(node, index, pos)
       ));
-      if (this.props.wrapper) {
-        treeNodes = this.props.wrapper(treeNodes);
+      if (wrapper) {
+        treeNodes = wrapper(treeNodes);
       }
       $children = (
-        <ul
-          className={classNames(
-            `${prefixCls}-child-tree`,
-            expanded && `${prefixCls}-child-tree-open`,
-          )}
-          data-expanded={expanded}
-        >
+        <ul hidden={!expanded}>
           {treeNodes}
         </ul>
       );
@@ -559,7 +567,7 @@ class TreeNode extends React.Component {
     return (
       <Animate
         {...animProps}
-        showProp="data-expanded"
+        hiddenProp="hidden"
         transitionAppear={transitionAppear}
         component=""
       >
@@ -573,10 +581,12 @@ class TreeNode extends React.Component {
       className,
       dragOver, dragOverGapTop, dragOverGapBottom,
     } = this.props;
-    const { rcTree: {
-      prefixCls,
-      filterTreeNode,
-    } } = this.context;
+    const {
+      rcTree: {
+        prefixCls,
+        filterTreeNode,
+      },
+    } = this.context;
     const disabled = this.isDisabled();
 
     return (
@@ -603,7 +613,3 @@ class TreeNode extends React.Component {
     );
   }
 }
-
-TreeNode.isTreeNode = 1;
-
-export default TreeNode;

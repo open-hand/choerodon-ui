@@ -2,7 +2,7 @@
 @import "../../style/mixins/index";
 @import "../../checkbox/style/mixin";
 
-@transfer-prefix-cls: ~"@{ant-prefix}-transfer";
+@transfer-prefix-cls: ~"@{c7n-prefix}-transfer";
 
 .@{transfer-prefix-cls} {
   .reset-component;
@@ -14,12 +14,12 @@
     border-radius: @border-radius-base;
     vertical-align: middle;
     position: relative;
-    width: 180px;
-    height: 200px;
-    padding-top: 34px;
+    width: 1.8rem;
+    height: 2rem;
+    padding-top: .34rem;
 
     &-with-footer {
-      padding-bottom: 34px;
+      padding-bottom: .34rem;
     }
 
     &-search {
@@ -27,10 +27,10 @@
       &-action {
         color: @disabled-color;
         position: absolute;
-        top: 4px;
-        right: 4px;
-        bottom: 4px;
-        width: 28px;
+        top: .04rem;
+        right: .04rem;
+        bottom: .04rem;
+        width: .28rem;
         line-height: @input-height-base;
         text-align: center;
         .@{iconfont-css-prefix} {
@@ -47,7 +47,7 @@
     }
 
     &-header {
-      padding: 6px @control-padding-horizontal;
+      padding: .06rem @control-padding-horizontal;
       border-radius: @border-radius-base @border-radius-base 0 0;
       background: @component-background;
       color: @text-color;
@@ -60,7 +60,7 @@
 
       &-title {
         position: absolute;
-        right: 12px;
+        right: .12rem;
       }
     }
 
@@ -73,13 +73,13 @@
         position: absolute;
         top: 0;
         left: 0;
-        padding: 4px;
+        padding: .04rem;
         width: 100%;
       }
     }
 
     &-body-with-search {
-      padding-top: @input-height-base + 8px;
+      padding-top: @input-height-base + .08rem;
     }
 
     &-content {
@@ -96,8 +96,8 @@
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
-        padding: 6px @control-padding-horizontal;
-        min-height: 32px;
+        padding: .06rem @control-padding-horizontal;
+        min-height: .32rem;
         transition: all .3s;
         > span {
           padding-right: 0;
@@ -123,7 +123,7 @@
       position: absolute;
       top: 50%;
       width: 100%;
-      margin-top: -10px;
+      margin-top: -.1rem;
     }
 
     &-content:empty + &-body-not-found {
@@ -143,18 +143,18 @@
   &-operation {
     display: inline-block;
     overflow: hidden;
-    margin: 0 8px;
+    margin: 0 .08rem;
     vertical-align: middle;
 
-    .@{ant-prefix}-btn {
+    .@{c7n-prefix}-btn {
       display: block;
 
       &:first-child {
-        margin-bottom: 4px;
+        margin-bottom: .04rem;
       }
 
       .@{iconfont-css-prefix} {
-        font-size: 12px;
+        font-size: .12rem;
       }
     }
   }

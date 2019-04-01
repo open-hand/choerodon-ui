@@ -1,8 +1,9 @@
-import * as React from 'react';
+import React, { Component } from 'react';
 import classNames from 'classnames';
 import Dialog, { ModalFuncProps } from './Modal';
 import Button from '../button';
 import { getConfirmLocale } from './locale';
+import { getPrefixCls } from '../configure';
 
 export interface SidebarState {
   open: boolean;
@@ -13,10 +14,10 @@ export interface SidebarProps extends ModalFuncProps {
   alwaysCanCancel?: boolean;
 }
 
-export default class Sidebar extends React.Component<SidebarProps, {}> {
+export default class Sidebar extends Component<SidebarProps, {}> {
+  static displayName = 'Sidebar';
 
   static defaultProps = {
-    prefixCls: 'ant-modal',
     width: '100%',
     transitionName: 'slide-right',
     maskTransitionName: 'fade',
@@ -28,11 +29,12 @@ export default class Sidebar extends React.Component<SidebarProps, {}> {
   };
 
   state: SidebarState;
+
   constructor(props: any) {
     super(props);
     this.state = {
       open: false,
-    }
+    };
   }
 
   handleCancel = (e: any) => {
@@ -51,14 +53,15 @@ export default class Sidebar extends React.Component<SidebarProps, {}> {
 
   renderFooter = () => {
     const props = this.props;
-    const { prefixCls, onCancel, onOk, okType, funcType, confirmLoading, alwaysCanCancel } = props;
+    const { onCancel, onOk, okType, funcType, confirmLoading, alwaysCanCancel } = props;
+    const prefixCls = this.getPrefixCls();
     const okCancel = ('okCancel' in props) ? props.okCancel! : true;
     const runtimeLocale = getConfirmLocale();
     const okText = props.okText ||
-        (okCancel ? runtimeLocale.okText : runtimeLocale.justOkText);
+      (okCancel ? runtimeLocale.okText : runtimeLocale.justOkText);
     const cancelText = props.cancelText || runtimeLocale.cancelText;
 
-    const  cancalBtn = okCancel ? (
+    const cancalBtn = okCancel ? (
       <Button
         className={`${prefixCls}-btn-cancel`}
         disabled={!alwaysCanCancel && confirmLoading}
@@ -87,12 +90,17 @@ export default class Sidebar extends React.Component<SidebarProps, {}> {
     const { open } = this.state;
     this.setState({
       open: !open,
-    })
+    });
   };
+
+  getPrefixCls() {
+    return getPrefixCls('modal', this.props.prefixCls);
+  }
 
   render() {
     const props = this.props;
-    const { prefixCls, zIndex, visible, keyboard, footer } = props;
+    const { zIndex, visible, keyboard, footer } = props;
+    const prefixCls = this.getPrefixCls();
     const { open } = this.state;
     const classString = classNames(prefixCls, {
         [`${prefixCls}-sidebar`]: true,
@@ -101,21 +109,22 @@ export default class Sidebar extends React.Component<SidebarProps, {}> {
       props.className);
 
     return (
-        <Dialog
-          {...this.props}
-          animationEnd={this.handleStatus}
-          width={props.width}
-          className={classString}
-          visible={visible}
-          title={props.title}
-          transitionName={props.transitionName}
-          footer={footer === undefined ? this.renderFooter() : footer}
-          zIndex={zIndex}
-          keyboard={keyboard}
-          closable={false}
-        >
-          {this.props.children}
-        </Dialog>
+      <Dialog
+        {...this.props}
+        prefixCls={prefixCls}
+        animationEnd={this.handleStatus}
+        width={props.width}
+        className={classString}
+        visible={visible}
+        title={props.title}
+        transitionName={props.transitionName}
+        footer={footer === undefined ? this.renderFooter() : footer}
+        zIndex={zIndex}
+        keyboard={keyboard}
+        closable={false}
+      >
+        {this.props.children}
+      </Dialog>
     );
   }
 }

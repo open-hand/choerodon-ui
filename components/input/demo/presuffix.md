@@ -55,16 +55,16 @@ ReactDOM.render(<App />, mountNode);
 ````
 
 ````css
-.anticon-close-circle {
+.icon-close {
   cursor: pointer;
   color: #ccc;
   transition: color 0.3s;
   font-size: 12px;
 }
-.anticon-close-circle:hover {
+.icon-close:hover {
   color: #999;
 }
-.anticon-close-circle:active {
+.icon-close:active {
   color: #666;
 }
 ````

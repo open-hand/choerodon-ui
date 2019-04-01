@@ -1,6 +1,7 @@
-import * as React from 'react';
+import React, { Component, HTMLAttributes } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { getPrefixCls } from '../configure';
 
 const stringOrNumber = PropTypes.oneOfType([PropTypes.string, PropTypes.number]);
 const objectOrNumber = PropTypes.oneOfType([PropTypes.object, PropTypes.number]);
@@ -13,7 +14,7 @@ export interface ColSize {
   pull?: number;
 }
 
-export interface ColProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface ColProps extends HTMLAttributes<HTMLDivElement> {
   span?: number;
   order?: number;
   offset?: number;
@@ -28,7 +29,8 @@ export interface ColProps extends React.HTMLAttributes<HTMLDivElement> {
   prefixCls?: string;
 }
 
-export default class Col extends React.Component<ColProps, {}> {
+export default class Col extends Component<ColProps, {}> {
+  static displayName = 'Col';
   static propTypes = {
     span: stringOrNumber,
     order: stringOrNumber,
@@ -47,7 +49,8 @@ export default class Col extends React.Component<ColProps, {}> {
 
   render() {
     const props: any = this.props;
-    const { span, order, offset, push, pull, className, children, prefixCls = 'ant-col', ...others } = props;
+    const { span, order, offset, push, pull, className, children, prefixCls: customizePrefixCls, ...others } = props;
+    const prefixCls = getPrefixCls('col', customizePrefixCls);
     let sizeClassObj = {};
     ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'].forEach(size => {
       let sizeProps: ColSize = {};

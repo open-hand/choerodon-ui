@@ -1,7 +1,7 @@
 @import "../../style/themes/default";
 @import "../../style/mixins/index";
 
-@collapse-prefix-cls: ~"@{ant-prefix}-collapse";
+@collapse-prefix-cls: ~"@{c7n-prefix}-collapse";
 
 @collapse-header-bg: @background-color-light;
 @collapse-active-bg: @background-color-base;
@@ -31,17 +31,17 @@
     }
 
     > .@{collapse-prefix-cls}-header {
-      line-height: 22px;
-      padding: 12px;
+      line-height: .22rem;
+      padding: .12rem;
       color: @heading-color;
       cursor: pointer;
       position: relative;
       transition: all .3s;
 
       .@{collapse-prefix-cls}-expand-icon {
-        .iconfont-font('\e5c5', 22px);
-        width: 22px;
-        height: 22px;
+        .iconfont-font('\e5c5', .22rem);
+        width: .22rem;
+        height: .22rem;
         line-height: 1;
         cursor: pointer;
         transform: rotate(-90deg);
@@ -93,7 +93,7 @@
   }
 
   &-borderless > &-item {
-    border-bottom: 1px solid @border-color-base;
+    border-bottom: @border-width-base @border-style-base @border-color-base;
   }
 
   &-borderless > &-item:last-child,
@@ -107,7 +107,7 @@
   }
 
   &-borderless > &-item > &-content > &-content-box {
-    padding-top: 4px;
+    padding-top: .04rem;
   }
 
   & &-item-disabled > &-header {

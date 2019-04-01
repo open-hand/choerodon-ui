@@ -1,4 +1,4 @@
-import { setTransform, isTransformSupported } from './utils';
+import { isTransformSupported, setTransform } from './utils';
 import React from 'react';
 import classnames from 'classnames';
 
@@ -62,7 +62,6 @@ function componentDidUpdate(component, init) {
 
       // If tabNode'width width equal to wrapNode'width when tabBarPosition is top or bottom
       // It means no css working, then ink bar should not have width until css is loaded
-      // Fix https://github.com/ant-design/ant-design/issues/7564
       if (width === rootNode.offsetWidth) {
         width = 0;
       } else if (styles.inkBar && styles.inkBar.width !== undefined) {
@@ -119,7 +118,6 @@ export default {
 
   componentDidMount() {
     if (isDev) {
-      // https://github.com/ant-design/ant-design/issues/8678
       this.timeout = setTimeout(() => {
         componentDidUpdate(this, true);
       }, 0);

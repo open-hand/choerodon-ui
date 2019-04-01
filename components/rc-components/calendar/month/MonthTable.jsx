@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { getTodayTime, getMonthName } from '../util/index';
+import noop from 'lodash/noop';
+import { getMonthName, getTodayTime } from '../util';
 
 const ROW = 4;
 const COL = 3;
@@ -12,18 +13,20 @@ function chooseMonth(month) {
   this.setAndSelectValue(next);
 }
 
-function noop() {
+export default class MonthTable extends Component {
+  static defaultProps = {
+    onSelect: noop,
+  };
+  static propTypes = {
+    onSelect: PropTypes.func,
+    cellRender: PropTypes.func,
+    prefixCls: PropTypes.string,
+    value: PropTypes.object,
+  };
 
-}
-
-class MonthTable extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      value: props.value,
-    };
-  }
+  state = {
+    value: this.props.value,
+  };
 
   componentWillReceiveProps(nextProps) {
     if ('value' in nextProps) {
@@ -126,14 +129,3 @@ class MonthTable extends Component {
     );
   }
 }
-
-MonthTable.defaultProps = {
-  onSelect: noop,
-};
-MonthTable.propTypes = {
-  onSelect: PropTypes.func,
-  cellRender: PropTypes.func,
-  prefixCls: PropTypes.string,
-  value: PropTypes.object,
-};
-export default MonthTable;

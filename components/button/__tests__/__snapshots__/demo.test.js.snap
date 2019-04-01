@@ -3,36 +3,36 @@
 exports[`renders ./components/button/demo/basic.md correctly 1`] = `
 <div>
   <button
-    class="ant-btn ant-btn-raised"
+    class="c7n-btn c7n-btn-raised"
     type="button"
   >
     <span>
       Rasied
     </span>
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
   <button
-    class="ant-btn ant-btn-flat"
+    class="c7n-btn c7n-btn-flat"
     type="button"
   >
     <span>
       Flat
     </span>
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
   <button
-    class="ant-btn ant-btn-circle ant-btn-icon-only ant-btn-flat"
+    class="c7n-btn c7n-btn-circle c7n-btn-icon-only c7n-btn-flat"
     type="button"
   >
     <i
       class="icon icon-search"
     />
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
 </div>
@@ -44,36 +44,36 @@ exports[`renders ./components/button/demo/button-group.md correctly 1`] = `
     Basic
   </h4>
   <div
-    class="ant-btn-group"
+    class="c7n-btn-group"
   >
     <button
-      class="ant-btn ant-btn-flat"
+      class="c7n-btn c7n-btn-flat"
       type="button"
     >
       <span>
         Cancel
       </span>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
     <button
-      class="ant-btn ant-btn-flat"
+      class="c7n-btn c7n-btn-flat"
       type="button"
     >
       <span>
         OK
       </span>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </div>
   <div
-    class="ant-btn-group"
+    class="c7n-btn-group"
   >
     <button
-      class="ant-btn ant-btn-flat"
+      class="c7n-btn c7n-btn-flat"
       disabled=""
       type="button"
     >
@@ -81,11 +81,11 @@ exports[`renders ./components/button/demo/button-group.md correctly 1`] = `
         L
       </span>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
     <button
-      class="ant-btn ant-btn-flat"
+      class="c7n-btn c7n-btn-flat"
       disabled=""
       type="button"
     >
@@ -93,11 +93,11 @@ exports[`renders ./components/button/demo/button-group.md correctly 1`] = `
         M
       </span>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
     <button
-      class="ant-btn ant-btn-flat"
+      class="c7n-btn c7n-btn-flat"
       disabled=""
       type="button"
     >
@@ -105,44 +105,44 @@ exports[`renders ./components/button/demo/button-group.md correctly 1`] = `
         R
       </span>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </div>
   <div
-    class="ant-btn-group"
+    class="c7n-btn-group"
   >
     <button
-      class="ant-btn ant-btn-flat"
+      class="c7n-btn c7n-btn-flat"
       type="button"
     >
       <span>
         L
       </span>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
     <button
-      class="ant-btn ant-btn-flat"
+      class="c7n-btn c7n-btn-flat"
       type="button"
     >
       <span>
         M
       </span>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
     <button
-      class="ant-btn ant-btn-flat"
+      class="c7n-btn c7n-btn-flat"
       type="button"
     >
       <span>
         R
       </span>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </div>
@@ -150,10 +150,10 @@ exports[`renders ./components/button/demo/button-group.md correctly 1`] = `
     With Icon
   </h4>
   <div
-    class="ant-btn-group"
+    class="c7n-btn-group"
   >
     <button
-      class="ant-btn ant-btn-primary ant-btn-flat"
+      class="c7n-btn c7n-btn-primary c7n-btn-flat"
       type="button"
     >
       <i
@@ -163,11 +163,11 @@ exports[`renders ./components/button/demo/button-group.md correctly 1`] = `
         Go back
       </span>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
     <button
-      class="ant-btn ant-btn-primary ant-btn-flat"
+      class="c7n-btn c7n-btn-primary c7n-btn-flat"
       type="button"
     >
       <span>
@@ -177,33 +177,33 @@ exports[`renders ./components/button/demo/button-group.md correctly 1`] = `
         class="icon icon-right"
       />
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </div>
   <div
-    class="ant-btn-group"
+    class="c7n-btn-group"
   >
     <button
-      class="ant-btn ant-btn-primary ant-btn-icon-only ant-btn-flat"
+      class="c7n-btn c7n-btn-primary c7n-btn-icon-only c7n-btn-flat"
       type="button"
     >
       <i
         class="icon icon-cloud"
       />
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
     <button
-      class="ant-btn ant-btn-primary ant-btn-icon-only ant-btn-flat"
+      class="c7n-btn c7n-btn-primary c7n-btn-icon-only c7n-btn-flat"
       type="button"
     >
       <i
         class="icon icon-cloud-download"
       />
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </div>
@@ -213,18 +213,18 @@ exports[`renders ./components/button/demo/button-group.md correctly 1`] = `
 exports[`renders ./components/button/demo/disabled.md correctly 1`] = `
 <div>
   <button
-    class="ant-btn ant-btn-primary ant-btn-raised"
+    class="c7n-btn c7n-btn-primary c7n-btn-raised"
     type="button"
   >
     <span>
       Primary
     </span>
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
   <button
-    class="ant-btn ant-btn-primary ant-btn-flat"
+    class="c7n-btn c7n-btn-primary c7n-btn-flat"
     disabled=""
     type="button"
   >
@@ -232,23 +232,23 @@ exports[`renders ./components/button/demo/disabled.md correctly 1`] = `
       Primary(disabled)
     </span>
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
   <br />
   <button
-    class="ant-btn ant-btn-flat"
+    class="c7n-btn c7n-btn-flat"
     type="button"
   >
     <span>
       Default
     </span>
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
   <button
-    class="ant-btn ant-btn-flat"
+    class="c7n-btn c7n-btn-flat"
     disabled=""
     type="button"
   >
@@ -256,23 +256,23 @@ exports[`renders ./components/button/demo/disabled.md correctly 1`] = `
       Default(disabled)
     </span>
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
   <br />
   <button
-    class="ant-btn ant-btn-flat"
+    class="c7n-btn c7n-btn-flat"
     type="button"
   >
     <span>
       Ghost
     </span>
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
   <button
-    class="ant-btn ant-btn-flat"
+    class="c7n-btn c7n-btn-flat"
     disabled=""
     type="button"
   >
@@ -280,23 +280,23 @@ exports[`renders ./components/button/demo/disabled.md correctly 1`] = `
       Ghost(disabled)
     </span>
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
   <br />
   <button
-    class="ant-btn ant-btn-dashed ant-btn-flat"
+    class="c7n-btn c7n-btn-dashed c7n-btn-flat"
     type="button"
   >
     <span>
       Dashed
     </span>
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
   <button
-    class="ant-btn ant-btn-dashed ant-btn-flat"
+    class="c7n-btn c7n-btn-dashed c7n-btn-flat"
     disabled=""
     type="button"
   >
@@ -304,7 +304,7 @@ exports[`renders ./components/button/demo/disabled.md correctly 1`] = `
       Dashed(disabled)
     </span>
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
 </div>
@@ -315,47 +315,47 @@ exports[`renders ./components/button/demo/ghost.md correctly 1`] = `
   style="background:rgb(190, 200, 200);padding:26px 16px 16px"
 >
   <button
-    class="ant-btn ant-btn-primary ant-btn-background-ghost ant-btn-flat"
+    class="c7n-btn c7n-btn-primary c7n-btn-background-ghost c7n-btn-flat"
     type="button"
   >
     <span>
       Primary
     </span>
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
   <button
-    class="ant-btn ant-btn-background-ghost ant-btn-flat"
+    class="c7n-btn c7n-btn-background-ghost c7n-btn-flat"
     type="button"
   >
     <span>
       Default
     </span>
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
   <button
-    class="ant-btn ant-btn-dashed ant-btn-background-ghost ant-btn-flat"
+    class="c7n-btn c7n-btn-dashed c7n-btn-background-ghost c7n-btn-flat"
     type="button"
   >
     <span>
       Dashed
     </span>
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
   <button
-    class="ant-btn ant-btn-danger ant-btn-background-ghost ant-btn-flat"
+    class="c7n-btn c7n-btn-danger c7n-btn-background-ghost c7n-btn-flat"
     type="button"
   >
     <span>
       danger
     </span>
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
 </div>
@@ -364,18 +364,18 @@ exports[`renders ./components/button/demo/ghost.md correctly 1`] = `
 exports[`renders ./components/button/demo/icon.md correctly 1`] = `
 <div>
   <button
-    class="ant-btn ant-btn-primary ant-btn-circle ant-btn-icon-only ant-btn-raised"
+    class="c7n-btn c7n-btn-primary c7n-btn-circle c7n-btn-icon-only c7n-btn-raised"
     type="button"
   >
     <i
       class="icon icon-search"
     />
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
   <button
-    class="ant-btn ant-btn-primary ant-btn-raised"
+    class="c7n-btn c7n-btn-primary c7n-btn-raised"
     type="button"
   >
     <i
@@ -385,22 +385,22 @@ exports[`renders ./components/button/demo/icon.md correctly 1`] = `
       Search
     </span>
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
   <button
-    class="ant-btn ant-btn-primary ant-btn-circle ant-btn-icon-only ant-btn-flat"
+    class="c7n-btn c7n-btn-primary c7n-btn-circle c7n-btn-icon-only c7n-btn-flat"
     type="button"
   >
     <i
       class="icon icon-search"
     />
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
   <button
-    class="ant-btn ant-btn-primary ant-btn-flat"
+    class="c7n-btn c7n-btn-primary c7n-btn-flat"
     type="button"
   >
     <i
@@ -410,7 +410,7 @@ exports[`renders ./components/button/demo/icon.md correctly 1`] = `
       Search
     </span>
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
 </div>
@@ -419,7 +419,7 @@ exports[`renders ./components/button/demo/icon.md correctly 1`] = `
 exports[`renders ./components/button/demo/loading.md correctly 1`] = `
 <span>
   <button
-    class="ant-btn ant-btn-primary ant-btn-loading ant-btn-flat"
+    class="c7n-btn c7n-btn-primary c7n-btn-loading c7n-btn-flat"
     type="button"
   >
     <div
@@ -439,11 +439,11 @@ exports[`renders ./components/button/demo/loading.md correctly 1`] = `
       Loading
     </span>
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
   <button
-    class="ant-btn ant-btn-primary ant-btn-loading ant-btn-raised"
+    class="c7n-btn c7n-btn-primary c7n-btn-loading c7n-btn-raised"
     type="button"
   >
     <div
@@ -463,23 +463,23 @@ exports[`renders ./components/button/demo/loading.md correctly 1`] = `
       Loading
     </span>
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
   <br />
   <button
-    class="ant-btn ant-btn-primary ant-btn-flat"
+    class="c7n-btn c7n-btn-primary c7n-btn-flat"
     type="button"
   >
     <span>
       Click me!
     </span>
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
   <button
-    class="ant-btn ant-btn-primary ant-btn-flat"
+    class="c7n-btn c7n-btn-primary c7n-btn-flat"
     type="button"
   >
     <i
@@ -489,12 +489,12 @@ exports[`renders ./components/button/demo/loading.md correctly 1`] = `
       Click me!
     </span>
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
   <br />
   <button
-    class="ant-btn ant-btn-circle ant-btn-loading ant-btn-flat"
+    class="c7n-btn c7n-btn-circle c7n-btn-loading c7n-btn-flat"
     type="button"
   >
     <div
@@ -511,11 +511,11 @@ exports[`renders ./components/button/demo/loading.md correctly 1`] = `
       />
     </div>
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
   <button
-    class="ant-btn ant-btn-primary ant-btn-circle ant-btn-loading ant-btn-flat"
+    class="c7n-btn c7n-btn-primary c7n-btn-circle c7n-btn-loading c7n-btn-flat"
     type="button"
   >
     <div
@@ -532,7 +532,7 @@ exports[`renders ./components/button/demo/loading.md correctly 1`] = `
       />
     </div>
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
 </span>
@@ -541,29 +541,29 @@ exports[`renders ./components/button/demo/loading.md correctly 1`] = `
 exports[`renders ./components/button/demo/multiple.md correctly 1`] = `
 <div>
   <button
-    class="ant-btn ant-btn-primary ant-btn-flat"
+    class="c7n-btn c7n-btn-primary c7n-btn-flat"
     type="button"
   >
     <span>
       primary
     </span>
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
   <button
-    class="ant-btn ant-btn-flat"
+    class="c7n-btn c7n-btn-flat"
     type="button"
   >
     <span>
       secondary
     </span>
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
   <button
-    class="ant-btn ant-dropdown-trigger ant-btn-flat"
+    class="c7n-btn c7n-dropdown-trigger c7n-btn-flat"
     type="button"
   >
     <span>
@@ -573,7 +573,7 @@ exports[`renders ./components/button/demo/multiple.md correctly 1`] = `
       class="icon icon-down"
     />
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
 </div>
@@ -582,25 +582,25 @@ exports[`renders ./components/button/demo/multiple.md correctly 1`] = `
 exports[`renders ./components/button/demo/size.md correctly 1`] = `
 <div>
   <div
-    class="ant-radio-group-wrapper"
+    class="c7n-radio-group-wrapper"
   >
     <div
-      class="ant-radio-group"
+      class="c7n-radio-group"
     >
       <label
-        class="ant-radio-button-wrapper ant-radio-button-wrapper-checked"
+        class="c7n-radio-button-wrapper c7n-radio-button-wrapper-checked"
       >
         <span
-          class="ant-radio-button ant-radio-button-checked"
+          class="c7n-radio-button c7n-radio-button-checked"
         >
           <input
             checked=""
-            class="ant-radio-button-input"
+            class="c7n-radio-button-input"
             type="radio"
             value="large"
           />
           <span
-            class="ant-radio-button-inner"
+            class="c7n-radio-button-inner"
           />
         </span>
         <span>
@@ -608,18 +608,18 @@ exports[`renders ./components/button/demo/size.md correctly 1`] = `
         </span>
       </label>
       <label
-        class="ant-radio-button-wrapper"
+        class="c7n-radio-button-wrapper"
       >
         <span
-          class="ant-radio-button"
+          class="c7n-radio-button"
         >
           <input
-            class="ant-radio-button-input"
+            class="c7n-radio-button-input"
             type="radio"
             value="default"
           />
           <span
-            class="ant-radio-button-inner"
+            class="c7n-radio-button-inner"
           />
         </span>
         <span>
@@ -627,18 +627,18 @@ exports[`renders ./components/button/demo/size.md correctly 1`] = `
         </span>
       </label>
       <label
-        class="ant-radio-button-wrapper"
+        class="c7n-radio-button-wrapper"
       >
         <span
-          class="ant-radio-button"
+          class="c7n-radio-button"
         >
           <input
-            class="ant-radio-button-input"
+            class="c7n-radio-button-input"
             type="radio"
             value="small"
           />
           <span
-            class="ant-radio-button-inner"
+            class="c7n-radio-button-inner"
           />
         </span>
         <span>
@@ -650,63 +650,63 @@ exports[`renders ./components/button/demo/size.md correctly 1`] = `
   <br />
   <br />
   <button
-    class="ant-btn ant-btn-primary ant-btn-lg ant-btn-flat"
+    class="c7n-btn c7n-btn-primary c7n-btn-lg c7n-btn-flat"
     type="button"
   >
     <span>
       默认
     </span>
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
   <button
-    class="ant-btn ant-btn-lg ant-btn-flat"
+    class="c7n-btn c7n-btn-lg c7n-btn-flat"
     type="button"
   >
     <span>
       Normal
     </span>
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
   <button
-    class="ant-btn ant-btn-dashed ant-btn-lg ant-btn-flat"
+    class="c7n-btn c7n-btn-dashed c7n-btn-lg c7n-btn-flat"
     type="button"
   >
     <span>
       Dashed
     </span>
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
   <button
-    class="ant-btn ant-btn-danger ant-btn-lg ant-btn-flat"
+    class="c7n-btn c7n-btn-danger c7n-btn-lg c7n-btn-flat"
     type="button"
   >
     <span>
       Danger
     </span>
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
   <br />
   <button
-    class="ant-btn ant-btn-primary ant-btn-circle ant-btn-lg ant-btn-icon-only ant-btn-flat"
+    class="c7n-btn c7n-btn-primary c7n-btn-circle c7n-btn-lg c7n-btn-icon-only c7n-btn-flat"
     type="button"
   >
     <i
       class="icon icon-cloud_queue"
     />
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
   <button
-    class="ant-btn ant-btn-primary ant-btn-lg ant-btn-flat"
+    class="c7n-btn c7n-btn-primary c7n-btn-lg c7n-btn-flat"
     type="button"
   >
     <i
@@ -716,15 +716,15 @@ exports[`renders ./components/button/demo/size.md correctly 1`] = `
       Download
     </span>
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
   <br />
   <div
-    class="ant-btn-group ant-btn-group-lg"
+    class="c7n-btn-group c7n-btn-group-lg"
   >
     <button
-      class="ant-btn ant-btn-primary ant-btn-flat"
+      class="c7n-btn c7n-btn-primary c7n-btn-flat"
       type="button"
     >
       <i
@@ -734,11 +734,11 @@ exports[`renders ./components/button/demo/size.md correctly 1`] = `
         Backward
       </span>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
     <button
-      class="ant-btn ant-btn-primary ant-btn-flat"
+      class="c7n-btn c7n-btn-primary c7n-btn-flat"
       type="button"
     >
       <span>
@@ -748,7 +748,7 @@ exports[`renders ./components/button/demo/size.md correctly 1`] = `
         class="icon icon-keyboard_arrow_right"
       />
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </div>

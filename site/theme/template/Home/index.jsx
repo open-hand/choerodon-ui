@@ -19,8 +19,8 @@ function getStyle() {
       padding: 0 24px;
     }
     #header,
-    #header .ant-select-selection,
-    #header .ant-menu {
+    #header .c7n-select-selection,
+    #header .c7n-menu {
       background: transparent;
     }
     #header #logo {
@@ -29,12 +29,12 @@ function getStyle() {
     #header #logo h1 {
       font-size: 24px;
     }
-    #header .ant-row > div:last-child .ant-select,
-    #header .ant-row > div:last-child .ant-menu,
+    #header .c7n-row > div:last-child .c7n-select,
+    #header .c7n-row > div:last-child .c7n-menu,
     #header .nav-phone-icon {
       display: none;
     }
-    #header .ant-row > div:last-child .header-lang-button span{
+    #header .c7n-row > div:last-child .header-lang-button span{
       margin-right: 0;
       height: 64px;
       line-height: 64px;
@@ -52,7 +52,7 @@ function getStyle() {
     footer  .bottom-bar {
       border-top: none;
     }
-    footer .footer-wrap .ant-row {
+    footer .footer-wrap .c7n-row {
       width: 100%;
       max-width: 1200px;
       margin: auto;
@@ -61,7 +61,7 @@ function getStyle() {
       #footer .footer-wrap{
         padding: 40px 24px
       }
-      footer .footer-wrap .ant-row {
+      footer .footer-wrap .c7n-row {
         padding: 0;
       }
     }
@@ -83,7 +83,6 @@ class Home extends React.Component {
         <div className="main-wrapper">
           <Banner {...childProps} />
           <Page1 {...childProps} />
-          {/* <Page2 {...childProps} /> */}
           <style dangerouslySetInnerHTML={{ __html: getStyle() }} />
         </div>
       </DocumentTitle>

@@ -63,7 +63,7 @@ ReactDOM.render(<App />, mountNode);
 ````
 
 <style>
-.ant-modal p {
+.c7n-modal p {
   margin: 0;
 }
 </style>

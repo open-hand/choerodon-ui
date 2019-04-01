@@ -84,6 +84,9 @@ module.exports = {
       path: 'components/:children/',
       component: contentTmpl,
     }, {
+      path: 'components-pro/:children/',
+      component: contentTmpl,
+    }, {
       path: 'docs/spec/feature',
       component: redirectTmpl,
     }, {

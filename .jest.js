@@ -28,9 +28,9 @@ module.exports = {
     'node',
   ],
   transform: {
-    '\\.tsx?$': './tests/jest/codePreprocessor',
-    '\\.jsx?$': './tests/jest/codePreprocessor',
-    '\\.md$': './tests/jest/demoPreprocessor',
+    '\\.tsx?$': './tools/jest/codePreprocessor',
+    '\\.jsx?$': './tools/jest/codePreprocessor',
+    '\\.md$': './tools/jest/demoPreprocessor',
   },
   testRegex: libDir === 'dist' ? 'demo\\.test\\.js$' : '.*\\.test\\.js$',
   collectCoverageFrom: [
@@ -50,4 +50,5 @@ module.exports = {
       tsConfigFile: './tsconfig.test.json',
     }
   },
+  cacheDirectory: './.jest_cache'
 };

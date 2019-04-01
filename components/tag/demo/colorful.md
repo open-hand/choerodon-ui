@@ -45,7 +45,7 @@ ReactDOM.render(
 ````
 
 ````css
-.ant-tag {
+.c7n-tag {
   margin-bottom: 8px;
 }
 ````

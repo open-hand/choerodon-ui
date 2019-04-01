@@ -1,9 +1,11 @@
-import * as React from 'react';
+import React, { Component, ComponentClass, FocusEventHandler } from 'react';
 import classNames from 'classnames';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import { generateShowHourMinuteSecond } from '../time-picker';
 import enUS from './locale/en_US';
 import TimePickerPanel from '../rc-components/time-picker/Panel';
+import { Size } from '../_util/enum';
+import { getPrefixCls } from '../configure';
 
 function getColumns({ showHour, showMinute, showSecond, use12Hours }: any) {
   let column = 0;
@@ -22,8 +24,9 @@ function getColumns({ showHour, showMinute, showSecond, use12Hours }: any) {
   return column;
 }
 
-export default function wrapPicker(Picker: React.ComponentClass<any>, defaultFormat?: string): any {
-  return class PickerWrapper extends React.Component<any, any> {
+export default function wrapPicker(Picker: ComponentClass<any>, defaultFormat?: string): any {
+  return class PickerWrapper extends Component<any, any> {
+    static displayName = 'PickerWrapper';
     static defaultProps = {
       format: defaultFormat || 'YYYY-MM-DD',
       transitionName: 'slide-up',
@@ -35,8 +38,8 @@ export default function wrapPicker(Picker: React.ComponentClass<any>, defaultFor
       onOpenChange() {
       },
       locale: {},
-      prefixCls: 'ant-calendar',
-      inputPrefixCls: 'ant-input',
+      prefixCls: getPrefixCls('calendar'),
+      inputPrefixCls: getPrefixCls('input'),
     };
 
     private picker: any;
@@ -51,21 +54,21 @@ export default function wrapPicker(Picker: React.ComponentClass<any>, defaultFor
     handleOpenChange = (open: boolean) => {
       const { onOpenChange } = this.props;
       onOpenChange(open);
-    }
+    };
 
-    handleFocus = (e: React.FocusEventHandler<HTMLInputElement>) => {
+    handleFocus = (e: FocusEventHandler<HTMLInputElement>) => {
       const { onFocus } = this.props;
       if (onFocus) {
         onFocus(e);
       }
-    }
+    };
 
-    handleBlur = (e: React.FocusEventHandler<HTMLInputElement>) => {
+    handleBlur = (e: FocusEventHandler<HTMLInputElement>) => {
       const { onBlur } = this.props;
       if (onBlur) {
         onBlur(e);
       }
-    }
+    };
 
     focus() {
       this.picker.focus();
@@ -77,7 +80,7 @@ export default function wrapPicker(Picker: React.ComponentClass<any>, defaultFor
 
     savePicker = (node: any) => {
       this.picker = node;
-    }
+    };
 
     getDefaultLocale = () => {
       const result = {
@@ -89,7 +92,7 @@ export default function wrapPicker(Picker: React.ComponentClass<any>, defaultFor
         ...(this.props.locale || {}).lang,
       };
       return result;
-    }
+    };
 
     renderPicker = (locale: any, localeCode: string) => {
       const props = this.props;
@@ -98,8 +101,8 @@ export default function wrapPicker(Picker: React.ComponentClass<any>, defaultFor
         [`${prefixCls}-picker-${props.size}`]: !!props.size,
       });
       const pickerInputClass = classNames(`${prefixCls}-picker-input`, inputPrefixCls, {
-        [`${inputPrefixCls}-lg`]: props.size === 'large',
-        [`${inputPrefixCls}-sm`]: props.size === 'small',
+        [`${inputPrefixCls}-lg`]: props.size === Size.large,
+        [`${inputPrefixCls}-sm`]: props.size === Size.small,
         [`${inputPrefixCls}-disabled`]: props.disabled,
       });
 
@@ -136,7 +139,7 @@ export default function wrapPicker(Picker: React.ComponentClass<any>, defaultFor
           onBlur={this.handleBlur}
         />
       );
-    }
+    };
 
     render() {
       return (

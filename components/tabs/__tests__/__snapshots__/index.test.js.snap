@@ -3,16 +3,15 @@
 exports[`Tabs tabPosition remove card 1`] = `
 <Tabs
   hideAdd={false}
-  prefixCls="ant-tabs"
   tabBarExtraContent="xxx"
   tabPosition="left"
 >
   <Tabs
-    className="ant-tabs-vertical ant-tabs-line"
+    className="c7n-tabs-line c7n-tabs-vertical"
     destroyInactiveTabPane={false}
     hideAdd={false}
     onChange={[Function]}
-    prefixCls="ant-tabs"
+    prefixCls="c7n-tabs"
     renderTabBar={[Function]}
     renderTabContent={[Function]}
     style={Object {}}
@@ -21,14 +20,14 @@ exports[`Tabs tabPosition remove card 1`] = `
     tabPosition="left"
   >
     <div
-      className="ant-tabs ant-tabs-left ant-tabs-vertical ant-tabs-line"
+      className="c7n-tabs c7n-tabs-left c7n-tabs-line c7n-tabs-vertical"
       style={Object {}}
     >
       <ScrollableInkTabBar
         activeKey="1"
         extraContent={
           <div
-            className="ant-tabs-extra-content"
+            className="c7n-tabs-extra-content"
           >
             xxx
           </div>
@@ -47,66 +46,82 @@ exports[`Tabs tabPosition remove card 1`] = `
             foo
           </TabPane>
         }
-        prefixCls="ant-tabs"
+        prefixCls="c7n-tabs"
         scrollAnimated={true}
         styles={Object {}}
         tabBarPosition="left"
       >
         <div
-          className="ant-tabs-bar"
+          className="c7n-tabs-bar"
           onKeyDown={[Function]}
           role="tablist"
           tabIndex="0"
         >
           <div
-            className="ant-tabs-nav-container"
+            className="c7n-tabs-nav-container"
             key="content"
           >
             <span
-              className="ant-tabs-tab-prev ant-tabs-tab-btn-disabled"
+              className="c7n-tabs-tab-prev c7n-tabs-tab-btn-disabled"
               onClick={null}
               onTransitionEnd={[Function]}
               unselectable="unselectable"
             >
               <span
-                className="ant-tabs-tab-prev-icon"
+                className="c7n-tabs-tab-prev-icon"
               />
             </span>
             <span
-              className="ant-tabs-tab-next ant-tabs-tab-btn-disabled"
+              className="c7n-tabs-tab-next c7n-tabs-tab-btn-disabled"
               onClick={null}
               unselectable="unselectable"
             >
               <span
-                className="ant-tabs-tab-next-icon"
+                className="c7n-tabs-tab-next-icon"
               />
             </span>
             <div
-              className="ant-tabs-nav-wrap"
+              className="c7n-tabs-nav-wrap"
             >
               <div
-                className="ant-tabs-nav-scroll"
+                className="c7n-tabs-nav-scroll"
               >
                 <div
-                  className="ant-tabs-nav ant-tabs-nav-animated"
+                  className="c7n-tabs-nav c7n-tabs-nav-animated"
                 >
                   <div
-                    className="ant-tabs-ink-bar ant-tabs-ink-bar-animated"
+                    className="c7n-tabs-ink-bar c7n-tabs-ink-bar-animated"
                     key="inkBar"
                   />
                   <Ripple
                     key="1"
-                    prefixCls="ant-ripple"
                   >
                     <RippleChild
                       key=".0"
-                      prefixCls="ant-ripple"
+                      prefixCls="c7n-ripple"
                     >
-                      <MouseDown>
+                      <MouseDown
+                        rippleChild={
+                          <div
+                            aria-disabled="false"
+                            aria-selected="true"
+                            className="c7n-tabs-tab-active c7n-tabs-tab"
+                            onClick={[Function]}
+                            role="tab"
+                            style={
+                              Object {
+                                "marginRight": undefined,
+                              }
+                            }
+                          >
+                            foo
+                          </div>
+                        }
+                      >
                         <div
                           aria-disabled="false"
                           aria-selected="true"
-                          className="ant-tabs-tab-active ant-tabs-tab"
+                          className="c7n-tabs-tab-active c7n-tabs-tab"
                           onClick={[Function]}
                           onMouseDown={[Function]}
                           role="tab"
@@ -122,21 +137,18 @@ exports[`Tabs tabPosition remove card 1`] = `
                             component="div"
                             componentProps={
                               Object {
-                                "className": "ant-ripple-wrapper",
+                                "className": "c7n-ripple-wrapper",
                               }
                             }
+                            hiddenProp="hidden"
                             key="ripple"
-                            onAppear={[Function]}
-                            onEnd={[Function]}
-                            onEnter={[Function]}
-                            onLeave={[Function]}
                             transitionAppear={false}
                             transitionEnter={true}
                             transitionLeave={true}
                             transitionName="fade"
                           >
                             <div
-                              className="ant-ripple-wrapper"
+                              className="c7n-ripple-wrapper"
                             />
                           </Animate>
                         </div>
@@ -148,7 +160,7 @@ exports[`Tabs tabPosition remove card 1`] = `
             </div>
           </div>
           <div
-            className="ant-tabs-extra-content"
+            className="c7n-tabs-extra-content"
             key="extra"
             style={Object {}}
           >
@@ -163,11 +175,11 @@ exports[`Tabs tabPosition remove card 1`] = `
         destroyInactiveTabPane={false}
         key="tabContent"
         onChange={[Function]}
-        prefixCls="ant-tabs"
+        prefixCls="c7n-tabs"
         tabBarPosition="left"
       >
         <div
-          className="ant-tabs-content ant-tabs-content-animated"
+          className="c7n-tabs-content c7n-tabs-content-animated"
           style={
             Object {
               "marginTop": "0%",
@@ -179,12 +191,12 @@ exports[`Tabs tabPosition remove card 1`] = `
             destroyInactiveTabPane={false}
             key="1"
             placeholder={null}
-            rootPrefixCls="ant-tabs"
+            rootPrefixCls="c7n-tabs"
             tab="foo"
           >
             <div
               aria-hidden="false"
-              className="ant-tabs-tabpane ant-tabs-tabpane-active"
+              className="c7n-tabs-tabpane c7n-tabs-tabpane-active"
               role="tabpanel"
             >
               foo

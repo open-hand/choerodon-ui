@@ -3,30 +3,30 @@
 exports[`Cascader can be selected 1`] = `
 <div>
   <div
-    class="ant-cascader-menus  ant-cascader-menus-placement-bottomLeft "
+    class="c7n-cascader-menus  c7n-cascader-menus-placement-bottomLeft "
   >
     <div>
       <ul
-        class="ant-cascader-menu"
+        class="c7n-cascader-menu"
       >
         <li
-          class="ant-cascader-menu-item ant-cascader-menu-item-expand ant-cascader-menu-item-active"
+          class="c7n-cascader-menu-item c7n-cascader-menu-item-expand c7n-cascader-menu-item-active"
           title="Zhejiang"
         >
           Zhejiang
         </li>
         <li
-          class="ant-cascader-menu-item ant-cascader-menu-item-expand"
+          class="c7n-cascader-menu-item c7n-cascader-menu-item-expand"
           title="Jiangsu"
         >
           Jiangsu
         </li>
       </ul>
       <ul
-        class="ant-cascader-menu"
+        class="c7n-cascader-menu"
       >
         <li
-          class="ant-cascader-menu-item ant-cascader-menu-item-expand"
+          class="c7n-cascader-menu-item c7n-cascader-menu-item-expand"
           title="Hangzhou"
         >
           Hangzhou
@@ -40,40 +40,40 @@ exports[`Cascader can be selected 1`] = `
 exports[`Cascader can be selected 2`] = `
 <div>
   <div
-    class="ant-cascader-menus  ant-cascader-menus-placement-bottomLeft "
+    class="c7n-cascader-menus  c7n-cascader-menus-placement-bottomLeft "
   >
     <div>
       <ul
-        class="ant-cascader-menu"
+        class="c7n-cascader-menu"
       >
         <li
-          class="ant-cascader-menu-item ant-cascader-menu-item-expand ant-cascader-menu-item-active"
+          class="c7n-cascader-menu-item c7n-cascader-menu-item-expand c7n-cascader-menu-item-active"
           title="Zhejiang"
         >
           Zhejiang
         </li>
         <li
-          class="ant-cascader-menu-item ant-cascader-menu-item-expand"
+          class="c7n-cascader-menu-item c7n-cascader-menu-item-expand"
           title="Jiangsu"
         >
           Jiangsu
         </li>
       </ul>
       <ul
-        class="ant-cascader-menu"
+        class="c7n-cascader-menu"
       >
         <li
-          class="ant-cascader-menu-item ant-cascader-menu-item-expand ant-cascader-menu-item-active"
+          class="c7n-cascader-menu-item c7n-cascader-menu-item-expand c7n-cascader-menu-item-active"
           title="Hangzhou"
         >
           Hangzhou
         </li>
       </ul>
       <ul
-        class="ant-cascader-menu"
+        class="c7n-cascader-menu"
       >
         <li
-          class="ant-cascader-menu-item"
+          class="c7n-cascader-menu-item"
           title="West Lake"
         >
           West Lake
@@ -87,40 +87,40 @@ exports[`Cascader can be selected 2`] = `
 exports[`Cascader can be selected 3`] = `
 <div>
   <div
-    class="ant-cascader-menus  ant-cascader-menus-placement-bottomLeft  ant-cascader-menus-hidden"
+    class="c7n-cascader-menus  c7n-cascader-menus-placement-bottomLeft  c7n-cascader-menus-hidden"
   >
     <div>
       <ul
-        class="ant-cascader-menu"
+        class="c7n-cascader-menu"
       >
         <li
-          class="ant-cascader-menu-item ant-cascader-menu-item-expand ant-cascader-menu-item-active"
+          class="c7n-cascader-menu-item c7n-cascader-menu-item-expand c7n-cascader-menu-item-active"
           title="Zhejiang"
         >
           Zhejiang
         </li>
         <li
-          class="ant-cascader-menu-item ant-cascader-menu-item-expand"
+          class="c7n-cascader-menu-item c7n-cascader-menu-item-expand"
           title="Jiangsu"
         >
           Jiangsu
         </li>
       </ul>
       <ul
-        class="ant-cascader-menu"
+        class="c7n-cascader-menu"
       >
         <li
-          class="ant-cascader-menu-item ant-cascader-menu-item-expand ant-cascader-menu-item-active"
+          class="c7n-cascader-menu-item c7n-cascader-menu-item-expand c7n-cascader-menu-item-active"
           title="Hangzhou"
         >
           Hangzhou
         </li>
       </ul>
       <ul
-        class="ant-cascader-menu"
+        class="c7n-cascader-menu"
       >
         <li
-          class="ant-cascader-menu-item ant-cascader-menu-item-active"
+          class="c7n-cascader-menu-item c7n-cascader-menu-item-active"
           title="West Lake"
         >
           West Lake
@@ -134,7 +134,7 @@ exports[`Cascader can be selected 3`] = `
 exports[`Cascader popup correctly when panel is hidden 1`] = `
 <div>
   <div
-    class="ant-cascader-menus  ant-cascader-menus-empty ant-cascader-menus-placement-bottomLeft  ant-cascader-menus-hidden"
+    class="c7n-cascader-menus  c7n-cascader-menus-empty c7n-cascader-menus-placement-bottomLeft  c7n-cascader-menus-hidden"
   >
     <div />
   </div>
@@ -144,20 +144,20 @@ exports[`Cascader popup correctly when panel is hidden 1`] = `
 exports[`Cascader popup correctly when panel is open 1`] = `
 <div>
   <div
-    class="ant-cascader-menus  ant-cascader-menus-placement-bottomLeft "
+    class="c7n-cascader-menus  c7n-cascader-menus-placement-bottomLeft "
   >
     <div>
       <ul
-        class="ant-cascader-menu"
+        class="c7n-cascader-menu"
       >
         <li
-          class="ant-cascader-menu-item ant-cascader-menu-item-expand"
+          class="c7n-cascader-menu-item c7n-cascader-menu-item-expand"
           title="Zhejiang"
         >
           Zhejiang
         </li>
         <li
-          class="ant-cascader-menu-item ant-cascader-menu-item-expand"
+          class="c7n-cascader-menu-item c7n-cascader-menu-item-expand"
           title="Jiangsu"
         >
           Jiangsu
@@ -171,40 +171,40 @@ exports[`Cascader popup correctly when panel is open 1`] = `
 exports[`Cascader popup correctly with defaultValue 1`] = `
 <div>
   <div
-    class="ant-cascader-menus  ant-cascader-menus-placement-bottomLeft "
+    class="c7n-cascader-menus  c7n-cascader-menus-placement-bottomLeft "
   >
     <div>
       <ul
-        class="ant-cascader-menu"
+        class="c7n-cascader-menu"
       >
         <li
-          class="ant-cascader-menu-item ant-cascader-menu-item-expand ant-cascader-menu-item-active"
+          class="c7n-cascader-menu-item c7n-cascader-menu-item-expand c7n-cascader-menu-item-active"
           title="Zhejiang"
         >
           Zhejiang
         </li>
         <li
-          class="ant-cascader-menu-item ant-cascader-menu-item-expand"
+          class="c7n-cascader-menu-item c7n-cascader-menu-item-expand"
           title="Jiangsu"
         >
           Jiangsu
         </li>
       </ul>
       <ul
-        class="ant-cascader-menu"
+        class="c7n-cascader-menu"
       >
         <li
-          class="ant-cascader-menu-item ant-cascader-menu-item-expand ant-cascader-menu-item-active"
+          class="c7n-cascader-menu-item c7n-cascader-menu-item-expand c7n-cascader-menu-item-active"
           title="Hangzhou"
         >
           Hangzhou
         </li>
       </ul>
       <ul
-        class="ant-cascader-menu"
+        class="c7n-cascader-menu"
       >
         <li
-          class="ant-cascader-menu-item"
+          class="c7n-cascader-menu-item"
           title="West Lake"
         >
           West Lake
@@ -217,33 +217,33 @@ exports[`Cascader popup correctly with defaultValue 1`] = `
 
 exports[`Cascader support controlled mode 1`] = `
 <span
-  class="ant-cascader-picker ant-input-has-value"
+  class="c7n-cascader-picker c7n-input-has-value"
   tabindex="0"
 >
   <span
-    class="ant-cascader-picker-label"
+    class="c7n-cascader-picker-label"
   >
     Zhejiang / Hangzhou / West Lake
   </span>
   <span
-    class="ant-input-wrapper"
+    class="c7n-input-wrapper"
   >
     <div
-      class="ant-input-content"
+      class="c7n-input-content"
     >
       <div
-        class="ant-input-rendered-wrapper"
+        class="c7n-input-rendered-wrapper"
       >
         <div
-          class="ant-input-rendered"
+          class="c7n-input-rendered"
           style="margin: 0px; width: 100%;"
         >
           <div
-            class="ant-input-placeholder"
+            class="c7n-input-placeholder"
           />
           <input
             autocomplete="off"
-            class="ant-input ant-cascader-input "
+            class="c7n-input c7n-cascader-input "
             readonly=""
             type="text"
             value=""
@@ -252,15 +252,15 @@ exports[`Cascader support controlled mode 1`] = `
       </div>
     </div>
     <div
-      class="ant-input-underline"
+      class="c7n-input-underline"
     >
       <span
-        class="ant-input-ripple"
+        class="c7n-input-ripple"
       />
     </div>
   </span>
   <i
-    class="icon icon-arrow_drop_down ant-cascader-picker-arrow"
+    class="icon icon-arrow_drop_down c7n-cascader-picker-arrow"
   />
 </span>
 `;

@@ -3,7 +3,7 @@ order: 5
 title: 在 TypeScript 中使用
 ---
 
-使用 `create-react-app` 一步步地创建一个 TypeScript 项目，并引入 antd。
+使用 `create-react-app` 一步步地创建一个 TypeScript 项目，并引入 choerodon-ui。
 
 ---
 
@@ -14,32 +14,32 @@ title: 在 TypeScript 中使用
 使用 yarn 创建项目。
 
 ```bash
-$ yarn create react-app antd-demo-ts --scripts-version=react-scripts-ts
+$ yarn create react-app choerodon-ui-demo-ts --scripts-version=react-scripts-ts
 ```
 
 如果你使用的是 npm（接下来我们都会用 yarn 作为例子，如果你习惯用 npm 也没问题）。
 
 ```bash
 $ npm install -g create-react-app
-$ create-react-app antd-demo-ts --scripts-version=react-scripts-ts
+$ create-react-app choerodon-ui-demo-ts --scripts-version=react-scripts-ts
 ```
 
 然后我们进入项目并启动。
 
 ```bash
-$ cd antd-demo-ts
+$ cd choerodon-ui-demo-ts
 $ yarn start
 ```
 
 此时浏览器会访问 http://localhost:3000/ ，看到 `Welcome to React` 的界面就算成功了。
 
-## 引入 antd
+## 引入 choerodon-ui
 
 ```bash
-$ yarn add antd
+$ yarn add choerodon-ui
 ```
 
-修改 `src/App.tsx`，引入 antd 的按钮组件。
+修改 `src/App.tsx`，引入 choerodon-ui 的按钮组件。
 
 ```jsx
 import * as React from 'react';
@@ -59,10 +59,10 @@ class App extends React.Component {
 export default App;
 ```
 
-修改 `src/App.css` 引入 antd 的样式。
+修改 `src/App.css` 引入 choerodon-ui 的样式。
 
 ```css
-@import '~antd/dist/antd.css';
+@import '~choerodon-ui/dist/choerodon-ui.css';
 
 .App {
   text-align: center;
@@ -71,11 +71,11 @@ export default App;
 ...
 ```
 
-重新启动 `yarn start`，现在你应该能看到页面上已经有了 antd 的蓝色按钮组件，接下来就可以继续选用其他组件开发应用了。其他开发流程你可以参考 create-react-app 的[官方文档](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md)。
+重新启动 `yarn start`，现在你应该能看到页面上已经有了 choerodon-ui 的蓝色按钮组件，接下来就可以继续选用其他组件开发应用了。其他开发流程你可以参考 create-react-app 的[官方文档](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md)。
 
 ## 高级配置
 
-我们现在已经把组件成功运行起来了，但是在实际开发过程中还有很多问题，例如上面的例子实际上加载了全部的 antd 组件的样式（对前端性能是个隐患）。
+我们现在已经把组件成功运行起来了，但是在实际开发过程中还有很多问题，例如上面的例子实际上加载了全部的 choerodon-ui 组件的样式（对前端性能是个隐患）。
 
 此时我们需要对 create-react-app 的默认配置进行自定义，这里我们使用 [react-app-rewired](https://github.com/timarney/react-app-rewired) （一个对 create-react-app 进行自定义配置的社区解决方案）。
 
@@ -132,7 +132,7 @@ module.exports = function override(config, env) {
   tsLoader.options = {
     getCustomTransformers: () => ({
       before: [ tsImportPluginFactory({
-        libraryName: 'antd',
+        libraryName: 'choerodon-ui',
         libraryDirectory: 'es',
         style: 'css',
       }) ]
@@ -143,7 +143,7 @@ module.exports = function override(config, env) {
 }
 ```
 
-然后移除前面在 `src/App.css` 里全量添加的 `@import '~antd/dist/antd.css';` 样式代码，并且按下面的格式引入模块。
+然后移除前面在 `src/App.css` 里全量添加的 `@import '~choerodon-ui/dist/choerodon-ui.css';` 样式代码，并且按下面的格式引入模块。
 
 ```diff
 import * as React from 'react';
@@ -163,7 +163,7 @@ class App extends React.Component {
 export default App;
 ```
 
-最后重启 `yarn start` 访问页面，antd 组件的 js 和 css 代码都会按需加载，你在控制台也不会看到这样的[警告信息](https://zos.alipayobjects.com/rmsportal/vgcHJRVZFmPjAawwVoXK.png)。关于按需加载的原理和其他方式可以阅读[这里](/docs/react/getting-started#按需加载)。
+最后重启 `yarn start` 访问页面，choerodon-ui 组件的 js 和 css 代码都会按需加载，你在控制台也不会看到这样的[警告信息](https://zos.alipayobjects.com/rmsportal/vgcHJRVZFmPjAawwVoXK.png)。关于按需加载的原理和其他方式可以阅读[这里](/docs/react/getting-started#按需加载)。
 
 ### 自定义主题
 
@@ -190,7 +190,7 @@ $ yarn add react-app-rewire-less --dev
     tsLoader.options = {
       getCustomTransformers: () => ({
         before: [ tsImportPluginFactory({
-          libraryName: 'antd',
+          libraryName: 'choerodon-ui',
           libraryDirectory: 'es',
 -         style: 'css',
 +         style: true,
@@ -210,18 +210,3 @@ $ yarn add react-app-rewire-less --dev
 变量和其他配置方式可以参考 [配置主题](/docs/react/customize-theme) 文档。
 
 修改后重启 `yarn start`，如果看到一个绿色的按钮就说明配置成功了。
-
-## 其他方案
-
-你也可以根据 [在 create-react-app 中使用](/docs/react/use-with-create-react-app.zh-CN.md) 的介绍使用 [react-app-rewire-typescript][https://github.com/lwd-technology/react-app-rewire-typescript] 自己来配置 TypeScript 的开发环境。
-
-此外，还可以选择 [react-scripts-ts-antd](https://www.npmjs.com/package/react-scripts-ts-antd)，其中已经配置好了 ts-import-plugin、react-app-rewired、scss、less 等常用功能。只需一条命令即可生成一个免配置的 TypeScript 项目.
-```bash
-$ create-react-app my-project --scripts-version=react-scripts-ts-antd
-```
-
-## 常见问题
-
-### error TS2605: JSX element type Xxx is not a constructor function for JSX elements.
-
-antd 3 以前的版本需要在 tsconfig.json 的 `compilerOptions` 中配置 `"allowSyntheticDefaultImports": true`。

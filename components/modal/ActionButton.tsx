@@ -1,5 +1,5 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import React, { Component } from 'react';
+import { findDOMNode } from 'react-dom';
 import Button from '../button';
 
 export interface ActionButtonProps {
@@ -11,7 +11,7 @@ export interface ActionButtonProps {
 export interface ActionButtonState {
   loading: boolean;
 }
-export default class ActionButton extends React.Component<ActionButtonProps, ActionButtonState> {
+export default class ActionButton extends Component<ActionButtonProps, ActionButtonState> {
   timeoutId: number;
 
   constructor(props: ActionButtonProps) {
@@ -23,7 +23,7 @@ export default class ActionButton extends React.Component<ActionButtonProps, Act
 
   componentDidMount() {
     if (this.props.autoFocus) {
-      const $this = ReactDOM.findDOMNode(this) as HTMLInputElement;
+      const $this = findDOMNode(this) as HTMLInputElement;
       this.timeoutId = setTimeout(() => $this.focus());
     }
   }
@@ -49,7 +49,7 @@ export default class ActionButton extends React.Component<ActionButtonProps, Act
           // this.setState({ loading: false });
           closeModal(...args);
         }, () => {
-          // See: https://github.com/ant-design/ant-design/issues/6183
+
           this.setState({ loading: false });
         });
       }

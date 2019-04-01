@@ -51,18 +51,18 @@ const reducePlugin = postcss.plugin('reducePlugin', () => {
   };
 });
 
-const antd = path.resolve(__dirname, '../');
-const entry = path.join(antd, 'components/style/index.less');
+const c7n = path.resolve(__dirname, '../');
+const entry = path.join(c7n, 'components/style/index.less');
 let content = fs.readFileSync(entry).toString();
-const styles = glob.sync(path.join(antd, 'components/*/style/index.less'));
+const styles = glob.sync(path.join(c7n, 'components/*/style/index.less'));
 content += '\n';
 styles.forEach((style) => {
   content += `@import "${style}";\n`;
 });
-content += `@import "${path.join(antd, 'site/theme/static/index.less')}";\n`;
+content += `@import "${path.join(c7n, 'site/theme/static/index.less')}";\n`;
 
 less.render.call(less, content, {
-  paths: [path.join(antd, 'components/style')],
+  paths: [path.join(c7n, 'components/style')],
 }).then(({ css }) => {
   return postcss([
     reducePlugin,
@@ -72,9 +72,9 @@ less.render.call(less, content, {
     css = css.replace(new RegExp(key, 'g'), COLOR_MAP[key]);
   });
 
-  const bezierEasing = fs.readFileSync(path.join(antd, 'components/style/color/bezierEasing.less')).toString();
-  const tinyColor = fs.readFileSync(path.join(antd, 'components/style/color/tinyColor.less')).toString();
-  const colorPalette = fs.readFileSync(path.join(antd, 'components/style/color/colorPalette.less'))
+  const bezierEasing = fs.readFileSync(path.join(c7n, 'components/style/color/bezierEasing.less')).toString();
+  const tinyColor = fs.readFileSync(path.join(c7n, 'components/style/color/tinyColor.less')).toString();
+  const colorPalette = fs.readFileSync(path.join(c7n, 'components/style/color/colorPalette.less'))
     .toString()
     .replace('@import "bezierEasing";', '')
     .replace('@import "tinyColor";', '');

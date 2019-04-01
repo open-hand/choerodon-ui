@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Header from './Header';
-import Combobox from './Combobox';
 import moment from 'moment';
 import classNames from 'classnames';
-
-function noop() {
-}
+import noop from 'lodash/noop';
+import Header from './Header';
+import Combobox from './Combobox';
 
 function generateOptions(length, disabledOptions, hideDisabledOptions, step = 1) {
   const arr = [];
@@ -82,13 +80,12 @@ class Panel extends Component {
   onChange = (newValue) => {
     this.setState({ value: newValue });
     this.props.onChange(newValue);
-  }
+  };
 
   onCurrentSelectPanelChange = (currentSelectPanel) => {
     this.setState({ currentSelectPanel });
-  }
+  };
 
-  // https://github.com/ant-design/ant-design/issues/5829
   close() {
     this.props.onEsc();
   }
@@ -104,7 +101,7 @@ class Panel extends Component {
       }
     }
     return disabledOptions;
-  }
+  };
 
   isAM() {
     const value = (this.state.value || this.props.defaultOpenValue);
@@ -126,13 +123,13 @@ class Panel extends Component {
     const disabledSecondOptions = disabledSeconds(value ? value.hour() : null,
       value ? value.minute() : null);
     const hourOptions = generateOptions(
-      24, disabledHourOptions, hideDisabledOptions, hourStep
+      24, disabledHourOptions, hideDisabledOptions, hourStep,
     );
     const minuteOptions = generateOptions(
-      60, disabledMinuteOptions, hideDisabledOptions, minuteStep
+      60, disabledMinuteOptions, hideDisabledOptions, minuteStep,
     );
     const secondOptions = generateOptions(
-      60, disabledSecondOptions, hideDisabledOptions, secondStep
+      60, disabledSecondOptions, hideDisabledOptions, secondStep,
     );
 
     return (

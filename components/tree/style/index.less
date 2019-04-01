@@ -3,10 +3,10 @@
 @import "../../checkbox/style/mixin";
 @import "./mixin";
 
-@tree-prefix-cls: ~"@{ant-prefix}-tree";
+@tree-prefix-cls: ~"@{c7n-prefix}-tree";
 @tree-showline-icon-color: @text-color-secondary;
 
-.antCheckboxFn(@checkbox-prefix-cls: ~"@{ant-prefix}-tree-checkbox");
+.antCheckboxFn(@checkbox-prefix-cls: ~"@{c7n-prefix}-tree-checkbox");
 
 .@{tree-prefix-cls} {
   .reset-component;
@@ -20,7 +20,7 @@
   }
 
   li {
-    padding: 4px 0;
+    padding: .04rem 0;
     margin: 0;
     list-style: none;
     white-space: nowrap;
@@ -28,9 +28,9 @@
     span[draggable],
     span[draggable="true"] {
       user-select: none;
-      border-top: 2px transparent solid;
-      border-bottom: 2px transparent solid;
-      margin-top: -2px;
+      border-top: .02rem transparent solid;
+      border-bottom: .02rem transparent solid;
+      margin-top: -.02rem;
       /* Required to make elements draggable in old WebKit */
       -khtml-user-drag: element;
       -webkit-user-drag: element;
@@ -60,11 +60,11 @@
     }
     ul {
       margin: 0;
-      padding: 0 0 0 18px;
+      padding: 0 0 0 .18rem;
     }
     .@{tree-prefix-cls}-node-content-wrapper {
       display: inline-block;
-      padding: 0 5px;
+      padding: 0 .05rem;
       border-radius: @border-radius-sm;
       margin: 0;
       cursor: pointer;
@@ -73,8 +73,8 @@
       color: @text-color;
       transition: all .3s;
       position: relative;
-      height: 24px;
-      line-height: 24px;
+      height: .24rem;
+      line-height: .24rem;
       &:hover {
         background-color: @item-hover-bg;
       }
@@ -84,11 +84,12 @@
     }
     span {
       &.@{tree-prefix-cls}-checkbox {
-        margin: 4px 4px 0 2px;
+        margin: .04rem .04rem 0 .02rem;
       }
+      &.@{tree-prefix-cls}-switcher,
       &.@{tree-prefix-cls}-iconEle {
         margin: 0;
-        line-height: 24px;
+        line-height: .24rem;
         display: inline-block;
         vertical-align: top;
         border: 0 none;
@@ -98,23 +99,23 @@
       }
       .@{tree-prefix-cls}-icon_loading {
         position: absolute;
-        left: -18px;
+        left: -.18rem;
         background: #fff;
-        width: 22px;
-        height: 22px;
+        width: .22rem;
+        height: .22rem;
       }
 
       &.@{tree-prefix-cls}-switcher {
-        .iconfont-font('\e5c5', 22px);
-        width: 22px;
-        height: 22px;
+        width: .22rem;
+        height: .22rem;
         line-height: 1;
         cursor: pointer;
-        transform: rotate(-90deg);
         vertical-align: top;
-        &-expanded {
-          transform: rotate(0);
-          vertical-align: top;
+        .@{iconfont-css-prefix} {
+          font-size: .22rem;
+        }
+        &_close .@{iconfont-css-prefix}-arrow_drop_down {
+          transform: rotate(-90deg);
         }
         &.@{tree-prefix-cls}-switcher-noop {
           cursor: default;
@@ -135,10 +136,10 @@
   }
   > li {
     &:first-child {
-      padding-top: 7px;
+      padding-top: .07rem;
     }
     &:last-child {
-      padding-bottom: 7px;
+      padding-bottom: .07rem;
     }
   }
   &-child-tree {
@@ -159,11 +160,11 @@
     }
   }
   &-icon__open {
-    margin-right: 2px;
+    margin-right: .02rem;
     vertical-align: top;
   }
   &-icon__close {
-    margin-right: 2px;
+    margin-right: .02rem;
     vertical-align: top;
   }
   // Tree with line
@@ -174,26 +175,17 @@
         &.@{tree-prefix-cls}-switcher {
           background: @component-background;
           color: @tree-showline-icon-color;
-          &.@{tree-prefix-cls}-switcher-noop {
-            .antTreeShowLineIcon("tree-doc-icon");
-          }
-          &.@{tree-prefix-cls}-switcher_open {
-            .antTreeShowLineIcon("tree-showline-open-icon");
-          }
-          &.@{tree-prefix-cls}-switcher_close {
-            .antTreeShowLineIcon("tree-showline-close-icon");
-          }
         }
       }
     }
     li:not(:last-child):before {
       content: ' ';
-      width: 1px;
-      border-left: 1px solid @border-color-base;
+      width: .01rem;
+      border-left: .01rem solid @border-color-base;
       height: 100%;
       position: absolute;
-      left: 12px;
-      margin: 22px 0;
+      left: .12rem;
+      margin: .22rem 0;
     }
   }
 }

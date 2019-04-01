@@ -24,13 +24,13 @@ describe('notification', () => {
       duration: 0,
       key: '2',
     });
-    expect(document.querySelectorAll('.ant-notification-notice').length).toBe(2);
+    expect(document.querySelectorAll('.c7n-notification-notice').length).toBe(2);
     notification.close('1');
     jest.runAllTimers();
-    expect(document.querySelectorAll('.ant-notification-notice').length).toBe(1);
+    expect(document.querySelectorAll('.c7n-notification-notice').length).toBe(1);
     notification.close('2');
     jest.runAllTimers();
-    expect(document.querySelectorAll('.ant-notification-notice').length).toBe(0);
+    expect(document.querySelectorAll('.c7n-notification-notice').length).toBe(0);
   });
 
   it('should be able to destroy globally', () => {
@@ -42,11 +42,11 @@ describe('notification', () => {
       message: 'Notification Title',
       duration: 0,
     });
-    expect(document.querySelectorAll('.ant-notification').length).toBe(1);
-    expect(document.querySelectorAll('.ant-notification-notice').length).toBe(2);
+    expect(document.querySelectorAll('.c7n-notification').length).toBe(1);
+    expect(document.querySelectorAll('.c7n-notification-notice').length).toBe(2);
     notification.destroy();
-    expect(document.querySelectorAll('.ant-notification').length).toBe(0);
-    expect(document.querySelectorAll('.ant-notification-notice').length).toBe(0);
+    expect(document.querySelectorAll('.c7n-notification').length).toBe(0);
+    expect(document.querySelectorAll('.c7n-notification-notice').length).toBe(0);
   });
 
   it('should be able to destroy after config', () => {
@@ -58,7 +58,7 @@ describe('notification', () => {
 
   it('should be able to open with icon', () => {
     const openNotificationWithIcon = (type) => {
-      const iconPrefix = '.ant-notification-notice-icon';
+      const iconPrefix = '.c7n-notification-notice-icon';
       notification[type]({
         message: 'Notification Title',
         duration: 0,

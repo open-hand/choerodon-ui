@@ -1,17 +1,12 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import noop from 'lodash/noop';
 import isNegativeZero from 'is-negative-zero';
 import InputHandler from './InputHandler';
 import Icon from '../../icon';
 import Input from '../../input';
-
-function noop() {
-}
-
-function preventDefault(e) {
-  e.preventDefault();
-}
+import { preventDefault } from '../../_util/EventManager';
 
 function defaultParser(input) {
   return input.replace(/[^\w\.-]+/g, '');
@@ -33,7 +28,7 @@ const DELAY = 600;
  */
 const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER || Math.pow(2, 53) - 1;
 
-export default class InputNumber extends React.Component {
+export default class InputNumber extends Component {
   static propTypes = {
     value: PropTypes.oneOfType([
       PropTypes.number,
@@ -76,7 +71,7 @@ export default class InputNumber extends React.Component {
       PropTypes.string,
       PropTypes.node,
     ]),
-  }
+  };
 
   static defaultProps = {
     focusOnUpDown: true,
@@ -91,7 +86,7 @@ export default class InputNumber extends React.Component {
     onBlur: noop,
     parser: defaultParser,
     required: false,
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -139,16 +134,15 @@ export default class InputNumber extends React.Component {
 
   componentDidUpdate() {
     // pressingUpOrDown is true means that someone just click up or down button
-    // https://github.com/ant-design/ant-design/issues/9204
     if (!this.pressingUpOrDown) {
       return;
     }
     if (this.props.focusOnUpDown && this.state.focused) {
       const selectionRange = this.input.setSelectionRange;
       if (selectionRange &&
-          typeof selectionRange === 'function' &&
-          this.start !== undefined &&
-          this.end !== undefined) {
+        typeof selectionRange === 'function' &&
+        this.start !== undefined &&
+        this.end !== undefined) {
         this.input.setSelectionRange(this.start, this.end);
       } else {
         this.focus();
@@ -175,7 +169,7 @@ export default class InputNumber extends React.Component {
     if (onKeyDown) {
       onKeyDown(e, ...args);
     }
-  }
+  };
 
   onKeyUp = (e, ...args) => {
     this.stop();
@@ -183,7 +177,7 @@ export default class InputNumber extends React.Component {
     if (onKeyUp) {
       onKeyUp(e, ...args);
     }
-  }
+  };
 
   onChange = (e) => {
     if (this.state.focused) {
@@ -192,14 +186,14 @@ export default class InputNumber extends React.Component {
     const input = this.props.parser(this.getValueFromEvent(e));
     this.setState({ inputValue: input });
     this.props.onChange(this.toNumberWhenUserInput(input)); // valid number or invalid string
-  }
+  };
 
   onFocus = (...args) => {
     this.setState({
       focused: true,
     });
     this.props.onFocus(...args);
-  }
+  };
 
   onBlur = (e, ...args) => {
     this.inputting = false;
@@ -211,7 +205,7 @@ export default class InputNumber extends React.Component {
     this.setValue(value, () => {
       this.props.onBlur(e, ...args);
     });
-  }
+  };
 
   getCurrentValidValue(value) {
     let val = value;
@@ -237,13 +231,11 @@ export default class InputNumber extends React.Component {
 
   getValueFromEvent(e) {
     // optimize for chinese input expierence
-    // https://github.com/ant-design/ant-design/issues/8196
     return e.target.value.trim().replace(/。/g, '.');
   }
 
   getValidValue(value, min = this.props.min, max = this.props.max) {
     let val = parseFloat(value, 10);
-    // https://github.com/ant-design/ant-design/issues/7358
     if (isNaN(val)) {
       return value;
     }
@@ -260,7 +252,7 @@ export default class InputNumber extends React.Component {
     // trigger onChange
     const newValue = this.isNotCompleteNumber(parseFloat(v, 10)) ? undefined : parseFloat(v, 10);
     const changed = newValue !== this.state.value ||
-      `${newValue}` !== `${this.state.inputValue}`; // https://github.com/ant-design/ant-design/issues/7363
+      `${newValue}` !== `${this.state.inputValue}`;
     if (!('value' in this.props)) {
       this.setState({
         value: newValue,
@@ -326,7 +318,6 @@ export default class InputNumber extends React.Component {
 
   formatWrapper(num) {
     // http://2ality.com/2012/03/signedzero.html
-    // https://github.com/ant-design/ant-design/issues/9439
     if (isNegativeZero(num)) {
       return '-0';
     }
@@ -387,7 +378,7 @@ export default class InputNumber extends React.Component {
     if (typeof val === 'number') {
       result =
         ((precisionFactor * val + precisionFactor * step * rat) /
-        precisionFactor).toFixed(precision);
+          precisionFactor).toFixed(precision);
     } else {
       result = min === -Infinity ? step : min;
     }
@@ -402,7 +393,7 @@ export default class InputNumber extends React.Component {
     if (typeof val === 'number') {
       result =
         ((precisionFactor * val - precisionFactor * step * rat) /
-        precisionFactor).toFixed(precision);
+          precisionFactor).toFixed(precision);
     } else {
       result = min === -Infinity ? -step : min;
     }
@@ -446,21 +437,21 @@ export default class InputNumber extends React.Component {
     if (this.autoStepTimer) {
       clearTimeout(this.autoStepTimer);
     }
-  }
+  };
 
   down = (e, ratio, recursive) => {
     this.pressingUpOrDown = true;
     this.step('down', e, ratio, recursive);
-  }
+  };
 
   up = (e, ratio, recursive) => {
     this.pressingUpOrDown = true;
     this.step('up', e, ratio, recursive);
-  }
+  };
 
   saveInput = (node) => {
     this.input = node;
-  }
+  };
 
   renderSuffix = () => {
     const props = { ...this.props };
@@ -509,44 +500,45 @@ export default class InputNumber extends React.Component {
     const isUpDisabled = !!upDisabledClass || disabled || readOnly;
     const isDownDisabled = !!downDisabledClass || disabled || readOnly;
     return (<div className={`${prefixCls}-handler-wrap`}>
-    <InputHandler
-      ref="up"
-      disabled={isUpDisabled}
-      prefixCls={prefixCls}
-      unselectable="unselectable"
-      {...upEvents}
-      role="button"
-      aria-label="Increase Value"
-      aria-disabled={!!isUpDisabled}
-      className={`${prefixCls}-handler ${prefixCls}-handler-up ${upDisabledClass}`}
-    >
-      {this.props.upHandler || <Icon
+      <InputHandler
+        ref="up"
+        disabled={isUpDisabled}
+        prefixCls={prefixCls}
         unselectable="unselectable"
-        type="baseline-arrow_drop_up"
-        className={`${prefixCls}-handler-up-inner`}
-        onClick={preventDefault}
-      />}
-    </InputHandler>
-    <InputHandler
-      ref="down"
-      disabled={isDownDisabled}
-      prefixCls={prefixCls}
-      unselectable="unselectable"
-      {...downEvents}
-      role="button"
-      aria-label="Decrease Value"
-      aria-disabled={!!isDownDisabled}
-      className={`${prefixCls}-handler ${prefixCls}-handler-down ${downDisabledClass}`}
-    >
-      {this.props.downHandler || <Icon
+        {...upEvents}
+        role="button"
+        aria-label="Increase Value"
+        aria-disabled={!!isUpDisabled}
+        className={`${prefixCls}-handler ${prefixCls}-handler-up ${upDisabledClass}`}
+      >
+        {this.props.upHandler || <Icon
+          unselectable="unselectable"
+          type="baseline-arrow_drop_up"
+          className={`${prefixCls}-handler-up-inner`}
+          onClick={preventDefault}
+        />}
+      </InputHandler>
+      <InputHandler
+        ref="down"
+        disabled={isDownDisabled}
+        prefixCls={prefixCls}
         unselectable="unselectable"
-        type="baseline-arrow_drop_down"
-        className={`${prefixCls}-handler-down-inner`}
-        onClick={preventDefault}
-      />}
-    </InputHandler>
-  </div>);
-  }
+        {...downEvents}
+        role="button"
+        aria-label="Decrease Value"
+        aria-disabled={!!isDownDisabled}
+        className={`${prefixCls}-handler ${prefixCls}-handler-down ${downDisabledClass}`}
+      >
+        {this.props.downHandler || <Icon
+          unselectable="unselectable"
+          type="baseline-arrow_drop_down"
+          className={`${prefixCls}-handler-down-inner`}
+          onClick={preventDefault}
+        />}
+      </InputHandler>
+    </div>);
+  };
+
   render() {
     const props = { ...this.props };
     const { prefixCls, disabled, readOnly, useTouch } = props;
@@ -604,7 +596,7 @@ export default class InputNumber extends React.Component {
           pattern={props.pattern}
           suffix={this.renderSuffix()}
           label={props.label}
-        /> 
+        />
       </div>
     );
   }

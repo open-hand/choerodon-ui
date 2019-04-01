@@ -2,13 +2,12 @@
 @import "../../style/mixins/index";
 @import "../../input/style/mixin";
 
-@cascader-prefix-cls: ~"@{ant-prefix}-cascader";
+@cascader-prefix-cls: ~"@{c7n-prefix}-cascader";
 
 .@{cascader-prefix-cls} {
   .reset-component;
 
-  &-input.@{ant-prefix}-input {
-    // Add important to fix https://github.com/ant-design/ant-design/issues/5078
+  &-input.@{c7n-prefix}-input {
     // because input.less will compile after cascader.less
     background-color: transparent !important;
     cursor: pointer;
@@ -25,7 +24,7 @@
     border-radius: @border-radius-base;
     outline: 0;
 
-    & .@{ant-prefix}-input-rendered {
+    & .@{c7n-prefix}-input-rendered {
       margin: 0;
     }
     &-with-value &-label {
@@ -49,14 +48,14 @@
       position: absolute;
       left: 0;
       top: 50%;
-      margin-top: -10px;
+      margin-top: -.1rem;
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
       width: 100%;
     }
 
-    .ant-input-has-label .ant-input-content {
+    .@{c7n-prefix}-input-has-label .@{c7n-prefix}-input-content {
       padding-top: 0;
     }
 
@@ -68,9 +67,9 @@
       background: @component-background;
       top: 50%;
       color: @input-color;
-      width: 20px;
-      height: 20px;
-      margin-top: -8px;
+      width: .2rem;
+      height: .2rem;
+      margin-top: -.08rem;
       cursor: pointer;
       transition: color 0.3s ease, opacity 0.15s ease;
     }
@@ -81,9 +80,9 @@
       z-index: 1;
       top: 50%;
       right: 0;
-      margin-top: -8px;
-      width: 20px;
-      height: 20px;
+      margin-top: -.08rem;
+      width: .2rem;
+      height: .2rem;
       color: @input-color;
       &:before {
         transition: transform .2s;
@@ -108,10 +107,7 @@
     z-index: @zindex-dropdown;
     border-radius: @border-radius-base;
     white-space: nowrap;
-    box-shadow:
-      0 5px 5px -3px rgba(0, 0, 0, 0.2),
-      0 8px 10px 1px rgba(0, 0, 0, 0.14),
-      0 3px 14px 2px rgba(0, 0, 0, 0.12);
+    box-shadow: @shadow-4;
 
     ul,
     ol {
@@ -145,8 +141,8 @@
   &-menu {
     display: inline-block;
     vertical-align: top;
-    min-width: 111px;
-    height: 180px;
+    min-width: 1.11rem;
+    height: 1.8rem;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -157,7 +153,7 @@
     }
     &:last-child {
       border-right-color: transparent;
-      margin-right: -1px;
+      margin-right: -.01rem;
       border-radius: 0 @border-radius-base @border-radius-base 0;
     }
     &:only-child {
@@ -165,8 +161,8 @@
     }
   }
   &-menu-item {
-    padding: 5px @control-padding-horizontal;
-    line-height: 22px;
+    padding: .05rem @control-padding-horizontal;
+    line-height: .22rem;
     cursor: pointer;
     white-space: nowrap;
     transition: all 0.3s;
@@ -189,10 +185,10 @@
     }
     &-expand {
       position: relative;
-      padding-right: 24px;
+      padding-right: .24rem;
       &:after {
         .iconfont-font("\e61f");
-        .iconfont-size-under-12px(8px);
+        .iconfont-size-under-12px(.08rem);
         color: @text-color-secondary;
         position: absolute;
         right: @control-padding-horizontal;

@@ -1,23 +1,25 @@
-import * as React from 'react';
+import React, { Component, CSSProperties } from 'react';
 import PropTypes from 'prop-types';
 import RcSteps from '../rc-components/steps';
+import { Size } from '../_util/enum';
+import { getPrefixCls } from '../configure';
 
 export interface StepsProps {
   prefixCls?: string;
   iconPrefix?: string;
   current?: number;
   status?: 'wait' | 'process' | 'finish' | 'error';
-  size?: 'default' | 'small';
+  size?: Size;
   direction?: 'horizontal' | 'vertical';
   progressDot?: boolean | Function;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
 }
 
-export default class Steps extends React.Component<StepsProps, any> {
+export default class Steps extends Component<StepsProps, any> {
+  static displayName = 'Steps';
   static Step = RcSteps.Step;
 
   static defaultProps = {
-    prefixCls: 'ant-steps',
     iconPrefix: 'icon',
     current: 0,
   };
@@ -30,7 +32,7 @@ export default class Steps extends React.Component<StepsProps, any> {
 
   render() {
     return (
-      <RcSteps {...this.props} />
+      <RcSteps {...this.props} prefixCls={getPrefixCls('steps', this.props.prefixCls)} />
     );
   }
 }

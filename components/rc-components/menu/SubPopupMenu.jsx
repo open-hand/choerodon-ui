@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { Children, cloneElement, Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import KeyCode from '../util/KeyCode';
+import noop from 'lodash/noop';
 import { connect } from 'mini-store';
+import KeyCode from '../../_util/KeyCode';
 import createChainedFunction from '../util/createChainedFunction';
-import { getKeyFromChildrenIndex, loopMenuItem, noop, menuAllProps } from './util';
-import Animate from '../animate';
+import { getKeyFromChildrenIndex, loopMenuItem, menuAllProps } from './util';
 import DOMWrap from './DOMWrap';
 
 function allDisabled(arr) {
@@ -69,7 +69,7 @@ export function saveRef(c) {
   }
 }
 
-export class SubPopupMenu extends React.Component {
+export class SubPopupMenu extends Component {
   static propTypes = {
     onSelect: PropTypes.func,
     onClick: PropTypes.func,
@@ -79,7 +79,7 @@ export class SubPopupMenu extends React.Component {
     openTransitionName: PropTypes.string,
     openAnimation: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     openKeys: PropTypes.arrayOf(PropTypes.string),
-    visible: PropTypes.bool,
+    hidden: PropTypes.bool,
     children: PropTypes.any,
     parentMenu: PropTypes.object,
     eventKey: PropTypes.string,
@@ -112,7 +112,7 @@ export class SubPopupMenu extends React.Component {
     mode: 'vertical',
     level: 1,
     inlineIndent: 24,
-    visible: true,
+    hidden: false,
     focusable: true,
     style: {},
     manualRef: noop,
@@ -139,13 +139,12 @@ export class SubPopupMenu extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    return this.props.visible || nextProps.visible;
+    return !this.props.hidden || !nextProps.hidden;
   }
 
   componentDidUpdate() {
     const props = this.props;
-    const originalActiveKey = 'activeKey' in props ? props.activeKey :
-      props.store.getState().activeKey[getEventKey(props)];
+    const originalActiveKey = 'activeKey' in props ? props.activeKey : props.store.getState().activeKey[getEventKey(props)];
     const activeKey = getActiveKey(props, originalActiveKey);
     if (activeKey !== originalActiveKey) {
       updateActiveKey(props.store, getEventKey(props), activeKey);
@@ -270,8 +269,7 @@ export class SubPopupMenu extends React.Component {
       index: i,
       parentMenu: props.parentMenu,
       // customized ref function, need to be invoked manually in child's componentDidMount
-      manualRef: childProps.disabled ? undefined :
-        createChainedFunction(child.ref, saveRef.bind(this)),
+      manualRef: childProps.disabled ? undefined : createChainedFunction(child.ref, saveRef.bind(this)),
       eventKey: key,
       active: !childProps.disabled && isActive,
       multiple: props.multiple,
@@ -296,7 +294,7 @@ export class SubPopupMenu extends React.Component {
     if (props.mode === 'inline') {
       newChildProps.triggerSubMenuAction = 'click';
     }
-    return React.cloneElement(child, newChildProps);
+    return cloneElement(child, newChildProps);
   };
 
   renderMenuItem = (c, i, subMenuKey) => {
@@ -325,7 +323,7 @@ export class SubPopupMenu extends React.Component {
     );
     const haveRendered = this.haveRendered;
     this.haveRendered = true;
-    this.haveOpened = this.haveOpened || props.visible || props.forceSubMenuRender;
+    this.haveOpened = this.haveOpened || !props.hidden || props.forceSubMenuRender;
     if (!this.haveOpened) {
       return null;
     }
@@ -341,10 +339,10 @@ export class SubPopupMenu extends React.Component {
       domProps.tabIndex = '0';
       domProps.onKeyDown = this.onKeyDown;
     }
-    const { prefixCls, eventKey, visible, level, mode, overflowedIndicator, theme } = props;
+    const { prefixCls, eventKey, hidden, level, mode, overflowedIndicator, theme } = props;
     menuAllProps.forEach(key => delete props[key]);
 
-    const transitionAppear = !(!haveRendered && props.visible && props.mode === 'inline');
+    const transitionAppear = !(!haveRendered && !props.hidden && props.mode === 'inline');
 
     props.className += ` ${props.prefixCls}-sub`;
     delete props.onClick;
@@ -367,11 +365,11 @@ export class SubPopupMenu extends React.Component {
         level={level}
         theme={theme}
         hiddenClassName={`${prefixCls}-hidden`}
-        visible={visible}
+        hidden={hidden}
         overflowedIndicator={overflowedIndicator}
         {...domProps}
       >
-        {React.Children.map(
+        {Children.map(
           props.children,
           (c, i) => this.renderMenuItem(c, i, eventKey || '0-menu-'),
         )}
@@ -380,6 +378,7 @@ export class SubPopupMenu extends React.Component {
     );
   }
 }
+
 const connected = connect()(SubPopupMenu);
 
 export default connected;

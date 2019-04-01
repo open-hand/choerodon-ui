@@ -2,16 +2,16 @@
 
 exports[`renders ./components/pagination/demo/basic.md correctly 1`] = `
 <ul
-  class="ant-pagination"
+  class="c7n-pagination"
   unselectable="unselectable"
 >
   <li
     aria-disabled="true"
-    class="ant-pagination-disabled ant-pagination-prev"
+    class="c7n-pagination-disabled c7n-pagination-prev"
     title="Previous Page"
   >
     <button
-      class="ant-btn ant-btn-circle ant-btn-icon-only ant-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-icon-only c7n-btn-flat"
       disabled=""
       type="button"
     >
@@ -19,110 +19,110 @@ exports[`renders ./components/pagination/demo/basic.md correctly 1`] = `
         class="icon icon-navigate_before"
       />
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </li>
   <li
-    class="ant-pagination-item ant-pagination-item-1 ant-pagination-item-active"
+    class="c7n-pagination-item c7n-pagination-item-1 c7n-pagination-item-active"
     tabindex="0"
     title="1"
   >
     <button
-      class="ant-btn ant-btn-circle ant-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-flat"
       type="button"
     >
       <a>
         1
       </a>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </li>
   <li
-    class="ant-pagination-item ant-pagination-item-2"
+    class="c7n-pagination-item c7n-pagination-item-2"
     tabindex="0"
     title="2"
   >
     <button
-      class="ant-btn ant-btn-circle ant-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-flat"
       type="button"
     >
       <a>
         2
       </a>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </li>
   <li
-    class="ant-pagination-item ant-pagination-item-3"
+    class="c7n-pagination-item c7n-pagination-item-3"
     tabindex="0"
     title="3"
   >
     <button
-      class="ant-btn ant-btn-circle ant-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-flat"
       type="button"
     >
       <a>
         3
       </a>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </li>
   <li
-    class="ant-pagination-item ant-pagination-item-4"
+    class="c7n-pagination-item c7n-pagination-item-4"
     tabindex="0"
     title="4"
   >
     <button
-      class="ant-btn ant-btn-circle ant-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-flat"
       type="button"
     >
       <a>
         4
       </a>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </li>
   <li
-    class="ant-pagination-item ant-pagination-item-5"
+    class="c7n-pagination-item c7n-pagination-item-5"
     tabindex="0"
     title="5"
   >
     <button
-      class="ant-btn ant-btn-circle ant-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-flat"
       type="button"
     >
       <a>
         5
       </a>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </li>
   <li
     aria-disabled="false"
-    class=" ant-pagination-next"
+    class=" c7n-pagination-next"
     tabindex="0"
     title="Next Page"
   >
     <button
-      class="ant-btn ant-btn-circle ant-btn-icon-only ant-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-icon-only c7n-btn-flat"
       type="button"
     >
       <i
         class="icon icon-navigate_next"
       />
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </li>
@@ -131,193 +131,193 @@ exports[`renders ./components/pagination/demo/basic.md correctly 1`] = `
 
 exports[`renders ./components/pagination/demo/changer.md correctly 1`] = `
 <ul
-  class="ant-pagination"
+  class="c7n-pagination"
   unselectable="unselectable"
 >
   <li
     aria-disabled="false"
-    class=" ant-pagination-prev"
+    class=" c7n-pagination-prev"
     tabindex="0"
     title="Previous Page"
   >
     <button
-      class="ant-btn ant-btn-circle ant-btn-icon-only ant-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-icon-only c7n-btn-flat"
       type="button"
     >
       <i
         class="icon icon-navigate_before"
       />
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </li>
   <li
-    class="ant-pagination-item ant-pagination-item-1"
+    class="c7n-pagination-item c7n-pagination-item-1"
     tabindex="0"
     title="1"
   >
     <button
-      class="ant-btn ant-btn-circle ant-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-flat"
       type="button"
     >
       <a>
         1
       </a>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </li>
   <li
-    class="ant-pagination-item ant-pagination-item-2"
+    class="c7n-pagination-item c7n-pagination-item-2"
     tabindex="0"
     title="2"
   >
     <button
-      class="ant-btn ant-btn-circle ant-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-flat"
       type="button"
     >
       <a>
         2
       </a>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </li>
   <li
-    class="ant-pagination-item ant-pagination-item-3 ant-pagination-item-active"
+    class="c7n-pagination-item c7n-pagination-item-3 c7n-pagination-item-active"
     tabindex="0"
     title="3"
   >
     <button
-      class="ant-btn ant-btn-circle ant-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-flat"
       type="button"
     >
       <a>
         3
       </a>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </li>
   <li
-    class="ant-pagination-item ant-pagination-item-4"
+    class="c7n-pagination-item c7n-pagination-item-4"
     tabindex="0"
     title="4"
   >
     <button
-      class="ant-btn ant-btn-circle ant-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-flat"
       type="button"
     >
       <a>
         4
       </a>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </li>
   <li
-    class="ant-pagination-item ant-pagination-item-5 ant-pagination-item-before-jump-next"
+    class="c7n-pagination-item c7n-pagination-item-5 c7n-pagination-item-before-jump-next"
     tabindex="0"
     title="5"
   >
     <button
-      class="ant-btn ant-btn-circle ant-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-flat"
       type="button"
     >
       <a>
         5
       </a>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </li>
   <li
-    class="ant-pagination-jump-next"
+    class="c7n-pagination-jump-next"
     tabindex="0"
     title="Next 5 Pages"
   >
     <button
-      class="ant-btn ant-btn-circle ant-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-flat"
       type="button"
     >
       <a
-        class="ant-pagination-item-link"
+        class="c7n-pagination-item-link"
       >
         •••
       </a>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </li>
   <li
-    class="ant-pagination-item ant-pagination-item-50"
+    class="c7n-pagination-item c7n-pagination-item-50"
     tabindex="0"
     title="50"
   >
     <button
-      class="ant-btn ant-btn-circle ant-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-flat"
       type="button"
     >
       <a>
         50
       </a>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </li>
   <li
     aria-disabled="false"
-    class=" ant-pagination-next"
+    class=" c7n-pagination-next"
     tabindex="0"
     title="Next Page"
   >
     <button
-      class="ant-btn ant-btn-circle ant-btn-icon-only ant-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-icon-only c7n-btn-flat"
       type="button"
     >
       <i
         class="icon icon-navigate_next"
       />
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </li>
   <li
-    class="ant-pagination-options"
+    class="c7n-pagination-options"
   >
     <div
-      class="ant-pagination-options-size-changer ant-select ant-select-has-value ant-select-enabled"
+      class="c7n-pagination-options-size-changer c7n-select c7n-select-has-value c7n-select-enabled"
     >
       <div
         aria-autocomplete="list"
         aria-expanded="false"
         aria-haspopup="true"
-        class="ant-select-selection
-            ant-select-selection--single"
+        class="c7n-select-selection
+            c7n-select-selection--single"
         role="combobox"
         tabindex="0"
       >
         <div
-          class="ant-select-selection__rendered"
+          class="c7n-select-selection__rendered"
         >
           <div
-            class="ant-select-selection-selected-value"
+            class="c7n-select-selection-selected-value"
             style="opacity:1"
             title="10"
           >
             10
           </div>
           <span
-            class="ant-select-arrow"
+            class="c7n-select-arrow"
             style="user-select:none;-webkit-user-select:none"
             unselectable="unselectable"
           >
@@ -329,10 +329,10 @@ exports[`renders ./components/pagination/demo/changer.md correctly 1`] = `
         </div>
       </div>
       <div
-        class="ant-select-underline"
+        class="c7n-select-underline"
       >
         <span
-          class="ant-select-ripple"
+          class="c7n-select-ripple"
         />
       </div>
     </div>
@@ -342,127 +342,127 @@ exports[`renders ./components/pagination/demo/changer.md correctly 1`] = `
 
 exports[`renders ./components/pagination/demo/controlled.md correctly 1`] = `
 <ul
-  class="ant-pagination"
+  class="c7n-pagination"
   unselectable="unselectable"
 >
   <li
     aria-disabled="false"
-    class=" ant-pagination-prev"
+    class=" c7n-pagination-prev"
     tabindex="0"
     title="Previous Page"
   >
     <button
-      class="ant-btn ant-btn-circle ant-btn-icon-only ant-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-icon-only c7n-btn-flat"
       type="button"
     >
       <i
         class="icon icon-navigate_before"
       />
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </li>
   <li
-    class="ant-pagination-item ant-pagination-item-1"
+    class="c7n-pagination-item c7n-pagination-item-1"
     tabindex="0"
     title="1"
   >
     <button
-      class="ant-btn ant-btn-circle ant-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-flat"
       type="button"
     >
       <a>
         1
       </a>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </li>
   <li
-    class="ant-pagination-item ant-pagination-item-2"
+    class="c7n-pagination-item c7n-pagination-item-2"
     tabindex="0"
     title="2"
   >
     <button
-      class="ant-btn ant-btn-circle ant-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-flat"
       type="button"
     >
       <a>
         2
       </a>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </li>
   <li
-    class="ant-pagination-item ant-pagination-item-3 ant-pagination-item-active"
+    class="c7n-pagination-item c7n-pagination-item-3 c7n-pagination-item-active"
     tabindex="0"
     title="3"
   >
     <button
-      class="ant-btn ant-btn-circle ant-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-flat"
       type="button"
     >
       <a>
         3
       </a>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </li>
   <li
-    class="ant-pagination-item ant-pagination-item-4"
+    class="c7n-pagination-item c7n-pagination-item-4"
     tabindex="0"
     title="4"
   >
     <button
-      class="ant-btn ant-btn-circle ant-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-flat"
       type="button"
     >
       <a>
         4
       </a>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </li>
   <li
-    class="ant-pagination-item ant-pagination-item-5"
+    class="c7n-pagination-item c7n-pagination-item-5"
     tabindex="0"
     title="5"
   >
     <button
-      class="ant-btn ant-btn-circle ant-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-flat"
       type="button"
     >
       <a>
         5
       </a>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </li>
   <li
     aria-disabled="false"
-    class=" ant-pagination-next"
+    class=" c7n-pagination-next"
     tabindex="0"
     title="Next Page"
   >
     <button
-      class="ant-btn ant-btn-circle ant-btn-icon-only ant-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-icon-only c7n-btn-flat"
       type="button"
     >
       <i
         class="icon icon-navigate_next"
       />
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </li>
@@ -471,12 +471,12 @@ exports[`renders ./components/pagination/demo/controlled.md correctly 1`] = `
 
 exports[`renders ./components/pagination/demo/itemRender.md correctly 1`] = `
 <ul
-  class="ant-pagination"
+  class="c7n-pagination"
   unselectable="unselectable"
 >
   <li
     aria-disabled="true"
-    class="ant-pagination-disabled ant-pagination-prev"
+    class="c7n-pagination-disabled c7n-pagination-prev"
     title="Previous Page"
   >
     <a>
@@ -484,7 +484,7 @@ exports[`renders ./components/pagination/demo/itemRender.md correctly 1`] = `
     </a>
   </li>
   <li
-    class="ant-pagination-item ant-pagination-item-1 ant-pagination-item-active"
+    class="c7n-pagination-item c7n-pagination-item-1 c7n-pagination-item-active"
     tabindex="0"
     title="1"
   >
@@ -493,7 +493,7 @@ exports[`renders ./components/pagination/demo/itemRender.md correctly 1`] = `
     </a>
   </li>
   <li
-    class="ant-pagination-item ant-pagination-item-2"
+    class="c7n-pagination-item c7n-pagination-item-2"
     tabindex="0"
     title="2"
   >
@@ -502,7 +502,7 @@ exports[`renders ./components/pagination/demo/itemRender.md correctly 1`] = `
     </a>
   </li>
   <li
-    class="ant-pagination-item ant-pagination-item-3"
+    class="c7n-pagination-item c7n-pagination-item-3"
     tabindex="0"
     title="3"
   >
@@ -511,7 +511,7 @@ exports[`renders ./components/pagination/demo/itemRender.md correctly 1`] = `
     </a>
   </li>
   <li
-    class="ant-pagination-item ant-pagination-item-4"
+    class="c7n-pagination-item c7n-pagination-item-4"
     tabindex="0"
     title="4"
   >
@@ -520,7 +520,7 @@ exports[`renders ./components/pagination/demo/itemRender.md correctly 1`] = `
     </a>
   </li>
   <li
-    class="ant-pagination-item ant-pagination-item-5 ant-pagination-item-before-jump-next"
+    class="c7n-pagination-item c7n-pagination-item-5 c7n-pagination-item-before-jump-next"
     tabindex="0"
     title="5"
   >
@@ -529,18 +529,18 @@ exports[`renders ./components/pagination/demo/itemRender.md correctly 1`] = `
     </a>
   </li>
   <li
-    class="ant-pagination-jump-next"
+    class="c7n-pagination-jump-next"
     tabindex="0"
     title="Next 5 Pages"
   >
     <a
-      class="ant-pagination-item-link"
+      class="c7n-pagination-item-link"
     >
       •••
     </a>
   </li>
   <li
-    class="ant-pagination-item ant-pagination-item-50"
+    class="c7n-pagination-item c7n-pagination-item-50"
     tabindex="0"
     title="50"
   >
@@ -550,7 +550,7 @@ exports[`renders ./components/pagination/demo/itemRender.md correctly 1`] = `
   </li>
   <li
     aria-disabled="false"
-    class=" ant-pagination-next"
+    class=" c7n-pagination-next"
     tabindex="0"
     title="Next Page"
   >
@@ -563,171 +563,171 @@ exports[`renders ./components/pagination/demo/itemRender.md correctly 1`] = `
 
 exports[`renders ./components/pagination/demo/jump.md correctly 1`] = `
 <ul
-  class="ant-pagination"
+  class="c7n-pagination"
   unselectable="unselectable"
 >
   <li
     aria-disabled="false"
-    class=" ant-pagination-prev"
+    class=" c7n-pagination-prev"
     tabindex="0"
     title="Previous Page"
   >
     <button
-      class="ant-btn ant-btn-circle ant-btn-icon-only ant-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-icon-only c7n-btn-flat"
       type="button"
     >
       <i
         class="icon icon-navigate_before"
       />
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </li>
   <li
-    class="ant-pagination-item ant-pagination-item-1"
+    class="c7n-pagination-item c7n-pagination-item-1"
     tabindex="0"
     title="1"
   >
     <button
-      class="ant-btn ant-btn-circle ant-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-flat"
       type="button"
     >
       <a>
         1
       </a>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </li>
   <li
-    class="ant-pagination-item ant-pagination-item-2 ant-pagination-item-active"
+    class="c7n-pagination-item c7n-pagination-item-2 c7n-pagination-item-active"
     tabindex="0"
     title="2"
   >
     <button
-      class="ant-btn ant-btn-circle ant-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-flat"
       type="button"
     >
       <a>
         2
       </a>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </li>
   <li
-    class="ant-pagination-item ant-pagination-item-3"
+    class="c7n-pagination-item c7n-pagination-item-3"
     tabindex="0"
     title="3"
   >
     <button
-      class="ant-btn ant-btn-circle ant-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-flat"
       type="button"
     >
       <a>
         3
       </a>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </li>
   <li
-    class="ant-pagination-item ant-pagination-item-4"
+    class="c7n-pagination-item c7n-pagination-item-4"
     tabindex="0"
     title="4"
   >
     <button
-      class="ant-btn ant-btn-circle ant-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-flat"
       type="button"
     >
       <a>
         4
       </a>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </li>
   <li
-    class="ant-pagination-item ant-pagination-item-5 ant-pagination-item-before-jump-next"
+    class="c7n-pagination-item c7n-pagination-item-5 c7n-pagination-item-before-jump-next"
     tabindex="0"
     title="5"
   >
     <button
-      class="ant-btn ant-btn-circle ant-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-flat"
       type="button"
     >
       <a>
         5
       </a>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </li>
   <li
-    class="ant-pagination-jump-next"
+    class="c7n-pagination-jump-next"
     tabindex="0"
     title="Next 5 Pages"
   >
     <button
-      class="ant-btn ant-btn-circle ant-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-flat"
       type="button"
     >
       <a
-        class="ant-pagination-item-link"
+        class="c7n-pagination-item-link"
       >
         •••
       </a>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </li>
   <li
-    class="ant-pagination-item ant-pagination-item-50"
+    class="c7n-pagination-item c7n-pagination-item-50"
     tabindex="0"
     title="50"
   >
     <button
-      class="ant-btn ant-btn-circle ant-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-flat"
       type="button"
     >
       <a>
         50
       </a>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </li>
   <li
     aria-disabled="false"
-    class=" ant-pagination-next"
+    class=" c7n-pagination-next"
     tabindex="0"
     title="Next Page"
   >
     <button
-      class="ant-btn ant-btn-circle ant-btn-icon-only ant-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-icon-only c7n-btn-flat"
       type="button"
     >
       <i
         class="icon icon-navigate_next"
       />
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </li>
   <li
-    class="ant-pagination-options"
+    class="c7n-pagination-options"
   >
     <div
-      class="ant-pagination-options-quick-jumper"
+      class="c7n-pagination-options-quick-jumper"
     >
       Goto
       <input
@@ -741,199 +741,199 @@ exports[`renders ./components/pagination/demo/jump.md correctly 1`] = `
 
 exports[`renders ./components/pagination/demo/more.md correctly 1`] = `
 <ul
-  class="ant-pagination"
+  class="c7n-pagination"
   unselectable="unselectable"
 >
   <li
     aria-disabled="false"
-    class=" ant-pagination-prev"
+    class=" c7n-pagination-prev"
     tabindex="0"
     title="Previous Page"
   >
     <button
-      class="ant-btn ant-btn-circle ant-btn-icon-only ant-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-icon-only c7n-btn-flat"
       type="button"
     >
       <i
         class="icon icon-navigate_before"
       />
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </li>
   <li
-    class="ant-pagination-item ant-pagination-item-1"
+    class="c7n-pagination-item c7n-pagination-item-1"
     tabindex="0"
     title="1"
   >
     <button
-      class="ant-btn ant-btn-circle ant-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-flat"
       type="button"
     >
       <a>
         1
       </a>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </li>
   <li
-    class="ant-pagination-jump-prev"
+    class="c7n-pagination-jump-prev"
     tabindex="0"
     title="Previous 5 Pages"
   >
     <button
-      class="ant-btn ant-btn-circle ant-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-flat"
       type="button"
     >
       <a
-        class="ant-pagination-item-link"
+        class="c7n-pagination-item-link"
       >
         •••
       </a>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </li>
   <li
-    class="ant-pagination-item ant-pagination-item-4 ant-pagination-item-after-jump-prev"
+    class="c7n-pagination-item c7n-pagination-item-4 c7n-pagination-item-after-jump-prev"
     tabindex="0"
     title="4"
   >
     <button
-      class="ant-btn ant-btn-circle ant-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-flat"
       type="button"
     >
       <a>
         4
       </a>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </li>
   <li
-    class="ant-pagination-item ant-pagination-item-5"
+    class="c7n-pagination-item c7n-pagination-item-5"
     tabindex="0"
     title="5"
   >
     <button
-      class="ant-btn ant-btn-circle ant-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-flat"
       type="button"
     >
       <a>
         5
       </a>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </li>
   <li
-    class="ant-pagination-item ant-pagination-item-6 ant-pagination-item-active"
+    class="c7n-pagination-item c7n-pagination-item-6 c7n-pagination-item-active"
     tabindex="0"
     title="6"
   >
     <button
-      class="ant-btn ant-btn-circle ant-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-flat"
       type="button"
     >
       <a>
         6
       </a>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </li>
   <li
-    class="ant-pagination-item ant-pagination-item-7"
+    class="c7n-pagination-item c7n-pagination-item-7"
     tabindex="0"
     title="7"
   >
     <button
-      class="ant-btn ant-btn-circle ant-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-flat"
       type="button"
     >
       <a>
         7
       </a>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </li>
   <li
-    class="ant-pagination-item ant-pagination-item-8 ant-pagination-item-before-jump-next"
+    class="c7n-pagination-item c7n-pagination-item-8 c7n-pagination-item-before-jump-next"
     tabindex="0"
     title="8"
   >
     <button
-      class="ant-btn ant-btn-circle ant-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-flat"
       type="button"
     >
       <a>
         8
       </a>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </li>
   <li
-    class="ant-pagination-jump-next"
+    class="c7n-pagination-jump-next"
     tabindex="0"
     title="Next 5 Pages"
   >
     <button
-      class="ant-btn ant-btn-circle ant-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-flat"
       type="button"
     >
       <a
-        class="ant-pagination-item-link"
+        class="c7n-pagination-item-link"
       >
         •••
       </a>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </li>
   <li
-    class="ant-pagination-item ant-pagination-item-50"
+    class="c7n-pagination-item c7n-pagination-item-50"
     tabindex="0"
     title="50"
   >
     <button
-      class="ant-btn ant-btn-circle ant-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-flat"
       type="button"
     >
       <a>
         50
       </a>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </li>
   <li
     aria-disabled="false"
-    class=" ant-pagination-next"
+    class=" c7n-pagination-next"
     tabindex="0"
     title="Next Page"
   >
     <button
-      class="ant-btn ant-btn-circle ant-btn-icon-only ant-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-icon-only c7n-btn-flat"
       type="button"
     >
       <i
         class="icon icon-navigate_next"
       />
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </li>
@@ -942,28 +942,28 @@ exports[`renders ./components/pagination/demo/more.md correctly 1`] = `
 
 exports[`renders ./components/pagination/demo/simple.md correctly 1`] = `
 <ul
-  class="ant-pagination ant-pagination-simple "
+  class="c7n-pagination c7n-pagination-simple "
 >
   <li
     aria-disabled="false"
-    class=" ant-pagination-prev"
+    class=" c7n-pagination-prev"
     tabindex="0"
     title="Previous Page"
   >
     <button
-      class="ant-btn ant-btn-circle ant-btn-sm ant-btn-icon-only ant-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
       type="button"
     >
       <i
         class="icon icon-navigate_before"
       />
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </li>
   <li
-    class="ant-pagination-simple-pager"
+    class="c7n-pagination-simple-pager"
     title="2/5"
   >
     <input
@@ -972,7 +972,7 @@ exports[`renders ./components/pagination/demo/simple.md correctly 1`] = `
       value="2"
     />
     <span
-      class="ant-pagination-slash"
+      class="c7n-pagination-slash"
     >
       ／
     </span>
@@ -980,19 +980,19 @@ exports[`renders ./components/pagination/demo/simple.md correctly 1`] = `
   </li>
   <li
     aria-disabled="false"
-    class=" ant-pagination-next"
+    class=" c7n-pagination-next"
     tabindex="0"
     title="Next Page"
   >
     <button
-      class="ant-btn ant-btn-circle ant-btn-sm ant-btn-icon-only ant-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
       type="button"
     >
       <i
         class="icon icon-navigate_next"
       />
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </li>
@@ -1002,16 +1002,16 @@ exports[`renders ./components/pagination/demo/simple.md correctly 1`] = `
 exports[`renders ./components/pagination/demo/size.md correctly 1`] = `
 <div>
   <ul
-    class="ant-pagination ant-pagination-large"
+    class="c7n-pagination c7n-pagination-large"
     unselectable="unselectable"
   >
     <li
       aria-disabled="true"
-      class="ant-pagination-disabled ant-pagination-prev"
+      class="c7n-pagination-disabled c7n-pagination-prev"
       title="Previous Page"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-lg ant-btn-icon-only ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-lg c7n-btn-icon-only c7n-btn-flat"
         disabled=""
         type="button"
       >
@@ -1019,125 +1019,125 @@ exports[`renders ./components/pagination/demo/size.md correctly 1`] = `
           class="icon icon-navigate_before"
         />
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
-      class="ant-pagination-item ant-pagination-item-1 ant-pagination-item-active"
+      class="c7n-pagination-item c7n-pagination-item-1 c7n-pagination-item-active"
       tabindex="0"
       title="1"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-flat"
         type="button"
       >
         <a>
           1
         </a>
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
-      class="ant-pagination-item ant-pagination-item-2"
+      class="c7n-pagination-item c7n-pagination-item-2"
       tabindex="0"
       title="2"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-flat"
         type="button"
       >
         <a>
           2
         </a>
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
-      class="ant-pagination-item ant-pagination-item-3"
+      class="c7n-pagination-item c7n-pagination-item-3"
       tabindex="0"
       title="3"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-flat"
         type="button"
       >
         <a>
           3
         </a>
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
-      class="ant-pagination-item ant-pagination-item-4"
+      class="c7n-pagination-item c7n-pagination-item-4"
       tabindex="0"
       title="4"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-flat"
         type="button"
       >
         <a>
           4
         </a>
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
-      class="ant-pagination-item ant-pagination-item-5"
+      class="c7n-pagination-item c7n-pagination-item-5"
       tabindex="0"
       title="5"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-flat"
         type="button"
       >
         <a>
           5
         </a>
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
       aria-disabled="false"
-      class=" ant-pagination-next"
+      class=" c7n-pagination-next"
       tabindex="0"
       title="Next Page"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-lg ant-btn-icon-only ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-lg c7n-btn-icon-only c7n-btn-flat"
         type="button"
       >
         <i
           class="icon icon-navigate_next"
         />
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
   </ul>
   <ul
-    class="ant-pagination ant-pagination-large"
+    class="c7n-pagination c7n-pagination-large"
     unselectable="unselectable"
   >
     <li
       aria-disabled="true"
-      class="ant-pagination-disabled ant-pagination-prev"
+      class="c7n-pagination-disabled c7n-pagination-prev"
       title="Previous Page"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-lg ant-btn-icon-only ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-lg c7n-btn-icon-only c7n-btn-flat"
         disabled=""
         type="button"
       >
@@ -1145,145 +1145,145 @@ exports[`renders ./components/pagination/demo/size.md correctly 1`] = `
           class="icon icon-navigate_before"
         />
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
-      class="ant-pagination-item ant-pagination-item-1 ant-pagination-item-active"
+      class="c7n-pagination-item c7n-pagination-item-1 c7n-pagination-item-active"
       tabindex="0"
       title="1"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-flat"
         type="button"
       >
         <a>
           1
         </a>
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
-      class="ant-pagination-item ant-pagination-item-2"
+      class="c7n-pagination-item c7n-pagination-item-2"
       tabindex="0"
       title="2"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-flat"
         type="button"
       >
         <a>
           2
         </a>
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
-      class="ant-pagination-item ant-pagination-item-3"
+      class="c7n-pagination-item c7n-pagination-item-3"
       tabindex="0"
       title="3"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-flat"
         type="button"
       >
         <a>
           3
         </a>
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
-      class="ant-pagination-item ant-pagination-item-4"
+      class="c7n-pagination-item c7n-pagination-item-4"
       tabindex="0"
       title="4"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-flat"
         type="button"
       >
         <a>
           4
         </a>
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
-      class="ant-pagination-item ant-pagination-item-5"
+      class="c7n-pagination-item c7n-pagination-item-5"
       tabindex="0"
       title="5"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-flat"
         type="button"
       >
         <a>
           5
         </a>
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
       aria-disabled="false"
-      class=" ant-pagination-next"
+      class=" c7n-pagination-next"
       tabindex="0"
       title="Next Page"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-lg ant-btn-icon-only ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-lg c7n-btn-icon-only c7n-btn-flat"
         type="button"
       >
         <i
           class="icon icon-navigate_next"
         />
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
-      class="ant-pagination-options"
+      class="c7n-pagination-options"
     >
       <span
-        class="ant-pagination-options-label"
+        class="c7n-pagination-options-label"
       >
         Items / page
       </span>
       <div
-        class="ant-select-lg ant-pagination-options-size-changer ant-select ant-select-has-value ant-select-enabled"
+        class="c7n-select-lg c7n-pagination-options-size-changer c7n-select c7n-select-has-value c7n-select-enabled"
       >
         <div
           aria-autocomplete="list"
           aria-expanded="false"
           aria-haspopup="true"
-          class="ant-select-selection
-            ant-select-selection--single"
+          class="c7n-select-selection
+            c7n-select-selection--single"
           role="combobox"
           tabindex="0"
         >
           <div
-            class="ant-select-selection__rendered"
+            class="c7n-select-selection__rendered"
           >
             <div
-              class="ant-select-selection-selected-value"
+              class="c7n-select-selection-selected-value"
               style="opacity:1"
               title="10"
             >
               10
             </div>
             <span
-              class="ant-select-arrow"
+              class="c7n-select-arrow"
               style="user-select:none;-webkit-user-select:none"
               unselectable="unselectable"
             >
@@ -1295,15 +1295,15 @@ exports[`renders ./components/pagination/demo/size.md correctly 1`] = `
           </div>
         </div>
         <div
-          class="ant-select-underline"
+          class="c7n-select-underline"
         >
           <span
-            class="ant-select-ripple"
+            class="c7n-select-ripple"
           />
         </div>
       </div>
       <div
-        class="ant-pagination-options-quick-jumper"
+        class="c7n-pagination-options-quick-jumper"
       >
         Goto
         <input
@@ -1314,21 +1314,21 @@ exports[`renders ./components/pagination/demo/size.md correctly 1`] = `
     </li>
   </ul>
   <ul
-    class="ant-pagination ant-pagination-large"
+    class="c7n-pagination c7n-pagination-large"
     unselectable="unselectable"
   >
     <li
-      class="ant-pagination-total-text"
+      class="c7n-pagination-total-text"
     >
       Total 50 items
     </li>
     <li
       aria-disabled="true"
-      class="ant-pagination-disabled ant-pagination-prev"
+      class="c7n-pagination-disabled c7n-pagination-prev"
       title="Previous Page"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-lg ant-btn-icon-only ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-lg c7n-btn-icon-only c7n-btn-flat"
         disabled=""
         type="button"
       >
@@ -1336,125 +1336,125 @@ exports[`renders ./components/pagination/demo/size.md correctly 1`] = `
           class="icon icon-navigate_before"
         />
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
-      class="ant-pagination-item ant-pagination-item-1 ant-pagination-item-active"
+      class="c7n-pagination-item c7n-pagination-item-1 c7n-pagination-item-active"
       tabindex="0"
       title="1"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-flat"
         type="button"
       >
         <a>
           1
         </a>
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
-      class="ant-pagination-item ant-pagination-item-2"
+      class="c7n-pagination-item c7n-pagination-item-2"
       tabindex="0"
       title="2"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-flat"
         type="button"
       >
         <a>
           2
         </a>
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
-      class="ant-pagination-item ant-pagination-item-3"
+      class="c7n-pagination-item c7n-pagination-item-3"
       tabindex="0"
       title="3"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-flat"
         type="button"
       >
         <a>
           3
         </a>
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
-      class="ant-pagination-item ant-pagination-item-4"
+      class="c7n-pagination-item c7n-pagination-item-4"
       tabindex="0"
       title="4"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-flat"
         type="button"
       >
         <a>
           4
         </a>
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
-      class="ant-pagination-item ant-pagination-item-5"
+      class="c7n-pagination-item c7n-pagination-item-5"
       tabindex="0"
       title="5"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-flat"
         type="button"
       >
         <a>
           5
         </a>
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
       aria-disabled="false"
-      class=" ant-pagination-next"
+      class=" c7n-pagination-next"
       tabindex="0"
       title="Next Page"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-lg ant-btn-icon-only ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-lg c7n-btn-icon-only c7n-btn-flat"
         type="button"
       >
         <i
           class="icon icon-navigate_next"
         />
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
   </ul>
   <ul
-    class="ant-pagination ant-pagination-small"
+    class="c7n-pagination c7n-pagination-small"
     unselectable="unselectable"
   >
     <li
       aria-disabled="true"
-      class="ant-pagination-disabled ant-pagination-prev"
+      class="c7n-pagination-disabled c7n-pagination-prev"
       title="Previous Page"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-sm ant-btn-icon-only ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
         disabled=""
         type="button"
       >
@@ -1462,125 +1462,125 @@ exports[`renders ./components/pagination/demo/size.md correctly 1`] = `
           class="icon icon-navigate_before"
         />
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
-      class="ant-pagination-item ant-pagination-item-1 ant-pagination-item-active"
+      class="c7n-pagination-item c7n-pagination-item-1 c7n-pagination-item-active"
       tabindex="0"
       title="1"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-flat"
         type="button"
       >
         <a>
           1
         </a>
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
-      class="ant-pagination-item ant-pagination-item-2"
+      class="c7n-pagination-item c7n-pagination-item-2"
       tabindex="0"
       title="2"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-flat"
         type="button"
       >
         <a>
           2
         </a>
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
-      class="ant-pagination-item ant-pagination-item-3"
+      class="c7n-pagination-item c7n-pagination-item-3"
       tabindex="0"
       title="3"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-flat"
         type="button"
       >
         <a>
           3
         </a>
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
-      class="ant-pagination-item ant-pagination-item-4"
+      class="c7n-pagination-item c7n-pagination-item-4"
       tabindex="0"
       title="4"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-flat"
         type="button"
       >
         <a>
           4
         </a>
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
-      class="ant-pagination-item ant-pagination-item-5"
+      class="c7n-pagination-item c7n-pagination-item-5"
       tabindex="0"
       title="5"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-flat"
         type="button"
       >
         <a>
           5
         </a>
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
       aria-disabled="false"
-      class=" ant-pagination-next"
+      class=" c7n-pagination-next"
       tabindex="0"
       title="Next Page"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-sm ant-btn-icon-only ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
         type="button"
       >
         <i
           class="icon icon-navigate_next"
         />
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
   </ul>
   <ul
-    class="ant-pagination ant-pagination-small"
+    class="c7n-pagination c7n-pagination-small"
     unselectable="unselectable"
   >
     <li
       aria-disabled="true"
-      class="ant-pagination-disabled ant-pagination-prev"
+      class="c7n-pagination-disabled c7n-pagination-prev"
       title="Previous Page"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-sm ant-btn-icon-only ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
         disabled=""
         type="button"
       >
@@ -1588,145 +1588,145 @@ exports[`renders ./components/pagination/demo/size.md correctly 1`] = `
           class="icon icon-navigate_before"
         />
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
-      class="ant-pagination-item ant-pagination-item-1 ant-pagination-item-active"
+      class="c7n-pagination-item c7n-pagination-item-1 c7n-pagination-item-active"
       tabindex="0"
       title="1"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-flat"
         type="button"
       >
         <a>
           1
         </a>
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
-      class="ant-pagination-item ant-pagination-item-2"
+      class="c7n-pagination-item c7n-pagination-item-2"
       tabindex="0"
       title="2"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-flat"
         type="button"
       >
         <a>
           2
         </a>
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
-      class="ant-pagination-item ant-pagination-item-3"
+      class="c7n-pagination-item c7n-pagination-item-3"
       tabindex="0"
       title="3"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-flat"
         type="button"
       >
         <a>
           3
         </a>
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
-      class="ant-pagination-item ant-pagination-item-4"
+      class="c7n-pagination-item c7n-pagination-item-4"
       tabindex="0"
       title="4"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-flat"
         type="button"
       >
         <a>
           4
         </a>
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
-      class="ant-pagination-item ant-pagination-item-5"
+      class="c7n-pagination-item c7n-pagination-item-5"
       tabindex="0"
       title="5"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-flat"
         type="button"
       >
         <a>
           5
         </a>
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
       aria-disabled="false"
-      class=" ant-pagination-next"
+      class=" c7n-pagination-next"
       tabindex="0"
       title="Next Page"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-sm ant-btn-icon-only ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
         type="button"
       >
         <i
           class="icon icon-navigate_next"
         />
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
-      class="ant-pagination-options"
+      class="c7n-pagination-options"
     >
       <span
-        class="ant-pagination-options-label"
+        class="c7n-pagination-options-label"
       >
         Items / page
       </span>
       <div
-        class="ant-select-sm ant-pagination-options-size-changer ant-select ant-select-has-value ant-select-enabled"
+        class="c7n-select-sm c7n-pagination-options-size-changer c7n-select c7n-select-has-value c7n-select-enabled"
       >
         <div
           aria-autocomplete="list"
           aria-expanded="false"
           aria-haspopup="true"
-          class="ant-select-selection
-            ant-select-selection--single"
+          class="c7n-select-selection
+            c7n-select-selection--single"
           role="combobox"
           tabindex="0"
         >
           <div
-            class="ant-select-selection__rendered"
+            class="c7n-select-selection__rendered"
           >
             <div
-              class="ant-select-selection-selected-value"
+              class="c7n-select-selection-selected-value"
               style="opacity:1"
               title="10"
             >
               10
             </div>
             <span
-              class="ant-select-arrow"
+              class="c7n-select-arrow"
               style="user-select:none;-webkit-user-select:none"
               unselectable="unselectable"
             >
@@ -1738,15 +1738,15 @@ exports[`renders ./components/pagination/demo/size.md correctly 1`] = `
           </div>
         </div>
         <div
-          class="ant-select-underline"
+          class="c7n-select-underline"
         >
           <span
-            class="ant-select-ripple"
+            class="c7n-select-ripple"
           />
         </div>
       </div>
       <div
-        class="ant-pagination-options-quick-jumper"
+        class="c7n-pagination-options-quick-jumper"
       >
         Goto
         <input
@@ -1757,21 +1757,21 @@ exports[`renders ./components/pagination/demo/size.md correctly 1`] = `
     </li>
   </ul>
   <ul
-    class="ant-pagination ant-pagination-small"
+    class="c7n-pagination c7n-pagination-small"
     unselectable="unselectable"
   >
     <li
-      class="ant-pagination-total-text"
+      class="c7n-pagination-total-text"
     >
       Total 50 items
     </li>
     <li
       aria-disabled="true"
-      class="ant-pagination-disabled ant-pagination-prev"
+      class="c7n-pagination-disabled c7n-pagination-prev"
       title="Previous Page"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-sm ant-btn-icon-only ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
         disabled=""
         type="button"
       >
@@ -1779,110 +1779,110 @@ exports[`renders ./components/pagination/demo/size.md correctly 1`] = `
           class="icon icon-navigate_before"
         />
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
-      class="ant-pagination-item ant-pagination-item-1 ant-pagination-item-active"
+      class="c7n-pagination-item c7n-pagination-item-1 c7n-pagination-item-active"
       tabindex="0"
       title="1"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-flat"
         type="button"
       >
         <a>
           1
         </a>
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
-      class="ant-pagination-item ant-pagination-item-2"
+      class="c7n-pagination-item c7n-pagination-item-2"
       tabindex="0"
       title="2"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-flat"
         type="button"
       >
         <a>
           2
         </a>
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
-      class="ant-pagination-item ant-pagination-item-3"
+      class="c7n-pagination-item c7n-pagination-item-3"
       tabindex="0"
       title="3"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-flat"
         type="button"
       >
         <a>
           3
         </a>
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
-      class="ant-pagination-item ant-pagination-item-4"
+      class="c7n-pagination-item c7n-pagination-item-4"
       tabindex="0"
       title="4"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-flat"
         type="button"
       >
         <a>
           4
         </a>
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
-      class="ant-pagination-item ant-pagination-item-5"
+      class="c7n-pagination-item c7n-pagination-item-5"
       tabindex="0"
       title="5"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-flat"
         type="button"
       >
         <a>
           5
         </a>
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
       aria-disabled="false"
-      class=" ant-pagination-next"
+      class=" c7n-pagination-next"
       tabindex="0"
       title="Next Page"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-sm ant-btn-icon-only ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
         type="button"
       >
         <i
           class="icon icon-navigate_next"
         />
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
@@ -1893,41 +1893,41 @@ exports[`renders ./components/pagination/demo/size.md correctly 1`] = `
 exports[`renders ./components/pagination/demo/tiny.md correctly 1`] = `
 <div>
   <ul
-    class="ant-pagination ant-pagination-tiny"
+    class="c7n-pagination c7n-pagination-tiny"
     unselectable="unselectable"
   >
     <li
-      class="ant-pagination-options"
+      class="c7n-pagination-options"
     >
       <span
-        class="ant-pagination-options-label"
+        class="c7n-pagination-options-label"
       >
         Items / page
       </span>
       <div
-        class="ant-pagination-options-size-changer ant-select ant-select-has-value ant-select-enabled"
+        class="c7n-pagination-options-size-changer c7n-select c7n-select-has-value c7n-select-enabled"
       >
         <div
           aria-autocomplete="list"
           aria-expanded="false"
           aria-haspopup="true"
-          class="ant-select-selection
-            ant-select-selection--single"
+          class="c7n-select-selection
+            c7n-select-selection--single"
           role="combobox"
           tabindex="0"
         >
           <div
-            class="ant-select-selection__rendered"
+            class="c7n-select-selection__rendered"
           >
             <div
-              class="ant-select-selection-selected-value"
+              class="c7n-select-selection-selected-value"
               style="opacity:1"
               title="10"
             >
               10
             </div>
             <span
-              class="ant-select-arrow"
+              class="c7n-select-arrow"
               style="user-select:none;-webkit-user-select:none"
               unselectable="unselectable"
             >
@@ -1939,26 +1939,26 @@ exports[`renders ./components/pagination/demo/tiny.md correctly 1`] = `
           </div>
         </div>
         <div
-          class="ant-select-underline"
+          class="c7n-select-underline"
         >
           <span
-            class="ant-select-ripple"
+            class="c7n-select-ripple"
           />
         </div>
       </div>
     </li>
     <li
-      class="ant-pagination-total-text"
+      class="c7n-pagination-total-text"
     >
       1 - 10 / 50
     </li>
     <li
       aria-disabled="true"
-      class="ant-pagination-disabled ant-pagination-first"
+      class="c7n-pagination-disabled c7n-pagination-first"
       title="First Page"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-icon-only ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-icon-only c7n-btn-flat"
         disabled=""
         type="button"
       >
@@ -1966,17 +1966,17 @@ exports[`renders ./components/pagination/demo/tiny.md correctly 1`] = `
           class="icon icon-first_page"
         />
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
       aria-disabled="true"
-      class="ant-pagination-disabled ant-pagination-prev"
+      class="c7n-pagination-disabled c7n-pagination-prev"
       title="Previous Page"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-icon-only ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-icon-only c7n-btn-flat"
         disabled=""
         type="button"
       >
@@ -1984,83 +1984,83 @@ exports[`renders ./components/pagination/demo/tiny.md correctly 1`] = `
           class="icon icon-navigate_before"
         />
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
       aria-disabled="false"
-      class=" ant-pagination-next"
+      class=" c7n-pagination-next"
       tabindex="0"
       title="Next Page"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-icon-only ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-icon-only c7n-btn-flat"
         type="button"
       >
         <i
           class="icon icon-navigate_next"
         />
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
       aria-disabled="false"
-      class=" ant-pagination-last"
+      class=" c7n-pagination-last"
       tabindex="0"
       title="Last Page"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-icon-only ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-icon-only c7n-btn-flat"
         type="button"
       >
         <i
           class="icon icon-last_page"
         />
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
   </ul>
   <ul
-    class="ant-pagination ant-pagination-tiny"
+    class="c7n-pagination c7n-pagination-tiny"
     unselectable="unselectable"
   >
     <li
-      class="ant-pagination-options"
+      class="c7n-pagination-options"
     >
       <span
-        class="ant-pagination-options-label"
+        class="c7n-pagination-options-label"
       >
         Items / page
       </span>
       <div
-        class="ant-pagination-options-size-changer ant-select ant-select-has-value ant-select-enabled"
+        class="c7n-pagination-options-size-changer c7n-select c7n-select-has-value c7n-select-enabled"
       >
         <div
           aria-autocomplete="list"
           aria-expanded="false"
           aria-haspopup="true"
-          class="ant-select-selection
-            ant-select-selection--single"
+          class="c7n-select-selection
+            c7n-select-selection--single"
           role="combobox"
           tabindex="0"
         >
           <div
-            class="ant-select-selection__rendered"
+            class="c7n-select-selection__rendered"
           >
             <div
-              class="ant-select-selection-selected-value"
+              class="c7n-select-selection-selected-value"
               style="opacity:1"
               title="10"
             >
               10
             </div>
             <span
-              class="ant-select-arrow"
+              class="c7n-select-arrow"
               style="user-select:none;-webkit-user-select:none"
               unselectable="unselectable"
             >
@@ -2072,15 +2072,15 @@ exports[`renders ./components/pagination/demo/tiny.md correctly 1`] = `
           </div>
         </div>
         <div
-          class="ant-select-underline"
+          class="c7n-select-underline"
         >
           <span
-            class="ant-select-ripple"
+            class="c7n-select-ripple"
           />
         </div>
       </div>
       <div
-        class="ant-pagination-options-quick-jumper"
+        class="c7n-pagination-options-quick-jumper"
       >
         Goto
         <input
@@ -2090,17 +2090,17 @@ exports[`renders ./components/pagination/demo/tiny.md correctly 1`] = `
       </div>
     </li>
     <li
-      class="ant-pagination-total-text"
+      class="c7n-pagination-total-text"
     >
       1 - 10 / 50
     </li>
     <li
       aria-disabled="true"
-      class="ant-pagination-disabled ant-pagination-first"
+      class="c7n-pagination-disabled c7n-pagination-first"
       title="First Page"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-icon-only ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-icon-only c7n-btn-flat"
         disabled=""
         type="button"
       >
@@ -2108,17 +2108,17 @@ exports[`renders ./components/pagination/demo/tiny.md correctly 1`] = `
           class="icon icon-first_page"
         />
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
       aria-disabled="true"
-      class="ant-pagination-disabled ant-pagination-prev"
+      class="c7n-pagination-disabled c7n-pagination-prev"
       title="Previous Page"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-icon-only ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-icon-only c7n-btn-flat"
         disabled=""
         type="button"
       >
@@ -2126,83 +2126,83 @@ exports[`renders ./components/pagination/demo/tiny.md correctly 1`] = `
           class="icon icon-navigate_before"
         />
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
       aria-disabled="false"
-      class=" ant-pagination-next"
+      class=" c7n-pagination-next"
       tabindex="0"
       title="Next Page"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-icon-only ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-icon-only c7n-btn-flat"
         type="button"
       >
         <i
           class="icon icon-navigate_next"
         />
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
       aria-disabled="false"
-      class=" ant-pagination-last"
+      class=" c7n-pagination-last"
       tabindex="0"
       title="Last Page"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-icon-only ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-icon-only c7n-btn-flat"
         type="button"
       >
         <i
           class="icon icon-last_page"
         />
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
   </ul>
   <ul
-    class="ant-pagination ant-pagination-tiny"
+    class="c7n-pagination c7n-pagination-tiny"
     unselectable="unselectable"
   >
     <li
-      class="ant-pagination-options"
+      class="c7n-pagination-options"
     >
       <span
-        class="ant-pagination-options-label"
+        class="c7n-pagination-options-label"
       >
         Items / page
       </span>
       <div
-        class="ant-pagination-options-size-changer ant-select ant-select-has-value ant-select-enabled"
+        class="c7n-pagination-options-size-changer c7n-select c7n-select-has-value c7n-select-enabled"
       >
         <div
           aria-autocomplete="list"
           aria-expanded="false"
           aria-haspopup="true"
-          class="ant-select-selection
-            ant-select-selection--single"
+          class="c7n-select-selection
+            c7n-select-selection--single"
           role="combobox"
           tabindex="0"
         >
           <div
-            class="ant-select-selection__rendered"
+            class="c7n-select-selection__rendered"
           >
             <div
-              class="ant-select-selection-selected-value"
+              class="c7n-select-selection-selected-value"
               style="opacity:1"
               title="10"
             >
               10
             </div>
             <span
-              class="ant-select-arrow"
+              class="c7n-select-arrow"
               style="user-select:none;-webkit-user-select:none"
               unselectable="unselectable"
             >
@@ -2214,26 +2214,26 @@ exports[`renders ./components/pagination/demo/tiny.md correctly 1`] = `
           </div>
         </div>
         <div
-          class="ant-select-underline"
+          class="c7n-select-underline"
         >
           <span
-            class="ant-select-ripple"
+            class="c7n-select-ripple"
           />
         </div>
       </div>
     </li>
     <li
-      class="ant-pagination-total-text"
+      class="c7n-pagination-total-text"
     >
       Total 50 items
     </li>
     <li
       aria-disabled="true"
-      class="ant-pagination-disabled ant-pagination-first"
+      class="c7n-pagination-disabled c7n-pagination-first"
       title="First Page"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-icon-only ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-icon-only c7n-btn-flat"
         disabled=""
         type="button"
       >
@@ -2241,17 +2241,17 @@ exports[`renders ./components/pagination/demo/tiny.md correctly 1`] = `
           class="icon icon-first_page"
         />
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
       aria-disabled="true"
-      class="ant-pagination-disabled ant-pagination-prev"
+      class="c7n-pagination-disabled c7n-pagination-prev"
       title="Previous Page"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-icon-only ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-icon-only c7n-btn-flat"
         disabled=""
         type="button"
       >
@@ -2259,43 +2259,43 @@ exports[`renders ./components/pagination/demo/tiny.md correctly 1`] = `
           class="icon icon-navigate_before"
         />
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
       aria-disabled="false"
-      class=" ant-pagination-next"
+      class=" c7n-pagination-next"
       tabindex="0"
       title="Next Page"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-icon-only ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-icon-only c7n-btn-flat"
         type="button"
       >
         <i
           class="icon icon-navigate_next"
         />
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
       aria-disabled="false"
-      class=" ant-pagination-last"
+      class=" c7n-pagination-last"
       tabindex="0"
       title="Last Page"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-icon-only ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-icon-only c7n-btn-flat"
         type="button"
       >
         <i
           class="icon icon-last_page"
         />
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
@@ -2306,21 +2306,21 @@ exports[`renders ./components/pagination/demo/tiny.md correctly 1`] = `
 exports[`renders ./components/pagination/demo/total.md correctly 1`] = `
 <div>
   <ul
-    class="ant-pagination"
+    class="c7n-pagination"
     unselectable="unselectable"
   >
     <li
-      class="ant-pagination-total-text"
+      class="c7n-pagination-total-text"
     >
       Total 85 items
     </li>
     <li
       aria-disabled="true"
-      class="ant-pagination-disabled ant-pagination-prev"
+      class="c7n-pagination-disabled c7n-pagination-prev"
       title="Previous Page"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-icon-only ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-icon-only c7n-btn-flat"
         disabled=""
         type="button"
       >
@@ -2328,131 +2328,131 @@ exports[`renders ./components/pagination/demo/total.md correctly 1`] = `
           class="icon icon-navigate_before"
         />
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
-      class="ant-pagination-item ant-pagination-item-1 ant-pagination-item-active"
+      class="c7n-pagination-item c7n-pagination-item-1 c7n-pagination-item-active"
       tabindex="0"
       title="1"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-flat"
         type="button"
       >
         <a>
           1
         </a>
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
-      class="ant-pagination-item ant-pagination-item-2"
+      class="c7n-pagination-item c7n-pagination-item-2"
       tabindex="0"
       title="2"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-flat"
         type="button"
       >
         <a>
           2
         </a>
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
-      class="ant-pagination-item ant-pagination-item-3"
+      class="c7n-pagination-item c7n-pagination-item-3"
       tabindex="0"
       title="3"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-flat"
         type="button"
       >
         <a>
           3
         </a>
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
-      class="ant-pagination-item ant-pagination-item-4"
+      class="c7n-pagination-item c7n-pagination-item-4"
       tabindex="0"
       title="4"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-flat"
         type="button"
       >
         <a>
           4
         </a>
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
-      class="ant-pagination-item ant-pagination-item-5"
+      class="c7n-pagination-item c7n-pagination-item-5"
       tabindex="0"
       title="5"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-flat"
         type="button"
       >
         <a>
           5
         </a>
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
       aria-disabled="false"
-      class=" ant-pagination-next"
+      class=" c7n-pagination-next"
       tabindex="0"
       title="Next Page"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-icon-only ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-icon-only c7n-btn-flat"
         type="button"
       >
         <i
           class="icon icon-navigate_next"
         />
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
   </ul>
   <br />
   <ul
-    class="ant-pagination"
+    class="c7n-pagination"
     unselectable="unselectable"
   >
     <li
-      class="ant-pagination-total-text"
+      class="c7n-pagination-total-text"
     >
       1-20 of 85 items
     </li>
     <li
       aria-disabled="true"
-      class="ant-pagination-disabled ant-pagination-prev"
+      class="c7n-pagination-disabled c7n-pagination-prev"
       title="Previous Page"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-icon-only ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-icon-only c7n-btn-flat"
         disabled=""
         type="button"
       >
@@ -2460,110 +2460,110 @@ exports[`renders ./components/pagination/demo/total.md correctly 1`] = `
           class="icon icon-navigate_before"
         />
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
-      class="ant-pagination-item ant-pagination-item-1 ant-pagination-item-active"
+      class="c7n-pagination-item c7n-pagination-item-1 c7n-pagination-item-active"
       tabindex="0"
       title="1"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-flat"
         type="button"
       >
         <a>
           1
         </a>
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
-      class="ant-pagination-item ant-pagination-item-2"
+      class="c7n-pagination-item c7n-pagination-item-2"
       tabindex="0"
       title="2"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-flat"
         type="button"
       >
         <a>
           2
         </a>
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
-      class="ant-pagination-item ant-pagination-item-3"
+      class="c7n-pagination-item c7n-pagination-item-3"
       tabindex="0"
       title="3"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-flat"
         type="button"
       >
         <a>
           3
         </a>
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
-      class="ant-pagination-item ant-pagination-item-4"
+      class="c7n-pagination-item c7n-pagination-item-4"
       tabindex="0"
       title="4"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-flat"
         type="button"
       >
         <a>
           4
         </a>
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
-      class="ant-pagination-item ant-pagination-item-5"
+      class="c7n-pagination-item c7n-pagination-item-5"
       tabindex="0"
       title="5"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-flat"
         type="button"
       >
         <a>
           5
         </a>
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
     <li
       aria-disabled="false"
-      class=" ant-pagination-next"
+      class=" c7n-pagination-next"
       tabindex="0"
       title="Next Page"
     >
       <button
-        class="ant-btn ant-btn-circle ant-btn-icon-only ant-btn-flat"
+        class="c7n-btn c7n-btn-circle c7n-btn-icon-only c7n-btn-flat"
         type="button"
       >
         <i
           class="icon icon-navigate_next"
         />
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </li>

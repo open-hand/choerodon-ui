@@ -1,0 +1,437 @@
+import { Component, CSSProperties, FocusEventHandler, Key, KeyboardEventHandler, MouseEventHandler } from 'react';
+import { findDOMNode } from 'react-dom';
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
+import { action, observable, runInAction } from 'mobx';
+import omit from 'lodash/omit';
+import defer from 'lodash/defer';
+import merge from 'lodash/merge';
+import noop from 'lodash/noop';
+import classes from 'component-classes';
+import { getPrefixCls } from 'choerodon-ui/lib/configure';
+import autobind from '../_util/autobind';
+import { Size } from './enum';
+import normalizeLanguage from '../_util/normalizeLanguage';
+import { Lang } from '../locale-context/enum';
+import localeContext from '../locale-context';
+
+//
+// 组件对外开放的事件函数名以 onXXX 命名. 尽量减少对外开放的事件，统一由数据来关联
+// 组件对内响应的事件函数名以 handleXXX 命名.
+// ----------------------------------------------------------------------
+
+export interface ViewComponentProps extends MouseEventComponentProps, KeyboardEventComponentProps, ElementProps {
+  /**
+   * 组件id
+   */
+  id?: string;
+  /**
+   *  是否禁用
+   */
+  disabled?: boolean;
+  /**
+   * 键盘Tab键焦点序号，设为-1时不会获得焦点，设为0时为节点树的顺序。
+   */
+  tabIndex?: number;
+  /**
+   * 悬浮提示，建议用ToolTip组件
+   */
+  title?: string;
+  /**
+   * 自动获取焦点，多个组件同时设置该参数时，以节点树的顺序最末的组件获取焦点
+   */
+  autoFocus?: boolean;
+  /**
+   * 组件大小<未实现>
+   * 可选值 `default` `small` `big`
+   */
+  size?: Size;
+  /**
+   * 获取焦点回调
+   */
+  onFocus?: FocusEventHandler<any>;
+  /**
+   * 失去焦点回调
+   */
+  onBlur?: FocusEventHandler<any>;
+}
+
+export interface ElementProps {
+  /**
+   * 组件key
+   */
+  key?: Key;
+  /**
+   * 样式后缀
+   */
+  suffixCls?: string;
+  /**
+   * 样式前缀
+   */
+  prefixCls?: string;
+  /**
+   * 自定义样式名
+   */
+  className?: string;
+  /**
+   * 内链样式
+   */
+  style?: CSSProperties;
+  /**
+   * 是否隐藏
+   */
+  hidden?: boolean;
+  /**
+   * 语言
+   */
+  lang?: Lang;
+}
+
+/** 响应鼠标事件组件 */
+export interface MouseEventComponentProps {
+  /**
+   * 单击回调
+   */
+  onClick?: MouseEventHandler<any>;
+  /**
+   * 双击回调
+   */
+  onDoubleClick?: MouseEventHandler<any>;
+  /**
+   * 右点击回调
+   */
+  onContextMenu?: MouseEventHandler<any>;
+  /**
+   * 鼠标抬起回调
+   */
+  onMouseUp?: MouseEventHandler<any>;
+  /**
+   * 鼠标点下回调
+   */
+  onMouseDown?: MouseEventHandler<any>;
+  /**
+   * 鼠标移动回调
+   */
+  onMouseMove?: MouseEventHandler<any>;
+  /**
+   * 鼠标进入回调
+   */
+  onMouseEnter?: MouseEventHandler<any>;
+  /**
+   * 鼠标离开回调
+   */
+  onMouseLeave?: MouseEventHandler<any>;
+  /**
+   * 鼠标进入回调，与onMouseEnter区别在于鼠标进入子节点时会触发onMouseOut
+   */
+  onMouseOver?: MouseEventHandler<any>;
+  /**
+   * 鼠标离开回调，与onMouseLeave区别在于子节点的onMouseout会冒泡触发本回调
+   */
+  onMouseOut?: MouseEventHandler<any>;
+}
+
+/** 响应键盘事件组件 */
+export interface KeyboardEventComponentProps {
+  /**
+   * 键盘按下时的回调
+   */
+  onKeyDown?: KeyboardEventHandler<any>;
+  /**
+   * 键盘抬起时的回调
+   */
+  onKeyUp?: KeyboardEventHandler<any>;
+  /**
+   * 键盘敲击后的回调
+   */
+  onKeyPress?: KeyboardEventHandler<any>;
+}
+
+export default class ViewComponent<P extends ViewComponentProps> extends Component<P, any> {
+  static propTypes = {
+    /**
+     * 组件id
+     */
+    id: PropTypes.string,
+    /**
+     * 组件大小<未实现>
+     * 可选值 `default` `small` `big`
+     */
+    size: PropTypes.oneOf([
+      Size.small, Size.default, Size.large,
+    ]),
+    /**
+     * 样式后缀
+     */
+    suffixCls: PropTypes.string,
+    /**
+     * 样式前缀
+     */
+    prefixCls: PropTypes.string,
+    /**
+     * 悬浮提示，建议用ToolTip组件
+     */
+    title: PropTypes.string,
+    /**
+     *  是否禁用
+     */
+    disabled: PropTypes.bool,
+    /**
+     * 是否隐藏
+     */
+    hidden: PropTypes.bool,
+    /**
+     * 自动获取焦点，多个组件同时设置该参数时，以节点树的顺序最末的组件获取焦点
+     */
+    autoFocus: PropTypes.bool,
+    /**
+     * 内链样式
+     */
+    style: PropTypes.object,
+    /**
+     * 自定义样式名
+     */
+    className: PropTypes.string,
+    /**
+     * 键盘Tab键焦点序号，设为-1时不会获得焦点，设为0时为节点树的顺序。
+     */
+    tabIndex: PropTypes.number,
+    /**
+     * 语言
+     */
+    lang: PropTypes.string,
+    /**
+     * 获取焦点回调
+     */
+    onFocus: PropTypes.func,
+    /**
+     * 失去焦点回调
+     */
+    onBlur: PropTypes.func,
+    /**
+     * 单击回调
+     */
+    onClick: PropTypes.func,
+    /**
+     * 双击回调
+     */
+    onDoubleClick: PropTypes.func,
+    /**
+     * 鼠标抬起回调
+     */
+    onMouseUp: PropTypes.func,
+    /**
+     * 鼠标点下回调
+     */
+    onMouseDown: PropTypes.func,
+    /**
+     * 鼠标移动回调
+     */
+    onMouseMove: PropTypes.func,
+    /**
+     * 鼠标进入回调
+     */
+    onMouseEnter: PropTypes.func,
+    /**
+     * 鼠标离开回调
+     */
+    onMouseLeave: PropTypes.func,
+    /**
+     * 鼠标进入回调，与onMouseEnter区别在于鼠标进入子节点时会触发onMouseOut
+     */
+    onMouseOver: PropTypes.func,
+    /**
+     * 鼠标离开回调，与onMouseLeave区别在于子节点的onMouseout会冒泡触发本回调
+     */
+    onMouseOut: PropTypes.func,
+    /**
+     * 鼠标右击后的回调
+     */
+    onContextMenu: PropTypes.func,
+    /**
+     * 键盘按下时的回调
+     */
+    onKeyDown: PropTypes.func,
+    /**
+     * 键盘抬起时的回调
+     */
+    onKeyUp: PropTypes.func,
+    /**
+     * 键盘敲击后的回调
+     */
+    onKeyPress: PropTypes.func,
+  };
+
+  element: any;
+
+  wrapper: any;
+
+  @observable isFocus: boolean;
+
+  get prefixCls(): string {
+    const { suffixCls, prefixCls } = this.props;
+    return getPrefixCls(suffixCls!, prefixCls);
+  }
+
+  get lang(): Lang {
+    const { lang } = this.props;
+    if (lang) {
+      return lang!;
+    }
+    return localeContext.locale.lang;
+  }
+
+  getMergedClassNames(...props) {
+    return classNames(this.getClassName(), this.getWrapperClassNames(), ...props);
+  }
+
+  getMergedProps(props = {}) {
+    return {
+      ...merge(this.getWrapperProps(props), this.getOtherProps()),
+      className: this.getMergedClassNames(),
+    };
+  }
+
+  getOtherProps() {
+    const { tabIndex, lang, style = {} } = this.props;
+    let otherProps: any = omit(this.props, [
+      'prefixCls',
+      'suffixCls',
+      'className',
+      'style',
+      'size',
+      'autoFocus',
+      'onFocus',
+      'onBlur',
+      'children',
+      'dataSet',
+    ]);
+    if (this.isDisabled()) {
+      otherProps = omit(otherProps, [
+        'onClick',
+        'onMouseUp',
+        'onMouseDown',
+        'onMouseEnter',
+        'onMouseLeave',
+        'onMouseOver',
+        'onMouseOut',
+        'onKeyDown',
+        'onKeyUp',
+        'onKeyPress',
+        'onContextMenu',
+      ]);
+      if (tabIndex !== void 0) {
+        otherProps.tabIndex = -1;
+      }
+    } else {
+      otherProps.onFocus = this.handleFocus;
+      otherProps.onBlur = this.handleBlur;
+    }
+    otherProps.ref = this.elementReference;
+    otherProps.disabled = this.isDisabled();
+    otherProps.className = this.getClassName();
+    if ('height' in style) {
+      otherProps.style = { height: style.height };
+    }
+    otherProps.lang = normalizeLanguage(lang);
+    return otherProps;
+  }
+
+  getClassName(...props): string | undefined {
+    const { prefixCls } = this;
+    return classNames(prefixCls, ...props);
+  }
+
+  getWrapperProps(props = {}): any {
+    const { style, hidden } = this.props;
+    const wrapperProps: any = {
+      ref: this.wrapperReference,
+      className: this.getWrapperClassNames(),
+      hidden,
+      ...props,
+    };
+    if (style) {
+      wrapperProps.style = omit(style, 'height');
+    }
+    return wrapperProps;
+  }
+
+  getWrapperClassNames(...args): string {
+    const { prefixCls, props: { className, size } } = this;
+    return classNames(`${prefixCls}-wrapper`, className, {
+      [`${prefixCls}-sm`]: size === 'small',
+      [`${prefixCls}-lg`]: size === 'large',
+      [`${prefixCls}-disabled`]: this.isDisabled(),
+    }, ...args);
+  }
+
+  isDisabled() {
+    return this.props.disabled;
+  }
+
+  @autobind
+  handleFocus(e) {
+    runInAction(() => {
+      this.isFocus = true;
+    });
+    const { props: { onFocus = noop }, prefixCls } = this;
+    const element = findDOMNode(this);
+    onFocus(e);
+    if (element) {
+      classes(element).add(`${prefixCls}-focus`);
+    }
+  }
+
+  @autobind
+  handleBlur(e) {
+    runInAction(() => {
+      this.isFocus = false;
+    });
+    if (!e.isDefaultPrevented()) {
+      const { props: { onBlur = noop }, prefixCls } = this;
+      onBlur(e);
+      const element = findDOMNode(this);
+      if (element) {
+        classes(element).remove(`${prefixCls}-focus`);
+      }
+    }
+  }
+
+  focus() {
+    if (this.element && !this.isFocus) {
+      this.element.focus();
+    }
+  }
+
+  blur() {
+    if (this.element) {
+      this.element.blur();
+    }
+  }
+
+  // get isFocus() {
+  //   if (typeof window !== 'undefined') {
+  //     return this.element === window.document.activeElement;
+  //   } else {
+  //     return false;
+  //   }
+  // }
+
+  @autobind
+  elementReference(node) {
+    this.element = node;
+  }
+
+  @autobind
+  @action
+  wrapperReference(node) {
+    this.wrapper = node;
+  }
+
+  componentWillMount() {
+    const { tabIndex, autoFocus } = this.props;
+    if (!this.isDisabled() && autoFocus && (tabIndex === void 0 || tabIndex > -1)) {
+      defer(() => this.focus());
+    }
+  }
+}

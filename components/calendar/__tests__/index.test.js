@@ -9,7 +9,7 @@ describe('Calendar', () => {
     const wrapper = mount(
       <Calendar onSelect={onSelect} />
     );
-    wrapper.find('.ant-fullcalendar-cell').at(0).simulate('click');
+    wrapper.find('.c7n-fullcalendar-cell').at(0).simulate('click');
     expect(onSelect).toBeCalledWith(expect.anything());
     const value = onSelect.mock.calls[0][0];
     expect(Moment.isMoment(value)).toBe(true);
@@ -33,7 +33,7 @@ describe('Calendar', () => {
       <Calendar onSelect={onSelect} validRange={validRange} defaultValue={Moment('2018-02-02')} />
     );
     wrapper.find('[title="February 20, 2018"]').at(0).simulate('click');
-    const elem = wrapper.find('[title="February 20, 2018"]').hasClass('ant-fullcalendar-disabled-cell');
+    const elem = wrapper.find('[title="February 20, 2018"]').hasClass('c7n-fullcalendar-disabled-cell');
     expect(elem).toEqual(true);
     expect(onSelect.mock.calls.length).toBe(0);
   });
@@ -44,9 +44,9 @@ describe('Calendar', () => {
     const wrapper = mount(
       <Calendar onSelect={onSelect} validRange={validRange} defaultValue={Moment('2018-02-02')} mode="year" />
     );
-    expect(wrapper.find('[title="Jan"]').at(0).hasClass('ant-fullcalendar-month-panel-cell-disabled')).toBe(true);
-    expect(wrapper.find('[title="Feb"]').at(0).hasClass('ant-fullcalendar-month-panel-cell-disabled')).toBe(false);
-    expect(wrapper.find('[title="Jun"]').at(0).hasClass('ant-fullcalendar-month-panel-cell-disabled')).toBe(true);
+    expect(wrapper.find('[title="Jan"]').at(0).hasClass('c7n-fullcalendar-month-panel-cell-disabled')).toBe(true);
+    expect(wrapper.find('[title="Feb"]').at(0).hasClass('c7n-fullcalendar-month-panel-cell-disabled')).toBe(false);
+    expect(wrapper.find('[title="Jun"]').at(0).hasClass('c7n-fullcalendar-month-panel-cell-disabled')).toBe(true);
     wrapper.find('[title="Jan"]').at(0).simulate('click');
     wrapper.find('[title="Mar"]').at(0).simulate('click');
     expect(onSelect.mock.calls.length).toBe(1);
@@ -57,11 +57,11 @@ describe('Calendar', () => {
     const wrapper = mount(
       <Calendar validRange={validRange} />
     );
-    wrapper.find('.ant-fullcalendar-year-select').hostNodes().simulate('click');
-    wrapper.find('.ant-select-dropdown-menu-item').first().simulate('click');
-    wrapper.find('.ant-fullcalendar-month-select').hostNodes().simulate('click');
+    wrapper.find('.c7n-fullcalendar-year-select').hostNodes().simulate('click');
+    wrapper.find('.c7n-select-dropdown-menu-item').first().simulate('click');
+    wrapper.find('.c7n-fullcalendar-month-select').hostNodes().simulate('click');
     // 2 years and 11 months
-    expect(wrapper.find('.ant-select-dropdown-menu-item').length).toBe(13);
+    expect(wrapper.find('.c7n-select-dropdown-menu-item').length).toBe(13);
   });
 
   it('getDateRange should returns a disabledDate function', () => {

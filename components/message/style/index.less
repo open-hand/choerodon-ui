@@ -1,7 +1,7 @@
 @import "../../style/themes/default";
 @import "../../style/mixins/index";
 
-@message-prefix-cls: ~"@{ant-prefix}-message";
+@message-prefix-cls: ~"@{c7n-prefix}-message";
 
 .@{message-prefix-cls} {
   .reset-component;
@@ -12,15 +12,15 @@
   pointer-events: none;
 
   &-notice {
-    padding: 8px;
+    padding: .08rem;
     text-align: center;
     &:first-child {
-      margin-top: -8px;
+      margin-top: -.08rem;
     }
   }
 
   &-notice-content {
-    padding: 10px 16px;
+    padding: .1rem .16rem;
     border-radius: @border-radius-base;
     box-shadow: @shadow-2;
     background: @component-background;
@@ -46,9 +46,9 @@
   }
 
   .@{iconfont-css-prefix} {
-    margin-right: 8px;
+    margin-right: .08rem;
     font-size: @font-size-lg;
-    top: 1px;
+    top: .01rem;
     position: relative;
     vertical-align: top;
   }
@@ -63,8 +63,8 @@
 @keyframes MessageMoveOut {
   0% {
     opacity: 1;
-    max-height: 150px;
-    padding: 8px;
+    max-height: 1.5rem;
+    padding: .08rem;
   }
   100% {
     opacity: 0;

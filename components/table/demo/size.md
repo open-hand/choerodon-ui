@@ -7,11 +7,11 @@ title:
 
 ## zh-CN
 
-两种紧凑型的列表，小型列表只用于对话框内。
+三种紧凑型的列表，小型列表只用于对话框内。
 
 ## en-US
 
-Two compacted table size: `middle` and `small`, `small` size is used in Modal only.
+Three compacted table size: `default` `large` and `small`, `small` size is used in Modal only.
 
 ````jsx
 import { Table } from 'choerodon-ui';

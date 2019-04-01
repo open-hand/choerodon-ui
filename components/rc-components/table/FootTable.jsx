@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { measureScrollbar } from './utils';
+import measureScrollbar from '../../_util/measureScrollbar';
 import BaseTable from './BaseTable';
 
 export default function FootTable(props, { table }) {

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
-import Align from '../align';
-import Animate from '../animate';
+import Align from '../../align';
+import Animate from '../../animate';
 import PopupInner from './PopupInner';
 import LazyRenderBox from './LazyRenderBox';
 import { saveRef } from './utils';
@@ -57,7 +57,7 @@ class Popup extends Component {
       popupDomNode.className = this.getClassName(currentAlignClassName);
     }
     props.onAlign(popupDomNode, align);
-  }
+  };
 
   // Record size if stretch needed
   setStretchSize = () => {
@@ -92,7 +92,7 @@ class Popup extends Component {
 
   getTarget = () => {
     return this.props.getRootDomNode();
-  }
+  };
 
   getMaskTransitionName() {
     const props = this.props;
@@ -182,11 +182,12 @@ class Popup extends Component {
               key="popup"
               ref={this.saveAlignRef}
               monitorWindowResize
+              hidden={!visible}
+              childrenProps={{ hidden: 'hidden' }}
               align={align}
               onAlign={this.onAlign}
             >
               <PopupInner
-                visible
                 {...popupInnerProps}
               >
                 {children}
@@ -202,15 +203,15 @@ class Popup extends Component {
         exclusive
         transitionAppear
         transitionName={this.getTransitionName()}
-        showProp="xVisible"
+        hiddenProp="hidden"
       >
         <Align
           target={this.getTarget}
           key="popup"
           ref={this.saveAlignRef}
           monitorWindowResize
-          xVisible={visible}
-          childrenProps={{ visible: 'xVisible' }}
+          hidden={!visible}
+          childrenProps={{ hidden: 'hidden' }}
           disabled={!visible}
           align={align}
           onAlign={this.onAlign}
@@ -246,14 +247,14 @@ class Popup extends Component {
           key="mask"
           className={`${props.prefixCls}-mask`}
           hiddenClassName={`${props.prefixCls}-mask-hidden`}
-          visible={props.visible}
+          hidden={!props.visible}
         />
       );
       if (maskTransition) {
         maskElement = (
           <Animate
             key="mask"
-            showProp="visible"
+            hiddenProp="hidden"
             transitionAppear
             component=""
             transitionName={maskTransition}

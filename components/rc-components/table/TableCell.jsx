@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Component, isValidElement } from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 
-export default class TableCell extends React.Component {
+export default class TableCell extends Component {
   static propTypes = {
     record: PropTypes.object,
     prefixCls: PropTypes.string,
@@ -15,7 +15,7 @@ export default class TableCell extends React.Component {
   };
 
   isInvalidRenderCellText(text) {
-    return text && !React.isValidElement(text) &&
+    return text && !isValidElement(text) &&
       Object.prototype.toString.call(text) === '[object Object]';
   }
 
@@ -68,8 +68,6 @@ export default class TableCell extends React.Component {
     if (column.onCell) {
       tdProps = { ...tdProps, ...column.onCell(record) };
     }
-
-    // Fix https://github.com/ant-design/ant-design/issues/1202
     if (this.isInvalidRenderCellText(text)) {
       text = null;
     }

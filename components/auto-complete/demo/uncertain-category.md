@@ -7,11 +7,11 @@ title:
 
 ## zh-CN
 
-[查询模式: 不确定类目](https://ant.design/docs/spec/reaction#Lookup-Patterns) 示例。
+[查询模式: 不确定类目](/docs/spec/reaction#Lookup-Patterns) 示例。
 
 ## en-US
 
-Demonstration of [Lookup Patterns: Uncertain Category](https://ant.design/docs/spec/reaction#Lookup-Patterns).
+Demonstration of [Lookup Patterns: Uncertain Category](/docs/spec/reaction#Lookup-Patterns).
 Basic Usage, set datasource of autocomplete with `dataSource` property.
 
 ````jsx
@@ -100,15 +100,15 @@ ReactDOM.render(<Complete />, mountNode);
   width: 100%;
 }
 
-.global-search.ant-select-auto-complete .ant-select-selection--single {
+.global-search.c7n-select-auto-complete .c7n-select-selection--single {
   margin-right: -46px;
 }
 
-.global-search.ant-select-auto-complete .ant-input-affix-wrapper .ant-input:not(:last-child) {
+.global-search.c7n-select-auto-complete .c7n-input-affix-wrapper .c7n-input:not(:last-child) {
   padding-right: 62px;
 }
 
-.global-search.ant-select-auto-complete .ant-input-affix-wrapper .ant-input-suffix {
+.global-search.c7n-select-auto-complete .c7n-input-affix-wrapper .c7n-input-suffix {
   right: 0;
 }
 

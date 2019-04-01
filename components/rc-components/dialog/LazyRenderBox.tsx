@@ -1,26 +1,24 @@
-import * as React from 'react';
+import React, { Component, CSSProperties } from 'react';
+import classNames from 'classnames';
 
 export interface ILazyRenderBoxPropTypes {
   className?: string;
-  visible?: boolean;
+  hidden?: boolean;
   hiddenClassName?: string;
   role?: string;
-  style?: {};
+  style?: CSSProperties;
 }
 
-export default class LazyRenderBox extends React.Component<ILazyRenderBoxPropTypes, any> {
+export default class LazyRenderBox extends Component<ILazyRenderBoxPropTypes, any> {
   shouldComponentUpdate(nextProps: ILazyRenderBoxPropTypes) {
-    return !!nextProps.hiddenClassName || !!nextProps.visible;
+    return !!nextProps.hiddenClassName || !nextProps.hidden;
   }
+
   render() {
-    let className = this.props.className;
-    if (!!this.props.hiddenClassName && !this.props.visible) {
-      className += ` ${this.props.hiddenClassName}`;
-    }
-    const props: any = { ...this.props };
-    delete props.hiddenClassName;
-    delete props.visible;
-    props.className = className;
-    return <div {...props} />;
+    const { hiddenClassName, hidden, className, ...otherProps } = this.props;
+    const classString = classNames(className, {
+      [hiddenClassName!]: hiddenClassName && hidden,
+    });
+    return <div className={classString} {...otherProps} />;
   }
 }

@@ -1,15 +1,17 @@
-import * as React from 'react';
+import React, { ChangeEvent, Component, CSSProperties, KeyboardEvent, MouseEvent, ReactNode } from 'react';
 import arrayTreeFilter from 'array-tree-filter';
 import classNames from 'classnames';
-import omit from 'omit.js';
+import omit from 'lodash/omit';
 import Input from '../input';
 import Icon from '../icon';
 import RcCascader from '../rc-components/cascader';
-import KeyCode from '../rc-components/util/KeyCode';
+import KeyCode from '../_util/KeyCode';
+import { Size } from '../_util/enum';
+import { getPrefixCls } from '../configure';
 
 export interface CascaderOptionType {
   value: string;
-  label: React.ReactNode;
+  label: ReactNode;
   disabled?: boolean;
   children?: Array<CascaderOptionType>;
   __IS_FILTERED_OPTION?: boolean;
@@ -19,7 +21,7 @@ export type CascaderExpandTrigger = 'click' | 'hover';
 
 export interface ShowSearchType {
   filter?: (inputValue: string, path: CascaderOptionType[]) => boolean;
-  render?: (inputValue: string, path: CascaderOptionType[], prefixCls: string | undefined) => React.ReactNode;
+  render?: (inputValue: string, path: CascaderOptionType[], prefixCls: string | undefined) => ReactNode;
   sort?: (a: CascaderOptionType[], b: CascaderOptionType[], inputValue: string) => number;
   matchInputWidth?: boolean;
 }
@@ -34,9 +36,9 @@ export interface CascaderProps {
   /** 选择完成后的回调 */
   onChange?: (value: string[], selectedOptions?: CascaderOptionType[]) => void;
   /** 选择后展示的渲染函数 */
-  displayRender?: (label: string[], selectedOptions?: CascaderOptionType[]) => React.ReactNode;
+  displayRender?: (label: string[], selectedOptions?: CascaderOptionType[]) => ReactNode;
   /** 自定义样式 */
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   /** 自定义类名 */
   className?: string;
   /** 自定义浮层类名 */
@@ -46,13 +48,13 @@ export interface CascaderProps {
   /** 输入框占位文本*/
   placeholder?: string;
   /** 输入框大小，可选 `large` `default` `small` */
-  size?: string;
+  size?: Size;
   /** 禁用*/
   disabled?: boolean;
   /** 是否支持清除*/
   allowClear?: boolean;
   showSearch?: boolean | ShowSearchType;
-  notFoundContent?: React.ReactNode;
+  notFoundContent?: ReactNode;
   loadData?: (selectedOptions?: CascaderOptionType[]) => void;
   /** 次级菜单的展开方式，可选 'click' 和 'hover' */
   expandTrigger?: CascaderExpandTrigger;
@@ -105,10 +107,9 @@ function defaultSortFilteredOption(a: any[], b: any[], inputValue: string) {
 
 const defaultDisplayRender = (label: string[]) => label.join(' / ');
 
-export default class Cascader extends React.Component<CascaderProps, CascaderState> {
+export default class Cascader extends Component<CascaderProps, CascaderState> {
+  static displayName = 'Cascader';
   static defaultProps = {
-    prefixCls: 'ant-cascader',
-    inputPrefixCls: 'ant-input',
     placeholder: 'Please select',
     transitionName: 'slide-up',
     popupPlacement: 'bottomLeft',
@@ -154,7 +155,7 @@ export default class Cascader extends React.Component<CascaderProps, CascaderSta
       return;
     }
     this.setValue(value, selectedOptions);
-  }
+  };
 
   handlePopupVisibleChange = (popupVisible: boolean) => {
     if (!('popupVisible' in this.props)) {
@@ -169,33 +170,33 @@ export default class Cascader extends React.Component<CascaderProps, CascaderSta
     if (onPopupVisibleChange) {
       onPopupVisibleChange(popupVisible);
     }
-  }
+  };
 
   handleInputBlur = () => {
     this.setState({
       inputFocused: false,
     });
-  }
+  };
 
-  handleInputClick = (e: React.MouseEvent<HTMLInputElement>) => {
+  handleInputClick = (e: MouseEvent<HTMLInputElement>) => {
     const { inputFocused, popupVisible } = this.state;
     // Prevent `Trigger` behaviour.
     if (inputFocused || popupVisible) {
       e.stopPropagation();
       e.nativeEvent.stopImmediatePropagation();
     }
-  }
+  };
 
-  handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.keyCode === KeyCode.BACKSPACE) {
       e.stopPropagation();
     }
-  }
+  };
 
-  handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
     this.setState({ inputValue });
-  }
+  };
 
   setValue = (value: string[], selectedOptions: any[] = []) => {
     if (!('value' in this.props)) {
@@ -205,7 +206,7 @@ export default class Cascader extends React.Component<CascaderProps, CascaderSta
     if (onChange) {
       onChange(value, selectedOptions);
     }
-  }
+  };
 
   getLabel() {
     const { options, displayRender = defaultDisplayRender as Function } = this.props;
@@ -218,7 +219,7 @@ export default class Cascader extends React.Component<CascaderProps, CascaderSta
     return displayRender(label, selectedOptions);
   }
 
-  clearSelection = (e: React.MouseEvent<HTMLElement>) => {
+  clearSelection = (e: MouseEvent<HTMLElement>) => {
     e.preventDefault();
     e.stopPropagation();
     if (!this.state.inputValue) {
@@ -227,7 +228,7 @@ export default class Cascader extends React.Component<CascaderProps, CascaderSta
     } else {
       this.setState({ inputValue: '' });
     }
-  }
+  };
 
   flattenTree(options: CascaderOptionType[], changeOnSelect: boolean | undefined, ancestor: CascaderOptionType[] = []) {
     let flattenOptions: any = [];
@@ -278,21 +279,23 @@ export default class Cascader extends React.Component<CascaderProps, CascaderSta
 
   saveInput = (node: Input) => {
     this.input = node;
-  }
+  };
 
   render() {
     const { props, state } = this;
     const {
-      prefixCls, inputPrefixCls, children, placeholder, size, disabled,
+      prefixCls: customizePrefixCls, inputPrefixCls: customizeInputPrefixCls, children, placeholder, size, disabled,
       className, style, allowClear, showSearch = false,
-     ...otherProps,
+      ...otherProps,
     } = props;
+    const prefixCls = getPrefixCls('cascader', customizePrefixCls);
+    const inputPrefixCls = getPrefixCls('input', customizeInputPrefixCls);
     const defaultValue = props.defaultValue;
     const value = state.value;
 
     const sizeCls = classNames({
-      [`${inputPrefixCls}-lg`]: size === 'large',
-      [`${inputPrefixCls}-sm`]: size === 'small',
+      [`${inputPrefixCls}-lg`]: size === Size.large,
+      [`${inputPrefixCls}-sm`]: size === Size.small,
     });
 
     const arrowCls = classNames({
@@ -301,12 +304,12 @@ export default class Cascader extends React.Component<CascaderProps, CascaderSta
     });
     const pickerCls = classNames(
       className, `${prefixCls}-picker`, {
-      [`${prefixCls}-picker-with-value`]: state.inputValue,
-      [`${prefixCls}-picker-disabled`]: disabled,
-      [`${prefixCls}-picker-${size}`]: !!size,
-      [`${inputPrefixCls}-has-value`]: !!defaultValue || value.length,
-      [`${inputPrefixCls}-focus`]: state.popupVisible,
-    });
+        [`${prefixCls}-picker-with-value`]: state.inputValue,
+        [`${prefixCls}-picker-disabled`]: disabled,
+        [`${prefixCls}-picker-${size}`]: !!size,
+        [`${inputPrefixCls}-has-value`]: !!defaultValue || value.length,
+        [`${inputPrefixCls}-focused`]: state.popupVisible,
+      });
 
     // Fix bug of https://github.com/facebook/react/pull/5004
     // and https://fb.me/react-unknown-prop
@@ -381,6 +384,8 @@ export default class Cascader extends React.Component<CascaderProps, CascaderSta
     return (
       <RcCascader
         {...props}
+        inputPrefixCls={inputPrefixCls}
+        prefixCls={prefixCls}
         options={options}
         value={value}
         popupVisible={state.popupVisible}

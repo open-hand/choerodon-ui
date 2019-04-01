@@ -1,21 +1,21 @@
-import React from 'react';
+import React, { cloneElement } from 'react';
 import createReactClass from 'create-react-class';
 import AsyncValidator from 'async-validator';
-import warning from 'warning';
 import get from 'lodash/get';
 import has from 'lodash/has';
 import set from 'lodash/set';
 import createFieldsStore from './createFieldsStore';
+import warning from '../../_util/warning';
 import {
   argumentContainer,
-  identity,
-  normalizeValidateRules,
+  flattenArray,
+  getParams,
   getValidateTriggers,
   getValueFromEvent,
   hasRules,
-  getParams,
+  identity,
   isEmptyObject,
-  flattenArray,
+  normalizeValidateRules,
 } from './utils';
 
 const DEFAULT_TRIGGER = 'onChange';
@@ -46,27 +46,26 @@ function createBaseForm(option = {}, mixins = []) {
         this.instances = {};
         this.cachedBind = {};
         this.clearedFieldMetaCache = {};
-        // HACK: https://github.com/ant-design/ant-design/issues/6406
         ['getFieldsValue',
-         'getFieldValue',
-         'setFieldsInitialValue',
-         'getFieldsError',
-         'getFieldError',
-         'isFieldValidating',
-         'isFieldsValidating',
-         'isFieldsTouched',
-         'isFieldTouched',
-         'isModifiedFields',
-         'isModifiedFields'].forEach(key => this[key] = (...args) => {
-           if (process.env.NODE_ENV !== 'production') {
-             warning(
-               false,
-               'you should not use `ref` on enhanced form, please use `wrappedComponentRef`. ' +
-                 'See: https://github.com/react-component/form#note-use-wrappedcomponentref-instead-of-withref-after-rc-form140'
-             );
-           }
-           return this.fieldsStore[key](...args);
-         });
+          'getFieldValue',
+          'setFieldsInitialValue',
+          'getFieldsError',
+          'getFieldError',
+          'isFieldValidating',
+          'isFieldsValidating',
+          'isFieldsTouched',
+          'isFieldTouched',
+          'isModifiedFields',
+          'isModifiedFields'].forEach(key => this[key] = (...args) => {
+          if (process.env.NODE_ENV !== 'production') {
+            warning(
+              false,
+              'you should not use `ref` on enhanced form, please use `wrappedComponentRef`. ' +
+              'See: https://github.com/react-component/form#note-use-wrappedcomponentref-instead-of-withref-after-rc-form140',
+            );
+          }
+          return this.fieldsStore[key](...args);
+        });
 
         return {
           submitting: false,
@@ -86,9 +85,7 @@ function createBaseForm(option = {}, mixins = []) {
         } else if (fieldMeta.originalProps && fieldMeta.originalProps[action]) {
           fieldMeta.originalProps[action](...args);
         }
-        const value = fieldMeta.getValueFromEvent ?
-          fieldMeta.getValueFromEvent(...args) :
-          getValueFromEvent(...args);
+        const value = fieldMeta.getValueFromEvent ? fieldMeta.getValueFromEvent(...args) : getValueFromEvent(...args);
         if (onValuesChange && value !== this.fieldsStore.getFieldValue(name)) {
           const valuesAll = this.fieldsStore.getAllValues();
           const valuesAllSet = {};
@@ -158,7 +155,7 @@ function createBaseForm(option = {}, mixins = []) {
               !(valuePropName in originalProps),
               `\`getFieldDecorator\` will override \`${valuePropName}\`, ` +
               `so please don't set \`${valuePropName}\` directly ` +
-              `and use \`setFieldsValue\` to set it.`
+              `and use \`setFieldsValue\` to set it.`,
             );
             const defaultValuePropName =
               `default${valuePropName[0].toUpperCase()}${valuePropName.slice(1)}`;
@@ -166,12 +163,12 @@ function createBaseForm(option = {}, mixins = []) {
               !(defaultValuePropName in originalProps),
               `\`${defaultValuePropName}\` is invalid ` +
               `for \`getFieldDecorator\` will set \`${valuePropName}\`,` +
-              ` please use \`option.initialValue\` instead.`
+              ` please use \`option.initialValue\` instead.`,
             );
           }
           fieldMeta.originalProps = originalProps;
           fieldMeta.ref = fieldElem.ref;
-          return React.cloneElement(fieldElem, {
+          return cloneElement(fieldElem, {
             ...props,
             ...this.fieldsStore.getFieldValuePropValue(fieldMeta),
           });
@@ -185,11 +182,11 @@ function createBaseForm(option = {}, mixins = []) {
         if (process.env.NODE_ENV !== 'production') {
           warning(
             this.fieldsStore.isValidNestedFieldName(name),
-            'One field name cannot be part of another, e.g. `a` and `a.b`.'
+            'One field name cannot be part of another, e.g. `a` and `a.b`.',
           );
           warning(
             !('exclusive' in usersFieldOption),
-            '`option.exclusive` of `getFieldProps`|`getFieldDecorator` had been remove.'
+            '`option.exclusive` of `getFieldProps`|`getFieldDecorator` had been remove.',
           );
         }
 
@@ -296,7 +293,7 @@ function createBaseForm(option = {}, mixins = []) {
             warning(
               isRegistered,
               'Cannot use `setFieldsValue` until ' +
-                'you use `getFieldDecorator` or `getFieldProps` to register it.'
+              'you use `getFieldDecorator` or `getFieldProps` to register it.',
             );
           }
           if (isRegistered) {
@@ -439,9 +436,7 @@ function createBaseForm(option = {}, mixins = []) {
 
       validateFields(ns, opt, cb) {
         const { names, callback, options } = getParams(ns, opt, cb);
-        const fieldNames = names ?
-          this.fieldsStore.getValidFieldsFullName(names) :
-          this.fieldsStore.getValidFieldsName();
+        const fieldNames = names ? this.fieldsStore.getValidFieldsFullName(names) : this.fieldsStore.getValidFieldsName();
         const fields = fieldNames
           .filter(name => {
             const fieldMeta = this.fieldsStore.getFieldMeta(name);
@@ -476,7 +471,7 @@ function createBaseForm(option = {}, mixins = []) {
           warning(
             false,
             '`isSubmitting` is deprecated. ' +
-              'Actually, it\'s more convenient to handle submitting status by yourself.'
+            'Actually, it\'s more convenient to handle submitting status by yourself.',
           );
         }
         return this.state.submitting;
@@ -487,7 +482,7 @@ function createBaseForm(option = {}, mixins = []) {
           warning(
             false,
             '`submit` is deprecated.' +
-              'Actually, it\'s more convenient to handle submitting status by yourself.'
+            'Actually, it\'s more convenient to handle submitting status by yourself.',
           );
         }
         const fn = () => {
@@ -511,7 +506,7 @@ function createBaseForm(option = {}, mixins = []) {
             warning(
               false,
               '`withRef` is deprecated, please use `wrappedComponentRef` instead. ' +
-                'See: https://github.com/react-component/form#note-use-wrappedcomponentref-instead-of-withref-after-rc-form140'
+              'See: https://github.com/react-component/form#note-use-wrappedcomponentref-instead-of-withref-after-rc-form140',
             );
           }
           formProps.ref = 'wrappedComponent';
@@ -522,7 +517,7 @@ function createBaseForm(option = {}, mixins = []) {
           ...formProps,
           ...restProps,
         });
-        return <WrappedComponent {...props}/>;
+        return <WrappedComponent {...props} />;
       },
     });
 

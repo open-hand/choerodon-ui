@@ -3,18 +3,18 @@
 exports[`renders ./components/progress/demo/circle.md correctly 1`] = `
 <div>
   <div
-    class="ant-progress ant-progress-circle ant-progress-status-normal ant-progress-show-info ant-progress-default"
+    class="c7n-progress c7n-progress-circle c7n-progress-status-normal c7n-progress-show-info c7n-progress-default"
   >
     <div
-      class="ant-progress-inner"
+      class="c7n-progress-inner"
       style="width:120px;height:120px;font-size:24px"
     >
       <svg
-        class="ant-progress-circle "
+        class="c7n-progress-circle "
         viewBox="0 0 100 100"
       >
         <path
-          class="ant-progress-circle-trail"
+          class="c7n-progress-circle-trail"
           d="M 50,50 m 0,-47
      a 47,47 0 1 1 0,94
      a 47,47 0 1 1 0,-94"
@@ -24,37 +24,37 @@ exports[`renders ./components/progress/demo/circle.md correctly 1`] = `
           style="stroke-dasharray:295.3097094374406px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s"
         />
         <path
-          class="ant-progress-circle-path"
+          class="c7n-progress-circle-path"
           d="M 50,50 m 0,-47
      a 47,47 0 1 1 0,94
      a 47,47 0 1 1 0,-94"
           fill-opacity="0"
-          stroke="#3367d6"
+          stroke="#2db7f5"
           stroke-linecap="round"
           stroke-width="6"
           style="stroke-dasharray:221.48228207808043px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s"
         />
       </svg>
       <span
-        class="ant-progress-text"
+        class="c7n-progress-text"
       >
         75%
       </span>
     </div>
   </div>
   <div
-    class="ant-progress ant-progress-circle ant-progress-status-exception ant-progress-show-info ant-progress-default"
+    class="c7n-progress c7n-progress-circle c7n-progress-status-exception c7n-progress-show-info c7n-progress-default"
   >
     <div
-      class="ant-progress-inner"
+      class="c7n-progress-inner"
       style="width:120px;height:120px;font-size:24px"
     >
       <svg
-        class="ant-progress-circle "
+        class="c7n-progress-circle "
         viewBox="0 0 100 100"
       >
         <path
-          class="ant-progress-circle-trail"
+          class="c7n-progress-circle-trail"
           d="M 50,50 m 0,-47
      a 47,47 0 1 1 0,94
      a 47,47 0 1 1 0,-94"
@@ -64,39 +64,39 @@ exports[`renders ./components/progress/demo/circle.md correctly 1`] = `
           style="stroke-dasharray:295.3097094374406px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s"
         />
         <path
-          class="ant-progress-circle-path"
+          class="c7n-progress-circle-path"
           d="M 50,50 m 0,-47
      a 47,47 0 1 1 0,94
      a 47,47 0 1 1 0,-94"
           fill-opacity="0"
-          stroke="#ff5500"
+          stroke="#2db7f5"
           stroke-linecap="round"
           stroke-width="6"
           style="stroke-dasharray:206.7167966062084px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s"
         />
       </svg>
       <span
-        class="ant-progress-text"
+        class="c7n-progress-text"
       >
         <i
-          class="icon icon-cross"
+          class="icon icon-close"
         />
       </span>
     </div>
   </div>
   <div
-    class="ant-progress ant-progress-circle ant-progress-status-success ant-progress-show-info ant-progress-default"
+    class="c7n-progress c7n-progress-circle c7n-progress-status-success c7n-progress-show-info c7n-progress-default"
   >
     <div
-      class="ant-progress-inner"
+      class="c7n-progress-inner"
       style="width:120px;height:120px;font-size:24px"
     >
       <svg
-        class="ant-progress-circle "
+        class="c7n-progress-circle "
         viewBox="0 0 100 100"
       >
         <path
-          class="ant-progress-circle-trail"
+          class="c7n-progress-circle-trail"
           d="M 50,50 m 0,-47
      a 47,47 0 1 1 0,94
      a 47,47 0 1 1 0,-94"
@@ -106,45 +106,24 @@ exports[`renders ./components/progress/demo/circle.md correctly 1`] = `
           style="stroke-dasharray:295.3097094374406px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s"
         />
         <path
-          class="ant-progress-circle-path"
+          class="c7n-progress-circle-path"
           d="M 50,50 m 0,-47
      a 47,47 0 1 1 0,94
      a 47,47 0 1 1 0,-94"
           fill-opacity="0"
-          stroke="#87d068"
+          stroke="#2db7f5"
           stroke-linecap="round"
           stroke-width="6"
           style="stroke-dasharray:295.3097094374406px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s"
         />
       </svg>
       <span
-        class="ant-progress-text"
+        class="c7n-progress-text"
       >
         <i
           class="icon icon-check"
         />
       </span>
-    </div>
-  </div>
-  <div
-    class="ant-progress ant-progress-loading ant-progress-status-normal ant-progress-show-info ant-progress-default"
-  >
-    <div
-      class="ant-progress-inner"
-      style="width:50px;height:50px"
-    >
-      <svg
-        viewBox="0 0 50 50"
-      >
-        <circle
-          cx="25"
-          cy="25"
-          fill="none"
-          r="20"
-          stroke="#3367d6"
-          stroke-width="4"
-        />
-      </svg>
     </div>
   </div>
 </div>
@@ -153,18 +132,18 @@ exports[`renders ./components/progress/demo/circle.md correctly 1`] = `
 exports[`renders ./components/progress/demo/circle-dynamic.md correctly 1`] = `
 <div>
   <div
-    class="ant-progress ant-progress-circle ant-progress-status-normal ant-progress-show-info ant-progress-default"
+    class="c7n-progress c7n-progress-circle c7n-progress-status-normal c7n-progress-show-info c7n-progress-default"
   >
     <div
-      class="ant-progress-inner"
+      class="c7n-progress-inner"
       style="width:120px;height:120px;font-size:24px"
     >
       <svg
-        class="ant-progress-circle "
+        class="c7n-progress-circle "
         viewBox="0 0 100 100"
       >
         <path
-          class="ant-progress-circle-trail"
+          class="c7n-progress-circle-trail"
           d="M 50,50 m 0,-47
      a 47,47 0 1 1 0,94
      a 47,47 0 1 1 0,-94"
@@ -174,47 +153,47 @@ exports[`renders ./components/progress/demo/circle-dynamic.md correctly 1`] = `
           style="stroke-dasharray:295.3097094374406px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s"
         />
         <path
-          class="ant-progress-circle-path"
+          class="c7n-progress-circle-path"
           d="M 50,50 m 0,-47
      a 47,47 0 1 1 0,94
      a 47,47 0 1 1 0,-94"
           fill-opacity="0"
-          stroke="#3367d6"
+          stroke="#2db7f5"
           stroke-linecap="round"
           stroke-width="0"
           style="stroke-dasharray:0px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s"
         />
       </svg>
       <span
-        class="ant-progress-text"
+        class="c7n-progress-text"
       >
         0%
       </span>
     </div>
   </div>
   <div
-    class="ant-btn-group"
+    class="c7n-btn-group"
   >
     <button
-      class="ant-btn ant-btn-icon-only ant-btn-flat"
+      class="c7n-btn c7n-btn-icon-only c7n-btn-flat"
       type="button"
     >
       <i
         class="icon icon-minus"
       />
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
     <button
-      class="ant-btn ant-btn-icon-only ant-btn-flat"
+      class="c7n-btn c7n-btn-icon-only c7n-btn-flat"
       type="button"
     >
       <i
         class="icon icon-plus"
       />
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </div>
@@ -224,18 +203,18 @@ exports[`renders ./components/progress/demo/circle-dynamic.md correctly 1`] = `
 exports[`renders ./components/progress/demo/circle-mini.md correctly 1`] = `
 <div>
   <div
-    class="ant-progress ant-progress-circle ant-progress-status-normal ant-progress-show-info ant-progress-default"
+    class="c7n-progress c7n-progress-circle c7n-progress-status-normal c7n-progress-show-info c7n-progress-default"
   >
     <div
-      class="ant-progress-inner"
+      class="c7n-progress-inner"
       style="width:80px;height:80px;font-size:18px"
     >
       <svg
-        class="ant-progress-circle "
+        class="c7n-progress-circle "
         viewBox="0 0 100 100"
       >
         <path
-          class="ant-progress-circle-trail"
+          class="c7n-progress-circle-trail"
           d="M 50,50 m 0,-47
      a 47,47 0 1 1 0,94
      a 47,47 0 1 1 0,-94"
@@ -245,37 +224,37 @@ exports[`renders ./components/progress/demo/circle-mini.md correctly 1`] = `
           style="stroke-dasharray:295.3097094374406px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s"
         />
         <path
-          class="ant-progress-circle-path"
+          class="c7n-progress-circle-path"
           d="M 50,50 m 0,-47
      a 47,47 0 1 1 0,94
      a 47,47 0 1 1 0,-94"
           fill-opacity="0"
-          stroke="#3367d6"
+          stroke="#2db7f5"
           stroke-linecap="round"
           stroke-width="6"
           style="stroke-dasharray:88.59291283123217px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s"
         />
       </svg>
       <span
-        class="ant-progress-text"
+        class="c7n-progress-text"
       >
         30%
       </span>
     </div>
   </div>
   <div
-    class="ant-progress ant-progress-circle ant-progress-status-exception ant-progress-show-info ant-progress-default"
+    class="c7n-progress c7n-progress-circle c7n-progress-status-exception c7n-progress-show-info c7n-progress-default"
   >
     <div
-      class="ant-progress-inner"
+      class="c7n-progress-inner"
       style="width:80px;height:80px;font-size:18px"
     >
       <svg
-        class="ant-progress-circle "
+        class="c7n-progress-circle "
         viewBox="0 0 100 100"
       >
         <path
-          class="ant-progress-circle-trail"
+          class="c7n-progress-circle-trail"
           d="M 50,50 m 0,-47
      a 47,47 0 1 1 0,94
      a 47,47 0 1 1 0,-94"
@@ -285,39 +264,39 @@ exports[`renders ./components/progress/demo/circle-mini.md correctly 1`] = `
           style="stroke-dasharray:295.3097094374406px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s"
         />
         <path
-          class="ant-progress-circle-path"
+          class="c7n-progress-circle-path"
           d="M 50,50 m 0,-47
      a 47,47 0 1 1 0,94
      a 47,47 0 1 1 0,-94"
           fill-opacity="0"
-          stroke="#ff5500"
+          stroke="#2db7f5"
           stroke-linecap="round"
           stroke-width="6"
           style="stroke-dasharray:206.7167966062084px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s"
         />
       </svg>
       <span
-        class="ant-progress-text"
+        class="c7n-progress-text"
       >
         <i
-          class="icon icon-cross"
+          class="icon icon-close"
         />
       </span>
     </div>
   </div>
   <div
-    class="ant-progress ant-progress-circle ant-progress-status-success ant-progress-show-info ant-progress-default"
+    class="c7n-progress c7n-progress-circle c7n-progress-status-success c7n-progress-show-info c7n-progress-default"
   >
     <div
-      class="ant-progress-inner"
+      class="c7n-progress-inner"
       style="width:80px;height:80px;font-size:18px"
     >
       <svg
-        class="ant-progress-circle "
+        class="c7n-progress-circle "
         viewBox="0 0 100 100"
       >
         <path
-          class="ant-progress-circle-trail"
+          class="c7n-progress-circle-trail"
           d="M 50,50 m 0,-47
      a 47,47 0 1 1 0,94
      a 47,47 0 1 1 0,-94"
@@ -327,19 +306,19 @@ exports[`renders ./components/progress/demo/circle-mini.md correctly 1`] = `
           style="stroke-dasharray:295.3097094374406px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s"
         />
         <path
-          class="ant-progress-circle-path"
+          class="c7n-progress-circle-path"
           d="M 50,50 m 0,-47
      a 47,47 0 1 1 0,94
      a 47,47 0 1 1 0,-94"
           fill-opacity="0"
-          stroke="#87d068"
+          stroke="#2db7f5"
           stroke-linecap="round"
           stroke-width="6"
           style="stroke-dasharray:295.3097094374406px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s"
         />
       </svg>
       <span
-        class="ant-progress-text"
+        class="c7n-progress-text"
       >
         <i
           class="icon icon-check"
@@ -352,18 +331,18 @@ exports[`renders ./components/progress/demo/circle-mini.md correctly 1`] = `
 
 exports[`renders ./components/progress/demo/dashboard.md correctly 1`] = `
 <div
-  class="ant-progress ant-progress-circle ant-progress-status-normal ant-progress-show-info ant-progress-default"
+  class="c7n-progress c7n-progress-circle c7n-progress-status-normal c7n-progress-show-info c7n-progress-default"
 >
   <div
-    class="ant-progress-inner"
+    class="c7n-progress-inner"
     style="width:120px;height:120px;font-size:24px"
   >
     <svg
-      class="ant-progress-circle "
+      class="c7n-progress-circle "
       viewBox="0 0 100 100"
     >
       <path
-        class="ant-progress-circle-trail"
+        class="c7n-progress-circle-trail"
         d="M 50,50 m 0,47
      a 47,47 0 1 1 0,-94
      a 47,47 0 1 1 0,94"
@@ -373,19 +352,19 @@ exports[`renders ./components/progress/demo/dashboard.md correctly 1`] = `
         style="stroke-dasharray:220.30970943744057px 295.3097094374406px;stroke-dashoffset:-37.5px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s"
       />
       <path
-        class="ant-progress-circle-path"
+        class="c7n-progress-circle-path"
         d="M 50,50 m 0,47
      a 47,47 0 1 1 0,-94
      a 47,47 0 1 1 0,94"
         fill-opacity="0"
-        stroke="#3367d6"
+        stroke="#2db7f5"
         stroke-linecap="round"
         stroke-width="6"
         style="stroke-dasharray:165.23228207808043px 295.3097094374406px;stroke-dashoffset:-37.5px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s"
       />
     </svg>
     <span
-      class="ant-progress-text"
+      class="c7n-progress-text"
     >
       75%
     </span>
@@ -396,51 +375,51 @@ exports[`renders ./components/progress/demo/dashboard.md correctly 1`] = `
 exports[`renders ./components/progress/demo/dynamic.md correctly 1`] = `
 <div>
   <div
-    class="ant-progress ant-progress-line ant-progress-status-normal ant-progress-show-info ant-progress-default"
+    class="c7n-progress c7n-progress-line c7n-progress-status-normal c7n-progress-show-info c7n-progress-default"
   >
     <div>
       <div
-        class="ant-progress-outer"
+        class="c7n-progress-outer"
       >
         <div
-          class="ant-progress-inner"
+          class="c7n-progress-inner"
         >
           <div
-            class="ant-progress-bg"
+            class="c7n-progress-bg"
             style="width:0%;height:8px"
           />
         </div>
       </div>
       <span
-        class="ant-progress-text"
+        class="c7n-progress-text"
       >
         0%
       </span>
     </div>
   </div>
   <div
-    class="ant-btn-group"
+    class="c7n-btn-group"
   >
     <button
-      class="ant-btn ant-btn-icon-only ant-btn-flat"
+      class="c7n-btn c7n-btn-icon-only c7n-btn-flat"
       type="button"
     >
       <i
         class="icon icon-minus"
       />
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
     <button
-      class="ant-btn ant-btn-icon-only ant-btn-flat"
+      class="c7n-btn c7n-btn-icon-only c7n-btn-flat"
       type="button"
     >
       <i
         class="icon icon-plus"
       />
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </div>
@@ -450,18 +429,18 @@ exports[`renders ./components/progress/demo/dynamic.md correctly 1`] = `
 exports[`renders ./components/progress/demo/format.md correctly 1`] = `
 <div>
   <div
-    class="ant-progress ant-progress-circle ant-progress-status-normal ant-progress-show-info ant-progress-default"
+    class="c7n-progress c7n-progress-circle c7n-progress-status-normal c7n-progress-show-info c7n-progress-default"
   >
     <div
-      class="ant-progress-inner"
+      class="c7n-progress-inner"
       style="width:120px;height:120px;font-size:24px"
     >
       <svg
-        class="ant-progress-circle "
+        class="c7n-progress-circle "
         viewBox="0 0 100 100"
       >
         <path
-          class="ant-progress-circle-trail"
+          class="c7n-progress-circle-trail"
           d="M 50,50 m 0,-47
      a 47,47 0 1 1 0,94
      a 47,47 0 1 1 0,-94"
@@ -471,37 +450,37 @@ exports[`renders ./components/progress/demo/format.md correctly 1`] = `
           style="stroke-dasharray:295.3097094374406px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s"
         />
         <path
-          class="ant-progress-circle-path"
+          class="c7n-progress-circle-path"
           d="M 50,50 m 0,-47
      a 47,47 0 1 1 0,94
      a 47,47 0 1 1 0,-94"
           fill-opacity="0"
-          stroke="#3367d6"
+          stroke="#2db7f5"
           stroke-linecap="round"
           stroke-width="6"
           style="stroke-dasharray:221.48228207808043px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s"
         />
       </svg>
       <span
-        class="ant-progress-text"
+        class="c7n-progress-text"
       >
         75 Days
       </span>
     </div>
   </div>
   <div
-    class="ant-progress ant-progress-circle ant-progress-status-success ant-progress-show-info ant-progress-default"
+    class="c7n-progress c7n-progress-circle c7n-progress-status-success c7n-progress-show-info c7n-progress-default"
   >
     <div
-      class="ant-progress-inner"
+      class="c7n-progress-inner"
       style="width:120px;height:120px;font-size:24px"
     >
       <svg
-        class="ant-progress-circle "
+        class="c7n-progress-circle "
         viewBox="0 0 100 100"
       >
         <path
-          class="ant-progress-circle-trail"
+          class="c7n-progress-circle-trail"
           d="M 50,50 m 0,-47
      a 47,47 0 1 1 0,94
      a 47,47 0 1 1 0,-94"
@@ -511,19 +490,19 @@ exports[`renders ./components/progress/demo/format.md correctly 1`] = `
           style="stroke-dasharray:295.3097094374406px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s"
         />
         <path
-          class="ant-progress-circle-path"
+          class="c7n-progress-circle-path"
           d="M 50,50 m 0,-47
      a 47,47 0 1 1 0,94
      a 47,47 0 1 1 0,-94"
           fill-opacity="0"
-          stroke="#87d068"
+          stroke="#2db7f5"
           stroke-linecap="round"
           stroke-width="6"
           style="stroke-dasharray:295.3097094374406px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s"
         />
       </svg>
       <span
-        class="ant-progress-text"
+        class="c7n-progress-text"
       >
         Done
       </span>
@@ -535,113 +514,113 @@ exports[`renders ./components/progress/demo/format.md correctly 1`] = `
 exports[`renders ./components/progress/demo/line.md correctly 1`] = `
 <div>
   <div
-    class="ant-progress ant-progress-line ant-progress-status-normal ant-progress-show-info ant-progress-default"
+    class="c7n-progress c7n-progress-line c7n-progress-status-normal c7n-progress-show-info c7n-progress-default"
   >
     <div>
       <div
-        class="ant-progress-outer"
+        class="c7n-progress-outer"
       >
         <div
-          class="ant-progress-inner"
+          class="c7n-progress-inner"
         >
           <div
-            class="ant-progress-bg"
+            class="c7n-progress-bg"
             style="width:30%;height:8px"
           />
         </div>
       </div>
       <span
-        class="ant-progress-text"
+        class="c7n-progress-text"
       >
         30%
       </span>
     </div>
   </div>
   <div
-    class="ant-progress ant-progress-line ant-progress-status-active ant-progress-show-info ant-progress-default"
+    class="c7n-progress c7n-progress-line c7n-progress-status-active c7n-progress-show-info c7n-progress-default"
   >
     <div>
       <div
-        class="ant-progress-outer"
+        class="c7n-progress-outer"
       >
         <div
-          class="ant-progress-inner"
+          class="c7n-progress-inner"
         >
           <div
-            class="ant-progress-bg"
+            class="c7n-progress-bg"
             style="width:50%;height:8px"
           />
         </div>
       </div>
       <span
-        class="ant-progress-text"
+        class="c7n-progress-text"
       >
         50%
       </span>
     </div>
   </div>
   <div
-    class="ant-progress ant-progress-line ant-progress-status-exception ant-progress-show-info ant-progress-default"
+    class="c7n-progress c7n-progress-line c7n-progress-status-exception c7n-progress-show-info c7n-progress-default"
   >
     <div>
       <div
-        class="ant-progress-outer"
+        class="c7n-progress-outer"
       >
         <div
-          class="ant-progress-inner"
+          class="c7n-progress-inner"
         >
           <div
-            class="ant-progress-bg"
+            class="c7n-progress-bg"
             style="width:70%;height:8px"
           />
         </div>
       </div>
       <span
-        class="ant-progress-text"
+        class="c7n-progress-text"
       >
         <i
-          class="icon icon-cross-circle"
+          class="icon icon-cancel"
         />
       </span>
     </div>
   </div>
   <div
-    class="ant-progress ant-progress-line ant-progress-status-success ant-progress-show-info ant-progress-default"
+    class="c7n-progress c7n-progress-line c7n-progress-status-success c7n-progress-show-info c7n-progress-default"
   >
     <div>
       <div
-        class="ant-progress-outer"
+        class="c7n-progress-outer"
       >
         <div
-          class="ant-progress-inner"
+          class="c7n-progress-inner"
         >
           <div
-            class="ant-progress-bg"
+            class="c7n-progress-bg"
             style="width:100%;height:8px"
           />
         </div>
       </div>
       <span
-        class="ant-progress-text"
+        class="c7n-progress-text"
       >
         <i
-          class="icon icon-check-circle"
+          class="icon icon-check_circle"
         />
       </span>
     </div>
   </div>
   <div
-    class="ant-progress ant-progress-line ant-progress-status-normal ant-progress-default"
+    class="c7n-progress c7n-progress-line c7n-progress-status-normal c7n-progress-default"
   >
     <div>
       <div
-        class="ant-progress-outer"
+        class="c7n-progress-outer"
       >
         <div
-          class="ant-progress-inner"
+          class="c7n-progress-inner"
         >
           <div
-            class="ant-progress-bg"
+            class="c7n-progress-bg"
             style="width:50%;height:8px"
           />
         </div>
@@ -656,97 +635,97 @@ exports[`renders ./components/progress/demo/line-mini.md correctly 1`] = `
   style="width:170px"
 >
   <div
-    class="ant-progress ant-progress-line ant-progress-status-normal ant-progress-show-info ant-progress-small"
+    class="c7n-progress c7n-progress-line c7n-progress-status-normal c7n-progress-show-info c7n-progress-small"
   >
     <div>
       <div
-        class="ant-progress-outer"
+        class="c7n-progress-outer"
       >
         <div
-          class="ant-progress-inner"
+          class="c7n-progress-inner"
         >
           <div
-            class="ant-progress-bg"
+            class="c7n-progress-bg"
             style="width:30%;height:6px"
           />
         </div>
       </div>
       <span
-        class="ant-progress-text"
+        class="c7n-progress-text"
       >
         30%
       </span>
     </div>
   </div>
   <div
-    class="ant-progress ant-progress-line ant-progress-status-active ant-progress-show-info ant-progress-small"
+    class="c7n-progress c7n-progress-line c7n-progress-status-active c7n-progress-show-info c7n-progress-small"
   >
     <div>
       <div
-        class="ant-progress-outer"
+        class="c7n-progress-outer"
       >
         <div
-          class="ant-progress-inner"
+          class="c7n-progress-inner"
         >
           <div
-            class="ant-progress-bg"
+            class="c7n-progress-bg"
             style="width:50%;height:6px"
           />
         </div>
       </div>
       <span
-        class="ant-progress-text"
+        class="c7n-progress-text"
       >
         50%
       </span>
     </div>
   </div>
   <div
-    class="ant-progress ant-progress-line ant-progress-status-exception ant-progress-show-info ant-progress-small"
+    class="c7n-progress c7n-progress-line c7n-progress-status-exception c7n-progress-show-info c7n-progress-small"
   >
     <div>
       <div
-        class="ant-progress-outer"
+        class="c7n-progress-outer"
       >
         <div
-          class="ant-progress-inner"
+          class="c7n-progress-inner"
         >
           <div
-            class="ant-progress-bg"
+            class="c7n-progress-bg"
             style="width:70%;height:6px"
           />
         </div>
       </div>
       <span
-        class="ant-progress-text"
+        class="c7n-progress-text"
       >
         <i
-          class="icon icon-cross-circle"
+          class="icon icon-cancel"
         />
       </span>
     </div>
   </div>
   <div
-    class="ant-progress ant-progress-line ant-progress-status-success ant-progress-show-info ant-progress-small"
+    class="c7n-progress c7n-progress-line c7n-progress-status-success c7n-progress-show-info c7n-progress-small"
   >
     <div>
       <div
-        class="ant-progress-outer"
+        class="c7n-progress-outer"
       >
         <div
-          class="ant-progress-inner"
+          class="c7n-progress-inner"
         >
           <div
-            class="ant-progress-bg"
+            class="c7n-progress-bg"
             style="width:100%;height:6px"
           />
         </div>
       </div>
       <span
-        class="ant-progress-text"
+        class="c7n-progress-text"
       >
         <i
-          class="icon icon-check-circle"
+          class="icon icon-check_circle"
         />
       </span>
     </div>
@@ -754,29 +733,85 @@ exports[`renders ./components/progress/demo/line-mini.md correctly 1`] = `
 </div>
 `;
 
+exports[`renders ./components/progress/demo/loading.md correctly 1`] = `
+<div>
+  <div
+    class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-small"
+  >
+    <div
+      class="c7n-progress-inner"
+    >
+      <svg
+        viewBox="0 0 50 50"
+      >
+        <circle
+          cx="25"
+          cy="25"
+          r="20"
+        />
+      </svg>
+    </div>
+  </div>
+  <div
+    class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-default"
+  >
+    <div
+      class="c7n-progress-inner"
+    >
+      <svg
+        viewBox="0 0 50 50"
+      >
+        <circle
+          cx="25"
+          cy="25"
+          r="20"
+        />
+      </svg>
+    </div>
+  </div>
+  <div
+    class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-large"
+  >
+    <div
+      class="c7n-progress-inner"
+    >
+      <svg
+        viewBox="0 0 50 50"
+      >
+        <circle
+          cx="25"
+          cy="25"
+          r="20"
+        />
+      </svg>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`renders ./components/progress/demo/segment.md correctly 1`] = `
 <div
-  class="ant-progress ant-progress-line ant-progress-status-normal ant-progress-show-info ant-progress-default"
+  class="c7n-progress c7n-progress-line c7n-progress-status-normal c7n-progress-show-info c7n-progress-default"
 >
   <div>
     <div
-      class="ant-progress-outer"
+      class="c7n-progress-outer"
     >
       <div
-        class="ant-progress-inner"
+        class="c7n-progress-inner"
       >
         <div
-          class="ant-progress-bg"
+          class="c7n-progress-bg"
           style="width:60%;height:8px"
         />
         <div
-          class="ant-progress-success-bg"
+          class="c7n-progress-success-bg"
           style="width:30%;height:8px"
         />
       </div>
     </div>
     <span
-      class="ant-progress-text"
+      class="c7n-progress-text"
     >
       60%
     </span>

@@ -32,7 +32,7 @@ describe('Table.rowSelection', () => {
 
   it('select by checkbox', () => {
     const wrapper = mount(createTable());
-    const checkboxes = wrapper.find('.ant-checkbox-input');
+    const checkboxes = wrapper.find('.c7n-checkbox-input');
     const checkboxAll = checkboxes.first();
 
     checkboxAll.simulate('change', { target: { checked: true } });
@@ -56,7 +56,7 @@ describe('Table.rowSelection', () => {
 
   it('select by radio', () => {
     const wrapper = mount(createTable({ rowSelection: { type: 'radio' } }));
-    const radios = wrapper.find('.ant-radio-input');
+    const radios = wrapper.find('.c7n-radio-input');
 
     expect(radios.length).toBe(4);
 
@@ -82,7 +82,7 @@ describe('Table.rowSelection', () => {
     };
 
     const wrapper = mount(createTable({ rowSelection }));
-    const checkboxes = wrapper.find('.ant-checkbox-input');
+    const checkboxes = wrapper.find('.c7n-checkbox-input');
 
     expect(checkboxes.at(1).props().disabled).toBe(false);
     expect(checkboxes.at(1).props().name).toEqual(data[0].name);
@@ -98,14 +98,13 @@ describe('Table.rowSelection', () => {
     checkboxAll.find('input').simulate('change', { target: { checked: true } });
     expect(checkboxAll.instance().state).toEqual({ checked: true, indeterminate: false });
 
-    wrapper.find('.ant-pagination-next').simulate('click');
+    wrapper.find('.c7n-pagination-next').simulate('click');
     expect(checkboxAll.instance().state).toEqual({ checked: false, indeterminate: false });
 
-    wrapper.find('.ant-pagination-prev').simulate('click');
+    wrapper.find('.c7n-pagination-prev').simulate('click');
     expect(checkboxAll.instance().state).toEqual({ checked: true, indeterminate: false });
   });
 
-  // https://github.com/ant-design/ant-design/issues/4020
   it('handles defaultChecked', () => {
     const rowSelection = {
       getCheckboxProps: record => ({
@@ -115,12 +114,12 @@ describe('Table.rowSelection', () => {
 
     const wrapper = mount(createTable({ rowSelection }));
 
-    let checkboxs = wrapper.find('.ant-checkbox-input');
+    let checkboxs = wrapper.find('.c7n-checkbox-input');
     expect(checkboxs.at(1).props().checked).toBe(true);
     expect(checkboxs.at(2).props().checked).toBe(false);
 
     checkboxs.at(2).simulate('change', { target: { checked: true } });
-    checkboxs = wrapper.find('.ant-checkbox-input');
+    checkboxs = wrapper.find('.c7n-checkbox-input');
     expect(checkboxs.at(1).props().checked).toBe(true);
     expect(checkboxs.at(2).props().checked).toBe(true);
   });
@@ -167,10 +166,10 @@ describe('Table.rowSelection', () => {
     };
     const wrapper = mount(createTable({ rowSelection }));
 
-    wrapper.find('.ant-checkbox-input').first().simulate('change', { target: { checked: true } });
+    wrapper.find('.c7n-checkbox-input').first().simulate('change', { target: { checked: true } });
     expect(handleSelectAll).toBeCalledWith(true, data, data);
 
-    wrapper.find('.ant-checkbox-input').first().simulate('change', { target: { checked: false } });
+    wrapper.find('.c7n-checkbox-input').first().simulate('change', { target: { checked: false } });
     expect(handleSelectAll).toBeCalledWith(false, [], data);
   });
 
@@ -192,7 +191,7 @@ describe('Table.rowSelection', () => {
     const wrapper = mount(createTable({ rowSelection }));
 
     const dropdownWrapper = mount(wrapper.find('Trigger').at(2).instance().getComponent());
-    dropdownWrapper.find('.ant-dropdown-menu-item > div').first().simulate('click');
+    dropdownWrapper.find('.c7n-dropdown-menu-item > div').first().simulate('click');
 
     expect(handleSelectAll).toBeCalledWith(true, data, data);
   });
@@ -204,11 +203,11 @@ describe('Table.rowSelection', () => {
       selections: true,
     };
     const wrapper = mount(createTable({ rowSelection }));
-    const checkboxes = wrapper.find('.ant-checkbox-input');
+    const checkboxes = wrapper.find('.c7n-checkbox-input');
 
     checkboxes.at(1).simulate('change', { target: { checked: true } });
     const dropdownWrapper = mount(wrapper.find('Trigger').at(2).instance().getComponent());
-    dropdownWrapper.find('.ant-dropdown-menu-item > div').at(1).simulate('click');
+    dropdownWrapper.find('.c7n-dropdown-menu-item > div').at(1).simulate('click');
 
     expect(handleSelectInvert).toBeCalledWith([1, 2, 3]);
   });
@@ -230,12 +229,12 @@ describe('Table.rowSelection', () => {
     const wrapper = mount(createTable({ rowSelection }));
 
     const dropdownWrapper = mount(wrapper.find('Trigger').at(2).instance().getComponent());
-    expect(dropdownWrapper.find('.ant-dropdown-menu-item').length).toBe(4);
+    expect(dropdownWrapper.find('.c7n-dropdown-menu-item').length).toBe(4);
 
-    dropdownWrapper.find('.ant-dropdown-menu-item > div').at(2).simulate('click');
+    dropdownWrapper.find('.c7n-dropdown-menu-item > div').at(2).simulate('click');
     expect(handleSelectOdd).toBeCalledWith([0, 1, 2, 3]);
 
-    dropdownWrapper.find('.ant-dropdown-menu-item > div').at(3).simulate('click');
+    dropdownWrapper.find('.c7n-dropdown-menu-item > div').at(3).simulate('click');
     expect(handleSelectEven).toBeCalledWith([0, 1, 2, 3]);
   });
 
@@ -252,7 +251,7 @@ describe('Table.rowSelection', () => {
     };
     const wrapper = mount(createTable({ rowSelection }));
     const dropdownWrapper = mount(wrapper.find('Trigger').at(2).instance().getComponent());
-    expect(dropdownWrapper.find('.ant-dropdown-menu-item').length).toBe(2);
+    expect(dropdownWrapper.find('.c7n-dropdown-menu-item').length).toBe(2);
   });
 
   it('handle custom selection onSelect correctly when hide default selection options', () => {
@@ -273,16 +272,15 @@ describe('Table.rowSelection', () => {
     const wrapper = mount(createTable({ rowSelection }));
 
     const dropdownWrapper = mount(wrapper.find('Trigger').at(2).instance().getComponent());
-    expect(dropdownWrapper.find('.ant-dropdown-menu-item').length).toBe(2);
+    expect(dropdownWrapper.find('.c7n-dropdown-menu-item').length).toBe(2);
 
-    dropdownWrapper.find('.ant-dropdown-menu-item > div').at(0).simulate('click');
+    dropdownWrapper.find('.c7n-dropdown-menu-item > div').at(0).simulate('click');
     expect(handleSelectOdd).toBeCalledWith([0, 1, 2, 3]);
 
-    dropdownWrapper.find('.ant-dropdown-menu-item > div').at(1).simulate('click');
+    dropdownWrapper.find('.c7n-dropdown-menu-item > div').at(1).simulate('click');
     expect(handleSelectEven).toBeCalledWith([0, 1, 2, 3]);
   });
 
-  // https://github.com/ant-design/ant-design/issues/4245
   it('handles disabled checkbox correctly when dataSource changes', () => {
     const rowSelection = {
       getCheckboxProps: record => ({ disabled: record.disabled }),
@@ -293,12 +291,11 @@ describe('Table.rowSelection', () => {
       { key: 1, name: 'Lucy', disabled: true },
     ];
     wrapper.setProps({ dataSource: newData });
-    wrapper.find('.ant-checkbox-input').forEach((checkbox) => {
+    wrapper.find('.c7n-checkbox-input').forEach((checkbox) => {
       expect(checkbox.props().disabled).toBe(true);
     });
   });
 
-  // https://github.com/ant-design/ant-design/issues/4779
   it('should not switch pagination when select record', () => {
     const newData = [];
     for (let i = 0; i < 20; i += 1) {
@@ -311,7 +308,7 @@ describe('Table.rowSelection', () => {
       rowSelection: {},
       dataSource: newData,
     }));
-    wrapper.find('.ant-pagination-next').simulate('click'); // switch to second page
+    wrapper.find('.c7n-pagination-next').simulate('click'); // switch to second page
     wrapper.find('input').first().simulate('change', { target: { checked: true } });
     wrapper.update();
     expect(renderedNames(wrapper)).toEqual(['10', '11', '12', '13', '14', '15', '16', '17', '18', '19']);
@@ -320,7 +317,7 @@ describe('Table.rowSelection', () => {
   it('highlight selected row', () => {
     const wrapper = mount(createTable());
     wrapper.find('input').at(1).simulate('change', { target: { checked: true } });
-    expect(wrapper.find('tbody tr').at(0).hasClass('ant-table-row-selected')).toBe(true);
+    expect(wrapper.find('tbody tr').at(0).hasClass('c7n-table-row-selected')).toBe(true);
   });
 
   it('fix selection column on the left', () => {

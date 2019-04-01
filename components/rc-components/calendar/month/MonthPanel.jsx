@@ -1,16 +1,13 @@
 import React from 'react';
 import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
+import noop from 'lodash/noop';
 import MonthTable from './MonthTable';
 
 function goYear(direction) {
   const next = this.state.value.clone();
   next.add(direction, 'year');
   this.setAndChangeValue(next);
-}
-
-function noop() {
-
 }
 
 const MonthPanel = createReactClass({

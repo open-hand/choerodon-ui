@@ -3,41 +3,16 @@ import PropTypes from 'prop-types';
 import { Link } from 'bisheng/router';
 import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
-import { Select, Menu, Row, Col, Icon, Popover, Button } from 'choerodon-ui';
+import { Button, Col, Icon, Menu, Popover, Row, Select } from 'choerodon-ui';
 import * as utils from '../utils';
-import { version as antdVersion } from '../../../../package.json';
+import { version as c7nUIVersion } from '../../../../package.json';
+import logo from '../../static/images/logo-title.svg';
 
 const { Option } = Select;
 
-// let docsearch;
-// if (typeof window !== 'undefined') {
-//   docsearch = require('docsearch.js'); // eslint-disable-line
-// }
-
-// function initDocSearch(locale) {
-//   if (!docsearch) {
-//     return;
-//   }
-//   const lang = locale === 'zh-CN' ? 'cn' : 'en';
-//   docsearch({
-//     apiKey: '60ac2c1a7d26ab713757e4a081e133d0',
-//     indexName: 'ant_design',
-//     inputSelector: '#search-box input',
-//     algoliaOptions: { facetFilters: [`tags:${lang}`] },
-//     transformData(hits) {
-//       hits.forEach((hit) => {
-//         hit.url = hit.url.replace('ant.design', location.host);
-//         hit.url = hit.url.replace('https:', location.protocol);
-//       });
-//       return hits;
-//     },
-//     debug: false, // Set debug to true if you want to inspect the dropdown
-//   });
-// }
-
 function getStyle() {
   return `
-    #header .ant-select-selection {
+    #header .c7n-select-selection {
       height: 24px;
       padding-top: 0;
     }
@@ -58,13 +33,6 @@ export default class Header extends React.Component {
   componentDidMount() {
     const { router } = this.context;
     router.listen(this.handleHideMenu);
-    // const { searchInput } = this;
-    // document.addEventListener('keyup', (event) => {
-    //   if (event.keyCode === 83 && event.target === document.body) {
-    //     searchInput.focus();
-    //   }
-    // });
-    // initDocSearch(intl.locale);
   }
 
   handleShowMenu = () => {
@@ -93,17 +61,17 @@ export default class Header extends React.Component {
   };
 
   handleLangChange = () => {
+    const { location } = window;
     const { location: { pathname } } = this.props;
-    const currentProtocol = `${window.location.protocol}//`;
-    const currentHref = window.location.href.substr(currentProtocol.length);
+    const isZhCn = utils.isZhCN(pathname);
 
     if (utils.isLocalStorageNameSupported()) {
-      localStorage.setItem('locale', utils.isZhCN(pathname) ? 'en-US' : 'zh-CN');
+      localStorage.setItem('locale', isZhCn ? 'en-US' : 'zh-CN');
     }
 
-    window.location.href = currentProtocol + currentHref.replace(
-      window.location.pathname,
-      utils.getLocalizedPathname(pathname, !utils.isZhCN(pathname)),
+    location.href = location.href.replace(
+      pathname.startsWith('/') ? pathname : `/${pathname}`,
+      utils.getLocalizedPathname(pathname, !isZhCn),
     );
   };
 
@@ -114,7 +82,7 @@ export default class Header extends React.Component {
     const {
       location, themeConfig,
     } = this.props;
-    const docVersions = { ...themeConfig.docVersions, [antdVersion]: antdVersion };
+    const docVersions = { ...themeConfig.docVersions, [c7nUIVersion]: c7nUIVersion };
     const versionOptions = Object.keys(docVersions)
       .map(version => <Option value={docVersions[version]} key={version}>{version}</Option>);
     const module = location.pathname.replace(/(^\/|\/$)/g, '').split('/').slice(0, -1).join('/');
@@ -138,7 +106,7 @@ export default class Header extends React.Component {
         className="version"
         size="small"
         dropdownMatchSelectWidth={false}
-        defaultValue={antdVersion}
+        defaultValue={c7nUIVersion}
         onChange={this.handleVersionChange}
         getPopupContainer={trigger => trigger.parentNode}
       >
@@ -179,18 +147,15 @@ export default class Header extends React.Component {
           </Popover>
         )}
         <Row>
-          <Col xxl={4} xl={5} lg={5} md={6} sm={24} xs={24}>
+          <Col xxl={4} xl={5} lg={5} md={5} sm={24} xs={24}>
             <Link to={utils.getLocalizedPathname('/', isZhCN)} id="logo">
-              <h1>Choerodon UI</h1>
+              <img
+                alt="logo"
+                src={logo}
+              />
             </Link>
           </Col>
           <Col xxl={20} xl={19} lg={19} md={18} sm={0} xs={0}>
-            {/*
-            <div id="search-box">
-              <Icon type="search" />
-              <Input ref={ref => this.searchInput = ref} placeholder={searchPlaceholder} />
-            </div>
-            */}
             {!isMobile && menu}
           </Col>
         </Row>

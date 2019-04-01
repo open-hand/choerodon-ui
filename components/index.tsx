@@ -1,5 +1,5 @@
 /* @remove-on-es-build-begin */
-// this file is not used if use https://github.com/ant-design/babel-plugin-import
+
 const ENV = process.env.NODE_ENV;
 if (ENV !== 'production' &&
     typeof console !== 'undefined' &&
@@ -121,3 +121,5 @@ export { default as Upload } from './upload';
 export { default as version } from './version';
 
 export { default as IconSelect } from './icon-select';
+
+export { default as configure } from './configure';

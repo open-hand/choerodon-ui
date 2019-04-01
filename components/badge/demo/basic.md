@@ -29,7 +29,7 @@ ReactDOM.render(
 ````
 
 <style>
-.ant-badge:not(.ant-badge-status) {
+.c7n-badge:not(.c7n-badge-status) {
   margin-right: 20px;
 }
 .head-example {

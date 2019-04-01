@@ -4,7 +4,7 @@ import List from '../list';
 import Checkbox from '../../checkbox';
 
 const listCommonProps = {
-  prefixCls: 'ant-transfer-list',
+  prefixCls: 'c7n-transfer-list',
   dataSource: [{
     key: 'a',
     title: 'a',
@@ -29,7 +29,7 @@ describe('List', () => {
 
   it('should check top Checkbox while all available items are checked', () => {
     const wrapper = mount(<List {...listCommonProps} checkedKeys={['a', 'b']} />);
-    expect(wrapper.find('.ant-transfer-list-header').find(Checkbox).prop('checked'))
+    expect(wrapper.find('.c7n-transfer-list-header').find(Checkbox).prop('checked'))
       .toBeTruthy();
   });
 });

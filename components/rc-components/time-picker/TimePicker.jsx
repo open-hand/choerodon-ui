@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import noop from 'lodash/noop';
+import moment from 'moment';
 import Trigger from '../trigger';
 import Panel from './Panel';
 import placements, { getPlacements } from './placements';
-import moment from 'moment';
 import Icon from '../../icon';
 import Input from '../../input';
-
-function noop() {
-}
 
 function refFn(field, component) {
   this[field] = component;

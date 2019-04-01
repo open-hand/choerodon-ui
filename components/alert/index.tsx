@@ -1,10 +1,10 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import Icon from '../icon';
+import React, { Component, CSSProperties, MouseEvent, MouseEventHandler, ReactNode } from 'react';
+import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
-import Animate from '../rc-components/animate';
-
-function noop() { }
+import noop from 'lodash/noop';
+import Icon from '../icon';
+import Animate from '../animate';
+import { getPrefixCls } from '../configure';
 
 export interface AlertProps {
   /**
@@ -14,35 +14,35 @@ export interface AlertProps {
   /** Whether Alert can be closed */
   closable?: boolean;
   /** Close text to show */
-  closeText?: React.ReactNode;
+  closeText?: ReactNode;
   /** Content of Alert */
-  message: React.ReactNode;
+  message: ReactNode;
   /** Additional content of Alert */
-  description?: React.ReactNode;
+  description?: ReactNode;
   /** Callback when close Alert */
-  onClose?: React.MouseEventHandler<HTMLAnchorElement>;
+  onClose?: MouseEventHandler<HTMLAnchorElement>;
   /** Trigger when animation ending of Alert */
   afterClose?: () => void;
   /** Whether to show icon */
   showIcon?: boolean;
   iconType?: string;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   prefixCls?: string;
   className?: string;
   banner?: boolean;
 }
 
-export default class Alert extends React.Component<AlertProps, any> {
-  constructor(props: AlertProps) {
-    super(props);
-    this.state = {
-      closing: true,
-      closed: false,
-    };
-  }
-  handleClose = (e: React.MouseEvent<HTMLAnchorElement>) => {
+export default class Alert extends Component<AlertProps, any> {
+  static displayName = 'Alert';
+
+  state = {
+    closing: true,
+    closed: false,
+  };
+
+  handleClose = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    let dom = ReactDOM.findDOMNode(this) as HTMLElement;
+    let dom = findDOMNode(this) as HTMLElement;
     dom.style.height = `${dom.offsetHeight}px`;
     // Magic code
     // 重复一次后才能正确设置 height
@@ -52,19 +52,21 @@ export default class Alert extends React.Component<AlertProps, any> {
       closing: false,
     });
     (this.props.onClose || noop)(e);
-  }
+  };
   animationEnd = () => {
     this.setState({
       closed: true,
       closing: true,
     });
     (this.props.afterClose || noop)();
-  }
+  };
+
   render() {
     let {
-      closable, description, type, prefixCls = 'ant-alert', message, closeText, showIcon, banner,
+      closable, description, type, prefixCls: customizePrefixCls, message, closeText, showIcon, banner,
       className = '', style, iconType,
     } = this.props;
+    const prefixCls = getPrefixCls('alert', customizePrefixCls);
 
     // banner模式默认有 Icon
     showIcon = banner && showIcon === undefined ? true : showIcon;
@@ -117,11 +119,11 @@ export default class Alert extends React.Component<AlertProps, any> {
     return this.state.closed ? null : (
       <Animate
         component=""
-        showProp="data-show"
+        hiddenProp="hidden"
         transitionName={`${prefixCls}-slide-up`}
         onEnd={this.animationEnd}
       >
-        <div data-show={this.state.closing} className={alertCls} style={style}>
+        <div hidden={!this.state.closing} className={alertCls} style={style}>
           {showIcon ? <Icon className={`${prefixCls}-icon`} type={iconType} /> : null}
           <span className={`${prefixCls}-message`}>{message}</span>
           <span className={`${prefixCls}-description`}>{description}</span>

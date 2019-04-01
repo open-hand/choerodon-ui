@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Children, Component } from 'react';
 import PropTypes from 'prop-types';
 import { menuAllProps } from './util';
 
-class MenuItemGroup extends React.Component {
+class MenuItemGroup extends Component {
   static propTypes = {
     renderMenuItem: PropTypes.func,
     index: PropTypes.number,
@@ -18,7 +18,7 @@ class MenuItemGroup extends React.Component {
   renderInnerMenuItem = (item) => {
     const { renderMenuItem, index } = this.props;
     return renderMenuItem(item, index, this.props.subMenuKey);
-  }
+  };
 
   render() {
     const { ...props } = this.props;
@@ -40,7 +40,7 @@ class MenuItemGroup extends React.Component {
           {title}
         </div>
         <ul className={listClassName}>
-          {React.Children.map(children, this.renderInnerMenuItem)}
+          {Children.map(children, this.renderInnerMenuItem)}
         </ul>
       </li>
     );

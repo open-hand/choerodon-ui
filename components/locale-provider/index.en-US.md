@@ -21,12 +21,12 @@ import 'moment/locale/fr';
 return <LocaleProvider locale={fr_FR}><App /></LocaleProvider>;
 ```
 
-We provide some locale like English, Chinese, Russian, German, French and etc, all locale packages can be found in [here](https://github.com/ant-design/ant-design/blob/master/components/locale-provider/).
+We provide some locale like English, Chinese, Russian, German, French and etc, all locale packages can be found in [here](https://github.com/choerodon/choerodon-ui/blob/master/components/locale-provider/).
 
-Note: if you need to use antd's UMD dist file, please use `antd/dist/antd-with-locales.js` and corresponding moment locale:
+Note: if you need to use choerodon-ui's UMD dist file, please use `choerodon-ui/dist/choerodon-ui-with-locales.js` and corresponding moment locale:
 
 ```jsx
-const { LocaleProvider, locales } = window.antd;
+const { LocaleProvider, locales } = window['choerodon-ui'];
 
 ...
 
@@ -35,7 +35,7 @@ return <LocaleProvider locale={locales.fr_FR}><App /></LocaleProvider>;
 
 ### Add a new language
 
-If you can't find your language, you are welcome to create a locale package based on [en_US](https://github.com/ant-design/ant-design/blob/master/components/locale-provider/en_US.tsx) and send us a pull request.
+If you can't find your language, you are welcome to create a locale package based on [en_US](https://github.com/choerodon/choerodon-ui/blob/master/components/locale-provider/en_US.tsx) and send us a pull request.
 
 ### Other localization needs
 
@@ -45,4 +45,4 @@ This component aims for localization of the built-in text, if you want to suppor
 
 | Property | Description | Type | Default |
 | -------- | ----------- | ---- | ------- |
-| locale | language package setting, you can find the packages in this path: `antd/lib/locale-provider/` | object | - |
+| locale | language package setting, you can find the packages in this path: `choerodon-ui/lib/locale-provider/` | object | - |

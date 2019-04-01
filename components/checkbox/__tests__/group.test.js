@@ -8,13 +8,13 @@ describe('CheckboxGroup', () => {
     const wrapper = mount(
       <Checkbox.Group options={['Apple', 'Pear', 'Orange']} onChange={onChange} />
     );
-    wrapper.find('.ant-checkbox-input').at(0).simulate('change');
+    wrapper.find('.c7n-checkbox-input').at(0).simulate('change');
     expect(onChange).toBeCalledWith(['Apple']);
-    wrapper.find('.ant-checkbox-input').at(1).simulate('change');
+    wrapper.find('.c7n-checkbox-input').at(1).simulate('change');
     expect(onChange).toBeCalledWith(['Apple', 'Pear']);
-    wrapper.find('.ant-checkbox-input').at(2).simulate('change');
+    wrapper.find('.c7n-checkbox-input').at(2).simulate('change');
     expect(onChange).toBeCalledWith(['Apple', 'Pear', 'Orange']);
-    wrapper.find('.ant-checkbox-input').at(1).simulate('change');
+    wrapper.find('.c7n-checkbox-input').at(1).simulate('change');
     expect(onChange).toBeCalledWith(['Apple', 'Orange']);
   });
 
@@ -29,9 +29,9 @@ describe('CheckboxGroup', () => {
     const groupWrapper = mount(
       <Checkbox.Group options={options} onChange={onChangeGroup} disabled />
     );
-    groupWrapper.find('.ant-checkbox-input').at(0).simulate('change');
+    groupWrapper.find('.c7n-checkbox-input').at(0).simulate('change');
     expect(onChangeGroup).not.toBeCalled();
-    groupWrapper.find('.ant-checkbox-input').at(1).simulate('change');
+    groupWrapper.find('.c7n-checkbox-input').at(1).simulate('change');
     expect(onChangeGroup).not.toBeCalled();
   });
 
@@ -46,9 +46,9 @@ describe('CheckboxGroup', () => {
     const groupWrapper = mount(
       <Checkbox.Group options={options} onChange={onChangeGroup} />
     );
-    groupWrapper.find('.ant-checkbox-input').at(0).simulate('change');
+    groupWrapper.find('.c7n-checkbox-input').at(0).simulate('change');
     expect(onChangeGroup).toBeCalledWith(['Apple']);
-    groupWrapper.find('.ant-checkbox-input').at(1).simulate('change');
+    groupWrapper.find('.c7n-checkbox-input').at(1).simulate('change');
     expect(onChangeGroup).toBeCalledWith(['Apple']);
   });
 });

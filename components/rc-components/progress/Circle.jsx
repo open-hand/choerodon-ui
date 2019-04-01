@@ -2,9 +2,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import enhancer from './enhancer';
-import { propTypes, defaultProps } from './types';
+import { defaultProps, propTypes } from './types';
 
 class Circle extends Component {
+  static propTypes = {
+    ...propTypes,
+    gapPosition: PropTypes.oneOf(['top', 'bottom', 'left', 'right']),
+  };
+
+  static defaultProps = {
+    ...defaultProps,
+    gapPosition: 'top',
+  };
+
   getPathStyles() {
     const { percent, strokeWidth, gapDegree = 0, gapPosition } = this.props;
     const radius = 50 - (strokeWidth / 2);
@@ -79,22 +89,14 @@ class Circle extends Component {
           stroke={strokeColor}
           strokeWidth={this.props.percent === 0 ? 0 : strokeWidth}
           fillOpacity="0"
-          ref={(path) => { this.path = path; }}
+          ref={(path) => {
+            this.path = path;
+          }}
           style={strokePathStyle}
         />
       </svg>
     );
   }
 }
-
-Circle.propTypes = {
-  ...propTypes,
-  gapPosition: PropTypes.oneOf(['top', 'bottom', 'left', 'right']),
-};
-
-Circle.defaultProps = {
-  ...defaultProps,
-  gapPosition: 'top',
-};
 
 export default enhancer(Circle);

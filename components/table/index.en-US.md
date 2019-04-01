@@ -64,15 +64,15 @@ const columns = [{
 | footer | Table footer renderer | Function(currentPageData) |  |
 | empty | Display while dataSource has't data | ReactNode | - |
 | indentSize | Indent size in pixels of tree data | number | 15 |
-| loading | Loading status of table | boolean\|[object](https://ant.design/components/spin-cn/#API) ([more](https://github.com/ant-design/ant-design/issues/4544#issuecomment-271533135)) | `false` |
-| locale | i18n text including filter, sort, empty text, etc | object | filterConfirm: 'Ok' <br> filterReset: 'Reset' <br> emptyText: 'No Data' <br> [Default](https://github.com/ant-design/ant-design/issues/575#issuecomment-159169511) |
+| loading | Loading status of table | boolean\|[object](/components/spin/#API) | `false` |
+| locale | i18n text including filter, sort, empty text, etc | object | filterConfirm: 'Ok' <br> filterReset: 'Reset' <br> emptyText: 'No Data' |
 | pagination | Pagination [config](#pagination) or [`Pagination`] (/components/pagination/), hide it by setting it to `false` | object |  |
 | rowClassName | Row's className | Function(record, index):string | - |
 | rowKey | Row's unique key, could be a string or function that returns a string | string\|Function(record):string | `key` |
 | rowSelection | Row selection [config](#rowSelection) | object | null |
-| scroll | Set horizontal or vertical scrolling, can also be used to specify the width and height of the scroll area. It is recommended to set a number for `x`, if you want to set it to `true`, you need to add style `.ant-table td { white-space: nowrap; }`. | { x: number \| true, y: number } | - |
+| scroll | Set horizontal or vertical scrolling, can also be used to specify the width and height of the scroll area. It is recommended to set a number for `x`, if you want to set it to `true`, you need to add style `.c7n-table td { white-space: nowrap; }`. | { x: number \| true, y: number } | - |
 | showHeader | Whether to show table header | boolean | `true` |
-| size | Size of table | `default` \| `middle` \| `small` | `default` |
+| size | Size of table | `default` \| `large` \| `small` | `default` |
 | title | Table title renderer | Function(currentPageData) |  |
 | onChange | Callback executed when pagination, filters or sorter is changed | Function(pagination, filters, sorter) |  |
 | onColumnFilterChange | Callback executed when ColumnFilter is changed | Function(item) | |
@@ -81,7 +81,7 @@ const columns = [{
 | onHeaderRow | Set props on per header row | Function(column, index) | - |
 | onRow | Set props on per row | Function(record, index) | - |
 | filterBar | Display filter bar. When set to false, filter menu button is displayed on column header | boolean | true |
-| filters | <Controlled>Filter conditions in the filter bar，e.g：`[{ name: 'Jom' }, 'OR', { name: 'Jim' }]`，`name` is column's `key` or `dataIndex` | any\[] | - |
+| filters | (Controlled) Filter conditions in the filter bar，e.g：`[{ name: 'Jom' }, 'OR', { name: 'Jim' }]`，`name` is column's `key` or `dataIndex` | any\[] | - |
 | filterBarPlaceholder | filter bar placeholder | string |  |
 
 #### onRow usage

@@ -1,4 +1,4 @@
-import { Modifier, EditorState } from 'draft-js';
+import { EditorState, Modifier } from 'draft-js';
 import getSearchWord from './getSearchWord';
 
 export default function clearMention(editorState) {

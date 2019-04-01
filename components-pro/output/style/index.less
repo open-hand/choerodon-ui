@@ -1,0 +1,24 @@
+@import "../../../components/style/themes/default";
+@import "../../../components/style/mixins/index";
+@import "../../text-field/style/mixin";
+
+@output-prefix-cls: ~"@{c7n-prefix}-pro-output";
+
+.@{output-prefix-cls} {
+  line-height: 28 / 13; // <-- fieldHeight / fontSize
+  &-invalid {
+    border: @border-width-base @border-style-base @error-color;
+    border-radius: @border-radius-base;
+    background-color: @error-bg-color;
+    color: @error-color;
+  }
+  &-multiple-block {
+    .tag-block;
+    vertical-align: text-top;
+  }
+  &-empty:after {
+    display: inline-block;
+    content: "";
+    width: .01rem;
+  }
+}

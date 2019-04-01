@@ -1,7 +1,7 @@
-import * as React from 'react';
-import { createElement, Component } from 'react';
-import omit from 'omit.js';
+import React, { Component, createElement, CSSProperties, ReactElement } from 'react';
+import omit from 'lodash/omit';
 import classNames from 'classnames';
+import { getPrefixCls } from '../configure';
 
 function getNumberArray(num: string | number | undefined) {
   return num ?
@@ -17,8 +17,9 @@ export interface ScrollNumberProps {
   count?: string | number;
   component?: string;
   onAnimated?: Function;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   title?: string | number;
+  hidden?: boolean;
 }
 
 export interface ScrollNumberState {
@@ -27,8 +28,8 @@ export interface ScrollNumberState {
 }
 
 export default class ScrollNumber extends Component<ScrollNumberProps, ScrollNumberState> {
+  static displayName = 'ScrollNumber';
   static defaultProps = {
-    prefixCls: 'ant-scroll-number',
     count: null,
     onAnimated() {
     },
@@ -90,8 +91,12 @@ export default class ScrollNumber extends Component<ScrollNumberProps, ScrollNum
     }
   }
 
+  getPrefixCls() {
+    return getPrefixCls('scroll-number', this.props.prefixCls);
+  }
+
   renderNumberList(position: number) {
-    const childrenToReturn: React.ReactElement<any>[] = [];
+    const childrenToReturn: ReactElement<any>[] = [];
     for (let i = 0; i < 30; i++) {
       const currentClassName = (position === i) ? 'current' : '';
       childrenToReturn.push(<p key={i.toString()} className={currentClassName}>{i % 10}</p>);
@@ -99,12 +104,12 @@ export default class ScrollNumber extends Component<ScrollNumberProps, ScrollNum
     return childrenToReturn;
   }
 
-  renderCurrentNumber(num: number, i: number) {
+  renderCurrentNumber = (num: number, i: number) => {
     const position = this.getPositionByNum(num, i);
     const removeTransition = this.state.animateStarted ||
       (getNumberArray(this.lastCount)[i] === undefined);
     return createElement('span', {
-      className: `${this.props.prefixCls}-only`,
+      className: `${this.getPrefixCls()}-only`,
       style: {
         transition: removeTransition && 'none',
         msTransform: `translateY(${-position * 100}%)`,
@@ -113,7 +118,7 @@ export default class ScrollNumber extends Component<ScrollNumberProps, ScrollNum
       },
       key: i,
     }, this.renderNumberList(position));
-  }
+  };
 
   renderNumberElement() {
     const state = this.state;
@@ -121,13 +126,12 @@ export default class ScrollNumber extends Component<ScrollNumberProps, ScrollNum
       return state.count;
     }
     return getNumberArray(state.count)
-      .map((num, i) => this.renderCurrentNumber(num, i)).reverse();
+      .map(this.renderCurrentNumber).reverse();
   }
 
   render() {
-    const { prefixCls, className, style, title, component = 'sup' } = this.props;
-    // fix https://fb.me/react-unknown-prop
-    const restProps = omit(this.props, [
+    const { className, style, component = 'sup' } = this.props;
+    const restProps = omit<ScrollNumberProps, 'count' | 'onAnimated' | 'component' | 'prefixCls'>(this.props, [
       'count',
       'onAnimated',
       'component',
@@ -135,14 +139,10 @@ export default class ScrollNumber extends Component<ScrollNumberProps, ScrollNum
     ]);
     const newProps = {
       ...restProps,
-      className: classNames(prefixCls, className),
-      title: title as string,
+      className: classNames(this.getPrefixCls(), className),
     };
-    // allow specify the border
-    // mock border-color by box-shadow for compatible with old usage:
-    // <Badge count={4} style={{ backgroundColor: '#fff', color: '#999', borderColor: '#d9d9d9' }} />
     if (style && style.borderColor) {
-      newProps.style.boxShadow = `0 0 0 1px ${style.borderColor} inset`;
+      newProps.style!.boxShadow = `0 0 0 1px ${style.borderColor} inset`;
     }
     return createElement(
       component as any,

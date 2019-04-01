@@ -2,7 +2,7 @@
 
 exports[`TimePicker renders addon correctly 1`] = `
 <div
-  class="ant-time-picker-panel-addon"
+  class="c7n-time-picker-panel-addon"
 >
   <button
     type="button"

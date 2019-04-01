@@ -1,18 +1,24 @@
-import * as React from 'react';
+import React, { Component, CSSProperties, MouseEventHandler } from 'react';
 import classNames from 'classnames';
-import omit from 'omit.js';
-import icons from './icons';
+import omit from 'lodash/omit';
+import { icons, categories } from 'choerodon-ui-font';
 
 export interface IconProps {
   type: string;
   className?: string;
   title?: string;
-  onClick?: React.MouseEventHandler<any>;
-  style?: React.CSSProperties;
+  onClick?: MouseEventHandler<any>;
+  onMouseDown?: MouseEventHandler<any>;
+  onMouseUp?: MouseEventHandler<any>;
+  onMouseLeave?: MouseEventHandler<any>;
+  style?: CSSProperties;
+  tabIndex?: number;
 }
 
-class Icon extends React.Component<IconProps, {}> {
+export default class Icon extends Component<IconProps, {}> {
   static icons = icons;
+  static categories = categories;
+
   render() {
     const { type, className = '' } = this.props;
     const classString = classNames({
@@ -22,5 +28,3 @@ class Icon extends React.Component<IconProps, {}> {
     return <i {...omit(this.props, ['type', 'spin'])} className={classString} />;
   }
 }
-
-export default Icon;

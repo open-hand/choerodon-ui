@@ -1,9 +1,9 @@
 @import "../../style/themes/default";
 @import "../../style/mixins/index";
 
-@table-prefix-cls: ~"@{ant-prefix}-table";
-@select-prefix-cls: ~"@{ant-prefix}-select";
-@checkbox-prefix-cls: ~"@{ant-prefix}-checkbox";
+@table-prefix-cls: ~"@{c7n-prefix}-table";
+@select-prefix-cls: ~"@{c7n-prefix}-select";
+@checkbox-prefix-cls: ~"@{c7n-prefix}-checkbox";
 @table-header-icon-color: @text-color-secondary;
 
 .@{table-prefix-cls}-wrapper {
@@ -49,12 +49,12 @@
 
     .@{table-prefix-cls}-sort-icon {
       position: relative;
-      margin-left: 8px;
-      font-size: @font-size-base + 2px;
+      margin-left: .08rem;
+      font-size: @font-size-base + .02rem;
       cursor: pointer;
       color: @table-header-icon-color;
       transition: all .3s;
-      width: 14px;
+      width: .14rem;
       font-weight: normal;
       vertical-align: text-bottom;
       opacity: 0;
@@ -115,10 +115,10 @@
     border-top: @border-width-base @border-style-base @border-color-split;
     &:before {
       content: '';
-      height: 1px;
+      height: .01rem;
       background: @table-header-bg;
       position: absolute;
-      top: -1px;
+      top: -.01rem;
       width: 100%;
       left: 0;
     }
@@ -131,7 +131,7 @@
   &-title {
     padding: @table-padding-vertical 0;
     position: relative;
-    top: 1px;
+    top: .01rem;
     border-radius: @border-radius-base @border-radius-base 0 0;
   }
 
@@ -153,8 +153,6 @@
       }
     }
   }
-
-  // https://github.com/ant-design/ant-design/issues/4373
   &-without-column-header &-title + &-content,
   &-without-column-header table {
     border-radius: 0;
@@ -174,18 +172,18 @@
   }
 
   &-thead > tr > th.@{table-prefix-cls}-selection-column-custom {
-    padding-left: 16px;
+    padding-left: .16rem;
     padding-right: 0;
-    min-width: 62px !important;
-    width: 62px !important;
+    min-width: .62rem !important;
+    width: .62rem !important;
   }
 
   &-thead > tr > th.@{table-prefix-cls}-selection-column,
   &-tbody > tr > td.@{table-prefix-cls}-selection-column {
     text-align: center;
-    min-width: 20px;
-    width: 20px;
-    .@{ant-prefix}-radio-wrapper {
+    min-width: .2rem;
+    width: .2rem;
+    .@{c7n-prefix}-radio-wrapper {
       margin-right: 0;
     }
   }
@@ -193,8 +191,8 @@
   &-expand-icon-th,
   &-row-expand-icon-cell {
     text-align: center;
-    min-width: 50px;
-    width: 50px;
+    min-width: .5rem;
+    width: .5rem;
   }
 
   &-header {
@@ -213,27 +211,27 @@
       opacity: 0.5;
     }
     .@{table-prefix-cls}-spin-holder {
-      height: 20px;
-      line-height: 20px;
+      height: .2rem;
+      line-height: .2rem;
       left: 50%;
       top: 50%;
-      margin-left: -30px;
+      margin-left: -.3rem;
       position: absolute;
     }
     .@{table-prefix-cls}-with-pagination {
-      margin-top: -20px;
+      margin-top: -.2rem;
     }
     .@{table-prefix-cls}-without-pagination {
-      margin-top: 10px;
+      margin-top: .1rem;
     }
   }
 
   &-column-sorter {
     position: relative;
-    margin-left: 8px;
+    margin-left: .08rem;
     display: inline-block;
-    width: 14px;
-    height: 14px;
+    width: .14rem;
+    height: .14rem;
     vertical-align: middle;
     text-align: center;
     font-weight: normal;
@@ -241,10 +239,10 @@
 
     &-up,
     &-down {
-      line-height: 6px;
+      line-height: .06rem;
       display: block;
-      width: 14px;
-      height: 6px;
+      width: .14rem;
+      height: .06rem;
       cursor: pointer;
       position: relative;
       &:hover .@{iconfont-css-prefix} {
@@ -260,8 +258,8 @@
       &:after {
         position: absolute;
         content: '';
-        height: 30px;
-        width: 14px;
+        height: .3rem;
+        width: .14rem;
         left: 0;
       }
     }
@@ -276,9 +274,9 @@
 
     .@{iconfont-css-prefix}-caret-up,
     .@{iconfont-css-prefix}-caret-down {
-      .iconfont-size-under-12px(8px);
-      line-height: 4px;
-      height: 4px;
+      .iconfont-size-under-12px(.08rem);
+      line-height: .04rem;
+      height: .04rem;
       transition: all .3s;
     }
   }
@@ -340,31 +338,29 @@
     color: @text-color-secondary;
     z-index: 1;
     .@{iconfont-css-prefix} {
-      margin-right: 4px;
+      margin-right: .04rem;
     }
   }
 
-  &-pagination.@{ant-prefix}-pagination {
+  &-pagination.@{c7n-prefix}-pagination {
     float: right;
-    line-height: 32px;
-    margin-top: 16px;
+    line-height: .32rem;
+    margin-top: .16rem;
   }
 
   &-filter-dropdown {
-    min-width: 96px;
-    margin-left: -8px;
+    min-width: .96rem;
+    margin-left: -.08rem;
     background: @component-background;
     border-radius: @border-radius-base;
     box-shadow: @box-shadow-base;
 
-    .@{ant-prefix}-dropdown-menu {
+    .@{c7n-prefix}-dropdown-menu {
       border: 0;
       box-shadow: none;
       border-radius: @border-radius-base @border-radius-base 0 0;
-
-      // https://github.com/ant-design/ant-design/issues/4916
       &-without-submenu {
-        max-height: 400px;
+        max-height: 4rem;
         overflow-x: hidden;
       }
 
@@ -377,27 +373,27 @@
         box-shadow: @box-shadow-base;
       }
 
-      .@{ant-prefix}-dropdown-submenu-contain-selected {
-        .@{ant-prefix}-dropdown-menu-submenu-title:after {
+      .@{c7n-prefix}-dropdown-submenu-contain-selected {
+        .@{c7n-prefix}-dropdown-menu-submenu-title:after {
           color: @primary-color;
           font-weight: bold;
-          text-shadow: 0 0 2px @primary-2;
+          text-shadow: 0 0 .02rem @primary-2;
         }
       }
     }
 
-    .@{ant-prefix}-dropdown-menu-item {
+    .@{c7n-prefix}-dropdown-menu-item {
       overflow: hidden;
     }
 
-    > .@{ant-prefix}-dropdown-menu > .@{ant-prefix}-dropdown-menu-item:last-child,
-    > .@{ant-prefix}-dropdown-menu > .@{ant-prefix}-dropdown-menu-submenu:last-child .@{ant-prefix}-dropdown-menu-submenu-title {
+    > .@{c7n-prefix}-dropdown-menu > .@{c7n-prefix}-dropdown-menu-item:last-child,
+    > .@{c7n-prefix}-dropdown-menu > .@{c7n-prefix}-dropdown-menu-submenu:last-child .@{c7n-prefix}-dropdown-menu-submenu-title {
       border-radius: 0;
     }
 
     &-btns {
       overflow: hidden;
-      padding: 7px 8px;
+      padding: .07rem .08rem;
       border-top: @border-width-base @border-style-base @border-color-split;
     }
 
@@ -422,17 +418,17 @@
     position: relative;
     border-top: @border-width-base @border-style-base @border-color-base;
     border-bottom: @border-width-base @border-style-base @border-color-base;
-    padding: 2.5px 57px 2px 0;
+    padding: .025rem .57rem .02rem 0;
   }
   &-filter-select {
-    padding-left: 41px;
+    padding-left: .41rem;
     vertical-align: middle;
     &-icon {
       position: absolute;
       top: 0;
       bottom: 0;
-      left: 16px;
-      height: 18px;
+      left: .16rem;
+      height: .18rem;
       margin: auto 0;
       color: @text-color;
       & i {
@@ -451,7 +447,7 @@
       position: absolute !important;
       bottom: 0;
       right: 0;
-      padding: 10px 20px !important;
+      padding: .1rem .2rem !important;
       background-color: #fff;
       width: 100%;
       text-align: right;
@@ -478,8 +474,8 @@
     top: 0;
     bottom: 0;
     right: 0;
-    height: 24px;
-    width: 56px;
+    height: .24rem;
+    width: .56rem;
     border-left: @border-width-base @border-style-base @border-color-base;
     margin: auto 0;
     line-height: 1;
@@ -488,7 +484,7 @@
 
   &-selection {
     &-select-all-custom {
-      margin-right: 4px !important;
+      margin-right: .04rem !important;
     }
 
     .@{iconfont-css-prefix}-down {
@@ -497,14 +493,14 @@
     }
 
     &-menu {
-      min-width: 96px;
-      margin-top: 5px;
-      margin-left: -30px;
+      min-width: .96rem;
+      margin-top: .05rem;
+      margin-left: -.3rem;
       background: @component-background;
       border-radius: @border-radius-base;
       box-shadow: @box-shadow-base;
 
-      .@{ant-prefix}-action-down {
+      .@{c7n-prefix}-action-down {
         color: @table-header-icon-color;
       }
     }
@@ -522,9 +518,9 @@
 
   &-row {
     &-expand-icon {
-      .iconfont-font('\e5c5', 20px);
-      width: 20px;
-      height: 20px;
+      .iconfont-font('\e5c5', .2rem);
+      width: .2rem;
+      height: .2rem;
       line-height: 1;
       cursor: pointer;
       transform: rotate(-90deg);
@@ -554,7 +550,7 @@
   }
 
   .@{table-prefix-cls}-row-indent + .@{table-prefix-cls}-row-expand-icon {
-    margin-right: 8px;
+    margin-right: .08rem;
     vertical-align: top;
   }
 
@@ -581,8 +577,8 @@
 
   &-fixed-header &-scroll &-header {
     overflow: scroll;
-    padding-bottom: 20px;
-    margin-bottom: -20px;
+    padding-bottom: .2rem;
+    margin-bottom: -.2rem;
   }
 
   &-fixed-left,
@@ -605,14 +601,14 @@
 
   &-fixed-left {
     left: 0;
-    box-shadow: 6px 0 6px -4px @shadow-color;
+    box-shadow: .06rem 0 .06rem -.04rem @shadow-color;
     .@{table-prefix-cls}-header {
       overflow-y: hidden;
     }
     // hide scrollbar in left fixed columns
     .@{table-prefix-cls}-body-inner {
-      margin-right: -20px;
-      padding-right: 20px;
+      margin-right: -.2rem;
+      padding-right: .2rem;
     }
     .@{table-prefix-cls}-fixed-header & .@{table-prefix-cls}-body-inner {
       padding-right: 0;
@@ -621,25 +617,24 @@
     table {
       border-radius: @border-radius-base 0 0 0;
     }
-    .ant-table-thead > tr > th:last-child {
+    .c7n-table-thead > tr > th:last-child {
       border-top-right-radius: 0;
     }
   }
 
   &-fixed-right {
     right: 0;
-    box-shadow: -6px 0 6px -4px @shadow-color;
+    box-shadow: -.06rem 0 .06rem -.04rem @shadow-color;
     &,
     table {
       border-radius: 0 @border-radius-base 0 0;
     }
     // hide expand row content in right-fixed Table
-    // https://github.com/ant-design/ant-design/issues/1898
     .@{table-prefix-cls}-expanded-row {
       color: transparent;
       pointer-events: none;
     }
-    .ant-table-thead > tr > th:first-child {
+    .c7n-table-thead > tr > th:first-child {
       border-top-left-radius: 0;
     }
   }

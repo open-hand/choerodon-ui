@@ -1,12 +1,14 @@
-import * as React from 'react';
+import React, { Children, Component, CSSProperties, MouseEventHandler, ReactNode } from 'react';
 import classNames from 'classnames';
-import omit from 'omit.js';
+import omit from 'lodash/omit';
+import { Size } from '../_util/enum';
 import Grid from './Grid';
 import Meta from './Meta';
 import Tabs from '../tabs';
 import { throttleByAnimationFrameDecorator } from '../_util/throttleByAnimationFrame';
 import warning from '../_util/warning';
-import addEventListener from '../rc-components/util/Dom/addEventListener';
+import addEventListener from '../_util/addEventListener';
+import { getPrefixCls } from '../configure';
 
 export { CardGridProps } from './Grid';
 export { CardMetaProps } from './Meta';
@@ -15,33 +17,34 @@ export type CardType = 'inner';
 
 export interface CardTabListType {
   key: string;
-  tab: React.ReactNode;
+  tab: ReactNode;
 }
 
 export interface CardProps {
   prefixCls?: string;
-  title?: React.ReactNode;
-  extra?: React.ReactNode;
+  title?: ReactNode;
+  extra?: ReactNode;
   bordered?: boolean;
-  bodyStyle?: React.CSSProperties;
-  style?: React.CSSProperties;
+  bodyStyle?: CSSProperties;
+  style?: CSSProperties;
   loading?: boolean;
   noHovering?: boolean;
   hoverable?: boolean;
-  children?: React.ReactNode;
+  children?: ReactNode;
   id?: string;
   className?: string;
   type?: CardType;
-  cover?: React.ReactNode;
-  actions?: Array<React.ReactNode>;
+  cover?: ReactNode;
+  actions?: ReactNode[];
   tabList?: CardTabListType[];
   onTabChange?: (key: string) => void;
-  onHeadClick?: React.MouseEventHandler<any>;
+  onHeadClick?: MouseEventHandler<any>;
   activeTabKey?: string;
   defaultActiveTabKey?: string;
 }
 
-export default class Card extends React.Component<CardProps, {}> {
+export default class Card extends Component<CardProps, {}> {
+  static displayName = 'Card';
   static Grid: typeof Grid = Grid;
   static Meta: typeof Meta = Meta;
   resizeEvent: any;
@@ -50,6 +53,7 @@ export default class Card extends React.Component<CardProps, {}> {
     widerPadding: false,
   };
   private container: HTMLDivElement;
+
   componentDidMount() {
     this.updateWiderPadding();
     this.resizeEvent = addEventListener(window, 'resize', this.updateWiderPadding);
@@ -62,12 +66,14 @@ export default class Card extends React.Component<CardProps, {}> {
       warning(!!this.props.noHovering, '`noHovering={false}` of Card is deperated, use `hoverable` instead.');
     }
   }
+
   componentWillUnmount() {
     if (this.resizeEvent) {
       this.resizeEvent.remove();
     }
     (this.updateWiderPadding as any).cancel();
   }
+
   @throttleByAnimationFrameDecorator()
   updateWiderPadding() {
     if (!this.container) {
@@ -86,24 +92,27 @@ export default class Card extends React.Component<CardProps, {}> {
       });
     }
   }
+
   onTabChange = (key: string) => {
     if (this.props.onTabChange) {
       this.props.onTabChange(key);
     }
-  }
+  };
   saveRef = (node: HTMLDivElement) => {
     this.container = node;
-  }
+  };
+
   isContainGrid() {
     let containGrid;
-    React.Children.forEach(this.props.children, (element: JSX.Element) => {
+    Children.forEach(this.props.children, (element: JSX.Element) => {
       if (element && element.type && element.type === Grid) {
         containGrid = true;
       }
     });
     return containGrid;
   }
-  getAction(actions: React.ReactNode[]) {
+
+  getAction(actions: ReactNode[]) {
     if (!actions || !actions.length) {
       return null;
     }
@@ -115,6 +124,7 @@ export default class Card extends React.Component<CardProps, {}> {
     );
     return actionList;
   }
+
   // For 2.x compatible
   getCompatibleHoverable() {
     const { noHovering, hoverable } = this.props;
@@ -123,11 +133,13 @@ export default class Card extends React.Component<CardProps, {}> {
     }
     return !!hoverable;
   }
+
   render() {
     const {
-      prefixCls = 'ant-card', className, extra, bodyStyle, noHovering, hoverable, title, loading,
+      prefixCls: customizePrefixCls, className, extra, bodyStyle, noHovering, hoverable, title, loading,
       bordered = true, type, cover, actions, tabList, children, activeTabKey, defaultActiveTabKey, onHeadClick, ...others,
     } = this.props;
+    const prefixCls = getPrefixCls('card', customizePrefixCls);
 
     const classString = classNames(prefixCls, className, {
       [`${prefixCls}-loading`]: loading,
@@ -175,7 +187,7 @@ export default class Card extends React.Component<CardProps, {}> {
       <Tabs
         {...extraProps}
         className={`${prefixCls}-head-tabs`}
-        size="large"
+        size={Size.large}
         onChange={this.onTabChange}
       >
         {tabList.map(item => <Tabs.TabPane tab={item.tab} key={item.key} />)}

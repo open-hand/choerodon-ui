@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import addEventListener from '../../util/Dom/addEventListener';
+import addEventListener from '../../../_util/addEventListener';
 import classNames from 'classnames';
-import warning from 'warning';
+import noop from 'lodash/noop';
+import warning from '../../../_util/warning';
 import Steps from './Steps';
 import Marks from './Marks';
 import Handle from '../Handle';
 import * as utils from '../utils';
-
-function noop() {}
 
 export default function createSlider(Component) {
   return class ComponentEnhancer extends Component {

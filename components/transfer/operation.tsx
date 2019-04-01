@@ -1,20 +1,19 @@
-import * as React from 'react';
+import React, { Component, FormEventHandler } from 'react';
+import noop from 'lodash/noop';
 import Button from '../button';
-
-function noop() {
-}
+import { Size } from '../_util/enum';
 
 export interface TransferOperationProps {
   className?: string;
   leftArrowText?: string;
   rightArrowText?: string;
-  moveToLeft?: React.FormEventHandler<any>;
-  moveToRight?: React.FormEventHandler<any>;
+  moveToLeft?: FormEventHandler<any>;
+  moveToRight?: FormEventHandler<any>;
   leftActive?: boolean;
   rightActive?: boolean;
 }
 
-export default class Operation extends React.Component<TransferOperationProps, any> {
+export default class Operation extends Component<TransferOperationProps, any> {
   render() {
     const {
       moveToLeft = noop,
@@ -29,7 +28,7 @@ export default class Operation extends React.Component<TransferOperationProps, a
       <div className={className}>
         <Button
           type="primary"
-          size="small"
+          size={Size.small}
           disabled={!leftActive}
           onClick={moveToLeft}
           icon="left"
@@ -38,7 +37,7 @@ export default class Operation extends React.Component<TransferOperationProps, a
         </Button>
         <Button
           type="primary"
-          size="small"
+          size={Size.small}
           disabled={!rightActive}
           onClick={moveToRight}
           icon="right"

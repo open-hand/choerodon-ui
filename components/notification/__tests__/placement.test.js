@@ -39,7 +39,7 @@ describe('Notification.placement', () => {
     open({
       placement: 'topLeft',
     });
-    style = getStyle($$('.ant-notification-topLeft')[0]);
+    style = getStyle($$('.c7n-notification-topLeft')[0]);
     expect(style.top).toBe(defaultTop);
     expect(style.left).toBe('0px');
     expect(style.bottom).toBe('');
@@ -47,14 +47,14 @@ describe('Notification.placement', () => {
     open({
       placement: 'topLeft',
     });
-    expect($$('.ant-notification-topLeft').length).toBe(1);
+    expect($$('.c7n-notification-topLeft').length).toBe(1);
 
 
     // topRight
     open({
       placement: 'topRight',
     });
-    style = getStyle($$('.ant-notification-topRight')[0]);
+    style = getStyle($$('.c7n-notification-topRight')[0]);
     expect(style.top).toBe(defaultTop);
     expect(style.right).toBe('0px');
     expect(style.bottom).toBe('');
@@ -62,14 +62,14 @@ describe('Notification.placement', () => {
     open({
       placement: 'topRight',
     });
-    expect($$('.ant-notification-topRight').length).toBe(1);
+    expect($$('.c7n-notification-topRight').length).toBe(1);
 
 
     // bottomRight
     open({
       placement: 'bottomRight',
     });
-    style = getStyle($$('.ant-notification-bottomRight')[0]);
+    style = getStyle($$('.c7n-notification-bottomRight')[0]);
     expect(style.top).toBe('');
     expect(style.right).toBe('0px');
     expect(style.bottom).toBe(defaultBottom);
@@ -77,14 +77,14 @@ describe('Notification.placement', () => {
     open({
       placement: 'bottomRight',
     });
-    expect($$('.ant-notification-bottomRight').length).toBe(1);
+    expect($$('.c7n-notification-bottomRight').length).toBe(1);
 
 
     // bottomLeft
     open({
       placement: 'bottomLeft',
     });
-    style = getStyle($$('.ant-notification-bottomLeft')[0]);
+    style = getStyle($$('.c7n-notification-bottomLeft')[0]);
     expect(style.top).toBe('');
     expect(style.left).toBe('0px');
     expect(style.bottom).toBe(defaultBottom);
@@ -92,7 +92,7 @@ describe('Notification.placement', () => {
     open({
       placement: 'bottomLeft',
     });
-    expect($$('.ant-notification-bottomLeft').length).toBe(1);
+    expect($$('.c7n-notification-bottomLeft').length).toBe(1);
   });
 
   it('change notification placement by `config` method', () => {
@@ -104,7 +104,7 @@ describe('Notification.placement', () => {
       top: 50,
       bottom: 50,
     });
-    style = getStyle($$('.ant-notification-topLeft')[0]);
+    style = getStyle($$('.c7n-notification-topLeft')[0]);
     expect(style.top).toBe('50px');
     expect(style.left).toBe('0px');
     expect(style.bottom).toBe('');
@@ -115,7 +115,7 @@ describe('Notification.placement', () => {
       top: 100,
       bottom: 50,
     });
-    style = getStyle($$('.ant-notification-topRight')[0]);
+    style = getStyle($$('.c7n-notification-topRight')[0]);
     expect(style.top).toBe('100px');
     expect(style.right).toBe('0px');
     expect(style.bottom).toBe('');
@@ -126,7 +126,7 @@ describe('Notification.placement', () => {
       top: 50,
       bottom: 100,
     });
-    style = getStyle($$('.ant-notification-bottomRight')[0]);
+    style = getStyle($$('.c7n-notification-bottomRight')[0]);
     expect(style.top).toBe('');
     expect(style.right).toBe('0px');
     expect(style.bottom).toBe('100px');
@@ -137,7 +137,7 @@ describe('Notification.placement', () => {
       top: 100,
       bottom: 50,
     });
-    style = getStyle($$('.ant-notification-bottomLeft')[0]);
+    style = getStyle($$('.c7n-notification-bottomLeft')[0]);
     expect(style.top).toBe('');
     expect(style.left).toBe('0px');
     expect(style.bottom).toBe('50px');
@@ -152,7 +152,7 @@ describe('Notification.placement', () => {
         return $container;
       },
     });
-    expect($container.querySelector('.ant-notification')).not.toBe(null);
+    expect($container.querySelector('.c7n-notification')).not.toBe(null);
     $container.remove();
   });
 });

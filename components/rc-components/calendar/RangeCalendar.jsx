@@ -3,14 +3,13 @@ import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import classnames from 'classnames';
+import noop from 'lodash/noop';
 import CalendarPart from './range-calendar/CalendarPart';
 import TodayButton from './calendar/TodayButton';
 import OkButton from './calendar/OkButton';
 import TimePickerButton from './calendar/TimePickerButton';
 import CommonMixin from './mixin/CommonMixin';
-import { syncTime, getTodayTime, isAllowedDate } from './util/';
-
-function noop() {}
+import { getTodayTime, isAllowedDate, syncTime } from './util';
 
 function isEmptyArray(arr) {
   return Array.isArray(arr) && (arr.length === 0 || arr.every(i => !i));

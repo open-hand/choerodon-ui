@@ -11,7 +11,7 @@ describe('List', () => {
     const wrapper = render(
       <List loading={loading} dataSource={[]} renderItem={() => <List.Item />} />
     );
-    expect(wrapper.find('.ant-list-empty-text')).toHaveLength(0);
+    expect(wrapper.find('.c7n-list-empty-text')).toHaveLength(0);
   });
 
   it('renders object loading', () => {
@@ -25,15 +25,15 @@ describe('List', () => {
         renderItem={() => <List.Item />}
       />
     );
-    expect(wrapper.find('.ant-spin-spinning')).toHaveLength(1);
+    expect(wrapper.find('.c7n-spin-spinning')).toHaveLength(1);
   });
 
   it('renders object loading with indicator', () => {
-    const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
+    const c7nIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 
     const loading = {
       spinning: true,
-      indicator: antIcon,
+      indicator: c7nIcon,
     };
     const wrapper = render(
       <List

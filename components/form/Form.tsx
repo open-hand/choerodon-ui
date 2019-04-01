@@ -1,13 +1,15 @@
-import * as React from 'react';
+import React, { Component, ComponentClass, CSSProperties, FormEvent, FormEventHandler, ReactNode, SFC } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import omit from 'omit.js';
+import omit from 'lodash/omit';
 import warning from '../_util/warning';
 import FormItem from './FormItem';
-import { FIELD_META_PROP, FIELD_DATA_PROP } from './constants';
+import { FIELD_DATA_PROP, FIELD_META_PROP } from './constants';
 import { createFormField } from '../rc-components/form';
 import createDOMForm from '../rc-components/form/createDOMForm';
 import PureRenderMixin from '../rc-components/util/PureRenderMixin';
+import { FormLayout } from './enum';
+import { getPrefixCls } from '../configure';
 
 export interface FormCreateOption<T> {
   onFieldsChange?: (props: T, fields: Array<any>) => void;
@@ -17,10 +19,10 @@ export interface FormCreateOption<T> {
 }
 
 export interface FormProps {
-  layout?: 'horizontal' | 'inline' | 'vertical';
+  layout?: FormLayout;
   form?: WrappedFormUtils;
-  onSubmit?: React.FormEventHandler<any>;
-  style?: React.CSSProperties;
+  onSubmit?: FormEventHandler<any>;
+  style?: CSSProperties;
   className?: string;
   prefixCls?: string;
   hideRequiredMark?: boolean;
@@ -107,7 +109,7 @@ export type WrappedFormUtils = {
   resetFields(names?: Array<string>): void;
   isModifiedFields(names?: Array<string>): boolean;
   isModifiedField(name: string): boolean;
-  getFieldDecorator(id: string, options?: GetFieldDecoratorOptions): (node: React.ReactNode) => React.ReactNode;
+  getFieldDecorator(id: string, options?: GetFieldDecoratorOptions): (node: ReactNode) => ReactNode;
 };
 
 export interface FormComponentProps {
@@ -119,22 +121,22 @@ export type Diff<T extends string, U extends string> =
 export type Omit<T, K extends keyof T> = Pick<T, Diff<keyof T, K>>;
 
 export interface ComponentDecorator {
-  <P extends FormComponentProps>(component: React.ComponentClass<P> | React.SFC<P>): React.ComponentClass<Omit<P, keyof FormComponentProps>>;
+  <P extends FormComponentProps>(component: ComponentClass<P> | SFC<P>): ComponentClass<Omit<P, keyof FormComponentProps>>;
 }
 
-export default class Form extends React.Component<FormProps, any> {
+export default class Form extends Component<FormProps, any> {
+  static displayName = 'Form';
   static defaultProps = {
-    prefixCls: 'ant-form',
-    layout: 'horizontal',
+    layout: FormLayout.horizontal,
     hideRequiredMark: false,
-    onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    onSubmit(e: FormEvent<HTMLFormElement>) {
       e.preventDefault();
     },
   };
 
   static propTypes = {
     prefixCls: PropTypes.string,
-    layout: PropTypes.oneOf(['horizontal', 'inline', 'vertical']),
+    layout: PropTypes.oneOf([FormLayout.horizontal, FormLayout.inline, FormLayout.vertical]),
     children: PropTypes.any,
     onSubmit: PropTypes.func,
     hideRequiredMark: PropTypes.bool,
@@ -160,7 +162,7 @@ export default class Form extends React.Component<FormProps, any> {
   constructor(props: FormProps) {
     super(props);
 
-    warning(!props.form, 'It is unnecessary to pass `form` to `Form` after antd@1.7.0.');
+    warning(!props.form, 'It is unnecessary to pass `form` to `Form`');
   }
 
   shouldComponentUpdate(...args: any[]) {
@@ -176,12 +178,11 @@ export default class Form extends React.Component<FormProps, any> {
 
   render() {
     const {
-      prefixCls, hideRequiredMark, className = '', layout,
+      prefixCls: customizePrefixCls, hideRequiredMark, className = '', layout,
     } = this.props;
+    const prefixCls = getPrefixCls('form', customizePrefixCls);
     const formClassName = classNames(prefixCls, {
-      [`${prefixCls}-horizontal`]: layout === 'horizontal',
-      [`${prefixCls}-vertical`]: layout === 'vertical',
-      [`${prefixCls}-inline`]: layout === 'inline',
+      [`${prefixCls}-${layout}`]: layout,
       [`${prefixCls}-hide-required-mark`]: hideRequiredMark,
     }, className);
 

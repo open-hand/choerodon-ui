@@ -5,7 +5,7 @@ exports[`renders ./components/upload/demo/avatar.md correctly 1`] = `
   class="avatar-uploader"
 >
   <div
-    class="ant-upload ant-upload-select ant-upload-select-picture-card"
+    class="c7n-upload c7n-upload-select c7n-upload-select-picture-card"
     style="display:"
   />
 </span>
@@ -16,11 +16,11 @@ exports[`renders ./components/upload/demo/basic.md correctly 1`] = `
   class=""
 >
   <div
-    class="ant-upload ant-upload-select ant-upload-select-text"
+    class="c7n-upload c7n-upload-select c7n-upload-select-text"
     style="display:"
   />
   <div
-    class="ant-upload-list ant-upload-list-text"
+    class="c7n-upload-list c7n-upload-list-text"
   />
 </span>
 `;
@@ -30,24 +30,24 @@ exports[`renders ./components/upload/demo/defaultFileList.md correctly 1`] = `
   class=""
 >
   <div
-    class="ant-upload ant-upload-select ant-upload-select-text"
+    class="c7n-upload c7n-upload-select c7n-upload-select-text"
     style="display:"
   />
   <div
-    class="ant-upload-list ant-upload-list-text"
+    class="c7n-upload-list c7n-upload-list-text"
   >
     <div
-      class="ant-upload-list-item ant-upload-list-item-done"
+      class="c7n-upload-list-item c7n-upload-list-item-done"
     >
       <div
-        class="ant-upload-list-item-info"
+        class="c7n-upload-list-item-info"
       >
         <span>
           <i
             class="icon icon-attach_file"
           />
           <a
-            class="ant-upload-list-item-name"
+            class="c7n-upload-list-item-name"
             href="http://www.baidu.com/xxx.png"
             rel="noopener noreferrer"
             target="_blank"
@@ -63,17 +63,17 @@ exports[`renders ./components/upload/demo/defaultFileList.md correctly 1`] = `
       />
     </div>
     <div
-      class="ant-upload-list-item ant-upload-list-item-done"
+      class="c7n-upload-list-item c7n-upload-list-item-done"
     >
       <div
-        class="ant-upload-list-item-info"
+        class="c7n-upload-list-item-info"
       >
         <span>
           <i
             class="icon icon-attach_file"
           />
           <a
-            class="ant-upload-list-item-name"
+            class="c7n-upload-list-item-name"
             href="http://www.baidu.com/yyy.png"
             rel="noopener noreferrer"
             target="_blank"
@@ -89,17 +89,17 @@ exports[`renders ./components/upload/demo/defaultFileList.md correctly 1`] = `
       />
     </div>
     <div
-      class="ant-upload-list-item ant-upload-list-item-error"
+      class="c7n-upload-list-item c7n-upload-list-item-error"
     >
       <div
-        class="ant-upload-list-item-info"
+        class="c7n-upload-list-item-info"
       >
         <span>
           <i
             class="icon icon-attach_file"
           />
           <a
-            class="ant-upload-list-item-name"
+            class="c7n-upload-list-item-name"
             href="http://www.baidu.com/zzz.png"
             rel="noopener noreferrer"
             target="_blank"
@@ -123,10 +123,10 @@ exports[`renders ./components/upload/demo/drag.md correctly 1`] = `
   class=""
 >
   <div
-    class="ant-upload ant-upload-drag"
+    class="c7n-upload c7n-upload-drag"
   />
   <div
-    class="ant-upload-list ant-upload-list-text"
+    class="c7n-upload-list c7n-upload-list-text"
   />
 </span>
 `;
@@ -136,24 +136,24 @@ exports[`renders ./components/upload/demo/fileList.md correctly 1`] = `
   class=""
 >
   <div
-    class="ant-upload ant-upload-select ant-upload-select-text"
+    class="c7n-upload c7n-upload-select c7n-upload-select-text"
     style="display:"
   />
   <div
-    class="ant-upload-list ant-upload-list-text"
+    class="c7n-upload-list c7n-upload-list-text"
   >
     <div
-      class="ant-upload-list-item ant-upload-list-item-done"
+      class="c7n-upload-list-item c7n-upload-list-item-done"
     >
       <div
-        class="ant-upload-list-item-info"
+        class="c7n-upload-list-item-info"
       >
         <span>
           <i
             class="icon icon-attach_file"
           />
           <a
-            class="ant-upload-list-item-name"
+            class="c7n-upload-list-item-name"
             href="http://www.baidu.com/xxx.png"
             rel="noopener noreferrer"
             target="_blank"
@@ -180,17 +180,17 @@ exports[`renders ./components/upload/demo/picture-card.md correctly 1`] = `
     class=""
   >
     <div
-      class="ant-upload-list ant-upload-list-picture-card"
+      class="c7n-upload-list c7n-upload-list-picture-card"
     >
       <div
-        class="ant-upload-list-item ant-upload-list-item-done"
+        class="c7n-upload-list-item c7n-upload-list-item-done"
       >
         <div
-          class="ant-upload-list-item-info"
+          class="c7n-upload-list-item-info"
         >
           <span>
             <a
-              class="ant-upload-list-item-thumbnail"
+              class="c7n-upload-list-item-thumbnail"
               href="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
               rel="noopener noreferrer"
               target="_blank"
@@ -201,7 +201,7 @@ exports[`renders ./components/upload/demo/picture-card.md correctly 1`] = `
               />
             </a>
             <a
-              class="ant-upload-list-item-name"
+              class="c7n-upload-list-item-name"
               href="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
               rel="noopener noreferrer"
               target="_blank"
@@ -212,7 +212,7 @@ exports[`renders ./components/upload/demo/picture-card.md correctly 1`] = `
           </span>
         </div>
         <span
-          class="ant-upload-list-item-actions"
+          class="c7n-upload-list-item-actions"
         >
           <a
             href="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
@@ -232,7 +232,7 @@ exports[`renders ./components/upload/demo/picture-card.md correctly 1`] = `
       </div>
     </div>
     <div
-      class="ant-upload ant-upload-select ant-upload-select-picture-card"
+      class="c7n-upload c7n-upload-select c7n-upload-select-picture-card"
       style="display:"
     />
   </span>
@@ -245,21 +245,21 @@ exports[`renders ./components/upload/demo/picture-style.md correctly 1`] = `
     class=""
   >
     <div
-      class="ant-upload ant-upload-select ant-upload-select-picture"
+      class="c7n-upload c7n-upload-select c7n-upload-select-picture"
       style="display:"
     />
     <div
-      class="ant-upload-list ant-upload-list-picture"
+      class="c7n-upload-list c7n-upload-list-picture"
     >
       <div
-        class="ant-upload-list-item ant-upload-list-item-done"
+        class="c7n-upload-list-item c7n-upload-list-item-done"
       >
         <div
-          class="ant-upload-list-item-info"
+          class="c7n-upload-list-item-info"
         >
           <span>
             <a
-              class="ant-upload-list-item-thumbnail"
+              class="c7n-upload-list-item-thumbnail"
               href="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
               rel="noopener noreferrer"
               target="_blank"
@@ -270,7 +270,7 @@ exports[`renders ./components/upload/demo/picture-style.md correctly 1`] = `
               />
             </a>
             <a
-              class="ant-upload-list-item-name"
+              class="c7n-upload-list-item-name"
               href="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
               rel="noopener noreferrer"
               target="_blank"
@@ -286,14 +286,14 @@ exports[`renders ./components/upload/demo/picture-style.md correctly 1`] = `
         />
       </div>
       <div
-        class="ant-upload-list-item ant-upload-list-item-done"
+        class="c7n-upload-list-item c7n-upload-list-item-done"
       >
         <div
-          class="ant-upload-list-item-info"
+          class="c7n-upload-list-item-info"
         >
           <span>
             <a
-              class="ant-upload-list-item-thumbnail"
+              class="c7n-upload-list-item-thumbnail"
               href="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
               rel="noopener noreferrer"
               target="_blank"
@@ -304,7 +304,7 @@ exports[`renders ./components/upload/demo/picture-style.md correctly 1`] = `
               />
             </a>
             <a
-              class="ant-upload-list-item-name"
+              class="c7n-upload-list-item-name"
               href="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
               rel="noopener noreferrer"
               target="_blank"
@@ -327,21 +327,21 @@ exports[`renders ./components/upload/demo/picture-style.md correctly 1`] = `
     class="upload-list-inline"
   >
     <div
-      class="ant-upload ant-upload-select ant-upload-select-picture"
+      class="c7n-upload c7n-upload-select c7n-upload-select-picture"
       style="display:"
     />
     <div
-      class="ant-upload-list ant-upload-list-picture"
+      class="c7n-upload-list c7n-upload-list-picture"
     >
       <div
-        class="ant-upload-list-item ant-upload-list-item-done"
+        class="c7n-upload-list-item c7n-upload-list-item-done"
       >
         <div
-          class="ant-upload-list-item-info"
+          class="c7n-upload-list-item-info"
         >
           <span>
             <a
-              class="ant-upload-list-item-thumbnail"
+              class="c7n-upload-list-item-thumbnail"
               href="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
               rel="noopener noreferrer"
               target="_blank"
@@ -352,7 +352,7 @@ exports[`renders ./components/upload/demo/picture-style.md correctly 1`] = `
               />
             </a>
             <a
-              class="ant-upload-list-item-name"
+              class="c7n-upload-list-item-name"
               href="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
               rel="noopener noreferrer"
               target="_blank"
@@ -368,14 +368,14 @@ exports[`renders ./components/upload/demo/picture-style.md correctly 1`] = `
         />
       </div>
       <div
-        class="ant-upload-list-item ant-upload-list-item-done"
+        class="c7n-upload-list-item c7n-upload-list-item-done"
       >
         <div
-          class="ant-upload-list-item-info"
+          class="c7n-upload-list-item-info"
         >
           <span>
             <a
-              class="ant-upload-list-item-thumbnail"
+              class="c7n-upload-list-item-thumbnail"
               href="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
               rel="noopener noreferrer"
               target="_blank"
@@ -386,7 +386,7 @@ exports[`renders ./components/upload/demo/picture-style.md correctly 1`] = `
               />
             </a>
             <a
-              class="ant-upload-list-item-name"
+              class="c7n-upload-list-item-name"
               href="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
               rel="noopener noreferrer"
               target="_blank"
@@ -412,15 +412,15 @@ exports[`renders ./components/upload/demo/upload-manually.md correctly 1`] = `
     class=""
   >
     <div
-      class="ant-upload ant-upload-select ant-upload-select-text"
+      class="c7n-upload c7n-upload-select c7n-upload-select-text"
       style="display:"
     />
     <div
-      class="ant-upload-list ant-upload-list-text"
+      class="c7n-upload-list c7n-upload-list-text"
     />
   </span>
   <button
-    class="ant-btn upload-demo-start ant-btn-primary ant-btn-flat"
+    class="c7n-btn upload-demo-start c7n-btn-primary c7n-btn-flat"
     disabled=""
     type="button"
   >
@@ -428,7 +428,7 @@ exports[`renders ./components/upload/demo/upload-manually.md correctly 1`] = `
       Start Upload
     </span>
     <div
-      class="ant-ripple-wrapper"
+      class="c7n-ripple-wrapper"
     />
   </button>
 </div>

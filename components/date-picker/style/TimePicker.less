@@ -1,7 +1,7 @@
 .@{calendar-timepicker-prefix-cls} {
   position: absolute;
   width: 100%;
-  top: 40px;
+  top: .4rem;
   background-color: @component-background;
 
   &-panel {
@@ -52,7 +52,7 @@
     box-sizing: border-box;
     overflow: hidden;
     position: relative; // Fix chrome weird render bug
-    height: 226px;
+    height: 2.26rem;
 
     &:hover {
       overflow-y: auto;
@@ -73,7 +73,7 @@
       margin: 0;
       padding: 0;
       width: 100%;
-      max-height: 206px;
+      max-height: 2.06rem;
     }
 
     li {
@@ -82,8 +82,8 @@
       box-sizing: content-box;
       margin: 0;
       width: 100%;
-      height: 24px;
-      line-height: 24px;
+      height: .24rem;
+      line-height: .24rem;
       cursor: pointer;
       user-select: none;
       transition: background 0.3s ease;
@@ -91,7 +91,7 @@
 
     li:last-child:after {
       content: '';
-      height: 202px;
+      height: 2.02rem;
       display: block;
     }
 
@@ -116,11 +116,11 @@
 
 .@{calendar-prefix-cls}-time {
   .@{calendar-prefix-cls}-day-select {
-    padding: 0 2px;
+    padding: 0 .02rem;
     font-weight: 500;
     display: inline-block;
     color: @heading-color;
-    line-height: 34px;
+    line-height: .34rem;
   }
 
   .@{calendar-prefix-cls}-footer {
@@ -138,7 +138,7 @@
 
     .@{calendar-prefix-cls}-time-picker-btn {
       display: inline-block;
-      margin-right: 8px;
+      margin-right: .08rem;
 
       &-disabled {
         color: @disabled-color;

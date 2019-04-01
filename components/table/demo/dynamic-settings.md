@@ -42,7 +42,7 @@ const columns = [{
       <Divider type="vertical" />
       <a href="#">Delete</a>
       <Divider type="vertical" />
-      <a href="#" className="ant-dropdown-link">
+      <a href="#" className="c7n-dropdown-link">
         More actions <Icon type="down" />
       </a>
     </span>
@@ -155,7 +155,7 @@ class Demo extends React.Component {
             <FormItem label="Size">
               <Radio.Group size="default" value={state.size} onChange={this.handleSizeChange}>
                 <Radio.Button value="default">Default</Radio.Button>
-                <Radio.Button value="middle">Middle</Radio.Button>
+                <Radio.Button value="large">Large</Radio.Button>
                 <Radio.Button value="small">Small</Radio.Button>
               </Radio.Group>
             </FormItem>
@@ -185,7 +185,7 @@ ReactDOM.render(<Demo />, mountNode);
 .components-table-demo-control-bar {
   margin-bottom: 10px;
 }
-.components-table-demo-control-bar .ant-form-item {
+.components-table-demo-control-bar .c7n-form-item {
   margin-right: 16px;
   margin-bottom: 8px;
 }

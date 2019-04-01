@@ -1,52 +1,52 @@
 @import "../../style/themes/default";
 @import "../../style/mixins/index";
 
-@select-prefix-cls: ~"@{ant-prefix}-select";
-@icon-select-prefix-cls: ~"@{ant-prefix}-icon-select";
+@select-prefix-cls: ~"@{c7n-prefix}-select";
+@icon-select-prefix-cls: ~"@{c7n-prefix}-icon-select";
 
 .@{icon-select-prefix-cls} {
-  i.icon {
+  i.@{iconfont-css-prefix} {
     vertical-align: text-bottom;
   }
   &-dropdown {
-    min-width: 512px;
+    min-width: 5.12rem;
     .@{select-prefix-cls}-dropdown-menu {
-      max-height: 300px;
+      max-height: 3rem;
       i {
-        font-size: 30px;
+        font-size: .3rem;
         width: 100%;
         text-align: center;
-        margin-top: 5px;
+        margin-top: .05rem;
         display: inline-block;
       }
       .text {
         text-align: center;
         text-overflow: ellipsis;
-        line-height: 18px;
+        line-height: .18rem;
         overflow: hidden;
-        margin-bottom: 5px;
+        margin-bottom: .05rem;
         display: block;
       }
       li {
-        padding: 0 5px !important;
+        padding: 0 .05rem !important;
       }
     }
     .@{select-prefix-cls}-dropdown-filter + div > .@{select-prefix-cls}-dropdown-menu li {
-      width: 85px;
-      line-height: 28px;
+      width: .85rem;
+      line-height: .28rem;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      padding: 0 12px;
-      margin: 0 7px;
+      padding: 0 .12rem;
+      margin: 0 .07rem;
       cursor: pointer;
       display: inline-block;
-      i.icon {
+      i.@{iconfont-css-prefix} {
         vertical-align: text-bottom;
       }
     }
     .@{select-prefix-cls}-dropdown-footer {
-        text-align: right;
+      text-align: right;
     }
   }
 }

@@ -1,4 +1,6 @@
-const availablePrefixs = ['moz', 'ms', 'webkit'];
+import noop from 'lodash/noop';
+
+const availablePrefixes = ['moz', 'ms', 'webkit'];
 
 function requestAnimationFramePolyfill() {
   let lastTime = 0;
@@ -13,17 +15,16 @@ function requestAnimationFramePolyfill() {
 
 export default function getRequestAnimationFrame() {
   if (typeof window === 'undefined') {
-    return () => {};
+    return noop;
   }
   if (window.requestAnimationFrame) {
-    // https://github.com/vuejs/vue/issues/4465
-    return window.requestAnimationFrame.bind(window);
+    return requestAnimationFrame;
   }
 
-  const prefix = availablePrefixs.filter(key => `${key}RequestAnimationFrame` in window)[0];
+  const prefix = availablePrefixes.filter(key => `${key}RequestAnimationFrame` in window)[0];
 
   return prefix
-    ? (window as any)[`${prefix}RequestAnimationFrame`]
+    ? window[`${prefix}RequestAnimationFrame`]
     : requestAnimationFramePolyfill();
 }
 
@@ -32,9 +33,9 @@ export function cancelRequestAnimationFrame(id: number) {
     return null;
   }
   if (window.cancelAnimationFrame) {
-    return window.cancelAnimationFrame(id);
+    return cancelAnimationFrame(id);
   }
-  const prefix = availablePrefixs.filter(key =>
+  const prefix = availablePrefixes.filter(key =>
     `${key}CancelAnimationFrame` in window || `${key}CancelRequestAnimationFrame` in window,
   )[0];
 

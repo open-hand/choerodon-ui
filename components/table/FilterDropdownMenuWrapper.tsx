@@ -1,7 +1,7 @@
-import * as React from 'react';
+import React, { MouseEventHandler } from 'react';
 
 export interface FilterDropdownMenuWrapperProps {
-  onClick?: React.MouseEventHandler<any>;
+  onClick?: MouseEventHandler<any>;
   children?: any;
   className?: string;
 }

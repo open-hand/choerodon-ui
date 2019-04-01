@@ -7,14 +7,14 @@ exports[`renders ./components/affix/demo/basic.md correctly 1`] = `
       class=""
     >
       <button
-        class="ant-btn ant-btn-primary ant-btn-flat"
+        class="c7n-btn c7n-btn-primary c7n-btn-flat"
         type="button"
       >
         <span>
           Affix top
         </span>
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </div>
@@ -25,14 +25,14 @@ exports[`renders ./components/affix/demo/basic.md correctly 1`] = `
       class=""
     >
       <button
-        class="ant-btn ant-btn-primary ant-btn-flat"
+        class="c7n-btn c7n-btn-primary c7n-btn-flat"
         type="button"
       >
         <span>
           Affix bottom
         </span>
         <div
-          class="ant-ripple-wrapper"
+          class="c7n-ripple-wrapper"
         />
       </button>
     </div>
@@ -46,14 +46,14 @@ exports[`renders ./components/affix/demo/on-change.md correctly 1`] = `
     class=""
   >
     <button
-      class="ant-btn ant-btn-flat"
+      class="c7n-btn c7n-btn-flat"
       type="button"
     >
       <span>
         120px to affix top
       </span>
       <div
-        class="ant-ripple-wrapper"
+        class="c7n-ripple-wrapper"
       />
     </button>
   </div>
@@ -72,14 +72,14 @@ exports[`renders ./components/affix/demo/target.md correctly 1`] = `
         class=""
       >
         <button
-          class="ant-btn ant-btn-primary ant-btn-flat"
+          class="c7n-btn c7n-btn-primary c7n-btn-flat"
           type="button"
         >
           <span>
             Fixed at the top of container
           </span>
           <div
-            class="ant-ripple-wrapper"
+            class="c7n-ripple-wrapper"
           />
         </button>
       </div>

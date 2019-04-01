@@ -27,7 +27,6 @@ describe('Breadcrumb', () => {
     );
   });
 
-  // https://github.com/ant-design/ant-design/issues/5015
   it('should allow Breadcrumb.Item is null or undefined', () => {
     const wrapper = render(
       <Breadcrumb>
@@ -40,7 +39,6 @@ describe('Breadcrumb', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  // https://github.com/ant-design/ant-design/issues/5542
   it('should not display Breadcrumb Item when its children is falsy', () => {
     const wrapper = render(
       <Breadcrumb>
