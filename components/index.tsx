@@ -122,4 +122,6 @@ export { default as version } from './version';
 
 export { default as IconSelect } from './icon-select';
 
+export { default as Animate } from './animate';
+
 export { default as configure } from './configure';

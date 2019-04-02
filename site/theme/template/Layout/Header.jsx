@@ -70,7 +70,7 @@ export default class Header extends React.Component {
     }
 
     location.href = location.href.replace(
-      pathname.startsWith('/') ? pathname : `/${pathname}`,
+      new RegExp(pathname.startsWith('/') ? `${pathname}$` : `/${pathname}$`),
       utils.getLocalizedPathname(pathname, !isZhCn),
     );
   };

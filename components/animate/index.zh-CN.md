@@ -25,7 +25,7 @@ transitionEnter | 子元素进入时是否展示动画 | boolean | true
 transitionAppear | 子元素出现时是否展示动画 | boolean | false
 transitionLeave | 子元素离开时是否展示动画 | boolean | true
 exclusive | 是否立即停止之前的动画 | boolean | false
-onEnd | 动画结束是的钩子 | string |
-onLeave | 子元素离开时的钩子 | string |
-onAppear | 子元素出现时的钩子 | string |
+onEnd | 动画结束是的钩子 | function |
+onLeave | 子元素离开时的钩子 | function |
+onAppear | 子元素出现时的钩子 | function |
 hiddenProp | 决定子元素是否离开的属性名 | string |
