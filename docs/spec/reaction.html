@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="An enterprise-class UI design language and React-based implementation with a set of high-quality React components, one of best React UI library for enterprises">
+    <title>Choerodon UI - A UI Design Language</title>
+    <!-- Polyfills -->
+    <!--[if IE]>
+    <script src="https://as.alipayobjects.com/g/component/??es6-shim/0.35.1/es6-sham.min.js,es6-shim/0.35.1/es6-shim.min.js"></script>
+    <![endif]-->
+    <script>
+    (function() {
+      function isLocalStorageNameSupported() {
+        var testKey = 'test';
+        var storage = window.localStorage;
+        try {
+          storage.setItem(testKey, '1');
+          storage.removeItem(testKey);
+          return true;
+        } catch (error) {
+          return false;
+        }
+      }
+
+      // 优先级提高到所有静态资源的前面，语言不对，加载其他静态资源没意义
+      var pathname = location.pathname;
+
+      function isZhCN(pathname) {
+        return /-cn\/?$/.test(pathname);
+      }
+
+      function getLocalizedPathname(path, zhCN) {
+        var pathname = path.indexOf('/') === 0 ? path : '/' + path;
+        if (!zhCN) { // to enUS
+          return /\/?index-cn/.test(pathname) ? '/' : pathname.replace('-cn', '');
+        } else if (pathname === '/') {
+          return '/index-cn';
+        } else if (pathname.endsWith('/')) {
+          return pathname.replace(/\/$/, '-cn/');
+        }
+        return pathname + '-cn';
+      }
+
+      // 兼容旧的 URL， `?locale=...`
+      var queryString = location.search;
+      if (queryString) {
+        var isZhCNConfig = queryString.indexOf('zh-CN') > -1;
+        if (isZhCNConfig && !isZhCN(pathname)) {
+          location.pathname = getLocalizedPathname(pathname, isZhCNConfig);
+        }
+      }
+
+      // 首页无视链接里面的语言设置 https://github.com/ant-design/ant-design/issues/4552
+      if (isLocalStorageNameSupported() && (pathname === '/' || pathname === '/index-cn')) {
+        var lang = (window.localStorage && localStorage.getItem('locale')) || ((navigator.language || navigator.browserLanguage).toLowerCase() === 'zh-cn' ? 'zh-CN' : 'en-US');
+        // safari is 'zh-cn', while other browser is 'zh-CN';
+        if ((lang === 'zh-CN') !== isZhCN(pathname)) {
+          location.pathname = getLocalizedPathname(pathname, lang === 'zh-CN');
+        }
+      }
+      document.documentElement.className += isZhCN(pathname) ? 'zh-cn' : 'en-us';
+
+      if (!window.Intl) {
+        var intlPath = 'https://as.alipayobjects.com/g/component/intl/1.0.1/??Intl.min.js';
+        if (isZhCN(pathname)) {
+          intlPath += ',locale-data/jsonp/zh.js';
+        } else {
+          intlPath += ',locale-data/jsonp/en.js';
+        }
+        document.writeln('<script src="' + intlPath + '">' + '<' + '/script>');
+      }
+      if (!window.Promise) {
+        document.writeln('<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"' + '>' + '<' + '/' + 'script>');
+      }
+    })();
+  </script>
+  <link rel="icon" href="http://choerodon.io/img/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" type="text/css" href="/choerodon-ui/index-1.css" />
+  <link rel="stylesheet" type="text/css" href="/choerodon-ui/index-2.css" />
+  <link rel="stylesheet" type="text/css" href="/choerodon-ui/index-3.css" />
+  <link rel="stylesheet/less" type="text/css" href="/choerodon-ui/color.less" />
+  <style id="nprogress-style">
+    #nprogress {
+      display: none
+    }
+  </style>
+  <!--[if lte IE 10]>
+  <script
+    src="https://as.alipayobjects.com/g/component/??console-polyfill/0.2.2/index.js,media-match/2.0.2/media.match.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<div id="react-content">
+  <div class="page-wrapper" data-reactroot=""><header id="header" class="clearfix"><div class="c7n-row"><div class="c7n-col-xs-24 c7n-col-sm-24 c7n-col-md-5 c7n-col-lg-5 c7n-col-xl-5 c7n-col-xxl-4"><a id="logo" href="/"><img alt="logo" src="/choerodon-ui/d117ad889f12e65bc4c682579d4e9dd7.svg"/></a></div><div class="c7n-col-xs-0 c7n-col-sm-0 c7n-col-md-18 c7n-col-lg-19 c7n-col-xl-19 c7n-col-xxl-20"><button type="button" class="c7n-btn header-lang-button c7n-btn-sm c7n-btn-background-ghost c7n-btn-flat"><span>中文</span><div class="c7n-ripple-wrapper"></div></button><div class="c7n-select-sm version c7n-select c7n-select-has-value c7n-select-enabled"><div class="c7n-select-selection
+            c7n-select-selection--single" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="false" tabindex="0"><div class="c7n-select-selection__rendered"><div class="c7n-select-selection-selected-value" title="0.6.0" style="opacity:1">0.6.0</div><span class="c7n-select-arrow" style="user-select:none;-webkit-user-select:none" unselectable="unselectable"><i class="icon icon-arrow_drop_down"></i><b></b></span></div></div><div class="c7n-select-underline"><span class="c7n-select-ripple"></span></div></div><ul class="c7n-menu menu-site c7n-menu-root c7n-menu-horizontal" role="menu" aria-activedescendant="" id="nav" tabindex="0"><li class="c7n-menu-item" role="menuitem" aria-selected="false"><a href="/"><span>Home</span></a><div class="c7n-ripple-wrapper"></div></li><li class="c7n-menu-item" role="menuitem" aria-selected="false"><a href="/docs/react/introduce"><span>Components</span></a><div class="c7n-ripple-wrapper"></div></li></ul></div></div><style>
+    #header .c7n-select-selection {
+      height: 24px;
+      padding-top: 0;
+    }
+  </style></header><div class="main-wrapper"><div class="c7n-row"><div class="main-menu c7n-col-xs-24 c7n-col-sm-24 c7n-col-md-24 c7n-col-lg-6 c7n-col-xl-5 c7n-col-xxl-4"><ul class="c7n-menu aside-container menu-site c7n-menu-root c7n-menu-inline" role="menu" aria-activedescendant="" tabindex="0"><li class="c7n-menu-submenu c7n-menu-submenu-inline c7n-menu-submenu-open c7n-menu-submenu-selected" role="menuitem"><div style="padding-left:40px" class="c7n-menu-submenu-title" aria-expanded="true" aria-owns="Principles$Menu" aria-haspopup="true"><h4>Principles</h4><i class="c7n-menu-submenu-arrow"></i></div><ul id="Principles$Menu" class="c7n-menu  c7n-menu-sub c7n-menu-inline" role="menu"><li class="c7n-menu-item c7n-menu-item-selected" role="menuitem" aria-selected="true" style="padding-left:80px"><a href="/docs/spec/reaction"><span>React Immediately</span></a><div class="c7n-ripple-wrapper"></div></li></ul></li></ul></div><div class="main-container c7n-col-xs-24 c7n-col-sm-24 c7n-col-md-24 c7n-col-lg-18 c7n-col-xl-19 c7n-col-xxl-20"><article class="markdown"><h1>React Immediately<a class="edit-button" href="https://github.com/choerodon/choerodon-ui/edit/master/docs/spec/reaction.en-US.md" target="_blank" rel="noopener noreferrer"><i class="icon icon-edit"></i></a></h1><section class="markdown"><p>Invitations are powerful because they directly address discoverability and provide feedback before an interaction happens. Transitions are useful because they provide visual feedback during an interaction. But another class of feedback exists. It is the feedback that happens immediately after each interaction with the system, an immediate reaction paired with the user&#x27;s action.</p><p>While we can&#x27;t literally extend Newton&#x27;s law to the world of user interfaces, we certainly can apply this principle to the way we should interact with users. When users click on a button, they expect the button to depress. When they type in a field, they expect to see characters show up in the text box. When they make a mistake, they want the application to tell them where they goofed.</p><p>While there is a possibility of too much feedback (or, more accurately, too much of the wrong feedback—a concept we will discuss in the upcoming chapters), a system with little or no feedback feels sluggish and thickheaded.</p><blockquote><p><strong> Newton&#x27;s Third Law of Motion </strong>: For every action, there is an equal and opposite reaction, from Wikipedia.</p></blockquote></section><div class="toc-affix"><div class=""><ul class="toc"><li><a class="bisheng-toc-h2" href="#Lookup-Patterns" title="Lookup Patterns">Lookup Patterns</a></li><li><a class="bisheng-toc-h2" href="#Live-Suggest" title="Live Suggest">Live Suggest</a></li></ul></div></div><section class="markdown"><h2 id="Lookup-Patterns"><span>Lookup Patterns</span><a href="#Lookup-Patterns" class="anchor">#</a></h2><div class="preview-image-boxes clearfix"><div class="preview-image-box"><div class="preview-image-wrapper"><img class="preview-img" src="https://gw.alipayobjects.com/zos/rmsportal/XlqFYhYiZtWFNImtRElR.png" alt="example of Certain Category"/></div><div class="preview-image-title">example of Certain Category</div><div class="preview-image-description">The keyword of the user query is only displayed in three categories, Topics, Questions and Articles.</div></div></div><div class="preview-image-boxes clearfix"><div class="preview-image-box"><div class="preview-image-wrapper"><img class="preview-img" src="https://gw.alipayobjects.com/zos/rmsportal/czfJRLltwXcsTLlTpytV.png" alt="example of Uncertain Category"/></div><div class="preview-image-title">example of Uncertain Category</div><div class="preview-image-description">The number of categories the keyword of the user query belongs to is uncertain.</div></div></div><p>Auto Complete: As the user types input into a field, a drop-down menu of matching values is displayed.
+Depending on the categories of search results, it can be divided into two types, Certain Category and Uncertain Category.</p><p><br/></p><div class="preview-image-boxes clearfix"><div class="preview-image-box"><div class="preview-image-wrapper"><img class="preview-img" src="https://gw.alipayobjects.com/zos/rmsportal/clFLKIWTYfHwIiOCUNbw.png" alt="example of Live Search"/></div><div class="preview-image-title">example of Live Search</div><div class="preview-image-description">When the user type a search value, the system instantly displays the search results.</div></div></div><p>Live Suggest: Live Suggest provides real-time search term suggestions for creating a search.</p><p><br/></p><hr/><h2 id="Live-Suggest"><span>Live Suggest</span><a href="#Live-Suggest" class="anchor">#</a></h2><div class="preview-image-boxes clearfix"><div class="preview-image-box"><div class="preview-image-wrapper"><img class="preview-img" src="https://gw.alipayobjects.com/zos/rmsportal/koYsOzKwTcHvjpZULpov.png" alt="example of Live Preview"/></div><div class="preview-image-title">example of Live Preview</div><div class="preview-image-description">Depending on the type of the input from the user, the system provides instant feedback on password strength and validation.</div></div></div><p>Live Preview: A Live Preview gives the users a glimpse beforehand of how the application will interpret their input once submitted.</p><blockquote><p>Note: An ounce of prevention is worth a pound of cure. Use Live Previews to prevent errors.</p></blockquote><p><br/></p><p>Progressive Disclosure: When users are faced with a series of steps, it is often best to provide hints only when they are needed, instead of cluttering the interface by displaying all the hints at once. Learn more cases on <a href="/docs/spec/stay#Process-Flows">Stay on the Page/Progressive Disclosure</a>。</p><p><br/></p><div class="preview-image-boxes clearfix"><div class="preview-image-box"><div class="preview-image-wrapper"><img class="preview-img" src="https://gw.alipayobjects.com/zos/rmsportal/cnAnCxfzSwUJeeXIUOIC.png" alt="example of Loading Button"/></div><div class="preview-image-title">example of Loading Button</div><div class="preview-image-description"></div></div></div><div class="preview-image-boxes clearfix"><div class="preview-image-box"><div class="preview-image-wrapper"><img class="preview-img" src="https://gw.alipayobjects.com/zos/rmsportal/agFZSlgdSOyCznCGXGcE.png" alt="example of Loading Table"/></div><div class="preview-image-title">example of Loading Table</div><div class="preview-image-description"></div></div></div><div class="preview-image-boxes clearfix"><div class="preview-image-box"><div class="preview-image-wrapper"><img class="preview-img" src="https://gw.alipayobjects.com/zos/rmsportal/tVzqUunjctTxvSMmhSVv.png" alt="example of Loading List"/></div><div class="preview-image-title">example of Loading List</div><div class="preview-image-description"></div></div></div><div class="preview-image-boxes clearfix"><div class="preview-image-box"><div class="preview-image-wrapper"><img class="preview-img" src="https://gw.alipayobjects.com/zos/rmsportal/igxFnUdRHWaBXtTePuFf.png" alt="example of Loading Page"/></div><div class="preview-image-title">example of Loading Page</div><div class="preview-image-description"></div></div></div><p>Progress Indicator: Progress Indicators keep a conversation going with the user when the rest of the interface is currently unavailable. Common Progress Indicators, such as Loading Button, Loading Table, Loading List and Loading Page, can be displayed respectively according to the frequency and importance of operation.</p><p><br/></p><div class="preview-image-boxes clearfix"><div class="preview-image-box"><div class="preview-image-wrapper"><img class="preview-img" src="https://gw.alipayobjects.com/zos/rmsportal/HTDCbBvlFKwsDwmcgzcw.png" alt="example of Click Refresh"/></div><div class="preview-image-title">example of Click Refresh</div><div class="preview-image-description"></div></div></div><p>Click Refresh: Click Refresh notifies the user of fresh content and provides button or tool to refresh.</p><p><br/></p><div class="preview-image-boxes clearfix"><div class="preview-image-box"><div class="preview-image-wrapper"><img class="preview-img" src="https://gw.alipayobjects.com/zos/rmsportal/kpUhmRudNWDxNzgUddEp.png" alt="example of Periodic Refresh"/></div><div class="preview-image-title">example of Periodic Refresh</div><div class="preview-image-description">The added list item turns to be highlighted and get back to normal in a few seconds.</div></div></div><p>Periodic Refresh: Periodic Refresh brings in fresh content on a periodic basis without direct user interaction.</p></section><section class="markdown api-container"></section></article></div></div><div class="c7n-row"><div class="c7n-col-xs-24 c7n-col-sm-24 c7n-col-md-24 c7n-col-lg-18 c7n-col-lg-offset-6 c7n-col-xl-19 c7n-col-xl-offset-5 c7n-col-xxl-20 c7n-col-xxl-offset-4"><section class="prev-next-nav"></section></div></div></div><footer id="footer"><div class="footer-wrap"><div class="c7n-row"><div class="c7n-col-xs-24 c7n-col-sm-24 c7n-col-md-6"><div class="footer-center"><h2><span>Resources</span></h2><div><a href="http://choerodon.io/">Choerodon</a></div></div></div><div class="c7n-col-xs-24 c7n-col-sm-24 c7n-col-md-6"><div class="footer-center"><h2><span>Help</span></h2><div><a target="_blank " href="https://github.com/choerodon/choerodon-ui">GitLab</a></div><div><a href="/changelog"><span>Change Log</span></a></div><div><a target="_blank" rel="noopener noreferrer" href="https://github.com/choerodon/choerodon-ui/issues"><span>Issues</span></a></div></div></div></div></div><div class="c7n-row bottom-bar"><div class="c7n-col-sm-24 c7n-col-md-4"></div><div class="c7n-col-sm-24 c7n-col-md-20"><span style="margin-right:12px">Copyright@ The choerodon Author. All rights reserved.</span></div></div></footer></div>
+</div>
+<script src="/choerodon-ui/common.js"></script>
+<script src="/choerodon-ui/index.js"></script>
+</body>
+</html>

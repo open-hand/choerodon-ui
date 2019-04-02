@@ -23,14 +23,16 @@
           return false;
         }
       }
+
       // 优先级提高到所有静态资源的前面，语言不对，加载其他静态资源没意义
       var pathname = location.pathname;
 
       function isZhCN(pathname) {
         return /-cn\/?$/.test(pathname);
       }
+
       function getLocalizedPathname(path, zhCN) {
-        var pathname = path.startsWith('/') ? path : '/' + path;
+        var pathname = path.indexOf('/') === 0 ? path : '/' + path;
         if (!zhCN) { // to enUS
           return /\/?index-cn/.test(pathname) ? '/' : pathname.replace('-cn', '');
         } else if (pathname === '/') {
@@ -46,7 +48,7 @@
       if (queryString) {
         var isZhCNConfig = queryString.indexOf('zh-CN') > -1;
         if (isZhCNConfig && !isZhCN(pathname)) {
-          location.pathname = getLocalizedPathname(pathname, isZhCNConfig)
+          location.pathname = getLocalizedPathname(pathname, isZhCNConfig);
         }
       }
 
@@ -59,61 +61,45 @@
         }
       }
       document.documentElement.className += isZhCN(pathname) ? 'zh-cn' : 'en-us';
-    })()
-    </script>
-    <link rel="icon" href="http://choerodon.io/img/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" type="text/css" href="/choerodon-ui/index-1.css"/>
-    <link rel="stylesheet" type="text/css" href="/choerodon-ui/index-2.css"/>
-    <link rel="stylesheet/less" type="text/css" href="/choerodon-ui/color.less"/>
-    <style id="nprogress-style">
-      #nprogress { display: none }
-    </style>
-    <!--[if lte IE 10]>
-      <script
-        src="https://as.alipayobjects.com/g/component/??console-polyfill/0.2.2/index.js,media-match/2.0.2/media.match.min.js"></script>
-    <![endif]-->
-    <script>
-    if (!window.Intl) {
-      document.writeln('<script src="https://as.alipayobjects.com/g/component/intl/1.0.1/??Intl.js,locale-data/jsonp/en.js,locale-data/jsonp/zh.js">' + '<' + '/script>');
+
+      if (!window.Intl) {
+        var intlPath = 'https://as.alipayobjects.com/g/component/intl/1.0.1/??Intl.min.js';
+        if (isZhCN(pathname)) {
+          intlPath += ',locale-data/jsonp/zh.js';
+        } else {
+          intlPath += ',locale-data/jsonp/en.js';
+        }
+        document.writeln('<script src="' + intlPath + '">' + '<' + '/script>');
+      }
+      if (!window.Promise) {
+        document.writeln('<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"' + '>' + '<' + '/' + 'script>');
+      }
+    })();
+  </script>
+  <link rel="icon" href="http://choerodon.io/img/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" type="text/css" href="/choerodon-ui/index-1.css" />
+  <link rel="stylesheet" type="text/css" href="/choerodon-ui/index-2.css" />
+  <link rel="stylesheet" type="text/css" href="/choerodon-ui/index-3.css" />
+  <link rel="stylesheet/less" type="text/css" href="/choerodon-ui/color.less" />
+  <style id="nprogress-style">
+    #nprogress {
+      display: none
     }
-    if (!window.Promise) {
-      document.writeln('<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"' + '>' + '<' + '/' + 'script>');
-    }
-    </script>
-    <!-- Hotjar Tracking Code for ant.design -->
-    <script>
-//    (function(h,o,t,j,a,r){
-//      h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-//      h._hjSettings={hjid:473408,hjsv:5};
-//      a=o.getElementsByTagName('head')[0];
-//      r=o.createElement('script');r.async=1;
-//      r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-//      a.appendChild(r);
-//    })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
-    </script>
-    <!-- Deer Tracking Code for ant.design -->
-    <script>
-//    !function(t,e,a,r,c){t.TracertCmdCache=t.TracertCmdCache||[],t[c]=window[c]||
-//      {_isInit:!0,call:function(){t.TracertCmdCache.push(arguments)},
-//      start:function(t){this.call('start',t)}},t[c].l=new Date;
-//      var n=e.createElement(a),s=e.getElementsByTagName(a)[0];
-//      n.async=!0,n.src=r,s.parentNode.insertBefore(n,s)}
-//      (window,document,'script','https://tracert.alipay.com/tracert.js','Tracert');
-//      Tracert.start({
-//        spmAPos: 'a513',
-//        spmBPos: 'b5776',
-//      });
-    </script>
-  </head>
-  <body>
-    <div id="react-content">
-      <div class="page-wrapper" data-reactroot=""><header id="header" class="clearfix"><div class="ant-row"><div class="ant-col-xs-24 ant-col-sm-24 ant-col-md-6 ant-col-lg-5 ant-col-xl-5 ant-col-xxl-4"><a id="logo" href="/choerodon-ui/index-cn"><h1>Choerodon UI</h1></a></div><div class="ant-col-xs-0 ant-col-sm-0 ant-col-md-18 ant-col-lg-19 ant-col-xl-19 ant-col-xxl-20"><button type="button" class="ant-btn header-lang-button ant-btn-sm ant-btn-background-ghost ant-btn-flat"><span>English</span><div class="ant-ripple-wrapper"></div></button><div class="ant-select-sm version ant-select ant-select-has-value ant-select-enabled"><div class="ant-select-selection
-            ant-select-selection--single" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="false" tabindex="0"><div class="ant-select-selection__rendered"><div class="ant-select-selection-selected-value" title="0.5.3" style="opacity:1">0.5.3</div><span class="ant-select-arrow" style="user-select:none;-webkit-user-select:none" unselectable="unselectable"><i class="icon icon-arrow_drop_down"></i><b></b></span></div></div><div class="ant-select-underline"><span class="ant-select-ripple"></span></div></div><ul class="ant-menu menu-site ant-menu-root ant-menu-horizontal" role="menu" aria-activedescendant="" id="nav" tabindex="0"><li class="ant-menu-item ant-menu-item-selected" role="menuitem" aria-selected="true"><a href="/choerodon-ui/index-cn"><span>首页</span></a><div class="ant-ripple-wrapper"></div></li><li class="ant-menu-item" role="menuitem" aria-selected="false"><a href="/docs/react/introduce-cn"><span>组件</span></a><div class="ant-ripple-wrapper"></div></li></ul></div></div><style>
-    #header .ant-select-selection {
+  </style>
+  <!--[if lte IE 10]>
+  <script
+    src="https://as.alipayobjects.com/g/component/??console-polyfill/0.2.2/index.js,media-match/2.0.2/media.match.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<div id="react-content">
+  <div class="page-wrapper" data-reactroot=""><header id="header" class="clearfix"><div class="c7n-row"><div class="c7n-col-xs-24 c7n-col-sm-24 c7n-col-md-5 c7n-col-lg-5 c7n-col-xl-5 c7n-col-xxl-4"><a id="logo" href="/index-cn"><img alt="logo" src="/choerodon-ui/d117ad889f12e65bc4c682579d4e9dd7.svg"/></a></div><div class="c7n-col-xs-0 c7n-col-sm-0 c7n-col-md-18 c7n-col-lg-19 c7n-col-xl-19 c7n-col-xxl-20"><button type="button" class="c7n-btn header-lang-button c7n-btn-sm c7n-btn-background-ghost c7n-btn-flat"><span>English</span><div class="c7n-ripple-wrapper"></div></button><div class="c7n-select-sm version c7n-select c7n-select-has-value c7n-select-enabled"><div class="c7n-select-selection
+            c7n-select-selection--single" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="false" tabindex="0"><div class="c7n-select-selection__rendered"><div class="c7n-select-selection-selected-value" title="0.6.0" style="opacity:1">0.6.0</div><span class="c7n-select-arrow" style="user-select:none;-webkit-user-select:none" unselectable="unselectable"><i class="icon icon-arrow_drop_down"></i><b></b></span></div></div><div class="c7n-select-underline"><span class="c7n-select-ripple"></span></div></div><ul class="c7n-menu menu-site c7n-menu-root c7n-menu-horizontal" role="menu" aria-activedescendant="" id="nav" tabindex="0"><li class="c7n-menu-item c7n-menu-item-selected" role="menuitem" aria-selected="true"><a href="/index-cn"><span>首页</span></a><div class="c7n-ripple-wrapper"></div></li><li class="c7n-menu-item" role="menuitem" aria-selected="false"><a href="/docs/react/introduce-cn"><span>组件</span></a><div class="c7n-ripple-wrapper"></div></li></ul></div></div><style>
+    #header .c7n-select-selection {
       height: 24px;
       padding-top: 0;
     }
-  </style></header><div class="main-wrapper"><div class="home-page-wrapper banner-wrapper" id="banner"><div class="banner page"></div></div><div class="home-page-wrapper page1"><div class="page"><h2>Choerodon UI <span>特性</span></h2><div><div class="ant-row"></div></div></div></div><style>
+  </style></header><div class="main-wrapper"><div class="home-page-wrapper banner-wrapper" id="banner"><div class="banner page"></div></div><div class="home-page-wrapper page1"><div class="page"><h2>Choerodon UI <span>特性</span></h2><div><div class="c7n-row"></div></div></div></div><style>
     .main-wrapper {
       padding: 0;
     }
@@ -125,8 +111,8 @@
       padding: 0 24px;
     }
     #header,
-    #header .ant-select-selection,
-    #header .ant-menu {
+    #header .c7n-select-selection,
+    #header .c7n-menu {
       background: transparent;
     }
     #header #logo {
@@ -135,12 +121,12 @@
     #header #logo h1 {
       font-size: 24px;
     }
-    #header .ant-row > div:last-child .ant-select,
-    #header .ant-row > div:last-child .ant-menu,
+    #header .c7n-row > div:last-child .c7n-select,
+    #header .c7n-row > div:last-child .c7n-menu,
     #header .nav-phone-icon {
       display: none;
     }
-    #header .ant-row > div:last-child .header-lang-button span{
+    #header .c7n-row > div:last-child .header-lang-button span{
       margin-right: 0;
       height: 64px;
       line-height: 64px;
@@ -158,7 +144,7 @@
     footer  .bottom-bar {
       border-top: none;
     }
-    footer .footer-wrap .ant-row {
+    footer .footer-wrap .c7n-row {
       width: 100%;
       max-width: 1200px;
       margin: auto;
@@ -167,13 +153,13 @@
       #footer .footer-wrap{
         padding: 40px 24px
       }
-      footer .footer-wrap .ant-row {
+      footer .footer-wrap .c7n-row {
         padding: 0;
       }
     }
-  </style></div><footer id="footer"><div class="footer-wrap"><div class="ant-row"><div class="ant-col-xs-24 ant-col-sm-24 ant-col-md-6"><div class="footer-center"><h2><span>相关资源</span></h2><div><a href="http://choerodon.io/">Choerodon</a></div><div><a href="http://ant-design.gitee.io/">Ant Design</a></div><div><a href="http://scaffold.ant.design">Scaffolds</a><span> - </span><span>脚手架市场</span></div><div><a target="_blank" rel="noopener noreferrer" href="https://github.com/dvajs/dva">dva</a> - <span>应用框架</span></div><div><a target="_blank" rel="noopener noreferrer" href="http://motion.ant.design">Ant Motion</a><span> - </span><span>设计动效</span></div><div><a target="_blank" rel="noopener noreferrer" href="http://library.ant.design/">Axure Library</a><span> - </span><span>Axure 部件库</span></div><div><a target="_blank" rel="noopener noreferrer" href="http://ux.ant.design">Ant UX</a><span> - </span><span>页面逻辑素材</span></div></div></div><div class="ant-col-xs-24 ant-col-sm-24 ant-col-md-6"><div class="footer-center"><h2><span>帮助</span></h2><div><a target="_blank " href="https://github.com/choerodon/choerodon-ui">GitLab</a></div><div><a href="/changelog"><span>更新记录</span></a></div><div><a target="_blank" rel="noopener noreferrer" href="https://github.com/choerodon/choerodon-ui/issues"><span>讨论列表</span></a></div></div></div></div></div><div class="ant-row bottom-bar"><div class="ant-col-sm-24 ant-col-md-4"></div><div class="ant-col-sm-24 ant-col-md-20"><span style="margin-right:12px">Copyright@ The choerodon Author. All rights reserved.</span></div></div></footer></div>
-    </div>
-    <script src="/choerodon-ui/common.js"></script>
-    <script src="/choerodon-ui/index.js"></script>
-  </body>
+  </style></div><footer id="footer"><div class="footer-wrap"><div class="c7n-row"><div class="c7n-col-xs-24 c7n-col-sm-24 c7n-col-md-6"><div class="footer-center"><h2><span>相关资源</span></h2><div><a href="http://choerodon.io/">Choerodon</a></div></div></div><div class="c7n-col-xs-24 c7n-col-sm-24 c7n-col-md-6"><div class="footer-center"><h2><span>帮助</span></h2><div><a target="_blank " href="https://github.com/choerodon/choerodon-ui">GitLab</a></div><div><a href="/changelog"><span>更新记录</span></a></div><div><a target="_blank" rel="noopener noreferrer" href="https://github.com/choerodon/choerodon-ui/issues"><span>讨论列表</span></a></div></div></div></div></div><div class="c7n-row bottom-bar"><div class="c7n-col-sm-24 c7n-col-md-4"></div><div class="c7n-col-sm-24 c7n-col-md-20"><span style="margin-right:12px">Copyright@ The choerodon Author. All rights reserved.</span></div></div></footer></div>
+</div>
+<script src="/choerodon-ui/common.js"></script>
+<script src="/choerodon-ui/index.js"></script>
+</body>
 </html>
