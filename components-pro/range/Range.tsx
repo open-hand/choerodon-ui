@@ -68,6 +68,7 @@ export default class Range extends NumberField<RangeProps> {
       <label {...this.getWrapperProps()}>
         <input {...this.getOtherProps()} value={this.getValue()} />
         {this.renderTrack()}
+        {this.renderFloatLabel()}
       </label>
     );
   }

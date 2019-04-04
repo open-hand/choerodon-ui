@@ -85,7 +85,7 @@
   }
 
   &:focus,
-  &-focus & {
+  &-focused & {
     .active();
   }
 
@@ -146,6 +146,10 @@
     label {
       position: relative;
       display: block;
+      z-index: 1;
+    }
+    .@{field-label-prefix-cls} {
+      z-index: -1;
     }
   }
 
@@ -208,7 +212,7 @@
   }
 
   &-wrapper:hover &-inner-button,
-  &-focus &-inner-button {
+  &-focused &-inner-button {
     opacity: 1;
     z-index: 2;
     &-clear-button {
@@ -217,7 +221,7 @@
   }
 
   &-wrapper:hover &-suffix-button &-suffix,
-  &-focus&-suffix-button &-suffix {
+  &-focused&-suffix-button &-suffix {
     opacity: 1;
   }
 
@@ -358,7 +362,51 @@
     width: 100%;
   }
 
+  &:-webkit-autofill {
+    box-shadow: 0 0 0 10rem @input-wrapper-bg inset;
+  }
+
   .validation;
+  .input-underline;
+  .float-label;
+}
+
+.input-underline() {
+  // underline
+  //default underline
+  &-underline {
+    position: absolute;
+    bottom: -@border-width-base;
+    height: 0;
+    width: 100%;
+    border-bottom: @border-width-base @border-style-base @input-baseline-color;
+  }
+
+  &-ripple {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    transform-origin: 50%;
+    transform: scaleX(.5);
+    opacity: 0;
+    border-bottom: .02rem @border-style-base @primary-color;
+    transition: border-color 300ms cubic-bezier(0.55, 0, 0.55, 0.2);
+    height: 0;
+  }
+  //disabled underline
+  &-disabled &-underline {
+    border-bottom: @border-width-base dotted rgba(0, 0, 0, 0.42);
+  }
+  // focused underline
+  &-focused &-underline &-ripple {
+    opacity: 1;
+    transform: scaleX(1);
+    transition: transform 300ms cubic-bezier(0.25, 0.8, 0.25, 1), opacity 100ms cubic-bezier(0.25, 0.8, 0.25, 1), border-color 300ms cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+
+  &-invalid &-underline {
+    border-color: @error-color;
+  }
 }
 
 .tag-block() {

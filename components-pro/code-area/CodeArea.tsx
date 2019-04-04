@@ -104,14 +104,17 @@ export default class CodeArea extends FormField<CodeAreaProps> {
       this.cmOptions.readOnly = this.isDisabled() ? 'nocursor' : this.isReadOnly();
       return (
         <div {...this.getWrapperProps()}>
-          <CodeMirror
-            {...this.getOtherProps()}
-            value={this.getText()}
-            options={this.cmOptions}
-            onBeforeChange={this.handleBeforeChange}
-            onBlur={this.handleCodeMirrorBlur}
-            editorDidMount={this.handleCodeMirrorDidMount}
-          />
+          <label>
+            <CodeMirror
+              {...this.getOtherProps()}
+              value={this.getText()}
+              options={this.cmOptions}
+              onBeforeChange={this.handleBeforeChange}
+              onBlur={this.handleCodeMirrorBlur}
+              editorDidMount={this.handleCodeMirrorDidMount}
+            />
+            {this.renderFloatLabel()}
+          </label>
         </div>
       );
     }

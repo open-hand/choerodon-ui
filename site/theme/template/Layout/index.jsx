@@ -8,7 +8,6 @@ import { localeContext, ModalContainer } from 'choerodon-ui/pro';
 import moment from 'moment';
 import { configure } from 'mobx';
 import Header from './Header';
-import Footer from './Footer';
 import enLocale from '../../en-US';
 import cnLocale from '../../zh-CN';
 import * as utils from '../utils';
@@ -60,13 +59,6 @@ export default class Layout extends React.Component {
   }
 
   componentDidMount() {
-    const { router } = this.context;
-    if (typeof window.ga !== 'undefined') {
-      router.listen((loc) => {
-        window.ga('send', 'pageview', loc.pathname + loc.search);
-      });
-    }
-
     const nprogressHiddenStyle = document.getElementById('nprogress-style');
     if (nprogressHiddenStyle) {
       this.timer = setTimeout(() => {
@@ -98,7 +90,6 @@ export default class Layout extends React.Component {
           <div className="page-wrapper">
             <Header {...restProps} />
             {children}
-            <Footer {...restProps} />
             <ModalContainer location={location} />
           </div>
         </LocaleProvider>

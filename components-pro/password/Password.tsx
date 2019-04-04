@@ -65,7 +65,7 @@ export default class Password extends TextField<PasswordProps> {
   @autobind
   handleReveal(e) {
     e.preventDefault();
-    if (!this.isFocus) {
+    if (!this.isFocused) {
       this.focus();
     }
     const target = this.element;

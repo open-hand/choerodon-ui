@@ -9,8 +9,8 @@ const page1Data = [
     imgCls: 'feature-1',
     name: '优雅美观',
     nameEn: 'Elegant and beautiful',
-    desc: '基于 Ant Design 体系精心设计',
-    descEn: 'Designed based on Ant Design system',
+    desc: '基于 Material Design 体系精心设计',
+    descEn: 'Designed based on Material Design system',
   },
   {
     imgCls: 'feature-2',

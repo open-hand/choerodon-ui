@@ -1,0 +1,31 @@
+.show-error-motion(@className, @keyframeName, @duration: @animation-duration-slow) {
+  .make-motion(@className, @keyframeName, @duration);
+  .@{className}-enter,
+  .@{className}-appear {
+    opacity: 0;
+    animation-timing-function: @ease-in-out;
+  }
+  .@{className}-leave {
+    animation-timing-function: @ease-in-out;
+  }
+}
+
+.show-error-motion(show-error, c7nShowError, .15s);
+
+@keyframes c7nShowErrorIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-.05rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes c7nShowErrorOut {
+  to {
+    opacity: 0;
+    transform: translateY(-.05rem);
+  }
+}

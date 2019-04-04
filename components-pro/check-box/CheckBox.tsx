@@ -79,7 +79,7 @@ export class CheckBox<T extends CheckBoxProps> extends Radio<T & CheckBoxProps> 
   constructor(props, context) {
     super(props, context);
     runInAction(() => {
-      this.checked = this.props.defaultChecked || false;
+      this.value = this.props.defaultChecked ? this.checkedValue : this.unCheckedValue;
     });
   }
 
@@ -116,13 +116,13 @@ export class CheckBox<T extends CheckBoxProps> extends Radio<T & CheckBoxProps> 
     if (indeterminate) {
       return false;
     }
-    const { name, dataSet } = this;
+    const { name, dataSet, checkedValue } = this;
     if (dataSet && name) {
-      return this.getValues().indexOf(this.checkedValue) !== -1;
+      return this.getValues().indexOf(checkedValue) !== -1;
     } else if (checked !== void 0) {
       return checked;
     } else {
-      return this.checked;
+      return this.value === checkedValue;
     }
   }
 
@@ -161,7 +161,6 @@ export class CheckBox<T extends CheckBoxProps> extends Radio<T & CheckBoxProps> 
   @action
   setChecked(checked) {
     this.setValue(checked ? this.checkedValue : this.unCheckedValue);
-    this.checked = checked;
   }
 
   getOldValue() {

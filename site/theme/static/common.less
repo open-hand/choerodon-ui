@@ -5,10 +5,10 @@ body {
 
 body {
   font-family: @font-family;
-  line-height: 1.5;
+  line-height: @line-height-base;
   color: @site-text-color;
-  font-size: 14px;
-  background: #fff;
+  font-size: @font-size-base;
+  background: @body-background;
   transition: background 1s cubic-bezier(0.075, 0.82, 0.165, 1);
   overflow-x: hidden;
 }
@@ -17,7 +17,7 @@ a {
   transition: color .3s ease;
   &:focus {
     text-decoration: underline;
-    text-decoration-skip: ink;
+    text-decoration-skip-ink: auto;
   }
 }
 
@@ -39,11 +39,21 @@ a {
 
 .main-menu {
   z-index: 1;
+
+  &-inner {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    max-height: 100vh;
+  }
+
+  &:hover &-inner {
+    overflow-y: auto;
+  }
 }
 
 .aside-container {
-  padding-bottom: 50px;
-  font-family: Lato, @font-family;
+  padding-bottom: 48px;
+  font-family: Avenir, @font-family, sans-serif;
 
   &.c7n-menu-inline .c7n-menu-submenu-title h4,
   &.c7n-menu-inline > .c7n-menu-item,
@@ -63,7 +73,7 @@ a {
 
   .menu-item-link-outside {
     position: relative;
-    .anticon {
+    .@{iconfont-css-prefix} {
       font-size: 12px;
       color: @primary-color;
       opacity: 0;
@@ -72,7 +82,7 @@ a {
       top: 16px;
       transition: all .3s;
     }
-    &:hover .anticon {
+    &:hover .@{iconfont-css-prefix} {
       opacity: 1;
     }
   }
@@ -91,7 +101,7 @@ a {
 
 .outside-link:after {
   content: '\e691';
-  font-family: 'anticon';
+  font-family: 'icon';
   margin-left: 5px;
   font-size: 12px;
   color: #aaa;
@@ -115,6 +125,7 @@ a {
   transition: transform .3s @ease-in-out-circ;
   height: 100%;
 }
+
 .page-wrapper {
   overflow: hidden;
   padding: 0;

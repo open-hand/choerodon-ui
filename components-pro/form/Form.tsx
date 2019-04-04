@@ -22,6 +22,16 @@ import { defaultColumns, defaultLabelLayout, defaultLabelWidth, FIELD_SUFFIX, ge
 import exception from '../_util/exception';
 import EventManager from '../_util/EventManager';
 
+/**
+ * 表单name生成器
+ */
+const NameGen: IterableIterator<string> = function* (start: number) {
+  while (true) {
+    start += 1;
+    yield `form-${start}`;
+  }
+}(0);
+
 export type LabelWidth = number | number[];
 
 export type LabelWidthType = LabelWidth | { [key in ResponsiveKeys]: LabelWidth };
@@ -116,7 +126,7 @@ export interface FormProps extends DataSetComponentProps {
 
 const labelWidthPropTypes = PropTypes.oneOfType([PropTypes.number, PropTypes.arrayOf(PropTypes.number)]);
 const labelAlignPropTypes = PropTypes.oneOf([LabelAlign.left, LabelAlign.center, LabelAlign.right]);
-const labelLayoutPropTypes = PropTypes.oneOf([LabelLayout.horizontal, LabelLayout.vertical, LabelLayout.placeholder]);
+const labelLayoutPropTypes = PropTypes.oneOf([LabelLayout.horizontal, LabelLayout.vertical, LabelLayout.placeholder, LabelLayout.float]);
 
 @observer
 export default class Form extends DataSetComponent<FormProps> {
@@ -173,7 +183,7 @@ export default class Form extends DataSetComponent<FormProps> {
     ]),
     /**
      * 标签位置
-     * 可选值： 'horizontal' | 'vertical' | 'placeholder' | 'none'
+     * 可选值： 'horizontal' | 'vertical' | 'placeholder' | 'float' | 'none'
      */
     labelLayout: PropTypes.oneOfType([
       labelLayoutPropTypes,
@@ -242,6 +252,8 @@ export default class Form extends DataSetComponent<FormProps> {
   @observable derivedContext: FormContextValue;
 
   resizeEvent: EventManager = new EventManager(typeof window !== 'undefined' && window);
+
+  name = NameGen.next().value;
 
   @computed
   get dataSet(): DataSet | undefined {
@@ -398,10 +410,14 @@ export default class Form extends DataSetComponent<FormProps> {
       'labelWidth',
       'labelAlign',
       'labelLayout',
+      'columns',
       'axios',
     ]);
     otherProps.onSubmit = this.handleSubmit;
     otherProps.onReset = this.handleReset;
+    if (!otherProps.name) {
+      otherProps.name = this.name;
+    }
     return otherProps;
   }
 
@@ -555,7 +571,7 @@ export default class Form extends DataSetComponent<FormProps> {
   async handleSubmit(e) {
     e.preventDefault();
     e.persist();
-    if (await this.reportValidity()) {
+    if (await this.checkValidity()) {
       const {
         target,
         action,
@@ -598,11 +614,6 @@ export default class Form extends DataSetComponent<FormProps> {
 
   checkValidity() {
     return Promise.all(this.getFields().map((field) => field.checkValidity()))
-      .then(results => results.every(result => result));
-  }
-
-  reportValidity() {
-    return Promise.all(this.getFields().map((field) => field.reportValidity()))
       .then(results => results.every(result => result));
   }
 

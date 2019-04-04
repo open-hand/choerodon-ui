@@ -23,6 +23,10 @@ function editorRenderer(record) {
   return record.status === 'add' ? <TextField /> : null;
 }
 
+function sexIdRenderer({ record }) {
+  return record.getField('sex').getLookupData().codeValueId;
+}
+
 function handleUserDSLoad({ dataSet }) {
   const first = dataSet.get(0);
   if (first) {
@@ -247,6 +251,7 @@ class App extends React.Component {
         <Column name="codeMultiple" editor width={150} />
         <Column name="codeMultiple_code" width={150} />
         <Column name="sex" editor width={150} />
+        <Column header="性别id" renderer={sexIdRenderer} />
         <Column name="sexMultiple" editor width={150} />
         <Column name="accountMultiple" editor width={150} />
         <Column name="date.startDate" editor width={150} />

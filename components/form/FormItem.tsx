@@ -146,16 +146,16 @@ export default class FormItem extends Component<FormItemProps, any> {
     const prefixCls = this.getPrefixCls();
     const help = this.getHelpMsg();
     const children = help ? (
-      <div className={`${prefixCls}-explain`} key="help">
+      <div className={`${prefixCls}-explain`} key="error">
         {help}
       </div>
     ) : null;
     return (
       <Animate
-        transitionName="show-help"
+        transitionName="show-error"
         component=""
         transitionAppear
-        key="help"
+        key="error"
         onEnd={this.onHelpAnimEnd}
       >
         {children}

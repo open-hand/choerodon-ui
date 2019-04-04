@@ -1,4 +1,4 @@
-import Set from 'core-js/es6/set';
+import Set from 'core-js/library/fn/set';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';

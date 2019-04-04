@@ -137,6 +137,13 @@ export class TextField<T extends TextFieldProps> extends FormField<T & TextField
     return isEmpty(this.text) && super.isEmpty();
   }
 
+  canPlaceholderShown() {
+    if (this.hasFloatLabel && !this.isFocused) {
+      return false;
+    }
+    return true;
+  }
+
   getOtherProps() {
     const otherProps = omit(super.getOtherProps(), [
       'prefix',
@@ -148,6 +155,9 @@ export class TextField<T extends TextFieldProps> extends FormField<T & TextField
     otherProps.type = this.type;
     otherProps.maxLength = this.getProp('maxLength');
     otherProps.onKeyDown = this.handleKeyDown;
+    if (!this.canPlaceholderShown()) {
+      delete otherProps.placeholder;
+    }
     return otherProps;
   }
 
@@ -185,6 +195,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T & TextField
     const otherPrevNode = this.getOtherPrevNode();
     const otherNextNode = this.getOtherNextNode();
     const placeholderDiv = this.renderPlaceHolder();
+    const floatLabel = this.renderFloatLabel();
+    const underLine = this.renderUnderLine();
 
     return (
       <span {...this.getWrapperProps()}>
@@ -193,9 +205,11 @@ export class TextField<T extends TextFieldProps> extends FormField<T & TextField
         <label onMouseDown={this.handleMouseDown}>
           {prefix}
           {input}
+          {floatLabel}
           {button}
           {suffix}
         </label>
+        {underLine}
         {otherNextNode}
       </span>
     );
@@ -359,7 +373,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T & TextField
   }
 
   renderPlaceHolder(): ReactNode {
-    if (this.multiple || !isPlaceHolderSupport()) {
+    if ((this.multiple || !isPlaceHolderSupport()) && this.canPlaceholderShown()) {
       return this.getPlaceHolderNode();
     }
   }
@@ -409,7 +423,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T & TextField
   handleMouseDown(e) {
     if (e.target !== this.element) {
       e.preventDefault();
-      if (!this.isFocus) {
+      if (!this.isFocused) {
         this.focus();
       }
     }

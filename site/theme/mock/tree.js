@@ -99,7 +99,7 @@ if (typeof window !== 'undefined') {
       symbol: '0',
       parentId: 2,
     }, {
-      expand: true,
+      expand: false,
       functionCode: 'HR',
       icon: 'fa fa-cubes',
       id: 2,

@@ -9,10 +9,12 @@
 
 .@{select-box-prefix} {
   .validation;
+  .float-label;
   display: inline-block;
   line-height: 28 / 13;
   &-wrapper,
   &-invalid&-wrapper {
+    position: relative;
     background-color: transparent;
   }
   .@{radio-prefix-cls}-button {

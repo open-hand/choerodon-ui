@@ -1,3 +1,5 @@
+@field-label-prefix-cls: ~"@{c7n-prefix}-pro-field-label";
+
 .validation() {
 
   &-invalid &,
@@ -18,4 +20,32 @@
   // &-invalid &:focus {
   //   box-shadow: 0 0 @outline-blur-size @outline-width fade(@error-color, 20%);
   // }
+}
+
+.float-label() {
+  &-has-label .@{field-label-prefix-cls} {
+    position: absolute;
+    padding: 0;
+    top: 0;
+    color: rgba(0, 0, 0, .6);
+    transform-origin: 0 -200%;
+    transition: transform .4s cubic-bezier(.215, .61, .355, 1), color .4s cubic-bezier(.215, .61, .355, 1), background-color .4s cubic-bezier(.215, .61, .355, 1), -webkit-transform .4s cubic-bezier(.215, .61, .355, 1);
+  }
+  &-has-label .@{field-label-prefix-cls},
+  &-has-label &:focus + .@{field-label-prefix-cls},
+  &-has-label &:-webkit-autofill + .@{field-label-prefix-cls} {
+    transform: scale(.75);
+  }
+  &-has-label & {
+    border: none;
+    padding-left: 0;
+  }
+  &-has-label&-invalid {
+    background-color: @input-wrapper-bg;
+  }
+  &-empty:not(&-focused) {
+    .@{field-label-prefix-cls} {
+      transform: none;
+    }
+  }
 }

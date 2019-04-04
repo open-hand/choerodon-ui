@@ -1,4 +1,4 @@
-import React, { FormEventHandler, ReactInstance, ReactNode } from 'react';
+import React, { cloneElement, FormEventHandler, isValidElement, ReactInstance, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { action, computed, isArrayLike, observable, runInAction, toJS } from 'mobx';
 import classNames from 'classnames';
@@ -30,6 +30,8 @@ import ValidationResult from '../validator/ValidationResult';
 import { ShowHelp } from './enum';
 import { ValidatorProps } from '../validator/rules';
 import { FIELD_SUFFIX } from '../form/utils';
+import { LabelLayout } from '../form/enum';
+import Animate from '../animate';
 
 const map: { [key: string]: FormField<FormFieldProps>[] } = {};
 
@@ -243,7 +245,11 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
 
   @observable value?: any;
 
-  @observable report?: boolean;
+  get hasFloatLabel(): boolean {
+    const { labelLayout } = this.context;
+    const { label } = this.props;
+    return labelLayout === LabelLayout.float && !!label;
+  }
 
   get isControlled(): boolean {
     return this.props.value !== void 0;
@@ -307,17 +313,29 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   }
 
   render() {
-    const { showHelp } = this.props;
     const validationMessage = this.renderValidationMessage();
-    return (
+    const wrapper = this.renderWrapper();
+    const help = this.renderHelpMessage();
+    return this.hasFloatLabel ? [
+      isValidElement(wrapper) && cloneElement(wrapper, { key: 'wrapper' }),
+      <Animate
+        transitionName="show-error"
+        component=""
+        transitionAppear
+        key="validation-message"
+      >
+        {validationMessage}
+      </Animate>,
+      help,
+    ] : (
       <Tooltip
         title={validationMessage}
         theme="light"
         placement="bottomLeft"
         hidden={!!(this.multiple && this.getValues().length) || this.isValidationMessageHidden(validationMessage)}
       >
-        {this.renderWrapper()}
-        {showHelp !== ShowHelp.tooltip ? this.renderHelpMessage() : null}
+        {wrapper}
+        {help}
       </Tooltip>
     );
   }
@@ -326,7 +344,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     const { prefixCls } = this;
     return super.getWrapperClassNames({
       [`${prefixCls}-invalid`]: !this.isValid,
-      [`${prefixCls}-validation-report`]: this.report,
+      [`${prefixCls}-has-label`]: this.hasFloatLabel,
     }, ...args);
   }
 
@@ -336,19 +354,33 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
 
   renderHelpMessage(): ReactNode {
     const { help, showHelp } = this.props;
-    if (showHelp === ShowHelp.none || !help) {
-      return null;
+    if (showHelp === ShowHelp.newLine && help) {
+      return (
+        <div key="help" className={`${getPrefixCls(FIELD_SUFFIX)}-help`}>{help}</div>
+      );
     }
-    if (showHelp === ShowHelp.tooltip) {
-      return this.renderTooltipHelp();
-    }
-    return (
-      <div className={`${getPrefixCls(FIELD_SUFFIX)}-help`}>{help}</div>
-    );
   }
 
-  renderTooltipHelp(): ReactNode {
-    return null;
+  renderFloatLabel(): ReactNode {
+    if (this.hasFloatLabel) {
+      const prefixCls = getPrefixCls(FIELD_SUFFIX);
+      const required = this.getProp('required');
+      const classString = classNames(`${prefixCls}-label`, {
+        [`${prefixCls}-required`]: required,
+      });
+      return <div className={classString}>{this.props.label}</div>;
+    }
+  }
+
+  renderUnderLine(): ReactNode {
+    if (this.hasFloatLabel) {
+      const { prefixCls } = this;
+      return (
+        <div className={`${prefixCls}-underline`}>
+          <span className={`${prefixCls}-ripple`} />
+        </div>
+      );
+    }
   }
 
   componentDidMount() {
@@ -408,7 +440,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     if (validationMessage) {
       return (
         <div className={getPrefixCls('pro-validation-message')}>
-          <Icon type="error" />
+          {this.context.labelLayout !== LabelLayout.float && <Icon type="error" />}
           <span>{validationMessage}</span>
         </div>
       );
@@ -540,7 +572,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
 
   getText(): ReactNode {
     const text = this.processValue(this.getValue());
-    return this.isFocus ? text : this.processText(text);
+    return this.isFocused ? text : this.processText(text);
   }
 
   processText(text?: any) {
@@ -685,16 +717,6 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     return !invalid;
   }
 
-  async reportValidity(): Promise<boolean> {
-    const valid = await this.checkValidity();
-    if (!valid) {
-      runInAction(() => {
-        this.report = true;
-      });
-    }
-    return valid;
-  }
-
   isDisabled() {
     const { field, record } = this;
     if (field) {
@@ -712,9 +734,6 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       this.setValue(this.props.defaultValue);
     }
     this.validator.reset();
-    runInAction(() => {
-      this.report = false;
-    });
   }
 
   getFieldType(): FieldType {

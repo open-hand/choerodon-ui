@@ -21,8 +21,8 @@ import { Progress } from 'choerodon-ui';
 ReactDOM.render(
   <div>
     <Progress type="loading" size="small" />
-    <Progress type="loading" />
-    <Progress type="loading" size="large" />
+    <Progress type="loading" status="success" />
+    <Progress type="loading" size="large" status="exception" />
   </div>,
   mountNode
 );

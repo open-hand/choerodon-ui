@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import PropTypes from 'prop-types';
-import { action, computed, observable } from 'mobx';
+import { action, computed } from 'mobx';
 import { observer } from 'mobx-react';
 import omit from 'lodash/omit';
 import noop from 'lodash/noop';
@@ -58,8 +58,6 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
 
   type: string = 'radio';
 
-  @observable checked?: boolean;
-
   @computed
   get defaultValidationMessages(): ValidationMessages | null {
     return {
@@ -99,6 +97,7 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
         <input {...this.getOtherProps()} checked={checked} value={this.checkedValue} />
         {this.renderInner()}
         {this.getText()}
+        {this.renderFloatLabel()}
       </label>
     );
   }
@@ -153,7 +152,6 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
     if (checked) {
       this.setValue(this.checkedValue);
     }
-    this.checked = checked;
   }
 
   getOldValue(): any {

@@ -6,7 +6,6 @@
 @switch-duration: .36s;
 
 .@{switch-prefix-cls} {
-  .radio-btn;
   &-wrapper {
     padding: .03rem;
     &.@{c7n-prefix}-pro-field {
@@ -14,7 +13,10 @@
     }
   }
 
+  .radio-btn;
+
   &-label {
+    position: relative;
     height: @switch-height - .04rem;
     min-width: .36rem;
     line-height: @switch-height - .06rem;
@@ -46,11 +48,11 @@
     width: @switch-height + .04rem;
   }
 
-  &-focus &-label {
+  &-focused &-label {
     box-shadow: 0 0 0 .02rem fade(@switch-color, 20%);
   }
 
-  &-focus:hover &-label {
+  &-focused:hover &-label {
     box-shadow: none;
   }
 
@@ -75,13 +77,13 @@
   }
 
   &-sm &-label:after {
-    width: @switch-height - .06rem;
-    height: @switch-height - .06rem;
+    width: @switch-sm-height;
+    height: @switch-sm-height;
     left: .01rem;
   }
 
   &-sm &:checked + &-label:after {
-    margin-left: .05rem - @switch-height;
+    margin-left: -.01rem - @switch-sm-height;
   }
 
   &-lg {
@@ -89,13 +91,13 @@
   }
 
   &-lg &-label {
-    height: @switch-height + .02rem;
+    height: @switch-lg-height;
     min-width: .4rem;
     &:after {
       left: .01rem;
     }
   }
   &-lg &:checked + &-label:after {
-    margin-left: -.01rem - @switch-height;
+    margin-left: .01rem - @switch-lg-height;
   }
 }

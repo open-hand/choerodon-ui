@@ -147,6 +147,7 @@ export default class SelectBox extends FormField<SelectBoxProps> {
     return (
       <span {...this.getWrapperProps()}>
         <Element className={className}>{items}</Element>
+        {this.renderFloatLabel()}
       </span>
     );
   }

@@ -1,5 +1,5 @@
 ---
-order: 4
+order: 5
 title:
   zh-CN: 仪表盘进度条
   en-US: Dashboard Progress

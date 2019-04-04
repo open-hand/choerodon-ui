@@ -94,10 +94,10 @@ function getNotificationInstance(prefixCls: string, placement: NotificationPlace
 }
 
 const typeToIcon = {
-  success: 'check-circle-o',
-  info: 'info-circle-o',
-  error: 'cross-circle-o',
-  warning: 'exclamation-circle-o',
+  success: 'check',
+  info: 'info',
+  error: 'error',
+  warning: 'warning',
 };
 
 export interface ArgsProps {

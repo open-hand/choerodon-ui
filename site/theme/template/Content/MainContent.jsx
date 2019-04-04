@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'bisheng/router';
-import { Col, Icon, Menu, Row } from 'choerodon-ui';
+import { Affix, Col, Icon, Menu, Row } from 'choerodon-ui';
 import classNames from 'classnames';
 import MobileMenu from 'rc-drawer';
 import Article from './Article';
+import PrevAndNext from './PrevAndNext';
+import Footer from '../Layout/Footer';
 import ComponentDoc from './ComponentDoc';
 import * as utils from '../utils';
 
@@ -130,7 +132,7 @@ export default class MainContent extends React.Component {
     }
   }
 
-  generateMenuItem(isTop, item) {
+  generateMenuItem(isTop, item, { before = null, after = null }) {
     const { intl: { locale } } = this.context;
     const key = fileNameToPath(item.filename);
     const title = item.title[locale] || item.title;
@@ -139,13 +141,15 @@ export default class MainContent extends React.Component {
       locale === 'zh-CN' && <span className="chinese" key="chinese">{item.subtitle}</span>,
     ];
     const { disabled } = item;
-    const url = item.ref || item.filename.replace(/(\/index)?((\.zh-CN)|(\.en-US))?\.md$/i, '').toLowerCase();
+    const url = item.filename.replace(/(\/index)?((\.zh-CN)|(\.en-US))?\.md$/i, '').toLowerCase();
     const child = !item.link ? (
       <Link
         to={utils.getLocalizedPathname(/^components/.test(url) ? `${url}/` : url, locale === 'zh-CN')}
         disabled={disabled}
       >
+        {before}
         {text}
+        {after}
       </Link>
     ) : (
       <a
@@ -155,7 +159,9 @@ export default class MainContent extends React.Component {
         disabled={disabled}
         className="menu-item-link-outside"
       >
+        {before}
         {text} <Icon type="export" />
+        {after}
       </a>
     );
 
@@ -166,7 +172,7 @@ export default class MainContent extends React.Component {
     );
   }
 
-  getMenuItems() {
+  getMenuItems(footerNavIcons = {}) {
     const { themeConfig } = this.props;
     const { intl: { locale } } = this.context;
     const moduleData = getModuleData(this.props);
@@ -186,16 +192,16 @@ export default class MainContent extends React.Component {
                   <Menu.ItemGroup title={child.title} key={child.title}>
                     {child.children.sort((a, b) => {
                       return a.title.charCodeAt(0) - b.title.charCodeAt(0);
-                    }).map(leaf => this.generateMenuItem(false, leaf))}
+                    }).map(leaf => this.generateMenuItem(false, leaf, footerNavIcons))}
                   </Menu.ItemGroup>
                 );
               }
-              return this.generateMenuItem(false, child);
+              return this.generateMenuItem(false, child, footerNavIcons);
             })}
           </SubMenu>
         );
       }
-      return this.generateMenuItem(true, menuItem);
+      return this.generateMenuItem(true, menuItem, footerNavIcons);
     });
   }
 
@@ -228,7 +234,11 @@ export default class MainContent extends React.Component {
     const { openKeys } = this.state;
     const activeMenuItem = getActiveMenuItem(props);
     const menuItems = this.getMenuItems();
-    const { prev, next } = this.getFooterNav(menuItems, activeMenuItem);
+    const menuItemsForFooterNav = this.getMenuItems({
+      before: <Icon className="footer-nav-icon-before" type="navigate_before" />,
+      after: <Icon className="footer-nav-icon-after" type="navigate_after" />,
+    });
+    const { prev, next } = this.getFooterNav(menuItemsForFooterNav, activeMenuItem);
     const { localizedPageData } = props;
     const mainContainerClass = classNames('main-container', {
       'main-container-component': !!props.demos,
@@ -259,40 +269,22 @@ export default class MainContent extends React.Component {
               </MobileMenu>
             ) : (
               <Col xxl={4} xl={5} lg={6} md={24} sm={24} xs={24} className="main-menu">
-                {menuChild}
+                <Affix>
+                  <section className="main-menu-inner">{menuChild}</section>
+                </Affix>
               </Col>
             )
           }
-          <Col xxl={20} xl={19} lg={18} md={24} sm={24} xs={24} className={mainContainerClass}>
-            {
-              props.demos
-                ? <ComponentDoc {...props} doc={localizedPageData} demos={props.demos} />
-                : <Article {...props} content={localizedPageData} />
-            }
-          </Col>
-        </Row>
-
-        <Row>
-          <Col
-            xxl={{ span: 20, offset: 4 }}
-            xl={{ span: 19, offset: 5 }}
-            lg={{ span: 18, offset: 6 }}
-            md={24}
-            sm={24}
-            xs={24}
-          >
-            <section className="prev-next-nav">
+          <Col xxl={20} xl={19} lg={18} md={24} sm={24} xs={24}>
+            <section className={mainContainerClass}>
               {
-                prev
-                  ? React.cloneElement(prev.props.children || prev.children[0], { className: 'prev-page' })
-                  : null
-              }
-              {
-                next
-                  ? React.cloneElement(next.props.children || next.children[0], { className: 'next-page' })
-                  : null
+                props.demos
+                  ? <ComponentDoc {...props} doc={localizedPageData} demos={props.demos} />
+                  : <Article {...props} content={localizedPageData} />
               }
             </section>
+            <PrevAndNext prev={prev} next={next} />
+            <Footer />
           </Col>
         </Row>
       </div>

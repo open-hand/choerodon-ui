@@ -1,23 +1,24 @@
 @import './colors';
 
-@padding-space: 144px;
+@padding-space: 24px;
 
 footer {
   clear: both;
-  font-size: 18px;
-  background-color: #fff;
+  font-size: 14px;
+  background-color: #000;
   position: relative;
-  z-index: 100;
-  color: #666;
-  box-shadow: 0 1000px 0 1000px #fff;
+  z-index: 9;
+  margin-left: -1px;
+  color: rgba(255, 255, 255, 0.65);
+
   .c7n-row {
     text-align: center;
     .footer-center {
       display: inline-block;
       text-align: left;
       > h2 {
-        font-size: 20px;
-        margin: 0 auto 17px;
+        font-size: 16px;
+        margin: 0 auto 24px;
         font-weight: 500;
         position: relative;
 
@@ -25,7 +26,7 @@ footer {
           width: 27px;
           margin-right: 16px;
         }
-        > .anticon {
+        > .@{iconfont-css-prefix} {
           font-size: 16px;
           position: absolute;
           left: -22px;
@@ -33,34 +34,47 @@ footer {
           color: #aaa;
         }
       }
-      > div + div {
-        margin-top: 14px;
+      > div {
+        margin: 12px 0;
       }
     }
   }
   .footer-wrap {
     position: relative;
-    border-bottom: 1px solid #d8d8d8;
-    border-top: 1px solid #d8d8d8;
-    .c7n-row {
-      padding: 21px 24px 20px 24px;
-    }
+    padding: 86px @padding-space 93px @padding-space;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
   }
   .bottom-bar {
-    text-align: right;
+    text-align: center;
     padding: 16px @padding-space;
     margin: 0;
-    line-height: 28px;
+    line-height: 32px;
     overflow: hidden;
-    color: #333;
+    font-family: Avenir, @font-family, sans-serif;
+    font-size: 16px;
+
+    a {
+      color: rgba(255, 255, 255, 0.65);
+      margin-left: 4px;
+      &:hover {
+        color: #fff;
+      }
+    }
+    .translate-button {
+      text-align: left;
+    }
+    .heart {
+      color: #f73f51;
+      font-size: 22px;
+    }
   }
   a {
-    color: #333;
+    color: rgba(255, 255, 255, 0.9);
   }
   h2 {
-    color: #333;
+    color: rgba(255, 255, 255, 1);
     & > span {
-      color: #333;
+      color: rgba(255, 255, 255, 1);
     }
   }
 }

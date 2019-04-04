@@ -580,38 +580,6 @@ form {
   }
 }
 
-.show-help-motion(@className, @keyframeName, @duration: @animation-duration-slow) {
-  .make-motion(@className, @keyframeName, @duration);
-  .@{className}-enter,
-  .@{className}-appear {
-    opacity: 0;
-    animation-timing-function: @ease-in-out;
-  }
-  .@{className}-leave {
-    animation-timing-function: @ease-in-out;
-  }
-}
-
-.show-help-motion(show-help, antShowHelp, 0.15s);
-
-@keyframes antShowHelpIn {
-  0% {
-    opacity: 0;
-    transform: translateY(-.05rem);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes antShowHelpOut {
-  to {
-    opacity: 0;
-    transform: translateY(-.05rem);
-  }
-}
-
 // need there different zoom animation
 // otherwise won't trigger anim
 @keyframes diffZoomIn1 {

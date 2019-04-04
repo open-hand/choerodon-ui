@@ -1,4 +1,4 @@
-import Map from 'core-js/es6/map';
+import Map from 'core-js/library/fn/map';
 import isObject from 'lodash/isObject';
 import { isArrayLike } from 'mobx';
 import { mobxGet, mobxRemove, mobxSet } from './MobxUtils';

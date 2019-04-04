@@ -1,5 +1,6 @@
 @import "../../../components/style/themes/default";
 @import "../../../components/style/mixins/index";
+@import '../../field/style/mixin';
 
 @range-prefix-cls: ~"@{c7n-prefix}-pro-range";
 
@@ -75,5 +76,9 @@
     .@{range-prefix-cls}-selection {
       background: @disabled-color;
     }
+  }
+  .float-label;
+  &-has-label {
+    padding-top: .11rem;
   }
 }

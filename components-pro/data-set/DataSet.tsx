@@ -1,4 +1,4 @@
-import Map from 'core-js/es6/map';
+import Map from 'core-js/library/fn/map';
 import { action, computed, get, isArrayLike, observable, reaction, runInAction, set, toJS } from 'mobx';
 import { AxiosInstance } from 'axios';
 import isNumber from 'lodash/isNumber';
@@ -564,9 +564,9 @@ export default class DataSet extends EventManager {
     return this.data.map(record => record.toData());
   }
 
-  toJSONData(noCascade?: boolean): object[] {
+  toJSONData(isSelected?: boolean, noCascade?: boolean): object[] {
     const data: object[] = [];
-    this.data.concat(this.destroyed).forEach((record) => {
+    (isSelected ? this.selected : this.data.concat(this.destroyed)).forEach((record) => {
       const json = record.toJSONData(noCascade);
       if (json.__dirty) {
         delete json.__dirty;
@@ -609,7 +609,7 @@ export default class DataSet extends EventManager {
   async submit(isSelect?: boolean, noCascade?: boolean): Promise<any> {
     await this.ready(isSelect);
     if (await this.validate(isSelect, noCascade)) {
-      return this.write(this.toJSONData(noCascade));
+      return this.write(this.toJSONData(isSelect, noCascade));
     }
   }
 

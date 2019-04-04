@@ -110,7 +110,7 @@ title: DataSet
 | validate(isSelected, noCascade) | 校验数据记录是否有效 | `isSelect` - 设为 `true` 时，校验选中的记录 `noCascade` - 为true时，不校验级联数据 | Promise&lt;boolean&gt; |
 | getField(fieldName) | 根据字段名获取字段 | `fieldName` - 字段名 | Field |
 | addField(fieldName, fieldProps) | 增加新字段 | `fieldName` - 字段名，`fieldProps` - 字段属性 | Field |
-| toJSONData(noCascade) | 转换成用于提交的json数据 | `noCascade` - 为true时，不转换级联数据 | object[] |
+| toJSONData(isSelected, noCascade) | 转换成用于提交的json数据 | `isSelect` - 设为 `true` 时，只转换选中记录 `noCascade` - 为true时，不转换级联数据 | object[] |
 | toData() | 转换成普通数据，不包含删除的数据 |  | object[] |
 | bind(ds, name) | 绑定头DataSet | `ds` - 头DataSet对象或id `name` - 绑定名 |  |
 | setQueryParameter(para, value) | 设置查询参数 | `para` - 参数名 `value` - 参数值 |  |

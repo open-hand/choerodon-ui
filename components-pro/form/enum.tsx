@@ -8,6 +8,7 @@ export const enum LabelLayout {
   horizontal = 'horizontal',
   vertical = 'vertical',
   placeholder = 'placeholder',
+  float = 'float',
   none = 'none',
 }
 

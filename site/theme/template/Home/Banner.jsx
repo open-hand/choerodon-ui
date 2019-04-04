@@ -45,16 +45,14 @@ class Banner extends React.PureComponent {
             <p key="p">
               <FormattedMessage id="app.home.introduce" />
             </p>
-            {!isMobile && (
-              <div className="banner-btns" key="buttons">
-                <Link className="banner-btn components" to={utils.getLocalizedPathname('/docs/react/introduce', isZhCN)}>
-                  <FormattedMessage id="app.home.getting-started" />
-                </Link>
-                <a className="banner-btn github" target="_black" rel="noopener noreferrer" href="https://github.com/choerodon/choerodon-ui">
-                  Github
-                </a>
-              </div>
-            )}
+            <div className="banner-btns" key="buttons">
+              <Link className="banner-btn components" to={utils.getLocalizedPathname('/docs/react/introduce', isZhCN)}>
+                <FormattedMessage id="app.home.getting-started" />
+              </Link>
+              <a className="banner-btn github" target="_black" rel="noopener noreferrer" href="https://github.com/choerodon/choerodon-ui">
+                Github
+              </a>
+            </div>
           </QueueAnim>
           {!isMobile && (
             <div className="img-wrapper" key="image">

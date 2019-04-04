@@ -24,7 +24,7 @@ title: Form
 | processParams | Ajax提交时的参数回调 | (event) => object |   |
 | labelWidth | 内部控件的标签宽度。如果为数组则分别对应每列的标签宽度。数组长度不够列数，以默认值补全, 响应式参考[Responsive](#Form Responsive) | number\| number[] \| object | 100 |
 | labelAlign | 标签文字对齐方式, 只在labelLayout为`horizontal`时起作用，可选值： `left` `center` `right`, 响应式参考[Responsive](#Form Responsive) | string \| object |  right  |
-| labelLayout | 标签位置, 可选值 `horizontal` `vertical` `placeholder` `none`, 响应式参考[Responsive](#Form Responsive) | string \| object |  horizontal |
+| labelLayout | 标签位置, 可选值 `horizontal` `vertical` `placeholder` `float` `none`, 响应式参考[Responsive](#Form Responsive) | string \| object |  horizontal |
 | dataIndex | 对照record在DataSet中的index | number | ds.currentIndex |
 | record | 对照record, 优先级高于dataSet和dataIndex | Record |  |
 | columns | 列数, 响应式参考[Responsive](#Form Responsive) | number \| object |  1 |

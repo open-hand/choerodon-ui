@@ -74,7 +74,7 @@ export default class TableBody extends Component<TableBodyProps, any> {
   componentDidUpdate() {
     if (!this.props.lock) {
       const { node } = this.context.tableStore;
-      if (classes(node.wrapper).has(`${this.props.prefixCls}-focus`)) {
+      if (classes(node.wrapper).has(`${this.props.prefixCls}-focused`)) {
         node.focus();
       }
     }

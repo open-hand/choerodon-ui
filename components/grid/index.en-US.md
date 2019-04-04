@@ -58,7 +58,7 @@ title: Grid
 </div>
 </div>
 
-In most business situations, Ant Design needs to solve a lot of information storage problems within the design area, so based on 12 Grids System, we divided the design area into 24 aliquots.
+In most business situations, Choerodon HAP UI need solve a lot of information storage problems within the design area,so based on 12 Grids System,we divided the design area into 24 aliquots.
 
 We name the divided area 'box'. We suggest four boxes for horizontal arrangement at most, one at least. Boxes are proportional to the entire screen as shown in the picture above. To ensure a high level of visual comfort, we customize the typography inside of the box based on the box unit.
 
@@ -81,7 +81,7 @@ Flex layout uses a 24 grid layout to define the width of each "box", but does no
 
 ## API
 
-If the Ant Design grid layout component does not meet your needs, you can use the excellent layout components of the community:
+Choerodon HAP UI layout component if it can not meet your needs, you can use the excellent layout of the components of the community:
 
 - [react-flexbox-grid](http://roylee0704.github.io/react-flexbox-grid/)
 - [react-blocks](https://github.com/whoisandy/react-blocks/)

@@ -266,7 +266,8 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
 
   wrapper: any;
 
-  @observable isFocus: boolean;
+  @observable isFocused: boolean;
+  isFocus: boolean;
 
   get prefixCls(): string {
     const { suffixCls, prefixCls } = this.props;
@@ -362,6 +363,7 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
       [`${prefixCls}-sm`]: size === 'small',
       [`${prefixCls}-lg`]: size === 'large',
       [`${prefixCls}-disabled`]: this.isDisabled(),
+      [`${prefixCls}-focused`]: this.isFocus,
     }, ...args);
   }
 
@@ -372,33 +374,35 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
   @autobind
   handleFocus(e) {
     runInAction(() => {
+      this.isFocused = true;
       this.isFocus = true;
+      const { props: { onFocus = noop }, prefixCls } = this;
+      const element = findDOMNode(this);
+      onFocus(e);
+      if (element) {
+        classes(element).add(`${prefixCls}-focused`);
+      }
     });
-    const { props: { onFocus = noop }, prefixCls } = this;
-    const element = findDOMNode(this);
-    onFocus(e);
-    if (element) {
-      classes(element).add(`${prefixCls}-focus`);
-    }
   }
 
   @autobind
   handleBlur(e) {
-    runInAction(() => {
-      this.isFocus = false;
-    });
     if (!e.isDefaultPrevented()) {
-      const { props: { onBlur = noop }, prefixCls } = this;
-      onBlur(e);
-      const element = findDOMNode(this);
-      if (element) {
-        classes(element).remove(`${prefixCls}-focus`);
-      }
+      runInAction(() => {
+        this.isFocused = false;
+        this.isFocus = false;
+        const { props: { onBlur = noop }, prefixCls } = this;
+        onBlur(e);
+        const element = findDOMNode(this);
+        if (element) {
+          classes(element).remove(`${prefixCls}-focused`);
+        }
+      });
     }
   }
 
   focus() {
-    if (this.element && !this.isFocus) {
+    if (this.element) {
       this.element.focus();
     }
   }
@@ -408,14 +412,6 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
       this.element.blur();
     }
   }
-
-  // get isFocus() {
-  //   if (typeof window !== 'undefined') {
-  //     return this.element === window.document.activeElement;
-  //   } else {
-  //     return false;
-  //   }
-  // }
 
   @autobind
   elementReference(node) {

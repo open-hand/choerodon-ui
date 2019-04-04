@@ -16,15 +16,13 @@ export interface IconProps {
 }
 
 export default class Icon extends Component<IconProps, {}> {
+  static displayName = 'Icon';
   static icons = icons;
   static categories = categories;
 
   render() {
     const { type, className = '' } = this.props;
-    const classString = classNames({
-      'icon': true,
-      [`icon-${type}`]: true,
-    }, className);
+    const classString = classNames('icon', `icon-${type}`, className);
     return <i {...omit(this.props, ['type', 'spin'])} className={classString} />;
   }
 }

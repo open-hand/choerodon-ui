@@ -1,3 +1,5 @@
+@import '../../field/style/mixin';
+
 .radio-btn() {
   position: absolute;
   top: 0;
@@ -21,5 +23,9 @@
   }
   &:disabled {
     cursor: not-allowed;
+  }
+  .float-label;
+  &-has-label {
+    padding-top: .07rem;
   }
 }

@@ -1,5 +1,5 @@
 ---
-order: 2
+order: 3
 title:
   zh-CN: 自定义文字格式
   en-US: Custom Font Format
