@@ -18,6 +18,7 @@ timeline: true
 - 🌟 `<pro>Form`: Property labelLayout adds float value.
 - 🌟 `<pro>Table`: Deprecated the attribute showQueryBar, add the queryBar property, the optional value is `normal` `bar` `none`.
 - 💄 `<pro>Table`: Optimize Table grouped columns.
+- 🐞 `<pro>Field`: Fix property pattern does not support regular constants.
 
 ## 0.6.0
 

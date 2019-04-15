@@ -18,6 +18,7 @@ timeline: true
 - 💄 `<pro>Form`: 属性labelLayout新增float值。
 - 🌟 `<pro>Table`: 弃用属性showQueryBar，新增queryBar属性，可选值为`normal` `bar` `none`。
 - 🌟 `<pro>Table`: 优化组合列。
+- 🐞 `<pro>Field`: 修复属性pattern不支持正则常量。
 
 ## 0.6.0
 

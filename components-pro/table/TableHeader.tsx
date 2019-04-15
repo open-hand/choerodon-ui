@@ -10,7 +10,7 @@ import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { ColumnLock } from './enum';
 import DataSet from '../data-set/DataSet';
 import { getColumnKey } from './utils';
-import ColumnGroups, { ColumnGroup } from './ColumnGroups';
+import { ColumnGroup } from './ColumnGroups';
 
 export interface TableHeaderProps extends ElementProps {
   dataSet: DataSet;
@@ -43,46 +43,48 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
     const { groupedColumns } = this;
     const rows = this.getTableHeaderRows(groupedColumns);
     const trs = rows.map((row, rowIndex) => {
-      let prevColumn: ColumnProps | undefined;
-      const tds = row.map(({ hidden, column, rowSpan, colSpan, lastLeaf }) => {
-        if (!hidden) {
-          const props: TableHeaderCellProps = {
-            key: getColumnKey(column),
-            prefixCls,
-            dataSet,
-            prevColumn,
-            column,
-            resizeColumn: lastLeaf,
-            rowHeight,
-            getHeaderNode: this.getHeaderNode,
-          };
-          if (rowSpan > 1) {
-            props.rowSpan = rowSpan;
+      if (row.length) {
+        let prevColumn: ColumnProps | undefined;
+        const tds = row.map(({ hidden, column, rowSpan, colSpan, lastLeaf }) => {
+          if (!hidden) {
+            const props: TableHeaderCellProps = {
+              key: getColumnKey(column),
+              prefixCls,
+              dataSet,
+              prevColumn,
+              column,
+              resizeColumn: lastLeaf,
+              rowHeight,
+              getHeaderNode: this.getHeaderNode,
+            };
+            if (rowSpan > 1) {
+              props.rowSpan = rowSpan;
+            }
+            if (colSpan > 1) {
+              props.colSpan = colSpan;
+            }
+            prevColumn = lastLeaf;
+            return <TableHeaderCell {...props} />;
           }
-          if (colSpan > 1) {
-            props.colSpan = colSpan;
-          }
-          prevColumn = lastLeaf;
-          return <TableHeaderCell {...props} />;
+        });
+        if (this.context.tableStore.overflowY && lock !== ColumnLock.left && rowIndex === 0) {
+          tds.push(<th key="fixed-column" className={`${prefixCls}-cell`} rowSpan={rows.length} />);
         }
-      });
-      if (this.context.tableStore.overflowY && lock !== ColumnLock.left && rowIndex === 0) {
-        tds.push(<th key="fixed-column" className={`${prefixCls}-cell`} rowSpan={rows.length} />);
+        return (
+          <tr key={rowIndex} style={{ height: lock ? this.getHeaderRowStyle(rows, rowIndex) : void 0 }}>
+            {tds}
+          </tr>
+        );
       }
-      return (
-        <tr key={rowIndex} style={{ height: lock && rowHeight === 'auto' ? this.getHeaderRowStyle(groupedColumns, rows, rowIndex) : void 0 }}>
-          {tds}
-        </tr>
-      );
     });
     return (
       <thead ref={this.saveRef} className={`${prefixCls}-thead`}>{trs}</thead>
     );
   }
 
-  getTableHeaderRows(groups: ColumnGroups, currentRow: number = 0, rows: ColumnGroup[][] = []): ColumnGroup[][] {
+  getTableHeaderRows(columns: ColumnGroup[], currentRow: number = 0, rows: ColumnGroup[][] = []): ColumnGroup[][] {
     rows[currentRow] = rows[currentRow] || [];
-    groups.columns.forEach((column) => {
+    columns.forEach((column) => {
       const { hidden, rowSpan, colSpan, children } = column;
       if (!hidden) {
         if (rowSpan && rows.length < rowSpan) {
@@ -91,43 +93,40 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
           }
         }
         if (children) {
-          this.getTableHeaderRows(children, currentRow + rowSpan, rows);
+          this.getTableHeaderRows(children.columns, currentRow + rowSpan, rows);
         }
         if (colSpan !== 0) {
           rows[currentRow].push(column);
         }
       }
     });
-    return rows.filter(row => row.length > 0);
+    return rows;
   }
 
-  getHeaderRowStyle(columns: ColumnGroups, rows: ColumnGroup[][], index: number): string | number | undefined {
-    if (columns) {
-      const headerHeight: number | undefined = get(this.context.tableStore.lockColumnsHeadRowsHeight, index);
-      if (headerHeight === void 0) {
-        return 'auto';
-      }
-      return pxToRem(headerHeight / rows.length);
-    }
+  getHeaderRowStyle(rows: ColumnGroup[][], rowIndex: number): string | number | undefined {
+    const { rowHeight } = this.props;
+    const height = rowHeight === 'auto' ? this.getRowHeight(rowIndex++) : rowHeight;
+    return pxToRem(rows.slice(rowIndex).reduce((total, r, index) => (
+      r.length ? total : total + 1 + (rowHeight === 'auto' ? this.getRowHeight(index + rowIndex) : rowHeight)
+    ), height));
+  }
+
+  getRowHeight(index): number {
+    return get(this.context.tableStore.lockColumnsHeadRowsHeight, index) || 0;
   }
 
   @computed
-  get columns(): ColumnProps[] {
+  get groupedColumns(): ColumnGroup[] {
     const { tableStore } = this.context;
     const { lock } = this.props;
     switch (lock) {
       case ColumnLock.left:
       case true:
-        return tableStore.leftColumns;
+        return tableStore.leftGroupedColumns;
       case ColumnLock.right:
-        return tableStore.rightColumns;
+        return tableStore.rightGroupedColumns;
       default:
-        return tableStore.columns;
+        return tableStore.groupedColumns;
     }
-  }
-
-  @computed
-  get groupedColumns(): ColumnGroups {
-    return new ColumnGroups(this.columns);
   }
 }

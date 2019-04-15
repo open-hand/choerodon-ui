@@ -98,7 +98,7 @@ export interface TableProps extends DataSetComponentProps {
    * @deprecated
    * 请使用 queryBar="none"
    */
-  showQuerybar?: boolean;
+  showQueryBar?: boolean;
   /**
    * 行高
    * @default 31
@@ -482,7 +482,7 @@ export default class Table extends DataSetComponent<TableProps> {
       prefixCls,
       tableStore,
       tableStore: { overflowX, isAnyColumnsLeftLock, isAnyColumnsRightLock },
-      props: { dataSet, buttons, queryFieldsLimit, queryFields, queryBar, header, showQuerybar },
+      props: { dataSet, buttons, queryFieldsLimit, queryFields, queryBar, header, showQueryBar },
     } = this;
     const content = this.getTable();
     const context = { tableStore };
@@ -495,7 +495,7 @@ export default class Table extends DataSetComponent<TableProps> {
             buttons={buttons}
             queryFieldsLimit={queryFieldsLimit!}
             queryFields={queryFields!}
-            showQueryBar={queryBar === TableQueryBar.normal && showQuerybar !== false}
+            showQueryBar={queryBar === TableQueryBar.normal && showQueryBar !== false}
             prefixCls={prefixCls}
           />
           {queryBar === TableQueryBar.bar && this.renderBar()}

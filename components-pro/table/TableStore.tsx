@@ -13,6 +13,7 @@ import { stopPropagation } from '../_util/EventManager';
 import { getColumnKey, getHeader } from './utils';
 import getReactNodeText from '../_util/getReactNodeText';
 import { getPrefixCls } from 'choerodon-ui/lib/configure';
+import ColumnGroups, { ColumnGroup } from './ColumnGroups';
 
 const SELECTION_KEY = '__selection-column__';
 
@@ -77,9 +78,142 @@ export default class TableStore {
   }
 
   @computed
+  get leftColumns(): ColumnProps[] {
+    return this.columns.filter(column => column.lock === ColumnLock.left || column.lock === true);
+  }
+
+  @computed
+  get rightColumns(): ColumnProps[] {
+    return this.columns.filter(column => column.lock === ColumnLock.right);
+  }
+
+  @computed
+  get columnGroups(): ColumnGroups {
+    return new ColumnGroups(this.columns);
+  }
+
+  @computed
+  get groupedColumns(): ColumnGroup[] {
+    return this.columnGroups.columns;
+  }
+
+  @computed
+  get leftGroupedColumns(): ColumnGroup[] {
+    return this.groupedColumns.filter(({ column: { lock } }) => lock === ColumnLock.left || lock === true);
+  }
+
+  @computed
+  get rightGroupedColumns(): ColumnGroup[] {
+    return this.groupedColumns.filter(({ column: { lock } }) => lock === ColumnLock.right);
+  }
+
+  @computed
+  get leafColumns(): ColumnProps[] {
+    return this._leafColumns(this.columns);
+  }
+
+  @computed
+  get leftLeafColumns(): ColumnProps[] {
+    return this._leafColumns(this.leftColumns);
+  }
+
+  @computed
+  get rightLeafColumns(): ColumnProps[] {
+    return this._leafColumns(this.rightColumns);
+  }
+
+  @computed
+  get leafNamedColumns(): ColumnProps[] {
+    return this.leafColumns.filter(column => !!column.name);
+  }
+
+  @computed
+  get totalLeafColumnsWidth(): number {
+    return this.leafColumns.reduce((total, column) => total + columnWidth(column), 0);
+  }
+
+  @computed
+  get leftLeafColumnsWidth(): number {
+    return this.leftLeafColumns.reduce((total, column) => total + columnWidth(column), 0);
+  }
+
+  @computed
+  get rightLeafColumnsWidth(): number {
+    return this.rightLeafColumns.reduce((total, column) => total + columnWidth(column), 0);
+  }
+
+  @computed
   get columnHeaders(): { name: string }[] {
     const { leafNamedColumns, dataSet } = this;
     return leafNamedColumns.map((column) => ({ name: column.name!, label: getReactNodeText(getHeader(column, dataSet)) }));
+  }
+
+  @computed
+  get hasCheckFieldColumn(): boolean {
+    const { checkField } = this.dataSet.props;
+    return this.leafColumns.some(({ name, editor }) => !!editor && checkField === name);
+  }
+
+  @computed
+  get hasFooter(): boolean {
+    return this.leafColumns.some(column => !!column.footer && column.key !== SELECTION_KEY);
+  }
+
+  @computed
+  get isAnyColumnsResizable(): boolean {
+    return this.leafColumns.some(column => column.resizable === true);
+  }
+
+  @computed
+  get isAnyColumnsLock(): boolean {
+    return this.columns.some(column => !!column.lock);
+  }
+
+  @computed
+  get isAnyColumnsLeftLock(): boolean {
+    return this.columns.some(column => column.lock === ColumnLock.left || column.lock === true);
+  }
+
+  @computed
+  get isAnyColumnsRightLock(): boolean {
+    return this.columns.some(column => column.lock === ColumnLock.right);
+  }
+
+  @computed
+  get data(): Record[] {
+    const { filter } = this.props;
+    const { dataSet, isTree, showCachedSeletion } = this;
+    let data = isTree ? dataSet.treeData : dataSet.data;
+    if (typeof filter === 'function') {
+      data = data.filter(filter);
+    }
+    if (showCachedSeletion) {
+      return [...dataSet.cachedSelected, ...data];
+    } else {
+      return data;
+    }
+  }
+
+  @computed
+  get indeterminate(): boolean {
+    const { dataSet, showCachedSeletion } = this;
+    if (dataSet) {
+      const { length } = (showCachedSeletion ? this.data : dataSet.data).filter(record => record.selectable);
+      const selectedLength = showCachedSeletion ? dataSet.selected.length : dataSet.currentSelected.length;
+      return !!selectedLength && selectedLength !== length;
+    }
+    return false;
+  }
+
+  @computed
+  get allChecked() {
+    const { dataSet, showCachedSeletion } = this;
+    if (dataSet) {
+      const { length } = (showCachedSeletion ? this.data : dataSet.data).filter(record => record.selectable);
+      const selectedLength = showCachedSeletion ? dataSet.selected.length : dataSet.currentSelected.length;
+      return !!selectedLength && selectedLength === length;
+    }
+    return false;
   }
 
   private handleSelectAllChange = action((value) => {
@@ -171,82 +305,6 @@ export default class TableStore {
     this.dataSet.data.forEach(record => this.setRowExpanded(record, false));
   }
 
-  @computed
-  get hasCheckFieldColumn(): boolean {
-    const { checkField } = this.dataSet.props;
-    return this.leafColumns.some(({ name, editor }) => !!editor && checkField === name);
-  }
-
-  @computed
-  get hasFooter(): boolean {
-    return this.leafColumns.some(column => !!column.footer && column.key !== SELECTION_KEY);
-  }
-
-  @computed
-  get totalLeafColumnsWidth(): number {
-    return this.leafColumns.reduce((total, column) => total + columnWidth(column), 0);
-  }
-
-  @computed
-  get leftLeafColumnsWidth(): number {
-    return this.leftLeafColumns.reduce((total, column) => total + columnWidth(column), 0);
-  }
-
-  @computed
-  get rightLeafColumnsWidth(): number {
-    return this.rightLeafColumns.reduce((total, column) => total + columnWidth(column), 0);
-  }
-
-  @computed
-  get isAnyColumnsResizable(): boolean {
-    return this.leafColumns.some(column => column.resizable === true);
-  }
-
-  @computed
-  get isAnyColumnsLock(): boolean {
-    return this.columns.some(column => !!column.lock);
-  }
-
-  @computed
-  get isAnyColumnsLeftLock(): boolean {
-    return this.columns.some(column => column.lock === ColumnLock.left || column.lock === true);
-  }
-
-  @computed
-  get isAnyColumnsRightLock(): boolean {
-    return this.columns.some(column => column.lock === ColumnLock.right);
-  }
-
-  @computed
-  get leftColumns(): ColumnProps[] {
-    return this.columns.filter(column => column.lock === ColumnLock.left || column.lock === true);
-  }
-
-  @computed
-  get rightColumns(): ColumnProps[] {
-    return this.columns.filter(column => column.lock === ColumnLock.right);
-  }
-
-  @computed
-  get leafColumns(): ColumnProps[] {
-    return this._leafColumns(this.columns);
-  }
-
-  @computed
-  get leftLeafColumns(): ColumnProps[] {
-    return this._leafColumns(this.leftColumns);
-  }
-
-  @computed
-  get rightLeafColumns(): ColumnProps[] {
-    return this._leafColumns(this.rightColumns);
-  }
-
-  @computed
-  get leafNamedColumns(): ColumnProps[] {
-    return this.leafColumns.filter(column => !!column.name);
-  }
-
   _leafColumns(columns: ColumnProps[]): ColumnProps[] {
     const leafColumns: ColumnProps[] = [];
     columns.forEach((column) => {
@@ -257,43 +315,6 @@ export default class TableStore {
       }
     });
     return leafColumns;
-  }
-
-  @computed
-  get data(): Record[] {
-    const { filter } = this.props;
-    const { dataSet, isTree, showCachedSeletion } = this;
-    let data = isTree ? dataSet.treeData : dataSet.data;
-    if (typeof filter === 'function') {
-      data = data.filter(filter);
-    }
-    if (showCachedSeletion) {
-      return [...dataSet.cachedSelected, ...data];
-    } else {
-      return data;
-    }
-  }
-
-  @computed
-  get indeterminate(): boolean {
-    const { dataSet, showCachedSeletion } = this;
-    if (dataSet) {
-      const { length } = (showCachedSeletion ? this.data : dataSet.data).filter(record => record.selectable);
-      const selectedLength = showCachedSeletion ? dataSet.selected.length : dataSet.currentSelected.length;
-      return !!selectedLength && selectedLength !== length;
-    }
-    return false;
-  }
-
-  @computed
-  get allChecked() {
-    const { dataSet, showCachedSeletion } = this;
-    if (dataSet) {
-      const { length } = (showCachedSeletion ? this.data : dataSet.data).filter(record => record.selectable);
-      const selectedLength = showCachedSeletion ? dataSet.selected.length : dataSet.currentSelected.length;
-      return !!selectedLength && selectedLength === length;
-    }
-    return false;
   }
 
   _addSelectionColumn(columns: ColumnProps[]): ColumnProps[] {
