@@ -30,7 +30,7 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
   };
 
   getOtherProps() {
-    const { resize, cols } = this.props;
+    const { resize } = this.props;
     const otherProps = omit(super.getOtherProps(), [
       'resize',
     ]);
@@ -38,9 +38,6 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
     style.resize = resize;
     if (resize !== ResizeType.none) {
       style.transition = 'none';
-    }
-    if (cols !== void 0 && style.width === void 0) {
-      style.width = 'auto';
     }
     otherProps.style = style;
     return otherProps;

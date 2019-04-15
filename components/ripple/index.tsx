@@ -1,6 +1,6 @@
 import React, { Children, PureComponent, ReactChild } from 'react';
 import RippleChild from './RippleChild';
-import { getPrefixCls } from '../configure';
+import { getConfig, getPrefixCls } from '../configure';
 
 export interface RippleProps {
   prefixCls?: string;
@@ -11,8 +11,8 @@ export default class Ripple extends PureComponent<RippleProps> {
 
   render() {
     const { children } = this.props;
-    if (!children) {
-      return null;
+    if (!children || !getConfig('ripple')) {
+      return children;
     }
     return Children.map(children, this.rippleChild);
   }

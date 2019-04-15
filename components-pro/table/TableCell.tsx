@@ -11,7 +11,7 @@ import { ColumnProps } from './Column';
 import Record from '../data-set/Record';
 import { ElementProps } from '../core/ViewComponent';
 import TableContext from './TableContext';
-import { findCell, findFirstFocusableElement, getAlignByField, getEditorByColumnAndRecord, isDisabledRow, isRadio } from './utils';
+import { findCell, findFirstFocusableElement, getAlignByField, getColumnKey, getEditorByColumnAndRecord, isDisabledRow, isRadio } from './utils';
 import { FormFieldProps } from '../field/FormField';
 import { ColumnLock } from './enum';
 import CheckBox from '../check-box/CheckBox';
@@ -49,8 +49,8 @@ export default class TableCell extends Component<TableCellProps> {
   handleEditorKeyDown = (e) => {
     switch (e.keyCode) {
       case KeyCode.TAB:
-        const { prefixCls, column: { index } } = this.props;
-        const cell = findCell(this.context.tableStore, prefixCls, index);
+        const { prefixCls, column } = this.props;
+        const cell = findCell(this.context.tableStore, prefixCls, getColumnKey(column));
         const node = findFirstFocusableElement(cell);
         if (node) {
           inTab = true;
@@ -65,12 +65,12 @@ export default class TableCell extends Component<TableCellProps> {
     const { tableStore } = this.context;
     const { editing, dataSet } = tableStore;
     if (!editing) {
-      const { prefixCls, record, column: { index, lock } } = this.props;
+      const { prefixCls, record, column, column: { lock } } = this.props;
       if (!isDisabledRow(record)) {
         dataSet.current = record;
         this.showEditor(e.currentTarget, lock);
         if (!this.cellEditor || isRadio(this.cellEditor)) {
-          const cell = findCell(tableStore, prefixCls, index, lock);
+          const cell = findCell(tableStore, prefixCls, getColumnKey(column), lock);
           const node = findFirstFocusableElement(cell);
           if (node && !inTab) {
             node.focus();
@@ -117,7 +117,7 @@ export default class TableCell extends Component<TableCellProps> {
   render() {
     const { column, prefixCls, record, children, indentSize, rowHeight } = this.props;
     const { tableStore } = this.context;
-    const { className, style, align, name, index, renderer } = column;
+    const { className, style, align, name, renderer } = column;
     const field = name && record.getField(name);
     const cellPrefix = `${prefixCls}-cell`;
     const classString = classNames(cellPrefix, {
@@ -160,7 +160,7 @@ export default class TableCell extends Component<TableCellProps> {
       <td
         className={classString}
         style={cellStyle}
-        data-index={index}
+        data-index={getColumnKey(column)}
       >
         {prefix}
         <Output

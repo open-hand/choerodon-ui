@@ -1,6 +1,8 @@
 @import "../../../components/style/themes/default";
 @import "../../../components/style/mixins/index";
 @import "../../text-field/style/mixin";
+@import "../../trigger-field/style/mixin";
+@import "../../select/style/mixin";
 
 @table-prefix-cls: ~"@{c7n-prefix}-pro-table";
 @table-border: @border-width-base @border-style-base @border-color-base;
@@ -10,6 +12,7 @@
   font-size: @font-size-base;
   color: @text-color;
   outline: none;
+  border-top: @table-border;
   border-bottom: @table-border;
   table {
     border-spacing: 0;
@@ -81,6 +84,10 @@
     position: relative;
     background-color: @table-header-bg;
     color: @heading-color;
+    border-bottom: @table-border;
+    &[colspan] {
+      border-bottom: none;
+    }
   }
 
   &-tbody &-cell {
@@ -155,7 +162,6 @@
 
   &-bordered {
     &.@{table-prefix-cls} {
-      border-top: @table-border;
       border-right: @table-border;
       border-left: @table-border;
     }
@@ -170,6 +176,10 @@
     }
     &:not(.@{table-prefix-cls}-scroll-position-left) .@{table-prefix-cls}-fixed-left .@{table-prefix-cls}-cell:last-child {
       border-right: none;
+    }
+    .@{table-prefix-cls}-filter-bar {
+      border-right: @table-border;
+      border-left: @table-border;
     }
   }
 
@@ -333,5 +343,39 @@
     color: @primary-color;
     margin-left: .03rem;
     margin-right: .03rem;
+  }
+
+  &-filter-select {
+    .input(.46rem, .65rem);
+    padding-right: .65rem !important;
+    padding-left: .46rem !important;
+    border: none;
+    border-top: @table-border !important;
+    &-wrapper {
+      width: 100%;
+    }
+    &-inner-editor {
+      border: none;
+      height: @input-height-base - .04rem;
+      padding: @input-padding-vertical-base 0;
+      & + * {
+        right: -.18rem;
+      }
+    }
+    &-select-field {
+      vertical-align: middle;
+      padding-left: .08rem;
+    }
+    &-multiple-block {
+      border-radius: .12rem;
+    }
+  }
+  &-columns-chooser {
+    width: .65rem;
+    border-left: @table-border;
+    &-dropdown-menu {
+      .dropdown-menu;
+      min-width: 1.8rem;
+    }
   }
 }

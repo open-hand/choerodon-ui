@@ -208,7 +208,7 @@ export function checkFieldType(value: any, field: Field): boolean {
       } else {
         const fieldType = getBaseType(field.type);
         const valueType = getValueType(value);
-        if (fieldType !== FieldType.auto && fieldType !== valueType) {
+        if (fieldType !== FieldType.auto && fieldType !== FieldType.reactNode && fieldType !== valueType) {
           warning(false,
             `Value type error: The value<${value}>'s type is ${valueType}, but the field<${field.name}>'s type is ${fieldType}.`,
           );

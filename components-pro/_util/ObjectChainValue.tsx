@@ -1,6 +1,5 @@
-import Map from 'core-js/library/fn/map';
 import isObject from 'lodash/isObject';
-import { isArrayLike } from 'mobx';
+import { isArrayLike, observable } from 'mobx';
 import { mobxGet, mobxRemove, mobxSet } from './MobxUtils';
 import Field, { Fields } from '../data-set/Field';
 
@@ -21,7 +20,7 @@ export function get(obj: object, prop: string): any {
   }
 }
 
-export function set(data: object, prop: string, value: any, fields: Fields = new Map<string, Field>()): any {
+export function set(data: object, prop: string, value: any, fields: Fields = observable.map<string, Field>()): any {
   const index = prop.indexOf('.');
   if (index !== -1) {
     const key = prop.slice(0, index);

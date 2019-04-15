@@ -1,3 +1,4 @@
+import Map from 'core-js/library/fn/map';
 import React, { cloneElement, FormEventHandler, isValidElement, ReactInstance, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { action, computed, isArrayLike, observable, runInAction, toJS } from 'mobx';
@@ -32,16 +33,20 @@ import { ValidatorProps } from '../validator/rules';
 import { FIELD_SUFFIX } from '../form/utils';
 import { LabelLayout } from '../form/enum';
 import Animate from '../animate';
+import CloseButton from './CloseButton';
 
 const map: { [key: string]: FormField<FormFieldProps>[] } = {};
 
-export type Renderer = (props: {
+export type RenderProps = {
   value?: any;
   text?: any;
   record?: Record | null;
   name?: string;
   dataSet?: DataSet | null;
-}) => ReactNode;
+  repeat?: number;
+}
+
+export type Renderer = (props: RenderProps) => ReactNode;
 
 export function getFieldsById(id): FormField<FormFieldProps>[] {
   if (!map[id]) {
@@ -234,7 +239,6 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     readOnly: false,
     noValidate: false,
     showHelp: 'newLine',
-    renderer: ({ text }) => text,
   };
 
   emptyValue?: any = null;
@@ -271,6 +275,11 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     runInAction(() => {
       this.value = props.defaultValue;
     });
+  }
+
+  @autobind
+  defaultRenderer({ text }: RenderProps) {
+    return text;
   }
 
   /**
@@ -524,7 +533,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     if (!e.isDefaultPrevented()) {
       switch (e.keyCode) {
         case KeyCode.ENTER:
-          this.handleEnterDown();
+          this.handleEnterDown(e);
           onEnterDown(e);
           break;
         case KeyCode.ESC:
@@ -536,12 +545,17 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     onKeyDown(e);
   }
 
-  handleEnterDown() {
-    this.blur();
+  handleEnterDown(e) {
+    if (this.multiple) {
+      this.addValue(e.target.value);
+    } else {
+      this.blur();
+    }
   }
 
-  handleMutipleValueRemove(value: any, e) {
-    this.setValue(this.getValues().filter(v => v !== value));
+  @autobind
+  handleMutipleValueRemove(e, value: any, index: number) {
+    this.removeValue(value, index);
     e.stopPropagation();
   }
 
@@ -575,14 +589,15 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     return this.isFocused ? text : this.processText(text);
   }
 
-  processText(text?: any) {
-    const { record, dataSet, props: { renderer, name } } = this;
+  processText(text?: any, value: any = this.getValue(), repeat?: number) {
+    const { record, dataSet, props: { renderer = this.defaultRenderer, name } } = this;
     return renderer ? renderer({
-      value: this.getValue(),
+      value,
       text,
       record,
       dataSet,
       name,
+      repeat,
     }) : text;
   }
 
@@ -620,6 +635,24 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     }
   }
 
+  removeValue(value: any, index: number) {
+    let repeat: number = 0;
+    this.setValue(this.getValues().filter((v) => {
+      if (v === value) {
+        if (repeat === index) {
+          this.afterRemoveValue(value, repeat);
+          repeat += 1;
+          return false;
+        }
+        repeat += 1;
+      }
+      return true;
+    }));
+  }
+
+  afterRemoveValue(_value, _repeat: number) {
+  }
+
   setValue(value: any): void {
     if (!this.isReadOnly()) {
       if (this.multiple ? isArrayLike(value) && !value.length : isNil(value) || value === '') {
@@ -652,8 +685,11 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   renderMultipleValues(readOnly?: boolean) {
     const { prefixCls } = this;
     const validationErrorValues = this.getValidationErrorValues();
-    return this.getValues().map((v, index) => {
-      const text = this.processText(this.processValue(v));
+    const repeats: Map<any, number> = new Map<any, number>();
+    return this.getValues().map((v) => {
+      const repeat = repeats.get(v) || 0;
+      const text = this.processText(this.processValue(v), v, repeat);
+      repeats.set(v, repeat + 1);
       if (!isNil(text)) {
         const validationResult = validationErrorValues.find(error => error.value === v);
         const disabled = this.isDisabled() || this.isReadOnly();
@@ -662,7 +698,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
           [`${prefixCls}-multiple-block-disabled`]: disabled,
         }, `${prefixCls}-multiple-block`);
         const validationMessage = validationResult && this.renderValidationMessage(validationResult);
-        const closeBtn = !disabled && <Icon type="close" onClick={this.handleMutipleValueRemove.bind(this, v)} />;
+        const closeBtn = !disabled && <CloseButton onClose={this.handleMutipleValueRemove} value={v} index={repeat} />;
         const inner = readOnly ? <span className={className}>{text}</span> : (
           <li className={className}>
             <div>{text}</div>
@@ -671,7 +707,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
         );
         return (
           <Tooltip
-            key={index}
+            key={`${v}-${text}-${repeat}`}
             title={validationMessage}
             theme="light"
             placement="bottomLeft"

@@ -1,6 +1,7 @@
 import React, { createElement, CSSProperties, isValidElement, ReactNode } from 'react';
 import omit from 'lodash/omit';
 import defer from 'lodash/defer';
+import isArray from 'lodash/isArray';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { action, observable } from 'mobx';
@@ -176,10 +177,12 @@ export class TextField<T extends TextFieldProps> extends FormField<T & TextField
   getWrapperClassNames(...args): string {
     const { prefixCls } = this;
     const suffix = this.getSuffix();
+    const prefix = this.getPrefix();
     return super.getWrapperClassNames({
       [`${prefixCls}-empty`]: this.isEmpty(),
       [`${prefixCls}-suffix-button`]: isValidElement<{ onClick }>(suffix),
       [`${prefixCls}-multiple`]: this.multiple,
+      [`${prefixCls}-prefix-button`]: isValidElement<{ onClick }>(prefix),
     }, ...args);
   }
 
@@ -197,9 +200,11 @@ export class TextField<T extends TextFieldProps> extends FormField<T & TextField
     const placeholderDiv = this.renderPlaceHolder();
     const floatLabel = this.renderFloatLabel();
     const underLine = this.renderUnderLine();
+    const multipleHolder = this.renderMultipleHolder();
 
     return (
       <span {...this.getWrapperProps()}>
+        {multipleHolder}
         {otherPrevNode}
         {placeholderDiv}
         <label onMouseDown={this.handleMouseDown}>
@@ -221,7 +226,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T & TextField
     const isTooltipHelp = showHelp === ShowHelp.tooltip;
     const help = isTooltipHelp ? this.renderHelpMessage() : null;
 
-    if (!addonBefore && !addonAfter && showHelp !== ShowHelp.tooltip) {
+    if (!addonBefore && !addonAfter && (!help || showHelp !== ShowHelp.tooltip)) {
       return inputElement;
     }
 
@@ -260,7 +265,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T & TextField
     );
   }
 
-  renderMultipleEditor(props) {
+  renderMultipleEditor(props: T) {
     const { style } = this.props;
     const { text } = this;
     const editorStyle = {} as CSSProperties;
@@ -293,7 +298,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T & TextField
     const { placeholder, ...otherProps } = this.getOtherProps();
     const { height } = (style || {}) as CSSProperties;
     return this.multiple ? (
-      <div key="text" className={prefixCls}>
+      <div key="text" className={otherProps.className}>
         <Animate
           component="ul"
           componentProps={{ style: height && height !== 'auto' ? { height: pxToRem(toPx(height)! - 2) } : void 0 }}
@@ -301,7 +306,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T & TextField
           exclusive
         >
           {this.renderMultipleValues()}
-          {this.renderMultipleEditor(otherProps)}
+          {this.renderMultipleEditor({ ...otherProps, className: `${prefixCls}-multiple-input` })}
         </Animate>
       </div>
     ) : (
@@ -315,17 +320,15 @@ export class TextField<T extends TextFieldProps> extends FormField<T & TextField
     );
   }
 
-  getClassName(...props): string | undefined {
-    if (!this.multiple) {
-      return super.getClassName(...props);
-    }
-  }
-
   getSuffix(): ReactNode {
-    const { suffix } = this.props;
+    const { suffix = this.getDefaultSuffix() } = this.props;
     if (suffix) {
       return this.wrapperSuffix(suffix);
     }
+  }
+
+  getDefaultSuffix(): ReactNode {
+    return;
   }
 
   wrapperSuffix(children: ReactNode, props?: any): ReactNode {
@@ -364,6 +367,15 @@ export class TextField<T extends TextFieldProps> extends FormField<T & TextField
     );
   }
 
+  renderMultipleHolder() {
+    const { name, multiple } = this;
+    if (multiple) {
+      return (
+        <input key="value" className={`${this.prefixCls}-multiple-value`} value={this.toValueString(this.getValue()) || ''} name={name} />
+      );
+    }
+  }
+
   getOtherPrevNode(): ReactNode {
     return;
   }
@@ -379,7 +391,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T & TextField
   }
 
   getPlaceHolderNode(): ReactNode {
-    const { props: { placeholder }, prefixCls } = this;
+    const { prefixCls } = this;
+    const { placeholder } = this.getOtherProps();
     if (placeholder) {
       return <div className={`${prefixCls}-placeholder`}>{placeholder}</div>;
     }
@@ -407,13 +420,30 @@ export class TextField<T extends TextFieldProps> extends FormField<T & TextField
   @autobind
   handleKeyDown(e) {
     const { disabled, clearButton } = this.props;
-    if (!disabled && clearButton && !this.editable) {
-      switch (e.keyCode) {
-        case KeyCode.DELETE:
-        case KeyCode.BACKSPACE:
-          this.clear();
-          break;
-        default:
+    if (!this.isReadOnly() && !disabled) {
+      if (this.multiple) {
+        if (!this.text) {
+          switch (e.keyCode) {
+            case KeyCode.DELETE:
+              this.clear();
+              break;
+            case KeyCode.BACKSPACE:
+              const values = this.getValues();
+              const value = values.pop();
+              this.setValue(values);
+              this.afterRemoveValue(value, -1);
+              break;
+            default:
+          }
+        }
+      } else if (clearButton && !this.editable) {
+        switch (e.keyCode) {
+          case KeyCode.DELETE:
+          case KeyCode.BACKSPACE:
+            this.clear();
+            break;
+          default:
+        }
       }
     }
     super.handleKeyDown(e);
@@ -442,10 +472,12 @@ export class TextField<T extends TextFieldProps> extends FormField<T & TextField
 
   @autobind
   handleBlur(e) {
-    if (this.editable) {
-      this.syncValueOnBlur(e.target.value);
-    } else if (!this.getValues().length) {
-      this.setValue(null); // to excute validation
+    if (!e.isDefaultPrevented()) {
+      if (this.editable) {
+        this.syncValueOnBlur(e.target.value);
+      } else if (!this.getValues().length) {
+        this.setValue(null); // to excute validation
+      }
     }
     super.handleBlur(e);
   }
@@ -488,6 +520,13 @@ export class TextField<T extends TextFieldProps> extends FormField<T & TextField
   }
 
   restrictInput(value: string): string {
+    return value;
+  }
+
+  toValueString(value: any): string | undefined {
+    if (isArray(value)) {
+      return value.join(',');
+    }
     return value;
   }
 

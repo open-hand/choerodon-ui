@@ -62,6 +62,11 @@ export interface ColumnProps extends ElementProps {
    */
   sortable?: boolean;
   /**
+   * 是否可隐藏，设为false时不会出现在列过滤选项中
+   * @default true
+   */
+  hideable?: boolean;
+  /**
    * 列头内链样式
    */
   headerStyle?: CSSProperties;
@@ -88,7 +93,6 @@ export interface ColumnProps extends ElementProps {
   showHelp?: ShowHelp;
   colSpan?: number;
   rowSpan?: number;
-  index?: number;
   children?: ColumnProps[];
 }
 
@@ -145,6 +149,16 @@ export default class Column extends Component<ColumnProps, ComponentState> {
      * 是否可排序
      * @default false
      */
+    sortable: PropTypes.bool,
+    /**
+     * 是否可隐藏，设为false时不会出现在列过滤选项中
+     * @default true
+     */
+    hideable: PropTypes.bool,
+    /**
+     * 是否可排序
+     * @default false
+     */
     /**
      * 列头提示信息
      */
@@ -158,22 +172,27 @@ export default class Column extends Component<ColumnProps, ComponentState> {
       ShowHelp.newLine,
       ShowHelp.none,
     ]),
-    sortable: PropTypes.bool,
     colSpan: PropTypes.number,
     rowSpan: PropTypes.number,
     children: PropTypes.array,
   };
 
   static defaultProps = {
+    hidden: false,
     lock: false,
     resizable: true,
     sortable: false,
+    hideable: true,
     minWidth: defaultMinWidth,
-    showHelp: 'tooltip',
+    showHelp: ShowHelp.tooltip,
   };
 }
 
 export function minColumnWidth(col) {
+  const hidden = get(col, 'hidden');
+  if (hidden) {
+    return 0;
+  }
   const width = get(col, 'width');
   const min = get(col, 'minWidth');
   const minWidth = min === void 0 ? defaultMinWidth : min;
@@ -184,6 +203,10 @@ export function minColumnWidth(col) {
 }
 
 export function columnWidth(col) {
+  const hidden = get(col, 'hidden');
+  if (hidden) {
+    return 0;
+  }
   const width = get(col, 'width');
   if (width === void 0) {
     const minWidth = get(col, 'minWidth');

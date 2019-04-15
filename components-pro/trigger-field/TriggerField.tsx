@@ -1,4 +1,5 @@
 import React, { CSSProperties, ReactNode } from 'react';
+import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 import omit from 'lodash/omit';
 import noop from 'lodash/noop';
@@ -140,6 +141,11 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
 
   abstract getPopupContent();
 
+  @autobind
+  getRootDomNode() {
+    return findDOMNode(this);
+  }
+
   getOtherProps() {
     return omit(super.getOtherProps(), [
       'popupContent',
@@ -190,6 +196,7 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
         onPopupAnimateEnd={this.handlePopupAnimateEnd}
         onPopupHiddenChange={this.handlePopupHiddenChange}
         getPopupStyleFromAlign={this.getPopupStyleFromAlign}
+        getRootDomNode={this.getRootDomNode}
       >
         {this.getEditor()}
       </Trigger>
@@ -204,14 +211,13 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
     });
   }
 
-  getSuffix(): ReactNode {
-    const { prefixCls, props: { suffix } } = this;
-    return this.wrapperSuffix(
-      suffix ||
+  getDefaultSuffix(): ReactNode {
+    const { prefixCls } = this;
+    return (
       <Icon
         type={this.getTriggerIconFont()}
         className={`${prefixCls}-trigger`}
-      />,
+      />
     );
   }
 
@@ -236,8 +242,9 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
   }
 
   expand() {
+    this.popupTask.cancel();
     if (!this.isReadOnly() && !this.popup) {
-      this.popupTask.cancel().delay(this.props.triggerShowDelay as number, action(() => {
+      this.popupTask.delay(this.props.triggerShowDelay as number, action(() => {
         this.popup = true;
       }));
     }

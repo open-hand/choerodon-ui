@@ -258,8 +258,8 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     return formatNumber;
   }
 
-  processText(text) {
-    return super.processText(this.getFormatter()(text, this.lang, this.getFormatOptions()));
+  processText(text?: any, value?: any, repeat?: number) {
+    return super.processText(this.getFormatter()(text, this.lang, this.getFormatOptions()), value, repeat);
   }
 }
 

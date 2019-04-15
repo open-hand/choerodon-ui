@@ -12,6 +12,7 @@ import { ColumnProps, minColumnWidth } from './Column';
 import { ColumnLock } from './enum';
 import TableEditor from './TableEditor';
 import TableCol from './TableCol';
+import { getColumnKey } from './utils';
 
 export interface TableWrapperProps extends ElementProps {
   lock?: ColumnLock | boolean;
@@ -74,17 +75,19 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
     }
   };
 
-  getCol(column, index, width): ReactNode {
-    const { prefixCls } = this.props;
-    return (
-      <TableCol
-        key={column.name || column.key || index}
-        prefixCls={prefixCls}
-        width={width}
-        minWidth={minColumnWidth(column)}
-        onResizeEnd={this.handleResizeEnd}
-      />
-    );
+  getCol(column, width): ReactNode {
+    if (!column.hidden) {
+      const { prefixCls } = this.props;
+      return (
+        <TableCol
+          key={getColumnKey(column)}
+          prefixCls={prefixCls}
+          width={width}
+          minWidth={minColumnWidth(column)}
+          onResizeEnd={this.handleResizeEnd}
+        />
+      );
+    }
   }
 
   getColGroup(): ReactNode {
@@ -100,7 +103,7 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
           hasEmptyWidth = true;
         }
       }
-      return this.getCol(column, index, width);
+      return this.getCol(column, width);
     });
     if (overflowY && lock !== ColumnLock.left && (hasHeader || hasFooter)) {
       cols.push(<col key="fixed-column" style={{ width: pxToRem(measureScrollbar()) }} />);

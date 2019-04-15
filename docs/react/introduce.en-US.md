@@ -44,7 +44,7 @@ If you are in a bad network environment，you can try other registries and tools
 
 Add `script` and `link` tags in your browser and use the global variable `choerodon-ui`.
 
-We provide `choerodon-ui.js` `choerodon-ui.css` and `choerodon-ui.min.js` `choerodon-ui.min.css` under `choerodon-ui/dist` in choerodon-ui's npm package. You can also download these files directly from [![CDNJS](https://img.shields.io/cdnjs/v/choerodon-ui.svg?style=flat-square)](https://cdnjs.com/libraries/choerodon-ui) or [unpkg](https://unpkg.com/).
+We provide `choerodon-ui.js` `choerodon-ui.css` and `choerodon-ui.min.js` `choerodon-ui.min.css` under `choerodon-ui/dist` in choerodon-ui's npm package. You can also download these files directly from [UNPKG](https://unpkg.com/choerodon-ui/dist/).
 
 > **We strongly discourage loading the entire files** this will add bloat to your application and make it more difficult to receive bugfixes and updates. Antd is intended to be used in conjunction with a build tool, such as [webpack](https://webpack.github.io/), which will make it easy to import only the parts of choerodon-ui that you are using.
 

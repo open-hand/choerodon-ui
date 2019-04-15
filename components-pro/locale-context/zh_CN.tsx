@@ -20,6 +20,7 @@ export default {
     empty_data: '暂无数据',
     choose_export_columns: '请选择要导出的列',
     column_name: '列名',
+    filter_bar_placeholder: '过滤表',
   },
   Pagination: {
     records_per_page: '每页行数：',

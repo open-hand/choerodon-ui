@@ -18,3 +18,4 @@ configure({ prefixCls: 'ant' });
 | Property | Description | Type | Default |
 | -------- | ----------- | ---- | ------- |
 | prefixCls | set prefix class | string | c7n |
+| ripple | Whether to open the ripple effect | boolean | true |

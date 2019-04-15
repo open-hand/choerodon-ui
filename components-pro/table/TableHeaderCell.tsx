@@ -13,7 +13,7 @@ import Icon from '../icon';
 import DataSet from '../data-set/DataSet';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import EventManager from '../_util/EventManager';
-import { getAlignByField, getHeader } from './utils';
+import { getAlignByField, getColumnKey, getHeader } from './utils';
 import { ColumnAlign } from './enum';
 import { ShowHelp } from '../field/enum';
 import Tooltip from '../tooltip';
@@ -142,7 +142,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
   render() {
     const { column, prefixCls, dataSet, rowHeight } = this.props;
     const sortPrefixCls = `${prefixCls}-sort`;
-    const { headerClassName, headerStyle = {}, rowSpan, colSpan, sortable, name, align, help, showHelp } = column;
+    const { headerClassName, headerStyle = {}, rowSpan, colSpan, sortable, name, align, help, showHelp, children } = column;
     const classList: string[] = [`${prefixCls}-cell`];
     if (headerClassName) {
       classList.push(headerClassName);
@@ -162,7 +162,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
       };
     }
     if (!style.textAlign) {
-      const textAlign = align || name && getAlignByField(dataSet.getField(name));
+      const textAlign = align || (children ? ColumnAlign.center : name && getAlignByField(dataSet.getField(name)) );
       if (textAlign) {
         style.textAlign = textAlign;
       }
@@ -217,7 +217,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
         style={style}
         rowSpan={rowSpan}
         colSpan={colSpan}
-        data-index={name}
+        data-index={getColumnKey(column)}
       >
         <div {...innerProps} />
         {this.renderResizer()}

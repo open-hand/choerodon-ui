@@ -21,6 +21,7 @@ export interface Locale {
     empty_data;
     choose_export_columns;
     column_name;
+    filter_bar_placeholder;
   };
   Pagination: {
     records_per_page;

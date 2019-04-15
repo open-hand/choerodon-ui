@@ -30,6 +30,7 @@ export interface TriggerProps extends ElementProps {
   onPopupAnimateLeave?: (key: Key | null) => void;
   onPopupAnimateEnd?: (key: Key | null, exists: boolean) => void;
   onPopupHiddenChange?: (hidden: boolean) => void;
+  getRootDomNode?: () => Element | null | Text;
   getPopupStyleFromAlign ?: (target: Node | Window, align: object) => object | undefined;
   getPopupClassNameFromAlign ?: (align: object) => string | undefined;
   focusDelay?: number;
@@ -257,6 +258,7 @@ export default class Trigger extends Component<TriggerProps> {
       onPopupAlign,
       popupContent,
       getPopupStyleFromAlign,
+      getRootDomNode = this.getRootDomNode,
       transitionName,
     } = this.props;
     const visible = !this.popupHidden && popupContent;
@@ -278,7 +280,7 @@ export default class Trigger extends Component<TriggerProps> {
         align={this.getPopupAlign()}
         onAlign={onPopupAlign}
         onMouseDown={this.handlePopupMouseDown}
-        getAlignTarget={this.getAlignTarget}
+        getRootDomNode={getRootDomNode}
         onAnimateAppear={onPopupAnimateAppear}
         onAnimateEnter={onPopupAnimateEnter}
         onAnimateLeave={onPopupAnimateLeave}
@@ -306,7 +308,7 @@ export default class Trigger extends Component<TriggerProps> {
   }
 
   @autobind
-  getAlignTarget() {
+  getRootDomNode() {
     return findDOMNode(this);
   }
 

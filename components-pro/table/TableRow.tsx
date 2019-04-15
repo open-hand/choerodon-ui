@@ -1,5 +1,4 @@
 import React, { Component, ReactNode } from 'react';
-import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { computed, get, runInAction, set } from 'mobx';
@@ -13,7 +12,7 @@ import { ElementProps } from '../core/ViewComponent';
 import TableContext from './TableContext';
 import ExpandIcon from './ExpandIcon';
 import { ColumnLock, SelectionMode } from './enum';
-import { isDisabledRow } from './utils';
+import { getColumnKey, isDisabledRow } from './utils';
 
 export interface TableRowProps extends ElementProps {
   lock?: ColumnLock | boolean;
@@ -108,19 +107,21 @@ export default class TableRow extends Component<TableRowProps, any> {
     const {
       prefixCls, record, indentSize, rowHeight,
     } = this.props;
-    const { name, key } = column;
-    return (
-      <TableCell
-        key={name || key || index}
-        prefixCls={prefixCls}
-        column={column}
-        record={record}
-        indentSize={indentSize}
-        rowHeight={rowHeight}
-      >
-        {this.hasExpandIcon(index) && this.renderExpandIcon()}
-      </TableCell>
-    );
+    const { hidden } = column;
+    if (!hidden) {
+      return (
+        <TableCell
+          key={getColumnKey(column)}
+          prefixCls={prefixCls}
+          column={column}
+          record={record}
+          indentSize={indentSize}
+          rowHeight={rowHeight}
+        >
+          {this.hasExpandIcon(index) && this.renderExpandIcon()}
+        </TableCell>
+      );
+    }
   };
 
   focusRow(row: HTMLTableRowElement | null) {
@@ -128,7 +129,7 @@ export default class TableRow extends Component<TableRowProps, any> {
       const { node, overflowY, currentEditorName } = this.context.tableStore;
       const { lock, record } = this.props;
       if (!lock && !currentEditorName) {
-        const element = findDOMNode(node) as HTMLDivElement;
+        const { element } = node;
         if (element && element.contains(document.activeElement)
           && Array.from<HTMLTableRowElement>(element.querySelectorAll(`tr[data-index="${record.id}"]`))
             .every(tr => !tr.contains(document.activeElement))) {

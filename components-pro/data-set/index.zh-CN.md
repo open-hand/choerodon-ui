@@ -198,9 +198,10 @@ title: DataSet
 | lovCode | LOV配置代码 | string  |  |
 | lovPara | LOV查询参数对象 | object  |  |
 | lookupCode | 值列表代码 | string  |  |
+| lookupUrl | 值列表请求地址 | string  |  |
 | bind | 内部字段别名绑定 | string  |  |
 | dynamicProps | 动态属性钩子 | ({ dataSet, record, name }) => object  |  |
-| cascadeMap | 快码和LOV查询时的级联参数映射。 例如：cascadeMap: { parentCodeValue: 'city' }，其中'city'是当前所在数据源的其他字段名，parentCodeValue是关联父级的查询字段 | object  |  |
+| cascadeMap | 快码和LOV查询时的级联参数映射。 例如：cascadeMap: { parentCodeValue: 'city' }，其中'city'是当前所在数据源的其他字段名，parentCodeValue是快码和LOV的查询参数 | object  |  |
 | currency | 货币代码，详见[Current currency & funds code list.](https://www.currency-iso.org/en/home/tables/table-a1.html)  | string  |  |
 
 ### Field Values

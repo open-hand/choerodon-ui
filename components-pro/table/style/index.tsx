@@ -16,3 +16,4 @@ import '../../modal-container/style';
 import '../../tooltip/style';
 import '../../validator/style';
 import '../../switch/style';
+import '../../menu/style';

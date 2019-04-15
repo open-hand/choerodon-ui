@@ -1,8 +1,8 @@
-import omit from 'lodash/omit';
+import React, { ReactNode } from 'react';
+import PropTypes from 'prop-types';
 import { action, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
-import PropTypes from 'prop-types';
-import React, { ReactNode } from 'react';
+import omit from 'lodash/omit';
 import Button from '../button/Button';
 import { ButtonColor } from '../button/enum';
 import autobind from '../_util/autobind';
@@ -12,7 +12,7 @@ import message from '../message';
 import Modal from '../modal';
 import { UploadFile } from './interface';
 import UploadList from './UploadList';
-import { Tooltip } from '..';
+import Tooltip from '../tooltip/Tooltip';
 import { $l } from '../locale-context';
 
 export interface UploadProps extends FormFieldProps {
@@ -409,13 +409,8 @@ export default class Upload extends FormField<UploadProps> {
       };
     }
     if (data) {
-      let newData = data;
-      if (typeof data === 'function') {
-        newData = data(file);
-      }
-      Object.keys(newData).map(function (key) {
-        formData.append(key, data[key]);
-      });
+      const newData = typeof data === 'function' ? data(file) : data;
+      Object.keys(newData).forEach(key => formData.append(key, newData[key]));
     }
     // TODO: `filename` default value needs better implementation
     formData.append(filename || 'file', file);

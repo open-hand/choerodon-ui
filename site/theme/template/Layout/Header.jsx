@@ -19,6 +19,16 @@ function getStyle() {
   `;
 }
 
+function getPathnameRegExp(pathname) {
+  if (pathname === '/') {
+    return /\/$/;
+  }
+  if (pathname.startsWith('/')) {
+    return new RegExp(pathname);
+  }
+  return new RegExp(`/${pathname}`);
+}
+
 export default class Header extends React.Component {
   static contextTypes = {
     router: PropTypes.object.isRequired,
@@ -70,7 +80,7 @@ export default class Header extends React.Component {
     }
 
     location.href = location.href.replace(
-      new RegExp(pathname.startsWith('/') ? `${pathname}$` : `/${pathname}$`),
+      getPathnameRegExp(pathname),
       utils.getLocalizedPathname(pathname, !isZhCn),
     );
   };

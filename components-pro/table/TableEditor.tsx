@@ -7,7 +7,7 @@ import { ElementProps } from '../core/ViewComponent';
 import { FormField, FormFieldProps } from '../field/FormField';
 import TableContext from './TableContext';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
-import { findCell, getEditorByColumnAndRecord, isRadio } from './utils';
+import { findCell, getColumnKey, getEditorByColumnAndRecord, isRadio } from './utils';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { stopEvent } from '../_util/EventManager';
 import { runInAction } from 'mobx';
@@ -50,8 +50,8 @@ export default class TableEditor extends Component<TableEditorProps> {
           break;
         }
       case KeyCode.TAB:
-        const { prefixCls, column: { index } } = this.props;
-        const cell = findCell(tableStore, prefixCls, index);
+        const { prefixCls, column } = this.props;
+        const cell = findCell(tableStore, prefixCls, getColumnKey(column));
         if (cell) {
           cell.focus();
         }
@@ -129,7 +129,7 @@ export default class TableEditor extends Component<TableEditorProps> {
   render() {
     const editor = this.renderEditor();
     if (editor) {
-      const { prefixCls, column: { index, lock, name } } = this.props;
+      const { prefixCls, column, column: { lock, name } } = this.props;
       const props: any = {
         className: `${prefixCls}-editor`,
       };
@@ -137,7 +137,7 @@ export default class TableEditor extends Component<TableEditorProps> {
       const { tableStore } = this.context;
       if (tableStore.currentEditorName === name) {
         this.currentEditorName = name;
-        const cell = findCell(tableStore, prefixCls, index, lock);
+        const cell = findCell(tableStore, prefixCls, getColumnKey(column), lock);
         if (cell) {
           this.editing = true;
           const { offsetLeft, offsetTop, offsetWidth, offsetHeight } = cell;

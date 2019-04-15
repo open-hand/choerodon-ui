@@ -1,4 +1,4 @@
-import React, { isValidElement, ReactElement, ReactNode } from 'react';
+import React, { isValidElement, Key, ReactElement, ReactNode } from 'react';
 import isString from 'lodash/isString';
 import { ColumnProps } from './Column';
 import Record from '../data-set/Record';
@@ -114,13 +114,13 @@ export function isRadio(element?: ReactElement<FormFieldProps>): boolean {
   return false;
 }
 
-export function findCell(tableStore: any, prefixCls?: string, index?: number, lock?: ColumnLock | boolean): HTMLTableCellElement | undefined {
+export function findCell(tableStore: any, prefixCls?: string, name?: Key, lock?: ColumnLock | boolean): HTMLTableCellElement | undefined {
   const { node, dataSet, overflowX } = tableStore;
   const { current } = dataSet;
   const tableCellPrefixCls = `${prefixCls}-cell`;
-  if (index !== void 0 && current) {
+  if (name !== void 0 && current) {
     const wrapperSelector = overflowX && lock ? `.${prefixCls}-fixed-${lock === true ? ColumnLock.left : lock} ` : '';
-    const selector = `${wrapperSelector}tr[data-index="${current.id}"] td[data-index="${index}"] span.${tableCellPrefixCls}-inner`;
+    const selector = `${wrapperSelector}tr[data-index="${current.id}"] td[data-index="${name}"] span.${tableCellPrefixCls}-inner`;
     return node.element.querySelector(selector);
   }
 }
@@ -153,4 +153,8 @@ export function getHeader(column: ColumnProps, dataSet: DataSet): ReactNode {
   if (field) {
     return field.get('label');
   }
+}
+
+export function getColumnKey({ name, key }: ColumnProps): Key {
+  return name || key!;
 }

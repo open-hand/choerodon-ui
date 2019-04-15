@@ -55,7 +55,7 @@ export default class MonthsView extends DaysView {
   }
 
   renderHeader(): ReactNode {
-    const { prefixCls, date } = this.props;
+    const { prefixCls, props: { date } } = this;
     return (
       <div className={`${prefixCls}-header`}>
         <a className={`${prefixCls}-prev-year`} onClick={this.handlePrevYearClick}>
@@ -76,7 +76,7 @@ export default class MonthsView extends DaysView {
   }
 
   renderPanelBody(): ReactNode {
-    const { date, prefixCls, renderer = this.renderCell, isValidDate = alwaysValidDate } = this.props;
+    const { prefixCls, props: { date, renderer = this.renderCell, isValidDate = alwaysValidDate } } = this;
     const selected = date.clone();
     const prevMonth = date.clone().startOf('y');
     const lastMonth = prevMonth.clone().add(12, 'M');
@@ -119,7 +119,7 @@ export default class MonthsView extends DaysView {
   }
 
   getPanelClass(): string {
-    return `${this.props.prefixCls}-month-panel`;
+    return `${this.prefixCls}-month-panel`;
   }
 
   choose(date: Moment) {

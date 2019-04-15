@@ -39,7 +39,7 @@ export default class DateTimesView extends DaysView implements DatePickerKeyboar
   }
 
   renderFooter(): ReactNode {
-    const { prefixCls, date } = this.props;
+    const { prefixCls, props: { date } } = this;
     return (
       <div className={`${prefixCls}-footer`}>
         <a

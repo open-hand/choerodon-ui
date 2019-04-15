@@ -14,6 +14,10 @@ timeline: true
 * 主版本号：含有破坏性更新和新特性，不在发布周期内。
 
 ---
+
+- 🌟 `<pro>Form`: 属性labelLayout新增float值。
+- 🌟 `<pro>Table`: 弃用属性showQueryBar，新增queryBar属性，可选值为`normal` `bar` `none`。
+
 ## 0.6.0
 
 `2018-04-01`

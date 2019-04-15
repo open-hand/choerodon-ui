@@ -1,4 +1,4 @@
-import { action, computed, get, observable, reaction, runInAction, set } from 'mobx';
+import { action, computed, get, observable, reaction, runInAction, set, ObservableMap } from 'mobx';
 import { MomentInput } from 'moment';
 import isObject from 'lodash/isObject';
 import merge from 'lodash/merge';
@@ -16,7 +16,7 @@ import ValidationResult from '../validator/ValidationResult';
 
 export type urlHook = (code: string) => string;
 
-export type Fields = Map<string, Field>;
+export type Fields = ObservableMap<string, Field>;
 
 export type FieldProps = {
   /**
@@ -285,8 +285,7 @@ export default class Field {
           if (props && propsName in props) {
             const reactor = this.reactions[propsName];
             if (!reactor) {
-              this.reactions[propsName] = true;
-              reaction(() => this.get(propsName), () => {
+              this.reactions[propsName] = reaction(() => this.get(propsName), () => {
                 this.validator.reset();
                 this.checkValidity();
               });

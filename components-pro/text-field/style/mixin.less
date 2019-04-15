@@ -7,13 +7,17 @@
 
 // size mixins for input
 .input-lg() {
-  padding: @input-padding-vertical-lg @input-padding-horizontal;
-  height: @input-height-lg;
+  &-lg & {
+    padding: @input-padding-vertical-lg @input-padding-horizontal;
+    height: @input-height-lg;
+  }
 }
 
 .input-sm() {
-  padding: @input-padding-vertical-sm @input-padding-horizontal;
-  height: @input-height-sm;
+  &-sm & {
+    padding: @input-padding-vertical-sm @input-padding-horizontal;
+    height: @input-height-sm;
+  }
 }
 
 // input status
@@ -62,7 +66,7 @@
 }
 
 // Basic style for input
-.input() {
+.input(@prefix-width: @input-button-width, @suffix-width: @input-button-width) {
   position: relative;
   display: inline-block;
   padding: @input-padding-vertical-base @input-padding-horizontal;
@@ -76,27 +80,29 @@
   background-image: none;
   border: @border-width-base @border-style-base @input-border-color;
   border-radius: @border-radius-base;
-  .placeholder(); // Reset placeholder
   transition: all .3s;
+
+  .placeholder;
 
   label:hover &,
   &:hover {
-    .hover();
+    .hover;
   }
 
   &:focus,
   &-focused & {
-    .active();
+    .active;
   }
 
   &-disabled &,
   &-disabled label:hover &,
   &:disabled {
-    .disabled();
+    .disabled;
   }
 
   &-disabled &-prefix,
   &-disabled &-suffix,
+  &-disabled&-prefix-button &-prefix,
   &-disabled&-suffix-button &-suffix,
   &-disabled &-inner-button,
   &-disabled input {
@@ -129,13 +135,8 @@
   }
 
   // Size
-  &-lg {
-    .input-lg();
-  }
-
-  &-sm {
-    .input-sm();
-  }
+  .input-lg;
+  .input-sm;
 
   &-wrapper {
     position: relative;
@@ -160,37 +161,43 @@
     z-index: 1;
     top: .01rem;
     bottom: .01rem;
-    width: @input-button-width;
-    // width: .3rem;
     height: .2rem;
-    // height: 100%;
     text-align: center;
     margin: auto 0;
     line-height: 1;
-
-    // & > * {
-    //   position: absolute;
-    //   top: 50%;
-    //   left: 50%;
-    //   transform: translate(-50%, -50%);
-    // }
   }
 
   &-prefix {
     left: .01rem;
+    width: @prefix-width;
+  }
+
+  &-suffix {
+    width: @suffix-width;
   }
 
   &-suffix,
   &-inner-button {
     right: .01rem;
   }
+  &-prefix-button &-placeholder {
+    padding-left: @prefix-width;
+  }
 
   &-suffix-button &-inner-button {
-    right: @input-button-width;
+    right: @suffix-width + .01rem;
   }
 
   &-suffix-button &-suffix {
     cursor: pointer;
+  }
+
+  &:not(textarea):not(:last-child) {
+    padding-right: @suffix-width;
+  }
+
+  &:not(textarea):not(:first-child) {
+    padding-left: @prefix-width;
   }
 
   &-inner-button {
@@ -203,20 +210,12 @@
     }
   }
 
-  &:not(textarea):not(:last-child) {
-    padding-right: @input-button-width;
-  }
-
-  &:not(textarea):not(:first-child) {
-    padding-left: @input-button-width;
-  }
-
   &-wrapper:hover &-inner-button,
   &-focused &-inner-button {
     opacity: 1;
     z-index: 2;
     &-clear-button {
-      right: @input-button-width;
+      right: @suffix-width;
     }
   }
 
@@ -261,7 +260,23 @@
   }
 
   &-multiple {
-    width: 1.72rem;
+    &-value {
+      visibility: hidden;
+      height: 0;
+      border: none;
+      display: block;
+      width: 100%;
+    }
+
+    &-input {
+      width: .05rem;
+      height: 100%;
+      border: none;
+      outline: 0;
+      background-color: transparent;
+      max-width: 100%;
+      margin-left: .04rem;
+    }
   }
 
   &-multiple & {
@@ -270,38 +285,19 @@
     padding-bottom: 0;
     padding-left: 0;
     margin: 0;
-    input {
-      width: .05rem;
-      height: 100%;
-      border: none;
-      outline: 0;
-      background-color: transparent;
-      float: left;
-      max-width: 100%;
-      margin-left: .04rem;
-    }
   }
 
   &-multiple &:not(:last-child) {
-    padding-right: @input-button-width * 2;
+    padding-right: @suffix-width * 2;
   }
 
   &-multiple-block {
     .tag-block;
     cursor: default;
-    position: relative;
-    padding-right: .25rem;
     .@{iconfont-css-prefix} {
       line-height: inherit;
       cursor: pointer;
-      transition: all .3s;
-      position: absolute;
-      right: .04rem;
-      top: .02rem;
-      opacity: .85;
-      &:hover {
-        opacity: 1;
-      }
+      margin-left: .08rem;
     }
   }
 
@@ -414,11 +410,12 @@
   color: @tag-default-color;
   background-color: @tag-default-bg;
   border-radius: @border-radius-base;
-  padding: 0 .1rem;
+  padding: 0 .08rem;
   overflow: hidden;
   max-width: 99%;
   margin: 0 .02rem;
   line-height: @line-height-base;
+  white-space: nowrap;
   > div {
     display: inline-block;
     white-space: nowrap;
@@ -426,6 +423,9 @@
     text-overflow: ellipsis;
     max-width: 100%;
     vertical-align: middle;
+    &:not(:last-child) {
+      max-width: ~"calc(100% - .26rem)";
+    }
   }
   &-invalid {
     background-color: @error-color;

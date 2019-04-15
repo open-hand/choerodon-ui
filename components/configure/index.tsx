@@ -1,9 +1,11 @@
 export type Config = {
   prefixCls?: string;
+  ripple?: boolean;
 }
 
 const globalConfig: Config = {
   prefixCls: 'c7n',
+  ripple: true,
 };
 
 export function getPrefixCls(suffixCls: string, customizePrefixCls?: string): string {
@@ -11,6 +13,10 @@ export function getPrefixCls(suffixCls: string, customizePrefixCls?: string): st
     return customizePrefixCls;
   }
   return `${globalConfig.prefixCls}-${suffixCls}`;
+}
+
+export function getConfig(key) {
+  return globalConfig[key];
 }
 
 export default function configure(config: Config) {

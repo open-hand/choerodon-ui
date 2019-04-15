@@ -70,9 +70,13 @@ export interface ElementProps {
    */
   prefixCls?: string;
   /**
-   * 自定义样式名
+   * 外层自定义样式名
    */
   className?: string;
+  /**
+   * 实际元素自定义样式名
+   */
+  elementClassName?: string;
   /**
    * 内链样式
    */
@@ -299,6 +303,7 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
       'prefixCls',
       'suffixCls',
       'className',
+      'elementClassName',
       'style',
       'size',
       'autoFocus',
@@ -339,8 +344,8 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
   }
 
   getClassName(...props): string | undefined {
-    const { prefixCls } = this;
-    return classNames(prefixCls, ...props);
+    const { prefixCls, props: { elementClassName } } = this;
+    return classNames(prefixCls, elementClassName, ...props);
   }
 
   getWrapperProps(props = {}): any {
@@ -377,8 +382,8 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
       this.isFocused = true;
       this.isFocus = true;
       const { props: { onFocus = noop }, prefixCls } = this;
-      const element = findDOMNode(this);
       onFocus(e);
+      const element = this.wrapper || findDOMNode(this);
       if (element) {
         classes(element).add(`${prefixCls}-focused`);
       }
@@ -393,7 +398,7 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
         this.isFocus = false;
         const { props: { onBlur = noop }, prefixCls } = this;
         onBlur(e);
-        const element = findDOMNode(this);
+        const element = this.wrapper || findDOMNode(this);
         if (element) {
           classes(element).remove(`${prefixCls}-focused`);
         }

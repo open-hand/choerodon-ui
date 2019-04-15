@@ -1,13 +1,14 @@
-import React, { Component, CSSProperties, MouseEventHandler } from 'react';
+import React, { Component, CSSProperties, FocusEventHandler, MouseEventHandler } from 'react';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
-import { icons, categories } from 'choerodon-ui-font';
+import { categories, icons } from 'choerodon-ui-font';
 
 export interface IconProps {
   type: string;
   className?: string;
   title?: string;
   onClick?: MouseEventHandler<any>;
+  onFocus?: FocusEventHandler<any>;
   onMouseDown?: MouseEventHandler<any>;
   onMouseUp?: MouseEventHandler<any>;
   onMouseLeave?: MouseEventHandler<any>;

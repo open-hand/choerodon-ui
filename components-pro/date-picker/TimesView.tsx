@@ -93,7 +93,7 @@ export default class TimesView extends DaysView {
   }
 
   renderHeader(): ReactNode {
-    const { prefixCls, date, mode } = this.props;
+    const { prefixCls, props: { date, mode } } = this;
     if (mode === ViewMode.time) {
       return (
         <div className={`${prefixCls}-header`}>
@@ -118,7 +118,7 @@ export default class TimesView extends DaysView {
   }
 
   renderFooter(): ReactNode {
-    const { prefixCls, mode } = this.props;
+    const { prefixCls, props: { mode } } = this;
     let viewSelect;
     if (mode !== ViewMode.time) {
       viewSelect = (
@@ -141,7 +141,7 @@ export default class TimesView extends DaysView {
   renderPanel() {
     const className = this.getPanelClass();
     return (
-      <div className={`${className} ${this.props.prefixCls}-${this.getCurrentUnit()}`} onWheel={this.handleWheel}>
+      <div className={`${className} ${this.prefixCls}-${this.getCurrentUnit()}`} onWheel={this.handleWheel}>
         <div className={`${className}-inner`}>
           {this.renderPanelBody()}
         </div>
@@ -154,7 +154,7 @@ export default class TimesView extends DaysView {
       this.getTimeBar(TimeUnit.hour),
       this.getTimeBar(TimeUnit.minute),
       this.getTimeBar(TimeUnit.second),
-      <div key="active" className={`${this.props.prefixCls}-time-focus-active`} />,
+      <div key="active" className={`${this.prefixCls}-time-focus-active`} />,
     ];
   }
 
@@ -166,7 +166,7 @@ export default class TimesView extends DaysView {
   }
 
   getTimeBar(unit: unitOfTime.Base): ReactNode {
-    const { prefixCls, date, renderer = this.renderCell, isValidDate = alwaysValidDate } = this.props;
+    const { prefixCls, props: { date, renderer = this.renderCell, isValidDate = alwaysValidDate } } = this;
     const size = unit === TimeUnit.hour ? 24 : 60;
     const selected = date.clone();
     const pre = date.clone().set(unit, 0);
@@ -202,7 +202,7 @@ export default class TimesView extends DaysView {
   }
 
   getPanelClass(): string {
-    return `${this.props.prefixCls}-time-panel`;
+    return `${this.prefixCls}-time-panel`;
   }
 
   getCurrentUnit(): unitOfTime.Base {

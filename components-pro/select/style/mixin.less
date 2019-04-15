@@ -1,0 +1,95 @@
+@checkbox-prefix-cls: ~"@{c7n-prefix}-checkbox";
+
+.dropdown-menu () {
+  outline: none;
+  margin-bottom: 0;
+  list-style: none;
+  max-height: 2.5rem;
+  overflow: auto;
+  padding: .08rem 0;
+  &-item-group {
+    padding-top: .04rem;
+    padding-bottom: .04rem;
+    &:not(:last-child) {
+      border-bottom: @border-width-base @border-style-base @border-color-base;
+    }
+  }
+  &-item-group-list {
+    margin: 0;
+    padding: 0;
+  }
+
+  &-item-group-list > &-item {
+    padding-left: .2rem;
+  }
+  &-item-group-no-title > &-item {
+    padding-left: @control-padding-horizontal;
+  }
+
+  &-item-group-title {
+    color: @text-color-secondary;
+    padding: 0 @control-padding-horizontal;
+    height: .32rem;
+    line-height: .32rem;
+    font-size: @font-size-sm;
+  }
+
+  &-item {
+    position: relative;
+    display: block;
+    padding: .04rem @control-padding-horizontal;
+    line-height: .2rem;
+    font-weight: normal;
+    color: @text-color;
+    white-space: nowrap;
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: background 0.3s ease;
+    letter-spacing: .01em;
+    height: auto;
+
+    &:hover {
+      background-color: @item-active-bg;
+    }
+
+    &:first-child {
+      border-radius: @border-radius-base @border-radius-base 0 0;
+    }
+
+    &:last-child {
+      border-radius: 0 0 @border-radius-base @border-radius-base;
+    }
+
+    &-disabled {
+      color: @input-disabled-color;
+      cursor: not-allowed;
+
+      &:hover {
+        color: @input-disabled-color;
+        background-color: @component-background;
+        cursor: not-allowed;
+      }
+    }
+
+    &-selected {
+      background-color: @item-focus-bg;
+    }
+
+    &-active {
+      background-color: @item-active-bg;
+    }
+
+    &-divider {
+      height: .01rem;
+      margin: .01rem 0;
+      overflow: hidden;
+      background-color: @border-color-split;
+      line-height: 0;
+    }
+    .@{checkbox-prefix-cls}-wrapper {
+      user-select: none;
+      margin-right: .08rem;
+    }
+  }
+}

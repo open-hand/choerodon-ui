@@ -35,7 +35,7 @@ const PopupKeyGen: IterableIterator<string> = function* (start: number) {
 export interface PopupProps extends ViewComponentProps {
   align: object;
   onAlign?: (source: Node, align: object, target: Node | Window) => void;
-  getAlignTarget?: () => Node;
+  getRootDomNode?: () => Node;
   transitionName?: string;
   onAnimateAppear?: (key: Key | null) => void;
   onAnimateEnter?: (key: Key | null) => void;
@@ -51,7 +51,7 @@ export default class Popup extends ViewComponent<PopupProps> {
   static propTypes = {
     align: PropTypes.object,
     onAlign: PropTypes.func,
-    getAlignTarget: PropTypes.func,
+    getRootDomNode: PropTypes.func,
     transitionName: PropTypes.string,
     onAnimateAppear: PropTypes.func,
     onAnimateEnter: PropTypes.func,
@@ -79,7 +79,7 @@ export default class Popup extends ViewComponent<PopupProps> {
     const otherProps = omit(super.getOtherProps(), [
       'align',
       'transitionName',
-      'getAlignTarget',
+      'getRootDomNode',
       'getClassNameFromAlign',
       'getStyleFromAlign',
       'onAlign',
@@ -96,7 +96,7 @@ export default class Popup extends ViewComponent<PopupProps> {
       hidden,
       align,
       transitionName,
-      getAlignTarget,
+      getRootDomNode,
       children,
       onAnimateAppear = noop,
       onAnimateEnter = noop,
@@ -125,7 +125,7 @@ export default class Popup extends ViewComponent<PopupProps> {
           childrenProps={{ hidden: 'hidden' }}
           align={align}
           onAlign={this.onAlign}
-          target={getAlignTarget}
+          target={getRootDomNode}
           hidden={hidden}
           monitorWindowResize
         >

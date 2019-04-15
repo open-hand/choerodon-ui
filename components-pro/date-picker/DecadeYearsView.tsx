@@ -60,7 +60,7 @@ export default class DecadeYearsView extends DaysView {
   }
 
   renderHeader(): ReactNode {
-    const { prefixCls, date } = this.props;
+    const { prefixCls, props: { date } } = this;
     const year = date.year() % 100;
     const from = date.clone().subtract(year, 'y');
     const to = from.clone().add(99, 'y');
@@ -84,7 +84,7 @@ export default class DecadeYearsView extends DaysView {
   }
 
   renderPanelBody(): ReactNode {
-    const { date, prefixCls, renderer = this.renderCell, isValidDate = alwaysValidDate } = this.props;
+    const { prefixCls, props: { date, renderer = this.renderCell, isValidDate = alwaysValidDate } } = this;
     const selected = date.clone().subtract(date.year() % 10, 'y');
     const from = date.clone().startOf('y').subtract(date.year() % 100, 'y');
     const to = from.clone().add(100, 'y');
@@ -130,7 +130,7 @@ export default class DecadeYearsView extends DaysView {
   }
 
   getPanelClass(): string {
-    return `${this.props.prefixCls}-year-panel`;
+    return `${this.prefixCls}-year-panel`;
   }
 
   choose(date: Moment): void {

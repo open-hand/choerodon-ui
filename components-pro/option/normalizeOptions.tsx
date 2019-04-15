@@ -13,9 +13,6 @@ export default function normalizeOptions({ field, textField, valueField, multipl
   if (field) {
     const options = field.getOptions();
     if (options) {
-      if (selectionType) {
-        options.selection = selectionType;
-      }
       return options;
     } else {
       const lookupKey = lookupStore.getKey(field);
@@ -43,6 +40,7 @@ export default function normalizeOptions({ field, textField, valueField, multipl
     fields,
     paging: false,
     selection: selectionType || DataSetSelection.single,
+    autoLocateFirst: false,
   });
   if (fetch) {
     fetch.then(values => values && ds.loadData(values));

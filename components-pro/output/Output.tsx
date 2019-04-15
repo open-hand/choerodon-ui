@@ -4,10 +4,8 @@ import { computed } from 'mobx';
 import omit from 'lodash/omit';
 import isNil from 'lodash/isNil';
 import { FormField, FormFieldProps } from '../field/FormField';
-import { FieldType } from '../data-set/enum';
-import { CheckBox } from '../check-box/CheckBox';
-import { formatCurrency, formatNumber } from '../number-field/utils';
 import autobind from '../_util/autobind';
+import processFieldValue from '../field/utils';
 
 export interface OutputProps extends FormFieldProps {
 }
@@ -41,20 +39,9 @@ export default class Output extends FormField<OutputProps> {
   processValue(value) {
     if (!isNil(value)) {
       value = super.processValue(value);
-      const { field } = this;
+      const { field, lang } = this;
       if (field) {
-        const { type } = field;
-        const { name, record, lang } = this;
-        if (type === FieldType.boolean) {
-          return <CheckBox disabled name={name} record={record} />;
-        } else if (type === FieldType.number) {
-          return formatNumber(value, lang);
-        } else if (type === FieldType.currency) {
-          return formatCurrency(value, lang, {
-            currency: this.getProp('currency'),
-          });
-        }
-        return field.getText(value);
+        return processFieldValue(value, field, lang);
       }
     }
     return value;

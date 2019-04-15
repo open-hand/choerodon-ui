@@ -1,4 +1,3 @@
-import Map from 'core-js/library/fn/map';
 import { action, computed, isArrayLike, isObservableArray, observable, runInAction, set, toJS } from 'mobx';
 import cloneDeep from 'lodash/cloneDeep';
 import isNil from 'lodash/isNil';
@@ -224,7 +223,7 @@ export default class Record {
 
   constructor(data: object = {}, dataSet?: DataSet) {
     runInAction(() => {
-      this.fields = new Map<string, Field>();
+      this.fields = observable.map<string, Field>();
       this.status = RecordStatus.add;
       this.selectable = true;
       this.isSelected = false;

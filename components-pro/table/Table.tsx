@@ -24,11 +24,12 @@ import TableContext from './TableContext';
 import TableWrapper from './TableWrapper';
 import TableBody from './TableBody';
 import TableFooter from './TableFooter';
-import { ColumnLock, ScrollPosition, SelectionMode, TableMode } from './enum';
+import { ColumnLock, ScrollPosition, SelectionMode, TableMode, TableQueryBar } from './enum';
 import TableToolBar, { Buttons, buttonsEnumType } from './TableToolBar';
 import Switch from '../switch/Switch';
 import Tooltip from '../tooltip/Tooltip';
 import { $l } from '../locale-context';
+import FilterBar from './FilterBar';
 
 export interface TableProps extends DataSetComponentProps {
   columns?: ColumnProps[];
@@ -87,9 +88,15 @@ export interface TableProps extends DataSetComponentProps {
   queryFieldsLimit?: number;
   /**
    * 显示查询条
-   * @default true
+   * 可选值: `normal` `bar` `none`
+   * @default 'normal'
    */
-  showQueryBar?: boolean;
+  queryBar?: TableQueryBar;
+  /**
+   * @deprecated
+   * 请使用 queryBar="none"
+   */
+  showQuerybar?: boolean;
   /**
    * 行高
    * @default 31
@@ -121,6 +128,14 @@ export interface TableProps extends DataSetComponentProps {
    * 可选值: `list` `tree`
    */
   mode?: TableMode;
+  /**
+   * queryBar为bar时，直接输入的过滤条件的字段名
+   */
+  filterBarFieldName?: string;
+  /**
+   * queryBar为bar时输入框的占位符
+   */
+  filterBarPlaceholder?: string;
 }
 
 @observer
@@ -177,7 +192,7 @@ export default class Table extends DataSetComponent<TableProps> {
      * 显示查询条
      * @default true
      */
-    showQueryBar: PropTypes.bool,
+    queryBar: PropTypes.oneOf([TableQueryBar.normal, TableQueryBar.bar, TableQueryBar.none]),
     /**
      * 行高
      * @default 30
@@ -188,6 +203,8 @@ export default class Table extends DataSetComponent<TableProps> {
     indentSize: PropTypes.number,
     filter: PropTypes.func,
     mode: PropTypes.oneOf([TableMode.list, TableMode.tree]),
+    filterBarFieldName: PropTypes.string,
+    filterBarPlaceholder: PropTypes.string,
     ...DataSetComponent.propTypes,
   };
 
@@ -198,11 +215,12 @@ export default class Table extends DataSetComponent<TableProps> {
     selectionMode: SelectionMode.rowbox,
     queryFields: {},
     queryFieldsLimit: 1,
-    showQueryBar: true,
+    queryBar: TableQueryBar.normal,
     rowHeight: 30,
     defaultRowExpanded: false,
     expandRowByClick: false,
     indentSize: 15,
+    filterBarFieldName: 'params',
   };
 
   tableStore: TableStore = new TableStore(this);
@@ -386,11 +404,14 @@ export default class Table extends DataSetComponent<TableProps> {
       'rowHeight',
       'queryFields',
       'queryFieldsLimit',
-      'showQueryBar',
+      'queryBar',
       'defaultRowExpanded',
       'expandRowByClick',
       'indentSize',
       'filter',
+      'mode',
+      'filterBarFieldName',
+      'filterBarPlaceholder',
     ]);
     otherProps.onKeyDown = this.handleKeyDown;
     const { rowHeight } = this.props;
@@ -442,9 +463,21 @@ export default class Table extends DataSetComponent<TableProps> {
     }
   }
 
+  renderBar() {
+    const {
+      prefixCls,
+      props: { dataSet, filterBarFieldName, filterBarPlaceholder },
+    } = this;
+    return <FilterBar prefixCls={prefixCls} dataSet={dataSet} paramName={filterBarFieldName!} placeholder={filterBarPlaceholder} />;
+  }
+
   render() {
-    const { prefixCls, tableStore, props: { dataSet, buttons, queryFieldsLimit, queryFields, showQueryBar, header } } = this;
-    const { overflowX, isAnyColumnsLeftLock, isAnyColumnsRightLock } = tableStore;
+    const {
+      prefixCls,
+      tableStore,
+      tableStore: { overflowX, isAnyColumnsLeftLock, isAnyColumnsRightLock },
+      props: { dataSet, buttons, queryFieldsLimit, queryFields, queryBar, header, showQuerybar },
+    } = this;
     const content = this.getTable();
     const context = { tableStore };
     return (
@@ -456,9 +489,10 @@ export default class Table extends DataSetComponent<TableProps> {
             buttons={buttons}
             queryFieldsLimit={queryFieldsLimit!}
             queryFields={queryFields!}
-            showQueryBar={showQueryBar!}
+            showQueryBar={queryBar === TableQueryBar.normal && showQuerybar !== false}
             prefixCls={prefixCls}
           />
+          {queryBar === TableQueryBar.bar && this.renderBar()}
           <Spin dataSet={dataSet}>
             <div {...this.getOtherProps()}>
               <div className={`${prefixCls}-content`}>

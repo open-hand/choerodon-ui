@@ -81,9 +81,9 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
       'mode',
     ]);
     otherProps.type = this.type;
-    if (this.isReadOnly()) {
-      otherProps.disabled = true;
-    }
+    // if (this.isReadOnly()) {
+    //   otherProps.disabled = true;
+    // }
     otherProps.onMouseDown = this.handleMouseDown;
     otherProps.onClick = otherProps.onChange;
     otherProps.onChange = noop;
@@ -132,7 +132,7 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
 
   @autobind
   handleMouseDown(e) {
-    e.stopPropagation();
+    // e.stopPropagation();
     const { onMouseDown } = this.props;
     if (typeof onMouseDown === 'function') {
       onMouseDown(e);

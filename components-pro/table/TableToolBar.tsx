@@ -22,13 +22,13 @@ import Table from './Table';
 import Column from './Column';
 import { findBindFieldBy } from '../data-set/utils';
 
-function filterBindField(fields: Fields): Fields {
+function filterBindField(fields: Fields): { [key: string]: Field } {
   return Array.from(fields.entries()).reduce((newFields, [key, field]) => {
     if (!field.get('bind')) {
       newFields[key] = field;
     }
     return newFields;
-  }, {} as Fields);
+  }, {} as { [key: string]: Field });
 }
 
 export type Buttons = TableButtonType | [TableButtonType, ButtonProps] | ReactElement<ButtonProps>;
@@ -243,23 +243,25 @@ export default class TableToolBar extends Component<TabelToolBarProps, any> {
     if (showQueryBar && queryDataSet) {
       const fields = filterBindField(queryDataSet.fields);
       const keys = Object.keys(fields);
-      const currentFields = keys.slice(0, queryFieldsLimit).map(name => fields[name]);
-      const moreKeys = keys.slice(queryFieldsLimit);
-      let more;
-      let dirtyInfo;
-      if (moreKeys.length) {
-        const moreFields = keys.slice(queryFieldsLimit).map(name => fields[name]);
-        more = this.getMoreButton(moreFields, queryDataSet);
-        dirtyInfo = this.getDirtyInfo(queryDataSet.current, moreKeys);
+      if (keys.length) {
+        const currentFields = keys.slice(0, queryFieldsLimit).map(name => fields[name]);
+        const moreKeys = keys.slice(queryFieldsLimit);
+        let more;
+        let dirtyInfo;
+        if (moreKeys.length) {
+          const moreFields = keys.slice(queryFieldsLimit).map(name => fields[name]);
+          more = this.getMoreButton(moreFields, queryDataSet);
+          dirtyInfo = this.getDirtyInfo(queryDataSet.current, moreKeys);
+        }
+        return (
+          <span className={`${prefixCls}-query-bar`}>
+            {dirtyInfo}
+            {this.getCurrentFields(currentFields, queryDataSet)}
+            <Button color={ButtonColor.blue} onClick={this.handleQuery}>{$l('Table', 'query_button')}</Button>
+            {more}
+          </span>
+        );
       }
-      return (
-        <span className={`${prefixCls}-query-bar`}>
-          {dirtyInfo}
-          {this.getCurrentFields(currentFields, queryDataSet)}
-          <Button color={ButtonColor.blue} onClick={this.handleQuery}>{$l('Table', 'query_button')}</Button>
-          {more}
-        </span>
-      );
     }
   }
 

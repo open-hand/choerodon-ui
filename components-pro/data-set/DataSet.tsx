@@ -1,5 +1,4 @@
-import Map from 'core-js/library/fn/map';
-import { action, computed, get, isArrayLike, observable, reaction, runInAction, set, toJS } from 'mobx';
+import { action, computed, get, IReactionDisposer, isArrayLike, observable, reaction, runInAction, set, toJS } from 'mobx';
 import { AxiosInstance } from 'axios';
 import isNumber from 'lodash/isNumber';
 import isArray from 'lodash/isArray';
@@ -69,6 +68,11 @@ export interface DataSetProps {
    * @default false;
    */
   autoCreate?: boolean;
+  /**
+   * 自动定位到第一条
+   * @default true;
+   */
+  autoLocateFirst?: boolean;
   /**
    * 选择的模式
    * @default "multiple"
@@ -167,6 +171,7 @@ export default class DataSet extends EventManager {
   static defaultProps: DataSetProps = {
     autoCreate: false,
     autoQuery: false,
+    autoLocateFirst: true,
     selection: DataSetSelection.multiple,
     modifiedCheck: true,
     pageSize: 10,
@@ -197,6 +202,8 @@ export default class DataSet extends EventManager {
   pending?: Promise<any>;
 
   isFilteredByQueryFields: boolean = false;
+
+  reaction: IReactionDisposer;
 
   @computed
   get lang(): Lang | undefined {
@@ -499,7 +506,7 @@ export default class DataSet extends EventManager {
       this.axios = axiosInstance!;
       this.name = name;
       this.data = [];
-      this.fields = new Map<string, Field>();
+      this.fields = observable.map<string, Field>();
       this.totalCount = 0;
       this.status = DataSetStatus.ready;
       this.currentPage = 1;
@@ -540,13 +547,14 @@ export default class DataSet extends EventManager {
   processListener() {
     this.addEventListener(DataSetEvents.indexChange, this.handleCascade);
     let previous;
-    reaction(
+    this.reaction = reaction(
       () => this.current,
       record => (this.fireEvent(DataSetEvents.indexChange, { dataSet: this, record, previous }, previous = record)),
     );
   }
 
   destroy() {
+    this.reaction();
     this.clear();
   }
 
@@ -1239,7 +1247,7 @@ Then the query method will be auto invoke.`);
   @action
   loadData(allData: object[] = [], total?: number): DataSet {
     this.storeSelected();
-    const { paging, pageSize } = this;
+    const { paging, pageSize, props: { autoLocateFirst } } = this;
     allData = paging ? allData.slice(0, pageSize) : allData;
     this.fireEvent(DataSetEvents.beforeLoad, { dataSet: this, data: allData });
     this.data = this.originalData = allData.map(data => {
@@ -1254,7 +1262,9 @@ Then the query method will be auto invoke.`);
       this.totalCount = allData.length;
     }
     this.releaseCachedSelected();
-    this.current = this.get(0);
+    if (autoLocateFirst) {
+      this.current = this.get(0);
+    }
     this.fireEvent(DataSetEvents.load, { dataSet: this });
     return this;
   }

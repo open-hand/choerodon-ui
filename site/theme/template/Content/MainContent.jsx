@@ -236,7 +236,7 @@ export default class MainContent extends React.Component {
     const menuItems = this.getMenuItems();
     const menuItemsForFooterNav = this.getMenuItems({
       before: <Icon className="footer-nav-icon-before" type="navigate_before" />,
-      after: <Icon className="footer-nav-icon-after" type="navigate_after" />,
+      after: <Icon className="footer-nav-icon-after" type="navigate_next" />,
     });
     const { prev, next } = this.getFooterNav(menuItemsForFooterNav, activeMenuItem);
     const { localizedPageData } = props;

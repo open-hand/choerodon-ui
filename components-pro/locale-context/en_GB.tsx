@@ -20,6 +20,7 @@ export default {
     empty_data: 'No data',
     choose_export_columns: 'Please select the column to export',
     column_name: 'Column Name',
+    filter_bar_placeholder: 'Table Filter',
   },
   Pagination: {
     records_per_page: 'Number of records per page：',

@@ -21,3 +21,4 @@ configure({ prefixCls: 'ant' });
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | prefixCls | 设置统一样式前缀 | string | c7n |
+| ripple | 是否开启波纹效果 | boolean | true |

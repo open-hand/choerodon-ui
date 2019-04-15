@@ -1,29 +1,43 @@
-import React, { CSSProperties, ReactNode } from 'react';
+import React, { CSSProperties, Key, ReactElement, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import omit from 'lodash/omit';
-import isArray from 'lodash/isArray';
 import isEqual from 'lodash/isEqual';
 import { observer } from 'mobx-react';
-import { action, computed, observable, reaction, runInAction } from 'mobx';
+import { computed, IReactionDisposer, reaction, runInAction } from 'mobx';
+import Menu, { Item, ItemGroup } from 'choerodon-ui/lib/rc-components/menu';
 import TriggerField, { TriggerFieldProps } from '../trigger-field/TriggerField';
 import autobind from '../_util/autobind';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
-import DropDownMenu from './DropDownMenu';
-import Record from '../data-set/Record';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { ValidationMessages } from '../validator/Validator';
 import Option from '../option/Option';
 import OptGroup from '../option/OptGroup';
-import { DataSetEvents, DataSetSelection, DataSetStatus, FieldType } from '../data-set/enum';
+import { DataSetStatus, FieldType } from '../data-set/enum';
 import DataSet from '../data-set/DataSet';
+import Record from '../data-set/Record';
+import { isSame, isSameLike } from '../data-set/utils';
 import lookupStore from '../stores/LookupCodeStore';
 import Spin from '../spin';
 import { stopEvent } from '../_util/EventManager';
 import normalizeOptions from '../option/normalizeOptions';
 import { $l } from '../locale-context';
-import isChildrenEqual from '../_util/isChildrenEqual';
-import { isSame, isSameLike } from '../data-set/utils';
-import noop from 'lodash/noop';
+import getReactNodeText from '../_util/getReactNodeText';
+
+function updateActiveKey(menu: Menu, activeKey: string) {
+  const store = menu.getStore();
+  const menuId = menu.getEventKey();
+  const state = store.getState();
+  store.setState({
+    activeKey: {
+      ...state.activeKey,
+      [menuId]: activeKey,
+    },
+  });
+}
+
+function getItemKey(record: Record, text: ReactNode, value: any) {
+  return `item-${value || record.id}-${getReactNodeText(text) || record.id}`;
+}
 
 export interface SelectProps extends TriggerFieldProps {
   /**
@@ -41,11 +55,24 @@ export interface SelectProps extends TriggerFieldProps {
    * @param {Record} record
    * @return {boolean}
    */
-  optionsFilter?: (record: Record) => boolean;
+  optionsFilter?: (record: Record, index: number, records: Record[]) => boolean;
+  /**
+   * 当选项改变时，检查并清除不在选项中的值
+   * @default true
+   */
+  checkValueOnOptionsChange?: boolean;
+  /**
+   * 下拉框匹配输入框宽度
+   * @default true
+   */
+  dropdownMatchSelectWidth?: boolean;
+  /**
+   * 下拉框菜单样式名
+   */
+  dropdownMenuStyle?: CSSProperties;
 }
 
-@observer
-export default class Select extends TriggerField<SelectProps> {
+export class Select<T extends SelectProps> extends TriggerField<T & SelectProps> {
   static displayName = 'Select';
 
   static propTypes = {
@@ -67,17 +94,17 @@ export default class Select extends TriggerField<SelectProps> {
     suffixCls: 'pro-select',
     combo: false,
     searchable: false,
+    dropdownMatchSelectWidth: true,
+    checkValueOnOptionsChange: true,
   };
 
   static Option = Option;
 
   static OptGroup = OptGroup;
 
-  comboOptions: Record[] = [];
+  comboOptions: DataSet = new DataSet();
 
-  @observable loading: boolean;
-
-  @observable options: DataSet;
+  menu?: Menu | null;
 
   @computed
   get defaultValidationMessages(): ValidationMessages | null {
@@ -97,23 +124,35 @@ export default class Select extends TriggerField<SelectProps> {
   }
 
   get currentComboOption(): Record | undefined {
-    return this.comboOptions.filter(record => !record.isSelected)[0];
+    return this.comboOptions.filter(record => !this.isSelected(record))[0];
   }
 
   @computed
-  get filteredOptions() {
-    const { optionsFilter, searchable } = this.props;
-    if (this.options) {
-      let { data } = this.options;
-      if (optionsFilter) {
-        data = data.filter(optionsFilter);
-      }
-      if (searchable && this.text) {
-        data = data.filter(record => record.get(this.textField).indexOf(this.text) !== -1);
-      }
-      return this.filterByCascade(data);
+  get filteredOptions(): Record[] {
+    const { cascadeOptions, text, props: { optionsFilter, searchable } } = this;
+    const data = optionsFilter ? cascadeOptions.filter(optionsFilter!) : cascadeOptions;
+    if (searchable && text) {
+      return data.filter(record => record.get(this.textField).indexOf(text) !== -1);
     }
-    return [];
+    return data;
+  }
+
+  @computed
+  get cascadeOptions(): Record[] {
+    const { record, field, options, comboOptions } = this;
+    const data = [...comboOptions.data, ...options.data];
+    if (field) {
+      const cascadeMap = field.get('cascadeMap');
+      if (cascadeMap) {
+        if (record) {
+          const cascades = Object.keys(cascadeMap);
+          return data.filter(item => cascades.every(cascade => isSameLike(record.get(cascadeMap[cascade]), item.get(cascade))));
+        } else {
+          return [];
+        }
+      }
+    }
+    return data;
   }
 
   @computed
@@ -124,48 +163,56 @@ export default class Select extends TriggerField<SelectProps> {
 
   @computed
   get multiple(): boolean {
-    return this.getProp('multiple') || (this.options && this.options.selection === DataSetSelection.multiple);
+    return !!this.getProp('multiple');
   }
+
+  @computed
+  get menuMultiple(): boolean {
+    return this.multiple;
+  }
+
+  @computed
+  get options(): DataSet {
+    const { field, textField, valueField, multiple, props: { children } } = this;
+    return normalizeOptions({ field, textField, valueField, multiple, children });
+  }
+
+  checkReaction?: IReactionDisposer;
 
   constructor(props, context) {
     super(props, context);
-    this.initOptions(props);
-    reaction(() => this.field && [lookupStore.getKey(this.field), this.field.getOptions()], () => this.initOptions(this.props));
-    reaction(() => this.processSelectedData(), noop);
-    reaction(() => this.filterByCascade(this.options.data), () => this.processSelectedData());
+    this.checkValue(props.checkValueOnOptionsChange!);
   }
 
-  processOptionsListener(flag: boolean) {
-    const { options } = this;
-    if (options) {
-      const handler = flag ? options.addEventListener : options.removeEventListener;
-      handler.call(options, DataSetEvents.select, this.handleOptionSelect);
-      handler.call(options, DataSetEvents.unSelect, this.handleOptionUnSelect);
-      handler.call(options, DataSetEvents.unSelectAll, this.handleOptionUnSelectAll);
+  saveMenu = node => this.menu = node;
+
+  checkValue(check: boolean) {
+    this.clearReaction();
+    if (check) {
+      this.checkReaction = reaction(() => this.cascadeOptions, () => this.processSelectedData());
     }
+  }
+
+  clearReaction() {
+    if (this.checkReaction) {
+      this.checkReaction();
+      delete this.checkReaction;
+    }
+  }
+
+  componentWillUnmount() {
+    super.componentWillUnmount();
+    this.clearReaction();
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
     super.componentWillReceiveProps(nextProps, nextContext);
-    if (!isChildrenEqual(nextProps.children, this.props.children)) {
-      this.initOptions(nextProps);
-    }
+    this.checkValue(nextProps.checkValueOnOptionsChange!);
+    this.checkComboOptions(nextProps);
   }
 
   componentDidUpdate() {
     this.forcePopupAlign();
-  }
-
-  componentWillUnmount() {
-    this.processOptionsListener(false);
-  }
-
-  @action
-  initOptions(props): void {
-    this.processOptionsListener(false);
-    const { field, textField, valueField, multiple } = this;
-    this.options = normalizeOptions({ field, textField, valueField, multiple, children: props.children });
-    this.processOptionsListener(true);
   }
 
   getOtherProps() {
@@ -176,16 +223,92 @@ export default class Select extends TriggerField<SelectProps> {
       'value',
       'name',
       'optionsFilter',
+      'dropdownMatchSelectWidth',
+      'dropdownMenuStyle',
+      'checkValueOnOptionsChange',
     ]);
     return otherProps;
   }
 
-  getEditor(): ReactNode {
-    const { name } = this;
-    return [
-      super.getEditor(),
-      <input key="value" type="hidden" value={this.toValueString(this.getValue()) || ''} name={name} />,
-    ];
+  renderMultipleHolder() {
+    const { name, multiple } = this;
+    if (multiple) {
+      return (
+        <input key="value" className={`${this.prefixCls}-multiple-value`} value={this.toValueString(this.getValue()) || ''} name={name} />
+      );
+    } else {
+      return (
+        <input key="value" type="hidden" value={this.toValueString(this.getValue()) || ''} name={name} />
+      );
+    }
+  }
+
+  getMenu(): ReactNode {
+    const { options, textField, valueField, filteredOptions, prefixCls, props: { dropdownMenuStyle } } = this;
+    if (!options) {
+      return null;
+    }
+    const groups = options.getGroups();
+    const optGroups: ReactElement<any>[] = [];
+    const selectedKeys: Key[] = [];
+    (filteredOptions ? filteredOptions : options.data).forEach((record) => {
+      let previousGroup: ReactElement<any> | undefined;
+      groups.every((field) => {
+        const label = record.get(field);
+        if (label !== void 0) {
+          if (!previousGroup) {
+            previousGroup = optGroups.find(item => item.props.title === label);
+            if (!previousGroup) {
+              previousGroup = <ItemGroup key={`group-${label}`} title={label} children={[]} />;
+              optGroups.push(previousGroup);
+            }
+          } else {
+            const { children } = previousGroup.props;
+            previousGroup = children.find(item => item.props.title === label);
+            if (!previousGroup) {
+              previousGroup = <ItemGroup key={`group-${label}`} title={label} children={[]} />;
+              children.push(previousGroup);
+            }
+          }
+          return true;
+        }
+        return false;
+      });
+      const value = record.get(valueField);
+      const text = record.get(textField);
+      const key: Key = getItemKey(record, text, value);
+      if (this.isSelected(record)) {
+        selectedKeys.push(key);
+      }
+      const option = (
+        <Item
+          key={key}
+          value={record}
+        >
+          {text}
+        </Item>
+      );
+      if (previousGroup) {
+        const { children } = previousGroup.props;
+        children.push(option);
+      } else {
+        optGroups.push(option);
+      }
+    });
+    return (
+      <Menu
+        ref={this.saveMenu}
+        defaultActiveFirst
+        multiple={this.menuMultiple}
+        selectedKeys={selectedKeys}
+        prefixCls={`${prefixCls}-dropdown-menu`}
+        onSelect={this.handleMenuSelect}
+        onDeselect={this.handleMenuUnSelect}
+        style={dropdownMenuStyle}
+      >
+        {optGroups}
+      </Menu>
+    );
   }
 
   getPopupProps() {
@@ -198,23 +321,18 @@ export default class Select extends TriggerField<SelectProps> {
   }
 
   getPopupContent() {
-    const { prefixCls, options, loading } = this;
+    const { options } = this;
     const data = this.filteredOptions;
     return data.length ? (
-      <Spin spinning={loading || options.status === DataSetStatus.loading}>
-        <DropDownMenu
-          {...this.getPopupProps()}
-          options={data}
-          className={`${prefixCls}-menu`}
-          onOptionClick={this.handleOptionClick}
-        />
+      <Spin spinning={options.status === DataSetStatus.loading}>
+        {this.getMenu()}
       </Spin>
     ) : null;
   }
 
   @autobind
   getPopupStyleFromAlign(target): CSSProperties | undefined {
-    if (target) {
+    if (target && this.props.dropdownMatchSelectWidth) {
       return {
         minWidth: pxToRem(target.getBoundingClientRect().width),
       };
@@ -228,83 +346,72 @@ export default class Select extends TriggerField<SelectProps> {
   @autobind
   handleKeyDown(e) {
     e.persist();
-    if (!this.isDisabled() && !this.isReadOnly()) {
-      let opposition = false;
-      switch (e.keyCode) {
-        case KeyCode.RIGHT:
-          opposition = true;
-        case KeyCode.LEFT:
-          this.handleKeyDownLeftRight(e, opposition);
-          break;
-        case KeyCode.DOWN:
-          opposition = true;
-        case KeyCode.UP:
-          this.handleKeyDownUpDown(e, opposition);
-          break;
-        case KeyCode.ENTER:
-          this.handleKeyDownEnter(e);
-          break;
-        case KeyCode.END:
-        case KeyCode.PAGE_DOWN:
-          opposition = true;
-        case KeyCode.HOME:
-        case KeyCode.PAGE_UP:
-          this.handleKeyDownFirstLast(e, opposition);
-          break;
-        case KeyCode.ESC:
-          this.handleKeyDownEsc(e);
-          break;
-        case KeyCode.SPACE:
-          this.handleKeyDownSpace(e);
-          break;
-        default:
+    const { menu } = this;
+    if (!this.isDisabled() && !this.isReadOnly() && menu) {
+      if (this.popup && menu.onKeyDown(e)) {
+        stopEvent(e);
+      } else {
+        let direction = -1;
+        switch (e.keyCode) {
+          case KeyCode.RIGHT:
+          case KeyCode.DOWN:
+            direction = 1;
+          case KeyCode.LEFT:
+          case KeyCode.UP:
+            this.handleKeyDownPrevNext(e, menu, direction);
+            break;
+          case KeyCode.END:
+          case KeyCode.PAGE_DOWN:
+            direction = 1;
+          case KeyCode.HOME:
+          case KeyCode.PAGE_UP:
+            this.handleKeyDownFirstLast(e, menu, direction);
+            break;
+          case KeyCode.ENTER:
+            this.handleKeyDownEnter(e);
+            break;
+          case KeyCode.ESC:
+            this.handleKeyDownEsc(e);
+            break;
+          case KeyCode.SPACE:
+            this.handleKeyDownSpace(e);
+            break;
+          default:
+        }
       }
     }
     super.handleKeyDown(e);
   }
 
-  async handleKeyDownFirstLast(e, opposition: boolean) {
+  handleKeyDownFirstLast(e, menu: Menu, direction: number) {
     stopEvent(e);
-    if (!this.editable || this.popup) {
-      try {
-        await this.options[opposition ? 'last' : 'first']();
-      } catch (e) {
+    const children = menu.getFlatInstanceArray();
+    const activeItem = children[direction < 0 ? 0 : children.length - 1];
+    if (activeItem) {
+      if (!this.editable || this.popup) {
+        updateActiveKey(menu, activeItem.props.eventKey);
       }
-    }
-    if (!this.editable && !this.popup) {
-      this.choose();
-    }
-  }
-
-  async handleKeyDownLeftRight(e, opposition: boolean) {
-    if (!this.editable) {
-      stopEvent(e);
-      if (!this.popup && !this.multiple) {
-        try {
-          await this.options[opposition ? 'next' : 'pre']();
-        } catch (e) {
-        }
-        this.choose();
+      if (!this.editable && !this.popup) {
+        this.choose(activeItem.props.value);
       }
     }
   }
 
-  async handleKeyDownUpDown(e, opposition: boolean) {
-    stopEvent(e);
-    try {
-      await this.options[opposition ? 'next' : 'pre']();
-    } catch (e) {
-    }
-    if (!this.popup && !this.multiple) {
-      this.choose();
-    }
-  }
-
-  handleKeyDownEnter(e) {
-    if (this.popup) {
+  handleKeyDownPrevNext(e, menu: Menu, direction: number) {
+    if (!this.multiple && !this.editable) {
+      const activeItem = menu.step(direction);
+      if (activeItem) {
+        updateActiveKey(menu, activeItem.props.eventKey);
+        this.choose(activeItem.props.value);
+      }
       e.preventDefault();
-      this.choose();
+    } else if (e === KeyCode.DOWN) {
+      this.expand();
+      e.preventDefault();
     }
+  }
+
+  handleKeyDownEnter(_e) {
   }
 
   handleKeyDownEsc(e) {
@@ -324,14 +431,19 @@ export default class Select extends TriggerField<SelectProps> {
   }
 
   @autobind
-  handleOptionClick(record: Record) {
-    this.choose(record);
-  }
-
-  @autobind
   handleBlur(e) {
     if (!e.isDefaultPrevented()) {
+      if (!this.popup || !this.filteredOptions.length) {
+        this.resetFilter();
+      }
       super.handleBlur(e);
+    }
+  }
+
+  expand() {
+    const { filteredOptions } = this;
+    if (filteredOptions && filteredOptions.length) {
+      super.expand();
     }
   }
 
@@ -345,43 +457,66 @@ export default class Select extends TriggerField<SelectProps> {
   }
 
   findByText(text): Record | undefined {
-    const { textField, options } = this;
-    return this.filterByCascade(options.data).find(record => isSameLike(record.get(textField), text));
+    const { textField } = this;
+    return this.cascadeOptions.find(record => isSameLike(record.get(textField), text));
   }
 
   findByValue(value): Record | undefined {
-    const { valueField, options } = this;
+    const { valueField } = this;
     const autoType = this.getProp('type') === FieldType.auto;
-    return this.filterByCascade(options.data).find(record =>
+    return this.cascadeOptions.find(record =>
       autoType ? isSameLike(record.get(valueField), value) : isSame(record.get(valueField), value),
     );
   }
 
-  generateComboOption(value: string, callback?: (text: string) => void): void {
+  isSelected(record: Record) {
+    const { valueField } = this;
+    const autoType = this.getProp('type') === FieldType.auto;
+    return this.getValues().some(value => autoType ? isSameLike(record.get(valueField), value) : isSame(record.get(valueField), value));
+  }
+
+  generateComboOption(value: string, callback: (text: string) => void): void {
     const { currentComboOption, textField, valueField, options } = this;
     if (value) {
       let found = this.findByText(value) || this.findByValue(value);
       if (found) {
         const text = found.get(textField);
-        if (callback && text !== value) {
+        if (text !== value) {
           callback(text);
         }
         this.removeComboOption();
+      } else if (currentComboOption) {
+        currentComboOption.set(textField, value);
+        currentComboOption.set(valueField, value);
+        found = currentComboOption;
       } else {
-        if (currentComboOption) {
-          currentComboOption.set(textField, value);
-          currentComboOption.set(valueField, value);
-        } else {
-          this.comboOptions.unshift(options.create({
-            [textField]: value,
-            [valueField]: value,
-          }));
-        }
-        found = this.currentComboOption;
+        found = this.createComboOption(value);
       }
       options.current = found;
     } else {
       this.removeComboOption();
+    }
+  }
+
+  createComboOption(value): Record {
+    const { textField, valueField, menu } = this;
+    const found = this.comboOptions.create({
+      [textField]: value,
+      [valueField]: value,
+    }, 0);
+    if (menu) {
+      updateActiveKey(menu, getItemKey(found, value, value));
+    }
+    return found;
+  }
+
+  checkComboOptions(nextProps) {
+    if (('value' in nextProps && !isSameLike(nextProps.value, this.value))) {
+      this.setValue(nextProps.value);
+      this.removeComboOptions();
+    }
+    if (!nextProps.combo && this.props.combo) {
+      this.removeComboOptions();
     }
   }
 
@@ -393,12 +528,8 @@ export default class Select extends TriggerField<SelectProps> {
     if (!record) {
       record = this.currentComboOption;
     }
-    if (record && !record.isSelected) {
-      const index = this.comboOptions.indexOf(record);
-      if (index !== -1) {
-        this.options.remove(record);
-        this.comboOptions.splice(index, 1);
-      }
+    if (record && !this.isSelected(record)) {
+      this.comboOptions.remove(record);
     }
   }
 
@@ -407,27 +538,27 @@ export default class Select extends TriggerField<SelectProps> {
 
   @autobind
   handlePopupAnimateEnd(key, exists) {
-    if (!exists && key === 'align') {
+    if (!exists && key === 'align' && !this.isFocused) {
       this.resetFilter();
     }
   }
 
-  handleMutipleValueRemove(value: any, e) {
-    const record = this.findByValue(value);
-    if (record) {
-      this.options.unSelect(record);
-    }
-    e.stopPropagation();
+  @autobind
+  handleMenuSelect({ item: { props: { value } } }) {
+    this.choose(value);
   }
 
   @autobind
-  handleOptionSelect({ record }) {
+  handleMenuUnSelect({ item: { props: { value } } }) {
+    this.unChoose(value);
+  }
+
+  handleOptionSelect(record) {
     const newValue = record.get(this.valueField);
     this.addValue(newValue);
   }
 
-  @autobind
-  handleOptionUnSelect({ record }) {
+  handleOptionUnSelect(record) {
     const newValue = record.get(this.valueField);
     const autoType = this.getProp('type') === FieldType.auto;
     this.setValue(this.getValues().filter(v => autoType ? !isSameLike(v, newValue) : !isSame(v, newValue)));
@@ -435,23 +566,14 @@ export default class Select extends TriggerField<SelectProps> {
   }
 
   @autobind
-  handleOptionUnSelectAll() {
-    this.setText(void 0);
-    this.setValue(null);
-    this.removeComboOptions();
-  }
-
-  @autobind
   handleChange(e) {
     const { value } = e.target;
     this.setText(value);
+    if (this.props.combo) {
+      this.generateComboOption(value, (text) => this.setText(text));
+    }
     if (!this.popup) {
       this.expand();
-    }
-    if (this.props.combo) {
-      this.generateComboOption(value, (text) => {
-        this.setText(text);
-      });
     }
   }
 
@@ -467,15 +589,10 @@ export default class Select extends TriggerField<SelectProps> {
     return super.processValue(found && found.get(textField));
   }
 
-  toValueString(value: any): string | undefined {
-    if (isArray[value]) {
-      return value.join(',');
-    }
-    return value;
-  }
-
   clear() {
-    this.options.unSelectAll();
+    this.setText(void 0);
+    this.setValue(null);
+    this.removeComboOptions();
   }
 
   resetFilter() {
@@ -490,18 +607,21 @@ export default class Select extends TriggerField<SelectProps> {
     this.resetFilter();
   }
 
-  async choose(record?: Record | null) {
-    const { options } = this;
-    record = record || options.current;
-    if (record) {
-      if (this.multiple && options.selected.indexOf(record) !== -1) {
-        options.unSelect(record);
-      } else {
-        await options.select(record);
-      }
-    }
+  unChoose(record?: Record | null) {
     if (!this.multiple) {
       this.collapse();
+    }
+    if (record) {
+      this.handleOptionUnSelect(record);
+    }
+  }
+
+  choose(record?: Record | null) {
+    if (!this.multiple) {
+      this.collapse();
+    }
+    if (record) {
+      this.handleOptionSelect(record);
     }
   }
 
@@ -513,53 +633,33 @@ export default class Select extends TriggerField<SelectProps> {
     super.handlePopupHiddenChange(hidden);
   }
 
-  filterByCascade(data) {
-    const { record, field } = this;
-    if (field) {
-      const cascadeMap = field.get('cascadeMap');
-      if (cascadeMap) {
-        if (record) {
-          const cascades = Object.keys(cascadeMap);
-          return data.filter(item => cascades.every(cascade => isSameLike(record.get(cascadeMap[cascade]), item.get(cascade))));
-        } else {
-          return [];
-        }
-      }
-    }
-    return data;
-  }
-
   async processSelectedData() {
-    this.comboOptions = [];
+    this.comboOptions.remove(this.comboOptions.data);
     const values = this.getValues();
-    if (values) {
-      const { field } = this;
-      if (field) {
-        await field.ready();
-      }
-      const { options, textField, valueField } = this;
-      const { combo } = this.props;
-      runInAction(() => {
-        const newValues = values.filter(value => {
-          let record = this.findByValue(value);
-          if (!record && combo) {
-            record = options.create({
-              [textField]: value,
-              [valueField]: value,
-            });
-            this.comboOptions.unshift(record);
-          }
-          if (record) {
-            record.isSelected = true;
-            return true;
-          }
-          return false;
-        });
-        if (options.length && !isEqual(newValues, values)) {
-          this.setValue(this.multiple ? newValues : newValues[0]);
-        }
-      });
+    const { field } = this;
+    if (field) {
+      await field.ready();
     }
+    const { filteredOptions, props: { combo } } = this;
+    runInAction(() => {
+      const newValues = values.filter(value => {
+        const record = this.findByValue(value);
+        if (record) {
+          return true;
+        } else if (combo) {
+          this.createComboOption(value);
+          return true;
+        }
+        return false;
+      });
+      if (filteredOptions.length && !isEqual(newValues, values)) {
+        this.setValue(this.multiple ? newValues : newValues[0]);
+      }
+    });
   };
+}
 
+@observer
+export default class ObserverSelect<T extends SelectProps> extends Select<T & SelectProps> {
+  static defaultProps = Select.defaultProps;
 }

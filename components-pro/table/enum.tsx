@@ -39,3 +39,9 @@ export const enum TableMode {
   list = 'list',
   tree = 'tree',
 }
+
+export const enum TableQueryBar {
+  normal = 'normal',
+  bar = 'bar',
+  none = 'none',
+}

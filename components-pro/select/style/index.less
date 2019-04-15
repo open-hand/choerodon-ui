@@ -2,10 +2,12 @@
 @import "../../../components/style/mixins/index";
 @import "../../trigger-field/style/mixin";
 @import "../../field/style/mixin";
+@import "./mixin";
 
-@select-prefix: ~"@{c7n-prefix}-pro-select";
+@select-prefix-cls: ~"@{c7n-prefix}-pro-select";
+@checkbox-prefix-cls: ~"@{c7n-prefix}-checkbox";
 
-.@{select-prefix} {
+.@{select-prefix-cls} {
   .trigger;
 
   margin: 0;
@@ -17,79 +19,7 @@
   &-expand &-trigger {
     transform: rotate(180deg);
   }
-  &-menu {
-    max-height: 2.5rem;
-    overflow: auto;
-    background: #fff;
-    box-shadow: 0 .05rem .05rem -.03rem rgba(0, 0, 0, 0.2), 0 .08rem .1rem .01rem rgba(0, 0, 0, 0.14), 0 .03rem .14rem .02rem rgba(0, 0, 0, 0.12);
-    border-radius: .02rem;
-    padding: .1rem 0;
-    dt {
-      color: @text-color-secondary;
-      line-height: 1.5;
-      padding: .08rem;
-    }
-    ul {
-      margin: 0;
-      padding: 0;
-    }
-
-    > ul:hover {
-      li.current:not(:hover) {
-        background-color: transparent;
-        &.selected {
-          background-color: @background-color-base;
-        }
-      }
-    }
-
-    li {
-      position: relative;
-      display: block;
-      padding: .07rem .08rem;
-      font-weight: normal;
-      color: @text-color;
-      white-space: nowrap;
-      cursor: pointer;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      transition: background-color .3s ease;
-
-      .@{iconfont-css-prefix} {
-        position: absolute;
-        right: .1rem;
-        display: none;
-      }
-
-      &.selected {
-        background-color: @background-color-base;
-        font-weight: normal;
-        color: @text-color;
-        .@{iconfont-css-prefix} {
-          display: inline-block;
-          color: @primary-color !important;
-        }
-      }
-
-      &.current,
-      &:hover {
-        background-color: @item-active-bg;
-        .@{c7n-prefix}-pro-icon {
-          display: inline-block;
-          color: @disabled-color;
-        }
-      }
-
-      &.disabled {
-        color: @disabled-color;
-        cursor: not-allowed;
-
-        &.hover {
-          color: @disabled-color;
-          background-color: @component-background;
-          cursor: not-allowed;
-        }
-      }
-    }
+  &-dropdown-menu {
+    .dropdown-menu;
   }
 }

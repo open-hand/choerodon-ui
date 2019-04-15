@@ -1,5 +1,6 @@
 import React, { Children, isValidElement, ReactNode } from 'react';
-import { action, computed, observable, runInAction, toJS } from 'mobx';
+import { action, computed, observable, runInAction } from 'mobx';
+import isNil from 'lodash/isNil';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import Column, { ColumnProps, columnWidth } from './Column';
 import DataSet from '../data-set/DataSet';
@@ -9,43 +10,11 @@ import Radio from '../radio';
 import { DataSetSelection } from '../data-set/enum';
 import { ColumnAlign, ColumnLock, SelectionMode, TableMode } from './enum';
 import { stopPropagation } from '../_util/EventManager';
-import { getHeader } from './utils';
+import { getColumnKey, getHeader } from './utils';
 import getReactNodeText from '../_util/getReactNodeText';
+import { getPrefixCls } from 'choerodon-ui/lib/configure';
 
-const SELECTION_KEY = 'selection-column';
-
-function groupColumns
-(columns: ColumnProps[], currentRow = 0, parentColumn: ColumnProps = {}, rows: ColumnProps[][] = [], cols: number[] = [0]): ColumnProps[] {
-  rows[currentRow] = rows[currentRow] || [];
-  const grouped: ColumnProps[] = [];
-  const setRowSpan = (column: ColumnProps) => {
-    const rowSpan = rows.length - currentRow;
-    if (column && (!column.children || column.children.length === 0) &&
-      rowSpan > 1 && (!column.rowSpan || column.rowSpan < rowSpan)) {
-      column.rowSpan = rowSpan;
-    }
-  };
-  columns.forEach((column, index) => {
-    const newColumn: ColumnProps = { ...column };
-    rows[currentRow].push(newColumn);
-    parentColumn.colSpan = parentColumn.colSpan || 0;
-    if (newColumn.children && newColumn.children.length > 0) {
-      newColumn.children = groupColumns(newColumn.children, currentRow + 1, newColumn, rows, cols);
-      parentColumn.colSpan = parentColumn.colSpan + (newColumn.colSpan || 0);
-    } else {
-      newColumn.index = cols[0]++;
-      parentColumn.colSpan++;
-    }
-    for (let i = 0; i < rows[currentRow].length - 1; ++i) {
-      setRowSpan(rows[currentRow][i]);
-    }
-    if (index + 1 === columns.length) {
-      setRowSpan(newColumn);
-    }
-    grouped.push(newColumn);
-  });
-  return observable.array(grouped);
-}
+const SELECTION_KEY = '__selection-column__';
 
 export default class TableStore {
 
@@ -104,7 +73,7 @@ export default class TableStore {
   @computed
   get columns(): ColumnProps[] {
     const { columns, children } = this.props;
-    return groupColumns(this._addSelectionColumn(toJS(columns) || normalizeColumns(children)));
+    return observable.array(this._addSelectionColumn(columns ? mergeDefaultProps(columns) : normalizeColumns(children)));
   }
 
   @computed
@@ -330,11 +299,11 @@ export default class TableStore {
   _addSelectionColumn(columns: ColumnProps[]): ColumnProps[] {
     if (this.hasRowBox) {
       const { dataSet } = this;
-      const { prefixCls } = this.props;
+      const { suffixCls, prefixCls } = this.props;
       const selectionColumn: ColumnProps = {
         key: SELECTION_KEY,
         resizable: false,
-        className: `${prefixCls}-selection-column`,
+        className: `${getPrefixCls(suffixCls!, prefixCls)}-selection-column`,
         renderer: renderSelectionBox,
         align: ColumnAlign.center,
         width: 50,
@@ -394,7 +363,21 @@ function renderSelectionBox({ record }) {
   }
 }
 
-function normalizeColumns(elements: ReactNode, parent?: ColumnProps) {
+function mergeDefaultProps(columns: ColumnProps[], defaultKey: number[] = [0]): ColumnProps[] {
+  return columns.map(column => {
+    const newColumn: ColumnProps = { ...Column.defaultProps, ...column };
+    if (isNil(getColumnKey(newColumn))) {
+      newColumn.key = `anonymous-${defaultKey[0]++}`;
+    }
+    const { children } = newColumn;
+    if (children) {
+      newColumn.children = mergeDefaultProps(children, defaultKey);
+    }
+    return newColumn;
+  });
+}
+
+function normalizeColumns(elements: ReactNode, parent: ColumnProps | null = null, defaultKey: number[] = [0]) {
   const columns: any[] = [];
   const leftFixedColumns: any[] = [];
   const rightFixedColumns: any[] = [];
@@ -406,10 +389,13 @@ function normalizeColumns(elements: ReactNode, parent?: ColumnProps) {
     const column: any = {
       ...props,
     };
+    if (isNil(getColumnKey(column))) {
+      column.key = `anonymous-${defaultKey[0]++}`;
+    }
     if (parent) {
       column.lock = parent.lock;
     }
-    column.children = normalizeColumns(column.children, column);
+    column.children = normalizeColumns(column.children, column, defaultKey);
     if (key) {
       column.key = key;
     }

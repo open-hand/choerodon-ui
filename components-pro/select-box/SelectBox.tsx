@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
-import { action, computed, isArrayLike, observable, reaction } from 'mobx';
+import { action, computed, isArrayLike, observable } from 'mobx';
 import omit from 'lodash/omit';
 import { FormField, FormFieldProps } from '../field/FormField';
 import Radio from '../radio/Radio';
@@ -10,13 +10,10 @@ import autobind from '../_util/autobind';
 import { ValidationMessages } from '../validator/Validator';
 import Option from '../option/Option';
 import OptGroup from '../option/OptGroup';
-import { DataSetSelection } from '../data-set/enum';
 import { ViewMode } from '../radio/enum';
 import DataSet from '../data-set/DataSet';
 import normalizeOptions from '../option/normalizeOptions';
 import { $l } from '../locale-context';
-import isChildrenEqual from '../_util/isChildrenEqual';
-import lookupStore from '../stores/LookupCodeStore';
 
 const GroupIdGen = function* (id) {
   while (true) {
@@ -50,6 +47,10 @@ export default class SelectBox extends FormField<SelectBoxProps> {
     vertical: false,
   };
 
+  static Option = Option;
+
+  static OptGroup = OptGroup;
+
   @computed
   get defaultValidationMessages(): ValidationMessages | null {
     return {
@@ -57,11 +58,11 @@ export default class SelectBox extends FormField<SelectBoxProps> {
     };
   }
 
-  static Option = Option;
-
-  static OptGroup = OptGroup;
-
-  @observable options: DataSet;
+  @computed
+  get options(): DataSet {
+    const { field, textField, valueField, multiple, props: { children } } = this;
+    return normalizeOptions({ field, textField, valueField, multiple, children });
+  }
 
   @observable value?: any;
 
@@ -83,12 +84,6 @@ export default class SelectBox extends FormField<SelectBoxProps> {
     return 'value';
   }
 
-  constructor(props, context) {
-    super(props, context);
-    this.initOptions(props);
-    reaction(() => this.field && [lookupStore.getKey(this.field), this.field.getOptions()], () => this.initOptions(this.props));
-  }
-
   @action
   setName(name) {
     super.setName(name || this.name || GroupIdGen.next().value);
@@ -98,22 +93,9 @@ export default class SelectBox extends FormField<SelectBoxProps> {
     return omit(super.getOtherProps(), ['vertical']);
   }
 
-  componentWillReceiveProps(nextProps, nextContext) {
-    super.componentWillReceiveProps(nextProps, nextContext);
-    if (!isChildrenEqual(nextProps.children, this.props.children)) {
-      this.initOptions(nextProps);
-    }
-  }
-
-  @action
-  initOptions(props): void {
-    const { field, textField, valueField, multiple } = this;
-    this.options = normalizeOptions({ field, textField, valueField, multiple, children: props.children });
-  }
-
   @computed
   get multiple(): boolean {
-    return this.getProp('multiple') || (this.options && this.options.selection === DataSetSelection.multiple);
+    return !!this.getProp('multiple');
   }
 
   getClassName() {

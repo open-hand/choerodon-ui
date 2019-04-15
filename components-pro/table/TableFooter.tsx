@@ -9,6 +9,7 @@ import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { ColumnLock } from './enum';
 import DataSet from '../data-set/DataSet';
 import TableFooterCell from './TableFooterCell';
+import { getColumnKey } from './utils';
 
 export interface TableFooterProps extends ElementProps {
   dataSet: DataSet;
@@ -31,17 +32,19 @@ export default class TableFooter extends Component<TableFooterProps, any> {
   render() {
     const { prefixCls, lock, rowHeight, dataSet } = this.props;
     const { lockColumnsFootRowsHeight, overflowY } = this.context.tableStore;
-    const tds = this.leafColumns.map((column, columnIndex) => {
-      const { key, name } = column;
-      return (
-        <TableFooterCell
-          key={name || key || columnIndex}
-          prefixCls={prefixCls}
-          dataSet={dataSet}
-          column={column}
-          rowHeight={rowHeight}
-        />
-      );
+    const tds = this.leafColumns.map((column) => {
+      const { hidden } = column;
+      if (!hidden) {
+        return (
+          <TableFooterCell
+            key={getColumnKey(column)}
+            prefixCls={prefixCls}
+            dataSet={dataSet}
+            column={column}
+            rowHeight={rowHeight}
+          />
+        );
+      }
     });
     if (overflowY && lock !== ColumnLock.left) {
       tds.push(<th key="fixed-column" className={`${prefixCls}-cell`} />);

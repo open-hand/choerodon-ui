@@ -11,7 +11,7 @@ export interface DropDownProps {
   overlay: React.ReactNode;
   onHiddenChange?: (hidden?: boolean) => void;
   onVisibleChange?: (visible?: boolean) => void;
-  onOverlayClick: (e) => void,
+  onOverlayClick?: (e) => void;
   hidden?: boolean;
   visible?: boolean;
   defaultHidden?: boolean;
@@ -34,7 +34,12 @@ export interface DropdownState {
 export default class Dropdown extends PureComponent<DropDownProps> {
   static displayName = 'Dropdown';
   static propTypes = {
-    trigger: PropTypes.arrayOf(PropTypes.string),
+    trigger: PropTypes.arrayOf(PropTypes.oneOf([
+      Action.focus,
+      Action.hover,
+      Action.click,
+      Action.contextMenu,
+    ])),
     overlay: PropTypes.any,
     placement: PropTypes.oneOf([
       Placements.bottomLeft,
@@ -57,7 +62,7 @@ export default class Dropdown extends PureComponent<DropDownProps> {
   static defaultProps = {
     suffixCls: 'pro-dropdown',
     placement: Placements.bottomLeft,
-    trigger: ['hover', 'focus'],
+    trigger: [Action.hover, Action.focus],
     defaultHidden: true,
   };
 
@@ -126,16 +131,16 @@ export default class Dropdown extends PureComponent<DropDownProps> {
   handleClick = (e) => {
     const { onOverlayClick, overlay, hidden, visible } = this.props;
     const { onClick } = (isValidElement(overlay) && overlay.props || {}) as { onClick };
-    if (hidden === void 0 && visible === void 0) {
-      this.setState({
-        hidden: true,
-      });
-    }
     if (onOverlayClick) {
       onOverlayClick(e);
     }
     if (onClick) {
       onClick(e);
+    }
+    if (hidden === void 0 && visible === void 0) {
+      this.setState({
+        hidden: true,
+      });
     }
   };
 
