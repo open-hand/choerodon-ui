@@ -1,4 +1,5 @@
 import React, { ReactNode } from 'react';
+import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import omit from 'lodash/omit';
 import isEqual from 'lodash/isEqual';
@@ -23,11 +24,18 @@ import lookupStore from '../stores/LookupCodeStore';
 
 export interface LovProps extends TextFieldProps {
   modalProps?: ModalProps;
+  noCache?: boolean;
 }
 
 @observer
 export default class Lov extends TextField<LovProps> {
   static displayName = 'Lov';
+
+  static propTypes = {
+    ...TextField.propTypes,
+    modalProps: PropTypes.object,
+    noCache: PropTypes.bool,
+  };
 
   static defaultProps = {
     ...TextField.defaultProps,
@@ -141,7 +149,7 @@ export default class Lov extends TextField<LovProps> {
       });
       const config = await this.getConfig();
       const options = this.options = await this.getOptions();
-      const { modalProps } = this.props;
+      const { modalProps, noCache } = this.props;
       if (!this.modal && config && options) {
         const { width, title } = config;
         options.unSelectAll();
@@ -189,7 +197,7 @@ export default class Lov extends TextField<LovProps> {
           } else {
             options.first();
           }
-          if (needQuery) {
+          if (noCache || needQuery) {
             options.query();
           }
         }

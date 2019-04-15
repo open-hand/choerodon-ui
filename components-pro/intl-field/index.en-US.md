@@ -17,6 +17,10 @@ title: IntlField
 
 多语言输入框
 
+| 参数      | 说明                                     | 类型        |默认值 |
+|-----------|------------------------------------------|------------|--------|
+| modalProps | 弹窗属性，详见[ModalProps](/components/modal/#Modal) | object  |  |
+
 更多属性请参考 [ViewComponent](/components-pro/text-field/#TextField)。
 
 <style>

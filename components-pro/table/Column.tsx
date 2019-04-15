@@ -91,8 +91,6 @@ export interface ColumnProps extends ElementProps {
    *
    */
   showHelp?: ShowHelp;
-  colSpan?: number;
-  rowSpan?: number;
   children?: ColumnProps[];
 }
 

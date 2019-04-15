@@ -31,6 +31,8 @@ import Tooltip from '../tooltip/Tooltip';
 import { $l } from '../locale-context';
 import FilterBar from './FilterBar';
 
+export type expandedRowRenderProps = { dataSet: DataSet, record: Record };
+
 export interface TableProps extends DataSetComponentProps {
   columns?: ColumnProps[];
   /**
@@ -111,6 +113,10 @@ export interface TableProps extends DataSetComponentProps {
    * 通过点击行来展开子行
    */
   expandRowByClick?: boolean;
+  /**
+   * 展开行渲染器
+   */
+  expandedRowRender?: (props: expandedRowRenderProps) => ReactNode;
   /**
    * 展示树形数据时，每层缩进的宽度
    */

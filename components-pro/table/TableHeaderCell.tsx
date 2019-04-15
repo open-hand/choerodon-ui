@@ -23,7 +23,11 @@ export interface TableHeaderCellProps extends ElementProps {
   dataSet: DataSet;
   prevColumn?: ColumnProps;
   column: ColumnProps;
+  resizeColumn: ColumnProps;
   rowHeight: number | 'auto';
+  rowSpan?: number;
+  colSpan?: number;
+  getHeaderNode: () => HTMLTableSectionElement | null;
 }
 
 @observer
@@ -37,8 +41,6 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
 
   static contextType = TableContext;
 
-  node: HTMLTableHeaderCellElement | null;
-
   resizeEvent: EventManager = new EventManager(typeof window !== 'undefined' && document);
 
   resizeBoundary: number = 0;
@@ -46,10 +48,6 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
   resizePosition?: number;
 
   resizeColumn?: ColumnProps;
-
-  saveRef = (node) => {
-    this.node = node;
-  };
 
   handleClick = () => {
     const { column, dataSet } = this.props;
@@ -59,20 +57,28 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
     }
   };
 
-  handleLeftResize = (e) => {
-    this.resizeColumn = this.props.prevColumn;
-    if (this.node) {
-      const prev = this.node.previousElementSibling;
-      this.resizeBoundary = prev ? prev.getBoundingClientRect().left : 0;
+  getNode(column) {
+    const headerDom: Element | null = this.props.getHeaderNode();
+    if (headerDom) {
+      return headerDom.querySelector(`[data-index="${getColumnKey(column)}"]`);
     }
+  }
+
+  setResizeColumn(column) {
+    this.resizeColumn = column;
+    const node = this.getNode(column);
+    if (node) {
+      this.resizeBoundary = node.getBoundingClientRect().left;
+    }
+  }
+
+  handleLeftResize = (e) => {
+    this.setResizeColumn(this.props.prevColumn);
     this.resizeStart(e);
   };
 
   handleRightResize = (e) => {
-    this.resizeColumn = this.props.column;
-    if (this.node) {
-      this.resizeBoundary = this.node.getBoundingClientRect().left;
-    }
+    this.setResizeColumn(this.props.resizeColumn);
     this.resizeStart(e);
   };
 
@@ -140,9 +146,9 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
   }
 
   render() {
-    const { column, prefixCls, dataSet, rowHeight } = this.props;
+    const { column, prefixCls, dataSet, rowHeight, rowSpan, colSpan } = this.props;
     const sortPrefixCls = `${prefixCls}-sort`;
-    const { headerClassName, headerStyle = {}, rowSpan, colSpan, sortable, name, align, help, showHelp, children } = column;
+    const { headerClassName, headerStyle = {}, sortable, name, align, help, showHelp, children } = column;
     const classList: string[] = [`${prefixCls}-cell`];
     if (headerClassName) {
       classList.push(headerClassName);
@@ -162,7 +168,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
       };
     }
     if (!style.textAlign) {
-      const textAlign = align || (children ? ColumnAlign.center : name && getAlignByField(dataSet.getField(name)) );
+      const textAlign = align || (children && children.length ? ColumnAlign.center : name && getAlignByField(dataSet.getField(name)) );
       if (textAlign) {
         style.textAlign = textAlign;
       }
@@ -212,7 +218,6 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
     }
     return (
       <th
-        ref={this.saveRef}
         className={classList.join(' ')}
         style={style}
         rowSpan={rowSpan}

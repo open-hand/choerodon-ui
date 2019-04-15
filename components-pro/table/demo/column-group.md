@@ -1,30 +1,24 @@
 ---
-order: 1
+order: 2
 title:
-  zh-CN: 过滤条
-  en-US: Filter Bar
+  zh-CN: 组合列
+  en-US: Grouped Columns
 ---
 
 ## zh-CN
 
-过滤条。
+组合列。
 
 ## en-US
 
-Filter Bar.
+Grouped Columns.
 
 ````jsx
-import { DataSet, Table, Button } from 'choerodon-ui/pro';
+import { DataSet, Table } from 'choerodon-ui/pro';
 
 const { Column } = Table;
 
 class App extends React.Component {
-  state = { show: false };
-
-  handleClick = () => this.setState({ show: !this.state.show });
-
-  button = <Button funcType="flat" onClick={this.handleClick}>切换</Button>
-
   ds = new DataSet({
      primaryKey: 'userid',
      name: 'user',
@@ -46,14 +40,11 @@ class App extends React.Component {
        { name: 'date.startDate', type: 'date', label: '开始日期', defaultValue: new Date() },
        { name: 'sexMultiple', type: 'string', label: '性别（多值）', lookupCode: 'HR.EMPLOYEE_GENDER', multiple: true },
      ],
-     events: {
-      query: ({ params }) => console.log('filterbar query parameter', params),
-     },
    });
 
   render() {
     return (
-      <Table dataSet={this.ds} queryBar="bar" border={false} buttons={[this.button]}>
+      <Table dataSet={this.ds}>
         <Column header="组合">
           <Column name="name" editor width={450} />
           <Column name="age" editor />
@@ -65,7 +56,6 @@ class App extends React.Component {
           </Column>
           <Column name="sexMultiple" editor />
         </Column>
-        {this.state.show ? <Column header="操作" /> : null}
       </Table>
     );
   }

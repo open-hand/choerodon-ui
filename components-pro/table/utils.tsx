@@ -156,5 +156,5 @@ export function getHeader(column: ColumnProps, dataSet: DataSet): ReactNode {
 }
 
 export function getColumnKey({ name, key }: ColumnProps): Key {
-  return name || key!;
+  return key || name!;
 }

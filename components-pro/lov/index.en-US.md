@@ -13,10 +13,12 @@ title: Lov
 
 ### Lov
 
-多语言输入框
+弹出选择输入框
 
 | 参数      | 说明                                     | 类型        |默认值 |
 |-----------|------------------------------------------|------------|--------|
+| modalProps | 弹窗属性，详见[ModalProps](/components/modal/#Modal) | object  |  |
+| noCache | 弹窗时自动重新查询 | string\| boolean  | false |
 | configUrl | 查询LOV配置的地址 | string\| (code) => string  | (code) => `/sys/lov/lov_define?code=${code}` |
 | queryUrl | LOV数据源查询地址 | string\| (code) => string | (code) => `/common/lov/${code}`  |
 

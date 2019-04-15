@@ -17,10 +17,11 @@ timeline: true
 
 - 🌟 `<pro>Form`: Property labelLayout adds float value.
 - 🌟 `<pro>Table`: Deprecated the attribute showQueryBar, add the queryBar property, the optional value is `normal` `bar` `none`.
+- 💄 `<pro>Table`: Optimize Table grouped columns.
 
 ## 0.6.0
 
-`2018-04-01`
+`2019-04-01`
 
 - 🌟 Incorporate the `choerodon-ui/pro` component library.
 - 🌟 The default ant prefix is changed to c7n. To use the ant prefix, please [Modify the topic variable @c7n-prefix] (https://choerodon.github.io/choerodon-ui/docs/react/customize-theme) And use [global configuration] (https://choerodon.github.io/choerodon-ui/components/configure).
@@ -28,7 +29,7 @@ timeline: true
 
 ## 0.5.3
 
-`2018-03-20`
+`2019-03-20`
 
 - 💄 `Input`: The Input input shows a prompt when it reaches the character limit.
 - 🌟 `Modal`: Modal adds the `disableOk` and `disableCancel` properties.
@@ -38,14 +39,14 @@ timeline: true
 
 ## 0.5.2
 
-`2018-02-22`
+`2019-02-22`
 
 - 💄 `Table`:  The confirmation button for the filter in the repair table is fixed at the bottom of the selection box and the style is overwritten.
 - 🌟 `Sidebar`: add `alwaysCanCancel`.
 
 ## 0.5.1
 
-`2018-02-19`
+`2019-02-19`
 
 - 💄 `Form.Item`:  The suffix icon is not hidden when Form.Item is verified as error.
 - 💄 `Table`:  Table filter does not clear after blur.
@@ -55,7 +56,7 @@ timeline: true
 
 ## 0.5.0
 
-`2018-01-10`
+`2019-01-10`
 
 - Change the source of the icon font file to change it from the npm library and package it locally.
 - 💄 `IconSelect`:  Optimize IconSelect, the icon is larger, and only the common icons are retained.
