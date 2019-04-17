@@ -23,6 +23,7 @@ export type LovConfigItem = {
   gridFieldName?: string,
   gridFieldWidth?: number,
   gridFieldAlign?: ColumnAlign,
+  gridFieldSequence: number,
 };
 
 export type LovConfig = {

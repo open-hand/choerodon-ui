@@ -137,6 +137,14 @@ export function findFirstFocusableElement(node?: HTMLElement): HTMLElement | und
   }
 }
 
+export function findIndexedSibling(element, direction): HTMLTableRowElement | null {
+  const sibling: HTMLTableRowElement | null = direction > 0 ? element.nextElementSibling : element.previousElementSibling;
+  if (!sibling || 'index' in sibling.dataset) {
+    return sibling;
+  }
+  return findIndexedSibling(sibling, direction);
+}
+
 export function isDisabledRow(record: Record) {
   return record.isCached;
 }

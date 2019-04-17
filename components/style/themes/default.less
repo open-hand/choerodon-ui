@@ -66,8 +66,8 @@
 // The background colors for active and hover states for things like
 // list items or table cells.
 @item-active-bg: rgba(140, 158, 255, .12);
-@item-hover-bg: rgba(0, 0, 0, 0.04);
-@item-focus-bg: rgba(0, 0, 0, 0.04);
+@item-hover-bg: @background-color-light;
+@item-focus-bg: @background-color-light;
 
 // use choerodon-ui-font
 // ICONFONT
@@ -384,7 +384,7 @@
 // --
 @table-header-bg: @background-color-light;
 @table-header-sort-bg: @background-color-base;
-@table-row-hover-bg: @background-color-light;
+@table-row-hover-bg: @item-hover-bg;
 @table-current-row-bg: @item-active-bg;
 @table-cell-focus-bg: fade(#000, 8%);
 @table-selected-row-bg: fade(#a1c2fa, 16%);

@@ -12,6 +12,7 @@ import TableRow from './TableRow';
 import Record from '../data-set/Record';
 import { ColumnLock } from './enum';
 import { $l } from '../locale-context';
+import ExpandedRow from './ExpandedRow';
 
 export interface TableBodyProps extends ElementProps {
   lock?: ColumnLock | boolean;
@@ -80,7 +81,7 @@ export default class TableBody extends Component<TableBodyProps, any> {
     }
   }
 
-  getRows(records: Record[], columns: ColumnProps[], expanded: boolean, lock?: ColumnLock | boolean) {
+  getRows(records: Record[], columns: ColumnProps[], expanded?: boolean, lock?: ColumnLock | boolean) {
     return records.map((record, index) => (
       this.getRow(columns, record, index, expanded, lock)
     ));
@@ -97,13 +98,20 @@ export default class TableBody extends Component<TableBodyProps, any> {
     }
   }
 
-  getRow(columns: ColumnProps[], record: Record, index: number, expanded: boolean, lock?: ColumnLock | boolean) {
+  renderExpandedRows = (columns: ColumnProps[], record: Record, isExpanded?: boolean, lock?: ColumnLock | boolean) =>
+    this.getRows(record.children || [], columns, isExpanded, lock);
+
+  getRow(columns: ColumnProps[], record: Record, index: number, expanded?: boolean, lock?: ColumnLock | boolean) {
     const { prefixCls, indentSize, rowHeight } = this.props;
     const { isTree } = this.context.tableStore;
-    const children = isTree && (isExpanded => this.getRows(record.children || [], columns, isExpanded, lock));
+    const children = isTree && (
+      <ExpandedRow record={record} columns={columns} lock={lock}>
+        {this.renderExpandedRows}
+      </ExpandedRow>
+    );
     return (
       <TableRow
-        key={record.id || index}
+        key={record.key}
         hidden={!expanded}
         lock={lock}
         indentSize={indentSize}
@@ -111,6 +119,7 @@ export default class TableBody extends Component<TableBodyProps, any> {
         prefixCls={prefixCls}
         columns={columns}
         record={record}
+        index={index}
       >
         {children}
       </TableRow>

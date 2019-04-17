@@ -1,4 +1,4 @@
-import React, { cloneElement, Component, CSSProperties, isValidElement } from 'react';
+import React, { cloneElement, Component, CSSProperties, HTMLProps, isValidElement } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { computed } from 'mobx';
@@ -114,20 +114,18 @@ export default class TableCell extends Component<TableCellProps> {
     }
   }
 
-  render() {
-    const { column, prefixCls, record, children, indentSize, rowHeight } = this.props;
-    const { tableStore } = this.context;
-    const { className, style, align, name, renderer } = column;
-    const field = name && record.getField(name);
-    const cellPrefix = `${prefixCls}-cell`;
-    const classString = classNames(cellPrefix, {
-      [`${cellPrefix}-dirty`]: field && field.dirty,
-    }, className);
+  getInnerNode(prefixCls) {
+    const { context: { tableStore }, props: { children } } = this;
+    if (tableStore.expandIconAsCell && children) {
+      return children;
+    }
+    const { column, record, indentSize, rowHeight } = this.props;
+    const { name, renderer } = column;
     const { cellEditor } = this;
     const isBoolean = isRadio(cellEditor);
     const hasEditor = cellEditor && !isBoolean;
     const innerProps: any = {
-      className: `${cellPrefix}-inner`,
+      className: `${prefixCls}-inner`,
       tabIndex: hasEditor && !isDisabledRow(record) ? 0 : -1,
       onFocus: this.handleFocus,
     };
@@ -145,31 +143,53 @@ export default class TableCell extends Component<TableCellProps> {
 
     const checkBox = children && !tableStore.hasCheckFieldColumn && this.getCheckBox();
 
-    const cellStyle: CSSProperties = style ? omit(style, ['width', 'height']) : {};
-    cellStyle.textAlign = align || getAlignByField(record.getField(name));
-
     const prefix = (indentText || children || checkBox) && (
-      <span className={`${prefixCls}-cell-prefix`} style={innerProps.style}>
+      <span key="prefix" className={`${prefixCls}-prefix`} style={innerProps.style}>
         {indentText}
         {children}
         {checkBox}
       </span>
     );
+    return [
+      prefix,
+      <Output
+        key="output"
+        {...innerProps}
+        record={record}
+        renderer={isBoolean ? this.renderEditor : renderer}
+        name={name}
+        disabled={isDisabledRow(record)}
+      />,
+    ];
+  }
 
+  render() {
+    const { column, prefixCls, record } = this.props;
+    const { className, style, align, name, onCell } = column;
+    const field = name ? record.getField(name) : void 0;
+    const cellPrefix = `${prefixCls}-cell`;
+    const classString = classNames(cellPrefix, {
+      [`${cellPrefix}-dirty`]: field && field.dirty,
+    }, className);
+    const cellExternalProps: HTMLProps<HTMLTableCellElement> = typeof onCell === 'function' ? onCell({
+      dataSet: record.dataSet!,
+      record,
+      column,
+    }) : {};
+    const cellStyle: CSSProperties = {
+      textAlign: align || getAlignByField(field),
+      ...style,
+      ...cellExternalProps.style,
+    };
+    cellStyle.textAlign = align || getAlignByField(field);
     return (
       <td
         className={classString}
-        style={cellStyle}
+        style={omit(cellStyle, ['width', 'height'])}
         data-index={getColumnKey(column)}
+        {...cellExternalProps}
       >
-        {prefix}
-        <Output
-          {...innerProps}
-          record={record}
-          renderer={isBoolean ? this.renderEditor : renderer}
-          name={name}
-          disabled={isDisabledRow(record)}
-        />
+        {this.getInnerNode(cellPrefix)}
       </td>
     );
   }

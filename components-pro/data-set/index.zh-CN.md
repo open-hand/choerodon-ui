@@ -140,6 +140,8 @@ title: DataSet
 
 | 名称 | 说明 | 类型 |
 | --- | --- | --- |
+| id | 唯一ID，自增长的数字 | number  |
+| key | 唯一键，主键字段或唯一索引键字段的值，默认同id | string \| number  |
 | status | 状态， 可选值 `add` `update` `delete` `sync` | observable&lt;string&gt;  |
 | selectable | 可选 | observable&lt;boolean&gt;  |
 | isSelected | 是否选中 | observable&lt;boolean&gt;  |

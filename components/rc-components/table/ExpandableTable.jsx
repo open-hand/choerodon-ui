@@ -95,7 +95,6 @@ class ExpandableTable extends Component {
       // row was collapse
       const expandedRowIndex = expandedRowKeys.indexOf(rowKey);
       if (expandedRowIndex !== -1) {
-        debugger;
         expandedRowKeys.splice(expandedRowIndex, 1);
       }
     }

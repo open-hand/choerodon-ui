@@ -1,14 +1,16 @@
 import { Component, ComponentState, CSSProperties, ReactElement, ReactNode } from 'react';
 import PropTypes from 'prop-types';
+import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import { FormFieldProps, Renderer } from '../field/FormField';
 import { ElementProps } from '../core/ViewComponent';
 import { ColumnAlign, ColumnLock } from './enum';
 import { get } from 'mobx';
 import { ShowHelp } from '../field/enum';
-import DataSet from '../data-set/DataSet';
 
 export const defaultMinWidth = 100;
+
+export type onCellProps = { dataSet: DataSet, record: Record, column: ColumnProps };
 
 export interface ColumnProps extends ElementProps {
   /**
@@ -91,6 +93,12 @@ export interface ColumnProps extends ElementProps {
    *
    */
   showHelp?: ShowHelp;
+  /**
+   * 设置单元格属性
+   * @param {onCellProps} props
+   * @return {Object} 单元格属性
+   */
+  onCell?: (props: onCellProps) => object;
   children?: ColumnProps[];
 }
 

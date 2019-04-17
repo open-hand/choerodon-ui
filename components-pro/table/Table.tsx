@@ -30,8 +30,10 @@ import Switch from '../switch/Switch';
 import Tooltip from '../tooltip/Tooltip';
 import { $l } from '../locale-context';
 import FilterBar from './FilterBar';
+import { findIndexedSibling } from './utils';
 
-export type expandedRowRenderProps = { dataSet: DataSet, record: Record };
+export type expandedRowRendererProps = { dataSet: DataSet, record: Record };
+export type onRowProps = { dataSet: DataSet, record: Record, index: number, expandedRow: boolean };
 
 export interface TableProps extends DataSetComponentProps {
   columns?: ColumnProps[];
@@ -58,11 +60,15 @@ export interface TableProps extends DataSetComponentProps {
   selectionMode?: SelectionMode;
   /**
    * 设置行属性
-   * @param {Record} record 记录
-   * @param index 行索引
+   * @param {onRowProps} props
    * @return {Object} 行属性
    */
-  rowRenderer?: (record: Record, index) => object;
+  onRow?: (props: onRowProps) => object;
+  /**
+   * @deprecated
+   * 请使用 onRow
+   */
+  rowRenderer?: (record: Record, index: number) => object;
   /**
    * 功能按钮
    * 可选值：`add` `delete` `remove` `save` `query` `reset` `expandAll` `collapseAll` `export` 或 自定义按钮
@@ -116,7 +122,11 @@ export interface TableProps extends DataSetComponentProps {
   /**
    * 展开行渲染器
    */
-  expandedRowRender?: (props: expandedRowRenderProps) => ReactNode;
+  expandedRowRenderer?: (props: expandedRowRendererProps) => ReactNode;
+  /**
+   * 展开图标所在列索引
+   */
+  expandIconColumnIndex?: number;
   /**
    * 展示树形数据时，每层缩进的宽度
    */
@@ -245,7 +255,7 @@ export default class Table extends DataSetComponent<TableProps> {
   scrollPosition: ScrollPosition;
 
   get currentRow(): HTMLTableRowElement | null {
-    return this.element.querySelector(`.${this.prefixCls}-current-row`) as HTMLTableRowElement | null;
+    return this.element.querySelector(`.${this.prefixCls}-row-current`) as HTMLTableRowElement | null;
   }
 
   get firstRow(): HTMLTableRowElement | null {
@@ -349,11 +359,11 @@ export default class Table extends DataSetComponent<TableProps> {
     e.preventDefault();
     const { currentRow } = this;
     if (currentRow) {
-      const { previousElementSibling } = currentRow;
-      const { dataSet } = this.props;
+      const previousElementSibling = findIndexedSibling(currentRow, -1);
       if (previousElementSibling) {
-        this.focusRow(previousElementSibling as HTMLTableRowElement);
+        this.focusRow(previousElementSibling);
       } else {
+        const { dataSet } = this.props;
         await dataSet.prePage();
         this.focusRow(this.lastRow);
       }
@@ -364,11 +374,11 @@ export default class Table extends DataSetComponent<TableProps> {
     e.preventDefault();
     const { currentRow } = this;
     if (currentRow) {
-      const { nextElementSibling } = currentRow;
-      const { dataSet } = this.props;
+      const nextElementSibling = findIndexedSibling(currentRow, 1);
       if (nextElementSibling) {
-        this.focusRow(nextElementSibling as HTMLTableRowElement);
+        this.focusRow(nextElementSibling);
       } else {
+        const { dataSet } = this.props;
         await dataSet.nextPage();
         this.focusRow(this.firstRow);
       }
@@ -376,9 +386,9 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   handleKeyDownRight(e) {
-    const { tableStore } = this;
-    if (tableStore.isTree) {
-      const { current } = this.props.dataSet;
+    const { tableStore, props: { expandedRowRenderer, dataSet } } = this;
+    if (tableStore.isTree || expandedRowRenderer) {
+      const { current } = dataSet;
       if (current) {
         e.preventDefault();
         tableStore.setRowExpanded(current, true);
@@ -387,9 +397,9 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   handleKeyDownLeft(e) {
-    const { tableStore } = this;
-    if (tableStore.isTree) {
-      const { current } = this.props.dataSet;
+    const { tableStore, props: { expandedRowRenderer, dataSet } } = this;
+    if (tableStore.isTree || expandedRowRenderer) {
+      const { current } = dataSet;
       if (current) {
         e.preventDefault();
         tableStore.setRowExpanded(current, false);
@@ -405,6 +415,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'border',
       'style',
       'selectionMode',
+      'onRow',
       'rowRenderer',
       'buttons',
       'rowHeight',
@@ -413,6 +424,8 @@ export default class Table extends DataSetComponent<TableProps> {
       'queryBar',
       'defaultRowExpanded',
       'expandRowByClick',
+      'expandedRowRenderer',
+      'expandIconColumnIndex',
       'indentSize',
       'filter',
       'mode',
@@ -674,7 +687,7 @@ export default class Table extends DataSetComponent<TableProps> {
 
   getCacheSelectionSwitch() {
     const { props: { dataSet }, prefixCls } = this;
-    if (dataSet && dataSet.cacheKeys && dataSet.cachedSelected.length) {
+    if (dataSet && dataSet.cacheSelectionKeys && dataSet.cachedSelected.length) {
       const { showCachedSeletion } = this.tableStore;
       return (
         <Tooltip title={$l('Table', showCachedSeletion ? 'hide_cached_seletion' : 'show_cached_seletion')}>

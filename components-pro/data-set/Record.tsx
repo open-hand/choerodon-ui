@@ -2,6 +2,7 @@ import { action, computed, isArrayLike, isObservableArray, observable, runInActi
 import cloneDeep from 'lodash/cloneDeep';
 import isNil from 'lodash/isNil';
 import isString from 'lodash/isString';
+import isNumber from 'lodash/isNumber';
 import warning from 'choerodon-ui/lib/_util/warning';
 import DataSet from './DataSet';
 import Field, { FieldProps, Fields } from './Field';
@@ -34,6 +35,20 @@ const IDGen: IterableIterator<number> = function* (start: number) {
 export default class Record {
 
   id: number;
+
+  @computed
+  get key(): string | number {
+    if (this.status !== RecordStatus.add) {
+      const { dataSet } = this;
+      if (dataSet && dataSet.uniqueKeys) {
+        const key = this.get(dataSet.uniqueKeys[0]);
+        if (isString(key) || isNumber(key)) {
+          return key;
+        }
+      }
+    }
+    return this.id;
+  }
 
   dataSet?: DataSet;
 
@@ -105,12 +120,7 @@ export default class Record {
       if (expandField) {
         const expanded = this.get(expandField);
         const field = this.getField(expandField);
-        if (expanded === (field ? field.get(BooleanValue.trueValue) : true)) {
-          const { parent } = this;
-          if (!parent || parent.isExpanded) {
-            return true;
-          }
-        }
+        return expanded === (field ? field.get(BooleanValue.trueValue) : true);
       }
     }
     return false;

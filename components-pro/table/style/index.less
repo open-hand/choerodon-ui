@@ -72,13 +72,6 @@
     }
   }
 
-  &-row:last-child &-cell {
-    border-bottom: none;
-  }
-  &-last-row-bordered &-row:last-child &-cell {
-    border-bottom: @table-border;
-  }
-
   &-thead &-cell,
   &-tfoot &-cell {
     position: relative;
@@ -222,12 +215,45 @@
   }
 
   //ROW
-  &-current-row td {
-    background-color: @table-current-row-bg;
+  &-empty-row {
+    text-align: center;
   }
 
-  &-disabled-row td {
-    background-color: @disabled-bg;
+  &-expanded-row > td {
+    background-color: @table-expanded-row-bg;
+    border-bottom: @table-border;
+  }
+
+  &-row:hover,
+  &-row-hover {
+    &,
+    & + .@{table-prefix-cls}-expanded-row {
+      & > td {
+        background-color: @table-row-hover-bg;
+      }
+    }
+  }
+
+  &-row-current,
+  &-row-current:hover {
+    &,
+    & + .@{table-prefix-cls}-expanded-row {
+      & > td {
+        background-color: @table-current-row-bg;
+      }
+    }
+  }
+
+  &-row:last-child &-cell {
+    border-bottom: none;
+  }
+
+  &-last-row-bordered &-row:last-child &-cell {
+    border-bottom: @table-border;
+  }
+
+  &-row-disabled > td {
+    background-color: @disabled-bg !important;
     color: @disabled-color !important;
     .@{c7n-prefix}-pro-btn {
       color: @disabled-color !important;
@@ -338,10 +364,6 @@
     & + .@{c7n-prefix}-pro-checkbox {
       margin-left: @table-padding-horizontal;
     }
-  }
-
-  &-empty-row {
-    text-align: center;
   }
 
   &-help-icon {

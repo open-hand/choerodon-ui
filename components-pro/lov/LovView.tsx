@@ -41,20 +41,17 @@ export default class LovView extends Component<LovViewProps> {
     this.props.dataSet.selection = this.selection;
   }
 
-  getColumns() {
-    const { lovItems } = this.props.config;
-    return lovItems.reduce((columns, { display, gridField, gridFieldName, gridFieldWidth, gridFieldAlign }) => (
-      gridField === 'Y' && columns.push(
-        {
-          key: gridFieldName,
-          header: display,
-          name: gridFieldName,
-          width: gridFieldWidth,
-          align: gridFieldAlign,
-        },
-      ),
-        columns
-    ), [] as ColumnProps[]);
+  getColumns(): ColumnProps[] {
+    return this.props.config.lovItems
+      .filter(({ gridField }) => gridField === 'Y')
+      .sort(({ gridFieldSequence: seq1 }, { gridFieldSequence: seq2 }) => seq1 - seq2)
+      .map<ColumnProps>(({ display, gridFieldName, gridFieldWidth, gridFieldAlign }) => ({
+        key: gridFieldName,
+        header: display,
+        name: gridFieldName,
+        width: gridFieldWidth,
+        align: gridFieldAlign,
+      }));
   }
 
   handleKeyDown = (e) => {
@@ -64,7 +61,7 @@ export default class LovView extends Component<LovViewProps> {
     }
   };
 
-  rowRenderer = () => {
+  handleRow = () => {
     return {
       onDoubleClick: this.props.onDoubleClick,
     };
@@ -84,7 +81,7 @@ export default class LovView extends Component<LovViewProps> {
       tableProps.selectionMode = SelectionMode.rowbox;
     } else {
       tableProps.selectionMode = SelectionMode.none;
-      tableProps.rowRenderer = this.rowRenderer;
+      tableProps.onRow = this.handleRow;
     }
     if (height) {
       tableProps.style = { height };

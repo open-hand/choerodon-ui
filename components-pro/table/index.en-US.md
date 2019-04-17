@@ -23,14 +23,16 @@ subtitle: 表格
 | footer | 表脚 | ReactNode \| (records) => ReactNode  |  |
 | border | 是否显示边框 | boolean | true  |
 | selectionMode | 选择记录的模式, 可选值: `rowbox` `click` `dblclick` | string | rowbox  |
-| rowRenderer | 设置航属性 | (record, index) => object |   |
+| onRow | 设置行属性 | ({ dataSet, record, index, expandedRow }) => object |   |
 | buttons | 功能按钮，可选值：`add` `delete` `remove` `save` `query` `reset` `expandAll` `collapseAll` `export` 或 数组 或 自定义按钮，数组为可选值字符串+按钮配置属性对象 | string \| \[string, object\] \|ReactNode |   |
 | queryFields | 自定义查询字段组件，默认会根据queryDataSet中定义的field类型自动匹配组件 | ReactNode[] |  |
 | queryFieldsLimit | 头部显示的查询字段的数量，超出限制的查询字段放入弹出窗口 | number | 1 |
-| queryBar | 查询条, 可选值：`normal` `bar` `none` | boolean | normal |
+| queryBar | 查询条, 可选值：`normal` `bar` `none` | string | normal |
 | rowHeight | 行高 | number \| auto | 30 |
 | defaultRowExpanded | 默认行是否展开，当dataSet没有设置expandField时才有效 | boolean | false |
 | expandRowByClick | 通过点击行来展开子行 | boolean | false |
+| expandedRowRenderer | 展开行渲染器 | ({ dataSet, record }) => ReactNode |  |
+| expandIconColumnIndex | 展开图标所在列索引 | number |  |
 | indentSize | 展示树形数据时，每层缩进的宽度 | number | 15 |
 | filter | 数据过滤， 返回值 true - 显示 false - 不显示 | (record) => boolean |  |
 | mode | 表格展示的模式, tree需要配合dataSet的`idField`和`parentField`来展示，可选值: `list` `tree` | string | list |
@@ -62,3 +64,4 @@ subtitle: 表格
 | footerClassName | 列脚样式名 | string  |  |
 | help | 额外信息，常用于提示 | `string` | `undefined` |
 | showHelp | 展示提示信息的方式 | `'tooltip' \| 'newLine' \| 'none'` | `'tooltip'` |
+| onCell | 设置单元格属性 | ({ dataSet, record, column }) => object |  |

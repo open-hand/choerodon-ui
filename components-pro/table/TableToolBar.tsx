@@ -222,7 +222,10 @@ export default class TableToolBar extends Component<TabelToolBarProps, any> {
           button = button[0];
         }
         if (isString(button) && button in TableButtonType) {
-          children.push(<Button color={ButtonColor.blue} funcType={FuncType.flat} key={button} {...this.getButtonProps(button)} {...props} />);
+          const defaultButtonProps = this.getButtonProps(button);
+          if (defaultButtonProps) {
+            children.push(<Button color={ButtonColor.blue} funcType={FuncType.flat} key={button} {...defaultButtonProps} {...props} />);
+          }
         } else if (isValidElement<ButtonProps>(button)) {
           children.push(button);
         }

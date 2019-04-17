@@ -15,10 +15,14 @@ timeline: true
 
 ---
 
-- 💄 `<pro>Form`: 属性labelLayout新增float值。
+- 🌟 `<pro>Form`: 属性labelLayout新增float值。
 - 🌟 `<pro>Table`: 弃用属性showQueryBar，新增queryBar属性，可选值为`normal` `bar` `none`。
-- 🌟 `<pro>Table`: 优化组合列。
+- 🌟 `<pro>Table`: 新增展开行渲染功能。
+- 🌟 `<pro>Table`: 新增onCell用于设置单元格属性。
+- 🌟 `<pro>Table`: 废弃属性rowRenderer，新增onRow用于设置行属性。
+- 💄 `<pro>Table`: 优化组合列。
 - 🐞 `<pro>Field`: 修复属性pattern不支持正则常量。
+- 🐞 `<pro>Lov`: 修复列序号不生效的问题。
 
 ## 0.6.0
 

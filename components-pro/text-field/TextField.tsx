@@ -223,10 +223,9 @@ export class TextField<T extends TextFieldProps> extends FormField<T & TextField
   renderGroup(): ReactNode {
     const { prefixCls, props: { addonBefore, addonAfter, showHelp } } = this;
     const inputElement = this.renderInputElement();
-    const isTooltipHelp = showHelp === ShowHelp.tooltip;
-    const help = isTooltipHelp ? this.renderHelpMessage() : null;
+    const help = showHelp === ShowHelp.tooltip ? this.renderTooltipHelp() : null;
 
-    if (!addonBefore && !addonAfter && (!help || showHelp !== ShowHelp.tooltip)) {
+    if (!addonBefore && !addonAfter && !help) {
       return inputElement;
     }
 

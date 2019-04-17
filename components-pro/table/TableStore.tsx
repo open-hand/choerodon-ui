@@ -1,6 +1,7 @@
 import React, { Children, isValidElement, ReactNode } from 'react';
 import { action, computed, observable, runInAction } from 'mobx';
 import isNil from 'lodash/isNil';
+import isPlainObject from 'lodash/isPlainObject';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import Column, { ColumnProps, columnWidth } from './Column';
 import DataSet from '../data-set/DataSet';
@@ -16,6 +17,7 @@ import { getPrefixCls } from 'choerodon-ui/lib/configure';
 import ColumnGroups, { ColumnGroup } from './ColumnGroups';
 
 const SELECTION_KEY = '__selection-column__';
+export const EXPAND_KEY = '__expand-column__';
 
 export default class TableStore {
 
@@ -34,6 +36,8 @@ export default class TableStore {
   @observable lockColumnsHeadRowsHeight: any;
 
   @observable expandedRows: Record[];
+
+  @observable hoverRow?: Record;
 
   @observable currentEditorName?: string;
 
@@ -74,7 +78,9 @@ export default class TableStore {
   @computed
   get columns(): ColumnProps[] {
     const { columns, children } = this.props;
-    return observable.array(this._addSelectionColumn(columns ? mergeDefaultProps(columns) : normalizeColumns(children)));
+    return observable.array(
+      this._addExpandColumn(this._addSelectionColumn(columns ? mergeDefaultProps(columns) : normalizeColumns(children))),
+    );
   }
 
   @computed
@@ -206,7 +212,7 @@ export default class TableStore {
   }
 
   @computed
-  get allChecked() {
+  get allChecked(): boolean {
     const { dataSet, showCachedSeletion } = this;
     if (dataSet) {
       const { length } = (showCachedSeletion ? this.data : dataSet.data).filter(record => record.selectable);
@@ -214,6 +220,24 @@ export default class TableStore {
       return !!selectedLength && selectedLength === length;
     }
     return false;
+  }
+
+  @computed
+  get expandIconAsCell(): boolean {
+    const { expandedRowRenderer } = this.props;
+    return !!expandedRowRenderer && !this.isTree;
+  }
+
+  @computed
+  get expandIconColumnIndex(): number {
+    const { expandIconAsCell, props: { expandIconColumnIndex = 0 } } = this;
+    if (expandIconAsCell) {
+      return 0;
+    }
+    if (this.hasRowBox) {
+      return expandIconColumnIndex + 1;
+    }
+    return expandIconColumnIndex;
   }
 
   private handleSelectAllChange = action((value) => {
@@ -267,18 +291,9 @@ export default class TableStore {
   }
 
   isRowExpanded(record: Record): boolean {
-    if (this.dataSet.props.expandField) {
-      return record.isExpanded;
-    } else {
-      const expanded = this.expandedRows.indexOf(record) !== -1;
-      if (expanded) {
-        const { parent } = record;
-        if (!parent || this.isRowExpanded(parent)) {
-          return true;
-        }
-      }
-    }
-    return false;
+    const { parent } = record;
+    const expanded = this.dataSet.props.expandField ? record.isExpanded : this.expandedRows.indexOf(record) !== -1;
+    return expanded && (!this.isTree || !parent || this.isRowExpanded(parent));
   }
 
   @action
@@ -295,6 +310,15 @@ export default class TableStore {
         }
       }
     }
+  }
+
+  isRowHover(record: Record): boolean {
+    return this.hoverRow === record;
+  }
+
+  @action
+  setRowHover(record: Record, hover: boolean) {
+    this.hoverRow = hover ? record : void 0;
   }
 
   expandAll() {
@@ -315,6 +339,19 @@ export default class TableStore {
       }
     });
     return leafColumns;
+  }
+
+  _addExpandColumn(columns: ColumnProps[]): ColumnProps[] {
+    if (this.expandIconAsCell) {
+      columns.unshift({
+        key: EXPAND_KEY,
+        resizable: false,
+        align: ColumnAlign.center,
+        width: 50,
+        lock: true,
+      });
+    }
+    return columns;
   }
 
   _addSelectionColumn(columns: ColumnProps[]): ColumnProps[] {
@@ -385,17 +422,20 @@ function renderSelectionBox({ record }) {
 }
 
 function mergeDefaultProps(columns: ColumnProps[], defaultKey: number[] = [0]): ColumnProps[] {
-  return columns.map(column => {
-    const newColumn: ColumnProps = { ...Column.defaultProps, ...column };
-    if (isNil(getColumnKey(newColumn))) {
-      newColumn.key = `anonymous-${defaultKey[0]++}`;
+  return columns.reduce<ColumnProps[]>((newColumns, column) => {
+    if (isPlainObject(column)) {
+      const newColumn: ColumnProps = { ...Column.defaultProps, ...column };
+      if (isNil(getColumnKey(newColumn))) {
+        newColumn.key = `anonymous-${defaultKey[0]++}`;
+      }
+      const { children } = newColumn;
+      if (children) {
+        newColumn.children = mergeDefaultProps(children, defaultKey);
+      }
+      newColumns.push(newColumn);
     }
-    const { children } = newColumn;
-    if (children) {
-      newColumn.children = mergeDefaultProps(children, defaultKey);
-    }
-    return newColumn;
-  });
+    return newColumns;
+  }, []);
 }
 
 function normalizeColumns(elements: ReactNode, parent: ColumnProps | null = null, defaultKey: number[] = [0]) {

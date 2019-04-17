@@ -459,22 +459,28 @@ export default class DataSet extends EventManager {
   }
 
   @computed
-  get cacheKeys(): string[] | undefined {
-    const { cacheSelection, primaryKey, selection } = this.props;
-    if (cacheSelection && selection === DataSetSelection.multiple) {
-      if (primaryKey) {
-        return [primaryKey];
-      } else {
-        const keys: string[] = [];
-        for (const [key, field] of this.fields.entries()) {
-          if (field.get('unique')) {
-            keys.push(key);
-          }
-        }
-        if (keys.length) {
-          return keys;
+  get uniqueKeys(): string[] | undefined {
+    const { primaryKey } = this.props;
+    if (primaryKey) {
+      return [primaryKey];
+    } else {
+      const keys: string[] = [];
+      for (const [key, field] of this.fields.entries()) {
+        if (field.get('unique')) {
+          keys.push(key);
         }
       }
+      if (keys.length) {
+        return keys;
+      }
+    }
+  }
+
+  @computed
+  get cacheSelectionKeys(): string[] | undefined {
+    const { cacheSelection, selection } = this.props;
+    if (cacheSelection && selection === DataSetSelection.multiple) {
+      return this.uniqueKeys;
     }
   }
 
@@ -1433,7 +1439,7 @@ Then the query method will be auto invoke.`);
 
   @action
   private storeSelected() {
-    if (this.cacheKeys) {
+    if (this.cacheSelectionKeys) {
       this.cachedSelected = [
         ...this.cachedSelected.filter(record => record.isSelected),
         ...this.currentSelected.map(record => (record.isCurrent = false, record.isCached = true, record)),
@@ -1443,10 +1449,10 @@ Then the query method will be auto invoke.`);
 
   @action
   private releaseCachedSelected() {
-    const { cacheKeys, cachedSelected } = this;
-    if (cacheKeys) {
+    const { cacheSelectionKeys, cachedSelected } = this;
+    if (cacheSelectionKeys) {
       this.data.forEach(record => {
-        const index = cachedSelected.findIndex(cached => cacheKeys.every(key => record.get(key) === cached.get(key)));
+        const index = cachedSelected.findIndex(cached => cacheSelectionKeys.every(key => record.get(key) === cached.get(key)));
         if (index !== -1) {
           record.isSelected = true;
           cachedSelected.splice(index, 1);
