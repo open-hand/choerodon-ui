@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.6.1
+
+`2019-04-18`
+
 - 🌟 `<pro>Form`: Property labelLayout adds float value.
 - 🌟 `<pro>Table`: Deprecated the property `showQueryBar`, added `queryBar` property, the optional value is `normal` `bar` `none`.
 - 🌟 `<pro>Table`: Added expanded row rendering.
