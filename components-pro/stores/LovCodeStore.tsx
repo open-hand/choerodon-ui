@@ -1,46 +1,15 @@
 import isNil from 'lodash/isNil';
+import { action, observable, ObservableMap, runInAction } from 'mobx';
 import warning from 'choerodon-ui/lib/_util/warning';
 import DataSet, { DataSetProps } from '../data-set/DataSet';
 import axios from '../axios';
-import { ColumnAlign } from '../table/enum';
 import { FieldProps } from '../data-set/Field';
-import { action, remove } from 'mobx';
 import { FieldType } from '../data-set/enum';
-import { LovFieldType } from './enum';
+import { LovFieldType } from '../lov/enum';
+import { getConfig } from 'choerodon-ui/lib/configure';
+import { LovConfig, LovConfigItem } from '../lov/Lov';
 
-export type LovConfigItem = {
-  display?: string,
-  conditionField?: string,
-  conditionFieldLovCode?: string,
-  conditionFieldType?: string,
-  conditionFieldName?: string,
-  conditionFieldSelectCode?: string,
-  conditionFieldSelectUrl?: string,
-  conditionFieldSelectTf?: string,
-  conditionFieldSelectVf?: string,
-  conditionFieldSequence: number,
-  gridField?: string,
-  gridFieldName?: string,
-  gridFieldWidth?: number,
-  gridFieldAlign?: ColumnAlign,
-  gridFieldSequence: number,
-};
-
-export type LovConfig = {
-  title?: string,
-  width?: number,
-  height?: number,
-  customUrl?: string,
-  lovPageSize?: string,
-  lovItems: LovConfigItem[],
-  treeFlag?: string,
-  parentIdField?: string,
-  idField?: string,
-  textField?: string,
-  valueField?: string,
-}
-
-function getFieldType(conditionFieldType?: string): FieldType {
+function getFieldType(conditionFieldType?: FieldType | LovFieldType): FieldType {
   switch (conditionFieldType) {
     case LovFieldType.INT:
       return FieldType.number;
@@ -53,7 +22,7 @@ function getFieldType(conditionFieldType?: string): FieldType {
     case LovFieldType.POPUP:
       return FieldType.object;
     default:
-      return FieldType.string;
+      return conditionFieldType as FieldType || FieldType.string;
   }
 }
 
@@ -110,24 +79,38 @@ function generateGridField(fields: FieldProps[], {
 
 export class LovCodeStore {
 
-  static getConfigUrl = code => `/sys/lov/lov_define?code=${code}`;
+  @observable lovCodes: ObservableMap<string, LovConfig>;
 
-  static getQueryUrl = code => `/common/lov/dataset/${code}`;
-
-  lovCodes = {};
-
-  lovDS = {};
+  @observable lovDS: ObservableMap<string, DataSet>;
 
   pendings = {};
 
+  constructor() {
+    this.init();
+  }
+
+  @action
+  init() {
+    this.lovCodes = observable.map<string, LovConfig>();
+    this.lovDS = observable.map<string, DataSet>();
+  }
+
+  getConfig(code: string): LovConfig | undefined {
+    return this.lovCodes.get(code);
+  }
+
   async fetchConfig(code: string): Promise<LovConfig | undefined> {
-    let config = this.lovCodes[code];
+    let config = this.getConfig(code);
     // SSR do not fetch the lookup
     if (!config && typeof window !== 'undefined') {
       try {
         const pending = this.pendings[code] = this.pendings[code] || axios.post(this.getConfigUrl(code));
         config = await pending;
-        this.lovCodes[code] = config;
+        runInAction(() => {
+          if (config) {
+            this.lovCodes.set(code, config);
+          }
+        });
       } finally {
         delete this.pendings[code];
       }
@@ -135,13 +118,11 @@ export class LovCodeStore {
     return config;
   }
 
-  async getLovDataSet(code: string): Promise<DataSet | undefined> {
-    let ds = this.lovDS[code];
+  getLovDataSet(code: string): DataSet | undefined {
+    let ds = this.lovDS.get(code);
     if (!ds) {
-      const config = await this.fetchConfig(code);
-      if (!config) {
-        warning(false, `LOV: code<${code}> is not exists`);
-      } else {
+      const config = this.getConfig(code);
+      if (config) {
         const { lovPageSize, lovItems, parentIdField, idField, valueField, treeFlag } = config;
         const dataSetProps: DataSetProps = {
           queryUrl: this.getQueryUrl(code),
@@ -170,44 +151,48 @@ export class LovCodeStore {
             dataSetProps.fields = fields;
           }
         }
-        this.lovDS[code] = ds = new DataSet(dataSetProps);
+        runInAction(() => {
+          this.lovDS.set(code, ds = new DataSet(dataSetProps));
+        });
+      } else {
+        warning(false, `LOV: code<${code}> is not exists`);
       }
     }
     return ds;
   }
 
   getConfigUrl(code: string): string {
-    const { getConfigUrl } = this.constructor as any;
-    if (typeof getConfigUrl === 'function') {
-      return getConfigUrl(code);
+    const lovDefineUrl = getConfig('lovDefineUrl');
+    if (typeof lovDefineUrl === 'function') {
+      return lovDefineUrl(code);
     } else {
-      return getConfigUrl as string;
+      return lovDefineUrl as string;
     }
   }
 
   getQueryUrl(code: string): string {
-    const config = this.lovCodes[code];
+    const config = this.getConfig(code);
     if (config) {
       const { customUrl } = config;
       if (customUrl) {
         return customUrl;
       }
     }
-    const { getQueryUrl } = this.constructor as any;
-    if (typeof getQueryUrl === 'function') {
-      return getQueryUrl(code);
+    const lovQueryUrl = getConfig('lovQueryUrl');
+    if (typeof lovQueryUrl === 'function') {
+      return lovQueryUrl(code);
     } else {
-      return getQueryUrl as string;
+      return lovQueryUrl as string;
     }
   }
 
   @action
   clearCache(codes?: string[]) {
     if (codes) {
-      codes.forEach(code => (remove(this.lovCodes, code), remove(this.lovDS, code)));
+      codes.forEach(code => (this.lovCodes.delete(code), this.lovDS.delete(code)));
     } else {
-      this.lovCodes = {};
-      this.lovDS = {};
+      this.lovCodes.clear();
+      this.lovDS.clear();
     }
   }
 }

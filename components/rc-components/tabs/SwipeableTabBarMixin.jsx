@@ -2,7 +2,7 @@ import React from 'react';
 import classnames from 'classnames';
 import Hammer from '../hammerjs';
 import ReactDOM from 'react-dom';
-import { getStyle, isVertical, setPxStyle, } from './utils';
+import { generateKey, getStyle, isVertical, setPxStyle, } from './utils';
 
 export default {
   getInitialState() {
@@ -44,7 +44,7 @@ export default {
     const { panels } = this.props;
     const length = panels.length;
     for (let i = 0; i < length; i++) {
-      if (panels[i].key === activeKey) {
+      if (generateKey(panels[i].key, i) === activeKey) {
         return i;
       }
     }

@@ -260,7 +260,7 @@ class App extends React.Component {
         <Column name="frozen" editor width={50} minWidth={50} lock="right" />
         <Column header="编辑Friends" align="center" renderer={this.renderEdit} lock="right" />
       </Table>,
-      <Tabs>
+      <Tabs key="tabs">
         <TabPane tab="Enemy">
           <Table key="enemy" buttons={['add', 'delete']} dataSet={this.enemyDs}>
             <Column name="name" editor sortable />

@@ -132,11 +132,6 @@ export function sortTree(children: Record[], orderField: Field): Record[] {
         return order === SortOrder.asc ? a - b : b - a;
       }
     });
-    // children.forEach((record) => {
-    //   if (record.children) {
-    //     sortTree(record.children, orderField);
-    //   }
-    // });
   }
   return children;
 }
@@ -244,10 +239,6 @@ export function doExport(url, data) {
   document.body.appendChild(form);
   form.submit();
   document.body.removeChild(form);
-}
-
-export function getLookupUrl(code) {
-  return `/common/code/${code}/`;
 }
 
 export function findBindFieldBy(myField: Field, fields: Fields, prop: string): Field | undefined {

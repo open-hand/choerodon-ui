@@ -16,6 +16,7 @@ import warning from '../_util/warning';
 import isFlexSupported from '../_util/isFlexSupported';
 import RcTabs, { TabContent, TabPane } from '../rc-components/tabs';
 import ScrollableInkTabBar from '../rc-components/tabs/ScrollableInkTabBar';
+import { generateKey } from '../rc-components/tabs/utils';
 import { Size } from '../_util/enum';
 import { TabsPosition, TabsType } from './enum';
 import { getPrefixCls } from '../configure';
@@ -156,7 +157,7 @@ export default class Tabs extends Component<TabsProps, any> {
               {closeIcon}
             </div>
           ),
-          key: child.key || index,
+          key: generateKey(child.key, index),
         }));
       });
       // Add new tab handler

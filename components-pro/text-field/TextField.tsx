@@ -399,7 +399,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T & TextField
 
   getInnerSpanButton(): ReactNode {
     const { props: { clearButton }, prefixCls } = this;
-    if (clearButton && !this.isDisabled() && !this.isReadOnly()) {
+    if (clearButton && !this.isReadOnly()) {
       return this.wrapperInnerSpanButton(<Icon type="close" onClick={this.handleClearButtonClick} />, {
         className: `${prefixCls}-clear-button`,
       });
@@ -409,7 +409,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T & TextField
   wrapperInnerSpanButton(children: ReactNode, props: any = {}): ReactNode {
     const { prefixCls } = this;
     const { className, ...otherProps } = props;
-    return (
+    return !this.isDisabled() && (
       <div key="inner-button" {...otherProps} className={classNames(`${prefixCls}-inner-button`, className)}>
         {children}
       </div>

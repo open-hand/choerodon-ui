@@ -48,7 +48,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
 
   private setFilterText = debounce(action((text?: string) => {
     this.filterText = text;
-  }), 100);
+  }), 500);
 
   @action
   setText(text) {

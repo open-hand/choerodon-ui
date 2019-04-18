@@ -57,6 +57,7 @@ Array [
   "Upload",
   "version",
   "IconSelect",
+  "Animate",
   "configure",
 ]
 `;

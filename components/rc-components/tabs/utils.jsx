@@ -1,7 +1,7 @@
 import { Children } from 'react';
+import isNil from 'lodash/isNil';
 
 export function toArray(children) {
-  // allow [c,[a,b]]
   const c = [];
   Children.forEach(children, child => {
     if (child) {
@@ -11,19 +11,18 @@ export function toArray(children) {
   return c;
 }
 
+export function generateKey(key, index) {
+  return String(isNil(key) ? index : key);
+}
+
 export function getActiveIndex(children, activeKey) {
   const c = toArray(children);
-  for (let i = 0; i < c.length; i++) {
-    if (c[i].key === activeKey) {
-      return i;
-    }
-  }
-  return -1;
+  return c.findIndex((child, index) => generateKey(child.key, index) === activeKey);
 }
 
 export function getActiveKey(children, index) {
   const c = toArray(children);
-  return c[index].key;
+  return generateKey(c[index].key, index);
 }
 
 export function setTransform(style, v) {

@@ -2,6 +2,7 @@ import { action, computed, get, IReactionDisposer, isArrayLike, observable, reac
 import { AxiosInstance } from 'axios';
 import isNumber from 'lodash/isNumber';
 import isArray from 'lodash/isArray';
+import defer from 'lodash/defer';
 import debounce from 'lodash/debounce';
 import axios from '../axios';
 import Record from './Record';
@@ -226,8 +227,14 @@ export default class DataSet extends EventManager {
    */
   set queryDataSet(ds: DataSet | undefined) {
     this.props.queryDataSet = ds;
-    if (ds && !ds.current) {
-      ds.create();
+    if (ds) {
+      defer(() => {
+        if (ds.length === 0) {
+          ds.create();
+        } else if (!ds.current) {
+          ds.currentIndex = 0;
+        }
+      });
     }
   }
 
@@ -545,7 +552,7 @@ export default class DataSet extends EventManager {
       if (autoQuery && typeof window !== 'undefined') {
         this.query();
       } else if (autoCreate && this.length === 0) {
-        this.create();
+        defer(() => this.create());
       }
     });
   }
@@ -595,12 +602,17 @@ export default class DataSet extends EventManager {
    * @param isSelect 如果为true，则只等待选中的记录
    * @returns Promise
    */
-  ready(isSelect?: boolean): Promise<any> {
-    return Promise.all([
-      this.pending,
+  async ready(isSelect?: boolean): Promise<any> {
+    const { pending } = this;
+    const result = await Promise.all([
+      pending,
       ...(isSelect ? this.selected : this.data).map(record => record.ready()),
       ...Array.from(this.fields.values()).map(field => field.ready()),
     ]);
+    if (this.pending && this.pending !== pending) {
+      return this.ready(isSelect);
+    }
+    return result;
   }
 
   /**
@@ -608,10 +620,17 @@ export default class DataSet extends EventManager {
    * @param page 页码
    * @return Promise
    */
-  async query(page?: number): Promise<any> {
-    const data = await this.read(page);
-    this.loadDataFromResponse(data);
-    return data;
+  query(page?: number): Promise<any> {
+    this.pending = new Promise(async (resolve, reject) => {
+      try {
+        const data = await this.read(page);
+        this.loadDataFromResponse(data);
+        resolve(data);
+      } catch (e) {
+        reject(e);
+      }
+    });
+    return this.pending;
   }
 
   /**
@@ -1269,7 +1288,9 @@ Then the query method will be auto invoke.`);
     }
     this.releaseCachedSelected();
     if (autoLocateFirst) {
-      this.current = this.get(0);
+      defer(() => {
+        this.current = this.get(0);
+      });
     }
     this.fireEvent(DataSetEvents.load, { dataSet: this });
     return this;
@@ -1360,11 +1381,6 @@ Then the query method will be auto invoke.`);
     }
     if (queryDataSet) {
       this.queryDataSet = queryDataSet;
-      if (queryDataSet.length === 0) {
-        queryDataSet.create();
-      } else if (!queryDataSet.current) {
-        queryDataSet.currentIndex = 0;
-      }
     }
   }
 
@@ -1413,26 +1429,19 @@ Then the query method will be auto invoke.`);
     const { parent, queryUrl } = this;
     if (queryUrl && this.checkReadable(parent)) {
       try {
-        this.pending = new Promise(async (resolve, reject) => {
-          this.changeStatus(DataSetStatus.loading);
-          try {
-            const params = await this.generateQueryParameter();
-            this.fireEvent(DataSetEvents.query, { dataSet: this, params });
-            const result = await this.axios.post(append(queryUrl, this.generateQueryString(page)), JSON.stringify(params));
-            runInAction(() => {
-              this.currentPage = page;
-            });
-            resolve(result);
-          } catch (e) {
-            reject(e);
-          }
+        this.changeStatus(DataSetStatus.loading);
+        const params = await this.generateQueryParameter();
+        this.fireEvent(DataSetEvents.query, { dataSet: this, params });
+        const result = await this.axios.post(append(queryUrl, this.generateQueryString(page)), JSON.stringify(params));
+        runInAction(() => {
+          this.currentPage = page;
         });
-        return await this.pending;
+        return result;
       } catch (e) {
         this.handleLoadFail(e);
+        throw e;
       } finally {
         this.changeStatus(DataSetStatus.ready);
-        this.pending = void 0;
       }
     }
   }

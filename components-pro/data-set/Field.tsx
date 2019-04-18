@@ -1,4 +1,4 @@
-import { action, computed, get, observable, reaction, runInAction, set, ObservableMap } from 'mobx';
+import { action, computed, get, observable, ObservableMap, reaction, runInAction, set } from 'mobx';
 import { MomentInput } from 'moment';
 import isObject from 'lodash/isObject';
 import merge from 'lodash/merge';
@@ -8,13 +8,13 @@ import Record from './Record';
 import Validator, { CustomValidator } from '../validator/Validator';
 import { DataSetEvents, FieldType, SortOrder } from './enum';
 import lookupStore from '../stores/LookupCodeStore';
-import lovCodeStore, { LovConfig } from '../stores/LovCodeStore';
+import lovCodeStore from '../stores/LovCodeStore';
 import localeContext from '../locale-context';
-import { findInvalidField, getLookupUrl, processValue } from './utils';
+import { findInvalidField, processValue } from './utils';
 import Validity from '../validator/Validity';
 import ValidationResult from '../validator/ValidationResult';
-
-export type urlHook = (code: string) => string;
+import { getConfig } from 'choerodon-ui/lib/configure';
+import { LovConfig } from '../lov/Lov';
 
 export type Fields = ObservableMap<string, Field>;
 
@@ -133,7 +133,7 @@ export type FieldProps = {
   /**
    * 值列表请求的Url
    */
-  lookupUrl?: string | urlHook;
+  lookupUrl?: string | ((code: string) => string);
   /**
    * 内部字段别名绑定
    */
@@ -166,7 +166,6 @@ export default class Field {
     valueField: 'value',
     trueValue: true,
     falseValue: false,
-    lookupUrl: getLookupUrl,
   };
 
   dataSet?: DataSet;
@@ -255,7 +254,7 @@ export default class Field {
   getProps(): FieldProps & { [key: string]: any } {
     const dsField = this.findDataSetField();
     return merge(
-      {},
+      { lookupUrl: getConfig('lookupUrl') },
       Field.defaultProps,
       dsField && dsField.props,
       this.props,
@@ -302,6 +301,9 @@ export default class Field {
     const dsField = this.findDataSetField();
     if (dsField) {
       return dsField.get(propsName);
+    }
+    if (propsName === 'lookupUrl') {
+      return getConfig(propsName);
     }
     return Field.defaultProps[propsName];
   }
@@ -548,8 +550,13 @@ export default class Field {
     return findInvalidField(this).validator.validationErrorValues;
   }
 
-  ready(): Promise<any> {
-    return Promise.all([this.lookUpPending, this.lovPending]);
+  async ready(): Promise<any> {
+    const { lookUpPending, lovPending } = this;
+    const result = await Promise.all([this.lookUpPending, this.lovPending]);
+    if ((this.lookUpPending && this.lookUpPending !== lookUpPending) || (this.lovPending && this.lovPending !== lovPending)) {
+      return this.ready();
+    }
+    return result;
   }
 
   private findDataSetField(): Field | undefined {

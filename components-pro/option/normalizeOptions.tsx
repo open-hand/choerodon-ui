@@ -8,7 +8,7 @@ import lookupStore from '../stores/LookupCodeStore';
 
 export default function normalizeOptions({ field, textField, valueField, multiple, children }) {
   const selectionType = multiple ? DataSetSelection.multiple : multiple === void 0 ? void 0 : DataSetSelection.single;
-  let data: object[] = [];
+  let data: object[] | undefined = [];
   let fetch;
   if (field) {
     const options = field.getOptions();

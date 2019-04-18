@@ -1,4 +1,4 @@
-import { action, get, observable, remove, runInAction, set } from 'mobx';
+import { action, get, observable, ObservableMap } from 'mobx';
 import isString from 'lodash/isString';
 import isObject from 'lodash/isObject';
 import warning from 'choerodon-ui/lib/_util/warning';
@@ -6,7 +6,8 @@ import axios from '../axios';
 import Field from '../data-set/Field';
 import lovCodeStore from './LovCodeStore';
 import { FieldType } from '../data-set/enum';
-import { getLookupUrl, isSameLike } from '../data-set/utils';
+import { isSameLike } from '../data-set/utils';
+import { getConfig } from 'choerodon-ui/lib/configure';
 
 export type responseData = object[];
 export type responseTypeIncludeRows = { rows: responseData };
@@ -22,12 +23,28 @@ export function hasRows(object: responseType): object is responseTypeIncludeRows
 
 export class LookupCodeStore {
 
-  @observable lookupCodes: { [key: string]: responseData } = {};
+  @observable lookupCodes: ObservableMap<string, responseData>;
 
   pendings: { [key: string]: Promise<responseType> } = {};
 
-  get(lookupKey: string): responseData {
-    return get(this.lookupCodes, lookupKey);
+  constructor() {
+    this.init();
+  }
+
+  @action
+  init() {
+    this.lookupCodes = observable.map<string, responseData>();
+  }
+
+  get(lookupKey: string): responseData | undefined {
+    return this.lookupCodes.get(lookupKey);
+  }
+
+  @action
+  set(lookupKey: string, data: responseData | undefined) {
+    if (data) {
+      this.lookupCodes.set(lookupKey, data);
+    }
   }
 
   getByValue(lookupKey: string, value: any, valueField: string): object | undefined {
@@ -45,18 +62,20 @@ export class LookupCodeStore {
   }
 
   async fetchLookupData(lookupKey): Promise<responseData | undefined> {
-    let data: responseType = this.get(lookupKey);
+    let data: responseData | undefined = this.get(lookupKey);
     // SSR do not fetch the lookup
     if (!data && typeof window !== 'undefined') {
       try {
         const pending: Promise<responseType> = this.pendings[lookupKey] = this.pendings[lookupKey] || axios.post<responseType>(lookupKey);
-        data = await pending;
-        if (hasRows(data)) {
-          data = data.rows;
+        const result: responseType = await pending;
+        if (result) {
+          if (hasRows(result)) {
+            data = result.rows;
+          } else {
+            data = result;
+          }
+          this.set(lookupKey, data);
         }
-        runInAction(() => {
-          set(this.lookupCodes, lookupKey, data);
-        });
         warning(!!data, `Lookup<${lookupKey}> is not exists`);
       } finally {
         delete this.pendings[lookupKey];
@@ -83,9 +102,12 @@ export class LookupCodeStore {
   @action
   clearCache(codes?: string[]) {
     if (codes) {
-      codes.forEach(code => remove(this.lookupCodes, getLookupUrl(code)));
+      const lookupUrl = getConfig('lookupUrl');
+      if (typeof lookupUrl === 'function') {
+        codes.forEach(code => this.lookupCodes.delete(lookupUrl(code)));
+      }
     } else {
-      this.lookupCodes = {};
+      this.lookupCodes.clear();
     }
   }
 }

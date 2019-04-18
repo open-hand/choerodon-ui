@@ -753,7 +753,7 @@ exports[`renders ./components/progress/demo/loading.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-default"
+    class="c7n-progress c7n-progress-loading c7n-progress-status-success c7n-progress-show-info c7n-progress-default"
   >
     <div
       class="c7n-progress-inner"
@@ -770,7 +770,7 @@ exports[`renders ./components/progress/demo/loading.md correctly 1`] = `
     </div>
   </div>
   <div
-    class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-large"
+    class="c7n-progress c7n-progress-loading c7n-progress-status-exception c7n-progress-show-info c7n-progress-large"
   >
     <div
       class="c7n-progress-inner"

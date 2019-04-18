@@ -4,20 +4,20 @@ import noop from 'lodash/noop';
 import classnames from 'classnames';
 import KeyCode from './KeyCode';
 import TabPane from './TabPane';
-import { getDataAttr } from './utils';
+import { generateKey, getDataAttr } from './utils';
 
 function getDefaultActiveKey(props) {
   let activeKey;
-  Children.forEach(props.children, (child) => {
+  Children.forEach(props.children, (child, index) => {
     if (child && !activeKey && !child.props.disabled) {
-      activeKey = child.key;
+      activeKey = generateKey(child.key, index);
     }
   });
   return activeKey;
 }
 
 function activeKeyIsValid(props, key) {
-  const keys = Children.map(props.children, child => child && child.key);
+  const keys = Children.map(props.children, (child, index) => child && generateKey(child.key, index));
   return keys.indexOf(key) >= 0;
 }
 
@@ -119,13 +119,13 @@ export default class Tabs extends Component {
       }
     });
     const length = children.length;
-    let ret = length && children[0].key;
+    let ret = length && generateKey(children[0].key, 0);
     children.forEach((child, i) => {
-      if (child.key === activeKey) {
+      if (generateKey(child.key, i) === activeKey) {
         if (i === length - 1) {
-          ret = children[0].key;
+          ret = generateKey(children[0].key, 0);
         } else {
-          ret = children[i + 1].key;
+          ret = generateKey(children[i + 1].key, i + 1);
         }
       }
     });

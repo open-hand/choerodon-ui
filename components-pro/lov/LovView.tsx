@@ -5,7 +5,7 @@ import Table, { TableProps } from '../table/Table';
 import { SelectionMode, TableMode } from '../table/enum';
 import { DataSetSelection } from '../data-set/enum';
 import { action } from 'mobx';
-import { LovConfig } from '../stores/LovCodeStore';
+import { LovConfig } from './Lov';
 import { ColumnProps } from '../table/Column';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 
@@ -68,14 +68,14 @@ export default class LovView extends Component<LovViewProps> {
   };
 
   render() {
-    const { dataSet, config: { height, treeFlag }, multiple } = this.props;
+    const { dataSet, config: { height, treeFlag, queryColumns }, multiple } = this.props;
     const tableProps: TableProps = {
       autoFocus: true,
       mode: treeFlag === 'Y' ? TableMode.tree : TableMode.list,
       onKeyDown: this.handleKeyDown,
       dataSet,
       columns: this.getColumns(),
-      queryFieldsLimit: 2,
+      queryFieldsLimit: queryColumns,
     };
     if (multiple) {
       tableProps.selectionMode = SelectionMode.rowbox;

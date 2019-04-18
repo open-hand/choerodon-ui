@@ -7,7 +7,7 @@ const transformIgnorePatterns = [
 
 module.exports = {
   verbose: true,
-  testURL: "http://localhost/",
+  testURL: 'http://localhost/',
   setupFiles: [
     './tests/setup.js',
   ],
@@ -48,7 +48,7 @@ module.exports = {
   globals: {
     'ts-jest': {
       tsConfigFile: './tsconfig.test.json',
-    }
+    },
   },
-  cacheDirectory: './.jest_cache'
+  cacheDirectory: './.jest-cache/' + (libDir || 'default'),
 };

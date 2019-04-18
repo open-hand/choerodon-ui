@@ -2,7 +2,7 @@ import React, { Children, cloneElement } from 'react';
 import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { getActiveIndex, getMarginStyle, getTransformByIndex, getTransformPropValue } from './utils';
+import { generateKey, getActiveIndex, getMarginStyle, getTransformByIndex, getTransformPropValue } from './utils';
 
 const TabContent = createReactClass({
   displayName: 'TabContent',
@@ -26,13 +26,14 @@ const TabContent = createReactClass({
     const children = props.children;
     const newChildren = [];
 
-    Children.forEach(children, (child) => {
+    Children.forEach(children, (child, index) => {
       if (!child) {
         return;
       }
-      const key = child.key;
+      const key = generateKey(child.key, index);
       const active = activeKey === key;
       newChildren.push(cloneElement(child, {
+        key,
         active,
         destroyInactiveTabPane: props.destroyInactiveTabPane,
         rootPrefixCls: props.prefixCls,
@@ -50,16 +51,12 @@ const TabContent = createReactClass({
     let { style } = props;
     const classes = classnames({
       [`${prefixCls}-content`]: true,
-      [animated ?
-        `${prefixCls}-content-animated` :
-        `${prefixCls}-content-no-animated`]: true,
+      [animated ? `${prefixCls}-content-animated` : `${prefixCls}-content-no-animated`]: true,
     });
     if (animated) {
       const activeIndex = getActiveIndex(children, activeKey);
       if (activeIndex !== -1) {
-        const animatedStyle = animatedWithMargin ?
-                getMarginStyle(activeIndex, tabBarPosition) :
-                getTransformPropValue(getTransformByIndex(activeIndex, tabBarPosition));
+        const animatedStyle = animatedWithMargin ? getMarginStyle(activeIndex, tabBarPosition) : getTransformPropValue(getTransformByIndex(activeIndex, tabBarPosition));
         style = {
           ...style,
           ...animatedStyle,

@@ -46,10 +46,10 @@ class App extends React.Component {
     return (
       <Row gutter={10}>
         <Col span={12}>
-          <Select dataSet={this.ds} name="mySex" />,
+          <Select dataSet={this.ds} name="mySex" />
         </Col>
         <Col span={12}>
-          <Lov dataSet={this.ds} name="code" />,
+          <Lov dataSet={this.ds} name="code" />
         </Col>
       </Row>
     );

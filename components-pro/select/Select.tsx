@@ -2,6 +2,7 @@ import React, { CSSProperties, Key, ReactElement, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import omit from 'lodash/omit';
 import isEqual from 'lodash/isEqual';
+import isPlainObject from 'lodash/isPlainObject';
 import { observer } from 'mobx-react';
 import { computed, IReactionDisposer, reaction, runInAction } from 'mobx';
 import Menu, { Item, ItemGroup } from 'choerodon-ui/lib/rc-components/menu';
@@ -22,6 +23,7 @@ import { stopEvent } from '../_util/EventManager';
 import normalizeOptions from '../option/normalizeOptions';
 import { $l } from '../locale-context';
 import getReactNodeText from '../_util/getReactNodeText';
+import * as ObjectChainValue from '../_util/ObjectChainValue';
 
 function updateActiveKey(menu: Menu, activeKey: string) {
   const store = menu.getStore();
@@ -37,6 +39,13 @@ function updateActiveKey(menu: Menu, activeKey: string) {
 
 function getItemKey(record: Record, text: ReactNode, value: any) {
   return `item-${value || record.id}-${getReactNodeText(text) || record.id}`;
+}
+
+function getSimpleValue(value, valueField) {
+  if (isPlainObject(value)) {
+    return ObjectChainValue.get(value, valueField);
+  }
+  return value;
 }
 
 export interface SelectProps extends TriggerFieldProps {
@@ -129,7 +138,7 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
 
   @computed
   get filteredOptions(): Record[] {
-    const { cascadeOptions, text, props: { optionsFilter, searchable } } = this;
+    const { cascadeOptions, text, searchable, props: { optionsFilter } } = this;
     const data = optionsFilter ? cascadeOptions.filter(optionsFilter!) : cascadeOptions;
     if (searchable && text) {
       return data.filter(record => record.get(this.textField).indexOf(text) !== -1);
@@ -157,8 +166,13 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
 
   @computed
   get editable(): boolean {
-    const { searchable, combo } = this.props;
-    return !this.isReadOnly() && (!!searchable || !!combo);
+    const { combo } = this.props;
+    return !this.isReadOnly() && (!!this.searchable || !!combo);
+  }
+
+  @computed
+  get searchable(): boolean {
+    return !!this.props.searchable;
   }
 
   @computed
@@ -302,8 +316,7 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
         multiple={this.menuMultiple}
         selectedKeys={selectedKeys}
         prefixCls={`${prefixCls}-dropdown-menu`}
-        onSelect={this.handleMenuSelect}
-        onDeselect={this.handleMenuUnSelect}
+        onClick={this.handleMenuClick}
         style={dropdownMenuStyle}
       >
         {optGroups}
@@ -449,10 +462,12 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
 
   syncValueOnBlur(value) {
     if (value) {
-      const record = this.findByText(value);
-      if (record) {
-        this.choose(record);
-      }
+      this.options.ready().then(() => {
+        const record = this.findByText(value);
+        if (record) {
+          this.choose(record);
+        }
+      });
     }
   }
 
@@ -464,6 +479,7 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
   findByValue(value): Record | undefined {
     const { valueField } = this;
     const autoType = this.getProp('type') === FieldType.auto;
+    value = getSimpleValue(value, valueField);
     return this.cascadeOptions.find(record =>
       autoType ? isSameLike(record.get(valueField), value) : isSame(record.get(valueField), value),
     );
@@ -472,7 +488,10 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
   isSelected(record: Record) {
     const { valueField } = this;
     const autoType = this.getProp('type') === FieldType.auto;
-    return this.getValues().some(value => autoType ? isSameLike(record.get(valueField), value) : isSame(record.get(valueField), value));
+    return this.getValues().some((value) => (
+      value = getSimpleValue(value, valueField),
+        autoType ? isSameLike(record.get(valueField), value) : isSame(record.get(valueField), value)
+    ));
   }
 
   generateComboOption(value: string, callback: (text: string) => void): void {
@@ -544,13 +563,12 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
   }
 
   @autobind
-  handleMenuSelect({ item: { props: { value } } }) {
-    this.choose(value);
-  }
-
-  @autobind
-  handleMenuUnSelect({ item: { props: { value } } }) {
-    this.unChoose(value);
+  handleMenuClick({ item: { props: { value } } }) {
+    if (this.isSelected(value) && this.multiple) {
+      this.unChoose(value);
+    } else {
+      this.choose(value);
+    }
   }
 
   handleOptionSelect(record) {
@@ -559,9 +577,13 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
   }
 
   handleOptionUnSelect(record) {
-    const newValue = record.get(this.valueField);
+    const { valueField } = this;
+    const newValue = record.get(valueField);
     const autoType = this.getProp('type') === FieldType.auto;
-    this.setValue(this.getValues().filter(v => autoType ? !isSameLike(v, newValue) : !isSame(v, newValue)));
+    this.setValue(this.getValues().filter(v => (
+      v = getSimpleValue(v, valueField),
+        autoType ? !isSameLike(v, newValue) : !isSame(v, newValue)
+    )));
     this.removeComboOption(record);
   }
 
@@ -577,6 +599,17 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
     }
   }
 
+  processObjectValue(value, textField) {
+    if (isPlainObject(value)) {
+      return ObjectChainValue.get(value, textField);
+    } else {
+      const found = this.findByValue(value);
+      if (found) {
+        return found.get(textField);
+      }
+    }
+  }
+
   processValue(value) {
     const { field, textField, valueField } = this;
     if (field) {
@@ -585,8 +618,7 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
         return super.processValue(lookupStore.getText(lookupKey, value, valueField, textField));
       }
     }
-    const found = this.findByValue(value);
-    return super.processValue(found && found.get(textField));
+    return super.processValue(this.processObjectValue(value, textField));
   }
 
   clear() {

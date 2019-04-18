@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import omit from 'lodash/omit';
 import isEqual from 'lodash/isEqual';
-import { computed, observable, runInAction, toJS } from 'mobx';
+import debounce from 'lodash/debounce';
+import { action, computed, observable, toJS } from 'mobx';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { ProgressType } from 'choerodon-ui/lib/progress/enum';
-import { TextField, TextFieldProps } from '../text-field/TextField';
 import Icon from '../icon';
 import { open } from '../modal-container/ModalContainer';
 import LovView from './LovView';
@@ -16,52 +16,156 @@ import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import Progress from '../progress';
 import { Size } from '../core/enum';
-import lovStore, { LovConfig } from '../stores/LovCodeStore';
-import * as ObjectChainValue from '../_util/ObjectChainValue';
+import lovStore from '../stores/LovCodeStore';
 import autobind from '../_util/autobind';
 import { stopEvent } from '../_util/EventManager';
 import lookupStore from '../stores/LookupCodeStore';
+import { Select, SelectProps } from '../select/Select';
+import { ColumnAlign } from '../table/enum';
+import { FieldType } from '../data-set/enum';
+import { LovFieldType } from './enum';
 
-export interface LovProps extends TextFieldProps {
+export type LovConfigItem = {
+  display?: string,
+  conditionField?: string,
+  conditionFieldLovCode?: string,
+  conditionFieldType?: FieldType | LovFieldType,
+  conditionFieldName?: string,
+  conditionFieldSelectCode?: string,
+  conditionFieldSelectUrl?: string,
+  conditionFieldSelectTf?: string,
+  conditionFieldSelectVf?: string,
+  conditionFieldSequence: number,
+  gridField?: string,
+  gridFieldName?: string,
+  gridFieldWidth?: number,
+  gridFieldAlign?: ColumnAlign,
+  gridFieldSequence: number,
+};
+
+export type LovConfig = {
+  title?: string,
+  width?: number,
+  height?: number,
+  customUrl?: string,
+  lovPageSize?: string,
+  lovItems: LovConfigItem[],
+  treeFlag?: 'Y' | 'N',
+  parentIdField?: string,
+  idField?: string,
+  textField?: string,
+  valueField?: string,
+  placeholder?: string,
+  editableFlag?: 'Y' | 'N',
+  queryColumns?: number,
+}
+
+export interface LovProps extends SelectProps {
   modalProps?: ModalProps;
   noCache?: boolean;
 }
 
 @observer
-export default class Lov extends TextField<LovProps> {
+export default class Lov extends Select<LovProps> {
   static displayName = 'Lov';
 
   static propTypes = {
-    ...TextField.propTypes,
+    ...Select.propTypes,
     modalProps: PropTypes.object,
     noCache: PropTypes.bool,
   };
 
   static defaultProps = {
-    ...TextField.defaultProps,
+    ...Select.defaultProps,
     clearButton: true,
+    checkValueOnOptionsChange: false,
   };
 
   modal;
 
-  options?: DataSet;
-
   @observable loading?: boolean;
 
+  @observable filterText?: string;
+
   @computed
-  get editable(): boolean {
-    return false;
+  get searchable(): boolean {
+    const config = this.getConfig();
+    if (config) {
+      return config.editableFlag === 'Y';
+    }
+    return !!this.props.searchable;
   }
 
   @computed
-  get textField(): string {
-    return this.getProp('textField') || 'meaning';
+  get lovCode(): string | undefined {
+    const { field } = this;
+    if (field) {
+      return field.get('lovCode');
+    }
   }
 
   @computed
-  get valueField(): string {
-    return this.getProp('valueField') || 'value';
+  get popup(): boolean {
+    return !this.filterText || this.modal ? false : this.statePopup;
   }
+
+  @computed
+  get options(): DataSet {
+    const { lovCode } = this;
+    if (lovCode) {
+      const ds = lovStore.getLovDataSet(lovCode);
+      if (ds) {
+        return ds;
+      }
+    }
+    return new DataSet();
+  }
+
+  private openModal = action(() => {
+    const config = this.getConfig();
+    const { options } = this;
+    const { modalProps, noCache } = this.props;
+    if (!this.modal && config && options) {
+      const { width, title } = config;
+      options.unSelectAll();
+      options.clearCachedSelected();
+      this.modal = open({
+        title,
+        children: (
+          <LovView
+            dataSet={options}
+            config={config}
+            onDoubleClick={this.handleLovViewSelect}
+            onEnterDown={this.handleLovViewSelect}
+            multiple={this.multiple}
+            values={this.getValues()}
+          />
+        ),
+        onClose: this.handleLovViewClose,
+        onOk: this.handleLovViewOk,
+        destroyOnClose: true,
+        style: {
+          width: pxToRem(width),
+          minHeight: pxToRem(400),
+          ...modalProps && modalProps.style,
+        },
+        ...omit(modalProps, ['style']),
+      } as ModalProps & { children });
+      if (this.resetOptions() || noCache) {
+        options.query();
+      }
+    }
+  });
+
+  private setFilterText = debounce(action((text?: string) => {
+    const { options, textField } = this;
+    this.filterText = text;
+    this.resetOptions();
+    options.setQueryParameter(textField, text);
+    if (text) {
+      options.query();
+    }
+  }), 500);
 
   handleLovViewSelect = () => {
     this.modal.close();
@@ -74,30 +178,67 @@ export default class Lov extends TextField<LovProps> {
   };
 
   handleLovViewOk = async () => {
-    const { options, multiple, field, valueField } = this;
-    if (options) {
-      const records = multiple ? options.selected : new Array().concat(options.current || []);
-      const lookupKey = field && lookupStore.getKey(field);
-      const values = lookupKey ? this.generateLookupValue(lookupKey, records, valueField)
-        : records.map(record => toJS(record.data));
-      this.setValue(multiple ? values : (values[0] || null));
-    }
+    const { options, multiple } = this;
+    const records = multiple ? options.selected : new Array().concat(options.current || []);
+    const values = records.map(record => this.processRecordToObject(record));
+    this.setValue(multiple ? values : (values[0] || null));
   };
 
-  generateLookupValue(lookupKey: string, records: Record[], valueField: string) {
-    const data = lookupStore.get(lookupKey);
-    return records.map((record) => {
-      const value = toJS(record.get(valueField));
-      if (data && data.every(item => item[valueField] !== value)) {
-        data.push(toJS(record.data));
+  @autobind
+  handleOptionSelect(record) {
+    this.addValue(this.processRecordToObject(record));
+  }
+
+  processRecordToObject(record: Record) {
+    const { field, valueField } = this;
+    const lookupKey = field && lookupStore.getKey(field);
+    return lookupKey ? this.generateLookupValue(lookupKey, record, valueField) : toJS(record.data);
+  }
+
+  resetOptions(): boolean {
+    const { field, record, options } = this;
+    const { queryDataSet } = options;
+    if (queryDataSet) {
+      queryDataSet.reset();
+    }
+    if (field) {
+      const lovPara = toJS(field.get('lovPara')) || {};
+      const cascadeMap = field.get('cascadeMap');
+      if (cascadeMap && record) {
+        Object.keys(cascadeMap).forEach(cascade => lovPara[cascade] = record.get(cascadeMap[cascade]));
       }
-      return value;
-    });
+      if (!isEqual(lovPara, options.queryParameter)) {
+        options.queryParameter = lovPara;
+        return true;
+      } else {
+        options.first();
+      }
+      if (!options.length || options.isFilteredByQueryFields) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  generateLookupValue(lookupKey: string, record: Record, valueField: string) {
+    const data = lookupStore.get(lookupKey);
+    const value = toJS(record.get(valueField));
+    if (data && data.every(item => item[valueField] !== value)) {
+      data.push(toJS(record.data));
+    }
+    return value;
+  }
+
+  setText(text) {
+    super.setText(text);
+    if (this.editable) {
+      this.setFilterText(text);
+    }
   }
 
   @autobind
   handleKeyDown(e) {
-    if (e.keyCode === KeyCode.DOWN) {
+    if (!this.popup && e.keyCode === KeyCode.DOWN) {
       stopEvent(e);
       this.openModal();
     }
@@ -112,102 +253,27 @@ export default class Lov extends TextField<LovProps> {
     super.handleBlur(e);
   }
 
-  async getOptions(): Promise<DataSet | undefined> {
-    const { field } = this;
-    if (field) {
-      const code = field.get('lovCode');
-      if (code) {
-        return await lovStore.getLovDataSet(code);
-      }
-    }
-  }
-
-  async getConfig(): Promise<LovConfig | undefined> {
-    const { field } = this;
-    if (field) {
-      const code = field.get('lovCode');
-      if (code) {
-        return await lovStore.fetchConfig(code);
-      }
+  getConfig() {
+    const { lovCode } = this;
+    if (lovCode) {
+      return lovStore.getConfig(lovCode);
     }
   }
 
   getOtherProps() {
-    return omit(super.getOtherProps(),
+    const otherProps = omit(super.getOtherProps(),
       [
         'modalProps',
-        'queryUrl',
-        'configUrl',
+        'noCache',
       ],
     );
-  }
-
-  openModal = async () => {
-    try {
-      runInAction(() => {
-        this.loading = true;
-      });
-      const config = await this.getConfig();
-      const options = this.options = await this.getOptions();
-      const { modalProps, noCache } = this.props;
-      if (!this.modal && config && options) {
-        const { width, title } = config;
-        options.unSelectAll();
-        options.clearCachedSelected();
-        this.modal = open({
-          title,
-          children: (
-            <LovView
-              dataSet={options}
-              config={config}
-              onDoubleClick={this.handleLovViewSelect}
-              onEnterDown={this.handleLovViewSelect}
-              multiple={this.multiple}
-              values={this.getValues()}
-            />
-          ),
-          onClose: this.handleLovViewClose,
-          onOk: this.handleLovViewOk,
-          destroyOnClose: true,
-          style: {
-            width: pxToRem(width),
-            minHeight: pxToRem(400),
-            ...modalProps && modalProps.style,
-          },
-          ...omit(modalProps, ['style']),
-        } as ModalProps & { children });
-        const { field, record } = this;
-        if (field) {
-          let needQuery = !options.length;
-          const { queryDataSet } = options;
-          if (queryDataSet) {
-            queryDataSet.reset();
-          }
-          if (options.isFilteredByQueryFields) {
-            needQuery = true;
-          }
-          const lovPara = toJS(field.get('lovPara')) || {};
-          const cascadeMap = field.get('cascadeMap');
-          if (cascadeMap && record) {
-            Object.keys(cascadeMap).forEach(cascade => lovPara[cascade] = record.get(cascadeMap[cascade]));
-          }
-          if (!isEqual(lovPara, options.queryParameter)) {
-            options.queryParameter = lovPara;
-            needQuery = true;
-          } else {
-            options.first();
-          }
-          if (noCache || needQuery) {
-            options.query();
-          }
-        }
-      }
-    } finally {
-      runInAction(() => {
-        this.loading = false;
-      });
+    const config = this.getConfig();
+    if (config && config.placeholder) {
+      otherProps.placeholder = config.placeholder;
     }
-  };
+
+    return otherProps;
+  }
 
   getSuffix(): ReactNode {
     const { suffix } = this.props;
@@ -217,17 +283,6 @@ export default class Lov extends TextField<LovProps> {
         onClick: this.isDisabled() || this.isReadOnly() ? void 0 : this.openModal,
       },
     );
-  }
-
-  processValue(value) {
-    const { field, textField, valueField } = this;
-    if (field) {
-      const lookupKey = lookupStore.getKey(field);
-      if (lookupKey) {
-        return super.processValue(lookupStore.getText(lookupKey, value, valueField, textField));
-      }
-    }
-    return super.processValue(value && textField ? ObjectChainValue.get(value, textField) : value);
   }
 
   componentWillUnmount() {

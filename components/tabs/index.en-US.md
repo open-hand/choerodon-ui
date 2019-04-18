@@ -30,11 +30,11 @@ Ant Design has 3 types of Tabs for different situations.
 | tabBarStyle | Tab bar style object | object | - |
 | tabPosition | Position of tabs | `top` \| `right` \| `bottom` \| `left` | `top` |
 | type | Basic style of tabs | `line` \| `card` \| `editable-card` | `line` |
-| onChange | Callback executed when active tab is changed | Function(activeKey) {} | - |
+| onChange | Callback executed when active tab is changed | (newActiveKey, oldActiveKey) => void | - |
 | onEdit | Callback executed when tab is added or removed. Only works while `type="editable-card"` | (targetKey, action): void | - |
-| onNextClick | Callback executed when next button is clicked | Function | - |
-| onPrevClick | Callback executed when prev button is clicked | Function | - |
-| onTabClick | Callback executed when tab is clicked | Function | - |
+| onNextClick | Callback executed when next button is clicked | (e) => void | - |
+| onPrevClick | Callback executed when prev button is clicked | (e) => void | - |
+| onTabClick | Callback executed when tab is clicked | (tabKey) => void | - |
 | tabBarGutter | The gap between tabs | number | - |
 
 ### Tabs.TabPane

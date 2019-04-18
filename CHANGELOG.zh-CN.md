@@ -20,9 +20,12 @@ timeline: true
 - 🌟 `<pro>Table`: 新增展开行渲染功能。
 - 🌟 `<pro>Table`: 新增onCell用于设置单元格属性。
 - 🌟 `<pro>Table`: 废弃属性rowRenderer，新增onRow用于设置行属性。
+- 🌟 `<pro>Lov`: 新增searchable属性，LovConfig新增editableFlag配置，用于输入时可获取lov值。
 - 💄 `<pro>Table`: 优化组合列。
 - 🐞 `<pro>Field`: 修复属性pattern不支持正则常量。
 - 🐞 `<pro>Lov`: 修复列序号不生效的问题。
+- 🐞 `<pro>NumberField`: 修复只读时能点击加减按钮的问题。
+- 🐞 `Tabs`: 修复Tab没有传key时无法切换的问题。
 
 ## 0.6.0
 

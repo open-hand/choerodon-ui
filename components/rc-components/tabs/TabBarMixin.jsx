@@ -1,6 +1,6 @@
 import React, { Children, cloneElement } from 'react';
 import classnames from 'classnames';
-import { getDataAttr } from './utils';
+import { generateKey, getDataAttr } from './utils';
 import warning from '../../_util/warning';
 import Ripple from '../../ripple';
 
@@ -21,7 +21,7 @@ export default {
       if (!child) {
         return;
       }
-      const key = child.key;
+      const key = generateKey(child.key, index);
       let cls = activeKey === key ? `${prefixCls}-tab-active` : '';
       cls += ` ${prefixCls}-tab`;
       let events = {};

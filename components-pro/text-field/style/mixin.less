@@ -206,9 +206,6 @@
     opacity: 0;
     z-index: 1;
     transition: opacity .3s;
-    + * {
-      transition: opacity .3s;
-    }
   }
 
   &-wrapper:hover &-inner-button,
@@ -290,6 +287,10 @@
 
   &-multiple &:not(:last-child) {
     padding-right: @suffix-width * 2;
+  }
+
+  &-multiple:not(&-suffix-button) &:not(:last-child) {
+    padding-right: @suffix-width;
   }
 
   &-multiple-block {

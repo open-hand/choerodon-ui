@@ -22,3 +22,6 @@ configure({ prefixCls: 'ant' });
 | --- | --- | --- | --- |
 | prefixCls | 设置统一样式前缀 | string | c7n |
 | ripple | 是否开启波纹效果 | boolean | true |
+| lookupUrl | lookup取值的地址或返回地址的钩子 | string \| ((code: string) => string) | code => \`/common/code/${code}/\` |
+| lovDefineUrl | Lov取配置的地址或返回地址的钩子 | string \| ((code: string) => string) | code => \`/sys/lov/lov_define?code=${code}\` |
+| lovQueryUrl | Lov取值的地址或返回地址的钩子 | string \| ((code: string) => string) | code => \`/common/lov/dataset/${code}\` |

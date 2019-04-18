@@ -20,9 +20,12 @@ timeline: true
 - 🌟 `<pro>Table`: Added expanded row rendering.
 - 🌟 `<pro>Table`: Added `onCell` property to set cell properties.
 - 🌟 `<pro>Table`: Deprecated the property `rowRenderer`, added `onRow` property to set row properties.
+- 🌟 `<pro>Lov`: Added `searchable` property, LovConfig adds `editableFlag` configuration, which can be used to get lov value when input.
 - 💄 `<pro>Table`: Optimize Table grouped columns.
 - 🐞 `<pro>Field`: Fix property pattern does not support regular constants.
 - 🐞 `<pro>Lov`: Fix the problem that the column number does not take effect.
+- 🐞 `<pro>NumberField`: Fix the problem that the field could be clicked the plus or minus button when read-only.
+- 🐞 `Tabs`: Fix the problem that the tab cannot be switched when the key is not passed.
 
 ## 0.6.0
 

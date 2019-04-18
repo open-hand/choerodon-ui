@@ -446,8 +446,13 @@ export default class Record {
     }
   }
 
-  ready(): Promise<any> {
-    return Promise.all([this.pending, ...Array.from(this.fields.values()).map(field => field.ready())]);
+  async ready(): Promise<any> {
+    const { pending } = this;
+    const result = await Promise.all([pending, ...Array.from(this.fields.values()).map(field => field.ready())]);
+    if (this.pending && this.pending !== pending) {
+      return this.ready();
+    }
+    return result;
   }
 
   mergeLocaleData(record) {

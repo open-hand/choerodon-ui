@@ -3,7 +3,7 @@ import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 import omit from 'lodash/omit';
 import noop from 'lodash/noop';
-import { action, observable, runInAction } from 'mobx';
+import { action, computed, observable } from 'mobx';
 import { PropTypes as MobxPropTypes } from 'mobx-react';
 import Trigger from '../trigger/Trigger';
 import { Action } from '../trigger/enum';
@@ -122,13 +122,21 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
 
   popupTask: TaskRunner = new TaskRunner();
   trigger: Trigger | null;
-  @observable popup: boolean;
+  @observable statePopup: boolean;
+
+  @computed
+  get popup(): boolean {
+    return this.statePopup;
+  }
 
   constructor(props, context) {
     super(props, context);
-    runInAction(() => {
-      this.popup = false;
-    });
+    this.setPopup(false);
+  }
+
+  @action
+  setPopup(statePopup: boolean) {
+    this.statePopup = statePopup;
   }
 
   abstract getTriggerIconFont(): string;
@@ -230,9 +238,7 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
 
   @autobind
   handlePopupHiddenChange(hidden: boolean) {
-    runInAction(() => {
-      this.popup = !hidden;
-    });
+    this.setPopup(!hidden);
   }
 
   forcePopupAlign() {
@@ -244,18 +250,18 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
   expand() {
     this.popupTask.cancel();
     if (!this.isReadOnly() && !this.popup) {
-      this.popupTask.delay(this.props.triggerShowDelay as number, action(() => {
-        this.popup = true;
-      }));
+      this.popupTask.delay(this.props.triggerShowDelay as number, () => {
+        this.setPopup(true);
+      });
     }
   }
 
   collapse() {
     this.popupTask.cancel();
     if (!this.isReadOnly() && this.popup) {
-      this.popupTask.delay(this.props.triggerHiddenDelay as number, action(() => {
-        this.popup = false;
-      }));
+      this.popupTask.delay(this.props.triggerHiddenDelay as number, () => {
+        this.setPopup(false);
+      });
     }
   }
 }

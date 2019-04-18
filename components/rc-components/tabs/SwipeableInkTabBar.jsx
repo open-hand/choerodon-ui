@@ -5,6 +5,7 @@ import InkTabBarMixin from './InkTabBarMixin';
 import SwipeableTabBarMixin from './SwipeableTabBarMixin';
 import TabBarMixin from './TabBarMixin';
 import RefMixin from './RefMixin';
+import { generateKey } from './utils';
 
 const SwipeableInkTabBar = createReactClass({
   displayName: 'SwipeableInkTabBar',
@@ -24,11 +25,11 @@ const SwipeableInkTabBar = createReactClass({
       flexBasis: _flexWidth,
     };
 
-    Children.forEach(children, (child) => {
+    Children.forEach(children, (child, index) => {
       if (!child) {
         return;
       }
-      const key = child.key;
+      const key = generateKey(child.key, index);
       const cls = classnames(`${prefixCls}-tab`, {
         [`${prefixCls}-tab-active`]: activeKey === key,
         [`${prefixCls}-tab-disabled`]: child.props.disabled,
