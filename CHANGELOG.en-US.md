@@ -14,16 +14,25 @@ timeline: true
 * Major version release is not included in this schedule for breaking change and new features.
 
 ---
+
+`2019-03-20`
+
+- 💄 `Input`: The Input input shows a prompt when it reaches the character limit.
+- 🌟 `Modal`: Modal adds the `disableOk` and `disableCancel` properties.
+- 🌟 `TreeNode`: TreeNode adds the `wrapper` attribute.
+- 🌟 `Icon`: Add new icons.
+- 🌟 `IconSelect`: Add the `showAll` attribute.
+
 ## 0.5.2
 
-`2018-02-22`
+`2019-02-22`
 
 - 💄 `Table`:  The confirmation button for the filter in the repair table is fixed at the bottom of the selection box and the style is overwritten.
 - 🌟 `Sidebar`: add `alwaysCanCancel`.
 
 ## 0.5.1
 
-`2018-02-19`
+`2019-02-19`
 
 - 💄 `Form.Item`:  The suffix icon is not hidden when Form.Item is verified as error.
 - 💄 `Table`:  Table filter does not clear after blur.
@@ -33,7 +42,7 @@ timeline: true
 
 ## 0.5.0
 
-`2018-01-10`
+`2019-01-10`
 
 - Change the source of the icon font file to change it from the npm library and package it locally.
 - 💄 `IconSelect`:  Optimize IconSelect, the icon is larger, and only the common icons are retained.

@@ -16,7 +16,7 @@ timeline: true
 ---
 ## 0.5.3
 
-`2018-03-20`
+`2019-03-20`
 
 - 💄 `Input`:  Input输入到达字符限制时显示提示。
 - 🌟 `Modal`:  Modal添加disableOk和disableCancel属性。
@@ -26,14 +26,14 @@ timeline: true
 
 ## 0.5.2
 
-`2018-02-22`
+`2019-02-22`
 
 - 💄 `Table`:  修复Table中过滤的确认按钮固定在选择框底部样式被覆盖。
 - 🌟 `Sidebar`: 增加属性alwaysCanCancel。
 
 ## 0.5.1
 
-`2018-02-19`
+`2019-02-19`
 
 - 💄 `Form.Item`:  Form.Item验证为error时不隐藏后缀图标。
 - 💄 `Table`:  Table过滤失去焦点后不清空。
@@ -43,13 +43,15 @@ timeline: true
 
 ## 0.5.0
 
-`2018-01-10`
+`2019-01-10`
 
 - 更改图标字体文件的来源，更改为从npm库中获取并打包到本地。
 - 💄 `IconSelect`:  优化了图标选择器，图标更大，且只保留常用图标.
 - 💄 `table`: 优化table翻页时自动回到第一条元素
 
 ## 0.4.5
+
+`2018-12-11`
 
 - 🌟 `Icon`: 增加新的图标。
 - 💄 `Select`: select全选和无更改为不对禁用的选项生效
