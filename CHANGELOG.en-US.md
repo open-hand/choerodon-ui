@@ -15,6 +15,14 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Form`: Install the disabled attribute.
+- 🌟 `<pro>TextField`: Added the restrict attribute to limit the characters that can be entered.
+- 🌟 `<pro>Table`: Add inline editing mode.
+- 💄 `<pro>Table`: Optimize the display of required and editable cells.
+- 🐞 `<pro>Form`: Fixed an issue with layout when there were empty child elements.
+- 🐞 `<pro>Lov`: Fixed an issue where the lovItems in the configuration were null.
+- 🐞 `<pro>NumberField`: Fixed an issue where the plus or minus button was incorrect when it was greater than 1000 digits.
+
 ## 0.6.1
 
 `2019-04-18`
@@ -37,6 +45,11 @@ timeline: true
 
 - 🌟 Incorporate the `choerodon-ui/pro` component library.
 - 🌟 The default ant prefix is changed to c7n. To use the ant prefix, please [Modify the topic variable @c7n-prefix] (https://choerodon.github.io/choerodon-ui/docs/react/customize-theme) And use [global configuration] (https://choerodon.github.io/choerodon-ui/components/configure).
+
+## 0.5.5
+
+`2019-04-01`
+
 - 🌟 `Icon`: Add new icons.
 
 ## 0.5.3

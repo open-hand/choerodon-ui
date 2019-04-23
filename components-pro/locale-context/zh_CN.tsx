@@ -5,8 +5,10 @@ export default {
   Table: {
     show_cached_seletion: '显示所有已选记录',
     hide_cached_seletion: '隐藏所有已选记录',
+    edit_button: '编辑',
     create_button: '新增',
     save_button: '保存',
+    cancel_button: '取消',
     delete_button: '删除',
     remove_button: '移除',
     reset_button: '重置',

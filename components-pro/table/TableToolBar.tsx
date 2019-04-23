@@ -1,8 +1,8 @@
 import React, { cloneElement, Component, isValidElement, ReactElement, ReactNode } from 'react';
-import PropTypes from 'prop-types';
+import { isArrayLike } from 'mobx';
 import { observer } from 'mobx-react';
-import isArray from 'lodash/isArray';
 import isString from 'lodash/isString';
+import defer from 'lodash/defer';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import { TableButtonType } from './enum';
@@ -16,9 +16,9 @@ import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import Form from '../form/Form';
 import Icon from '../icon';
 import TableContext from './TableContext';
-import { DataSetStatus, FieldType } from '../data-set/enum';
+import { DataSetStatus, FieldType, RecordStatus } from '../data-set/enum';
 import { $l } from '../locale-context';
-import Table from './Table';
+import Table, { Buttons } from './Table';
 import Column from './Column';
 import { findBindFieldBy } from '../data-set/utils';
 
@@ -31,8 +31,6 @@ function filterBindField(fields: Fields): { [key: string]: Field } {
   }, {} as { [key: string]: Field });
 }
 
-export type Buttons = TableButtonType | [TableButtonType, ButtonProps] | ReactElement<ButtonProps>;
-
 export interface TabelToolBarProps extends ElementProps {
   header?: ReactNode | ((records: Record[]) => ReactNode);
   buttons?: Buttons[];
@@ -41,37 +39,9 @@ export interface TabelToolBarProps extends ElementProps {
   showQueryBar: boolean;
 }
 
-export const buttonsEnumType = PropTypes.oneOf([
-  TableButtonType.add,
-  TableButtonType.save,
-  TableButtonType.remove,
-  TableButtonType.delete,
-  TableButtonType.reset,
-  TableButtonType.query,
-  TableButtonType.export,
-  TableButtonType.expandAll,
-  TableButtonType.collapseAll,
-]);
-
 @observer
 export default class TableToolBar extends Component<TabelToolBarProps, any> {
   static displayName = 'TableToolBar';
-
-  static propTypes = {
-    prefixCls: PropTypes.string,
-    header: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-    buttons: PropTypes.arrayOf(PropTypes.oneOfType([
-      buttonsEnumType,
-      PropTypes.arrayOf(PropTypes.oneOfType([
-        buttonsEnumType,
-        PropTypes.object,
-      ])),
-      PropTypes.node,
-    ])),
-    queryFields: PropTypes.object,
-    queryFieldsLimit: PropTypes.number.isRequired,
-    showQueryBar: PropTypes.bool.isRequired,
-  };
 
   static contextType = TableContext;
 
@@ -87,7 +57,23 @@ export default class TableToolBar extends Component<TabelToolBarProps, any> {
     }
   };
 
-  handleButtonCreate = () => this.context.tableStore.dataSet.create(void 0, 0);
+  handleButtonCreate = () => {
+    const { tableStore } = this.context;
+    const { dataSet, inlineEdit, currentEditRecord } = tableStore;
+    const record = dataSet.create(void 0, 0);
+    if (inlineEdit) {
+      if (currentEditRecord) {
+        if (currentEditRecord.status === RecordStatus.add) {
+          dataSet.remove(currentEditRecord);
+        } else {
+          currentEditRecord.reset();
+        }
+      }
+      defer(() => {
+        tableStore.currentEditRecord = record;
+      });
+    }
+  };
 
   handleButtonSubmit = () => this.context.tableStore.dataSet.submit();
 
@@ -217,7 +203,7 @@ export default class TableToolBar extends Component<TabelToolBarProps, any> {
       const children: ReactElement<ButtonProps>[] = [];
       buttons.forEach((button) => {
         let props = {};
-        if (isArray(button)) {
+        if (isArrayLike(button)) {
           props = button[1];
           button = button[0];
         }

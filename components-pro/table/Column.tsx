@@ -7,6 +7,7 @@ import { ElementProps } from '../core/ViewComponent';
 import { ColumnAlign, ColumnLock } from './enum';
 import { get } from 'mobx';
 import { ShowHelp } from '../field/enum';
+import { Commands } from './Table';
 
 export const defaultMinWidth = 100;
 
@@ -99,6 +100,12 @@ export interface ColumnProps extends ElementProps {
    * @return {Object} 单元格属性
    */
   onCell?: (props: onCellProps) => object;
+  /**
+   * 行操作按钮
+   * 可选值：`edit` `delete` 或 自定义按钮
+   * 给内置按钮加属性：command={[['edit', { color: 'red' }], ...]}
+   */
+  command?: Commands[];
   children?: ColumnProps[];
 }
 

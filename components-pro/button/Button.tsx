@@ -4,12 +4,11 @@ import { DebounceSettings } from 'lodash';
 import omit from 'lodash/omit';
 import debounce from 'lodash/debounce';
 import isString from 'lodash/isString';
-import { computed, observable, runInAction } from 'mobx';
+import { computed, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import { ProgressType } from 'choerodon-ui/lib/progress/enum';
 import Icon from '../icon';
 import FormContext from '../form/FormContext';
-import DataSet from '../data-set/DataSet';
 import Progress from '../progress';
 import Ripple from '../ripple';
 import { ButtonColor, ButtonType, ButtonWaitType, FuncType } from './enum';
@@ -135,40 +134,37 @@ export default class Button extends DataSetComponent<ButtonProps> {
     waitType: ButtonWaitType.throttle,
   };
 
-  @observable stateLoading?: boolean;
-
   @computed
   get loading(): boolean {
-    const { type } = this.props;
-    const { dataSet } = this;
-    return this.stateLoading || type === ButtonType.submit && !!dataSet && dataSet.status === DataSetStatus.submitting;
+    const { type, dataSet, loading } = this.observableProps;
+    return loading || type === ButtonType.submit && !!dataSet && dataSet.status === DataSetStatus.submitting;
   }
 
   set loading(loading: boolean) {
     runInAction(() => {
-      this.stateLoading = loading;
+      this.observableProps.loading = loading;
     });
-  }
-
-  get dataSet(): DataSet | null | undefined {
-    return this.props.dataSet || this.context.dataSet;
   }
 
   handleClickWait;
 
   constructor(props, context) {
     super(props, context);
-    this.loading = props.loading;
     this.handleClickWait = this.getHandleClick(props);
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { props } = this;
-    const { loading, wait, waitType } = nextProps;
-    if (loading !== props.loading) {
-      this.loading = nextProps.loading;
-    }
-    if (wait !== props.wait || waitType !== props.waitType) {
+  getObservableProps(props, context) {
+    return {
+      dataSet: props.dataSet || context.dataSet,
+      loading: props.loading,
+      type: props.type,
+    };
+  }
+
+  componentWillReceiveProps(nextProps, nextContext) {
+    super.componentWillReceiveProps(nextProps, nextContext);
+    const { wait, waitType } = this.props;
+    if (wait !== nextProps.wait || waitType !== nextProps.waitType) {
       this.handleClickWait = this.getHandleClick(nextProps);
     }
   }
@@ -206,7 +202,8 @@ export default class Button extends DataSetComponent<ButtonProps> {
   }
 
   isDisabled() {
-    return super.isDisabled() || this.loading;
+    const { disabled } = this.context;
+    return disabled || super.isDisabled() || this.loading;
   }
 
   getOtherProps() {

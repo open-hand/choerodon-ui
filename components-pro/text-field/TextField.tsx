@@ -73,6 +73,10 @@ export interface TextFieldProps extends FormFieldProps {
    * 后置标签
    */
   addonAfter?: ReactNode;
+  /**
+   * 限制可输入的字符
+   */
+  restrict?: string;
 }
 
 export class TextField<T extends TextFieldProps> extends FormField<T & TextFieldProps> {
@@ -119,6 +123,10 @@ export class TextField<T extends TextFieldProps> extends FormField<T & TextField
      * 后置标签
      */
     addonAfter: PropTypes.node,
+    /**
+     * 限制可输入的字符
+     */
+    restrict: PropTypes.string,
     ...FormField.propTypes,
   };
 
@@ -152,6 +160,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T & TextField
       'clearButton',
       'addonBefore',
       'addonAfter',
+      'restrict',
     ]);
     otherProps.type = this.type;
     otherProps.maxLength = this.getProp('maxLength');
@@ -244,7 +253,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T & TextField
   renderTooltipHelp(): ReactNode {
     return (
       <Tooltip
-        title={this.props.help}
+        title={this.getProp('help')}
         placement="bottom"
       >
         <Icon type="help" />
@@ -466,7 +475,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T & TextField
   @autobind
   handleFocus(e) {
     super.handleFocus(e);
-    defer(() => this.select());
+    defer(() => this.isFocused && this.select());
   }
 
   @autobind
@@ -475,7 +484,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T & TextField
       if (this.editable) {
         this.syncValueOnBlur(e.target.value);
       } else if (!this.getValues().length) {
-        this.setValue(null); // to excute validation
+        this.setValue(null);
       }
     }
     super.handleBlur(e);
@@ -519,6 +528,10 @@ export class TextField<T extends TextFieldProps> extends FormField<T & TextField
   }
 
   restrictInput(value: string): string {
+    const { restrict } = this.props;
+    if (restrict) {
+      return value.replace(new RegExp('[^' + restrict + ']+', 'g'), '');
+    }
     return value;
   }
 

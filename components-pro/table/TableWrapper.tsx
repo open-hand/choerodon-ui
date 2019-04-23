@@ -55,6 +55,21 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
   }
 
   @computed
+  get leafEditorColumns(): ColumnProps[] {
+    const { tableStore } = this.context;
+    const { lock } = this.props;
+    switch (lock) {
+      case ColumnLock.left:
+      case true:
+        return tableStore.leftLeafColumns.filter(column => column.editor && column.name);
+      case ColumnLock.right:
+        return tableStore.rightLeafColumns.filter(column => column.editor && column.name);
+      default:
+        return tableStore.leafColumns.filter(column => column.editor && column.name && !column.lock);
+    }
+  }
+
+  @computed
   get leafColumns(): ColumnProps[] {
     const { tableStore } = this.context;
     const { lock } = this.props;
@@ -113,7 +128,7 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
 
   getEditors() {
     const { prefixCls, rowHeight } = this.props;
-    return this.leafColumns.map(column => column.editor && column.name && (
+    return this.leafEditorColumns.map(column => (
       <TableEditor key={column.name} prefixCls={prefixCls} column={column} rowHeight={rowHeight} />
     ));
   }
@@ -140,7 +155,7 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
   render() {
     const { children, lock, hasBody, prefixCls } = this.props;
     const { overflowY, height } = this.context.tableStore;
-    const editors = !lock && hasBody && (
+    const editors = hasBody && (
       this.getEditors()
     );
     const className = classNames({

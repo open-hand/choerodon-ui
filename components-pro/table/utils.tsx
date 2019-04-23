@@ -25,6 +25,7 @@ import EmailField from '../email-field/EmailField';
 import ColorPicker from '../color-picker/ColorPicker';
 import warning from 'choerodon-ui/lib/_util/warning';
 import DataSet from '../data-set/DataSet';
+import TableStore from './TableStore';
 
 export function getEditorByField(field: Field): ReactElement<FormFieldProps> {
   const lookupCode = field.get('lookupCode');
@@ -114,9 +115,9 @@ export function isRadio(element?: ReactElement<FormFieldProps>): boolean {
   return false;
 }
 
-export function findCell(tableStore: any, prefixCls?: string, name?: Key, lock?: ColumnLock | boolean): HTMLTableCellElement | undefined {
-  const { node, dataSet, overflowX } = tableStore;
-  const { current } = dataSet;
+export function findCell(tableStore: TableStore, prefixCls?: string, name?: Key, lock?: ColumnLock | boolean): HTMLTableCellElement | undefined {
+  const { node, dataSet, overflowX, currentEditRecord } = tableStore;
+  const current = currentEditRecord || dataSet.current;
   const tableCellPrefixCls = `${prefixCls}-cell`;
   if (name !== void 0 && current) {
     const wrapperSelector = overflowX && lock ? `.${prefixCls}-fixed-${lock === true ? ColumnLock.left : lock} ` : '';

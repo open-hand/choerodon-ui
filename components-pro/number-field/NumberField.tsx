@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { computed } from 'mobx';
 import { observer } from 'mobx-react';
 import isString from 'lodash/isString';
+import isNumber from 'lodash/isNumber';
 import defaultTo from 'lodash/defaultTo';
 import { TextField, TextFieldProps } from '../text-field/TextField';
 import autobind from '../_util/autobind';
@@ -179,47 +180,43 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     const min = defaultTo(this.min, -MAX_SAFE_INTEGER);
     const max = defaultTo(this.max, MAX_SAFE_INTEGER);
     const step = defaultTo(this.getProp('step'), 1);
-    const target = this.element;
-    if (target) {
-      let newValue;
-      if (!target.value) {
-        newValue = defaultTo(this.min, 0);
+    let newValue;
+    if (!isNumber(this.value)) {
+      newValue = defaultTo(this.min, 0);
+    } else {
+      const currentValue = newValue = getCurrentValidValue(String(this.value));
+      const nearStep = getNearStepValues(currentValue, step as number, min, max);
+      if (nearStep) {
+        switch (nearStep.length) {
+          case 1:
+            newValue = nearStep[0];
+            break;
+          case 2:
+            newValue = nearStep[isPlus ? 1 : 0];
+            break;
+          default:
+        }
       } else {
-        const currentValue = newValue = getCurrentValidValue(target.value);
-        const nearStep = getNearStepValues(currentValue, step as number, min, max);
-        if (nearStep) {
-          switch (nearStep.length) {
-            case 1:
-              newValue = nearStep[0];
-              break;
-            case 2:
-              newValue = nearStep[isPlus ? 1 : 0];
-              break;
-            default:
+        const nextValue = plus(currentValue, (isPlus ? step : -step) as number);
+        if (nextValue < min) {
+          newValue = min;
+        } else if (nextValue > max) {
+          const nearMaxStep = getNearStepValues(max as number, step as number, min, max as number);
+          if (nearMaxStep) {
+            newValue = nearMaxStep[0];
+          } else {
+            newValue = max;
           }
         } else {
-          const nextValue = plus(currentValue, (isPlus ? step : -step) as number);
-          if (nextValue < min) {
-            newValue = min;
-          } else if (nextValue > max) {
-            const nearMaxStep = getNearStepValues(max as number, step as number, min, max as number);
-            if (nearMaxStep) {
-              newValue = nearMaxStep[0];
-            } else {
-              newValue = max;
-            }
-          } else {
-            newValue = nextValue;
-          }
+          newValue = nextValue;
         }
       }
-      if (target.value !== String(newValue)) {
-        target.value = newValue;
-        if (!this.multiple) {
-          this.addValue(newValue);
-        } else {
-          this.setText(String(newValue));
-        }
+    }
+    if (this.value !== newValue) {
+      if (this.multiple) {
+        this.setText(String(newValue));
+      } else {
+        this.addValue(newValue);
       }
     }
   }
@@ -231,14 +228,11 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
   restrictInput(value: string): string {
     if (value) {
       let restrict = '0-9';
-      let isNegative = false;
-      if (this.allowNegative) {
-        isNegative = /^-/.test(value);
-      }
       if (this.allowDecimal) {
         restrict += '.';
       }
-      value = value.replace(new RegExp('[^' + restrict + ']+', 'g'), '');
+      const isNegative = this.allowNegative && /^-/.test(value);
+      value = super.restrictInput(value.replace(new RegExp('[^' + restrict + ']+', 'g'), ''));
       const values = value.split('.');
       if (values.length > 2) {
         value = values.shift() + '.' + values.join('');

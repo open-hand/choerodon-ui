@@ -5,6 +5,7 @@
 @import "../../select/style/mixin";
 
 @table-prefix-cls: ~"@{c7n-prefix}-pro-table";
+@output-prefix-cls: ~"@{c7n-prefix}-pro-output";
 @table-border: @border-width-base @border-style-base @border-color-base;
 
 .@{table-prefix-cls} {
@@ -38,7 +39,7 @@
 
   &-cell {
     margin: 0;
-    padding: 0;
+    padding: .01rem;
     &-inner {
       display: block;
       position: relative;
@@ -60,7 +61,7 @@
         content: ' ';
       }
     }
-    .@{c7n-prefix}-pro-output-invalid:after {
+    .@{output-prefix-cls}-invalid:after {
       border-top-color: @error-color;
     }
     &-prefix {
@@ -121,6 +122,7 @@
   &-fixed-right {
     position: absolute;
     top: 0;
+    z-index: 1;
     .@{table-prefix-cls}-head,
     .@{table-prefix-cls}-body {
       overflow-x: hidden;
@@ -175,6 +177,9 @@
     .@{table-prefix-cls}-cell[colspan] {
       border-right: @table-border;
       border-bottom: @table-border;
+    }
+    .@{table-prefix-cls}-cell-inner {
+      border: @border-width-base @border-style-base transparent;
     }
     &:not(.@{table-prefix-cls}-scroll-position-left) .@{table-prefix-cls}-fixed-left .@{table-prefix-cls}-cell:last-child {
       border-right: none;
@@ -242,6 +247,22 @@
         background-color: @table-current-row-bg;
       }
     }
+  }
+
+  &-cell-editable &-cell-inner {
+    border-color: @table-editable-cell-border-color;
+  }
+
+  &-cell-editable&-cell-required &-cell-inner {
+    background-color: @table-editable-cell-required-bg;
+  }
+
+  &-cell-editable .@{output-prefix-cls}-invalid {
+    border-color: @error-color;
+  }
+
+  &-cell-editable&-cell-required .@{output-prefix-cls}-invalid {
+    background-color: @error-bg-color;
   }
 
   &-row:last-child &-cell {

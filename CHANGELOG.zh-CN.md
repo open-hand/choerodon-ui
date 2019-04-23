@@ -15,6 +15,14 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Form`: 实装disabled属性。
+- 🌟 `<pro>TextField`: 新增restrict属性，用于限制可输入的字符。
+- 🌟 `<pro>Table`: 新增行内编辑模式。
+- 💄 `<pro>Table`: 优化必选和可编辑单元格的显示。
+- 🐞 `<pro>Form`: 修复在有空子元素时布局的问题。
+- 🐞 `<pro>Lov`: 修复配置中lovItems为null时报错的问题。
+- 🐞 `<pro>NumberField`: 修复加减按钮在大于1000数字时结果不正确的问题。
+
 ## 0.6.1
 
 `2019-04-18`
@@ -37,6 +45,11 @@ timeline: true
 
 - 🌟 并入`choerodon-ui/pro` 组件库。
 - 🌟 默认ant前缀改为c7n，如要使用ant前缀，请[修改主题变量@c7n-prefix](https://choerodon.github.io/choerodon-ui/docs/react/customize-theme-cn)，并使用[全局化配置](https://choerodon.github.io/choerodon-ui/components/configure-cn)。
+
+## 0.5.5
+
+`2019-04-01`
+
 - 🌟 `Icon`:  增加新的图标。
 
 ## 0.5.3

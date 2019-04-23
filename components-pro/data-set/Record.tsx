@@ -77,6 +77,8 @@ export default class Record {
 
   @observable isCached: boolean;
 
+  @observable editing?: boolean;
+
   @computed
   get index(): number {
     const { dataSet } = this;

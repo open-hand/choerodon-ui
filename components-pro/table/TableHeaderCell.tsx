@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { action, set } from 'mobx';
 import { observer } from 'mobx-react';
 import omit from 'lodash/omit';
+import defaultTo from 'lodash/defaultTo';
 import isString from 'lodash/isString';
 import classes from 'component-classes';
-import { getPrefixCls } from 'choerodon-ui/lib/configure';
 import { ColumnProps, minColumnWidth } from './Column';
 import TableContext from './TableContext';
 import { ElementProps } from '../core/ViewComponent';
@@ -17,7 +17,6 @@ import { getAlignByField, getColumnKey, getHeader } from './utils';
 import { ColumnAlign } from './enum';
 import { ShowHelp } from '../field/enum';
 import Tooltip from '../tooltip';
-import { FIELD_SUFFIX } from '../form/utils';
 
 export interface TableHeaderCellProps extends ElementProps {
   dataSet: DataSet;
@@ -148,8 +147,9 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
   render() {
     const { column, prefixCls, dataSet, rowHeight, rowSpan, colSpan } = this.props;
     const sortPrefixCls = `${prefixCls}-sort`;
-    const { headerClassName, headerStyle = {}, sortable, name, align, help, showHelp, children } = column;
+    const { headerClassName, headerStyle = {}, sortable, name, align, help, showHelp, children, command } = column;
     const classList: string[] = [`${prefixCls}-cell`];
+    const field = dataSet.getField(name);
     if (headerClassName) {
       classList.push(headerClassName);
     }
@@ -161,23 +161,18 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
           : isString(headerNode) ? <span key="text">{headerNode}</span> : headerNode,
       ],
     };
-    const style: CSSProperties = headerStyle ? omit(headerStyle, ['width', 'height']) : {};
+    const cellStyle: CSSProperties = {
+      textAlign: align || ((command || children && children.length) ? ColumnAlign.center : getAlignByField(field)),
+      ...headerStyle,
+    };
     if (rowHeight !== 'auto') {
       innerProps.style = {
         height: pxToRem(rowHeight),
       };
     }
-    if (!style.textAlign) {
-      const textAlign = align || (children && children.length ? ColumnAlign.center : name && getAlignByField(dataSet.getField(name)) );
-      if (textAlign) {
-        style.textAlign = textAlign;
-      }
-    }
-    const field = dataSet.getField(column.name);
     if (showHelp !== ShowHelp.none) {
-      // dataset field配置中的help优先级较低，以jsx为主
-      const fieldHelp = help || (field ? field.get('help') : null);
-      if (fieldHelp && showHelp === ShowHelp.tooltip) {
+      const fieldHelp = defaultTo(field && field.get('help'), help);
+      if (fieldHelp) {
         const helpIcon = (
           <Tooltip
             title={fieldHelp}
@@ -187,18 +182,11 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
             <Icon type="help_outline" className={`${prefixCls}-help-icon`} />
           </Tooltip>
         );
-        // TODO: 提示和排序按钮的渲染逻辑整合在一处
-        if (style.textAlign === ColumnAlign.right) {
+        if (cellStyle.textAlign === ColumnAlign.right) {
           innerProps.children.unshift(helpIcon);
         } else {
           innerProps.children.push(helpIcon);
         }
-      }
-      if (fieldHelp && showHelp === ShowHelp.newLine) {
-        const helpMessage = (
-          <div className={getPrefixCls(`${FIELD_SUFFIX}-help`)}>{fieldHelp}</div>
-        );
-        innerProps.children.push(helpMessage);
       }
     }
     if (sortable && name) {
@@ -210,7 +198,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
       }
       innerProps.onClick = this.handleClick;
       const icon = <Icon key="sort" type="arrow_upward" className={`${sortPrefixCls}-icon`} />;
-      if (style.textAlign === ColumnAlign.right) {
+      if (cellStyle.textAlign === ColumnAlign.right) {
         innerProps.children.unshift(icon);
       } else {
         innerProps.children.push(icon);
@@ -219,7 +207,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
     return (
       <th
         className={classList.join(' ')}
-        style={style}
+        style={omit(cellStyle, ['width', 'height'])}
         rowSpan={rowSpan}
         colSpan={colSpan}
         data-index={getColumnKey(column)}

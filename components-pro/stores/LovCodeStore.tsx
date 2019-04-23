@@ -138,7 +138,7 @@ export class LovCodeStore {
           dataSetProps.idField = idField;
         }
 
-        if (lovItems.length) {
+        if (lovItems && lovItems.length) {
           const { querys, fields } = lovItems.sort(({ conditionFieldSequence }, { conditionFieldSequence: conditionFieldSequence2 }) => (
             conditionFieldSequence - conditionFieldSequence2
           )).reduce((obj, configItem) => (

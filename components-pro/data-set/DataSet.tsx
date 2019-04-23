@@ -552,7 +552,7 @@ export default class DataSet extends EventManager {
       if (autoQuery && typeof window !== 'undefined') {
         this.query();
       } else if (autoCreate && this.length === 0) {
-        defer(() => this.create());
+        this.create();
       }
     });
   }
@@ -628,6 +628,8 @@ export default class DataSet extends EventManager {
         resolve(data);
       } catch (e) {
         reject(e);
+      } finally {
+        this.pending = void 0;
       }
     });
     return this.pending;
@@ -644,6 +646,7 @@ export default class DataSet extends EventManager {
     if (await this.validate(isSelect, noCascade)) {
       return this.write(this.toJSONData(isSelect, noCascade));
     }
+    return false;
   }
 
   /**
@@ -823,7 +826,7 @@ export default class DataSet extends EventManager {
             json.push(data);
           }
         });
-        this.write(json);
+        return this.write(json);
       }
     }
   }
@@ -1288,9 +1291,7 @@ Then the query method will be auto invoke.`);
     }
     this.releaseCachedSelected();
     if (autoLocateFirst) {
-      defer(() => {
-        this.current = this.get(0);
-      });
+      this.current = this.get(0);
     }
     this.fireEvent(DataSetEvents.load, { dataSet: this });
     return this;
@@ -1375,7 +1376,6 @@ Then the query method will be auto invoke.`);
   private initQueryDataSet(queryDataSet?: DataSet, queryFields?: FieldProps[]) {
     if (queryFields) {
       queryDataSet = new DataSet({
-        autoCreate: true,
         fields: queryFields,
       });
     }
@@ -1417,6 +1417,7 @@ Then the query method will be auto invoke.`);
           return result;
         } catch (e) {
           this.handleSubmitFail(e);
+          throw e;
         } finally {
           this.changeSubmitStatus(DataSetStatus.ready);
           this.pending = void 0;

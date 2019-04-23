@@ -1,8 +1,9 @@
 import React, { ReactNode } from 'react';
 import PropTypes from 'prop-types';
-import { action, computed, observable, runInAction } from 'mobx';
+import { action, computed } from 'mobx';
 import { observer } from 'mobx-react';
 import omit from 'lodash/omit';
+import defaultTo from 'lodash/defaultTo';
 import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComponent';
 import Select from '../select/Select';
 import Button from '../button/Button';
@@ -37,69 +38,36 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     showSizeChanger: true,
   };
 
-  @observable current: number;
-
-  @observable currentTotal?: number;
-
-  @observable currentPageSize: number;
-
-  constructor(props, context) {
-    super(props, context);
-    runInAction(() => {
-      this.current = props.page || 1;
-      this.currentTotal = props.total;
-      this.currentPageSize = props.pageSize || 10;
-    });
-  }
-
-  @action
-  handlePropsReceive(props) {
-    const { page, total, pageSize } = props;
-    if (page !== void 0) {
-      this.current = page;
-    }
-    if (total !== void 0) {
-      this.currentTotal = total;
-    }
-    if (pageSize !== void 0) {
-      this.currentPageSize = pageSize;
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.handlePropsReceive(nextProps);
-  }
-
   @computed
   get pageSize(): number {
-    const { dataSet } = this.props;
+    const { dataSet, pageSize } = this.observableProps;
     if (dataSet) {
       return dataSet.pageSize;
     }
-    return this.currentPageSize;
+    return pageSize!;
   }
 
   @computed
   get page(): number {
-    const { dataSet } = this.props;
+    const { dataSet, page } = this.observableProps;
     if (dataSet) {
       return dataSet.currentPage;
     }
-    return this.current;
+    return page!;
   }
 
   @computed
   get total(): number | undefined {
-    const { dataSet } = this.props;
+    const { dataSet, total } = this.observableProps;
     if (dataSet) {
       return dataSet.totalCount;
     }
-    return this.currentTotal;
+    return total;
   }
 
   @computed
   get totalPage(): number {
-    const { dataSet } = this.props;
+    const { dataSet } = this.observableProps;
     const { total, pageSize } = this;
     if (dataSet) {
       return dataSet.totalPage;
@@ -110,6 +78,15 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     return 1;
   }
 
+  getObservableProps(props: PaginationProps, context) {
+    return {
+      ...super.getObservableProps(props, context),
+      page: defaultTo(props.page, 1),
+      pageSize: defaultTo(props.pageSize, 10),
+      total: props.total,
+    } as PaginationProps;
+  }
+
   handlePageSizeChange = (value: number) => {
     this.handleChange(this.page, Number(value));
   };
@@ -118,15 +95,15 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
   handleChange(page: number, pageSize: number) {
     const { dataSet, onChange } = this.props;
     if (this.pageSize !== pageSize) {
-      this.currentPageSize = pageSize;
-      this.current = 1;
+      this.observableProps.pageSize = pageSize;
+      this.observableProps.page = 1;
       if (dataSet) {
         dataSet.pageSize = pageSize;
         dataSet.currentPage = 1;
         dataSet.query();
       }
     } else {
-      this.current = page;
+      this.observableProps.page = page;
     }
     if (onChange) {
       onChange(page, pageSize);

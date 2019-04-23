@@ -5,8 +5,10 @@ export default {
   Table: {
     show_cached_seletion: 'Show all selected records',
     hide_cached_seletion: 'Hide all selected records',
+    edit_button: 'Edit',
     create_button: 'Create',
     save_button: 'Save',
+    cancel_button: 'Cancel',
     delete_button: 'Delete',
     remove_button: 'Remove',
     reset_button: 'Reset',

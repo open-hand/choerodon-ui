@@ -163,6 +163,10 @@ export default class Trigger extends Component<TriggerProps> {
     }
   }
 
+  componentWillUnmount() {
+    this.popupTask.cancel();
+  }
+
   handleEvent = (eventName, child, e) => {
     const { [`on${eventName}`]: handle } = this.props;
     const { [`on${eventName}`]: childHandle } = child.props;

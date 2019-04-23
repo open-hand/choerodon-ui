@@ -35,9 +35,19 @@ export enum TableButtonType {
   export = 'export',
 }
 
+export enum TableCommandType {
+  edit = 'edit',
+  delete = 'delete',
+}
+
 export const enum TableMode {
   list = 'list',
   tree = 'tree',
+}
+
+export const enum TableEditMode {
+  cell = 'cell',
+  inline = 'inline',
 }
 
 export const enum TableQueryBar {

@@ -44,9 +44,13 @@
       }
     }
   }
-  &-invalid .@{radio-prefix-cls} .@{radio-prefix-cls}-inner,
-  &-invalid .@{checkbox-prefix-cls} .@{checkbox-prefix-cls}-inner {
+  &-invalid .@{radio-prefix-cls}-inner,
+  &-invalid .@{checkbox-prefix-cls}-inner {
     border-color: @error-color;
+  }
+  &-required .@{radio-prefix-cls}-inner,
+  &-required .@{checkbox-prefix-cls}-inner {
+    background-color: @input-required-bg;
   }
   &-vertical {
     .@{radio-prefix-cls}-wrapper,

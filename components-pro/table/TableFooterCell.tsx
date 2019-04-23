@@ -9,6 +9,7 @@ import DataSet from '../data-set/DataSet';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import classNames from 'classnames';
 import { getAlignByField } from './utils';
+import { ColumnAlign } from './enum';
 
 export interface TableFooterCellProps extends ElementProps {
   dataSet: DataSet;
@@ -40,7 +41,7 @@ export default class TableFooterCell extends Component<TableFooterCellProps, any
 
   render() {
     const { column, prefixCls, dataSet, rowHeight } = this.props;
-    const { footer, footerClassName, footerStyle = {}, align, name } = column;
+    const { footer, footerClassName, footerStyle = {}, align, name, command } = column;
     const classString = classNames(`${prefixCls}-cell`, footerClassName);
     const innerProps: any = {
       className: `${prefixCls}-cell-inner`,
@@ -50,17 +51,14 @@ export default class TableFooterCell extends Component<TableFooterCellProps, any
         height: pxToRem(rowHeight),
       };
     }
-    const style: CSSProperties = footerStyle ? omit(footerStyle, ['width', 'height']) : {};
-    if (!style.textAlign) {
-      const textAlign = align || name && getAlignByField(dataSet.getField(name));
-      if (textAlign) {
-        style.textAlign = textAlign;
-      }
-    }
+    const cellStyle: CSSProperties = {
+      textAlign: align || (command ? ColumnAlign.center : getAlignByField(dataSet.getField(name))),
+      ...footerStyle,
+    };
     return (
       <th
         className={classString}
-        style={omit(style, ['width', 'height'])}
+        style={omit(cellStyle, ['width', 'height'])}
       >
         <div {...innerProps}>
           {this.getFooter(footer, dataSet)}

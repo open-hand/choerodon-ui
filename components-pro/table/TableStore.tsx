@@ -9,7 +9,7 @@ import Record from '../data-set/Record';
 import CheckBox from '../check-box';
 import Radio from '../radio';
 import { DataSetSelection } from '../data-set/enum';
-import { ColumnAlign, ColumnLock, SelectionMode, TableMode } from './enum';
+import { ColumnAlign, ColumnLock, SelectionMode, TableEditMode, TableMode } from './enum';
 import { stopPropagation } from '../_util/EventManager';
 import { getColumnKey, getHeader } from './utils';
 import getReactNodeText from '../_util/getReactNodeText';
@@ -41,6 +41,23 @@ export default class TableStore {
 
   @observable currentEditorName?: string;
 
+  @computed
+  get currentEditRecord(): Record | undefined {
+    return this.dataSet.find(record => record.editing === true);
+  };
+
+  set currentEditRecord(record: Record | undefined) {
+    runInAction(() => {
+      const { currentEditRecord } = this;
+      if (currentEditRecord) {
+        currentEditRecord.editing = false;
+      }
+      if (record) {
+        record.editing = true;
+      }
+    });
+  };
+
   @observable showCachedSeletion?: boolean;
 
   get isTree(): boolean {
@@ -48,7 +65,7 @@ export default class TableStore {
   }
 
   get editing(): boolean {
-    return this.currentEditorName !== void 0;
+    return this.currentEditorName !== void 0 || this.currentEditRecord !== void 0;
   }
 
   @computed
@@ -238,6 +255,11 @@ export default class TableStore {
       return expandIconColumnIndex + 1;
     }
     return expandIconColumnIndex;
+  }
+
+  @computed
+  get inlineEdit() {
+    return this.props.editMode === TableEditMode.inline;
   }
 
   private handleSelectAllChange = action((value) => {

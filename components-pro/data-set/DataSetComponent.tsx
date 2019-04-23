@@ -10,7 +10,7 @@ import { computed } from 'mobx';
  */
 export interface DataSetComponentProps extends ViewComponentProps {
   /** 数据源 */
-  dataSet?: DataSet | null;
+  dataSet?: DataSet;
 }
 
 export default class DataSetComponent<T extends DataSetComponentProps> extends ViewComponent<T> {
@@ -20,8 +20,9 @@ export default class DataSetComponent<T extends DataSetComponentProps> extends V
     ...ViewComponent.propTypes,
   };
 
-  get dataSet(): DataSet | null | undefined {
-    return this.props.dataSet;
+  @computed
+  get dataSet(): DataSet | undefined {
+    return this.observableProps.dataSet;
   }
 
   @computed
@@ -31,6 +32,12 @@ export default class DataSetComponent<T extends DataSetComponentProps> extends V
       return dataSet.lang;
     }
     return super.lang;
+  }
+
+  getObservableProps(props: T, _context) {
+    return {
+      dataSet: props.dataSet,
+    } as T;
   }
 
   getOtherProps() {

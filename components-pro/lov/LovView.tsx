@@ -41,8 +41,9 @@ export default class LovView extends Component<LovViewProps> {
     this.props.dataSet.selection = this.selection;
   }
 
-  getColumns(): ColumnProps[] {
-    return this.props.config.lovItems
+  getColumns(): ColumnProps[] | undefined {
+    const { lovItems } = this.props.config;
+    return lovItems ? lovItems
       .filter(({ gridField }) => gridField === 'Y')
       .sort(({ gridFieldSequence: seq1 }, { gridFieldSequence: seq2 }) => seq1 - seq2)
       .map<ColumnProps>(({ display, gridFieldName, gridFieldWidth, gridFieldAlign }) => ({
@@ -51,7 +52,7 @@ export default class LovView extends Component<LovViewProps> {
         name: gridFieldName,
         width: gridFieldWidth,
         align: gridFieldAlign,
-      }));
+      })) : void 0;
   }
 
   handleKeyDown = (e) => {

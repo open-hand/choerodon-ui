@@ -49,7 +49,7 @@ export type LovConfig = {
   height?: number,
   customUrl?: string,
   lovPageSize?: string,
-  lovItems: LovConfigItem[],
+  lovItems: LovConfigItem[] | null,
   treeFlag?: 'Y' | 'N',
   parentIdField?: string,
   idField?: string,

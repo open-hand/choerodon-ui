@@ -2,7 +2,7 @@ import { Component, CSSProperties, FocusEventHandler, Key, KeyboardEventHandler,
 import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { action, observable, runInAction } from 'mobx';
+import { action, observable, runInAction, toJS } from 'mobx';
 import omit from 'lodash/omit';
 import defer from 'lodash/defer';
 import merge from 'lodash/merge';
@@ -270,8 +270,11 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
 
   wrapper: any;
 
-  @observable isFocused: boolean;
   isFocus: boolean;
+
+  @observable isFocused: boolean;
+
+  @observable observableProps: P;
 
   get prefixCls(): string {
     const { suffixCls, prefixCls } = this.props;
@@ -286,6 +289,11 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
     return localeContext.locale.lang;
   }
 
+  constructor(props, context) {
+    super(props, context);
+    this.setObservableProps(props, context);
+  }
+
   getMergedClassNames(...props) {
     return classNames(this.getClassName(), this.getWrapperClassNames(), ...props);
   }
@@ -295,6 +303,19 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
       ...merge(this.getWrapperProps(props), this.getOtherProps()),
       className: this.getMergedClassNames(),
     };
+  }
+
+  getObservableProps(_props: P, _context: any): P {
+    return {} as P;
+  }
+
+  @action
+  setObservableProps(props: P, context: any) {
+    this.observableProps = Object.assign(
+      {},
+      toJS<P>(this.observableProps),
+      this.getObservableProps(props, context),
+    );
   }
 
   getOtherProps() {
@@ -427,6 +448,10 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
   @action
   wrapperReference(node) {
     this.wrapper = node;
+  }
+
+  componentWillReceiveProps(nextProps, nextContext) {
+    this.setObservableProps(nextProps, nextContext);
   }
 
   componentWillMount() {

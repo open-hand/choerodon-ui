@@ -28,7 +28,7 @@ export interface TooltipProps {
   mouseEnterDelay?: number;
   mouseLeaveDelay?: number;
   transitionName?: string;
-  trigger?: 'hover' | 'focus' | 'click' | 'contextMenu';
+  trigger?: Action[];
   openClassName?: string;
   arrowPointAtCenter?: boolean;
   autoAdjustOverflow?: boolean | AdjustOverflow;
@@ -61,12 +61,12 @@ export default class Tooltip extends Component<TooltipProps, any> {
       'rightTop',
       'rightBottom',
     ]),
-    trigger: PropTypes.oneOf([
-      'click',
-      'hover',
-      'contextMenu',
-      'focus',
-    ]),
+    trigger: PropTypes.arrayOf(PropTypes.oneOf([
+      Action.click,
+      Action.hover,
+      Action.contextMenu,
+      Action.focus,
+    ])),
     hidden: PropTypes.bool,
     onHiddenChange: PropTypes.func,
   };
@@ -81,6 +81,7 @@ export default class Tooltip extends Component<TooltipProps, any> {
     autoAdjustOverflow: true,
     theme: 'dark',
     defaultHidden: true,
+    trigger: [Action.hover],
   };
 
   state = {
@@ -126,38 +127,6 @@ export default class Tooltip extends Component<TooltipProps, any> {
       onHiddenChange(hidden);
     }
   };
-
-  /**
-   * 将表示触发方式的字符串转换为枚举对象
-   *
-   * @readonly
-   * @memberof Tooltip
-   */
-  get triggerAction() {
-    const { trigger, hidden } = this.props;
-    let actionArr: Action[] = [];
-    switch (trigger) {
-      case 'click':
-        actionArr.push(Action.click);
-        break;
-      case 'focus':
-        actionArr.push(Action.focus);
-        break;
-      case 'contextMenu':
-        actionArr.push(Action.contextMenu);
-        break;
-      case 'hover':
-      default:
-        actionArr.push(Action.hover);
-        break;
-    }
-
-    if (hidden !== undefined) {
-      actionArr = [];
-    }
-
-    return actionArr;
-  }
 
   get popupContent() {
     const { title } = this.props;
@@ -213,6 +182,7 @@ export default class Tooltip extends Component<TooltipProps, any> {
         mouseEnterDelay,
         mouseLeaveDelay,
         transitionName,
+        trigger,
       },
     } = this;
 
@@ -224,7 +194,7 @@ export default class Tooltip extends Component<TooltipProps, any> {
       <Trigger
         prefixCls={prefixCls}
         popupStyle={{ backgroundColor: 'transparent' }}
-        action={this.triggerAction}
+        action={trigger}
         builtinPlacements={this.placements}
         popupPlacement={placement}
         popupContent={this.popupContent}

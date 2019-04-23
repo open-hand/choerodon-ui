@@ -24,16 +24,31 @@ import TableContext from './TableContext';
 import TableWrapper from './TableWrapper';
 import TableBody from './TableBody';
 import TableFooter from './TableFooter';
-import { ColumnLock, ScrollPosition, SelectionMode, TableMode, TableQueryBar } from './enum';
-import TableToolBar, { Buttons, buttonsEnumType } from './TableToolBar';
+import { ColumnLock, ScrollPosition, SelectionMode, TableButtonType, TableCommandType, TableEditMode, TableMode, TableQueryBar } from './enum';
+import TableToolBar from './TableToolBar';
 import Switch from '../switch/Switch';
 import Tooltip from '../tooltip/Tooltip';
 import { $l } from '../locale-context';
 import FilterBar from './FilterBar';
 import { findIndexedSibling } from './utils';
+import { ButtonProps } from '../button/Button';
 
 export type expandedRowRendererProps = { dataSet: DataSet, record: Record };
 export type onRowProps = { dataSet: DataSet, record: Record, index: number, expandedRow: boolean };
+export type Buttons = TableButtonType | [TableButtonType, ButtonProps] | ReactElement<ButtonProps>;
+export type Commands = TableCommandType | [TableCommandType, ButtonProps] | ReactElement<ButtonProps>;
+
+export const buttonsEnumType = PropTypes.oneOf([
+  TableButtonType.add,
+  TableButtonType.save,
+  TableButtonType.remove,
+  TableButtonType.delete,
+  TableButtonType.reset,
+  TableButtonType.query,
+  TableButtonType.export,
+  TableButtonType.expandAll,
+  TableButtonType.collapseAll,
+]);
 
 export interface TableProps extends DataSetComponentProps {
   columns?: ColumnProps[];
@@ -72,6 +87,7 @@ export interface TableProps extends DataSetComponentProps {
   /**
    * 功能按钮
    * 可选值：`add` `delete` `remove` `save` `query` `reset` `expandAll` `collapseAll` `export` 或 自定义按钮
+   * 给内置按钮加属性：buttons={[['add', { color: 'red' }], ...]}
    */
   buttons?: Buttons[];
   /**
@@ -144,6 +160,12 @@ export interface TableProps extends DataSetComponentProps {
    * 可选值: `list` `tree`
    */
   mode?: TableMode;
+  /**
+   * 表格编辑的模式
+   * 可选值: `cell` `inline`
+   * @default cell
+   */
+  editMode?: TableEditMode;
   /**
    * queryBar为bar时，直接输入的过滤条件的字段名
    */
@@ -219,6 +241,7 @@ export default class Table extends DataSetComponent<TableProps> {
     indentSize: PropTypes.number,
     filter: PropTypes.func,
     mode: PropTypes.oneOf([TableMode.list, TableMode.tree]),
+    editMode: PropTypes.oneOf([TableEditMode.inline, TableEditMode.cell]),
     filterBarFieldName: PropTypes.string,
     filterBarPlaceholder: PropTypes.string,
     ...DataSetComponent.propTypes,
@@ -429,6 +452,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'indentSize',
       'filter',
       'mode',
+      'editMode',
       'filterBarFieldName',
       'filterBarPlaceholder',
     ]);
@@ -529,7 +553,8 @@ export default class Table extends DataSetComponent<TableProps> {
     );
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps, nextContext) {
+    super.componentWillReceiveProps(nextProps, nextContext);
     this.tableStore.setProps(nextProps);
   }
 

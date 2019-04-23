@@ -11,6 +11,7 @@ import { findCell, getColumnKey, getEditorByColumnAndRecord, isRadio } from './u
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { stopEvent } from '../_util/EventManager';
 import { runInAction } from 'mobx';
+import { ShowHelp } from '../field/enum';
 
 export interface TableEditorProps extends ElementProps {
   column: ColumnProps;
@@ -103,8 +104,9 @@ export default class TableEditor extends Component<TableEditorProps> {
 
   renderEditor(): ReactElement<FormFieldProps> | undefined {
     const { column, rowHeight } = this.props;
-    const { dataSet } = this.context.tableStore;
-    const cellEditor = getEditorByColumnAndRecord(column, dataSet.current);
+    const { dataSet, currentEditRecord } = this.context.tableStore;
+    const record = currentEditRecord || dataSet.current;
+    const cellEditor = getEditorByColumnAndRecord(column, record);
     if (isValidElement(cellEditor) && !isRadio(cellEditor)) {
       this.editorProps = cellEditor.props;
       const { style = {}, ...otherProps } = this.editorProps;
@@ -115,12 +117,13 @@ export default class TableEditor extends Component<TableEditorProps> {
         ...otherProps,
         style,
         ref: this.saveRef,
-        dataSet,
+        record,
         name: column.name,
         onKeyDown: this.handleEditorKeyDown,
         onEnterDown: this.handleEditorKeyEnterDown,
         onBlur: this.handleEditorBlur,
         tabIndex: -1,
+        showHelp: ShowHelp.none,
       };
       return cloneElement<FormFieldProps>(cellEditor, newEditorProps);
     }
@@ -135,14 +138,14 @@ export default class TableEditor extends Component<TableEditorProps> {
       };
       const editorProps: any = {};
       const { tableStore } = this.context;
-      if (tableStore.currentEditorName === name) {
+      if (tableStore.currentEditorName === name || tableStore.currentEditRecord) {
         this.currentEditorName = name;
         const cell = findCell(tableStore, prefixCls, getColumnKey(column), lock);
         if (cell) {
           this.editing = true;
           const { offsetLeft, offsetTop, offsetWidth, offsetHeight } = cell;
           props.style = {
-            left: pxToRem(offsetLeft + (lock ? tableStore.node.tableBodyWrap.scrollLeft : 0)),
+            left: pxToRem(offsetLeft),
             top: pxToRem(offsetTop),
           };
           editorProps.style = {
@@ -166,7 +169,9 @@ export default class TableEditor extends Component<TableEditorProps> {
   }
 
   componentDidUpdate() {
-    if (this.editor && this.editing) {
+    const { column: { name } } = this.props;
+    const { tableStore } = this.context;
+    if (this.editor && this.editing && tableStore.currentEditorName === name) {
       this.editor.focus();
     }
   }

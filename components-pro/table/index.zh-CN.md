@@ -36,6 +36,7 @@ subtitle: 表格
 | indentSize | 展示树形数据时，每层缩进的宽度 | number | 15 |
 | filter | 数据过滤， 返回值 true - 显示 false - 不显示 | (record) => boolean |  |
 | mode | 表格展示的模式, tree需要配合dataSet的`idField`和`parentField`来展示，可选值: `list` `tree` | string | list |
+| editMode | 表格编辑的模式，可选值: `cell` `inline` | string | cell |
 | filterBarFieldName | `queryBar`为`bar`时，直接输入的过滤条件的字段名 | string | params |
 | filterBarPlaceholder | `queryBar`为`bar`时输入框的占位符 | string |  |
 
@@ -65,3 +66,4 @@ subtitle: 表格
 | help | 额外信息，常用于提示 | `string` | `undefined` |
 | showHelp | 展示提示信息的方式 | `'tooltip' \| 'newLine' \| 'none'` | `'tooltip'` |
 | onCell | 设置单元格属性 | ({ dataSet, record, column }) => object |  |
+| command | 行操作按钮，可选值：`edit` `delete` 或 数组 或 自定义按钮，数组为可选值字符串+按钮配置属性对象 | string \| \[string, object\] \|ReactNode |   |

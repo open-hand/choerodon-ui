@@ -38,34 +38,6 @@
     border: 0;
   }
 
-  &-icon-only {
-    padding: 0;
-    border-radius: 50%;
-    width: @btn-circle-size;
-    height: @btn-circle-size;
-    > .@{iconfont-css-prefix} {
-      font-size: @btn-icon-size + .06rem;
-      line-height: 1.5;
-      margin-right: 0;
-    }
-    &.@{btn-prefix-cls}-sm {
-      padding: 0;
-      width: @btn-circle-size-sm;
-      height: @btn-circle-size-sm;
-      > .@{iconfont-css-prefix} {
-        font-size: @btn-icon-size;
-      }
-    }
-    &.@{btn-prefix-cls}-lg {
-      padding: 0;
-      width: @btn-circle-size-lg;
-      height: @btn-circle-size-lg;
-      > .@{iconfont-css-prefix} {
-        font-size: @btn-icon-size + .1rem;
-      }
-    }
-  }
-
   &-lg {
     font-size: @font-size-lg;
     padding: .07rem .12rem;
@@ -282,6 +254,37 @@
     }
     &:focus {
       color: @primary-color;
+    }
+  }
+
+  &-icon-only {
+    padding: 0;
+    border-radius: 50%;
+    width: @btn-circle-size;
+    height: @btn-circle-size;
+    > .@{iconfont-css-prefix} {
+      font-size: @btn-icon-size + .06rem;
+      line-height: 1.5;
+      margin-right: 0;
+    }
+    &.@{btn-prefix-cls}-sm {
+      padding: 0;
+      width: @btn-circle-size-sm;
+      height: @btn-circle-size-sm;
+      > .@{iconfont-css-prefix} {
+        font-size: @btn-icon-size;
+      }
+    }
+    &.@{btn-prefix-cls}-lg {
+      padding: 0;
+      width: @btn-circle-size-lg;
+      height: @btn-circle-size-lg;
+      > .@{iconfont-css-prefix} {
+        font-size: @btn-icon-size + .1rem;
+      }
+    }
+    &:disabled:before {
+      opacity: .5;
     }
   }
 

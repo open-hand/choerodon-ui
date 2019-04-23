@@ -269,6 +269,46 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     return !this.isReadOnly();
   }
 
+  @computed
+  get dataSet(): DataSet | undefined {
+    const { record } = this;
+    if (record) {
+      return record.dataSet;
+    } else {
+      return this.observableProps.dataSet;
+    }
+  }
+
+  @computed
+  get record(): Record | undefined {
+    const { record, dataSet, dataIndex } = this.observableProps;
+    if (record) {
+      return record;
+    } else if (dataSet) {
+      if (isNumber(dataIndex)) {
+        return dataSet.get(dataIndex);
+      } else {
+        return dataSet.current;
+      }
+    }
+  }
+
+  @computed
+  get field(): Field | undefined {
+    const { record, dataSet, name } = this;
+    const { displayName } = this.constructor as any;
+    warning(dataSet && displayName !== 'Output' ? !!name : true, `${displayName} with binding DataSet need property name.`);
+    if (name) {
+      const recordField = record ? record.getField(name) : void 0;
+      const dsField = dataSet ? dataSet.getField(name) : void 0;
+      if (recordField) {
+        return recordField;
+      } else {
+        return dsField;
+      }
+    }
+  }
+
   constructor(props, context) {
     super(props, context);
     this.setName(props.name);
@@ -299,6 +339,14 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   isEmpty() {
     const value = this.getValue();
     return isArrayLike(value) ? !value.length : isEmpty(value);
+  }
+
+  getObservableProps(props: T, context) {
+    return {
+      record: props.record || context.record,
+      dataSet: props.dataSet || context.dataSet,
+      dataIndex: defaultTo(props.dataIndex, context.dataIndex),
+    } as T;
   }
 
   getOtherProps() {
@@ -354,6 +402,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     return super.getWrapperClassNames({
       [`${prefixCls}-invalid`]: !this.isValid,
       [`${prefixCls}-has-label`]: this.hasFloatLabel,
+      [`${prefixCls}-required`]: this.getProp('required'),
     }, ...args);
   }
 
@@ -362,7 +411,8 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   }
 
   renderHelpMessage(): ReactNode {
-    const { help, showHelp } = this.props;
+    const { showHelp } = this.props;
+    const help = this.getProp('help');
     if (showHelp === ShowHelp.newLine && help) {
       return (
         <div key="help" className={`${getPrefixCls(FIELD_SUFFIX)}-help`}>{help}</div>
@@ -397,6 +447,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   }
 
   componentWillReceiveProps(nextProps: T, nextContext) {
+    super.componentWillReceiveProps(nextProps, nextContext);
     this.removeFromForm(this.props, this.context);
     this.addToForm(nextProps, nextContext);
     if (!this.record && this.props.value !== nextProps.value) {
@@ -658,7 +709,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       if (this.multiple ? isArrayLike(value) && !value.length : isNil(value) || value === '') {
         value = this.emptyValue;
       }
-      const { name, dataSet, dataIndex } = this;
+      const { name, dataSet, observableProps: { dataIndex } } = this;
       const { onChange = noop } = this.props;
       const { formNode } = this.context;
       const old = this.getOldValue();
@@ -754,7 +805,11 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   }
 
   isDisabled() {
+    const { disabled } = this.context;
     const { field, record } = this;
+    if (disabled) {
+      return disabled;
+    }
     if (field) {
       const cascadeMap = field.get('cascadeMap');
       if (cascadeMap && (!record || Object.keys(cascadeMap).some(cascade => !record.get(cascadeMap[cascade])))) {
@@ -780,55 +835,6 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   getProp(propName: string) {
     const { field } = this;
     return defaultTo(field && field.get(propName), this.props[propName]);
-  }
-
-  get dataSet(): DataSet | null | undefined {
-    const { record } = this;
-    if (record) {
-      return record.dataSet;
-    } else {
-      return this.props.dataSet || this.context.dataSet;
-    }
-  }
-
-  get dataIndex(): number | undefined {
-    const { dataIndex } = this.props;
-    return dataIndex === void 0 ? this.context.dataIndex : dataIndex;
-  }
-
-  get record(): Record | undefined {
-    const { record, dataSet } = this.props;
-    const { dataSet: contextDataSet, record: contextRecord } = this.context;
-    const r = record || contextRecord;
-    if (r) {
-      return r;
-    } else {
-      const ds = dataSet || contextDataSet;
-      if (ds) {
-        const { dataIndex } = this;
-        if (isNumber(dataIndex)) {
-          return ds.get(dataIndex);
-        } else {
-          return ds.current;
-        }
-      }
-    }
-  }
-
-  @computed
-  get field(): Field | undefined {
-    const { record, dataSet, name } = this;
-    const { displayName } = this.constructor as any;
-    warning(dataSet && displayName !== 'Output' ? !!name : true, `${displayName} with binding DataSet need property name.`);
-    if (name) {
-      const recordField = record ? record.getField(name) : void 0;
-      const dsField = dataSet ? dataSet.getField(name) : void 0;
-      if (recordField) {
-        return recordField;
-      } else {
-        return dsField;
-      }
-    }
   }
 }
 

@@ -6,8 +6,10 @@ export interface Locale {
   Table: {
     show_cached_seletion;
     hide_cached_seletion;
+    edit_button;
     create_button;
     save_button;
+    cancel_button;
     delete_button;
     remove_button;
     reset_button;
