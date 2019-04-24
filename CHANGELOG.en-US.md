@@ -14,6 +14,9 @@ timeline: true
 * Major version release is not included in this schedule for breaking change and new features.
 
 ---
+## 0.6.2
+
+`2019-04-25`
 
 - 🌟 `<pro>Form`: Install the disabled attribute.
 - 🌟 `<pro>TextField`: Added the restrict attribute to limit the characters that can be entered.

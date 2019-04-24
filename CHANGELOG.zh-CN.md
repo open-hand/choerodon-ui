@@ -14,6 +14,9 @@ timeline: true
 * 主版本号：含有破坏性更新和新特性，不在发布周期内。
 
 ---
+## 0.6.2
+
+`2019-04-25`
 
 - 🌟 `<pro>Form`: 实装disabled属性。
 - 🌟 `<pro>TextField`: 新增restrict属性，用于限制可输入的字符。
