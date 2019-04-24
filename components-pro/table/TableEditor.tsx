@@ -40,7 +40,9 @@ export default class TableEditor extends Component<TableEditorProps> {
   saveRef = (node) => this.editor = node;
 
   handleEditorKeyEnterDown = (e) => {
-    this.showNextEditor(e.shiftKey);
+    if (!e.isDefaultPrevented()) {
+      this.showNextEditor(e.shiftKey);
+    }
   };
 
   handleEditorKeyDown = (e) => {

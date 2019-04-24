@@ -1,5 +1,6 @@
 ---
 category: Pro Components
+cols: 1
 subtitle: 分页
 type: Navigation
 title: Pagination
@@ -23,7 +24,10 @@ title: Pagination
 | pageSize | 分页数 | number |  |
 | onChange | 页码改变的回调，参数是改变后的页码及每页条数 | (page, pageSize) => void |  |
 | pageSizeOptions | 指定每页可以显示多少条 | string\[] | \['10', '20', '50', '100'\] |
-| showSizeChanger | 是否可以改变 pageSize | boolean | true |
+| showSizeChanger | 是否可以改变分页大小 | boolean | true |
+| showTotal | 显示总数 | boolean | true |
+| showPager | 显示数字按钮 | boolean | false |
+| itemRender | 按钮渲染 | (page, type) => ReactNode |  |
 
 更多属性请参考 [DataSetComponent](/components-pro/core/#DataSetComponent)。
 

@@ -113,7 +113,7 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
 
   static defaultProps = {
     ...TextField.defaultProps,
-    suffixCls: 'pro-trigger',
+    suffixCls: 'trigger',
     clearButton: true,
     trigger: ['focus', 'click'],
     triggerShowDelay: 150,

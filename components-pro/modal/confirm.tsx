@@ -1,6 +1,6 @@
 import React from 'react';
 import noop from 'lodash/noop';
-import { getPrefixCls } from 'choerodon-ui/lib/configure';
+import { getProPrefixCls } from 'choerodon-ui/lib/configure';
 import { ModalProps } from './Modal';
 import { getKey, open } from '../modal-container/ModalContainer';
 import Icon from '../icon';
@@ -13,7 +13,7 @@ export default function confirm(props: ModalProps & { iconType?: string, type?: 
     children, type = 'confirm', onOk = noop, onCancel = noop,
     iconType = 'error', header = false, ...otherProps,
   } = props;
-  const prefixCls = getPrefixCls('pro-confirm');
+  const prefixCls = getProPrefixCls('confirm');
   return new Promise((resolve) => {
     open({
       key: getKey(),

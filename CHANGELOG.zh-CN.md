@@ -18,6 +18,8 @@ timeline: true
 - 🌟 `<pro>Form`: 实装disabled属性。
 - 🌟 `<pro>TextField`: 新增restrict属性，用于限制可输入的字符。
 - 🌟 `<pro>Table`: 新增行内编辑模式。
+- 🌟 `<pro>Table`: 新增pagination属性。
+- 🌟 `<pro>Pagination`: 新增showTotal、showPager、itemRender属性。
 - 💄 `<pro>Table`: 优化必选和可编辑单元格的显示。
 - 🐞 `<pro>Form`: 修复在有空子元素时布局的问题。
 - 🐞 `<pro>Lov`: 修复配置中lovItems为null时报错的问题。

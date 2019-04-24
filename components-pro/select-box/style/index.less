@@ -3,9 +3,9 @@
 @import "../../trigger-field/style/mixin";
 @import "../../field/style/mixin";
 
-@select-box-prefix: ~"@{c7n-prefix}-pro-select-box";
-@checkbox-prefix-cls: ~"@{c7n-prefix}-pro-checkbox";
-@radio-prefix-cls: ~"@{c7n-prefix}-pro-radio";
+@select-box-prefix: ~"@{c7n-pro-prefix}-select-box";
+@checkbox-prefix-cls: ~"@{c7n-pro-prefix}-checkbox";
+@radio-prefix-cls: ~"@{c7n-pro-prefix}-radio";
 
 .@{select-box-prefix} {
   .validation;
@@ -48,8 +48,8 @@
   &-invalid .@{checkbox-prefix-cls}-inner {
     border-color: @error-color;
   }
-  &-required .@{radio-prefix-cls}-inner,
-  &-required .@{checkbox-prefix-cls}-inner {
+  &-required:not(&-has-label):not(&-disabled) .@{radio-prefix-cls}-inner,
+  &-required:not(&-has-label):not(&-disabled) .@{checkbox-prefix-cls}-inner {
     background-color: @input-required-bg;
   }
   &-vertical {

@@ -44,7 +44,7 @@ export class CheckBox<T extends CheckBoxProps> extends Radio<T & CheckBoxProps> 
 
   static defaultProps = {
     ...Radio.defaultProps,
-    suffixCls: 'pro-checkbox',
+    suffixCls: 'checkbox',
     indeterminate: false,
   };
 

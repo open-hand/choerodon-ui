@@ -4,8 +4,8 @@
 @import "../../trigger-field/style/mixin";
 @import "../../select/style/mixin";
 
-@table-prefix-cls: ~"@{c7n-prefix}-pro-table";
-@output-prefix-cls: ~"@{c7n-prefix}-pro-output";
+@table-prefix-cls: ~"@{c7n-pro-prefix}-table";
+@output-prefix-cls: ~"@{c7n-pro-prefix}-output";
 @table-border: @border-width-base @border-style-base @border-color-base;
 
 .@{table-prefix-cls} {
@@ -276,7 +276,7 @@
   &-row-disabled > td {
     background-color: @disabled-bg !important;
     color: @disabled-color !important;
-    .@{c7n-prefix}-pro-btn {
+    .@{c7n-pro-prefix}-btn {
       color: @disabled-color !important;
     }
     &:not(.@{table-prefix-cls}-selection-column) .@{table-prefix-cls}-cell-inner:before {
@@ -382,7 +382,7 @@
     &-spaced {
       visibility: hidden;
     }
-    & + .@{c7n-prefix}-pro-checkbox {
+    & + .@{c7n-pro-prefix}-checkbox {
       margin-left: @table-padding-horizontal;
     }
   }

@@ -16,7 +16,7 @@ export default class Output extends FormField<OutputProps> {
 
   static defaultProps = {
     ...FormField.defaultProps,
-    suffixCls: 'pro-output',
+    suffixCls: 'output',
   };
 
   @computed

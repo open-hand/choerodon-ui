@@ -55,6 +55,7 @@ if (process.env.RUN_ENV === 'DEMO') {
     indent: 0,
     'no-console': 0,
     'no-plusplus': 0,
+    'no-unused-vars': 0,
     'eol-last': 0,
     'prefer-rest-params': 0,
     'react/no-access-state-in-setstate': 0,

@@ -9,7 +9,7 @@ import isString from 'lodash/isString';
 import noop from 'lodash/noop';
 import defaultTo from 'lodash/defaultTo';
 import { AxiosInstance } from 'axios';
-import { getPrefixCls } from 'choerodon-ui/lib/configure';
+import { getProPrefixCls } from 'choerodon-ui/lib/configure';
 import axios from '../axios';
 import autobind from '../_util/autobind';
 import { FormField, FormFieldProps, getFieldsById } from '../field/FormField';
@@ -235,7 +235,7 @@ export default class Form extends DataSetComponent<FormProps> {
   };
 
   static defaultProps = {
-    suffixCls: 'pro-form',
+    suffixCls: 'form',
     columns: defaultColumns,
     labelWidth: defaultLabelWidth,
     labelLayout: defaultLabelLayout,
@@ -315,6 +315,7 @@ export default class Form extends DataSetComponent<FormProps> {
   constructor(props, context) {
     super(props, context);
     this.setResponsiveKey();
+    this.initResponsive();
   }
 
   getObservableProps(props, context) {
@@ -335,6 +336,11 @@ export default class Form extends DataSetComponent<FormProps> {
 
   componentDidMount() {
     this.setResponsiveKey();
+  }
+
+  componentWillReceiveProps(props, context) {
+    super.componentWillReceiveProps(props, context);
+    this.initResponsive();
   }
 
   componentWillUnmount() {
@@ -366,11 +372,10 @@ export default class Form extends DataSetComponent<FormProps> {
   }
 
   @mobxAction
-  setObservableProps(props, context) {
-    super.setObservableProps(props, context);
+  initResponsive() {
+    const { columns, labelWidth, labelLayout, labelAlign } = this.observableProps;
     this.clear();
-    const { columns, labelWidth } = props;
-    if (!isNumber(columns) || !(isNumber(labelWidth) || isArrayLike(labelWidth))) {
+    if (!isNumber(columns) || !(isNumber(labelWidth) || isArrayLike(labelWidth)) || !isString(labelLayout) || (labelAlign && !isString(labelAlign))) {
       this.resizeEvent.addEventListener('resize', this.handleResize);
     }
   }
@@ -405,7 +410,7 @@ export default class Form extends DataSetComponent<FormProps> {
 
   rasterizedChildren() {
     const { dataSet, record, columns, labelLayout, labelAlign, props: { children } } = this;
-    const prefixCls = getPrefixCls(FIELD_SUFFIX);
+    const prefixCls = getProPrefixCls(FIELD_SUFFIX);
     const labelWidth = normalizeLabelWidth(this.labelWidth, columns);
     const rows: ReactElement<any>[] = [];
     let cols: ReactElement<any>[] = [];

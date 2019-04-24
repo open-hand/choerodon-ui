@@ -19,7 +19,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
 
   static defaultProps = {
     ...TriggerField.defaultProps,
-    suffixCls: 'pro-color-picker',
+    suffixCls: 'color-picker',
     clearButton: false,
   };
 

@@ -6,7 +6,7 @@ import noop from 'lodash/noop';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import warning from 'choerodon-ui/lib/_util/warning';
-import { getPrefixCls } from 'choerodon-ui/lib/configure';
+import { getProPrefixCls } from 'choerodon-ui/lib/configure';
 import Modal, { ModalProps } from '../modal/Modal';
 import Animate from '../animate';
 import Mask from './Mask';
@@ -16,7 +16,7 @@ const { suffixCls } = Modal.defaultProps;
 
 const KeyGen = function* (id) {
   while (true) {
-    yield `${getPrefixCls(suffixCls)}-${id++}`;
+    yield `${getProPrefixCls(suffixCls)}-${id++}`;
   }
 }(1);
 
@@ -182,7 +182,7 @@ export default class ModalContainer extends Component<any> {
         };
       }
       if (index === modals.length - 1) {
-        newProps.className = classNames(props.className, `${getPrefixCls(suffixCls)}-active`);
+        newProps.className = classNames(props.className, `${getProPrefixCls(suffixCls)}-active`);
       }
       return (
         <Animate
@@ -243,7 +243,7 @@ function getRoot() {
       }
     } else {
       root = doc.createElement('div');
-      root.className = `${getPrefixCls(suffixCls)}-container`;
+      root.className = `${getProPrefixCls(suffixCls)}-container`;
       doc.body.appendChild(root);
     }
   }

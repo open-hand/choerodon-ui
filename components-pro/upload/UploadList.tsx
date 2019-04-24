@@ -25,7 +25,7 @@ export default class UploadList extends FormField<UploadListProps> {
 
   static defaultProps = {
     ...FormField.defaultProps,
-    suffixCls: 'pro-upload-list',
+    suffixCls: 'upload-list',
     items: [],
   };
 

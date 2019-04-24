@@ -55,3 +55,9 @@ export const enum TableQueryBar {
   bar = 'bar',
   none = 'none',
 }
+
+export const enum TablePaginationPosition {
+  top = 'top',
+  bottom = 'bottom',
+  both = 'both',
+}

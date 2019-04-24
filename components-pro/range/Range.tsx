@@ -30,7 +30,7 @@ export default class Range extends NumberField<RangeProps> {
 
   static defaultProps = {
     ...NumberField.defaultProps,
-    suffixCls: 'pro-range',
+    suffixCls: 'range',
     min: 0,
     step: 1,
     max: 100,

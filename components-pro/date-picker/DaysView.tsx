@@ -36,7 +36,7 @@ export default class DaysView extends ViewComponent<DateViewProps> implements Da
   };
 
   static defaultProps = {
-    suffixCls: 'pro-calendar',
+    suffixCls: 'calendar',
   };
 
   static type = FieldType.date;

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { getPrefixCls } from 'choerodon-ui/lib/configure';
+import { getProPrefixCls } from 'choerodon-ui/lib/configure';
 import Trigger from '../trigger/Trigger';
 import { Action } from '../trigger/enum';
 import getPlacements, { AdjustOverflow } from './placements';
@@ -72,7 +72,7 @@ export default class Tooltip extends Component<TooltipProps, any> {
   };
 
   static defaultProps = {
-    suffixCls: 'pro-tooltip',
+    suffixCls: 'tooltip',
     placement: 'bottom',
     transitionName: 'zoom-big-fast',
     mouseEnterDelay: 100,
@@ -90,7 +90,7 @@ export default class Tooltip extends Component<TooltipProps, any> {
 
   get prefixCls(): string {
     const { suffixCls, prefixCls } = this.props;
-    return getPrefixCls(suffixCls!, prefixCls);
+    return getProPrefixCls(suffixCls!, prefixCls);
   }
 
   componentDidMount() {

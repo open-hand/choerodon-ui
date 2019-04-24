@@ -1,4 +1,4 @@
-@field-label-prefix-cls: ~"@{c7n-prefix}-pro-field-label";
+@field-label-prefix-cls: ~"@{c7n-pro-prefix}-field-label";
 
 .validation() {
 
@@ -40,7 +40,8 @@
     border: none;
     padding-left: 0;
   }
-  &-has-label&-invalid {
+  &-has-label&-invalid,
+  &-has-label&-required {
     background-color: @input-wrapper-bg;
   }
   &-empty:not(&-focused) {

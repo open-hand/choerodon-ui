@@ -8,7 +8,7 @@ import defer from 'lodash/defer';
 import merge from 'lodash/merge';
 import noop from 'lodash/noop';
 import classes from 'component-classes';
-import { getPrefixCls } from 'choerodon-ui/lib/configure';
+import { getProPrefixCls } from 'choerodon-ui/lib/configure';
 import autobind from '../_util/autobind';
 import { Size } from './enum';
 import normalizeLanguage from '../_util/normalizeLanguage';
@@ -278,7 +278,7 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
 
   get prefixCls(): string {
     const { suffixCls, prefixCls } = this.props;
-    return getPrefixCls(suffixCls!, prefixCls);
+    return getProPrefixCls(suffixCls!, prefixCls);
   }
 
   get lang(): Lang {

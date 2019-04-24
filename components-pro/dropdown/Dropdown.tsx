@@ -4,7 +4,7 @@ import Trigger from '../trigger/Trigger';
 import { Action } from '../trigger/enum';
 import { Placements } from './enum';
 import placements from './placements';
-import { getPrefixCls } from 'choerodon-ui/lib/configure';
+import { getProPrefixCls } from 'choerodon-ui/lib/configure';
 
 export interface DropDownProps {
   trigger?: Action[];
@@ -60,7 +60,7 @@ export default class Dropdown extends PureComponent<DropDownProps> {
     defaultVisible: PropTypes.bool,
   };
   static defaultProps = {
-    suffixCls: 'pro-dropdown',
+    suffixCls: 'dropdown',
     placement: Placements.bottomLeft,
     trigger: [Action.hover, Action.focus],
     defaultHidden: true,
@@ -82,7 +82,7 @@ export default class Dropdown extends PureComponent<DropDownProps> {
 
   get prefixCls(): string {
     const { suffixCls, prefixCls } = this.props;
-    return getPrefixCls(suffixCls!, prefixCls);
+    return getProPrefixCls(suffixCls!, prefixCls);
   }
 
   state: DropdownState;

@@ -1,5 +1,6 @@
 import React, { ReactElement, ReactNode } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import ResizeObserver from 'resize-observer-polyfill';
 import { observer } from 'mobx-react';
 import omit from 'lodash/omit';
@@ -17,20 +18,30 @@ import Record from '../data-set/Record';
 import TableStore from './TableStore';
 import TableHeader from './TableHeader';
 import autobind from '../_util/autobind';
-import Pagination from '../pagination/Pagination';
+import Pagination, { PaginationProps } from '../pagination/Pagination';
 import Spin from '../spin';
 import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComponent';
 import TableContext from './TableContext';
 import TableWrapper from './TableWrapper';
 import TableBody from './TableBody';
 import TableFooter from './TableFooter';
-import { ColumnLock, ScrollPosition, SelectionMode, TableButtonType, TableCommandType, TableEditMode, TableMode, TableQueryBar } from './enum';
+import {
+  ColumnLock,
+  ScrollPosition,
+  SelectionMode,
+  TableButtonType,
+  TableCommandType,
+  TableEditMode,
+  TableMode,
+  TablePaginationPosition,
+  TableQueryBar,
+} from './enum';
 import TableToolBar from './TableToolBar';
 import Switch from '../switch/Switch';
 import Tooltip from '../tooltip/Tooltip';
 import { $l } from '../locale-context';
 import FilterBar from './FilterBar';
-import { findIndexedSibling } from './utils';
+import { findIndexedSibling, getPaginationPosition } from './utils';
 import { ButtonProps } from '../button/Button';
 
 export type expandedRowRendererProps = { dataSet: DataSet, record: Record };
@@ -49,6 +60,10 @@ export const buttonsEnumType = PropTypes.oneOf([
   TableButtonType.expandAll,
   TableButtonType.collapseAll,
 ]);
+
+export interface TablePaginationConfig extends PaginationProps {
+  position?: TablePaginationPosition;
+}
 
 export interface TableProps extends DataSetComponentProps {
   columns?: ColumnProps[];
@@ -174,6 +189,10 @@ export interface TableProps extends DataSetComponentProps {
    * queryBar为bar时输入框的占位符
    */
   filterBarPlaceholder?: string;
+  /**
+   * 分页导航条属性
+   */
+  pagination?: TablePaginationConfig | false;
 }
 
 @observer
@@ -248,7 +267,7 @@ export default class Table extends DataSetComponent<TableProps> {
   };
 
   static defaultProps = {
-    suffixCls: 'pro-table',
+    suffixCls: 'table',
     border: true,
     tabIndex: 0,
     selectionMode: SelectionMode.rowbox,
@@ -455,6 +474,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'editMode',
       'filterBarFieldName',
       'filterBarPlaceholder',
+      'pagination',
     ]);
     otherProps.onKeyDown = this.handleKeyDown;
     const { rowHeight } = this.props;
@@ -511,7 +531,7 @@ export default class Table extends DataSetComponent<TableProps> {
       prefixCls,
       props: { dataSet, filterBarFieldName, filterBarPlaceholder },
     } = this;
-    return <FilterBar prefixCls={prefixCls} dataSet={dataSet} paramName={filterBarFieldName!} placeholder={filterBarPlaceholder} />;
+    return <FilterBar key="querybar" prefixCls={prefixCls} dataSet={dataSet} paramName={filterBarFieldName!} placeholder={filterBarPlaceholder} />;
   }
 
   render() {
@@ -528,6 +548,7 @@ export default class Table extends DataSetComponent<TableProps> {
         <div {...this.getWrapperProps()}>
           {this.getHeader()}
           <TableToolBar
+            key="toolbar"
             header={header}
             buttons={buttons}
             queryFieldsLimit={queryFieldsLimit!}
@@ -535,8 +556,9 @@ export default class Table extends DataSetComponent<TableProps> {
             showQueryBar={queryBar === TableQueryBar.normal && showQueryBar !== false}
             prefixCls={prefixCls}
           />
+          {this.getPagination(TablePaginationPosition.top)}
           {queryBar === TableQueryBar.bar && this.renderBar()}
-          <Spin dataSet={dataSet}>
+          <Spin key="content" dataSet={dataSet}>
             <div {...this.getOtherProps()}>
               <div className={`${prefixCls}-content`}>
                 {content}
@@ -546,8 +568,8 @@ export default class Table extends DataSetComponent<TableProps> {
               </div>
               {this.getFooter()}
             </div>
-            {this.getPagination()}
           </Spin>
+          {this.getPagination(TablePaginationPosition.bottom)}
         </div>
       </TableContext.Provider>
     );
@@ -680,7 +702,7 @@ export default class Table extends DataSetComponent<TableProps> {
     const data = dataSet ? dataSet.data : [];
     if (header) {
       return (
-        <div className={`${prefixCls}-header`}>
+        <div key="header" className={`${prefixCls}-header`}>
           {typeof header === 'function' ? header(data) : header}
         </div>
       );
@@ -692,21 +714,25 @@ export default class Table extends DataSetComponent<TableProps> {
     const data = dataSet ? dataSet.data : [];
     if (footer) {
       return (
-        <div className={`${prefixCls}-footer`}>
+        <div key="footer" className={`${prefixCls}-footer`}>
           {typeof footer === 'function' ? footer(data) : footer}
         </div>
       );
     }
   }
 
-  getPagination(): ReactNode | undefined {
-    const { prefixCls, props: { dataSet } } = this;
-    if (dataSet && dataSet.paging) {
-      return (
-        <Pagination className={`${prefixCls}-pagination`} dataSet={dataSet}>
-          {this.getCacheSelectionSwitch()}
-        </Pagination>
-      );
+  getPagination(position: TablePaginationPosition): ReactNode {
+    const { prefixCls, props: { dataSet, pagination } } = this;
+    if (pagination !== false && dataSet && dataSet.paging) {
+      const paginationPosition = getPaginationPosition(pagination);
+      if (paginationPosition === TablePaginationPosition.both || paginationPosition === position) {
+        const props = omit(pagination, 'position');
+        return (
+          <Pagination key={`pagination-${position}`} {...props} className={classNames(`${prefixCls}-pagination`, props.className)} dataSet={dataSet}>
+            {this.getCacheSelectionSwitch()}
+          </Pagination>
+        );
+      }
     }
   }
 
@@ -793,7 +819,7 @@ export default class Table extends DataSetComponent<TableProps> {
     return [tableHead, tableBody, tableFooter];
   }
 
-  getLeftFixedTable(): ReactNode | undefined {
+  getLeftFixedTable(): ReactNode {
     const { overflowX, height } = this.tableStore;
     if (!overflowX && height === void 0) {
       return;
@@ -813,7 +839,7 @@ export default class Table extends DataSetComponent<TableProps> {
     return <div className={`${prefixCls}-fixed-right`}>{table}</div>;
   }
 
-  getTableBody(lock?: ColumnLock | boolean): ReactNode | undefined {
+  getTableBody(lock?: ColumnLock | boolean): ReactNode {
     const { prefixCls, props: { indentSize, rowHeight, filter } } = this;
     return (
       <TableBody

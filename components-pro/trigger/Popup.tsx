@@ -5,7 +5,7 @@ import omit from 'lodash/omit';
 import shallowEqual from 'lodash/isEqual';
 import noop from 'lodash/noop';
 import Align from 'choerodon-ui/lib/align';
-import { getPrefixCls } from 'choerodon-ui/lib/configure';
+import { getProPrefixCls } from 'choerodon-ui/lib/configure';
 import Animate from '../animate';
 import ViewComponent, { ViewComponentProps } from '../core/ViewComponent';
 import PopupInner from './PopupInner';
@@ -17,7 +17,7 @@ function getContainer() {
   if (!popupContainer && typeof window !== 'undefined') {
     const doc = window.document;
     popupContainer = doc.createElement('div');
-    popupContainer.className = getPrefixCls('pro-popup-container');
+    popupContainer.className = getProPrefixCls('popup-container');
     doc.body.appendChild(popupContainer);
   }
   return popupContainer;
@@ -63,7 +63,7 @@ export default class Popup extends ViewComponent<PopupProps> {
   };
 
   static defaultProps = {
-    suffixCls: 'pro-popup',
+    suffixCls: 'popup',
     transitionName: 'zoom',
   };
 

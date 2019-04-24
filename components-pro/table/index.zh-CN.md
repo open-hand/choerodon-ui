@@ -39,6 +39,7 @@ subtitle: 表格
 | editMode | 表格编辑的模式，可选值: `cell` `inline` | string | cell |
 | filterBarFieldName | `queryBar`为`bar`时，直接输入的过滤条件的字段名 | string | params |
 | filterBarPlaceholder | `queryBar`为`bar`时输入框的占位符 | string |  |
+| pagination | 分页器，参考[配置项](#pagination)或 [pagination](/components/pagination/)，设为 false 时不展示分页 | object \| false |  |
 
 更多属性请参考 [DataSetComponent](/components-pro/core/#DataSetComponent)。
 
@@ -67,3 +68,11 @@ subtitle: 表格
 | showHelp | 展示提示信息的方式 | `'tooltip' \| 'newLine' \| 'none'` | `'tooltip'` |
 | onCell | 设置单元格属性 | ({ dataSet, record, column }) => object |  |
 | command | 行操作按钮，可选值：`edit` `delete` 或 数组 或 自定义按钮，数组为可选值字符串+按钮配置属性对象 | string \| \[string, object\] \|ReactNode |   |
+
+### pagination
+
+分页的配置项。
+
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| position | 指定分页显示的位置 | 'top' \| 'bottom' \| 'both' | 'bottom' |

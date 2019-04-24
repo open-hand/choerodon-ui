@@ -12,7 +12,7 @@ import { observer } from 'mobx-react';
 import noop from 'lodash/noop';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import warning from 'choerodon-ui/lib/_util/warning';
-import { getPrefixCls } from 'choerodon-ui/lib/configure';
+import { getProPrefixCls } from 'choerodon-ui/lib/configure';
 import autobind from '../_util/autobind';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
@@ -415,14 +415,14 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     const help = this.getProp('help');
     if (showHelp === ShowHelp.newLine && help) {
       return (
-        <div key="help" className={`${getPrefixCls(FIELD_SUFFIX)}-help`}>{help}</div>
+        <div key="help" className={`${getProPrefixCls(FIELD_SUFFIX)}-help`}>{help}</div>
       );
     }
   }
 
   renderFloatLabel(): ReactNode {
     if (this.hasFloatLabel) {
-      const prefixCls = getPrefixCls(FIELD_SUFFIX);
+      const prefixCls = getProPrefixCls(FIELD_SUFFIX);
       const required = this.getProp('required');
       const classString = classNames(`${prefixCls}-label`, {
         [`${prefixCls}-required`]: required,
@@ -499,7 +499,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     const validationMessage = this.getValidationMessage(validationResult);
     if (validationMessage) {
       return (
-        <div className={getPrefixCls('pro-validation-message')}>
+        <div className={getProPrefixCls('validation-message')}>
           {this.context.labelLayout !== LabelLayout.float && <Icon type="error" />}
           <span>{validationMessage}</span>
         </div>
@@ -598,7 +598,11 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
 
   handleEnterDown(e) {
     if (this.multiple) {
-      this.addValue(e.target.value);
+      const { value } = e.target;
+      if (value !== '') {
+        this.addValue(value);
+        e.preventDefault();
+      }
     } else {
       this.blur();
     }

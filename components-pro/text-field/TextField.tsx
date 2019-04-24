@@ -132,7 +132,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T & TextField
 
   static defaultProps = {
     ...FormField.defaultProps,
-    suffixCls: 'pro-input',
+    suffixCls: 'input',
     autoComplete: 'off',
     clearButton: false,
     multiple: false,

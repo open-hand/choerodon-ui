@@ -47,7 +47,7 @@ export default class CodeArea extends FormField<CodeAreaProps> {
 
   static defaultProps = {
     ...FormField.defaultProps,
-    suffixCls: 'pro-code-area',
+    suffixCls: 'code-area',
     formatHotKey: 'Alt-F',
     unFormatHotKey: 'Alt-R',
   };

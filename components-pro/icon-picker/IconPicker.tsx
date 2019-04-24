@@ -32,7 +32,7 @@ export default class IconPicker extends TriggerField<IconPickerProps> {
 
   static defaultProps = {
     ...TriggerField.defaultProps,
-    suffixCls: 'pro-icon-picker',
+    suffixCls: 'icon-picker',
     pageSize: 100,
   };
 

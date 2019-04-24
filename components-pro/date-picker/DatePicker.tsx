@@ -99,7 +99,7 @@ export default class DatePicker extends TriggerField<DatePickerProps> implements
 
   static defaultProps = {
     ...TriggerField.defaultProps,
-    suffixCls: 'pro-calendar-picker',
+    suffixCls: 'calendar-picker',
     mode: ViewMode.date,
   };
 

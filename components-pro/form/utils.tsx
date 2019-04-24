@@ -9,7 +9,7 @@ export const defaultLabelLayout: LabelLayout = LabelLayout.horizontal;
 
 export const defaultColumns: number = 1;
 
-export const FIELD_SUFFIX = 'pro-field';
+export const FIELD_SUFFIX = 'field';
 
 export function normalizeLabelWidth(labelWidth, columns) {
   if (isNumber(labelWidth)) {

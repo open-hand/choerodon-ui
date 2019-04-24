@@ -32,7 +32,7 @@ export default class Password extends TextField<PasswordProps> {
 
   static defaultProps = {
     ...TextField.defaultProps,
-    suffixCls: 'pro-password',
+    suffixCls: 'password',
     reveal: true,
   };
 

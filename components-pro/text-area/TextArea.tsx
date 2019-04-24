@@ -24,7 +24,7 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
 
   static defaultProps = {
     ...TextField.defaultProps,
-    suffixCls: 'pro-textarea',
+    suffixCls: 'textarea',
     resize: ResizeType.none,
     rows: 4,
   };

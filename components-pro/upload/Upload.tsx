@@ -152,7 +152,7 @@ export default class Upload extends FormField<UploadProps> {
 
   static defaultProps = {
     ...FormField.defaultProps,
-    suffixCls: 'pro-upload',
+    suffixCls: 'upload',
     multiple: false,
     headers: {},
     data: {},

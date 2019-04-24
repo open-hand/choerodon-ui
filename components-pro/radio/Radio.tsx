@@ -53,7 +53,7 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
 
   static defaultProps = {
     ...FormField.defaultProps,
-    suffixCls: 'pro-radio',
+    suffixCls: 'radio',
   };
 
   type: string = 'radio';

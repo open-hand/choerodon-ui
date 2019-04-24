@@ -126,7 +126,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
   };
 
   static defaultProps = {
-    suffixCls: 'pro-btn',
+    suffixCls: 'btn',
     type: ButtonType.button,
     funcType: FuncType.raised,
     color: ButtonColor.default,

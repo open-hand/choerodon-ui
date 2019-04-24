@@ -2,19 +2,19 @@
 @import "../../../components/style/mixins/index";
 @import "../../text-field/style/mixin";
 
-.@{c7n-prefix}-pro-password {
+.@{c7n-pro-prefix}-password {
   .input;
   &-empty &-inner-button {
     display: none;
   }
   &-inner-button {
-    .@{c7n-prefix}-pro-icon:before {
+    .@{c7n-pro-prefix}-icon:before {
       content: "\f06e";
     }
     &:hover {
       color: @primary-5;
     }
-    &:active .@{c7n-prefix}-pro-icon:before {
+    &:active .@{c7n-pro-prefix}-icon:before {
       content: "\f070";
     }
   }

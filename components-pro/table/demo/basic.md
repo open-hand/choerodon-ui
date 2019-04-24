@@ -262,14 +262,14 @@ class App extends React.Component {
       </Table>,
       <Tabs key="tabs">
         <TabPane tab="Enemy">
-          <Table key="enemy" buttons={['add', 'delete']} dataSet={this.enemyDs}>
+          <Table key="enemy" buttons={['add', 'delete']} dataSet={this.enemyDs} pagination={{ position: 'both' }}>
             <Column name="name" editor sortable />
             <Column name="age" editor sortable />
             <Column name="sex" editor width={150} />
           </Table>
         </TabPane>
         <TabPane tab="Enemy Friends">
-          <Table key="friends" buttons={['add', 'delete']} dataSet={this.enemyFriendsDs}>
+          <Table key="friends" buttons={['add', 'delete']} dataSet={this.enemyFriendsDs} pagination={{ position: 'top' }}>
             <Column name="name" editor={editorRenderer} sortable />
             <Column name="age" editor sortable />
             <Column name="sex" editor width={150} />

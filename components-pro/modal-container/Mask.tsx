@@ -5,7 +5,7 @@ export default class Mask extends ViewComponent<ViewComponentProps> {
   static displayName = 'Mask';
 
   static defaultProps = {
-    suffixCls: 'pro-mask',
+    suffixCls: 'mask',
   };
 
   render() {

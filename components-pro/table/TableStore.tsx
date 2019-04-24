@@ -13,7 +13,7 @@ import { ColumnAlign, ColumnLock, SelectionMode, TableEditMode, TableMode } from
 import { stopPropagation } from '../_util/EventManager';
 import { getColumnKey, getHeader } from './utils';
 import getReactNodeText from '../_util/getReactNodeText';
-import { getPrefixCls } from 'choerodon-ui/lib/configure';
+import { getProPrefixCls } from 'choerodon-ui/lib/configure';
 import ColumnGroups, { ColumnGroup } from './ColumnGroups';
 
 const SELECTION_KEY = '__selection-column__';
@@ -383,7 +383,7 @@ export default class TableStore {
       const selectionColumn: ColumnProps = {
         key: SELECTION_KEY,
         resizable: false,
-        className: `${getPrefixCls(suffixCls!, prefixCls)}-selection-column`,
+        className: `${getProPrefixCls(suffixCls!, prefixCls)}-selection-column`,
         renderer: renderSelectionBox,
         align: ColumnAlign.center,
         width: 50,

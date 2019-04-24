@@ -58,7 +58,7 @@ module.exports = {
   plugins: [
     'bisheng-plugin-description',
     'bisheng-plugin-toc?maxDepth=2&keepElem',
-    `bisheng-plugin-antd?babelConfig=${demoBabelConfig}`,
+    `bisheng-plugin-choerodon-ui?babelConfig=${demoBabelConfig}`,
     'bisheng-plugin-react?lang=__react',
   ],
   routes: {

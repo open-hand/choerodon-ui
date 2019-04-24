@@ -10,7 +10,7 @@ export default class Switch extends CheckBox<CheckBoxProps> {
 
   static defaultProps = {
     ...CheckBox.defaultProps,
-    suffixCls: 'pro-switch',
+    suffixCls: 'switch',
   };
 
   @autobind

@@ -17,7 +17,7 @@ import WeekPicker from '../week-picker/WeekPicker';
 import MonthPicker from '../month-picker/MonthPicker';
 import YearPicker from '../year-picker/YearPicker';
 import TextField from '../text-field/TextField';
-import { ColumnAlign, ColumnLock } from './enum';
+import { ColumnAlign, ColumnLock, TablePaginationPosition } from './enum';
 import { FormFieldProps } from '../field/FormField';
 import IntlField from '../intl-field/IntlField';
 import UrlField from '../url-field/UrlField';
@@ -26,6 +26,7 @@ import ColorPicker from '../color-picker/ColorPicker';
 import warning from 'choerodon-ui/lib/_util/warning';
 import DataSet from '../data-set/DataSet';
 import TableStore from './TableStore';
+import { TablePaginationConfig } from './Table';
 
 export function getEditorByField(field: Field): ReactElement<FormFieldProps> {
   const lookupCode = field.get('lookupCode');
@@ -166,4 +167,14 @@ export function getHeader(column: ColumnProps, dataSet: DataSet): ReactNode {
 
 export function getColumnKey({ name, key }: ColumnProps): Key {
   return key || name!;
+}
+
+export function getPaginationPosition(pagination?: TablePaginationConfig): TablePaginationPosition {
+  if (pagination) {
+    const { position } = pagination;
+    if (position) {
+      return position;
+    }
+  }
+  return TablePaginationPosition.bottom;
 }

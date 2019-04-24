@@ -43,7 +43,7 @@ export default class SelectBox extends FormField<SelectBoxProps> {
 
   static defaultProps = {
     ...FormField.defaultProps,
-    suffixCls: 'pro-select-box',
+    suffixCls: 'select-box',
     vertical: false,
   };
 

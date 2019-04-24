@@ -66,7 +66,7 @@ export default class Modal extends ViewComponent<ModalProps> {
   };
 
   static defaultProps = {
-    suffixCls: 'pro-modal',
+    suffixCls: 'modal',
     header: true,
     closable: false,
     movable: true,

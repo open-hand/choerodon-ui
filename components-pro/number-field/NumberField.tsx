@@ -53,7 +53,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
 
   static defaultProps = {
     ...TextField.defaultProps,
-    suffixCls: 'pro-input-number',
+    suffixCls: 'input-number',
   };
 
   static format = formatNumber;

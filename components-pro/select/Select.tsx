@@ -100,7 +100,7 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
 
   static defaultProps = {
     ...TriggerField.defaultProps,
-    suffixCls: 'pro-select',
+    suffixCls: 'select',
     combo: false,
     searchable: false,
     dropdownMatchSelectWidth: true,

@@ -18,6 +18,8 @@ timeline: true
 - 🌟 `<pro>Form`: Install the disabled attribute.
 - 🌟 `<pro>TextField`: Added the restrict attribute to limit the characters that can be entered.
 - 🌟 `<pro>Table`: Add inline editing mode.
+- 🌟 `<pro>Table`: Added `pagination` property.
+- 🌟 `<pro>Pagination`: Added `showTotal`, `showPager`, `itemRender` properties.
 - 💄 `<pro>Table`: Optimize the display of required and editable cells.
 - 🐞 `<pro>Form`: Fixed an issue with layout when there were empty child elements.
 - 🐞 `<pro>Lov`: Fixed an issue where the lovItems in the configuration were null.
