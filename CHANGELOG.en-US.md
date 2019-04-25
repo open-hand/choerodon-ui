@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.5.6
+
+`2019-04-25`
+
 - 🌟 `Icon`:  Add new icons.
 
 ## 0.5.5
