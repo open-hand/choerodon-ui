@@ -15,6 +15,22 @@ timeline: true
 
 ---
 
+- 🌟 `Icon`:  Add new icons.
+
+## 0.5.5
+
+`2019-04-20`
+
+- 🐞 Fix the problem of 0.5.4 publishing file confusion.
+
+## 0.5.4 (deprecated)
+
+`2019-04-19`
+
+- 🌟 `Icon`:  Add new icons.
+
+## 0.5.3
+
 `2019-03-20`
 
 - 💄 `Input`: The Input input shows a prompt when it reaches the character limit.

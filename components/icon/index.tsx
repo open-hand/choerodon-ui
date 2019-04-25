@@ -1,7 +1,7 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import omit from 'omit.js';
-import icons from './icons';
+import { categories, icons } from 'choerodon-ui-font';
 
 export interface IconProps {
   type: string;
@@ -13,6 +13,7 @@ export interface IconProps {
 
 class Icon extends React.Component<IconProps, {}> {
   static icons = icons;
+  static categories = categories;
   render() {
     const { type, className = '' } = this.props;
     const classString = classNames({

@@ -1,4 +1,5 @@
 /* stylelint-disable at-rule-empty-line-before,at-rule-name-space-after,at-rule-no-unknown */
+@import "~choerodon-ui-font/style/theme";
 @import "../color/colors";
 
 // The prefix to use on all css classes from ant.
@@ -66,9 +67,15 @@
 @item-active-bg: rgba(0, 0, 0, 0.04);
 @item-hover-bg: rgba(0, 0, 0, 0.04);
 @item-focus-bg: rgba(0, 0, 0, 0.04);
+
+// use choerodon-ui-font
 // ICONFONT
-@iconfont-css-prefix: icon;
-@icon-url: "fonts/icomoon";
+//@iconfont-css-prefix: icon;
+//@icon-url: "~choerodon-ui-font/fonts/icomoon";
+//Icon
+//@icon-font-size-base: 18px;
+//@icon-font-size-sm: 16px;
+//@icon-font-size-lg: 20px;
 
 // LINK
 @link-color: @primary-color;
@@ -490,9 +497,3 @@
 @slider-dot-border-color-active: tint(@primary-color, 50%);
 @slider-disabled-color: @disabled-color;
 @slider-disabled-background-color: @component-background;
-
-//Icon
-@icon-font-size-base: 18px;
-@icon-font-size-sm: 16px;
-@icon-font-size-lg: 20px;
-
