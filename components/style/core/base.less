@@ -47,6 +47,9 @@ input::-ms-clear, input::-ms-reveal {
 }
 
 html {
+  //统一采用rem 格式。
+  //为了方便计算，html 根节点字体大小为100px (Chrome 最小字体12px)， 100px ÷ 16 × 100% = 625%
+  font-size: 625%;
   font-family: sans-serif; // 2
   line-height: 1.15; // 3
   -webkit-text-size-adjust: 100%; // 4
