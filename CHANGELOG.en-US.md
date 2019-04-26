@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.5.7
+
+`2019-04-26`
+
 - 🐞 `Icon`: Fix icon size issues.
 
 ## 0.5.6
