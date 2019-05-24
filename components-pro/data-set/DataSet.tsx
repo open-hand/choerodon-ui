@@ -19,6 +19,7 @@ import exception from '../_util/exception';
 import { $l } from '../locale-context';
 import isEmpty from '../_util/isEmpty';
 import * as ObjectChainValue from '../_util/ObjectChainValue';
+import { getConfig } from 'choerodon-ui/lib/configure';
 
 export type DataSetChildren = { [key: string]: DataSet };
 
@@ -179,14 +180,15 @@ export default class DataSet extends EventManager {
     paging: true,
     dataKey: 'rows',
     totalKey: 'total',
-    axios,
   };
 
   id?: string;
 
   name?: string;
 
-  axios: AxiosInstance;
+  get axios(): AxiosInstance {
+    return this.props.axios || getConfig('axios') || axios;
+  }
 
   @observable fields: Fields;
 
@@ -514,9 +516,8 @@ export default class DataSet extends EventManager {
       this.props = props = { ...DataSet.defaultProps, ...props } as DataSetProps;
       const {
         data, fields, queryFields, queryDataSet, autoQuery, autoCreate, pageSize,
-        selection, events, id, name, children, queryParameter = {}, axios: axiosInstance,
+        selection, events, id, name, children, queryParameter = {},
       } = props;
-      this.axios = axiosInstance!;
       this.name = name;
       this.data = [];
       this.fields = observable.map<string, Field>();
@@ -805,6 +806,7 @@ export default class DataSet extends EventManager {
     } else {
       this.push(record);
     }
+    this.fireEvent(DataSetEvents.create, { dataSet: this, record });
     return record;
   }
 
@@ -1025,14 +1027,14 @@ export default class DataSet extends EventManager {
    * @param recordOrIndex 记录或记录索引
    */
   @action
-  async select(recordOrIndex: Record | number): Promise<any> {
+  select(recordOrIndex: Record | number): void {
     const { selection } = this;
     if (selection) {
       let record: Record | undefined = recordOrIndex as Record;
       if (isNumber(recordOrIndex)) {
         record = this.get(recordOrIndex as number);
       }
-      if (record && record.selectable && !record.isSelected && await this.fireEvent(DataSetEvents.beforeSelect, { dataSet: this, record })) {
+      if (record && record.selectable && !record.isSelected) {
         let previous: Record | undefined;
         runInAction(() => {
           if (selection === DataSetSelection.single) {
@@ -1081,24 +1083,20 @@ export default class DataSet extends EventManager {
     const { selection } = this;
     if (selection) {
       this.inBatchSelection = true;
-      const actions: Promise<any>[] = [];
       if (selection === DataSetSelection.single) {
         if (!this.currentSelected.length) {
-          actions.push(this.select(filter ? this.filter(filter)[0] : 0));
+          this.select(filter ? this.filter(filter)[0] : 0);
         }
       } else {
         this.data.forEach((record) => {
           if (!filter || filter(record) !== false) {
-            actions.push(this.select(record));
+            this.select(record);
           }
         });
       }
 
-      const end = () => {
-        this.fireEvent(DataSetEvents.selectAll, { dataSet: this });
-        this.inBatchSelection = false;
-      };
-      Promise.all(actions).then(end, end);
+      this.fireEvent(DataSetEvents.selectAll, { dataSet: this });
+      this.inBatchSelection = false;
     }
   }
 

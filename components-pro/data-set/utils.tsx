@@ -154,7 +154,7 @@ export function mergeTlsFields(fields: Fields, supports: Supports, fieldNames: s
 
 export function checkParentByInsert({ parent }: DataSet) {
   if (parent && !parent.current) {
-    throw new Error($l('Utils', 'no_new_row_when_head_unselected'));
+    throw new Error($l('DataSet', 'cannot_add_record_when_head_no_current'));
   }
 }
 

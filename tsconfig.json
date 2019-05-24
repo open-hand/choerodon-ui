@@ -8,7 +8,9 @@
     "jsx": "preserve",
     "noUnusedParameters": true,
     "noUnusedLocals": true,
-    "target": "es6",
+    "noEmitHelpers": true,
+    "importHelpers": true,
+    "target": "esnext",
     "lib": [
       "dom",
       "dom.iterable",

@@ -34,10 +34,10 @@ export default class DataSetComponent<T extends DataSetComponentProps> extends V
     return super.lang;
   }
 
-  getObservableProps(props: T, _context) {
+  getObservableProps(props, _context) {
     return {
       dataSet: props.dataSet,
-    } as T;
+    };
   }
 
   getOtherProps() {

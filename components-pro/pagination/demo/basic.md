@@ -45,7 +45,7 @@ class App extends React.Component {
           showSizeChanger={current.get('showSizeChanger')}
           showTotal={current.get('showTotal')}
           showPager={current.get('showPager')}
-          total={1000}
+          total={90}
           onChange={handleChange}
         />
       </div>

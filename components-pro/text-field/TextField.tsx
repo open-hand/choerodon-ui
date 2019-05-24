@@ -425,6 +425,14 @@ export class TextField<T extends TextFieldProps> extends FormField<T & TextField
     );
   }
 
+  @action
+  removeLastValue() {
+    const values = this.getValues();
+    const value = values.pop();
+    this.setValue(values);
+    this.afterRemoveValue(value, -1);
+  }
+
   @autobind
   handleKeyDown(e) {
     const { disabled, clearButton } = this.props;
@@ -436,10 +444,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T & TextField
               this.clear();
               break;
             case KeyCode.BACKSPACE:
-              const values = this.getValues();
-              const value = values.pop();
-              this.setValue(values);
-              this.afterRemoveValue(value, -1);
+              this.removeLastValue();
               break;
             default:
           }
@@ -494,6 +499,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T & TextField
     this.addValue(value);
   }
 
+  @action
   setValue(value: any): void {
     super.setValue(value);
     this.setText(void 0);

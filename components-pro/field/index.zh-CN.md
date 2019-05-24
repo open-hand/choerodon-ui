@@ -32,6 +32,7 @@ title: FormField
 | onChange | 值变化回调 | (value, oldValue, form) => void |   |
 | onInput | 输入回调 | Function |   |
 | onEnterDown | 键盘回车回调 | Function |   |
+| onClear | 值清空回调 | Function |   |
 
 注意，当绑定DataSet时，以DataSet的校验为主，校验规则应设置在DataSet的Field上。
 

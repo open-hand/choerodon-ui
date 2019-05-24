@@ -7,11 +7,11 @@ title:
 
 ## zh-CN
 
-下拉选择器。
+绑定数据源。
 
 ## en-US
 
-SelectBox
+DataSet Binding
 
 ````jsx
 import { DataSet, SelectBox, Row, Col } from 'choerodon-ui/pro';

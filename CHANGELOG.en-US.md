@@ -14,6 +14,14 @@ timeline: true
 * Major version release is not included in this schedule for breaking change and new features.
 
 ---
+
+- 🌟 `<pro>Select`: Added primitiveValue property.
+- 🌟 `<pro>Tranfer`: Added Transfer component.
+- 🌟 `<pro>DataSet`: Deprecated the beforeSelect event and adds the create event.
+- 🌟 `Ripple`: Added the disabled attribute to disable the ripple effect.
+- 🐞 `<pro>Table`: Fixed an issue where the inline edit box was not displayed when the binding dataSet create new record.
+- 🐞 `<pro>Select`: The value of the renderer is always displayed when it is not editable.
+
 ## 0.6.2
 
 `2019-04-25`
@@ -51,9 +59,27 @@ timeline: true
 - 🌟 Incorporate the `choerodon-ui/pro` component library.
 - 🌟 The default ant prefix is changed to c7n. To use the ant prefix, please [Modify the topic variable @c7n-prefix] (https://choerodon.github.io/choerodon-ui/docs/react/customize-theme) And use [global configuration] (https://choerodon.github.io/choerodon-ui/components/configure).
 
+## 0.5.7
+
+`2019-04-26`
+
+- 🐞 `Icon`: Fix icon size issues.
+
+## 0.5.6
+
+`2019-04-25`
+
+- 🌟 `Icon`:  Add new icons.
+
 ## 0.5.5
 
-`2019-04-01`
+`2019-04-20`
+
+- 🐞 Fix the problem of 0.5.4 publishing file confusion.
+
+## 0.5.4 (deprecated)
+
+`2019-04-19`
 
 - 🌟 `Icon`: Add new icons.
 

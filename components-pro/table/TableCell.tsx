@@ -99,11 +99,9 @@ export default class TableCell extends Component<TableCellProps> {
   handleCommandEdit = () => {
     const { record } = this.props;
     const { tableStore } = this.context;
-    const { currentEditRecord } = tableStore;
-    if (currentEditRecord) {
-      currentEditRecord.reset();
+    if (tableStore.inlineEdit) {
+      tableStore.currentEditRecord = record;
     }
-    tableStore.currentEditRecord = record;
   };
 
   handleCommandDelete = () => {
@@ -217,10 +215,9 @@ export default class TableCell extends Component<TableCellProps> {
   }
 
   getCellRenderer(): Renderer | undefined {
-    const { inlineEdit } = this.context.tableStore;
     const { column } = this.props;
     const { renderer, command } = column;
-    if (inlineEdit && command) {
+    if (command) {
       return this.renderCommand;
     }
     if (this.cellEditorInCell) {

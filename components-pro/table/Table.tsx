@@ -285,6 +285,7 @@ export default class Table extends DataSetComponent<TableProps> {
 
   resizeObserver?: ResizeObserver;
   oldWidth?: number;
+  isHidden?: boolean;
 
   resizeLine: HTMLDivElement | null;
   tableHeadWrap: HTMLDivElement | null;
@@ -313,8 +314,14 @@ export default class Table extends DataSetComponent<TableProps> {
   });
 
   private handleResize = debounce(() => {
-    this.syncSize();
-    this.setScrollPositionClassName();
+    if (!this.element.offsetParent) {
+      this.isHidden = true;
+    } else if (!this.isHidden) {
+      this.syncSize();
+      this.setScrollPositionClassName();
+    } else {
+      this.isHidden = false;
+    }
   }, 30);
 
   saveResizeRef = (node: HTMLDivElement | null) => {
@@ -323,6 +330,13 @@ export default class Table extends DataSetComponent<TableProps> {
 
   handleDataSetLoad = () => {
     this.initDefaultExpandedRows();
+  };
+
+  handleDataSetCreate = ({ record }) => {
+    const { tableStore } = this;
+    if (tableStore.inlineEdit) {
+      tableStore.currentEditRecord = record;
+    }
   };
 
   handleKeyDown = (e) => {
@@ -510,19 +524,41 @@ export default class Table extends DataSetComponent<TableProps> {
   componentWillMount() {
     super.componentWillMount();
     this.initDefaultExpandedRows();
-    const { dataSet } = this.props;
-    if (dataSet && this.tableStore.isTree) {
-      dataSet.addEventListener('load', this.handleDataSetLoad);
-    }
+    this.processDataSetListener(true);
+  }
+
+  componentDidMount() {
+    this.resizeObserver = new ResizeObserver(this.handleResize);
+    this.resizeObserver.observe(this.element);
+  }
+
+  componentWillReceiveProps(nextProps, nextContext) {
+    super.componentWillReceiveProps(nextProps, nextContext);
+    this.processDataSetListener(false);
+    this.tableStore.setProps(nextProps);
+    this.processDataSetListener(true);
+  }
+
+  componentDidUpdate() {
+    this.handleResize();
   }
 
   componentWillUnmount() {
+    this.handleResize.cancel();
     if (this.resizeObserver) {
       this.resizeObserver.disconnect();
     }
-    const { dataSet } = this.props;
-    if (dataSet && this.tableStore.isTree) {
-      dataSet.removeEventListener('load', this.handleDataSetLoad);
+    this.processDataSetListener(false);
+  }
+
+  processDataSetListener(flag: boolean) {
+    const { isTree, dataSet } = this.tableStore;
+    if (dataSet) {
+      const handler = flag ? dataSet.addEventListener : dataSet.removeEventListener;
+      if (isTree) {
+        handler.call(dataSet, 'load', this.handleDataSetLoad);
+      }
+      handler.call(dataSet, 'create', this.handleDataSetCreate);
     }
   }
 
@@ -573,20 +609,6 @@ export default class Table extends DataSetComponent<TableProps> {
         </div>
       </TableContext.Provider>
     );
-  }
-
-  componentWillReceiveProps(nextProps, nextContext) {
-    super.componentWillReceiveProps(nextProps, nextContext);
-    this.tableStore.setProps(nextProps);
-  }
-
-  componentDidMount() {
-    this.resizeObserver = new ResizeObserver(this.handleResize);
-    this.resizeObserver.observe(this.element);
-  }
-
-  componentDidUpdate() {
-    this.handleResize();
   }
 
   @autobind

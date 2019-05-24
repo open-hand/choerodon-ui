@@ -1,6 +1,6 @@
 import React, { Children } from 'react';
 import PropTypes from 'prop-types';
-import { DebounceSettings } from 'lodash';
+import { Cancelable, DebounceSettings } from 'lodash';
 import omit from 'lodash/omit';
 import debounce from 'lodash/debounce';
 import isString from 'lodash/isString';
@@ -169,7 +169,11 @@ export default class Button extends DataSetComponent<ButtonProps> {
     }
   }
 
-  getHandleClick(props) {
+  componentWillUnmount() {
+    this.handleClickWait.cancel();
+  }
+
+  getHandleClick(props): Cancelable {
     const { wait, waitType } = props;
     if (wait && waitType) {
       const options: DebounceSettings = { leading: true, trailing: true };
@@ -182,7 +186,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
       return debounce(this.handleClick, wait, options);
     }
 
-    return this.handleClick;
+    return debounce(this.handleClick, 0);
   }
 
   @autobind
@@ -240,7 +244,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
     const Cmp = href ? 'a' : 'button';
     const props = this.getMergedProps();
     return (
-      <Ripple>
+      <Ripple disabled={this.isDisabled()}>
         <Cmp {...(href ? omit(props, ['type']) : props)}>
           {buttonIcon}
           {hasString ? <span>{children}</span> : children}

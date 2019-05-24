@@ -25,7 +25,7 @@ export default {
     filter_bar_placeholder: 'Table Filter',
   },
   Pagination: {
-    records_per_page: 'Number of records per page：',
+    records_per_page: 'Number of items per page：',
   },
   Upload: {
     file_selection: 'Select File',
@@ -52,9 +52,7 @@ export default {
     query_failure: 'Fail to query data.',
     submit_success: 'Submit successfully.',
     submit_failure: 'Fail to submit data.',
-  },
-  Utils: {
-    no_new_row_when_head_unselected: `Can't create new row record when head record unselected.`,
+    cannot_add_record_when_head_no_current: `Can't create new row record when head record unselected.`,
   },
   DatePicker: {
     value_missing: 'Please choose a date.',
@@ -77,6 +75,9 @@ export default {
   },
   Select: {
     value_missing: 'Please make a choice',
+  },
+  Transfer: {
+    items: 'items',
   },
   UrlField: {
     value_missing: 'Please input an address',

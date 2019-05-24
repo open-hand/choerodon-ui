@@ -27,8 +27,11 @@ export interface ClickParam {
 
 export type MenuMode = 'vertical' | 'vertical-left' | 'vertical-right' | 'horizontal' | 'inline';
 
+export type MenuTheme = 'light' | 'dark';
+
 export interface MenuProps {
   id?: string;
+  theme?: MenuTheme;
   mode?: MenuMode;
   selectable?: boolean;
   selectedKeys?: Array<string>;
@@ -63,6 +66,8 @@ export default class Menu extends Component<MenuProps, MenuState> {
   static ItemGroup = ItemGroup;
   static defaultProps = {
     className: '',
+    theme: 'light', // or dark
+    focusable: false,
   };
   static childContextTypes = {
     inlineCollapsed: PropTypes.bool,
@@ -104,6 +109,7 @@ export default class Menu extends Component<MenuProps, MenuState> {
   getChildContext() {
     return {
       inlineCollapsed: this.getInlineCollapsed(),
+      menuTheme: this.props.theme,
     };
   }
 
@@ -219,12 +225,12 @@ export default class Menu extends Component<MenuProps, MenuState> {
   }
 
   render() {
-    const { className } = this.props;
+    const { className, theme } = this.props;
     const prefixCls = this.getPrefixCls();
     const menuMode = this.getRealMenuMode();
     const menuOpenAnimation = this.getMenuOpenAnimation(menuMode!);
 
-    const menuClassName = classNames(className, {
+    const menuClassName = classNames(className, `${prefixCls}-${theme}`, {
       [`${prefixCls}-inline-collapsed`]: this.getInlineCollapsed(),
     });
 

@@ -2,13 +2,14 @@ import React, { Children, isValidElement, ReactNode } from 'react';
 import { action, computed, observable, runInAction } from 'mobx';
 import isNil from 'lodash/isNil';
 import isPlainObject from 'lodash/isPlainObject';
+import defer from 'lodash/defer';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import Column, { ColumnProps, columnWidth } from './Column';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import CheckBox from '../check-box';
 import Radio from '../radio';
-import { DataSetSelection } from '../data-set/enum';
+import { DataSetSelection, RecordStatus } from '../data-set/enum';
 import { ColumnAlign, ColumnLock, SelectionMode, TableEditMode, TableMode } from './enum';
 import { stopPropagation } from '../_util/EventManager';
 import { getColumnKey, getHeader } from './utils';
@@ -48,12 +49,17 @@ export default class TableStore {
 
   set currentEditRecord(record: Record | undefined) {
     runInAction(() => {
-      const { currentEditRecord } = this;
+      const { currentEditRecord, dataSet } = this;
       if (currentEditRecord) {
-        currentEditRecord.editing = false;
+        if (currentEditRecord.status === RecordStatus.add) {
+          dataSet.remove(currentEditRecord);
+        } else {
+          currentEditRecord.reset();
+          currentEditRecord.editing = false;
+        }
       }
       if (record) {
-        record.editing = true;
+        defer(action(() => record.editing = true));
       }
     });
   };

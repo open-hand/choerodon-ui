@@ -7,19 +7,14 @@ import debounce from 'lodash/debounce';
 import { action, computed, observable, toJS } from 'mobx';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
-import { ProgressType } from 'choerodon-ui/lib/progress/enum';
 import Icon from '../icon';
 import { open } from '../modal-container/ModalContainer';
 import LovView from './LovView';
 import { ModalProps } from '../modal/Modal';
 import DataSet from '../data-set/DataSet';
-import Record from '../data-set/Record';
-import Progress from '../progress';
-import { Size } from '../core/enum';
 import lovStore from '../stores/LovCodeStore';
 import autobind from '../_util/autobind';
 import { stopEvent } from '../_util/EventManager';
-import lookupStore from '../stores/LookupCodeStore';
 import { Select, SelectProps } from '../select/Select';
 import { ColumnAlign } from '../table/enum';
 import { FieldType } from '../data-set/enum';
@@ -79,11 +74,10 @@ export default class Lov extends Select<LovProps> {
     ...Select.defaultProps,
     clearButton: true,
     checkValueOnOptionsChange: false,
+    primitiveValue: false,
   };
 
   modal;
-
-  @observable loading?: boolean;
 
   @observable filterText?: string;
 
@@ -184,17 +178,6 @@ export default class Lov extends Select<LovProps> {
     this.setValue(multiple ? values : (values[0] || null));
   };
 
-  @autobind
-  handleOptionSelect(record) {
-    this.addValue(this.processRecordToObject(record));
-  }
-
-  processRecordToObject(record: Record) {
-    const { field, valueField } = this;
-    const lookupKey = field && lookupStore.getKey(field);
-    return lookupKey ? this.generateLookupValue(lookupKey, record, valueField) : toJS(record.data);
-  }
-
   resetOptions(): boolean {
     const { field, record, options } = this;
     const { queryDataSet } = options;
@@ -218,15 +201,6 @@ export default class Lov extends Select<LovProps> {
       }
     }
     return false;
-  }
-
-  generateLookupValue(lookupKey: string, record: Record, valueField: string) {
-    const data = lookupStore.get(lookupKey);
-    const value = toJS(record.get(valueField));
-    if (data && data.every(item => item[valueField] !== value)) {
-      data.push(toJS(record.data));
-    }
-    return value;
   }
 
   setText(text) {
@@ -278,7 +252,7 @@ export default class Lov extends Select<LovProps> {
   getSuffix(): ReactNode {
     const { suffix } = this.props;
     return this.wrapperSuffix(
-      this.loading ? <Progress size={Size.small} type={ProgressType.loading} /> : (suffix || <Icon type="search" />),
+      suffix || <Icon type="search" />,
       {
         onClick: this.isDisabled() || this.isReadOnly() ? void 0 : this.openModal,
       },
@@ -286,6 +260,7 @@ export default class Lov extends Select<LovProps> {
   }
 
   componentWillUnmount() {
+    this.setFilterText.cancel();
     if (this.modal) {
       this.modal.close();
     }

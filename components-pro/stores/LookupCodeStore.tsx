@@ -1,4 +1,5 @@
 import { action, get, observable, ObservableMap } from 'mobx';
+import { AxiosInstance } from 'axios';
 import isString from 'lodash/isString';
 import isObject from 'lodash/isObject';
 import warning from 'choerodon-ui/lib/_util/warning';
@@ -26,6 +27,10 @@ export class LookupCodeStore {
   @observable lookupCodes: ObservableMap<string, responseData>;
 
   pendings: { [key: string]: Promise<responseType> } = {};
+
+  get axios(): AxiosInstance {
+    return getConfig('axios') || axios;
+  }
 
   constructor() {
     this.init();
@@ -66,7 +71,7 @@ export class LookupCodeStore {
     // SSR do not fetch the lookup
     if (!data && typeof window !== 'undefined') {
       try {
-        const pending: Promise<responseType> = this.pendings[lookupKey] = this.pendings[lookupKey] || axios.post<responseType>(lookupKey);
+        const pending: Promise<responseType> = this.pendings[lookupKey] = this.pendings[lookupKey] || this.axios.post<responseType>(lookupKey);
         const result: responseType = await pending;
         if (result) {
           if (hasRows(result)) {

@@ -66,6 +66,8 @@ export { default as Select } from './select';
 
 export { default as SelectBox } from './select-box';
 
+export { default as Transfer } from './transfer';
+
 export { default as Progress } from './progress';
 
 export { default as Modal } from './modal';

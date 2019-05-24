@@ -1,12 +1,6 @@
 @checkbox-prefix-cls: ~"@{c7n-prefix}-checkbox";
 
-.dropdown-menu () {
-  outline: none;
-  margin-bottom: 0;
-  list-style: none;
-  max-height: 2.5rem;
-  overflow: auto;
-  padding: .08rem 0;
+.dropdown-menu-item () {
   &-item-group {
     padding-top: .04rem;
     padding-bottom: .04rem;
@@ -92,4 +86,14 @@
       margin-right: .08rem;
     }
   }
+}
+
+.dropdown-menu () {
+  outline: none;
+  margin-bottom: 0;
+  list-style: none;
+  max-height: 2.5rem;
+  overflow: auto;
+  padding: .08rem 0;
+  .dropdown-menu-item;
 }

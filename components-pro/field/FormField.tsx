@@ -141,6 +141,10 @@ export interface FormFieldProps extends DataSetComponentProps {
    * 键盘回车回调
    */
   onEnterDown?: FormEventHandler<any>;
+  /**
+   * 值清空回调
+   */
+  onClear?: () => void;
 }
 
 export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
@@ -341,12 +345,12 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     return isArrayLike(value) ? !value.length : isEmpty(value);
   }
 
-  getObservableProps(props: T, context) {
+  getObservableProps(props, context) {
     return {
       record: props.record || context.record,
       dataSet: props.dataSet || context.dataSet,
       dataIndex: defaultTo(props.dataIndex, context.dataIndex),
-    } as T;
+    };
   }
 
   getOtherProps() {
@@ -355,6 +359,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       'defaultValue',
       'dataIndex',
       'onEnterDown',
+      'onClear',
       'readOnly',
       'validator',
       'validationRenderer',
@@ -581,6 +586,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   @autobind
   handleKeyDown(e) {
     const { onKeyDown = noop, onEnterDown = noop } = this.props;
+    onKeyDown(e);
     if (!e.isDefaultPrevented()) {
       switch (e.keyCode) {
         case KeyCode.ENTER:
@@ -593,7 +599,6 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
         default:
       }
     }
-    onKeyDown(e);
   }
 
   handleEnterDown(e) {
@@ -641,7 +646,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
 
   getText(): ReactNode {
     const text = this.processValue(this.getValue());
-    return this.isFocused ? text : this.processText(text);
+    return this.isFocused && this.editable ? text : this.processText(text);
   }
 
   processText(text?: any, value: any = this.getValue(), repeat?: number) {
@@ -677,22 +682,26 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     return isEmpty(old) ? [] : isArrayLike(old) ? old.slice() : [old];
   }
 
-  addValue(value): void {
+  addValues(values: any[]): void {
     if (this.multiple) {
-      const values = this.getValues();
-      if (!isEmpty(value)) {
-        this.setValue([...values, value]);
-      } else if (!values.length) {
-        this.setValue(value);
+      const oldValues = this.getValues();
+      if (values.length) {
+        this.setValue([...oldValues, ...values]);
+      } else if (!oldValues.length) {
+        this.setValue(null);
       }
     } else {
-      this.setValue(value);
+      this.setValue(values[values.length - 1]);
     }
   }
 
-  removeValue(value: any, index: number) {
-    let repeat: number = 0;
-    this.setValue(this.getValues().filter((v) => {
+  addValue(value): void {
+    this.addValues(isEmpty(value) ? [] : [value]);
+  }
+
+  removeValues(values: any[], index: number = 0) {
+    let repeat: number;
+    this.setValue(values.reduce((oldValues, value) => (repeat = 0, oldValues.filter((v) => {
       if (v === value) {
         if (repeat === index) {
           this.afterRemoveValue(value, repeat);
@@ -702,12 +711,17 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
         repeat += 1;
       }
       return true;
-    }));
+    })), this.getValues()));
+  }
+
+  removeValue(value: any, index: number = 0) {
+    this.removeValues([value], index);
   }
 
   afterRemoveValue(_value, _repeat: number) {
   }
 
+  @action
   setValue(value: any): void {
     if (!this.isReadOnly()) {
       if (this.multiple ? isArrayLike(value) && !value.length : isNil(value) || value === '') {
@@ -718,22 +732,14 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       const { formNode } = this.context;
       const old = this.getOldValue();
       if (dataSet && name) {
-        let { record } = this;
-        if (!record) {
-          record = dataSet.create({}, dataIndex);
-        }
-        if (record) {
-          record.set(name, value);
-        }
+        (this.record || dataSet.create({}, dataIndex)).set(name, value);
       } else {
         this.validate(value);
       }
       if (old !== value) {
         onChange(value, toJS(old), formNode);
       }
-      runInAction(() => {
-        this.value = value;
-      });
+      this.value = value;
     }
   }
 
@@ -776,7 +782,9 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   }
 
   clear() {
-    this.setValue(null);
+    const { onClear = noop } = this.props;
+    this.setValue(this.emptyValue);
+    onClear();
   }
 
   async checkValidity(): Promise<boolean> {

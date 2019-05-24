@@ -135,6 +135,7 @@ export class CheckBox<T extends CheckBoxProps> extends Radio<T & CheckBoxProps> 
     }
   }
 
+  @action
   setValue(value: any): void {
     const { record, checkedValue, multiple } = this;
     if (record) {

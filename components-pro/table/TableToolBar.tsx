@@ -2,7 +2,6 @@ import React, { cloneElement, Component, isValidElement, ReactElement, ReactNode
 import { isArrayLike } from 'mobx';
 import { observer } from 'mobx-react';
 import isString from 'lodash/isString';
-import defer from 'lodash/defer';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import { TableButtonType } from './enum';
@@ -16,7 +15,7 @@ import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import Form from '../form/Form';
 import Icon from '../icon';
 import TableContext from './TableContext';
-import { DataSetStatus, FieldType, RecordStatus } from '../data-set/enum';
+import { DataSetStatus, FieldType } from '../data-set/enum';
 import { $l } from '../locale-context';
 import Table, { Buttons } from './Table';
 import Column from './Column';
@@ -58,21 +57,8 @@ export default class TableToolBar extends Component<TabelToolBarProps, any> {
   };
 
   handleButtonCreate = () => {
-    const { tableStore } = this.context;
-    const { dataSet, inlineEdit, currentEditRecord } = tableStore;
-    const record = dataSet.create(void 0, 0);
-    if (inlineEdit) {
-      if (currentEditRecord) {
-        if (currentEditRecord.status === RecordStatus.add) {
-          dataSet.remove(currentEditRecord);
-        } else {
-          currentEditRecord.reset();
-        }
-      }
-      defer(() => {
-        tableStore.currentEditRecord = record;
-      });
-    }
+    const { dataSet } = this.context.tableStore;
+    dataSet.create({}, 0);
   };
 
   handleButtonSubmit = () => this.context.tableStore.dataSet.submit();

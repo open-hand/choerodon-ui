@@ -36,7 +36,6 @@ title: SelectBox
 | value | 选项值 | any |  |
 
 <style>
-.code-box-demo .c7n-pro-select-wrapper,
 .code-box-demo .c7n-pro-select-box {
   margin-bottom: .1rem;
 }

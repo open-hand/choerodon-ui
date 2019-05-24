@@ -2,16 +2,16 @@
 order: 0
 title:
   zh-CN: 基本使用
-  en-US: SelectBox
+  en-US: Basic Usage
 ---
 
 ## zh-CN
 
-按钮选则框。
+基本使用。
 
 ## en-US
 
-SelectBox.
+Basic Usage.
 
 ````jsx
 import { SelectBox, Row, Col } from 'choerodon-ui/pro';

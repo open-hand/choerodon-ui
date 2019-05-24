@@ -6,7 +6,6 @@ export const enum DataSetEvents {
   submit = 'submit',
   submitSuccess = 'submitSuccess',
   submitFailed = 'submitFailed',
-  beforeSelect = 'beforeSelect',
   select = 'select',
   unSelect = 'unSelect',
   selectAll = 'selectAll',
@@ -15,6 +14,7 @@ export const enum DataSetEvents {
   update = 'update',
   fieldChange = 'fieldChange',
   export = 'export',
+  create = 'create',
 }
 
 export const enum DataSetSelection {

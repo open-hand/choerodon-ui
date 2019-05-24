@@ -37,7 +37,7 @@ function updateActiveKey(menu: Menu, activeKey: string) {
   });
 }
 
-function getItemKey(record: Record, text: ReactNode, value: any) {
+export function getItemKey(record: Record, text: ReactNode, value: any) {
   return `item-${value || record.id}-${getReactNodeText(text) || record.id}`;
 }
 
@@ -79,6 +79,16 @@ export interface SelectProps extends TriggerFieldProps {
    * 下拉框菜单样式名
    */
   dropdownMenuStyle?: CSSProperties;
+  /**
+   * 选项数据源
+   */
+  options?: DataSet;
+  /**
+   * 是否为原始值
+   * true - 选项中valueField对应的值
+   * false - 选项值对象
+   */
+  primitiveValue?: boolean;
 }
 
 export class Select<T extends SelectProps> extends TriggerField<T & SelectProps> {
@@ -95,6 +105,7 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
      * @default false
      */
     searchable: PropTypes.bool,
+    primitiveValue: PropTypes.bool,
     ...TriggerField.propTypes,
   };
 
@@ -136,14 +147,9 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
     return this.comboOptions.filter(record => !this.isSelected(record))[0];
   }
 
-  @computed
   get filteredOptions(): Record[] {
-    const { cascadeOptions, text, searchable, props: { optionsFilter } } = this;
-    const data = optionsFilter ? cascadeOptions.filter(optionsFilter!) : cascadeOptions;
-    if (searchable && text) {
-      return data.filter(record => record.get(this.textField).indexOf(text) !== -1);
-    }
-    return data;
+    const { cascadeOptions, text } = this;
+    return this.filterData(cascadeOptions, text);
   }
 
   @computed
@@ -166,7 +172,7 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
 
   @computed
   get editable(): boolean {
-    const { combo } = this.props;
+    const { combo } = this.observableProps;
     return !this.isReadOnly() && (!!this.searchable || !!combo);
   }
 
@@ -187,8 +193,19 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
 
   @computed
   get options(): DataSet {
-    const { field, textField, valueField, multiple, props: { children } } = this;
-    return normalizeOptions({ field, textField, valueField, multiple, children });
+    const { field, textField, valueField, multiple, observableProps: { children, options } } = this;
+    return options || normalizeOptions({ field, textField, valueField, multiple, children });
+  }
+
+  @computed
+  get popup(): boolean {
+    return this.statePopup && this.filteredOptions.length > 0;
+  }
+
+  @computed
+  get primitive(): boolean {
+    const type = this.getProp('type');
+    return this.observableProps.primitiveValue !== false || !(!type || type === FieldType.object);
   }
 
   checkReaction?: IReactionDisposer;
@@ -236,12 +253,28 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
       'multiple',
       'value',
       'name',
+      'options',
       'optionsFilter',
       'dropdownMatchSelectWidth',
       'dropdownMenuStyle',
       'checkValueOnOptionsChange',
+      'primitiveValue',
     ]);
     return otherProps;
+  }
+
+  getObservableProps(props, context) {
+    return {
+      ...super.getObservableProps(props, context),
+      children: props.children,
+      options: props.options,
+      combo: props.combo,
+      primitiveValue: props.primitiveValue,
+    };
+  }
+
+  getMenuPrefixCls() {
+    return `${this.prefixCls}-dropdown-menu`;
   }
 
   renderMultipleHolder() {
@@ -257,15 +290,17 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
     }
   }
 
-  getMenu(): ReactNode {
-    const { options, textField, valueField, filteredOptions, prefixCls, props: { dropdownMenuStyle } } = this;
+  @autobind
+  getMenu(menuProps: object = {}): ReactNode {
+    const { options, textField, valueField, props: { dropdownMenuStyle } } = this;
     if (!options) {
       return null;
     }
+    const disabled = this.isDisabled();
     const groups = options.getGroups();
     const optGroups: ReactElement<any>[] = [];
     const selectedKeys: Key[] = [];
-    (filteredOptions ? filteredOptions : options.data).forEach((record) => {
+    this.filteredOptions.forEach((record) => {
       let previousGroup: ReactElement<any> | undefined;
       groups.every((field) => {
         const label = record.get(field);
@@ -291,13 +326,14 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
       const value = record.get(valueField);
       const text = record.get(textField);
       const key: Key = getItemKey(record, text, value);
-      if (this.isSelected(record)) {
+      if (!('selectedKeys' in menuProps ) && this.isSelected(record)) {
         selectedKeys.push(key);
       }
       const option = (
         <Item
           key={key}
           value={record}
+          disabled={disabled}
         >
           {text}
         </Item>
@@ -312,12 +348,15 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
     return (
       <Menu
         ref={this.saveMenu}
+        disabled={disabled}
         defaultActiveFirst
         multiple={this.menuMultiple}
         selectedKeys={selectedKeys}
-        prefixCls={`${prefixCls}-dropdown-menu`}
+        prefixCls={this.getMenuPrefixCls()}
         onClick={this.handleMenuClick}
         style={dropdownMenuStyle}
+        focusable={false}
+        {...menuProps}
       >
         {optGroups}
       </Menu>
@@ -358,7 +397,6 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
 
   @autobind
   handleKeyDown(e) {
-    e.persist();
     const { menu } = this;
     if (!this.isDisabled() && !this.isReadOnly() && menu) {
       if (this.popup && menu.onKeyDown(e)) {
@@ -446,7 +484,7 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
   @autobind
   handleBlur(e) {
     if (!e.isDefaultPrevented()) {
-      if (!this.popup || !this.filteredOptions.length) {
+      if (!this.popup) {
         this.resetFilter();
       }
       super.handleBlur(e);
@@ -495,9 +533,9 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
   }
 
   generateComboOption(value: string, callback: (text: string) => void): void {
-    const { currentComboOption, textField, valueField, options } = this;
+    const { currentComboOption, textField, valueField } = this;
     if (value) {
-      let found = this.findByText(value) || this.findByValue(value);
+      const found = this.findByText(value) || this.findByValue(value);
       if (found) {
         const text = found.get(textField);
         if (text !== value) {
@@ -507,26 +545,23 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
       } else if (currentComboOption) {
         currentComboOption.set(textField, value);
         currentComboOption.set(valueField, value);
-        found = currentComboOption;
       } else {
-        found = this.createComboOption(value);
+        this.createComboOption(value);
       }
-      options.current = found;
     } else {
       this.removeComboOption();
     }
   }
 
-  createComboOption(value): Record {
+  createComboOption(value): void {
     const { textField, valueField, menu } = this;
-    const found = this.comboOptions.create({
-      [textField]: value,
-      [valueField]: value,
-    }, 0);
     if (menu) {
-      updateActiveKey(menu, getItemKey(found, value, value));
+      const record = this.comboOptions.create({
+        [textField]: value,
+        [valueField]: value,
+      }, 0);
+      updateActiveKey(menu, getItemKey(record, value, value));
     }
-    return found;
   }
 
   checkComboOptions(nextProps) {
@@ -571,12 +606,11 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
     }
   }
 
-  handleOptionSelect(record) {
-    const newValue = record.get(this.valueField);
-    this.addValue(newValue);
+  handleOptionSelect(record: Record) {
+    this.addValue(this.processRecordToObject(record));
   }
 
-  handleOptionUnSelect(record) {
+  handleOptionUnSelect(record: Record) {
     const { valueField } = this;
     const newValue = record.get(valueField);
     const autoType = this.getProp('type') === FieldType.auto;
@@ -597,6 +631,23 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
     if (!this.popup) {
       this.expand();
     }
+  }
+
+  generateLookupValue(record: Record, valueField: string, lookupKey?: string) {
+    const value = record.get(valueField);
+    if (lookupKey) {
+      const data = lookupStore.get(lookupKey);
+      if (data && data.every(item => item[valueField] !== value)) {
+        data.push(record.toData());
+      }
+    }
+    return value;
+  }
+
+  processRecordToObject(record: Record) {
+    const { field, valueField, primitive } = this;
+    const lookupKey = field && lookupStore.getKey(field);
+    return primitive || lookupKey ? this.generateLookupValue(record, valueField, lookupKey) : record.toData();
   }
 
   processObjectValue(value, textField) {
@@ -623,7 +674,7 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
 
   clear() {
     this.setText(void 0);
-    this.setValue(null);
+    super.clear();
     this.removeComboOptions();
   }
 
@@ -689,9 +740,22 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
       }
     });
   };
+
+  filterData(data: Record[], text?: string): Record[] {
+    const { textField, searchable, props: { optionsFilter } } = this;
+    data = optionsFilter ? data.filter(optionsFilter!) : data;
+    if (searchable && text) {
+      return data.filter(record => record.get(textField).indexOf(text) !== -1);
+    }
+    return data;
+  }
 }
 
 @observer
 export default class ObserverSelect<T extends SelectProps> extends Select<T & SelectProps> {
   static defaultProps = Select.defaultProps;
+
+  static Option = Option;
+
+  static OptGroup = OptGroup;
 }

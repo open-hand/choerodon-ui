@@ -4,14 +4,15 @@ import { getConfig, getPrefixCls } from '../configure';
 
 export interface RippleProps {
   prefixCls?: string;
+  disabled?: boolean;
 }
 
 export default class Ripple extends PureComponent<RippleProps> {
   static displayName = 'Ripple';
 
   render() {
-    const { children } = this.props;
-    if (!children || !getConfig('ripple')) {
+    const { disabled, children } = this.props;
+    if (disabled || !children || !getConfig('ripple')) {
       return children;
     }
     return Children.map(children, this.rippleChild);

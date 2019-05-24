@@ -105,13 +105,13 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     return 1;
   }
 
-  getObservableProps(props: PaginationProps, context) {
+  getObservableProps(props, context) {
     return {
       ...super.getObservableProps(props, context),
       page: defaultTo(props.page, 1),
       pageSize: defaultTo(props.pageSize, 10),
       total: props.total,
-    } as PaginationProps;
+    };
   }
 
   handlePageSizeChange = (value: number) => {
@@ -192,7 +192,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     const { totalPage } = this;
     const bufferSize = 2;
     const pagerList: any[] = [];
-    if (totalPage <= 5 + bufferSize * 2) {
+    if (totalPage <= 1 + bufferSize) {
       for (let i = 1; i <= totalPage; i++) {
         pagerList.push(this.getPager(i, 'page', page === i));
       }

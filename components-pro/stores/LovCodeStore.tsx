@@ -1,5 +1,6 @@
 import isNil from 'lodash/isNil';
 import { action, observable, ObservableMap, runInAction } from 'mobx';
+import { AxiosInstance } from 'axios';
 import warning from 'choerodon-ui/lib/_util/warning';
 import DataSet, { DataSetProps } from '../data-set/DataSet';
 import axios from '../axios';
@@ -85,6 +86,10 @@ export class LovCodeStore {
 
   pendings = {};
 
+  get axios(): AxiosInstance {
+    return getConfig('axios') || axios;
+  }
+
   constructor() {
     this.init();
   }
@@ -104,7 +109,7 @@ export class LovCodeStore {
     // SSR do not fetch the lookup
     if (!config && typeof window !== 'undefined') {
       try {
-        const pending = this.pendings[code] = this.pendings[code] || axios.post(this.getConfigUrl(code));
+        const pending = this.pendings[code] = this.pendings[code] || this.axios.post(this.getConfigUrl(code));
         config = await pending;
         runInAction(() => {
           if (config) {

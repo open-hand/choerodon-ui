@@ -55,9 +55,9 @@ class App extends React.Component {
     ],
   });
 
-  buttons=['add'];
+  buttons = ['add', <Button key="create" funcType="flat" icon="add" onClick={() => this.ds.create()}>自定义新增</Button>];
 
-  commands=['edit', ['delete', { color: 'red' }], <Button key="add" icon="add" />];
+  commands = ['edit', ['delete', { color: 'red' }], <Button key="add" funcType="flat" icon="add" />];
 
   render() {
     return (

@@ -22,10 +22,11 @@ export default {
         return;
       }
       const key = generateKey(child.key, index);
+      const { disabled, tab } = child.props;
       let cls = activeKey === key ? `${prefixCls}-tab-active` : '';
       cls += ` ${prefixCls}-tab`;
       let events = {};
-      if (child.props.disabled) {
+      if (disabled) {
         cls += ` ${prefixCls}-tab-disabled`;
       } else {
         events = {
@@ -39,18 +40,19 @@ export default {
       warning('tab' in child.props, 'There must be `tab` property on children of Tabs.');
       rst.push(
         <Ripple
+          disabled={disabled}
           key={key}
         >
           <div
             role="tab"
-            aria-disabled={child.props.disabled ? 'true' : 'false'}
+            aria-disabled={disabled ? 'true' : 'false'}
             aria-selected={activeKey === key ? 'true' : 'false'}
             {...events}
             className={cls}
             style={{ marginRight: tabBarGutter && index === children.length - 1 ? 0 : tabBarGutter }}
             {...ref}
           >
-            {child.props.tab}
+            {tab}
           </div>
         </Ripple>,
       );

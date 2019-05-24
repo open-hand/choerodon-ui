@@ -52,9 +52,7 @@ export default {
     query_failure: '查询失败',
     submit_success: '提交成功',
     submit_failure: '提交失败',
-  },
-  Utils: {
-    no_new_row_when_head_unselected: '头未选中记录，不能新建行记录',
+    cannot_add_record_when_head_no_current: '头未选中记录，不能新建行记录',
   },
   DatePicker: {
     value_missing: '请选择日期',
@@ -77,6 +75,9 @@ export default {
   },
   Select: {
     value_missing: '请选择',
+  },
+  Transfer: {
+    items: '项',
   },
   UrlField: {
     value_missing: '请输入地址',

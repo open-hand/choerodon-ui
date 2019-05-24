@@ -9,7 +9,7 @@ import isString from 'lodash/isString';
 import noop from 'lodash/noop';
 import defaultTo from 'lodash/defaultTo';
 import { AxiosInstance } from 'axios';
-import { getProPrefixCls } from 'choerodon-ui/lib/configure';
+import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
 import axios from '../axios';
 import autobind from '../_util/autobind';
 import { FormField, FormFieldProps, getFieldsById } from '../field/FormField';
@@ -239,7 +239,6 @@ export default class Form extends DataSetComponent<FormProps> {
     columns: defaultColumns,
     labelWidth: defaultLabelWidth,
     labelLayout: defaultLabelLayout,
-    axios,
   };
 
   static contextType = FormContext;
@@ -251,6 +250,11 @@ export default class Form extends DataSetComponent<FormProps> {
   resizeEvent: EventManager = new EventManager(typeof window !== 'undefined' && window);
 
   name = NameGen.next().value;
+
+  @computed
+  get axios(): AxiosInstance {
+    return this.observableProps.axios || getConfig('axios') || axios;
+  }
 
   @computed
   get dataSet(): DataSet | undefined {
@@ -294,7 +298,7 @@ export default class Form extends DataSetComponent<FormProps> {
     const { labelAlign } = this.observableProps;
     const defaultLabelAlign = this.labelLayout === LabelLayout.vertical ? LabelAlign.left : LabelAlign.right;
     if (isString(labelAlign)) {
-      return labelAlign;
+      return labelAlign as LabelAlign;
     } else if (labelAlign) {
       return labelAlign[this.responsiveKey] || defaultLabelAlign;
     }
@@ -305,7 +309,7 @@ export default class Form extends DataSetComponent<FormProps> {
   get labelLayout(): LabelLayout {
     const { labelLayout } = this.observableProps;
     if (isString(labelLayout)) {
-      return labelLayout;
+      return labelLayout as LabelLayout;
     } else if (labelLayout) {
       return labelLayout[this.responsiveKey] || defaultLabelLayout;
     }
@@ -574,7 +578,7 @@ export default class Form extends DataSetComponent<FormProps> {
           if (target && this.element) {
             this.element.submit();
           } else {
-            onSuccess(await this.props.axios![method || 'get'](action, processParams(e)));
+            onSuccess(await this.axios[method || 'get'](action, processParams(e)));
           }
         }
       } catch (error) {

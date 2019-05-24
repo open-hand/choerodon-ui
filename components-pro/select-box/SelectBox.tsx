@@ -1,9 +1,9 @@
 import React, { ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
-import { action, computed, isArrayLike, observable } from 'mobx';
+import { action, computed, isArrayLike } from 'mobx';
 import omit from 'lodash/omit';
-import { FormField, FormFieldProps } from '../field/FormField';
+import { Select, SelectProps } from '../select/Select';
 import Radio from '../radio/Radio';
 import CheckBox from '../check-box/CheckBox';
 import autobind from '../_util/autobind';
@@ -21,7 +21,7 @@ const GroupIdGen = function* (id) {
   }
 }(1);
 
-export interface SelectBoxProps extends FormFieldProps {
+export interface SelectBoxProps extends SelectProps {
   /**
    * 是否垂直显示
    */
@@ -30,7 +30,7 @@ export interface SelectBoxProps extends FormFieldProps {
 }
 
 @observer
-export default class SelectBox extends FormField<SelectBoxProps> {
+export default class SelectBox extends Select<SelectBoxProps> {
   static displayName = 'SelectBox';
 
   static propTypes = {
@@ -38,11 +38,11 @@ export default class SelectBox extends FormField<SelectBoxProps> {
      * 是否垂直显示
      */
     vertical: PropTypes.bool,
-    ...FormField.propTypes,
+    ...Select.propTypes,
   };
 
   static defaultProps = {
-    ...FormField.defaultProps,
+    ...Select.defaultProps,
     suffixCls: 'select-box',
     vertical: false,
   };
@@ -64,26 +64,6 @@ export default class SelectBox extends FormField<SelectBoxProps> {
     return normalizeOptions({ field, textField, valueField, multiple, children });
   }
 
-  @observable value?: any;
-
-  @computed
-  get textField(): string {
-    const { field } = this;
-    if (field) {
-      return field.get('textField') || 'meaning';
-    }
-    return 'meaning';
-  }
-
-  @computed
-  get valueField(): string {
-    const { field } = this;
-    if (field) {
-      return field.get('valueField') || 'value';
-    }
-    return 'value';
-  }
-
   @action
   setName(name) {
     super.setName(name || this.name || GroupIdGen.next().value);
@@ -91,11 +71,6 @@ export default class SelectBox extends FormField<SelectBoxProps> {
 
   getOtherProps() {
     return omit(super.getOtherProps(), ['vertical']);
-  }
-
-  @computed
-  get multiple(): boolean {
-    return !!this.getProp('multiple');
   }
 
   getClassName() {

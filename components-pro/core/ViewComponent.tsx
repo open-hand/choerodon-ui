@@ -274,7 +274,7 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
 
   @observable isFocused: boolean;
 
-  @observable observableProps: P;
+  @observable observableProps: any;
 
   get prefixCls(): string {
     const { suffixCls, prefixCls } = this.props;
@@ -305,15 +305,15 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
     };
   }
 
-  getObservableProps(_props: P, _context: any): P {
-    return {} as P;
+  getObservableProps(_props, _context: any) {
+    return {};
   }
 
   @action
-  setObservableProps(props: P, context: any) {
+  setObservableProps(props, context: any) {
     this.observableProps = Object.assign(
       {},
-      toJS<P>(this.observableProps),
+      toJS(this.observableProps),
       this.getObservableProps(props, context),
     );
   }

@@ -22,6 +22,10 @@ import { runInAction } from 'mobx';
 class App extends React.Component {
   ds = new DataSet();
 
+  state = {
+    loading: true,
+  };
+
   componentWillMount() {
     runInAction(() => {
       this.ds.status = 'submitting';
@@ -29,13 +33,14 @@ class App extends React.Component {
   }
 
   handleClick = () => {
+    this.setState({ loading: !this.state.loading });
     return new Promise(resolve => setTimeout(resolve, 1000));
   };
 
   render() {
     return (
       <div>
-        <Button icon="save" loading>保存</Button>
+        <Button icon="save" loading={this.state.loading}>保存</Button>
         <Button funcType="flat" color="blue" icon="save" loading>保存</Button>
         <Button icon="save" loading />
         <Button funcType="flat" icon="save" color="blue" loading />

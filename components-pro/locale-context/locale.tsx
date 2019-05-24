@@ -53,9 +53,7 @@ export interface Locale {
     query_failure;
     submit_success;
     submit_failure;
-  },
-  Utils: {
-    no_new_row_when_head_unselected;
+    cannot_add_record_when_head_no_current;
   },
   DatePicker: {
     value_missing;
@@ -78,6 +76,9 @@ export interface Locale {
   },
   Select: {
     value_missing;
+  },
+  Transfer: {
+    items;
   },
   UrlField: {
     value_missing;

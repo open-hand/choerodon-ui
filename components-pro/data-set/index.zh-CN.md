@@ -128,13 +128,13 @@ title: DataSet
 | submit | 提交事件 | ({ dataSet, data }) =&gt; void | `dataSet` - 数据集 `data` - json数据 |
 | submitSuccess | 提交成功事件 | ({ dataSet, data }) =&gt; void | `dataSet` - 数据集 `data` - 响应数据 |
 | submitFailed | 提交失败事件 | ({ dataSet }) =&gt; void | `dataSet` - 数据集 |
-| beforeSelect | 选择记录之前的事件，返回值为false时阻止选择 | ({ dataSet, record }) =&gt; boolean | `dataSet` -数据集 `record` - 选择的记录 |
 | select | 选择记录事件 | ({ dataSet, record, previous }) =&gt; void | `dataSet` - 数据集 `record` - 选择的记录 `previous` - 之前选择的记录，单选模式下有效 |
 | unSelect | 撤销选择记录事件 | ({ dataSet, record }) =&gt; void | `dataSet` - 数据集 `record` - 撤销选择的记录 |
 | selectAll | 全选记录事件 | ({ dataSet }) =&gt; void | `dataSet` - 数据集 |
 | unSelectAll | 撤销全选记录事件 | ({ dataSet }) =&gt; void | `dataSet` - 数据集 |
 | indexChange | 当前记录变更事件 | ({ dataSet, record, previous }) =&gt; void | `dataSet` - 数据集 `record` - 新当前记录 `previous` - 旧当前记录 |
 | fieldChange | 字段属性变更事件 | ({ dataSet, record, field, propsName, value, oldValue }) =&gt; void | `dataSet` - 数据集 `record` - 字段所属记录，dataSet的字段无record `field` - 当前字段 `propsName` - 属性名 `value` - 新值 `oldValue` - 旧值 |
+| create | 记录创建事件 | ({ dataSet, record }) =&gt; void | `dataSet` - 数据集 `record` - 创建的记录 |
 
 ### Record Values
 

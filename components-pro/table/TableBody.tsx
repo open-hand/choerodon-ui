@@ -67,6 +67,7 @@ export default class TableBody extends Component<TableBodyProps, any> {
   }
 
   componentWillUnmount() {
+    this.handleResize.cancel();
     if (this.resizeObserver) {
       this.resizeObserver.disconnect();
     }

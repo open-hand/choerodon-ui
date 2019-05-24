@@ -40,7 +40,7 @@ ReactDOM.render(
       <Option value="en-us">英语(美国)</Option>
       <Option value="ja-jp">日本語</Option>
     </Select>
-    <EmailField label="邮箱" name="email" />
+    <EmailField label="邮箱" name="email" multiple />
     <TextArea rowSpan={2} colSpan={2} label="简介" name="description" required style={{ height: 80 }} placeholder="请输入简介" />
     <UrlField label="个人主页" name="homepage" required />
     <DatePicker label="生日" name="birth" required />

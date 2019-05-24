@@ -156,7 +156,7 @@ export default class Button extends Component<ButtonProps, any> {
       }) : null;
 
     return (
-      <Ripple>
+      <Ripple disabled={others.disabled}>
         <ComponentProp
           {...omit(others, ['loading'])}
           type={others.href ? undefined : (htmlType || 'button')}

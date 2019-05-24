@@ -18,15 +18,15 @@ import { DataSet, Select } from 'choerodon-ui/pro';
 
 const { Option } = Select;
 
-function optionsFilter(record) {
-  return record.get('meaning').toLowerCase().indexOf('a') !== -1;
-}
-
 const data = [{
   'last-name': 'huazhen',
 }];
 
 class App extends React.Component {
+  state = {
+    key: 'a',
+  };
+
   ds = new DataSet({
     data,
     fields: [
@@ -34,13 +34,24 @@ class App extends React.Component {
     ],
   });
 
+  handleClick = () => {
+    this.setState({ key: this.state.key === 'a' ? 'c' : 'a' });
+  };
+
+  optionsFilter = (record) => {
+    return record.get('meaning').toLowerCase().indexOf(this.state.key) !== -1;
+  };
+
   render() {
     return (
-      <Select dataSet={this.ds} name="last-name" optionsFilter={optionsFilter}>
-        <Option value="jack">Jack</Option>
-        <Option value="lucy">Lucy</Option>
-        <Option value="huazhen">Huazhen</Option>
-      </Select>
+      <div>
+        <Select dataSet={this.ds} name="last-name" optionsFilter={this.optionsFilter}>
+          <Option value="jack">Jack</Option>
+          <Option value="lucy">Lucy</Option>
+          <Option value="huazhen">Huazhen</Option>
+        </Select>
+        <Button onClick={this.handleClick}>切换过滤条件</Button>
+      </div>
     );
   }
 }

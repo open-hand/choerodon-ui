@@ -50,6 +50,11 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
     this.filterText = text;
   }), 500);
 
+  componentWillUnmount() {
+    super.componentWillUnmount();
+    this.setFilterText.cancel();
+  }
+
   @action
   setText(text) {
     super.setText(text);
@@ -113,17 +118,25 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
   }
 
   afterRemoveValue(value, repeat: number) {
-    const { paramName } = this.props;
     const values = this.getQueryValues(value);
-    const newValues = repeat === -1 ? values.slice(0, values.length - 1) : values.filter((_v, index) => index !== repeat);
-    let multiple = true;
+    if (repeat === -1) {
+      values.pop();
+    } else {
+      values.splice(repeat, 1);
+    }
+    const multiple = this.getQueryFieldMultiple(value);
+    this.setQueryValue(value, multiple ? values : values[0]);
+  }
+
+  getQueryFieldMultiple(value) {
+    const { paramName } = this.props;
     if (paramName !== value) {
       const field = this.getQueryField(value);
       if (field && !field.get('multiple')) {
-        multiple = false;
+        return false;
       }
     }
-    this.setQueryValue(value, multiple ? newValues : newValues[0]);
+    return true;
   }
 
   @autobind
