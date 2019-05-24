@@ -15,10 +15,11 @@ timeline: true
 
 ---
 
-- 🌟 `<pro>Select`: Added primitiveValue property.
+- 🌟 `<pro>Field`: Added the ignore property.
+- 🌟 `<pro>Select`: Added the primitiveValue property.
 - 🌟 `<pro>Tranfer`: Added Transfer component.
 - 🌟 `<pro>DataSet`: Deprecated the beforeSelect event and adds the create event.
-- 🌟 `Ripple`: Added the disabled attribute to disable the ripple effect.
+- 🌟 `Ripple`: Added the disabled property to disable the ripple effect.
 - 🐞 `<pro>Table`: Fixed an issue where the inline edit box was not displayed when the binding dataSet create new record.
 - 🐞 `<pro>Select`: The value of the renderer is always displayed when it is not editable.
 

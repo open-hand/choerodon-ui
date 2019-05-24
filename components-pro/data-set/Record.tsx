@@ -20,7 +20,7 @@ import {
 import * as ObjectChainValue from '../_util/ObjectChainValue';
 import DataSetSnapshot from './DataSetSnapshot';
 import localeContext from '../locale-context';
-import { BooleanValue, DataSetEvents, FieldType, RecordStatus } from './enum';
+import { BooleanValue, DataSetEvents, FieldIgnore, FieldType, RecordStatus } from './enum';
 import { Supports } from '../locale-context/supports';
 
 /**
@@ -268,7 +268,7 @@ export default class Record {
   toJSONData(noCascade?: boolean): object & { __dirty, __id, __status } {
     const { status } = this;
     let dirty = status !== RecordStatus.sync;
-    const json = this.normalizeData();
+    const json = this.normalizeData(true);
     const tls = this.normalizeTls();
     if (tls) {
       dirty = true;
@@ -617,13 +617,18 @@ export default class Record {
     return data;
   }
 
-  private normalizeData() {
+  private normalizeData(needIgnore?: boolean) {
     const { fields } = this;
     const json: any = toJS(this.data);
     Array.from(fields.keys()).forEach((key) => {
       let value = ObjectChainValue.get(json, key);
       const field = this.getField(key);
       if (field) {
+        const ignore = field.get('ignore');
+        if (needIgnore && (ignore === FieldIgnore.always || (ignore === FieldIgnore.clean && !field.dirty))) {
+          delete json[key];
+          return;
+        }
         const bind = field.get('bind');
         const multiple = field.get('multiple');
         const type = field.get('type');

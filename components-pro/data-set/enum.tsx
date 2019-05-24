@@ -64,3 +64,9 @@ export const enum BooleanValue {
   trueValue = 'trueValue',
   falseValue = 'falseValue',
 }
+
+export const enum FieldIgnore {
+ always = 'always',
+ clean = 'clean',
+ never = 'never',
+}

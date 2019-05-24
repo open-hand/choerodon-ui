@@ -6,7 +6,7 @@ import noop from 'lodash/noop';
 import DataSet from './DataSet';
 import Record from './Record';
 import Validator, { CustomValidator } from '../validator/Validator';
-import { DataSetEvents, FieldType, SortOrder } from './enum';
+import { DataSetEvents, FieldIgnore, FieldType, SortOrder } from './enum';
 import lookupStore from '../stores/LookupCodeStore';
 import lovCodeStore from '../stores/LovCodeStore';
 import localeContext from '../locale-context';
@@ -153,6 +153,12 @@ export type FieldProps = {
    * 货币代码
    */
   currency?: string;
+  /**
+   * 忽略提交
+   * 可选值: always - 总是忽略 clean - 值未变化时忽略 never - 从不忽略
+   * @default never
+   */
+  ignore?: FieldIgnore;
 }
 
 export default class Field {

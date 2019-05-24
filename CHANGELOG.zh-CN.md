@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Field`: 新增ignore属性。
 - 🌟 `<pro>Select`: 新增primitiveValue属性。
 - 🌟 `<pro>Tranfer`: 新增Transfer组件。
 - 🌟 `<pro>DataSet`: 废弃beforeSelect事件，新增create事件。

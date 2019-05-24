@@ -114,7 +114,7 @@ class App extends React.Component {
     ],
     fields: [
       { name: 'userid', type: 'string', label: '编号', required: true, unique: true, help: '主键，区分用户' },
-      { name: 'name', type: 'intl', label: '姓名', dynamicProps: nameDynamicProps },
+      { name: 'name', type: 'intl', label: '姓名', dynamicProps: nameDynamicProps, ignore: 'clean' },
       { name: 'age', type: 'number', label: '年龄', unique: 'uniqueGroup', max: 100, step: 1, help: '用户年龄，可以排序' },
       { name: 'numberMultiple', type: 'number', label: '数值多值', multiple: true, min: 10, max: 100, step: 0.5 },
       { name: 'code', type: 'object', label: '代码描述', lovCode: 'LOV_CODE', dynamicProps: codeDynamicProps },
@@ -127,7 +127,7 @@ class App extends React.Component {
       { name: 'sex', type: 'string', label: '性别', lookupCode: 'HR.EMPLOYEE_GENDER', required: true },
       { name: 'sexMultiple', type: 'string', label: '性别（多值）', lookupCode: 'HR.EMPLOYEE_GENDER', multiple: true },
       { name: 'accountMultiple', type: 'string', bind: 'account.multiple', label: '多值拼接', lookupCode: 'HR.EMPLOYEE_GENDER', multiple: ',' },
-      { name: 'account', type: 'object' },
+      { name: 'account', type: 'object', ignore: 'always' },
       { name: 'enable', type: 'boolean', label: '是否开启', unique: 'uniqueGroup' },
       { name: 'frozen', type: 'boolean', label: '是否冻结', trueValue: 'Y', falseValue: 'N' },
       { name: 'date.startDate', type: 'date', label: '开始日期', defaultValue: new Date() },
