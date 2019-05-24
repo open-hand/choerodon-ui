@@ -144,6 +144,7 @@ export default class Tree extends Component<TreeProps, any> {
         className={classNames(!showIcon && `${prefixCls}-icon-hide`, className)}
         checkable={checkable ? <span className={`${prefixCls}-checkbox-inner`} /> : checkable}
         switcherIcon={this.renderSwitcherIcon}
+        prefixCls={prefixCls}
       >
         {this.props.children}
       </RcTree>
