@@ -242,7 +242,7 @@ export default class Lov extends Select<LovProps> {
       ],
     );
     const config = this.getConfig();
-    if (config && config.placeholder) {
+    if (!('placeholder' in otherProps ) && config && config.placeholder) {
       otherProps.placeholder = config.placeholder;
     }
 
