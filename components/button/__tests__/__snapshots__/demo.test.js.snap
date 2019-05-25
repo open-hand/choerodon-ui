@@ -80,9 +80,6 @@ exports[`renders ./components/button/demo/button-group.md correctly 1`] = `
       <span>
         L
       </span>
-      <div
-        class="c7n-ripple-wrapper"
-      />
     </button>
     <button
       class="c7n-btn c7n-btn-flat"
@@ -92,9 +89,6 @@ exports[`renders ./components/button/demo/button-group.md correctly 1`] = `
       <span>
         M
       </span>
-      <div
-        class="c7n-ripple-wrapper"
-      />
     </button>
     <button
       class="c7n-btn c7n-btn-flat"
@@ -104,9 +98,6 @@ exports[`renders ./components/button/demo/button-group.md correctly 1`] = `
       <span>
         R
       </span>
-      <div
-        class="c7n-ripple-wrapper"
-      />
     </button>
   </div>
   <div
@@ -231,9 +222,6 @@ exports[`renders ./components/button/demo/disabled.md correctly 1`] = `
     <span>
       Primary(disabled)
     </span>
-    <div
-      class="c7n-ripple-wrapper"
-    />
   </button>
   <br />
   <button
@@ -255,9 +243,6 @@ exports[`renders ./components/button/demo/disabled.md correctly 1`] = `
     <span>
       Default(disabled)
     </span>
-    <div
-      class="c7n-ripple-wrapper"
-    />
   </button>
   <br />
   <button
@@ -279,9 +264,6 @@ exports[`renders ./components/button/demo/disabled.md correctly 1`] = `
     <span>
       Ghost(disabled)
     </span>
-    <div
-      class="c7n-ripple-wrapper"
-    />
   </button>
   <br />
   <button
@@ -303,9 +285,6 @@ exports[`renders ./components/button/demo/disabled.md correctly 1`] = `
     <span>
       Dashed(disabled)
     </span>
-    <div
-      class="c7n-ripple-wrapper"
-    />
   </button>
 </div>
 `;

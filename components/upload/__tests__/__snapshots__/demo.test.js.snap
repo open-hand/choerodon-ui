@@ -427,9 +427,6 @@ exports[`renders ./components/upload/demo/upload-manually.md correctly 1`] = `
     <span>
       Start Upload
     </span>
-    <div
-      class="c7n-ripple-wrapper"
-    />
   </button>
 </div>
 `;

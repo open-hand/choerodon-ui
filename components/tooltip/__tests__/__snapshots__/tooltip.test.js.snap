@@ -13,9 +13,6 @@ exports[`Tooltip should hide when mouse leave choerodon-ui disabled Button 1`] =
     <span>
       Hello world!
     </span>
-    <div
-      class="c7n-ripple-wrapper"
-    />
   </button>
 </span>
 `;

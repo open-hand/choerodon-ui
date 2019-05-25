@@ -532,9 +532,6 @@ exports[`Table.rowSelection fix selection column on the left 1`] = `
             <i
               class="icon icon-first_page"
             />
-            <div
-              class="c7n-ripple-wrapper"
-            />
           </button>
         </li>
         <li
@@ -549,9 +546,6 @@ exports[`Table.rowSelection fix selection column on the left 1`] = `
           >
             <i
               class="icon icon-navigate_before"
-            />
-            <div
-              class="c7n-ripple-wrapper"
             />
           </button>
         </li>
@@ -568,9 +562,6 @@ exports[`Table.rowSelection fix selection column on the left 1`] = `
             <i
               class="icon icon-navigate_next"
             />
-            <div
-              class="c7n-ripple-wrapper"
-            />
           </button>
         </li>
         <li
@@ -585,9 +576,6 @@ exports[`Table.rowSelection fix selection column on the left 1`] = `
           >
             <i
               class="icon icon-last_page"
-            />
-            <div
-              class="c7n-ripple-wrapper"
             />
           </button>
         </li>
@@ -604,9 +592,8 @@ exports[`Table.rowSelection render with default selection correctly 1`] = `
   >
     <ul
       aria-activedescendant=""
-      class="c7n-dropdown-menu c7n-table-selection-menu c7n-dropdown-menu-root c7n-dropdown-menu-vertical"
+      class="c7n-dropdown-menu c7n-table-selection-menu c7n-dropdown-menu-light c7n-dropdown-menu-root c7n-dropdown-menu-vertical"
       role="menu"
-      tabindex="0"
     >
       <li
         aria-selected="false"

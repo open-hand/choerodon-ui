@@ -3,9 +3,8 @@
 exports[`renders ./components/menu/demo/horizontal.md correctly 1`] = `
 <ul
   aria-activedescendant=""
-  class="c7n-menu  c7n-menu-root c7n-menu-horizontal"
+  class="c7n-menu c7n-menu-light c7n-menu-root c7n-menu-horizontal"
   role="menu"
-  tabindex="0"
 >
   <li
     aria-selected="true"
@@ -30,9 +29,6 @@ exports[`renders ./components/menu/demo/horizontal.md correctly 1`] = `
       class="icon icon-apps"
     />
     Navigation Two
-    <div
-      class="c7n-ripple-wrapper"
-    />
   </li>
   <li
     class="c7n-menu-submenu c7n-menu-submenu-horizontal"
@@ -76,10 +72,9 @@ exports[`renders ./components/menu/demo/horizontal.md correctly 1`] = `
 exports[`renders ./components/menu/demo/inline.md correctly 1`] = `
 <ul
   aria-activedescendant=""
-  class="c7n-menu  c7n-menu-root c7n-menu-inline"
+  class="c7n-menu c7n-menu-light c7n-menu-root c7n-menu-inline"
   role="menu"
   style="width:256px"
-  tabindex="0"
 >
   <li
     class="c7n-menu-submenu c7n-menu-submenu-inline c7n-menu-submenu-open c7n-menu-submenu-selected"
@@ -252,9 +247,8 @@ exports[`renders ./components/menu/demo/inline-collapsed.md correctly 1`] = `
   </button>
   <ul
     aria-activedescendant=""
-    class="c7n-menu  c7n-menu-root c7n-menu-inline"
+    class="c7n-menu c7n-menu-light c7n-menu-root c7n-menu-inline"
     role="menu"
-    tabindex="0"
   >
     <li
       aria-selected="true"
@@ -409,10 +403,9 @@ exports[`renders ./components/menu/demo/inline-collapsed.md correctly 1`] = `
 exports[`renders ./components/menu/demo/sider-current.md correctly 1`] = `
 <ul
   aria-activedescendant=""
-  class="c7n-menu  c7n-menu-root c7n-menu-inline"
+  class="c7n-menu c7n-menu-light c7n-menu-root c7n-menu-inline"
   role="menu"
   style="width:256px"
-  tabindex="0"
 >
   <li
     class="c7n-menu-submenu c7n-menu-submenu-inline c7n-menu-submenu-open"
@@ -558,10 +551,9 @@ exports[`renders ./components/menu/demo/switch-mode.md correctly 1`] = `
   <br />
   <ul
     aria-activedescendant=""
-    class="c7n-menu  c7n-menu-root c7n-menu-inline"
+    class="c7n-menu c7n-menu-light c7n-menu-root c7n-menu-inline"
     role="menu"
     style="width:256px"
-    tabindex="0"
   >
     <li
       aria-selected="true"
@@ -689,13 +681,159 @@ exports[`renders ./components/menu/demo/switch-mode.md correctly 1`] = `
 </div>
 `;
 
+exports[`renders ./components/menu/demo/theme.md correctly 1`] = `
+<div>
+  <span
+    checked=""
+    class="c7n-switch c7n-switch-checked"
+    tabindex="0"
+  >
+    <span
+      class="c7n-switch-inner"
+    >
+      Dark
+    </span>
+  </span>
+  <br />
+  <br />
+  <ul
+    aria-activedescendant=""
+    class="c7n-menu c7n-menu-dark c7n-menu-root c7n-menu-inline"
+    role="menu"
+    style="width:256px"
+  >
+    <li
+      class="c7n-menu-submenu c7n-menu-submenu-inline c7n-menu-submenu-open c7n-menu-submenu-selected"
+      role="menuitem"
+    >
+      <div
+        aria-expanded="true"
+        aria-haspopup="true"
+        aria-owns="sub1$Menu"
+        class="c7n-menu-submenu-title"
+        style="padding-left:24px"
+      >
+        <span>
+          <i
+            class="icon icon-mail"
+          />
+          <span>
+            Navigation One
+          </span>
+        </span>
+        <i
+          class="c7n-menu-submenu-arrow"
+        />
+      </div>
+      <ul
+        class="c7n-menu  c7n-menu-sub c7n-menu-inline"
+        id="sub1$Menu"
+        role="menu"
+      >
+        <li
+          aria-selected="true"
+          class="c7n-menu-item c7n-menu-item-selected"
+          role="menuitem"
+          style="padding-left:48px"
+        >
+          Option 1
+          <div
+            class="c7n-ripple-wrapper"
+          />
+        </li>
+        <li
+          aria-selected="false"
+          class="c7n-menu-item"
+          role="menuitem"
+          style="padding-left:48px"
+        >
+          Option 2
+          <div
+            class="c7n-ripple-wrapper"
+          />
+        </li>
+        <li
+          aria-selected="false"
+          class="c7n-menu-item"
+          role="menuitem"
+          style="padding-left:48px"
+        >
+          Option 3
+          <div
+            class="c7n-ripple-wrapper"
+          />
+        </li>
+        <li
+          aria-selected="false"
+          class="c7n-menu-item"
+          role="menuitem"
+          style="padding-left:48px"
+        >
+          Option 4
+          <div
+            class="c7n-ripple-wrapper"
+          />
+        </li>
+      </ul>
+    </li>
+    <li
+      class="c7n-menu-submenu c7n-menu-submenu-inline"
+      role="menuitem"
+    >
+      <div
+        aria-expanded="false"
+        aria-haspopup="true"
+        class="c7n-menu-submenu-title"
+        style="padding-left:24px"
+      >
+        <span>
+          <i
+            class="icon icon-appstore"
+          />
+          <span>
+            Navigtion Two
+          </span>
+        </span>
+        <i
+          class="c7n-menu-submenu-arrow"
+        />
+      </div>
+      <div />
+    </li>
+    <li
+      class="c7n-menu-submenu c7n-menu-submenu-inline"
+      role="menuitem"
+    >
+      <div
+        aria-expanded="false"
+        aria-haspopup="true"
+        class="c7n-menu-submenu-title"
+        style="padding-left:24px"
+      >
+        <span>
+          <i
+            class="icon icon-setting"
+          />
+          <span>
+            Navigation Three
+          </span>
+        </span>
+        <i
+          class="c7n-menu-submenu-arrow"
+        />
+      </div>
+      <div />
+    </li>
+  </ul>
+</div>
+`;
+
 exports[`renders ./components/menu/demo/vertical.md correctly 1`] = `
 <ul
   aria-activedescendant=""
-  class="c7n-menu  c7n-menu-root c7n-menu-vertical"
+  class="c7n-menu c7n-menu-light c7n-menu-root c7n-menu-vertical"
   role="menu"
   style="width:256px"
-  tabindex="0"
 >
   <li
     class="c7n-menu-submenu c7n-menu-submenu-vertical"

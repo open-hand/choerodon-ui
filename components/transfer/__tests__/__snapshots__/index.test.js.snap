@@ -104,9 +104,6 @@ exports[`Transfer should render correctly 1`] = `
       <i
         class="icon icon-left"
       />
-      <div
-        class="c7n-ripple-wrapper"
-      />
     </button>
     <button
       class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
@@ -273,9 +270,6 @@ exports[`Transfer should show sorted targetkey 1`] = `
       <i
         class="icon icon-left"
       />
-      <div
-        class="c7n-ripple-wrapper"
-      />
     </button>
     <button
       class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
@@ -284,9 +278,6 @@ exports[`Transfer should show sorted targetkey 1`] = `
     >
       <i
         class="icon icon-right"
-      />
-      <div
-        class="c7n-ripple-wrapper"
       />
     </button>
   </div>

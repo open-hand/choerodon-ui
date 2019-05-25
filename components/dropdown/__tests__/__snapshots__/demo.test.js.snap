@@ -63,9 +63,6 @@ exports[`renders ./components/dropdown/demo/dropdown-button.md correctly 1`] = `
       <span>
         Dropdown
       </span>
-      <div
-        class="c7n-ripple-wrapper"
-      />
     </button>
     <button
       class="c7n-btn c7n-dropdown-trigger c7n-btn-default c7n-btn-flat"
@@ -74,9 +71,6 @@ exports[`renders ./components/dropdown/demo/dropdown-button.md correctly 1`] = `
     >
       <i
         class="icon icon-arrow_drop_down"
-      />
-      <div
-        class="c7n-ripple-wrapper"
       />
     </button>
   </div>

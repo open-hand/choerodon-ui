@@ -139,9 +139,8 @@ exports[`renders ./components/layout/demo/custom-trigger.md correctly 1`] = `
       />
       <ul
         aria-activedescendant=""
-        class="c7n-menu  c7n-menu-root c7n-menu-inline"
+        class="c7n-menu c7n-menu-dark c7n-menu-root c7n-menu-inline"
         role="menu"
-        tabindex="0"
       >
         <li
           aria-selected="true"
@@ -228,10 +227,9 @@ exports[`renders ./components/layout/demo/fixed.md correctly 1`] = `
     />
     <ul
       aria-activedescendant=""
-      class="c7n-menu  c7n-menu-root c7n-menu-horizontal"
+      class="c7n-menu c7n-menu-dark c7n-menu-root c7n-menu-horizontal"
       role="menu"
       style="line-height:64px"
-      tabindex="0"
     >
       <li
         aria-selected="false"
@@ -341,9 +339,8 @@ exports[`renders ./components/layout/demo/fixed-sider.md correctly 1`] = `
       />
       <ul
         aria-activedescendant=""
-        class="c7n-menu  c7n-menu-root c7n-menu-inline"
+        class="c7n-menu c7n-menu-dark c7n-menu-root c7n-menu-inline"
         role="menu"
-        tabindex="0"
       >
         <li
           aria-selected="false"
@@ -630,9 +627,8 @@ exports[`renders ./components/layout/demo/responsive.md correctly 1`] = `
       />
       <ul
         aria-activedescendant=""
-        class="c7n-menu  c7n-menu-root c7n-menu-inline"
+        class="c7n-menu c7n-menu-dark c7n-menu-root c7n-menu-inline"
         role="menu"
-        tabindex="0"
       >
         <li
           aria-selected="false"
@@ -753,9 +749,8 @@ exports[`renders ./components/layout/demo/side.md correctly 1`] = `
       />
       <ul
         aria-activedescendant=""
-        class="c7n-menu  c7n-menu-root c7n-menu-inline"
+        class="c7n-menu c7n-menu-dark c7n-menu-root c7n-menu-inline"
         role="menu"
-        tabindex="0"
       >
         <li
           aria-selected="true"
@@ -932,10 +927,9 @@ exports[`renders ./components/layout/demo/top.md correctly 1`] = `
     />
     <ul
       aria-activedescendant=""
-      class="c7n-menu  c7n-menu-root c7n-menu-horizontal"
+      class="c7n-menu c7n-menu-dark c7n-menu-root c7n-menu-horizontal"
       role="menu"
       style="line-height:64px"
-      tabindex="0"
     >
       <li
         aria-selected="false"
@@ -1041,10 +1035,9 @@ exports[`renders ./components/layout/demo/top-side.md correctly 1`] = `
     />
     <ul
       aria-activedescendant=""
-      class="c7n-menu  c7n-menu-root c7n-menu-horizontal"
+      class="c7n-menu c7n-menu-dark c7n-menu-root c7n-menu-horizontal"
       role="menu"
       style="line-height:64px"
-      tabindex="0"
     >
       <li
         aria-selected="false"
@@ -1136,10 +1129,9 @@ exports[`renders ./components/layout/demo/top-side.md correctly 1`] = `
         >
           <ul
             aria-activedescendant=""
-            class="c7n-menu  c7n-menu-root c7n-menu-inline"
+            class="c7n-menu c7n-menu-light c7n-menu-root c7n-menu-inline"
             role="menu"
             style="height:100%"
-            tabindex="0"
           >
             <li
               class="c7n-menu-submenu c7n-menu-submenu-inline c7n-menu-submenu-open c7n-menu-submenu-selected"
@@ -1289,10 +1281,9 @@ exports[`renders ./components/layout/demo/top-side-2.md correctly 1`] = `
     />
     <ul
       aria-activedescendant=""
-      class="c7n-menu  c7n-menu-root c7n-menu-horizontal"
+      class="c7n-menu c7n-menu-dark c7n-menu-root c7n-menu-horizontal"
       role="menu"
       style="line-height:64px"
-      tabindex="0"
     >
       <li
         aria-selected="false"
@@ -1338,10 +1329,9 @@ exports[`renders ./components/layout/demo/top-side-2.md correctly 1`] = `
       >
         <ul
           aria-activedescendant=""
-          class="c7n-menu  c7n-menu-root c7n-menu-inline"
+          class="c7n-menu c7n-menu-light c7n-menu-root c7n-menu-inline"
           role="menu"
           style="height:100%;border-right:0"
-          tabindex="0"
         >
           <li
             class="c7n-menu-submenu c7n-menu-submenu-inline c7n-menu-submenu-open c7n-menu-submenu-selected"

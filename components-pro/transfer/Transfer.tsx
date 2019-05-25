@@ -77,7 +77,7 @@ export default class Transfer extends Select<TransferProps> {
     if (this.multiple) {
       this.selectRecord(value, this.sourceSelected);
     } else {
-      this.addValue(value);
+      this.addValue(this.processRecordToObject(value));
     }
   }
 

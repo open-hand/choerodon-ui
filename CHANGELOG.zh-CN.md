@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.6.4
+
+`2019-05-25`
+
 - 🌟 `<pro>FormField`: 新增maxTagPlaceholder、maxTagCount、maxTagTextLength属性。
 - 🌟 `<pro>Field`: 新增ignore属性。
 - 🌟 `<pro>Select`: 新增primitiveValue属性。
@@ -22,8 +26,17 @@ timeline: true
 - 🌟 `<pro>DataSet`: 废弃beforeSelect事件，新增create事件。
 - 🌟 `Ripple`: 增加disabled属性，用于禁用波纹效果。
 - 💄 `<pro>Table`: 优化尺寸变化时的性能。
+- 💄 `Pagination`: 优化10页以内的分页效果。
+- 💄 `<pro>Lov`: 提升placeholder属性优先级大于配置的placeholder。
 - 🐞 `<pro>Table`: 修复绑定的数据源新增记录时，行内编辑框不显示的问题。
 - 🐞 `<pro>Select`: 在不可编辑的情况下始终显示renderer的值。
+
+## 0.6.3
+
+`2019-05-24`
+
+- 🐞 `Tree`: 修复样式。
+- 🐞 `Button`: 修复小按钮样式。
 
 ## 0.6.2
 

@@ -279,9 +279,6 @@ exports[`Locale Provider should display the text as ar 1`] = `
         <i
           class="icon icon-first_page"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
     </li>
     <li
@@ -296,9 +293,6 @@ exports[`Locale Provider should display the text as ar 1`] = `
       >
         <i
           class="icon icon-navigate_before"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
@@ -636,9 +630,6 @@ exports[`Locale Provider should display the text as ar 1`] = `
         <i
           class="icon icon-left"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
       <button
         class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
@@ -647,9 +638,6 @@ exports[`Locale Provider should display the text as ar 1`] = `
       >
         <i
           class="icon icon-right"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </div>
@@ -1995,9 +1983,6 @@ exports[`Locale Provider should display the text as bg 1`] = `
         <i
           class="icon icon-first_page"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
     </li>
     <li
@@ -2012,9 +1997,6 @@ exports[`Locale Provider should display the text as bg 1`] = `
       >
         <i
           class="icon icon-navigate_before"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
@@ -2352,9 +2334,6 @@ exports[`Locale Provider should display the text as bg 1`] = `
         <i
           class="icon icon-left"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
       <button
         class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
@@ -2363,9 +2342,6 @@ exports[`Locale Provider should display the text as bg 1`] = `
       >
         <i
           class="icon icon-right"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </div>
@@ -3711,9 +3687,6 @@ exports[`Locale Provider should display the text as ca 1`] = `
         <i
           class="icon icon-first_page"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
     </li>
     <li
@@ -3728,9 +3701,6 @@ exports[`Locale Provider should display the text as ca 1`] = `
       >
         <i
           class="icon icon-navigate_before"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
@@ -4068,9 +4038,6 @@ exports[`Locale Provider should display the text as ca 1`] = `
         <i
           class="icon icon-left"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
       <button
         class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
@@ -4079,9 +4046,6 @@ exports[`Locale Provider should display the text as ca 1`] = `
       >
         <i
           class="icon icon-right"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </div>
@@ -5427,9 +5391,6 @@ exports[`Locale Provider should display the text as cs 1`] = `
         <i
           class="icon icon-first_page"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
     </li>
     <li
@@ -5444,9 +5405,6 @@ exports[`Locale Provider should display the text as cs 1`] = `
       >
         <i
           class="icon icon-navigate_before"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
@@ -5784,9 +5742,6 @@ exports[`Locale Provider should display the text as cs 1`] = `
         <i
           class="icon icon-left"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
       <button
         class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
@@ -5795,9 +5750,6 @@ exports[`Locale Provider should display the text as cs 1`] = `
       >
         <i
           class="icon icon-right"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </div>
@@ -7143,9 +7095,6 @@ exports[`Locale Provider should display the text as de 1`] = `
         <i
           class="icon icon-first_page"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
     </li>
     <li
@@ -7160,9 +7109,6 @@ exports[`Locale Provider should display the text as de 1`] = `
       >
         <i
           class="icon icon-navigate_before"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
@@ -7500,9 +7446,6 @@ exports[`Locale Provider should display the text as de 1`] = `
         <i
           class="icon icon-left"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
       <button
         class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
@@ -7511,9 +7454,6 @@ exports[`Locale Provider should display the text as de 1`] = `
       >
         <i
           class="icon icon-right"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </div>
@@ -8859,9 +8799,6 @@ exports[`Locale Provider should display the text as el 1`] = `
         <i
           class="icon icon-first_page"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
     </li>
     <li
@@ -8876,9 +8813,6 @@ exports[`Locale Provider should display the text as el 1`] = `
       >
         <i
           class="icon icon-navigate_before"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
@@ -9216,9 +9150,6 @@ exports[`Locale Provider should display the text as el 1`] = `
         <i
           class="icon icon-left"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
       <button
         class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
@@ -9227,9 +9158,6 @@ exports[`Locale Provider should display the text as el 1`] = `
       >
         <i
           class="icon icon-right"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </div>
@@ -10575,9 +10503,6 @@ exports[`Locale Provider should display the text as en 1`] = `
         <i
           class="icon icon-first_page"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
     </li>
     <li
@@ -10592,9 +10517,6 @@ exports[`Locale Provider should display the text as en 1`] = `
       >
         <i
           class="icon icon-navigate_before"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
@@ -10932,9 +10854,6 @@ exports[`Locale Provider should display the text as en 1`] = `
         <i
           class="icon icon-left"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
       <button
         class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
@@ -10943,9 +10862,6 @@ exports[`Locale Provider should display the text as en 1`] = `
       >
         <i
           class="icon icon-right"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </div>
@@ -12291,9 +12207,6 @@ exports[`Locale Provider should display the text as en-gb 1`] = `
         <i
           class="icon icon-first_page"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
     </li>
     <li
@@ -12308,9 +12221,6 @@ exports[`Locale Provider should display the text as en-gb 1`] = `
       >
         <i
           class="icon icon-navigate_before"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
@@ -12648,9 +12558,6 @@ exports[`Locale Provider should display the text as en-gb 1`] = `
         <i
           class="icon icon-left"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
       <button
         class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
@@ -12659,9 +12566,6 @@ exports[`Locale Provider should display the text as en-gb 1`] = `
       >
         <i
           class="icon icon-right"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </div>
@@ -14007,9 +13911,6 @@ exports[`Locale Provider should display the text as es 1`] = `
         <i
           class="icon icon-first_page"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
     </li>
     <li
@@ -14024,9 +13925,6 @@ exports[`Locale Provider should display the text as es 1`] = `
       >
         <i
           class="icon icon-navigate_before"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
@@ -14364,9 +14262,6 @@ exports[`Locale Provider should display the text as es 1`] = `
         <i
           class="icon icon-left"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
       <button
         class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
@@ -14375,9 +14270,6 @@ exports[`Locale Provider should display the text as es 1`] = `
       >
         <i
           class="icon icon-right"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </div>
@@ -15723,9 +15615,6 @@ exports[`Locale Provider should display the text as et 1`] = `
         <i
           class="icon icon-first_page"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
     </li>
     <li
@@ -15740,9 +15629,6 @@ exports[`Locale Provider should display the text as et 1`] = `
       >
         <i
           class="icon icon-navigate_before"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
@@ -16080,9 +15966,6 @@ exports[`Locale Provider should display the text as et 1`] = `
         <i
           class="icon icon-left"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
       <button
         class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
@@ -16091,9 +15974,6 @@ exports[`Locale Provider should display the text as et 1`] = `
       >
         <i
           class="icon icon-right"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </div>
@@ -17439,9 +17319,6 @@ exports[`Locale Provider should display the text as fa 1`] = `
         <i
           class="icon icon-first_page"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
     </li>
     <li
@@ -17456,9 +17333,6 @@ exports[`Locale Provider should display the text as fa 1`] = `
       >
         <i
           class="icon icon-navigate_before"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
@@ -17796,9 +17670,6 @@ exports[`Locale Provider should display the text as fa 1`] = `
         <i
           class="icon icon-left"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
       <button
         class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
@@ -17807,9 +17678,6 @@ exports[`Locale Provider should display the text as fa 1`] = `
       >
         <i
           class="icon icon-right"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </div>
@@ -19155,9 +19023,6 @@ exports[`Locale Provider should display the text as fi 1`] = `
         <i
           class="icon icon-first_page"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
     </li>
     <li
@@ -19172,9 +19037,6 @@ exports[`Locale Provider should display the text as fi 1`] = `
       >
         <i
           class="icon icon-navigate_before"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
@@ -19512,9 +19374,6 @@ exports[`Locale Provider should display the text as fi 1`] = `
         <i
           class="icon icon-left"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
       <button
         class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
@@ -19523,9 +19382,6 @@ exports[`Locale Provider should display the text as fi 1`] = `
       >
         <i
           class="icon icon-right"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </div>
@@ -20871,9 +20727,6 @@ exports[`Locale Provider should display the text as fr 1`] = `
         <i
           class="icon icon-first_page"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
     </li>
     <li
@@ -20888,9 +20741,6 @@ exports[`Locale Provider should display the text as fr 1`] = `
       >
         <i
           class="icon icon-navigate_before"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
@@ -21228,9 +21078,6 @@ exports[`Locale Provider should display the text as fr 1`] = `
         <i
           class="icon icon-left"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
       <button
         class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
@@ -21239,9 +21086,6 @@ exports[`Locale Provider should display the text as fr 1`] = `
       >
         <i
           class="icon icon-right"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </div>
@@ -22587,9 +22431,6 @@ exports[`Locale Provider should display the text as fr 2`] = `
         <i
           class="icon icon-first_page"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
     </li>
     <li
@@ -22604,9 +22445,6 @@ exports[`Locale Provider should display the text as fr 2`] = `
       >
         <i
           class="icon icon-navigate_before"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
@@ -22944,9 +22782,6 @@ exports[`Locale Provider should display the text as fr 2`] = `
         <i
           class="icon icon-left"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
       <button
         class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
@@ -22955,9 +22790,6 @@ exports[`Locale Provider should display the text as fr 2`] = `
       >
         <i
           class="icon icon-right"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </div>
@@ -24303,9 +24135,6 @@ exports[`Locale Provider should display the text as is 1`] = `
         <i
           class="icon icon-first_page"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
     </li>
     <li
@@ -24320,9 +24149,6 @@ exports[`Locale Provider should display the text as is 1`] = `
       >
         <i
           class="icon icon-navigate_before"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
@@ -24660,9 +24486,6 @@ exports[`Locale Provider should display the text as is 1`] = `
         <i
           class="icon icon-left"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
       <button
         class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
@@ -24671,9 +24494,6 @@ exports[`Locale Provider should display the text as is 1`] = `
       >
         <i
           class="icon icon-right"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </div>
@@ -26019,9 +25839,6 @@ exports[`Locale Provider should display the text as it 1`] = `
         <i
           class="icon icon-first_page"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
     </li>
     <li
@@ -26036,9 +25853,6 @@ exports[`Locale Provider should display the text as it 1`] = `
       >
         <i
           class="icon icon-navigate_before"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
@@ -26376,9 +26190,6 @@ exports[`Locale Provider should display the text as it 1`] = `
         <i
           class="icon icon-left"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
       <button
         class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
@@ -26387,9 +26198,6 @@ exports[`Locale Provider should display the text as it 1`] = `
       >
         <i
           class="icon icon-right"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </div>
@@ -27735,9 +27543,6 @@ exports[`Locale Provider should display the text as ja 1`] = `
         <i
           class="icon icon-first_page"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
     </li>
     <li
@@ -27752,9 +27557,6 @@ exports[`Locale Provider should display the text as ja 1`] = `
       >
         <i
           class="icon icon-navigate_before"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
@@ -28092,9 +27894,6 @@ exports[`Locale Provider should display the text as ja 1`] = `
         <i
           class="icon icon-left"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
       <button
         class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
@@ -28103,9 +27902,6 @@ exports[`Locale Provider should display the text as ja 1`] = `
       >
         <i
           class="icon icon-right"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </div>
@@ -29451,9 +29247,6 @@ exports[`Locale Provider should display the text as ko 1`] = `
         <i
           class="icon icon-first_page"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
     </li>
     <li
@@ -29468,9 +29261,6 @@ exports[`Locale Provider should display the text as ko 1`] = `
       >
         <i
           class="icon icon-navigate_before"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
@@ -29808,9 +29598,6 @@ exports[`Locale Provider should display the text as ko 1`] = `
         <i
           class="icon icon-left"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
       <button
         class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
@@ -29819,9 +29606,6 @@ exports[`Locale Provider should display the text as ko 1`] = `
       >
         <i
           class="icon icon-right"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </div>
@@ -31167,9 +30951,6 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
         <i
           class="icon icon-first_page"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
     </li>
     <li
@@ -31184,9 +30965,6 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
       >
         <i
           class="icon icon-navigate_before"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
@@ -31524,9 +31302,6 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
         <i
           class="icon icon-left"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
       <button
         class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
@@ -31535,9 +31310,6 @@ exports[`Locale Provider should display the text as ku-iq 1`] = `
       >
         <i
           class="icon icon-right"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </div>
@@ -32883,9 +32655,6 @@ exports[`Locale Provider should display the text as nb 1`] = `
         <i
           class="icon icon-first_page"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
     </li>
     <li
@@ -32900,9 +32669,6 @@ exports[`Locale Provider should display the text as nb 1`] = `
       >
         <i
           class="icon icon-navigate_before"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
@@ -33240,9 +33006,6 @@ exports[`Locale Provider should display the text as nb 1`] = `
         <i
           class="icon icon-left"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
       <button
         class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
@@ -33251,9 +33014,6 @@ exports[`Locale Provider should display the text as nb 1`] = `
       >
         <i
           class="icon icon-right"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </div>
@@ -34599,9 +34359,6 @@ exports[`Locale Provider should display the text as nl 1`] = `
         <i
           class="icon icon-first_page"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
     </li>
     <li
@@ -34616,9 +34373,6 @@ exports[`Locale Provider should display the text as nl 1`] = `
       >
         <i
           class="icon icon-navigate_before"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
@@ -34956,9 +34710,6 @@ exports[`Locale Provider should display the text as nl 1`] = `
         <i
           class="icon icon-left"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
       <button
         class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
@@ -34967,9 +34718,6 @@ exports[`Locale Provider should display the text as nl 1`] = `
       >
         <i
           class="icon icon-right"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </div>
@@ -36315,9 +36063,6 @@ exports[`Locale Provider should display the text as nl-be 1`] = `
         <i
           class="icon icon-first_page"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
     </li>
     <li
@@ -36332,9 +36077,6 @@ exports[`Locale Provider should display the text as nl-be 1`] = `
       >
         <i
           class="icon icon-navigate_before"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
@@ -36672,9 +36414,6 @@ exports[`Locale Provider should display the text as nl-be 1`] = `
         <i
           class="icon icon-left"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
       <button
         class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
@@ -36683,9 +36422,6 @@ exports[`Locale Provider should display the text as nl-be 1`] = `
       >
         <i
           class="icon icon-right"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </div>
@@ -38031,9 +37767,6 @@ exports[`Locale Provider should display the text as pl 1`] = `
         <i
           class="icon icon-first_page"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
     </li>
     <li
@@ -38048,9 +37781,6 @@ exports[`Locale Provider should display the text as pl 1`] = `
       >
         <i
           class="icon icon-navigate_before"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
@@ -38388,9 +38118,6 @@ exports[`Locale Provider should display the text as pl 1`] = `
         <i
           class="icon icon-left"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
       <button
         class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
@@ -38399,9 +38126,6 @@ exports[`Locale Provider should display the text as pl 1`] = `
       >
         <i
           class="icon icon-right"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </div>
@@ -39747,9 +39471,6 @@ exports[`Locale Provider should display the text as pt 1`] = `
         <i
           class="icon icon-first_page"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
     </li>
     <li
@@ -39764,9 +39485,6 @@ exports[`Locale Provider should display the text as pt 1`] = `
       >
         <i
           class="icon icon-navigate_before"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
@@ -40104,9 +39822,6 @@ exports[`Locale Provider should display the text as pt 1`] = `
         <i
           class="icon icon-left"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
       <button
         class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
@@ -40115,9 +39830,6 @@ exports[`Locale Provider should display the text as pt 1`] = `
       >
         <i
           class="icon icon-right"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </div>
@@ -41463,9 +41175,6 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
         <i
           class="icon icon-first_page"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
     </li>
     <li
@@ -41480,9 +41189,6 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
       >
         <i
           class="icon icon-navigate_before"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
@@ -41820,9 +41526,6 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
         <i
           class="icon icon-left"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
       <button
         class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
@@ -41831,9 +41534,6 @@ exports[`Locale Provider should display the text as pt-br 1`] = `
       >
         <i
           class="icon icon-right"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </div>
@@ -43179,9 +42879,6 @@ exports[`Locale Provider should display the text as ru 1`] = `
         <i
           class="icon icon-first_page"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
     </li>
     <li
@@ -43196,9 +42893,6 @@ exports[`Locale Provider should display the text as ru 1`] = `
       >
         <i
           class="icon icon-navigate_before"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
@@ -43536,9 +43230,6 @@ exports[`Locale Provider should display the text as ru 1`] = `
         <i
           class="icon icon-left"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
       <button
         class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
@@ -43547,9 +43238,6 @@ exports[`Locale Provider should display the text as ru 1`] = `
       >
         <i
           class="icon icon-right"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </div>
@@ -44895,9 +44583,6 @@ exports[`Locale Provider should display the text as sk 1`] = `
         <i
           class="icon icon-first_page"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
     </li>
     <li
@@ -44912,9 +44597,6 @@ exports[`Locale Provider should display the text as sk 1`] = `
       >
         <i
           class="icon icon-navigate_before"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
@@ -45252,9 +44934,6 @@ exports[`Locale Provider should display the text as sk 1`] = `
         <i
           class="icon icon-left"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
       <button
         class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
@@ -45263,9 +44942,6 @@ exports[`Locale Provider should display the text as sk 1`] = `
       >
         <i
           class="icon icon-right"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </div>
@@ -46611,9 +46287,6 @@ exports[`Locale Provider should display the text as sl 1`] = `
         <i
           class="icon icon-first_page"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
     </li>
     <li
@@ -46628,9 +46301,6 @@ exports[`Locale Provider should display the text as sl 1`] = `
       >
         <i
           class="icon icon-navigate_before"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
@@ -46968,9 +46638,6 @@ exports[`Locale Provider should display the text as sl 1`] = `
         <i
           class="icon icon-left"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
       <button
         class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
@@ -46979,9 +46646,6 @@ exports[`Locale Provider should display the text as sl 1`] = `
       >
         <i
           class="icon icon-right"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </div>
@@ -48327,9 +47991,6 @@ exports[`Locale Provider should display the text as sr 1`] = `
         <i
           class="icon icon-first_page"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
     </li>
     <li
@@ -48344,9 +48005,6 @@ exports[`Locale Provider should display the text as sr 1`] = `
       >
         <i
           class="icon icon-navigate_before"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
@@ -48684,9 +48342,6 @@ exports[`Locale Provider should display the text as sr 1`] = `
         <i
           class="icon icon-left"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
       <button
         class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
@@ -48695,9 +48350,6 @@ exports[`Locale Provider should display the text as sr 1`] = `
       >
         <i
           class="icon icon-right"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </div>
@@ -50043,9 +49695,6 @@ exports[`Locale Provider should display the text as sv 1`] = `
         <i
           class="icon icon-first_page"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
     </li>
     <li
@@ -50060,9 +49709,6 @@ exports[`Locale Provider should display the text as sv 1`] = `
       >
         <i
           class="icon icon-navigate_before"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
@@ -50400,9 +50046,6 @@ exports[`Locale Provider should display the text as sv 1`] = `
         <i
           class="icon icon-left"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
       <button
         class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
@@ -50411,9 +50054,6 @@ exports[`Locale Provider should display the text as sv 1`] = `
       >
         <i
           class="icon icon-right"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </div>
@@ -51759,9 +51399,6 @@ exports[`Locale Provider should display the text as th 1`] = `
         <i
           class="icon icon-first_page"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
     </li>
     <li
@@ -51776,9 +51413,6 @@ exports[`Locale Provider should display the text as th 1`] = `
       >
         <i
           class="icon icon-navigate_before"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
@@ -52116,9 +51750,6 @@ exports[`Locale Provider should display the text as th 1`] = `
         <i
           class="icon icon-left"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
       <button
         class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
@@ -52127,9 +51758,6 @@ exports[`Locale Provider should display the text as th 1`] = `
       >
         <i
           class="icon icon-right"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </div>
@@ -53475,9 +53103,6 @@ exports[`Locale Provider should display the text as tr 1`] = `
         <i
           class="icon icon-first_page"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
     </li>
     <li
@@ -53492,9 +53117,6 @@ exports[`Locale Provider should display the text as tr 1`] = `
       >
         <i
           class="icon icon-navigate_before"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
@@ -53832,9 +53454,6 @@ exports[`Locale Provider should display the text as tr 1`] = `
         <i
           class="icon icon-left"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
       <button
         class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
@@ -53843,9 +53462,6 @@ exports[`Locale Provider should display the text as tr 1`] = `
       >
         <i
           class="icon icon-right"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </div>
@@ -55191,9 +54807,6 @@ exports[`Locale Provider should display the text as uk 1`] = `
         <i
           class="icon icon-first_page"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
     </li>
     <li
@@ -55208,9 +54821,6 @@ exports[`Locale Provider should display the text as uk 1`] = `
       >
         <i
           class="icon icon-navigate_before"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
@@ -55548,9 +55158,6 @@ exports[`Locale Provider should display the text as uk 1`] = `
         <i
           class="icon icon-left"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
       <button
         class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
@@ -55559,9 +55166,6 @@ exports[`Locale Provider should display the text as uk 1`] = `
       >
         <i
           class="icon icon-right"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </div>
@@ -56907,9 +56511,6 @@ exports[`Locale Provider should display the text as vi 1`] = `
         <i
           class="icon icon-first_page"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
     </li>
     <li
@@ -56924,9 +56525,6 @@ exports[`Locale Provider should display the text as vi 1`] = `
       >
         <i
           class="icon icon-navigate_before"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
@@ -57264,9 +56862,6 @@ exports[`Locale Provider should display the text as vi 1`] = `
         <i
           class="icon icon-left"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
       <button
         class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
@@ -57275,9 +56870,6 @@ exports[`Locale Provider should display the text as vi 1`] = `
       >
         <i
           class="icon icon-right"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </div>
@@ -58623,9 +58215,6 @@ exports[`Locale Provider should display the text as zh-cn 1`] = `
         <i
           class="icon icon-first_page"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
     </li>
     <li
@@ -58640,9 +58229,6 @@ exports[`Locale Provider should display the text as zh-cn 1`] = `
       >
         <i
           class="icon icon-navigate_before"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
@@ -58980,9 +58566,6 @@ exports[`Locale Provider should display the text as zh-cn 1`] = `
         <i
           class="icon icon-left"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
       <button
         class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
@@ -58991,9 +58574,6 @@ exports[`Locale Provider should display the text as zh-cn 1`] = `
       >
         <i
           class="icon icon-right"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </div>
@@ -60339,9 +59919,6 @@ exports[`Locale Provider should display the text as zh-tw 1`] = `
         <i
           class="icon icon-first_page"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
     </li>
     <li
@@ -60356,9 +59933,6 @@ exports[`Locale Provider should display the text as zh-tw 1`] = `
       >
         <i
           class="icon icon-navigate_before"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
@@ -60696,9 +60270,6 @@ exports[`Locale Provider should display the text as zh-tw 1`] = `
         <i
           class="icon icon-left"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
       <button
         class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
@@ -60707,9 +60278,6 @@ exports[`Locale Provider should display the text as zh-tw 1`] = `
       >
         <i
           class="icon icon-right"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </div>

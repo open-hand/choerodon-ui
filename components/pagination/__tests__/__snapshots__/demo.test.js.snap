@@ -18,9 +18,6 @@ exports[`renders ./components/pagination/demo/basic.md correctly 1`] = `
       <i
         class="icon icon-navigate_before"
       />
-      <div
-        class="c7n-ripple-wrapper"
-      />
     </button>
   </li>
   <li
@@ -1018,9 +1015,6 @@ exports[`renders ./components/pagination/demo/size.md correctly 1`] = `
         <i
           class="icon icon-navigate_before"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
     </li>
     <li
@@ -1143,9 +1137,6 @@ exports[`renders ./components/pagination/demo/size.md correctly 1`] = `
       >
         <i
           class="icon icon-navigate_before"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
@@ -1335,9 +1326,6 @@ exports[`renders ./components/pagination/demo/size.md correctly 1`] = `
         <i
           class="icon icon-navigate_before"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
     </li>
     <li
@@ -1461,9 +1449,6 @@ exports[`renders ./components/pagination/demo/size.md correctly 1`] = `
         <i
           class="icon icon-navigate_before"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
     </li>
     <li
@@ -1586,9 +1571,6 @@ exports[`renders ./components/pagination/demo/size.md correctly 1`] = `
       >
         <i
           class="icon icon-navigate_before"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
@@ -1778,9 +1760,6 @@ exports[`renders ./components/pagination/demo/size.md correctly 1`] = `
         <i
           class="icon icon-navigate_before"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
     </li>
     <li
@@ -1965,9 +1944,6 @@ exports[`renders ./components/pagination/demo/tiny.md correctly 1`] = `
         <i
           class="icon icon-first_page"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
     </li>
     <li
@@ -1982,9 +1958,6 @@ exports[`renders ./components/pagination/demo/tiny.md correctly 1`] = `
       >
         <i
           class="icon icon-navigate_before"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
@@ -2107,9 +2080,6 @@ exports[`renders ./components/pagination/demo/tiny.md correctly 1`] = `
         <i
           class="icon icon-first_page"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
     </li>
     <li
@@ -2124,9 +2094,6 @@ exports[`renders ./components/pagination/demo/tiny.md correctly 1`] = `
       >
         <i
           class="icon icon-navigate_before"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
@@ -2240,9 +2207,6 @@ exports[`renders ./components/pagination/demo/tiny.md correctly 1`] = `
         <i
           class="icon icon-first_page"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
     </li>
     <li
@@ -2257,9 +2221,6 @@ exports[`renders ./components/pagination/demo/tiny.md correctly 1`] = `
       >
         <i
           class="icon icon-navigate_before"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
@@ -2326,9 +2287,6 @@ exports[`renders ./components/pagination/demo/total.md correctly 1`] = `
       >
         <i
           class="icon icon-navigate_before"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </li>
@@ -2458,9 +2416,6 @@ exports[`renders ./components/pagination/demo/total.md correctly 1`] = `
       >
         <i
           class="icon icon-navigate_before"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </li>

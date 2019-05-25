@@ -136,9 +136,6 @@ exports[`renders ./components/locale-provider/demo/all.md correctly 1`] = `
             <i
               class="icon icon-first_page"
             />
-            <div
-              class="c7n-ripple-wrapper"
-            />
           </button>
         </li>
         <li
@@ -153,9 +150,6 @@ exports[`renders ./components/locale-provider/demo/all.md correctly 1`] = `
           >
             <i
               class="icon icon-navigate_before"
-            />
-            <div
-              class="c7n-ripple-wrapper"
             />
           </button>
         </li>
@@ -530,9 +524,6 @@ exports[`renders ./components/locale-provider/demo/all.md correctly 1`] = `
             <i
               class="icon icon-left"
             />
-            <div
-              class="c7n-ripple-wrapper"
-            />
           </button>
           <button
             class="c7n-btn c7n-btn-primary c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
@@ -541,9 +532,6 @@ exports[`renders ./components/locale-provider/demo/all.md correctly 1`] = `
           >
             <i
               class="icon icon-right"
-            />
-            <div
-              class="c7n-ripple-wrapper"
             />
           </button>
         </div>
@@ -1897,9 +1885,6 @@ exports[`renders ./components/locale-provider/demo/basic.md correctly 1`] = `
         <i
           class="icon icon-first_page"
         />
-        <div
-          class="c7n-ripple-wrapper"
-        />
       </button>
     </li>
     <li
@@ -1914,9 +1899,6 @@ exports[`renders ./components/locale-provider/demo/basic.md correctly 1`] = `
       >
         <i
           class="icon icon-navigate_before"
-        />
-        <div
-          class="c7n-ripple-wrapper"
         />
       </button>
     </li>

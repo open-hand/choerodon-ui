@@ -490,9 +490,6 @@ exports[`renders ./components/tabs/demo/disabled.md correctly 1`] = `
               role="tab"
             >
               Tab 2
-              <div
-                class="c7n-ripple-wrapper"
-              />
             </div>
             <div
               aria-disabled="false"

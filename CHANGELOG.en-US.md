@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.6.4
+
+`2019-05-25`
+
 - 🌟 `<pro>FormField`: Added `maxTagPlaceholder`, `maxTagCount`, `maxTagTextLength` properties.
 - 🌟 `<pro>Field`: Added the `ignore` property.
 - 🌟 `<pro>Select`: Added the `primitiveValue` property.
@@ -22,8 +26,17 @@ timeline: true
 - 🌟 `<pro>DataSet`: Deprecated the beforeSelect event and adds the create event.
 - 🌟 `Ripple`: Added the disabled property to disable the ripple effect.
 - 💄 `<pro>Table`: Optimize performance when the size changes.
+- 💄 `Pagination`: Optimize the paging effect within 10 pages.
+- 💄 `<pro>Lov`: Promote the `placeholder` property with a priority greater than the configured `placeholder`.
 - 🐞 `<pro>Table`: Fixed an issue where the inline edit box was not displayed when the binding dataSet create new record.
 - 🐞 `<pro>Select`: The value of the renderer is always displayed when it is not editable.
+
+## 0.6.3
+
+`2019-05-24`
+
+- 🐞 `Tree`: Fix style.
+- 🐞 `Button`: Fix small button style.
 
 ## 0.6.2
 

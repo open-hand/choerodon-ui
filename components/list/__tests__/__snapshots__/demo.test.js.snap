@@ -1470,9 +1470,6 @@ exports[`renders ./components/list/demo/vertical.md correctly 1`] = `
             <i
               class="icon icon-first_page"
             />
-            <div
-              class="c7n-ripple-wrapper"
-            />
           </button>
         </li>
         <li
@@ -1487,9 +1484,6 @@ exports[`renders ./components/list/demo/vertical.md correctly 1`] = `
           >
             <i
               class="icon icon-navigate_before"
-            />
-            <div
-              class="c7n-ripple-wrapper"
             />
           </button>
         </li>
@@ -1506,9 +1500,6 @@ exports[`renders ./components/list/demo/vertical.md correctly 1`] = `
             <i
               class="icon icon-navigate_next"
             />
-            <div
-              class="c7n-ripple-wrapper"
-            />
           </button>
         </li>
         <li
@@ -1523,9 +1514,6 @@ exports[`renders ./components/list/demo/vertical.md correctly 1`] = `
           >
             <i
               class="icon icon-last_page"
-            />
-            <div
-              class="c7n-ripple-wrapper"
             />
           </button>
         </li>
