@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `<pro>Tranfer`: Added Transfer component.
 - 🌟 `<pro>DataSet`: Deprecated the beforeSelect event and adds the create event.
 - 🌟 `Ripple`: Added the disabled property to disable the ripple effect.
+- 💄 `<pro>Table`: Optimize performance when the size changes.
 - 🐞 `<pro>Table`: Fixed an issue where the inline edit box was not displayed when the binding dataSet create new record.
 - 🐞 `<pro>Select`: The value of the renderer is always displayed when it is not editable.
 

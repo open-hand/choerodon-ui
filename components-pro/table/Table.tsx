@@ -41,7 +41,7 @@ import Switch from '../switch/Switch';
 import Tooltip from '../tooltip/Tooltip';
 import { $l } from '../locale-context';
 import FilterBar from './FilterBar';
-import { findIndexedSibling, getPaginationPosition } from './utils';
+import { findIndexedSibling, getHeight, getPaginationPosition } from './utils';
 import { ButtonProps } from '../button/Button';
 
 export type expandedRowRendererProps = { dataSet: DataSet, record: Record };
@@ -539,9 +539,9 @@ export default class Table extends DataSetComponent<TableProps> {
     this.processDataSetListener(true);
   }
 
-  componentDidUpdate() {
-    this.handleResize();
-  }
+  // componentDidUpdate() {
+  //   this.handleResize();
+  // }
 
   componentWillUnmount() {
     this.handleResize.cancel();
@@ -908,21 +908,21 @@ export default class Table extends DataSetComponent<TableProps> {
       const { prefixCls } = this;
       let height = this.getStyleHeight();
       if (element && isNumber(height)) {
-        const tableTitle = element.querySelectorAll(`.${prefixCls}-title`);
-        const tableHeader = element.querySelectorAll(`.${prefixCls}-thead`);
-        const tableFooter = element.querySelectorAll(`.${prefixCls}-footer`);
-        const tableFootWrap = element.querySelectorAll(`.${prefixCls}-foot`);
-        if (tableTitle.length) {
-          height -= tableTitle[0].offsetHeight;
+        const tableTitle: HTMLDivElement | null = element.querySelector(`.${prefixCls}-title`);
+        const tableHeader: HTMLTableSectionElement | null = element.querySelector(`.${prefixCls}-thead`);
+        const tableFooter: HTMLTableSectionElement | null = element.querySelector(`.${prefixCls}-footer`);
+        const tableFootWrap: HTMLDivElement | null = element.querySelector(`.${prefixCls}-foot`);
+        if (tableTitle) {
+          height -= getHeight(tableTitle);
         }
-        if (tableHeader.length) {
-          height -= tableHeader[0].offsetHeight;
+        if (tableHeader) {
+          height -= getHeight(tableHeader);
         }
-        if (tableFooter.length) {
-          height -= tableFooter[0].offsetHeight;
+        if (tableFooter) {
+          height -= getHeight(tableFooter);
         }
-        if (tableFootWrap.length) {
-          height -= tableFootWrap[0].offsetHeight;
+        if (tableFootWrap) {
+          height -= getHeight(tableFootWrap);
         }
         this.tableStore.height = height;
       }

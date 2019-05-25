@@ -178,3 +178,7 @@ export function getPaginationPosition(pagination?: TablePaginationConfig): Table
   }
   return TablePaginationPosition.bottom;
 }
+
+export function getHeight(el: HTMLElement) {
+  return el.getBoundingClientRect().height;
+}
