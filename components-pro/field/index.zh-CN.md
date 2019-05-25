@@ -28,6 +28,9 @@ title: FormField
 | showHelp | 展示提示信息的方式，`'tooltip'`只有在`TextField`及其子类上生效 | `'tooltip' \| 'newLine' \| 'none'` | `'newLine'` |
 | renderer | 渲染器，覆盖默认渲染行为 | ({ value, text, name, record, dataSet }) => ReactNode | ({ text }) => text |
 | noValidate | 不校验，不影响DataSet校验 | boolean | false |
+| maxTagPlaceholder | 多值标签超出最大数量时的占位描述 | ReactNode \| (restValues) => ReactNode |  |
+| maxTagCount | 多值标签最大数量 | number |  |
+| maxTagTextLength | 多值标签文案最大长度 | number |  |
 | onInvalid | 校验失败回调 | (validationMessage, validity, name) => void |   |
 | onChange | 值变化回调 | (value, oldValue, form) => void |   |
 | onInput | 输入回调 | Function |   |

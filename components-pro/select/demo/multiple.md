@@ -45,10 +45,13 @@ class App extends React.Component {
     return (
       <Row gutter={10}>
         <Col span={24}>
-          <Select dataSet={this.ds} name="user" placeholder="数据源多选">
+          <Select dataSet={this.ds} name="user" placeholder="数据源多选" maxTagCount={2} maxTagTextLength={3} maxTagPlaceholder={restValues => `+${restValues.length}...`}>
             <Option value="jack">Jack</Option>
             <Option value="lucy">Lucy</Option>
             <Option value="wu">Wu</Option>
+            <Option value="a1">a1</Option>
+            <Option value="b2">b2</Option>
+            <Option value="c3">c3</Option>
           </Select>
         </Col>
         <Col span={12}>

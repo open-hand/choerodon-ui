@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>FormField`: 新增maxTagPlaceholder、maxTagCount、maxTagTextLength属性。
 - 🌟 `<pro>Field`: 新增ignore属性。
 - 🌟 `<pro>Select`: 新增primitiveValue属性。
 - 🌟 `<pro>Tranfer`: 新增Transfer组件。

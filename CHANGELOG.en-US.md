@@ -15,8 +15,9 @@ timeline: true
 
 ---
 
-- 🌟 `<pro>Field`: Added the ignore property.
-- 🌟 `<pro>Select`: Added the primitiveValue property.
+- 🌟 `<pro>FormField`: Added `maxTagPlaceholder`, `maxTagCount`, `maxTagTextLength` properties.
+- 🌟 `<pro>Field`: Added the `ignore` property.
+- 🌟 `<pro>Select`: Added the `primitiveValue` property.
 - 🌟 `<pro>Tranfer`: Added Transfer component.
 - 🌟 `<pro>DataSet`: Deprecated the beforeSelect event and adds the create event.
 - 🌟 `Ripple`: Added the disabled property to disable the ripple effect.

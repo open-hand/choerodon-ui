@@ -126,6 +126,18 @@ export interface FormFieldProps extends DataSetComponentProps {
    */
   renderer?: Renderer;
   /**
+   * 多值标签超出最大数量时的占位描述
+   */
+  maxTagPlaceholder?: ReactNode | ((omittedValues: any[]) => ReactNode);
+  /**
+   * 多值标签最大数量
+   */
+  maxTagCount?: number;
+  /**
+   * 多值标签文案最大长度
+   */
+  maxTagTextLength?: number;
+  /**
    * 校验失败回调
    */
   onInvalid?: (validationResults: ValidationResult[], validity: Validity, name?: string) => void;
@@ -744,25 +756,30 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   }
 
   renderMultipleValues(readOnly?: boolean) {
-    const { prefixCls } = this;
+    const values = this.getValues();
+    const valueLength = values.length;
+    const { prefixCls, props: { maxTagCount = valueLength, maxTagPlaceholder, maxTagTextLength } } = this;
     const validationErrorValues = this.getValidationErrorValues();
     const repeats: Map<any, number> = new Map<any, number>();
-    return this.getValues().map((v) => {
+    const disabled = this.isDisabled() || this.isReadOnly();
+    const blockClassName = classNames({
+      [`${prefixCls}-multiple-block-disabled`]: disabled,
+    }, `${prefixCls}-multiple-block`);
+    const tags = values.slice(0, maxTagCount).map((v) => {
       const repeat = repeats.get(v) || 0;
       const text = this.processText(this.processValue(v), v, repeat);
       repeats.set(v, repeat + 1);
       if (!isNil(text)) {
+        const content = maxTagTextLength && text.length > maxTagTextLength ? `${text.slice(0, maxTagTextLength)}...` : text;
         const validationResult = validationErrorValues.find(error => error.value === v);
-        const disabled = this.isDisabled() || this.isReadOnly();
         const className = classNames({
-          [`${prefixCls}-multiple-block-invalid`]: validationResult,
           [`${prefixCls}-multiple-block-disabled`]: disabled,
-        }, `${prefixCls}-multiple-block`);
+        }, blockClassName);
         const validationMessage = validationResult && this.renderValidationMessage(validationResult);
         const closeBtn = !disabled && <CloseButton onClose={this.handleMutipleValueRemove} value={v} index={repeat} />;
-        const inner = readOnly ? <span className={className}>{text}</span> : (
+        const inner = readOnly ? <span className={className}>{content}</span> : (
           <li className={className}>
-            <div>{text}</div>
+            <div>{content}</div>
             {closeBtn}
           </li>
         );
@@ -779,6 +796,21 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
         );
       }
     });
+
+    if (valueLength > maxTagCount) {
+      let content: ReactNode = `+ ${valueLength - maxTagCount} ...`;
+      if (maxTagPlaceholder) {
+        const omittedValues = values.slice(maxTagCount, valueLength);
+        content = typeof maxTagPlaceholder === 'function' ? maxTagPlaceholder(omittedValues) : maxTagPlaceholder;
+      }
+      tags.push(
+        <li key="maxTagPlaceholder" className={blockClassName}>
+          <div>{content}</div>
+        </li>,
+      );
+    }
+
+    return tags;
   }
 
   clear() {
