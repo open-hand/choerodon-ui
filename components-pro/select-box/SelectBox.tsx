@@ -14,6 +14,7 @@ import { ViewMode } from '../radio/enum';
 import DataSet from '../data-set/DataSet';
 import normalizeOptions from '../option/normalizeOptions';
 import { $l } from '../locale-context';
+import { LabelLayout } from '../form/enum';
 
 const GroupIdGen = function* (id) {
   while (true) {
@@ -80,6 +81,10 @@ export default class SelectBox extends Select<SelectBoxProps> {
     });
   }
 
+  isEmpty() {
+    return false;
+  }
+
   renderWrapper(): ReactNode {
     const { options, textField, valueField } = this;
     const { autoFocus, mode } = this.props;
@@ -97,6 +102,7 @@ export default class SelectBox extends Select<SelectBoxProps> {
         disabled: this.isDisabled(),
         mode,
         noValidate: true,
+        labelLayout: LabelLayout.none,
       })
     ));
     const { className } = this.getOtherProps();

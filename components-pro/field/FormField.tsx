@@ -60,6 +60,7 @@ export interface FormFieldProps extends DataSetComponentProps {
    * 标签名
    */
   label?: string;
+  labelLayout?: LabelLayout;
   /**
    * 字段名
    */
@@ -266,9 +267,8 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   @observable value?: any;
 
   get hasFloatLabel(): boolean {
-    const { labelLayout } = this.context;
-    const { label } = this.props;
-    return labelLayout === LabelLayout.float && !!label;
+    const labelLayout = this.props.labelLayout || this.context.labelLayout;
+    return labelLayout === LabelLayout.float;
   }
 
   get isControlled(): boolean {
@@ -437,25 +437,21 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     }
   }
 
+  getLabel() {
+    return this.getProp('label');
+  }
+
   renderFloatLabel(): ReactNode {
     if (this.hasFloatLabel) {
       const prefixCls = getProPrefixCls(FIELD_SUFFIX);
       const required = this.getProp('required');
+      const label = this.getLabel();
       const classString = classNames(`${prefixCls}-label`, {
         [`${prefixCls}-required`]: required,
       });
-      return <div className={classString}>{this.props.label}</div>;
-    }
-  }
-
-  renderUnderLine(): ReactNode {
-    if (this.hasFloatLabel) {
-      const { prefixCls } = this;
-      return (
-        <div className={`${prefixCls}-underline`}>
-          <span className={`${prefixCls}-ripple`} />
-        </div>
-      );
+      return <div className={`${prefixCls}-label-wrapper`}>
+        <div className={classString}>{label}</div>
+      </div>;
     }
   }
 

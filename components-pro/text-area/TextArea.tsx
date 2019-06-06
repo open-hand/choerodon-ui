@@ -50,7 +50,6 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
           <textarea {...this.getOtherProps()} readOnly={!this.editable} value={this.getText()} />
           {this.renderFloatLabel()}
         </label>
-        {this.renderUnderLine()}
       </div>
     );
   }

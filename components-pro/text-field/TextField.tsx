@@ -146,13 +146,6 @@ export class TextField<T extends TextFieldProps> extends FormField<T & TextField
     return isEmpty(this.text) && super.isEmpty();
   }
 
-  canPlaceholderShown() {
-    if (this.hasFloatLabel && !this.isFocused) {
-      return false;
-    }
-    return true;
-  }
-
   getOtherProps() {
     const otherProps = omit(super.getOtherProps(), [
       'prefix',
@@ -161,13 +154,12 @@ export class TextField<T extends TextFieldProps> extends FormField<T & TextField
       'addonBefore',
       'addonAfter',
       'restrict',
+      'placeholder',
+      'placeHolder',
     ]);
     otherProps.type = this.type;
     otherProps.maxLength = this.getProp('maxLength');
     otherProps.onKeyDown = this.handleKeyDown;
-    if (!this.canPlaceholderShown()) {
-      delete otherProps.placeholder;
-    }
     return otherProps;
   }
 
@@ -208,7 +200,6 @@ export class TextField<T extends TextFieldProps> extends FormField<T & TextField
     const otherNextNode = this.getOtherNextNode();
     const placeholderDiv = this.renderPlaceHolder();
     const floatLabel = this.renderFloatLabel();
-    const underLine = this.renderUnderLine();
     const multipleHolder = this.renderMultipleHolder();
 
     return (
@@ -223,7 +214,6 @@ export class TextField<T extends TextFieldProps> extends FormField<T & TextField
           {button}
           {suffix}
         </label>
-        {underLine}
         {otherNextNode}
       </span>
     );
@@ -259,6 +249,18 @@ export class TextField<T extends TextFieldProps> extends FormField<T & TextField
         <Icon type="help" />
       </Tooltip>
     );
+  }
+
+  getPlaceholder() {
+    return this.props.placeholder;
+  }
+
+  getLabel() {
+    const placeholder = this.getPlaceholder();
+    if (this.isEmpty() && placeholder) {
+      return placeholder;
+    }
+    return this.getProp('label');
   }
 
   wrapGroupItem(node: ReactNode, category: GroupItemCategory): ReactNode {
@@ -303,7 +305,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T & TextField
 
   getEditor(): ReactNode {
     const { prefixCls, props: { style } } = this;
-    const { placeholder, ...otherProps } = this.getOtherProps();
+    const otherProps = this.getOtherProps();
     const { height } = (style || {}) as CSSProperties;
     return this.multiple ? (
       <div key="text" className={otherProps.className}>
@@ -321,7 +323,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T & TextField
       <input
         key="text"
         {...otherProps}
-        placeholder={placeholder}
+        placeholder={this.hasFloatLabel ? null : this.getPlaceholder()}
         value={this.getText()}
         readOnly={!this.editable}
       />
@@ -393,14 +395,14 @@ export class TextField<T extends TextFieldProps> extends FormField<T & TextField
   }
 
   renderPlaceHolder(): ReactNode {
-    if ((this.multiple || !isPlaceHolderSupport()) && this.canPlaceholderShown()) {
+    if ((this.multiple || !isPlaceHolderSupport()) && !this.hasFloatLabel) {
       return this.getPlaceHolderNode();
     }
   }
 
   getPlaceHolderNode(): ReactNode {
     const { prefixCls } = this;
-    const { placeholder } = this.getOtherProps();
+    const placeholder = this.getPlaceholder();
     if (placeholder) {
       return <div className={`${prefixCls}-placeholder`}>{placeholder}</div>;
     }

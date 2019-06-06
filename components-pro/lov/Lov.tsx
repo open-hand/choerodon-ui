@@ -234,19 +234,24 @@ export default class Lov extends Select<LovProps> {
     }
   }
 
+  getPlaceholder() {
+    const placeholder = super.getPlaceholder();
+    if (placeholder) {
+      return placeholder;
+    }
+    const config = this.getConfig();
+    if (config) {
+      return config.placeholder;
+    }
+  }
+
   getOtherProps() {
-    const otherProps = omit(super.getOtherProps(),
+    return omit(super.getOtherProps(),
       [
         'modalProps',
         'noCache',
       ],
     );
-    const config = this.getConfig();
-    if (!('placeholder' in otherProps ) && config && config.placeholder) {
-      otherProps.placeholder = config.placeholder;
-    }
-
-    return otherProps;
   }
 
   getSuffix(): ReactNode {

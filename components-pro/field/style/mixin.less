@@ -24,28 +24,55 @@
 
 .float-label() {
   &-has-label .@{field-label-prefix-cls} {
-    position: absolute;
+    &-wrapper {
+      position: absolute;
+      padding: 0 .04rem;
+      top: 0;
+      height: 0;
+      left: @input-padding-horizontal-base;
+      border-top: @border-width-base @border-style-base @component-background;
+      transform-origin: 0 -170%;
+      transition: all 0.4s @ease-out;
+    }
+    &:after {
+      width: 0;
+    }
     padding: 0;
-    top: 0;
     color: rgba(0, 0, 0, .6);
-    transform-origin: 0 -200%;
-    transition: transform .4s cubic-bezier(.215, .61, .355, 1), color .4s cubic-bezier(.215, .61, .355, 1), background-color .4s cubic-bezier(.215, .61, .355, 1), -webkit-transform .4s cubic-bezier(.215, .61, .355, 1);
+    transform-origin: inherit;
+    transition: inherit;
+    pointer-events: none;
+  }
+  &-has-label&-focused .@{field-label-prefix-cls} {
+    color: @outline-color;
+  }
+  &-has-label&-invalid .@{field-label-prefix-cls} {
+    color: @error-color;
   }
   &-has-label .@{field-label-prefix-cls},
   &-has-label &:focus + .@{field-label-prefix-cls},
   &-has-label &:-webkit-autofill + .@{field-label-prefix-cls} {
-    transform: scale(.75);
+    &-wrapper {
+      transform: scaleX(.75);
+    }
+    transform: scaleY(.75);
   }
   &-has-label & {
-    border: none;
-    padding-left: 0;
+    border-radius: .04rem;
   }
   &-has-label&-invalid,
   &-has-label&-required {
     background-color: @input-wrapper-bg;
   }
+  &-has-label&-required .@{field-label-prefix-cls}:after {
+    width: .08rem;
+  }
   &-empty:not(&-focused) {
     .@{field-label-prefix-cls} {
+      &-wrapper {
+        border-top-color: fade(@component-background, 0);
+        transform: none;
+      }
       transform: none;
     }
   }

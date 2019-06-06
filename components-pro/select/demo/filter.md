@@ -14,7 +14,7 @@ title:
 Through the property `opyionsFilter` the options will be filtered.
 
 ````jsx
-import { DataSet, Select } from 'choerodon-ui/pro';
+import { DataSet, Select, Button } from 'choerodon-ui/pro';
 
 const { Option } = Select;
 
