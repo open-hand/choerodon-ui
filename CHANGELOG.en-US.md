@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+
+- 🌟 `<pro>TextField`: The style of the input box when updating the labelLayout to float.
+- 🐞 `<pro>Upload`: Fixed an issue where the popup could not be closed.
+
 ## 0.6.4
 
 `2019-05-25`

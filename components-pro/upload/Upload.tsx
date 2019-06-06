@@ -252,13 +252,13 @@ export default class Upload extends FormField<UploadProps> {
       ...this.getOtherProps(),
     };
 
-    const inputWrapperBtn = (
-      <Button onClick={this.handleWrapperBtnClick}>
-        <input {...uploadProps} hidden />
+    const inputWrapperBtn = [
+      <Button key="upload-btn" onClick={this.handleWrapperBtnClick}>
         <Icon type="insert_drive_file" />
         <span>{children || $l('Upload', 'file_selection')}</span>
-      </Button>
-    );
+      </Button>,
+      <input key="upload" {...uploadProps} hidden />,
+    ];
 
     const uploadBtn = (
       <Tooltip
