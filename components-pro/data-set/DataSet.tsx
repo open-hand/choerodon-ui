@@ -1,4 +1,4 @@
-import { action, computed, get, IReactionDisposer, isArrayLike, observable, reaction, runInAction, set, toJS } from 'mobx';
+import { action, computed, get, IReactionDisposer, isArrayLike, observable, runInAction, set, toJS } from 'mobx';
 import { AxiosInstance } from 'axios';
 import isNumber from 'lodash/isNumber';
 import isArray from 'lodash/isArray';
@@ -322,6 +322,8 @@ export default class DataSet extends EventManager {
 
   @observable cachedSelected: Record[];
 
+  previous?: Record;
+
   /**
    * 获取新建的记录集
    * @return 记录集
@@ -446,7 +448,13 @@ export default class DataSet extends EventManager {
    */
   @computed
   get current(): Record | undefined {
-    return this.data.find(record => record.isCurrent) || this.cachedSelected.find(record => record.isCurrent);
+    const { previous } = this;
+    const current = this.data.find(record => record.isCurrent) || this.cachedSelected.find(record => record.isCurrent);
+    if (previous !== current) {
+      defer(() => this.fireEvent(DataSetEvents.indexChange, { dataSet: this, record: current, previous }));
+      this.previous = current;
+    }
+    return current;
   }
 
   /**
@@ -560,15 +568,15 @@ export default class DataSet extends EventManager {
 
   processListener() {
     this.addEventListener(DataSetEvents.indexChange, this.handleCascade);
-    let previous;
-    this.reaction = reaction(
-      () => this.current,
-      record => (this.fireEvent(DataSetEvents.indexChange, { dataSet: this, record, previous }, previous = record)),
-    );
+    // let previous;
+    // this.reaction = reaction(
+    //   () => this.current,
+    //   record => (this.fireEvent(DataSetEvents.indexChange, { dataSet: this, record, previous }, previous = record)),
+    // );
   }
 
   destroy() {
-    this.reaction();
+    // this.reaction();
     this.clear();
   }
 

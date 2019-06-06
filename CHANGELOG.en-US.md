@@ -17,6 +17,7 @@ timeline: true
 
 
 - 🌟 `<pro>TextField`: The style of the input box when updating the labelLayout to float.
+- 💄 `<pro>DataSet`: Optimize the problem that memory is not released.
 - 🐞 `<pro>Upload`: Fixed an issue where the popup could not be closed.
 
 ## 0.6.4

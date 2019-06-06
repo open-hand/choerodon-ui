@@ -49,8 +49,8 @@ export default class Validator {
 
   reset() {
     this.validedValue = void 0;
-    this.validity.reset();
     this.validationMessage = '';
+    this.validity.reset();
   }
 
   @action

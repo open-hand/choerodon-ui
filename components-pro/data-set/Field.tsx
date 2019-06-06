@@ -1,8 +1,8 @@
-import { action, computed, get, observable, ObservableMap, reaction, runInAction, set } from 'mobx';
+import { action, computed, get, observable, ObservableMap, runInAction, set } from 'mobx';
 import { MomentInput } from 'moment';
 import isObject from 'lodash/isObject';
 import merge from 'lodash/merge';
-import noop from 'lodash/noop';
+import defer from 'lodash/defer';
 import DataSet from './DataSet';
 import Record from './Record';
 import Validator, { CustomValidator } from '../validator/Validator';
@@ -183,7 +183,10 @@ export default class Field {
   validator: Validator = new Validator();
 
   lookUpPending?: Promise<object[] | undefined>;
+
   lovPending?: Promise<LovConfig | undefined>;
+
+  lastDynamicProps: any = {};
 
   @observable props: FieldProps & { [key: string]: any };
 
@@ -240,7 +243,9 @@ export default class Field {
     this.set('order', order);
   }
 
-  private reactions: any = {};
+  // private reactions: { [key: string]: IReactionDisposer } = {};
+  // private lookupReaction: IReactionDisposer;
+  // private lovReaction: IReactionDisposer;
 
   constructor(props: FieldProps = {}, dataSet?: DataSet, record?: Record) {
     runInAction(() => {
@@ -248,8 +253,10 @@ export default class Field {
       this.record = record;
       this.props = this.pristineProps = props;
       this.modified = false;
-      reaction(() => this.fetchLookup(), noop);
-      reaction(() => this.fetchLovConfig(), noop);
+      this.fetchLookup();
+      this.fetchLovConfig();
+      // this.lookupReaction = reaction(() => this.fetchLookup(), noop);
+      // this.lovReaction = reaction(() => this.fetchLovConfig(), noop);
     });
   }
 
@@ -288,15 +295,19 @@ export default class Field {
         if (dataSet && record) {
           const props = dynamicProps({ dataSet, record, name });
           if (props && propsName in props) {
-            const reactor = this.reactions[propsName];
-            if (!reactor) {
-              this.reactions[propsName] = reaction(() => this.get(propsName), () => {
-                this.validator.reset();
-                this.checkValidity();
-              });
-            }
-            return props[propsName];
+            // const reactor = this.reactions[propsName];
+            // if (!reactor) {
+            //   this.reactions[propsName] = reaction(() => this.get(propsName), () => {
+            //     this.validator.reset();
+            //     this.checkValidity();
+            //   });
+            // }
+
+            const prop = props[propsName];
+            this.checkDynamicProp(propsName, prop);
+            return prop;
           }
+          this.checkDynamicProp(propsName, void 0);
         }
       }
     }
@@ -334,6 +345,7 @@ export default class Field {
       if (dataSet) {
         dataSet.fireEvent(DataSetEvents.fieldChange, { dataSet, record, field: this, propsName, value, oldValue });
       }
+      this.handlePropChange(propsName);
     }
   }
 
@@ -572,4 +584,27 @@ export default class Field {
     }
   }
 
+  private checkDynamicProp(propsName, newProp) {
+    if (propsName in this.lastDynamicProps) {
+      const oldProp = this.lastDynamicProps[propsName];
+      if (oldProp !== newProp) {
+        defer(() => {
+          this.validator.reset();
+          this.checkValidity();
+          this.handlePropChange(propsName);
+        });
+      }
+    }
+    this.lastDynamicProps[propsName] = newProp;
+  }
+
+  private handlePropChange(propsName) {
+    if (propsName === 'type' || propsName === 'lookupUrl' || propsName === 'lookupCode') {
+      this.fetchLookup();
+    }
+    if (propsName === 'lovCode') {
+      this.fetchLookup();
+      this.fetchLovConfig();
+    }
+  }
 }
