@@ -17,7 +17,7 @@ export default class CloseButton extends PureComponent<CloseButtonProps> {
 
   render() {
     return (
-      <Icon type="cancel" onClick={this.handleClick} onFocus={stopPropagation} onMouseDown={stopPropagation} tabIndex={-1} />
+      <Icon type="cancel" onClick={this.handleClick} onFocus={stopPropagation} onMouseDown={stopEvent} tabIndex={-1} />
     );
   }
 }

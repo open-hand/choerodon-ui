@@ -15,6 +15,9 @@ timeline: true
 
 ---
 
+## 0.6.5
+
+`2019-06-07`
 
 - 🌟 `<pro>TextField`: The style of the input box when updating the labelLayout to float.
 - 💄 `<pro>DataSet`: Optimize the problem that memory is not released.
