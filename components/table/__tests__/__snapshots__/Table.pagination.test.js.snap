@@ -225,9 +225,6 @@ exports[`Table.pagination renders pagination correctly 1`] = `
             <i
               class="icon icon-first_page"
             />
-            <div
-              class="c7n-ripple-wrapper"
-            />
           </button>
         </li>
         <li
@@ -242,9 +239,6 @@ exports[`Table.pagination renders pagination correctly 1`] = `
           >
             <i
               class="icon icon-navigate_before"
-            />
-            <div
-              class="c7n-ripple-wrapper"
             />
           </button>
         </li>

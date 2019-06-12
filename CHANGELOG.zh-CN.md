@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.6.6
+
+`2019-06-12`
+
 - 🌟 `<pro>DataSet`:  新增transport属性，用于配置CRUD的请求。
 - 💄 `Message`:  默认placement属性设为leftBottom。
 - 🐞 `<pro>DatePicker`: 修复placeholder不显示的问题。

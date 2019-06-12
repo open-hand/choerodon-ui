@@ -43,6 +43,7 @@ export type TransportProps = {
   update?: AxiosRequestConfig | string;
   destroy?: AxiosRequestConfig | string;
   validate?: AxiosRequestConfig | string;
+  submit?: AxiosRequestConfig | string;
 }
 
 export type Transport = {
@@ -360,6 +361,7 @@ export default class DataSet extends EventManager {
       update,
       destroy,
       validate = validateUrl,
+      submit = submitUrl,
     } = transport;
     return {
       create: generateAxiosRequestConfig(create),
@@ -367,7 +369,7 @@ export default class DataSet extends EventManager {
       update: generateAxiosRequestConfig(update),
       destroy: generateAxiosRequestConfig(destroy),
       validate: generateAxiosRequestConfig(validate),
-      submit: generateAxiosRequestConfig(submitUrl),
+      submit: generateAxiosRequestConfig(submit),
     };
   }
 

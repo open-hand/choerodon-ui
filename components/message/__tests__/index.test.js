@@ -16,7 +16,7 @@ describe('message', () => {
     message.config({
       top: 100,
     });
-    message.info('whatever');
+    message.info('whatever', undefined, undefined, 'top');
     expect(document.querySelectorAll('.c7n-message')[0].style.top).toBe('100px');
   });
 

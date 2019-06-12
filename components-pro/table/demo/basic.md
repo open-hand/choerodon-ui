@@ -115,7 +115,7 @@ class App extends React.Component {
       delete: {
         url: '/dataset/user/mutations',
         method: 'delete',
-      }
+      },
     },
     queryFields: [
       { name: 'name', type: 'string', label: '姓名' },
