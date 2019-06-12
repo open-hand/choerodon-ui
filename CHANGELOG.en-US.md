@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `<pro>DataSet`: Added `transport` property to configure CRUD requests.
 - 💄 `Message`: The default `placement` property is set to `leftBottom`.
+- 🐞 `<pro>DatePicker`: Fix the problem that the `placeholder` does not display.
 
 ## 0.6.5
 

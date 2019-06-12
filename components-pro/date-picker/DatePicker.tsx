@@ -145,6 +145,7 @@ export default class DatePicker extends TriggerField<DatePickerProps> implements
     return (
       <input
         {...this.getOtherProps()}
+        placeholder={this.hasFloatLabel ? null : this.getPlaceholder()}
         value={this.getText() || ''}
         readOnly={!this.editable}
       />

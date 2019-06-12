@@ -32,7 +32,7 @@ title: TextField
 更多属性请参考 [FormField](/components-pro/field/#FormField)。
 
 <style>
-.code-box .c7n-pro-row {
+.code-box .c7n-row {
   margin-bottom: .24rem;
 }
 </style>

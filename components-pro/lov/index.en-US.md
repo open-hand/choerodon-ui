@@ -23,7 +23,7 @@ title: Lov
 更多属性请参考 [ViewComponent](/components-pro/text-field/#TextField)。
 
 <style>
-.code-box .c7n-pro-row {
+.code-box .c7n-row {
   margin-bottom: .24rem;
 }
 </style>

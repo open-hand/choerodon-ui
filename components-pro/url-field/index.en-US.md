@@ -19,7 +19,7 @@ Url输入框。
 更多属性请参考 [TextField](/components-pro/text-field/#TextField)。
 
 <style>
-.code-box .c7n-pro-row {
+.code-box .c7n-row {
   margin-bottom: .24rem;
 }
 </style>
