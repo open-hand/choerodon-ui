@@ -112,7 +112,7 @@ class App extends React.Component {
         method: 'put',
       },
       update: '/dataset/user/mutations',
-      delete: {
+      destroy: {
         url: '/dataset/user/mutations',
         method: 'delete',
       },
@@ -238,10 +238,14 @@ class App extends React.Component {
     <Button funcType="flat" color="blue" icon="get_app" onClick={this.importData} key="import">导入</Button>
   );
 
+  save = async () => {
+    console.log('submit result', await this.userDs.submit());
+  };
+
   render() {
     const buttons = [
       this.createButton,
-      'save',
+      ['save', { onClick: this.save }],
       ['delete', { color: 'red' }],
       'remove',
       'reset',

@@ -10,7 +10,7 @@ import isEqual from 'lodash/isEqual';
 import warning from 'choerodon-ui/lib/_util/warning';
 import Field, { FieldProps, Fields } from './Field';
 import { BooleanValue, FieldType, RecordStatus, SortOrder } from './enum';
-import DataSet from './DataSet';
+import DataSet, { Transport } from './DataSet';
 import Record from './Record';
 import Constants from './Constants';
 import { Supports } from '../locale-context/supports';
@@ -373,17 +373,19 @@ export function prepareSubmitData(records: Record[], noCascade?: boolean): [obje
   return [created, updated, destroyed];
 }
 
-export function prepareForSubmit
-(data: object[], config: AxiosRequestConfig = {}, submit: AxiosRequestConfig = {}, configs: AxiosRequestConfig[]): object[] {
+export function prepareForSubmit(type: string, data: object[], transport: Transport, configs: AxiosRequestConfig[]): object[] {
+  const { adapter, [type]: config = {} } = transport;
   if (data.length) {
     if (config.url) {
-      configs.push({
-        ...config,
-        data,
-      });
-    } else if (submit.url) {
+      const newConfig = { ...config, data };
+      configs.push(adapter(newConfig, type) || newConfig);
+    } else {
       return data;
     }
   }
   return [];
+}
+
+export function defaultAxiosAdapter(config: AxiosRequestConfig): AxiosRequestConfig {
+  return config;
 }

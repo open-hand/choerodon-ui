@@ -29,7 +29,7 @@ title: DataSet
 | tlsUrl | 多语言查询请求的url。 当设定name时， 默认 /dataset/{name}/languages | string |  |
 | validateUrl | 远程校验查询请求的url。 当设定name时， 默认 /dataset/{name}/validate | string |  |
 | exportUrl | 导出请求的url。 当设定name时， 默认 /dataset/{name}/export | string |  |
-| transport | 自定义CRUD请求配置, 详见[AxiosRequestConfig](#AxiosRequestConfig) | { create: AxiosRequestConfig\| string, read: AxiosRequestConfig\| string, update: AxiosRequestConfig\| string, destroy: AxiosRequestConfig\| string, submit: AxiosRequestConfig \| string } |  |
+| transport | 自定义CRUD请求配置, 详见[Transport](#Transport) 及 [AxiosRequestConfig](#AxiosRequestConfig) | Transport |  |
 | children | 级联行数据集, 例： { name_1: dataSet1, name_2: dataSet2 } | { name: DataSet } |  |
 | primaryKey | 主键字段名，一般用作级联行表的查询字段 | string |  |
 | idField | 树形数据当前节点id字段名 | string |  |
@@ -230,9 +230,20 @@ title: DataSet
 | getText(lookupValue) | 根据lookup值获取lookup含义 | `lookupValue` - lookup值，默认本字段值 |
 | getLookupData(lookupValue) | 根据lookup值获取lookup对象 | `lookupValue` - lookup值，默认本字段值 |
 
+### Transport
+
+| 属性 | 说明 | 类型 |
+| --- | --- | --- |
+| create | 新建请求的axios配置或url字符串 | AxiosRequestConfig \| string |
+| read | 查询请求的axios配置或url字符串 | AxiosRequestConfig \| string |
+| update | 更新请求的axios配置或url字符串 | AxiosRequestConfig \| string |
+| destroy | 删除请求的axios配置或url字符串 | AxiosRequestConfig \| string |
+| submit | create, update, destroy的默认配置或url字符串 | AxiosRequestConfig \| string |
+| adapter | CRUD配置适配器 | (config: AxiosRequestConfig, type: string) => AxiosRequestConfig |
+
 ### AxiosRequestConfig
 
-| 参数 | 说明 | 类型 |
+| 属性 | 说明 | 类型 |
 | --- | --- | --- |
 | url | 地址 | string |
 | method | 方法 | string |

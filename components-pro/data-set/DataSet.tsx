@@ -11,6 +11,7 @@ import warning from 'choerodon-ui/lib/_util/warning';
 import {
   append,
   checkParentByInsert,
+  defaultAxiosAdapter,
   doExport,
   findBindFieldBy,
   generateAxiosRequestConfig,
@@ -37,6 +38,8 @@ export type DataSetChildren = { [key: string]: DataSet };
 
 export type Events = { [key: string]: Function };
 
+export type TransportAdapter = (config: AxiosRequestConfig, type: string) => AxiosRequestConfig;
+
 export type TransportProps = {
   create?: AxiosRequestConfig | string;
   read?: AxiosRequestConfig | string;
@@ -44,6 +47,7 @@ export type TransportProps = {
   destroy?: AxiosRequestConfig | string;
   validate?: AxiosRequestConfig | string;
   submit?: AxiosRequestConfig | string;
+  adapter?: TransportAdapter;
 }
 
 export type Transport = {
@@ -53,6 +57,7 @@ export type Transport = {
   destroy?: AxiosRequestConfig;
   validate?: AxiosRequestConfig;
   submit?: AxiosRequestConfig;
+  adapter: TransportAdapter;
 }
 
 export interface DataSetProps {
@@ -362,6 +367,7 @@ export default class DataSet extends EventManager {
       destroy,
       validate = validateUrl,
       submit = submitUrl,
+      adapter = defaultAxiosAdapter,
     } = transport;
     return {
       create: generateAxiosRequestConfig(create),
@@ -370,6 +376,7 @@ export default class DataSet extends EventManager {
       destroy: generateAxiosRequestConfig(destroy),
       validate: generateAxiosRequestConfig(validate),
       submit: generateAxiosRequestConfig(submit),
+      adapter,
     };
   }
 
@@ -1473,24 +1480,18 @@ Then the query method will be auto invoke.`);
   private async write(records: Record[], noCascade?: boolean): Promise<any> {
     if (records.length) {
       const [created, updated, destroyed] = prepareSubmitData(records, noCascade);
-      const { create, update, destroy, submit } = this.transport;
+      const { transport } = this;
       const axiosConfigs: AxiosRequestConfig[] = [];
-      const submitData = [
-        ...prepareForSubmit(created, create, submit, axiosConfigs),
-        ...prepareForSubmit(updated, update, submit, axiosConfigs),
-        ...prepareForSubmit(destroyed, destroy, submit, axiosConfigs),
+      const submitData: object[] = [
+        ...prepareForSubmit('create', created, transport, axiosConfigs),
+        ...prepareForSubmit('update', updated, transport, axiosConfigs),
+        ...prepareForSubmit('destroy', destroyed, transport, axiosConfigs),
       ];
-
-      if (submit && submit.url && submitData.length) {
-        axiosConfigs.push({
-          ...submit,
-          data: submitData,
-        });
-      }
+      prepareForSubmit('submit', submitData, transport, axiosConfigs);
       if (axiosConfigs.length) {
         try {
           this.changeSubmitStatus(DataSetStatus.submitting);
-          this.fireEvent(DataSetEvents.submit, { dataSet: this, data: submitData });
+          this.fireEvent(DataSetEvents.submit, { dataSet: this, data: [...created, ...updated, ...destroyed] });
           this.pending = axiosStatic.all(axiosConfigs.map(config => this.axios(config)));
           const result: any[] = await this.pending;
           return this.handleSubmitSuccess(result);
@@ -1506,17 +1507,17 @@ Then the query method will be auto invoke.`);
   }
 
   private async read(page: number = 1): Promise<any> {
-    const { parent, transport: { read } } = this;
+    const { parent, transport: { read, adapter } } = this;
     if (read && this.checkReadable(parent)) {
       try {
         this.changeStatus(DataSetStatus.loading);
         const params = await this.generateQueryParameter();
         this.fireEvent(DataSetEvents.query, { dataSet: this, params });
-        const result = await this.axios({
+        const result = await this.axios(adapter({
           ...read,
           params: this.generateQueryString(page),
           data: params,
-        });
+        }, 'read'));
         runInAction(() => {
           this.currentPage = page;
         });
@@ -1584,21 +1585,21 @@ Then the query method will be auto invoke.`);
     const { dataKey, totalKey } = this.props;
     const data: object[] = [];
     let total = void 0;
-    resp.forEach((result) => {
-      data.push(...(isArray(result) ? result : dataKey ? result[dataKey] || [] : [result]));
-      if (totalKey && totalKey in result) {
-        total = result[totalKey];
+    resp.forEach((item) => {
+      data.push(...(isArray(item) ? item : dataKey ? item[dataKey] || [] : [item]));
+      if (totalKey && totalKey in item) {
+        total = item[totalKey];
       }
     });
-    this.fireEvent(DataSetEvents.submitSuccess, {
-      dataSet: this, data: dataKey ? {
-        [dataKey]: data,
-        [totalKey!]: total,
-        success: true,
-      } : data,
-    });
+    const result = dataKey ? {
+      [dataKey]: data,
+      [totalKey!]: total,
+      success: true,
+    } : data;
+    this.fireEvent(DataSetEvents.submitSuccess, { dataSet: this, data: result });
     this.commitData(data, total);
     Message.success($l('DataSet', 'submit_success'));
+    return result;
   }
 
   private handleSubmitFail(e) {
