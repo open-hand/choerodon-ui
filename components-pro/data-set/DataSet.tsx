@@ -1,5 +1,5 @@
 import { action, computed, get, IReactionDisposer, isArrayLike, observable, runInAction, set, toJS } from 'mobx';
-import { AxiosInstance } from 'axios';
+import axiosStatic, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import isNumber from 'lodash/isNumber';
 import isArray from 'lodash/isArray';
 import defer from 'lodash/defer';
@@ -8,7 +8,19 @@ import axios from '../axios';
 import Record from './Record';
 import Field, { FieldProps, Fields } from './Field';
 import warning from 'choerodon-ui/lib/_util/warning';
-import { append, checkParentByInsert, doExport, findBindFieldBy, getFieldSorter, getOrderFields, sortTree } from './utils';
+import {
+  append,
+  checkParentByInsert,
+  doExport,
+  findBindFieldBy,
+  generateAxiosRequestConfig,
+  generateJSONData,
+  getFieldSorter,
+  getOrderFields,
+  prepareForSubmit,
+  prepareSubmitData,
+  sortTree,
+} from './utils';
 import EventManager from '../_util/EventManager';
 import DataSetSnapshot from './DataSetSnapshot';
 import confirm from '../modal/confirm';
@@ -24,6 +36,23 @@ import { getConfig } from 'choerodon-ui/lib/configure';
 export type DataSetChildren = { [key: string]: DataSet };
 
 export type Events = { [key: string]: Function };
+
+export type TransportProps = {
+  create?: AxiosRequestConfig | string;
+  read?: AxiosRequestConfig | string;
+  update?: AxiosRequestConfig | string;
+  destroy?: AxiosRequestConfig | string;
+  validate?: AxiosRequestConfig | string;
+}
+
+export type Transport = {
+  create?: AxiosRequestConfig;
+  read?: AxiosRequestConfig;
+  update?: AxiosRequestConfig;
+  destroy?: AxiosRequestConfig;
+  validate?: AxiosRequestConfig;
+  submit?: AxiosRequestConfig;
+}
 
 export interface DataSetProps {
   /**
@@ -133,6 +162,10 @@ export interface DataSetProps {
    */
   exportUrl?: string;
   /**
+   * 自定义CRUD的请求配置
+   */
+  transport?: TransportProps;
+  /**
    * 级联行数据集, 当为数组时，数组成员必须是有name属性的DataSet
    * @example
    * { name_1: 'ds-id-1', name_2: 'ds-id-2' }
@@ -184,8 +217,9 @@ export default class DataSet extends EventManager {
 
   id?: string;
 
-  name?: string;
+  @observable name?: string;
 
+  @computed
   get axios(): AxiosInstance {
     return this.props.axios || getConfig('axios') || axios;
   }
@@ -220,7 +254,7 @@ export default class DataSet extends EventManager {
   }
 
   get queryDataSet(): DataSet | undefined {
-    return this.props.queryDataSet;
+    return get(this.props, 'queryDataSet');
   }
 
   /**
@@ -228,20 +262,23 @@ export default class DataSet extends EventManager {
    * @param {DataSet} ds DataSet.
    */
   set queryDataSet(ds: DataSet | undefined) {
-    this.props.queryDataSet = ds;
-    if (ds) {
-      defer(() => {
-        if (ds.length === 0) {
-          ds.create();
-        } else if (!ds.current) {
-          ds.currentIndex = 0;
-        }
-      });
-    }
+    runInAction(() => {
+      set(this.props, 'queryDataSet', ds);
+      if (ds) {
+        defer(() => {
+          if (ds.length === 0) {
+            ds.create();
+          } else if (!ds.current) {
+            ds.currentIndex = 0;
+          }
+        });
+      }
+    });
   }
 
+  @computed
   get queryUrl(): string | undefined {
-    return this.props.queryUrl || (this.name && `/dataset/${this.name}/queries`);
+    return get(this.props, 'queryUrl') || (this.name && `/dataset/${this.name}/queries`);
   }
 
   /**
@@ -249,11 +286,14 @@ export default class DataSet extends EventManager {
    * @param {String} url 提交的Url.
    */
   set queryUrl(url: string | undefined) {
-    this.props.queryUrl = url;
+    runInAction(() => {
+      set(this.props, 'queryUrl', url);
+    });
   }
 
+  @computed
   get submitUrl(): string | undefined {
-    return this.props.submitUrl || (this.name && `/dataset/${this.name}/mutations`);
+    return get(this.props, 'submitUrl') || (this.name && `/dataset/${this.name}/mutations`);
   }
 
   /**
@@ -261,11 +301,14 @@ export default class DataSet extends EventManager {
    * @param {String} url 查询的Url.
    */
   set submitUrl(url: string | undefined) {
-    this.props.submitUrl = url;
+    runInAction(() => {
+      set(this.props, 'submitUrl', url);
+    });
   }
 
+  @computed
   get tlsUrl(): string | undefined {
-    return this.props.tlsUrl || (this.name && `/dataset/${this.name}/languages`);
+    return get(this.props, 'tlsUrl') || (this.name && `/dataset/${this.name}/languages`);
   }
 
   /**
@@ -273,11 +316,14 @@ export default class DataSet extends EventManager {
    * @param {String} url 多语言的Url.
    */
   set tlsUrl(url: string | undefined) {
-    this.props.tlsUrl = url;
+    runInAction(() => {
+      set(this.props, 'tlsUrl', url);
+    });
   }
 
+  @computed
   get validateUrl(): string | undefined {
-    return this.props.validateUrl || (this.name && `/dataset/${this.name}/validate`);
+    return get(this.props, 'validateUrl') || (this.name && `/dataset/${this.name}/validate`);
   }
 
   /**
@@ -285,11 +331,14 @@ export default class DataSet extends EventManager {
    * @param {String} url 远程校验查询请求的url.
    */
   set validateUrl(url: string | undefined) {
-    this.props.validateUrl = url;
+    runInAction(() => {
+      set(this.props, 'validateUrl', url);
+    });
   }
 
+  @computed
   get exportUrl(): string | undefined {
-    return this.props.exportUrl || (this.name && `/dataset/${this.name}/export`);
+    return get(this.props, 'exportUrl') || (this.name && `/dataset/${this.name}/export`);
   }
 
   /**
@@ -297,7 +346,29 @@ export default class DataSet extends EventManager {
    * @param {String} url 远程校验查询请求的url.
    */
   set exportUrl(url: string | undefined) {
-    this.props.exportUrl = url;
+    runInAction(() => {
+      set(this.props, 'exportUrl', url);
+    });
+  }
+
+  @computed
+  get transport(): Transport {
+    const { props: { transport = {} }, queryUrl, submitUrl, validateUrl } = this;
+    const {
+      create,
+      read = queryUrl,
+      update,
+      destroy,
+      validate = validateUrl,
+    } = transport;
+    return {
+      create: generateAxiosRequestConfig(create),
+      read: generateAxiosRequestConfig(read),
+      update: generateAxiosRequestConfig(update),
+      destroy: generateAxiosRequestConfig(destroy),
+      validate: generateAxiosRequestConfig(validate),
+      submit: generateAxiosRequestConfig(submitUrl),
+    };
   }
 
   @observable props: DataSetProps;
@@ -596,13 +667,7 @@ export default class DataSet extends EventManager {
 
   toJSONData(isSelected?: boolean, noCascade?: boolean): object[] {
     const data: object[] = [];
-    (isSelected ? this.selected : this.data.concat(this.destroyed)).forEach((record) => {
-      const json = record.toJSONData(noCascade);
-      if (json.__dirty) {
-        delete json.__dirty;
-        data.push(json);
-      }
-    });
+    (isSelected ? this.selected : this.data.concat(this.destroyed)).forEach(record => generateJSONData(data, record, noCascade));
     return data;
   }
 
@@ -653,7 +718,7 @@ export default class DataSet extends EventManager {
   async submit(isSelect?: boolean, noCascade?: boolean): Promise<any> {
     await this.ready(isSelect);
     if (await this.validate(isSelect, noCascade)) {
-      return this.write(this.toJSONData(isSelect, noCascade));
+      return this.write(isSelect ? this.selected : this.data.concat(this.destroyed), noCascade);
     }
     return false;
   }
@@ -828,15 +893,7 @@ export default class DataSet extends EventManager {
       records = ([] as Record[]).concat(records);
       if (records.length > 0 && await confirm($l('DataSet', 'delete_selected_row_confirm')) !== 'cancel') {
         this.remove(records);
-        const json: object[] = [];
-        this.destroyed.forEach(record => {
-          const data = record.toJSONData();
-          if (data.__dirty) {
-            delete data.__dirty;
-            json.push(data);
-          }
-        });
-        return this.write(json);
+        return this.write(this.destroyed);
       }
     }
   }
@@ -1022,7 +1079,7 @@ export default class DataSet extends EventManager {
       } else {
         field.order = SortOrder.desc;
       }
-      if (this.paging && this.queryUrl) {
+      if (this.paging && this.transport.read) {
         this.query();
       } else {
         this.data = this.data.sort(getFieldSorter(field));
@@ -1410,17 +1467,31 @@ Then the query method will be auto invoke.`);
   //       (item1, item2) => String(item1[name]).localeCompare(String(item2[name])),
   //     ), allData);
   // }
-  private async write(submitData: object[]): Promise<any> {
-    if (submitData.length) {
-      const { submitUrl } = this;
-      if (submitUrl) {
+
+  private async write(records: Record[], noCascade?: boolean): Promise<any> {
+    if (records.length) {
+      const [created, updated, destroyed] = prepareSubmitData(records, noCascade);
+      const { create, update, destroy, submit } = this.transport;
+      const axiosConfigs: AxiosRequestConfig[] = [];
+      const submitData = [
+        ...prepareForSubmit(created, create, submit, axiosConfigs),
+        ...prepareForSubmit(updated, update, submit, axiosConfigs),
+        ...prepareForSubmit(destroyed, destroy, submit, axiosConfigs),
+      ];
+
+      if (submit && submit.url && submitData.length) {
+        axiosConfigs.push({
+          ...submit,
+          data: submitData,
+        });
+      }
+      if (axiosConfigs.length) {
         try {
           this.changeSubmitStatus(DataSetStatus.submitting);
           this.fireEvent(DataSetEvents.submit, { dataSet: this, data: submitData });
-          this.pending = this.axios.post(submitUrl, JSON.stringify(submitData));
-          const result: any = await this.pending;
-          this.handleSubmitSuccess(result);
-          return result;
+          this.pending = axiosStatic.all(axiosConfigs.map(config => this.axios(config)));
+          const result: any[] = await this.pending;
+          return this.handleSubmitSuccess(result);
         } catch (e) {
           this.handleSubmitFail(e);
           throw e;
@@ -1433,13 +1504,17 @@ Then the query method will be auto invoke.`);
   }
 
   private async read(page: number = 1): Promise<any> {
-    const { parent, queryUrl } = this;
-    if (queryUrl && this.checkReadable(parent)) {
+    const { parent, transport: { read } } = this;
+    if (read && this.checkReadable(parent)) {
       try {
         this.changeStatus(DataSetStatus.loading);
         const params = await this.generateQueryParameter();
         this.fireEvent(DataSetEvents.query, { dataSet: this, params });
-        const result = await this.axios.post(append(queryUrl, this.generateQueryString(page)), JSON.stringify(params));
+        const result = await this.axios({
+          ...read,
+          params: this.generateQueryString(page),
+          data: params,
+        });
         runInAction(() => {
           this.currentPage = page;
         });
@@ -1503,11 +1578,23 @@ Then the query method will be auto invoke.`);
     Message.error(exception(e, $l('DataSet', 'query_failure')));
   }
 
-  private handleSubmitSuccess(resp: any) {
-    this.fireEvent(DataSetEvents.submitSuccess, { dataSet: this, data: resp });
+  private handleSubmitSuccess(resp: any[]) {
     const { dataKey, totalKey } = this.props;
-    const data: object[] = dataKey ? resp[dataKey] || [] : isArray(resp) ? resp : [resp];
-    const total = resp[totalKey!];
+    const data: object[] = [];
+    let total = void 0;
+    resp.forEach((result) => {
+      data.push(...(isArray(result) ? result : dataKey ? result[dataKey] || [] : [result]));
+      if (totalKey && totalKey in result) {
+        total = result[totalKey];
+      }
+    });
+    this.fireEvent(DataSetEvents.submitSuccess, {
+      dataSet: this, data: dataKey ? {
+        [dataKey]: data,
+        [totalKey!]: total,
+        success: true,
+      } : data,
+    });
     this.commitData(data, total);
     Message.success($l('DataSet', 'submit_success'));
   }

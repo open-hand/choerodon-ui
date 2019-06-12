@@ -29,6 +29,7 @@ title: DataSet
 | tlsUrl | 多语言查询请求的url。 当设定name时， 默认 /dataset/{name}/languages | string |  |
 | validateUrl | 远程校验查询请求的url。 当设定name时， 默认 /dataset/{name}/validate | string |  |
 | exportUrl | 导出请求的url。 当设定name时， 默认 /dataset/{name}/export | string |  |
+| transport | 自定义CRUD请求配置, 详见[AxiosRequestConfig](#AxiosRequestConfig) | { create: AxiosRequestConfig, read: AxiosRequestConfig, update: AxiosRequestConfig, destroy: AxiosRequestConfig } |  |
 | children | 级联行数据集, 例： { name_1: dataSet1, name_2: dataSet2 } | { name: DataSet } |  |
 | primaryKey | 主键字段名，一般用作级联行表的查询字段 | string |  |
 | idField | 树形数据当前节点id字段名 | string |  |
@@ -228,3 +229,18 @@ title: DataSet
 | getValue() | 获取当前记录的本字段值 | `lookupValue` - lookup值 |
 | getText(lookupValue) | 根据lookup值获取lookup含义 | `lookupValue` - lookup值，默认本字段值 |
 | getLookupData(lookupValue) | 根据lookup值获取lookup对象 | `lookupValue` - lookup值，默认本字段值 |
+
+### AxiosRequestConfig
+
+| 参数 | 说明 | 类型 |
+| --- | --- | --- |
+| url | 地址 | string |
+| method | 方法 | string |
+| baseURL | 基础地址 | string |
+| headers |  请求头 | object |
+| params | url参数 | object |
+| data | 请求体数据 | object |
+| timeout | 请求超时时间 | number |
+| withCredentials | 用于跨域传递cookie | boolean |
+
+更多配置请参考 Axios 官方文档，或参考typescript文件/node_modules/axios/index.d.ts

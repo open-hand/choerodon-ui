@@ -11,7 +11,7 @@ let messageInstance: any;
 let key = 1;
 let customizePrefixCls;
 let transitionName = 'move-up';
-let defaultPlacement: Placement = 'top';
+let defaultPlacement: Placement = 'leftBottom';
 let getContainer: () => HTMLElement;
 
 type NoticeType = 'info' | 'success' | 'error' | 'warning' | 'loading';

@@ -40,9 +40,12 @@ export default async function uniqueError(value, { dataSet, record, unique, name
     }
     let invalid = dataSet.data.some(item => item !== record && Object.keys(fields).every(field => fields[field] === item.get(field)));
     if (!invalid) {
-      const { validateUrl, totalPage, axios } = dataSet;
-      if (validateUrl && totalPage > 1) {
-        const results: any = await axios.post(validateUrl, JSON.stringify({ unique: [fields] }));
+      const { totalPage, axios, transport: { validate } } = dataSet;
+      if (validate && totalPage > 1) {
+        const results: any = await axios({
+          ...validate,
+          data: { unique: [fields] },
+        });
         invalid = [].concat(results).some(result => !result);
       }
     }

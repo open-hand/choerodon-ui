@@ -15,6 +15,9 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>DataSet`: Added `transport` property to configure CRUD requests.
+- 💄 `Message`: The default `placement` property is set to `leftBottom`.
+
 ## 0.6.5
 
 `2019-06-07`

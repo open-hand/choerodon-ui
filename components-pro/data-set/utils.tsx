@@ -9,13 +9,14 @@ import isNumber from 'lodash/isNumber';
 import isEqual from 'lodash/isEqual';
 import warning from 'choerodon-ui/lib/_util/warning';
 import Field, { FieldProps, Fields } from './Field';
-import { BooleanValue, FieldType, SortOrder } from './enum';
+import { BooleanValue, FieldType, RecordStatus, SortOrder } from './enum';
 import DataSet from './DataSet';
 import Record from './Record';
 import Constants from './Constants';
 import { Supports } from '../locale-context/supports';
 import isEmpty from '../_util/isEmpty';
 import { $l } from '../locale-context';
+import { AxiosRequestConfig } from 'axios';
 
 export function append(url: string, suffix?: object) {
   if (suffix) {
@@ -334,4 +335,55 @@ export function getDateFormatByField(field?: Field, type?: FieldType): string {
     return getDateFormatByFieldType(type);
   }
   return Constants.DATE_JSON_FORMAT;
+}
+
+export function generateAxiosRequestConfig(config?: AxiosRequestConfig | string): AxiosRequestConfig | undefined {
+  if (isString(config)) {
+    return {
+      url: config,
+      method: 'post',
+    };
+  }
+  return config;
+}
+
+export function generateJSONData(array: object[], record: Record, noCascade?: boolean) {
+  const json = record.toJSONData(noCascade);
+  if (json.__dirty) {
+    delete json.__dirty;
+    array.push(json);
+  }
+}
+
+export function prepareSubmitData(records: Record[], noCascade?: boolean): [object[], object[], object[]] {
+  const created: object[] = [];
+  const updated: object[] = [];
+  const destroyed: object[] = [];
+  records.forEach((record) => {
+    switch (record.status) {
+      case RecordStatus.add:
+        return generateJSONData(created, record, noCascade);
+      case RecordStatus.update:
+        return generateJSONData(updated, record, noCascade);
+      case RecordStatus.delete:
+        return generateJSONData(destroyed, record, noCascade);
+      default:
+    }
+  });
+  return [created, updated, destroyed];
+}
+
+export function prepareForSubmit
+(data: object[], config: AxiosRequestConfig = {}, submit: AxiosRequestConfig = {}, configs: AxiosRequestConfig[]): object[] {
+  if (data.length) {
+    if (config.url) {
+      configs.push({
+        ...config,
+        data,
+      });
+    } else if (submit.url) {
+      return data;
+    }
+  }
+  return [];
 }
