@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.6.7
+
+`2019-06-13`
+
 - 🌟 `DataSet`: The property `transport` adds the `adapter`x hook property to adapt the configuration of the CRUD request.
 - 🐞 `DataSet`: Fix the submit method with no return value.
 
