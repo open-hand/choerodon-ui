@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.6.8
+
+`2019-06-13`
+
 - 💄 `<pro>DataSet`: If the query is a get request, the query condition is automatically incorporated into params.
 - 🐞 `<pro>Table`: Fix the `header` property of the column does not support ReactNode.
 
