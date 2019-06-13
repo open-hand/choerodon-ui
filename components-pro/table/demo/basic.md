@@ -273,7 +273,7 @@ class App extends React.Component {
         <Column name="date.endDate" editor width={150} />
         <Column name="numberMultiple" editor width={150} minWidth={50} />
         <Column name="frozen" editor width={50} minWidth={50} lock="right" />
-        <Column header="编辑Friends" align="center" renderer={this.renderEdit} lock="right" />
+        <Column header={<span style={{ color: 'red' }}>编辑Friends</span>} align="center" renderer={this.renderEdit} lock="right" />
       </Table>,
       <Tabs key="tabs">
         <TabPane tab="Enemy">

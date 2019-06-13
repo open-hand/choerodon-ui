@@ -344,6 +344,12 @@ export function generateAxiosRequestConfig(config?: AxiosRequestConfig | string)
       method: 'post',
     };
   }
+  if (config && !config.method) {
+    return {
+      ...config,
+      method: 'post',
+    }
+  }
   return config;
 }
 
@@ -387,5 +393,15 @@ export function prepareForSubmit(type: string, data: object[], transport: Transp
 }
 
 export function defaultAxiosAdapter(config: AxiosRequestConfig): AxiosRequestConfig {
+  return config;
+}
+
+export function axiosGetAdapter(config: AxiosRequestConfig): AxiosRequestConfig {
+  if (config.data && config.method && config.method.toLowerCase() === 'get') {
+    config.params = {
+      ...config.params,
+      ...config.data,
+    };
+  }
   return config;
 }

@@ -156,7 +156,7 @@ export function getHeader(column: ColumnProps, dataSet: DataSet): ReactNode {
   if (typeof header === 'function') {
     return header(dataSet, name);
   }
-  if (isString(header)) {
+  if (header !== void 0) {
     return header;
   }
   const field = dataSet.getField(name);

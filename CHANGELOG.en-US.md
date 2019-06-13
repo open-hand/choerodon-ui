@@ -15,12 +15,15 @@ timeline: true
 
 ---
 
+- 💄 `<pro>DataSet`: If the query is a get request, the query condition is automatically incorporated into params.
+- 🐞 `<pro>Table`: Fix the `header` property of the column does not support ReactNode.
+
 ## 0.6.7
 
 `2019-06-13`
 
-- 🌟 `DataSet`: The property `transport` adds the `adapter`x hook property to adapt the configuration of the CRUD request.
-- 🐞 `DataSet`: Fix the submit method with no return value.
+- 🌟 `<pro>DataSet`: The property `transport` adds the `adapter`x hook property to adapt the configuration of the CRUD request.
+- 🐞 `<pro>DataSet`: Fix the submit method with no return value.
 
 ## 0.6.6
 

@@ -10,6 +10,7 @@ import Field, { FieldProps, Fields } from './Field';
 import warning from 'choerodon-ui/lib/_util/warning';
 import {
   append,
+  axiosGetAdapter,
   checkParentByInsert,
   defaultAxiosAdapter,
   doExport,
@@ -1513,11 +1514,11 @@ Then the query method will be auto invoke.`);
         this.changeStatus(DataSetStatus.loading);
         const params = await this.generateQueryParameter();
         this.fireEvent(DataSetEvents.query, { dataSet: this, params });
-        const result = await this.axios(adapter({
+        const result = await this.axios(axiosGetAdapter(adapter({
           ...read,
           params: this.generateQueryString(page),
           data: params,
-        }, 'read'));
+        }, 'read')));
         runInAction(() => {
           this.currentPage = page;
         });
