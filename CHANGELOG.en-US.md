@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>Table`: Fix the problem that the filter bar placeholder always shows.
+
 ## 0.6.8
 
 `2019-06-13`

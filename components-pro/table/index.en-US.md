@@ -25,7 +25,7 @@ subtitle: 表格
 | selectionMode | 选择记录的模式, 可选值: `rowbox` `click` `dblclick` | string | rowbox  |
 | onRow | 设置行属性 | ({ dataSet, record, index, expandedRow }) => object |   |
 | buttons | 功能按钮，可选值：`add` `delete` `remove` `save` `query` `reset` `expandAll` `collapseAll` `export` 或 数组 或 自定义按钮，数组为可选值字符串+按钮配置属性对象 | string \| \[string, object\] \|ReactNode |   |
-| queryFields | 自定义查询字段组件，默认会根据queryDataSet中定义的field类型自动匹配组件 | ReactNode[] |  |
+| queryFields | 自定义查询字段组件或默认组件属性，默认会根据queryDataSet中定义的field类型自动匹配组件 | ReactNode[] \| object |  |
 | queryFieldsLimit | 头部显示的查询字段的数量，超出限制的查询字段放入弹出窗口 | number | 1 |
 | queryBar | 查询条, 可选值：`normal` `bar` `none` | string | normal |
 | rowHeight | 行高 | number \| auto | 30 |

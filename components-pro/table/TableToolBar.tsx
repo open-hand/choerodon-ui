@@ -33,7 +33,7 @@ function filterBindField(fields: Fields): { [key: string]: Field } {
 export interface TabelToolBarProps extends ElementProps {
   header?: ReactNode | ((records: Record[]) => ReactNode);
   buttons?: Buttons[];
-  queryFields: { [key: string]: ReactElement<any> };
+  queryFields: { [key: string]: ReactElement<any> | object };
   queryFieldsLimit: number;
   showQueryBar: boolean;
 }
@@ -276,7 +276,7 @@ export default class TableToolBar extends Component<TabelToolBarProps, any> {
     const { queryFields } = this.props;
     return fields.map((field, index) => {
       const { name } = field;
-      const props = {
+      const props: any = {
         key: name,
         name,
         dataSet,
@@ -285,10 +285,19 @@ export default class TableToolBar extends Component<TabelToolBarProps, any> {
         style: { width: pxToRem(isMore ? 250 : 130) },
         ...(isMore ? { label: field.get('label') } : { placeholder: field.get('label') }),
       };
-      return isValidElement(queryFields[name]) ? (
-        cloneElement(queryFields[name], props)
+      const label = field.get('label');
+      if (label) {
+        if (isMore) {
+          props.label = label;
+        } else {
+          props.placeholder = label;
+        }
+      }
+      const element = queryFields[name];
+      return isValidElement(element) ? (
+        cloneElement(element, props)
       ) : (
-        cloneElement(getEditorByField(field), props)
+        cloneElement(getEditorByField(field), { ...props, ...element })
       );
     });
   }

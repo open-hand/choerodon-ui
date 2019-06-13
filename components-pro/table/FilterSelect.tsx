@@ -61,12 +61,14 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
     this.setFilterText(text);
   }
 
-  getOtherProps() {
-    const omits = ['paramName', 'optionDataSet', 'dropdownMenuStyle'];
-    if (this.selectField) {
-      omits.push('placeholder');
+  getPlaceholder() {
+    if (!this.selectField) {
+      return super.getPlaceholder();
     }
-    return omit(super.getOtherProps(), omits);
+  }
+
+  getOtherProps() {
+    return omit(super.getOtherProps(), ['paramName', 'optionDataSet', 'dropdownMenuStyle']);
   }
 
   @autobind
