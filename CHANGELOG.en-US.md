@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>DataSet`: Field adds the `lookupAxiosConfig` property to adapt the configuration of the lookup request.
 - 🌟 `configure`: Add global configuration new properties.
 - 🐞 `<pro>Table`: Fix the problem that the filter bar placeholder always shows.
 - 🐞 `<pro>DataSet`: Fixed an issue where the commit response value was empty.

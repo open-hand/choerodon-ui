@@ -19,7 +19,7 @@ export default function normalizeOptions({ field, textField, valueField, multipl
       if (lookupKey) {
         data = lookupStore.get(lookupKey);
         if (!data) {
-          fetch = lookupStore.fetchLookupData(lookupKey);
+          fetch = lookupStore.fetchLookupData(lookupKey, field.get('lookupAxiosConfig'));
         }
       }
     }

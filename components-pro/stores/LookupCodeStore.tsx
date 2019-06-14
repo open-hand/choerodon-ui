@@ -1,5 +1,5 @@
 import { action, get, observable, ObservableMap } from 'mobx';
-import { AxiosInstance } from 'axios';
+import { AxiosInstance, AxiosRequestConfig } from 'axios';
 import isString from 'lodash/isString';
 import warning from 'choerodon-ui/lib/_util/warning';
 import axios from '../axios';
@@ -56,15 +56,16 @@ export class LookupCodeStore {
     }
   }
 
-  async fetchLookupData(lookupKey): Promise<responseData | undefined> {
+  async fetchLookupData(lookupKey, axiosConfig: AxiosRequestConfig = {}): Promise<responseData | undefined> {
     let data: responseData | undefined = this.get(lookupKey);
     // SSR do not fetch the lookup
     if (!data && typeof window !== 'undefined') {
       try {
         const config = {
+          ...axiosConfig,
           url: lookupKey,
-          method: getConfig('lookupFetchMethod') || 'post',
-        }
+          method: axiosConfig.method || getConfig('lookupAxiosMethod') || 'post',
+        };
         const pending: Promise<responseType> = this.pendings[lookupKey] = this.pendings[lookupKey] || this.axios(config);
         const result: responseType = await pending;
         if (result) {

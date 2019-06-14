@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>DataSet`:  Field新增lookupAxiosConfig属性，用于适配lookup请求的配置。
 - 🌟 `configure`: 增加全局配置新属性。
 - 🐞 `<pro>Table`: 修复过滤条placeholder始终显示的问题。
 - 🐞 `<pro>DataSet`: 修复提交响应值为空时报错的问题。

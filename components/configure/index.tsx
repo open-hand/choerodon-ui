@@ -6,7 +6,7 @@ export type Config = {
   proPrefixCls?: string;
   ripple?: boolean;
   lookupUrl?: string | ((code: string) => string);
-  lookupFetchMethod?: string;
+  lookupAxiosMethod?: string;
   lovDefineUrl?: string | ((code: string) => string);
   lovQueryUrl?: string | ((code: string) => string);
   axios?: AxiosInstance;
@@ -24,7 +24,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['proPrefixCls', 'c7n-pro'],
   ['ripple', true],
   ['lookupUrl', code => `/common/code/${code}/`],
-  ['lookupFetchMethod', 'post'],
+  ['lookupAxiosMethod', 'post'],
   ['lovDefineUrl', code => `/sys/lov/lov_define?code=${code}`],
   ['lovQueryUrl', code => `/common/lov/dataset/${code}`],
   ['dataKey', 'rows'],

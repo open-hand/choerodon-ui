@@ -202,6 +202,7 @@ title: DataSet
 | lovPara | LOV查询参数对象 | object  |  |
 | lookupCode | 值列表代码 | string  |  |
 | lookupUrl | 值列表请求地址 | string  |  |
+| lookupAxiosConfig | 值列表请求配置，详见[AxiosRequestConfig](#AxiosRequestConfig) | AxiosRequestConfig  |  |
 | bind | 内部字段别名绑定 | string  |  |
 | dynamicProps | 动态属性钩子 | ({ dataSet, record, name }) => object  |  |
 | cascadeMap | 快码和LOV查询时的级联参数映射。 例如：cascadeMap: { parentCodeValue: 'city' }，其中'city'是当前所在数据源的其他字段名，parentCodeValue是快码和LOV的查询参数 | object  |  |

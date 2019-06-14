@@ -15,6 +15,7 @@ import Validity from '../validator/Validity';
 import ValidationResult from '../validator/ValidationResult';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import { LovConfig } from '../lov/Lov';
+import { AxiosRequestConfig } from 'axios';
 
 export type Fields = ObservableMap<string, Field>;
 
@@ -134,6 +135,10 @@ export type FieldProps = {
    * 值列表请求的Url
    */
   lookupUrl?: string | ((code: string) => string);
+  /**
+   * 值列表请求的axiosConfig
+   */
+  lookupAxiosConfig?: AxiosRequestConfig;
   /**
    * 内部字段别名绑定
    */
@@ -523,7 +528,7 @@ export default class Field {
     const lookupKey = lookupStore.getKey(this);
     if (lookupKey) {
       try {
-        await (this.lookUpPending = lookupStore.fetchLookupData(lookupKey));
+        await (this.lookUpPending = lookupStore.fetchLookupData(lookupKey, this.get('lookupAxiosConfig')));
       } finally {
         this.lookUpPending = void 0;
       }
