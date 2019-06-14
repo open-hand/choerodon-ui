@@ -19,7 +19,7 @@ import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import measureTextWidth from '../_util/measureTextWidth';
 import { LabelAlign, LabelLayout, ResponsiveKeys } from './enum';
-import { defaultColumns, defaultLabelLayout, defaultLabelWidth, FIELD_SUFFIX, getProperty, normalizeLabelWidth } from './utils';
+import { defaultColumns, defaultLabelWidth, FIELD_SUFFIX, getProperty, normalizeLabelWidth } from './utils';
 import exception from '../_util/exception';
 import EventManager from '../_util/EventManager';
 
@@ -39,16 +39,6 @@ export type LabelWidthType = LabelWidth | { [key in ResponsiveKeys]: LabelWidth 
 export type LabelAlignType = LabelAlign | { [key in ResponsiveKeys]: LabelAlign };
 export type LabelLayoutType = LabelLayout | { [key in ResponsiveKeys]: LabelLayout };
 export type ColumnsType = number | { [key in ResponsiveKeys]: number };
-
-export interface FormState {
-  dataSet?: DataSet;
-  record?: Record;
-  dataIndex?: number;
-  columns?: ColumnsType;
-  labelWidth?: LabelWidthType;
-  labelAlign?: LabelAlignType;
-  labelLayout?: LabelLayoutType;
-}
 
 export interface FormProps extends DataSetComponentProps {
   /**
@@ -238,7 +228,6 @@ export default class Form extends DataSetComponent<FormProps> {
     suffixCls: 'form',
     columns: defaultColumns,
     labelWidth: defaultLabelWidth,
-    labelLayout: defaultLabelLayout,
   };
 
   static contextType = FormContext;
@@ -307,6 +296,7 @@ export default class Form extends DataSetComponent<FormProps> {
 
   @computed
   get labelLayout(): LabelLayout {
+    const defaultLabelLayout = getConfig('labelLayout') as LabelLayout || LabelLayout.horizontal;
     const { labelLayout } = this.observableProps;
     if (isString(labelLayout)) {
       return labelLayout as LabelLayout;

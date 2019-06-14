@@ -1,7 +1,6 @@
 import { action, get, observable, ObservableMap } from 'mobx';
 import { AxiosInstance } from 'axios';
 import isString from 'lodash/isString';
-import isObject from 'lodash/isObject';
 import warning from 'choerodon-ui/lib/_util/warning';
 import axios from '../axios';
 import Field from '../data-set/Field';
@@ -11,16 +10,7 @@ import { isSameLike } from '../data-set/utils';
 import { getConfig } from 'choerodon-ui/lib/configure';
 
 export type responseData = object[];
-export type responseTypeIncludeRows = { rows: responseData };
-export type responseType = responseTypeIncludeRows | responseData | undefined;
-
-export function isObjectType(object?: any): object is Object {
-  return isObject(object);
-}
-
-export function hasRows(object: responseType): object is responseTypeIncludeRows {
-  return isObjectType(object) && 'rows' in object;
-}
+export type responseType = responseData | undefined;
 
 export class LookupCodeStore {
 
@@ -74,8 +64,9 @@ export class LookupCodeStore {
         const pending: Promise<responseType> = this.pendings[lookupKey] = this.pendings[lookupKey] || this.axios.post<responseType>(lookupKey);
         const result: responseType = await pending;
         if (result) {
-          if (hasRows(result)) {
-            data = result.rows;
+          const { [getConfig<'dataKey'>('dataKey') || 'rows']: rows } = result;
+          if (rows) {
+            data = rows;
           } else {
             data = result;
           }

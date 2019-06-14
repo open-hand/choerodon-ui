@@ -24,3 +24,8 @@ configure({ prefixCls: 'ant' });
 | lovDefineUrl | Lov configure url or hook which return url | string \| ((code: string) => string) | code => \`/sys/lov/lov_define?code=${code}\` |
 | lovQueryUrl | Lov query url or hook which return url | string \| ((code: string) => string) | code => \`/common/lov/dataset/${code}\` |
 | axios | Replace the built-in axios instance | AxiosInstance |  |
+| dataKey | default DataSet's dataKey  | string | |
+| totalKey | default DataSet's totalKey | string | |
+| labelLayout | default Form's labelLayout | string | |
+| queryBar | default table's queryBar | string | |
+| tableBorder | default table's border | string | |

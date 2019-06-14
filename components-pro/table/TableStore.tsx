@@ -10,11 +10,11 @@ import Record from '../data-set/Record';
 import CheckBox from '../check-box';
 import Radio from '../radio';
 import { DataSetSelection, RecordStatus } from '../data-set/enum';
-import { ColumnAlign, ColumnLock, SelectionMode, TableEditMode, TableMode } from './enum';
+import { ColumnAlign, ColumnLock, SelectionMode, TableEditMode, TableMode, TableQueryBar } from './enum';
 import { stopPropagation } from '../_util/EventManager';
 import { getColumnKey, getHeader } from './utils';
 import getReactNodeText from '../_util/getReactNodeText';
-import { getProPrefixCls } from 'choerodon-ui/lib/configure';
+import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
 import ColumnGroups, { ColumnGroup } from './ColumnGroups';
 
 const SELECTION_KEY = '__selection-column__';
@@ -41,6 +41,16 @@ export default class TableStore {
   @observable hoverRow?: Record;
 
   @observable currentEditorName?: string;
+
+  @computed
+  get border(): boolean {
+    return this.props.border || getConfig('tableBorder');
+  }
+
+  @computed
+  get queryBar(): TableQueryBar {
+    return this.props.queryBar || getConfig('queryBar');
+  }
 
   @computed
   get currentEditRecord(): Record | undefined {

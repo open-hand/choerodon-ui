@@ -218,8 +218,8 @@ export default class DataSet extends EventManager {
     modifiedCheck: true,
     pageSize: 10,
     paging: true,
-    dataKey: 'rows',
-    totalKey: 'total',
+    // dataKey: 'rows',
+    // totalKey: 'total',
   };
 
   id?: string;
@@ -602,7 +602,7 @@ export default class DataSet extends EventManager {
   constructor(props?: DataSetProps) {
     super();
     runInAction(() => {
-      this.props = props = { ...DataSet.defaultProps, ...props } as DataSetProps;
+      this.props = props = { ...DataSet.defaultProps, dataKey: getConfig('dataKey'), totalKey: getConfig('totalKey'), ...props } as DataSetProps;
       const {
         data, fields, queryFields, queryDataSet, autoQuery, autoCreate, pageSize,
         selection, events, id, name, children, queryParameter = {},

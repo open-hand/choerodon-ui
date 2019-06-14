@@ -9,6 +9,11 @@ export type Config = {
   lovDefineUrl?: string | ((code: string) => string);
   lovQueryUrl?: string | ((code: string) => string);
   axios?: AxiosInstance;
+  dataKey?: string;
+  totalKey?: string;
+  labelLayout?: string;
+  queryBar?: string;
+  tableBorder?: boolean;
 }
 
 export type ConfigKeys = keyof Config;
@@ -20,6 +25,11 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['lookupUrl', code => `/common/code/${code}/`],
   ['lovDefineUrl', code => `/sys/lov/lov_define?code=${code}`],
   ['lovQueryUrl', code => `/common/lov/dataset/${code}`],
+  ['dataKey', 'rows'],
+  ['totalKey', 'total'],
+  ['labelLayout', 'horizontal'],
+  ['queryBar', 'normal'],
+  ['tableBorder', true],
 ]);
 
 export function getConfig<T extends ConfigKeys>(key: T): Config[T] {

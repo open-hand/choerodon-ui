@@ -268,12 +268,10 @@ export default class Table extends DataSetComponent<TableProps> {
 
   static defaultProps = {
     suffixCls: 'table',
-    border: true,
     tabIndex: 0,
     selectionMode: SelectionMode.rowbox,
     queryFields: {},
     queryFieldsLimit: 1,
-    queryBar: TableQueryBar.normal,
     rowHeight: 30,
     defaultRowExpanded: false,
     expandRowByClick: false,
@@ -499,7 +497,7 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   getClassName(): string | undefined {
-    const { prefixCls, props: { border, rowHeight } } = this;
+    const { prefixCls, props: { rowHeight }, tableStore: { border } } = this;
     return super.getClassName(`${prefixCls}-scroll-position-left`, {
       [`${prefixCls}-bordered`]: border,
       [`${prefixCls}-row-height-fixed`]: isNumber(rowHeight),
@@ -574,8 +572,8 @@ export default class Table extends DataSetComponent<TableProps> {
     const {
       prefixCls,
       tableStore,
-      tableStore: { overflowX, isAnyColumnsLeftLock, isAnyColumnsRightLock },
-      props: { dataSet, buttons, queryFieldsLimit, queryFields, queryBar, header, showQueryBar },
+      tableStore: { overflowX, isAnyColumnsLeftLock, isAnyColumnsRightLock, queryBar },
+      props: { dataSet, buttons, queryFieldsLimit, queryFields, header, showQueryBar },
     } = this;
     const content = this.getTable();
     const context = { tableStore };
