@@ -61,7 +61,11 @@ export class LookupCodeStore {
     // SSR do not fetch the lookup
     if (!data && typeof window !== 'undefined') {
       try {
-        const pending: Promise<responseType> = this.pendings[lookupKey] = this.pendings[lookupKey] || this.axios.post<responseType>(lookupKey);
+        const config = {
+          url: lookupKey,
+          method: getConfig('lookupFetchMethod') || 'post',
+        }
+        const pending: Promise<responseType> = this.pendings[lookupKey] = this.pendings[lookupKey] || this.axios(config);
         const result: responseType = await pending;
         if (result) {
           const { [getConfig<'dataKey'>('dataKey') || 'rows']: rows } = result;

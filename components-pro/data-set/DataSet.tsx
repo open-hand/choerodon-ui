@@ -2,6 +2,7 @@ import { action, computed, get, IReactionDisposer, isArrayLike, observable, runI
 import axiosStatic, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import isNumber from 'lodash/isNumber';
 import isArray from 'lodash/isArray';
+import isObject from 'lodash/isObject';
 import defer from 'lodash/defer';
 import debounce from 'lodash/debounce';
 import axios from '../axios';
@@ -1588,7 +1589,7 @@ Then the query method will be auto invoke.`);
     let total = void 0;
     resp.forEach((item) => {
       data.push(...(isArray(item) ? item : dataKey ? item[dataKey] || [] : [item]));
-      if (totalKey && totalKey in item) {
+      if (totalKey && isObject(item) && totalKey in item) {
         total = item[totalKey];
       }
     });

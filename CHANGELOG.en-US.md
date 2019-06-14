@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `configure`: Add global configuration new properties.
 - 🐞 `<pro>Table`: Fix the problem that the filter bar placeholder always shows.
+- 🐞 `<pro>DataSet`: Fixed an issue where the commit response value was empty.
 
 ## 0.6.8
 
