@@ -17,8 +17,13 @@ timeline: true
 
 - 🌟 `<pro>DataSet`: Field adds the `lookupAxiosConfig` property to adapt the configuration of the lookup request.
 - 🌟 `configure`: Add global configuration new properties.
+- 🌟 `<pro>DataSet`: The property transport supports hooks.
+- 💄 `<pro>TextField`: Updates the disabled style when the `labelLayout` is `float`.
+- 💄 `<pro>Table`: Optimize the display of empty data.
 - 🐞 `<pro>Table`: Fix the problem that the filter bar placeholder always shows.
 - 🐞 `<pro>DataSet`: Fixed an issue where the commit response value was empty.
+- 🐞 `<pro>DataSet`: Fixed an issue where the commit response value was empty.
+- 🐞 `<pro>DataSet`: Fixed the timing issue triggered by indexChange.
 
 ## 0.6.8
 

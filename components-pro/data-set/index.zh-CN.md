@@ -235,11 +235,11 @@ title: DataSet
 
 | 属性 | 说明 | 类型 |
 | --- | --- | --- |
-| create | 新建请求的axios配置或url字符串 | AxiosRequestConfig \| string |
-| read | 查询请求的axios配置或url字符串 | AxiosRequestConfig \| string |
-| update | 更新请求的axios配置或url字符串 | AxiosRequestConfig \| string |
-| destroy | 删除请求的axios配置或url字符串 | AxiosRequestConfig \| string |
-| submit | create, update, destroy的默认配置或url字符串 | AxiosRequestConfig \| string |
+| create | 新建请求的axios配置或url字符串 | AxiosRequestConfig \| ({ data, params, dataSet }) => AxiosRequestConfig \| string |
+| read | 查询请求的axios配置或url字符串 | AxiosRequestConfig \| ({ data, params, dataSet }) => AxiosRequestConfig \| string |
+| update | 更新请求的axios配置或url字符串 | AxiosRequestConfig \| ({ data, params, dataSet }) => AxiosRequestConfig \| string |
+| destroy | 删除请求的axios配置或url字符串 | AxiosRequestConfig \| ({ data, params, dataSet }) => AxiosRequestConfig \| string |
+| submit | create, update, destroy的默认配置或url字符串 | AxiosRequestConfig \| ({ data, params, dataSet }) => AxiosRequestConfig \| string |
 | adapter | CRUD配置适配器 | (config: AxiosRequestConfig, type: string) => AxiosRequestConfig |
 
 ### AxiosRequestConfig

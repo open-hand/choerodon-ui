@@ -17,8 +17,12 @@ timeline: true
 
 - 🌟 `<pro>DataSet`:  Field新增lookupAxiosConfig属性，用于适配lookup请求的配置。
 - 🌟 `configure`: 增加全局配置新属性。
+- 🌟 `<pro>DataSet`: 属性transport支持钩子。
+- 💄 `<pro>TextField`: 更新float labelLayout状态下，禁用时的样式。
+- 💄 `<pro>Table`: 优化空数据显示。
 - 🐞 `<pro>Table`: 修复过滤条placeholder始终显示的问题。
 - 🐞 `<pro>DataSet`: 修复提交响应值为空时报错的问题。
+- 🐞 `<pro>DataSet`: 修复indexChange触发的时机问题。
 
 ## 0.6.8
 

@@ -1,6 +1,7 @@
 import queryString from 'querystringify';
 import moment, { isDate, isMoment } from 'moment';
 import { isArrayLike } from 'mobx';
+import { AxiosRequestConfig } from 'axios';
 import isBoolean from 'lodash/isBoolean';
 import isObject from 'lodash/isObject';
 import isString from 'lodash/isString';
@@ -10,13 +11,13 @@ import isEqual from 'lodash/isEqual';
 import warning from 'choerodon-ui/lib/_util/warning';
 import Field, { FieldProps, Fields } from './Field';
 import { BooleanValue, FieldType, RecordStatus, SortOrder } from './enum';
-import DataSet, { Transport } from './DataSet';
+import DataSet from './DataSet';
 import Record from './Record';
 import Constants from './Constants';
 import { Supports } from '../locale-context/supports';
 import isEmpty from '../_util/isEmpty';
 import { $l } from '../locale-context';
-import { AxiosRequestConfig } from 'axios';
+import Transport, { TransportType } from './Transport';
 
 export function append(url: string, suffix?: object) {
   if (suffix) {
@@ -337,22 +338,6 @@ export function getDateFormatByField(field?: Field, type?: FieldType): string {
   return Constants.DATE_JSON_FORMAT;
 }
 
-export function generateAxiosRequestConfig(config?: AxiosRequestConfig | string): AxiosRequestConfig | undefined {
-  if (isString(config)) {
-    return {
-      url: config,
-      method: 'post',
-    };
-  }
-  if (config && !config.method) {
-    return {
-      ...config,
-      method: 'post',
-    }
-  }
-  return config;
-}
-
 export function generateJSONData(array: object[], record: Record, noCascade?: boolean) {
   const json = record.toJSONData(noCascade);
   if (json.__dirty) {
@@ -379,12 +364,13 @@ export function prepareSubmitData(records: Record[], noCascade?: boolean): [obje
   return [created, updated, destroyed];
 }
 
-export function prepareForSubmit(type: string, data: object[], transport: Transport, configs: AxiosRequestConfig[]): object[] {
+export function prepareForSubmit(type: string, data: object[], transport: Transport, configs: AxiosRequestConfig[], dataSet: DataSet): object[] {
   const { adapter, [type]: config = {} } = transport;
   if (data.length) {
-    if (config.url) {
-      const newConfig = { ...config, data };
-      configs.push(adapter(newConfig, type) || newConfig);
+    const newConfig = axiosAdapter(config, dataSet, data);
+    const adapterConfig = adapter(newConfig, type) || newConfig;
+    if (adapterConfig.url) {
+      configs.push(adapterConfig);
     } else {
       return data;
     }
@@ -392,16 +378,22 @@ export function prepareForSubmit(type: string, data: object[], transport: Transp
   return [];
 }
 
-export function defaultAxiosAdapter(config: AxiosRequestConfig): AxiosRequestConfig {
-  return config;
-}
-
-export function axiosGetAdapter(config: AxiosRequestConfig): AxiosRequestConfig {
-  if (config.data && config.method && config.method.toLowerCase() === 'get') {
-    config.params = {
-      ...config.params,
-      ...config.data,
+export function axiosAdapter(config: TransportType, dataSet: DataSet, data?: any, params?: any): AxiosRequestConfig {
+  const newConfig: AxiosRequestConfig = {
+    data,
+    params,
+    method: 'post',
+  };
+  if (isString(config)) {
+    newConfig.url = config;
+  } else if (config) {
+    Object.assign(newConfig, typeof config === 'function' ? config({ data, dataSet }) : config);
+  }
+  if (newConfig.data && newConfig.method && newConfig.method.toLowerCase() === 'get') {
+    newConfig.params = {
+      ...newConfig.params,
+      ...newConfig.data,
     };
   }
-  return config;
+  return newConfig;
 }

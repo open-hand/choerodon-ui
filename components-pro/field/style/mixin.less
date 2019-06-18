@@ -49,6 +49,11 @@
   &-has-label&-invalid .@{field-label-prefix-cls} {
     color: @error-color;
   }
+  &-has-label&-disabled &,
+  &-has-label&-disabled &:hover {
+    border-style: dashed;
+    background-color: transparent;
+  }
   &-has-label .@{field-label-prefix-cls},
   &-has-label &:focus + .@{field-label-prefix-cls},
   &-has-label &:-webkit-autofill + .@{field-label-prefix-cls} {

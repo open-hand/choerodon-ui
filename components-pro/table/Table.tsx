@@ -193,6 +193,10 @@ export interface TableProps extends DataSetComponentProps {
    * 分页导航条属性
    */
   pagination?: TablePaginationConfig | false;
+  /**
+   * 高亮行
+   */
+  highLightRow?: boolean;
 }
 
 @observer
@@ -263,6 +267,7 @@ export default class Table extends DataSetComponent<TableProps> {
     editMode: PropTypes.oneOf([TableEditMode.inline, TableEditMode.cell]),
     filterBarFieldName: PropTypes.string,
     filterBarPlaceholder: PropTypes.string,
+    highLightRow: PropTypes.bool,
     ...DataSetComponent.propTypes,
   };
 

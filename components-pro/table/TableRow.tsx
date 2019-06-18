@@ -70,7 +70,10 @@ export default class TableRow extends Component<TableRowProps, any> {
   }
 
   set isHover(hover: boolean) {
-    this.context.tableStore.setRowHover(this.props.record, hover);
+    const { tableStore } = this.context;
+    if (tableStore.highLightRow) {
+      tableStore.setRowHover(this.props.record, hover);
+    }
   }
 
   private saveRef = action((node: HTMLTableRowElement | null) => {
@@ -280,7 +283,7 @@ export default class TableRow extends Component<TableRowProps, any> {
 
   render() {
     const { prefixCls, columns, record, lock, hidden, rowHeight, index } = this.props;
-    const { lockColumnsBodyRowsHeight, overflowX, props: { onRow, rowRenderer, selectionMode } } = this.context.tableStore;
+    const { lockColumnsBodyRowsHeight, overflowX, highLightRow, props: { onRow, rowRenderer, selectionMode } } = this.context.tableStore;
     const { dataSet, isCurrent, key, id } = record;
     const rowExternalProps = this.rowExternalProps = {
       ...(
@@ -297,8 +300,9 @@ export default class TableRow extends Component<TableRowProps, any> {
     };
     const rowPrefixCls = `${prefixCls}-row`;
     const classString = classNames(rowPrefixCls, {
-      [`${rowPrefixCls}-current`]: isCurrent,
-      [`${rowPrefixCls}-hover`]: !isCurrent && this.isHover,
+      [`${rowPrefixCls}-current`]: highLightRow && isCurrent,
+      [`${rowPrefixCls}-hover`]: highLightRow && !isCurrent && this.isHover,
+      [`${rowPrefixCls}-highlight`]: highLightRow,
       [`${rowPrefixCls}-disabled`]: isDisabledRow(record),
     }, rowExternalProps.className);
     const rowProps: HTMLProps<HTMLTableRowElement> & { style: CSSProperties, 'data-index': number } = {

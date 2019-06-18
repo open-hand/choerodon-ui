@@ -40,6 +40,7 @@ subtitle: 表格
 | filterBarFieldName | `queryBar`为`bar`时，直接输入的过滤条件的字段名 | string | params |
 | filterBarPlaceholder | `queryBar`为`bar`时输入框的占位符 | string |  |
 | pagination | 分页器，参考[配置项](#pagination)或 [pagination](/components/pagination/)，设为 false 时不展示分页 | object \| false |  |
+| highLightRow | 当前行高亮 | boolean | true |
 
 更多属性请参考 [DataSetComponent](/components-pro/core/#DataSetComponent)。
 

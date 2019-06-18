@@ -16,6 +16,7 @@ import { getColumnKey, getHeader } from './utils';
 import getReactNodeText from '../_util/getReactNodeText';
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
 import ColumnGroups, { ColumnGroup } from './ColumnGroups';
+import { $l } from '../locale-context/index';
 
 const SELECTION_KEY = '__selection-column__';
 export const EXPAND_KEY = '__expand-column__';
@@ -42,9 +43,34 @@ export default class TableStore {
 
   @observable currentEditorName?: string;
 
+  get emptyText(): ReactNode {
+    const renderEmpty = getConfig('renderEmpty');
+    if (typeof renderEmpty === 'function') {
+      return renderEmpty('Table');
+    }
+    return $l('Table', 'empty_data');
+  }
+
+  @computed
+  get highLightRow(): boolean {
+    if ('highLightRow' in this.props) {
+      return this.props.highLightRow;
+    }
+    if (getConfig('tableHighLightRow') === false) {
+      return false;
+    }
+    return true;
+  }
+
   @computed
   get border(): boolean {
-    return this.props.border || getConfig('tableBorder');
+    if ('border' in this.props) {
+      return this.props.border;
+    }
+    if (getConfig('tableBorder') === false) {
+      return false;
+    }
+    return true;
   }
 
   @computed

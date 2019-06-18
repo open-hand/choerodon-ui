@@ -1,4 +1,4 @@
-import React, { Component, ReactNode } from 'react';
+import React, { Component, CSSProperties, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import ResizeObserver from 'resize-observer-polyfill';
 import { observer } from 'mobx-react';
@@ -11,8 +11,9 @@ import TableContext from './TableContext';
 import TableRow from './TableRow';
 import Record from '../data-set/Record';
 import { ColumnLock } from './enum';
-import { $l } from '../locale-context';
 import ExpandedRow from './ExpandedRow';
+import { DataSetStatus } from '../data-set/enum';
+import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 
 export interface TableBodyProps extends ElementProps {
   lock?: ColumnLock | boolean;
@@ -89,14 +90,18 @@ export default class TableBody extends Component<TableBodyProps, any> {
   }
 
   getEmptyRow(columns: ColumnProps[], lock?: ColumnLock | boolean): ReactNode | undefined {
+    const { dataSet, emptyText, width } = this.context.tableStore;
     const { prefixCls } = this.props;
-    if (!lock) {
-      return (
-        <tr className={`${prefixCls}-empty-row`}>
-          <td colSpan={columns.length}>{$l('Table', 'empty_data')}</td>
-        </tr>
-      );
-    }
+    const style: CSSProperties = { marginLeft: pxToRem(width / 2) };
+    return (
+      <tr className={`${prefixCls}-empty-row`}>
+        <td colSpan={columns.length}>
+          <div style={style}>
+            {!lock && dataSet.status === DataSetStatus.ready && emptyText}
+          </div>
+        </td>
+      </tr>
+    );
   }
 
   renderExpandedRows = (columns: ColumnProps[], record: Record, isExpanded?: boolean, lock?: ColumnLock | boolean) =>

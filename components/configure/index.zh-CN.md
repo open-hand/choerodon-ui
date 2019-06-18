@@ -33,3 +33,5 @@ configure({ prefixCls: 'ant' });
 | labelLayout | 默认Form的labelLayout | string | horizontal |
 | queryBar | 默认Table的queryBar | string | normal |
 | tableBorder | 默认Table的border | boolean | true |
+| tableHighLightRow | 默认Table当前行高亮 | boolean | true |
+| renderEmpty | 自定义组件空状态。 | Function(componentName: string): ReactNode | - |

@@ -1,0 +1,114 @@
+import { computed, observable, runInAction } from 'mobx';
+import { AxiosRequestConfig } from 'axios';
+import DataSet from './DataSet';
+
+function defaultAxiosAdapter(config: AxiosRequestConfig): AxiosRequestConfig {
+  return config;
+}
+
+export type TransportAdapter = (config: AxiosRequestConfig, type: string) => AxiosRequestConfig;
+
+export type TransportHook = (props: { data?: any, params?: any, dataSet: DataSet }) => AxiosRequestConfig;
+
+export type TransportType = AxiosRequestConfig | TransportHook | string;
+
+export type TransportProps = {
+  create?: TransportType;
+  read?: TransportType;
+  update?: TransportType;
+  destroy?: TransportType;
+  validate?: TransportType;
+  submit?: TransportType;
+  adapter?: TransportAdapter;
+}
+
+export default class Transport {
+
+  @observable props: TransportProps;
+
+  dataSet: DataSet;
+
+  set create(create: TransportType | undefined) {
+    runInAction(() => {
+      this.props.create = create;
+    });
+  }
+
+  @computed
+  get create(): TransportType | undefined {
+    return this.props.create;
+  }
+
+  set read(read: TransportType | undefined) {
+    runInAction(() => {
+      this.props.read = read;
+    });
+  }
+
+  @computed
+  get read(): TransportType | undefined {
+    return this.props.read || this.dataSet.queryUrl;
+  }
+
+  set update(update: TransportType | undefined) {
+    runInAction(() => {
+      this.props.update = update;
+    });
+  }
+
+  @computed
+  get update(): TransportType | undefined {
+    return this.props.update;
+  }
+
+  set destroy(destroy: TransportType | undefined) {
+    runInAction(() => {
+      this.props.destroy = destroy;
+    });
+  }
+
+  @computed
+  get destroy(): TransportType | undefined {
+    return this.props.destroy;
+  }
+
+  set validate(validate: TransportType | undefined) {
+    runInAction(() => {
+      this.props.validate = validate;
+    });
+  }
+
+  @computed
+  get validate(): TransportType | undefined {
+    return this.props.validate || this.dataSet.validateUrl;
+  }
+
+  set submit(submit: TransportType | undefined) {
+    runInAction(() => {
+      this.props.submit = submit;
+    });
+  }
+
+  @computed
+  get submit(): TransportType | undefined {
+    return this.props.submit || this.dataSet.submitUrl;
+  }
+
+  set adapter(adapter: TransportAdapter) {
+    runInAction(() => {
+      this.props.adapter = adapter;
+    });
+  }
+
+  @computed
+  get adapter(): TransportAdapter {
+    return this.props.adapter || defaultAxiosAdapter;
+  }
+
+  constructor(props: TransportProps = {}, dataSet: DataSet) {
+    runInAction(() => {
+      this.props = props;
+      this.dataSet = dataSet;
+    });
+  }
+}

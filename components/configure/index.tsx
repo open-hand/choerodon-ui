@@ -1,5 +1,6 @@
 import { observable, ObservableMap, runInAction } from 'mobx';
 import { AxiosInstance } from 'axios';
+import { ReactNode } from 'react';
 
 export type Config = {
   prefixCls?: string;
@@ -15,6 +16,8 @@ export type Config = {
   labelLayout?: string;
   queryBar?: string;
   tableBorder?: boolean;
+  tableHighLightRow?: boolean;
+  renderEmpty?: (componentName?: string) => ReactNode;
 }
 
 export type ConfigKeys = keyof Config;
@@ -32,6 +35,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['labelLayout', 'horizontal'],
   ['queryBar', 'normal'],
   ['tableBorder', true],
+  ['tableHighLightRow', true],
 ]);
 
 export function getConfig<T extends ConfigKeys>(key: T): Config[T] {

@@ -30,3 +30,5 @@ configure({ prefixCls: 'ant' });
 | labelLayout | default Form's labelLayout | string | horizontal |
 | queryBar | default table's queryBar | string | normal |
 | tableBorder | default table's border | boolean | true |
+| tableHighLightRow | Default Table Current Line Highlight | boolean | true |
+| renderEmpty | set empty content of components. | Function(componentName: string): ReactNode | - |

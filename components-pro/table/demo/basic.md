@@ -107,11 +107,19 @@ class App extends React.Component {
     autoQuery: true,
     pageSize: 5,
     transport: {
+      read: ({ dataSet }) => dataSet.length ? {
+        url: '/dataset/user/mutations',
+      } : {
+        url: '/dataset/user/queries',
+      },
       create: {
         url: '/dataset/user/mutations',
         method: 'put',
       },
-      update: '/dataset/user/mutations',
+      update: ({ data }) => data.length ? {
+        url: `/dataset/user/mutations/${data[0].userid}`,
+        data: data[0],
+      }: null,
       destroy: {
         url: '/dataset/user/mutations',
         method: 'delete',
@@ -212,6 +220,7 @@ class App extends React.Component {
 
   createUser = () => {
     this.openModal(this.userDs.create({}, 0));
+    this.friendsDs.create({});
   };
 
   editUser = () => {
@@ -277,7 +286,7 @@ class App extends React.Component {
       </Table>,
       <Tabs key="tabs">
         <TabPane tab="Enemy">
-          <Table key="enemy" buttons={['add', 'delete']} dataSet={this.enemyDs} pagination={{ position: 'both' }}>
+          <Table key="enemy" highLightRow={false} buttons={['add', 'delete']} dataSet={this.enemyDs} pagination={{ position: 'both' }}>
             <Column name="name" editor sortable />
             <Column name="age" editor sortable />
             <Column name="sex" editor width={150} />

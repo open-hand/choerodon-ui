@@ -11,12 +11,10 @@ import Field, { FieldProps, Fields } from './Field';
 import warning from 'choerodon-ui/lib/_util/warning';
 import {
   append,
-  axiosGetAdapter,
+  axiosAdapter,
   checkParentByInsert,
-  defaultAxiosAdapter,
   doExport,
   findBindFieldBy,
-  generateAxiosRequestConfig,
   generateJSONData,
   getFieldSorter,
   getOrderFields,
@@ -35,32 +33,11 @@ import { $l } from '../locale-context';
 import isEmpty from '../_util/isEmpty';
 import * as ObjectChainValue from '../_util/ObjectChainValue';
 import { getConfig } from 'choerodon-ui/lib/configure';
+import Transport, { TransportProps } from './Transport';
 
 export type DataSetChildren = { [key: string]: DataSet };
 
 export type Events = { [key: string]: Function };
-
-export type TransportAdapter = (config: AxiosRequestConfig, type: string) => AxiosRequestConfig;
-
-export type TransportProps = {
-  create?: AxiosRequestConfig | string;
-  read?: AxiosRequestConfig | string;
-  update?: AxiosRequestConfig | string;
-  destroy?: AxiosRequestConfig | string;
-  validate?: AxiosRequestConfig | string;
-  submit?: AxiosRequestConfig | string;
-  adapter?: TransportAdapter;
-}
-
-export type Transport = {
-  create?: AxiosRequestConfig;
-  read?: AxiosRequestConfig;
-  update?: AxiosRequestConfig;
-  destroy?: AxiosRequestConfig;
-  validate?: AxiosRequestConfig;
-  submit?: AxiosRequestConfig;
-  adapter: TransportAdapter;
-}
 
 export interface DataSetProps {
   /**
@@ -359,27 +336,15 @@ export default class DataSet extends EventManager {
     });
   }
 
+  set transport(transport: Transport) {
+    runInAction(() => {
+      this.props.transport = transport instanceof Transport ? transport.props : transport;
+    });
+  }
+
   @computed
   get transport(): Transport {
-    const { props: { transport = {} }, queryUrl, submitUrl, validateUrl } = this;
-    const {
-      create,
-      read = queryUrl,
-      update,
-      destroy,
-      validate = validateUrl,
-      submit = submitUrl,
-      adapter = defaultAxiosAdapter,
-    } = transport;
-    return {
-      create: generateAxiosRequestConfig(create),
-      read: generateAxiosRequestConfig(read),
-      update: generateAxiosRequestConfig(update),
-      destroy: generateAxiosRequestConfig(destroy),
-      validate: generateAxiosRequestConfig(validate),
-      submit: generateAxiosRequestConfig(submit),
-      adapter,
-    };
+    return new Transport(this.props.transport, this);
   }
 
   @observable props: DataSetProps;
@@ -403,8 +368,6 @@ export default class DataSet extends EventManager {
   @observable destroyed: Record[];
 
   @observable cachedSelected: Record[];
-
-  previous?: Record;
 
   /**
    * 获取新建的记录集
@@ -530,13 +493,7 @@ export default class DataSet extends EventManager {
    */
   @computed
   get current(): Record | undefined {
-    const { previous } = this;
-    const current = this.data.find(record => record.isCurrent) || this.cachedSelected.find(record => record.isCurrent);
-    if (previous !== current) {
-      defer(() => this.fireEvent(DataSetEvents.indexChange, { dataSet: this, record: current, previous }));
-      this.previous = current;
-    }
-    return current;
+    return this.data.find(record => record.isCurrent) || this.cachedSelected.find(record => record.isCurrent);
   }
 
   /**
@@ -553,6 +510,7 @@ export default class DataSet extends EventManager {
         if (record && record.dataSet === this) {
           record.isCurrent = true;
         }
+        this.fireEvent(DataSetEvents.indexChange, { dataSet: this, record, previous: currentRecord });
       });
     }
   }
@@ -914,8 +872,10 @@ export default class DataSet extends EventManager {
    * @param records 记录或者记录数组
    * @return Promise
    */
+  @action
   remove(records?: Record | Record[]): void {
     if (records) {
+      const { current, currentIndex } = this;
       ([] as Record[]).concat(records).forEach((record) => {
         const index = this.indexOf(record);
         if (index !== -1) {
@@ -923,7 +883,13 @@ export default class DataSet extends EventManager {
         }
       });
       if (!this.current) {
-        this.current = this.get(0);
+        const record = this.get(currentIndex) || this.get(this.length - 1);
+        if (record) {
+          record.isCurrent = true;
+        }
+        if (current !== record) {
+          this.fireEvent(DataSetEvents.indexChange, { dataSet: this, record, previous: current });
+        }
       }
     }
   }
@@ -1364,9 +1330,11 @@ Then the query method will be auto invoke.`);
       this.totalCount = allData.length;
     }
     this.releaseCachedSelected();
-    if (autoLocateFirst) {
-      this.current = this.get(0);
+    const nextRecord = autoLocateFirst && this.get(0);
+    if (nextRecord) {
+      nextRecord.isCurrent = true;
     }
+    this.fireEvent(DataSetEvents.indexChange, { dataSet: this, record: nextRecord });
     this.fireEvent(DataSetEvents.load, { dataSet: this });
     return this;
   }
@@ -1485,11 +1453,11 @@ Then the query method will be auto invoke.`);
       const { transport } = this;
       const axiosConfigs: AxiosRequestConfig[] = [];
       const submitData: object[] = [
-        ...prepareForSubmit('create', created, transport, axiosConfigs),
-        ...prepareForSubmit('update', updated, transport, axiosConfigs),
-        ...prepareForSubmit('destroy', destroyed, transport, axiosConfigs),
+        ...prepareForSubmit('create', created, transport, axiosConfigs, this),
+        ...prepareForSubmit('update', updated, transport, axiosConfigs, this),
+        ...prepareForSubmit('destroy', destroyed, transport, axiosConfigs, this),
       ];
-      prepareForSubmit('submit', submitData, transport, axiosConfigs);
+      prepareForSubmit('submit', submitData, transport, axiosConfigs, this);
       if (axiosConfigs.length) {
         try {
           this.changeSubmitStatus(DataSetStatus.submitting);
@@ -1509,21 +1477,21 @@ Then the query method will be auto invoke.`);
   }
 
   private async read(page: number = 1): Promise<any> {
-    const { parent, transport: { read, adapter } } = this;
-    if (read && this.checkReadable(parent)) {
+    if (this.checkReadable(this.parent)) {
       try {
+        const { transport: { read = {}, adapter } } = this;
         this.changeStatus(DataSetStatus.loading);
         const params = await this.generateQueryParameter();
-        this.fireEvent(DataSetEvents.query, { dataSet: this, params });
-        const result = await this.axios(axiosGetAdapter(adapter({
-          ...read,
-          params: this.generateQueryString(page),
-          data: params,
-        }, 'read')));
-        runInAction(() => {
-          this.currentPage = page;
-        });
-        return result;
+        const newConfig = axiosAdapter(read, this, params, this.generateQueryString(page));
+        const adapterConfig = adapter(newConfig, 'read') || newConfig;
+        if (adapterConfig.url) {
+          this.fireEvent(DataSetEvents.query, { dataSet: this, params: adapterConfig.params });
+          const result = await this.axios(adapterConfig);
+          runInAction(() => {
+            this.currentPage = page;
+          });
+          return result;
+        }
       } catch (e) {
         this.handleLoadFail(e);
         throw e;
