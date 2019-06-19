@@ -366,7 +366,7 @@ export function prepareSubmitData(records: Record[], noCascade?: boolean): [obje
   }
 
   records.forEach(
-    record => (noCascade && record.status !== RecordStatus.sync) || generateJSONData(storeWith(record.status), record, noCascade),
+    record => (noCascade && record.status === RecordStatus.sync) || generateJSONData(storeWith(record.status), record, noCascade),
   );
   return [created, updated, destroyed, cascade];
 }

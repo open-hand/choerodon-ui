@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.6.9
+
+`2019-06-19`
+
 - 🌟 `<pro>DataSet`: Field adds the `lookupAxiosConfig` property to adapt the configuration of the lookup request.
 - 🌟 `configure`: Add global configuration new properties.
 - 🌟 `<pro>DataSet`: The property transport supports hooks.

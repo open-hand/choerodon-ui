@@ -2,6 +2,7 @@
 
 const ENV = process.env.NODE_ENV;
 if (ENV !== 'production' &&
+  ENV !== 'test' &&
     typeof console !== 'undefined' &&
     console.warn &&
     typeof window !== 'undefined') {

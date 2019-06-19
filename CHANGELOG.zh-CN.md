@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.6.9
+
+`2019-06-19`
+
 - 🌟 `<pro>DataSet`:  Field新增lookupAxiosConfig属性，用于适配lookup请求的配置。
 - 🌟 `configure`: 增加全局配置新属性。
 - 🌟 `<pro>DataSet`: 属性transport支持钩子。
