@@ -1449,19 +1449,20 @@ Then the query method will be auto invoke.`);
 
   private async write(records: Record[], noCascade?: boolean): Promise<any> {
     if (records.length) {
-      const [created, updated, destroyed] = prepareSubmitData(records, noCascade);
+      const [created, updated, destroyed, cascade] = prepareSubmitData(records, noCascade);
       const { transport } = this;
       const axiosConfigs: AxiosRequestConfig[] = [];
       const submitData: object[] = [
         ...prepareForSubmit('create', created, transport, axiosConfigs, this),
         ...prepareForSubmit('update', updated, transport, axiosConfigs, this),
         ...prepareForSubmit('destroy', destroyed, transport, axiosConfigs, this),
+        ...cascade,
       ];
       prepareForSubmit('submit', submitData, transport, axiosConfigs, this);
       if (axiosConfigs.length) {
         try {
           this.changeSubmitStatus(DataSetStatus.submitting);
-          this.fireEvent(DataSetEvents.submit, { dataSet: this, data: [...created, ...updated, ...destroyed] });
+          this.fireEvent(DataSetEvents.submit, { dataSet: this, data: [...created, ...updated, ...destroyed, ...cascade] });
           this.pending = axiosStatic.all(axiosConfigs.map(config => this.axios(config)));
           const result: any[] = await this.pending;
           return this.handleSubmitSuccess(result);
@@ -1485,7 +1486,7 @@ Then the query method will be auto invoke.`);
         const newConfig = axiosAdapter(read, this, params, this.generateQueryString(page));
         const adapterConfig = adapter(newConfig, 'read') || newConfig;
         if (adapterConfig.url) {
-          this.fireEvent(DataSetEvents.query, { dataSet: this, params: adapterConfig.params });
+          this.fireEvent(DataSetEvents.query, { dataSet: this, params: adapterConfig.data || adapterConfig.params });
           const result = await this.axios(adapterConfig);
           runInAction(() => {
             this.currentPage = page;

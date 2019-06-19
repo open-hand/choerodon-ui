@@ -23,6 +23,9 @@ timeline: true
 - 🐞 `<pro>Table`: 修复过滤条placeholder始终显示的问题。
 - 🐞 `<pro>DataSet`: 修复提交响应值为空时报错的问题。
 - 🐞 `<pro>DataSet`: 修复indexChange触发的时机问题。
+- 🐞 `<pro>DataSet`: 修复query事件查询参数不正确的问题。
+- 🐞 `<pro>DataSet`: 修复级联子数据源数据无法提交的问题。
+- 🐞 `<pro>DataSet`: 修复ignore为clean的多语言字段无法正确提交的问题。
 
 ## 0.6.8
 

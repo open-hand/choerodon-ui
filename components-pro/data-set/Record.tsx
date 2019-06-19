@@ -356,6 +356,10 @@ export default class Record {
     }
   }
 
+  getPristineValue(fieldName) {
+    return ObjectChainValue.get(this.pristineData, fieldName);
+  }
+
   @action
   set(fieldName: string, value: any): Record {
     const oldName = fieldName;
@@ -371,7 +375,8 @@ export default class Record {
     const newValue = processValue(value, field);
     if (!isSame(newValue, oldValue)) {
       const { fields } = this;
-      const pristineValue = ObjectChainValue.get(this.pristineData, fieldName);
+      ObjectChainValue.set(this.data, fieldName, newValue, fields);
+      const pristineValue = this.getPristineValue(fieldName);
       if (isSame(pristineValue, newValue)) {
         if (field && field.dirty) {
           field.dirty = false;
@@ -387,7 +392,6 @@ export default class Record {
           this.status = RecordStatus.update;
         }
       }
-      ObjectChainValue.set(this.data, fieldName, newValue, fields);
       const { dataSet, tlsDataSet } = this;
       if (dataSet) {
         if (tlsDataSet) {
@@ -409,7 +413,8 @@ export default class Record {
     }
     if (field) {
       findBindFields(field, this.fields).forEach(oneField => (
-        oneField.dirty = field.dirty, oneField.validator.reset(), oneField.checkValidity()
+        // oneField.dirty = field.dirty,
+          oneField.validator.reset(), oneField.checkValidity()
       ));
     }
     return this;

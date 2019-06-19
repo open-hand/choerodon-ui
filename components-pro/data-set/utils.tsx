@@ -346,22 +346,29 @@ export function generateJSONData(array: object[], record: Record, noCascade?: bo
   }
 }
 
-export function prepareSubmitData(records: Record[], noCascade?: boolean): [object[], object[], object[]] {
+export function prepareSubmitData(records: Record[], noCascade?: boolean): [object[], object[], object[], object[]] {
   const created: object[] = [];
   const updated: object[] = [];
   const destroyed: object[] = [];
-  records.forEach((record) => {
-    switch (record.status) {
+  const cascade: object[] = [];
+
+  function storeWith(status) {
+    switch (status) {
       case RecordStatus.add:
-        return generateJSONData(created, record, noCascade);
+        return created;
       case RecordStatus.update:
-        return generateJSONData(updated, record, noCascade);
+        return updated;
       case RecordStatus.delete:
-        return generateJSONData(destroyed, record, noCascade);
+        return destroyed;
       default:
+        return cascade;
     }
-  });
-  return [created, updated, destroyed];
+  }
+
+  records.forEach(
+    record => (noCascade && record.status !== RecordStatus.sync) || generateJSONData(storeWith(record.status), record, noCascade),
+  );
+  return [created, updated, destroyed, cascade];
 }
 
 export function prepareForSubmit(type: string, data: object[], transport: Transport, configs: AxiosRequestConfig[], dataSet: DataSet): object[] {

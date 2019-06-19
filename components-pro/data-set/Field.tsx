@@ -1,6 +1,7 @@
 import { action, computed, get, observable, ObservableMap, runInAction, set } from 'mobx';
 import { MomentInput } from 'moment';
 import isObject from 'lodash/isObject';
+import isEqual from 'lodash/isEqual';
 import merge from 'lodash/merge';
 import defer from 'lodash/defer';
 import DataSet from './DataSet';
@@ -16,6 +17,35 @@ import ValidationResult from '../validator/ValidationResult';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import { LovConfig } from '../lov/Lov';
 import { AxiosRequestConfig } from 'axios';
+
+function setFieldDirty(field: Field, dirty: boolean) {
+  if (dirty) {
+    field.dirty = true;
+  } else {
+    const { record, name } = field;
+    if (record) {
+      if (!isValueDirty(name, record)) {
+        field.dirty = false;
+      }
+    } else {
+      field.dirty = false;
+    }
+  }
+}
+
+function isValueDirty(name: string, record: Record): boolean {
+  const pristineValue = record.getPristineValue(name);
+  const value = record.get(name);
+  return !isEqual(pristineValue, value);
+}
+
+function getParentField(name: string, record: Record): Field | undefined {
+  const parentFieldIndex = name.lastIndexOf('.');
+  if (parentFieldIndex > -1) {
+    const parentFieldName = name.slice(0, parentFieldIndex);
+    return record.getField(parentFieldName);
+  }
+}
 
 export type Fields = ObservableMap<string, Field>;
 
@@ -203,13 +233,20 @@ export default class Field {
       return true;
     }
     const { record } = this;
+    let name = this.name;
     const bind = this.get('bind');
     if (record) {
       if (bind) {
         const field = record.getField(bind);
         if (field) {
           return field.dirty;
+        } else {
+          name = bind;
         }
+      }
+      const parentField = getParentField(name, record);
+      if (parentField) {
+        return parentField.dirty && isValueDirty(name, record);
       }
       if (record.tlsDataSet && this.type === FieldType.intl) {
         const { current } = record.tlsDataSet;
@@ -226,11 +263,20 @@ export default class Field {
 
   set dirty(dirty: boolean) {
     const { record } = this;
+    let name = this.name;
     const bind = this.get('bind');
-    if (bind && record) {
-      const field = record.getField(bind);
-      if (field) {
-        field.dirty = dirty;
+    if (record) {
+      if (bind) {
+        const field = record.getField(bind);
+        if (field) {
+          setFieldDirty(field, dirty);
+        } else {
+          name = bind;
+        }
+      }
+      const parentField = getParentField(name, record);
+      if (parentField) {
+        setFieldDirty(parentField, dirty);
       }
     }
     this.modified = dirty;

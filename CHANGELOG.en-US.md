@@ -24,6 +24,9 @@ timeline: true
 - 🐞 `<pro>DataSet`: Fixed an issue where the commit response value was empty.
 - 🐞 `<pro>DataSet`: Fixed an issue where the commit response value was empty.
 - 🐞 `<pro>DataSet`: Fixed the timing issue triggered by indexChange.
+- 🐞 `<pro>DataSet`: Fixed an issue where the query parameters of the `query` event were incorrect.
+- 🐞 `<pro>DataSet`: Fixed an issue where cascading subdata source data could not be submitted.
+- 🐞 `<pro>DataSet`: Fixed an issue where property `ignore` of multi-language field is a `clean` that could not be submitted correctly.
 
 ## 0.6.8
 
