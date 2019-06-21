@@ -5,6 +5,7 @@ import { $l } from '../../locale-context';
 import isEmpty from '../../_util/isEmpty';
 import Field from '../../data-set/Field';
 import { methodReturn } from '.';
+import { axiosAdapter } from '../../data-set/utils';
 
 const reportOtherField = action(({ validator, validator: { validity } }: Field, invalid: boolean) => {
   if (invalid) {
@@ -40,12 +41,11 @@ export default async function uniqueError(value, { dataSet, record, unique, name
     }
     let invalid = dataSet.data.some(item => item !== record && Object.keys(fields).every(field => fields[field] === item.get(field)));
     if (!invalid) {
-      const { totalPage, axios, transport: { validate } } = dataSet;
-      if (validate && totalPage > 1) {
-        const results: any = await axios({
-          ...validate,
-          data: { unique: [fields] },
-        });
+      const { totalPage, axios, transport: { validate = {}, adapter } } = dataSet;
+      const newConfig = axiosAdapter(validate, this, { unique: [fields] });
+      const adapterConfig = adapter(newConfig, 'validate') || newConfig;
+      if (adapterConfig.url && totalPage > 1) {
+        const results: any = await axios(adapterConfig);
         invalid = [].concat(results).some(result => !result);
       }
     }

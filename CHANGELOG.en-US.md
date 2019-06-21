@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+- 🐞 `Checkbox`: Fixed semi-selection style issues.
+- 🐞 `<pro>Validator`: Fixed Unique validates problem when `Transport` setting validate.
+- 🐞 `<pro>DataSet`: Fixed the `Field.dirty` property has a problem with loop calculations.
+
 ## 0.7.0
 ## 0.6.9
 

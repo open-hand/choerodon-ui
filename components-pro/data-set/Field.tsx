@@ -17,6 +17,7 @@ import ValidationResult from '../validator/ValidationResult';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import { LovConfig } from '../lov/Lov';
 import { AxiosRequestConfig } from 'axios';
+import warning from 'choerodon-ui/lib/_util/warning';
 
 function setFieldDirty(field: Field, dirty: boolean) {
   if (dirty) {
@@ -43,7 +44,11 @@ function getParentField(name: string, record: Record): Field | undefined {
   const parentFieldIndex = name.lastIndexOf('.');
   if (parentFieldIndex > -1) {
     const parentFieldName = name.slice(0, parentFieldIndex);
-    return record.getField(parentFieldName);
+    const parentField = record.getField(parentFieldName);
+    if (parentField) {
+      return parentField;
+    }
+    return getParentField(parentFieldName, record);
   }
 }
 
@@ -227,59 +232,66 @@ export default class Field {
 
   @observable modified: boolean;
 
+  isDirtyComputing: boolean = false;
+
+  isBinding: boolean = false;
+
   @computed
   get dirty(): boolean {
     if (this.modified) {
       return true;
     }
-    const { record } = this;
-    let name = this.name;
-    const bind = this.get('bind');
+    const { record, name } = this;
     if (record) {
-      if (bind) {
-        const field = record.getField(bind);
-        if (field) {
-          return field.dirty;
-        } else {
-          name = bind;
+      try {
+        this.isDirtyComputing = true;
+        const bind = this.get('bind') || name;
+        if (bind !== name) {
+          const field = record.getField(bind);
+          if (field && !field.isDirtyComputing) {
+            return field.dirty;
+          }
         }
-      }
-      const parentField = getParentField(name, record);
-      if (parentField) {
-        return parentField.dirty && isValueDirty(name, record);
-      }
-      if (record.tlsDataSet && this.type === FieldType.intl) {
-        const { current } = record.tlsDataSet;
-        if (current) {
-          return Object.keys(localeContext.supports).some(lang => {
-            const langField = current.getField(`${this.name}.${lang}`);
-            return langField ? langField.dirty : false;
-          });
+        const parentField = getParentField(bind, record);
+        if (parentField && parentField !== this && !parentField.isDirtyComputing) {
+          return parentField.dirty && isValueDirty(bind, record);
         }
+        if (record.tlsDataSet && this.type === FieldType.intl) {
+          const { current } = record.tlsDataSet;
+          if (current) {
+            return Object.keys(localeContext.supports).some((lang) => {
+              const langField = current.getField(`${name}.${lang}`);
+              return langField && !langField.isDirtyComputing ? langField.dirty : false;
+            });
+          }
+        }
+      } catch (e) {
+        warning(false, `Field#${name}; ${e.message}`);
+      } finally {
+        this.isDirtyComputing = false;
       }
     }
     return false;
   }
 
   set dirty(dirty: boolean) {
-    const { record } = this;
-    let name = this.name;
-    const bind = this.get('bind');
-    if (record) {
-      if (bind) {
-        const field = record.getField(bind);
-        if (field) {
-          setFieldDirty(field, dirty);
-        } else {
-          name = bind;
+    runInAction(() => {
+      const { record, name } = this;
+      if (record) {
+        const bind = this.get('bind') || name;
+        if (bind !== name) {
+          const field = record.getField(bind);
+          if (field) {
+            setFieldDirty(field, dirty);
+          }
+        }
+        const parentField = getParentField(bind, record);
+        if (parentField) {
+          setFieldDirty(parentField, dirty);
         }
       }
-      const parentField = getParentField(name, record);
-      if (parentField) {
-        setFieldDirty(parentField, dirty);
-      }
-    }
-    this.modified = dirty;
+      this.modified = dirty;
+    });
   }
 
   get name(): string {
@@ -618,6 +630,40 @@ export default class Field {
   getValidationErrorValues(): ValidationResult[] {
     return findInvalidField(this).validator.validationErrorValues;
   }
+
+  // getBindFields(): Field[] {
+  //   const bindFields: Field[] = [];
+  //   const { record } = this;
+  //   if (record) {
+  //     const { fields } = record;
+  //
+  //   }
+  // }
+  //
+  // getBindField(): Field | undefined {
+  //   const { record, name } = this;
+  //   if (record) {
+  //     try {
+  //       const bind = this.get('bind');
+  //       if (bind !== name) {
+  //         this.isBinding = true;
+  //         const field = getParentField(bind || name, record);
+  //         if (field) {
+  //           if (field.isBinding) {
+  //             throw 'X';
+  //           }
+  //           return field.getBindField() || field;
+  //         }
+  //       } else {
+  //         throw 'X';
+  //       }
+  //     } catch (e) {
+  //       throw new Error(`[DataSet.Field] Cycle binding fields. Field#${bind}`);
+  //     } finally {
+  //       this.isBinding = false;
+  //     }
+  //   }
+  // }
 
   async ready(): Promise<any> {
     const { lookUpPending, lovPending } = this;

@@ -92,10 +92,16 @@ export default class TableBody extends Component<TableBodyProps, any> {
   getEmptyRow(columns: ColumnProps[], lock?: ColumnLock | boolean): ReactNode | undefined {
     const { dataSet, emptyText, width } = this.context.tableStore;
     const { prefixCls } = this.props;
-    const style: CSSProperties = { marginLeft: pxToRem(width / 2) };
+    const style: CSSProperties = width ? {
+      marginLeft: pxToRem(width / 2),
+    } : {
+      transform: 'none',
+      display: 'inline-block',
+    };
+    const tdStyle: CSSProperties = width ? {} : { textAlign: 'center' };
     return (
       <tr className={`${prefixCls}-empty-row`}>
-        <td colSpan={columns.length}>
+        <td colSpan={columns.length} style={tdStyle}>
           <div style={style}>
             {!lock && dataSet.status === DataSetStatus.ready && emptyText}
           </div>

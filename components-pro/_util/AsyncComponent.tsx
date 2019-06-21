@@ -13,9 +13,7 @@ const asyncComponent = (importComponent: () => Promise<{ default: ReactType }>):
     componentDidMount() {
       importComponent().then(({ default: component }) => {
         this.setState({ component });
-      }, (e) => {
-        exception(e);
-      });
+      }, exception);
     }
 
     render() {

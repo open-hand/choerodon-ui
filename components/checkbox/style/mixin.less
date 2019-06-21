@@ -73,23 +73,6 @@
     }
   }
 
-  // 半选状态
-  .@{checkbox-prefix-cls}-indeterminate .@{checkbox-inner-prefix-cls}:after {
-    @indeterminate-width: (@checkbox-size / 14) * 8;
-    @indeterminate-height: @checkbox-size / 14;
-    content: ' ';
-    transform: scale(1);
-    position: absolute;
-    left: (@checkbox-size - .03rem - @indeterminate-width) / 2;
-    top: (@checkbox-size - .04rem - @indeterminate-height) / 2;
-    width: @indeterminate-width;
-    height: @indeterminate-height;
-  }
-
-  .@{checkbox-prefix-cls}-indeterminate.@{checkbox-prefix-cls}-disabled .@{checkbox-inner-prefix-cls}:after {
-    border-color: @disabled-color;
-  }
-
   // 选中状态
   .@{checkbox-prefix-cls}-checked .@{checkbox-inner-prefix-cls}:after {
     transform: rotate(45deg) scale(1);
@@ -188,6 +171,23 @@
       transform-origin: 0 0;
       transform: scale(0.75) translateY(0) translateZ(.00001rem);
     }
+  }
+
+  // 半选状态
+  .@{checkbox-prefix-cls}-indeterminate .@{checkbox-inner-prefix-cls}:after {
+    @indeterminate-width: (@checkbox-size / 14) * 8;
+    @indeterminate-height: @checkbox-size / 14;
+    content: ' ';
+    transform: scale(1);
+    position: absolute;
+    left: (@checkbox-size - .03rem - @indeterminate-width) / 2;
+    top: (@checkbox-size - .04rem - @indeterminate-height) / 2;
+    width: @indeterminate-width;
+    height: @indeterminate-height;
+  }
+
+  .@{checkbox-prefix-cls}-indeterminate.@{checkbox-prefix-cls}-disabled .@{checkbox-inner-prefix-cls}:after {
+    border-color: @disabled-color;
   }
 }
 
