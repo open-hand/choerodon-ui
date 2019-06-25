@@ -15,6 +15,11 @@ timeline: true
 
 ---
 
+## 0.7.1
+## 0.6.10
+
+`2019-06-25`
+
 - 🌟 `configure`: Add global configuration new properties.
 - 💄 `<pro>TextField`: Updated the style of the input box with the property `labelLayout` is float.
 - 🐞 `<pro>Select`: Fix bugs in the `combo` property.

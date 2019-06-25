@@ -15,6 +15,11 @@ timeline: true
 
 ---
 
+## 0.7.1
+## 0.6.10
+
+`2019-06-25`
+
 - 🌟 `configure`: 增加全局配置新属性。
 - 💄 `<pro>TextField`: 更新labelLayout为float时输入框的样式。
 - 🐞 `<pro>Select`: 修复combo属性的bug。
