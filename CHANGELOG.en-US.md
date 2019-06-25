@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 💄 `<pro>TextField`: Updated the style of the input box with the property `labelLayout` is float.
 - 🐞 `<pro>Select`: Fix bugs in the `combo` property.
 - 🐞 `Checkbox`: Fixed semi-selection style issues.
 - 🐞 `<pro>Validator`: Fixed Unique validates problem when `Transport` setting validate.
@@ -64,7 +65,7 @@ timeline: true
 
 `2019-06-07`
 
-- 🌟 `<pro>TextField`: The style of the input box when updating the labelLayout to float.
+- 💄 `<pro>TextField`: Updated the style of the input box with the property `labelLayout` is float.
 - 💄 `<pro>DataSet`: Optimize the problem that memory is not released.
 - 🐞 `<pro>Upload`: Fixed an issue where the popup could not be closed.
 

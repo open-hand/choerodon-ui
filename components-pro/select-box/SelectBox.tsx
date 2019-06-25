@@ -108,7 +108,7 @@ export default class SelectBox extends Select<SelectBoxProps> {
     const { className } = this.getOtherProps();
     const Element = this.context.formNode ? 'div' : 'form';
     return (
-      <span {...this.getWrapperProps()}>
+      <span key="wrapper" {...this.getWrapperProps()}>
         <Element className={className}>{items}</Element>
         {this.renderFloatLabel()}
       </span>

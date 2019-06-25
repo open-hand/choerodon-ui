@@ -414,12 +414,14 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
         {validationMessage}
       </Animate>,
       help,
+    ] : !!(this.multiple && this.getValues().length) || this.isValidationMessageHidden(validationMessage) ? [
+      wrapper,
+      help,
     ] : (
       <Tooltip
         title={validationMessage}
         theme="light"
         placement="bottomLeft"
-        hidden={!!(this.multiple && this.getValues().length) || this.isValidationMessageHidden(validationMessage)}
       >
         {wrapper}
         {help}
@@ -431,7 +433,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     const { prefixCls } = this;
     return super.getWrapperClassNames({
       [`${prefixCls}-invalid`]: !this.isValid,
-      [`${prefixCls}-has-label`]: this.hasFloatLabel,
+      [`${prefixCls}-float-label`]: this.hasFloatLabel,
       [`${prefixCls}-required`]: this.getProp('required'),
     }, ...args);
   }
@@ -779,7 +781,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
         const content = maxTagTextLength && text.length > maxTagTextLength ? `${text.slice(0, maxTagTextLength)}...` : text;
         const validationResult = validationErrorValues.find(error => error.value === v);
         const className = classNames({
-          [`${prefixCls}-multiple-block-disabled`]: disabled,
+          [`${prefixCls}-multiple-block-invalid`]: validationResult,
         }, blockClassName);
         const validationMessage = validationResult && this.renderValidationMessage(validationResult);
         const closeBtn = !disabled && <CloseButton onClose={this.handleMutipleValueRemove} value={v} index={repeat} />;

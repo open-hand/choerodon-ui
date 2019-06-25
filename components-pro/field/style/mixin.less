@@ -23,7 +23,7 @@
 }
 
 .float-label() {
-  &-has-label .@{field-label-prefix-cls} {
+  &-float-label .@{field-label-prefix-cls} {
     &-wrapper {
       position: absolute;
       padding: 0 .04rem;
@@ -42,34 +42,42 @@
     transform-origin: inherit;
     transition: inherit;
     pointer-events: none;
+    line-height: 34 / 13; // <-- fieldHeight / fontSize
   }
-  &-has-label&-focused .@{field-label-prefix-cls} {
+  &-float-label&-focused .@{field-label-prefix-cls} {
     color: @outline-color;
+    &-wrapper {
+      border-top-width: .02rem;
+    }
   }
-  &-has-label&-invalid .@{field-label-prefix-cls} {
+  &-float-label&-invalid .@{field-label-prefix-cls} {
     color: @error-color;
+    &-wrapper {
+      border-top-width: .02rem;
+    }
   }
-  &-has-label&-disabled &,
-  &-has-label&-disabled &:hover {
+  &-float-label&-disabled &,
+  &-float-label&-disabled &:hover {
     border-style: dashed;
     background-color: transparent;
   }
-  &-has-label .@{field-label-prefix-cls},
-  &-has-label &:focus + .@{field-label-prefix-cls},
-  &-has-label &:-webkit-autofill + .@{field-label-prefix-cls} {
+  &-float-label .@{field-label-prefix-cls},
+  &-float-label &:focus + .@{field-label-prefix-cls},
+  &-float-label &:-webkit-autofill + .@{field-label-prefix-cls} {
     &-wrapper {
       transform: scaleX(.75);
     }
     transform: scaleY(.75);
   }
-  &-has-label & {
+  &-float-label & {
     border-radius: .04rem;
+    height: .36rem;
   }
-  &-has-label&-invalid,
-  &-has-label&-required {
+  &-float-label&-invalid,
+  &-float-label&-required {
     background-color: @input-wrapper-bg;
   }
-  &-has-label&-required .@{field-label-prefix-cls}:after {
+  &-float-label&-required .@{field-label-prefix-cls}:after {
     width: .08rem;
   }
   &-empty:not(&-focused) {
@@ -81,7 +89,10 @@
       transform: none;
     }
   }
-  &-has-label &-multiple-block {
+  &-float-label & > ul {
+    margin-top: .03rem;
+  }
+  &-float-label &-multiple-block {
     border-radius: .12rem;
   }
 }

@@ -203,7 +203,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T & TextField
     const multipleHolder = this.renderMultipleHolder();
 
     return (
-      <span {...this.getWrapperProps()}>
+      <span key="element" {...this.getWrapperProps()}>
         {multipleHolder}
         {otherPrevNode}
         {placeholderDiv}
@@ -228,9 +228,13 @@ export class TextField<T extends TextFieldProps> extends FormField<T & TextField
       return inputElement;
     }
 
+    const classString = classNames(`${prefixCls}-group`, {
+      [`${prefixCls}-float-label-group`]: this.hasFloatLabel,
+    });
+
     return (
-      <div className={`${prefixCls}-group-wrapper`}>
-        <div {...this.getWrapperProps()} className={`${prefixCls}-group`}>
+      <div key="wrapper" className={`${prefixCls}-group-wrapper`}>
+        <div {...this.getWrapperProps()} className={classString}>
           {this.wrapGroupItem(addonBefore, GroupItemCategory.before)}
           {this.wrapGroupItem(inputElement, GroupItemCategory.input)}
           {this.wrapGroupItem(help, GroupItemCategory.help)}

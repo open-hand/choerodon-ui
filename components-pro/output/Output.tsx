@@ -60,7 +60,7 @@ export default class Output extends FormField<OutputProps> {
 
   renderWrapper(): ReactNode {
     return (
-      <span {...this.getMergedProps()}>{this.getRenderedValue()}</span>
+      <span key="wrapper" {...this.getMergedProps()}>{this.getRenderedValue()}</span>
     );
   }
 }

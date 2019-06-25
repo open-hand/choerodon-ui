@@ -132,7 +132,7 @@ export default class Transfer extends Select<TransferProps> {
     const { prefixCls, targetSelected, sourceSelected, multiple, props: { titles = [] } } = this;
     const disabled = this.isDisabled();
     return (
-      <span className={`${prefixCls}-wrapper`}>
+      <span key="wrapper" className={`${prefixCls}-wrapper`}>
         <TransferList
           {...this.props}
           options={this.options}

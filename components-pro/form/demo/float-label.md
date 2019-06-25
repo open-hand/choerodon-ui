@@ -42,7 +42,7 @@ ReactDOM.render(
     </Select>
     <EmailField label="邮箱" name="email" multiple />
     <TextArea rowSpan={2} colSpan={2} label="简介" name="description" required style={{ height: 80 }} placeholder="请输入简介" />
-    <UrlField label="个人主页" name="homepage" required />
+    <UrlField label="个人主页" name="homepage" required help="请输入你的个人主页，如Github Pages个人博客" showHelp="tooltip" />
     <DatePicker label="生日" name="birth" required />
     <Range label="阈值" name="threshold" required />
     <Switch label="是否冻结" name="frozen" required />

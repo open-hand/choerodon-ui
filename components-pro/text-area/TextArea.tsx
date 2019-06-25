@@ -45,7 +45,7 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
 
   renderWrapper(): ReactNode {
     return (
-      <div {...this.getWrapperProps()}>
+      <div key="wrapper" {...this.getWrapperProps()}>
         <label>
           <textarea {...this.getOtherProps()} readOnly={!this.editable} value={this.getText()} />
           {this.renderFloatLabel()}

@@ -93,7 +93,7 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
   renderWrapper(): ReactNode {
     const checked = this.isChecked();
     return (
-      <label {...this.getWrapperProps()}>
+      <label key="wrapper" {...this.getWrapperProps()}>
         <input {...this.getOtherProps()} checked={checked} value={this.checkedValue} />
         {this.renderInner()}
         {this.getText()}

@@ -322,38 +322,30 @@
     }
     &-before {
       border-right: none;
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
+      border-top-right-radius: 0 !important;
+      border-bottom-right-radius: 0 !important;
     }
     &-after, &-help {
       border-left: none;
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
+      border-top-left-radius: 0 !important;
+      border-bottom-left-radius: 0 !important;
     }
     &-help:not(:last-child) {
-      border-radius: 0;
+      border-radius: 0 !important;
     }
     &-input {
       flex: 1;
-
-      &:first-child:not(:last-child) {
-        input {
-          border-top-right-radius: 0;
-          border-bottom-right-radius: 0;
-        }
-      }
-      &:not(:first-child):last-child {
-        input {
-          border-top-left-radius: 0;
-          border-bottom-left-radius: 0;
-        }
-      }
-      &:not(:first-child):not(:last-child) {
-        input {
-          border-radius: 0;
-        }
-      }
     }
+  }
+
+  &-group-input:not(:last-child) & {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  &-group-input:not(:first-child) & {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
   }
 
   &-group-input &-wrapper {
@@ -371,6 +363,58 @@
   .validation;
   .input-underline;
   .float-label;
+  .float-label-input;
+}
+
+.float-label-input() {
+
+  &-float-label label:hover &,
+  &-float-label &:hover {
+    border-color: rgba(0, 0, 0, .87);
+  }
+
+  &-float-label &:focus,
+  &-float-label&-focused &,
+  &-float-label&-invalid & {
+    border-color: transparent !important;
+  }
+
+  &-float-label&-focused,
+  &-float-label&-invalid {
+    &:before {
+      display: block;
+      content: " ";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      border-width: .02rem;
+      border-style: solid;
+      border-color: @primary-color;
+      border-radius: .04rem;
+    }
+  }
+
+  &-float-label&-invalid:before {
+    border-color: @error-color;
+  }
+
+  &-group-input:not(:last-child) &-float-label:before {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  &-group-input:not(:first-child) &-float-label:before {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  &-float-label-group &-group-before,
+  &-float-label-group &-group-after,
+  &-float-label-group &-group-help {
+    border-radius: 4px;
+  }
 }
 
 .input-underline() {

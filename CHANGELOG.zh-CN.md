@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 💄 `<pro>TextField`: 更新labelLayout为float时输入框的样式。
 - 🐞 `<pro>Select`: 修复combo属性的bug。
 - 🐞 `Checkbox`: 修复半选样式问题。
 - 🐞 `<pro>Validator`: Transport设置validate时，唯一校验问题。
@@ -63,7 +64,7 @@ timeline: true
 
 `2019-06-07`
 
-- 🌟 `<pro>TextField`: 更新labelLayout为float时输入框的样式。
+- 💄 `<pro>TextField`: 更新labelLayout为float时输入框的样式。
 - 💄 `<pro>DataSet`: 优化内存不释放的问题。
 - 🐞 `<pro>Upload`: 修复弹窗无法关闭的问题。
 

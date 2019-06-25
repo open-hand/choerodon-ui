@@ -65,7 +65,7 @@ export default class Range extends NumberField<RangeProps> {
 
   renderWrapper(): ReactNode {
     return (
-      <label {...this.getWrapperProps()}>
+      <label key="wrapper" {...this.getWrapperProps()}>
         <input {...this.getOtherProps()} value={this.getValue()} />
         {this.renderTrack()}
         {this.renderFloatLabel()}
