@@ -254,5 +254,7 @@ title: DataSet
 | data | 请求体数据 | object |
 | timeout | 请求超时时间 | number |
 | withCredentials | 用于跨域传递cookie | boolean |
+| transformRequest | 转变提交的数据 | (data: any, headers: any) => string |
+| transformResponse | 转变响应的数据 | (data: any, headers: any) => any |
 
 更多配置请参考 Axios 官方文档，或参考typescript文件/node_modules/axios/index.d.ts

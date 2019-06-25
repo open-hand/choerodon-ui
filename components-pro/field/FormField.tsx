@@ -264,7 +264,16 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
 
   @observable name?: string;
 
-  @observable value?: any;
+  @computed
+  get value(): any | undefined {
+    return this.observableProps.value;
+  }
+
+  set value(value: any | undefined) {
+    runInAction(() => {
+      this.observableProps.value = value;
+    });
+  }
 
   get hasFloatLabel(): boolean {
     const labelLayout = this.props.labelLayout || this.context.labelLayout;
@@ -328,9 +337,9 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   constructor(props, context) {
     super(props, context);
     this.setName(props.name);
-    runInAction(() => {
+    if (!('value' in props)) {
       this.value = props.defaultValue;
-    });
+    }
   }
 
   @autobind
@@ -362,6 +371,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       record: props.record || context.record,
       dataSet: props.dataSet || context.dataSet,
       dataIndex: defaultTo(props.dataIndex, context.dataIndex),
+      value: props.value,
     };
   }
 
@@ -378,6 +388,9 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       'help',
       'showHelp',
       'renderer',
+      'maxTagPlaceholder',
+      'maxTagCount',
+      'maxTagTextLength',
     ]);
     if (!this.isDisabled() && !this.isReadOnly()) {
       otherProps.onChange = this.handleChange;
@@ -675,11 +688,8 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
 
   getValue(): any {
     const { name } = this;
-    const { value } = this.props;
     if (this.dataSet && name) {
       return this.getDataSetValue();
-    } else if (value !== void 0) {
-      return value;
     } else {
       return this.value;
     }

@@ -208,26 +208,47 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
     return this.observableProps.primitiveValue !== false || !(!type || type === FieldType.object);
   }
 
-  checkReaction?: IReactionDisposer;
-
-  constructor(props, context) {
-    super(props, context);
-    this.checkValue(props.checkValueOnOptionsChange!);
-  }
+  checkValueReaction?: IReactionDisposer;
+  checkComboReaction?: IReactionDisposer;
 
   saveMenu = node => this.menu = node;
 
-  checkValue(check: boolean) {
-    this.clearReaction();
-    if (check) {
-      this.checkReaction = reaction(() => this.cascadeOptions, () => this.processSelectedData());
+  checkValue() {
+    this.checkValueReaction = reaction(() => this.cascadeOptions, () => this.processSelectedData());
+  }
+
+  checkCombo() {
+    this.checkComboReaction = reaction(() => this.getValue(), value => this.generateComboOption(value));
+  }
+
+  clearCheckValue() {
+    if (this.checkValueReaction) {
+      this.checkValueReaction();
+      this.checkValueReaction = void 0;
+    }
+  }
+
+  clearCheckCombo() {
+    if (this.checkComboReaction) {
+      this.checkComboReaction();
+      this.checkComboReaction = void 0;
     }
   }
 
   clearReaction() {
-    if (this.checkReaction) {
-      this.checkReaction();
-      delete this.checkReaction;
+    this.clearCheckValue();
+    this.clearCheckCombo();
+  }
+
+  componentWillMount() {
+    super.componentWillMount();
+    const { checkValueOnOptionsChange, combo } = this.props;
+    if (checkValueOnOptionsChange) {
+      this.checkValue();
+    }
+    if (combo) {
+      this.checkCombo();
+      this.generateComboOption(this.getValue());
     }
   }
 
@@ -238,8 +259,23 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
 
   componentWillReceiveProps(nextProps, nextContext) {
     super.componentWillReceiveProps(nextProps, nextContext);
-    this.checkValue(nextProps.checkValueOnOptionsChange!);
-    this.checkComboOptions(nextProps);
+    const { checkValueOnOptionsChange, combo } = this.props;
+    if (checkValueOnOptionsChange && !nextProps.checkValueOnOptionsChange) {
+      this.clearCheckValue();
+    }
+    if (!checkValueOnOptionsChange && nextProps.checkValueOnOptionsChange) {
+      this.checkValue();
+    }
+    if (combo && !nextProps.combo) {
+      this.removeComboOptions();
+      this.clearCheckCombo();
+    }
+    if (!combo && nextProps.combo) {
+      this.checkCombo();
+      if ('value' in nextProps) {
+        this.generateComboOption(nextProps.value);
+      }
+    }
   }
 
   componentDidUpdate() {
@@ -532,14 +568,14 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
     ));
   }
 
-  generateComboOption(value: string, callback: (text: string) => void): void {
+  generateComboOption(value: string): void {
     const { currentComboOption, textField, valueField } = this;
     if (value) {
       const found = this.findByText(value) || this.findByValue(value);
       if (found) {
         const text = found.get(textField);
         if (text !== value) {
-          callback(text);
+          this.setText(text);
         }
         this.removeComboOption();
       } else if (currentComboOption) {
@@ -555,22 +591,12 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
 
   createComboOption(value): void {
     const { textField, valueField, menu } = this;
+    const record = this.comboOptions.create({
+      [textField]: value,
+      [valueField]: value,
+    }, 0);
     if (menu) {
-      const record = this.comboOptions.create({
-        [textField]: value,
-        [valueField]: value,
-      }, 0);
       updateActiveKey(menu, getItemKey(record, value, value));
-    }
-  }
-
-  checkComboOptions(nextProps) {
-    if (('value' in nextProps && !isSameLike(nextProps.value, this.value))) {
-      this.setValue(nextProps.value);
-      this.removeComboOptions();
-    }
-    if (!nextProps.combo && this.props.combo) {
-      this.removeComboOptions();
     }
   }
 
@@ -625,8 +651,8 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
   handleChange(e) {
     const { value } = e.target;
     this.setText(value);
-    if (this.props.combo) {
-      this.generateComboOption(value, (text) => this.setText(text));
+    if (this.observableProps.combo) {
+      this.generateComboOption(value);
     }
     if (!this.popup) {
       this.expand();
@@ -723,7 +749,7 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
     if (field) {
       await field.ready();
     }
-    const { filteredOptions, props: { combo } } = this;
+    const { filteredOptions, observableProps: { combo } } = this;
     runInAction(() => {
       const newValues = values.filter(value => {
         const record = this.findByValue(value);
