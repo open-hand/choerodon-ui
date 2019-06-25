@@ -14,7 +14,6 @@ import { ColumnAlign } from './enum';
 export interface TableFooterCellProps extends ElementProps {
   dataSet: DataSet;
   column: ColumnProps;
-  rowHeight: number | 'auto';
 }
 
 @observer
@@ -23,7 +22,6 @@ export default class TableFooterCell extends Component<TableFooterCellProps, any
 
   static propTypes = {
     column: PropTypes.object.isRequired,
-    rowHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf(['auto', null])]).isRequired,
   };
 
   static contextType = TableContext;
@@ -40,7 +38,8 @@ export default class TableFooterCell extends Component<TableFooterCellProps, any
   }
 
   render() {
-    const { column, prefixCls, dataSet, rowHeight } = this.props;
+    const { column, prefixCls, dataSet } = this.props;
+    const { rowHeight } = this.context.tableStore;
     const { footer, footerClassName, footerStyle = {}, align, name, command } = column;
     const classString = classNames(`${prefixCls}-cell`, footerClassName);
     const innerProps: any = {

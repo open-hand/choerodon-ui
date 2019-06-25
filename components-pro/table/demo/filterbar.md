@@ -77,7 +77,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <Table dataSet={this.ds} queryBar="bar" border={false} buttons={[this.button]} columns={this.getColumns()} />
+      <Table dataSet={this.ds} queryBar="bar" border={false} columnResizable={false} buttons={[this.button]} columns={this.getColumns()} />
     );
   }
 }

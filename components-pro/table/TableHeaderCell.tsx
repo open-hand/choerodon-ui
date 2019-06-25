@@ -22,8 +22,7 @@ export interface TableHeaderCellProps extends ElementProps {
   dataSet: DataSet;
   prevColumn?: ColumnProps;
   column: ColumnProps;
-  resizeColumn: ColumnProps;
-  rowHeight: number | 'auto';
+  resizeColumn?: ColumnProps;
   rowSpan?: number;
   colSpan?: number;
   getHeaderNode: () => HTMLTableSectionElement | null;
@@ -35,7 +34,6 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
 
   static propTypes = {
     column: PropTypes.object.isRequired,
-    rowHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf(['auto', null])]).isRequired,
   };
 
   static contextType = TableContext;
@@ -145,7 +143,8 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
   }
 
   render() {
-    const { column, prefixCls, dataSet, rowHeight, rowSpan, colSpan } = this.props;
+    const { column, prefixCls, dataSet, rowSpan, colSpan } = this.props;
+    const { rowHeight, columnResizable } = this.context.tableStore;
     const sortPrefixCls = `${prefixCls}-sort`;
     const { headerClassName, headerStyle = {}, sortable, name, align, help, showHelp, children, command } = column;
     const classList: string[] = [`${prefixCls}-cell`];
@@ -213,7 +212,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
         data-index={getColumnKey(column)}
       >
         <div {...innerProps} />
-        {this.renderResizer()}
+        {columnResizable && this.renderResizer()}
       </th>
     );
   }

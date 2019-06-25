@@ -18,7 +18,6 @@ import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 export interface TableBodyProps extends ElementProps {
   lock?: ColumnLock | boolean;
   indentSize: number;
-  rowHeight: number | 'auto';
   filter?: (record: Record) => boolean;
 }
 
@@ -30,7 +29,6 @@ export default class TableBody extends Component<TableBodyProps, any> {
     lock: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf([ColumnLock.right, ColumnLock.left])]),
     prefixCls: PropTypes.string,
     indentSize: PropTypes.number.isRequired,
-    rowHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf(['auto', null])]).isRequired,
     filter: PropTypes.func,
   };
 
@@ -114,7 +112,7 @@ export default class TableBody extends Component<TableBodyProps, any> {
     this.getRows(record.children || [], columns, isExpanded, lock);
 
   getRow(columns: ColumnProps[], record: Record, index: number, expanded?: boolean, lock?: ColumnLock | boolean) {
-    const { prefixCls, indentSize, rowHeight } = this.props;
+    const { prefixCls, indentSize } = this.props;
     const { isTree } = this.context.tableStore;
     const children = isTree && (
       <ExpandedRow record={record} columns={columns} lock={lock}>
@@ -127,7 +125,6 @@ export default class TableBody extends Component<TableBodyProps, any> {
         hidden={!expanded}
         lock={lock}
         indentSize={indentSize}
-        rowHeight={rowHeight}
         prefixCls={prefixCls}
         columns={columns}
         record={record}

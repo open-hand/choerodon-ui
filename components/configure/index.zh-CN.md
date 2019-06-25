@@ -34,4 +34,6 @@ configure({ prefixCls: 'ant' });
 | queryBar | 默认Table的queryBar | string | normal |
 | tableBorder | 默认Table的border | boolean | true |
 | tableHighLightRow | 默认Table当前行高亮 | boolean | true |
+| tableRowHeight | 默认Table行高 | auto \| number | 30 |
+| tableColumnResizable | 默认Table列可调整列宽 | boolean | true |
 | renderEmpty | 自定义组件空状态。 | Function(componentName: string): ReactNode | - |

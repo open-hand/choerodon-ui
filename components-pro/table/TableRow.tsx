@@ -21,7 +21,6 @@ export interface TableRowProps extends ElementProps {
   columns: ColumnProps[];
   record: Record;
   indentSize: number;
-  rowHeight: number | 'auto';
   index: number;
 }
 
@@ -35,7 +34,6 @@ export default class TableRow extends Component<TableRowProps, any> {
     columns: PropTypes.array.isRequired,
     record: PropTypes.instanceOf(Record).isRequired,
     indentSize: PropTypes.number.isRequired,
-    rowHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf(['auto', null])]).isRequired,
   };
 
   static contextType = TableContext;
@@ -79,9 +77,9 @@ export default class TableRow extends Component<TableRowProps, any> {
   private saveRef = action((node: HTMLTableRowElement | null) => {
     if (node) {
       this.node = node;
-      const { rowHeight, lock, record } = this.props;
+      const { lock, record } = this.props;
+      const { rowHeight, lockColumnsBodyRowsHeight } = this.context.tableStore;
       if (rowHeight === 'auto' && !lock) {
-        const { lockColumnsBodyRowsHeight } = this.context.tableStore;
         set(lockColumnsBodyRowsHeight, this.rowKey = record.key, node.offsetHeight);
       }
     }
@@ -129,7 +127,7 @@ export default class TableRow extends Component<TableRowProps, any> {
     const { hidden } = column;
     if (!hidden) {
       const {
-        prefixCls, record, indentSize, rowHeight,
+        prefixCls, record, indentSize,
       } = this.props;
       return (
         <TableCell
@@ -138,7 +136,6 @@ export default class TableRow extends Component<TableRowProps, any> {
           column={column}
           record={record}
           indentSize={indentSize}
-          rowHeight={rowHeight}
         >
           {this.hasExpandIcon(index) && this.renderExpandIcon()}
         </TableCell>
@@ -282,8 +279,8 @@ export default class TableRow extends Component<TableRowProps, any> {
   }
 
   render() {
-    const { prefixCls, columns, record, lock, hidden, rowHeight, index } = this.props;
-    const { lockColumnsBodyRowsHeight, overflowX, highLightRow, props: { onRow, rowRenderer, selectionMode } } = this.context.tableStore;
+    const { prefixCls, columns, record, lock, hidden, index } = this.props;
+    const { rowHeight, lockColumnsBodyRowsHeight, overflowX, highLightRow, props: { onRow, rowRenderer, selectionMode } } = this.context.tableStore;
     const { dataSet, isCurrent, key, id } = record;
     const rowExternalProps = this.rowExternalProps = {
       ...(

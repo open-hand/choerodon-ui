@@ -17,6 +17,8 @@ export type Config = {
   queryBar?: string;
   tableBorder?: boolean;
   tableHighLightRow?: boolean;
+  tableRowHeight?: 'auto' | number;
+  tableColumnResizable?: boolean;
   renderEmpty?: (componentName?: string) => ReactNode;
 }
 
@@ -36,6 +38,8 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['queryBar', 'normal'],
   ['tableBorder', true],
   ['tableHighLightRow', true],
+  ['tableRowHeight', 30],
+  ['tableColumnResizable', true],
 ]);
 
 export function getConfig<T extends ConfigKeys>(key: T): Config[T] {

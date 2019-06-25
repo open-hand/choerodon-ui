@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
+import classNames from 'classnames';
 import { ColumnProps } from './Column';
 import { ElementProps } from '../core/ViewComponent';
 import TableHeaderCell, { TableHeaderCellProps } from './TableHeaderCell';
@@ -15,7 +16,6 @@ import { ColumnGroup } from './ColumnGroups';
 export interface TableHeaderProps extends ElementProps {
   dataSet: DataSet;
   lock?: ColumnLock | boolean;
-  rowHeight: number | 'auto';
 }
 
 @observer
@@ -25,7 +25,6 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
   static propTypes = {
     prefixCls: PropTypes.string,
     lock: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf([ColumnLock.right, ColumnLock.left])]),
-    rowHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf(['auto', null])]).isRequired,
   };
 
   static contextType = TableContext;
@@ -39,7 +38,7 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
   };
 
   render() {
-    const { prefixCls, lock, rowHeight, dataSet } = this.props;
+    const { prefixCls, lock, dataSet } = this.props;
     const { groupedColumns } = this;
     const rows = this.getTableHeaderRows(groupedColumns);
     const trs = rows.map((row, rowIndex) => {
@@ -54,7 +53,6 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
               prevColumn,
               column,
               resizeColumn: lastLeaf,
-              rowHeight,
               getHeaderNode: this.getHeaderNode,
             };
             if (rowSpan > 1) {
@@ -77,8 +75,11 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
         );
       }
     });
+    const classString = classNames(`${prefixCls}-thead`, {
+      [`${prefixCls}-column-resizable`]: this.context.tableStore.columnResizable,
+    })
     return (
-      <thead ref={this.saveRef} className={`${prefixCls}-thead`}>{trs}</thead>
+      <thead ref={this.saveRef} className={classString}>{trs}</thead>
     );
   }
 
@@ -104,7 +105,7 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
   }
 
   getHeaderRowStyle(rows: ColumnGroup[][], rowIndex: number): string | number | undefined {
-    const { rowHeight } = this.props;
+    const { rowHeight } = this.context.tableStore;
     const height = rowHeight === 'auto' ? this.getRowHeight(rowIndex++) : rowHeight;
     return pxToRem(rows.slice(rowIndex).reduce((total, r, index) => (
       r.length ? total : total + 1 + (rowHeight === 'auto' ? this.getRowHeight(index + rowIndex) : rowHeight)

@@ -43,6 +43,30 @@ export default class TableStore {
 
   @observable currentEditorName?: string;
 
+  @computed
+  get columnResizable(): boolean {
+    if ('columnResizable' in this.props) {
+      return this.props.columnResizable;
+    }
+    if (getConfig('tableColumnResizable') === false) {
+      return false;
+    }
+    return true;
+  }
+
+  @computed
+  get rowHeight(): 'auto' | number {
+    if ('rowHeight' in this.props) {
+      return this.props.rowHeight;
+    }
+    const rowHeight = getConfig('tableRowHeight');
+    if (typeof rowHeight !== 'undefined') {
+      return rowHeight;
+    }
+    return 30;
+  }
+
+  @computed
   get emptyText(): ReactNode {
     const renderEmpty = getConfig('renderEmpty');
     if (typeof renderEmpty === 'function') {

@@ -15,7 +15,6 @@ import { ShowHelp } from '../field/enum';
 
 export interface TableEditorProps extends ElementProps {
   column: ColumnProps;
-  rowHeight: number | 'auto';
 }
 
 @observer
@@ -24,7 +23,6 @@ export default class TableEditor extends Component<TableEditorProps> {
 
   static propTypes = {
     column: PropTypes.object.isRequired,
-    rowHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf(['auto', null])]).isRequired,
   };
 
   static contextType = TableContext;
@@ -105,8 +103,8 @@ export default class TableEditor extends Component<TableEditorProps> {
   }
 
   renderEditor(): ReactElement<FormFieldProps> | undefined {
-    const { column, rowHeight } = this.props;
-    const { dataSet, currentEditRecord } = this.context.tableStore;
+    const { column } = this.props;
+    const { dataSet, currentEditRecord, rowHeight } = this.context.tableStore;
     const record = currentEditRecord || dataSet.current;
     const cellEditor = getEditorByColumnAndRecord(column, record);
     if (isValidElement(cellEditor) && !isRadio(cellEditor)) {

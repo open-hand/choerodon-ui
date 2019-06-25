@@ -28,7 +28,6 @@ export interface TableCellProps extends ElementProps {
   column: ColumnProps;
   record: Record;
   indentSize: number;
-  rowHeight: number | 'auto';
 }
 
 let inTab: boolean = false;
@@ -42,7 +41,6 @@ export default class TableCell extends Component<TableCellProps> {
     column: PropTypes.object.isRequired,
     record: PropTypes.instanceOf(Record).isRequired,
     indentSize: PropTypes.number.isRequired,
-    rowHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf(['auto', null])]).isRequired,
   };
 
   static contextType = TableContext;
@@ -227,11 +225,11 @@ export default class TableCell extends Component<TableCellProps> {
   }
 
   getInnerNode(prefixCls) {
-    const { context: { tableStore }, props: { children } } = this;
-    if (tableStore.expandIconAsCell && children) {
+    const { context: { tableStore: { rowHeight, expandIconAsCell, hasCheckFieldColumn } }, props: { children } } = this;
+    if (expandIconAsCell && children) {
       return children;
     }
-    const { column, record, indentSize, rowHeight } = this.props;
+    const { column, record, indentSize } = this.props;
     const { name } = column;
     const { hasEditor } = this;
     const innerProps: any = {
@@ -251,7 +249,7 @@ export default class TableCell extends Component<TableCellProps> {
       <span style={{ paddingLeft: pxToRem(indentSize * record.level) }} />
     );
 
-    const checkBox = children && !tableStore.hasCheckFieldColumn && this.getCheckBox();
+    const checkBox = children && !hasCheckFieldColumn && this.getCheckBox();
 
     const prefix = (indentText || children || checkBox) && (
       <span key="prefix" className={`${prefixCls}-prefix`} style={innerProps.style}>

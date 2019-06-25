@@ -14,7 +14,6 @@ import { getColumnKey } from './utils';
 export interface TableFooterProps extends ElementProps {
   dataSet: DataSet;
   lock?: ColumnLock | boolean;
-  rowHeight: number | 'auto';
 }
 
 @observer
@@ -24,14 +23,13 @@ export default class TableFooter extends Component<TableFooterProps, any> {
   static propTypes = {
     prefixCls: PropTypes.string,
     lock: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf([ColumnLock.right, ColumnLock.left])]),
-    rowHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf(['auto', null])]).isRequired,
   };
 
   static contextType = TableContext;
 
   render() {
-    const { prefixCls, lock, rowHeight, dataSet } = this.props;
-    const { lockColumnsFootRowsHeight, overflowY } = this.context.tableStore;
+    const { prefixCls, lock, dataSet } = this.props;
+    const { lockColumnsFootRowsHeight, overflowY, rowHeight } = this.context.tableStore;
     const tds = this.leafColumns.map((column) => {
       const { hidden } = column;
       if (!hidden) {
@@ -41,7 +39,6 @@ export default class TableFooter extends Component<TableFooterProps, any> {
             prefixCls={prefixCls}
             dataSet={dataSet}
             column={column}
-            rowHeight={rowHeight}
           />
         );
       }

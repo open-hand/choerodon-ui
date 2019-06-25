@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: Add global configuration new properties.
 - 💄 `<pro>TextField`: Updated the style of the input box with the property `labelLayout` is float.
 - 🐞 `<pro>Select`: Fix bugs in the `combo` property.
 - 🐞 `Checkbox`: Fixed semi-selection style issues.

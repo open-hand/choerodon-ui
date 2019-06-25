@@ -140,7 +140,7 @@ export interface TableProps extends DataSetComponentProps {
    * 行高
    * @default 31
    */
-  rowHeight?: number | 'auto' | null;
+  rowHeight?: number | 'auto';
   /**
    * 默认行是否展开，当dataSet没有设置expandField时才有效
    * @default false;
@@ -197,6 +197,10 @@ export interface TableProps extends DataSetComponentProps {
    * 高亮行
    */
   highLightRow?: boolean;
+  /**
+   * 可调整列宽
+   */
+  columnResizable?: boolean;
 }
 
 @observer
@@ -258,7 +262,7 @@ export default class Table extends DataSetComponent<TableProps> {
      * 行高
      * @default 30
      */
-    rowHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf(['auto', null])]),
+    rowHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf(['auto'])]),
     defaultRowExpanded: PropTypes.bool,
     expandRowByClick: PropTypes.bool,
     indentSize: PropTypes.number,
@@ -277,7 +281,6 @@ export default class Table extends DataSetComponent<TableProps> {
     selectionMode: SelectionMode.rowbox,
     queryFields: {},
     queryFieldsLimit: 1,
-    rowHeight: 30,
     defaultRowExpanded: false,
     expandRowByClick: false,
     indentSize: 15,
@@ -492,9 +495,11 @@ export default class Table extends DataSetComponent<TableProps> {
       'filterBarFieldName',
       'filterBarPlaceholder',
       'pagination',
+      'highLightRow',
+      'columnResizable',
     ]);
     otherProps.onKeyDown = this.handleKeyDown;
-    const { rowHeight } = this.props;
+    const { rowHeight } = this.tableStore;
     if (rowHeight !== 'auto') {
       otherProps.style = { lineHeight: pxToRem(rowHeight) };
     }
@@ -502,7 +507,7 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   getClassName(): string | undefined {
-    const { prefixCls, props: { rowHeight }, tableStore: { border } } = this;
+    const { prefixCls, tableStore: { border, rowHeight } } = this;
     return super.getClassName(`${prefixCls}-scroll-position-left`, {
       [`${prefixCls}-bordered`]: border,
       [`${prefixCls}-row-height-fixed`]: isNumber(rowHeight),
@@ -704,11 +709,10 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   renderTable(hasHeader: boolean, hasBody: boolean, hasFooter: boolean, lock?: ColumnLock | boolean): ReactNode {
-    const { prefixCls, props: { rowHeight } } = this;
+    const { prefixCls } = this;
     return (
       <TableWrapper
         prefixCls={prefixCls}
-        rowHeight={rowHeight!}
         key="tableWrapper"
         lock={lock}
         hasBody={hasBody}
@@ -774,13 +778,13 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   getTable(lock?: ColumnLock | boolean): ReactNode {
-    const { prefixCls, props: { rowHeight } } = this;
+    const { prefixCls } = this;
     const { overflowX, height, hasFooter: footer } = this.tableStore;
     let tableHead: ReactNode;
     let tableBody: ReactNode;
     let tableFooter: ReactNode;
     if (height !== void 0 || overflowX) {
-      const { lockColumnsBodyRowsHeight, leftLeafColumnsWidth } = this.tableStore;
+      const { lockColumnsBodyRowsHeight, leftLeafColumnsWidth, rowHeight } = this.tableStore;
       let bodyHeight = height;
       let tableHeadRef;
       let tableBodyRef;
@@ -865,30 +869,29 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   getTableBody(lock?: ColumnLock | boolean): ReactNode {
-    const { prefixCls, props: { indentSize, rowHeight, filter } } = this;
+    const { prefixCls, props: { indentSize, filter } } = this;
     return (
       <TableBody
         key="tbody"
         prefixCls={prefixCls}
         lock={lock}
         indentSize={indentSize!}
-        rowHeight={rowHeight!}
         filter={filter}
       />
     );
   }
 
   getTableHeader(lock?: ColumnLock | boolean): ReactNode {
-    const { prefixCls, props: { rowHeight, dataSet } } = this;
+    const { prefixCls, props: { dataSet } } = this;
     return (
-      <TableHeader key="thead" prefixCls={prefixCls} rowHeight={rowHeight!} lock={lock} dataSet={dataSet} />
+      <TableHeader key="thead" prefixCls={prefixCls} lock={lock} dataSet={dataSet} />
     );
   }
 
   getTableFooter(lock?: ColumnLock | boolean): ReactNode {
-    const { prefixCls, props: { rowHeight, dataSet } } = this;
+    const { prefixCls, props: { dataSet } } = this;
     return (
-      <TableFooter key="tfoot" prefixCls={prefixCls} rowHeight={rowHeight!} lock={lock} dataSet={dataSet} />
+      <TableFooter key="tfoot" prefixCls={prefixCls} lock={lock} dataSet={dataSet} />
     );
   }
 

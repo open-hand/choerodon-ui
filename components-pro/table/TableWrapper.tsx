@@ -16,7 +16,6 @@ import { getColumnKey } from './utils';
 
 export interface TableWrapperProps extends ElementProps {
   lock?: ColumnLock | boolean;
-  rowHeight: number | 'auto';
   hasBody?: boolean;
   hasHeader?: boolean;
   hasFooter?: boolean;
@@ -29,7 +28,6 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
 
   static propTypes = {
     lock: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf([ColumnLock.right, ColumnLock.left])]),
-    rowHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf(['auto', null])]).isRequired,
     hasBody: PropTypes.bool,
     hasHeader: PropTypes.bool,
     hasFooter: PropTypes.bool,
@@ -85,7 +83,7 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
   }
 
   handleResizeEnd = () => {
-    if (this.props.rowHeight === 'auto') {
+    if (this.context.tableStore.rowHeight === 'auto') {
       this.syncFixedTableRowHeight();
     }
   };
@@ -127,9 +125,9 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
   }
 
   getEditors() {
-    const { prefixCls, rowHeight } = this.props;
+    const { prefixCls } = this.props;
     return this.leafEditorColumns.map(column => (
-      <TableEditor key={column.name} prefixCls={prefixCls} column={column} rowHeight={rowHeight} />
+      <TableEditor key={column.name} prefixCls={prefixCls} column={column} />
     ));
   }
 
