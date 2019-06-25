@@ -5,7 +5,7 @@ import CheckBox from '../check-box/CheckBox';
 import { formatCurrency, formatNumber } from '../number-field/utils';
 import { Lang } from '../locale-context/enum';
 
-export default function processFieldValue(value, field: Field, lang: Lang) {
+export default function processFieldValue(value, field: Field, lang: Lang, showValueIfNotFound?: boolean) {
   const { type } = field;
   if (type === FieldType.boolean) {
     return <CheckBox disabled checked={value === field.get(BooleanValue.trueValue)} />;
@@ -16,5 +16,5 @@ export default function processFieldValue(value, field: Field, lang: Lang) {
       currency: this.getProp('currency'),
     });
   }
-  return field.getText(value);
+  return field.getText(value, showValueIfNotFound);
 }

@@ -440,12 +440,19 @@ export default class Field {
    * @param value lookup值
    * @return {string}
    */
-  getText(value: any = this.getValue()): string | undefined {
+  getText(value: any = this.getValue(), showValueIfNotFound?: boolean): string | undefined {
     const textField = this.get('textField');
     const valueField = this.get('valueField');
     const lookupKey = lookupStore.getKey(this);
     if (lookupKey) {
-      return lookupStore.getText(lookupKey, value, valueField, textField);
+      const found = lookupStore.getByValue(lookupKey, value, valueField);
+      if (found) {
+        return get(found, textField);
+      } else if (showValueIfNotFound) {
+        return value;
+      } else {
+        return void 0;
+      }
     }
     const options = this.getOptions();
     if (options) {

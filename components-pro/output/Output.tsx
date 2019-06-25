@@ -41,7 +41,7 @@ export default class Output extends FormField<OutputProps> {
       value = super.processValue(value);
       const { field, lang } = this;
       if (field) {
-        return processFieldValue(value, field, lang);
+        return processFieldValue(value, field, lang, true);
       }
     }
     return value;
@@ -60,7 +60,7 @@ export default class Output extends FormField<OutputProps> {
 
   renderWrapper(): ReactNode {
     return (
-      <span key="wrapper" {...this.getMergedProps()}>{this.getRenderedValue()}</span>
+      <span {...this.getMergedProps()}>{this.getRenderedValue()}</span>
     );
   }
 }

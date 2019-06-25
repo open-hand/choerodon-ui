@@ -21,6 +21,7 @@ timeline: true
 - 🐞 `Checkbox`: 修复半选样式问题。
 - 🐞 `<pro>Validator`: Transport设置validate时，唯一校验问题。
 - 🐞 `<pro>DataSet`: 修复Field.dirty属性会有循环计算的问题。
+- 🐞 `<pro>DataSet`: 修复lookup的复合值在Output中不显示的问题。
 
 ## 0.7.0
 ## 0.6.9
