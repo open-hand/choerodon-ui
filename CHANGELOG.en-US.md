@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 💄 `Password`: Change to reveal password by clicking.
 - 💄 `Input`: Update the style.
 - 💄 `DatePicker`: Update the style.
 - 💄 `Select`: Update the style.

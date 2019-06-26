@@ -267,6 +267,14 @@ export default class Input extends Component<InputProps, any> {
     }
   };
 
+  handleTogglePassword = () => {
+    if (this.state.type === 'password') {
+      this.handleShowPassword();
+    } else {
+      this.handleHidePassword();
+    }
+  };
+
   handleShowPassword = () => {
     this.setState({
       type: 'text',
@@ -323,9 +331,7 @@ export default class Input extends Component<InputProps, any> {
     return type === 'password' ? (
       <span
         className={`${prefixCls}-icon`}
-        onMouseDown={this.handleShowPassword}
-        onMouseLeave={this.handleHidePassword}
-        onMouseUp={this.handleHidePassword}
+        onClick={this.handleTogglePassword}
       >
         <Icon className={`${prefixCls}-icon-copy`} type={showPassword ? 'visibility' : 'visibility_off'} />
       </span>) : null;
@@ -450,7 +456,7 @@ export default class Input extends Component<InputProps, any> {
       [`${prefixCls}-has-label`]: !!label,
       [`${prefixCls}-has-prefix`]: !!prefix,
       [`${prefixCls}-has-suffix`]: !!suffix,
-      [`${prefixCls}-has-border`]: !!border,
+      [`${prefixCls}-has-border`]: border,
     });
 
     return (

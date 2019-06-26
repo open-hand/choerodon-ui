@@ -24,7 +24,7 @@ class App extends React.Component {
   ds = new DataSet({
     autoCreate: true,
     fields: [
-      { name: 'email', type: 'string', defaultValue: '123@abc.com', required: true },
+      { name: 'email', type: 'email', defaultValue: '123@abc.com', required: true },
     ],
     events: {
       update: handleDataSetChange,

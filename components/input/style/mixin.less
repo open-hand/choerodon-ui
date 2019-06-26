@@ -60,10 +60,6 @@
     width: 100%;
   }
 
-  &-group-compact &-content {
-    margin-bottom: .04rem;
-  }
-
   // input-rendered
   &-content {
     position: relative;
@@ -213,7 +209,7 @@
 }
 
 .border() {
-  &-wrapper:before {
+  &-has-border&-wrapper:before {
     display: block;
     content: " ";
     position: absolute;
@@ -225,21 +221,21 @@
     border-radius: .04rem;
   }
 
-  &-wrapper:hover:before {
+  &-has-border&-wrapper:hover:before {
     border-color: @input-color;
   }
 
-  &-focused&-wrapper:before,
+  &-has-border&-focused&-wrapper:before,
   .has-error &-wrapper:before {
     border-width: .02rem;
   }
-  &-focused&-wrapper:before {
+  &-has-border&-focused&-wrapper:before {
     border-color: @primary-color;
   }
-  .has-error &-wrapper:before {
+  .has-error &-has-border&-wrapper:before {
     border-color: @error-color;
   }
-  &-disabled:before {
+  &-has-border&-disabled:before {
     border-style: dashed;
     border-color: @input-border-color !important;
   }
@@ -493,53 +489,42 @@
 
   &&-compact {
     display: block;
+    white-space: nowrap;
     .clearfix;
-
-    & > * {
-      border-radius: 0;
-      border-right-width: 0;
+    .@{c7n-prefix}-input-has-border:before,
+    .@{c7n-prefix}-select-has-border:before {
+      border-style: @border-style-base;
+    }
+    > * {
       vertical-align: top;
       float: none;
       display: inline-block;
+      &:not(:first-child) {
+        .@{c7n-prefix}-input-has-border,
+        .@{c7n-prefix}-select-has-border,
+        &.@{c7n-prefix}-input-has-border,
+        &.@{c7n-prefix}-select-has-border {
+          margin-left: -.01rem;
+          &:before {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+          }
+        }
+      }
+      &:not(:last-child) {
+        .@{c7n-prefix}-input-has-border:before,
+        .@{c7n-prefix}-select-has-border:before,
+        &.@{c7n-prefix}-input-has-border:before,
+        &.@{c7n-prefix}-select-has-border:before {
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+      }
     }
 
     .@{inputClass} {
       float: none;
       z-index: auto;
-    }
-
-    // reset border for Select, DatePicker, AutoComplete, Cascader, Mention, TimePicker
-    & > .@{c7n-prefix}-select > .@{c7n-prefix}-select-selection,
-    & > .@{c7n-prefix}-calendar-picker .@{c7n-prefix}-input,
-    & > .@{c7n-prefix}-select-auto-complete .@{c7n-prefix}-input,
-    & > .@{c7n-prefix}-cascader-picker .@{c7n-prefix}-input,
-    & > .@{c7n-prefix}-mention-wrapper .@{c7n-prefix}-mention-editor,
-    & > .@{c7n-prefix}-time-picker .@{c7n-prefix}-time-picker-input {
-      border-radius: 0;
-      border-right-width: 0;
-    }
-
-    & > *:first-child,
-    & > .@{c7n-prefix}-select:first-child > .@{c7n-prefix}-select-selection,
-    & > .@{c7n-prefix}-calendar-picker:first-child .@{c7n-prefix}-input,
-    & > .@{c7n-prefix}-select-auto-complete:first-child .@{c7n-prefix}-input,
-    & > .@{c7n-prefix}-cascader-picker:first-child .@{c7n-prefix}-input,
-    & > .@{c7n-prefix}-mention-wrapper:first-child .@{c7n-prefix}-mention-editor,
-    & > .@{c7n-prefix}-time-picker:first-child .@{c7n-prefix}-time-picker-input {
-      border-top-left-radius: @border-radius-base;
-      border-bottom-left-radius: @border-radius-base;
-    }
-
-    & > *:last-child,
-    & > .@{c7n-prefix}-select:last-child > .@{c7n-prefix}-select-selection,
-    & > .@{c7n-prefix}-calendar-picker:last-child .@{c7n-prefix}-input,
-    & > .@{c7n-prefix}-select-auto-complete:last-child .@{c7n-prefix}-input,
-    & > .@{c7n-prefix}-cascader-picker:last-child .@{c7n-prefix}-input,
-    & > .@{c7n-prefix}-mention-wrapper:last-child .@{c7n-prefix}-mention-editor,
-    & > .@{c7n-prefix}-time-picker:last-child .@{c7n-prefix}-time-picker-input {
-      border-top-right-radius: @border-radius-base;
-      border-bottom-right-radius: @border-radius-base;
-      border-right-width: .01rem;
     }
   }
 }
