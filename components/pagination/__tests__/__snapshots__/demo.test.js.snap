@@ -325,13 +325,6 @@ exports[`renders ./components/pagination/demo/changer.md correctly 1`] = `
           </span>
         </div>
       </div>
-      <div
-        class="c7n-select-underline"
-      >
-        <span
-          class="c7n-select-ripple"
-        />
-      </div>
     </div>
   </li>
 </ul>
@@ -1285,13 +1278,6 @@ exports[`renders ./components/pagination/demo/size.md correctly 1`] = `
             </span>
           </div>
         </div>
-        <div
-          class="c7n-select-underline"
-        >
-          <span
-            class="c7n-select-ripple"
-          />
-        </div>
       </div>
       <div
         class="c7n-pagination-options-quick-jumper"
@@ -1719,13 +1705,6 @@ exports[`renders ./components/pagination/demo/size.md correctly 1`] = `
             </span>
           </div>
         </div>
-        <div
-          class="c7n-select-underline"
-        >
-          <span
-            class="c7n-select-ripple"
-          />
-        </div>
       </div>
       <div
         class="c7n-pagination-options-quick-jumper"
@@ -1917,13 +1896,6 @@ exports[`renders ./components/pagination/demo/tiny.md correctly 1`] = `
             </span>
           </div>
         </div>
-        <div
-          class="c7n-select-underline"
-        >
-          <span
-            class="c7n-select-ripple"
-          />
-        </div>
       </div>
     </li>
     <li
@@ -2043,13 +2015,6 @@ exports[`renders ./components/pagination/demo/tiny.md correctly 1`] = `
               <b />
             </span>
           </div>
-        </div>
-        <div
-          class="c7n-select-underline"
-        >
-          <span
-            class="c7n-select-ripple"
-          />
         </div>
       </div>
       <div
@@ -2179,13 +2144,6 @@ exports[`renders ./components/pagination/demo/tiny.md correctly 1`] = `
               <b />
             </span>
           </div>
-        </div>
-        <div
-          class="c7n-select-underline"
-        >
-          <span
-            class="c7n-select-ripple"
-          />
         </div>
       </div>
     </li>

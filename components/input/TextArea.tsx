@@ -1,4 +1,4 @@
-import React, { ChangeEvent, Component, CSSProperties, FocusEvent, FormEventHandler, KeyboardEvent, TextareaHTMLAttributes } from 'react';
+import React, { ChangeEvent, Component, CSSProperties, FocusEvent, FormEventHandler, KeyboardEvent, ReactNode, TextareaHTMLAttributes } from 'react';
 import omit from 'lodash/omit';
 import classNames from 'classnames';
 import { AbstractInputProps } from './Input';
@@ -42,7 +42,6 @@ export type HTMLTextareaProps = TextareaHTMLAttributes<HTMLTextAreaElement>;
 export default class TextArea extends Component<TextAreaProps & HTMLTextareaProps, TextAreaState> {
   static displayName = 'TextArea';
   static defaultProps = {
-    underline: true,
     showLengthInfo: true,
   };
 
@@ -183,6 +182,36 @@ export default class TextArea extends Component<TextAreaProps & HTMLTextareaProp
     }
   };
 
+  getLengthInfo() {
+    const { maxLength, showLengthInfo } = this.props;
+    const prefixCls = this.getPrefixCls();
+    const { inputLength } = this.state;
+    return (maxLength && showLengthInfo) || (maxLength && maxLength > 0 && inputLength === maxLength ) ? (
+      <div className={`${prefixCls}-length-info`}>{`${inputLength}/${maxLength}`}</div>
+    ) : null;
+  }
+
+  getLabel() {
+    const { placeholder, label } = this.props;
+    const { inputLength } = this.state;
+    if (inputLength === 0 && placeholder) {
+      return placeholder;
+    }
+    return label;
+  }
+
+  renderFloatLabel(): ReactNode {
+    const label = this.getLabel();
+    if (label) {
+      const prefixCls = this.getPrefixCls();
+      return (
+        <div className={`${prefixCls}-label-wrapper`}>
+          <div className={`${prefixCls}-label`}>{label}</div>
+        </div>
+      );
+    }
+  }
+
   render() {
     const props = this.props;
     const prefixCls = this.getPrefixCls();
@@ -193,7 +222,6 @@ export default class TextArea extends Component<TextAreaProps & HTMLTextareaProp
         'onPressEnter',
         'autosize',
         'placeholder',
-        'underline',
         'focused',
         'showLengthInfo',
       ],
@@ -209,39 +237,23 @@ export default class TextArea extends Component<TextAreaProps & HTMLTextareaProp
     }
     otherProps.onInput = this.handleInput;
 
-    const lengthInfo = props.maxLength && props.showLengthInfo ? (
-      <div className={`${prefixCls}-length-info`}>{`${this.state.inputLength}/${props.maxLength}`}</div>
-    ) : null;
-
-    const border = props.underline ? (
-      <div>
-        <hr className={`${prefixCls}-border`} />
-        <hr className={`${prefixCls}-border-active`} />
-      </div>
-    ) : null;
-    const label = props.label ? (
-      <div className={`${prefixCls}-rendered`}>
-        <div className={`${prefixCls}-label`}>{props.label}</div>
-      </div>
-    ) : null;
-    const placeholder = !label || this.state.focused ? props.placeholder : '';
     return (
       <span className={this.getWrapperClassName()}>
-        {label}
-        <textarea
-          {...otherProps}
-          placeholder={placeholder}
-          className={this.getTextAreaClassName()}
-          style={style}
-          onKeyDown={this.handleKeyDown}
-          onChange={this.handleTextareaChange}
-          ref={this.saveTextAreaRef}
-          onInput={this.handleInput}
-          onBlur={this.handleBlur}
-          onFocus={this.handleFocus}
-        />
-        {border}
-        {lengthInfo}
+        <div className={`${prefixCls}-rendered-wrapper`}>
+          <textarea
+            {...otherProps}
+            className={this.getTextAreaClassName()}
+            style={style}
+            onKeyDown={this.handleKeyDown}
+            onChange={this.handleTextareaChange}
+            ref={this.saveTextAreaRef}
+            onInput={this.handleInput}
+            onBlur={this.handleBlur}
+            onFocus={this.handleFocus}
+          />
+          {this.renderFloatLabel()}
+        </div>
+        {this.getLengthInfo()}
       </span>
     );
   }

@@ -147,7 +147,6 @@ export default class WeekPicker extends Component<any, any> {
 
     const suffix = (<span
       className={`${prefixCls}-picker-icon-wrapper`}
-      style={{ minWidth: clearIcon ? '42px' : '18px' }}
       onClick={this.onPickerIconClick}
     >
       {clearIcon}

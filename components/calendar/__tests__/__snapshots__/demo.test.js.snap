@@ -8,7 +8,7 @@ exports[`renders ./components/calendar/demo/basic.md correctly 1`] = `
     class="c7n-fullcalendar-header"
   >
     <div
-      class="c7n-fullcalendar-year-select c7n-select c7n-select-has-value c7n-select-enabled"
+      class="c7n-fullcalendar-year-select c7n-select c7n-select-has-value c7n-select-enabled c7n-select-has-border"
     >
       <div
         aria-autocomplete="list"
@@ -41,16 +41,9 @@ exports[`renders ./components/calendar/demo/basic.md correctly 1`] = `
           </span>
         </div>
       </div>
-      <div
-        class="c7n-select-underline"
-      >
-        <span
-          class="c7n-select-ripple"
-        />
-      </div>
     </div>
     <div
-      class="c7n-fullcalendar-month-select c7n-select c7n-select-has-value c7n-select-enabled"
+      class="c7n-fullcalendar-month-select c7n-select c7n-select-has-value c7n-select-enabled c7n-select-has-border"
     >
       <div
         aria-autocomplete="list"
@@ -82,13 +75,6 @@ exports[`renders ./components/calendar/demo/basic.md correctly 1`] = `
             <b />
           </span>
         </div>
-      </div>
-      <div
-        class="c7n-select-underline"
-      >
-        <span
-          class="c7n-select-ripple"
-        />
       </div>
     </div>
     <div
@@ -1041,7 +1027,7 @@ exports[`renders ./components/calendar/demo/card.md correctly 1`] = `
       class="c7n-fullcalendar-header"
     >
       <div
-        class="c7n-select-sm c7n-fullcalendar-year-select c7n-select c7n-select-has-value c7n-select-enabled"
+        class="c7n-select-sm c7n-fullcalendar-year-select c7n-select c7n-select-has-value c7n-select-enabled c7n-select-has-border"
       >
         <div
           aria-autocomplete="list"
@@ -1074,16 +1060,9 @@ exports[`renders ./components/calendar/demo/card.md correctly 1`] = `
             </span>
           </div>
         </div>
-        <div
-          class="c7n-select-underline"
-        >
-          <span
-            class="c7n-select-ripple"
-          />
-        </div>
       </div>
       <div
-        class="c7n-select-sm c7n-fullcalendar-month-select c7n-select c7n-select-has-value c7n-select-enabled"
+        class="c7n-select-sm c7n-fullcalendar-month-select c7n-select c7n-select-has-value c7n-select-enabled c7n-select-has-border"
       >
         <div
           aria-autocomplete="list"
@@ -1115,13 +1094,6 @@ exports[`renders ./components/calendar/demo/card.md correctly 1`] = `
               <b />
             </span>
           </div>
-        </div>
-        <div
-          class="c7n-select-underline"
-        >
-          <span
-            class="c7n-select-ripple"
-          />
         </div>
       </div>
       <div
@@ -2072,7 +2044,7 @@ exports[`renders ./components/calendar/demo/notice-calendar.md correctly 1`] = `
     class="c7n-fullcalendar-header"
   >
     <div
-      class="c7n-fullcalendar-year-select c7n-select c7n-select-has-value c7n-select-enabled"
+      class="c7n-fullcalendar-year-select c7n-select c7n-select-has-value c7n-select-enabled c7n-select-has-border"
     >
       <div
         aria-autocomplete="list"
@@ -2105,16 +2077,9 @@ exports[`renders ./components/calendar/demo/notice-calendar.md correctly 1`] = `
           </span>
         </div>
       </div>
-      <div
-        class="c7n-select-underline"
-      >
-        <span
-          class="c7n-select-ripple"
-        />
-      </div>
     </div>
     <div
-      class="c7n-fullcalendar-month-select c7n-select c7n-select-has-value c7n-select-enabled"
+      class="c7n-fullcalendar-month-select c7n-select c7n-select-has-value c7n-select-enabled c7n-select-has-border"
     >
       <div
         aria-autocomplete="list"
@@ -2146,13 +2111,6 @@ exports[`renders ./components/calendar/demo/notice-calendar.md correctly 1`] = `
             <b />
           </span>
         </div>
-      </div>
-      <div
-        class="c7n-select-underline"
-      >
-        <span
-          class="c7n-select-ripple"
-        />
       </div>
     </div>
     <div
@@ -3512,7 +3470,7 @@ exports[`renders ./components/calendar/demo/select.md correctly 1`] = `
       class="c7n-fullcalendar-header"
     >
       <div
-        class="c7n-fullcalendar-year-select c7n-select c7n-select-has-value c7n-select-enabled"
+        class="c7n-fullcalendar-year-select c7n-select c7n-select-has-value c7n-select-enabled c7n-select-has-border"
       >
         <div
           aria-autocomplete="list"
@@ -3545,16 +3503,9 @@ exports[`renders ./components/calendar/demo/select.md correctly 1`] = `
             </span>
           </div>
         </div>
-        <div
-          class="c7n-select-underline"
-        >
-          <span
-            class="c7n-select-ripple"
-          />
-        </div>
       </div>
       <div
-        class="c7n-fullcalendar-month-select c7n-select c7n-select-has-value c7n-select-enabled"
+        class="c7n-fullcalendar-month-select c7n-select c7n-select-has-value c7n-select-enabled c7n-select-has-border"
       >
         <div
           aria-autocomplete="list"
@@ -3586,13 +3537,6 @@ exports[`renders ./components/calendar/demo/select.md correctly 1`] = `
               <b />
             </span>
           </div>
-        </div>
-        <div
-          class="c7n-select-underline"
-        >
-          <span
-            class="c7n-select-ripple"
-          />
         </div>
       </div>
       <div

@@ -7,6 +7,7 @@ exports[`Search should show cross icon when input value exists 1`] = `
 >
   <div>
     <Input
+      border={true}
       disabled={false}
       onChange={[Function]}
       placeholder=""
@@ -14,11 +15,10 @@ exports[`Search should show cross icon when input value exists 1`] = `
       showLengthInfo={true}
       showPasswordEye={false}
       type="text"
-      underline={true}
       value=""
     >
       <span
-        className="c7n-input-wrapper"
+        className="c7n-input-wrapper c7n-input-has-border"
       >
         <div
           className="c7n-input-content"
@@ -29,10 +29,8 @@ exports[`Search should show cross icon when input value exists 1`] = `
             <div
               className="c7n-input-rendered"
             >
-              <div
-                className="c7n-input-placeholder"
-              />
               <input
+                border={true}
                 className="c7n-input"
                 disabled={false}
                 onBlur={[Function]}
@@ -46,13 +44,6 @@ exports[`Search should show cross icon when input value exists 1`] = `
               />
             </div>
           </div>
-        </div>
-        <div
-          className="c7n-input-underline"
-        >
-          <span
-            className="c7n-input-ripple"
-          />
         </div>
       </span>
     </Input>
@@ -78,6 +69,7 @@ exports[`Search should show cross icon when input value exists 2`] = `
 >
   <div>
     <Input
+      border={true}
       disabled={false}
       onChange={[Function]}
       placeholder=""
@@ -85,11 +77,10 @@ exports[`Search should show cross icon when input value exists 2`] = `
       showLengthInfo={true}
       showPasswordEye={false}
       type="text"
-      underline={true}
       value="a"
     >
       <span
-        className="c7n-input-wrapper c7n-input-has-value"
+        className="c7n-input-wrapper c7n-input-has-value c7n-input-has-border"
       >
         <div
           className="c7n-input-content"
@@ -100,10 +91,8 @@ exports[`Search should show cross icon when input value exists 2`] = `
             <div
               className="c7n-input-rendered"
             >
-              <div
-                className="c7n-input-placeholder"
-              />
               <input
+                border={true}
                 className="c7n-input"
                 disabled={false}
                 onBlur={[Function]}
@@ -117,13 +106,6 @@ exports[`Search should show cross icon when input value exists 2`] = `
               />
             </div>
           </div>
-        </div>
-        <div
-          className="c7n-input-underline"
-        >
-          <span
-            className="c7n-input-ripple"
-          />
         </div>
       </span>
     </Input>

@@ -402,6 +402,14 @@ export default class Form extends DataSetComponent<FormProps> {
     }
   }
 
+  getClassName(...props): string | undefined {
+    const { prefixCls, labelLayout } = this;
+    return super.getClassName({
+      ...props,
+      [`${prefixCls}-float-label`]: labelLayout === LabelLayout.float,
+    });
+  }
+
   rasterizedChildren() {
     const { dataSet, record, columns, labelLayout, labelAlign, props: { children } } = this;
     const prefixCls = getProPrefixCls(FIELD_SUFFIX);

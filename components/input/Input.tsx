@@ -24,7 +24,6 @@ export interface AbstractInputProps {
   tabIndex?: number;
   style?: CSSProperties;
   label?: ReactNode;
-  underline?: boolean;
   showLengthInfo?: boolean;
   showPasswordEye?: boolean;
 }
@@ -56,13 +55,13 @@ export interface InputProps extends AbstractInputProps {
   spellCheck?: boolean;
   autoFocus?: boolean;
   focused?: boolean;
+  border?: boolean;
 }
 
 export interface InputState {
   inputLength?: number;
   focused?: boolean;
   renderedStyle?: {};
-  showLengthInfo?: boolean;
   showPasswordEye?: boolean;
   type?: string;
   showPassword?: boolean;
@@ -77,10 +76,10 @@ export default class Input extends Component<InputProps, any> {
   static defaultProps = {
     type: 'text',
     disabled: false,
-    underline: true,
     readOnly: false,
     showLengthInfo: true,
     showPasswordEye: false,
+    border: true,
   };
 
   static propTypes = {
@@ -112,7 +111,6 @@ export default class Input extends Component<InputProps, any> {
     suffix: PropTypes.node,
     copy: PropTypes.bool,
     onCopy: PropTypes.func,
-    underline: PropTypes.bool,
     readOnly: PropTypes.bool,
     focused: PropTypes.bool,
     showLengthInfo: PropTypes.bool,
@@ -126,7 +124,6 @@ export default class Input extends Component<InputProps, any> {
       width: '100%',
       margin: 0,
     },
-    showLengthInfo: true,
     showPassword: false,
     type: 'text',
   };
@@ -145,12 +142,11 @@ export default class Input extends Component<InputProps, any> {
 
   componentDidMount() {
     const { inputLength } = this.state;
-    const { focused, showLengthInfo } = this.props;
+    const { focused } = this.props;
     const inputValueLength = this.input.value.length;
     if (inputValueLength !== inputLength) {
       this.setState({
         inputLength: inputValueLength,
-        showLengthInfo,
       });
     }
     if (this.props.autoFocus) {
@@ -184,11 +180,6 @@ export default class Input extends Component<InputProps, any> {
     if (typeof nextProps.focused === 'boolean') {
       this.setState({
         focused: nextProps.focused,
-      });
-    }
-    if ('showLengthInfo' in nextProps) {
-      this.setState({
-        showLengthInfo: nextProps.showLengthInfo,
       });
     }
     this.setState({
@@ -344,7 +335,7 @@ export default class Input extends Component<InputProps, any> {
     const { value, className } = this.props;
     // Fix https://fb.me/react-unknown-prop
     const otherProps = omit<InputProps, 'placeholder' | 'prefixCls' | 'onPressEnter' | 'addonBefore' | 'addonAfter' | 'prefix' |
-      'suffix' | 'label' | 'copy' | 'style' | 'underline' | 'focused' | 'showLengthInfo' | 'showPasswordEye' | 'size'>(
+      'suffix' | 'label' | 'copy' | 'style' | 'focused' | 'showLengthInfo' | 'showPasswordEye' | 'size'>(
       this.props, [
         'placeholder',
         'prefixCls',
@@ -356,7 +347,6 @@ export default class Input extends Component<InputProps, any> {
         'label',
         'copy',
         'style',
-        'underline',
         'focused',
         'showLengthInfo',
         'showPasswordEye',
@@ -385,24 +375,33 @@ export default class Input extends Component<InputProps, any> {
   }
 
   getLengthInfo() {
-    const { maxLength } = this.props;
+    const { maxLength, showLengthInfo } = this.props;
     const prefixCls = this.getPrefixCls();
-    const { inputLength, showLengthInfo } = this.state;
+    const { inputLength } = this.state;
     return (maxLength && showLengthInfo) || (maxLength && maxLength > 0 && inputLength === maxLength ) ? (
-      <span className={`${prefixCls}-icon`}>
-        <span className={`${prefixCls}-icon-copy ${prefixCls}-length-info`}>{`${inputLength}/${maxLength}`}</span>
-      </span>
+      <div className={`${prefixCls}-length-info`}>{`${inputLength}/${maxLength}`}</div>
     ) : null;
   }
 
-  getUnderLine() {
-    const { underline } = this.props;
-    const prefixCls = this.getPrefixCls();
-    return underline ? (
-      <div className={`${prefixCls}-underline`}>
-        <span className={`${prefixCls}-ripple`} />
-      </div>
-    ) : null;
+  getLabel() {
+    const { placeholder, label } = this.props;
+    if (!this.hasValue() && placeholder) {
+      return placeholder;
+    }
+    return label;
+  }
+
+  renderFloatLabel(): ReactNode {
+    const label = this.getLabel();
+    const { border } = this.props;
+    if (label && border) {
+      const prefixCls = this.getPrefixCls();
+      return (
+        <div className={`${prefixCls}-label-wrapper`}>
+          <div className={`${prefixCls}-label`}>{label}</div>
+        </div>
+      );
+    }
   }
 
   getSizeClassName(name: string) {
@@ -414,11 +413,25 @@ export default class Input extends Component<InputProps, any> {
     });
   }
 
+  hasValue() {
+    return this.state.inputLength !== 0;
+  }
+
+  renderPlaceholder() {
+    const { placeholder, border } = this.props;
+    if (!border && placeholder) {
+      const prefixCls = this.getPrefixCls();
+      return (
+        <div className={`${prefixCls}-placeholder`}>{placeholder}</div>
+      );
+    }
+  }
+
   render() {
     const props = this.props;
-    const { disabled, label, style, placeholder, showPasswordEye } = this.props;
+    const { disabled, label, style, showPasswordEye, border } = this.props;
     const prefixCls = this.getPrefixCls();
-    const { inputLength, focused } = this.state;
+    const { focused } = this.state;
     const prefix = props.prefix ? (
       <span ref="prefix" className={this.getSizeClassName('prefix')}>
         {props.prefix}
@@ -431,23 +444,24 @@ export default class Input extends Component<InputProps, any> {
     ) : null;
 
     const className = classNames(`${prefixCls}-wrapper`, {
-      [`${prefixCls}-has-value`]: inputLength !== 0,
+      [`${prefixCls}-has-value`]: this.hasValue(),
       [`${prefixCls}-focused`]: focused,
       [`${prefixCls}-disabled`]: disabled,
       [`${prefixCls}-has-label`]: !!label,
       [`${prefixCls}-has-prefix`]: !!prefix,
       [`${prefixCls}-has-suffix`]: !!suffix,
+      [`${prefixCls}-has-border`]: !!border,
     });
 
     return (
       <span className={className} style={style}>
         <div className={`${prefixCls}-content`}>
-          {label ? <div className={`${prefixCls}-label`}>{label}</div> : null}
           <div className={`${prefixCls}-rendered-wrapper`}>
             {prefix}
             <div className={this.getSizeClassName('rendered')} ref="rendered">
-              <div className={`${prefixCls}-placeholder`}>{placeholder}</div>
+              {this.renderPlaceholder()}
               {this.renderInput()}
+              {this.renderFloatLabel()}
               {this.renderCopyIcon()}
               {showPasswordEye ? this.renderShowPassword() : null}
             </div>
@@ -455,7 +469,6 @@ export default class Input extends Component<InputProps, any> {
           </div>
           {this.getLengthInfo()}
         </div>
-        {this.getUnderLine()}
       </span>
     );
   }

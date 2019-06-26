@@ -464,9 +464,11 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       const classString = classNames(`${prefixCls}-label`, {
         [`${prefixCls}-required`]: required,
       });
-      return <div className={`${prefixCls}-label-wrapper`}>
-        <div className={classString}>{label}</div>
-      </div>;
+      return (
+        <div className={`${prefixCls}-label-wrapper`}>
+          <div className={classString}>{label}</div>
+        </div>
+      );
     }
   }
 

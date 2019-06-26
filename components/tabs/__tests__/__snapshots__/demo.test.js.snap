@@ -881,7 +881,7 @@ exports[`renders ./components/tabs/demo/position.md correctly 1`] = `
   >
     Tab position：
     <div
-      class="c7n-select c7n-select-has-value c7n-select-enabled"
+      class="c7n-select c7n-select-has-value c7n-select-enabled c7n-select-has-border"
     >
       <div
         aria-autocomplete="list"
@@ -913,13 +913,6 @@ exports[`renders ./components/tabs/demo/position.md correctly 1`] = `
             <b />
           </span>
         </div>
-      </div>
-      <div
-        class="c7n-select-underline"
-      >
-        <span
-          class="c7n-select-ripple"
-        />
       </div>
     </div>
   </div>

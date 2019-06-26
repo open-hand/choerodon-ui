@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+- 💄 `Input`: Update the style.
+- 💄 `DatePicker`: Update the style.
+- 💄 `Select`: Update the style.
+
 ## 0.7.1
 ## 0.6.10
 
