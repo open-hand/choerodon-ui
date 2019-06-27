@@ -24,7 +24,7 @@ class App extends React.Component {
   ds = new DataSet({
     autoCreate: true,
     fields: [
-      { name: 'url', type: 'string', defaultValue: 'https://choerodon.io', required: true },
+      { name: 'url', type: 'url', defaultValue: 'https://choerodon.io', required: true },
     ],
     events: {
       update: handleDataSetChange,

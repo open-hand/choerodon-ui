@@ -84,6 +84,10 @@ export interface Locale {
     value_missing;
     type_mismatch;
   },
+  ColorPicker: {
+    value_missing;
+    type_mismatch;
+  },
   Validator: {
     bad_input;
     pattern_mismatch;

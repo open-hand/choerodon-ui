@@ -11,17 +11,25 @@ const colorRgbaReg = /^[rR][gG][Bb][Aa]?\((\s*(2[0-4][0-9]|25[0-5]|[01]?[0-9][0-
 const colorHexReg = /^#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})$/;
 /* tslint:enable */
 
+const types: { [key: string]: [((value: any) => boolean), string] } = {
+  [FieldType.email]: [value => !emailReg.test(value), 'EmailField'],
+  [FieldType.url]: [value => !urlReg.test(value), 'UrlField'],
+  [FieldType.color]: [value => !(colorRgbaReg.test(value) || colorHexReg.test(value)), 'ColorPicker'],
+};
+
 export default function typeMismatch(value, { type }): methodReturn {
-  if (!isEmpty(value) && (
-      (type === FieldType.email && !emailReg.test(value))
-      || (type === FieldType.url && !urlReg.test(value))
-      || (type === FieldType.color && !(colorRgbaReg.test(value) || colorHexReg.test(value)))
-    )) {
-    return new ValidationResult({
-      validationMessage: $l('Validator', 'type_mismatch'),
-      value,
-      ruleName: 'typeMismatch',
-    });
+  if (!isEmpty(value)) {
+    const validateType = types[type];
+    if (validateType) {
+      const [validate, component] = validateType;
+      if (validate(value)) {
+        return new ValidationResult({
+          validationMessage: $l(component, 'type_mismatch'),
+          value,
+          ruleName: 'typeMismatch',
+        });
+      }
+    }
   }
   return true;
 }
