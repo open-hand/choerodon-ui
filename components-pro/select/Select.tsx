@@ -659,7 +659,9 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
     }
   }
 
-  generateLookupValue(record: Record, valueField: string, lookupKey?: string) {
+  generateLookupValue(record: Record) {
+    const { field, valueField } = this;
+    const lookupKey = field && lookupStore.getKey(field);
     const value = record.get(valueField);
     if (lookupKey) {
       const data = lookupStore.get(lookupKey);
@@ -671,9 +673,8 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
   }
 
   processRecordToObject(record: Record) {
-    const { field, valueField, primitive } = this;
-    const lookupKey = field && lookupStore.getKey(field);
-    return primitive && lookupKey ? this.generateLookupValue(record, valueField, lookupKey) : record.toData();
+    const { primitive } = this;
+    return primitive ? this.generateLookupValue(record) : record.toData();
   }
 
   processObjectValue(value, textField) {
