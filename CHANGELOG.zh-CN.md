@@ -15,14 +15,15 @@ timeline: true
 
 ---
 
-## 0.8.0
-
-`2019-06-26`
-
 - 💄 `Password`: 变更为通过点击揭示密码。
 - 💄 `Input`: 更新样式。
 - 💄 `DatePicker`: 更新样式。
 - 💄 `Select`: 更新样式。
+
+## 0.7.2
+## 0.6.11
+
+`2019-06-27`
 
 - 💄 `<pro>Validator`: 优化email,url,color在Output中显示的校验信息。
 - 🐞 `<pro>Table`: 校验失败的下拉框重新选择值后，其他编辑器无法激活。
