@@ -40,6 +40,7 @@ export default function wrapPicker(Picker: ComponentClass<any>, defaultFormat?: 
       locale: {},
       prefixCls: getPrefixCls('calendar'),
       inputPrefixCls: getPrefixCls('input'),
+      border: true,
     };
 
     private picker: any;
@@ -107,6 +108,7 @@ export default function wrapPicker(Picker: ComponentClass<any>, defaultFormat?: 
       });
       const pickerWrapperInputClass = classNames(`${inputPrefixCls}-wrapper`, {
         [`${inputPrefixCls}-disabled`]: props.disabled,
+        [`${inputPrefixCls}-has-border`]: props.border,
       })
 
       const timeFormat = (props.showTime && props.showTime.format) || 'HH:mm:ss';

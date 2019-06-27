@@ -344,7 +344,9 @@ export default class RangePicker extends Component<any, RangePickerState> {
               tabIndex={-1}
             />
             {clearIcon}
-            <Icon type="date_range" className={`${prefixCls}-picker-icon`} />
+            <span className={`${props.inputPrefixCls}-suffix`}>
+              <Icon type="date_range" className={`${prefixCls}-picker-icon`} />
+            </span>
           </span>
         </span>
       );

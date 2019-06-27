@@ -243,8 +243,10 @@
     }
     &.@{select-prefix-cls}-tags,
     &.@{select-prefix-cls}-multiple {
-      .@{select-prefix-cls}-selection--multiple {
+      .@{select-prefix-cls}-selection__rendered {
         min-height: @input-height-lg;
+      }
+      .@{select-prefix-cls}-selection--multiple {
         > ul > li,
         .@{select-prefix-cls}-selection__rendered > ul > li,
         .@{select-prefix-cls}-selection__choice__remove > i.@{iconfont-css-prefix} {
@@ -265,8 +267,10 @@
     }
     &.@{select-prefix-cls}-tags,
     &.@{select-prefix-cls}-multiple {
-      .@{select-prefix-cls}-selection--multiple {
+      .@{select-prefix-cls}-selection__rendered {
         min-height: @input-height-sm;
+      }
+      .@{select-prefix-cls}-selection--multiple {
         > ul > li,
         .@{select-prefix-cls}-selection__rendered > ul > li,
         .@{select-prefix-cls}-selection__choice__remove > i.@{iconfont-css-prefix} {
@@ -337,7 +341,6 @@
   &-multiple {
     .@{select-prefix-cls}-selection--multiple {
       cursor: text;
-      min-height: .36rem;
       .clearfix;
 
       .@{select-prefix-cls}-search--inline {
@@ -358,9 +361,9 @@
       }
 
       .@{select-prefix-cls}-selection__rendered {
-        margin-top: .07rem;
         height: auto;
-        padding: 0 .04rem;
+        padding: .07rem .04rem 0 .04rem;
+        min-height: .36rem;
       }
 
       .@{select-prefix-cls}-selection__placeholder,
