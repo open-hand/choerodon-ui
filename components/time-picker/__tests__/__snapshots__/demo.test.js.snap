@@ -6,7 +6,7 @@ exports[`renders ./components/time-picker/demo/12hours.md correctly 1`] = `
     class="c7n-time-picker "
   >
     <span
-      class="c7n-input-wrapper c7n-input-has-suffix"
+      class="c7n-input-wrapper c7n-input-has-suffix c7n-input-has-border"
     >
       <div
         class="c7n-input-content"
@@ -17,11 +17,6 @@ exports[`renders ./components/time-picker/demo/12hours.md correctly 1`] = `
           <div
             class="c7n-input-rendered"
           >
-            <div
-              class="c7n-input-placeholder"
-            >
-              Select time
-            </div>
             <input
               class="c7n-input c7n-time-picker-input"
               id=""
@@ -29,6 +24,15 @@ exports[`renders ./components/time-picker/demo/12hours.md correctly 1`] = `
               type="text"
               value=""
             />
+            <div
+              class="c7n-input-label-wrapper"
+            >
+              <div
+                class="c7n-input-label"
+              >
+                Select time
+              </div>
+            </div>
           </div>
           <span
             class="c7n-input-suffix"
@@ -38,13 +42,6 @@ exports[`renders ./components/time-picker/demo/12hours.md correctly 1`] = `
             />
           </span>
         </div>
-      </div>
-      <div
-        class="c7n-input-underline"
-      >
-        <span
-          class="c7n-input-ripple"
-        />
       </div>
     </span>
   </span>
@@ -52,7 +49,7 @@ exports[`renders ./components/time-picker/demo/12hours.md correctly 1`] = `
     class="c7n-time-picker "
   >
     <span
-      class="c7n-input-wrapper c7n-input-has-suffix"
+      class="c7n-input-wrapper c7n-input-has-suffix c7n-input-has-border"
     >
       <div
         class="c7n-input-content"
@@ -63,11 +60,6 @@ exports[`renders ./components/time-picker/demo/12hours.md correctly 1`] = `
           <div
             class="c7n-input-rendered"
           >
-            <div
-              class="c7n-input-placeholder"
-            >
-              Select time
-            </div>
             <input
               class="c7n-input c7n-time-picker-input"
               id=""
@@ -75,6 +67,15 @@ exports[`renders ./components/time-picker/demo/12hours.md correctly 1`] = `
               type="text"
               value=""
             />
+            <div
+              class="c7n-input-label-wrapper"
+            >
+              <div
+                class="c7n-input-label"
+              >
+                Select time
+              </div>
+            </div>
           </div>
           <span
             class="c7n-input-suffix"
@@ -84,13 +85,6 @@ exports[`renders ./components/time-picker/demo/12hours.md correctly 1`] = `
             />
           </span>
         </div>
-      </div>
-      <div
-        class="c7n-input-underline"
-      >
-        <span
-          class="c7n-input-ripple"
-        />
       </div>
     </span>
   </span>
@@ -98,7 +92,7 @@ exports[`renders ./components/time-picker/demo/12hours.md correctly 1`] = `
     class="c7n-time-picker "
   >
     <span
-      class="c7n-input-wrapper c7n-input-has-suffix"
+      class="c7n-input-wrapper c7n-input-has-suffix c7n-input-has-border"
     >
       <div
         class="c7n-input-content"
@@ -109,11 +103,6 @@ exports[`renders ./components/time-picker/demo/12hours.md correctly 1`] = `
           <div
             class="c7n-input-rendered"
           >
-            <div
-              class="c7n-input-placeholder"
-            >
-              Select time
-            </div>
             <input
               class="c7n-input c7n-time-picker-input"
               id=""
@@ -121,6 +110,15 @@ exports[`renders ./components/time-picker/demo/12hours.md correctly 1`] = `
               type="text"
               value=""
             />
+            <div
+              class="c7n-input-label-wrapper"
+            >
+              <div
+                class="c7n-input-label"
+              >
+                Select time
+              </div>
+            </div>
           </div>
           <span
             class="c7n-input-suffix"
@@ -130,13 +128,6 @@ exports[`renders ./components/time-picker/demo/12hours.md correctly 1`] = `
             />
           </span>
         </div>
-      </div>
-      <div
-        class="c7n-input-underline"
-      >
-        <span
-          class="c7n-input-ripple"
-        />
       </div>
     </span>
   </span>
@@ -148,7 +139,7 @@ exports[`renders ./components/time-picker/demo/addon.md correctly 1`] = `
   class="c7n-time-picker "
 >
   <span
-    class="c7n-input-wrapper c7n-input-has-suffix"
+    class="c7n-input-wrapper c7n-input-has-suffix c7n-input-has-border"
   >
     <div
       class="c7n-input-content"
@@ -159,11 +150,6 @@ exports[`renders ./components/time-picker/demo/addon.md correctly 1`] = `
         <div
           class="c7n-input-rendered"
         >
-          <div
-            class="c7n-input-placeholder"
-          >
-            Select time
-          </div>
           <input
             class="c7n-input c7n-time-picker-input"
             id=""
@@ -171,6 +157,15 @@ exports[`renders ./components/time-picker/demo/addon.md correctly 1`] = `
             type="text"
             value=""
           />
+          <div
+            class="c7n-input-label-wrapper"
+          >
+            <div
+              class="c7n-input-label"
+            >
+              Select time
+            </div>
+          </div>
         </div>
         <span
           class="c7n-input-suffix"
@@ -180,13 +175,6 @@ exports[`renders ./components/time-picker/demo/addon.md correctly 1`] = `
           />
         </span>
       </div>
-    </div>
-    <div
-      class="c7n-input-underline"
-    >
-      <span
-        class="c7n-input-ripple"
-      />
     </div>
   </span>
 </span>
@@ -197,27 +185,17 @@ exports[`renders ./components/time-picker/demo/basic.md correctly 1`] = `
   class="c7n-time-picker "
 >
   <span
-    class="c7n-input-wrapper c7n-input-has-label c7n-input-has-suffix"
+    class="c7n-input-wrapper c7n-input-has-label c7n-input-has-suffix c7n-input-has-border"
   >
     <div
       class="c7n-input-content"
     >
-      <div
-        class="c7n-input-label"
-      >
-        时间选择框
-      </div>
       <div
         class="c7n-input-rendered-wrapper"
       >
         <div
           class="c7n-input-rendered"
         >
-          <div
-            class="c7n-input-placeholder"
-          >
-            Select time
-          </div>
           <input
             class="c7n-input c7n-time-picker-input"
             id=""
@@ -225,6 +203,15 @@ exports[`renders ./components/time-picker/demo/basic.md correctly 1`] = `
             type="text"
             value=""
           />
+          <div
+            class="c7n-input-label-wrapper"
+          >
+            <div
+              class="c7n-input-label"
+            >
+              Select time
+            </div>
+          </div>
         </div>
         <span
           class="c7n-input-suffix"
@@ -234,13 +221,6 @@ exports[`renders ./components/time-picker/demo/basic.md correctly 1`] = `
           />
         </span>
       </div>
-    </div>
-    <div
-      class="c7n-input-underline"
-    >
-      <span
-        class="c7n-input-ripple"
-      />
     </div>
   </span>
 </span>
@@ -251,7 +231,7 @@ exports[`renders ./components/time-picker/demo/disabled.md correctly 1`] = `
   class="c7n-time-picker "
 >
   <span
-    class="c7n-input-wrapper c7n-input-disabled c7n-input-has-suffix"
+    class="c7n-input-wrapper c7n-input-disabled c7n-input-has-suffix c7n-input-has-border"
   >
     <div
       class="c7n-input-content"
@@ -262,11 +242,6 @@ exports[`renders ./components/time-picker/demo/disabled.md correctly 1`] = `
         <div
           class="c7n-input-rendered"
         >
-          <div
-            class="c7n-input-placeholder"
-          >
-            Select time
-          </div>
           <input
             class="c7n-input c7n-time-picker-input"
             disabled=""
@@ -275,6 +250,15 @@ exports[`renders ./components/time-picker/demo/disabled.md correctly 1`] = `
             type="text"
             value="12:08:23"
           />
+          <div
+            class="c7n-input-label-wrapper"
+          >
+            <div
+              class="c7n-input-label"
+            >
+              Select time
+            </div>
+          </div>
         </div>
         <span
           class="c7n-input-suffix"
@@ -284,13 +268,6 @@ exports[`renders ./components/time-picker/demo/disabled.md correctly 1`] = `
           />
         </span>
       </div>
-    </div>
-    <div
-      class="c7n-input-underline"
-    >
-      <span
-        class="c7n-input-ripple"
-      />
     </div>
   </span>
 </span>
@@ -301,7 +278,7 @@ exports[`renders ./components/time-picker/demo/hide-column.md correctly 1`] = `
   class="c7n-time-picker "
 >
   <span
-    class="c7n-input-wrapper c7n-input-has-suffix"
+    class="c7n-input-wrapper c7n-input-has-suffix c7n-input-has-border"
   >
     <div
       class="c7n-input-content"
@@ -312,11 +289,6 @@ exports[`renders ./components/time-picker/demo/hide-column.md correctly 1`] = `
         <div
           class="c7n-input-rendered"
         >
-          <div
-            class="c7n-input-placeholder"
-          >
-            Select time
-          </div>
           <input
             class="c7n-input c7n-time-picker-input"
             id=""
@@ -324,6 +296,15 @@ exports[`renders ./components/time-picker/demo/hide-column.md correctly 1`] = `
             type="text"
             value="12:08"
           />
+          <div
+            class="c7n-input-label-wrapper"
+          >
+            <div
+              class="c7n-input-label"
+            >
+              Select time
+            </div>
+          </div>
         </div>
         <span
           class="c7n-input-suffix"
@@ -333,13 +314,6 @@ exports[`renders ./components/time-picker/demo/hide-column.md correctly 1`] = `
           />
         </span>
       </div>
-    </div>
-    <div
-      class="c7n-input-underline"
-    >
-      <span
-        class="c7n-input-ripple"
-      />
     </div>
   </span>
 </span>
@@ -350,7 +324,7 @@ exports[`renders ./components/time-picker/demo/interval-options.md correctly 1`]
   class="c7n-time-picker "
 >
   <span
-    class="c7n-input-wrapper c7n-input-has-suffix"
+    class="c7n-input-wrapper c7n-input-has-suffix c7n-input-has-border"
   >
     <div
       class="c7n-input-content"
@@ -361,11 +335,6 @@ exports[`renders ./components/time-picker/demo/interval-options.md correctly 1`]
         <div
           class="c7n-input-rendered"
         >
-          <div
-            class="c7n-input-placeholder"
-          >
-            Select time
-          </div>
           <input
             class="c7n-input c7n-time-picker-input"
             id=""
@@ -373,6 +342,15 @@ exports[`renders ./components/time-picker/demo/interval-options.md correctly 1`]
             type="text"
             value=""
           />
+          <div
+            class="c7n-input-label-wrapper"
+          >
+            <div
+              class="c7n-input-label"
+            >
+              Select time
+            </div>
+          </div>
         </div>
         <span
           class="c7n-input-suffix"
@@ -382,13 +360,6 @@ exports[`renders ./components/time-picker/demo/interval-options.md correctly 1`]
           />
         </span>
       </div>
-    </div>
-    <div
-      class="c7n-input-underline"
-    >
-      <span
-        class="c7n-input-ripple"
-      />
     </div>
   </span>
 </span>
@@ -400,7 +371,7 @@ exports[`renders ./components/time-picker/demo/size.md correctly 1`] = `
     class="c7n-time-picker c7n-time-picker-large"
   >
     <span
-      class="c7n-input-wrapper c7n-input-has-suffix"
+      class="c7n-input-wrapper c7n-input-has-suffix c7n-input-has-border"
     >
       <div
         class="c7n-input-content"
@@ -411,11 +382,6 @@ exports[`renders ./components/time-picker/demo/size.md correctly 1`] = `
           <div
             class="c7n-input-rendered"
           >
-            <div
-              class="c7n-input-placeholder"
-            >
-              Select time
-            </div>
             <input
               class="c7n-input c7n-time-picker-input"
               id=""
@@ -423,6 +389,15 @@ exports[`renders ./components/time-picker/demo/size.md correctly 1`] = `
               type="text"
               value="12:08:23"
             />
+            <div
+              class="c7n-input-label-wrapper"
+            >
+              <div
+                class="c7n-input-label"
+              >
+                Select time
+              </div>
+            </div>
           </div>
           <span
             class="c7n-input-suffix"
@@ -432,13 +407,6 @@ exports[`renders ./components/time-picker/demo/size.md correctly 1`] = `
             />
           </span>
         </div>
-      </div>
-      <div
-        class="c7n-input-underline"
-      >
-        <span
-          class="c7n-input-ripple"
-        />
       </div>
     </span>
   </span>
@@ -446,7 +414,7 @@ exports[`renders ./components/time-picker/demo/size.md correctly 1`] = `
     class="c7n-time-picker "
   >
     <span
-      class="c7n-input-wrapper c7n-input-has-suffix"
+      class="c7n-input-wrapper c7n-input-has-suffix c7n-input-has-border"
     >
       <div
         class="c7n-input-content"
@@ -457,11 +425,6 @@ exports[`renders ./components/time-picker/demo/size.md correctly 1`] = `
           <div
             class="c7n-input-rendered"
           >
-            <div
-              class="c7n-input-placeholder"
-            >
-              Select time
-            </div>
             <input
               class="c7n-input c7n-time-picker-input"
               id=""
@@ -469,6 +432,15 @@ exports[`renders ./components/time-picker/demo/size.md correctly 1`] = `
               type="text"
               value="12:08:23"
             />
+            <div
+              class="c7n-input-label-wrapper"
+            >
+              <div
+                class="c7n-input-label"
+              >
+                Select time
+              </div>
+            </div>
           </div>
           <span
             class="c7n-input-suffix"
@@ -478,13 +450,6 @@ exports[`renders ./components/time-picker/demo/size.md correctly 1`] = `
             />
           </span>
         </div>
-      </div>
-      <div
-        class="c7n-input-underline"
-      >
-        <span
-          class="c7n-input-ripple"
-        />
       </div>
     </span>
   </span>
@@ -492,7 +457,7 @@ exports[`renders ./components/time-picker/demo/size.md correctly 1`] = `
     class="c7n-time-picker c7n-time-picker-small"
   >
     <span
-      class="c7n-input-wrapper c7n-input-has-suffix"
+      class="c7n-input-wrapper c7n-input-has-suffix c7n-input-has-border"
     >
       <div
         class="c7n-input-content"
@@ -503,11 +468,6 @@ exports[`renders ./components/time-picker/demo/size.md correctly 1`] = `
           <div
             class="c7n-input-rendered"
           >
-            <div
-              class="c7n-input-placeholder"
-            >
-              Select time
-            </div>
             <input
               class="c7n-input c7n-time-picker-input"
               id=""
@@ -515,6 +475,15 @@ exports[`renders ./components/time-picker/demo/size.md correctly 1`] = `
               type="text"
               value="12:08:23"
             />
+            <div
+              class="c7n-input-label-wrapper"
+            >
+              <div
+                class="c7n-input-label"
+              >
+                Select time
+              </div>
+            </div>
           </div>
           <span
             class="c7n-input-suffix"
@@ -524,13 +493,6 @@ exports[`renders ./components/time-picker/demo/size.md correctly 1`] = `
             />
           </span>
         </div>
-      </div>
-      <div
-        class="c7n-input-underline"
-      >
-        <span
-          class="c7n-input-ripple"
-        />
       </div>
     </span>
   </span>
@@ -542,7 +504,7 @@ exports[`renders ./components/time-picker/demo/value.md correctly 1`] = `
   class="c7n-time-picker "
 >
   <span
-    class="c7n-input-wrapper c7n-input-has-suffix"
+    class="c7n-input-wrapper c7n-input-has-suffix c7n-input-has-border"
   >
     <div
       class="c7n-input-content"
@@ -553,11 +515,6 @@ exports[`renders ./components/time-picker/demo/value.md correctly 1`] = `
         <div
           class="c7n-input-rendered"
         >
-          <div
-            class="c7n-input-placeholder"
-          >
-            Select time
-          </div>
           <input
             class="c7n-input c7n-time-picker-input"
             id=""
@@ -565,6 +522,15 @@ exports[`renders ./components/time-picker/demo/value.md correctly 1`] = `
             type="text"
             value=""
           />
+          <div
+            class="c7n-input-label-wrapper"
+          >
+            <div
+              class="c7n-input-label"
+            >
+              Select time
+            </div>
+          </div>
         </div>
         <span
           class="c7n-input-suffix"
@@ -574,13 +540,6 @@ exports[`renders ./components/time-picker/demo/value.md correctly 1`] = `
           />
         </span>
       </div>
-    </div>
-    <div
-      class="c7n-input-underline"
-    >
-      <span
-        class="c7n-input-ripple"
-      />
     </div>
   </span>
 </span>

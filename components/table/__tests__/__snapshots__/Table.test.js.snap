@@ -59,13 +59,6 @@ exports[`Table renders JSX correctly 1`] = `
                 </ul>
               </div>
             </div>
-            <div
-              class="c7n-select-underline"
-            >
-              <span
-                class="c7n-select-ripple"
-              />
-            </div>
           </div>
           <div
             class="c7n-table-filter-select-columns"

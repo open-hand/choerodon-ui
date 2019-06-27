@@ -1443,13 +1443,6 @@ exports[`renders ./components/list/demo/vertical.md correctly 1`] = `
                 </span>
               </div>
             </div>
-            <div
-              class="c7n-select-underline"
-            >
-              <span
-                class="c7n-select-ripple"
-              />
-            </div>
           </div>
         </li>
         <li
