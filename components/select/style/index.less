@@ -234,6 +234,10 @@
 
   &-lg {
     font-size: @font-size-lg;
+    .@{select-prefix-cls}-selection__rendered {
+      height: @input-height-lg;
+      line-height: @input-height-lg - .02rem;
+    }
     i.@{iconfont-css-prefix} {
       font-size: .24rem;
     }
@@ -252,6 +256,10 @@
   }
 
   &-sm {
+    .@{select-prefix-cls}-selection__rendered {
+      height: @input-height-sm;
+      line-height: @input-height-sm - .02rem;
+    }
     i.@{iconfont-css-prefix} {
       font-size: .16rem;
     }

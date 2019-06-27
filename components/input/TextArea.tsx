@@ -29,6 +29,7 @@ export interface TextAreaProps extends AbstractInputProps {
   autosize?: boolean | AutoSizeType;
   onPressEnter?: FormEventHandler<any>;
   autoFocus?: boolean;
+  border?: boolean;
 }
 
 export interface TextAreaState {
@@ -43,6 +44,7 @@ export default class TextArea extends Component<TextAreaProps & HTMLTextareaProp
   static displayName = 'TextArea';
   static defaultProps = {
     showLengthInfo: true,
+    border: true,
   };
 
   nextFrameActionId: number;
@@ -152,13 +154,14 @@ export default class TextArea extends Component<TextAreaProps & HTMLTextareaProp
   };
 
   getWrapperClassName() {
-    const { disabled, label } = this.props;
+    const { disabled, label, border } = this.props;
     const prefixCls = this.getPrefixCls();
     return classNames(`${prefixCls}-wrapper`, `${prefixCls}-textarea`, {
       [`${prefixCls}-has-value`]: this.state.inputLength !== 0,
       [`${prefixCls}-focused`]: this.state.focused,
       [`${prefixCls}-disabled`]: disabled,
       [`${prefixCls}-has-label`]: !!label,
+      [`${prefixCls}-has-border`]: border,
     });
   }
 
