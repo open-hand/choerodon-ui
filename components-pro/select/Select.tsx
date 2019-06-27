@@ -205,7 +205,7 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
   @computed
   get primitive(): boolean {
     const type = this.getProp('type');
-    return this.observableProps.primitiveValue !== false || !(!type || type === FieldType.object);
+    return this.observableProps.primitiveValue !== false && type !== FieldType.object;
   }
 
   checkValueReaction?: IReactionDisposer;
@@ -673,7 +673,7 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
   processRecordToObject(record: Record) {
     const { field, valueField, primitive } = this;
     const lookupKey = field && lookupStore.getKey(field);
-    return primitive || lookupKey ? this.generateLookupValue(record, valueField, lookupKey) : record.toData();
+    return primitive && lookupKey ? this.generateLookupValue(record, valueField, lookupKey) : record.toData();
   }
 
   processObjectValue(value, textField) {
@@ -688,8 +688,8 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
   }
 
   processValue(value) {
-    const { field, textField, valueField } = this;
-    if (field) {
+    const { field, textField, valueField, primitive } = this;
+    if (field && primitive) {
       const lookupKey = lookupStore.getKey(field);
       if (lookupKey) {
         return super.processValue(lookupStore.getText(lookupKey, value, valueField, textField));

@@ -24,6 +24,10 @@ timeline: true
 - 💄 `DatePicker`: Update the style.
 - 💄 `Select`: Update the style.
 
+- 💄 `<pro>Validator`: Optimize the verification information displayed by email, url, and color in Output.
+- 🐞 `<pro>Table`: After checking the failed drop-down box to reselect the value, other editors cannot be activated.
+- 🐞 `<pro>Select`: Fixed a problem with the primitive attribute.
+
 ## 0.7.1
 ## 0.6.10
 
