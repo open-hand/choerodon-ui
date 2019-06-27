@@ -80,8 +80,12 @@ export default {
     items: 'items',
   },
   UrlField: {
-    value_missing: 'Please input an address',
-    type_mismatch: 'Please input a valid address',
+    value_missing: 'Please input a url address',
+    type_mismatch: 'Please input a valid url address',
+  },
+  ColorPicker: {
+    value_missing: 'Please select a color',
+    type_mismatch: 'Please select a valid color',
   },
   Validator: {
     bad_input: 'Please input a number.',

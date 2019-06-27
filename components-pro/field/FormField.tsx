@@ -414,12 +414,9 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
         {validationMessage}
       </Animate>,
       help,
-    ] : !!(this.multiple && this.getValues().length) || this.isValidationMessageHidden(validationMessage) ? [
-      wrapper,
-      help,
     ] : (
       <Tooltip
-        title={validationMessage}
+        title={!!(this.multiple && this.getValues().length) || this.isValidationMessageHidden(validationMessage) ? null : validationMessage}
         theme="light"
         placement="bottomLeft"
       >

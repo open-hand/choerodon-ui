@@ -80,8 +80,12 @@ export default {
     items: '项',
   },
   UrlField: {
-    value_missing: '请输入地址',
-    type_mismatch: '请输入有效的地址',
+    value_missing: '请输入网址',
+    type_mismatch: '请输入有效的网址',
+  },
+  ColorPicker: {
+    value_missing: '请选择颜色',
+    type_mismatch: '请选择有效的颜色',
   },
   Validator: {
     bad_input: '请输入一个数字。',
