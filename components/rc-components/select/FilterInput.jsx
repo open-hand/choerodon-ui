@@ -52,7 +52,7 @@ class FilterInput extends Component {
   }
 
   render() {
-    const { prefixCls, placeholder, underline } = this.props;
+    const { prefixCls, placeholder } = this.props;
     const { value } = this.state;
     const suffix = value && <Button size='small' onClick={this.clearInputValue} shape="circle" icon="close" />;
     return (
@@ -65,7 +65,6 @@ class FilterInput extends Component {
             suffix={suffix}
             onChange={this.handleChange}
             onKeyDown={this.props.onKeyDown}
-            underline={underline}
             ref={saveRef(this, 'filterInputRef')}
           />
         </span>

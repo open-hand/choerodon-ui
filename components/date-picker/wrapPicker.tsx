@@ -105,6 +105,9 @@ export default function wrapPicker(Picker: ComponentClass<any>, defaultFormat?: 
         [`${inputPrefixCls}-sm`]: props.size === Size.small,
         [`${inputPrefixCls}-disabled`]: props.disabled,
       });
+      const pickerWrapperInputClass = classNames(`${inputPrefixCls}-wrapper`, {
+        [`${inputPrefixCls}-disabled`]: props.disabled,
+      })
 
       const timeFormat = (props.showTime && props.showTime.format) || 'HH:mm:ss';
       const rcTimePickerProps = {
@@ -131,6 +134,7 @@ export default function wrapPicker(Picker: ComponentClass<any>, defaultFormat?: 
           ref={this.savePicker}
           pickerClass={pickerClass}
           pickerInputClass={pickerInputClass}
+          pickerWrapperInputClass={pickerWrapperInputClass}
           locale={locale}
           localeCode={localeCode}
           timePicker={timePicker}

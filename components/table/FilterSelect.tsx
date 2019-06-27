@@ -130,6 +130,7 @@ export default class FilterSelect<T> extends Component<FilterSelectProps<T>, Fil
           allowClear
           labelInValue
           blurChange={false}
+          border={false}
         >
           {this.getOptions()}
         </Select>

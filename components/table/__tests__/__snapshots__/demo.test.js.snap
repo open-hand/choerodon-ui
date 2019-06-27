@@ -59,13 +59,6 @@ exports[`renders ./components/table/demo/ajax.md correctly 1`] = `
                 </ul>
               </div>
             </div>
-            <div
-              class="c7n-select-underline"
-            >
-              <span
-                class="c7n-select-ripple"
-              />
-            </div>
           </div>
           <div
             class="c7n-table-filter-select-columns"
@@ -225,13 +218,6 @@ exports[`renders ./components/table/demo/basic.md correctly 1`] = `
                   </li>
                 </ul>
               </div>
-            </div>
-            <div
-              class="c7n-select-underline"
-            >
-              <span
-                class="c7n-select-ripple"
-              />
             </div>
           </div>
           <div
@@ -548,13 +534,6 @@ exports[`renders ./components/table/demo/basic.md correctly 1`] = `
                 </span>
               </div>
             </div>
-            <div
-              class="c7n-select-underline"
-            >
-              <span
-                class="c7n-select-ripple"
-              />
-            </div>
           </div>
         </li>
         <li
@@ -686,13 +665,6 @@ exports[`renders ./components/table/demo/bordered.md correctly 1`] = `
                   </li>
                 </ul>
               </div>
-            </div>
-            <div
-              class="c7n-select-underline"
-            >
-              <span
-                class="c7n-select-ripple"
-              />
             </div>
           </div>
           <div
@@ -916,13 +888,6 @@ exports[`renders ./components/table/demo/bordered.md correctly 1`] = `
                 </span>
               </div>
             </div>
-            <div
-              class="c7n-select-underline"
-            >
-              <span
-                class="c7n-select-ripple"
-              />
-            </div>
           </div>
         </li>
         <li
@@ -1054,13 +1019,6 @@ exports[`renders ./components/table/demo/colspan-rowspan.md correctly 1`] = `
                   </li>
                 </ul>
               </div>
-            </div>
-            <div
-              class="c7n-select-underline"
-            >
-              <span
-                class="c7n-select-ripple"
-              />
             </div>
           </div>
           <div
@@ -1361,13 +1319,6 @@ exports[`renders ./components/table/demo/colspan-rowspan.md correctly 1`] = `
                 </span>
               </div>
             </div>
-            <div
-              class="c7n-select-underline"
-            >
-              <span
-                class="c7n-select-ripple"
-              />
-            </div>
           </div>
         </li>
         <li
@@ -1499,13 +1450,6 @@ exports[`renders ./components/table/demo/custom-filter-panel.md correctly 1`] = 
                   </li>
                 </ul>
               </div>
-            </div>
-            <div
-              class="c7n-select-underline"
-            >
-              <span
-                class="c7n-select-ripple"
-              />
             </div>
           </div>
           <div
@@ -1742,13 +1686,6 @@ exports[`renders ./components/table/demo/custom-filter-panel.md correctly 1`] = 
                 </span>
               </div>
             </div>
-            <div
-              class="c7n-select-underline"
-            >
-              <span
-                class="c7n-select-ripple"
-              />
-            </div>
           </div>
         </li>
         <li
@@ -1880,13 +1817,6 @@ exports[`renders ./components/table/demo/drag-sorting.md correctly 1`] = `
                   </li>
                 </ul>
               </div>
-            </div>
-            <div
-              class="c7n-select-underline"
-            >
-              <span
-                class="c7n-select-ripple"
-              />
             </div>
           </div>
           <div
@@ -2093,13 +2023,6 @@ exports[`renders ./components/table/demo/drag-sorting.md correctly 1`] = `
                   <b />
                 </span>
               </div>
-            </div>
-            <div
-              class="c7n-select-underline"
-            >
-              <span
-                class="c7n-select-ripple"
-              />
             </div>
           </div>
         </li>
@@ -2620,13 +2543,6 @@ exports[`renders ./components/table/demo/dynamic-settings.md correctly 1`] = `
                     </li>
                   </ul>
                 </div>
-              </div>
-              <div
-                class="c7n-select-underline"
-              >
-                <span
-                  class="c7n-select-ripple"
-                />
               </div>
             </div>
             <div
@@ -3675,13 +3591,6 @@ exports[`renders ./components/table/demo/dynamic-settings.md correctly 1`] = `
                   </span>
                 </div>
               </div>
-              <div
-                class="c7n-select-underline"
-              >
-                <span
-                  class="c7n-select-ripple"
-                />
-              </div>
             </div>
           </li>
           <li
@@ -3826,13 +3735,6 @@ exports[`renders ./components/table/demo/edit-cell.md correctly 1`] = `
                     </li>
                   </ul>
                 </div>
-              </div>
-              <div
-                class="c7n-select-underline"
-              >
-                <span
-                  class="c7n-select-ripple"
-                />
               </div>
             </div>
             <div
@@ -4061,13 +3963,6 @@ exports[`renders ./components/table/demo/edit-cell.md correctly 1`] = `
                   </span>
                 </div>
               </div>
-              <div
-                class="c7n-select-underline"
-              >
-                <span
-                  class="c7n-select-ripple"
-                />
-              </div>
             </div>
           </li>
           <li
@@ -4200,13 +4095,6 @@ exports[`renders ./components/table/demo/edit-row.md correctly 1`] = `
                   </li>
                 </ul>
               </div>
-            </div>
-            <div
-              class="c7n-select-underline"
-            >
-              <span
-                class="c7n-select-ripple"
-              />
             </div>
           </div>
           <div
@@ -4785,13 +4673,6 @@ exports[`renders ./components/table/demo/edit-row.md correctly 1`] = `
                 </span>
               </div>
             </div>
-            <div
-              class="c7n-select-underline"
-            >
-              <span
-                class="c7n-select-ripple"
-              />
-            </div>
           </div>
         </li>
         <li
@@ -4929,13 +4810,6 @@ exports[`renders ./components/table/demo/expand.md correctly 1`] = `
                   </li>
                 </ul>
               </div>
-            </div>
-            <div
-              class="c7n-select-underline"
-            >
-              <span
-                class="c7n-select-ripple"
-              />
             </div>
           </div>
           <div
@@ -5193,13 +5067,6 @@ exports[`renders ./components/table/demo/expand.md correctly 1`] = `
                 </span>
               </div>
             </div>
-            <div
-              class="c7n-select-underline"
-            >
-              <span
-                class="c7n-select-ripple"
-              />
-            </div>
           </div>
         </li>
         <li
@@ -5331,13 +5198,6 @@ exports[`renders ./components/table/demo/expand-children.md correctly 1`] = `
                   </li>
                 </ul>
               </div>
-            </div>
-            <div
-              class="c7n-select-underline"
-            >
-              <span
-                class="c7n-select-ripple"
-              />
             </div>
           </div>
           <div
@@ -5593,13 +5453,6 @@ exports[`renders ./components/table/demo/expand-children.md correctly 1`] = `
                   <b />
                 </span>
               </div>
-            </div>
-            <div
-              class="c7n-select-underline"
-            >
-              <span
-                class="c7n-select-ripple"
-              />
             </div>
           </div>
         </li>
@@ -5897,13 +5750,6 @@ exports[`renders ./components/table/demo/filter-dropdown.md correctly 1`] = `
                 </span>
               </div>
             </div>
-            <div
-              class="c7n-select-underline"
-            >
-              <span
-                class="c7n-select-ripple"
-              />
-            </div>
           </div>
         </li>
         <li
@@ -6035,13 +5881,6 @@ exports[`renders ./components/table/demo/fixed-columns.md correctly 1`] = `
                   </li>
                 </ul>
               </div>
-            </div>
-            <div
-              class="c7n-select-underline"
-            >
-              <span
-                class="c7n-select-ripple"
-              />
             </div>
           </div>
           <div
@@ -6564,13 +6403,6 @@ exports[`renders ./components/table/demo/fixed-columns.md correctly 1`] = `
                 </span>
               </div>
             </div>
-            <div
-              class="c7n-select-underline"
-            >
-              <span
-                class="c7n-select-ripple"
-              />
-            </div>
           </div>
         </li>
         <li
@@ -6702,13 +6534,6 @@ exports[`renders ./components/table/demo/fixed-columns-header.md correctly 1`] =
                   </li>
                 </ul>
               </div>
-            </div>
-            <div
-              class="c7n-select-underline"
-            >
-              <span
-                class="c7n-select-ripple"
-              />
             </div>
           </div>
           <div
@@ -8214,13 +8039,6 @@ exports[`renders ./components/table/demo/fixed-columns-header.md correctly 1`] =
                 </span>
               </div>
             </div>
-            <div
-              class="c7n-select-underline"
-            >
-              <span
-                class="c7n-select-ripple"
-              />
-            </div>
           </div>
         </li>
         <li
@@ -8358,13 +8176,6 @@ exports[`renders ./components/table/demo/fixed-header.md correctly 1`] = `
                   </li>
                 </ul>
               </div>
-            </div>
-            <div
-              class="c7n-select-underline"
-            >
-              <span
-                class="c7n-select-ripple"
-              />
             </div>
           </div>
           <div
@@ -9814,13 +9625,6 @@ exports[`renders ./components/table/demo/fixed-header.md correctly 1`] = `
                 </span>
               </div>
             </div>
-            <div
-              class="c7n-select-underline"
-            >
-              <span
-                class="c7n-select-ripple"
-              />
-            </div>
           </div>
         </li>
         <li
@@ -9958,13 +9762,6 @@ exports[`renders ./components/table/demo/grouping-columns.md correctly 1`] = `
                   </li>
                 </ul>
               </div>
-            </div>
-            <div
-              class="c7n-select-underline"
-            >
-              <span
-                class="c7n-select-ripple"
-              />
             </div>
           </div>
           <div
@@ -11147,13 +10944,6 @@ exports[`renders ./components/table/demo/grouping-columns.md correctly 1`] = `
                 </span>
               </div>
             </div>
-            <div
-              class="c7n-select-underline"
-            >
-              <span
-                class="c7n-select-ripple"
-              />
-            </div>
           </div>
         </li>
         <li
@@ -11291,13 +11081,6 @@ exports[`renders ./components/table/demo/head.md correctly 1`] = `
                   </li>
                 </ul>
               </div>
-            </div>
-            <div
-              class="c7n-select-underline"
-            >
-              <span
-                class="c7n-select-ripple"
-              />
             </div>
           </div>
           <div
@@ -11544,13 +11327,6 @@ exports[`renders ./components/table/demo/head.md correctly 1`] = `
                 </span>
               </div>
             </div>
-            <div
-              class="c7n-select-underline"
-            >
-              <span
-                class="c7n-select-ripple"
-              />
-            </div>
           </div>
         </li>
         <li
@@ -11682,13 +11458,6 @@ exports[`renders ./components/table/demo/jsx.md correctly 1`] = `
                   </li>
                 </ul>
               </div>
-            </div>
-            <div
-              class="c7n-select-underline"
-            >
-              <span
-                class="c7n-select-ripple"
-              />
             </div>
           </div>
           <div
@@ -12036,13 +11805,6 @@ exports[`renders ./components/table/demo/jsx.md correctly 1`] = `
                 </span>
               </div>
             </div>
-            <div
-              class="c7n-select-underline"
-            >
-              <span
-                class="c7n-select-ripple"
-              />
-            </div>
           </div>
         </li>
         <li
@@ -12174,13 +11936,6 @@ exports[`renders ./components/table/demo/nested-table.md correctly 1`] = `
                   </li>
                 </ul>
               </div>
-            </div>
-            <div
-              class="c7n-select-underline"
-            >
-              <span
-                class="c7n-select-ripple"
-              />
             </div>
           </div>
           <div
@@ -12519,13 +12274,6 @@ exports[`renders ./components/table/demo/nested-table.md correctly 1`] = `
                 </span>
               </div>
             </div>
-            <div
-              class="c7n-select-underline"
-            >
-              <span
-                class="c7n-select-ripple"
-              />
-            </div>
           </div>
         </li>
         <li
@@ -12772,13 +12520,6 @@ exports[`renders ./components/table/demo/reset-filter.md correctly 1`] = `
                   </button>
                 </div>
               </div>
-              <div
-                class="c7n-select-underline"
-              >
-                <span
-                  class="c7n-select-ripple"
-                />
-              </div>
             </div>
             <div
               class="c7n-table-filter-select-columns"
@@ -12939,13 +12680,6 @@ exports[`renders ./components/table/demo/row-selection.md correctly 1`] = `
                   </li>
                 </ul>
               </div>
-            </div>
-            <div
-              class="c7n-select-underline"
-            >
-              <span
-                class="c7n-select-ripple"
-              />
             </div>
           </div>
           <div
@@ -13316,13 +13050,6 @@ exports[`renders ./components/table/demo/row-selection.md correctly 1`] = `
                 </span>
               </div>
             </div>
-            <div
-              class="c7n-select-underline"
-            >
-              <span
-                class="c7n-select-ripple"
-              />
-            </div>
           </div>
         </li>
         <li
@@ -13471,13 +13198,6 @@ exports[`renders ./components/table/demo/row-selection-and-operation.md correctl
                     </li>
                   </ul>
                 </div>
-              </div>
-              <div
-                class="c7n-select-underline"
-              >
-                <span
-                  class="c7n-select-ripple"
-                />
               </div>
             </div>
             <div
@@ -14108,13 +13828,6 @@ exports[`renders ./components/table/demo/row-selection-and-operation.md correctl
                   </span>
                 </div>
               </div>
-              <div
-                class="c7n-select-underline"
-              >
-                <span
-                  class="c7n-select-ripple"
-                />
-              </div>
             </div>
           </li>
           <li
@@ -14253,13 +13966,6 @@ exports[`renders ./components/table/demo/row-selection-custom.md correctly 1`] =
                   </li>
                 </ul>
               </div>
-            </div>
-            <div
-              class="c7n-select-underline"
-            >
-              <span
-                class="c7n-select-ripple"
-              />
             </div>
           </div>
           <div
@@ -14897,13 +14603,6 @@ exports[`renders ./components/table/demo/row-selection-custom.md correctly 1`] =
                 </span>
               </div>
             </div>
-            <div
-              class="c7n-select-underline"
-            >
-              <span
-                class="c7n-select-ripple"
-              />
-            </div>
           </div>
         </li>
         <li
@@ -15045,13 +14744,6 @@ exports[`renders ./components/table/demo/size.md correctly 1`] = `
                     </li>
                   </ul>
                 </div>
-              </div>
-              <div
-                class="c7n-select-underline"
-              >
-                <span
-                  class="c7n-select-ripple"
-                />
               </div>
             </div>
             <div
@@ -15253,13 +14945,6 @@ exports[`renders ./components/table/demo/size.md correctly 1`] = `
                   </span>
                 </div>
               </div>
-              <div
-                class="c7n-select-underline"
-              >
-                <span
-                  class="c7n-select-ripple"
-                />
-              </div>
             </div>
           </li>
           <li
@@ -15391,13 +15076,6 @@ exports[`renders ./components/table/demo/size.md correctly 1`] = `
                     </li>
                   </ul>
                 </div>
-              </div>
-              <div
-                class="c7n-select-underline"
-              >
-                <span
-                  class="c7n-select-ripple"
-                />
               </div>
             </div>
             <div
@@ -15598,13 +15276,6 @@ exports[`renders ./components/table/demo/size.md correctly 1`] = `
                     <b />
                   </span>
                 </div>
-              </div>
-              <div
-                class="c7n-select-underline"
-              >
-                <span
-                  class="c7n-select-ripple"
-                />
               </div>
             </div>
           </li>

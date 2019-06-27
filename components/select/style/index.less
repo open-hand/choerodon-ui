@@ -22,23 +22,57 @@
     background-color: @component-background;
   }
 
-  .input-underline;
+  .label;
+
+  &-has-border&:before {
+    display: block;
+    content: " ";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border: @border-width-base @border-style-base @input-border-color;
+    border-radius: .04rem;
+  }
+
+  &-has-border&:hover:before {
+    border-color: @input-color;
+  }
+
+  &-has-border&-focused&:before,
+  .has-error &:before {
+    border-width: .02rem;
+  }
+  &-has-border&-focused&:before {
+    border-color: @primary-color;
+  }
+  .has-error &-has-border&:before {
+    border-color: @error-color;
+  }
+  &-has-border&-disabled:before {
+    border-style: dashed;
+    border-color: @input-border-color !important;
+  }
 
   &-arrow {
     position: absolute !important;
+    top: 0;
     right: 0;
     bottom: 0;
     margin: 0;
     transition: opacity 0.15s ease;
     cursor: pointer;
+    display: flex;
+    align-items: center;
   }
 
   &-clear {
     position: absolute !important;
     top: 0;
     right: .2rem;
-    bottom: -.02rem;
-    margin: 0;
+    bottom: 0;
+    margin: auto;
     opacity: 1;
     transition: opacity 0.15s ease;
     cursor: pointer;
@@ -54,15 +88,6 @@
       transform: scale(.75) translateY(-.2rem) translateZ(.00001rem);
       color: @primary-color;
       transition: transform 300ms @ease-out, color 100ms @ease-out, background-color 300ms @ease-out;
-    }
-  }
-
-  &&-has-label {
-    .@{select-prefix-cls}-selection {
-      padding-top: .15rem;
-      &__placeholder {
-        display: none;
-      }
     }
   }
 
@@ -117,11 +142,13 @@
     }
 
     &__rendered {
-      display: inline-block;
+      display: block;
       width: 100%;
       position: relative;
-      padding-right: .2rem;
-      margin-bottom: .03rem;
+      padding-right: .24rem;
+      padding-left: @input-padding-horizontal;
+      line-height: .34rem;
+      height: .36rem;
     }
 
     &-selected-value {
@@ -207,6 +234,10 @@
 
   &-lg {
     font-size: @font-size-lg;
+    .@{select-prefix-cls}-selection__rendered {
+      height: @input-height-lg;
+      line-height: @input-height-lg - .02rem;
+    }
     i.@{iconfont-css-prefix} {
       font-size: .24rem;
     }
@@ -225,6 +256,10 @@
   }
 
   &-sm {
+    .@{select-prefix-cls}-selection__rendered {
+      height: @input-height-sm;
+      line-height: @input-height-sm - .02rem;
+    }
     i.@{iconfont-css-prefix} {
       font-size: .16rem;
     }
@@ -302,7 +337,7 @@
   &-multiple {
     .@{select-prefix-cls}-selection--multiple {
       cursor: text;
-      min-height: .28rem;
+      min-height: .36rem;
       .clearfix;
 
       .@{select-prefix-cls}-search--inline {
@@ -323,15 +358,15 @@
       }
 
       .@{select-prefix-cls}-selection__rendered {
-        margin-top: .04rem;
-        margin-bottom: -.03rem;
+        margin-top: .07rem;
         height: auto;
-        padding: 0;
+        padding: 0 .04rem;
       }
 
       .@{select-prefix-cls}-selection__placeholder,
       .@{select-prefix-cls}-search__field__placeholder { // for TreeSelect compatibility
         margin-top: 0;
+        line-height: 1.5;
       }
 
       > ul > li,
@@ -438,9 +473,6 @@
     }
     .@{select-prefix-cls}-clear {
       right: 0;
-    }
-    .@{select-prefix-cls}-selection__rendered {
-      padding: 0;
     }
     &.@{select-prefix-cls}-allow-clear {
       .@{select-prefix-cls}-selection__rendered {
