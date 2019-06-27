@@ -232,15 +232,6 @@ export default class RangePicker extends Component<any, RangePickerState> {
     return [rangeNode, customFooter];
   };
 
-  renderUnderLine() {
-    const prefixCls = this.getPrefixCls();
-    return (
-      <div className={`${prefixCls}-underline`}>
-        <span className={`${prefixCls}-ripple`} />
-      </div>
-    );
-  }
-
   getPrefixCls() {
     return getPrefixCls('calendar', this.props.prefixCls);
   }
@@ -333,7 +324,7 @@ export default class RangePicker extends Component<any, RangePickerState> {
       const start = inputValue[0];
       const end = inputValue[1];
       return (
-        <span className={`${prefixCls}-range-picker`}>
+        <span className={`${prefixCls}-range-picker ${props.pickerWrapperInputClass}`}>
           <span className={props.pickerInputClass}>
             <input
               disabled={props.disabled}
@@ -355,7 +346,6 @@ export default class RangePicker extends Component<any, RangePickerState> {
             {clearIcon}
             <Icon type="date_range" className={`${prefixCls}-picker-icon`} />
           </span>
-          {this.renderUnderLine()}
         </span>
       );
     };

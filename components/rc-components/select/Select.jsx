@@ -141,6 +141,7 @@ export default class Select extends Component {
     filterPlaceholder: 'Input for filter',
     showCheckAll: true,
     loading: false,
+    border: true,
   };
 
   needExpand = true;
@@ -659,11 +660,10 @@ export default class Select extends Component {
   };
 
   getPlaceholderElement = () => {
-    const { props } = this;
-    const placeholder = props.placeholder;
-    if (placeholder) {
+    const { placeholder, prefixCls, border } = this.props;
+    if (!border && placeholder) {
       return (
-        <div className={`${props.prefixCls}-selection__placeholder`}>
+        <div className={`${prefixCls}-selection__placeholder`}>
           {placeholder}
         </div>
       );
@@ -1351,20 +1351,6 @@ export default class Select extends Component {
     }
   }
 
-  getUnderLine() {
-    const { prefixCls, className } = this.props;
-
-    if (className && className.includes(`${prefixCls}-auto-complete`)) {
-      return null;
-    }
-
-    return (
-      <div className={`${prefixCls}-underline`}>
-        <span className={`${prefixCls}-ripple`} />
-      </div>
-    );
-  }
-
   checkAll = (event) => {
     const name = event.target.getAttribute('name');
     const props = this.props;
@@ -1421,6 +1407,31 @@ export default class Select extends Component {
     return null;
   }
 
+  getLabel() {
+    const { placeholder, label } = this.props;
+    if (!this.hasValue() && placeholder) {
+      return placeholder;
+    }
+    return label;
+  }
+
+  renderFloatLabel() {
+    const label = this.getLabel();
+    const { prefixCls, border } = this.props;
+    if (label && border) {
+      return (
+        <div className={`${prefixCls}-label-wrapper`}>
+          <div className={`${prefixCls}-label`}>{label}</div>
+        </div>
+      );
+    }
+  }
+
+  hasValue() {
+    const { value, inputValue } = this.state;
+    return inputValue || (value.length && value[0]);
+  }
+
   render() {
     const props = this.props;
     const state = this.state;
@@ -1429,9 +1440,8 @@ export default class Select extends Component {
       disabled,
       prefixCls,
       label,
-      placeholder,
-      defaultValue,
       loading,
+      border,
     } = props;
     const { open, value, inputValue } = this.state;
     const multiple = isMultipleOrTags(props);
@@ -1451,7 +1461,7 @@ export default class Select extends Component {
       [prefixCls]: 1,
       [`${prefixCls}-open`]: open,
       [`${prefixCls}-focused`]: !isMultiple(props) && this._focused,
-      [`${prefixCls}-has-value`]: inputValue || (value.length && value[0]),
+      [`${prefixCls}-has-value`]: this.hasValue(),
       [`${prefixCls}-has-label`]: label,
       [`${prefixCls}-combobox`]: isCombobox(props),
       [`${prefixCls}-disabled`]: disabled,
@@ -1459,6 +1469,7 @@ export default class Select extends Component {
       [`${prefixCls}-allow-clear`]: !!props.allowClear,
       [`${prefixCls}-tags`]: isTags(props),
       [`${prefixCls}-multiple`]: isMultiple(props),
+      [`${prefixCls}-has-border`]: border,
     };
     return (
       <SelectTrigger
@@ -1523,10 +1534,9 @@ export default class Select extends Component {
             aria-expanded={open}
             {...extraSelectionProps}
           >
-            {label ? (<div className={`${prefixCls}-selection-label`}>{label}</div>) : null}
             {ctrlNode}
+            {this.renderFloatLabel()}
           </div>
-          {this.getUnderLine()}
         </div>
       </SelectTrigger>
     );

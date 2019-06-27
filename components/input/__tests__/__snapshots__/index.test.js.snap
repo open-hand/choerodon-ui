@@ -2,16 +2,16 @@
 
 exports[`Input should support maxLength 1`] = `
 <Input
+  border={true}
   disabled={false}
   maxLength="3"
   readOnly={false}
   showLengthInfo={true}
   showPasswordEye={false}
   type="text"
-  underline={true}
 >
   <span
-    className="c7n-input-wrapper"
+    className="c7n-input-wrapper c7n-input-has-border"
   >
     <div
       className="c7n-input-content"
@@ -22,10 +22,8 @@ exports[`Input should support maxLength 1`] = `
         <div
           className="c7n-input-rendered"
         >
-          <div
-            className="c7n-input-placeholder"
-          />
           <input
+            border={true}
             className="c7n-input"
             disabled={false}
             maxLength="3"
@@ -38,22 +36,11 @@ exports[`Input should support maxLength 1`] = `
           />
         </div>
       </div>
-      <span
-        className="c7n-input-icon"
+      <div
+        className="c7n-input-length-info"
       >
-        <span
-          className="c7n-input-icon-copy c7n-input-length-info"
-        >
-          0/3
-        </span>
-      </span>
-    </div>
-    <div
-      className="c7n-input-underline"
-    >
-      <span
-        className="c7n-input-ripple"
-      />
+        0/3
+      </div>
     </div>
   </span>
 </Input>
@@ -66,6 +53,7 @@ exports[`Input.Search should support suffix 1`] = `
   suffix="suffix"
 >
   <Input
+    border={true}
     className="c7n-input-search c7n-input-search-small"
     disabled={false}
     onPressEnter={[Function]}
@@ -89,10 +77,9 @@ exports[`Input.Search should support suffix 1`] = `
       ]
     }
     type="text"
-    underline={true}
   >
     <span
-      className="c7n-input-wrapper c7n-input-has-suffix"
+      className="c7n-input-wrapper c7n-input-has-suffix c7n-input-has-border"
     >
       <div
         className="c7n-input-content"
@@ -103,10 +90,8 @@ exports[`Input.Search should support suffix 1`] = `
           <div
             className="c7n-input-rendered c7n-input-rendered-sm"
           >
-            <div
-              className="c7n-input-placeholder"
-            />
             <input
+              border={true}
               className="c7n-input c7n-input-sm c7n-input-search c7n-input-search-small"
               disabled={false}
               onBlur={[Function]}
@@ -188,13 +173,6 @@ exports[`Input.Search should support suffix 1`] = `
           </span>
         </div>
       </div>
-      <div
-        className="c7n-input-underline"
-      >
-        <span
-          className="c7n-input-ripple"
-        />
-      </div>
     </span>
   </Input>
 </Search>
@@ -204,27 +182,22 @@ exports[`TextArea should support disabled 1`] = `
 <TextArea
   disabled={true}
   showLengthInfo={true}
-  underline={true}
 >
   <span
     className="c7n-input-wrapper c7n-input-textarea c7n-input-disabled"
   >
-    <textarea
-      className="c7n-input"
-      disabled={true}
-      onBlur={[Function]}
-      onChange={[Function]}
-      onFocus={[Function]}
-      onInput={[Function]}
-      onKeyDown={[Function]}
-      style={Object {}}
-    />
-    <div>
-      <hr
-        className="c7n-input-border"
-      />
-      <hr
-        className="c7n-input-border-active"
+    <div
+      className="c7n-input-rendered-wrapper"
+    >
+      <textarea
+        className="c7n-input"
+        disabled={true}
+        onBlur={[Function]}
+        onChange={[Function]}
+        onFocus={[Function]}
+        onInput={[Function]}
+        onKeyDown={[Function]}
+        style={Object {}}
       />
     </div>
   </span>
@@ -235,27 +208,22 @@ exports[`TextArea should support maxLength 1`] = `
 <TextArea
   maxLength="10"
   showLengthInfo={true}
-  underline={true}
 >
   <span
     className="c7n-input-wrapper c7n-input-textarea"
   >
-    <textarea
-      className="c7n-input"
-      maxLength="10"
-      onBlur={[Function]}
-      onChange={[Function]}
-      onFocus={[Function]}
-      onInput={[Function]}
-      onKeyDown={[Function]}
-      style={Object {}}
-    />
-    <div>
-      <hr
-        className="c7n-input-border"
-      />
-      <hr
-        className="c7n-input-border-active"
+    <div
+      className="c7n-input-rendered-wrapper"
+    >
+      <textarea
+        className="c7n-input"
+        maxLength="10"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onFocus={[Function]}
+        onInput={[Function]}
+        onKeyDown={[Function]}
+        style={Object {}}
       />
     </div>
     <div

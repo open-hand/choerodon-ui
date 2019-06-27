@@ -5,25 +5,17 @@ exports[`renders ./components/input-number/demo/basic.md correctly 1`] = `
   class="c7n-input-number"
 >
   <span
-    class="c7n-input-wrapper c7n-input-has-label c7n-input-has-suffix"
+    class="c7n-input-wrapper c7n-input-has-label c7n-input-has-suffix c7n-input-has-border"
   >
     <div
       class="c7n-input-content"
     >
-      <div
-        class="c7n-input-label"
-      >
-        数字
-      </div>
       <div
         class="c7n-input-rendered-wrapper"
       >
         <div
           class="c7n-input-rendered"
         >
-          <div
-            class="c7n-input-placeholder"
-          />
           <input
             autocomplete="off"
             class="c7n-input"
@@ -33,6 +25,15 @@ exports[`renders ./components/input-number/demo/basic.md correctly 1`] = `
             type="text"
             value="3"
           />
+          <div
+            class="c7n-input-label-wrapper"
+          >
+            <div
+              class="c7n-input-label"
+            >
+              数字
+            </div>
+          </div>
         </div>
         <span
           class="c7n-input-suffix"
@@ -67,13 +68,6 @@ exports[`renders ./components/input-number/demo/basic.md correctly 1`] = `
           </div>
         </span>
       </div>
-    </div>
-    <div
-      class="c7n-input-underline"
-    >
-      <span
-        class="c7n-input-ripple"
-      />
     </div>
   </span>
 </div>
@@ -84,25 +78,17 @@ exports[`renders ./components/input-number/demo/digit.md correctly 1`] = `
   class="c7n-input-number"
 >
   <span
-    class="c7n-input-wrapper c7n-input-has-label c7n-input-has-suffix"
+    class="c7n-input-wrapper c7n-input-has-label c7n-input-has-suffix c7n-input-has-border"
   >
     <div
       class="c7n-input-content"
     >
-      <div
-        class="c7n-input-label"
-      >
-        小数
-      </div>
       <div
         class="c7n-input-rendered-wrapper"
       >
         <div
           class="c7n-input-rendered"
         >
-          <div
-            class="c7n-input-placeholder"
-          />
           <input
             autocomplete="off"
             class="c7n-input"
@@ -112,6 +98,15 @@ exports[`renders ./components/input-number/demo/digit.md correctly 1`] = `
             type="text"
             value=""
           />
+          <div
+            class="c7n-input-label-wrapper"
+          >
+            <div
+              class="c7n-input-label"
+            >
+              小数
+            </div>
+          </div>
         </div>
         <span
           class="c7n-input-suffix"
@@ -146,13 +141,6 @@ exports[`renders ./components/input-number/demo/digit.md correctly 1`] = `
           </div>
         </span>
       </div>
-    </div>
-    <div
-      class="c7n-input-underline"
-    >
-      <span
-        class="c7n-input-ripple"
-      />
     </div>
   </span>
 </div>
@@ -164,25 +152,17 @@ exports[`renders ./components/input-number/demo/disabled.md correctly 1`] = `
     class="c7n-input-number"
   >
     <span
-      class="c7n-input-wrapper c7n-input-disabled c7n-input-has-label c7n-input-has-suffix"
+      class="c7n-input-wrapper c7n-input-disabled c7n-input-has-label c7n-input-has-suffix c7n-input-has-border"
     >
       <div
         class="c7n-input-content"
       >
-        <div
-          class="c7n-input-label"
-        >
-          禁用
-        </div>
         <div
           class="c7n-input-rendered-wrapper"
         >
           <div
             class="c7n-input-rendered"
           >
-            <div
-              class="c7n-input-placeholder"
-            />
             <input
               autocomplete="off"
               class="c7n-input"
@@ -193,6 +173,15 @@ exports[`renders ./components/input-number/demo/disabled.md correctly 1`] = `
               type="text"
               value="3"
             />
+            <div
+              class="c7n-input-label-wrapper"
+            >
+              <div
+                class="c7n-input-label"
+              >
+                禁用
+              </div>
+            </div>
           </div>
           <span
             class="c7n-input-suffix"
@@ -227,13 +216,6 @@ exports[`renders ./components/input-number/demo/disabled.md correctly 1`] = `
             </div>
           </span>
         </div>
-      </div>
-      <div
-        class="c7n-input-underline"
-      >
-        <span
-          class="c7n-input-ripple"
-        />
       </div>
     </span>
   </div>
@@ -261,25 +243,17 @@ exports[`renders ./components/input-number/demo/formatter.md correctly 1`] = `
     class="c7n-input-number"
   >
     <span
-      class="c7n-input-wrapper c7n-input-has-label c7n-input-has-suffix"
+      class="c7n-input-wrapper c7n-input-has-label c7n-input-has-suffix c7n-input-has-border"
     >
       <div
         class="c7n-input-content"
       >
-        <div
-          class="c7n-input-label"
-        >
-          金额
-        </div>
         <div
           class="c7n-input-rendered-wrapper"
         >
           <div
             class="c7n-input-rendered"
           >
-            <div
-              class="c7n-input-placeholder"
-            />
             <input
               autocomplete="off"
               class="c7n-input"
@@ -288,6 +262,15 @@ exports[`renders ./components/input-number/demo/formatter.md correctly 1`] = `
               type="text"
               value="$ 1,000"
             />
+            <div
+              class="c7n-input-label-wrapper"
+            >
+              <div
+                class="c7n-input-label"
+              >
+                金额
+              </div>
+            </div>
           </div>
           <span
             class="c7n-input-suffix"
@@ -323,38 +306,23 @@ exports[`renders ./components/input-number/demo/formatter.md correctly 1`] = `
           </span>
         </div>
       </div>
-      <div
-        class="c7n-input-underline"
-      >
-        <span
-          class="c7n-input-ripple"
-        />
-      </div>
     </span>
   </div>
   <div
     class="c7n-input-number"
   >
     <span
-      class="c7n-input-wrapper c7n-input-has-label c7n-input-has-suffix"
+      class="c7n-input-wrapper c7n-input-has-label c7n-input-has-suffix c7n-input-has-border"
     >
       <div
         class="c7n-input-content"
       >
-        <div
-          class="c7n-input-label"
-        >
-          百分比
-        </div>
         <div
           class="c7n-input-rendered-wrapper"
         >
           <div
             class="c7n-input-rendered"
           >
-            <div
-              class="c7n-input-placeholder"
-            />
             <input
               autocomplete="off"
               class="c7n-input"
@@ -364,6 +332,15 @@ exports[`renders ./components/input-number/demo/formatter.md correctly 1`] = `
               type="text"
               value="100%"
             />
+            <div
+              class="c7n-input-label-wrapper"
+            >
+              <div
+                class="c7n-input-label"
+              >
+                百分比
+              </div>
+            </div>
           </div>
           <span
             class="c7n-input-suffix"
@@ -398,13 +375,6 @@ exports[`renders ./components/input-number/demo/formatter.md correctly 1`] = `
             </div>
           </span>
         </div>
-      </div>
-      <div
-        class="c7n-input-underline"
-      >
-        <span
-          class="c7n-input-ripple"
-        />
       </div>
     </span>
   </div>

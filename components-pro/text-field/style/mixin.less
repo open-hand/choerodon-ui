@@ -368,36 +368,43 @@
 
 .float-label-input() {
 
-  &-float-label label:hover &,
-  &-float-label &:hover {
-    border-color: rgba(0, 0, 0, .87);
+  &-float-label & {
+    border: none;
   }
 
-  &-float-label &:focus,
-  &-float-label&-focused &,
-  &-float-label&-invalid & {
-    border-color: transparent !important;
+  &-float-label:before {
+    display: block;
+    content: " ";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border: @border-width-base @border-style-base @input-border-color;
+    border-radius: .04rem;
+  }
+  &-float-label&-focused:before,
+  &-float-label&-invalid:before {
+    border-width: .02rem;
+  }
+  &-float-label:hover:not(&-disabled):not(&-focused):not(&-invalid):before {
+    border-color: @input-color;
   }
 
-  &-float-label&-focused,
-  &-float-label&-invalid {
-    &:before {
-      display: block;
-      content: " ";
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      border-width: .02rem;
-      border-style: solid;
-      border-color: @primary-color;
-      border-radius: .04rem;
-    }
+  &-float-label&-focused:before {
+    border-color: @primary-color;
   }
-
   &-float-label&-invalid:before {
     border-color: @error-color;
+  }
+
+  &-float-label&-disabled:before {
+    border-style: dashed;
+  }
+
+  &-float-label&-disabled &,
+  &-float-label&-disabled &:hover {
+    background-color: transparent;
   }
 
   &-group-input:not(:last-child) &-float-label:before {
@@ -414,6 +421,13 @@
   &-float-label-group &-group-after,
   &-float-label-group &-group-help {
     border-radius: 4px;
+  }
+  &-float-label &:-webkit-autofill {
+    width: ~"calc(100% - .04rem)";
+    margin: .02rem;
+    height: .32rem;
+    border-radius: .04rem;
+    text-indent: -0.02rem;
   }
 }
 

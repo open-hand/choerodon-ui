@@ -6,40 +6,38 @@ exports[`renders ./components/date-picker/demo/basic.md correctly 1`] = `
     class="c7n-calendar-picker"
   >
     <span
-      class="c7n-input-wrapper c7n-input-has-label c7n-input-has-suffix"
+      class="c7n-input-wrapper c7n-input-has-label c7n-input-has-suffix c7n-input-has-border"
     >
       <div
         class="c7n-input-content"
       >
-        <div
-          class="c7n-input-label"
-        >
-          日期框
-        </div>
         <div
           class="c7n-input-rendered-wrapper"
         >
           <div
             class="c7n-input-rendered"
           >
-            <div
-              class="c7n-input-placeholder"
-            >
-              Select date
-            </div>
             <input
               class="c7n-input c7n-calendar-picker-input c7n-input"
               readonly=""
               type="text"
               value=""
             />
+            <div
+              class="c7n-input-label-wrapper"
+            >
+              <div
+                class="c7n-input-label"
+              >
+                Select date
+              </div>
+            </div>
           </div>
           <span
             class="c7n-input-suffix"
           >
             <span
               class="c7n-calendar-picker-icon-wrapper"
-              style="min-width:18px"
             >
               <i
                 class="icon icon-date_range c7n-calendar-picker-icon"
@@ -47,13 +45,6 @@ exports[`renders ./components/date-picker/demo/basic.md correctly 1`] = `
             </span>
           </span>
         </div>
-      </div>
-      <div
-        class="c7n-input-underline"
-      >
-        <span
-          class="c7n-input-ripple"
-        />
       </div>
     </span>
   </span>
@@ -62,7 +53,7 @@ exports[`renders ./components/date-picker/demo/basic.md correctly 1`] = `
     class="c7n-calendar-picker"
   >
     <span
-      class="c7n-input-wrapper c7n-input-has-suffix"
+      class="c7n-input-wrapper c7n-input-has-suffix c7n-input-has-border"
     >
       <div
         class="c7n-input-content"
@@ -73,24 +64,27 @@ exports[`renders ./components/date-picker/demo/basic.md correctly 1`] = `
           <div
             class="c7n-input-rendered"
           >
-            <div
-              class="c7n-input-placeholder"
-            >
-              Select month
-            </div>
             <input
               class="c7n-input c7n-calendar-picker-input c7n-input"
               readonly=""
               type="text"
               value=""
             />
+            <div
+              class="c7n-input-label-wrapper"
+            >
+              <div
+                class="c7n-input-label"
+              >
+                Select month
+              </div>
+            </div>
           </div>
           <span
             class="c7n-input-suffix"
           >
             <span
               class="c7n-calendar-picker-icon-wrapper"
-              style="min-width:18px"
             >
               <i
                 class="icon icon-date_range c7n-calendar-picker-icon"
@@ -98,13 +92,6 @@ exports[`renders ./components/date-picker/demo/basic.md correctly 1`] = `
             </span>
           </span>
         </div>
-      </div>
-      <div
-        class="c7n-input-underline"
-      >
-        <span
-          class="c7n-input-ripple"
-        />
       </div>
     </span>
   </span>
@@ -114,7 +101,7 @@ exports[`renders ./components/date-picker/demo/basic.md correctly 1`] = `
     tabindex="0"
   >
     <span
-      class="c7n-calendar-range-picker"
+      class="c7n-calendar-range-picker c7n-input-wrapper"
     >
       <span
         class="c7n-calendar-picker-input c7n-input"
@@ -142,13 +129,6 @@ exports[`renders ./components/date-picker/demo/basic.md correctly 1`] = `
           class="icon icon-date_range c7n-calendar-picker-icon"
         />
       </span>
-      <div
-        class="c7n-calendar-underline"
-      >
-        <span
-          class="c7n-calendar-ripple"
-        />
-      </div>
     </span>
   </span>
   <br />
@@ -156,40 +136,38 @@ exports[`renders ./components/date-picker/demo/basic.md correctly 1`] = `
     class="c7n-calendar-picker"
   >
     <span
-      class="c7n-input-wrapper c7n-input-has-label c7n-input-has-suffix"
+      class="c7n-input-wrapper c7n-input-has-label c7n-input-has-suffix c7n-input-has-border"
     >
       <div
         class="c7n-input-content"
       >
-        <div
-          class="c7n-input-label"
-        >
-          选择周
-        </div>
         <div
           class="c7n-input-rendered-wrapper"
         >
           <div
             class="c7n-input-rendered"
           >
-            <div
-              class="c7n-input-placeholder"
-            >
-              Select week
-            </div>
             <input
               class="c7n-input c7n-calendar-picker-input c7n-input"
               readonly=""
               type="text"
               value=""
             />
+            <div
+              class="c7n-input-label-wrapper"
+            >
+              <div
+                class="c7n-input-label"
+              >
+                Select week
+              </div>
+            </div>
           </div>
           <span
             class="c7n-input-suffix"
           >
             <span
               class="c7n-calendar-picker-icon-wrapper"
-              style="min-width:18px"
             >
               <i
                 class="icon icon-date_range c7n-calendar-picker-icon"
@@ -197,13 +175,6 @@ exports[`renders ./components/date-picker/demo/basic.md correctly 1`] = `
             </span>
           </span>
         </div>
-      </div>
-      <div
-        class="c7n-input-underline"
-      >
-        <span
-          class="c7n-input-ripple"
-        />
       </div>
     </span>
   </span>
@@ -216,7 +187,7 @@ exports[`renders ./components/date-picker/demo/date-render.md correctly 1`] = `
     class="c7n-calendar-picker"
   >
     <span
-      class="c7n-input-wrapper c7n-input-has-suffix"
+      class="c7n-input-wrapper c7n-input-has-suffix c7n-input-has-border"
     >
       <div
         class="c7n-input-content"
@@ -227,24 +198,27 @@ exports[`renders ./components/date-picker/demo/date-render.md correctly 1`] = `
           <div
             class="c7n-input-rendered"
           >
-            <div
-              class="c7n-input-placeholder"
-            >
-              Select date
-            </div>
             <input
               class="c7n-input c7n-calendar-picker-input c7n-input"
               readonly=""
               type="text"
               value=""
             />
+            <div
+              class="c7n-input-label-wrapper"
+            >
+              <div
+                class="c7n-input-label"
+              >
+                Select date
+              </div>
+            </div>
           </div>
           <span
             class="c7n-input-suffix"
           >
             <span
               class="c7n-calendar-picker-icon-wrapper"
-              style="min-width:18px"
             >
               <i
                 class="icon icon-date_range c7n-calendar-picker-icon"
@@ -253,13 +227,6 @@ exports[`renders ./components/date-picker/demo/date-render.md correctly 1`] = `
           </span>
         </div>
       </div>
-      <div
-        class="c7n-input-underline"
-      >
-        <span
-          class="c7n-input-ripple"
-        />
-      </div>
     </span>
   </span>
   <span
@@ -267,7 +234,7 @@ exports[`renders ./components/date-picker/demo/date-render.md correctly 1`] = `
     tabindex="0"
   >
     <span
-      class="c7n-calendar-range-picker"
+      class="c7n-calendar-range-picker c7n-input-wrapper"
     >
       <span
         class="c7n-calendar-picker-input c7n-input"
@@ -295,13 +262,6 @@ exports[`renders ./components/date-picker/demo/date-render.md correctly 1`] = `
           class="icon icon-date_range c7n-calendar-picker-icon"
         />
       </span>
-      <div
-        class="c7n-calendar-underline"
-      >
-        <span
-          class="c7n-calendar-ripple"
-        />
-      </div>
     </span>
   </span>
 </div>
@@ -313,7 +273,7 @@ exports[`renders ./components/date-picker/demo/disabled.md correctly 1`] = `
     class="c7n-calendar-picker"
   >
     <span
-      class="c7n-input-wrapper c7n-input-disabled c7n-input-has-suffix"
+      class="c7n-input-wrapper c7n-input-disabled c7n-input-has-suffix c7n-input-has-border"
     >
       <div
         class="c7n-input-content"
@@ -324,11 +284,6 @@ exports[`renders ./components/date-picker/demo/disabled.md correctly 1`] = `
           <div
             class="c7n-input-rendered"
           >
-            <div
-              class="c7n-input-placeholder"
-            >
-              Select date
-            </div>
             <input
               class="c7n-input c7n-calendar-picker-input c7n-input c7n-input-disabled"
               disabled=""
@@ -336,13 +291,21 @@ exports[`renders ./components/date-picker/demo/disabled.md correctly 1`] = `
               type="text"
               value="2015-06-06"
             />
+            <div
+              class="c7n-input-label-wrapper"
+            >
+              <div
+                class="c7n-input-label"
+              >
+                Select date
+              </div>
+            </div>
           </div>
           <span
             class="c7n-input-suffix"
           >
             <span
               class="c7n-calendar-picker-icon-wrapper"
-              style="min-width:18px"
             >
               <i
                 class="icon icon-date_range c7n-calendar-picker-icon"
@@ -350,13 +313,6 @@ exports[`renders ./components/date-picker/demo/disabled.md correctly 1`] = `
             </span>
           </span>
         </div>
-      </div>
-      <div
-        class="c7n-input-underline"
-      >
-        <span
-          class="c7n-input-ripple"
-        />
       </div>
     </span>
   </span>
@@ -365,7 +321,7 @@ exports[`renders ./components/date-picker/demo/disabled.md correctly 1`] = `
     class="c7n-calendar-picker"
   >
     <span
-      class="c7n-input-wrapper c7n-input-disabled c7n-input-has-suffix"
+      class="c7n-input-wrapper c7n-input-disabled c7n-input-has-suffix c7n-input-has-border"
     >
       <div
         class="c7n-input-content"
@@ -376,11 +332,6 @@ exports[`renders ./components/date-picker/demo/disabled.md correctly 1`] = `
           <div
             class="c7n-input-rendered"
           >
-            <div
-              class="c7n-input-placeholder"
-            >
-              Select date
-            </div>
             <input
               class="c7n-input c7n-calendar-picker-input c7n-input c7n-input-disabled"
               disabled=""
@@ -388,13 +339,21 @@ exports[`renders ./components/date-picker/demo/disabled.md correctly 1`] = `
               type="text"
               value="2015-06"
             />
+            <div
+              class="c7n-input-label-wrapper"
+            >
+              <div
+                class="c7n-input-label"
+              >
+                Select date
+              </div>
+            </div>
           </div>
           <span
             class="c7n-input-suffix"
           >
             <span
               class="c7n-calendar-picker-icon-wrapper"
-              style="min-width:18px"
             >
               <i
                 class="icon icon-date_range c7n-calendar-picker-icon"
@@ -402,13 +361,6 @@ exports[`renders ./components/date-picker/demo/disabled.md correctly 1`] = `
             </span>
           </span>
         </div>
-      </div>
-      <div
-        class="c7n-input-underline"
-      >
-        <span
-          class="c7n-input-ripple"
-        />
       </div>
     </span>
   </span>
@@ -418,7 +370,7 @@ exports[`renders ./components/date-picker/demo/disabled.md correctly 1`] = `
     tabindex="-1"
   >
     <span
-      class="c7n-calendar-range-picker"
+      class="c7n-calendar-range-picker c7n-input-wrapper c7n-input-disabled"
     >
       <span
         class="c7n-calendar-picker-input c7n-input c7n-input-disabled"
@@ -448,13 +400,6 @@ exports[`renders ./components/date-picker/demo/disabled.md correctly 1`] = `
           class="icon icon-date_range c7n-calendar-picker-icon"
         />
       </span>
-      <div
-        class="c7n-calendar-underline"
-      >
-        <span
-          class="c7n-calendar-ripple"
-        />
-      </div>
     </span>
   </span>
 </div>
@@ -466,7 +411,7 @@ exports[`renders ./components/date-picker/demo/disabled-date.md correctly 1`] = 
     class="c7n-calendar-picker"
   >
     <span
-      class="c7n-input-wrapper c7n-input-has-suffix"
+      class="c7n-input-wrapper c7n-input-has-suffix c7n-input-has-border"
     >
       <div
         class="c7n-input-content"
@@ -477,24 +422,27 @@ exports[`renders ./components/date-picker/demo/disabled-date.md correctly 1`] = 
           <div
             class="c7n-input-rendered"
           >
-            <div
-              class="c7n-input-placeholder"
-            >
-              Select date
-            </div>
             <input
               class="c7n-input c7n-calendar-picker-input c7n-input"
               readonly=""
               type="text"
               value=""
             />
+            <div
+              class="c7n-input-label-wrapper"
+            >
+              <div
+                class="c7n-input-label"
+              >
+                Select date
+              </div>
+            </div>
           </div>
           <span
             class="c7n-input-suffix"
           >
             <span
               class="c7n-calendar-picker-icon-wrapper"
-              style="min-width:18px"
             >
               <i
                 class="icon icon-date_range c7n-calendar-picker-icon"
@@ -502,13 +450,6 @@ exports[`renders ./components/date-picker/demo/disabled-date.md correctly 1`] = 
             </span>
           </span>
         </div>
-      </div>
-      <div
-        class="c7n-input-underline"
-      >
-        <span
-          class="c7n-input-ripple"
-        />
       </div>
     </span>
   </span>
@@ -517,7 +458,7 @@ exports[`renders ./components/date-picker/demo/disabled-date.md correctly 1`] = 
     class="c7n-calendar-picker"
   >
     <span
-      class="c7n-input-wrapper c7n-input-has-suffix"
+      class="c7n-input-wrapper c7n-input-has-suffix c7n-input-has-border"
     >
       <div
         class="c7n-input-content"
@@ -528,24 +469,27 @@ exports[`renders ./components/date-picker/demo/disabled-date.md correctly 1`] = 
           <div
             class="c7n-input-rendered"
           >
-            <div
-              class="c7n-input-placeholder"
-            >
-              Select month
-            </div>
             <input
               class="c7n-input c7n-calendar-picker-input c7n-input"
               readonly=""
               type="text"
               value=""
             />
+            <div
+              class="c7n-input-label-wrapper"
+            >
+              <div
+                class="c7n-input-label"
+              >
+                Select month
+              </div>
+            </div>
           </div>
           <span
             class="c7n-input-suffix"
           >
             <span
               class="c7n-calendar-picker-icon-wrapper"
-              style="min-width:18px"
             >
               <i
                 class="icon icon-date_range c7n-calendar-picker-icon"
@@ -553,13 +497,6 @@ exports[`renders ./components/date-picker/demo/disabled-date.md correctly 1`] = 
             </span>
           </span>
         </div>
-      </div>
-      <div
-        class="c7n-input-underline"
-      >
-        <span
-          class="c7n-input-ripple"
-        />
       </div>
     </span>
   </span>
@@ -570,7 +507,7 @@ exports[`renders ./components/date-picker/demo/disabled-date.md correctly 1`] = 
     tabindex="0"
   >
     <span
-      class="c7n-calendar-range-picker"
+      class="c7n-calendar-range-picker c7n-input-wrapper"
     >
       <span
         class="c7n-calendar-picker-input c7n-input"
@@ -598,13 +535,6 @@ exports[`renders ./components/date-picker/demo/disabled-date.md correctly 1`] = 
           class="icon icon-date_range c7n-calendar-picker-icon"
         />
       </span>
-      <div
-        class="c7n-calendar-underline"
-      >
-        <span
-          class="c7n-calendar-ripple"
-        />
-      </div>
     </span>
   </span>
 </div>
@@ -616,7 +546,7 @@ exports[`renders ./components/date-picker/demo/extra-footer.md correctly 1`] = `
     class="c7n-calendar-picker"
   >
     <span
-      class="c7n-input-wrapper c7n-input-has-suffix"
+      class="c7n-input-wrapper c7n-input-has-suffix c7n-input-has-border"
     >
       <div
         class="c7n-input-content"
@@ -627,24 +557,27 @@ exports[`renders ./components/date-picker/demo/extra-footer.md correctly 1`] = `
           <div
             class="c7n-input-rendered"
           >
-            <div
-              class="c7n-input-placeholder"
-            >
-              Select date
-            </div>
             <input
               class="c7n-input c7n-calendar-picker-input c7n-input"
               readonly=""
               type="text"
               value=""
             />
+            <div
+              class="c7n-input-label-wrapper"
+            >
+              <div
+                class="c7n-input-label"
+              >
+                Select date
+              </div>
+            </div>
           </div>
           <span
             class="c7n-input-suffix"
           >
             <span
               class="c7n-calendar-picker-icon-wrapper"
-              style="min-width:18px"
             >
               <i
                 class="icon icon-date_range c7n-calendar-picker-icon"
@@ -652,13 +585,6 @@ exports[`renders ./components/date-picker/demo/extra-footer.md correctly 1`] = `
             </span>
           </span>
         </div>
-      </div>
-      <div
-        class="c7n-input-underline"
-      >
-        <span
-          class="c7n-input-ripple"
-        />
       </div>
     </span>
   </span>
@@ -666,7 +592,7 @@ exports[`renders ./components/date-picker/demo/extra-footer.md correctly 1`] = `
     class="c7n-calendar-picker"
   >
     <span
-      class="c7n-input-wrapper c7n-input-has-suffix"
+      class="c7n-input-wrapper c7n-input-has-suffix c7n-input-has-border"
     >
       <div
         class="c7n-input-content"
@@ -677,24 +603,27 @@ exports[`renders ./components/date-picker/demo/extra-footer.md correctly 1`] = `
           <div
             class="c7n-input-rendered"
           >
-            <div
-              class="c7n-input-placeholder"
-            >
-              Select date
-            </div>
             <input
               class="c7n-input c7n-calendar-picker-input c7n-input"
               readonly=""
               type="text"
               value=""
             />
+            <div
+              class="c7n-input-label-wrapper"
+            >
+              <div
+                class="c7n-input-label"
+              >
+                Select date
+              </div>
+            </div>
           </div>
           <span
             class="c7n-input-suffix"
           >
             <span
               class="c7n-calendar-picker-icon-wrapper"
-              style="min-width:18px"
             >
               <i
                 class="icon icon-date_range c7n-calendar-picker-icon"
@@ -702,13 +631,6 @@ exports[`renders ./components/date-picker/demo/extra-footer.md correctly 1`] = `
             </span>
           </span>
         </div>
-      </div>
-      <div
-        class="c7n-input-underline"
-      >
-        <span
-          class="c7n-input-ripple"
-        />
       </div>
     </span>
   </span>
@@ -717,7 +639,7 @@ exports[`renders ./components/date-picker/demo/extra-footer.md correctly 1`] = `
     tabindex="0"
   >
     <span
-      class="c7n-calendar-range-picker"
+      class="c7n-calendar-range-picker c7n-input-wrapper"
     >
       <span
         class="c7n-calendar-picker-input c7n-input"
@@ -745,13 +667,6 @@ exports[`renders ./components/date-picker/demo/extra-footer.md correctly 1`] = `
           class="icon icon-date_range c7n-calendar-picker-icon"
         />
       </span>
-      <div
-        class="c7n-calendar-underline"
-      >
-        <span
-          class="c7n-calendar-ripple"
-        />
-      </div>
     </span>
   </span>
   <span
@@ -760,7 +675,7 @@ exports[`renders ./components/date-picker/demo/extra-footer.md correctly 1`] = `
     tabindex="0"
   >
     <span
-      class="c7n-calendar-range-picker"
+      class="c7n-calendar-range-picker c7n-input-wrapper"
     >
       <span
         class="c7n-calendar-picker-input c7n-input"
@@ -788,20 +703,13 @@ exports[`renders ./components/date-picker/demo/extra-footer.md correctly 1`] = `
           class="icon icon-date_range c7n-calendar-picker-icon"
         />
       </span>
-      <div
-        class="c7n-calendar-underline"
-      >
-        <span
-          class="c7n-calendar-ripple"
-        />
-      </div>
     </span>
   </span>
   <span
     class="c7n-calendar-picker"
   >
     <span
-      class="c7n-input-wrapper c7n-input-has-suffix"
+      class="c7n-input-wrapper c7n-input-has-suffix c7n-input-has-border"
     >
       <div
         class="c7n-input-content"
@@ -812,24 +720,27 @@ exports[`renders ./components/date-picker/demo/extra-footer.md correctly 1`] = `
           <div
             class="c7n-input-rendered"
           >
-            <div
-              class="c7n-input-placeholder"
-            >
-              Select month
-            </div>
             <input
               class="c7n-input c7n-calendar-picker-input c7n-input"
               readonly=""
               type="text"
               value=""
             />
+            <div
+              class="c7n-input-label-wrapper"
+            >
+              <div
+                class="c7n-input-label"
+              >
+                Select month
+              </div>
+            </div>
           </div>
           <span
             class="c7n-input-suffix"
           >
             <span
               class="c7n-calendar-picker-icon-wrapper"
-              style="min-width:18px"
             >
               <i
                 class="icon icon-date_range c7n-calendar-picker-icon"
@@ -837,13 +748,6 @@ exports[`renders ./components/date-picker/demo/extra-footer.md correctly 1`] = `
             </span>
           </span>
         </div>
-      </div>
-      <div
-        class="c7n-input-underline"
-      >
-        <span
-          class="c7n-input-ripple"
-        />
       </div>
     </span>
   </span>
@@ -856,7 +760,7 @@ exports[`renders ./components/date-picker/demo/format.md correctly 1`] = `
     class="c7n-calendar-picker"
   >
     <span
-      class="c7n-input-wrapper c7n-input-has-suffix"
+      class="c7n-input-wrapper c7n-input-has-suffix c7n-input-has-border"
     >
       <div
         class="c7n-input-content"
@@ -867,24 +771,27 @@ exports[`renders ./components/date-picker/demo/format.md correctly 1`] = `
           <div
             class="c7n-input-rendered"
           >
-            <div
-              class="c7n-input-placeholder"
-            >
-              Select date
-            </div>
             <input
               class="c7n-input c7n-calendar-picker-input c7n-input"
               readonly=""
               type="text"
               value="2015/01/01"
             />
+            <div
+              class="c7n-input-label-wrapper"
+            >
+              <div
+                class="c7n-input-label"
+              >
+                Select date
+              </div>
+            </div>
           </div>
           <span
             class="c7n-input-suffix"
           >
             <span
               class="c7n-calendar-picker-icon-wrapper"
-              style="min-width:42px"
             >
               <button
                 class="c7n-btn c7n-calendar-picker-clear c7n-btn-circle c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
@@ -903,13 +810,6 @@ exports[`renders ./components/date-picker/demo/format.md correctly 1`] = `
             </span>
           </span>
         </div>
-      </div>
-      <div
-        class="c7n-input-underline"
-      >
-        <span
-          class="c7n-input-ripple"
-        />
       </div>
     </span>
   </span>
@@ -918,7 +818,7 @@ exports[`renders ./components/date-picker/demo/format.md correctly 1`] = `
     class="c7n-calendar-picker"
   >
     <span
-      class="c7n-input-wrapper c7n-input-has-suffix"
+      class="c7n-input-wrapper c7n-input-has-suffix c7n-input-has-border"
     >
       <div
         class="c7n-input-content"
@@ -929,24 +829,27 @@ exports[`renders ./components/date-picker/demo/format.md correctly 1`] = `
           <div
             class="c7n-input-rendered"
           >
-            <div
-              class="c7n-input-placeholder"
-            >
-              Select date
-            </div>
             <input
               class="c7n-input c7n-calendar-picker-input c7n-input"
               readonly=""
               type="text"
               value="2015/01"
             />
+            <div
+              class="c7n-input-label-wrapper"
+            >
+              <div
+                class="c7n-input-label"
+              >
+                Select date
+              </div>
+            </div>
           </div>
           <span
             class="c7n-input-suffix"
           >
             <span
               class="c7n-calendar-picker-icon-wrapper"
-              style="min-width:42px"
             >
               <button
                 class="c7n-btn c7n-calendar-picker-clear c7n-btn-circle c7n-btn-sm c7n-btn-icon-only c7n-btn-flat"
@@ -965,13 +868,6 @@ exports[`renders ./components/date-picker/demo/format.md correctly 1`] = `
             </span>
           </span>
         </div>
-      </div>
-      <div
-        class="c7n-input-underline"
-      >
-        <span
-          class="c7n-input-ripple"
-        />
       </div>
     </span>
   </span>
@@ -981,7 +877,7 @@ exports[`renders ./components/date-picker/demo/format.md correctly 1`] = `
     tabindex="0"
   >
     <span
-      class="c7n-calendar-range-picker"
+      class="c7n-calendar-range-picker c7n-input-wrapper"
     >
       <span
         class="c7n-calendar-picker-input c7n-input"
@@ -1020,13 +916,6 @@ exports[`renders ./components/date-picker/demo/format.md correctly 1`] = `
           class="icon icon-date_range c7n-calendar-picker-icon"
         />
       </span>
-      <div
-        class="c7n-calendar-underline"
-      >
-        <span
-          class="c7n-calendar-ripple"
-        />
-      </div>
     </span>
   </span>
 </div>
@@ -1038,7 +927,7 @@ exports[`renders ./components/date-picker/demo/mode.md correctly 1`] = `
     class="c7n-calendar-picker"
   >
     <span
-      class="c7n-input-wrapper c7n-input-has-suffix"
+      class="c7n-input-wrapper c7n-input-has-suffix c7n-input-has-border"
     >
       <div
         class="c7n-input-content"
@@ -1049,24 +938,27 @@ exports[`renders ./components/date-picker/demo/mode.md correctly 1`] = `
           <div
             class="c7n-input-rendered"
           >
-            <div
-              class="c7n-input-placeholder"
-            >
-              Select date
-            </div>
             <input
               class="c7n-input c7n-calendar-picker-input c7n-input"
               readonly=""
               type="text"
               value=""
             />
+            <div
+              class="c7n-input-label-wrapper"
+            >
+              <div
+                class="c7n-input-label"
+              >
+                Select date
+              </div>
+            </div>
           </div>
           <span
             class="c7n-input-suffix"
           >
             <span
               class="c7n-calendar-picker-icon-wrapper"
-              style="min-width:18px"
             >
               <i
                 class="icon icon-date_range c7n-calendar-picker-icon"
@@ -1074,13 +966,6 @@ exports[`renders ./components/date-picker/demo/mode.md correctly 1`] = `
             </span>
           </span>
         </div>
-      </div>
-      <div
-        class="c7n-input-underline"
-      >
-        <span
-          class="c7n-input-ripple"
-        />
       </div>
     </span>
   </span>
@@ -1090,7 +975,7 @@ exports[`renders ./components/date-picker/demo/mode.md correctly 1`] = `
     tabindex="0"
   >
     <span
-      class="c7n-calendar-range-picker"
+      class="c7n-calendar-range-picker c7n-input-wrapper"
     >
       <span
         class="c7n-calendar-picker-input c7n-input"
@@ -1118,13 +1003,6 @@ exports[`renders ./components/date-picker/demo/mode.md correctly 1`] = `
           class="icon icon-date_range c7n-calendar-picker-icon"
         />
       </span>
-      <div
-        class="c7n-calendar-underline"
-      >
-        <span
-          class="c7n-calendar-ripple"
-        />
-      </div>
     </span>
   </span>
 </div>
@@ -1137,7 +1015,7 @@ exports[`renders ./components/date-picker/demo/presetted-ranges.md correctly 1`]
     tabindex="0"
   >
     <span
-      class="c7n-calendar-range-picker"
+      class="c7n-calendar-range-picker c7n-input-wrapper"
     >
       <span
         class="c7n-calendar-picker-input c7n-input"
@@ -1165,13 +1043,6 @@ exports[`renders ./components/date-picker/demo/presetted-ranges.md correctly 1`]
           class="icon icon-date_range c7n-calendar-picker-icon"
         />
       </span>
-      <div
-        class="c7n-calendar-underline"
-      >
-        <span
-          class="c7n-calendar-ripple"
-        />
-      </div>
     </span>
   </span>
   <br />
@@ -1181,7 +1052,7 @@ exports[`renders ./components/date-picker/demo/presetted-ranges.md correctly 1`]
     tabindex="0"
   >
     <span
-      class="c7n-calendar-range-picker"
+      class="c7n-calendar-range-picker c7n-input-wrapper"
     >
       <span
         class="c7n-calendar-picker-input c7n-input"
@@ -1209,13 +1080,6 @@ exports[`renders ./components/date-picker/demo/presetted-ranges.md correctly 1`]
           class="icon icon-date_range c7n-calendar-picker-icon"
         />
       </span>
-      <div
-        class="c7n-calendar-underline"
-      >
-        <span
-          class="c7n-calendar-ripple"
-        />
-      </div>
     </span>
   </span>
 </div>
@@ -1295,7 +1159,7 @@ exports[`renders ./components/date-picker/demo/size.md correctly 1`] = `
     class="c7n-calendar-picker c7n-calendar-picker-default"
   >
     <span
-      class="c7n-input-wrapper c7n-input-has-suffix"
+      class="c7n-input-wrapper c7n-input-has-suffix c7n-input-has-border"
     >
       <div
         class="c7n-input-content"
@@ -1306,24 +1170,27 @@ exports[`renders ./components/date-picker/demo/size.md correctly 1`] = `
           <div
             class="c7n-input-rendered"
           >
-            <div
-              class="c7n-input-placeholder"
-            >
-              Select date
-            </div>
             <input
               class="c7n-input c7n-calendar-picker-input c7n-input"
               readonly=""
               type="text"
               value=""
             />
+            <div
+              class="c7n-input-label-wrapper"
+            >
+              <div
+                class="c7n-input-label"
+              >
+                Select date
+              </div>
+            </div>
           </div>
           <span
             class="c7n-input-suffix"
           >
             <span
               class="c7n-calendar-picker-icon-wrapper"
-              style="min-width:18px"
             >
               <i
                 class="icon icon-date_range c7n-calendar-picker-icon"
@@ -1331,13 +1198,6 @@ exports[`renders ./components/date-picker/demo/size.md correctly 1`] = `
             </span>
           </span>
         </div>
-      </div>
-      <div
-        class="c7n-input-underline"
-      >
-        <span
-          class="c7n-input-ripple"
-        />
       </div>
     </span>
   </span>
@@ -1346,7 +1206,7 @@ exports[`renders ./components/date-picker/demo/size.md correctly 1`] = `
     class="c7n-calendar-picker c7n-calendar-picker-default"
   >
     <span
-      class="c7n-input-wrapper c7n-input-has-suffix"
+      class="c7n-input-wrapper c7n-input-has-suffix c7n-input-has-border"
     >
       <div
         class="c7n-input-content"
@@ -1357,24 +1217,27 @@ exports[`renders ./components/date-picker/demo/size.md correctly 1`] = `
           <div
             class="c7n-input-rendered"
           >
-            <div
-              class="c7n-input-placeholder"
-            >
-              Select Month
-            </div>
             <input
               class="c7n-input c7n-calendar-picker-input c7n-input"
               readonly=""
               type="text"
               value=""
             />
+            <div
+              class="c7n-input-label-wrapper"
+            >
+              <div
+                class="c7n-input-label"
+              >
+                Select Month
+              </div>
+            </div>
           </div>
           <span
             class="c7n-input-suffix"
           >
             <span
               class="c7n-calendar-picker-icon-wrapper"
-              style="min-width:18px"
             >
               <i
                 class="icon icon-date_range c7n-calendar-picker-icon"
@@ -1382,13 +1245,6 @@ exports[`renders ./components/date-picker/demo/size.md correctly 1`] = `
             </span>
           </span>
         </div>
-      </div>
-      <div
-        class="c7n-input-underline"
-      >
-        <span
-          class="c7n-input-ripple"
-        />
       </div>
     </span>
   </span>
@@ -1398,7 +1254,7 @@ exports[`renders ./components/date-picker/demo/size.md correctly 1`] = `
     tabindex="0"
   >
     <span
-      class="c7n-calendar-range-picker"
+      class="c7n-calendar-range-picker c7n-input-wrapper"
     >
       <span
         class="c7n-calendar-picker-input c7n-input"
@@ -1426,13 +1282,6 @@ exports[`renders ./components/date-picker/demo/size.md correctly 1`] = `
           class="icon icon-date_range c7n-calendar-picker-icon"
         />
       </span>
-      <div
-        class="c7n-calendar-underline"
-      >
-        <span
-          class="c7n-calendar-ripple"
-        />
-      </div>
     </span>
   </span>
   <br />
@@ -1440,7 +1289,7 @@ exports[`renders ./components/date-picker/demo/size.md correctly 1`] = `
     class="c7n-calendar-picker c7n-calendar-picker-default"
   >
     <span
-      class="c7n-input-wrapper c7n-input-has-suffix"
+      class="c7n-input-wrapper c7n-input-has-suffix c7n-input-has-border"
     >
       <div
         class="c7n-input-content"
@@ -1451,24 +1300,27 @@ exports[`renders ./components/date-picker/demo/size.md correctly 1`] = `
           <div
             class="c7n-input-rendered"
           >
-            <div
-              class="c7n-input-placeholder"
-            >
-              Select Week
-            </div>
             <input
               class="c7n-input c7n-calendar-picker-input c7n-input"
               readonly=""
               type="text"
               value=""
             />
+            <div
+              class="c7n-input-label-wrapper"
+            >
+              <div
+                class="c7n-input-label"
+              >
+                Select Week
+              </div>
+            </div>
           </div>
           <span
             class="c7n-input-suffix"
           >
             <span
               class="c7n-calendar-picker-icon-wrapper"
-              style="min-width:18px"
             >
               <i
                 class="icon icon-date_range c7n-calendar-picker-icon"
@@ -1476,13 +1328,6 @@ exports[`renders ./components/date-picker/demo/size.md correctly 1`] = `
             </span>
           </span>
         </div>
-      </div>
-      <div
-        class="c7n-input-underline"
-      >
-        <span
-          class="c7n-input-ripple"
-        />
       </div>
     </span>
   </span>
@@ -1495,7 +1340,7 @@ exports[`renders ./components/date-picker/demo/start-end.md correctly 1`] = `
     class="c7n-calendar-picker"
   >
     <span
-      class="c7n-input-wrapper c7n-input-has-suffix"
+      class="c7n-input-wrapper c7n-input-has-suffix c7n-input-has-border"
     >
       <div
         class="c7n-input-content"
@@ -1506,24 +1351,27 @@ exports[`renders ./components/date-picker/demo/start-end.md correctly 1`] = `
           <div
             class="c7n-input-rendered"
           >
-            <div
-              class="c7n-input-placeholder"
-            >
-              Start
-            </div>
             <input
               class="c7n-input c7n-calendar-picker-input c7n-input"
               readonly=""
               type="text"
               value=""
             />
+            <div
+              class="c7n-input-label-wrapper"
+            >
+              <div
+                class="c7n-input-label"
+              >
+                Start
+              </div>
+            </div>
           </div>
           <span
             class="c7n-input-suffix"
           >
             <span
               class="c7n-calendar-picker-icon-wrapper"
-              style="min-width:18px"
             >
               <i
                 class="icon icon-date_range c7n-calendar-picker-icon"
@@ -1531,13 +1379,6 @@ exports[`renders ./components/date-picker/demo/start-end.md correctly 1`] = `
             </span>
           </span>
         </div>
-      </div>
-      <div
-        class="c7n-input-underline"
-      >
-        <span
-          class="c7n-input-ripple"
-        />
       </div>
     </span>
   </span>
@@ -1545,7 +1386,7 @@ exports[`renders ./components/date-picker/demo/start-end.md correctly 1`] = `
     class="c7n-calendar-picker"
   >
     <span
-      class="c7n-input-wrapper c7n-input-has-suffix"
+      class="c7n-input-wrapper c7n-input-has-suffix c7n-input-has-border"
     >
       <div
         class="c7n-input-content"
@@ -1556,24 +1397,27 @@ exports[`renders ./components/date-picker/demo/start-end.md correctly 1`] = `
           <div
             class="c7n-input-rendered"
           >
-            <div
-              class="c7n-input-placeholder"
-            >
-              End
-            </div>
             <input
               class="c7n-input c7n-calendar-picker-input c7n-input"
               readonly=""
               type="text"
               value=""
             />
+            <div
+              class="c7n-input-label-wrapper"
+            >
+              <div
+                class="c7n-input-label"
+              >
+                End
+              </div>
+            </div>
           </div>
           <span
             class="c7n-input-suffix"
           >
             <span
               class="c7n-calendar-picker-icon-wrapper"
-              style="min-width:18px"
             >
               <i
                 class="icon icon-date_range c7n-calendar-picker-icon"
@@ -1581,13 +1425,6 @@ exports[`renders ./components/date-picker/demo/start-end.md correctly 1`] = `
             </span>
           </span>
         </div>
-      </div>
-      <div
-        class="c7n-input-underline"
-      >
-        <span
-          class="c7n-input-ripple"
-        />
       </div>
     </span>
   </span>
@@ -1600,7 +1437,7 @@ exports[`renders ./components/date-picker/demo/time.md correctly 1`] = `
     class="c7n-calendar-picker"
   >
     <span
-      class="c7n-input-wrapper c7n-input-has-suffix"
+      class="c7n-input-wrapper c7n-input-has-suffix c7n-input-has-border"
     >
       <div
         class="c7n-input-content"
@@ -1611,24 +1448,27 @@ exports[`renders ./components/date-picker/demo/time.md correctly 1`] = `
           <div
             class="c7n-input-rendered"
           >
-            <div
-              class="c7n-input-placeholder"
-            >
-              Select Time
-            </div>
             <input
               class="c7n-input c7n-calendar-picker-input c7n-input"
               readonly=""
               type="text"
               value=""
             />
+            <div
+              class="c7n-input-label-wrapper"
+            >
+              <div
+                class="c7n-input-label"
+              >
+                Select Time
+              </div>
+            </div>
           </div>
           <span
             class="c7n-input-suffix"
           >
             <span
               class="c7n-calendar-picker-icon-wrapper"
-              style="min-width:18px"
             >
               <i
                 class="icon icon-date_range c7n-calendar-picker-icon"
@@ -1636,13 +1476,6 @@ exports[`renders ./components/date-picker/demo/time.md correctly 1`] = `
             </span>
           </span>
         </div>
-      </div>
-      <div
-        class="c7n-input-underline"
-      >
-        <span
-          class="c7n-input-ripple"
-        />
       </div>
     </span>
   </span>
@@ -1653,7 +1486,7 @@ exports[`renders ./components/date-picker/demo/time.md correctly 1`] = `
     tabindex="0"
   >
     <span
-      class="c7n-calendar-range-picker"
+      class="c7n-calendar-range-picker c7n-input-wrapper"
     >
       <span
         class="c7n-calendar-picker-input c7n-input"
@@ -1681,13 +1514,6 @@ exports[`renders ./components/date-picker/demo/time.md correctly 1`] = `
           class="icon icon-date_range c7n-calendar-picker-icon"
         />
       </span>
-      <div
-        class="c7n-calendar-underline"
-      >
-        <span
-          class="c7n-calendar-ripple"
-        />
-      </div>
     </span>
   </span>
 </div>
