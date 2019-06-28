@@ -20,8 +20,8 @@ timeline: true
 - 💄 `DatePicker`: Update the style.
 - 💄 `Select`: Update the style.
 
-## 0.7.4
-## 0.6.13
+## 0.7.5
+## 0.6.14
 
 `2019-06-28`
 
