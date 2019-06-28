@@ -122,6 +122,7 @@ export default class Options extends Component {
           onChange={this.changeSize}
           builtinPlacements={BUILT_IN_PLACEMENTS}
           getPopupContainer={triggerNode => triggerNode.parentNode}
+          border={false}
         >
           {options}
         </Select>

@@ -50,19 +50,12 @@
     .active();
   }
 
-  .@{input-prefix-cls}-suffix {
-    display: block !important;
-  }
   .@{input-prefix-cls}-disabled &-icon {
     color: @input-disabled-color;
   }
 
   &-icon {
     color: #000;
-    position: absolute !important;
-    right: 0;
-    bottom: 0;
-    margin: 0;
     cursor: pointer;
     &-wrapper {
       display: inline-block;
@@ -73,8 +66,9 @@
   &-clear {
     position: absolute !important;
     right: .2rem;
-    bottom: -.02rem;
-    margin: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
     opacity: 0;
     transition: opacity 0.15s ease;
     cursor: pointer;

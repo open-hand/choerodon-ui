@@ -2,7 +2,7 @@
 
 exports[`renders ./components/select/demo/automatic-tokenization.md correctly 1`] = `
 <div
-  class="c7n-select c7n-select-enabled c7n-select-tags"
+  class="c7n-select c7n-select-enabled c7n-select-tags c7n-select-has-border"
   style="width:100%"
 >
   <div
@@ -38,20 +38,13 @@ exports[`renders ./components/select/demo/automatic-tokenization.md correctly 1`
       </ul>
     </div>
   </div>
-  <div
-    class="c7n-select-underline"
-  >
-    <span
-      class="c7n-select-ripple"
-    />
-  </div>
 </div>
 `;
 
 exports[`renders ./components/select/demo/basic.md correctly 1`] = `
 <div>
   <div
-    class="c7n-select c7n-select-has-label c7n-select-enabled c7n-select-allow-clear"
+    class="c7n-select c7n-select-has-label c7n-select-enabled c7n-select-allow-clear c7n-select-has-border"
     style="width:200px"
   >
     <div
@@ -64,18 +57,8 @@ exports[`renders ./components/select/demo/basic.md correctly 1`] = `
       tabindex="0"
     >
       <div
-        class="c7n-select-selection-label"
-      >
-        Select
-      </div>
-      <div
         class="c7n-select-selection__rendered"
       >
-        <div
-          class="c7n-select-selection__placeholder"
-        >
-          Please Select
-        </div>
         <div
           class="c7n-select-selection-selected-value"
           style="opacity:1"
@@ -91,17 +74,19 @@ exports[`renders ./components/select/demo/basic.md correctly 1`] = `
           <b />
         </span>
       </div>
-    </div>
-    <div
-      class="c7n-select-underline"
-    >
-      <span
-        class="c7n-select-ripple"
-      />
+      <div
+        class="c7n-select-label-wrapper"
+      >
+        <div
+          class="c7n-select-label"
+        >
+          Please Select
+        </div>
+      </div>
     </div>
   </div>
   <div
-    class="c7n-select c7n-select-has-value c7n-select-disabled c7n-select-allow-clear"
+    class="c7n-select c7n-select-has-value c7n-select-disabled c7n-select-allow-clear c7n-select-has-border"
     style="width:200px"
   >
     <div
@@ -148,20 +133,13 @@ exports[`renders ./components/select/demo/basic.md correctly 1`] = `
         </span>
       </div>
     </div>
-    <div
-      class="c7n-select-underline"
-    >
-      <span
-        class="c7n-select-ripple"
-      />
-    </div>
   </div>
 </div>
 `;
 
 exports[`renders ./components/select/demo/combobox.md correctly 1`] = `
 <div
-  class="c7n-select c7n-select-combobox c7n-select-enabled"
+  class="c7n-select c7n-select-combobox c7n-select-enabled c7n-select-has-border"
   style="width:200px"
 >
   <div
@@ -175,11 +153,6 @@ exports[`renders ./components/select/demo/combobox.md correctly 1`] = `
     <div
       class="c7n-select-selection__rendered"
     >
-      <div
-        class="c7n-select-selection__placeholder"
-      >
-        Enter the account name
-      </div>
       <div
         class="c7n-select-search c7n-select-search--inline"
         style="display:inline-block"
@@ -210,13 +183,15 @@ exports[`renders ./components/select/demo/combobox.md correctly 1`] = `
         <b />
       </span>
     </div>
-  </div>
-  <div
-    class="c7n-select-underline"
-  >
-    <span
-      class="c7n-select-ripple"
-    />
+    <div
+      class="c7n-select-label-wrapper"
+    >
+      <div
+        class="c7n-select-label"
+      >
+        Enter the account name
+      </div>
+    </div>
   </div>
 </div>
 `;
@@ -224,7 +199,7 @@ exports[`renders ./components/select/demo/combobox.md correctly 1`] = `
 exports[`renders ./components/select/demo/coordinate.md correctly 1`] = `
 <div>
   <div
-    class="c7n-select c7n-select-has-value c7n-select-enabled"
+    class="c7n-select c7n-select-has-value c7n-select-enabled c7n-select-has-border"
     style="width:90px"
   >
     <div
@@ -258,16 +233,9 @@ exports[`renders ./components/select/demo/coordinate.md correctly 1`] = `
         </span>
       </div>
     </div>
-    <div
-      class="c7n-select-underline"
-    >
-      <span
-        class="c7n-select-ripple"
-      />
-    </div>
   </div>
   <div
-    class="c7n-select c7n-select-has-value c7n-select-enabled"
+    class="c7n-select c7n-select-has-value c7n-select-enabled c7n-select-has-border"
     style="width:90px"
   >
     <div
@@ -301,20 +269,13 @@ exports[`renders ./components/select/demo/coordinate.md correctly 1`] = `
         </span>
       </div>
     </div>
-    <div
-      class="c7n-select-underline"
-    >
-      <span
-        class="c7n-select-ripple"
-      />
-    </div>
   </div>
 </div>
 `;
 
 exports[`renders ./components/select/demo/iconselect.md correctly 1`] = `
 <div
-  class="c7n-icon-select c7n-select c7n-select-has-value c7n-select-enabled"
+  class="c7n-icon-select c7n-select c7n-select-has-value c7n-select-enabled c7n-select-has-border"
   style="width:300px"
 >
   <div
@@ -343,19 +304,12 @@ exports[`renders ./components/select/demo/iconselect.md correctly 1`] = `
       </div>
     </div>
   </div>
-  <div
-    class="c7n-select-underline"
-  >
-    <span
-      class="c7n-select-ripple"
-    />
-  </div>
 </div>
 `;
 
 exports[`renders ./components/select/demo/label-in-value.md correctly 1`] = `
 <div
-  class="c7n-select c7n-select-has-value c7n-select-enabled"
+  class="c7n-select c7n-select-has-value c7n-select-enabled c7n-select-has-border"
   style="width:120px"
 >
   <div
@@ -389,19 +343,12 @@ exports[`renders ./components/select/demo/label-in-value.md correctly 1`] = `
       </span>
     </div>
   </div>
-  <div
-    class="c7n-select-underline"
-  >
-    <span
-      class="c7n-select-ripple"
-    />
-  </div>
 </div>
 `;
 
 exports[`renders ./components/select/demo/multiple.md correctly 1`] = `
 <div
-  class="c7n-select c7n-select-has-label c7n-select-enabled c7n-select-allow-clear c7n-select-multiple"
+  class="c7n-select c7n-select-has-label c7n-select-enabled c7n-select-allow-clear c7n-select-multiple c7n-select-has-border"
   style="width:100%"
 >
   <div
@@ -412,11 +359,6 @@ exports[`renders ./components/select/demo/multiple.md correctly 1`] = `
             c7n-select-selection--multiple"
     role="combobox"
   >
-    <div
-      class="c7n-select-selection-label"
-    >
-      多选用例
-    </div>
     <div
       class="c7n-select-selection__rendered"
     >
@@ -451,20 +393,22 @@ exports[`renders ./components/select/demo/multiple.md correctly 1`] = `
         <b />
       </span>
     </div>
-  </div>
-  <div
-    class="c7n-select-underline"
-  >
-    <span
-      class="c7n-select-ripple"
-    />
+    <div
+      class="c7n-select-label-wrapper"
+    >
+      <div
+        class="c7n-select-label"
+      >
+        多选用例
+      </div>
+    </div>
   </div>
 </div>
 `;
 
 exports[`renders ./components/select/demo/optgroup.md correctly 1`] = `
 <div
-  class="c7n-select c7n-select-has-value c7n-select-enabled"
+  class="c7n-select c7n-select-has-value c7n-select-enabled c7n-select-has-border"
   style="width:200px"
 >
   <div
@@ -498,19 +442,12 @@ exports[`renders ./components/select/demo/optgroup.md correctly 1`] = `
       </span>
     </div>
   </div>
-  <div
-    class="c7n-select-underline"
-  >
-    <span
-      class="c7n-select-ripple"
-    />
-  </div>
 </div>
 `;
 
 exports[`renders ./components/select/demo/search.md correctly 1`] = `
 <div
-  class="c7n-select c7n-select-enabled"
+  class="c7n-select c7n-select-enabled c7n-select-has-border"
   style="width:300px"
 >
   <div
@@ -526,11 +463,6 @@ exports[`renders ./components/select/demo/search.md correctly 1`] = `
       class="c7n-select-selection__rendered"
     >
       <div
-        class="c7n-select-selection__placeholder"
-      >
-        Select a person
-      </div>
-      <div
         class="c7n-select-selection-selected-value"
         style="opacity:1"
       />
@@ -545,20 +477,22 @@ exports[`renders ./components/select/demo/search.md correctly 1`] = `
         <b />
       </span>
     </div>
-  </div>
-  <div
-    class="c7n-select-underline"
-  >
-    <span
-      class="c7n-select-ripple"
-    />
+    <div
+      class="c7n-select-label-wrapper"
+    >
+      <div
+        class="c7n-select-label"
+      >
+        Select a person
+      </div>
+    </div>
   </div>
 </div>
 `;
 
 exports[`renders ./components/select/demo/search-box.md correctly 1`] = `
 <div
-  class="c7n-select c7n-select-combobox c7n-select-enabled"
+  class="c7n-select c7n-select-combobox c7n-select-enabled c7n-select-has-border"
   style="width:200px"
 >
   <div
@@ -572,11 +506,6 @@ exports[`renders ./components/select/demo/search-box.md correctly 1`] = `
     <div
       class="c7n-select-selection__rendered"
     >
-      <div
-        class="c7n-select-selection__placeholder"
-      >
-        input search text
-      </div>
       <div
         class="c7n-select-search c7n-select-search--inline"
         style="display:inline-block"
@@ -597,13 +526,15 @@ exports[`renders ./components/select/demo/search-box.md correctly 1`] = `
         </div>
       </div>
     </div>
-  </div>
-  <div
-    class="c7n-select-underline"
-  >
-    <span
-      class="c7n-select-ripple"
-    />
+    <div
+      class="c7n-select-label-wrapper"
+    >
+      <div
+        class="c7n-select-label"
+      >
+        input search text
+      </div>
+    </div>
   </div>
 </div>
 `;
@@ -679,7 +610,7 @@ exports[`renders ./components/select/demo/size.md correctly 1`] = `
   <br />
   <br />
   <div
-    class="c7n-select c7n-select-has-value c7n-select-enabled"
+    class="c7n-select c7n-select-has-value c7n-select-enabled c7n-select-has-border"
     style="width:200px"
   >
     <div
@@ -713,17 +644,10 @@ exports[`renders ./components/select/demo/size.md correctly 1`] = `
         </span>
       </div>
     </div>
-    <div
-      class="c7n-select-underline"
-    >
-      <span
-        class="c7n-select-ripple"
-      />
-    </div>
   </div>
   <br />
   <div
-    class="c7n-select c7n-select-has-value c7n-select-combobox c7n-select-enabled"
+    class="c7n-select c7n-select-has-value c7n-select-combobox c7n-select-enabled c7n-select-has-border"
     style="width:200px"
   >
     <div
@@ -768,17 +692,10 @@ exports[`renders ./components/select/demo/size.md correctly 1`] = `
         </span>
       </div>
     </div>
-    <div
-      class="c7n-select-underline"
-    >
-      <span
-        class="c7n-select-ripple"
-      />
-    </div>
   </div>
   <br />
   <div
-    class="c7n-select c7n-select-has-value c7n-select-enabled c7n-select-multiple"
+    class="c7n-select c7n-select-has-value c7n-select-enabled c7n-select-multiple c7n-select-has-border"
     style="width:100%"
   >
     <div
@@ -792,11 +709,6 @@ exports[`renders ./components/select/demo/size.md correctly 1`] = `
       <div
         class="c7n-select-selection__rendered"
       >
-        <div
-          class="c7n-select-selection__placeholder"
-        >
-          Please select
-        </div>
         <ul>
           <li
             class="c7n-select-selection__choice"
@@ -871,17 +783,10 @@ exports[`renders ./components/select/demo/size.md correctly 1`] = `
         </span>
       </div>
     </div>
-    <div
-      class="c7n-select-underline"
-    >
-      <span
-        class="c7n-select-ripple"
-      />
-    </div>
   </div>
   <br />
   <div
-    class="c7n-select c7n-select-has-value c7n-select-enabled c7n-select-tags"
+    class="c7n-select c7n-select-has-value c7n-select-enabled c7n-select-tags c7n-select-has-border"
     style="width:100%"
   >
     <div
@@ -895,11 +800,6 @@ exports[`renders ./components/select/demo/size.md correctly 1`] = `
       <div
         class="c7n-select-selection__rendered"
       >
-        <div
-          class="c7n-select-selection__placeholder"
-        >
-          Please select
-        </div>
         <ul>
           <li
             class="c7n-select-selection__choice"
@@ -964,20 +864,13 @@ exports[`renders ./components/select/demo/size.md correctly 1`] = `
         </ul>
       </div>
     </div>
-    <div
-      class="c7n-select-underline"
-    >
-      <span
-        class="c7n-select-ripple"
-      />
-    </div>
   </div>
 </div>
 `;
 
 exports[`renders ./components/select/demo/tags.md correctly 1`] = `
 <div
-  class="c7n-select c7n-select-has-label c7n-select-enabled c7n-select-allow-clear c7n-select-tags"
+  class="c7n-select c7n-select-has-label c7n-select-enabled c7n-select-allow-clear c7n-select-tags c7n-select-has-border"
   style="width:100%"
 >
   <div
@@ -989,18 +882,8 @@ exports[`renders ./components/select/demo/tags.md correctly 1`] = `
     role="combobox"
   >
     <div
-      class="c7n-select-selection-label"
-    >
-      标签用例
-    </div>
-    <div
       class="c7n-select-selection__rendered"
     >
-      <div
-        class="c7n-select-selection__placeholder"
-      >
-        tags
-      </div>
       <ul>
         <li
           class="c7n-select-search c7n-select-search--inline"
@@ -1022,13 +905,15 @@ exports[`renders ./components/select/demo/tags.md correctly 1`] = `
         </li>
       </ul>
     </div>
-  </div>
-  <div
-    class="c7n-select-underline"
-  >
-    <span
-      class="c7n-select-ripple"
-    />
+    <div
+      class="c7n-select-label-wrapper"
+    >
+      <div
+        class="c7n-select-label"
+      >
+        tags
+      </div>
+    </div>
   </div>
 </div>
 `;
