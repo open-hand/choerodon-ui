@@ -265,12 +265,13 @@
     }
     &-wrapper {
       position: absolute;
-      padding: 0 .04rem;
+      padding: 0 .05rem;
+      margin-left: -.05rem;
       top: 0;
       height: 0;
       left: @input-padding-horizontal-base;
       border-top: .02rem @border-style-base transparent;
-      transform-origin: 0 -170%;
+      transform-origin: .1rem -230%;
       transition: all 0.2s @ease-out;
     }
   }
@@ -280,13 +281,13 @@
   &-has-value &-label-wrapper,
   &-focused &-label-wrapper,
   &:-webkit-autofill + &-label-wrapper {
-    transform: scaleX(.75);
+    transform: scaleX(.8);
     border-top-color: @component-background;
   }
   &-has-value &-label,
   &-focused &-label,
   &:-webkit-autofill + &-label-wrapper &-label {
-    transform: scaleY(.75);
+    transform: scaleY(.8);
   }
 
   &-focused &-label {

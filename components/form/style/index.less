@@ -72,6 +72,7 @@ input[type="checkbox"] {
   }
 
   .reset-component;
+  padding-top: @form-item-margin-top;
   margin-bottom: @form-item-margin-bottom;
   vertical-align: top;
 
@@ -362,7 +363,8 @@ form {
     margin-bottom: 0;
 
     &-with-help {
-      margin-bottom: .24rem;
+      padding-top: @form-item-margin-top;
+      margin-bottom: @form-item-margin-bottom;
     }
 
     > .@{form-prefix-cls}-item-control-wrapper, > .@{form-prefix-cls}-item-label {
