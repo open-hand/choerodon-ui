@@ -315,6 +315,14 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
   setObservableProps(props, context: any) {
     this.observableProps = {
       ...toJS(this.observableProps),
+      ...this.getObservableProps(props, context),
+    };
+  }
+
+  @action
+  updateObservableProps(props, context: any) {
+    this.observableProps = {
+      ...toJS(this.observableProps),
       ...omitBy(this.getObservableProps(props, context), isUndefined),
     };
   }
@@ -452,7 +460,7 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
-    this.setObservableProps(nextProps, nextContext);
+    this.updateObservableProps(nextProps, nextContext);
   }
 
   componentWillMount() {
