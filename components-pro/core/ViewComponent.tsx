@@ -4,9 +4,11 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { action, observable, runInAction, toJS } from 'mobx';
 import omit from 'lodash/omit';
+import omitBy from 'lodash/omitBy';
 import defer from 'lodash/defer';
 import merge from 'lodash/merge';
 import noop from 'lodash/noop';
+import isUndefined from 'lodash/isUndefined';
 import classes from 'component-classes';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure';
 import autobind from '../_util/autobind';
@@ -311,11 +313,10 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
 
   @action
   setObservableProps(props, context: any) {
-    this.observableProps = Object.assign(
-      {},
-      toJS(this.observableProps),
-      this.getObservableProps(props, context),
-    );
+    this.observableProps = {
+      ...toJS(this.observableProps),
+      ...omitBy(this.getObservableProps(props, context), isUndefined),
+    };
   }
 
   getOtherProps() {

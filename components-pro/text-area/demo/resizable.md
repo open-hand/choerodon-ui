@@ -1,5 +1,5 @@
 ---
-order: 1
+order: 3
 title:
   zh-CN: 拖拽调整大小
   en-US: Resizable 
