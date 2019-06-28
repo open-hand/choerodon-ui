@@ -11,7 +11,6 @@
 @form-component-height: @input-height-base;
 @form-component-max-height: @input-height-lg;
 @form-feedback-icon-size: .14rem;
-@form-help-margin-top: (@form-component-height - @form-component-max-height) / 2 + .02rem;
 
 .@{form-prefix-cls} {
   .reset-component;
@@ -91,10 +90,6 @@ input[type="checkbox"] {
     position: relative;
   }
 
-  &-with-help {
-    margin-bottom: @form-item-margin-bottom - @font-size-base * @line-height-base - @form-help-margin-top;
-  }
-
   &-label {
     text-align: right;
     vertical-align: middle;
@@ -134,7 +129,7 @@ input[type="checkbox"] {
   color: @text-color-secondary;
   line-height: @line-height-base;
   transition: color .15s @ease-out;
-  margin-top: @form-help-margin-top;
+  position: absolute;
 }
 
 .@{form-prefix-cls}-extra {

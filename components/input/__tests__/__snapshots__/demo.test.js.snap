@@ -6,7 +6,7 @@ exports[`renders ./components/input/demo/addon.md correctly 1`] = `
     style="margin-bottom:16px"
   >
     <span
-      class="c7n-input-wrapper"
+      class="c7n-input-wrapper c7n-input-has-border"
     >
       <div
         class="c7n-input-content"
@@ -17,9 +17,6 @@ exports[`renders ./components/input/demo/addon.md correctly 1`] = `
           <div
             class="c7n-input-rendered"
           >
-            <div
-              class="c7n-input-placeholder"
-            />
             <input
               class="c7n-input"
               maxlength="30"
@@ -28,22 +25,11 @@ exports[`renders ./components/input/demo/addon.md correctly 1`] = `
             />
           </div>
         </div>
-        <span
-          class="c7n-input-icon"
+        <div
+          class="c7n-input-length-info"
         >
-          <span
-            class="c7n-input-icon-copy c7n-input-length-info"
-          >
-            0/30
-          </span>
-        </span>
-      </div>
-      <div
-        class="c7n-input-underline"
-      >
-        <span
-          class="c7n-input-ripple"
-        />
+          0/30
+        </div>
       </div>
     </span>
   </div>
@@ -51,7 +37,7 @@ exports[`renders ./components/input/demo/addon.md correctly 1`] = `
     style="margin-bottom:16px"
   >
     <span
-      class="c7n-input-wrapper"
+      class="c7n-input-wrapper c7n-input-has-border"
     >
       <div
         class="c7n-input-content"
@@ -62,9 +48,6 @@ exports[`renders ./components/input/demo/addon.md correctly 1`] = `
           <div
             class="c7n-input-rendered"
           >
-            <div
-              class="c7n-input-placeholder"
-            />
             <input
               class="c7n-input"
               type="text"
@@ -73,51 +56,38 @@ exports[`renders ./components/input/demo/addon.md correctly 1`] = `
           </div>
         </div>
       </div>
-      <div
-        class="c7n-input-underline"
-      >
-        <span
-          class="c7n-input-ripple"
-        />
-      </div>
     </span>
   </div>
   <div
     style="margin-bottom:16px"
   >
     <span
-      class="c7n-input-wrapper c7n-input-has-label"
+      class="c7n-input-wrapper c7n-input-has-label c7n-input-has-border"
     >
       <div
         class="c7n-input-content"
       >
-        <div
-          class="c7n-input-label"
-        >
-          mysite
-        </div>
         <div
           class="c7n-input-rendered-wrapper"
         >
           <div
             class="c7n-input-rendered"
           >
-            <div
-              class="c7n-input-placeholder"
-            />
             <input
               class="c7n-input"
               type="text"
             />
+            <div
+              class="c7n-input-label-wrapper"
+            >
+              <div
+                class="c7n-input-label"
+              >
+                mysite
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      <div
-        class="c7n-input-underline"
-      >
-        <span
-          class="c7n-input-ripple"
-        />
       </div>
     </span>
   </div>
@@ -129,17 +99,21 @@ exports[`renders ./components/input/demo/autosize-textarea.md correctly 1`] = `
   <span
     class="c7n-input-wrapper c7n-input-textarea"
   >
-    <textarea
-      class="c7n-input"
-      placeholder="Autosize height based on content lines"
-    />
-    <div>
-      <hr
-        class="c7n-input-border"
+    <div
+      class="c7n-input-rendered-wrapper"
+    >
+      <textarea
+        class="c7n-input"
       />
-      <hr
-        class="c7n-input-border-active"
-      />
+      <div
+        class="c7n-input-label-wrapper"
+      >
+        <div
+          class="c7n-input-label"
+        >
+          Autosize height based on content lines
+        </div>
+      </div>
     </div>
   </span>
   <div
@@ -148,17 +122,21 @@ exports[`renders ./components/input/demo/autosize-textarea.md correctly 1`] = `
   <span
     class="c7n-input-wrapper c7n-input-textarea"
   >
-    <textarea
-      class="c7n-input"
-      placeholder="Autosize height with minimum and maximum number of lines"
-    />
-    <div>
-      <hr
-        class="c7n-input-border"
+    <div
+      class="c7n-input-rendered-wrapper"
+    >
+      <textarea
+        class="c7n-input"
       />
-      <hr
-        class="c7n-input-border-active"
-      />
+      <div
+        class="c7n-input-label-wrapper"
+      >
+        <div
+          class="c7n-input-label"
+        >
+          Autosize height with minimum and maximum number of lines
+        </div>
+      </div>
     </div>
   </span>
 </div>
@@ -174,33 +152,32 @@ exports[`renders ./components/input/demo/basic.md correctly 1`] = `
     style="padding-left:4px;padding-right:4px"
   >
     <span
-      class="c7n-input-wrapper c7n-input-has-label"
+      class="c7n-input-wrapper c7n-input-has-label c7n-input-has-border"
     >
       <div
         class="c7n-input-content"
       >
-        <div
-          class="c7n-input-label"
-        >
-          Basic
-        </div>
         <div
           class="c7n-input-rendered-wrapper"
         >
           <div
             class="c7n-input-rendered"
           >
-            <div
-              class="c7n-input-placeholder"
-            >
-              Basic usage
-            </div>
             <input
               class="c7n-input c7n-input-has-copy"
               maxlength="50"
               required=""
               type="text"
             />
+            <div
+              class="c7n-input-label-wrapper"
+            >
+              <div
+                class="c7n-input-label"
+              >
+                Basic usage
+              </div>
+            </div>
             <span
               class="c7n-input-icon"
             >
@@ -210,22 +187,11 @@ exports[`renders ./components/input/demo/basic.md correctly 1`] = `
             </span>
           </div>
         </div>
-        <span
-          class="c7n-input-icon"
+        <div
+          class="c7n-input-length-info"
         >
-          <span
-            class="c7n-input-icon-copy c7n-input-length-info"
-          >
-            0/50
-          </span>
-        </span>
-      </div>
-      <div
-        class="c7n-input-underline"
-      >
-        <span
-          class="c7n-input-ripple"
-        />
+          0/50
+        </div>
       </div>
     </span>
   </div>
@@ -234,27 +200,17 @@ exports[`renders ./components/input/demo/basic.md correctly 1`] = `
     style="padding-left:4px;padding-right:4px"
   >
     <span
-      class="c7n-input-wrapper c7n-input-disabled c7n-input-has-label"
+      class="c7n-input-wrapper c7n-input-disabled c7n-input-has-label c7n-input-has-border"
     >
       <div
         class="c7n-input-content"
       >
-        <div
-          class="c7n-input-label"
-        >
-          Basic
-        </div>
         <div
           class="c7n-input-rendered-wrapper"
         >
           <div
             class="c7n-input-rendered"
           >
-            <div
-              class="c7n-input-placeholder"
-            >
-              Basic usage
-            </div>
             <input
               class="c7n-input"
               disabled=""
@@ -263,24 +219,22 @@ exports[`renders ./components/input/demo/basic.md correctly 1`] = `
               type="text"
               value="123"
             />
+            <div
+              class="c7n-input-label-wrapper"
+            >
+              <div
+                class="c7n-input-label"
+              >
+                Basic usage
+              </div>
+            </div>
           </div>
         </div>
-        <span
-          class="c7n-input-icon"
+        <div
+          class="c7n-input-length-info"
         >
-          <span
-            class="c7n-input-icon-copy c7n-input-length-info"
-          >
-            0/20
-          </span>
-        </span>
-      </div>
-      <div
-        class="c7n-input-underline"
-      >
-        <span
-          class="c7n-input-ripple"
-        />
+          0/20
+        </div>
       </div>
     </span>
   </div>
@@ -296,7 +250,7 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
       class="c7n-col-5"
     >
       <span
-        class="c7n-input-wrapper"
+        class="c7n-input-wrapper c7n-input-has-border"
       >
         <div
           class="c7n-input-content"
@@ -307,9 +261,6 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
             <div
               class="c7n-input-rendered"
             >
-              <div
-                class="c7n-input-placeholder"
-              />
               <input
                 class="c7n-input"
                 type="text"
@@ -318,20 +269,13 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
             </div>
           </div>
         </div>
-        <div
-          class="c7n-input-underline"
-        >
-          <span
-            class="c7n-input-ripple"
-          />
-        </div>
       </span>
     </div>
     <div
       class="c7n-col-8"
     >
       <span
-        class="c7n-input-wrapper"
+        class="c7n-input-wrapper c7n-input-has-border"
       >
         <div
           class="c7n-input-content"
@@ -342,9 +286,6 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
             <div
               class="c7n-input-rendered"
             >
-              <div
-                class="c7n-input-placeholder"
-              />
               <input
                 class="c7n-input"
                 type="text"
@@ -352,13 +293,6 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
               />
             </div>
           </div>
-        </div>
-        <div
-          class="c7n-input-underline"
-        >
-          <span
-            class="c7n-input-ripple"
-          />
         </div>
       </span>
     </div>
@@ -368,7 +302,7 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
     class="c7n-input-group c7n-input-group-compact"
   >
     <span
-      class="c7n-input-wrapper"
+      class="c7n-input-wrapper c7n-input-has-border"
       style="width:20%"
     >
       <div
@@ -380,9 +314,6 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
           <div
             class="c7n-input-rendered"
           >
-            <div
-              class="c7n-input-placeholder"
-            />
             <input
               class="c7n-input"
               type="text"
@@ -391,16 +322,9 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
           </div>
         </div>
       </div>
-      <div
-        class="c7n-input-underline"
-      >
-        <span
-          class="c7n-input-ripple"
-        />
-      </div>
     </span>
     <span
-      class="c7n-input-wrapper"
+      class="c7n-input-wrapper c7n-input-has-border"
       style="width:30%"
     >
       <div
@@ -412,9 +336,6 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
           <div
             class="c7n-input-rendered"
           >
-            <div
-              class="c7n-input-placeholder"
-            />
             <input
               class="c7n-input"
               type="text"
@@ -423,13 +344,6 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
           </div>
         </div>
       </div>
-      <div
-        class="c7n-input-underline"
-      >
-        <span
-          class="c7n-input-ripple"
-        />
-      </div>
     </span>
   </span>
   <br />
@@ -437,7 +351,7 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
     class="c7n-input-group c7n-input-group-compact"
   >
     <div
-      class="c7n-select c7n-select-has-value c7n-select-enabled"
+      class="c7n-select c7n-select-has-value c7n-select-enabled c7n-select-has-border"
     >
       <div
         aria-autocomplete="list"
@@ -470,16 +384,9 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
           </span>
         </div>
       </div>
-      <div
-        class="c7n-select-underline"
-      >
-        <span
-          class="c7n-select-ripple"
-        />
-      </div>
     </div>
     <span
-      class="c7n-input-wrapper"
+      class="c7n-input-wrapper c7n-input-has-border"
       style="width:50%"
     >
       <div
@@ -491,9 +398,6 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
           <div
             class="c7n-input-rendered"
           >
-            <div
-              class="c7n-input-placeholder"
-            />
             <input
               class="c7n-input"
               type="text"
@@ -502,13 +406,6 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
           </div>
         </div>
       </div>
-      <div
-        class="c7n-input-underline"
-      >
-        <span
-          class="c7n-input-ripple"
-        />
-      </div>
     </span>
   </span>
   <br />
@@ -516,7 +413,7 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
     class="c7n-input-group c7n-input-group-compact"
   >
     <div
-      class="c7n-select c7n-select-has-value c7n-select-enabled"
+      class="c7n-select c7n-select-has-value c7n-select-enabled c7n-select-has-border"
     >
       <div
         aria-autocomplete="list"
@@ -549,16 +446,9 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
           </span>
         </div>
       </div>
-      <div
-        class="c7n-select-underline"
-      >
-        <span
-          class="c7n-select-ripple"
-        />
-      </div>
     </div>
     <span
-      class="c7n-input-wrapper"
+      class="c7n-input-wrapper c7n-input-has-border"
       style="width:50%"
     >
       <div
@@ -570,9 +460,6 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
           <div
             class="c7n-input-rendered"
           >
-            <div
-              class="c7n-input-placeholder"
-            />
             <input
               class="c7n-input"
               type="text"
@@ -581,19 +468,12 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
           </div>
         </div>
       </div>
-      <div
-        class="c7n-input-underline"
-      >
-        <span
-          class="c7n-input-ripple"
-        />
-      </div>
     </span>
     <div
       class="c7n-input-number"
     >
       <span
-        class="c7n-input-wrapper c7n-input-has-suffix"
+        class="c7n-input-wrapper c7n-input-has-suffix c7n-input-has-border"
       >
         <div
           class="c7n-input-content"
@@ -604,9 +484,6 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
             <div
               class="c7n-input-rendered"
             >
-              <div
-                class="c7n-input-placeholder"
-              />
               <input
                 autocomplete="off"
                 class="c7n-input"
@@ -650,13 +527,6 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
             </span>
           </div>
         </div>
-        <div
-          class="c7n-input-underline"
-        >
-          <span
-            class="c7n-input-ripple"
-          />
-        </div>
       </span>
     </div>
   </span>
@@ -665,7 +535,7 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
     class="c7n-input-group c7n-input-group-compact"
   >
     <span
-      class="c7n-input-wrapper"
+      class="c7n-input-wrapper c7n-input-has-border"
       style="width:50%"
     >
       <div
@@ -677,9 +547,6 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
           <div
             class="c7n-input-rendered"
           >
-            <div
-              class="c7n-input-placeholder"
-            />
             <input
               class="c7n-input"
               type="text"
@@ -688,19 +555,12 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
           </div>
         </div>
       </div>
-      <div
-        class="c7n-input-underline"
-      >
-        <span
-          class="c7n-input-ripple"
-        />
-      </div>
     </span>
     <span
       class="c7n-calendar-picker"
     >
       <span
-        class="c7n-input-wrapper c7n-input-has-suffix"
+        class="c7n-input-wrapper c7n-input-has-suffix c7n-input-has-border"
       >
         <div
           class="c7n-input-content"
@@ -711,24 +571,27 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
             <div
               class="c7n-input-rendered"
             >
-              <div
-                class="c7n-input-placeholder"
-              >
-                Select date
-              </div>
               <input
                 class="c7n-input c7n-calendar-picker-input c7n-input"
                 readonly=""
                 type="text"
                 value=""
               />
+              <div
+                class="c7n-input-label-wrapper"
+              >
+                <div
+                  class="c7n-input-label"
+                >
+                  Select date
+                </div>
+              </div>
             </div>
             <span
               class="c7n-input-suffix"
             >
               <span
                 class="c7n-calendar-picker-icon-wrapper"
-                style="min-width:18px"
               >
                 <i
                   class="icon icon-date_range c7n-calendar-picker-icon"
@@ -736,13 +599,6 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
               </span>
             </span>
           </div>
-        </div>
-        <div
-          class="c7n-input-underline"
-        >
-          <span
-            class="c7n-input-ripple"
-          />
         </div>
       </span>
     </span>
@@ -752,7 +608,7 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
     class="c7n-input-group c7n-input-group-compact"
   >
     <div
-      class="c7n-select c7n-select-has-value c7n-select-enabled"
+      class="c7n-select c7n-select-has-value c7n-select-enabled c7n-select-has-border"
     >
       <div
         aria-autocomplete="list"
@@ -785,16 +641,9 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
           </span>
         </div>
       </div>
-      <div
-        class="c7n-select-underline"
-      >
-        <span
-          class="c7n-select-ripple"
-        />
-      </div>
     </div>
     <div
-      class="c7n-select c7n-select-has-value c7n-select-enabled"
+      class="c7n-select c7n-select-has-value c7n-select-enabled c7n-select-has-border"
     >
       <div
         aria-autocomplete="list"
@@ -827,13 +676,6 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
           </span>
         </div>
       </div>
-      <div
-        class="c7n-select-underline"
-      >
-        <span
-          class="c7n-select-ripple"
-        />
-      </div>
     </div>
   </span>
   <br />
@@ -841,7 +683,7 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
     class="c7n-input-group c7n-input-group-compact"
   >
     <div
-      class="c7n-select c7n-select-has-value c7n-select-enabled"
+      class="c7n-select c7n-select-has-value c7n-select-enabled c7n-select-has-border"
     >
       <div
         aria-autocomplete="list"
@@ -874,16 +716,9 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
           </span>
         </div>
       </div>
-      <div
-        class="c7n-select-underline"
-      >
-        <span
-          class="c7n-select-ripple"
-        />
-      </div>
     </div>
     <span
-      class="c7n-input-wrapper"
+      class="c7n-input-wrapper c7n-input-has-border"
       style="width:100px;text-align:center"
     >
       <div
@@ -895,28 +730,25 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
           <div
             class="c7n-input-rendered"
           >
-            <div
-              class="c7n-input-placeholder"
-            >
-              Minimum
-            </div>
             <input
               class="c7n-input"
               type="text"
             />
+            <div
+              class="c7n-input-label-wrapper"
+            >
+              <div
+                class="c7n-input-label"
+              >
+                Minimum
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div
-        class="c7n-input-underline"
-      >
-        <span
-          class="c7n-input-ripple"
-        />
-      </div>
     </span>
     <span
-      class="c7n-input-wrapper c7n-input-disabled"
+      class="c7n-input-wrapper c7n-input-disabled c7n-input-has-border"
       style="width:30px;border-left:0;pointer-events:none;background-color:#fff"
     >
       <div
@@ -928,9 +760,6 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
           <div
             class="c7n-input-rendered"
           >
-            <div
-              class="c7n-input-placeholder"
-            />
             <input
               class="c7n-input"
               disabled=""
@@ -940,16 +769,9 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
           </div>
         </div>
       </div>
-      <div
-        class="c7n-input-underline"
-      >
-        <span
-          class="c7n-input-ripple"
-        />
-      </div>
     </span>
     <span
-      class="c7n-input-wrapper"
+      class="c7n-input-wrapper c7n-input-has-border"
       style="width:100px;text-align:center;border-left:0"
     >
       <div
@@ -961,24 +783,21 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
           <div
             class="c7n-input-rendered"
           >
-            <div
-              class="c7n-input-placeholder"
-            >
-              Maximum
-            </div>
             <input
               class="c7n-input"
               type="text"
             />
+            <div
+              class="c7n-input-label-wrapper"
+            >
+              <div
+                class="c7n-input-label"
+              >
+                Maximum
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      <div
-        class="c7n-input-underline"
-      >
-        <span
-          class="c7n-input-ripple"
-        />
       </div>
     </span>
   </span>
@@ -987,7 +806,7 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
     class="c7n-input-group c7n-input-group-compact"
   >
     <div
-      class="c7n-select c7n-select-has-value c7n-select-enabled"
+      class="c7n-select c7n-select-has-value c7n-select-enabled c7n-select-has-border"
     >
       <div
         aria-autocomplete="list"
@@ -1020,16 +839,9 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
           </span>
         </div>
       </div>
-      <div
-        class="c7n-select-underline"
-      >
-        <span
-          class="c7n-select-ripple"
-        />
-      </div>
     </div>
     <div
-      class="c7n-select-show-search c7n-select-auto-complete c7n-select c7n-select-combobox c7n-select-enabled"
+      class="c7n-select-show-search c7n-select-auto-complete c7n-select c7n-select-combobox c7n-select-enabled c7n-select-has-border"
       style="width:200px"
     >
       <div
@@ -1044,11 +856,6 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
           class="c7n-select-selection__rendered"
         >
           <div
-            class="c7n-select-selection__placeholder"
-          >
-            Email
-          </div>
-          <div
             class="c7n-select-search c7n-select-search--inline"
             style="display:inline-block"
           >
@@ -1056,7 +863,7 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
               class="c7n-select-search__field__wrap"
             >
               <span
-                class="c7n-input-wrapper"
+                class="c7n-input-wrapper c7n-input-has-border"
               >
                 <div
                   class="c7n-input-content"
@@ -1067,9 +874,6 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
                     <div
                       class="c7n-input-rendered"
                     >
-                      <div
-                        class="c7n-input-placeholder"
-                      />
                       <input
                         class="c7n-input c7n-select-search__field"
                         type="text"
@@ -1077,13 +881,6 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
                       />
                     </div>
                   </div>
-                </div>
-                <div
-                  class="c7n-input-underline"
-                >
-                  <span
-                    class="c7n-input-ripple"
-                  />
                 </div>
               </span>
               <span
@@ -1104,6 +901,15 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
             <b />
           </span>
         </div>
+        <div
+          class="c7n-select-label-wrapper"
+        >
+          <div
+            class="c7n-select-label"
+          >
+            Email
+          </div>
+        </div>
       </div>
     </div>
   </span>
@@ -1112,7 +918,7 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
     class="c7n-input-group c7n-input-group-compact"
   >
     <div
-      class="c7n-select c7n-select-has-value c7n-select-enabled"
+      class="c7n-select c7n-select-has-value c7n-select-enabled c7n-select-has-border"
       style="width:30%"
     >
       <div
@@ -1146,13 +952,6 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
           </span>
         </div>
       </div>
-      <div
-        class="c7n-select-underline"
-      >
-        <span
-          class="c7n-select-ripple"
-        />
-      </div>
     </div>
     <span
       class="c7n-cascader-picker"
@@ -1163,7 +962,7 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
         class="c7n-cascader-picker-label"
       />
       <span
-        class="c7n-input-wrapper"
+        class="c7n-input-wrapper c7n-input-has-border"
       >
         <div
           class="c7n-input-content"
@@ -1174,11 +973,6 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
             <div
               class="c7n-input-rendered"
             >
-              <div
-                class="c7n-input-placeholder"
-              >
-                Select Address
-              </div>
               <input
                 autocomplete="off"
                 class="c7n-input c7n-cascader-input "
@@ -1186,15 +980,17 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
                 type="text"
                 value=""
               />
+              <div
+                class="c7n-input-label-wrapper"
+              >
+                <div
+                  class="c7n-input-label"
+                >
+                  Select Address
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-        <div
-          class="c7n-input-underline"
-        >
-          <span
-            class="c7n-input-ripple"
-          />
         </div>
       </span>
       <i
@@ -1215,51 +1011,39 @@ exports[`renders ./components/input/demo/password.md correctly 1`] = `
     style="padding-left:4px;padding-right:4px"
   >
     <span
-      class="c7n-input-wrapper c7n-input-has-label"
+      class="c7n-input-wrapper c7n-input-has-label c7n-input-has-border"
     >
       <div
         class="c7n-input-content"
       >
-        <div
-          class="c7n-input-label"
-        >
-          username
-        </div>
         <div
           class="c7n-input-rendered-wrapper"
         >
           <div
             class="c7n-input-rendered"
           >
-            <div
-              class="c7n-input-placeholder"
-            >
-              username
-            </div>
             <input
               class="c7n-input"
               maxlength="50"
               required=""
               type="text"
             />
+            <div
+              class="c7n-input-label-wrapper"
+            >
+              <div
+                class="c7n-input-label"
+              >
+                username
+              </div>
+            </div>
           </div>
         </div>
-        <span
-          class="c7n-input-icon"
+        <div
+          class="c7n-input-length-info"
         >
-          <span
-            class="c7n-input-icon-copy c7n-input-length-info"
-          >
-            0/50
-          </span>
-        </span>
-      </div>
-      <div
-        class="c7n-input-underline"
-      >
-        <span
-          class="c7n-input-ripple"
-        />
+          0/50
+        </div>
       </div>
     </span>
   </div>
@@ -1268,51 +1052,39 @@ exports[`renders ./components/input/demo/password.md correctly 1`] = `
     style="padding-left:4px;padding-right:4px"
   >
     <span
-      class="c7n-input-wrapper c7n-input-has-label"
+      class="c7n-input-wrapper c7n-input-has-label c7n-input-has-border"
     >
       <div
         class="c7n-input-content"
       >
-        <div
-          class="c7n-input-label"
-        >
-          password
-        </div>
         <div
           class="c7n-input-rendered-wrapper"
         >
           <div
             class="c7n-input-rendered"
           >
-            <div
-              class="c7n-input-placeholder"
-            >
-              password
-            </div>
             <input
               class="c7n-input"
               maxlength="20"
               required=""
               type="text"
             />
+            <div
+              class="c7n-input-label-wrapper"
+            >
+              <div
+                class="c7n-input-label"
+              >
+                password
+              </div>
+            </div>
           </div>
         </div>
-        <span
-          class="c7n-input-icon"
+        <div
+          class="c7n-input-length-info"
         >
-          <span
-            class="c7n-input-icon-copy c7n-input-length-info"
-          >
-            0/20
-          </span>
-        </span>
-      </div>
-      <div
-        class="c7n-input-underline"
-      >
-        <span
-          class="c7n-input-ripple"
-        />
+          0/20
+        </div>
       </div>
     </span>
   </div>
@@ -1321,33 +1093,32 @@ exports[`renders ./components/input/demo/password.md correctly 1`] = `
     style="padding-left:4px;padding-right:4px"
   >
     <span
-      class="c7n-input-wrapper c7n-input-has-label"
+      class="c7n-input-wrapper c7n-input-has-label c7n-input-has-border"
     >
       <div
         class="c7n-input-content"
       >
-        <div
-          class="c7n-input-label"
-        >
-          password
-        </div>
         <div
           class="c7n-input-rendered-wrapper"
         >
           <div
             class="c7n-input-rendered"
           >
-            <div
-              class="c7n-input-placeholder"
-            >
-              password
-            </div>
             <input
               class="c7n-input"
               maxlength="20"
               required=""
               type="text"
             />
+            <div
+              class="c7n-input-label-wrapper"
+            >
+              <div
+                class="c7n-input-label"
+              >
+                password
+              </div>
+            </div>
             <span
               class="c7n-input-icon"
             >
@@ -1357,22 +1128,11 @@ exports[`renders ./components/input/demo/password.md correctly 1`] = `
             </span>
           </div>
         </div>
-        <span
-          class="c7n-input-icon"
+        <div
+          class="c7n-input-length-info"
         >
-          <span
-            class="c7n-input-icon-copy c7n-input-length-info"
-          >
-            0/20
-          </span>
-        </span>
-      </div>
-      <div
-        class="c7n-input-underline"
-      >
-        <span
-          class="c7n-input-ripple"
-        />
+          0/20
+        </div>
       </div>
     </span>
   </div>
@@ -1381,16 +1141,11 @@ exports[`renders ./components/input/demo/password.md correctly 1`] = `
 
 exports[`renders ./components/input/demo/presuffix.md correctly 1`] = `
 <span
-  class="c7n-input-wrapper c7n-input-has-label c7n-input-has-prefix c7n-input-has-suffix"
+  class="c7n-input-wrapper c7n-input-has-label c7n-input-has-prefix c7n-input-has-suffix c7n-input-has-border"
 >
   <div
     class="c7n-input-content"
   >
-    <div
-      class="c7n-input-label"
-    >
-      username
-    </div>
     <div
       class="c7n-input-rendered-wrapper"
     >
@@ -1402,16 +1157,20 @@ exports[`renders ./components/input/demo/presuffix.md correctly 1`] = `
       <div
         class="c7n-input-rendered"
       >
-        <div
-          class="c7n-input-placeholder"
-        >
-          Enter your username
-        </div>
         <input
           class="c7n-input c7n-input-has-copy"
           type="text"
           value="xxx"
         />
+        <div
+          class="c7n-input-label-wrapper"
+        >
+          <div
+            class="c7n-input-label"
+          >
+            Enter your username
+          </div>
+        </div>
         <span
           class="c7n-input-icon"
         >
@@ -1429,20 +1188,13 @@ exports[`renders ./components/input/demo/presuffix.md correctly 1`] = `
       </span>
     </div>
   </div>
-  <div
-    class="c7n-input-underline"
-  >
-    <span
-      class="c7n-input-ripple"
-    />
-  </div>
 </span>
 `;
 
 exports[`renders ./components/input/demo/search-input.md correctly 1`] = `
 <div>
   <span
-    class="c7n-input-wrapper c7n-input-has-suffix"
+    class="c7n-input-wrapper c7n-input-has-suffix c7n-input-has-border"
     style="width:200px"
   >
     <div
@@ -1454,15 +1206,19 @@ exports[`renders ./components/input/demo/search-input.md correctly 1`] = `
         <div
           class="c7n-input-rendered c7n-input-rendered-sm"
         >
-          <div
-            class="c7n-input-placeholder"
-          >
-            input search text
-          </div>
           <input
             class="c7n-input c7n-input-sm c7n-input-search c7n-input-search-small"
             type="text"
           />
+          <div
+            class="c7n-input-label-wrapper"
+          >
+            <div
+              class="c7n-input-label"
+            >
+              input search text
+            </div>
+          </div>
         </div>
         <span
           class="c7n-input-suffix c7n-input-suffix-sm"
@@ -1481,18 +1237,11 @@ exports[`renders ./components/input/demo/search-input.md correctly 1`] = `
         </span>
       </div>
     </div>
-    <div
-      class="c7n-input-underline"
-    >
-      <span
-        class="c7n-input-ripple"
-      />
-    </div>
   </span>
   <br />
   <br />
   <span
-    class="c7n-input-wrapper c7n-input-has-suffix"
+    class="c7n-input-wrapper c7n-input-has-suffix c7n-input-has-border"
   >
     <div
       class="c7n-input-content"
@@ -1503,15 +1252,19 @@ exports[`renders ./components/input/demo/search-input.md correctly 1`] = `
         <div
           class="c7n-input-rendered c7n-input-rendered-sm"
         >
-          <div
-            class="c7n-input-placeholder"
-          >
-            input search text
-          </div>
           <input
             class="c7n-input c7n-input-sm c7n-input-search c7n-input-search-enter-button c7n-input-search-small"
             type="text"
           />
+          <div
+            class="c7n-input-label-wrapper"
+          >
+            <div
+              class="c7n-input-label"
+            >
+              input search text
+            </div>
+          </div>
         </div>
         <span
           class="c7n-input-suffix c7n-input-suffix-sm"
@@ -1530,18 +1283,11 @@ exports[`renders ./components/input/demo/search-input.md correctly 1`] = `
         </span>
       </div>
     </div>
-    <div
-      class="c7n-input-underline"
-    >
-      <span
-        class="c7n-input-ripple"
-      />
-    </div>
   </span>
   <br />
   <br />
   <span
-    class="c7n-input-wrapper c7n-input-has-suffix"
+    class="c7n-input-wrapper c7n-input-has-suffix c7n-input-has-border"
   >
     <div
       class="c7n-input-content"
@@ -1552,15 +1298,19 @@ exports[`renders ./components/input/demo/search-input.md correctly 1`] = `
         <div
           class="c7n-input-rendered c7n-input-rendered-lg"
         >
-          <div
-            class="c7n-input-placeholder"
-          >
-            input search text
-          </div>
           <input
             class="c7n-input c7n-input-lg c7n-input-search c7n-input-search-enter-button c7n-input-search-large"
             type="text"
           />
+          <div
+            class="c7n-input-label-wrapper"
+          >
+            <div
+              class="c7n-input-label"
+            >
+              input search text
+            </div>
+          </div>
         </div>
         <span
           class="c7n-input-suffix c7n-input-suffix-lg"
@@ -1579,13 +1329,6 @@ exports[`renders ./components/input/demo/search-input.md correctly 1`] = `
         </span>
       </div>
     </div>
-    <div
-      class="c7n-input-underline"
-    >
-      <span
-        class="c7n-input-ripple"
-      />
-    </div>
   </span>
 </div>
 `;
@@ -1595,54 +1338,42 @@ exports[`renders ./components/input/demo/size.md correctly 1`] = `
   class="example-input"
 >
   <span
-    class="c7n-input-wrapper c7n-input-has-label"
+    class="c7n-input-wrapper c7n-input-has-label c7n-input-has-border"
   >
     <div
       class="c7n-input-content"
     >
-      <div
-        class="c7n-input-label"
-      >
-        Large
-      </div>
       <div
         class="c7n-input-rendered-wrapper"
       >
         <div
           class="c7n-input-rendered c7n-input-rendered-lg"
         >
-          <div
-            class="c7n-input-placeholder"
-          >
-            large size
-          </div>
           <input
             class="c7n-input c7n-input-lg"
             maxlength="20"
             type="text"
           />
+          <div
+            class="c7n-input-label-wrapper"
+          >
+            <div
+              class="c7n-input-label"
+            >
+              large size
+            </div>
+          </div>
         </div>
       </div>
-      <span
-        class="c7n-input-icon"
+      <div
+        class="c7n-input-length-info"
       >
-        <span
-          class="c7n-input-icon-copy c7n-input-length-info"
-        >
-          0/20
-        </span>
-      </span>
-    </div>
-    <div
-      class="c7n-input-underline"
-    >
-      <span
-        class="c7n-input-ripple"
-      />
+        0/20
+      </div>
     </div>
   </span>
   <span
-    class="c7n-input-wrapper"
+    class="c7n-input-wrapper c7n-input-has-border"
   >
     <div
       class="c7n-input-content"
@@ -1653,61 +1384,50 @@ exports[`renders ./components/input/demo/size.md correctly 1`] = `
         <div
           class="c7n-input-rendered"
         >
-          <div
-            class="c7n-input-placeholder"
-          >
-            default size
-          </div>
           <input
             class="c7n-input"
             type="text"
           />
+          <div
+            class="c7n-input-label-wrapper"
+          >
+            <div
+              class="c7n-input-label"
+            >
+              default size
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <div
-      class="c7n-input-underline"
-    >
-      <span
-        class="c7n-input-ripple"
-      />
-    </div>
   </span>
   <span
-    class="c7n-input-wrapper c7n-input-has-label"
+    class="c7n-input-wrapper c7n-input-has-label c7n-input-has-border"
   >
     <div
       class="c7n-input-content"
     >
-      <div
-        class="c7n-input-label"
-      >
-        small
-      </div>
       <div
         class="c7n-input-rendered-wrapper"
       >
         <div
           class="c7n-input-rendered c7n-input-rendered-sm"
         >
-          <div
-            class="c7n-input-placeholder"
-          >
-            small size
-          </div>
           <input
             class="c7n-input c7n-input-sm"
             type="text"
           />
+          <div
+            class="c7n-input-label-wrapper"
+          >
+            <div
+              class="c7n-input-label"
+            >
+              small size
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <div
-      class="c7n-input-underline"
-    >
-      <span
-        class="c7n-input-ripple"
-      />
     </div>
   </span>
 </div>
@@ -1718,28 +1438,23 @@ exports[`renders ./components/input/demo/textarea.md correctly 1`] = `
   class="c7n-input-wrapper c7n-input-textarea c7n-input-has-label"
 >
   <div
-    class="c7n-input-rendered"
+    class="c7n-input-rendered-wrapper"
   >
+    <textarea
+      class="c7n-input"
+      label="textarea"
+      maxlength="20"
+      rows="4"
+    />
     <div
-      class="c7n-input-label"
+      class="c7n-input-label-wrapper"
     >
-      textarea
+      <div
+        class="c7n-input-label"
+      >
+        textarea usage
+      </div>
     </div>
-  </div>
-  <textarea
-    class="c7n-input"
-    label="textarea"
-    maxlength="20"
-    placeholder=""
-    rows="4"
-  />
-  <div>
-    <hr
-      class="c7n-input-border"
-    />
-    <hr
-      class="c7n-input-border-active"
-    />
   </div>
   <div
     class="c7n-input-length-info"
@@ -1751,7 +1466,7 @@ exports[`renders ./components/input/demo/textarea.md correctly 1`] = `
 
 exports[`renders ./components/input/demo/tooltip.md correctly 1`] = `
 <span
-  class="c7n-input-wrapper"
+  class="c7n-input-wrapper c7n-input-has-border"
   style="width:120px"
 >
   <div
@@ -1763,35 +1478,28 @@ exports[`renders ./components/input/demo/tooltip.md correctly 1`] = `
       <div
         class="c7n-input-rendered"
       >
-        <div
-          class="c7n-input-placeholder"
-        >
-          Input a number
-        </div>
         <input
           class="c7n-input"
           maxlength="25"
           type="text"
           value=""
         />
+        <div
+          class="c7n-input-label-wrapper"
+        >
+          <div
+            class="c7n-input-label"
+          >
+            Input a number
+          </div>
+        </div>
       </div>
     </div>
-    <span
-      class="c7n-input-icon"
+    <div
+      class="c7n-input-length-info"
     >
-      <span
-        class="c7n-input-icon-copy c7n-input-length-info"
-      >
-        0/25
-      </span>
-    </span>
-  </div>
-  <div
-    class="c7n-input-underline"
-  >
-    <span
-      class="c7n-input-ripple"
-    />
+      0/25
+    </div>
   </div>
 </span>
 `;

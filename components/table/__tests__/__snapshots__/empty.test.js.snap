@@ -59,13 +59,6 @@ exports[`Table renders empty table 1`] = `
                 </ul>
               </div>
             </div>
-            <div
-              class="c7n-select-underline"
-            >
-              <span
-                class="c7n-select-ripple"
-              />
-            </div>
           </div>
           <div
             class="c7n-table-filter-select-columns"
@@ -255,13 +248,6 @@ exports[`Table renders empty table with custom emptyText 1`] = `
                 </ul>
               </div>
             </div>
-            <div
-              class="c7n-select-underline"
-            >
-              <span
-                class="c7n-select-ripple"
-              />
-            </div>
           </div>
           <div
             class="c7n-table-filter-select-columns"
@@ -450,13 +436,6 @@ exports[`Table renders empty table with fixed columns 1`] = `
                   </li>
                 </ul>
               </div>
-            </div>
-            <div
-              class="c7n-select-underline"
-            >
-              <span
-                class="c7n-select-ripple"
-              />
             </div>
           </div>
           <div
@@ -793,13 +772,6 @@ exports[`Table renders empty table without emptyText when loading 1`] = `
                   </li>
                 </ul>
               </div>
-            </div>
-            <div
-              class="c7n-select-underline"
-            >
-              <span
-                class="c7n-select-ripple"
-              />
             </div>
           </div>
           <div
