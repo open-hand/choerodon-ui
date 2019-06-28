@@ -20,6 +20,13 @@ timeline: true
 - 💄 `DatePicker`: Update the style.
 - 💄 `Select`: Update the style.
 
+## 0.7.4
+## 0.6.13
+
+`2019-06-28`
+
+- 🐞 `<pro>TextArea`: Fixed an issue where uncontrolled values could not be retained.
+
 ## 0.7.3
 ## 0.6.12
 
