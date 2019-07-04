@@ -30,11 +30,14 @@ export interface ModalProps extends ViewComponentProps {
   destroyOnClose?: boolean;
   okText?: ReactNode;
   cancelText?: ReactNode;
+  disableOk?: boolean;
+  disableCancel?: boolean;
   onClose?: () => Promise<boolean | undefined>;
   onOk?: () => Promise<boolean | undefined>;
   onCancel?: () => Promise<boolean | undefined>;
   afterClose?: () => void;
   close?: () => void;
+  update?: (props?: ModalProps) => void;
   okCancel?: boolean;
   drawer?: boolean;
   key?: Key;
@@ -56,6 +59,8 @@ export default class Modal extends ViewComponent<ModalProps> {
     destroyOnClose: PropTypes.bool,
     okText: PropTypes.node,
     cancelText: PropTypes.node,
+    disableOk: PropTypes.bool,
+    disableCancel: PropTypes.bool,
     onClose: PropTypes.func,
     onOk: PropTypes.func,
     onCancel: PropTypes.func,
@@ -98,8 +103,9 @@ export default class Modal extends ViewComponent<ModalProps> {
   saveCancelRef = node => this.cancelButton = node;
 
   handleKeyDown = (e) => {
-    if (this.cancelButton && !this.cancelButton.isDisabled() && e.keyCode === KeyCode.ESC) {
-      this.cancelButton.handleClickWait(e);
+    const { cancelButton } = this;
+    if (cancelButton && !cancelButton.isDisabled() && e.keyCode === KeyCode.ESC) {
+      cancelButton.handleClickWait(e);
     }
   };
 
@@ -114,6 +120,7 @@ export default class Modal extends ViewComponent<ModalProps> {
       'header',
       'footer',
       'close',
+      'update',
       'okText',
       'cancelText',
       'okCancel',
@@ -123,6 +130,8 @@ export default class Modal extends ViewComponent<ModalProps> {
       'destroyOnClose',
       'drawer',
       'afterClose',
+      'disableOk',
+      'okDisabled',
     ]);
     if (this.props.keyboardClosable) {
       otherProps.autoFocus = true;
@@ -279,19 +288,30 @@ export default class Modal extends ViewComponent<ModalProps> {
     }
   }
 
+  registerOk = (ok) => {
+    this.okCancelEvent.removeEventListener('ok');
+    this.okCancelEvent.addEventListener('ok', ok);
+  };
+
+  registerCancel = (cancel) => {
+    this.okCancelEvent.removeEventListener('cancel');
+    this.okCancelEvent.addEventListener('cancel', cancel);
+  };
+
   renderChildren(children: ReactNode): ReactNode {
     if (children) {
-      const { prefixCls, props: { close = noop } } = this;
-      const { okCancelEvent } = this;
-      const handleOk = (ok) => (
-        okCancelEvent.removeEventListener('ok'), okCancelEvent.addEventListener('ok', ok)
-      );
-      const handleCancel = (cancel) => (
-        okCancelEvent.removeEventListener('cancel'), okCancelEvent.addEventListener('cancel', cancel)
-      );
+      const { prefixCls, props } = this;
+      const { close = noop, update = noop } = props;
+      const modal = {
+        close,
+        update,
+        props,
+        handleOk: this.registerOk,
+        handleCancel: this.registerCancel,
+      };
       return (
         <div className={`${prefixCls}-body`}>
-          {isValidElement(children) ? cloneElement(children, { modal: { close, handleOk, handleCancel } } as any) : children}
+          {isValidElement(children) ? cloneElement<any>(children, { modal }) : children}
         </div>
       );
     }
@@ -340,11 +360,14 @@ export default class Modal extends ViewComponent<ModalProps> {
   }
 
   getDefaultFooter() {
-    const { okCancel, okText = $l('Modal', 'ok'), cancelText = $l('Modal', 'cancel') } = this.props;
+    const {
+      disableOk, disableCancel, okCancel,
+      okText = $l('Modal', 'ok'), cancelText = $l('Modal', 'cancel'),
+    } = this.props;
     return (
       <div>
-        <Button color={ButtonColor.blue} onClick={this.handleOk}>{okText}</Button>
-        {okCancel && <Button ref={this.saveCancelRef} onClick={this.handleCancel}>{cancelText}</Button>}
+        <Button disabled={disableOk} color={ButtonColor.blue} onClick={this.handleOk}>{okText}</Button>
+        {okCancel && <Button ref={this.saveCancelRef} disabled={disableCancel} onClick={this.handleCancel}>{cancelText}</Button>}
       </div>
     );
   }

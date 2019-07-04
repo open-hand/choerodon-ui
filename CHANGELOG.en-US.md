@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Modal`: Modal and internal injection modal object add `update` methods.
+- 🌟 `<pro>Modal`: Added `disableOk`, `disableCancel` attribute.
 - 💄 `Password`: Change to reveal password by clicking.
 - 💄 `Input`: Update the style.
 - 💄 `DatePicker`: Update the style.

@@ -26,12 +26,17 @@ const ModalContent = ({ modal }) => {
   modal.handleCancel(() => {
     console.log('do Cancel');
   });
+  function toggleOkDisabled() {
+    modal.update({ disableOk:!modal.props.disableOk });
+  }
+  
   return (
     <div>
       <p>Some contents...</p>
       <p>Some contents...</p>
       <p>Some contents...</p>
       <Button color="blue" onClick={modal.close}>custom button for close modal</Button>
+      <Button onClick={toggleOkDisabled}>{modal.props.disableOk ? 'enable' : 'disable'}</Button>
     </div>
   );
 };
@@ -41,6 +46,7 @@ function openModal() {
     key: modalKey,
     title: 'Basic',
     children: <ModalContent />,
+    disableOk: true,
   });
 }
 

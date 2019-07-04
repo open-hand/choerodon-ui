@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Modal`: Modal和内部注入modal对象增加update方法。
+- 🌟 `<pro>Modal`: 新增disableOk, disableCancel属性。
 - 💄 `Password`: 变更为通过点击揭示密码。
 - 💄 `Input`: 更新样式。
 - 💄 `DatePicker`: 更新样式。

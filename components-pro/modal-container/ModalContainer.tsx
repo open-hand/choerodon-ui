@@ -20,8 +20,21 @@ const KeyGen = function* (id) {
   }
 }(1);
 
+const containerInstanses: ModalContainer[] = [];
+
+function addInstanse(instanse: ModalContainer) {
+  removeInstanse(instanse);
+  containerInstanses.push(instanse);
+}
+
+function removeInstanse(instanse: ModalContainer) {
+  const index = containerInstanses.indexOf(instanse);
+  if (index > -1) {
+    containerInstanses.splice(index, 1);
+  }
+}
+
 let root;
-let containerInstanse;
 let defaultBodyStyle: { overflow, paddingRight } | undefined;
 
 function hideBodyScrollBar() {
@@ -59,7 +72,7 @@ export default class ModalContainer extends Component<any> {
 
   constructor(props, context) {
     super(props, context);
-    containerInstanse = this;
+    addInstanse(this);
   }
 
   handleAnimationEnd = (modalKey, isEnter) => {
@@ -99,10 +112,11 @@ export default class ModalContainer extends Component<any> {
     if (location && currentLocation && location.pathname !== currentLocation.pathname) {
       this.clear();
     }
+    addInstanse(this);
   }
 
   componentWillUnmount() {
-    containerInstanse = null;
+    removeInstanse(this);
   }
 
   findIndex(modalKey) {
@@ -130,6 +144,17 @@ export default class ModalContainer extends Component<any> {
     if (target) {
       Object.assign(target, props, { hidden: true });
       this.setState({ modals });
+    }
+  }
+
+  update(props: ModalProps) {
+    const modals = [...this.state.modals];
+    if (props.key) {
+      const index = this.findIndex(props.key);
+      if (index !== -1) {
+        modals[index] = props;
+        this.setState({ modals });
+      }
     }
   }
 
@@ -250,12 +275,13 @@ function getRoot() {
   return root;
 }
 
-export function getContainer() {
-  if (containerInstanse) {
-    return containerInstanse;
-  } else {
+export function getContainer(loop?: boolean) {
+  const { length } = containerInstanses;
+  if (length) {
+    return containerInstanses[length - 1];
+  } else if (loop !== true) {
     render(<ModalContainer />, getRoot());
-    return containerInstanse;
+    return getContainer(true);
   }
 }
 
@@ -277,8 +303,13 @@ export function open(props: ModalProps & { children }) {
     container.open(props);
   }
 
+  function update(newProps) {
+    container.update({ ...props, ...newProps });
+  }
+
   props = {
     close,
+    update,
     ...Modal.defaultProps,
     ...props,
   };
@@ -287,6 +318,7 @@ export function open(props: ModalProps & { children }) {
   return {
     close,
     open: show,
+    update,
   };
 }
 

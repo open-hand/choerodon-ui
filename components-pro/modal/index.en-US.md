@@ -34,6 +34,8 @@ title: Modal
 | afterClose | 关闭后回调 | () => void |  |
 | drawer | 抽屉模式 | boolean | false |
 | okCancel | 同时显示ok和cancel按钮，false的时候只显示ok按钮 | boolean | true |
+| disableOk | 是否禁用ok按钮 | boolean | false |
+| disableCancel | 是否禁用cancel按钮 | boolean | false |
 
 <style>
 .code-box-demo .c7n-pro-btn {
@@ -43,7 +45,8 @@ title: Modal
 
 ### ModalContainer
 
-使用Modal前，需要在页面Root内插入ModalContainer。如果路由切换时要清空所有Modal，需要在ModalContiner传入location，如下所示。
+* 使用Modal前，需要在页面Root内插入ModalContainer。如果路由切换时要清空所有Modal，需要在ModalContiner传入location，如下所示。
+* 如要使用react-intl之类的多语言库，请将ModalContainer至于IntlProvider之下。
 
 ```jsx harmony
 import { ModalContainer } from 'choerodon-ui/pro';
@@ -67,3 +70,26 @@ render(
 )
 
 ```
+
+### Modal.open
+
+Modal.open()返回一个对象，该对象具有如下方法：
+
+| 名称 | 说明 | 参数 |
+| --- | --- | --- |
+| close(destroy) | 关闭 | `destroy` - 是否销毁 |
+| open() | 打开 |  |
+| update(props) | 更新 |  |
+
+
+### props.modal
+
+Modal会向内部组件注入modal对象，该对象具有如下属性与方法：
+
+| 名称 | 说明 | 参数 |
+| --- | --- | --- |
+| handleOk(callback) | 注册响应ok按钮的钩子，返回值为false将阻止关闭 | `callback` - 钩子 |
+| handleCancel(callback) | 注册响应cancel按钮的钩子，返回值为false将阻止关闭 | `callback` - 钩子 |
+| close(destroy) | 关闭 | `destroy` - 是否销毁 |
+| update(props) | 更新 |  |
+| props | modal的props |  |
