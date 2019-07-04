@@ -45,6 +45,7 @@ export default class Modal extends ViewComponent<ModalProps> {
   static displayName = 'Modal';
 
   static propTypes = {
+    ...ViewComponent.propTypes,
     closable: PropTypes.bool,
     movable: PropTypes.bool,
     fullScreen: PropTypes.bool,
@@ -62,7 +63,7 @@ export default class Modal extends ViewComponent<ModalProps> {
     okCancel: PropTypes.bool,
     drawer: PropTypes.bool,
     type: PropTypes.string,
-    ...ViewComponent.propTypes,
+    title: PropTypes.node,
   };
 
   static defaultProps = {

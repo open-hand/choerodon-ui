@@ -19,6 +19,7 @@ timeline: true
 - 💄 `Input`: Update the style.
 - 💄 `DatePicker`: Update the style.
 - 💄 `Select`: Update the style.
+- 🐞 `<pro>Select`: Fix the bug of compound multiple selection.
 
 ## 0.7.5
 ## 0.6.14
