@@ -8,7 +8,7 @@ import classes from 'component-classes';
 import ViewComponent, { ViewComponentProps } from '../core/ViewComponent';
 import Icon from '../icon';
 import autobind from '../_util/autobind';
-import Button from '../button/Button';
+import Button, { ButtonProps } from '../button/Button';
 import EventManager from '../_util/EventManager';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import isEmpty from '../_util/isEmpty';
@@ -18,6 +18,7 @@ import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import Message from '../message';
 import exception from '../_util/exception';
 import { $l } from '../locale-context';
+import { getConfig } from 'choerodon-ui/lib/configure';
 
 export interface ModalProps extends ViewComponentProps {
   closable?: boolean;
@@ -30,8 +31,8 @@ export interface ModalProps extends ViewComponentProps {
   destroyOnClose?: boolean;
   okText?: ReactNode;
   cancelText?: ReactNode;
-  disableOk?: boolean;
-  disableCancel?: boolean;
+  okProps?: ButtonProps;
+  cancelProps?: ButtonProps;
   onClose?: () => Promise<boolean | undefined>;
   onOk?: () => Promise<boolean | undefined>;
   onCancel?: () => Promise<boolean | undefined>;
@@ -41,7 +42,8 @@ export interface ModalProps extends ViewComponentProps {
   okCancel?: boolean;
   drawer?: boolean;
   key?: Key;
-  type?: string;
+  border?: boolean;
+  okFirst?: boolean;
 }
 
 export default class Modal extends ViewComponent<ModalProps> {
@@ -59,16 +61,16 @@ export default class Modal extends ViewComponent<ModalProps> {
     destroyOnClose: PropTypes.bool,
     okText: PropTypes.node,
     cancelText: PropTypes.node,
-    disableOk: PropTypes.bool,
-    disableCancel: PropTypes.bool,
+    okProps: PropTypes.object,
+    cancelProps: PropTypes.object,
     onClose: PropTypes.func,
     onOk: PropTypes.func,
     onCancel: PropTypes.func,
     afterClose: PropTypes.func,
     okCancel: PropTypes.bool,
     drawer: PropTypes.bool,
-    type: PropTypes.string,
     title: PropTypes.node,
+    okFirst: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -130,8 +132,10 @@ export default class Modal extends ViewComponent<ModalProps> {
       'destroyOnClose',
       'drawer',
       'afterClose',
-      'disableOk',
-      'okDisabled',
+      'okProps',
+      'cancelProps',
+      'border',
+      'okFirst',
     ]);
     if (this.props.keyboardClosable) {
       otherProps.autoFocus = true;
@@ -143,12 +147,13 @@ export default class Modal extends ViewComponent<ModalProps> {
   }
 
   getClassName(): string | undefined {
-    const { prefixCls, props: { style = {}, fullScreen, drawer } } = this;
+    const { prefixCls, props: { style = {}, fullScreen, drawer, border = getConfig('modalSectionBorder') } } = this;
 
     return super.getClassName({
       [`${prefixCls}-center`]: !drawer && !('left' in style || 'right' in style) && !this.offset,
       [`${prefixCls}-fullscreen`]: fullScreen,
       [`${prefixCls}-drawer`]: drawer,
+      [`${prefixCls}-border`]: border,
     });
   }
 
@@ -323,51 +328,41 @@ export default class Modal extends ViewComponent<ModalProps> {
   }
 
   getFooter(): ReactNode {
-    const { prefixCls, props: { footer = this.getDefaultFooter(), drawer, header } } = this;
+    const { prefixCls, props: { footer = this.getDefaultFooter(), drawer } } = this;
     if (!isEmpty(footer, true)) {
       const className = classNames(`${prefixCls}-footer`, {
         [`${prefixCls}-footer-drawer`]: !!drawer,
-        [`${prefixCls}-footer-without-border`]: !header,
       });
       return (
         <div className={className}>
-          {header ? footer : this.getConfirmFooter()}
+          {footer}
         </div>
       );
     }
   }
 
-  getConfirmFooter() {
-    const { okText = $l('Modal', 'ok'), cancelText = $l('Modal', 'cancel'), type } = this.props;
-    const isConfirm = type === 'confirm';
-    const cancelBtn = isConfirm ? (
-      <Button ref={this.saveCancelRef} onClick={this.handleCancel}>{cancelText}</Button>
-    ) : (
-      <Button
-        funcType={FuncType.flat}
-        color={ButtonColor.blue}
-        onClick={this.handleOk}
-      >
-        {okText}
-      </Button>
-    );
-    return (
-      <div>
-        {isConfirm && <Button color={ButtonColor.blue} onClick={this.handleOk}>{okText}</Button>}
-        {cancelBtn}
-      </div>
-    );
-  }
-
   getDefaultFooter() {
     const {
-      disableOk, disableCancel, okCancel,
+      okProps, cancelProps, okCancel, okFirst = getConfig('modalOkFirst'), drawer,
       okText = $l('Modal', 'ok'), cancelText = $l('Modal', 'cancel'),
     } = this.props;
+    const funcType: FuncType | undefined = drawer ? FuncType.raised : getConfig('buttonFuncType') as FuncType;
+    const buttons = [
+      <Button key="ok" funcType={funcType} color={ButtonColor.blue} onClick={this.handleOk} children={okText} {...okProps} />,
+    ];
+    if (okCancel) {
+      const cancelBtn = (
+        <Button key="cancel" ref={this.saveCancelRef} funcType={funcType} onClick={this.handleCancel} children={cancelText} {...cancelProps} />
+      );
+      if (okFirst || drawer) {
+        buttons.push(cancelBtn);
+      } else {
+        buttons.unshift(cancelBtn);
+      }
+    }
     return (
       <div>
-        <Button disabled={disableOk} color={ButtonColor.blue} onClick={this.handleOk}>{okText}</Button>
-        {okCancel && <Button ref={this.saveCancelRef} disabled={disableCancel} onClick={this.handleCancel}>{cancelText}</Button>}
+        {buttons}
       </div>
     );
   }

@@ -34,8 +34,9 @@ title: Modal
 | afterClose | 关闭后回调 | () => void |  |
 | drawer | 抽屉模式 | boolean | false |
 | okCancel | 同时显示ok和cancel按钮，false的时候只显示ok按钮 | boolean | true |
-| disableOk | 是否禁用ok按钮 | boolean | false |
-| disableCancel | 是否禁用cancel按钮 | boolean | false |
+| okFirst | ok按钮是否排在第一个 | boolean | true |
+| okProps | ok按钮属性 | object |  |
+| cancelProps | cancel按钮属性 | object |  |
 
 <style>
 .code-box-demo .c7n-pro-btn {

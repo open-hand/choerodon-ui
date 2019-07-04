@@ -11,7 +11,7 @@ export default function confirm(props: ModalProps & { iconType?: string, type?: 
   props = normalizeProps(props);
   const {
     children, type = 'confirm', onOk = noop, onCancel = noop,
-    iconType = 'error', header = false, ...otherProps,
+    iconType = 'error', header = false, border = false, okCancel = true, ...otherProps,
   } = props;
   const prefixCls = getProPrefixCls('confirm');
   return new Promise((resolve) => {
@@ -19,9 +19,9 @@ export default function confirm(props: ModalProps & { iconType?: string, type?: 
       key: getKey(),
       title: $l('Modal', 'confirm_modal_title'),
       header,
-      type,
+      border,
       destroyOnClose: true,
-      okCancel: true,
+      okCancel,
       closable: false,
       movable: false,
       style: { width: '4rem' },

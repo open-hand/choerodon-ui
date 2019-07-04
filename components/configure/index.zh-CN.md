@@ -36,4 +36,7 @@ configure({ prefixCls: 'ant' });
 | tableHighLightRow | 默认Table当前行高亮 | boolean | true |
 | tableRowHeight | 默认Table行高 | auto \| number | 30 |
 | tableColumnResizable | 默认Table列可调整列宽 | boolean | true |
+| modalSectionBorder | 默认Modal的头和脚有边框线 | boolean | true |
+| modalOkFirst | 默认Modal的ok按钮排在第一个 | boolean | true |
+| buttonFuncType | 默认Button的功能类型 | string | raised |
 | renderEmpty | 自定义组件空状态。 | Function(componentName: string): ReactNode | - |

@@ -27,7 +27,7 @@ const ModalContent = ({ modal }) => {
     console.log('do Cancel');
   });
   function toggleOkDisabled() {
-    modal.update({ disableOk:!modal.props.disableOk });
+    modal.update({ okProps:{ disabled: !modal.props.okProps.disabled } });
   }
   
   return (
@@ -36,7 +36,7 @@ const ModalContent = ({ modal }) => {
       <p>Some contents...</p>
       <p>Some contents...</p>
       <Button color="blue" onClick={modal.close}>custom button for close modal</Button>
-      <Button onClick={toggleOkDisabled}>{modal.props.disableOk ? 'enable' : 'disable'}</Button>
+      <Button onClick={toggleOkDisabled}>{modal.props.okProps.disabled ? 'enable' : 'disable'}</Button>
     </div>
   );
 };
@@ -46,7 +46,7 @@ function openModal() {
     key: modalKey,
     title: 'Basic',
     children: <ModalContent />,
-    disableOk: true,
+    okProps: { disabled: true, children: '保存' },
   });
 }
 

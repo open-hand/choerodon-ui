@@ -33,4 +33,7 @@ configure({ prefixCls: 'ant' });
 | tableHighLightRow | Default Table current line highlight | boolean | true |
 | tableRowHeight | Default Table row height | auto \| number | 30 |
 | tableColumnResizable | Default Table column resizable | boolean | true |
+| modalSectionBorder | Default if Modal header and foot have a border line | boolean | true |
+| modalOkFirst | Default the ok button of Modal is ranked first | boolean | true |
+| buttonFuncType | Default Button function type | string | raised |
 | renderEmpty | set empty content of components. | Function(componentName: string): ReactNode | - |
