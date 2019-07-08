@@ -95,6 +95,13 @@ export interface TableProps extends DataSetComponentProps {
    */
   onRow?: (props: onRowProps) => object;
   /**
+   * 设置行类名
+   * @param {Record} record 行记录
+   * @param {number} index 行索引
+   * @returns {string} 类名字符串
+   */
+  rowClassName?: (record: Record, index: number) => string;
+  /**
    * @deprecated
    * 请使用 onRow
    */
@@ -272,6 +279,7 @@ export default class Table extends DataSetComponent<TableProps> {
     filterBarFieldName: PropTypes.string,
     filterBarPlaceholder: PropTypes.string,
     highLightRow: PropTypes.bool,
+    rowClassName: PropTypes.func,
     ...DataSetComponent.propTypes,
   };
 
@@ -285,6 +293,7 @@ export default class Table extends DataSetComponent<TableProps> {
     expandRowByClick: false,
     indentSize: 15,
     filterBarFieldName: 'params',
+    rowClassName: () => '',
   };
 
   tableStore: TableStore = new TableStore(this);
@@ -497,6 +506,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'pagination',
       'highLightRow',
       'columnResizable',
+      'rowClassName',
     ]);
     otherProps.onKeyDown = this.handleKeyDown;
     const { rowHeight } = this.tableStore;

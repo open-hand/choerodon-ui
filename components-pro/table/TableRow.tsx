@@ -280,7 +280,13 @@ export default class TableRow extends Component<TableRowProps, any> {
 
   render() {
     const { prefixCls, columns, record, lock, hidden, index } = this.props;
-    const { rowHeight, lockColumnsBodyRowsHeight, overflowX, highLightRow, props: { onRow, rowRenderer, selectionMode } } = this.context.tableStore;
+    const {
+      rowHeight,
+      lockColumnsBodyRowsHeight,
+      overflowX,
+      highLightRow,
+      props: { onRow, rowRenderer, selectionMode, rowClassName },
+    } = this.context.tableStore;
     const { dataSet, isCurrent, key, id } = record;
     const rowExternalProps = this.rowExternalProps = {
       ...(
@@ -294,6 +300,7 @@ export default class TableRow extends Component<TableRowProps, any> {
           index,
         }) : {}
       ),
+      className: rowClassName(record, index),
     };
     const rowPrefixCls = `${prefixCls}-row`;
     const classString = classNames(rowPrefixCls, {

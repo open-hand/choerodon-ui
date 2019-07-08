@@ -42,6 +42,7 @@ subtitle: 表格
 | pagination | 分页器，参考[配置项](#pagination)或 [pagination](/components/pagination/)，设为 false 时不展示分页 | object \| false |  |
 | highLightRow | 当前行高亮 | boolean | true |
 | columnResizable | 可调整列宽 | boolean | true |
+| rowClassName | 表格行的类名 | Function(record, index): string | () => '' |
 
 更多属性请参考 [DataSetComponent](/components-pro/core/#DataSetComponent)。
 
