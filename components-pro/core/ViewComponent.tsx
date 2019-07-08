@@ -2,7 +2,7 @@ import { Component, CSSProperties, FocusEventHandler, Key, KeyboardEventHandler,
 import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { action, observable, runInAction, toJS } from 'mobx';
+import { action, observable, runInAction } from 'mobx';
 import omit from 'lodash/omit';
 import omitBy from 'lodash/omitBy';
 import defer from 'lodash/defer';
@@ -313,18 +313,12 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
 
   @action
   setObservableProps(props, context: any) {
-    this.observableProps = {
-      ...toJS(this.observableProps),
-      ...this.getObservableProps(props, context),
-    };
+    this.observableProps = this.getObservableProps(props, context);
   }
 
   @action
   updateObservableProps(props, context: any) {
-    this.observableProps = {
-      ...toJS(this.observableProps),
-      ...omitBy(this.getObservableProps(props, context), isUndefined),
-    };
+    Object.assign(this.observableProps, omitBy(this.getObservableProps(props, context), isUndefined));
   }
 
   getOtherProps() {

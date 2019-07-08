@@ -22,7 +22,9 @@ timeline: true
 - 💄 `Input`: 更新样式。
 - 💄 `DatePicker`: 更新样式。
 - 💄 `Select`: 更新样式。
+- 💄 `<pro>DataSet`: 优化性能。
 - 🐞 `<pro>Select`: 修复复合多选的bug。
+- 🐞 `<pro>Select`: 修复searchable情况下，两个相同文案的选项始终选择的是第一个的问题。
 
 ## 0.7.5
 ## 0.6.14

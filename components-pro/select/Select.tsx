@@ -541,12 +541,26 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
   syncValueOnBlur(value) {
     if (value) {
       this.options.ready().then(() => {
-        const record = this.findByText(value);
+        const record = this.findByTextWithValue(value);
         if (record) {
           this.choose(record);
         }
       });
     }
+  }
+
+  findByTextWithValue(text): Record | undefined {
+    const { textField } = this;
+    const records = this.cascadeOptions.filter(record => isSameLike(record.get(textField), text));
+    if (records.length > 1) {
+      const { valueField } = this;
+      const value = this.getValue();
+      const found = records.find(record => isSameLike(record.get(valueField), value));
+      if (found) {
+        return found;
+      }
+    }
+    return records[0];
   }
 
   findByText(text): Record | undefined {

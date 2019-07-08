@@ -22,7 +22,9 @@ timeline: true
 - 💄 `Input`: Update the style.
 - 💄 `DatePicker`: Update the style.
 - 💄 `Select`: Update the style.
+- 💄 `<pro>DataSet`: Optimize performance.
 - 🐞 `<pro>Select`: Fix the bug of compound multiple selection.
+- 🐞 `<pro>Select`: With the same text, searchable Select always selects the first option.
 
 ## 0.7.5
 ## 0.6.14
