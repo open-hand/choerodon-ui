@@ -37,3 +37,4 @@ configure({ prefixCls: 'ant' });
 | modalOkFirst | Default the ok button of Modal is ranked first | boolean | true |
 | buttonFuncType | Default Button function type | string | raised |
 | renderEmpty | set empty content of components. | Function(componentName: string): ReactNode | - |
+| generatePageQuery | 分页参数转换 | Function(pageParams: { page: number, pageSize: number }): object | - |
