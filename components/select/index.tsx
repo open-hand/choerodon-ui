@@ -73,6 +73,7 @@ export interface SelectProps extends AbstractSelectProps {
   onFilterChange?: (value: string) => void;
   choiceRemove?: boolean;
   filterValue?: string;
+  border?: boolean;
 }
 
 export interface OptionProps {
@@ -142,6 +143,7 @@ export default class Select extends Component<SelectProps, {}> {
     filter: false,
     showCheckAll: true,
     choiceRemove: true,
+    border: true,
   };
 
   static propTypes = SelectPropTypes;

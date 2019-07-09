@@ -1,7 +1,12 @@
+const OLD_NODE_ENV = process.env.NODE_ENV;
+process.env.NODE_ENV = 'development';
 const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
 const choerodon = require('..');
 
 describe('choerodon-ui', () => {
+  afterAll(() => {
+    process.env.NODE_ENV = OLD_NODE_ENV;
+  });
   it('exports modules correctly', () => {
     expect(Object.keys(choerodon)).toMatchSnapshot();
   });

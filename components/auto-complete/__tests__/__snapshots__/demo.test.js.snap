@@ -2,7 +2,7 @@
 
 exports[`renders ./components/auto-complete/demo/basic.md correctly 1`] = `
 <div
-  class="c7n-select-show-search c7n-select-auto-complete c7n-select c7n-select-combobox c7n-select-enabled"
+  class="c7n-select-show-search c7n-select-auto-complete c7n-select c7n-select-combobox c7n-select-enabled c7n-select-has-border"
   style="width:200px"
 >
   <div
@@ -17,11 +17,6 @@ exports[`renders ./components/auto-complete/demo/basic.md correctly 1`] = `
       class="c7n-select-selection__rendered"
     >
       <div
-        class="c7n-select-selection__placeholder"
-      >
-        input here
-      </div>
-      <div
         class="c7n-select-search c7n-select-search--inline"
         style="display:inline-block"
       >
@@ -29,7 +24,7 @@ exports[`renders ./components/auto-complete/demo/basic.md correctly 1`] = `
           class="c7n-select-search__field__wrap"
         >
           <span
-            class="c7n-input-wrapper"
+            class="c7n-input-wrapper c7n-input-has-border"
           >
             <div
               class="c7n-input-content"
@@ -40,9 +35,6 @@ exports[`renders ./components/auto-complete/demo/basic.md correctly 1`] = `
                 <div
                   class="c7n-input-rendered"
                 >
-                  <div
-                    class="c7n-input-placeholder"
-                  />
                   <input
                     class="c7n-input c7n-select-search__field"
                     type="text"
@@ -50,13 +42,6 @@ exports[`renders ./components/auto-complete/demo/basic.md correctly 1`] = `
                   />
                 </div>
               </div>
-            </div>
-            <div
-              class="c7n-input-underline"
-            >
-              <span
-                class="c7n-input-ripple"
-              />
             </div>
           </span>
           <span
@@ -77,6 +62,15 @@ exports[`renders ./components/auto-complete/demo/basic.md correctly 1`] = `
         <b />
       </span>
     </div>
+    <div
+      class="c7n-select-label-wrapper"
+    >
+      <div
+        class="c7n-select-label"
+      >
+        input here
+      </div>
+    </div>
   </div>
 </div>
 `;
@@ -87,7 +81,7 @@ exports[`renders ./components/auto-complete/demo/certain-category.md correctly 1
   style="width:250px"
 >
   <div
-    class="certain-category-search c7n-select-show-search c7n-select-auto-complete c7n-select c7n-select-combobox c7n-select-enabled"
+    class="certain-category-search c7n-select-show-search c7n-select-auto-complete c7n-select c7n-select-combobox c7n-select-enabled c7n-select-has-border"
     style="width:100%"
   >
     <div
@@ -102,11 +96,6 @@ exports[`renders ./components/auto-complete/demo/certain-category.md correctly 1
         class="c7n-select-selection__rendered"
       >
         <div
-          class="c7n-select-selection__placeholder"
-        >
-          input here
-        </div>
-        <div
           class="c7n-select-search c7n-select-search--inline"
           style="display:inline-block"
         >
@@ -114,7 +103,7 @@ exports[`renders ./components/auto-complete/demo/certain-category.md correctly 1
             class="c7n-select-search__field__wrap"
           >
             <span
-              class="c7n-input-wrapper c7n-input-has-suffix"
+              class="c7n-input-wrapper c7n-input-has-suffix c7n-input-has-border"
             >
               <div
                 class="c7n-input-content"
@@ -125,9 +114,6 @@ exports[`renders ./components/auto-complete/demo/certain-category.md correctly 1
                   <div
                     class="c7n-input-rendered"
                   >
-                    <div
-                      class="c7n-input-placeholder"
-                    />
                     <input
                       class="c7n-input c7n-select-search__field"
                       type="text"
@@ -151,13 +137,6 @@ exports[`renders ./components/auto-complete/demo/certain-category.md correctly 1
                   </span>
                 </div>
               </div>
-              <div
-                class="c7n-input-underline"
-              >
-                <span
-                  class="c7n-input-ripple"
-                />
-              </div>
             </span>
             <span
               class="c7n-select-search__field__mirror"
@@ -177,6 +156,15 @@ exports[`renders ./components/auto-complete/demo/certain-category.md correctly 1
           <b />
         </span>
       </div>
+      <div
+        class="c7n-select-label-wrapper"
+      >
+        <div
+          class="c7n-select-label"
+        >
+          input here
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -184,7 +172,7 @@ exports[`renders ./components/auto-complete/demo/certain-category.md correctly 1
 
 exports[`renders ./components/auto-complete/demo/custom.md correctly 1`] = `
 <div
-  class="c7n-select-show-search c7n-select-auto-complete c7n-select c7n-select-combobox c7n-select-enabled"
+  class="c7n-select-show-search c7n-select-auto-complete c7n-select c7n-select-combobox c7n-select-enabled c7n-select-has-border"
   style="width:200px"
 >
   <div
@@ -208,17 +196,21 @@ exports[`renders ./components/auto-complete/demo/custom.md correctly 1`] = `
           <span
             class="c7n-input-wrapper c7n-input-textarea"
           >
-            <textarea
-              class="c7n-input custom c7n-select-search__field"
-              placeholder="input here"
-            />
-            <div>
-              <hr
-                class="c7n-input-border"
+            <div
+              class="c7n-input-rendered-wrapper"
+            >
+              <textarea
+                class="c7n-input custom c7n-select-search__field"
               />
-              <hr
-                class="c7n-input-border-active"
-              />
+              <div
+                class="c7n-input-label-wrapper"
+              >
+                <div
+                  class="c7n-input-label"
+                >
+                  input here
+                </div>
+              </div>
             </div>
           </span>
           <span
@@ -245,7 +237,7 @@ exports[`renders ./components/auto-complete/demo/custom.md correctly 1`] = `
 
 exports[`renders ./components/auto-complete/demo/non-case-sensitive.md correctly 1`] = `
 <div
-  class="c7n-select-show-search c7n-select-auto-complete c7n-select c7n-select-combobox c7n-select-enabled"
+  class="c7n-select-show-search c7n-select-auto-complete c7n-select c7n-select-combobox c7n-select-enabled c7n-select-has-border"
   style="width:200px"
 >
   <div
@@ -260,11 +252,6 @@ exports[`renders ./components/auto-complete/demo/non-case-sensitive.md correctly
       class="c7n-select-selection__rendered"
     >
       <div
-        class="c7n-select-selection__placeholder"
-      >
-        try to type \`b\`
-      </div>
-      <div
         class="c7n-select-search c7n-select-search--inline"
         style="display:inline-block"
       >
@@ -272,7 +259,7 @@ exports[`renders ./components/auto-complete/demo/non-case-sensitive.md correctly
           class="c7n-select-search__field__wrap"
         >
           <span
-            class="c7n-input-wrapper"
+            class="c7n-input-wrapper c7n-input-has-border"
           >
             <div
               class="c7n-input-content"
@@ -283,9 +270,6 @@ exports[`renders ./components/auto-complete/demo/non-case-sensitive.md correctly
                 <div
                   class="c7n-input-rendered"
                 >
-                  <div
-                    class="c7n-input-placeholder"
-                  />
                   <input
                     class="c7n-input c7n-select-search__field"
                     type="text"
@@ -293,13 +277,6 @@ exports[`renders ./components/auto-complete/demo/non-case-sensitive.md correctly
                   />
                 </div>
               </div>
-            </div>
-            <div
-              class="c7n-input-underline"
-            >
-              <span
-                class="c7n-input-ripple"
-              />
             </div>
           </span>
           <span
@@ -320,13 +297,22 @@ exports[`renders ./components/auto-complete/demo/non-case-sensitive.md correctly
         <b />
       </span>
     </div>
+    <div
+      class="c7n-select-label-wrapper"
+    >
+      <div
+        class="c7n-select-label"
+      >
+        try to type \`b\`
+      </div>
+    </div>
   </div>
 </div>
 `;
 
 exports[`renders ./components/auto-complete/demo/options.md correctly 1`] = `
 <div
-  class="c7n-select-show-search c7n-select-auto-complete c7n-select c7n-select-combobox c7n-select-enabled"
+  class="c7n-select-show-search c7n-select-auto-complete c7n-select c7n-select-combobox c7n-select-enabled c7n-select-has-border"
   style="width:200px"
 >
   <div
@@ -341,11 +327,6 @@ exports[`renders ./components/auto-complete/demo/options.md correctly 1`] = `
       class="c7n-select-selection__rendered"
     >
       <div
-        class="c7n-select-selection__placeholder"
-      >
-        input here
-      </div>
-      <div
         class="c7n-select-search c7n-select-search--inline"
         style="display:inline-block"
       >
@@ -353,7 +334,7 @@ exports[`renders ./components/auto-complete/demo/options.md correctly 1`] = `
           class="c7n-select-search__field__wrap"
         >
           <span
-            class="c7n-input-wrapper"
+            class="c7n-input-wrapper c7n-input-has-border"
           >
             <div
               class="c7n-input-content"
@@ -364,9 +345,6 @@ exports[`renders ./components/auto-complete/demo/options.md correctly 1`] = `
                 <div
                   class="c7n-input-rendered"
                 >
-                  <div
-                    class="c7n-input-placeholder"
-                  />
                   <input
                     class="c7n-input c7n-select-search__field"
                     type="text"
@@ -374,13 +352,6 @@ exports[`renders ./components/auto-complete/demo/options.md correctly 1`] = `
                   />
                 </div>
               </div>
-            </div>
-            <div
-              class="c7n-input-underline"
-            >
-              <span
-                class="c7n-input-ripple"
-              />
             </div>
           </span>
           <span
@@ -400,6 +371,15 @@ exports[`renders ./components/auto-complete/demo/options.md correctly 1`] = `
         />
         <b />
       </span>
+    </div>
+    <div
+      class="c7n-select-label-wrapper"
+    >
+      <div
+        class="c7n-select-label"
+      >
+        input here
+      </div>
     </div>
   </div>
 </div>
@@ -411,7 +391,7 @@ exports[`renders ./components/auto-complete/demo/uncertain-category.md correctly
   style="width:300px"
 >
   <div
-    class="global-search c7n-select-show-search c7n-select-auto-complete c7n-select c7n-select-combobox c7n-select-enabled"
+    class="global-search c7n-select-show-search c7n-select-auto-complete c7n-select c7n-select-combobox c7n-select-enabled c7n-select-has-border"
     style="width:100%"
   >
     <div
@@ -426,11 +406,6 @@ exports[`renders ./components/auto-complete/demo/uncertain-category.md correctly
         class="c7n-select-selection__rendered"
       >
         <div
-          class="c7n-select-selection__placeholder"
-        >
-          input here
-        </div>
-        <div
           class="c7n-select-search c7n-select-search--inline"
           style="display:inline-block"
         >
@@ -438,7 +413,7 @@ exports[`renders ./components/auto-complete/demo/uncertain-category.md correctly
             class="c7n-select-search__field__wrap"
           >
             <span
-              class="c7n-input-wrapper c7n-input-has-suffix"
+              class="c7n-input-wrapper c7n-input-has-suffix c7n-input-has-border"
             >
               <div
                 class="c7n-input-content"
@@ -449,9 +424,6 @@ exports[`renders ./components/auto-complete/demo/uncertain-category.md correctly
                   <div
                     class="c7n-input-rendered"
                   >
-                    <div
-                      class="c7n-input-placeholder"
-                    />
                     <input
                       class="c7n-input c7n-select-search__field"
                       type="text"
@@ -475,13 +447,6 @@ exports[`renders ./components/auto-complete/demo/uncertain-category.md correctly
                   </span>
                 </div>
               </div>
-              <div
-                class="c7n-input-underline"
-              >
-                <span
-                  class="c7n-input-ripple"
-                />
-              </div>
             </span>
             <span
               class="c7n-select-search__field__mirror"
@@ -500,6 +465,15 @@ exports[`renders ./components/auto-complete/demo/uncertain-category.md correctly
           />
           <b />
         </span>
+      </div>
+      <div
+        class="c7n-select-label-wrapper"
+      >
+        <div
+          class="c7n-select-label"
+        >
+          input here
+        </div>
       </div>
     </div>
   </div>

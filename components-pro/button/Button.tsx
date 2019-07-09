@@ -16,6 +16,7 @@ import { DataSetStatus } from '../data-set/enum';
 import { Size } from '../core/enum';
 import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComponent';
 import autobind from '../_util/autobind';
+import { getConfig } from 'choerodon-ui/lib/configure';
 
 export interface ButtonProps extends DataSetComponentProps {
   /**
@@ -128,7 +129,6 @@ export default class Button extends DataSetComponent<ButtonProps> {
   static defaultProps = {
     suffixCls: 'btn',
     type: ButtonType.button,
-    funcType: FuncType.raised,
     color: ButtonColor.default,
     loading: false,
     waitType: ButtonWaitType.throttle,
@@ -226,7 +226,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
   }
 
   getClassName(...props): string | undefined {
-    const { prefixCls, props: { color, funcType, children, icon } } = this;
+    const { prefixCls, props: { color, funcType = getConfig('buttonFuncType') || FuncType.raised, children, icon } } = this;
     const childrenCount = Children.count(children);
     return super.getClassName({
       [`${prefixCls}-${funcType}`]: funcType,

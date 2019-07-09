@@ -19,6 +19,9 @@ export type Config = {
   tableHighLightRow?: boolean;
   tableRowHeight?: 'auto' | number;
   tableColumnResizable?: boolean;
+  modalSectionBorder?: boolean;
+  modalOkFirst?: boolean;
+  buttonFuncType?: string;
   renderEmpty?: (componentName?: string) => ReactNode;
 }
 
@@ -40,6 +43,8 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['tableHighLightRow', true],
   ['tableRowHeight', 30],
   ['tableColumnResizable', true],
+  ['modalSectionBorder', true],
+  ['modalOkFirst', true],
 ]);
 
 export function getConfig<T extends ConfigKeys>(key: T): Config[T] {

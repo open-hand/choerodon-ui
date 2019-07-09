@@ -178,7 +178,6 @@ export default class DropdownMenu extends Component {
       prefixCls,
       placeholder,
       onChange: onFilterChange,
-      underline: false,
       onKeyDown: onKeyDown,
     };
     return filter ? <FilterInput {...props} ref={saveRef(this, 'filterRef')} /> : null;

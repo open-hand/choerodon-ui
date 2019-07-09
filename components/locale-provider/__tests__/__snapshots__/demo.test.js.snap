@@ -109,13 +109,6 @@ exports[`renders ./components/locale-provider/demo/all.md correctly 1`] = `
                 </span>
               </div>
             </div>
-            <div
-              class="c7n-select-underline"
-            >
-              <span
-                class="c7n-select-ripple"
-              />
-            </div>
           </div>
         </li>
         <li
@@ -195,7 +188,7 @@ exports[`renders ./components/locale-provider/demo/all.md correctly 1`] = `
       class="example"
     >
       <div
-        class="c7n-select c7n-select-enabled"
+        class="c7n-select c7n-select-enabled c7n-select-has-border"
         style="width:200px"
       >
         <div
@@ -226,19 +219,12 @@ exports[`renders ./components/locale-provider/demo/all.md correctly 1`] = `
             </span>
           </div>
         </div>
-        <div
-          class="c7n-select-underline"
-        >
-          <span
-            class="c7n-select-ripple"
-          />
-        </div>
       </div>
       <span
         class="c7n-calendar-picker"
       >
         <span
-          class="c7n-input-wrapper c7n-input-has-suffix"
+          class="c7n-input-wrapper c7n-input-has-suffix c7n-input-has-border"
         >
           <div
             class="c7n-input-content"
@@ -249,24 +235,27 @@ exports[`renders ./components/locale-provider/demo/all.md correctly 1`] = `
               <div
                 class="c7n-input-rendered"
               >
-                <div
-                  class="c7n-input-placeholder"
-                >
-                  Select date
-                </div>
                 <input
                   class="c7n-input c7n-calendar-picker-input c7n-input"
                   readonly=""
                   type="text"
                   value=""
                 />
+                <div
+                  class="c7n-input-label-wrapper"
+                >
+                  <div
+                    class="c7n-input-label"
+                  >
+                    Select date
+                  </div>
+                </div>
               </div>
               <span
                 class="c7n-input-suffix"
               >
                 <span
                   class="c7n-calendar-picker-icon-wrapper"
-                  style="min-width:18px"
                 >
                   <i
                     class="icon icon-date_range c7n-calendar-picker-icon"
@@ -275,20 +264,13 @@ exports[`renders ./components/locale-provider/demo/all.md correctly 1`] = `
               </span>
             </div>
           </div>
-          <div
-            class="c7n-input-underline"
-          >
-            <span
-              class="c7n-input-ripple"
-            />
-          </div>
         </span>
       </span>
       <span
         class="c7n-time-picker "
       >
         <span
-          class="c7n-input-wrapper c7n-input-has-suffix"
+          class="c7n-input-wrapper c7n-input-has-suffix c7n-input-has-border"
         >
           <div
             class="c7n-input-content"
@@ -299,11 +281,6 @@ exports[`renders ./components/locale-provider/demo/all.md correctly 1`] = `
               <div
                 class="c7n-input-rendered"
               >
-                <div
-                  class="c7n-input-placeholder"
-                >
-                  Select time
-                </div>
                 <input
                   class="c7n-input c7n-time-picker-input"
                   id=""
@@ -311,6 +288,15 @@ exports[`renders ./components/locale-provider/demo/all.md correctly 1`] = `
                   type="text"
                   value=""
                 />
+                <div
+                  class="c7n-input-label-wrapper"
+                >
+                  <div
+                    class="c7n-input-label"
+                  >
+                    Select time
+                  </div>
+                </div>
               </div>
               <span
                 class="c7n-input-suffix"
@@ -321,13 +307,6 @@ exports[`renders ./components/locale-provider/demo/all.md correctly 1`] = `
               </span>
             </div>
           </div>
-          <div
-            class="c7n-input-underline"
-          >
-            <span
-              class="c7n-input-ripple"
-            />
-          </div>
         </span>
       </span>
       <span
@@ -336,7 +315,7 @@ exports[`renders ./components/locale-provider/demo/all.md correctly 1`] = `
         tabindex="0"
       >
         <span
-          class="c7n-calendar-range-picker"
+          class="c7n-calendar-range-picker c7n-input-wrapper"
         >
           <span
             class="c7n-calendar-picker-input c7n-input"
@@ -364,13 +343,6 @@ exports[`renders ./components/locale-provider/demo/all.md correctly 1`] = `
               class="icon icon-date_range c7n-calendar-picker-icon"
             />
           </span>
-          <div
-            class="c7n-calendar-underline"
-          >
-            <span
-              class="c7n-calendar-ripple"
-            />
-          </div>
         </span>
       </span>
     </div>
@@ -462,7 +434,7 @@ exports[`renders ./components/locale-provider/demo/all.md correctly 1`] = `
             >
               <div>
                 <span
-                  class="c7n-input-wrapper"
+                  class="c7n-input-wrapper c7n-input-has-border"
                 >
                   <div
                     class="c7n-input-content"
@@ -473,25 +445,22 @@ exports[`renders ./components/locale-provider/demo/all.md correctly 1`] = `
                       <div
                         class="c7n-input-rendered"
                       >
-                        <div
-                          class="c7n-input-placeholder"
-                        >
-                          Search here
-                        </div>
                         <input
                           class="c7n-input c7n-transfer-list-search"
                           type="text"
                           value=""
                         />
+                        <div
+                          class="c7n-input-label-wrapper"
+                        >
+                          <div
+                            class="c7n-input-label"
+                          >
+                            Search here
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div
-                    class="c7n-input-underline"
-                  >
-                    <span
-                      class="c7n-input-ripple"
-                    />
                   </div>
                 </span>
                 <span
@@ -575,7 +544,7 @@ exports[`renders ./components/locale-provider/demo/all.md correctly 1`] = `
             >
               <div>
                 <span
-                  class="c7n-input-wrapper"
+                  class="c7n-input-wrapper c7n-input-has-border"
                 >
                   <div
                     class="c7n-input-content"
@@ -586,25 +555,22 @@ exports[`renders ./components/locale-provider/demo/all.md correctly 1`] = `
                       <div
                         class="c7n-input-rendered"
                       >
-                        <div
-                          class="c7n-input-placeholder"
-                        >
-                          Search here
-                        </div>
                         <input
                           class="c7n-input c7n-transfer-list-search"
                           type="text"
                           value=""
                         />
+                        <div
+                          class="c7n-input-label-wrapper"
+                        >
+                          <div
+                            class="c7n-input-label"
+                          >
+                            Search here
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div
-                    class="c7n-input-underline"
-                  >
-                    <span
-                      class="c7n-input-ripple"
-                    />
                   </div>
                 </span>
                 <span
@@ -638,7 +604,7 @@ exports[`renders ./components/locale-provider/demo/all.md correctly 1`] = `
           class="c7n-fullcalendar-header"
         >
           <div
-            class="c7n-select-sm c7n-fullcalendar-year-select c7n-select c7n-select-has-value c7n-select-enabled"
+            class="c7n-select-sm c7n-fullcalendar-year-select c7n-select c7n-select-has-value c7n-select-enabled c7n-select-has-border"
           >
             <div
               aria-autocomplete="list"
@@ -671,16 +637,9 @@ exports[`renders ./components/locale-provider/demo/all.md correctly 1`] = `
                 </span>
               </div>
             </div>
-            <div
-              class="c7n-select-underline"
-            >
-              <span
-                class="c7n-select-ripple"
-              />
-            </div>
           </div>
           <div
-            class="c7n-select-sm c7n-fullcalendar-month-select c7n-select c7n-select-has-value c7n-select-enabled"
+            class="c7n-select-sm c7n-fullcalendar-month-select c7n-select c7n-select-has-value c7n-select-enabled c7n-select-has-border"
           >
             <div
               aria-autocomplete="list"
@@ -712,13 +671,6 @@ exports[`renders ./components/locale-provider/demo/all.md correctly 1`] = `
                   <b />
                 </span>
               </div>
-            </div>
-            <div
-              class="c7n-select-underline"
-            >
-              <span
-                class="c7n-select-ripple"
-              />
             </div>
           </div>
           <div
@@ -1720,13 +1672,6 @@ exports[`renders ./components/locale-provider/demo/all.md correctly 1`] = `
                       </ul>
                     </div>
                   </div>
-                  <div
-                    class="c7n-select-underline"
-                  >
-                    <span
-                      class="c7n-select-ripple"
-                    />
-                  </div>
                 </div>
                 <div
                   class="c7n-table-filter-select-columns"
@@ -1857,13 +1802,6 @@ exports[`renders ./components/locale-provider/demo/basic.md correctly 1`] = `
               <b />
             </span>
           </div>
-        </div>
-        <div
-          class="c7n-select-underline"
-        >
-          <span
-            class="c7n-select-ripple"
-          />
         </div>
       </div>
     </li>

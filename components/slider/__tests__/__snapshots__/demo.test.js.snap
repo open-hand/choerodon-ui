@@ -233,7 +233,7 @@ exports[`renders ./components/slider/demo/input-number.md correctly 1`] = `
         style="margin-left:16px"
       >
         <span
-          class="c7n-input-wrapper c7n-input-has-suffix"
+          class="c7n-input-wrapper c7n-input-has-suffix c7n-input-has-border"
         >
           <div
             class="c7n-input-content"
@@ -244,9 +244,6 @@ exports[`renders ./components/slider/demo/input-number.md correctly 1`] = `
               <div
                 class="c7n-input-rendered"
               >
-                <div
-                  class="c7n-input-placeholder"
-                />
                 <input
                   autocomplete="off"
                   class="c7n-input"
@@ -290,13 +287,6 @@ exports[`renders ./components/slider/demo/input-number.md correctly 1`] = `
                 </div>
               </span>
             </div>
-          </div>
-          <div
-            class="c7n-input-underline"
-          >
-            <span
-              class="c7n-input-ripple"
-            />
           </div>
         </span>
       </div>
@@ -344,7 +334,7 @@ exports[`renders ./components/slider/demo/input-number.md correctly 1`] = `
         style="margin-left:16px"
       >
         <span
-          class="c7n-input-wrapper c7n-input-has-suffix"
+          class="c7n-input-wrapper c7n-input-has-suffix c7n-input-has-border"
         >
           <div
             class="c7n-input-content"
@@ -355,9 +345,6 @@ exports[`renders ./components/slider/demo/input-number.md correctly 1`] = `
               <div
                 class="c7n-input-rendered"
               >
-                <div
-                  class="c7n-input-placeholder"
-                />
                 <input
                   autocomplete="off"
                   class="c7n-input"
@@ -401,13 +388,6 @@ exports[`renders ./components/slider/demo/input-number.md correctly 1`] = `
                 </div>
               </span>
             </div>
-          </div>
-          <div
-            class="c7n-input-underline"
-          >
-            <span
-              class="c7n-input-ripple"
-            />
           </div>
         </span>
       </div>

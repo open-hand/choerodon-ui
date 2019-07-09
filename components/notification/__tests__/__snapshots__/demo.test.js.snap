@@ -59,7 +59,7 @@ exports[`renders ./components/notification/demo/duration.md correctly 1`] = `
 exports[`renders ./components/notification/demo/placement.md correctly 1`] = `
 <div>
   <div
-    class="c7n-select c7n-select-has-value c7n-select-enabled"
+    class="c7n-select c7n-select-has-value c7n-select-enabled c7n-select-has-border"
     style="width:120px;margin-right:10px"
   >
     <div
@@ -92,13 +92,6 @@ exports[`renders ./components/notification/demo/placement.md correctly 1`] = `
           <b />
         </span>
       </div>
-    </div>
-    <div
-      class="c7n-select-underline"
-    >
-      <span
-        class="c7n-select-ripple"
-      />
     </div>
   </div>
   <button

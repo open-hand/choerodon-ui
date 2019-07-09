@@ -15,6 +15,14 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: Add global configuration new properties.
+- 🌟 `<pro>Modal`: Modal and internal injection modal object add `update` methods.
+- 🌟 `<pro>Modal`: Added `okProps`, `cancelProps`, `okFirst`, `border` attribute.
+- 💄 `Password`: Change to reveal password by clicking.
+- 💄 `Input`: Update the style.
+- 💄 `DatePicker`: Update the style.
+- 💄 `Select`: Update the style.
+
 ## 0.7.6
 
 `2019-07-09`

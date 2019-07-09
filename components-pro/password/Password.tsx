@@ -2,6 +2,7 @@ import React, { ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import omit from 'lodash/omit';
 import { observer } from 'mobx-react';
+import { action, observable } from 'mobx';
 import { TextField, TextFieldProps } from '../text-field/TextField';
 import autobind from '../_util/autobind';
 import Icon from '../icon';
@@ -14,8 +15,8 @@ export interface PasswordProps extends TextFieldProps {
   reveal?: boolean;
 }
 
-let selectionStart;
-let selectionEnd;
+// let selectionStart;
+// let selectionEnd;
 
 @observer
 export default class Password extends TextField<PasswordProps> {
@@ -38,6 +39,11 @@ export default class Password extends TextField<PasswordProps> {
 
   type: string = 'password';
 
+  @observable reveal?: boolean;
+
+  selectionEnd?: number;
+  selectionStart?: number;
+
   getOtherProps() {
     return omit(super.getOtherProps(), [
       'reveal',
@@ -53,37 +59,46 @@ export default class Password extends TextField<PasswordProps> {
     if (reveal) {
       return this.wrapperInnerSpanButton(
         <Icon
-          type="visibility"
-          onMouseDown={this.handleReveal}
-          onMouseLeave={this.handleResetReveal}
-          onMouseUp={this.handleResetReveal}
+          type={this.reveal ? 'visibility' : 'visibility_off'}
+          onClick={this.handleToggleReveal}
         />,
       );
     }
   }
 
   @autobind
-  handleReveal(e) {
+  handleToggleReveal(e) {
     e.preventDefault();
     if (!this.isFocused) {
       this.focus();
     }
     const target = this.element;
     if (target) {
-      selectionEnd = target.selectionEnd;
-      selectionStart = target.selectionStart;
-      target.type = 'text';
+      if (target.type === 'password') {
+        this.doReveal(target);
+      } else {
+        this.resetReveal(target);
+      }
     }
   }
 
-  @autobind
-  handleResetReveal() {
-    const target = this.element;
-    if (target && typeof selectionStart !== 'undefined' && typeof selectionEnd !== 'undefined') {
-      target.type = 'password';
+  @action
+  doReveal(target) {
+    this.selectionEnd = target.selectionEnd;
+    this.selectionStart = target.selectionStart;
+    this.type = target.type = 'text';
+    this.reveal = true;
+  }
+
+  @action
+  resetReveal(target) {
+    const { selectionStart, selectionEnd } = this;
+    this.type = target.type = 'password';
+    if (typeof selectionStart !== 'undefined' && typeof selectionEnd !== 'undefined') {
       target.setSelectionRange(selectionStart, selectionEnd);
-      selectionStart = void 0;
-      selectionEnd = void 0;
+      this.selectionStart = void 0;
+      this.selectionEnd = void 0;
     }
+    this.reveal = false;
   }
 }
