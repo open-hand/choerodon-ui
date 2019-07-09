@@ -638,7 +638,7 @@ export default class Record {
         const multiple = field.get('multiple');
         const type = field.get('type');
         if (bind) {
-          value = ObjectChainValue.get(json, bind);
+          value = this.get(bind);
         }
         if (type === FieldType.object) {
           return;
