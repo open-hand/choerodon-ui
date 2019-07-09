@@ -5,6 +5,7 @@ import { observer } from 'mobx-react';
 import isString from 'lodash/isString';
 import isNumber from 'lodash/isNumber';
 import defaultTo from 'lodash/defaultTo';
+import format from 'string-template';
 import { TextField, TextFieldProps } from '../text-field/TextField';
 import autobind from '../_util/autobind';
 import keepRunning from '../_util/keepRunning';
@@ -60,8 +61,9 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
 
   @computed
   get defaultValidationMessages(): ValidationMessages | null {
+    const label = this.getProp('label');
     return {
-      valueMissing: $l('NumberField', 'value_missing'),
+      valueMissing: format($l('NumberField', label ? 'value_missing_with_label' : 'value_missing'), { label }),
     };
   }
 

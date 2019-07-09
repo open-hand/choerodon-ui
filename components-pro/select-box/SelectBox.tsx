@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { action, computed, isArrayLike } from 'mobx';
 import omit from 'lodash/omit';
+import format from 'string-template';
 import { Select, SelectProps } from '../select/Select';
 import Radio from '../radio/Radio';
 import CheckBox from '../check-box/CheckBox';
@@ -54,8 +55,9 @@ export default class SelectBox extends Select<SelectBoxProps> {
 
   @computed
   get defaultValidationMessages(): ValidationMessages | null {
+    const label = this.getProp('label');
     return {
-      valueMissing: $l('SelectBox', 'value_missing'),
+      valueMissing: format($l('SelectBox', label ? 'value_missing_with_label' : 'value_missing'), { label }),
     };
   }
 

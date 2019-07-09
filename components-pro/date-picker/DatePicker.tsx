@@ -5,6 +5,7 @@ import isString from 'lodash/isString';
 import omit from 'lodash/omit';
 import { observer } from 'mobx-react';
 import { action, computed, observable, runInAction } from 'mobx';
+import format from 'string-template';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import noop from 'lodash/noop';
 import TriggerField, { TriggerFieldProps } from '../trigger-field/TriggerField';
@@ -105,8 +106,9 @@ export default class DatePicker extends TriggerField<DatePickerProps> implements
 
   @computed
   get defaultValidationMessages(): ValidationMessages | null {
+    const label = this.getProp('label');
     return {
-      valueMissing: $l('DatePicker', 'value_missing'),
+      valueMissing: format($l('DatePicker', label ? 'value_missing_with_label' : 'value_missing'), { label }),
     };
   }
 

@@ -1,4 +1,4 @@
-import { action, isArrayLike, observable, runInAction } from 'mobx';
+import { action, computed, isArrayLike, observable, runInAction } from 'mobx';
 import isEqual from 'lodash/isEqual';
 import Validity from './Validity';
 import ValidationResult from './ValidationResult';
@@ -25,7 +25,8 @@ export interface ValidationMessages {
 
 export default class Validator {
 
-  props: ValidatorProps;
+  @observable fieldProps: ValidatorProps;
+  @observable controlProps: ValidatorProps;
 
   validity: Validity = new Validity();
 
@@ -37,14 +38,28 @@ export default class Validator {
 
   @observable validationErrorValues: ValidationResult[];
 
+  @computed
+  get props(): ValidatorProps {
+    return {
+      ...this.fieldProps,
+      ...this.controlProps,
+    }
+  }
+
   constructor() {
     runInAction(() => {
       this.validationErrorValues = [];
     });
   }
 
+  @action
   setProps(props) {
-    this.props = props;
+    this.fieldProps = props;
+  }
+
+  @action
+  setControlProps(props) {
+    this.controlProps = props;
   }
 
   reset() {

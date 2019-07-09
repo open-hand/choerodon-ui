@@ -6,6 +6,7 @@ import isNil from 'lodash/isNil';
 import isPlainObject from 'lodash/isPlainObject';
 import { observer } from 'mobx-react';
 import { computed, IReactionDisposer, isArrayLike, reaction, runInAction } from 'mobx';
+import format from 'string-template';
 import Menu, { Item, ItemGroup } from 'choerodon-ui/lib/rc-components/menu';
 import TriggerField, { TriggerFieldProps } from '../trigger-field/TriggerField';
 import autobind from '../_util/autobind';
@@ -129,8 +130,9 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
 
   @computed
   get defaultValidationMessages(): ValidationMessages | null {
+    const label = this.getProp('label');
     return {
-      valueMissing: $l('Select', 'value_missing'),
+      valueMissing: format($l('Select', label ? 'value_missing_with_label' : 'value_missing'), { label }),
     };
   }
 

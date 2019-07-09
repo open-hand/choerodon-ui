@@ -22,7 +22,13 @@ timeline: true
 - 💄 `Input`: Update the style.
 - 💄 `DatePicker`: Update the style.
 - 💄 `Select`: Update the style.
+
+## 0.7.6
+
+`2019-07-09`
+
 - 💄 `<pro>DataSet`: Optimize performance.
+- 💄 `<pro>Validator`: Optimize validation.
 - 🐞 `<pro>Select`: Fix the bug of compound multiple selection.
 - 🐞 `<pro>Select`: With the same text, searchable Select always selects the first option.
 - 🐞 `<pro>DataSet`: Fixed the ignore property of the Field will ignore the binding fields.

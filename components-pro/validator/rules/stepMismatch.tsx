@@ -1,8 +1,8 @@
+import format from 'string-template';
 import isEmpty from '../../_util/isEmpty';
 import ValidationResult from '../ValidationResult';
 import { $l } from '../../locale-context';
 import { getNearStepValues } from '../../number-field/utils';
-import { inject } from '../utils';
 import { methodReturn } from '.';
 
 export default function stepMismatch(value, { step, min, max }): methodReturn {
@@ -15,7 +15,7 @@ export default function stepMismatch(value, { step, min, max }): methodReturn {
           `最接近的有效值为${nearStepValues[0]}。`,
       };
       return new ValidationResult({
-        validationMessage: inject($l('Validator', 'step_mismatch'), injectionOptions),
+        validationMessage: format($l('Validator', 'step_mismatch'), injectionOptions),
         injectionOptions,
         value,
         ruleName: 'stepMismatch',
