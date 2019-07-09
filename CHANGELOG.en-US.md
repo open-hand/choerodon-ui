@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.7.6
+
+`2019-07-09`
+
 - 💄 `<pro>DataSet`: Optimize performance.
 - 💄 `<pro>Validator`: Optimize validation.
 - 🐞 `<pro>Select`: Fix the bug of compound multiple selection.

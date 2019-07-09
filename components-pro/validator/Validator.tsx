@@ -39,7 +39,7 @@ export default class Validator {
   @observable validationErrorValues: ValidationResult[];
 
   @computed
-  get props() {
+  get props(): ValidatorProps {
     return {
       ...this.fieldProps,
       ...this.controlProps,
