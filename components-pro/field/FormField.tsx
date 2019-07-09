@@ -455,15 +455,19 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
 
   renderFloatLabel(): ReactNode {
     if (this.hasFloatLabel) {
-      const prefixCls = getProPrefixCls(FIELD_SUFFIX);
-      const required = this.getProp('required');
       const label = this.getLabel();
-      const classString = classNames(`${prefixCls}-label`, {
-        [`${prefixCls}-required`]: required,
-      });
-      return <div className={`${prefixCls}-label-wrapper`}>
-        <div className={classString}>{label}</div>
-      </div>;
+      if (label) {
+        const prefixCls = getProPrefixCls(FIELD_SUFFIX);
+        const required = this.getProp('required');
+        const classString = classNames(`${prefixCls}-label`, {
+          [`${prefixCls}-required`]: required,
+        });
+        return (
+          <div className={`${prefixCls}-label-wrapper`}>
+            <div className={classString}>{label}</div>
+          </div>
+        );
+      }
     }
   }
 

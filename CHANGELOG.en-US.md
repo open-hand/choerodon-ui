@@ -15,6 +15,11 @@ timeline: true
 
 ---
 
+- 💄 `<pro>DataSet`: Optimize performance.
+- 🐞 `<pro>Select`: Fix the bug of compound multiple selection.
+- 🐞 `<pro>Select`: With the same text, searchable Select always selects the first option.
+- 🐞 `<pro>DataSet`: Fixed the ignore property of the Field will ignore the binding fields.
+
 ## 0.7.5
 ## 0.6.14
 

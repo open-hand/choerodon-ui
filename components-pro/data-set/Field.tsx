@@ -11,7 +11,7 @@ import { DataSetEvents, FieldIgnore, FieldType, SortOrder } from './enum';
 import lookupStore from '../stores/LookupCodeStore';
 import lovCodeStore from '../stores/LovCodeStore';
 import localeContext from '../locale-context';
-import { findInvalidField, processValue } from './utils';
+import { processValue } from './utils';
 import Validity from '../validator/Validity';
 import ValidationResult from '../validator/ValidationResult';
 import { getConfig } from 'choerodon-ui/lib/configure';
@@ -623,19 +623,23 @@ export default class Field {
   }
 
   isValid() {
-    return findInvalidField(this).validator.validity.valid;
+    // return findInvalidField(this).validator.validity.valid;
+    return this.validator.validity.valid;
   }
 
   getValidationMessage() {
-    return findInvalidField(this).validator.validationMessage;
+    // return findInvalidField(this).validator.validationMessage;
+    return this.validator.validationMessage;
   }
 
   getValidityState(): Validity {
-    return findInvalidField(this).validator.validity;
+    // return findInvalidField(this).validator.validity;
+    return this.validator.validity;
   }
 
   getValidationErrorValues(): ValidationResult[] {
-    return findInvalidField(this).validator.validationErrorValues;
+    // return findInvalidField(this).validator.validationErrorValues;
+    return this.validator.validationErrorValues;
   }
 
   // getBindFields(): Field[] {

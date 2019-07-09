@@ -26,19 +26,20 @@
   &-float-label .@{field-label-prefix-cls} {
     &-wrapper {
       position: absolute;
-      padding: 0 .04rem;
+      padding: 0 .05rem;
+      margin-left: -.05rem;
       top: 0;
       height: 0;
       left: @input-padding-horizontal-base;
-      border-top: @border-width-base @border-style-base @component-background;
-      transform-origin: 0 -170%;
-      transition: all 0.4s @ease-out;
+      border-top: .02rem @border-style-base @component-background;
+      transform-origin: .1rem -230%;
+      transition: all 0.2s @ease-out;
     }
     &:after {
       width: 0;
     }
     padding: 0;
-    color: rgba(0, 0, 0, .6);
+    color: @label-color;
     transform-origin: inherit;
     transition: inherit;
     pointer-events: none;
@@ -46,32 +47,26 @@
   }
   &-float-label&-focused .@{field-label-prefix-cls} {
     color: @outline-color;
-    &-wrapper {
-      border-top-width: .02rem;
-    }
   }
   &-float-label&-invalid .@{field-label-prefix-cls} {
     color: @error-color;
-    &-wrapper {
-      border-top-width: .02rem;
-    }
   }
-  &-float-label&-disabled &,
-  &-float-label&-disabled &:hover {
-    border-style: dashed;
-    background-color: transparent;
+  &-float-label .@{field-label-prefix-cls}-wrapper,
+  &-float-label &:focus + .@{field-label-prefix-cls}-wrapper,
+  &-float-label &:-webkit-autofill + .@{field-label-prefix-cls}-wrapper {
+    transform: scaleX(.8);
   }
   &-float-label .@{field-label-prefix-cls},
-  &-float-label &:focus + .@{field-label-prefix-cls},
-  &-float-label &:-webkit-autofill + .@{field-label-prefix-cls} {
-    &-wrapper {
-      transform: scaleX(.75);
-    }
-    transform: scaleY(.75);
+  &-float-label&-focused .@{field-label-prefix-cls},
+  &-float-label &:-webkit-autofill + .@{field-label-prefix-cls}-wrapper .@{field-label-prefix-cls} {
+    transform: scaleY(.8);
   }
   &-float-label & {
     border-radius: .04rem;
     height: .36rem;
+  }
+  &-float-label textarea& {
+    height: auto;
   }
   &-float-label&-invalid,
   &-float-label&-required {
@@ -83,14 +78,15 @@
   &-empty:not(&-focused) {
     .@{field-label-prefix-cls} {
       &-wrapper {
-        border-top-color: fade(@component-background, 0);
+        border-top-color: transparent;
         transform: none;
       }
       transform: none;
     }
   }
   &-float-label & > ul {
-    margin-top: .03rem;
+    margin-top: .05rem;
+    margin-left: .03rem;
   }
   &-float-label &-multiple-block {
     border-radius: .12rem;

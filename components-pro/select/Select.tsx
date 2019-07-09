@@ -2,9 +2,10 @@ import React, { CSSProperties, Key, ReactElement, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import omit from 'lodash/omit';
 import isEqual from 'lodash/isEqual';
+import isNil from 'lodash/isNil';
 import isPlainObject from 'lodash/isPlainObject';
 import { observer } from 'mobx-react';
-import { computed, IReactionDisposer, reaction, runInAction } from 'mobx';
+import { computed, IReactionDisposer, isArrayLike, reaction, runInAction } from 'mobx';
 import Menu, { Item, ItemGroup } from 'choerodon-ui/lib/rc-components/menu';
 import TriggerField, { TriggerFieldProps } from '../trigger-field/TriggerField';
 import autobind from '../_util/autobind';
@@ -218,7 +219,10 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
   }
 
   checkCombo() {
-    this.checkComboReaction = reaction(() => this.getValue(), value => this.generateComboOption(value));
+    this.checkComboReaction = reaction(
+      () => this.getValue(),
+      value => this.generateComboOption(value),
+    );
   }
 
   clearCheckValue() {
@@ -537,12 +541,26 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
   syncValueOnBlur(value) {
     if (value) {
       this.options.ready().then(() => {
-        const record = this.findByText(value);
+        const record = this.findByTextWithValue(value);
         if (record) {
           this.choose(record);
         }
       });
     }
+  }
+
+  findByTextWithValue(text): Record | undefined {
+    const { textField } = this;
+    const records = this.cascadeOptions.filter(record => isSameLike(record.get(textField), text));
+    if (records.length > 1) {
+      const { valueField } = this;
+      const value = this.getValue();
+      const found = records.find(record => isSameLike(record.get(valueField), value));
+      if (found) {
+        return found;
+      }
+    }
+    return records[0];
   }
 
   findByText(text): Record | undefined {
@@ -568,21 +586,25 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
     ));
   }
 
-  generateComboOption(value: string): void {
+  generateComboOption(value: string | any[], callback?: (text: string) => void): void {
     const { currentComboOption, textField, valueField } = this;
     if (value) {
-      const found = this.findByText(value) || this.findByValue(value);
-      if (found) {
-        const text = found.get(textField);
-        if (text !== value) {
-          this.setText(text);
-        }
-        this.removeComboOption();
-      } else if (currentComboOption) {
-        currentComboOption.set(textField, value);
-        currentComboOption.set(valueField, value);
+      if (isArrayLike(value)) {
+        value.forEach(v => !isNil(v) && this.generateComboOption(v));
       } else {
-        this.createComboOption(value);
+        const found = this.findByText(value) || this.findByValue(value);
+        if (found) {
+          const text = found.get(textField);
+          if (text !== value && callback) {
+            callback(text);
+          }
+          this.removeComboOption();
+        } else if (currentComboOption) {
+          currentComboOption.set(textField, value);
+          currentComboOption.set(valueField, value);
+        } else {
+          this.createComboOption(value);
+        }
       }
     } else {
       this.removeComboOption();
@@ -652,7 +674,7 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
     const { value } = e.target;
     this.setText(value);
     if (this.observableProps.combo) {
-      this.generateComboOption(value);
+      this.generateComboOption(value, text => this.setText(text));
     }
     if (!this.popup) {
       this.expand();
