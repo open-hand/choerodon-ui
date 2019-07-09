@@ -97,9 +97,9 @@ export default {
   },
   Validator: {
     bad_input: 'Please input a number.',
-    pattern_mismatch: 'Please input a value to match the given pattern.',
-    range_overflow: 'The value must be less than or equal to {max}.',
-    range_underflow: 'The value must be greater than or equal to {min}.',
+    pattern_mismatch: 'Please input a valid value.',
+    range_overflow: '{label} must be less than or equal to {max}.',
+    range_underflow: '{label} must be greater than or equal to {min}.',
     step_mismatch: 'Please input a valid value. {near}',
     too_long: 'Please decrease the length of the value down to {maxLength} or less characters (You have input {length} characters).',
     too_short: 'Please increase the length of the value down to {minLength} or more characters (You have input {length} characters).',

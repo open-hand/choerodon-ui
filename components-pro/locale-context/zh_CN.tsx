@@ -97,7 +97,7 @@ export default {
   },
   Validator: {
     bad_input: '请输入一个数字。',
-    pattern_mismatch: '请与所请求的格式保持一致。',
+    pattern_mismatch: '请输入有效的值。',
     range_overflow: '{label}必须小于或等于{max}。',
     range_underflow: '{label}必须大于或等于{min}。',
     step_mismatch: '请输入有效值。{near}',
