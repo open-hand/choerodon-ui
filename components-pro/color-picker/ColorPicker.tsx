@@ -1,6 +1,7 @@
 import React, { CSSProperties, ReactNode } from 'react';
 import { observer } from 'mobx-react';
 import { action, computed, observable } from 'mobx';
+import format from 'string-template';
 import TriggerField, { TriggerFieldProps } from '../trigger-field/TriggerField';
 import autobind from '../_util/autobind';
 import EventManager from '../_util/EventManager';
@@ -50,8 +51,9 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
 
   @computed
   get defaultValidationMessages(): ValidationMessages | null {
+    const label = this.getProp('label');
     return {
-      valueMissing: $l('ColorPicker', 'value_missing'),
+      valueMissing: format($l('ColorPicker', label ? 'value_missing_with_label' : 'value_missing'), { label }),
       typeMismatch: $l('ColorPicker', 'type_mismatch'),
     };
   }

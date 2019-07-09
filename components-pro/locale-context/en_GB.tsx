@@ -56,40 +56,48 @@ export default {
   },
   DatePicker: {
     value_missing: 'Please choose a date.',
+    value_missing_with_label: 'Please select {label}.',
   },
   EmailField: {
-    value_missing: 'Please input an email address',
-    type_mismatch: 'Please input a valid email address',
+    value_missing: 'Please input an email address.',
+    value_missing_with_label: 'Please input {label}.',
+    type_mismatch: 'Please input a valid email address.',
   },
   IntlField: {
-    modal_title: 'Input multi-language information',
+    modal_title: 'Input multi-language information.',
   },
   NumberField: {
-    value_missing: 'Please input a number',
+    value_missing: 'Please input a number.',
+    value_missing_with_label: 'Please input {label}.',
   },
   Radio: {
-    value_missing: 'Please make a choice',
+    value_missing: 'Please make a choice.',
+    value_missing_with_label: 'Please select {label}.',
   },
   SelectBox: {
     value_missing: 'Please make a choice',
+    value_missing_with_label: 'Please select {label}.',
   },
   Select: {
     value_missing: 'Please make a choice',
+    value_missing_with_label: 'Please select {label}.',
   },
   Transfer: {
     items: 'items',
   },
   UrlField: {
-    value_missing: 'Please input a url address',
-    type_mismatch: 'Please input a valid url address',
+    value_missing: 'Please input a url address.',
+    value_missing_with_label: 'Please input {label}.',
+    type_mismatch: 'Please input a valid url address.',
   },
   ColorPicker: {
-    value_missing: 'Please select a color',
-    type_mismatch: 'Please select a valid color',
+    value_missing: 'Please select a color.',
+    value_missing_with_label: 'Please select {label}.',
+    type_mismatch: 'Please select a valid color.',
   },
   Validator: {
     bad_input: 'Please input a number.',
-    pattern_mismatch: 'Please input a value to match the given pattern',
+    pattern_mismatch: 'Please input a value to match the given pattern.',
     range_overflow: 'The value must be less than or equal to {max}.',
     range_underflow: 'The value must be greater than or equal to {min}.',
     step_mismatch: 'Please input a valid value. {near}',
@@ -97,7 +105,8 @@ export default {
     too_short: 'Please increase the length of the value down to {minLength} or more characters (You have input {length} characters).',
     type_mismatch: 'Please input a value to match the given type.',
     value_missing: 'Please input a value.',
-    unique: 'The value of this field is not unique, please input again',
+    value_missing_with_label: 'Please input {label}.',
+    unique: 'The value of this field is not unique, please input again.',
     unknown: 'Unknown error.',
   },
   Icon: {

@@ -55,10 +55,12 @@ export default {
     cannot_add_record_when_head_no_current: '头未选中记录，不能新建行记录',
   },
   DatePicker: {
-    value_missing: '请选择日期',
+    value_missing: '请选择日期。',
+    value_missing_with_label: '请选择{label}。',
   },
   EmailField: {
     value_missing: '请输入邮箱地址',
+    value_missing_with_label: '请输入{label}。',
     type_mismatch: '请输入有效的邮箱地址',
   },
   IntlField: {
@@ -66,37 +68,44 @@ export default {
   },
   NumberField: {
     value_missing: '请输入数字',
+    value_missing_with_label: '请输入{label}。',
   },
   Radio: {
-    value_missing: '请选择',
+    value_missing: '请选择。',
+    value_missing_with_label: '请选择{label}。',
   },
   SelectBox: {
-    value_missing: '请选择',
+    value_missing: '请选择。',
+    value_missing_with_label: '请选择{label}。',
   },
   Select: {
-    value_missing: '请选择',
+    value_missing: '请选择。',
+    value_missing_with_label: '请选择{label}。',
   },
   Transfer: {
     items: '项',
   },
   UrlField: {
-    value_missing: '请输入网址',
-    type_mismatch: '请输入有效的网址',
+    value_missing: '请输入网址。',
+    value_missing_with_label: '请输入{label}。',
+    type_mismatch: '请输入有效的网址。',
   },
   ColorPicker: {
     value_missing: '请选择颜色',
-    type_mismatch: '请选择有效的颜色',
+    value_missing_with_label: '请选择{label}。',
+    type_mismatch: '请选择有效的颜色。',
   },
   Validator: {
     bad_input: '请输入一个数字。',
     pattern_mismatch: '请与所请求的格式保持一致。',
-    range_overflow: '值必须小于或等于{max}。',
-    range_underflow: '值必须大于或等于{min}。',
+    range_overflow: '{label}必须小于或等于{max}。',
+    range_underflow: '{label}必须大于或等于{min}。',
     step_mismatch: '请输入有效值。{near}',
     too_long: '请将该内容减少到{maxLength}个或更少字符（目前您使用了{length}个字符）。',
     too_short: '请将该内容增加到{minLength}个或更多字符（目前您使用了{length}个字符）。',
     type_mismatch: '请输入与类型匹配的有效值。',
     value_missing: '请填写此字段。',
+    value_missing_with_label: '请输入{label}。',
     unique: '该字段值不唯一，请重新填写。',
     unknown: '未知错误。',
   },
