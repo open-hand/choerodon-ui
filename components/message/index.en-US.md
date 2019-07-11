@@ -16,19 +16,19 @@ Display global messages as feedback in response to user operations.
 
 This components provides some static methods, with usage and arguments as following:
 
-- `message.success(content, [duration], onClose)`
-- `message.error(content, [duration], onClose)`
-- `message.info(content, [duration], onClose)`
-- `message.warning(content, [duration], onClose)`
-- `message.warn(content, [duration], onClose)` // alias of warning
-- `message.loading(content, [duration], onClose)`
+- `message.success(content, [duration], [onClose], placement)`
+- `message.error(content, [duration], [onClose], placement)`
+- `message.info(content, [duration], [onClose], placement)`
+- `message.warning(content, [duration], [onClose], placement)`
+- `message.warn(content, [duration], [onClose], placement)` // alias of warning
+- `message.loading(content, [duration], [onClose], placement)`
 
 | Argument | Description | Type | Default |
 | -------- | ----------- | ---- | ------- |
 | content | content of the message | string\|ReactNode | - |
 | duration | time before auto-dismiss, in seconds | number | 1.5 |
 | onClose | Specify a function that will be called when the message is closed | Function | - |
-| placement | the position of message, 可选 `top` `left` `right` `bottom` `topLeft` `topRight` `bottomLeft` `bottomRight` `leftTop` `leftBottom` `rightTop` `rightBottom`| string | `top`|
+| placement | the position of message, values: `top` `left` `right` `bottom` `topLeft` `topRight` `bottomLeft` `bottomRight` `leftTop` `leftBottom` `rightTop` `rightBottom`| string | `leftBottom` |
 
 Methods for global configuration and destruction are also provided:
 
@@ -48,5 +48,6 @@ message.config({
 | -------- | ----------- | ---- | ------- |
 | duration | time before auto-dismiss, in seconds | number | 1.5 |
 | getContainer | Return the mount node for Message | () => HTMLElement | () => document.body |
-| top | the position of the message when it appears on the top | number | 24px |
-| bottom | the position of the message when it appears on the bottom | number | 24px |
+| top | the position of the message when it appears on the top | number | 24 |
+| bottom | the position of the message when it appears on the bottom | number | 24 |
+| placement | the position of message, values: `top` `left` `right` `bottom` `topLeft` `topRight` `bottomLeft` `bottomRight` `leftTop` `leftBottom` `rightTop` `rightBottom`| string | `leftBottom` |
