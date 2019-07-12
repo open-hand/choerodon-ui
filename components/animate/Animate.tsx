@@ -210,7 +210,7 @@ export default class Animate extends Component<AnimateProps> {
       transitionLeave,
       component: Cmp,
       componentProps,
-      ...otherProps,
+      ...otherProps
     } = props;
     const { children: stateChildren } = this.state;
     let children: ReactElement<any>[] = [];

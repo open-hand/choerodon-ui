@@ -162,6 +162,6 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
 }
 
 @observer
-export default class ObserverRadio<T extends RadioProps> extends Radio<T & RadioProps> {
+export default class ObserverRadio extends Radio<RadioProps> {
   static defaultProps = Radio.defaultProps;
 }

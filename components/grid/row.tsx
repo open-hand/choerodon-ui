@@ -4,23 +4,14 @@ import { getPrefixCls } from '../configure';
 
 let enquire: any;
 if (typeof window !== 'undefined') {
-  const matchMediaPolyfill = (mediaQuery: string): MediaQueryList => {
-    return {
-      media: mediaQuery,
-      matches: false,
-      addListener() {
-      },
-      removeListener() {
-      },
-    };
-  };
-  window.matchMedia = window.matchMedia || matchMediaPolyfill;
+  window.matchMedia = window.matchMedia || matchMediaPolifill;
   enquire = require('enquire.js');
 }
 
 import React, { Children, cloneElement, Component, HTMLAttributes, ReactElement } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import { matchMediaPolifill } from '../_util/mediaQueryListPolyfill';
 
 export type Breakpoint = 'xxl' | 'xl' | 'lg' | 'md' | 'sm' | 'xs';
 export type BreakpointMap = {
@@ -127,8 +118,14 @@ export default class Row extends Component<RowProps, RowState> {
 
   render() {
     const {
-      type, justify, align, className, style, children,
-      prefixCls: customizePrefixCls, ...others,
+      type,
+      justify,
+      align,
+      className,
+      style,
+      children,
+      prefixCls: customizePrefixCls,
+      ...others
     } = this.props;
     const prefixCls = getPrefixCls('row', customizePrefixCls);
     const gutter = this.getGutter();

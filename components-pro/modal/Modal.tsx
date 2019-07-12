@@ -13,7 +13,7 @@ import EventManager from '../_util/EventManager';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import isEmpty from '../_util/isEmpty';
 import { ButtonColor, FuncType } from '../button/enum';
-import asyncComponent from '../_util/AsyncComponent';
+import asyncComponent, { AsyncCmpLoadingFunction } from '../_util/AsyncComponent';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import Message from '../message';
 import exception from '../_util/exception';
@@ -69,7 +69,11 @@ export default class Modal extends ViewComponent<ModalProps> {
     afterClose: PropTypes.func,
     okCancel: PropTypes.bool,
     drawer: PropTypes.bool,
-    title: PropTypes.node,
+    // title: PropTypes.node,
+    // 此处原本允许title传入node，但是类型为PropTypes.node时无法正确继承ViewComponent
+    // 父类中的title指的是HTML元素的title属性，此处title指modal标题，产生歧义，暂时设置为string
+    // TODO: 添加modalTitle属性替代此处的title
+    title: PropTypes.string,
     okFirst: PropTypes.bool,
   };
 
@@ -324,7 +328,7 @@ export default class Modal extends ViewComponent<ModalProps> {
 
   getBody(): ReactNode {
     const { children } = this.props;
-    return this.renderChildren(typeof children === 'function' ? asyncComponent(children) : children);
+    return this.renderChildren(typeof children === 'function' ? asyncComponent(children as AsyncCmpLoadingFunction) : children);
   }
 
   getFooter(): ReactNode {

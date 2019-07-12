@@ -349,7 +349,7 @@ export default class Form extends DataSetComponent<FormProps> {
   setResponsiveKey(): void {
     let responsiveKey = ResponsiveKeys.xs;
     const { element } = this;
-    if (element && typeof window !== 'undefined') {
+    if (element && typeof window !== 'undefined' && document.defaultView) {
       const { content } = document.defaultView.getComputedStyle(element);
       if (content) {
         try {

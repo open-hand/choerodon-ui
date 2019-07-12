@@ -1,4 +1,4 @@
-import React, { Component, KeyboardEvent, MouseEvent } from 'react';
+import React, { Component, KeyboardEvent, MouseEventHandler } from 'react';
 import { findDOMNode } from 'react-dom';
 import LazyRenderBox from './LazyRenderBox';
 import IDialogPropTypes from './IDialogPropTypes';
@@ -173,7 +173,7 @@ export default class Dialog extends Component<IDialogPropTypes, any> {
       animationEnd();
     }
   };
-  onMaskClick = (e: MouseEvent<HTMLDivElement>) => {
+  onMaskClick: MouseEventHandler<HTMLDivElement> = (e) => {
     // android trigger click on open (fastclick??)
     if (Date.now() - this.openTime < 300) {
       return;

@@ -1,4 +1,4 @@
-import React, { Children, Component, CSSProperties, FormEventHandler, KeyboardEventHandler, MouseEvent } from 'react';
+import React, { Children, Component, CSSProperties, FormEventHandler, KeyboardEventHandler, ButtonHTMLAttributes, MouseEventHandler } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
@@ -94,7 +94,7 @@ export default class Button extends Component<ButtonProps, any> {
     }
   }
 
-  handleClick = (e: MouseEvent<HTMLButtonElement>) => {
+  handleClick: MouseEventHandler<HTMLButtonElement | HTMLAnchorElement> = (e) => {
     clearTimeout(this.timeout);
     this.timeout = window.setTimeout(() => this.setState({ clicked: false }), 500);
 
@@ -106,7 +106,17 @@ export default class Button extends Component<ButtonProps, any> {
 
   render() {
     const {
-      type, shape, size, className, htmlType, children, icon, prefixCls: customizePrefixCls, ghost, funcType, ...others,
+      prefixCls: customizePrefixCls,
+      type,
+      shape,
+      size,
+      className,
+      htmlType,
+      children,
+      icon,
+      ghost,
+      funcType,
+      ...others
     } = this.props;
 
     const { loading, clicked } = this.state;
@@ -159,7 +169,8 @@ export default class Button extends Component<ButtonProps, any> {
       <Ripple disabled={others.disabled}>
         <ComponentProp
           {...omit(others, ['loading'])}
-          type={others.href ? undefined : (htmlType || 'button')}
+          // 如果没有href属性，则表示组件使用button标签，type为'submit' | 'reset' | 'button'
+          type={others.href ? undefined : (htmlType as ButtonHTMLAttributes<any>['type'] || 'button')}
           className={classes}
           onClick={this.handleClick}
         >

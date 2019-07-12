@@ -803,7 +803,7 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
 }
 
 @observer
-export default class ObserverSelect<T extends SelectProps> extends Select<T & SelectProps> {
+export default class ObserverSelect extends Select<SelectProps> {
   static defaultProps = Select.defaultProps;
 
   static Option = Option;

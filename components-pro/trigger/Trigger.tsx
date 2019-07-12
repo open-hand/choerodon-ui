@@ -168,7 +168,7 @@ export default class Trigger extends Component<TriggerProps> {
   }
 
   handleEvent = (eventName, child, e) => {
-    const { [`on${eventName}`]: handle } = this.props;
+    const { [`on${eventName}`]: handle } = this.props as { [key: string]: any };
     const { [`on${eventName}`]: childHandle } = child.props;
     if (childHandle) {
       childHandle(e);

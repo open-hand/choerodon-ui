@@ -1,4 +1,4 @@
-import React, { Component, CSSProperties, MouseEvent, MouseEventHandler } from 'react';
+import React, { Component, CSSProperties, MouseEventHandler } from 'react';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
 import noop from 'lodash/noop';
@@ -55,7 +55,7 @@ export default class BackTop extends Component<BackTopProps, any> {
     return (targetNode as HTMLElement).scrollTop;
   };
 
-  scrollToTop = (e: MouseEvent<HTMLDivElement>) => {
+  scrollToTop = (e: React.MouseEvent<HTMLDivElement>) => {
     const scrollTop = this.getCurrentScrollTop();
     const startTime = Date.now();
     const frameFunc = () => {

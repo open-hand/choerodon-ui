@@ -178,7 +178,7 @@ export default class Select extends Component<SelectProps, {}> {
       className = '',
       size,
       mode,
-      ...restProps,
+      ...restProps
     } = this.props;
     const prefixCls = getPrefixCls('select', customizePrefixCls);
     const cls = classNames({

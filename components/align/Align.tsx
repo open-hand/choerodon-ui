@@ -6,6 +6,8 @@ import domAlign from 'dom-align';
 import EventManager from '../_util/EventManager';
 import TaskRunner from '../_util/TaskRunner';
 
+type FirstParam<T extends (...args: any) => any> = T extends (arg1: infer A, ...rest: any) => any ? A : never;
+
 export interface AlignProps {
   childrenProps?: object;
   align: object;
@@ -14,6 +16,7 @@ export interface AlignProps {
   monitorBufferTime?: number;
   monitorWindowResize?: boolean;
   hidden?: boolean;
+  children: FirstParam<typeof cloneElement>;
 }
 
 export default class Align extends Component<AlignProps, any> {

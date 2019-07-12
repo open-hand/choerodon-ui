@@ -170,6 +170,6 @@ export class CheckBox<T extends CheckBoxProps> extends Radio<T & CheckBoxProps> 
 }
 
 @observer
-export default class ObserverCheckBox<T extends CheckBoxProps> extends CheckBox<T & CheckBoxProps> {
+export default class ObserverCheckBox extends CheckBox<CheckBoxProps> {
   static defaultProps = CheckBox.defaultProps;
 }

@@ -1,4 +1,4 @@
-import React, { Component, CSSProperties, MouseEvent, MouseEventHandler, ReactNode } from 'react';
+import React, { Component, CSSProperties, MouseEventHandler, ReactNode } from 'react';
 import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
 import noop from 'lodash/noop';
@@ -40,7 +40,7 @@ export default class Alert extends Component<AlertProps, any> {
     closed: false,
   };
 
-  handleClose = (e: MouseEvent<HTMLAnchorElement>) => {
+  handleClose = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     let dom = findDOMNode(this) as HTMLElement;
     dom.style.height = `${dom.offsetHeight}px`;
