@@ -1,4 +1,4 @@
-import React, { Component, MouseEvent, ReactNode } from 'react';
+import React, { Component, ReactNode, MouseEventHandler } from 'react';
 import Tooltip, { AbstractTooltipProps } from '../tooltip';
 import Icon from '../icon';
 import Button from '../button';
@@ -10,8 +10,8 @@ import { getPrefixCls } from '../configure';
 
 export interface PopconfirmProps extends AbstractTooltipProps {
   title: ReactNode;
-  onConfirm?: (e: MouseEvent<any>) => void;
-  onCancel?: (e: MouseEvent<any>) => void;
+  onConfirm?: MouseEventHandler<any>;
+  onCancel?: MouseEventHandler<any>;
   okText?: ReactNode;
   okType?: ButtonType;
   cancelText?: ReactNode;
@@ -55,7 +55,7 @@ export default class Popconfirm extends Component<PopconfirmProps, PopconfirmSta
     return this.tooltip.getPopupDomNode();
   }
 
-  onConfirm = (e: MouseEvent<HTMLButtonElement>) => {
+  onConfirm: MouseEventHandler<HTMLButtonElement> = (e) => {
     this.setVisible(false);
 
     const { onConfirm } = this.props;
@@ -64,7 +64,7 @@ export default class Popconfirm extends Component<PopconfirmProps, PopconfirmSta
     }
   };
 
-  onCancel = (e: MouseEvent<HTMLButtonElement>) => {
+  onCancel: MouseEventHandler<HTMLButtonElement> = (e) => {
     this.setVisible(false);
 
     const { onCancel } = this.props;

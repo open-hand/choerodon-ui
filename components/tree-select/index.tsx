@@ -54,7 +54,7 @@ export default class TreeSelect extends Component<TreeSelectProps, any> {
       notFoundContent,
       dropdownStyle,
       dropdownClassName,
-      ...restProps,
+      ...restProps
     } = this.props;
 
     const prefixCls = getPrefixCls('select', customizePrefixCls);

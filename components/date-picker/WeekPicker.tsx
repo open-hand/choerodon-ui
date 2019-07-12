@@ -1,4 +1,4 @@
-import React, { Component, MouseEvent } from 'react';
+import React, { Component, MouseEventHandler } from 'react';
 import moment, { Moment } from 'moment';
 import classNames from 'classnames';
 import Icon from '../icon';
@@ -80,12 +80,12 @@ export default class WeekPicker extends Component<any, any> {
     }
     this.props.onChange(value, formatValue(value, this.props.format));
   };
-  clearSelection = (e: MouseEvent<HTMLElement>) => {
+  clearSelection: MouseEventHandler<HTMLElement> = (e) => {
     e.preventDefault();
     e.stopPropagation();
     this.handleChange(null);
   };
-  onPickerIconClick = (e: MouseEvent<HTMLElement>) => {
+  onPickerIconClick: MouseEventHandler<HTMLElement> = (e) => {
     e.preventDefault();
     e.stopPropagation();
     const { focused } = this.state;

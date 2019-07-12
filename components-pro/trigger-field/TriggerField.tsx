@@ -177,7 +177,7 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
     } = this;
     let content;
     if (popupContent !== void 0) {
-      if (typeof popupContent === 'function') {
+      if (popupContent instanceof Function) {
         content = popupContent(this.getPopupProps());
       } else {
         content = popupContent;

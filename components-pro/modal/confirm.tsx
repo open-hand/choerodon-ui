@@ -10,8 +10,15 @@ import { normalizeProps } from './utils';
 export default function confirm(props: ModalProps & { iconType?: string, type?: string, children } | string) {
   props = normalizeProps(props);
   const {
-    children, type = 'confirm', onOk = noop, onCancel = noop,
-    iconType = 'error', header = false, border = false, okCancel = true, ...otherProps,
+    children,
+    type = 'confirm',
+    onOk = noop,
+    onCancel = noop,
+    iconType = 'error',
+    header = false,
+    border = false,
+    okCancel = true,
+    ...otherProps
   } = props;
   const prefixCls = getProPrefixCls('confirm');
   return new Promise((resolve) => {

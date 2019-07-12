@@ -55,7 +55,12 @@ export default function createTableRow(Cmp = 'tr') {
     }
 
     render() {
-      const rowProps = omit(this.props, ['prefixCls', 'rowKey', 'store']);
+      const otherProps: any = omit(this.props, [
+        'prefixCls',
+        'rowKey',
+        'store',
+        'children',
+      ]);
       const className = classnames(
         this.props.className,
         {
@@ -64,7 +69,7 @@ export default function createTableRow(Cmp = 'tr') {
       );
 
       return (
-        <Cmp {...rowProps} className={className}>
+        <Cmp {...otherProps} className={className}>
           {this.props.children}
         </Cmp>
       );

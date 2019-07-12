@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { action, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import { EditorConfiguration } from 'codemirror';
-import { IInstance } from 'react-codemirror2';
+import { IInstance, IControlledCodeMirror as CodeMirrorProps } from 'react-codemirror2';
 import isEqual from 'lodash/isEqual';
 import omit from 'lodash/omit';
 import noop from 'lodash/noop';
@@ -13,7 +13,7 @@ import { FormFieldProps } from '../field/FormField';
 import { CodeAreaFormatter } from './CodeAreaFormatter';
 import autobind from '../_util/autobind';
 
-let CodeMirror: ComponentClass | undefined;
+let CodeMirror: ComponentClass<CodeMirrorProps>;
 
 if (typeof window !== 'undefined') {
   CodeMirror = require('react-codemirror2').Controlled;
@@ -126,7 +126,7 @@ export default class CodeArea extends FormField<CodeAreaProps> {
   }
 
   getText() {
-    return this.text === void 0 ? super.getText() || '' : this.text;
+    return this.text === void 0 ? super.getText() as string || '' : this.text;
   }
 
   processValue(value) {

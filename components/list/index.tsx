@@ -130,7 +130,7 @@ export default class List extends Component<ListProps> {
       footer,
       empty,
       loading,
-      ...rest,
+      ...rest
     } = this.props;
     const prefixCls = this.getPrefixCls();
     let loadingProp = loading;

@@ -1,4 +1,4 @@
-import React, { Children, cloneElement, isValidElement, PureComponent, ReactChild, ReactElement } from 'react';
+import React, { Children, cloneElement, isValidElement, PureComponent, ReactNode, ReactElement } from 'react';
 import Animate from '../animate';
 import MouseDown, { Size } from './MouseDown';
 
@@ -55,7 +55,7 @@ export default class RippleChild extends PureComponent<RippleChildProps> {
     return cloneElement<any>(child, newProps);
   };
 
-  ripple = (child: ReactChild) => {
+  ripple = (child: ReactNode) => {
     if (isValidElement<any>(child)) {
       return (
         <MouseDown rippleChild={child}>

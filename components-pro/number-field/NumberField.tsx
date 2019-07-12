@@ -260,7 +260,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
 }
 
 @observer
-export default class ObserverNumberField<T extends NumberFieldProps> extends NumberField<T & NumberFieldProps> {
+export default class ObserverNumberField extends NumberField<NumberFieldProps> {
   static defaultProps = NumberField.defaultProps;
   static format = formatNumber;
 }

@@ -4,19 +4,20 @@ import omit from 'lodash/omit';
 import PropTypes from 'prop-types';
 import Icon from '../icon';
 import { getPrefixCls } from '../configure';
+import { matchMediaPolifill } from '../_util/mediaQueryListPolyfill';
 
 if (typeof window !== 'undefined') {
-  const matchMediaPolyfill = (mediaQuery: string): MediaQueryList => {
-    return {
-      media: mediaQuery,
-      matches: false,
-      addListener() {
-      },
-      removeListener() {
-      },
-    };
-  };
-  window.matchMedia = window.matchMedia || matchMediaPolyfill;
+  // const matchMediaPolyfill = (mediaQuery: string): MediaQueryList => {
+  //   return {
+  //     media: mediaQuery,
+  //     matches: false,
+  //     addListener() {
+  //     },
+  //     removeListener() {
+  //     },
+  //   };
+  // };
+  window.matchMedia = window.matchMedia || matchMediaPolifill;
 }
 
 const dimensionMap = {
@@ -126,7 +127,10 @@ export default class Sider extends Component<SiderProps, SiderState> {
   componentDidMount() {
     if (this.mql) {
       this.mql.addListener(this.responsiveHandler);
-      this.responsiveHandler(this.mql);
+      this.responsiveHandler(new MediaQueryListEvent('change', {
+        matches: this.mql.matches,
+        media: this.mql.media,
+      }));
     }
 
     if (this.context.siderHook) {
@@ -144,10 +148,10 @@ export default class Sider extends Component<SiderProps, SiderState> {
     }
   }
 
-  responsiveHandler = (mql: MediaQueryList) => {
-    this.setState({ below: mql.matches });
-    if (this.state.collapsed !== mql.matches) {
-      this.setCollapsed(mql.matches, 'responsive');
+  responsiveHandler = (event: MediaQueryListEvent) => {
+    this.setState({ below: event.matches });
+    if (this.state.collapsed !== event.matches) {
+      this.setCollapsed(event.matches, 'responsive');
     }
   };
 
@@ -174,9 +178,15 @@ export default class Sider extends Component<SiderProps, SiderState> {
 
   render() {
     const {
-      prefixCls: customizePrefixCls, className,
-      collapsible, reverseArrow, trigger, style, width, collapsedWidth,
-      ...others,
+      prefixCls: customizePrefixCls,
+      className,
+      collapsible,
+      reverseArrow,
+      trigger,
+      style,
+      width,
+      collapsedWidth,
+      ...others
     } = this.props;
     const prefixCls = getPrefixCls('layout-sider', customizePrefixCls);
     const divProps = omit(others, ['collapsed',

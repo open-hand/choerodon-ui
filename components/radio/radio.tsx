@@ -48,7 +48,7 @@ export default class Radio extends Component<RadioProps, {}> {
       className,
       children,
       style,
-      ...restProps,
+      ...restProps
     } = props;
     const prefixCls = getPrefixCls('radio', customizePrefixCls);
     const { radioGroup } = context;
