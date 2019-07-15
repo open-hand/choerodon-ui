@@ -23,6 +23,7 @@ timeline: true
 - 💄 `Input`: Update the style.
 - 💄 `DatePicker`: Update the style.
 - 💄 `Select`: Update the style.
+- 💄 `<pro>Form`: Optimize rowSpan and colSpan.
 
 ## 0.7.6
 

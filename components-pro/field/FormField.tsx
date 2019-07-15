@@ -400,6 +400,9 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       'maxTagPlaceholder',
       'maxTagCount',
       'maxTagTextLength',
+      'rowIndex',
+      'colIndex',
+      'labelLayout',
     ]);
     if (!this.isDisabled() && !this.isReadOnly()) {
       otherProps.onChange = this.handleChange;

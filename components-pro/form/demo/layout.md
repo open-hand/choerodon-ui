@@ -29,9 +29,9 @@ ReactDOM.render(
   <Form labelWidth={[60, 70, 50]} columns={3}>
     <TextField colSpan={3} label="手机号" pattern="1[3-9]\d{9}" name="phone" required />
     <Password label="密码" name="password" required />
-    <Password label="确认密码" name="confirmPassword" required validator={passwordValidator} />
     <NumberField rowSpan={2} label="年龄" name="age" min={18} step={1} required addonAfter="周岁" />
-    <SelectBox label="性别" name="sex" required>
+    <Password label="确认密码" name="confirmPassword" required validator={passwordValidator} />
+    <SelectBox colSpan={2} label="性别" name="sex" required>
       <Option value="M">男</Option>
       <Option value="F">女</Option>
     </SelectBox>
