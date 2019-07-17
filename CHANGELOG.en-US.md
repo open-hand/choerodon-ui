@@ -18,6 +18,7 @@ timeline: true
 - 🌟 `configure`: Add global configuration new properties.
 - 🌟 `<pro>Modal`: Modal and internal injection modal object add `update` methods.
 - 🌟 `<pro>Modal`: Added `okProps`, `cancelProps`, `okFirst`, `border` attribute.
+- 🌟 `<pro>DataSet.Field`: Add `requestTransform` & `responseTransform` input property.
 - 🌟 `message`: Added `placement` config.
 - 💄 `Password`: Change to reveal password by clicking.
 - 💄 `Input`: Update the style.
@@ -309,7 +310,7 @@ timeline: true
 ## 0.3.8
 
 `2018-08-31`
- 
+
 - 🌟 `Icon`: Added new icons.
 - 💄 `Input`: Adjust the style.
 - 💄 `FormItem`: Adjust the style.

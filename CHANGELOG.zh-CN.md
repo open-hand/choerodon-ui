@@ -18,6 +18,7 @@ timeline: true
 - 🌟 `configure`: 增加全局配置新属性。
 - 🌟 `<pro>Modal`: Modal和内部注入modal对象增加update方法。
 - 🌟 `<pro>Modal`: 新增okProps, cancelProps, okFirst, border属性。
+- 🌟 `<pro>DataSet.Field`: 增加`requestTransform`和`responseTransform`输入属性。
 - 🌟 `message`: 新增placement配置。
 - 💄 `Password`: 变更为通过点击揭示密码。
 - 💄 `Input`: 更新样式。
@@ -308,7 +309,7 @@ timeline: true
 ## 0.3.8
 
 `2018-08-31`
- 
+
 - 🌟 `Icon`: 增加新的图标。。
 - 💄 `Input`: Input和select在compact模式和正常模式下都能对齐了。
 - 💄 `FormItem`: 表单输入框带有字数限制时，优化为报错提示时报错信息与横线无间距，且隐藏字数限制提示。
