@@ -25,6 +25,7 @@ timeline: true
 - 💄 `DatePicker`: Update the style.
 - 💄 `Select`: Update the style.
 - 💄 `<pro>Form`: Optimize rowSpan and colSpan.
+- 💄 `<pro>DataSet`: The return value of the query and submit events is false which can prevent queries and commits.
 
 ## 0.7.6
 

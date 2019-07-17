@@ -122,11 +122,11 @@ title: DataSet
 | 事件名 | 说明 | 钩子参数 | 参数说明 |
 | --- | --- | --- | --- |
 | update | 值更新事件 | ({ dataSet, record, name, value, oldValue }) =&gt; void | `dataSet` - 数据集 `record` - 更新的记录 `name` - 更新的字段 `value` - 新值 `oldValue` - 旧值 |
-| query | 查询事件 | ({ dataSet, params }) =&gt; void | `dataSet` - 数据集 `params` - 查询参数，可修改 |
+| query | 查询事件，返回值为false将阻止查询 | ({ dataSet, params }) =&gt; boolean | `dataSet` - 数据集 `params` - 查询参数，可修改 |
 | beforeLoad | 数据加载前的事件， 用于处理请求数据 | ({ dataSet, data }) =&gt; data | `dataSet` - 数据集 `data` - 请求数据 |
 | load | 数据加载完后事件 | ({ dataSet }) =&gt; void | `dataSet` - 数据集 |
 | loadFailed | 数据加载失败事件 | ({ dataSet }) =&gt; void | `dataSet` - 数据集 |
-| submit | 提交事件 | ({ dataSet, data }) =&gt; void | `dataSet` - 数据集 `data` - json数据 |
+| submit | 提交事件，返回值为false将阻止提交 | ({ dataSet, data }) =&gt; boolean | `dataSet` - 数据集 `data` - json数据 |
 | submitSuccess | 提交成功事件 | ({ dataSet, data }) =&gt; void | `dataSet` - 数据集 `data` - 响应数据 |
 | submitFailed | 提交失败事件 | ({ dataSet }) =&gt; void | `dataSet` - 数据集 |
 | select | 选择记录事件 | ({ dataSet, record, previous }) =&gt; void | `dataSet` - 数据集 `record` - 选择的记录 `previous` - 之前选择的记录，单选模式下有效 |
