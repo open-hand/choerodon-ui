@@ -24,6 +24,7 @@ timeline: true
 - 💄 `Input`: Update the style.
 - 💄 `DatePicker`: Update the style.
 - 💄 `Select`: Update the style.
+- 💄 `SelectBox`: Update the style(with 'floatLabel' layout).
 
 ## 0.7.6
 
