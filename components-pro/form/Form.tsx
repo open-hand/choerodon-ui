@@ -17,7 +17,6 @@ import FormContext from './FormContext';
 import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComponent';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
-import measureTextWidth from '../_util/measureTextWidth';
 import { LabelAlign, LabelLayout, ResponsiveKeys } from './enum';
 import { defaultColumns, defaultLabelWidth, FIELD_SUFFIX, getProperty, normalizeLabelWidth } from './utils';
 import exception from '../_util/exception';
@@ -492,7 +491,7 @@ export default class Form extends DataSetComponent<FormProps> {
             className={labelClassName}
             rowSpan={rowSpan}
           >
-            <label title={label && measureTextWidth(label) > labelWidth[index % columns] - (required ? 20 : 10) ? label : void 0}>
+            <label>
               {label}
             </label>
           </td>

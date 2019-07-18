@@ -1,4 +1,4 @@
-import React, { CSSProperties, Key, ReactElement, ReactNode } from 'react';
+import React, { CSSProperties, isValidElement, Key, ReactElement, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import omit from 'lodash/omit';
 import isEqual from 'lodash/isEqual';
@@ -6,7 +6,6 @@ import isNil from 'lodash/isNil';
 import isPlainObject from 'lodash/isPlainObject';
 import { observer } from 'mobx-react';
 import { computed, IReactionDisposer, isArrayLike, reaction, runInAction } from 'mobx';
-import format from 'string-template';
 import Menu, { Item, ItemGroup } from 'choerodon-ui/lib/rc-components/menu';
 import TriggerField, { TriggerFieldProps } from '../trigger-field/TriggerField';
 import autobind from '../_util/autobind';
@@ -24,8 +23,8 @@ import Spin from '../spin';
 import { stopEvent } from '../_util/EventManager';
 import normalizeOptions from '../option/normalizeOptions';
 import { $l } from '../locale-context';
-import getReactNodeText from '../_util/getReactNodeText';
 import * as ObjectChainValue from '../_util/ObjectChainValue';
+import formatReactTemplate from '../_util/formatReactTemplate';
 
 function updateActiveKey(menu: Menu, activeKey: string) {
   const store = menu.getStore();
@@ -40,7 +39,7 @@ function updateActiveKey(menu: Menu, activeKey: string) {
 }
 
 export function getItemKey(record: Record, text: ReactNode, value: any) {
-  return `item-${value || record.id}-${getReactNodeText(text) || record.id}`;
+  return `item-${value || record.id}-${(isValidElement(text) ? text.key : text) || record.id}`;
 }
 
 function getSimpleValue(value, valueField) {
@@ -132,7 +131,7 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
   get defaultValidationMessages(): ValidationMessages | null {
     const label = this.getProp('label');
     return {
-      valueMissing: format($l('Select', label ? 'value_missing_with_label' : 'value_missing'), { label }),
+      valueMissing: formatReactTemplate($l('Select', label ? 'value_missing_with_label' : 'value_missing'), { label }),
     };
   }
 

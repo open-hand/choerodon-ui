@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { action, computed, isArrayLike } from 'mobx';
 import omit from 'lodash/omit';
-import format from 'string-template';
 import { Select, SelectProps } from '../select/Select';
 import Radio from '../radio/Radio';
 import CheckBox from '../check-box/CheckBox';
@@ -16,6 +15,7 @@ import DataSet from '../data-set/DataSet';
 import normalizeOptions from '../option/normalizeOptions';
 import { $l } from '../locale-context';
 import { LabelLayout } from '../form/enum';
+import formatReactTemplate from '../_util/formatReactTemplate';
 
 const GroupIdGen = function* (id) {
   while (true) {
@@ -57,7 +57,7 @@ export default class SelectBox extends Select<SelectBoxProps> {
   get defaultValidationMessages(): ValidationMessages | null {
     const label = this.getProp('label');
     return {
-      valueMissing: format($l('SelectBox', label ? 'value_missing_with_label' : 'value_missing'), { label }),
+      valueMissing: formatReactTemplate($l('SelectBox', label ? 'value_missing_with_label' : 'value_missing'), { label }),
     };
   }
 
