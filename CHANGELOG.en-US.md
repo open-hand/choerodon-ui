@@ -24,6 +24,9 @@ timeline: true
 - 💄 `Input`: Update the style.
 - 💄 `DatePicker`: Update the style.
 - 💄 `Select`: Update the style.
+- 💄 `<pro>Form`: Optimize rowSpan and colSpan.
+- 💄 `<pro>DataSet`: The return value of the query and submit events is false which can prevent queries and commits.
+- 💄 `<pro>Popup`: upgrade the `z-index` style.
 - 💄 `SelectBox`: Update the style(with 'floatLabel' layout).
 
 ## 0.7.6

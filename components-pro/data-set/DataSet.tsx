@@ -1462,10 +1462,15 @@ Then the query method will be auto invoke.`);
       if (axiosConfigs.length) {
         try {
           this.changeSubmitStatus(DataSetStatus.submitting);
-          this.fireEvent(DataSetEvents.submit, { dataSet: this, data: [...created, ...updated, ...destroyed, ...cascade] });
-          this.pending = axiosStatic.all(axiosConfigs.map(config => this.axios(config)));
-          const result: any[] = await this.pending;
-          return this.handleSubmitSuccess(result);
+          const submitEventResult = await this.fireEvent(DataSetEvents.submit, {
+            dataSet: this,
+            data: [...created, ...updated, ...destroyed, ...cascade],
+          });
+          if (submitEventResult) {
+            this.pending = axiosStatic.all(axiosConfigs.map(config => this.axios(config)));
+            const result: any[] = await this.pending;
+            return this.handleSubmitSuccess(result);
+          }
         } catch (e) {
           this.handleSubmitFail(e);
           throw e;
@@ -1486,12 +1491,16 @@ Then the query method will be auto invoke.`);
         const newConfig = axiosAdapter(read, this, params, this.generateQueryString(page));
         const adapterConfig = adapter(newConfig, 'read') || newConfig;
         if (adapterConfig.url) {
-          this.fireEvent(DataSetEvents.query, { dataSet: this, params: adapterConfig.data || adapterConfig.params });
-          const result = await this.axios(adapterConfig);
-          runInAction(() => {
-            this.currentPage = page;
+          const queryEventResult = await this.fireEvent(DataSetEvents.query, {
+            dataSet: this, params: adapterConfig.data || adapterConfig.params,
           });
-          return result;
+          if (queryEventResult) {
+            const result = await this.axios(adapterConfig);
+            runInAction(() => {
+              this.currentPage = page;
+            });
+            return result;
+          }
         }
       } catch (e) {
         this.handleLoadFail(e);
