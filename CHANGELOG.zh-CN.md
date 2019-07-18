@@ -26,6 +26,7 @@ timeline: true
 - 💄 `Select`: 更新样式。
 - 💄 `<pro>Form`: 优化行列合并。
 - 💄 `<pro>DataSet`: query和submit事件返回值为false可阻止查询和提交。
+- 💄 `<pro>Popup`: 提升样式z-index。
 
 ## 0.7.6
 
