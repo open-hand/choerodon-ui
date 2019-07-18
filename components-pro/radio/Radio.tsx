@@ -4,12 +4,12 @@ import { action, computed } from 'mobx';
 import { observer } from 'mobx-react';
 import omit from 'lodash/omit';
 import noop from 'lodash/noop';
-import format from 'string-template';
 import { FormField, FormFieldProps } from '../field/FormField';
 import autobind from '../_util/autobind';
 import { ValidationMessages } from '../validator/Validator';
 import { ViewMode } from './enum';
 import { $l } from '../locale-context';
+import formatReactTemplate from '../_util/formatReactTemplate';
 
 export interface RadioProps extends FormFieldProps {
   /**
@@ -63,7 +63,7 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
   get defaultValidationMessages(): ValidationMessages | null {
     const label = this.getProp('label');
     return {
-      valueMissing: format($l('Radio', label ? 'value_missing_with_label' : 'value_missing'), { label }),
+      valueMissing: formatReactTemplate($l('Radio', label ? 'value_missing_with_label' : 'value_missing'), { label }),
     };
   }
 

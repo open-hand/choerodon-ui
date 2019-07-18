@@ -1,5 +1,7 @@
+import { ReactNode } from 'react';
+
 export default class ValidationResult {
-  validationMessage?: string;
+  validationMessage?: ReactNode;
   injectionOptions?: object;
   value?: any;
   ruleName: string;

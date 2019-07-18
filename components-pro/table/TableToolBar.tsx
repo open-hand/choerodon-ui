@@ -86,8 +86,8 @@ export default class TableToolBar extends Component<TabelToolBarProps, any> {
   handleExpandAll = () => this.context.tableStore.expandAll();
   handleCollapseAll = () => this.context.tableStore.collapseAll();
 
-  handleButtonExport = () => {
-    const { columnHeaders } = this.context.tableStore;
+  handleButtonExport = async () => {
+    const columnHeaders = await this.context.tableStore.getColumnHeaders();
     this.exportDataSet = new DataSet({ data: columnHeaders, paging: false });
     this.exportDataSet.selectAll();
     this.exportModal = Modal.open({

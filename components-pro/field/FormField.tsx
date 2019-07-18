@@ -574,7 +574,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     return this.getProp('multiple');
   }
 
-  getValidationMessage(validationResult?: ValidationResult): string | undefined {
+  getValidationMessage(validationResult?: ValidationResult): ReactNode {
     const { defaultValidationMessages, validator } = this;
     if (defaultValidationMessages) {
       const { validity } = validator;

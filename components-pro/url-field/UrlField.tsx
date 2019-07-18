@@ -1,10 +1,10 @@
 import { observer } from 'mobx-react';
 import { computed } from 'mobx';
-import format from 'string-template';
 import { TextField, TextFieldProps } from '../text-field/TextField';
 import { ValidationMessages } from '../validator/Validator';
 import { $l } from '../locale-context';
 import { FieldType } from '../data-set/enum';
+import formatReactTemplate from '../_util/formatReactTemplate';
 
 export interface UrlFieldProps extends TextFieldProps {
 }
@@ -19,7 +19,7 @@ export default class UrlField extends TextField<UrlFieldProps> {
   get defaultValidationMessages(): ValidationMessages | null {
     const label = this.getProp('label');
     return {
-      valueMissing: format($l('UrlField', label ? 'value_missing_with_label' : 'value_missing'), { label }),
+      valueMissing: formatReactTemplate($l('UrlField', label ? 'value_missing_with_label' : 'value_missing'), { label }),
       typeMismatch: $l('UrlField', 'type_mismatch'),
     };
   }

@@ -1,10 +1,10 @@
 import { observer } from 'mobx-react';
 import { computed } from 'mobx';
-import format from 'string-template';
 import { TextField, TextFieldProps } from '../text-field/TextField';
 import { ValidationMessages } from '../validator/Validator';
 import { $l } from '../locale-context';
 import { FieldType } from '../data-set/enum';
+import formatReactTemplate from '../_util/formatReactTemplate';
 
 export interface EmailFieldProps extends TextFieldProps {
 }
@@ -23,7 +23,7 @@ export default class EmailField extends TextField<EmailFieldProps> {
   get defaultValidationMessages(): ValidationMessages | null {
     const label = this.getProp('label');
     return {
-      valueMissing: format($l('EmailField', label ? 'value_missing_with_label' : 'value_missing'), { label }),
+      valueMissing: formatReactTemplate($l('EmailField', label ? 'value_missing_with_label' : 'value_missing'), { label }),
       typeMismatch: $l('EmailField', 'type_mismatch'),
     };
   }
