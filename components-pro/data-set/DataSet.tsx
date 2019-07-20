@@ -1653,6 +1653,10 @@ Then the query method will be auto invoke.`);
   private generatePageQueryString(page: number) {
     const { paging, pageSize } = this;
     if (paging === true) {
+      const generatePageQuery = getConfig('generatePageQuery');
+      if (generatePageQuery) {
+        return generatePageQuery({ pageSize, page });
+      }
       return { page, pagesize: pageSize };
     }
     return {};

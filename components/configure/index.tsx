@@ -23,6 +23,7 @@ export type Config = {
   modalOkFirst?: boolean;
   buttonFuncType?: string;
   renderEmpty?: (componentName?: string) => ReactNode;
+  generatePageQuery?: (pageParams: { page: number, pageSize: number }) => object;
 }
 
 export type ConfigKeys = keyof Config;
