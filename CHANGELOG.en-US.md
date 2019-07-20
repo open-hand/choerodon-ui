@@ -30,6 +30,7 @@ timeline: true
 - 💄 `SelectBox`: Update the style(with 'floatLabel' layout).
 - 💄 `TextArea`: Update the style.
 - 🐞 `<pro>FormField`: Fix the problem when the label is ReactNode.
+- 🐞 `<pro>Modal`: Fix the problem when `document.body` has no scrollbar, a popup modal will affect the page layout.
 
 ## 0.7.6
 
