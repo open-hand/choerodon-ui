@@ -1,6 +1,7 @@
 import { observable, ObservableMap, runInAction } from 'mobx';
-import { AxiosInstance } from 'axios';
+import { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { ReactNode } from 'react';
+import { LovConfig } from 'components-pro/lov/Lov';
 
 export type Config = {
   prefixCls?: string;
@@ -9,7 +10,9 @@ export type Config = {
   lookupUrl?: string | ((code: string) => string);
   lookupAxiosMethod?: string;
   lovDefineUrl?: string | ((code: string) => string);
-  lovQueryUrl?: string | ((code: string) => string);
+  lovDefineAxiosConfig?: (code: string) => AxiosRequestConfig;
+  lovQueryUrl?: string | ((code: string, lovConfig?: LovConfig) => string);
+  lovQueryAxiosConfig?: (code: string, lovConfig?: LovConfig) => AxiosRequestConfig;
   axios?: AxiosInstance;
   dataKey?: string;
   totalKey?: string;
