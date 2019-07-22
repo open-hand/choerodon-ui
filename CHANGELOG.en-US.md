@@ -29,6 +29,7 @@ timeline: true
 - 💄 `<pro>Popup`: upgrade the `z-index` style.
 - 💄 `SelectBox`: Update the style(with 'floatLabel' layout).
 - 💄 `TextArea`: Update the style.
+- 💄 `Tabs`: Update the style.
 - 🐞 `<pro>FormField`: Fix the problem when the label is ReactNode.
 
 ## 0.7.6
