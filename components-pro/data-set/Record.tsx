@@ -603,6 +603,7 @@ export default class Record {
       let value = ObjectChainValue.get(data, fieldName);
       const bind = field.get('bind');
       const type = field.get('type');
+      const responseTransform = field.get('responseTransform');
       if (bind) {
         fieldName = bind;
         const bindValue = ObjectChainValue.get(data, fieldName);
@@ -612,6 +613,9 @@ export default class Record {
       }
       if (value === void 0 && type === FieldType.boolean) {
         value = false;
+      }
+      if (responseTransform) {
+        value = responseTransform(value);
       }
       value = processValue(value, field);
       if (value === null) {
@@ -637,13 +641,17 @@ export default class Record {
         const bind = field.get('bind');
         const multiple = field.get('multiple');
         const type = field.get('type');
+        const requestTransform = field.get('requestTransform');
         if (bind) {
-          value = ObjectChainValue.get(json, bind);
+          value = this.get(bind);
         }
         if (type === FieldType.object) {
           return;
         } else if (isString(multiple) && isArrayLike(value)) {
           value = value.map(processToJSON).join(multiple);
+        }
+        if (requestTransform) {
+          value = requestTransform(value);
         }
       }
       if (value !== void 0) {

@@ -1,4 +1,4 @@
-import { cloneElement, MouseEvent, PureComponent, ReactElement } from 'react';
+import { cloneElement, MouseEventHandler, PureComponent, ReactElement } from 'react';
 import PropTypes from 'prop-types';
 
 export type Size = { x: number, y: number, width: number, height: number, position: string };
@@ -36,7 +36,7 @@ export default class MouseDown extends PureComponent<MouseDownProps> {
     return cloneElement(element, newProps);
   }
 
-  show = (e: MouseEvent<HTMLElement>) => {
+  show: MouseEventHandler<HTMLElement> = (e) => {
     const { currentTarget } = e;
     const pos: ClientRect = currentTarget.getBoundingClientRect();
     this.setState({
@@ -45,7 +45,7 @@ export default class MouseDown extends PureComponent<MouseDownProps> {
         y: e.clientY - pos.top,
         width: currentTarget.clientWidth,
         height: currentTarget.clientHeight,
-        position: document.defaultView.getComputedStyle(currentTarget).position,
+        position: document.defaultView && document.defaultView.getComputedStyle(currentTarget).position,
       },
     });
   };
@@ -57,8 +57,8 @@ export default class MouseDown extends PureComponent<MouseDownProps> {
   };
 }
 
-function wrapEvent(element: ReactElement<any>, eventName: string, callback: (e: MouseEvent<HTMLElement>) => void) {
-  return (e: MouseEvent<HTMLElement>) => {
+function wrapEvent(element: ReactElement<any>, eventName: string, callback: MouseEventHandler<HTMLElement>): MouseEventHandler<HTMLElement> {
+  return (e) => {
     const originalEvent = element.props[eventName];
     if (originalEvent) {
       originalEvent(e);

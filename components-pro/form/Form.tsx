@@ -17,7 +17,6 @@ import FormContext from './FormContext';
 import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComponent';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
-import measureTextWidth from '../_util/measureTextWidth';
 import { LabelAlign, LabelLayout, ResponsiveKeys } from './enum';
 import { defaultColumns, defaultLabelWidth, FIELD_SUFFIX, getProperty, normalizeLabelWidth } from './utils';
 import exception from '../_util/exception';
@@ -349,7 +348,7 @@ export default class Form extends DataSetComponent<FormProps> {
   setResponsiveKey(): void {
     let responsiveKey = ResponsiveKeys.xs;
     const { element } = this;
-    if (element && typeof window !== 'undefined') {
+    if (element && typeof window !== 'undefined' && document.defaultView) {
       const { content } = document.defaultView.getComputedStyle(element);
       if (content) {
         try {
@@ -416,8 +415,9 @@ export default class Form extends DataSetComponent<FormProps> {
     const labelWidth = normalizeLabelWidth(this.labelWidth, columns);
     const rows: ReactElement<any>[] = [];
     let cols: ReactElement<any>[] = [];
-    let rowCount = 0;
-    let colCount = [0];
+    let rowIndex = 0;
+    let colIndex = 0;
+    const matrix: (boolean | undefined)[][] = [[]];
     let noLabel = true;
     const childrenArray: ReactElement<any>[] = [];
     Children.forEach(children, (child) => {
@@ -428,30 +428,56 @@ export default class Form extends DataSetComponent<FormProps> {
         childrenArray.push(child);
       }
     });
-    childrenArray.forEach((child, index) => {
-      const { props, key } = child;
+
+    function completeLine() {
+      if (cols.length) {
+        rows.push((
+          <tr key={`row-${rowIndex}`}>
+            {cols}
+          </tr>
+        ));
+        cols = [];
+      }
+      rowIndex++;
+      colIndex = 0;
+      matrix[rowIndex] = matrix[rowIndex] || [];
+    }
+
+    for (let index = 0, len = childrenArray.length; index < len;) {
+      const { props, key, type } = childrenArray[index];
       const label = getProperty(props, 'label', dataSet, record);
       const required = getProperty(props, 'required', dataSet, record);
       let { rowSpan = 1, colSpan = 1, newLine, ...otherProps } = props as any;
-      colSpan = Math.min(colSpan, columns);
+      const currentRow = matrix[rowIndex];
       if (newLine) {
-        let count = colCount[rowCount];
-        while (count) {
-          cols.push(<td key={`empty-${rowCount}`} colSpan={(columns - count) * (noLabel ? 1 : 2)} />);
-          rows.push((
-            <tr key={`row-${rowCount}`}>
-              {cols}
-            </tr>
-          ));
-          cols = [];
-          count = colCount[++rowCount];
+        if (colIndex !== 0) {
+          completeLine();
+          continue;
         }
       }
-      if (colSpan + colCount[rowCount] > columns) {
-        colSpan = columns - colCount[rowCount];
+      while (currentRow[colIndex]) {
+        colIndex++;
       }
-      for (let i = rowCount; i < rowSpan + rowCount; i++) {
-        colCount[i] = colSpan + (colCount[i] || 0);
+      if (colIndex >= columns) {
+        completeLine();
+        continue;
+      }
+      if (colSpan + colIndex > columns) {
+        colSpan = columns - colIndex;
+      }
+      for (let i = colIndex, k = colIndex + colSpan; i < k; i++) {
+        if (currentRow[i]) {
+          colSpan = i - colIndex;
+          break;
+        }
+      }
+      for (let i = rowIndex; i < rowSpan + rowIndex; i++) {
+        for (let j = colIndex, k = colSpan + colIndex; j < k; j++) {
+          if (!matrix[i]) {
+            matrix[i] = [];
+          }
+          matrix[i][j] = true;
+        }
       }
       const labelClassName = classNames(`${prefixCls}-label`, `${prefixCls}-label-${labelAlign}`, {
         [`${prefixCls}-required`]: required,
@@ -461,46 +487,45 @@ export default class Form extends DataSetComponent<FormProps> {
       if (!noLabel) {
         cols.push((
           <td
-            key={`row-${rowCount}-col-${colCount[rowCount]}-label`}
+            key={`row-${rowIndex}-col-${colIndex}-label`}
             className={labelClassName}
             rowSpan={rowSpan}
           >
-            <label title={label && measureTextWidth(label) > labelWidth[index % columns] - (required ? 20 : 10) ? label : void 0}>
+            <label>
               {label}
             </label>
           </td>
         ));
       }
-      const fieldElementProps = {
+      const fieldElementProps: any = {
         key,
         className: prefixCls,
         placeholder: labelLayout === LabelLayout.placeholder ? label : void 0,
         ...otherProps,
       };
+      if (!isString(type)) {
+        fieldElementProps.rowIndex = rowIndex;
+        fieldElementProps.colIndex = colIndex;
+      }
       cols.push(
         <td
-          key={`row-${rowCount}-col-${colCount[rowCount]}-field`}
+          key={`row-${rowIndex}-col-${colIndex}-field`}
           colSpan={noLabel ? colSpan : colSpan * 2 - 1}
           rowSpan={rowSpan}
         >
           {labelLayout === LabelLayout.vertical && <label className={labelClassName}>{label}</label>}
           <div className={wrapperClassName}>
-            {createElement(child.type, fieldElementProps)}
+            {createElement(type, fieldElementProps)}
           </div>
         </td>,
       );
-      if (colCount[rowCount] >= columns || index === childrenArray.length - 1) {
-        if (cols.length) {
-          rows.push((
-            <tr key={`row-${rowCount}`}>
-              {cols}
-            </tr>
-          ));
-        }
-        cols = [];
-        rowCount++;
+      if (index === len - 1) {
+        completeLine();
+      } else {
+        colIndex++;
       }
-    });
+      index++;
+    }
     cols = [];
     if (!noLabel) {
       for (let i = 0; i < columns; i++) {

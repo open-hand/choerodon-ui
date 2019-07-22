@@ -1,12 +1,14 @@
-import React, { Component, ReactType } from 'react';
+import React, { Component, ComponentType } from 'react';
 import Spin from '../spin';
 import exception from './exception';
 
 interface AsyncComponentState {
-  component?: ReactType;
+  component?: ComponentType;
 }
 
-const asyncComponent = (importComponent: () => Promise<{ default: ReactType }>): any => {
+export type AsyncCmpLoadingFunction = () => Promise<{ default: ComponentType }>;
+
+const asyncComponent = (importComponent: AsyncCmpLoadingFunction): any => {
   class AsyncComponent extends Component<any> {
     state: AsyncComponentState = {};
 

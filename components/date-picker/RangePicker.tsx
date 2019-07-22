@@ -1,5 +1,5 @@
 /* tslint:disable jsx-no-multiline-js */
-import React, { Component, MouseEvent } from 'react';
+import React, { Component, MouseEventHandler } from 'react';
 import moment, { Moment } from 'moment';
 import classNames from 'classnames';
 import Button from '../button';
@@ -110,7 +110,7 @@ export default class RangePicker extends Component<any, RangePickerState> {
     }
   }
 
-  clearSelection = (e: MouseEvent<HTMLElement>) => {
+  clearSelection: MouseEventHandler<HTMLElement> = (e) => {
     e.preventDefault();
     e.stopPropagation();
     this.setState({ value: [] });

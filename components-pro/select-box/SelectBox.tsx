@@ -15,6 +15,7 @@ import DataSet from '../data-set/DataSet';
 import normalizeOptions from '../option/normalizeOptions';
 import { $l } from '../locale-context';
 import { LabelLayout } from '../form/enum';
+import formatReactTemplate from '../_util/formatReactTemplate';
 
 const GroupIdGen = function* (id) {
   while (true) {
@@ -54,8 +55,9 @@ export default class SelectBox extends Select<SelectBoxProps> {
 
   @computed
   get defaultValidationMessages(): ValidationMessages | null {
+    const label = this.getProp('label');
     return {
-      valueMissing: $l('SelectBox', 'value_missing'),
+      valueMissing: formatReactTemplate($l('SelectBox', label ? 'value_missing_with_label' : 'value_missing'), { label }),
     };
   }
 

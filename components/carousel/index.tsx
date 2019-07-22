@@ -2,21 +2,22 @@ import React, { Component, CSSProperties } from 'react';
 import debounce from 'lodash/debounce';
 import classNames from 'classnames';
 import { getPrefixCls } from '../configure';
+import { matchMediaPolifill } from '../_util/mediaQueryListPolyfill';
 
 // matchMedia polyfill for
 // https://github.com/WickyNilliams/enquire.js/issues/82
 if (typeof window !== 'undefined') {
-  const matchMediaPolyfill = (mediaQuery: string): MediaQueryList => {
-    return {
-      media: mediaQuery,
-      matches: false,
-      addListener() {
-      },
-      removeListener() {
-      },
-    };
-  };
-  window.matchMedia = window.matchMedia || matchMediaPolyfill;
+  // const matchMediaPolyfill = (mediaQuery: string): MediaQueryList => {
+  //   return {
+  //     media: mediaQuery,
+  //     matches: false,
+  //     addListener() {
+  //     },
+  //     removeListener() {
+  //     },
+  //   };
+  // };
+  window.matchMedia = window.matchMedia || matchMediaPolifill;
 }
 // Use require over import (will be lifted up)
 // make sure matchMedia polyfill run before require('react-slick')

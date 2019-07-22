@@ -1,4 +1,4 @@
-import React, { Component, MouseEvent } from 'react';
+import React, { Component, MouseEventHandler } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { SubMenu as RcSubMenu } from '../rc-components/menu';
@@ -8,7 +8,7 @@ class SubMenu extends Component<any, any> {
     menuTheme: PropTypes.string,
   };
   private subMenu: any;
-  onKeyDown = (e: MouseEvent<HTMLElement>) => {
+  onKeyDown: MouseEventHandler<HTMLElement> = (e) => {
     this.subMenu.onKeyDown(e);
   };
   saveSubMenu = (subMenu: any) => {

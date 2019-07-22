@@ -37,7 +37,7 @@ export default class TriggerChild extends PureComponent<TriggerChildProps> {
   constructor(props, context) {
     super(props, context);
     const createChains = eventName => e => {
-      const { [`on${eventName}`]: handle, children } = this.props;
+      const { [`on${eventName}`]: handle, children } = this.props as { [key: string]: any };
       const child = Children.only(children);
       if (handle) {
         handle(eventName, child, e);
@@ -59,7 +59,7 @@ export default class TriggerChild extends PureComponent<TriggerChildProps> {
   }
 
   render() {
-    return cloneElement(Children.only(this.props.children), {
+    return cloneElement(Children.only(this.props.children as ReactElement), {
       onContextMenu: this.handleContextMenu,
       onClick: this.handleClick,
       onMouseDown: this.handleMouseDown,

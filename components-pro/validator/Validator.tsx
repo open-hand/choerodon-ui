@@ -1,31 +1,35 @@
-import { action, isArrayLike, observable, runInAction } from 'mobx';
+import React, { ReactNode } from 'react';
+import { action, computed, isArrayLike, observable, runInAction } from 'mobx';
 import isEqual from 'lodash/isEqual';
+import isString from 'lodash/isString';
 import Validity from './Validity';
 import ValidationResult from './ValidationResult';
 import Record from '../data-set/Record';
 import Form from '../form/Form';
 import validationRules, { methodReturn, ValidatorProps } from './rules';
 import valueMissing from './rules/valueMissing';
+import getReactNodeText from '../_util/getReactNodeText';
 
 export type CustomValidator = (value: any, name: string, record: Record | Form) => Promise<boolean | string | undefined>
 
 export interface ValidationMessages {
   badInput?: string;
   patternMismatch?: string;
-  rangeOverflow?: string;
-  rangeUnderflow?: string;
+  rangeOverflow?: ReactNode;
+  rangeUnderflow?: ReactNode;
   stepMismatch?: string;
   tooLong?: string;
   tooShort?: string;
   typeMismatch?: string;
-  valueMissing?: string;
+  valueMissing?: ReactNode;
   uniqueError?: string;
   unknown?: string;
 }
 
 export default class Validator {
 
-  props: ValidatorProps;
+  @observable fieldProps: ValidatorProps;
+  @observable controlProps: ValidatorProps;
 
   validity: Validity = new Validity();
 
@@ -33,9 +37,17 @@ export default class Validator {
 
   injectionOptions: object = {};
 
-  validationMessage?: string = '';
+  validationMessage?: ReactNode = '';
 
   @observable validationErrorValues: ValidationResult[];
+
+  @computed
+  get props(): ValidatorProps {
+    return {
+      ...this.fieldProps,
+      ...this.controlProps,
+    };
+  }
 
   constructor() {
     runInAction(() => {
@@ -43,8 +55,14 @@ export default class Validator {
     });
   }
 
+  @action
   setProps(props) {
-    this.props = props;
+    this.fieldProps = props;
+  }
+
+  @action
+  setControlProps(props) {
+    this.controlProps = props;
   }
 
   reset() {
@@ -54,7 +72,7 @@ export default class Validator {
   }
 
   @action
-  report(ret: methodReturn) {
+  async report(ret: methodReturn) {
     if (ret instanceof ValidationResult) {
       const { ruleName, validationMessage, injectionOptions } = ret;
       this.validity[ruleName] = true;
@@ -63,7 +81,11 @@ export default class Validator {
     }
     if (process.env.NODE_ENV !== 'production' && !this.validity.valid && typeof console !== 'undefined') {
       const { name, dataSet, record } = this.props;
-      const reportMessage: any[] = ['validation:', JSON.stringify(this.validationMessage)];
+      const { validationMessage } = this;
+      const reportMessage: any[] = [
+        'validation:',
+        isString(validationMessage) ? validationMessage : await getReactNodeText(<span>{validationMessage}</span>),
+      ];
       if (dataSet) {
         const { name: dsName, id } = dataSet;
         if (dsName || id) {

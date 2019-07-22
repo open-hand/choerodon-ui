@@ -48,7 +48,9 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['modalOkFirst', true],
 ]);
 
-export function getConfig<T extends ConfigKeys>(key: T): Config[T] {
+export function getConfig<T extends ConfigKeys>(key: T): any {
+  // FIXME: observable.map把构建map时传入的key类型和value类型分别做了union，
+  // 丢失了一一对应的映射关系，导致函数调用者无法使用union后的返回值类型，因此需要指定本函数返回值为any
   return globalConfig.get(key);
 }
 

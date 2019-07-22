@@ -1,4 +1,4 @@
-import React, { ChangeEvent, Component, CSSProperties, KeyboardEvent, MouseEvent, ReactNode } from 'react';
+import React, { ChangeEvent, Component, CSSProperties, KeyboardEvent, ReactNode, MouseEventHandler } from 'react';
 import arrayTreeFilter from 'array-tree-filter';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
@@ -178,7 +178,7 @@ export default class Cascader extends Component<CascaderProps, CascaderState> {
     });
   };
 
-  handleInputClick = (e: MouseEvent<HTMLInputElement>) => {
+  handleInputClick: MouseEventHandler<HTMLInputElement> = (e) => {
     const { inputFocused, popupVisible } = this.state;
     // Prevent `Trigger` behaviour.
     if (inputFocused || popupVisible) {
@@ -196,6 +196,17 @@ export default class Cascader extends Component<CascaderProps, CascaderState> {
   handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
     this.setState({ inputValue });
+  };
+
+  clearSelection: MouseEventHandler<HTMLElement> = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!this.state.inputValue) {
+      this.setValue([]);
+      this.handlePopupVisibleChange(false);
+    } else {
+      this.setState({ inputValue: '' });
+    }
   };
 
   setValue = (value: string[], selectedOptions: any[] = []) => {
@@ -218,17 +229,6 @@ export default class Cascader extends Component<CascaderProps, CascaderState> {
     const label = selectedOptions.map(o => o.label);
     return displayRender(label, selectedOptions);
   }
-
-  clearSelection = (e: MouseEvent<HTMLElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (!this.state.inputValue) {
-      this.setValue([]);
-      this.handlePopupVisibleChange(false);
-    } else {
-      this.setState({ inputValue: '' });
-    }
-  };
 
   flattenTree(options: CascaderOptionType[], changeOnSelect: boolean | undefined, ancestor: CascaderOptionType[] = []) {
     let flattenOptions: any = [];
@@ -284,9 +284,17 @@ export default class Cascader extends Component<CascaderProps, CascaderState> {
   render() {
     const { props, state } = this;
     const {
-      prefixCls: customizePrefixCls, inputPrefixCls: customizeInputPrefixCls, children, placeholder, size, disabled,
-      className, style, allowClear, showSearch = false,
-      ...otherProps,
+      prefixCls: customizePrefixCls,
+      inputPrefixCls: customizeInputPrefixCls,
+      children,
+      placeholder,
+      size,
+      disabled,
+      className,
+      style,
+      allowClear,
+      showSearch = false,
+      ...otherProps
     } = props;
     const prefixCls = getPrefixCls('cascader', customizePrefixCls);
     const inputPrefixCls = getPrefixCls('input', customizeInputPrefixCls);

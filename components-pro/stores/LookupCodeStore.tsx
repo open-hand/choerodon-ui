@@ -66,10 +66,10 @@ export class LookupCodeStore {
           url: lookupKey,
           method: axiosConfig.method || getConfig('lookupAxiosMethod') || 'post',
         };
-        const pending: Promise<responseType> = this.pendings[lookupKey] = this.pendings[lookupKey] || this.axios(config);
+        const pending: Promise<responseType> = this.pendings[lookupKey] = this.pendings[lookupKey] || this.axios(config as AxiosRequestConfig);
         const result: responseType = await pending;
         if (result) {
-          const { [getConfig<'dataKey'>('dataKey') || 'rows']: rows } = result;
+          const { [getConfig<'dataKey'>('dataKey') || 'rows']: rows } = result as { [key: string]: any };
           if (rows) {
             data = rows;
           } else {

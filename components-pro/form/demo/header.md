@@ -28,7 +28,7 @@ function passwordValidator(value, name, form) {
 ReactDOM.render(
   <Form header="Custom Header">
     <TextField label="手机号" pattern="1[3-9]\d{9}" name="phone" required clearButton />
-    <Password label="密码" name="password" form="basic" required />
+    <Password label="密码" name="password" required />
     <Password label="确认密码" name="confirmPassword" required validator={passwordValidator} />
     <NumberField label="年龄" name="age" min={18} step={1} required />
     <SelectBox label="性别" name="sex" required>

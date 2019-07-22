@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { action, computed, isArrayLike, observable, runInAction, toJS } from 'mobx';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
+import omitBy from 'lodash/omitBy';
+import isUndefined from 'lodash/isUndefined';
 import isNumber from 'lodash/isNumber';
 import isNil from 'lodash/isNil';
 import defaultTo from 'lodash/defaultTo';
@@ -260,7 +262,14 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
 
   emptyValue?: any = null;
 
-  validator: Validator = new Validator();
+  @computed
+  get validator(): Validator {
+    const { field } = this;
+    if (field) {
+      return field.validator;
+    }
+    return new Validator();
+  }
 
   @observable name?: string;
 
@@ -391,6 +400,9 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       'maxTagPlaceholder',
       'maxTagCount',
       'maxTagTextLength',
+      'rowIndex',
+      'colIndex',
+      'labelLayout',
     ]);
     if (!this.isDisabled() && !this.isReadOnly()) {
       otherProps.onChange = this.handleChange;
@@ -541,23 +553,20 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     const type = this.getFieldType();
     const required = this.getProp('required');
     const customValidator = this.getProp('validator');
+    const label = this.getProp('label');
     return {
       type,
       required,
       customValidator,
       name,
+      label,
       form: this.context.formNode as Form,
     };
   }
 
   @computed
   get isValid(): boolean {
-    const { field } = this;
-    if (field) {
-      return field.isValid();
-    } else {
-      return this.validator.validity.valid;
-    }
+    return this.validator.validity.valid;
   }
 
   @computed
@@ -565,20 +574,11 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     return this.getProp('multiple');
   }
 
-  getValidityState(): Validity {
-    const { field } = this;
-    if (field) {
-      return field.getValidityState();
-    } else {
-      return this.validator.validity;
-    }
-  }
-
-  getValidationMessage(validationResult?: ValidationResult): string | undefined {
-    const { field, defaultValidationMessages } = this;
+  getValidationMessage(validationResult?: ValidationResult): ReactNode {
+    const { defaultValidationMessages, validator } = this;
     if (defaultValidationMessages) {
-      const fieldValidity = this.getValidityState();
-      const found = Object.keys(defaultValidationMessages).find(key => validationResult ? validationResult.ruleName === key : fieldValidity[key]);
+      const { validity } = validator;
+      const found = Object.keys(defaultValidationMessages).find(key => validationResult ? validationResult.ruleName === key : validity[key]);
       if (found) {
         return defaultValidationMessages[found];
       }
@@ -586,19 +586,11 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     if (validationResult) {
       return validationResult.validationMessage;
     }
-    if (field) {
-      return field.getValidationMessage();
-    }
-    return this.validator.validationMessage;
+    return validator.validationMessage;
   }
 
   getValidationErrorValues(): any[] {
-    const { field } = this;
-    if (field) {
-      return field.getValidationErrorValues();
-    } else {
-      return this.validator.validationErrorValues;
-    }
+    return this.validator.validationErrorValues;
   }
 
   @autobind
@@ -829,16 +821,12 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   }
 
   async checkValidity(): Promise<boolean> {
-    const { field, name } = this;
-    let valid;
-    if (field) {
-      valid = await field.checkValidity();
-    } else {
-      valid = await this.validate();
-    }
+    const { name } = this;
+    const valid = await this.validate();
     const { onInvalid = noop } = this.props;
     if (!valid) {
-      onInvalid(this.getValidationErrorValues(), this.getValidityState(), name);
+      const { validationErrorValues, validity } = this.validator;
+      onInvalid(validationErrorValues, validity, name);
     }
     return valid;
   }
@@ -849,9 +837,12 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       if (value === void 0) {
         value = this.multiple ? this.getValues() : this.getValue();
       }
-      const { validator } = this;
+      const { validator, field } = this;
       validator.reset();
-      validator.setProps(this.getValidatorProps());
+      if (field) {
+        validator.setProps(field.getValidatorProps());
+      }
+      validator.setControlProps(omitBy(this.getValidatorProps(), isUndefined));
       invalid = !await validator.checkValidity(value);
     }
     return !invalid;
