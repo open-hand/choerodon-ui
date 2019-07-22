@@ -30,6 +30,7 @@ timeline: true
 - 💄 `SelectBox`: Update the style(with 'floatLabel' layout).
 - 💄 `TextArea`: Update the style.
 - 🐞 `<pro>FormField`: Fix the problem when the label is ReactNode.
+- 🐞 `<pro>TextField`: Fix the display style of TextField(and child classes) when using addons.
 
 ## 0.7.6
 
