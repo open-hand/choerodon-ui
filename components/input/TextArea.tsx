@@ -120,7 +120,8 @@ export default class TextArea extends Component<TextAreaProps & HTMLTextareaProp
 
   getTextAreaClassName() {
     const { className } = this.props;
-    return classNames(this.getPrefixCls(), className);
+    const prefixCls = this.getPrefixCls();
+    return classNames(prefixCls, `${prefixCls}-textarea-element`, className);
   }
 
   handleTextareaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {

@@ -9,6 +9,7 @@ import autobind from '../_util/autobind';
 import { ValidationMessages } from '../validator/Validator';
 import { ViewMode } from './enum';
 import { $l } from '../locale-context';
+import formatReactTemplate from '../_util/formatReactTemplate';
 
 export interface RadioProps extends FormFieldProps {
   /**
@@ -60,8 +61,9 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
 
   @computed
   get defaultValidationMessages(): ValidationMessages | null {
+    const label = this.getProp('label');
     return {
-      valueMissing: $l('Radio', 'value_missing'),
+      valueMissing: formatReactTemplate($l('Radio', label ? 'value_missing_with_label' : 'value_missing'), { label }),
     };
   }
 
@@ -160,6 +162,6 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
 }
 
 @observer
-export default class ObserverRadio<T extends RadioProps> extends Radio<T & RadioProps> {
+export default class ObserverRadio extends Radio<RadioProps> {
   static defaultProps = Radio.defaultProps;
 }

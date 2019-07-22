@@ -1,4 +1,4 @@
-import React, { Component, CSSProperties, MouseEvent } from 'react';
+import React, { Component, CSSProperties, MouseEventHandler } from 'react';
 import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
@@ -39,7 +39,7 @@ export default class Tag extends Component<TagProps, TagState> {
     closed: false,
   };
 
-  close = (e: MouseEvent<HTMLElement>) => {
+  close: MouseEventHandler<HTMLElement> = (e) => {
     const onClose = this.props.onClose;
     if (onClose) {
       onClose(e);

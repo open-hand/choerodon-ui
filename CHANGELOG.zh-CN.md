@@ -18,11 +18,28 @@ timeline: true
 - 🌟 `configure`: 增加全局配置新属性。
 - 🌟 `<pro>Modal`: Modal和内部注入modal对象增加update方法。
 - 🌟 `<pro>Modal`: 新增okProps, cancelProps, okFirst, border属性。
+- 🌟 `<pro>DataSet.Field`: 增加`requestTransform`和`responseTransform`输入属性。
+- 🌟 `message`: 新增placement配置。
 - 💄 `Password`: 变更为通过点击揭示密码。
 - 💄 `Input`: 更新样式。
 - 💄 `DatePicker`: 更新样式。
 - 💄 `Select`: 更新样式。
+- 💄 `<pro>Form`: 优化行列合并。
+- 💄 `<pro>DataSet`: query和submit事件返回值为false可阻止查询和提交。
+- 💄 `<pro>Popup`: 提升样式z-index。
+- 💄 `SelectBox`: 更新样式（浮动标签状态下）。
+- 💄 `TexaArea`: 更新样式。
+- 🐞 `<pro>FormField`: 修复label为ReactNode时的问题。
+
+## 0.7.6
+
+`2019-07-09`
+
+- 💄 `<pro>DataSet`: 优化性能。
+- 💄 `<pro>Validator`: 优化校验。
 - 🐞 `<pro>Select`: 修复复合多选的bug。
+- 🐞 `<pro>Select`: 修复searchable情况下，两个相同文案的选项始终选择的是第一个的问题。
+- 🐞 `<pro>DataSet`: 修复Field的ignore属性会忽略bind的字段。
 
 ## 0.7.5
 ## 0.6.14
@@ -297,7 +314,7 @@ timeline: true
 ## 0.3.8
 
 `2018-08-31`
- 
+
 - 🌟 `Icon`: 增加新的图标。。
 - 💄 `Input`: Input和select在compact模式和正常模式下都能对齐了。
 - 💄 `FormItem`: 表单输入框带有字数限制时，优化为报错提示时报错信息与横线无间距，且隐藏字数限制提示。

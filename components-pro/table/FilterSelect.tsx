@@ -300,7 +300,8 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
       onEnterDown: this.handleFieldEnterDown,
       renderer: noop,
     };
-    if (editor.type === Select) {
+
+    if (editor.type === Select as any) {
       (editorProps as SelectProps).dropdownMenuStyle = this.props.dropdownMenuStyle;
     }
     return cloneElement<FormFieldProps>(editor, editorProps);

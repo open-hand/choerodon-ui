@@ -18,11 +18,28 @@ timeline: true
 - 🌟 `configure`: Add global configuration new properties.
 - 🌟 `<pro>Modal`: Modal and internal injection modal object add `update` methods.
 - 🌟 `<pro>Modal`: Added `okProps`, `cancelProps`, `okFirst`, `border` attribute.
+- 🌟 `<pro>DataSet.Field`: Add `requestTransform` & `responseTransform` input property.
+- 🌟 `message`: Added `placement` config.
 - 💄 `Password`: Change to reveal password by clicking.
 - 💄 `Input`: Update the style.
 - 💄 `DatePicker`: Update the style.
 - 💄 `Select`: Update the style.
+- 💄 `<pro>Form`: Optimize rowSpan and colSpan.
+- 💄 `<pro>DataSet`: The return value of the query and submit events is false which can prevent queries and commits.
+- 💄 `<pro>Popup`: upgrade the `z-index` style.
+- 💄 `SelectBox`: Update the style(with 'floatLabel' layout).
+- 💄 `TextArea`: Update the style.
+- 🐞 `<pro>FormField`: Fix the problem when the label is ReactNode.
+
+## 0.7.6
+
+`2019-07-09`
+
+- 💄 `<pro>DataSet`: Optimize performance.
+- 💄 `<pro>Validator`: Optimize validation.
 - 🐞 `<pro>Select`: Fix the bug of compound multiple selection.
+- 🐞 `<pro>Select`: With the same text, searchable Select always selects the first option.
+- 🐞 `<pro>DataSet`: Fixed the ignore property of the Field will ignore the binding fields.
 
 ## 0.7.5
 ## 0.6.14
@@ -298,7 +315,7 @@ timeline: true
 ## 0.3.8
 
 `2018-08-31`
- 
+
 - 🌟 `Icon`: Added new icons.
 - 💄 `Input`: Adjust the style.
 - 💄 `FormItem`: Adjust the style.

@@ -14,6 +14,7 @@ import DataSet from '../../data-set/DataSet';
 import Record from '../../data-set/Record';
 import Form from '../../form/Form';
 import { CustomValidator } from '../Validator';
+import { ReactNode } from 'react';
 
 export type methodReturn = ValidationResult | boolean;
 
@@ -46,6 +47,8 @@ export interface ValidatorProps {
   dataSet?: DataSet;
   record?: Record;
   name?: string;
+  unique?: boolean | string;
+  label?: ReactNode;
   customValidator?: CustomValidator;
   form?: Form;
 }

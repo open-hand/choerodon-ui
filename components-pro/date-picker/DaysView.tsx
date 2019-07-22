@@ -26,7 +26,7 @@ export default class DaysView extends ViewComponent<DateViewProps> implements Da
   static displayName = 'DaysView';
 
   static propTypes = {
-    date: PropTypes.instanceOf(moment),
+    date: PropTypes.object,
     renderer: PropTypes.func,
     isValidDate: PropTypes.func,
     onSelect: PropTypes.func,

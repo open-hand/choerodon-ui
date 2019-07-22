@@ -4,6 +4,7 @@ import { TextField, TextFieldProps } from '../text-field/TextField';
 import { ValidationMessages } from '../validator/Validator';
 import { $l } from '../locale-context';
 import { FieldType } from '../data-set/enum';
+import formatReactTemplate from '../_util/formatReactTemplate';
 
 export interface UrlFieldProps extends TextFieldProps {
 }
@@ -16,8 +17,9 @@ export default class UrlField extends TextField<UrlFieldProps> {
 
   @computed
   get defaultValidationMessages(): ValidationMessages | null {
+    const label = this.getProp('label');
     return {
-      valueMissing: $l('UrlField', 'value_missing'),
+      valueMissing: formatReactTemplate($l('UrlField', label ? 'value_missing_with_label' : 'value_missing'), { label }),
       typeMismatch: $l('UrlField', 'type_mismatch'),
     };
   }

@@ -371,7 +371,15 @@ export function prepareSubmitData(records: Record[], noCascade?: boolean): [obje
   return [created, updated, destroyed, cascade];
 }
 
-export function prepareForSubmit(type: string, data: object[], transport: Transport, configs: AxiosRequestConfig[], dataSet: DataSet): object[] {
+type SubmitType = 'create' | 'update' | 'destroy' | 'submit';
+
+export function prepareForSubmit(
+  type: SubmitType,
+  data: object[],
+  transport: Transport,
+  configs: AxiosRequestConfig[],
+  dataSet: DataSet,
+): object[] {
   const { adapter, [type]: config = {} } = transport;
   if (data.length) {
     const newConfig = axiosAdapter(config, dataSet, data);

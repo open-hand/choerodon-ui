@@ -59,6 +59,8 @@
   &-float-label .@{field-label-prefix-cls},
   &-float-label&-focused .@{field-label-prefix-cls},
   &-float-label &:-webkit-autofill + .@{field-label-prefix-cls}-wrapper .@{field-label-prefix-cls} {
+    font-size: .15rem; // 15 * 0.8(缩放比例) = 12(目标值)
+    font-weight: 500;
     transform: scaleY(.8);
   }
   &-float-label & {
@@ -82,6 +84,8 @@
         transform: none;
       }
       transform: none;
+      font-size: inherit;
+      font-weight: auto;
     }
   }
   &-float-label & > ul {

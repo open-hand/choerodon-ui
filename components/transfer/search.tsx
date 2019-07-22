@@ -1,4 +1,4 @@
-import React, { ChangeEvent, Component, FormEvent, MouseEvent } from 'react';
+import React, { ChangeEvent, Component, FormEvent, MouseEventHandler } from 'react';
 import Icon from '../icon';
 import Input from '../input';
 
@@ -6,7 +6,7 @@ export interface TransferSearchProps {
   prefixCls?: string;
   placeholder?: string;
   onChange?: (e: FormEvent<any>) => void;
-  handleClear?: (e: MouseEvent<any>) => void;
+  handleClear?: MouseEventHandler<any>;
   value?: any;
 }
 
@@ -22,7 +22,7 @@ export default class Search extends Component<TransferSearchProps, any> {
     }
   };
 
-  handleClear = (e: MouseEvent<HTMLAnchorElement>) => {
+  handleClear: MouseEventHandler<HTMLAnchorElement> = (e) => {
     e.preventDefault();
 
     const handleClear = this.props.handleClear;

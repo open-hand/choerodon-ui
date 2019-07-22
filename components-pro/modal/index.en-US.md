@@ -18,9 +18,10 @@ title: Modal
 | 参数      | 说明                                     | 类型        |默认值 |
 |---|------------------------------------------------------|--------|--------|
 | key | 唯一键， 当destroyOnClose为false时，必须指定key。为了避免与其他modal的key重复，可通过Modal.key()来获取唯一key。 | string |  |
-| header | 标题 | ReactNode |  |
+| title | 标题 | ReactNode |  |
+| header | 是否显示头部 | ReactNode |  |
 | closable | 显示右上角关闭按钮 | boolean | true |
-| movable | 可移动 | boolean | true |
+| movable | 可移动， drawer无法移动 | boolean | true |
 | fullScreen | 全屏显示 | boolean | false |
 | maskClosable | 点击蒙层是否允许关闭 | boolean | false |
 | keyboardClosable | 按esc键是否允许关闭 | boolean | true |

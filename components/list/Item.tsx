@@ -32,7 +32,7 @@ export const Meta: SFC<ListItemMetaProps> = (props) => {
     avatar,
     title,
     description,
-    ...others,
+    ...others
   } = props;
   const prefixCls = getPrefixCls('list', customizePrefixCls);
 

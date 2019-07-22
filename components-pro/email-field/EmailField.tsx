@@ -4,6 +4,7 @@ import { TextField, TextFieldProps } from '../text-field/TextField';
 import { ValidationMessages } from '../validator/Validator';
 import { $l } from '../locale-context';
 import { FieldType } from '../data-set/enum';
+import formatReactTemplate from '../_util/formatReactTemplate';
 
 export interface EmailFieldProps extends TextFieldProps {
 }
@@ -20,8 +21,9 @@ export default class EmailField extends TextField<EmailFieldProps> {
 
   @computed
   get defaultValidationMessages(): ValidationMessages | null {
+    const label = this.getProp('label');
     return {
-      valueMissing: $l('EmailField', 'value_missing'),
+      valueMissing: formatReactTemplate($l('EmailField', label ? 'value_missing_with_label' : 'value_missing'), { label }),
       typeMismatch: $l('EmailField', 'type_mismatch'),
     };
   }

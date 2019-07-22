@@ -278,11 +278,6 @@ export default class TableCell extends Component<TableCellProps> {
     const { className, style, align, name, onCell, command } = column;
     const field = name ? record.getField(name) : void 0;
     const cellPrefix = `${prefixCls}-cell`;
-    const classString = classNames(cellPrefix, field ? {
-      [`${cellPrefix}-dirty`]: field.dirty,
-      [`${cellPrefix}-required`]: !inlineEdit && field.required,
-      [`${cellPrefix}-editable`]: !inlineEdit && this.hasEditor,
-    } : void 0, className);
     const cellExternalProps: HTMLProps<HTMLTableCellElement> = typeof onCell === 'function' ? onCell({
       dataSet: record.dataSet!,
       record,
@@ -293,12 +288,17 @@ export default class TableCell extends Component<TableCellProps> {
       ...style,
       ...cellExternalProps.style,
     };
+    const classString = classNames(cellPrefix, field ? {
+      [`${cellPrefix}-dirty`]: field.dirty,
+      [`${cellPrefix}-required`]: !inlineEdit && field.required,
+      [`${cellPrefix}-editable`]: !inlineEdit && this.hasEditor,
+    } : void 0, className, cellExternalProps.className);
     return (
       <td
+        {...cellExternalProps}
         className={classString}
         style={omit(cellStyle, ['width', 'height'])}
         data-index={getColumnKey(column)}
-        {...cellExternalProps}
       >
         {this.getInnerNode(cellPrefix)}
       </td>
