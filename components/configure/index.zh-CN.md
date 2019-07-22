@@ -26,7 +26,9 @@ configure({ prefixCls: 'ant' });
 | lookupUrl | lookup取值的地址或返回地址的钩子 | string \| ((code: string) => string) | code => \`/common/code/${code}/\` |
 | lookupAxiosMethod | Lookup 和 lov 默认请求方法 | string \| string | post |
 | lovDefineUrl | Lov取配置的地址或返回地址的钩子 | string \| ((code: string) => string) | code => \`/sys/lov/lov_define?code=${code}\` |
+| lovDefineAxiosConfig | 返回Lov配置的钩子 | (code: string) => AxiosRequestConfig | - |
 | lovQueryUrl | Lov取值的地址或返回地址的钩子 | string \| ((code: string) => string) | code => \`/common/lov/dataset/${code}\` |
+| lovQueryAxiosConfig | Lov取值Axios逻辑的钩子 | (code: string, lovConfig?: LovConfig) => AxiosRequestConfig | - |
 | axios | 替换内置的axios实例 | AxiosInstance |  |
 | dataKey | 默认DataSet的dataKey | string | rows |
 | totalKey | 默认DataSet的totalKey | string | total |
@@ -40,4 +42,4 @@ configure({ prefixCls: 'ant' });
 | modalOkFirst | 默认Modal的ok按钮排在第一个 | boolean | true |
 | buttonFuncType | 默认Button的功能类型 | string | raised |
 | renderEmpty | 自定义组件空状态。 | Function(componentName: string): ReactNode | - |
-| generatePageQuery | 分页参数转换 | Function(pageParams: { page: number, pageSize: number }): object | - |
+| generatePageQuery | 分页参数转换的钩子 | Function(pageParams: { page: number, pageSize: number }): object | - |
