@@ -29,8 +29,10 @@ timeline: true
 - 💄 `<pro>Popup`: 提升样式z-index。
 - 💄 `SelectBox`: 更新样式（浮动标签状态下）。
 - 💄 `TexaArea`: 更新样式。
+- 💄 `Tabs`: 更新样式。
 - 🐞 `<pro>FormField`: 修复label为ReactNode时的问题。
 - 🐞 `<pro>TextField`: 修复TextField(和子类)使用addon时的display样式。
+- 🐞 `<pro>Modal`: 修复body无滚动条时，Modal弹出会影响布局的问题。
 
 ## 0.7.6
 

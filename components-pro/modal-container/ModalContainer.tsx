@@ -37,6 +37,16 @@ function removeInstanse(instanse: ModalContainer) {
 let root;
 let defaultBodyStyle: { overflow, paddingRight } | undefined;
 
+/**
+ * 判断body是否有滚动条
+ *
+ * @returns {boolean}
+ */
+function hasScrollBar(): boolean {
+  const { scrollHeight, clientHeight } = document.body;
+  return scrollHeight > clientHeight;
+}
+
 function hideBodyScrollBar() {
   const { style } = document.body;
   if (!defaultBodyStyle) {
@@ -45,7 +55,9 @@ function hideBodyScrollBar() {
       paddingRight: style.paddingRight,
     };
     style.overflow = 'hidden';
-    style.paddingRight = pxToRem(measureScrollbar()) || null;
+    if (hasScrollBar()) {
+      style.paddingRight = pxToRem(measureScrollbar()) || null;
+    }
   }
 }
 
