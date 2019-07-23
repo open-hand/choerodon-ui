@@ -109,7 +109,9 @@ export class LovCodeStore {
     // SSR do not fetch the lookup
     if (!config && typeof window !== 'undefined') {
       try {
-        const pending = this.pendings[code] = this.pendings[code] || this.axios.post(this.getConfigUrl(code));
+        const lovDefineAxiosConfig = getConfig('lovDefineAxiosConfig');
+        const pending = this.pendings[code] =
+          this.pendings[code] || (lovDefineAxiosConfig ? this.axios(lovDefineAxiosConfig(code)) : this.axios.post(this.getConfigUrl(code)));
         config = await pending;
         runInAction(() => {
           if (config) {
@@ -129,8 +131,12 @@ export class LovCodeStore {
       const config = this.getConfig(code);
       if (config) {
         const { lovPageSize, lovItems, parentIdField, idField, valueField, treeFlag } = config;
-        const dataSetProps: DataSetProps = {
-          queryUrl: this.getQueryUrl(code),
+        const lovQueryAxiosConfig = getConfig('lovQueryAxiosConfig');
+        let dataSetProps: DataSetProps = {
+          queryUrl: lovQueryAxiosConfig ? undefined : this.getQueryUrl(code),
+          transport: lovQueryAxiosConfig && {
+            read: lovQueryAxiosConfig(code, config),
+          },
           cacheSelection: true,
         };
         if (!isNil(lovPageSize) && !isNaN(Number(lovPageSize))) {
@@ -176,6 +182,7 @@ export class LovCodeStore {
   }
 
   getQueryUrl(code: string): string {
+
     const config = this.getConfig(code);
     if (config) {
       const { customUrl } = config;
@@ -183,12 +190,15 @@ export class LovCodeStore {
         return customUrl;
       }
     }
+
     const lovQueryUrl = getConfig('lovQueryUrl');
+
     if (typeof lovQueryUrl === 'function') {
-      return lovQueryUrl(code);
+      return lovQueryUrl(code, config);
     } else {
       return lovQueryUrl as string;
     }
+
   }
 
   @action
