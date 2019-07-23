@@ -31,6 +31,7 @@ timeline: true
 - 💄 `TexaArea`: 更新样式。
 - 💄 `Tabs`: 更新样式。
 - 💄 `<pro>Table`: 更新`ColumnFilter`样式。
+- 💄 `<pro>DataSet.Field`: 动态属性变更时只重置校验，不自动触发校验。
 - 🐞 `<pro>FormField`: 修复label为ReactNode时的问题。
 - 🐞 `<pro>TextField`: 修复TextField(和子类)使用addon时的display样式。
 - 🐞 `<pro>Modal`: 修复body无滚动条时，Modal弹出会影响布局的问题。

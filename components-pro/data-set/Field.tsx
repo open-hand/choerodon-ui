@@ -681,8 +681,10 @@ export default class Field {
       const oldProp = this.lastDynamicProps[propsName];
       if (oldProp !== newProp) {
         defer(() => {
-          this.validator.reset();
-          this.checkValidity();
+          if (propsName in this.validator.props || propsName === 'validator') {
+            this.validator.reset();
+            // this.checkValidity();
+          }
           this.handlePropChange(propsName);
         });
       }
