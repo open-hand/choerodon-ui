@@ -30,6 +30,7 @@ timeline: true
 - 💄 `SelectBox`: Update the style(with 'floatLabel' layout).
 - 💄 `TextArea`: Update the style.
 - 💄 `Tabs`: Update the style.
+- 💄 `<pro>Table`: Update the style of `ColumnFilter`.
 - 🐞 `<pro>FormField`: Fix the problem when the label is ReactNode.
 - 🐞 `<pro>TextField`: Fix the display style of TextField(and child classes) when using addons.
 - 🐞 `<pro>Modal`: Fix the problem when `document.body` has no scrollbar, a popup modal will affect the page layout.

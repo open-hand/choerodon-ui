@@ -117,7 +117,9 @@ export default class ColumnFilter extends Component<ColumnFilterProps> {
 
   getOptions(columns: [ColumnProps, ReactNode, Key][]): ReactElement<any>[] {
     return columns.map(([column, header, key]) => (
-      <Item key={key} value={column}>{header}</Item>
+      <Item key={key} value={column}>
+        <span>{header}</span>
+      </Item>
     ));
   }
 }
