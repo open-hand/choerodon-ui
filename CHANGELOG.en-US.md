@@ -34,6 +34,7 @@ timeline: true
 - 🐞 `<pro>FormField`: Fix the problem when the label is ReactNode.
 - 🐞 `<pro>TextField`: Fix the display style of TextField(and child classes) when using addons.
 - 🐞 `<pro>Modal`: Fix the problem when `document.body` has no scrollbar, a popup modal will affect the page layout.
+- 🐞 `<pro>FormField`: Fix the style of `FormField` label with multiple values.
 
 ## 0.7.6
 
