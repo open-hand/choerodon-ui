@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import { action, computed, isArrayLike, observable, runInAction } from 'mobx';
-import isEqual from 'lodash/isEqual';
+// import isEqual from 'lodash/isEqual';
 import isString from 'lodash/isString';
 import Validity from './Validity';
 import ValidationResult from './ValidationResult';
@@ -123,7 +123,9 @@ export default class Validator {
   }
 
   async checkValidity(value: any = null): Promise<boolean> {
-    if (!isEqual(this.validedValue, value)) {
+    // const useCache = isEqual(this.validedValue, value);
+    const useCachedResult = false;
+    if (!useCachedResult) {
       const { props } = this;
       this.validedValue = value;
       const valueMiss: methodReturn = valueMissing(value, props);
