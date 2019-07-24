@@ -311,6 +311,10 @@ export default class Form extends DataSetComponent<FormProps> {
     this.initResponsive();
   }
 
+  isDisabled() {
+    return super.isDisabled() || this.context.disabled;
+  }
+
   getObservableProps(props, context) {
     return {
       dataSet: props.dataSet || context.dataSet,
