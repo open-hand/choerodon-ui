@@ -37,6 +37,7 @@ timeline: true
 - 🐞 `<pro>TextField`: 修复TextField(和子类)使用addon时的display样式。
 - 🐞 `<pro>Modal`: 修复body无滚动条时，Modal弹出会影响布局的问题。
 - 🐞 `<pro>FormField`: 修复多值组件的标签样式。
+- 🐞 `<pro>Form`: 修复disabled属性无法传递给子Form的问题。
 
 ## 0.7.6
 
