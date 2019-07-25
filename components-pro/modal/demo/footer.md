@@ -18,6 +18,7 @@ import { Modal, Button } from 'choerodon-ui/pro';
 
 const key1 = Modal.key();
 const key2 = Modal.key();
+const key3 = Modal.key();
 
 let modal;
 
@@ -59,10 +60,35 @@ function openNoFooter() {
   });
 }
 
+function openMoreButtons() {
+  Modal.open({
+    key: key3,
+    title: 'More Buttons',
+    maskClosable: true,
+    destroyOnClose: true,
+    drawer: true,
+    children: (
+      <div>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </div>
+    ),
+    footer: (okBtn, cancelBtn) => (
+      <div>
+        {okBtn}
+        <Button color="blue">Custom</Button>
+        {cancelBtn}
+      </div>
+    ),
+  });
+}
+
 ReactDOM.render(
   <div>
     <Button onClick={openModal}>Custom</Button>
     <Button onClick={openNoFooter}>No Footer</Button>
+    <Button onClick={openMoreButtons}>More Buttons</Button>
   </div>,
   mountNode,
 );
