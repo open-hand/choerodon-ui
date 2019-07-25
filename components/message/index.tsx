@@ -1,4 +1,6 @@
 import React, { ReactNode } from 'react';
+import noop from 'lodash/noop';
+import isString from 'lodash/isString';
 import Icon from '../icon';
 import Notification from '../rc-components/notification';
 import { getPlacementStyle, getPlacementTransitionName } from './util';
@@ -18,6 +20,10 @@ type NoticeType = 'info' | 'success' | 'error' | 'warning' | 'loading';
 type Placement = 'top' | 'left' | 'right' | 'bottom' |
   'topRight' | 'topLeft' | 'bottomRight' | 'bottomLeft' |
   'rightTop' | 'leftTop' | 'rightBottom' | 'leftBottom';
+
+type ConfigContent = ReactNode;
+type ConfigDuration = number | Placement | (() => void);
+export type ConfigOnClose = (() => void) | Placement;
 
 function getCustomizePrefixCls() {
   return getPrefixCls('message', customizePrefixCls);
@@ -44,9 +50,10 @@ function getMessageInstance(placement: Placement, callback: (i: any) => void) {
 }
 
 function notice(content: ReactNode,
-                duration: (() => void) | number = defaultDuration,
+                duration: ConfigDuration = defaultDuration,
                 type: NoticeType,
-                onClose?: () => void, placement?: Placement) {
+                onClose?: ConfigOnClose,
+                placement?: Placement) {
   let iconType = ({
     info: 'info',
     success: 'check_circle',
@@ -55,17 +62,21 @@ function notice(content: ReactNode,
     loading: 'loading',
   })[type];
 
+  if (isString(onClose)) {
+    placement = onClose;
+    onClose = noop;
+  }
+
   if (typeof duration === 'function') {
     onClose = duration;
     duration = defaultDuration;
+  } else if (isString(duration)) {
+    placement = duration;
   }
 
-  if (placement !== undefined) {
-    defaultPlacement = placement;
-  }
   const target = key++;
   const prefixCls = getCustomizePrefixCls();
-  getMessageInstance(defaultPlacement, (instance) => {
+  getMessageInstance(placement || defaultPlacement, (instance) => {
     instance.notice({
       key: target,
       duration,
@@ -86,10 +97,6 @@ function notice(content: ReactNode,
   };
 }
 
-type ConfigContent = ReactNode | string;
-type ConfigDuration = number | (() => void);
-export type ConfigOnClose = () => void;
-
 export interface ConfigOptions {
   top?: number;
   duration?: number;
@@ -100,6 +107,7 @@ export interface ConfigOptions {
    * 消息距离视窗位置
    */
   bottom?: number;
+  placement?: Placement;
 }
 
 export default {
@@ -143,6 +151,9 @@ export default {
     if (options.transitionName !== undefined) {
       transitionName = options.transitionName;
       messageInstance = null; // delete messageInstance for new transitionName
+    }
+    if (options.placement !== undefined) {
+      defaultPlacement = options.placement;
     }
   },
   destroy() {

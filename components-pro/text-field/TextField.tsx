@@ -79,7 +79,7 @@ export interface TextFieldProps extends FormFieldProps {
   restrict?: string;
 }
 
-export class TextField<T extends TextFieldProps> extends FormField<T & TextFieldProps> {
+export class TextField<T extends TextFieldProps> extends FormField<T> {
   static displayName = 'TextField';
 
   static propTypes = {
@@ -320,14 +320,14 @@ export class TextField<T extends TextFieldProps> extends FormField<T & TextField
           exclusive
         >
           {this.renderMultipleValues()}
-          {this.renderMultipleEditor({ ...otherProps, className: `${prefixCls}-multiple-input` })}
+          {this.renderMultipleEditor({ ...otherProps, className: `${prefixCls}-multiple-input` } as T)}
         </Animate>
       </div>
     ) : (
       <input
         key="text"
         {...otherProps}
-        placeholder={this.hasFloatLabel ? null : this.getPlaceholder()}
+        placeholder={this.hasFloatLabel ? void 0 : this.getPlaceholder()}
         value={this.getText()}
         readOnly={!this.editable}
       />
@@ -512,7 +512,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T & TextField
   }
 
   getText() {
-    return this.text === void 0 ? super.getText() : this.text;
+    return this.text === void 0 ? super.getText() as string : this.text;
   }
 
   @action
@@ -557,6 +557,6 @@ export class TextField<T extends TextFieldProps> extends FormField<T & TextField
 }
 
 @observer
-export default class ObserverTextField<T extends TextFieldProps> extends TextField<T & TextFieldProps> {
+export default class ObserverTextField extends TextField<TextFieldProps> {
   static defaultProps = TextField.defaultProps;
 }

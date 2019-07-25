@@ -91,7 +91,8 @@
       true,
       {
         "singleline": "never",
-        "multiline": "always"
+        "multiline": "always",
+        "esSpecCompliant": true
       }
     ],
     "triple-equals": [

@@ -34,7 +34,7 @@ export function getEditorByField(field: Field): ReactElement<FormFieldProps> {
   const lovCode = field.get('lovCode');
   const { type, name } = field;
   if (lookupCode || isString(lookupUrl) || (lovCode && type !== FieldType.object) || field.getOptions()) {
-    return <Select />;
+  return <Select />;
   }
   if (lovCode) {
     return <Lov />;
@@ -105,7 +105,7 @@ export function getEditorByColumnAndRecord(column: ColumnProps, record?: Record)
 
 export function isRadio(element?: ReactElement<FormFieldProps>): boolean {
   if (element) {
-    switch (element.type) {
+    switch (element.type as any) {
       case CheckBox:
       case Radio:
       case Switch:

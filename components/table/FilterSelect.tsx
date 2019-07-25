@@ -1,4 +1,4 @@
-import React, { Component, Key, MouseEvent, ReactElement } from 'react';
+import React, { Component, Key, ReactElement, MouseEventHandler } from 'react';
 import { findDOMNode } from 'react-dom';
 import Icon from '../icon';
 import { ColumnProps, TableStateFilters } from './interface';
@@ -91,7 +91,7 @@ export default class FilterSelect<T> extends Component<FilterSelectProps<T>, Fil
     return `${this.props.prefixCls}-filter-select`;
   }
 
-  handleDropdownMouseDown = (e: MouseEvent<any>) => {
+  handleDropdownMouseDown: MouseEventHandler<any> = (e) => {
     e.preventDefault();
     this.rcSelect.focus();
   };

@@ -56,8 +56,21 @@ export default class Progress extends Component<ProgressProps, {}> {
   render() {
     const props = this.props;
     const {
-      prefixCls: customizePrefixCls, className, percent = 0, status, format, trailColor, size, successPercent,
-      type, strokeWidth, width, showInfo, gapDegree = 0, gapPosition, ...restProps,
+      prefixCls: customizePrefixCls,
+      className,
+      percent = 0,
+      status,
+      format,
+      trailColor,
+      size,
+      successPercent,
+      type,
+      strokeWidth,
+      width,
+      showInfo,
+      gapDegree = 0,
+      gapPosition,
+      ...restProps
     } = props;
     const prefixCls = getPrefixCls('progress', customizePrefixCls);
     const progressStatus = parseInt((successPercent ? successPercent.toString() : percent.toString()), 10) >= 100 &&

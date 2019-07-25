@@ -58,7 +58,7 @@ export default class Badge extends Component<BadgeProps, any> {
       status,
       text,
       offset,
-      ...restProps,
+      ...restProps
     } = this.props;
     const prefixCls = getPrefixCls('badge', customizePrefixCls);
     let displayCount = (count as number) > (overflowCount as number) ? `${overflowCount}+` : count;

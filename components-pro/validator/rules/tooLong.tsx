@@ -1,7 +1,7 @@
+import format from 'string-template';
 import isEmpty from '../../_util/isEmpty';
 import ValidationResult from '../ValidationResult';
 import { $l } from '../../locale-context';
-import { inject } from '../utils';
 import { methodReturn } from '.';
 
 export default function tooLong(value, { maxLength }): methodReturn {
@@ -10,7 +10,7 @@ export default function tooLong(value, { maxLength }): methodReturn {
     if (!!maxLength && maxLength > 0 && length > maxLength) {
       const injectionOptions = { maxLength, length };
       return new ValidationResult({
-        validationMessage: inject($l('Validator', 'too_long'), injectionOptions),
+        validationMessage: format($l('Validator', 'too_long'), injectionOptions),
         injectionOptions,
         value,
         ruleName: 'tooLong',

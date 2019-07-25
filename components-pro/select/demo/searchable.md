@@ -43,6 +43,7 @@ class App extends React.Component {
         <Option value="jack">Jack</Option>
         <Option value="lucy">Lucy</Option>
         <Option value="huazhen">Huazhen</Option>
+        <Option value="aaa">Huazhen</Option>
       </Select>
     );
   }

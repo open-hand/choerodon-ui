@@ -232,12 +232,6 @@ export default class TableStore {
   }
 
   @computed
-  get columnHeaders(): { name: string }[] {
-    const { leafNamedColumns, dataSet } = this;
-    return leafNamedColumns.map((column) => ({ name: column.name!, label: getReactNodeText(getHeader(column, dataSet)) }));
-  }
-
-  @computed
   get hasCheckFieldColumn(): boolean {
     const { checkField } = this.dataSet.props;
     return this.leafColumns.some(({ name, editor }) => !!editor && checkField === name);
@@ -350,6 +344,15 @@ export default class TableStore {
       this.expandedRows = [];
     });
     this.setProps(node.props);
+  }
+
+  async getColumnHeaders(): Promise<{ name: string, label: string }[]> {
+    const { leafNamedColumns, dataSet } = this;
+    const headers: { name: string, label: string }[] = [];
+    for (let column of leafNamedColumns) {
+      headers.push({ name: column.name!, label: await getReactNodeText(getHeader(column, dataSet)) });
+    }
+    return headers;
   }
 
   @action

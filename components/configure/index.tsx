@@ -1,6 +1,7 @@
 import { observable, ObservableMap, runInAction } from 'mobx';
-import { AxiosInstance } from 'axios';
+import { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { ReactNode } from 'react';
+import { LovConfig } from 'components-pro/lov/Lov';
 
 export type Config = {
   prefixCls?: string;
@@ -9,7 +10,9 @@ export type Config = {
   lookupUrl?: string | ((code: string) => string);
   lookupAxiosMethod?: string;
   lovDefineUrl?: string | ((code: string) => string);
-  lovQueryUrl?: string | ((code: string) => string);
+  lovDefineAxiosConfig?: (code: string) => AxiosRequestConfig;
+  lovQueryUrl?: string | ((code: string, lovConfig?: LovConfig) => string);
+  lovQueryAxiosConfig?: (code: string, lovConfig?: LovConfig) => AxiosRequestConfig;
   axios?: AxiosInstance;
   dataKey?: string;
   totalKey?: string;
@@ -48,7 +51,9 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['modalOkFirst', true],
 ]);
 
-export function getConfig<T extends ConfigKeys>(key: T): Config[T] {
+export function getConfig<T extends ConfigKeys>(key: T): any {
+  // FIXME: observable.map把构建map时传入的key类型和value类型分别做了union，
+  // 丢失了一一对应的映射关系，导致函数调用者无法使用union后的返回值类型，因此需要指定本函数返回值为any
   return globalConfig.get(key);
 }
 

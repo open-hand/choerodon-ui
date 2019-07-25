@@ -91,7 +91,14 @@ export default class Avatar extends Component<AvatarProps, AvatarState> {
 
   render() {
     const {
-      prefixCls: customizePrefixCls, shape, size, src, icon, className, alt, ...others,
+      prefixCls: customizePrefixCls,
+      shape,
+      size,
+      src,
+      icon,
+      className,
+      alt,
+      ...others
     } = this.props;
     const prefixCls = getPrefixCls('avatar', customizePrefixCls);
 

@@ -16,6 +16,7 @@ import isEmpty from '../_util/isEmpty';
 import { $l } from '../locale-context';
 import { FieldType } from '../data-set/enum';
 import { ValidatorProps } from '../validator/rules';
+import formatReactTemplate from '../_util/formatReactTemplate';
 
 export interface NumberFieldProps extends TextFieldProps {
   /**
@@ -60,8 +61,9 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
 
   @computed
   get defaultValidationMessages(): ValidationMessages | null {
+    const label = this.getProp('label');
     return {
-      valueMissing: $l('NumberField', 'value_missing'),
+      valueMissing: formatReactTemplate($l('NumberField', label ? 'value_missing_with_label' : 'value_missing'), { label }),
     };
   }
 
@@ -258,7 +260,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
 }
 
 @observer
-export default class ObserverNumberField<T extends NumberFieldProps> extends NumberField<T & NumberFieldProps> {
+export default class ObserverNumberField extends NumberField<NumberFieldProps> {
   static defaultProps = NumberField.defaultProps;
   static format = formatNumber;
 }

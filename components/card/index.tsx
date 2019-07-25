@@ -136,8 +136,24 @@ export default class Card extends Component<CardProps, {}> {
 
   render() {
     const {
-      prefixCls: customizePrefixCls, className, extra, bodyStyle, noHovering, hoverable, title, loading,
-      bordered = true, type, cover, actions, tabList, children, activeTabKey, defaultActiveTabKey, onHeadClick, ...others,
+      prefixCls: customizePrefixCls,
+      className,
+      extra,
+      bodyStyle,
+      noHovering,
+      hoverable,
+      title,
+      loading,
+      bordered = true,
+      type,
+      cover,
+      actions,
+      tabList,
+      children,
+      activeTabKey,
+      defaultActiveTabKey,
+      onHeadClick,
+      ...others
     } = this.props;
     const prefixCls = getPrefixCls('card', customizePrefixCls);
 

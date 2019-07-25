@@ -1,4 +1,4 @@
-import React, { CSSProperties, Key, ReactElement, ReactNode } from 'react';
+import React, { CSSProperties, isValidElement, Key, ReactElement, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import omit from 'lodash/omit';
 import isEqual from 'lodash/isEqual';
@@ -23,8 +23,8 @@ import Spin from '../spin';
 import { stopEvent } from '../_util/EventManager';
 import normalizeOptions from '../option/normalizeOptions';
 import { $l } from '../locale-context';
-import getReactNodeText from '../_util/getReactNodeText';
 import * as ObjectChainValue from '../_util/ObjectChainValue';
+import formatReactTemplate from '../_util/formatReactTemplate';
 
 function updateActiveKey(menu: Menu, activeKey: string) {
   const store = menu.getStore();
@@ -39,7 +39,7 @@ function updateActiveKey(menu: Menu, activeKey: string) {
 }
 
 export function getItemKey(record: Record, text: ReactNode, value: any) {
-  return `item-${value || record.id}-${getReactNodeText(text) || record.id}`;
+  return `item-${value || record.id}-${(isValidElement(text) ? text.key : text) || record.id}`;
 }
 
 function getSimpleValue(value, valueField) {
@@ -129,8 +129,9 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
 
   @computed
   get defaultValidationMessages(): ValidationMessages | null {
+    const label = this.getProp('label');
     return {
-      valueMissing: $l('Select', 'value_missing'),
+      valueMissing: formatReactTemplate($l('Select', label ? 'value_missing_with_label' : 'value_missing'), { label }),
     };
   }
 
@@ -541,12 +542,26 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
   syncValueOnBlur(value) {
     if (value) {
       this.options.ready().then(() => {
-        const record = this.findByText(value);
+        const record = this.findByTextWithValue(value);
         if (record) {
           this.choose(record);
         }
       });
     }
+  }
+
+  findByTextWithValue(text): Record | undefined {
+    const { textField } = this;
+    const records = this.cascadeOptions.filter(record => isSameLike(record.get(textField), text));
+    if (records.length > 1) {
+      const { valueField } = this;
+      const value = this.getValue();
+      const found = records.find(record => isSameLike(record.get(valueField), value));
+      if (found) {
+        return found;
+      }
+    }
+    return records[0];
   }
 
   findByText(text): Record | undefined {
@@ -787,7 +802,7 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
 }
 
 @observer
-export default class ObserverSelect<T extends SelectProps> extends Select<T & SelectProps> {
+export default class ObserverSelect extends Select<SelectProps> {
   static defaultProps = Select.defaultProps;
 
   static Option = Option;

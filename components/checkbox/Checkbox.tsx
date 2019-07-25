@@ -80,7 +80,7 @@ export default class Checkbox extends Component<CheckboxProps, {}> {
       style,
       onMouseEnter,
       onMouseLeave,
-      ...restProps,
+      ...restProps
     } = props;
     const prefixCls = getPrefixCls('checkbox', customizePrefixCls);
     const { checkboxGroup } = context;

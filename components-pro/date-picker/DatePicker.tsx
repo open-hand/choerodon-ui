@@ -22,6 +22,7 @@ import { stopEvent } from '../_util/EventManager';
 import warning from 'choerodon-ui/lib/_util/warning';
 import { FieldType } from '../data-set/enum';
 import { $l } from '../locale-context';
+import formatReactTemplate from '../_util/formatReactTemplate';
 
 export type RenderFunction = (props: object, text: string, currentDate: Moment, selected: Moment) => ReactNode;
 
@@ -105,8 +106,9 @@ export default class DatePicker extends TriggerField<DatePickerProps> implements
 
   @computed
   get defaultValidationMessages(): ValidationMessages | null {
+    const label = this.getProp('label');
     return {
-      valueMissing: $l('DatePicker', 'value_missing'),
+      valueMissing: formatReactTemplate($l('DatePicker', label ? 'value_missing_with_label' : 'value_missing'), { label }),
     };
   }
 
@@ -145,7 +147,7 @@ export default class DatePicker extends TriggerField<DatePickerProps> implements
     return (
       <input
         {...this.getOtherProps()}
-        placeholder={this.hasFloatLabel ? null : this.getPlaceholder()}
+        placeholder={this.hasFloatLabel ? void 0 : this.getPlaceholder()}
         value={this.getText() || ''}
         readOnly={!this.editable}
       />

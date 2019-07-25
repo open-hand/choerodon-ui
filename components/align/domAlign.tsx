@@ -139,7 +139,7 @@ function getVisibleRectForElement() {
 
 function isFixedPosition(node) {
   const { offsetParent } = node;
-  if (offsetParent === document.body && document.defaultView.getComputedStyle(node).position !== 'fixed') {
+  if (offsetParent === document.body && document.defaultView && document.defaultView.getComputedStyle(node).position !== 'fixed') {
     return false;
   }
   if (offsetParent === null) {

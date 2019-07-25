@@ -57,9 +57,11 @@ export interface Locale {
   },
   DatePicker: {
     value_missing;
+    value_missing_with_label;
   },
   EmailField: {
     value_missing;
+    value_missing_with_label;
     type_mismatch;
   },
   IntlField: {
@@ -67,25 +69,31 @@ export interface Locale {
   },
   NumberField: {
     value_missing;
+    value_missing_with_label;
   },
   Radio: {
     value_missing;
+    value_missing_with_label;
   },
   SelectBox: {
     value_missing;
+    value_missing_with_label;
   },
   Select: {
     value_missing;
+    value_missing_with_label;
   },
   Transfer: {
     items;
   },
   UrlField: {
     value_missing;
+    value_missing_with_label;
     type_mismatch;
   },
   ColorPicker: {
     value_missing;
+    value_missing_with_label;
     type_mismatch;
   },
   Validator: {
@@ -98,6 +106,7 @@ export interface Locale {
     too_short;
     type_mismatch;
     value_missing;
+    value_missing_with_label;
     unique;
     unknown;
   },

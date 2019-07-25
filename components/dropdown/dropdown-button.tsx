@@ -24,10 +24,20 @@ export default class DropdownButton extends Component<DropdownButtonProps, any> 
 
   render() {
     const {
-      type, disabled, onClick, children,
-      prefixCls: customizePrefixCls, className, overlay, trigger, align,
-      visible, onVisibleChange, placement, getPopupContainer,
-      ...restProps,
+      prefixCls: customizePrefixCls,
+      type,
+      disabled,
+      onClick,
+      children,
+      className,
+      overlay,
+      trigger,
+      align,
+      visible,
+      onVisibleChange,
+      placement,
+      getPopupContainer,
+      ...restProps
     } = this.props;
 
     const prefixCls = getPrefixCls('dropdown-button', customizePrefixCls);

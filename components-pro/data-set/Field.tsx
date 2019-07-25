@@ -11,13 +11,14 @@ import { DataSetEvents, FieldIgnore, FieldType, SortOrder } from './enum';
 import lookupStore from '../stores/LookupCodeStore';
 import lovCodeStore from '../stores/LovCodeStore';
 import localeContext from '../locale-context';
-import { findInvalidField, processValue } from './utils';
+import { processValue } from './utils';
 import Validity from '../validator/Validity';
 import ValidationResult from '../validator/ValidationResult';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import { LovConfig } from '../lov/Lov';
 import { AxiosRequestConfig } from 'axios';
 import warning from 'choerodon-ui/lib/_util/warning';
+import { ValidatorProps } from '../validator/rules/index';
 
 function setFieldDirty(field: Field, dirty: boolean) {
   if (dirty) {
@@ -199,6 +200,14 @@ export type FieldProps = {
    * @default never
    */
   ignore?: FieldIgnore;
+  /**
+   * 在发送请求之前对数据进行处理
+   */
+  requestTransform?: (data: object) => object;
+  /**
+   * 在获得响应之后对数据进行处理
+   */
+  responseTransform?: (data: object) => object;
 }
 
 export default class Field {
@@ -552,14 +561,8 @@ export default class Field {
     this.set('lovPara', p);
   }
 
-  /**
-   * 校验字段值
-   * 只有通过record.getField()获取的field才能校验
-   * @return true | false
-   */
-  async checkValidity(): Promise<boolean> {
-    let valid = true;
-    const { record, dataSet, validator, name, type, required } = this;
+  getValidatorProps(): ValidatorProps | undefined {
+    const { record, dataSet, name, type, required } = this;
     if (record) {
       const customValidator = this.get('validator');
       const max = this.get('max');
@@ -568,8 +571,8 @@ export default class Field {
       const step = this.get('step');
       const minLength = this.get('minLength');
       const maxLength = this.get('maxLength');
-      const value = record.get(name);
-      validator.setProps({
+      const label = this.get('label');
+      return {
         type,
         required,
         record,
@@ -583,7 +586,22 @@ export default class Field {
         step,
         minLength,
         maxLength,
-      });
+        label,
+      };
+    }
+  }
+
+  /**
+   * 校验字段值
+   * 只有通过record.getField()获取的field才能校验
+   * @return true | false
+   */
+  async checkValidity(): Promise<boolean> {
+    let valid = true;
+    const { record, validator, name } = this;
+    if (record) {
+      const value = record.get(name);
+      validator.setProps(this.getValidatorProps());
       valid = await validator.checkValidity(value);
     }
     return valid;
@@ -623,54 +641,24 @@ export default class Field {
   }
 
   isValid() {
-    return findInvalidField(this).validator.validity.valid;
+    // return findInvalidField(this).validator.validity.valid;
+    return this.validator.validity.valid;
   }
 
   getValidationMessage() {
-    return findInvalidField(this).validator.validationMessage;
+    // return findInvalidField(this).validator.validationMessage;
+    return this.validator.validationMessage;
   }
 
   getValidityState(): Validity {
-    return findInvalidField(this).validator.validity;
+    // return findInvalidField(this).validator.validity;
+    return this.validator.validity;
   }
 
   getValidationErrorValues(): ValidationResult[] {
-    return findInvalidField(this).validator.validationErrorValues;
+    // return findInvalidField(this).validator.validationErrorValues;
+    return this.validator.validationErrorValues;
   }
-
-  // getBindFields(): Field[] {
-  //   const bindFields: Field[] = [];
-  //   const { record } = this;
-  //   if (record) {
-  //     const { fields } = record;
-  //
-  //   }
-  // }
-  //
-  // getBindField(): Field | undefined {
-  //   const { record, name } = this;
-  //   if (record) {
-  //     try {
-  //       const bind = this.get('bind');
-  //       if (bind !== name) {
-  //         this.isBinding = true;
-  //         const field = getParentField(bind || name, record);
-  //         if (field) {
-  //           if (field.isBinding) {
-  //             throw 'X';
-  //           }
-  //           return field.getBindField() || field;
-  //         }
-  //       } else {
-  //         throw 'X';
-  //       }
-  //     } catch (e) {
-  //       throw new Error(`[DataSet.Field] Cycle binding fields. Field#${bind}`);
-  //     } finally {
-  //       this.isBinding = false;
-  //     }
-  //   }
-  // }
 
   async ready(): Promise<any> {
     const { lookUpPending, lovPending } = this;
@@ -693,8 +681,10 @@ export default class Field {
       const oldProp = this.lastDynamicProps[propsName];
       if (oldProp !== newProp) {
         defer(() => {
-          this.validator.reset();
-          this.checkValidity();
+          if (propsName in this.validator.props || propsName === 'validator') {
+            this.validator.reset();
+            // this.checkValidity();
+          }
           this.handlePropChange(propsName);
         });
       }

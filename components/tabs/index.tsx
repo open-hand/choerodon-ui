@@ -4,7 +4,6 @@ import React, {
   cloneElement,
   Component,
   CSSProperties,
-  MouseEvent,
   MouseEventHandler,
   ReactElement,
   ReactNode,
@@ -33,7 +32,7 @@ export interface TabsProps {
   tabBarStyle?: CSSProperties;
   type?: TabsType;
   tabPosition?: TabsPosition;
-  onEdit?: (targetKey: string | MouseEvent<HTMLElement>, action: any) => void;
+  onEdit?: (targetKey: string | React.MouseEvent<HTMLElement>, action: any) => void;
   size?: Size;
   style?: CSSProperties;
   prefixCls?: string;
@@ -61,14 +60,14 @@ export default class Tabs extends Component<TabsProps, any> {
     hideAdd: false,
   };
 
-  createNewTab = (targetKey: MouseEvent<HTMLElement>) => {
+  createNewTab: MouseEventHandler<HTMLElement> = (targetKey) => {
     const onEdit = this.props.onEdit;
     if (onEdit) {
       onEdit(targetKey, 'add');
     }
   };
 
-  removeTab = (targetKey: string, e: MouseEvent<HTMLElement>) => {
+  removeTab = (targetKey: string, e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
     if (!targetKey) {
       return;

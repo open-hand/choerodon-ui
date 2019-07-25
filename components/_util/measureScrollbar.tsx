@@ -2,7 +2,7 @@ let scrollbarWidth: number;
 let rootFontSize: number = 100;
 
 function getRootFontSize(): number {
-  if (typeof window !== 'undefined') {
+  if (typeof window !== 'undefined' && document.defaultView) {
     const { fontSize } = document.defaultView.getComputedStyle(document.documentElement);
     if (fontSize !== null) {
       return parseFloat(fontSize);
