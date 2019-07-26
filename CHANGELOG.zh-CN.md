@@ -37,6 +37,7 @@ timeline: true
 - 🐞 `<pro>FormField`: 修复label为ReactNode时的问题。
 - 🐞 `<pro>TextField`: 修复TextField(和子类)使用addon时的display样式。
 - 🐞 `<pro>Modal`: 修复body无滚动条时，Modal弹出会影响布局的问题。
+- 🐞 `<pro>Modal`: 修复在抽屉类型的`Modal`中使用浮动标签`Form`时，验证和帮助信息无法随页面滚动。
 - 🐞 `<pro>FormField`: 修复多值组件的标签样式。
 - 🐞 `<pro>Form`: 修复disabled属性无法传递给子Form的问题。
 - 🐞 `<pro>DataSet`: 修复Transport的钩子没有传递params的问题。

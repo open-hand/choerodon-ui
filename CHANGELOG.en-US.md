@@ -37,6 +37,7 @@ timeline: true
 - 🐞 `<pro>FormField`: Fix the problem when the label is ReactNode.
 - 🐞 `<pro>TextField`: Fix the display style of TextField(and child classes) when using addons.
 - 🐞 `<pro>Modal`: Fix the problem when `document.body` has no scrollbar, a popup modal will affect the page layout.
+- 🐞 `<pro>Modal`: Fix the problem when using float-label `Form` in a `drawer`, the validation & help message cannot scroll.
 - 🐞 `<pro>FormField`: Fix the style of `FormField` label with multiple values.
 - 🐞 `<pro>Form`: Fixed an issue where the disabled property could not be passed to the child Form.
 - 🐞 `<pro>DataSet`: Fix the problem that the transport hooks does not pass `params`.
