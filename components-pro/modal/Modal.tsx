@@ -27,7 +27,7 @@ export interface ModalProps extends ViewComponentProps {
   maskClosable?: boolean;
   keyboardClosable?: boolean;
   header?: boolean;
-  footer?: ReactNode | boolean;
+  footer?: ((okBtn: ReactNode, cancelBtn: ReactNode) => ReactNode) | ReactNode | boolean;
   destroyOnClose?: boolean;
   okText?: ReactNode;
   cancelText?: ReactNode;
@@ -57,7 +57,7 @@ export default class Modal extends ViewComponent<ModalProps> {
     maskClosable: PropTypes.bool,
     keyboardClosable: PropTypes.bool,
     header: PropTypes.bool,
-    footer: PropTypes.oneOfType([PropTypes.node, PropTypes.bool]),
+    footer: PropTypes.oneOfType([PropTypes.func, PropTypes.node, PropTypes.bool]),
     destroyOnClose: PropTypes.bool,
     okText: PropTypes.node,
     cancelText: PropTypes.node,
@@ -332,32 +332,59 @@ export default class Modal extends ViewComponent<ModalProps> {
   }
 
   getFooter(): ReactNode {
-    const { prefixCls, props: { footer = this.getDefaultFooter(), drawer } } = this;
+    const {
+      okProps,
+      cancelProps,
+      drawer,
+      okText = $l('Modal', 'ok'),
+      cancelText = $l('Modal', 'cancel'),
+      footer = this.getDefaultFooter,
+    } = this.props;
+    const funcType: FuncType | undefined = drawer ? FuncType.raised : getConfig('buttonFuncType') as FuncType;
+
+    const okBtn = (
+      <Button key="ok" funcType={funcType} color={ButtonColor.blue} onClick={this.handleOk} children={okText} {...okProps} />
+    );
+    const cancelBtn = (
+      <Button key="cancel" ref={this.saveCancelRef} funcType={funcType} onClick={this.handleCancel} children={cancelText} {...cancelProps} />
+    );
+
+    if (typeof footer === 'function') {
+      return this.getWrappedFooter(footer(okBtn, cancelBtn));
+    }
+
     if (!isEmpty(footer, true)) {
-      const className = classNames(`${prefixCls}-footer`, {
-        [`${prefixCls}-footer-drawer`]: !!drawer,
-      });
-      return (
-        <div className={className}>
-          {footer}
-        </div>
-      );
+      return this.getWrappedFooter(footer);
     }
   }
 
-  getDefaultFooter() {
+  getWrappedFooter(footer: ReactNode) {
+    const { prefixCls } = this;
+
     const {
-      okProps, cancelProps, okCancel, okFirst = getConfig('modalOkFirst'), drawer,
-      okText = $l('Modal', 'ok'), cancelText = $l('Modal', 'cancel'),
+      drawer,
     } = this.props;
-    const funcType: FuncType | undefined = drawer ? FuncType.raised : getConfig('buttonFuncType') as FuncType;
+
+    const className = classNames(`${prefixCls}-footer`, {
+      [`${prefixCls}-footer-drawer`]: !!drawer,
+    });
+    return (
+      <div className={className}>
+        {footer}
+      </div>
+    );
+  }
+
+  getDefaultFooter = (okBtn: ReactNode, cancelBtn: ReactNode) => {
+    const {
+      okCancel,
+      okFirst = getConfig('modalOkFirst'),
+      drawer,
+    } = this.props;
     const buttons = [
-      <Button key="ok" funcType={funcType} color={ButtonColor.blue} onClick={this.handleOk} children={okText} {...okProps} />,
+      okBtn,
     ];
     if (okCancel) {
-      const cancelBtn = (
-        <Button key="cancel" ref={this.saveCancelRef} funcType={funcType} onClick={this.handleCancel} children={cancelText} {...cancelProps} />
-      );
       if (okFirst || drawer) {
         buttons.push(cancelBtn);
       } else {
