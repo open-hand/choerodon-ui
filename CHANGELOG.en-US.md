@@ -39,6 +39,7 @@ timeline: true
 - 🐞 `<pro>Modal`: Fix the problem when `document.body` has no scrollbar, a popup modal will affect the page layout.
 - 🐞 `<pro>FormField`: Fix the style of `FormField` label with multiple values.
 - 🐞 `<pro>Form`: Fixed an issue where the disabled property could not be passed to the child Form.
+- 🐞 `<pro>DataSet`: Fix the problem that the transport hooks does not pass `params`.
 
 ## 0.7.6
 

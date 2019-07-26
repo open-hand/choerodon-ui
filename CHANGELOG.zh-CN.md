@@ -39,6 +39,7 @@ timeline: true
 - 🐞 `<pro>Modal`: 修复body无滚动条时，Modal弹出会影响布局的问题。
 - 🐞 `<pro>FormField`: 修复多值组件的标签样式。
 - 🐞 `<pro>Form`: 修复disabled属性无法传递给子Form的问题。
+- 🐞 `<pro>DataSet`: 修复Transport的钩子没有传递params的问题。
 
 ## 0.7.6
 

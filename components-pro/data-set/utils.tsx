@@ -402,7 +402,7 @@ export function axiosAdapter(config: TransportType, dataSet: DataSet, data?: any
   if (isString(config)) {
     newConfig.url = config;
   } else if (config) {
-    Object.assign(newConfig, typeof config === 'function' ? config({ data, dataSet }) : config);
+    Object.assign(newConfig, typeof config === 'function' ? config({ data, dataSet, params }) : config);
   }
   if (newConfig.data && newConfig.method && newConfig.method.toLowerCase() === 'get') {
     newConfig.params = {
