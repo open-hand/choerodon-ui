@@ -43,6 +43,7 @@ import { $l } from '../locale-context';
 import FilterBar from './FilterBar';
 import { findIndexedSibling, getHeight, getPaginationPosition } from './utils';
 import { ButtonProps } from '../button/Button';
+import TableAdvancedQueryBar from './TableAdvancedQueryBar';
 
 export type expandedRowRendererProps = { dataSet: DataSet, record: Record };
 export type onRowProps = { dataSet: DataSet, record: Record, index: number, expandedRow: boolean };
@@ -127,7 +128,7 @@ export interface TableProps extends DataSetComponentProps {
   queryFieldsLimit?: number;
   /**
    * 显示查询条
-   * 可选值: `normal` `bar` `none`
+   * 可选值: `advancedBar` `normal` `bar` `none`
    * @default 'normal'
    */
   queryBar?: TableQueryBar;
@@ -257,7 +258,7 @@ export default class Table extends DataSetComponent<TableProps> {
      * 显示查询条
      * @default true
      */
-    queryBar: PropTypes.oneOf([TableQueryBar.normal, TableQueryBar.bar, TableQueryBar.none]),
+    queryBar: PropTypes.oneOf([TableQueryBar.advancedBar, TableQueryBar.normal, TableQueryBar.bar, TableQueryBar.none]),
     /**
      * 行高
      * @default 30
@@ -578,6 +579,14 @@ export default class Table extends DataSetComponent<TableProps> {
     return <FilterBar key="querybar" prefixCls={prefixCls} dataSet={dataSet} paramName={filterBarFieldName!} placeholder={filterBarPlaceholder} />;
   }
 
+  renderAdvancedQueryBar() {
+    const {
+      queryFields,
+      queryFieldsLimit,
+    } = this.props;
+    return <TableAdvancedQueryBar queryFields={queryFields!} queryFieldsLimit={queryFieldsLimit!} />;
+  }
+
   render() {
     const {
       prefixCls,
@@ -602,6 +611,7 @@ export default class Table extends DataSetComponent<TableProps> {
           />
           {this.getPagination(TablePaginationPosition.top)}
           {queryBar === TableQueryBar.bar && this.renderBar()}
+          {queryBar === TableQueryBar.advancedBar && showQueryBar !== false && this.renderAdvancedQueryBar()}
           <Spin key="content" dataSet={dataSet}>
             <div {...this.getOtherProps()}>
               <div className={`${prefixCls}-content`}>
