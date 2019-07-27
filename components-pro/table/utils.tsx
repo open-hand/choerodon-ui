@@ -3,6 +3,7 @@ import isString from 'lodash/isString';
 import { ColumnProps } from './Column';
 import Record from '../data-set/Record';
 import CheckBox from '../check-box/CheckBox';
+import SelectBox from '../select-box/SelectBox';
 import Switch from '../switch/Switch';
 import Radio from '../radio/Radio';
 import { FieldType, RecordStatus } from '../data-set/enum';
@@ -34,7 +35,11 @@ export function getEditorByField(field: Field): ReactElement<FormFieldProps> {
   const lovCode = field.get('lovCode');
   const { type, name } = field;
   if (lookupCode || isString(lookupUrl) || (lovCode && type !== FieldType.object) || field.getOptions()) {
-  return <Select />;
+    const optionDataSet = field.getOptions();
+    if (optionDataSet && optionDataSet.length <= 5) {
+      return <SelectBox />;
+    }
+    return <Select />;
   }
   if (lovCode) {
     return <Lov />;

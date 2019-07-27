@@ -21,7 +21,14 @@ import Table, { Buttons } from './Table';
 import Column from './Column';
 import { findBindFieldBy } from '../data-set/utils';
 
-function filterBindField(fields: Fields): { [key: string]: Field } {
+/**
+ * 去除级联字段
+ *
+ * @export
+ * @param {Fields} fields 待筛选的字段数组
+ * @returns {{ [key: string]: Field }} 不含级联字段的字段数组
+ */
+export function filterBindField(fields: Fields): { [key: string]: Field } {
   return Array.from(fields.entries()).reduce((newFields, [key, field]) => {
     if (!field.get('bind')) {
       newFields[key] = field;
@@ -242,17 +249,17 @@ export default class TableToolBar extends Component<TabelToolBarProps, any> {
 
   getDirtyInfo(current: Record | undefined, moreKeys: string[]) {
     if (current && moreKeys.some(key => {
-        const field = current.getField(key);
-        return field ? field.dirty : false;
-      })
+      const field = current.getField(key);
+      return field ? field.dirty : false;
+    })
     ) {
       const { prefixCls } = this.props;
       return (
         <span className={`${prefixCls}-query-bar-dirty-info`}>
-        <Icon type="info" />
-        <span>{$l('Table', 'dirty_info')}</span>
-        <a onClick={this.handleQueryReset}>{$l('Table', 'restore')}</a>
-      </span>
+          <Icon type="info" />
+          <span>{$l('Table', 'dirty_info')}</span>
+          <a onClick={this.handleQueryReset}>{$l('Table', 'restore')}</a>
+        </span>
       );
     }
   }
@@ -297,8 +304,8 @@ export default class TableToolBar extends Component<TabelToolBarProps, any> {
       return isValidElement(element) ? (
         cloneElement(element, props)
       ) : (
-        cloneElement(getEditorByField(field), { ...props, ...element })
-      );
+          cloneElement(getEditorByField(field), { ...props, ...element })
+        );
     });
   }
 

@@ -18,7 +18,8 @@ timeline: true
 - 🌟 `configure`: Add global configuration new properties.
 - 🌟 `<pro>Modal`: Modal and internal injection modal object add `update` methods.
 - 🌟 `<pro>Modal`: Added `okProps`, `cancelProps`, `okFirst`, `border` attribute.
-- 🌟 `<pro>DataSet.Field`: Add `transformRequest` & `transformResponse` input property.
+- 🌟 `<pro>DataSet.Field`: Add `requestTransform` & `responseTransform` input property.
+- 🌟 `<pro>Table`: Add `advancedBar` type to `queryBar` property.
 - 🌟 `message`: Added `placement` config.
 - 💄 `Password`: Change to reveal password by clicking.
 - 💄 `Input`: Update the style.
