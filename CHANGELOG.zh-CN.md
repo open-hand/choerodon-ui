@@ -35,6 +35,7 @@ timeline: true
 - 💄 `<pro>DataSet.Field`: 动态属性变更时只重置校验，不自动触发校验。
 - 💄 `<pro>DataSet`: 取消`Validator.checkValidity`方法的缓存策略。
 - 💄 `<pro>Modal`: `footer`属性支持函数类型。
+- 💄 `<pro>Select`: 当没有匹配选项时，显示值，而不是自动清空值，除了级联。
 - 🐞 `<pro>FormField`: 修复label为ReactNode时的问题。
 - 🐞 `<pro>TextField`: 修复TextField(和子类)使用addon时的display样式。
 - 🐞 `<pro>Modal`: 修复body无滚动条时，Modal弹出会影响布局的问题。

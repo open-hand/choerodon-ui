@@ -35,6 +35,7 @@ timeline: true
 - 💄 `<pro>DataSet.Field`: The checksum will be reset but not triggered automatically when the dynamic properties changed.
 - 💄 `<pro>DataSet`: Cancel the cache strategy in `Validator.checkValidity` method.
 - 💄 `<pro>Modal`: `footer` property now supports `function` type.
+- 💄 `<pro>Select`: When there is no matching option, the value is displayed instead of automatically clearing the value, except for cascading.
 - 🐞 `<pro>FormField`: Fix the problem when the label is ReactNode.
 - 🐞 `<pro>TextField`: Fix the display style of TextField(and child classes) when using addons.
 - 🐞 `<pro>Modal`: Fix the problem when `document.body` has no scrollbar, a popup modal will affect the page layout.

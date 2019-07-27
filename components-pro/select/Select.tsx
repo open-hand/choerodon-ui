@@ -25,6 +25,7 @@ import normalizeOptions from '../option/normalizeOptions';
 import { $l } from '../locale-context';
 import * as ObjectChainValue from '../_util/ObjectChainValue';
 import formatReactTemplate from '../_util/formatReactTemplate';
+import isEmpty from '../_util/isEmpty';
 
 function updateActiveKey(menu: Menu, activeKey: string) {
   const store = menu.getStore();
@@ -711,7 +712,7 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
     }
   }
 
-  processValue(value) {
+  processLookupValue(value) {
     const { field, textField, valueField, primitive } = this;
     if (field && primitive) {
       const lookupKey = lookupStore.getKey(field);
@@ -720,6 +721,18 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
       }
     }
     return super.processValue(this.processObjectValue(value, textField));
+  }
+
+  processValue(value) {
+    const text = this.processLookupValue(value);
+    if (isEmpty(text)) {
+      if (isEmpty(value)) {
+        return '';
+      }
+      return value;
+    } else {
+      return text;
+    }
   }
 
   clear() {
@@ -785,7 +798,7 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
         }
         return false;
       });
-      if (filteredOptions.length && !isEqual(newValues, values)) {
+      if (field && field.get('cascadeMap') && filteredOptions.length && !isEqual(newValues, values)) {
         this.setValue(this.multiple ? newValues : newValues[0]);
       }
     });
