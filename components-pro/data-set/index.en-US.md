@@ -208,8 +208,8 @@ title: DataSet
 | cascadeMap | 快码和LOV查询时的级联参数映射。 例如：cascadeMap: { parentCodeValue: 'city' }，其中'city'是当前所在数据源的其他字段名，parentCodeValue是快码和LOV的查询参数 | object  |  |
 | currency | 货币代码，详见[Current currency & funds code list.](https://www.currency-iso.org/en/home/tables/table-a1.html)  | string  |  |
 | ignore | 忽略提交, 可选值: `always` - 总是忽略 `clean` - 值未变化时忽略 `never` - 从不忽略 | string  | `never` |
-| requestTransform | 在发送请求之前对数据进行处理 | (data: object) => object |  |
-| responseTransform | 在获得响应之后对数据进行处理 | (data: object) => object |  |
+| transformRequest | 在发送请求之前对数据进行处理 | (data: object) => object |  |
+| transformResponse | 在获得响应之后对数据进行处理 | (data: object) => object |  |
 
 ### Field Values
 

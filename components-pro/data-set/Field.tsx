@@ -203,11 +203,11 @@ export type FieldProps = {
   /**
    * 在发送请求之前对数据进行处理
    */
-  requestTransform?: (data: object) => object;
+  transformRequest?: (data: object) => object;
   /**
    * 在获得响应之后对数据进行处理
    */
-  responseTransform?: (data: object) => object;
+  transformResponse?: (data: object) => object;
 }
 
 export default class Field {
