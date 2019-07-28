@@ -6,7 +6,7 @@ import OptGroup, { OptGroupProps } from './OptGroup';
 import Option, { OptionProps } from './Option';
 import lookupStore from '../stores/LookupCodeStore';
 
-export default function normalizeOptions({ field, textField, valueField, multiple, childrenFields, childrenOptions }) {
+export default function normalizeOptions({ field, textField, valueField, multiple, children }) {
   const selectionType = multiple ? DataSetSelection.multiple : multiple === void 0 ? void 0 : DataSetSelection.single;
   let data: object[] | undefined = [];
   let fetch;
@@ -25,16 +25,16 @@ export default function normalizeOptions({ field, textField, valueField, multipl
       }
     }
   }
-  let fields = [{
+  const fields = [{
     name: textField,
     type: FieldType.reactNode,
   }, {
     name: valueField,
   }];
 
-  if ((!data || !data.length) && childrenOptions.length) {
-    data = childrenOptions;
-    fields = childrenFields;
+  if ((!data || !data.length) && children) {
+    data = [];
+    getOptionsFromChildren(children, data, fields, textField, valueField);
   }
   const ds = new DataSet({
     data,
@@ -49,7 +49,7 @@ export default function normalizeOptions({ field, textField, valueField, multipl
   return ds;
 }
 
-export function getOptionsFromChildren
+function getOptionsFromChildren
 (elements: ReactNode[], data: object[], fields: FieldProps[], textField: string, valueField: string, groups: string[] = []) {
   if (elements) {
     Children.forEach(elements, (child) => {

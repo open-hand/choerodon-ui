@@ -6,7 +6,7 @@ import isNil from 'lodash/isNil';
 import noop from 'lodash/noop';
 import isPlainObject from 'lodash/isPlainObject';
 import { observer } from 'mobx-react';
-import { action, computed, IReactionDisposer, isArrayLike, observable, reaction, runInAction } from 'mobx';
+import { computed, IReactionDisposer, isArrayLike, reaction, runInAction } from 'mobx';
 import Menu, { Item, ItemGroup } from 'choerodon-ui/lib/rc-components/menu';
 import TriggerField, { TriggerFieldProps } from '../trigger-field/TriggerField';
 import autobind from '../_util/autobind';
@@ -22,7 +22,7 @@ import { isSame, isSameLike } from '../data-set/utils';
 import lookupStore from '../stores/LookupCodeStore';
 import Spin from '../spin';
 import { stopEvent } from '../_util/EventManager';
-import normalizeOptions, { getOptionsFromChildren } from '../option/normalizeOptions';
+import normalizeOptions from '../option/normalizeOptions';
 import { $l } from '../locale-context';
 import * as ObjectChainValue from '../_util/ObjectChainValue';
 import formatReactTemplate from '../_util/formatReactTemplate';
@@ -197,8 +197,8 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
 
   @computed
   get options(): DataSet {
-    const { field, textField, valueField, multiple, childrenFields, childrenOptions, observableProps: { options } } = this;
-    return options || normalizeOptions({ field, textField, valueField, multiple, childrenFields, childrenOptions });
+    const { field, textField, valueField, multiple, observableProps: { children, options } } = this;
+    return options || normalizeOptions({ field, textField, valueField, multiple, children });
   }
 
   @computed
@@ -212,16 +212,8 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
     return this.observableProps.primitiveValue !== false && type !== FieldType.object;
   }
 
-  @observable childrenOptions: object[];
-  @observable childrenFields: object[];
-
   checkValueReaction?: IReactionDisposer;
   checkComboReaction?: IReactionDisposer;
-
-  constructor(props, context) {
-    super(props, context);
-    this.generateChildrenOptions(props);
-  }
 
   saveMenu = node => this.menu = node;
 
@@ -291,24 +283,10 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
         this.generateComboOption(nextProps.value);
       }
     }
-    this.generateChildrenOptions(nextProps);
   }
 
   componentDidUpdate() {
     this.forcePopupAlign();
-  }
-
-  @action
-  generateChildrenOptions(props) {
-    const { textField, valueField } = this;
-    this.childrenFields = [{
-      name: textField,
-      type: FieldType.reactNode,
-    }, {
-      name: valueField,
-    }];
-    this.childrenOptions = [];
-    getOptionsFromChildren(props.children, this.childrenOptions, this.childrenFields, textField, valueField);
   }
 
   getOtherProps() {
