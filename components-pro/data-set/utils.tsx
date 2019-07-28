@@ -373,13 +373,11 @@ export function prepareSubmitData(records: Record[], noCascade?: boolean): [obje
 
 type SubmitType = 'create' | 'update' | 'destroy' | 'submit';
 
-export function prepareForSubmit(
-  type: SubmitType,
-  data: object[],
-  transport: Transport,
-  configs: AxiosRequestConfig[],
-  dataSet: DataSet,
-): object[] {
+export function prepareForSubmit(type: SubmitType,
+                                 data: object[],
+                                 transport: Transport,
+                                 configs: AxiosRequestConfig[],
+                                 dataSet: DataSet): object[] {
   const { adapter, [type]: config = {} } = transport;
   if (data.length) {
     const newConfig = axiosAdapter(config, dataSet, data);
@@ -411,4 +409,8 @@ export function axiosAdapter(config: TransportType, dataSet: DataSet, data?: any
     };
   }
   return newConfig;
+}
+
+export function generateResponseData(item: any, dataKey?: string): object[] {
+  return isArray(item) ? item : dataKey && dataKey in item ? item[dataKey] || [] : [item];
 }

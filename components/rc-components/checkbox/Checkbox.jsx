@@ -18,7 +18,7 @@ export default class Checkbox extends Component {
     onBlur: PropTypes.func,
     onChange: PropTypes.func,
     onClick: PropTypes.func,
-    tabIndex: PropTypes.string,
+    tabIndex: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     readOnly: PropTypes.bool,
     autoFocus: PropTypes.bool,
     value: PropTypes.any,
@@ -29,10 +29,14 @@ export default class Checkbox extends Component {
     style: {},
     type: 'checkbox',
     defaultChecked: false,
-    onFocus() {},
-    onBlur() {},
-    onChange() {},
+    onFocus() {
+    },
+    onBlur() {
+    },
+    onChange() {
+    },
   };
+
   constructor(props) {
     super(props);
 
@@ -90,7 +94,7 @@ export default class Checkbox extends Component {
 
   saveInput = (node) => {
     this.input = node;
-  }
+  };
 
   render() {
     const {

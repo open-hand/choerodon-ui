@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import omit from 'lodash/omit';
 import isEqual from 'lodash/isEqual';
 import isNil from 'lodash/isNil';
+import noop from 'lodash/noop';
 import isPlainObject from 'lodash/isPlainObject';
 import { observer } from 'mobx-react';
 import { computed, IReactionDisposer, isArrayLike, reaction, runInAction } from 'mobx';
@@ -323,11 +324,17 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
     const { name, multiple } = this;
     if (multiple) {
       return (
-        <input key="value" className={`${this.prefixCls}-multiple-value`} value={this.toValueString(this.getValue()) || ''} name={name} />
+        <input
+          key="value"
+          className={`${this.prefixCls}-multiple-value`}
+          value={this.toValueString(this.getValue()) || ''}
+          name={name}
+          onChange={noop}
+        />
       );
     } else {
       return (
-        <input key="value" type="hidden" value={this.toValueString(this.getValue()) || ''} name={name} />
+        <input key="value" type="hidden" value={this.toValueString(this.getValue()) || ''} name={name} onChange={noop} />
       );
     }
   }

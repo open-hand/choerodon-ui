@@ -2,6 +2,7 @@ import React, { createElement, CSSProperties, isValidElement, ReactNode } from '
 import omit from 'lodash/omit';
 import defer from 'lodash/defer';
 import isArray from 'lodash/isArray';
+import noop from 'lodash/noop';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { action, observable } from 'mobx';
@@ -385,7 +386,13 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const { name, multiple } = this;
     if (multiple) {
       return (
-        <input key="value" className={`${this.prefixCls}-multiple-value`} value={this.toValueString(this.getValue()) || ''} name={name} />
+        <input
+          key="value"
+          className={`${this.prefixCls}-multiple-value`}
+          value={this.toValueString(this.getValue()) || ''}
+          name={name}
+          onChange={noop}
+        />
       );
     }
   }

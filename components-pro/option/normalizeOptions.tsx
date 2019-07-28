@@ -15,11 +15,12 @@ export default function normalizeOptions({ field, textField, valueField, multipl
     if (options) {
       return options;
     } else {
-      const lookupKey = lookupStore.getKey(field);
+      const axiosConfig = lookupStore.getAxiosConfig(field);
+      const lookupKey = lookupStore.getKey(axiosConfig);
       if (lookupKey) {
         data = lookupStore.get(lookupKey);
         if (!data) {
-          fetch = lookupStore.fetchLookupData(lookupKey, field.get('lookupAxiosConfig'));
+          fetch = lookupStore.fetchLookupData(axiosConfig);
         }
       }
     }

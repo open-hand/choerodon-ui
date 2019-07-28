@@ -16,6 +16,7 @@ import {
   doExport,
   findBindFieldBy,
   generateJSONData,
+  generateResponseData,
   getFieldSorter,
   getOrderFields,
   prepareForSubmit,
@@ -1433,7 +1434,7 @@ Then the query method will be auto invoke.`);
   private loadDataFromResponse(resp: any): DataSet {
     if (resp) {
       const { dataKey, totalKey } = this.props;
-      const data: object[] = dataKey ? resp[dataKey] || [] : isArray(resp) ? resp : [resp];
+      const data: object[] = generateResponseData(resp, dataKey);
       const total: number | undefined = resp[totalKey!];
       this.loadData(data, total);
     }
@@ -1566,7 +1567,7 @@ Then the query method will be auto invoke.`);
     const data: object[] = [];
     let total = void 0;
     resp.forEach((item) => {
-      data.push(...(isArray(item) ? item : dataKey ? item[dataKey] || [] : [item]));
+      data.push(...generateResponseData(item, dataKey));
       if (totalKey && isObject(item) && totalKey in item) {
         total = item[totalKey];
       }

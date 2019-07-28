@@ -6,7 +6,7 @@ import axios from '../axios';
 import Field from '../data-set/Field';
 import lovCodeStore from './LovCodeStore';
 import { FieldType } from '../data-set/enum';
-import { isSameLike } from '../data-set/utils';
+import { append, generateResponseData, isSameLike } from '../data-set/utils';
 import { getConfig } from 'choerodon-ui/lib/configure';
 
 export type responseData = object[];
@@ -56,36 +56,75 @@ export class LookupCodeStore {
     }
   }
 
-  async fetchLookupData(lookupKey, axiosConfig: AxiosRequestConfig = {}): Promise<responseData | undefined> {
-    let data: responseData | undefined = this.get(lookupKey);
-    // SSR do not fetch the lookup
-    if (!data && typeof window !== 'undefined') {
-      try {
-        const config = {
-          ...axiosConfig,
-          url: lookupKey,
-          method: axiosConfig.method || getConfig('lookupAxiosMethod') || 'post',
-        };
-        const pending: Promise<responseType> = this.pendings[lookupKey] = this.pendings[lookupKey] || this.axios(config as AxiosRequestConfig);
-        const result: responseType = await pending;
-        if (result) {
-          const { [getConfig<'dataKey'>('dataKey') || 'rows']: rows } = result as { [key: string]: any };
-          if (rows) {
-            data = rows;
-          } else {
-            data = result;
-          }
-          this.set(lookupKey, data);
-        }
-        warning(!!data, `Lookup<${lookupKey}> is not exists`);
-      } finally {
-        delete this.pendings[lookupKey];
-      }
+  async fetchLookupData(key: AxiosRequestConfig | string, axiosConfig: AxiosRequestConfig = {}): Promise<responseData | undefined> {
+    let lookupKey: string | undefined;
+    let config: AxiosRequestConfig = {};
+    if (isString(key)) {
+      lookupKey = key;
+      config = {
+        ...axiosConfig,
+        url: key,
+        method: axiosConfig.method || getConfig('lookupAxiosMethod') || 'post',
+      };
+    } else {
+      config = key as AxiosRequestConfig;
+      lookupKey = this.getKey(config);
     }
-    return data;
+    if (lookupKey) {
+      let data: responseData | undefined = this.get(lookupKey);
+      // SSR do not fetch the lookup
+      if (!data && typeof window !== 'undefined') {
+        try {
+          const pending: Promise<responseType> = this.pendings[lookupKey] = this.pendings[lookupKey] || this.axios(config);
+          const result: responseType = await pending;
+          if (result) {
+            data = generateResponseData(result, getConfig('dataKey'))
+            this.set(lookupKey, data);
+          }
+          warning(!!data, `Lookup<${lookupKey}> is not exists`);
+        } finally {
+          delete this.pendings[lookupKey];
+        }
+      }
+      return data;
+    }
   }
 
-  getKey(field: Field): string | undefined {
+  getAxiosConfig(field: Field): AxiosRequestConfig {
+    const lookupAxiosConfig = field.get('lookupAxiosConfig');
+    let config: AxiosRequestConfig = {};
+    if (typeof lookupAxiosConfig === 'function') {
+      const lookupCode = field.get('lookupCode');
+      const cascadeMap = field.get('cascadeMap');
+      const { record } = field;
+      const params = {};
+      if (cascadeMap && record) {
+        Object.keys(cascadeMap).forEach((key) => {
+          params[key] = record.get(cascadeMap[key]);
+        });
+      }
+      config = lookupAxiosConfig({ dataSet: field.dataSet, record, params, lookupCode });
+    } else if (lookupAxiosConfig) {
+      config = lookupAxiosConfig;
+    }
+    return {
+      ...config,
+      url: config.url || this.getUrl(field),
+      method: config.method || getConfig('lookupAxiosMethod') || 'post',
+    };
+  }
+
+  getKey(field: Field | AxiosRequestConfig): string | undefined {
+    if (field instanceof Field) {
+      return this.getKey(this.getAxiosConfig(field));
+    }
+    const { url, params, data } = field as AxiosRequestConfig;
+    if (url) {
+      return append(url, { ...params, ...data });
+    }
+  }
+
+  getUrl(field: Field): string | undefined {
     const type = field.get('type');
     const lovCode = field.get('lovCode');
     const lookupUrl = field.get('lookupUrl');

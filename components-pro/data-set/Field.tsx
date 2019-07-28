@@ -174,7 +174,7 @@ export type FieldProps = {
   /**
    * 值列表请求的axiosConfig
    */
-  lookupAxiosConfig?: AxiosRequestConfig;
+  lookupAxiosConfig?: AxiosRequestConfig | ((props: { params?: any, dataSet?: DataSet, record?: Record, lookupCode?: string }) => AxiosRequestConfig);
   /**
    * 内部字段别名绑定
    */
@@ -447,6 +447,7 @@ export default class Field {
   /**
    * 根据lookup值获取lookup含义
    * @param value lookup值
+   * @param boolean showValueIfNotFound
    * @return {string}
    */
   getText(value: any = this.getValue(), showValueIfNotFound?: boolean): string | undefined {
@@ -608,10 +609,10 @@ export default class Field {
   }
 
   async fetchLookup() {
-    const lookupKey = lookupStore.getKey(this);
-    if (lookupKey) {
+    const axiosConfig = lookupStore.getAxiosConfig(this);
+    if (axiosConfig.url) {
       try {
-        await (this.lookUpPending = lookupStore.fetchLookupData(lookupKey, this.get('lookupAxiosConfig')));
+        await (this.lookUpPending = lookupStore.fetchLookupData(axiosConfig));
       } finally {
         this.lookUpPending = void 0;
       }
