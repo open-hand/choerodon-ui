@@ -1,7 +1,7 @@
 import React, { Component, ReactElement, isValidElement, cloneElement, ContextType, ReactNode } from 'react';
 import Field from '../data-set/Field';
 import { DataSet, Button } from '..';
-import { pxToRem } from '../../components/_util/UnitConvertor';
+import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { getEditorByField } from './utils';
 import TableContext from './TableContext';
 import { ElementProps } from '../core/ViewComponent';
