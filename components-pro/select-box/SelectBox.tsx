@@ -11,8 +11,6 @@ import { ValidationMessages } from '../validator/Validator';
 import Option from '../option/Option';
 import OptGroup from '../option/OptGroup';
 import { ViewMode } from '../radio/enum';
-import DataSet from '../data-set/DataSet';
-import normalizeOptions from '../option/normalizeOptions';
 import { $l } from '../locale-context';
 import { LabelLayout } from '../form/enum';
 import formatReactTemplate from '../_util/formatReactTemplate';
@@ -59,12 +57,6 @@ export default class SelectBox extends Select<SelectBoxProps> {
     return {
       valueMissing: formatReactTemplate($l('SelectBox', label ? 'value_missing_with_label' : 'value_missing'), { label }),
     };
-  }
-
-  @computed
-  get options(): DataSet {
-    const { field, textField, valueField, multiple, props: { children } } = this;
-    return normalizeOptions({ field, textField, valueField, multiple, children });
   }
 
   @action

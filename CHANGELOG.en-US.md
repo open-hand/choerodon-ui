@@ -46,6 +46,7 @@ timeline: true
 - 🐞 `<pro>Form`: Fixed an issue where the disabled property could not be passed to the child Form.
 - 🐞 `<pro>DataSet`: Fix the problem that the transport hooks does not pass `params`.
 - 🐞 `<pro>Lov`: Fix the problem when the Field.type is string, the text is not displayed.
+- 🐞 `<pro>SelectBox`: Fix the problem that children changes are not rendered.
 
 ## 0.7.6
 

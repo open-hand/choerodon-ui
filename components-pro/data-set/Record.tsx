@@ -3,6 +3,7 @@ import cloneDeep from 'lodash/cloneDeep';
 import isNil from 'lodash/isNil';
 import isString from 'lodash/isString';
 import isNumber from 'lodash/isNumber';
+import isPlainObject from 'lodash/isPlainObject';
 import warning from 'choerodon-ui/lib/_util/warning';
 import DataSet from './DataSet';
 import Field, { FieldProps, Fields } from './Field';
@@ -22,7 +23,6 @@ import DataSetSnapshot from './DataSetSnapshot';
 import localeContext from '../locale-context';
 import { BooleanValue, DataSetEvents, FieldIgnore, FieldType, RecordStatus } from './enum';
 import { Supports } from '../locale-context/supports';
-import { isPlainObject } from 'mobx/lib/utils/utils';
 
 /**
  * 记录ID生成器

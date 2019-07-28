@@ -46,6 +46,7 @@ timeline: true
 - 🐞 `<pro>Form`: 修复disabled属性无法传递给子Form的问题。
 - 🐞 `<pro>DataSet`: 修复Transport的钩子没有传递params的问题。
 - 🐞 `<pro>Lov`: 修复Field.type为string时，不显示文案的问题。
+- 🐞 `<pro>SelectBox`: 修复children变化不渲染的问题。
 
 ## 0.7.6
 
