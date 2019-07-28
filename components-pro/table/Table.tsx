@@ -581,10 +581,13 @@ export default class Table extends DataSetComponent<TableProps> {
 
   renderAdvancedQueryBar() {
     const {
-      queryFields,
-      queryFieldsLimit,
-    } = this.props;
-    return <TableAdvancedQueryBar queryFields={queryFields!} queryFieldsLimit={queryFieldsLimit!} />;
+      prefixCls,
+      props: {
+        queryFields,
+        queryFieldsLimit,
+      },
+    } = this;
+    return <TableAdvancedQueryBar key="advancebar" prefixCls={prefixCls} queryFields={queryFields!} queryFieldsLimit={queryFieldsLimit!} />;
   }
 
   render() {

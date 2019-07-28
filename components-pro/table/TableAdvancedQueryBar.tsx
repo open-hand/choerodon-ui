@@ -1,18 +1,19 @@
-import React, { Component, ReactElement, isValidElement, cloneElement, ContextType, ReactNode } from 'react';
-import Field from '../data-set/Field';
-import { DataSet, Button } from '..';
+import React, { cloneElement, Component, ContextType, isValidElement, ReactElement, ReactNode } from 'react';
+import classNames from 'classnames';
+import { action, isArrayLike } from 'mobx';
+import { observer } from 'mobx-react';
+import { isMoment, Moment } from 'moment';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
+import Field from '../data-set/Field';
+import DataSet from '../data-set';
+import Button from '../button';
 import { getEditorByField } from './utils';
 import TableContext from './TableContext';
 import { ElementProps } from '../core/ViewComponent';
 import { ButtonColor, FuncType } from '../button/enum';
 import { filterBindField } from './TableToolBar';
-import classNames from 'classnames';
 import KeyValueBar, { KeyValuePair } from './KeyValueBar';
-import { isArrayLike, action } from 'mobx';
-import { observer } from 'mobx-react';
 import Record from '../data-set/Record';
-import { isMoment, Moment } from 'moment';
 import { getDateFormatByField } from '../data-set/utils';
 
 export interface TableAdvancedQueryBarProps extends ElementProps {
@@ -44,9 +45,8 @@ function processFieldValue(field: Field) {
 export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryBarProps, TableAdvancedQueryBarState> {
 
   static defaultProps = {
-    prefixCls: 'c7n-pro-table',
     queryFields: [],
-  }
+  };
 
   static contextType = TableContext;
 
@@ -54,7 +54,7 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
 
   state = {
     showMoreFieldsPanel: false,
-  }
+  };
 
   moreFields: Field[];
 
@@ -88,8 +88,8 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
       return {
         ...prevState,
         showMoreFieldsPanel: !prevState.showMoreFieldsPanel,
-      }
-    })
+      };
+    });
   };
 
   getCurrentFields(fields: Field[], dataSet: DataSet) {
@@ -176,8 +176,8 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
       return isValidElement(element) ? (
         cloneElement(element, props)
       ) : (
-          cloneElement(getEditorByField(field), { ...props, ...element })
-        );
+        cloneElement(getEditorByField(field), { ...props, ...element })
+      );
     });
   }
 
@@ -264,7 +264,7 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
             {showMoreFieldsPanel ? this.renderMoreFieldsPanel(moreFields, queryDataSet) : null}
             {this.renderKeyValueBar()}
           </div>
-        )
+        );
       }
     }
 
