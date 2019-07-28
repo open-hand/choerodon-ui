@@ -22,6 +22,7 @@ import DataSetSnapshot from './DataSetSnapshot';
 import localeContext from '../locale-context';
 import { BooleanValue, DataSetEvents, FieldIgnore, FieldType, RecordStatus } from './enum';
 import { Supports } from '../locale-context/supports';
+import { isPlainObject } from 'mobx/lib/utils/utils';
 
 /**
  * 记录ID生成器
@@ -361,61 +362,66 @@ export default class Record {
   }
 
   @action
-  set(fieldName: string, value: any): Record {
-    const oldName = fieldName;
-    const field = this.getField(fieldName);
-    if (field) {
-      checkFieldType(value, field);
-      const bind = field.get('bind');
-      if (bind) {
-        fieldName = bind;
-      }
-    }
-    const oldValue = toJS(this.get(fieldName));
-    const newValue = processValue(value, field);
-    if (!isSame(newValue, oldValue)) {
-      const { fields } = this;
-      ObjectChainValue.set(this.data, fieldName, newValue, fields);
-      const pristineValue = this.getPristineValue(fieldName);
-      if (isSame(pristineValue, newValue)) {
-        if (field && field.dirty) {
-          field.dirty = false;
-          if (this.status === RecordStatus.update && Array.from(fields.values()).every(f => !f.dirty)) {
-            this.status = RecordStatus.sync;
-          }
-        }
-      } else {
-        if (field) {
-          field.dirty = true;
-        }
-        if (this.status === RecordStatus.sync) {
-          this.status = RecordStatus.update;
+  set(item: string | object, value: any): Record {
+    if (isString(item)) {
+      let fieldName: string = item;
+      const oldName = fieldName;
+      const field = this.getField(fieldName);
+      if (field) {
+        checkFieldType(value, field);
+        const bind = field.get('bind');
+        if (bind) {
+          fieldName = bind;
         }
       }
-      const { dataSet, tlsDataSet } = this;
-      if (dataSet) {
-        if (tlsDataSet) {
-          const { lang = localeContext.locale.lang } = dataSet;
-          const { current } = tlsDataSet;
-          if (current && current.get(fieldName)) {
-            current.set(`${fieldName}.${lang}`, newValue);
+      const oldValue = toJS(this.get(fieldName));
+      const newValue = processValue(value, field);
+      if (!isSame(newValue, oldValue)) {
+        const { fields } = this;
+        ObjectChainValue.set(this.data, fieldName, newValue, fields);
+        const pristineValue = this.getPristineValue(fieldName);
+        if (isSame(pristineValue, newValue)) {
+          if (field && field.dirty) {
+            field.dirty = false;
+            if (this.status === RecordStatus.update && Array.from(fields.values()).every(f => !f.dirty)) {
+              this.status = RecordStatus.sync;
+            }
+          }
+        } else {
+          if (field) {
+            field.dirty = true;
+          }
+          if (this.status === RecordStatus.sync) {
+            this.status = RecordStatus.update;
           }
         }
-        dataSet.fireEvent(DataSetEvents.update, { dataSet, record: this, name: oldName, value: newValue, oldValue });
-        const { checkField } = dataSet.props;
-        if (checkField && (checkField === fieldName || checkField === oldName)) {
-          const { children } = this;
-          if (children) {
-            children.forEach(record => record.set(fieldName, value));
+        const { dataSet, tlsDataSet } = this;
+        if (dataSet) {
+          if (tlsDataSet) {
+            const { lang = localeContext.locale.lang } = dataSet;
+            const { current } = tlsDataSet;
+            if (current && current.get(fieldName)) {
+              current.set(`${fieldName}.${lang}`, newValue);
+            }
+          }
+          dataSet.fireEvent(DataSetEvents.update, { dataSet, record: this, name: oldName, value: newValue, oldValue });
+          const { checkField } = dataSet.props;
+          if (checkField && (checkField === fieldName || checkField === oldName)) {
+            const { children } = this;
+            if (children) {
+              children.forEach(record => record.set(fieldName, value));
+            }
           }
         }
       }
-    }
-    if (field) {
-      findBindFields(field, this.fields).forEach(oneField => (
-        // oneField.dirty = field.dirty,
+      if (field) {
+        findBindFields(field, this.fields).forEach(oneField => (
+          // oneField.dirty = field.dirty,
           oneField.validator.reset(), oneField.checkValidity()
-      ));
+        ));
+      }
+    } else if (isPlainObject(item)) {
+      Object.keys(item).forEach(key => this.set(key, item[key]));
     }
     return this;
   }

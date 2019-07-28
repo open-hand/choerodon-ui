@@ -21,6 +21,7 @@ timeline: true
 - 🌟 `<pro>DataSet.Field`: 增加`requestTransform`和`responseTransform`输入属性。
 - 🌟 `<pro>Table`: `queryBar`属性新增`advancedBar`类型。
 - 🌟 `message`: 新增placement配置。
+- 🌟 `<pro>DataSet.Record`: set方法可以传一个键值对的对象。
 - 💄 `Password`: 变更为通过点击揭示密码。
 - 💄 `Input`: 更新样式。
 - 💄 `DatePicker`: 更新样式。

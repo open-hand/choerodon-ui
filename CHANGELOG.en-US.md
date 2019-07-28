@@ -21,6 +21,7 @@ timeline: true
 - 🌟 `<pro>DataSet.Field`: Add `requestTransform` & `responseTransform` input property.
 - 🌟 `<pro>Table`: Add `advancedBar` type to `queryBar` property.
 - 🌟 `message`: Added `placement` config.
+- 🌟 `<pro>DataSet.Record`: The set method can pass an object with a key-value pair.
 - 💄 `Password`: Change to reveal password by clicking.
 - 💄 `Input`: Update the style.
 - 💄 `DatePicker`: Update the style.
@@ -44,6 +45,7 @@ timeline: true
 - 🐞 `<pro>FormField`: Fix the style of `FormField` label with multiple values.
 - 🐞 `<pro>Form`: Fixed an issue where the disabled property could not be passed to the child Form.
 - 🐞 `<pro>DataSet`: Fix the problem that the transport hooks does not pass `params`.
+- 🐞 `<pro>Lov`: Fix the problem when the Field.type is string, the text is not displayed.
 
 ## 0.7.6
 
