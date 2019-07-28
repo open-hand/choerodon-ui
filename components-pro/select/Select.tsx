@@ -736,6 +736,9 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
       if (isEmpty(value)) {
         return '';
       }
+      if (isPlainObject(value)) {
+        return ObjectChainValue.get(value, this.valueField);
+      }
       return value;
     } else {
       return text;

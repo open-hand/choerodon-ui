@@ -74,7 +74,6 @@ export default class Lov extends Select<LovProps> {
     ...Select.defaultProps,
     clearButton: true,
     checkValueOnOptionsChange: false,
-    primitiveValue: false,
   };
 
   modal;
