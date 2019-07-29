@@ -37,6 +37,7 @@ timeline: true
 - 💄 `<pro>DataSet`: Cancel the cache strategy in `Validator.checkValidity` method.
 - 💄 `<pro>Modal`: `footer` property now supports `function` type.
 - 💄 `<pro>Select`: When there is no matching option, the value is displayed instead of automatically clearing the value, except for cascading.
+- 💄 `<pro>Select`: When the component is searchable & there is no matching option, the popup menu shows `No Matching Options`.
 - 💄 `<pro>DataSet.Field`: `lookupAxiosConfig` supports hooks.
 - 🐞 `<pro>FormField`: Fix the problem when the label is ReactNode.
 - 🐞 `<pro>TextField`: Fix the display style of TextField(and child classes) when using addons.

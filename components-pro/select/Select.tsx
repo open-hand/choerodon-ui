@@ -147,6 +147,11 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
     return this.getProp('valueField') || 'value';
   }
 
+  @computed
+  get disabledField(): string {
+    return this.getProp('disabledField') || 'disabled';
+  }
+
   get currentComboOption(): Record | undefined {
     return this.comboOptions.filter(record => !this.isSelected(record))[0];
   }
@@ -341,11 +346,11 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
 
   @autobind
   getMenu(menuProps: object = {}): ReactNode {
-    const { options, textField, valueField, props: { dropdownMenuStyle } } = this;
+    const { options, textField, valueField, disabledField, props: { dropdownMenuStyle } } = this;
     if (!options) {
       return null;
     }
-    const disabled = this.isDisabled();
+    const menuDisabled = this.isDisabled();
     const groups = options.getGroups();
     const optGroups: ReactElement<any>[] = [];
     const selectedKeys: Key[] = [];
@@ -374,6 +379,7 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
       });
       const value = record.get(valueField);
       const text = record.get(textField);
+      const optionDisabled = record.get(disabledField);
       const key: Key = getItemKey(record, text, value);
       if (!('selectedKeys' in menuProps ) && this.isSelected(record)) {
         selectedKeys.push(key);
@@ -382,7 +388,7 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
         <Item
           key={key}
           value={record}
-          disabled={disabled}
+          disabled={menuDisabled ? menuDisabled : optionDisabled}
         >
           {text}
         </Item>
@@ -397,7 +403,7 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
     return (
       <Menu
         ref={this.saveMenu}
-        disabled={disabled}
+        disabled={menuDisabled}
         defaultActiveFirst
         multiple={this.menuMultiple}
         selectedKeys={selectedKeys}
@@ -818,7 +824,12 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
     const { textField, searchable, props: { optionsFilter } } = this;
     data = optionsFilter ? data.filter(optionsFilter!) : data;
     if (searchable && text) {
-      return data.filter(record => record.get(textField).indexOf(text) !== -1);
+      const matchedRecords = data.filter(record => record.get(textField).indexOf(text) !== -1);
+      return matchedRecords.length ? matchedRecords : [new Record({
+        [`${this.textField}`]: '无匹配结果',
+        [`${this.valueField}`]: null,
+        disabled: true,
+      })];
     }
     return data;
   }
