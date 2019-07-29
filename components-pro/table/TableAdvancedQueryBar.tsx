@@ -15,6 +15,7 @@ import { filterBindField } from './TableToolBar';
 import KeyValueBar, { KeyValuePair } from './KeyValueBar';
 import Record from '../data-set/Record';
 import { getDateFormatByField } from '../data-set/utils';
+import { $l } from '../locale-context';
 
 export interface TableAdvancedQueryBarProps extends ElementProps {
   queryFields: { [key: string]: ReactElement<any> | object };
@@ -62,6 +63,10 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
     this.handleQuery();
   };
 
+  handleFieldChange = () => {
+    this.handleQuery();
+  };
+
   handleQuery = () => {
     this.context.tableStore.dataSet.query();
   };
@@ -71,7 +76,7 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
     if (fields.length) {
       return (
         <Button icon="filter_list" color={ButtonColor.blue} funcType={FuncType.flat} onClick={this.handleMoreFieldsButtonClick}>
-          {!showMoreFieldsPanel ? '高级查询' : '隐藏高级查询'}
+          {!showMoreFieldsPanel ? $l('Table', 'advanced_query') : $l('Table', 'hide_advanced_query')}
         </Button>
       );
     }
@@ -158,6 +163,7 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
         dataSet,
         autoFocus: isMore && index === 0,
         onEnterDown: this.handleFieldEnter,
+        onChange: isMore ? this.handleFieldChange : undefined,
         style: {
           width: pxToRem(isMore ? 250 : 260),
           marginRight: !isMore ? pxToRem(16) : 0,
@@ -192,6 +198,7 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
         .forEach(field => {
           const record = field.record || queryDataSet.current as Record;
           record.set(field.name, null);
+          this.handleQuery();
         });
     }
   };
