@@ -84,6 +84,7 @@ export default {
   Select: {
     value_missing: '请选择。',
     value_missing_with_label: '请选择{label}。',
+    no_matching_results: '无匹配结果。',
   },
   Transfer: {
     items: '项',

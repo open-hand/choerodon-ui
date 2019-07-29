@@ -84,6 +84,7 @@ export default {
   Select: {
     value_missing: 'Please make a choice',
     value_missing_with_label: 'Please select {label}.',
+    no_matching_results: 'No matching results.',
   },
   Transfer: {
     items: 'items',
