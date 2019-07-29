@@ -1,6 +1,7 @@
 import React, { FC, isValidElement } from 'react';
 import Icon from '../icon';
 import classNames from 'classnames';
+import { $l } from '../locale-context';
 
 export interface KeyValuePair {
   key: string,
@@ -53,7 +54,7 @@ const KeyValueBar: FC<KeyValueBarProps> = (props) => {
 
   return (
     <div className={getClassName()}>
-      <span>高级查询条件: </span>
+      <span>{$l('Table', 'advanced_query_conditions')}: </span>
       {renderItems(props.items)}
     </div>
   );

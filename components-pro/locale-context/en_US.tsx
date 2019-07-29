@@ -23,6 +23,9 @@ export default {
     choose_export_columns: 'Please select the column to export',
     column_name: 'Column Name',
     filter_bar_placeholder: 'Table Filter',
+    advanced_query: 'Advanced Query',
+    hide_advanced_query: 'Hide Advanced Query',
+    advanced_query_conditions: 'Advanced Query Conditions',
   },
   Pagination: {
     records_per_page: 'Number of items per page：',
