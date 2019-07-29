@@ -871,7 +871,6 @@ export default class DataSet extends EventManager {
   /**
    * 临时删除记录
    * @param records 记录或者记录数组
-   * @return Promise
    */
   @action
   remove(records?: Record | Record[]): void {
@@ -892,6 +891,32 @@ export default class DataSet extends EventManager {
           this.fireEvent(DataSetEvents.indexChange, { dataSet: this, record, previous: current });
         }
       }
+    }
+  }
+
+  /**
+   * 临时删除所有记录
+   */
+  @action
+  removeAll() {
+    const { current, length } = this;
+    if (length) {
+      this.forEach(this.deleteRecord, this);
+      this.data = [];
+      if (current) {
+        this.fireEvent(DataSetEvents.indexChange, { dataSet: this, previous: current });
+      }
+    }
+  }
+
+  /**
+   * 删除所有记录
+   */
+  @action
+  async deleteAll() {
+    if (this.length > 0 && await confirm($l('DataSet', 'delete_all_row_confirm')) !== 'cancel') {
+      this.removeAll();
+      return this.write(this.destroyed);
     }
   }
 
@@ -946,7 +971,9 @@ export default class DataSet extends EventManager {
    */
   @action
   splice(from: number, deleteCount: number, ...records: Record[]): (Record | undefined)[] {
-    checkParentByInsert(this);
+    if (records.length) {
+      checkParentByInsert(this);
+    }
     return this.data.splice(from, deleteCount, ...this.transferRecords(records)).map(this.deleteRecord, this);
   }
 
@@ -965,10 +992,11 @@ export default class DataSet extends EventManager {
   /**
    * 获取记录所在的索引
    * @param record 记录
+   * @param fromIndex 开始检索的索引
    * @return 索引
    */
-  indexOf(record: Record): number {
-    return this.data.indexOf(record);
+  indexOf(record: Record, fromIndex?: number): number {
+    return this.data.indexOf(record, fromIndex);
   }
 
   /**
@@ -1036,6 +1064,34 @@ export default class DataSet extends EventManager {
    */
   filter(fn: (record: Record, index: number, array: Record[]) => boolean, thisArg?: any): Record[] {
     return this.data.filter(fn, thisArg);
+  }
+
+  /**
+   * 为数组中的所有元素调用指定的回调函数。 回调函数的返回值是累计结果，并在下次调用回调函数时作为参数提供。
+   * @param fn 累计函数
+   * @param initialValue 初始值
+   * @returns {U}
+   */
+  reduce<U>(fn: (previousValue: U, record: Record, index: number, array: Record[]) => U, initialValue: U): U {
+    return this.data.reduce<U>(fn, initialValue);
+  }
+
+  /**
+   * 按降序调用数组中所有元素的指定回调函数。 回调函数的返回值是累计结果，并在下次调用回调函数时作为参数提供。
+   * @param fn 累计函数
+   * @param initialValue 初始值
+   * @returns {U}
+   */
+  reduceRight<U>(fn: (previousValue: U, record: Record, index: number, array: Record[]) => U, initialValue: U): U {
+    return this.data.reduceRight<U>(fn, initialValue);
+  }
+
+  /**
+   * 反转记录的顺序。
+   */
+  @action
+  reverse(): Record[] {
+    return this.data = this.data.reverse();
   }
 
   /**

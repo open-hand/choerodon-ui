@@ -22,6 +22,7 @@ timeline: true
 - 🌟 `<pro>Table`: Add `advancedBar` type to `queryBar` property.
 - 🌟 `message`: Added `placement` config.
 - 🌟 `<pro>DataSet.Record`: The set method can pass an object with a key-value pair.
+- 🌟 `<pro>DataSet`: Added `reverse`, `reduce`, `reduceRight`, `removeAll`, and `deleteAll` methods.
 - 💄 `Password`: Change to reveal password by clicking.
 - 💄 `Input`: Update the style.
 - 💄 `DatePicker`: Update the style.

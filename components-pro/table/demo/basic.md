@@ -217,6 +217,14 @@ class App extends React.Component {
     console.log(userDs.toJSONData(false, true));
     userDs.create({ other: { enemy: [{}, {}] } });
   };
+  
+  removeAllData = () => {
+    this.userDs.removeAll();
+  };
+  
+  deleteAllData = () => {
+    this.userDs.deleteAll();
+  };
 
   createUser = () => {
     this.openModal(this.userDs.create({}, 0));
@@ -247,6 +255,14 @@ class App extends React.Component {
     <Button funcType="flat" color="blue" icon="get_app" onClick={this.importData} key="import">导入</Button>
   );
 
+  removeAllButton = (
+    <Button funcType="flat" color="blue" icon="remove_circle" onClick={this.removeAllData} key="removeAll">全部移除</Button>
+  );
+
+  deleteAllButton = (
+    <Button funcType="flat" color="blue" icon="delete" onClick={this.deleteAllData} key="deleteAll">全部删除</Button>
+  );
+
   save = async () => {
     console.log('submit result', await this.userDs.submit());
   };
@@ -262,6 +278,8 @@ class App extends React.Component {
       this.importButton,
       this.copyButton,
       this.insertButton,
+      this.removeAllButton,
+      this.deleteAllButton,
     ];
     return [
       <Table key="user" buttons={buttons} dataSet={this.userDs} header="User" style={{ height: 200 }}>

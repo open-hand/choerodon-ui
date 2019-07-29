@@ -51,7 +51,8 @@ export default {
   DataSet: {
     unsaved_data_confirm: `There's unsaved data, continue?`,
     invalid_query_dataset: 'Invalid query DataSet.',
-    delete_selected_row_confirm: 'Make sure to delete the selected row?',
+    delete_selected_row_confirm: 'Are you sure to delete the selected row?',
+    delete_all_row_confirm: 'Are you sure to delete all rows?',
     query_failure: 'Fail to query data.',
     submit_success: 'Submit successfully.',
     submit_failure: 'Fail to submit data.',

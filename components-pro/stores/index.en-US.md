@@ -21,9 +21,13 @@ const lovDataSet = await Stores.LovCodeStore.getLovDataSet('LOV_CODE');
 
 // 请求快码值，优先返回缓存中的数据
 const lookupData = await Stores.LookupCodeStore.fetchLookupData('/common/code/SYS.USER_STATUS/');
+const lookupData = await Stores.LookupCodeStore.fetchLookupData({
+  url: '/common/code/SYS.USER_STATUS/',
+  method: 'get',
+});
 
 // 清除LookupCode缓存，不传参数时将清除所有缓存
-Stores.LookupCodeStore.clearCache(['SYS.USER_STATUS']);
+Stores.LookupCodeStore.clearCache(['SYS.USER_STATUS', '/common/code/SYS.USER_STATUS/']);
 
 // 清除Lov缓存，不传参数时将清除所有缓存
 Stores.LovCodeStore.clearCache(['LOV_CODE']);

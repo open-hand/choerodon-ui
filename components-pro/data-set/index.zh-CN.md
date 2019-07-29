@@ -88,6 +88,8 @@ title: DataSet
 | create(data, index) | 创建一条记录 | `data` - 记录数据对象；`index`&lt;optional,default:0&gt; - 记录所在的索引 | Record |
 | delete(records) | 立即删除记录 | `records` - 删除的记录或记录组 |  |
 | remove(records) | 临时删除记录 | `records` - 删除的记录或记录组 |  |
+| deleteAll() | 立即删除所有记录 |  |  |
+| removeAll() | 临时删除所有记录 |  |  |
 | push(...records) | 将若干数据记录插入记录堆栈顶部 | `records` - 插入的记录列表 | number |
 | unshift(...records) | 将若干数据记录插入记录堆栈底部 | `records` - 插入的记录列表 | number |
 | pop() | 从记录堆栈顶部获取记录 |  | Record |
@@ -101,6 +103,10 @@ title: DataSet
 | some(fn, thisArg) | 根据函数遍历，当有返回值为true时，输出true |`fn` - 遍历函数(record, index, array) =&gt; boolean  | boolean |
 | every(fn, thisArg) | 根据函数遍历，当有返回值为false时，输出false |`fn` - 遍历函数(record, index, array) =&gt; boolean  | boolean |
 | filter(fn, thisArg) | 根据函数过滤并返回记录集 |`fn` - 过滤函数(record, index, array) =&gt; boolean  | Record[] |
+| reduce(fn, initialValue) | 为数组中的所有元素调用指定的回调函数。 回调函数的返回值是累计结果，并在下次调用回调函数时作为参数提供 |`fn` - 过滤函数(previousValue, record, index, array) =&gt; value `initialValue` - 初始值  | typeof initialValue |
+| reduceRight(fn, initialValue) | 按降序调用数组中所有元素的指定回调函数。 回调函数的返回值是累计结果，并在下次调用回调函数时作为参数提供 |`fn` - 过滤函数(previousValue, record, index, array) =&gt; value `initialValue` - 初始值  | typeof initialValue |
+| indexOf(record, fromIndex) | 获取记录所在索引 | `record` - 记录；`fromIndex`&lt;optional&gt; - 开始检索的索引 | number |
+| reverse() | 反转记录的顺序 |  | Record[] |
 | select(record) | 选中记录 |`record` - 记录对象或记录的索引  |  |
 | unSelect(record) | 取消选中记录 |`record` - 记录对象或记录的索引  |  |
 | selectAll() | 全选当前页 |  |  |

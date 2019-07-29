@@ -52,6 +52,7 @@ export default {
     unsaved_data_confirm: '有未保存的数据，是否继续？',
     invalid_query_dataset: '查询条件数集不通过',
     delete_selected_row_confirm: '确认删除选中行？',
+    delete_all_row_confirm: '确认删除所有行？',
     query_failure: '查询失败',
     submit_success: '提交成功',
     submit_failure: '提交失败',

@@ -78,7 +78,7 @@ export class LookupCodeStore {
           const pending: Promise<responseType> = this.pendings[lookupKey] = this.pendings[lookupKey] || this.axios(config);
           const result: responseType = await pending;
           if (result) {
-            data = generateResponseData(result, getConfig('dataKey'))
+            data = generateResponseData(result, getConfig('dataKey'));
             this.set(lookupKey, data);
           }
           warning(!!data, `Lookup<${lookupKey}> is not exists`);
@@ -144,7 +144,9 @@ export class LookupCodeStore {
     if (codes) {
       const lookupUrl = getConfig('lookupUrl');
       if (typeof lookupUrl === 'function') {
-        codes.forEach(code => this.lookupCodes.delete(lookupUrl(code)));
+        codes.forEach(code => (this.lookupCodes.delete(lookupUrl(code)), this.lookupCodes.delete(code)));
+      } else {
+        codes.forEach(code => this.lookupCodes.delete(code));
       }
     } else {
       this.lookupCodes.clear();
