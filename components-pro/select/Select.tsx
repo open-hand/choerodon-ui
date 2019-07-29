@@ -826,7 +826,7 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
     if (searchable && text) {
       const matchedRecords = data.filter(record => record.get(textField).indexOf(text) !== -1);
       return matchedRecords.length ? matchedRecords : [new Record({
-        [`${this.textField}`]: '无匹配结果',
+        [`${this.textField}`]: $l('Select', 'no_matching_results'),
         [`${this.valueField}`]: null,
         disabled: true,
       })];
