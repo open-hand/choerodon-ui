@@ -14,6 +14,20 @@ export interface SidebarProps extends ModalFuncProps {
   alwaysCanCancel?: boolean;
 }
 
+function isFixedWidth(width: ModalFuncProps['width']) {
+  switch (typeof width) {
+    case 'undefined':
+      return false;
+    case 'number':
+      return true;
+    case 'string':
+      // width: 100%不是固定宽度
+      return width.indexOf('%') === -1;
+    default:
+      return false;
+  }
+}
+
 export default class Sidebar extends Component<SidebarProps, {}> {
   static displayName = 'Sidebar';
 
@@ -99,12 +113,14 @@ export default class Sidebar extends Component<SidebarProps, {}> {
 
   render() {
     const props = this.props;
-    const { zIndex, visible, keyboard, footer } = props;
+    const { zIndex, visible, keyboard, footer, width } = props;
     const prefixCls = this.getPrefixCls();
     const { open } = this.state;
+    const fixedWidth = isFixedWidth(width);
     const classString = classNames(prefixCls, {
         [`${prefixCls}-sidebar`]: true,
         [`${prefixCls}-sidebar-open`]: open,
+        [`${prefixCls}-sidebar-fixed-width`]: fixedWidth,
       },
       props.className);
 
@@ -113,7 +129,6 @@ export default class Sidebar extends Component<SidebarProps, {}> {
         {...this.props}
         prefixCls={prefixCls}
         animationEnd={this.handleStatus}
-        width={props.width}
         className={classString}
         visible={visible}
         title={props.title}

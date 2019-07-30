@@ -22,8 +22,17 @@
     position: absolute;
     height: 100%;
     padding: 0;
-    width: calc(~"100% - 3.52rem") !important;
+    width: calc(~"100% - 3.52rem");
     overflow: auto;
+  }
+
+  &-fixed-width {
+    right: 0;
+
+    .@{modal-prefix-cls}-content {
+      left: auto;
+      width: 100%;
+    }
   }
 
   .@{modal-prefix-cls}-header {
