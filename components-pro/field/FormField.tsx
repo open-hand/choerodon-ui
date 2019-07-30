@@ -284,8 +284,12 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     });
   }
 
+  get labelLayout() {
+    return this.props.labelLayout || this.context.labelLayout;
+  }
+
   get hasFloatLabel(): boolean {
-    const labelLayout = this.props.labelLayout || this.context.labelLayout;
+    const { labelLayout } = this;
     return labelLayout === LabelLayout.float;
   }
 

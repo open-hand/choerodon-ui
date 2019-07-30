@@ -10,6 +10,7 @@ import { ValidationMessages } from '../validator/Validator';
 import { ViewMode } from './enum';
 import { $l } from '../locale-context';
 import formatReactTemplate from '../_util/formatReactTemplate';
+import { LabelLayout } from '../form/enum';
 
 export interface RadioProps extends FormFieldProps {
   /**
@@ -109,9 +110,13 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
   }
 
   getText() {
-    const { props: { children }, prefixCls } = this;
-    if (children) {
-      return <span className={`${prefixCls}-label`}>{children}</span>;
+    const { props: { children }, prefixCls, field, labelLayout } = this;
+    let text = children;
+    if (labelLayout !== LabelLayout.horizontal && labelLayout !== LabelLayout.vertical) {
+      text = children || field && field.get('label');
+    }
+    if (text) {
+      return <span className={`${prefixCls}-label`}>{text}</span>;
     }
   }
 
