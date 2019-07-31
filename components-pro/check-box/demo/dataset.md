@@ -28,7 +28,7 @@ class App extends React.Component {
   ds = new DataSet({
     fields: [
       { name: 'bind', multiple: true },
-      { name: 'bind2', type: 'boolean' },
+      { name: 'bind2', type: 'boolean', label: '是否开启' }, // 组件没有children会用label替代
       { name: 'bind3', type: 'boolean', trueValue: 'Y', falseValue: 'N' },
     ],
     data,
@@ -43,7 +43,7 @@ class App extends React.Component {
         <CheckBox dataSet={this.ds} name="bind" value="A">A</CheckBox>
         <CheckBox dataSet={this.ds} name="bind" value="B">B</CheckBox>
         <CheckBox dataSet={this.ds} name="bind" value="C">C</CheckBox>
-        <CheckBox dataSet={this.ds} name="bind2">是否开启</CheckBox>
+        <CheckBox dataSet={this.ds} name="bind2" /> 
         <CheckBox dataSet={this.ds} name="bind3">是否展开</CheckBox>
       </div>
     );
