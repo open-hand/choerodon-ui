@@ -23,6 +23,7 @@ timeline: true
 - 🌟 `message`: 新增placement配置。
 - 🌟 `<pro>DataSet.Record`: set方法可以传一个键值对的对象。
 - 🌟 `<pro>DataSet`: 新增reverse、reduce、reduceRight、removeAll、deleteAll方法。
+- 🌟 `<pro>Select`: 新增`optionRenderer`输入属性。
 - 💄 `Password`: 变更为通过点击揭示密码。
 - 💄 `Input`: 更新样式。
 - 💄 `DatePicker`: 更新样式。
