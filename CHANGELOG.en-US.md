@@ -41,6 +41,7 @@ timeline: true
 - 💄 `<pro>Select`: When there is no matching option, the value is displayed instead of automatically clearing the value, except for cascading.
 - 💄 `<pro>Select`: When the component is searchable & there is no matching option, the popup menu shows `No Matching Options`.
 - 💄 `<pro>DataSet.Field`: `lookupAxiosConfig` supports hooks.
+- 💄 `<pro>Modal`: Adjust the footer position to bottom of the viewport in `drawer` modal.
 - 🐞 `<pro>FormField`: Fix the problem when the label is ReactNode.
 - 🐞 `<pro>TextField`: Fix the display style of TextField(and child classes) when using addons.
 - 🐞 `<pro>Modal`: Fix the problem when `document.body` has no scrollbar, a popup modal will affect the page layout.
