@@ -50,6 +50,7 @@ timeline: true
 - 🐞 `<pro>DataSet`: 修复Transport的钩子没有传递params的问题。
 - 🐞 `<pro>Lov`: 修复Field.type为string时，不显示文案的问题。
 - 🐞 `<pro>SelectBox`: 修复children变化不渲染的问题。
+- 🐞 `Modal`: 修复`SideBar`组件`width`属性无效的问题。
 
 ## 0.7.6
 

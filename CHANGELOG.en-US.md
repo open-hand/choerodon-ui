@@ -50,6 +50,7 @@ timeline: true
 - 🐞 `<pro>DataSet`: Fix the problem that the transport hooks does not pass `params`.
 - 🐞 `<pro>Lov`: Fix the problem when the Field.type is string, the text is not displayed.
 - 🐞 `<pro>SelectBox`: Fix the problem that children changes are not rendered.
+- 🐞 `Modal`: Fix the problem that `width` property doesn't work with `SideBar`。
 
 ## 0.7.6
 

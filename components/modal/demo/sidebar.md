@@ -49,6 +49,7 @@ class App extends React.Component {
           onCancel={this.handleCancel}
           cancelText="取消"
           okText="确定"
+          width={400}
         >
           <p>Some contents...</p>
           <p>Some contents...</p>
