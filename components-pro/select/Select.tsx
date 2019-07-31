@@ -51,6 +51,12 @@ function getSimpleValue(value, valueField) {
   return value;
 }
 
+type OptionRendererArg = {
+  record: Record;
+  text: string;
+  value: any;
+}
+
 export interface SelectProps extends TriggerFieldProps {
   /**
    * 复合输入值
@@ -92,9 +98,20 @@ export interface SelectProps extends TriggerFieldProps {
    * false - 选项值对象
    */
   primitiveValue?: boolean;
+  /**
+   * 渲染Option文本的钩子
+   * @example
+   * ```js
+   * <Select
+   *   {...props}
+   *   optionRenderer={({ record, text, value }) => text + '$'}
+   * />
+   * ```
+   */
+  optionRenderer?: (arg: OptionRendererArg) => ReactNode;
 }
 
-export class Select<T extends SelectProps> extends TriggerField<T & SelectProps> {
+export class Select<T extends SelectProps> extends TriggerField<T> {
   static displayName = 'Select';
 
   static propTypes = {
@@ -108,7 +125,23 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
      * @default false
      */
     searchable: PropTypes.bool,
+    /**
+     * 是否为原始值
+     * true - 选项中valueField对应的值
+     * false - 选项值对象
+     */
     primitiveValue: PropTypes.bool,
+    /**
+     * 渲染Option文本的钩子
+     * @example
+     * ```js
+     * <Select
+     *   {...props}
+     *   optionRenderer={({ record, text, value }) => text + '$'}
+     * />
+     * ```
+     */
+    optionRenderer: PropTypes.func,
     ...TriggerField.propTypes,
   };
 
@@ -307,6 +340,7 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
       'dropdownMenuStyle',
       'checkValueOnOptionsChange',
       'primitiveValue',
+      'optionRenderer',
     ]);
     return otherProps;
   }
@@ -346,7 +380,7 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
 
   @autobind
   getMenu(menuProps: object = {}): ReactNode {
-    const { options, textField, valueField, disabledField, props: { dropdownMenuStyle } } = this;
+    const { options, textField, valueField, disabledField, props: { dropdownMenuStyle, optionRenderer } } = this;
     if (!options) {
       return null;
     }
@@ -384,13 +418,14 @@ export class Select<T extends SelectProps> extends TriggerField<T & SelectProps>
       if (!('selectedKeys' in menuProps ) && this.isSelected(record)) {
         selectedKeys.push(key);
       }
-      const option = (
+      const itemContent = optionRenderer ? optionRenderer({ record, text, value }) : text;
+      const option: ReactElement = (
         <Item
           key={key}
           value={record}
           disabled={menuDisabled ? menuDisabled : optionDisabled}
         >
-          {text}
+          {itemContent}
         </Item>
       );
       if (previousGroup) {

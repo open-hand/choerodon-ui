@@ -23,6 +23,7 @@ timeline: true
 - 🌟 `message`: Added `placement` config.
 - 🌟 `<pro>DataSet.Record`: The set method can pass an object with a key-value pair.
 - 🌟 `<pro>DataSet`: Added `reverse`, `reduce`, `reduceRight`, `removeAll`, and `deleteAll` methods.
+- 🌟 `<pro>Select`: Add `optionRenderer` input property.
 - 💄 `Password`: Change to reveal password by clicking.
 - 💄 `Input`: Update the style.
 - 💄 `DatePicker`: Update the style.

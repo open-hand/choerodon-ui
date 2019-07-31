@@ -27,6 +27,7 @@ title: Select
 | dropdownMenuStyle | 下拉框菜单样式名 | object  |  |
 | options | 下拉框选项数据源 | DataSet  |  |
 | primitiveValue | 是否为原始值（建议以绑定的数据源Field的type来决定值类型，如type设为object相当于primitiveValue设为false）`true` - 选项中valueField对应的值 `false` - 选项值对象 | boolean  |  |
+| optionRenderer | 渲染Option本文的钩子 | ({ record, text, value }) => ReactNode |  |
 
 更多属性请参考 [TriggerField](/components-pro/trigger-field/#TriggerField)。
 

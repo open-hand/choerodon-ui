@@ -7,11 +7,11 @@ title:
 
 ## zh-CN
 
-通过属性`opyionsFilter`过滤选项。
+通过属性`optionsFilter`过滤选项。
 
 ## en-US
 
-Through the property `opyionsFilter` the options will be filtered.
+Through the property `optionsFilter` the options will be filtered.
 
 ````jsx
 import { DataSet, Select, Button } from 'choerodon-ui/pro';
