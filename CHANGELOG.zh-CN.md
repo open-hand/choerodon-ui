@@ -29,6 +29,7 @@ timeline: true
 - 💄 `DatePicker`: 更新样式。
 - 💄 `Select`: 更新样式。
 - 💄 `<pro>Form`: 优化行列合并。
+- 💄 `<pro>FormField`: 更新浮动标签下的样式。
 - 💄 `<pro>DataSet`: query和submit事件返回值为false可阻止查询和提交。
 - 💄 `<pro>Popup`: 提升样式z-index。
 - 💄 `SelectBox`: 更新样式（浮动标签状态下）。
