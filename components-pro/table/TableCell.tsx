@@ -23,6 +23,7 @@ import { ButtonColor, FuncType } from '../button/enum';
 import { $l } from '../locale-context';
 import Tooltip from '../tooltip/Tooltip';
 import { RecordStatus } from '../data-set/enum';
+import { LabelLayout } from '../form/enum';
 
 export interface TableCellProps extends ElementProps {
   column: ColumnProps;
@@ -191,6 +192,7 @@ export default class TableCell extends Component<TableCellProps> {
         name,
         disabled: isDisabledRow(record),
         indeterminate: checkField && checkField === name && record.isIndeterminate,
+        labelLayout: LabelLayout.none,
       };
       return cloneElement(cellEditor, newEditorProps as FormFieldProps);
     }

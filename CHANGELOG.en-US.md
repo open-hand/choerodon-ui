@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>Table`: Fix the problem that the CheckBox editor displays the label.
+
 ## 0.8.0
 
 `2019-08-02`

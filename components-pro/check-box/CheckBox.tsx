@@ -5,7 +5,6 @@ import { action, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import { Radio, RadioProps } from '../radio/Radio';
 import { BooleanValue } from '../data-set/enum';
-import { LabelLayout } from '../form/enum';
 
 export interface CheckBoxProps extends RadioProps {
   /**
@@ -97,16 +96,9 @@ export class CheckBox<T extends CheckBoxProps> extends Radio<T & CheckBoxProps> 
     return <i className={`${this.prefixCls}-inner`} />;
   }
 
-  getText() {
-    const { prefixCls, props: { children, unCheckedChildren }, field, labelLayout } = this;
-    const childrenToRender = this.isChecked() ? children : unCheckedChildren || children;
-    let text = childrenToRender;
-    if (labelLayout !== LabelLayout.horizontal && labelLayout !== LabelLayout.vertical) {
-      text = childrenToRender || field && field.get('label');
-    }
-    if (text) {
-      return <span className={`${prefixCls}-label`}>{text}</span>;
-    }
+  getChildrenText() {
+    const { children, unCheckedChildren } = this.props;
+    return this.isChecked() ? children : unCheckedChildren || children;
   }
 
   getWrapperClassNames() {
