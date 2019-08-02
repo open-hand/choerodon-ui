@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.0
+
+`2019-08-02`
+
 - 🌟 `configure`: Add global configuration new properties.
 - 🌟 `<pro>Modal`: Modal and internal injection modal object add `update` methods.
 - 🌟 `<pro>Modal`: Added `okProps`, `cancelProps`, `okFirst`, `border` attribute.

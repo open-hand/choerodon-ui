@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.0
+
+`2019-08-02`
+
 - 🌟 `configure`: 增加全局配置新属性。
 - 🌟 `<pro>Modal`: Modal和内部注入modal对象增加update方法。
 - 🌟 `<pro>Modal`: 新增okProps, cancelProps, okFirst, border属性。
