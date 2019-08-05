@@ -39,7 +39,7 @@
   &-track {
     position: relative;
     height: .04rem;
-    border-radius: .04rem; /*将轨道设为圆角的*/
+    border-radius: .06rem; /*将轨道设为圆角的*/
     background: @normal-color;
     cursor: pointer;
 
@@ -48,6 +48,7 @@
       left: 0;
       height: .04rem;
       background: @primary-color;
+      border-radius: .06rem;
       cursor: inherit;
     }
 
@@ -55,11 +56,11 @@
       position: absolute;
       margin-left: -0.07rem;
       z-index: 1;
-      width: .14rem;
-      height: .14rem;
+      width: .13rem;
+      height: .13rem;
       bottom: -.05rem;
       border-radius: 50%;
-      border: @border-width-base @border-style-base @primary-color;
+      border: .015rem @border-style-base @primary-color;
       background: #fff;
       cursor: inherit;
       user-select: none;
@@ -80,5 +81,9 @@
   .float-label;
   &-float-label {
     padding-top: .11rem;
+  }
+  &-float-label .@{field-label-prefix-cls}-wrapper {
+    transform-origin: @float-label-transform-origin-high;
+    left: 0;
   }
 }

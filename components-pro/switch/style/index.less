@@ -100,4 +100,9 @@
   &-lg &:checked + &-label:after {
     margin-left: .01rem - @switch-lg-height;
   }
+
+  &-float-label .@{field-label-prefix-cls}-wrapper {
+    transform-origin: @float-label-transform-origin-high;
+    left: 0;
+  }
 }
