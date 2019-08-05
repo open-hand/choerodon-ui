@@ -11,12 +11,10 @@
   .float-label;
   display: inline-block;
   line-height: 28 / 13;
-  &-float-label & {
-    padding-left: .1rem;
-  }
   &-float-label .@{field-label-prefix-cls}-wrapper {
-    transform-origin: .1rem -330%;
+    transform-origin: @float-label-transform-origin-high;
     border: none;
+    left: 0;
   }
   &-wrapper,
   &-invalid&-wrapper {

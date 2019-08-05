@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+- 💄 `<pro>Range`: Update the style under float label layout.
+- 💄 `<pro>CheckBox`: Update the style under float label layout.
+- 💄 `<pro>Switch`: Update the style under float label layout.
+
 ## 0.8.1
 
 `2019-08-02`
