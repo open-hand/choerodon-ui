@@ -15,11 +15,15 @@ timeline: true
 
 ---
 
-## 0.8.1
-
 - 💄 `<pro>Range`: 更新浮动标签下的样式。
 - 💄 `<pro>CheckBox`: 更新浮动标签下的样式。
 - 💄 `<pro>Switch`: 更新浮动标签下的样式。
+
+## 0.8.1
+
+`2019-08-02`
+
+- 🐞 `<pro>Table`: 修复CheckBox编辑器显示label的问题。
 
 ## 0.8.0
 

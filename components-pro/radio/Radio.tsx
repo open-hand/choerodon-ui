@@ -109,12 +109,14 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
     return <span className={`${this.prefixCls}-inner`} />;
   }
 
+  getChildrenText() {
+    return this.props.children;
+  }
+
   getText() {
-    const { props: { children }, prefixCls, field, labelLayout } = this;
-    let text = children;
-    if (labelLayout !== LabelLayout.horizontal && labelLayout !== LabelLayout.vertical) {
-      text = children || field && field.get('label');
-    }
+    const { prefixCls, field, labelLayout } = this;
+    const text = this.getChildrenText() ||
+      (field && labelLayout && ![LabelLayout.horizontal, LabelLayout.vertical, LabelLayout.none].includes(labelLayout) && field.get('label'));
     if (text) {
       return <span className={`${prefixCls}-label`}>{text}</span>;
     }

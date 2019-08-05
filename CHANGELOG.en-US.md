@@ -15,11 +15,15 @@ timeline: true
 
 ---
 
-## 0.8.1
-
 - 💄 `<pro>Range`: Update the style under float label layout.
 - 💄 `<pro>CheckBox`: Update the style under float label layout.
 - 💄 `<pro>Switch`: Update the style under float label layout.
+
+## 0.8.1
+
+`2019-08-02`
+
+- 🐞 `<pro>Table`: Fix the problem that the CheckBox editor displays the label.
 
 ## 0.8.0
 
