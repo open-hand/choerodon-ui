@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.2
+
+`2019-08-06`
+
 - 🌟 `<pro>configure`: 钩子generatePageQuery增加sortName和sortOrder参数。
 - 🌟 `<pro>Form`: 增加pristine属性，用于显示记录的初始值。
 - 🌟 `<pro>FormField`: 增加pristine属性，用于显示记录的初始值。

@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.2
+
+`2019-08-06`
+
 - 🌟 `<pro>configure`: The hook `generatePageQuery` adds the `sortName` and `sortOrder` parameters.
 - 🌟 `<pro>Form`: Add the pristine attribute to display the initial value of the record.
 - 🌟 `<pro>FormField`: Add the pristine attribute to display the initial value of the record.
