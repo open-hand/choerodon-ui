@@ -305,6 +305,11 @@ export default class Form extends DataSetComponent<FormProps> {
     return defaultLabelLayout;
   }
 
+  @computed
+  get pristine(): boolean {
+    return this.observableProps.pristine;
+  }
+
   constructor(props, context) {
     super(props, context);
     this.setResponsiveKey();
@@ -323,6 +328,7 @@ export default class Form extends DataSetComponent<FormProps> {
       labelLayout: props.labelLayout || context.labelLayout,
       labelAlign: props.labelAlign || context.labelAlign,
       labelWidth: defaultTo(props.labelWidth, context.labelWidth),
+      pristine: props.pristine || context.pristine,
       columns: props.columns,
     };
   }
@@ -553,7 +559,7 @@ export default class Form extends DataSetComponent<FormProps> {
   }
 
   render() {
-    const { labelWidth, labelAlign, labelLayout, dataSet, record, dataIndex } = this;
+    const { labelWidth, labelAlign, labelLayout, pristine, dataSet, record, dataIndex } = this;
     const { formNode } = this.context;
     const value = {
       formNode: formNode || this,
@@ -563,6 +569,7 @@ export default class Form extends DataSetComponent<FormProps> {
       labelWidth,
       labelAlign,
       labelLayout,
+      pristine,
       disabled: this.isDisabled(),
     };
     let children: ReactNode = this.rasterizedChildren();

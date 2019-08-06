@@ -102,6 +102,10 @@ export default class TableStore {
     return this.props.queryBar || getConfig('queryBar');
   }
 
+  get pristine(): boolean {
+    return this.props.pristine;
+  }
+
   @computed
   get currentEditRecord(): Record | undefined {
     return this.dataSet.find(record => record.editing === true);
@@ -264,11 +268,14 @@ export default class TableStore {
 
   @computed
   get data(): Record[] {
-    const { filter } = this.props;
+    const { filter, pristine } = this.props;
     const { dataSet, isTree, showCachedSeletion } = this;
     let data = isTree ? dataSet.treeData : dataSet.data;
     if (typeof filter === 'function') {
       data = data.filter(filter);
+    }
+    if (pristine) {
+      data = data.filter(record => record.status !== RecordStatus.add);
     }
     if (showCachedSeletion) {
       return [...dataSet.cachedSelected, ...data];

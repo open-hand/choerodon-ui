@@ -28,6 +28,7 @@ title: Form
 | dataIndex | 对照record在DataSet中的index | number | ds.currentIndex |
 | record | 对照record, 优先级高于dataSet和dataIndex | Record |  |
 | columns | 列数, 响应式参考[Responsive](#Form Responsive) | number \| object |  1 |
+| pristine | 显示原始值 | boolean | false |
 | onSubmit | 提交回调 | Function  |  |
 | onReset | 重置回调 | Function  |  |
 | onSuccess | 提交成功回调 | Function  |  |

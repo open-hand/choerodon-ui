@@ -12,6 +12,7 @@ import {
   childrenInfoForDelete,
   findBindFields,
   getOrderFields,
+  getRecordValue,
   isSame,
   mergeTlsFields,
   processToJSON,
@@ -333,32 +334,11 @@ export default class Record {
   }
 
   get(fieldName?: string): any {
-    if (fieldName) {
-      const field = this.getField(fieldName);
-      if (field) {
-        const bind = field.get('bind');
-        if (bind) {
-          fieldName = bind;
-        }
-      }
-      const { dataSet } = this;
-      if (dataSet) {
-        const { checkField } = dataSet.props;
-        if (checkField && checkField === fieldName) {
-          const trueValue = field ? field.get(BooleanValue.trueValue) : true;
-          const falseValue = field ? field.get(BooleanValue.falseValue) : false;
-          const { children } = this;
-          if (children) {
-            return children.every(child => child.get(checkField) === trueValue) ? trueValue : falseValue;
-          }
-        }
-      }
-      return ObjectChainValue.get(this.data, fieldName as string);
-    }
+    return getRecordValue.call(this, this.data, (child, checkField) => child.get(checkField), fieldName);
   }
 
-  getPristineValue(fieldName) {
-    return ObjectChainValue.get(this.pristineData, fieldName);
+  getPristineValue(fieldName?: string): any {
+    return getRecordValue.call(this, this.pristineData, (child, checkField) => child.getPristineValue(checkField), fieldName);
   }
 
   @action

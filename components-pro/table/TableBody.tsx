@@ -18,7 +18,6 @@ import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 export interface TableBodyProps extends ElementProps {
   lock?: ColumnLock | boolean;
   indentSize: number;
-  filter?: (record: Record) => boolean;
 }
 
 @observer
@@ -29,7 +28,6 @@ export default class TableBody extends Component<TableBodyProps, any> {
     lock: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf([ColumnLock.right, ColumnLock.left])]),
     prefixCls: PropTypes.string,
     indentSize: PropTypes.number.isRequired,
-    filter: PropTypes.func,
   };
 
   static contextType = TableContext;

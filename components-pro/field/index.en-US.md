@@ -31,6 +31,7 @@ title: FormField
 | maxTagPlaceholder | 多值标签超出最大数量时的占位描述 | ReactNode \| (restValues) => ReactNode |  |
 | maxTagCount | 多值标签最大数量 | number |  |
 | maxTagTextLength | 多值标签文案最大长度 | number |  |
+| pristine | 显示原始值 | boolean | false |
 | onInvalid | 校验失败回调 | (validationMessage, validity, name) => void |   |
 | onChange | 值变化回调 | (value, oldValue, form) => void |   |
 | onInput | 输入回调 | Function |   |

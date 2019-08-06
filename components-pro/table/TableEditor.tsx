@@ -104,10 +104,10 @@ export default class TableEditor extends Component<TableEditorProps> {
 
   renderEditor(): ReactElement<FormFieldProps> | undefined {
     const { column } = this.props;
-    const { dataSet, currentEditRecord, rowHeight } = this.context.tableStore;
+    const { dataSet, currentEditRecord, rowHeight, pristine } = this.context.tableStore;
     const record = currentEditRecord || dataSet.current;
     const cellEditor = getEditorByColumnAndRecord(column, record);
-    if (isValidElement(cellEditor) && !isRadio(cellEditor)) {
+    if (!pristine && isValidElement(cellEditor) && !isRadio(cellEditor)) {
       this.editorProps = cellEditor.props;
       const { style = {}, ...otherProps } = this.editorProps;
       if (rowHeight !== 'auto') {

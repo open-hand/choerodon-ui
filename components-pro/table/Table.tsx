@@ -202,6 +202,10 @@ export interface TableProps extends DataSetComponentProps {
    * 可调整列宽
    */
   columnResizable?: boolean;
+  /**
+   * 显示原始值
+   */
+  pristine?: boolean;
 }
 
 @observer
@@ -882,14 +886,13 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   getTableBody(lock?: ColumnLock | boolean): ReactNode {
-    const { prefixCls, props: { indentSize, filter } } = this;
+    const { prefixCls, props: { indentSize } } = this;
     return (
       <TableBody
         key="tbody"
         prefixCls={prefixCls}
         lock={lock}
         indentSize={indentSize!}
-        filter={filter}
       />
     );
   }

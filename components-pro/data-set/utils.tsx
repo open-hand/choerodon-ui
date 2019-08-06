@@ -16,6 +16,7 @@ import Record from './Record';
 import Constants from './Constants';
 import { Supports } from '../locale-context/supports';
 import isEmpty from '../_util/isEmpty';
+import * as ObjectChainValue from '../_util/ObjectChainValue';
 import { $l } from '../locale-context';
 import Transport, { TransportType } from './Transport';
 
@@ -413,4 +414,29 @@ export function axiosAdapter(config: TransportType, dataSet: DataSet, data?: any
 
 export function generateResponseData(item: any, dataKey?: string): object[] {
   return isArray(item) ? item : dataKey && dataKey in item ? item[dataKey] || [] : [item];
+}
+
+export function getRecordValue(data: any, cb: (record: Record, fieldName: string) => boolean, fieldName?: string) {
+  if (fieldName) {
+    const field = this.getField(fieldName);
+    if (field) {
+      const bind = field.get('bind');
+      if (bind) {
+        fieldName = bind;
+      }
+    }
+    const { dataSet } = this;
+    if (dataSet) {
+      const { checkField } = dataSet.props;
+      if (checkField && checkField === fieldName) {
+        const trueValue = field ? field.get(BooleanValue.trueValue) : true;
+        const falseValue = field ? field.get(BooleanValue.falseValue) : false;
+        const { children } = this;
+        if (children) {
+          return children.every(child => cb(child, checkField) === trueValue) ? trueValue : falseValue;
+        }
+      }
+    }
+    return ObjectChainValue.get(data, fieldName as string);
+  }
 }

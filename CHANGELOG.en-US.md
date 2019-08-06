@@ -16,6 +16,9 @@ timeline: true
 ---
 
 - 🌟 `<pro>configure`: The hook `generatePageQuery` adds the `sortName` and `sortOrder` parameters.
+- 🌟 `<pro>Form`: Add the pristine attribute to display the initial value of the record.
+- 🌟 `<pro>FormField`: Add the pristine attribute to display the initial value of the record.
+- 🌟 `<pro>Table`: Add the pristine attribute to display the initial value of the record.
 - 💄 `<pro>Range`: Update the style under float label layout.
 - 💄 `<pro>CheckBox`: Update the style under float label layout.
 - 💄 `<pro>Switch`: Update the style under float label layout.

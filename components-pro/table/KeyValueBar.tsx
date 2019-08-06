@@ -30,7 +30,7 @@ const KeyValueBar: FC<KeyValueBarProps> = (props) => {
     return items.map(item => {
       let isReactNode = false;
       const { key, value } = item;
-      if (isValidElement(item.value) || typeof value === 'string' || typeof value === 'number') {
+      if (isValidElement(value) || typeof value === 'string' || typeof value === 'number') {
         isReactNode = true; // FIXME: 暂时没想到更好的方法去判断value能否渲染
       }
 

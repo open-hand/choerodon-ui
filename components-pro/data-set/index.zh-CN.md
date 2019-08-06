@@ -167,6 +167,7 @@ title: DataSet
 | 名称 | 说明 | 参数 | 返回值 |
 | --- | --- | --- | --- |
 | get(fieldName) | 根据字段名获取字段值。注意：禁止通过record.data\[fieldName\]的方式获取字段值。 | `fieldName` - 字段名 | any |
+| getPristineValue(fieldName) | 根据字段名获取字段的原始值。 | `fieldName` - 字段名 | any |
 | set(fieldName, value) | 给指定字段赋值 | `fieldName` - 字段名或者键值对对象；`value` - 值 |  |
 | toJSONData(noCascade) | 转换成用于提交的json数据 | `noCascade` - 为true时，不转换级联数据 | object |
 | toData() | 转换成普通数据 | | object |

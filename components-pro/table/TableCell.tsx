@@ -59,7 +59,7 @@ export default class TableCell extends Component<TableCellProps> {
 
   @computed
   get hasEditor() {
-    return this.cellEditor && !this.cellEditorInCell;
+    return !this.context.tableStore.pristine && this.cellEditor && !this.cellEditorInCell;
   }
 
   handleEditorKeyDown = (e) => {
@@ -183,13 +183,14 @@ export default class TableCell extends Component<TableCellProps> {
   renderEditor: Renderer = () => {
     const { cellEditor } = this;
     if (isValidElement(cellEditor)) {
-      const { dataSet } = this.context.tableStore;
+      const { dataSet, pristine } = this.context.tableStore;
       const { column: { name }, record } = this.props;
       const { checkField } = dataSet.props;
       const newEditorProps = {
         ...cellEditor.props,
         record,
         name,
+        pristine,
         disabled: isDisabledRow(record),
         indeterminate: checkField && checkField === name && record.isIndeterminate,
         labelLayout: LabelLayout.none,
@@ -227,7 +228,7 @@ export default class TableCell extends Component<TableCellProps> {
   }
 
   getInnerNode(prefixCls) {
-    const { context: { tableStore: { rowHeight, expandIconAsCell, hasCheckFieldColumn } }, props: { children } } = this;
+    const { context: { tableStore: { rowHeight, expandIconAsCell, hasCheckFieldColumn, pristine } }, props: { children } } = this;
     if (expandIconAsCell && children) {
       return children;
     }
@@ -238,6 +239,7 @@ export default class TableCell extends Component<TableCellProps> {
       className: `${prefixCls}-inner`,
       tabIndex: hasEditor && !isDisabledRow(record) ? 0 : -1,
       onFocus: this.handleFocus,
+      pristine,
     };
     if (!hasEditor) {
       innerProps.onKeyDown = this.handleEditorKeyDown;
@@ -276,7 +278,7 @@ export default class TableCell extends Component<TableCellProps> {
 
   render() {
     const { column, prefixCls, record } = this.props;
-    const { inlineEdit } = this.context.tableStore;
+    const { inlineEdit, pristine } = this.context.tableStore;
     const { className, style, align, name, onCell, command } = column;
     const field = name ? record.getField(name) : void 0;
     const cellPrefix = `${prefixCls}-cell`;
@@ -291,7 +293,7 @@ export default class TableCell extends Component<TableCellProps> {
       ...cellExternalProps.style,
     };
     const classString = classNames(cellPrefix, field ? {
-      [`${cellPrefix}-dirty`]: field.dirty,
+      [`${cellPrefix}-dirty`]: !pristine && field.dirty,
       [`${cellPrefix}-required`]: !inlineEdit && field.required,
       [`${cellPrefix}-editable`]: !inlineEdit && this.hasEditor,
     } : void 0, className, cellExternalProps.className);

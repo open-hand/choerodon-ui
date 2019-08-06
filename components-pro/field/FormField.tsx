@@ -19,7 +19,7 @@ import autobind from '../_util/autobind';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import Field from '../data-set/Field';
-import { getDateFormatByField } from '../data-set/utils';
+import { getDateFormatByField, isSame } from '../data-set/utils';
 import Validator, { CustomValidator, ValidationMessages } from '../validator/Validator';
 import Validity from '../validator/Validity';
 import FormContext from '../form/FormContext';
@@ -140,6 +140,10 @@ export interface FormFieldProps extends DataSetComponentProps {
    * 多值标签文案最大长度
    */
   maxTagTextLength?: number;
+  /**
+   * 显示原始值
+   */
+  pristine?: boolean;
   /**
    * 校验失败回调
    */
@@ -297,6 +301,10 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     return this.props.value !== void 0;
   }
 
+  get pristine(): boolean {
+    return this.props.pristine || this.context.pristine;
+  }
+
   @computed
   get defaultValidationMessages(): ValidationMessages | null {
     return null;
@@ -369,7 +377,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
    */
   isValidationMessageHidden(message?: ReactNode): undefined | boolean {
     const { hidden, noValidate } = this.props;
-    if (hidden || (!this.record && noValidate) || !message) {
+    if (hidden || this.pristine || (!this.record && noValidate) || !message) {
       return true;
     }
   }
@@ -570,7 +578,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
 
   @computed
   get isValid(): boolean {
-    return this.validator.validity.valid;
+    return this.validator.validity.valid || this.pristine;
   }
 
   @computed
@@ -654,13 +662,13 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   }
 
   isReadOnly(): boolean {
-    return this.getProp('readOnly') as boolean || (this.isControlled && !this.props.onChange);
+    return this.getProp('readOnly') as boolean || this.pristine || (this.isControlled && !this.props.onChange);
   }
 
   getDataSetValue(): any {
-    const { record } = this;
+    const { record, pristine, name } = this;
     if (record) {
-      return record.get(this.name);
+      return pristine ? record.getPristineValue(name) : record.get(name);
     }
   }
 
@@ -753,7 +761,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       } else {
         this.validate(value);
       }
-      if (old !== value) {
+      if (!isSame(old, value)) {
         onChange(value, toJS(old), formNode);
       }
       this.value = value;
