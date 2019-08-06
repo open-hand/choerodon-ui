@@ -18,6 +18,8 @@ timeline: true
 - 💄 `<pro>Range`: Update the style under float label layout.
 - 💄 `<pro>CheckBox`: Update the style under float label layout.
 - 💄 `<pro>Switch`: Update the style under float label layout.
+- 🐞 `<pro>Radio`: When using `label` as `children`, `label` won't be rendered under float label layout.
+- 🐞 `<pro>CheckBox`: When using `label` as `children`, `label` won't be rendered under float label layout.
 
 ## 0.8.1
 
