@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>configure`: The hook `generatePageQuery` adds the `sortName` and `sortOrder` parameters.
 - 💄 `<pro>Range`: Update the style under float label layout.
 - 💄 `<pro>CheckBox`: Update the style under float label layout.
 - 💄 `<pro>Switch`: Update the style under float label layout.

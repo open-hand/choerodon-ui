@@ -41,5 +41,5 @@ configure({ prefixCls: 'ant' });
 | modalSectionBorder | 默认Modal的头和脚有边框线 | boolean | true |
 | modalOkFirst | 默认Modal的ok按钮排在第一个 | boolean | true |
 | buttonFuncType | 默认Button的功能类型 | string | raised |
-| renderEmpty | 自定义组件空状态。 | Function(componentName: string): ReactNode | - |
-| generatePageQuery | 分页参数转换的钩子 | Function(pageParams: { page: number, pageSize: number }): object | - |
+| renderEmpty | 自定义组件空状态。 | (componentName: string) => ReactNode | - |
+| generatePageQuery | 分页参数转换的钩子 | ({ page?: number, pageSize?: number, sortName?: string, sortOrder?: string }) => object | - |

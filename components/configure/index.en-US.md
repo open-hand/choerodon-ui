@@ -38,5 +38,5 @@ configure({ prefixCls: 'ant' });
 | modalSectionBorder | Default if Modal header and foot have a border line | boolean | true |
 | modalOkFirst | Default the ok button of Modal is ranked first | boolean | true |
 | buttonFuncType | Default Button function type | string | raised |
-| renderEmpty | set empty content of components. | Function(componentName: string): ReactNode | - |
-| generatePageQuery | Hook for Paging Parameter Conversion | Function(pageParams: { page: number, pageSize: number }): object | - |
+| renderEmpty | set empty content of components. | (componentName: string) => ReactNode | - |
+| generatePageQuery | Hook for Paging Parameter Conversion | ({ page?: number, pageSize?: number, sortName?: string, sortOrder?: string }) => object | - |

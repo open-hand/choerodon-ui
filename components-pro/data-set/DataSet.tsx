@@ -1544,12 +1544,12 @@ Then the query method will be auto invoke.`);
       try {
         const { transport: { read = {}, adapter } } = this;
         this.changeStatus(DataSetStatus.loading);
-        const params = await this.generateQueryParameter();
-        const newConfig = axiosAdapter(read, this, params, this.generateQueryString(page));
+        const data = await this.generateQueryParameter();
+        const newConfig = axiosAdapter(read, this, data, this.generateQueryString(page));
         const adapterConfig = adapter(newConfig, 'read') || newConfig;
         if (adapterConfig.url) {
           const queryEventResult = await this.fireEvent(DataSetEvents.query, {
-            dataSet: this, params: adapterConfig.data || adapterConfig.params,
+            dataSet: this, params: adapterConfig.params, data: adapterConfig.data,
           });
           if (queryEventResult) {
             const result = await this.axios(adapterConfig);
@@ -1710,16 +1710,12 @@ Then the query method will be auto invoke.`);
   private generatePageQueryString(page: number) {
     const { paging, pageSize } = this;
     if (paging === true) {
-      const generatePageQuery = getConfig('generatePageQuery');
-      if (generatePageQuery) {
-        return generatePageQuery({ pageSize, page });
-      }
       return { page, pagesize: pageSize };
     }
     return {};
   }
 
-  private generateOrderQueryString() {
+  private generateOrderQueryString(): { sortname?: string, sortorder?: string } {
     const { fields } = this;
     const orderField = getOrderFields(fields)[0];
     if (orderField) {
@@ -1736,7 +1732,13 @@ Then the query method will be auto invoke.`);
   }
 
   private generateQueryString(page: number) {
-    return { ...this.generatePageQueryString(page), ...this.generateOrderQueryString() };
+    const order = this.generateOrderQueryString();
+    const pageQuery = this.generatePageQueryString(page);
+    const generatePageQuery = getConfig('generatePageQuery');
+    if (typeof generatePageQuery === 'function') {
+      return generatePageQuery({ sortName: order.sortname, sortOrder: order.sortorder, pageSize: pageQuery.pagesize, page: pageQuery.page });
+    }
+    return { ...pageQuery, ...order };
   }
 
   private async generateQueryParameter(): Promise<any> {

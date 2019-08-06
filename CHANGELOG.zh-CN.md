@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>configure`: 钩子generatePageQuery增加sortName和sortOrder参数。
 - 💄 `<pro>Range`: 更新浮动标签下的样式。
 - 💄 `<pro>CheckBox`: 更新浮动标签下的样式。
 - 💄 `<pro>Switch`: 更新浮动标签下的样式。
