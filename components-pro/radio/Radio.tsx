@@ -109,14 +109,34 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
     return <span className={`${this.prefixCls}-inner`} />;
   }
 
+  /**
+   * 当使用label代替children时，不需要展示float label
+   *
+   * @readonly
+   * @memberof Radio
+   */
+  get hasFloatLabel() {
+    return this.getLabelChildren() ? false : super.hasFloatLabel;
+  };
+
+  /**
+   * 没有children时，使用label替代children
+   *
+   * @returns {ReactNode} label
+   * @memberof Radio
+   */
+  getLabelChildren(): ReactNode {
+    const { labelLayout } = this;
+    return labelLayout && ![LabelLayout.horizontal, LabelLayout.vertical, LabelLayout.none].includes(labelLayout) && this.getLabel();
+  }
+
   getChildrenText() {
     return this.props.children;
   }
 
   getText() {
-    const { prefixCls, field, labelLayout } = this;
-    const text = this.getChildrenText() ||
-      (field && labelLayout && ![LabelLayout.horizontal, LabelLayout.vertical, LabelLayout.none].includes(labelLayout) && field.get('label'));
+    const { prefixCls } = this;
+    const text = this.getChildrenText() || this.getLabelChildren();
     if (text) {
       return <span className={`${prefixCls}-label`}>{text}</span>;
     }
