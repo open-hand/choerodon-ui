@@ -61,6 +61,10 @@ export default {
   DatePicker: {
     value_missing: '请选择日期。',
     value_missing_with_label: '请选择{label}。',
+    ok: '确定',
+    today: '今天',
+    now: '此刻',
+    this_week: '本周',
   },
   EmailField: {
     value_missing: '请输入邮箱地址',

@@ -61,6 +61,10 @@ export default {
   DatePicker: {
     value_missing: 'Please choose a date.',
     value_missing_with_label: 'Please select {label}.',
+    ok: 'OK',
+    today: 'Today',
+    now: 'Now',
+    this_week: 'This week',
   },
   EmailField: {
     value_missing: 'Please input an email address.',

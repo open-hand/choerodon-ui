@@ -8,7 +8,7 @@ import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComp
 import Select from '../select/Select';
 import { $l } from '../locale-context';
 import Pager from './Pager';
-import Icon from '../icon/index';
+import Icon from '../icon';
 
 export type PagerType = 'page' | 'prev' | 'next' | 'first' | 'last' | 'jump-prev' | 'jump-next';
 

@@ -7,6 +7,7 @@ import autobind from '../_util/autobind';
 import { ViewMode } from './enum';
 import { FieldType } from '../data-set/enum';
 import { getDateFormatByFieldType } from '../data-set/utils';
+import { $l } from '../locale-context';
 
 export default class DateTimesView extends DaysView implements DatePickerKeyboardEvent {
   static displayName = 'DateTimesView';
@@ -42,10 +43,8 @@ export default class DateTimesView extends DaysView implements DatePickerKeyboar
     const { prefixCls, props: { date } } = this;
     return (
       <div className={`${prefixCls}-footer`}>
-        <a
-          className={`${prefixCls}-footer-now-btn`}
-          onClick={this.choose.bind(this, moment())}
-        >Now
+        <a className={`${prefixCls}-footer-now-btn`} onClick={this.choose.bind(this, moment())}>
+          {$l('DatePicker', 'now')}
         </a>
         <a
           className={`${prefixCls}-footer-view-select`}

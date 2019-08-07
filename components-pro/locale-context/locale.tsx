@@ -59,6 +59,10 @@ export interface Locale {
   DatePicker: {
     value_missing;
     value_missing_with_label;
+    ok;
+    today;
+    now;
+    this_week;
   },
   EmailField: {
     value_missing;

@@ -9,6 +9,7 @@ import Icon from '../icon';
 import { DatePickerKeyboardEvent, RenderFunction } from './DatePicker';
 import { ViewMode } from './enum';
 import { FieldType } from '../data-set/enum';
+import { $l } from '../locale-context';
 
 export interface DateViewProps extends ViewComponentProps {
   date: Moment;
@@ -199,7 +200,9 @@ export default class DaysView extends ViewComponent<DateViewProps> implements Da
     const { prefixCls } = this;
     return (
       <div className={`${prefixCls}-footer`}>
-        <a onClick={this.choose.bind(this, moment().startOf('d'))}>Today</a>
+        <a onClick={this.choose.bind(this, moment().startOf('d'))}>
+          {$l('DatePicker', 'today')}
+        </a>
       </div>
     );
   }

@@ -18,7 +18,7 @@ import { getConfig } from 'choerodon-ui/lib/configure';
 import { LovConfig } from '../lov/Lov';
 import { AxiosRequestConfig } from 'axios';
 import warning from 'choerodon-ui/lib/_util/warning';
-import { ValidatorProps } from '../validator/rules/index';
+import { ValidatorProps } from '../validator/rules';
 
 function setFieldDirty(field: Field, dirty: boolean) {
   if (dirty) {

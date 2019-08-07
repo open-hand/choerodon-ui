@@ -5,6 +5,7 @@ import { DatePickerKeyboardEvent } from './DatePicker';
 import DaysView from './DaysView';
 import { ViewMode } from './enum';
 import { FieldType } from '../data-set/enum';
+import { $l } from '../locale-context';
 
 export default class WeeksView extends DaysView implements DatePickerKeyboardEvent {
   static displayName = 'WeeksView';
@@ -83,7 +84,9 @@ export default class WeeksView extends DaysView implements DatePickerKeyboardEve
     const { prefixCls } = this;
     return (
       <div className={`${prefixCls}-footer`}>
-        <a onClick={this.choose.bind(this, moment())}>This week</a>
+        <a onClick={this.choose.bind(this, moment())}>
+          {$l('DatePicker', 'this_week')}
+        </a>
       </div>
     );
   }

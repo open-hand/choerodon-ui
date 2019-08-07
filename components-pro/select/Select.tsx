@@ -25,7 +25,6 @@ import { stopEvent } from '../_util/EventManager';
 import normalizeOptions from '../option/normalizeOptions';
 import { $l } from '../locale-context';
 import * as ObjectChainValue from '../_util/ObjectChainValue';
-import formatReactTemplate from '../_util/formatReactTemplate';
 import isEmpty from '../_util/isEmpty';
 
 function updateActiveKey(menu: Menu, activeKey: string) {
@@ -166,7 +165,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   get defaultValidationMessages(): ValidationMessages | null {
     const label = this.getProp('label');
     return {
-      valueMissing: formatReactTemplate($l('Select', label ? 'value_missing_with_label' : 'value_missing'), { label }),
+      valueMissing: $l('Select', label ? 'value_missing_with_label' : 'value_missing', { label }),
     };
   }
 

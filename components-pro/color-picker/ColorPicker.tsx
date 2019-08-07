@@ -6,8 +6,7 @@ import autobind from '../_util/autobind';
 import EventManager from '../_util/EventManager';
 import { FieldType } from '../data-set/enum';
 import { ValidationMessages } from '../validator/Validator';
-import { $l } from '../locale-context/index';
-import formatReactTemplate from '../_util/formatReactTemplate';
+import { $l } from '../locale-context';
 
 function getNodeRect(node): ClientRect {
   return node.getBoundingClientRect();
@@ -53,7 +52,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
   get defaultValidationMessages(): ValidationMessages | null {
     const label = this.getProp('label');
     return {
-      valueMissing: formatReactTemplate($l('ColorPicker', label ? 'value_missing_with_label' : 'value_missing'), { label }),
+      valueMissing: $l('ColorPicker', label ? 'value_missing_with_label' : 'value_missing', { label }),
       typeMismatch: $l('ColorPicker', 'type_mismatch'),
     };
   }

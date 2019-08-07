@@ -16,7 +16,7 @@ import { getColumnKey, getHeader } from './utils';
 import getReactNodeText from '../_util/getReactNodeText';
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
 import ColumnGroups, { ColumnGroup } from './ColumnGroups';
-import { $l } from '../locale-context/index';
+import { $l } from '../locale-context';
 
 const SELECTION_KEY = '__selection-column__';
 export const EXPAND_KEY = '__expand-column__';

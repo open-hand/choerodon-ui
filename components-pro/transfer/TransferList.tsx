@@ -4,7 +4,7 @@ import { observer } from 'mobx-react';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
 import CheckBox from '../check-box/CheckBox';
-import { $l } from '../locale-context/index';
+import { $l } from '../locale-context';
 import Record from '../data-set/Record';
 import TextField from '../text-field/TextField';
 import Icon from '../icon';
