@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>SelectBox`: 修复SelectBox在Form下多选值的问题。
+
 ## 0.8.2
 
 `2019-08-06`

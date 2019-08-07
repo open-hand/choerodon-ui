@@ -86,6 +86,7 @@ export default class SelectBox extends Select<SelectBoxProps> {
       this.renderItem({
         key: index,
         dataSet: null,
+        record: null,
         value: record.get(valueField),
         checked: this.isChecked(this.getValue(), record.get(valueField)),
         name: this.name,

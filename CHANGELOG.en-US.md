@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>SelectBox`: Fix the problem that SelectBox selects multiple values under Form.
+
 ## 0.8.2
 
 `2019-08-06`

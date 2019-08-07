@@ -322,13 +322,13 @@ export default class Form extends DataSetComponent<FormProps> {
 
   getObservableProps(props, context) {
     return {
-      dataSet: props.dataSet || context.dataSet,
-      record: props.record || context.record,
+      dataSet: 'dataSet' in props ? props.dataSet : context.dataSet,
+      record: 'record' in props ? props.record : context.record,
       dataIndex: defaultTo(props.dataIndex, context.dataIndex),
-      labelLayout: props.labelLayout || context.labelLayout,
-      labelAlign: props.labelAlign || context.labelAlign,
+      labelLayout: 'labelLayout' in props ? props.labelLayout : context.labelLayout,
+      labelAlign: 'labelAlign' in props ? props.labelAlign : context.labelAlign,
       labelWidth: defaultTo(props.labelWidth, context.labelWidth),
-      pristine: props.pristine || context.pristine,
+      pristine: 'pristine' in props ? props.pristine : context.pristine,
       columns: props.columns,
     };
   }
