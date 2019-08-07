@@ -18,6 +18,7 @@ timeline: true
 - 💄 `<pro>Popup`: Synchronize with scrolling when expanded.
 - 💄 `<pro>DatePicker`: Completion of internationalization.
 - 🐞 `<pro>SelectBox`: Fix the problem that SelectBox selects multiple values under Form.
+- 🐞 `<pro>Anchor`: Fixed an issue where the getContainer property is invalid.
 
 ## 0.8.2
 

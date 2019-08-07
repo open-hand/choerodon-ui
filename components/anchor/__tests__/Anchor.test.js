@@ -9,7 +9,7 @@ describe('Anchor Render', () => {
     const wrapper = mount(
       <Anchor>
         <Link href="#API" title="API" />
-      </Anchor>
+      </Anchor>,
     );
 
     wrapper.find('a[href="#API"]').simulate('click');
@@ -22,13 +22,13 @@ describe('Anchor Render', () => {
     const wrapper = mount(
       <Anchor>
         <Link href="http://www.example.com/#API" title="API" />
-      </Anchor>
+      </Anchor>,
     );
     wrapper.find('a[href="http://www.example.com/#API"]').simulate('click');
     expect(wrapper.instance().state.activeLink).toBe('http://www.example.com/#API');
   });
 
-  it('Anchor render perfectly for complete href - scoll', () => {
+  it('Anchor render perfectly for complete href - scroll', () => {
     let root = document.getElementById('root');
     if (!root) {
       root = document.createElement('div', { id: 'root' });
@@ -39,7 +39,7 @@ describe('Anchor Render', () => {
     const wrapper = mount(
       <Anchor>
         <Link href="http://www.example.com/#API" title="API" />
-      </Anchor>
+      </Anchor>,
     );
     wrapper.instance().handleScroll();
     expect(wrapper.instance().state.activeLink).toBe('http://www.example.com/#API');
@@ -56,7 +56,7 @@ describe('Anchor Render', () => {
     const wrapper = mount(
       <Anchor>
         <Link href="##API" title="API" />
-      </Anchor>
+      </Anchor>,
     );
     wrapper.instance().handleScrollTo('##API');
     expect(wrapper.instance().state.activeLink).toBe('##API');
