@@ -157,6 +157,7 @@ export default class Trigger extends Component<TriggerProps> {
     const { popupHidden } = this.props;
     this.documentEvent.clear();
     if (!popupHidden) {
+      this.documentEvent.addEventListener('scroll', this.handleDocumentScroll, true);
       if ((this.isClickToHide() || this.isContextMenuToShow()) && !this.isBlurToHide()) {
         this.documentEvent.addEventListener('mousedown', this.handleDocumentMouseDown);
       }
@@ -165,6 +166,7 @@ export default class Trigger extends Component<TriggerProps> {
 
   componentWillUnmount() {
     this.popupTask.cancel();
+    this.documentEvent.clear();
   }
 
   handleEvent = (eventName, child, e) => {
@@ -205,11 +207,16 @@ export default class Trigger extends Component<TriggerProps> {
   handleDocumentMouseDown(e) {
     if (this.popup) {
       const { target } = e;
-      const root = findDOMNode(this);
-      const popupNode = findDOMNode(this.popup);
-      if (!contains(root, target) && !contains(popupNode, target)) {
+      if (!contains(findDOMNode(this), target) && !contains(findDOMNode(this.popup), target)) {
         this.setPopupHidden(true);
       }
+    }
+  }
+
+  @autobind
+  handleDocumentScroll({ target }) {
+    if (this.popup && target !== document && !contains(findDOMNode(this.popup), target)) {
+      this.forcePopupAlign();
     }
   }
 
@@ -423,11 +430,13 @@ function getAlignFromPlacement(builtinPlacements, placementStr, align) {
 
 function contains(root, n) {
   let node = n;
-  while (node) {
-    if (node === root) {
-      return true;
+  if (root) {
+    while (node) {
+      if (node === root || (root.contains && root.contains(node))) {
+        return true;
+      }
+      node = node.parentNode;
     }
-    node = node.parentNode;
   }
   return false;
 }

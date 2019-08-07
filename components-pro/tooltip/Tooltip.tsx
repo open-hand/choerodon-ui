@@ -176,6 +176,7 @@ export default class Tooltip extends Component<TooltipProps, any> {
   render() {
     const {
       prefixCls,
+      popupContent,
       props: {
         children,
         placement,
@@ -184,11 +185,10 @@ export default class Tooltip extends Component<TooltipProps, any> {
         transitionName,
         trigger,
       },
+      state: {
+        hidden,
+      },
     } = this;
-
-    const {
-      hidden,
-    } = this.state;
 
     return (
       <Trigger
@@ -197,11 +197,11 @@ export default class Tooltip extends Component<TooltipProps, any> {
         action={trigger}
         builtinPlacements={this.placements}
         popupPlacement={placement}
-        popupContent={this.popupContent}
+        popupContent={popupContent}
         onPopupHiddenChange={this.handlePopupHiddenChange}
         mouseEnterDelay={mouseEnterDelay}
         mouseLeaveDelay={mouseLeaveDelay}
-        popupHidden={hidden}
+        popupHidden={hidden || !popupContent}
         transitionName={transitionName}
       >
         {children}

@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 💄 `<pro>Popup`: 展开时与滚动同步。
 - 💄 `<pro>DatePicker`: 补全国际化。
 - 🐞 `<pro>SelectBox`: 修复SelectBox在Form下多选值的问题。
 
