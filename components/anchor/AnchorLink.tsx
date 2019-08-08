@@ -1,4 +1,4 @@
-import React, { Component, MouseEvent, ReactNode } from 'react';
+import React, { Component, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { C7NAnchor } from './Anchor';
@@ -42,7 +42,7 @@ export default class AnchorLink extends Component<AnchorLinkProps, any> {
     this.context.c7nAnchor.unregisterLink(this.props.href);
   }
 
-  handleClick = (e: MouseEvent<HTMLElement>) => {
+  handleClick = (e: React.MouseEvent<HTMLElement>) => {
     const { scrollTo, onClick } = this.context.c7nAnchor;
     const { href, title } = this.props;
     if (onClick) {

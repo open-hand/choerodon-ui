@@ -8,15 +8,8 @@ module.exports = function () {
   let my = {};
   if (fs.existsSync(path.join(process.cwd(), 'tsconfig.json'))) {
     my = require(path.join(process.cwd(), 'tsconfig.json'));
+  } else {
+    throw new Error('"tsconfig.json" not found!');
   }
-  return assign({
-    noUnusedParameters: true,
-    noUnusedLocals: true,
-    strictNullChecks: true,
-    target: 'es6',
-    jsx: 'preserve',
-    moduleResolution: 'node',
-    declaration: true,
-    allowSyntheticDefaultImports: true,
-  }, my.compilerOptions);
+  return my.compilerOptions;
 };

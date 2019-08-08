@@ -136,7 +136,7 @@ module.exports = function (modules) {
                 options: {
                   sourceMap: true,
                   modifyVars: {
-                    'icon-url': JSON.stringify('https://file.choerodon.com.cn/choerodon-ui/fonts/icomoon'),
+                    'c7n-icon-url': JSON.stringify('https://choerodon.github.io/choerodon-ui-font/icomoon'),
                   },
                 },
               },
