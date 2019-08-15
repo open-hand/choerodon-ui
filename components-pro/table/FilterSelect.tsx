@@ -19,7 +19,7 @@ import measureTextWidth from '../_util/measureTextWidth';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { getEditorByField } from './utils';
 import Select, { SelectProps } from '../select/Select';
-import processFieldValue from '../field/utils';
+import processFieldValue from '../_util/processFieldValue';
 import LookupCodeStore from '../stores/LookupCodeStore';
 import { isSameLike } from '../data-set/utils';
 import Option, { OptionProps } from '../option/Option';
@@ -61,10 +61,11 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
     this.setFilterText(text);
   }
 
-  getPlaceholder() {
+  getPlaceholders(): string[] {
     if (!this.selectField) {
-      return super.getPlaceholder();
+      return super.getPlaceholders();
     }
+    return [];
   }
 
   getOtherProps() {
@@ -116,7 +117,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
     const { paramName } = this.props;
     const values = this.getQueryValues(paramName);
     this.setQueryValue(paramName!, values.concat(value));
-    this.addValue(paramName);
+    this.prepareSetValue(paramName);
   }
 
   afterRemoveValue(value, repeat: number) {
@@ -152,7 +153,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
           this.setValue(this.getValues().filter(v => v !== name));
         } else {
           if (oldValue.length < value.length) {
-            this.addValue(name);
+            this.prepareSetValue(name);
           } else {
             const diffIndex: number[] = [];
             let d = 0;
@@ -177,7 +178,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
           }
         }
       } else if (!isNil(value)) {
-        this.addValue(name);
+        this.prepareSetValue(name);
       }
     } else if (isString(value)) {
       this.addQueryParams(value);
@@ -327,6 +328,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
     );
   }
 
+  @action
   clear() {
     const record = this.getQueryRecord();
     if (record) {

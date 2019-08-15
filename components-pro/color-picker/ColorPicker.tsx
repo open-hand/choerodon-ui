@@ -337,7 +337,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
       this.setHSV(undefined, s, v, undefined);
       const { r, g, b, a } = hsvToRGB(h, s, v, opacity);
       const hexColor = rgbToHEX(r, g, b, a);
-      this.setValue(hexColor);
+      this.prepareSetValue(hexColor);
     }
   }
 
@@ -371,7 +371,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
       const hueColor = rgbToHEX(r, g, b, a);
       const valueColor = rgbToHEX(valueR, valueG, valueB, valueA);
       this.setHueColor(hueColor);
-      this.setValue(valueColor);
+      this.prepareSetValue(valueColor);
     }
   }
 

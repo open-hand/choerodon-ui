@@ -14,20 +14,10 @@ title:
 Basic usage example.
 
 ````jsx
-import { Output, Row, Col } from 'choerodon-ui/pro';
+import { Output } from 'choerodon-ui/pro';
 
 ReactDOM.render(
-  <Row gutter={10}>
-    <Col span={8}>
-      <Output value="hello" />
-    </Col>
-    <Col span={8}>
-      <Output />
-    </Col>
-    <Col span={8}>
-      <Output />
-    </Col>
-  </Row>,
+  <Output value="hello" />,
   mountNode
 );
 ````

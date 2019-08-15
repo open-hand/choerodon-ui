@@ -203,7 +203,7 @@ export default class TableToolBar extends Component<TabelToolBarProps, any> {
         if (isString(button) && button in TableButtonType) {
           const defaultButtonProps = this.getButtonProps(button);
           if (defaultButtonProps) {
-            children.push(<Button color={ButtonColor.blue} funcType={FuncType.flat} key={button} {...defaultButtonProps} {...props} />);
+            children.push(<Button color={ButtonColor.primary} funcType={FuncType.flat} key={button} {...defaultButtonProps} {...props} />);
           }
         } else if (isValidElement<ButtonProps>(button)) {
           children.push(button);
@@ -239,7 +239,7 @@ export default class TableToolBar extends Component<TabelToolBarProps, any> {
           <span className={`${prefixCls}-query-bar`}>
             {dirtyInfo}
             {this.getCurrentFields(currentFields, queryDataSet)}
-            <Button color={ButtonColor.blue} onClick={this.handleQuery}>{$l('Table', 'query_button')}</Button>
+            <Button color={ButtonColor.primary} onClick={this.handleQuery}>{$l('Table', 'query_button')}</Button>
             {more}
           </span>
         );
@@ -272,7 +272,7 @@ export default class TableToolBar extends Component<TabelToolBarProps, any> {
     if (fields.length) {
       const moreFields = this.createFields(fields, dataSet, true);
       return (
-        <Button color={ButtonColor.blue} funcType={FuncType.flat} onClick={() => this.openMore(moreFields)}>
+        <Button color={ButtonColor.primary} funcType={FuncType.flat} onClick={() => this.openMore(moreFields)}>
           {$l('Table', 'advanced_search')}
         </Button>
       );

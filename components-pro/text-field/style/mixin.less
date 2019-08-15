@@ -125,6 +125,9 @@
     color: @input-placeholder-color;
     opacity: 0;
     transition: all .3s;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   // Reset height for `textarea`s
@@ -302,6 +305,48 @@
       cursor: pointer;
       margin-left: .08rem;
     }
+  }
+
+  &-range {
+    &-text {
+      display: block;
+      position: relative;
+      width: 100%;
+      height: 100%;
+      white-space: nowrap;
+    }
+    &-start,
+    &-end,
+    &-split,
+    &-input {
+      display: inline-block;
+      line-height: .26rem;
+      text-align: center;
+      height: 100%;
+    }
+
+    &-start,
+    &-end,
+    &-input {
+      width: ~"calc(50% - .1rem)";
+      border: none;
+      outline: 0;
+      background-color: transparent;
+    }
+
+    &-split {
+      width: .2rem;
+    }
+
+    &-input {
+      position: absolute;
+      opacity: 0;
+      color: @primary-color;
+      font-weight: bold;
+    }
+  }
+  &-focused &-range-input {
+    opacity: 1;
   }
 
   &-group {

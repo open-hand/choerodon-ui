@@ -27,14 +27,14 @@ export default class TransferOperation extends Component<TransferOperationProps,
       return (
         <div className={className}>
           <Button
-            color={ButtonColor.blue}
+            color={ButtonColor.primary}
             size={Size.small}
             disabled={!leftActive}
             onClick={moveToLeft}
             icon="navigate_before"
           />
           <Button
-            color={ButtonColor.blue}
+            color={ButtonColor.primary}
             size={Size.small}
             disabled={!rightActive}
             onClick={moveToRight}

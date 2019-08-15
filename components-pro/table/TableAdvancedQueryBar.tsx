@@ -75,7 +75,7 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
     const { showMoreFieldsPanel } = this.state;
     if (fields.length) {
       return (
-        <Button icon="filter_list" color={ButtonColor.blue} funcType={FuncType.flat} onClick={this.handleMoreFieldsButtonClick}>
+        <Button icon="filter_list" color={ButtonColor.primary} funcType={FuncType.flat} onClick={this.handleMoreFieldsButtonClick}>
           {!showMoreFieldsPanel ? $l('Table', 'advanced_query') : $l('Table', 'hide_advanced_query')}
         </Button>
       );

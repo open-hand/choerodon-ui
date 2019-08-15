@@ -77,7 +77,7 @@ export default class Transfer extends Select<TransferProps> {
     if (this.multiple) {
       this.selectRecord(value, this.sourceSelected);
     } else {
-      this.addValue(this.processRecordToObject(value));
+      this.prepareSetValue(this.processRecordToObject(value));
     }
   }
 
@@ -102,7 +102,7 @@ export default class Transfer extends Select<TransferProps> {
   @action
   handleMoveToRight() {
     const { valueField } = this;
-    this.addValues(this.sourceSelected.map(record => record.get(valueField)));
+    this.prepareSetValue(...this.sourceSelected.map(record => record.get(valueField)));
     this.sourceSelected = [];
   }
 

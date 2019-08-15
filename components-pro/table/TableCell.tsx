@@ -147,10 +147,10 @@ export default class TableCell extends Component<TableCellProps> {
     if (record.editing) {
       return [
         <Tooltip key="save" title={$l('Table', 'save_button')}>
-          <Button color={ButtonColor.blue} funcType={FuncType.flat} icon="finished" onClick={this.handleCommandSave} />
+          <Button color={ButtonColor.primary} funcType={FuncType.flat} icon="finished" onClick={this.handleCommandSave} />
         </Tooltip>,
         <Tooltip key="cancel" title={$l('Table', 'cancel_button')}>
-          <Button color={ButtonColor.blue} funcType={FuncType.flat} icon="cancle_a" onClick={this.handleCommandCancel} />
+          <Button color={ButtonColor.primary} funcType={FuncType.flat} icon="cancle_a" onClick={this.handleCommandCancel} />
         </Tooltip>,
       ];
     }
@@ -168,7 +168,7 @@ export default class TableCell extends Component<TableCellProps> {
             const { title, ...otherProps } = defaultButtonProps;
             children.push(
               <Tooltip key={button} title={title}>
-                <Button color={ButtonColor.blue} funcType={FuncType.flat} {...otherProps} {...props} />
+                <Button color={ButtonColor.primary} funcType={FuncType.flat} {...otherProps} {...props} />
               </Tooltip>,
             );
           }

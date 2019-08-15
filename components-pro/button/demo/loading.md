@@ -41,9 +41,9 @@ class App extends React.Component {
     return (
       <div>
         <Button icon="save" loading={this.state.loading}>保存</Button>
-        <Button funcType="flat" color="blue" icon="save" loading>保存</Button>
+        <Button funcType="flat" color="primary" icon="save" loading>保存</Button>
         <Button icon="save" loading />
-        <Button funcType="flat" icon="save" color="blue" loading />
+        <Button funcType="flat" icon="save" color="primary" loading />
         <Button dataSet={this.ds} type="submit">数据源状态</Button>
         <Button onClick={this.handleClick}>wait promise</Button>
       </div>

@@ -79,11 +79,12 @@ export default class Button extends DataSetComponent<ButtonProps> {
     ]),
     /**
      * 按钮颜色风格
-     * 可选值：'default' | 'gray' | 'blue' | 'red' | 'green' | 'yellow' | 'purple' | 'dark'
+     * 可选值：'default' | 'primary' | 'gray' | 'blue' | 'red' | 'green' | 'yellow' | 'purple' | 'dark'
      * @default 'default'
      */
     color: PropTypes.oneOf([
       ButtonColor.default,
+      ButtonColor.primary,
       ButtonColor.gray,
       ButtonColor.blue,
       ButtonColor.red,

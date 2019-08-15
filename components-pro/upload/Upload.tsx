@@ -265,7 +265,7 @@ export default class Upload extends FormField<UploadProps> {
         title={$l('Upload', 'click_to_upload')}
         placement="right"
       >
-        <Button color={ButtonColor.blue} onClick={this.handleUploadBtnClick}>
+        <Button color={ButtonColor.primary} onClick={this.handleUploadBtnClick}>
           <Icon type="file_upload" />
         </Button>
       </Tooltip>

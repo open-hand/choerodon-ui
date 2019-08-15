@@ -48,9 +48,21 @@ export function processToJSON(value) {
   return value;
 }
 
-function processOne(value: any, field: Field) {
+function processOne(value: any, field: Field, checkRange: boolean = true) {
   if (!isEmpty(value)) {
-    if (value instanceof Date) {
+    const range = field.get('range');
+    if (range && checkRange) {
+      if (isArray(range)) {
+        if (isObject(value)) {
+          const [start, end] = range;
+          value[start] = processOne(value[start], field, false);
+          value[end] = processOne(value[end], field, false);
+        }
+      } else if (isArray(value)) {
+        value[0] = processOne(value[0], field, false);
+        value[1] = processOne(value[1], field, false);
+      }
+    } else if (value instanceof Date) {
       value = moment(value, Constants.DATE_JSON_FORMAT);
     } else if (!isObject(value)) {
       switch (field.type) {
@@ -413,7 +425,7 @@ export function axiosAdapter(config: TransportType, dataSet: DataSet, data?: any
 }
 
 export function generateResponseData(item: any, dataKey?: string): object[] {
-  return isArray(item) ? item : dataKey && dataKey in item ? item[dataKey] || [] : [item];
+  return item ? isArray(item) ? item : dataKey && isObject(item) && dataKey in item ? item[dataKey] || [] : [item] : [];
 }
 
 export function getRecordValue(data: any, cb: (record: Record, fieldName: string) => boolean, fieldName?: string) {

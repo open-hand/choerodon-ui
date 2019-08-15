@@ -17,7 +17,7 @@ title: TextField
 
 | 参数      | 说明                                     | 类型        |默认值 |
 |-----------|------------------------------------------|------------|--------|
-| placeholder | 占位词 | string  |  |
+| placeholder | 占位词。当为range时，可以设定两个占位词 | string\|string[]  |  |
 | prefix | 前缀，一般用于放置图标 | ReactNode  |  |
 | suffix | 后缀，一般用于放置图标 | ReactNode  |  |
 | clearButton | 是否显示清除按钮 | boolean  | false |

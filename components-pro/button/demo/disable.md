@@ -24,8 +24,8 @@ class App extends React.PureComponent {
       <div>
         <Button>默认可选择按钮</Button>
         <Button disabled>不可选择按钮</Button>
-        <Button color="blue" disabled>不可选择按钮</Button>
-        <Button funcType="flat" color="blue" disabled>不可选择按钮</Button>
+        <Button color="primary" disabled>不可选择按钮</Button>
+        <Button funcType="flat" color="primary" disabled>不可选择按钮</Button>
         <Button funcType="flat" icon="save" disabled />
       </div>
     );

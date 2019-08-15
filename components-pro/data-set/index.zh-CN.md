@@ -190,8 +190,8 @@ title: DataSet
 | pattern | 正则校验 | string \| RegExp  |  |
 | maxLength | 最大长度 | number  |  |
 | minLength | 最小长度 | number  |  |
-| max | 最大值。 fieldName指向当前记录的fieldName值。 | number \| MomentInput \| fieldName  |  |
-| min | 最小值。 fieldName指向当前记录的fieldName值。 | number \| MomentInput \| fieldName  |  |
+| max | 最大值。 fieldName指向当前记录的fieldName值作为最大值。 | number \| MomentInput \| fieldName  |  |
+| min | 最小值。 fieldName指向当前记录的fieldName值作为最小值。 | number \| MomentInput \| fieldName  |  |
 | step | 步距 | number  |  |
 | validator | 校验器，当返回值为 false 或 涵盖错误信息的字符串，则为校验失败 | (value, name, record) =&gt; boolean \| string \| undefined  |  |
 | required | 是否必选 | boolean  | false |
@@ -204,6 +204,7 @@ title: DataSet
 | group | 是否分组，如果是number，则为分组的顺序(暂无实装) | boolean\|number |  |
 | defaultValue | 默认值 | any  |  |
 | multiple | 是否为值数组。 当为字符串时，作为数据分隔符，查询时会将字符串分割成数组，提交时会将数组拼接成字符串 | boolean\| string  | false |
+| range | 是否为范围值。 当为true时，则值为\[startValue, endValue\]；当为数组时，例如\['start', 'end'\]时，则值为{ start: startValue, end: endValue } | boolean\| \[string, string\]  | false |
 | unique | 唯一索引或联合唯一索引组名。当column的editor设为true时，编辑器只会在新增的记录显示，如果要对已有数据进行编辑，请自定义editor | boolean\| string  | false |
 | lovCode | LOV配置代码 | string  |  |
 | lovPara | LOV查询参数对象 | object  |  |

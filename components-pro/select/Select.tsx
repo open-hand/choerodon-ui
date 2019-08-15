@@ -6,7 +6,7 @@ import isNil from 'lodash/isNil';
 import noop from 'lodash/noop';
 import isPlainObject from 'lodash/isPlainObject';
 import { observer } from 'mobx-react';
-import { computed, IReactionDisposer, isArrayLike, reaction, runInAction } from 'mobx';
+import { action, computed, IReactionDisposer, isArrayLike, reaction, runInAction } from 'mobx';
 import Menu, { Item, ItemGroup } from 'choerodon-ui/lib/rc-components/menu';
 import TriggerField, { TriggerFieldProps } from '../trigger-field/TriggerField';
 import autobind from '../_util/autobind';
@@ -361,15 +361,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   renderMultipleHolder() {
     const { name, multiple } = this;
     if (multiple) {
-      return (
-        <input
-          key="value"
-          className={`${this.prefixCls}-multiple-value`}
-          value={this.toValueString(this.getValue()) || ''}
-          name={name}
-          onChange={noop}
-        />
-      );
+      return super.renderMultipleHolder();
     } else {
       return (
         <input key="value" type="hidden" value={this.toValueString(this.getValue()) || ''} name={name} onChange={noop} />
@@ -687,6 +679,15 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   handlePopupAnimateAppear() {
   }
 
+  getValueKey(v) {
+    if (isArrayLike(v)) {
+      return v.map(this.getValueKey, this).join(',');
+    }
+    const autoType = this.getProp('type') === FieldType.auto;
+    const value = getSimpleValue(v, this.valueField);
+    return autoType && !isNil(value) ? value.toString() : value;
+  }
+
   @autobind
   handlePopupAnimateEnd(key, exists) {
     if (!exists && key === 'align' && !this.isFocused) {
@@ -696,7 +697,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
 
   @autobind
   handleMenuClick({ item: { props: { value } } }) {
-    if (this.isSelected(value) && this.multiple) {
+    if (this.multiple && this.isSelected(value)) {
       this.unChoose(value);
     } else {
       this.choose(value);
@@ -704,17 +705,13 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   }
 
   handleOptionSelect(record: Record) {
-    this.addValue(this.processRecordToObject(record));
+    this.prepareSetValue(this.processRecordToObject(record));
   }
 
   handleOptionUnSelect(record: Record) {
     const { valueField } = this;
     const newValue = record.get(valueField);
-    const autoType = this.getProp('type') === FieldType.auto;
-    this.setValue(this.getValues().filter(v => (
-      v = getSimpleValue(v, valueField),
-        autoType ? !isSameLike(v, newValue) : !isSame(v, newValue)
-    )));
+    this.removeValue(newValue, -1);
     this.removeComboOption(record);
   }
 
@@ -785,6 +782,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     }
   }
 
+  @action
   clear() {
     this.setText(void 0);
     super.clear();
@@ -804,9 +802,6 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   }
 
   unChoose(record?: Record | null) {
-    if (!this.multiple) {
-      this.collapse();
-    }
     if (record) {
       this.handleOptionUnSelect(record);
     }

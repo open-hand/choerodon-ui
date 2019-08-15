@@ -318,7 +318,7 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
 
   @action
   updateObservableProps(props, context: any) {
-    Object.assign(this.observableProps, omitBy(this.getObservableProps(props, context), isUndefined));
+    Object.assign(this.observableProps, omitBy(this.getObservableProps(props, context), isUndefined), true);
   }
 
   getOtherProps() {

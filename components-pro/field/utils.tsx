@@ -1,20 +1,26 @@
-import React from 'react';
-import Field from '../data-set/Field';
-import { BooleanValue, FieldType } from '../data-set/enum';
-import CheckBox from '../check-box/CheckBox';
-import { formatCurrency, formatNumber } from '../number-field/utils';
-import { Lang } from '../locale-context/enum';
+import isObject from 'lodash/isObject';
+import isNil from 'lodash/isNil';
+import { isArrayLike } from 'mobx';
 
-export default function processFieldValue(value, field: Field, lang: Lang, showValueIfNotFound?: boolean) {
-  const { type } = field;
-  if (type === FieldType.boolean) {
-    return <CheckBox disabled checked={value === field.get(BooleanValue.trueValue)} />;
-  } else if (type === FieldType.number) {
-    return formatNumber(value, lang);
-  } else if (type === FieldType.currency) {
-    return formatCurrency(value, lang, {
-      currency: this.getProp('currency'),
-    });
+export function toRangeValue(value: any, range?: boolean | [string, string]): [any, any] {
+  if (isArrayLike(range)) {
+    if (isObject(value)) {
+      const [start, end] = range;
+      return [value[start], value[end]];
+    }
+  } else if (isArrayLike(value)) {
+    return value.slice(0, 2) as [any, any];
   }
-  return field.getText(value, showValueIfNotFound);
+  return [void 0, void 0];
+}
+
+export function toMultipleValue(value: any, range?: boolean | [string, string]) {
+  if (!isNil(value)) {
+    const multipleValue = isArrayLike(value) ? value.slice() : [value];
+    if (range) {
+      return multipleValue.map(item => toRangeValue(item, range));
+    }
+    return multipleValue;
+  }
+  return [];
 }

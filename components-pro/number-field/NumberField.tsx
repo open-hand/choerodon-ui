@@ -217,13 +217,13 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
       if (this.multiple) {
         this.setText(String(newValue));
       } else {
-        this.addValue(newValue);
+        this.prepareSetValue(newValue);
       }
     }
   }
 
-  addValue(value: any): void {
-    super.addValue(isNaN(value) || isEmpty(value) ? null : Number(value));
+  prepareSetValue(value: any): void {
+    super.prepareSetValue(isNaN(value) || isEmpty(value) ? null : Number(value));
   }
 
   restrictInput(value: string): string {
@@ -253,8 +253,8 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     return formatNumber;
   }
 
-  processText(text?: any, value?: any, repeat?: number) {
-    return super.processText(this.getFormatter()(text, this.lang, this.getFormatOptions()), value, repeat);
+  processValue(value) {
+    return this.getFormatter()(super.processValue(value), this.lang, this.getFormatOptions());
   }
 }
 

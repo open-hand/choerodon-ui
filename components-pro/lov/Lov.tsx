@@ -233,15 +233,17 @@ export default class Lov extends Select<LovProps> {
     }
   }
 
-  getPlaceholder() {
-    const placeholder = super.getPlaceholder();
-    if (placeholder) {
+  getPlaceholders(): string[] {
+    const placeholder = super.getPlaceholders();
+    if (placeholder.length) {
       return placeholder;
     }
     const config = this.getConfig();
     if (config) {
-      return config.placeholder;
+      const { placeholder: holder } = config;
+      return holder ? new Array<string>().concat(holder) : [];
     }
+    return [];
   }
 
   getOtherProps() {

@@ -1,5 +1,5 @@
 import Map from 'core-js/library/fn/map';
-import React, { cloneElement, FormEventHandler, isValidElement, ReactInstance, ReactNode } from 'react';
+import React, { cloneElement, FormEventHandler, Fragment, isValidElement, ReactInstance, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { action, computed, isArrayLike, observable, runInAction, toJS } from 'mobx';
 import classNames from 'classnames';
@@ -7,6 +7,7 @@ import omit from 'lodash/omit';
 import omitBy from 'lodash/omitBy';
 import isUndefined from 'lodash/isUndefined';
 import isNumber from 'lodash/isNumber';
+import isString from 'lodash/isString';
 import isNil from 'lodash/isNil';
 import defaultTo from 'lodash/defaultTo';
 import { isMoment, Moment } from 'moment';
@@ -36,16 +37,20 @@ import { FIELD_SUFFIX } from '../form/utils';
 import { LabelLayout } from '../form/enum';
 import Animate from '../animate';
 import CloseButton from './CloseButton';
+import { toMultipleValue, toRangeValue } from './utils';
 
 const map: { [key: string]: FormField<FormFieldProps>[] } = {};
 
+export type Comparator = (v1: any, v2: any) => boolean
+
 export type RenderProps = {
   value?: any;
-  text?: any;
+  text?: ReactNode;
   record?: Record | null;
   name?: string;
   dataSet?: DataSet | null;
   repeat?: number;
+  maxTagTextLength?: number;
 }
 
 export type Renderer = (props: RenderProps) => ReactNode;
@@ -266,6 +271,9 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
 
   emptyValue?: any = null;
 
+  @observable rangeTarget?: 0 | 1;
+  @observable rangeValue?: [any, any];
+
   @computed
   get validator(): Validator {
     const { field } = this;
@@ -275,7 +283,10 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     return new Validator();
   }
 
-  @observable name?: string;
+  @computed
+  get name(): string | undefined {
+    return this.observableProps.name;
+  }
 
   @computed
   get value(): any | undefined {
@@ -355,17 +366,9 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     }
   }
 
-  constructor(props, context) {
-    super(props, context);
-    this.setName(props.name);
-    if (!('value' in props)) {
-      this.value = props.defaultValue;
-    }
-  }
-
   @autobind
-  defaultRenderer({ text }: RenderProps) {
-    return text;
+  defaultRenderer({ text, repeat, maxTagTextLength }: RenderProps) {
+    return repeat !== void 0 && maxTagTextLength && isString(text) && text.length > maxTagTextLength ? `${text.slice(0, maxTagTextLength)}...` : text;
   }
 
   /**
@@ -389,10 +392,11 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
 
   getObservableProps(props, context) {
     return {
+      name: props.name,
       record: 'record' in props ? props.record : context.record,
       dataSet: 'dataSet' in props ? props.dataSet : context.dataSet,
       dataIndex: defaultTo(props.dataIndex, context.dataIndex),
-      value: props.value,
+      value: this.observableProps || 'value' in props ? props.value : props.defaultValue,
     };
   }
 
@@ -506,12 +510,6 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     if (!this.record && this.props.value !== nextProps.value) {
       this.validate(nextProps.value);
     }
-    this.setName(nextProps.name);
-  }
-
-  @action
-  setName(name) {
-    this.name = name;
   }
 
   componentWillUnmount() {
@@ -586,6 +584,11 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     return this.getProp('multiple');
   }
 
+  @computed
+  get range(): boolean {
+    return this.getProp('range');
+  }
+
   getValidationMessage(validationResult?: ValidationResult): ReactNode {
     const { defaultValidationMessages, validator } = this;
     if (defaultValidationMessages) {
@@ -603,6 +606,22 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
 
   getValidationErrorValues(): any[] {
     return this.validator.validationErrorValues;
+  }
+
+  @autobind
+  handleFocus(e) {
+    super.handleFocus(e);
+    if (this.range) {
+      this.beginRange();
+    }
+  }
+
+  @autobind
+  handleBlur(e) {
+    super.handleBlur(e);
+    if (this.range) {
+      this.endRange();
+    }
   }
 
   @autobind
@@ -631,10 +650,15 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
 
   handleEnterDown(e) {
     if (this.multiple) {
-      const { value } = e.target;
-      if (value !== '') {
-        this.addValue(value);
+      if (this.range) {
+        this.endRange();
         e.preventDefault();
+      } else {
+        const { value } = e.target;
+        if (value !== '') {
+          this.prepareSetValue(value);
+          e.preventDefault();
+        }
       }
     } else {
       this.blur();
@@ -651,7 +675,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     return getDateFormatByField(this.field, this.getFieldType());
   }
 
-  processValue(value: any): any {
+  processValue(value: any): ReactNode {
     if (!isNil(value)) {
       if (isMoment(value)) {
         return (value as Moment).format(this.getDateFormat());
@@ -673,12 +697,12 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   }
 
   getText(): ReactNode {
-    const text = this.processValue(this.getValue());
-    return this.isFocused && this.editable ? text : this.processText(text);
+    return this.isFocused && this.editable ? this.processValue(this.getValue()) : this.processRenderer(this.getValue());
   }
 
-  processText(text?: any, value: any = this.getValue(), repeat?: number) {
-    const { record, dataSet, props: { renderer = this.defaultRenderer, name } } = this;
+  processRenderer(value?: any, repeat?: number): ReactNode {
+    const { record, dataSet, props: { renderer = this.defaultRenderer, name, maxTagTextLength } } = this;
+    const text = this.processValue(value);
     return renderer ? renderer({
       value,
       text,
@@ -686,7 +710,18 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       dataSet,
       name,
       repeat,
+      maxTagTextLength,
     }) : text;
+  }
+
+  processRangeValue(value?: any, repeat?: number): [any, any] {
+    if (repeat === void 0) {
+      value = this.rangeValue;
+    }
+    if (value === void 0 && !this.multiple) {
+      value = this.getValue();
+    }
+    return toRangeValue(value, this.range).map(item => this.processRenderer(item, repeat)) as [any, any];
   }
 
   getOldValue(): any {
@@ -703,32 +738,54 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   }
 
   getValues(): any[] {
-    const old = this.getValue();
-    return isEmpty(old) ? [] : isArrayLike(old) ? old.slice() : [old];
+    return toMultipleValue(this.getValue(), this.range);
   }
 
-  addValues(values: any[]): void {
+  addValue(...values) {
     if (this.multiple) {
       const oldValues = this.getValues();
       if (values.length) {
         this.setValue([...oldValues, ...values]);
       } else if (!oldValues.length) {
-        this.setValue(null);
+        this.setValue(this.emptyValue);
       }
     } else {
-      this.setValue(values[values.length - 1]);
+      this.setValue(values.pop());
     }
   }
 
-  addValue(value): void {
-    this.addValues(isEmpty(value) ? [] : [value]);
+  isLowerRange(_value1: any, _value2: any): boolean {
+    return false;
+  }
+
+  @action
+  prepareSetValue(...value: any[]): void {
+    const { rangeTarget, range, rangeValue } = this;
+    const values = value.filter(item => !isEmpty(item));
+    if (range) {
+      if (rangeTarget !== void 0 && rangeValue) {
+        const [start, end] = rangeValue;
+        const newValue = values.pop();
+        rangeValue[rangeTarget] = newValue;
+        if (rangeTarget === 0 && newValue && end && this.isLowerRange(end, newValue)) {
+          rangeValue[rangeTarget] = end;
+          rangeValue[1] = newValue;
+        }
+        if (rangeTarget === 1 && newValue && start && this.isLowerRange(newValue, start)) {
+          rangeValue[rangeTarget] = start;
+          rangeValue[0] = newValue;
+        }
+      }
+    } else {
+      this.addValue(...values);
+    }
   }
 
   removeValues(values: any[], index: number = 0) {
     let repeat: number;
     this.setValue(values.reduce((oldValues, value) => (repeat = 0, oldValues.filter((v) => {
-      if (v === value) {
-        if (repeat === index) {
+      if (this.getValueKey(v) === this.getValueKey(value)) {
+        if (index === -1 || repeat === index) {
           this.afterRemoveValue(value, repeat);
           repeat += 1;
           return false;
@@ -747,9 +804,33 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   }
 
   @action
+  beginRange() {
+    this.setRangeTarget(0);
+    this.rangeValue = this.multiple ? [void 0, void 0] : toRangeValue(this.getValue());
+  }
+
+  @action
+  endRange() {
+    if (this.rangeValue) {
+      const values = this.rangeValue.slice();
+      if (this.multiple) {
+        this.rangeValue = void 0;
+      }
+      if (!values.every(isNil)) {
+        this.addValue(values);
+      }
+    }
+  }
+
+  @action
+  setRangeTarget(target?: 0 | 1) {
+    this.rangeTarget = target;
+  }
+
+  @action
   setValue(value: any): void {
     if (!this.isReadOnly()) {
-      if (this.multiple ? isArrayLike(value) && !value.length : isNil(value) || value === '') {
+      if (this.multiple || this.range ? isArrayLike(value) && !value.length : isNil(value) || value === '') {
         value = this.emptyValue;
       }
       const { name, dataSet, observableProps: { dataIndex } } = this;
@@ -768,37 +849,54 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     }
   }
 
+  renderRangeValue(readOnly?: boolean, value?: any, repeat?: number): ReactNode {
+    const rangeValue = this.processRangeValue(value, repeat);
+    if (readOnly) {
+      if (rangeValue.length) {
+        return <Fragment>{rangeValue[0]}~{rangeValue[1]}</Fragment>;
+      }
+    }
+  }
+
+  getValueKey(v: any) {
+    if (isArrayLike(v)) {
+      return v.join(',');
+    }
+    return v;
+  }
+
   renderMultipleValues(readOnly?: boolean) {
     const values = this.getValues();
     const valueLength = values.length;
-    const { prefixCls, props: { maxTagCount = valueLength, maxTagPlaceholder, maxTagTextLength } } = this;
+    const { prefixCls, range, props: { maxTagCount = valueLength, maxTagPlaceholder } } = this;
     const validationErrorValues = this.getValidationErrorValues();
     const repeats: Map<any, number> = new Map<any, number>();
-    const disabled = this.isDisabled() || this.isReadOnly();
     const blockClassName = classNames({
-      [`${prefixCls}-multiple-block-disabled`]: disabled,
+      [`${prefixCls}-multiple-block-disabled`]: this.isDisabled(),
     }, `${prefixCls}-multiple-block`);
     const tags = values.slice(0, maxTagCount).map((v) => {
-      const repeat = repeats.get(v) || 0;
-      const text = this.processText(this.processValue(v), v, repeat);
-      repeats.set(v, repeat + 1);
+      const key = this.getValueKey(v);
+      const repeat = repeats.get(key) || 0;
+      const text = range ? this.renderRangeValue(true, v, repeat) : this.processRenderer(v, repeat);
+      repeats.set(key, repeat + 1);
       if (!isNil(text)) {
-        const content = maxTagTextLength && text.length > maxTagTextLength ? `${text.slice(0, maxTagTextLength)}...` : text;
         const validationResult = validationErrorValues.find(error => error.value === v);
         const className = classNames({
           [`${prefixCls}-multiple-block-invalid`]: validationResult,
         }, blockClassName);
         const validationMessage = validationResult && this.renderValidationMessage(validationResult);
-        const closeBtn = !disabled && <CloseButton onClose={this.handleMutipleValueRemove} value={v} index={repeat} />;
-        const inner = readOnly ? <span className={className}>{content}</span> : (
+        const closeBtn = !this.isDisabled() && !this.isReadOnly() && (
+          <CloseButton onClose={this.handleMutipleValueRemove} value={v} index={repeat} />
+        );
+        const inner = readOnly ? <span className={className}>{text}</span> : (
           <li className={className}>
-            <div>{content}</div>
+            <div>{text}</div>
             {closeBtn}
           </li>
         );
         return (
           <Tooltip
-            key={`${v}-${text}-${repeat}`}
+            key={`${key}-${repeat}`}
             title={validationMessage}
             theme="light"
             placement="bottomLeft"
@@ -826,9 +924,11 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     return tags;
   }
 
+  @action
   clear() {
     const { onClear = noop } = this.props;
     this.setValue(this.emptyValue);
+    this.rangeValue = this.isFocused ? [void 0, void 0] : void 0;
     onClear();
   }
 

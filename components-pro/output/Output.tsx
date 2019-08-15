@@ -5,7 +5,7 @@ import omit from 'lodash/omit';
 import isNil from 'lodash/isNil';
 import { FormField, FormFieldProps } from '../field/FormField';
 import autobind from '../_util/autobind';
-import processFieldValue from '../field/utils';
+import processFieldValue from '../_util/processFieldValue';
 
 export interface OutputProps extends FormFieldProps {
 }
@@ -33,7 +33,7 @@ export default class Output extends FormField<OutputProps> {
   }
 
   getText(): ReactNode {
-    return this.processText(this.processValue(this.getValue()));
+    return this.processRenderer(this.getValue());
   }
 
   processValue(value) {
@@ -48,12 +48,11 @@ export default class Output extends FormField<OutputProps> {
   }
 
   getRenderedValue(): ReactNode {
-    const { field } = this;
-    if (field) {
-      const multiple = field.get('multiple');
-      if (multiple) {
-        return this.renderMultipleValues(true);
-      }
+    const { multiple, range } = this;
+    if (multiple) {
+      return this.renderMultipleValues(true);
+    } else if (range) {
+      return this.renderRangeValue(true);
     }
     return this.getText();
   }

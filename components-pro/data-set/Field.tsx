@@ -152,6 +152,13 @@ export type FieldProps = {
    */
   multiple?: boolean | string;
   /**
+   * 是否为范围值
+   * 当为true时，则值为[startValue, endValue]
+   * 当为数组时，例如['start', 'end']时，则值为{ start: startValue, end: endValue }
+   * @default false
+   */
+  range?: boolean | [string, string];
+  /**
    * 唯一索引或联合唯一索引组名
    */
   unique?: boolean | string;
@@ -663,7 +670,8 @@ export default class Field {
 
   async ready(): Promise<any> {
     const { lookUpPending, lovPending } = this;
-    const result = await Promise.all([this.lookUpPending, this.lovPending]);
+    const options = this.getOptions();
+    const result = await Promise.all([this.lookUpPending, this.lovPending, options && options.ready()]);
     if ((this.lookUpPending && this.lookUpPending !== lookUpPending) || (this.lovPending && this.lovPending !== lovPending)) {
       return this.ready();
     }

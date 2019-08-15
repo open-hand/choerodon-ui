@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
-import { action, computed, isArrayLike } from 'mobx';
+import { computed, isArrayLike } from 'mobx';
 import omit from 'lodash/omit';
 import { Select, SelectProps } from '../select/Select';
 import Radio from '../radio/Radio';
@@ -58,9 +58,9 @@ export default class SelectBox extends Select<SelectBoxProps> {
     };
   }
 
-  @action
-  setName(name) {
-    super.setName(name || this.name || GroupIdGen.next().value);
+  @computed
+  get name(): string | undefined {
+    return this.observableProps.name || GroupIdGen.next().value;
   }
 
   getOtherProps() {

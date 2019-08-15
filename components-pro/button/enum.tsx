@@ -1,5 +1,6 @@
 export const enum ButtonColor {
   default = 'default',
+  primary = 'primary',
   gray = 'gray',
   blue = 'blue',
   red = 'red',

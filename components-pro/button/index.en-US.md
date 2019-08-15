@@ -19,7 +19,7 @@ subtitle: 按钮
 属性 | 说明 | 类型 | 默认值
 -----|-----|-----|------
 type | 按钮类型，可选值为 `button` `submit` `reset` | string | `button`
-color | 按钮颜色风格，可选值为 `default` `blue` `yellow` `red` `dark` `green` `purple` | string | `default`
+color | 按钮颜色风格，可选值为 `default` `primary` `blue` `yellow` `red` `dark` `green` `purple` | string | `default`
 funcType | 按钮展现模式，可选值为 `flat` `raised` | string | `raised`
 loading | 按钮是否是加载状态 | boolean | false
 icon | 按钮图标 | string |

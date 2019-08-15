@@ -37,7 +37,7 @@ export interface TextFieldProps extends FormFieldProps {
   /**
    * 占位词
    */
-  placeholder?: string;
+  placeholder?: string | string[];
   /**
    * 最小长度
    */
@@ -87,7 +87,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     /**
      * 占位词
      */
-    placeholder: PropTypes.string,
+    placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
     /**
      * 最小长度
      */
@@ -177,13 +177,14 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   getWrapperClassNames(...args): string {
-    const { prefixCls } = this;
+    const { prefixCls, multiple, range } = this;
     const suffix = this.getSuffix();
     const prefix = this.getPrefix();
     return super.getWrapperClassNames({
       [`${prefixCls}-empty`]: this.isEmpty(),
       [`${prefixCls}-suffix-button`]: isValidElement<{ onClick }>(suffix),
-      [`${prefixCls}-multiple`]: this.multiple,
+      [`${prefixCls}-multiple`]: multiple,
+      [`${prefixCls}-range`]: range,
       [`${prefixCls}-prefix-button`]: isValidElement<{ onClick }>(prefix),
     }, ...args);
   }
@@ -256,12 +257,13 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     );
   }
 
-  getPlaceholder() {
-    return this.props.placeholder;
+  getPlaceholders(): string[] {
+    const { placeholder } = this.props;
+    return placeholder ? new Array<string>().concat(placeholder!) : [];
   }
 
   getLabel() {
-    const placeholder = this.getPlaceholder();
+    const [placeholder] = this.getPlaceholders();
     if (this.isEmpty() && placeholder) {
       return placeholder;
     }
@@ -277,6 +279,48 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       <div className={`${prefixCls}-group-${category}`}>
         {node}
       </div>
+    );
+  }
+
+  renderRangeEditor(props) {
+    const { prefixCls, rangeTarget, isFocused } = this;
+    const [startPlaceholder, endPlaceHolder = startPlaceholder] = this.getPlaceholders();
+    const [startValue = '', endValue = ''] = this.processRangeValue();
+    const editorStyle = {} as CSSProperties;
+    if (rangeTarget === 1) {
+      editorStyle.right = 0;
+    } else {
+      editorStyle.left = 0;
+    }
+    return (
+      <span key="text" className={`${prefixCls}-range-text`}>
+        <input
+          tabIndex={-1}
+          className={`${prefixCls}-range-start`}
+          onMouseDown={this.handleRangeStart}
+          value={rangeTarget === 0 && isFocused ? '' : startValue}
+          placeholder={rangeTarget === 0 && isFocused ? '' : startPlaceholder}
+          readOnly
+        />
+        <span className={`${prefixCls}-range-split`}>~</span>
+        <input
+          tabIndex={-1}
+          className={`${prefixCls}-range-end`}
+          onMouseDown={this.handleRangeEnd}
+          value={rangeTarget === 1 && isFocused ? '' : endValue}
+          placeholder={rangeTarget === 1 && isFocused ? '' : endPlaceHolder}
+          readOnly
+        />
+        <input
+          {...props}
+          className={`${prefixCls}-range-input`}
+          key="text"
+          value={rangeTarget === void 0 || !this.isFocused ? '' : rangeTarget === 0 ? startValue : endValue}
+          placeholder={rangeTarget === void 0 || !this.isFocused ? '' : rangeTarget === 0 ? startPlaceholder : endPlaceHolder}
+          readOnly={!this.editable}
+          style={editorStyle}
+        />
+      </span>
     );
   }
 
@@ -309,10 +353,10 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   getEditor(): ReactNode {
-    const { prefixCls, props: { style } } = this;
+    const { prefixCls, multiple, range, props: { style } } = this;
     const otherProps = this.getOtherProps();
     const { height } = (style || {}) as CSSProperties;
-    return this.multiple ? (
+    return multiple ? (
       <div key="text" className={otherProps.className}>
         <Animate
           component="ul"
@@ -321,14 +365,18 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           exclusive
         >
           {this.renderMultipleValues()}
-          {this.renderMultipleEditor({ ...otherProps, className: `${prefixCls}-multiple-input` } as T)}
+          {range ? this.renderRangeEditor(otherProps) : this.renderMultipleEditor({ ...otherProps, className: `${prefixCls}-multiple-input` } as T)}
         </Animate>
       </div>
+    ) : range ? (
+      <span key="text" className={otherProps.className}>
+        {this.renderRangeEditor(otherProps)}
+      </span>
     ) : (
       <input
         key="text"
         {...otherProps}
-        placeholder={this.hasFloatLabel ? void 0 : this.getPlaceholder()}
+        placeholder={this.hasFloatLabel ? void 0 : this.getPlaceholders()[0]}
         value={this.getText()}
         readOnly={!this.editable}
       />
@@ -406,14 +454,14 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   renderPlaceHolder(): ReactNode {
-    if ((this.multiple || !isPlaceHolderSupport()) && !this.hasFloatLabel) {
+    if ((this.multiple || !isPlaceHolderSupport()) && !this.hasFloatLabel && !this.range) {
       return this.getPlaceHolderNode();
     }
   }
 
   getPlaceHolderNode(): ReactNode {
     const { prefixCls } = this;
-    const placeholder = this.getPlaceholder();
+    const [placeholder] = this.getPlaceholders();
     if (placeholder) {
       return <div className={`${prefixCls}-placeholder`}>{placeholder}</div>;
     }
@@ -447,9 +495,29 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   @autobind
+  handleRangeStart() {
+    this.setRangeTarget(0);
+  }
+
+  @autobind
+  handleRangeEnd() {
+    this.setRangeTarget(1);
+  }
+
+  @autobind
   handleKeyDown(e) {
     const { disabled, clearButton } = this.props;
     if (!this.isReadOnly() && !disabled) {
+      if (this.range && e.keyCode === KeyCode.TAB) {
+        if (this.rangeTarget === 0 && !e.shiftKey) {
+          this.setRangeTarget(1);
+          e.preventDefault();
+        }
+        if (this.rangeTarget === 1 && e.shiftKey) {
+          this.setRangeTarget(0);
+          e.preventDefault();
+        }
+      }
       if (this.multiple) {
         if (!this.text) {
           switch (e.keyCode) {
@@ -509,7 +577,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   syncValueOnBlur(value) {
-    this.addValue(value);
+    this.prepareSetValue(value);
   }
 
   @action

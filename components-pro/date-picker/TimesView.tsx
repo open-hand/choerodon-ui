@@ -6,9 +6,9 @@ import { observer } from 'mobx-react';
 import autobind from '../_util/autobind';
 import { TimeUnit, ViewMode } from './enum';
 import DaysView, { alwaysValidDate } from './DaysView';
-import Button from '../button/Button';
 import { FieldType } from '../data-set/enum';
 import { getDateFormatByFieldType } from '../data-set/utils';
+import { $l } from '../locale-context';
 
 const TimeUnitQueue: unitOfTime.Base[] = [
   TimeUnit.hour,
@@ -118,22 +118,15 @@ export default class TimesView extends DaysView {
   }
 
   renderFooter(): ReactNode {
-    const { prefixCls, props: { mode } } = this;
-    let viewSelect;
-    if (mode !== ViewMode.time) {
-      viewSelect = (
-        <a
-          className={`${prefixCls}-footer-view-select`}
-          onClick={this.handleDateTimeSelect}
-        >Select date
-        </a>
-      );
-    }
+    const { prefixCls } = this;
     return (
       <div className={`${prefixCls}-footer`}>
-        <a className={`${prefixCls}-footer-now-btn`} onClick={this.choose.bind(this, moment())}>Now</a>
-        <Button onClick={this.choose.bind(this, this.props.date)}>OK</Button>
-        {viewSelect}
+        <a className={`${prefixCls}-footer-now-btn`} onClick={this.choose.bind(this, moment())}>
+          {$l('DatePicker', 'now')}
+        </a>
+        <a className={`${prefixCls}-footer-view-select`} onClick={this.choose.bind(this, this.props.date)}>
+          {$l('DatePicker', 'ok')}
+        </a>
       </div>
     );
   }

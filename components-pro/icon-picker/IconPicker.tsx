@@ -280,7 +280,7 @@ export default class IconPicker extends TriggerField<IconPickerProps> {
   }
 
   choose(icon?: string) {
-    this.addValue(icon);
+    this.prepareSetValue(icon);
     this.changeSelected(icon);
     if (!this.multiple) {
       this.collapse();

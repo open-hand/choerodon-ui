@@ -15,6 +15,11 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Field`: Add rang property.
+- 🌟 `<pro>DatePicker`: Add multiple and range mode.
+- 🌟 `<pro>Button`: Add the primary color.
+- 🐞 `<pro>DataSet`: Fix bugs when the response value is empty.
+
 ## 0.8.3
 
 `2019-08-08`

@@ -1,10 +1,11 @@
-import React, { createElement, CSSProperties, KeyboardEventHandler, ReactNode } from 'react';
+import { createElement, CSSProperties, KeyboardEventHandler, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import moment, { isMoment, Moment, MomentInput } from 'moment';
 import isString from 'lodash/isString';
+import isNil from 'lodash/isNil';
 import omit from 'lodash/omit';
 import { observer } from 'mobx-react';
-import { action, computed, observable, runInAction } from 'mobx';
+import { action, computed, isArrayLike, observable, runInAction } from 'mobx';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import noop from 'lodash/noop';
 import TriggerField, { TriggerFieldProps } from '../trigger-field/TriggerField';
@@ -142,17 +143,6 @@ export default class DatePicker extends TriggerField<DatePickerProps> implements
     return mode;
   }
 
-  getEditor(): ReactNode {
-    return (
-      <input
-        {...this.getOtherProps()}
-        placeholder={this.hasFloatLabel ? void 0 : this.getPlaceholder()}
-        value={this.getText() || ''}
-        readOnly={!this.editable}
-      />
-    );
-  }
-
   getPopupContent() {
     const mode = this.getViewMode();
     return createElement(
@@ -188,21 +178,41 @@ export default class DatePicker extends TriggerField<DatePickerProps> implements
     return mode;
   }
 
-  getValue(): any {
-    const value = super.getValue();
-    if (value) {
-      if (!isMoment(value)) {
-        const fieldMsg = this.record ? ` Please check the field<${this.props.name}> of DataSet.` : '';
-        warning(false, `DatePicker: The value of DatePicker is not moment.${fieldMsg}`);
-        return moment(value, this.getDateFormat());
+  checkMoment(item) {
+    if (!isNil(item) && !isMoment(item)) {
+      warning(false, `DatePicker: The value of DatePicker is not moment.`);
+      const format = this.getDateFormat();
+      if (item instanceof Date) {
+        item = moment(item).format(format);
       }
+      return moment(item, format);
     }
-    return value;
+    return item;
+  }
+
+  getValue(): any {
+    const { multiple, range } = this;
+    const value = super.getValue();
+    const values = (isNil(value) ? [] : isArrayLike(value) ? value.slice() : [value]).map((item) => {
+      if (range && multiple) {
+        return (isNil(item) ? [] : isArrayLike(item) ? item.slice() : [item]).map(this.checkMoment, this);
+      }
+      return this.checkMoment(item);
+    });
+    return multiple || range ? values : values[0];
   }
 
   getSelectedDate(): Moment {
-    const { selectedDate = this.getValue() || this.getValidDate(moment().startOf('d')) } = this;
-    return selectedDate.clone();
+    const { range, multiple, rangeTarget, rangeValue } = this;
+    const selectedDate = this.selectedDate || (
+      range && !multiple && rangeTarget !== void 0 && rangeValue && rangeValue[rangeTarget]
+    ) || (
+      !multiple && this.getValue()
+    );
+    if (isMoment(selectedDate)) {
+      return selectedDate.clone();
+    }
+    return this.getValidDate(moment().startOf('d'));
   }
 
   getLimit(type: string) {
@@ -249,7 +259,11 @@ export default class DatePicker extends TriggerField<DatePickerProps> implements
 
   @autobind
   handleSelect(date: Moment) {
-    this.choose(date);
+    if (this.multiple && this.isSelected(date)) {
+      this.unChoose(date);
+    } else {
+      this.choose(date);
+    }
   }
 
   @autobind
@@ -311,39 +325,59 @@ export default class DatePicker extends TriggerField<DatePickerProps> implements
   }
 
   handleKeyDownHome() {
-    this.choose(this.getSelectedDate().startOf('M'));
+    if (!this.multiple) {
+      this.choose(this.getSelectedDate().startOf('M'));
+    }
   }
 
   handleKeyDownEnd() {
-    this.choose(this.getSelectedDate().endOf('M'));
+    if (!this.multiple) {
+      this.choose(this.getSelectedDate().endOf('M'));
+    }
   }
 
   handleKeyDownLeft() {
-    this.choose(this.getSelectedDate().subtract(1, 'd'));
+    if (!this.multiple) {
+      this.choose(this.getSelectedDate().subtract(1, 'd'));
+    }
   }
 
   handleKeyDownRight() {
-    this.choose(this.getSelectedDate().add(1, 'd'));
+    if (!this.multiple) {
+      this.choose(this.getSelectedDate().add(1, 'd'));
+    }
   }
 
   handleKeyDownUp() {
-    this.choose(this.getSelectedDate().subtract(1, 'w'));
+    if (!this.multiple) {
+      this.choose(this.getSelectedDate().subtract(1, 'w'));
+    }
   }
 
   handleKeyDownDown() {
-    this.choose(this.getSelectedDate().add(1, 'w'));
+    if (this.multiple) {
+      this.expand();
+    } else {
+      this.choose(this.getSelectedDate().add(1, 'w'));
+    }
   }
 
   handleKeyDownPageUp(e) {
-    this.choose(this.getSelectedDate().subtract(1, e.altKey ? 'y' : 'M'));
+    if (!this.multiple) {
+      this.choose(this.getSelectedDate().subtract(1, e.altKey ? 'y' : 'M'));
+    }
   }
 
   handleKeyDownPageDown(e) {
-    this.choose(this.getSelectedDate().add(1, e.altKey ? 'y' : 'M'));
+    if (!this.multiple) {
+      this.choose(this.getSelectedDate().add(1, e.altKey ? 'y' : 'M'));
+    }
   }
 
   handleKeyDownEnter() {
-    this.choose(this.getSelectedDate());
+    if (!this.multiple) {
+      this.choose(this.getSelectedDate());
+    }
   }
 
   handleKeyDownEsc(e) {
@@ -354,7 +388,7 @@ export default class DatePicker extends TriggerField<DatePickerProps> implements
   }
 
   handleKeyDownTab() {
-    this.collapse();
+    // this.collapse();
   }
 
   handleKeyDownSpace(e) {
@@ -364,16 +398,54 @@ export default class DatePicker extends TriggerField<DatePickerProps> implements
     }
   }
 
+  handleEnterDown(e) {
+    super.handleEnterDown(e);
+    if (this.multiple && this.range) {
+      this.beginRange();
+    }
+  }
+
+  getValueKey(v: any) {
+    if (isArrayLike(v)) {
+      return v.map(this.getValueKey, this).join(',');
+    } else if (isMoment(v)) {
+      return v.format();
+    }
+    return v;
+  }
+
   @action
   changeSelectedDate(selectedDate: Moment) {
     this.selectedDate = this.getValidDate(selectedDate);
   }
 
+  isSelected(date: Moment) {
+    return this.getValues().some(value => date.isSame(value));
+  }
+
+  unChoose(date: Moment) {
+    this.removeValue(date, -1);
+  }
+
   choose(date: Moment) {
     date = this.getValidDate(date);
-    this.setValue(date);
+    this.prepareSetValue(date);
     this.changeSelectedDate(date);
-    this.collapse();
+    if (this.range ? this.rangeTarget === 1 : !this.multiple) {
+      this.collapse();
+    }
+    if (this.range && this.rangeTarget === 0 && this.popup) {
+      this.setRangeTarget(1);
+    }
+  }
+
+  @action
+  setRangeTarget(target) {
+    if (target !== void 0 && target !== this.rangeTarget) {
+      this.expand();
+    }
+    this.selectedDate = void 0;
+    super.setRangeTarget(target);
   }
 
   getValidDate(date: Moment): Moment {
@@ -384,6 +456,10 @@ export default class DatePicker extends TriggerField<DatePickerProps> implements
       date = max;
     }
     return date;
+  }
+
+  isLowerRange(m1: Moment, m2: Moment): boolean {
+    return m1.isBefore(m2);
   }
 
   @autobind

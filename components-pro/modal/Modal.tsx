@@ -343,7 +343,7 @@ export default class Modal extends ViewComponent<ModalProps> {
     const funcType: FuncType | undefined = drawer ? FuncType.raised : getConfig('buttonFuncType') as FuncType;
 
     const okBtn = (
-      <Button key="ok" funcType={funcType} color={ButtonColor.blue} onClick={this.handleOk} children={okText} {...okProps} />
+      <Button key="ok" funcType={funcType} color={ButtonColor.primary} onClick={this.handleOk} children={okText} {...okProps} />
     );
     const cancelBtn = (
       <Button key="cancel" ref={this.saveCancelRef} funcType={funcType} onClick={this.handleCancel} children={cancelText} {...cancelProps} />
