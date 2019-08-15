@@ -19,6 +19,7 @@ timeline: true
 - 🌟 `<pro>DatePicker`: 新增multiple和range模式。
 - 🌟 `<pro>Button`: 新增primary颜色。
 - 🌟 `<pro>Table`: 高级搜索增加重置按钮。
+- 🌟 `<pro>Table.Column`: command属性新增钩子类型。
 - 🐞 `<pro>DataSet`: 修复响应值为空时报错。
 - 🐞 `<pro>Tooltip`: 修复层级比下拉框低的问题。
 

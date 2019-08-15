@@ -19,6 +19,7 @@ timeline: true
 - 🌟 `<pro>DatePicker`: Add multiple and range mode.
 - 🌟 `<pro>Button`: Add the primary color.
 - 🌟 `<pro>Table`: Advanced search adds a reset button.
+- 🌟 `<pro>Table.Column`: The command property adds a hook type.
 - 🐞 `<pro>DataSet`: Fix bugs when the response value is empty.
 - 🐞 `<pro>Tooltip`: Fix the problem that the z-index is lower than the drop-down box.
 

@@ -70,7 +70,7 @@ subtitle: 表格
 | help | 额外信息，常用于提示 | `string` | `undefined` |
 | showHelp | 展示提示信息的方式 | `'tooltip' \| 'newLine' \| 'none'` | `'tooltip'` |
 | onCell | 设置单元格属性 | ({ dataSet, record, column }) => object |  |
-| command | 行操作按钮，可选值：`edit` `delete` 或 数组 或 自定义按钮，数组为可选值字符串+按钮配置属性对象 | string \| \[string, object\] \|ReactNode |   |
+| command | 行操作按钮集，该值为数组 或 返回数组的钩子，数组可选值：`edit` `delete` 或 \[`edit`\| `delete` , 按钮配置属性对象\] 或 自定义按钮 | (string \| \[string, object\] \| ReactNode)[] \| ({ dataSet, record }) => (string \| \[string, object\] \| ReactNode)[] |   |
 
 ### pagination
 

@@ -12,6 +12,7 @@ import { Commands } from './Table';
 export const defaultMinWidth = 100;
 
 export type onCellProps = { dataSet: DataSet, record: Record, column: ColumnProps };
+export type commandProps = { dataSet: DataSet, record: Record };
 
 export interface ColumnProps extends ElementProps {
   /**
@@ -105,7 +106,7 @@ export interface ColumnProps extends ElementProps {
    * 可选值：`edit` `delete` 或 自定义按钮
    * 给内置按钮加属性：command={[['edit', { color: 'red' }], ...]}
    */
-  command?: Commands[];
+  command?: Commands[] | ((props: commandProps) => Commands[]);
   children?: ColumnProps[];
 }
 

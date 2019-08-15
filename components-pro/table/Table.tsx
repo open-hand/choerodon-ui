@@ -48,7 +48,10 @@ import TableAdvancedQueryBar from './TableAdvancedQueryBar';
 export type expandedRowRendererProps = { dataSet: DataSet, record: Record };
 export type onRowProps = { dataSet: DataSet, record: Record, index: number, expandedRow: boolean };
 export type Buttons = TableButtonType | [TableButtonType, ButtonProps] | ReactElement<ButtonProps>;
-export type Commands = TableCommandType | [TableCommandType, ButtonProps] | ReactElement<ButtonProps>;
+export type Commands =
+  TableCommandType
+  | [TableCommandType, ButtonProps]
+  | ReactElement<ButtonProps>;
 
 export const buttonsEnumType = PropTypes.oneOf([
   TableButtonType.add,

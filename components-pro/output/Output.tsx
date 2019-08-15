@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import { observer } from 'mobx-react';
-import { computed } from 'mobx';
+import { computed, isArrayLike } from 'mobx';
 import omit from 'lodash/omit';
 import isNil from 'lodash/isNil';
 import { FormField, FormFieldProps } from '../field/FormField';
@@ -34,6 +34,13 @@ export default class Output extends FormField<OutputProps> {
 
   getText(): ReactNode {
     return this.processRenderer(this.getValue());
+  }
+
+  getValueKey(value) {
+    if (isArrayLike(value)) {
+      return value.map(this.getValueKey, this).join(',');
+    }
+    return this.processValue(value);
   }
 
   processValue(value) {

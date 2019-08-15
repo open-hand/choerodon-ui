@@ -24,6 +24,8 @@ import { $l } from '../locale-context';
 import Tooltip from '../tooltip/Tooltip';
 import { RecordStatus } from '../data-set/enum';
 import { LabelLayout } from '../form/enum';
+import { Commands } from './Table';
+import autobind from '../_util/autobind';
 
 export interface TableCellProps extends ElementProps {
   column: ColumnProps;
@@ -62,7 +64,8 @@ export default class TableCell extends Component<TableCellProps> {
     return !this.context.tableStore.pristine && this.cellEditor && !this.cellEditorInCell;
   }
 
-  handleEditorKeyDown = (e) => {
+  @autobind
+  handleEditorKeyDown(e) {
     switch (e.keyCode) {
       case KeyCode.TAB:
         const { prefixCls, column } = this.props;
@@ -75,9 +78,10 @@ export default class TableCell extends Component<TableCellProps> {
         break;
       default:
     }
-  };
+  }
 
-  handleFocus = (e) => {
+  @autobind
+  handleFocus(e) {
     const { tableStore } = this.context;
     const { currentEditorName, dataSet, inlineEdit } = tableStore;
     const { prefixCls, record, column, column: { lock } } = this.props;
@@ -93,32 +97,36 @@ export default class TableCell extends Component<TableCellProps> {
       }
     }
     inTab = false;
-  };
+  }
 
-  handleCommandEdit = () => {
+  @autobind
+  handleCommandEdit() {
     const { record } = this.props;
     const { tableStore } = this.context;
     if (tableStore.inlineEdit) {
       tableStore.currentEditRecord = record;
     }
-  };
+  }
 
-  handleCommandDelete = () => {
+  @autobind
+  handleCommandDelete() {
     const { record } = this.props;
     const { tableStore } = this.context;
     const { dataSet } = tableStore;
     dataSet.delete(record);
-  };
+  }
 
-  handleCommandSave = async () => {
+  @autobind
+  async handleCommandSave() {
     const { tableStore } = this.context;
     const { dataSet } = tableStore;
     if ((await dataSet.submit()) !== false) {
       tableStore.currentEditRecord = void 0;
     }
-  };
+  }
 
-  handleCommandCancel = () => {
+  @autobind
+  handleCommandCancel() {
     const { record } = this.props;
     const { tableStore } = this.context;
     if (record.status === RecordStatus.add) {
@@ -128,7 +136,7 @@ export default class TableCell extends Component<TableCellProps> {
       record.reset();
       tableStore.currentEditRecord = void 0;
     }
-  };
+  }
 
   getButtonProps(type: TableCommandType, record: Record): ButtonProps & { children?: ReactNode } | undefined {
     const disabled = isDisabledRow(record);
@@ -141,9 +149,10 @@ export default class TableCell extends Component<TableCellProps> {
     }
   }
 
-  renderCommand: Renderer = () => {
-    const { column, record } = this.props;
-    const { command } = column;
+  @autobind
+  renderCommand() {
+    const { record } = this.props;
+    const command = this.getCommand();
     if (record.editing) {
       return [
         <Tooltip key="save" title={$l('Table', 'save_button')}>
@@ -156,6 +165,7 @@ export default class TableCell extends Component<TableCellProps> {
     }
     if (command) {
       const children: ReactElement<ButtonProps>[] = [];
+
       command.forEach((button) => {
         let props = {};
         if (isArrayLike(button)) {
@@ -178,9 +188,10 @@ export default class TableCell extends Component<TableCellProps> {
       });
       return children;
     }
-  };
+  }
 
-  renderEditor: Renderer = () => {
+  @autobind
+  renderEditor() {
     const { cellEditor } = this;
     if (isValidElement(cellEditor)) {
       const { dataSet, pristine } = this.context.tableStore;
@@ -197,7 +208,7 @@ export default class TableCell extends Component<TableCellProps> {
       };
       return cloneElement(cellEditor, newEditorProps as FormFieldProps);
     }
-  };
+  }
 
   getCheckBox() {
     const { record } = this.props;
@@ -215,9 +226,18 @@ export default class TableCell extends Component<TableCellProps> {
     }
   }
 
-  getCellRenderer(): Renderer | undefined {
+  getCommand(): Commands[] | undefined {
+    const { column: { command }, record } = this.props;
+    const { dataSet } = this.context.tableStore;
+    if (typeof command === 'function') {
+      return command({ dataSet, record });
+    }
+    return command;
+  }
+
+  getCellRenderer(command?: Commands[]): Renderer | undefined {
     const { column } = this.props;
-    const { renderer, command } = column;
+    const { renderer } = column;
     if (command) {
       return this.renderCommand;
     }
@@ -227,7 +247,7 @@ export default class TableCell extends Component<TableCellProps> {
     return renderer;
   }
 
-  getInnerNode(prefixCls) {
+  getInnerNode(prefixCls, command?: Commands[]) {
     const { context: { tableStore: { rowHeight, expandIconAsCell, hasCheckFieldColumn, pristine } }, props: { children } } = this;
     if (expandIconAsCell && children) {
       return children;
@@ -268,7 +288,7 @@ export default class TableCell extends Component<TableCellProps> {
         key="output"
         {...innerProps}
         record={record}
-        renderer={this.getCellRenderer()}
+        renderer={this.getCellRenderer(command)}
         name={name}
         disabled={isDisabledRow(record)}
         showHelp={ShowHelp.none}
@@ -279,7 +299,8 @@ export default class TableCell extends Component<TableCellProps> {
   render() {
     const { column, prefixCls, record } = this.props;
     const { inlineEdit, pristine } = this.context.tableStore;
-    const { className, style, align, name, onCell, command } = column;
+    const { className, style, align, name, onCell } = column;
+    const command = this.getCommand();
     const field = name ? record.getField(name) : void 0;
     const cellPrefix = `${prefixCls}-cell`;
     const cellExternalProps: HTMLProps<HTMLTableCellElement> = typeof onCell === 'function' ? onCell({
@@ -304,7 +325,7 @@ export default class TableCell extends Component<TableCellProps> {
         style={omit(cellStyle, ['width', 'height'])}
         data-index={getColumnKey(column)}
       >
-        {this.getInnerNode(cellPrefix)}
+        {this.getInnerNode(cellPrefix, command)}
       </td>
     );
   }
