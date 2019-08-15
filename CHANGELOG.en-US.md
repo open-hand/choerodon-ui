@@ -22,6 +22,7 @@ timeline: true
 - 🌟 `<pro>Table.Column`: The command property adds a hook type.
 - 🐞 `<pro>DataSet`: Fix bugs when the response value is empty.
 - 🐞 `<pro>Tooltip`: Fix the problem that the z-index is lower than the drop-down box.
+- 🐞 `<pro>Table`: Fixed an issue where the value of filterBar was not controlled.
 
 ## 0.8.3
 

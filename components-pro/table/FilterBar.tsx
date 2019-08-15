@@ -12,11 +12,6 @@ export interface FilterBarProps {
 }
 
 export default class FilterBar extends PureComponent<FilterBarProps, any> {
-  handleChange = () => {
-    const { dataSet } = this.props;
-    dataSet.query();
-  };
-
   renderSuffix() {
     const { prefixCls } = this.props;
     return (
@@ -35,7 +30,6 @@ export default class FilterBar extends PureComponent<FilterBarProps, any> {
         placeholder={placeholder}
         suffix={this.renderSuffix()}
         paramName={paramName}
-        onChange={this.handleChange}
       />
     );
   }

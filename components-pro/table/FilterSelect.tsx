@@ -7,7 +7,7 @@ import noop from 'lodash/noop';
 import debounce from 'lodash/debounce';
 import isString from 'lodash/isString';
 import { observer } from 'mobx-react';
-import { action, get, observable, toJS } from 'mobx';
+import { action, computed, get, IReactionDisposer, isArrayLike, observable, reaction, runInAction, toJS } from 'mobx';
 import Icon from '../icon';
 import Field from '../data-set/Field';
 import { TextField, TextFieldProps } from '../text-field/TextField';
@@ -46,19 +46,84 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
   @observable selectField?: Field;
   @observable filterText?: string;
 
+  queryDataSet?: DataSet;
+  reaction: IReactionDisposer;
+
+  @computed
+  get value(): any | undefined {
+    const { value } = this.observableProps;
+    if (value) {
+      return value;
+    }
+    const { optionDataSet: { queryDataSet }, paramName } = this.props;
+    if (queryDataSet) {
+      const { current } = queryDataSet;
+      if (current) {
+        const result: string[] = [];
+        [...new Set([...queryDataSet.fields.keys(), paramName])].forEach((key) => {
+          if (key) {
+            const values = current.get(key);
+            if (isArrayLike(values)) {
+              values.forEach(item => !isNil(item) && result.push(key));
+            } else if (!isNil(values)) {
+              result.push(key);
+            }
+          }
+        });
+        return result;
+      }
+    }
+  }
+
+  set value(value: any | undefined) {
+    runInAction(() => {
+      this.observableProps.value = value;
+    });
+  }
+
   private setFilterText = debounce(action((text?: string) => {
     this.filterText = text;
   }), 500);
 
+  constructor(props, context) {
+    super(props, context);
+    const { optionDataSet } = props;
+    this.on(optionDataSet.queryDataSet);
+    this.reaction = reaction(() => optionDataSet.queryDataSet, this.on);
+  }
+
+  on(ds?: DataSet) {
+    this.off();
+    if (ds) {
+      ds.addEventListener('update', this.handleDataSetUpdate);
+    }
+    this.queryDataSet = ds;
+  }
+
+  off() {
+    const { queryDataSet } = this;
+    if (queryDataSet) {
+      queryDataSet.addEventListener('update', this.handleDataSetUpdate);
+    }
+  }
+
   componentWillUnmount() {
     super.componentWillUnmount();
     this.setFilterText.cancel();
+    this.off();
+    this.reaction();
   }
 
   @action
   setText(text) {
     super.setText(text);
     this.setFilterText(text);
+  }
+
+  @action
+  setValue(value) {
+    super.setValue(value);
+    this.props.optionDataSet.query();
   }
 
   getPlaceholders(): string[] {
@@ -115,9 +180,10 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
 
   addQueryParams(value) {
     const { paramName } = this.props;
-    const values = this.getQueryValues(paramName);
-    this.setQueryValue(paramName!, values.concat(value));
-    this.prepareSetValue(paramName);
+    if (paramName) {
+      const values = this.getQueryValues(paramName);
+      this.setQueryValue(paramName!, values.concat(value));
+    }
   }
 
   afterRemoveValue(value, repeat: number) {
@@ -143,43 +209,48 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
   }
 
   @autobind
-  handleFieldChange(value, oldValue) {
+  handleDataSetUpdate({ name, value }) {
+    const values = this.getValues();
+    if (isArrayLike(value)) {
+      const { length } = value;
+      if (length) {
+        let repeat = 0;
+        const filtered = values.filter(item => {
+          if (item === name) {
+            repeat += 1;
+            if (repeat > length) {
+              return false;
+            }
+          }
+          return true;
+        });
+        for (let i = 0, n = length - repeat; i < n; i += 1) {
+          filtered.push(name);
+        }
+        this.setValue(filtered);
+      } else {
+        this.setValue(values.filter(item => item === name));
+      }
+    } else if (isNil(value)) {
+      this.setValue(values.filter(item => item === name));
+    } else if (values.indexOf(name) === -1) {
+      values.push(name);
+      this.setValue(values);
+    }
+  }
+
+  @autobind
+  handleBlur(e) {
+    super.handleBlur(e);
+    this.setSelectField(void 0);
+  }
+
+  @autobind
+  handleFieldChange(value) {
     const { selectField } = this;
     if (selectField) {
       const { name } = selectField;
       this.setQueryValue(name, value);
-      if (selectField.get('multiple')) {
-        if (isNil(value)) {
-          this.setValue(this.getValues().filter(v => v !== name));
-        } else {
-          if (oldValue.length < value.length) {
-            this.prepareSetValue(name);
-          } else {
-            const diffIndex: number[] = [];
-            let d = 0;
-            oldValue.forEach((v, index) => {
-              if (!isSameLike(value[index - d], v)) {
-                diffIndex.push(index);
-                d += 1;
-              }
-            });
-            let repeat = 0;
-            this.setValue(this.getValues().filter(v => {
-              if (v === name && diffIndex.length) {
-                if (diffIndex[0] === repeat) {
-                  diffIndex.shift();
-                  repeat += 1;
-                  return false;
-                }
-                repeat += 1;
-              }
-              return true;
-            }));
-          }
-        }
-      } else if (!isNil(value)) {
-        this.prepareSetValue(name);
-      }
     } else if (isString(value)) {
       this.addQueryParams(value);
       if (this.isFocused) {
