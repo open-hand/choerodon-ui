@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `<pro>Button`: 新增primary颜色。
 - 🌟 `<pro>Table`: 高级搜索增加重置按钮。
 - 🐞 `<pro>DataSet`: 修复响应值为空时报错。
+- 🐞 `<pro>Tooltip`: 修复层级比下拉框低的问题。
 
 ## 0.8.3
 

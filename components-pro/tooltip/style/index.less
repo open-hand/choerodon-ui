@@ -9,7 +9,7 @@
 .@{tooltip-prefix-cls}-popup {
   .reset-component;
   position: absolute;
-  z-index: -1;
+  z-index: 1;
   display: block;
   visibility: visible;
   box-shadow: none;
@@ -53,7 +53,6 @@
     width: @tooltip-arrow-width;
     height: @tooltip-arrow-width;
     background-color: @tooltip-bg;
-    z-index: @zindex-tooltip + 1;
 
     // 暗色主题用border实现箭头
     // 因为背景色有透明度, 无法使用两个div互相覆盖的方法

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Children, Component, isValidElement } from 'react';
 import PropTypes from 'prop-types';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure';
 import Trigger from '../trigger/Trigger';
@@ -189,6 +189,12 @@ export default class Tooltip extends Component<TooltipProps, any> {
         hidden,
       },
     } = this;
+    const child = Children.map(children, (node, index) => {
+      if (node && !isValidElement(node)) {
+        return <span key={`text-${index}`}>{node}</span>;
+      }
+      return node;
+    });
 
     return (
       <Trigger
@@ -204,7 +210,7 @@ export default class Tooltip extends Component<TooltipProps, any> {
         popupHidden={hidden || !popupContent}
         transitionName={transitionName}
       >
-        {children}
+        {child}
       </Trigger>
     );
   }

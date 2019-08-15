@@ -14,7 +14,7 @@ title:
 Use `optionRenderer` input property.
 
 ````jsx
-import { DataSet, Select, Button, Row, Col, Menu } from 'choerodon-ui/pro';
+import { DataSet, Select, Button, Row, Col, Menu, Tooltip } from 'choerodon-ui/pro';
 
 const Item = Menu.Item;
 
@@ -31,7 +31,11 @@ const App = () => {
     ],
   });
 
-  const optionRenderer = ({ record, text, value }) => 'User: ' + text;
+  const optionRenderer = ({ record, text, value }) => (
+    <Tooltip title={text} placement="left">
+      <div style={{ width: '100%' }}>User: {text}</div>
+    </Tooltip>
+  );
 
   return (
     <Row gutter={10}>

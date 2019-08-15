@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `<pro>Button`: Add the primary color.
 - 🌟 `<pro>Table`: Advanced search adds a reset button.
 - 🐞 `<pro>DataSet`: Fix bugs when the response value is empty.
+- 🐞 `<pro>Tooltip`: Fix the problem that the z-index is lower than the drop-down box.
 
 ## 0.8.3
 
