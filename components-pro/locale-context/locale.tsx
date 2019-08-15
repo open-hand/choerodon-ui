@@ -24,6 +24,9 @@ export interface Locale {
     choose_export_columns;
     column_name;
     filter_bar_placeholder;
+    advanced_query;
+    hide_advanced_query;
+    advanced_query_conditions;
   };
   Pagination: {
     records_per_page;

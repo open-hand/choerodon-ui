@@ -20,6 +20,7 @@ import { $l } from '../locale-context';
 import Table, { Buttons } from './Table';
 import Column from './Column';
 import { findBindFieldBy } from '../data-set/utils';
+import autobind from '../_util/autobind';
 
 /**
  * 去除级联字段
@@ -56,44 +57,66 @@ export default class TableToolBar extends Component<TabelToolBarProps, any> {
 
   exportDataSet: DataSet;
 
-  handleFieldEnter = () => {
+  @autobind
+  handleFieldEnter() {
     this.handleQuery();
     if (this.modal) {
       this.modal.close();
     }
-  };
+  }
 
-  handleButtonCreate = () => {
+  @autobind
+  handleButtonCreate() {
     const { dataSet } = this.context.tableStore;
     dataSet.create({}, 0);
-  };
+  }
 
-  handleButtonSubmit = () => this.context.tableStore.dataSet.submit();
+  @autobind
+  handleButtonSubmit() {
+    this.context.tableStore.dataSet.submit();
+  }
 
-  handleButtonDelete = () => {
+  @autobind
+  handleButtonDelete() {
     const { dataSet } = this.context.tableStore;
     dataSet.delete(dataSet.selected);
-  };
+  }
 
-  handleButtonRemove = () => {
+  @autobind
+  handleButtonRemove() {
     const { dataSet } = this.context.tableStore;
     dataSet.remove(dataSet.selected);
-  };
+  }
 
-  handleButtonReset = () => this.context.tableStore.dataSet.reset();
+  @autobind
+  handleButtonReset() {
+    this.context.tableStore.dataSet.reset();
+  }
 
-  handleQueryReset = () => {
-    const { current } = this.context.tableStore.dataSet.queryDataSet;
-    if (current) {
-      current.reset();
+  @autobind
+  handleQueryReset() {
+    const { queryDataSet } = this.context.tableStore.dataSet;
+    if (queryDataSet) {
+      const { current } = queryDataSet;
+      if (current) {
+        current.reset();
+      }
+      this.handleQuery();
     }
-    this.handleQuery();
-  };
+  }
 
-  handleExpandAll = () => this.context.tableStore.expandAll();
-  handleCollapseAll = () => this.context.tableStore.collapseAll();
+  @autobind
+  handleExpandAll() {
+    this.context.tableStore.expandAll();
+  }
 
-  handleButtonExport = async () => {
+  @autobind
+  handleCollapseAll() {
+    this.context.tableStore.collapseAll();
+  }
+
+  @autobind
+  async handleButtonExport() {
     const columnHeaders = await this.context.tableStore.getColumnHeaders();
     this.exportDataSet = new DataSet({ data: columnHeaders, paging: false });
     this.exportDataSet.selectAll();
@@ -110,13 +133,15 @@ export default class TableToolBar extends Component<TabelToolBarProps, any> {
         width: pxToRem(400),
       },
     });
-  };
+  }
 
-  handleQuery = () => {
+  @autobind
+  handleQuery() {
     this.context.tableStore.dataSet.query();
-  };
+  }
 
-  handleExport = () => {
+  @autobind
+  handleExport() {
     const { selected } = this.exportDataSet;
     if (selected.length) {
       const { dataSet } = this.context.tableStore;
@@ -135,7 +160,7 @@ export default class TableToolBar extends Component<TabelToolBarProps, any> {
     } else {
       return false;
     }
-  };
+  }
 
   componentWillUnmount() {
     if (this.modal) {
@@ -249,9 +274,9 @@ export default class TableToolBar extends Component<TabelToolBarProps, any> {
 
   getDirtyInfo(current: Record | undefined, moreKeys: string[]) {
     if (current && moreKeys.some(key => {
-      const field = current.getField(key);
-      return field ? field.dirty : false;
-    })
+        const field = current.getField(key);
+        return field ? field.dirty : false;
+      })
     ) {
       const { prefixCls } = this.props;
       return (
@@ -304,8 +329,8 @@ export default class TableToolBar extends Component<TabelToolBarProps, any> {
       return isValidElement(element) ? (
         cloneElement(element, props)
       ) : (
-          cloneElement(getEditorByField(field), { ...props, ...element })
-        );
+        cloneElement(getEditorByField(field), { ...props, ...element })
+      );
     });
   }
 
