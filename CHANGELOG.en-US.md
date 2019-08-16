@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.4
+
+`2019-08-16`
+
 - 🌟 `configure`: Add global configuration new properties.
 - 🌟 `getConfig`: export getConfig method from choerodon-ui.
 - 🌟 `<pro>Field`: Add rang property.
