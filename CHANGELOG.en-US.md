@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: Add global configuration new properties.
+- 🌟 `getConfig`: export getConfig method from choerodon-ui.
 - 🌟 `<pro>Field`: Add rang property.
 - 🌟 `<pro>DatePicker`: Add multiple and range mode.
 - 🌟 `<pro>Button`: Add the primary color.

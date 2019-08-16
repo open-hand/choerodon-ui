@@ -1,7 +1,7 @@
 import { observable, ObservableMap, runInAction } from 'mobx';
 import { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { ReactNode } from 'react';
-import { LovConfig } from 'components-pro/lov/Lov';
+import { LovConfig } from 'choerodon-ui/pro/lib/lov/Lov';
 
 export type Config = {
   prefixCls?: string;
@@ -16,6 +16,7 @@ export type Config = {
   axios?: AxiosInstance;
   dataKey?: string;
   totalKey?: string;
+  statusKey?: string;
   labelLayout?: string;
   queryBar?: string;
   tableBorder?: boolean;
@@ -41,6 +42,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['lovQueryUrl', code => `/common/lov/dataset/${code}`],
   ['dataKey', 'rows'],
   ['totalKey', 'total'],
+  ['statusKey', '__status'],
   ['labelLayout', 'horizontal'],
   ['queryBar', 'normal'],
   ['tableBorder', true],

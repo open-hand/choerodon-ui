@@ -5,10 +5,11 @@ import isArray from 'lodash/isArray';
 import isObject from 'lodash/isObject';
 import defer from 'lodash/defer';
 import debounce from 'lodash/debounce';
+import warning from 'choerodon-ui/lib/_util/warning';
+import { getConfig } from 'choerodon-ui/lib/configure';
 import axios from '../axios';
 import Record from './Record';
 import Field, { FieldProps, Fields } from './Field';
-import warning from 'choerodon-ui/lib/_util/warning';
 import {
   append,
   axiosAdapter,
@@ -33,7 +34,6 @@ import exception from '../_util/exception';
 import { $l } from '../locale-context';
 import isEmpty from '../_util/isEmpty';
 import * as ObjectChainValue from '../_util/ObjectChainValue';
-import { getConfig } from 'choerodon-ui/lib/configure';
 import Transport, { TransportProps } from './Transport';
 
 export type DataSetChildren = { [key: string]: DataSet };
@@ -1769,7 +1769,7 @@ Then the query method will be auto invoke.`);
         this.isFilteredByQueryFields = data.__dirty;
         delete data.__dirty;
         delete data.__id;
-        delete data.__status;
+        delete data[getConfig('statusKey')];
       }
     }
     data = {

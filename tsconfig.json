@@ -21,6 +21,9 @@
     "paths": {
       "choerodon-ui/lib/*": [
         "./components/*"
+      ],
+      "choerodon-ui/pro/lib/*": [
+        "./components-pro/*"
       ]
     }
   },

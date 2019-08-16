@@ -8,9 +8,11 @@ title: Configure
 ## Usage
 
 ```jsx
-import { configure } from 'choerodon-ui';
+import { configure, getConfig } from 'choerodon-ui';
 
 configure({ prefixCls: 'ant' });
+
+const prefixCls = getConfig('prefixCls');
 ```
 
 ## API

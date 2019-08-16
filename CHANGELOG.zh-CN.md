@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: 增加全局配置新属性。
+- 🌟 `getConfig`: 暴露getConfig方法。
 - 🌟 `<pro>Field`: 新增range属性。
 - 🌟 `<pro>DatePicker`: 新增multiple和range模式。
 - 🌟 `<pro>Button`: 新增primary颜色。

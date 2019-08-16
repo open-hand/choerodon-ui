@@ -29,6 +29,7 @@ const esProDir = path.join(cwd, 'pro', 'es');
 const packageJson = require(`${cwd}/package.json`);
 
 const libName = `${packageJson.name}/lib`;
+const proName = `${packageJson.name}/pro/lib`;
 const lessLibName = /(\.\.\/)+components/g;
 
 function dist(done) {
@@ -257,15 +258,15 @@ function reportError() {
   console.log(chalk.bgRed('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'));
 }
 
-function changePath(modules) {
-  const dir = modules === false ? 'es' : 'lib';
+function changePath(dir, name, isPro) {
   return through2.obj(function (file, encoding, next) {
     const matches = file.path.match(/\.d\.ts|\.js/);
     if (matches) {
       const content = file.contents.toString(encoding);
-      if (content.match(libName)) {
+      if (content.match(name)) {
+        const replaceText = path.relative(file.path, dir).replace(/\\/g, '/');
         file.contents = Buffer.from(content
-          .replace(new RegExp(libName, 'g'), path.relative(file.path, path.join(cwd, dir)).replace(/\\/g, '/')));
+          .replace(new RegExp(name, 'g'), isPro ? replaceText.replace('../', '') : replaceText));
       }
     }
     this.push(file);
@@ -313,15 +314,15 @@ gulp.task('dist', (done) => {
 gulp.task('compile', ['compile-with-es'], () => {
   rimraf.sync(libDir);
   rimraf.sync(libProDir);
-  compile().pipe(gulp.dest(libDir));
-  compilePro().pipe(changePath()).pipe(gulp.dest(libProDir));
+  compile().pipe(changePath(libProDir, proName, true)).pipe(gulp.dest(libDir));
+  compilePro().pipe(changePath(libDir, libName)).pipe(gulp.dest(libProDir));
   compileRc().pipe(gulp.dest(libRcDir));
 });
 gulp.task('compile-with-es', () => {
   rimraf.sync(esDir);
   rimraf.sync(esProDir);
-  compile(false).pipe(gulp.dest(esDir));
-  compilePro(false).pipe(changePath(false)).pipe(gulp.dest(esProDir));
+  compile(false).pipe(changePath(esProDir, proName, true)).pipe(gulp.dest(esDir));
+  compilePro(false).pipe(changePath(esDir, libName)).pipe(gulp.dest(esProDir));
   compileRc(false).pipe(gulp.dest(esRcDir));
 });
 

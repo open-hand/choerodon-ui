@@ -5,6 +5,7 @@ import isString from 'lodash/isString';
 import isNumber from 'lodash/isNumber';
 import isPlainObject from 'lodash/isPlainObject';
 import warning from 'choerodon-ui/lib/_util/warning';
+import { getConfig } from 'choerodon-ui/lib/configure';
 import DataSet from './DataSet';
 import Field, { FieldProps, Fields } from './Field';
 import {
@@ -267,7 +268,7 @@ export default class Record {
     return json;
   }
 
-  toJSONData(noCascade?: boolean): object & { __dirty, __id, __status } {
+  toJSONData(noCascade?: boolean): any {
     const { status } = this;
     let dirty = status !== RecordStatus.sync;
     const json = this.normalizeData(true);
@@ -282,7 +283,7 @@ export default class Record {
     return {
       ...json,
       __id: this.id,
-      __status: status === RecordStatus.sync ? RecordStatus.update : status,
+      [getConfig('statusKey')]: status === RecordStatus.sync ? RecordStatus.update : status,
       __dirty: dirty,
     };
   }
@@ -659,7 +660,7 @@ export default class Record {
           const tls: any = current.toJSONData();
           if (tls.__dirty) {
             delete tls.__id;
-            delete tls.__status;
+            delete tls[getConfig('statusKey')];
             delete tls.__dirty;
             return tls;
           }
