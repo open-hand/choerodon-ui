@@ -351,15 +351,15 @@ export function getDateFormatByField(field?: Field, type?: FieldType): string {
   return Constants.DATE_JSON_FORMAT;
 }
 
-export function generateJSONData(array: object[], record: Record, noCascade?: boolean) {
+export function generateJSONData(array: object[], record: Record, isSelect?: boolean, noCascade?: boolean) {
   const json = record.toJSONData(noCascade);
-  if (json.__dirty) {
+  if (json.__dirty || isSelect) {
     delete json.__dirty;
     array.push(json);
   }
 }
 
-export function prepareSubmitData(records: Record[], noCascade?: boolean): [object[], object[], object[], object[]] {
+export function prepareSubmitData(records: Record[], isSelect?: boolean, noCascade?: boolean): [object[], object[], object[], object[]] {
   const created: object[] = [];
   const updated: object[] = [];
   const destroyed: object[] = [];
@@ -379,7 +379,7 @@ export function prepareSubmitData(records: Record[], noCascade?: boolean): [obje
   }
 
   records.forEach(
-    record => (noCascade && record.status === RecordStatus.sync) || generateJSONData(storeWith(record.status), record, noCascade),
+    record => (noCascade && record.status === RecordStatus.sync) || generateJSONData(storeWith(record.status), record, isSelect, noCascade),
   );
   return [created, updated, destroyed, cascade];
 }

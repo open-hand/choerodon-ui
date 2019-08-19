@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>DataSet.Record`: The `toJSONData` method adds the `isCascadeSelect` parameter.
+
 ## 0.8.4
 
 `2019-08-16`

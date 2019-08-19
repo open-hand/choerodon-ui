@@ -268,7 +268,7 @@ export default class Record {
     return json;
   }
 
-  toJSONData(noCascade?: boolean): any {
+  toJSONData(noCascade?: boolean, isCascadeSelect?: boolean): any {
     const { status } = this;
     let dirty = status !== RecordStatus.sync;
     const json = this.normalizeData(true);
@@ -277,7 +277,7 @@ export default class Record {
       dirty = true;
       json.__tls = tls;
     }
-    if (!noCascade && this.normalizeCascadeData(json)) {
+    if (!noCascade && this.normalizeCascadeData(json, false, isCascadeSelect)) {
       dirty = true;
     }
     return {
@@ -669,7 +669,7 @@ export default class Record {
     }
   }
 
-  private normalizeCascadeData(json: any, all?: boolean) {
+  private normalizeCascadeData(json: any, all?: boolean, isSelect?: boolean) {
     const { dataSetSnapshot, dataSet, isCurrent, status, fields } = this;
     const isDelete = status === RecordStatus.delete;
     if (dataSet) {
@@ -682,7 +682,7 @@ export default class Record {
         if (keys) {
           keys.forEach((name) => {
             const child = isCurrent ? children[name] : new DataSet().restore(dataSetSnapshot[name]);
-            const jsonArray = all ? child.toData() : child.toJSONData();
+            const jsonArray = all ? child.toData() : child.toJSONData(isSelect);
             if (jsonArray.length > 0) {
               dirty = true;
             }

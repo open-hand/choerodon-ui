@@ -637,7 +637,7 @@ export default class DataSet extends EventManager {
 
   toJSONData(isSelected?: boolean, noCascade?: boolean): object[] {
     const data: object[] = [];
-    (isSelected ? this.selected : this.data.concat(this.destroyed)).forEach(record => generateJSONData(data, record, noCascade));
+    (isSelected ? this.selected : this.data.concat(this.destroyed)).forEach(record => generateJSONData(data, record, isSelected, noCascade));
     return data;
   }
 
@@ -688,7 +688,7 @@ export default class DataSet extends EventManager {
   async submit(isSelect?: boolean, noCascade?: boolean): Promise<any> {
     await this.ready(isSelect);
     if (await this.validate(isSelect, noCascade)) {
-      return this.write(isSelect ? this.selected : this.data.concat(this.destroyed), noCascade);
+      return this.write(isSelect ? this.selected : this.data.concat(this.destroyed), isSelect, noCascade);
     }
     return false;
   }
@@ -1504,9 +1504,9 @@ Then the query method will be auto invoke.`);
   //     ), allData);
   // }
 
-  private async write(records: Record[], noCascade?: boolean): Promise<any> {
+  private async write(records: Record[], isSelect?: boolean, noCascade?: boolean): Promise<any> {
     if (records.length) {
-      const [created, updated, destroyed, cascade] = prepareSubmitData(records, noCascade);
+      const [created, updated, destroyed, cascade] = prepareSubmitData(records, isSelect, noCascade);
       const { transport } = this;
       const axiosConfigs: AxiosRequestConfig[] = [];
       const submitData: object[] = [

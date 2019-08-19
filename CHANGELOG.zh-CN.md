@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>DataSet.Record`: toJSONData方法增加isCascadeSelect参数。
+
 ## 0.8.4
 
 `2019-08-16`
