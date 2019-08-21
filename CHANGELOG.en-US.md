@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.6
+
+`2019-08-21`
+
 - 🐞 `<pro>Table`: Fixed an issue that table was not automatically queried when it's filter bar value was changed.
 - 🐞 `<pro>Table`: Fixed an issue of inline editing when the dataSet was changed.
 
