@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import PropTypes from 'prop-types';
+import { getConfig } from 'choerodon-ui/lib/configure';
 import TextField from '../text-field/TextField';
 import Form from '../form/Form';
 import localeContext from '../locale-context';
-import DataSet from '../data-set/DataSet';
+import Record from '../data-set/Record';
 import { Lang } from '../locale-context/enum';
 
 export interface IntlListProps {
-  dataSet: DataSet;
+  record?: Record;
   name?: string;
   lang: Lang;
 }
@@ -17,18 +18,19 @@ export interface IntlListProps {
 export default class IntlList extends Component<IntlListProps> {
 
   static propTypes = {
-    dataSet: PropTypes.object,
+    record: PropTypes.object,
     name: PropTypes.string,
     lang: PropTypes.string,
   };
 
   renderOptions() {
-    const { dataSet, name, lang } = this.props;
+    const { record, name, lang } = this.props;
     const { supports } = localeContext;
+    const tlsKey = getConfig('tlsKey');
     return Object.keys(supports).map(key => (
       <TextField
-        dataSet={dataSet}
-        name={name ? `${name}.${key}` : key}
+        record={record}
+        name={name ? `${tlsKey}.${name}.${key}` : key}
         autoFocus={key === lang}
         key={key}
         label={supports[key]}

@@ -10,7 +10,6 @@ import Validator, { CustomValidator } from '../validator/Validator';
 import { DataSetEvents, FieldIgnore, FieldType, SortOrder } from './enum';
 import lookupStore from '../stores/LookupCodeStore';
 import lovCodeStore from '../stores/LovCodeStore';
-import localeContext from '../locale-context';
 import { processValue } from './utils';
 import Validity from '../validator/Validity';
 import ValidationResult from '../validator/ValidationResult';
@@ -272,15 +271,6 @@ export default class Field {
         if (parentField && parentField !== this && !parentField.isDirtyComputing) {
           return parentField.dirty && isValueDirty(bind, record);
         }
-        if (record.tlsDataSet && this.type === FieldType.intl) {
-          const { current } = record.tlsDataSet;
-          if (current) {
-            return Object.keys(localeContext.supports).some((lang) => {
-              const langField = current.getField(`${name}.${lang}`);
-              return langField && !langField.isDirtyComputing ? langField.dirty : false;
-            });
-          }
-        }
       } catch (e) {
         warning(false, `Field#${name}; ${e.message}`);
       } finally {
@@ -363,10 +353,6 @@ export default class Field {
       const dynamicProps = this.get('dynamicProps');
       if (typeof dynamicProps === 'function') {
         let { dataSet, record, name } = this;
-        if (dataSet && dataSet.tlsRecord) {
-          record = dataSet.tlsRecord;
-          dataSet = record.dataSet;
-        }
         if (record && !record.data) {
           record = new Record(record.initData);
           record.dataSet = dataSet;
@@ -374,14 +360,6 @@ export default class Field {
         if (dataSet && record) {
           const props = dynamicProps({ dataSet, record, name });
           if (props && propsName in props) {
-            // const reactor = this.reactions[propsName];
-            // if (!reactor) {
-            //   this.reactions[propsName] = reaction(() => this.get(propsName), () => {
-            //     this.validator.reset();
-            //     this.checkValidity();
-            //   });
-            // }
-
             const prop = props[propsName];
             this.checkDynamicProp(propsName, prop);
             return prop;

@@ -50,7 +50,7 @@ if (typeof window !== 'undefined') {
   Mock.mock(/\/dataset\/user\/languages/, {
     rows: [{
       name: {
-        zh_CN: '',
+        zh_CN: '@cname()',
         en_GB: '@name()',
         en_US: '@name()',
       },

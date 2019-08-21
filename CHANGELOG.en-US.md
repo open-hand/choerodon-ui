@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `<pro>DataSet.Record`: The `toJSONData` method adds the `isCascadeSelect` parameter.
+- 💄 `<pro>IntlField`: Refactor the code to support multi-language values directly from the Record data.
 
 ## 0.8.4
 

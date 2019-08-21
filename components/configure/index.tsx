@@ -17,6 +17,7 @@ export type Config = {
   dataKey?: string;
   totalKey?: string;
   statusKey?: string;
+  tlsKey?: string;
   labelLayout?: string;
   queryBar?: string;
   tableBorder?: boolean;
@@ -43,6 +44,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['dataKey', 'rows'],
   ['totalKey', 'total'],
   ['statusKey', '__status'],
+  ['tlsKey', '__tls'],
   ['labelLayout', 'horizontal'],
   ['queryBar', 'normal'],
   ['tableBorder', true],

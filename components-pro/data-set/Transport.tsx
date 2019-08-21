@@ -19,6 +19,7 @@ export type TransportProps = {
   destroy?: TransportType;
   validate?: TransportType;
   submit?: TransportType;
+  tls?: TransportType;
   adapter?: TransportAdapter;
 }
 
@@ -92,6 +93,17 @@ export default class Transport {
   @computed
   get submit(): TransportType | undefined {
     return this.props.submit || this.dataSet.submitUrl;
+  }
+
+  set tls(tls: TransportType | undefined) {
+    runInAction(() => {
+      this.props.tls = tls;
+    });
+  }
+
+  @computed
+  get tls(): TransportType | undefined {
+    return this.props.tls || this.dataSet.tlsUrl;
   }
 
   set adapter(adapter: TransportAdapter) {

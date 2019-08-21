@@ -34,6 +34,8 @@ const prefixCls = getConfig('prefixCls');
 | axios | 替换内置的axios实例 | AxiosInstance |  |
 | dataKey | 默认DataSet的dataKey | string | rows |
 | totalKey | 默认DataSet的totalKey | string | total |
+| statusKey | 默认DataSet提交的数据中标识状态的key | string | __status |
+| tlsKey | 默认DataSet数据中标识多语言的key | string | __tls |
 | labelLayout | 默认Form的labelLayout | string | horizontal |
 | queryBar | 默认Table的queryBar | string | normal |
 | tableBorder | 默认Table的border | boolean | true |

@@ -7,6 +7,7 @@ import defer from 'lodash/defer';
 import debounce from 'lodash/debounce';
 import warning from 'choerodon-ui/lib/_util/warning';
 import { getConfig } from 'choerodon-ui/lib/configure';
+import localeContext, { $l } from '../locale-context';
 import axios from '../axios';
 import Record from './Record';
 import Field, { FieldProps, Fields } from './Field';
@@ -21,7 +22,7 @@ import {
   getFieldSorter,
   getOrderFields,
   prepareForSubmit,
-  prepareSubmitData,
+  prepareSubmitData, processIntlField,
   sortTree,
 } from './utils';
 import EventManager from '../_util/EventManager';
@@ -31,7 +32,6 @@ import { DataSetEvents, DataSetSelection, DataSetStatus, FieldType, RecordStatus
 import { Lang } from '../locale-context/enum';
 import Message from '../message';
 import exception from '../_util/exception';
-import { $l } from '../locale-context';
 import isEmpty from '../_util/isEmpty';
 import * as ObjectChainValue from '../_util/ObjectChainValue';
 import Transport, { TransportProps } from './Transport';
@@ -214,8 +214,6 @@ export default class DataSet extends EventManager {
 
   parent?: DataSet;
 
-  tlsRecord?: Record;
-
   children: DataSetChildren = {};
 
   originalData: Record[] = [];
@@ -229,11 +227,11 @@ export default class DataSet extends EventManager {
   reaction: IReactionDisposer;
 
   @computed
-  get lang(): Lang | undefined {
-    return get(this.props, 'lang');
+  get lang(): Lang {
+    return get(this.props, 'lang') || localeContext.locale.lang;
   }
 
-  set lang(lang: Lang | undefined) {
+  set lang(lang: Lang) {
     runInAction(() => {
       set(this.props, 'lang', lang);
     });
@@ -1305,15 +1303,17 @@ export default class DataSet extends EventManager {
 
   /*
    * 增加新字段
-   * @param fieldName 字段名
-   * @param props 字段属性
+   * @param name 字段名
+   * @param field 字段属性
    * @return 新增字段
    */
   @action
-  addField(fieldName: string, props: FieldProps = {}): Field {
-    const field = new Field(props, this);
-    this.fields.set(fieldName, field);
-    return field;
+  addField(name: string, fieldProps: FieldProps = {}): Field {
+    return processIntlField(name, fieldProps, (langName, langProps) => {
+      const field = new Field(langProps, this);
+      this.fields.set(langName, field);
+      return field;
+    }, this);
   }
 
   @action

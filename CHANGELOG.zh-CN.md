@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `<pro>DataSet.Record`: toJSONData方法增加isCascadeSelect参数。
+- 💄 `<pro>IntlField`: 重构代码，支持直接从Record数据中获取多语言值。
 
 ## 0.8.4
 

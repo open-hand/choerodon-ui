@@ -31,6 +31,8 @@ const prefixCls = getConfig('prefixCls');
 | axios | Replace the built-in axios instance | AxiosInstance |  |
 | dataKey | default DataSet's dataKey  | string | rows |
 | totalKey | default DataSet's totalKey | string | total |
+| statusKey | The status key in the data submitted by the DataSet by default.  | string | __status |
+| tlsKey | Multi-language key in the DataSet data by default. | string | __tls |
 | labelLayout | default Form's labelLayout | string | horizontal |
 | queryBar | default table's queryBar | string | normal |
 | tableBorder | default table's border | boolean | true |

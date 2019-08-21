@@ -1,5 +1,4 @@
 import { action, computed, isArrayLike, isObservableArray, observable, runInAction, set, toJS } from 'mobx';
-import cloneDeep from 'lodash/cloneDeep';
 import isNil from 'lodash/isNil';
 import isString from 'lodash/isString';
 import isNumber from 'lodash/isNumber';
@@ -9,13 +8,15 @@ import { getConfig } from 'choerodon-ui/lib/configure';
 import DataSet from './DataSet';
 import Field, { FieldProps, Fields } from './Field';
 import {
+  axiosAdapter,
   checkFieldType,
   childrenInfoForDelete,
   findBindFields,
+  generateResponseData,
   getOrderFields,
   getRecordValue,
   isSame,
-  mergeTlsFields,
+  processIntlField,
   processToJSON,
   processValue,
   sortTree,
@@ -63,8 +64,6 @@ export default class Record {
   dataSetSnapshot: { [key: string]: DataSetSnapshot } = {};
 
   localeSupports?: Supports;
-
-  @observable tlsDataSet?: DataSet;
 
   pending?: Promise<boolean>;
 
@@ -260,10 +259,6 @@ export default class Record {
 
   toData(): object {
     const json = this.normalizeData();
-    const tls = this.normalizeTls(true);
-    if (tls) {
-      json.__tls = tls;
-    }
     this.normalizeCascadeData(json, true);
     return json;
   }
@@ -272,11 +267,6 @@ export default class Record {
     const { status } = this;
     let dirty = status !== RecordStatus.sync;
     const json = this.normalizeData(true);
-    const tls = this.normalizeTls();
-    if (tls) {
-      dirty = true;
-      json.__tls = tls;
-    }
     if (!noCascade && this.normalizeCascadeData(json, false, isCascadeSelect)) {
       dirty = true;
     }
@@ -343,7 +333,7 @@ export default class Record {
   }
 
   @action
-  set(item: string | object, value: any): Record {
+  set(item: string | object, value?: any): Record {
     if (isString(item)) {
       let fieldName: string = item;
       const oldName = fieldName;
@@ -376,15 +366,8 @@ export default class Record {
             this.status = RecordStatus.update;
           }
         }
-        const { dataSet, tlsDataSet } = this;
+        const { dataSet } = this;
         if (dataSet) {
-          if (tlsDataSet) {
-            const { lang = localeContext.locale.lang } = dataSet;
-            const { current } = tlsDataSet;
-            if (current && current.get(fieldName)) {
-              current.set(`${fieldName}.${lang}`, newValue);
-            }
-          }
           dataSet.fireEvent(DataSetEvents.update, { dataSet, record: this, name: oldName, value: newValue, oldValue });
           const { checkField } = dataSet.props;
           if (checkField && (checkField === fieldName || checkField === oldName)) {
@@ -409,32 +392,13 @@ export default class Record {
 
   clone(): Record {
     const { dataSet } = this;
-    const cloneData = cloneDeep(toJS(this.data));
+    const cloneData = this.toData();
     if (dataSet) {
-      const { primaryKey, tlsUrl } = dataSet.props;
+      const { primaryKey } = dataSet.props;
       if (primaryKey) {
         delete cloneData[primaryKey];
       }
-      const clone = new Record(cloneData, dataSet);
-      if (tlsUrl && primaryKey) {
-        this.tls().then((locales) => {
-          if (locales) {
-            const record = locales[0];
-            this.mergeLocaleData(record);
-            clone.tlsDataSet = new DataSet({
-              fields: mergeTlsFields(this.fields, localeContext.supports, Object.keys(record)),
-            });
-            clone.tlsDataSet.tlsRecord = clone;
-            clone.tlsDataSet.create(record);
-            if (dataSet) {
-              const { lang = localeContext.locale.lang } = dataSet;
-              Object.keys(record).forEach(fieldName => clone.set(fieldName, record[fieldName][lang]));
-            }
-          }
-        });
-        clone.localeSupports = this.localeSupports;
-      }
-      return clone;
+      return new Record(cloneData, dataSet);
     } else {
       return new Record(cloneData);
     }
@@ -463,53 +427,25 @@ export default class Record {
   };
 
   @action
-  async tls(name?: string): Promise<any> {
-    const { supports } = localeContext;
+  async tls(): Promise<void> {
+    const tlsKey = getConfig('tlsKey');
     const { dataSet } = this;
-    if (dataSet) {
-      const { tlsUrl, lang = localeContext.locale.lang } = dataSet;
-      const { primaryKey, dataKey } = dataSet.props;
-      if (!this.tlsDataSet) {
-
-        warning(!!primaryKey, 'If you want to use IntlField, please set `primaryKey` for dataSet.');
-        warning(!!tlsUrl, 'If you want to use IntlField, please set `tlsUrl` for dataSet.');
-
-        if (tlsUrl && primaryKey) {
-          this.tlsDataSet = new DataSet({
-            data: name ? [{ [name]: { [lang]: this.get(name) } }] : void 0,
-            queryUrl: tlsUrl,
-            queryParameter: {
-              key: this.get(primaryKey),
-            },
-            fields: name ? mergeTlsFields(this.fields, supports, [name]) : void 0,
-            events: {
-              [DataSetEvents.beforeLoad]: ({ data: [record] }) => {
-                if (this.tlsDataSet) {
-                  this.tlsDataSet.initFields(mergeTlsFields(this.fields, supports, Object.keys(record)));
-                }
-                this.mergeLocaleData(record);
-                Object.keys(record).forEach(fieldName => this.set(fieldName, record[fieldName][lang]));
-              },
-            },
-          });
-          this.tlsDataSet.tlsRecord = this;
+    if (dataSet && !this.get(tlsKey)) {
+      const { transport: { tls = {}, adapter }, axios } = dataSet;
+      const { primaryKey } = dataSet.props;
+      warning(!!primaryKey, 'If you want to use IntlField, please set `primaryKey` for dataSet.');
+      const newConfig = axiosAdapter(tls, dataSet, {}, {
+        key: this.get(primaryKey),
+      });
+      const adapterConfig = adapter(newConfig, 'tls') || newConfig;
+      if (adapterConfig.url) {
+        const result = await axios(adapterConfig);
+        if (result) {
+          const dataKey = getConfig('dataKey');
+          this.commitTls(generateResponseData(result, dataKey)[0]);
         }
-      } else if (name) {
-        mergeTlsFields(this.fields, supports, [name]).forEach((field) => (
-          field.name && this.tlsDataSet && this.tlsDataSet.addField(field.name, field)
-        ));
-      }
-      if (this.tlsDataSet) {
-        if (this.status !== RecordStatus.add && this.localeSupports !== supports) {
-          this.localeSupports = supports;
-          const data = await this.tlsDataSet.query();
-          return data[dataKey!];
-        } else {
-          const { current } = this.tlsDataSet;
-          if (current) {
-            return [cloneDeep(toJS(current.data))];
-          }
-        }
+      } else {
+        warning(!!tls, 'If you want to use IntlField, please set `tlsUrl` or `transport.tls` for dataSet.');
       }
     }
   }
@@ -519,9 +455,6 @@ export default class Record {
     const { status, fields } = this;
     Array.from(fields.values()).forEach(field => field.commit());
     this.data = this.pristineData;
-    if (this.tlsDataSet) {
-      this.tlsDataSet.reset();
-    }
     if (status === RecordStatus.update || status === RecordStatus.delete) {
       this.status = RecordStatus.sync;
     }
@@ -562,15 +495,26 @@ export default class Record {
         }
       }
     }
-    if (this.tlsDataSet) {
-      const { current } = this.tlsDataSet;
-      if (current) {
-        current.commit();
-      }
-    }
     Array.from(fields.values()).forEach(field => field.commit());
     this.status = RecordStatus.sync;
     return this;
+  }
+
+  @action
+  private commitTls(data) {
+    const { dataSet } = this;
+    const lang = dataSet ? dataSet.lang : localeContext.locale.lang;
+    const tlsKey = getConfig('tlsKey');
+    this.pristineData[tlsKey] = data;
+    const values: object = {};
+    Object.keys(data).forEach((key) => {
+      const field = this.getField(key);
+      if (field && field.dirty) {
+        values[`${tlsKey}.${key}.${lang}`] = this.get(key);
+      }
+    });
+    this.set(tlsKey, data);
+    this.set(values);
   }
 
   private initFields(fields: Fields) {
@@ -578,10 +522,13 @@ export default class Record {
   }
 
   @action
-  private addField(name: string, props: FieldProps = {}): Field | undefined {
-    const field = new Field({ ...props, name }, this.dataSet, this);
-    this.fields.set(name, field);
-    return field;
+  private addField(name: string, fieldProps: FieldProps = {}): Field {
+    const { dataSet } = this;
+    return processIntlField(name, fieldProps, (langName, langProps) => {
+      const field = new Field({ ...langProps, name: langName }, dataSet, this);
+      this.fields.set(langName, field);
+      return field;
+    }, dataSet);
   }
 
   private processData(data: object = {}): object {
@@ -648,25 +595,6 @@ export default class Record {
       }
     });
     return json;
-  }
-
-  private normalizeTls(all?: boolean) {
-    if (this.tlsDataSet) {
-      const { current } = this.tlsDataSet;
-      if (current) {
-        if (all) {
-          return current.toData();
-        } else {
-          const tls: any = current.toJSONData();
-          if (tls.__dirty) {
-            delete tls.__id;
-            delete tls[getConfig('statusKey')];
-            delete tls.__dirty;
-            return tls;
-          }
-        }
-      }
-    }
   }
 
   private normalizeCascadeData(json: any, all?: boolean, isSelect?: boolean) {

@@ -9,15 +9,15 @@ import isArray from 'lodash/isArray';
 import isNumber from 'lodash/isNumber';
 import isEqual from 'lodash/isEqual';
 import warning from 'choerodon-ui/lib/_util/warning';
+import { getConfig } from 'choerodon-ui/lib/configure';
 import Field, { FieldProps, Fields } from './Field';
 import { BooleanValue, FieldType, RecordStatus, SortOrder } from './enum';
 import DataSet from './DataSet';
 import Record from './Record';
 import Constants from './Constants';
-import { Supports } from '../locale-context/supports';
 import isEmpty from '../_util/isEmpty';
 import * as ObjectChainValue from '../_util/ObjectChainValue';
-import { $l } from '../locale-context';
+import localeContext, { $l } from '../locale-context';
 import Transport, { TransportType } from './Transport';
 
 export function append(url: string, suffix?: object) {
@@ -149,22 +149,6 @@ export function sortTree(children: Record[], orderField: Field): Record[] {
     });
   }
   return children;
-}
-
-export function mergeTlsFields(fields: Fields, supports: Supports, fieldNames: string[]): (FieldProps & { [key: string]: any })[] {
-  const newFields: (FieldProps & { [key: string]: any })[] = [];
-  const langs = Object.keys(supports);
-  fieldNames.forEach((fieldName) => {
-    const field = fields.get(fieldName);
-    if (field) {
-      const props = field.getProps();
-      newFields.push({ ...props, name: fieldName });
-      langs.forEach((lang) => {
-        newFields.push({ ...props, name: `${fieldName}.${lang}`, label: langs[lang] });
-      });
-    }
-  });
-  return newFields;
 }
 
 export function checkParentByInsert({ parent }: DataSet) {
@@ -451,4 +435,29 @@ export function getRecordValue(data: any, cb: (record: Record, fieldName: string
     }
     return ObjectChainValue.get(data, fieldName as string);
   }
+}
+
+export function processIntlField(name: string,
+                                 fieldProps: FieldProps,
+                                 callback: (name: string, props: FieldProps) => Field,
+                                 dataSet?: DataSet): Field {
+  const tlsKey = getConfig('tlsKey');
+  const languages = Object.keys(localeContext.supports);
+  const { type, dynamicProps } = fieldProps;
+  if (type === FieldType.intl) {
+    languages.forEach(language => (
+      callback(`${tlsKey}.${name}.${language}`, { ...fieldProps, type: FieldType.string, label: `${languages[language]}` })
+    ));
+    return callback(name, {
+      ...fieldProps,
+      dynamicProps(props) {
+        const { lang = localeContext.locale.lang } = dataSet || {};
+        return {
+          ...(dynamicProps && dynamicProps(props)),
+          bind: props.record.get(tlsKey) ? `${tlsKey}.${name}.${lang}` : void 0,
+        };
+      },
+    });
+  }
+  return callback(name, fieldProps);
 }

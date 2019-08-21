@@ -249,7 +249,9 @@ title: DataSet
 | read | 查询请求的axios配置或url字符串 | AxiosRequestConfig \| ({ data, params, dataSet }) => AxiosRequestConfig \| string |
 | update | 更新请求的axios配置或url字符串 | AxiosRequestConfig \| ({ data, params, dataSet }) => AxiosRequestConfig \| string |
 | destroy | 删除请求的axios配置或url字符串 | AxiosRequestConfig \| ({ data, params, dataSet }) => AxiosRequestConfig \| string |
+| validate | 唯一性校验请求的axios配置或url字符串 | AxiosRequestConfig \| ({ data, params, dataSet }) => AxiosRequestConfig \| string |
 | submit | create, update, destroy的默认配置或url字符串 | AxiosRequestConfig \| ({ data, params, dataSet }) => AxiosRequestConfig \| string |
+| tls | 多语言数据请求的axios配置或url字符串 | AxiosRequestConfig \| ({ data, params, dataSet }) => AxiosRequestConfig \| string |
 | adapter | CRUD配置适配器 | (config: AxiosRequestConfig, type: string) => AxiosRequestConfig |
 
 ### AxiosRequestConfig
