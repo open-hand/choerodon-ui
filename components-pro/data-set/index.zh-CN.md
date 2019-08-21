@@ -177,6 +177,7 @@ title: DataSet
 | clone() | 克隆记录，自动剔除主键值 |  | Record |
 | ready() | 判断记录是否准备就绪 |  | Promise&lt;boolean&gt; |
 | reset() | 重置更改 |  |  |
+| clear() | 清除所有数据 |  |  |
 
 ### Field Props
 
@@ -240,6 +241,8 @@ title: DataSet
 | getValue() | 获取当前记录的本字段值 | `lookupValue` - lookup值 |
 | getText(lookupValue) | 根据lookup值获取lookup含义 | `lookupValue` - lookup值，默认本字段值 |
 | getLookupData(lookupValue) | 根据lookup值获取lookup对象 | `lookupValue` - lookup值，默认本字段值 |
+| isValid() | 是否校验通过 |  |
+| getValidationMessage() | 获取校验信息 |  |
 
 ### Transport
 

@@ -462,6 +462,11 @@ export default class Record {
   }
 
   @action
+  clear(): Record {
+    return this.set(Object.keys(this.data).reduce((obj, key) => (obj[key] = null, obj), {}));
+  }
+
+  @action
   commit(data?: object, dataSet?: DataSet): Record {
     const { dataSetSnapshot, fields } = this;
     if (dataSet) {

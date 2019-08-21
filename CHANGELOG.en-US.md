@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>Table`: Fixed an issue that table was not automatically queried when it's filter bar value was changed.
+
 ## 0.8.5
 
 `2019-08-21`

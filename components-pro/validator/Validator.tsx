@@ -37,7 +37,7 @@ export default class Validator {
 
   injectionOptions: object = {};
 
-  validationMessage?: ReactNode = '';
+  @observable validationMessage: ReactNode;
 
   @observable validationErrorValues: ValidationResult[];
 
@@ -51,6 +51,7 @@ export default class Validator {
 
   constructor() {
     runInAction(() => {
+      this.validationMessage = '';
       this.validationErrorValues = [];
     });
   }
@@ -65,6 +66,7 @@ export default class Validator {
     this.controlProps = props;
   }
 
+  @action
   reset() {
     this.validedValue = void 0;
     this.validationMessage = '';

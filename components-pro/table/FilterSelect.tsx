@@ -103,7 +103,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
   off() {
     const { queryDataSet } = this;
     if (queryDataSet) {
-      queryDataSet.addEventListener('update', this.handleDataSetUpdate);
+      queryDataSet.removeEventListener('update', this.handleDataSetUpdate);
     }
   }
 
@@ -118,12 +118,6 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
   setText(text) {
     super.setText(text);
     this.setFilterText(text);
-  }
-
-  @action
-  setValue(value) {
-    super.setValue(value);
-    this.props.optionDataSet.query();
   }
 
   getPlaceholders(): string[] {
@@ -237,6 +231,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
       values.push(name);
       this.setValue(values);
     }
+    this.props.optionDataSet.query();
   }
 
   @autobind
@@ -403,9 +398,8 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
   clear() {
     const record = this.getQueryRecord();
     if (record) {
-      record.reset();
+      record.clear();
     }
-    super.clear();
   }
 
   renderMultipleEditor(props: FilterSelectProps) {
