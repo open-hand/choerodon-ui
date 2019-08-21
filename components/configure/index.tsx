@@ -2,6 +2,13 @@ import { observable, ObservableMap, runInAction } from 'mobx';
 import { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { ReactNode } from 'react';
 import { LovConfig } from 'choerodon-ui/pro/lib/lov/Lov';
+import { RecordStatus } from 'choerodon-ui/pro/lib/data-set/enum';
+
+export type Status = {
+  [RecordStatus.add]: string;
+  [RecordStatus.update]: string;
+  [RecordStatus.delete]: string;
+}
 
 export type Config = {
   prefixCls?: string;
@@ -18,6 +25,7 @@ export type Config = {
   totalKey?: string;
   statusKey?: string;
   tlsKey?: string;
+  status?: Status;
   labelLayout?: string;
   queryBar?: string;
   tableBorder?: boolean;
@@ -45,6 +53,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['totalKey', 'total'],
   ['statusKey', '__status'],
   ['tlsKey', '__tls'],
+  ['status', { [RecordStatus.add]: 'add', [RecordStatus.update]: 'update', [RecordStatus.delete]: 'delete' }],
   ['labelLayout', 'horizontal'],
   ['queryBar', 'normal'],
   ['tableBorder', true],

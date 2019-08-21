@@ -36,6 +36,7 @@ const prefixCls = getConfig('prefixCls');
 | totalKey | 默认DataSet的totalKey | string | total |
 | statusKey | 默认DataSet提交的数据中标识状态的key | string | __status |
 | tlsKey | 默认DataSet数据中标识多语言的key | string | __tls |
+| status | 默认DataSet提交的数据的状态映射 | { add: string, update: string, delete: string } | { add: 'add', update: 'update', delete: 'delete' } |
 | labelLayout | 默认Form的labelLayout | string | horizontal |
 | queryBar | 默认Table的queryBar | string | normal |
 | tableBorder | 默认Table的border | boolean | true |

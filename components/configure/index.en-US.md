@@ -33,6 +33,7 @@ const prefixCls = getConfig('prefixCls');
 | totalKey | default DataSet's totalKey | string | total |
 | statusKey | The status key in the data submitted by the DataSet by default.  | string | __status |
 | tlsKey | Multi-language key in the DataSet data by default. | string | __tls |
+| status | Default status map of data submitted by DataSet. | { add: string, update: string, delete: string } | { add: 'add', update: 'update', delete: 'delete' } |
 | labelLayout | default Form's labelLayout | string | horizontal |
 | queryBar | default table's queryBar | string | normal |
 | tableBorder | default table's border | boolean | true |

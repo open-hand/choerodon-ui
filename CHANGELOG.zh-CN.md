@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: 增加全局配置新属性。
 - 🌟 `<pro>DataSet.Record`: toJSONData方法增加isCascadeSelect参数。
 - 💄 `<pro>IntlField`: 重构代码，支持直接从Record数据中获取多语言值。
 

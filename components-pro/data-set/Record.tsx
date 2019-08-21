@@ -273,7 +273,7 @@ export default class Record {
     return {
       ...json,
       __id: this.id,
-      [getConfig('statusKey')]: status === RecordStatus.sync ? RecordStatus.update : status,
+      [getConfig('statusKey')]: getConfig('status')[status === RecordStatus.sync ? RecordStatus.update : status],
       __dirty: dirty,
     };
   }

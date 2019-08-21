@@ -64,5 +64,5 @@ if (typeof window !== 'undefined') {
     success: true,
   });
 
-  Mock.mock(/\/dataset\/user\/validate/, ['@boolean()']);
+  Mock.mock(/\/dataset\/user\/validate/, [true]);
 }
