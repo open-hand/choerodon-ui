@@ -25,8 +25,6 @@ export default class TableStore {
 
   node: any;
 
-  dataSet: DataSet;
-
   @observable props: any;
 
   @observable bodyHeight: number;
@@ -42,6 +40,11 @@ export default class TableStore {
   @observable hoverRow?: Record;
 
   @observable currentEditorName?: string;
+
+  @computed
+  get dataSet(): DataSet {
+    return this.props.dataSet;
+  }
 
   @computed
   get columnResizable(): boolean {
@@ -383,9 +386,7 @@ export default class TableStore {
 
   @action
   setProps(props) {
-    const { dataSet } = props;
     this.props = props;
-    this.dataSet = dataSet;
   }
 
   isRowExpanded(record: Record): boolean {
