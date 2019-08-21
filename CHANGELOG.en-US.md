@@ -18,6 +18,7 @@ timeline: true
 - 🌟 `configure`: Add global configuration new properties.
 - 🌟 `<pro>DataSet.Record`: The `toJSONData` method adds the `isCascadeSelect` parameter.
 - 💄 `<pro>IntlField`: Refactor the code to support multi-language values directly from the Record data.
+- 🐞 `<pro>Tabs`: Fix disabled style issues.
 
 ## 0.8.4
 

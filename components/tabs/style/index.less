@@ -160,12 +160,6 @@
       clear: both;
     }
 
-    .@{tab-prefix-cls}-tab-disabled {
-      pointer-events: none;
-      cursor: default;
-      color: @disabled-color;
-    }
-
     .@{tab-prefix-cls}-tab {
       & .@{ripple-prefix-cls} {
         background-color: fade(#000, 20%);
@@ -202,6 +196,12 @@
     .@{tab-prefix-cls}-tab-active {
       color: @tab-highlight-color;
       font-weight: 500;
+    }
+
+    .@{tab-prefix-cls}-tab-disabled {
+      pointer-events: none;
+      cursor: default;
+      color: @disabled-color;
     }
   }
 
