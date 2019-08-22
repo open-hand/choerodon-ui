@@ -15,7 +15,7 @@ import isEmpty from '../_util/isEmpty';
 import { ButtonColor, FuncType } from '../button/enum';
 import asyncComponent, { AsyncCmpLoadingFunction } from '../_util/AsyncComponent';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
-import Message from '../message';
+import message from '../message';
 import exception from '../_util/exception';
 import { $l } from '../locale-context';
 import { getConfig } from 'choerodon-ui/lib/configure';
@@ -221,7 +221,7 @@ export default class Modal extends ViewComponent<ModalProps> {
         this.close();
       }
     } catch (e) {
-      Message.error(exception(e));
+      message.error(exception(e));
     }
   }
 
@@ -235,7 +235,7 @@ export default class Modal extends ViewComponent<ModalProps> {
         this.close();
       }
     } catch (e) {
-      Message.error(exception(e));
+      message.error(exception(e));
     }
   }
 

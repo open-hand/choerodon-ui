@@ -30,7 +30,7 @@ import DataSetSnapshot from './DataSetSnapshot';
 import confirm from '../modal/confirm';
 import { DataSetEvents, DataSetSelection, DataSetStatus, FieldType, RecordStatus, SortOrder } from './enum';
 import { Lang } from '../locale-context/enum';
-import Message from '../message';
+import message from '../message';
 import exception from '../_util/exception';
 import isEmpty from '../_util/isEmpty';
 import * as ObjectChainValue from '../_util/ObjectChainValue';
@@ -1615,7 +1615,7 @@ Then the query method will be auto invoke.`);
 
   private handleLoadFail(e) {
     this.fireEvent(DataSetEvents.loadFailed, { dataSet: this });
-    Message.error(exception(e, $l('DataSet', 'query_failure')));
+    message.error(exception(e, $l('DataSet', 'query_failure')));
   }
 
   private handleSubmitSuccess(resp: any[]) {
@@ -1635,13 +1635,13 @@ Then the query method will be auto invoke.`);
     } : data;
     this.fireEvent(DataSetEvents.submitSuccess, { dataSet: this, data: result });
     this.commitData(data, total);
-    Message.success($l('DataSet', 'submit_success'));
+    message.success($l('DataSet', 'submit_success'));
     return result;
   }
 
   private handleSubmitFail(e) {
     this.fireEvent(DataSetEvents.submitFailed, { dataSet: this });
-    Message.error(exception(e, $l('DataSet', 'submit_failure')));
+    message.error(exception(e, $l('DataSet', 'submit_failure')));
   }
 
   private syncChildren(current?: Record, previous?: Record) {

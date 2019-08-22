@@ -10,6 +10,7 @@ import Validator, { CustomValidator } from '../validator/Validator';
 import { DataSetEvents, FieldIgnore, FieldType, SortOrder } from './enum';
 import lookupStore from '../stores/LookupCodeStore';
 import lovCodeStore from '../stores/LovCodeStore';
+import localeContext from '../locale-context';
 import { processValue } from './utils';
 import Validity from '../validator/Validity';
 import ValidationResult from '../validator/ValidationResult';
@@ -260,6 +261,13 @@ export default class Field {
     if (record) {
       try {
         this.isDirtyComputing = true;
+        const tlsKey = getConfig('tlsKey');
+        if (this.type === FieldType.intl && record.get(tlsKey)) {
+          return Object.keys(localeContext.supports).some((lang) => {
+            const langField = record.getField(`${tlsKey}.${name}.${lang}`);
+            return langField && !langField.isDirtyComputing ? langField.dirty : false;
+          });
+        }
         const bind = this.get('bind') || name;
         if (bind !== name) {
           const field = record.getField(bind);

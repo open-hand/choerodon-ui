@@ -446,7 +446,19 @@ export function processIntlField(name: string,
   const { type, dynamicProps } = fieldProps;
   if (type === FieldType.intl) {
     languages.forEach(language => (
-      callback(`${tlsKey}.${name}.${language}`, { ...fieldProps, type: FieldType.string, label: `${languages[language]}` })
+      callback(`${tlsKey}.${name}.${language}`, {
+        ...fieldProps,
+        type: FieldType.string,
+        label: `${languages[language]}`,
+        dynamicProps(props) {
+          const { record } = props;
+          const field = record.getField(name);
+          return {
+            ...(dynamicProps && dynamicProps(props)),
+            required: field && field.required && !!record.get(tlsKey),
+          };
+        },
+      })
     ));
     return callback(name, {
       ...fieldProps,

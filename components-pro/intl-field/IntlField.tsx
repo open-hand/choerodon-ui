@@ -14,6 +14,8 @@ import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { stopEvent } from '../_util/EventManager';
 import Progress from '../progress';
 import { Size } from '../core/enum';
+import exception from '../_util/exception';
+import message from '../message';
 
 export interface IntlFieldProps extends TextFieldProps {
   modalProps?: ModalProps;
@@ -37,6 +39,9 @@ export default class IntlField extends TextField<IntlFieldProps> {
         this.setLoading(true);
         try {
           await record.tls();
+        } catch (err) {
+          message.error(exception(err));
+          return;
         } finally {
           this.setLoading(false);
         }

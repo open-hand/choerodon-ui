@@ -431,7 +431,7 @@ export default class Record {
     const tlsKey = getConfig('tlsKey');
     const { dataSet } = this;
     if (dataSet && !this.get(tlsKey)) {
-      const { transport: { tls = {}, adapter }, axios } = dataSet;
+      const { transport: { tls = {}, adapter }, axios, lang } = dataSet;
       const { primaryKey } = dataSet.props;
       warning(!!primaryKey, 'If you want to use IntlField, please set `primaryKey` for dataSet.');
       const newConfig = axiosAdapter(tls, dataSet, {}, {
@@ -445,7 +445,14 @@ export default class Record {
           this.commitTls(generateResponseData(result, dataKey)[0]);
         }
       } else {
-        warning(!!tls, 'If you want to use IntlField, please set `tlsUrl` or `transport.tls` for dataSet.');
+        this.commitTls([...this.fields.entries()].reduce((data, [key, field]) => {
+          if (field.type === FieldType.intl) {
+            data[key] = {
+              [lang]: this.get(key),
+            };
+          }
+          return data;
+        }, {}));
       }
     }
   }
