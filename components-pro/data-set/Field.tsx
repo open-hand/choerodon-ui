@@ -20,17 +20,19 @@ import { AxiosRequestConfig } from 'axios';
 import warning from 'choerodon-ui/lib/_util/warning';
 import { ValidatorProps } from '../validator/rules';
 
-function setFieldDirty(field: Field, dirty: boolean) {
-  if (dirty) {
-    field.dirty = true;
-  } else {
-    const { record, name } = field;
-    if (record) {
-      if (!isValueDirty(name, record)) {
+function setFieldDirty(field?: Field, dirty?: boolean) {
+  if (field) {
+    if (dirty) {
+      field.dirty = true;
+    } else {
+      const { record, name } = field;
+      if (record) {
+        if (!isValueDirty(name, record)) {
+          field.dirty = false;
+        }
+      } else {
         field.dirty = false;
       }
-    } else {
-      field.dirty = false;
     }
   }
 }
@@ -41,15 +43,17 @@ function isValueDirty(name: string, record: Record): boolean {
   return !isEqual(pristineValue, value);
 }
 
-function getParentField(name: string, record: Record): Field | undefined {
-  const parentFieldIndex = name.lastIndexOf('.');
-  if (parentFieldIndex > -1) {
-    const parentFieldName = name.slice(0, parentFieldIndex);
-    const parentField = record.getField(parentFieldName);
-    if (parentField) {
-      return parentField;
+function getParentField(name: string, record?: Record): Field | undefined {
+  if (record) {
+    const parentFieldIndex = name.lastIndexOf('.');
+    if (parentFieldIndex > -1) {
+      const parentFieldName = name.slice(0, parentFieldIndex);
+      const parentField = record.getField(parentFieldName);
+      if (parentField) {
+        return parentField;
+      }
+      return getParentField(parentFieldName, record);
     }
-    return getParentField(parentFieldName, record);
   }
 }
 
@@ -250,34 +254,47 @@ export default class Field {
 
   isDirtyComputing: boolean = false;
 
-  isBinding: boolean = false;
+  @computed
+  get bindTarget(): Field | undefined {
+    const { record } = this;
+    const bind = this.get('bind');
+    if (bind && record) {
+      return record.getField(bind);
+    }
+  }
+
+  @computed
+  get parent(): Field | undefined {
+    const { bindTarget, record, name } = this;
+    if (bindTarget) {
+      return bindTarget.parent;
+    }
+    return getParentField(name, record);
+  }
 
   @computed
   get dirty(): boolean {
     if (this.modified) {
       return true;
     }
-    const { record, name } = this;
+    const { record, name, type } = this;
     if (record) {
       try {
         this.isDirtyComputing = true;
         const tlsKey = getConfig('tlsKey');
-        if (this.type === FieldType.intl && record.get(tlsKey)) {
+        if (type === FieldType.intl && record.get(tlsKey)) {
           return Object.keys(localeContext.supports).some((lang) => {
             const langField = record.getField(`${tlsKey}.${name}.${lang}`);
             return langField && !langField.isDirtyComputing ? langField.dirty : false;
           });
         }
-        const bind = this.get('bind') || name;
-        if (bind !== name) {
-          const field = record.getField(bind);
-          if (field && !field.isDirtyComputing) {
-            return field.dirty;
-          }
+        const { bindTarget } = this;
+        if (bindTarget && !bindTarget.isDirtyComputing) {
+          return bindTarget.dirty;
         }
-        const parentField = getParentField(bind, record);
-        if (parentField && parentField !== this && !parentField.isDirtyComputing) {
-          return parentField.dirty && isValueDirty(bind, record);
+        const { parent } = this;
+        if (parent && parent !== this && !parent.isDirtyComputing) {
+          return parent.dirty && isValueDirty(bindTarget ? bindTarget.name : name, record);
         }
       } catch (e) {
         warning(false, `Field#${name}; ${e.message}`);
@@ -290,20 +307,8 @@ export default class Field {
 
   set dirty(dirty: boolean) {
     runInAction(() => {
-      const { record, name } = this;
-      if (record) {
-        const bind = this.get('bind') || name;
-        if (bind !== name) {
-          const field = record.getField(bind);
-          if (field) {
-            setFieldDirty(field, dirty);
-          }
-        }
-        const parentField = getParentField(bind, record);
-        if (parentField) {
-          setFieldDirty(parentField, dirty);
-        }
-      }
+      setFieldDirty(this.bindTarget, dirty);
+      setFieldDirty(this.parent, dirty);
       this.modified = dirty;
     });
   }
@@ -382,7 +387,10 @@ export default class Field {
     }
     const dsField = this.findDataSetField();
     if (dsField) {
-      return dsField.get(propsName);
+      const dsValue = dsField.get(propsName);
+      if (dsValue !== void 0) {
+        return dsValue;
+      }
     }
     if (propsName === 'lookupUrl') {
       return getConfig(propsName);

@@ -24,23 +24,22 @@ export default class IntlList extends Component<IntlListProps> {
   };
 
   renderOptions() {
-    const { record, name, lang } = this.props;
+    const { name, lang } = this.props;
     const { supports } = localeContext;
     const tlsKey = getConfig('tlsKey');
     return Object.keys(supports).map(key => (
       <TextField
-        record={record}
         name={name ? `${tlsKey}.${name}.${key}` : key}
         autoFocus={key === lang}
         key={key}
-        label={supports[key]}
       />
     ));
   }
 
   render() {
+    const { record } = this.props;
     return (
-      <Form>
+      <Form record={record}>
         {this.renderOptions()}
       </Form>
     );

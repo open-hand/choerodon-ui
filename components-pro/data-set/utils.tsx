@@ -442,14 +442,15 @@ export function processIntlField(name: string,
                                  callback: (name: string, props: FieldProps) => Field,
                                  dataSet?: DataSet): Field {
   const tlsKey = getConfig('tlsKey');
-  const languages = Object.keys(localeContext.supports);
+  const { supports } = localeContext;
+  const languages = Object.keys(supports);
   const { type, dynamicProps } = fieldProps;
   if (type === FieldType.intl) {
     languages.forEach(language => (
       callback(`${tlsKey}.${name}.${language}`, {
         ...fieldProps,
         type: FieldType.string,
-        label: `${languages[language]}`,
+        label: `${supports[language]}`,
         dynamicProps(props) {
           const { record } = props;
           const field = record.getField(name);
