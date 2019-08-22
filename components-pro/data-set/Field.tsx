@@ -273,20 +273,33 @@ export default class Field {
   }
 
   @computed
+  get intlFields(): Field[] {
+    const { record, type, name } = this;
+    const tlsKey = getConfig('tlsKey');
+    if (type === FieldType.intl && record && record.get(tlsKey)) {
+      return Object.keys(localeContext.supports).reduce<Field[]>((arr, lang) => {
+        const field = record.getField(`${tlsKey}.${name}.${lang}`);
+        if (field) {
+          arr.push(field);
+        }
+        return arr;
+      }, []);
+    }
+    return [];
+  }
+
+  @computed
   get dirty(): boolean {
     if (this.modified) {
       return true;
     }
-    const { record, name, type } = this;
+    const { record, name } = this;
     if (record) {
       try {
         this.isDirtyComputing = true;
-        const tlsKey = getConfig('tlsKey');
-        if (type === FieldType.intl && record.get(tlsKey)) {
-          return Object.keys(localeContext.supports).some((lang) => {
-            const langField = record.getField(`${tlsKey}.${name}.${lang}`);
-            return langField && !langField.isDirtyComputing ? langField.dirty : false;
-          });
+        const { intlFields } = this;
+        if (intlFields.length) {
+          return intlFields.some((langField) => !langField.isDirtyComputing ? langField.dirty : false);
         }
         const { bindTarget } = this;
         if (bindTarget && !bindTarget.isDirtyComputing) {
@@ -325,9 +338,23 @@ export default class Field {
     this.set('order', order);
   }
 
-  // private reactions: { [key: string]: IReactionDisposer } = {};
-  // private lookupReaction: IReactionDisposer;
-  // private lovReaction: IReactionDisposer;
+  @computed
+  get valid(): boolean {
+    const { intlFields, validator: { validity: { valid } } } = this;
+    if (valid && intlFields.length) {
+      return intlFields.every(field => field.valid);
+    }
+    return valid;
+  }
+
+  @computed
+  get validationMessage() {
+    const { intlFields, validator: { validationMessage, validity: { valid } } } = this;
+    if (valid && intlFields.length && !this.valid) {
+      return intlFields.map(field => field.validationMessage);
+    }
+    return validationMessage;
+  }
 
   constructor(props: FieldProps = {}, dataSet?: DataSet, record?: Record) {
     runInAction(() => {
@@ -337,8 +364,6 @@ export default class Field {
       this.modified = false;
       this.fetchLookup();
       this.fetchLovConfig();
-      // this.lookupReaction = reaction(() => this.fetchLookup(), noop);
-      // this.lovReaction = reaction(() => this.fetchLovConfig(), noop);
     });
   }
 
@@ -643,22 +668,18 @@ export default class Field {
   }
 
   isValid() {
-    // return findInvalidField(this).validator.validity.valid;
-    return this.validator.validity.valid;
+    return this.valid;
   }
 
   getValidationMessage() {
-    // return findInvalidField(this).validator.validationMessage;
-    return this.validator.validationMessage;
+    return this.validationMessage;
   }
 
   getValidityState(): Validity {
-    // return findInvalidField(this).validator.validity;
     return this.validator.validity;
   }
 
   getValidationErrorValues(): ValidationResult[] {
-    // return findInvalidField(this).validator.validationErrorValues;
     return this.validator.validationErrorValues;
   }
 

@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.7
+
+`2019-08-22`
+
 - 🐞 `<pro>IntlField`: Fixed multi-language required and data change display issues.
 
 ## 0.8.6

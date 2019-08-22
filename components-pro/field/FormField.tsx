@@ -576,7 +576,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
 
   @computed
   get isValid(): boolean {
-    return this.validator.validity.valid || this.pristine;
+    return this.pristine || (this.field ? this.field.valid : this.validator.validity.valid);
   }
 
   @computed
@@ -590,7 +590,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   }
 
   getValidationMessage(validationResult?: ValidationResult): ReactNode {
-    const { defaultValidationMessages, validator } = this;
+    const { defaultValidationMessages, validator, field } = this;
     if (defaultValidationMessages) {
       const { validity } = validator;
       const found = Object.keys(defaultValidationMessages).find(key => validationResult ? validationResult.ruleName === key : validity[key]);
@@ -600,6 +600,9 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     }
     if (validationResult) {
       return validationResult.validationMessage;
+    }
+    if (field) {
+      return field.validationMessage;
     }
     return validator.validationMessage;
   }
