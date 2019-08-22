@@ -34,13 +34,14 @@ function isFieldEmpty(field: Field): boolean {
 
 function processFieldValue(field: Field) {
   let value = field.getValue();
+  let text = field.getText();
   if (isMoment(value)) {
-    value = (value as Moment).format(getDateFormatByField(field, field.get('type')));
+    text = (value as Moment).format(getDateFormatByField(field, field.get('type')));
   }
-  if (isArrayLike(value)) {
-    value = value.join(',');
-  }
-  return value;
+  // if (isArrayLike(value)) {
+  //   text = value.join(',');
+  // }
+  return text;
 }
 
 @observer
@@ -134,8 +135,10 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
           <div className={`${prefixCls}-advanced-query-bar`}>
             {/* {dirtyInfo} */}
             {this.getCurrentFields(currentFields, queryDataSet)}
-            {this.getResetButton()}
-            {moreFieldsButton}
+            <div className={`${prefixCls}-advanced-query-bar-button`}>
+              {this.getResetButton()}
+              {moreFieldsButton}
+            </div>
           </div>
         );
       }
