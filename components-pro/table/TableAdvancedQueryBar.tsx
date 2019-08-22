@@ -38,9 +38,6 @@ function processFieldValue(field: Field) {
   if (isMoment(value)) {
     text = (value as Moment).format(getDateFormatByField(field, field.get('type')));
   }
-  // if (isArrayLike(value)) {
-  //   text = value.join(',');
-  // }
   return text;
 }
 
@@ -135,10 +132,10 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
           <div className={`${prefixCls}-advanced-query-bar`}>
             {/* {dirtyInfo} */}
             {this.getCurrentFields(currentFields, queryDataSet)}
-            <div className={`${prefixCls}-advanced-query-bar-button`}>
+            <span className={`${prefixCls}-advanced-query-bar-button`}>
               {this.getResetButton()}
               {moreFieldsButton}
-            </div>
+            </span>
           </div>
         );
       }
@@ -180,6 +177,7 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
         dataSet,
         autoFocus: isMore && index === 0,
         onEnterDown: this.handleFieldEnter,
+        onBlur: this.handleFieldEnter,
         onChange: isMore ? this.handleFieldChange : undefined,
         style: {
           width: pxToRem(isMore ? 250 : 260),
