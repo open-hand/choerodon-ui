@@ -21,6 +21,7 @@ timeline: true
 - 🐞 `<pro>Lov`: 修复多选翻页时无法缓存选中的记录。
 - 🐞 `<pro>DataSet.Record`: 修复序列化数据的问题。
 - 🐞 `<pro>Table`: 优化并修复高级查询条的一些问题。
+- 🐞 `<pro>Select`: 修复错误信息遮盖下拉框的问题。
 
 ## 0.8.7
 

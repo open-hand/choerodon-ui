@@ -5,12 +5,6 @@
 @field-prefix-cls: ~"@{c7n-pro-prefix}-field";
 @validation-prefix-cls: ~"@{c7n-pro-prefix}-validation-message";
 
-.make-form(@class: ~'') {
-  .@{form-prefix-cls} {
-    content: "@{class}";
-  }
-}
-
 .@{form-prefix-cls} {
   &-header {
     border-bottom: @border-width-base @border-style-base @border-color-base;
@@ -48,26 +42,3 @@
     }
   }
 }
-
-.make-form(xs);
-
-@media (min-width: @screen-sm-min) {
-  .make-form(sm);
-}
-
-@media (min-width: @screen-md-min) {
-  .make-form(md);
-}
-
-@media (min-width: @screen-lg-min) {
-  .make-form(lg);
-}
-
-@media (min-width: @screen-xl-min) {
-  .make-form(xl);
-}
-
-@media (min-width: @screen-xxl-min) {
-  .make-form(xxl);
-}
-

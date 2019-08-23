@@ -134,6 +134,10 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
     this.setPopup(false);
   }
 
+  isValidationMessageHidden(message?: ReactNode): undefined | boolean {
+    return super.isValidationMessageHidden(message) || this.popup;
+  }
+
   @action
   setPopup(statePopup: boolean) {
     this.statePopup = statePopup;
