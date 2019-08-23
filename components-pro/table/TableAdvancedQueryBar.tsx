@@ -1,6 +1,6 @@
 import React, { cloneElement, Component, ContextType, isValidElement, ReactElement, ReactNode } from 'react';
 import classNames from 'classnames';
-import { action, isArrayLike } from 'mobx';
+import { action, isArrayLike, reaction, IReactionDisposer } from 'mobx';
 import { observer } from 'mobx-react';
 import { isMoment, Moment } from 'moment';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
@@ -43,13 +43,14 @@ function processFieldValue(field: Field) {
 
 @observer
 export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryBarProps, TableAdvancedQueryBarState> {
-
   static defaultProps = {
     queryFields: [],
   };
 
   static contextType = TableContext;
 
+  queryDataSet?: DataSet;
+  reaction: IReactionDisposer;
   context: ContextType<typeof TableContext>;
 
   state = {
@@ -58,13 +59,31 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
 
   moreFields: Field[];
 
+  constructor(props, context) {
+    super(props, context);
+    this.on(this.context.tableStore.dataSet.queryDataSet);
+    this.reaction = reaction(() => this.context.tableStore.dataSet.queryDataSet, this.on);
+  }
+
+  on(dataSet) {
+    this.off();
+    dataSet.addEventListener('update', this.handleDataSetUpdate);
+    this.queryDataSet = dataSet;
+  }
+  off() {
+    const { queryDataSet } = this;
+    if (queryDataSet) {
+      queryDataSet.removeEventListener('update', this.handleDataSetUpdate);
+    }
+  }
+
   @autobind
-  handleFieldEnter() {
+  handleDataSetUpdate() {
     this.handleQuery();
   }
 
   @autobind
-  handleFieldChange() {
+  handleFieldEnter() {
     this.handleQuery();
   }
 
@@ -177,8 +196,6 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
         dataSet,
         autoFocus: isMore && index === 0,
         onEnterDown: this.handleFieldEnter,
-        onBlur: this.handleFieldEnter,
-        onChange: isMore ? this.handleFieldChange : undefined,
         style: {
           width: pxToRem(isMore ? 250 : 260),
           marginRight: !isMore ? pxToRem(16) : 0,
