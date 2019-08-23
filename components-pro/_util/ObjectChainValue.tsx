@@ -12,7 +12,7 @@ export function get(obj: object, prop: string): any {
     if (isArrayLike(value)) {
       return value.map(item => get(item, restKey)).filter(item => !!item);
     }
-    if (value && typeof value === 'object') {
+    if (isObject(value)) {
       return get(value, restKey);
     }
   } else {
@@ -58,7 +58,7 @@ export function remove(obj: object, prop: string) {
     const value = mobxGet(obj, key);
     if (isArrayLike(value)) {
       value.forEach(item => remove(item, restKey));
-    } else if (typeof value === 'object') {
+    } else if (isObject(value)) {
       remove(value, restKey);
     }
   } else {

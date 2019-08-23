@@ -15,6 +15,9 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>DataSet.Record`: 修复序列化数据的问题。
+- 🐞 `<pro>Table`: 优化并修复高级查询条的一些问题。
+
 ## 0.8.7
 
 `2019-08-22`

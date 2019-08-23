@@ -15,6 +15,9 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>DataSet.Record`: Fix the problem of serializing data.
+- 🐞 `<pro>Table`: Optimized AdvanceQueryBar, fix some bug.
+
 ## 0.8.7
 
 `2019-08-22`
