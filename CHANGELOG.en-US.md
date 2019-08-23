@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.8
+
+`2019-08-23`
+
 - 🌟 `Responsive`: Added Responsive component.
 - 🌟 `<pro>DataSet`: Transport increases the exports configuration, the exported url is spliced to the baseUrl of axios, and the export event is added.
 - 💄 `<pro>Form`: Optimize the responsiveness.

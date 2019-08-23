@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.8
+
+`2019-08-23`
+
 - 🌟 `Responsive`: 新增Responsive组件。
 - 🌟 `<pro>DataSet`: Transport增加exports配置，导出的url拼接axios的baseUrl，增加export事件。
 - 💄 `<pro>Form`: 优化响应式。
