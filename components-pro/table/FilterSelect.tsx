@@ -103,7 +103,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
   off() {
     const { queryDataSet } = this;
     if (queryDataSet) {
-      queryDataSet.addEventListener('update', this.handleDataSetUpdate);
+      queryDataSet.removeEventListener('update', this.handleDataSetUpdate);
     }
   }
 
