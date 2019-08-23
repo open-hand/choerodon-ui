@@ -142,6 +142,7 @@ title: DataSet
 | indexChange | 当前记录变更事件 | ({ dataSet, record, previous }) =&gt; void | `dataSet` - 数据集 `record` - 新当前记录 `previous` - 旧当前记录 |
 | fieldChange | 字段属性变更事件 | ({ dataSet, record, field, propsName, value, oldValue }) =&gt; void | `dataSet` - 数据集 `record` - 字段所属记录，dataSet的字段无record `field` - 当前字段 `propsName` - 属性名 `value` - 新值 `oldValue` - 旧值 |
 | create | 记录创建事件 | ({ dataSet, record }) =&gt; void | `dataSet` - 数据集 `record` - 创建的记录 |
+| export | 导出事件，返回值为false将阻止导出 | ({ dataSet, params, data }) =&gt; boolean | `dataSet` - 数据集 `params` - 查询参数 `data` - 查询参数 |
 
 ### Record Values
 

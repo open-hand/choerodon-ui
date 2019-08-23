@@ -216,7 +216,7 @@ export function checkFieldType(value: any, field: Field): boolean {
 
 let iframe;
 
-export function doExport(url, data) {
+export function doExport(url, data, method = 'post') {
   if (!iframe) {
     iframe = document.createElement('iframe');
     iframe.id = '_export_window';
@@ -227,13 +227,13 @@ export function doExport(url, data) {
 
   const form = document.createElement('form');
   form.target = '_export_window';
-  form.method = 'post';
+  form.method = method;
   form.action = url;
   const s = document.createElement('input');
   s.id = '_request_data';
   s.type = 'hidden';
   s.name = '_request_data';
-  s.value = data;
+  s.value = JSON.stringify(data);
   form.appendChild(s);
   document.body.appendChild(form);
   form.submit();

@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `Responsive`: Added Responsive component.
+- 🌟 `<pro>DataSet`: Transport increases the exports configuration, the exported url is spliced to the baseUrl of axios, and the export event is added.
 - 💄 `<pro>Form`: Optimize the responsiveness.
 - 🐞 `<pro>Lov`: Fixed that multiple Lov do not cache selected records when turning pages .
 - 🐞 `<pro>DataSet.Record`: Fix the problem of serializing data.
