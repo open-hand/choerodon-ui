@@ -49,13 +49,6 @@ title: Form
 
 ### Form Responsive
 
-响应式可设置参数`columns` `labelWidth` `labelAlign` `labelLayout` 为一个键值对，键值如下：
+响应式可设置参数`columns` `labelWidth` `labelAlign` `labelLayout` 为一个键值对。
 
-| 键值      | 响应视宽                                     |
-|-----------|------------------------------------------|
-| xs  |  < 576px | 
-| sm  | >= 576px |
-| md  | >= 768px |
-| lg  | >= 992px | 
-| xl  | >= 1200px | 
-| xxl | >= 1600px | 
+键值可参考 [Responsive BreakPoints](/components/responsive/#BreakPoints)。

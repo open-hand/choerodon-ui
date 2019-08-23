@@ -137,6 +137,7 @@ export class LovCodeStore {
           transport: lovQueryAxiosConfig && {
             read: lovQueryAxiosConfig(code, config),
           },
+          primaryKey: valueField,
           cacheSelection: true,
         };
         if (!isNil(lovPageSize) && !isNaN(Number(lovPageSize))) {

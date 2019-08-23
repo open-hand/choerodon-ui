@@ -15,6 +15,9 @@ timeline: true
 
 ---
 
+- 🌟 `Responsive`: 新增Responsive组件。
+- 💄 `<pro>Form`: 优化响应式。
+- 🐞 `<pro>Lov`: 修复多选翻页时无法缓存选中的记录。
 - 🐞 `<pro>DataSet.Record`: 修复序列化数据的问题。
 - 🐞 `<pro>Table`: 优化并修复高级查询条的一些问题。
 

@@ -15,8 +15,6 @@ The most basic usage.
 
 ````jsx
 import { DataSet, Table, TextField, NumberField, Modal, Button, Tabs } from 'choerodon-ui/pro';
-import isObject from 'lodash/isObject';
-alert(isObject(undefined))
 
 const { Column } = Table;
 const { TabPane } = Tabs;

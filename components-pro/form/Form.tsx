@@ -2,13 +2,14 @@ import React, { Children, createElement, FormEvent, FormEventHandler, isValidEle
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { observer } from 'mobx-react';
-import { action as mobxAction, computed, isArrayLike, observable } from 'mobx';
+import { action as mobxAction, computed, isArrayLike, observable, runInAction } from 'mobx';
 import omit from 'lodash/omit';
 import isNumber from 'lodash/isNumber';
 import isString from 'lodash/isString';
 import noop from 'lodash/noop';
 import defaultTo from 'lodash/defaultTo';
 import { AxiosInstance } from 'axios';
+import Responsive from 'choerodon-ui/lib/responsive/Responsive';
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
 import axios from '../axios';
 import autobind from '../_util/autobind';
@@ -19,8 +20,6 @@ import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import { LabelAlign, LabelLayout, ResponsiveKeys } from './enum';
 import { defaultColumns, defaultLabelWidth, FIELD_SUFFIX, getProperty, normalizeLabelWidth } from './utils';
-import exception from '../_util/exception';
-import EventManager from '../_util/EventManager';
 
 /**
  * 表单name生成器
@@ -233,11 +232,16 @@ export default class Form extends DataSetComponent<FormProps> {
 
   fields: FormField<FormFieldProps>[] = [];
 
-  @observable responsiveKey: ResponsiveKeys;
-
-  resizeEvent: EventManager = new EventManager(typeof window !== 'undefined' && window);
+  @observable responsiveItems: any[];
 
   name = NameGen.next().value;
+
+  constructor(props, context) {
+    super(props, context);
+    runInAction(() => {
+      this.responsiveItems = [];
+    });
+  }
 
   @computed
   get axios(): AxiosInstance {
@@ -265,7 +269,10 @@ export default class Form extends DataSetComponent<FormProps> {
     if (isNumber(columns)) {
       return columns;
     } else if (columns) {
-      return columns[this.responsiveKey] || defaultColumns;
+      const responsiveColumns = this.responsiveItems[0];
+      if (responsiveColumns) {
+        return responsiveColumns;
+      }
     }
     return defaultColumns;
   }
@@ -276,7 +283,10 @@ export default class Form extends DataSetComponent<FormProps> {
     if (isNumber(labelWidth) || isArrayLike(labelWidth)) {
       return labelWidth;
     } else if (labelWidth) {
-      return labelWidth[this.responsiveKey] || defaultLabelWidth;
+      const responsiveWidth = this.responsiveItems[1];
+      if (responsiveWidth !== void 0) {
+        return responsiveWidth;
+      }
     }
     return defaultLabelWidth;
   }
@@ -288,7 +298,10 @@ export default class Form extends DataSetComponent<FormProps> {
     if (isString(labelAlign)) {
       return labelAlign as LabelAlign;
     } else if (labelAlign) {
-      return labelAlign[this.responsiveKey] || defaultLabelAlign;
+      const responsiveAlign = this.responsiveItems[2];
+      if (responsiveAlign) {
+        return responsiveAlign;
+      }
     }
     return defaultLabelAlign;
   }
@@ -300,7 +313,10 @@ export default class Form extends DataSetComponent<FormProps> {
     if (isString(labelLayout)) {
       return labelLayout as LabelLayout;
     } else if (labelLayout) {
-      return labelLayout[this.responsiveKey] || defaultLabelLayout;
+      const responsiveLabelLayout = this.responsiveItems[3];
+      if (responsiveLabelLayout) {
+        return responsiveLabelLayout;
+      }
     }
     return defaultLabelLayout;
   }
@@ -308,12 +324,6 @@ export default class Form extends DataSetComponent<FormProps> {
   @computed
   get pristine(): boolean {
     return this.observableProps.pristine;
-  }
-
-  constructor(props, context) {
-    super(props, context);
-    this.setResponsiveKey();
-    this.initResponsive();
   }
 
   isDisabled() {
@@ -331,56 +341,6 @@ export default class Form extends DataSetComponent<FormProps> {
       pristine: 'pristine' in props ? props.pristine : context.pristine,
       columns: props.columns,
     };
-  }
-
-  handleResize = () => {
-    this.setResponsiveKey();
-  };
-
-  componentDidMount() {
-    this.setResponsiveKey();
-  }
-
-  componentWillReceiveProps(props, context) {
-    super.componentWillReceiveProps(props, context);
-    this.initResponsive();
-  }
-
-  componentWillUnmount() {
-    this.clear();
-  }
-
-  clear() {
-    this.resizeEvent.clear();
-  }
-
-  @mobxAction
-  setResponsiveKey(): void {
-    let responsiveKey = ResponsiveKeys.xs;
-    const { element } = this;
-    if (element && typeof window !== 'undefined' && document.defaultView) {
-      const { content } = document.defaultView.getComputedStyle(element);
-      if (content) {
-        try {
-          responsiveKey = JSON.parse(content) as ResponsiveKeys;
-        } catch (e) {
-          exception(e);
-          responsiveKey = content as ResponsiveKeys;
-        }
-      }
-    }
-    if (responsiveKey && responsiveKey !== this.responsiveKey) {
-      this.responsiveKey = responsiveKey;
-    }
-  }
-
-  @mobxAction
-  initResponsive() {
-    const { columns, labelWidth, labelLayout, labelAlign } = this.observableProps;
-    this.clear();
-    if (!isNumber(columns) || !(isNumber(labelWidth) || isArrayLike(labelWidth)) || !isString(labelLayout) || (labelAlign && !isString(labelAlign))) {
-      this.resizeEvent.addEventListener('resize', this.handleResize);
-    }
   }
 
   getOtherProps() {
@@ -559,7 +519,7 @@ export default class Form extends DataSetComponent<FormProps> {
   }
 
   render() {
-    const { labelWidth, labelAlign, labelLayout, pristine, dataSet, record, dataIndex } = this;
+    const { labelWidth, labelAlign, labelLayout, pristine, dataSet, record, dataIndex, observableProps } = this;
     const { formNode } = this.context;
     const value = {
       formNode: formNode || this,
@@ -580,13 +540,23 @@ export default class Form extends DataSetComponent<FormProps> {
         </form>
       );
     }
-    // header按照现在的实现方法，不属于Form的子元素
-    // 如果把header放在Form内，样式不好处理
+
     return (
-      <FormContext.Provider value={value}>
-        {children}
-      </FormContext.Provider>
+      <Responsive
+        items={[observableProps.columns, observableProps.labelWidth, observableProps.labelAlign, observableProps.labelLayout]}
+        onChange={this.handleResponsive}
+      >
+        <FormContext.Provider value={value}>
+          {children}
+        </FormContext.Provider>
+      </Responsive>
     );
+  }
+
+  @autobind
+  @mobxAction
+  handleResponsive(items) {
+    this.responsiveItems = items;
   }
 
   @autobind

@@ -15,6 +15,9 @@ timeline: true
 
 ---
 
+- 🌟 `Responsive`: Added Responsive component.
+- 💄 `<pro>Form`: Optimize the responsiveness.
+- 🐞 `<pro>Lov`: Fixed that multiple Lov do not cache selected records when turning pages .
 - 🐞 `<pro>DataSet.Record`: Fix the problem of serializing data.
 - 🐞 `<pro>Table`: Optimized AdvanceQueryBar, fix some bug.
 

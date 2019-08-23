@@ -1,27 +1,8 @@
-// matchMedia polyfill for
-// https://github.com/WickyNilliams/enquire.js/issues/82
-import { getPrefixCls } from '../configure';
-
-let enquire: any;
-if (typeof window !== 'undefined') {
-  window.matchMedia = window.matchMedia || matchMediaPolifill;
-  enquire = require('enquire.js');
-}
-
 import React, { Children, cloneElement, Component, HTMLAttributes, ReactElement } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { matchMediaPolifill } from '../_util/mediaQueryListPolyfill';
-
-export type Breakpoint = 'xxl' | 'xl' | 'lg' | 'md' | 'sm' | 'xs';
-export type BreakpointMap = {
-  xs?: string;
-  sm?: string;
-  md?: string;
-  lg?: string;
-  xl?: string;
-  xxl?: string
-};
+import Responsive, { BreakpointMap } from '../responsive/Responsive';
+import { getPrefixCls } from '../configure';
 
 export interface RowProps extends HTMLAttributes<HTMLDivElement> {
   gutter?: number | BreakpointMap;
@@ -31,25 +12,12 @@ export interface RowProps extends HTMLAttributes<HTMLDivElement> {
   prefixCls?: string;
 }
 
-export interface RowState {
-  screens: BreakpointMap;
-}
+const defaultGutter = 0;
 
-const responsiveArray: Breakpoint[] = ['xxl', 'xl', 'lg', 'md', 'sm', 'xs'];
-
-const responsiveMap: BreakpointMap = {
-  xs: '(max-width: 575px)',
-  sm: '(min-width: 576px)',
-  md: '(min-width: 768px)',
-  lg: '(min-width: 992px)',
-  xl: '(min-width: 1200px)',
-  xxl: '(min-width: 1600px)',
-};
-
-export default class Row extends Component<RowProps, RowState> {
+export default class Row extends Component<RowProps> {
   static displayName = 'Row';
   static defaultProps = {
-    gutter: 0,
+    gutter: defaultGutter,
   };
 
   static propTypes = {
@@ -62,61 +30,7 @@ export default class Row extends Component<RowProps, RowState> {
     prefixCls: PropTypes.string,
   };
 
-  state: RowState = {
-    screens: {},
-  };
-
-  componentDidMount() {
-    Object.keys(responsiveMap)
-      .map((screen: Breakpoint) => enquire.register(responsiveMap[screen], {
-          match: () => {
-            if (typeof this.props.gutter !== 'object') {
-              return;
-            }
-            this.setState((prevState) => ({
-              screens: {
-                ...prevState.screens,
-                [screen]: true,
-              },
-            }));
-          },
-          unmatch: () => {
-            if (typeof this.props.gutter !== 'object') {
-              return;
-            }
-            this.setState((prevState) => ({
-              screens: {
-                ...prevState.screens,
-                [screen]: false,
-              },
-            }));
-          },
-          // Keep a empty destory to avoid triggering unmatch when unregister
-          destroy() {
-          },
-        },
-      ));
-  }
-
-  componentWillUnmount() {
-    Object.keys(responsiveMap)
-      .map((screen: Breakpoint) => enquire.unregister(responsiveMap[screen]));
-  }
-
-  getGutter() {
-    const { gutter } = this.props;
-    if (typeof gutter === 'object') {
-      for (let i = 0; i <= responsiveArray.length; i++) {
-        const breakpoint: Breakpoint = responsiveArray[i];
-        if (this.state.screens[breakpoint] && gutter[breakpoint] !== undefined) {
-          return gutter[breakpoint];
-        }
-      }
-    }
-    return gutter;
-  }
-
-  render() {
+  renderRow = ([gutter = defaultGutter]) => {
     const {
       type,
       justify,
@@ -128,7 +42,6 @@ export default class Row extends Component<RowProps, RowState> {
       ...others
     } = this.props;
     const prefixCls = getPrefixCls('row', customizePrefixCls);
-    const gutter = this.getGutter();
     const classes = classNames({
       [prefixCls]: !type,
       [`${prefixCls}-${type}`]: type,
@@ -158,5 +71,13 @@ export default class Row extends Component<RowProps, RowState> {
     const otherProps = { ...others };
     delete otherProps.gutter;
     return <div {...otherProps} className={classes} style={rowStyle}>{cols}</div>;
+  };
+
+  render() {
+    return (
+      <Responsive items={[this.props.gutter]}>
+        {this.renderRow}
+      </Responsive>
+    );
   }
 }

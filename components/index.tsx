@@ -125,6 +125,8 @@ export { default as IconSelect } from './icon-select';
 
 export { default as Animate } from './animate';
 
+export { default as Responsive } from './responsive';
+
 export { default as configure } from './configure';
 
 export { default as getConfig } from './get-config';

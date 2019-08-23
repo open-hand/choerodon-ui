@@ -298,13 +298,8 @@ gulp.task('clean:ts', () => {
     'components/**/*.d.ts',
     'components-pro/**/*.d.ts',
   ];
-  gulp.src(source, { read: false })
-    .pipe(through2.obj(function (file, encoding, next) {
-      console.log(file.path);
-      this.push(file);
-      next();
-    }))
-    .pipe(gulpRimraf());
+  gulp.src(source, { read: false, buffer: true })
+    .pipe(gulpRimraf({ verbose: true }));
 });
 
 gulp.task('dist', (done) => {
