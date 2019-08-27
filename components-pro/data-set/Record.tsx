@@ -25,7 +25,6 @@ import * as ObjectChainValue from '../_util/ObjectChainValue';
 import DataSetSnapshot from './DataSetSnapshot';
 import localeContext from '../locale-context';
 import { BooleanValue, DataSetEvents, FieldIgnore, FieldType, RecordStatus } from './enum';
-import { Supports } from '../locale-context/supports';
 
 /**
  * 记录ID生成器
@@ -40,20 +39,6 @@ export default class Record {
 
   id: number;
 
-  @computed
-  get key(): string | number {
-    if (this.status !== RecordStatus.add) {
-      const { dataSet } = this;
-      if (dataSet && dataSet.uniqueKeys) {
-        const key = this.get(dataSet.uniqueKeys[0]);
-        if (isString(key) || isNumber(key)) {
-          return key;
-        }
-      }
-    }
-    return this.id;
-  }
-
   dataSet?: DataSet;
 
   @observable fields: Fields;
@@ -62,8 +47,6 @@ export default class Record {
   pristineData: object;
 
   dataSetSnapshot: { [key: string]: DataSetSnapshot } = {};
-
-  localeSupports?: Supports;
 
   pending?: Promise<boolean>;
 
@@ -80,6 +63,23 @@ export default class Record {
   @observable isCached: boolean;
 
   @observable editing?: boolean;
+
+  @computed
+  get key(): string | number {
+    if (this.status !== RecordStatus.add) {
+      const { dataSet } = this;
+      if (dataSet && dataSet.uniqueKeys) {
+        const comboKey = dataSet.uniqueKeys
+          .map(key => this.get(key))
+          .filter(key => isString(key) || isNumber(key))
+          .join('-');
+        if (comboKey) {
+          return comboKey;
+        }
+      }
+    }
+    return this.id;
+  }
 
   @computed
   get index(): number {
@@ -191,7 +191,7 @@ export default class Record {
     if (dataSet) {
       const { parentField, idField } = dataSet.props;
       if (parentField && idField) {
-        return dataSet.find(record => {
+        return dataSet.records.find(record => {
           const parentId = this.get(parentField);
           const id = record.get(idField);
           return !isNil(parentId) && !isNil(id) && parentId === id;
@@ -281,7 +281,7 @@ export default class Record {
   validate(all?: boolean, noCascade?: boolean): Promise<boolean> {
     const { dataSetSnapshot, isCurrent, dataSet, status, fields } = this;
     return Promise.all([
-      ...Array.from(fields.values()).map(field => (
+      ...[...fields.values()].map(field => (
         all || status !== RecordStatus.sync ? field.checkValidity() : true
       )),
       ...(
@@ -354,7 +354,7 @@ export default class Record {
         if (isSame(pristineValue, newValue)) {
           if (field && field.dirty) {
             field.dirty = false;
-            if (this.status === RecordStatus.update && Array.from(fields.values()).every(f => !f.dirty)) {
+            if (this.status === RecordStatus.update && [...fields.values()].every(f => !f.dirty)) {
               this.status = RecordStatus.sync;
             }
           }
@@ -406,7 +406,7 @@ export default class Record {
 
   async ready(): Promise<any> {
     const { pending } = this;
-    const result = await Promise.all([pending, ...Array.from(this.fields.values()).map(field => field.ready())]);
+    const result = await Promise.all([pending, ...[...this.fields.values()].map(field => field.ready())]);
     if (this.pending && this.pending !== pending) {
       return this.ready();
     }
@@ -460,7 +460,7 @@ export default class Record {
   @action
   reset(): Record {
     const { status, fields } = this;
-    Array.from(fields.values()).forEach(field => field.commit());
+    [...fields.values()].forEach(field => field.commit());
     this.data = this.pristineData;
     if (status === RecordStatus.update || status === RecordStatus.delete) {
       this.status = RecordStatus.sync;
@@ -475,19 +475,23 @@ export default class Record {
 
   @action
   commit(data?: object, dataSet?: DataSet): Record {
-    const { dataSetSnapshot, fields } = this;
+    const { dataSetSnapshot, fields, status } = this;
     if (dataSet) {
-      let { totalCount, destroyed } = dataSet;
-      if (this.status === RecordStatus.add && dataSet.indexOf(this) !== -1) {
-        totalCount += 1;
-      } else if (this.status === RecordStatus.delete) {
-        const index = destroyed.indexOf(this);
+      const { records } = dataSet;
+      if (status === RecordStatus.delete) {
+        const index = records.indexOf(this);
         if (index !== -1) {
-          destroyed.splice(index, 1);
-          totalCount -= 1;
+          dataSet.totalCount -= 1;
+          records.splice(index, 1);
+        }
+        return this;
+      }
+      if (status === RecordStatus.add) {
+        const index = records.indexOf(this);
+        if (index !== -1) {
+          dataSet.totalCount += 1;
         }
       }
-      dataSet.totalCount = totalCount;
       if (data) {
         const newData = this.pristineData = this.processData(data);
         Object.keys(newData).forEach((key) => {
@@ -507,7 +511,7 @@ export default class Record {
         }
       }
     }
-    Array.from(fields.values()).forEach(field => field.commit());
+    [...fields.values()].forEach(field => field.commit());
     this.status = RecordStatus.sync;
     return this;
   }
@@ -530,7 +534,7 @@ export default class Record {
   }
 
   private initFields(fields: Fields) {
-    Array.from(fields.keys()).forEach(key => this.addField(key));
+    [...fields.keys()].forEach(key => this.addField(key));
   }
 
   @action
@@ -575,7 +579,7 @@ export default class Record {
   private normalizeData(needIgnore?: boolean) {
     const { fields } = this;
     const json: any = toJS(this.data);
-    Array.from(fields.keys()).forEach((key) => {
+    [...fields.keys()].forEach((key) => {
       let value = ObjectChainValue.get(json, key);
       const field = this.getField(key);
       if (field) {

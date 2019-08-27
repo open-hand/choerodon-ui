@@ -4,7 +4,7 @@ if (typeof window !== 'undefined') {
   Mock.mock(/\/dataset\/user\/mutations/, {
     rows: [],
     total: 1000,
-    success: true,
+    success: '@boolean()',
   });
 
   Mock.mock(/\/dataset\/user\/queries/, {

@@ -148,7 +148,7 @@ export function findIndexedSibling(element, direction): HTMLTableRowElement | nu
 }
 
 export function isDisabledRow(record: Record) {
-  return record.isCached;
+  return record.isCached || record.status === RecordStatus.delete;
 }
 
 export function getHeader(column: ColumnProps, dataSet: DataSet): ReactNode {

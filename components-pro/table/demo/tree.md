@@ -70,7 +70,7 @@ class App extends React.Component {
   handleChangeMode = () => this.setState({ mode: this.state.mode === 'tree' ? 'list' : 'tree' });
 
   buttons = [
-    'add', 'save', 'delete', 'query', 'expandAll', 'collapseAll',
+    'add', 'save', 'delete', 'remove', 'query', 'expandAll', 'collapseAll',
     <Button key="change-expand-type" onClick={this.handleChangeExpandIconIndex} color="blue" funcType="flat">切换展开图标索引</Button>,
     <Button key="change-border" onClick={this.handleChangeBorder} color="blue" funcType="flat">切换边框</Button>,
     <Button key="change-mode" onClick={this.handleChangeMode} color="blue" funcType="flat">切换树模式</Button>,

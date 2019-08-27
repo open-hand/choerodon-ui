@@ -54,17 +54,19 @@ title: DataSet
 | paging | 是否分页 | observable&lt;boolean&gt; |
 | status | 状态，`loading` `submitting` `ready` | observable&lt;string&gt; |
 | selection | 选择的模式, 可选值：`false` `'multiple'` `'single'` | observable&lt;string\|boolean&gt; |
-| data | 数据, 不含删除状态的Record | observable&lt;Record[]&gt; |
-| created | 新建的数据 | observable&lt;Record[]&gt; |
-| updated | 更新的数据 | observable&lt;Record[]&gt; |
-| destroyed | 暂时销毁的数据 | observable&lt;Record[]&gt; |
-| selected | 选中记录，包括缓存的选中记录 | observable&lt;Record[]&gt; |
-| currentSelected | 当前页选中记录 | observable&lt;Record[]&gt; |
-| cachedSelected | 缓存的选中记录 | observable&lt;Record[]&gt; |
+| records | 所有记录 | observable&lt;Record[]&gt; |
+| all | 所有记录, 包括缓存的选择记录 | observable&lt;Record[]&gt; |
+| data | 数据, 不包括删除状态的Record | observable&lt;Record[]&gt; |
+| created | 新建的数据 | readonly observable&lt;Record[]&gt; |
+| updated | 更新的数据 | readonly observable&lt;Record[]&gt; |
+| destroyed | 暂时销毁的数据 | readonly observable&lt;Record[]&gt; |
+| selected | 选中记录，包括缓存的选中记录 | readonly observable&lt;Record[]&gt; |
+| currentSelected | 当前页选中记录 | readonly observable&lt;Record[]&gt; |
+| cachedSelected | 缓存的选中记录 | readonly observable&lt;Record[]&gt; |
 | length | 数据量 | readonly observable&lt;number&gt; |
-| queryDataSet | 查询数据源 | DataSet |
-| parent | 级联头数据源 | DataSet |
-| children | 所有级联行数据源 | {\[key:string\]: DataSet} |
+| queryDataSet | 查询数据源 | observable&lt;DataSet&gt; |
+| parent | 级联头数据源 | readonly DataSet |
+| children | 所有级联行数据源 | readonly \[key:string\]: DataSet} |
 
 
 ### DataSet Methods

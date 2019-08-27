@@ -3,6 +3,7 @@ import axiosStatic, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import isNumber from 'lodash/isNumber';
 import isArray from 'lodash/isArray';
 import isObject from 'lodash/isObject';
+import flatMap from 'lodash/flatMap';
 import defer from 'lodash/defer';
 import debounce from 'lodash/debounce';
 import warning from 'choerodon-ui/lib/_util/warning';
@@ -201,20 +202,9 @@ export default class DataSet extends EventManager {
 
   id?: string;
 
-  @observable name?: string;
-
-  @computed
-  get axios(): AxiosInstance {
-    return this.props.axios || getConfig('axios') || axios;
-  }
-
-  @observable fields: Fields;
-
   parent?: DataSet;
 
   children: DataSetChildren = {};
-
-  originalData: Record[] = [];
 
   queryParameter: object;
 
@@ -223,6 +213,33 @@ export default class DataSet extends EventManager {
   isFilteredByQueryFields: boolean = false;
 
   reaction: IReactionDisposer;
+
+  originalData: Record[] = [];
+
+  @observable name?: string;
+
+  @observable records: Record[];
+
+  @observable fields: Fields;
+
+  @observable props: DataSetProps;
+
+  @observable pageSize: number;
+
+  @observable totalCount: number;
+
+  @observable status: DataSetStatus;
+
+  @observable currentPage: number;
+
+  @observable selection: DataSetSelection | false;
+
+  @observable cachedSelected: Record[];
+
+  @computed
+  get axios(): AxiosInstance {
+    return this.props.axios || getConfig('axios') || axios;
+  }
 
   @computed
   get dataKey(): string {
@@ -354,27 +371,36 @@ export default class DataSet extends EventManager {
     return new Transport(this.props.transport, this);
   }
 
-  @observable props: DataSetProps;
+  @computed
+  get data(): Record[] {
+    return this.records.filter(record => record.status !== RecordStatus.delete);
+  }
 
-  @observable data: Record[];
+  set data(records: Record[]) {
+    this.loadData(records);
+  }
 
-  @observable pageSize: number;
-
-  @observable totalCount: number;
-
-  @observable status: DataSetStatus;
-
-  @observable currentPage: number;
-
-  @observable selection: DataSetSelection | false;
-
-  /**
-   * 获取删除的记录集
-   * @return 记录集
-   */
-  @observable destroyed: Record[];
-
-  @observable cachedSelected: Record[];
+  @computed
+  get dirtyRecords(): [Record[], Record[], Record[]] {
+    const created: Record[] = [];
+    const updated: Record[] = [];
+    const destroyed: Record[] = [];
+    this.records.forEach(record => {
+      switch (record.status) {
+        case RecordStatus.add:
+          created.push(record);
+          break;
+        case RecordStatus.update:
+          updated.push(record);
+          break;
+        case RecordStatus.delete:
+          destroyed.push(record);
+          break;
+        default:
+      }
+    });
+    return [created, updated, destroyed];
+  }
 
   /**
    * 获取新建的记录集
@@ -382,7 +408,7 @@ export default class DataSet extends EventManager {
    */
   @computed
   get created(): Record[] {
-    return this.data.filter(record => record.status === RecordStatus.add);
+    return this.dirtyRecords[0];
   }
 
   /**
@@ -391,7 +417,16 @@ export default class DataSet extends EventManager {
    */
   @computed
   get updated(): Record[] {
-    return this.data.filter(record => record.status === RecordStatus.update);
+    return this.dirtyRecords[1];
+  }
+
+  /**
+   * 获取删除的记录集
+   * @return 记录集
+   */
+  @computed
+  get destroyed(): Record[] {
+    return this.dirtyRecords[2];
   }
 
   /**
@@ -405,7 +440,7 @@ export default class DataSet extends EventManager {
 
   @computed
   get currentSelected(): Record[] {
-    return this.data.filter(record => record.isSelected);
+    return this.records.filter(record => record.isSelected);
   }
 
   @computed
@@ -442,43 +477,12 @@ export default class DataSet extends EventManager {
   }
 
   @computed
+  get treeRecords(): Record[] {
+    return sortTree(this.records.filter(record => !record.parent), getOrderFields(this.fields)[0]);
+  }
+
+  @computed
   get treeData(): Record[] {
-    // const { data } = this;
-    // const { idField, parentField } = this.props;
-    // if (idField !== void 0 && parentField !== void 0) {
-    //   const array: Record[] = [];
-    //   const map1: { [key: string]: Record } = {};
-    //   const map2: { [key: string]: Record } = {};
-    //   data.forEach((record) => {
-    //     const id = record.get(idField) || record.id;
-    //     map1[id] = map2[id] = record;
-    //   });
-    //   runInAction(() => {
-    //     for (const key of Object.keys(map2)) {
-    //       const record = map2[key];
-    //       const parent = map2[record.get(parentField)];
-    //       if (parent) {
-    //         record.parent = parent;
-    //         if (!parent.children) {
-    //           parent.children = [record];
-    //         } else if (!~parent.children.indexOf(record)) {
-    //           parent.children.push(record);
-    //         }
-    //         delete map1[key];
-    //       }
-    //     }
-    //   });
-    //   for (const key of Object.keys(map1)) {
-    //     array.push(map2[key]);
-    //   }
-    //   const orderField = getOrderFields(this.fields)[0];
-    //   if (orderField) {
-    //     sortTree(array, orderField);
-    //   }
-    //   return array;
-    // } else {
-    //   return data;
-    // }
     return sortTree(this.filter(record => !record.parent), getOrderFields(this.fields)[0]);
   }
 
@@ -555,7 +559,7 @@ export default class DataSet extends EventManager {
    */
   @computed
   get all(): Record[] {
-    return this.data.concat(this.cachedSelected.slice()).concat(this.destroyed.slice());
+    return this.records.concat(this.cachedSelected.slice());
   }
 
   private inBatchSelection: boolean = false;
@@ -574,12 +578,11 @@ export default class DataSet extends EventManager {
         selection, events, id, name, children, queryParameter = {},
       } = props;
       this.name = name;
-      this.data = [];
+      this.records = [];
       this.fields = observable.map<string, Field>();
       this.totalCount = 0;
       this.status = DataSetStatus.ready;
       this.currentPage = 1;
-      this.destroyed = [];
       this.cachedSelected = [];
       this.queryParameter = queryParameter;
       this.pageSize = pageSize!;
@@ -615,15 +618,9 @@ export default class DataSet extends EventManager {
 
   processListener() {
     this.addEventListener(DataSetEvents.indexChange, this.handleCascade);
-    // let previous;
-    // this.reaction = reaction(
-    //   () => this.current,
-    //   record => (this.fireEvent(DataSetEvents.indexChange, { dataSet: this, record, previous }, previous = record)),
-    // );
   }
 
   destroy() {
-    // this.reaction();
     this.clear();
   }
 
@@ -643,7 +640,7 @@ export default class DataSet extends EventManager {
 
   toJSONData(isSelected?: boolean, noCascade?: boolean): object[] {
     const data: object[] = [];
-    (isSelected ? this.selected : this.data.concat(this.destroyed)).forEach(record => generateJSONData(data, record, isSelected, noCascade));
+    (isSelected ? this.selected : this.records).forEach(record => generateJSONData(data, record, isSelected, noCascade));
     return data;
   }
 
@@ -657,7 +654,7 @@ export default class DataSet extends EventManager {
     const result = await Promise.all([
       pending,
       ...(isSelect ? this.selected : this.data).map(record => record.ready()),
-      ...Array.from(this.fields.values()).map(field => field.ready()),
+      ...[...this.fields.values()].map(field => field.ready()),
     ]);
     if (this.pending && this.pending !== pending) {
       return this.ready(isSelect);
@@ -694,7 +691,7 @@ export default class DataSet extends EventManager {
   async submit(isSelect?: boolean, noCascade?: boolean): Promise<any> {
     await this.ready(isSelect);
     if (await this.validate(isSelect, noCascade)) {
-      return this.write(isSelect ? this.selected : this.data.concat(this.destroyed), isSelect, noCascade);
+      return this.write(isSelect ? this.selected : this.records, isSelect, noCascade);
     }
     return false;
   }
@@ -723,8 +720,7 @@ export default class DataSet extends EventManager {
    */
   @action
   reset(): DataSet {
-    this.data = this.originalData.map(record => record.reset());
-    this.destroyed = [];
+    this.records = this.originalData.map(record => record.reset());
     return this;
   }
 
@@ -886,8 +882,9 @@ export default class DataSet extends EventManager {
   @action
   remove(records?: Record | Record[]): void {
     if (records) {
+      const data = isArrayLike(records) ? records.slice() : [records];
       const { current, currentIndex } = this;
-      ([] as Record[]).concat(records).forEach((record) => {
+      data.forEach((record) => {
         const index = this.indexOf(record);
         if (index !== -1) {
           this.splice(index, 1);
@@ -913,7 +910,6 @@ export default class DataSet extends EventManager {
     const { current, length } = this;
     if (length) {
       this.forEach(this.deleteRecord, this);
-      this.data = [];
       if (current) {
         this.fireEvent(DataSetEvents.indexChange, { dataSet: this, previous: current });
       }
@@ -939,7 +935,7 @@ export default class DataSet extends EventManager {
   @action
   push(...records: Record[]): number {
     checkParentByInsert(this);
-    return this.data.push(...this.transferRecords(records));
+    return this.records.push(...this.transferRecords(records));
   }
 
   /**
@@ -950,7 +946,7 @@ export default class DataSet extends EventManager {
   @action
   unshift(...records: Record[]): number {
     checkParentByInsert(this);
-    return this.data.unshift(...this.transferRecords(records));
+    return this.records.unshift(...this.transferRecords(records));
   }
 
   /**
@@ -985,7 +981,19 @@ export default class DataSet extends EventManager {
     if (records.length) {
       checkParentByInsert(this);
     }
-    return this.data.splice(from, deleteCount, ...this.transferRecords(records)).map(this.deleteRecord, this);
+    const deleted = this.records.filter((record, index) => {
+      if (record.status === RecordStatus.delete) {
+        from += 1;
+      }
+      if (index >= from && deleteCount > 0 && record.status !== RecordStatus.delete) {
+        this.deleteRecord(record);
+        deleteCount -= 1;
+        return true;
+      }
+      return false;
+    });
+    this.records.splice(from, 0, ...this.transferRecords(records));
+    return deleted;
   }
 
   /**
@@ -1102,7 +1110,7 @@ export default class DataSet extends EventManager {
    */
   @action
   reverse(): Record[] {
-    return this.data = this.data.reverse();
+    return this.records = this.records.reverse();
   }
 
   /**
@@ -1124,10 +1132,10 @@ export default class DataSet extends EventManager {
       } else {
         field.order = SortOrder.desc;
       }
-      if (this.paging && this.transport.read) {
+      if (this.paging) {
         this.query();
       } else {
-        this.data = this.data.sort(getFieldSorter(field));
+        this.records = this.records.sort(getFieldSorter(field));
       }
     }
   }
@@ -1198,7 +1206,7 @@ export default class DataSet extends EventManager {
           this.select(filter ? this.filter(filter)[0] : 0);
         }
       } else {
-        this.data.forEach((record) => {
+        this.records.forEach((record) => {
           if (!filter || filter(record) !== false) {
             this.select(record);
           }
@@ -1244,10 +1252,9 @@ export default class DataSet extends EventManager {
    * @return true | false
    */
   isModified(): boolean {
-    return this.destroyed.length !== 0 ||
-      this.data.some(
-        record => record.status === RecordStatus.update || record.status === RecordStatus.add,
-      );
+    return this.records.some(
+      record => record.status === RecordStatus.update || record.status === RecordStatus.add || record.status === RecordStatus.delete,
+    );
   }
 
   /**
@@ -1262,7 +1269,7 @@ export default class DataSet extends EventManager {
    * @return 记录
    */
   findRecordById(id: number | string): Record | undefined {
-    return this.data.concat(this.destroyed).find(record => String(record.id) === String(id));
+    return this.records.find(record => String(record.id) === String(id));
   }
 
   /**
@@ -1292,7 +1299,7 @@ export default class DataSet extends EventManager {
    * @returns 字段名列表
    */
   getGroups(): string [] {
-    return Array.from(this.fields.entries()).reduce((arr: string[], [name, field]) => {
+    return [...this.fields.entries()].reduce((arr: string[], [name, field]) => {
       const group = field.get('group');
       if (isNumber(group)) {
         arr[group as number] = name;
@@ -1341,13 +1348,13 @@ export default class DataSet extends EventManager {
       if (isNumber(total)) {
         this.totalCount = total;
       }
-      this.originalData = this.data.slice();
-    } else if (this.length || this.destroyed.length) {
+    } else if (this.records.length) {
       warning(false, `The primary key which generated by database is not exists in each created records,
 because of no data \`${this.dataKey}\` from the response by \`submit\` or \`delete\` method.
 Then the query method will be auto invoke.`);
       this.query();
     }
+    flatMap<Record>(this.dirtyRecords).forEach(record => record.commit(void 0, this));
     return this;
   }
 
@@ -1383,17 +1390,16 @@ Then the query method will be auto invoke.`);
   }
 
   @action
-  loadData(allData: object[] = [], total?: number): DataSet {
+  loadData(allData: (object | Record)[] = [], total?: number): DataSet {
     this.storeSelected();
     const { paging, pageSize, props: { autoLocateFirst } } = this;
     allData = paging ? allData.slice(0, pageSize) : allData;
     this.fireEvent(DataSetEvents.beforeLoad, { dataSet: this, data: allData });
-    this.data = this.originalData = allData.map(data => {
-      const record = new Record(data, this);
+    this.records = this.originalData = allData.map(data => {
+      const record = data instanceof Record ? (data.dataSet = this, data) : new Record(data, this);
       record.status = RecordStatus.sync;
       return record;
     });
-    this.destroyed = [];
     if (total !== void 0 && paging === true) {
       this.totalCount = total;
     } else {
@@ -1413,14 +1419,18 @@ Then the query method will be auto invoke.`);
     if (record) {
       record.isSelected = false;
       record.isCurrent = false;
-      const { selected, destroyed } = this;
-      const index = selected.indexOf(record);
-      if (index !== -1) {
-        selected.splice(index, 1);
+      const { selected, records } = this;
+      const selectedIndex = selected.indexOf(record);
+      if (selectedIndex !== -1) {
+        selected.splice(selectedIndex, 1);
       }
-      if (record.status !== RecordStatus.add && record.status !== RecordStatus.delete) {
+      if (record.status === RecordStatus.add) {
+        const index = records.indexOf(record);
+        if (index !== -1) {
+          records.splice(index, 1);
+        }
+      } else if (record.status !== RecordStatus.delete) {
         record.status = RecordStatus.delete;
-        destroyed.push(record);
       }
     }
     return record;
@@ -1439,14 +1449,14 @@ Then the query method will be auto invoke.`);
     return index - (currentPage - 1) * pageSize;
   }
 
-  private transferRecords(records: Record[]): Record[] {
-    return records.map((record) => {
+  private transferRecords(data: Record[]): Record[] {
+    return data.map((record) => {
       const { dataSet } = record;
       if (dataSet === this) {
-        const { data } = this;
-        const index = data.indexOf(record);
+        const { records } = this;
+        const index = records.indexOf(record);
         if (index !== -1) {
-          data.splice(index, 1);
+          records.splice(index, 1);
         }
         return record;
       } else {
@@ -1655,6 +1665,7 @@ Then the query method will be auto invoke.`);
   private handleSubmitFail(e) {
     this.fireEvent(DataSetEvents.submitFailed, { dataSet: this });
     message.error(exception(e, $l('DataSet', 'submit_failure')));
+    this.destroyed.forEach(record => record.reset());
   }
 
   private syncChildren(current?: Record, previous?: Record) {

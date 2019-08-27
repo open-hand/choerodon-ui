@@ -273,7 +273,7 @@ export default class TableStore {
   get data(): Record[] {
     const { filter, pristine } = this.props;
     const { dataSet, isTree, showCachedSeletion } = this;
-    let data = isTree ? dataSet.treeData : dataSet.data;
+    let data = isTree ? dataSet.treeRecords : dataSet.records;
     if (typeof filter === 'function') {
       data = data.filter(filter);
     }
@@ -291,7 +291,7 @@ export default class TableStore {
   get indeterminate(): boolean {
     const { dataSet, showCachedSeletion } = this;
     if (dataSet) {
-      const { length } = (showCachedSeletion ? this.data : dataSet.data).filter(record => record.selectable);
+      const { length } = this.data.filter(record => record.selectable);
       const selectedLength = showCachedSeletion ? dataSet.selected.length : dataSet.currentSelected.length;
       return !!selectedLength && selectedLength !== length;
     }
@@ -302,7 +302,7 @@ export default class TableStore {
   get allChecked(): boolean {
     const { dataSet, showCachedSeletion } = this;
     if (dataSet) {
-      const { length } = (showCachedSeletion ? this.data : dataSet.data).filter(record => record.selectable);
+      const { length } = this.data.filter(record => record.selectable);
       const selectedLength = showCachedSeletion ? dataSet.selected.length : dataSet.currentSelected.length;
       return !!selectedLength && selectedLength === length;
     }

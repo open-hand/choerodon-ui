@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Table`: The temporarily deleted line is displayed as disabled and reset when the submission fails.
+
 ## 0.8.8
 
 `2019-08-23`

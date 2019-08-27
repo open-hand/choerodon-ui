@@ -30,7 +30,7 @@ import autobind from '../_util/autobind';
  * @returns {{ [key: string]: Field }} 不含级联字段的字段数组
  */
 export function filterBindField(fields: Fields): { [key: string]: Field } {
-  return Array.from(fields.entries()).reduce((newFields, [key, field]) => {
+  return [...fields.entries()].reduce((newFields, [key, field]) => {
     if (!field.get('bind')) {
       newFields[key] = field;
     }

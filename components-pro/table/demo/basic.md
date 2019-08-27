@@ -107,9 +107,7 @@ class App extends React.Component {
     autoQuery: true,
     pageSize: 5,
     transport: {
-      read: ({ dataSet }) => dataSet.length ? {
-        url: '/dataset/user/mutations',
-      } : {
+      read: {
         url: '/dataset/user/queries',
       },
       create: {
