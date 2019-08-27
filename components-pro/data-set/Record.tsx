@@ -13,13 +13,11 @@ import {
   childrenInfoForDelete,
   findBindFields,
   generateResponseData,
-  getOrderFields,
   getRecordValue,
   isSame,
   processIntlField,
   processToJSON,
   processValue,
-  sortTree,
 } from './utils';
 import * as ObjectChainValue from '../_util/ObjectChainValue';
 import DataSetSnapshot from './DataSetSnapshot';
@@ -175,11 +173,11 @@ export default class Record {
     if (dataSet) {
       const { parentField, idField } = dataSet.props;
       if (parentField && idField) {
-        const children = sortTree(dataSet.filter(record => {
+        const children = dataSet.records.filter(record => {
           const childParentId = record.get(parentField);
           const id = this.get(idField);
           return !isNil(childParentId) && !isNil(id) && childParentId === id;
-        }), getOrderFields(this.fields)[0]);
+        });
         return children.length > 0 ? children : void 0;
       }
     }

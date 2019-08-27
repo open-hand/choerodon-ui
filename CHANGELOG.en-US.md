@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `<pro>Table`: The temporarily deleted line is displayed as disabled and reset when the submission fails.
+- 🐞 `<pro>Table`: Fix the row positioning problem with the up and down key of keyboard.
 
 ## 0.8.8
 

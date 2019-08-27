@@ -141,7 +141,11 @@ export function findFirstFocusableElement(node?: HTMLElement): HTMLElement | und
 
 export function findIndexedSibling(element, direction): HTMLTableRowElement | null {
   const sibling: HTMLTableRowElement | null = direction > 0 ? element.nextElementSibling : element.previousElementSibling;
-  if (!sibling || 'index' in sibling.dataset) {
+  if (!sibling || (
+      'index' in sibling.dataset
+      && !sibling.getAttributeNodeNS('', 'disabled')
+      && (!document.defaultView || document.defaultView.getComputedStyle(sibling).display !== 'none')
+    )) {
     return sibling;
   }
   return findIndexedSibling(sibling, direction);

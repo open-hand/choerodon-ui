@@ -420,12 +420,14 @@ export default class TableStore {
     this.hoverRow = hover ? record : void 0;
   }
 
+  @action
   expandAll() {
-    this.dataSet.data.forEach(record => this.setRowExpanded(record, true));
+    this.dataSet.records.forEach(record => this.setRowExpanded(record, true));
   }
 
+  @action
   collapseAll() {
-    this.dataSet.data.forEach(record => this.setRowExpanded(record, false));
+    this.dataSet.records.forEach(record => this.setRowExpanded(record, false));
   }
 
   _leafColumns(columns: ColumnProps[]): ColumnProps[] {

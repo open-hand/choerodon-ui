@@ -295,12 +295,13 @@ export default class TableRow extends Component<TableRowProps, any> {
         }) : {}
       ),
     };
+    const disabled = isDisabledRow(record);
     const rowPrefixCls = `${prefixCls}-row`;
     const classString = classNames(rowPrefixCls, {
       [`${rowPrefixCls}-current`]: highLightRow && isCurrent,
       [`${rowPrefixCls}-hover`]: highLightRow && !isCurrent && this.isHover,
       [`${rowPrefixCls}-highlight`]: highLightRow,
-      [`${rowPrefixCls}-disabled`]: isDisabledRow(record),
+      [`${rowPrefixCls}-disabled`]: disabled,
     }, rowExternalProps.className);
     const rowProps: HTMLProps<HTMLTableRowElement> & { style: CSSProperties, 'data-index': number } = {
       ref: this.saveRef,
@@ -308,6 +309,7 @@ export default class TableRow extends Component<TableRowProps, any> {
       style: { ...rowExternalProps.style },
       onClick: this.handleClick,
       tabIndex: -1,
+      disabled,
       'data-index': id,
     };
     if (overflowX) {
