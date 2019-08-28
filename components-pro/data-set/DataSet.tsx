@@ -243,7 +243,8 @@ export default class DataSet extends EventManager {
 
   @computed
   get dataKey(): string {
-    return this.props.dataKey || getConfig('dataKey');
+    const { dataKey = getConfig('dataKey') } = this.props;
+    return dataKey;
   }
 
   @computed
