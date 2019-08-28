@@ -702,16 +702,17 @@ export default class DataSet extends EventManager {
    * @param object columns 导出的列
    */
   async export(columns: any = {}): Promise<void> {
-    const { parent, exportUrl } = this;
-    if (exportUrl && this.checkReadable(parent) && await this.ready()) {
+    if (this.checkReadable(this.parent) && await this.ready()) {
       const data = await this.generateQueryParameter();
       data._HAP_EXCEL_EXPORT_COLUMNS = columns;
       const { transport: { exports = {}, adapter }, totalCount, totalKey } = this;
       const params = { [totalKey]: totalCount, _r: Date.now(), ...this.generateOrderQueryString() };
       const newConfig = axiosAdapter(exports, this, data, params);
       const adapterConfig = adapter(newConfig, 'exports') || newConfig;
-      if ((await this.fireEvent(DataSetEvents.export, { dataSet: this, params: adapterConfig.params, data: adapterConfig.data })) !== false) {
-        doExport(this.axios.getUri(adapterConfig), adapterConfig.data, adapterConfig.method);
+      if (adapterConfig.url) {
+        if ((await this.fireEvent(DataSetEvents.export, { dataSet: this, params: adapterConfig.params, data: adapterConfig.data })) !== false) {
+          doExport(this.axios.getUri(adapterConfig), adapterConfig.data, adapterConfig.method);
+        }
       }
     }
   }
