@@ -41,6 +41,7 @@ export default class Record {
 
   @observable fields: Fields;
 
+  memo?: object;
   initData?: object;
   pristineData: object;
 
@@ -460,8 +461,25 @@ export default class Record {
     const { status, fields } = this;
     [...fields.values()].forEach(field => field.commit());
     this.data = this.pristineData;
+    this.memo = void 0;
     if (status === RecordStatus.update || status === RecordStatus.delete) {
       this.status = RecordStatus.sync;
+    }
+    return this;
+  }
+
+  @action
+  save(): Record {
+    this.memo = toJS(this.data);
+    return this;
+  }
+
+  @action
+  restore(): Record {
+    const { memo } = this;
+    if (memo) {
+      this.set(memo);
+      this.memo = void 0;
     }
     return this;
   }

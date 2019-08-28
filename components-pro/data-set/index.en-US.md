@@ -180,6 +180,8 @@ title: DataSet
 | clone() | 克隆记录，自动剔除主键值 |  | Record |
 | ready() | 判断记录是否准备就绪 |  | Promise&lt;boolean&gt; |
 | reset() | 重置更改 |  |  |
+| save() | 保存当前数据至缓存 |  |  |
+| restore() | 从缓存恢复保存的数据 |  |  |
 | clear() | 清除所有数据 |  |  |
 
 ### Field Props

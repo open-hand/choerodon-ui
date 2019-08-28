@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `<pro>Table`: The temporarily deleted line is displayed as disabled and reset when the submission fails.
+- 🌟 `<pro>DataSet.Record`: Added save and restore methods.
 - 🐞 `<pro>Table`: Fix the row positioning problem with the up and down key of keyboard.
 - 🐞 `<pro>DataSet`: Fix the problem when dataKey is null.
 - 🐞 `<pro>DataSet`: Fixed an issue that export function can not be executed until the exportUrl property is set.
