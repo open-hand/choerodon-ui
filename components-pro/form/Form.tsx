@@ -417,7 +417,7 @@ export default class Form extends DataSetComponent<FormProps> {
       const { props, key, type } = childrenArray[index];
       const label = getProperty(props, 'label', dataSet, record);
       const required = getProperty(props, 'required', dataSet, record);
-      let { rowSpan = 1, colSpan = 1, newLine, ...otherProps } = props as any;
+      let { rowSpan = 1, colSpan = 1, newLine, className, placeholder, ...otherProps } = props as any;
       const currentRow = matrix[rowIndex];
       if (newLine) {
         if (colIndex !== 0) {
@@ -469,8 +469,8 @@ export default class Form extends DataSetComponent<FormProps> {
       }
       const fieldElementProps: any = {
         key,
-        className: prefixCls,
-        placeholder: labelLayout === LabelLayout.placeholder ? label : void 0,
+        className: classNames(prefixCls, className),
+        placeholder: label && labelLayout === LabelLayout.placeholder ? label : placeholder,
         ...otherProps,
       };
       if (!isString(type)) {

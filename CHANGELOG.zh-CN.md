@@ -20,6 +20,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复键盘的上下键操作时行高亮定位问题。
 - 🐞 `<pro>DataSet`: 修复dataKey为null时的问题。
 - 🐞 `<pro>DataSet`: 修复必须要设置exportUrl才能导出的问题。
+- 🐞 `<pro>Form`: 修复FormField设了className时，宽度不是100%的问题。
 
 ## 0.8.8
 
