@@ -18,6 +18,7 @@ timeline: true
 - 🌟 `<pro>Table.Filter`: 优化过滤条placeholder文字与光标的位置，调整过滤条高度为40px。
 - 🌟 `<pro>Table`: 临时删除的行显示为禁用状态，提交失败时重置状态。
 - 🌟 `<pro>DataSet.Record`: 新增save和restore方法。
+- 🐞 `<pro>Table`: 修复Table有Column的lock="right"的时候，非固定和固定列之间会没有border的问题。
 - 🐞 `<pro>Table`: 修复键盘的上下键操作时行高亮定位问题。
 - 🐞 `<pro>DataSet`: 修复dataKey为null时的问题。
 - 🐞 `<pro>DataSet`: 修复必须要设置exportUrl才能导出的问题。
