@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Table.Filter`: Optimize the position of the filter placeholder and cursor, and adjust the filter bar height to 40px.
 - 🌟 `<pro>Table`: The temporarily deleted line is displayed as disabled and reset when the submission fails.
 - 🌟 `<pro>DataSet.Record`: Added save and restore methods.
 - 🐞 `<pro>Table`: Fix the row positioning problem with the up and down key of keyboard.
