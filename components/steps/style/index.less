@@ -1,7 +1,7 @@
-@import "../../style/themes/default";
-@import "../../style/mixins/index";
+@import '../../style/themes/default';
+@import '../../style/mixins/index';
 
-@steps-prefix-cls: ~"@{c7n-prefix}-steps";
+@steps-prefix-cls: ~'@{c7n-prefix}-steps';
 @process-icon-color: @processing-color;
 @process-title-color: @heading-color;
 @process-description-color: @text-color;
@@ -14,39 +14,39 @@
 @finish-icon-color: @process-icon-color;
 @finish-title-color: @text-color;
 @finish-description-color: @text-color-secondary;
-@finish-tail-color:  @process-tail-color;
+@finish-tail-color: @process-tail-color;
 @error-icon-color: @error-color;
 @error-title-color: @error-color;
 @error-description-color: @error-color;
-@error-tail-color:  @process-tail-color;
+@error-tail-color: @process-tail-color;
 @steps-background: @component-background;
 
-@steps-icon-size: .28rem;
-@steps-small-icon-size: .24rem;
-@steps-dot-size: .08rem;
-@steps-current-dot-size: .1rem;
+@steps-icon-size: 0.28rem;
+@steps-small-icon-size: 0.24rem;
+@steps-dot-size: 0.08rem;
+@steps-current-dot-size: 0.1rem;
 @steps-desciption-max-width: 1.4rem;
 
 .@{steps-prefix-cls} {
   .reset-component;
-  font-size: 0;
-  width: 100%;
   display: flex;
+  width: 100%;
+  font-size: 0;
 }
 
 .@{steps-prefix-cls}-item {
   position: relative;
   display: inline-block;
-  vertical-align: top;
   flex: 1;
   overflow: hidden;
+  vertical-align: top;
 
   &:last-child {
     flex: none;
   }
 
   &:last-child &-tail,
-  &:last-child &-title:after {
+  &:last-child &-title::after {
     display: none;
   }
 
@@ -57,66 +57,66 @@
   }
 
   &-icon {
-    color: @icon-text-color;
     width: @steps-icon-size;
     height: @steps-icon-size;
+    margin-right: 0.08rem;
+    color: @icon-text-color;
+    font-size: @font-size-lg;
+    font-family: @font-family-no-number;
     line-height: @steps-icon-size;
     text-align: center;
     border-radius: @steps-icon-size;
-    font-size: @font-size-lg;
-    margin-right: .08rem;
-    transition: background-color .3s, border-color .3s;
-    font-family: @font-family-no-number;
+    transition: background-color 0.3s, border-color 0.3s;
 
     > .@{steps-prefix-cls}-icon {
-      line-height: 1;
-      top: -.01rem;
       position: relative;
+      top: -0.01rem;
+      line-height: 1;
     }
     span.@{iconfont-css-prefix} {
-      height: @steps-icon-size;
       width: @steps-icon-size;
+      height: @steps-icon-size;
       line-height: @steps-icon-size;
       vertical-align: initial;
     }
   }
   &-tail {
     position: absolute;
+    top: 0.12rem;
     left: 0;
     width: 100%;
-    top: .12rem;
-    padding: 0 .1rem;
-    &:after {
-      content: '';
+    padding: 0 0.1rem;
+    &::after {
       display: inline-block;
-      background: @step-border-color;
-      height: .01rem;
-      border-radius: .01rem;
       width: 100%;
-      transition: background .3s;
+      height: 0.01rem;
+      background: @step-border-color;
+      border-radius: 0.01rem;
+      transition: background 0.3s;
+      content: '';
     }
   }
   &-title {
-    font-size: @font-size-lg;
-    color: @text-color;
-    display: inline-block;
-    padding-right: .16rem;
     position: relative;
+    display: inline-block;
+    padding-right: 0.16rem;
+    color: @text-color;
+    font-size: @font-size-lg;
     line-height: @steps-icon-size;
-    &:after {
-      content: '';
-      height: .01rem;
-      width: 99.99rem;
-      background: @wait-tail-color;
-      display: block;
+    &::after {
       position: absolute;
       top: @steps-icon-size / 2;
       left: 100%;
+      display: block;
+      width: 99.99rem;
+      height: 0.01rem;
+      background: @wait-tail-color;
+      content: '';
     }
   }
   &-description {
-    font-size: @font-size-base;
     color: @text-color-secondary;
+    font-size: @font-size-base;
   }
   .step-item-status(wait);
   .step-item-status(process);
@@ -130,7 +130,7 @@
 
 .@{steps-prefix-cls}-horizontal:not(.@{steps-prefix-cls}-label-vertical) {
   .@{steps-prefix-cls}-item {
-    margin-right: .16rem;
+    margin-right: 0.16rem;
     white-space: nowrap;
     &:last-child {
       margin-right: 0;
@@ -148,10 +148,10 @@
 }
 
 .step-item-status(@status) {
-  @icon-color: "@{status}-icon-color";
-  @title-color: "@{status}-title-color";
-  @description-color: "@{status}-description-color";
-  @tail-color: "@{status}-tail-color";
+  @icon-color: '@{status}-icon-color';
+  @title-color: '@{status}-title-color';
+  @description-color: '@{status}-description-color';
+  @tail-color: '@{status}-tail-color';
   &-@{status} &-icon {
     background-color: @@icon-color;
     > .@{steps-prefix-cls}-icon {
@@ -162,14 +162,14 @@
   }
   &-@{status} > &-content > &-title {
     color: @@title-color;
-    &:after {
+    &::after {
       background-color: @@tail-color;
     }
   }
   &-@{status} > &-content > &-description {
     color: @@description-color;
   }
-  &-@{status} > &-tail:after {
+  &-@{status} > &-tail::after {
     background-color: @@tail-color;
   }
 }

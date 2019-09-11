@@ -27,16 +27,14 @@ function getColumns({ showHour, showMinute, showSecond, use12Hours }: any) {
 export default function wrapPicker(Picker: ComponentClass<any>, defaultFormat?: string): any {
   return class PickerWrapper extends Component<any, any> {
     static displayName = 'PickerWrapper';
+
     static defaultProps = {
       format: defaultFormat || 'YYYY-MM-DD',
       transitionName: 'slide-up',
       popupStyle: {},
-      onChange() {
-      },
-      onOk() {
-      },
-      onOpenChange() {
-      },
+      onChange() {},
+      onOk() {},
+      onOpenChange() {},
       locale: {},
       prefixCls: getPrefixCls('calendar'),
       inputPrefixCls: getPrefixCls('input'),
@@ -84,13 +82,14 @@ export default function wrapPicker(Picker: ComponentClass<any>, defaultFormat?: 
     };
 
     getDefaultLocale = () => {
+      const { locale } = this.props;
       const result = {
         ...enUS,
-        ...this.props.locale,
+        ...locale,
       };
       result.lang = {
         ...result.lang,
-        ...(this.props.locale || {}).lang,
+        ...(locale || {}).lang,
       };
       return result;
     };
@@ -109,13 +108,13 @@ export default function wrapPicker(Picker: ComponentClass<any>, defaultFormat?: 
       const pickerWrapperInputClass = classNames(`${inputPrefixCls}-wrapper`, {
         [`${inputPrefixCls}-disabled`]: props.disabled,
         [`${inputPrefixCls}-has-border`]: props.border,
-      })
+      });
 
       const timeFormat = (props.showTime && props.showTime.format) || 'HH:mm:ss';
       const rcTimePickerProps = {
         ...generateShowHourMinuteSecond(timeFormat),
         format: timeFormat,
-        use12Hours: (props.showTime && props.showTime.use12Hours),
+        use12Hours: props.showTime && props.showTime.use12Hours,
       };
       const columns = getColumns(rcTimePickerProps);
       const timePickerCls = `${prefixCls}-time-picker-column-${columns}`;
@@ -149,10 +148,7 @@ export default function wrapPicker(Picker: ComponentClass<any>, defaultFormat?: 
 
     render() {
       return (
-        <LocaleReceiver
-          componentName="DatePicker"
-          defaultLocale={this.getDefaultLocale}
-        >
+        <LocaleReceiver componentName="DatePicker" defaultLocale={this.getDefaultLocale}>
           {this.renderPicker}
         </LocaleReceiver>
       );

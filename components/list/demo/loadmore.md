@@ -13,7 +13,7 @@ title:
 
 Load more list with `loadMore` property.
 
-````jsx
+```jsx
 import { List, Avatar, Button, Spin } from 'choerodon-ui';
 
 import reqwest from 'reqwest';
@@ -26,10 +26,10 @@ class LoadMoreList extends React.Component {
     loadingMore: false,
     showLoadingMore: true,
     data: [],
-  }
+  };
 
   componentDidMount() {
-    this.getData((res) => {
+    this.getData(res => {
       this.setState({
         loading: false,
         data: res.results,
@@ -37,35 +37,38 @@ class LoadMoreList extends React.Component {
     });
   }
 
-  getData = (callback) => {
+  getData = callback => {
     reqwest({
       url: fakeDataUrl,
       type: 'json',
       method: 'get',
       contentType: 'application/json',
-      success: (res) => {
+      success: res => {
         callback(res);
       },
     });
-  }
+  };
 
   onLoadMore = () => {
     this.setState({
       loadingMore: true,
     });
-    this.getData((res) => {
+    this.getData(res => {
       const data = this.state.data.concat(res.results);
-      this.setState({
-        data,
-        loadingMore: false,
-      }, () => {
-        // Resetting window's offsetTop so as to display react-virtualized demo underfloor.
-        // In real scene, you can using public method of react-virtualized:
-        // https://stackoverflow.com/questions/46700726/how-to-use-public-method-updateposition-of-react-virtualized
-        window.dispatchEvent(new Event('resize'));
-      });
+      this.setState(
+        {
+          data,
+          loadingMore: false,
+        },
+        () => {
+          // Resetting window's offsetTop so as to display react-virtualized demo underfloor.
+          // In real scene, you can using public method of react-virtualized:
+          // https://stackoverflow.com/questions/46700726/how-to-use-public-method-updateposition-of-react-virtualized
+          window.dispatchEvent(new Event('resize'));
+        },
+      );
     });
-  }
+  };
 
   render() {
     const { loading, loadingMore, showLoadingMore, data } = this.state;
@@ -83,11 +86,16 @@ class LoadMoreList extends React.Component {
         loadMore={loadMore}
         dataSource={data}
         renderItem={item => (
-          <List.Item actions={[<a>edit</a>, <a>more</a>]}>
+          <List.Item
+            key={item.name.last}
+            actions={[<a key="edit">edit</a>, <a key="more">more</a>]}
+          >
             <List.Item.Meta
-              avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+              avatar={
+                <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+              }
               title={<a href="https://choerodon.github.io/choerodon-ui/">{item.name.last}</a>}
-              description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+              description="Choerodon"
             />
             <div>content</div>
           </List.Item>
@@ -98,10 +106,10 @@ class LoadMoreList extends React.Component {
 }
 
 ReactDOM.render(<LoadMoreList />, mountNode);
-````
+```
 
-````css
+```css
 .demo-loadmore-list {
   min-height: 350px;
 }
-````
+```

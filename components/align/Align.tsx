@@ -6,7 +6,13 @@ import domAlign from 'dom-align';
 import EventManager from '../_util/EventManager';
 import TaskRunner from '../_util/TaskRunner';
 
-type FirstParam<T extends (...args: any) => any> = T extends (arg1: infer A, ...rest: any) => any ? A : never;
+function isWindow(obj) {
+  return obj != null && obj === obj.window;
+}
+
+type FirstParam<T extends (...args: any) => any> = T extends (arg1: infer A, ...rest: any) => any
+  ? A
+  : never;
 
 export interface AlignProps {
   childrenProps?: object;
@@ -40,6 +46,7 @@ export default class Align extends Component<AlignProps, any> {
   };
 
   resizeHandler: EventManager | null;
+
   bufferMonitor: TaskRunner | null;
 
   forceAlign() {
@@ -94,11 +101,18 @@ export default class Align extends Component<AlignProps, any> {
   }
 
   startMonitorWindowResize() {
+    const { monitorBufferTime } = this.props;
     if (!this.resizeHandler) {
       this.resizeHandler = new EventManager(window);
       this.bufferMonitor = new TaskRunner();
-      this.resizeHandler.addEventListener('resize',
-        this.bufferMonitor.delay.bind(this.bufferMonitor, this.props.monitorBufferTime, this.forceAlign.bind(this)));
+      this.resizeHandler.addEventListener(
+        'resize',
+        this.bufferMonitor.delay.bind(
+          this.bufferMonitor,
+          monitorBufferTime,
+          this.forceAlign.bind(this),
+        ),
+      );
     }
   }
 
@@ -113,21 +127,17 @@ export default class Align extends Component<AlignProps, any> {
   }
 
   render() {
-    const { childrenProps, children } = this.props;
+    const { props } = this;
+    const { childrenProps, children } = props;
     if (childrenProps) {
       const newProps = {};
-      for (let prop in childrenProps) {
-        if (childrenProps.hasOwnProperty(prop)) {
-          newProps[prop] = this.props[childrenProps[prop]];
+      Object.keys(childrenProps).forEach(prop => {
+        if ({}.hasOwnProperty.call(childrenProps, prop)) {
+          newProps[prop] = props[childrenProps[prop]];
         }
-      }
+      });
       return cloneElement(Children.only(children), newProps);
     }
     return children;
   }
-
-}
-
-function isWindow(obj) {
-  return obj != null && obj === obj.window;
 }

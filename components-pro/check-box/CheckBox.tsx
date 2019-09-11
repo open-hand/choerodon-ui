@@ -52,26 +52,24 @@ export class CheckBox<T extends CheckBoxProps> extends Radio<T & CheckBoxProps> 
 
   get unCheckedValue() {
     const { unCheckedValue } = this.props;
-    if (unCheckedValue !== void 0) {
+    if (unCheckedValue !== undefined) {
       return unCheckedValue;
-    } else {
-      const { field } = this;
-      if (field) {
-        return field.get(BooleanValue.falseValue);
-      }
+    }
+    const { field } = this;
+    if (field) {
+      return field.get(BooleanValue.falseValue);
     }
     return false;
   }
 
   get checkedValue() {
     const { value } = this.props;
-    if (value !== void 0) {
+    if (value !== undefined) {
       return value;
-    } else {
-      const { field } = this;
-      if (field) {
-        return field.get(BooleanValue.trueValue);
-      }
+    }
+    const { field } = this;
+    if (field) {
+      return field.get(BooleanValue.trueValue);
     }
     return true;
   }
@@ -102,7 +100,10 @@ export class CheckBox<T extends CheckBoxProps> extends Radio<T & CheckBoxProps> 
   }
 
   getWrapperClassNames() {
-    const { prefixCls, props: { indeterminate } } = this;
+    const {
+      prefixCls,
+      props: { indeterminate },
+    } = this;
     return super.getWrapperClassNames({
       [`${prefixCls}-indeterminate`]: indeterminate,
     });
@@ -116,20 +117,19 @@ export class CheckBox<T extends CheckBoxProps> extends Radio<T & CheckBoxProps> 
     const { name, dataSet, checkedValue } = this;
     if (dataSet && name) {
       return this.getValues().indexOf(checkedValue) !== -1;
-    } else if (checked !== void 0) {
-      return checked;
-    } else {
-      return this.value === checkedValue;
     }
+    if (checked !== undefined) {
+      return checked;
+    }
+    return this.value === checkedValue;
   }
 
   getDataSetValues(): any[] {
     const values = this.getDataSetValue();
-    if (values === void 0) {
+    if (values === undefined) {
       return [];
-    } else {
-      return [].concat(values);
     }
+    return [].concat(values);
   }
 
   @action

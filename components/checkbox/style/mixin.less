@@ -1,20 +1,20 @@
-@import "../../style/mixins/index";
+@import '../../style/mixins/index';
 
-.antCheckboxFn(@checkbox-prefix-cls: ~"@{c7n-prefix}-checkbox") {
-  @checkbox-inner-prefix-cls: ~"@{checkbox-prefix-cls}-inner";
+.antCheckboxFn(@checkbox-prefix-cls: ~'@{c7n-prefix}-checkbox') {
+  @checkbox-inner-prefix-cls: ~'@{checkbox-prefix-cls}-inner';
   // 一般状态
   .@{checkbox-prefix-cls} {
     .reset-component;
-    white-space: nowrap;
-    cursor: pointer;
-    outline: none;
+    position: relative;
+    top: -0.09em;
     display: inline-block;
     line-height: 1;
-    position: relative;
+    white-space: nowrap;
     vertical-align: middle;
-    top: -0.09em;
+    outline: none;
+    cursor: pointer;
 
-    &-checked:after {
+    &-checked::after {
       position: absolute;
       top: 0;
       left: 0;
@@ -24,8 +24,8 @@
       content: '';
     }
 
-    &:hover:after,
-    .@{checkbox-prefix-cls}-wrapper:hover &:after {
+    &:hover::after,
+    .@{checkbox-prefix-cls}-wrapper:hover &::after {
       visibility: visible;
     }
 
@@ -36,53 +36,54 @@
       display: block;
       width: @checkbox-size;
       height: @checkbox-size;
+      background-color: #fff;
       border: @checkbox-border-width @border-style-base;
       border-radius: @border-radius-sm;
-      background-color: #fff;
-      transition: border-color 90ms cubic-bezier(0, 0, 0.2, 0.1), background-color 90ms cubic-bezier(0, 0, 0.2, 0.1);
+      transition: border-color 90ms cubic-bezier(0, 0, 0.2, 0.1),
+        background-color 90ms cubic-bezier(0, 0, 0.2, 0.1);
 
-      &:after {
+      &::after {
         @check-width: (@checkbox-size / 14) * 5;
         @check-height: (@checkbox-size / 14) * 10;
-        transform: rotate(45deg) scale(0);
         position: absolute;
-        left: (@checkbox-size - @check-width) / 2 - @check-width * .3;
-        top: (@checkbox-size - @check-height) / 2 - @check-height * .3;
+        top: (@checkbox-size - @check-height) / 2 - @check-height * 0.3;
+        left: (@checkbox-size - @check-width) / 2 - @check-width * 0.3;
         display: table;
         width: @check-width;
         height: @check-height;
-        border: .02rem solid #fff;
+        border: 0.02rem solid #fff;
         border-top: 0;
         border-left: 0;
+        transform: rotate(45deg) scale(0);
+        transition: all 0.1s @ease-in-back;
         content: ' ';
-        transition: all .1s @ease-in-back;
       }
     }
 
     &-input {
       position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
       left: 0;
       z-index: 1;
-      cursor: pointer;
-      opacity: 0;
-      top: 0;
-      bottom: 0;
-      right: 0;
       width: 100%;
       height: 100%;
+      cursor: pointer;
+      opacity: 0;
     }
   }
 
   // 选中状态
-  .@{checkbox-prefix-cls}-checked .@{checkbox-inner-prefix-cls}:after {
-    transform: rotate(45deg) scale(1);
+  .@{checkbox-prefix-cls}-checked .@{checkbox-inner-prefix-cls}::after {
     position: absolute;
     display: table;
-    border: .02rem solid #fff;
+    border: 0.02rem solid #fff;
     border-top: 0;
     border-left: 0;
+    transform: rotate(45deg) scale(1);
+    transition: all 0.2s @ease-out-back 0.1s;
     content: ' ';
-    transition: all .2s @ease-out-back .1s;
   }
 
   .@{checkbox-prefix-cls}-checked,
@@ -97,9 +98,9 @@
     cursor: not-allowed;
 
     &.@{checkbox-prefix-cls}-checked {
-      .@{checkbox-inner-prefix-cls}:after {
-        animation-name: none;
+      .@{checkbox-inner-prefix-cls}::after {
         border-color: @disabled-color;
+        animation-name: none;
       }
     }
 
@@ -108,11 +109,11 @@
     }
 
     .@{checkbox-inner-prefix-cls} {
-      border-color: @border-color-base !important;
       background-color: @input-disabled-bg;
-      &:after {
-        animation-name: none;
+      border-color: @border-color-base !important;
+      &::after {
         border-color: @input-disabled-bg;
+        animation-name: none;
       }
     }
 
@@ -124,25 +125,25 @@
 
   .@{checkbox-prefix-cls}-wrapper {
     .reset-component;
+    display: inline-block;
     line-height: unset;
     cursor: pointer;
-    display: inline-block;
     & + & {
-      margin-left: .08rem;
+      margin-left: 0.08rem;
     }
   }
 
   .@{checkbox-prefix-cls}-wrapper + span,
   .@{checkbox-prefix-cls} + span {
-    padding-left: .08rem;
-    padding-right: .08rem;
+    padding-right: 0.08rem;
+    padding-left: 0.08rem;
   }
 
   .@{checkbox-prefix-cls}-group {
     display: inline-block;
     &-item {
       display: inline-block;
-      margin-right: .08rem;
+      margin-right: 0.08rem;
       &:last-child {
         margin-right: 0;
       }
@@ -158,35 +159,36 @@
       position: relative;
     }
     &-wrapper&-has-label & {
-      padding-top: .17rem;
+      padding-top: 0.17rem;
     }
     &-wrapper &-label.label-disabled {
       color: rgba(0, 0, 0, 0.54);
     }
     &-wrapper &-label {
-      color: rgba(0, 0, 0, 0.6);
       position: absolute;
       left: 0;
       width: 100%;
+      color: rgba(0, 0, 0, 0.6);
+      transform: scale(0.75) translateY(0) translateZ(0.00001rem);
       transform-origin: 0 0;
-      transform: scale(0.75) translateY(0) translateZ(.00001rem);
     }
   }
 
   // 半选状态
-  .@{checkbox-prefix-cls}-indeterminate .@{checkbox-inner-prefix-cls}:after {
+  .@{checkbox-prefix-cls}-indeterminate .@{checkbox-inner-prefix-cls}::after {
     @indeterminate-width: (@checkbox-size / 14) * 8;
     @indeterminate-height: @checkbox-size / 14;
-    content: ' ';
-    transform: scale(1);
     position: absolute;
-    left: (@checkbox-size - .03rem - @indeterminate-width) / 2;
-    top: (@checkbox-size - .04rem - @indeterminate-height) / 2;
+    top: (@checkbox-size - 0.04rem - @indeterminate-height) / 2;
+    left: (@checkbox-size - 0.03rem - @indeterminate-width) / 2;
     width: @indeterminate-width;
     height: @indeterminate-height;
+    transform: scale(1);
+    content: ' ';
   }
 
-  .@{checkbox-prefix-cls}-indeterminate.@{checkbox-prefix-cls}-disabled .@{checkbox-inner-prefix-cls}:after {
+  .@{checkbox-prefix-cls}-indeterminate.@{checkbox-prefix-cls}-disabled
+    .@{checkbox-inner-prefix-cls}::after {
     border-color: @disabled-color;
   }
 }

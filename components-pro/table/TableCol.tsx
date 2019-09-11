@@ -1,9 +1,9 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classes from 'component-classes';
+import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { ElementProps } from '../core/ViewComponent';
 import TableContext from './TableContext';
-import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 
 export interface TableColProps extends ElementProps {
   width?: number | string;
@@ -34,7 +34,11 @@ export default class TableCol extends PureComponent<TableColProps> {
 
   componentDidMount() {
     const { prefixCls } = this.props;
-    const { element } = this.context.tableStore.node;
+    const {
+      tableStore: {
+        node: { element },
+      },
+    } = this.context;
     if (element && classes(element).has(`${prefixCls}-resizing`)) {
       this.fireResizeEnd();
     }
@@ -53,7 +57,8 @@ export default class TableCol extends PureComponent<TableColProps> {
 
   fireResizeEnd() {
     const { prefixCls, onResizeEnd } = this.props;
+    const { tableStore } = this.context;
     onResizeEnd();
-    classes(this.context.tableStore.node.element).remove(`${prefixCls}-resizing`);
+    classes(tableStore.node.element).remove(`${prefixCls}-resizing`);
   }
 }

@@ -13,8 +13,9 @@ title:
 
 More than one panel can be expanded at a time, the first panel is initialized to be active in this case.
 
-````jsx
+```jsx
 import { Collapse } from 'choerodon-ui';
+
 const Panel = Collapse.Panel;
 
 function callback(key) {
@@ -39,8 +40,9 @@ ReactDOM.render(
       <p>{text}</p>
     </Panel>
   </Collapse>,
-  mountNode);
-````
+  mountNode,
+);
+```
 
 <style>
 p {

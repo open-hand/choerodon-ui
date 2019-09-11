@@ -4,7 +4,7 @@ import { $l } from '../../locale-context';
 import { methodReturn } from '.';
 
 export default function rangeOverflow(value, { max, label }): methodReturn {
-  if (!isEmpty(value) && max !== void 0 && Number(value) > max) {
+  if (!isEmpty(value) && max !== undefined && Number(value) > max) {
     const injectionOptions = { max, label };
     return new ValidationResult({
       validationMessage: $l('Validator', 'range_overflow', injectionOptions),

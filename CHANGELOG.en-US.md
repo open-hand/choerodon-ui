@@ -9,12 +9,13 @@ timeline: true
 
 #### Release Schedule
 
-* Weekly release: patch version at the end of every week for routine bugfix (anytime for urgent bugfix).
-* Monthly release: minor version at the end of every month for new features.
-* Major version release is not included in this schedule for breaking change and new features.
+- Weekly release: patch version at the end of every week for routine bugfix (anytime for urgent bugfix).
+- Monthly release: minor version at the end of every month for new features.
+- Major version release is not included in this schedule for breaking change and new features.
 
 ---
 
+- 🌟 Upgrade webpack4 babel7 eslint and stylelint.
 - 🌟 `<pro>Table.Filter`: Optimize the position of the filter placeholder and cursor, and adjust the filter bar height to 40px.
 - 🌟 `<pro>Table`: The temporarily deleted line is displayed as disabled and reset when the submission fails.
 - 🌟 `<pro>DataSet.Record`: Added save and restore methods.
@@ -23,6 +24,7 @@ timeline: true
 - 🐞 `<pro>DataSet`: Fix the problem when dataKey is null.
 - 🐞 `<pro>DataSet`: Fixed an issue that export function can not be executed until the exportUrl property is set.
 - 🐞 `<pro>Form`: Fixed a problem where the width of the FormField was not 100% when the className was set.
+- 🐞 `<pro>TextField`: Fix the autofill and prefix style of the float label.
 
 ## 0.8.8
 
@@ -158,6 +160,7 @@ timeline: true
 - 🐞 `<pro>DataSet`: Fixed the ignore property of the Field will ignore the binding fields.
 
 ## 0.7.5
+
 ## 0.6.14
 
 `2019-06-28`
@@ -165,6 +168,7 @@ timeline: true
 - 🐞 `<pro>TextArea`: Fixed an issue where uncontrolled values could not be retained.
 
 ## 0.7.3
+
 ## 0.6.12
 
 `2019-06-27`
@@ -174,6 +178,7 @@ timeline: true
 - 🐞 `<pro>Select`: Fixed a problem with the primitive attribute.
 
 ## 0.7.1
+
 ## 0.6.10
 
 `2019-06-25`
@@ -187,6 +192,7 @@ timeline: true
 - 🐞 `<pro>DataSet`: Fix the problem that the composite value of lookup is not displayed in Output.
 
 ## 0.7.0
+
 ## 0.6.9
 
 `2019-06-19`
@@ -292,7 +298,7 @@ timeline: true
 `2019-04-01`
 
 - 🌟 Incorporate the `choerodon-ui/pro` component library.
-- 🌟 The default ant prefix is changed to c7n. To use the ant prefix, please [Modify the topic variable @c7n-prefix] (https://choerodon.github.io/choerodon-ui/docs/react/customize-theme) And use [global configuration] (https://choerodon.github.io/choerodon-ui/components/configure).
+- 🌟 The default ant prefix is changed to c7n. To use the ant prefix, please [Modify the topic variable @c7n-prefix](https://choerodon.github.io/choerodon-ui/docs/react/customize-theme) And use [global configuration](https://choerodon.github.io/choerodon-ui/components/configure).
 
 ## 0.5.7
 
@@ -304,7 +310,7 @@ timeline: true
 
 `2019-04-25`
 
-- 🌟 `Icon`:  Add new icons.
+- 🌟 `Icon`: Add new icons.
 
 ## 0.5.5
 
@@ -332,17 +338,17 @@ timeline: true
 
 `2019-02-22`
 
-- 💄 `Table`:  The confirmation button for the filter in the repair table is fixed at the bottom of the selection box and the style is overwritten.
+- 💄 `Table`: The confirmation button for the filter in the repair table is fixed at the bottom of the selection box and the style is overwritten.
 - 🌟 `Sidebar`: add `alwaysCanCancel`.
 
 ## 0.5.1
 
 `2019-02-19`
 
-- 💄 `Form.Item`:  The suffix icon is not hidden when Form.Item is verified as error.
-- 💄 `Table`:  Table filter does not clear after blur.
-- 💄 `Table`:  Table filter clear icon is displayed when there is content.
-- 💄 `Table`:  The confirmation button filtered in the Table is fixed at the bottom of the selection box.
+- 💄 `Form.Item`: The suffix icon is not hidden when Form.Item is verified as error.
+- 💄 `Table`: Table filter does not clear after blur.
+- 💄 `Table`: Table filter clear icon is displayed when there is content.
+- 💄 `Table`: The confirmation button filtered in the Table is fixed at the bottom of the selection box.
 - 🌟 `Icon`: Add new icons.
 
 ## 0.5.0
@@ -350,7 +356,7 @@ timeline: true
 `2019-01-10`
 
 - Change the source of the icon font file to change it from the npm library and package it locally.
-- 💄 `IconSelect`:  Optimize IconSelect, the icon is larger, and only the common icons are retained.
+- 💄 `IconSelect`: Optimize IconSelect, the icon is larger, and only the common icons are retained.
 - 💄 `table`: Optimize the table to automatically return to the first element when turning pages.
 
 ## 0.4.5
@@ -501,7 +507,7 @@ timeline: true
 - 💄 `Modal`: Adjust the style of footer's button.
 - 🌟 Added component `IconSelect`.
 - 💄 `Table`: Adjust `FilterSelect` function.
-- 💄 `Table`:  Adjust the position of Popup.
+- 💄 `Table`: Adjust the position of Popup.
 
 ## 0.2.4
 

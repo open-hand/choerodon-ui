@@ -6,12 +6,12 @@ import omit from 'lodash/omit';
 import defaultTo from 'lodash/defaultTo';
 import isString from 'lodash/isString';
 import classes from 'component-classes';
+import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { ColumnProps, minColumnWidth } from './Column';
 import TableContext from './TableContext';
 import { ElementProps } from '../core/ViewComponent';
 import Icon from '../icon';
 import DataSet from '../data-set/DataSet';
-import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import EventManager from '../_util/EventManager';
 import { getAlignByField, getColumnKey, getHeader } from './utils';
 import { ColumnAlign } from './enum';
@@ -55,7 +55,8 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
   };
 
   getNode(column) {
-    const headerDom: Element | null = this.props.getHeaderNode();
+    const { getHeaderNode } = this.props;
+    const headerDom: Element | null = getHeaderNode();
     if (headerDom) {
       return headerDom.querySelector(`[data-index="${getColumnKey(column)}"]`);
     }
@@ -69,19 +70,27 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
     }
   }
 
-  handleLeftResize = (e) => {
-    this.setResizeColumn(this.props.prevColumn);
+  handleLeftResize = e => {
+    const { prevColumn } = this.props;
+    this.setResizeColumn(prevColumn);
     this.resizeStart(e);
   };
 
-  handleRightResize = (e) => {
-    this.setResizeColumn(this.props.resizeColumn);
+  handleRightResize = e => {
+    const { resizeColumn } = this.props;
+    this.setResizeColumn(resizeColumn);
     this.resizeStart(e);
   };
 
   @action
   resizeStart(e): void {
-    classes(this.context.tableStore.node.element).add(`${this.props.prefixCls}-resizing`);
+    const { prefixCls } = this.props;
+    const {
+      tableStore: {
+        node: { element },
+      },
+    } = this.context;
+    classes(element).add(`${prefixCls}-resizing`);
     delete this.resizePosition;
     this.setSplitLinePosition(e.pageX);
     this.resizeEvent
@@ -101,9 +110,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
 
   @action
   resizeEnd = (): void => {
-    this.resizeEvent
-      .removeEventListener('mousemove')
-      .removeEventListener('mouseup');
+    this.resizeEvent.removeEventListener('mousemove').removeEventListener('mouseup');
     const column = this.resizeColumn;
     if (this.resizePosition && column) {
       const newWidth = Math.max(this.resizePosition - this.resizeBoundary, minColumnWidth(column));
@@ -112,12 +119,22 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
         return;
       }
     }
-    classes(this.context.tableStore.node.element).remove(`${this.props.prefixCls}-resizing`);
+    const { prefixCls } = this.props;
+    const {
+      tableStore: {
+        node: { element },
+      },
+    } = this.context;
+    classes(element).remove(`${prefixCls}-resizing`);
   };
 
   @action
   setSplitLinePosition(left: number): number | undefined {
-    const { resizeLine } = this.context.tableStore.node;
+    const {
+      tableStore: {
+        node: { resizeLine },
+      },
+    } = this.context;
     const { left: rectLeft, width } = resizeLine.offsetParent.getBoundingClientRect();
     left -= rectLeft;
     if (left < 0) {
@@ -133,10 +150,18 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
     const { prevColumn, column, prefixCls } = this.props;
     const resizerPrefixCls = `${prefixCls}-resizer`;
     const pre = prevColumn && prevColumn.resizable && (
-      <div key="pre" className={`${resizerPrefixCls} ${resizerPrefixCls}-left`} onMouseDown={this.handleLeftResize} />
+      <div
+        key="pre"
+        className={`${resizerPrefixCls} ${resizerPrefixCls}-left`}
+        onMouseDown={this.handleLeftResize}
+      />
     );
     const next = column.resizable && (
-      <div key="next" className={`${resizerPrefixCls} ${resizerPrefixCls}-right`} onMouseDown={this.handleRightResize} />
+      <div
+        key="next"
+        className={`${resizerPrefixCls} ${resizerPrefixCls}-right`}
+        onMouseDown={this.handleRightResize}
+      />
     );
 
     return [pre, next];
@@ -144,9 +169,21 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
 
   render() {
     const { column, prefixCls, dataSet, rowSpan, colSpan } = this.props;
-    const { rowHeight, columnResizable } = this.context.tableStore;
+    const {
+      tableStore: { rowHeight, columnResizable },
+    } = this.context;
     const sortPrefixCls = `${prefixCls}-sort`;
-    const { headerClassName, headerStyle = {}, sortable, name, align, help, showHelp, children, command } = column;
+    const {
+      headerClassName,
+      headerStyle = {},
+      sortable,
+      name,
+      align,
+      help,
+      showHelp,
+      children,
+      command,
+    } = column;
     const classList: string[] = [`${prefixCls}-cell`];
     const field = dataSet.getField(name);
     if (headerClassName) {
@@ -156,12 +193,19 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
     const innerProps: any = {
       className: `${prefixCls}-cell-inner`,
       children: [
-        isValidElement(headerNode) ? cloneElement(headerNode, { key: 'text' })
-          : isString(headerNode) ? <span key="text">{headerNode}</span> : headerNode,
+        isValidElement(headerNode) ? (
+          cloneElement(headerNode, { key: 'text' })
+        ) : isString(headerNode) ? (
+          <span key="text">{headerNode}</span>
+        ) : (
+          headerNode
+        ),
       ],
     };
     const cellStyle: CSSProperties = {
-      textAlign: align || ((command || children && children.length) ? ColumnAlign.center : getAlignByField(field)),
+      textAlign:
+        align ||
+        (command || (children && children.length) ? ColumnAlign.center : getAlignByField(field)),
       ...headerStyle,
     };
     if (rowHeight !== 'auto') {
@@ -173,11 +217,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
       const fieldHelp = defaultTo(field && field.get('help'), help);
       if (fieldHelp) {
         const helpIcon = (
-          <Tooltip
-            title={fieldHelp}
-            placement="bottom"
-            key="help"
-          >
+          <Tooltip title={fieldHelp} placement="bottom" key="help">
             <Icon type="help_outline" className={`${prefixCls}-help-icon`} />
           </Tooltip>
         );
@@ -220,5 +260,4 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
   componentWillUnmount() {
     this.resizeEvent.clear();
   }
-
 }

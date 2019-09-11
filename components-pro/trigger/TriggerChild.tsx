@@ -1,5 +1,4 @@
 import { Children, cloneElement, PureComponent, ReactElement } from 'react';
-import PropTypes from 'prop-types';
 
 export type hook = (eventName: string, child: ReactElement<any>, e) => void;
 
@@ -16,22 +15,18 @@ export interface TriggerChildProps {
 export default class TriggerChild extends PureComponent<TriggerChildProps> {
   static displayName = 'TriggerChild';
 
-  static propTypes = {
-    onContextMenu: PropTypes.func,
-    onClick: PropTypes.func,
-    onMouseDown: PropTypes.func,
-    onMouseEnter: PropTypes.func,
-    onMouseLeave: PropTypes.func,
-    onFocus: PropTypes.func,
-    onBlur: PropTypes.func,
-  };
-
   handleContextMenu;
+
   handleClick;
+
   handleMouseDown;
+
   handleMouseEnter;
+
   handleMouseLeave;
+
   handleFocus;
+
   handleBlur;
 
   constructor(props, context) {
@@ -59,7 +54,8 @@ export default class TriggerChild extends PureComponent<TriggerChildProps> {
   }
 
   render() {
-    return cloneElement(Children.only(this.props.children as ReactElement), {
+    const { children } = this.props;
+    return cloneElement(Children.only(children as ReactElement), {
       onContextMenu: this.handleContextMenu,
       onClick: this.handleClick,
       onMouseDown: this.handleMouseDown,

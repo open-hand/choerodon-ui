@@ -2,20 +2,32 @@ import { action, computed, observable } from 'mobx';
 
 export default class Validity {
   @observable badInput: boolean;
+
   @observable customError: boolean;
+
   @observable patternMismatch: boolean;
+
   @observable rangeOverflow: boolean;
+
   @observable rangeUnderflow: boolean;
+
   @observable stepMismatch: boolean;
+
   @observable tooLong: boolean;
+
   @observable tooShort: boolean;
+
   @observable typeMismatch: boolean;
+
   @observable valueMissing: boolean;
+
   @observable uniqueError: boolean;
 
   @computed
   get valid(): boolean {
-    return Object.keys(this).filter(key => key !== 'valid').every(key => !this[key]);
+    return Object.keys(this)
+      .filter(key => key !== 'valid')
+      .every(key => !this[key]);
   }
 
   constructor() {

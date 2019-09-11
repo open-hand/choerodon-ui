@@ -34,7 +34,7 @@ export default class YearsView extends DaysView {
 
   handleKeyDownEnd() {
     const date = this.getCloneDate();
-    this.changeSelectedDate(date.add(9 - date.year() % 10, 'y'));
+    this.changeSelectedDate(date.add(9 - (date.year() % 10), 'y'));
   }
 
   handleKeyDownLeft(e) {
@@ -72,7 +72,10 @@ export default class YearsView extends DaysView {
   }
 
   renderHeader(): ReactNode {
-    const { prefixCls, props: { date } } = this;
+    const {
+      prefixCls,
+      props: { date },
+    } = this;
     const year = date.year() % 10;
     const from = date.clone().subtract(year, 'y');
     const to = from.clone().add(9, 'y');
@@ -92,13 +95,19 @@ export default class YearsView extends DaysView {
   }
 
   renderPanelHead(): ReactNode {
-    return;
+    return undefined;
   }
 
   renderPanelBody(): ReactNode {
-    const { prefixCls, props: { date, renderer = this.renderCell, isValidDate = alwaysValidDate } } = this;
+    const {
+      prefixCls,
+      props: { date, renderer = this.renderCell, isValidDate = alwaysValidDate },
+    } = this;
     const selected = date.clone();
-    const from = date.clone().startOf('y').subtract(date.year() % 10, 'y');
+    const from = date
+      .clone()
+      .startOf('y')
+      .subtract(date.year() % 10, 'y');
     const to = from.clone().add(10, 'y');
     const prevYear = from.clone().subtract(1, 'y');
     const lastYear = to.clone().add(1, 'y');
@@ -141,7 +150,7 @@ export default class YearsView extends DaysView {
   }
 
   renderFooter(): ReactNode {
-    return;
+    return undefined;
   }
 
   getPanelClass(): string {

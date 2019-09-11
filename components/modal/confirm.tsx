@@ -15,52 +15,68 @@ interface ConfirmDialogProps extends ModalFuncProps {
 const IS_REACT_16 = !!ReactDOM.createPortal;
 
 const ConfirmDialog = (props: ConfirmDialogProps) => {
-  const { onCancel, onOk, close, zIndex, afterClose, visible, keyboard } = props;
-  const iconType = props.iconType || undefined;
-  const okType = props.okType || 'primary';
-  const prefixCls = getPrefixCls('confirm', props.prefixCls);
-  // 默认为 true，保持向下兼容
-  const okCancel = ('okCancel' in props) ? props.okCancel! : true;
-  const width = props.width || 416;
-  const style = props.style || {};
-  // 默认为 false，保持旧版默认行为
-  const maskClosable = props.maskClosable === undefined ? false : props.maskClosable;
+  const {
+    prefixCls: customizePrefixCls,
+    onCancel,
+    onOk,
+    close,
+    zIndex,
+    width,
+    style,
+    type,
+    className,
+    afterClose,
+    visible,
+    keyboard,
+    okText,
+    cancelText,
+    okCancel = true,
+    iconType,
+    okType,
+    maskClosable = false,
+    title,
+    content,
+  } = props;
+  const propOkType = okType || 'primary';
+  const prefixCls = getPrefixCls('confirm', customizePrefixCls);
+  const propWidth = width || 416;
+  const propStyle = style || {};
   const runtimeLocale = getConfirmLocale();
-  const okText = props.okText ||
-    (okCancel ? runtimeLocale.okText : runtimeLocale.justOkText);
-  const cancelText = props.cancelText || runtimeLocale.cancelText;
-  const classString = classNames(
-    prefixCls,
-    `${prefixCls}-${props.type}`,
-    props.className,
-  );
+  const propOkText = okText || (okCancel ? runtimeLocale.okText : runtimeLocale.justOkText);
+  const propCancelText = cancelText || runtimeLocale.cancelText;
+  const classString = classNames(prefixCls, `${prefixCls}-${type}`, className);
   const actionButtonProps: any = {
     okProps: {
-      text: okText,
-      type: okType,
+      text: propOkText,
+      type: propOkType,
       actionFn: onOk,
       closeModal: close,
     },
   };
   if (okCancel) {
     actionButtonProps.cancelProps = {
-      text: cancelText,
+      text: propCancelText,
       actionFn: onCancel,
       closeModal: close,
     };
   }
+
+  function handleCancel() {
+    close({ triggerCancel: true });
+  }
+
   return (
     <Dialog
       className={classString}
-      onCancel={close.bind(this, { triggerCancel: true })}
+      onCancel={handleCancel}
       visible={visible}
       title=""
       transitionName="zoom"
       footer=""
       maskTransitionName="fade"
       maskClosable={maskClosable}
-      style={style}
-      width={width}
+      style={propStyle}
+      width={propWidth}
       zIndex={zIndex}
       afterClose={afterClose}
       keyboard={keyboard}
@@ -68,8 +84,8 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
       <div className={`${prefixCls}-body-wrapper`}>
         <div className={`${prefixCls}-body`}>
           {iconType ? <Icon type={iconType!} /> : null}
-          <span className={`${prefixCls}-title`}>{props.title}</span>
-          <div className={`${prefixCls}-content`}>{props.content}</div>
+          <span className={`${prefixCls}-title`}>{title}</span>
+          <div className={`${prefixCls}-content`}>{content}</div>
         </div>
         <div className={`${prefixCls}-btns`}>
           <ActionButton {...actionButtonProps} />
@@ -80,24 +96,15 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
 };
 
 export default function confirm(config: ModalFuncProps) {
-  let div = document.createElement('div');
+  const div = document.createElement('div');
   document.body.appendChild(div);
-
-  function close(...args: any[]) {
-    if (IS_REACT_16) {
-      render({ ...config, close, visible: false, afterClose: destroy.bind(this, ...args) });
-    } else {
-      destroy(...args);
-    }
-  }
 
   function destroy(...args: any[]) {
     const unmountResult = ReactDOM.unmountComponentAtNode(div);
     if (unmountResult && div.parentNode) {
       div.parentNode.removeChild(div);
     }
-    const triggerCancel = args && args.length &&
-      args.some(param => param && param.triggerCancel);
+    const triggerCancel = args && args.length && args.some(param => param && param.triggerCancel);
     if (config.onCancel && triggerCancel) {
       config.onCancel(...args);
     }
@@ -105,6 +112,14 @@ export default function confirm(config: ModalFuncProps) {
 
   function render(props: any) {
     ReactDOM.render(<ConfirmDialog {...props} />, div);
+  }
+
+  function close(...args: any[]) {
+    if (IS_REACT_16) {
+      render({ ...config, close, visible: false, afterClose: destroy.bind(this, ...args) });
+    } else {
+      destroy(...args);
+    }
   }
 
   render({ ...config, visible: true, close });

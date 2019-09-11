@@ -21,8 +21,18 @@ We provide properties like `validateStatus` `help` `hasFeedback` to customize yo
 2. `hasFeedback`: display feed icon of input control
 3. `help`: display validate message.
 
-````jsx
-import { Form, Input, DatePicker, Col, TimePicker, Select, Cascader, InputNumber } from 'choerodon-ui';
+```jsx
+import {
+  Form,
+  Input,
+  DatePicker,
+  Col,
+  TimePicker,
+  Select,
+  Cascader,
+  InputNumber,
+} from 'choerodon-ui';
+
 const FormItem = Form.Item;
 const Option = Select.Option;
 
@@ -48,11 +58,7 @@ ReactDOM.render(
       <Input placeholder="unavailable choice" id="error" />
     </FormItem>
 
-    <FormItem
-      {...formItemLayout}
-      label="Warning"
-      validateStatus="warning"
-    >
+    <FormItem {...formItemLayout} label="Warning" validateStatus="warning">
       <Input placeholder="Warning" id="warning" />
     </FormItem>
 
@@ -66,21 +72,11 @@ ReactDOM.render(
       <Input placeholder="I'm the content is being validated" id="validating" />
     </FormItem>
 
-    <FormItem
-      {...formItemLayout}
-      label="Success"
-      hasFeedback
-      validateStatus="success"
-    >
+    <FormItem {...formItemLayout} label="Success" hasFeedback validateStatus="success">
       <Input placeholder="I'm the content" id="success" />
     </FormItem>
 
-    <FormItem
-      {...formItemLayout}
-      label="Warning"
-      hasFeedback
-      validateStatus="warning"
-    >
+    <FormItem {...formItemLayout} label="Warning" hasFeedback validateStatus="warning">
       <Input placeholder="Warning" id="warning" />
     </FormItem>
 
@@ -94,30 +90,15 @@ ReactDOM.render(
       <Input placeholder="unavailable choice" id="error" />
     </FormItem>
 
-    <FormItem
-      {...formItemLayout}
-      label="Success"
-      hasFeedback
-      validateStatus="success"
-    >
+    <FormItem {...formItemLayout} label="Success" hasFeedback validateStatus="success">
       <DatePicker style={{ width: '100%' }} />
     </FormItem>
 
-    <FormItem
-      {...formItemLayout}
-      label="Warning"
-      hasFeedback
-      validateStatus="warning"
-    >
+    <FormItem {...formItemLayout} label="Warning" hasFeedback validateStatus="warning">
       <TimePicker style={{ width: '100%' }} />
     </FormItem>
 
-    <FormItem
-      {...formItemLayout}
-      label="Error"
-      hasFeedback
-      validateStatus="error"
-    >
+    <FormItem {...formItemLayout} label="Error" hasFeedback validateStatus="error">
       <Select defaultValue="1">
         <Option value="1">Option 1</Option>
         <Option value="2">Option 2</Option>
@@ -135,19 +116,14 @@ ReactDOM.render(
       <Cascader defaultValue={['1']} options={[]} />
     </FormItem>
 
-    <FormItem
-      label="inline"
-      {...formItemLayout}
-    >
+    <FormItem label="inline" {...formItemLayout}>
       <Col span={11}>
         <FormItem validateStatus="error" help="Please select the correct date">
           <DatePicker />
         </FormItem>
       </Col>
       <Col span={2}>
-        <span style={{ display: 'inline-block', width: '100%', textAlign: 'center' }}>
-          -
-        </span>
+        <span style={{ display: 'inline-block', width: '100%', textAlign: 'center' }}>-</span>
       </Col>
       <Col span={11}>
         <FormItem>
@@ -156,14 +132,10 @@ ReactDOM.render(
       </Col>
     </FormItem>
 
-    <FormItem
-      {...formItemLayout}
-      label="Success"
-      hasFeedback
-      validateStatus="success"
-    >
+    <FormItem {...formItemLayout} label="Success" hasFeedback validateStatus="success">
       <InputNumber style={{ width: '100%' }} />
     </FormItem>
   </Form>,
-  mountNode);
-````
+  mountNode,
+);
+```

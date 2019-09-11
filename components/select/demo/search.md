@@ -13,8 +13,9 @@ title:
 
 Search the options while expanded.
 
-````jsx
+```jsx
 import { Select } from 'choerodon-ui';
+
 const Option = Select.Option;
 
 ReactDOM.render(
@@ -22,7 +23,9 @@ ReactDOM.render(
     style={{ width: 300 }}
     placeholder="Select a person"
     optionFilterProp="children"
-    filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+    filterOption={(input, option) =>
+      option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+    }
     filter
   >
     <Option value="jack">Jack</Option>
@@ -35,5 +38,6 @@ ReactDOM.render(
     <Option value="lucy2">Lucy2</Option>
     <Option value="tom2">Tom2</Option>
   </Select>,
-  mountNode);
-````
+  mountNode,
+);
+```

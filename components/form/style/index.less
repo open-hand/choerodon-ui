@@ -1,38 +1,38 @@
-@import "../../style/themes/default";
-@import "../../style/mixins/index";
-@import "../../input/style/mixin";
-@import "../../button/style/mixin";
-@import "../../grid/style/mixin";
-@import "./mixin";
+@import '../../style/themes/default';
+@import '../../style/mixins/index';
+@import '../../input/style/mixin';
+@import '../../button/style/mixin';
+@import '../../grid/style/mixin';
+@import './mixin';
 
-@form-prefix-cls: ~"@{c7n-prefix}-form";
-@input-prefix-cls: ~"@{c7n-prefix}-input";
-@select-prefix-cls: ~"@{c7n-prefix}-select";
+@form-prefix-cls: ~'@{c7n-prefix}-form';
+@input-prefix-cls: ~'@{c7n-prefix}-input';
+@select-prefix-cls: ~'@{c7n-prefix}-select';
 @form-component-height: @input-height-base;
 @form-component-max-height: @input-height-lg;
-@form-feedback-icon-size: .14rem;
+@form-feedback-icon-size: 0.14rem;
 
 .@{form-prefix-cls} {
   .reset-component;
   .reset-form;
 }
 
-.@{form-prefix-cls}-item-required:before {
+.@{form-prefix-cls}-item-required::before {
   display: inline-block;
-  margin-right: .04rem;
-  content: "*";
-  font-family: SimSun;
-  line-height: 1;
-  font-size: @font-size-base;
+  margin-right: 0.04rem;
   color: @label-required-color;
+  font-size: @font-size-base;
+  font-family: SimSun, sans-serif;
+  line-height: 1;
+  content: '*';
   .@{form-prefix-cls}-hide-required-mark & {
     display: none;
   }
 }
 
 // Radio && Checkbox
-input[type="radio"],
-input[type="checkbox"] {
+input[type='radio'],
+input[type='checkbox'] {
   &[disabled],
   &.disabled {
     cursor: not-allowed;
@@ -66,19 +66,19 @@ input[type="checkbox"] {
     position: relative;
 
     > .@{iconfont-css-prefix} {
-      vertical-align: top;
       font-size: @font-size-base;
+      vertical-align: top;
     }
   }
 
   .reset-component;
-  padding-top: @form-item-margin-top;
   margin-bottom: @form-item-margin-bottom;
+  padding-top: @form-item-margin-top;
   vertical-align: top;
 
   // nested FormItem
   &-control > &:last-child,
-  & [class^="@{c7n-prefix}-col-"] > &:only-child {
+  & [class^='@{c7n-prefix}-col-'] > &:only-child {
     margin-bottom: -@form-item-margin-bottom;
   }
 
@@ -92,54 +92,54 @@ input[type="checkbox"] {
   }
 
   &-label {
-    text-align: right;
-    vertical-align: middle;
-    line-height: @form-component-max-height - 0.000001rem;
     display: inline-block;
     overflow: hidden;
+    line-height: @form-component-max-height - 0.000001rem;
     white-space: nowrap;
+    text-align: right;
+    vertical-align: middle;
 
     label {
       color: @label-color;
 
-      &:after {
+      &::after {
         & when (@form-item-trailing-colon=true) {
-          content: ":";
+          content: ':';
         }
         & when not (@form-item-trailing-colon=true) {
-          content: " ";
+          content: ' ';
         }
-        margin: 0 .08rem 0 .02rem;
         position: relative;
-        top: -.005rem;
+        top: -0.005rem;
+        margin: 0 0.08rem 0 0.02rem;
       }
     }
   }
 
   .@{c7n-prefix}-switch {
-    margin: .02rem 0 .04rem;
+    margin: 0.02rem 0 0.04rem;
   }
 
-  &-no-colon &-label label:after {
-    content: " ";
+  &-no-colon &-label label::after {
+    content: ' ';
   }
 }
 
 .@{form-prefix-cls}-explain,
 .@{form-prefix-cls}-extra {
+  position: absolute;
   color: @text-color-secondary;
   line-height: @line-height-base;
-  transition: color .15s @ease-out;
-  position: absolute;
+  transition: color 0.15s @ease-out;
 }
 
 .@{form-prefix-cls}-extra {
-  padding-top: .04rem;
+  padding-top: 0.04rem;
 }
 
 .@{form-prefix-cls}-text {
   display: inline-block;
-  padding-right: .08rem;
+  padding-right: 0.08rem;
 }
 
 .@{form-prefix-cls}-split {
@@ -151,33 +151,37 @@ input[type="checkbox"] {
 form {
   .has-feedback {
     .@{c7n-prefix}-input {
-      padding-right: .24rem;
+      padding-right: 0.24rem;
     }
 
     // Fix overlapping between feedback icon and <Select>'s arrow.
     > .@{c7n-prefix}-select .@{c7n-prefix}-select-arrow,
     > .@{c7n-prefix}-select .@{c7n-prefix}-select-selection__clear,
     :not(.@{c7n-prefix}-input-group-addon) > .@{c7n-prefix}-select .@{c7n-prefix}-select-arrow,
-    :not(.@{c7n-prefix}-input-group-addon) > .@{c7n-prefix}-select .@{c7n-prefix}-select-selection__clear {
-      right: .28rem;
+    :not(.@{c7n-prefix}-input-group-addon)
+      > .@{c7n-prefix}-select
+      .@{c7n-prefix}-select-selection__clear {
+      right: 0.28rem;
     }
     > .@{c7n-prefix}-select .@{c7n-prefix}-select-selection-selected-value,
-    :not(.@{c7n-prefix}-input-group-addon) > .@{c7n-prefix}-select .@{c7n-prefix}-select-selection-selected-value {
-      padding-right: .42rem;
+    :not(.@{c7n-prefix}-input-group-addon)
+      > .@{c7n-prefix}-select
+      .@{c7n-prefix}-select-selection-selected-value {
+      padding-right: 0.42rem;
     }
 
     .@{c7n-prefix}-cascader-picker {
       &-arrow {
-        margin-right: .17rem;
+        margin-right: 0.17rem;
       }
       &-clear {
-        right: .28rem;
+        right: 0.28rem;
       }
     }
 
     .@{c7n-prefix}-input-search:not(.@{c7n-prefix}-input-search-enter-button) {
       .@{c7n-prefix}-input-suffix {
-        right: .28rem;
+        right: 0.28rem;
       }
     }
 
@@ -185,7 +189,7 @@ form {
     .@{c7n-prefix}-time-picker {
       &-icon,
       &-clear {
-        right: .28rem;
+        right: 0.28rem;
       }
     }
   }
@@ -199,20 +203,20 @@ form {
     background: transparent;
   }
 
-  input[type="radio"],
-  input[type="checkbox"] {
-    width: .14rem;
-    height: .14rem;
+  input[type='radio'],
+  input[type='checkbox'] {
+    width: 0.14rem;
+    height: 0.14rem;
   }
 
   // Radios and checkboxes on same line
   .@{c7n-prefix}-radio-inline,
   .@{c7n-prefix}-checkbox-inline {
     display: inline-block;
-    vertical-align: middle;
+    margin-left: 0.08rem;
     font-weight: normal;
+    vertical-align: middle;
     cursor: pointer;
-    margin-left: .08rem;
 
     &:first-child {
       margin-left: 0;
@@ -230,7 +234,7 @@ form {
   }
 
   .@{c7n-prefix}-input-number + .@{form-prefix-cls}-text {
-    margin-left: .08rem;
+    margin-left: 0.08rem;
   }
 
   .@{c7n-prefix}-select,
@@ -245,30 +249,30 @@ form {
   }
 
   .@{c7n-prefix}-input-group-wrapper {
-    vertical-align: middle;
     position: relative;
-    top: -.01rem;
+    top: -0.01rem;
+    vertical-align: middle;
   }
 }
 
 // Input combined with select
 .@{c7n-prefix}-input-group-wrap {
   .@{c7n-prefix}-select-selection {
-    border-bottom-left-radius: 0;
     border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
     &:hover {
       border-color: @border-color-base;
     }
   }
 
   .@{c7n-prefix}-select-selection--single {
-    margin-left: -.01rem;
     height: @input-height-lg;
+    margin-left: -0.01rem;
     background-color: #eee;
     .@{c7n-prefix}-select-selection__rendered {
-      padding-left: .08rem;
-      padding-right: .25rem;
-      line-height: .3rem;
+      padding-right: 0.25rem;
+      padding-left: 0.08rem;
+      line-height: 0.3rem;
     }
   }
 
@@ -281,13 +285,13 @@ form {
 // Form layout
 //== Vertical Form
 .make-vertical-layout-label() {
-  padding: @form-vertical-label-padding;
-  margin: @form-vertical-label-margin;
   display: block;
-  text-align: left;
+  margin: @form-vertical-label-margin;
+  padding: @form-vertical-label-padding;
   line-height: @line-height-base;
+  text-align: left;
 
-  label:after {
+  label::after {
     display: none;
   }
 }
@@ -312,15 +316,15 @@ form {
 
 .@{form-prefix-cls}-vertical {
   .@{form-prefix-cls}-item {
-    padding-bottom: .08rem;
+    padding-bottom: 0.08rem;
   }
   .@{form-prefix-cls}-item-control {
     line-height: @line-height-base;
   }
   .@{form-prefix-cls}-explain,
   .@{form-prefix-cls}-extra {
-    margin-top: .02rem;
-    margin-bottom: -.04rem;
+    margin-top: 0.02rem;
+    margin-bottom: -0.04rem;
   }
 }
 
@@ -359,15 +363,16 @@ form {
 .@{form-prefix-cls}-inline {
   .@{form-prefix-cls}-item {
     display: inline-block;
-    margin-right: .16rem;
+    margin-right: 0.16rem;
     margin-bottom: 0;
 
     &-with-help {
-      padding-top: @form-item-margin-top;
       margin-bottom: @form-item-margin-bottom;
+      padding-top: @form-item-margin-top;
     }
 
-    > .@{form-prefix-cls}-item-control-wrapper, > .@{form-prefix-cls}-item-label {
+    > .@{form-prefix-cls}-item-control-wrapper,
+    > .@{form-prefix-cls}-item-label {
       display: inline-block;
       vertical-align: middle;
     }
@@ -391,30 +396,30 @@ form {
 .has-warning,
 .has-error,
 .is-validating {
-  &.has-feedback .@{form-prefix-cls}-item-children:after {
+  &.has-feedback .@{form-prefix-cls}-item-children::after {
     position: absolute;
     top: 50%;
     right: 0;
-    visibility: visible;
-    pointer-events: none;
-    width: @form-component-height;
-    height: .2rem;
-    line-height: .2rem;
-    margin-top: -.08rem;
-    text-align: center;
-    font-size: @form-feedback-icon-size;
-    animation: zoomIn .3s @ease-out-back;
-    .iconfont-font("");
     z-index: 1;
+    width: @form-component-height;
+    height: 0.2rem;
+    margin-top: -0.08rem;
+    font-size: @form-feedback-icon-size;
+    line-height: 0.2rem;
+    text-align: center;
+    visibility: visible;
+    animation: zoomIn 0.3s @ease-out-back;
+    pointer-events: none;
+    .iconfont-font('');
   }
 }
 
 .has-success {
   &.has-feedback .@{form-prefix-cls}-item-children {
-    &:after {
+    &::after {
+      color: @success-color;
       animation-name: diffZoomIn1 !important;
       content: '\e86c';
-      color: @success-color;
     }
 
     .@{input-prefix-cls}-suffix,
@@ -431,10 +436,10 @@ form {
 .has-warning {
   .form-control-validation(@warning-color; @warning-color;);
 
-  &.has-feedback .@{form-prefix-cls}-item-children:after {
-    content: '\e000';
+  &.has-feedback .@{form-prefix-cls}-item-children::after {
     color: @warning-color;
     animation-name: diffZoomIn3 !important;
+    content: '\e000';
   }
 
   //select
@@ -449,9 +454,9 @@ form {
   }
 
   // arrow and icon
-  .@{c7n-prefix}-calendar-picker-icon:after,
-  .@{c7n-prefix}-time-picker-icon:after,
-  .@{c7n-prefix}-picker-icon:after,
+  .@{c7n-prefix}-calendar-picker-icon::after,
+  .@{c7n-prefix}-time-picker-icon::after,
+  .@{c7n-prefix}-picker-icon::after,
   .@{c7n-prefix}-select-arrow,
   .@{c7n-prefix}-cascader-picker-arrow {
     color: @warning-color;
@@ -478,10 +483,10 @@ form {
 .has-error {
   .form-control-validation(@error-color; @error-color;);
 
-  &.has-feedback .@{form-prefix-cls}-item-children:after {
-    content: '\e5c9';
+  &.has-feedback .@{form-prefix-cls}-item-children::after {
     color: @error-color;
     animation-name: diffZoomIn2 !important;
+    content: '\e5c9';
   }
 
   //select
@@ -509,9 +514,9 @@ form {
   }
 
   // arrow and icon
-  .@{c7n-prefix}-calendar-picker-icon:after,
-  .@{c7n-prefix}-time-picker-icon:after,
-  .@{c7n-prefix}-picker-icon:after,
+  .@{c7n-prefix}-calendar-picker-icon::after,
+  .@{c7n-prefix}-time-picker-icon::after,
+  .@{c7n-prefix}-picker-icon::after,
   .@{c7n-prefix}-select-arrow,
   .@{c7n-prefix}-cascader-picker-arrow {
     color: @error-color;
@@ -554,11 +559,11 @@ form {
 
 .is-validating {
   &.has-feedback .@{form-prefix-cls}-item-children {
-    &:after {
+    &::after {
       display: inline-block;
-      animation: loadingCircle 1s infinite linear;
-      content: "\e917";
       color: @primary-color;
+      animation: loadingCircle 1s infinite linear;
+      content: '\e917';
     }
     .@{input-prefix-cls}-suffix,
     .@{input-prefix-cls}-icon {
@@ -573,7 +578,7 @@ form {
 
 .@{c7n-prefix}-advanced-search-form {
   .@{form-prefix-cls}-item {
-    margin-bottom: .24rem;
+    margin-bottom: 0.24rem;
   }
 }
 

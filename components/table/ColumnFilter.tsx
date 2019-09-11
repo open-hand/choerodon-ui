@@ -27,7 +27,7 @@ export default class ColumnFilter<T> extends Component<ColumnFilterProps<T>, Col
   };
 
   render() {
-    const { prefixCls } = this.props;
+    const { prefixCls, getPopupContainer } = this.props;
     const { open } = this.state;
     return (
       <div className={`${prefixCls}-columns-chooser`}>
@@ -36,7 +36,7 @@ export default class ColumnFilter<T> extends Component<ColumnFilterProps<T>, Col
           showAction={['click']}
           options={this.getOptions()}
           value={this.getVisibleColumns()}
-          getPopupContainer={this.props.getPopupContainer}
+          getPopupContainer={getPopupContainer}
           multiple
           onDropdownVisibleChange={this.onDropdownVisibleChange}
           onMenuSelect={this.onMenuSelect}
@@ -63,7 +63,8 @@ export default class ColumnFilter<T> extends Component<ColumnFilterProps<T>, Col
   };
 
   onDropdownVisibleChange = (open: boolean) => {
-    if (this.state.open !== open) {
+    const { state } = this;
+    if (state.open !== open) {
       this.setState({
         open,
       });
@@ -78,26 +79,29 @@ export default class ColumnFilter<T> extends Component<ColumnFilterProps<T>, Col
   }
 
   getOptions() {
-    let options: any = [];
-    (this.props.columns || []).filter((column) => !column.notDisplay).map((column, i) => {
-      const item = column.title ? (
-        <MenuItem
-          disabled={column.disableClick}
-          style={UNSELECTABLE_STYLE}
-          attribute={UNSELECTABLE_ATTRIBUTE}
-          value={column}
-          key={getColumnKey(column, i)}
-        >
-          {column.title}
-        </MenuItem>) : null;
-      if (item) {
-        options.push(item);
+    const { columns } = this.props;
+    const options: any = [];
+    (columns || []).forEach((column, i) => {
+      const { title, notDisplay, disableClick } = column;
+      if (title && !notDisplay) {
+        options.push(
+          <MenuItem
+            disabled={disableClick}
+            style={UNSELECTABLE_STYLE}
+            attribute={UNSELECTABLE_ATTRIBUTE}
+            value={column}
+            key={getColumnKey(column, i)}
+          >
+            {title}
+          </MenuItem>,
+        );
       }
     });
     return options;
   }
 
   getVisibleColumns() {
-    return (this.props.columns || []).filter((column) => !column.hidden);
+    const { columns } = this.props;
+    return (columns || []).filter(column => !column.hidden);
   }
 }

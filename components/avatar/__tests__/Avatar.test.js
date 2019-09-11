@@ -21,7 +21,7 @@ describe('Avatar Render', () => {
     const children = wrapper.find('.c7n-avatar-string');
     expect(children.length).toBe(1);
     expect(children.text()).toBe('Fallback');
-    expect(wrapper.instance().setScale).toBeCalled();
+    expect(wrapper.instance().setScale).toHaveBeenCalled();
     expect(div.querySelector('.c7n-avatar-string').style.transform).toContain('scale(0.5)');
 
     wrapper.detach();
@@ -38,14 +38,14 @@ describe('Avatar Render', () => {
     class Foo extends React.Component {
       state = {
         src: LOAD_FAILURE_SRC,
-      }
+      };
 
       handleImgError = () => {
         this.setState({
           src: LOAD_SUCCESS_SRC,
         });
         return false;
-      }
+      };
 
       render() {
         const { src } = this.state;

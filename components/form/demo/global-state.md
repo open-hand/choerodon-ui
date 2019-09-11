@@ -17,8 +17,9 @@ We can store form data into upper component or [Redux](https://github.com/reactj
 
 **Note:** You must wrap field data with `Form.createFormField` in `mapPropsToFields`.
 
-````jsx
+```jsx
 import { Form, Input } from 'choerodon-ui';
+
 const FormItem = Form.Item;
 
 const CustomizedForm = Form.create({
@@ -36,7 +37,7 @@ const CustomizedForm = Form.create({
   onValuesChange(_, values) {
     console.log(values);
   },
-})((props) => {
+})(props => {
   const { getFieldDecorator } = props.form;
   return (
     <Form layout="inline">
@@ -56,29 +57,27 @@ class Demo extends React.Component {
         value: 'benjycui',
       },
     },
-  }
+  };
 
-  handleFormChange = (changedFields) => {
+  handleFormChange = changedFields => {
     this.setState(({ fields }) => ({
       fields: { ...fields, ...changedFields },
     }));
-  }
+  };
 
   render() {
     const fields = this.state.fields;
     return (
       <div>
         <CustomizedForm {...fields} onChange={this.handleFormChange} />
-        <pre className="language-bash">
-          {JSON.stringify(fields, null, 2)}
-        </pre>
+        <pre className="language-bash">{JSON.stringify(fields, null, 2)}</pre>
       </div>
     );
   }
 }
 
 ReactDOM.render(<Demo />, mountNode);
-````
+```
 
 <style>
 #components-form-demo-global-state .language-bash {

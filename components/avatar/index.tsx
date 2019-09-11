@@ -24,7 +24,7 @@ export interface AvatarProps {
   children?: any;
   alt?: string;
   /* callback when img load error */
-  /* return false to prevent Avatar show default fallback behavior, then you can do fallback by your self*/
+  /* return false to prevent Avatar show default fallback behavior, then you can do fallback by your self */
   onError?: () => boolean;
 }
 
@@ -35,6 +35,7 @@ export interface AvatarState {
 
 export default class Avatar extends Component<AvatarProps, AvatarState> {
   static displayName = 'Avatar';
+
   static defaultProps = {
     shape: 'circle',
     size: Size.default,
@@ -55,9 +56,13 @@ export default class Avatar extends Component<AvatarProps, AvatarState> {
   }
 
   componentDidUpdate(prevProps: AvatarProps, prevState: AvatarState) {
-    if (prevProps.children !== this.props.children
-      || (prevState.scale !== this.state.scale && this.state.scale === 1)
-      || (prevState.isImgExist !== this.state.isImgExist)) {
+    const { children } = this.props;
+    const { scale, isImgExist } = this.state;
+    if (
+      prevProps.children !== children ||
+      (prevState.scale !== scale && scale === 1) ||
+      prevState.isImgExist !== isImgExist
+    ) {
       this.setScale();
     }
   }
@@ -115,22 +120,18 @@ export default class Avatar extends Component<AvatarProps, AvatarState> {
       [`${prefixCls}-icon`]: icon,
     });
 
-    const sizeStyle: CSSProperties = isNumber(size) ? {
-      width: size,
-      height: size,
-      lineHeight: `${size}px`,
-      fontSize: icon ? size / 2 : 18,
-    } : {};
+    const sizeStyle: CSSProperties = isNumber(size)
+      ? {
+          width: size,
+          height: size,
+          lineHeight: `${size}px`,
+          fontSize: icon ? size / 2 : 18,
+        }
+      : {};
 
-    let children = this.props.children;
+    let { children } = this.props;
     if (src && isImgExist) {
-      children = (
-        <img
-          src={src}
-          onError={this.handleImgLoadError}
-          alt={alt}
-        />
-      );
+      children = <img src={src} onError={this.handleImgLoadError} alt={alt} />;
     } else if (icon) {
       children = <Icon type={icon} />;
     } else {
@@ -142,14 +143,15 @@ export default class Avatar extends Component<AvatarProps, AvatarState> {
           WebkitTransform: transformString,
           transform: transformString,
         };
-        const sizeChildrenStyle: CSSProperties =
-          isNumber(size) ? {
-            lineHeight: `${size}px`,
-          } : {};
+        const sizeChildrenStyle: CSSProperties = isNumber(size)
+          ? {
+              lineHeight: `${size}px`,
+            }
+          : {};
         children = (
           <span
             className={`${prefixCls}-string`}
-            ref={span => this.avatarChildren = span}
+            ref={span => (this.avatarChildren = span)}
             style={{ ...sizeChildrenStyle, ...childrenStyle }}
           >
             {children}
@@ -157,21 +159,14 @@ export default class Avatar extends Component<AvatarProps, AvatarState> {
         );
       } else {
         children = (
-          <span
-            className={`${prefixCls}-string`}
-            ref={span => this.avatarChildren = span}
-          >
+          <span className={`${prefixCls}-string`} ref={span => (this.avatarChildren = span)}>
             {children}
           </span>
         );
       }
     }
     return (
-      <span
-        {...others}
-        style={{ ...sizeStyle, ...others.style }}
-        className={classString}
-      >
+      <span {...others} style={{ ...sizeStyle, ...others.style }} className={classString}>
         {children}
       </span>
     );

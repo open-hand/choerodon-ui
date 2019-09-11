@@ -13,10 +13,11 @@ title:
 
 Autocomplete with remote ajax data.
 
-````jsx
+```jsx
 import { Select } from 'choerodon-ui';
 import jsonp from 'fetch-jsonp';
 import queryString from 'querystringify';
+
 const Option = Select.Option;
 
 let timeout;
@@ -36,11 +37,11 @@ function fetch(value, callback) {
     });
     jsonp(`https://suggest.taobao.com/sug?${str}`)
       .then(response => response.json())
-      .then((d) => {
+      .then(d => {
         if (currentValue === value) {
           const result = d.result;
           const data = [];
-          result.forEach((r) => {
+          result.forEach(r => {
             data.push({
               value: r[0],
               text: r[0],
@@ -58,12 +59,12 @@ class SearchInput extends React.Component {
   state = {
     data: [],
     value: '',
-  }
+  };
 
-  handleChange = (value) => {
+  handleChange = value => {
     this.setState({ value });
     fetch(value, data => this.setState({ data }));
-  }
+  };
 
   render() {
     const options = this.state.data.map(d => <Option key={d.value}>{d.text}</Option>);
@@ -84,7 +85,5 @@ class SearchInput extends React.Component {
   }
 }
 
-ReactDOM.render(
-  <SearchInput placeholder="input search text" style={{ width: 200 }} />,
-  mountNode);
-````
+ReactDOM.render(<SearchInput placeholder="input search text" style={{ width: 200 }} />, mountNode);
+```

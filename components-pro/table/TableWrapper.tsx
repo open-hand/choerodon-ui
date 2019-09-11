@@ -5,9 +5,9 @@ import { action, computed, get, set } from 'mobx';
 import classNames from 'classnames';
 import isNil from 'lodash/isNil';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
+import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import TableContext from './TableContext';
 import { ElementProps } from '../core/ViewComponent';
-import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { ColumnProps, minColumnWidth } from './Column';
 import { ColumnLock } from './enum';
 import TableEditor from './TableEditor';
@@ -23,11 +23,13 @@ export interface TableWrapperProps extends ElementProps {
 
 @observer
 export default class TableWrapper extends Component<TableWrapperProps, any> {
-
   static contextType = TableContext;
 
   static propTypes = {
-    lock: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf([ColumnLock.right, ColumnLock.left])]),
+    lock: PropTypes.oneOfType([
+      PropTypes.bool,
+      PropTypes.oneOf([ColumnLock.right, ColumnLock.left]),
+    ]),
     hasBody: PropTypes.bool,
     hasHeader: PropTypes.bool,
     hasFooter: PropTypes.bool,
@@ -50,6 +52,7 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
           return tableStore.totalLeafColumnsWidth;
         }
     }
+    return undefined;
   }
 
   @computed
@@ -63,7 +66,9 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
       case ColumnLock.right:
         return tableStore.rightLeafColumns.filter(column => column.editor && column.name);
       default:
-        return tableStore.leafColumns.filter(column => column.editor && column.name && !column.lock);
+        return tableStore.leafColumns.filter(
+          column => column.editor && column.name && !column.lock,
+        );
     }
   }
 
@@ -83,7 +88,8 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
   }
 
   handleResizeEnd = () => {
-    if (this.context.tableStore.rowHeight === 'auto') {
+    const { tableStore } = this.context;
+    if (tableStore.rowHeight === 'auto') {
       this.syncFixedTableRowHeight();
     }
   };
@@ -105,13 +111,15 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
 
   getColGroup(): ReactNode {
     const { lock, hasHeader, hasFooter } = this.props;
-    const { overflowY, overflowX } = this.context.tableStore;
+    const {
+      tableStore: { overflowY, overflowX },
+    } = this.context;
     let hasEmptyWidth = false;
     const cols = this.leafColumns.map((column, index, array) => {
       let width = get(column, 'width');
       if (!overflowX) {
         if (!hasEmptyWidth && index === array.length - 1) {
-          width = void 0;
+          width = undefined;
         } else if (isNil(width)) {
           hasEmptyWidth = true;
         }
@@ -131,36 +139,42 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
     ));
   }
 
-  saveRef = (node) => {
+  saveRef = node => {
     this.tableWrapper = node;
   };
 
   @computed
   get tableWidth() {
     const { lock, hasBody } = this.props;
-    const { overflowY, overflowX } = this.context.tableStore;
+    const {
+      tableStore: { overflowY, overflowX },
+    } = this.context;
     if (overflowX) {
       let tableWidth = this.leafColumnsWidth;
-      if (tableWidth !== void 0 && overflowY && lock !== ColumnLock.left && !hasBody) {
+      if (tableWidth !== undefined && overflowY && lock !== ColumnLock.left && !hasBody) {
         tableWidth += measureScrollbar();
       }
       return pxToRem(tableWidth);
-    } else {
-      return '100%';
     }
+    return '100%';
   }
 
   render() {
     const { children, lock, hasBody, prefixCls } = this.props;
-    const { overflowY, height } = this.context.tableStore;
-    const editors = hasBody && (
-      this.getEditors()
-    );
+    const {
+      tableStore: { overflowY, height },
+    } = this.context;
+    const editors = hasBody && this.getEditors();
     const className = classNames({
-      [`${prefixCls}-last-row-bordered`]: hasBody && !overflowY && height !== void 0,
+      [`${prefixCls}-last-row-bordered`]: hasBody && !overflowY && height !== undefined,
     });
     const table = (
-      <table key="table" ref={lock ? void 0 : this.saveRef} className={className} style={{ width: this.tableWidth }}>
+      <table
+        key="table"
+        ref={lock ? undefined : this.saveRef}
+        className={className}
+        style={{ width: this.tableWidth }}
+      >
         {this.getColGroup()}
         {children}
       </table>
@@ -173,20 +187,32 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
   syncFixedTableRowHeight() {
     const { prefixCls, hasFooter, hasBody, hasHeader } = this.props;
     if (this.tableWrapper) {
-      const { lockColumnsHeadRowsHeight, lockColumnsBodyRowsHeight, lockColumnsFootRowsHeight } = this.context.tableStore;
+      const { tableStore } = this.context;
+      const {
+        lockColumnsHeadRowsHeight,
+        lockColumnsBodyRowsHeight,
+        lockColumnsFootRowsHeight,
+      } = tableStore;
       if (hasHeader) {
-        const headRows = Array.from<HTMLTableRowElement>(this.tableWrapper.querySelectorAll('thead tr'));
+        const headRows = Array.from<HTMLTableRowElement>(
+          this.tableWrapper.querySelectorAll('thead tr'),
+        );
         headRows.forEach((row, index) => set(lockColumnsHeadRowsHeight, index, row.offsetHeight));
       }
       if (hasBody) {
-        const bodyRows = Array.from<HTMLTableRowElement>(this.tableWrapper.querySelectorAll('.' + prefixCls + '-row'));
-        bodyRows.forEach(row => set(lockColumnsBodyRowsHeight, row.dataset.index, row.offsetHeight));
+        const bodyRows = Array.from<HTMLTableRowElement>(
+          this.tableWrapper.querySelectorAll(`.${prefixCls}-row`),
+        );
+        bodyRows.forEach(row =>
+          set(lockColumnsBodyRowsHeight, row.dataset.index, row.offsetHeight),
+        );
       }
       if (hasFooter) {
-        const footRows = Array.from<HTMLTableRowElement>(this.tableWrapper.querySelectorAll('tfoot tr'));
+        const footRows = Array.from<HTMLTableRowElement>(
+          this.tableWrapper.querySelectorAll('tfoot tr'),
+        );
         footRows.forEach((row, index) => set(lockColumnsFootRowsHeight, index, row.offsetHeight));
       }
     }
   }
-
 }

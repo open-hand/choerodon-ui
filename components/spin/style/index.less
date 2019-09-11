@@ -1,33 +1,33 @@
-@import "../../style/themes/default";
-@import "../../style/mixins/index";
+@import '../../style/themes/default';
+@import '../../style/mixins/index';
 
-@spin-prefix-cls: ~"@{c7n-prefix}-spin";
+@spin-prefix-cls: ~'@{c7n-prefix}-spin';
 @spin-dot-default: @text-color-secondary;
 
 .@{spin-prefix-cls} {
   .reset-component;
-  color: @primary-color;
-  vertical-align: middle;
-  text-align: center;
-  opacity: 0;
   position: absolute;
-  transition: transform 0.3s @ease-in-out-circ;
   display: none;
+  color: @primary-color;
+  text-align: center;
+  vertical-align: middle;
+  opacity: 0;
+  transition: transform 0.3s @ease-in-out-circ;
 
   &-spinning {
-    opacity: 1;
     position: static;
     display: inline-block;
+    opacity: 1;
   }
 
   &-nested-loading {
     position: relative;
     > .@{spin-prefix-cls} {
       position: absolute;
+      z-index: 4;
+      width: 100%;
       height: 100%;
       max-height: 3.2rem;
-      width: 100%;
-      z-index: 4;
       .@{spin-prefix-cls}-dot {
         position: absolute;
         top: 50%;
@@ -38,11 +38,11 @@
         position: absolute;
         top: 50%;
         width: 100%;
-        padding-top: (@spin-dot-size - @font-size-base) / 2 + .02rem;
-        text-shadow: 0 .01rem .02rem #fff;
+        padding-top: (@spin-dot-size - @font-size-base) / 2 + 0.02rem;
+        text-shadow: 0 0.01rem 0.02rem #fff;
       }
       &.@{spin-prefix-cls}-show-text .@{spin-prefix-cls}-dot {
-        margin-top: -@spin-dot-size / 2 - .10rem;
+        margin-top: -@spin-dot-size / 2 - 0.1rem;
       }
     }
 
@@ -51,10 +51,10 @@
         margin: -@spin-dot-size-sm / 2;
       }
       .@{spin-prefix-cls}-text {
-        padding-top: (@spin-dot-size-sm - @font-size-base) / 2 + .02rem;
+        padding-top: (@spin-dot-size-sm - @font-size-base) / 2 + 0.02rem;
       }
       &.@{spin-prefix-cls}-show-text .@{spin-prefix-cls}-dot {
-        margin-top: -@spin-dot-size-sm / 2 - .1rem;
+        margin-top: -@spin-dot-size-sm / 2 - 0.1rem;
       }
     }
 
@@ -63,10 +63,10 @@
         margin: -@spin-dot-size-lg / 2;
       }
       .@{spin-prefix-cls}-text {
-        padding-top: (@spin-dot-size-lg - @font-size-base) / 2 + .02rem;
+        padding-top: (@spin-dot-size-lg - @font-size-base) / 2 + 0.02rem;
       }
       &.@{spin-prefix-cls}-show-text .@{spin-prefix-cls}-dot {
-        margin-top: -@spin-dot-size-lg / 2 - .1rem;
+        margin-top: -@spin-dot-size-lg / 2 - 0.1rem;
       }
     }
   }
@@ -78,12 +78,12 @@
 
   &-blur {
     clear: both;
-    pointer-events: none;
-    user-select: none;
     overflow: hidden;
     opacity: 0.5;
+    user-select: none;
+    pointer-events: none;
 
-    &:after {
+    &::after {
       opacity: 0.4;
       pointer-events: auto;
     }
@@ -101,7 +101,7 @@
   &-dot {
     position: relative;
     display: inline-block;
-    .square(@spin-dot-size)
+    .square(@spin-dot-size);
   }
 
   // Sizes

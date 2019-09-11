@@ -1,3 +1,3 @@
-import TextField from './TextField';
+import ObserverTextField from './TextField';
 
-export default TextField;
+export default ObserverTextField;

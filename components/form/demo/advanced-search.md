@@ -17,9 +17,9 @@ Three columns layout is often used for advanced searching of data table.
 
 Because the width of label is not fixed, you may need to adjust it by customizing its style.
 
-
-````jsx
+```jsx
 import { Form, Row, Col, Input, Button, Icon } from 'choerodon-ui';
+
 const FormItem = Form.Item;
 
 class AdvancedSearchForm extends React.Component {
@@ -27,21 +27,21 @@ class AdvancedSearchForm extends React.Component {
     expand: false,
   };
 
-  handleSearch = (e) => {
+  handleSearch = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       console.log('Received values of form: ', values);
     });
-  }
+  };
 
   handleReset = () => {
     this.props.form.resetFields();
-  }
+  };
 
   toggle = () => {
     const { expand } = this.state;
     this.setState({ expand: !expand });
-  }
+  };
 
   // To generate mock Form.Item
   getFields() {
@@ -52,11 +52,9 @@ class AdvancedSearchForm extends React.Component {
       children.push(
         <Col span={8} key={i} style={{ display: i < count ? 'block' : 'none' }}>
           <FormItem label={`Field ${i}`}>
-            {getFieldDecorator(`field-${i}`)(
-              <Input placeholder="placeholder" />
-            )}
+            {getFieldDecorator(`field-${i}`)(<Input placeholder="placeholder" />)}
           </FormItem>
-        </Col>
+        </Col>,
       );
     }
     return children;
@@ -64,14 +62,13 @@ class AdvancedSearchForm extends React.Component {
 
   render() {
     return (
-      <Form
-        className="c7n-advanced-search-form"
-        onSubmit={this.handleSearch}
-      >
+      <Form className="c7n-advanced-search-form" onSubmit={this.handleSearch}>
         <Row gutter={24}>{this.getFields()}</Row>
         <Row>
           <Col span={24} style={{ textAlign: 'right' }}>
-            <Button type="primary" htmlType="submit">Search</Button>
+            <Button type="primary" htmlType="submit">
+              Search
+            </Button>
             <Button style={{ marginLeft: 8 }} onClick={this.handleReset}>
               Clear
             </Button>
@@ -91,11 +88,11 @@ ReactDOM.render(
     <WrappedAdvancedSearchForm />
     <div className="search-result-list">Search Result List</div>
   </div>,
-  mountNode
+  mountNode,
 );
-````
+```
 
-````css
+```css
 .c7n-advanced-search-form {
   padding: 24px;
   background: #fbfbfb;
@@ -110,7 +107,7 @@ ReactDOM.render(
 .c7n-advanced-search-form .c7n-form-item-control-wrapper {
   flex: 1;
 }
-````
+```
 
 <style>
 #components-form-demo-advanced-search .c7n-form {

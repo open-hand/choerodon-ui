@@ -1,11 +1,25 @@
 import { cloneElement, MouseEventHandler, PureComponent, ReactElement } from 'react';
 import PropTypes from 'prop-types';
 
-export type Size = { x: number, y: number, width: number, height: number, position: string };
+function wrapEvent(
+  element: ReactElement<any>,
+  eventName: string,
+  callback: MouseEventHandler<HTMLElement>,
+): MouseEventHandler<HTMLElement> {
+  return e => {
+    const originalEvent = element.props[eventName];
+    if (originalEvent) {
+      originalEvent(e);
+    }
+    callback(e);
+  };
+}
+
+export type Size = { x: number; y: number; width: number; height: number; position: string };
 
 export interface MouseDownProps {
   children: (child: ReactElement<any>, size?: Size) => ReactElement<any>;
-  rippleChild: ReactElement<any>
+  rippleChild: ReactElement<any>;
 }
 
 export interface MouseDownState {
@@ -36,7 +50,7 @@ export default class MouseDown extends PureComponent<MouseDownProps> {
     return cloneElement(element, newProps);
   }
 
-  show: MouseEventHandler<HTMLElement> = (e) => {
+  show: MouseEventHandler<HTMLElement> = e => {
     const { currentTarget } = e;
     const pos: ClientRect = currentTarget.getBoundingClientRect();
     this.setState({
@@ -45,24 +59,15 @@ export default class MouseDown extends PureComponent<MouseDownProps> {
         y: e.clientY - pos.top,
         width: currentTarget.clientWidth,
         height: currentTarget.clientHeight,
-        position: document.defaultView && document.defaultView.getComputedStyle(currentTarget).position,
+        position:
+          document.defaultView && document.defaultView.getComputedStyle(currentTarget).position,
       },
     });
   };
 
   hide = () => {
     this.setState({
-      size: void 0,
+      size: undefined,
     });
-  };
-}
-
-function wrapEvent(element: ReactElement<any>, eventName: string, callback: MouseEventHandler<HTMLElement>): MouseEventHandler<HTMLElement> {
-  return (e) => {
-    const originalEvent = element.props[eventName];
-    if (originalEvent) {
-      originalEvent(e);
-    }
-    callback(e);
   };
 }

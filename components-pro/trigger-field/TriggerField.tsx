@@ -77,7 +77,9 @@ export interface TriggerFieldProps extends TextFieldProps {
   triggerHiddenDelay?: number;
 }
 
-export default abstract class TriggerField<T extends TriggerFieldProps> extends TextField<T & TriggerFieldProps> {
+export default abstract class TriggerField<T extends TriggerFieldProps> extends TextField<
+  T & TriggerFieldProps
+> {
   static displayName = 'TriggerField';
 
   static propTypes = {
@@ -121,7 +123,9 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
   };
 
   popupTask: TaskRunner = new TaskRunner();
+
   trigger: Trigger | null;
+
   @observable statePopup: boolean;
 
   @computed
@@ -175,12 +179,19 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
 
   getWrappedEditor() {
     const {
-      prefixCls, props: {
-        popupCls, popupStyle, popupContent, hidden, trigger, triggerShowDelay, triggerHiddenDelay,
+      prefixCls,
+      props: {
+        popupCls,
+        popupStyle,
+        popupContent,
+        hidden,
+        trigger,
+        triggerShowDelay,
+        triggerHiddenDelay,
       },
     } = this;
     let content;
-    if (popupContent !== void 0) {
+    if (popupContent !== undefined) {
       if (popupContent instanceof Function) {
         content = popupContent(this.getPopupProps());
       } else {
@@ -191,7 +202,7 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
     }
     return (
       <Trigger
-        ref={node => this.trigger = node}
+        ref={node => (this.trigger = node)}
         action={this.isReadOnly() || this.isDisabled() ? [] : trigger}
         focusDelay={triggerShowDelay}
         blurDelay={triggerHiddenDelay}
@@ -225,12 +236,7 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
 
   getDefaultSuffix(): ReactNode {
     const { prefixCls } = this;
-    return (
-      <Icon
-        type={this.getTriggerIconFont()}
-        className={`${prefixCls}-trigger`}
-      />
-    );
+    return <Icon type={this.getTriggerIconFont()} className={`${prefixCls}-trigger`} />;
   }
 
   @autobind

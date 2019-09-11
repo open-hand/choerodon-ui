@@ -52,25 +52,29 @@ export default class EventManager {
         }
         off(eventName, fn, this.el, useCapture);
       } else {
-        this.events[eventName] = this.el ?
-          (this.events[eventName] || []).filter(([event, capture]) => (
-            off(eventName, event, this.el, capture), false
-          )) : [];
+        this.events[eventName] = this.el
+          ? (this.events[eventName] || []).filter(([event, capture]) => {
+              off(eventName, event, this.el, capture);
+              return false;
+            })
+          : [];
       }
     }
     return this;
   }
 
-  async fireEvent(eventName: string, ...rest: any[]): Promise<boolean> {
+  fireEvent(eventName: string, ...rest: any[]): Promise<boolean> {
     const events: handler[] = this.events[eventName.toLowerCase()];
     return events
-      ? await Promise.all(events.map(([fn]) => fn.apply(void 0, rest))).then(all => all.every(result => result !== false))
-      : true;
+      ? Promise.all(events.map(([fn]) => fn(...rest))).then(all =>
+          all.every(result => result !== false),
+        )
+      : Promise.resolve(true);
   }
 
   clear(): EventManager {
     if (this.el) {
-      Object.keys(this.events).forEach((eventName) => this.removeEventListener(eventName));
+      Object.keys(this.events).forEach(eventName => this.removeEventListener(eventName));
     }
     this.events = {};
     return this;

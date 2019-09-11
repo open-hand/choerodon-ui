@@ -6,8 +6,8 @@ import { RadioChangeEvent } from '../radio';
 import { CheckboxChangeEvent } from '../checkbox';
 import { Size } from '../_util/enum';
 
-export type CompareFn<T> = ((a: T, b: T) => number);
-export type ColumnFilterItem = { text: string; value: string, children?: ColumnFilterItem[] };
+export type CompareFn<T> = (a: T, b: T) => number;
+export type ColumnFilterItem = { text: string; value: string; children?: ColumnFilterItem[] };
 
 export interface ColumnProps<T> {
   title?: ReactNode;
@@ -109,7 +109,12 @@ export interface TableProps<T> {
   expandRowByClick?: boolean;
   onExpandedRowsChange?: (expandedRowKeys: string[] | number[]) => void;
   onExpand?: (expanded: boolean, record: T) => void;
-  onChange?: (pagination: TablePaginationConfig | boolean, filters: string[], sorter: Object) => any;
+  onChange?: (
+    pagination: TablePaginationConfig | boolean,
+    filters: string[],
+    sorter: Object,
+    params: any[],
+  ) => any;
   onFilterSelectChange?: (item: any) => void;
   onColumnFilterChange?: (item: any) => void;
   loading?: boolean | SpinProps;
@@ -123,7 +128,7 @@ export interface TableProps<T> {
   footer?: (currentPageData: Object[]) => ReactNode;
   title?: (currentPageData: Object[]) => ReactNode;
   empty?: (currentPageData: Object[]) => ReactNode;
-  scroll?: { x?: boolean | number | string, y?: boolean | number | string };
+  scroll?: { x?: boolean | number | string; y?: boolean | number | string };
   childrenColumnName?: string;
   bodyStyle?: CSSProperties;
   className?: string;

@@ -1,4 +1,10 @@
-import React, { Component, CSSProperties, KeyboardEventHandler, MouseEventHandler, ReactNode } from 'react';
+import React, {
+  Component,
+  CSSProperties,
+  KeyboardEventHandler,
+  MouseEventHandler,
+  ReactNode,
+} from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import shallowEqual from 'lodash/isEqual';
@@ -41,7 +47,9 @@ export interface CheckboxChangeEvent {
 
 export default class Checkbox extends Component<CheckboxProps, {}> {
   static displayName = 'Checkbox';
+
   static Group: typeof CheckboxGroup;
+
   static defaultProps = {
     indeterminate: false,
   };
@@ -52,10 +60,17 @@ export default class Checkbox extends Component<CheckboxProps, {}> {
 
   private rcCheckbox: any;
 
-  shouldComponentUpdate(nextProps: CheckboxProps, nextState: {}, nextContext: CheckboxGroupContext) {
-    return !shallowEqual(this.props, nextProps) ||
+  shouldComponentUpdate(
+    nextProps: CheckboxProps,
+    nextState: {},
+    nextContext: CheckboxGroupContext,
+  ) {
+    const { checkboxGroup } = this.context;
+    return (
+      !shallowEqual(this.props, nextProps) ||
       !shallowEqual(this.state, nextState) ||
-      !shallowEqual(this.context.checkboxGroup, nextContext.checkboxGroup);
+      !shallowEqual(checkboxGroup, nextContext.checkboxGroup)
+    );
   }
 
   focus() {
@@ -84,9 +99,10 @@ export default class Checkbox extends Component<CheckboxProps, {}> {
     } = props;
     const prefixCls = getPrefixCls('checkbox', customizePrefixCls);
     const { checkboxGroup } = context;
-    let checkboxProps: CheckboxProps = { ...restProps };
+    const checkboxProps: CheckboxProps = { ...restProps };
     if (checkboxGroup) {
-      checkboxProps.onChange = () => checkboxGroup.toggleOption({ label: children, value: props.value });
+      checkboxProps.onChange = () =>
+        checkboxGroup.toggleOption({ label: children, value: props.value });
       checkboxProps.checked = checkboxGroup.value.indexOf(props.value) !== -1;
       checkboxProps.disabled = props.disabled || checkboxGroup.disabled;
     }

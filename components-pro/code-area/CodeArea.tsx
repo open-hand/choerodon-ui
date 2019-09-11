@@ -8,7 +8,7 @@ import isEqual from 'lodash/isEqual';
 import omit from 'lodash/omit';
 import noop from 'lodash/noop';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
-import FormField from '../field';
+import ObserverFormField from '../field';
 import { FormFieldProps } from '../field/FormField';
 import { CodeAreaFormatter } from './CodeAreaFormatter';
 import autobind from '../_util/autobind';
@@ -16,11 +16,12 @@ import autobind from '../_util/autobind';
 let CodeMirror: ComponentClass<CodeMirrorProps>;
 
 if (typeof window !== 'undefined') {
+  // eslint-disable-next-line global-require
   CodeMirror = require('react-codemirror2').Controlled;
 }
 
 export interface CodeAreaProps extends FormFieldProps {
-  options?: EditorConfiguration,
+  options?: EditorConfiguration;
   formatHotKey?: string;
   unFormatHotKey?: string;
   formatter?: CodeAreaFormatter;
@@ -34,7 +35,7 @@ const defaultCodeMirrorOptions: EditorConfiguration = {
 };
 
 @observer
-export default class CodeArea extends FormField<CodeAreaProps> {
+export default class CodeArea extends ObserverFormField<CodeAreaProps> {
   static displayName = 'CodeArea';
 
   static propTypes = {
@@ -42,11 +43,11 @@ export default class CodeArea extends FormField<CodeAreaProps> {
     formatHotKey: PropTypes.string,
     unFormatHotKey: PropTypes.string,
     formatter: PropTypes.object,
-    ...FormField.propTypes,
+    ...ObserverFormField.propTypes,
   };
 
   static defaultProps = {
-    ...FormField.defaultProps,
+    ...ObserverFormField.defaultProps,
     suffixCls: 'code-area',
     formatHotKey: 'Alt-F',
     unFormatHotKey: 'Alt-R',
@@ -83,11 +84,7 @@ export default class CodeArea extends FormField<CodeAreaProps> {
   }
 
   getOtherProps() {
-    const otherProps = omit(super.getOtherProps(), [
-      'onChange',
-      'formatHotKey',
-      'unFormatHotKey',
-    ]);
+    const otherProps = omit(super.getOtherProps(), ['onChange', 'formatHotKey', 'unFormatHotKey']);
     otherProps.onKeyDown = this.handleCodeMirrorKeyDown;
     return otherProps;
   }
@@ -126,7 +123,7 @@ export default class CodeArea extends FormField<CodeAreaProps> {
   }
 
   getText() {
-    return this.text === void 0 ? super.getText() as string || '' : this.text;
+    return this.text === undefined ? (super.getText() as string) || '' : this.text;
   }
 
   processValue(value) {
@@ -153,15 +150,10 @@ export default class CodeArea extends FormField<CodeAreaProps> {
    * @memberof CodeArea
    */
   handleCodeMirrorDidMount = (editor: any) => {
-    const {
-      formatter,
-      style,
-      formatHotKey,
-      unFormatHotKey,
-    } = this.props;
+    const { formatter, style, formatHotKey, unFormatHotKey } = this.props;
     const { width = '100%', height = 100 } = style || {};
     const options = {
-      Tab: function (cm) {
+      Tab(cm) {
         if (cm.somethingSelected()) {
           cm.indentSelection('add'); // 有选中内容时整体缩进
         } else {

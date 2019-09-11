@@ -17,9 +17,9 @@ Coordinating the selection of provinces and cities is a common use case and demo
 
 Using the [Cascader](/components/cascader) component is strongly recommended instead as it is more flexible and capable.
 
-
-````jsx
+```jsx
 import { Select } from 'choerodon-ui';
+
 const Option = Select.Option;
 
 const provinceData = ['Zhejiang', 'Jiangsu'];
@@ -32,30 +32,40 @@ class App extends React.Component {
   state = {
     cities: cityData[provinceData[0]],
     secondCity: cityData[provinceData[0]][0],
-  }
+  };
 
-  handleProvinceChange = (value) => {
+  handleProvinceChange = value => {
     this.setState({
       cities: cityData[value],
       secondCity: cityData[value][0],
     });
-  }
+  };
 
-  onSecondCityChange = (value) => {
+  onSecondCityChange = value => {
     this.setState({
       secondCity: value,
     });
-  }
+  };
 
   render() {
-    const provinceOptions = provinceData.map(province => <Option key={province}>{province}</Option>);
+    const provinceOptions = provinceData.map(province => (
+      <Option key={province}>{province}</Option>
+    ));
     const cityOptions = this.state.cities.map(city => <Option key={city}>{city}</Option>);
     return (
       <div>
-        <Select defaultValue={provinceData[0]} style={{ width: 90 }} onChange={this.handleProvinceChange}>
+        <Select
+          defaultValue={provinceData[0]}
+          style={{ width: 90 }}
+          onChange={this.handleProvinceChange}
+        >
           {provinceOptions}
         </Select>
-        <Select value={this.state.secondCity} style={{ width: 90 }} onChange={this.onSecondCityChange}>
+        <Select
+          value={this.state.secondCity}
+          style={{ width: 90 }}
+          onChange={this.onSecondCityChange}
+        >
           {cityOptions}
         </Select>
       </div>
@@ -64,4 +74,4 @@ class App extends React.Component {
 }
 
 ReactDOM.render(<App />, mountNode);
-````
+```

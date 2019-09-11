@@ -13,8 +13,9 @@ title:
 
 A simple mini version step bar in the vertical direction.
 
-````jsx
+```jsx
 import { Steps } from 'choerodon-ui';
+
 const Step = Steps.Step;
 
 ReactDOM.render(
@@ -23,5 +24,6 @@ ReactDOM.render(
     <Step title="In Progress" description="This is a description." />
     <Step title="Waiting" description="This is a description." />
   </Steps>,
-  mountNode);
-````
+  mountNode,
+);
+```

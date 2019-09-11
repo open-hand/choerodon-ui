@@ -13,21 +13,21 @@ title:
 
 Basic list.
 
-````jsx
+```jsx
 import { List, Avatar } from 'choerodon-ui';
 
 const data = [
   {
-    title: 'Ant Design Title 1',
+    title: 'Choerodon UI Title 1',
   },
   {
-    title: 'Ant Design Title 2',
+    title: 'Choerodon UI Title 2',
   },
   {
-    title: 'Ant Design Title 3',
+    title: 'Choerodon UI Title 3',
   },
   {
-    title: 'Ant Design Title 4',
+    title: 'Choerodon UI Title 4',
   },
 ];
 
@@ -40,10 +40,11 @@ ReactDOM.render(
         <List.Item.Meta
           avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
           title={<a href="https://choerodon.github.io/choerodon-ui/">{item.title}</a>}
-          description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+          description="Choerodon"
         />
       </List.Item>
     )}
   />,
-  mountNode);
-````
+  mountNode,
+);
+```

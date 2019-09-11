@@ -29,6 +29,7 @@ export interface InputNumberProps extends AbstractInputProps {
 
 export default class InputNumber extends Component<InputNumberProps, any> {
   static displayName = 'InputNumber';
+
   static defaultProps = {
     step: 1,
   };
@@ -38,12 +39,22 @@ export default class InputNumber extends Component<InputNumberProps, any> {
   render() {
     const { className, size, prefixCls: customizePrefixCls, ...others } = this.props;
     const prefixCls = getPrefixCls('input-number', customizePrefixCls);
-    const inputNumberClass = classNames({
-      [`${prefixCls}-lg`]: size === Size.large,
-      [`${prefixCls}-sm`]: size === Size.small,
-    }, className);
+    const inputNumberClass = classNames(
+      {
+        [`${prefixCls}-lg`]: size === Size.large,
+        [`${prefixCls}-sm`]: size === Size.small,
+      },
+      className,
+    );
 
-    return <RcInputNumber ref={(c: any) => this.inputNumberRef = c} className={inputNumberClass} prefixCls={prefixCls} {...others} />;
+    return (
+      <RcInputNumber
+        ref={(c: any) => (this.inputNumberRef = c)}
+        className={inputNumberClass}
+        prefixCls={prefixCls}
+        {...others}
+      />
+    );
   }
 
   focus() {

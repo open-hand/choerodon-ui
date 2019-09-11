@@ -25,15 +25,8 @@ export interface ListItemMetaProps {
   title?: ReactNode;
 }
 
-export const Meta: SFC<ListItemMetaProps> = (props) => {
-  const {
-    prefixCls: customizePrefixCls,
-    className,
-    avatar,
-    title,
-    description,
-    ...others
-  } = props;
+export const Meta: SFC<ListItemMetaProps> = props => {
+  const { prefixCls: customizePrefixCls, className, avatar, title, description, ...others } = props;
   const prefixCls = getPrefixCls('list', customizePrefixCls);
 
   const classString = classNames(`${prefixCls}-item-meta`, className);
@@ -63,6 +56,7 @@ const GridColumns = ['', 1, 2, 3, 4, 6, 8, 12, 24];
 
 export default class Item extends Component<ListItemProps, any> {
   static displayName = 'ListItem';
+
   static Meta: typeof Meta = Meta;
 
   static propTypes = {
@@ -81,7 +75,14 @@ export default class Item extends Component<ListItemProps, any> {
 
   render() {
     const { grid } = this.context;
-    const { prefixCls: customizePrefixCls, children, actions, extra, className, ...others } = this.props;
+    const {
+      prefixCls: customizePrefixCls,
+      children,
+      actions,
+      extra,
+      className,
+      ...others
+    } = this.props;
     const prefixCls = getPrefixCls('list', customizePrefixCls);
     const classString = classNames(`${prefixCls}-item`, className);
 
@@ -97,19 +98,17 @@ export default class Item extends Component<ListItemProps, any> {
     });
 
     const contentClassString = classNames(`${prefixCls}-item-content`, {
-      [`${prefixCls}-item-content-single`]: (metaContent.length < 1),
+      [`${prefixCls}-item-content-single`]: metaContent.length < 1,
     });
-    const content = otherContent.length > 0 ? (
-      <div className={contentClassString}>
-        {otherContent}
-      </div>) : null;
+    const content =
+      otherContent.length > 0 ? <div className={contentClassString}>{otherContent}</div> : null;
 
     let actionsContent;
     if (actions && actions.length > 0) {
       const actionsContentItem = (action: ReactNode, i: number) => (
         <li key={`${prefixCls}-item-action-${i}`}>
           {action}
-          {i !== (actions.length - 1) && <em className={`${prefixCls}-item-action-split`} />}
+          {i !== actions.length - 1 && <em className={`${prefixCls}-item-action-split`} />}
         </li>
       );
       actionsContent = (

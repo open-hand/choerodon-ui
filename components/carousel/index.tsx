@@ -70,6 +70,7 @@ export interface CarouselProps {
 
 export default class Carousel extends Component<CarouselProps, {}> {
   static displayName = 'Carousel';
+
   static defaultProps = {
     dots: true,
     arrows: false,
@@ -80,15 +81,18 @@ export default class Carousel extends Component<CarouselProps, {}> {
 
   private slick: any;
 
-  private onWindowResized = debounce(() => {
-
-    const { autoplay } = this.props;
-    if (autoplay && this.slick && this.slick.innerSlider && this.slick.innerSlider.autoPlay) {
-      this.slick.innerSlider.autoPlay();
-    }
-  }, 500, {
-    leading: false,
-  });
+  private onWindowResized = debounce(
+    () => {
+      const { autoplay } = this.props;
+      if (autoplay && this.slick && this.slick.innerSlider && this.slick.innerSlider.autoPlay) {
+        this.slick.innerSlider.autoPlay();
+      }
+    },
+    500,
+    {
+      leading: false,
+    },
+  );
 
   componentDidMount() {
     const { autoplay } = this.props;

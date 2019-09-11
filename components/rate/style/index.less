@@ -1,17 +1,17 @@
-@import "../../style/themes/default";
-@import "../../style/mixins/index";
+@import '../../style/themes/default';
+@import '../../style/mixins/index';
 
-@rate-prefix-cls: ~"@{c7n-prefix}-rate";
+@rate-prefix-cls: ~'@{c7n-prefix}-rate';
 
 .@{rate-prefix-cls} {
   .reset-component;
-  line-height: unset;
+  display: inline-block;
   margin: 0;
   padding: 0;
-  list-style: none;
-  font-size: .2rem;
-  display: inline-block;
   color: @rate-star-color;
+  font-size: 0.2rem;
+  line-height: unset;
+  list-style: none;
   outline: none;
 
   &-disabled &-star {
@@ -22,30 +22,31 @@
   }
 
   &-star {
-    margin: 0;
-    padding: 0;
-    display: inline-block;
-    margin-right: .08rem;
     position: relative;
-    transition: all .3s;
+    display: inline-block;
+    margin: 0;
+    margin-right: 0.08rem;
+    padding: 0;
     color: inherit;
     cursor: pointer;
+    transition: all 0.3s;
 
     &-first,
     &-second {
-      user-select: none;
-      transition: all .3s;
       color: @rate-star-bg;
+      transition: all 0.3s;
+      user-select: none;
     }
 
-    &-focused, &:hover {
+    &-focused,
+    &:hover {
       transform: scale(1.1);
     }
 
     &-first {
       position: absolute;
-      left: 0;
       top: 0;
+      left: 0;
       width: 50%;
       height: 100%;
       overflow: hidden;
@@ -64,8 +65,8 @@
   }
 
   &-text {
-    margin-left: .08rem;
     display: inline-block;
+    margin-left: 0.08rem;
     font-size: @font-size-base;
   }
 }

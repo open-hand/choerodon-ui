@@ -28,6 +28,7 @@ export interface PopconfirmLocale {
 
 export default class Popconfirm extends Component<PopconfirmProps, PopconfirmState> {
   static displayName = 'Popconfirm';
+
   static defaultProps = {
     transitionName: 'zoom-big',
     placement: 'top',
@@ -55,7 +56,7 @@ export default class Popconfirm extends Component<PopconfirmProps, PopconfirmSta
     return this.tooltip.getPopupDomNode();
   }
 
-  onConfirm: MouseEventHandler<HTMLButtonElement> = (e) => {
+  onConfirm: MouseEventHandler<HTMLButtonElement> = e => {
     this.setVisible(false);
 
     const { onConfirm } = this.props;
@@ -64,7 +65,7 @@ export default class Popconfirm extends Component<PopconfirmProps, PopconfirmSta
     }
   };
 
-  onCancel: MouseEventHandler<HTMLButtonElement> = (e) => {
+  onCancel: MouseEventHandler<HTMLButtonElement> = e => {
     this.setVisible(false);
 
     const { onCancel } = this.props;
@@ -117,16 +118,15 @@ export default class Popconfirm extends Component<PopconfirmProps, PopconfirmSta
   };
 
   getPrefixCls() {
-    return getPrefixCls('popover', this.props.prefixCls);
+    const { prefixCls } = this.props;
+    return getPrefixCls('popover', prefixCls);
   }
 
   render() {
     const { placement, ...restProps } = this.props;
+    const { visible } = this.state;
     const overlay = (
-      <LocaleReceiver
-        componentName="Popconfirm"
-        defaultLocale={defaultLocale.Popconfirm}
-      >
+      <LocaleReceiver componentName="Popconfirm" defaultLocale={defaultLocale.Popconfirm}>
         {this.renderOverlay}
       </LocaleReceiver>
     );
@@ -137,7 +137,7 @@ export default class Popconfirm extends Component<PopconfirmProps, PopconfirmSta
         prefixCls={this.getPrefixCls()}
         placement={placement}
         onVisibleChange={this.onVisibleChange}
-        visible={this.state.visible}
+        visible={visible}
         overlay={overlay}
         ref={this.saveTooltip}
       />

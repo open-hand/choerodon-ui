@@ -1,35 +1,35 @@
 .@{list-prefix-cls}-bordered {
-  border-radius: @border-radius-base;
   border: @border-width-base @border-style-base @border-color-base;
+  border-radius: @border-radius-base;
   .@{list-prefix-cls}-header,
   .@{list-prefix-cls}-footer,
   .@{list-prefix-cls}-item {
-    padding-left: .24rem;
-    padding-right: .24rem;
+    padding-right: 0.24rem;
+    padding-left: 0.24rem;
   }
   .@{list-prefix-cls}-item {
     border-bottom: @border-width-base @border-style-base @border-color-split;
   }
 
   .@{list-prefix-cls}-pagination {
-    margin: .16rem .24rem;
+    margin: 0.16rem 0.24rem;
   }
 
   &.@{list-prefix-cls}-sm {
     .@{list-prefix-cls}-item {
-      padding-left: .16rem;
-      padding-right: .16rem;
+      padding-right: 0.16rem;
+      padding-left: 0.16rem;
     }
     .@{list-prefix-cls}-header,
     .@{list-prefix-cls}-footer {
-      padding: .08rem .16rem;
+      padding: 0.08rem 0.16rem;
     }
   }
 
   &.@{list-prefix-cls}-lg {
     .@{list-prefix-cls}-header,
     .@{list-prefix-cls}-footer {
-      padding: .16rem .24rem;
+      padding: 0.16rem 0.24rem;
     }
   }
 }

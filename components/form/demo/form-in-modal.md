@@ -13,11 +13,13 @@ title:
 
 When user visit a page with a list of items, and want to create a new item. The page can popup a form in Modal, then let user fills in the form to create an item.
 
-````jsx
+```jsx
 import { Button, Modal, Form, Input, Radio } from 'choerodon-ui';
+
 const FormItem = Form.Item;
 
 const CollectionCreateForm = Form.create()(
+  // eslint-disable-next-line
   class extends React.Component {
     render() {
       const { visible, onCancel, onCreate, form } = this.props;
@@ -34,9 +36,7 @@ const CollectionCreateForm = Form.create()(
             <FormItem label="Title">
               {getFieldDecorator('title', {
                 rules: [{ required: true, message: 'Please input the title of collection!' }],
-              })(
-                <Input />
-              )}
+              })(<Input />)}
             </FormItem>
             <FormItem label="Description">
               {getFieldDecorator('description')(<Input type="textarea" />)}
@@ -48,14 +48,14 @@ const CollectionCreateForm = Form.create()(
                 <Radio.Group>
                   <Radio value="public">Public</Radio>
                   <Radio value="private">Private</Radio>
-                </Radio.Group>
+                </Radio.Group>,
               )}
             </FormItem>
           </Form>
         </Modal>
       );
     }
-  }
+  },
 );
 
 class CollectionsPage extends React.Component {
@@ -65,11 +65,11 @@ class CollectionsPage extends React.Component {
 
   showModal = () => {
     this.setState({ visible: true });
-  }
+  };
 
   handleCancel = () => {
     this.setState({ visible: false });
-  }
+  };
 
   handleCreate = () => {
     const form = this.formRef.props.form;
@@ -82,16 +82,18 @@ class CollectionsPage extends React.Component {
       form.resetFields();
       this.setState({ visible: false });
     });
-  }
+  };
 
-  saveFormRef = (formRef) => {
+  saveFormRef = formRef => {
     this.formRef = formRef;
-  }
+  };
 
   render() {
     return (
       <div>
-        <Button type="primary" onClick={this.showModal}>New Collection</Button>
+        <Button type="primary" onClick={this.showModal}>
+          New Collection
+        </Button>
         <CollectionCreateForm
           wrappedComponentRef={this.saveFormRef}
           visible={this.state.visible}
@@ -104,10 +106,10 @@ class CollectionsPage extends React.Component {
 }
 
 ReactDOM.render(<CollectionsPage />, mountNode);
-````
+```
 
-````css
+```css
 .collection-create-form_last-form-item {
   margin-bottom: 0;
 }
-````
+```

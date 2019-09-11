@@ -1,9 +1,17 @@
-import React, { cloneElement, Component, ContextType, isValidElement, ReactElement, ReactNode } from 'react';
+import React, {
+  cloneElement,
+  Component,
+  ContextType,
+  isValidElement,
+  ReactElement,
+  ReactNode,
+} from 'react';
 import classNames from 'classnames';
-import { action, isArrayLike, reaction, IReactionDisposer } from 'mobx';
+import { action, IReactionDisposer, isArrayLike, reaction } from 'mobx';
 import { observer } from 'mobx-react';
 import { isMoment, Moment } from 'moment';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
+import warning from 'choerodon-ui/lib/_util/warning';
 import Field from '../data-set/Field';
 import DataSet from '../data-set';
 import Button from '../button';
@@ -33,16 +41,18 @@ function isFieldEmpty(field: Field): boolean {
 }
 
 function processFieldValue(field: Field) {
-  let value = field.getValue();
-  let text = field.getText();
+  const value = field.getValue();
   if (isMoment(value)) {
-    text = (value as Moment).format(getDateFormatByField(field, field.get('type')));
+    return (value as Moment).format(getDateFormatByField(field, field.get('type')));
   }
-  return text;
+  return field.getText();
 }
 
 @observer
-export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryBarProps, TableAdvancedQueryBarState> {
+export default class TableAdvancedQueryBar extends Component<
+  TableAdvancedQueryBarProps,
+  TableAdvancedQueryBarState
+> {
   static defaultProps = {
     queryFields: [],
   };
@@ -50,7 +60,9 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
   static contextType = TableContext;
 
   queryDataSet?: DataSet;
+
   reaction: IReactionDisposer;
+
   context: ContextType<typeof TableContext>;
 
   state = {
@@ -61,8 +73,8 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
 
   constructor(props, context) {
     super(props, context);
-    this.on(this.context.tableStore.dataSet.queryDataSet);
-    this.reaction = reaction(() => this.context.tableStore.dataSet.queryDataSet, this.on);
+    this.on(context.tableStore.dataSet.queryDataSet);
+    this.reaction = reaction(() => context.tableStore.dataSet.queryDataSet, this.on);
   }
 
   on(dataSet) {
@@ -70,6 +82,7 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
     dataSet.addEventListener('update', this.handleDataSetUpdate);
     this.queryDataSet = dataSet;
   }
+
   off() {
     const { queryDataSet } = this;
     if (queryDataSet) {
@@ -89,15 +102,25 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
 
   @autobind
   handleQuery() {
-    this.context.tableStore.dataSet.query();
+    const {
+      tableStore: { dataSet },
+    } = this.context;
+    dataSet.query();
   }
 
   getMoreFieldsButton(fields: Field[]) {
     const { showMoreFieldsPanel } = this.state;
     if (fields.length) {
       return (
-        <Button icon="filter_list" color={ButtonColor.primary} funcType={FuncType.flat} onClick={this.handleMoreFieldsButtonClick}>
-          {!showMoreFieldsPanel ? $l('Table', 'advanced_query') : $l('Table', 'hide_advanced_query')}
+        <Button
+          icon="filter_list"
+          color={ButtonColor.primary}
+          funcType={FuncType.flat}
+          onClick={this.handleMoreFieldsButtonClick}
+        >
+          {!showMoreFieldsPanel
+            ? $l('Table', 'advanced_query')
+            : $l('Table', 'hide_advanced_query')}
         </Button>
       );
     }
@@ -111,7 +134,7 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
   @autobind
   handleMoreFieldsButtonClick() {
     // toggle state
-    this.setState((prevState) => {
+    this.setState(prevState => {
       return {
         ...prevState,
         showMoreFieldsPanel: !prevState.showMoreFieldsPanel,
@@ -125,7 +148,12 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
 
   getResetButton() {
     return (
-      <Button icon="replay" color={ButtonColor.primary} funcType={FuncType.flat} onClick={this.handleQueryReset}>
+      <Button
+        icon="replay"
+        color={ButtonColor.primary}
+        funcType={FuncType.flat}
+        onClick={this.handleQueryReset}
+      >
         {$l('Table', 'reset_button')}
       </Button>
     );
@@ -133,7 +161,11 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
 
   getQueryBar(): ReactNode {
     const { prefixCls, queryFieldsLimit } = this.props;
-    const { queryDataSet } = this.context.tableStore.dataSet;
+    const {
+      tableStore: {
+        dataSet: { queryDataSet },
+      },
+    } = this.context;
     if (queryDataSet) {
       const fields = filterBindField(queryDataSet.fields);
       const keys = Object.keys(fields);
@@ -165,13 +197,9 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
     return fields.map((field, index) => {
       const { label } = field.props;
       return (
-        <div className="more-field-container" key={`${field.key}-${index}`}>
-          <label className="more-field-label">
-            {label}
-          </label>
-          <div className="more-field-wrapper">
-            {field}
-          </div>
+        <div className="more-field-container" key={`${field.key}-${String(index)}`}>
+          <label className="more-field-label">{label}</label>
+          <div className="more-field-wrapper">{field}</div>
         </div>
       );
     });
@@ -211,25 +239,27 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
         }
       }
       const element = queryFields[name];
-      return isValidElement(element) ? (
-        cloneElement(element, props)
-      ) : (
-        cloneElement(getEditorByField(field), { ...props, ...element })
-      );
+      return isValidElement(element)
+        ? cloneElement(element, props)
+        : cloneElement(getEditorByField(field), { ...props, ...element });
     });
   }
 
   @autobind
   @action
   handleKeyValueItemClose(label: string) {
-    const { queryDataSet } = this.context.tableStore.dataSet;
+    const {
+      tableStore: {
+        dataSet: { queryDataSet },
+      },
+    } = this.context;
     if (queryDataSet) {
       const fields = filterBindField(queryDataSet.fields);
       Object.keys(fields)
         .map(fieldKey => fields[fieldKey])
         .filter(field => field.get('label') === label)
         .forEach(field => {
-          const record = field.record || queryDataSet.current as Record;
+          const record = field.record || (queryDataSet.current as Record);
           record.set(field.name, null);
           this.handleQuery();
         });
@@ -238,7 +268,11 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
 
   @autobind
   handleQueryReset() {
-    const { queryDataSet } = this.context.tableStore.dataSet;
+    const {
+      tableStore: {
+        dataSet: { queryDataSet },
+      },
+    } = this.context;
     if (queryDataSet) {
       const { current } = queryDataSet;
       if (current) {
@@ -250,7 +284,11 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
 
   getMoreFields(): Field[] {
     const { queryFieldsLimit } = this.props;
-    const { queryDataSet } = this.context.tableStore.dataSet;
+    const {
+      tableStore: {
+        dataSet: { queryDataSet },
+      },
+    } = this.context;
 
     if (queryDataSet) {
       const fields = filterBindField(queryDataSet.fields);
@@ -289,7 +327,11 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
 
   getMoreFieldKeys(): string[] {
     const { queryFieldsLimit } = this.props;
-    const { queryDataSet } = this.context.tableStore.dataSet;
+    const {
+      tableStore: {
+        dataSet: { queryDataSet },
+      },
+    } = this.context;
 
     if (queryDataSet) {
       const fields = filterBindField(queryDataSet.fields);
@@ -302,8 +344,17 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
 
   render() {
     const { queryFieldsLimit } = this.props;
-    const { queryDataSet } = this.context.tableStore.dataSet;
+    const {
+      tableStore: {
+        dataSet: { queryDataSet },
+      },
+    } = this.context;
     const { showMoreFieldsPanel } = this.state;
+    // invalid advanced query bar
+    warning(
+      !!queryDataSet,
+      `queryBar = 'advancedBar' doesn't work, caused by missing queryDataSet`,
+    );
 
     if (queryDataSet) {
       const fields = filterBindField(queryDataSet.fields);
@@ -320,8 +371,6 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
       }
     }
 
-    // invalid advanced query bar
-    console.warn(`queryBar = 'advancedBar' doesn't work, invalid queryDataSet`);
     return null;
   }
 }

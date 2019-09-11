@@ -47,6 +47,7 @@ function easeInOutCubic(t: number, b: number, c: number, d: number) {
 
 const reqAnimFrame = getRequestAnimationFrame();
 const sharpMatcherRegx = /#([^#]+)$/;
+
 function scrollTo(
   href: string,
   offsetTop = 0,
@@ -101,10 +102,7 @@ export interface AnchorProps {
   affix?: boolean;
   showInkInFixed?: boolean;
   getContainer?: () => AnchorContainer;
-  onClick?: (
-    e: MouseEvent<HTMLElement>,
-    link: { title: ReactNode; href: string },
-  ) => void;
+  onClick?: (e: MouseEvent<HTMLElement>, link: { title: ReactNode; href: string }) => void;
 }
 
 export interface AnchorState {
@@ -131,6 +129,7 @@ export interface C7NAnchor {
 
 export default class Anchor extends Component<AnchorProps, AnchorState> {
   static displayName = 'Anchor';
+
   static Link: typeof AnchorLink;
 
   static defaultProps = {
@@ -150,10 +149,14 @@ export default class Anchor extends Component<AnchorProps, AnchorState> {
   private inkNode: HTMLSpanElement;
 
   private links: string[] = [];
+
   private scrollEvent: any;
+
   private animating: boolean;
 
   getChildContext() {
+    const { onClick } = this.props;
+    const { activeLink } = this.state;
     const c7nAnchor: C7NAnchor = {
       registerLink: (link: string) => {
         if (!this.links.includes(link)) {
@@ -166,9 +169,9 @@ export default class Anchor extends Component<AnchorProps, AnchorState> {
           this.links.splice(index, 1);
         }
       },
-      activeLink: this.state.activeLink,
+      activeLink,
       scrollTo: this.handleScrollTo,
-      onClick: this.props.onClick,
+      onClick,
     };
     return { c7nAnchor };
   }
@@ -246,7 +249,9 @@ export default class Anchor extends Component<AnchorProps, AnchorState> {
       return;
     }
     const prefixCls = this.getPrefixCls();
-    const linkNode = (findDOMNode(this as any) as HTMLElement).getElementsByClassName(`${prefixCls}-link-title-active`)[0];
+    const linkNode = (findDOMNode(this as any) as HTMLElement).getElementsByClassName(
+      `${prefixCls}-link-title-active`,
+    )[0];
     if (linkNode) {
       this.inkNode.style.top = `${(linkNode as any).offsetTop + linkNode.clientHeight / 2 - 4.5}px`;
     }
@@ -257,7 +262,8 @@ export default class Anchor extends Component<AnchorProps, AnchorState> {
   };
 
   getPrefixCls() {
-    return getPrefixCls('anchor', this.props.prefixCls);
+    const { prefixCls } = this.props;
+    return getPrefixCls('anchor', prefixCls);
   }
 
   render() {

@@ -1,4 +1,4 @@
-import React, { Children, Component, ReactChildren, ReactElement, ReactNode } from 'react';
+import React, { Children, Component, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import shallowEqual from 'lodash/isEqual';
@@ -20,6 +20,7 @@ function getCheckedValue(children: ReactNode) {
 
 export default class RadioGroup extends Component<RadioGroupProps, RadioGroupState> {
   static displayName = 'RadioGroup';
+
   static defaultProps = {
     disabled: false,
   };
@@ -45,12 +46,14 @@ export default class RadioGroup extends Component<RadioGroupProps, RadioGroupSta
   }
 
   getChildContext() {
+    const { disabled, name } = this.props;
+    const { value } = this.state;
     return {
       radioGroup: {
         onChange: this.onRadioChange,
-        value: this.state.value,
-        disabled: this.props.disabled,
-        name: this.props.name,
+        value,
+        disabled,
+        name,
       },
     };
   }
@@ -71,12 +74,11 @@ export default class RadioGroup extends Component<RadioGroupProps, RadioGroupSta
   }
 
   shouldComponentUpdate(nextProps: RadioGroupProps, nextState: RadioGroupState) {
-    return !shallowEqual(this.props, nextProps) ||
-      !shallowEqual(this.state, nextState);
+    return !shallowEqual(this.props, nextProps) || !shallowEqual(this.state, nextState);
   }
 
   onRadioChange = (ev: RadioChangeEvent) => {
-    const lastValue = this.state.value;
+    const { value: lastValue } = this.state;
     const { value } = ev.target;
     if (!('value' in this.props)) {
       this.setState({
@@ -84,62 +86,68 @@ export default class RadioGroup extends Component<RadioGroupProps, RadioGroupSta
       });
     }
 
-    const onChange = this.props.onChange;
+    const { onChange } = this.props;
     if (onChange && value !== lastValue) {
       onChange(ev);
     }
   };
 
   render() {
-    const props = this.props;
-    const { prefixCls: customizePrefixCls, className = '', options } = props;
+    const { props } = this;
+    const { prefixCls: customizePrefixCls, className = '', options, size, label, disabled } = props;
+    const { value } = this.state;
     const prefixCls = getPrefixCls('radio-group', customizePrefixCls);
-    const classString = classNames(prefixCls, {
-      [`${prefixCls}-${props.size}`]: props.size,
-    }, className);
+    const classString = classNames(
+      prefixCls,
+      {
+        [`${prefixCls}-${size}`]: size,
+      },
+      className,
+    );
     const wrapperClassString = classNames({
       [`${prefixCls}-wrapper`]: true,
-      [`${prefixCls}-has-label`]: props.label,
+      [`${prefixCls}-has-label`]: label,
     });
     const labelClassString = classNames(`${prefixCls}-label`, {
-      'label-disabled': props.disabled,
+      'label-disabled': disabled,
     });
-    let children: ReactChildren[] | ReactElement<any>[] | ReactNode = props.children;
+    let { children } = props;
 
     // 如果存在 options, 优先使用
     if (options && options.length > 0) {
       children = options.map((option, index) => {
-        if (typeof option === 'string') { // 此处类型自动推导为 string
+        if (typeof option === 'string') {
+          // 此处类型自动推导为 string
           return (
             <Radio
-              key={index}
-              disabled={this.props.disabled}
+              key={String(index)}
+              disabled={disabled}
               value={option}
               onChange={this.onRadioChange}
-              checked={this.state.value === option}
+              checked={value === option}
             >
               {option}
             </Radio>
           );
-        } else { // 此处类型自动推导为 { label: string value: string }
-          return (
-            <Radio
-              key={index}
-              disabled={option.disabled || this.props.disabled}
-              value={option.value}
-              onChange={this.onRadioChange}
-              checked={this.state.value === option.value}
-            >
-              {option.label}
-            </Radio>
-          );
         }
+        // 此处类型自动推导为 { label: string value: string }
+        return (
+          <Radio
+            key={String(index)}
+            disabled={option.disabled || disabled}
+            value={option.value}
+            onChange={this.onRadioChange}
+            checked={value === option.value}
+          >
+            {option.label}
+          </Radio>
+        );
       });
     }
 
     return (
       <div className={wrapperClassString}>
-        {props.label ? (<span className={labelClassString}>{props.label}</span>) : null}
+        {props.label ? <span className={labelClassString}>{props.label}</span> : null}
         <div
           className={classString}
           style={props.style}

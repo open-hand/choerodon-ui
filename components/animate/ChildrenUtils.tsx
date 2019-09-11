@@ -2,7 +2,7 @@ import { Children, isValidElement, Key, ReactElement, ReactNode } from 'react';
 
 export function toArrayChildren(children: ReactNode): ReactElement<any>[] {
   const ret: ReactElement<any>[] = [];
-  Children.forEach(children, (child) => {
+  Children.forEach(children, child => {
     if (isValidElement(child)) {
       ret.push(child);
     }
@@ -10,19 +10,23 @@ export function toArrayChildren(children: ReactNode): ReactElement<any>[] {
   return ret;
 }
 
-export function findChildInChildrenByKey(children: ReactElement<any>[],
-                                         key: Key | null): ReactElement<any> | undefined {
+export function findChildInChildrenByKey(
+  children: ReactElement<any>[],
+  key: Key | null,
+): ReactElement<any> | undefined {
   if (children) {
-    return children.find((child) => child && child.key === key);
+    return children.find(child => child && child.key === key);
   }
 }
 
-export function findShownChildInChildrenByKey(children: ReactElement<any>[],
-                                              key: Key | null,
-                                              hiddenProp: string): ReactElement<any> | undefined {
-  let ret: ReactElement<any> | undefined = void 0;
+export function findShownChildInChildrenByKey(
+  children: ReactElement<any>[],
+  key: Key | null,
+  hiddenProp: string,
+): ReactElement<any> | undefined {
+  let ret: ReactElement<any> | undefined;
   if (children) {
-    children.forEach((child) => {
+    children.forEach(child => {
       if (child && child.key === key && !child.props[hiddenProp]) {
         if (ret) {
           throw new Error('two child with same key for animate children');
@@ -47,13 +51,17 @@ export function findShownChildInChildrenByKey(children: ReactElement<any>[],
 //   return found;
 // }
 
-export function isSameChildren(c1: ReactElement<any>[], c2: ReactElement<any>[], hiddenProp?: string): boolean {
+export function isSameChildren(
+  c1: ReactElement<any>[],
+  c2: ReactElement<any>[],
+  hiddenProp?: string,
+): boolean {
   let same = c1.length === c2.length;
   if (same) {
     c1.forEach((child, index) => {
-      let child2 = c2[index];
+      const child2 = c2[index];
       if (child && child2) {
-        if (child && !child2 || !child && child2) {
+        if ((child && !child2) || (!child && child2)) {
           same = false;
         } else if (child.key !== child2.key) {
           same = false;
@@ -66,11 +74,14 @@ export function isSameChildren(c1: ReactElement<any>[], c2: ReactElement<any>[],
   return same;
 }
 
-export function mergeChildren(prev: ReactElement<any>[], next: ReactElement<any>[]): ReactElement<any>[] {
+export function mergeChildren(
+  prev: ReactElement<any>[],
+  next: ReactElement<any>[],
+): ReactElement<any>[] {
   let ret: ReactElement<any>[] = [];
   const nextChildrenPending: { [key: string]: ReactElement<any>[] } = {};
   let pendingChildren: ReactElement<any>[] = [];
-  prev.forEach((child) => {
+  prev.forEach(child => {
     if (child && child.key && findChildInChildrenByKey(next, child.key)) {
       if (pendingChildren.length) {
         nextChildrenPending[child.key] = pendingChildren;
@@ -81,8 +92,8 @@ export function mergeChildren(prev: ReactElement<any>[], next: ReactElement<any>
     }
   });
 
-  next.forEach((child) => {
-    if (child && child.key && nextChildrenPending.hasOwnProperty(child.key)) {
+  next.forEach(child => {
+    if (child && child.key && {}.hasOwnProperty.call(nextChildrenPending, child.key)) {
       ret = ret.concat(nextChildrenPending[child.key]);
     }
     ret.push(child);

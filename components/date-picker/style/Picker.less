@@ -1,4 +1,4 @@
-@import "../../button/style/mixin";
+@import '../../button/style/mixin';
 
 .@{calendar-prefix-cls}-picker-container {
   .reset-component;
@@ -38,8 +38,8 @@
   transition: opacity 0.3s;
 
   &-input {
-    outline: none;
     display: block;
+    outline: none;
   }
 
   &:hover &-input:not(.@{c7n-prefix}-input-disabled) {
@@ -59,19 +59,19 @@
     cursor: pointer;
     &-wrapper {
       display: inline-block;
-      min-width: .18rem;
+      min-width: 0.18rem;
     }
   }
 
   &-clear {
     position: absolute !important;
-    right: .2rem;
     top: 0;
+    right: 0.2rem;
     bottom: 0;
     margin: auto;
+    cursor: pointer;
     opacity: 0;
     transition: opacity 0.15s ease;
-    cursor: pointer;
   }
 
   &:hover &-clear {

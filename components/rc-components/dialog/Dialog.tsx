@@ -31,7 +31,7 @@ function setTransformOrigin(node: any, value: string) {
   ['Webkit', 'Moz', 'Ms', 'ms'].forEach((prefix: string) => {
     style[`${prefix}TransformOrigin`] = value;
   });
-  style[`transformOrigin`] = value;
+  style.transformOrigin = value;
 }
 
 function offset(el: any) {
@@ -61,14 +61,23 @@ export default class Dialog extends Component<IDialogPropTypes, any> {
   };
 
   private inTransition: boolean;
+
   private titleId: string;
+
   private openTime: number;
+
   private lastOutSideFocusNode: HTMLElement | null;
+
   private wrap: HTMLElement;
+
   private dialog: any;
+
   private sentinel: HTMLElement;
+
   private bodyIsOverflowing: boolean;
+
   private scrollbarWidth: number;
+
   private resizeEvent: any;
 
   componentWillMount() {
@@ -90,9 +99,8 @@ export default class Dialog extends Component<IDialogPropTypes, any> {
   }
 
   componentDidUpdate(prevProps: IDialogPropTypes) {
-    const props = this.props;
-    const mousePosition = this.props.mousePosition;
-    if (props.visible) {
+    const { mousePosition, visible, mask } = this.props;
+    if (visible) {
       // first show
       if (!prevProps.visible) {
         this.center();
@@ -103,15 +111,17 @@ export default class Dialog extends Component<IDialogPropTypes, any> {
         const dialogNode = findDOMNode(this.dialog);
         if (mousePosition) {
           const elOffset = offset(dialogNode);
-          setTransformOrigin(dialogNode,
-            `${mousePosition.x - elOffset.left}px ${mousePosition.y - elOffset.top}px`);
+          setTransformOrigin(
+            dialogNode,
+            `${mousePosition.x - elOffset.left}px ${mousePosition.y - elOffset.top}px`,
+          );
         } else {
           setTransformOrigin(dialogNode, '');
         }
       }
     } else if (prevProps.visible) {
       this.inTransition = true;
-      if (props.mask && this.lastOutSideFocusNode) {
+      if (mask && this.lastOutSideFocusNode) {
         try {
           this.lastOutSideFocusNode.focus();
         } catch (e) {
@@ -123,10 +133,11 @@ export default class Dialog extends Component<IDialogPropTypes, any> {
   }
 
   componentWillUnmount() {
-    if (this.props.visible || this.inTransition) {
+    const { visible, center } = this.props;
+    if (visible || this.inTransition) {
       this.removeScrollingEffect();
     }
-    if (this.props.center) {
+    if (center) {
       this.removeEventListener();
     }
   }
@@ -134,26 +145,26 @@ export default class Dialog extends Component<IDialogPropTypes, any> {
   center = () => {
     const { center } = this.props;
     const dialogNode: any = findDOMNode(this.dialog);
-    if (center && dialogNode && typeof window !== undefined) {
-      const {
-        clientWidth: docWidth,
-        clientHeight: docHeight,
-      } = window.document.documentElement;
+    if (center && dialogNode && typeof window !== 'undefined') {
+      const { clientWidth: docWidth, clientHeight: docHeight } = window.document.documentElement;
       const { offsetWidth: width, offsetHeight: height, style } = dialogNode;
       style.left = `${Math.max((docWidth - width) / 2, 0)}px`;
       style.top = `${Math.max((docHeight - height) / 2, 0)}px`;
     }
   };
+
   onEventListener = () => {
-    if (typeof window !== undefined) {
+    if (typeof window !== 'undefined') {
       this.resizeEvent = addEventListener(window, 'resize', this.center);
     }
   };
+
   removeEventListener = () => {
-    if (typeof window !== undefined) {
+    if (typeof window !== 'undefined') {
       this.resizeEvent.remove();
     }
   };
+
   onAnimateLeave = () => {
     const { afterClose } = this.props;
     // need demo?
@@ -167,13 +178,15 @@ export default class Dialog extends Component<IDialogPropTypes, any> {
       afterClose();
     }
   };
+
   onAnimateEnd = () => {
     const { animationEnd } = this.props;
     if (animationEnd) {
       animationEnd();
     }
   };
-  onMaskClick: MouseEventHandler<HTMLDivElement> = (e) => {
+
+  onMaskClick: MouseEventHandler<HTMLDivElement> = e => {
     // android trigger click on open (fastclick??)
     if (Date.now() - this.openTime < 300) {
       return;
@@ -182,6 +195,7 @@ export default class Dialog extends Component<IDialogPropTypes, any> {
       this.close(e);
     }
   };
+
   onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     const props = this.props;
     if (props.keyboard && e.keyCode === KeyCode.ESC) {
@@ -202,11 +216,12 @@ export default class Dialog extends Component<IDialogPropTypes, any> {
       }
     }
   };
+
   getDialogElement = () => {
     const props = this.props;
     const closable = props.closable;
     const prefixCls = props.prefixCls;
-    let dest: any = {};
+    const dest: any = {};
     if (props.width !== undefined) {
       dest.width = props.width;
     }
@@ -215,17 +230,13 @@ export default class Dialog extends Component<IDialogPropTypes, any> {
     }
     let footer;
     if (props.footer) {
-      footer = (
-        <div className={`${prefixCls}-footer`} ref="footer">
-          {props.footer}
-        </div>
-      );
+      footer = <div className={`${prefixCls}-footer`}>{props.footer}</div>;
     }
 
     let header;
     if (props.title) {
       header = (
-        <div className={`${prefixCls}-header`} ref="header">
+        <div className={`${prefixCls}-header`}>
           <div className={`${prefixCls}-title`} id={this.titleId}>
             {props.title}
           </div>
@@ -237,12 +248,14 @@ export default class Dialog extends Component<IDialogPropTypes, any> {
     if (closable) {
       closer = (
         <button
+          type="button"
           onClick={this.close}
           aria-label="Close"
           className={`${prefixCls}-close`}
         >
           <Icon className={`${prefixCls}-close-x`} type="close" />
-        </button>);
+        </button>
+      );
     }
 
     const style = { ...props.style, ...dest };
@@ -259,17 +272,16 @@ export default class Dialog extends Component<IDialogPropTypes, any> {
         <div className={`${prefixCls}-content`}>
           {closer}
           {header}
-          <div
-            className={`${prefixCls}-body`}
-            style={props.bodyStyle}
-            ref="body"
-            {...props.bodyProps}
-          >
+          <div className={`${prefixCls}-body`} style={props.bodyStyle} {...props.bodyProps}>
             {props.children}
           </div>
           {footer}
         </div>
-        <div tabIndex={0} ref={this.saveRef('sentinel')} style={{ width: 0, height: 0, overflow: 'hidden' }}>
+        <div
+          tabIndex={0}
+          ref={this.saveRef('sentinel')}
+          style={{ width: 0, height: 0, overflow: 'hidden' }}
+        >
           sentinel
         </div>
       </LazyRenderBox>
@@ -284,10 +296,11 @@ export default class Dialog extends Component<IDialogPropTypes, any> {
         component=""
         transitionAppear
       >
-        {(props.visible || !props.destroyOnClose) ? dialogElement : null}
+        {props.visible || !props.destroyOnClose ? dialogElement : null}
       </Animate>
     );
   };
+
   getZIndexStyle = () => {
     const style: any = {};
     const props = this.props;
@@ -296,12 +309,17 @@ export default class Dialog extends Component<IDialogPropTypes, any> {
     }
     return style;
   };
+
   getWrapStyle = (): any => {
-    return { ...this.getZIndexStyle(), ...this.props.wrapStyle };
+    const { wrapStyle } = this.props;
+    return { ...this.getZIndexStyle(), ...wrapStyle };
   };
+
   getMaskStyle = () => {
-    return { ...this.getZIndexStyle(), ...this.props.maskStyle };
+    const { maskStyle } = this.props;
+    return { ...this.getZIndexStyle(), ...maskStyle };
   };
+
   getMaskElement = () => {
     const props = this.props;
     let maskElement;
@@ -333,6 +351,7 @@ export default class Dialog extends Component<IDialogPropTypes, any> {
     }
     return maskElement;
   };
+
   getMaskTransitionName = () => {
     const props = this.props;
     let transitionName = props.maskTransitionName;
@@ -342,6 +361,7 @@ export default class Dialog extends Component<IDialogPropTypes, any> {
     }
     return transitionName;
   };
+
   getTransitionName = () => {
     const props = this.props;
     let transitionName = props.transitionName;
@@ -351,11 +371,13 @@ export default class Dialog extends Component<IDialogPropTypes, any> {
     }
     return transitionName;
   };
+
   setScrollbar = () => {
     if (this.bodyIsOverflowing && this.scrollbarWidth !== undefined) {
       document.body.style.paddingRight = `${this.scrollbarWidth}px`;
     }
   };
+
   addScrollingEffect = () => {
     openCount++;
     if (openCount !== 1) {
@@ -366,6 +388,7 @@ export default class Dialog extends Component<IDialogPropTypes, any> {
     document.body.style.overflow = 'hidden';
     // this.adjustDialog();
   };
+
   removeScrollingEffect = () => {
     openCount--;
     if (openCount !== 0) {
@@ -375,15 +398,18 @@ export default class Dialog extends Component<IDialogPropTypes, any> {
     this.resetScrollbar();
     // this.resetAdjustments();
   };
+
   close = (e: any) => {
     const { onClose } = this.props;
     if (onClose) {
       onClose(e);
     }
   };
+
   checkScrollbar = () => {
     let fullWindowWidth = window.innerWidth;
-    if (!fullWindowWidth) { // workaround for missing window.innerWidth in IE8
+    if (!fullWindowWidth) {
+      // workaround for missing window.innerWidth in IE8
       const documentElementRect = document.documentElement.getBoundingClientRect();
       fullWindowWidth = documentElementRect.right - Math.abs(documentElementRect.left);
     }
@@ -392,22 +418,30 @@ export default class Dialog extends Component<IDialogPropTypes, any> {
       this.scrollbarWidth = getScrollBarSize();
     }
   };
+
   resetScrollbar = () => {
     document.body.style.paddingRight = '';
   };
+
   adjustDialog = () => {
-    if (this.wrap && this.scrollbarWidth !== undefined) {
-      const modalIsOverflowing =
-        this.wrap.scrollHeight > document.documentElement.clientHeight;
-      this.wrap.style.paddingLeft =
-        `${!this.bodyIsOverflowing && modalIsOverflowing ? this.scrollbarWidth : ''}px`;
-      this.wrap.style.paddingRight =
-        `${this.bodyIsOverflowing && !modalIsOverflowing ? this.scrollbarWidth : ''}px`;
+    const { wrap } = this;
+    if (wrap && this.scrollbarWidth !== undefined) {
+      const modalIsOverflowing = wrap.scrollHeight > document.documentElement.clientHeight;
+      wrap.style.paddingLeft = `${
+        !this.bodyIsOverflowing && modalIsOverflowing ? this.scrollbarWidth : ''
+      }px`;
+      wrap.style.paddingRight = `${
+        this.bodyIsOverflowing && !modalIsOverflowing ? this.scrollbarWidth : ''
+      }px`;
     }
   };
+
   resetAdjustments = () => {
-    if (this.wrap) {
-      this.wrap.style.paddingLeft = this.wrap.style.paddingLeft = '';
+    const { wrap } = this;
+    if (wrap) {
+      const { style } = wrap;
+      style.paddingLeft = '';
+      style.paddingRight = '';
     }
   };
 

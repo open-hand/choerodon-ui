@@ -45,16 +45,18 @@ export default class LocaleProvider extends Component<LocaleProviderProps, any> 
   };
 
   getChildContext() {
+    const { locale } = this.props;
     return {
       c7nLocale: {
-        ...this.props.locale,
+        ...locale,
         exist: true,
       },
     };
   }
 
   componentWillMount() {
-    setMomentLocale(this.props.locale);
+    const { locale } = this.props;
+    setMomentLocale(locale);
     this.componentDidUpdate();
   }
 
@@ -76,6 +78,7 @@ export default class LocaleProvider extends Component<LocaleProviderProps, any> 
   }
 
   render() {
-    return Children.only(this.props.children);
+    const { children } = this.props;
+    return Children.only(children);
   }
 }

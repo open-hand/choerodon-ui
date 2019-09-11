@@ -45,10 +45,7 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
      * 可选值： button | box
      * @default box
      */
-    mode: PropTypes.oneOf([
-      ViewMode.button,
-      ViewMode.box,
-    ]),
+    mode: PropTypes.oneOf([ViewMode.button, ViewMode.box]),
     ...FormField.propTypes,
   };
 
@@ -73,15 +70,11 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
   }
 
   get isControlled() {
-    return this.props.checked !== void 0;
+    return this.props.checked !== undefined;
   }
 
   getOtherProps() {
-    const otherProps = omit(super.getOtherProps(), [
-      'value',
-      'readOnly',
-      'mode',
-    ]);
+    const otherProps = omit(super.getOtherProps(), ['value', 'readOnly', 'mode']);
     otherProps.type = this.type;
     // if (this.isReadOnly()) {
     //   otherProps.disabled = true;
@@ -116,7 +109,7 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
    */
   get hasFloatLabel() {
     return this.getLabelChildren() ? false : super.hasFloatLabel;
-  };
+  }
 
   /**
    * 没有children时，使用label替代children
@@ -126,7 +119,11 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
    */
   getLabelChildren(): ReactNode {
     const { labelLayout } = this;
-    return labelLayout && ![LabelLayout.horizontal, LabelLayout.vertical, LabelLayout.none].includes(labelLayout) && this.getLabel();
+    return (
+      labelLayout &&
+      ![LabelLayout.horizontal, LabelLayout.vertical, LabelLayout.none].includes(labelLayout) &&
+      this.getLabel()
+    );
   }
 
   getChildrenText() {
@@ -142,10 +139,16 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
   }
 
   getWrapperClassNames(...args) {
-    const { prefixCls, props: { mode } } = this;
-    return super.getWrapperClassNames({
-      [`${prefixCls}-button`]: mode === ViewMode.button,
-    }, ...args);
+    const {
+      prefixCls,
+      props: { mode },
+    } = this;
+    return super.getWrapperClassNames(
+      {
+        [`${prefixCls}-button`]: mode === ViewMode.button,
+      },
+      ...args,
+    );
   }
 
   isChecked() {
@@ -153,9 +156,8 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
     const { name, dataSet, checkedValue } = this;
     if (dataSet && name) {
       return this.getDataSetValue() === checkedValue;
-    } else {
-      return checked;
     }
+    return checked;
   }
 
   @autobind
@@ -183,7 +185,7 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
   }
 
   getOldValue(): any {
-    return this.isChecked() ? this.checkedValue : void 0;
+    return this.isChecked() ? this.checkedValue : undefined;
   }
 }
 

@@ -6,11 +6,15 @@ import Validity from './Validity';
 import ValidationResult from './ValidationResult';
 import Record from '../data-set/Record';
 import Form from '../form/Form';
-import validationRules, { methodReturn, ValidatorProps } from './rules';
+import validationRules, { methodReturn, validationRule, ValidatorProps } from './rules';
 import valueMissing from './rules/valueMissing';
 import getReactNodeText from '../_util/getReactNodeText';
 
-export type CustomValidator = (value: any, name: string, record: Record | Form) => Promise<boolean | string | undefined>
+export type CustomValidator = (
+  value: any,
+  name: string,
+  record: Record | Form,
+) => Promise<boolean | string | undefined>;
 
 export interface ValidationMessages {
   badInput?: string;
@@ -27,8 +31,8 @@ export interface ValidationMessages {
 }
 
 export default class Validator {
-
   @observable fieldProps: ValidatorProps;
+
   @observable controlProps: ValidatorProps;
 
   validity: Validity = new Validity();
@@ -68,7 +72,7 @@ export default class Validator {
 
   @action
   reset() {
-    this.validedValue = void 0;
+    this.validedValue = undefined;
     this.validationMessage = '';
     this.validity.reset();
   }
@@ -81,36 +85,53 @@ export default class Validator {
       this.validationMessage = validationMessage;
       this.injectionOptions = injectionOptions || {};
     }
-    if (process.env.NODE_ENV !== 'production' && !this.validity.valid && typeof console !== 'undefined') {
+    if (
+      process.env.NODE_ENV !== 'production' &&
+      !this.validity.valid &&
+      typeof console !== 'undefined'
+    ) {
       const { name, dataSet, record } = this.props;
       const { validationMessage } = this;
       const reportMessage: any[] = [
         'validation:',
-        isString(validationMessage) ? validationMessage : await getReactNodeText(<span>{validationMessage}</span>),
+        isString(validationMessage)
+          ? validationMessage
+          : await getReactNodeText(<span>{validationMessage}</span>),
       ];
       if (dataSet) {
         const { name: dsName, id } = dataSet;
         if (dsName || id) {
-          reportMessage.push(`
-[dataSet<${dsName || id}>]:`, dataSet);
+          reportMessage.push(
+            `
+[dataSet<${dsName || id}>]:`,
+            dataSet,
+          );
         } else {
           reportMessage.push('\n[dataSet]:', dataSet);
         }
       }
       if (record) {
         if (dataSet) {
-          reportMessage.push(`
-[record<${dataSet.indexOf(record)}>]:`, record);
+          reportMessage.push(
+            `
+[record<${dataSet.indexOf(record)}>]:`,
+            record,
+          );
         } else {
           reportMessage.push(`\n[record]:`, record);
         }
-        reportMessage.push(`
-[field<${name}>]:`, record.getField(name));
+        reportMessage.push(
+          `
+[field<${name}>]:`,
+          record.getField(name),
+        );
       } else {
         reportMessage.push('[field]:', name);
       }
       reportMessage.push('\n[value]:', this.validedValue);
-      console.warn(...reportMessage);
+      if (typeof console !== 'undefined') {
+        console.warn(...reportMessage);
+      }
     }
   }
 
@@ -124,42 +145,44 @@ export default class Validator {
     this.validationErrorValues.push(result);
   }
 
+  async execute(rules: validationRule[], value: any[]): Promise<any> {
+    const { props } = this;
+    const method = rules.shift();
+    if (method) {
+      const results: methodReturn[] = await Promise.all<methodReturn>(
+        value.map(item => method(item, props)),
+      );
+      let ret: methodReturn = true;
+      results.forEach(result => {
+        if (result instanceof ValidationResult) {
+          ret = result;
+          this.addError(result);
+          const index = value.indexOf(result.value);
+          if (index !== -1) {
+            value.splice(index, 1);
+          }
+        }
+      });
+      if (ret !== true) {
+        this.report(ret);
+      }
+      if (value.length) {
+        await this.execute(rules, value);
+      }
+    }
+  }
+
   async checkValidity(value: any = null): Promise<boolean> {
     // const useCache = isEqual(this.validedValue, value);
     const useCachedResult = false;
     if (!useCachedResult) {
-      const { props } = this;
       this.validedValue = value;
-      const valueMiss: methodReturn = valueMissing(value, props);
+      const valueMiss: methodReturn = valueMissing(value, this.props);
       this.clearErrors();
       if (valueMiss !== true) {
         this.report(valueMiss);
       } else {
-        if (isArrayLike(value)) {
-          value = value.slice();
-        } else {
-          value = [value];
-        }
-        for (const method of validationRules) {
-          const results: methodReturn[] = await Promise.all<methodReturn>(value.map(item => method(item, props)));
-          let ret: methodReturn = true;
-          results.forEach(result => {
-            if (result instanceof ValidationResult) {
-              ret = result;
-              this.addError(result);
-              const index = value.indexOf(result.value);
-              if (index !== -1) {
-                value.splice(index, 1);
-              }
-            }
-          });
-          if (ret !== true) {
-            this.report(ret);
-          }
-          if (!value.length) {
-            break;
-          }
-        }
+        await this.execute(validationRules.slice(), isArrayLike(value) ? value.slice() : [value]);
       }
     }
     return this.validity.valid;

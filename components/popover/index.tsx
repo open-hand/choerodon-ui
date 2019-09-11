@@ -10,6 +10,7 @@ export interface PopoverProps extends AbstractTooltipProps {
 
 export default class Popover extends Component<PopoverProps, {}> {
   static displayName = 'Popover';
+
   static defaultProps = {
     placement: 'top',
     transitionName: 'zoom-big',
@@ -35,9 +36,7 @@ export default class Popover extends Component<PopoverProps, {}> {
     return (
       <div>
         {title && <div className={`${prefixCls}-title`}>{title}</div>}
-        <div className={`${prefixCls}-inner-content`}>
-          {content}
-        </div>
+        <div className={`${prefixCls}-inner-content`}>{content}</div>
       </div>
     );
   }
@@ -47,7 +46,8 @@ export default class Popover extends Component<PopoverProps, {}> {
   };
 
   getPrefixCls() {
-    return getPrefixCls('popover', this.props.prefixCls);
+    const { prefixCls } = this.props;
+    return getPrefixCls('popover', prefixCls);
   }
 
   render() {

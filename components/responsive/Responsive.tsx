@@ -7,6 +7,7 @@ import { Breakpoint } from './enum';
 let enquire: any;
 if (typeof window !== 'undefined') {
   window.matchMedia = window.matchMedia || matchMediaPolifill;
+  // eslint-disable-next-line global-require
   enquire = require('enquire.js');
 }
 
@@ -86,49 +87,50 @@ export default class Responsive extends PureComponent<ResponsiveProps, Responsiv
 
   register() {
     if (enquire) {
-      responsiveArray
-        .map((breakpoint: Breakpoint) => enquire.register(responsiveMap[breakpoint], {
-            match: () => {
-              this.setState((prevState) => ({
-                breakpoints: {
-                  ...prevState.breakpoints,
-                  [breakpoint]: true,
-                },
-              }));
-            },
-            unmatch: () => {
-              this.setState((prevState) => ({
-                breakpoints: {
-                  ...prevState.breakpoints,
-                  [breakpoint]: false,
-                },
-              }));
-            },
-            // Keep a empty destory to avoid triggering unmatch when unregister
-            destroy() {
-            },
+      responsiveArray.map((breakpoint: Breakpoint) =>
+        enquire.register(responsiveMap[breakpoint], {
+          match: () => {
+            this.setState(prevState => ({
+              breakpoints: {
+                ...prevState.breakpoints,
+                [breakpoint]: true,
+              },
+            }));
           },
-        ));
+          unmatch: () => {
+            this.setState(prevState => ({
+              breakpoints: {
+                ...prevState.breakpoints,
+                [breakpoint]: false,
+              },
+            }));
+          },
+          // Keep a empty destory to avoid triggering unmatch when unregister
+          destroy() {},
+        }),
+      );
     }
   }
 
   unregister() {
-    Object.keys(responsiveMap)
-      .map((breakpoint: Breakpoint) => enquire.unregister(responsiveMap[breakpoint]));
+    Object.keys(responsiveMap).map((breakpoint: Breakpoint) =>
+      enquire.unregister(responsiveMap[breakpoint]),
+    );
   }
 
   processValue(value) {
     const { breakpoints } = this.state;
     if (isArrayLike(value)) {
       return value.map(this.processValue, this);
-    } else if (isObject(value)) {
+    }
+    if (isObject(value)) {
       for (let i = 0; i < responsiveArray.length; i++) {
         const breakpoint: Breakpoint = responsiveArray[i];
-        if (breakpoints[breakpoint] && value[breakpoint] !== void 0) {
+        if (breakpoints[breakpoint] && value[breakpoint] !== undefined) {
           return value[breakpoint];
         }
       }
-      return void 0;
+      return undefined;
     }
     return value;
   }

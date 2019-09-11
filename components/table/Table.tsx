@@ -16,7 +16,16 @@ import SelectionCheckboxAll from './SelectionCheckboxAll';
 import Column from './Column';
 import ColumnGroup from './ColumnGroup';
 import createBodyRow from './createBodyRow';
-import { findColumnByFilterValue, flatArray, flatFilter, getColumnKey, getLeafColumns, normalizeColumns, removeHiddenColumns, treeMap } from './util';
+import {
+  findColumnByFilterValue,
+  flatArray,
+  flatFilter,
+  getColumnKey,
+  getLeafColumns,
+  normalizeColumns,
+  removeHiddenColumns,
+  treeMap,
+} from './util';
 import {
   ColumnProps,
   CompareFn,
@@ -42,7 +51,8 @@ function findBodyDom(dom: Element | HTMLDivElement, reg: RegExp): any {
     for (let i = 0; i < dom.childElementCount; i += 1) {
       if (reg.test(dom.children[i].className)) {
         return dom.children[i];
-      } else if (dom.childElementCount > 0) {
+      }
+      if (dom.childElementCount > 0) {
         const childFound = findBodyDom(dom.children[i], reg);
         if (childFound !== null) {
           return childFound;
@@ -73,7 +83,9 @@ const emptyObject = {};
 
 export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
   static displayName = 'Table';
+
   static Column = Column;
+
   static ColumnGroup = ColumnGroup;
 
   static propTypes = {
@@ -86,10 +98,7 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
     rowSelection: PropTypes.object,
     className: PropTypes.string,
     size: PropTypes.oneOf([Size.large, Size.default, Size.small]),
-    loading: PropTypes.oneOfType([
-      PropTypes.bool,
-      PropTypes.object,
-    ]),
+    loading: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
     bordered: PropTypes.bool,
     onChange: PropTypes.func,
     locale: PropTypes.object,
@@ -100,6 +109,9 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
     onFilterSelectChange: PropTypes.func,
     noFilter: PropTypes.bool,
     autoScroll: PropTypes.bool,
+    indentSize: PropTypes.number,
+    rowKey: PropTypes.string,
+    showHeader: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -123,9 +135,13 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
   CheckboxPropsCache: {
     [key: string]: any;
   };
+
   store: Store;
+
   columns: ColumnProps<T>[];
+
   components: TableComponents;
+
   private refTable: HTMLDivElement | null;
 
   constructor(props: TableProps<T>) {
@@ -174,7 +190,8 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
   };
 
   getPrefixCls() {
-    return getPrefixCls('table', this.props.prefixCls);
+    const { prefixCls } = this.props;
+    return getPrefixCls('table', prefixCls);
   }
 
   getDefaultSelection() {
@@ -189,14 +206,15 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
 
   getDefaultPagination(props: TableProps<T>) {
     const pagination: TablePaginationConfig = props.pagination || {};
-    return this.hasPagination(props) ?
-      {
-        ...defaultPagination,
-        size: props.size,
-        ...pagination,
-        current: pagination.defaultCurrent || pagination.current || 1,
-        pageSize: pagination.defaultPageSize || pagination.pageSize || 10,
-      } : {};
+    return this.hasPagination(props)
+      ? {
+          ...defaultPagination,
+          size: props.size,
+          ...pagination,
+          current: pagination.defaultCurrent || pagination.current || 1,
+          pageSize: pagination.defaultPageSize || pagination.pageSize || 10,
+        }
+      : {};
   }
 
   componentWillReceiveProps(nextProps: TableProps<T>) {
@@ -214,20 +232,20 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
         return { pagination: nextProps.pagination !== false ? newPagination : emptyObject };
       });
     }
-    if (nextProps.rowSelection &&
-      'selectedRowKeys' in nextProps.rowSelection) {
+    const { rowSelection, dataSource, components } = this.props;
+    const { filters, sortColumn, sortOrder } = this.state;
+    if (nextProps.rowSelection && 'selectedRowKeys' in nextProps.rowSelection) {
       this.store.setState({
         selectedRowKeys: nextProps.rowSelection.selectedRowKeys || [],
       });
-      const { rowSelection } = this.props;
-      if (rowSelection && (
-          nextProps.rowSelection.getCheckboxProps !== rowSelection.getCheckboxProps
-        )) {
+      if (
+        rowSelection &&
+        nextProps.rowSelection.getCheckboxProps !== rowSelection.getCheckboxProps
+      ) {
         this.CheckboxPropsCache = {};
       }
     }
-    if ('dataSource' in nextProps &&
-      nextProps.dataSource !== this.props.dataSource) {
+    if ('dataSource' in nextProps && nextProps.dataSource !== dataSource) {
       this.store.setState({
         selectionDirty: false,
       });
@@ -236,8 +254,7 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
 
     if (this.getSortOrderColumns(this.columns).length > 0) {
       const sortState = this.getSortStateFromColumns(this.columns);
-      if (sortState.sortColumn !== this.state.sortColumn ||
-        sortState.sortOrder !== this.state.sortOrder) {
+      if (sortState.sortColumn !== sortColumn || sortState.sortOrder !== sortOrder) {
         this.setState(sortState);
       }
     }
@@ -245,7 +262,7 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
     const filteredValueColumns = this.getFilteredValueColumns(this.columns);
     if (filteredValueColumns.length > 0) {
       const filtersFromColumns = this.getFiltersFromColumns(this.columns);
-      const newFilters = { ...this.state.filters };
+      const newFilters = { ...filters };
       Object.keys(filtersFromColumns).forEach(key => {
         newFilters[key] = filtersFromColumns[key];
       });
@@ -260,7 +277,7 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
       });
     }
 
-    this.createComponents(nextProps.components, this.props.components);
+    this.createComponents(nextProps.components, components);
   }
 
   onRow = (record: T, index: number) => {
@@ -275,7 +292,10 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
     };
   };
 
-  setSelectedRowKeys(selectedRowKeys: string[], { selectWay, record, checked, changeRowKeys, nativeEvent }: any) {
+  setSelectedRowKeys(
+    selectedRowKeys: string[],
+    { selectWay, record, checked, changeRowKeys, nativeEvent }: any,
+  ) {
     const { rowSelection = {} as any } = this.props;
     if (rowSelection && !('selectedRowKeys' in rowSelection)) {
       this.store.setState({ selectedRowKeys });
@@ -308,11 +328,12 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
 
   isFiltersChanged(filters: TableStateFilters) {
     let filtersChanged = false;
-    if (Object.keys(filters).length !== Object.keys(this.state.filters).length) {
+    const { filters: stateFilters } = this.state;
+    if (Object.keys(filters).length !== Object.keys(stateFilters).length) {
       filtersChanged = true;
     } else {
       Object.keys(filters).forEach(columnKey => {
-        if (filters[columnKey] !== this.state.filters[columnKey]) {
+        if (filters[columnKey] !== stateFilters[columnKey]) {
           filtersChanged = true;
         }
       });
@@ -335,7 +356,7 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
   }
 
   getFiltersFromColumns(columns?: ColumnProps<T>[]) {
-    let filters: any = {};
+    const filters: any = {};
     this.getFilteredValueColumns(columns).forEach((col: ColumnProps<T>) => {
       const colKey = this.getColumnKey(col) as string;
       filters[colKey] = col.filteredValue;
@@ -346,7 +367,10 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
   getDefaultSortOrder(columns?: ColumnProps<T>[]) {
     const definedSortState = this.getSortStateFromColumns(columns);
 
-    let defaultSortedColumn = flatFilter(columns || [], (column: ColumnProps<T>) => column.defaultSortOrder != null)[0];
+    const defaultSortedColumn = flatFilter(
+      columns || [],
+      (column: ColumnProps<T>) => column.defaultSortOrder != null,
+    )[0];
 
     if (defaultSortedColumn && !definedSortState.sortColumn) {
       return {
@@ -360,8 +384,9 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
 
   getSortStateFromColumns(columns?: ColumnProps<T>[]) {
     // return first column which sortOrder is not falsy
-    const sortedColumn =
-      this.getSortOrderColumns(columns).filter((col: ColumnProps<T>) => col.sortOrder)[0];
+    const sortedColumn = this.getSortOrderColumns(columns).filter(
+      (col: ColumnProps<T>) => col.sortOrder,
+    )[0];
 
     if (sortedColumn) {
       return {
@@ -378,15 +403,14 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
 
   getSorterFn() {
     const { sortOrder, sortColumn } = this.state;
-    if (!sortOrder || !sortColumn ||
-      typeof sortColumn.sorter !== 'function') {
+    if (!sortOrder || !sortColumn || typeof sortColumn.sorter !== 'function') {
       return;
     }
 
     return (a: T, b: T) => {
       const result = (sortColumn!.sorter as CompareFn<T>)(a, b);
       if (result !== 0) {
-        return (sortOrder === 'descend') ? -result : result;
+        return sortOrder === 'descend' ? -result : result;
       }
       return 0;
     };
@@ -403,29 +427,32 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
       this.setState(newState);
     }
 
-    const onChange = this.props.onChange;
+    const { onChange } = this.props;
     if (onChange) {
-      onChange.apply(null, this.prepareParamsArguments({
-        ...this.state,
-        ...newState,
-      }));
+      onChange(
+        ...this.prepareParamsArguments({
+          ...this.state,
+          ...newState,
+        }),
+      );
     }
   }
 
   toggleSortOrder(order: string, column: ColumnProps<T>) {
     let { sortColumn, sortOrder } = this.state;
     // 只同时允许一列进行排序，否则会导致排序顺序的逻辑问题
-    let isSortColumn = this.isSortColumn(column);
-    if (!isSortColumn) {  // 当前列未排序
+    const isSortColumn = this.isSortColumn(column);
+    if (!isSortColumn) {
+      // 当前列未排序
       sortOrder = order;
       sortColumn = column;
-    } else {                      // 当前列已排序
-      if (sortOrder === order) {  // 切换为未排序状态
-        sortOrder = '';
-        sortColumn = null;
-      } else {                    // 切换为排序状态
-        sortOrder = order;
-      }
+    } else if (sortOrder === order) {
+      // 切换为未排序状态
+      sortOrder = '';
+      sortColumn = null;
+    } else {
+      // 切换为排序状态
+      sortOrder = order;
     }
     const newState = {
       sortOrder,
@@ -437,50 +464,54 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
       this.setState(newState);
     }
 
-    const onChange = this.props.onChange;
+    const { onChange } = this.props;
     if (onChange) {
-      onChange.apply(null, this.prepareParamsArguments({
-        ...this.state,
-        ...newState,
-      }));
+      onChange(
+        ...this.prepareParamsArguments({
+          ...this.state,
+          ...newState,
+        }),
+      );
     }
   }
 
   setNewFilterState(newState: any) {
-    const props = this.props;
-    let pagination = { ...this.state.pagination };
+    const { pagination: propsPagination, onChange } = this.props;
+    const { pagination: statePagination } = this.state;
+    const pagination = { ...statePagination };
 
-    if (props.pagination) {
+    if (propsPagination) {
       // Reset current prop
       pagination.current = 1;
       pagination.onChange!(pagination.current);
     }
 
     // Controlled current prop will not respond user interaction
-    if (typeof props.pagination === 'object' && 'current' in (props.pagination as Object)) {
+    if (propsPagination && typeof propsPagination === 'object' && 'current' in propsPagination) {
       newState.pagination = {
         ...pagination,
-        current: this.state.pagination.current,
+        current: statePagination.current,
       };
     }
     this.setState(newState, () => {
       this.store.setState({
         selectionDirty: false,
       });
-      const onChange = this.props.onChange;
       if (onChange) {
-        onChange.apply(null, this.prepareParamsArguments({
-          ...this.state,
-          selectionDirty: false,
-          pagination,
-        }));
+        onChange(
+          ...this.prepareParamsArguments({
+            ...this.state,
+            selectionDirty: false,
+            pagination,
+          }),
+        );
       }
     });
   }
 
   handleFilterSelectClear = () => {
     const { filters } = this.state;
-    Object.keys(this.state.filters).map(key => filters[key] = []);
+    Object.keys(filters).map(key => (filters[key] = []));
     this.setNewFilterState({
       barFilters: [],
       filters,
@@ -506,8 +537,9 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
   };
 
   handleFilter = (column: ColumnProps<T>, nextFilters: string[]) => {
+    const { filters: stateFilters } = this.state;
     const filters = {
-      ...this.state.filters,
+      ...stateFilters,
       [this.getColumnKey(column) as string]: nextFilters,
     };
     // Remove filters not in current columns
@@ -517,7 +549,7 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
         currentColumnKeys.push(this.getColumnKey(c) as string);
       }
     });
-    Object.keys(filters).forEach((columnKey) => {
+    Object.keys(filters).forEach(columnKey => {
       if (currentColumnKeys.indexOf(columnKey) < 0) {
         delete filters[columnKey];
       }
@@ -533,7 +565,7 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
     const nativeEvent = e.nativeEvent;
     const defaultSelection = this.store.getState().selectionDirty ? [] : this.getDefaultSelection();
     let selectedRowKeys = this.store.getState().selectedRowKeys.concat(defaultSelection);
-    let key = this.getRecordKey(record, rowIndex);
+    const key = this.getRecordKey(record, rowIndex);
     if (checked) {
       selectedRowKeys.push(this.getRecordKey(record, rowIndex));
     } else {
@@ -546,7 +578,7 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
       selectWay: 'onSelect',
       record,
       checked,
-      changeRowKeys: void(0),
+      changeRowKeys: undefined,
       nativeEvent,
     });
   };
@@ -556,7 +588,7 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
     const nativeEvent = e.nativeEvent;
     const defaultSelection = this.store.getState().selectionDirty ? [] : this.getDefaultSelection();
     let selectedRowKeys = this.store.getState().selectedRowKeys.concat(defaultSelection);
-    let key = this.getRecordKey(record, rowIndex);
+    const key = this.getRecordKey(record, rowIndex);
     selectedRowKeys = [key];
     this.store.setState({
       selectionDirty: true,
@@ -565,7 +597,7 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
       selectWay: 'onSelect',
       record,
       checked,
-      changeRowKeys: void(0),
+      changeRowKeys: undefined,
       nativeEvent,
     });
   };
@@ -578,7 +610,7 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
       .filter((item, i) => !this.getCheckboxPropsByItem(item, i).disabled)
       .map((item, i) => this.getRecordKey(item, i));
 
-    let changeRowKeys: string[] = [];
+    const changeRowKeys: string[] = [];
     let selectWay = '';
     let checked;
     // handle default selection
@@ -631,16 +663,17 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
       return onSelectFunc(changeableRowKeys);
     }
     this.setSelectedRowKeys(selectedRowKeys, {
-      selectWay: selectWay,
+      selectWay,
       checked,
       changeRowKeys,
     });
   };
 
   handlePageChange = (current: number, ...otherArguments: any[]) => {
-    const props = this.props;
-    let pagination = { ...this.state.pagination };
-    if (props.autoScroll) {
+    const { onChange, autoScroll, pagination: propsPagination } = this.props;
+    const { pagination: statePagination } = this.state;
+    const pagination = { ...statePagination };
+    if (autoScroll) {
       setTimeout(() => {
         if (this.refTable && this.refTable.clientHeight > document.body.clientHeight) {
           this.refTable.scrollIntoView({
@@ -671,12 +704,10 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
       pagination,
     };
     // Controlled current prop will not respond user interaction
-    if (props.pagination &&
-      typeof props.pagination === 'object' &&
-      'current' in (props.pagination as Object)) {
+    if (propsPagination && typeof propsPagination === 'object' && 'current' in propsPagination) {
       newState.pagination = {
         ...pagination,
-        current: this.state.pagination.current,
+        current: statePagination.current,
       };
     }
     this.setState(newState);
@@ -685,23 +716,27 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
       selectionDirty: false,
     });
 
-    const onChange = this.props.onChange;
     if (onChange) {
-      onChange.apply(null, this.prepareParamsArguments({
-        ...this.state,
-        selectionDirty: false,
-        pagination,
-      }));
+      onChange(
+        ...this.prepareParamsArguments({
+          ...this.state,
+          selectionDirty: false,
+          pagination,
+        }),
+      );
     }
   };
 
   renderSelectionBox = (type: RowSelectionType | undefined) => {
     return (_: any, record: T, index: number) => {
-      let rowIndex = this.getRecordKey(record, index); // 从 1 开始
+      const rowIndex = this.getRecordKey(record, index); // 从 1 开始
       const props = this.getCheckboxPropsByItem(record, index);
       const handleChange = (e: RadioChangeEvent | CheckboxChangeEvent) => {
-        type === 'radio' ? this.handleRadioSelect(record, rowIndex, e) :
+        if (type === 'radio') {
+          this.handleRadioSelect(record, rowIndex, e);
+        } else {
           this.handleSelect(record, rowIndex, e);
+        }
       };
 
       return (
@@ -720,10 +755,11 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
   };
 
   getRecordKey = (record: T, index: number) => {
-    const rowKey = this.props.rowKey;
-    const recordKey = (typeof rowKey === 'function') ?
-      rowKey(record, index) : (record as any)[rowKey as string];
-    warning(recordKey !== undefined,
+    const { rowKey } = this.props;
+    const recordKey =
+      typeof rowKey === 'function' ? rowKey(record, index) : (record as any)[rowKey as string];
+    warning(
+      recordKey !== undefined,
       'Each record in dataSource of table should have a unique `key` prop, or set `rowKey` to an unique primary key',
     );
     return recordKey === undefined ? index : recordKey;
@@ -744,7 +780,7 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
         }
         return true;
       });
-      let selectionColumnClass = classNames(`${prefixCls}-selection-column`, {
+      const selectionColumnClass = classNames(`${prefixCls}-selection-column`, {
         [`${prefixCls}-selection-column-custom`]: rowSelection.selections,
       });
       const selectionColumn: ColumnProps<any> = {
@@ -755,7 +791,9 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
         width: rowSelection.columnWidth,
       };
       if (rowSelection.type !== 'radio') {
-        const checkboxAllDisabled = data.every((item, index) => this.getCheckboxPropsByItem(item, index).disabled);
+        const checkboxAllDisabled = data.every(
+          (item, index) => this.getCheckboxPropsByItem(item, index).disabled,
+        );
         selectionColumn.title = (
           <SelectionCheckboxAll
             store={this.store}
@@ -791,7 +829,9 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
   }
 
   getMaxCurrent(total: number) {
-    const { current, pageSize } = this.state.pagination;
+    const {
+      pagination: { current, pageSize },
+    } = this.state;
     if ((current! - 1) * pageSize! >= total) {
       return Math.floor((total - 1) / pageSize!) + 1;
     }
@@ -810,14 +850,14 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
     const { dropdownPrefixCls: customizeDropdownPrefixCls, filterBar } = this.props;
     const prefixCls = this.getPrefixCls();
     const dropdownPrefixCls = getPrefixCls('dropdown', customizeDropdownPrefixCls);
-    const { sortOrder } = this.state;
+    const { sortOrder, filters } = this.state;
     return treeMap(columns, (originColumn, i) => {
-      let column = { ...originColumn };
-      let key = this.getColumnKey(column, i) as string;
+      const column = { ...originColumn };
+      const key = this.getColumnKey(column, i) as string;
       let filterDropdown;
       let sortButton;
-      if (!filterBar && (column.filters && column.filters.length > 0) || column.filterDropdown) {
-        let colFilters = this.state.filters[key] || [];
+      if ((!filterBar && (column.filters && column.filters.length > 0)) || column.filterDropdown) {
+        const colFilters = filters[key] || [];
         filterDropdown = (
           <FilterDropdown
             locale={locale}
@@ -831,14 +871,14 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
         );
       }
       if (column.sorter) {
-        let isSortColumn = this.isSortColumn(column);
+        const isSortColumn = this.isSortColumn(column);
         const isAscend = isSortColumn && sortOrder === 'ascend';
         // const isDescend = isSortColumn && sortOrder === 'descend';
         column.className = classNames(column.className, {
           [`${prefixCls}-sort-${sortOrder}`]: isSortColumn,
         });
         const { onHeaderCell } = column;
-        column.onHeaderCell = (col) => {
+        column.onHeaderCell = col => {
           const customProps = (onHeaderCell && onHeaderCell(col)) || {};
           const { onClick } = customProps;
           return {
@@ -855,9 +895,7 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
             },
           };
         };
-        sortButton = (
-          <Icon type="arrow_upward" className={`${prefixCls}-sort-icon`} />
-        );
+        sortButton = <Icon type="arrow_upward" className={`${prefixCls}-sort-icon`} />;
       }
       column.title = (
         <span key={key}>
@@ -876,7 +914,7 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
   }
 
   handleShowSizeChange = (current: number, pageSize: number) => {
-    const pagination = this.state.pagination;
+    const { pagination } = this.state;
     pagination.onShowSizeChange!(current, pageSize);
     const nextPagination = {
       ...pagination,
@@ -885,12 +923,14 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
     };
     this.setState({ pagination: nextPagination });
 
-    const onChange = this.props.onChange;
+    const { onChange } = this.props;
     if (onChange) {
-      onChange.apply(null, this.prepareParamsArguments({
-        ...this.state,
-        pagination: nextPagination,
-      }));
+      onChange(
+        ...this.prepareParamsArguments({
+          ...this.state,
+          pagination: nextPagination,
+        }),
+      );
     }
   };
 
@@ -900,17 +940,18 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
       return null;
     }
     const { pagination } = this.state;
+    const { size } = this.props;
     const prefixCls = this.getPrefixCls();
-    let position = pagination.position || 'bottom';
-    let total = pagination.total || this.getLocalData().length;
-    return (total > 0 && (position === paginationPosition || position === 'both')) ? (
+    const position = pagination.position || 'bottom';
+    const total = pagination.total || this.getLocalData().length;
+    return total > 0 && (position === paginationPosition || position === 'both') ? (
       <Pagination
         key={`pagination-${paginationPosition}`}
         {...pagination}
         className={classNames(pagination.className, `${prefixCls}-pagination`)}
         onChange={this.handlePageChange}
         total={total}
-        size={pagination.size || this.props.size}
+        size={pagination.size || size}
         current={this.getMaxCurrent(total)}
         onShowSizeChange={this.handleShowSizeChange}
       />
@@ -918,7 +959,7 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
   }
 
   // Get pagination, filters, sorter
-  prepareParamsArguments(state: any): [any, string[], Object, any[]] {
+  prepareParamsArguments(state: any): [TablePaginationConfig | boolean, string[], Object, any[]] {
     const pagination = { ...state.pagination };
     // remove useless handle function in Table.onChange
     delete pagination.onChange;
@@ -951,7 +992,7 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
     let data = this.getLocalData();
     let current: number;
     let pageSize: number;
-    let state = this.state;
+    const { state } = this;
     // 如果没有分页的话，默认全部展示
     if (!this.hasPagination()) {
       pageSize = Number.MAX_VALUE;
@@ -974,19 +1015,25 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
   }
 
   getFlatData() {
-    return flatArray(this.getLocalData(), this.props.childrenColumnName);
+    const { childrenColumnName } = this.props;
+    return flatArray(this.getLocalData(), childrenColumnName);
   }
 
   getFlatCurrentPageData() {
-    return flatArray(this.getCurrentPageData(), this.props.childrenColumnName);
+    const { childrenColumnName } = this.props;
+    return flatArray(this.getCurrentPageData(), childrenColumnName);
   }
 
   recursiveSort(data: T[], sorterFn: (a: any, b: any) => number): T[] {
     const { childrenColumnName = 'children' } = this.props;
-    return data.sort(sorterFn).map((item: any) => (item[childrenColumnName] ? {
-      ...item,
-      [childrenColumnName]: this.recursiveSort(item[childrenColumnName], sorterFn),
-    } : item));
+    return data.sort(sorterFn).map((item: any) =>
+      item[childrenColumnName]
+        ? {
+            ...item,
+            [childrenColumnName]: this.recursiveSort(item[childrenColumnName], sorterFn),
+          }
+        : item,
+    );
   }
 
   getLocalData() {
@@ -1004,19 +1051,21 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
       let filteredData = data;
       // 筛选
       if (filters) {
-        Object.keys(filters).forEach((columnKey) => {
-          let col = this.findColumn(columnKey) as any;
+        Object.keys(filters).forEach(columnKey => {
+          const col = this.findColumn(columnKey) as any;
           if (!col) {
             return;
           }
-          let values = filters[columnKey] || [];
+          const values = filters[columnKey] || [];
           if (values.length === 0) {
             return;
           }
           const { onFilter, filters: columnFilters } = col;
-          filteredData = onFilter ? filteredData.filter(record => {
-            return values.some(v => onFilter(v, record, columnFilters));
-          }) : filteredData;
+          filteredData = onFilter
+            ? filteredData.filter(record => {
+                return values.some(v => onFilter(v, record, columnFilters));
+              })
+            : filteredData;
         });
       }
       if (barFilters.length) {
@@ -1025,8 +1074,11 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
           if (filter === VALUE_OR) {
             isOr = true;
           } else {
-            filteredData = data.filter(record => isOr ? filteredData.indexOf(record) !== -1 || this.doBarFilter(filter, record)
-              : filteredData.indexOf(record) !== -1 && this.doBarFilter(filter, record));
+            filteredData = data.filter(record =>
+              isOr
+                ? filteredData.indexOf(record) !== -1 || this.doBarFilter(filter, record)
+                : filteredData.indexOf(record) !== -1 && this.doBarFilter(filter, record),
+            );
             isOr = false;
           }
         });
@@ -1035,23 +1087,21 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
         return data;
       }
       return filteredData;
-    } else {
-      return [];
     }
+    return [];
   }
 
   doBarFilter(filter: any, record: T): boolean {
     if (typeof filter === 'string') {
       return !!findColumnByFilterValue<T>(record, getLeafColumns<T>(this.columns), filter);
-    } else {
-      const columnKey = Object.keys(filter)[0];
-      const col = this.findColumn(columnKey);
-      if (!col) {
-        return true;
-      }
-      const { onFilter, filters } = col;
-      return !onFilter || onFilter(filter[columnKey], record, filters);
     }
+    const columnKey = Object.keys(filter)[0];
+    const col = this.findColumn(columnKey);
+    if (!col) {
+      return true;
+    }
+    const { onFilter, filters } = col;
+    return !onFilter || onFilter(filter[columnKey], record, filters);
   }
 
   createComponents(components: TableComponents = {}, prevComponents?: TableComponents) {
@@ -1067,15 +1117,26 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
   }
 
   renderTable = (contextLocale: TableLocale, loading: SpinProps): ReactNode => {
-    const locale = { ...contextLocale, ...this.props.locale };
-    const { filterBarMultiple, filterBarPlaceholder, showHeader, filterBar, dataSource, filters, empty, ...restProps } = this.props;
+    const { props } = this;
+    const locale = { ...contextLocale, ...props.locale };
+    const {
+      filterBarMultiple,
+      filterBarPlaceholder,
+      showHeader,
+      filterBar,
+      dataSource,
+      filters,
+      empty,
+      ...restProps
+    } = props;
+    const { filters: columnFilters } = this.state;
     const prefixCls = this.getPrefixCls();
     const data = this.getCurrentPageData();
-    const expandIconAsCell = this.props.expandedRowRender && this.props.expandIconAsCell !== false;
+    const expandIconAsCell = props.expandedRowRender && props.expandIconAsCell !== false;
 
     const classString = classNames({
-      [`${prefixCls}-${this.props.size}`]: true,
-      [`${prefixCls}-bordered`]: this.props.bordered,
+      [`${prefixCls}-${props.size}`]: true,
+      [`${prefixCls}-bordered`]: props.bordered,
       [`${prefixCls}-empty`]: !data.length,
       [`${prefixCls}-without-column-header`]: !showHeader,
     });
@@ -1089,7 +1150,7 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
     });
     columns = removeHiddenColumns(columns);
 
-    let expandIconColumnIndex = (columns[0] && columns[0].key === 'selection-column') ? 1 : 0;
+    let expandIconColumnIndex = columns[0] && columns[0].key === 'selection-column' ? 1 : 0;
     if ('expandIconColumnIndex' in restProps) {
       expandIconColumnIndex = restProps.expandIconColumnIndex as number;
     }
@@ -1123,7 +1184,7 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
           onFilter={this.handleFilter}
           dataSource={dataSource}
           filters={filters}
-          columnFilters={this.state.filters}
+          columnFilters={columnFilters}
           multiple={filterBarMultiple}
           getPopupContainer={this.getPopupContainer}
         />
@@ -1134,11 +1195,12 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
   };
 
   render() {
-    const { style, className } = this.props;
+    const { props } = this;
+    const { style, className } = props;
     const prefixCls = this.getPrefixCls();
     const data = this.getCurrentPageData();
 
-    let loading = this.props.loading as SpinProps;
+    let loading = props.loading as SpinProps;
     if (typeof loading === 'boolean') {
       loading = {
         spinning: loading,
@@ -1146,18 +1208,17 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
     }
 
     const table = (
-      <LocaleReceiver
-        componentName="Table"
-        defaultLocale={defaultLocale.Table}
-      >
-        {(locale) => this.renderTable(locale, loading)}
+      <LocaleReceiver componentName="Table" defaultLocale={defaultLocale.Table}>
+        {locale => this.renderTable(locale, loading)}
       </LocaleReceiver>
     );
 
     // if there is no pagination or no data,
     // the height of spin should decrease by half of pagination
-    const paginationPatchClass = (this.hasPagination() && data && data.length !== 0)
-      ? `${prefixCls}-with-pagination` : `${prefixCls}-without-pagination`;
+    const paginationPatchClass =
+      this.hasPagination() && data && data.length !== 0
+        ? `${prefixCls}-with-pagination`
+        : `${prefixCls}-without-pagination`;
 
     return (
       <div

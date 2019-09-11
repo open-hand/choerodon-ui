@@ -13,6 +13,7 @@ export interface SearchProps extends InputProps {
 
 export default class Search extends Component<SearchProps, any> {
   static displayName = 'Search';
+
   static defaultProps = {
     enterButton: false,
     size: Size.small,
@@ -41,53 +42,40 @@ export default class Search extends Component<SearchProps, any> {
   };
 
   getPrefixCls() {
-    return getPrefixCls('input-search', this.props.prefixCls);
+    const { prefixCls } = this.props;
+    return getPrefixCls('input-search', prefixCls);
   }
 
   getButtonOrIcon() {
     const { enterButton, size } = this.props;
     if (!enterButton) {
-      return (
-        <Button
-          type="primary"
-          size={size}
-          shape="circle"
-          icon="search"
-        />
-      );
+      return <Button type="primary" size={size} shape="circle" icon="search" />;
     }
     const enterButtonAsElement = enterButton as ReactElement<any>;
     if (enterButtonAsElement.type === Button || enterButtonAsElement.type === 'button') {
-      return cloneElement(enterButtonAsElement, enterButtonAsElement.type === Button ? {
-        className: `${this.getPrefixCls()}-button`,
-        size,
-        onClick: this.onSearch,
-      } : {
-        onClick: this.onSearch,
-      });
+      return cloneElement(
+        enterButtonAsElement,
+        enterButtonAsElement.type === Button
+          ? {
+              className: `${this.getPrefixCls()}-button`,
+              size,
+              onClick: this.onSearch,
+            }
+          : {
+              onClick: this.onSearch,
+            },
+      );
     }
     if (enterButton === true) {
       return (
-        <Button
-          type="primary"
-          size={size}
-          shape="circle"
-          onClick={this.onSearch}
-          icon="search"
-        />
-      );
-    } else {
-      return (
-        <Button
-          type="primary"
-          size={size}
-          onClick={this.onSearch}
-          key="enterButton"
-        >
-          {enterButton}
-        </Button>
+        <Button type="primary" size={size} shape="circle" onClick={this.onSearch} icon="search" />
       );
     }
+    return (
+      <Button type="primary" size={size} onClick={this.onSearch} key="enterButton">
+        {enterButton}
+      </Button>
+    );
   }
 
   render() {

@@ -1,38 +1,64 @@
+const { getProjectPath, resolve, injectRequire } = require('./utils/projectHelper'); // eslint-disable-line import/order
+
+injectRequire();
+
+// Show warning for webpack
+process.traceDeprecation = true;
+
+// Normal requirement
 const path = require('path');
 const webpack = require('webpack');
 const WebpackBar = require('webpackbar');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const webpackMerge = require('webpack-merge');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
-const deepAssign = require('deep-assign');
+const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
 const postcssConfig = require('./postcssConfig');
+const CleanUpStatsPlugin = require('./utils/CleanUpStatsPlugin');
 
-module.exports = function (modules) {
-  const pkg = require(path.join(process.cwd(), 'package.json'));
+const svgRegex = /\.svg(\?v=\d+\.\d+\.\d+)?$/;
+const svgOptions = {
+  limit: 10000,
+  minetype: 'image/svg+xml',
+};
+
+const imageOptions = {
+  limit: 10000,
+};
+
+function getWebpackConfig(modules) {
+  const pkg = require(getProjectPath('package.json'));
   const babelConfig = require('./getBabelCommonConfig')(modules || false);
 
-  const pluginImportOptions = [
-    {
-      style: true,
-      libraryName: pkg.name,
-      libraryDirectory: 'components',
-    },
-    {
-      style: true,
-      libraryName: pkg.name + '/pro',
-      libraryDirectory: 'components-pro',
-    },
-  ];
-
-  babelConfig.plugins.push([
-    require.resolve('babel-plugin-import'),
-    pluginImportOptions,
-  ]);
+  // babel import for components
+  babelConfig.plugins.push(
+    [
+      resolve('babel-plugin-import'),
+      {
+        style: true,
+        libraryName: pkg.name,
+        libraryDirectory: 'components',
+      },
+      'c7n',
+    ],
+    [
+      resolve('babel-plugin-import'),
+      {
+        style: true,
+        libraryName: pkg.name + '/pro',
+        libraryDirectory: 'components-pro',
+      },
+      'c7n-pro',
+    ],
+  );
 
   const config = {
     devtool: 'source-map',
 
     output: {
-      path: path.join(process.cwd(), './dist/'),
+      path: getProjectPath('./dist/'),
       filename: '[name].js',
     },
 
@@ -50,7 +76,7 @@ module.exports = function (modules) {
         '.json',
       ],
       alias: {
-        [`${pkg.name}/lib`]: path.join(process.cwd(), 'components'),
+        [`${pkg.name}/lib`]: getProjectPath('components'),
         [pkg.name]: process.cwd(),
       },
     },
@@ -74,18 +100,18 @@ module.exports = function (modules) {
         {
           test: /\.jsx?$/,
           exclude: /node_modules/,
-          loader: 'babel-loader',
+          loader: resolve('babel-loader'),
           options: babelConfig,
         },
         {
           test: /\.tsx?$/,
           use: [
             {
-              loader: 'babel-loader',
+              loader: resolve('babel-loader'),
               options: babelConfig,
             },
             {
-              loader: 'ts-loader',
+              loader: resolve('ts-loader'),
               options: {
                 transpileOnly: true,
               },
@@ -94,82 +120,91 @@ module.exports = function (modules) {
         },
         {
           test: /\.css$/,
-          use: ExtractTextPlugin.extract({
-            use: [
-              {
-                loader: 'css-loader',
-                options: {
-                  sourceMap: true,
-                },
+          use: [
+            MiniCssExtractPlugin.loader,
+            {
+              loader: 'css-loader',
+              options: {
+                sourceMap: true,
               },
-              {
-                loader: 'postcss-loader',
-                options: Object.assign(
-                  {},
-                  postcssConfig,
-                  { sourceMap: true },
-                ),
-              },
-            ],
-          }),
+            },
+            {
+              loader: 'postcss-loader',
+              options: Object.assign({}, postcssConfig, { sourceMap: true }),
+            },
+          ],
         },
         {
           test: /\.less$/,
-          use: ExtractTextPlugin.extract({
-            use: [
-              {
-                loader: 'css-loader',
-                options: {
-                  sourceMap: true,
+          use: [
+            MiniCssExtractPlugin.loader,
+            {
+              loader: 'css-loader',
+              options: {
+                sourceMap: true,
+              },
+            },
+            {
+              loader: 'postcss-loader',
+              options: Object.assign({}, postcssConfig, { sourceMap: true }),
+            },
+            {
+              loader: resolve('less-loader'),
+              options: {
+                javascriptEnabled: true,
+                sourceMap: true,
+                modifyVars: {
+                  'c7n-icon-url': JSON.stringify(
+                    'https://choerodon.github.io/choerodon-ui-font/icomoon',
+                  ),
                 },
               },
-              {
-                loader: 'postcss-loader',
-                options: Object.assign(
-                  {},
-                  postcssConfig,
-                  { sourceMap: true },
-                ),
-              },
-              {
-                loader: 'less-loader',
-                options: {
-                  sourceMap: true,
-                  modifyVars: {
-                    'c7n-icon-url': JSON.stringify('https://choerodon.github.io/choerodon-ui-font/icomoon'),
-                  },
-                },
-              },
-            ],
-          }),
+            },
+          ],
+        },
+
+        // Images
+        // {
+        //   test: svgRegex,
+        //   loader: 'url-loader',
+        //   options: svgOptions,
+        // },
+        {
+          test: /\.(png|jpg|jpeg|gif)(\?v=\d+\.\d+\.\d+)?$/i,
+          loader: 'url-loader',
+          options: imageOptions,
         },
       ],
     },
 
     plugins: [
-      new ExtractTextPlugin({
-        filename: '[name].css',
-        disable: false,
-        allChunks: true,
-      }),
       new CaseSensitivePathsPlugin(),
       new webpack.BannerPlugin(`
 ${pkg.name} v${pkg.version}
       `),
       new WebpackBar({
         name: '🚚  Choerodon Tools',
+        color: '#3f51b5',
+      }),
+      new CleanUpStatsPlugin(),
+      new FilterWarningsPlugin({
+        // suppress conflicting order warnings from mini-css-extract-plugin.
+        // ref: https://github.com/ant-design/ant-design/issues/14895
+        // see https://github.com/webpack-contrib/mini-css-extract-plugin/issues/250
+        exclude: /mini-css-extract-plugin[^]*Conflicting order between:/,
       }),
     ],
+
+    performance: {
+      hints: false,
+    },
   };
 
   if (process.env.RUN_ENV === 'PRODUCTION') {
     const entry = ['./index'];
     const entryPro = ['./index-pro'];
-    config.entry = {
-      [`${pkg.name}.min`]: entry,
-      [`${pkg.name}-pro.min`]: entryPro,
-    };
 
+    // Common config
     config.externals = {
       react: {
         root: 'React',
@@ -183,7 +218,7 @@ ${pkg.name} v${pkg.version}
         commonjs: 'react-dom',
         amd: 'react-dom',
       },
-      'mobx': {
+      mobx: {
         root: 'mobx',
         commonjs2: 'mobx',
         commonjs: 'mobx',
@@ -192,38 +227,63 @@ ${pkg.name} v${pkg.version}
     };
     config.output.library = '[name]';
     config.output.libraryTarget = 'umd';
-
-    const uncompressedConfig = deepAssign({}, config);
-
-    config.plugins = config.plugins.concat([
-      new webpack.optimize.UglifyJsPlugin({
-        output: {
-          ascii_only: true,
-        },
-        compress: {
-          warnings: false,
-        },
-      }),
-      new webpack.optimize.ModuleConcatenationPlugin(),
-      new webpack.LoaderOptionsPlugin({
-        minimize: true,
-      }),
-      new webpack.DefinePlugin({
-        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
-      }),
-    ]);
-
-    uncompressedConfig.entry = {
-      [pkg.name]: entry,
-      [`${pkg.name}-pro`]: entryPro,
+    config.optimization = {
+      minimizer: [
+        new UglifyJsPlugin({
+          cache: true,
+          parallel: true,
+          sourceMap: true,
+          uglifyOptions: {
+            warnings: false,
+          },
+        }),
+      ],
     };
 
-    uncompressedConfig.plugins.push(new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('development'),
-    }));
+    // Development
+    const uncompressedConfig = webpackMerge({}, config, {
+      entry: {
+        [pkg.name]: entry,
+        [`${pkg.name}-pro`]: entryPro,
+      },
+      mode: 'development',
+      plugins: [
+        new MiniCssExtractPlugin({
+          filename: '[name].css',
+        }),
+      ],
+    });
 
-    return [config, uncompressedConfig];
+    // Production
+    const prodConfig = webpackMerge({}, config, {
+      entry: {
+        [`${pkg.name}.min`]: entry,
+        [`${pkg.name}-pro.min`]: entryPro,
+      },
+      mode: 'production',
+      plugins: [
+        new webpack.optimize.ModuleConcatenationPlugin(),
+        new webpack.LoaderOptionsPlugin({
+          minimize: true,
+        }),
+        new MiniCssExtractPlugin({
+          filename: '[name].css',
+        }),
+      ],
+      optimization: {
+        minimizer: [new OptimizeCSSAssetsPlugin({})],
+      },
+    });
+
+    return [prodConfig, uncompressedConfig];
   }
 
   return config;
-};
+}
+
+getWebpackConfig.webpack = webpack;
+getWebpackConfig.svgRegex = svgRegex;
+getWebpackConfig.svgOptions = svgOptions;
+getWebpackConfig.imageOptions = imageOptions;
+
+module.exports = getWebpackConfig;

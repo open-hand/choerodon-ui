@@ -1,4 +1,13 @@
-import React, { ChangeEvent, Component, CSSProperties, FocusEvent, FormEventHandler, KeyboardEvent, ReactNode, TextareaHTMLAttributes } from 'react';
+import React, {
+  ChangeEvent,
+  Component,
+  CSSProperties,
+  FocusEvent,
+  FormEventHandler,
+  KeyboardEvent,
+  ReactNode,
+  TextareaHTMLAttributes,
+} from 'react';
 import omit from 'lodash/omit';
 import classNames from 'classnames';
 import { AbstractInputProps } from './Input';
@@ -42,6 +51,7 @@ export type HTMLTextareaProps = TextareaHTMLAttributes<HTMLTextAreaElement>;
 
 export default class TextArea extends Component<TextAreaProps & HTMLTextareaProps, TextAreaState> {
   static displayName = 'TextArea';
+
   static defaultProps = {
     showLengthInfo: true,
     border: true,
@@ -64,7 +74,8 @@ export default class TextArea extends Component<TextAreaProps & HTMLTextareaProp
         inputLength: this.textAreaRef.value.length,
       });
     }
-    if (this.props.autoFocus) {
+    const { autoFocus } = this.props;
+    if (autoFocus) {
       this.setState({
         focused: true,
       });
@@ -86,8 +97,8 @@ export default class TextArea extends Component<TextAreaProps & HTMLTextareaProp
         focused: true,
       });
     }
-
-    if (this.props.value !== nextProps.value) {
+    const { value } = this.props;
+    if (value !== nextProps.value) {
       if (this.nextFrameActionId) {
         clearNextFrameAction(this.nextFrameActionId);
       }
@@ -115,7 +126,8 @@ export default class TextArea extends Component<TextAreaProps & HTMLTextareaProp
   };
 
   getPrefixCls() {
-    return getPrefixCls('input', this.props.prefixCls);
+    const { prefixCls } = this.props;
+    return getPrefixCls('input', prefixCls);
   }
 
   getTextAreaClassName() {
@@ -156,10 +168,11 @@ export default class TextArea extends Component<TextAreaProps & HTMLTextareaProp
 
   getWrapperClassName() {
     const { disabled, label, border } = this.props;
+    const { inputLength, focused } = this.state;
     const prefixCls = this.getPrefixCls();
     return classNames(`${prefixCls}-wrapper`, `${prefixCls}-textarea`, {
-      [`${prefixCls}-has-value`]: this.state.inputLength !== 0,
-      [`${prefixCls}-focused`]: this.state.focused,
+      [`${prefixCls}-has-value`]: inputLength !== 0,
+      [`${prefixCls}-focused`]: focused,
       [`${prefixCls}-disabled`]: disabled,
       [`${prefixCls}-has-label`]: !!label,
       [`${prefixCls}-has-border`]: border,
@@ -190,7 +203,8 @@ export default class TextArea extends Component<TextAreaProps & HTMLTextareaProp
     const { maxLength, showLengthInfo } = this.props;
     const prefixCls = this.getPrefixCls();
     const { inputLength } = this.state;
-    return (maxLength && showLengthInfo) || (maxLength && maxLength > 0 && inputLength === maxLength ) ? (
+    return (maxLength && showLengthInfo) ||
+      (maxLength && maxLength > 0 && inputLength === maxLength) ? (
       <div className={`${prefixCls}-length-info`}>{`${inputLength}/${maxLength}`}</div>
     ) : null;
   }
@@ -218,21 +232,19 @@ export default class TextArea extends Component<TextAreaProps & HTMLTextareaProp
 
   render() {
     const props = this.props;
+    const { textareaStyles } = this.state;
     const prefixCls = this.getPrefixCls();
-    const otherProps: TextAreaProps & HTMLTextareaProps = omit(
-      props,
-      [
-        'prefixCls',
-        'onPressEnter',
-        'autosize',
-        'placeholder',
-        'focused',
-        'showLengthInfo',
-      ],
-    );
+    const otherProps: TextAreaProps & HTMLTextareaProps = omit(props, [
+      'prefixCls',
+      'onPressEnter',
+      'autosize',
+      'placeholder',
+      'focused',
+      'showLengthInfo',
+    ]);
     const style = {
       ...props.style,
-      ...this.state.textareaStyles,
+      ...textareaStyles,
     };
 
     // Make sure it could be reset when using form.getFieldDecorator

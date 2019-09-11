@@ -1,8 +1,8 @@
 import React, { ReactNode } from 'react';
 import { observer } from 'mobx-react';
 import omit from 'lodash/omit';
-import { TextField, TextFieldProps } from '../text-field/TextField';
 import PropTypes from 'prop-types';
+import { TextField, TextFieldProps } from '../text-field/TextField';
 import { ResizeType } from './enum';
 
 export interface TextAreaProps extends TextFieldProps {
@@ -18,7 +18,12 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
   static propTypes = {
     cols: PropTypes.number,
     rows: PropTypes.number,
-    resize: PropTypes.oneOf([ResizeType.vertical, ResizeType.horizontal, ResizeType.none, ResizeType.both]),
+    resize: PropTypes.oneOf([
+      ResizeType.vertical,
+      ResizeType.horizontal,
+      ResizeType.none,
+      ResizeType.both,
+    ]),
     ...TextField.propTypes,
   };
 
@@ -31,9 +36,7 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
 
   getOtherProps() {
     const { resize } = this.props;
-    const otherProps = omit(super.getOtherProps(), [
-      'resize',
-    ]);
+    const otherProps = omit(super.getOtherProps(), ['resize']);
     const { style = {} } = otherProps;
     style.resize = resize;
     if (resize !== ResizeType.none) {
@@ -54,6 +57,5 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
     );
   }
 
-  handleEnterDown() {
-  }
+  handleEnterDown() {}
 }

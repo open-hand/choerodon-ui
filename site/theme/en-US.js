@@ -3,7 +3,7 @@ import proComponentsLocale from 'choerodon-ui/pro/lib/locale-context/en_US';
 
 const appLocaleData = require('react-intl/locale-data/en');
 
-module.exports = {
+export default {
   locale: 'en-US',
   data: appLocaleData,
   componentsLocale,
@@ -19,7 +19,8 @@ module.exports = {
     'app.demo.codepen': 'Open in CodePen',
     'app.demo.codesandbox': 'Open in CodeSandbox',
     'app.home.based-on-ant-design': '——based on Ant Design@3.4.0',
-    'app.home.introduce': 'Choerodon UI is a set of React components based on Ant Design Components that implement Google\'s material design for developing and serving enterprise back-end products.',
+    'app.home.introduce':
+      "Choerodon UI is a set of React components based on Ant Design Components that implement Google's material design for developing and serving enterprise back-end products.",
     'app.home.feature': 'Feature',
     'app.home.getting-started': 'Getting Started',
     'app.footer.resources': 'Resources',

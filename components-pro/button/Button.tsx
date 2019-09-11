@@ -7,6 +7,7 @@ import isString from 'lodash/isString';
 import { computed, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import { ProgressType } from 'choerodon-ui/lib/progress/enum';
+import { getConfig } from 'choerodon-ui/lib/configure';
 import Icon from '../icon';
 import FormContext from '../form/FormContext';
 import Progress from '../progress';
@@ -16,7 +17,6 @@ import { DataSetStatus } from '../data-set/enum';
 import { Size } from '../core/enum';
 import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComponent';
 import autobind from '../_util/autobind';
-import { getConfig } from 'choerodon-ui/lib/configure';
 
 export interface ButtonProps extends DataSetComponentProps {
   /**
@@ -73,10 +73,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
      * 可选值：'flat' | 'raised'
      * @default raised
      */
-    funcType: PropTypes.oneOf([
-      FuncType.flat,
-      FuncType.raised,
-    ]),
+    funcType: PropTypes.oneOf([FuncType.flat, FuncType.raised]),
     /**
      * 按钮颜色风格
      * 可选值：'default' | 'primary' | 'gray' | 'blue' | 'red' | 'green' | 'yellow' | 'purple' | 'dark'
@@ -98,11 +95,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
      * 可选值：'button' | 'submit' | 'reset'
      * @default 'button'
      */
-    type: PropTypes.oneOf([
-      ButtonType.button,
-      ButtonType.submit,
-      ButtonType.reset,
-    ]),
+    type: PropTypes.oneOf([ButtonType.button, ButtonType.submit, ButtonType.reset]),
     /**
      * 按钮是否是加载状态
      */
@@ -138,7 +131,10 @@ export default class Button extends DataSetComponent<ButtonProps> {
   @computed
   get loading(): boolean {
     const { type, dataSet, loading } = this.observableProps;
-    return loading || type === ButtonType.submit && !!dataSet && dataSet.status === DataSetStatus.submitting;
+    return (
+      loading ||
+      (type === ButtonType.submit && !!dataSet && dataSet.status === DataSetStatus.submitting)
+    );
   }
 
   set loading(loading: boolean) {
@@ -227,20 +223,30 @@ export default class Button extends DataSetComponent<ButtonProps> {
   }
 
   getClassName(...props): string | undefined {
-    const { prefixCls, props: { color, funcType = getConfig('buttonFuncType') || FuncType.raised, children, icon } } = this;
+    const {
+      prefixCls,
+      props: { color, funcType = getConfig('buttonFuncType') || FuncType.raised, children, icon },
+    } = this;
     const childrenCount = Children.count(children);
-    return super.getClassName({
-      [`${prefixCls}-${funcType}`]: funcType,
-      [`${prefixCls}-${color}`]: color,
-      [`${prefixCls}-icon-only`]: icon ? childrenCount === 0 || children === false : (childrenCount === 1 && (children as any).type === Icon),
-    }, ...props);
+    return super.getClassName(
+      {
+        [`${prefixCls}-${funcType}`]: funcType,
+        [`${prefixCls}-${color}`]: color,
+        [`${prefixCls}-icon-only`]: icon
+          ? childrenCount === 0 || children === false
+          : childrenCount === 1 && (children as any).type === Icon,
+      },
+      ...props,
+    );
   }
 
   render() {
     const { children, icon, href } = this.props;
-    const buttonIcon: any = this.loading
-      ? <Progress key="loading" type={ProgressType.loading} size={Size.small} />
-      : icon && <Icon type={icon} />;
+    const buttonIcon: any = this.loading ? (
+      <Progress key="loading" type={ProgressType.loading} size={Size.small} />
+    ) : (
+      icon && <Icon type={icon} />
+    );
     const hasString = Children.toArray(children).some(child => isString(child));
     const Cmp = href ? 'a' : 'button';
     const props = this.getMergedProps();

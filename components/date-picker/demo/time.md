@@ -13,8 +13,9 @@ title:
 
 This property provide an additional time selection. When `showTime` is an Object, its properties will be passed on to built-in `TimePicker`.
 
-````jsx
+```jsx
 import { DatePicker } from 'choerodon-ui';
+
 const { RangePicker } = DatePicker;
 
 function onChange(value, dateString) {
@@ -44,5 +45,6 @@ ReactDOM.render(
       onOk={onOk}
     />
   </div>,
-  mountNode);
-````
+  mountNode,
+);
+```

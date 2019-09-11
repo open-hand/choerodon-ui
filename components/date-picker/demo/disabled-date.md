@@ -13,9 +13,10 @@ title:
 
 Disabled part of dates and time by `disabledDate` and `disabledTime` respectively, and `disabledTime` only works with `showTime`.
 
-````jsx
+```jsx
 import moment from 'moment';
 import { DatePicker } from 'choerodon-ui';
+
 const { MonthPicker, RangePicker } = DatePicker;
 
 function range(start, end) {
@@ -75,6 +76,6 @@ ReactDOM.render(
       format="YYYY-MM-DD HH:mm:ss"
     />
   </div>,
-  mountNode
+  mountNode,
 );
-````
+```

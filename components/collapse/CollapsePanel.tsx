@@ -1,4 +1,4 @@
-import React, { Component, CSSProperties, ReactNode } from 'react';
+import React, { CSSProperties, ReactNode } from 'react';
 import classNames from 'classnames';
 import RcCollapse from '../rc-components/collapse';
 
@@ -13,12 +13,13 @@ export interface CollapsePanelProps {
   forceRender?: boolean;
 }
 
-export default class CollapsePanel extends Component<CollapsePanelProps, {}> {
-  render() {
-    const { prefixCls, className = '', showArrow = true } = this.props;
-    const collapsePanelClassName = classNames({
+export default function CollapsePanel(props: CollapsePanelProps) {
+  const { prefixCls, className = '', showArrow = true } = props;
+  const collapsePanelClassName = classNames(
+    {
       [`${prefixCls}-no-arrow`]: !showArrow,
-    }, className);
-    return <RcCollapse.Panel {...this.props} className={collapsePanelClassName} />;
-  }
+    },
+    className,
+  );
+  return <RcCollapse.Panel {...props} className={collapsePanelClassName} />;
 }

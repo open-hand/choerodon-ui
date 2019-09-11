@@ -6,8 +6,8 @@ export interface FilterDropdownMenuWrapperProps {
   className?: string;
 }
 
-export default (props: FilterDropdownMenuWrapperProps) => (
-  <div className={props.className} onClick={props.onClick}>
-    {props.children}
+export default ({ className, onClick, children }: FilterDropdownMenuWrapperProps) => (
+  <div className={className} onClick={onClick}>
+    {children}
   </div>
 );

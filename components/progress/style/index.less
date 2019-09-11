@@ -1,16 +1,16 @@
-@import "../../style/themes/default";
-@import "../../style/mixins/index";
+@import '../../style/themes/default';
+@import '../../style/mixins/index';
 
-@progress-prefix-cls: ~"@{c7n-prefix}-progress";
+@progress-prefix-cls: ~'@{c7n-prefix}-progress';
 
 .@{progress-prefix-cls} {
   .reset-component;
   display: inline-block;
 
   &-line {
+    position: relative;
     width: 100%;
     font-size: @font-size-base;
-    position: relative;
   }
 
   &-small&-line,
@@ -24,18 +24,18 @@
     margin-right: 0;
     padding-right: 0;
     .@{progress-prefix-cls}-show-info & {
-      padding-right: ~"calc(2em + .08rem)";
-      margin-right: ~"calc(-2em - .08rem)";
+      margin-right: ~'calc(-2em - .08rem)';
+      padding-right: ~'calc(2em + .08rem)';
     }
   }
 
   &-inner {
+    position: relative;
     display: inline-block;
     width: 100%;
+    vertical-align: middle;
     background-color: @progress-remaining-color;
     border-radius: 1rem;
-    vertical-align: middle;
-    position: relative;
   }
 
   &-circle-trail {
@@ -43,35 +43,35 @@
   }
 
   &-circle-path {
+    animation: ~'@{c7n-prefix}-progress-appear' 0.3s;
     stroke: @progress-default-color;
-    animation: ~"@{c7n-prefix}-progress-appear" .3s;
   }
 
   &-success-bg,
   &-bg {
-    border-radius: 1rem;
-    background-color: @progress-default-color;
-    transition: all .4s @ease-out-circ 0s;
     position: relative;
+    background-color: @progress-default-color;
+    border-radius: 1rem;
+    transition: all 0.4s @ease-out-circ 0s;
   }
 
   &-success-bg {
-    background-color: @success-color;
     position: absolute;
     top: 0;
     left: 0;
+    background-color: @success-color;
   }
 
   &-text {
-    word-break: normal;
-    width: 2em;
-    text-align: left;
-    font-size: 1em;
-    margin-left: .08rem;
-    vertical-align: middle;
     display: inline-block;
+    width: 2em;
+    margin-left: 0.08rem;
     color: @text-color-secondary;
+    font-size: 1em;
     line-height: 1;
+    text-align: left;
+    vertical-align: middle;
+    word-break: normal;
     .@{iconfont-css-prefix} {
       font-size: @font-size-base;
     }
@@ -84,16 +84,16 @@
   }
 
   &-circle &-text {
-    display: block;
     position: absolute;
-    width: 100%;
-    text-align: center;
-    line-height: 1;
     top: 50%;
-    transform: translateY(-50%);
     left: 0;
+    display: block;
+    width: 100%;
     margin: 0;
     color: @text-color;
+    line-height: 1;
+    text-align: center;
+    transform: translateY(-50%);
 
     .@{iconfont-css-prefix} {
       font-size: 14 / 12em;
@@ -101,47 +101,47 @@
   }
 
   &-loading &-inner {
+    width: 0.3rem;
+    height: 0.3rem;
     background-color: transparent;
     transform: rotate(-90deg);
-    width: .3rem;
-    height: .3rem;
   }
 
   &-loading &-inner svg {
-    animation: ~"@{c7n-prefix}-progress-rotate" 1.4s linear infinite;
+    animation: ~'@{c7n-prefix}-progress-rotate' 1.4s linear infinite;
   }
 
   &-loading &-inner circle {
-    animation: ~"@{c7n-prefix}-progress-loading" 1.4s ease-in-out infinite;
-    stroke-width: 4;
-    stroke-dasharray: .08rem 2rem;
-    stroke-dashoffset: 0;
-    stroke: @primary-color;
+    animation: ~'@{c7n-prefix}-progress-loading' 1.4s ease-in-out infinite;
     fill: none;
+    stroke: @primary-color;
+    stroke-width: 4;
+    stroke-dasharray: 0.08rem 2rem;
+    stroke-dashoffset: 0;
   }
 
   &-small&-loading &-inner {
-    width: .2rem;
-    height: .2rem;
+    width: 0.2rem;
+    height: 0.2rem;
   }
 
   &-large&-loading &-inner {
-    width: .5rem;
-    height: .5rem;
+    width: 0.5rem;
+    height: 0.5rem;
   }
 
   &-status-active {
-    .@{progress-prefix-cls}-bg:before {
-      content: "";
-      opacity: 0;
+    .@{progress-prefix-cls}-bg::before {
       position: absolute;
       top: 0;
-      left: 0;
       right: 0;
       bottom: 0;
+      left: 0;
       background: @component-background;
-      border-radius: .1rem;
-      animation: ~"@{c7n-prefix}-progress-active" 2.4s @ease-out-quint infinite;
+      border-radius: 0.1rem;
+      opacity: 0;
+      animation: ~'@{c7n-prefix}-progress-active' 2.4s @ease-out-quint infinite;
+      content: '';
     }
   }
 
@@ -187,12 +187,12 @@
 
 @keyframes ~"@{c7n-prefix}-progress-loading" {
   0% {
-    stroke-dasharray: .01rem 2rem;
+    stroke-dasharray: 0.01rem 2rem;
     stroke-dashoffset: 0;
   }
   30% {
     stroke-dasharray: 1rem 2rem;
-    stroke-dashoffset: -.15rem;
+    stroke-dashoffset: -0.15rem;
   }
   100% {
     stroke-dasharray: 1rem 2rem;
@@ -202,15 +202,15 @@
 
 @keyframes ~"@{c7n-prefix}-progress-active" {
   0% {
-    opacity: 0.1;
     width: 0;
+    opacity: 0.1;
   }
   20% {
-    opacity: 0.5;
     width: 0;
+    opacity: 0.5;
   }
   100% {
-    opacity: 0;
     width: 100%;
+    opacity: 0;
   }
 }

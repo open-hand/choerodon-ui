@@ -1,4 +1,12 @@
-import React, { cloneElement, Component, CSSProperties, HTMLProps, isValidElement, Key, ReactNode } from 'react';
+import React, {
+  cloneElement,
+  Component,
+  CSSProperties,
+  HTMLProps,
+  isValidElement,
+  Key,
+  ReactNode,
+} from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { action, computed, get, remove, set } from 'mobx';
@@ -30,7 +38,10 @@ export default class TableRow extends Component<TableRowProps, any> {
 
   static propTypes = {
     prefixCls: PropTypes.string,
-    lock: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf([ColumnLock.right, ColumnLock.left])]),
+    lock: PropTypes.oneOfType([
+      PropTypes.bool,
+      PropTypes.oneOf([ColumnLock.right, ColumnLock.left]),
+    ]),
     columns: PropTypes.array.isRequired,
     record: PropTypes.instanceOf(Record).isRequired,
     indentSize: PropTypes.number.isRequired,
@@ -48,29 +59,41 @@ export default class TableRow extends Component<TableRowProps, any> {
 
   @computed
   get expandable(): boolean {
+    const {
+      tableStore: {
+        isTree,
+        props: { expandedRowRenderer },
+      },
+    } = this.context;
     const { record } = this.props;
-    const { isTree, props: { expandedRowRenderer } } = this.context.tableStore;
     return !!expandedRowRenderer || (isTree && !!record.children);
   }
 
   @computed
   get isExpanded(): boolean {
-    return this.context.tableStore.isRowExpanded(this.props.record);
+    const { tableStore } = this.context;
+    const { record } = this.props;
+    return tableStore.isRowExpanded(record);
   }
 
   set isExpanded(expanded: boolean) {
-    this.context.tableStore.setRowExpanded(this.props.record, expanded);
+    const { tableStore } = this.context;
+    const { record } = this.props;
+    tableStore.setRowExpanded(record, expanded);
   }
 
   @computed
   get isHover(): boolean {
-    return this.context.tableStore.isRowHover(this.props.record);
+    const { tableStore } = this.context;
+    const { record } = this.props;
+    return tableStore.isRowHover(record);
   }
 
   set isHover(hover: boolean) {
     const { tableStore } = this.context;
     if (tableStore.highLightRow) {
-      tableStore.setRowHover(this.props.record, hover);
+      const { record } = this.props;
+      tableStore.setRowHover(record, hover);
     }
   }
 
@@ -78,9 +101,11 @@ export default class TableRow extends Component<TableRowProps, any> {
     if (node) {
       this.node = node;
       const { lock, record } = this.props;
-      const { rowHeight, lockColumnsBodyRowsHeight } = this.context.tableStore;
+      const {
+        tableStore: { rowHeight, lockColumnsBodyRowsHeight },
+      } = this.context;
       if (rowHeight === 'auto' && !lock) {
-        set(lockColumnsBodyRowsHeight, this.rowKey = record.key, node.offsetHeight);
+        set(lockColumnsBodyRowsHeight, (this.rowKey = record.key), node.offsetHeight);
       }
     }
   });
@@ -113,7 +138,10 @@ export default class TableRow extends Component<TableRowProps, any> {
   };
 
   handleClick = () => {
-    const { record, record: { dataSet } } = this.props;
+    const {
+      record,
+      record: { dataSet },
+    } = this.props;
     if (dataSet && !isDisabledRow(record)) {
       dataSet.current = record;
     }
@@ -126,9 +154,7 @@ export default class TableRow extends Component<TableRowProps, any> {
   getCell = (column: ColumnProps, index: number): ReactNode => {
     const { hidden } = column;
     if (!hidden) {
-      const {
-        prefixCls, record, indentSize,
-      } = this.props;
+      const { prefixCls, record, indentSize } = this.props;
       return (
         <TableCell
           key={getColumnKey(column)}
@@ -145,13 +171,19 @@ export default class TableRow extends Component<TableRowProps, any> {
 
   focusRow(row: HTMLTableRowElement | null) {
     if (row) {
-      const { node, overflowY, currentEditorName } = this.context.tableStore;
+      const {
+        tableStore: { node, overflowY, currentEditorName },
+      } = this.context;
       const { lock, record } = this.props;
       if (!lock && !currentEditorName) {
         const { element } = node;
-        if (element && element.contains(document.activeElement)
-          && Array.from<HTMLTableRowElement>(element.querySelectorAll(`tr[data-index="${record.id}"]`))
-            .every(tr => !tr.contains(document.activeElement))) {
+        if (
+          element &&
+          element.contains(document.activeElement) &&
+          Array.from<HTMLTableRowElement>(
+            element.querySelectorAll(`tr[data-index="${record.id}"]`),
+          ).every(tr => !tr.contains(document.activeElement))
+        ) {
           row.focus();
         }
       }
@@ -163,15 +195,15 @@ export default class TableRow extends Component<TableRowProps, any> {
             const { offsetTop, offsetHeight } = row;
             const { scrollTop, offsetHeight: height } = tableBodyWrap;
             const bottomSide = offsetTop + offsetHeight - height + measureScrollbar();
-            let _scrollTop = scrollTop;
-            if (_scrollTop < bottomSide) {
-              _scrollTop = bottomSide;
+            let st = scrollTop;
+            if (st < bottomSide) {
+              st = bottomSide;
             }
-            if (_scrollTop > offsetTop) {
-              _scrollTop = offsetTop + 1;
+            if (st > offsetTop) {
+              st = offsetTop + 1;
             }
-            if (_scrollTop !== scrollTop) {
-              tableBodyWrap.scrollTop = _scrollTop;
+            if (st !== scrollTop) {
+              tableBodyWrap.scrollTop = st;
               node.handleBodyScrollTop({
                 target: tableBodyWrap,
                 currentTarget: tableBodyWrap,
@@ -184,13 +216,15 @@ export default class TableRow extends Component<TableRowProps, any> {
   }
 
   componentDidMount() {
-    if (this.props.record.isCurrent) {
+    const { record } = this.props;
+    if (record.isCurrent) {
       this.focusRow(this.node);
     }
   }
 
   componentDidUpdate() {
-    if (this.props.record.isCurrent) {
+    const { record } = this.props;
+    if (record.isCurrent) {
       this.focusRow(this.node);
     }
   }
@@ -213,10 +247,14 @@ export default class TableRow extends Component<TableRowProps, any> {
 
   hasExpandIcon(columnIndex) {
     const { tableStore } = this.context;
-    const { props: { expandRowByClick, expandedRowRenderer }, expandIconColumnIndex, isTree } = tableStore;
-    return !expandRowByClick &&
-      (expandedRowRenderer || isTree) &&
-      columnIndex === expandIconColumnIndex;
+    const {
+      props: { expandRowByClick, expandedRowRenderer },
+      expandIconColumnIndex,
+      isTree,
+    } = tableStore;
+    return (
+      !expandRowByClick && (expandedRowRenderer || isTree) && columnIndex === expandIconColumnIndex
+    );
   }
 
   renderExpandIcon() {
@@ -232,19 +270,29 @@ export default class TableRow extends Component<TableRowProps, any> {
   }
 
   renderExpandRow(): ReactNode[] {
-    const { isExpanded, props: { children, columns, record, prefixCls, index } } = this;
+    const {
+      isExpanded,
+      props: { children, columns, record, prefixCls, index },
+    } = this;
     const { tableStore } = this.context;
-    const { props: { expandedRowRenderer, onRow }, expandIconAsCell, overflowX } = tableStore;
+    const {
+      props: { expandedRowRenderer, onRow },
+      expandIconAsCell,
+      overflowX,
+    } = tableStore;
     const expandRows: ReactNode[] = [];
     if (isExpanded || this.childrenRendered) {
       this.childrenRendered = true;
       if (expandedRowRenderer) {
-        const rowExternalProps = typeof onRow === 'function' ? onRow({
-          dataSet: record.dataSet!,
-          record,
-          expandedRow: true,
-          index,
-        }) : {};
+        const rowExternalProps =
+          typeof onRow === 'function'
+            ? onRow({
+                dataSet: record.dataSet!,
+                record,
+                expandedRow: true,
+                index,
+              })
+            : {};
         const classString = classNames(`${prefixCls}-expanded-row`, rowExternalProps.className);
         const rowProps: HTMLProps<HTMLTableRowElement> & { style: CSSProperties } = {
           key: `${record.key}-expanded-row`,
@@ -263,7 +311,11 @@ export default class TableRow extends Component<TableRowProps, any> {
         expandRows.push(
           <tr {...rowExternalProps} {...rowProps}>
             {expandIconAsCell && <td key={EXPAND_KEY} />}
-            <td key={`${EXPAND_KEY}-rest`} className={`${prefixCls}-cell`} colSpan={columns.length - (expandIconAsCell ? 1 : 0)}>
+            <td
+              key={`${EXPAND_KEY}-rest`}
+              className={`${prefixCls}-cell`}
+              colSpan={columns.length - (expandIconAsCell ? 1 : 0)}
+            >
               <div className={`${prefixCls}-cell-inner`}>
                 {expandedRowRenderer({ dataSet: record.dataSet!, record })}
               </div>
@@ -280,30 +332,44 @@ export default class TableRow extends Component<TableRowProps, any> {
 
   render() {
     const { prefixCls, columns, record, lock, hidden, index } = this.props;
-    const { rowHeight, lockColumnsBodyRowsHeight, overflowX, highLightRow, props: { onRow, rowRenderer, selectionMode } } = this.context.tableStore;
+    const {
+      tableStore: {
+        rowHeight,
+        lockColumnsBodyRowsHeight,
+        overflowX,
+        highLightRow,
+        props: { onRow, rowRenderer, selectionMode },
+      },
+    } = this.context;
     const { dataSet, isCurrent, key, id } = record;
-    const rowExternalProps = this.rowExternalProps = {
-      ...(
-        typeof rowRenderer === 'function' ? rowRenderer(record, index) : {}
-      ),
-      ...(
-        typeof onRow === 'function' ? onRow({
-          dataSet: dataSet!,
-          record,
-          expandedRow: false,
-          index,
-        }) : {}
-      ),
+    const rowExternalProps = {
+      ...(typeof rowRenderer === 'function' ? rowRenderer(record, index) : {}),
+      ...(typeof onRow === 'function'
+        ? onRow({
+            dataSet: dataSet!,
+            record,
+            expandedRow: false,
+            index,
+          })
+        : {}),
     };
+    this.rowExternalProps = rowExternalProps;
     const disabled = isDisabledRow(record);
     const rowPrefixCls = `${prefixCls}-row`;
-    const classString = classNames(rowPrefixCls, {
-      [`${rowPrefixCls}-current`]: highLightRow && isCurrent,
-      [`${rowPrefixCls}-hover`]: highLightRow && !isCurrent && this.isHover,
-      [`${rowPrefixCls}-highlight`]: highLightRow,
-      [`${rowPrefixCls}-disabled`]: disabled,
-    }, rowExternalProps.className);
-    const rowProps: HTMLProps<HTMLTableRowElement> & { style: CSSProperties, 'data-index': number } = {
+    const classString = classNames(
+      rowPrefixCls,
+      {
+        [`${rowPrefixCls}-current`]: highLightRow && isCurrent,
+        [`${rowPrefixCls}-hover`]: highLightRow && !isCurrent && this.isHover,
+        [`${rowPrefixCls}-highlight`]: highLightRow,
+        [`${rowPrefixCls}-disabled`]: disabled,
+      },
+      rowExternalProps.className,
+    );
+    const rowProps: HTMLProps<HTMLTableRowElement> & {
+      style: CSSProperties;
+      'data-index': number;
+    } = {
       ref: this.saveRef,
       className: classString,
       style: { ...rowExternalProps.style },

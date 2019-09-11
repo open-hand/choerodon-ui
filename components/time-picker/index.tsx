@@ -11,11 +11,7 @@ import { getPrefixCls } from '../configure';
 export function generateShowHourMinuteSecond(format: string) {
   // Ref: http://momentjs.com/docs/#/parsing/string-format/
   return {
-    showHour: (
-      format.indexOf('H') > -1 ||
-      format.indexOf('h') > -1 ||
-      format.indexOf('k') > -1
-    ),
+    showHour: format.indexOf('H') > -1 || format.indexOf('h') > -1 || format.indexOf('k') > -1,
     showMinute: format.indexOf('m') > -1,
     showSecond: format.indexOf('s') > -1,
   };
@@ -59,6 +55,7 @@ export interface TimePickerLocale {
 
 export default class TimePicker extends Component<TimePickerProps, any> {
   static displayName = 'TimePicker';
+
   static defaultProps = {
     align: {
       offset: [0, -2],
@@ -79,9 +76,7 @@ export default class TimePicker extends Component<TimePickerProps, any> {
     super(props);
     const value = props.value || props.defaultValue;
     if (value && !interopDefault(moment).isMoment(value)) {
-      throw new Error(
-        'The value/defaultValue of TimePicker must be a moment object',
-      );
+      throw new Error('The value/defaultValue of TimePicker must be a moment object');
     }
     this.state = {
       value,
@@ -127,7 +122,8 @@ export default class TimePicker extends Component<TimePickerProps, any> {
     const { format, use12Hours } = this.props;
     if (format) {
       return format;
-    } else if (use12Hours) {
+    }
+    if (use12Hours) {
       return 'h:mm:ss a';
     }
     return 'HH:mm:ss';
@@ -137,6 +133,7 @@ export default class TimePicker extends Component<TimePickerProps, any> {
     const props: TimePickerProps & { children?: any } = {
       ...this.props,
     };
+    const { value } = this.state;
     delete props.defaultValue;
     const prefixCls = getPrefixCls('time-picker', props.prefixCls);
     const format = this.getDefaultFormat();
@@ -144,13 +141,8 @@ export default class TimePicker extends Component<TimePickerProps, any> {
       [`${prefixCls}-${props.size}`]: !!props.size,
     });
 
-    const addon = (panel: ReactElement<any>) => (
-      props.addon ? (
-        <div className={`${prefixCls}-panel-addon`}>
-          {props.addon(panel)}
-        </div>
-      ) : null
-    );
+    const addon = (panel: ReactElement<any>) =>
+      props.addon ? <div className={`${prefixCls}-panel-addon`}>{props.addon(panel)}</div> : null;
 
     return (
       <RcTimePicker
@@ -160,7 +152,7 @@ export default class TimePicker extends Component<TimePickerProps, any> {
         ref={this.saveTimePicker}
         format={format}
         className={className}
-        value={this.state.value}
+        value={value}
         placeholder={props.placeholder === undefined ? locale.placeholder : props.placeholder}
         onChange={this.handleChange}
         onOpen={this.handleOpenClose}
@@ -172,10 +164,7 @@ export default class TimePicker extends Component<TimePickerProps, any> {
 
   render() {
     return (
-      <LocaleReceiver
-        componentName="TimePicker"
-        defaultLocale={defaultLocale}
-      >
+      <LocaleReceiver componentName="TimePicker" defaultLocale={defaultLocale}>
         {this.renderTimePicker}
       </LocaleReceiver>
     );

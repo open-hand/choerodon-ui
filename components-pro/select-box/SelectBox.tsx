@@ -4,8 +4,8 @@ import { observer } from 'mobx-react';
 import { computed, isArrayLike } from 'mobx';
 import omit from 'lodash/omit';
 import { Select, SelectProps } from '../select/Select';
-import Radio from '../radio/Radio';
-import CheckBox from '../check-box/CheckBox';
+import ObserverRadio from '../radio/Radio';
+import ObserverCheckBox from '../check-box/CheckBox';
 import autobind from '../_util/autobind';
 import { ValidationMessages } from '../validator/Validator';
 import Option from '../option/Option';
@@ -14,11 +14,11 @@ import { ViewMode } from '../radio/enum';
 import { $l } from '../locale-context';
 import { LabelLayout } from '../form/enum';
 
-const GroupIdGen = function* (id) {
+const GroupIdGen = (function*(id) {
   while (true) {
     yield `__group-${id++}__`;
   }
-}(1);
+})(1);
 
 export interface SelectBoxProps extends SelectProps {
   /**
@@ -54,7 +54,9 @@ export default class SelectBox extends Select<SelectBoxProps> {
   get defaultValidationMessages(): ValidationMessages | null {
     const label = this.getProp('label');
     return {
-      valueMissing: $l('SelectBox', label ? 'value_missing_with_label' : 'value_missing', { label }),
+      valueMissing: $l('SelectBox', label ? 'value_missing_with_label' : 'value_missing', {
+        label,
+      }),
     };
   }
 
@@ -68,7 +70,10 @@ export default class SelectBox extends Select<SelectBoxProps> {
   }
 
   getClassName() {
-    const { prefixCls, props: { vertical } } = this;
+    const {
+      prefixCls,
+      props: { vertical },
+    } = this;
     return super.getClassName({
       [`${prefixCls}-vertical`]: vertical,
     });
@@ -81,7 +86,7 @@ export default class SelectBox extends Select<SelectBoxProps> {
   renderWrapper(): ReactNode {
     const { options, textField, valueField } = this;
     const { autoFocus, mode } = this.props;
-    const items = options.data.map((record, index) => (
+    const items = options.data.map((record, index) =>
       this.renderItem({
         key: index,
         dataSet: null,
@@ -97,8 +102,8 @@ export default class SelectBox extends Select<SelectBoxProps> {
         mode,
         noValidate: true,
         labelLayout: LabelLayout.none,
-      })
-    ));
+      }),
+    );
     const { className } = this.getOtherProps();
     const Element = this.context.formNode ? 'div' : 'form';
     return (
@@ -127,16 +132,14 @@ export default class SelectBox extends Select<SelectBoxProps> {
   isChecked(value, checkedValue) {
     if (isArrayLike(value)) {
       return value.indexOf(checkedValue) !== -1;
-    } else {
-      return value === checkedValue;
     }
+    return value === checkedValue;
   }
 
   renderItem(props) {
     if (this.multiple) {
-      return <CheckBox {...props} />;
-    } else {
-      return <Radio {...props} />;
+      return <ObserverCheckBox {...props} />;
     }
+    return <ObserverRadio {...props} />;
   }
 }

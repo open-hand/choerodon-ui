@@ -13,12 +13,19 @@ title:
 
 You can customize the display for Steps with progress dot style.
 
-````jsx
+```jsx
 import { Steps, Popover } from 'choerodon-ui';
+
 const Step = Steps.Step;
 
 const customDot = (dot, { status, index }) => (
-  <Popover content={<span>step {index} status: {status}</span>}>
+  <Popover
+    content={
+      <span>
+        step {index} status: {status}
+      </span>
+    }
+  >
     {dot}
   </Popover>
 );
@@ -30,5 +37,6 @@ ReactDOM.render(
     <Step title="Waiting" description="You can hover on the dot." />
     <Step title="Waiting" description="You can hover on the dot." />
   </Steps>,
-  mountNode);
-````
+  mountNode,
+);
+```

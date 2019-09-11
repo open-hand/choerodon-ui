@@ -17,7 +17,10 @@ function getDefaultActiveKey(props) {
 }
 
 function activeKeyIsValid(props, key) {
-  const keys = Children.map(props.children, (child, index) => child && generateKey(child.key, index));
+  const keys = Children.map(
+    props.children,
+    (child, index) => child && generateKey(child.key, index),
+  );
   return keys.indexOf(key) >= 0;
 }
 
@@ -75,14 +78,14 @@ export default class Tabs extends Component {
     }
   }
 
-  onTabClick = (activeKey) => {
+  onTabClick = activeKey => {
     if (this.tabBar.props.onTabClick) {
       this.tabBar.props.onTabClick(activeKey);
     }
     this.setActiveKey(activeKey);
   };
 
-  onNavKeyDown = (e) => {
+  onNavKeyDown = e => {
     const eventKeyCode = e.keyCode;
     if (eventKeyCode === KeyCode.RIGHT || eventKeyCode === KeyCode.DOWN) {
       e.preventDefault();
@@ -95,7 +98,7 @@ export default class Tabs extends Component {
     }
   };
 
-  setActiveKey = (activeKey) => {
+  setActiveKey = activeKey => {
     if (this.state.activeKey !== activeKey) {
       if (!('activeKey' in this.props)) {
         this.setState({
@@ -106,10 +109,10 @@ export default class Tabs extends Component {
     }
   };
 
-  getNextActiveKey = (next) => {
+  getNextActiveKey = next => {
     const activeKey = this.state.activeKey;
     const children = [];
-    Children.forEach(this.props.children, (c) => {
+    Children.forEach(this.props.children, c => {
       if (c && !c.props.disabled) {
         if (next) {
           children.push(c);
@@ -136,11 +139,12 @@ export default class Tabs extends Component {
     const props = this.props;
     const {
       prefixCls,
-      tabBarPosition, className,
+      tabBarPosition,
+      className,
       renderTabContent,
       renderTabBar,
       destroyInactiveTabPane,
-      ...restProps,
+      ...restProps
     } = props;
     const cls = classnames({
       [prefixCls]: 1,
@@ -173,11 +177,7 @@ export default class Tabs extends Component {
       contents.reverse();
     }
     return (
-      <div
-        className={cls}
-        style={props.style}
-        {...getDataAttr(restProps)}
-      >
+      <div className={cls} style={props.style} {...getDataAttr(restProps)}>
         {contents}
       </div>
     );

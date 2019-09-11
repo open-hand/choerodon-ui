@@ -1,70 +1,70 @@
-@dialog-prefix-cls: ~"@{c7n-prefix}-modal";
+@dialog-prefix-cls: ~'@{c7n-prefix}-modal';
 
 .@{dialog-prefix-cls} {
   .reset-component;
   position: relative;
+  top: 1rem;
   width: auto;
   margin: 0 auto;
-  top: 1rem;
-  padding-bottom: .24rem;
+  padding-bottom: 0.24rem;
 
   &-wrap {
     position: fixed;
-    overflow: auto;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
     z-index: @zindex-modal;
-    -webkit-overflow-scrolling: touch;
+    overflow: auto;
     outline: 0;
+    -webkit-overflow-scrolling: touch;
   }
 
   &-title {
     margin: 0;
-    font-size: @modal-font-size-lg;
     color: @heading-color;
     font-weight: 400;
+    font-size: @modal-font-size-lg;
+    line-height: 0.32rem;
     letter-spacing: 0;
-    line-height: .32rem;
   }
 
   &-content {
     position: relative;
+    padding: 0.24rem;
     background-color: @component-background;
+    background-clip: padding-box;
     border: 0;
     border-radius: @border-radius-base;
-    background-clip: padding-box;
     box-shadow: @modal-content-shadow;
-    padding: .24rem;
   }
 
   &-close {
-    cursor: pointer;
-    border: 0;
-    background: transparent;
     position: absolute;
-    right: 0;
     top: 0;
+    right: 0;
     z-index: 10;
+    padding: 0;
+    color: @text-color-secondary;
     font-weight: 700;
     line-height: 1;
     text-decoration: none;
-    transition: color .3s;
-    color: @text-color-secondary;
+    background: transparent;
+    border: 0;
     outline: 0;
-    padding: 0;
+    cursor: pointer;
+    transition: color 0.3s;
 
     &-x {
       display: block;
+      width: 0.56rem;
+      height: 0.56rem;
       font-style: normal;
-      vertical-align: baseline;
+      line-height: 0.56rem;
       text-align: center;
       text-transform: none;
+      vertical-align: baseline;
       text-rendering: auto;
-      width: .56rem;
-      height: .56rem;
-      line-height: .56rem;
     }
 
     &:focus,
@@ -75,8 +75,8 @@
   }
 
   &-header {
-    background: @component-background;
     color: @text-color;
+    background: @component-background;
   }
 
   &-body {
@@ -86,34 +86,34 @@
   }
 
   &-footer {
+    margin-bottom: -0.24rem;
+    padding: 0.12rem 0;
     text-align: right;
-    margin-bottom: -.24rem;
-    padding: .12rem 0;
     border-radius: 0 0 @border-radius-base @border-radius-base;
     button + button {
-      margin-left: .08rem;
       margin-bottom: 0;
+      margin-left: 0.08rem;
     }
   }
 
   &.zoom-enter,
   &.zoom-appear {
-    animation-duration: @animation-duration-slow;
     transform: none; // reset scale avoid mousePosition bug
     opacity: 0;
+    animation-duration: @animation-duration-slow;
   }
 
   &-mask {
     position: fixed;
     top: 0;
     right: 0;
-    left: 0;
     bottom: 0;
+    left: 0;
+    z-index: @zindex-modal-mask;
+    height: 100%;
     background-color: #373737;
     background-color: @modal-mask-bg; // lesshint duplicateProperty: false
-    height: 100%;
-    z-index: @zindex-modal-mask;
-    filter: ~"alpha(opacity=50)";
+    filter: ~'alpha(opacity=50)';
 
     &-hidden {
       display: none;
@@ -128,7 +128,7 @@
 @media (max-width: @screen-md) {
   .@{dialog-prefix-cls} {
     width: auto !important;
-    margin: .1rem;
+    margin: 0.1rem;
   }
   .vertical-center-modal {
     .@{dialog-prefix-cls} {

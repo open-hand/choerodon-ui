@@ -1,3 +1,3 @@
-import Radio from './Radio';
+import ObserverRadio from './Radio';
 
-export default Radio;
+export default ObserverRadio;

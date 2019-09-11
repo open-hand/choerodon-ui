@@ -1,19 +1,19 @@
-@import "../../style/themes/default";
-@import "../../style/mixins/index";
+@import '../../style/themes/default';
+@import '../../style/mixins/index';
 
-@full-calendar-prefix-cls: ~"@{c7n-prefix}-fullcalendar";
+@full-calendar-prefix-cls: ~'@{c7n-prefix}-fullcalendar';
 
 .@{full-calendar-prefix-cls} {
   .reset-component;
-  outline: none;
   border-top: @border-width-base @border-style-base @border-color-base;
+  outline: none;
 
   &-month-select {
-    margin-left: .05rem;
+    margin-left: 0.05rem;
   }
 
   &-header {
-    padding: .11rem .16rem .11rem 0;
+    padding: 0.11rem 0.16rem 0.11rem 0;
     text-align: right;
 
     .@{c7n-prefix}-select-dropdown {
@@ -21,14 +21,14 @@
     }
 
     .@{c7n-prefix}-radio-group {
-      margin-left: .08rem;
+      margin-left: 0.08rem;
       text-align: left;
     }
 
     label.@{c7n-prefix}-radio-button {
-      height: .22rem;
-      line-height: .2rem;
-      padding: 0 .1rem;
+      height: 0.22rem;
+      padding: 0 0.1rem;
+      line-height: 0.2rem;
     }
   }
 
@@ -38,15 +38,15 @@
   }
 
   &-calendar-body {
-    padding: .08rem .12rem;
+    padding: 0.08rem 0.12rem;
   }
 
   table {
-    border-collapse: collapse;
-    max-width: 100%;
-    background-color: transparent;
     width: 100%;
+    max-width: 100%;
     height: 2.56rem;
+    background-color: transparent;
+    border-collapse: collapse;
   }
 
   table,
@@ -60,14 +60,14 @@
   }
 
   &-calendar-table {
-    border-spacing: 0;
     margin-bottom: 0;
+    border-spacing: 0;
   }
 
   &-column-header {
-    line-height: .18rem;
+    width: 0.33rem;
     padding: 0;
-    width: .33rem;
+    line-height: 0.18rem;
     text-align: center;
     .@{full-calendar-prefix-cls}-column-header-inner {
       display: block;
@@ -84,20 +84,20 @@
   &-month,
   &-date {
     text-align: center;
-    transition: all .3s;
+    transition: all 0.3s;
   }
 
   &-value {
     display: block;
+    width: 0.24rem;
+    height: 0.24rem;
     margin: 0 auto;
-    color: @text-color;
-    border-radius: @border-radius-sm;
-    width: .24rem;
-    height: .24rem;
     padding: 0;
+    color: @text-color;
+    line-height: 0.24rem;
     background: transparent;
-    line-height: .24rem;
-    transition: all .3s;
+    border-radius: @border-radius-sm;
+    transition: all 0.3s;
 
     &:hover {
       background: @item-hover-bg;
@@ -105,24 +105,24 @@
     }
 
     &:active {
-      background: @primary-color;
       color: #fff;
+      background: @primary-color;
     }
   }
 
   &-month-panel-cell &-value {
-    width: .48rem;
+    width: 0.48rem;
   }
 
   &-today &-value,
   &-month-panel-current-cell &-value {
-    box-shadow: 0 0 0 .01rem @primary-color inset;
+    box-shadow: 0 0 0 0.01rem @primary-color inset;
   }
 
   &-selected-day &-value,
   &-month-panel-selected-cell &-value {
-    background: @primary-color;
     color: #fff;
+    background: @primary-color;
   }
 
   &-disabled-cell-first-of-row &-value {
@@ -141,16 +141,16 @@
   }
 
   &-month-panel-table {
-    table-layout: fixed;
     width: 100%;
+    table-layout: fixed;
     border-collapse: separate;
   }
 
   &-content {
     position: absolute;
-    width: 100%;
+    bottom: -0.09rem;
     left: 0;
-    bottom: -.09rem;
+    width: 100%;
   }
 
   &-fullscreen {
@@ -163,24 +163,24 @@
 
   &-fullscreen &-header {
     .@{c7n-prefix}-radio-group {
-      margin-left: .16rem;
+      margin-left: 0.16rem;
     }
     label.@{c7n-prefix}-radio-button {
       height: @input-height-base;
-      line-height: @input-height-base - .02rem;
+      line-height: @input-height-base - 0.02rem;
     }
   }
 
   &-fullscreen &-month,
   &-fullscreen &-date {
-    text-align: left;
-    margin: 0 .04rem;
     display: block;
-    color: @text-color;
     height: 1.16rem;
-    padding: .04rem .08rem;
-    border-top: .02rem solid @border-color-split;
-    transition: background .3s;
+    margin: 0 0.04rem;
+    padding: 0.04rem 0.08rem;
+    color: @text-color;
+    text-align: left;
+    border-top: 0.02rem solid @border-color-split;
+    transition: background 0.3s;
 
     &:hover {
       background: @item-hover-bg;
@@ -193,15 +193,15 @@
   }
 
   &-fullscreen &-column-header {
+    padding-right: 0.12rem;
+    padding-bottom: 0.05rem;
     text-align: right;
-    padding-right: .12rem;
-    padding-bottom: .05rem;
   }
 
   &-fullscreen &-value {
+    width: auto;
     text-align: right;
     background: transparent;
-    width: auto;
   }
 
   &-fullscreen &-today &-value {
@@ -210,8 +210,8 @@
 
   &-fullscreen &-month-panel-current-cell &-month,
   &-fullscreen &-today &-date {
-    border-top-color: @primary-color;
     background: transparent;
+    border-top-color: @primary-color;
   }
 
   &-fullscreen &-month-panel-current-cell &-value,
@@ -235,12 +235,12 @@
   }
 
   &-fullscreen &-content {
-    height: .9rem;
-    overflow-y: auto;
     position: static;
-    width: auto;
-    left: auto;
     bottom: auto;
+    left: auto;
+    width: auto;
+    height: 0.9rem;
+    overflow-y: auto;
   }
 
   &-disabled-cell &-date {
@@ -258,9 +258,9 @@
   }
 
   &-disabled-cell &-value {
+    width: auto;
     color: @disabled-color;
     border-radius: 0;
-    width: auto;
     cursor: not-allowed;
   }
 }

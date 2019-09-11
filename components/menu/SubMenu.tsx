@@ -7,22 +7,25 @@ class SubMenu extends Component<any, any> {
   static contextTypes = {
     menuTheme: PropTypes.string,
   };
+
   private subMenu: any;
-  onKeyDown: MouseEventHandler<HTMLElement> = (e) => {
+
+  onKeyDown: MouseEventHandler<HTMLElement> = e => {
     this.subMenu.onKeyDown(e);
   };
+
   saveSubMenu = (subMenu: any) => {
     this.subMenu = subMenu;
   };
 
   render() {
     const { rootPrefixCls, className } = this.props;
-    const theme = this.context.menuTheme;
+    const { menuTheme } = this.context;
     return (
       <RcSubMenu
         {...this.props}
         ref={this.saveSubMenu}
-        popupClassName={classNames(`${rootPrefixCls}-${theme}`, className)}
+        popupClassName={classNames(`${rootPrefixCls}-${menuTheme}`, className)}
       />
     );
   }

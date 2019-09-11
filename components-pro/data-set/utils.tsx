@@ -23,19 +23,12 @@ import Transport, { TransportType } from './Transport';
 export function append(url: string, suffix?: object) {
   if (suffix) {
     return url + queryString.stringify(suffix, url.indexOf('?') === -1);
-  } else {
-    return url;
   }
+  return url;
 }
 
 export function getOrderFields(fields: Fields): Field[] {
-  const result: Field[] = [];
-  for (const field of fields.values()) {
-    if (field.order) {
-      result.push(field);
-    }
-  }
-  return result;
+  return [...fields.values()].filter(({ order }) => order);
 }
 
 export function processToJSON(value) {
@@ -52,13 +45,13 @@ function processOne(value: any, field: Field, checkRange: boolean = true) {
   if (!isEmpty(value)) {
     const range = field.get('range');
     if (range && checkRange) {
-      if (isArray(range)) {
+      if (isArrayLike(range)) {
         if (isObject(value)) {
           const [start, end] = range;
           value[start] = processOne(value[start], field, false);
           value[end] = processOne(value[end], field, false);
         }
-      } else if (isArray(value)) {
+      } else if (isArrayLike(value)) {
         value[0] = processOne(value[0], field, false);
         value[1] = processOne(value[1], field, false);
       }
@@ -66,13 +59,14 @@ function processOne(value: any, field: Field, checkRange: boolean = true) {
       value = moment(value, Constants.DATE_JSON_FORMAT);
     } else if (!isObject(value)) {
       switch (field.type) {
-        case FieldType.boolean:
+        case FieldType.boolean: {
           const trueValue = field.get(BooleanValue.trueValue);
           const falseValue = field.get(BooleanValue.falseValue);
           if (value !== trueValue) {
             value = falseValue;
           }
           break;
+        }
         case FieldType.number:
           if (!isNaN(value)) {
             value = Number(value);
@@ -124,13 +118,13 @@ export function processValue(value: any, field?: Field): any {
 }
 
 export function childrenInfoForDelete(json: {}, children: { [key: string]: DataSet }): {} {
-  for (const name of Object.keys(children)) {
+  return Object.keys(children).reduce((data, name) => {
     const child = children[name];
     if (child) {
-      json[name] = [childrenInfoForDelete({}, child.children)];
+      data[name] = [childrenInfoForDelete({}, child.children)];
     }
-  }
-  return json;
+    return data;
+  }, json);
 }
 
 export function sortTree(children: Record[], orderField: Field): Record[] {
@@ -141,11 +135,11 @@ export function sortTree(children: Record[], orderField: Field): Record[] {
       const a = record1.get(name) || m;
       const b = record2.get(name) || m;
       if (isString(a) || isString(b)) {
-        return order === SortOrder.asc ?
-          String(a).localeCompare(String(b)) : String(b).localeCompare(String(a));
-      } else {
-        return order === SortOrder.asc ? a - b : b - a;
+        return order === SortOrder.asc
+          ? String(a).localeCompare(String(b))
+          : String(b).localeCompare(String(a));
       }
+      return order === SortOrder.asc ? a - b : b - a;
     });
   }
   return children;
@@ -158,14 +152,12 @@ export function checkParentByInsert({ parent }: DataSet) {
 }
 
 export function isSame(newValue, oldValue) {
-  return (isEmpty(newValue) && isEmpty(oldValue))
-    || isEqual(newValue, oldValue);
+  return (isEmpty(newValue) && isEmpty(oldValue)) || isEqual(newValue, oldValue);
 }
 
 export function isSameLike(newValue, oldValue) {
-  /* tslint:disable */
+  /* eslint-disable-next-line */
   return isSame(newValue, oldValue) || newValue == oldValue;
-  /* tslint:enable */
 }
 
 function getBaseType(type: FieldType): FieldType {
@@ -186,12 +178,17 @@ function getBaseType(type: FieldType): FieldType {
 }
 
 function getValueType(value: any): FieldType {
-  return isBoolean(value) ? FieldType.boolean
-    : isNumber(value) ? FieldType.number
-      : isString(value) ? FieldType.string
-        : isMoment(value) ? FieldType.date
-          : isObject(value) ? FieldType.object
-            : FieldType.auto;
+  return isBoolean(value)
+    ? FieldType.boolean
+    : isNumber(value)
+    ? FieldType.number
+    : isString(value)
+    ? FieldType.string
+    : isMoment(value)
+    ? FieldType.date
+    : isObject(value)
+    ? FieldType.object
+    : FieldType.auto;
 }
 
 export function checkFieldType(value: any, field: Field): boolean {
@@ -199,15 +196,19 @@ export function checkFieldType(value: any, field: Field): boolean {
     if (!isEmpty(value)) {
       if (isArrayLike(value)) {
         return value.every(item => checkFieldType(item, field));
-      } else {
-        const fieldType = getBaseType(field.type);
-        const valueType = getValueType(value);
-        if (fieldType !== FieldType.auto && fieldType !== FieldType.reactNode && fieldType !== valueType) {
-          warning(false,
-            `Value type error: The value<${value}>'s type is ${valueType}, but the field<${field.name}>'s type is ${fieldType}.`,
-          );
-          return false;
-        }
+      }
+      const fieldType = getBaseType(field.type);
+      const valueType = getValueType(value);
+      if (
+        fieldType !== FieldType.auto &&
+        fieldType !== FieldType.reactNode &&
+        fieldType !== valueType
+      ) {
+        warning(
+          false,
+          `Value type error: The value<${value}>'s type is ${valueType}, but the field<${field.name}>'s type is ${fieldType}.`,
+        );
+        return false;
       }
     }
   }
@@ -221,7 +222,8 @@ export function doExport(url, data, method = 'post') {
     iframe = document.createElement('iframe');
     iframe.id = '_export_window';
     iframe.name = '_export_window';
-    iframe.style.cssText = 'position:absolute;left:-10000px;top:-10000px;width:1px;height:1px;display:none';
+    iframe.style.cssText =
+      'position:absolute;left:-10000px;top:-10000px;width:1px;height:1px;display:none';
     document.body.appendChild(iframe);
   }
 
@@ -243,37 +245,24 @@ export function doExport(url, data, method = 'post') {
 export function findBindFieldBy(myField: Field, fields: Fields, prop: string): Field | undefined {
   const value = myField.get(prop);
   const myName = myField.name;
-  for (const field of fields.values()) {
+  return [...fields.values()].find(field => {
     const bind = field.get('bind');
-    if (bind && bind === `${myName}.${value}`) {
-      return field;
-    }
-  }
+    return bind && bind === `${myName}.${value}`;
+  });
 }
 
 export function findBindFields(myField: Field, fields: Fields): Field[] {
-  const bindFields: Field[] = [myField];
   const myName = myField.name;
   const myBind = myField.get('bind');
-  for (const field of fields.values()) {
+  return [...fields.values()].filter(field => {
     if (field !== myField) {
       const bind = field.get('bind');
-      if (bind && bind.startsWith(`${myName}.`)) {
-        bindFields.push(field);
-      } else if (myBind && myBind.startsWith(`${field.name}.`)) {
-        bindFields.push(field);
-      }
+      return (
+        (bind && bind.startsWith(`${myName}.`)) || (myBind && myBind.startsWith(`${field.name}.`))
+      );
     }
-  }
-  return bindFields;
-}
-
-export function findInvalidField(field: Field): Field {
-  const { record } = field;
-  if (record) {
-    return findBindFields(field, record.fields).find(oneField => !oneField.validator.validity.valid) || field;
-  }
-  return field;
+    return true;
+  });
 }
 
 function numberSorter(a, b) {
@@ -335,7 +324,12 @@ export function getDateFormatByField(field?: Field, type?: FieldType): string {
   return Constants.DATE_JSON_FORMAT;
 }
 
-export function generateJSONData(array: object[], record: Record, isSelect?: boolean, noCascade?: boolean) {
+export function generateJSONData(
+  array: object[],
+  record: Record,
+  isSelect?: boolean,
+  noCascade?: boolean,
+) {
   const json = record.toJSONData(noCascade);
   if (json.__dirty || isSelect) {
     delete json.__dirty;
@@ -343,7 +337,11 @@ export function generateJSONData(array: object[], record: Record, isSelect?: boo
   }
 }
 
-export function prepareSubmitData(records: Record[], isSelect?: boolean, noCascade?: boolean): [object[], object[], object[], object[]] {
+export function prepareSubmitData(
+  records: Record[],
+  isSelect?: boolean,
+  noCascade?: boolean,
+): [object[], object[], object[], object[]] {
   const created: object[] = [];
   const updated: object[] = [];
   const destroyed: object[] = [];
@@ -363,18 +361,50 @@ export function prepareSubmitData(records: Record[], isSelect?: boolean, noCasca
   }
 
   records.forEach(
-    record => (noCascade && record.status === RecordStatus.sync) || generateJSONData(storeWith(record.status), record, isSelect, noCascade),
+    record =>
+      (noCascade && record.status === RecordStatus.sync) ||
+      generateJSONData(storeWith(record.status), record, isSelect, noCascade),
   );
   return [created, updated, destroyed, cascade];
 }
 
 type SubmitType = 'create' | 'update' | 'destroy' | 'submit';
 
-export function prepareForSubmit(type: SubmitType,
-                                 data: object[],
-                                 transport: Transport,
-                                 configs: AxiosRequestConfig[],
-                                 dataSet: DataSet): object[] {
+export function axiosAdapter(
+  config: TransportType,
+  dataSet: DataSet,
+  data?: any,
+  params?: any,
+): AxiosRequestConfig {
+  const newConfig: AxiosRequestConfig = {
+    data,
+    params,
+    method: 'post',
+  };
+  if (isString(config)) {
+    newConfig.url = config;
+  } else if (config) {
+    Object.assign(
+      newConfig,
+      typeof config === 'function' ? config({ data, dataSet, params }) : config,
+    );
+  }
+  if (newConfig.data && newConfig.method && newConfig.method.toLowerCase() === 'get') {
+    newConfig.params = {
+      ...newConfig.params,
+      ...newConfig.data,
+    };
+  }
+  return newConfig;
+}
+
+export function prepareForSubmit(
+  type: SubmitType,
+  data: object[],
+  transport: Transport,
+  configs: AxiosRequestConfig[],
+  dataSet: DataSet,
+): object[] {
   const { adapter, [type]: config = {} } = transport;
   if (data.length) {
     const newConfig = axiosAdapter(config, dataSet, data);
@@ -388,31 +418,21 @@ export function prepareForSubmit(type: SubmitType,
   return [];
 }
 
-export function axiosAdapter(config: TransportType, dataSet: DataSet, data?: any, params?: any): AxiosRequestConfig {
-  const newConfig: AxiosRequestConfig = {
-    data,
-    params,
-    method: 'post',
-  };
-  if (isString(config)) {
-    newConfig.url = config;
-  } else if (config) {
-    Object.assign(newConfig, typeof config === 'function' ? config({ data, dataSet, params }) : config);
-  }
-  if (newConfig.data && newConfig.method && newConfig.method.toLowerCase() === 'get') {
-    newConfig.params = {
-      ...newConfig.params,
-      ...newConfig.data,
-    };
-  }
-  return newConfig;
-}
-
 export function generateResponseData(item: any, dataKey?: string): object[] {
-  return item ? isArray(item) ? item : dataKey && isObject(item) && dataKey in item ? item[dataKey] || [] : [item] : [];
+  return item
+    ? isArray(item)
+      ? item
+      : dataKey && isObject(item) && dataKey in item
+      ? item[dataKey] || []
+      : [item]
+    : [];
 }
 
-export function getRecordValue(data: any, cb: (record: Record, fieldName: string) => boolean, fieldName?: string) {
+export function getRecordValue(
+  data: any,
+  cb: (record: Record, fieldName: string) => boolean,
+  fieldName?: string,
+) {
   if (fieldName) {
     const field = this.getField(fieldName);
     if (field) {
@@ -429,7 +449,9 @@ export function getRecordValue(data: any, cb: (record: Record, fieldName: string
         const falseValue = field ? field.get(BooleanValue.falseValue) : false;
         const { children } = this;
         if (children) {
-          return children.every(child => cb(child, checkField) === trueValue) ? trueValue : falseValue;
+          return children.every(child => cb(child, checkField) === trueValue)
+            ? trueValue
+            : falseValue;
         }
       }
     }
@@ -437,16 +459,18 @@ export function getRecordValue(data: any, cb: (record: Record, fieldName: string
   }
 }
 
-export function processIntlField(name: string,
-                                 fieldProps: FieldProps,
-                                 callback: (name: string, props: FieldProps) => Field,
-                                 dataSet?: DataSet): Field {
+export function processIntlField(
+  name: string,
+  fieldProps: FieldProps,
+  callback: (name: string, props: FieldProps) => Field,
+  dataSet?: DataSet,
+): Field {
   const tlsKey = getConfig('tlsKey');
   const { supports } = localeContext;
   const languages = Object.keys(supports);
   const { type, dynamicProps } = fieldProps;
   if (type === FieldType.intl) {
-    languages.forEach(language => (
+    languages.forEach(language =>
       callback(`${tlsKey}.${name}.${language}`, {
         // ...fieldProps,
         type: FieldType.string,
@@ -459,15 +483,15 @@ export function processIntlField(name: string,
         //     required: field && field.required && !!record.get(tlsKey),
         //   };
         // },
-      })
-    ));
+      }),
+    );
     return callback(name, {
       ...fieldProps,
       dynamicProps(props) {
         const { lang = localeContext.locale.lang } = dataSet || {};
         return {
           ...(dynamicProps && dynamicProps(props)),
-          bind: props.record.get(tlsKey) ? `${tlsKey}.${name}.${lang}` : void 0,
+          bind: props.record.get(tlsKey) ? `${tlsKey}.${name}.${lang}` : undefined,
         };
       },
     });

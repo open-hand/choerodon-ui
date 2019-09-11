@@ -5,20 +5,22 @@ const homeTmpl = './template/Home/index';
 const contentTmpl = './template/Content/index';
 const redirectTmpl = './template/Redirect';
 
-const demoBabelConfig = encodeURIComponent(JSON.stringify({
-  plugins: [
-    'transform-class-properties',
-    'transform-object-rest-spread',
-    'transform-decorators-legacy',
-  ],
-}));
+const demoBabelConfig = encodeURIComponent(
+  JSON.stringify({
+    plugins: [
+      ['@babel/plugin-transform-typescript', { isTSX: true }],
+      ['@babel/plugin-proposal-decorators', { legacy: true }],
+      ['@babel/plugin-proposal-class-properties', { loose: true }],
+      '@babel/plugin-proposal-object-rest-spread',
+    ],
+  }),
+);
 
 function pickerGenerator(module) {
   const tester = new RegExp(`^docs/${module}`);
-  return (markdownData) => {
+  return markdownData => {
     const { filename } = markdownData.meta;
-    if (tester.test(filename)
-      && !/\/demo$/.test(path.dirname(filename))) {
+    if (tester.test(filename) && !/\/demo$/.test(path.dirname(filename))) {
       return {
         meta: markdownData.meta,
       };
@@ -36,9 +38,9 @@ module.exports = {
   pick: {
     components(markdownData) {
       const { filename } = markdownData.meta;
-      if (!/^components/.test(filename)
-        || /[/\\]demo$/.test(path.dirname(filename))) return;
-
+      if (!/^components/.test(filename) || /[/\\]demo$/.test(path.dirname(filename))) {
+        return null;
+      }
       return {
         meta: markdownData.meta,
       };
@@ -50,9 +52,7 @@ module.exports = {
         };
       }
     },
-    'docs/pattern': pickerGenerator('pattern'),
     'docs/react': pickerGenerator('react'),
-    'docs/resource': pickerGenerator('resource'),
     'docs/spec': pickerGenerator('spec'),
   },
   plugins: [
@@ -65,39 +65,51 @@ module.exports = {
     path: '/',
     component: './template/Layout/index',
     indexRoute: { component: homeTmpl },
-    childRoutes: [{
-      path: 'index-cn',
-      component: homeTmpl,
-    }, {
-      path: 'docs/pattern/:children',
-      component: redirectTmpl,
-    }, {
-      path: 'docs/react/:children',
-      component: contentTmpl,
-    }, {
-      path: 'changelog',
-      component: contentTmpl,
-    }, {
-      path: 'changelog-cn',
-      component: contentTmpl,
-    }, {
-      path: 'components/:children/',
-      component: contentTmpl,
-    }, {
-      path: 'components-pro/:children/',
-      component: contentTmpl,
-    }, {
-      path: 'docs/spec/feature',
-      component: redirectTmpl,
-    }, {
-      path: 'docs/spec/feature-cn',
-      component: redirectTmpl,
-    }, {
-      path: 'docs/spec/:children',
-      component: contentTmpl,
-    }, {
-      path: 'docs/resource/:children',
-      component: redirectTmpl,
-    }],
+    childRoutes: [
+      {
+        path: 'index-cn',
+        component: homeTmpl,
+      },
+      {
+        path: 'docs/pattern/:children',
+        component: redirectTmpl,
+      },
+      {
+        path: 'docs/react/:children',
+        component: contentTmpl,
+      },
+      {
+        path: 'changelog',
+        component: contentTmpl,
+      },
+      {
+        path: 'changelog-cn',
+        component: contentTmpl,
+      },
+      {
+        path: 'components/:children/',
+        component: contentTmpl,
+      },
+      {
+        path: 'components-pro/:children/',
+        component: contentTmpl,
+      },
+      {
+        path: 'docs/spec/feature',
+        component: redirectTmpl,
+      },
+      {
+        path: 'docs/spec/feature-cn',
+        component: redirectTmpl,
+      },
+      {
+        path: 'docs/spec/:children',
+        component: contentTmpl,
+      },
+      {
+        path: 'docs/resource/:children',
+        component: redirectTmpl,
+      },
+    ],
   },
 };

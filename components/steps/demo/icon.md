@@ -13,8 +13,9 @@ title:
 
 You can use your own custom icons by setting the property `icon` for `Steps.Step`.
 
-````jsx
+```jsx
 import { Steps, Icon } from 'choerodon-ui';
+
 const Step = Steps.Step;
 
 ReactDOM.render(
@@ -24,5 +25,6 @@ ReactDOM.render(
     <Step status="process" title="Pay" icon={<Icon type="schedule" />} />
     <Step status="wait" title="Done" icon={<Icon type="tag_faces" />} />
   </Steps>,
-  mountNode);
-````
+  mountNode,
+);
+```

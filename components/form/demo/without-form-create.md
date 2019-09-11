@@ -13,8 +13,9 @@ title:
 
 `Form.create` will collect and validate form data automatically. But if you don't need this feature or the default behaviour cannot satisfy your business, you can drop `Form.create` and handle form data manually.
 
-````jsx
+```jsx
 import { Form, InputNumber } from 'choerodon-ui';
+
 const FormItem = Form.Item;
 
 function validatePrimeNumber(number) {
@@ -35,16 +36,16 @@ class RawForm extends React.Component {
     number: {
       value: 11,
     },
-  }
+  };
 
-  handleNumberChange = (value) => {
+  handleNumberChange = value => {
     this.setState({
       number: {
         ...validatePrimeNumber(value),
         value,
       },
     });
-  }
+  };
 
   render() {
     const formItemLayout = {
@@ -52,7 +53,8 @@ class RawForm extends React.Component {
       wrapperCol: { span: 12 },
     };
     const number = this.state.number;
-    const tips = 'A prime is a natural number greater than 1 that has no positive divisors other than 1 and itself.';
+    const tips =
+      'A prime is a natural number greater than 1 that has no positive divisors other than 1 and itself.';
     return (
       <Form>
         <FormItem
@@ -61,12 +63,7 @@ class RawForm extends React.Component {
           validateStatus={number.validateStatus}
           help={number.errorMsg || tips}
         >
-          <InputNumber
-            min={8}
-            max={12}
-            value={number.value}
-            onChange={this.handleNumberChange}
-          />
+          <InputNumber min={8} max={12} value={number.value} onChange={this.handleNumberChange} />
         </FormItem>
       </Form>
     );
@@ -74,4 +71,4 @@ class RawForm extends React.Component {
 }
 
 ReactDOM.render(<RawForm />, mountNode);
-````
+```

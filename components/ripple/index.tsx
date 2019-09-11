@@ -19,6 +19,7 @@ export default class Ripple extends PureComponent<RippleProps> {
   }
 
   rippleChild = (child: ReactChild) => {
-    return <RippleChild prefixCls={getPrefixCls('ripple', this.props.prefixCls)}>{child}</RippleChild>;
+    const { prefixCls } = this.props;
+    return <RippleChild prefixCls={getPrefixCls('ripple', prefixCls)}>{child}</RippleChild>;
   };
 }

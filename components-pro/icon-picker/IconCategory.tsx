@@ -47,7 +47,7 @@ export default class IconCategory extends Component<IconItemProps> {
     this.setPage(props.page);
   }
 
-  saveRef = node => this.ul = node;
+  saveRef = node => (this.ul = node);
 
   handlePageChange = (page: number) => {
     this.setPage(page);
@@ -57,7 +57,7 @@ export default class IconCategory extends Component<IconItemProps> {
     }
   };
 
-  handleItemSelect = (icon) => {
+  handleItemSelect = icon => {
     const { onSelect } = this.props;
     onSelect(icon);
   };
@@ -77,7 +77,10 @@ export default class IconCategory extends Component<IconItemProps> {
   }
 
   syncItemPosition() {
-    const { props: { value, prefixCls }, ul } = this;
+    const {
+      props: { value, prefixCls },
+      ul,
+    } = this;
     if (value && ul) {
       const item = ul.querySelector(`li.${prefixCls}-item-selected`) as HTMLLIElement;
       if (item) {
@@ -98,7 +101,10 @@ export default class IconCategory extends Component<IconItemProps> {
   }
 
   renderPagination() {
-    const { page, props: { paging, pageSize, prefixCls, icons } } = this;
+    const {
+      page,
+      props: { paging, pageSize, prefixCls, icons },
+    } = this;
     const total = icons.length;
     if (paging && total > pageSize!) {
       return (
@@ -119,21 +125,31 @@ export default class IconCategory extends Component<IconItemProps> {
   renderIcons() {
     const { value, prefixCls } = this.props;
     return this.getIcons().map(icon => (
-      <IconItem key={icon} prefixCls={prefixCls} type={icon} onSelect={this.handleItemSelect} active={value === icon} />
+      <IconItem
+        key={icon}
+        prefixCls={prefixCls}
+        type={icon}
+        onSelect={this.handleItemSelect}
+        active={value === icon}
+      />
     ));
   }
 
   getIcons() {
-    const { page, props: { paging, pageSize, icons } } = this;
+    const {
+      page,
+      props: { paging, pageSize, icons },
+    } = this;
     if (paging && icons.length > pageSize!) {
       return icons.slice((page - 1) * pageSize!, page * pageSize!);
-    } else {
-      return icons;
     }
+    return icons;
   }
 
   render() {
-    const { props: { prefixCls } } = this;
+    const {
+      props: { prefixCls },
+    } = this;
     return (
       <div className={`${prefixCls}-category`}>
         {this.renderPagination()}

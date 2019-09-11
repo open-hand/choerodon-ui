@@ -3,10 +3,10 @@ import { computed } from 'mobx';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
-import CheckBox from '../check-box/CheckBox';
+import ObserverCheckBox from '../check-box/CheckBox';
 import { $l } from '../locale-context';
 import Record from '../data-set/Record';
-import TextField from '../text-field/TextField';
+import ObserverTextField from '../text-field/TextField';
 import Icon from '../icon';
 import { getItemKey, Select, SelectProps } from '../select/Select';
 import autobind from '../_util/autobind';
@@ -23,7 +23,6 @@ export interface TransferListProps extends SelectProps {
 
 @observer
 export default class TransferList extends Select<TransferListProps> {
-
   @computed
   get popup() {
     return true;
@@ -31,7 +30,11 @@ export default class TransferList extends Select<TransferListProps> {
 
   @computed
   get header(): ReactNode {
-    const { prefixCls, multiple, observableProps: { header } } = this;
+    const {
+      prefixCls,
+      multiple,
+      observableProps: { header },
+    } = this;
     if (multiple || header) {
       return (
         <div className={`${prefixCls}-header`}>
@@ -40,24 +43,35 @@ export default class TransferList extends Select<TransferListProps> {
         </div>
       );
     }
+    return undefined;
   }
 
   @computed
   get footer(): ReactNode {
-    const { prefixCls, filteredOptions, observableProps: { footer } } = this;
+    const {
+      prefixCls,
+      filteredOptions,
+      observableProps: { footer },
+    } = this;
     if (footer) {
-      return (
-        <div className={`${prefixCls}-footer`}>
-          {footer(filteredOptions)}
-        </div>
-      );
+      return <div className={`${prefixCls}-footer`}>{footer(filteredOptions)}</div>;
     }
+    return undefined;
   }
 
   getOtherProps() {
     return omit(super.getOtherProps(), [
-      'type', 'autoComplete', 'ref', 'body', 'footer', 'header', 'selected',
-      'onChange', 'onSelect', 'onSelectAll', 'onKeyDown',
+      'type',
+      'autoComplete',
+      'ref',
+      'body',
+      'footer',
+      'header',
+      'selected',
+      'onChange',
+      'onSelect',
+      'onSelectAll',
+      'onKeyDown',
     ]);
   }
 
@@ -83,15 +97,22 @@ export default class TransferList extends Select<TransferListProps> {
 
   @autobind
   handleClear() {
-    this.setText(void 0);
+    this.setText(undefined);
   }
 
   getHeaderSelected() {
-    const { filteredOptions: { length }, multiple, prefixCls, props: { selected: { length: selectedLength } } } = this;
+    const {
+      filteredOptions: { length },
+      multiple,
+      prefixCls,
+      props: {
+        selected: { length: selectedLength },
+      },
+    } = this;
     const selectedText = selectedLength ? `${selectedLength}/` : '';
     if (multiple) {
       return (
-        <CheckBox
+        <ObserverCheckBox
           disabled={this.isDisabled()}
           onChange={this.handleSelectAllChange}
           onFocus={stopPropagation}
@@ -101,7 +122,7 @@ export default class TransferList extends Select<TransferListProps> {
           <span className={`${prefixCls}-header-selected`}>
             {`${selectedText}${length}${$l('Transfer', 'items')}`}
           </span>
-        </CheckBox>
+        </ObserverCheckBox>
       );
     }
   }
@@ -110,7 +131,7 @@ export default class TransferList extends Select<TransferListProps> {
     const { prefixCls } = this;
     return (
       <div className={`${prefixCls}-body-search-wrapper`}>
-        <TextField
+        <ObserverTextField
           ref={this.elementReference}
           onInput={this.handleChange}
           onClear={this.handleClear}
@@ -123,16 +144,27 @@ export default class TransferList extends Select<TransferListProps> {
   }
 
   renderBody(): ReactNode {
-    const { prefixCls, searchable, textField, valueField, props: { selected, onSelect } } = this;
+    const {
+      prefixCls,
+      searchable,
+      textField,
+      valueField,
+      props: { selected, onSelect },
+    } = this;
     const searchField = searchable && this.getSearchField();
     const classString = classNames(`${prefixCls}-body`, {
       [`${prefixCls}-body-with-search`]: searchable,
     });
-    const selectedKeys = selected.map(record => getItemKey(record, record.get(textField), record.get(valueField)));
+    const selectedKeys = selected.map(record =>
+      getItemKey(record, record.get(textField), record.get(valueField)),
+    );
     return (
       <div className={classString}>
         {searchField}
-        <div className={`${prefixCls}-content-wrapper`} onFocus={searchable ? stopPropagation : void 0}>
+        <div
+          className={`${prefixCls}-content-wrapper`}
+          onFocus={searchable ? stopPropagation : undefined}
+        >
           {this.getMenu({ selectedKeys, onClick: onSelect, focusable: !this.searchable })}
         </div>
       </div>
@@ -147,8 +179,7 @@ export default class TransferList extends Select<TransferListProps> {
     });
   }
 
-  removeLastValue() {
-  }
+  removeLastValue() {}
 
   @autobind
   handleBlur(e) {

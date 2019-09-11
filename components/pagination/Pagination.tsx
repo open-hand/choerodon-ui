@@ -32,17 +32,19 @@ function getIcon(type: string) {
     case 'next':
       return 'navigate_next';
     default:
-      return;
   }
 }
 
 function itemRender(page: number, type: string, item: ReactNode, disabled: boolean, size?: Size) {
   if (page !== undefined) {
     if (type === 'page' || type === 'jump-prev' || type === 'jump-next') {
-      return <Button size={size} shape="circle">{item}</Button>;
-    } else {
-      return <Button size={size} shape="circle" icon={getIcon(type)} disabled={disabled} />;
+      return (
+        <Button size={size} shape="circle">
+          {item}
+        </Button>
+      );
     }
+    return <Button size={size} shape="circle" icon={getIcon(type)} disabled={disabled} />;
   }
 }
 
@@ -66,13 +68,17 @@ export interface PaginationProps {
   className?: string;
   prefixCls?: string;
   selectPrefixCls?: string;
-  itemRender?: (page: number, type: 'page' | 'first' | 'last' | 'prev' | 'next' | 'jump-prev' | 'jump-next') => ReactNode;
+  itemRender?: (
+    page: number,
+    type: 'page' | 'first' | 'last' | 'prev' | 'next' | 'jump-prev' | 'jump-next',
+  ) => ReactNode;
 }
 
 export type PaginationLocale = any;
 
 export default class Pagination extends Component<PaginationProps, {}> {
   static displayName = 'Pagination';
+
   static defaultProps = {
     showSizeChanger: true,
     showSizeChangerLabel: true,
@@ -84,7 +90,13 @@ export default class Pagination extends Component<PaginationProps, {}> {
   };
 
   renderPagination = (locale: PaginationLocale) => {
-    const { className, size, prefixCls: customizePrefixCls, selectPrefixCls: customizeSelectPrefixCls, ...restProps } = this.props;
+    const {
+      className,
+      size,
+      prefixCls: customizePrefixCls,
+      selectPrefixCls: customizeSelectPrefixCls,
+      ...restProps
+    } = this.props;
     const prefixCls = getPrefixCls('pagination', customizePrefixCls);
     const selectPrefixCls = getPrefixCls('select', customizeSelectPrefixCls);
     return (
@@ -102,10 +114,7 @@ export default class Pagination extends Component<PaginationProps, {}> {
 
   render() {
     return (
-      <LocaleReceiver
-        componentName="Pagination"
-        defaultLocale={enUS}
-      >
+      <LocaleReceiver componentName="Pagination" defaultLocale={enUS}>
         {this.renderPagination}
       </LocaleReceiver>
     );

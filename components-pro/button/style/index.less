@@ -1,8 +1,8 @@
-@import "../../../components/style/themes/default";
+@import '../../../components/style/themes/default';
 
-@btn-prefix-cls: ~"@{c7n-pro-prefix}-btn";
+@btn-prefix-cls: ~'@{c7n-pro-prefix}-btn';
 
-@progress-cls: ~"@{c7n-prefix}-progress";
+@progress-cls: ~'@{c7n-prefix}-progress';
 
 .@{btn-prefix-cls} {
   background-color: @btn-default-bg;
@@ -12,12 +12,12 @@
   cursor: pointer;
   display: inline-block;
   outline: none;
-  padding: .03rem .1rem .04rem .1rem;
+  padding: 0.03rem 0.1rem 0.04rem 0.1rem;
   position: relative;
   text-align: center;
   user-select: none;
-  vertical-align: text-bottom;
-  transition: all .3s ease-out;
+  vertical-align: top;
+  transition: all 0.3s ease-out;
   line-height: 1.5;
 
   &:focus {
@@ -29,7 +29,7 @@
   }
 
   > .@{iconfont-css-prefix} {
-    margin-right: .05rem;
+    margin-right: 0.05rem;
     font-size: @btn-icon-size;
   }
 
@@ -40,7 +40,7 @@
 
   &-lg {
     font-size: @font-size-lg;
-    padding: .07rem .12rem;
+    padding: 0.07rem 0.12rem;
     .@{c7n-pro-prefix}-icon {
       font-size: @font-size-lg;
     }
@@ -48,7 +48,7 @@
 
   &-sm {
     font-size: @font-size-sm;
-    padding: 0 .08rem;
+    padding: 0 0.08rem;
     .@{c7n-pro-prefix}-icon {
       font-size: @font-size-sm;
     }
@@ -79,16 +79,16 @@
     cursor: not-allowed;
     &:before {
       position: absolute;
-      top: -.01rem;
-      left: -.01rem;
-      bottom: -.01rem;
-      right: -.01rem;
+      top: -0.01rem;
+      left: -0.01rem;
+      bottom: -0.01rem;
+      right: -0.01rem;
       background: #fff;
-      opacity: .35;
-      content: "";
+      opacity: 0.35;
+      content: '';
       border-radius: inherit;
       z-index: 1;
-      transition: opacity .2s;
+      transition: opacity 0.2s;
       pointer-events: none;
     }
   }
@@ -284,7 +284,7 @@
     width: @btn-circle-size;
     height: @btn-circle-size;
     > .@{iconfont-css-prefix} {
-      font-size: @btn-icon-size + .06rem;
+      font-size: @btn-icon-size + 0.06rem;
       line-height: 1.5;
       margin-right: 0;
     }
@@ -301,29 +301,29 @@
       width: @btn-circle-size-lg;
       height: @btn-circle-size-lg;
       > .@{iconfont-css-prefix} {
-        font-size: @btn-icon-size + .1rem;
+        font-size: @btn-icon-size + 0.1rem;
       }
     }
     &:disabled:before {
-      opacity: .5;
+      opacity: 0.5;
     }
   }
 
   .@{progress-cls}.@{progress-cls}-loading {
     line-height: 1;
-    margin-right: .01rem;
+    margin-right: 0.01rem;
 
     & + span {
-      margin-left: .05rem;
+      margin-left: 0.05rem;
     }
     .@{progress-cls}-inner {
-      width: .15rem;
-      height: .15rem;
+      width: 0.15rem;
+      height: 0.15rem;
     }
   }
 
   & + & {
-    margin-left: .1rem;
+    margin-left: 0.1rem;
   }
 
   > * {

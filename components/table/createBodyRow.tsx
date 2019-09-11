@@ -14,12 +14,12 @@ interface BodyRowState {
   selected: boolean;
 }
 
-export interface BodyRowClass extends ComponentClass {
-}
+export interface BodyRowClass extends ComponentClass {}
 
 export default function createTableRow(Cmp = 'tr') {
   class BodyRow extends Component<BodyRowProps, BodyRowState> {
     private store: Store;
+
     private unsubscribe: () => void;
 
     constructor(props: BodyRowProps) {
@@ -44,33 +44,29 @@ export default function createTableRow(Cmp = 'tr') {
     }
 
     subscribe() {
+      const { state } = this;
       const { store, rowKey } = this.props;
       this.unsubscribe = store.subscribe(() => {
         const { selectedRowKeys } = this.store.getState();
         const selected = selectedRowKeys.indexOf(rowKey) >= 0;
-        if (selected !== this.state.selected) {
+        if (selected !== state.selected) {
           this.setState({ selected });
         }
       });
     }
 
     render() {
-      const otherProps: any = omit(this.props, [
-        'prefixCls',
-        'rowKey',
-        'store',
-        'children',
-      ]);
-      const className = classnames(
-        this.props.className,
-        {
-          [`${this.props.prefixCls}-row-selected`]: this.state.selected,
-        },
-      );
+      const { props } = this;
+      const { selected } = this.state;
+      const { className, prefixCls, children } = props;
+      const otherProps: any = omit(props, ['prefixCls', 'rowKey', 'store', 'children']);
+      const classString = classnames(className, {
+        [`${prefixCls}-row-selected`]: selected,
+      });
 
       return (
-        <Cmp {...otherProps} className={className}>
-          {this.props.children}
+        <Cmp {...otherProps} className={classString}>
+          {children}
         </Cmp>
       );
     }

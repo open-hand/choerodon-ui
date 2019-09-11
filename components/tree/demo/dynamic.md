@@ -13,8 +13,9 @@ title:
 
 To load data asynchronously when click to expand a treeNode.
 
-````jsx
+```jsx
 import { Tree } from 'choerodon-ui';
+
 const TreeNode = Tree.TreeNode;
 
 class Demo extends React.Component {
@@ -24,10 +25,10 @@ class Demo extends React.Component {
       { title: 'Expand to load', key: '1' },
       { title: 'Tree Node', key: '2', isLeaf: true },
     ],
-  }
+  };
 
-  onLoadData = (treeNode) => {
-    return new Promise((resolve) => {
+  onLoadData = treeNode => {
+    return new Promise(resolve => {
       if (treeNode.props.children) {
         resolve();
         return;
@@ -43,10 +44,10 @@ class Demo extends React.Component {
         resolve();
       }, 1000);
     });
-  }
+  };
 
-  renderTreeNodes = (data) => {
-    return data.map((item) => {
+  renderTreeNodes = data => {
+    return data.map(item => {
       if (item.children) {
         return (
           <TreeNode title={item.title} key={item.key} dataRef={item}>
@@ -54,18 +55,14 @@ class Demo extends React.Component {
           </TreeNode>
         );
       }
-      return <TreeNode {...item} dataRef={item} />;
+      return <TreeNode key={item.key} {...item} dataRef={item} />;
     });
-  }
+  };
 
   render() {
-    return (
-      <Tree loadData={this.onLoadData}>
-        {this.renderTreeNodes(this.state.treeData)}
-      </Tree>
-    );
+    return <Tree loadData={this.onLoadData}>{this.renderTreeNodes(this.state.treeData)}</Tree>;
   }
 }
 
 ReactDOM.render(<Demo />, mountNode);
-````
+```

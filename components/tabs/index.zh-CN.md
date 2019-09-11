@@ -12,7 +12,7 @@ cols: 1
 
 提供平级的区域将大块内容进行收纳和展现，保持界面整洁。
 
-Ant Design 依次提供了三级选项卡，分别用于不同的场景。
+Choerodon UI 依次提供了三级选项卡，分别用于不同的场景。
 
 - 卡片式的页签，提供可关闭的样式，常用于容器顶部。
 - 标准线条式页签，用于容器内部的主功能切换，这是最常用的 Tabs。
@@ -42,8 +42,8 @@ Ant Design 依次提供了三级选项卡，分别用于不同的场景。
 
 ### Tabs.TabPane
 
-| 参数 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| forceRender | 被隐藏时是否渲染 DOM 结构 | boolean | false |
-| key | 对应 activeKey | string | 无 |
-| tab | 选项卡头显示文字 | string\|ReactNode | 无 |
+| 参数        | 说明                      | 类型              | 默认值 |
+| ----------- | ------------------------- | ----------------- | ------ |
+| forceRender | 被隐藏时是否渲染 DOM 结构 | boolean           | false  |
+| key         | 对应 activeKey            | string            | 无     |
+| tab         | 选项卡头显示文字          | string\|ReactNode | 无     |

@@ -20,11 +20,16 @@ export function get(obj: object, prop: string): any {
   }
 }
 
-export function set(data: object, prop: string, value: any, fields: Fields = observable.map<string, Field>()): any {
+export function set(
+  data: object,
+  prop: string,
+  value: any,
+  fields: Fields = observable.map<string, Field>(),
+): any {
   const index = prop.indexOf('.');
   if (index !== -1) {
     const key = prop.slice(0, index);
-    if (!data[key] && value !== void 0) {
+    if (!data[key] && value !== undefined) {
       const field = fields.get(key);
       if (field && field.get('multiple')) {
         mobxSet(data, key, []);

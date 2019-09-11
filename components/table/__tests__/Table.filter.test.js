@@ -13,10 +13,7 @@ describe('Table.filter', () => {
       {
         text: 'Title',
         value: 'title',
-        children: [
-          { text: 'Designer', value: 'designer' },
-          { text: 'Coder', value: 'coder' },
-        ],
+        children: [{ text: 'Designer', value: 'designer' }, { text: 'Coder', value: 'coder' }],
       },
     ],
     onFilter: filterFn,
@@ -31,13 +28,7 @@ describe('Table.filter', () => {
 
   function createTable(props) {
     return (
-      <Table
-        columns={[column]}
-        dataSource={data}
-        pagination={false}
-        filterBar={false}
-        {...props}
-      />
+      <Table columns={[column]} dataSource={data} pagination={false} filterBar={false} {...props} />
     );
   }
 
@@ -53,54 +44,82 @@ describe('Table.filter', () => {
 
   it('renders menu correctly', () => {
     const wrapper = mount(createTable());
-    const dropdownWrapper = render(wrapper.find('Trigger').at(0).instance().getComponent());
+    const dropdownWrapper = render(
+      wrapper
+        .find('Trigger')
+        .at(0)
+        .instance()
+        .getComponent(),
+    );
     expect(dropdownWrapper).toMatchSnapshot();
   });
 
   it('renders radio filter correctly', () => {
-    const wrapper = mount(createTable({
-      columns: [{
-        ...column,
-        filterMultiple: false,
-      }],
-    }));
-    const dropdownWrapper = render(wrapper.find('Trigger').at(0).instance().getComponent());
+    const wrapper = mount(
+      createTable({
+        columns: [
+          {
+            ...column,
+            filterMultiple: false,
+          },
+        ],
+      }),
+    );
+    const dropdownWrapper = render(
+      wrapper
+        .find('Trigger')
+        .at(0)
+        .instance()
+        .getComponent(),
+    );
     expect(dropdownWrapper).toMatchSnapshot();
   });
 
   it('renders custom content correctly', () => {
-    const filter = (
-      <div className="custom-filter-dropdown">
-        custom filter
-      </div>
+    const filter = <div className="custom-filter-dropdown">custom filter</div>;
+    const wrapper = mount(
+      createTable({
+        columns: [
+          {
+            ...column,
+            filterDropdown: filter,
+          },
+        ],
+      }),
     );
-    const wrapper = mount(createTable({
-      columns: [{
-        ...column,
-        filterDropdown: filter,
-      }],
-    }));
 
-    const dropdownWrapper = render(wrapper.find('Trigger').at(0).instance().getComponent());
+    const dropdownWrapper = render(
+      wrapper
+        .find('Trigger')
+        .at(0)
+        .instance()
+        .getComponent(),
+    );
     expect(dropdownWrapper).toMatchSnapshot();
   });
 
   it('can be controlled by filterDropdownVisible', () => {
-    const wrapper = mount(createTable({
-      columns: [{
-        ...column,
-        filterDropdownVisible: true,
-      }],
-    }));
+    const wrapper = mount(
+      createTable({
+        columns: [
+          {
+            ...column,
+            filterDropdownVisible: true,
+          },
+        ],
+      }),
+    );
 
     let dropdown = wrapper.find('Dropdown').first();
     expect(dropdown.props().visible).toBe(true);
 
     wrapper.setProps({
-      columns: [{
-        ...column,
-        filterDropdownVisible: false,
-      }],
+      columns: [
+        {
+          ...column,
+          filterDropdownVisible: false,
+        },
+      ],
     });
 
     dropdown = wrapper.find('Dropdown').first();
@@ -109,50 +128,69 @@ describe('Table.filter', () => {
 
   it('fires change event when visible change', () => {
     const handleChange = jest.fn();
-    const wrapper = mount(createTable({
-      columns: [{
-        ...column,
-        onFilterDropdownVisibleChange: handleChange,
-      }],
-    }));
+    const wrapper = mount(
+      createTable({
+        columns: [
+          {
+            ...column,
+            onFilterDropdownVisibleChange: handleChange,
+          },
+        ],
+      }),
+    );
 
-    wrapper.find('.c7n-dropdown-trigger').first().simulate('click');
+    wrapper
+      .find('.c7n-dropdown-trigger')
+      .first()
+      .simulate('click');
 
-    expect(handleChange).toBeCalledWith(true);
+    expect(handleChange).toHaveBeenCalledWith(true);
   });
 
   it('can be controlled by filteredValue', () => {
-    const wrapper = mount(createTable({
-      columns: [{
-        ...column,
-        filteredValue: ['Lucy'],
-      }],
-    }));
+    const wrapper = mount(
+      createTable({
+        columns: [
+          {
+            ...column,
+            filteredValue: ['Lucy'],
+          },
+        ],
+      }),
+    );
 
     expect(wrapper.find('tbody tr').length).toBe(1);
     wrapper.setProps({
-      columns: [{
-        ...column,
-        filteredValue: [],
-      }],
+      columns: [
+        {
+          ...column,
+          filteredValue: [],
+        },
+      ],
     });
     expect(wrapper.find('tbody tr').length).toBe(4);
   });
 
   it('can be controlled by filteredValue null', () => {
-    const wrapper = mount(createTable({
-      columns: [{
-        ...column,
-        filteredValue: ['Lucy'],
-      }],
-    }));
+    const wrapper = mount(
+      createTable({
+        columns: [
+          {
+            ...column,
+            filteredValue: ['Lucy'],
+          },
+        ],
+      }),
+    );
 
     expect(wrapper.find('tbody tr').length).toBe(1);
     wrapper.setProps({
-      columns: [{
-        ...column,
-        filteredValue: null,
-      }],
+      columns: [
+        {
+          ...column,
+          filteredValue: null,
+        },
+      ],
     });
     expect(wrapper.find('tbody tr').length).toBe(4);
   });
@@ -160,12 +198,21 @@ describe('Table.filter', () => {
   it('fires change event', () => {
     const handleChange = jest.fn();
     const wrapper = mount(createTable({ onChange: handleChange }));
-    const dropdownWrapper = mount(wrapper.find('Trigger').at(0).instance().getComponent());
+    const dropdownWrapper = mount(
+      wrapper
+        .find('Trigger')
+        .at(0)
+        .instance()
+        .getComponent(),
+    );
 
-    dropdownWrapper.find('MenuItem').first().simulate('click');
+    dropdownWrapper
+      .find('MenuItem')
+      .first()
+      .simulate('click');
     dropdownWrapper.find('.confirm').simulate('click');
 
-    expect(handleChange).toBeCalledWith({}, { name: ['boy'] }, {}, []);
+    expect(handleChange).toHaveBeenCalledWith({}, { name: ['boy'] }, {}, []);
   });
 
   it('three levels menu', () => {
@@ -190,21 +237,40 @@ describe('Table.filter', () => {
         ],
       },
     ];
-    const wrapper = mount(createTable({
-      columns: [{
-        ...column,
-        filters,
-      }],
-    }));
+    const wrapper = mount(
+      createTable({
+        columns: [
+          {
+            ...column,
+            filters,
+          },
+        ],
+      }),
+    );
     jest.useFakeTimers();
-    const dropdownWrapper = mount(wrapper.find('Trigger').at(0).instance().getComponent());
-    dropdownWrapper.find('.c7n-dropdown-menu-submenu-title').at(0).simulate('mouseEnter');
+    const dropdownWrapper = mount(
+      wrapper
+        .find('Trigger')
+        .at(0)
+        .instance()
+        .getComponent(),
+    );
+    dropdownWrapper
+      .find('.c7n-dropdown-menu-submenu-title')
+      .at(0)
+      .simulate('mouseEnter');
     jest.runAllTimers();
     dropdownWrapper.update();
-    dropdownWrapper.find('.c7n-dropdown-menu-submenu-title').at(1).simulate('mouseEnter');
+    dropdownWrapper
+      .find('.c7n-dropdown-menu-submenu-title')
+      .at(1)
+      .simulate('mouseEnter');
     jest.runAllTimers();
     dropdownWrapper.update();
-    dropdownWrapper.find('MenuItem').last().simulate('click');
+    dropdownWrapper
+      .find('MenuItem')
+      .last()
+      .simulate('click');
     dropdownWrapper.find('.confirm').simulate('click');
     wrapper.update();
     expect(renderedNames(wrapper)).toEqual(['Jack']);
@@ -224,17 +290,16 @@ describe('Table.filter', () => {
       };
 
       render() {
-        const { filters: { name } } = this.state;
+        const {
+          filters: { name },
+        } = this.state;
         return (
           <Table dataSource={data} onChange={this.handleChange} filterBar={false}>
             <Column
               title="name"
               dataIndex="name"
               key="name"
-              filters={[
-                { text: 'Jack', value: 'Jack' },
-                { text: 'Lucy', value: 'Lucy' },
-              ]}
+              filters={[{ text: 'Jack', value: 'Jack' }, { text: 'Lucy', value: 'Lucy' }]}
               filteredValue={name}
               onFilter={filterFn}
             />
@@ -244,9 +309,18 @@ describe('Table.filter', () => {
     }
 
     const wrapper = mount(<App />);
-    const dropdownWrapper = mount(wrapper.find('Trigger').at(0).instance().getComponent());
+    const dropdownWrapper = mount(
+      wrapper
+        .find('Trigger')
+        .at(0)
+        .instance()
+        .getComponent(),
+    );
 
-    dropdownWrapper.find('MenuItem').first().simulate('click');
+    dropdownWrapper
+      .find('MenuItem')
+      .first()
+      .simulate('click');
     dropdownWrapper.find('.confirm').simulate('click');
     wrapper.update();
     expect(renderedNames(wrapper)).toEqual(['Jack']);
@@ -266,10 +340,7 @@ describe('Table.filter', () => {
             title: 'Name',
             dataIndex: 'name',
             key: 'name',
-            filters: [
-              { text: 'Jack', value: 'Jack' },
-              { text: 'Lucy', value: 'Lucy' },
-            ],
+            filters: [{ text: 'Jack', value: 'Jack' }, { text: 'Lucy', value: 'Lucy' }],
             onFilter: filterFn,
             filteredValue: ['Jack'],
           },
@@ -287,30 +358,38 @@ describe('Table.filter', () => {
       { key: 2, name: 'Tom', age: 21 },
       { key: 3, name: 'Jerry', age: 22 },
     ];
-    const wrapper = mount(
-      <Table columns={columns} dataSource={testData} filterBar={false} />,
-    );
+    const wrapper = mount(<Table columns={columns} dataSource={testData} filterBar={false} />);
 
     expect(renderedNames(wrapper)).toEqual(['Jack']);
   });
 
   it('confirm filter when dropdown hidden', () => {
     const handleChange = jest.fn();
-    const wrapper = mount(createTable({
-      columns: [{
-        ...column,
-        filters: [
-          { text: 'Jack', value: 'Jack' },
-          { text: 'Lucy', value: 'Lucy' },
+    const wrapper = mount(
+      createTable({
+        columns: [
+          {
+            ...column,
+            filters: [{ text: 'Jack', value: 'Jack' }, { text: 'Lucy', value: 'Lucy' }],
+          },
         ],
-      }],
-      onChange: handleChange,
-    }));
+        onChange: handleChange,
+      }),
+    );
 
-    wrapper.find('.c7n-dropdown-trigger').first().simulate('click');
-    wrapper.find('.c7n-dropdown-menu-item').first().simulate('click');
-    wrapper.find('.c7n-dropdown-trigger').first().simulate('click');
+    wrapper
+      .find('.c7n-dropdown-trigger')
+      .first()
+      .simulate('click');
+    wrapper
+      .find('.c7n-dropdown-menu-item')
+      .first()
+      .simulate('click');
+    wrapper
+      .find('.c7n-dropdown-trigger')
+      .first()
+      .simulate('click');
 
-    expect(handleChange).toBeCalled();
+    expect(handleChange).toHaveBeenCalled();
   });
 });

@@ -11,7 +11,7 @@ export function toRangeValue(value: any, range?: boolean | [string, string]): [a
   } else if (isArrayLike(value)) {
     return value.slice(0, 2) as [any, any];
   }
-  return [void 0, void 0];
+  return [undefined, undefined];
 }
 
 export function toMultipleValue(value: any, range?: boolean | [string, string]) {

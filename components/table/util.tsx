@@ -21,7 +21,11 @@ export function flatArray(data: any[] = [], childrenName = 'children') {
   return result;
 }
 
-export function treeMap<Node>(tree: Node[], mapper: (node: Node, index: number) => any, childrenName = 'children') {
+export function treeMap<Node>(
+  tree: Node[],
+  mapper: (node: Node, index: number) => any,
+  childrenName = 'children',
+) {
   return tree.map((node: any, index) => {
     const extra: any = {};
     if (node[childrenName]) {
@@ -34,22 +38,28 @@ export function treeMap<Node>(tree: Node[], mapper: (node: Node, index: number) 
   });
 }
 
-export function flatFilter<T>(tree: ColumnProps<T>[], callback: (node: ColumnProps<T>) => any): ColumnProps<T>[] {
-  return tree.reduce((acc, node) => {
-    if (callback(node)) {
-      acc.push(node);
-    }
-    if (node.children) {
-      const children = flatFilter(node.children, callback);
-      acc.push(...children);
-    }
-    return acc;
-  }, [] as ColumnProps<T>[]);
+export function flatFilter<T>(
+  tree: ColumnProps<T>[],
+  callback: (node: ColumnProps<T>) => any,
+): ColumnProps<T>[] {
+  return tree.reduce(
+    (acc, node) => {
+      if (callback(node)) {
+        acc.push(node);
+      }
+      if (node.children) {
+        const children = flatFilter(node.children, callback);
+        acc.push(...children);
+      }
+      return acc;
+    },
+    [] as ColumnProps<T>[],
+  );
 }
 
 export function normalizeColumns(elements: ReactChildren) {
   const columns: any[] = [];
-  Children.forEach(elements, (element) => {
+  Children.forEach(elements, element => {
     if (!isValidElement(element)) {
       return;
     }
@@ -71,12 +81,20 @@ export function getLeafColumns<T>(columns: ColumnProps<T>[]) {
   return flatFilter(columns, c => !c.children);
 }
 
-export function findColumnByFilterValue<T>(record: T, columns: ColumnProps<T>[], inputValue: string): ColumnProps<T> | undefined {
-  return columns.find((col) => {
+export function getColumnKey<T>(column: ColumnProps<T>, index?: number) {
+  return column.key || column.dataIndex || index;
+}
+
+export function findColumnByFilterValue<T>(
+  record: T,
+  columns: ColumnProps<T>[],
+  inputValue: string,
+): ColumnProps<T> | undefined {
+  return columns.find(col => {
     const key = getColumnKey(col);
     if (key) {
       let value = (record as any)[key];
-      if (value && (typeof value !== 'object')) {
+      if (value && typeof value !== 'object') {
         value = value.toString();
         if (value.toLowerCase().indexOf(inputValue.toLowerCase()) !== -1) {
           return true;
@@ -87,11 +105,13 @@ export function findColumnByFilterValue<T>(record: T, columns: ColumnProps<T>[],
   });
 }
 
-export function filterByInputValue<T>(dataSource: T[],
-                                      columns: ColumnProps<T>[],
-                                      inputValue: string,
-                                      cb: (record: T, column: ColumnProps<T>) => void) {
-  dataSource.forEach((data) => {
+export function filterByInputValue<T>(
+  dataSource: T[],
+  columns: ColumnProps<T>[],
+  inputValue: string,
+  cb: (record: T, column: ColumnProps<T>) => void,
+) {
+  dataSource.forEach(data => {
     const column = findColumnByFilterValue<T>(data, columns, inputValue);
     if (column) {
       cb(data, column);
@@ -103,7 +123,8 @@ export function removeHiddenColumns<T>(columns: ColumnProps<T>[]) {
   return columns.filter(c => {
     if (c.hidden) {
       return false;
-    } else if (c.children) {
+    }
+    if (c.children) {
       const children = removeHiddenColumns(c.children);
       if (children.length) {
         c.children = children;
@@ -113,8 +134,4 @@ export function removeHiddenColumns<T>(columns: ColumnProps<T>[]) {
     }
     return true;
   });
-}
-
-export function getColumnKey<T>(column: ColumnProps<T>, index?: number) {
-  return column.key || column.dataIndex || index;
 }

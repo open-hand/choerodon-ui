@@ -6,11 +6,10 @@ let mapStore;
 function bind(fn, context) {
   if (fn.bind) {
     return fn.bind(context);
-  } else {
-    return function __autobind__() {
-      return fn.apply(context, arguments);
-    };
   }
+  return function __autobind__(...args) {
+    return fn.apply(context, args);
+  };
 }
 
 function getBoundSuper(obj, fn) {
@@ -65,7 +64,10 @@ export default function autobind(target, key, descriptor) {
       // Someone accesses the property directly on a prototype but it was found
       // up the chain, not defined directly on it
       // i.e. Class.prototype.hasOwnProperty(key) == false && key in Class.prototype
-      if (this.constructor !== constructor && Object.getPrototypeOf(this).constructor === constructor) {
+      if (
+        this.constructor !== constructor &&
+        Object.getPrototypeOf(this).constructor === constructor
+      ) {
         return fn;
       }
 

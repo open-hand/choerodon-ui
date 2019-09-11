@@ -6,9 +6,7 @@ import RadioGroup from '../group';
 describe('Radio', () => {
   function createRadioGroup(props) {
     return (
-      <RadioGroup
-        {...props}
-      >
+      <RadioGroup {...props}>
         <Radio value="A">A</Radio>
         <Radio value="B">B</Radio>
         <Radio value="C">C</Radio>
@@ -23,12 +21,7 @@ describe('Radio', () => {
       { label: 'C', value: 'C' },
     ];
 
-    return (
-      <RadioGroup
-        {...props}
-        options={options}
-      />
-    );
+    return <RadioGroup {...props} options={options} />;
   }
 
   it('responses hover events', () => {
@@ -36,13 +29,9 @@ describe('Radio', () => {
     const onMouseLeave = jest.fn();
 
     const wrapper = shallow(
-      <RadioGroup
-        className="radiogroup"
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}
-      >
+      <RadioGroup className="radiogroup" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
         <Radio />
-      </RadioGroup>
+      </RadioGroup>,
     );
     wrapper.find('.radiogroup').simulate('mouseenter');
     expect(onMouseEnter).toHaveBeenCalled();
@@ -57,7 +46,7 @@ describe('Radio', () => {
     const wrapper = mount(
       createRadioGroup({
         onChange,
-      })
+      }),
     );
     const radios = wrapper.find('input');
 
@@ -72,13 +61,13 @@ describe('Radio', () => {
     expect(onChange.mock.calls.length).toBe(2);
   });
 
-  it('won\'t fire change events when value not changes', () => {
+  it("won't fire change events when value not changes", () => {
     const onChange = jest.fn();
 
     const wrapper = mount(
       createRadioGroup({
         onChange,
-      })
+      }),
     );
     const radios = wrapper.find('input');
 
@@ -94,9 +83,7 @@ describe('Radio', () => {
   });
 
   it('optional should correct render', () => {
-    const wrapper = mount(
-      createRadioGroupByOption()
-    );
+    const wrapper = mount(createRadioGroupByOption());
     const radios = wrapper.find('input');
 
     expect(radios.length).toBe(3);
@@ -104,12 +91,10 @@ describe('Radio', () => {
 
   it('all children should have a name property', () => {
     const GROUP_NAME = 'radiogroup';
-    const wrapper = mount(
-      createRadioGroup({ name: GROUP_NAME })
-    );
+    const wrapper = mount(createRadioGroup({ name: GROUP_NAME }));
 
-    expect(wrapper.find('input[type="radio"]').forEach((el) => {
+    wrapper.find('input[type="radio"]').forEach(el => {
       expect(el.props().name).toEqual(GROUP_NAME);
-    }));
+    });
   });
 });

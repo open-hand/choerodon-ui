@@ -1,8 +1,8 @@
-@import "../../style/themes/default";
-@import "../../style/mixins/index";
+@import '../../style/themes/default';
+@import '../../style/mixins/index';
 @import '../../input/style/mixin';
 
-@mention-prefix-cls: ~"@{c7n-prefix}-mention";
+@mention-prefix-cls: ~'@{c7n-prefix}-mention';
 
 .@{mention-prefix-cls} {
   &-wrapper {
@@ -15,14 +15,14 @@
 
   &-editor {
     .input;
-    min-height: @input-height-base;
-    height: auto; // To override height in .input mixin
-    line-height: @line-height-base;
-    padding: 0;
     display: block;
+    height: auto; // To override height in .input mixin
+    min-height: @input-height-base;
+    padding: 0;
+    line-height: @line-height-base;
     &-wrapper {
-      overflow-y: auto;
       height: auto;
+      overflow-y: auto;
     }
   }
   &-active:not(.disabled) .@{mention-prefix-cls}-editor {
@@ -34,19 +34,19 @@
 
   &-dropdown {
     .reset-component;
-    margin-top: 1.5em;
-    max-height: 2.5rem;
-    min-width: 1.2rem;
-    background-color: @component-background;
-    box-shadow: @box-shadow-base;
-    border-radius: @border-radius-base;
-    z-index: @zindex-dropdown;
-    left: -99.99rem;
-    top: -99.99rem;
     position: absolute;
-    outline: none;
+    top: -99.99rem;
+    left: -99.99rem;
+    z-index: @zindex-dropdown;
+    min-width: 1.2rem;
+    max-height: 2.5rem;
+    margin-top: 1.5em;
     overflow-x: hidden;
     overflow-y: auto;
+    background-color: @component-background;
+    border-radius: @border-radius-base;
+    outline: none;
+    box-shadow: @box-shadow-base;
 
     &-placement-top {
       margin-top: -0.1em;
@@ -56,22 +56,22 @@
       color: @disabled-color;
 
       .@{iconfont-css-prefix}-loading {
+        display: block;
         color: @primary-color;
         text-align: center;
-        display: block;
       }
     }
     &-item {
       position: relative;
       display: block;
-      padding: .05rem @control-padding-horizontal;
-      line-height: .22rem;
-      font-weight: normal;
-      color: @text-color;
-      white-space: nowrap;
-      cursor: pointer;
-      text-overflow: ellipsis;
+      padding: 0.05rem @control-padding-horizontal;
       overflow: hidden;
+      color: @text-color;
+      font-weight: normal;
+      line-height: 0.22rem;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      cursor: pointer;
       transition: background 0.3s;
 
       &:hover {
@@ -97,18 +97,18 @@
       &-selected {
         &,
         &:hover {
-          background-color: @background-color-base;
-          font-weight: bold;
           color: @text-color;
+          font-weight: bold;
+          background-color: @background-color-base;
         }
       }
 
       &-divider {
-        height: .01rem;
-        margin: .01rem 0;
+        height: 0.01rem;
+        margin: 0.01rem 0;
         overflow: hidden;
-        background-color: @border-color-split;
         line-height: 0;
+        background-color: @border-color-split;
       }
     }
   }
@@ -117,17 +117,17 @@
     position: absolute;
     pointer-events: none;
     .public-DraftEditorPlaceholder-inner {
+      height: auto;
+      padding: 0.05rem @control-padding-horizontal - 0.01rem;
       color: @input-placeholder-color;
-      opacity: 1;
-      outline: none;
       white-space: pre-wrap;
       word-wrap: break-word;
-      height: auto;
-      padding: .05rem @control-padding-horizontal - .01rem;
+      outline: none;
+      opacity: 1;
     }
   }
   .DraftEditor-editorContainer .public-DraftEditor-content {
     height: auto;
-    padding: .05rem @control-padding-horizontal - .01rem;
+    padding: 0.05rem @control-padding-horizontal - 0.01rem;
   }
 }

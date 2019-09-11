@@ -44,10 +44,8 @@ const BUILT_IN_PLACEMENTS = {
 export default class Cascader extends Component {
   static defaultProps = {
     options: [],
-    onChange() {
-    },
-    onPopupVisibleChange() {
-    },
+    onChange() {},
+    onPopupVisibleChange() {},
     disabled: false,
     transitionName: '',
     prefixCls: 'rc-cascader',
@@ -131,7 +129,7 @@ export default class Cascader extends Component {
     return arrayTreeFilter(this.props.options, (o, level) => o.value === activeValue[level]);
   }
 
-  setPopupVisible = (popupVisible) => {
+  setPopupVisible = popupVisible => {
     if (!('popupVisible' in this.props)) {
       this.setState({ popupVisible });
     }
@@ -149,7 +147,7 @@ export default class Cascader extends Component {
       this.setPopupVisible(setProps.visible);
     }
   };
-  handlePopupVisibleChange = (popupVisible) => {
+  handlePopupVisibleChange = popupVisible => {
     this.setPopupVisible(popupVisible);
   };
   handleMenuSelect = (targetOption, menuIndex, e) => {
@@ -191,13 +189,12 @@ export default class Cascader extends Component {
     }
     newState.activeValue = activeValue;
     //  not change the value by keyboard
-    if ('value' in this.props ||
-      (e.type === 'keydown' && e.keyCode !== KeyCode.ENTER)) {
+    if ('value' in this.props || (e.type === 'keydown' && e.keyCode !== KeyCode.ENTER)) {
       delete newState.value;
     }
     this.setState(newState);
   };
-  handleKeyDown = (e) => {
+  handleKeyDown = e => {
     const { children } = this.props;
     // Don't bind keyboard support when children specify the onKeyDown
     if (children && children.props.onKeyDown) {
@@ -208,21 +205,25 @@ export default class Cascader extends Component {
     const currentLevel = activeValue.length - 1 < 0 ? 0 : activeValue.length - 1;
     const currentOptions = this.getCurrentLevelOptions();
     const currentIndex = currentOptions.map(o => o.value).indexOf(activeValue[currentLevel]);
-    if (e.keyCode !== KeyCode.DOWN &&
+    if (
+      e.keyCode !== KeyCode.DOWN &&
       e.keyCode !== KeyCode.UP &&
       e.keyCode !== KeyCode.LEFT &&
       e.keyCode !== KeyCode.RIGHT &&
       e.keyCode !== KeyCode.ENTER &&
       e.keyCode !== KeyCode.BACKSPACE &&
-      e.keyCode !== KeyCode.ESC) {
+      e.keyCode !== KeyCode.ESC
+    ) {
       return;
     }
     // Press any keys above to reopen menu
-    if (!this.state.popupVisible &&
+    if (
+      !this.state.popupVisible &&
       e.keyCode !== KeyCode.BACKSPACE &&
       e.keyCode !== KeyCode.LEFT &&
       e.keyCode !== KeyCode.RIGHT &&
-      e.keyCode !== KeyCode.ESC) {
+      e.keyCode !== KeyCode.ESC
+    ) {
       this.setPopupVisible(true);
       return;
     }
@@ -262,14 +263,21 @@ export default class Cascader extends Component {
     }
   };
 
-  saveTrigger = (node) => {
+  saveTrigger = node => {
     this.trigger = node;
   };
 
   render() {
     const {
-      prefixCls, transitionName, popupClassName, options, disabled,
-      builtinPlacements, popupPlacement, children, ...restProps,
+      prefixCls,
+      transitionName,
+      popupClassName,
+      options,
+      disabled,
+      builtinPlacements,
+      popupPlacement,
+      children,
+      ...restProps
     } = this.props;
     // Did not show popup when there is no options
     let menus = <div />;

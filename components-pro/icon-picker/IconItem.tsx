@@ -28,8 +28,8 @@ export default class IconItem extends PureComponent<IconItemProps> {
   render() {
     const { prefixCls, type, active } = this.props;
     return (
-      <li className={classNames({ [`${prefixCls}-item-selected`]: active })} onClick={this.handleClick}>
-        <div>
+      <li className={classNames({ [`${prefixCls}-item-selected`]: active })}>
+        <div onClick={this.handleClick}>
           <Icon type={type} />
           <p>{type}</p>
         </div>

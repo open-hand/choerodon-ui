@@ -13,8 +13,9 @@ title:
 
 Basic usage.
 
-````jsx
+```jsx
 import { Mention } from 'choerodon-ui';
+
 const { toString, toContentState } = Mention;
 
 function onChange(contentState) {
@@ -33,5 +34,6 @@ ReactDOM.render(
     suggestions={['afc163', 'benjycui', 'yiminghe', 'RaoHai', '中文', 'にほんご']}
     onSelect={onSelect}
   />,
-  mountNode);
-````
+  mountNode,
+);
+```

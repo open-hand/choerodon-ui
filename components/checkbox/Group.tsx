@@ -42,6 +42,7 @@ export interface CheckboxGroupContext {
 
 export default class CheckboxGroup extends Component<CheckboxGroupProps, CheckboxGroupState> {
   static displayName = 'CheckboxGroup';
+
   static defaultProps = {
     options: [],
   };
@@ -49,7 +50,7 @@ export default class CheckboxGroup extends Component<CheckboxGroupProps, Checkbo
   static propTypes = {
     defaultValue: PropTypes.array,
     value: PropTypes.array,
-    options: PropTypes.array.isRequired,
+    options: PropTypes.array,
     onChange: PropTypes.func,
   };
 
@@ -65,11 +66,13 @@ export default class CheckboxGroup extends Component<CheckboxGroupProps, Checkbo
   }
 
   getChildContext() {
+    const { disabled } = this.props;
+    const { value } = this.state;
     return {
       checkboxGroup: {
         toggleOption: this.toggleOption,
-        value: this.state.value,
-        disabled: this.props.disabled,
+        value,
+        disabled,
       },
     };
   }
@@ -83,8 +86,7 @@ export default class CheckboxGroup extends Component<CheckboxGroupProps, Checkbo
   }
 
   shouldComponentUpdate(nextProps: CheckboxGroupProps, nextState: CheckboxGroupState) {
-    return !shallowEqual(this.props, nextProps) ||
-      !shallowEqual(this.state, nextState);
+    return !shallowEqual(this.props, nextProps) || !shallowEqual(this.state, nextState);
   }
 
   getOptions() {
@@ -102,8 +104,9 @@ export default class CheckboxGroup extends Component<CheckboxGroupProps, Checkbo
   }
 
   toggleOption = (option: CheckboxOptionType) => {
-    const optionIndex = this.state.value.indexOf(option.value);
-    const value = [...this.state.value];
+    const { state } = this;
+    const optionIndex = state.value.indexOf(option.value);
+    const value = [...state.value];
     if (optionIndex === -1) {
       value.push(option.value);
     } else {
@@ -112,7 +115,7 @@ export default class CheckboxGroup extends Component<CheckboxGroupProps, Checkbo
     if (!('value' in this.props)) {
       this.setState({ value });
     }
-    const onChange = this.props.onChange;
+    const { onChange } = this.props;
     if (onChange) {
       onChange(value);
     }
@@ -148,7 +151,7 @@ export default class CheckboxGroup extends Component<CheckboxGroupProps, Checkbo
     });
     return (
       <div className={wrapperClassString}>
-        {props.label ? (<span className={labelClassString}>{props.label}</span>) : null}
+        {props.label ? <span className={labelClassString}>{props.label}</span> : null}
         <div className={classString} style={style}>
           {children}
         </div>

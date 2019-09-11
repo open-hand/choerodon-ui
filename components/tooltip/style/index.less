@@ -1,7 +1,7 @@
-@import "../../style/themes/default";
-@import "../../style/mixins/index";
+@import '../../style/themes/default';
+@import '../../style/mixins/index';
 
-@tooltip-prefix-cls: ~"@{c7n-prefix}-tooltip";
+@tooltip-prefix-cls: ~'@{c7n-prefix}-tooltip';
 
 // Base class
 .@{tooltip-prefix-cls} {
@@ -39,14 +39,14 @@
   // Wrapper for the tooltip content
   &-inner {
     max-width: @tooltip-max-width;
-    padding: .06rem .08rem;
+    min-height: 0.32rem;
+    padding: 0.06rem 0.08rem;
     color: @tooltip-color;
     text-align: left;
     text-decoration: none;
     background-color: @tooltip-bg;
     border-radius: @border-radius-base;
     box-shadow: @box-shadow-base;
-    min-height: .32rem;
   }
 
   // Arrows
@@ -72,11 +72,11 @@
   }
 
   &-placement-topLeft &-arrow {
-    left: .16rem;
+    left: 0.16rem;
   }
 
   &-placement-topRight &-arrow {
-    right: .16rem;
+    right: 0.16rem;
   }
 
   &-placement-right &-arrow,
@@ -93,11 +93,11 @@
   }
 
   &-placement-rightTop &-arrow {
-    top: .08rem;
+    top: 0.08rem;
   }
 
   &-placement-rightBottom &-arrow {
-    bottom: .08rem;
+    bottom: 0.08rem;
   }
 
   &-placement-left &-arrow,
@@ -114,11 +114,11 @@
   }
 
   &-placement-leftTop &-arrow {
-    top: .08rem;
+    top: 0.08rem;
   }
 
   &-placement-leftBottom &-arrow {
-    bottom: .08rem;
+    bottom: 0.08rem;
   }
 
   &-placement-bottom &-arrow,
@@ -135,10 +135,10 @@
   }
 
   &-placement-bottomLeft &-arrow {
-    left: .16rem;
+    left: 0.16rem;
   }
 
   &-placement-bottomRight &-arrow {
-    right: .16rem;
+    right: 0.16rem;
   }
 }

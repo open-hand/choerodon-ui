@@ -1,4 +1,12 @@
-import React, { cloneElement, Component, CSSProperties, HTMLProps, isValidElement, ReactElement, ReactNode } from 'react';
+import React, {
+  cloneElement,
+  Component,
+  CSSProperties,
+  HTMLProps,
+  isValidElement,
+  ReactElement,
+  ReactNode,
+} from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { computed, isArrayLike } from 'mobx';
@@ -12,13 +20,21 @@ import { ColumnProps } from './Column';
 import Record from '../data-set/Record';
 import { ElementProps } from '../core/ViewComponent';
 import TableContext from './TableContext';
-import { findCell, findFirstFocusableElement, getAlignByField, getColumnKey, getEditorByColumnAndRecord, isDisabledRow, isRadio } from './utils';
+import {
+  findCell,
+  findFirstFocusableElement,
+  getAlignByField,
+  getColumnKey,
+  getEditorByColumnAndRecord,
+  isDisabledRow,
+  isRadio,
+} from './utils';
 import { FormFieldProps, Renderer } from '../field/FormField';
 import { ColumnAlign, ColumnLock, TableCommandType } from './enum';
-import CheckBox from '../check-box/CheckBox';
+import ObserverCheckBox from '../check-box/CheckBox';
 import Output from '../output/Output';
 import { ShowHelp } from '../field/enum';
-import { ButtonProps, default as Button } from '../button/Button';
+import Button, { ButtonProps } from '../button/Button';
 import { ButtonColor, FuncType } from '../button/enum';
 import { $l } from '../locale-context';
 import Tooltip from '../tooltip/Tooltip';
@@ -61,21 +77,26 @@ export default class TableCell extends Component<TableCellProps> {
 
   @computed
   get hasEditor() {
-    return !this.context.tableStore.pristine && this.cellEditor && !this.cellEditorInCell;
+    const {
+      tableStore: { pristine },
+    } = this.context;
+    return !pristine && this.cellEditor && !this.cellEditorInCell;
   }
 
   @autobind
   handleEditorKeyDown(e) {
     switch (e.keyCode) {
-      case KeyCode.TAB:
+      case KeyCode.TAB: {
         const { prefixCls, column } = this.props;
-        const cell = findCell(this.context.tableStore, prefixCls, getColumnKey(column));
+        const { tableStore } = this.context;
+        const cell = findCell(tableStore, prefixCls, getColumnKey(column));
         const node = findFirstFocusableElement(cell);
         if (node) {
           inTab = true;
           node.focus();
         }
         break;
+      }
       default:
     }
   }
@@ -84,7 +105,12 @@ export default class TableCell extends Component<TableCellProps> {
   handleFocus(e) {
     const { tableStore } = this.context;
     const { currentEditorName, dataSet, inlineEdit } = tableStore;
-    const { prefixCls, record, column, column: { lock } } = this.props;
+    const {
+      prefixCls,
+      record,
+      column,
+      column: { lock },
+    } = this.props;
     if (!currentEditorName && !isDisabledRow(record) && (!inlineEdit || record.editing)) {
       dataSet.current = record;
       this.showEditor(e.currentTarget, lock);
@@ -121,7 +147,7 @@ export default class TableCell extends Component<TableCellProps> {
     const { tableStore } = this.context;
     const { dataSet } = tableStore;
     if ((await dataSet.submit()) !== false) {
-      tableStore.currentEditRecord = void 0;
+      tableStore.currentEditRecord = undefined;
     }
   }
 
@@ -134,17 +160,30 @@ export default class TableCell extends Component<TableCellProps> {
       dataSet.remove(record);
     } else {
       record.reset();
-      tableStore.currentEditRecord = void 0;
+      tableStore.currentEditRecord = undefined;
     }
   }
 
-  getButtonProps(type: TableCommandType, record: Record): ButtonProps & { children?: ReactNode } | undefined {
+  getButtonProps(
+    type: TableCommandType,
+    record: Record,
+  ): ButtonProps & { children?: ReactNode } | undefined {
     const disabled = isDisabledRow(record);
     switch (type) {
       case TableCommandType.edit:
-        return { icon: 'mode_edit', onClick: this.handleCommandEdit, disabled, title: $l('Table', 'edit_button') };
+        return {
+          icon: 'mode_edit',
+          onClick: this.handleCommandEdit,
+          disabled,
+          title: $l('Table', 'edit_button'),
+        };
       case TableCommandType.delete:
-        return { icon: 'delete', onClick: this.handleCommandDelete, disabled, title: $l('Table', 'delete_button') };
+        return {
+          icon: 'delete',
+          onClick: this.handleCommandDelete,
+          disabled,
+          title: $l('Table', 'delete_button'),
+        };
       default:
     }
   }
@@ -156,17 +195,27 @@ export default class TableCell extends Component<TableCellProps> {
     if (record.editing) {
       return [
         <Tooltip key="save" title={$l('Table', 'save_button')}>
-          <Button color={ButtonColor.primary} funcType={FuncType.flat} icon="finished" onClick={this.handleCommandSave} />
+          <Button
+            color={ButtonColor.primary}
+            funcType={FuncType.flat}
+            icon="finished"
+            onClick={this.handleCommandSave}
+          />
         </Tooltip>,
         <Tooltip key="cancel" title={$l('Table', 'cancel_button')}>
-          <Button color={ButtonColor.primary} funcType={FuncType.flat} icon="cancle_a" onClick={this.handleCommandCancel} />
+          <Button
+            color={ButtonColor.primary}
+            funcType={FuncType.flat}
+            icon="cancle_a"
+            onClick={this.handleCommandCancel}
+          />
         </Tooltip>,
       ];
     }
     if (command) {
       const children: ReactElement<ButtonProps>[] = [];
 
-      command.forEach((button) => {
+      command.forEach(button => {
         let props = {};
         if (isArrayLike(button)) {
           props = button[1];
@@ -178,7 +227,12 @@ export default class TableCell extends Component<TableCellProps> {
             const { title, ...otherProps } = defaultButtonProps;
             children.push(
               <Tooltip key={button} title={title}>
-                <Button color={ButtonColor.primary} funcType={FuncType.flat} {...otherProps} {...props} />
+                <Button
+                  color={ButtonColor.primary}
+                  funcType={FuncType.flat}
+                  {...otherProps}
+                  {...props}
+                />
               </Tooltip>,
             );
           }
@@ -194,8 +248,13 @@ export default class TableCell extends Component<TableCellProps> {
   renderEditor() {
     const { cellEditor } = this;
     if (isValidElement(cellEditor)) {
-      const { dataSet, pristine } = this.context.tableStore;
-      const { column: { name }, record } = this.props;
+      const {
+        tableStore: { dataSet, pristine },
+      } = this.context;
+      const {
+        column: { name },
+        record,
+      } = this.props;
       const { checkField } = dataSet.props;
       const newEditorProps = {
         ...cellEditor.props,
@@ -212,11 +271,13 @@ export default class TableCell extends Component<TableCellProps> {
 
   getCheckBox() {
     const { record } = this.props;
-    const { dataSet } = this.context.tableStore;
+    const {
+      tableStore: { dataSet },
+    } = this.context;
     const { checkField } = dataSet.props;
     if (checkField) {
       return (
-        <CheckBox
+        <ObserverCheckBox
           name={checkField}
           record={record}
           disabled={isDisabledRow(record)}
@@ -227,8 +288,13 @@ export default class TableCell extends Component<TableCellProps> {
   }
 
   getCommand(): Commands[] | undefined {
-    const { column: { command }, record } = this.props;
-    const { dataSet } = this.context.tableStore;
+    const {
+      column: { command },
+      record,
+    } = this.props;
+    const {
+      tableStore: { dataSet },
+    } = this.context;
     if (typeof command === 'function') {
       return command({ dataSet, record });
     }
@@ -248,7 +314,12 @@ export default class TableCell extends Component<TableCellProps> {
   }
 
   getInnerNode(prefixCls, command?: Commands[]) {
-    const { context: { tableStore: { rowHeight, expandIconAsCell, hasCheckFieldColumn, pristine } }, props: { children } } = this;
+    const {
+      context: {
+        tableStore: { rowHeight, expandIconAsCell, hasCheckFieldColumn, pristine },
+      },
+      props: { children },
+    } = this;
     if (expandIconAsCell && children) {
       return children;
     }
@@ -298,26 +369,38 @@ export default class TableCell extends Component<TableCellProps> {
 
   render() {
     const { column, prefixCls, record } = this.props;
-    const { inlineEdit, pristine } = this.context.tableStore;
+    const {
+      tableStore: { inlineEdit, pristine },
+    } = this.context;
     const { className, style, align, name, onCell } = column;
     const command = this.getCommand();
-    const field = name ? record.getField(name) : void 0;
+    const field = name ? record.getField(name) : undefined;
     const cellPrefix = `${prefixCls}-cell`;
-    const cellExternalProps: HTMLProps<HTMLTableCellElement> = typeof onCell === 'function' ? onCell({
-      dataSet: record.dataSet!,
-      record,
-      column,
-    }) : {};
+    const cellExternalProps: HTMLProps<HTMLTableCellElement> =
+      typeof onCell === 'function'
+        ? onCell({
+            dataSet: record.dataSet!,
+            record,
+            column,
+          })
+        : {};
     const cellStyle: CSSProperties = {
       textAlign: align || (command ? ColumnAlign.center : getAlignByField(field)),
       ...style,
       ...cellExternalProps.style,
     };
-    const classString = classNames(cellPrefix, field ? {
-      [`${cellPrefix}-dirty`]: !pristine && field.dirty,
-      [`${cellPrefix}-required`]: !inlineEdit && field.required,
-      [`${cellPrefix}-editable`]: !inlineEdit && this.hasEditor,
-    } : void 0, className, cellExternalProps.className);
+    const classString = classNames(
+      cellPrefix,
+      field
+        ? {
+            [`${cellPrefix}-dirty`]: !pristine && field.dirty,
+            [`${cellPrefix}-required`]: !inlineEdit && field.required,
+            [`${cellPrefix}-editable`]: !inlineEdit && this.hasEditor,
+          }
+        : undefined,
+      className,
+      cellExternalProps.className,
+    );
     return (
       <td
         {...cellExternalProps}
@@ -331,11 +414,13 @@ export default class TableCell extends Component<TableCellProps> {
   }
 
   showEditor(cell, lock?: ColumnLock | boolean) {
-    const { name } = this.props.column;
+    const {
+      column: { name },
+    } = this.props;
+    const { tableStore } = this.context;
     const { cellEditor } = this;
     if (name && cellEditor && !isRadio(cellEditor)) {
       if (!lock) {
-        const { tableStore } = this.context;
         const { node, overflowX } = tableStore;
         if (overflowX) {
           const tableBodyWrap = cell.offsetParent;
@@ -345,16 +430,17 @@ export default class TableCell extends Component<TableCellProps> {
             const { scrollLeft } = tableBodyWrap;
             const { width } = tableBodyWrap.getBoundingClientRect();
             const leftSide = offsetLeft - leftLeafColumnsWidth;
-            const rightSide = offsetLeft + offsetWidth - width + rightLeafColumnsWidth + measureScrollbar();
-            let _scrollLeft = scrollLeft;
-            if (_scrollLeft < rightSide) {
-              _scrollLeft = rightSide;
+            const rightSide =
+              offsetLeft + offsetWidth - width + rightLeafColumnsWidth + measureScrollbar();
+            let sl = scrollLeft;
+            if (sl < rightSide) {
+              sl = rightSide;
             }
-            if (_scrollLeft > leftSide) {
-              _scrollLeft = leftSide;
+            if (sl > leftSide) {
+              sl = leftSide;
             }
-            if (_scrollLeft !== scrollLeft) {
-              tableBodyWrap.scrollLeft = _scrollLeft;
+            if (sl !== scrollLeft) {
+              tableBodyWrap.scrollLeft = sl;
               node.handleBodyScrollLeft({
                 target: tableBodyWrap,
                 currentTarget: tableBodyWrap,
@@ -363,7 +449,7 @@ export default class TableCell extends Component<TableCellProps> {
           }
         }
       }
-      this.context.tableStore.showEditor(name);
+      tableStore.showEditor(name);
     }
   }
 }

@@ -1,4 +1,12 @@
-import React, { Children, createElement, FormEvent, FormEventHandler, isValidElement, ReactElement, ReactNode } from 'react';
+import React, {
+  Children,
+  createElement,
+  FormEvent,
+  FormEventHandler,
+  isValidElement,
+  ReactElement,
+  ReactNode,
+} from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { observer } from 'mobx-react';
@@ -19,17 +27,23 @@ import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComp
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import { LabelAlign, LabelLayout, ResponsiveKeys } from './enum';
-import { defaultColumns, defaultLabelWidth, FIELD_SUFFIX, getProperty, normalizeLabelWidth } from './utils';
+import {
+  defaultColumns,
+  defaultLabelWidth,
+  FIELD_SUFFIX,
+  getProperty,
+  normalizeLabelWidth,
+} from './utils';
 
 /**
  * 表单name生成器
  */
-const NameGen: IterableIterator<string> = function* (start: number) {
+const NameGen: IterableIterator<string> = (function*(start: number) {
   while (true) {
     start += 1;
     yield `form-${start}`;
   }
-}(0);
+})(0);
 
 export type LabelWidth = number | number[];
 
@@ -113,9 +127,17 @@ export interface FormProps extends DataSetComponentProps {
   axios?: AxiosInstance;
 }
 
-const labelWidthPropTypes = PropTypes.oneOfType([PropTypes.number, PropTypes.arrayOf(PropTypes.number)]);
+const labelWidthPropTypes = PropTypes.oneOfType([
+  PropTypes.number,
+  PropTypes.arrayOf(PropTypes.number),
+]);
 const labelAlignPropTypes = PropTypes.oneOf([LabelAlign.left, LabelAlign.center, LabelAlign.right]);
-const labelLayoutPropTypes = PropTypes.oneOf([LabelLayout.horizontal, LabelLayout.vertical, LabelLayout.placeholder, LabelLayout.float]);
+const labelLayoutPropTypes = PropTypes.oneOf([
+  LabelLayout.horizontal,
+  LabelLayout.vertical,
+  LabelLayout.placeholder,
+  LabelLayout.float,
+]);
 
 @observer
 export default class Form extends DataSetComponent<FormProps> {
@@ -268,7 +290,8 @@ export default class Form extends DataSetComponent<FormProps> {
     const { columns } = this.observableProps;
     if (isNumber(columns)) {
       return columns;
-    } else if (columns) {
+    }
+    if (columns) {
       const responsiveColumns = this.responsiveItems[0];
       if (responsiveColumns) {
         return responsiveColumns;
@@ -282,9 +305,10 @@ export default class Form extends DataSetComponent<FormProps> {
     const { labelWidth } = this.observableProps;
     if (isNumber(labelWidth) || isArrayLike(labelWidth)) {
       return labelWidth;
-    } else if (labelWidth) {
+    }
+    if (labelWidth) {
       const responsiveWidth = this.responsiveItems[1];
-      if (responsiveWidth !== void 0) {
+      if (responsiveWidth !== undefined) {
         return responsiveWidth;
       }
     }
@@ -294,10 +318,12 @@ export default class Form extends DataSetComponent<FormProps> {
   @computed
   get labelAlign(): LabelAlign {
     const { labelAlign } = this.observableProps;
-    const defaultLabelAlign = this.labelLayout === LabelLayout.vertical ? LabelAlign.left : LabelAlign.right;
+    const defaultLabelAlign =
+      this.labelLayout === LabelLayout.vertical ? LabelAlign.left : LabelAlign.right;
     if (isString(labelAlign)) {
       return labelAlign as LabelAlign;
-    } else if (labelAlign) {
+    }
+    if (labelAlign) {
       const responsiveAlign = this.responsiveItems[2];
       if (responsiveAlign) {
         return responsiveAlign;
@@ -308,11 +334,12 @@ export default class Form extends DataSetComponent<FormProps> {
 
   @computed
   get labelLayout(): LabelLayout {
-    const defaultLabelLayout = getConfig('labelLayout') as LabelLayout || LabelLayout.horizontal;
+    const defaultLabelLayout = (getConfig('labelLayout') as LabelLayout) || LabelLayout.horizontal;
     const { labelLayout } = this.observableProps;
     if (isString(labelLayout)) {
       return labelLayout as LabelLayout;
-    } else if (labelLayout) {
+    }
+    if (labelLayout) {
       const responsiveLabelLayout = this.responsiveItems[3];
       if (responsiveLabelLayout) {
         return responsiveLabelLayout;
@@ -354,6 +381,7 @@ export default class Form extends DataSetComponent<FormProps> {
       'labelAlign',
       'labelLayout',
       'columns',
+      'pristine',
       'axios',
     ]);
     otherProps.onSubmit = this.handleSubmit;
@@ -365,9 +393,16 @@ export default class Form extends DataSetComponent<FormProps> {
   }
 
   getHeader(): ReactNode {
-    const { props: { header }, prefixCls } = this;
+    const {
+      props: { header },
+      prefixCls,
+    } = this;
     if (header) {
-      return <div key="form-header" className={`${prefixCls}-header`}>{header}</div>;
+      return (
+        <div key="form-header" className={`${prefixCls}-header`}>
+          {header}
+        </div>
+      );
     }
   }
 
@@ -380,7 +415,14 @@ export default class Form extends DataSetComponent<FormProps> {
   }
 
   rasterizedChildren() {
-    const { dataSet, record, columns, labelLayout, labelAlign, props: { children } } = this;
+    const {
+      dataSet,
+      record,
+      columns,
+      labelLayout,
+      labelAlign,
+      props: { children },
+    } = this;
     const prefixCls = getProPrefixCls(FIELD_SUFFIX);
     const labelWidth = normalizeLabelWidth(this.labelWidth, columns);
     const rows: ReactElement<any>[] = [];
@@ -390,9 +432,13 @@ export default class Form extends DataSetComponent<FormProps> {
     const matrix: (boolean | undefined)[][] = [[]];
     let noLabel = true;
     const childrenArray: ReactElement<any>[] = [];
-    Children.forEach(children, (child) => {
+    Children.forEach(children, child => {
       if (isValidElement(child)) {
-        if (noLabel === true && labelLayout === LabelLayout.horizontal && getProperty(child.props, 'label', dataSet, record)) {
+        if (
+          noLabel === true &&
+          labelLayout === LabelLayout.horizontal &&
+          getProperty(child.props, 'label', dataSet, record)
+        ) {
           noLabel = false;
         }
         childrenArray.push(child);
@@ -401,11 +447,7 @@ export default class Form extends DataSetComponent<FormProps> {
 
     function completeLine() {
       if (cols.length) {
-        rows.push((
-          <tr key={`row-${rowIndex}`}>
-            {cols}
-          </tr>
-        ));
+        rows.push(<tr key={`row-${rowIndex}`}>{cols}</tr>);
         cols = [];
       }
       rowIndex++;
@@ -413,11 +455,19 @@ export default class Form extends DataSetComponent<FormProps> {
       matrix[rowIndex] = matrix[rowIndex] || [];
     }
 
-    for (let index = 0, len = childrenArray.length; index < len;) {
+    for (let index = 0, len = childrenArray.length; index < len; ) {
       const { props, key, type } = childrenArray[index];
       const label = getProperty(props, 'label', dataSet, record);
       const required = getProperty(props, 'required', dataSet, record);
-      let { rowSpan = 1, colSpan = 1, newLine, className, placeholder, ...otherProps } = props as any;
+      const {
+        rowSpan = 1,
+        colSpan = 1,
+        newLine,
+        className,
+        placeholder,
+        ...otherProps
+      } = props as any;
+      let newColSpan = colSpan;
       const currentRow = matrix[rowIndex];
       if (newLine) {
         if (colIndex !== 0) {
@@ -432,17 +482,17 @@ export default class Form extends DataSetComponent<FormProps> {
         completeLine();
         continue;
       }
-      if (colSpan + colIndex > columns) {
-        colSpan = columns - colIndex;
+      if (newColSpan + colIndex > columns) {
+        newColSpan = columns - colIndex;
       }
-      for (let i = colIndex, k = colIndex + colSpan; i < k; i++) {
+      for (let i = colIndex, k = colIndex + newColSpan; i < k; i++) {
         if (currentRow[i]) {
-          colSpan = i - colIndex;
+          newColSpan = i - colIndex;
           break;
         }
       }
       for (let i = rowIndex; i < rowSpan + rowIndex; i++) {
-        for (let j = colIndex, k = colSpan + colIndex; j < k; j++) {
+        for (let j = colIndex, k = newColSpan + colIndex; j < k; j++) {
           if (!matrix[i]) {
             matrix[i] = [];
           }
@@ -455,17 +505,15 @@ export default class Form extends DataSetComponent<FormProps> {
       });
       const wrapperClassName = `${prefixCls}-wrapper`;
       if (!noLabel) {
-        cols.push((
+        cols.push(
           <td
             key={`row-${rowIndex}-col-${colIndex}-label`}
             className={labelClassName}
             rowSpan={rowSpan}
           >
-            <label>
-              {label}
-            </label>
-          </td>
-        ));
+            <label>{label}</label>
+          </td>,
+        );
       }
       const fieldElementProps: any = {
         key,
@@ -480,13 +528,13 @@ export default class Form extends DataSetComponent<FormProps> {
       cols.push(
         <td
           key={`row-${rowIndex}-col-${colIndex}-field`}
-          colSpan={noLabel ? colSpan : colSpan * 2 - 1}
+          colSpan={noLabel ? newColSpan : newColSpan * 2 - 1}
           rowSpan={rowSpan}
         >
-          {labelLayout === LabelLayout.vertical && <label className={labelClassName}>{label}</label>}
-          <div className={wrapperClassName}>
-            {createElement(type, fieldElementProps)}
-          </div>
+          {labelLayout === LabelLayout.vertical && (
+            <label className={labelClassName}>{label}</label>
+          )}
+          <div className={wrapperClassName}>{createElement(type, fieldElementProps)}</div>
         </td>,
       );
       if (index === len - 1) {
@@ -507,19 +555,24 @@ export default class Form extends DataSetComponent<FormProps> {
     }
     return [
       this.getHeader(),
-      (
-        <table key="form-body">
-          {cols.length ? <colgroup>{cols}</colgroup> : void 0}
-          <tbody>
-          {rows}
-          </tbody>
-        </table>
-      ),
+      <table key="form-body">
+        {cols.length ? <colgroup>{cols}</colgroup> : undefined}
+        <tbody>{rows}</tbody>
+      </table>,
     ];
   }
 
   render() {
-    const { labelWidth, labelAlign, labelLayout, pristine, dataSet, record, dataIndex, observableProps } = this;
+    const {
+      labelWidth,
+      labelAlign,
+      labelLayout,
+      pristine,
+      dataSet,
+      record,
+      dataIndex,
+      observableProps,
+    } = this;
     const { formNode } = this.context;
     const value = {
       formNode: formNode || this,
@@ -543,12 +596,15 @@ export default class Form extends DataSetComponent<FormProps> {
 
     return (
       <Responsive
-        items={[observableProps.columns, observableProps.labelWidth, observableProps.labelAlign, observableProps.labelLayout]}
+        items={[
+          observableProps.columns,
+          observableProps.labelWidth,
+          observableProps.labelAlign,
+          observableProps.labelLayout,
+        ]}
         onChange={this.handleResponsive}
       >
-        <FormContext.Provider value={value}>
-          {children}
-        </FormContext.Provider>
+        <FormContext.Provider value={value}>{children}</FormContext.Provider>
       </Responsive>
     );
   }
@@ -599,27 +655,27 @@ export default class Form extends DataSetComponent<FormProps> {
       if (dataSet) {
         dataSet.reset();
       } else {
-        this.getFields().forEach((field) => field.reset());
+        this.getFields().forEach(field => field.reset());
       }
     }
   }
 
   checkValidity() {
-    return Promise.all(this.getFields().map((field) => field.checkValidity()))
-      .then(results => results.every(result => result));
+    return Promise.all(this.getFields().map(field => field.checkValidity())).then(results =>
+      results.every(result => result),
+    );
   }
 
   getFields(): FormField<FormFieldProps>[] {
     const { id } = this.props;
     if (id) {
       return ([] as FormField<FormFieldProps>[]).concat(this.fields, getFieldsById(id));
-    } else {
-      return this.fields;
     }
+    return this.fields;
   }
 
   getField(name: string): FormField<FormFieldProps> | undefined {
-    return this.getFields().find((field) => field.props.name === name);
+    return this.getFields().find(field => field.props.name === name);
   }
 
   addField(field: FormField<FormFieldProps>) {
@@ -632,5 +688,4 @@ export default class Form extends DataSetComponent<FormProps> {
       this.fields.splice(index, 1);
     }
   }
-
 }

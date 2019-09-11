@@ -10,9 +10,12 @@ import triggerEvent from '../_util/triggerEvent';
 import Animate from '../animate';
 import PureRenderMixin from '../rc-components/util/PureRenderMixin';
 
-function isRenderResultPlainObject(result: any): result is { value, label } {
-  return result && !isValidElement(result) &&
-    Object.prototype.toString.call(result) === '[object Object]';
+function isRenderResultPlainObject(result: any): result is { value; label } {
+  return (
+    result &&
+    !isValidElement(result) &&
+    Object.prototype.toString.call(result) === '[object Object]'
+  );
 }
 
 export interface TransferListProps {
@@ -34,13 +37,14 @@ export interface TransferListProps {
   itemUnit: string;
   itemsUnit: string;
   body?: (props: any) => any;
-  footer?: (props: any) => void;
+  footer?: (props: any) => any;
   lazy?: boolean | {};
   onScroll: Function;
 }
 
 export default class TransferList extends Component<TransferListProps, any> {
   static displayName = 'TransferList';
+
   static defaultProps = {
     dataSource: [],
     titleText: '',
@@ -50,6 +54,7 @@ export default class TransferList extends Component<TransferListProps, any> {
   };
 
   timer: number;
+
   triggerScrollTimer: number;
 
   state = {
@@ -77,27 +82,31 @@ export default class TransferList extends Component<TransferListProps, any> {
     const { checkedKeys } = this.props;
     if (checkedKeys.length === 0) {
       return 'none';
-    } else if (filteredDataSource.every(item => checkedKeys.indexOf(item.key) >= 0)) {
+    }
+    if (filteredDataSource.every(item => checkedKeys.indexOf(item.key) >= 0)) {
       return 'all';
     }
     return 'part';
   }
 
   handleSelect = (selectedItem: TransferItem) => {
-    const { checkedKeys } = this.props;
-    const result = checkedKeys.some((key) => key === selectedItem.key);
-    this.props.handleSelect(selectedItem, !result);
+    const { checkedKeys, handleSelect } = this.props;
+    const result = checkedKeys.some(key => key === selectedItem.key);
+    handleSelect(selectedItem, !result);
   };
 
   handleFilter = (e: ChangeEvent<HTMLInputElement>) => {
-    this.props.handleFilter(e);
+    const { handleFilter, prefixCls } = this.props;
+    handleFilter(e);
     if (!e.target.value) {
       return;
     }
     // Manually trigger scroll event for lazy search bug
 
     this.triggerScrollTimer = window.setTimeout(() => {
-      const listNode = (findDOMNode(this) as HTMLElement).querySelectorAll(`${this.props.prefixCls}-content`)[0];
+      const listNode = (findDOMNode(this) as HTMLElement).querySelectorAll(
+        `${prefixCls}-content`,
+      )[0];
       if (listNode) {
         triggerEvent(listNode, 'scroll');
       }
@@ -105,7 +114,8 @@ export default class TransferList extends Component<TransferListProps, any> {
   };
 
   handleClear = () => {
-    this.props.handleClear();
+    const { handleClear } = this.props;
+    handleClear();
   };
 
   matchFilter = (text: string, item: TransferItem) => {
@@ -133,10 +143,24 @@ export default class TransferList extends Component<TransferListProps, any> {
 
   render() {
     const {
-      prefixCls, dataSource, titleText, checkedKeys, lazy,
-      body = noop, footer = noop, showSearch, style, filter,
-      searchPlaceholder, notFoundContent, itemUnit, itemsUnit, onScroll,
+      prefixCls,
+      dataSource,
+      titleText,
+      checkedKeys,
+      lazy,
+      body = noop,
+      footer = noop,
+      showSearch,
+      style,
+      filter,
+      searchPlaceholder,
+      notFoundContent,
+      itemUnit,
+      itemsUnit,
+      onScroll,
+      handleSelectAll,
     } = this.props;
+    const { mounted } = this.state;
 
     // Custom Layout
     const footerDom = footer({ ...this.props });
@@ -149,7 +173,7 @@ export default class TransferList extends Component<TransferListProps, any> {
     const filteredDataSource: TransferItem[] = [];
     const totalDataSource: TransferItem[] = [];
 
-    const showItems = dataSource.map((item) => {
+    const showItems = dataSource.map(item => {
       const { renderedText, renderedEl } = this.renderItem(item);
       if (filter && filter.trim() && !this.matchFilter(renderedText, item)) {
         return null;
@@ -192,37 +216,34 @@ export default class TransferList extends Component<TransferListProps, any> {
     ) : null;
 
     const listBody = bodyDom || (
-      <div className={showSearch ? `${prefixCls}-body ${prefixCls}-body-with-search` : `${prefixCls}-body`}>
+      <div
+        className={
+          showSearch ? `${prefixCls}-body ${prefixCls}-body-with-search` : `${prefixCls}-body`
+        }
+      >
         {search}
         <Animate
           component="ul"
           componentProps={{ onScroll }}
           className={`${prefixCls}-content`}
-          transitionName={this.state.mounted ? `${prefixCls}-content-item-highlight` : ''}
+          transitionName={mounted ? `${prefixCls}-content-item-highlight` : ''}
           transitionLeave={false}
         >
           {showItems}
         </Animate>
-        <div className={`${prefixCls}-body-not-found`}>
-          {notFoundContent}
-        </div>
+        <div className={`${prefixCls}-body-not-found`}>{notFoundContent}</div>
       </div>
     );
 
-    const listFooter = footerDom ? (
-      <div className={`${prefixCls}-footer`}>
-        {footerDom}
-      </div>
-    ) : null;
+    const listFooter = footerDom ? <div className={`${prefixCls}-footer`}>{footerDom}</div> : null;
 
     const checkStatus = this.getCheckStatus(filteredDataSource);
     const checkedAll = checkStatus === 'all';
     const checkAllCheckbox = (
       <Checkbox
-        ref="checkbox"
         checked={checkedAll}
         indeterminate={checkStatus === 'part'}
-        onChange={() => this.props.handleSelectAll(filteredDataSource, checkedAll)}
+        onChange={() => handleSelectAll(filteredDataSource, checkedAll)}
       />
     );
 
@@ -232,11 +253,10 @@ export default class TransferList extends Component<TransferListProps, any> {
           {checkAllCheckbox}
           <span className={`${prefixCls}-header-selected`}>
             <span>
-              {(checkedKeys.length > 0 ? `${checkedKeys.length}/` : '') + totalDataSource.length} {unit}
+              {(checkedKeys.length > 0 ? `${checkedKeys.length}/` : '') + totalDataSource.length}{' '}
+              {unit}
             </span>
-            <span className={`${prefixCls}-header-title`}>
-              {titleText}
-            </span>
+            <span className={`${prefixCls}-header-title`}>{titleText}</span>
           </span>
         </div>
         {listBody}

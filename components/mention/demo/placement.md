@@ -13,8 +13,9 @@ title:
 
 Change the suggestions placement.
 
-````jsx
+```jsx
 import { Mention } from 'choerodon-ui';
+
 const { toString } = Mention;
 
 function onChange(contentState) {
@@ -33,5 +34,6 @@ ReactDOM.render(
     onSelect={onSelect}
     placement="top"
   />,
-  mountNode);
-````
+  mountNode,
+);
+```

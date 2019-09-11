@@ -1,6 +1,6 @@
-@import "../../style/themes/default";
-@import "../../style/mixins/index";
-@import "./mixin";
+@import '../../style/themes/default';
+@import '../../style/mixins/index';
+@import './mixin';
 
 // Input styles
 .@{c7n-prefix}-input {
@@ -11,35 +11,35 @@
 .@{c7n-prefix}-input-textarea {
   .@{c7n-prefix}-input-rendered {
     position: relative;
-    padding-top: .15rem;
     display: block;
+    padding-top: 0.15rem;
   }
   .@{c7n-prefix}-input-label {
     bottom: auto;
   }
   .@{c7n-prefix}-input-textarea-element {
-    padding: .1rem;
+    padding: 0.1rem;
   }
 }
 //== Style for input-group: input with label, with bulabeltton or dropdown...
 .@{c7n-prefix}-input-group {
   .reset-component;
-  .input-group(~"@{c7n-prefix}-input");
+  .input-group(~'@{c7n-prefix}-input');
   &-wrapper {
     display: inline-block;
-    vertical-align: top;
     width: 100%;
+    vertical-align: top;
   }
 }
 
 // Input with affix: prefix or suffix
 .@{c7n-prefix}-input-affix-wrapper {
   .reset-component;
-  .input-affix-wrapper(~"@{c7n-prefix}-input");
+  .input-affix-wrapper(~'@{c7n-prefix}-input');
 
   .@{c7n-prefix}-input {
-    min-height: 100%;  // use min-height, assume that no smaller height to override
+    min-height: 100%; // use min-height, assume that no smaller height to override
   }
 }
 
-@import "./search-input";
+@import './search-input';

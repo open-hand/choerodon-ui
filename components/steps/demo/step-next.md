@@ -13,20 +13,25 @@ title:
 
 Cooperate with the content and buttons, to represent the progress of a process.
 
-````jsx
+```jsx
 import { Steps, Button, message } from 'choerodon-ui';
+
 const Step = Steps.Step;
 
-const steps = [{
-  title: 'First',
-  content: 'First-content',
-}, {
-  title: 'Second',
-  content: 'Second-content',
-}, {
-  title: 'Last',
-  content: 'Last-content',
-}];
+const steps = [
+  {
+    title: 'First',
+    content: 'First-content',
+  },
+  {
+    title: 'Second',
+    content: 'Second-content',
+  },
+  {
+    title: 'Last',
+    content: 'Last-content',
+  },
+];
 
 class App extends React.Component {
   constructor(props) {
@@ -51,26 +56,27 @@ class App extends React.Component {
     return (
       <div>
         <Steps current={current}>
-          {steps.map(item => <Step key={item.title} title={item.title} />)}
+          {steps.map(item => (
+            <Step key={item.title} title={item.title} />
+          ))}
         </Steps>
         <div className="steps-content">{steps[this.state.current].content}</div>
         <div className="steps-action">
-          {
-            this.state.current < steps.length - 1
-            && <Button type="primary" onClick={() => this.next()}>Next</Button>
-          }
-          {
-            this.state.current === steps.length - 1
-            && <Button type="primary" onClick={() => message.success('Processing complete!')}>Done</Button>
-          }
-          {
-            this.state.current > 0
-            && (
-              <Button style={{ marginLeft: 8 }} onClick={() => this.prev()}>
-                Previous
-              </Button>
-            )
-          }
+          {this.state.current < steps.length - 1 && (
+            <Button type="primary" onClick={() => this.next()}>
+              Next
+            </Button>
+          )}
+          {this.state.current === steps.length - 1 && (
+            <Button type="primary" onClick={() => message.success('Processing complete!')}>
+              Done
+            </Button>
+          )}
+          {this.state.current > 0 && (
+            <Button style={{ marginLeft: 8 }} onClick={() => this.prev()}>
+              Previous
+            </Button>
+          )}
         </div>
       </div>
     );
@@ -78,9 +84,9 @@ class App extends React.Component {
 }
 
 ReactDOM.render(<App />, mountNode);
-````
+```
 
-````css
+```css
 .steps-content {
   margin-top: 16px;
   border: 1px dashed #e9e9e9;
@@ -94,4 +100,4 @@ ReactDOM.render(<App />, mountNode);
 .steps-action {
   margin-top: 24px;
 }
-````
+```

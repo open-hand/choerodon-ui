@@ -15,34 +15,34 @@
 }
 
 .@{calendar-prefix-cls}-decade-panel-header {
-  .calendarPanelHeader(~"@{calendar-prefix-cls}-decade-panel");
+  .calendarPanelHeader(~'@{calendar-prefix-cls}-decade-panel');
 }
 
 .@{calendar-prefix-cls}-decade-panel-body {
-  height: ~"calc(100% - .4rem)";
+  height: ~'calc(100% - .4rem)';
 }
 
 .@{calendar-prefix-cls}-decade-panel-table {
-  table-layout: fixed;
   width: 100%;
   height: 100%;
+  table-layout: fixed;
   border-collapse: separate;
 }
 
 .@{calendar-prefix-cls}-decade-panel-cell {
-  text-align: center;
   white-space: nowrap;
+  text-align: center;
 }
 
 .@{calendar-prefix-cls}-decade-panel-decade {
   display: inline-block;
+  height: 0.24rem;
   margin: 0 auto;
+  padding: 0 0.06rem;
   color: @text-color;
-  background: transparent;
+  line-height: 0.24rem;
   text-align: center;
-  height: .24rem;
-  line-height: .24rem;
-  padding: 0 .06rem;
+  background: transparent;
   border-radius: @border-radius-sm;
   transition: background 0.3s ease;
 
@@ -53,19 +53,19 @@
 }
 
 .@{calendar-prefix-cls}-decade-panel-selected-cell .@{calendar-prefix-cls}-decade-panel-decade {
-  background: @primary-color;
   color: #fff;
+  background: @primary-color;
 
   &:hover {
-    background: @primary-color;
     color: #fff;
+    background: @primary-color;
   }
 }
 
 .@{calendar-prefix-cls}-decade-panel-last-century-cell,
 .@{calendar-prefix-cls}-decade-panel-next-century-cell {
   .@{calendar-prefix-cls}-decade-panel-decade {
-    user-select: none;
     color: @disabled-color;
+    user-select: none;
   }
 }

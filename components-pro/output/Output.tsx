@@ -7,8 +7,7 @@ import { FormField, FormFieldProps } from '../field/FormField';
 import autobind from '../_util/autobind';
 import processFieldValue from '../_util/processFieldValue';
 
-export interface OutputProps extends FormFieldProps {
-}
+export interface OutputProps extends FormFieldProps {}
 
 @observer
 export default class Output extends FormField<OutputProps> {
@@ -25,8 +24,7 @@ export default class Output extends FormField<OutputProps> {
   }
 
   @autobind
-  handleChange() {
-  }
+  handleChange() {}
 
   getOtherProps() {
     return omit(super.getOtherProps(), ['name']);
@@ -58,15 +56,14 @@ export default class Output extends FormField<OutputProps> {
     const { multiple, range } = this;
     if (multiple) {
       return this.renderMultipleValues(true);
-    } else if (range) {
+    }
+    if (range) {
       return this.renderRangeValue(true);
     }
     return this.getText();
   }
 
   renderWrapper(): ReactNode {
-    return (
-      <span {...this.getMergedProps()}>{this.getRenderedValue()}</span>
-    );
+    return <span {...this.getMergedProps()}>{this.getRenderedValue()}</span>;
   }
 }

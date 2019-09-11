@@ -10,11 +10,7 @@ import { FieldType } from '../data-set/enum';
 import { getDateFormatByFieldType } from '../data-set/utils';
 import { $l } from '../locale-context';
 
-const TimeUnitQueue: unitOfTime.Base[] = [
-  TimeUnit.hour,
-  TimeUnit.minute,
-  TimeUnit.second,
-];
+const TimeUnitQueue: unitOfTime.Base[] = [TimeUnit.hour, TimeUnit.minute, TimeUnit.second];
 
 @observer
 export default class TimesView extends DaysView {
@@ -93,28 +89,32 @@ export default class TimesView extends DaysView {
   }
 
   renderHeader(): ReactNode {
-    const { prefixCls, props: { date, mode } } = this;
+    const {
+      prefixCls,
+      props: { date, mode },
+    } = this;
     if (mode === ViewMode.time) {
       return (
         <div className={`${prefixCls}-header`}>
-          <span className={`${prefixCls}-view-select`}>{date.format(getDateFormatByFieldType(TimesView.type))}</span>
-        </div>
-      );
-    } else {
-      return (
-        <div className={`${prefixCls}-header`}>
-          <a className={`${prefixCls}-view-select`} onClick={this.handleMonthSelect}>
-            {date.localeData().monthsShort(date)}
-          </a>
-          <a className={`${prefixCls}-view-select`} onClick={this.handleDateTimeSelect}>
-            {date.date()}
-          </a>
-          <a className={`${prefixCls}-view-select`} onClick={this.handleYearSelect}>
-            {date.year()}
-          </a>
+          <span className={`${prefixCls}-view-select`}>
+            {date.format(getDateFormatByFieldType(TimesView.type))}
+          </span>
         </div>
       );
     }
+    return (
+      <div className={`${prefixCls}-header`}>
+        <a className={`${prefixCls}-view-select`} onClick={this.handleMonthSelect}>
+          {date.localeData().monthsShort(date)}
+        </a>
+        <a className={`${prefixCls}-view-select`} onClick={this.handleDateTimeSelect}>
+          {date.date()}
+        </a>
+        <a className={`${prefixCls}-view-select`} onClick={this.handleYearSelect}>
+          {date.year()}
+        </a>
+      </div>
+    );
   }
 
   renderFooter(): ReactNode {
@@ -124,7 +124,10 @@ export default class TimesView extends DaysView {
         <a className={`${prefixCls}-footer-now-btn`} onClick={this.choose.bind(this, moment())}>
           {$l('DatePicker', 'now')}
         </a>
-        <a className={`${prefixCls}-footer-view-select`} onClick={this.choose.bind(this, this.props.date)}>
+        <a
+          className={`${prefixCls}-footer-view-select`}
+          onClick={this.choose.bind(this, this.props.date)}
+        >
           {$l('DatePicker', 'ok')}
         </a>
       </div>
@@ -134,10 +137,11 @@ export default class TimesView extends DaysView {
   renderPanel() {
     const className = this.getPanelClass();
     return (
-      <div className={`${className} ${this.prefixCls}-${this.getCurrentUnit()}`} onWheel={this.handleWheel}>
-        <div className={`${className}-inner`}>
-          {this.renderPanelBody()}
-        </div>
+      <div
+        className={`${className} ${this.prefixCls}-${this.getCurrentUnit()}`}
+        onWheel={this.handleWheel}
+      >
+        <div className={`${className}-inner`}>{this.renderPanelBody()}</div>
       </div>
     );
   }
@@ -153,13 +157,14 @@ export default class TimesView extends DaysView {
 
   @autobind
   renderCell(props: object): ReactNode {
-    return (
-      <li {...props} />
-    );
+    return <li {...props} />;
   }
 
   getTimeBar(unit: unitOfTime.Base): ReactNode {
-    const { prefixCls, props: { date, renderer = this.renderCell, isValidDate = alwaysValidDate } } = this;
+    const {
+      prefixCls,
+      props: { date, renderer = this.renderCell, isValidDate = alwaysValidDate },
+    } = this;
     const size = unit === TimeUnit.hour ? 24 : 60;
     const selected = date.clone();
     const pre = date.clone().set(unit, 0);
@@ -175,10 +180,8 @@ export default class TimesView extends DaysView {
       });
       const props: any = {
         key: text,
-        className: className,
-        children: (
-          <div className={`${prefixCls}-cell-inner`}>{text}</div>
-        ),
+        className,
+        children: <div className={`${prefixCls}-cell-inner`}>{text}</div>,
       };
       if (!isDisabled) {
         props.onClick = this.handleTimeCellClick.bind(this, current, unit);
@@ -187,8 +190,12 @@ export default class TimesView extends DaysView {
       pre.add(1, unit);
     }
     return (
-      <div key={unit} className={`${prefixCls}-time-list`} onMouseEnter={this.changeUnit.bind(this, unit)}>
-        <ul style={{ top: (-selected.get(unit) + 4.5) * 100 + '%' }}>{items}</ul>
+      <div
+        key={unit}
+        className={`${prefixCls}-time-list`}
+        onMouseEnter={this.changeUnit.bind(this, unit)}
+      >
+        <ul style={{ top: `${(-selected.get(unit) + 4.5) * 100}%` }}>{items}</ul>
         <div className={`${prefixCls}-time-focus`} />
       </div>
     );
@@ -213,7 +220,7 @@ export default class TimesView extends DaysView {
 
   @action
   changeUnit(unit) {
-    if (unit !== void 0 && unit !== this.currentUnit) {
+    if (unit !== undefined && unit !== this.currentUnit) {
       this.currentUnit = unit;
     }
   }

@@ -19,22 +19,26 @@ export interface CollapseProps {
 
 export default class Collapse extends Component<CollapseProps, any> {
   static displayName = 'Collapse';
+
   static Panel = CollapsePanel;
 
   static defaultProps = {
     bordered: true,
     openAnimation: {
-      ...animation, appear() {
-      },
+      ...animation,
+      appear() {},
     },
   };
 
   render() {
     const { prefixCls: customizePrefixCls, className = '', bordered } = this.props;
     const prefixCls = getPrefixCls('collapse', customizePrefixCls);
-    const collapseClassName = classNames({
-      [`${prefixCls}-borderless`]: !bordered,
-    }, className);
+    const collapseClassName = classNames(
+      {
+        [`${prefixCls}-borderless`]: !bordered,
+      },
+      className,
+    );
     return <RcCollapse {...this.props} prefixCls={prefixCls} className={collapseClassName} />;
   }
 }

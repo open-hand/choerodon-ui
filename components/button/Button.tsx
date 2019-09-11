@@ -1,4 +1,12 @@
-import React, { Children, Component, CSSProperties, FormEventHandler, KeyboardEventHandler, ButtonHTMLAttributes, MouseEventHandler } from 'react';
+import React, {
+  Children,
+  Component,
+  CSSProperties,
+  FormEventHandler,
+  KeyboardEventHandler,
+  ButtonHTMLAttributes,
+  MouseEventHandler,
+} from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
@@ -38,7 +46,9 @@ export interface ButtonProps {
 
 export default class Button extends Component<ButtonProps, any> {
   static displayName = 'Button';
+
   static Group: typeof Group;
+
   static __ANT_BUTTON = true;
 
   static defaultProps = {
@@ -56,10 +66,12 @@ export default class Button extends Component<ButtonProps, any> {
     loading: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
     className: PropTypes.string,
     icon: PropTypes.string,
+    ghost: PropTypes.bool,
     funcType: PropTypes.oneOf(['raised', 'flat']),
   };
 
   timeout: number;
+
   delayTimeout: number;
 
   constructor(props: ButtonProps) {
@@ -71,8 +83,8 @@ export default class Button extends Component<ButtonProps, any> {
   }
 
   componentWillReceiveProps(nextProps: ButtonProps) {
-    const currentLoading = this.props.loading;
-    const loading = nextProps.loading;
+    const { loading: currentLoading } = this.props;
+    const { loading } = nextProps;
 
     if (currentLoading) {
       clearTimeout(this.delayTimeout);
@@ -94,11 +106,11 @@ export default class Button extends Component<ButtonProps, any> {
     }
   }
 
-  handleClick: MouseEventHandler<HTMLButtonElement | HTMLAnchorElement> = (e) => {
+  handleClick: MouseEventHandler<HTMLButtonElement | HTMLAnchorElement> = e => {
     clearTimeout(this.timeout);
     this.timeout = window.setTimeout(() => this.setState({ clicked: false }), 500);
 
-    const onClick = this.props.onClick;
+    const { onClick } = this.props;
     if (onClick) {
       onClick(e);
     }
@@ -132,8 +144,8 @@ export default class Button extends Component<ButtonProps, any> {
         break;
       case Size.small:
         sizeCls = 'sm';
-      default:
         break;
+      default:
     }
 
     const ComponentProp = others.href ? 'a' : 'button';
@@ -156,21 +168,27 @@ export default class Button extends Component<ButtonProps, any> {
         <span className="dot2" />
         <span className="dot3" />
       </div>
-    ) : iconNode;
-    const kids = (children || children === 0)
-      ? Children.map(children, child => {
-        if (typeof child === 'string') {
-          return <span>{child}</span>;
-        }
-        return child;
-      }) : null;
+    ) : (
+      iconNode
+    );
+    const kids =
+      children || children === 0
+        ? Children.map(children, child => {
+            if (typeof child === 'string') {
+              return <span>{child}</span>;
+            }
+            return child;
+          })
+        : null;
 
     return (
       <Ripple disabled={others.disabled}>
         <ComponentProp
           {...omit(others, ['loading'])}
           // 如果没有href属性，则表示组件使用button标签，type为'submit' | 'reset' | 'button'
-          type={others.href ? undefined : (htmlType as ButtonHTMLAttributes<any>['type'] || 'button')}
+          type={
+            others.href ? undefined : (htmlType as ButtonHTMLAttributes<any>['type']) || 'button'
+          }
           className={classes}
           onClick={this.handleClick}
         >

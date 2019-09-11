@@ -1,23 +1,23 @@
-@import "../../style/themes/default";
-@import "../../style/mixins/index";
-@import "../../tree/style/mixin";
-@import "../../checkbox/style/mixin";
+@import '../../style/themes/default';
+@import '../../style/mixins/index';
+@import '../../tree/style/mixin';
+@import '../../checkbox/style/mixin';
 
-@select-prefix-cls: ~"@{c7n-prefix}-select";
-@select-tree-prefix-cls: ~"@{c7n-prefix}-select-tree";
+@select-prefix-cls: ~'@{c7n-prefix}-select';
+@select-tree-prefix-cls: ~'@{c7n-prefix}-select-tree';
 
-.antCheckboxFn(@checkbox-prefix-cls: ~"@{c7n-prefix}-select-tree-checkbox");
+.antCheckboxFn(@checkbox-prefix-cls: ~'@{c7n-prefix}-select-tree-checkbox');
 
 .@{select-tree-prefix-cls} {
   .reset-component;
   margin: 0;
-  padding: 0 .04rem;
-  margin-top: -.04rem;
+  margin-top: -0.04rem;
+  padding: 0 0.04rem;
   li {
+    margin: 0.08rem 0;
     padding: 0;
-    margin: .08rem 0;
-    list-style: none;
     white-space: nowrap;
+    list-style: none;
     outline: 0;
     &.filter-node {
       > span {
@@ -26,18 +26,18 @@
     }
     ul {
       margin: 0;
-      padding: 0 0 0 .18rem;
+      padding: 0 0 0 0.18rem;
     }
     .@{select-tree-prefix-cls}-node-content-wrapper {
       display: inline-block;
-      padding: .03rem .05rem;
-      border-radius: .02rem;
+      width: ~'calc(100% - .24rem)';
       margin: 0;
-      cursor: pointer;
-      text-decoration: none;
+      padding: 0.03rem 0.05rem;
       color: @text-color;
-      transition: all .3s;
-      width: ~"calc(100% - .24rem)";
+      text-decoration: none;
+      border-radius: 0.02rem;
+      cursor: pointer;
+      transition: all 0.3s;
       &:hover {
         background-color: @item-hover-bg;
       }
@@ -47,46 +47,46 @@
     }
     span {
       &.@{select-tree-prefix-cls}-checkbox {
-        margin: 0 .04rem 0 0;
+        margin: 0 0.04rem 0 0;
         + .@{select-tree-prefix-cls}-node-content-wrapper {
-          width: ~"calc(100% - .46rem)";
+          width: ~'calc(100% - .46rem)';
         }
       }
       &.@{select-tree-prefix-cls}-switcher,
       &.@{select-tree-prefix-cls}-iconEle {
-        margin: 0;
-        width: .24rem;
-        height: .24rem;
-        line-height: .22rem;
         display: inline-block;
+        width: 0.24rem;
+        height: 0.24rem;
+        margin: 0;
+        line-height: 0.22rem;
+        text-align: center;
         vertical-align: middle;
         border: 0 none;
-        cursor: pointer;
         outline: none;
-        text-align: center;
+        cursor: pointer;
       }
       &.@{select-tree-prefix-cls}-icon_loading {
-        &:after {
+        &::after {
           display: inline-block;
-          .iconfont-font("\e6ae");
-          animation: loadingCircle 1s infinite linear;
           color: @primary-color;
+          animation: loadingCircle 1s infinite linear;
+          .iconfont-font('\e6ae');
         }
       }
       &.@{select-tree-prefix-cls}-switcher {
-        width: .22rem;
-        height: .22rem;
+        width: 0.22rem;
+        height: 0.22rem;
         line-height: 1;
-        cursor: pointer;
-        transform: rotate(-90deg);
         vertical-align: top;
+        transform: rotate(-90deg);
+        cursor: pointer;
         &-expanded {
-          transform: rotate(0);
           vertical-align: top;
+          transform: rotate(0);
         }
         &.@{select-tree-prefix-cls}-switcher-noop {
           cursor: default;
-          &:before {
+          &::before {
             display: none;
           }
         }
@@ -111,11 +111,11 @@
     }
   }
   &-icon__open {
-    margin-right: .02rem;
+    margin-right: 0.02rem;
     vertical-align: top;
   }
   &-icon__close {
-    margin-right: .02rem;
+    margin-right: 0.02rem;
     vertical-align: top;
   }
 
@@ -123,16 +123,16 @@
     .reset-component;
     .@{select-prefix-cls}-dropdown-search {
       display: block;
-      padding: .04rem;
+      padding: 0.04rem;
       .@{select-prefix-cls}-search__field__wrap {
         width: 100%;
       }
       .@{select-prefix-cls}-search__field {
-        padding: .04rem .07rem;
-        width: 100%;
         box-sizing: border-box;
+        width: 100%;
+        padding: 0.04rem 0.07rem;
         border: @border-width-base @border-style-base @border-color-base;
-        border-radius: .04rem;
+        border-radius: 0.04rem;
         outline: none;
       }
       &.@{select-prefix-cls}-search--hide {
@@ -140,10 +140,10 @@
       }
     }
     .@{select-prefix-cls}-not-found {
-      cursor: not-allowed;
-      color: @disabled-color;
-      padding: .07rem .16rem;
       display: block;
+      padding: 0.07rem 0.16rem;
+      color: @disabled-color;
+      cursor: not-allowed;
     }
   }
 }

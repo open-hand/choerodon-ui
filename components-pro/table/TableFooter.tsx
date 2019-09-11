@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { computed, get } from 'mobx';
+import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { ColumnProps } from './Column';
 import { ElementProps } from '../core/ViewComponent';
 import TableContext from './TableContext';
-import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { ColumnLock } from './enum';
 import DataSet from '../data-set/DataSet';
 import TableFooterCell from './TableFooterCell';
@@ -22,15 +22,20 @@ export default class TableFooter extends Component<TableFooterProps, any> {
 
   static propTypes = {
     prefixCls: PropTypes.string,
-    lock: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf([ColumnLock.right, ColumnLock.left])]),
+    lock: PropTypes.oneOfType([
+      PropTypes.bool,
+      PropTypes.oneOf([ColumnLock.right, ColumnLock.left]),
+    ]),
   };
 
   static contextType = TableContext;
 
   render() {
     const { prefixCls, lock, dataSet } = this.props;
-    const { lockColumnsFootRowsHeight, overflowY, rowHeight } = this.context.tableStore;
-    const tds = this.leafColumns.map((column) => {
+    const {
+      tableStore: { lockColumnsFootRowsHeight, overflowY, rowHeight },
+    } = this.context;
+    const tds = this.leafColumns.map(column => {
       const { hidden } = column;
       if (!hidden) {
         return (
@@ -42,13 +47,25 @@ export default class TableFooter extends Component<TableFooterProps, any> {
           />
         );
       }
+      return undefined;
     });
     if (overflowY && lock !== ColumnLock.left) {
-      tds.push(<th key="fixed-column" className={`${prefixCls}-cell`} />);
+      tds.push(
+        <th key="fixed-column" className={`${prefixCls}-cell`}>
+          &nbsp;
+        </th>,
+      );
     }
     return (
       <tfoot className={`${prefixCls}-tfoot`}>
-      <tr style={{ height: lock && rowHeight === 'auto' ? pxToRem(get(lockColumnsFootRowsHeight, 0)) : void 0 }}>{tds}</tr>
+        <tr
+          style={{
+            height:
+              lock && rowHeight === 'auto' ? pxToRem(get(lockColumnsFootRowsHeight, 0)) : undefined,
+          }}
+        >
+          {tds}
+        </tr>
       </tfoot>
     );
   }
@@ -59,11 +76,10 @@ export default class TableFooter extends Component<TableFooterProps, any> {
     const { lock } = this.props;
     if (lock === 'right') {
       return tableStore.rightLeafColumns;
-    } else if (lock) {
-      return tableStore.leftLeafColumns;
-    } else {
-      return tableStore.leafColumns;
     }
+    if (lock) {
+      return tableStore.leftLeafColumns;
+    }
+    return tableStore.leafColumns;
   }
-
 }

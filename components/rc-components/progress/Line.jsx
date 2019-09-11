@@ -18,21 +18,20 @@ class Line extends Component {
       style,
       trailColor,
       trailWidth,
-      ...restProps,
+      ...restProps
     } = this.props;
 
     delete restProps.gapPosition;
 
     const pathStyle = {
       strokeDasharray: '100px, 100px',
-      strokeDashoffset: `${(100 - percent)}px`,
+      strokeDashoffset: `${100 - percent}px`,
       transition: 'stroke-dashoffset 0.3s ease 0s, stroke 0.3s linear',
     };
 
     const center = strokeWidth / 2;
-    const right = 100 - (strokeWidth / 2);
-    const pathString =
-      `M ${strokeLinecap === 'round' ? center : 0},${center}
+    const right = 100 - strokeWidth / 2;
+    const pathString = `M ${strokeLinecap === 'round' ? center : 0},${center}
            L ${strokeLinecap === 'round' ? right : 100},${center}`;
     const viewBoxString = `0 0 100 ${strokeWidth}`;
 
@@ -59,7 +58,7 @@ class Line extends Component {
           stroke={strokeColor}
           strokeWidth={strokeWidth}
           fillOpacity="0"
-          ref={(path) => {
+          ref={path => {
             this.path = path;
           }}
           style={pathStyle}

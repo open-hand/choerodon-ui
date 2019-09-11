@@ -5,7 +5,7 @@ import Sidebar from './Sidebar';
 export { ActionButtonProps } from './ActionButton';
 export { ModalProps, ModalFuncProps } from './Modal';
 
-Modal.info = function (props: ModalFuncProps) {
+Modal.info = function(props: ModalFuncProps) {
   const config = {
     type: 'info',
     okCancel: false,
@@ -14,7 +14,7 @@ Modal.info = function (props: ModalFuncProps) {
   return confirm(config);
 };
 
-Modal.success = function (props: ModalFuncProps) {
+Modal.success = function(props: ModalFuncProps) {
   const config = {
     type: 'success',
     iconType: 'check_circle',
@@ -24,7 +24,7 @@ Modal.success = function (props: ModalFuncProps) {
   return confirm(config);
 };
 
-Modal.error = function (props: ModalFuncProps) {
+Modal.error = function(props: ModalFuncProps) {
   const config = {
     type: 'error',
     iconType: 'error',
@@ -34,7 +34,7 @@ Modal.error = function (props: ModalFuncProps) {
   return confirm(config);
 };
 
-Modal.warning = Modal.warn = function (props: ModalFuncProps) {
+Modal.warn = function(props: ModalFuncProps) {
   const config = {
     type: 'warning',
     iconType: 'warning',
@@ -44,7 +44,9 @@ Modal.warning = Modal.warn = function (props: ModalFuncProps) {
   return confirm(config);
 };
 
-Modal.confirm = function (props: ModalFuncProps) {
+Modal.warning = Modal.warn;
+
+Modal.confirm = function(props: ModalFuncProps) {
   const config = {
     type: 'confirm',
     okCancel: true,

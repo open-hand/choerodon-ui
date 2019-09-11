@@ -5,6 +5,7 @@ import { observer } from 'mobx-react';
 import { action, computed } from 'mobx';
 import classes from 'component-classes';
 import debounce from 'lodash/debounce';
+import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { ColumnProps } from './Column';
 import { ElementProps } from '../core/ViewComponent';
 import TableContext from './TableContext';
@@ -13,7 +14,6 @@ import Record from '../data-set/Record';
 import { ColumnLock } from './enum';
 import ExpandedRow from './ExpandedRow';
 import { DataSetStatus } from '../data-set/enum';
-import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 
 export interface TableBodyProps extends ElementProps {
   lock?: ColumnLock | boolean;
@@ -25,7 +25,10 @@ export default class TableBody extends Component<TableBodyProps, any> {
   static displayName = 'TableBody';
 
   static propTypes = {
-    lock: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf([ColumnLock.right, ColumnLock.left])]),
+    lock: PropTypes.oneOfType([
+      PropTypes.bool,
+      PropTypes.oneOf([ColumnLock.right, ColumnLock.left]),
+    ]),
     prefixCls: PropTypes.string,
     indentSize: PropTypes.number.isRequired,
   };
@@ -40,18 +43,22 @@ export default class TableBody extends Component<TableBodyProps, any> {
     this.syncBodyHeight();
   }, 30);
 
-  saveRef = (node) => {
+  saveRef = node => {
     this.tableBody = node;
   };
 
   render() {
     const { prefixCls, lock } = this.props;
     const { leafColumns } = this;
-    const { data } = this.context.tableStore;
-    const rows = data.length ? this.getRows(data, leafColumns, true, lock) : this.getEmptyRow(leafColumns, lock);
+    const {
+      tableStore: { data },
+    } = this.context;
+    const rows = data.length
+      ? this.getRows(data, leafColumns, true, lock)
+      : this.getEmptyRow(leafColumns, lock);
     return (
-      <tbody ref={lock ? void 0 : this.saveRef} className={`${prefixCls}-tbody`}>
-      {rows}
+      <tbody ref={lock ? undefined : this.saveRef} className={`${prefixCls}-tbody`}>
+        {rows}
       </tbody>
     );
   }
@@ -71,47 +78,67 @@ export default class TableBody extends Component<TableBodyProps, any> {
   }
 
   componentDidUpdate() {
-    if (!this.props.lock) {
-      const { node } = this.context.tableStore;
-      if (classes(node.wrapper).has(`${this.props.prefixCls}-focused`)) {
+    const { lock, prefixCls } = this.props;
+    if (!lock) {
+      const {
+        tableStore: { node },
+      } = this.context;
+      if (classes(node.wrapper).has(`${prefixCls}-focused`)) {
         node.focus();
       }
     }
   }
 
-  getRows(records: Record[], columns: ColumnProps[], expanded?: boolean, lock?: ColumnLock | boolean) {
-    return records.map((record, index) => (
-      this.getRow(columns, record, index, expanded, lock)
-    ));
+  getRows(
+    records: Record[],
+    columns: ColumnProps[],
+    expanded?: boolean,
+    lock?: ColumnLock | boolean,
+  ) {
+    return records.map((record, index) => this.getRow(columns, record, index, expanded, lock));
   }
 
   getEmptyRow(columns: ColumnProps[], lock?: ColumnLock | boolean): ReactNode | undefined {
-    const { dataSet, emptyText, width } = this.context.tableStore;
+    const {
+      tableStore: { dataSet, emptyText, width },
+    } = this.context;
     const { prefixCls } = this.props;
-    const style: CSSProperties = width ? {
-      marginLeft: pxToRem(width / 2),
-    } : {
-      transform: 'none',
-      display: 'inline-block',
-    };
+    const style: CSSProperties = width
+      ? {
+          marginLeft: pxToRem(width / 2),
+        }
+      : {
+          transform: 'none',
+          display: 'inline-block',
+        };
     const tdStyle: CSSProperties = width ? {} : { textAlign: 'center' };
     return (
       <tr className={`${prefixCls}-empty-row`}>
         <td colSpan={columns.length} style={tdStyle}>
-          <div style={style}>
-            {!lock && dataSet.status === DataSetStatus.ready && emptyText}
-          </div>
+          <div style={style}>{!lock && dataSet.status === DataSetStatus.ready && emptyText}</div>
         </td>
       </tr>
     );
   }
 
-  renderExpandedRows = (columns: ColumnProps[], record: Record, isExpanded?: boolean, lock?: ColumnLock | boolean) =>
-    this.getRows(record.children || [], columns, isExpanded, lock);
+  renderExpandedRows = (
+    columns: ColumnProps[],
+    record: Record,
+    isExpanded?: boolean,
+    lock?: ColumnLock | boolean,
+  ) => this.getRows(record.children || [], columns, isExpanded, lock);
 
-  getRow(columns: ColumnProps[], record: Record, index: number, expanded?: boolean, lock?: ColumnLock | boolean) {
+  getRow(
+    columns: ColumnProps[],
+    record: Record,
+    index: number,
+    expanded?: boolean,
+    lock?: ColumnLock | boolean,
+  ) {
     const { prefixCls, indentSize } = this.props;
-    const { isTree } = this.context.tableStore;
+    const {
+      tableStore: { isTree },
+    } = this.context;
     const children = isTree && (
       <ExpandedRow record={record} columns={columns} lock={lock}>
         {this.renderExpandedRows}
@@ -139,11 +166,11 @@ export default class TableBody extends Component<TableBodyProps, any> {
     const { lock } = this.props;
     if (lock === 'right') {
       return tableStore.rightLeafColumns;
-    } else if (lock) {
-      return tableStore.leftLeafColumns;
-    } else {
-      return tableStore.leafColumns;
     }
+    if (lock) {
+      return tableStore.leftLeafColumns;
+    }
+    return tableStore.leafColumns;
   }
 
   @action

@@ -13,8 +13,9 @@ title:
 
 Classic page layouts.
 
-````jsx
+```jsx
 import { Layout } from 'choerodon-ui';
+
 const { Header, Footer, Sider, Content } = Layout;
 
 ReactDOM.render(
@@ -52,8 +53,9 @@ ReactDOM.render(
       </Layout>
     </Layout>
   </div>,
-  mountNode);
-````
+  mountNode,
+);
+```
 
 <style>
 #components-layout-demo-basic .code-box-demo {

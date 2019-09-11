@@ -13,19 +13,19 @@ title:
 
 The most basic usage.
 
-````jsx
+```jsx
 import { TreeSelect } from 'choerodon-ui';
+
 const TreeNode = TreeSelect.TreeNode;
 
 class Demo extends React.Component {
   state = {
     value: undefined,
-  }
+  };
 
-  onChange = (value) => {
-    console.log(arguments);
+  onChange = value => {
     this.setState({ value });
-  }
+  };
 
   render() {
     return (
@@ -54,4 +54,4 @@ class Demo extends React.Component {
 }
 
 ReactDOM.render(<Demo />, mountNode);
-````
+```

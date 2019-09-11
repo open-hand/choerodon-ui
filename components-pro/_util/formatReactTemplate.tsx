@@ -3,12 +3,15 @@ import format from 'string-template';
 import isString from 'lodash/isString';
 import flatMap from 'lodash/flatMap';
 
-export default function formatReactTemplate(template: string, map: { [key: string]: ReactNode }): ReactNode {
+export default function formatReactTemplate(
+  template: string,
+  map: { [key: string]: ReactNode },
+): ReactNode {
   let result: ReactNode[] = [template];
-  Object.keys(map).forEach((key) => {
+  Object.keys(map).forEach(key => {
     const node = map[key];
     if (node) {
-      result = flatMap(result, (text) => {
+      result = flatMap(result, text => {
         if (isString(text)) {
           let stringText = text;
           if (isValidElement(node)) {
@@ -28,9 +31,8 @@ export default function formatReactTemplate(template: string, map: { [key: strin
               textArr.push(stringText);
             }
             return textArr;
-          } else {
-            return format(text, { [key]: node });
           }
+          return format(text, { [key]: node });
         }
         return text;
       });

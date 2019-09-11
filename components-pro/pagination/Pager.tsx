@@ -30,7 +30,7 @@ export default class Pager extends PureComponent<PagerProps> {
         className={className}
         funcType={active ? FuncType.raised : FuncType.flat}
         onClick={this.handleClick}
-        color={active ? ButtonColor.primary : void 0}
+        color={active ? ButtonColor.primary : undefined}
         disabled={disabled}
       >
         {renderer(page, type)}

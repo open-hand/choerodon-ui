@@ -38,8 +38,9 @@ export default class SelectionBox extends Component<SelectionBoxProps, Selection
     if (store.getState().selectionDirty) {
       checked = store.getState().selectedRowKeys.indexOf(rowIndex) >= 0;
     } else {
-      checked = (store.getState().selectedRowKeys.indexOf(rowIndex) >= 0 ||
-                 defaultSelection.indexOf(rowIndex) >= 0);
+      checked =
+        store.getState().selectedRowKeys.indexOf(rowIndex) >= 0 ||
+        defaultSelection.indexOf(rowIndex) >= 0;
     }
     return checked;
   }
@@ -49,20 +50,8 @@ export default class SelectionBox extends Component<SelectionBoxProps, Selection
     const { checked } = this.state;
 
     if (type === 'radio') {
-      return (
-        <Radio
-          checked={checked}
-          value={rowIndex}
-          {...rest}
-        />
-      );
-    } else {
-      return (
-        <Checkbox
-          checked={checked}
-          {...rest}
-        />
-      );
+      return <Radio checked={checked} value={rowIndex} {...rest} />;
     }
+    return <Checkbox checked={checked} {...rest} />;
   }
 }

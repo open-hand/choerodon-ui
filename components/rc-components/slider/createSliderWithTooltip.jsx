@@ -11,16 +11,20 @@ export default function createSliderWithTooltip(Component) {
       tipProps: PropTypes.object,
     };
     static defaultProps = {
-      tipFormatter(value) { return value; },
+      tipFormatter(value) {
+        return value;
+      },
       handleStyle: [{}],
       tipProps: {},
     };
+
     constructor(props) {
       super(props);
       this.state = { visibles: {} };
     }
+
     handleTooltipVisibleChange = (index, visible) => {
-      this.setState((prevState) => {
+      this.setState(prevState => {
         return {
           visibles: {
             ...prevState.visibles,
@@ -28,20 +32,16 @@ export default function createSliderWithTooltip(Component) {
           },
         };
       });
-    }
+    };
     handleWithTooltip = ({ value, dragging, index, disabled, ...restProps }) => {
-      const {
-        tipFormatter,
-        tipProps,
-        handleStyle,
-      } = this.props;
+      const { tipFormatter, tipProps, handleStyle } = this.props;
 
       const {
         prefixCls = 'rc-slider-tooltip',
         overlay = tipFormatter(value),
         placement = 'top',
         visible = visible || false,
-        ...restTooltipProps,
+        ...restTooltipProps
       } = tipProps;
 
       let handleStyleWithIndex;
@@ -60,7 +60,6 @@ export default function createSliderWithTooltip(Component) {
           visible={(!disabled && (this.state.visibles[index] || dragging)) || visible}
           key={index}
         >
-
           <Handle
             {...restProps}
             style={{
@@ -72,7 +71,8 @@ export default function createSliderWithTooltip(Component) {
           />
         </Tooltip>
       );
-    }
+    };
+
     render() {
       return <Component {...this.props} handle={this.handleWithTooltip} />;
     }

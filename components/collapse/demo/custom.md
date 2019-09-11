@@ -13,8 +13,9 @@ title:
 
 Customize the background, border and margin styles for each panel.
 
-````jsx
+```jsx
 import { Collapse } from 'choerodon-ui';
+
 const Panel = Collapse.Panel;
 
 const text = `
@@ -43,5 +44,6 @@ ReactDOM.render(
       <p>{text}</p>
     </Panel>
   </Collapse>,
-  mountNode);
-````
+  mountNode,
+);
+```

@@ -13,8 +13,9 @@ title:
 
 Using `OptGroup` to group the options.
 
-````jsx
+```jsx
 import { Select } from 'choerodon-ui';
+
 const { Option, OptGroup } = Select;
 
 function handleChange(value) {
@@ -22,11 +23,7 @@ function handleChange(value) {
 }
 
 ReactDOM.render(
-  <Select
-    defaultValue="lucy"
-    style={{ width: 200 }}
-    onChange={handleChange}
-  >
+  <Select defaultValue="lucy" style={{ width: 200 }} onChange={handleChange}>
     <OptGroup label="Manager">
       <Option value="jack">Jack</Option>
       <Option value="lucy">Lucy</Option>
@@ -35,5 +32,6 @@ ReactDOM.render(
       <Option value="Yiminghe">yiminghe</Option>
     </OptGroup>
   </Select>,
-  mountNode);
-````
+  mountNode,
+);
+```

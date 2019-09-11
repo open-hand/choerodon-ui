@@ -7,16 +7,15 @@ title:
 
 ## zh-CN
 
-只有卡片样式的页签支持新增和关闭选项。
-使用 `closable={false}` 禁止关闭。
+只有卡片样式的页签支持新增和关闭选项。使用 `closable={false}` 禁止关闭。
 
 ## en-US
 
-Only card type Tabs support adding & closable.
-+Use `closable={false}` to disable close.
+Only card type Tabs support adding & closable. +Use `closable={false}` to disable close.
 
-````jsx
+```jsx
 import { Tabs } from 'choerodon-ui';
+
 const TabPane = Tabs.TabPane;
 
 class Demo extends React.Component {
@@ -34,22 +33,22 @@ class Demo extends React.Component {
     };
   }
 
-  onChange = (activeKey) => {
+  onChange = activeKey => {
     this.setState({ activeKey });
-  }
+  };
 
   onEdit = (targetKey, action) => {
     this[action](targetKey);
-  }
+  };
 
   add = () => {
     const panes = this.state.panes;
     const activeKey = `newTab${this.newTabIndex++}`;
     panes.push({ title: 'New Tab', content: 'Content of new Tab', key: activeKey });
     this.setState({ panes, activeKey });
-  }
+  };
 
-  remove = (targetKey) => {
+  remove = targetKey => {
     let activeKey = this.state.activeKey;
     let lastIndex;
     this.state.panes.forEach((pane, i) => {
@@ -62,7 +61,7 @@ class Demo extends React.Component {
       activeKey = panes[lastIndex].key;
     }
     this.setState({ panes, activeKey });
-  }
+  };
 
   render() {
     return (
@@ -72,11 +71,15 @@ class Demo extends React.Component {
         type="editable-card"
         onEdit={this.onEdit}
       >
-        {this.state.panes.map(pane => <TabPane tab={pane.title} key={pane.key} closable={pane.closable}>{pane.content}</TabPane>)}
+        {this.state.panes.map(pane => (
+          <TabPane tab={pane.title} key={pane.key} closable={pane.closable}>
+            {pane.content}
+          </TabPane>
+        ))}
       </Tabs>
     );
   }
 }
 
 ReactDOM.render(<Demo />, mountNode);
-````
+```

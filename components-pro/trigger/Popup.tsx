@@ -26,11 +26,11 @@ function getContainer() {
 /**
  * 记录ID生成器
  */
-const PopupKeyGen: IterableIterator<string> = function* (start: number) {
+const PopupKeyGen: IterableIterator<string> = (function*(start: number) {
   while (true) {
-    yield `popup-key-${++start}`;
+    yield `popup-key-${start++}`;
   }
-}(1);
+})(1);
 
 export interface PopupProps extends ViewComponentProps {
   align: object;
@@ -68,12 +68,16 @@ export default class Popup extends ViewComponent<PopupProps> {
   };
 
   currentAlignClassName?: string;
+
   currentAlignStyle?: CSSProperties;
+
   align: Align | null;
+
   contentRendered: boolean = false;
+
   popupKey: string = PopupKeyGen.next().value;
 
-  saveRef = align => this.align = align;
+  saveRef = align => (this.align = align);
 
   getOtherProps() {
     const otherProps = omit(super.getOtherProps(), [
@@ -107,36 +111,36 @@ export default class Popup extends ViewComponent<PopupProps> {
       this.contentRendered = true;
     }
     const container = getContainer();
-    return container && this.contentRendered ? createPortal(
-      <Animate
-        component=""
-        exclusive
-        transitionAppear
-        transitionName={transitionName}
-        hiddenProp="hidden"
-        onAppear={onAnimateAppear}
-        onEnter={onAnimateEnter}
-        onLeave={onAnimateLeave}
-        onEnd={onAnimateEnd}
-      >
-        <Align
-          ref={this.saveRef}
-          key="align"
-          childrenProps={{ hidden: 'hidden' }}
-          align={align}
-          onAlign={this.onAlign}
-          target={getRootDomNode}
-          hidden={hidden}
-          monitorWindowResize
-        >
-          <PopupInner {...omit(this.getMergedProps(), ['ref'])}>
-            {children}
-          </PopupInner>
-        </Align>
-      </Animate>,
-      container,
-      this.popupKey,
-    ) : null;
+    return container && this.contentRendered
+      ? createPortal(
+          <Animate
+            component=""
+            exclusive
+            transitionAppear
+            transitionName={transitionName}
+            hiddenProp="hidden"
+            onAppear={onAnimateAppear}
+            onEnter={onAnimateEnter}
+            onLeave={onAnimateLeave}
+            onEnd={onAnimateEnd}
+          >
+            <Align
+              ref={this.saveRef}
+              key="align"
+              childrenProps={{ hidden: 'hidden' }}
+              align={align}
+              onAlign={this.onAlign}
+              target={getRootDomNode}
+              hidden={hidden}
+              monitorWindowResize
+            >
+              <PopupInner {...omit(this.getMergedProps(), ['ref'])}>{children}</PopupInner>
+            </Align>
+          </Animate>,
+          container,
+          this.popupKey,
+        )
+      : null;
   }
 
   @autobind
@@ -160,5 +164,4 @@ export default class Popup extends ViewComponent<PopupProps> {
       this.align.forceAlign();
     }
   }
-
 }

@@ -1,41 +1,41 @@
-@import "../../style/themes/default";
-@import "../../style/mixins/index";
-@import "../../checkbox/style/mixin";
+@import '../../style/themes/default';
+@import '../../style/mixins/index';
+@import '../../checkbox/style/mixin';
 
-@transfer-prefix-cls: ~"@{c7n-prefix}-transfer";
+@transfer-prefix-cls: ~'@{c7n-prefix}-transfer';
 
 .@{transfer-prefix-cls} {
   .reset-component;
   position: relative;
 
   &-list {
-    border: @border-width-base @border-style-base @border-color-base;
-    display: inline-block;
-    border-radius: @border-radius-base;
-    vertical-align: middle;
     position: relative;
+    display: inline-block;
     width: 1.8rem;
     height: 2rem;
-    padding-top: .34rem;
+    padding-top: 0.34rem;
+    vertical-align: middle;
+    border: @border-width-base @border-style-base @border-color-base;
+    border-radius: @border-radius-base;
 
     &-with-footer {
-      padding-bottom: .34rem;
+      padding-bottom: 0.34rem;
     }
 
     &-search {
       padding: 0 @control-padding-horizontal-sm;
       &-action {
-        color: @disabled-color;
         position: absolute;
-        top: .04rem;
-        right: .04rem;
-        bottom: .04rem;
-        width: .28rem;
+        top: 0.04rem;
+        right: 0.04rem;
+        bottom: 0.04rem;
+        width: 0.28rem;
+        color: @disabled-color;
         line-height: @input-height-base;
         text-align: center;
         .@{iconfont-css-prefix} {
-          transition: all .3s;
           color: @disabled-color;
+          transition: all 0.3s;
           &:hover {
             color: @text-color-secondary;
           }
@@ -47,83 +47,83 @@
     }
 
     &-header {
-      padding: .06rem @control-padding-horizontal;
-      border-radius: @border-radius-base @border-radius-base 0 0;
-      background: @component-background;
-      color: @text-color;
-      border-bottom: @border-width-base @border-style-base @border-color-split;
-      overflow: hidden;
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
+      padding: 0.06rem @control-padding-horizontal;
+      overflow: hidden;
+      color: @text-color;
+      background: @component-background;
+      border-bottom: @border-width-base @border-style-base @border-color-split;
+      border-radius: @border-radius-base @border-radius-base 0 0;
 
       &-title {
         position: absolute;
-        right: .12rem;
+        right: 0.12rem;
       }
     }
 
     &-body {
-      font-size: @font-size-base;
       position: relative;
       height: 100%;
+      font-size: @font-size-base;
 
       &-search-wrapper {
         position: absolute;
         top: 0;
         left: 0;
-        padding: .04rem;
         width: 100%;
+        padding: 0.04rem;
       }
     }
 
     &-body-with-search {
-      padding-top: @input-height-base + .08rem;
+      padding-top: @input-height-base + 0.08rem;
     }
 
     &-content {
       height: 100%;
+      margin: 0;
+      padding: 0;
       overflow: auto;
       list-style: none;
-      padding: 0;
-      margin: 0;
       > .LazyLoad {
         animation: transferHighlightIn 1s;
       }
 
       &-item {
+        min-height: 0.32rem;
+        padding: 0.06rem @control-padding-horizontal;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
-        padding: .06rem @control-padding-horizontal;
-        min-height: .32rem;
-        transition: all .3s;
+        transition: all 0.3s;
         > span {
           padding-right: 0;
         }
       }
 
       &-item:not(&-item-disabled):hover {
-        cursor: pointer;
         background-color: @item-hover-bg;
+        cursor: pointer;
       }
 
       &-item-disabled {
-        cursor: not-allowed;
         color: @btn-disable-color;
+        cursor: not-allowed;
       }
     }
 
     &-body-not-found {
+      position: absolute;
+      top: 50%;
+      display: none;
+      width: 100%;
+      margin-top: -0.1rem;
       padding-top: 0;
       color: @disabled-color;
       text-align: center;
-      display: none;
-      position: absolute;
-      top: 50%;
-      width: 100%;
-      margin-top: -.1rem;
     }
 
     &-content:empty + &-body-not-found {
@@ -131,30 +131,30 @@
     }
 
     &-footer {
-      border-top: @border-width-base @border-style-base @border-color-split;
-      border-radius: 0 0 @border-radius-base @border-radius-base;
       position: absolute;
       bottom: 0;
       left: 0;
       width: 100%;
+      border-top: @border-width-base @border-style-base @border-color-split;
+      border-radius: 0 0 @border-radius-base @border-radius-base;
     }
   }
 
   &-operation {
     display: inline-block;
+    margin: 0 0.08rem;
     overflow: hidden;
-    margin: 0 .08rem;
     vertical-align: middle;
 
     .@{c7n-prefix}-btn {
       display: block;
 
       &:first-child {
-        margin-bottom: .04rem;
+        margin-bottom: 0.04rem;
       }
 
       .@{iconfont-css-prefix} {
-        font-size: .12rem;
+        font-size: 0.12rem;
       }
     }
   }

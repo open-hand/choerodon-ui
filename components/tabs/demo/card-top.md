@@ -13,8 +13,9 @@ title:
 
 Should be used at the top of container, needs to override styles.
 
-````jsx
+```jsx
 import { Tabs } from 'choerodon-ui';
+
 const TabPane = Tabs.TabPane;
 
 ReactDOM.render(
@@ -37,10 +38,11 @@ ReactDOM.render(
       </TabPane>
     </Tabs>
   </div>,
-  mountNode);
-````
+  mountNode,
+);
+```
 
-````css
+```css
 .card-container > .c7n-tabs-card > .c7n-tabs-content {
   height: 120px;
   margin-top: -16px;
@@ -64,7 +66,7 @@ ReactDOM.render(
   border-color: #fff;
   background: #fff;
 }
-````
+```
 
 <style>
 #components-tabs-demo-card-top .code-box-demo {

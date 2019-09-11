@@ -6,26 +6,29 @@ import { errorRequest, successRequest } from './requests';
 
 const delay = timeout => new Promise(resolve => setTimeout(resolve, timeout));
 
-const fileList = [{
-  uid: -1,
-  name: 'xxx.png',
-  status: 'done',
-  url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-  thumbUrl: 'https://zos.alipayobjects.com/rmsportal/IQKRngzUuFzJzGzRJXUs.png',
-}, {
-  uid: -2,
-  name: 'yyy.png',
-  status: 'done',
-  url: 'https://zos.alipayobjects.com/rmsportal/IQKRngzUuFzJzGzRJXUs.png',
-  thumbUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-}];
+const fileList = [
+  {
+    uid: -1,
+    name: 'xxx.png',
+    status: 'done',
+    url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+    thumbUrl: 'https://zos.alipayobjects.com/rmsportal/IQKRngzUuFzJzGzRJXUs.png',
+  },
+  {
+    uid: -2,
+    name: 'yyy.png',
+    status: 'done',
+    url: 'https://zos.alipayobjects.com/rmsportal/IQKRngzUuFzJzGzRJXUs.png',
+    thumbUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+  },
+];
 
 describe('Upload List', () => {
   it('should use file.thumbUrl for <img /> in priority', () => {
     const wrapper = mount(
       <Upload defaultFileList={fileList} listType="picture">
         <button type="button">upload</button>
-      </Upload>
+      </Upload>,
     );
     fileList.forEach((file, i) => {
       const linkNode = wrapper.find('.c7n-upload-list-item-thumbnail').at(i);
@@ -36,32 +39,39 @@ describe('Upload List', () => {
   });
 
   it('should remove correct item when uid is 0', async () => {
-    const list = [{
-      uid: 0,
-      name: 'xxx.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-      thumbUrl: 'https://zos.alipayobjects.com/rmsportal/IQKRngzUuFzJzGzRJXUs.png',
-    }, {
-      uid: 1,
-      name: 'xxx.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-      thumbUrl: 'https://zos.alipayobjects.com/rmsportal/IQKRngzUuFzJzGzRJXUs.png',
-    }];
+    const list = [
+      {
+        uid: 0,
+        name: 'xxx.png',
+        status: 'done',
+        url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+        thumbUrl: 'https://zos.alipayobjects.com/rmsportal/IQKRngzUuFzJzGzRJXUs.png',
+      },
+      {
+        uid: 1,
+        name: 'xxx.png',
+        status: 'done',
+        url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+        thumbUrl: 'https://zos.alipayobjects.com/rmsportal/IQKRngzUuFzJzGzRJXUs.png',
+      },
+    ];
     const wrapper = mount(
       <Upload defaultFileList={list}>
         <button type="button">upload</button>
-      </Upload>
+      </Upload>,
     );
     expect(wrapper.find('.c7n-upload-list-item').length).toBe(2);
-    wrapper.find('.c7n-upload-list-item').at(0).find('.icon-close').simulate('click');
+    wrapper
+      .find('.c7n-upload-list-item')
+      .at(0)
+      .find('.icon-close')
+      .simulate('click');
     await delay(400);
     wrapper.update();
     expect(wrapper.find('.c7n-upload-list-item').hostNodes().length).toBe(1);
   });
 
-  it('should be uploading when upload a file', (done) => {
+  it('should be uploading when upload a file', done => {
     let wrapper;
     const onChange = ({ file }) => {
       if (file.status === 'uploading') {
@@ -79,18 +89,16 @@ describe('Upload List', () => {
         customRequest={successRequest}
       >
         <button type="button">upload</button>
-      </Upload>
+      </Upload>,
     );
     wrapper.find('input').simulate('change', {
       target: {
-        files: [
-          { filename: 'foo.png' },
-        ],
+        files: [{ filename: 'foo.png' }],
       },
     });
   });
 
-  it('handle error', (done) => {
+  it('handle error', done => {
     let wrapper;
     const onChange = ({ file }) => {
       if (file.status !== 'uploading') {
@@ -105,13 +113,11 @@ describe('Upload List', () => {
         customRequest={errorRequest}
       >
         <button type="button">upload</button>
-      </Upload>
+      </Upload>,
     );
     wrapper.find('input').simulate('change', {
       target: {
-        files: [
-          { filename: 'foo.png' },
-        ],
+        files: [{ filename: 'foo.png' }],
       },
     });
   });
@@ -126,14 +132,12 @@ describe('Upload List', () => {
         beforeUpload={() => false}
       >
         <button type="button">upload</button>
-      </Upload>
+      </Upload>,
     );
 
     wrapper.find('input').simulate('change', {
       target: {
-        files: [
-          { filename: 'foo.png' },
-        ],
+        files: [{ filename: 'foo.png' }],
       },
     });
 
@@ -145,14 +149,18 @@ describe('Upload List', () => {
     let errors;
     class TestForm extends React.Component {
       handleSubmit = () => {
-        const { form: { validateFields } } = this.props;
-        validateFields((err) => {
+        const {
+          form: { validateFields },
+        } = this.props;
+        validateFields(err => {
           errors = err;
         });
-      }
+      };
 
       render() {
-        const { form: { getFieldDecorator } } = this.props;
+        const {
+          form: { getFieldDecorator },
+        } = this.props;
 
         return (
           <Form onSubmit={this.handleSubmit}>
@@ -173,11 +181,9 @@ describe('Upload List', () => {
                   },
                 ],
               })(
-                <Upload
-                  beforeUpload={() => false}
-                >
+                <Upload beforeUpload={() => false}>
                   <button type="button">upload</button>
-                </Upload>
+                </Upload>,
               )}
             </Form.Item>
           </Form>
@@ -192,9 +198,7 @@ describe('Upload List', () => {
 
     wrapper.find('input').simulate('change', {
       target: {
-        files: [
-          { filename: 'foo.png' },
-        ],
+        files: [{ filename: 'foo.png' }],
       },
     });
     wrapper.find(Form).simulate('submit');
@@ -204,18 +208,20 @@ describe('Upload List', () => {
   it('should support onPreview', () => {
     const handlePreview = jest.fn();
     const wrapper = mount(
-      <Upload
-        listType="picture-card"
-        defaultFileList={fileList}
-        onPreview={handlePreview}
-      >
+      <Upload listType="picture-card" defaultFileList={fileList} onPreview={handlePreview}>
         <button type="button">upload</button>
-      </Upload>
+      </Upload>,
     );
-    wrapper.find('.icon-visibility').at(0).simulate('click');
-    expect(handlePreview).toBeCalledWith(fileList[0]);
-    wrapper.find('.icon-visibility').at(1).simulate('click');
-    expect(handlePreview).toBeCalledWith(fileList[1]);
+    wrapper
+      .find('.icon-visibility')
+      .at(0)
+      .simulate('click');
+    expect(handlePreview).toHaveBeenCalledWith(fileList[0]);
+    wrapper
+      .find('.icon-visibility')
+      .at(1)
+      .simulate('click');
+    expect(handlePreview).toHaveBeenCalledWith(fileList[1]);
   });
 
   it('should support onRemove', async () => {
@@ -229,12 +235,18 @@ describe('Upload List', () => {
         onChange={handleChange}
       >
         <button type="button">upload</button>
-      </Upload>
+      </Upload>,
     );
-    wrapper.find('.icon-delete').at(0).simulate('click');
-    expect(handleRemove).toBeCalledWith(fileList[0]);
-    wrapper.find('.icon-delete').at(1).simulate('click');
-    expect(handleRemove).toBeCalledWith(fileList[1]);
+    wrapper
+      .find('.icon-delete')
+      .at(0)
+      .simulate('click');
+    expect(handleRemove).toHaveBeenCalledWith(fileList[0]);
+    wrapper
+      .find('.icon-delete')
+      .at(1)
+      .simulate('click');
+    expect(handleRemove).toHaveBeenCalledWith(fileList[1]);
     await delay(0);
     expect(handleChange.mock.calls.length).toBe(2);
   });
@@ -246,13 +258,9 @@ describe('Upload List', () => {
     delete newFile.thumbUrl;
     newFileList.push(newFile);
     const wrapper = mount(
-      <Upload
-        listType="picture-card"
-        defaultFileList={newFileList}
-        onPreview={handlePreview}
-      >
+      <Upload listType="picture-card" defaultFileList={newFileList} onPreview={handlePreview}>
         <button type="button">upload</button>
-      </Upload>
+      </Upload>,
     );
     wrapper.setState({});
     await delay(20);
@@ -271,12 +279,9 @@ describe('Upload List', () => {
     ];
 
     const wrapper = mount(
-      <Upload
-        listType="picture"
-        defaultFileList={list}
-      >
+      <Upload listType="picture" defaultFileList={list}>
         <button type="button">upload</button>
-      </Upload>
+      </Upload>,
     );
     expect(wrapper.render()).toMatchSnapshot();
   });

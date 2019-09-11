@@ -22,9 +22,10 @@ export default class ExpandIcon extends Component<ExpandIconProps> {
     return !shallowequal(nextProps, this.props);
   }
 
-  handleClick = (e) => {
+  handleClick = e => {
     e.stopPropagation();
-    this.props.onChange(e);
+    const { onChange } = this.props;
+    onChange(e);
   };
 
   render() {
@@ -38,7 +39,7 @@ export default class ExpandIcon extends Component<ExpandIconProps> {
       <Icon
         type="baseline-arrow_right"
         className={classString}
-        onClick={expandable ? this.handleClick : void 0}
+        onClick={expandable ? this.handleClick : undefined}
         tabIndex={expandable ? 0 : -1}
       />
     );

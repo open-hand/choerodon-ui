@@ -13,8 +13,9 @@ title:
 
 Multiple selection, selecting from existing items (scroll the menu).
 
-````jsx
+```jsx
 import { Select, Button } from 'choerodon-ui';
+
 const Option = Select.Option;
 
 const children = [];
@@ -26,7 +27,7 @@ class SelectMulitpleDemo extends React.Component {
   state = {
     loading: true,
     options: [],
-  }
+  };
 
   componentDidMount() {
     this.getOptions();
@@ -39,11 +40,11 @@ class SelectMulitpleDemo extends React.Component {
         loading: false,
       });
     }, 3000);
-  }
+  };
 
-  handleChoiceRemove = (value) => {
+  handleChoiceRemove = value => {
     return value >= 15;
-  }
+  };
 
   render() {
     const { options, loading } = this.state;
@@ -53,7 +54,11 @@ class SelectMulitpleDemo extends React.Component {
         style={{ width: '100%' }}
         label="多选用例"
         optionFilterProp="children"
-        footer={<Button funcType="raised" type="primary">这里是footer</Button>}
+        footer={
+          <Button funcType="raised" type="primary">
+            这里是footer
+          </Button>
+        }
         loading={loading}
         choiceRemove={this.handleChoiceRemove}
         filter
@@ -66,4 +71,4 @@ class SelectMulitpleDemo extends React.Component {
 }
 
 ReactDOM.render(<SelectMulitpleDemo />, mountNode);
-````
+```

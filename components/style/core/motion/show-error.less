@@ -10,22 +10,22 @@
   }
 }
 
-.show-error-motion(show-error, c7nShowError, .15s);
+.show-error-motion(show-error, c7nShowError, 0.15s);
 
 @keyframes c7nShowErrorIn {
   0% {
+    transform: translateY(-0.05rem);
     opacity: 0;
-    transform: translateY(-.05rem);
   }
   100% {
-    opacity: 1;
     transform: translateY(0);
+    opacity: 1;
   }
 }
 
 @keyframes c7nShowErrorOut {
   to {
+    transform: translateY(-0.05rem);
     opacity: 0;
-    transform: translateY(-.05rem);
   }
 }

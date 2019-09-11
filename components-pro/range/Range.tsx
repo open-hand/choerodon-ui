@@ -1,10 +1,10 @@
 import React, { ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
+import omit from 'lodash/omit';
 import { NumberField, NumberFieldProps } from '../number-field/NumberField';
 import autobind from '../_util/autobind';
 import EventManager from '../_util/EventManager';
-import omit from 'lodash/omit';
 import { FieldType } from '../data-set/enum';
 
 export interface RangeProps extends NumberFieldProps {
@@ -38,6 +38,7 @@ export default class Range extends NumberField<RangeProps> {
   };
 
   dragEvent: EventManager = new EventManager(typeof window !== 'undefined' && document);
+
   track: HTMLDivElement;
 
   type: string = 'range';
@@ -47,9 +48,7 @@ export default class Range extends NumberField<RangeProps> {
   }
 
   getOtherProps() {
-    return omit(super.getOtherProps(), [
-      'vertical',
-    ]);
+    return omit(super.getOtherProps(), ['vertical']);
   }
 
   getValue() {
@@ -57,7 +56,10 @@ export default class Range extends NumberField<RangeProps> {
   }
 
   getWrapperClassNames() {
-    const { props: { vertical }, prefixCls } = this;
+    const {
+      props: { vertical },
+      prefixCls,
+    } = this;
     return super.getWrapperClassNames({
       [`${prefixCls}-vertical`]: vertical,
     });
@@ -75,11 +77,23 @@ export default class Range extends NumberField<RangeProps> {
 
   renderTrack() {
     const percent = this.getPercent();
-    const { props: { vertical }, prefixCls } = this;
+    const {
+      props: { vertical },
+      prefixCls,
+    } = this;
     return (
-      <div className={`${prefixCls}-track`} onMouseDown={this.isReadOnly() || this.isDisabled() ? void 0 : this.handleTrackClick}>
-        <div className={`${prefixCls}-draghandle`} style={vertical ? { bottom: percent } : { left: percent }} />
-        <div className={`${prefixCls}-selection`} style={vertical ? { height: percent } : { width: percent }} />
+      <div
+        className={`${prefixCls}-track`}
+        onMouseDown={this.isReadOnly() || this.isDisabled() ? undefined : this.handleTrackClick}
+      >
+        <div
+          className={`${prefixCls}-draghandle`}
+          style={vertical ? { bottom: percent } : { left: percent }}
+        />
+        <div
+          className={`${prefixCls}-selection`}
+          style={vertical ? { height: percent } : { width: percent }}
+        />
       </div>
     );
   }
@@ -115,7 +129,7 @@ export default class Range extends NumberField<RangeProps> {
     const { bottom, left } = track.getBoundingClientRect();
     const length = vertical ? bottom - e.clientY : e.clientX - left;
     const totalLength = vertical ? track.clientHeight : track.clientWidth;
-    const oneStepLength = 1 / ((max - min ) / step) * totalLength;
+    const oneStepLength = (1 / ((max - min) / step)) * totalLength;
     let value = min;
     if (length <= 0) {
       value = min;
@@ -133,11 +147,10 @@ export default class Range extends NumberField<RangeProps> {
     const min = this.getProp('min');
     if (value <= min) {
       return 0;
-    } else if (value >= max) {
-      return '100%';
-    } else {
-      return `${(value - min) / (max - min) * 100}%`;
     }
+    if (value >= max) {
+      return '100%';
+    }
+    return `${((value - min) / (max - min)) * 100}%`;
   }
-
 }

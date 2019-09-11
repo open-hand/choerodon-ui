@@ -17,28 +17,28 @@ Automatic completion of select input.
 
 Using the [AutoComplete](/components/auto-complete/) component is strongly recommended instead as it is more flexible and capable.
 
-
-````jsx
+```jsx
 import { Select } from 'choerodon-ui';
+
 const Option = Select.Option;
 
 class App extends React.Component {
   state = {
     options: [],
-  }
+  };
 
-  handleChange = (value) => {
+  handleChange = value => {
     let options;
     if (!value || value.indexOf('@') >= 0) {
       options = [];
     } else {
-      options = ['gmail.com', '163.com', 'qq.com'].map((domain) => {
+      options = ['gmail.com', '163.com', 'qq.com'].map(domain => {
         const email = `${value}@${domain}`;
         return <Option key={email}>{email}</Option>;
       });
     }
     this.setState({ options });
-  }
+  };
 
   render() {
     // filterOption needs to be false，as the value is dynamically generated
@@ -57,4 +57,4 @@ class App extends React.Component {
 }
 
 ReactDOM.render(<App />, mountNode);
-````
+```

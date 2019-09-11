@@ -16,16 +16,22 @@ export function normalizeLabelWidth(labelWidth, columns) {
     return new Array(columns).fill(labelWidth);
   }
   const labelWidths = new Array(columns).fill(defaultLabelWidth);
-  labelWidth.slice(0, columns).forEach((width, index) => labelWidths[index] = width);
+  labelWidth.slice(0, columns).forEach((width, index) => (labelWidths[index] = width));
   return labelWidths;
 }
 
-export function getProperty(props: any, key: string, dataSet?: DataSet, record?: Record): string | undefined {
+export function getProperty(
+  props: any,
+  key: string,
+  dataSet?: DataSet,
+  record?: Record,
+): string | undefined {
   if (props[key]) {
     return props[key];
   }
   const { name, dataIndex } = props;
-  record = record || dataSet && (dataIndex === void 0 ? dataSet.current : dataSet.get(dataIndex));
+  record =
+    record || (dataSet && (dataIndex === undefined ? dataSet.current : dataSet.get(dataIndex)));
   const field = record ? record.getField(name) : dataSet && dataSet.getField(name);
   if (field) {
     const fieldProperty = field.get(key);

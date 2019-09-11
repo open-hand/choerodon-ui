@@ -7,7 +7,19 @@ import noop from 'lodash/noop';
 import debounce from 'lodash/debounce';
 import isString from 'lodash/isString';
 import { observer } from 'mobx-react';
-import { action, computed, get, IReactionDisposer, isArrayLike, observable, reaction, runInAction, toJS } from 'mobx';
+import {
+  action,
+  computed,
+  get,
+  IReactionDisposer,
+  isArrayLike,
+  observable,
+  reaction,
+  runInAction,
+  toJS,
+} from 'mobx';
+import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
+import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import Icon from '../icon';
 import Field from '../data-set/Field';
 import { TextField, TextFieldProps } from '../text-field/TextField';
@@ -16,14 +28,12 @@ import Record from '../data-set/Record';
 import autobind from '../_util/autobind';
 import { FormFieldProps, RenderProps } from '../field/FormField';
 import measureTextWidth from '../_util/measureTextWidth';
-import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { getEditorByField } from './utils';
-import Select, { SelectProps } from '../select/Select';
+import ObserverSelect, { SelectProps } from '../select/Select';
 import processFieldValue from '../_util/processFieldValue';
-import LookupCodeStore from '../stores/LookupCodeStore';
+import lookupStore from '../stores/LookupCodeStore';
 import { isSameLike } from '../data-set/utils';
 import Option, { OptionProps } from '../option/Option';
-import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 
 export interface FilterSelectProps extends TextFieldProps {
   paramName?: string;
@@ -33,7 +43,6 @@ export interface FilterSelectProps extends TextFieldProps {
 
 @observer
 export default class FilterSelect extends TextField<FilterSelectProps> {
-
   static defaultProps = {
     ...TextField.defaultProps,
     optionDataSet: DataSet,
@@ -44,9 +53,11 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
   };
 
   @observable selectField?: Field;
+
   @observable filterText?: string;
 
   queryDataSet?: DataSet;
+
   reaction: IReactionDisposer;
 
   @computed
@@ -55,12 +66,15 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
     if (value) {
       return value;
     }
-    const { optionDataSet: { queryDataSet }, paramName } = this.props;
+    const {
+      optionDataSet: { queryDataSet },
+      paramName,
+    } = this.props;
     if (queryDataSet) {
       const { current } = queryDataSet;
       if (current) {
         const result: string[] = [];
-        [...new Set([...queryDataSet.fields.keys(), paramName])].forEach((key) => {
+        [...new Set([...queryDataSet.fields.keys(), paramName])].forEach(key => {
           if (key) {
             const values = current.get(key);
             if (isArrayLike(values)) {
@@ -73,6 +87,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
         return result;
       }
     }
+    return undefined;
   }
 
   set value(value: any | undefined) {
@@ -81,9 +96,12 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
     });
   }
 
-  private setFilterText = debounce(action((text?: string) => {
-    this.filterText = text;
-  }), 500);
+  private setFilterText = debounce(
+    action((text?: string) => {
+      this.filterText = text;
+    }),
+    500,
+  );
 
   constructor(props, context) {
     super(props, context);
@@ -138,7 +156,10 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
 
   @autobind
   defaultRenderer({ value, repeat = 0 }: RenderProps) {
-    const { optionDataSet: { queryDataSet }, paramName } = this.props;
+    const {
+      optionDataSet: { queryDataSet },
+      paramName,
+    } = this.props;
     if (queryDataSet) {
       const { current } = queryDataSet;
       if (current) {
@@ -151,22 +172,30 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
           if (field.get('multiple')) {
             fieldValue = (fieldValue || [])[repeat];
           }
-          return `${this.getFieldLabel(field)}: ${processFieldValue(super.processValue(fieldValue), field, this.lang)}`;
+          return `${this.getFieldLabel(field)}: ${processFieldValue(
+            super.processValue(fieldValue),
+            field,
+            this.lang,
+          )}`;
         }
         return value;
       }
     }
-  };
+  }
 
   getQueryRecord(): Record | undefined {
-    const { optionDataSet: { queryDataSet } } = this.props;
+    const {
+      optionDataSet: { queryDataSet },
+    } = this.props;
     if (queryDataSet) {
       return queryDataSet.current;
     }
   }
 
   getQueryField(fieldName): Field | undefined {
-    const { optionDataSet: { queryDataSet } } = this.props;
+    const {
+      optionDataSet: { queryDataSet },
+    } = this.props;
     if (queryDataSet) {
       return queryDataSet.getField(fieldName);
     }
@@ -237,7 +266,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
   @autobind
   handleBlur(e) {
     super.handleBlur(e);
-    this.setSelectField(void 0);
+    this.setSelectField(undefined);
   }
 
   @autobind
@@ -270,7 +299,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
   handleKeyDown(e) {
     if (this.selectField) {
       if (e.keyCode === KeyCode.BACKSPACE && !this.text) {
-        this.setSelectField(void 0);
+        this.setSelectField(undefined);
       }
     } else {
       super.handleKeyDown(e);
@@ -278,13 +307,12 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
   }
 
   @autobind
-  handleEnterDown() {
-  }
+  handleEnterDown() {}
 
   @action
   setSelectField(value) {
     this.selectField = value;
-    this.setFilterText(void 0);
+    this.setFilterText(undefined);
   }
 
   getQueryValues(fieldName) {
@@ -295,8 +323,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
     return [];
   }
 
-  syncValueOnBlur() {
-  }
+  syncValueOnBlur() {}
 
   @action
   setQueryValue(fieldName: string, value: any) {
@@ -304,7 +331,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
     if (current) {
       current.set(fieldName, value);
     }
-    this.setSelectField(void 0);
+    this.setSelectField(undefined);
   }
 
   getFieldLabel(field: Field): ReactNode {
@@ -313,12 +340,14 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
 
   multipleFieldExistsValue(field: Field, current?: Record): boolean {
     if (field.get('multiple')) {
-      const lookupKey = LookupCodeStore.getKey(field);
+      const lookupKey = lookupStore.getKey(field);
       if (lookupKey) {
-        const lookupData = LookupCodeStore.get(lookupKey);
+        const lookupData = lookupStore.get(lookupKey);
         if (lookupData && current) {
           const values = current.get(field.name);
-          return lookupData.some(obj => !values.some(value => isSameLike(get(obj, field.get('valueField')), value)));
+          return lookupData.some(
+            obj => !values.some(value => isSameLike(get(obj, field.get('valueField')), value)),
+          );
         }
       }
     }
@@ -326,31 +355,48 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
   }
 
   getInputFilterOptions(filterText: string): ReactElement<OptionProps>[] {
-    const { optionDataSet, optionDataSet: { fields } } = this.props;
+    const {
+      optionDataSet,
+      optionDataSet: { fields },
+    } = this.props;
     const values: Set<string> = new Set<string>();
-    optionDataSet.forEach((record) => {
-      [...fields.keys()].forEach((key) => {
+    optionDataSet.forEach(record => {
+      [...fields.keys()].forEach(key => {
         const value = record.get(key);
         if (isString(value) && value.toLowerCase().indexOf(filterText.toLowerCase()) !== -1) {
           values.add(value);
         }
       });
     });
-    return [...values].map(value => <Option key={value} value={value}>{value}</Option>);
+    return [...values].map(value => (
+      <Option key={value} value={value}>
+        {value}
+      </Option>
+    ));
   }
 
   getFieldSelectOptions(): ReactElement<OptionProps>[] {
-    const { props: { optionDataSet: { queryDataSet }, paramName } } = this;
+    const {
+      props: {
+        optionDataSet: { queryDataSet },
+        paramName,
+      },
+    } = this;
     const data: ReactElement<OptionProps>[] = [];
     if (queryDataSet) {
-      [...queryDataSet.fields.entries()]
-        .forEach(([key, field]) => {
-          if (key !== paramName && (this.getValues().indexOf(key) === -1 || this.multipleFieldExistsValue(field, this.getQueryRecord()))) {
-            data.push(
-              <Option key={key} value={field}>{this.getFieldLabel(field)}</Option>,
-            );
-          }
-        });
+      [...queryDataSet.fields.entries()].forEach(([key, field]) => {
+        if (
+          key !== paramName &&
+          (this.getValues().indexOf(key) === -1 ||
+            this.multipleFieldExistsValue(field, this.getQueryRecord()))
+        ) {
+          data.push(
+            <Option key={key} value={field}>
+              {this.getFieldLabel(field)}
+            </Option>,
+          );
+        }
+      });
     }
     return data;
   }
@@ -368,16 +414,19 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
       renderer: noop,
     };
 
-    if (editor.type === Select as any) {
+    if (editor.type === (ObserverSelect as any)) {
       (editorProps as SelectProps).dropdownMenuStyle = this.props.dropdownMenuStyle;
     }
     return cloneElement<FormFieldProps>(editor, editorProps);
   }
 
   getFieldSelect(props): ReactElement<SelectProps> {
-    const { filterText, props: { dropdownMenuStyle } } = this;
+    const {
+      filterText,
+      props: { dropdownMenuStyle },
+    } = this;
     return (
-      <Select
+      <ObserverSelect
         {...props}
         key="key"
         combo
@@ -390,7 +439,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
         dropdownMenuStyle={dropdownMenuStyle}
       >
         {filterText ? this.getInputFilterOptions(filterText) : this.getFieldSelectOptions()}
-      </Select>
+      </ObserverSelect>
     );
   }
 
@@ -417,8 +466,12 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
     }
     return (
       <li key="text">
-        {selectField ? <span className={`${prefixCls}-select-field`}>{this.getFieldLabel(selectField)}:</span> : null}
-        {selectField ? this.getFieldEditor(editorProps, selectField) : this.getFieldSelect(editorProps)}
+        {selectField ? (
+          <span className={`${prefixCls}-select-field`}>{this.getFieldLabel(selectField)}:</span>
+        ) : null}
+        {selectField
+          ? this.getFieldEditor(editorProps, selectField)
+          : this.getFieldSelect(editorProps)}
       </li>
     );
   }

@@ -39,6 +39,7 @@ export default class LocaleReceiver extends Component<LocaleReceiverProps> {
   }
 
   render() {
-    return this.props.children(this.getLocale(), this.getLocaleCode());
+    const { children } = this.props;
+    return children(this.getLocale(), this.getLocaleCode());
   }
 }

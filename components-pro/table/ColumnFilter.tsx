@@ -34,12 +34,12 @@ export default class ColumnFilter extends Component<ColumnFilterProps> {
     this.setDropDownHidden(true);
   }
 
-  saveMenu = node => this.menu = node;
+  saveMenu = node => (this.menu = node);
 
   @autobind
   handleHiddenChange(hidden) {
     this.setDropDownHidden(hidden);
-  };
+  }
 
   @autobind
   handleKeyDown(e) {
@@ -54,28 +54,47 @@ export default class ColumnFilter extends Component<ColumnFilterProps> {
   }
 
   render() {
-    const prefixCls = `${this.props.prefixCls}-columns-chooser`;
+    const { prefixCls: rootPrefixCls } = this.props;
+    const prefixCls = `${rootPrefixCls}-columns-chooser`;
     return (
-      <div className={prefixCls} onFocus={stopPropagation} onMouseDown={stopPropagation} tabIndex={-1}>
+      <div
+        className={prefixCls}
+        onFocus={stopPropagation}
+        onMouseDown={stopPropagation}
+        tabIndex={-1}
+      >
         <Dropdown
           placement={Placements.bottomRight}
           overlay={this.getMenu(prefixCls)}
           hidden={this.hidden}
           onHiddenChange={this.handleHiddenChange}
         >
-          <Button funcType={FuncType.flat} icon="view_column" size={Size.small} onKeyDown={this.handleKeyDown} />
+          <Button
+            funcType={FuncType.flat}
+            icon="view_column"
+            size={Size.small}
+            onKeyDown={this.handleKeyDown}
+          />
         </Dropdown>
       </div>
     );
   }
 
   @action
-  handleMenuSelect({ item: { props: { value } } }) {
+  handleMenuSelect({
+    item: {
+      props: { value },
+    },
+  }) {
     value.hidden = false;
   }
 
   @action
-  handleMenuUnSelect({ item: { props: { value } } }) {
+  handleMenuUnSelect({
+    item: {
+      props: { value },
+    },
+  }) {
     value.hidden = true;
   }
 
@@ -84,10 +103,12 @@ export default class ColumnFilter extends Component<ColumnFilterProps> {
   }
 
   getMenu(prefixCls) {
-    const { leafColumns, dataSet } = this.context.tableStore;
+    const {
+      tableStore: { leafColumns, dataSet },
+    } = this.context;
     const selectedKeys: Key[] = [];
     const columns: [ColumnProps, ReactNode, Key][] = [];
-    leafColumns.forEach((column) => {
+    leafColumns.forEach(column => {
       if (column.hideable) {
         const header = getHeader(column, dataSet);
         if (header) {

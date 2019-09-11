@@ -30,8 +30,9 @@ import Button from '../../button/Button';
 import { getLabelFromPropsValue, getMapKey } from '../select/util';
 
 function filterFn(input, child) {
-  return String(getPropValue(child, labelCompatible(this.props.treeNodeFilterProp)))
-    .indexOf(input) > -1;
+  return (
+    String(getPropValue(child, labelCompatible(this.props.treeNodeFilterProp))).indexOf(input) > -1
+  );
 }
 
 function loopTreeData(data, level = 0, treeCheckable) {
@@ -46,7 +47,7 @@ function loopTreeData(data, level = 0, treeCheckable) {
       selectable,
       children,
       isLeaf,
-      ...otherProps,
+      ...otherProps
     } = item;
     const props = {
       value,
@@ -59,9 +60,9 @@ function loopTreeData(data, level = 0, treeCheckable) {
     };
     let ret;
     if (children && children.length) {
-      ret = (<_TreeNode {...props}>{loopTreeData(children, pos, treeCheckable)}</_TreeNode>);
+      ret = <_TreeNode {...props}>{loopTreeData(children, pos, treeCheckable)}</_TreeNode>;
     } else {
-      ret = (<_TreeNode {...props} isLeaf={isLeaf} />);
+      ret = <_TreeNode {...props} isLeaf={isLeaf} />;
     }
     return ret;
   });
@@ -152,11 +153,11 @@ export default class Select extends Component {
     this.renderedTreeData = this.renderTreeData(nextProps);
     // Detecting whether the object of `onChange`'s argument  is old ref.
     // Better to do a deep equal later.
-    this._cacheTreeNodesStates = this._cacheTreeNodesStates !== 'no' &&
+    this._cacheTreeNodesStates =
+      this._cacheTreeNodesStates !== 'no' &&
       this._savedValue &&
       nextProps.value === this._savedValue;
-    if (this.props.treeData !== nextProps.treeData ||
-      this.props.children !== nextProps.children) {
+    if (this.props.treeData !== nextProps.treeData || this.props.children !== nextProps.children) {
       // refresh this._treeNodesStates cache
       this._treeNodesStates = getTreeNodesStates(
         this.renderedTreeData || nextProps.children,
@@ -189,9 +190,12 @@ export default class Select extends Component {
   }
 
   componentWillUpdate(nextProps) {
-    if (this._savedValue && nextProps.value &&
+    if (
+      this._savedValue &&
+      nextProps.value &&
       nextProps.value !== this._savedValue &&
-      nextProps.value === this.props.value) {
+      nextProps.value === this.props.value
+    ) {
       this._cacheTreeNodesStates = false;
       this.getValue(nextProps, this.addLabelToValue(nextProps, toArray(nextProps.value)));
     }
@@ -220,7 +224,7 @@ export default class Select extends Component {
     }
   }
 
-  onInputChange = (event) => {
+  onInputChange = event => {
     const val = event.target.value;
     const { props } = this;
     this.setState({
@@ -235,7 +239,7 @@ export default class Select extends Component {
     props.onSearch(val);
   };
 
-  onDropdownVisibleChange = (open) => {
+  onDropdownVisibleChange = open => {
     // selection inside combobox cause click
     if (!open && document.activeElement === this.getInputDOMNode()) {
       // return;
@@ -248,7 +252,7 @@ export default class Select extends Component {
   };
 
   // combobox ignore
-  onKeyDown = (event) => {
+  onKeyDown = event => {
     const props = this.props;
     if (props.disabled) {
       return;
@@ -262,7 +266,7 @@ export default class Select extends Component {
     }
   };
 
-  onInputKeyDown = (event) => {
+  onInputKeyDown = event => {
     const props = this.props;
     if (props.disabled) {
       return;
@@ -328,20 +332,24 @@ export default class Select extends Component {
         if (value.some(i => i.value === selectedValue)) {
           return;
         }
-        value = value.concat([{
-          value: selectedValue,
-          label: selectedLabel,
-        }]);
+        value = value.concat([
+          {
+            value: selectedValue,
+            label: selectedLabel,
+          },
+        ]);
       }
     } else {
       if (value.length && value[0].value === selectedValue) {
         this.setOpenState(false);
         return;
       }
-      value = [{
-        value: selectedValue,
-        label: selectedLabel,
-      }];
+      value = [
+        {
+          value: selectedValue,
+          label: selectedLabel,
+        },
+      ];
       this.setOpenState(false);
     }
 
@@ -352,7 +360,10 @@ export default class Select extends Component {
     if (checkEvt) {
       extraInfo.checked = info.checked;
       // if inputValue existing, tree is checkStrictly
-      extraInfo.allCheckedNodes = props.treeCheckStrictly || this.state.inputValue ? info.checkedNodes : flatToHierarchy(info.checkedNodesPositions);
+      extraInfo.allCheckedNodes =
+        props.treeCheckStrictly || this.state.inputValue
+          ? info.checkedNodes
+          : flatToHierarchy(info.checkedNodesPositions);
       this._checkedNodes = info.checkedNodesPositions;
       const _tree = this.trigger.popupEle;
       this._treeNodesStates = _tree.checkKeys;
@@ -368,7 +379,7 @@ export default class Select extends Component {
     }
   };
 
-  onDeselect = (info) => {
+  onDeselect = info => {
     this.removeSelected(getValuePropValue(info.node));
     if (!isMultiple(this.props)) {
       this.setOpenState(false);
@@ -381,7 +392,7 @@ export default class Select extends Component {
     this.getInputDOMNode().focus();
   };
 
-  onClearSelection = (event) => {
+  onClearSelection = event => {
     const props = this.props;
     const state = this.state;
     if (props.disabled) {
@@ -393,11 +404,14 @@ export default class Select extends Component {
     if (state.inputValue || state.value.length) {
       this.setOpenState(false);
       if (typeof props.inputValue === 'undefined') {
-        this.setState({
-          inputValue: '',
-        }, () => {
-          this.fireChange([]);
-        });
+        this.setState(
+          {
+            inputValue: '',
+          },
+          () => {
+            this.fireChange([]);
+          },
+        );
       } else {
         this.fireChange([]);
       }
@@ -498,11 +512,11 @@ export default class Select extends Component {
   getValue(_props, val, init = true) {
     let value = val;
     // if inputValue existing, tree is checkStrictly
-    const _strict = init === '__strict' ||
-      init && (this.state && this.state.inputValue ||
-        this.props.inputValue !== _props.inputValue);
-    if (_props.treeCheckable &&
-      (_props.treeCheckStrictly || _strict)) {
+    const _strict =
+      init === '__strict' ||
+      (init &&
+        ((this.state && this.state.inputValue) || this.props.inputValue !== _props.inputValue));
+    if (_props.treeCheckable && (_props.treeCheckStrictly || _strict)) {
       this.halfCheckedValues = [];
       value = [];
       val.forEach(i => {
@@ -514,13 +528,20 @@ export default class Select extends Component {
       });
     }
     // if (!(_props.treeCheckable && !_props.treeCheckStrictly)) {
-    if (!!!_props.treeCheckable || _props.treeCheckable &&
-      (_props.treeCheckStrictly || _strict)) {
+    if (
+      !!!_props.treeCheckable ||
+      (_props.treeCheckable && (_props.treeCheckStrictly || _strict))
+    ) {
       return value;
     }
     let checkedTreeNodes;
-    if (this._cachetreeData && this._cacheTreeNodesStates && this._checkedNodes &&
-      this.state && !this.state.inputValue) {
+    if (
+      this._cachetreeData &&
+      this._cacheTreeNodesStates &&
+      this._checkedNodes &&
+      this.state &&
+      !this.state.inputValue
+    ) {
       this.checkedTreeNodes = checkedTreeNodes = this._checkedNodes;
     } else {
       /**
@@ -538,21 +559,22 @@ export default class Select extends Component {
       );
       this.checkedTreeNodes = checkedTreeNodes = this._treeNodesStates.checkedNodes;
     }
-    const mapLabVal = arr => arr.map(itemObj => {
-      return {
-        value: getValuePropValue(itemObj.node),
-        label: getPropValue(itemObj.node, _props.treeNodeLabelProp),
-      };
-    });
+    const mapLabVal = arr =>
+      arr.map(itemObj => {
+        return {
+          value: getValuePropValue(itemObj.node),
+          label: getPropValue(itemObj.node, _props.treeNodeLabelProp),
+        };
+      });
     const props = this.props;
     let checkedValues = [];
     if (props.showCheckedStrategy === SHOW_ALL) {
       checkedValues = mapLabVal(checkedTreeNodes);
     } else if (props.showCheckedStrategy === SHOW_PARENT) {
       const posArr = filterParentPosition(checkedTreeNodes.map(itemObj => itemObj.pos));
-      checkedValues = mapLabVal(checkedTreeNodes.filter(
-        itemObj => posArr.indexOf(itemObj.pos) !== -1,
-      ));
+      checkedValues = mapLabVal(
+        checkedTreeNodes.filter(itemObj => posArr.indexOf(itemObj.pos) !== -1),
+      );
     } else {
       checkedValues = mapLabVal(checkedTreeNodes.filter(itemObj => !itemObj.node.props.children));
     }
@@ -571,7 +593,8 @@ export default class Select extends Component {
       checkedNodes = checkedNodes;
     } else if (props.showCheckedStrategy === SHOW_PARENT) {
       const posArr = filterParentPosition(checkedNodesPositions.map(itemObj => itemObj.pos));
-      checkedNodes = checkedNodesPositions.filter(itemObj => posArr.indexOf(itemObj.pos) !== -1)
+      checkedNodes = checkedNodesPositions
+        .filter(itemObj => posArr.indexOf(itemObj.pos) !== -1)
         .map(itemObj => itemObj.node);
     } else {
       checkedNodes = checkedNodes.filter(n => !n.props.children);
@@ -612,24 +635,27 @@ export default class Select extends Component {
     if (!this.props.onDropdownVisibleChange(open, { documentClickClose })) {
       return;
     }
-    this.setState({
-      open,
-    }, () => {
-      if (needFocus || open) {
-        // Input dom init after first time component render
-        // Add delay for this to get focus
-        Promise.resolve().then(() => {
-          if (open || isMultiple(props)) {
-            const input = this.getInputDOMNode();
-            if (input && document.activeElement !== input) {
-              input.focus();
+    this.setState(
+      {
+        open,
+      },
+      () => {
+        if (needFocus || open) {
+          // Input dom init after first time component render
+          // Add delay for this to get focus
+          Promise.resolve().then(() => {
+            if (open || isMultiple(props)) {
+              const input = this.getInputDOMNode();
+              if (input && document.activeElement !== input) {
+                input.focus();
+              }
+            } else if (this.selection) {
+              this.selection.focus();
             }
-          } else if (this.selection) {
-            this.selection.focus();
-          }
-        });
-      }
-    });
+          });
+        }
+      },
+    );
   }
 
   clearSearchInput() {
@@ -676,9 +702,11 @@ export default class Select extends Component {
       return;
     }
     this._cacheTreeNodesStates = 'no';
-    if (props.treeCheckable &&
-      (props.showCheckedStrategy === SHOW_ALL || props.showCheckedStrategy === SHOW_PARENT)
-      && !(props.treeCheckStrictly || this.state.inputValue)) {
+    if (
+      props.treeCheckable &&
+      (props.showCheckedStrategy === SHOW_ALL || props.showCheckedStrategy === SHOW_PARENT) &&
+      !(props.treeCheckStrictly || this.state.inputValue)
+    ) {
       this.getDeselectedValue(selectedVal);
       return;
     }
@@ -686,11 +714,11 @@ export default class Select extends Component {
     // cautiously, they are completely different, think about it, the tree may not render at first,
     // but the nodes in select box are ready.
     let label;
-    const value = this.state.value.filter((singleValue) => {
+    const value = this.state.value.filter(singleValue => {
       if (singleValue.value === selectedVal) {
         label = singleValue.label;
       }
-      return (singleValue.value !== selectedVal);
+      return singleValue.value !== selectedVal;
     });
     const canMultiple = isMultiple(props);
 
@@ -777,12 +805,17 @@ export default class Select extends Component {
       if (!('value' in props)) {
         this._cacheTreeNodesStates = false;
         this.setState({
-          value: this.getValue(props, toArray(this._savedValue).map((v, i) => {
-            return this.isLabelInValue() ? v : {
-              value: v,
-              label: labs && labs[i],
-            };
-          })),
+          value: this.getValue(
+            props,
+            toArray(this._savedValue).map((v, i) => {
+              return this.isLabelInValue()
+                ? v
+                : {
+                    value: v,
+                    label: labs && labs[i],
+                  };
+            }),
+          ),
         });
       }
     }
@@ -849,11 +882,7 @@ export default class Select extends Component {
     const { props, state } = this;
     const placeholder = props.placeholder;
     if (placeholder) {
-      return (
-        <div className={`${props.prefixCls}-selection__placeholder`}>
-          {placeholder}
-        </div>
-      );
+      return <div className={`${props.prefixCls}-selection__placeholder`}>{placeholder}</div>;
     }
     return null;
   };
@@ -869,12 +898,8 @@ export default class Select extends Component {
       const singleValue = value && value[0];
       const { label } = singleValue || {};
       const innerNode = (
-        <span
-          key="value"
-          title={label}
-          className={`${prefixCls}-selection-selected-value`}
-        >
-         {choiceRender ? choiceRender(label) : label}
+        <span key="value" title={label} className={`${prefixCls}-selection-selected-value`}>
+          {choiceRender ? choiceRender(label) : label}
         </span>
       );
       return (
@@ -898,7 +923,7 @@ export default class Select extends Component {
       );
     }
 
-    const selectedValueNodes = value.map((singleValue) => {
+    const selectedValueNodes = value.map(singleValue => {
       let content = singleValue.label;
       const title = content;
       if (maxTagTextLength && typeof content === 'string' && content.length > maxTagTextLength) {
@@ -922,12 +947,11 @@ export default class Select extends Component {
       );
     });
 
-    selectedValueNodes.push(<li
-      className={`${prefixCls}-search ${prefixCls}-search--inline`}
-      key="__input"
-    >
-      {this.getInputElement()}
-    </li>);
+    selectedValueNodes.push(
+      <li className={`${prefixCls}-search ${prefixCls}-search--inline`} key="__input">
+        {this.getInputElement()}
+      </li>,
+    );
     const className = `${prefixCls}-selection__rendered`;
     if (choiceTransitionName) {
       return (
@@ -941,7 +965,7 @@ export default class Select extends Component {
         </Animate>
       );
     }
-    return (<ul className={className}>{selectedValueNodes}</ul>);
+    return <ul className={className}>{selectedValueNodes}</ul>;
   }
 
   renderTreeData(props) {
@@ -1011,7 +1035,8 @@ export default class Select extends Component {
     };
 
     return (
-      <SelectTrigger {...props}
+      <SelectTrigger
+        {...props}
         treeNodes={props.children}
         treeData={this.renderedTreeData}
         _cachetreeData={this._cachetreeData}

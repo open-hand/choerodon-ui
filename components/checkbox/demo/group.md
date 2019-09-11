@@ -1,8 +1,8 @@
 ---
 order: 3
 title:
-    zh-CN: Checkbox 组
-    en-US: Checkbox Group
+  zh-CN: Checkbox 组
+  en-US: Checkbox Group
 ---
 
 ## zh-CN
@@ -13,8 +13,9 @@ title:
 
 Generate a group of checkboxes from an array.
 
-````jsx
+```jsx
 import { Checkbox } from 'choerodon-ui';
+
 const CheckboxGroup = Checkbox.Group;
 
 function onChange(checkedValues) {
@@ -35,11 +36,24 @@ const optionsWithDisabled = [
 
 ReactDOM.render(
   <div>
-    <CheckboxGroup label="这是一个label" options={plainOptions} defaultValue={['Apple']} onChange={onChange} />
-    <br /><br />
+    <CheckboxGroup
+      label="这是一个label"
+      options={plainOptions}
+      defaultValue={['Apple']}
+      onChange={onChange}
+    />
+    <br />
+    <br />
     <CheckboxGroup options={options} defaultValue={['Pear']} onChange={onChange} />
-    <br /><br />
-    <CheckboxGroup options={optionsWithDisabled} disabled defaultValue={['Apple']} onChange={onChange} />
+    <br />
+    <br />
+    <CheckboxGroup
+      options={optionsWithDisabled}
+      disabled
+      defaultValue={['Apple']}
+      onChange={onChange}
+    />
   </div>,
-  mountNode);
-````
+  mountNode,
+);
+```

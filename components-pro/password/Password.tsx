@@ -42,12 +42,11 @@ export default class Password extends TextField<PasswordProps> {
   @observable reveal?: boolean;
 
   selectionEnd?: number;
+
   selectionStart?: number;
 
   getOtherProps() {
-    return omit(super.getOtherProps(), [
-      'reveal',
-    ]);
+    return omit(super.getOtherProps(), ['reveal']);
   }
 
   getOtherPrevNode(): ReactNode {
@@ -86,18 +85,20 @@ export default class Password extends TextField<PasswordProps> {
   doReveal(target) {
     this.selectionEnd = target.selectionEnd;
     this.selectionStart = target.selectionStart;
-    this.type = target.type = 'text';
+    target.type = 'text';
+    this.type = target.type;
     this.reveal = true;
   }
 
   @action
   resetReveal(target) {
     const { selectionStart, selectionEnd } = this;
-    this.type = target.type = 'password';
+    target.type = 'password';
+    this.type = target.type;
     if (typeof selectionStart !== 'undefined' && typeof selectionEnd !== 'undefined') {
       target.setSelectionRange(selectionStart, selectionEnd);
-      this.selectionStart = void 0;
-      this.selectionEnd = void 0;
+      this.selectionStart = undefined;
+      this.selectionEnd = undefined;
     }
     this.reveal = false;
   }

@@ -13,8 +13,9 @@ title:
 
 By setting like this: `<Steps size="small">`, you can get a mini version.
 
-````jsx
+```jsx
 import { Steps } from 'choerodon-ui';
+
 const Step = Steps.Step;
 
 ReactDOM.render(
@@ -23,5 +24,6 @@ ReactDOM.render(
     <Step title="In Progress" />
     <Step title="Waiting" />
   </Steps>,
-  mountNode);
-````
+  mountNode,
+);
+```

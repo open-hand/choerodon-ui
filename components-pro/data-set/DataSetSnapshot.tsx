@@ -3,13 +3,25 @@ import Record from './Record';
 
 export default class DataSetSnapshot {
   records: Record[];
+
   originalData: Record[];
+
   cachedSelected: Record[];
+
   totalCount: number;
+
   currentPage: number;
+
   pageSize: number;
 
-  constructor({ records, originalData, totalCount, currentPage, pageSize, cachedSelected }: DataSet) {
+  constructor({
+    records,
+    originalData,
+    totalCount,
+    currentPage,
+    pageSize,
+    cachedSelected,
+  }: DataSet) {
     this.records = records;
     this.originalData = originalData;
     this.totalCount = totalCount;

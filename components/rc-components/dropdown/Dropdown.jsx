@@ -35,8 +35,7 @@ export default class Dropdown extends Component {
     overlayClassName: '',
     overlayStyle: {},
     defaultVisible: false,
-    onVisibleChange() {
-    },
+    onVisibleChange() {},
     placement: 'bottomLeft',
   };
 
@@ -61,7 +60,7 @@ export default class Dropdown extends Component {
     }
   }
 
-  onClick = (e) => {
+  onClick = e => {
     const props = this.props;
     const overlayProps = props.overlay.props;
     // do no call onVisibleChange, if you need click to hide, use onClick and control visible
@@ -78,7 +77,7 @@ export default class Dropdown extends Component {
     }
   };
 
-  onVisibleChange = (visible) => {
+  onVisibleChange = visible => {
     const props = this.props;
     if (!('visible' in props)) {
       this.setState({
@@ -104,33 +103,38 @@ export default class Dropdown extends Component {
     return this.trigger.getPopupDomNode();
   }
 
-  afterVisibleChange = (visible) => {
+  afterVisibleChange = visible => {
     if (visible && this.props.minOverlayWidthMatchTrigger) {
       const overlayNode = this.getPopupDomNode();
       const rootNode = ReactDOM.findDOMNode(this);
       if (rootNode && overlayNode && rootNode.offsetWidth > overlayNode.offsetWidth) {
         overlayNode.style.minWidth = `${rootNode.offsetWidth}px`;
-        if (this.trigger &&
-          this.trigger._component &&
-          this.trigger._component.alignInstance) {
+        if (this.trigger && this.trigger._component && this.trigger._component.alignInstance) {
           this.trigger._component.alignInstance.forceAlign();
         }
       }
     }
   };
 
-  saveTrigger = (node) => {
+  saveTrigger = node => {
     this.trigger = node;
   };
 
   render() {
     const {
-      prefixCls, children,
-      transitionName, animation,
-      align, placement, getPopupContainer,
-      showAction, hideAction,
-      overlayClassName, overlayStyle,
-      trigger, ...otherProps,
+      prefixCls,
+      children,
+      transitionName,
+      animation,
+      align,
+      placement,
+      getPopupContainer,
+      showAction,
+      hideAction,
+      overlayClassName,
+      overlayStyle,
+      trigger,
+      ...otherProps
     } = this.props;
     return (
       <Trigger

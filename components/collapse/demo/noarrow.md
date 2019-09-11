@@ -13,8 +13,9 @@ title:
 
 You can disable showing arrow icon by passing `showArrow={false}` to `CollapsePanel` component.
 
-````jsx
+```jsx
 import { Collapse } from 'choerodon-ui';
+
 const Panel = Collapse.Panel;
 
 function callback(key) {
@@ -36,5 +37,6 @@ ReactDOM.render(
       <p>{text}</p>
     </Panel>
   </Collapse>,
-  mountNode);
-````
+  mountNode,
+);
+```

@@ -1,25 +1,25 @@
-@import "../../style/themes/default";
-@import "../../style/mixins/index";
+@import '../../style/themes/default';
+@import '../../style/mixins/index';
 
-@input-number-prefix-cls: ~"@{c7n-prefix}-input-number";
+@input-number-prefix-cls: ~'@{c7n-prefix}-input-number';
 
 .@{input-number-prefix-cls} {
-  margin: 0;
-  padding: 0;
   display: inline-block;
   width: 100%;
+  margin: 0;
+  padding: 0;
 
   &-handler {
-    text-align: center;
-    line-height: 0;
-    height: .1rem;
-    overflow: hidden;
     position: relative;
-    transition: all 0.1s linear;
     display: block;
     width: 100%;
+    height: 0.1rem;
+    overflow: hidden;
     font-weight: bold;
+    line-height: 0;
+    text-align: center;
     cursor: pointer;
+    transition: all 0.1s linear;
     &:hover &-up-inner,
     &:hover &-down-inner {
       color: @primary-5;
@@ -28,20 +28,20 @@
 
   &-handler-up-inner,
   &-handler-down-inner {
-    user-select: none;
-    transition: all 0.1s linear;
     cursor: pointer;
+    transition: all 0.1s linear;
+    user-select: none;
   }
 
   &-handler-up-inner {
     position: absolute;
-    bottom: -.05rem;
-    right: .02rem;
+    right: 0.02rem;
+    bottom: -0.05rem;
   }
   &-handler-down-inner {
     position: absolute;
-    top: -.05rem;
-    right: .02rem;
+    top: -0.05rem;
+    right: 0.02rem;
   }
 
   &-disabled {
@@ -51,19 +51,19 @@
   }
 
   &-handler-wrap {
-    width: .22rem;
-    height: .2rem;
-    background: @component-background;
-    color: #000;
     position: absolute;
     top: 0;
+    right: 0.01rem;
     bottom: 0;
-    right: .01rem;
-    opacity: 0;
-    border-radius: 0 @border-radius-base @border-radius-base 0;
-    transition: opacity 0.24s linear 0.1s;
     z-index: 2;
+    width: 0.22rem;
+    height: 0.2rem;
     margin: auto;
+    color: #000;
+    background: @component-background;
+    border-radius: 0 @border-radius-base @border-radius-base 0;
+    opacity: 0;
+    transition: opacity 0.24s linear 0.1s;
   }
 
   &:hover &-handler-wrap {

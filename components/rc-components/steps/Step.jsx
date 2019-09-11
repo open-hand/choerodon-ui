@@ -12,29 +12,27 @@ export default class Step extends Component {
     prefixCls: PropTypes.string,
     style: PropTypes.object,
     wrapperStyle: PropTypes.object,
-    itemWidth: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.string,
-    ]),
+    itemWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     status: PropTypes.string,
     iconPrefix: PropTypes.string,
     icon: PropTypes.node,
-    adjustMarginRight: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.string,
-    ]),
+    adjustMarginRight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     stepNumber: PropTypes.string,
     description: PropTypes.any,
     title: PropTypes.any,
-    progressDot: PropTypes.oneOfType([
-      PropTypes.bool,
-      PropTypes.func,
-    ]),
+    progressDot: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
     tailContent: PropTypes.any,
   };
+
   renderIconNode() {
     const {
-      prefixCls, progressDot, stepNumber, status, title, description, icon,
+      prefixCls,
+      progressDot,
+      stepNumber,
+      status,
+      title,
+      description,
+      icon,
       iconPrefix,
     } = this.props;
     let iconNode;
@@ -64,21 +62,29 @@ export default class Step extends Component {
     }
     return iconNode;
   }
+
   render() {
     const {
-      className, prefixCls, style, itemWidth,
-      status = 'wait', iconPrefix, icon, wrapperStyle,
-      adjustMarginRight, stepNumber,
-      description, title, progressDot, tailContent,
-      ...restProps,
+      className,
+      prefixCls,
+      style,
+      itemWidth,
+      status = 'wait',
+      iconPrefix,
+      icon,
+      wrapperStyle,
+      adjustMarginRight,
+      stepNumber,
+      description,
+      title,
+      progressDot,
+      tailContent,
+      ...restProps
     } = this.props;
 
-    const classString = classNames(
-      `${prefixCls}-item`,
-      `${prefixCls}-item-${status}`,
-      className,
-      { [`${prefixCls}-item-custom`]: icon },
-    );
+    const classString = classNames(`${prefixCls}-item`, `${prefixCls}-item-${status}`, className, {
+      [`${prefixCls}-item-custom`]: icon,
+    });
     const stepItemStyle = { ...style };
     if (itemWidth) {
       stepItemStyle.width = itemWidth;
@@ -87,21 +93,11 @@ export default class Step extends Component {
       stepItemStyle.marginRight = adjustMarginRight;
     }
     return (
-      <div
-        {...restProps}
-        className={classString}
-        style={stepItemStyle}
-      >
-        <div className={`${prefixCls}-item-tail`}>
-          {tailContent}
-        </div>
-        <div className={`${prefixCls}-item-icon`}>
-          {this.renderIconNode()}
-        </div>
+      <div {...restProps} className={classString} style={stepItemStyle}>
+        <div className={`${prefixCls}-item-tail`}>{tailContent}</div>
+        <div className={`${prefixCls}-item-icon`}>{this.renderIconNode()}</div>
         <div className={`${prefixCls}-item-content`}>
-          <div className={`${prefixCls}-item-title`}>
-            {title}
-          </div>
+          <div className={`${prefixCls}-item-title`}>{title}</div>
           {description && <div className={`${prefixCls}-item-description`}>{description}</div>}
         </div>
       </div>

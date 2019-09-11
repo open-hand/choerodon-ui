@@ -1,3 +1,3 @@
-import CheckBox from './CheckBox';
+import ObserverCheckBox from './CheckBox';
 
-export default CheckBox;
+export default ObserverCheckBox;

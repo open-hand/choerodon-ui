@@ -1,13 +1,13 @@
 import isNil from 'lodash/isNil';
 import { action, observable, ObservableMap, runInAction } from 'mobx';
 import { AxiosInstance } from 'axios';
+import { getConfig } from 'choerodon-ui/lib/configure';
 import warning from 'choerodon-ui/lib/_util/warning';
 import DataSet, { DataSetProps } from '../data-set/DataSet';
 import axios from '../axios';
 import { FieldProps } from '../data-set/Field';
 import { FieldType } from '../data-set/enum';
 import { LovFieldType } from '../lov/enum';
-import { getConfig } from 'choerodon-ui/lib/configure';
 import { LovConfig, LovConfigItem } from '../lov/Lov';
 
 function getFieldType(conditionFieldType?: FieldType | LovFieldType): FieldType {
@@ -23,33 +23,36 @@ function getFieldType(conditionFieldType?: FieldType | LovFieldType): FieldType 
     case LovFieldType.POPUP:
       return FieldType.object;
     default:
-      return conditionFieldType as FieldType || FieldType.string;
+      return (conditionFieldType as FieldType) || FieldType.string;
   }
 }
 
-function generateConditionField(fields: FieldProps[], {
-  conditionField,
-  conditionFieldType,
-  conditionFieldName,
-  gridFieldName,
-  display,
-  conditionFieldLovCode,
-  conditionFieldSelectCode,
-  conditionFieldSelectUrl,
-  conditionFieldSelectTf,
-  conditionFieldSelectVf,
-}: LovConfigItem): void {
+function generateConditionField(
+  fields: FieldProps[],
+  {
+    conditionField,
+    conditionFieldType,
+    conditionFieldName,
+    gridFieldName,
+    display,
+    conditionFieldLovCode,
+    conditionFieldSelectCode,
+    conditionFieldSelectUrl,
+    conditionFieldSelectTf,
+    conditionFieldSelectVf,
+  }: LovConfigItem,
+): void {
   if (conditionField === 'Y') {
     const name = conditionFieldName || gridFieldName;
     const field = {
       name,
       type: getFieldType(conditionFieldType),
       label: display,
-      lovCode: conditionFieldLovCode || void 0,
-      lookupCode: conditionFieldSelectCode || void 0,
-      lookupUrl: conditionFieldSelectUrl || void 0,
-      textField: conditionFieldSelectTf || void 0,
-      valueField: conditionFieldSelectVf || void 0,
+      lovCode: conditionFieldLovCode || undefined,
+      lookupCode: conditionFieldSelectCode || undefined,
+      lookupUrl: conditionFieldSelectUrl || undefined,
+      textField: conditionFieldSelectTf || undefined,
+      valueField: conditionFieldSelectVf || undefined,
     };
     fields.push(field);
     if (conditionFieldType === LovFieldType.POPUP) {
@@ -63,12 +66,11 @@ function generateConditionField(fields: FieldProps[], {
   }
 }
 
-function generateGridField(fields: FieldProps[], {
-                             gridField,
-                             gridFieldName,
-                             display,
-                           }: LovConfigItem,
-                           valueField?: string): void {
+function generateGridField(
+  fields: FieldProps[],
+  { gridField, gridFieldName, display }: LovConfigItem,
+  valueField?: string,
+): void {
   if (gridField === 'Y') {
     fields.push({
       name: gridFieldName,
@@ -79,7 +81,6 @@ function generateGridField(fields: FieldProps[], {
 }
 
 export class LovCodeStore {
-
   @observable lovCodes: ObservableMap<string, LovConfig>;
 
   @observable lovDS: ObservableMap<string, DataSet>;
@@ -110,8 +111,12 @@ export class LovCodeStore {
     if (!config && typeof window !== 'undefined') {
       try {
         const lovDefineAxiosConfig = getConfig('lovDefineAxiosConfig');
-        const pending = this.pendings[code] =
-          this.pendings[code] || (lovDefineAxiosConfig ? this.axios(lovDefineAxiosConfig(code)) : this.axios.post(this.getConfigUrl(code)));
+        const pending =
+          this.pendings[code] ||
+          (lovDefineAxiosConfig
+            ? this.axios(lovDefineAxiosConfig(code))
+            : this.axios.post(this.getConfigUrl(code)));
+        this.pendings[code] = pending;
         config = await pending;
         runInAction(() => {
           if (config) {
@@ -132,7 +137,7 @@ export class LovCodeStore {
       if (config) {
         const { lovPageSize, lovItems, parentIdField, idField, valueField, treeFlag } = config;
         const lovQueryAxiosConfig = getConfig('lovQueryAxiosConfig');
-        let dataSetProps: DataSetProps = {
+        const dataSetProps: DataSetProps = {
           queryUrl: lovQueryAxiosConfig ? undefined : this.getQueryUrl(code),
           transport: lovQueryAxiosConfig && {
             read: lovQueryAxiosConfig(code, config),
@@ -151,11 +156,19 @@ export class LovCodeStore {
         }
 
         if (lovItems && lovItems.length) {
-          const { querys, fields } = lovItems.sort(({ conditionFieldSequence }, { conditionFieldSequence: conditionFieldSequence2 }) => (
-            conditionFieldSequence - conditionFieldSequence2
-          )).reduce((obj, configItem) => (
-            generateConditionField(obj.querys, configItem), generateGridField(obj.fields, configItem, valueField), obj
-          ), { querys: [] as FieldProps[], fields: [] as FieldProps[] });
+          const { querys, fields } = lovItems
+            .sort(
+              ({ conditionFieldSequence }, { conditionFieldSequence: conditionFieldSequence2 }) =>
+                conditionFieldSequence - conditionFieldSequence2,
+            )
+            .reduce(
+              (obj, configItem) => {
+                generateConditionField(obj.querys, configItem);
+                generateGridField(obj.fields, configItem, valueField);
+                return obj;
+              },
+              { querys: [] as FieldProps[], fields: [] as FieldProps[] },
+            );
           if (querys.length) {
             dataSetProps.queryFields = querys;
           }
@@ -164,7 +177,7 @@ export class LovCodeStore {
           }
         }
         runInAction(() => {
-          this.lovDS.set(code, ds = new DataSet(dataSetProps));
+          this.lovDS.set(code, (ds = new DataSet(dataSetProps)));
         });
       } else {
         warning(false, `LOV: code<${code}> is not exists`);
@@ -177,13 +190,11 @@ export class LovCodeStore {
     const lovDefineUrl = getConfig('lovDefineUrl');
     if (typeof lovDefineUrl === 'function') {
       return lovDefineUrl(code);
-    } else {
-      return lovDefineUrl as string;
     }
+    return lovDefineUrl as string;
   }
 
   getQueryUrl(code: string): string {
-
     const config = this.getConfig(code);
     if (config) {
       const { customUrl } = config;
@@ -196,16 +207,17 @@ export class LovCodeStore {
 
     if (typeof lovQueryUrl === 'function') {
       return lovQueryUrl(code, config);
-    } else {
-      return lovQueryUrl as string;
     }
-
+    return lovQueryUrl as string;
   }
 
   @action
   clearCache(codes?: string[]) {
     if (codes) {
-      codes.forEach(code => (this.lovCodes.delete(code), this.lovDS.delete(code)));
+      codes.forEach(code => {
+        this.lovCodes.delete(code);
+        this.lovDS.delete(code);
+      });
     } else {
       this.lovCodes.clear();
       this.lovDS.clear();

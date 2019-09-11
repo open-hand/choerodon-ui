@@ -14,14 +14,15 @@ title:
 
 You can customize icons for different nodes by styles override.
 
-````jsx
+```jsx
 import { Tree, Icon } from 'choerodon-ui';
+
 const TreeNode = Tree.TreeNode;
 
 class Demo extends React.Component {
   onSelect = (selectedKeys, info) => {
     console.log('selected', selectedKeys, info);
-  }
+  };
 
   render() {
     return (
@@ -48,10 +49,10 @@ class Demo extends React.Component {
 }
 
 ReactDOM.render(<Demo />, mountNode);
-````
+```
 
 ```css
-#components-tree-demo-customized-icon .c7n-tree-iconEle.c7n-tree-icon__customize i.icon{
+#components-tree-demo-customized-icon .c7n-tree-iconEle.c7n-tree-icon__customize i.icon {
   float: left;
   line-height: 24px;
 }

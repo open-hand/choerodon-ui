@@ -24,13 +24,15 @@ export default class Switch extends CheckBox<CheckBoxProps> {
   }
 
   getText() {
-    const { prefixCls, props: { children, unCheckedChildren } } = this;
-    const text = this.isChecked() ? children : (unCheckedChildren || children);
+    const {
+      prefixCls,
+      props: { children, unCheckedChildren },
+    } = this;
+    const text = this.isChecked() ? children : unCheckedChildren || children;
     return <span className={`${prefixCls}-label`}>{text}</span>;
   }
 
   renderInner(): ReactNode {
-    return;
+    return undefined;
   }
-
 }
