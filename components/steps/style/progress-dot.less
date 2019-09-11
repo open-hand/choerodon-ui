@@ -4,43 +4,43 @@
       line-height: @line-height-base;
     }
     &-tail {
+      top: 0.02rem;
       width: 100%;
-      top: .02rem;
       margin: 0 0 0 @steps-desciption-max-width / 2;
       padding: 0;
-      &:after {
-        height: .03rem;
-        width: ~"calc(100% - .2rem)";
-        margin-left: .12rem;
+      &::after {
+        width: ~'calc(100% - .2rem)';
+        height: 0.03rem;
+        margin-left: 0.12rem;
       }
     }
     &:first-child .@{steps-prefix-cls}-icon-dot {
-      left: .02rem;
+      left: 0.02rem;
     }
     &-icon {
-      padding-right: 0;
       width: @steps-dot-size;
       height: @steps-dot-size;
+      margin-left: 0.67rem;
+      padding-right: 0;
       line-height: @steps-dot-size;
-      border: 0;
-      margin-left: .67rem;
       background: transparent;
+      border: 0;
       .@{steps-prefix-cls}-icon-dot {
+        position: relative;
         float: left;
         width: 100%;
         height: 100%;
         border-radius: 1rem;
-        position: relative;
-        transition: all .3s;
+        transition: all 0.3s;
         /* expand hover area */
-        &:after {
-          content: "";
-          background: rgba(0, 0, 0, .001);
-          width: .6rem;
-          height: .32rem;
+        &::after {
           position: absolute;
-          top: -.12rem;
-          left: -.26rem;
+          top: -0.12rem;
+          left: -0.26rem;
+          width: 0.6rem;
+          height: 0.32rem;
+          background: rgba(0, 0, 0, 0.001);
+          content: '';
         }
       }
     }
@@ -49,7 +49,7 @@
       height: @steps-current-dot-size;
       line-height: @steps-current-dot-size;
       .@{steps-prefix-cls}-icon-dot {
-        top: -.01rem;
+        top: -0.01rem;
       }
     }
   }
@@ -57,19 +57,19 @@
 
 .@{steps-prefix-cls}-vertical.@{steps-prefix-cls}-dot {
   .@{steps-prefix-cls}-item-icon {
+    margin-top: 0.08rem;
     margin-left: 0;
-    margin-top: .08rem;
   }
   .@{steps-prefix-cls}-item-tail {
+    top: 0.02rem;
+    left: -0.09rem;
     margin: 0;
-    left: -.09rem;
-    top: .02rem;
-    padding: .22rem 0 .04rem;
+    padding: 0.22rem 0 0.04rem;
   }
   .@{steps-prefix-cls}-item:first-child .@{steps-prefix-cls}-icon-dot {
     left: 0;
   }
   .@{steps-prefix-cls}-item-process .@{steps-prefix-cls}-icon-dot {
-    left: -.02rem;
+    left: -0.02rem;
   }
 }

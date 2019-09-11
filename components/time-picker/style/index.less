@@ -1,44 +1,44 @@
-@import "../../style/themes/default";
-@import "../../style/mixins/index";
-@import "../../input/style/mixin";
+@import '../../style/themes/default';
+@import '../../style/mixins/index';
+@import '../../input/style/mixin';
 
-@input-prefix-cls: ~"@{c7n-prefix}-input";
-@timepicker-prefix-cls: ~"@{c7n-prefix}-time-picker";
-@timepicker-item-height: .32rem;
+@input-prefix-cls: ~'@{c7n-prefix}-input';
+@timepicker-prefix-cls: ~'@{c7n-prefix}-time-picker';
+@timepicker-item-height: 0.32rem;
 
 .@{timepicker-prefix-cls}-panel {
   .reset-component;
-  z-index: @zindex-picker;
   position: absolute;
+  z-index: @zindex-picker;
 
   &-inner {
     position: relative;
-    outline: none;
-    list-style: none;
+    left: -0.02rem;
+    overflow: hidden;
     font-size: @font-size-base;
     text-align: left;
+    list-style: none;
     background-color: @component-background;
-    border-radius: @border-radius-base;
-    box-shadow: @box-shadow-base;
     background-clip: padding-box;
-    overflow: hidden;
-    left: -.02rem;
+    border-radius: @border-radius-base;
+    outline: none;
+    box-shadow: @box-shadow-base;
   }
 
   &-input {
+    width: 100%;
     margin: 0;
     padding: 0;
     border: 0;
-    width: 100%;
-    cursor: auto;
     outline: 0;
+    cursor: auto;
 
     .placeholder;
 
     &-wrap {
-      box-sizing: border-box;
       position: relative;
-      padding: .07rem .02rem .07rem @control-padding-horizontal;
+      box-sizing: border-box;
+      padding: 0.07rem 0.02rem 0.07rem @control-padding-horizontal;
       border-bottom: @border-width-base @border-style-base @border-color-split;
     }
 
@@ -49,29 +49,29 @@
 
   &-clear-btn {
     position: absolute;
-    right: .08rem;
-    cursor: pointer;
-    overflow: hidden;
-    width: .2rem;
-    height: .2rem;
-    text-align: center;
-    line-height: .2rem;
-    top: .07rem;
+    top: 0.07rem;
+    right: 0.08rem;
+    width: 0.2rem;
+    height: 0.2rem;
     margin: 0;
+    overflow: hidden;
+    line-height: 0.2rem;
+    text-align: center;
+    cursor: pointer;
   }
 
-  &-clear-btn:after {
-    font-size: @font-size-base - .02rem;
-    color: @disabled-color;
+  &-clear-btn::after {
     display: inline-block;
+    width: 0.18rem;
+    height: 0.18rem;
+    color: @disabled-color;
+    font-size: @font-size-base - 0.02rem;
     line-height: 1;
-    width: .18rem;
-    height: .18rem;
     transition: color 0.3s ease;
-    .iconfont-font("\e62e");
+    .iconfont-font('\e62e');
   }
 
-  &-clear-btn:hover:after {
+  &-clear-btn:hover::after {
     color: @text-color-secondary;
   }
 
@@ -80,22 +80,22 @@
   }
 
   &-select {
+    position: relative; // Fix chrome weird render bug
     float: left;
-    font-size: @font-size-base;
-    border-left: @border-width-base @border-style-base @border-color-split;
     box-sizing: border-box;
     width: @time-picker-panel-column-width;
-    overflow: hidden;
-    position: relative; // Fix chrome weird render bug
     max-height: @timepicker-item-height * 6;
+    overflow: hidden;
+    font-size: @font-size-base;
+    border-left: @border-width-base @border-style-base @border-color-split;
 
     &:hover {
       overflow-y: auto;
     }
 
     &:first-child {
-      border-left: 0;
       margin-left: 0;
+      border-left: 0;
     }
 
     &:last-child {
@@ -107,25 +107,25 @@
     }
 
     ul {
-      list-style: none;
       box-sizing: border-box;
+      width: 100%;
       margin: 0;
       padding: 0 0 @timepicker-item-height * 5;
-      width: 100%;
+      list-style: none;
     }
 
     li {
-      list-style: none;
       box-sizing: content-box;
-      margin: 0;
-      padding: 0 0 0 @control-padding-horizontal;
       width: 100%;
       height: @timepicker-item-height;
+      margin: 0;
+      padding: 0 0 0 @control-padding-horizontal;
       line-height: @timepicker-item-height;
       text-align: left;
+      list-style: none;
       cursor: pointer;
-      user-select: none;
       transition: background 0.3s;
+      user-select: none;
     }
 
     li:hover {
@@ -133,8 +133,8 @@
     }
 
     li&-option-selected {
-      background: @time-picker-selected-bg;
       font-weight: bold;
+      background: @time-picker-selected-bg;
       &:hover {
         background: @time-picker-selected-bg;
       }
@@ -154,7 +154,7 @@
   }
 
   &-addon {
-    padding: .08rem;
+    padding: 0.08rem;
     border-top: @border-width-base @border-style-base @border-color-split;
   }
 
@@ -187,9 +187,9 @@
   .reset-component;
   position: relative;
   display: inline-block;
-  outline: none;
-  transition: opacity .3s;
   width: 1.28rem;
+  outline: none;
+  transition: opacity 0.3s;
 
   &-input {
     .input;
@@ -204,7 +204,7 @@
 
   .@{input-prefix-cls}-suffix {
     display: block !important;
-    height: .18rem;
+    height: 0.18rem;
   }
 
   .@{input-prefix-cls}-disabled &-icon {
@@ -225,6 +225,6 @@
   }
 
   &-small &-icon {
-    right: @control-padding-horizontal-sm - .01rem;
+    right: @control-padding-horizontal-sm - 0.01rem;
   }
 }

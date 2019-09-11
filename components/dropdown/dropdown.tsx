@@ -22,7 +22,9 @@ export interface DropDownProps {
 
 export default class Dropdown extends Component<DropDownProps, any> {
   static displayName = 'Dropdown';
+
   static Button: typeof DropdownButton;
+
   static defaultProps = {
     mouseEnterDelay: 0.15,
     mouseLeaveDelay: 0.1,
@@ -45,12 +47,18 @@ export default class Dropdown extends Component<DropDownProps, any> {
     const overlayProps = (overlay as any).props as any;
     warning(
       !overlayProps.mode || overlayProps.mode === 'vertical',
-      `mode="${overlayProps.mode}" is not supported for Dropdown\'s Menu.`,
+      `mode="${overlayProps.mode}" is not supported for Dropdown's Menu.`,
     );
   }
 
   render() {
-    const { children, prefixCls: customizePrefixCls, overlay: overlayElements, trigger, disabled } = this.props;
+    const {
+      children,
+      prefixCls: customizePrefixCls,
+      overlay: overlayElements,
+      trigger,
+      disabled,
+    } = this.props;
     const prefixCls = getPrefixCls('dropdown', customizePrefixCls);
 
     const child = Children.only(children) as ReactElement<any>;

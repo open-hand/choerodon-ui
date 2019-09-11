@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { Lang } from './enum';
 import zh_CN from './zh_CN';
 
@@ -40,7 +41,7 @@ export interface Locale {
     upload_path_unset;
     not_acceptable_prompt;
     file_list_max_length;
-  },
+  };
   Modal: {
     ok;
     cancel;
@@ -48,7 +49,7 @@ export interface Locale {
     success_modal_title;
     error_modal_title;
     warning_modal_title;
-  },
+  };
   DataSet: {
     unsaved_data_confirm;
     invalid_query_dataset;
@@ -58,7 +59,7 @@ export interface Locale {
     submit_success;
     submit_failure;
     cannot_add_record_when_head_no_current;
-  },
+  };
   DatePicker: {
     value_missing;
     value_missing_with_label;
@@ -66,44 +67,44 @@ export interface Locale {
     today;
     now;
     this_week;
-  },
+  };
   EmailField: {
     value_missing;
     value_missing_with_label;
     type_mismatch;
-  },
+  };
   IntlField: {
     modal_title;
-  },
+  };
   NumberField: {
     value_missing;
     value_missing_with_label;
-  },
+  };
   Radio: {
     value_missing;
     value_missing_with_label;
-  },
+  };
   SelectBox: {
     value_missing;
     value_missing_with_label;
-  },
+  };
   Select: {
     value_missing;
     value_missing_with_label;
-  },
+  };
   Transfer: {
     items;
-  },
+  };
   UrlField: {
     value_missing;
     value_missing_with_label;
     type_mismatch;
-  },
+  };
   ColorPicker: {
     value_missing;
     value_missing_with_label;
     type_mismatch;
-  },
+  };
   Validator: {
     bad_input;
     pattern_mismatch;
@@ -117,7 +118,7 @@ export interface Locale {
     value_missing_with_label;
     unique;
     unknown;
-  },
+  };
   Icon: {
     icons;
     whatsNew;
@@ -127,7 +128,7 @@ export interface Locale {
     data;
     other;
     series;
-  }
+  };
 }
 
 export default zh_CN;

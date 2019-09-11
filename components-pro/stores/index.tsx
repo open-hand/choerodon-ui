@@ -1,9 +1,9 @@
-import LookupCodeStore from './LookupCodeStore';
-import LovCodeStore from './LovCodeStore';
+import lookupStore from './LookupCodeStore';
+import lovStore from './LovCodeStore';
 
 const stores: any = {
-  LovCodeStore,
-  LookupCodeStore,
+  LovCodeStore: lovStore,
+  LookupCodeStore: lookupStore,
 };
 
 export default stores;

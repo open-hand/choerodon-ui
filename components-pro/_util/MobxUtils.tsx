@@ -3,9 +3,8 @@ import { get, isObservableObject, remove, runInAction, set } from 'mobx';
 export function mobxGet(obj: object, key: string): any {
   if (isObservableObject(obj)) {
     return get(obj, key);
-  } else {
-    return obj[key];
   }
+  return obj[key];
 }
 
 export function mobxSet(obj: object, key: string, value: any): void {

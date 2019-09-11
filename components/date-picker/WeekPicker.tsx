@@ -20,6 +20,7 @@ export default class WeekPicker extends Component<any, any> {
   };
 
   private input: any;
+
   private picker: any;
 
   constructor(props: any) {
@@ -43,25 +44,18 @@ export default class WeekPicker extends Component<any, any> {
   }
 
   weekDateRender = (current: any) => {
-    const selectedValue = this.state.value;
+    const { value } = this.state;
     const { prefixCls } = this.props;
-    if (selectedValue &&
-      current.year() === selectedValue.year() &&
-      current.week() === selectedValue.week()) {
+    if (value && current.year() === value.year() && current.week() === value.week()) {
       return (
         <div className={`${prefixCls}-selected-day`}>
-          <div className={`${prefixCls}-date`}>
-            {current.date()}
-          </div>
+          <div className={`${prefixCls}-date`}>{current.date()}</div>
         </div>
       );
     }
-    return (
-      <div className={`${prefixCls}-calendar-date`}>
-        {current.date()}
-      </div>
-    );
+    return <div className={`${prefixCls}-calendar-date`}>{current.date()}</div>;
   };
+
   handleOpenChange = (status: boolean) => {
     const { onOpenChange } = this.props;
     const { focused } = this.state;
@@ -74,18 +68,22 @@ export default class WeekPicker extends Component<any, any> {
       onOpenChange(status);
     }
   };
+
   handleChange = (value: Moment | null) => {
     if (!('value' in this.props)) {
       this.setState({ value });
     }
-    this.props.onChange(value, formatValue(value, this.props.format));
+    const { onChange, format } = this.props;
+    onChange(value, formatValue(value, format));
   };
-  clearSelection: MouseEventHandler<HTMLElement> = (e) => {
+
+  clearSelection: MouseEventHandler<HTMLElement> = e => {
     e.preventDefault();
     e.stopPropagation();
     this.handleChange(null);
   };
-  onPickerIconClick: MouseEventHandler<HTMLElement> = (e) => {
+
+  onPickerIconClick: MouseEventHandler<HTMLElement> = e => {
     e.preventDefault();
     e.stopPropagation();
     const { focused } = this.state;
@@ -103,25 +101,39 @@ export default class WeekPicker extends Component<any, any> {
   saveInput = (node: any) => {
     this.input = node;
   };
+
   savePicker = (node: any) => {
     this.picker = node;
   };
 
   render() {
-    const { focused } = this.state;
+    const { props } = this;
+    const { focused, value } = this.state;
     const {
-      prefixCls, className, disabled, pickerClass, popupStyle,
-      pickerInputClass, format, allowClear, locale, localeCode, disabledDate,
-      style, onFocus, onBlur, label,
-    } = this.props;
+      prefixCls,
+      className,
+      disabled,
+      pickerClass,
+      popupStyle,
+      pickerInputClass,
+      format,
+      allowClear,
+      locale,
+      localeCode,
+      disabledDate,
+      style,
+      onFocus,
+      onBlur,
+      label,
+      id,
+    } = props;
 
-    const pickerValue = this.state.value;
+    const pickerValue = value;
     if (pickerValue && localeCode) {
       pickerValue.locale(localeCode);
     }
 
-    const placeholder = ('placeholder' in this.props)
-      ? this.props.placeholder : locale.lang.placeholder;
+    const placeholder = 'placeholder' in props ? props.placeholder : locale.lang.placeholder;
 
     const calendar = (
       <Calendar
@@ -135,29 +147,29 @@ export default class WeekPicker extends Component<any, any> {
         disabledDate={disabledDate}
       />
     );
-    const clearIcon = (!disabled && allowClear && this.state.value) ? (
-      <Button
-        className={`${prefixCls}-picker-clear`}
-        onClick={this.clearSelection}
-        shape="circle"
-        icon="close"
-        size={Size.small}
-      />
-    ) : null;
+    const clearIcon =
+      !disabled && allowClear && value ? (
+        <Button
+          className={`${prefixCls}-picker-clear`}
+          onClick={this.clearSelection}
+          shape="circle"
+          icon="close"
+          size={Size.small}
+        />
+      ) : null;
 
-    const suffix = (<span
-      className={`${prefixCls}-picker-icon-wrapper`}
-      onClick={this.onPickerIconClick}
-    >
-      {clearIcon}
-      <Icon type="date_range" className={`${prefixCls}-picker-icon`} />
-    </span>);
-    const input = ({ value }: { value: Moment | undefined }) => (
+    const suffix = (
+      <span className={`${prefixCls}-picker-icon-wrapper`} onClick={this.onPickerIconClick}>
+        {clearIcon}
+        <Icon type="date_range" className={`${prefixCls}-picker-icon`} />
+      </span>
+    );
+    const input = ({ value: inputValue }: { value: Moment | undefined }) => (
       <Input
         ref={this.saveInput}
         disabled={disabled}
         readOnly
-        value={(value && value.format(format)) || ''}
+        value={(inputValue && inputValue.format(format)) || ''}
         placeholder={placeholder}
         className={pickerInputClass}
         onFocus={onFocus}
@@ -169,7 +181,7 @@ export default class WeekPicker extends Component<any, any> {
       />
     );
     return (
-      <span className={classNames(className, pickerClass)} id={this.props.id}>
+      <span className={classNames(className, pickerClass)} id={id}>
         <RcDatePicker
           {...this.props}
           calendar={calendar}

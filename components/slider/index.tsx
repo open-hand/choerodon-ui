@@ -4,19 +4,21 @@ import RcSlider, { Handle as RcHandle, Range as RcRange } from '../rc-components
 import { getPrefixCls } from '../configure';
 
 export interface SliderMarks {
-  [key: number]: ReactNode | {
-    style: CSSProperties,
-    label: ReactNode,
-  };
+  [key: number]:
+    | ReactNode
+    | {
+        style: CSSProperties;
+        label: ReactNode;
+      };
 }
 
 export type SliderValue = number | [number, number];
 
 export type HandleGeneratorFn = (info: {
-  value: number,
-  dragging: boolean,
-  index: number,
-  rest: any[],
+  value: number;
+  dragging: boolean;
+  index: number;
+  rest: any[];
 }) => ReactElement<any>;
 
 export interface SliderProps {
@@ -46,6 +48,7 @@ export interface SliderState {
 
 export default class Slider extends Component<SliderProps, SliderState> {
   static displayName = 'Slider';
+
   static defaultProps = {
     tipFormatter(value: number) {
       return value.toString();
@@ -69,11 +72,12 @@ export default class Slider extends Component<SliderProps, SliderState> {
       },
     }));
   };
+
   handleWithTooltip: HandleGeneratorFn = ({ value, dragging, index, ...restProps }) => {
     const { tooltipPrefixCls: customizeTooltipPrefixCls, tipFormatter } = this.props;
     const tooltipPrefixCls = getPrefixCls('tooltip', customizeTooltipPrefixCls);
     const { visibles } = this.state;
-    const visible = tipFormatter ? (visibles[index] || dragging) : false;
+    const visible = tipFormatter ? visibles[index] || dragging : false;
     return (
       <Tooltip
         prefixCls={tooltipPrefixCls}
@@ -109,8 +113,22 @@ export default class Slider extends Component<SliderProps, SliderState> {
     const { range, prefixCls: customizePrefixCls, ...restProps } = this.props;
     const prefixCls = getPrefixCls('slider', customizePrefixCls);
     if (range) {
-      return <RcRange {...restProps} ref={this.saveSlider} handle={this.handleWithTooltip} prefixCls={prefixCls} />;
+      return (
+        <RcRange
+          {...restProps}
+          ref={this.saveSlider}
+          handle={this.handleWithTooltip}
+          prefixCls={prefixCls}
+        />
+      );
     }
-    return <RcSlider {...restProps} ref={this.saveSlider} handle={this.handleWithTooltip} prefixCls={prefixCls} />;
+    return (
+      <RcSlider
+        {...restProps}
+        ref={this.saveSlider}
+        handle={this.handleWithTooltip}
+        prefixCls={prefixCls}
+      />
+    );
   }
 }

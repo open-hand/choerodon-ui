@@ -10,6 +10,7 @@ function setMomentLocale(locale: Locale) {
 
 export class LocaleContext {
   @observable locale: Locale;
+
   @observable supports: Supports;
 
   constructor() {
@@ -31,7 +32,7 @@ export class LocaleContext {
 
   get(component: string, key: string) {
     const cmp = get(this.locale, component);
-    return cmp && get(cmp, key) || `${component}.${key}`;
+    return (cmp && get(cmp, key)) || `${component}.${key}`;
   }
 }
 

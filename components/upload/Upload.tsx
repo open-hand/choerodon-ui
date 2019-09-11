@@ -14,6 +14,7 @@ export { UploadProps };
 
 export default class Upload extends Component<UploadProps, UploadState> {
   static displayName = 'Upload';
+
   static Dragger: typeof Dragger;
 
   static defaultProps = {
@@ -31,6 +32,7 @@ export default class Upload extends Component<UploadProps, UploadState> {
   };
 
   recentUploadStatus: boolean | PromiseLike<any>;
+
   progressTimer: any;
 
   private upload: any;
@@ -49,9 +51,9 @@ export default class Upload extends Component<UploadProps, UploadState> {
   }
 
   onStart = (file: UploadFile) => {
-    let targetItem;
-    let nextFileList = this.state.fileList.concat();
-    targetItem = fileToObject(file);
+    const { fileList } = this.state;
+    const nextFileList = [...fileList];
+    const targetItem = fileToObject(file);
     targetItem.status = 'uploading';
     nextFileList.push(targetItem);
     this.onChange({
@@ -70,9 +72,12 @@ export default class Upload extends Component<UploadProps, UploadState> {
     this.clearProgressTimer();
     this.progressTimer = setInterval(() => {
       curPercent = getPercent(curPercent);
-      this.onProgress({
-        percent: curPercent,
-      }, file);
+      this.onProgress(
+        {
+          percent: curPercent,
+        },
+        file,
+      );
     }, 200);
   }
 
@@ -82,41 +87,40 @@ export default class Upload extends Component<UploadProps, UploadState> {
       if (typeof response === 'string') {
         response = JSON.parse(response);
       }
-    } catch (e) { /* do nothing */
+    } catch (e) {
+      /* do nothing */
     }
-    let fileList = this.state.fileList;
-    let targetItem = getFileItem(file, fileList);
+    const { fileList } = this.state;
+    const targetItem = getFileItem(file, fileList);
     // removed
-    if (!targetItem) {
-      return;
+    if (targetItem) {
+      targetItem.status = 'done';
+      targetItem.response = response;
+      this.onChange({
+        file: { ...targetItem },
+        fileList,
+      });
     }
-    targetItem.status = 'done';
-    targetItem.response = response;
-    this.onChange({
-      file: { ...targetItem },
-      fileList,
-    });
   };
 
   onProgress = (e: { percent: number }, file: UploadFile) => {
-    let fileList = this.state.fileList;
-    let targetItem = getFileItem(file, fileList);
+    const { fileList } = this.state;
+    const targetItem = getFileItem(file, fileList);
     // removed
-    if (!targetItem) {
-      return;
+    if (targetItem) {
+      targetItem.percent = e.percent;
+      this.onChange({
+        event: e,
+        file: { ...targetItem },
+        fileList,
+      });
     }
-    targetItem.percent = e.percent;
-    this.onChange({
-      event: e,
-      file: { ...targetItem },
-      fileList: this.state.fileList,
-    });
   };
 
   onError = (error: Error, response: any, file: UploadFile) => {
     this.clearProgressTimer();
-    let fileList = this.state.fileList;
-    let targetItem = getFileItem(file, fileList);
+    const { fileList } = this.state;
+    const targetItem = getFileItem(file, fileList);
     // removed
     if (!targetItem) {
       return;
@@ -138,8 +142,8 @@ export default class Upload extends Component<UploadProps, UploadState> {
       if (ret === false) {
         return;
       }
-
-      const removedFileList = removeFileItem(file, this.state.fileList);
+      const { fileList } = this.state;
+      const removedFileList = removeFileItem(file, fileList);
       if (removedFileList) {
         this.onChange({
           file,
@@ -180,19 +184,21 @@ export default class Upload extends Component<UploadProps, UploadState> {
     });
   };
 
-  beforeUpload = (file: UploadFile, fileList: UploadFile[]) => {
-    if (!this.props.beforeUpload) {
-      return true;
-    }
-    const result = this.props.beforeUpload(file, fileList);
-    if (result === false) {
-      this.onChange({
-        file,
-        fileList: uniqBy(fileList.concat(this.state.fileList), (item: any) => item.uid),
-      });
-      return false;
-    } else if (result && (result as PromiseLike<any>).then) {
-      return result;
+  beforeUpload = (file: UploadFile, uploadFiles: UploadFile[]) => {
+    const { beforeUpload } = this.props;
+    if (beforeUpload) {
+      const result = beforeUpload(file, uploadFiles);
+      if (result === false) {
+        const { fileList } = this.state;
+        this.onChange({
+          file,
+          fileList: uniqBy(uploadFiles.concat(fileList), (item: any) => item.uid),
+        });
+        return false;
+      }
+      if (result && (result as PromiseLike<any>).then) {
+        return result;
+      }
     }
     return true;
   };
@@ -205,18 +211,19 @@ export default class Upload extends Component<UploadProps, UploadState> {
     this.upload = node;
   };
 
-  renderUploadList = (locale: UploadLocale) => {
-    const { showUploadList, listType, onPreview } = this.props;
+  renderUploadList = (uploadLocale: UploadLocale) => {
+    const { showUploadList, listType, onPreview, locale } = this.props;
+    const { fileList } = this.state;
     const { showRemoveIcon, showPreviewIcon } = showUploadList as any;
     return (
       <UploadList
         listType={listType}
-        items={this.state.fileList}
+        items={fileList}
         onPreview={onPreview}
         onRemove={this.handleManualRemove}
         showRemoveIcon={showRemoveIcon}
         showPreviewIcon={showPreviewIcon}
-        locale={{ ...locale, ...this.props.locale }}
+        locale={{ ...uploadLocale, ...locale }}
       />
     );
   };
@@ -231,6 +238,7 @@ export default class Upload extends Component<UploadProps, UploadState> {
       disabled,
       children,
     } = this.props;
+    const { fileList, dragState } = this.state;
 
     const prefixCls = getPrefixCls('upload', customizePrefixCls);
 
@@ -247,10 +255,7 @@ export default class Upload extends Component<UploadProps, UploadState> {
     delete rcUploadProps.className;
 
     const uploadList = showUploadList ? (
-      <LocaleReceiver
-        componentName="Upload"
-        defaultLocale={defaultLocale.Upload}
-      >
+      <LocaleReceiver componentName="Upload" defaultLocale={defaultLocale.Upload}>
         {this.renderUploadList}
       </LocaleReceiver>
     ) : null;
@@ -258,8 +263,8 @@ export default class Upload extends Component<UploadProps, UploadState> {
     if (type === 'drag') {
       const dragCls = classNames(prefixCls, {
         [`${prefixCls}-drag`]: true,
-        [`${prefixCls}-drag-uploading`]: this.state.fileList.some(file => file.status === 'uploading'),
-        [`${prefixCls}-drag-hover`]: this.state.dragState === 'dragover',
+        [`${prefixCls}-drag-uploading`]: fileList.some(file => file.status === 'uploading'),
+        [`${prefixCls}-drag-hover`]: dragState === 'dragover',
         [`${prefixCls}-disabled`]: disabled,
       });
       return (
@@ -271,9 +276,7 @@ export default class Upload extends Component<UploadProps, UploadState> {
             onDragLeave={this.onFileDrop}
           >
             <RcUpload {...rcUploadProps} ref={this.saveUpload} className={`${prefixCls}-btn`}>
-              <div className={`${prefixCls}-drag-container`}>
-                {children}
-              </div>
+              <div className={`${prefixCls}-drag-container`}>{children}</div>
             </RcUpload>
           </div>
           {uploadList}

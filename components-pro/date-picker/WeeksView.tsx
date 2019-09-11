@@ -27,7 +27,10 @@ export default class WeeksView extends DaysView implements DatePickerKeyboardEve
   }
 
   renderPanelBody(): ReactNode {
-    const { prefixCls, props: { date, renderer = this.renderCell } } = this;
+    const {
+      prefixCls,
+      props: { date, renderer = this.renderCell },
+    } = this;
     const selected = date.clone();
     const firstDay = this.getFirstDay(date);
     const lastDay = firstDay.clone().add(42, 'd');
@@ -60,13 +63,14 @@ export default class WeeksView extends DaysView implements DatePickerKeyboardEve
 
       if (cells.length === 8) {
         rows.push(
-          <tr onClick={this.handleCellClick.bind(this, currentDate)} key={firstDay.format('M_D')}>{cells}</tr>,
+          <tr onClick={this.handleCellClick.bind(this, currentDate)} key={firstDay.format('M_D')}>
+            {cells}
+          </tr>,
         );
         cells = [];
       }
 
       firstDay.add(1, 'd');
-
     }
 
     return rows;
@@ -84,9 +88,7 @@ export default class WeeksView extends DaysView implements DatePickerKeyboardEve
     const { prefixCls } = this;
     return (
       <div className={`${prefixCls}-footer`}>
-        <a onClick={this.choose.bind(this, moment())}>
-          {$l('DatePicker', 'this_week')}
-        </a>
+        <a onClick={this.choose.bind(this, moment())}>{$l('DatePicker', 'this_week')}</a>
       </div>
     );
   }
@@ -101,9 +103,6 @@ export default class WeeksView extends DaysView implements DatePickerKeyboardEve
   }
 
   getDaysOfWeek(): ReactNode[] {
-    return [
-      <th key="null" />,
-      ...super.getDaysOfWeek(),
-    ];
+    return [<th key="null">&nbsp;</th>, ...super.getDaysOfWeek()];
   }
 }

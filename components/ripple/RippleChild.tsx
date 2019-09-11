@@ -1,4 +1,11 @@
-import React, { Children, cloneElement, isValidElement, PureComponent, ReactNode, ReactElement } from 'react';
+import React, {
+  Children,
+  cloneElement,
+  isValidElement,
+  PureComponent,
+  ReactNode,
+  ReactElement,
+} from 'react';
 import Animate from '../animate';
 import MouseDown, { Size } from './MouseDown';
 
@@ -10,10 +17,12 @@ export default class RippleChild extends PureComponent<RippleChildProps> {
   static displayName = 'RippleChild';
 
   currentCircleStyle: any;
+
   currentStyle: any;
 
   render() {
-    return this.ripple(Children.only(this.props.children));
+    const { children } = this.props;
+    return this.ripple(Children.only(children));
   }
 
   handleMouseDown = (child: ReactElement<any>, size?: Size) => {
@@ -44,24 +53,28 @@ export default class RippleChild extends PureComponent<RippleChildProps> {
           transitionName={size ? 'zoom-small-slow' : 'fade'}
           hiddenProp="hidden"
         >
-          {this.currentCircleStyle && <div hidden={!size} className={prefixCls} key="circle" style={this.currentCircleStyle} />}
+          {this.currentCircleStyle && (
+            <div
+              hidden={!size}
+              className={prefixCls}
+              key="circle"
+              style={this.currentCircleStyle}
+            />
+          )}
         </Animate>,
       ],
       style: this.currentStyle || style,
     };
     if (size && size.position === 'static') {
-      newProps.style = this.currentStyle = Object.assign({}, style, { position: 'relative' });
+      newProps.style = { ...style, position: 'relative' };
+      this.currentStyle = newProps.style;
     }
     return cloneElement<any>(child, newProps);
   };
 
   ripple = (child: ReactNode) => {
     if (isValidElement<any>(child)) {
-      return (
-        <MouseDown rippleChild={child}>
-          {this.handleMouseDown}
-        </MouseDown>
-      );
+      return <MouseDown rippleChild={child}>{this.handleMouseDown}</MouseDown>;
     }
     return child;
   };

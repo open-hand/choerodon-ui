@@ -21,6 +21,7 @@ export interface RateProps {
 
 export default class Rate extends Component<RateProps, any> {
   static displayName = 'Rate';
+
   static propTypes = {
     prefixCls: PropTypes.string,
     character: PropTypes.node,

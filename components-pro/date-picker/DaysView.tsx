@@ -11,6 +11,10 @@ import { ViewMode } from './enum';
 import { FieldType } from '../data-set/enum';
 import { $l } from '../locale-context';
 
+export function alwaysValidDate() {
+  return true;
+}
+
 export interface DateViewProps extends ViewComponentProps {
   date: Moment;
   min?: Moment;
@@ -23,7 +27,8 @@ export interface DateViewProps extends ViewComponentProps {
   onViewModeChange?: (mode: ViewMode) => void;
 }
 
-export default class DaysView extends ViewComponent<DateViewProps> implements DatePickerKeyboardEvent {
+export default class DaysView extends ViewComponent<DateViewProps>
+  implements DatePickerKeyboardEvent {
   static displayName = 'DaysView';
 
   static propTypes = {
@@ -43,7 +48,10 @@ export default class DaysView extends ViewComponent<DateViewProps> implements Da
   static type = FieldType.date;
 
   render() {
-    const { prefixCls, props: { className } } = this;
+    const {
+      prefixCls,
+      props: { className },
+    } = this;
     const classString = classNames(`${prefixCls}-view`, className);
     return (
       <div className={classString}>
@@ -146,7 +154,10 @@ export default class DaysView extends ViewComponent<DateViewProps> implements Da
   }
 
   renderHeader(): ReactNode {
-    const { prefixCls, props: { date } } = this;
+    const {
+      prefixCls,
+      props: { date },
+    } = this;
     return (
       <div className={`${prefixCls}-header`}>
         <a className={`${prefixCls}-prev-year`} onClick={this.handlePrevYearClick}>
@@ -172,11 +183,7 @@ export default class DaysView extends ViewComponent<DateViewProps> implements Da
   }
 
   renderBody() {
-    return (
-      <div className={`${this.prefixCls}-body`}>
-        {this.renderPanel()}
-      </div>
-    );
+    return <div className={`${this.prefixCls}-body`}>{this.renderPanel()}</div>;
   }
 
   renderPanel() {
@@ -191,7 +198,7 @@ export default class DaysView extends ViewComponent<DateViewProps> implements Da
   renderPanelHead(): ReactNode {
     return (
       <thead>
-      <tr>{this.getDaysOfWeek()}</tr>
+        <tr>{this.getDaysOfWeek()}</tr>
       </thead>
     );
   }
@@ -200,18 +207,14 @@ export default class DaysView extends ViewComponent<DateViewProps> implements Da
     const { prefixCls } = this;
     return (
       <div className={`${prefixCls}-footer`}>
-        <a onClick={this.choose.bind(this, moment().startOf('d'))}>
-          {$l('DatePicker', 'today')}
-        </a>
+        <a onClick={this.choose.bind(this, moment().startOf('d'))}>{$l('DatePicker', 'today')}</a>
       </div>
     );
   }
 
   @autobind
   renderCell(props: object): ReactNode {
-    return (
-      <td {...props} />
-    );
+    return <td {...props} />;
   }
 
   renderInner(text) {
@@ -225,7 +228,10 @@ export default class DaysView extends ViewComponent<DateViewProps> implements Da
   }
 
   renderPanelBody(): ReactNode {
-    const { prefixCls, props: { date, renderer = this.renderCell, isValidDate = alwaysValidDate } } = this;
+    const {
+      prefixCls,
+      props: { date, renderer = this.renderCell, isValidDate = alwaysValidDate },
+    } = this;
     const selected = date.clone();
     const prevMonth = this.getFirstDay(date);
     const currentYear = date.year();
@@ -238,10 +244,12 @@ export default class DaysView extends ViewComponent<DateViewProps> implements Da
       const currentDate = prevMonth.clone();
       const isDisabled = !isValidDate(currentDate, selected);
       const className = classNames(`${prefixCls}-cell`, {
-        [`${prefixCls}-old`]: prevMonth.year() < currentYear ||
-        ( prevMonth.year() === currentYear && prevMonth.month() < currentMonth ),
-        [`${prefixCls}-new`]: prevMonth.year() > currentYear ||
-        ( prevMonth.year() === currentYear && prevMonth.month() > currentMonth ),
+        [`${prefixCls}-old`]:
+          prevMonth.year() < currentYear ||
+          (prevMonth.year() === currentYear && prevMonth.month() < currentMonth),
+        [`${prefixCls}-new`]:
+          prevMonth.year() > currentYear ||
+          (prevMonth.year() === currentYear && prevMonth.month() > currentMonth),
         [`${prefixCls}-selected`]: prevMonth.isSame(selected, 'd'),
         [`${prefixCls}-today`]: prevMonth.isSame(moment(), 'd'),
         [`${prefixCls}-disabled`]: isDisabled,
@@ -280,8 +288,12 @@ export default class DaysView extends ViewComponent<DateViewProps> implements Da
     const first = locale.firstDayOfWeek();
     const dow: ReactNode[] = [];
     let i = 0;
-    days.forEach((day) => {
-      dow[(7 + ( i++ ) - first) % 7] = <th key={day} title={day}>{day}</th>;
+    days.forEach(day => {
+      dow[(7 + i++ - first) % 7] = (
+        <th key={day} title={day}>
+          {day}
+        </th>
+      );
     });
 
     return dow;
@@ -290,8 +302,4 @@ export default class DaysView extends ViewComponent<DateViewProps> implements Da
   getCloneDate(): Moment {
     return this.props.date.clone();
   }
-}
-
-export function alwaysValidDate() {
-  return true;
 }

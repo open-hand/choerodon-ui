@@ -5,7 +5,7 @@ const appLocaleData = require('react-intl/locale-data/zh');
 
 require('moment/locale/zh-cn');
 
-module.exports = {
+export default {
   locale: 'zh-CN',
   data: appLocaleData,
   componentsLocale,
@@ -21,7 +21,8 @@ module.exports = {
     'app.demo.codepen': '在 CodePen 中打开',
     'app.demo.codesandbox': '在 CodeSandbox 中打开',
     'app.home.based-on-ant-design': '——基于Ant Design@3.4.0',
-    'app.home.introduce': 'Choerodon UI 是一组基于 Ant Design Components 实现谷歌的 Material Design 的 React 组件，用于开发和服务于企业级后台产品。',
+    'app.home.introduce':
+      'Choerodon UI 是一组基于 Ant Design Components 实现谷歌的 Material Design 的 React 组件，用于开发和服务于企业级后台产品。',
     'app.home.feature': '特性',
     'app.home.getting-started': '开始使用',
     'app.footer.resources': '相关资源',

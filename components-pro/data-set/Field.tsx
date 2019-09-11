@@ -4,6 +4,9 @@ import isObject from 'lodash/isObject';
 import isEqual from 'lodash/isEqual';
 import merge from 'lodash/merge';
 import defer from 'lodash/defer';
+import { AxiosRequestConfig } from 'axios';
+import { getConfig } from 'choerodon-ui/lib/configure';
+import warning from 'choerodon-ui/lib/_util/warning';
 import DataSet from './DataSet';
 import Record from './Record';
 import Validator, { CustomValidator } from '../validator/Validator';
@@ -14,11 +17,14 @@ import localeContext from '../locale-context';
 import { processValue } from './utils';
 import Validity from '../validator/Validity';
 import ValidationResult from '../validator/ValidationResult';
-import { getConfig } from 'choerodon-ui/lib/configure';
 import { LovConfig } from '../lov/Lov';
-import { AxiosRequestConfig } from 'axios';
-import warning from 'choerodon-ui/lib/_util/warning';
 import { ValidatorProps } from '../validator/rules';
+
+function isValueDirty(name: string, record: Record): boolean {
+  const pristineValue = record.getPristineValue(name);
+  const value = record.get(name);
+  return !isEqual(pristineValue, value);
+}
 
 function setFieldDirty(field?: Field, dirty?: boolean) {
   if (field) {
@@ -35,12 +41,6 @@ function setFieldDirty(field?: Field, dirty?: boolean) {
       }
     }
   }
-}
-
-function isValueDirty(name: string, record: Record): boolean {
-  const pristineValue = record.getPristineValue(name);
-  const value = record.get(name);
-  return !isEqual(pristineValue, value);
 }
 
 function getParentField(name: string, record?: Record): Field | undefined {
@@ -185,7 +185,14 @@ export type FieldProps = {
   /**
    * 值列表请求的axiosConfig
    */
-  lookupAxiosConfig?: AxiosRequestConfig | ((props: { params?: any, dataSet?: DataSet, record?: Record, lookupCode?: string }) => AxiosRequestConfig);
+  lookupAxiosConfig?:
+    | AxiosRequestConfig
+    | ((props: {
+        params?: any;
+        dataSet?: DataSet;
+        record?: Record;
+        lookupCode?: string;
+      }) => AxiosRequestConfig);
   /**
    * 内部字段别名绑定
    */
@@ -193,7 +200,7 @@ export type FieldProps = {
   /**
    * 动态属性
    */
-  dynamicProps?: (props: { dataSet: DataSet, record: Record, name: string }) => any;
+  dynamicProps?: (props: { dataSet: DataSet; record: Record; name: string }) => any;
   /**
    * 快码和LOV查询时的级联参数映射
    * @example
@@ -219,10 +226,9 @@ export type FieldProps = {
    * 在获得响应之后对数据进行处理
    */
   transformResponse?: (value: any) => any;
-}
+};
 
 export default class Field {
-
   static defaultProps: FieldProps = {
     type: FieldType.auto,
     required: false,
@@ -261,6 +267,7 @@ export default class Field {
     if (bind && record) {
       return record.getField(bind);
     }
+    return undefined;
   }
 
   @computed
@@ -299,7 +306,9 @@ export default class Field {
         this.isDirtyComputing = true;
         const { intlFields } = this;
         if (intlFields.length) {
-          return intlFields.some((langField) => !langField.isDirtyComputing ? langField.dirty : false);
+          return intlFields.some(langField =>
+            !langField.isDirtyComputing ? langField.dirty : false,
+          );
         }
         const { bindTarget } = this;
         if (bindTarget && !bindTarget.isDirtyComputing) {
@@ -340,7 +349,12 @@ export default class Field {
 
   @computed
   get valid(): boolean {
-    const { intlFields, validator: { validity: { valid } } } = this;
+    const {
+      intlFields,
+      validator: {
+        validity: { valid },
+      },
+    } = this;
     if (valid && intlFields.length) {
       return intlFields.every(field => field.valid);
     }
@@ -349,7 +363,13 @@ export default class Field {
 
   @computed
   get validationMessage() {
-    const { intlFields, validator: { validationMessage, validity: { valid } } } = this;
+    const {
+      intlFields,
+      validator: {
+        validationMessage,
+        validity: { valid },
+      },
+    } = this;
     if (valid && intlFields.length && !this.valid) {
       return intlFields.map(field => field.validationMessage);
     }
@@ -360,7 +380,8 @@ export default class Field {
     runInAction(() => {
       this.dataSet = dataSet;
       this.record = record;
-      this.props = this.pristineProps = props;
+      this.pristineProps = props;
+      this.props = props;
       this.modified = false;
       this.fetchLookup();
       this.fetchLovConfig();
@@ -390,7 +411,8 @@ export default class Field {
     if (propsName !== 'dynamicProps') {
       const dynamicProps = this.get('dynamicProps');
       if (typeof dynamicProps === 'function') {
-        let { dataSet, record, name } = this;
+        const { dataSet, name } = this;
+        let { record } = this;
         if (record && !record.data) {
           record = new Record(record.initData);
           record.dataSet = dataSet;
@@ -402,18 +424,18 @@ export default class Field {
             this.checkDynamicProp(propsName, prop);
             return prop;
           }
-          this.checkDynamicProp(propsName, void 0);
+          this.checkDynamicProp(propsName, undefined);
         }
       }
     }
     const value = get(this.props, propsName);
-    if (value !== void 0) {
+    if (value !== undefined) {
       return value;
     }
     const dsField = this.findDataSetField();
     if (dsField) {
       const dsValue = dsField.get(propsName);
-      if (dsValue !== void 0) {
+      if (dsValue !== undefined) {
         return dsValue;
       }
     }
@@ -441,7 +463,14 @@ export default class Field {
         }
       }
       if (dataSet) {
-        dataSet.fireEvent(DataSetEvents.fieldChange, { dataSet, record, field: this, propsName, value, oldValue });
+        dataSet.fireEvent(DataSetEvents.fieldChange, {
+          dataSet,
+          record,
+          field: this,
+          propsName,
+          value,
+          oldValue,
+        });
       }
       this.handlePropChange(propsName);
     }
@@ -464,7 +493,7 @@ export default class Field {
 
   getValue(): any {
     const { dataSet, name } = this;
-    const record = this.record || dataSet && dataSet.current;
+    const record = this.record || (dataSet && dataSet.current);
     if (record) {
       return record.get(name);
     }
@@ -484,15 +513,15 @@ export default class Field {
       const found = lookupStore.getByValue(lookupKey, value, valueField);
       if (found) {
         return get(found, textField);
-      } else if (showValueIfNotFound) {
-        return value;
-      } else {
-        return void 0;
       }
+      if (showValueIfNotFound) {
+        return value;
+      }
+      return undefined;
     }
     const options = this.getOptions();
     if (options) {
-      const found = options.find((record) => record.get(valueField) === value);
+      const found = options.find(record => record.get(valueField) === value);
       if (found) {
         return found.get(textField);
       }
@@ -640,7 +669,7 @@ export default class Field {
       try {
         await (this.lookUpPending = lookupStore.fetchLookupData(axiosConfig));
       } finally {
-        this.lookUpPending = void 0;
+        this.lookUpPending = undefined;
       }
     }
   }
@@ -651,18 +680,20 @@ export default class Field {
       try {
         const config = await (this.lovPending = lovCodeStore.fetchConfig(lovCode));
         if (config) {
-          const { textField, valueField } = config;
-          if (textField) {
-            this.set('textField', textField);
-            this.pristineProps.textField = valueField;
-          }
-          if (valueField) {
-            this.set('valueField', valueField);
-            this.pristineProps.valueField = valueField;
-          }
+          runInAction(() => {
+            const { textField, valueField } = config;
+            if (textField) {
+              this.set('textField', textField);
+              this.pristineProps.textField = valueField;
+            }
+            if (valueField) {
+              this.set('valueField', valueField);
+              this.pristineProps.valueField = valueField;
+            }
+          });
         }
       } finally {
-        this.lovPending = void 0;
+        this.lovPending = undefined;
       }
     }
   }
@@ -686,8 +717,15 @@ export default class Field {
   async ready(): Promise<any> {
     const { lookUpPending, lovPending } = this;
     const options = this.getOptions();
-    const result = await Promise.all([this.lookUpPending, this.lovPending, options && options.ready()]);
-    if ((this.lookUpPending && this.lookUpPending !== lookUpPending) || (this.lovPending && this.lovPending !== lovPending)) {
+    const result = await Promise.all([
+      this.lookUpPending,
+      this.lovPending,
+      options && options.ready(),
+    ]);
+    if (
+      (this.lookUpPending && this.lookUpPending !== lookUpPending) ||
+      (this.lovPending && this.lovPending !== lovPending)
+    ) {
       return this.ready();
     }
     return result;

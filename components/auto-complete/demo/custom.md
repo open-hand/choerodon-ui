@@ -13,8 +13,9 @@ title:
 
 Customize Input Component
 
-````jsx
+```jsx
 import { AutoComplete, Input } from 'choerodon-ui';
+
 const { TextArea } = Input;
 
 function onSelect(value) {
@@ -24,21 +25,17 @@ function onSelect(value) {
 class Complete extends React.Component {
   state = {
     dataSource: [],
-  }
+  };
 
-  handleSearch = (value) => {
+  handleSearch = value => {
     this.setState({
-      dataSource: !value ? [] : [
-        value,
-        value + value,
-        value + value + value,
-      ],
+      dataSource: !value ? [] : [value, value + value, value + value + value],
     });
-  }
+  };
 
-  handleKeyPress = (ev) => {
+  handleKeyPress = ev => {
     console.log('handleKeyPress', ev);
-  }
+  };
 
   render() {
     const { dataSource } = this.state;
@@ -49,15 +46,11 @@ class Complete extends React.Component {
         onSelect={onSelect}
         onSearch={this.handleSearch}
       >
-        <TextArea
-          placeholder="input here"
-          className="custom"
-          onKeyPress={this.handleKeyPress}
-        />
+        <TextArea placeholder="input here" className="custom" onKeyPress={this.handleKeyPress} />
       </AutoComplete>
     );
   }
 }
 
 ReactDOM.render(<Complete />, mountNode);
-````
+```

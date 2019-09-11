@@ -1,49 +1,52 @@
-@import "../../style/mixins/index";
+@import '../../style/mixins/index';
 
 // mixins for grid system
 // ------------------------
 .make-row(@gutter: @grid-gutter-width) {
   position: relative;
-  margin-left: (@gutter / -2);
-  margin-right: (@gutter / -2);
   height: auto;
+  margin-right: (@gutter / -2);
+  margin-left: (@gutter / -2);
   .clearfix;
 }
 
 .make-grid-columns() {
   .col(@index) {
-    @item: ~".@{c7n-prefix}-col-@{index}, .@{c7n-prefix}-col-xs-@{index}, .@{c7n-prefix}-col-sm-@{index}, .@{c7n-prefix}-col-md-@{index}, .@{c7n-prefix}-col-lg-@{index}";
+    @item: ~'.@{c7n-prefix}-col-@{index}, .@{c7n-prefix}-col-xs-@{index}, .@{c7n-prefix}-col-sm-@{index}, .@{c7n-prefix}-col-md-@{index}, .@{c7n-prefix}-col-lg-@{index}';
     .col((@index + 1), @item);
   }
   .col(@index, @list) when (@index =< @grid-columns) {
-    @item: ~".@{c7n-prefix}-col-@{index}, .@{c7n-prefix}-col-xs-@{index}, .@{c7n-prefix}-col-sm-@{index}, .@{c7n-prefix}-col-md-@{index}, .@{c7n-prefix}-col-lg-@{index}";
-    .col((@index + 1), ~"@{list}, @{item}");
+    @item: ~'.@{c7n-prefix}-col-@{index}, .@{c7n-prefix}-col-xs-@{index}, .@{c7n-prefix}-col-sm-@{index}, .@{c7n-prefix}-col-md-@{index}, .@{c7n-prefix}-col-lg-@{index}';
+    .col((@index + 1), ~'@{list}, @{item}');
   }
   .col(@index, @list) when (@index > @grid-columns) {
     @{list} {
       position: relative;
       // Prevent columns from collapsing when empty
-      min-height: .01rem;
-      padding-left: (@grid-gutter-width / 2);
+      min-height: 0.01rem;
       padding-right: (@grid-gutter-width / 2);
+      padding-left: (@grid-gutter-width / 2);
     }
   }
   .col(1);
 }
 
 .float-grid-columns(@class) {
-  .col(@index) { // initial
-    @item: ~".@{c7n-prefix}-col@{class}-@{index}";
+  .col(@index) {
+    // initial
+    @item: ~'.@{c7n-prefix}-col@{class}-@{index}';
     .col((@index + 1), @item);
   }
-  .col(@index, @list) when (@index =< @grid-columns) { // general
-    @item: ~".@{c7n-prefix}-col@{class}-@{index}";
-    .col((@index + 1), ~"@{list}, @{item}");
+  .col(@index, @list) when (@index =< @grid-columns) {
+    // general
+    @item: ~'.@{c7n-prefix}-col@{class}-@{index}';
+    .col((@index + 1), ~'@{list}, @{item}');
   }
-  .col(@index, @list) when (@index > @grid-columns) { // terminal
+  .col(@index, @list) when (@index > @grid-columns) {
+    // terminal
     @{list} {
-      float: left;
       flex: 0 0 auto;
+      float: left;
     }
   }
   .col(1); // kickstart it

@@ -1,4 +1,14 @@
-import { action, computed, get, IReactionDisposer, isArrayLike, observable, runInAction, set, toJS } from 'mobx';
+import {
+  action,
+  computed,
+  get,
+  IReactionDisposer,
+  isArrayLike,
+  observable,
+  runInAction,
+  set,
+  toJS,
+} from 'mobx';
 import axiosStatic, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import isNumber from 'lodash/isNumber';
 import isArray from 'lodash/isArray';
@@ -29,7 +39,14 @@ import {
 import EventManager from '../_util/EventManager';
 import DataSetSnapshot from './DataSetSnapshot';
 import confirm from '../modal/confirm';
-import { DataSetEvents, DataSetSelection, DataSetStatus, FieldType, RecordStatus, SortOrder } from './enum';
+import {
+  DataSetEvents,
+  DataSetSelection,
+  DataSetStatus,
+  FieldType,
+  RecordStatus,
+  SortOrder,
+} from './enum';
 import { Lang } from '../locale-context/enum';
 import message from '../message';
 import exception from '../_util/exception';
@@ -46,20 +63,20 @@ export interface DataSetProps {
    * 唯一标识
    * @see children
    */
-  id?: string,
+  id?: string;
   /**
    * 对应后台ds的name，用于自动生成约定的submitUrl, queryUrl, tlsUrl，也可用于级联
    * @see children
    */
-  name?: string,
+  name?: string;
   /**
    * 主键字段名，一般用作级联行表的查询字段
    */
-  primaryKey?: string,
+  primaryKey?: string;
   /**
    * 语言
    */
-  lang?: Lang,
+  lang?: Lang;
   /**
    * 字段组
    */
@@ -159,7 +176,7 @@ export interface DataSetProps {
    * { name_1: ds1, name_2: ds2 }
    * [ds1, ds2]
    */
-  children?: { [key: string]: (string | DataSet) } | DataSet [];
+  children?: { [key: string]: string | DataSet } | DataSet[];
   /**
    * 树形数据当前节点id字段名
    */
@@ -189,7 +206,6 @@ export interface DataSetProps {
 }
 
 export default class DataSet extends EventManager {
-
   static defaultProps: DataSetProps = {
     autoCreate: false,
     autoQuery: false,
@@ -490,7 +506,7 @@ export default class DataSet extends EventManager {
   @computed
   get paging(): boolean {
     const { idField, parentField, paging } = this.props;
-    return (parentField === void 0 || idField === void 0) && paging!;
+    return (parentField === undefined || idField === undefined) && paging!;
   }
 
   set paging(paging) {
@@ -505,7 +521,10 @@ export default class DataSet extends EventManager {
    */
   @computed
   get current(): Record | undefined {
-    return this.data.find(record => record.isCurrent) || this.cachedSelected.find(record => record.isCurrent);
+    return (
+      this.data.find(record => record.isCurrent) ||
+      this.cachedSelected.find(record => record.isCurrent)
+    );
   }
 
   /**
@@ -522,7 +541,11 @@ export default class DataSet extends EventManager {
         if (record && record.dataSet === this) {
           record.isCurrent = true;
         }
-        this.fireEvent(DataSetEvents.indexChange, { dataSet: this, record, previous: currentRecord });
+        this.fireEvent(DataSetEvents.indexChange, {
+          dataSet: this,
+          record,
+          previous: currentRecord,
+        });
       });
     }
   }
@@ -532,17 +555,17 @@ export default class DataSet extends EventManager {
     const { primaryKey } = this.props;
     if (primaryKey) {
       return [primaryKey];
-    } else {
-      const keys: string[] = [];
-      for (const [key, field] of this.fields.entries()) {
-        if (field.get('unique')) {
-          keys.push(key);
-        }
-      }
-      if (keys.length) {
-        return keys;
-      }
     }
+    const keys: string[] = [];
+    [...this.fields.entries()].forEach(([key, field]) => {
+      if (field.get('unique')) {
+        keys.push(key);
+      }
+    });
+    if (keys.length) {
+      return keys;
+    }
+    return undefined;
   }
 
   @computed
@@ -551,6 +574,7 @@ export default class DataSet extends EventManager {
     if (cacheSelection && selection === DataSetSelection.multiple) {
       return this.uniqueKeys;
     }
+    return undefined;
   }
 
   /**
@@ -573,10 +597,22 @@ export default class DataSet extends EventManager {
   constructor(props?: DataSetProps) {
     super();
     runInAction(() => {
-      this.props = props = { ...DataSet.defaultProps, ...props } as DataSetProps;
+      props = { ...DataSet.defaultProps, ...props } as DataSetProps;
+      this.props = props;
       const {
-        data, fields, queryFields, queryDataSet, autoQuery, autoCreate, pageSize,
-        selection, events, id, name, children, queryParameter = {},
+        data,
+        fields,
+        queryFields,
+        queryDataSet,
+        autoQuery,
+        autoCreate,
+        pageSize,
+        selection,
+        events,
+        id,
+        name,
+        children,
+        queryParameter = {},
       } = props;
       this.name = name;
       this.records = [];
@@ -641,7 +677,9 @@ export default class DataSet extends EventManager {
 
   toJSONData(isSelected?: boolean, noCascade?: boolean): object[] {
     const data: object[] = [];
-    (isSelected ? this.selected : this.records).forEach(record => generateJSONData(data, record, isSelected, noCascade));
+    (isSelected ? this.selected : this.records).forEach(record =>
+      generateJSONData(data, record, isSelected, noCascade),
+    );
     return data;
   }
 
@@ -669,18 +707,19 @@ export default class DataSet extends EventManager {
    * @return Promise
    */
   query(page?: number): Promise<any> {
-    this.pending = new Promise(async (resolve, reject) => {
-      try {
-        const data = await this.read(page);
-        this.loadDataFromResponse(data);
-        resolve(data);
-      } catch (e) {
-        reject(e);
-      } finally {
-        this.pending = void 0;
-      }
-    });
-    return this.pending;
+    try {
+      const pending = this.doQuery(page);
+      this.pending = pending;
+      return pending;
+    } finally {
+      this.pending = undefined;
+    }
+  }
+
+  async doQuery(page): Promise<any> {
+    const data = await this.read(page);
+    this.loadDataFromResponse(data);
+    return data;
   }
 
   /**
@@ -702,15 +741,25 @@ export default class DataSet extends EventManager {
    * @param object columns 导出的列
    */
   async export(columns: any = {}): Promise<void> {
-    if (this.checkReadable(this.parent) && await this.ready()) {
+    if (this.checkReadable(this.parent) && (await this.ready())) {
       const data = await this.generateQueryParameter();
       data._HAP_EXCEL_EXPORT_COLUMNS = columns;
-      const { transport: { exports = {}, adapter }, totalCount, totalKey } = this;
+      const {
+        transport: { exports = {}, adapter },
+        totalCount,
+        totalKey,
+      } = this;
       const params = { [totalKey]: totalCount, _r: Date.now(), ...this.generateOrderQueryString() };
       const newConfig = axiosAdapter(exports, this, data, params);
       const adapterConfig = adapter(newConfig, 'exports') || newConfig;
       if (adapterConfig.url) {
-        if ((await this.fireEvent(DataSetEvents.export, { dataSet: this, params: adapterConfig.params, data: adapterConfig.data })) !== false) {
+        if (
+          (await this.fireEvent(DataSetEvents.export, {
+            dataSet: this,
+            params: adapterConfig.params,
+            data: adapterConfig.data,
+          })) !== false
+        ) {
           doExport(this.axios.getUri(adapterConfig), adapterConfig.data, adapterConfig.method);
         }
       }
@@ -735,7 +784,7 @@ export default class DataSet extends EventManager {
     if (page > 0 && this.paging) {
       return this.locate((page - 1) * this.pageSize + this.created.length - this.destroyed.length);
     }
-    return Promise.reject('page rejected');
+    return Promise.reject(new Error('page rejected'));
   }
 
   /**
@@ -750,12 +799,13 @@ export default class DataSet extends EventManager {
     if (currentRecord) {
       this.current = currentRecord;
       return currentRecord;
-    } else if (paging === true) {
+    }
+    if (paging === true) {
       if (index >= 0 && index < totalCount + this.created.length - this.destroyed.length) {
         if (
-          !modifiedCheck
-          || !this.isModified()
-          || await confirm($l('DataSet', 'unsaved_data_confirm')) !== 'cancel'
+          !modifiedCheck ||
+          !this.isModified() ||
+          (await confirm($l('DataSet', 'unsaved_data_confirm'))) !== 'cancel'
         ) {
           await this.query(Math.floor(index / pageSize) + 1);
           currentRecord = this.findInAllPage(index);
@@ -766,7 +816,7 @@ export default class DataSet extends EventManager {
         }
       }
     }
-    return Promise.reject('locate canceled');
+    return Promise.reject(new Error('locate canceled'));
   }
 
   /**
@@ -845,14 +895,15 @@ export default class DataSet extends EventManager {
     if (data === null) {
       data = {};
     }
-    for (const [name, field] of this.fields.entries()) {
+    [...this.fields.entries()].forEach(([name, field]) => {
       const defaultValue = field.get('defaultValue');
       const value = ObjectChainValue.get(data, name);
-      if (value === void 0 && defaultValue !== void 0) {
+      if (value === undefined && defaultValue !== undefined) {
         ObjectChainValue.set(data, name, toJS(defaultValue));
       }
-    }
-    const record = this.current = new Record(data, this);
+    });
+    const record = new Record(data, this);
+    this.current = record;
     if (isNumber(dataIndex)) {
       this.splice(dataIndex, 0, record);
     } else {
@@ -870,7 +921,10 @@ export default class DataSet extends EventManager {
   async delete(records?: Record | Record[]): Promise<any> {
     if (records) {
       records = ([] as Record[]).concat(records);
-      if (records.length > 0 && await confirm($l('DataSet', 'delete_selected_row_confirm')) !== 'cancel') {
+      if (
+        records.length > 0 &&
+        (await confirm($l('DataSet', 'delete_selected_row_confirm'))) !== 'cancel'
+      ) {
         this.remove(records);
         return this.write(this.destroyed);
       }
@@ -886,7 +940,7 @@ export default class DataSet extends EventManager {
     if (records) {
       const data = isArrayLike(records) ? records.slice() : [records];
       const { current, currentIndex } = this;
-      data.forEach((record) => {
+      data.forEach(record => {
         const index = this.indexOf(record);
         if (index !== -1) {
           this.splice(index, 1);
@@ -923,7 +977,7 @@ export default class DataSet extends EventManager {
    */
   @action
   async deleteAll() {
-    if (this.length > 0 && await confirm($l('DataSet', 'delete_all_row_confirm')) !== 'cancel') {
+    if (this.length > 0 && (await confirm($l('DataSet', 'delete_all_row_confirm'))) !== 'cancel') {
       this.removeAll();
       return this.write(this.destroyed);
     }
@@ -1093,7 +1147,10 @@ export default class DataSet extends EventManager {
    * @param initialValue 初始值
    * @returns {U}
    */
-  reduce<U>(fn: (previousValue: U, record: Record, index: number, array: Record[]) => U, initialValue: U): U {
+  reduce<U>(
+    fn: (previousValue: U, record: Record, index: number, array: Record[]) => U,
+    initialValue: U,
+  ): U {
     return this.data.reduce<U>(fn, initialValue);
   }
 
@@ -1103,7 +1160,10 @@ export default class DataSet extends EventManager {
    * @param initialValue 初始值
    * @returns {U}
    */
-  reduceRight<U>(fn: (previousValue: U, record: Record, index: number, array: Record[]) => U, initialValue: U): U {
+  reduceRight<U>(
+    fn: (previousValue: U, record: Record, index: number, array: Record[]) => U,
+    initialValue: U,
+  ): U {
     return this.data.reduceRight<U>(fn, initialValue);
   }
 
@@ -1112,7 +1172,7 @@ export default class DataSet extends EventManager {
    */
   @action
   reverse(): Record[] {
-    return this.records = this.records.reverse();
+    return (this.records = this.records.reverse());
   }
 
   /**
@@ -1124,9 +1184,9 @@ export default class DataSet extends EventManager {
     const field = this.getField(fieldName);
     if (field) {
       const currents = getOrderFields(this.fields);
-      currents.forEach((current) => {
+      currents.forEach(current => {
         if (current !== field) {
-          current.order = void 0;
+          current.order = undefined;
         }
       });
       if (!field.order || field.order === SortOrder.desc) {
@@ -1158,7 +1218,10 @@ export default class DataSet extends EventManager {
         let previous: Record | undefined;
         runInAction(() => {
           if (selection === DataSetSelection.single) {
-            this.selected.forEach((selected: Record) => (selected.isSelected = false, previous = selected));
+            this.selected.forEach((selected: Record) => {
+              selected.isSelected = false;
+              previous = selected;
+            });
           }
           if (record) {
             record.isSelected = true;
@@ -1208,7 +1271,7 @@ export default class DataSet extends EventManager {
           this.select(filter ? this.filter(filter)[0] : 0);
         }
       } else {
-        this.records.forEach((record) => {
+        this.records.forEach(record => {
           if (!filter || filter(record) !== false) {
             this.select(record);
           }
@@ -1227,7 +1290,7 @@ export default class DataSet extends EventManager {
   unSelectAll(): void {
     if (this.selection) {
       this.inBatchSelection = true;
-      this.currentSelected.forEach((record) => {
+      this.currentSelected.forEach(record => {
         this.unSelect(record);
       });
       this.fireEvent(DataSetEvents.unSelectAll, { dataSet: this });
@@ -1246,7 +1309,7 @@ export default class DataSet extends EventManager {
    * @returns {Record}
    */
   get(index: number): Record | undefined {
-    return this.data.length ? this.data[index] : void 0;
+    return this.data.length ? this.data[index] : undefined;
   }
 
   /**
@@ -1254,9 +1317,7 @@ export default class DataSet extends EventManager {
    * @return true | false
    */
   isModified(): boolean {
-    return this.records.some(
-      record => record.status === RecordStatus.update || record.status === RecordStatus.add || record.status === RecordStatus.delete,
-    );
+    return this.dirtyRecords.length > 0;
   }
 
   /**
@@ -1281,8 +1342,9 @@ export default class DataSet extends EventManager {
    * @return true | false
    */
   validate(isSelected?: boolean, noCascade?: boolean): Promise<boolean> {
-    return Promise.all((isSelected ? this.selected : this.data).map(record => record.validate(noCascade)))
-      .then(results => results.every(result => result));
+    return Promise.all(
+      (isSelected ? this.selected : this.data).map(record => record.validate(noCascade)),
+    ).then(results => results.every(result => result));
   }
 
   /**
@@ -1300,25 +1362,30 @@ export default class DataSet extends EventManager {
    * 获取分组字段名
    * @returns 字段名列表
    */
-  getGroups(): string [] {
-    return [...this.fields.entries()].reduce((arr: string[], [name, field]) => {
-      const group = field.get('group');
-      if (isNumber(group)) {
-        arr[group as number] = name;
-      } else if (group === true && !arr[0]) {
-        arr[0] = name;
-      }
-      return arr;
-    }, []).filter(group => group !== void 0);
+  getGroups(): string[] {
+    return [...this.fields.entries()]
+      .reduce((arr: string[], [name, field]) => {
+        const group = field.get('group');
+        if (isNumber(group)) {
+          arr[group as number] = name;
+        } else if (group === true && !arr[0]) {
+          arr[0] = name;
+        }
+        return arr;
+      }, [])
+      .filter(group => group !== undefined);
   }
 
   initFields(fields: FieldProps[]): void {
-    fields.forEach((field) => {
+    fields.forEach(field => {
       const { name } = field;
       if (name) {
         this.addField(name, field);
       } else {
-        warning(false, 'DataSet create field failed. Please check if property name is exists on field.');
+        warning(
+          false,
+          'DataSet create field failed. Please check if property name is exists on field.',
+        );
       }
     });
   }
@@ -1331,11 +1398,16 @@ export default class DataSet extends EventManager {
    */
   @action
   addField(name: string, fieldProps: FieldProps = {}): Field {
-    return processIntlField(name, fieldProps, (langName, langProps) => {
-      const field = new Field(langProps, this);
-      this.fields.set(langName, field);
-      return field;
-    }, this);
+    return processIntlField(
+      name,
+      fieldProps,
+      (langName, langProps) => {
+        const field = new Field(langProps, this);
+        this.fields.set(langName, field);
+        return field;
+      },
+      this,
+    );
   }
 
   @action
@@ -1351,12 +1423,15 @@ export default class DataSet extends EventManager {
         this.totalCount = total;
       }
     } else if (this.records.length) {
-      warning(false, `The primary key which generated by database is not exists in each created records,
+      warning(
+        false,
+        `The primary key which generated by database is not exists in each created records,
 because of no data \`${this.dataKey}\` from the response by \`submit\` or \`delete\` method.
-Then the query method will be auto invoke.`);
+Then the query method will be auto invoke.`,
+      );
       this.query();
     }
-    flatMap<Record>(this.dirtyRecords).forEach(record => record.commit(void 0, this));
+    flatMap<Record>(this.dirtyRecords).forEach(record => record.commit(undefined, this));
     return this;
   }
 
@@ -1394,15 +1469,21 @@ Then the query method will be auto invoke.`);
   @action
   loadData(allData: (object | Record)[] = [], total?: number): DataSet {
     this.storeSelected();
-    const { paging, pageSize, props: { autoLocateFirst } } = this;
+    const {
+      paging,
+      pageSize,
+      props: { autoLocateFirst },
+    } = this;
     allData = paging ? allData.slice(0, pageSize) : allData;
     this.fireEvent(DataSetEvents.beforeLoad, { dataSet: this, data: allData });
-    this.records = this.originalData = allData.map(data => {
-      const record = data instanceof Record ? (data.dataSet = this, data) : new Record(data, this);
+    this.originalData = allData.map(data => {
+      const record =
+        data instanceof Record ? ((data.dataSet = this), data) : new Record(data, this);
       record.status = RecordStatus.sync;
       return record;
     });
-    if (total !== void 0 && paging === true) {
+    this.records = this.originalData;
+    if (total !== undefined && paging === true) {
       this.totalCount = total;
     } else {
       this.totalCount = allData.length;
@@ -1452,7 +1533,7 @@ Then the query method will be auto invoke.`);
   }
 
   private transferRecords(data: Record[]): Record[] {
-    return data.map((record) => {
+    return data.map(record => {
       const { dataSet } = record;
       if (dataSet === this) {
         const { records } = this;
@@ -1461,21 +1542,20 @@ Then the query method will be auto invoke.`);
           records.splice(index, 1);
         }
         return record;
-      } else {
-        if (dataSet) {
-          dataSet.remove(record);
-          record = new Record(record.data, this);
-        }
-        record.dataSet = this;
-        record.status = RecordStatus.add;
-        return record;
       }
+      if (dataSet) {
+        dataSet.remove(record);
+        record = new Record(record.data, this);
+      }
+      record.dataSet = this;
+      record.status = RecordStatus.add;
+      return record;
     });
   }
 
-  private initChildren(children: { [key: string]: (string | DataSet) } | DataSet []): void {
+  private initChildren(children: { [key: string]: string | DataSet } | DataSet[]): void {
     if (isArray(children)) {
-      children.forEach((childDs) => {
+      children.forEach(childDs => {
         if (childDs instanceof DataSet) {
           const { name } = childDs;
           if (name) {
@@ -1486,7 +1566,7 @@ Then the query method will be auto invoke.`);
         }
       });
     } else {
-      Object.keys(children as DataSetChildren).forEach((childName) => {
+      Object.keys(children as DataSetChildren).forEach(childName => {
         const child = children[childName];
         if (child instanceof DataSet) {
           child.bind(this, childName);
@@ -1531,7 +1611,11 @@ Then the query method will be auto invoke.`);
 
   private async write(records: Record[], isSelect?: boolean, noCascade?: boolean): Promise<any> {
     if (records.length) {
-      const [created, updated, destroyed, cascade] = prepareSubmitData(records, isSelect, noCascade);
+      const [created, updated, destroyed, cascade] = prepareSubmitData(
+        records,
+        isSelect,
+        noCascade,
+      );
       const { transport } = this;
       const axiosConfigs: AxiosRequestConfig[] = [];
       const submitData: object[] = [
@@ -1558,7 +1642,7 @@ Then the query method will be auto invoke.`);
           throw e;
         } finally {
           this.changeSubmitStatus(DataSetStatus.ready);
-          this.pending = void 0;
+          this.pending = undefined;
         }
       }
     }
@@ -1567,14 +1651,18 @@ Then the query method will be auto invoke.`);
   private async read(page: number = 1): Promise<any> {
     if (this.checkReadable(this.parent)) {
       try {
-        const { transport: { read = {}, adapter } } = this;
+        const {
+          transport: { read = {}, adapter },
+        } = this;
         this.changeStatus(DataSetStatus.loading);
         const data = await this.generateQueryParameter();
         const newConfig = axiosAdapter(read, this, data, this.generateQueryString(page));
         const adapterConfig = adapter(newConfig, 'read') || newConfig;
         if (adapterConfig.url) {
           const queryEventResult = await this.fireEvent(DataSetEvents.query, {
-            dataSet: this, params: adapterConfig.params, data: adapterConfig.data,
+            dataSet: this,
+            params: adapterConfig.params,
+            data: adapterConfig.data,
           });
           if (queryEventResult) {
             const result = await this.axios(adapterConfig);
@@ -1598,7 +1686,11 @@ Then the query method will be auto invoke.`);
     if (this.cacheSelectionKeys) {
       this.cachedSelected = [
         ...this.cachedSelected.filter(record => record.isSelected),
-        ...this.currentSelected.map(record => (record.isCurrent = false, record.isCached = true, record)),
+        ...this.currentSelected.map(record => {
+          record.isCurrent = false;
+          record.isCached = true;
+          return record;
+        }),
       ];
     }
   }
@@ -1608,7 +1700,9 @@ Then the query method will be auto invoke.`);
     const { cacheSelectionKeys, cachedSelected } = this;
     if (cacheSelectionKeys) {
       this.data.forEach(record => {
-        const index = cachedSelected.findIndex(cached => cacheSelectionKeys.every(key => record.get(key) === cached.get(key)));
+        const index = cachedSelected.findIndex(cached =>
+          cacheSelectionKeys.every(key => record.get(key) === cached.get(key)),
+        );
         if (index !== -1) {
           record.isSelected = true;
           cachedSelected.splice(index, 1);
@@ -1632,7 +1726,15 @@ Then the query method will be auto invoke.`);
     });
   }
 
-  private handleCascade({ dataSet, record, previous }: { dataSet: DataSet, record?: Record, previous?: Record }) {
+  private handleCascade({
+    dataSet,
+    record,
+    previous,
+  }: {
+    dataSet: DataSet;
+    record?: Record;
+    previous?: Record;
+  }) {
     if (dataSet.hasChildren) {
       dataSet.syncChildren(record, previous);
     }
@@ -1646,18 +1748,20 @@ Then the query method will be auto invoke.`);
   private handleSubmitSuccess(resp: any[]) {
     const { dataKey, totalKey } = this;
     const data: object[] = [];
-    let total = void 0;
-    resp.forEach((item) => {
+    let total;
+    resp.forEach(item => {
       data.push(...generateResponseData(item, dataKey));
       if (totalKey && isObject(item) && totalKey in item) {
         total = item[totalKey];
       }
     });
-    const result = dataKey ? {
-      [dataKey]: data,
-      [totalKey!]: total,
-      success: true,
-    } : data;
+    const result = dataKey
+      ? {
+          [dataKey]: data,
+          [totalKey!]: total,
+          success: true,
+        }
+      : data;
     this.fireEvent(DataSetEvents.submitSuccess, { dataSet: this, data: result });
     this.commitData(data, total);
     message.success($l('DataSet', 'submit_success'));
@@ -1674,7 +1778,7 @@ Then the query method will be auto invoke.`);
     const { children } = this;
     const keys: string[] = Object.keys(children);
     const remoteKeys: string[] = [];
-    keys.forEach((childName) => {
+    keys.forEach(childName => {
       const ds = children[childName];
       if (previous && ds.status === DataSetStatus.ready && previous.dataSetSnapshot[childName]) {
         previous.dataSetSnapshot[childName] = ds.snapshot();
@@ -1683,11 +1787,9 @@ Then the query method will be auto invoke.`);
         const snapshot = current.dataSetSnapshot[childName];
         if (snapshot instanceof DataSetSnapshot) {
           ds.restore(snapshot);
-        } else {
-          if (!this.syncChild(ds, current, childName, true)) {
-            ds.loadData([]);
-            remoteKeys.push(childName);
-          }
+        } else if (!this.syncChild(ds, current, childName, true)) {
+          ds.loadData([]);
+          remoteKeys.push(childName);
         }
       } else {
         ds.loadData([]);
@@ -1696,22 +1798,28 @@ Then the query method will be auto invoke.`);
     if (current && remoteKeys.length) {
       this.syncChildrenRemote(remoteKeys, current);
     }
-  };
+  }
 
   @action
-  private syncChild(ds: DataSet, currentRecord: Record, childName: string, onlyClient?: boolean): boolean {
+  private syncChild(
+    ds: DataSet,
+    currentRecord: Record,
+    childName: string,
+    onlyClient?: boolean,
+  ): boolean {
     const childRecords = currentRecord.get(childName);
     if (currentRecord.status === RecordStatus.add || isArrayLike(childRecords)) {
       ds.clearCachedSelected();
       ds.loadData(childRecords ? childRecords.slice() : []);
       if (currentRecord.status === RecordStatus.add) {
-        ds.forEach(record => record.status = RecordStatus.add);
+        ds.forEach(record => (record.status = RecordStatus.add));
       }
       currentRecord.dataSetSnapshot[childName] = ds.snapshot();
       return true;
-    } else if (!onlyClient) {
+    }
+    if (!onlyClient) {
       const oldSnapshot = ds.snapshot();
-      ds.read(1).then((resp) => {
+      ds.read(1).then(resp => {
         const { current } = this;
         if (current !== currentRecord) {
           ds = new DataSet().restore(oldSnapshot);
@@ -1741,7 +1849,7 @@ Then the query method will be auto invoke.`);
     return {};
   }
 
-  private generateOrderQueryString(): { sortname?: string, sortorder?: string } {
+  private generateOrderQueryString(): { sortname?: string; sortorder?: string } {
     const { fields } = this;
     const orderField = getOrderFields(fields)[0];
     if (orderField) {
@@ -1762,7 +1870,12 @@ Then the query method will be auto invoke.`);
     const pageQuery = this.generatePageQueryString(page);
     const generatePageQuery = getConfig('generatePageQuery');
     if (typeof generatePageQuery === 'function') {
-      return generatePageQuery({ sortName: order.sortname, sortOrder: order.sortorder, pageSize: pageQuery.pagesize, page: pageQuery.page });
+      return generatePageQuery({
+        sortName: order.sortname,
+        sortOrder: order.sortorder,
+        pageSize: pageQuery.pagesize,
+        page: pageQuery.page,
+      });
     }
     return { ...pageQuery, ...order };
   }
@@ -1771,7 +1884,10 @@ Then the query method will be auto invoke.`);
     const { parent, queryDataSet } = this;
     let parentParam = {};
     if (parent) {
-      const { props: { primaryKey }, current } = parent;
+      const {
+        props: { primaryKey },
+        current,
+      } = parent;
       if (current) {
         if (primaryKey) {
           parentParam[primaryKey] = current.get(primaryKey);
@@ -1782,7 +1898,7 @@ Then the query method will be auto invoke.`);
     }
     if (queryDataSet) {
       await queryDataSet.ready();
-      if (!await queryDataSet.validate()) {
+      if (!(await queryDataSet.validate())) {
         throw new Error($l('DataSet', 'invalid_query_dataset'));
       }
     }

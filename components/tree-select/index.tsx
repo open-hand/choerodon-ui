@@ -4,7 +4,12 @@ import { TreeSelectProps } from './interface';
 import { SelectLocale } from '../select';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import warning from '../_util/warning';
-import RcTreeSelect, { SHOW_ALL, SHOW_CHILD, SHOW_PARENT, TreeNode } from '../rc-components/tree-select';
+import RcTreeSelect, {
+  SHOW_ALL,
+  SHOW_CHILD,
+  SHOW_PARENT,
+  TreeNode,
+} from '../rc-components/tree-select';
 import { Size } from '../_util/enum';
 import { getPrefixCls } from '../configure';
 
@@ -12,9 +17,13 @@ export { TreeData, TreeSelectProps } from './interface';
 
 export default class TreeSelect extends Component<TreeSelectProps, any> {
   static displayName = 'TreeSelect';
+
   static TreeNode = TreeNode;
+
   static SHOW_ALL = SHOW_ALL;
+
   static SHOW_PARENT = SHOW_PARENT;
+
   static SHOW_CHILD = SHOW_CHILD;
 
   static defaultProps = {
@@ -58,10 +67,13 @@ export default class TreeSelect extends Component<TreeSelectProps, any> {
     } = this.props;
 
     const prefixCls = getPrefixCls('select', customizePrefixCls);
-    const cls = classNames({
-      [`${prefixCls}-lg`]: size === Size.large,
-      [`${prefixCls}-sm`]: size === Size.small,
-    }, className);
+    const cls = classNames(
+      {
+        [`${prefixCls}-lg`]: size === Size.large,
+        [`${prefixCls}-sm`]: size === Size.small,
+      },
+      className,
+    );
 
     let checkable = restProps.treeCheckable;
     if (checkable) {
@@ -83,10 +95,7 @@ export default class TreeSelect extends Component<TreeSelectProps, any> {
 
   render() {
     return (
-      <LocaleReceiver
-        componentName="Select"
-        defaultLocale={{}}
-      >
+      <LocaleReceiver componentName="Select" defaultLocale={{}}>
         {this.renderTreeSelect}
       </LocaleReceiver>
     );

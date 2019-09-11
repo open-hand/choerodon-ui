@@ -1,9 +1,9 @@
 .calendarPanelHeader(@calendar-prefix-cls) {
-  height: .4rem;
-  line-height: .4rem;
+  height: 0.4rem;
+  line-height: 0.4rem;
   text-align: center;
-  user-select: none;
   border-bottom: @border-width-base @border-style-base @border-color-split;
+  user-select: none;
 
   a:hover {
     color: @link-hover-color;
@@ -13,11 +13,11 @@
   .@{calendar-prefix-cls}-decade-select,
   .@{calendar-prefix-cls}-year-select,
   .@{calendar-prefix-cls}-month-select {
-    padding: 0 .02rem;
-    font-weight: 500;
     display: inline-block;
+    padding: 0 0.02rem;
     color: @heading-color;
-    line-height: .4rem;
+    font-weight: 500;
+    line-height: 0.4rem;
   }
 
   .@{calendar-prefix-cls}-century-select-arrow,
@@ -37,20 +37,20 @@
   .@{calendar-prefix-cls}-next-year-btn {
     position: absolute;
     top: 0;
-    color: @text-color-secondary;
-    font-family: Arial, "Hiragino Sans GB", "Microsoft Yahei", "Microsoft Sans Serif", sans-serif;
-    padding: 0 .05rem;
-    font-size: .16rem;
     display: inline-block;
-    line-height: .4rem;
+    padding: 0 0.05rem;
+    color: @text-color-secondary;
+    font-size: 0.16rem;
+    font-family: Arial, 'Hiragino Sans GB', 'Microsoft Yahei', 'Microsoft Sans Serif', sans-serif;
+    line-height: 0.4rem;
   }
 
   .@{calendar-prefix-cls}-prev-century-btn,
   .@{calendar-prefix-cls}-prev-decade-btn,
   .@{calendar-prefix-cls}-prev-year-btn {
-    left: .07rem;
+    left: 0.07rem;
 
-    &:after {
+    &::after {
       content: '«';
     }
   }
@@ -58,25 +58,25 @@
   .@{calendar-prefix-cls}-next-century-btn,
   .@{calendar-prefix-cls}-next-decade-btn,
   .@{calendar-prefix-cls}-next-year-btn {
-    right: .07rem;
+    right: 0.07rem;
 
-    &:after {
+    &::after {
       content: '»';
     }
   }
 
   .@{calendar-prefix-cls}-prev-month-btn {
-    left: .29rem;
+    left: 0.29rem;
 
-    &:after {
+    &::after {
       content: '‹';
     }
   }
 
   .@{calendar-prefix-cls}-next-month-btn {
-    right: .29rem;
+    right: 0.29rem;
 
-    &:after {
+    &::after {
       content: '›';
     }
   }
@@ -84,32 +84,32 @@
 
 .@{calendar-prefix-cls} {
   position: relative;
-  outline: none;
   width: 2.8rem;
-  border: @border-width-base @border-style-base #fff;
-  list-style: none;
   font-size: @font-size-base;
-  text-align: left;
-  background-color: @component-background;
-  border-radius: @border-radius-base;
-  box-shadow: @box-shadow-base;
-  background-clip: padding-box;
   line-height: @line-height-base;
+  text-align: left;
+  list-style: none;
+  background-color: @component-background;
+  background-clip: padding-box;
+  border: @border-width-base @border-style-base #fff;
+  border-radius: @border-radius-base;
+  outline: none;
+  box-shadow: @box-shadow-base;
 
   &-input-wrap {
-    height: .34rem;
-    padding: .06rem @control-padding-horizontal - .02rem;
+    height: 0.34rem;
+    padding: 0.06rem @control-padding-horizontal - 0.02rem;
     border-bottom: @border-width-base @border-style-base @border-color-split;
   }
 
   &-input {
-    border: 0;
     width: 100%;
-    cursor: auto;
-    outline: 0;
-    height: .22rem;
+    height: 0.22rem;
     color: @input-color;
     background: @input-bg;
+    border: 0;
+    outline: 0;
+    cursor: auto;
     .placeholder;
   }
 
@@ -126,32 +126,32 @@
   }
 
   &-body {
-    padding: .08rem .12rem;
+    padding: 0.08rem 0.12rem;
   }
 
   table {
-    border-collapse: collapse;
+    width: 100%;
     max-width: 100%;
     background-color: transparent;
-    width: 100%;
+    border-collapse: collapse;
   }
 
   table,
   th,
   td {
-    border: 0;
     text-align: center;
+    border: 0;
   }
 
   &-calendar-table {
-    border-spacing: 0;
     margin-bottom: 0;
+    border-spacing: 0;
   }
 
   &-column-header {
-    line-height: .18rem;
-    width: .33rem;
-    padding: .06rem 0;
+    width: 0.33rem;
+    padding: 0.06rem 0;
+    line-height: 0.18rem;
     text-align: center;
     .@{calendar-prefix-cls}-column-header-inner {
       display: block;
@@ -166,22 +166,22 @@
   }
 
   &-cell {
-    padding: .03rem 0;
-    height: .3rem;
+    height: 0.3rem;
+    padding: 0.03rem 0;
   }
 
   &-date {
     display: block;
+    width: 0.24rem;
+    height: 0.24rem;
     margin: 0 auto;
-    color: @text-color;
-    border-radius: @border-radius-sm;
-    width: .24rem;
-    height: .24rem;
-    line-height: .22rem;
-    border: @border-width-base @border-style-base transparent;
     padding: 0;
-    background: transparent;
+    color: @text-color;
+    line-height: 0.22rem;
     text-align: center;
+    background: transparent;
+    border: @border-width-base @border-style-base transparent;
+    border-radius: @border-radius-sm;
     transition: background 0.3s ease;
 
     &-panel {
@@ -200,9 +200,9 @@
   }
 
   &-today &-date {
-    border-color: @primary-color;
-    font-weight: bold;
     color: @primary-color;
+    font-weight: bold;
+    border-color: @primary-color;
   }
 
   &-last-month-cell &-date,
@@ -211,8 +211,8 @@
   }
 
   &-selected-day &-date {
-    background: @primary-color;
     color: #fff;
+    background: @primary-color;
     border: @border-width-base @border-style-base transparent;
 
     &:hover {
@@ -221,12 +221,12 @@
   }
 
   &-disabled-cell &-date {
-    cursor: not-allowed;
+    width: auto;
     color: #bcbcbc;
     background: @disabled-bg;
-    border-radius: 0;
-    width: auto;
     border: @border-width-base @border-style-base transparent;
+    border-radius: 0;
+    cursor: not-allowed;
 
     &:hover {
       background: @disabled-bg;
@@ -234,53 +234,53 @@
   }
   &-disabled-cell&-today &-date {
     position: relative;
-    margin-right: .05rem;
-    padding-left: .05rem;
-    &:before {
-      content: " ";
+    margin-right: 0.05rem;
+    padding-left: 0.05rem;
+    &::before {
       position: absolute;
-      top: -.01rem;
-      left: .05rem;
-      width: .24rem;
-      height: .24rem;
+      top: -0.01rem;
+      left: 0.05rem;
+      width: 0.24rem;
+      height: 0.24rem;
       border: @border-width-base @border-style-base #bcbcbc;
       border-radius: @border-radius-sm;
+      content: ' ';
     }
   }
 
   &-disabled-cell-first-of-row &-date {
-    border-top-left-radius: .04rem;
-    border-bottom-left-radius: .04rem;
+    border-top-left-radius: 0.04rem;
+    border-bottom-left-radius: 0.04rem;
   }
 
   &-disabled-cell-last-of-row &-date {
-    border-top-right-radius: .04rem;
-    border-bottom-right-radius: .04rem;
+    border-top-right-radius: 0.04rem;
+    border-bottom-right-radius: 0.04rem;
   }
 
   &-footer {
+    padding: 0 0.12rem;
+    line-height: 0.38rem;
     border-top: @border-width-base @border-style-base @border-color-split;
-    line-height: .38rem;
-    padding: 0 .12rem;
     &:empty {
       border-top: 0;
     }
     &-btn {
-      text-align: center;
       display: block;
+      text-align: center;
     }
     &-extra + &-btn {
+      margin: 0 -0.12rem;
+      padding: 0 0.12rem;
       border-top: @border-width-base @border-style-base @border-color-split;
-      margin: 0 -.12rem;
-      padding: 0 .12rem;
     }
   }
 
   .@{calendar-prefix-cls}-today-btn,
   .@{calendar-prefix-cls}-clear-btn {
     display: inline-block;
+    margin: 0 0 0 0.08rem;
     text-align: center;
-    margin: 0 0 0 .08rem;
     &-disabled {
       color: @disabled-color;
       cursor: not-allowed;
@@ -291,32 +291,32 @@
   }
 
   .@{calendar-prefix-cls}-clear-btn {
-    display: none;
     position: absolute;
-    right: .05rem;
-    text-indent: -.76rem;
-    overflow: hidden;
-    width: .2rem;
-    height: .2rem;
-    text-align: center;
-    line-height: .2rem;
-    top: .07rem;
+    top: 0.07rem;
+    right: 0.05rem;
+    display: none;
+    width: 0.2rem;
+    height: 0.2rem;
     margin: 0;
+    overflow: hidden;
+    line-height: 0.2rem;
+    text-align: center;
+    text-indent: -0.76rem;
   }
 
-  .@{calendar-prefix-cls}-clear-btn:after {
-    .iconfont-font("\e62e");
-    font-size: @font-size-base;
-    color: @disabled-color;
+  .@{calendar-prefix-cls}-clear-btn::after {
+    .iconfont-font('\e62e');
     display: inline-block;
+    width: 0.2rem;
+    height: 0.18rem;
+    color: @disabled-color;
+    font-size: @font-size-base;
     line-height: 1;
-    width: .2rem;
-    height: .18rem;
-    text-indent: .43rem;
+    text-indent: 0.43rem;
     transition: color 0.3s ease;
   }
 
-  .@{calendar-prefix-cls}-clear-btn:hover:after {
+  .@{calendar-prefix-cls}-clear-btn:hover::after {
     color: @text-color-secondary;
   }
 
@@ -324,7 +324,7 @@
     .btn;
     .btn-primary;
     .button-size(@btn-height-sm; @btn-padding-sm; @font-size-base; @border-radius-base);
-    line-height: @btn-height-sm - .02rem;
+    line-height: @btn-height-sm - 0.02rem;
 
     &-disabled {
       .button-color(@btn-disable-color; @btn-disable-bg; @btn-disable-border);

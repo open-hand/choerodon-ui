@@ -12,7 +12,7 @@ describe('choerodon-ui', () => {
   });
 
   it('should hint when import all components', () => {
-    expect(warnSpy).toBeCalledWith(
+    expect(warnSpy).toHaveBeenCalledWith(
       'You are using a whole package of choerodon-ui, please use https://www.npmjs.com/package/babel-plugin-import to reduce app bundle size.'
     );
     warnSpy.mockRestore();

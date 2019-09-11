@@ -318,7 +318,7 @@ exports[`renders ./components/layout/demo/fixed.md correctly 1`] = `
     class="c7n-layout-footer"
     style="text-align:center"
   >
-    Ant Design ©2016 Created by Ant UED
+    Choerodon UI
   </div>
 </div>
 `;
@@ -605,7 +605,7 @@ exports[`renders ./components/layout/demo/fixed-sider.md correctly 1`] = `
       class="c7n-layout-footer"
       style="text-align:center"
     >
-      Ant Design ©2016 Created by Ant UED
+      Choerodon UI
     </div>
   </div>
 </div>
@@ -726,7 +726,7 @@ exports[`renders ./components/layout/demo/responsive.md correctly 1`] = `
       class="c7n-layout-footer"
       style="text-align:center"
     >
-      Ant Design ©2016 Created by Ant UED
+      Choerodon UI
     </div>
   </div>
 </div>
@@ -909,7 +909,7 @@ exports[`renders ./components/layout/demo/side.md correctly 1`] = `
       class="c7n-layout-footer"
       style="text-align:center"
     >
-      Ant Design ©2016 Created by Ant UED
+      Choerodon UI
     </div>
   </div>
 </div>
@@ -1018,7 +1018,7 @@ exports[`renders ./components/layout/demo/top.md correctly 1`] = `
     class="c7n-layout-footer"
     style="text-align:center"
   >
-    Ant Design ©2016 Created by Ant UED
+    Choerodon UI
   </div>
 </div>
 `;
@@ -1264,7 +1264,7 @@ exports[`renders ./components/layout/demo/top-side.md correctly 1`] = `
     class="c7n-layout-footer"
     style="text-align:center"
   >
-    Ant Design ©2016 Created by Ant UED
+    Choerodon UI
   </div>
 </div>
 `;

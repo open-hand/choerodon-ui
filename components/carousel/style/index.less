@@ -1,5 +1,5 @@
-@import "../../style/themes/default";
-@import "../../style/mixins/index";
+@import '../../style/themes/default';
+@import '../../style/mixins/index';
 
 .@{c7n-prefix}-carousel {
   .reset-component;
@@ -15,10 +15,10 @@
   }
   .slick-list {
     position: relative;
-    overflow: hidden;
     display: block;
     margin: 0;
     padding: 0;
+    overflow: hidden;
 
     &:focus {
       outline: none;
@@ -35,17 +35,17 @@
 
   .slick-track {
     position: relative;
-    left: 0;
     top: 0;
+    left: 0;
     display: block;
 
-    &:before,
-    &:after {
-      content: "";
+    &::before,
+    &::after {
       display: table;
+      content: '';
     }
 
-    &:after {
+    &::after {
       clear: both;
     }
 
@@ -54,10 +54,11 @@
     }
   }
   .slick-slide {
+    display: none;
     float: left;
     height: 100%;
-    min-height: .01rem;
-    [dir="rtl"] & {
+    min-height: 0.01rem;
+    [dir='rtl'] & {
       float: right;
     }
     img {
@@ -66,8 +67,6 @@
     &.slick-loading img {
       display: none;
     }
-
-    display: none;
 
     &.dragging img {
       pointer-events: none;
@@ -95,88 +94,88 @@
   .slick-prev,
   .slick-next {
     position: absolute;
-    display: block;
-    height: .2rem;
-    width: .2rem;
-    line-height: 0;
-    font-size: 0;
-    cursor: pointer;
-    background: transparent;
-    color: transparent;
     top: 50%;
-    margin-top: -.1rem;
+    display: block;
+    width: 0.2rem;
+    height: 0.2rem;
+    margin-top: -0.1rem;
     padding: 0;
+    color: transparent;
+    font-size: 0;
+    line-height: 0;
+    background: transparent;
     border: 0;
     outline: none;
+    cursor: pointer;
     &:hover,
     &:focus {
-      outline: none;
-      background: transparent;
       color: transparent;
-      &:before {
+      background: transparent;
+      outline: none;
+      &::before {
         opacity: 1;
       }
     }
-    &.slick-disabled:before {
+    &.slick-disabled::before {
       opacity: 0.25;
     }
   }
 
   .slick-prev {
-    left: -.25rem;
-    &:before {
-      content: "←";
+    left: -0.25rem;
+    &::before {
+      content: '←';
     }
   }
 
   .slick-next {
-    right: -.25rem;
-    &:before {
-      content: "→";
+    right: -0.25rem;
+    &::before {
+      content: '→';
     }
   }
 
   // Dots
   .slick-dots {
     position: absolute;
-    bottom: .12rem;
-    list-style: none;
+    bottom: 0.12rem;
     display: block;
-    text-align: center;
-    margin: 0;
-    padding: 0;
     width: 100%;
     height: @carousel-dot-height;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    list-style: none;
     li {
       position: relative;
       display: inline-block;
-      vertical-align: top;
-      text-align: center;
-      margin: 0 .02rem;
+      margin: 0 0.02rem;
       padding: 0;
+      text-align: center;
+      vertical-align: top;
       button {
-        border: 0;
-        cursor: pointer;
-        background: #fff;
-        opacity: 0.3;
         display: block;
         width: @carousel-dot-width;
         height: @carousel-dot-height;
-        border-radius: .01rem;
-        outline: none;
-        font-size: 0;
-        color: transparent;
-        transition: all .5s;
         padding: 0;
+        color: transparent;
+        font-size: 0;
+        background: #fff;
+        border: 0;
+        border-radius: 0.01rem;
+        outline: none;
+        cursor: pointer;
+        opacity: 0.3;
+        transition: all 0.5s;
         &:hover,
         &:focus {
           opacity: 0.75;
         }
       }
       &.slick-active button {
+        width: @carousel-dot-active-width;
         background: #fff;
         opacity: 1;
-        width: @carousel-dot-active-width;
         &:hover,
         &:focus {
           opacity: 1;
@@ -188,14 +187,14 @@
 
 .@{c7n-prefix}-carousel-vertical {
   .slick-dots {
-    width: @carousel-dot-height;
-    bottom: auto;
-    right: .12rem;
     top: 50%;
-    transform: translateY(-50%);
+    right: 0.12rem;
+    bottom: auto;
+    width: @carousel-dot-height;
     height: auto;
+    transform: translateY(-50%);
     li {
-      margin: 0 .02rem;
+      margin: 0 0.02rem;
       vertical-align: baseline;
       button {
         width: @carousel-dot-height;

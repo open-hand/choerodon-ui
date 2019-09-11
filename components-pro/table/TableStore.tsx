@@ -4,35 +4,154 @@ import isNil from 'lodash/isNil';
 import isPlainObject from 'lodash/isPlainObject';
 import defer from 'lodash/defer';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
+import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
 import Column, { ColumnProps, columnWidth } from './Column';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
-import CheckBox from '../check-box';
-import Radio from '../radio';
+import ObserverCheckBox from '../check-box';
+import ObserverRadio from '../radio';
 import { DataSetSelection, RecordStatus } from '../data-set/enum';
-import { ColumnAlign, ColumnLock, SelectionMode, TableEditMode, TableMode, TableQueryBar } from './enum';
+import {
+  ColumnAlign,
+  ColumnLock,
+  SelectionMode,
+  TableEditMode,
+  TableMode,
+  TableQueryBar,
+} from './enum';
 import { stopPropagation } from '../_util/EventManager';
 import { getColumnKey, getHeader } from './utils';
 import getReactNodeText from '../_util/getReactNodeText';
-import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
-import ColumnGroups, { ColumnGroup } from './ColumnGroups';
+import ColumnGroups from './ColumnGroups';
 import { $l } from '../locale-context';
+import autobind from '../_util/autobind';
+import ColumnGroup from './ColumnGroup';
 
 const SELECTION_KEY = '__selection-column__';
 export const EXPAND_KEY = '__expand-column__';
 
-export default class TableStore {
+export type HeaderText = { name: string; label: string };
 
+function renderSelectionBox({ record }) {
+  const { dataSet } = record;
+  if (dataSet) {
+    const { selection } = dataSet;
+    const handleChange = value => {
+      if (value) {
+        dataSet.select(record);
+      } else {
+        dataSet.unSelect(record);
+      }
+    };
+    if (selection === DataSetSelection.multiple) {
+      return (
+        <ObserverCheckBox
+          checked={record.isSelected}
+          onChange={handleChange}
+          onClick={stopPropagation}
+          disabled={!record.selectable}
+          value
+        />
+      );
+    }
+    if (selection === DataSetSelection.single) {
+      return (
+        <ObserverRadio
+          checked={record.isSelected}
+          onChange={handleChange}
+          onClick={stopPropagation}
+          disabled={!record.selectable}
+          value
+        />
+      );
+    }
+  }
+}
+
+function mergeDefaultProps(columns: ColumnProps[], defaultKey: number[] = [0]): ColumnProps[] {
+  return columns.reduce<ColumnProps[]>((newColumns, column) => {
+    if (isPlainObject(column)) {
+      const newColumn: ColumnProps = { ...Column.defaultProps, ...column };
+      if (isNil(getColumnKey(newColumn))) {
+        newColumn.key = `anonymous-${defaultKey[0]++}`;
+      }
+      const { children } = newColumn;
+      if (children) {
+        newColumn.children = mergeDefaultProps(children, defaultKey);
+      }
+      newColumns.push(newColumn);
+    }
+    return newColumns;
+  }, []);
+}
+
+function normalizeColumns(
+  elements: ReactNode,
+  parent: ColumnProps | null = null,
+  defaultKey: number[] = [0],
+) {
+  const columns: any[] = [];
+  const leftFixedColumns: any[] = [];
+  const rightFixedColumns: any[] = [];
+  Children.forEach(elements, element => {
+    if (!isValidElement(element) || element.type !== Column) {
+      return;
+    }
+    const { props, key } = element;
+    const column: any = {
+      ...props,
+    };
+    if (isNil(getColumnKey(column))) {
+      column.key = `anonymous-${defaultKey[0]++}`;
+    }
+    if (parent) {
+      column.lock = parent.lock;
+    }
+    column.children = normalizeColumns(column.children, column, defaultKey);
+    if (key) {
+      column.key = key;
+    }
+    if (column.lock === ColumnLock.left || column.lock === true) {
+      leftFixedColumns.push(column);
+    } else if (column.lock === ColumnLock.right) {
+      rightFixedColumns.push(column);
+    } else {
+      columns.push(column);
+    }
+  });
+  return leftFixedColumns.concat(columns, rightFixedColumns);
+}
+
+async function getHeaderTexts(
+  dataSet: DataSet,
+  columns: ColumnProps[],
+  headers: HeaderText[] = [],
+): Promise<HeaderText[]> {
+  const column = columns.shift();
+  if (column) {
+    headers.push({ name: column.name!, label: await getReactNodeText(getHeader(column, dataSet)) });
+  }
+  if (columns.length) {
+    await getHeaderTexts(dataSet, columns, headers);
+  }
+  return headers;
+}
+
+export default class TableStore {
   node: any;
 
   @observable props: any;
 
   @observable bodyHeight: number;
+
   @observable width?: number;
+
   @observable height?: number;
 
   @observable lockColumnsBodyRowsHeight: any;
+
   @observable lockColumnsFootRowsHeight: any;
+
   @observable lockColumnsHeadRowsHeight: any;
 
   @observable expandedRows: Record[];
@@ -112,7 +231,7 @@ export default class TableStore {
   @computed
   get currentEditRecord(): Record | undefined {
     return this.dataSet.find(record => record.editing === true);
-  };
+  }
 
   set currentEditRecord(record: Record | undefined) {
     runInAction(() => {
@@ -126,10 +245,10 @@ export default class TableStore {
         }
       }
       if (record) {
-        defer(action(() => record.editing = true));
+        defer(action(() => (record.editing = true)));
       }
     });
-  };
+  }
 
   @observable showCachedSeletion?: boolean;
 
@@ -138,7 +257,7 @@ export default class TableStore {
   }
 
   get editing(): boolean {
-    return this.currentEditorName !== void 0 || this.currentEditRecord !== void 0;
+    return this.currentEditorName !== undefined || this.currentEditRecord !== undefined;
   }
 
   @computed
@@ -162,14 +281,20 @@ export default class TableStore {
   @computed
   get overflowY(): boolean {
     const { bodyHeight, height } = this;
-    return bodyHeight !== void 0 && height !== void 0 && height < bodyHeight + (this.overflowX ? measureScrollbar() : 0);
+    return (
+      bodyHeight !== undefined &&
+      height !== undefined &&
+      height < bodyHeight + (this.overflowX ? measureScrollbar() : 0)
+    );
   }
 
   @computed
   get columns(): ColumnProps[] {
     const { columns, children } = this.props;
     return observable.array(
-      this._addExpandColumn(this._addSelectionColumn(columns ? mergeDefaultProps(columns) : normalizeColumns(children))),
+      this.addExpandColumn(
+        this.addSelectionColumn(columns ? mergeDefaultProps(columns) : normalizeColumns(children)),
+      ),
     );
   }
 
@@ -195,7 +320,9 @@ export default class TableStore {
 
   @computed
   get leftGroupedColumns(): ColumnGroup[] {
-    return this.groupedColumns.filter(({ column: { lock } }) => lock === ColumnLock.left || lock === true);
+    return this.groupedColumns.filter(
+      ({ column: { lock } }) => lock === ColumnLock.left || lock === true,
+    );
   }
 
   @computed
@@ -205,17 +332,17 @@ export default class TableStore {
 
   @computed
   get leafColumns(): ColumnProps[] {
-    return this._leafColumns(this.columns);
+    return this.getLeafColumns(this.columns);
   }
 
   @computed
   get leftLeafColumns(): ColumnProps[] {
-    return this._leafColumns(this.leftColumns);
+    return this.getLeafColumns(this.leftColumns);
   }
 
   @computed
   get rightLeafColumns(): ColumnProps[] {
-    return this._leafColumns(this.rightColumns);
+    return this.getLeafColumns(this.rightColumns);
   }
 
   @computed
@@ -282,9 +409,8 @@ export default class TableStore {
     }
     if (showCachedSeletion) {
       return [...dataSet.cachedSelected, ...data];
-    } else {
-      return data;
     }
+    return data;
   }
 
   @computed
@@ -292,7 +418,9 @@ export default class TableStore {
     const { dataSet, showCachedSeletion } = this;
     if (dataSet) {
       const { length } = this.data.filter(record => record.selectable);
-      const selectedLength = showCachedSeletion ? dataSet.selected.length : dataSet.currentSelected.length;
+      const selectedLength = showCachedSeletion
+        ? dataSet.selected.length
+        : dataSet.currentSelected.length;
       return !!selectedLength && selectedLength !== length;
     }
     return false;
@@ -303,7 +431,9 @@ export default class TableStore {
     const { dataSet, showCachedSeletion } = this;
     if (dataSet) {
       const { length } = this.data.filter(record => record.selectable);
-      const selectedLength = showCachedSeletion ? dataSet.selected.length : dataSet.currentSelected.length;
+      const selectedLength = showCachedSeletion
+        ? dataSet.selected.length
+        : dataSet.currentSelected.length;
       return !!selectedLength && selectedLength === length;
     }
     return false;
@@ -317,7 +447,10 @@ export default class TableStore {
 
   @computed
   get expandIconColumnIndex(): number {
-    const { expandIconAsCell, props: { expandIconColumnIndex = 0 } } = this;
+    const {
+      expandIconAsCell,
+      props: { expandIconColumnIndex = 0 },
+    } = this;
     if (expandIconAsCell) {
       return 0;
     }
@@ -332,7 +465,7 @@ export default class TableStore {
     return this.props.editMode === TableEditMode.inline;
   }
 
-  private handleSelectAllChange = action((value) => {
+  private handleSelectAllChange = action(value => {
     const { dataSet, filter } = this.props;
     if (value) {
       dataSet.selectAll(filter);
@@ -356,13 +489,9 @@ export default class TableStore {
     this.setProps(node.props);
   }
 
-  async getColumnHeaders(): Promise<{ name: string, label: string }[]> {
+  async getColumnHeaders(): Promise<HeaderText[]> {
     const { leafNamedColumns, dataSet } = this;
-    const headers: { name: string, label: string }[] = [];
-    for (let column of leafNamedColumns) {
-      headers.push({ name: column.name!, label: await getReactNodeText(getHeader(column, dataSet)) });
-    }
-    return headers;
+    return getHeaderTexts(dataSet, leafNamedColumns.slice());
   }
 
   @action
@@ -372,7 +501,7 @@ export default class TableStore {
 
   @action
   hideEditor() {
-    this.currentEditorName = void 0;
+    this.currentEditorName = undefined;
   }
 
   showNextEditor(name: string, reserve: boolean) {
@@ -391,7 +520,9 @@ export default class TableStore {
 
   isRowExpanded(record: Record): boolean {
     const { parent } = record;
-    const expanded = this.dataSet.props.expandField ? record.isExpanded : this.expandedRows.indexOf(record) !== -1;
+    const expanded = this.dataSet.props.expandField
+      ? record.isExpanded
+      : this.expandedRows.indexOf(record) !== -1;
     return expanded && (!this.isTree || !parent || this.isRowExpanded(parent));
   }
 
@@ -399,14 +530,12 @@ export default class TableStore {
   setRowExpanded(record: Record, expanded: boolean) {
     if (this.dataSet.props.expandField) {
       record.isExpanded = expanded;
+    } else if (expanded) {
+      this.expandedRows.push(record);
     } else {
-      if (expanded) {
-        this.expandedRows.push(record);
-      } else {
-        const index = this.expandedRows.indexOf(record);
-        if (index !== -1) {
-          this.expandedRows.splice(index, 1);
-        }
+      const index = this.expandedRows.indexOf(record);
+      if (index !== -1) {
+        this.expandedRows.splice(index, 1);
       }
     }
   }
@@ -417,7 +546,7 @@ export default class TableStore {
 
   @action
   setRowHover(record: Record, hover: boolean) {
-    this.hoverRow = hover ? record : void 0;
+    this.hoverRow = hover ? record : undefined;
   }
 
   @action
@@ -430,19 +559,19 @@ export default class TableStore {
     this.dataSet.records.forEach(record => this.setRowExpanded(record, false));
   }
 
-  _leafColumns(columns: ColumnProps[]): ColumnProps[] {
+  private getLeafColumns(columns: ColumnProps[]): ColumnProps[] {
     const leafColumns: ColumnProps[] = [];
-    columns.forEach((column) => {
+    columns.forEach(column => {
       if (!column.children || column.children.length === 0) {
         leafColumns.push(column);
       } else {
-        leafColumns.push(...this._leafColumns(column.children));
+        leafColumns.push(...this.getLeafColumns(column.children));
       }
     });
     return leafColumns;
   }
 
-  _addExpandColumn(columns: ColumnProps[]): ColumnProps[] {
+  private addExpandColumn(columns: ColumnProps[]): ColumnProps[] {
     if (this.expandIconAsCell) {
       columns.unshift({
         key: EXPAND_KEY,
@@ -455,7 +584,19 @@ export default class TableStore {
     return columns;
   }
 
-  _addSelectionColumn(columns: ColumnProps[]): ColumnProps[] {
+  @autobind
+  private multipleSelectionRenderer() {
+    return (
+      <ObserverCheckBox
+        checked={this.allChecked}
+        indeterminate={this.indeterminate}
+        onChange={this.handleSelectAllChange}
+        value
+      />
+    );
+  }
+
+  private addSelectionColumn(columns: ColumnProps[]): ColumnProps[] {
     if (this.hasRowBox) {
       const { dataSet } = this;
       const { suffixCls, prefixCls } = this.props;
@@ -468,106 +609,12 @@ export default class TableStore {
         width: 50,
         lock: true,
       };
-      if (dataSet) {
-        const { selection } = dataSet;
-        if (selection === DataSetSelection.multiple) {
-          selectionColumn.header = selectionColumn.footer = () => (
-            <CheckBox
-              checked={this.allChecked}
-              indeterminate={this.indeterminate}
-              onChange={this.handleSelectAllChange}
-              value
-            />
-          );
-        }
+      if (dataSet && dataSet.selection === DataSetSelection.multiple) {
+        selectionColumn.header = this.multipleSelectionRenderer;
+        selectionColumn.footer = this.multipleSelectionRenderer;
       }
       columns.unshift(selectionColumn);
     }
     return columns;
   }
-}
-
-function renderSelectionBox({ record }) {
-  const { dataSet } = record;
-  if (dataSet) {
-    const { selection } = dataSet;
-    const handleChange = (value) => {
-      if (value) {
-        dataSet.select(record);
-      } else {
-        dataSet.unSelect(record);
-      }
-    };
-    if (selection === DataSetSelection.multiple) {
-      return (
-        <CheckBox
-          checked={record.isSelected}
-          onChange={handleChange}
-          onClick={stopPropagation}
-          disabled={!record.selectable}
-          value
-        />
-      );
-    } else if (selection === DataSetSelection.single) {
-      return (
-        <Radio
-          checked={record.isSelected}
-          onChange={handleChange}
-          onClick={stopPropagation}
-          disabled={!record.selectable}
-          value
-        />
-      );
-    }
-  }
-}
-
-function mergeDefaultProps(columns: ColumnProps[], defaultKey: number[] = [0]): ColumnProps[] {
-  return columns.reduce<ColumnProps[]>((newColumns, column) => {
-    if (isPlainObject(column)) {
-      const newColumn: ColumnProps = { ...Column.defaultProps, ...column };
-      if (isNil(getColumnKey(newColumn))) {
-        newColumn.key = `anonymous-${defaultKey[0]++}`;
-      }
-      const { children } = newColumn;
-      if (children) {
-        newColumn.children = mergeDefaultProps(children, defaultKey);
-      }
-      newColumns.push(newColumn);
-    }
-    return newColumns;
-  }, []);
-}
-
-function normalizeColumns(elements: ReactNode, parent: ColumnProps | null = null, defaultKey: number[] = [0]) {
-  const columns: any[] = [];
-  const leftFixedColumns: any[] = [];
-  const rightFixedColumns: any[] = [];
-  Children.forEach(elements, (element) => {
-    if (!isValidElement(element) || element.type !== Column) {
-      return;
-    }
-    const { props, key } = element;
-    const column: any = {
-      ...props,
-    };
-    if (isNil(getColumnKey(column))) {
-      column.key = `anonymous-${defaultKey[0]++}`;
-    }
-    if (parent) {
-      column.lock = parent.lock;
-    }
-    column.children = normalizeColumns(column.children, column, defaultKey);
-    if (key) {
-      column.key = key;
-    }
-    if (column.lock === ColumnLock.left || column.lock === true) {
-      leftFixedColumns.push(column);
-    } else if (column.lock === ColumnLock.right) {
-      rightFixedColumns.push(column);
-    } else {
-      columns.push(column);
-    }
-  });
-  return leftFixedColumns.concat(columns, rightFixedColumns);
 }

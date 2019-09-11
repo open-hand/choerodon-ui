@@ -13,9 +13,10 @@ title:
 
 A disabled state of the `DatePicker`.
 
-````jsx
+```jsx
 import { DatePicker } from 'choerodon-ui';
 import moment from 'moment';
+
 const { MonthPicker, RangePicker } = DatePicker;
 
 const dateFormat = 'YYYY-MM-DD';
@@ -30,5 +31,6 @@ ReactDOM.render(
       disabled
     />
   </div>,
-  mountNode);
-````
+  mountNode,
+);
+```

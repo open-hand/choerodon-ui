@@ -17,8 +17,9 @@ You can drag files to a specific area, to upload. Alternatively, you can also up
 
 We can upload serveral files at once in modern browsers by giving the input the `multiple` attribute.
 
-````jsx
+```jsx
 import { Upload, Icon, message } from 'choerodon-ui';
+
 const Dragger = Upload.Dragger;
 
 const props = {
@@ -44,7 +45,11 @@ ReactDOM.render(
       <Icon type="inbox" />
     </p>
     <p className="c7n-upload-text">Click or drag file to this area to upload</p>
-    <p className="c7n-upload-hint">Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files</p>
+    <p className="c7n-upload-hint">
+      Support for a single or bulk upload. Strictly prohibit from uploading company data or other
+      band files
+    </p>
   </Dragger>,
-  mountNode);
-````
+  mountNode,
+);
+```

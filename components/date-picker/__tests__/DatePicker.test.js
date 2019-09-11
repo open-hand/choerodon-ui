@@ -3,14 +3,7 @@ import { mount } from 'enzyme';
 import moment from 'moment';
 import MockDate from 'mockdate';
 import DatePicker from '..';
-import {
-  selectDate,
-  openPanel,
-  clearInput,
-  nextYear,
-  nextMonth,
-  hasSelected,
-} from './utils';
+import { selectDate, openPanel, clearInput, nextYear, nextMonth, hasSelected } from './utils';
 import focusTest from '../../../tests/shared/focusTest';
 
 describe('DatePicker', () => {
@@ -28,10 +21,7 @@ describe('DatePicker', () => {
     const locale = {
       lang: {
         placeholder: 'Избери дата',
-        rangePlaceholder: [
-          'Начална дата',
-          'Крайна дата',
-        ],
+        rangePlaceholder: ['Начална дата', 'Крайна дата'],
         today: 'Днес',
         now: 'Сега',
         backToToday: 'Към днес',
@@ -63,9 +53,7 @@ describe('DatePicker', () => {
       },
     };
     const birthday = moment('2000-01-01', 'YYYY-MM-DD');
-    const wrapper = mount(
-      <DatePicker open locale={locale} value={birthday} />
-    );
+    const wrapper = mount(<DatePicker open locale={locale} value={birthday} />);
     expect(wrapper.render()).toMatchSnapshot();
   });
 
@@ -74,9 +62,9 @@ describe('DatePicker', () => {
       state = {
         cleared: false,
         value: moment(),
-      }
+      };
 
-      onChange = (value) => {
+      onChange = value => {
         let { cleared } = this.state;
 
         if (cleared) {
@@ -89,7 +77,7 @@ describe('DatePicker', () => {
         }
 
         this.setState({ value, cleared });
-      }
+      };
 
       render() {
         const { value } = this.state;
@@ -116,22 +104,18 @@ describe('DatePicker', () => {
 
   it('triggers onChange only when date was selected', () => {
     const handleChange = jest.fn();
-    const wrapper = mount(
-      <DatePicker onChange={handleChange} />
-    );
+    const wrapper = mount(<DatePicker onChange={handleChange} />);
     openPanel(wrapper);
     nextYear(wrapper);
-    expect(handleChange).not.toBeCalled();
+    expect(handleChange).not.toHaveBeenCalled();
     nextMonth(wrapper);
-    expect(handleChange).not.toBeCalled();
+    expect(handleChange).not.toHaveBeenCalled();
     selectDate(wrapper, moment('2017-12-22'));
-    expect(handleChange).toBeCalled();
+    expect(handleChange).toHaveBeenCalled();
   });
 
   it('clear input', () => {
-    const wrapper = mount(
-      <DatePicker />
-    );
+    const wrapper = mount(<DatePicker />);
     openPanel(wrapper);
     selectDate(wrapper, moment('2016-11-23'));
     clearInput(wrapper);

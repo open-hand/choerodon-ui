@@ -13,43 +13,67 @@ title:
 
 Fill in this form to create a new account for you.
 
-````jsx
-import { Form, Input, Tooltip, Icon, Cascader, Row, Col, Checkbox, Button, AutoComplete, InputNumber } from 'choerodon-ui';
+```jsx
+import {
+  Form,
+  Input,
+  Tooltip,
+  Icon,
+  Cascader,
+  Row,
+  Col,
+  Checkbox,
+  Button,
+  AutoComplete,
+  InputNumber,
+} from 'choerodon-ui';
+
 const FormItem = Form.Item;
 const AutoCompleteOption = AutoComplete.Option;
 
-const residences = [{
-  value: 'zhejiang',
-  label: 'Zhejiang',
-  children: [{
-    value: 'hangzhou',
-    label: 'Hangzhou',
-    children: [{
-      value: 'xihu',
-      label: 'West Lake',
-    }],
-  }],
-}, {
-  value: 'jiangsu',
-  label: 'Jiangsu',
-  children: [{
-    value: 'nanjing',
-    label: 'Nanjing',
-    children: [{
-      value: 'zhonghuamen',
-      label: 'Zhong Hua Men',
-    }],
-  }],
-}];
+const residences = [
+  {
+    value: 'zhejiang',
+    label: 'Zhejiang',
+    children: [
+      {
+        value: 'hangzhou',
+        label: 'Hangzhou',
+        children: [
+          {
+            value: 'xihu',
+            label: 'West Lake',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    value: 'jiangsu',
+    label: 'Jiangsu',
+    children: [
+      {
+        value: 'nanjing',
+        label: 'Nanjing',
+        children: [
+          {
+            value: 'zhonghuamen',
+            label: 'Zhong Hua Men',
+          },
+        ],
+      },
+    ],
+  },
+];
 
 class RegistrationForm extends React.Component {
   state = {
     confirmDirty: false,
     showLengthInfo: true,
     autoCompleteResult: [],
-  }
+  };
 
-  handleSubmit = (e) => {
+  handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (err.nickname) {
@@ -61,12 +85,12 @@ class RegistrationForm extends React.Component {
         console.log('Received values of form: ', values);
       }
     });
-  }
+  };
 
-  handleConfirmBlur = (e) => {
+  handleConfirmBlur = e => {
     const value = e.target.value;
     this.setState({ confirmDirty: this.state.confirmDirty || !!value });
-  }
+  };
 
   compareToFirstPassword = (rule, value, callback) => {
     const form = this.props.form;
@@ -75,7 +99,7 @@ class RegistrationForm extends React.Component {
     } else {
       callback();
     }
-  }
+  };
 
   validateToNextPassword = (rule, value, callback) => {
     const form = this.props.form;
@@ -83,9 +107,9 @@ class RegistrationForm extends React.Component {
       form.validateFields(['confirm'], { force: true });
     }
     callback();
-  }
+  };
 
-  handleWebsiteChange = (value) => {
+  handleWebsiteChange = value => {
     let autoCompleteResult;
     if (!value) {
       autoCompleteResult = [];
@@ -93,7 +117,7 @@ class RegistrationForm extends React.Component {
       autoCompleteResult = ['.com', '.org', '.net'].map(domain => `${value}${domain}`);
     }
     this.setState({ autoCompleteResult });
-  }
+  };
 
   handleNickName = () => {
     const { showLengthInfo } = this.state;
@@ -102,7 +126,7 @@ class RegistrationForm extends React.Component {
         showLengthInfo: true,
       });
     }
-  }
+  };
 
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -137,58 +161,63 @@ class RegistrationForm extends React.Component {
 
     return (
       <Form onSubmit={this.handleSubmit}>
-        <FormItem
-          {...formItemLayout}
-          label="E-mail"
-        >
+        <FormItem {...formItemLayout} label="E-mail">
           {getFieldDecorator('email', {
-            rules: [{
-              type: 'email', message: 'The input is not valid E-mail!',
-            }, {
-              required: true, message: 'Please input your E-mail!',
-            }],
-          })(
-            <Input label="email" />
-          )}
+            rules: [
+              {
+                type: 'email',
+                message: 'The input is not valid E-mail!',
+              },
+              {
+                required: true,
+                message: 'Please input your E-mail!',
+              },
+            ],
+          })(<Input label="email" />)}
         </FormItem>
-        <FormItem
-          {...formItemLayout}
-          label="Password"
-        >
+        <FormItem {...formItemLayout} label="Password">
           {getFieldDecorator('password', {
-            rules: [{
-              required: true, message: 'Please input your password!',
-            }, {
-              validator: this.validateToNextPassword,
-            }],
-          })(
-            <Input showPasswordEye label="password" type="password" />
-          )}
+            rules: [
+              {
+                required: true,
+                message: 'Please input your password!',
+              },
+              {
+                validator: this.validateToNextPassword,
+              },
+            ],
+          })(<Input showPasswordEye label="password" type="password" />)}
         </FormItem>
-        <FormItem
-          {...formItemLayout}
-          label="Confirm Password"
-        >
+        <FormItem {...formItemLayout} label="Confirm Password">
           {getFieldDecorator('confirm', {
-            rules: [{
-              required: true, message: 'Please confirm your password!',
-            }, {
-              validator: this.compareToFirstPassword,
-            }],
+            rules: [
+              {
+                required: true,
+                message: 'Please confirm your password!',
+              },
+              {
+                validator: this.compareToFirstPassword,
+              },
+            ],
           })(
-            <Input showPasswordEye label="password" type="password" onBlur={this.handleConfirmBlur} />
+            <Input
+              showPasswordEye
+              label="password"
+              type="password"
+              onBlur={this.handleConfirmBlur}
+            />,
           )}
         </FormItem>
         <FormItem
           {...formItemLayout}
-          label={(
+          label={
             <span>
               Nickname&nbsp;
               <Tooltip title="What do you want others to call you?">
                 <Icon type="question-circle-o" />
               </Tooltip>
             </span>
-          )}
+          }
         >
           {getFieldDecorator('nickname', {
             rules: [{ required: true, message: 'Please input your nickname!', whitespace: true }],
@@ -198,38 +227,31 @@ class RegistrationForm extends React.Component {
               label="名称"
               showLengthInfo={showLengthInfo}
               onChange={this.handleNickName}
-            />
+            />,
           )}
         </FormItem>
-        <FormItem
-          {...formItemLayout}
-        >
+        <FormItem {...formItemLayout}>
           {getFieldDecorator('age', {
-            rules: [{
-              required: true,
-              message: 'Please input your age!',
-              type: 'number',
-              whitespace: true,
-            }],
+            rules: [
+              {
+                required: true,
+                message: 'Please input your age!',
+                type: 'number',
+                whitespace: true,
+              },
+            ],
             initialValue: 20,
-          })(
-            <InputNumber label="Age" min={1} max={100} />
-          )}
+          })(<InputNumber label="Age" min={1} max={100} />)}
         </FormItem>
-        <FormItem
-          {...formItemLayout}
-          label="Habitual Residence"
-        >
+        <FormItem {...formItemLayout} label="Habitual Residence">
           {getFieldDecorator('residence', {
             initialValue: ['zhejiang', 'hangzhou', 'xihu'],
-            rules: [{ type: 'array', required: true, message: 'Please select your habitual residence!' }],
-          })(
-            <Cascader options={residences} />
-          )}
+            rules: [
+              { type: 'array', required: true, message: 'Please select your habitual residence!' },
+            ],
+          })(<Cascader options={residences} />)}
         </FormItem>
-        <FormItem
-          {...formItemLayout}
-        >
+        <FormItem {...formItemLayout}>
           {getFieldDecorator('website', {
             rules: [{ required: true, message: 'Please input website!' }],
           })(
@@ -238,20 +260,15 @@ class RegistrationForm extends React.Component {
               onChange={this.handleWebsiteChange}
               placeholder="website"
               label="Website"
-            />
+            />,
           )}
         </FormItem>
-        <FormItem
-          {...formItemLayout}
-          extra="We must make sure that your are a human."
-        >
+        <FormItem {...formItemLayout} extra="We must make sure that your are a human.">
           <Row gutter={8}>
             <Col span={12}>
               {getFieldDecorator('captcha', {
                 rules: [{ required: true, message: 'Please input the captcha you got!' }],
-              })(
-                <Input label="Captcha" />
-              )}
+              })(<Input label="Captcha" />)}
             </Col>
             <Col span={12}>
               <Button funcType="raised">Get captcha</Button>
@@ -262,11 +279,15 @@ class RegistrationForm extends React.Component {
           {getFieldDecorator('agreement', {
             valuePropName: 'checked',
           })(
-            <Checkbox>I have read the <a href="">agreement</a></Checkbox>
+            <Checkbox>
+              I have read the <a href="">agreement</a>
+            </Checkbox>,
           )}
         </FormItem>
         <FormItem {...tailFormItemLayout}>
-          <Button type="primary" funcType="raised" htmlType="submit">Register</Button>
+          <Button type="primary" funcType="raised" htmlType="submit">
+            Register
+          </Button>
         </FormItem>
       </Form>
     );
@@ -276,4 +297,4 @@ class RegistrationForm extends React.Component {
 const WrappedRegistrationForm = Form.create()(RegistrationForm);
 
 ReactDOM.render(<WrappedRegistrationForm />, mountNode);
-````
+```

@@ -1,8 +1,8 @@
-@import "../../style/themes/default";
-@import "../../style/mixins/index";
+@import '../../style/themes/default';
+@import '../../style/mixins/index';
 
-@upload-prefix-cls: ~"@{c7n-prefix}-upload";
-@upload-item: ~"@{c7n-prefix}-upload-list-item";
+@upload-prefix-cls: ~'@{c7n-prefix}-upload';
+@upload-item: ~'@{c7n-prefix}-upload-list-item';
 @upload-pictrue-card-size: 1.04rem;
 
 .@{upload-prefix-cls} {
@@ -19,7 +19,7 @@
     outline: none;
   }
 
-  input[type="file"] {
+  input[type='file'] {
     cursor: pointer;
   }
 
@@ -28,26 +28,26 @@
   }
 
   &&-select-picture-card {
-    border: @border-width-base dashed @border-color-base;
+    display: table;
     width: @upload-pictrue-card-size;
     height: @upload-pictrue-card-size;
-    border-radius: @border-radius-base;
-    background-color: @background-color-light;
+    margin-right: 0.08rem;
+    margin-bottom: 0.08rem;
     text-align: center;
+    vertical-align: top;
+    background-color: @background-color-light;
+    border: @border-width-base dashed @border-color-base;
+    border-radius: @border-radius-base;
     cursor: pointer;
     transition: border-color 0.3s ease;
-    vertical-align: top;
-    margin-right: .08rem;
-    margin-bottom: .08rem;
-    display: table;
 
     > .@{upload-prefix-cls} {
+      display: table-cell;
       width: 100%;
       height: 100%;
-      display: table-cell;
+      padding: 0.08rem;
       text-align: center;
       vertical-align: middle;
-      padding: .08rem;
     }
 
     &:hover {
@@ -56,19 +56,19 @@
   }
 
   &&-drag {
-    border: @border-width-base dashed @border-color-base;
-    transition: border-color .3s;
-    cursor: pointer;
-    border-radius: @border-radius-base;
-    text-align: center;
+    position: relative;
     width: 100%;
     height: 100%;
-    position: relative;
-    padding: .16rem 0;
+    padding: 0.16rem 0;
+    text-align: center;
     background: @background-color-light;
+    border: @border-width-base dashed @border-color-base;
+    border-radius: @border-radius-base;
+    cursor: pointer;
+    transition: border-color 0.3s;
 
     &.@{upload-prefix-cls}-drag-hover:not(.@{upload-prefix-cls}-disabled) {
-      border: .02rem dashed @primary-5;
+      border: 0.02rem dashed @primary-5;
     }
 
     &.@{upload-prefix-cls}-disabled {
@@ -91,24 +91,24 @@
 
     p.@{upload-prefix-cls}-drag-icon {
       .@{iconfont-css-prefix} {
-        font-size: .48rem;
         color: @primary-5;
+        font-size: 0.48rem;
       }
-      margin-bottom: .2rem;
+      margin-bottom: 0.2rem;
     }
     p.@{upload-prefix-cls}-text {
-      font-size: @font-size-lg;
-      margin: 0 0 .04rem;
+      margin: 0 0 0.04rem;
       color: @heading-color;
+      font-size: @font-size-lg;
     }
     p.@{upload-prefix-cls}-hint {
-      font-size: @font-size-base;
       color: @text-color-secondary;
+      font-size: @font-size-base;
     }
     .@{iconfont-css-prefix}-plus {
-      font-size: .3rem;
-      transition: all .3s;
       color: @disabled-color;
+      font-size: 0.3rem;
+      transition: all 0.3s;
       &:hover {
         color: @text-color-secondary;
       }
@@ -123,23 +123,23 @@
   .reset-component;
   .clearfix;
   &-item {
-    margin-top: .08rem;
-    font-size: @font-size-base;
     position: relative;
-    height: .22rem;
+    height: 0.22rem;
+    margin-top: 0.08rem;
+    font-size: @font-size-base;
     &-name {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      padding-left: @font-size-base + .08rem;
-      width: 100%;
       display: inline-block;
+      width: 100%;
+      padding-left: @font-size-base + 0.08rem;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
 
     &-info {
       height: 100%;
-      padding: 0 .12rem 0 .04rem;
-      transition: background-color .3s;
+      padding: 0 0.12rem 0 0.04rem;
+      transition: background-color 0.3s;
 
       > span {
         display: block;
@@ -147,23 +147,23 @@
 
       .@{iconfont-css-prefix}-loading,
       .@{iconfont-css-prefix}-attach_file {
-        font-size: @font-size-base;
-        color: @text-color-secondary;
         position: absolute;
-        top: @font-size-base / 2 - .02rem;
+        top: @font-size-base / 2 - 0.02rem;
+        color: @text-color-secondary;
+        font-size: @font-size-base;
       }
     }
 
     .@{iconfont-css-prefix}-close {
-      .iconfont-size-under-12px(.1rem);
-      transition: all .3s;
-      opacity: 0;
-      cursor: pointer;
+      .iconfont-size-under-12px(0.1rem);
       position: absolute;
       top: 0;
-      right: .04rem;
+      right: 0.04rem;
       color: @text-color-secondary;
-      line-height: .22rem;
+      line-height: 0.22rem;
+      cursor: pointer;
+      opacity: 0;
+      transition: all 0.3s;
       &:hover {
         color: @text-color;
       }
@@ -184,28 +184,28 @@
     }
 
     &-error .@{iconfont-css-prefix}-close {
-      opacity: 1;
       color: @error-color !important;
+      opacity: 1;
     }
 
     &-progress {
-      line-height: 0;
-      font-size: @font-size-base;
       position: absolute;
+      bottom: -0.12rem;
       width: 100%;
-      bottom: -.12rem;
-      padding-left: @font-size-base + .12rem;
+      padding-left: @font-size-base + 0.12rem;
+      font-size: @font-size-base;
+      line-height: 0;
     }
   }
 
   &-picture,
   &-picture-card {
     .@{upload-item} {
-      padding: .08rem;
-      border-radius: @border-radius-base;
-      border: @border-width-base @border-style-base @border-color-base;
-      height: .66rem;
       position: relative;
+      height: 0.66rem;
+      padding: 0.08rem;
+      border: @border-width-base @border-style-base @border-color-base;
+      border-radius: @border-radius-base;
       &:hover {
         background: transparent;
       }
@@ -227,55 +227,55 @@
     }
 
     .@{upload-item}-thumbnail {
-      width: .48rem;
-      height: .48rem;
       position: absolute;
-      top: .08rem;
-      left: .08rem;
+      top: 0.08rem;
+      left: 0.08rem;
+      width: 0.48rem;
+      height: 0.48rem;
     }
 
     .@{upload-item}-thumbnail img {
-      width: .48rem;
-      height: .48rem;
       display: block;
+      width: 0.48rem;
+      height: 0.48rem;
       overflow: hidden;
     }
 
-    .@{upload-item}-thumbnail.@{iconfont-css-prefix}:before {
-      line-height: .48rem;
-      font-size: .24rem;
+    .@{upload-item}-thumbnail.@{iconfont-css-prefix}::before {
       color: @text-color-secondary;
+      font-size: 0.24rem;
+      line-height: 0.48rem;
     }
 
     .@{upload-item}-name {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      margin: 0 0 0 .08rem;
-      line-height: .44rem;
-      transition: all .3s;
-      padding-left: .48rem;
-      padding-right: .08rem;
-      max-width: 100%;
       display: inline-block;
       box-sizing: border-box;
+      max-width: 100%;
+      margin: 0 0 0 0.08rem;
+      padding-right: 0.08rem;
+      padding-left: 0.48rem;
+      overflow: hidden;
+      line-height: 0.44rem;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      transition: all 0.3s;
     }
 
     .@{upload-item}-uploading .@{upload-item}-name {
-      line-height: .28rem;
+      line-height: 0.28rem;
     }
 
     .@{upload-item}-progress {
-      padding-left: .56rem;
+      bottom: 0.14rem;
+      width: ~'calc(100% - .24rem)';
       margin-top: 0;
-      bottom: .14rem;
-      width: ~"calc(100% - .24rem)";
+      padding-left: 0.56rem;
     }
 
     .@{iconfont-css-prefix}-close {
       position: absolute;
-      right: .08rem;
-      top: .08rem;
+      top: 0.08rem;
+      right: 0.08rem;
       line-height: 1;
     }
   }
@@ -283,56 +283,56 @@
   &-picture-card {
     display: inline;
 
-    &.@{upload-prefix-cls}-list:after {
+    &.@{upload-prefix-cls}-list::after {
       display: none;
     }
     .@{upload-item} {
       float: left;
       width: @upload-pictrue-card-size;
       height: @upload-pictrue-card-size;
-      margin: 0 .08rem .08rem 0;
+      margin: 0 0.08rem 0.08rem 0;
     }
 
     .@{upload-item}-info {
-      height: 100%;
       position: relative;
+      height: 100%;
       overflow: hidden;
 
-      &:before {
-        content: ' ';
+      &::before {
         position: absolute;
         z-index: 1;
-        background-color: rgba(0, 0, 0, 0.5);
-        transition: all .3s;
         width: 100%;
         height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
         opacity: 0;
+        transition: all 0.3s;
+        content: ' ';
       }
     }
 
-    .@{upload-item}:hover .@{upload-item}-info:before {
+    .@{upload-item}:hover .@{upload-item}-info::before {
       opacity: 1;
     }
 
     .@{upload-item}-actions {
       position: absolute;
-      left: 50%;
       top: 50%;
-      transform: translate(-50%, -50%);
+      left: 50%;
       z-index: 10;
       white-space: nowrap;
+      transform: translate(-50%, -50%);
       opacity: 0;
-      transition: all .3s;
+      transition: all 0.3s;
 
       .@{iconfont-css-prefix}-visibility,
       .@{iconfont-css-prefix}-delete {
         z-index: 10;
-        transition: all .3s;
-        cursor: pointer;
-        font-size: .16rem;
-        width: .16rem;
+        width: 0.16rem;
+        margin: 0 0.04rem;
         color: @text-color-dark;
-        margin: 0 .04rem;
+        font-size: 0.16rem;
+        cursor: pointer;
+        transition: all 0.3s;
         &:hover {
           color: #fff;
         }
@@ -346,18 +346,18 @@
 
     .@{upload-item}-thumbnail,
     .@{upload-item}-thumbnail img {
+      position: static;
       display: block;
       width: 100%;
       height: 100%;
-      position: static;
     }
 
     .@{upload-item}-name {
-      margin: .08rem 0 0;
-      padding: 0;
-      text-align: center;
-      line-height: @line-height-base;
       display: none;
+      margin: 0.08rem 0 0;
+      padding: 0;
+      line-height: @line-height-base;
+      text-align: center;
     }
 
     .anticon-picture + .@{upload-item}-name {
@@ -371,7 +371,7 @@
 
       .@{upload-item}-info {
         height: auto;
-        &:before,
+        &::before,
         .@{iconfont-css-prefix}-visibility,
         .@{iconfont-css-prefix}-delete {
           display: none;
@@ -379,14 +379,14 @@
       }
 
       &-text {
-        margin-top: .18rem;
+        margin-top: 0.18rem;
         color: @text-color-secondary;
       }
     }
 
     .@{upload-item}-progress {
+      bottom: 0.32rem;
       padding-left: 0;
-      bottom: .32rem;
     }
   }
 
@@ -399,7 +399,7 @@
   .@{upload-prefix-cls}-animate-leave,
   .@{upload-prefix-cls}-animate-inline-enter,
   .@{upload-prefix-cls}-animate-inline-leave {
-    animation-duration: .3s;
+    animation-duration: 0.3s;
     animation-fill-mode: @ease-in-out-circ;
   }
 
@@ -424,8 +424,8 @@
   from {
     height: 0;
     margin: 0;
-    opacity: 0;
     padding: 0;
+    opacity: 0;
   }
 }
 
@@ -443,8 +443,8 @@
     width: 0;
     height: 0;
     margin: 0;
-    opacity: 0;
     padding: 0;
+    opacity: 0;
   }
 }
 

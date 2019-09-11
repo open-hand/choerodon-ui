@@ -1,8 +1,8 @@
-@import "../../style/themes/default";
-@import "../../style/mixins/index";
+@import '../../style/themes/default';
+@import '../../style/mixins/index';
 
-@select-prefix-cls: ~"@{c7n-prefix}-select";
-@icon-select-prefix-cls: ~"@{c7n-prefix}-icon-select";
+@select-prefix-cls: ~'@{c7n-prefix}-select';
+@icon-select-prefix-cls: ~'@{c7n-prefix}-icon-select';
 
 .@{icon-select-prefix-cls} {
   i.@{iconfont-css-prefix} {
@@ -13,34 +13,34 @@
     .@{select-prefix-cls}-dropdown-menu {
       max-height: 3rem;
       i {
-        font-size: .3rem;
-        width: 100%;
-        text-align: center;
-        margin-top: .05rem;
         display: inline-block;
+        width: 100%;
+        margin-top: 0.05rem;
+        font-size: 0.3rem;
+        text-align: center;
       }
       .text {
+        display: block;
+        margin-bottom: 0.05rem;
+        overflow: hidden;
+        line-height: 0.18rem;
         text-align: center;
         text-overflow: ellipsis;
-        line-height: .18rem;
-        overflow: hidden;
-        margin-bottom: .05rem;
-        display: block;
       }
       li {
-        padding: 0 .05rem !important;
+        padding: 0 0.05rem !important;
       }
     }
     .@{select-prefix-cls}-dropdown-filter + div > .@{select-prefix-cls}-dropdown-menu li {
-      width: .85rem;
-      line-height: .28rem;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      padding: 0 .12rem;
-      margin: 0 .07rem;
-      cursor: pointer;
       display: inline-block;
+      width: 0.85rem;
+      margin: 0 0.07rem;
+      padding: 0 0.12rem;
+      overflow: hidden;
+      line-height: 0.28rem;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      cursor: pointer;
       i.@{iconfont-css-prefix} {
         vertical-align: text-bottom;
       }

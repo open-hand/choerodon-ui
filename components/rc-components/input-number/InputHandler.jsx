@@ -15,8 +15,14 @@ export default class InputHandler extends Component {
 
   render() {
     const {
-      prefixCls, disabled, onTouchStart, onTouchEnd,
-      onMouseDown, onMouseUp, onMouseLeave, ...otherProps,
+      prefixCls,
+      disabled,
+      onTouchStart,
+      onTouchEnd,
+      onMouseDown,
+      onMouseUp,
+      onMouseLeave,
+      ...otherProps
     } = this.props;
     return (
       <Touchable

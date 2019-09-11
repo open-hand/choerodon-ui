@@ -13,9 +13,10 @@ title:
 
 We can set the date format by `format`.
 
-````jsx
+```jsx
 import { DatePicker } from 'choerodon-ui';
 import moment from 'moment';
+
 const { MonthPicker, RangePicker } = DatePicker;
 
 const dateFormat = 'YYYY/MM/DD';
@@ -31,5 +32,6 @@ ReactDOM.render(
       format={dateFormat}
     />
   </div>,
-  mountNode);
-````
+  mountNode,
+);
+```

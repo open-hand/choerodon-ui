@@ -4,10 +4,12 @@ import noop from 'lodash/noop';
 import Table from '..';
 
 describe('Table.pagination', () => {
-  const columns = [{
-    title: 'Name',
-    dataIndex: 'name',
-  }];
+  const columns = [
+    {
+      title: 'Name',
+      dataIndex: 'name',
+    },
+  ];
 
   const data = [
     { key: 0, name: 'Jack' },
@@ -19,14 +21,7 @@ describe('Table.pagination', () => {
   const pagination = { className: 'my-page', pageSize: 2 };
 
   function createTable(props) {
-    return (
-      <Table
-        columns={columns}
-        dataSource={data}
-        pagination={pagination}
-        {...props}
-      />
-    );
+    return <Table columns={columns} dataSource={data} pagination={pagination} {...props} />;
   }
 
   function renderedNames(wrapper) {
@@ -61,7 +56,6 @@ describe('Table.pagination', () => {
     expect(renderedNames(wrapper)).toEqual(['Tom', 'Jerry']);
   });
 
-
   it('repaginates when pageSize change', () => {
     const wrapper = mount(createTable());
 
@@ -72,14 +66,16 @@ describe('Table.pagination', () => {
   it('fires change event', () => {
     const handleChange = jest.fn();
     const handlePaginationChange = jest.fn();
-    const wrapper = mount(createTable({
-      pagination: { ...pagination, onChange: handlePaginationChange, onShowSizeChange: noop },
-      onChange: handleChange,
-    }));
+    const wrapper = mount(
+      createTable({
+        pagination: { ...pagination, onChange: handlePaginationChange, onShowSizeChange: noop },
+        onChange: handleChange,
+      }),
+    );
 
     wrapper.find('.c7n-pagination-next').simulate('click');
 
-    expect(handleChange).toBeCalledWith(
+    expect(handleChange).toHaveBeenCalledWith(
       {
         className: 'my-page',
         current: 2,
@@ -91,7 +87,7 @@ describe('Table.pagination', () => {
       [],
     );
 
-    expect(handlePaginationChange).toBeCalledWith(2, 2);
+    expect(handlePaginationChange).toHaveBeenCalledWith(2, 2);
   });
 
   // https://codepen.io/afc163/pen/dVeNoP?editors=001
@@ -100,27 +96,47 @@ describe('Table.pagination', () => {
     expect(wrapper.find('.c7n-pagination')).toHaveLength(0);
     wrapper.setProps({ pagination: undefined });
     expect(wrapper.find('.c7n-pagination')).toHaveLength(1);
-    expect(wrapper.find('.c7n-pagination-total-text').at(0).text()).toEqual('1 - 4 / 4');
+    expect(
+      wrapper
+        .find('.c7n-pagination-total-text')
+        .at(0)
+        .text(),
+    ).toEqual('1 - 4 / 4');
   });
 
   // https://codepen.io/afc163/pen/pWVRJV?editors=001
   it('should display pagination as prop pagination change between true and false', () => {
     const wrapper = mount(createTable());
     expect(wrapper.find('.c7n-pagination')).toHaveLength(1);
-    expect(wrapper.find('.c7n-pagination-total-text').at(0).text()).toEqual('1 - 2 / 4');
+    expect(
+      wrapper
+        .find('.c7n-pagination-total-text')
+        .at(0)
+        .text(),
+    ).toEqual('1 - 2 / 4');
     wrapper.setProps({ pagination: false });
     expect(wrapper.find('.c7n-pagination')).toHaveLength(0);
     wrapper.setProps({ pagination });
     wrapper.update();
     expect(wrapper.find('.c7n-pagination')).toHaveLength(1);
-    expect(wrapper.find('.c7n-pagination-total-text').at(0).text()).toEqual('1 - 2 / 4');
+    expect(
+      wrapper
+        .find('.c7n-pagination-total-text')
+        .at(0)
+        .text(),
+    ).toEqual('1 - 2 / 4');
     wrapper.find('.c7n-pagination-next').simulate('click');
     expect(renderedNames(wrapper)).toEqual(['Tom', 'Jerry']);
     wrapper.setProps({ pagination: false });
     expect(wrapper.find('.c7n-pagination')).toHaveLength(0);
     wrapper.setProps({ pagination: true });
     expect(wrapper.find('.c7n-pagination')).toHaveLength(1);
-    expect(wrapper.find('.c7n-pagination-total-text').at(0).text()).toEqual('1 - 4 / 4'); // pageSize will be 10
+    expect(
+      wrapper
+        .find('.c7n-pagination-total-text')
+        .at(0)
+        .text(),
+    ).toEqual('1 - 4 / 4'); // pageSize will be 10
     expect(renderedNames(wrapper)).toEqual(['Jack', 'Lucy', 'Tom', 'Jerry']);
   });
 
@@ -128,19 +144,44 @@ describe('Table.pagination', () => {
     const wrapper = mount(createTable({ pagination: { pageSize: 1 } }));
     wrapper.find('.c7n-pagination-next').simulate('click');
     wrapper.setProps({ dataSource: [data[0]] });
-    expect(wrapper.find('.c7n-pagination-total-text').at(0).text()).toEqual('1 - 1 / 1');
+    expect(
+      wrapper
+        .find('.c7n-pagination-total-text')
+        .at(0)
+        .text(),
+    ).toEqual('1 - 1 / 1');
   });
 
   it('specify the position of pagination', () => {
     const wrapper = mount(createTable({ pagination: { position: 'top' } }));
     expect(wrapper.find('.c7n-spin-container').children()).toHaveLength(2);
-    expect(wrapper.find('.c7n-spin-container').childAt(0).find('.c7n-pagination')).toHaveLength(1);
+    expect(
+      wrapper
+        .find('.c7n-spin-container')
+        .childAt(0)
+        .find('.c7n-pagination'),
+    ).toHaveLength(1);
     wrapper.setProps({ pagination: { position: 'bottom' } });
     expect(wrapper.find('.c7n-spin-container').children()).toHaveLength(2);
-    expect(wrapper.find('.c7n-spin-container').childAt(1).find('.c7n-pagination')).toHaveLength(1);
+    expect(
+      wrapper
+        .find('.c7n-spin-container')
+        .childAt(1)
+        .find('.c7n-pagination'),
+    ).toHaveLength(1);
     wrapper.setProps({ pagination: { position: 'both' } });
     expect(wrapper.find('.c7n-spin-container').children()).toHaveLength(3);
-    expect(wrapper.find('.c7n-spin-container').childAt(0).find('.c7n-pagination')).toHaveLength(1);
-    expect(wrapper.find('.c7n-spin-container').childAt(2).find('.c7n-pagination')).toHaveLength(1);
+    expect(
+      wrapper
+        .find('.c7n-spin-container')
+        .childAt(0)
+        .find('.c7n-pagination'),
+    ).toHaveLength(1);
+    expect(
+      wrapper
+        .find('.c7n-spin-container')
+        .childAt(2)
+        .find('.c7n-pagination'),
+    ).toHaveLength(1);
   });
 });

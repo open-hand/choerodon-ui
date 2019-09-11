@@ -5,31 +5,31 @@
     overflow: visible;
     &-icon {
       float: left;
-      margin-right: .16rem;
+      margin-right: 0.16rem;
     }
     &-content {
-      min-height: .48rem;
-      overflow: hidden;
       display: block;
+      min-height: 0.48rem;
+      overflow: hidden;
     }
     &-title {
       line-height: @steps-icon-size;
     }
     &-description {
-      padding-bottom: .12rem;
+      padding-bottom: 0.12rem;
     }
   }
 
   > .@{steps-prefix-cls}-item > .@{steps-prefix-cls}-item-tail {
     position: absolute;
-    left: .16rem;
     top: 0;
+    left: 0.16rem;
+    width: 0.01rem;
     height: 100%;
-    width: .01rem;
-    padding: @steps-icon-size + .06rem 0 .06rem;
-    &:after {
+    padding: @steps-icon-size + 0.06rem 0 0.06rem;
+    &::after {
+      width: 0.01rem;
       height: 100%;
-      width: .01rem;
     }
   }
 
@@ -37,8 +37,10 @@
     display: block;
   }
 
-  > .@{steps-prefix-cls}-item > .@{steps-prefix-cls}-item-content > .@{steps-prefix-cls}-item-title {
-    &:after {
+  > .@{steps-prefix-cls}-item
+    > .@{steps-prefix-cls}-item-content
+    > .@{steps-prefix-cls}-item-title {
+    &::after {
       display: none;
     }
   }
@@ -46,9 +48,9 @@
   &.@{steps-prefix-cls}-small {
     .@{steps-prefix-cls}-item-tail {
       position: absolute;
-      left: .12rem;
       top: 0;
-      padding: @steps-small-icon-size + .06rem 0 .06rem;
+      left: 0.12rem;
+      padding: @steps-small-icon-size + 0.06rem 0 0.06rem;
     }
     .@{steps-prefix-cls}-item-title {
       line-height: @steps-small-icon-size;

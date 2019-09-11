@@ -15,6 +15,7 @@ Passing the `name` property to all `input[type="radio"]` that are in the same Ra
 
 ```jsx
 import { Radio } from 'choerodon-ui';
+
 const RadioGroup = Radio.Group;
 
 function App() {

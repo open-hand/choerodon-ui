@@ -15,6 +15,7 @@ The combination of radio button style.
 
 ```jsx
 import { Radio } from 'choerodon-ui';
+
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 
@@ -35,7 +36,9 @@ ReactDOM.render(
     <div style={{ marginTop: 16 }}>
       <RadioGroup onChange={onChange} defaultValue="a">
         <RadioButton value="a">Hangzhou</RadioButton>
-        <RadioButton value="b" disabled>Shanghai</RadioButton>
+        <RadioButton value="b" disabled>
+          Shanghai
+        </RadioButton>
         <RadioButton value="c">Beijing</RadioButton>
         <RadioButton value="d">Chengdu</RadioButton>
       </RadioGroup>
@@ -49,5 +52,6 @@ ReactDOM.render(
       </RadioGroup>
     </div>
   </div>,
-  mountNode);
+  mountNode,
+);
 ```

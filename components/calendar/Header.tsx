@@ -17,11 +17,12 @@ export interface HeaderProps {
   onValueChange?: (value: Moment) => void;
   onTypeChange?: (type: string) => void;
   value: any;
-  validRange ?: [Moment, Moment];
+  validRange?: [Moment, Moment];
 }
 
 export default class Header extends Component<HeaderProps, any> {
   static displayName = 'Header';
+
   static defaultProps = {
     yearSelectOffset: 10,
     yearSelectTotal: 20,
@@ -30,17 +31,12 @@ export default class Header extends Component<HeaderProps, any> {
   private calenderHeaderNode: HTMLDivElement;
 
   getPrefixCls() {
-    return getPrefixCls('fullcalendar-header', this.props.prefixCls);
+    const { prefixCls } = this.props;
+    return getPrefixCls('fullcalendar-header', prefixCls);
   }
 
   getYearSelectElement(year: number) {
-    const {
-      yearSelectOffset,
-      yearSelectTotal,
-      locale,
-      fullscreen,
-      validRange,
-    } = this.props;
+    const { yearSelectOffset, yearSelectTotal, locale, fullscreen, validRange } = this.props;
     const prefixCls = this.getPrefixCls();
     let start = year - (yearSelectOffset as number);
     let end = start + (yearSelectTotal as number);
@@ -128,23 +124,23 @@ export default class Header extends Component<HeaderProps, any> {
       }
     }
 
-    const onValueChange = this.props.onValueChange;
+    const { onValueChange } = this.props;
     if (onValueChange) {
       onValueChange(newValue);
     }
   };
 
   onMonthChange = (month: string) => {
-    const newValue = this.props.value.clone();
+    const { onValueChange, value } = this.props;
+    const newValue = value.clone();
     newValue.month(parseInt(month, 10));
-    const onValueChange = this.props.onValueChange;
     if (onValueChange) {
       onValueChange(newValue);
     }
   };
 
   onTypeChange = (e: RadioChangeEvent) => {
-    const onTypeChange = this.props.onTypeChange;
+    const { onTypeChange } = this.props;
     if (onTypeChange) {
       onTypeChange(e.target.value);
     }
@@ -158,10 +154,16 @@ export default class Header extends Component<HeaderProps, any> {
     const { type, value, locale, fullscreen } = this.props;
     const prefixCls = this.getPrefixCls();
     const yearSelect = this.getYearSelectElement(value.year());
-    const monthSelect = type === 'date' ?
-      this.getMonthSelectElement(value.month(), this.getMonthsLocale(value)) : null;
+    const monthSelect =
+      type === 'date'
+        ? this.getMonthSelectElement(value.month(), this.getMonthsLocale(value))
+        : null;
     const typeSwitch = (
-      <Group onChange={this.onTypeChange} value={type} size={fullscreen ? Size.default : Size.small}>
+      <Group
+        onChange={this.onTypeChange}
+        value={type}
+        size={fullscreen ? Size.default : Size.small}
+      >
         <Button value="date">{locale.month}</Button>
         <Button value="month">{locale.year}</Button>
       </Group>

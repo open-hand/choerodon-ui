@@ -17,9 +17,19 @@ let defaultPlacement: Placement = 'leftBottom';
 let getContainer: () => HTMLElement;
 
 type NoticeType = 'info' | 'success' | 'error' | 'warning' | 'loading';
-type Placement = 'top' | 'left' | 'right' | 'bottom' |
-  'topRight' | 'topLeft' | 'bottomRight' | 'bottomLeft' |
-  'rightTop' | 'leftTop' | 'rightBottom' | 'leftBottom';
+type Placement =
+  | 'top'
+  | 'left'
+  | 'right'
+  | 'bottom'
+  | 'topRight'
+  | 'topLeft'
+  | 'bottomRight'
+  | 'bottomLeft'
+  | 'rightTop'
+  | 'leftTop'
+  | 'rightBottom'
+  | 'leftBottom';
 
 type ConfigContent = ReactNode;
 type ConfigDuration = number | Placement | (() => void);
@@ -34,33 +44,38 @@ function getMessageInstance(placement: Placement, callback: (i: any) => void) {
     callback(messageInstance);
     return;
   }
-  Notification.newInstance({
-    prefixCls: getCustomizePrefixCls(),
-    style: getPlacementStyle(placement, defaultTop, defaultBottom),
-    transitionName: getPlacementTransitionName(placement, transitionName),
-    getContainer,
-  }, (instance: any) => {
-    if (messageInstance) {
-      callback(messageInstance);
-      return;
-    }
-    messageInstance = instance;
-    callback(instance);
-  });
+  Notification.newInstance(
+    {
+      prefixCls: getCustomizePrefixCls(),
+      style: getPlacementStyle(placement, defaultTop, defaultBottom),
+      transitionName: getPlacementTransitionName(placement, transitionName),
+      getContainer,
+    },
+    (instance: any) => {
+      if (messageInstance) {
+        callback(messageInstance);
+        return;
+      }
+      messageInstance = instance;
+      callback(instance);
+    },
+  );
 }
 
-function notice(content: ReactNode,
-                duration: ConfigDuration = defaultDuration,
-                type: NoticeType,
-                onClose?: ConfigOnClose,
-                placement?: Placement) {
-  let iconType = ({
+function notice(
+  content: ReactNode,
+  duration: ConfigDuration = defaultDuration,
+  type: NoticeType,
+  onClose?: ConfigOnClose,
+  placement?: Placement,
+) {
+  const iconType = {
     info: 'info',
     success: 'check_circle',
     error: 'error',
     warning: 'warning',
     loading: 'loading',
-  })[type];
+  }[type];
 
   if (isString(onClose)) {
     placement = onClose;
@@ -76,7 +91,7 @@ function notice(content: ReactNode,
 
   const target = key++;
   const prefixCls = getCustomizePrefixCls();
-  getMessageInstance(placement || defaultPlacement, (instance) => {
+  getMessageInstance(placement || defaultPlacement, instance => {
     instance.notice({
       key: target,
       duration,
@@ -111,23 +126,53 @@ export interface ConfigOptions {
 }
 
 export default {
-  info(content: ConfigContent, duration?: ConfigDuration, onClose?: ConfigOnClose, placement?: Placement) {
+  info(
+    content: ConfigContent,
+    duration?: ConfigDuration,
+    onClose?: ConfigOnClose,
+    placement?: Placement,
+  ) {
     return notice(content, duration, 'info', onClose, placement);
   },
-  success(content: ConfigContent, duration?: ConfigDuration, onClose?: ConfigOnClose, placement?: Placement) {
+  success(
+    content: ConfigContent,
+    duration?: ConfigDuration,
+    onClose?: ConfigOnClose,
+    placement?: Placement,
+  ) {
     return notice(content, duration, 'success', onClose, placement);
   },
-  error(content: ConfigContent, duration?: ConfigDuration, onClose?: ConfigOnClose, placement?: Placement) {
+  error(
+    content: ConfigContent,
+    duration?: ConfigDuration,
+    onClose?: ConfigOnClose,
+    placement?: Placement,
+  ) {
     return notice(content, duration, 'error', onClose, placement);
   },
   // Departed usage, please use warning()
-  warn(content: ConfigContent, duration?: ConfigDuration, onClose?: ConfigOnClose, placement?: Placement) {
+  warn(
+    content: ConfigContent,
+    duration?: ConfigDuration,
+    onClose?: ConfigOnClose,
+    placement?: Placement,
+  ) {
     return notice(content, duration, 'warning', onClose, placement);
   },
-  warning(content: ConfigContent, duration?: ConfigDuration, onClose?: ConfigOnClose, placement?: Placement) {
+  warning(
+    content: ConfigContent,
+    duration?: ConfigDuration,
+    onClose?: ConfigOnClose,
+    placement?: Placement,
+  ) {
     return notice(content, duration, 'warning', onClose, placement);
   },
-  loading(content: ConfigContent, duration?: ConfigDuration, onClose?: ConfigOnClose, placement?: Placement) {
+  loading(
+    content: ConfigContent,
+    duration?: ConfigDuration,
+    onClose?: ConfigOnClose,
+    placement?: Placement,
+  ) {
     return notice(content, duration, 'loading', onClose, placement);
   },
   config(options: ConfigOptions) {

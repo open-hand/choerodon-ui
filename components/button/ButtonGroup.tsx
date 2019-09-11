@@ -1,4 +1,4 @@
-import React, { CSSProperties, SFC } from 'react';
+import React, { CSSProperties, FunctionComponent } from 'react';
 import classNames from 'classnames';
 import { Size } from '../_util/enum';
 import { getPrefixCls } from '../configure';
@@ -10,7 +10,7 @@ export interface ButtonGroupProps {
   prefixCls?: string;
 }
 
-const ButtonGroup: SFC<ButtonGroupProps> = (props) => {
+const ButtonGroup: FunctionComponent<ButtonGroupProps> = props => {
   const { prefixCls: customizePrefixCls, size, className, ...others } = props;
   const prefixCls = getPrefixCls('btn-group', customizePrefixCls);
 
@@ -23,13 +23,17 @@ const ButtonGroup: SFC<ButtonGroupProps> = (props) => {
       break;
     case Size.small:
       sizeCls = 'sm';
-    default:
       break;
+    default:
   }
 
-  const classes = classNames(prefixCls, {
-    [`${prefixCls}-${sizeCls}`]: sizeCls,
-  }, className);
+  const classes = classNames(
+    prefixCls,
+    {
+      [`${prefixCls}-${sizeCls}`]: sizeCls,
+    },
+    className,
+  );
 
   return <div {...others} className={classes} />;
 };

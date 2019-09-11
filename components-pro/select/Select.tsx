@@ -8,10 +8,10 @@ import isPlainObject from 'lodash/isPlainObject';
 import { observer } from 'mobx-react';
 import { action, computed, IReactionDisposer, isArrayLike, reaction, runInAction } from 'mobx';
 import Menu, { Item, ItemGroup } from 'choerodon-ui/lib/rc-components/menu';
-import TriggerField, { TriggerFieldProps } from '../trigger-field/TriggerField';
-import autobind from '../_util/autobind';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
+import TriggerField, { TriggerFieldProps } from '../trigger-field/TriggerField';
+import autobind from '../_util/autobind';
 import { ValidationMessages } from '../validator/Validator';
 import Option from '../option/Option';
 import OptGroup from '../option/OptGroup';
@@ -54,7 +54,7 @@ type OptionRendererArg = {
   record: Record;
   text: string;
   value: any;
-}
+};
 
 export interface SelectProps extends TriggerFieldProps {
   /**
@@ -189,23 +189,31 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   }
 
   get filteredOptions(): Record[] {
-    const { cascadeOptions, text } = this;
-    return this.filterData(cascadeOptions, text);
+    const { optionsWithCombo, text } = this;
+    return this.filterData(optionsWithCombo, text);
+  }
+
+  @computed
+  get optionsWithCombo(): Record[] {
+    return [...this.comboOptions.data, ...this.cascadeOptions];
   }
 
   @computed
   get cascadeOptions(): Record[] {
-    const { record, field, options, comboOptions } = this;
-    const data = [...comboOptions.data, ...options.data];
+    const { record, field, options } = this;
+    const { data } = options;
     if (field) {
       const cascadeMap = field.get('cascadeMap');
       if (cascadeMap) {
         if (record) {
           const cascades = Object.keys(cascadeMap);
-          return data.filter(item => cascades.every(cascade => isSameLike(record.get(cascadeMap[cascade]), item.get(cascade))));
-        } else {
-          return [];
+          return data.filter(item =>
+            cascades.every(cascade =>
+              isSameLike(record.get(cascadeMap[cascade]), item.get(cascade)),
+            ),
+          );
         }
+        return [];
       }
     }
     return data;
@@ -234,7 +242,13 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
 
   @computed
   get options(): DataSet {
-    const { field, textField, valueField, multiple, observableProps: { children, options } } = this;
+    const {
+      field,
+      textField,
+      valueField,
+      multiple,
+      observableProps: { children, options },
+    } = this;
     return options || normalizeOptions({ field, textField, valueField, multiple, children });
   }
 
@@ -250,9 +264,10 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   }
 
   checkValueReaction?: IReactionDisposer;
+
   checkComboReaction?: IReactionDisposer;
 
-  saveMenu = node => this.menu = node;
+  saveMenu = node => (this.menu = node);
 
   checkValue() {
     this.checkValueReaction = reaction(() => this.cascadeOptions, () => this.processSelectedData());
@@ -268,14 +283,14 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   clearCheckValue() {
     if (this.checkValueReaction) {
       this.checkValueReaction();
-      this.checkValueReaction = void 0;
+      this.checkValueReaction = undefined;
     }
   }
 
   clearCheckCombo() {
     if (this.checkComboReaction) {
       this.checkComboReaction();
-      this.checkComboReaction = void 0;
+      this.checkComboReaction = undefined;
     }
   }
 
@@ -362,16 +377,27 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     const { name, multiple } = this;
     if (multiple) {
       return super.renderMultipleHolder();
-    } else {
-      return (
-        <input key="value" type="hidden" value={this.toValueString(this.getValue()) || ''} name={name} onChange={noop} />
-      );
     }
+    return (
+      <input
+        key="value"
+        type="hidden"
+        value={this.toValueString(this.getValue()) || ''}
+        name={name}
+        onChange={noop}
+      />
+    );
   }
 
   @autobind
   getMenu(menuProps: object = {}): ReactNode {
-    const { options, textField, valueField, disabledField, props: { dropdownMenuStyle, optionRenderer } } = this;
+    const {
+      options,
+      textField,
+      valueField,
+      disabledField,
+      props: { dropdownMenuStyle, optionRenderer },
+    } = this;
     if (!options) {
       return null;
     }
@@ -379,22 +405,30 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     const groups = options.getGroups();
     const optGroups: ReactElement<any>[] = [];
     const selectedKeys: Key[] = [];
-    this.filteredOptions.forEach((record) => {
+    this.filteredOptions.forEach(record => {
       let previousGroup: ReactElement<any> | undefined;
-      groups.every((field) => {
+      groups.every(field => {
         const label = record.get(field);
-        if (label !== void 0) {
+        if (label !== undefined) {
           if (!previousGroup) {
             previousGroup = optGroups.find(item => item.props.title === label);
             if (!previousGroup) {
-              previousGroup = <ItemGroup key={`group-${label}`} title={label} children={[]} />;
+              previousGroup = (
+                <ItemGroup key={`group-${label}`} title={label}>
+                  {[]}
+                </ItemGroup>
+              );
               optGroups.push(previousGroup);
             }
           } else {
             const { children } = previousGroup.props;
             previousGroup = children.find(item => item.props.title === label);
             if (!previousGroup) {
-              previousGroup = <ItemGroup key={`group-${label}`} title={label} children={[]} />;
+              previousGroup = (
+                <ItemGroup key={`group-${label}`} title={label}>
+                  {[]}
+                </ItemGroup>
+              );
               children.push(previousGroup);
             }
           }
@@ -406,16 +440,12 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
       const text = record.get(textField);
       const optionDisabled = record.get(disabledField);
       const key: Key = getItemKey(record, text, value);
-      if (!('selectedKeys' in menuProps ) && this.isSelected(record)) {
+      if (!('selectedKeys' in menuProps) && this.isSelected(record)) {
         selectedKeys.push(key);
       }
       const itemContent = optionRenderer ? optionRenderer({ record, text, value }) : text;
       const option: ReactElement = (
-        <Item
-          key={key}
-          value={record}
-          disabled={menuDisabled ? menuDisabled : optionDisabled}
-        >
+        <Item key={key} value={record} disabled={menuDisabled || optionDisabled}>
           {itemContent}
         </Item>
       );
@@ -457,9 +487,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     const { options } = this;
     const data = this.filteredOptions;
     return data.length ? (
-      <Spin spinning={options.status === DataSetStatus.loading}>
-        {this.getMenu()}
-      </Spin>
+      <Spin spinning={options.status === DataSetStatus.loading}>{this.getMenu()}</Spin>
     ) : null;
   }
 
@@ -483,25 +511,26 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
       if (this.popup && menu.onKeyDown(e)) {
         stopEvent(e);
       } else {
-        let direction = -1;
         switch (e.keyCode) {
           case KeyCode.RIGHT:
           case KeyCode.DOWN:
-            direction = 1;
+            this.handleKeyDownPrevNext(e, menu, 1);
+            break;
           case KeyCode.LEFT:
           case KeyCode.UP:
-            this.handleKeyDownPrevNext(e, menu, direction);
+            this.handleKeyDownPrevNext(e, menu, -1);
             break;
           case KeyCode.END:
           case KeyCode.PAGE_DOWN:
-            direction = 1;
+            this.handleKeyDownFirstLast(e, menu, 1);
+            break;
           case KeyCode.HOME:
           case KeyCode.PAGE_UP:
-            this.handleKeyDownFirstLast(e, menu, direction);
+            this.handleKeyDownFirstLast(e, menu, -1);
             break;
-          case KeyCode.ENTER:
-            this.handleKeyDownEnter(e);
-            break;
+          // case KeyCode.ENTER:
+          //   this.handleKeyDownEnter(e);
+          //   break;
           case KeyCode.ESC:
             this.handleKeyDownEsc(e);
             break;
@@ -543,8 +572,8 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     }
   }
 
-  handleKeyDownEnter(_e) {
-  }
+  // handleKeyDownEnter(_e) {
+  // }
 
   handleKeyDownEsc(e) {
     if (this.popup) {
@@ -592,7 +621,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
 
   findByTextWithValue(text): Record | undefined {
     const { textField } = this;
-    const records = this.cascadeOptions.filter(record => isSameLike(record.get(textField), text));
+    const records = this.optionsWithCombo.filter(record => isSameLike(record.get(textField), text));
     if (records.length > 1) {
       const { valueField } = this;
       const value = this.getValue();
@@ -606,14 +635,14 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
 
   findByText(text): Record | undefined {
     const { textField } = this;
-    return this.cascadeOptions.find(record => isSameLike(record.get(textField), text));
+    return this.optionsWithCombo.find(record => isSameLike(record.get(textField), text));
   }
 
   findByValue(value): Record | undefined {
     const { valueField } = this;
     const autoType = this.getProp('type') === FieldType.auto;
     value = getSimpleValue(value, valueField);
-    return this.cascadeOptions.find(record =>
+    return this.optionsWithCombo.find(record =>
       autoType ? isSameLike(record.get(valueField), value) : isSame(record.get(valueField), value),
     );
   }
@@ -621,10 +650,12 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   isSelected(record: Record) {
     const { valueField } = this;
     const autoType = this.getProp('type') === FieldType.auto;
-    return this.getValues().some((value) => (
-      value = getSimpleValue(value, valueField),
-        autoType ? isSameLike(record.get(valueField), value) : isSame(record.get(valueField), value)
-    ));
+    return this.getValues().some(value => {
+      const simpleValue = getSimpleValue(value, valueField);
+      return autoType
+        ? isSameLike(record.get(valueField), simpleValue)
+        : isSame(record.get(valueField), simpleValue);
+    });
   }
 
   generateComboOption(value: string | any[], callback?: (text: string) => void): void {
@@ -654,10 +685,13 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
 
   createComboOption(value): void {
     const { textField, valueField, menu } = this;
-    const record = this.comboOptions.create({
-      [textField]: value,
-      [valueField]: value,
-    }, 0);
+    const record = this.comboOptions.create(
+      {
+        [textField]: value,
+        [valueField]: value,
+      },
+      0,
+    );
     if (menu) {
       updateActiveKey(menu, getItemKey(record, value, value));
     }
@@ -676,8 +710,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     }
   }
 
-  handlePopupAnimateAppear() {
-  }
+  handlePopupAnimateAppear() {}
 
   getValueKey(v) {
     if (isArrayLike(v)) {
@@ -696,7 +729,11 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   }
 
   @autobind
-  handleMenuClick({ item: { props: { value } } }) {
+  handleMenuClick({
+    item: {
+      props: { value },
+    },
+  }) {
     if (this.multiple && this.isSelected(value)) {
       this.unChoose(value);
     } else {
@@ -748,11 +785,10 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   processObjectValue(value, textField) {
     if (isPlainObject(value)) {
       return ObjectChainValue.get(value, textField);
-    } else {
-      const found = this.findByValue(value);
-      if (found) {
-        return found.get(textField);
-      }
+    }
+    const found = this.findByValue(value);
+    if (found) {
+      return found.get(textField);
     }
   }
 
@@ -777,20 +813,19 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
         return ObjectChainValue.get(value, this.valueField);
       }
       return value;
-    } else {
-      return text;
     }
+    return text;
   }
 
   @action
   clear() {
-    this.setText(void 0);
+    this.setText(undefined);
     super.clear();
     this.removeComboOptions();
   }
 
   resetFilter() {
-    this.setText(void 0);
+    this.setText(undefined);
     this.removeComboOption();
     this.forcePopupAlign();
   }
@@ -825,40 +860,57 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   }
 
   async processSelectedData() {
-    this.comboOptions.remove(this.comboOptions.data);
+    this.comboOptions.removeAll();
     const values = this.getValues();
     const { field } = this;
     if (field) {
       await field.ready();
     }
-    const { filteredOptions, observableProps: { combo } } = this;
+    const {
+      filteredOptions,
+      observableProps: { combo },
+    } = this;
     runInAction(() => {
       const newValues = values.filter(value => {
         const record = this.findByValue(value);
         if (record) {
           return true;
-        } else if (combo) {
+        }
+        if (combo) {
           this.createComboOption(value);
           return true;
         }
         return false;
       });
-      if (field && field.get('cascadeMap') && filteredOptions.length && !isEqual(newValues, values)) {
+      if (
+        field &&
+        field.get('cascadeMap') &&
+        filteredOptions.length &&
+        !isEqual(newValues, values)
+      ) {
         this.setValue(this.multiple ? newValues : newValues[0]);
       }
     });
-  };
+  }
 
   filterData(data: Record[], text?: string): Record[] {
-    const { textField, searchable, props: { optionsFilter } } = this;
+    const {
+      textField,
+      searchable,
+      props: { optionsFilter },
+    } = this;
     data = optionsFilter ? data.filter(optionsFilter!) : data;
     if (searchable && text) {
       const matchedRecords = data.filter(record => record.get(textField).indexOf(text) !== -1);
-      return matchedRecords.length ? matchedRecords : [new Record({
-        [`${this.textField}`]: $l('Select', 'no_matching_results'),
-        [`${this.valueField}`]: null,
-        disabled: true,
-      })];
+      return matchedRecords.length
+        ? matchedRecords
+        : [
+            new Record({
+              [`${this.textField}`]: $l('Select', 'no_matching_results'),
+              [`${this.valueField}`]: null,
+              disabled: true,
+            }),
+          ];
     }
     return data;
   }

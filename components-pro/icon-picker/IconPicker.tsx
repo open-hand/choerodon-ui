@@ -1,16 +1,16 @@
 import React, { CSSProperties, ReactNode } from 'react';
 import PropTypes from 'prop-types';
+import { action, computed, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import omit from 'lodash/omit';
 import flatten from 'lodash/flatten';
+import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import TriggerField, { TriggerFieldProps } from '../trigger-field/TriggerField';
 import Icon from '../icon';
 import Tabs from '../tabs';
 import { $l } from '../locale-context';
 import IconCategory from './IconCategory';
-import { action, computed, observable, runInAction } from 'mobx';
 import autobind from '../_util/autobind';
-import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { stopEvent } from '../_util/EventManager';
 
 const { categories } = Icon;
@@ -51,7 +51,9 @@ export default class IconPicker extends TriggerField<IconPickerProps> {
   get filteredIcons(): string[] {
     const { text } = this;
     if (text) {
-      return flatten(categoryKeys.map(category => categories[category].filter(icon => icon.startsWith(text))));
+      return flatten(
+        categoryKeys.map(category => categories[category].filter(icon => icon.startsWith(text))),
+      );
     }
     return [];
   }
@@ -88,12 +90,12 @@ export default class IconPicker extends TriggerField<IconPickerProps> {
   @autobind
   handleTabsChange(category: string) {
     this.setActiveCategory(category);
-  };
+  }
 
   @autobind
   handleItemSelect(icon: string) {
     this.choose(icon);
-  };
+  }
 
   @autobind
   handlePageChange(page: number, category: string) {
@@ -159,25 +161,41 @@ export default class IconPicker extends TriggerField<IconPickerProps> {
   }
 
   handleKeyDownHome() {
-    const { activeCategory, categoryPages, props: { pageSize } } = this;
+    const {
+      activeCategory,
+      categoryPages,
+      props: { pageSize },
+    } = this;
     const category = categories[activeCategory];
     const page = categoryPages[activeCategory] || 1;
     this.changeSelected(category[(page - 1) * pageSize!]);
   }
 
   handleKeyDownEnd() {
-    const { activeCategory, categoryPages, props: { pageSize } } = this;
+    const {
+      activeCategory,
+      categoryPages,
+      props: { pageSize },
+    } = this;
     const category = categories[activeCategory];
     const page = categoryPages[activeCategory] || 1;
     this.changeSelected(category[page * pageSize! - 1] || category[category.length - 1]);
   }
 
   handleKeyDownLeftOrRight(isLeft: boolean) {
-    const { activeCategory, selectedIndex, categoryPages, props: { pageSize } } = this;
+    const {
+      activeCategory,
+      selectedIndex,
+      categoryPages,
+      props: { pageSize },
+    } = this;
     const step = isLeft ? -1 : 1;
     let category = categories[activeCategory];
     let index = selectedIndex;
-    if (index % COLUMNS === (isLeft ? 0 : COLUMNS - 1) || (!isLeft && index === category.length - 1)) {
+    if (
+      index % COLUMNS === (isLeft ? 0 : COLUMNS - 1) ||
+      (!isLeft && index === category.length - 1)
+    ) {
       const activeCategoryIndex = categoryKeys.indexOf(activeCategory);
       if (activeCategoryIndex !== (isLeft ? 0 : categoryKeys.length - 1)) {
         const newTabIndex = activeCategoryIndex + step;
@@ -200,7 +218,12 @@ export default class IconPicker extends TriggerField<IconPickerProps> {
   }
 
   handleKeyDownUpOrDown(isUP) {
-    const { activeCategory, selectedIndex, categoryPages, props: { pageSize } } = this;
+    const {
+      activeCategory,
+      selectedIndex,
+      categoryPages,
+      props: { pageSize },
+    } = this;
     const step = isUP ? -1 : 1;
     const category = categories[activeCategory];
     let index = selectedIndex;
@@ -239,7 +262,12 @@ export default class IconPicker extends TriggerField<IconPickerProps> {
   }
 
   handleKeyDownPageUp() {
-    const { activeCategory, selectedIndex, categoryPages, props: { pageSize } } = this;
+    const {
+      activeCategory,
+      selectedIndex,
+      categoryPages,
+      props: { pageSize },
+    } = this;
     const page = categoryPages[activeCategory] || 1;
     const category = categories[activeCategory];
     if (page > 1) {
@@ -249,7 +277,12 @@ export default class IconPicker extends TriggerField<IconPickerProps> {
   }
 
   handleKeyDownPageDown() {
-    const { activeCategory, selectedIndex, categoryPages, props: { pageSize } } = this;
+    const {
+      activeCategory,
+      selectedIndex,
+      categoryPages,
+      props: { pageSize },
+    } = this;
     const page = categoryPages[activeCategory] || 1;
     const category = categories[activeCategory];
     if (page < Math.ceil(category.length / pageSize!)) {
@@ -291,15 +324,13 @@ export default class IconPicker extends TriggerField<IconPickerProps> {
     if (this.filteredIcons.indexOf(value) !== -1) {
       this.choose(value);
     } else {
-      this.setText(void 0);
+      this.setText(undefined);
     }
   }
 
-  handlePopupAnimateAppear() {
-  }
+  handlePopupAnimateAppear() {}
 
-  handlePopupAnimateEnd() {
-  }
+  handlePopupAnimateEnd() {}
 
   getPopupStyleFromAlign(): CSSProperties | any {
     return undefined;
@@ -313,9 +344,8 @@ export default class IconPicker extends TriggerField<IconPickerProps> {
     const { text } = this;
     if (text) {
       return this.renderFilteredIcons();
-    } else {
-      return this.renderIconCategories();
     }
+    return this.renderIconCategories();
   }
 
   getPrefix() {
@@ -341,14 +371,14 @@ export default class IconPicker extends TriggerField<IconPickerProps> {
   }
 
   renderIconCategories() {
-    const { activeCategory, prefixCls, props: { pageSize } } = this;
+    const {
+      activeCategory,
+      prefixCls,
+      props: { pageSize },
+    } = this;
     const { TabPane } = Tabs;
     const tabs = categoryKeys.map(category => (
-      <TabPane
-        key={category}
-        tab={$l('Icon', category)}
-        className={`${prefixCls}-tab`}
-      >
+      <TabPane key={category} tab={$l('Icon', category)} className={`${prefixCls}-tab`}>
         <IconCategory
           page={this.categoryPages[category]}
           pageSize={pageSize}

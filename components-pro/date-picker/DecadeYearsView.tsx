@@ -26,7 +26,7 @@ export default class DecadeYearsView extends DaysView {
 
   handleKeyDownEnd() {
     const date = this.getCloneDate();
-    this.changeSelectedDate(date.add(90 - date.year() % 100, 'y'));
+    this.changeSelectedDate(date.add(90 - (date.year() % 100), 'y'));
   }
 
   handleKeyDownLeft(e) {
@@ -60,7 +60,10 @@ export default class DecadeYearsView extends DaysView {
   }
 
   renderHeader(): ReactNode {
-    const { prefixCls, props: { date } } = this;
+    const {
+      prefixCls,
+      props: { date },
+    } = this;
     const year = date.year() % 100;
     const from = date.clone().subtract(year, 'y');
     const to = from.clone().add(99, 'y');
@@ -80,13 +83,19 @@ export default class DecadeYearsView extends DaysView {
   }
 
   renderPanelHead(): ReactNode {
-    return;
+    return undefined;
   }
 
   renderPanelBody(): ReactNode {
-    const { prefixCls, props: { date, renderer = this.renderCell, isValidDate = alwaysValidDate } } = this;
+    const {
+      prefixCls,
+      props: { date, renderer = this.renderCell, isValidDate = alwaysValidDate },
+    } = this;
     const selected = date.clone().subtract(date.year() % 10, 'y');
-    const from = date.clone().startOf('y').subtract(date.year() % 100, 'y');
+    const from = date
+      .clone()
+      .startOf('y')
+      .subtract(date.year() % 100, 'y');
     const to = from.clone().add(100, 'y');
     const prevYear = from.clone().subtract(10, 'y');
     const lastYear = to.clone().add(10, 'y');
@@ -102,7 +111,10 @@ export default class DecadeYearsView extends DaysView {
         [`${prefixCls}-selected`]: prevYear.isSame(selected, 'y'),
         [`${prefixCls}-disabled`]: isDisabled,
       });
-      const text = `${prevYear.year()}-${prevYear.clone().add(9, 'y').year()}`;
+      const text = `${prevYear.year()}-${prevYear
+        .clone()
+        .add(9, 'y')
+        .year()}`;
 
       const decadeProps: any = {
         key: text,
@@ -126,7 +138,7 @@ export default class DecadeYearsView extends DaysView {
   }
 
   renderFooter(): ReactNode {
-    return;
+    return undefined;
   }
 
   getPanelClass(): string {

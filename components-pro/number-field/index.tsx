@@ -1,3 +1,3 @@
-import NumberField from './NumberField';
+import ObserverNumberField from './NumberField';
 
-export default NumberField;
+export default ObserverNumberField;

@@ -15,6 +15,7 @@ There are three sizes available: large, medium, and small. It can coordinate wit
 
 ```jsx
 import { Radio } from 'choerodon-ui';
+
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 
@@ -45,5 +46,6 @@ ReactDOM.render(
       </RadioGroup>
     </div>
   </div>,
-  mountNode);
+  mountNode,
+);
 ```

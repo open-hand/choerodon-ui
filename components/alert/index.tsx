@@ -1,7 +1,6 @@
 import React, { Component, CSSProperties, MouseEventHandler, ReactNode } from 'react';
 import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
-import noop from 'lodash/noop';
 import Icon from '../icon';
 import Animate from '../animate';
 import { getPrefixCls } from '../configure';
@@ -42,7 +41,7 @@ export default class Alert extends Component<AlertProps, any> {
 
   handleClose = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    let dom = findDOMNode(this) as HTMLElement;
+    const dom = findDOMNode(this) as HTMLElement;
     dom.style.height = `${dom.offsetHeight}px`;
     // Magic code
     // 重复一次后才能正确设置 height
@@ -51,21 +50,36 @@ export default class Alert extends Component<AlertProps, any> {
     this.setState({
       closing: false,
     });
-    (this.props.onClose || noop)(e);
+    const { onClose } = this.props;
+    if (onClose) {
+      onClose(e);
+    }
   };
+
   animationEnd = () => {
     this.setState({
       closed: true,
       closing: true,
     });
-    (this.props.afterClose || noop)();
+    const { afterClose } = this.props;
+    if (afterClose) {
+      afterClose();
+    }
   };
 
   render() {
-    let {
-      closable, description, type, prefixCls: customizePrefixCls, message, closeText, showIcon, banner,
-      className = '', style, iconType,
-    } = this.props;
+    const { props } = this;
+    const {
+      description,
+      prefixCls: customizePrefixCls,
+      message,
+      closeText,
+      banner,
+      className = '',
+      style,
+    } = props;
+    let { closable, showIcon, type, iconType } = props;
+    const { closing, closed } = this.state;
     const prefixCls = getPrefixCls('alert', customizePrefixCls);
 
     // banner模式默认有 Icon
@@ -92,18 +106,22 @@ export default class Alert extends Component<AlertProps, any> {
       }
 
       // use outline icon in alert with description
-      if (!!description) {
+      if (description) {
         iconType += '-o';
       }
     }
 
-    let alertCls = classNames(prefixCls, {
-      [`${prefixCls}-${type}`]: true,
-      [`${prefixCls}-close`]: !this.state.closing,
-      [`${prefixCls}-with-description`]: !!description,
-      [`${prefixCls}-no-icon`]: !showIcon,
-      [`${prefixCls}-banner`]: !!banner,
-    }, className);
+    const alertCls = classNames(
+      prefixCls,
+      {
+        [`${prefixCls}-${type}`]: true,
+        [`${prefixCls}-close`]: !closing,
+        [`${prefixCls}-with-description`]: !!description,
+        [`${prefixCls}-no-icon`]: !showIcon,
+        [`${prefixCls}-banner`]: !!banner,
+      },
+      className,
+    );
 
     // closeable when closeText is assigned
     if (closeText) {
@@ -116,14 +134,14 @@ export default class Alert extends Component<AlertProps, any> {
       </a>
     ) : null;
 
-    return this.state.closed ? null : (
+    return closed ? null : (
       <Animate
         component=""
         hiddenProp="hidden"
         transitionName={`${prefixCls}-slide-up`}
         onEnd={this.animationEnd}
       >
-        <div hidden={!this.state.closing} className={alertCls} style={style}>
+        <div hidden={!closing} className={alertCls} style={style}>
           {showIcon ? <Icon className={`${prefixCls}-icon`} type={iconType} /> : null}
           <span className={`${prefixCls}-message`}>{message}</span>
           <span className={`${prefixCls}-description`}>{description}</span>

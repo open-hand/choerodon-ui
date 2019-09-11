@@ -1,10 +1,12 @@
-import React, { cloneElement, isValidElement, PureComponent } from 'react';
+import React, { cloneElement, CSSProperties, isValidElement, PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { getProPrefixCls } from 'choerodon-ui/lib/configure';
 import Trigger from '../trigger/Trigger';
 import { Action } from '../trigger/enum';
 import { Placements } from './enum';
-import placements from './placements';
-import { getProPrefixCls } from 'choerodon-ui/lib/configure';
+import builtinPlacements from './placements';
+
+const popupStyle: CSSProperties = { whiteSpace: 'nowrap' };
 
 export interface DropDownProps {
   trigger?: Action[];
@@ -33,13 +35,11 @@ export interface DropdownState {
 
 export default class Dropdown extends PureComponent<DropDownProps> {
   static displayName = 'Dropdown';
+
   static propTypes = {
-    trigger: PropTypes.arrayOf(PropTypes.oneOf([
-      Action.focus,
-      Action.hover,
-      Action.click,
-      Action.contextMenu,
-    ])),
+    trigger: PropTypes.arrayOf(
+      PropTypes.oneOf([Action.focus, Action.hover, Action.click, Action.contextMenu]),
+    ),
     overlay: PropTypes.any,
     placement: PropTypes.oneOf([
       Placements.bottomLeft,
@@ -59,6 +59,7 @@ export default class Dropdown extends PureComponent<DropDownProps> {
     defaultHidden: PropTypes.bool,
     defaultVisible: PropTypes.bool,
   };
+
   static defaultProps = {
     suffixCls: 'dropdown',
     placement: Placements.bottomLeft,
@@ -114,8 +115,13 @@ export default class Dropdown extends PureComponent<DropDownProps> {
    * @param {boolean} hidden
    */
   handlePopupHiddenChange = (hidden: boolean) => {
-    const { onHiddenChange, onVisibleChange, hidden: propsHidden, visible: propsVisible } = this.props;
-    if (propsHidden === void 0 && propsVisible === void 0) {
+    const {
+      onHiddenChange,
+      onVisibleChange,
+      hidden: propsHidden,
+      visible: propsVisible,
+    } = this.props;
+    if (propsHidden === undefined && propsVisible === undefined) {
       this.setState({
         hidden,
       });
@@ -128,16 +134,16 @@ export default class Dropdown extends PureComponent<DropDownProps> {
     }
   };
 
-  handleClick = (e) => {
+  handleClick = e => {
     const { onOverlayClick, overlay, hidden, visible } = this.props;
-    const { onClick } = (isValidElement(overlay) && overlay.props || {}) as { onClick };
+    const { onClick } = ((isValidElement(overlay) && overlay.props) || {}) as { onClick };
     if (onOverlayClick) {
       onOverlayClick(e);
     }
     if (onClick) {
       onClick(e);
     }
-    if (hidden === void 0 && visible === void 0) {
+    if (hidden === undefined && visible === undefined) {
       this.setState({
         hidden: true,
       });
@@ -154,11 +160,11 @@ export default class Dropdown extends PureComponent<DropDownProps> {
   }
 
   componentWillReceiveProps({ hidden, visible }: DropDownProps) {
-    if (hidden !== void 0) {
+    if (hidden !== undefined) {
       this.setState({
         hidden,
       });
-    } else if (visible !== void 0) {
+    } else if (visible !== undefined) {
       this.setState({
         hidden: !visible,
       });
@@ -168,22 +174,20 @@ export default class Dropdown extends PureComponent<DropDownProps> {
   render() {
     const {
       prefixCls,
-      props: {
-        children,
-        placement,
-      },
+      state: { hidden },
+      props: { children, placement },
     } = this;
 
     return (
       <Trigger
         prefixCls={prefixCls}
         action={this.triggerAction}
-        builtinPlacements={placements}
+        builtinPlacements={builtinPlacements}
         popupPlacement={placement}
         popupContent={this.getMenuElement()}
-        popupStyle={{ whiteSpace: 'nowrap' }}
+        popupStyle={popupStyle}
         onPopupHiddenChange={this.handlePopupHiddenChange}
-        popupHidden={this.state.hidden}
+        popupHidden={hidden}
       >
         {children}
       </Trigger>

@@ -1,44 +1,45 @@
-@import "../../style/themes/default";
-@import "../../style/mixins/index";
-@import "../../checkbox/style/mixin";
-@import "./mixin";
+@import '../../style/themes/default';
+@import '../../style/mixins/index';
+@import '../../checkbox/style/mixin';
+@import './mixin';
 
-@tree-prefix-cls: ~"@{c7n-prefix}-tree";
+@tree-prefix-cls: ~'@{c7n-prefix}-tree';
 @tree-showline-icon-color: @text-color-secondary;
 
-.antCheckboxFn(@checkbox-prefix-cls: ~"@{c7n-prefix}-tree-checkbox");
+.antCheckboxFn(@checkbox-prefix-cls: ~'@{c7n-prefix}-tree-checkbox');
 
 .@{tree-prefix-cls} {
   .reset-component;
   margin: 0;
   padding: 0;
 
-  ol, ul {
-    list-style: none;
+  ol,
+  ul {
     margin: 0;
     padding: 0;
+    list-style: none;
   }
 
   li {
-    padding: .04rem 0;
     margin: 0;
-    list-style: none;
+    padding: 0.04rem 0;
     white-space: nowrap;
+    list-style: none;
     outline: 0;
     span[draggable],
-    span[draggable="true"] {
+    span[draggable='true'] {
+      margin-top: -0.02rem;
+      border-top: 0.02rem transparent solid;
+      border-bottom: 0.02rem transparent solid;
       user-select: none;
-      border-top: .02rem transparent solid;
-      border-bottom: .02rem transparent solid;
-      margin-top: -.02rem;
       /* Required to make elements draggable in old WebKit */
       -khtml-user-drag: element;
       -webkit-user-drag: element;
     }
     &.drag-over {
       > span[draggable] {
-        background-color: @primary-color;
         color: white;
+        background-color: @primary-color;
         opacity: 0.8;
       }
     }
@@ -60,21 +61,21 @@
     }
     ul {
       margin: 0;
-      padding: 0 0 0 .18rem;
+      padding: 0 0 0 0.18rem;
     }
     .@{tree-prefix-cls}-node-content-wrapper {
+      position: relative;
       display: inline-block;
-      padding: 0 .05rem;
-      border-radius: @border-radius-sm;
+      height: 0.24rem;
       margin: 0;
-      cursor: pointer;
+      padding: 0 0.05rem;
+      color: @text-color;
+      line-height: 0.24rem;
       text-decoration: none;
       vertical-align: top;
-      color: @text-color;
-      transition: all .3s;
-      position: relative;
-      height: .24rem;
-      line-height: .24rem;
+      border-radius: @border-radius-sm;
+      cursor: pointer;
+      transition: all 0.3s;
       &:hover {
         background-color: @item-hover-bg;
       }
@@ -84,42 +85,42 @@
     }
     span {
       &.@{tree-prefix-cls}-checkbox {
-        margin: .04rem .04rem 0 .02rem;
+        margin: 0.04rem 0.04rem 0 0.02rem;
       }
       &.@{tree-prefix-cls}-switcher,
       &.@{tree-prefix-cls}-iconEle {
-        margin: 0;
-        line-height: .24rem;
         display: inline-block;
+        margin: 0;
+        line-height: 0.24rem;
+        text-align: center;
         vertical-align: top;
         border: 0 none;
-        cursor: pointer;
         outline: none;
-        text-align: center;
+        cursor: pointer;
       }
       .@{tree-prefix-cls}-icon_loading {
         position: absolute;
-        left: -.18rem;
+        left: -0.18rem;
+        width: 0.22rem;
+        height: 0.22rem;
         background: #fff;
-        width: .22rem;
-        height: .22rem;
       }
 
       &.@{tree-prefix-cls}-switcher {
-        width: .22rem;
-        height: .22rem;
+        width: 0.22rem;
+        height: 0.22rem;
         line-height: 1;
-        cursor: pointer;
         vertical-align: top;
+        cursor: pointer;
         .@{iconfont-css-prefix} {
-          font-size: .22rem;
+          font-size: 0.22rem;
         }
         &_close .@{iconfont-css-prefix}-arrow_drop_down {
           transform: rotate(-90deg);
         }
         &.@{tree-prefix-cls}-switcher-noop {
           cursor: default;
-          &:before {
+          &::before {
             display: none;
           }
         }
@@ -128,7 +129,7 @@
     &:last-child > span {
       &.@{tree-prefix-cls}-switcher-noop,
       &.@{tree-prefix-cls}-iconEle {
-        &:before {
+        &::before {
           display: none;
         }
       }
@@ -136,10 +137,10 @@
   }
   > li {
     &:first-child {
-      padding-top: .07rem;
+      padding-top: 0.07rem;
     }
     &:last-child {
-      padding-bottom: .07rem;
+      padding-bottom: 0.07rem;
     }
   }
   &-child-tree {
@@ -160,11 +161,11 @@
     }
   }
   &-icon__open {
-    margin-right: .02rem;
+    margin-right: 0.02rem;
     vertical-align: top;
   }
   &-icon__close {
-    margin-right: .02rem;
+    margin-right: 0.02rem;
     vertical-align: top;
   }
   // Tree with line
@@ -173,19 +174,19 @@
       position: relative;
       span {
         &.@{tree-prefix-cls}-switcher {
-          background: @component-background;
           color: @tree-showline-icon-color;
+          background: @component-background;
         }
       }
     }
-    li:not(:last-child):before {
-      content: ' ';
-      width: .01rem;
-      border-left: .01rem solid @border-color-base;
-      height: 100%;
+    li:not(:last-child)::before {
       position: absolute;
-      left: .12rem;
-      margin: .22rem 0;
+      left: 0.12rem;
+      width: 0.01rem;
+      height: 100%;
+      margin: 0.22rem 0;
+      border-left: 0.01rem solid @border-color-base;
+      content: ' ';
     }
   }
 }

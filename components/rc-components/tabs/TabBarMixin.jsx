@@ -39,17 +39,16 @@ export default {
       }
       warning('tab' in child.props, 'There must be `tab` property on children of Tabs.');
       rst.push(
-        <Ripple
-          disabled={disabled}
-          key={key}
-        >
+        <Ripple disabled={disabled} key={key}>
           <div
             role="tab"
             aria-disabled={disabled ? 'true' : 'false'}
             aria-selected={activeKey === key ? 'true' : 'false'}
             {...events}
             className={cls}
-            style={{ marginRight: tabBarGutter && index === children.length - 1 ? 0 : tabBarGutter }}
+            style={{
+              marginRight: tabBarGutter && index === children.length - 1 ? 0 : tabBarGutter,
+            }}
             {...ref}
           >
             {tab}
@@ -62,15 +61,20 @@ export default {
   },
   getRootNode(contents) {
     const {
-      prefixCls, onKeyDown, className, extraContent, style, tabBarPosition,
-      ...restProps,
+      prefixCls,
+      onKeyDown,
+      className,
+      extraContent,
+      style,
+      tabBarPosition,
+      ...restProps
     } = this.props;
     const cls = classnames(`${prefixCls}-bar`, {
       [className]: !!className,
     });
-    const topOrBottom = (tabBarPosition === 'top' || tabBarPosition === 'bottom');
+    const topOrBottom = tabBarPosition === 'top' || tabBarPosition === 'bottom';
     const tabBarExtraContentStyle = topOrBottom ? { float: 'right' } : {};
-    const extraContentStyle = (extraContent && extraContent.props) ? extraContent.props.style : {};
+    const extraContentStyle = extraContent && extraContent.props ? extraContent.props.style : {};
     let children = contents;
     if (extraContent) {
       children = [

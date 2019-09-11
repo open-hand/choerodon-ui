@@ -24,17 +24,15 @@ describe('Upload', () => {
     expect(ref).toBeDefined();
   });
 
-  it('return promise in beforeUpload', (done) => {
+  it('return promise in beforeUpload', done => {
     const data = jest.fn();
     const props = {
       action: 'http://upload.com',
-      beforeUpload: () => new Promise(
-        resolve => setTimeout(() => resolve('success'), 100)
-      ),
+      beforeUpload: () => new Promise(resolve => setTimeout(() => resolve('success'), 100)),
       data,
       onChange: ({ file }) => {
         if (file.status !== 'uploading') {
-          expect(data).toBeCalled();
+          expect(data).toHaveBeenCalled();
           done();
         }
       },
@@ -43,26 +41,24 @@ describe('Upload', () => {
     const wrapper = mount(
       <Upload {...props}>
         <button type="button">upload</button>
-      </Upload>
+      </Upload>,
     );
 
     wrapper.find('input').simulate('change', {
       target: {
-        files: [
-          { filename: 'foo.png' },
-        ],
+        files: [{ filename: 'foo.png' }],
       },
     });
   });
 
-  it('should not stop upload when return value of beforeUpload is not false', (done) => {
+  it('should not stop upload when return value of beforeUpload is false', done => {
     const data = jest.fn();
     const props = {
       action: 'http://upload.com',
       beforeUpload: () => false,
       data,
       onChange: () => {
-        expect(data).not.toBeCalled();
+        expect(data).not.toHaveBeenCalled();
         done();
       },
     };
@@ -70,26 +66,24 @@ describe('Upload', () => {
     const wrapper = mount(
       <Upload {...props}>
         <button type="button">upload</button>
-      </Upload>
+      </Upload>,
     );
 
     wrapper.find('input').simulate('change', {
       target: {
-        files: [
-          { filename: 'foo.png' },
-        ],
+        files: [{ filename: 'foo.png' }],
       },
     });
   });
 
-  it('should not stop upload when return value of beforeUpload is not false', (done) => {
+  it('should not stop upload when return value of beforeUpload is not false', done => {
     const data = jest.fn();
     const props = {
       action: 'http://upload.com',
       beforeUpload() {},
       data,
       onChange: () => {
-        expect(data).toBeCalled();
+        expect(data).toHaveBeenCalled();
         done();
       },
     };
@@ -97,14 +91,12 @@ describe('Upload', () => {
     const wrapper = mount(
       <Upload {...props}>
         <button type="button">upload</button>
-      </Upload>
+      </Upload>,
     );
 
     wrapper.find('input').simulate('change', {
       target: {
-        files: [
-          { filename: 'foo.png' },
-        ],
+        files: [{ filename: 'foo.png' }],
       },
     });
   });

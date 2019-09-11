@@ -1,8 +1,15 @@
-import React, { cloneElement, Component, CSSProperties, MouseEventHandler, ReactElement, ReactNode } from 'react';
+import React, {
+  cloneElement,
+  Component,
+  CSSProperties,
+  MouseEventHandler,
+  ReactElement,
+  ReactNode,
+} from 'react';
 import classNames from 'classnames';
 import animation from '../_util/openAnimation';
-import RcTree, { TreeNode, TreeNodeAttribute, TreeNodeProps } from '../rc-components/tree';
-import { TreeEvent } from '../tree/enum';
+import RcTree, { TreeNode } from '../rc-components/tree';
+import { TreeEvent } from './enum';
 import Icon from '../icon';
 import Progress from '../progress';
 import { ProgressType } from '../progress/enum';
@@ -10,6 +17,45 @@ import { Size } from '../_util/enum';
 import { getPrefixCls } from '../configure';
 
 export { TreeNode };
+
+export interface TreeNodeAttribute {
+  eventKey: string;
+  prefixCls: string;
+  className: string;
+  expanded: boolean;
+  selected: boolean;
+  checked: boolean;
+  halfChecked: boolean;
+  children: React.ReactNode;
+  title: React.ReactNode;
+  pos: string;
+  dragOver: boolean;
+  dragOverGapTop: boolean;
+  dragOverGapBottom: boolean;
+  isLeaf: boolean;
+  selectable: boolean;
+  disabled: boolean;
+  disableCheckbox: boolean;
+}
+
+export interface TreeNodeProps {
+  className?: string;
+  checkable?: boolean;
+  disabled?: boolean;
+  disableCheckbox?: boolean;
+  title?: string | React.ReactNode;
+  key?: string;
+  eventKey?: string;
+  isLeaf?: boolean;
+  checked?: boolean;
+  expanded?: boolean;
+  loading?: boolean;
+  selected?: boolean;
+  selectable?: boolean;
+  icon?: ((treeNode: TreeNodeAttribute) => React.ReactNode) | React.ReactNode;
+  children?: React.ReactNode;
+  [customProp: string]: any;
+}
 
 export interface TreeNodeEvent {
   event: TreeEvent;
@@ -37,7 +83,7 @@ export interface TreeProps {
   multiple?: boolean;
   /** 是否自动展开父节点 */
   autoExpandParent?: boolean;
-  /** checkable状态下节点选择完全受控（父子节点选中状态不再关联）*/
+  /** checkable状态下节点选择完全受控（父子节点选中状态不再关联） */
   checkStrictly?: boolean;
   /** 是否支持选中 */
   checkable?: boolean;
@@ -48,7 +94,7 @@ export interface TreeProps {
   /** （受控）展开指定的树节点 */
   expandedKeys?: string[];
   /** （受控）选中复选框的树节点 */
-  checkedKeys?: string[] | { checked: string[], halfChecked: string[] };
+  checkedKeys?: string[] | { checked: string[]; halfChecked: string[] };
   /** 默认选中复选框的树节点 */
   defaultCheckedKeys?: string[];
   /** （受控）设置选中的树节点 */
@@ -67,7 +113,7 @@ export interface TreeProps {
   loadData?: (node: TreeNode) => PromiseLike<any>;
   /** 响应右键点击 */
   onRightClick?: (options: TreeNodeMouseEvent) => void;
-  /** 设置节点可拖拽（IE>8）*/
+  /** 设置节点可拖拽（IE>8） */
   draggable?: boolean;
   /** 开始拖拽时调用 */
   onDragStart?: (options: TreeNodeMouseEvent) => void;
@@ -86,9 +132,9 @@ export interface TreeProps {
   prefixCls?: string;
   filterTreeNode?: (node: TreeNode) => boolean;
   focusable?: boolean;
-  tabIndex?: string | number,
-  openTransitionName?: string,
-  openAnimation?: string | object,
+  tabIndex?: string | number;
+  openTransitionName?: string;
+  openAnimation?: string | object;
   selectable?: boolean;
   defaultExpandParent?: boolean;
   children?: any;
@@ -96,6 +142,7 @@ export interface TreeProps {
 
 export default class Tree extends Component<TreeProps, any> {
   static displayName = 'Tree';
+
   static TreeNode = TreeNode;
 
   static defaultProps = {
@@ -108,7 +155,13 @@ export default class Tree extends Component<TreeProps, any> {
     const { showLine, switcherIcon } = this.props;
     const prefixCls = this.getPrefixCls();
     if (loading) {
-      return <Progress type={ProgressType.loading} className={`${prefixCls}-switcher-loading-icon`} size={Size.small} />;
+      return (
+        <Progress
+          type={ProgressType.loading}
+          className={`${prefixCls}-switcher-loading-icon`}
+          size={Size.small}
+        />
+      );
     }
     const switcherCls = `${prefixCls}-switcher-icon`;
     if (showLine) {
@@ -116,27 +169,27 @@ export default class Tree extends Component<TreeProps, any> {
         return <Icon type="note" className={`${prefixCls}-switcher-line-icon`} />;
       }
       return <Icon type="arrow_drop_down" className={switcherCls} />;
-    } else {
-      if (isLeaf) {
-        return null;
-      } else if (switcherIcon) {
-        const switcherOriginCls = switcherIcon.props.className || '';
-        return cloneElement(switcherIcon, {
-          className: [switcherOriginCls, switcherCls],
-        });
-      } else {
-        return <Icon type="arrow_drop_down" className={switcherCls} />;
-      }
     }
+    if (isLeaf) {
+      return null;
+    }
+    if (switcherIcon) {
+      const switcherOriginCls = switcherIcon.props.className || '';
+      return cloneElement(switcherIcon, {
+        className: [switcherOriginCls, switcherCls],
+      });
+    }
+    return <Icon type="arrow_drop_down" className={switcherCls} />;
   };
 
   getPrefixCls() {
-    return getPrefixCls('tree', this.props.prefixCls);
+    const { prefixCls } = this.props;
+    return getPrefixCls('tree', prefixCls);
   }
 
   render() {
     const props = this.props;
-    const { className, showIcon, checkable } = props;
+    const { className, showIcon, checkable, children } = props;
     const prefixCls = this.getPrefixCls();
     return (
       <RcTree
@@ -146,7 +199,7 @@ export default class Tree extends Component<TreeProps, any> {
         switcherIcon={this.renderSwitcherIcon}
         prefixCls={prefixCls}
       >
-        {this.props.children}
+        {children}
       </RcTree>
     );
   }

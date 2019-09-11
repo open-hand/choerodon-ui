@@ -13,8 +13,9 @@ title:
 
 The menu has multiple levels.
 
-````jsx
+```jsx
 import { Menu, Dropdown, Icon } from 'choerodon-ui';
+
 const SubMenu = Menu.SubMenu;
 
 const menu = (
@@ -38,5 +39,6 @@ ReactDOM.render(
       Cascading menu <Icon type="arrow_drop_down" />
     </a>
   </Dropdown>,
-  mountNode);
-````
+  mountNode,
+);
+```

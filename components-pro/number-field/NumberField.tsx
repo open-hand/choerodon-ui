@@ -5,17 +5,21 @@ import { observer } from 'mobx-react';
 import isString from 'lodash/isString';
 import isNumber from 'lodash/isNumber';
 import defaultTo from 'lodash/defaultTo';
+import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { TextField, TextFieldProps } from '../text-field/TextField';
 import autobind from '../_util/autobind';
 import keepRunning from '../_util/keepRunning';
 import Icon from '../icon';
-import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { formatNumber, getNearStepValues, MAX_SAFE_INTEGER, plus } from './utils';
 import { ValidationMessages } from '../validator/Validator';
 import isEmpty from '../_util/isEmpty';
 import { $l } from '../locale-context';
 import { FieldType } from '../data-set/enum';
 import { ValidatorProps } from '../validator/rules';
+
+function getCurrentValidValue(value: string): number {
+  return Number(value.replace(/\.$/, '')) || 0;
+}
 
 export interface NumberFieldProps extends TextFieldProps {
   /**
@@ -62,7 +66,9 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
   get defaultValidationMessages(): ValidationMessages | null {
     const label = this.getProp('label');
     return {
-      valueMissing: $l('NumberField', label ? 'value_missing_with_label' : 'value_missing', { label }),
+      valueMissing: $l('NumberField', label ? 'value_missing_with_label' : 'value_missing', {
+        label,
+      }),
     };
   }
 
@@ -76,7 +82,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
   @computed
   get allowNegative(): boolean {
     const { min } = this;
-    return min === void 0 || min < 0;
+    return min === undefined || min < 0;
   }
 
   get min(): number | undefined {
@@ -96,7 +102,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     const limit = this.getProp(type);
     if (record && isString(limit)) {
       const num = record.get(limit);
-      if (num !== void 0) {
+      if (num !== undefined) {
         return num;
       }
     }
@@ -185,7 +191,8 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     if (!isNumber(this.value)) {
       newValue = defaultTo(this.min, 0);
     } else {
-      const currentValue = newValue = getCurrentValidValue(String(this.value));
+      const currentValue = getCurrentValidValue(String(this.value));
+      newValue = currentValue;
       const nearStep = getNearStepValues(currentValue, step as number, min, max);
       if (nearStep) {
         switch (nearStep.length) {
@@ -233,20 +240,20 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
         restrict += '.';
       }
       const isNegative = this.allowNegative && /^-/.test(value);
-      value = super.restrictInput(value.replace(new RegExp('[^' + restrict + ']+', 'g'), ''));
+      value = super.restrictInput(value.replace(new RegExp(`[^${restrict}]+`, 'g'), ''));
       const values = value.split('.');
       if (values.length > 2) {
-        value = values.shift() + '.' + values.join('');
+        value = `${values.shift()}.${values.join('')}`;
       }
       if (isNegative) {
-        value = '-' + value;
+        value = `-${value}`;
       }
     }
     return value;
   }
 
   getFormatOptions(): Intl.NumberFormatOptions | undefined {
-    return;
+    return undefined;
   }
 
   getFormatter() {
@@ -261,9 +268,6 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
 @observer
 export default class ObserverNumberField extends NumberField<NumberFieldProps> {
   static defaultProps = NumberField.defaultProps;
-  static format = formatNumber;
-}
 
-function getCurrentValidValue(value: string): number {
-  return Number(value.replace(/\.$/, '')) || 0;
+  static format = formatNumber;
 }

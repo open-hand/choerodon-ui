@@ -14,6 +14,7 @@ export interface AnchorLinkProps {
 
 export default class AnchorLink extends Component<AnchorLinkProps, any> {
   static displayName = 'AnchorLink';
+
   static defaultProps = {
     href: '#',
   };
@@ -27,23 +28,30 @@ export default class AnchorLink extends Component<AnchorLinkProps, any> {
   };
 
   componentDidMount() {
-    this.context.c7nAnchor.registerLink(this.props.href);
+    const { c7nAnchor } = this.context;
+    const { href } = this.props;
+    c7nAnchor.registerLink(href);
   }
 
   componentDidUpdate({ href: prevHref }: AnchorLinkProps) {
     const { href } = this.props;
     if (prevHref !== href) {
-      this.context.c7nAnchor.unregisterLink(prevHref);
-      this.context.c7nAnchor.registerLink(href);
+      const { c7nAnchor } = this.context;
+      c7nAnchor.unregisterLink(prevHref);
+      c7nAnchor.registerLink(href);
     }
   }
 
   componentWillUnmount() {
-    this.context.c7nAnchor.unregisterLink(this.props.href);
+    const { c7nAnchor } = this.context;
+    const { href } = this.props;
+    c7nAnchor.unregisterLink(href);
   }
 
   handleClick = (e: React.MouseEvent<HTMLElement>) => {
-    const { scrollTo, onClick } = this.context.c7nAnchor;
+    const {
+      c7nAnchor: { scrollTo, onClick },
+    } = this.context;
     const { href, title } = this.props;
     if (onClick) {
       onClick(e, { title, href });
@@ -52,9 +60,10 @@ export default class AnchorLink extends Component<AnchorLinkProps, any> {
   };
 
   render() {
+    const { c7nAnchor } = this.context;
     const { prefixCls: customizePrefixCls, href, title, children, className } = this.props;
     const prefixCls = getPrefixCls('anchor', customizePrefixCls);
-    const active = this.context.c7nAnchor.activeLink === href;
+    const active = c7nAnchor.activeLink === href;
     const wrapperClassName = classNames(className, `${prefixCls}-link`, {
       [`${prefixCls}-link-active`]: active,
     });

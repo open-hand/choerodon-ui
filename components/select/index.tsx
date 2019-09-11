@@ -1,4 +1,12 @@
-import React, { ClassicComponentClass, Component, CSSProperties, KeyboardEvent, MouseEvent, ReactElement, ReactNode } from 'react';
+import React, {
+  ClassicComponentClass,
+  Component,
+  CSSProperties,
+  KeyboardEvent,
+  MouseEvent,
+  ReactElement,
+  ReactNode,
+} from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Size } from '../_util/enum';
@@ -67,8 +75,8 @@ export interface SelectProps extends AbstractSelectProps {
   getRootDomNode?: () => HTMLElement;
   showCheckAll?: boolean;
   filter?: boolean;
-  footer?: ReactNode | string,
-  choiceRender?: (label: ReactElement<any>, value: SelectValue) => any,
+  footer?: ReactNode | string;
+  choiceRender?: (label: ReactElement<any>, value: SelectValue) => any;
   loading?: boolean | object;
   onFilterChange?: (value: string) => void;
   choiceRemove?: boolean;
@@ -94,45 +102,14 @@ export interface SelectLocale {
   filterPlaceholder?: string;
 }
 
-const SelectPropTypes = {
-  prefixCls: PropTypes.string,
-  className: PropTypes.string,
-  size: PropTypes.oneOf([Size.default, Size.large, Size.small]),
-  combobox: PropTypes.bool,
-  notFoundContent: PropTypes.any,
-  showSearch: PropTypes.bool,
-  optionLabelProp: PropTypes.string,
-  transitionName: PropTypes.string,
-  choiceTransitionName: PropTypes.string,
-  showNotFindInputItem: PropTypes.bool,
-  showNotFindSelectedItem: PropTypes.bool,
-  filter: PropTypes.bool,
-  showCheckAll: PropTypes.bool,
-  footer: PropTypes.oneOfType([
-    PropTypes.node,
-    PropTypes.string,
-  ]),
-  choiceRender: PropTypes.func,
-  loading: PropTypes.oneOfType([
-    PropTypes.bool,
-    PropTypes.object,
-  ]),
-  filterValue: PropTypes.string,
-  onFilterChange: PropTypes.func,
-  choiceRemove: PropTypes.oneOfType([
-    PropTypes.bool,
-    PropTypes.func,
-  ]),
-  onChoiceRemove: PropTypes.func,
-  onClear: PropTypes.func,
-};
-
 // => It is needless to export the declaration of below two inner components.
 // export { Option, OptGroup };
 
 export default class Select extends Component<SelectProps, {}> {
   static displayName = 'Select';
+
   static Option = Option as ClassicComponentClass<OptionProps>;
+
   static OptGroup = OptGroup as ClassicComponentClass<OptGroupProps>;
 
   static defaultProps = {
@@ -146,7 +123,31 @@ export default class Select extends Component<SelectProps, {}> {
     border: true,
   };
 
-  static propTypes = SelectPropTypes;
+  static propTypes = {
+    prefixCls: PropTypes.string,
+    className: PropTypes.string,
+    size: PropTypes.oneOf([Size.default, Size.large, Size.small]),
+    combobox: PropTypes.bool,
+    notFoundContent: PropTypes.any,
+    showSearch: PropTypes.bool,
+    optionLabelProp: PropTypes.string,
+    transitionName: PropTypes.string,
+    choiceTransitionName: PropTypes.string,
+    showNotFindInputItem: PropTypes.bool,
+    showNotFindSelectedItem: PropTypes.bool,
+    filter: PropTypes.bool,
+    showCheckAll: PropTypes.bool,
+    footer: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
+    choiceRender: PropTypes.func,
+    loading: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+    filterValue: PropTypes.string,
+    onFilterChange: PropTypes.func,
+    choiceRemove: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
+    onChoiceRemove: PropTypes.func,
+    onClear: PropTypes.func,
+    border: PropTypes.bool,
+    blurChange: PropTypes.bool,
+  };
 
   private rcSelect: any;
 
@@ -173,18 +174,15 @@ export default class Select extends Component<SelectProps, {}> {
   }
 
   renderSelect = (locale: SelectLocale) => {
-    const {
-      prefixCls: customizePrefixCls,
-      className = '',
-      size,
-      mode,
-      ...restProps
-    } = this.props;
+    const { prefixCls: customizePrefixCls, className = '', size, mode, ...restProps } = this.props;
     const prefixCls = getPrefixCls('select', customizePrefixCls);
-    const cls = classNames({
-      [`${prefixCls}-lg`]: size === Size.large,
-      [`${prefixCls}-sm`]: size === Size.small,
-    }, className);
+    const cls = classNames(
+      {
+        [`${prefixCls}-lg`]: size === Size.large,
+        [`${prefixCls}-sm`]: size === Size.small,
+      },
+      className,
+    );
 
     let { optionLabelProp } = this.props;
     const isCombobox = mode === SelectMode.combobox;
@@ -215,10 +213,7 @@ export default class Select extends Component<SelectProps, {}> {
 
   render() {
     return (
-      <LocaleReceiver
-        componentName="Select"
-        defaultLocale={defaultLocale.Select}
-      >
+      <LocaleReceiver componentName="Select" defaultLocale={defaultLocale.Select}>
         {this.renderSelect}
       </LocaleReceiver>
     );

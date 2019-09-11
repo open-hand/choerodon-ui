@@ -3,10 +3,12 @@ import { mount, render } from 'enzyme';
 import Table from '..';
 
 describe('Table.rowSelection', () => {
-  const columns = [{
-    title: 'Name',
-    dataIndex: 'name',
-  }];
+  const columns = [
+    {
+      title: 'Name',
+      dataIndex: 'name',
+    },
+  ];
 
   const data = [
     { key: 0, name: 'Jack' },
@@ -16,14 +18,7 @@ describe('Table.rowSelection', () => {
   ];
 
   function createTable(props = {}) {
-    return (
-      <Table
-        columns={columns}
-        dataSource={data}
-        rowSelection={{}}
-        {...props}
-      />
-    );
+    return <Table columns={columns} dataSource={data} rowSelection={{}} {...props} />;
   }
 
   function renderedNames(wrapper) {
@@ -149,9 +144,12 @@ describe('Table.rowSelection', () => {
     };
     const wrapper = mount(createTable({ rowSelection }));
 
-    wrapper.find('input').last().simulate('change', { target: { checked: true } });
+    wrapper
+      .find('input')
+      .last()
+      .simulate('change', { target: { checked: true } });
 
-    expect(handleChange).toBeCalledWith([3], [{ key: 3, name: 'Jerry' }]);
+    expect(handleChange).toHaveBeenCalledWith([3], [{ key: 3, name: 'Jerry' }]);
     expect(handleSelect.mock.calls.length).toBe(1);
     expect(handleSelect.mock.calls[0][0]).toEqual({ key: 3, name: 'Jerry' });
     expect(handleSelect.mock.calls[0][1]).toEqual(true);
@@ -166,11 +164,17 @@ describe('Table.rowSelection', () => {
     };
     const wrapper = mount(createTable({ rowSelection }));
 
-    wrapper.find('.c7n-checkbox-input').first().simulate('change', { target: { checked: true } });
-    expect(handleSelectAll).toBeCalledWith(true, data, data);
+    wrapper
+      .find('.c7n-checkbox-input')
+      .first()
+      .simulate('change', { target: { checked: true } });
+    expect(handleSelectAll).toHaveBeenCalledWith(true, data, data);
 
-    wrapper.find('.c7n-checkbox-input').first().simulate('change', { target: { checked: false } });
-    expect(handleSelectAll).toBeCalledWith(false, [], data);
+    wrapper
+      .find('.c7n-checkbox-input')
+      .first()
+      .simulate('change', { target: { checked: false } });
+    expect(handleSelectAll).toHaveBeenCalledWith(false, [], data);
   });
 
   it('render with default selection correctly', () => {
@@ -178,7 +182,13 @@ describe('Table.rowSelection', () => {
       selections: true,
     };
     const wrapper = mount(createTable({ rowSelection }));
-    const dropdownWrapper = render(wrapper.find('Trigger').at(2).instance().getComponent());
+    const dropdownWrapper = render(
+      wrapper
+        .find('Trigger')
+        .at(2)
+        .instance()
+        .getComponent(),
+    );
     expect(dropdownWrapper).toMatchSnapshot();
   });
 
@@ -190,10 +200,19 @@ describe('Table.rowSelection', () => {
     };
     const wrapper = mount(createTable({ rowSelection }));
 
-    const dropdownWrapper = mount(wrapper.find('Trigger').at(2).instance().getComponent());
-    dropdownWrapper.find('.c7n-dropdown-menu-item > div').first().simulate('click');
+    const dropdownWrapper = mount(
+      wrapper
+        .find('Trigger')
+        .at(2)
+        .instance()
+        .getComponent(),
+    );
+    dropdownWrapper
+      .find('.c7n-dropdown-menu-item > div')
+      .first()
+      .simulate('click');
 
-    expect(handleSelectAll).toBeCalledWith(true, data, data);
+    expect(handleSelectAll).toHaveBeenCalledWith(true, data, data);
   });
 
   it('fires selectInvert event', () => {
@@ -206,51 +225,84 @@ describe('Table.rowSelection', () => {
     const checkboxes = wrapper.find('.c7n-checkbox-input');
 
     checkboxes.at(1).simulate('change', { target: { checked: true } });
-    const dropdownWrapper = mount(wrapper.find('Trigger').at(2).instance().getComponent());
-    dropdownWrapper.find('.c7n-dropdown-menu-item > div').at(1).simulate('click');
+    const dropdownWrapper = mount(
+      wrapper
+        .find('Trigger')
+        .at(2)
+        .instance()
+        .getComponent(),
+    );
+    dropdownWrapper
+      .find('.c7n-dropdown-menu-item > div')
+      .at(1)
+      .simulate('click');
 
-    expect(handleSelectInvert).toBeCalledWith([1, 2, 3]);
+    expect(handleSelectInvert).toHaveBeenCalledWith([1, 2, 3]);
   });
 
   it('fires selection event', () => {
     const handleSelectOdd = jest.fn();
     const handleSelectEven = jest.fn();
     const rowSelection = {
-      selections: [{
-        key: 'odd',
-        text: '奇数项',
-        onSelect: handleSelectOdd,
-      }, {
-        key: 'even',
-        text: '偶数项',
-        onSelect: handleSelectEven,
-      }],
+      selections: [
+        {
+          key: 'odd',
+          text: '奇数项',
+          onSelect: handleSelectOdd,
+        },
+        {
+          key: 'even',
+          text: '偶数项',
+          onSelect: handleSelectEven,
+        },
+      ],
     };
     const wrapper = mount(createTable({ rowSelection }));
 
-    const dropdownWrapper = mount(wrapper.find('Trigger').at(2).instance().getComponent());
+    const dropdownWrapper = mount(
+      wrapper
+        .find('Trigger')
+        .at(2)
+        .instance()
+        .getComponent(),
+    );
     expect(dropdownWrapper.find('.c7n-dropdown-menu-item').length).toBe(4);
 
-    dropdownWrapper.find('.c7n-dropdown-menu-item > div').at(2).simulate('click');
-    expect(handleSelectOdd).toBeCalledWith([0, 1, 2, 3]);
+    dropdownWrapper
+      .find('.c7n-dropdown-menu-item > div')
+      .at(2)
+      .simulate('click');
+    expect(handleSelectOdd).toHaveBeenCalledWith([0, 1, 2, 3]);
 
-    dropdownWrapper.find('.c7n-dropdown-menu-item > div').at(3).simulate('click');
-    expect(handleSelectEven).toBeCalledWith([0, 1, 2, 3]);
+    dropdownWrapper
+      .find('.c7n-dropdown-menu-item > div')
+      .at(3)
+      .simulate('click');
+    expect(handleSelectEven).toHaveBeenCalledWith([0, 1, 2, 3]);
   });
 
   it('could hide default selection options', () => {
     const rowSelection = {
       hideDefaultSelections: true,
-      selections: [{
-        key: 'odd',
-        text: '奇数项',
-      }, {
-        key: 'even',
-        text: '偶数项',
-      }],
+      selections: [
+        {
+          key: 'odd',
+          text: '奇数项',
+        },
+        {
+          key: 'even',
+          text: '偶数项',
+        },
+      ],
     };
     const wrapper = mount(createTable({ rowSelection }));
-    const dropdownWrapper = mount(wrapper.find('Trigger').at(2).instance().getComponent());
+    const dropdownWrapper = mount(
+      wrapper
+        .find('Trigger')
+        .at(2)
+        .instance()
+        .getComponent(),
+    );
     expect(dropdownWrapper.find('.c7n-dropdown-menu-item').length).toBe(2);
   });
 
@@ -259,26 +311,41 @@ describe('Table.rowSelection', () => {
     const handleSelectEven = jest.fn();
     const rowSelection = {
       hideDefaultSelections: true,
-      selections: [{
-        key: 'odd',
-        text: '奇数项',
-        onSelect: handleSelectOdd,
-      }, {
-        key: 'even',
-        text: '偶数项',
-        onSelect: handleSelectEven,
-      }],
+      selections: [
+        {
+          key: 'odd',
+          text: '奇数项',
+          onSelect: handleSelectOdd,
+        },
+        {
+          key: 'even',
+          text: '偶数项',
+          onSelect: handleSelectEven,
+        },
+      ],
     };
     const wrapper = mount(createTable({ rowSelection }));
 
-    const dropdownWrapper = mount(wrapper.find('Trigger').at(2).instance().getComponent());
+    const dropdownWrapper = mount(
+      wrapper
+        .find('Trigger')
+        .at(2)
+        .instance()
+        .getComponent(),
+    );
     expect(dropdownWrapper.find('.c7n-dropdown-menu-item').length).toBe(2);
 
-    dropdownWrapper.find('.c7n-dropdown-menu-item > div').at(0).simulate('click');
-    expect(handleSelectOdd).toBeCalledWith([0, 1, 2, 3]);
+    dropdownWrapper
+      .find('.c7n-dropdown-menu-item > div')
+      .at(0)
+      .simulate('click');
+    expect(handleSelectOdd).toHaveBeenCalledWith([0, 1, 2, 3]);
 
-    dropdownWrapper.find('.c7n-dropdown-menu-item > div').at(1).simulate('click');
-    expect(handleSelectEven).toBeCalledWith([0, 1, 2, 3]);
+    dropdownWrapper
+      .find('.c7n-dropdown-menu-item > div')
+      .at(1)
+      .simulate('click');
+    expect(handleSelectEven).toHaveBeenCalledWith([0, 1, 2, 3]);
   });
 
   it('handles disabled checkbox correctly when dataSource changes', () => {
@@ -291,7 +358,7 @@ describe('Table.rowSelection', () => {
       { key: 1, name: 'Lucy', disabled: true },
     ];
     wrapper.setProps({ dataSource: newData });
-    wrapper.find('.c7n-checkbox-input').forEach((checkbox) => {
+    wrapper.find('.c7n-checkbox-input').forEach(checkbox => {
       expect(checkbox.props().disabled).toBe(true);
     });
   });
@@ -304,26 +371,52 @@ describe('Table.rowSelection', () => {
         name: i.toString(),
       });
     }
-    const wrapper = mount(createTable({
-      rowSelection: {},
-      dataSource: newData,
-    }));
+    const wrapper = mount(
+      createTable({
+        rowSelection: {},
+        dataSource: newData,
+      }),
+    );
     wrapper.find('.c7n-pagination-next').simulate('click'); // switch to second page
-    wrapper.find('input').first().simulate('change', { target: { checked: true } });
+    wrapper
+      .find('input')
+      .first()
+      .simulate('change', { target: { checked: true } });
     wrapper.update();
-    expect(renderedNames(wrapper)).toEqual(['10', '11', '12', '13', '14', '15', '16', '17', '18', '19']);
+    expect(renderedNames(wrapper)).toEqual([
+      '10',
+      '11',
+      '12',
+      '13',
+      '14',
+      '15',
+      '16',
+      '17',
+      '18',
+      '19',
+    ]);
   });
 
   it('highlight selected row', () => {
     const wrapper = mount(createTable());
-    wrapper.find('input').at(1).simulate('change', { target: { checked: true } });
-    expect(wrapper.find('tbody tr').at(0).hasClass('c7n-table-row-selected')).toBe(true);
+    wrapper
+      .find('input')
+      .at(1)
+      .simulate('change', { target: { checked: true } });
+    expect(
+      wrapper
+        .find('tbody tr')
+        .at(0)
+        .hasClass('c7n-table-row-selected'),
+    ).toBe(true);
   });
 
   it('fix selection column on the left', () => {
-    const wrapper = render(createTable({
-      rowSelection: { fixed: true },
-    }));
+    const wrapper = render(
+      createTable({
+        rowSelection: { fixed: true },
+      }),
+    );
 
     expect(wrapper).toMatchSnapshot();
   });

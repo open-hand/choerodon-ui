@@ -15,6 +15,26 @@ import UploadList from './UploadList';
 import Tooltip from '../tooltip/Tooltip';
 import { $l } from '../locale-context';
 
+/**
+ * 把XMLHttpRequest对象的返回信息转化为字符串
+ *
+ * @param {XMLHttpRequest} xhr
+ * @returns {string}
+ * @memberof Upload
+ */
+function getResponse(xhr: XMLHttpRequest): string {
+  const res = xhr.responseText || xhr.response;
+  if (!res) {
+    return res;
+  }
+
+  try {
+    return JSON.parse(res).message;
+  } catch (e) {
+    return '';
+  }
+}
+
 export interface UploadProps extends FormFieldProps {
   /**
    *  可接受的上传文件类型
@@ -106,7 +126,6 @@ export interface UploadProps extends FormFieldProps {
 
 @observer
 export default class Upload extends FormField<UploadProps> {
-
   static displayName = 'Upload';
 
   static propTypes = {
@@ -214,7 +233,7 @@ export default class Upload extends FormField<UploadProps> {
     return otherProps;
   }
 
-  saveNativeInputElement = (elem) => this.nativeInputElement = elem;
+  saveNativeInputElement = elem => (this.nativeInputElement = elem);
 
   /**
    * 传递包装按钮的点击事件
@@ -242,10 +261,10 @@ export default class Upload extends FormField<UploadProps> {
     } = this;
 
     const uploadProps = {
-      multiple: multiple,
+      multiple,
       accept: accept ? accept.join(',') : undefined,
       action: formAction,
-      name: name,
+      name,
       type: 'file',
       ref: this.saveNativeInputElement,
       onChange: this.handleChange,
@@ -261,10 +280,7 @@ export default class Upload extends FormField<UploadProps> {
     ];
 
     const uploadBtn = (
-      <Tooltip
-        title={$l('Upload', 'click_to_upload')}
-        placement="right"
-      >
+      <Tooltip title={$l('Upload', 'click_to_upload')} placement="right">
         <Button color={ButtonColor.primary} onClick={this.handleUploadBtnClick}>
           <Icon type="file_upload" />
         </Button>
@@ -278,9 +294,7 @@ export default class Upload extends FormField<UploadProps> {
             {inputWrapperBtn}
             {!uploadImmediately && showUploadBtn ? uploadBtn : null}
           </div>
-          <div>
-            {extra}
-          </div>
+          <div>{extra}</div>
         </div>
 
         <UploadList
@@ -299,7 +313,8 @@ export default class Upload extends FormField<UploadProps> {
 
   startUpload = () => {
     const fileList = [...this.fileList];
-    if (fileList.length) { // <-- 当有文件时才上传
+    if (fileList.length) {
+      // <-- 当有文件时才上传
       this.uploadFiles(fileList);
       this.nativeInputElement.value = '';
     } else {
@@ -368,7 +383,7 @@ export default class Upload extends FormField<UploadProps> {
     const that = this;
     files.forEach((file: UploadFile, index: number) => {
       file.uid = this.getUid(index);
-      setTimeout(function () {
+      setTimeout(function() {
         // that.handleStart(file);
         that.upload(file);
       }, 0);
@@ -384,12 +399,7 @@ export default class Upload extends FormField<UploadProps> {
    */
   @autobind
   upload(file: any): void {
-    const {
-      data,
-      action: formAction,
-      headers,
-      name: filename,
-    } = this.props;
+    const { data, action: formAction, headers, name: filename } = this.props;
     if (typeof XMLHttpRequest === 'undefined') {
       return;
     }
@@ -400,10 +410,10 @@ export default class Upload extends FormField<UploadProps> {
     file.status = 'uploading';
 
     if (xhr.upload) {
-      xhr.upload.onprogress = (e) => {
+      xhr.upload.onprogress = e => {
         let percent = 0;
         if (e.total > 0) {
-          percent = e.loaded / e.total * 100;
+          percent = (e.loaded / e.total) * 100;
         }
         this.handleProgress(percent, file);
       };
@@ -422,24 +432,24 @@ export default class Upload extends FormField<UploadProps> {
       if (isSuccessful) {
         this.handleSuccess(xhr.status, xhr.response, file);
       } else {
-        this.handleError(new Error(errorMsg), this.getResponse(xhr), xhr.response, file);
+        this.handleError(new Error(errorMsg), getResponse(xhr), xhr.response, file);
       }
     };
     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     if (headers !== undefined) {
-      Object.keys(headers).forEach((key) => {
-        if (headers.hasOwnProperty(key)) {
+      Object.keys(headers).forEach(key => {
+        if ({}.hasOwnProperty.call(headers, key)) {
           xhr.setRequestHeader(key, headers[key]);
         }
       });
     }
     xhr.send(formData);
     xhr.onerror = () => {
-      this.handleError(new Error(errorMsg), this.getResponse(xhr), xhr.response, file);
+      this.handleError(new Error(errorMsg), getResponse(xhr), xhr.response, file);
     };
     xhr.ontimeout = () => {
       const timeoutMsg = `The request post for ${action} timed out`;
-      this.handleError(new Error(timeoutMsg), this.getResponse(xhr), xhr.response, file);
+      this.handleError(new Error(timeoutMsg), getResponse(xhr), xhr.response, file);
     };
   }
 
@@ -453,21 +463,18 @@ export default class Upload extends FormField<UploadProps> {
    * @returns
    */
   @action
-  handleSuccess = (status: number, response: any, file: UploadFile) => {
-    const fileList = this.fileList.slice();
-    const targetItem = this.getFileItem(file, fileList);
-    const { onUploadSuccess } = this.props;
-    if (!targetItem) {
-      return;
+  handleSuccess(status: number, response: any, file: UploadFile) {
+    const targetItem = this.getFileItem(file);
+    if (targetItem) {
+      const { onUploadSuccess } = this.props;
+      targetItem.status = status === 200 ? 'success' : 'done';
+      targetItem.response = response;
+      if (onUploadSuccess) {
+        onUploadSuccess(response, file);
+      }
+      this.forceUpdate();
     }
-    targetItem.status = status === 200 ? 'success' : 'done';
-    targetItem.response = response;
-    this.fileList = fileList;
-
-    if (onUploadSuccess) {
-      onUploadSuccess(response, file);
-    }
-  };
+  }
 
   /**
    * 处理上传进度变化的函数，更新文件对象中的percent值，
@@ -478,19 +485,17 @@ export default class Upload extends FormField<UploadProps> {
    * @returns
    */
   @action
-  handleProgress = (percent: number, file: UploadFile) => {
+  handleProgress(percent: number, file: UploadFile) {
     const { onUploadProgress } = this.props;
-    const fileList = [...this.fileList];
-    const targetItem = this.getFileItem(file, fileList);
-    if (!targetItem) {
-      return;
+    const targetItem = this.getFileItem(file);
+    if (targetItem) {
+      targetItem.percent = percent;
+      if (onUploadProgress) {
+        onUploadProgress(percent, file);
+      }
+      this.forceUpdate();
     }
-    targetItem.percent = percent;
-    this.fileList = fileList;
-    if (onUploadProgress) {
-      onUploadProgress(percent, file);
-    }
-  };
+  }
 
   /**
    * 处理上传出错的函数，用于设置文件对象的status值，
@@ -501,26 +506,22 @@ export default class Upload extends FormField<UploadProps> {
    * @returns
    */
   @action
-  handleError = (error: Error, responseText: string, response: any, file: UploadFile) => {
+  handleError(error: Error, responseText: string, response: any, file: UploadFile) {
     const { onUploadError } = this.props;
-    const fileList = this.fileList.slice();
-    const targetItem = this.getFileItem(file, fileList);
-    if (!targetItem) {
-      return;
+    const targetItem = this.getFileItem(file);
+    if (targetItem) {
+      targetItem.status = 'error';
+      targetItem.error = error;
+      targetItem.response = responseText;
+      if (onUploadError) {
+        onUploadError(error, response, file);
+      }
+      this.forceUpdate();
     }
-    if (onUploadError) {
-      onUploadError(error, response, file);
-    }
-    targetItem.status = 'error';
-    targetItem.error = error;
-    targetItem.response = responseText;
-    this.fileList = fileList;
-  };
+  }
 
   handleRemove = (file: UploadFile) => {
-    runInAction(() => {
-      this.fileList = this.removeFileItem(file, this.fileList);
-    });
+    this.removeFileItem(file);
   };
 
   /**
@@ -536,39 +537,14 @@ export default class Upload extends FormField<UploadProps> {
     if (!accept) {
       return true;
     }
-    const acceptTypes = accept.map((type) => {
+    const acceptTypes = accept.map(type => {
       type = type.replace(/\./g, '\\.');
       type = type.replace(/\*/g, '.*');
       return new RegExp(type);
     });
-    for (const file of fileList) {
-      for (const type of acceptTypes) {
-        if (type.test(file.name) || type.test(file.type)) {
-          return true;
-        }
-      }
-    }
-    return false;
-  }
-
-  /**
-   * 把XMLHttpRequest对象的返回信息转化为字符串
-   *
-   * @param {XMLHttpRequest} xhr
-   * @returns {string}
-   * @memberof Upload
-   */
-  getResponse(xhr: XMLHttpRequest): string {
-    const res = xhr.responseText || xhr.response;
-    if (!res) {
-      return res;
-    }
-
-    try {
-      return JSON.parse(res).message;
-    } catch (e) {
-      return '';
-    }
+    return fileList.some(({ name, type }) =>
+      acceptTypes.some(acceptType => acceptType.test(name) || acceptType.test(type)),
+    );
   }
 
   /**
@@ -593,9 +569,9 @@ export default class Upload extends FormField<UploadProps> {
    * @returns {UploadFile}
    * @memberof Upload
    */
-  getFileItem(file: UploadFile, fileList: UploadFile[]): UploadFile {
+  getFileItem(file: UploadFile): UploadFile | undefined {
     const matchKey = file.uid !== undefined ? 'uid' : 'name';
-    return fileList.filter(item => item[matchKey] === file[matchKey])[0];
+    return this.fileList.find(item => item[matchKey] === file[matchKey]);
   }
 
   /**
@@ -607,12 +583,11 @@ export default class Upload extends FormField<UploadProps> {
    * @returns {UploadFile[]}
    * @memberof Upload
    */
-  removeFileItem(file: UploadFile, fileList: UploadFile[]): UploadFile[] {
+  @action
+  removeFileItem(file: UploadFile): void {
+    const { fileList } = this;
     const matchKey = file.uid !== undefined ? 'uid' : 'name';
-    const removed = fileList.filter(item => item[matchKey] !== file[matchKey]);
-    if (removed.length === fileList.length) {
-      return [];
-    }
-    return removed;
+    const index = fileList.findIndex(item => item[matchKey] === file[matchKey]);
+    fileList.splice(index, 1);
   }
 }

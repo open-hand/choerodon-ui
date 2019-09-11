@@ -66,15 +66,21 @@ export default class Handle extends Component {
 
   render() {
     const {
-      prefixCls, vertical, offset, style, disabled, min, max, value, tabIndex, ...restProps,
+      prefixCls,
+      vertical,
+      offset,
+      style,
+      disabled,
+      min,
+      max,
+      value,
+      tabIndex,
+      ...restProps
     } = this.props;
 
-    const className = classNames(
-      this.props.className,
-      {
-        [`${prefixCls}-handle-click-focused`]: this.state.clickFocused,
-      },
-    );
+    const className = classNames(this.props.className, {
+      [`${prefixCls}-handle-click-focused`]: this.state.clickFocused,
+    });
 
     const postionStyle = vertical ? { bottom: `${offset}%` } : { left: `${offset}%` };
     const elStyle = {
@@ -96,7 +102,7 @@ export default class Handle extends Component {
       <div
         ref={node => (this.handle = node)}
         role="slider"
-        tabIndex={disabled ? null : (tabIndex || 0)}
+        tabIndex={disabled ? null : tabIndex || 0}
         {...ariaProps}
         {...restProps}
         className={className}

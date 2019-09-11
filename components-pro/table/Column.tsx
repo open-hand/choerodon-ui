@@ -1,18 +1,18 @@
 import { Component, ComponentState, CSSProperties, ReactElement, ReactNode } from 'react';
 import PropTypes from 'prop-types';
+import { get } from 'mobx';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import { FormFieldProps, Renderer } from '../field/FormField';
 import { ElementProps } from '../core/ViewComponent';
 import { ColumnAlign, ColumnLock } from './enum';
-import { get } from 'mobx';
 import { ShowHelp } from '../field/enum';
 import { Commands } from './Table';
 
 export const defaultMinWidth = 100;
 
-export type onCellProps = { dataSet: DataSet, record: Record, column: ColumnProps };
-export type commandProps = { dataSet: DataSet, record: Record };
+export type onCellProps = { dataSet: DataSet; record: Record; column: ColumnProps };
+export type commandProps = { dataSet: DataSet; record: Record };
 
 export interface ColumnProps extends ElementProps {
   /**
@@ -43,7 +43,10 @@ export interface ColumnProps extends ElementProps {
   /**
    * 编辑器
    */
-  editor?: ReactElement<FormFieldProps> | ((record: Record, name?: string) => ReactElement<FormFieldProps>) | true;
+  editor?:
+    | ReactElement<FormFieldProps>
+    | ((record: Record, name?: string) => ReactElement<FormFieldProps>)
+    | true;
   /**
    * 是否锁定
    * 可选值： false | true | 'left' | 'right'
@@ -107,9 +110,10 @@ export interface ColumnProps extends ElementProps {
    * 给内置按钮加属性：command={[['edit', { color: 'red' }], ...]}
    */
   command?: Commands[] | ((props: commandProps) => Commands[]);
+  hidden?: boolean;
   children?: ColumnProps[];
 }
-
+/* eslint-disable react/prefer-stateless-function,react/no-unused-prop-types */
 export default class Column extends Component<ColumnProps, ComponentState> {
   static propTypes = {
     /**
@@ -146,9 +150,7 @@ export default class Column extends Component<ColumnProps, ComponentState> {
      * 可选值： false | true | 'left' | 'right'
      * @default false
      */
-    lock: PropTypes.oneOf([
-      ColumnLock.left, ColumnLock.right, true, false,
-    ]),
+    lock: PropTypes.oneOf([ColumnLock.left, ColumnLock.right, true, false]),
     /**
      * 文字对齐方式
      * 可选值： 'left' | 'center' | 'right'
@@ -181,11 +183,8 @@ export default class Column extends Component<ColumnProps, ComponentState> {
      * 显示提示信息的方式
      *
      */
-    showHelp: PropTypes.oneOf([
-      ShowHelp.tooltip,
-      ShowHelp.newLine,
-      ShowHelp.none,
-    ]),
+    showHelp: PropTypes.oneOf([ShowHelp.tooltip, ShowHelp.newLine, ShowHelp.none]),
+    hidden: PropTypes.bool,
     colSpan: PropTypes.number,
     rowSpan: PropTypes.number,
     children: PropTypes.array,
@@ -209,8 +208,8 @@ export function minColumnWidth(col) {
   }
   const width = get(col, 'width');
   const min = get(col, 'minWidth');
-  const minWidth = min === void 0 ? defaultMinWidth : min;
-  if (width === void 0) {
+  const minWidth = min === undefined ? defaultMinWidth : min;
+  if (width === undefined) {
     return minWidth;
   }
   return Math.min(width, minWidth);
@@ -222,9 +221,9 @@ export function columnWidth(col) {
     return 0;
   }
   const width = get(col, 'width');
-  if (width === void 0) {
+  if (width === undefined) {
     const minWidth = get(col, 'minWidth');
-    if (minWidth === void 0) {
+    if (minWidth === undefined) {
       return defaultMinWidth;
     }
     return minWidth;

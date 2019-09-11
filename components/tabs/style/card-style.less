@@ -1,7 +1,7 @@
-@import "../../style/themes/default";
-@import "../../style/mixins/index";
+@import '../../style/themes/default';
+@import '../../style/mixins/index';
 
-@tab-prefix-cls: ~"@{c7n-prefix}-tabs";
+@tab-prefix-cls: ~'@{c7n-prefix}-tabs';
 
 // card style
 .@{tab-prefix-cls} {
@@ -13,20 +13,20 @@
   }
   &&-card > &-bar &-tab {
     margin: 0;
+    margin-right: 0.02rem;
+    padding: 0 0.16rem;
+    line-height: @tabs-card-height - 0.02rem;
+    background: @tabs-card-head-background;
     border: @border-width-base @border-style-base @border-color-split;
     border-bottom: 0;
     border-radius: @border-radius-base @border-radius-base 0 0;
-    background: @tabs-card-head-background;
-    margin-right: .02rem;
-    padding: 0 .16rem;
     transition: all 0.3s @ease-in-out;
-    line-height: @tabs-card-height - .02rem;
   }
   &&-card > &-bar &-tab-active {
+    padding-bottom: 0.01rem;
+    color: @tabs-card-active-color;
     background: @component-background;
     border-color: @border-color-split;
-    color: @tabs-card-active-color;
-    padding-bottom: .01rem;
   }
   &&-card > &-bar &-tab-inactive {
     padding: 0;
@@ -35,16 +35,16 @@
     margin-bottom: 0;
   }
   &&-card > &-bar &-tab .@{iconfont-css-prefix}-close {
-    color: @text-color-secondary;
-    transition: all .3s;
-    font-size: @font-size-sm;
-    margin-left: .03rem;
-    margin-right: -.05rem;
-    overflow: hidden;
-    vertical-align: middle;
-    width: .16rem;
-    height: .16rem;
+    width: 0.16rem;
+    height: 0.16rem;
     height: @font-size-base;
+    margin-right: -0.05rem;
+    margin-left: 0.03rem;
+    overflow: hidden;
+    color: @text-color-secondary;
+    font-size: @font-size-sm;
+    vertical-align: middle;
+    transition: all 0.3s;
     &:hover {
       color: @heading-color;
     }
@@ -66,16 +66,16 @@
     line-height: @tabs-card-height;
 
     .@{tab-prefix-cls}-new-tab {
-      width: .2rem;
-      height: .2rem;
-      line-height: .2rem;
-      text-align: center;
-      cursor: pointer;
-      border-radius: @border-radius-sm;
-      border: @border-width-base @border-style-base @border-color-split;
-      font-size: .12rem;
+      width: 0.2rem;
+      height: 0.2rem;
       color: @text-color;
-      transition: all .3s;
+      font-size: 0.12rem;
+      line-height: 0.2rem;
+      text-align: center;
+      border: @border-width-base @border-style-base @border-color-split;
+      border-radius: @border-radius-sm;
+      cursor: pointer;
+      transition: all 0.3s;
       &:hover {
         color: @tabs-card-active-color;
         border-color: @tabs-card-active-color;
@@ -87,13 +87,13 @@
       height: auto;
     }
     .@{tab-prefix-cls}-tab {
+      margin-bottom: 0.08rem;
       border-bottom: @border-width-base @border-style-base @border-color-split;
-      margin-bottom: .08rem;
       &-active {
-        padding-bottom: .04rem;
+        padding-bottom: 0.04rem;
       }
       &:last-child {
-        margin-bottom: .08rem;
+        margin-bottom: 0.08rem;
       }
     }
     .@{tab-prefix-cls}-new-tab {
@@ -106,12 +106,12 @@
       margin-right: 0;
     }
     .@{tab-prefix-cls}-tab {
+      margin-right: 0.01rem;
       border-right: 0;
       border-radius: @border-radius-base 0 0 @border-radius-base;
-      margin-right: .01rem;
       &-active {
-        margin-right: -.01rem;
-        padding-right: .18rem;
+        margin-right: -0.01rem;
+        padding-right: 0.18rem;
       }
     }
   }
@@ -121,24 +121,24 @@
       margin-left: 0;
     }
     .@{tab-prefix-cls}-tab {
+      margin-left: 0.01rem;
       border-left: 0;
       border-radius: 0 @border-radius-base @border-radius-base 0;
-      margin-left: .01rem;
       &-active {
-        margin-left: -.01rem;
-        padding-left: .18rem;
+        margin-left: -0.01rem;
+        padding-left: 0.18rem;
       }
     }
   }
   &&-card&-bottom > &-bar &-tab {
-    border-bottom: @border-width-base @border-style-base @border-color-split;
     border-top: 0;
+    border-bottom: @border-width-base @border-style-base @border-color-split;
     border-radius: 0 0 @border-radius-base @border-radius-base;
   }
 
   &&-card&-bottom > &-bar &-tab-active {
-    color: @primary-color;
+    padding-top: 0.01rem;
     padding-bottom: 0;
-    padding-top: .01rem;
+    color: @primary-color;
   }
 }

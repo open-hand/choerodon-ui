@@ -12,8 +12,7 @@ function getNodeRect(node): ClientRect {
   return node.getBoundingClientRect();
 }
 
-export interface ColorPickerProps extends TriggerFieldProps {
-}
+export interface ColorPickerProps extends TriggerFieldProps {}
 
 @observer
 export default class ColorPicker extends TriggerField<ColorPickerProps> {
@@ -52,22 +51,24 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
   get defaultValidationMessages(): ValidationMessages | null {
     const label = this.getProp('label');
     return {
-      valueMissing: $l('ColorPicker', label ? 'value_missing_with_label' : 'value_missing', { label }),
+      valueMissing: $l('ColorPicker', label ? 'value_missing_with_label' : 'value_missing', {
+        label,
+      }),
       typeMismatch: $l('ColorPicker', 'type_mismatch'),
     };
   }
 
-  saveGradientRef = node => this.gradient = node;
+  saveGradientRef = node => (this.gradient = node);
 
-  saveSelectPointerRef = node => this.selectPointer = node;
+  saveSelectPointerRef = node => (this.selectPointer = node);
 
-  saveHuePointerRef = node => this.huePointer = node;
+  saveHuePointerRef = node => (this.huePointer = node);
 
-  saveHueRef = node => this.hue = node;
+  saveHueRef = node => (this.hue = node);
 
-  saveOpacityRef = node => this.opacity = node;
+  saveOpacityRef = node => (this.opacity = node);
 
-  saveOpacityPointerRef = node => this.opacityPointer = node;
+  saveOpacityPointerRef = node => (this.opacityPointer = node);
 
   componentDidUpdate() {
     const { popup } = this;
@@ -76,7 +77,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
       const { huePointer, selectPointer, hue, gradient } = this;
       if (huePointer && hue) {
         const { width } = getNodeRect(hue);
-        this.setHuePointer(width * h / 360, huePointer, hue, false);
+        this.setHuePointer((width * h) / 360, huePointer, hue, false);
       }
       if (selectPointer && gradient) {
         const { width, height } = getNodeRect(gradient);
@@ -125,7 +126,10 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
           <div {...huePointerProps} />
         </div>
         <div ref={this.saveOpacityRef} className={`${prefixCls}-popup-footer-slider opacity`}>
-          <div ref={this.saveOpacityPointerRef} className={`${prefixCls}-popup-footer-slider-pointer`} />
+          <div
+            ref={this.saveOpacityPointerRef}
+            className={`${prefixCls}-popup-footer-slider-pointer`}
+          />
         </div>
       </div>
     );
@@ -156,16 +160,16 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
 
   setHSV(h, s, v, a) {
     const { HSV } = this;
-    if (h !== void 0 && h !== HSV.h) {
+    if (h !== undefined && h !== HSV.h) {
       HSV.h = h;
     }
-    if (v !== void 0 && v !== HSV.v) {
+    if (v !== undefined && v !== HSV.v) {
       HSV.v = v;
     }
-    if (s !== void 0 && s !== HSV.s) {
+    if (s !== undefined && s !== HSV.s) {
       HSV.s = s;
     }
-    if (a !== void 0 && a !== HSV.a) {
+    if (a !== undefined && a !== HSV.a) {
       HSV.a = a;
     }
   }
@@ -179,7 +183,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
 
   @autobind
   setColor(color) {
-    if (color !== void 0 && color.slice(0, 1) === '#' && color.length > 3) {
+    if (color !== undefined && color.slice(0, 1) === '#' && color.length > 3) {
       const { gradient, selectPointer, hue, huePointer } = this;
       const { r, g, b, a } = this.hexToRGB(color);
       const { h, s, v } = this.rgbToHSV(r / 255, g / 255, b / 255, a);
@@ -191,7 +195,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
       const left = s * width;
       const top = height - v * height;
       const { width: hueWidth } = getNodeRect(hue);
-      const hueLeft = h / 360 * hueWidth;
+      const hueLeft = (h / 360) * hueWidth;
       this.setHuePointer(hueLeft, huePointer, hue, false);
       this.setGradientPointer(left, top, selectPointer, gradient, false);
     }
@@ -199,7 +203,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
 
   @autobind
   positionToHSV(left, top, width, height) {
-    let { h, a } = this.HSV;
+    const { h, a } = this.HSV;
     if (width < 0) {
       width = 0;
     }
@@ -210,12 +214,12 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
 
   rgbToHEX(r, g, b, a) {
     function hex(num) {
-      let hexNum = num.toString(16);
+      const hexNum = num.toString(16);
       return hexNum.length === 1 ? `0${hexNum}` : hexNum;
     }
 
     if (a !== 1) {
-      return `#${hex(r)}${hex(g)}${hex(b)}${hex(a * 255 / 10)}`;
+      return `#${hex(r)}${hex(g)}${hex(b)}${hex((a * 255) / 10)}`;
     }
     return `#${hex(r)}${hex(g)}${hex(b)}`;
   }
@@ -236,18 +240,20 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
       results = hex;
     }
     results = results.slice(0, 6);
-    let result = /^#?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(results);
-    return result ? {
-      r: parseInt(result[1], 16),
-      g: parseInt(result[2], 16),
-      b: parseInt(result[3], 16),
-      a: 1,
-    } : {
-      r: 255,
-      g: 0,
-      b: 0,
-      a: 1,
-    };
+    const result = /^#?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(results);
+    return result
+      ? {
+          r: parseInt(result[1], 16),
+          g: parseInt(result[2], 16),
+          b: parseInt(result[3], 16),
+          a: 1,
+        }
+      : {
+          r: 255,
+          g: 0,
+          b: 0,
+          a: 1,
+        };
   }
 
   rgbToHSV(r, g, b, a) {
@@ -264,18 +270,18 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
     if (max === min) {
       h = 0;
     } else {
-      const d = (r === min) ? g - b : ((b === min) ? r - g : b - r);
-      const m = (r === min) ? 3 : ((b === min) ? 1 : 5);
+      const d = r === min ? g - b : b === min ? r - g : b - r;
+      const m = r === min ? 3 : b === min ? 1 : 5;
       h = 60 * (m - d / (max - min));
     }
     if (h < 0) {
-      h = h + 360;
+      h += 360;
     }
     return { h, s, v, a };
   }
 
   hsvToRGB(h, s, v, a) {
-    h = h / 60;
+    h /= 60;
     const h1 = Math.floor(h);
     const f = h - h1;
     const p = v * (1 - s);
@@ -284,22 +290,22 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
     let rgb;
     switch (h1) {
       case 0:
-        rgb = { r: v, g: t, b: p, a: a };
+        rgb = { r: v, g: t, b: p, a };
         break;
       case 1:
-        rgb = { r: q, g: v, b: p, a: a };
+        rgb = { r: q, g: v, b: p, a };
         break;
       case 2:
-        rgb = { r: p, g: v, b: t, a: a };
+        rgb = { r: p, g: v, b: t, a };
         break;
       case 3:
-        rgb = { r: p, g: q, b: v, a: a };
+        rgb = { r: p, g: q, b: v, a };
         break;
       case 4:
-        rgb = { r: t, g: p, b: v, a: a };
+        rgb = { r: t, g: p, b: v, a };
         break;
       default:
-        rgb = { r: v, g: p, b: q, a: a };
+        rgb = { r: v, g: p, b: q, a };
         break;
     }
     rgb.r = Math.floor(rgb.r * 255);
@@ -363,7 +369,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
     const { hue, huePointer, setHuePointer, hsvToRGB, rgbToHEX } = this;
     if (hue && huePointer) {
       const { left, wrapW } = setHuePointer(e.clientX, huePointer, hue, true);
-      let h = Math.floor(left / wrapW * 360);
+      const h = Math.floor((left / wrapW) * 360);
       const { s, v, a: opacity } = this.HSV;
       this.setHSV(h, undefined, undefined, undefined);
       const { r, g, b, a } = hsvToRGB(h, 1, 1, 1);
@@ -408,11 +414,10 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
     this.setColor(this.getValue());
   }
 
-  handlePopupAnimateEnd() {
-  }
+  handlePopupAnimateEnd() {}
 
   getPopupStyleFromAlign(): CSSProperties | undefined {
-    return;
+    return undefined;
   }
 
   getTriggerIconFont() {

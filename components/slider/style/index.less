@@ -1,55 +1,55 @@
-@import "../../style/themes/default";
-@import "../../style/mixins/index";
+@import '../../style/themes/default';
+@import '../../style/mixins/index';
 
-@slider-prefix-cls: ~"@{c7n-prefix}-slider";
+@slider-prefix-cls: ~'@{c7n-prefix}-slider';
 
 .@{slider-prefix-cls} {
   .reset-component;
   position: relative;
+  height: 0.12rem;
   margin: @slider-margin;
-  padding: .04rem 0;
-  height: .12rem;
+  padding: 0.04rem 0;
   cursor: pointer;
 
   .vertical();
 
   &-with-marks {
-    margin-bottom: .28rem;
+    margin-bottom: 0.28rem;
   }
 
   &-rail {
     position: absolute;
     width: 100%;
-    height: .04rem;
-    border-radius: .02rem;
+    height: 0.04rem;
     background-color: @slider-rail-background-color;
-    transition: background-color .3s;
+    border-radius: 0.02rem;
+    transition: background-color 0.3s;
   }
 
   &-track {
     position: absolute;
-    height: .04rem;
-    border-radius: @border-radius-base;
+    height: 0.04rem;
     background-color: @slider-track-background-color;
+    border-radius: @border-radius-base;
     transition: background-color 0.3s ease;
   }
 
   &-handle {
     position: absolute;
-    margin-left: -.07rem;
-    margin-top: -.05rem;
-    width: .14rem;
-    height: .14rem;
-    cursor: pointer;
-    border-radius: 50%;
-    border: .02rem @border-style-base @slider-handle-color;
+    width: 0.14rem;
+    height: 0.14rem;
+    margin-top: -0.05rem;
+    margin-left: -0.07rem;
     background-color: @component-background;
-    transition: border-color .3s, transform .3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    border: 0.02rem @border-style-base @slider-handle-color;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: border-color 0.3s, transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 
     &:focus {
       border-color: @slider-handle-color-focus;
-      box-shadow: 0 0 0 .05rem @slider-handle-color-focus-shadow;
       outline: none;
+      box-shadow: 0 0 0 0.05rem @slider-handle-color-focus-shadow;
     }
 
     &.@{c7n-prefix}-tooltip-open {
@@ -71,7 +71,7 @@
 
   &-mark {
     position: absolute;
-    top: .14rem;
+    top: 0.14rem;
     left: 0;
     width: 100%;
     font-size: @font-size-base;
@@ -80,10 +80,10 @@
   &-mark-text {
     position: absolute;
     display: inline-block;
-    vertical-align: middle;
-    text-align: center;
-    cursor: pointer;
     color: @text-color-secondary;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
 
     &-active {
       color: @text-color;
@@ -93,26 +93,26 @@
   &-step {
     position: absolute;
     width: 100%;
-    height: .04rem;
+    height: 0.04rem;
     background: transparent;
   }
 
   &-dot {
     position: absolute;
-    top: -.02rem;
-    margin-left: -.04rem;
-    width: .08rem;
-    height: .08rem;
-    border: .02rem @border-style-base @slider-dot-border-color;
-    background-color: @component-background;
-    cursor: pointer;
-    border-radius: 50%;
+    top: -0.02rem;
+    width: 0.08rem;
+    height: 0.08rem;
+    margin-left: -0.04rem;
     vertical-align: middle;
+    background-color: @component-background;
+    border: 0.02rem @border-style-base @slider-dot-border-color;
+    border-radius: 50%;
+    cursor: pointer;
     &:first-child {
-      margin-left: -.04rem;
+      margin-left: -0.04rem;
     }
     &:last-child {
-      margin-left: -.04rem;
+      margin-left: -0.04rem;
     }
     &-active {
       border-color: @slider-dot-border-color-active;
@@ -128,10 +128,10 @@
 
     .@{slider-prefix-cls}-handle,
     .@{slider-prefix-cls}-dot {
-      border-color: @slider-disabled-color !important;
       background-color: @component-background;
-      cursor: not-allowed;
+      border-color: @slider-disabled-color !important;
       box-shadow: none;
+      cursor: not-allowed;
     }
 
     .@{slider-prefix-cls}-mark-text,
@@ -143,46 +143,46 @@
 
 .vertical() {
   &-vertical {
-    width: .12rem;
+    width: 0.12rem;
     height: 100%;
-    margin: .06rem .1rem;
-    padding: 0 .04rem;
+    margin: 0.06rem 0.1rem;
+    padding: 0 0.04rem;
 
     .@{slider-prefix-cls}-rail {
+      width: 0.04rem;
       height: 100%;
-      width: .04rem;
     }
 
     .@{slider-prefix-cls}-track {
-      width: .04rem;
+      width: 0.04rem;
     }
 
     .@{slider-prefix-cls}-handle {
-      margin-left: -.05rem;
-      margin-bottom: -.07rem;
+      margin-bottom: -0.07rem;
+      margin-left: -0.05rem;
     }
 
     .@{slider-prefix-cls}-mark {
       top: 0;
-      left: .12rem;
-      width: .18rem;
+      left: 0.12rem;
+      width: 0.18rem;
       height: 100%;
     }
 
     .@{slider-prefix-cls}-mark-text {
-      left: .04rem;
+      left: 0.04rem;
       white-space: nowrap;
     }
 
     .@{slider-prefix-cls}-step {
-      width: .04rem;
+      width: 0.04rem;
       height: 100%;
     }
 
     .@{slider-prefix-cls}-dot {
       top: auto;
-      left: .02rem;
-      margin-bottom: -.04rem;
+      left: 0.02rem;
+      margin-bottom: -0.04rem;
     }
   }
 }

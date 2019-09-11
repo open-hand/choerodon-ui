@@ -1,7 +1,8 @@
 // This config is for building dist files
-const webpack = require('webpack');
 const getWebpackConfig = require('./tools/getWebpackConfig');
 const pkg = require('./package.json');
+
+const { webpack } = getWebpackConfig;
 
 // noParse still leave `require('./locale' + name)` in dist files
 // ignore is better
@@ -36,7 +37,7 @@ function externalMoment(config) {
 
 const webpackConfig = getWebpackConfig(false);
 if (process.env.RUN_ENV === 'PRODUCTION') {
-  webpackConfig.forEach((config) => {
+  webpackConfig.forEach(config => {
     ignoreMomentLocale(config);
     externalMoment(config);
     addLocales(config);

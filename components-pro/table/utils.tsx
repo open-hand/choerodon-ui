@@ -1,29 +1,29 @@
 import React, { isValidElement, Key, ReactElement, ReactNode } from 'react';
 import isString from 'lodash/isString';
+import warning from 'choerodon-ui/lib/_util/warning';
 import { ColumnProps } from './Column';
 import Record from '../data-set/Record';
-import CheckBox from '../check-box/CheckBox';
+import ObserverCheckBox from '../check-box/CheckBox';
 import Switch from '../switch/Switch';
-import Radio from '../radio/Radio';
+import ObserverRadio from '../radio/Radio';
 import { FieldType, RecordStatus } from '../data-set/enum';
 import Field from '../data-set/Field';
-import Select from '../select/Select';
+import ObserverSelect from '../select/Select';
 import Lov from '../lov/Lov';
-import NumberField from '../number-field/NumberField';
+import ObserverNumberField from '../number-field/NumberField';
 import Currency from '../currency/Currency';
 import DatePicker from '../date-picker/DatePicker';
 import DateTimePicker from '../date-time-picker/DateTimePicker';
 import WeekPicker from '../week-picker/WeekPicker';
 import MonthPicker from '../month-picker/MonthPicker';
 import YearPicker from '../year-picker/YearPicker';
-import TextField from '../text-field/TextField';
+import ObserverTextField from '../text-field/TextField';
 import { ColumnAlign, ColumnLock, TablePaginationPosition } from './enum';
 import { FormFieldProps } from '../field/FormField';
 import IntlField from '../intl-field/IntlField';
 import UrlField from '../url-field/UrlField';
 import EmailField from '../email-field/EmailField';
 import ColorPicker from '../color-picker/ColorPicker';
-import warning from 'choerodon-ui/lib/_util/warning';
 import DataSet from '../data-set/DataSet';
 import TableStore from './TableStore';
 import { TablePaginationConfig } from './Table';
@@ -33,17 +33,22 @@ export function getEditorByField(field: Field): ReactElement<FormFieldProps> {
   const lookupUrl = field.get('lookupUrl');
   const lovCode = field.get('lovCode');
   const { type, name } = field;
-  if (lookupCode || isString(lookupUrl) || (lovCode && type !== FieldType.object) || field.getOptions()) {
-    return <Select />;
+  if (
+    lookupCode ||
+    isString(lookupUrl) ||
+    (lovCode && type !== FieldType.object) ||
+    field.getOptions()
+  ) {
+    return <ObserverSelect />;
   }
   if (lovCode) {
     return <Lov />;
   }
   switch (type) {
     case FieldType.boolean:
-      return <CheckBox />;
+      return <ObserverCheckBox />;
     case FieldType.number:
-      return <NumberField />;
+      return <ObserverNumberField />;
     case FieldType.currency:
       return <Currency />;
     case FieldType.date:
@@ -65,10 +70,13 @@ export function getEditorByField(field: Field): ReactElement<FormFieldProps> {
     case FieldType.color:
       return <ColorPicker />;
     case FieldType.string:
-      return <TextField />;
+      return <ObserverTextField />;
     default:
-      warning(false, `Table auto editor: No editor exists on the field<${name}>'s type<${type}>, so use the TextField as default editor`);
-      return <TextField />;
+      warning(
+        false,
+        `Table auto editor: No editor exists on the field<${name}>'s type<${type}>, so use the TextField as default editor`,
+      );
+      return <ObserverTextField />;
   }
 }
 
@@ -85,19 +93,24 @@ export function getAlignByField(field?: Field): ColumnAlign | undefined {
   }
 }
 
-export function getEditorByColumnAndRecord(column: ColumnProps, record?: Record): ReactElement<FormFieldProps> | undefined {
+export function getEditorByColumnAndRecord(
+  column: ColumnProps,
+  record?: Record,
+): ReactElement<FormFieldProps> | undefined {
   const { name, editor } = column;
   if (record) {
     if (typeof editor === 'function') {
       return editor(record, name);
-    } else if (editor === true) {
+    }
+    if (editor === true) {
       const field = record.getField(name);
       if (field) {
         if (!field.get('unique') || record.status === RecordStatus.add) {
           return getEditorByField(field);
         }
       }
-    } else if (isValidElement(editor)) {
+    }
+    if (isValidElement(editor)) {
       return editor;
     }
   }
@@ -106,8 +119,8 @@ export function getEditorByColumnAndRecord(column: ColumnProps, record?: Record)
 export function isRadio(element?: ReactElement<FormFieldProps>): boolean {
   if (element) {
     switch (element.type as any) {
-      case CheckBox:
-      case Radio:
+      case ObserverCheckBox:
+      case ObserverRadio:
       case Switch:
         return true;
       default:
@@ -116,12 +129,18 @@ export function isRadio(element?: ReactElement<FormFieldProps>): boolean {
   return false;
 }
 
-export function findCell(tableStore: TableStore, prefixCls?: string, name?: Key, lock?: ColumnLock | boolean): HTMLTableCellElement | undefined {
+export function findCell(
+  tableStore: TableStore,
+  prefixCls?: string,
+  name?: Key,
+  lock?: ColumnLock | boolean,
+): HTMLTableCellElement | undefined {
   const { node, dataSet, overflowX, currentEditRecord } = tableStore;
   const current = currentEditRecord || dataSet.current;
   const tableCellPrefixCls = `${prefixCls}-cell`;
-  if (name !== void 0 && current) {
-    const wrapperSelector = overflowX && lock ? `.${prefixCls}-fixed-${lock === true ? ColumnLock.left : lock} ` : '';
+  if (name !== undefined && current) {
+    const wrapperSelector =
+      overflowX && lock ? `.${prefixCls}-fixed-${lock === true ? ColumnLock.left : lock} ` : '';
     const selector = `${wrapperSelector}tr[data-index="${current.id}"] td[data-index="${name}"] span.${tableCellPrefixCls}-inner`;
     return node.element.querySelector(selector);
   }
@@ -129,23 +148,27 @@ export function findCell(tableStore: TableStore, prefixCls?: string, name?: Key,
 
 export function findFirstFocusableElement(node?: HTMLElement): HTMLElement | undefined {
   if (node && node.children) {
-    for (const child of node.children as HTMLCollectionOf<HTMLElement>) {
+    let found: HTMLElement | undefined;
+    [...(node.children as HTMLCollectionOf<HTMLElement>)].forEach(child => {
       if (child.tabIndex > -1) {
-        return child;
+        found = child;
       } else {
-        return findFirstFocusableElement(child);
+        found = findFirstFocusableElement(child);
       }
-    }
+    });
+    return found;
   }
 }
 
 export function findIndexedSibling(element, direction): HTMLTableRowElement | null {
-  const sibling: HTMLTableRowElement | null = direction > 0 ? element.nextElementSibling : element.previousElementSibling;
-  if (!sibling || (
-      'index' in sibling.dataset
-      && !sibling.getAttributeNodeNS('', 'disabled')
-      && (!document.defaultView || document.defaultView.getComputedStyle(sibling).display !== 'none')
-    )) {
+  const sibling: HTMLTableRowElement | null =
+    direction > 0 ? element.nextElementSibling : element.previousElementSibling;
+  if (
+    !sibling ||
+    ('index' in sibling.dataset &&
+      !sibling.getAttributeNodeNS('', 'disabled') &&
+      (!document.defaultView || document.defaultView.getComputedStyle(sibling).display !== 'none'))
+  ) {
     return sibling;
   }
   return findIndexedSibling(sibling, direction);
@@ -160,7 +183,7 @@ export function getHeader(column: ColumnProps, dataSet: DataSet): ReactNode {
   if (typeof header === 'function') {
     return header(dataSet, name);
   }
-  if (header !== void 0) {
+  if (header !== undefined) {
     return header;
   }
   const field = dataSet.getField(name);

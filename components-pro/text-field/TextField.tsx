@@ -24,13 +24,13 @@ import { ShowHelp } from '../field/enum';
 let PLACEHOLDER_SUPPORT;
 
 export function isPlaceHolderSupport(): boolean {
-  if (PLACEHOLDER_SUPPORT !== void 0) {
+  if (PLACEHOLDER_SUPPORT !== undefined) {
     return PLACEHOLDER_SUPPORT;
-  } else if (typeof window !== 'undefined') {
-    return PLACEHOLDER_SUPPORT = 'placeholder' in document.createElement('input');
-  } else {
-    return true;
   }
+  if (typeof window !== 'undefined') {
+    return (PLACEHOLDER_SUPPORT = 'placeholder' in document.createElement('input'));
+  }
+  return true;
 }
 
 export interface TextFieldProps extends FormFieldProps {
@@ -180,13 +180,16 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const { prefixCls, multiple, range } = this;
     const suffix = this.getSuffix();
     const prefix = this.getPrefix();
-    return super.getWrapperClassNames({
-      [`${prefixCls}-empty`]: this.isEmpty(),
-      [`${prefixCls}-suffix-button`]: isValidElement<{ onClick }>(suffix),
-      [`${prefixCls}-multiple`]: multiple,
-      [`${prefixCls}-range`]: range,
-      [`${prefixCls}-prefix-button`]: isValidElement<{ onClick }>(prefix),
-    }, ...args);
+    return super.getWrapperClassNames(
+      {
+        [`${prefixCls}-empty`]: this.isEmpty(),
+        [`${prefixCls}-suffix-button`]: isValidElement<{ onClick }>(suffix),
+        [`${prefixCls}-multiple`]: multiple,
+        [`${prefixCls}-range`]: range,
+        [`${prefixCls}-prefix-button`]: isValidElement<{ onClick }>(prefix),
+      },
+      ...args,
+    );
   }
 
   renderWrapper(): ReactNode {
@@ -222,7 +225,10 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   renderGroup(): ReactNode {
-    const { prefixCls, props: { addonBefore, addonAfter, showHelp } } = this;
+    const {
+      prefixCls,
+      props: { addonBefore, addonAfter, showHelp },
+    } = this;
     const inputElement = this.renderInputElement();
     const help = showHelp === ShowHelp.tooltip ? this.renderTooltipHelp() : null;
 
@@ -248,10 +254,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   renderTooltipHelp(): ReactNode {
     return (
-      <Tooltip
-        title={this.getProp('help')}
-        placement="bottom"
-      >
+      <Tooltip title={this.getProp('help')} placement="bottom">
         <Icon type="help" />
       </Tooltip>
     );
@@ -259,7 +262,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   getPlaceholders(): string[] {
     const { placeholder } = this.props;
-    return placeholder ? new Array<string>().concat(placeholder!) : [];
+    const holders: string[] = [];
+    return placeholder ? holders.concat(placeholder!) : holders;
   }
 
   getLabel() {
@@ -275,11 +279,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     if (!node) {
       return null;
     }
-    return (
-      <div className={`${prefixCls}-group-${category}`}>
-        {node}
-      </div>
-    );
+    return <div className={`${prefixCls}-group-${category}`}>{node}</div>;
   }
 
   renderRangeEditor(props) {
@@ -315,8 +315,20 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           {...props}
           className={`${prefixCls}-range-input`}
           key="text"
-          value={rangeTarget === void 0 || !this.isFocused ? '' : rangeTarget === 0 ? startValue : endValue}
-          placeholder={rangeTarget === void 0 || !this.isFocused ? '' : rangeTarget === 0 ? startPlaceholder : endPlaceHolder}
+          value={
+            rangeTarget === undefined || !this.isFocused
+              ? ''
+              : rangeTarget === 0
+              ? startValue
+              : endValue
+          }
+          placeholder={
+            rangeTarget === undefined || !this.isFocused
+              ? ''
+              : rangeTarget === 0
+              ? startPlaceholder
+              : endPlaceHolder
+          }
           readOnly={!this.editable}
           style={editorStyle}
         />
@@ -339,11 +351,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     }
     return (
       <li key="text">
-        <input
-          {...props}
-          value={text || ''}
-          style={editorStyle}
-        />
+        <input {...props} value={text || ''} style={editorStyle} />
       </li>
     );
   }
@@ -353,19 +361,31 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   getEditor(): ReactNode {
-    const { prefixCls, multiple, range, props: { style } } = this;
+    const {
+      prefixCls,
+      multiple,
+      range,
+      props: { style },
+    } = this;
     const otherProps = this.getOtherProps();
     const { height } = (style || {}) as CSSProperties;
     return multiple ? (
       <div key="text" className={otherProps.className}>
         <Animate
           component="ul"
-          componentProps={{ style: height && height !== 'auto' ? { height: pxToRem(toPx(height)! - 2) } : void 0 }}
+          componentProps={{
+            style: height && height !== 'auto' ? { height: pxToRem(toPx(height)! - 2) } : undefined,
+          }}
           transitionName="zoom"
           exclusive
         >
           {this.renderMultipleValues()}
-          {range ? this.renderRangeEditor(otherProps) : this.renderMultipleEditor({ ...otherProps, className: `${prefixCls}-multiple-input` } as T)}
+          {range
+            ? this.renderRangeEditor(otherProps)
+            : this.renderMultipleEditor({
+                ...otherProps,
+                className: `${prefixCls}-multiple-input`,
+              } as T)}
         </Animate>
       </div>
     ) : range ? (
@@ -376,7 +396,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       <input
         key="text"
         {...otherProps}
-        placeholder={this.hasFloatLabel ? void 0 : this.getPlaceholders()[0]}
+        placeholder={this.hasFloatLabel ? undefined : this.getPlaceholders()[0]}
         value={this.getText()}
         readOnly={!this.editable}
       />
@@ -391,7 +411,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   getDefaultSuffix(): ReactNode {
-    return;
+    return undefined;
   }
 
   wrapperSuffix(children: ReactNode, props?: any): ReactNode {
@@ -423,11 +443,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   wrapperPrefix(children: ReactNode): ReactNode {
     const { prefixCls } = this;
-    return (
-      <div className={`${prefixCls}-prefix`}>
-        {children}
-      </div>
-    );
+    return <div className={`${prefixCls}-prefix`}>{children}</div>;
   }
 
   renderMultipleHolder() {
@@ -446,11 +462,11 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   getOtherPrevNode(): ReactNode {
-    return;
+    return undefined;
   }
 
   getOtherNextNode(): ReactNode {
-    return;
+    return undefined;
   }
 
   renderPlaceHolder(): ReactNode {
@@ -468,21 +484,33 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   getInnerSpanButton(): ReactNode {
-    const { props: { clearButton }, prefixCls } = this;
+    const {
+      props: { clearButton },
+      prefixCls,
+    } = this;
     if (clearButton && !this.isReadOnly()) {
-      return this.wrapperInnerSpanButton(<Icon type="close" onClick={this.handleClearButtonClick} />, {
-        className: `${prefixCls}-clear-button`,
-      });
+      return this.wrapperInnerSpanButton(
+        <Icon type="close" onClick={this.handleClearButtonClick} />,
+        {
+          className: `${prefixCls}-clear-button`,
+        },
+      );
     }
   }
 
   wrapperInnerSpanButton(children: ReactNode, props: any = {}): ReactNode {
     const { prefixCls } = this;
     const { className, ...otherProps } = props;
-    return !this.isDisabled() && (
-      <div key="inner-button" {...otherProps} className={classNames(`${prefixCls}-inner-button`, className)}>
-        {children}
-      </div>
+    return (
+      !this.isDisabled() && (
+        <div
+          key="inner-button"
+          {...otherProps}
+          className={classNames(`${prefixCls}-inner-button`, className)}
+        >
+          {children}
+        </div>
+      )
     );
   }
 
@@ -583,11 +611,11 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   @action
   setValue(value: any): void {
     super.setValue(value);
-    this.setText(void 0);
+    this.setText(undefined);
   }
 
   getText() {
-    return this.text === void 0 ? super.getText() as string : this.text;
+    return this.text === undefined ? (super.getText() as string) : this.text;
   }
 
   @action
@@ -604,7 +632,10 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   @autobind
   handleChange(e) {
-    const { target, target: { value } } = e;
+    const {
+      target,
+      target: { value },
+    } = e;
     const restricted = this.restrictInput(value);
     if (restricted !== value) {
       const selectionEnd = target.selectionEnd + restricted.length - value.length;
@@ -617,7 +648,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   restrictInput(value: string): string {
     const { restrict } = this.props;
     if (restrict) {
-      return value.replace(new RegExp('[^' + restrict + ']+', 'g'), '');
+      return value.replace(new RegExp(`[^${restrict}]+`, 'g'), '');
     }
     return value;
   }
@@ -628,7 +659,6 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     }
     return value;
   }
-
 }
 
 @observer

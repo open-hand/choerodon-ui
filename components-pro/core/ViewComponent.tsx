@@ -1,4 +1,11 @@
-import { Component, CSSProperties, FocusEventHandler, Key, KeyboardEventHandler, MouseEventHandler } from 'react';
+import {
+  Component,
+  CSSProperties,
+  FocusEventHandler,
+  Key,
+  KeyboardEventHandler,
+  MouseEventHandler,
+} from 'react';
 import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
@@ -22,7 +29,10 @@ import localeContext from '../locale-context';
 // 组件对内响应的事件函数名以 handleXXX 命名.
 // ----------------------------------------------------------------------
 
-export interface ViewComponentProps extends MouseEventComponentProps, KeyboardEventComponentProps, ElementProps {
+export interface ViewComponentProps
+  extends MouseEventComponentProps,
+    KeyboardEventComponentProps,
+    ElementProps {
   /**
    * 组件id
    */
@@ -153,6 +163,7 @@ export interface KeyboardEventComponentProps {
   onKeyPress?: KeyboardEventHandler<any>;
 }
 
+/* eslint-disable react/no-unused-prop-types */
 export default class ViewComponent<P extends ViewComponentProps> extends Component<P, any> {
   static propTypes = {
     /**
@@ -163,9 +174,7 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
      * 组件大小<未实现>
      * 可选值 `default` `small` `big`
      */
-    size: PropTypes.oneOf([
-      Size.small, Size.default, Size.large,
-    ]),
+    size: PropTypes.oneOf([Size.small, Size.default, Size.large]),
     /**
      * 样式后缀
      */
@@ -318,7 +327,11 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
 
   @action
   updateObservableProps(props, context: any) {
-    Object.assign(this.observableProps, omitBy(this.getObservableProps(props, context), isUndefined), true);
+    Object.assign(
+      this.observableProps,
+      omitBy(this.getObservableProps(props, context), isUndefined),
+      true,
+    );
   }
 
   getOtherProps() {
@@ -350,7 +363,7 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
         'onKeyPress',
         'onContextMenu',
       ]);
-      if (tabIndex !== void 0) {
+      if (tabIndex !== undefined) {
         otherProps.tabIndex = -1;
       }
     } else {
@@ -368,7 +381,10 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
   }
 
   getClassName(...props): string | undefined {
-    const { prefixCls, props: { elementClassName } } = this;
+    const {
+      prefixCls,
+      props: { elementClassName },
+    } = this;
     return classNames(prefixCls, elementClassName, ...props);
   }
 
@@ -387,17 +403,26 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
   }
 
   getWrapperClassNames(...args): string {
-    const { prefixCls, props: { className, size } } = this;
-    return classNames(`${prefixCls}-wrapper`, className, {
-      [`${prefixCls}-sm`]: size === 'small',
-      [`${prefixCls}-lg`]: size === 'large',
-      [`${prefixCls}-disabled`]: this.isDisabled(),
-      [`${prefixCls}-focused`]: this.isFocus,
-    }, ...args);
+    const {
+      prefixCls,
+      props: { className, size },
+    } = this;
+    return classNames(
+      `${prefixCls}-wrapper`,
+      className,
+      {
+        [`${prefixCls}-sm`]: size === 'small',
+        [`${prefixCls}-lg`]: size === 'large',
+        [`${prefixCls}-disabled`]: this.isDisabled(),
+        [`${prefixCls}-focused`]: this.isFocus,
+      },
+      ...args,
+    );
   }
 
   isDisabled() {
-    return this.props.disabled;
+    const { disabled } = this.props;
+    return disabled;
   }
 
   @autobind
@@ -405,7 +430,10 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
     runInAction(() => {
       this.isFocused = true;
       this.isFocus = true;
-      const { props: { onFocus = noop }, prefixCls } = this;
+      const {
+        props: { onFocus = noop },
+        prefixCls,
+      } = this;
       onFocus(e);
       const element = this.wrapper || findDOMNode(this);
       if (element) {
@@ -420,7 +448,10 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
       runInAction(() => {
         this.isFocused = false;
         this.isFocus = false;
-        const { props: { onBlur = noop }, prefixCls } = this;
+        const {
+          props: { onBlur = noop },
+          prefixCls,
+        } = this;
         onBlur(e);
         const element = this.wrapper || findDOMNode(this);
         if (element) {
@@ -459,7 +490,7 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
 
   componentWillMount() {
     const { tabIndex, autoFocus } = this.props;
-    if (!this.isDisabled() && autoFocus && (tabIndex === void 0 || tabIndex > -1)) {
+    if (!this.isDisabled() && autoFocus && (tabIndex === undefined || tabIndex > -1)) {
       defer(() => this.focus());
     }
   }

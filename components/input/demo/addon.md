@@ -1,8 +1,8 @@
 ---
 order: 2
 title:
-    zh-CN: 前置/后置标签
-    en-US: Pre / Post tab
+  zh-CN: 前置/后置标签
+  en-US: Pre / Post tab
 ---
 
 ## zh-CN
@@ -13,8 +13,9 @@ title:
 
 Using pre & post tabs example.
 
-````jsx
+```jsx
 import { Input, Select, Icon } from 'choerodon-ui';
+
 const Option = Select.Option;
 
 const selectBefore = (
@@ -44,5 +45,6 @@ ReactDOM.render(
       <Input addonAfter={<Icon type="setting" />} label="mysite" />
     </div>
   </div>,
-  mountNode);
-````
+  mountNode,
+);
+```

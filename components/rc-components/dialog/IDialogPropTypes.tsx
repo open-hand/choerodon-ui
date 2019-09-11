@@ -1,6 +1,6 @@
 import { CSSProperties, ReactInstance, ReactNode, SyntheticEvent } from 'react';
 
-interface IDialogPropTypes {
+export default interface IDialogPropTypes {
   className?: string;
   keyboard?: boolean;
   style?: CSSProperties;
@@ -12,10 +12,10 @@ interface IDialogPropTypes {
   closable?: boolean;
   maskClosable?: boolean;
   visible?: boolean;
-  destroyOnClose ?: boolean;
+  destroyOnClose?: boolean;
   mousePosition?: {
-    x: number,
-    y: number,
+    x: number;
+    y: number;
   } | null;
   title?: ReactNode;
   footer?: ReactNode;
@@ -37,5 +37,3 @@ interface IDialogPropTypes {
   getContainer?: (instance: ReactInstance) => HTMLElement;
   center?: boolean;
 }
-
-export default IDialogPropTypes;

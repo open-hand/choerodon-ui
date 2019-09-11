@@ -1,4 +1,4 @@
-import getRequestAnimationFrame, { cancelRequestAnimationFrame } from '../_util/getRequestAnimationFrame';
+import getRequestAnimationFrame, { cancelRequestAnimationFrame } from './getRequestAnimationFrame';
 
 const reqAnimFrame = getRequestAnimationFrame();
 
@@ -23,16 +23,16 @@ export default function throttleByAnimationFrame(fn: (...args: any[]) => void) {
 
 export function throttleByAnimationFrameDecorator() {
   return function(target: any, key: string, descriptor: any) {
-    let fn = descriptor.value;
+    const fn = descriptor.value;
     let definingProperty = false;
     return {
       configurable: true,
       get() {
-        if (definingProperty || this === target.prototype || this.hasOwnProperty(key)) {
+        if (definingProperty || this === target.prototype || {}.hasOwnProperty.call(this, key)) {
           return fn;
         }
 
-        let boundFn = throttleByAnimationFrame(fn.bind(this));
+        const boundFn = throttleByAnimationFrame(fn.bind(this));
         definingProperty = true;
         Object.defineProperty(this, key, {
           value: boundFn,

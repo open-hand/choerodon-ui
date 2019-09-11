@@ -53,22 +53,29 @@ export default class DOMWrap extends Component {
         entries.forEach(this.setChildrenWidthAndResize);
       });
 
-      [].slice.call(menuUl.children).concat(menuUl).forEach(el => {
-        this.resizeObserver.observe(el);
-      });
+      [].slice
+        .call(menuUl.children)
+        .concat(menuUl)
+        .forEach(el => {
+          this.resizeObserver.observe(el);
+        });
 
       if (typeof MutationObserver !== 'undefined') {
         this.mutationObserver = new MutationObserver(() => {
           this.resizeObserver.disconnect();
-          [].slice.call(menuUl.children).concat(menuUl).forEach(el => {
-            this.resizeObserver.observe(el);
-          });
+          [].slice
+            .call(menuUl.children)
+            .concat(menuUl)
+            .forEach(el => {
+              this.resizeObserver.observe(el);
+            });
           this.setChildrenWidthAndResize();
         });
-        this.mutationObserver.observe(
-          menuUl,
-          { attributes: false, childList: true, subTree: false },
-        );
+        this.mutationObserver.observe(menuUl, {
+          attributes: false,
+          childList: true,
+          subTree: false,
+        });
       }
     }
   }
@@ -91,10 +98,9 @@ export default class DOMWrap extends Component {
     }
 
     // filter out all overflowed indicator placeholder
-    return [].slice.call(ul.children)
-      .filter(node => {
-        return node.className.split(' ').indexOf(`${prefixCls}-overflowed-submenu`) < 0;
-      });
+    return [].slice.call(ul.children).filter(node => {
+      return node.className.split(' ').indexOf(`${prefixCls}-overflowed-submenu`) < 0;
+    });
   };
 
   getOverflowedSubMenuItem = (keyPrefix, overflowedItems, renderPlaceholder) => {
@@ -176,8 +182,9 @@ export default class DOMWrap extends Component {
     // reset display attribute for all hidden elements caused by overflow to calculate updated width
     // and then reset to original state after width calculation
 
-    const overflowedItems = menuItemNodes
-      .filter(c => c.className.split(' ').indexOf(MENUITEM_OVERFLOWED_CLASSNAME) >= 0);
+    const overflowedItems = menuItemNodes.filter(
+      c => c.className.split(' ').indexOf(MENUITEM_OVERFLOWED_CLASSNAME) >= 0,
+    );
 
     overflowedItems.forEach(c => {
       setStyle(c, 'display', 'inline-block');
@@ -245,8 +252,8 @@ export default class DOMWrap extends Component {
       let item = childNode;
       if (this.props.mode === 'horizontal') {
         let overflowed = this.getOverflowedSubMenuItem(childNode.props.eventKey, []);
-        if (lastVisibleIndex !== undefined
-          &&
+        if (
+          lastVisibleIndex !== undefined &&
           this.props.className.indexOf(`${this.props.prefixCls}-root`) !== -1
         ) {
           if (index > lastVisibleIndex) {
@@ -300,17 +307,13 @@ export default class DOMWrap extends Component {
       tag: Tag,
       children,
       theme,
-      ...rest,
+      ...rest
     } = this.props;
 
     if (hidden) {
       rest.className += ` ${hiddenClassName}`;
     }
 
-    return (
-      <Tag {...rest}>
-        {this.renderChildren(this.props.children)}
-      </Tag>
-    );
+    return <Tag {...rest}>{this.renderChildren(this.props.children)}</Tag>;
   }
 }

@@ -17,19 +17,22 @@ title:
 
 > it is an absolute controlled component and has no uncontrolled mode.
 
-````jsx
+```jsx
 import { Tag } from 'choerodon-ui';
+
 const { CheckableTag } = Tag;
 
 class MyTag extends React.Component {
-  state = { checked: true }
+  state = { checked: true };
 
-  handleChange = (checked) => {
+  handleChange = checked => {
     this.setState({ checked });
-  }
+  };
 
   render() {
-    return <CheckableTag {...this.props} checked={this.state.checked} onChange={this.handleChange} />;
+    return (
+      <CheckableTag {...this.props} checked={this.state.checked} onChange={this.handleChange} />
+    );
   }
 }
 
@@ -39,5 +42,6 @@ ReactDOM.render(
     <MyTag>Tag2</MyTag>
     <MyTag>Tag3</MyTag>
   </div>,
-  mountNode);
-````
+  mountNode,
+);
+```

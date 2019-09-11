@@ -1,6 +1,13 @@
-import React, { Children, ClassicComponentClass, cloneElement, Component, CSSProperties, ReactElement, ReactNode } from 'react';
+import React, {
+  Children,
+  cloneElement,
+  Component,
+  CSSProperties,
+  ReactElement,
+  ReactNode,
+} from 'react';
 import classNames from 'classnames';
-import TimelineItem, { TimeLineItemProps } from './TimelineItem';
+import TimelineItem from './TimelineItem';
 import Icon from '../icon';
 import { getPrefixCls } from '../configure';
 
@@ -15,27 +22,36 @@ export interface TimelineProps {
 
 export default class Timeline extends Component<TimelineProps, any> {
   static displayName = 'Timeline';
-  static Item = TimelineItem as ClassicComponentClass<TimeLineItemProps>;
+
+  static Item = TimelineItem;
 
   render() {
-    const { prefixCls: customizePrefixCls, children, pending, pendingDot, className, ...restProps } = this.props;
+    const {
+      prefixCls: customizePrefixCls,
+      children,
+      pending,
+      pendingDot,
+      className,
+      ...restProps
+    } = this.props;
     const pendingNode = typeof pending === 'boolean' ? null : pending;
     const prefixCls = getPrefixCls('timeline', customizePrefixCls);
-    const classString = classNames(prefixCls, {
-      [`${prefixCls}-pending`]: !!pending,
-    }, className);
+    const classString = classNames(
+      prefixCls,
+      {
+        [`${prefixCls}-pending`]: !!pending,
+      },
+      className,
+    );
     // Remove falsy items
     const falsylessItems = Children.toArray(children).filter(item => !!item);
     const items = Children.map(falsylessItems, (ele: ReactElement<any>, idx) =>
       cloneElement(ele, {
-        last: idx === (Children.count(falsylessItems) - 1),
+        last: idx === Children.count(falsylessItems) - 1,
       }),
     );
-    const pendingItem = (!!pending) ? (
-      <TimelineItem
-        pending={!!pending}
-        dot={pendingDot || <Icon type="loading" />}
-      >
+    const pendingItem = pending ? (
+      <TimelineItem pending={!!pending} dot={pendingDot || <Icon type="loading" />}>
         {pendingNode}
       </TimelineItem>
     ) : null;

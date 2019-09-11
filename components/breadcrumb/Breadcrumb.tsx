@@ -1,5 +1,4 @@
-import React, { Children, Component, CSSProperties, ReactNode } from 'react';
-import { cloneElement } from 'react';
+import React, { Children, cloneElement, Component, CSSProperties, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import warning from '../_util/warning';
@@ -36,13 +35,12 @@ function getBreadcrumbName(route: Route, params: any) {
 function defaultItemRender(route: Route, params: any, routes: Route[], paths: string[]) {
   const isLastItem = routes.indexOf(route) === routes.length - 1;
   const name = getBreadcrumbName(route, params);
-  return isLastItem
-    ? <span>{name}</span>
-    : <a href={`#/${paths.join('/')}`}>{name}</a>;
+  return isLastItem ? <span>{name}</span> : <a href={`#/${paths.join('/')}`}>{name}</a>;
 }
 
 export default class Breadcrumb extends Component<BreadcrumbProps, any> {
   static displayName = 'Breadcrumb';
+
   static Item: any;
 
   static defaultProps = {
@@ -54,8 +52,7 @@ export default class Breadcrumb extends Component<BreadcrumbProps, any> {
     separator: PropTypes.node,
     routes: PropTypes.array,
     params: PropTypes.object,
-    linkRender: PropTypes.func,
-    nameRender: PropTypes.func,
+    itemRender: PropTypes.func,
   };
 
   componentDidMount() {
@@ -69,12 +66,18 @@ export default class Breadcrumb extends Component<BreadcrumbProps, any> {
   render() {
     let crumbs;
     const {
-      separator, prefixCls, style, className, routes, params = {},
-      children, itemRender = defaultItemRender,
+      separator,
+      prefixCls,
+      style,
+      className,
+      routes,
+      params = {},
+      children,
+      itemRender = defaultItemRender,
     } = this.props;
     if (routes && routes.length > 0) {
       const paths: string[] = [];
-      crumbs = routes.map((route) => {
+      crumbs = routes.map(route => {
         route.path = route.path || '';
         let path: string = route.path.replace(/^\//, '');
         Object.keys(params).forEach(key => {
@@ -96,7 +99,7 @@ export default class Breadcrumb extends Component<BreadcrumbProps, any> {
         }
         warning(
           element.type && element.type.__ANT_BREADCRUMB_ITEM,
-          'Breadcrumb only accepts Breadcrumb.Item as it\'s children',
+          "Breadcrumb only accepts Breadcrumb.Item as it's children",
         );
         return cloneElement(element, {
           separator,

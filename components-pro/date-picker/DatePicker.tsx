@@ -4,10 +4,11 @@ import moment, { isMoment, Moment, MomentInput } from 'moment';
 import isString from 'lodash/isString';
 import isNil from 'lodash/isNil';
 import omit from 'lodash/omit';
+import noop from 'lodash/noop';
 import { observer } from 'mobx-react';
 import { action, computed, isArrayLike, observable, runInAction } from 'mobx';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
-import noop from 'lodash/noop';
+import warning from 'choerodon-ui/lib/_util/warning';
 import TriggerField, { TriggerFieldProps } from '../trigger-field/TriggerField';
 import DaysView, { DateViewProps } from './DaysView';
 import DateTimesView from './DateTimesView';
@@ -20,11 +21,15 @@ import { ValidationMessages } from '../validator/Validator';
 import autobind from '../_util/autobind';
 import { ViewMode } from './enum';
 import { stopEvent } from '../_util/EventManager';
-import warning from 'choerodon-ui/lib/_util/warning';
 import { FieldType } from '../data-set/enum';
 import { $l } from '../locale-context';
 
-export type RenderFunction = (props: object, text: string, currentDate: Moment, selected: Moment) => ReactNode;
+export type RenderFunction = (
+  props: object,
+  text: string,
+  currentDate: Moment,
+  selected: Moment,
+) => ReactNode;
 
 const viewComponents: { [x: string]: typeof DaysView } = {
   [ViewMode.decade]: DecadeYearsView,
@@ -67,7 +72,8 @@ export interface DatePickerKeyboardEvent {
 }
 
 @observer
-export default class DatePicker extends TriggerField<DatePickerProps> implements DatePickerKeyboardEvent {
+export default class DatePicker extends TriggerField<DatePickerProps>
+  implements DatePickerKeyboardEvent {
   static displayName = 'DatePicker';
 
   static propTypes = {
@@ -108,7 +114,9 @@ export default class DatePicker extends TriggerField<DatePickerProps> implements
   get defaultValidationMessages(): ValidationMessages | null {
     const label = this.getProp('label');
     return {
-      valueMissing: $l('DatePicker', label ? 'value_missing_with_label' : 'value_missing', { label }),
+      valueMissing: $l('DatePicker', label ? 'value_missing_with_label' : 'value_missing', {
+        label,
+      }),
     };
   }
 
@@ -137,7 +145,7 @@ export default class DatePicker extends TriggerField<DatePickerProps> implements
 
   getDefaultViewMode() {
     const { mode } = this.props;
-    if (mode === ViewMode.decade || mode === void 0) {
+    if (mode === ViewMode.decade || mode === undefined) {
       return ViewMode.date;
     }
     return mode;
@@ -145,19 +153,16 @@ export default class DatePicker extends TriggerField<DatePickerProps> implements
 
   getPopupContent() {
     const mode = this.getViewMode();
-    return createElement(
-      viewComponents[mode],
-      {
-        ref: (node) => this.view = node,
-        date: this.getSelectedDate(),
-        mode: this.getDefaultViewMode(),
-        renderer: this.getCellRenderer(mode),
-        onSelect: this.handleSelect,
-        onSelectedDateChange: this.handleSelectedDateChange,
-        onViewModeChange: this.handelViewModeChange,
-        isValidDate: this.isValidDate,
-      } as DateViewProps,
-    );
+    return createElement(viewComponents[mode], {
+      ref: node => (this.view = node),
+      date: this.getSelectedDate(),
+      mode: this.getDefaultViewMode(),
+      renderer: this.getCellRenderer(mode),
+      onSelect: this.handleSelect,
+      onSelectedDateChange: this.handleSelectedDateChange,
+      onViewModeChange: this.handelViewModeChange,
+      isValidDate: this.isValidDate,
+    } as DateViewProps);
   }
 
   getCellRenderer(mode: ViewMode): RenderFunction | undefined {
@@ -190,25 +195,16 @@ export default class DatePicker extends TriggerField<DatePickerProps> implements
     return item;
   }
 
-  getValue(): any {
-    const { multiple, range } = this;
-    const value = super.getValue();
-    const values = (isNil(value) ? [] : isArrayLike(value) ? value.slice() : [value]).map((item) => {
-      if (range && multiple) {
-        return (isNil(item) ? [] : isArrayLike(item) ? item.slice() : [item]).map(this.checkMoment, this);
-      }
-      return this.checkMoment(item);
-    });
-    return multiple || range ? values : values[0];
+  processValue(value: any): ReactNode {
+    return super.processValue(this.checkMoment(value));
   }
 
   getSelectedDate(): Moment {
     const { range, multiple, rangeTarget, rangeValue } = this;
-    const selectedDate = this.selectedDate || (
-      range && !multiple && rangeTarget !== void 0 && rangeValue && rangeValue[rangeTarget]
-    ) || (
-      !multiple && this.getValue()
-    );
+    const selectedDate =
+      this.selectedDate ||
+      (range && !multiple && rangeTarget !== undefined && rangeValue && rangeValue[rangeTarget]) ||
+      (!multiple && this.getValue());
     if (isMoment(selectedDate)) {
       return selectedDate.clone();
     }
@@ -217,7 +213,7 @@ export default class DatePicker extends TriggerField<DatePickerProps> implements
 
   getLimit(type: string) {
     const limit = this.getProp(type);
-    if (limit !== void 0) {
+    if (limit !== undefined) {
       const { record } = this;
       if (record && isString(limit) && record.getField(limit)) {
         return record.get(limit);
@@ -227,7 +223,7 @@ export default class DatePicker extends TriggerField<DatePickerProps> implements
   }
 
   getPopupStyleFromAlign(): CSSProperties | undefined {
-    return;
+    return undefined;
   }
 
   @autobind
@@ -244,15 +240,14 @@ export default class DatePicker extends TriggerField<DatePickerProps> implements
     });
   }
 
-  handlePopupAnimateAppear() {
-  }
+  handlePopupAnimateAppear() {}
 
   @autobind
   handlePopupAnimateEnd(key, exists) {
     if (!exists && key === 'align') {
       runInAction(() => {
-        this.selectedDate = void 0;
-        this.mode = void 0;
+        this.selectedDate = undefined;
+        this.mode = undefined;
       });
     }
   }
@@ -408,7 +403,8 @@ export default class DatePicker extends TriggerField<DatePickerProps> implements
   getValueKey(v: any) {
     if (isArrayLike(v)) {
       return v.map(this.getValueKey, this).join(',');
-    } else if (isMoment(v)) {
+    }
+    if (isMoment(v)) {
       return v.format();
     }
     return v;
@@ -441,10 +437,10 @@ export default class DatePicker extends TriggerField<DatePickerProps> implements
 
   @action
   setRangeTarget(target) {
-    if (target !== void 0 && target !== this.rangeTarget) {
+    if (target !== undefined && target !== this.rangeTarget) {
       this.expand();
     }
-    this.selectedDate = void 0;
+    this.selectedDate = undefined;
     super.setRangeTarget(target);
   }
 
@@ -478,14 +474,22 @@ export default class DatePicker extends TriggerField<DatePickerProps> implements
           end = end.endOf('y');
           break;
         case ViewMode.decade:
-          start = start.startOf('y').subtract(start.year() % 10, 'y');
-          end = end.endOf('y').add(9 - end.year() % 10, 'y');
+          start = start
+            .startOf('y')
+            .subtract(start.year() % 10, 'y')
+            .startOf('d');
+          end = end
+            .endOf('y')
+            .add(9 - (end.year() % 10), 'y')
+            .endOf('d');
+          break;
         case ViewMode.dateTime:
           start = start.startOf('d');
           end = end.endOf('d');
+          break;
         default:
       }
-      return date.isBetween(start, end, void 0, '[]');
+      return date.isBetween(start, end, undefined, '[]');
     }
     return true;
   }

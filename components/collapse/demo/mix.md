@@ -13,8 +13,9 @@ title:
 
 `Collapse` is nested inside the `Collapse`.
 
-````jsx
+```jsx
 import { Collapse } from 'choerodon-ui';
+
 const Panel = Collapse.Panel;
 
 function callback(key) {
@@ -43,5 +44,6 @@ ReactDOM.render(
       <p>{text}</p>
     </Panel>
   </Collapse>,
-  mountNode);
-````
+  mountNode,
+);
+```

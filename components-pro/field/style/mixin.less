@@ -1,7 +1,6 @@
-@field-label-prefix-cls: ~"@{c7n-pro-prefix}-field-label";
+@field-label-prefix-cls: ~'@{c7n-pro-prefix}-field-label';
 
 .validation() {
-
   &-invalid &,
   &-invalid label:hover &,
   &-invalid &:hover {
@@ -14,7 +13,12 @@
   }
 
   &-invalid &-clear-button {
-    background: linear-gradient(to right, rgba(255, 255, 255, 0), @error-bg-color 20%, @error-bg-color) !important;
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0),
+      @error-bg-color 20%,
+      @error-bg-color
+    ) !important;
   }
 
   // &-invalid &:focus {
@@ -22,22 +26,24 @@
   // }
 }
 
-.float-label() {
+.float-label(@prefix-width: @input-icon-width-base) {
   &-float-label .@{field-label-prefix-cls} {
     &-wrapper {
       position: absolute;
-      padding: 0 .05rem;
-      margin-left: -.05rem;
+      padding: 0 0.05rem;
+      margin-left: -0.05rem;
       top: 0;
       height: 0;
       left: @input-padding-horizontal-base;
-      border-top: .02rem @border-style-base @component-background;
-      transform-origin: .1rem -230%;
+      border-top: 0.02rem @border-style-base @component-background;
+      transform-origin: 0.1rem -230%;
       transition: all 0.2s @ease-out;
     }
+
     &:after {
       width: 0;
     }
+
     padding: 0;
     color: @label-color;
     transform-origin: inherit;
@@ -54,18 +60,18 @@
   &-float-label .@{field-label-prefix-cls}-wrapper,
   &-float-label &:focus + .@{field-label-prefix-cls}-wrapper,
   &-float-label &:-webkit-autofill + .@{field-label-prefix-cls}-wrapper {
-    transform: scaleX(.8);
+    transform: scaleX(0.8);
   }
   &-float-label .@{field-label-prefix-cls},
   &-float-label&-focused .@{field-label-prefix-cls},
   &-float-label &:-webkit-autofill + .@{field-label-prefix-cls}-wrapper .@{field-label-prefix-cls} {
-    font-size: .15rem; // 15 * 0.8(缩放比例) = 12(目标值)
+    font-size: 0.15rem; // 15 * 0.8(缩放比例) = 12(目标值)
     font-weight: 500;
-    transform: scaleY(.8);
+    transform: scaleY(0.8);
   }
   &-float-label & {
-    border-radius: .04rem;
-    height: .36rem;
+    border-radius: 0.04rem;
+    height: 0.36rem;
   }
   &-float-label textarea& {
     height: auto;
@@ -75,7 +81,7 @@
     background-color: @input-wrapper-bg;
   }
   &-float-label&-required .@{field-label-prefix-cls}:after {
-    width: .08rem;
+    width: 0.08rem;
   }
   &-empty:not(&-focused) {
     .@{field-label-prefix-cls} {
@@ -83,16 +89,20 @@
         border-top-color: transparent;
         transform: none;
       }
+
       transform: none;
       font-size: inherit;
       font-weight: auto;
     }
   }
   &-float-label & > ul {
-    margin-top: .05rem;
-    margin-left: .03rem;
+    margin-top: 0.05rem;
+    margin-left: 0.03rem;
   }
   &-float-label &-multiple-block {
-    border-radius: .12rem;
+    border-radius: 0.12rem;
+  }
+  &-prefix-button&-float-label .@{field-label-prefix-cls}-wrapper {
+    left: @prefix-width;
   }
 }

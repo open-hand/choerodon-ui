@@ -13,8 +13,16 @@ title:
 
 Range.
 
-````jsx
-import { DataSet, DatePicker, MonthPicker, YearPicker, DateTimePicker, Row, Col } from 'choerodon-ui/pro';
+```jsx
+import {
+  DataSet,
+  DatePicker,
+  MonthPicker,
+  YearPicker,
+  DateTimePicker,
+  Row,
+  Col,
+} from 'choerodon-ui/pro';
 
 function handleDataSetChange({ value, oldValue }) {
   console.log('[range dataset newValue]', value, '[oldValue]', oldValue);
@@ -24,7 +32,12 @@ class App extends React.Component {
   ds = new DataSet({
     autoCreate: true,
     fields: [
-      { name: 'date', type: 'date', range: true, defaultValue: ['1984-11-22', '2019-08-12'] },
+      {
+        name: 'date',
+        type: 'date',
+        range: ['start', 'end'],
+        defaultValue: { start: '1984-11-22', end: '2019-08-12' },
+      },
       { name: 'multipleDate', type: 'date', range: true, multiple: true },
     ],
     events: {
@@ -46,8 +59,5 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(
-  <App />,
-  mountNode
-);
-````
+ReactDOM.render(<App />, mountNode);
+```

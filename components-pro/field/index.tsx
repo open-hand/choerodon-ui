@@ -1,3 +1,3 @@
-import FormField from './FormField';
+import ObserverFormField from './FormField';
 
-export default FormField;
+export default ObserverFormField;

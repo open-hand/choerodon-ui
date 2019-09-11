@@ -1,4 +1,4 @@
-@import "../../input/style/mixin";
+@import '../../input/style/mixin';
 
 .form-control-validation(@text-color: @input-color; @border-color: @input-baseline-color; @background-color: @input-bg) {
   .@{c7n-prefix}-form-explain,
@@ -31,8 +31,8 @@
 
   .@{c7n-prefix}-input-group-addon {
     color: @text-color;
-    border-color: @border-color;
     background-color: @background-color;
+    border-color: @border-color;
   }
 
   .has-feedback {
@@ -47,11 +47,11 @@
   legend {
     display: block;
     width: 100%;
+    margin-bottom: 0.2rem;
     padding: 0;
-    margin-bottom: .2rem;
+    color: @text-color-secondary;
     font-size: @font-size-lg;
     line-height: inherit;
-    color: @text-color-secondary;
     border: 0;
     border-bottom: @border-width-base @border-style-base @border-color-base;
   }
@@ -60,22 +60,22 @@
     font-size: @font-size-base;
   }
 
-  input[type="search"] {
+  input[type='search'] {
     box-sizing: border-box;
   }
 
   // Position radios and checkboxes better
-  input[type="radio"],
-  input[type="checkbox"] {
+  input[type='radio'],
+  input[type='checkbox'] {
     line-height: normal;
   }
 
-  input[type="file"] {
+  input[type='file'] {
     display: block;
   }
 
   // Make range inputs behave like textual form controls
-  input[type="range"] {
+  input[type='range'] {
     display: block;
     width: 100%;
   }
@@ -87,20 +87,20 @@
   }
 
   // Focus for file, radio, and checkbox
-  input[type="file"]:focus,
-  input[type="radio"]:focus,
-  input[type="checkbox"]:focus {
+  input[type='file']:focus,
+  input[type='radio']:focus,
+  input[type='checkbox']:focus {
     outline: thin dotted;
-    outline: .05rem auto -webkit-focus-ring-color; // lesshint duplicateProperty: false
-    outline-offset: -.02rem;
+    outline: 0.05rem auto -webkit-focus-ring-color; // lesshint duplicateProperty: false
+    outline-offset: -0.02rem;
   }
 
   // Adjust output element
   output {
     display: block;
-    padding-top: .15rem;
+    padding-top: 0.15rem;
+    color: @input-color;
     font-size: @font-size-base;
     line-height: @line-height-base;
-    color: @input-color;
   }
 }

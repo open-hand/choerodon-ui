@@ -64,6 +64,7 @@ const generateId = (() => {
 
 export default class Sider extends Component<SiderProps, SiderState> {
   static displayName = 'LayoutSider';
+
   static __ANT_LAYOUT_SIDER: any = true;
 
   static defaultProps = {
@@ -85,6 +86,7 @@ export default class Sider extends Component<SiderProps, SiderState> {
   };
 
   private mql: MediaQueryList;
+
   private uniqueId: string;
 
   constructor(props: SiderProps) {
@@ -110,9 +112,11 @@ export default class Sider extends Component<SiderProps, SiderState> {
   }
 
   getChildContext() {
+    const { collapsedWidth } = this.props;
+    const { collapsed } = this.state;
     return {
-      siderCollapsed: this.state.collapsed,
-      collapsedWidth: this.props.collapsedWidth,
+      siderCollapsed: collapsed,
+      collapsedWidth,
     };
   }
 
@@ -127,14 +131,16 @@ export default class Sider extends Component<SiderProps, SiderState> {
   componentDidMount() {
     if (this.mql) {
       this.mql.addListener(this.responsiveHandler);
-      this.responsiveHandler(new MediaQueryListEvent('change', {
-        matches: this.mql.matches,
-        media: this.mql.media,
-      }));
+      this.responsiveHandler(
+        new MediaQueryListEvent('change', {
+          matches: this.mql.matches,
+          media: this.mql.media,
+        }),
+      );
     }
-
-    if (this.context.siderHook) {
-      this.context.siderHook.addSider(this.uniqueId);
+    const { siderHook } = this.context;
+    if (siderHook) {
+      siderHook.addSider(this.uniqueId);
     }
   }
 
@@ -142,15 +148,16 @@ export default class Sider extends Component<SiderProps, SiderState> {
     if (this.mql) {
       this.mql.removeListener(this.responsiveHandler);
     }
-
-    if (this.context.siderHook) {
-      this.context.siderHook.removeSider(this.uniqueId);
+    const { siderHook } = this.context;
+    if (siderHook) {
+      siderHook.removeSider(this.uniqueId);
     }
   }
 
   responsiveHandler = (event: MediaQueryListEvent) => {
     this.setState({ below: event.matches });
-    if (this.state.collapsed !== event.matches) {
+    const { collapsed } = this.state;
+    if (collapsed !== event.matches) {
       this.setCollapsed(event.matches, 'responsive');
     }
   };
@@ -168,12 +175,13 @@ export default class Sider extends Component<SiderProps, SiderState> {
   };
 
   toggle = () => {
-    const collapsed = !this.state.collapsed;
-    this.setCollapsed(collapsed, 'clickTrigger');
+    const { collapsed } = this.state;
+    this.setCollapsed(!collapsed, 'clickTrigger');
   };
 
   belowShowChange = () => {
-    this.setState({ belowShow: !this.state.belowShow });
+    const { belowShow } = this.state;
+    this.setState({ belowShow: !belowShow });
   };
 
   render() {
@@ -186,32 +194,38 @@ export default class Sider extends Component<SiderProps, SiderState> {
       style,
       width,
       collapsedWidth,
+      children,
       ...others
     } = this.props;
+    const { collapsed, below } = this.state;
     const prefixCls = getPrefixCls('layout-sider', customizePrefixCls);
-    const divProps = omit(others, ['collapsed',
-      'defaultCollapsed', 'onCollapse', 'breakpoint']);
-    const siderWidth = this.state.collapsed ? collapsedWidth : width;
+    const divProps = omit(others, ['collapsed', 'defaultCollapsed', 'onCollapse', 'breakpoint']);
+    const siderWidth = collapsed ? collapsedWidth : width;
     // special trigger when collapsedWidth == 0
-    const zeroWidthTrigger = collapsedWidth === 0 || collapsedWidth === '0' || collapsedWidth === '0px' ? (
-      <span onClick={this.toggle} className={`${prefixCls}-zero-width-trigger`}>
-        <Icon type="bars" />
-      </span>
-    ) : null;
+    const zeroWidthTrigger =
+      collapsedWidth === 0 || collapsedWidth === '0' || collapsedWidth === '0px' ? (
+        <span onClick={this.toggle} className={`${prefixCls}-zero-width-trigger`}>
+          <Icon type="bars" />
+        </span>
+      ) : null;
     const iconObj = {
-      'expanded': reverseArrow ? <Icon type="right" /> : <Icon type="left" />,
-      'collapsed': reverseArrow ? <Icon type="left" /> : <Icon type="right" />,
+      expanded: reverseArrow ? <Icon type="right" /> : <Icon type="left" />,
+      collapsed: reverseArrow ? <Icon type="left" /> : <Icon type="right" />,
     };
-    const status = this.state.collapsed ? 'collapsed' : 'expanded';
+    const status = collapsed ? 'collapsed' : 'expanded';
     const defaultTrigger = iconObj[status];
-    const triggerDom = (
-      trigger !== null ?
-        zeroWidthTrigger || (
-          <div className={`${prefixCls}-trigger`} onClick={this.toggle} style={{ width: siderWidth }}>
-            {trigger || defaultTrigger}
-          </div>
-        ) : null
-    );
+    const triggerDom =
+      trigger !== null
+        ? zeroWidthTrigger || (
+            <div
+              className={`${prefixCls}-trigger`}
+              onClick={this.toggle}
+              style={{ width: siderWidth }}
+            >
+              {trigger || defaultTrigger}
+            </div>
+          )
+        : null;
     const divStyle = {
       ...style,
       flex: `0 0 ${siderWidth}px`,
@@ -220,15 +234,15 @@ export default class Sider extends Component<SiderProps, SiderState> {
       width: `${siderWidth}px`,
     };
     const siderCls = classNames(className, prefixCls, {
-      [`${prefixCls}-collapsed`]: !!this.state.collapsed,
+      [`${prefixCls}-collapsed`]: !!collapsed,
       [`${prefixCls}-has-trigger`]: collapsible && trigger !== null && !zeroWidthTrigger,
-      [`${prefixCls}-below`]: !!this.state.below,
+      [`${prefixCls}-below`]: !!below,
       [`${prefixCls}-zero-width`]: siderWidth === 0 || siderWidth === '0' || siderWidth === '0px',
     });
     return (
       <div className={siderCls} {...divProps} style={divStyle}>
-        <div className={`${prefixCls}-children`}>{this.props.children}</div>
-        {collapsible || (this.state.below && zeroWidthTrigger) ? triggerDom : null}
+        <div className={`${prefixCls}-children`}>{children}</div>
+        {collapsible || (below && zeroWidthTrigger) ? triggerDom : null}
       </div>
     );
   }

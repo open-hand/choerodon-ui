@@ -1,10 +1,10 @@
 import React, { Component, ReactElement, ReactNode } from 'react';
+import classNames from 'classnames';
+import omit from 'lodash/omit';
 import Icon from '../icon';
 import Select, { SelectProps } from '../select';
 import Pagination from '../pagination';
 import Tooltip from '../tooltip';
-import classNames from 'classnames';
-import omit from 'lodash/omit';
 import { getPrefixCls } from '../configure';
 
 const Option = Select.Option;
@@ -16,22 +16,25 @@ export interface IconSelectProps extends SelectProps {
 }
 
 export interface IconSelectState {
-  current: number,
-  total: number,
-  pageSize: number,
-  filterValue: string,
-  data: any,
+  current: number;
+  total: number;
+  pageSize: number;
+  filterValue: string;
+  data: any;
 }
 
 export default class IconSelect extends Component<IconSelectProps, IconSelectState> {
   static displayName = 'IconSelect';
+
   static defaultProps = {
     filter: true,
     showArrow: false,
     showCheckAll: false,
     showAll: false,
   };
+
   icons: any;
+
   rcSelect: ReactNode | null;
 
   constructor(props: IconSelectProps) {
@@ -57,14 +60,14 @@ export default class IconSelect extends Component<IconSelectProps, IconSelectSta
     if (showAll) {
       items = icons.default;
       if (filterValue) {
-        items = icons.favorite.filter((name) => {
+        items = icons.favorite.filter(name => {
           return name.toLowerCase().indexOf(filterValue.toLowerCase()) !== -1;
         });
       }
     } else {
       items = icons.favorite;
       if (filterValue) {
-        items = icons.favorite.filter((name) => {
+        items = icons.favorite.filter(name => {
           return name.toLowerCase().indexOf(filterValue.toLowerCase()) !== -1;
         });
       }
@@ -98,13 +101,17 @@ export default class IconSelect extends Component<IconSelectProps, IconSelectSta
 
   handleRender = (label: ReactElement<any>) => {
     if (typeof label === 'string' && label) {
-      return <span><Icon type={label} /> {label}</span>;
-    } else if (typeof label === 'object' && label.props) {
+      return (
+        <span>
+          <Icon type={label} /> {label}
+        </span>
+      );
+    }
+    if (typeof label === 'object' && label.props) {
       const { children } = label.props;
       return children ? <span>{children}</span> : null;
-    } else {
-      return null;
     }
+    return null;
   };
 
   handlePageChange = (current: number, pageSize: number) => {
@@ -138,6 +145,7 @@ export default class IconSelect extends Component<IconSelectProps, IconSelectSta
 
   render() {
     const { className, prefixCls: customizePrefixCls, dropdownClassName } = this.props;
+    const { filterValue } = this.state;
     const prefixCls = getPrefixCls('icon-select', customizePrefixCls);
     const selectCls = classNames(className, prefixCls);
     const dropDownCls = classNames(dropdownClassName, `${prefixCls}-dropdown`);
@@ -152,7 +160,7 @@ export default class IconSelect extends Component<IconSelectProps, IconSelectSta
         {...otherProps}
         footer={this.renderFooter()}
         onFilterChange={this.handleFilter}
-        filterValue={this.state.filterValue}
+        filterValue={filterValue}
         choiceRender={this.handleRender}
         filter
         ref={this.saveRef}

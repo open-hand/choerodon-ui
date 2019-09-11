@@ -1,24 +1,24 @@
-@import "../../style/themes/default";
-@import "../../style/mixins/index";
+@import '../../style/themes/default';
+@import '../../style/mixins/index';
 
-@ripple-prefix-cls: ~"@{c7n-prefix}-ripple";
+@ripple-prefix-cls: ~'@{c7n-prefix}-ripple';
 
 .@{ripple-prefix-cls} {
   position: absolute;
-  border-radius: 50%;
   background-color: @ripple-dark-color;
+  border-radius: 50%;
   transition: all 450ms cubic-bezier(0, 0, 0.2, 1);
   pointer-events: none;
 
   &-wrapper {
     position: absolute;
-    top: -.01rem;
-    left: -.01rem;
-    right: -.01rem;
-    bottom: -.01rem;
+    top: -0.01rem;
+    right: -0.01rem;
+    bottom: -0.01rem;
+    left: -0.01rem;
     overflow: hidden;
-    border-radius: inherit;
     background-clip: padding-box;
+    border-radius: inherit;
     pointer-events: none;
   }
 }

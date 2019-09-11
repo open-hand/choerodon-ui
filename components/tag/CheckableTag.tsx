@@ -11,6 +11,7 @@ export interface CheckableTagProps {
 
 export default class CheckableTag extends Component<CheckableTagProps> {
   static displayName = 'CheckableTag';
+
   handleClick = () => {
     const { checked, onChange } = this.props;
     if (onChange) {
@@ -21,12 +22,16 @@ export default class CheckableTag extends Component<CheckableTagProps> {
   render() {
     const { prefixCls: customizePrefixCls, className, checked, ...restProps } = this.props;
     const prefixCls = getPrefixCls('tag', customizePrefixCls);
-    const cls = classNames(prefixCls, {
-      [`${prefixCls}-checkable`]: true,
-      [`${prefixCls}-checkable-checked`]: checked,
-    }, className);
+    const cls = classNames(
+      prefixCls,
+      {
+        [`${prefixCls}-checkable`]: true,
+        [`${prefixCls}-checkable-checked`]: checked,
+      },
+      className,
+    );
 
     delete (restProps as any).onChange; // TypeScript cannot check delete now.
-    return <div {...restProps as any} className={cls} onClick={this.handleClick} />;
+    return <div {...(restProps as any)} className={cls} onClick={this.handleClick} />;
   }
 }

@@ -1,12 +1,11 @@
-
 export function getPlacementStyle(placement: string, defaultTop: number, defaultBottom: number) {
-  const top = defaultTop ? defaultTop + 'px' : 0;
-  const bottom = defaultBottom ? defaultBottom + 'px' : 0;
+  const top = defaultTop ? `${defaultTop}px` : 0;
+  const bottom = defaultBottom ? `${defaultBottom}px` : 0;
   const target = {
     left: '24px',
     right: '24px',
-    top: top,
-    bottom: bottom,
+    top,
+    bottom,
   };
   let style = {};
   switch (placement) {
@@ -62,7 +61,7 @@ export function getPlacementStyle(placement: string, defaultTop: number, default
         top: 'auto',
       };
       break;
-    default :
+    default:
       break;
   }
   Object.assign(target, style);
@@ -92,7 +91,7 @@ export function getPlacementTransitionName(placement: string, defaultTransitionN
     case 'rightBottom':
       transitionName = 'move-right';
       break;
-    default :
+    default:
       break;
   }
   return transitionName;

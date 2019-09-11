@@ -4,7 +4,12 @@ import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { computed, observable, runInAction } from 'mobx';
 import noop from 'lodash/noop';
-import C7NTree, { TreeNode, TreeNodeEvent, TreeNodeExpandEvent, TreeProps as C7NTreeProps } from 'choerodon-ui/lib/tree';
+import C7NTree, {
+  TreeNode,
+  TreeNodeEvent,
+  TreeNodeExpandEvent,
+  TreeProps as C7NTreeProps,
+} from 'choerodon-ui/lib/tree';
 import DataSet from '../data-set/DataSet';
 import { getKey, getTreeNodes, NodeRenderer } from './util';
 import { BooleanValue, DataSetSelection } from '../data-set/enum';
@@ -37,10 +42,7 @@ export default class Tree extends Component<TreeProps> {
     selectable: PropTypes.bool,
     disabled: PropTypes.bool,
     multiple: PropTypes.bool,
-    checkable: PropTypes.oneOfType([
-      PropTypes.bool,
-      PropTypes.node,
-    ]),
+    checkable: PropTypes.oneOfType([PropTypes.bool, PropTypes.node]),
     checkStrictly: PropTypes.bool,
     draggable: PropTypes.bool,
     defaultExpandParent: PropTypes.bool,
@@ -81,12 +83,16 @@ export default class Tree extends Component<TreeProps> {
   static TreeNode = TreeNode;
 
   @observable stateCheckedKeys: string[];
+
   @observable stateExpandedKeys: string[];
+
   stateForceRenderKeys: string[] = [];
 
   @computed
   get forceRenderKeys() {
-    return this.stateForceRenderKeys = [...new Set<string>([...this.stateForceRenderKeys, ...this.expandedKeys])];
+    return (this.stateForceRenderKeys = [
+      ...new Set<string>([...this.stateForceRenderKeys, ...this.expandedKeys]),
+    ]);
   }
 
   @computed
@@ -96,7 +102,7 @@ export default class Tree extends Component<TreeProps> {
       const { expandField, idField } = dataSet.props;
       if (expandField) {
         const keys: string[] = [];
-        dataSet.forEach((record) => {
+        dataSet.forEach(record => {
           if (record.isExpanded) {
             keys.push(getKey(record, idField));
           }
@@ -114,7 +120,7 @@ export default class Tree extends Component<TreeProps> {
       const { checkField, idField } = dataSet.props;
       if (checkField) {
         const keys: string[] = [];
-        dataSet.forEach((record) => {
+        dataSet.forEach(record => {
           const field = record.getField(checkField);
           if (record.get(checkField) === (field ? field.get(BooleanValue.trueValue) : true)) {
             keys.push(getKey(record, idField));
@@ -168,10 +174,19 @@ export default class Tree extends Component<TreeProps> {
       if (checkField) {
         const { node, checked } = eventObj;
         const { eventKey } = node.props;
-        const found = dataSet.find(record => eventKey === String(idField ? record.get(idField) : record.id));
+        const found = dataSet.find(
+          record => eventKey === String(idField ? record.get(idField) : record.id),
+        );
         if (found) {
           const field = found.getField(checkField);
-          found.set(checkField, field ? checked ? field.get(BooleanValue.trueValue) : field.get(BooleanValue.falseValue) : checked);
+          found.set(
+            checkField,
+            field
+              ? checked
+                ? field.get(BooleanValue.trueValue)
+                : field.get(BooleanValue.falseValue)
+              : checked,
+          );
           return false;
         }
       }
@@ -205,7 +220,9 @@ export default class Tree extends Component<TreeProps> {
       const { idField } = dataSet.props;
       const { node, selected } = eventObj;
       const { eventKey } = node.props;
-      const found = dataSet.find(record => eventKey === String(idField ? record.get(idField) : record.id));
+      const found = dataSet.find(
+        record => eventKey === String(idField ? record.get(idField) : record.id),
+      );
       if (found) {
         if (selected) {
           dataSet.select(found);
@@ -240,8 +257,6 @@ export default class Tree extends Component<TreeProps> {
         </Spin>
       );
     }
-    return (
-      <C7NTree {...otherProps} />
-    );
+    return <C7NTree {...otherProps} />;
   }
 }

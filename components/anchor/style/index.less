@@ -1,7 +1,7 @@
-@import "../../style/themes/default";
-@import "../../style/mixins/index";
+@import '../../style/themes/default';
+@import '../../style/mixins/index';
 
-@anchor-border-width: .02rem;
+@anchor-border-width: 0.02rem;
 
 .@{c7n-prefix}-anchor {
   .reset-component;
@@ -9,37 +9,37 @@
   padding-left: @anchor-border-width;
 
   &-wrapper {
-    background-color: @component-background;
+    margin-left: -0.04rem;
+    padding-left: 0.04rem;
     overflow: auto;
-    padding-left: .04rem;
-    margin-left: -.04rem;
+    background-color: @component-background;
   }
 
   &-ink {
     position: absolute;
-    height: 100%;
-    left: 0;
     top: 0;
-    &:before {
-      content: ' ';
+    left: 0;
+    height: 100%;
+    &::before {
       position: relative;
+      display: block;
       width: @anchor-border-width;
       height: 100%;
-      display: block;
-      background-color: @border-color-split;
       margin: 0 auto;
+      background-color: @border-color-split;
+      content: ' ';
     }
     &-ball {
-      display: none;
       position: absolute;
-      width: .08rem;
-      height: .08rem;
-      border-radius: .08rem;
-      border: .02rem solid @primary-color;
-      background-color: @component-background;
       left: 50%;
-      transition: top .3s ease-in-out;
+      display: none;
+      width: 0.08rem;
+      height: 0.08rem;
+      background-color: @component-background;
+      border: 0.02rem solid @primary-color;
+      border-radius: 0.08rem;
       transform: translateX(-50%);
+      transition: top 0.3s ease-in-out;
       &.visible {
         display: inline-block;
       }
@@ -51,18 +51,18 @@
   }
 
   &-link {
-    padding: .07rem 0 .07rem .16rem;
+    padding: 0.07rem 0 0.07rem 0.16rem;
     line-height: 1.143;
 
     &-title {
-      display: block;
       position: relative;
-      transition: all .3s;
+      display: block;
+      margin-bottom: 0.06rem;
+      overflow: hidden;
       color: @text-color;
       white-space: nowrap;
-      overflow: hidden;
       text-overflow: ellipsis;
-      margin-bottom: .06rem;
+      transition: all 0.3s;
 
       &:only-child {
         margin-bottom: 0;
@@ -75,7 +75,7 @@
   }
 
   &-link &-link {
-    padding-top: .05rem;
-    padding-bottom: .05rem;
+    padding-top: 0.05rem;
+    padding-bottom: 0.05rem;
   }
 }

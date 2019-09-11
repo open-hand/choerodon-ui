@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import FilterSelect from './FilterSelect';
 import ColumnFilter from './ColumnFilter';
 import { ColumnProps, TableStateFilters } from './interface';
@@ -18,34 +18,42 @@ export interface FilterBarProps<T> {
   getPopupContainer?: (triggerNode?: Element) => HTMLElement;
 }
 
-export default class FilterBar<T> extends Component<FilterBarProps<T>, any> {
-  render() {
-    const {
-      prefixCls, columns, onColumnFilterChange, onFilterSelectChange, onFilterSelectClear, onFilter,
-      dataSource, filters, columnFilters, placeholder, multiple, getPopupContainer,
-    } = this.props;
-    return (
-      <div className={`${prefixCls}-filter-bar`}>
-        <FilterSelect
-          prefixCls={prefixCls}
-          placeholder={placeholder}
-          columns={columns}
-          dataSource={dataSource}
-          onChange={onFilterSelectChange}
-          onClear={onFilterSelectClear}
-          onFilter={onFilter}
-          filters={filters}
-          columnFilters={columnFilters}
-          getPopupContainer={getPopupContainer}
-          multiple={multiple}
-        />
-        <ColumnFilter
-          prefixCls={prefixCls}
-          columns={columns}
-          onColumnFilterChange={onColumnFilterChange}
-          getPopupContainer={getPopupContainer}
-        />
-      </div>
-    );
-  }
-};
+export default function FilterBar<T>(props: FilterBarProps<T>) {
+  const {
+    prefixCls,
+    columns,
+    onColumnFilterChange,
+    onFilterSelectChange,
+    onFilterSelectClear,
+    onFilter,
+    dataSource,
+    filters,
+    columnFilters,
+    placeholder,
+    multiple,
+    getPopupContainer,
+  } = props;
+  return (
+    <div className={`${prefixCls}-filter-bar`}>
+      <FilterSelect
+        prefixCls={prefixCls}
+        placeholder={placeholder}
+        columns={columns}
+        dataSource={dataSource}
+        onChange={onFilterSelectChange}
+        onClear={onFilterSelectClear}
+        onFilter={onFilter}
+        filters={filters}
+        columnFilters={columnFilters}
+        getPopupContainer={getPopupContainer}
+        multiple={multiple}
+      />
+      <ColumnFilter
+        prefixCls={prefixCls}
+        columns={columns}
+        onColumnFilterChange={onColumnFilterChange}
+        getPopupContainer={getPopupContainer}
+      />
+    </div>
+  );
+}

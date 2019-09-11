@@ -1,4 +1,4 @@
-import React, { Component, Key, ReactElement, MouseEventHandler } from 'react';
+import React, { Component, Key, MouseEventHandler, ReactElement } from 'react';
 import { findDOMNode } from 'react-dom';
 import Icon from '../icon';
 import { ColumnProps, TableStateFilters } from './interface';
@@ -58,17 +58,22 @@ function removeDoubleOr(filters: LabeledValue[]): LabeledValue[] {
 }
 
 export default class FilterSelect<T> extends Component<FilterSelectProps<T>, FilterSelectState<T>> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      columns: this.getColumnsWidthFilters(),
+      filters: props.filters || [],
+      columnFilters: props.columnFilters || {},
+      inputValue: '',
+      selectColumn: undefined,
+      checked: [],
+    };
+  }
 
-  state: FilterSelectState<T> = {
-    columns: this.getColumnsWidthFilters(),
-    filters: this.props.filters || [],
-    columnFilters: this.props.columnFilters || {},
-    inputValue: '',
-    selectColumn: undefined,
-    checked: [],
-  };
+  state: FilterSelectState<T>;
 
   rcSelect: any;
+
   columnRefs: any = {};
 
   componentWillReceiveProps(nextProps: FilterSelectProps<T>) {
@@ -88,15 +93,18 @@ export default class FilterSelect<T> extends Component<FilterSelectProps<T>, Fil
   }
 
   getPrefixCls() {
-    return `${this.props.prefixCls}-filter-select`;
+    const { prefixCls } = this.props;
+    return `${prefixCls}-filter-select`;
   }
 
-  handleDropdownMouseDown: MouseEventHandler<any> = (e) => {
+  handleDropdownMouseDown: MouseEventHandler<any> = e => {
     e.preventDefault();
     this.rcSelect.focus();
   };
 
   render() {
+    const { placeholder, getPopupContainer } = this.props;
+    const { inputValue } = this.state;
     const prefixCls = this.getPrefixCls();
     const multiple = this.isMultiple();
     return (
@@ -114,19 +122,19 @@ export default class FilterSelect<T> extends Component<FilterSelectProps<T>, Fil
           onInputKeyDown={this.handleInputKeyDown}
           onClear={this.handleClear}
           value={this.getValue()}
-          placeholder={this.props.placeholder}
+          placeholder={placeholder}
           notFoundContent={false}
           showNotFindInputItem={false}
           showNotFindSelectedItem={false}
           dropdownMatchSelectWidth={false}
-          defaultActiveFirstOption={!this.state.inputValue}
+          defaultActiveFirstOption={!inputValue}
           dropdownStyle={{ minWidth: 256 }}
           onDropdownMouseDown={this.handleDropdownMouseDown}
           dropdownClassName={`${prefixCls}-dropdown`}
           getRootDomNode={this.getRootDomNode}
           showCheckAll={false}
           onChoiceItemClick={this.handleChoiceItemClick}
-          getPopupContainer={this.props.getPopupContainer}
+          getPopupContainer={getPopupContainer}
           allowClear
           labelInValue
           blurChange={false}
@@ -140,8 +148,9 @@ export default class FilterSelect<T> extends Component<FilterSelectProps<T>, Fil
   }
 
   renderColumnsTitle() {
+    const { columns } = this.state;
     this.columnRefs = {};
-    return this.state.columns.map((col) => {
+    return columns.map(col => {
       const key = getColumnKey(col);
       return (
         <span ref={this.saveColumnRef.bind(this, key)} key={key}>
@@ -179,7 +188,8 @@ export default class FilterSelect<T> extends Component<FilterSelectProps<T>, Fil
         const key = getColumnKey(selectColumn);
         if (key) {
           const { filters: columFilters } = selectColumn;
-          const filterText = columnFilters[key] = value.split(this.getColumnTitle(selectColumn)).slice(1);
+          const filterText = value.split(this.getColumnTitle(selectColumn)).slice(1);
+          columnFilters[key] = filterText;
           const found = columFilters && columFilters.find(filter => filter.text === filterText[0]);
           const filterValue = found ? String(found.value) : filterText[0];
           this.fireColumnFilterChange(key, [filterValue]);
@@ -220,10 +230,13 @@ export default class FilterSelect<T> extends Component<FilterSelectProps<T>, Fil
       const selectColumn = this.findColumn(columnKey as string);
       if (selectColumn && selectColumn.filterMultiple) {
         const { filters } = selectColumn;
-        const checked = pair.join(PAIR_SPLIT).split(VALUE_SPLIT).map(text => {
-          const found = filters && filters.find(filter => filter.text === text);
-          return found ? found.value : text;
-        });
+        const checked = pair
+          .join(PAIR_SPLIT)
+          .split(VALUE_SPLIT)
+          .map(text => {
+            const found = filters && filters.find(filter => filter.text === text);
+            return found ? found.value : text;
+          });
         this.setState({
           selectColumn,
           checked,
@@ -243,22 +256,25 @@ export default class FilterSelect<T> extends Component<FilterSelectProps<T>, Fil
       } else {
         checked.splice(index, 1);
       }
-      this.setState({
-        checked,
-      }, () => {
-        if (selectColumn) {
-          const { columnFilters } = this.state;
-          const columnKey = getColumnKey(selectColumn);
-          if (columnKey) {
-            const filters = columnFilters[columnKey];
-            if (!filters || !filters.length) {
-              this.rcSelect.setState({
-                inputValue: this.getColumnTitle(selectColumn),
-              });
+      this.setState(
+        {
+          checked,
+        },
+        () => {
+          if (selectColumn) {
+            const { columnFilters } = this.state;
+            const columnKey = getColumnKey(selectColumn);
+            if (columnKey) {
+              const filters = columnFilters[columnKey];
+              if (!filters || !filters.length) {
+                this.rcSelect.setState({
+                  inputValue: this.getColumnTitle(selectColumn),
+                });
+              }
             }
           }
-        }
-      });
+        },
+      );
     }
     return false;
   };
@@ -286,8 +302,8 @@ export default class FilterSelect<T> extends Component<FilterSelectProps<T>, Fil
 
   handleChange = (changedValue: LabeledValue[]) => {
     const { state, rcSelect } = this;
-    const { selectColumn, inputValue } = state;
-    let { filters, columnFilters } = state;
+    const { selectColumn, inputValue, columnFilters } = state;
+    let { filters } = state;
     const all = this.getValue();
     let change = false;
     if (changedValue.length > all.length) {
@@ -340,7 +356,7 @@ export default class FilterSelect<T> extends Component<FilterSelectProps<T>, Fil
       }
     } else {
       filters = this.changeValue(changedValue, rcSelect.state.value);
-      if (this.state.filters.length !== filters.length) {
+      if (state.filters.length !== filters.length) {
         change = true;
       }
       this.setState({
@@ -368,15 +384,17 @@ export default class FilterSelect<T> extends Component<FilterSelectProps<T>, Fil
     }
   }
 
-  changeValue(changedValue: LabeledValue [], oldValue: any[]): string[] {
+  changeValue(changedValue: LabeledValue[], oldValue: any[]): string[] {
     const { state } = this;
-    let changedColumnKeys: any[] = [];
-    let changedColumnFilters = state.columnFilters;
+    const changedColumnKeys: any[] = [];
+    const changedColumnFilters = state.columnFilters;
     const columnFiltersValues = this.getColumnFiltersValues();
     if (changedValue.length) {
       const len = columnFiltersValues.length;
       if (len > 0) {
-        const index = oldValue.findIndex((item, i) => item !== (changedValue[i] && changedValue[i].key));
+        const index = oldValue.findIndex(
+          (item, i) => item !== (changedValue[i] && changedValue[i].key),
+        );
         if (index < columnFiltersValues.length) {
           const deleted = changedValue.splice(0, len - 1);
           if (deleted.length < 2 && changedValue[0] && changedValue[0].label === VALUE_OR) {
@@ -434,10 +452,13 @@ export default class FilterSelect<T> extends Component<FilterSelectProps<T>, Fil
       if (filteredValue && filteredValue.length && column) {
         const { filters } = column;
         values.push({
-          [c]: filteredValue.map(value => {
-            const found = filters && filters.find(filter => String(filter.value) === String(value));
-            return found ? found.text : value;
-          }).join(VALUE_SPLIT),
+          [c]: filteredValue
+            .map(value => {
+              const found =
+                filters && filters.find(filter => String(filter.value) === String(value));
+              return found ? found.text : value;
+            })
+            .join(VALUE_SPLIT),
         });
       }
     });
@@ -446,7 +467,9 @@ export default class FilterSelect<T> extends Component<FilterSelectProps<T>, Fil
 
   getValue() {
     const { filters } = this.state;
-    return this.getColumnFiltersValues().map(this.toValueString).concat(filters.map(barPair));
+    return this.getColumnFiltersValues()
+      .map(this.toValueString)
+      .concat(filters.map(barPair));
   }
 
   getInputFilterOptions(inputValue: string) {
@@ -454,22 +477,32 @@ export default class FilterSelect<T> extends Component<FilterSelectProps<T>, Fil
     const options: ReactElement<OptionProps>[] = [];
     if (dataSource && columns) {
       const values: { [x: string]: boolean } = {};
-      filterByInputValue<T>(dataSource, columns, inputValue, (record: T, column: ColumnProps<T>) => {
-        const { dataIndex } = column;
-        if (dataIndex) {
-          const value = (record as any)[dataIndex].toString();
-          if (!values[value]) {
-            values[value] = true;
-            options.push(<Option key={value} value={value}>{value}</Option>);
+      filterByInputValue<T>(
+        dataSource,
+        columns,
+        inputValue,
+        (record: T, column: ColumnProps<T>) => {
+          const { dataIndex } = column;
+          if (dataIndex) {
+            const value = (record as any)[dataIndex].toString();
+            if (!values[value]) {
+              values[value] = true;
+              options.push(
+                <Option key={value} value={value}>
+                  {value}
+                </Option>,
+              );
+            }
           }
-        }
-      });
+        },
+      );
     }
     return options;
   }
 
   getOptions() {
-    const { selectColumn, inputValue, columns, checked, columnFilters } = this.state;
+    const { state } = this;
+    const { selectColumn, inputValue, columns, checked, columnFilters } = state;
     if (selectColumn) {
       if (inputValue && inputValue.split(PAIR_SPLIT)[1]) {
         return null;
@@ -477,47 +510,66 @@ export default class FilterSelect<T> extends Component<FilterSelectProps<T>, Fil
       const { filters, filterMultiple } = selectColumn;
       const columnKey = getColumnKey(selectColumn);
       if (filters) {
-        return filters.filter(filter => !filter.children).map((filter, i) => {
-          const value = String(filter.value);
-          let text: any = filter.text;
-          if (filterMultiple && columnKey) {
-            let _checked = columnFilters[columnKey];
-            if (_checked && !checked.length) {
-              this.state.checked = _checked.slice();
-            } else {
-              _checked = checked;
+        return filters
+          .filter(filter => !filter.children)
+          .map((filter, i) => {
+            const value = String(filter.value);
+            let text: any = filter.text;
+            if (filterMultiple && columnKey) {
+              let _checked = columnFilters[columnKey];
+              if (_checked && !checked.length) {
+                state.checked = _checked.slice();
+              } else {
+                _checked = checked;
+              }
+              text = [
+                <Checkbox key="ck" className="multiple" checked={_checked.indexOf(value) !== -1} />,
+                text,
+              ];
             }
-            text = [<Checkbox key="ck" className="multiple" checked={_checked.indexOf(value) !== -1} />, text];
-          }
-          return <Option key={`filter-${i}`} value={value}>{text}</Option>;
-        }).concat(filterMultiple ? (
-          <OptGroup key="ok">
-            <Option value="__ok__" className={`${this.getPrefixCls()}-ok-btn`}>确认</Option>
-          </OptGroup>
-        ) : []);
+            return (
+              <Option key={`filter-${String(i)}`} value={value}>
+                {text}
+              </Option>
+            );
+          })
+          .concat(
+            filterMultiple ? (
+              <OptGroup key="ok">
+                <Option value="__ok__" className={`${this.getPrefixCls()}-ok-btn`}>
+                  确认
+                </Option>
+              </OptGroup>
+            ) : (
+              []
+            ),
+          );
       }
     } else if (inputValue) {
       return this.getInputFilterOptions(inputValue);
     } else {
       const { filters } = this.state;
+      const { multiple } = this.props;
       const { length } = filters;
       const value = this.getColumnFiltersValues();
       const keys = value.map(item => Object.keys(item)[0]);
       const options = columns.reduce((opts: any[], column, i) => {
         const key = getColumnKey(column, i);
         if (keys.indexOf(key as string) === -1 || column.filterMultiple) {
-          opts.push(<Option key={`column-${key}`} value={key}><span>{column.filterTitle || column.title}</span></Option>);
+          opts.push(
+            <Option key={`column-${key}`} value={key}>
+              <span>{column.filterTitle || column.title}</span>
+            </Option>,
+          );
         }
         return opts;
       }, []);
-      if (this.props.multiple && (length ? filters[length - 1] !== VALUE_OR : value.length)) {
+      if (multiple && (length ? filters[length - 1] !== VALUE_OR : value.length)) {
         return [
           <OptGroup key="or">
             <Option value={OPTION_OR}>OR</Option>
           </OptGroup>,
-          <OptGroup key="all">
-            {options}
-          </OptGroup>,
+          <OptGroup key="all">{options}</OptGroup>,
         ];
       }
       return options;
@@ -529,7 +581,8 @@ export default class FilterSelect<T> extends Component<FilterSelectProps<T>, Fil
   }
 
   findColumn(myKey: string | number) {
-    return this.state.columns.find(c => getColumnKey(c) === myKey);
+    const { columns } = this.state;
+    return columns.find(c => getColumnKey(c) === myKey);
   }
 
   toValueString = (item: any) => {
@@ -537,21 +590,21 @@ export default class FilterSelect<T> extends Component<FilterSelectProps<T>, Fil
     const col = this.findColumn(key);
     if (col) {
       return pairValue(col, item[key]);
-    } else {
-      return '';
     }
+    return '';
   };
 
   getRootDomNode = (): HTMLElement => {
-    return (findDOMNode(this) as HTMLElement).querySelector(`.${getPrefixCls('select')}-search__field`) as HTMLElement;
+    return (findDOMNode(this) as HTMLElement).querySelector(
+      `.${getPrefixCls('select')}-search__field`,
+    ) as HTMLElement;
   };
 
   getColumnTitle(column: ColumnProps<T>) {
     const columnKey = getColumnKey(column);
     if (columnKey) {
       return `${this.columnRefs[columnKey].textContent}${PAIR_SPLIT}`;
-    } else {
-      return '';
     }
+    return '';
   }
-};
+}

@@ -20,12 +20,14 @@ export interface PickerProps {
 export default function createPicker(TheCalendar: ComponentClass): any {
   return class CalenderWrapper extends Component<any, any> {
     static displayName = 'CalenderWrapper';
+
     static defaultProps = {
       allowClear: true,
       showToday: true,
     };
 
     private input: any;
+
     private picker: any;
 
     constructor(props: any) {
@@ -56,9 +58,7 @@ export default function createPicker(TheCalendar: ComponentClass): any {
       const { renderExtraFooter } = this.props;
       const prefixCls = this.getPrefixCls();
       return renderExtraFooter ? (
-        <div className={`${prefixCls}-footer-extra`}>
-          {renderExtraFooter(...args)}
-        </div>
+        <div className={`${prefixCls}-footer-extra`}>{renderExtraFooter(...args)}</div>
       ) : null;
     };
 
@@ -120,7 +120,8 @@ export default function createPicker(TheCalendar: ComponentClass): any {
     };
 
     getPrefixCls() {
-      return getPrefixCls('calendar', this.props.prefixCls);
+      const { prefixCls } = this.props;
+      return getPrefixCls('calendar', prefixCls);
     }
 
     render() {
@@ -128,8 +129,7 @@ export default function createPicker(TheCalendar: ComponentClass): any {
       const props = omit(this.props, ['onChange']);
       const { label, disabled, pickerInputClass, locale, localeCode } = props;
       const prefixCls = this.getPrefixCls();
-      const placeholder = ('placeholder' in props)
-        ? props.placeholder : locale.lang.placeholder;
+      const placeholder = 'placeholder' in props ? props.placeholder : locale.lang.placeholder;
 
       const disabledTime = props.showTime ? props.disabledTime : null;
 
@@ -146,7 +146,6 @@ export default function createPicker(TheCalendar: ComponentClass): any {
       let calendarProps: any = {};
       if (props.showTime) {
         calendarProps = {
-
           onSelect: this.handleChange,
         };
       } else {
@@ -158,7 +157,10 @@ export default function createPicker(TheCalendar: ComponentClass): any {
         calendarProps.mode = props.mode;
       }
 
-      warning(!('onOK' in props), 'It should be `DatePicker[onOk]` or `MonthPicker[onOk]`, instead of `onOK`!');
+      warning(
+        !('onOK' in props),
+        'It should be `DatePicker[onOk]` or `MonthPicker[onOk]`, instead of `onOK`!',
+      );
       const calendar = (
         <TheCalendar
           {...calendarProps}
@@ -182,23 +184,23 @@ export default function createPicker(TheCalendar: ComponentClass): any {
         />
       );
 
-      const clearIcon = (!props.disabled && props.allowClear && value) ? (
-        <Button
-          className={`${prefixCls}-picker-clear`}
-          onClick={this.clearSelection}
-          shape="circle"
-          icon="close"
-          size={Size.small}
-        />
-      ) : null;
+      const clearIcon =
+        !props.disabled && props.allowClear && value ? (
+          <Button
+            className={`${prefixCls}-picker-clear`}
+            onClick={this.clearSelection}
+            shape="circle"
+            icon="close"
+            size={Size.small}
+          />
+        ) : null;
 
-      const suffix = (<span
-        className={`${prefixCls}-picker-icon-wrapper`}
-        onClick={this.onPickerIconClick}
-      >
-        {clearIcon}
-        <Icon type="date_range" className={`${prefixCls}-picker-icon`} />
-      </span>);
+      const suffix = (
+        <span className={`${prefixCls}-picker-icon-wrapper`} onClick={this.onPickerIconClick}>
+          {clearIcon}
+          <Icon type="date_range" className={`${prefixCls}-picker-icon`} />
+        </span>
+      );
 
       const inputProps = {
         label,

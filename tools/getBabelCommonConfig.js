@@ -1,37 +1,52 @@
 'use strict';
-const replaceLib = require('./replaceLib');
+const { resolve } = require('./utils/projectHelper');
+const runtimeVersion = require('@babel/runtime/package.json').version;
 
-module.exports = function (modules) {
+module.exports = function(modules) {
   const plugins = [
-    require.resolve('babel-plugin-transform-es3-member-expression-literals'),
-    require.resolve('babel-plugin-transform-es3-property-literals'),
-    require.resolve('babel-plugin-transform-object-assign'),
-    require.resolve('babel-plugin-transform-class-properties'),
-    require.resolve('babel-plugin-transform-object-rest-spread'),
+    [
+      resolve('@babel/plugin-transform-typescript'),
+      {
+        isTSX: true,
+      },
+    ],
+    resolve('babel-plugin-inline-import-data-uri'),
+    resolve('@babel/plugin-transform-member-expression-literals'),
+    resolve('@babel/plugin-transform-object-assign'),
+    resolve('@babel/plugin-transform-property-literals'),
+    [resolve('@babel/plugin-transform-runtime'), { version: runtimeVersion }],
+    // resolve('@babel/plugin-transform-spread'),
+    resolve('@babel/plugin-transform-template-literals'),
+    resolve('@babel/plugin-proposal-export-default-from'),
+    resolve('@babel/plugin-proposal-export-namespace-from'),
+    resolve('@babel/plugin-proposal-object-rest-spread'),
+    [
+      resolve('@babel/plugin-proposal-decorators'),
+      {
+        legacy: true,
+      },
+    ],
+    resolve('@babel/plugin-proposal-class-properties'),
   ];
-  plugins.push([require.resolve('babel-plugin-transform-runtime'), {
-    polyfill: false,
-  }]);
-
-  if (modules === false) {
-    plugins.push(replaceLib);
-  }
   return {
     presets: [
-      require.resolve('babel-preset-react'),
-      [require.resolve('babel-preset-env'), {
-        modules,
-        targets: {
-          browsers: [
-            'last 2 versions',
-            'Firefox ESR',
-            '> 1%',
-            'ie >= 9',
-            'iOS >= 8',
-            'Android >= 4',
-          ],
+      resolve('@babel/preset-react'),
+      [
+        resolve('@babel/preset-env'),
+        {
+          modules,
+          targets: {
+            browsers: [
+              'last 2 versions',
+              'Firefox ESR',
+              '> 1%',
+              'ie >= 9',
+              'iOS >= 8',
+              'Android >= 4',
+            ],
+          },
         },
-      }],
+      ],
     ],
     plugins,
   };

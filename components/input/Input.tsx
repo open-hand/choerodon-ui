@@ -1,4 +1,12 @@
-import React, { ChangeEventHandler, Component, CSSProperties, FocusEvent, FormEventHandler, KeyboardEvent, ReactNode } from 'react';
+import React, {
+  ChangeEventHandler,
+  Component,
+  CSSProperties,
+  FocusEvent,
+  FormEventHandler,
+  KeyboardEvent,
+  ReactNode,
+} from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
@@ -47,7 +55,7 @@ export interface InputProps extends AbstractInputProps {
   onClick?: FormEventHandler<HTMLInputElement>;
   onFocus?: FormEventHandler<HTMLInputElement>;
   onBlur?: FormEventHandler<HTMLInputElement>;
-  onInput?: FormEventHandler<HTMLInputElement>
+  onInput?: FormEventHandler<HTMLInputElement>;
   onCopy?: (value: any) => void;
   autoComplete?: string;
   prefix?: ReactNode;
@@ -59,18 +67,19 @@ export interface InputProps extends AbstractInputProps {
 }
 
 export interface InputState {
-  inputLength?: number;
+  value?: any;
   focused?: boolean;
-  renderedStyle?: {};
   showPasswordEye?: boolean;
-  type?: string;
   showPassword?: boolean;
 }
 
 export default class Input extends Component<InputProps, any> {
   static displayName = 'Input';
+
   static Group: typeof Group;
+
   static Search: typeof Search;
+
   static TextArea: typeof TextArea;
 
   static defaultProps = {
@@ -84,16 +93,10 @@ export default class Input extends Component<InputProps, any> {
 
   static propTypes = {
     type: PropTypes.string,
-    id: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-    ]),
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     label: PropTypes.node,
     size: PropTypes.oneOf([Size.small, Size.default, Size.large]),
-    maxLength: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-    ]),
+    maxLength: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     disabled: PropTypes.bool,
     value: PropTypes.any,
     defaultValue: PropTypes.any,
@@ -113,22 +116,29 @@ export default class Input extends Component<InputProps, any> {
     onCopy: PropTypes.func,
     readOnly: PropTypes.bool,
     focused: PropTypes.bool,
+    border: PropTypes.bool,
     showLengthInfo: PropTypes.bool,
     showPasswordEye: PropTypes.bool,
   };
 
-  state: InputState = {
-    inputLength: 0,
-    focused: false,
-    renderedStyle: {
-      width: '100%',
-      margin: 0,
-    },
-    showPassword: false,
-    type: 'text',
-  };
+  state: InputState;
 
   input: HTMLInputElement;
+
+  rendered: HTMLDivElement;
+
+  prefix: HTMLSpanElement;
+
+  suffix: HTMLSpanElement;
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: fixControlledValue('value' in props ? props.value : props.defaultValue),
+      focused: false,
+      showPassword: false,
+    };
+  }
 
   handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     const { onPressEnter, onKeyDown } = this.props;
@@ -141,35 +151,25 @@ export default class Input extends Component<InputProps, any> {
   };
 
   componentDidMount() {
-    const { inputLength } = this.state;
-    const { focused } = this.props;
-    const inputValueLength = this.input.value.length;
-    if (inputValueLength !== inputLength) {
-      this.setState({
-        inputLength: inputValueLength,
-      });
-    }
-    if (this.props.autoFocus) {
+    const { focused, autoFocus } = this.props;
+    if (autoFocus) {
       this.setState({
         focused: true,
       });
     }
     if (typeof focused === 'boolean') {
       this.setState({
-        focused: focused,
+        focused,
       });
     }
-    this.setState({
-      type: this.props.type,
-    });
     this.setRenderedStyle();
   }
 
   componentWillReceiveProps(nextProps: InputProps) {
-    if (this.input.value !== nextProps.value) {
-      const inputLength = nextProps.value && nextProps.value.length;
+    const { value } = this.state;
+    if ('value' in nextProps && value !== nextProps.value) {
       this.setState({
-        inputLength: inputLength || 0,
+        value: nextProps.value,
       });
     }
     if (nextProps.autoFocus) {
@@ -182,41 +182,34 @@ export default class Input extends Component<InputProps, any> {
         focused: nextProps.focused,
       });
     }
-    this.setState({
-      type: nextProps.type,
-    });
+    if (nextProps.type !== 'password') {
+      this.setState({
+        showPassword: false,
+      });
+    }
   }
 
   componentDidUpdate() {
-    const { inputLength } = this.state;
-    const inputValueLength = this.input.value.length;
-    if (inputValueLength !== inputLength) {
-      this.setState({
-        inputLength: inputValueLength,
-      });
-    }
     this.setRenderedStyle();
   }
 
   setRenderedStyle() {
-    const suffix: any = this.refs.suffix;
-    const prefix: any = this.refs.prefix;
-    const rendered: any = this.refs.rendered;
+    const { rendered, suffix, prefix } = this;
     let suffixWidth: string;
     let prefixWidth: string;
     let margin: string = '0';
     let width: string = '100%';
     if (suffix && prefix) {
-      suffixWidth = (suffix.clientWidth || -2) + 2 + 'px';
-      prefixWidth = (prefix.clientWidth || -2) + 2 + 'px';
+      suffixWidth = `${(suffix.clientWidth || -2) + 2}px`;
+      prefixWidth = `${(prefix.clientWidth || -2) + 2}px`;
       margin = `0 ${suffixWidth} 0 ${prefixWidth}`;
       width = `calc(100% - ${suffixWidth} - ${prefixWidth})`;
     } else if (suffix) {
-      suffixWidth = (suffix.clientWidth || -2) + 2 + 'px';
+      suffixWidth = `${(suffix.clientWidth || -2) + 2}px`;
       margin = `0 ${suffixWidth} 0 0`;
       width = `calc(100% - ${suffixWidth})`;
     } else if (prefix) {
-      prefixWidth = (prefix.clientWidth || -2) + 2 + 'px';
+      prefixWidth = `${(prefix.clientWidth || -2) + 2}px`;
       margin = `0 0 0 ${prefixWidth}`;
       width = `calc(100% - ${prefixWidth})`;
     }
@@ -233,16 +226,6 @@ export default class Input extends Component<InputProps, any> {
     }
     if (onFocus) {
       onFocus(e);
-    }
-  };
-
-  handleInput = (e) => {
-    const { onInput } = this.props;
-    this.setState({
-      inputLength: this.input.value.length,
-    });
-    if (onInput) {
-      onInput(e);
     }
   };
 
@@ -268,25 +251,26 @@ export default class Input extends Component<InputProps, any> {
   };
 
   handleTogglePassword = () => {
-    if (this.state.type === 'password') {
-      this.handleShowPassword();
-    } else {
-      this.handleHidePassword();
-    }
-  };
-
-  handleShowPassword = () => {
+    const { showPassword } = this.state;
     this.setState({
-      type: 'text',
-      showPassword: true,
+      showPassword: !showPassword,
     });
   };
 
-  handleHidePassword = () => {
-    this.setState({
-      type: 'password',
-      showPassword: false,
-    });
+  saveInput = (node: HTMLInputElement) => {
+    this.input = node;
+  };
+
+  saveRenderedRef = (node: HTMLDivElement) => {
+    this.rendered = node;
+  };
+
+  savePrefix = (node: HTMLSpanElement) => {
+    this.prefix = node;
+  };
+
+  saveSuffix = (node: HTMLSpanElement) => {
+    this.suffix = node;
   };
 
   focus() {
@@ -298,7 +282,8 @@ export default class Input extends Component<InputProps, any> {
   }
 
   getPrefixCls() {
-    return getPrefixCls('input', this.props.prefixCls);
+    const { prefixCls } = this.props;
+    return getPrefixCls('input', prefixCls);
   }
 
   getInputClassName() {
@@ -311,17 +296,14 @@ export default class Input extends Component<InputProps, any> {
     });
   }
 
-  saveInput = (node: HTMLInputElement) => {
-    this.input = node;
-  };
-
   renderCopyIcon() {
     const { copy } = this.props;
     const prefixCls = this.getPrefixCls();
     return copy ? (
       <span className={`${prefixCls}-icon`} onClick={this.handleCopy}>
         <Icon className={`${prefixCls}-icon-copy`} type="library_books" />
-      </span>) : null;
+      </span>
+    ) : null;
   }
 
   renderShowPassword() {
@@ -329,53 +311,69 @@ export default class Input extends Component<InputProps, any> {
     const prefixCls = this.getPrefixCls();
     const { showPassword } = this.state;
     return type === 'password' ? (
-      <span
-        className={`${prefixCls}-icon`}
-        onClick={this.handleTogglePassword}
-      >
-        <Icon className={`${prefixCls}-icon-copy`} type={showPassword ? 'visibility' : 'visibility_off'} />
-      </span>) : null;
+      <span className={`${prefixCls}-icon`} onClick={this.handleTogglePassword}>
+        <Icon
+          className={`${prefixCls}-icon-copy`}
+          type={showPassword ? 'visibility' : 'visibility_off'}
+        />
+      </span>
+    ) : null;
   }
 
   renderInput() {
-    const { value, className } = this.props;
+    const { className, type } = this.props;
+    const { showPassword, value } = this.state;
     // Fix https://fb.me/react-unknown-prop
-    const otherProps = omit<InputProps, 'placeholder' | 'prefixCls' | 'onPressEnter' | 'addonBefore' | 'addonAfter' | 'prefix' |
-      'suffix' | 'label' | 'copy' | 'style' | 'focused' | 'showLengthInfo' | 'showPasswordEye' | 'size'>(
-      this.props, [
-        'placeholder',
-        'prefixCls',
-        'onPressEnter',
-        'addonBefore',
-        'addonAfter',
-        'prefix',
-        'suffix',
-        'label',
-        'copy',
-        'style',
-        'focused',
-        'showLengthInfo',
-        'showPasswordEye',
-        'size',
-      ]);
+    const otherProps = omit<
+      InputProps,
+      | 'placeholder'
+      | 'prefixCls'
+      | 'onPressEnter'
+      | 'addonBefore'
+      | 'addonAfter'
+      | 'prefix'
+      | 'suffix'
+      | 'label'
+      | 'copy'
+      | 'style'
+      | 'focused'
+      | 'showLengthInfo'
+      | 'showPasswordEye'
+      | 'size'
+    >(this.props, [
+      'placeholder',
+      'prefixCls',
+      'onPressEnter',
+      'addonBefore',
+      'addonAfter',
+      'prefix',
+      'suffix',
+      'label',
+      'copy',
+      'style',
+      'focused',
+      'showLengthInfo',
+      'showPasswordEye',
+      'size',
+    ]);
 
-    if ('value' in this.props) {
-      otherProps.value = fixControlledValue(value);
-      // Input elements must be either controlled or uncontrolled,
-      // specify either the value prop, or the defaultValue prop, but not both.
-      delete otherProps.defaultValue;
-    }
-    otherProps.onInput = this.handleInput;
+    // if ('value' in this.props) {
+    //   otherProps.value = fixControlledValue(value);
+    //   // Input elements must be either controlled or uncontrolled,
+    //   // specify either the value prop, or the defaultValue prop, but not both.
+    //   delete otherProps.defaultValue;
+    // }
 
     return (
       <input
         {...otherProps}
+        value={value}
         className={classNames(this.getInputClassName(), className)}
         onKeyDown={this.handleKeyDown}
         ref={this.saveInput}
         onFocus={this.handleFocus}
         onBlur={this.handleBlur}
-        type={this.state.type}
+        type={showPassword ? 'text' : type}
       />
     );
   }
@@ -383,8 +381,10 @@ export default class Input extends Component<InputProps, any> {
   getLengthInfo() {
     const { maxLength, showLengthInfo } = this.props;
     const prefixCls = this.getPrefixCls();
-    const { inputLength } = this.state;
-    return (maxLength && showLengthInfo) || (maxLength && maxLength > 0 && inputLength === maxLength ) ? (
+    const { value } = this.state;
+    const inputLength = value.length;
+    return (maxLength && showLengthInfo) ||
+      (maxLength && maxLength > 0 && inputLength === maxLength) ? (
       <div className={`${prefixCls}-length-info`}>{`${inputLength}/${maxLength}`}</div>
     ) : null;
   }
@@ -420,16 +420,15 @@ export default class Input extends Component<InputProps, any> {
   }
 
   hasValue() {
-    return this.state.inputLength !== 0;
+    const { value } = this.state;
+    return value.length !== 0;
   }
 
   renderPlaceholder() {
     const { placeholder, border } = this.props;
     if (!border && placeholder) {
       const prefixCls = this.getPrefixCls();
-      return (
-        <div className={`${prefixCls}-placeholder`}>{placeholder}</div>
-      );
+      return <div className={`${prefixCls}-placeholder`}>{placeholder}</div>;
     }
   }
 
@@ -439,13 +438,13 @@ export default class Input extends Component<InputProps, any> {
     const prefixCls = this.getPrefixCls();
     const { focused } = this.state;
     const prefix = props.prefix ? (
-      <span ref="prefix" className={this.getSizeClassName('prefix')}>
+      <span ref={this.savePrefix} className={this.getSizeClassName('prefix')}>
         {props.prefix}
       </span>
     ) : null;
     const suffix = props.suffix ? (
-      <span ref="suffix" className={this.getSizeClassName('suffix')}>
-         {props.suffix}
+      <span ref={this.saveSuffix} className={this.getSizeClassName('suffix')}>
+        {props.suffix}
       </span>
     ) : null;
 
@@ -464,7 +463,7 @@ export default class Input extends Component<InputProps, any> {
         <div className={`${prefixCls}-content`}>
           <div className={`${prefixCls}-rendered-wrapper`}>
             {prefix}
-            <div className={this.getSizeClassName('rendered')} ref="rendered">
+            <div className={this.getSizeClassName('rendered')} ref={this.saveRenderedRef}>
               {this.renderPlaceholder()}
               {this.renderInput()}
               {this.renderFloatLabel()}

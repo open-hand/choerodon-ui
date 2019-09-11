@@ -16,23 +16,23 @@ describe('Popconfirm', () => {
         onVisibleChange={onVisibleChange}
       >
         <span>Delete</span>
-      </Popconfirm>
+      </Popconfirm>,
     );
 
     const triggerNode = wrapper.find('span').at(0);
     triggerNode.simulate('click');
-    expect(onVisibleChange).toBeCalledWith(true);
+    expect(onVisibleChange).toHaveBeenCalledWith(true);
     expect(wrapper.find('.popconfirm-test').length).toBe(1);
 
     triggerNode.simulate('click');
-    expect(onVisibleChange).toBeCalledWith(false);
+    expect(onVisibleChange).toHaveBeenCalledWith(false);
   });
 
   it('should show overlay when trigger is clicked', () => {
     const popconfirm = mount(
       <Popconfirm title="code">
         <span>show me your code</span>
-      </Popconfirm>
+      </Popconfirm>,
     );
 
     expect(popconfirm.instance().getPopupDomNode()).toBe(null);

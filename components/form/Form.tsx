@@ -1,4 +1,12 @@
-import React, { Component, ComponentClass, CSSProperties, FormEvent, FormEventHandler, ReactNode, SFC } from 'react';
+import React, {
+  Component,
+  ComponentClass,
+  CSSProperties,
+  FormEvent,
+  FormEventHandler,
+  ReactNode,
+  SFC,
+} from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
@@ -80,11 +88,11 @@ export type GetFieldDecoratorOptions = {
 export type WrappedFormUtils = {
   /** 获取一组输入控件的值，如不传入参数，则获取全部组件的值 */
   getFieldsValue(fieldNames?: Array<string>): Object;
-  /** 获取一个输入控件的值*/
+  /** 获取一个输入控件的值 */
   getFieldValue(fieldName: string): any;
-  /** 设置一组输入控件的值*/
+  /** 设置一组输入控件的值 */
   setFieldsValue(obj: Object): void;
-  /** 设置一组输入控件的值*/
+  /** 设置一组输入控件的值 */
   setFields(obj: Object): void;
   /** 校验并获取一组输入域的值与 Error */
   validateFields(fieldNames: Array<string>, options: Object, callback: ValidateCallback): void;
@@ -93,7 +101,11 @@ export type WrappedFormUtils = {
   validateFields(callback: ValidateCallback): void;
   validateFields(): void;
   /** 与 `validateFields` 相似，但校验完后，如果校验不通过的菜单域不在可见范围内，则自动滚动进可见范围 */
-  validateFieldsAndScroll(fieldNames?: Array<string>, options?: Object, callback?: ValidateCallback): void;
+  validateFieldsAndScroll(
+    fieldNames?: Array<string>,
+    options?: Object,
+    callback?: ValidateCallback,
+  ): void;
   validateFieldsAndScroll(fieldNames?: Array<string>, callback?: ValidateCallback): void;
   validateFieldsAndScroll(options?: Object, callback?: ValidateCallback): void;
   validateFieldsAndScroll(callback?: ValidateCallback): void;
@@ -101,7 +113,7 @@ export type WrappedFormUtils = {
   /** 获取某个输入控件的 Error */
   getFieldError(name: string): Object[];
   getFieldsError(names?: Array<string>): Object;
-  /** 判断一个输入控件是否在校验状态*/
+  /** 判断一个输入控件是否在校验状态 */
   isFieldValidating(name: string): boolean;
   isFieldTouched(name: string): boolean;
   isFieldsTouched(names?: Array<string>): boolean;
@@ -117,11 +129,14 @@ export interface FormComponentProps {
 }
 
 export interface ComponentDecorator {
-  <P extends FormComponentProps>(component: ComponentClass<P> | SFC<P>): ComponentClass<Omit<P, keyof FormComponentProps>>;
+  <P extends FormComponentProps>(component: ComponentClass<P> | SFC<P>): ComponentClass<
+    Omit<P, keyof FormComponentProps>
+  >;
 }
 
 export default class Form extends Component<FormProps, any> {
   static displayName = 'Form';
+
   static defaultProps = {
     layout: FormLayout.horizontal,
     hideRequiredMark: false,
@@ -146,7 +161,9 @@ export default class Form extends Component<FormProps, any> {
 
   static createFormField = createFormField;
 
-  static create = function <TOwnProps>(options: FormCreateOption<TOwnProps> = {}): ComponentDecorator {
+  static create = function<TOwnProps>(
+    options: FormCreateOption<TOwnProps> = {},
+  ): ComponentDecorator {
     return createDOMForm({
       fieldNameProp: 'id',
       ...options,
@@ -173,14 +190,16 @@ export default class Form extends Component<FormProps, any> {
   }
 
   render() {
-    const {
-      prefixCls: customizePrefixCls, hideRequiredMark, className = '', layout,
-    } = this.props;
+    const { prefixCls: customizePrefixCls, hideRequiredMark, className = '', layout } = this.props;
     const prefixCls = getPrefixCls('form', customizePrefixCls);
-    const formClassName = classNames(prefixCls, {
-      [`${prefixCls}-${layout}`]: layout,
-      [`${prefixCls}-hide-required-mark`]: hideRequiredMark,
-    }, className);
+    const formClassName = classNames(
+      prefixCls,
+      {
+        [`${prefixCls}-${layout}`]: layout,
+        [`${prefixCls}-hide-required-mark`]: hideRequiredMark,
+      },
+      className,
+    );
 
     const formProps = omit(this.props, [
       'prefixCls',

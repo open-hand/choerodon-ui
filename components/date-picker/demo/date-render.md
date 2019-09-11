@@ -13,14 +13,15 @@ title:
 
 We can customize the rendering of date cells in the calendar by providing a `dateRender` function to `DatePicker`.
 
-````jsx
+```jsx
 import { DatePicker } from 'choerodon-ui';
+
 const { RangePicker } = DatePicker;
 
 ReactDOM.render(
   <div>
     <DatePicker
-      dateRender={(current) => {
+      dateRender={current => {
         const style = {};
         if (current.date() === 1) {
           style.border = '1px solid #1890ff';
@@ -34,7 +35,7 @@ ReactDOM.render(
       }}
     />
     <RangePicker
-      dateRender={(current) => {
+      dateRender={current => {
         const style = {};
         if (current.date() === 1) {
           style.border = '1px solid #1890ff';
@@ -48,5 +49,6 @@ ReactDOM.render(
       }}
     />
   </div>,
-  mountNode);
-````
+  mountNode,
+);
+```

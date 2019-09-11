@@ -1,9 +1,8 @@
-import Timer = NodeJS.Timer;
-
 export default class TaskRunner {
+  id: NodeJS.Timeout;
 
-  id: Timer;
   fn: Function;
+
   callbacks: (() => any)[] = [];
 
   constructor(fn?: Function) {
@@ -29,18 +28,18 @@ export default class TaskRunner {
       this.callbacks.push(callback);
     }
     if (this.fn) {
-      return new Promise((resolve) => {
+      return new Promise(resolve => {
         this.id = setInterval(() => {
           if (once) {
             this.cancel();
           }
           resolve(this.fn());
-          this.callbacks.forEach((cb) => cb());
+          this.callbacks.forEach(cb => cb());
           this.callbacks = [];
         }, interval);
       });
     }
-    return Promise.reject('no caller');
+    return Promise.reject(new Error('no caller'));
   }
 
   cancel() {

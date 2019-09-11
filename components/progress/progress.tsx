@@ -28,8 +28,11 @@ export interface ProgressProps {
 
 export default class Progress extends Component<ProgressProps, {}> {
   static displayName = 'Progress';
+
   static Line: any;
+
   static Circle: any;
+
   static Loading: any;
 
   static defaultProps = {
@@ -41,8 +44,18 @@ export default class Progress extends Component<ProgressProps, {}> {
   };
 
   static propTypes = {
-    status: PropTypes.oneOf([ProgressStatus.normal, ProgressStatus.exception, ProgressStatus.active, ProgressStatus.success]),
-    type: PropTypes.oneOf([ProgressType.line, ProgressType.circle, ProgressType.dashboard, ProgressType.loading]),
+    status: PropTypes.oneOf([
+      ProgressStatus.normal,
+      ProgressStatus.exception,
+      ProgressStatus.active,
+      ProgressStatus.success,
+    ]),
+    type: PropTypes.oneOf([
+      ProgressType.line,
+      ProgressType.circle,
+      ProgressType.dashboard,
+      ProgressType.loading,
+    ]),
     showInfo: PropTypes.bool,
     percent: PropTypes.number,
     width: PropTypes.number,
@@ -50,7 +63,7 @@ export default class Progress extends Component<ProgressProps, {}> {
     trailColor: PropTypes.string,
     format: PropTypes.func,
     gapDegree: PropTypes.number,
-    default: PropTypes.oneOf([Size.default, Size.small, Size.large]),
+    size: PropTypes.oneOf([Size.default, Size.small, Size.large]),
   };
 
   render() {
@@ -73,8 +86,11 @@ export default class Progress extends Component<ProgressProps, {}> {
       ...restProps
     } = props;
     const prefixCls = getPrefixCls('progress', customizePrefixCls);
-    const progressStatus = parseInt((successPercent ? successPercent.toString() : percent.toString()), 10) >= 100 &&
-    !('status' in props) ? ProgressStatus.success : (status || ProgressStatus.normal);
+    const progressStatus =
+      parseInt(successPercent ? successPercent.toString() : percent.toString(), 10) >= 100 &&
+      !('status' in props)
+        ? ProgressStatus.success
+        : status || ProgressStatus.normal;
     let progressInfo;
     let progress;
     const textFormatter = format || (percentNumber => `${percentNumber}%`);
@@ -85,7 +101,11 @@ export default class Progress extends Component<ProgressProps, {}> {
       if (progressStatus === ProgressStatus.exception) {
         text = format ? textFormatter(percent) : <Icon type={circleType ? 'close' : 'cancel'} />;
       } else if (progressStatus === ProgressStatus.success) {
-        text = format ? textFormatter(percent) : <Icon type={circleType ? 'check' : 'check_circle'} />;
+        text = format ? (
+          textFormatter(percent)
+        ) : (
+          <Icon type={circleType ? 'check' : 'check_circle'} />
+        );
       } else {
         text = textFormatter(percent);
       }
@@ -101,9 +121,10 @@ export default class Progress extends Component<ProgressProps, {}> {
         width: `${successPercent}%`,
         height: strokeWidth || (size === Size.small ? 6 : 8),
       };
-      const successSegment = successPercent !== undefined
-        ? <div className={`${prefixCls}-success-bg`} style={successPercentStyle} />
-        : null;
+      const successSegment =
+        successPercent !== undefined ? (
+          <div className={`${prefixCls}-success-bg`} style={successPercentStyle} />
+        ) : null;
       progress = (
         <div>
           <div className={`${prefixCls}-outer`}>
@@ -123,8 +144,11 @@ export default class Progress extends Component<ProgressProps, {}> {
         fontSize: circleSize * 0.15 + 6,
       };
       const circleWidth = strokeWidth || 6;
-      const gapPos = gapPosition || type === ProgressType.dashboard && ProgressPosition.bottom || ProgressPosition.top;
-      const gapDeg = gapDegree || type === ProgressType.dashboard && 75;
+      const gapPos =
+        gapPosition ||
+        (type === ProgressType.dashboard && ProgressPosition.bottom) ||
+        ProgressPosition.top;
+      const gapDeg = gapDegree || (type === ProgressType.dashboard && 75);
       progress = (
         <div className={`${prefixCls}-inner`} style={circleStyle}>
           <Circle
@@ -147,12 +171,16 @@ export default class Progress extends Component<ProgressProps, {}> {
       );
     }
 
-    const classString = classNames(prefixCls, {
-      [`${prefixCls}-${type === ProgressType.dashboard && ProgressType.circle || type}`]: true,
-      [`${prefixCls}-status-${progressStatus}`]: true,
-      [`${prefixCls}-show-info`]: showInfo,
-      [`${prefixCls}-${size}`]: size,
-    }, className);
+    const classString = classNames(
+      prefixCls,
+      {
+        [`${prefixCls}-${(type === ProgressType.dashboard && ProgressType.circle) || type}`]: true,
+        [`${prefixCls}-status-${progressStatus}`]: true,
+        [`${prefixCls}-show-info`]: showInfo,
+        [`${prefixCls}-${size}`]: size,
+      },
+      className,
+    );
 
     return (
       <div {...restProps} className={classString}>

@@ -1,4 +1,13 @@
-import { action, computed, isArrayLike, isObservableArray, observable, runInAction, set, toJS } from 'mobx';
+import {
+  action,
+  computed,
+  isArrayLike,
+  isObservableArray,
+  observable,
+  runInAction,
+  set,
+  toJS,
+} from 'mobx';
 import isNil from 'lodash/isNil';
 import isString from 'lodash/isString';
 import isNumber from 'lodash/isNumber';
@@ -27,14 +36,13 @@ import { BooleanValue, DataSetEvents, FieldIgnore, FieldType, RecordStatus } fro
 /**
  * 记录ID生成器
  */
-const IDGen: IterableIterator<number> = function* (start: number) {
+const IDGen: IterableIterator<number> = (function*(start: number) {
   while (true) {
     yield ++start;
   }
-}(1000);
+})(1000);
 
 export default class Record {
-
   id: number;
 
   dataSet?: DataSet;
@@ -42,7 +50,9 @@ export default class Record {
   @observable fields: Fields;
 
   memo?: object;
+
   initData?: object;
+
   pristineData: object;
 
   dataSetSnapshot: { [key: string]: DataSetSnapshot } = {};
@@ -67,13 +77,13 @@ export default class Record {
   get key(): string | number {
     if (this.status !== RecordStatus.add) {
       const { dataSet } = this;
-      if (dataSet && dataSet.uniqueKeys) {
-        const comboKey = dataSet.uniqueKeys
-          .map(key => this.get(key))
-          .filter(key => isString(key) || isNumber(key))
-          .join('-');
-        if (comboKey) {
-          return comboKey;
+      if (dataSet) {
+        const { primaryKey } = dataSet.props;
+        if (primaryKey) {
+          const key = this.get(primaryKey);
+          if (isString(key) || isNumber(key)) {
+            return key;
+          }
         }
       }
     }
@@ -100,15 +110,18 @@ export default class Record {
         const { children } = this;
         if (children) {
           let checkedLength = 0;
-          return children.some(record => {
-            if (record.isIndeterminate) {
-              return true;
-            }
-            if (record.get(checkField) === trueValue) {
-              checkedLength += 1;
-            }
-            return false;
-          }) || (checkedLength > 0 && checkedLength !== children.length);
+          return (
+            children.some(record => {
+              if (record.isIndeterminate) {
+                return true;
+              }
+              if (record.get(checkField) === trueValue) {
+                checkedLength += 1;
+              }
+              return false;
+            }) ||
+            (checkedLength > 0 && checkedLength !== children.length)
+          );
         }
       }
     }
@@ -135,7 +148,14 @@ export default class Record {
       const { expandField } = dataSet.props;
       if (expandField) {
         const field = this.getField(expandField);
-        this.set(expandField, field ? expand ? field.get(BooleanValue.trueValue) : field.get(BooleanValue.falseValue) : expand);
+        this.set(
+          expandField,
+          field
+            ? expand
+              ? field.get(BooleanValue.trueValue)
+              : field.get(BooleanValue.falseValue)
+            : expand,
+        );
       }
     }
   }
@@ -152,6 +172,7 @@ export default class Record {
     if (children) {
       return children[children.indexOf(this) - 1];
     }
+    return undefined;
   }
 
   @computed
@@ -166,6 +187,7 @@ export default class Record {
     if (children) {
       return children[children.indexOf(this) + 1];
     }
+    return undefined;
   }
 
   @computed
@@ -179,9 +201,10 @@ export default class Record {
           const id = this.get(idField);
           return !isNil(childParentId) && !isNil(id) && childParentId === id;
         });
-        return children.length > 0 ? children : void 0;
+        return children.length > 0 ? children : undefined;
       }
     }
+    return undefined;
   }
 
   @computed
@@ -197,6 +220,7 @@ export default class Record {
         });
       }
     }
+    return undefined;
   }
 
   @computed
@@ -211,12 +235,7 @@ export default class Record {
   @computed
   get dirty(): boolean {
     const { fields } = this;
-    for (const field of fields.values()) {
-      if (field.dirty) {
-        return true;
-      }
-    }
-    return false;
+    return [...fields.values()].some(({ dirty }) => dirty);
   }
 
   @computed
@@ -232,6 +251,7 @@ export default class Record {
         }
       }
     }
+    return undefined;
   }
 
   constructor(data: object = {}, dataSet?: DataSet) {
@@ -251,7 +271,8 @@ export default class Record {
         }
       }
       this.initData = toJS(data);
-      this.data = this.pristineData = this.processData(this.initData);
+      this.pristineData = this.processData(this.initData);
+      this.data = this.pristineData;
       delete this.initData;
     });
   }
@@ -272,7 +293,9 @@ export default class Record {
     return {
       ...json,
       __id: this.id,
-      [getConfig('statusKey')]: getConfig('status')[status === RecordStatus.sync ? RecordStatus.update : status],
+      [getConfig('statusKey')]: getConfig('status')[
+        status === RecordStatus.sync ? RecordStatus.update : status
+      ],
       __dirty: dirty,
     };
   }
@@ -280,18 +303,18 @@ export default class Record {
   validate(all?: boolean, noCascade?: boolean): Promise<boolean> {
     const { dataSetSnapshot, isCurrent, dataSet, status, fields } = this;
     return Promise.all([
-      ...[...fields.values()].map(field => (
-        all || status !== RecordStatus.sync ? field.checkValidity() : true
-      )),
-      ...(
-        noCascade
-          ? []
-          : Object.keys(dataSetSnapshot).map(key => (
-            isCurrent && dataSet ? dataSet.children[key] : new DataSet().restore(dataSetSnapshot[key])
-          ).validate(all))
+      ...[...fields.values()].map(field =>
+        all || status !== RecordStatus.sync ? field.checkValidity() : true,
       ),
-    ])
-      .then(results => results.every(result => result));
+      ...(noCascade
+        ? []
+        : Object.keys(dataSetSnapshot).map(key =>
+            (isCurrent && dataSet
+              ? dataSet.children[key]
+              : new DataSet().restore(dataSetSnapshot[key])
+            ).validate(all),
+          )),
+    ]).then(results => results.every(result => result));
   }
 
   getField(fieldName?: string): Field | undefined {
@@ -308,27 +331,36 @@ export default class Record {
         const snapshot = this.dataSetSnapshot[fieldName];
         if (snapshot) {
           const isCurrent = dataSet.current === this;
-          return (isCurrent ? childDataSet : (new DataSet()).restore(snapshot)).slice();
-        } else {
-          const data = this.get(fieldName);
-          if (isObservableArray(data)) {
-            const newSnapshot = childDataSet.snapshot();
-            this.dataSetSnapshot[fieldName] = childDataSet.loadData(data.slice()).snapshot();
-            const records = childDataSet.slice();
-            childDataSet.restore(newSnapshot);
-            return records;
-          }
+          return (isCurrent ? childDataSet : new DataSet().restore(snapshot)).slice();
+        }
+        const data = this.get(fieldName);
+        if (isObservableArray(data)) {
+          const newSnapshot = childDataSet.snapshot();
+          this.dataSetSnapshot[fieldName] = childDataSet.loadData(data.slice()).snapshot();
+          const records = childDataSet.slice();
+          childDataSet.restore(newSnapshot);
+          return records;
         }
       }
     }
   }
 
   get(fieldName?: string): any {
-    return getRecordValue.call(this, this.data, (child, checkField) => child.get(checkField), fieldName);
+    return getRecordValue.call(
+      this,
+      this.data,
+      (child, checkField) => child.get(checkField),
+      fieldName,
+    );
   }
 
   getPristineValue(fieldName?: string): any {
-    return getRecordValue.call(this, this.pristineData, (child, checkField) => child.getPristineValue(checkField), fieldName);
+    return getRecordValue.call(
+      this,
+      this.pristineData,
+      (child, checkField) => child.getPristineValue(checkField),
+      fieldName,
+    );
   }
 
   @action
@@ -367,7 +399,13 @@ export default class Record {
         }
         const { dataSet } = this;
         if (dataSet) {
-          dataSet.fireEvent(DataSetEvents.update, { dataSet, record: this, name: oldName, value: newValue, oldValue });
+          dataSet.fireEvent(DataSetEvents.update, {
+            dataSet,
+            record: this,
+            name: oldName,
+            value: newValue,
+            oldValue,
+          });
           const { checkField } = dataSet.props;
           if (checkField && (checkField === fieldName || checkField === oldName)) {
             const { children } = this;
@@ -378,10 +416,11 @@ export default class Record {
         }
       }
       if (field) {
-        findBindFields(field, this.fields).forEach(oneField => (
+        findBindFields(field, this.fields).forEach(oneField => {
           // oneField.dirty = field.dirty,
-          oneField.validator.reset(), oneField.checkValidity()
-        ));
+          oneField.validator.reset();
+          oneField.checkValidity();
+        });
       }
     } else if (isPlainObject(item)) {
       Object.keys(item).forEach(key => this.set(key, item[key]));
@@ -398,14 +437,16 @@ export default class Record {
         delete cloneData[primaryKey];
       }
       return new Record(cloneData, dataSet);
-    } else {
-      return new Record(cloneData);
     }
+    return new Record(cloneData);
   }
 
   async ready(): Promise<any> {
     const { pending } = this;
-    const result = await Promise.all([pending, ...[...this.fields.values()].map(field => field.ready())]);
+    const result = await Promise.all([
+      pending,
+      ...[...this.fields.values()].map(field => field.ready()),
+    ]);
     if (this.pending && this.pending !== pending) {
       return this.ready();
     }
@@ -416,26 +457,35 @@ export default class Record {
     const { dataSet } = this;
     if (record && dataSet) {
       const { lang = localeContext.locale.lang } = dataSet;
-      Object.keys(record).forEach((name) => {
+      Object.keys(record).forEach(name => {
         const field = this.getField(name);
         if (field && field.dirty) {
           record[name][lang] = this.get(name);
         }
       });
     }
-  };
+  }
 
   @action
   async tls(): Promise<void> {
     const tlsKey = getConfig('tlsKey');
     const { dataSet } = this;
     if (dataSet && !this.get(tlsKey)) {
-      const { transport: { tls = {}, adapter }, axios, lang } = dataSet;
+      const {
+        transport: { tls = {}, adapter },
+        axios,
+        lang,
+      } = dataSet;
       const { primaryKey } = dataSet.props;
       warning(!!primaryKey, 'If you want to use IntlField, please set `primaryKey` for dataSet.');
-      const newConfig = axiosAdapter(tls, dataSet, {}, {
-        key: this.get(primaryKey),
-      });
+      const newConfig = axiosAdapter(
+        tls,
+        dataSet,
+        {},
+        {
+          key: this.get(primaryKey),
+        },
+      );
       const adapterConfig = adapter(newConfig, 'tls') || newConfig;
       if (adapterConfig.url) {
         const result = await axios(adapterConfig);
@@ -444,14 +494,16 @@ export default class Record {
           this.commitTls(generateResponseData(result, dataKey)[0]);
         }
       } else {
-        this.commitTls([...this.fields.entries()].reduce((data, [key, field]) => {
-          if (field.type === FieldType.intl) {
-            data[key] = {
-              [lang]: this.get(key),
-            };
-          }
-          return data;
-        }, {}));
+        this.commitTls(
+          [...this.fields.entries()].reduce((data, [key, field]) => {
+            if (field.type === FieldType.intl) {
+              data[key] = {
+                [lang]: this.get(key),
+              };
+            }
+            return data;
+          }, {}),
+        );
       }
     }
   }
@@ -461,7 +513,7 @@ export default class Record {
     const { status, fields } = this;
     [...fields.values()].forEach(field => field.commit());
     this.data = this.pristineData;
-    this.memo = void 0;
+    this.memo = undefined;
     if (status === RecordStatus.update || status === RecordStatus.delete) {
       this.status = RecordStatus.sync;
     }
@@ -479,14 +531,19 @@ export default class Record {
     const { memo } = this;
     if (memo) {
       this.set(memo);
-      this.memo = void 0;
+      this.memo = undefined;
     }
     return this;
   }
 
   @action
   clear(): Record {
-    return this.set(Object.keys(this.data).reduce((obj, key) => (obj[key] = null, obj), {}));
+    return this.set(
+      Object.keys(this.data).reduce((obj, key) => {
+        obj[key] = null;
+        return obj;
+      }, {}),
+    );
   }
 
   @action
@@ -509,8 +566,9 @@ export default class Record {
         }
       }
       if (data) {
-        const newData = this.pristineData = this.processData(data);
-        Object.keys(newData).forEach((key) => {
+        const newData = this.processData(data);
+        this.pristineData = newData;
+        Object.keys(newData).forEach(key => {
           const newValue = newData[key];
           if (this.get(key) !== newValue) {
             set(this.data, key, newData[key]);
@@ -520,10 +578,15 @@ export default class Record {
         if (snapShorts.length) {
           const isCurrent = dataSet.current === this;
           const ds = new DataSet();
-          snapShorts.forEach(key => (
-            dataSetSnapshot[key] = (isCurrent ? dataSet.children[key] : ds.restore(dataSetSnapshot[key]))
-              .commitData(data[key] || []).snapshot()
-          ));
+          snapShorts.forEach(
+            key =>
+              (dataSetSnapshot[key] = (isCurrent
+                ? dataSet.children[key]
+                : ds.restore(dataSetSnapshot[key])
+              )
+                .commitData(data[key] || [])
+                .snapshot()),
+          );
         }
       }
     }
@@ -539,7 +602,7 @@ export default class Record {
     const tlsKey = getConfig('tlsKey');
     this.pristineData[tlsKey] = data;
     const values: object = {};
-    Object.keys(data).forEach((key) => {
+    Object.keys(data).forEach(key => {
       const field = this.getField(key);
       if (field && field.dirty) {
         values[`${tlsKey}.${key}.${lang}`] = this.get(key);
@@ -556,16 +619,21 @@ export default class Record {
   @action
   private addField(name: string, fieldProps: FieldProps = {}): Field {
     const { dataSet } = this;
-    return processIntlField(name, fieldProps, (langName, langProps) => {
-      const field = new Field({ ...langProps, name: langName }, dataSet, this);
-      this.fields.set(langName, field);
-      return field;
-    }, dataSet);
+    return processIntlField(
+      name,
+      fieldProps,
+      (langName, langProps) => {
+        const field = new Field({ ...langProps, name: langName }, dataSet, this);
+        this.fields.set(langName, field);
+        return field;
+      },
+      dataSet,
+    );
   }
 
   private processData(data: object = {}): object {
     const { fields } = this;
-    for (let [fieldName, field] of fields.entries()) {
+    [...fields.entries()].forEach(([fieldName, field]) => {
       let value = ObjectChainValue.get(data, fieldName);
       const bind = field.get('bind');
       const type = field.get('type');
@@ -577,7 +645,7 @@ export default class Record {
           value = bindValue;
         }
       }
-      if (value === void 0 && type === FieldType.boolean) {
+      if (value === undefined && type === FieldType.boolean) {
         value = false;
       }
       if (transformResponse) {
@@ -585,22 +653,25 @@ export default class Record {
       }
       value = processValue(value, field);
       if (value === null) {
-        value = void 0;
+        value = undefined;
       }
       ObjectChainValue.set(data, fieldName, value, fields);
-    }
+    });
     return data;
   }
 
   private normalizeData(needIgnore?: boolean) {
     const { fields } = this;
     const json: any = toJS(this.data);
-    [...fields.keys()].forEach((key) => {
+    [...fields.keys()].forEach(key => {
       let value = ObjectChainValue.get(json, key);
       const field = this.getField(key);
       if (field) {
         const ignore = field.get('ignore');
-        if (needIgnore && (ignore === FieldIgnore.always || (ignore === FieldIgnore.clean && !field.dirty))) {
+        if (
+          needIgnore &&
+          (ignore === FieldIgnore.always || (ignore === FieldIgnore.clean && !field.dirty))
+        ) {
           delete json[key];
           return;
         }
@@ -613,14 +684,15 @@ export default class Record {
         }
         if (type === FieldType.object) {
           return;
-        } else if (isString(multiple) && isArrayLike(value)) {
+        }
+        if (isString(multiple) && isArrayLike(value)) {
           value = value.map(processToJSON).join(multiple);
         }
         if (transformRequest) {
           value = transformRequest(value);
         }
       }
-      if (value !== void 0) {
+      if (value !== undefined) {
         ObjectChainValue.set(json, key, processToJSON(value), fields);
       } else {
         ObjectChainValue.remove(json, key);
@@ -640,7 +712,7 @@ export default class Record {
       } else {
         const keys = Object.keys(children);
         if (keys) {
-          keys.forEach((name) => {
+          keys.forEach(name => {
             const child = isCurrent ? children[name] : new DataSet().restore(dataSetSnapshot[name]);
             const jsonArray = all ? child.toData() : child.toJSONData(isSelect);
             if (jsonArray.length > 0) {

@@ -2,7 +2,12 @@ import React, { Component, CSSProperties, FocusEvent, FocusEventHandler } from '
 import classNames from 'classnames';
 import shallowequal from 'lodash/isEqual';
 import Icon from '../icon';
-import RcMention, { getMentions, Nav, toEditorState, toString } from '../rc-components/editor-mention';
+import RcMention, {
+  getMentions,
+  Nav,
+  toEditorState,
+  toString,
+} from '../rc-components/editor-mention';
 import { getPrefixCls } from '../configure';
 
 export type MentionPlacement = 'top' | 'bottom';
@@ -37,16 +42,22 @@ export interface MentionState {
 
 export default class Mention extends Component<MentionProps, MentionState> {
   static displayName = 'Mention';
+
   static getMentions = getMentions;
+
   static defaultProps = {
     notFoundContent: '无匹配结果，轻敲空格完成输入',
     loading: false,
     multiLines: false,
     placement: 'bottom',
   };
+
   static Nav = Nav;
+
   static toString = toString;
+
   static toContentState = toEditorState;
+
   private mentionEle: any;
 
   constructor(props: MentionProps) {
@@ -59,7 +70,8 @@ export default class Mention extends Component<MentionProps, MentionState> {
 
   componentWillReceiveProps(nextProps: MentionProps) {
     const { suggestions } = nextProps;
-    if (!shallowequal(suggestions, this.props.suggestions)) {
+    const { props } = this;
+    if (!shallowequal(suggestions, props.suggestions)) {
       this.setState({
         suggestions,
       });
@@ -67,30 +79,24 @@ export default class Mention extends Component<MentionProps, MentionState> {
   }
 
   onSearchChange = (value: string, prefix: string) => {
-    if (this.props.onSearchChange) {
-      return this.props.onSearchChange(value, prefix);
+    const { onSearchChange } = this.props;
+    if (onSearchChange) {
+      return onSearchChange(value, prefix);
     }
     return this.defaultSearchChange(value);
   };
 
-  onChange = (editorState: any) => {
-    if (this.props.onChange) {
-      this.props.onChange(editorState);
-    }
-  };
-
   defaultSearchChange(value: String): void {
     const searchValue = value.toLowerCase();
-    const filteredSuggestions = (this.props.suggestions || []).filter(
-      suggestion => {
-        if (suggestion.type && suggestion.type === Nav) {
-          return suggestion.props.value ?
-            suggestion.props.value.toLowerCase().indexOf(searchValue) !== -1
-            : true;
-        }
-        return suggestion.toLowerCase().indexOf(searchValue) !== -1;
-      },
-    );
+    const { suggestions } = this.props;
+    const filteredSuggestions = (suggestions || []).filter(suggestion => {
+      if (suggestion.type && suggestion.type === Nav) {
+        return suggestion.props.value
+          ? suggestion.props.value.toLowerCase().indexOf(searchValue) !== -1
+          : true;
+      }
+      return suggestion.toLowerCase().indexOf(searchValue) !== -1;
+    });
     this.setState({
       suggestions: filteredSuggestions,
     });
@@ -100,27 +106,39 @@ export default class Mention extends Component<MentionProps, MentionState> {
     this.setState({
       focus: true,
     });
-    if (this.props.onFocus) {
-      this.props.onFocus(ev);
+    const { onFocus } = this.props;
+    if (onFocus) {
+      onFocus(ev);
     }
   };
+
   onBlur = (ev: FocusEvent<HTMLElement>) => {
     this.setState({
       focus: false,
     });
-    if (this.props.onBlur) {
-      this.props.onBlur(ev);
+    const { onBlur } = this.props;
+    if (onBlur) {
+      onBlur(ev);
     }
   };
+
   focus = () => {
     this.mentionEle._editor.focusEditor();
   };
+
   mentionRef = (ele: any) => {
     this.mentionEle = ele;
   };
 
   render() {
-    const { className = '', prefixCls: customizePrefixCls, loading, placement } = this.props;
+    const {
+      className = '',
+      prefixCls: customizePrefixCls,
+      loading,
+      placement,
+      notFoundContent,
+      onChange,
+    } = this.props;
     const prefixCls = getPrefixCls('mention', customizePrefixCls);
     const { suggestions, focus } = this.state;
     const cls = classNames(className, {
@@ -128,9 +146,7 @@ export default class Mention extends Component<MentionProps, MentionState> {
       [`${prefixCls}-placement-top`]: placement === 'top',
     });
 
-    const notFoundContent = loading
-      ? <Icon type="loading" />
-      : this.props.notFoundContent;
+    const notFound = loading ? <Icon type="loading" /> : notFoundContent;
 
     return (
       <RcMention
@@ -139,11 +155,11 @@ export default class Mention extends Component<MentionProps, MentionState> {
         className={cls}
         ref={this.mentionRef}
         onSearchChange={this.onSearchChange}
-        onChange={this.onChange}
+        onChange={onChange}
         onFocus={this.onFocus}
         onBlur={this.onBlur}
         suggestions={suggestions}
-        notFoundContent={notFoundContent}
+        notFoundContent={notFound}
       />
     );
   }

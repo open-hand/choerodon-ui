@@ -13,8 +13,9 @@ title:
 
 Basic use case. Users can select or input a date in panel.
 
-````jsx
+```jsx
 import { DatePicker } from 'choerodon-ui';
+
 const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
 
 function onChange(date, dateString) {
@@ -31,5 +32,6 @@ ReactDOM.render(
     <br />
     <WeekPicker onChange={onChange} placeholder="Select week" label="选择周" />
   </div>,
-  mountNode);
-````
+  mountNode,
+);
+```

@@ -4,7 +4,7 @@ import { $l } from '../../locale-context';
 import { methodReturn } from '.';
 
 export default function rangeUnderflow(value, { min, label }): methodReturn {
-  if (!isEmpty(value) && min !== void 0 && Number(value) < min) {
+  if (!isEmpty(value) && min !== undefined && Number(value) < min) {
     const injectionOptions = { min, label };
     return new ValidationResult({
       validationMessage: $l('Validator', 'range_underflow', injectionOptions),

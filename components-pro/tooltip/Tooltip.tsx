@@ -6,9 +6,18 @@ import { Action } from '../trigger/enum';
 import getPlacements, { AdjustOverflow } from './placements';
 
 export type TooltipPlacement =
-  'top' | 'left' | 'right' | 'bottom' |
-  'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight' |
-  'leftTop' | 'leftBottom' | 'rightTop' | 'rightBottom';
+  | 'top'
+  | 'left'
+  | 'right'
+  | 'bottom'
+  | 'topLeft'
+  | 'topRight'
+  | 'bottomLeft'
+  | 'bottomRight'
+  | 'leftTop'
+  | 'leftBottom'
+  | 'rightTop'
+  | 'rightBottom';
 
 export type TooltipTheme = 'light' | 'dark';
 
@@ -38,8 +47,8 @@ export interface TooltipProps {
 }
 
 export default class Tooltip extends Component<TooltipProps, any> {
-
   static displayName = 'Tooltip';
+
   static propTypes = {
     title: PropTypes.any,
     arrowPointAtCenter: PropTypes.bool,
@@ -61,14 +70,14 @@ export default class Tooltip extends Component<TooltipProps, any> {
       'rightTop',
       'rightBottom',
     ]),
-    trigger: PropTypes.arrayOf(PropTypes.oneOf([
-      Action.click,
-      Action.hover,
-      Action.contextMenu,
-      Action.focus,
-    ])),
+    trigger: PropTypes.arrayOf(
+      PropTypes.oneOf([Action.click, Action.hover, Action.contextMenu, Action.focus]),
+    ),
     hidden: PropTypes.bool,
     onHiddenChange: PropTypes.func,
+    suffixCls: PropTypes.string,
+    transitionName: PropTypes.string,
+    theme: PropTypes.oneOf(['light', 'dark']),
   };
 
   static defaultProps = {
@@ -95,12 +104,13 @@ export default class Tooltip extends Component<TooltipProps, any> {
 
   componentDidMount() {
     const { hidden, defaultHidden } = this.props;
+    const { hidden: stateHidden } = this.state;
 
     let initialHidden = defaultHidden;
     if (hidden !== undefined) {
       initialHidden = hidden;
     }
-    if (initialHidden !== this.state.hidden) {
+    if (initialHidden !== stateHidden) {
       this.setState({
         hidden: initialHidden,
       });
@@ -120,7 +130,7 @@ export default class Tooltip extends Component<TooltipProps, any> {
     const { onHiddenChange } = this.props;
 
     this.setState({
-      hidden: hidden,
+      hidden,
     });
 
     if (onHiddenChange) {
@@ -133,7 +143,10 @@ export default class Tooltip extends Component<TooltipProps, any> {
     if (!title) {
       return null;
     }
-    const { prefixCls, props: { overlay, theme } } = this;
+    const {
+      prefixCls,
+      props: { overlay, theme },
+    } = this;
 
     let content: any = '';
     if (typeof overlay === 'function') {
@@ -159,11 +172,14 @@ export default class Tooltip extends Component<TooltipProps, any> {
 
   get placements() {
     const { builtinPlacements, arrowPointAtCenter, autoAdjustOverflow } = this.props;
-    return builtinPlacements || getPlacements({
-      arrowPointAtCenter,
-      verticalArrowShift: 8,
-      autoAdjustOverflow,
-    });
+    return (
+      builtinPlacements ||
+      getPlacements({
+        arrowPointAtCenter,
+        verticalArrowShift: 8,
+        autoAdjustOverflow,
+      })
+    );
   }
 
   /**
@@ -177,21 +193,12 @@ export default class Tooltip extends Component<TooltipProps, any> {
     const {
       prefixCls,
       popupContent,
-      props: {
-        children,
-        placement,
-        mouseEnterDelay,
-        mouseLeaveDelay,
-        transitionName,
-        trigger,
-      },
-      state: {
-        hidden,
-      },
+      props: { children, placement, mouseEnterDelay, mouseLeaveDelay, transitionName, trigger },
+      state: { hidden },
     } = this;
-    const child = Children.map(children, (node, index) => {
+    const child = Children.map(children, node => {
       if (node && !isValidElement(node)) {
-        return <span key={`text-${index}`}>{node}</span>;
+        return <span key={`text-${node}`}>{node}</span>;
       }
       return node;
     });

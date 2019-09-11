@@ -1,7 +1,7 @@
-@import "../../style/themes/default";
-@import "../../style/mixins/index";
+@import '../../style/themes/default';
+@import '../../style/mixins/index';
 
-@input-affix-width: .19rem;
+@input-affix-width: 0.19rem;
 
 // size mixins for input
 .input-lg() {
@@ -16,19 +16,19 @@
 // input status
 // == when focus or actived
 .active(@color: @outline-color) {
-  border-color: ~`colorPalette("@{color}", 5)`;
+  border-color: ~`colorPalette('@{color}', 5) `;
   outline: 0;
   // box-shadow: 0 0 @outline-blur-size @outline-width fade(@color, 20%);
 }
 
 // == when hoverd
 .hover(@color: @input-hover-border-color) {
-  border-color: ~`colorPalette("@{color}", 5)`;
+  border-color: ~`colorPalette('@{color}', 5) `;
 }
 
 .disabled() {
-  opacity: 1;
   color: @input-disabled-color;
+  opacity: 1;
   &:hover {
     .hover(@input-baseline-color);
   }
@@ -42,16 +42,16 @@
   position: relative;
   display: inline-block;
   width: 100%;
+  height: 0.36rem;
+  padding: @input-padding-vertical-base @input-padding-horizontal;
+  color: @input-color;
   font-size: @font-size-base;
   line-height: @line-height-base;
-  color: @input-color;
   background-color: @input-bg;
   background-image: none;
   border: none;
-  height: .36rem;
-  padding: @input-padding-vertical-base @input-padding-horizontal;
+  transition: all 0.3s;
   .placeholder(); // Reset placeholder
-  transition: all .3s;
 
   // input-wrapper
   &-wrapper {
@@ -64,21 +64,21 @@
   &-content {
     position: relative;
     display: inline-block;
-    vertical-align: middle;
     width: 100%;
+    vertical-align: middle;
   }
 
   &-rendered-wrapper {
-    width: 100%;
+    position: relative;
     display: block;
     box-sizing: content-box;
-    position: relative;
+    width: 100%;
   }
 
   &-rendered {
     position: relative;
-    width: 100%;
     display: inline-block;
+    width: 100%;
   }
 
   &-icon &-icon-copy {
@@ -86,7 +86,7 @@
   }
 
   &-has-copy {
-    padding-right: @icon-font-size-base + .02rem;
+    padding-right: @icon-font-size-base + 0.02rem;
   }
 
   &-has-value &-icon {
@@ -105,12 +105,12 @@
     position: absolute !important;
     top: 0;
     bottom: 0;
-    min-width: .24rem;
-    margin: auto 0;
-    padding: 0 .02rem;
-    text-align: center;
     display: flex;
     align-items: center;
+    min-width: 0.24rem;
+    margin: auto 0;
+    padding: 0 0.02rem;
+    text-align: center;
   }
   &-suffix,
   &-prefix {
@@ -133,11 +133,11 @@
     position: absolute;
     left: 0;
     width: 100%;
-    pointer-events: none;
-    text-overflow: ellipsis;
-    white-space: nowrap;
     max-width: 100%;
     color: #bfbfbf;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    pointer-events: none;
   }
 
   &-has-value &-placeholder {
@@ -147,10 +147,10 @@
   &-length-info {
     position: absolute;
     right: 0;
+    margin-top: 0.02rem;
     color: @input-baseline-color;
     font-size: @font-size-sm;
-    letter-spacing: .02rem;
-    margin-top: .02rem;
+    letter-spacing: 0.02rem;
   }
 
   &:hover {
@@ -179,9 +179,9 @@
   textarea& {
     max-width: 100%; // prevent textearea resize from coming out of its container
     height: auto;
-    vertical-align: bottom;
-    transition: all .3s, height 0s;
     min-height: @input-height-base;
+    vertical-align: bottom;
+    transition: all 0.3s, height 0s;
   }
 
   // Size
@@ -189,22 +189,22 @@
     .input-lg();
   }
   &-lg &-has-copy {
-    padding-right: @icon-font-size-lg + .02rem;
+    padding-right: @icon-font-size-lg + 0.02rem;
   }
   &-sm {
     .input-sm();
   }
   &-sm &-has-copy {
-    padding-right: @icon-font-size-sm + .02rem;
+    padding-right: @icon-font-size-sm + 0.02rem;
   }
 
   &:-webkit-autofill {
-    box-shadow: 0 0 0 10rem @input-wrapper-bg inset;
-    width: ~"calc(100% - .04rem)";
-    margin: .02rem;
-    height: .32rem;
+    width: ~'calc(100% - .04rem)';
+    height: 0.32rem;
+    margin: 0.02rem;
     text-indent: -0.02rem;
-    border-radius: .04rem;
+    border-radius: 0.04rem;
+    box-shadow: 0 0 0 10rem @input-wrapper-bg inset;
   }
 
   textarea&:-webkit-autofill {
@@ -213,65 +213,65 @@
 }
 
 .border() {
-  &-has-border&-wrapper:before {
-    display: block;
-    content: " ";
+  &-has-border&-wrapper::before {
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
+    display: block;
     border: @border-width-base @border-style-base @input-border-color;
-    border-radius: .04rem;
+    border-radius: 0.04rem;
+    content: ' ';
   }
 
-  &-has-border&-wrapper:hover:before {
+  &-has-border&-wrapper:hover::before {
     border-color: @input-color;
   }
 
-  &-has-border&-focused&-wrapper:before,
-  .has-error &-wrapper:before {
-    border-width: .02rem;
+  &-has-border&-focused&-wrapper::before,
+  .has-error &-wrapper::before {
+    border-width: 0.02rem;
   }
-  &-has-border&-focused&-wrapper:before {
+  &-has-border&-focused&-wrapper::before {
     border-color: @primary-color;
   }
-  .has-error &-has-border&-wrapper:before {
+  .has-error &-has-border&-wrapper::before {
     border-color: @error-color;
   }
-  &-has-border&-disabled:before {
-    border-style: dashed;
+  &-has-border&-disabled::before {
     border-color: @input-border-color !important;
+    border-style: dashed;
   }
 }
 
 .label() {
   &-label {
-    color: @label-color;
     padding: 0;
+    color: @label-color;
+    line-height: 34 / 13; // <-- fieldHeight / fontSize
     transform-origin: inherit;
     transition: inherit;
     pointer-events: none;
-    line-height: 34 / 13; // <-- fieldHeight / fontSize
-    .is-required &:after {
+    .is-required &::after {
       display: inline-block;
-      margin-left: .04rem;
-      content: "*";
-      font-family: SimSun;
-      line-height: 1;
-      font-size: @font-size-base;
+      width: 0.08rem;
+      margin-left: 0.04rem;
       color: @label-required-color;
-      width: .08rem;
+      font-size: @font-size-base;
+      font-family: SimSun, sans-serif;
+      line-height: 1;
+      content: '*';
     }
     &-wrapper {
       position: absolute;
-      padding: 0 .05rem;
-      margin-left: -.05rem;
       top: 0;
-      height: 0;
       left: @input-padding-horizontal-base;
-      border-top: .02rem @border-style-base transparent;
-      transform-origin: .1rem -230%;
+      height: 0;
+      margin-left: -0.05rem;
+      padding: 0 0.05rem;
+      border-top: 0.02rem @border-style-base transparent;
+      transform-origin: 0.1rem -230%;
       transition: all 0.2s @ease-out;
     }
   }
@@ -281,13 +281,13 @@
   &-has-value &-label-wrapper,
   &-focused &-label-wrapper,
   &:-webkit-autofill + &-label-wrapper {
-    transform: scaleX(.8);
     border-top-color: @component-background;
+    transform: scaleX(0.8);
   }
   &-has-value &-label,
   &-focused &-label,
   &:-webkit-autofill + &-label-wrapper &-label {
-    transform: scaleY(.8);
+    transform: scaleY(0.8);
   }
 
   &-focused &-label {
@@ -304,8 +304,8 @@
   //default underline
   &-underline {
     position: absolute;
-    height: 0;
     width: 100%;
+    height: 0;
     border-bottom: @border-width-base @border-style-base @input-baseline-color;
   }
 
@@ -313,12 +313,12 @@
     position: absolute;
     left: 0;
     width: 100%;
-    transform-origin: 50%;
-    transform: scaleX(0.5);
-    opacity: 0;
-    border-bottom: .02rem @border-style-base @primary-color;
-    transition: border-color 300ms cubic-bezier(0.55, 0, 0.55, 0.2);
     height: 0;
+    border-bottom: 0.02rem @border-style-base @primary-color;
+    transform: scaleX(0.5);
+    transform-origin: 50%;
+    opacity: 0;
+    transition: border-color 300ms cubic-bezier(0.55, 0, 0.55, 0.2);
   }
   //disabled underline
   &-disabled &-underline {
@@ -326,9 +326,11 @@
   }
   // focused underline
   &-focused &-underline &-ripple {
-    opacity: 1;
     transform: scaleX(1);
-    transition: transform 300ms cubic-bezier(0.25, 0.8, 0.25, 1), opacity 100ms cubic-bezier(0.25, 0.8, 0.25, 1), border-color 300ms cubic-bezier(0.25, 0.8, 0.25, 1);
+    opacity: 1;
+    transition: transform 300ms cubic-bezier(0.25, 0.8, 0.25, 1),
+      opacity 100ms cubic-bezier(0.25, 0.8, 0.25, 1),
+      border-color 300ms cubic-bezier(0.25, 0.8, 0.25, 1);
   }
 }
 
@@ -336,19 +338,19 @@
 .input-group(@inputClass) {
   position: relative;
   display: inline-block;
+  width: 100%;
   border-collapse: separate;
   border-spacing: 0;
-  width: 100%;
 
   // Undo padding and float of grid classes
-  &[class*="col-"] {
+  &[class*='col-'] {
     float: none;
-    padding-left: 0;
     padding-right: 0;
+    padding-left: 0;
   }
 
-  > [class*="col-"] {
-    padding-right: .08rem;
+  > [class*='col-'] {
+    padding-right: 0.08rem;
     &:last-child {
       padding-right: 0;
     }
@@ -366,7 +368,7 @@
 
   &-addon,
   &-wrap {
-    width: .01rem; // To make addon/wrap as small as possible
+    width: 0.01rem; // To make addon/wrap as small as possible
     white-space: nowrap;
     vertical-align: middle;
   }
@@ -384,24 +386,24 @@
   }
 
   &-addon {
-    font-size: @font-size-base;
-    font-weight: normal;
-    line-height: 1;
+    position: relative;
     color: @input-color;
+    font-weight: normal;
+    font-size: @font-size-base;
+    line-height: 1;
     text-align: center;
     background-color: @input-addon-bg;
     border: @border-width-base @border-style-base @input-baseline-color;
     border-radius: @border-radius-base;
-    position: relative;
-    transition: all .3s;
+    transition: all 0.3s;
 
     // Reset Select's style in addon
     .@{c7n-prefix}-select {
-      margin: -(@input-padding-vertical-base + .01rem) (-@input-padding-horizontal-base); // lesshint spaceAroundOperator: false
+      margin: -(@input-padding-vertical-base + 0.01rem) (-@input-padding-horizontal-base); // lesshint spaceAroundOperator: false
 
       .@{c7n-prefix}-select-selection {
+        margin: -0.01rem;
         background-color: inherit;
-        margin: -.01rem;
         border: @border-width-base @border-style-base transparent;
         box-shadow: none;
       }
@@ -415,38 +417,38 @@
     }
 
     // Expand addon icon click area
-    > i:only-child:after {
+    > i:only-child::after {
       position: absolute;
-      content: '';
       top: 0;
-      left: 0;
       right: 0;
       bottom: 0;
+      left: 0;
+      content: '';
     }
   }
 
   // Reset rounded corners
   > .@{inputClass}:first-child,
   &-addon:first-child {
-    border-bottom-right-radius: 0;
     border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
 
     // Reset Select's style in addon
     .@{c7n-prefix}-select .@{c7n-prefix}-select-selection {
-      border-bottom-right-radius: 0;
       border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
     }
   }
 
   > .@{inputClass}-affix-wrapper {
     &:not(:first-child) .@{inputClass} {
-      border-bottom-left-radius: 0;
       border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
     }
 
     &:not(:last-child) .@{inputClass} {
-      border-bottom-right-radius: 0;
       border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
     }
   }
 
@@ -459,13 +461,13 @@
 
   > .@{inputClass}:last-child,
   &-addon:last-child {
-    border-bottom-left-radius: 0;
     border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
 
     // Reset Select's style in addon
     .@{c7n-prefix}-select .@{c7n-prefix}-select-selection {
-      border-bottom-left-radius: 0;
       border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
     }
   }
 
@@ -488,39 +490,39 @@
   }
 
   .@{inputClass}-affix-wrapper {
-    width: 100%;
     float: left;
+    width: 100%;
   }
 
   &&-compact {
     display: block;
     white-space: nowrap;
     .clearfix;
-    .@{c7n-prefix}-input-has-border:before,
-    .@{c7n-prefix}-select-has-border:before {
+    .@{c7n-prefix}-input-has-border::before,
+    .@{c7n-prefix}-select-has-border::before {
       border-style: @border-style-base;
     }
     > * {
-      vertical-align: top;
-      float: none;
       display: inline-block;
+      float: none;
+      vertical-align: top;
       &:not(:first-child) {
         .@{c7n-prefix}-input-has-border,
         .@{c7n-prefix}-select-has-border,
         &.@{c7n-prefix}-input-has-border,
         &.@{c7n-prefix}-select-has-border {
-          margin-left: -.01rem;
-          &:before {
+          margin-left: -0.01rem;
+          &::before {
             border-top-left-radius: 0;
             border-bottom-left-radius: 0;
           }
         }
       }
       &:not(:last-child) {
-        .@{c7n-prefix}-input-has-border:before,
-        .@{c7n-prefix}-select-has-border:before,
-        &.@{c7n-prefix}-input-has-border:before,
-        &.@{c7n-prefix}-select-has-border:before {
+        .@{c7n-prefix}-input-has-border::before,
+        .@{c7n-prefix}-select-has-border::before,
+        &.@{c7n-prefix}-input-has-border::before,
+        &.@{c7n-prefix}-select-has-border::before {
           border-top-right-radius: 0;
           border-bottom-right-radius: 0;
         }
@@ -528,8 +530,8 @@
     }
 
     .@{inputClass} {
-      float: none;
       z-index: auto;
+      float: none;
     }
   }
 }
@@ -551,17 +553,17 @@
   .@{inputClass}-suffix {
     position: absolute;
     top: 50%;
-    transform: translateY(-50%);
     z-index: 2;
-    line-height: 0;
     color: @input-color;
+    line-height: 0;
+    transform: translateY(-50%);
     :not(.anticon) {
       line-height: @line-height-base;
     }
   }
 
   .@{inputClass}-suffix {
-    right: @input-padding-horizontal-base + .01rem;
+    right: @input-padding-horizontal-base + 0.01rem;
   }
 
   .@{inputClass}:not(:first-child) {

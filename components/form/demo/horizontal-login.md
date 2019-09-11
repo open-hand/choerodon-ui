@@ -13,8 +13,9 @@ title:
 
 Horizontal login form is often used in navigation bar.
 
-````jsx
+```jsx
 import { Form, Icon, Input, Button } from 'choerodon-ui';
+
 const FormItem = Form.Item;
 
 function hasErrors(fieldsError) {
@@ -27,14 +28,14 @@ class HorizontalLoginForm extends React.Component {
     this.props.form.validateFields();
   }
 
-  handleSubmit = (e) => {
+  handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
       }
     });
-  }
+  };
 
   render() {
     const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
@@ -44,32 +45,29 @@ class HorizontalLoginForm extends React.Component {
     const passwordError = isFieldTouched('password') && getFieldError('password');
     return (
       <Form layout="inline" onSubmit={this.handleSubmit}>
-        <FormItem
-          validateStatus={userNameError ? 'error' : ''}
-          help={userNameError || ''}
-        >
+        <FormItem validateStatus={userNameError ? 'error' : ''} help={userNameError || ''}>
           {getFieldDecorator('userName', {
             rules: [{ required: true, message: 'Please input your username!' }],
           })(
-            <Input prefix={<Icon type="person_outline" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" />
+            <Input
+              prefix={<Icon type="person_outline" style={{ color: 'rgba(0,0,0,.25)' }} />}
+              placeholder="Username"
+            />,
           )}
         </FormItem>
-        <FormItem
-          validateStatus={passwordError ? 'error' : ''}
-          help={passwordError || ''}
-        >
+        <FormItem validateStatus={passwordError ? 'error' : ''} help={passwordError || ''}>
           {getFieldDecorator('password', {
             rules: [{ required: true, message: 'Please input your Password!' }],
           })(
-            <Input prefix={<Icon type="lock_outline" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" />
+            <Input
+              prefix={<Icon type="lock_outline" style={{ color: 'rgba(0,0,0,.25)' }} />}
+              type="password"
+              placeholder="Password"
+            />,
           )}
         </FormItem>
         <FormItem>
-          <Button
-            type="primary"
-            htmlType="submit"
-            disabled={hasErrors(getFieldsError())}
-          >
+          <Button type="primary" htmlType="submit" disabled={hasErrors(getFieldsError())}>
             Log in
           </Button>
         </FormItem>
@@ -81,4 +79,4 @@ class HorizontalLoginForm extends React.Component {
 const WrappedHorizontalLoginForm = Form.create()(HorizontalLoginForm);
 
 ReactDOM.render(<WrappedHorizontalLoginForm />, mountNode);
-````
+```

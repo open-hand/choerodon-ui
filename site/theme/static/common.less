@@ -4,17 +4,17 @@ body {
 }
 
 body {
-  font-family: @font-family;
-  line-height: @line-height-base;
+  overflow-x: hidden;
   color: @site-text-color;
   font-size: @font-size-base;
+  font-family: @font-family;
+  line-height: @line-height-base;
   background: @body-background;
   transition: background 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-  overflow-x: hidden;
 }
 
 a {
-  transition: color .3s ease;
+  transition: color 0.3s ease;
   &:focus {
     text-decoration: underline;
     text-decoration-skip-ink: auto;
@@ -22,28 +22,28 @@ a {
 }
 
 .main-wrapper {
-  background: #fff;
-  padding: 40px 0 0;
   position: relative;
+  padding: 40px 0 0;
+  background: #fff;
 }
 
 .main-container {
-  padding: 0 170px 144px 64px;
-  background: #fff;
-  min-height: 500px;
-  overflow: hidden;
-  border-left: 1px solid @site-border-color-split;
   position: relative;
+  min-height: 500px;
   margin-left: -1px;
+  padding: 0 170px 144px 64px;
+  overflow: hidden;
+  background: #fff;
+  border-left: 1px solid @site-border-color-split;
 }
 
 .main-menu {
   z-index: 1;
 
   &-inner {
+    max-height: 100vh;
     overflow-x: hidden;
     overflow-y: hidden;
-    max-height: 100vh;
   }
 
   &:hover &-inner {
@@ -58,9 +58,9 @@ a {
   &.c7n-menu-inline .c7n-menu-submenu-title h4,
   &.c7n-menu-inline > .c7n-menu-item,
   &.c7n-menu-inline .c7n-menu-item a {
+    overflow: hidden;
     font-size: 14px;
     text-overflow: ellipsis;
-    overflow: hidden;
   }
 
   &.c7n-menu-inline .c7n-menu-item-group-title {
@@ -74,13 +74,13 @@ a {
   .menu-item-link-outside {
     position: relative;
     .@{iconfont-css-prefix} {
-      font-size: 12px;
-      color: @primary-color;
-      opacity: 0;
       position: absolute;
-      right: -10px;
       top: 16px;
-      transition: all .3s;
+      right: -10px;
+      color: @primary-color;
+      font-size: 12px;
+      opacity: 0;
+      transition: all 0.3s;
     }
     &:hover .@{iconfont-css-prefix} {
       opacity: 1;
@@ -89,22 +89,22 @@ a {
 }
 
 .aside-container .chinese {
-  font-size: 12px;
   margin-left: 6px;
   font-weight: normal;
-  opacity: .67;
+  font-size: 12px;
+  opacity: 0.67;
 }
 
 .outside-link {
   display: inline-block;
 }
 
-.outside-link:after {
-  content: '\e691';
-  font-family: 'icon';
+.outside-link::after {
   margin-left: 5px;
-  font-size: 12px;
   color: #aaa;
+  font-size: 12px;
+  font-family: 'icon', sans-serif;
+  content: '\e691';
 }
 
 .outside-link.internal {
@@ -122,14 +122,14 @@ a {
 }
 
 #react-content {
-  transition: transform .3s @ease-in-out-circ;
   height: 100%;
+  transition: transform 0.3s @ease-in-out-circ;
 }
 
 .page-wrapper {
-  overflow: hidden;
-  padding: 0;
   width: 100%;
+  padding: 0;
+  overflow: hidden;
   a {
     text-decoration: none;
   }

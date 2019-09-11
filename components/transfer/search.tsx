@@ -16,16 +16,16 @@ export default class Search extends Component<TransferSearchProps, any> {
   };
 
   handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const onChange = this.props.onChange;
+    const { onChange } = this.props;
     if (onChange) {
       onChange(e);
     }
   };
 
-  handleClear: MouseEventHandler<HTMLAnchorElement> = (e) => {
+  handleClear: MouseEventHandler<HTMLAnchorElement> = e => {
     e.preventDefault();
 
-    const handleClear = this.props.handleClear;
+    const { handleClear } = this.props;
     if (handleClear) {
       handleClear(e);
     }
@@ -33,13 +33,16 @@ export default class Search extends Component<TransferSearchProps, any> {
 
   render() {
     const { placeholder, value, prefixCls } = this.props;
-    const icon = (value && value.length > 0) ? (
-      <a href="#" className={`${prefixCls}-action`} onClick={this.handleClear}>
-        <Icon type="cross-circle" />
-      </a>
-    ) : (
-      <span className={`${prefixCls}-action`}><Icon type="search" /></span>
-    );
+    const icon =
+      value && value.length > 0 ? (
+        <a href="#" className={`${prefixCls}-action`} onClick={this.handleClear}>
+          <Icon type="cross-circle" />
+        </a>
+      ) : (
+        <span className={`${prefixCls}-action`}>
+          <Icon type="search" />
+        </span>
+      );
 
     return (
       <div>
@@ -47,7 +50,6 @@ export default class Search extends Component<TransferSearchProps, any> {
           placeholder={placeholder}
           className={prefixCls}
           value={value}
-          ref="input"
           onChange={this.handleChange}
         />
         {icon}

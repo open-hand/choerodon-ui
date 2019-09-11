@@ -15,7 +15,6 @@ export interface FormItemProps {
   className?: string;
   id?: string;
   label?: ReactNode;
-  labelCol?: ColProps;
   wrapperCol?: ColProps;
   help?: ReactNode;
   extra?: ReactNode;
@@ -32,6 +31,7 @@ export interface FormItemContext {
 
 export default class FormItem extends Component<FormItemProps, any> {
   static displayName = 'FormItem';
+
   static defaultProps = {
     hasFeedback: false,
     colon: true,
@@ -40,7 +40,6 @@ export default class FormItem extends Component<FormItemProps, any> {
   static propTypes = {
     prefixCls: PropTypes.string,
     label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-    labelCol: PropTypes.object,
     help: PropTypes.oneOfType([PropTypes.node, PropTypes.bool]),
     validateStatus: PropTypes.oneOf([
       FormItemValidateStatus.success,
@@ -65,10 +64,11 @@ export default class FormItem extends Component<FormItemProps, any> {
   state = { helpShow: false };
 
   componentDidMount() {
+    const { children } = this.props;
     warning(
-      this.getControls(this.props.children, true).length <= 1,
+      this.getControls(children, true).length <= 1,
       '`Form.Item` cannot generate `validateStatus` and `help` automatically, ' +
-      'while there are more than one `getFieldDecorator` in it.',
+        'while there are more than one `getFieldDecorator` in it.',
     );
   }
 
@@ -96,14 +96,17 @@ export default class FormItem extends Component<FormItemProps, any> {
       }
 
       const child = childrenArray[i] as ReactElement<any>;
-      if (child.type &&
-        (child.type as any === FormItem || (child.type as any).displayName === 'FormItem')) {
+      if (
+        child.type &&
+        ((child.type as any) === FormItem || (child.type as any).displayName === 'FormItem')
+      ) {
         continue;
       }
       if (!child.props) {
         continue;
       }
-      if (FIELD_META_PROP in child.props) { // And means FIELD_DATA_PROP in chidl.props, too.
+      if (FIELD_META_PROP in child.props) {
+        // And means FIELD_DATA_PROP in chidl.props, too.
         controls.push(child);
       } else if (child.props.children) {
         controls = controls.concat(this.getControls(child.props.children, recursively));
@@ -113,7 +116,8 @@ export default class FormItem extends Component<FormItemProps, any> {
   }
 
   getOnlyControl() {
-    const child = this.getControls(this.props.children, false)[0];
+    const { children } = this.props;
+    const child = this.getControls(children, false)[0];
     return child !== undefined ? child : null;
   }
 
@@ -135,7 +139,8 @@ export default class FormItem extends Component<FormItemProps, any> {
   }
 
   getPrefixCls() {
-    return getPrefixCls('form', this.props.prefixCls);
+    const { prefixCls } = this.props;
+    return getPrefixCls('form', prefixCls);
   }
 
   onHelpAnimEnd = (_key: string, helpShow: boolean) => {
@@ -166,9 +171,7 @@ export default class FormItem extends Component<FormItemProps, any> {
   renderExtra() {
     const { extra } = this.props;
     const prefixCls = this.getPrefixCls();
-    return extra ? (
-      <div className={`${prefixCls}-extra`}>{extra}</div>
-    ) : null;
+    return extra ? <div className={`${prefixCls}-extra`}>{extra}</div> : null;
   }
 
   getValidateStatus(): FormItemValidateStatus | undefined {
@@ -192,9 +195,10 @@ export default class FormItem extends Component<FormItemProps, any> {
     const props = this.props;
     const prefixCls = this.getPrefixCls();
     const onlyControl = this.getOnlyControl();
-    const validateStatus = (props.validateStatus === undefined && onlyControl) ?
-      this.getValidateStatus() :
-      props.validateStatus;
+    const validateStatus =
+      props.validateStatus === undefined && onlyControl
+        ? this.getValidateStatus()
+        : props.validateStatus;
 
     let classes = `${prefixCls}-item-control`;
     if (validateStatus) {
@@ -209,7 +213,8 @@ export default class FormItem extends Component<FormItemProps, any> {
     return (
       <div className={classes}>
         <span className={`${prefixCls}-item-children`}>{c1}</span>
-        {c2}{c3}
+        {c2}
+        {c3}
       </div>
     );
   }
@@ -220,7 +225,8 @@ export default class FormItem extends Component<FormItemProps, any> {
     const required = this.isRequired();
     const className = classNames(
       `${prefixCls}-item-control-wrapper`,
-      wrapperCol && wrapperCol.className, {
+      wrapperCol && wrapperCol.className,
+      {
         'is-required': required,
       },
     );
@@ -240,9 +246,11 @@ export default class FormItem extends Component<FormItemProps, any> {
       const meta = this.getMeta() || {};
       const validate = meta.validate || [];
 
-      return validate.filter((item: any) => !!item.rules).some((item: any) => {
-        return item.rules.some((rule: any) => rule.required);
-      });
+      return validate
+        .filter((item: any) => !!item.rules)
+        .some((item: any) => {
+          return item.rules.some((rule: any) => rule.required);
+        });
     }
     return false;
   }
@@ -250,8 +258,8 @@ export default class FormItem extends Component<FormItemProps, any> {
   // Resolve duplicated ids bug between different forms
 
   onLabelClick = (e: any) => {
-    const { label } = this.props;
-    const id = this.props.id || this.getId();
+    const { label, id: propId } = this.props;
+    const id = propId || this.getId();
     if (!id) {
       return;
     }
@@ -262,7 +270,9 @@ export default class FormItem extends Component<FormItemProps, any> {
       if (typeof label === 'string') {
         e.preventDefault();
       }
-      const control = (findDOMNode(this) as HTMLElement).querySelector(`[id="${id}"]`) as HTMLElement;
+      const control = (findDOMNode(this) as HTMLElement).querySelector(
+        `[id="${id}"]`,
+      ) as HTMLElement;
       if (control && control.focus) {
         control.focus();
       }
@@ -274,22 +284,19 @@ export default class FormItem extends Component<FormItemProps, any> {
     return [
       // this.renderLabel(),
       this.renderWrapper(
-        this.renderValidateWrapper(
-          children,
-          this.renderHelp(),
-          this.renderExtra(),
-        ),
+        this.renderValidateWrapper(children, this.renderHelp(), this.renderExtra()),
       ),
     ];
   }
 
   renderFormItem(children: ReactNode) {
     const props = this.props;
+    const { helpShow } = this.state;
     const prefixCls = this.getPrefixCls();
     const style = props.style;
     const itemClassName = {
       [`${prefixCls}-item`]: true,
-      [`${prefixCls}-item-with-help`]: !!this.getHelpMsg() || this.state.helpShow,
+      [`${prefixCls}-item-with-help`]: !!this.getHelpMsg() || helpShow,
       [`${prefixCls}-item-no-colon`]: !props.colon,
       [`${props.className}`]: !!props.className,
     };

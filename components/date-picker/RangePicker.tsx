@@ -67,6 +67,7 @@ function fixLocale(value: RangePickerValue | undefined, localeCode: string) {
 
 export default class RangePicker extends Component<any, RangePickerState> {
   static displayName = 'RangePicker';
+
   static defaultProps = {
     allowClear: true,
     showToday: false,
@@ -78,12 +79,10 @@ export default class RangePicker extends Component<any, RangePickerState> {
     super(props);
     const value = props.value || props.defaultValue || [];
     if (
-      value[0] && !interopDefault(moment).isMoment(value[0]) ||
-      value[1] && !interopDefault(moment).isMoment(value[1])
+      (value[0] && !interopDefault(moment).isMoment(value[0])) ||
+      (value[1] && !interopDefault(moment).isMoment(value[1]))
     ) {
-      throw new Error(
-        'The value/defaultValue of RangePicker must be a moment object array',
-      );
+      throw new Error('The value/defaultValue of RangePicker must be a moment object array');
     }
     const pickerValue = !value || isEmptyArray(value) ? props.defaultPickerValue : value;
     this.state = {
@@ -96,11 +95,11 @@ export default class RangePicker extends Component<any, RangePickerState> {
 
   componentWillReceiveProps(nextProps: any) {
     if ('value' in nextProps) {
-      const state = this.state;
+      const { showDate } = this.state;
       const value = nextProps.value || [];
       this.setState({
         value,
-        showDate: getShowDateFromValue(value) || state.showDate,
+        showDate: getShowDateFromValue(value) || showDate,
       });
     }
     if ('open' in nextProps) {
@@ -110,7 +109,7 @@ export default class RangePicker extends Component<any, RangePickerState> {
     }
   }
 
-  clearSelection: MouseEventHandler<HTMLElement> = (e) => {
+  clearSelection: MouseEventHandler<HTMLElement> = e => {
     e.preventDefault();
     e.stopPropagation();
     this.setState({ value: [] });
@@ -153,7 +152,8 @@ export default class RangePicker extends Component<any, RangePickerState> {
   handleHoverChange = (hoverValue: any) => this.setState({ hoverValue });
 
   handleRangeMouseLeave = () => {
-    if (this.state.open) {
+    const { open } = this.state;
+    if (open) {
       this.clearHoverValue();
     }
   };
@@ -183,7 +183,8 @@ export default class RangePicker extends Component<any, RangePickerState> {
 
   setValue(value: RangePickerValue, hidePanel?: boolean) {
     this.handleChange(value);
-    if ((hidePanel || !this.props.showTime) && !('open' in this.props)) {
+    const { props } = this;
+    if ((hidePanel || !props.showTime) && !('open' in props)) {
       this.setState({ open: false });
     }
   }
@@ -211,7 +212,7 @@ export default class RangePicker extends Component<any, RangePickerState> {
         {renderExtraFooter(...args)}
       </div>
     ) : null;
-    const operations = Object.keys(ranges || {}).map((range) => {
+    const operations = Object.keys(ranges || {}).map(range => {
       const value = ranges[range];
       return (
         <a
@@ -233,18 +234,27 @@ export default class RangePicker extends Component<any, RangePickerState> {
   };
 
   getPrefixCls() {
-    return getPrefixCls('calendar', this.props.prefixCls);
+    const { prefixCls } = this.props;
+    return getPrefixCls('calendar', prefixCls);
   }
 
   render() {
     const { state, props } = this;
     const { value, showDate, hoverValue, open } = state;
     const {
-      popupStyle, style,
-      disabledDate, disabledTime,
-      showTime, showToday,
-      ranges, onOk, locale, localeCode, format,
-      dateRender, onCalendarChange,
+      popupStyle,
+      style,
+      disabledDate,
+      disabledTime,
+      showTime,
+      showToday,
+      ranges,
+      onOk,
+      locale,
+      localeCode,
+      format,
+      dateRender,
+      onCalendarChange,
     } = props;
 
     fixLocale(value, localeCode);
@@ -259,7 +269,7 @@ export default class RangePicker extends Component<any, RangePickerState> {
     });
 
     // 需要选择时间时，点击 ok 时才触发 onChange
-    let pickerChangeHandler = {
+    const pickerChangeHandler = {
       onChange: this.handleChange,
     };
     let calendarProps: any = {
@@ -274,10 +284,10 @@ export default class RangePicker extends Component<any, RangePickerState> {
       calendarProps.mode = props.mode;
     }
 
-    const startPlaceholder = ('placeholder' in props)
-      ? props.placeholder[0] : locale.lang.rangePlaceholder[0];
-    const endPlaceholder = ('placeholder' in props)
-      ? props.placeholder[1] : locale.lang.rangePlaceholder[1];
+    const startPlaceholder =
+      'placeholder' in props ? props.placeholder[0] : locale.lang.rangePlaceholder[0];
+    const endPlaceholder =
+      'placeholder' in props ? props.placeholder[1] : locale.lang.rangePlaceholder[1];
 
     const calendar = (
       <RangeCalendar
@@ -310,15 +320,16 @@ export default class RangePicker extends Component<any, RangePickerState> {
       pickerStyle.width = (style && style.width) || 350;
     }
 
-    const clearIcon = (!props.disabled && props.allowClear && value && (value[0] || value[1])) ? (
-      <Button
-        shape="circle"
-        size={Size.small}
-        onClick={this.clearSelection}
-        className={`${prefixCls}-picker-clear`}
-        icon="close"
-      />
-    ) : null;
+    const clearIcon =
+      !props.disabled && props.allowClear && value && (value[0] || value[1]) ? (
+        <Button
+          shape="circle"
+          size={Size.small}
+          onClick={this.clearSelection}
+          className={`${prefixCls}-picker-clear`}
+          icon="close"
+        />
+      ) : null;
 
     const input = ({ value: inputValue }: { value: any }) => {
       const start = inputValue[0];

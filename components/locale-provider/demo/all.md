@@ -7,47 +7,65 @@ title:
 
 ## zh-CN
 
-此处列出 Ant Design 中需要国际化支持的组件，你可以在演示里切换语言。
+此处列出 Choerodon UI 中需要国际化支持的组件，你可以在演示里切换语言。
 
 ## en-US
 
 Components which need localization support are listed here, you can toggle the language in the demo.
 
-````jsx
-import { LocaleProvider, Pagination, DatePicker, TimePicker, Calendar,
-         Popconfirm, Table, Modal, Button, Select, Transfer, Radio } from 'choerodon-ui';
+```jsx
+import {
+  LocaleProvider,
+  Pagination,
+  DatePicker,
+  TimePicker,
+  Calendar,
+  Popconfirm,
+  Table,
+  Modal,
+  Button,
+  Select,
+  Transfer,
+  Radio,
+} from 'choerodon-ui';
 import zhCN from 'choerodon-ui/lib/locale-provider/zh_CN';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
+
 moment.locale('en');
 
 const Option = Select.Option;
 const RangePicker = DatePicker.RangePicker;
 
-const columns = [{
-  title: 'Name',
-  dataIndex: 'name',
-  filters: [{
-    text: 'filter1',
-    value: 'filter1',
-  }],
-}, {
-  title: 'Age',
-  dataIndex: 'age',
-}];
+const columns = [
+  {
+    title: 'Name',
+    dataIndex: 'name',
+    filters: [
+      {
+        text: 'filter1',
+        value: 'filter1',
+      },
+    ],
+  },
+  {
+    title: 'Age',
+    dataIndex: 'age',
+  },
+];
 
 class Page extends React.Component {
   state = {
     visible: false,
-  }
+  };
 
   showModal = () => {
     this.setState({ visible: true });
-  }
+  };
 
   hideModal = () => {
     this.setState({ visible: false });
-  }
+  };
 
   render() {
     const info = () => {
@@ -77,7 +95,9 @@ class Page extends React.Component {
           <RangePicker style={{ width: 200 }} />
         </div>
         <div className="example">
-          <Button type="primary" onClick={this.showModal}>Show Modal</Button>
+          <Button type="primary" onClick={this.showModal}>
+            Show Modal
+          </Button>
           <Button onClick={info}>Show info</Button>
           <Button onClick={confirm}>Show confirm</Button>
           <Popconfirm title="Question?">
@@ -85,12 +105,7 @@ class Page extends React.Component {
           </Popconfirm>
         </div>
         <div className="example">
-          <Transfer
-            dataSource={[]}
-            showSearch
-            targetKeys={[]}
-            render={item => item.title}
-          />
+          <Transfer dataSource={[]} showSearch targetKeys={[]} render={item => item.title} />
         </div>
         <div style={{ width: 319, border: '1px solid #d9d9d9', borderRadius: 4 }}>
           <Calendar fullscreen={false} value={moment()} />
@@ -115,7 +130,7 @@ class App extends React.Component {
     };
   }
 
-  changeLocale = (e) => {
+  changeLocale = e => {
     const localeValue = e.target.value;
     this.setState({ locale: localeValue });
     if (!localeValue) {
@@ -123,7 +138,7 @@ class App extends React.Component {
     } else {
       moment.locale('zh-cn');
     }
-  }
+  };
 
   render() {
     return (
@@ -131,8 +146,12 @@ class App extends React.Component {
         <div className="change-locale">
           <span style={{ marginRight: 16 }}>Change locale of components: </span>
           <Radio.Group defaultValue={null} onChange={this.changeLocale}>
-            <Radio.Button key="en" value={null}>English</Radio.Button>
-            <Radio.Button key="cn" value={zhCN}>中文</Radio.Button>
+            <Radio.Button key="en" value={null}>
+              English
+            </Radio.Button>
+            <Radio.Button key="cn" value={zhCN}>
+              中文
+            </Radio.Button>
           </Radio.Group>
         </div>
         <LocaleProvider locale={this.state.locale}>
@@ -144,9 +163,9 @@ class App extends React.Component {
 }
 
 ReactDOM.render(<App />, mountNode);
-````
+```
 
-````css
+```css
 .locale-components {
   border-top: 1px solid #d9d9d9;
   padding-top: 16px;
@@ -163,4 +182,4 @@ ReactDOM.render(<App />, mountNode);
 .change-locale {
   margin-bottom: 16px;
 }
-````
+```

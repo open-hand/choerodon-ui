@@ -36,6 +36,7 @@ export default class Transfer extends Select<TransferProps> {
   static OptGroup = OptGroup;
 
   @observable sourceSelected: Record[];
+
   @observable targetSelected: Record[];
 
   constructor(props, context) {
@@ -48,7 +49,10 @@ export default class Transfer extends Select<TransferProps> {
 
   @autobind
   sourceFilter(record, index, array) {
-    const { valueField, props: { optionsFilter } } = this;
+    const {
+      valueField,
+      props: { optionsFilter },
+    } = this;
     if (optionsFilter && !optionsFilter(record, index, array)) {
       return false;
     }
@@ -61,7 +65,10 @@ export default class Transfer extends Select<TransferProps> {
 
   @autobind
   targetFilter(record, index, array) {
-    const { valueField, props: { optionsFilter } } = this;
+    const {
+      valueField,
+      props: { optionsFilter },
+    } = this;
     if (optionsFilter && !optionsFilter(record, index, array)) {
       return false;
     }
@@ -73,7 +80,11 @@ export default class Transfer extends Select<TransferProps> {
   }
 
   @autobind
-  handleMenuClick({ item: { props: { value } } }) {
+  handleMenuClick({
+    item: {
+      props: { value },
+    },
+  }) {
     if (this.multiple) {
       this.selectRecord(value, this.sourceSelected);
     } else {
@@ -82,7 +93,11 @@ export default class Transfer extends Select<TransferProps> {
   }
 
   @autobind
-  handleTargetMenuClick({ item: { props: { value } } }) {
+  handleTargetMenuClick({
+    item: {
+      props: { value },
+    },
+  }) {
     if (this.multiple) {
       this.selectRecord(value, this.targetSelected);
     } else {
@@ -129,7 +144,13 @@ export default class Transfer extends Select<TransferProps> {
   }
 
   renderWrapper() {
-    const { prefixCls, targetSelected, sourceSelected, multiple, props: { titles = [] } } = this;
+    const {
+      prefixCls,
+      targetSelected,
+      sourceSelected,
+      multiple,
+      props: { titles = [] },
+    } = this;
     const disabled = this.isDisabled();
     return (
       <span key="wrapper" className={`${prefixCls}-wrapper`}>

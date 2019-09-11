@@ -11,9 +11,9 @@ import addEventListener from '../_util/addEventListener';
 import { getPrefixCls } from '../configure';
 
 function getTargetRect(target: HTMLElement | Window | null): ClientRect {
-  return target !== window ?
-    (target as HTMLElement).getBoundingClientRect() :
-    { top: 0, left: 0, bottom: 0 } as ClientRect;
+  return target !== window
+    ? (target as HTMLElement).getBoundingClientRect()
+    : ({ top: 0, left: 0, bottom: 0 } as ClientRect);
 }
 
 function getOffset(element: HTMLElement, target: HTMLElement | Window | null) {
@@ -64,6 +64,7 @@ export interface AffixState {
 
 export default class Affix extends Component<AffixProps, AffixState> {
   static displayName = 'Affix';
+
   static propTypes = {
     offsetTop: PropTypes.number,
     offsetBottom: PropTypes.number,
@@ -76,9 +77,13 @@ export default class Affix extends Component<AffixProps, AffixState> {
   };
 
   private timeout: number;
+
   private eventHandlers: Record<string, any> = {};
+
   private fixedNode: HTMLElement;
+
   private placeholderNode: HTMLElement;
+
   private readonly events = [
     'resize',
     'scroll',
@@ -91,7 +96,7 @@ export default class Affix extends Component<AffixProps, AffixState> {
 
   setAffixStyle(e: Event, affixStyle: CSSProperties | null) {
     const { onChange = noop, target = getDefaultTarget } = this.props;
-    const originalAffixStyle = this.state.affixStyle;
+    const { affixStyle: originalAffixStyle } = this.state;
     const isWindow = target() === window;
     if (e.type === 'scroll' && originalAffixStyle && affixStyle && isWindow) {
       return;
@@ -101,15 +106,15 @@ export default class Affix extends Component<AffixProps, AffixState> {
     }
 
     this.setState({ affixStyle: affixStyle as React.CSSProperties }, () => {
-      const affixed = !!this.state.affixStyle;
       if ((affixStyle && !originalAffixStyle) || (!affixStyle && originalAffixStyle)) {
-        onChange(affixed);
+        const { state } = this;
+        onChange(!!state.affixStyle);
       }
     });
   }
 
   setPlaceholderStyle(placeholderStyle: CSSProperties | null) {
-    const originalPlaceholderStyle = this.state.placeholderStyle;
+    const { placeholderStyle: originalPlaceholderStyle } = this.state;
     if (shallowequal(placeholderStyle, originalPlaceholderStyle)) {
       return;
     }
@@ -216,7 +221,8 @@ export default class Affix extends Component<AffixProps, AffixState> {
   }
 
   componentDidMount() {
-    const target = this.props.target || getDefaultTarget;
+    const { props } = this;
+    const target = props.target || getDefaultTarget;
     // Wait for parent component ref has its value
     this.timeout = setTimeout(() => {
       this.setTargetEventListeners(target);
@@ -226,17 +232,15 @@ export default class Affix extends Component<AffixProps, AffixState> {
   }
 
   componentWillReceiveProps(nextProps: AffixProps) {
-    if (this.props.target !== nextProps.target) {
+    const { offsetTop, offsetBottom, target } = this.props;
+    if (target !== nextProps.target) {
       this.clearEventListeners();
       this.setTargetEventListeners(nextProps.target!);
 
       // Mock Event object.
       this.updatePosition({} as Event);
     }
-    if (
-      this.props.offsetTop !== nextProps.offsetTop ||
-      this.props.offsetBottom !== nextProps.offsetBottom
-    ) {
+    if (offsetTop !== nextProps.offsetTop || offsetBottom !== nextProps.offsetBottom) {
       this.updatePosition({} as Event);
     }
   }

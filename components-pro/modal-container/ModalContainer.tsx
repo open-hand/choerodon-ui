@@ -14,18 +14,14 @@ import { stopEvent } from '../_util/EventManager';
 
 const { suffixCls } = Modal.defaultProps;
 
-const KeyGen = function* (id) {
+const KeyGen = (function*(id) {
   while (true) {
-    yield `${getProPrefixCls(suffixCls)}-${id++}`;
+    yield `${getProPrefixCls(suffixCls)}-${id}`;
+    id += 1;
   }
-}(1);
+})(1);
 
 const containerInstanses: ModalContainer[] = [];
-
-function addInstanse(instanse: ModalContainer) {
-  removeInstanse(instanse);
-  containerInstanses.push(instanse);
-}
 
 function removeInstanse(instanse: ModalContainer) {
   const index = containerInstanses.indexOf(instanse);
@@ -34,8 +30,33 @@ function removeInstanse(instanse: ModalContainer) {
   }
 }
 
+function addInstanse(instanse: ModalContainer) {
+  removeInstanse(instanse);
+  containerInstanses.push(instanse);
+}
+
+export function getKey(): string {
+  return KeyGen.next().value;
+}
+
 let root;
-let defaultBodyStyle: { overflow, paddingRight } | undefined;
+let defaultBodyStyle: { overflow; paddingRight } | undefined;
+
+function getRoot() {
+  if (typeof window !== 'undefined') {
+    const doc = window.document;
+    if (root) {
+      if (!root.parentNode) {
+        doc.body.appendChild(root);
+      }
+    } else {
+      root = doc.createElement('div');
+      root.className = `${getProPrefixCls(suffixCls)}-container`;
+      doc.body.appendChild(root);
+    }
+  }
+  return root;
+}
 
 /**
  * 判断body是否有滚动条
@@ -65,7 +86,7 @@ function showBodyScrollBar() {
   const { style } = document.body;
   if (defaultBodyStyle) {
     const { overflow, paddingRight } = defaultBodyStyle;
-    defaultBodyStyle = void 0;
+    defaultBodyStyle = undefined;
     style.overflow = overflow;
     style.paddingRight = paddingRight;
   }
@@ -106,7 +127,8 @@ export default class ModalContainer extends Component<any> {
   };
 
   handleMaskClick = async () => {
-    const modal = findLast(this.state.modals, ({ hidden }) => !hidden);
+    const { modals } = this.state;
+    const modal = findLast(modals, ({ hidden }) => !hidden);
     if (modal) {
       const { close = noop, onCancel = noop, maskClosable } = modal;
       if (maskClosable) {
@@ -132,14 +154,18 @@ export default class ModalContainer extends Component<any> {
   }
 
   findIndex(modalKey) {
-    return this.state.modals.findIndex(({ key }) => key === modalKey);
+    const { modals } = this.state;
+    return modals.findIndex(({ key }) => key === modalKey);
   }
 
   open(props: ModalProps) {
     const { modals } = this.state;
     if (!props.key) {
       props.key = getKey();
-      warning(!!props.destroyOnClose, `The modal which opened has no key, please provide a key or set the \`destroyOnClose\` as true.`);
+      warning(
+        !!props.destroyOnClose,
+        `The modal which opened has no key, please provide a key or set the \`destroyOnClose\` as true.`,
+      );
     } else {
       const index = this.findIndex(props.key);
       if (index !== -1) {
@@ -160,7 +186,8 @@ export default class ModalContainer extends Component<any> {
   }
 
   update(props: ModalProps) {
-    const modals = [...this.state.modals];
+    const { modals: originModals } = this.state;
+    const modals = [...originModals];
     if (props.key) {
       const index = this.findIndex(props.key);
       if (index !== -1) {
@@ -171,7 +198,8 @@ export default class ModalContainer extends Component<any> {
   }
 
   clear() {
-    this.state.modals.forEach(modal => this.close({ ...modal, destroyOnClose: true }));
+    const { modals } = this.state;
+    modals.forEach(modal => this.close({ ...modal, destroyOnClose: true }));
   }
 
   getOffset(modals, idx) {
@@ -200,7 +228,7 @@ export default class ModalContainer extends Component<any> {
   }
 
   getModalWidth(modal) {
-    return (modal && modal.style && modal.style.width || 520);
+    return (modal && modal.style && modal.style.width) || 520;
   }
 
   getComponent() {
@@ -256,42 +284,23 @@ export default class ModalContainer extends Component<any> {
         {items}
       </Fragment>
     );
-  };
+  }
 
   render() {
     const mount = getRoot();
     if (mount) {
-      return createPortal(
-        this.getComponent(),
-        mount,
-      );
-    } else {
-      return null;
+      return createPortal(this.getComponent(), mount);
     }
+    return null;
   }
-}
-
-function getRoot() {
-  if (typeof window !== 'undefined') {
-    const doc = window.document;
-    if (root) {
-      if (!root.parentNode) {
-        doc.body.appendChild(root);
-      }
-    } else {
-      root = doc.createElement('div');
-      root.className = `${getProPrefixCls(suffixCls)}-container`;
-      doc.body.appendChild(root);
-    }
-  }
-  return root;
 }
 
 export function getContainer(loop?: boolean) {
   const { length } = containerInstanses;
   if (length) {
     return containerInstanses[length - 1];
-  } else if (loop !== true) {
+  }
+  if (loop !== true) {
     render(<ModalContainer />, getRoot());
     return getContainer(true);
   }
@@ -302,7 +311,7 @@ export function open(props: ModalProps & { children }) {
 
   async function close(destroy?: boolean) {
     const { onClose = noop } = props;
-    if (await onClose() !== false) {
+    if ((await onClose()) !== false) {
       if (destroy) {
         container.close({ ...props, destroyOnClose: true });
       } else {
@@ -332,8 +341,4 @@ export function open(props: ModalProps & { children }) {
     open: show,
     update,
   };
-}
-
-export function getKey(): string {
-  return KeyGen.next().value;
 }

@@ -7,8 +7,7 @@ declare module 'react-lazy-load';
 declare module 'dom-closest';
 
 declare module 'lodash/noop' {
-  const noop: (...args: any[]) => any;
-  export default noop;
+  export default function(...args: any[]): any;
 }
 
 declare module '*.json' {

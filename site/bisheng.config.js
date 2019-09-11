@@ -1,7 +1,5 @@
 const path = require('path');
-const webpack = require('webpack');
 const CSSSplitWebpackPlugin = require('css-split-webpack-plugin').default;
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const babelOptions = require('bisheng/lib/config/getBabelCommonConfig').default();
 const replaceLib = require('../tools/replaceLib');
 
@@ -9,7 +7,7 @@ const isDev = process.env.NODE_ENV === 'development';
 const rcPath = path.resolve(process.cwd(), 'components', 'rc-components');
 
 function alertBabelConfig(rules) {
-  rules.forEach((rule) => {
+  rules.forEach(rule => {
     if (rule.loader && rule.loader === 'babel-loader') {
       if (rule.options.plugins.indexOf(replaceLib) === -1) {
         rule.options.plugins.push(replaceLib);
@@ -25,15 +23,13 @@ function alertBabelConfig(rules) {
 
 module.exports = {
   port: 8001,
+  hash: true,
   root: '/choerodon-ui/',
   source: {
     components: './components',
     'components-pro': './components-pro',
     docs: './docs',
-    changelog: [
-      'CHANGELOG.zh-CN.md',
-      'CHANGELOG.en-US.md',
-    ],
+    changelog: ['CHANGELOG.zh-CN.md', 'CHANGELOG.en-US.md'],
   },
   theme: './site/theme',
   htmlTemplate: './site/theme/static/template.html',
@@ -77,7 +73,9 @@ module.exports = {
   },
   doraConfig: {
     verbose: true,
-    plugins: ['dora-plugin-upload'],
+  },
+  lessConfig: {
+    javascriptEnabled: true,
   },
   webpackConfig(config) {
     config.resolve.alias = {
@@ -93,8 +91,8 @@ module.exports = {
       'react-router-dom': 'ReactRouterDOM',
     };
 
-    config.module.rules.forEach((rule) => {
-      if (rule.loader && rule.loader === 'babel-loader') {
+    config.module.rules.forEach(rule => {
+      if (rule.loader && rule.loader === require.resolve('babel-loader')) {
         if (rule.exclude) {
           rule.exclude = [rule.exclude, rcPath];
         } else {
@@ -105,8 +103,8 @@ module.exports = {
 
     const rcComponentsRule = {
       test: /\.jsx?$/,
-      include: rcPath,
-      loader: 'babel-loader',
+      include: [rcPath],
+      loader: require.resolve('babel-loader'),
       options: babelOptions,
     };
 
@@ -115,39 +113,15 @@ module.exports = {
     alertBabelConfig(config.module.rules);
 
     rcComponentsRule.options.plugins.push(
-      require.resolve('babel-plugin-transform-proto-to-assign'),
-      [require.resolve('babel-plugin-transform-es2015-classes'), { loose: true }],
+      require.resolve('@babel/plugin-transform-proto-to-assign'),
+      // [require.resolve('@babel/plugin-transform-classes'), { loose: true }],
     );
 
-    config.plugins.push(
-      new CSSSplitWebpackPlugin({ size: 4000 }),
-      new webpack.DefinePlugin({
-        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-      }),
-    );
+    config.plugins.push(new CSSSplitWebpackPlugin({ size: 4000 }));
 
     if (isDev) {
       config.devtool = '#source-map';
-    } else {
-      config.plugins.push(
-        new UglifyJsPlugin({
-          parallel: true,
-          cache: true,
-          uglifyOptions: {
-            output: {
-              comments: false,
-            },
-            compress: {
-              warnings: false,
-            },
-          },
-        }),
-      );
     }
-    const { push } = config.plugins;
-    config.plugins.push = function (...rest) {
-      push.apply(this, rest.filter(plugin => Object.getPrototypeOf(plugin).constructor.name !== 'UglifyJsPlugin'));
-    };
 
     return config;
   },

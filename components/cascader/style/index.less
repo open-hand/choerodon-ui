@@ -1,28 +1,28 @@
-@import "../../style/themes/default";
-@import "../../style/mixins/index";
-@import "../../input/style/mixin";
+@import '../../style/themes/default';
+@import '../../style/mixins/index';
+@import '../../input/style/mixin';
 
-@cascader-prefix-cls: ~"@{c7n-prefix}-cascader";
+@cascader-prefix-cls: ~'@{c7n-prefix}-cascader';
 
 .@{cascader-prefix-cls} {
   .reset-component;
 
   &-input.@{c7n-prefix}-input {
+    display: block;
+    width: 100%;
     // because input.less will compile after cascader.less
     background-color: transparent !important;
     cursor: pointer;
-    width: 100%;
-    display: block;
   }
 
   &-picker {
     .reset-component;
     position: relative;
     display: inline-block;
-    cursor: pointer;
     background-color: @component-background;
     border-radius: @border-radius-base;
     outline: 0;
+    cursor: pointer;
 
     & .@{c7n-prefix}-input-rendered {
       margin: 0;
@@ -32,9 +32,9 @@
     }
 
     &-disabled {
-      cursor: not-allowed;
-      background: @input-disabled-bg;
       color: @disabled-color;
+      background: @input-disabled-bg;
+      cursor: not-allowed;
       .@{cascader-prefix-cls}-input {
         cursor: not-allowed;
       }
@@ -46,14 +46,14 @@
 
     &-label {
       position: absolute;
-      left: 0;
       top: 50%;
-      margin-top: -.1rem;
+      left: 0;
+      width: 100%;
+      margin-top: -0.1rem;
+      padding: @input-padding-vertical-base @input-padding-horizontal;
+      overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
-      overflow: hidden;
-      width: 100%;
-      padding: @input-padding-vertical-base @input-padding-horizontal;
     }
 
     .@{c7n-prefix}-input-has-label .@{c7n-prefix}-input-content {
@@ -61,16 +61,16 @@
     }
 
     &-clear {
-      display: none;
       position: absolute;
+      top: 50%;
       right: 0;
       z-index: 2;
-      background: @component-background;
-      top: 50%;
+      display: none;
+      width: 0.2rem;
+      height: 0.2rem;
+      margin-top: -0.08rem;
       color: @input-color;
-      width: .2rem;
-      height: .2rem;
-      margin-top: -.08rem;
+      background: @component-background;
       cursor: pointer;
       transition: color 0.3s ease, opacity 0.15s ease;
     }
@@ -78,18 +78,18 @@
     // arrow
     &-arrow {
       position: absolute;
-      z-index: 1;
       top: 50%;
       right: 0;
-      margin-top: -.08rem;
-      width: .2rem;
-      height: .2rem;
+      z-index: 1;
+      width: 0.2rem;
+      height: 0.2rem;
+      margin-top: -0.08rem;
       color: @input-color;
-      &:before {
-        transition: transform .2s;
+      &::before {
+        transition: transform 0.2s;
       }
       &&-expand {
-        &:before {
+        &::before {
           transform: rotate(180deg);
         }
       }
@@ -102,19 +102,19 @@
   }
 
   &-menus {
-    font-size: @font-size-base;
-    background: @component-background;
     position: absolute;
     z-index: @zindex-dropdown;
-    border-radius: @border-radius-base;
+    font-size: @font-size-base;
     white-space: nowrap;
+    background: @component-background;
+    border-radius: @border-radius-base;
     box-shadow: @shadow-4;
 
     ul,
     ol {
-      list-style: none;
       margin: 0;
       padding: 0;
+      list-style: none;
     }
 
     &-empty,
@@ -141,20 +141,20 @@
   }
   &-menu {
     display: inline-block;
-    vertical-align: top;
     min-width: 1.11rem;
     height: 1.8rem;
-    list-style: none;
     margin: 0;
     padding: 0;
-    border-right: @border-width-base @border-style-base @border-color-split;
     overflow: auto;
+    vertical-align: top;
+    list-style: none;
+    border-right: @border-width-base @border-style-base @border-color-split;
     &:first-child {
       border-radius: @border-radius-base 0 0 @border-radius-base;
     }
     &:last-child {
+      margin-right: -0.01rem;
       border-right-color: transparent;
-      margin-right: -.01rem;
       border-radius: 0 @border-radius-base @border-radius-base 0;
     }
     &:only-child {
@@ -162,17 +162,17 @@
     }
   }
   &-menu-item {
-    padding: .05rem @control-padding-horizontal;
-    line-height: .22rem;
-    cursor: pointer;
+    padding: 0.05rem @control-padding-horizontal;
+    line-height: 0.22rem;
     white-space: nowrap;
+    cursor: pointer;
     transition: all 0.3s;
     &:hover {
       background: @item-hover-bg;
     }
     &-disabled {
-      cursor: not-allowed;
       color: @disabled-color;
+      cursor: not-allowed;
       &:hover {
         background: transparent;
       }
@@ -180,23 +180,23 @@
     &-active:not(&-disabled) {
       &,
       &:hover {
-        background: @background-color-base;
         font-weight: 600;
+        background: @background-color-base;
       }
     }
     &-expand {
       position: relative;
-      padding-right: .24rem;
-      &:after {
-        .iconfont-font("\e61f");
-        .iconfont-size-under-12px(.08rem);
-        color: @text-color-secondary;
+      padding-right: 0.24rem;
+      &::after {
+        .iconfont-font('\e61f');
+        .iconfont-size-under-12px(0.08rem);
         position: absolute;
         right: @control-padding-horizontal;
+        color: @text-color-secondary;
       }
     }
-    &-loading:after {
-      .iconfont-font("\e64d");
+    &-loading::after {
+      .iconfont-font('\e64d');
       animation: loadingCircle 1s infinite linear;
     }
 

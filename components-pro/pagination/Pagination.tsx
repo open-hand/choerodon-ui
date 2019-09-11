@@ -5,7 +5,7 @@ import { observer } from 'mobx-react';
 import omit from 'lodash/omit';
 import defaultTo from 'lodash/defaultTo';
 import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComponent';
-import Select from '../select/Select';
+import ObserverSelect from '../select/Select';
 import { $l } from '../locale-context';
 import Pager from './Pager';
 import Icon from '../icon';
@@ -40,7 +40,7 @@ function defaultItemRender(page: number, type: PagerType) {
     default:
       return page;
   }
-};
+}
 
 @observer
 export default class Pagination extends DataSetComponent<PaginationProps> {
@@ -99,7 +99,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     if (dataSet) {
       return dataSet.totalPage;
     }
-    if (total !== void 0 && pageSize !== void 0) {
+    if (total !== undefined && pageSize !== undefined) {
       return Math.ceil(total / pageSize);
     }
     return 1;
@@ -137,7 +137,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     }
   }
 
-  handlePagerClick = (page) => {
+  handlePagerClick = page => {
     const { dataSet } = this.props;
     if (dataSet) {
       dataSet.page(page);
@@ -161,19 +161,24 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
 
   getOptions(): ReactNode {
     const { pageSize } = this;
-    let { pageSizeOptions } = this.props;
+    const { pageSizeOptions } = this.props;
     const options = pageSizeOptions || [];
     if (options.indexOf(String(pageSize)) === -1) {
       options.unshift(String(pageSize));
     }
-    const { Option } = Select;
+    const { Option } = ObserverSelect;
     return options.map(option => (
-      <Option key={option} value={option}>{option}</Option>
+      <Option key={option} value={option}>
+        {option}
+      </Option>
     ));
   }
 
   getPager(page: number, type: PagerType, active: boolean = false, disabled?: boolean) {
-    const { prefixCls, props: { itemRender = defaultItemRender } } = this;
+    const {
+      prefixCls,
+      props: { itemRender = defaultItemRender },
+    } = this;
     return (
       <Pager
         key={type === 'page' ? page : type}
@@ -210,25 +215,17 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
         pagerList.push(this.getPager(i, 'page', page === i));
       }
       if (page - 1 >= bufferSize * 2 && page !== 1 + 2) {
-        pagerList.unshift(
-          this.getPager(Math.max(page - 5, 1), 'jump-prev'),
-        );
+        pagerList.unshift(this.getPager(Math.max(page - 5, 1), 'jump-prev'));
       }
       if (totalPage - page >= bufferSize * 2 && page !== totalPage - 2) {
-        pagerList.push(
-          this.getPager(Math.min(page + 5, totalPage), 'jump-next'),
-        );
+        pagerList.push(this.getPager(Math.min(page + 5, totalPage), 'jump-next'));
       }
 
       if (left !== 1) {
-        pagerList.unshift(
-          this.getPager(1, 'page', page === 1),
-        );
+        pagerList.unshift(this.getPager(1, 'page', page === 1));
       }
       if (totalPage > 1 && right !== totalPage) {
-        pagerList.push(
-          this.getPager(totalPage, 'page', page === totalPage),
-        );
+        pagerList.push(this.getPager(totalPage, 'page', page === totalPage));
       }
     }
     return pagerList;
@@ -237,7 +234,14 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
   renderSizeChange(pageSize: number): ReactNode {
     return [
       <span key="size-info">{$l('Pagination', 'records_per_page')}</span>,
-      <Select key="size-select" onChange={this.handlePageSizeChange} value={String(pageSize)} clearButton={false}>{this.getOptions()}</Select>,
+      <ObserverSelect
+        key="size-select"
+        onChange={this.handlePageSizeChange}
+        value={String(pageSize)}
+        clearButton={false}
+      >
+        {this.getOptions()}
+      </ObserverSelect>,
     ];
   }
 
@@ -252,10 +256,13 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
 
   render() {
     const { total, pageSize, page } = this;
-    if (total === void 0 || pageSize === void 0 || page === void 0) {
+    if (total === undefined || pageSize === undefined || page === undefined) {
       return null;
     }
-    const { totalPage, props: { children, showSizeChanger, showTotal, showPager } } = this;
+    const {
+      totalPage,
+      props: { children, showSizeChanger, showTotal, showPager },
+    } = this;
 
     return (
       <nav {...this.getMergedProps()}>

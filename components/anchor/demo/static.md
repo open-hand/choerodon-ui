@@ -15,6 +15,7 @@ Do not change state when page is scrolling.
 
 ```jsx
 import { Anchor } from 'choerodon-ui';
+
 const { Link } = Anchor;
 
 ReactDOM.render(
@@ -26,5 +27,6 @@ ReactDOM.render(
       <Link href="#Link-Props" title="Link Props" />
     </Link>
   </Anchor>,
-  mountNode);
+  mountNode,
+);
 ```

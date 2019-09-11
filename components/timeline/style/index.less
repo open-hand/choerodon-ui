@@ -1,28 +1,28 @@
-@import "../../style/themes/default";
-@import "../../style/mixins/index";
+@import '../../style/themes/default';
+@import '../../style/mixins/index';
 
-@timeline-prefix-cls: ~"@{c7n-prefix}-timeline";
+@timeline-prefix-cls: ~'@{c7n-prefix}-timeline';
 @timeline-color: @border-color-split;
 
 .@{timeline-prefix-cls} {
   .reset-component;
-  list-style: none;
   margin: 0;
   padding: 0;
+  list-style: none;
 
   &-item {
     position: relative;
-    padding: 0 0 .2rem;
-    list-style: none;
     margin: 0;
+    padding: 0 0 0.2rem;
     font-size: @font-size-base;
+    list-style: none;
 
     &-tail {
       position: absolute;
-      left: .04rem;
-      top: .75em;
+      top: 0.75em;
+      left: 0.04rem;
       height: 100%;
-      border-left: .02rem solid @timeline-color;
+      border-left: 0.02rem solid @timeline-color;
     }
 
     &-pending &-head {
@@ -35,54 +35,54 @@
 
     &-head {
       position: absolute;
-      width: .1rem;
-      height: .1rem;
+      width: 0.1rem;
+      height: 0.1rem;
       background-color: @component-background;
+      border: 0.02rem solid transparent;
       border-radius: 1rem;
-      border: .02rem solid transparent;
 
       &-blue {
-        border-color: @primary-color;
         color: @primary-color;
+        border-color: @primary-color;
       }
       &-red {
-        border-color: @error-color;
         color: @error-color;
+        border-color: @error-color;
       }
       &-green {
-        border-color: @success-color;
         color: @success-color;
+        border-color: @success-color;
       }
     }
 
     &-head-custom {
       position: absolute;
-      text-align: center;
-      line-height: 1;
-      margin-top: 0;
-      border: 0;
-      height: auto;
-      border-radius: 0;
-      padding: .03rem .01rem;
-      transform: translate(-50%, -50%);
-      top: .05rem;
-      left: .05rem;
+      top: 0.05rem;
+      left: 0.05rem;
       width: auto;
+      height: auto;
+      margin-top: 0;
+      padding: 0.03rem 0.01rem;
+      line-height: 1;
+      text-align: center;
+      border: 0;
+      border-radius: 0;
+      transform: translate(-50%, -50%);
     }
 
     &-content {
-      padding: 0 0 0 .18rem;
       position: relative;
-      top: -(@font-size-base * @line-height-base - @font-size-base) + .01rem;
+      top: -(@font-size-base * @line-height-base - @font-size-base) + 0.01rem;
+      padding: 0 0 0 0.18rem;
     }
 
     &-last {
       .@{timeline-prefix-cls}-item-tail {
-        border-left: .02rem dotted @timeline-color;
         display: none;
+        border-left: 0.02rem dotted @timeline-color;
       }
       .@{timeline-prefix-cls}-item-content {
-        min-height: .48rem;
+        min-height: 0.48rem;
       }
     }
   }

@@ -1,14 +1,6 @@
 module.exports = {
-  setupFiles: [
-    './tests/setup.js',
-  ],
-  moduleFileExtensions: [
-    'ts',
-    'tsx',
-    'js',
-    'jsx',
-    'md',
-  ],
+  setupFiles: ['./tests/setup.js'],
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'md'],
   transform: {
     '\\.tsx?$': './tools/jest/codePreprocessor',
     '\\.jsx?$': './tools/jest/codePreprocessor',
@@ -16,13 +8,11 @@ module.exports = {
   },
   testRegex: 'demo\\.test\\.js$',
   testEnvironment: 'node',
-  snapshotSerializers: [
-    'enzyme-to-json/serializer'
-  ],
+  snapshotSerializers: ['enzyme-to-json/serializer'],
   globals: {
     'ts-jest': {
       tsConfigFile: './tsconfig.test.json',
-    }
+    },
   },
-  cacheDirectory: './.jest-cache/node'
+  cacheDirectory: './.jest-cache/node',
 };

@@ -1,52 +1,73 @@
 import { pxToRem } from '../_util/UnitConvertor';
 
-type overflowType = { adjustX?: boolean, adjustY?: boolean };
-type regionType = { left: number, top: number, width: number, height: number };
-type positionType = { left: number, top: number };
+type overflowType = { adjustX?: boolean; adjustY?: boolean };
+type regionType = { left: number; top: number; width: number; height: number };
+type positionType = { left: number; top: number };
 
 function isFailX(elFuturePos, elRegion, visibleRect) {
-  return elFuturePos.left < visibleRect.left || elFuturePos.left + elRegion.width > visibleRect.right;
+  return (
+    elFuturePos.left < visibleRect.left || elFuturePos.left + elRegion.width > visibleRect.right
+  );
 }
 
 function isFailY(elFuturePos, elRegion, visibleRect) {
-  return elFuturePos.top < visibleRect.top || elFuturePos.top + elRegion.height > visibleRect.bottom;
+  return (
+    elFuturePos.top < visibleRect.top || elFuturePos.top + elRegion.height > visibleRect.bottom
+  );
 }
 
 function isCompleteFailX(elFuturePos, elRegion, visibleRect) {
-  return elFuturePos.left > visibleRect.right || elFuturePos.left + elRegion.width < visibleRect.left;
+  return (
+    elFuturePos.left > visibleRect.right || elFuturePos.left + elRegion.width < visibleRect.left
+  );
 }
 
 function isCompleteFailY(elFuturePos, elRegion, visibleRect) {
-  return elFuturePos.top > visibleRect.bottom || elFuturePos.top + elRegion.height < visibleRect.top;
+  return (
+    elFuturePos.top > visibleRect.bottom || elFuturePos.top + elRegion.height < visibleRect.top
+  );
+}
+
+function getVisibleRectForElement() {
+  const body = document.body;
+  return {
+    top: 0,
+    right: body.clientWidth,
+    bottom: body.clientHeight,
+    left: 0,
+  };
+}
+
+function getRegion(node): regionType {
+  const rect = node.getBoundingClientRect();
+  return {
+    top: rect.top,
+    left: rect.left,
+    width: rect.width,
+    height: rect.height,
+  };
 }
 
 function isOutOfVisibleRect(target) {
   const visibleRect = getVisibleRectForElement();
   const targetRegion = getRegion(target);
 
-  return !visibleRect || targetRegion.left + targetRegion.width <= visibleRect.left ||
+  return (
+    !visibleRect ||
+    targetRegion.left + targetRegion.width <= visibleRect.left ||
     targetRegion.top + targetRegion.height <= visibleRect.top ||
-    targetRegion.left >= visibleRect.right || targetRegion.top >= visibleRect.bottom;
+    targetRegion.left >= visibleRect.right ||
+    targetRegion.top >= visibleRect.bottom
+  );
 }
 
 function flip(points, reg, map) {
-  return points.map((p) => p.replace(reg, (m) => map[m]));
+  return points.map(p => p.replace(reg, m => map[m]));
 }
 
 function flipOffset(offset, index) {
   offset[index] = -offset[index];
   return offset;
-}
-
-function getElFuturePos(elRegion, refNodeRegion, points, offset, targetOffset): positionType {
-  const p1 = getAlignOffset(refNodeRegion, points[1]);
-  const p2 = getAlignOffset(elRegion, points[0]);
-  const diff = [p2.left - p1.left, p2.top - p1.top];
-
-  return {
-    left: elRegion.left - diff[0] + offset[0] - targetOffset[0],
-    top: elRegion.top - diff[1] + offset[1] - targetOffset[1],
-  };
 }
 
 function getAlignOffset(region, align) {
@@ -76,7 +97,23 @@ function getAlignOffset(region, align) {
   };
 }
 
-function adjustForViewport(elFuturePos: positionType, elRegion: regionType, visibleRect, overflow): regionType {
+function getElFuturePos(elRegion, refNodeRegion, points, offset, targetOffset): positionType {
+  const p1 = getAlignOffset(refNodeRegion, points[1]);
+  const p2 = getAlignOffset(elRegion, points[0]);
+  const diff = [p2.left - p1.left, p2.top - p1.top];
+
+  return {
+    left: elRegion.left - diff[0] + offset[0] - targetOffset[0],
+    top: elRegion.top - diff[1] + offset[1] - targetOffset[1],
+  };
+}
+
+function adjustForViewport(
+  elFuturePos: positionType,
+  elRegion: regionType,
+  visibleRect,
+  overflow,
+): regionType {
   const pos = { ...elFuturePos };
   const size = {
     width: elRegion.width,
@@ -88,7 +125,11 @@ function adjustForViewport(elFuturePos: positionType, elRegion: regionType, visi
   }
 
   // Left edge inside and right edge outside viewport, try to resize it.
-  if (overflow.resizeWidth && pos.left >= visibleRect.left && pos.left + size.width > visibleRect.right) {
+  if (
+    overflow.resizeWidth &&
+    pos.left >= visibleRect.left &&
+    pos.left + size.width > visibleRect.right
+  ) {
     size.width -= pos.left + size.width - visibleRect.right;
   }
 
@@ -104,7 +145,11 @@ function adjustForViewport(elFuturePos: positionType, elRegion: regionType, visi
   }
 
   // Top edge inside and bottom edge outside viewport, try to resize it.
-  if (overflow.resizeHeight && pos.top >= visibleRect.top && pos.top + size.height > visibleRect.bottom) {
+  if (
+    overflow.resizeHeight &&
+    pos.top >= visibleRect.top &&
+    pos.top + size.height > visibleRect.bottom
+  ) {
     size.height -= pos.top + size.height - visibleRect.bottom;
   }
 
@@ -117,39 +162,22 @@ function adjustForViewport(elFuturePos: positionType, elRegion: regionType, visi
   return Object.assign(pos, size);
 }
 
-function getRegion(node): regionType {
-  const rect = node.getBoundingClientRect();
-  return {
-    top: rect.top,
-    left: rect.left,
-    width: rect.width,
-    height: rect.height,
-  };
-}
-
-function getVisibleRectForElement() {
-  const body = document.body;
-  return {
-    top: 0,
-    right: body.clientWidth,
-    bottom: body.clientHeight,
-    left: 0,
-  };
-}
-
 function isFixedPosition(node) {
   const { offsetParent } = node;
-  if (offsetParent === document.body && document.defaultView && document.defaultView.getComputedStyle(node).position !== 'fixed') {
+  if (
+    offsetParent === document.body &&
+    document.defaultView &&
+    document.defaultView.getComputedStyle(node).position !== 'fixed'
+  ) {
     return false;
   }
   if (offsetParent === null) {
     return true;
-  } else {
-    return isFixedPosition(offsetParent);
   }
+  return isFixedPosition(offsetParent);
 }
 
-export default function (el, refNode, align) {
+export default function(el, refNode, align) {
   let points = align.points;
   let offset = (align.offset || [0, 0]).slice();
   let targetOffset = (align.targetOffset || [0, 0]).slice();
@@ -169,13 +197,19 @@ export default function (el, refNode, align) {
   if (visibleRect && (overflow.adjustX || overflow.adjustY) && isTargetNotOutOfVisible) {
     if (overflow.adjustX) {
       if (isFailX(elFuturePos, elRegion, visibleRect)) {
-        const newPoints = flip(points, /[lr]/ig, {
+        const newPoints = flip(points, /[lr]/gi, {
           l: 'r',
           r: 'l',
         });
         const newOffset = flipOffset(offset, 0);
         const newTargetOffset = flipOffset(targetOffset, 0);
-        const newElFuturePos = getElFuturePos(elRegion, refNodeRegion, newPoints, newOffset, newTargetOffset);
+        const newElFuturePos = getElFuturePos(
+          elRegion,
+          refNodeRegion,
+          newPoints,
+          newOffset,
+          newTargetOffset,
+        );
 
         if (!isCompleteFailX(newElFuturePos, elRegion, visibleRect)) {
           fail = 1;
@@ -188,13 +222,19 @@ export default function (el, refNode, align) {
 
     if (overflow.adjustY) {
       if (isFailY(elFuturePos, elRegion, visibleRect)) {
-        const _newPoints = flip(points, /[tb]/ig, {
+        const _newPoints = flip(points, /[tb]/gi, {
           t: 'b',
           b: 't',
         });
         const _newOffset = flipOffset(offset, 1);
         const _newTargetOffset = flipOffset(targetOffset, 1);
-        const _newElFuturePos = getElFuturePos(elRegion, refNodeRegion, _newPoints, _newOffset, _newTargetOffset);
+        const _newElFuturePos = getElFuturePos(
+          elRegion,
+          refNodeRegion,
+          _newPoints,
+          _newOffset,
+          _newTargetOffset,
+        );
 
         if (!isCompleteFailY(_newElFuturePos, elRegion, visibleRect)) {
           fail = 1;
@@ -228,8 +268,12 @@ export default function (el, refNode, align) {
   }
 
   const isTargetFixed = isFixedPosition(target);
-  const scrollTop = isTargetFixed ? 0 : document.documentElement.scrollTop || document.body.scrollTop;
-  const scrollLeft = isTargetFixed ? 0 : document.documentElement.scrollLeft || document.body.scrollLeft;
+  const scrollTop = isTargetFixed
+    ? 0
+    : document.documentElement.scrollTop || document.body.scrollTop;
+  const scrollLeft = isTargetFixed
+    ? 0
+    : document.documentElement.scrollLeft || document.body.scrollLeft;
 
   Object.assign(source.style, {
     left: pxToRem(newElRegion.left + scrollLeft),
@@ -243,9 +287,9 @@ export default function (el, refNode, align) {
   }
 
   return {
-    points: points,
-    offset: offset,
-    targetOffset: targetOffset,
+    points,
+    offset,
+    targetOffset,
     overflow: newOverflowCfg,
   };
 }

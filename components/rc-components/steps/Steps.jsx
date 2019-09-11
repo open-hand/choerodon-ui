@@ -16,10 +16,7 @@ export default class Steps extends Component {
     children: PropTypes.any,
     status: PropTypes.string,
     size: PropTypes.string,
-    progressDot: PropTypes.oneOfType([
-      PropTypes.bool,
-      PropTypes.func,
-    ]),
+    progressDot: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
     style: PropTypes.object,
     current: PropTypes.number,
   };
@@ -33,6 +30,7 @@ export default class Steps extends Component {
     size: '',
     progressDot: false,
   };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -41,6 +39,7 @@ export default class Steps extends Component {
     };
     this.calcStepOffsetWidth = debounce(this.calcStepOffsetWidth, 150);
   }
+
   componentDidMount() {
     this.calcStepOffsetWidth();
     if (!isFlexSupported()) {
@@ -49,9 +48,11 @@ export default class Steps extends Component {
       });
     }
   }
+
   componentDidUpdate() {
     this.calcStepOffsetWidth();
   }
+
   componentWillUnmount() {
     if (this.calcTimeout) {
       clearTimeout(this.calcTimeout);
@@ -60,6 +61,7 @@ export default class Steps extends Component {
       this.calcStepOffsetWidth.cancel();
     }
   }
+
   calcStepOffsetWidth = () => {
     if (isFlexSupported()) {
       return;
@@ -74,19 +76,31 @@ export default class Steps extends Component {
         // +1 for fit edge bug of digit width, like 35.4px
         const lastStepOffsetWidth = (domNode.lastChild.offsetWidth || 0) + 1;
         // Reduce shake bug
-        if (this.state.lastStepOffsetWidth === lastStepOffsetWidth ||
-            Math.abs(this.state.lastStepOffsetWidth - lastStepOffsetWidth) <= 3) {
+        if (
+          this.state.lastStepOffsetWidth === lastStepOffsetWidth ||
+          Math.abs(this.state.lastStepOffsetWidth - lastStepOffsetWidth) <= 3
+        ) {
           return;
         }
         this.setState({ lastStepOffsetWidth });
       });
     }
-  }
+  };
+
   render() {
     const {
-      prefixCls, style = {}, className, children, direction,
-      labelPlacement, iconPrefix, status, size, current, progressDot,
-      ...restProps,
+      prefixCls,
+      style = {},
+      className,
+      children,
+      direction,
+      labelPlacement,
+      iconPrefix,
+      status,
+      size,
+      current,
+      progressDot,
+      ...restProps
     } = this.props;
     const { lastStepOffsetWidth, flexSupported } = this.state;
     const filteredChildren = Children.toArray(children).filter(c => !!c);
@@ -100,39 +114,37 @@ export default class Steps extends Component {
 
     return (
       <div className={classString} style={style} {...restProps}>
-        {
-          Children.map(filteredChildren, (child, index) => {
-            if (!child) {
-              return null;
+        {Children.map(filteredChildren, (child, index) => {
+          if (!child) {
+            return null;
+          }
+          const childProps = {
+            stepNumber: `${index + 1}`,
+            prefixCls,
+            iconPrefix,
+            wrapperStyle: style,
+            progressDot,
+            ...child.props,
+          };
+          if (!flexSupported && direction !== 'vertical' && index !== lastIndex) {
+            childProps.itemWidth = `${100 / lastIndex}%`;
+            childProps.adjustMarginRight = -Math.round(lastStepOffsetWidth / lastIndex + 1);
+          }
+          // fix tail color
+          if (status === 'error' && index === current - 1) {
+            childProps.className = `${prefixCls}-next-error`;
+          }
+          if (!child.props.status) {
+            if (index === current) {
+              childProps.status = status;
+            } else if (index < current) {
+              childProps.status = 'finish';
+            } else {
+              childProps.status = 'wait';
             }
-            const childProps = {
-              stepNumber: `${index + 1}`,
-              prefixCls,
-              iconPrefix,
-              wrapperStyle: style,
-              progressDot,
-              ...child.props,
-            };
-            if (!flexSupported && direction !== 'vertical' && index !== lastIndex) {
-              childProps.itemWidth = `${100 / lastIndex}%`;
-              childProps.adjustMarginRight = -Math.round(lastStepOffsetWidth / lastIndex + 1);
-            }
-            // fix tail color
-            if (status === 'error' && index === current - 1) {
-              childProps.className = `${prefixCls}-next-error`;
-            }
-            if (!child.props.status) {
-              if (index === current) {
-                childProps.status = status;
-              } else if (index < current) {
-                childProps.status = 'finish';
-              } else {
-                childProps.status = 'wait';
-              }
-            }
-            return cloneElement(child, childProps);
-          })
-        }
+          }
+          return cloneElement(child, childProps);
+        })}
       </div>
     );
   }

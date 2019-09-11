@@ -1,11 +1,11 @@
 import React, { FC, isValidElement } from 'react';
-import Icon from '../icon';
 import classNames from 'classnames';
+import Icon from '../icon';
 import { $l } from '../locale-context';
 
 export interface KeyValuePair {
-  key: string,
-  value: any,
+  key: string;
+  value: any;
 }
 
 export interface KeyValueBarProps {
@@ -14,48 +14,39 @@ export interface KeyValueBarProps {
   onCloseBtnClick?: (key: string) => void;
 }
 
-const KeyValueBar: FC<KeyValueBarProps> = (props) => {
+const KeyValueBar: FC<KeyValueBarProps> = props => {
+  const { items, prefixCls, onCloseBtnClick } = props;
+  const classString = classNames({
+    [`${prefixCls}-advanced-query-bar-key-value-bar`]: !!prefixCls,
+  });
 
-  const handleCloseBtnClick = (key: string) => {
-    const { onCloseBtnClick } = props;
+  function handleCloseBtnClick(key: string) {
     if (onCloseBtnClick) {
       onCloseBtnClick(key);
     }
   }
 
-  function renderItems(items: KeyValuePair[]) {
-    if (items.length === 0) {
-      return null;
-    }
-    return items.map(item => {
-      let isReactNode = false;
-      const { key, value } = item;
-      if (isValidElement(value) || typeof value === 'string' || typeof value === 'number') {
-        isReactNode = true; // FIXME: 暂时没想到更好的方法去判断value能否渲染
-      }
+  function renderItem(item) {
+    const { key, value } = item;
+    const isReactNode =
+      isValidElement(value) || typeof value === 'string' || typeof value === 'number'; // FIXME: 暂时没想到更好的方法去判断value能否渲染
 
-      return (
-        <div key={key} className="pair-container">
-          <div className="d-flex">
-            <span>{key}: {isReactNode ? value : '不支持的值'}</span>
-            <Icon type="close" onClick={() => handleCloseBtnClick(key)} />
-          </div>
+    return (
+      <div key={key} className="pair-container">
+        <div className="d-flex">
+          <span>
+            {key}: {isReactNode ? value : '不支持的值'}
+          </span>
+          <Icon type="close" onClick={() => handleCloseBtnClick(key)} />
         </div>
-      )
-    });
-  }
-
-  function getClassName() {
-    const { prefixCls } = props;
-    return classNames({
-      [`${prefixCls}-advanced-query-bar-key-value-bar`]: !!prefixCls,
-    });
+      </div>
+    );
   }
 
   return (
-    <div className={getClassName()}>
+    <div className={classString}>
       <span>{$l('Table', 'advanced_query_conditions')}: </span>
-      {renderItems(props.items)}
+      {items.map(renderItem)}
     </div>
   );
 };

@@ -18,7 +18,9 @@ export interface IconProps {
 
 export default class Icon extends Component<IconProps, {}> {
   static displayName = 'Icon';
+
   static icons = icons;
+
   static categories = categories;
 
   render() {

@@ -1,9 +1,6 @@
-@import "../../../components/style/themes/default";
-@import "../../../components/style/mixins/index";
-@import "../../field/style/mixin";
-
-@input-affix-width: .17rem;
-@input-button-width: .24rem;
+@import '../../../components/style/themes/default';
+@import '../../../components/style/mixins/index';
+@import '../../field/style/mixin';
 
 // size mixins for input
 .input-lg() {
@@ -23,7 +20,7 @@
 // input status
 // == when focus or actived
 .active(@color: @outline-color) {
-  border-color: ~`colorPalette("@{color}", 5)`;
+  border-color: ~`colorPalette('@{color}', 5) `;
   outline: 0;
   color: @input-active-color;
   // box-shadow: 0 0 @outline-blur-size @outline-width fade(@color, 20%);
@@ -31,7 +28,7 @@
 
 // == when hoverd
 .hover(@color: @input-hover-border-color) {
-  border-color: ~`colorPalette("@{color}", 5)`;
+  border-color: ~`colorPalette('@{color}', 5) `;
 }
 
 .disabled() {
@@ -66,7 +63,7 @@
 }
 
 // Basic style for input
-.input(@prefix-width: @input-button-width, @suffix-width: @input-button-width) {
+.input(@prefix-width: @input-icon-width-base, @suffix-width: @input-icon-width-base) {
   position: relative;
   display: inline-block;
   padding: @input-padding-vertical-base @input-padding-horizontal;
@@ -80,7 +77,7 @@
   background-image: none;
   border: @border-width-base @border-style-base @input-border-color;
   border-radius: @border-radius-base;
-  transition: all .3s;
+  transition: all 0.3s;
 
   .placeholder;
 
@@ -117,14 +114,14 @@
     position: absolute;
     top: 0;
     bottom: 0;
-    height: .2rem;
-    line-height: .2rem;
+    height: 0.2rem;
+    line-height: 0.2rem;
     margin: auto 0;
     white-space: nowrap;
     padding: 0 @input-padding-horizontal;
     color: @input-placeholder-color;
     opacity: 0;
-    transition: all .3s;
+    transition: all 0.3s;
     max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -147,11 +144,13 @@
     background-color: @input-wrapper-bg;
     vertical-align: top; // <-- use 'top' for styling addonBefore/addonAfter & queryBar's TextField
     line-height: 1;
+
     label {
       position: relative;
       display: block;
       z-index: 1;
     }
+
     .@{field-label-prefix-cls} {
       z-index: -1;
     }
@@ -162,16 +161,16 @@
   &-inner-button {
     position: absolute;
     z-index: 1;
-    top: .01rem;
-    bottom: .01rem;
-    height: .2rem;
+    top: 0.01rem;
+    bottom: 0.01rem;
+    height: 0.2rem;
     text-align: center;
     margin: auto 0;
     line-height: 1;
   }
 
   &-prefix {
-    left: .01rem;
+    left: 0.01rem;
     width: @prefix-width;
   }
 
@@ -181,14 +180,14 @@
 
   &-suffix,
   &-inner-button {
-    right: .01rem;
+    right: 0.01rem;
   }
   &-prefix-button &-placeholder {
     padding-left: @prefix-width;
   }
 
   &-suffix-button &-inner-button {
-    right: @suffix-width + .01rem;
+    right: @suffix-width + 0.01rem;
   }
 
   &-suffix-button &-suffix {
@@ -208,13 +207,14 @@
     cursor: pointer;
     opacity: 0;
     z-index: 1;
-    transition: opacity .3s;
+    transition: opacity 0.3s;
   }
 
   &-wrapper:hover &-inner-button,
   &-focused &-inner-button {
     opacity: 1;
     z-index: 2;
+
     &-clear-button {
       right: @suffix-width;
     }
@@ -227,9 +227,11 @@
 
   &-clear-button {
     background: linear-gradient(to right, rgba(255, 255, 255, 0), #fff 20%, #fff);
+
     &:hover {
       color: @primary-5;
     }
+
     &:active {
       color: @primary-3;
     }
@@ -237,6 +239,7 @@
 
   &-empty &-clear-button {
     display: none;
+
     & + * {
       opacity: 1 !important;
     }
@@ -248,15 +251,16 @@
   > ul {
     position: relative;
     margin: 0;
-    padding: .02rem 0 0 0;
+    padding: 0.02rem 0 0 0;
     overflow: hidden auto;
+
     > li {
-      height: .24rem;
-      line-height: .22rem;
+      height: 0.24rem;
+      line-height: 0.22rem;
       display: inline-block;
       max-width: 99%;
       vertical-align: middle;
-      margin-bottom: .02rem;
+      margin-bottom: 0.02rem;
     }
   }
 
@@ -271,13 +275,13 @@
     }
 
     &-input {
-      width: .05rem;
+      width: 0.05rem;
       height: 100%;
       border: none;
       outline: 0;
       background-color: transparent;
       max-width: 100%;
-      margin-left: .04rem;
+      margin-left: 0.04rem;
     }
   }
 
@@ -300,10 +304,11 @@
   &-multiple-block {
     .tag-block;
     cursor: default;
+
     .@{iconfont-css-prefix} {
       line-height: inherit;
       cursor: pointer;
-      margin-left: .08rem;
+      margin-left: 0.08rem;
     }
   }
 
@@ -315,12 +320,13 @@
       height: 100%;
       white-space: nowrap;
     }
+
     &-start,
     &-end,
     &-split,
     &-input {
       display: inline-block;
-      line-height: .26rem;
+      line-height: 0.26rem;
       text-align: center;
       height: 100%;
     }
@@ -328,14 +334,14 @@
     &-start,
     &-end,
     &-input {
-      width: ~"calc(50% - .1rem)";
+      width: ~'calc(50% - .1rem)';
       border: none;
       outline: 0;
       background-color: transparent;
     }
 
     &-split {
-      width: .2rem;
+      width: 0.2rem;
     }
 
     &-input {
@@ -356,29 +362,37 @@
       display: inline-block;
       width: 100%;
     }
-    &-before, &-after, &-help {
+
+    &-before,
+    &-after,
+    &-help {
       background-color: @input-addon-bg;
-      padding-left: .05rem;
-      padding-right: .05rem;
-      border: .01rem solid @input-border-color;
+      padding-left: 0.05rem;
+      padding-right: 0.05rem;
+      border: 0.01rem solid @input-border-color;
       border-radius: @border-radius-base;
       display: flex;
       align-items: center;
       word-break: keep-all;
     }
+
     &-before {
       border-right: none;
       border-top-right-radius: 0 !important;
       border-bottom-right-radius: 0 !important;
     }
-    &-after, &-help {
+
+    &-after,
+    &-help {
       border-left: none;
       border-top-left-radius: 0 !important;
       border-bottom-left-radius: 0 !important;
     }
+
     &-help:not(:last-child) {
       border-radius: 0 !important;
     }
+
     &-input {
       flex: 1;
     }
@@ -408,30 +422,29 @@
 
   .validation;
   .input-underline;
-  .float-label;
-  .float-label-input;
+  .float-label(@prefix-width);
+  .float-label-input(@prefix-width);
 }
 
-.float-label-input() {
-
+.float-label-input(@prefix-width) {
   &-float-label & {
     border: none;
   }
 
   &-float-label:before {
     display: block;
-    content: " ";
+    content: ' ';
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
     border: @border-width-base @border-style-base @input-border-color;
-    border-radius: .05rem;
+    border-radius: 0.05rem;
   }
   &-float-label&-focused:before,
   &-float-label&-invalid:before {
-    border-width: .02rem;
+    border-width: 0.02rem;
   }
   &-float-label:hover:not(&-disabled):not(&-focused):not(&-invalid):before {
     border-color: @input-color;
@@ -469,15 +482,19 @@
     border-radius: 4px;
   }
   &-float-label &:-webkit-autofill {
-    width: ~"calc(100% - .04rem)";
-    margin: .02rem;
-    height: .32rem;
-    border-radius: .04rem;
-    text-indent: -0.02rem;
+    width: ~'calc(100% - .04rem)';
+    margin: 0.02rem;
+    height: 0.32rem;
+    border-radius: 0.04rem;
+    padding-left: @input-padding-horizontal - 0.02rem;
   }
 
   &-float-label textarea&:-webkit-autofill {
     height: auto;
+  }
+
+  &-prefix-button&-float-label &:-webkit-autofill {
+    padding-left: @prefix-width - 0.02rem;
   }
 }
 
@@ -497,9 +514,9 @@
     left: 0;
     width: 100%;
     transform-origin: 50%;
-    transform: scaleX(.5);
+    transform: scaleX(0.5);
     opacity: 0;
-    border-bottom: .02rem @border-style-base @primary-color;
+    border-bottom: 0.02rem @border-style-base @primary-color;
     transition: border-color 300ms cubic-bezier(0.55, 0, 0.55, 0.2);
     height: 0;
   }
@@ -511,7 +528,9 @@
   &-focused &-underline &-ripple {
     opacity: 1;
     transform: scaleX(1);
-    transition: transform 300ms cubic-bezier(0.25, 0.8, 0.25, 1), opacity 100ms cubic-bezier(0.25, 0.8, 0.25, 1), border-color 300ms cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition: transform 300ms cubic-bezier(0.25, 0.8, 0.25, 1),
+      opacity 100ms cubic-bezier(0.25, 0.8, 0.25, 1),
+      border-color 300ms cubic-bezier(0.25, 0.8, 0.25, 1);
   }
 
   &-invalid &-underline {
@@ -524,10 +543,10 @@
   color: @tag-default-color;
   background-color: @tag-default-bg;
   border-radius: @border-radius-base;
-  padding: 0 .08rem;
+  padding: 0 0.08rem;
   overflow: hidden;
   max-width: 99%;
-  margin: 0 .02rem;
+  margin: 0 0.02rem;
   line-height: @line-height-base;
   white-space: nowrap;
   > div {
@@ -537,8 +556,9 @@
     text-overflow: ellipsis;
     max-width: 100%;
     vertical-align: middle;
+
     &:not(:last-child) {
-      max-width: ~"calc(100% - .26rem)";
+      max-width: ~'calc(100% - .26rem)';
     }
   }
   &-invalid {
@@ -546,7 +566,7 @@
   }
   &-disabled {
     background-color: @disabled-color;
-    padding-right: .1rem;
+    padding-right: 0.1rem;
     cursor: not-allowed;
   }
 }

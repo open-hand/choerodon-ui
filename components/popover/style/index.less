@@ -1,7 +1,7 @@
-@import "../../style/themes/default";
-@import "../../style/mixins/index";
+@import '../../style/themes/default';
+@import '../../style/mixins/index';
 
-@popover-prefix-cls: ~"@{c7n-prefix}-popover";
+@popover-prefix-cls: ~'@{c7n-prefix}-popover';
 
 .@{popover-prefix-cls} {
   .reset-component;
@@ -9,16 +9,16 @@
   top: 0;
   left: 0;
   z-index: @zindex-popover;
+  font-weight: normal;
+  white-space: normal;
+  text-align: left;
   cursor: auto;
   user-select: text;
-  white-space: normal;
-  font-weight: normal;
-  text-align: left;
 
-  &:after {
-    content: "";
+  &::after {
     position: absolute;
-    background: rgba(255, 255, 255, .01);
+    background: rgba(255, 255, 255, 0.01);
+    content: '';
   }
 
   &-hidden {
@@ -59,38 +59,38 @@
 
   &-title {
     min-width: @popover-min-width;
+    min-height: 0.32rem;
     margin: 0; // reset heading margin
-    padding: .05rem @padding-md .04rem;
-    min-height: .32rem;
-    border-bottom: @border-width-base @border-style-base  @border-color-split;
+    padding: 0.05rem @padding-md 0.04rem;
     color: @heading-color;
     font-weight: 500;
+    border-bottom: @border-width-base @border-style-base @border-color-split;
   }
 
   &-inner-content {
-    padding: .12rem @padding-md;
+    padding: 0.12rem @padding-md;
     color: @popover-color;
   }
 
   &-message {
-    padding: .04rem 0 .12rem;
-    font-size: @font-size-base;
+    padding: 0.04rem 0 0.12rem;
     color: @popover-color;
+    font-size: @font-size-base;
     > .@{iconfont-css-prefix} {
+      position: absolute;
       color: @warning-color;
       line-height: 1;
-      position: absolute;
     }
     &-title {
-      padding-left: @font-size-base + .08rem;
+      padding-left: @font-size-base + 0.08rem;
     }
   }
 
   &-buttons {
+    margin-bottom: 0.04rem;
     text-align: right;
-    margin-bottom: .04rem;
     button {
-      margin-left: .08rem;
+      margin-left: 0.08rem;
     }
   }
 
@@ -98,81 +98,81 @@
   // .popover-arrow is outer, .popover-arrow:after is inner
 
   &-arrow {
-    background: @popover-bg;
-    width: sqrt(@popover-arrow-width * @popover-arrow-width * 2);
-    height: sqrt(@popover-arrow-width * @popover-arrow-width * 2);
-    transform: rotate(45deg);
     position: absolute;
     display: block;
+    width: sqrt(@popover-arrow-width * @popover-arrow-width * 2);
+    height: sqrt(@popover-arrow-width * @popover-arrow-width * 2);
+    background: @popover-bg;
     border-color: transparent;
     border-style: solid;
+    transform: rotate(45deg);
   }
 
   &-placement-top > &-content > &-arrow,
-  &-placement-topLeft > &-content >  &-arrow,
-  &-placement-topRight > &-content >  &-arrow {
-    bottom: @popover-distance - @popover-arrow-width + .02rem;
-    box-shadow: .03rem .03rem .07rem rgba(0, 0, 0, .07);
+  &-placement-topLeft > &-content > &-arrow,
+  &-placement-topRight > &-content > &-arrow {
+    bottom: @popover-distance - @popover-arrow-width + 0.02rem;
+    box-shadow: 0.03rem 0.03rem 0.07rem rgba(0, 0, 0, 0.07);
   }
-  &-placement-top > &-content >  &-arrow {
+  &-placement-top > &-content > &-arrow {
     left: 50%;
     transform: translateX(-50%) rotate(45deg);
   }
-  &-placement-topLeft > &-content >  &-arrow {
-    left: .16rem;
+  &-placement-topLeft > &-content > &-arrow {
+    left: 0.16rem;
   }
-  &-placement-topRight > &-content >  &-arrow {
-    right: .16rem;
+  &-placement-topRight > &-content > &-arrow {
+    right: 0.16rem;
   }
 
-  &-placement-right > &-content >  &-arrow,
-  &-placement-rightTop > &-content >  &-arrow,
-  &-placement-rightBottom > &-content >  &-arrow {
-    left: @popover-distance - @popover-arrow-width + .02rem;
-    box-shadow: -.03rem .03rem .07rem rgba(0, 0, 0, .07);
+  &-placement-right > &-content > &-arrow,
+  &-placement-rightTop > &-content > &-arrow,
+  &-placement-rightBottom > &-content > &-arrow {
+    left: @popover-distance - @popover-arrow-width + 0.02rem;
+    box-shadow: -0.03rem 0.03rem 0.07rem rgba(0, 0, 0, 0.07);
   }
-  &-placement-right > &-content >  &-arrow {
+  &-placement-right > &-content > &-arrow {
     top: 50%;
     transform: translateY(-50%) rotate(45deg);
   }
-  &-placement-rightTop > &-content >  &-arrow {
-    top: .12rem;
+  &-placement-rightTop > &-content > &-arrow {
+    top: 0.12rem;
   }
-  &-placement-rightBottom > &-content >  &-arrow {
-    bottom: .12rem;
+  &-placement-rightBottom > &-content > &-arrow {
+    bottom: 0.12rem;
   }
 
-  &-placement-bottom > &-content >  &-arrow,
-  &-placement-bottomLeft > &-content >  &-arrow,
-  &-placement-bottomRight > &-content >  &-arrow {
-    top: @popover-distance - @popover-arrow-width + .02rem;
-    box-shadow: -.01rem -.01rem .04rem rgba(0, 0, 0, .06);
+  &-placement-bottom > &-content > &-arrow,
+  &-placement-bottomLeft > &-content > &-arrow,
+  &-placement-bottomRight > &-content > &-arrow {
+    top: @popover-distance - @popover-arrow-width + 0.02rem;
+    box-shadow: -0.01rem -0.01rem 0.04rem rgba(0, 0, 0, 0.06);
   }
-  &-placement-bottom > &-content >  &-arrow {
+  &-placement-bottom > &-content > &-arrow {
     left: 50%;
     transform: translateX(-50%) rotate(45deg);
   }
-  &-placement-bottomLeft > &-content >  &-arrow {
-    left: .16rem;
+  &-placement-bottomLeft > &-content > &-arrow {
+    left: 0.16rem;
   }
-  &-placement-bottomRight > &-content >  &-arrow {
-    right: .16rem;
+  &-placement-bottomRight > &-content > &-arrow {
+    right: 0.16rem;
   }
 
-  &-placement-left > &-content >  &-arrow,
-  &-placement-leftTop > &-content >  &-arrow,
-  &-placement-leftBottom > &-content >  &-arrow {
-    right: @popover-distance - @popover-arrow-width + .02rem;
-    box-shadow: .03rem -.03rem .07rem rgba(0, 0, 0, .07);
+  &-placement-left > &-content > &-arrow,
+  &-placement-leftTop > &-content > &-arrow,
+  &-placement-leftBottom > &-content > &-arrow {
+    right: @popover-distance - @popover-arrow-width + 0.02rem;
+    box-shadow: 0.03rem -0.03rem 0.07rem rgba(0, 0, 0, 0.07);
   }
-  &-placement-left > &-content >  &-arrow {
+  &-placement-left > &-content > &-arrow {
     top: 50%;
     transform: translateY(-50%) rotate(45deg);
   }
-  &-placement-leftTop > &-content >  &-arrow {
-    top: .12rem;
+  &-placement-leftTop > &-content > &-arrow {
+    top: 0.12rem;
   }
-  &-placement-leftBottom > &-content >  &-arrow {
-    bottom: .12rem;
+  &-placement-leftBottom > &-content > &-arrow {
+    bottom: 0.12rem;
   }
 }

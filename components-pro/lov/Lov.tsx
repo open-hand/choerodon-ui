@@ -12,6 +12,7 @@ import { open } from '../modal-container/ModalContainer';
 import LovView from './LovView';
 import { ModalProps } from '../modal/Modal';
 import DataSet from '../data-set/DataSet';
+import Record from '../data-set/Record';
 import lovStore from '../stores/LovCodeStore';
 import autobind from '../_util/autobind';
 import { stopEvent } from '../_util/EventManager';
@@ -21,39 +22,39 @@ import { FieldType } from '../data-set/enum';
 import { LovFieldType } from './enum';
 
 export type LovConfigItem = {
-  display?: string,
-  conditionField?: string,
-  conditionFieldLovCode?: string,
-  conditionFieldType?: FieldType | LovFieldType,
-  conditionFieldName?: string,
-  conditionFieldSelectCode?: string,
-  conditionFieldSelectUrl?: string,
-  conditionFieldSelectTf?: string,
-  conditionFieldSelectVf?: string,
-  conditionFieldSequence: number,
-  gridField?: string,
-  gridFieldName?: string,
-  gridFieldWidth?: number,
-  gridFieldAlign?: ColumnAlign,
-  gridFieldSequence: number,
+  display?: string;
+  conditionField?: string;
+  conditionFieldLovCode?: string;
+  conditionFieldType?: FieldType | LovFieldType;
+  conditionFieldName?: string;
+  conditionFieldSelectCode?: string;
+  conditionFieldSelectUrl?: string;
+  conditionFieldSelectTf?: string;
+  conditionFieldSelectVf?: string;
+  conditionFieldSequence: number;
+  gridField?: string;
+  gridFieldName?: string;
+  gridFieldWidth?: number;
+  gridFieldAlign?: ColumnAlign;
+  gridFieldSequence: number;
 };
 
 export type LovConfig = {
-  title?: string,
-  width?: number,
-  height?: number,
-  customUrl?: string,
-  lovPageSize?: string,
-  lovItems: LovConfigItem[] | null,
-  treeFlag?: 'Y' | 'N',
-  parentIdField?: string,
-  idField?: string,
-  textField?: string,
-  valueField?: string,
-  placeholder?: string,
-  editableFlag?: 'Y' | 'N',
-  queryColumns?: number,
-}
+  title?: string;
+  width?: number;
+  height?: number;
+  customUrl?: string;
+  lovPageSize?: string;
+  lovItems: LovConfigItem[] | null;
+  treeFlag?: 'Y' | 'N';
+  parentIdField?: string;
+  idField?: string;
+  textField?: string;
+  valueField?: string;
+  placeholder?: string;
+  editableFlag?: 'Y' | 'N';
+  queryColumns?: number;
+};
 
 export interface LovProps extends SelectProps {
   modalProps?: ModalProps;
@@ -95,6 +96,7 @@ export default class Lov extends Select<LovProps> {
     if (field) {
       return field.get('lovCode');
     }
+    return undefined;
   }
 
   @computed
@@ -140,7 +142,7 @@ export default class Lov extends Select<LovProps> {
         style: {
           width: pxToRem(width),
           minHeight: pxToRem(400),
-          ...modalProps && modalProps.style,
+          ...(modalProps && modalProps.style),
         },
         ...omit(modalProps, ['style']),
       } as ModalProps & { children });
@@ -150,15 +152,18 @@ export default class Lov extends Select<LovProps> {
     }
   });
 
-  private setFilterText = debounce(action((text?: string) => {
-    const { options, textField } = this;
-    this.filterText = text;
-    this.resetOptions();
-    options.setQueryParameter(textField, text);
-    if (text) {
-      options.query();
-    }
-  }), 500);
+  private setFilterText = debounce(
+    action((text?: string) => {
+      const { options, textField } = this;
+      this.filterText = text;
+      this.resetOptions();
+      options.setQueryParameter(textField, text);
+      if (text) {
+        options.query();
+      }
+    }),
+    500,
+  );
 
   handleLovViewSelect = () => {
     this.modal.close();
@@ -172,9 +177,10 @@ export default class Lov extends Select<LovProps> {
 
   handleLovViewOk = async () => {
     const { options, multiple } = this;
-    const records = multiple ? options.selected : new Array().concat(options.current || []);
+    const result: Record[] = [];
+    const records = multiple ? options.selected : result.concat(options.current || []);
     const values = records.map(record => this.processRecordToObject(record));
-    this.setValue(multiple ? values : (values[0] || null));
+    this.setValue(multiple ? values : values[0] || null);
   };
 
   resetOptions(): boolean {
@@ -187,14 +193,15 @@ export default class Lov extends Select<LovProps> {
       const lovPara = toJS(field.get('lovPara')) || {};
       const cascadeMap = field.get('cascadeMap');
       if (cascadeMap && record) {
-        Object.keys(cascadeMap).forEach(cascade => lovPara[cascade] = record.get(cascadeMap[cascade]));
+        Object.keys(cascadeMap).forEach(
+          cascade => (lovPara[cascade] = record.get(cascadeMap[cascade])),
+        );
       }
       if (!isEqual(lovPara, options.queryParameter)) {
         options.queryParameter = lovPara;
         return true;
-      } else {
-        options.first();
       }
+      options.first();
       if (!options.length || options.isFilteredByQueryFields) {
         return true;
       }
@@ -241,28 +248,21 @@ export default class Lov extends Select<LovProps> {
     const config = this.getConfig();
     if (config) {
       const { placeholder: holder } = config;
-      return holder ? new Array<string>().concat(holder) : [];
+      const holders: string[] = [];
+      return holder ? holders.concat(holder) : holders;
     }
     return [];
   }
 
   getOtherProps() {
-    return omit(super.getOtherProps(),
-      [
-        'modalProps',
-        'noCache',
-      ],
-    );
+    return omit(super.getOtherProps(), ['modalProps', 'noCache']);
   }
 
   getSuffix(): ReactNode {
     const { suffix } = this.props;
-    return this.wrapperSuffix(
-      suffix || <Icon type="search" />,
-      {
-        onClick: this.isDisabled() || this.isReadOnly() ? void 0 : this.openModal,
-      },
-    );
+    return this.wrapperSuffix(suffix || <Icon type="search" />, {
+      onClick: this.isDisabled() || this.isReadOnly() ? undefined : this.openModal,
+    });
   }
 
   componentWillUnmount() {

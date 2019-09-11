@@ -52,14 +52,14 @@ export default class Sidebar extends Component<SidebarProps, {}> {
   }
 
   handleCancel = (e: any) => {
-    const onCancel = this.props.onCancel;
+    const { onCancel } = this.props;
     if (onCancel) {
       onCancel(e);
     }
   };
 
   handleOk = (e: any) => {
-    const onOk = this.props.onOk;
+    const { onOk } = this.props;
     if (onOk) {
       onOk(e);
     }
@@ -69,10 +69,9 @@ export default class Sidebar extends Component<SidebarProps, {}> {
     const props = this.props;
     const { onCancel, onOk, okType, funcType, confirmLoading, alwaysCanCancel } = props;
     const prefixCls = this.getPrefixCls();
-    const okCancel = ('okCancel' in props) ? props.okCancel! : true;
+    const okCancel = 'okCancel' in props ? props.okCancel! : true;
     const runtimeLocale = getConfirmLocale();
-    const okText = props.okText ||
-      (okCancel ? runtimeLocale.okText : runtimeLocale.justOkText);
+    const okText = props.okText || (okCancel ? runtimeLocale.okText : runtimeLocale.justOkText);
     const cancelText = props.cancelText || runtimeLocale.cancelText;
 
     const cancalBtn = okCancel ? (
@@ -83,7 +82,8 @@ export default class Sidebar extends Component<SidebarProps, {}> {
         onClick={onCancel}
       >
         {cancelText}
-      </Button>) : null;
+      </Button>
+    ) : null;
     return (
       <div className={`${prefixCls}-btns`}>
         <Button
@@ -108,38 +108,35 @@ export default class Sidebar extends Component<SidebarProps, {}> {
   };
 
   getPrefixCls() {
-    return getPrefixCls('modal', this.props.prefixCls);
+    const { prefixCls } = this.props;
+    return getPrefixCls('modal', prefixCls);
   }
 
   render() {
-    const props = this.props;
-    const { zIndex, visible, keyboard, footer, width } = props;
+    const { props } = this;
+    const { footer = this.renderFooter(), width, className } = props;
     const prefixCls = this.getPrefixCls();
     const { open } = this.state;
     const fixedWidth = isFixedWidth(width);
-    const classString = classNames(prefixCls, {
+    const classString = classNames(
+      prefixCls,
+      {
         [`${prefixCls}-sidebar`]: true,
         [`${prefixCls}-sidebar-open`]: open,
         [`${prefixCls}-sidebar-fixed-width`]: fixedWidth,
       },
-      props.className);
+      className,
+    );
 
     return (
       <Dialog
-        {...this.props}
+        {...props}
         prefixCls={prefixCls}
         animationEnd={this.handleStatus}
         className={classString}
-        visible={visible}
-        title={props.title}
-        transitionName={props.transitionName}
-        footer={footer === undefined ? this.renderFooter() : footer}
-        zIndex={zIndex}
-        keyboard={keyboard}
+        footer={footer}
         closable={false}
-      >
-        {this.props.children}
-      </Dialog>
+      />
     );
   }
 }

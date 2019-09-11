@@ -15,13 +15,13 @@ title:
 
 ## en-US
 
-Ant Design supports a default list size as well as a large and small size.
+Choerodon UI supports a default list size as well as a large and small size.
 
 If a large or small list is desired, set the size property to either large or small respectively. Omit the size property for a list with the default size.
 
 Customizing the header and footer of list by setting `header` and `footer` property.
 
-````jsx
+```jsx
 import { List } from 'choerodon-ui';
 
 const data = [
@@ -40,7 +40,7 @@ ReactDOM.render(
       footer={<div>Footer</div>}
       bordered
       dataSource={data}
-      renderItem={item => (<List.Item>{item}</List.Item>)}
+      renderItem={item => <List.Item>{item}</List.Item>}
     />
     <h3 style={{ margin: '16px 0' }}>Small Size</h3>
     <List
@@ -49,7 +49,7 @@ ReactDOM.render(
       footer={<div>Footer</div>}
       bordered
       dataSource={data}
-      renderItem={item => (<List.Item>{item}</List.Item>)}
+      renderItem={item => <List.Item>{item}</List.Item>}
     />
     <h3 style={{ margin: '16px 0' }}>Large Size</h3>
     <List
@@ -58,8 +58,9 @@ ReactDOM.render(
       footer={<div>Footer</div>}
       bordered
       dataSource={data}
-      renderItem={item => (<List.Item>{item}</List.Item>)}
+      renderItem={item => <List.Item>{item}</List.Item>}
     />
   </div>,
-  mountNode);
-````
+  mountNode,
+);
+```

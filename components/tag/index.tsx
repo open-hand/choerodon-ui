@@ -29,7 +29,9 @@ export interface TagState {
 
 export default class Tag extends Component<TagProps, TagState> {
   static displayName = 'Tag';
+
   static CheckableTag = CheckableTag;
+
   static defaultProps = {
     closable: false,
   };
@@ -39,8 +41,8 @@ export default class Tag extends Component<TagProps, TagState> {
     closed: false,
   };
 
-  close: MouseEventHandler<HTMLElement> = (e) => {
-    const onClose = this.props.onClose;
+  close: MouseEventHandler<HTMLElement> = e => {
+    const { onClose } = this.props;
     if (onClose) {
       onClose(e);
     }
@@ -57,13 +59,14 @@ export default class Tag extends Component<TagProps, TagState> {
   };
 
   animationEnd = (_: string, existed: boolean) => {
-    if (!existed && !this.state.closed) {
+    const { closed } = this.state;
+    if (!existed && !closed) {
       this.setState({
         closed: true,
         closing: false,
       });
+      const { afterClose } = this.props;
 
-      const afterClose = this.props.afterClose;
       if (afterClose) {
         afterClose();
       }
@@ -74,28 +77,36 @@ export default class Tag extends Component<TagProps, TagState> {
     if (!color) {
       return false;
     }
-    return (
-      /^(pink|red|yellow|orange|cyan|green|blue|purple|geekblue|magenta|volcano|gold|lime)(-inverse)?$/
-        .test(color)
+    return /^(pink|red|yellow|orange|cyan|green|blue|purple|geekblue|magenta|volcano|gold|lime)(-inverse)?$/.test(
+      color,
     );
   }
 
   render() {
-    const { prefixCls: customizePrefixCls, closable, color, className, children, style, ...otherProps } = this.props;
+    const {
+      prefixCls: customizePrefixCls,
+      closable,
+      color,
+      className,
+      children,
+      style,
+      ...otherProps
+    } = this.props;
     const prefixCls = getPrefixCls('tag', customizePrefixCls);
     const { closing, closed } = this.state;
     const closeIcon = closable ? <Icon type="close" onClick={this.close} /> : '';
     const isPresetColor = this.isPresetColor(color);
-    const classString = classNames(prefixCls, {
-      [`${prefixCls}-${color}`]: isPresetColor,
-      [`${prefixCls}-has-color`]: (color && !isPresetColor),
-      [`${prefixCls}-close`]: closing,
-    }, className);
+    const classString = classNames(
+      prefixCls,
+      {
+        [`${prefixCls}-${color}`]: isPresetColor,
+        [`${prefixCls}-has-color`]: color && !isPresetColor,
+        [`${prefixCls}-close`]: closing,
+      },
+      className,
+    );
     // fix https://fb.me/react-unknown-prop
-    const divProps = omit(otherProps, [
-      'onClose',
-      'afterClose',
-    ]);
+    const divProps = omit(otherProps, ['onClose', 'afterClose']);
     const tagStyle: CSSProperties = {
       ...style,
     };
@@ -103,12 +114,7 @@ export default class Tag extends Component<TagProps, TagState> {
       tagStyle.backgroundColor = color;
     }
     const tag = closed ? null : (
-      <div
-        hidden={closing}
-        {...divProps}
-        className={classString}
-        style={tagStyle}
-      >
+      <div hidden={closing} {...divProps} className={classString} style={tagStyle}>
         {children}
         {closeIcon}
       </div>

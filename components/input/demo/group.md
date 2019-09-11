@@ -1,8 +1,8 @@
 ---
 order: 3
 title:
-    zh-CN: 输入框组合
-    en-US: Input Group
+  zh-CN: 输入框组合
+  en-US: Input Group
 ---
 
 ## zh-CN
@@ -17,49 +17,60 @@ Input.Group example
 
 Note: You don't need `Col` to control the width in the `compact` mode.
 
-````jsx
+```jsx
 import { Input, Col, Select, InputNumber, DatePicker, AutoComplete, Cascader } from 'choerodon-ui';
+
 const InputGroup = Input.Group;
 const Option = Select.Option;
 
-const options = [{
-  value: 'zhejiang',
-  label: 'Zhejiang',
-  children: [{
-    value: 'hangzhou',
-    label: 'Hangzhou',
-    children: [{
-      value: 'xihu',
-      label: 'West Lake',
-    }],
-  }],
-}, {
-  value: 'jiangsu',
-  label: 'Jiangsu',
-  children: [{
-    value: 'nanjing',
-    label: 'Nanjing',
-    children: [{
-      value: 'zhonghuamen',
-      label: 'Zhong Hua Men',
-    }],
-  }],
-}];
+const options = [
+  {
+    value: 'zhejiang',
+    label: 'Zhejiang',
+    children: [
+      {
+        value: 'hangzhou',
+        label: 'Hangzhou',
+        children: [
+          {
+            value: 'xihu',
+            label: 'West Lake',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    value: 'jiangsu',
+    label: 'Jiangsu',
+    children: [
+      {
+        value: 'nanjing',
+        label: 'Nanjing',
+        children: [
+          {
+            value: 'zhonghuamen',
+            label: 'Zhong Hua Men',
+          },
+        ],
+      },
+    ],
+  },
+];
 
 class CompactDemo extends React.Component {
   state = {
     dataSource: [],
-  }
+  };
 
-  handleChange = (value) => {
+  handleChange = value => {
     this.setState({
-      dataSource: !value || value.indexOf('@') >= 0 ? [] : [
-        `${value}@gmail.com`,
-        `${value}@163.com`,
-        `${value}@qq.com`,
-      ],
+      dataSource:
+        !value || value.indexOf('@') >= 0
+          ? []
+          : [`${value}@gmail.com`, `${value}@163.com`, `${value}@qq.com`],
     });
-  }
+  };
 
   render() {
     return (
@@ -117,7 +128,11 @@ class CompactDemo extends React.Component {
             <Option value="2">Except</Option>
           </Select>
           <Input style={{ width: 100, textAlign: 'center' }} placeholder="Minimum" />
-          <Input style={{ width: 30, borderLeft: 0, pointerEvents: 'none', backgroundColor: '#fff' }} value="~" disabled />
+          <Input
+            style={{ width: 30, borderLeft: 0, pointerEvents: 'none', backgroundColor: '#fff' }}
+            value="~"
+            disabled
+          />
           <Input style={{ width: 100, textAlign: 'center', borderLeft: 0 }} placeholder="Maximum" />
         </InputGroup>
         <br />
@@ -147,4 +162,4 @@ class CompactDemo extends React.Component {
 }
 
 ReactDOM.render(<CompactDemo />, mountNode);
-````
+```

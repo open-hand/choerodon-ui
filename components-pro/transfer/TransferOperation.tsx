@@ -1,4 +1,4 @@
-import React, { Component, FormEventHandler } from 'react';
+import React, { FormEventHandler } from 'react';
 import noop from 'lodash/noop';
 import Button from '../button';
 import { Size } from '../core/enum';
@@ -13,36 +13,34 @@ export interface TransferOperationProps {
   multiple?: boolean;
 }
 
-export default class TransferOperation extends Component<TransferOperationProps, any> {
-  render() {
-    const {
-      moveToLeft = noop,
-      moveToRight = noop,
-      leftActive,
-      rightActive,
-      className,
-      multiple,
-    } = this.props;
-    if (multiple) {
-      return (
-        <div className={className}>
-          <Button
-            color={ButtonColor.primary}
-            size={Size.small}
-            disabled={!leftActive}
-            onClick={moveToLeft}
-            icon="navigate_before"
-          />
-          <Button
-            color={ButtonColor.primary}
-            size={Size.small}
-            disabled={!rightActive}
-            onClick={moveToRight}
-            icon="navigate_next"
-          />
-        </div>
-      );
-    }
-    return null;
+export default function TransferOperation(props: TransferOperationProps) {
+  const {
+    moveToLeft = noop,
+    moveToRight = noop,
+    leftActive,
+    rightActive,
+    className,
+    multiple,
+  } = props;
+  if (multiple) {
+    return (
+      <div className={className}>
+        <Button
+          color={ButtonColor.primary}
+          size={Size.small}
+          disabled={!leftActive}
+          onClick={moveToLeft}
+          icon="navigate_before"
+        />
+        <Button
+          color={ButtonColor.primary}
+          size={Size.small}
+          disabled={!rightActive}
+          onClick={moveToRight}
+          icon="navigate_next"
+        />
+      </div>
+    );
   }
+  return null;
 }

@@ -13,8 +13,9 @@ title:
 
 Select your favourite topics.
 
-````jsx
+```jsx
 import { Tag } from 'choerodon-ui';
+
 const CheckableTag = Tag.CheckableTag;
 
 const tagsFromServer = ['Movies', 'Books', 'Music', 'Sports'];
@@ -26,9 +27,7 @@ class HotTags extends React.Component {
 
   handleChange(tag, checked) {
     const { selectedTags } = this.state;
-    const nextSelectedTags = checked
-      ? [...selectedTags, tag]
-      : selectedTags.filter(t => t !== tag);
+    const nextSelectedTags = checked ? [...selectedTags, tag] : selectedTags.filter(t => t !== tag);
     console.log('You are interested in: ', nextSelectedTags);
     this.setState({ selectedTags: nextSelectedTags });
   }
@@ -53,4 +52,4 @@ class HotTags extends React.Component {
 }
 
 ReactDOM.render(<HotTags />, mountNode);
-````
+```

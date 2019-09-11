@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import PropTypes from 'prop-types';
 import { getConfig } from 'choerodon-ui/lib/configure';
-import TextField from '../text-field/TextField';
+import ObserverTextField from '../text-field/TextField';
 import Form from '../form/Form';
 import localeContext from '../locale-context';
 import Record from '../data-set/Record';
@@ -16,7 +16,6 @@ export interface IntlListProps {
 
 @observer
 export default class IntlList extends Component<IntlListProps> {
-
   static propTypes = {
     record: PropTypes.object,
     name: PropTypes.string,
@@ -28,7 +27,7 @@ export default class IntlList extends Component<IntlListProps> {
     const { supports } = localeContext;
     const tlsKey = getConfig('tlsKey');
     return Object.keys(supports).map(key => (
-      <TextField
+      <ObserverTextField
         name={name ? `${tlsKey}.${name}.${key}` : key}
         autoFocus={key === lang}
         key={key}
@@ -38,10 +37,6 @@ export default class IntlList extends Component<IntlListProps> {
 
   render() {
     const { record } = this.props;
-    return (
-      <Form record={record}>
-        {this.renderOptions()}
-      </Form>
-    );
+    return <Form record={record}>{this.renderOptions()}</Form>;
   }
 }

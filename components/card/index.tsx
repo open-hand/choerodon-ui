@@ -45,13 +45,19 @@ export interface CardProps {
 
 export default class Card extends Component<CardProps, {}> {
   static displayName = 'Card';
+
   static Grid: typeof Grid = Grid;
+
   static Meta: typeof Meta = Meta;
+
   resizeEvent: any;
+
   updateWiderPaddingCalled: boolean;
+
   state = {
     widerPadding: false,
   };
+
   private container: HTMLDivElement;
 
   componentDidMount() {
@@ -59,11 +65,12 @@ export default class Card extends Component<CardProps, {}> {
     this.resizeEvent = addEventListener(window, 'resize', this.updateWiderPadding);
 
     if ('noHovering' in this.props) {
+      const { noHovering } = this.props;
       warning(
-        !this.props.noHovering,
+        !noHovering,
         '`noHovering` of Card is deperated, you can remove it safely or use `hoverable` instead.',
       );
-      warning(!!this.props.noHovering, '`noHovering={false}` of Card is deperated, use `hoverable` instead.');
+      warning(!!noHovering, '`noHovering={false}` of Card is deperated, use `hoverable` instead.');
     }
   }
 
@@ -81,12 +88,13 @@ export default class Card extends Component<CardProps, {}> {
     }
     // 936 is a magic card width pixer number indicated by designer
     const WIDTH_BOUDARY_PX = 936;
-    if (this.container.offsetWidth >= WIDTH_BOUDARY_PX && !this.state.widerPadding) {
+    const { widerPadding } = this.state;
+    if (this.container.offsetWidth >= WIDTH_BOUDARY_PX && !widerPadding) {
       this.setState({ widerPadding: true }, () => {
         this.updateWiderPaddingCalled = true; // first render without css transition
       });
     }
-    if (this.container.offsetWidth < WIDTH_BOUDARY_PX && this.state.widerPadding) {
+    if (this.container.offsetWidth < WIDTH_BOUDARY_PX && widerPadding) {
       this.setState({ widerPadding: false }, () => {
         this.updateWiderPaddingCalled = true; // first render without css transition
       });
@@ -94,22 +102,21 @@ export default class Card extends Component<CardProps, {}> {
   }
 
   onTabChange = (key: string) => {
-    if (this.props.onTabChange) {
-      this.props.onTabChange(key);
+    const { onTabChange } = this.props;
+    if (onTabChange) {
+      onTabChange(key);
     }
   };
+
   saveRef = (node: HTMLDivElement) => {
     this.container = node;
   };
 
   isContainGrid() {
-    let containGrid;
-    Children.forEach(this.props.children, (element: JSX.Element) => {
-      if (element && element.type && element.type === Grid) {
-        containGrid = true;
-      }
-    });
-    return containGrid;
+    const { children } = this.props;
+    return Children.toArray(children).some(
+      (element: JSX.Element) => element && element.type && element.type === Grid,
+    );
   }
 
   getAction(actions: ReactNode[]) {
@@ -117,11 +124,10 @@ export default class Card extends Component<CardProps, {}> {
       return null;
     }
     const actionList = actions.map((action, index) => (
-        <li style={{ width: `${100 / actions.length}%` }} key={`action-${index}`}>
-          <span>{action}</span>
-        </li>
-      ),
-    );
+      <li style={{ width: `${100 / actions.length}%` }} key={`action-${String(index)}`}>
+        <span>{action}</span>
+      </li>
+    ));
     return actionList;
   }
 
@@ -140,8 +146,6 @@ export default class Card extends Component<CardProps, {}> {
       className,
       extra,
       bodyStyle,
-      noHovering,
-      hoverable,
       title,
       loading,
       bordered = true,
@@ -155,13 +159,14 @@ export default class Card extends Component<CardProps, {}> {
       onHeadClick,
       ...others
     } = this.props;
+    const { widerPadding } = this.state;
     const prefixCls = getPrefixCls('card', customizePrefixCls);
 
     const classString = classNames(prefixCls, className, {
       [`${prefixCls}-loading`]: loading,
       [`${prefixCls}-bordered`]: bordered,
       [`${prefixCls}-hoverable`]: this.getCompatibleHoverable(),
-      [`${prefixCls}-wider-padding`]: this.state.widerPadding,
+      [`${prefixCls}-wider-padding`]: widerPadding,
       [`${prefixCls}-padding-transition`]: this.updateWiderPaddingCalled,
       [`${prefixCls}-contain-grid`]: this.isContainGrid(),
       [`${prefixCls}-contain-tabs`]: tabList && tabList.length,
@@ -199,16 +204,19 @@ export default class Card extends Component<CardProps, {}> {
     };
 
     let head;
-    const tabs = tabList && tabList.length ? (
-      <Tabs
-        {...extraProps}
-        className={`${prefixCls}-head-tabs`}
-        size={Size.large}
-        onChange={this.onTabChange}
-      >
-        {tabList.map(item => <Tabs.TabPane tab={item.tab} key={item.key} />)}
-      </Tabs>
-    ) : null;
+    const tabs =
+      tabList && tabList.length ? (
+        <Tabs
+          {...extraProps}
+          className={`${prefixCls}-head-tabs`}
+          size={Size.large}
+          onChange={this.onTabChange}
+        >
+          {tabList.map(item => (
+            <Tabs.TabPane tab={item.tab} key={item.key} />
+          ))}
+        </Tabs>
+      ) : null;
     if (title || extra || tabs) {
       head = (
         <div className={`${prefixCls}-head`} onClick={onHeadClick}>
@@ -226,11 +234,11 @@ export default class Card extends Component<CardProps, {}> {
         {loading ? loadingBlock : children}
       </div>
     );
-    const actionDom = actions && actions.length ?
-      <ul className={`${prefixCls}-actions`}>{this.getAction(actions)}</ul> : null;
-    const divProps = omit(others, [
-      'onTabChange',
-    ]);
+    const actionDom =
+      actions && actions.length ? (
+        <ul className={`${prefixCls}-actions`}>{this.getAction(actions)}</ul>
+      ) : null;
+    const divProps = omit(others, ['onTabChange', 'noHovering', 'hoverable']);
     return (
       <div {...divProps} className={classString} ref={this.saveRef}>
         {head}

@@ -1,10 +1,10 @@
 // mixins for button
 // ------------------------
 .button-size(@height; @padding; @font-size; @border-radius) {
+  height: @height;
   padding: @padding;
   font-size: @font-size;
   border-radius: @border-radius;
-  height: @height;
 }
 
 .button-loading(@color) {
@@ -58,14 +58,14 @@
   // http://stackoverflow.com/a/17253457
   > a:only-child {
     color: currentColor;
-    &:after {
-      content: '';
+    &::after {
       position: absolute;
       top: 0;
-      left: 0;
-      bottom: 0;
       right: 0;
+      bottom: 0;
+      left: 0;
       background: transparent;
+      content: '';
     }
   }
   > i.@{iconfont-css-prefix} {
@@ -107,8 +107,8 @@
     .button-size(@btn-height-sm; @btn-padding-sm; @font-size-base; @btn-border-radius-sm);
     line-height: @btn-height-sm;
     > .@{iconfont-css-prefix} {
-      font-size: @icon-font-size-sm;
       margin-right: @btn-height-sm / 8;
+      font-size: @icon-font-size-sm;
       line-height: @btn-height-sm;
     }
   }
@@ -117,21 +117,21 @@
 // Base styles of buttons
 // --------------------------------------------------
 .btn() {
+  position: relative;
   display: inline-block;
+  box-sizing: border-box;
   font-weight: @btn-font-weight;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
   text-align: center;
-  touch-action: manipulation;
-  cursor: pointer;
+  text-transform: uppercase;
   background-image: none;
   border: none;
-  white-space: nowrap;
-  .button-size(@btn-height-base; @btn-padding-base; @font-size-base; @btn-border-radius-base);
+  cursor: pointer;
+  transition: all 0.3s @ease-in-out;
   user-select: none;
-  transition: all .3s @ease-in-out;
-  position: relative;
-  text-transform: uppercase;
-  letter-spacing: .01em;
-  box-sizing: border-box;
+  touch-action: manipulation;
+  .button-size(@btn-height-base; @btn-padding-base; @font-size-base; @btn-border-radius-base);
 
   > .@{iconfont-css-prefix} {
     margin-right: @btn-height-base / 8;
@@ -170,9 +170,9 @@
     }
   }
   &&-lg&-dashed {
-    line-height: @btn-height-lg - .04rem;
+    line-height: @btn-height-lg - 0.04rem;
     > .@{iconfont-css-prefix} {
-      line-height: @btn-height-lg - .04rem;
+      line-height: @btn-height-lg - 0.04rem;
     }
   }
 
@@ -186,9 +186,9 @@
   }
 
   &&-sm&-dashed {
-    line-height: @btn-height-sm - .04rem;
+    line-height: @btn-height-sm - 0.04rem;
     > .@{iconfont-css-prefix} {
-      line-height: @btn-height-sm - .04rem;
+      line-height: @btn-height-sm - 0.04rem;
     }
   }
 }
@@ -233,7 +233,6 @@
 
 // circle button: the content only contains icon
 .btn-circle(@btnClassName: btn) {
-
   .square(@btn-circle-size);
   .button-size(@btn-circle-size; 0; @font-size-base + .02rem; 50%);
 
@@ -241,8 +240,8 @@
     .square(@btn-circle-size-lg);
     .button-size(@btn-circle-size-lg; 0; @btn-font-size-lg + .02rem; 50%);
     > .@{iconfont-css-prefix} {
-      font-size: @icon-font-size-lg;
       margin-right: 0;
+      font-size: @icon-font-size-lg;
     }
   }
 
@@ -250,8 +249,8 @@
     .square(@btn-circle-size-sm);
     .button-size(@btn-circle-size-sm; 0; @font-size-base; 50%);
     > .@{iconfont-css-prefix} {
-      font-size: @icon-font-size-sm;
       margin-right: 0;
+      font-size: @icon-font-size-sm;
     }
   }
 
@@ -271,7 +270,7 @@
   .@{btnClassName} + span,
   & + .@{btnClassName},
   & + & {
-    margin-left: -.01rem;
+    margin-left: -0.01rem;
   }
 
   .@{btnClassName}:not(:first-child):not(:last-child) {
@@ -285,14 +284,14 @@
 
   > .@{btnClassName}:first-child:not(:last-child),
   > span:first-child:not(:last-child) > .@{btnClassName} {
-    border-bottom-right-radius: 0;
     border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
   }
 
   > .@{btnClassName}:last-child:not(:first-child),
   > span:last-child:not(:first-child) > .@{btnClassName} {
-    border-bottom-left-radius: 0;
     border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
   }
 
   & > & {
@@ -305,15 +304,15 @@
 
   & > &:first-child:not(:last-child) {
     > .@{btnClassName}:last-child {
-      border-bottom-right-radius: 0;
+      padding-right: 0.08rem;
       border-top-right-radius: 0;
-      padding-right: .08rem;
+      border-bottom-right-radius: 0;
     }
   }
 
   & > &:last-child:not(:first-child) > .@{btnClassName}:first-child {
-    border-bottom-left-radius: 0;
+    padding-left: 0.08rem;
     border-top-left-radius: 0;
-    padding-left: .08rem;
+    border-bottom-left-radius: 0;
   }
 }

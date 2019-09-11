@@ -60,25 +60,35 @@ export interface MenuState {
 
 export default class Menu extends Component<MenuProps, MenuState> {
   static displayName = 'Menu';
+
   static Divider = Divider;
+
   static Item = Item;
+
   static SubMenu = SubMenu;
+
   static ItemGroup = ItemGroup;
+
   static defaultProps = {
     className: '',
     theme: 'light', // or dark
     focusable: false,
   };
+
   static childContextTypes = {
     inlineCollapsed: PropTypes.bool,
     menuTheme: PropTypes.string,
   };
+
   static contextTypes = {
     siderCollapsed: PropTypes.bool,
     collapsedWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   };
+
   switchModeFromInline: boolean;
+
   leaveAnimationExecutedWhenInlineCollapsed: boolean;
+
   inlineOpenKeys: string[] = [];
 
   constructor(props: MenuProps) {
@@ -91,7 +101,7 @@ export default class Menu extends Component<MenuProps, MenuState> {
 
     warning(
       !('inlineCollapsed' in props && props.mode !== 'inline'),
-      '`inlineCollapsed` should only be used when Menu\'s `mode` is inline.',
+      "`inlineCollapsed` should only be used when Menu's `mode` is inline.",
     );
 
     let openKeys;
@@ -107,14 +117,16 @@ export default class Menu extends Component<MenuProps, MenuState> {
   }
 
   getChildContext() {
+    const { theme } = this.props;
     return {
       inlineCollapsed: this.getInlineCollapsed(),
-      menuTheme: this.props.theme,
+      menuTheme: theme,
     };
   }
 
   getPrefixCls() {
-    return getPrefixCls('menu', this.props.prefixCls);
+    const { prefixCls } = this.props;
+    return getPrefixCls('menu', prefixCls);
   }
 
   componentWillReceiveProps(nextProps: MenuProps, nextContext: SiderContext) {
@@ -128,15 +140,22 @@ export default class Menu extends Component<MenuProps, MenuState> {
     }
     const { openKeys } = this.state;
     const { siderCollapsed } = this.context;
-    if ((nextProps.inlineCollapsed && !inlineCollapsed) ||
-      (nextContext.siderCollapsed && !siderCollapsed)) {
+    if (
+      (nextProps.inlineCollapsed && !inlineCollapsed) ||
+      (nextContext.siderCollapsed && !siderCollapsed)
+    ) {
       this.switchModeFromInline =
-        !!openKeys.length && !!(findDOMNode(this) as HTMLElement).querySelectorAll(`.${this.getPrefixCls()}-submenu-open`).length;
+        !!openKeys.length &&
+        !!(findDOMNode(this) as HTMLElement).querySelectorAll(
+          `.${this.getPrefixCls()}-submenu-open`,
+        ).length;
       this.inlineOpenKeys = openKeys;
       this.setState({ openKeys: [] });
     }
-    if ((!nextProps.inlineCollapsed && inlineCollapsed) ||
-      (!nextContext.siderCollapsed && siderCollapsed)) {
+    if (
+      (!nextProps.inlineCollapsed && inlineCollapsed) ||
+      (!nextContext.siderCollapsed && siderCollapsed)
+    ) {
       this.setState({ openKeys: this.inlineOpenKeys });
       this.inlineOpenKeys = [];
     }
@@ -150,6 +169,7 @@ export default class Menu extends Component<MenuProps, MenuState> {
       onClick(e);
     }
   };
+
   handleOpenChange = (openKeys: string[]) => {
     this.setOpenKeys(openKeys);
 
@@ -176,10 +196,8 @@ export default class Menu extends Component<MenuProps, MenuState> {
 
   getInlineCollapsed() {
     const { inlineCollapsed } = this.props;
-    if (this.context.siderCollapsed !== undefined) {
-      return this.context.siderCollapsed;
-    }
-    return inlineCollapsed;
+    const { siderCollapsed = inlineCollapsed } = this.context;
+    return siderCollapsed;
   }
 
   getMenuOpenAnimation(menuMode: MenuMode) {
@@ -205,17 +223,18 @@ export default class Menu extends Component<MenuProps, MenuState> {
         case 'inline':
           menuOpenAnimation = {
             ...animation,
-            leave: (node: HTMLElement, done: () => void) => animation.leave(node, () => {
-              // Make sure inline menu leave animation finished before mode is switched
-              this.switchModeFromInline = false;
-              this.setState({});
-              // when inlineCollapsed change false to true, all submenu will be unmounted,
-              // so that we don't need handle animation leaving.
-              if (this.getRealMenuMode() === 'vertical') {
-                return;
-              }
-              done();
-            }),
+            leave: (node: HTMLElement, done: () => void) =>
+              animation.leave(node, () => {
+                // Make sure inline menu leave animation finished before mode is switched
+                this.switchModeFromInline = false;
+                this.setState({});
+                // when inlineCollapsed change false to true, all submenu will be unmounted,
+                // so that we don't need handle animation leaving.
+                if (this.getRealMenuMode() === 'vertical') {
+                  return;
+                }
+                done();
+              }),
           };
           break;
         default:
@@ -226,6 +245,7 @@ export default class Menu extends Component<MenuProps, MenuState> {
 
   render() {
     const { className, theme } = this.props;
+    const { openKeys } = this.state;
     const prefixCls = this.getPrefixCls();
     const menuMode = this.getRealMenuMode();
     const menuOpenAnimation = this.getMenuOpenAnimation(menuMode!);
@@ -235,7 +255,7 @@ export default class Menu extends Component<MenuProps, MenuState> {
     });
 
     const menuProps: MenuProps = {
-      openKeys: this.state.openKeys,
+      openKeys,
       onOpenChange: this.handleOpenChange,
       className: menuClassName,
       mode: menuMode,

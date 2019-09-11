@@ -17,8 +17,9 @@ Layout.Sider supports responsive layout.
 
 > Note: You can get a responsive layout by setting `breakpoint`, the Sider will collapse to the width of `collapsedWidth` when window width is below the `breakpoint`. And a special trigger will appear if the `collapsedWidth` is set to `0`.
 
-````jsx
+```jsx
 import { Layout, Menu, Icon } from 'choerodon-ui';
+
 const { Header, Content, Footer, Sider } = Layout;
 
 ReactDOM.render(
@@ -26,7 +27,9 @@ ReactDOM.render(
     <Sider
       breakpoint="lg"
       collapsedWidth="0"
-      onCollapse={(collapsed, type) => { console.log(collapsed, type); }}
+      onCollapse={(collapsed, type) => {
+        console.log(collapsed, type);
+      }}
     >
       <div className="logo" />
       <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']}>
@@ -51,22 +54,19 @@ ReactDOM.render(
     <Layout>
       <Header style={{ background: '#fff', padding: 0 }} />
       <Content style={{ margin: '24px 16px 0' }}>
-        <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
-          content
-        </div>
+        <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>content</div>
       </Content>
-      <Footer style={{ textAlign: 'center' }}>
-        Ant Design ©2016 Created by Ant UED
-      </Footer>
+      <Footer style={{ textAlign: 'center' }}>Choerodon UI</Footer>
     </Layout>
   </Layout>,
-  mountNode);
-````
+  mountNode,
+);
+```
 
-````css
+```css
 #components-layout-demo-responsive .logo {
   height: 32px;
-  background: rgba(255,255,255,.2);
+  background: rgba(255, 255, 255, 0.2);
   margin: 16px;
 }
-````
+```

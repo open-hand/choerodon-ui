@@ -19,18 +19,19 @@ class DialogWrap extends Component<IDialogPropTypes, any> {
   removeContainer: () => void;
 
   shouldComponentUpdate({ visible }: { visible: boolean }) {
-    return !!(this.props.visible || visible);
+    const { props } = this;
+    return !!(props.visible || visible);
   }
 
   componentWillUnmount() {
     if (IS_REACT_16) {
       return;
     }
-    if (this.props.visible) {
+    const { visible } = this.props;
+    if (visible) {
       this.renderComponent({
         afterClose: this.removeContainer,
-        onClose() {
-        },
+        onClose() {},
         visible: false,
       });
     } else {
@@ -43,19 +44,13 @@ class DialogWrap extends Component<IDialogPropTypes, any> {
   };
 
   getComponent = (extra = {}) => {
-    return (
-      <Dialog
-        ref={this.saveDialog}
-        {...this.props}
-        {...extra}
-        key="dialog"
-      />
-    );
+    return <Dialog ref={this.saveDialog} {...this.props} {...extra} key="dialog" />;
   };
 
   getContainer = () => {
-    if (this.props.getContainer) {
-      return this.props.getContainer(this);
+    const { getContainer } = this.props;
+    if (getContainer) {
+      return getContainer(this);
     }
     const container = document.createElement('div');
     document.body.appendChild(container);
@@ -68,7 +63,13 @@ class DialogWrap extends Component<IDialogPropTypes, any> {
     let portal: any = null;
 
     if (!IS_REACT_16) {
-      const container = ({ renderComponent, removeContainer }: { renderComponent: any, removeContainer: any }) => {
+      const container = ({
+        renderComponent,
+        removeContainer,
+      }: {
+        renderComponent: any;
+        removeContainer: any;
+      }) => {
         this.renderComponent = renderComponent;
         this.removeContainer = removeContainer;
         return null;
@@ -87,11 +88,7 @@ class DialogWrap extends Component<IDialogPropTypes, any> {
     }
 
     if (visible || this._component) {
-      portal = (
-        <Portal getContainer={this.getContainer}>
-          {this.getComponent()}
-        </Portal>
-      );
+      portal = <Portal getContainer={this.getContainer}>{this.getComponent()}</Portal>;
     }
 
     return portal;

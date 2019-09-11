@@ -1,3 +1,3 @@
-import Select from './Select';
+import ObserverSelect from './Select';
 
-export default Select;
+export default ObserverSelect;

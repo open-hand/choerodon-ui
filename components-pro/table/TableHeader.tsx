@@ -2,16 +2,16 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
+import { computed, get } from 'mobx';
+import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { ColumnProps } from './Column';
 import { ElementProps } from '../core/ViewComponent';
 import TableHeaderCell, { TableHeaderCellProps } from './TableHeaderCell';
 import TableContext from './TableContext';
-import { computed, get } from 'mobx';
-import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { ColumnLock } from './enum';
 import DataSet from '../data-set/DataSet';
 import { getColumnKey } from './utils';
-import { ColumnGroup } from './ColumnGroups';
+import ColumnGroup from './ColumnGroup';
 
 export interface TableHeaderProps extends ElementProps {
   dataSet: DataSet;
@@ -24,14 +24,17 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
 
   static propTypes = {
     prefixCls: PropTypes.string,
-    lock: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf([ColumnLock.right, ColumnLock.left])]),
+    lock: PropTypes.oneOfType([
+      PropTypes.bool,
+      PropTypes.oneOf([ColumnLock.right, ColumnLock.left]),
+    ]),
   };
 
   static contextType = TableContext;
 
   node: HTMLTableSectionElement | null;
 
-  saveRef = node => this.node = node;
+  saveRef = node => (this.node = node);
 
   getHeaderNode = () => {
     return this.node;
@@ -40,6 +43,9 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
   render() {
     const { prefixCls, lock, dataSet } = this.props;
     const { groupedColumns } = this;
+    const {
+      tableStore: { overflowY, columnResizable },
+    } = this.context;
     const rows = this.getTableHeaderRows(groupedColumns);
     const trs = rows.map((row, rowIndex) => {
       if (row.length) {
@@ -64,28 +70,43 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
             prevColumn = lastLeaf;
             return <TableHeaderCell {...props} />;
           }
+          return undefined;
         });
-        if (this.context.tableStore.overflowY && lock !== ColumnLock.left && rowIndex === 0) {
-          tds.push(<th key="fixed-column" className={`${prefixCls}-cell`} rowSpan={rows.length} />);
+        if (overflowY && lock !== ColumnLock.left && rowIndex === 0) {
+          tds.push(
+            <th key="fixed-column" className={`${prefixCls}-cell`} rowSpan={rows.length}>
+              &nbsp;
+            </th>,
+          );
         }
         return (
-          <tr key={rowIndex} style={{ height: lock ? this.getHeaderRowStyle(rows, rowIndex) : void 0 }}>
+          <tr
+            key={String(rowIndex)}
+            style={{ height: lock ? this.getHeaderRowStyle(rows, rowIndex) : undefined }}
+          >
             {tds}
           </tr>
         );
       }
+      return undefined;
     });
     const classString = classNames(`${prefixCls}-thead`, {
-      [`${prefixCls}-column-resizable`]: this.context.tableStore.columnResizable,
-    })
+      [`${prefixCls}-column-resizable`]: columnResizable,
+    });
     return (
-      <thead ref={this.saveRef} className={classString}>{trs}</thead>
+      <thead ref={this.saveRef} className={classString}>
+        {trs}
+      </thead>
     );
   }
 
-  getTableHeaderRows(columns: ColumnGroup[], currentRow: number = 0, rows: ColumnGroup[][] = []): ColumnGroup[][] {
+  getTableHeaderRows(
+    columns: ColumnGroup[],
+    currentRow: number = 0,
+    rows: ColumnGroup[][] = [],
+  ): ColumnGroup[][] {
     rows[currentRow] = rows[currentRow] || [];
-    columns.forEach((column) => {
+    columns.forEach(column => {
       const { hidden, rowSpan, colSpan, children } = column;
       if (!hidden) {
         if (rowSpan && rows.length < rowSpan) {
@@ -105,15 +126,28 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
   }
 
   getHeaderRowStyle(rows: ColumnGroup[][], rowIndex: number): string | number | undefined {
-    const { rowHeight } = this.context.tableStore;
+    const {
+      tableStore: { rowHeight },
+    } = this.context;
     const height = rowHeight === 'auto' ? this.getRowHeight(rowIndex++) : rowHeight;
-    return pxToRem(rows.slice(rowIndex).reduce((total, r, index) => (
-      r.length ? total : total + 1 + (rowHeight === 'auto' ? this.getRowHeight(index + rowIndex) : rowHeight)
-    ), height));
+    return pxToRem(
+      rows
+        .slice(rowIndex)
+        .reduce(
+          (total, r, index) =>
+            r.length
+              ? total
+              : total +
+                1 +
+                (rowHeight === 'auto' ? this.getRowHeight(index + rowIndex) : rowHeight),
+          height,
+        ),
+    );
   }
 
   getRowHeight(index): number {
-    return get(this.context.tableStore.lockColumnsHeadRowsHeight, index) || 0;
+    const { tableStore } = this.context;
+    return get(tableStore.lockColumnsHeadRowsHeight, index) || 0;
   }
 
   @computed

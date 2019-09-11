@@ -13,8 +13,9 @@ title:
 
 There are three layout for form: `horizontal`, `vertical`, `inline`.
 
-````jsx
+```jsx
 import { Form, Input, Button, Radio } from 'choerodon-ui';
+
 const FormItem = Form.Item;
 
 class FormLayoutDemo extends React.Component {
@@ -25,42 +26,39 @@ class FormLayoutDemo extends React.Component {
     };
   }
 
-  handleFormLayoutChange = (e) => {
+  handleFormLayoutChange = e => {
     this.setState({ formLayout: e.target.value });
-  }
+  };
 
   render() {
     const { formLayout } = this.state;
-    const formItemLayout = formLayout === 'horizontal' ? {
-      labelCol: { span: 4 },
-      wrapperCol: { span: 14 },
-    } : null;
-    const buttonItemLayout = formLayout === 'horizontal' ? {
-      wrapperCol: { span: 14, offset: 4 },
-    } : null;
+    const formItemLayout =
+      formLayout === 'horizontal'
+        ? {
+            labelCol: { span: 4 },
+            wrapperCol: { span: 14 },
+          }
+        : null;
+    const buttonItemLayout =
+      formLayout === 'horizontal'
+        ? {
+            wrapperCol: { span: 14, offset: 4 },
+          }
+        : null;
     return (
       <div>
         <Form layout={formLayout}>
-          <FormItem
-            label="Form Layout"
-            {...formItemLayout}
-          >
+          <FormItem label="Form Layout" {...formItemLayout}>
             <Radio.Group defaultValue="horizontal" onChange={this.handleFormLayoutChange}>
               <Radio.Button value="horizontal">Horizontal</Radio.Button>
               <Radio.Button value="vertical">Vertical</Radio.Button>
               <Radio.Button value="inline">Inline</Radio.Button>
             </Radio.Group>
           </FormItem>
-          <FormItem
-            label="Field A"
-            {...formItemLayout}
-          >
+          <FormItem label="Field A" {...formItemLayout}>
             <Input placeholder="input placeholder" />
           </FormItem>
-          <FormItem
-            label="Field B"
-            {...formItemLayout}
-          >
+          <FormItem label="Field B" {...formItemLayout}>
             <Input placeholder="input placeholder" />
           </FormItem>
           <FormItem {...buttonItemLayout}>
@@ -73,4 +71,4 @@ class FormLayoutDemo extends React.Component {
 }
 
 ReactDOM.render(<FormLayoutDemo />, mountNode);
-````
+```

@@ -13,8 +13,9 @@ title:
 
 Perform different check rules according to different situations.
 
-````jsx
+```jsx
 import { Form, Input, Button, Checkbox } from 'choerodon-ui';
+
 const FormItem = Form.Item;
 
 const formItemLayout = {
@@ -31,22 +32,23 @@ class DynamicRule extends React.Component {
   };
 
   check = () => {
-    this.props.form.validateFields(
-      (err) => {
-        if (!err) {
-          console.info('success');
-        }
+    this.props.form.validateFields(err => {
+      if (!err) {
+        console.info('success');
+      }
+    });
+  };
+
+  handleChange = e => {
+    this.setState(
+      {
+        checkNick: e.target.checked,
+      },
+      () => {
+        this.props.form.validateFields(['nickname'], { force: true });
       },
     );
-  }
-
-  handleChange = (e) => {
-    this.setState({
-      checkNick: e.target.checked,
-    }, () => {
-      this.props.form.validateFields(['nickname'], { force: true });
-    });
-  }
+  };
 
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -54,29 +56,26 @@ class DynamicRule extends React.Component {
       <div>
         <FormItem {...formItemLayout} label="Name">
           {getFieldDecorator('username', {
-            rules: [{
-              required: true,
-              message: 'Please input your name',
-            }],
-          })(
-            <Input placeholder="Please input your name" />
-          )}
+            rules: [
+              {
+                required: true,
+                message: 'Please input your name',
+              },
+            ],
+          })(<Input placeholder="Please input your name" />)}
         </FormItem>
         <FormItem {...formItemLayout} label="Nickname">
           {getFieldDecorator('nickname', {
-            rules: [{
-              required: this.state.checkNick,
-              message: 'Please input your nickname',
-            }],
-          })(
-            <Input placeholder="Please input your nickname" />
-          )}
+            rules: [
+              {
+                required: this.state.checkNick,
+                message: 'Please input your nickname',
+              },
+            ],
+          })(<Input placeholder="Please input your nickname" />)}
         </FormItem>
         <FormItem {...formTailLayout}>
-          <Checkbox
-            value={this.state.checkNick}
-            onChange={this.handleChange}
-          >
+          <Checkbox value={this.state.checkNick} onChange={this.handleChange}>
             Nickname is required
           </Checkbox>
         </FormItem>
@@ -92,5 +91,4 @@ class DynamicRule extends React.Component {
 
 const WrappedDynamicRule = Form.create()(DynamicRule);
 ReactDOM.render(<WrappedDynamicRule />, mountNode);
-
-````
+```

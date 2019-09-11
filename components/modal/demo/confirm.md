@@ -13,8 +13,9 @@ title:
 
 To use `confirm()` to popup a confirmation modal dialog.
 
-````jsx
+```jsx
 import { Modal, Button } from 'choerodon-ui';
+
 const confirm = Modal.confirm;
 
 function showConfirm() {
@@ -48,12 +49,11 @@ function showDeleteConfirm() {
 
 ReactDOM.render(
   <div>
-    <Button onClick={showConfirm}>
-      Confirm
-    </Button>
+    <Button onClick={showConfirm}>Confirm</Button>
     <Button onClick={showDeleteConfirm} type="dashed">
       Delete
     </Button>
   </div>,
-  mountNode);
-````
+  mountNode,
+);
+```

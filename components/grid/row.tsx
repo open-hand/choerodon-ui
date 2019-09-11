@@ -16,6 +16,7 @@ const defaultGutter = 0;
 
 export default class Row extends Component<RowProps> {
   static displayName = 'Row';
+
   static defaultProps = {
     gutter: defaultGutter,
   };
@@ -42,17 +43,23 @@ export default class Row extends Component<RowProps> {
       ...others
     } = this.props;
     const prefixCls = getPrefixCls('row', customizePrefixCls);
-    const classes = classNames({
-      [prefixCls]: !type,
-      [`${prefixCls}-${type}`]: type,
-      [`${prefixCls}-${type}-${justify}`]: type && justify,
-      [`${prefixCls}-${type}-${align}`]: type && align,
-    }, className);
-    const rowStyle = (gutter as number) > 0 ? {
-      marginLeft: (gutter as number) / -2,
-      marginRight: (gutter as number) / -2,
-      ...style,
-    } : style;
+    const classes = classNames(
+      {
+        [prefixCls]: !type,
+        [`${prefixCls}-${type}`]: type,
+        [`${prefixCls}-${type}-${justify}`]: type && justify,
+        [`${prefixCls}-${type}-${align}`]: type && align,
+      },
+      className,
+    );
+    const rowStyle =
+      (gutter as number) > 0
+        ? {
+            marginLeft: (gutter as number) / -2,
+            marginRight: (gutter as number) / -2,
+            ...style,
+          }
+        : style;
     const cols = Children.map(children, (col: ReactElement<HTMLDivElement>) => {
       if (!col) {
         return null;
@@ -70,14 +77,15 @@ export default class Row extends Component<RowProps> {
     });
     const otherProps = { ...others };
     delete otherProps.gutter;
-    return <div {...otherProps} className={classes} style={rowStyle}>{cols}</div>;
+    return (
+      <div {...otherProps} className={classes} style={rowStyle}>
+        {cols}
+      </div>
+    );
   };
 
   render() {
-    return (
-      <Responsive items={[this.props.gutter]}>
-        {this.renderRow}
-      </Responsive>
-    );
+    const { gutter } = this.props;
+    return <Responsive items={[gutter]}>{this.renderRow}</Responsive>;
   }
 }

@@ -57,6 +57,7 @@ export interface ListLocale {
 
 export default class List extends Component<ListProps> {
   static displayName = 'List';
+
   static Item: typeof Item = Item;
 
   static childContextTypes = {
@@ -74,8 +75,9 @@ export default class List extends Component<ListProps> {
   private keys: { [key: string]: string } = {};
 
   getChildContext() {
+    const { grid } = this.props;
     return {
-      grid: this.props.grid,
+      grid,
     };
   }
 
@@ -106,12 +108,14 @@ export default class List extends Component<ListProps> {
   }
 
   renderEmpty = (contextLocale: ListLocale) => {
-    const locale = { ...contextLocale, ...this.props.locale };
+    const { props } = this;
+    const locale = { ...contextLocale, ...props.locale };
     return <div className={`${this.getPrefixCls()}-empty-text`}>{locale.emptyText}</div>;
   };
 
   getPrefixCls() {
-    return getPrefixCls('list', this.props.prefixCls);
+    const { prefixCls } = this.props;
+    return getPrefixCls('list', prefixCls);
   }
 
   render() {
@@ -139,7 +143,7 @@ export default class List extends Component<ListProps> {
         spinning: loadingProp,
       };
     }
-    const isLoading = (loadingProp && loadingProp.spinning);
+    const isLoading = loadingProp && loadingProp.spinning;
 
     // large => lg
     // small => sm
@@ -150,8 +154,8 @@ export default class List extends Component<ListProps> {
         break;
       case Size.small:
         sizeCls = 'sm';
-      default:
         break;
+      default:
     }
 
     const classString = classNames(prefixCls, className, {
@@ -171,23 +175,19 @@ export default class List extends Component<ListProps> {
     );
 
     let childrenContent;
-    childrenContent = isLoading && (<div style={{ minHeight: 53 }} />);
+    childrenContent = isLoading && <div style={{ minHeight: 53 }} />;
     if (dataSource.length > 0) {
       const items = dataSource.map((item: any, index: number) => this.renderItem(item, index));
-      const childrenList = Children.map(items, (child: any, index) => cloneElement(child, {
+      const childrenList = Children.map(items, (child: any, index) =>
+        cloneElement(child, {
           key: this.keys[index],
         }),
       );
 
-      childrenContent = grid ? (
-        <Row gutter={grid.gutter}>{childrenList}</Row>
-      ) : childrenList;
+      childrenContent = grid ? <Row gutter={grid.gutter}>{childrenList}</Row> : childrenList;
     } else if (!children && !isLoading && !empty) {
       childrenContent = (
-        <LocaleReceiver
-          componentName="Table"
-          defaultLocale={defaultLocale.Table}
-        >
+        <LocaleReceiver componentName="Table" defaultLocale={defaultLocale.Table}>
           {this.renderEmpty}
         </LocaleReceiver>
       );
@@ -199,7 +199,7 @@ export default class List extends Component<ListProps> {
       <div>
         <Spin {...loadingProp}>{childrenContent}</Spin>
         {loadMore}
-        {(!loadMore && pagination) ? paginationContent : null}
+        {!loadMore && pagination ? paginationContent : null}
       </div>
     );
 

@@ -13,6 +13,41 @@ import EventManager from '../_util/EventManager';
 import { Action, HideAction, ShowAction } from './enum';
 import TriggerChild from './TriggerChild';
 
+function isPointsEq(a1: string[], a2: string[]): boolean {
+  return a1[0] === a2[0] && a1[1] === a2[1];
+}
+
+function getPopupClassNameFromAlign(builtinPlacements, prefixCls, align): string {
+  const { points } = align;
+  const found = Object.keys(builtinPlacements).find(
+    placement =>
+      ({}.hasOwnProperty.call(builtinPlacements, placement) &&
+      isPointsEq(builtinPlacements[placement].points, points)),
+  );
+  return found ? `${prefixCls}-popup-placement-${found}` : '';
+}
+
+function getAlignFromPlacement(builtinPlacements, placementStr, align) {
+  const baseAlign = builtinPlacements[placementStr] || {};
+  return {
+    ...baseAlign,
+    ...align,
+  };
+}
+
+function contains(root, n) {
+  let node = n;
+  if (root) {
+    while (node) {
+      if (node === root || (root.contains && root.contains(node))) {
+        return true;
+      }
+      node = node.parentNode;
+    }
+  }
+  return false;
+}
+
 export interface TriggerProps extends ElementProps {
   action?: Action[];
   showAction?: ShowAction[];
@@ -31,8 +66,8 @@ export interface TriggerProps extends ElementProps {
   onPopupAnimateEnd?: (key: Key | null, exists: boolean) => void;
   onPopupHiddenChange?: (hidden: boolean) => void;
   getRootDomNode?: () => Element | null | Text;
-  getPopupStyleFromAlign ?: (target: Node | Window, align: object) => object | undefined;
-  getPopupClassNameFromAlign ?: (align: object) => string | undefined;
+  getPopupStyleFromAlign?: (target: Node | Window, align: object) => object | undefined;
+  getPopupClassNameFromAlign?: (align: object) => string | undefined;
   focusDelay?: number;
   blurDelay?: number;
   mouseEnterDelay?: number;
@@ -45,23 +80,20 @@ export default class Trigger extends Component<TriggerProps> {
   static displayName = 'Trigger';
 
   static propTypes = {
-    action: MobxPropTypes.arrayOrObservableArrayOf(PropTypes.oneOf([
-      Action.hover,
-      Action.contextMenu,
-      Action.focus,
-      Action.click,
-    ])),
-    showAction: MobxPropTypes.arrayOrObservableArrayOf(PropTypes.oneOf([
-      ShowAction.mouseEnter,
-      ShowAction.contextMenu,
-      ShowAction.focus,
-      ShowAction.click,
-    ])),
-    hideAction: MobxPropTypes.arrayOrObservableArrayOf(PropTypes.oneOf([
-      HideAction.blur,
-      HideAction.mouseLeave,
-      HideAction.click,
-    ])),
+    action: MobxPropTypes.arrayOrObservableArrayOf(
+      PropTypes.oneOf([Action.hover, Action.contextMenu, Action.focus, Action.click]),
+    ),
+    showAction: MobxPropTypes.arrayOrObservableArrayOf(
+      PropTypes.oneOf([
+        ShowAction.mouseEnter,
+        ShowAction.contextMenu,
+        ShowAction.focus,
+        ShowAction.click,
+      ]),
+    ),
+    hideAction: MobxPropTypes.arrayOrObservableArrayOf(
+      PropTypes.oneOf([HideAction.blur, HideAction.mouseLeave, HideAction.click]),
+    ),
     popupContent: PropTypes.node,
     popupCls: PropTypes.string,
     popupStyle: PropTypes.object,
@@ -80,6 +112,7 @@ export default class Trigger extends Component<TriggerProps> {
     blurDelay: PropTypes.number,
     mouseEnterDelay: PropTypes.number,
     mouseLeaveDelay: PropTypes.number,
+    transitionName: PropTypes.string,
   };
 
   static defaultProps = {
@@ -91,10 +124,13 @@ export default class Trigger extends Component<TriggerProps> {
   };
 
   popup: Popup | null;
+
   popupTask: TaskRunner = new TaskRunner();
+
   documentEvent: EventManager = new EventManager(typeof window !== 'undefined' && document);
 
   focusTime: number = 0;
+
   preClickTime: number = 0;
 
   @observable popupHidden?: boolean;
@@ -107,12 +143,12 @@ export default class Trigger extends Component<TriggerProps> {
     });
   }
 
-  saveRef = node => this.popup = node;
+  saveRef = node => (this.popup = node);
 
   render() {
     const { children } = this.props;
     const popup = this.getPopup();
-    const newChildren = Children.map(children, (child) => {
+    const newChildren = Children.map(children, child => {
       if (isValidElement(child)) {
         const newChildProps: any = {};
         if (this.isContextMenuToShow()) {
@@ -132,14 +168,9 @@ export default class Trigger extends Component<TriggerProps> {
           newChildProps.onFocus = this.handleEvent;
           newChildProps.onBlur = this.handleEvent;
         }
-        return (
-          <TriggerChild {...newChildProps}>
-            {child}
-          </TriggerChild>
-        );
-      } else {
-        return child;
+        return <TriggerChild {...newChildProps}>{child}</TriggerChild>;
       }
+      return child;
     });
     return [newChildren, popup];
   }
@@ -147,7 +178,7 @@ export default class Trigger extends Component<TriggerProps> {
   @mobxAction
   componentWillReceiveProps(nextProps) {
     const { popupHidden, onPopupHiddenChange = noop } = nextProps;
-    if (popupHidden !== this.popupHidden && popupHidden !== void 0) {
+    if (popupHidden !== this.popupHidden && popupHidden !== undefined) {
       this.popupHidden = popupHidden;
       onPopupHiddenChange(popupHidden);
     }
@@ -169,7 +200,8 @@ export default class Trigger extends Component<TriggerProps> {
     this.documentEvent.clear();
   }
 
-  handleEvent = (eventName, child, e) => {
+  @autobind
+  handleEvent(eventName, child, e) {
     const { [`on${eventName}`]: handle } = this.props as { [key: string]: any };
     const { [`on${eventName}`]: childHandle } = child.props;
     if (childHandle) {
@@ -183,7 +215,7 @@ export default class Trigger extends Component<TriggerProps> {
         this[`handle${eventName}`].call(this, e);
       }
     }
-  };
+  }
 
   handleContextMenu(e) {
     e.preventDefault();
@@ -192,14 +224,16 @@ export default class Trigger extends Component<TriggerProps> {
 
   handleFocus() {
     if (this.isFocusToShow()) {
+      const { focusDelay } = this.props;
       this.focusTime = Date.now();
-      this.delaySetPopupHidden(false, this.props.focusDelay);
+      this.delaySetPopupHidden(false, focusDelay);
     }
   }
 
   handleBlur() {
     if (this.isBlurToHide()) {
-      this.delaySetPopupHidden(true, this.props.blurDelay);
+      const { blurDelay } = this.props;
+      this.delaySetPopupHidden(true, blurDelay);
     }
   }
 
@@ -233,18 +267,20 @@ export default class Trigger extends Component<TriggerProps> {
       this.focusTime = 0;
     }
     this.preClickTime = 0;
-    if (this.isClickToHide() && !popupHidden || popupHidden && this.isClickToShow()) {
+    if ((this.isClickToHide() && !popupHidden) || (popupHidden && this.isClickToShow())) {
       e.preventDefault();
       this.setPopupHidden(!popupHidden);
     }
   }
 
   handleMouseEnter() {
-    this.delaySetPopupHidden(false, this.props.mouseEnterDelay);
+    const { mouseEnterDelay } = this.props;
+    this.delaySetPopupHidden(false, mouseEnterDelay);
   }
 
   handleMouseLeave() {
-    this.delaySetPopupHidden(true, this.props.mouseLeaveDelay);
+    const { mouseLeaveDelay } = this.props;
+    this.delaySetPopupHidden(true, mouseLeaveDelay);
   }
 
   @autobind
@@ -254,7 +290,8 @@ export default class Trigger extends Component<TriggerProps> {
 
   @autobind
   handlePopupMouseLeave() {
-    this.delaySetPopupHidden(true, this.props.mouseLeaveDelay);
+    const { mouseLeaveDelay } = this.props;
+    this.delaySetPopupHidden(true, mouseLeaveDelay);
   }
 
   getPopup(): ReactNode {
@@ -326,7 +363,12 @@ export default class Trigger extends Component<TriggerProps> {
   @autobind
   getPopupClassNameFromAlign(align): string {
     const className: string[] = [];
-    const { popupPlacement, builtinPlacements, prefixCls, getPopupClassNameFromAlign: getCls } = this.props;
+    const {
+      popupPlacement,
+      builtinPlacements,
+      prefixCls,
+      getPopupClassNameFromAlign: getCls,
+    } = this.props;
     if (popupPlacement && builtinPlacements) {
       className.push(getPopupClassNameFromAlign(builtinPlacements, prefixCls, align));
     }
@@ -350,7 +392,7 @@ export default class Trigger extends Component<TriggerProps> {
     this.popupTask.cancel();
     if (this.popupHidden !== hidden) {
       const { popupHidden, onPopupHiddenChange = noop } = this.props;
-      if (popupHidden === void 0) {
+      if (popupHidden === undefined) {
         this.popupHidden = hidden;
       }
       onPopupHiddenChange(hidden);
@@ -375,7 +417,9 @@ export default class Trigger extends Component<TriggerProps> {
 
   isContextMenuToShow() {
     const { action = [], showAction = [] } = this.props;
-    return action.indexOf(Action.contextMenu) !== -1 || showAction.indexOf(ShowAction.contextMenu) !== -1;
+    return (
+      action.indexOf(Action.contextMenu) !== -1 || showAction.indexOf(ShowAction.contextMenu) !== -1
+    );
   }
 
   isClickToHide() {
@@ -402,41 +446,4 @@ export default class Trigger extends Component<TriggerProps> {
     const { action = [], hideAction = [] } = this.props;
     return action.indexOf(Action.focus) !== -1 || hideAction.indexOf(HideAction.blur) !== -1;
   }
-}
-
-function getPopupClassNameFromAlign(builtinPlacements, prefixCls, align): string {
-  const { points } = align;
-  for (let placement in builtinPlacements) {
-    if (builtinPlacements.hasOwnProperty(placement)) {
-      if (isPointsEq(builtinPlacements[placement].points, points)) {
-        return prefixCls + '-popup-placement-' + placement;
-      }
-    }
-  }
-  return '';
-}
-
-function isPointsEq(a1: string[], a2: string[]): boolean {
-  return a1[0] === a2[0] && a1[1] === a2[1];
-}
-
-function getAlignFromPlacement(builtinPlacements, placementStr, align) {
-  const baseAlign = builtinPlacements[placementStr] || {};
-  return {
-    ...baseAlign,
-    ...align,
-  };
-}
-
-function contains(root, n) {
-  let node = n;
-  if (root) {
-    while (node) {
-      if (node === root || (root.contains && root.contains(node))) {
-        return true;
-      }
-      node = node.parentNode;
-    }
-  }
-  return false;
 }

@@ -8,7 +8,6 @@ const chalk = require('chalk');
 const path = require('path');
 const ts = require('gulp-typescript');
 const gulp = require('gulp');
-const gulpRimraf = require('gulp-rimraf');
 const rimraf = require('rimraf');
 const stripCode = require('gulp-strip-code');
 const runCmd = require('./tools/runCmd');
@@ -16,6 +15,7 @@ const getBabelCommonConfig = require('./tools/getBabelCommonConfig');
 const transformLess = require('./tools/transformLess');
 const getNpmArgs = require('./tools/utils/get-npm-args');
 const tsConfig = require('./tools/getTSCommonConfig')();
+const replaceLib = require('./tools/replaceLib');
 
 const tsDefaultReporter = ts.reporter.defaultReporter();
 const cwd = process.cwd();
@@ -80,78 +80,86 @@ function tag() {
 
 function babelify(js, modules) {
   const babelConfig = getBabelCommonConfig(modules);
-  if (modules !== false) {
-    babelConfig.plugins.push(require.resolve('babel-plugin-add-module-exports'));
+  if (modules === false) {
+    babelConfig.plugins.push(replaceLib);
   }
-  let stream = js.pipe(babel(babelConfig))
-    .pipe(through2.obj(function z(file, encoding, next) {
+  let stream = js.pipe(babel(babelConfig)).pipe(
+    through2.obj(function z(file, encoding, next) {
       this.push(file.clone());
       if (file.path.match(/[/\\]style[/\\]index\.js/)) {
         const content = file.contents.toString(encoding);
-        file.contents = Buffer.from(content
-          .replace(/\/style\/?'/g, '/style/css\'')
-          .replace(/\.less/g, '.css'));
+        file.contents = Buffer.from(
+          content.replace(/\/style\/?'/g, "/style/css'").replace(/\.less/g, '.css'),
+        );
         file.path = file.path.replace(/index\.js/, 'css.js');
         this.push(file);
         next();
       } else {
         next();
       }
-    }));
+    }),
+  );
   if (modules === false) {
-    stream = stream.pipe(stripCode({
-      start_comment: '@remove-on-es-build-begin',
-      end_comment: '@remove-on-es-build-end',
-    }));
+    stream = stream.pipe(
+      stripCode({
+        start_comment: '@remove-on-es-build-begin',
+        end_comment: '@remove-on-es-build-end',
+      }),
+    );
   }
   return stream;
 }
 
 function compileRc(modules) {
-  const source = [
-    'components/rc-components/**/*.jsx',
-    'components/rc-components/**/*.js',
-  ];
+  const source = ['components/rc-components/**/*.jsx', 'components/rc-components/**/*.js'];
   return babelify(gulp.src(source), modules);
 }
 
 function compilePro(modules) {
   const dir = modules === false ? 'es' : 'lib';
-  const less = gulp.src(['components-pro/**/*.less'])
-    .pipe(through2.obj(function (file, encoding, next) {
+  const less = gulp.src(['components-pro/**/*.less']).pipe(
+    through2.obj(function(file, encoding, next) {
       const content = file.contents.toString(encoding);
       if (content.match(lessLibName)) {
-        file.contents = Buffer.from(content
-          .replace(lessLibName, path.relative(file.path, path.join(cwd, dir)).replace(/\\/g, '/')));
+        file.contents = Buffer.from(
+          content.replace(
+            lessLibName,
+            path.relative(file.path, path.join(cwd, dir)).replace(/\\/g, '/'),
+          ),
+        );
       }
       this.push(file.clone());
-      if (file.path.match(/[/\\]style[/\\]index\.less$/) || file.path.match(/[/\\]style[/\\]v2-compatible-reset\.less$/)) {
-        transformLess(file.path).then((css) => {
-          file.contents = Buffer.from(css);
-          file.path = file.path.replace(/\.less$/, '.css');
-          this.push(file);
-          next();
-        }).catch((e) => {
-          console.error(e);
-        });
+      if (
+        file.path.match(/[/\\]style[/\\]index\.less$/) ||
+        file.path.match(/[/\\]style[/\\]v2-compatible-reset\.less$/)
+      ) {
+        transformLess(file.path)
+          .then(css => {
+            file.contents = Buffer.from(css);
+            file.path = file.path.replace(/\.less$/, '.css');
+            this.push(file);
+            next();
+          })
+          .catch(e => {
+            console.error(e);
+          });
       } else {
         next();
       }
-    }));
+    }),
+  );
   const assets = gulp.src(['components-pro/**/*.@(png|svg)']);
   let error = 0;
-  const source = [
-    'components-pro/**/*.tsx',
-    'components-pro/**/*.ts',
-    'typings/**/*.d.ts',
-  ];
-  const tsResult = gulp.src(source).pipe(ts(tsConfig, {
-    error(e) {
-      tsDefaultReporter.error(e);
-      error = 1;
-    },
-    finish: tsDefaultReporter.finish,
-  }));
+  const source = ['components-pro/**/*.tsx', 'components-pro/**/*.ts', 'typings/**/*.d.ts'];
+  const tsResult = gulp.src(source).pipe(
+    ts(tsConfig, {
+      error(e) {
+        tsDefaultReporter.error(e);
+        error = 1;
+      },
+      finish: tsDefaultReporter.finish,
+    }),
+  );
 
   function check() {
     if (error && !argv['ignore-error']) {
@@ -166,36 +174,40 @@ function compilePro(modules) {
 }
 
 function compile(modules) {
-  const less = gulp.src(['components/**/*.less'])
-    .pipe(through2.obj(function (file, encoding, next) {
+  const less = gulp.src(['components/**/*.less']).pipe(
+    through2.obj(function(file, encoding, next) {
       this.push(file.clone());
-      if (file.path.match(/[/\\]style[/\\]index\.less$/) || file.path.match(/[/\\]style[/\\]v2-compatible-reset\.less$/)) {
-        transformLess(file.path).then((css) => {
-          file.contents = Buffer.from(css);
-          file.path = file.path.replace(/\.less$/, '.css');
-          this.push(file);
-          next();
-        }).catch((e) => {
-          console.error(e);
-        });
+      if (
+        file.path.match(/[/\\]style[/\\]index\.less$/) ||
+        file.path.match(/[/\\]style[/\\]v2-compatible-reset\.less$/)
+      ) {
+        transformLess(file.path)
+          .then(css => {
+            file.contents = Buffer.from(css);
+            file.path = file.path.replace(/\.less$/, '.css');
+            this.push(file);
+            next();
+          })
+          .catch(e => {
+            console.error(e);
+          });
       } else {
         next();
       }
-    }));
+    }),
+  );
   const assets = gulp.src(['components/**/*.@(png|svg)']);
   let error = 0;
-  const source = [
-    'components/**/*.tsx',
-    'components/**/*.ts',
-    'typings/**/*.d.ts',
-  ];
-  const tsResult = gulp.src(source).pipe(ts(tsConfig, {
-    error(e) {
-      tsDefaultReporter.error(e);
-      error = 1;
-    },
-    finish: tsDefaultReporter.finish,
-  }));
+  const source = ['components/**/*.tsx', 'components/**/*.ts', 'typings/**/*.d.ts'];
+  const tsResult = gulp.src(source).pipe(
+    ts(tsConfig, {
+      error(e) {
+        tsDefaultReporter.error(e);
+        error = 1;
+      },
+      finish: tsDefaultReporter.finish,
+    }),
+  );
 
   function check() {
     if (error && !argv['ignore-error']) {
@@ -215,7 +227,7 @@ function publish(tagString, done) {
     args = args.concat(['--tag', tagString]);
   }
   const publishNpm = process.env.PUBLISH_NPM_CLI || 'npm';
-  runCmd(publishNpm, args, (code) => {
+  runCmd(publishNpm, args, code => {
     if (!argv['skip-tag']) {
       tag();
     }
@@ -224,7 +236,7 @@ function publish(tagString, done) {
 }
 
 function pub(done) {
-  dist((code) => {
+  dist(code => {
     if (code) {
       done(code);
       return;
@@ -238,7 +250,7 @@ function pub(done) {
       tagString = 'next';
     }
     if (packageJson.scripts['pre-publish']) {
-      runCmd('npm', ['run', 'pre-publish'], (code2) => {
+      runCmd('npm', ['run', 'pre-publish'], code2 => {
         if (code2) {
           done(code2);
           return;
@@ -251,22 +263,19 @@ function pub(done) {
   });
 }
 
-function reportError() {
-  console.log(chalk.bgRed('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'));
-  console.log(chalk.bgRed('!! `npm publish` is forbidden for this package. !!'));
-  console.log(chalk.bgRed('!! Use `npm run pub` instead.        !!'));
-  console.log(chalk.bgRed('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'));
-}
-
 function changePath(dir, name, isPro) {
-  return through2.obj(function (file, encoding, next) {
+  return through2.obj(function(file, encoding, next) {
     const matches = file.path.match(/\.d\.ts|\.js/);
     if (matches) {
       const content = file.contents.toString(encoding);
       if (content.match(name)) {
         const replaceText = path.relative(file.path, dir).replace(/\\/g, '/');
-        file.contents = Buffer.from(content
-          .replace(new RegExp(name, 'g'), isPro ? replaceText.replace('../', '') : replaceText));
+        file.contents = Buffer.from(
+          content.replace(
+            new RegExp(name, 'g'),
+            isPro ? replaceText.replace('../', '') : replaceText,
+          ),
+        );
       }
     }
     this.push(file);
@@ -274,67 +283,113 @@ function changePath(dir, name, isPro) {
   });
 }
 
-gulp.task('check-git', (done) => {
-  runCmd('git', ['status', '--porcelain'], (code, result) => {
-    if (/^\?\?/m.test(result)) {
-      return done(`There are untracked files in the working tree.\n${result}
+gulp.task(
+  'check-git',
+  gulp.series(done => {
+    runCmd('git', ['status', '--porcelain'], (code, result) => {
+      if (/^\?\?/m.test(result)) {
+        return done(`There are untracked files in the working tree.\n${result}
       `);
-    }
-    if (/^([ADRM]| [ADRM])/m.test(result)) {
-      return done(`There are uncommitted changes in the working tree.\n${result}
-      `);
-    }
-    return done();
-  });
-});
-
-gulp.task('clean', () => {
-  rimraf.sync(path.join(cwd, '_site'));
-});
-
-gulp.task('clean:ts', () => {
-  const source = [
-    '!components/rc-components/**/*.d.ts',
-    'components/**/*.d.ts',
-    'components-pro/**/*.d.ts',
-  ];
-  gulp.src(source, { read: false, buffer: true })
-    .pipe(gulpRimraf({ verbose: true }));
-});
-
-gulp.task('dist', (done) => {
-  dist(done);
-});
-
-gulp.task('compile', ['compile-with-es'], () => {
-  rimraf.sync(libDir);
-  rimraf.sync(libProDir);
-  compile().pipe(changePath(libProDir, proName, true)).pipe(gulp.dest(libDir));
-  compilePro().pipe(changePath(libDir, libName)).pipe(gulp.dest(libProDir));
-  compileRc().pipe(gulp.dest(libRcDir));
-});
-gulp.task('compile-with-es', () => {
-  rimraf.sync(esDir);
-  rimraf.sync(esProDir);
-  compile(false).pipe(changePath(esProDir, proName, true)).pipe(gulp.dest(esDir));
-  compilePro(false).pipe(changePath(esDir, libName)).pipe(gulp.dest(esProDir));
-  compileRc(false).pipe(gulp.dest(esRcDir));
-});
-
-gulp.task('pub', ['check-git', 'compile'], (done) => {
-  pub(done);
-});
-
-gulp.task('guard', (done) => {
-  const npmArgs = getNpmArgs();
-  if (npmArgs) {
-    for (let arg = npmArgs.shift(); arg; arg = npmArgs.shift()) {
-      if (/^pu(b(l(i(sh?)?)?)?)?$/.test(arg) && npmArgs.indexOf('--with-tools') < 0) {
-        reportError();
-        done(1);
-        return;
       }
-    }
-  }
+      if (/^([ADRM]| [ADRM])/m.test(result)) {
+        return done(`There are uncommitted changes in the working tree.\n${result}
+      `);
+      }
+      return done();
+    });
+  }),
+);
+
+gulp.task('clean', done => {
+  rimraf.sync(path.join(cwd, '_site'));
   done();
 });
+
+gulp.task(
+  'dist',
+  gulp.series(done => {
+    dist(done);
+  }),
+);
+
+gulp.task('compile-with-es', done => {
+  rimraf.sync(esDir);
+  compile(false)
+    .pipe(changePath(esProDir, proName, true))
+    .pipe(gulp.dest(esDir))
+    .on('finish', done);
+});
+
+gulp.task('compile-with-lib', done => {
+  rimraf.sync(libDir);
+  compile()
+    .pipe(changePath(libProDir, proName, true))
+    .pipe(gulp.dest(libDir))
+    .on('finish', done);
+});
+
+gulp.task('compile-with-pro-es', done => {
+  rimraf.sync(esProDir);
+  compilePro(false)
+    .pipe(changePath(esDir, libName))
+    .pipe(gulp.dest(esProDir))
+    .on('finish', done);
+});
+
+gulp.task('compile-with-pro-lib', done => {
+  rimraf.sync(libProDir);
+  compilePro()
+    .pipe(changePath(libDir, libName))
+    .pipe(gulp.dest(libProDir))
+    .on('finish', done);
+});
+
+gulp.task('compile-with-rc-es', done => {
+  compileRc(false)
+    .pipe(gulp.dest(esRcDir))
+    .on('finish', done);
+});
+
+gulp.task('compile-with-rc-lib', done => {
+  compileRc()
+    .pipe(gulp.dest(libRcDir))
+    .on('finish', done);
+});
+
+gulp.task(
+  'compile',
+  gulp.parallel(
+    'compile-with-es',
+    'compile-with-lib',
+    'compile-with-pro-es',
+    'compile-with-pro-lib',
+    'compile-with-rc-es',
+    'compile-with-rc-lib',
+  ),
+);
+
+gulp.task('pub', gulp.series('check-git', 'compile', pub));
+
+gulp.task(
+  'guard',
+  gulp.series(done => {
+    function reportError() {
+      console.log(chalk.bgRed('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'));
+      console.log(chalk.bgRed('!! `npm publish` is forbidden for this package. !!'));
+      console.log(chalk.bgRed('!! Use `npm run pub` instead.        !!'));
+      console.log(chalk.bgRed('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'));
+    }
+
+    const npmArgs = getNpmArgs();
+    if (npmArgs) {
+      for (let arg = npmArgs.shift(); arg; arg = npmArgs.shift()) {
+        if (/^pu(b(l(i(sh?)?)?)?)?$/.test(arg) && npmArgs.indexOf('--with-tools') < 0) {
+          reportError();
+          done(1);
+          return;
+        }
+      }
+    }
+    done();
+  }),
+);

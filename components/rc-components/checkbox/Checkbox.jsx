@@ -29,12 +29,9 @@ export default class Checkbox extends Component {
     style: {},
     type: 'checkbox',
     defaultChecked: false,
-    onFocus() {
-    },
-    onBlur() {
-    },
-    onChange() {
-    },
+    onFocus() {},
+    onBlur() {},
+    onChange() {},
   };
 
   constructor(props) {
@@ -67,7 +64,7 @@ export default class Checkbox extends Component {
     this.input.blur();
   }
 
-  handleChange = (e) => {
+  handleChange = e => {
     const { props } = this;
     if (props.disabled) {
       return;
@@ -92,7 +89,7 @@ export default class Checkbox extends Component {
     });
   };
 
-  saveInput = (node) => {
+  saveInput = node => {
     this.input = node;
   };
 
@@ -112,7 +109,7 @@ export default class Checkbox extends Component {
       onBlur,
       autoFocus,
       value,
-      ...others,
+      ...others
     } = this.props;
 
     const globalProps = Object.keys(others).reduce((prev, key) => {

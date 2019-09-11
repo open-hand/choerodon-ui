@@ -2,31 +2,16 @@ const libDir = process.env.LIB_DIR;
 
 const transformIgnorePatterns = [
   '/dist/',
-  'node_modules\/[^/]+?\/(?!(es|node_modules)\/)', // Ignore modules without es dir
+  'node_modules/[^/]+?/(?!(es|node_modules)/)', // Ignore modules without es dir
 ];
 
 module.exports = {
   verbose: true,
   testURL: 'http://localhost/',
-  setupFiles: [
-    './tests/setup.js',
-  ],
-  moduleFileExtensions: [
-    'ts',
-    'tsx',
-    'js',
-    'jsx',
-    'json',
-    'md',
-  ],
-  modulePathIgnorePatterns: [
-    '/_site/',
-  ],
-  testPathIgnorePatterns: [
-    '/node_modules/',
-    'dekko',
-    'node',
-  ],
+  setupFiles: ['./tests/setup.js'],
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'md'],
+  modulePathIgnorePatterns: ['/_site/'],
+  testPathIgnorePatterns: ['/node_modules/', 'dekko', 'node'],
   transform: {
     '\\.tsx?$': './tools/jest/codePreprocessor',
     '\\.jsx?$': './tools/jest/codePreprocessor',
@@ -42,13 +27,11 @@ module.exports = {
     '!components/**/*/interface.{ts,tsx}',
   ],
   transformIgnorePatterns,
-  snapshotSerializers: [
-    'enzyme-to-json/serializer',
-  ],
+  snapshotSerializers: ['enzyme-to-json/serializer'],
   globals: {
     'ts-jest': {
       tsConfigFile: './tsconfig.test.json',
     },
   },
-  cacheDirectory: './.jest-cache/' + (libDir || 'default'),
+  cacheDirectory: `./.jest-cache/${libDir || 'default'}`,
 };
