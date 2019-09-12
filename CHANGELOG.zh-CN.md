@@ -30,6 +30,7 @@ timeline: true
 - 🐞 `<pro>Form`: 修复 FormField 设了 className 时，宽度不是 100%的问题。
 - 🐞 `<pro>TextField`: 修复 float label 的 autofill 及 prefix 的样式问题。
 - 🐞 `<pro>DatePicker`: 修复 range 为数组时的问题。
+- 🐞 `<pro>DataSet.Field`: 修复 dynamicProps 死循环的问题。
 
 ## 0.8.8
 

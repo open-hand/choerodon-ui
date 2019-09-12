@@ -30,6 +30,7 @@ timeline: true
 - 🐞 `<pro>Form`: Fixed a problem where the width of the FormField was not 100% when the className was set.
 - 🐞 `<pro>TextField`: Fix the autofill and prefix style of the float label.
 - 🐞 `<pro>DatePicker`: Fix the problem when `range` is array.
+- 🐞 `<pro>DataSet.Field`: Fix `dynamicProps` cycle running.
 
 ## 0.8.8
 

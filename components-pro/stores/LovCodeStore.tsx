@@ -141,7 +141,7 @@ export class LovCodeStore {
         const lovQueryAxiosConfig = getConfig('lovQueryAxiosConfig');
         const dataSetProps: DataSetProps = {
           queryUrl: lovQueryAxiosConfig ? undefined : this.getQueryUrl(code),
-          transport: {
+          transport: lovQueryAxiosConfig && {
             read(...args) {
               return lovQueryAxiosConfig(code, config, ...args);
             },
