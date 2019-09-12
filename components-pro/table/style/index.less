@@ -353,25 +353,28 @@
   }
 
   &-advanced-query-bar {
-    margin-bottom: -0.2rem;
-    padding-top: 0.1rem;
-    padding-bottom: 0.11rem;
+    padding-top: 0.12rem;
+    &-container {
+      border-top: 0.01rem solid @border-color-split;
+    }
     > span {
-      margin-bottom: 0.2rem;
+      margin-bottom: 0.12rem;
     }
     &-button {
       display: inline-block;
     }
     &-more-fields-panel {
       padding: 0.12rem 0.2rem;
+      padding-top: 0;
+      padding-bottom: 0.04rem;
 
       .more-field-container {
-        margin-bottom: 0.08rem;
+        margin-bottom: 0.04rem;
       }
       .more-field-label {
         display: inline-block;
-        margin-bottom: 0.08rem;
         color: rgba(0, 0, 0, 0.65);
+        margin-bottom: 0.04rem;
       }
     }
     &-key-value-bar {
