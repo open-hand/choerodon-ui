@@ -1,16 +1,16 @@
-@import "../../../components/style/themes/default";
-@import "../../../components/style/mixins/index";
+@import '../../../components/style/themes/default';
+@import '../../../components/style/mixins/index';
 
 .@{c7n-pro-prefix}-validation-message {
-  padding-left: .10rem;
-  font-size: .12rem;
-  color: @error-color;
-  white-space: nowrap;
   max-width: unset;
+  padding-left: 0.1rem;
+  color: @error-color;
+  font-size: 0.12rem;
+  white-space: nowrap;
   > span {
     vertical-align: middle;
   }
   > .@{iconfont-css-prefix} {
-    margin-right: .08rem;
+    margin-right: 0.08rem;
   }
 }

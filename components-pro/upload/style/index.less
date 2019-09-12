@@ -1,8 +1,8 @@
-@import "../../../components/style/themes/default";
-@import "../../../components/style/mixins/index";
+@import '../../../components/style/themes/default';
+@import '../../../components/style/mixins/index';
 
-@upload-prefix-cls: ~"@{c7n-pro-prefix}-upload";
-@uploadlist-prefix-cls: ~"@{c7n-pro-prefix}-upload-list";
+@upload-prefix-cls: ~'@{c7n-pro-prefix}-upload';
+@uploadlist-prefix-cls: ~'@{c7n-pro-prefix}-upload-list';
 
 .@{upload-prefix-cls} {
   display: inline-block;
@@ -16,22 +16,22 @@
   &-select {
     display: flex;
     // min-width: 1.5rem; // <-- FIXME: hard code for now
-    margin-right: .1rem;
+    margin-right: 0.1rem;
   }
 
   &-select input {
-    cursor: pointer;
     position: absolute;
     top: 0;
-    bottom: 0;
     right: 0;
+    bottom: 0;
     left: 0;
     width: 100%;
+    cursor: pointer;
     opacity: 0;
   }
 
   &-name {
-    margin-left: .05rem;
+    margin-left: 0.05rem;
   }
 
   &:focus {
@@ -40,10 +40,10 @@
 }
 
 .@{uploadlist-prefix-cls} {
-  border-radius: @btn-border-radius-base;
+  margin-top: 0.05rem;
   border: @border-width-base @border-style-base @border-color-base;
   border-bottom: none;
-  margin-top: .05rem;
+  border-radius: @btn-border-radius-base;
 
   &-empty {
     display: none;
@@ -51,31 +51,31 @@
 
   &-item {
     position: relative;
-    width: 100%;
     display: flex;
     align-items: center;
+    width: 100%;
+    padding: 0.05rem 0.1rem;
     border-bottom: @border-width-base @border-style-base @border-color-base;
-    padding: .05rem .1rem;
 
     &-name {
-      padding-left: .2rem;
+      padding-left: 0.2rem;
     }
 
     &-progress {
-      width: 100%;
       display: inline-block;
-      padding-left: .2rem;
+      width: 100%;
+      padding-left: 0.2rem;
     }
 
     &-icon {
       // position: absolute;
-      top: .09rem;
+      top: 0.09rem;
     }
 
     &-remove {
-      cursor: pointer;
-      right: .1rem;
+      right: 0.1rem;
       margin-left: auto;
+      cursor: pointer;
     }
 
     &-error {

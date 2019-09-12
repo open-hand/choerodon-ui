@@ -18,9 +18,10 @@ timeline: true
 - 🌟 Upgrade webpack4 babel7 eslint and stylelint.
 - 🌟 `configure`: Add global configuration new properties.
 - 🌟 `<pro>DataSet`: Add beforeDelete event.
+- 🌟 `<pro>DataSet.Record`: Added save and restore methods.
 - 🌟 `<pro>Table.Filter`: Optimize the position of the filter placeholder and cursor, and adjust the filter bar height to 40px.
 - 🌟 `<pro>Table`: The temporarily deleted line is displayed as disabled and reset when the submission fails.
-- 🌟 `<pro>DataSet.Record`: Added save and restore methods.
+- 🌟 `<pro>Table`: Support SelectBox editor.
 - 🐞 `<pro>Table`: Fixed a problem where there would be no border between the non-fixed and fixed columns of the Table.
 - 🐞 `<pro>Table`: Fix the row positioning problem with the up and down key of keyboard.
 - 🐞 `<pro>DataSet`: Fix the problem when dataKey is null.

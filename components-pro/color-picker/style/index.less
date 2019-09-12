@@ -1,7 +1,7 @@
-@import "../../../components/style/themes/default";
-@import "../../trigger-field/style/mixin";
+@import '../../../components/style/themes/default';
+@import '../../trigger-field/style/mixin';
 
-@color-prefix: ~"@{c7n-pro-prefix}-color-picker";
+@color-prefix: ~'@{c7n-pro-prefix}-color-picker';
 @color-picker-width: 2.8rem;
 
 .@{color-prefix} {
@@ -9,36 +9,38 @@
   // cursor: pointer;
   // width: 0.6rem;
   &-prefix {
-    padding: 0 .03rem;
-    height: .18rem;
+    height: 0.18rem;
+    padding: 0 0.03rem;
   }
   &-color {
-    border-radius: @border-radius-base;
     display: block;
     height: 100%;
+    border-radius: @border-radius-base;
   }
   &-popup {
     width: @color-picker-width;
-    background-clip: padding-box;
-    line-height: 1.5;
     padding: 0.05rem;
+    line-height: 1.5;
+    background-clip: padding-box;
     &-body {
-      height: 1.5rem;
       position: relative;
+      height: 1.5rem;
       &-gradient {
         height: 100%;
-        background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0, #000 100%), linear-gradient(to right, #fff 0, rgba(255, 255, 255, 0) 100%);
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0, #000 100%),
+          linear-gradient(to right, #fff 0, rgba(255, 255, 255, 0) 100%);
       }
       &-selector {
+        position: absolute;
+        // left: 0.2rem;
+        top: -0.05rem;
+        right: -0.05rem;
         width: 0.1rem;
         height: 0.1rem;
         border: @border-width-base @border-style-base #fff;
-        position: absolute;
-        right: -0.05rem;
-        // left: 0.2rem;
-        top: -0.05rem;
         border-radius: 50%;
-        &:hover, :active {
+        &:hover,
+        :active {
           cursor: pointer;
         }
       }
@@ -46,26 +48,35 @@
     &-footer {
       padding: 0.12rem 0.15rem;
       &-slider {
-        height: 0.12rem;
         position: relative;
+        height: 0.12rem;
         // margin-bottom: 0.1rem;
         .hue {
-          border-radius: @border-radius-base;
           height: 100%;
-          background: linear-gradient(to right, red 0, #ff0 16%, #0f0 33%, #0ff 50%, #00f 67%, #f0f 84%, #ff0004 100%);
+          background: linear-gradient(
+            to right,
+            red 0,
+            #ff0 16%,
+            #0f0 33%,
+            #0ff 50%,
+            #00f 67%,
+            #f0f 84%,
+            #ff0004 100%
+          );
+          border-radius: @border-radius-base;
         }
         &.opacity {
-          background: linear-gradient(to right, rgba(255, 0, 0, 1), rgba(255, 0, 0, 0));
           display: none;
+          background: linear-gradient(to right, rgba(255, 0, 0, 1), rgba(255, 0, 0, 0));
         }
         &-pointer {
           position: absolute;
-          height: 0.14rem;
-          width: 0.14rem;
-          border-radius: 50%;
-          background-color: #fff;
-          left: -0.07rem;
           top: -0.01rem;
+          left: -0.07rem;
+          width: 0.14rem;
+          height: 0.14rem;
+          background-color: #fff;
+          border-radius: 50%;
           box-shadow: @box-shadow-base;
           cursor: pointer;
         }

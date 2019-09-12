@@ -1,17 +1,17 @@
-@import "../../../components/style/themes/default";
-@import "../../../components/style/mixins/index";
+@import '../../../components/style/themes/default';
+@import '../../../components/style/mixins/index';
 
-@form-prefix-cls: ~"@{c7n-pro-prefix}-form";
-@field-prefix-cls: ~"@{c7n-pro-prefix}-field";
-@validation-prefix-cls: ~"@{c7n-pro-prefix}-validation-message";
+@form-prefix-cls: ~'@{c7n-pro-prefix}-form';
+@field-prefix-cls: ~'@{c7n-pro-prefix}-field';
+@validation-prefix-cls: ~'@{c7n-pro-prefix}-validation-message';
 
 .@{form-prefix-cls} {
   &-header {
-    border-bottom: @border-width-base @border-style-base @border-color-base;
-    padding: .08rem;
-    font-size: .16rem;
+    margin-bottom: 0.1rem;
+    padding: 0.08rem;
     font-weight: 400;
-    margin-bottom: .1rem;
+    font-size: 0.16rem;
+    border-bottom: @border-width-base @border-style-base @border-color-base;
   }
   > table {
     width: 100%;
@@ -23,14 +23,14 @@
   &-float-label {
     margin: 0 -0.05rem;
     .@{form-prefix-cls}-header {
-      margin-left: .05rem;
-      margin-right: .05rem;
+      margin-right: 0.05rem;
+      margin-left: 0.05rem;
     }
     .@{field-prefix-cls}-wrapper {
-      padding-top: 0;
-      padding-bottom: 0;
       margin-top: @form-item-margin-top;
       margin-bottom: @form-item-margin-bottom;
+      padding-top: 0;
+      padding-bottom: 0;
       // position: relative;
     }
     // .@{field-prefix-cls}-help,

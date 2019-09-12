@@ -90,10 +90,16 @@ export default class TableCell extends Component<TableCellProps> {
         const { prefixCls, column } = this.props;
         const { tableStore } = this.context;
         const cell = findCell(tableStore, prefixCls, getColumnKey(column));
-        const node = findFirstFocusableElement(cell);
-        if (node) {
-          inTab = true;
-          node.focus();
+        if (cell) {
+          if (cell.contains(document.activeElement)) {
+            inTab = true;
+          } else {
+            const node = findFirstFocusableElement(cell);
+            if (node) {
+              inTab = true;
+              node.focus();
+            }
+          }
         }
         break;
       }
@@ -116,9 +122,11 @@ export default class TableCell extends Component<TableCellProps> {
       this.showEditor(e.currentTarget, lock);
       if (!this.cellEditor || isRadio(this.cellEditor)) {
         const cell = findCell(tableStore, prefixCls, getColumnKey(column), lock);
-        const node = findFirstFocusableElement(cell);
-        if (node && !inTab) {
-          node.focus();
+        if (cell && !cell.contains(document.activeElement)) {
+          const node = findFirstFocusableElement(cell);
+          if (node && !inTab) {
+            node.focus();
+          }
         }
       }
     }

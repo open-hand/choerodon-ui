@@ -1,24 +1,24 @@
-@import "../../../components/style/themes/default";
-@import "../../../components/style/mixins/index";
-@import "../../text-field/style/mixin";
+@import '../../../components/style/themes/default';
+@import '../../../components/style/mixins/index';
+@import '../../text-field/style/mixin';
 
-@output-prefix-cls: ~"@{c7n-pro-prefix}-output";
+@output-prefix-cls: ~'@{c7n-pro-prefix}-output';
 
 .@{output-prefix-cls} {
   line-height: 28 / 13; // <-- fieldHeight / fontSize
   &-invalid {
+    color: @error-color;
+    background-color: @error-bg-color;
     border: @border-width-base @border-style-base @error-color;
     border-radius: @border-radius-base;
-    background-color: @error-bg-color;
-    color: @error-color;
   }
   &-multiple-block {
     .tag-block;
     vertical-align: text-top;
   }
-  &-empty:after {
+  &-empty::after {
     display: inline-block;
-    content: "";
-    width: .01rem;
+    width: 0.01rem;
+    content: '';
   }
 }

@@ -9,6 +9,7 @@ import ObserverRadio from '../radio/Radio';
 import { FieldType, RecordStatus } from '../data-set/enum';
 import Field from '../data-set/Field';
 import ObserverSelect from '../select/Select';
+import SelectBox from '../select-box/SelectBox';
 import Lov from '../lov/Lov';
 import ObserverNumberField from '../number-field/NumberField';
 import Currency from '../currency/Currency';
@@ -122,6 +123,7 @@ export function isRadio(element?: ReactElement<FormFieldProps>): boolean {
       case ObserverCheckBox:
       case ObserverRadio:
       case Switch:
+      case SelectBox:
         return true;
       default:
     }
@@ -146,15 +148,16 @@ export function findCell(
   }
 }
 
-export function findFirstFocusableElement(node?: HTMLElement): HTMLElement | undefined {
-  if (node && node.children) {
+export function findFirstFocusableElement(node: HTMLElement): HTMLElement | undefined {
+  if (node.children) {
     let found: HTMLElement | undefined;
-    [...(node.children as HTMLCollectionOf<HTMLElement>)].forEach(child => {
+    [...(node.children as HTMLCollectionOf<HTMLElement>)].some(child => {
       if (child.tabIndex > -1) {
         found = child;
       } else {
         found = findFirstFocusableElement(child);
       }
+      return !!found;
     });
     return found;
   }

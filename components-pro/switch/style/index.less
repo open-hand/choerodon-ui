@@ -1,13 +1,13 @@
-@import "../../../components/style/themes/default";
-@import "../../../components/style/mixins/index";
-@import "../../radio/style/mixin";
+@import '../../../components/style/themes/default';
+@import '../../../components/style/mixins/index';
+@import '../../radio/style/mixin';
 
-@switch-prefix-cls: ~"@{c7n-pro-prefix}-switch";
-@switch-duration: .36s;
+@switch-prefix-cls: ~'@{c7n-pro-prefix}-switch';
+@switch-duration: 0.36s;
 
 .@{switch-prefix-cls} {
   &-wrapper {
-    padding: .03rem;
+    padding: 0.03rem;
     &.@{c7n-pro-prefix}-field {
       width: auto;
     }
@@ -17,39 +17,40 @@
 
   &-label {
     position: relative;
-    height: @switch-height - .04rem;
-    min-width: .36rem;
-    line-height: @switch-height - .06rem;
-    border-radius: @switch-height / 2;
+    display: block;
+    min-width: 0.36rem;
+    height: @switch-height - 0.04rem;
+    padding: 0 0.05rem 0 @switch-height;
     color: #fff;
     font-size: @font-size-sm;
-    display: block;
-    background-color: rgba(0, 0, 0, .38);
-    padding: 0 .05rem 0 @switch-height;
-    &:after {
+    line-height: @switch-height - 0.06rem;
+    background-color: rgba(0, 0, 0, 0.38);
+    border-radius: @switch-height / 2;
+    &::after {
       position: absolute;
-      width: @switch-height;
-      height: @switch-height;
-      left: 0;
       top: 0;
       bottom: 0;
+      left: 0;
+      width: @switch-height;
+      height: @switch-height;
       margin-top: auto;
       margin-bottom: auto;
-      border-radius: 50%;
       background-color: @component-background;
-      content: " ";
+      border-radius: 50%;
+      box-shadow: 0 0.02rem 0.01rem -0.01rem rgba(0, 0, 0, 0.2),
+        0 0.01rem 0.01rem 0 rgba(0, 0, 0, 0.14), 0 0.01rem 0.03rem 0 rgba(0, 0, 0, 0.12);
       cursor: inherit;
       transition: all @switch-duration @ease-in-out-circ;
-      box-shadow: 0 .02rem .01rem -.01rem rgba(0, 0, 0, .2), 0 .01rem .01rem 0 rgba(0, 0, 0, 0.14), 0 .01rem .03rem 0 rgba(0, 0, 0, 0.12);
+      content: ' ';
     }
   }
 
-  &:active + &-label:after {
-    width: @switch-height + .04rem;
+  &:active + &-label::after {
+    width: @switch-height + 0.04rem;
   }
 
   &-focused &-label {
-    box-shadow: 0 0 0 .02rem fade(@switch-color, 20%);
+    box-shadow: 0 0 0 0.02rem fade(@switch-color, 20%);
   }
 
   &-focused:hover &-label {
@@ -57,9 +58,9 @@
   }
 
   &:checked + &-label {
+    padding: 0 @switch-height 0 0.05rem;
     background-color: @switch-color;
-    padding: 0 @switch-height 0 .05rem;
-    &:after {
+    &::after {
       left: 100%;
       margin-left: 0 - @switch-height;
       background-color: @switch-checked-color;
@@ -76,33 +77,33 @@
     padding: 0;
   }
 
-  &-sm &-label:after {
+  &-sm &-label::after {
+    left: 0.01rem;
     width: @switch-sm-height;
     height: @switch-sm-height;
-    left: .01rem;
   }
 
-  &-sm &:checked + &-label:after {
-    margin-left: -.01rem - @switch-sm-height;
+  &-sm &:checked + &-label::after {
+    margin-left: -0.01rem - @switch-sm-height;
   }
 
   &-lg {
-    padding: .03rem 0;
+    padding: 0.03rem 0;
   }
 
   &-lg &-label {
+    min-width: 0.4rem;
     height: @switch-lg-height;
-    min-width: .4rem;
-    &:after {
-      left: .01rem;
+    &::after {
+      left: 0.01rem;
     }
   }
-  &-lg &:checked + &-label:after {
-    margin-left: .01rem - @switch-lg-height;
+  &-lg &:checked + &-label::after {
+    margin-left: 0.01rem - @switch-lg-height;
   }
 
   &-float-label .@{field-label-prefix-cls}-wrapper {
-    transform-origin: @float-label-transform-origin-high;
     left: 0;
+    transform-origin: @float-label-transform-origin-high;
   }
 }

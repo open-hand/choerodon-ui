@@ -1,67 +1,67 @@
-@import "../../../components/style/themes/default";
-@import "../../../components/style/mixins/index";
+@import '../../../components/style/themes/default';
+@import '../../../components/style/mixins/index';
 @import '../../field/style/mixin';
 
-@range-prefix-cls: ~"@{c7n-pro-prefix}-range";
+@range-prefix-cls: ~'@{c7n-pro-prefix}-range';
 
 .@{range-prefix-cls} {
   display: none;
   &-wrapper {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 0.04rem @input-padding-horizontal-base;
     white-space: nowrap;
     outline: none;
-    padding: .04rem @input-padding-horizontal-base;
-    display: block;
-    position: relative;
-    width: 100%;
   }
 
   &-vertical {
-    padding: 0 .04rem;
     height: 100%;
+    padding: 0 0.04rem;
   }
 
   &-vertical &-track {
-    width: .04rem;
+    width: 0.04rem;
     height: 100%;
 
     .@{range-prefix-cls}-selection {
       bottom: 0;
-      width: .04rem;
+      width: 0.04rem;
       height: 0;
     }
     .@{range-prefix-cls}-draghandle {
-      margin: 0 0 -0.07rem 0;
-      left: -.05rem;
       bottom: 0;
+      left: -0.05rem;
+      margin: 0 0 -0.07rem 0;
     }
   }
 
   &-track {
     position: relative;
-    height: .04rem;
-    border-radius: .06rem; /*将轨道设为圆角的*/
+    height: 0.04rem;
     background: @normal-color;
+    border-radius: 0.06rem; /* 将轨道设为圆角的 */
     cursor: pointer;
 
     .@{range-prefix-cls}-selection {
       position: absolute;
       left: 0;
-      height: .04rem;
+      height: 0.04rem;
       background: @primary-color;
-      border-radius: .06rem;
+      border-radius: 0.06rem;
       cursor: inherit;
     }
 
     .@{range-prefix-cls}-draghandle {
       position: absolute;
-      margin-left: -0.07rem;
+      bottom: -0.05rem;
       z-index: 1;
-      width: .13rem;
-      height: .13rem;
-      bottom: -.05rem;
-      border-radius: 50%;
-      border: .015rem @border-style-base @primary-color;
+      width: 0.13rem;
+      height: 0.13rem;
+      margin-left: -0.07rem;
       background: #fff;
+      border: 0.015rem @border-style-base @primary-color;
+      border-radius: 50%;
       cursor: inherit;
       user-select: none;
     }
@@ -80,10 +80,10 @@
   }
   .float-label;
   &-float-label {
-    padding-top: .11rem;
+    padding-top: 0.11rem;
   }
   &-float-label .@{field-label-prefix-cls}-wrapper {
-    transform-origin: @float-label-transform-origin-high;
     left: 0;
+    transform-origin: @float-label-transform-origin-high;
   }
 }

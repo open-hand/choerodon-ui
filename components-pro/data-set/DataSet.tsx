@@ -33,6 +33,7 @@ import {
   getOrderFields,
   prepareForSubmit,
   prepareSubmitData,
+  processData,
   processIntlField,
   sortTree,
 } from './utils';
@@ -1475,12 +1476,7 @@ Then the query method will be auto invoke.`,
     } = this;
     allData = paging ? allData.slice(0, pageSize) : allData;
     this.fireEvent(DataSetEvents.beforeLoad, { dataSet: this, data: allData });
-    this.originalData = allData.map(data => {
-      const record =
-        data instanceof Record ? ((data.dataSet = this), data) : new Record(data, this);
-      record.status = RecordStatus.sync;
-      return record;
-    });
+    this.originalData = processData(allData, this);
     this.records = this.originalData;
     if (total !== undefined && paging === true) {
       this.totalCount = total;
@@ -1793,8 +1789,12 @@ Then the query method will be auto invoke.`,
       }
       if (current) {
         const snapshot = current.dataSetSnapshot[childName];
+        const cascadeRecords = current.cascadeRecordsMap[childName];
         if (snapshot instanceof DataSetSnapshot) {
           ds.restore(snapshot);
+        } else if (cascadeRecords) {
+          delete current.cascadeRecordsMap[childName];
+          ds.loadData(cascadeRecords);
         } else if (!this.syncChild(ds, current, childName, true)) {
           ds.loadData([]);
           remoteKeys.push(childName);

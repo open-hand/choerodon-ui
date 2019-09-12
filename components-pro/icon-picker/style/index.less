@@ -1,15 +1,15 @@
-@import "../../../components/style/themes/default";
-@import "../../../components/style/mixins/index";
-@import "../../trigger-field/style/mixin";
+@import '../../../components/style/themes/default';
+@import '../../../components/style/mixins/index';
+@import '../../trigger-field/style/mixin';
 
-@icon-picker-prefix: ~"@{c7n-pro-prefix}-icon-picker";
+@icon-picker-prefix: ~'@{c7n-pro-prefix}-icon-picker';
 
 .@{icon-picker-prefix} {
   .trigger;
 
   &-item-selected div {
-    background-color: @primary-color;
     color: #fff;
+    background-color: @primary-color;
   }
 
   &-popup {
@@ -18,30 +18,30 @@
       position: relative;
       width: 100%;
       height: 100%;
-      overflow: auto;
-      list-style: none;
       margin: 0;
       padding: 0;
+      overflow: auto;
+      list-style: none;
     }
     li {
       float: left;
       width: 20%;
-      padding: .05rem;
+      padding: 0.05rem;
       text-align: center;
       div {
-        padding: .05rem;
-        cursor: pointer;
+        padding: 0.05rem;
         border-radius: @border-radius-base;
+        cursor: pointer;
         &:hover {
           background-color: @item-hover-bg;
         }
       }
       p {
-        overflow: hidden;
-        text-overflow: ellipsis;
         margin: 0;
         padding: 0;
+        overflow: hidden;
         white-space: nowrap;
+        text-overflow: ellipsis;
       }
     }
   }
@@ -52,7 +52,7 @@
   }
 
   &-tab {
-    margin-top: -.16rem;
+    margin-top: -0.16rem;
   }
 
   &-category {
@@ -60,15 +60,15 @@
   }
 
   &-pagination {
-    text-align: center;
     position: absolute;
-    z-index: 1;
+    right: 0;
     bottom: 0;
     left: 0;
-    right: 0;
-    background-color: rgba(255, 255, 255, .9);
+    z-index: 1;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.9);
     + ul {
-      padding-bottom: .36rem;
+      padding-bottom: 0.36rem;
     }
   }
 }

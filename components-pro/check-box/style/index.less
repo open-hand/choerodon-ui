@@ -1,8 +1,8 @@
-@import "../../../components/style/themes/default";
-@import "../../../components/style/mixins/index";
-@import "../../radio/style/mixin";
+@import '../../../components/style/themes/default';
+@import '../../../components/style/mixins/index';
+@import '../../radio/style/mixin';
 
-@checkbox-prefix-cls: ~"@{c7n-pro-prefix}-checkbox";
+@checkbox-prefix-cls: ~'@{c7n-pro-prefix}-checkbox';
 
 .@{checkbox-prefix-cls} {
   .radio-btn;
@@ -13,32 +13,33 @@
     width: @checkbox-size;
     height: @checkbox-size;
     font-size: @font-size-base !important;
+    vertical-align: middle;
+    background-color: #fff;
     border: @checkbox-border-width @border-style-base @checkbox-border-color;
     border-radius: @border-radius-sm;
-    background-color: #fff;
-    transition: border-color 90ms cubic-bezier(0, 0, .2, .1), background-color 90ms cubic-bezier(0, 0, .2, .1);
-    vertical-align: middle;
+    transition: border-color 90ms cubic-bezier(0, 0, 0.2, 0.1),
+      background-color 90ms cubic-bezier(0, 0, 0.2, 0.1);
 
-    &:after {
+    &::after {
       @check-width: (@checkbox-size / 14) * 5;
       @check-height: (@checkbox-size / 14) * 10;
-      transform: rotate(45deg) scale(0);
       position: absolute;
-      left: (@checkbox-size - @check-width) / 2 - 1.5 * (@checkbox-size / 14);
       top: (@checkbox-size - @check-height) / 2 - 3 * (@checkbox-size / 14);
+      left: (@checkbox-size - @check-width) / 2 - 1.5 * (@checkbox-size / 14);
       display: table;
       width: @check-width;
       height: @check-height;
-      border: .02rem solid #fff;
+      border: 0.02rem solid #fff;
       border-top: 0;
       border-left: 0;
+      transform: rotate(45deg) scale(0);
+      transition: all 0.1s @ease-in-back;
       content: ' ';
-      transition: all .1s @ease-in-back;
     }
 
     & + span {
-      padding-left: .08rem;
-      padding-right: .08rem;
+      padding-right: 0.08rem;
+      padding-left: 0.08rem;
       vertical-align: middle;
     }
   }
@@ -54,54 +55,54 @@
 
   &:checked + &-inner,
   &-indeterminate &-inner {
-    border-color: @primary-color;
     background-color: @primary-color;
-    &:after {
-      opacity: 1;
+    border-color: @primary-color;
+    &::after {
       transform: rotate(45deg) scale(1);
+      opacity: 1;
     }
   }
   &:hover &:checked + &-inner,
   &-indeterminate:hover &-inner,
   &:focus:checked + &-inner {
-    border-color: @primary-7;
     background-color: @primary-7;
+    border-color: @primary-7;
   }
 
-  &-indeterminate &-inner:after {
+  &-indeterminate &-inner::after {
     @indeterminate-width: (@checkbox-size / 14) * 8;
     @indeterminate-height: (@checkbox-size / 14) * 1;
-    content: ' ';
-    transform: scale(1) !important;
     position: absolute;
-    left: (@checkbox-size - .03rem - @indeterminate-width) / 2;
-    top: (@checkbox-size - .05rem - @indeterminate-height) / 2;
+    top: (@checkbox-size - 0.05rem - @indeterminate-height) / 2;
+    left: (@checkbox-size - 0.03rem - @indeterminate-width) / 2;
     width: @indeterminate-width;
     height: @indeterminate-height;
+    transform: scale(1) !important;
+    content: ' ';
   }
 
   &:disabled + &-inner {
-    border-color: @disabled-color !important;
-    background-color: @input-disabled-bg !important;
     color: @disabled-color;
-    &:after {
+    background-color: @input-disabled-bg !important;
+    border-color: @disabled-color !important;
+    &::after {
       border-color: @disabled-color !important;
     }
   }
 
   &-button {
-    padding: 0 .15rem;
-    line-height: .3rem;
+    padding: 0 0.15rem;
+    line-height: 0.3rem;
     .@{checkbox-prefix-cls}-inner {
       position: absolute;
       top: 0;
       right: 0;
       bottom: 0;
       left: 0;
-      height: auto;
       width: auto;
+      height: auto;
       border-radius: @border-radius-base;
-      &:after {
+      &::after {
         display: none;
       }
       & + span {
@@ -118,10 +119,10 @@
     }
   }
   &-button + &-button {
-    margin-left: .1rem;
+    margin-left: 0.1rem;
   }
   &-float-label .@{field-label-prefix-cls}-wrapper {
-    transform-origin: @float-label-transform-origin-high;
     left: 0;
+    transform-origin: @float-label-transform-origin-high;
   }
 }

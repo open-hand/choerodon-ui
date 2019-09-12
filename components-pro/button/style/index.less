@@ -5,20 +5,20 @@
 @progress-cls: ~'@{c7n-prefix}-progress';
 
 .@{btn-prefix-cls} {
+  position: relative;
+  display: inline-block;
+  padding: 0.03rem 0.1rem 0.04rem 0.1rem;
+  line-height: 1.5;
+  text-align: center;
+  vertical-align: top;
   background-color: @btn-default-bg;
   border: none;
-  box-shadow: @btn-box-shadow;
   border-radius: @border-radius-base;
-  cursor: pointer;
-  display: inline-block;
   outline: none;
-  padding: 0.03rem 0.1rem 0.04rem 0.1rem;
-  position: relative;
-  text-align: center;
-  user-select: none;
-  vertical-align: top;
+  box-shadow: @btn-box-shadow;
+  cursor: pointer;
   transition: all 0.3s ease-out;
-  line-height: 1.5;
+  user-select: none;
 
   &:focus {
     box-shadow: @btn-focus-box-shadow;
@@ -39,16 +39,16 @@
   }
 
   &-lg {
-    font-size: @font-size-lg;
     padding: 0.07rem 0.12rem;
+    font-size: @font-size-lg;
     .@{c7n-pro-prefix}-icon {
       font-size: @font-size-lg;
     }
   }
 
   &-sm {
-    font-size: @font-size-sm;
     padding: 0 0.08rem;
+    font-size: @font-size-sm;
     .@{c7n-pro-prefix}-icon {
       font-size: @font-size-sm;
     }
@@ -77,18 +77,18 @@
 
   &:disabled {
     cursor: not-allowed;
-    &:before {
+    &::before {
       position: absolute;
       top: -0.01rem;
-      left: -0.01rem;
-      bottom: -0.01rem;
       right: -0.01rem;
-      background: #fff;
-      opacity: 0.35;
-      content: '';
-      border-radius: inherit;
+      bottom: -0.01rem;
+      left: -0.01rem;
       z-index: 1;
+      background: #fff;
+      border-radius: inherit;
+      opacity: 0.35;
       transition: opacity 0.2s;
+      content: '';
       pointer-events: none;
     }
   }
@@ -279,39 +279,39 @@
   }
 
   &-icon-only {
-    padding: 0;
-    border-radius: 50%;
     width: @btn-circle-size;
     height: @btn-circle-size;
+    padding: 0;
+    border-radius: 50%;
     > .@{iconfont-css-prefix} {
+      margin-right: 0;
       font-size: @btn-icon-size + 0.06rem;
       line-height: 1.5;
-      margin-right: 0;
     }
     &.@{btn-prefix-cls}-sm {
-      padding: 0;
       width: @btn-circle-size-sm;
       height: @btn-circle-size-sm;
+      padding: 0;
       > .@{iconfont-css-prefix} {
         font-size: @btn-icon-size;
       }
     }
     &.@{btn-prefix-cls}-lg {
-      padding: 0;
       width: @btn-circle-size-lg;
       height: @btn-circle-size-lg;
+      padding: 0;
       > .@{iconfont-css-prefix} {
         font-size: @btn-icon-size + 0.1rem;
       }
     }
-    &:disabled:before {
+    &:disabled::before {
       opacity: 0.5;
     }
   }
 
   .@{progress-cls}.@{progress-cls}-loading {
-    line-height: 1;
     margin-right: 0.01rem;
+    line-height: 1;
 
     & + span {
       margin-left: 0.05rem;

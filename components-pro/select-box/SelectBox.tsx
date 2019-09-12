@@ -102,6 +102,9 @@ export default class SelectBox extends Select<SelectBoxProps> {
         mode,
         noValidate: true,
         labelLayout: LabelLayout.none,
+        onBlur: e => {
+          console.trace(e.target);
+        },
       }),
     );
     const { className } = this.getOtherProps();

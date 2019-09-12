@@ -1,6 +1,7 @@
 import React, { Children, cloneElement, Component, HTMLAttributes, ReactElement } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import omit from 'lodash/omit';
 import Responsive, { BreakpointMap } from '../responsive/Responsive';
 import { getPrefixCls } from '../configure';
 
@@ -78,7 +79,7 @@ export default class Row extends Component<RowProps> {
     const otherProps = { ...others };
     delete otherProps.gutter;
     return (
-      <div {...otherProps} className={classes} style={rowStyle}>
+      <div {...omit(otherProps, ['rowIndex', 'colIndex'])} className={classes} style={rowStyle}>
         {cols}
       </div>
     );

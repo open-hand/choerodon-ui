@@ -83,7 +83,10 @@ export default class TableBody extends Component<TableBodyProps, any> {
       const {
         tableStore: { node },
       } = this.context;
-      if (classes(node.wrapper).has(`${prefixCls}-focused`)) {
+      if (
+        classes(node.wrapper).has(`${prefixCls}-focused`) &&
+        !node.wrapper.contains(document.activeElement)
+      ) {
         node.focus();
       }
     }

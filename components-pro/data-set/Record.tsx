@@ -24,6 +24,7 @@ import {
   generateResponseData,
   getRecordValue,
   isSame,
+  processData,
   processIntlField,
   processToJSON,
   processValue,
@@ -56,6 +57,8 @@ export default class Record {
   pristineData: object;
 
   dataSetSnapshot: { [key: string]: DataSetSnapshot } = {};
+
+  cascadeRecordsMap: { [key: string]: Record[] } = {};
 
   pending?: Promise<boolean>;
 
@@ -328,17 +331,21 @@ export default class Record {
     if (fieldName && dataSet) {
       const childDataSet = dataSet.children[fieldName];
       if (childDataSet) {
+        if (dataSet.current === this) {
+          return childDataSet.slice();
+        }
         const snapshot = this.dataSetSnapshot[fieldName];
         if (snapshot) {
-          const isCurrent = dataSet.current === this;
-          return (isCurrent ? childDataSet : new DataSet().restore(snapshot)).slice();
+          return snapshot.records.slice();
+        }
+        const cascadeRecords = this.cascadeRecordsMap[fieldName];
+        if (cascadeRecords) {
+          return cascadeRecords;
         }
         const data = this.get(fieldName);
         if (isObservableArray(data)) {
-          const newSnapshot = childDataSet.snapshot();
-          this.dataSetSnapshot[fieldName] = childDataSet.loadData(data.slice()).snapshot();
-          const records = childDataSet.slice();
-          childDataSet.restore(newSnapshot);
+          const records = processData(data, dataSet);
+          this.cascadeRecordsMap[fieldName] = records;
           return records;
         }
       }

@@ -1,18 +1,18 @@
-@import "../../../components/style/themes/default";
-@import "../../../components/style/mixins/index";
+@import '../../../components/style/themes/default';
+@import '../../../components/style/mixins/index';
 
-@field-prefix-cls: ~"@{c7n-pro-prefix}-field";
+@field-prefix-cls: ~'@{c7n-pro-prefix}-field';
 
 .@{field-prefix-cls} {
   display: inline-block;
   width: 100%;
   &-label,
   &-label-vertical {
-    vertical-align: middle;
     overflow: hidden;
+    line-height: 28 / 13; // <-- fieldHeight / fontSize
     white-space: nowrap;
     text-overflow: ellipsis;
-    line-height: 28 / 13; // <-- fieldHeight / fontSize
+    vertical-align: middle;
     label {
       display: inline-block;
     }
@@ -25,30 +25,30 @@
   }
   &-label,
   &-wrapper {
-    padding: .1rem .05rem;
+    padding: 0.1rem 0.05rem;
   }
   &-label-vertical {
-    text-align: left;
-    direction: ltr;
     display: block;
     padding-top: 0;
     padding-bottom: 0;
+    direction: ltr;
+    text-align: left;
     & + .@{field-prefix-cls}-wrapper {
       padding-top: 0;
     }
   }
-  &-label:after {
+  &-label::after {
     display: inline-block;
-    line-height: 1;
-    margin-left: .04rem;
+    width: 0.08rem;
+    margin-left: 0.04rem;
     color: @label-required-color;
-    width: .08rem;
+    font-family: SimSun, sans-serif;
+    line-height: 1;
     vertical-align: middle;
-    content: " ";
-    font-family: SimSun;
+    content: ' ';
   }
-  &-required&-label:after {
-    content: "*";
+  &-required&-label::after {
+    content: '*';
   }
   &-help {
     color: @field-help-color;

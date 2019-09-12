@@ -1,13 +1,13 @@
-@import "../../../components/style/themes/default";
-@import "../../../components/style/mixins/index";
-@import "../../trigger-field/style/mixin";
+@import '../../../components/style/themes/default';
+@import '../../../components/style/mixins/index';
+@import '../../trigger-field/style/mixin';
 
-@date-picker-prefix: ~"@{c7n-pro-prefix}-calendar";
+@date-picker-prefix: ~'@{c7n-pro-prefix}-calendar';
 @date-picker-width: 2.8rem;
-@date-picker-horizontal-padding: .12rem;
+@date-picker-horizontal-padding: 0.12rem;
 @date-picker-border-base: @border-width-base @border-style-base @input-border-color;
-@date-time-list-width: (@date-picker-width - @date-picker-horizontal-padding * 2 + .02rem) / 3;
-@date-time-list-item-height: .24rem;
+@date-time-list-width: (@date-picker-width - @date-picker-horizontal-padding * 2 + 0.02rem) / 3;
+@date-time-list-item-height: 0.24rem;
 
 .@{date-picker-prefix} {
   &-picker {
@@ -15,18 +15,18 @@
 
     &-popup {
       width: @date-picker-width;
-      background-clip: padding-box;
       line-height: 1.5;
+      background-clip: padding-box;
     }
 
     &-suffix {
       display: flex;
-      cursor: pointer;
-      justify-content: center;
       align-items: center;
-      height: 100%;
-      padding: .05rem .03rem;
+      justify-content: center;
       width: auto;
+      height: 100%;
+      padding: 0.05rem 0.03rem;
+      cursor: pointer;
 
       .@{iconfont-css-prefix} {
         display: block;
@@ -35,36 +35,36 @@
   }
 
   &-body {
-    padding: .08rem @date-picker-horizontal-padding;
+    padding: 0.08rem @date-picker-horizontal-padding;
     overflow: hidden;
     table {
       width: 100%;
       font-size: @font-size-lg;
     }
     th {
-      line-height: .18rem;
-      width: .33rem;
-      padding: .06rem 0;
-      text-align: center;
+      width: 0.33rem;
+      padding: 0.06rem 0;
       font-weight: normal;
+      line-height: 0.18rem;
+      text-align: center;
     }
   }
   &-cell {
+    height: 0.3rem;
+    padding: 0.03rem 0;
     text-align: center;
-    padding: .03rem 0;
-    height: .3rem;
     &-inner {
       display: block;
+      height: 0.24rem;
       margin: 0 auto;
-      border-radius: @border-radius-sm;
-      height: .24rem;
-      line-height: .22rem;
-      border: @border-width-base @border-style-base transparent;
       padding: 0;
-      background-color: transparent;
+      line-height: 0.22rem;
       text-align: center;
-      transition: background .3s ease;
+      background-color: transparent;
+      border: @border-width-base @border-style-base transparent;
+      border-radius: @border-radius-sm;
       cursor: pointer;
+      transition: background 0.3s ease;
       &:hover {
         background-color: @item-hover-bg;
       }
@@ -81,14 +81,14 @@
   }
 
   &-today &-cell-inner {
-    border-color: @primary-color;
-    font-weight: bold;
     color: @primary-color;
+    font-weight: bold;
+    border-color: @primary-color;
   }
 
   &-selected &-cell-inner {
-    background: @primary-color;
     color: #fff;
+    background: @primary-color;
     border: @border-width-base @border-style-base transparent;
 
     &:hover {
@@ -97,12 +97,12 @@
   }
 
   &-disabled &-cell-inner {
-    cursor: not-allowed;
+    width: auto;
     color: #bcbcbc;
     background: @disabled-bg;
-    border-radius: 0;
-    width: auto;
     border: @border-width-base @border-style-base transparent;
+    border-radius: 0;
+    cursor: not-allowed;
 
     &:hover {
       background: @disabled-bg;
@@ -110,46 +110,46 @@
   }
   &-disabled&-today &-cell-inner {
     position: relative;
-    &:before {
-      content: " ";
+    &::before {
       position: absolute;
-      top: .01rem;
-      left: .01rem;
-      width: .2rem;
-      height: .2rem;
+      top: 0.01rem;
+      left: 0.01rem;
+      width: 0.2rem;
+      height: 0.2rem;
       border: @border-width-base @border-style-base #bcbcbc;
       border-radius: @border-radius-base;
+      content: ' ';
     }
   }
 
   &-day-panel &-cell-inner,
   &-time-panel &-cell-inner {
-    width: .24rem;
+    width: 0.24rem;
   }
 
   &-month-panel &-cell,
   &-year-panel &-cell {
-    padding: .2rem 0;
+    padding: 0.2rem 0;
   }
 
   &-month-panel &-cell-inner,
   &-year-panel &-cell-inner {
     display: inline-block;
-    padding: 0 .06rem;
+    padding: 0 0.06rem;
   }
 
   &-time-panel &-cell-inner {
-    height: @date-time-list-item-height - .06rem;
-    line-height: @date-time-list-item-height - .07rem;
+    height: @date-time-list-item-height - 0.06rem;
+    line-height: @date-time-list-item-height - 0.07rem;
   }
 
   &-header {
-    height: .4rem;
-    line-height: .4rem;
+    height: 0.4rem;
+    padding: 0 0.07rem;
+    line-height: 0.4rem;
     text-align: center;
-    user-select: none;
     border-bottom: @border-width-base @border-style-base @border-color-split;
-    padding: 0 .07rem;
+    user-select: none;
 
     a:hover {
       color: @link-hover-color;
@@ -159,10 +159,10 @@
   &-prev-month,
   &-next-year,
   &-next-month {
+    padding: 0 0.05rem;
     color: @text-color-secondary;
-    font-family: Arial, "Hiragino Sans GB", "Microsoft Yahei", "Microsoft Sans Serif", sans-serif;
-    padding: 0 .05rem;
-    font-size: .14rem;
+    font-size: 0.14rem;
+    font-family: Arial, 'Hiragino Sans GB', 'Microsoft Yahei', 'Microsoft Sans Serif', sans-serif;
   }
 
   &-prev-year,
@@ -176,29 +176,29 @@
   }
 
   &-view-select {
-    padding: 0 .02rem;
-    font-weight: bold;
+    padding: 0 0.02rem;
     color: @text-color;
-    line-height: .34rem;
+    font-weight: bold;
+    line-height: 0.34rem;
   }
 
   &-footer {
     position: relative;
+    height: 0.39rem;
+    line-height: 0.39rem;
     text-align: center;
     border-top: @border-width-base @border-style-base @border-color-split;
-    line-height: .39rem;
-    height: .39rem;
     button {
-      transition: all .3s ease-out, visibility 0s;
+      transition: all 0.3s ease-out, visibility 0s;
     }
   }
   &-footer-now-btn {
     position: absolute;
-    left: .12rem;
+    left: 0.12rem;
   }
   &-footer-view-select {
     position: absolute;
-    right: .12rem;
+    right: 0.12rem;
   }
 
   &-week-panel {
@@ -248,34 +248,35 @@
 
   &-time-list {
     position: relative;
+    float: left;
     width: 33.33%;
     height: 100%;
-    float: left;
     &:first-child .@{date-picker-prefix}-time-focus {
+      border-right: 0;
       border-top-left-radius: @border-radius-base;
       border-bottom-left-radius: @border-radius-base;
-      border-right: 0;
     }
     &:nth-child(3) .@{date-picker-prefix}-time-focus {
+      border-left: 0;
       border-top-right-radius: @border-radius-base;
       border-bottom-right-radius: @border-radius-base;
-      border-left: 0;
     }
     ul {
       position: absolute;
       top: 50%;
-      list-style: none;
+      width: 100%;
       margin: 0;
       padding: 0;
-      width: 100%;
-      transition: top .3s ease;
+      list-style: none;
+      transition: top 0.3s ease;
     }
     li {
-      list-style: none;
       height: @date-time-list-item-height;
+      list-style: none;
     }
   }
-  &-time-focus, &-time-focus-active {
+  &-time-focus,
+  &-time-focus-active {
     position: absolute;
     top: 450%;
     border: @border-width-base @border-style-base @input-border-color;
@@ -288,7 +289,7 @@
       height: 100%;
       .active();
       border-radius: @border-radius-base;
-      transition: left .3s ease;
+      transition: left 0.3s ease;
     }
   }
   &-h &-time-focus-active {

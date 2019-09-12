@@ -1,7 +1,7 @@
-@import "../../../components/style/themes/default";
-@import "../../../components/style/mixins/index";
+@import '../../../components/style/themes/default';
+@import '../../../components/style/mixins/index';
 
-@tooltip-prefix-cls: ~"@{c7n-pro-prefix}-tooltip";
+@tooltip-prefix-cls: ~'@{c7n-pro-prefix}-tooltip';
 
 @square-root-two: 1.414;
 
@@ -11,12 +11,12 @@
   position: absolute;
   z-index: 1;
   display: block;
-  visibility: visible;
-  box-shadow: none;
   white-space: nowrap;
   background-color: transparent;
-  filter: drop-shadow(0 .01rem .01rem rgba(0, 0, 0, 0.20));
-  border-radius: .04rem;
+  border-radius: 0.04rem;
+  box-shadow: none;
+  visibility: visible;
+  filter: drop-shadow(0 0.01rem 0.01rem rgba(0, 0, 0, 0.2));
 
   &-hidden {
     display: none;
@@ -26,15 +26,13 @@
   &-inner {
     // max-width: @tooltip-max-width;
     position: relative;
-    padding: .06rem .08rem;
+    min-height: 0.32rem;
+    padding: 0.06rem 0.08rem;
     text-align: left;
     text-decoration: none;
-    min-height: .32rem;
-    box-shadow:
-    0 .01rem .03rem 0 rgba(0, 0, 0, 0.20),
-    0 .01rem .01rem 0 rgba(0, 0, 0, 0.14),
-    0 .02rem .01rem -0.01rem rgba(0, 0, 0, 0.12);
-    border-radius: .04rem;
+    border-radius: 0.04rem;
+    box-shadow: 0 0.01rem 0.03rem 0 rgba(0, 0, 0, 0.2), 0 0.01rem 0.01rem 0 rgba(0, 0, 0, 0.14),
+      0 0.02rem 0.01rem -0.01rem rgba(0, 0, 0, 0.12);
 
     &-dark {
       color: @tooltip-color;
@@ -60,12 +58,12 @@
     &-dark {
       width: 0;
       height: 0;
+      background-color: transparent;
       border-color: transparent;
       border-style: solid;
       border-width: @tooltip-arrow-width / @square-root-two;
       border-bottom-color: @tooltip-arrow-color;
       border-left-color: @tooltip-arrow-color;
-      background-color: transparent;
       transform-origin: 0 0;
     }
 
@@ -81,7 +79,6 @@
   &-placement-top &-arrow,
   &-placement-topLeft &-arrow,
   &-placement-topRight &-arrow {
-
     &-dark {
       bottom: -@tooltip-arrow-width * @square-root-two;
       transform: translateX(-50%) rotate(-45deg);
@@ -89,8 +86,8 @@
 
     &-light {
       bottom: 0;
-      transform: translate(-50%, 50%) rotate(45deg);
       background-color: @tooltip-arrow-color-light;
+      transform: translate(-50%, 50%) rotate(45deg);
     }
   }
 
@@ -99,24 +96,23 @@
   }
 
   &-placement-topLeft &-arrow {
-    left: .16rem;
+    left: 0.16rem;
   }
 
   &-placement-topRight &-arrow {
-    right: .16rem;
+    right: 0.16rem;
   }
 
   &-placement-right &-arrow,
   &-placement-rightTop &-arrow,
   &-placement-rightBottom &-arrow {
-
     &-dark {
       transform: translateY(-@tooltip-arrow-width) rotate(45deg);
     }
 
     &-light {
-      transform: translate(-50%, -50%) rotate(-45deg);
       background-color: @tooltip-arrow-color-light;
+      transform: translate(-50%, -50%) rotate(-45deg);
     }
   }
 
@@ -135,16 +131,15 @@
   &-placement-left &-arrow,
   &-placement-leftTop &-arrow,
   &-placement-leftBottom &-arrow {
-
     &-dark {
       right: -@tooltip-arrow-width * @square-root-two;
       transform: translateY(@tooltip-arrow-width) rotate(-135deg);
     }
 
     &-light {
-      transform: translate(50%, -50%) rotate(45deg);
       right: 0;
       background-color: @tooltip-arrow-color-light;
+      transform: translate(50%, -50%) rotate(45deg);
     }
   }
 
@@ -168,8 +163,8 @@
     }
 
     &-light {
-      transform: translate(-50%, -50%) rotate(45deg);
       background-color: @tooltip-arrow-color-light;
+      transform: translate(-50%, -50%) rotate(45deg);
     }
   }
 
@@ -178,10 +173,10 @@
   }
 
   &-placement-bottomLeft &-arrow {
-    left: .16rem;
+    left: 0.16rem;
   }
 
   &-placement-bottomRight &-arrow {
-    right: .16rem;
+    right: 0.16rem;
   }
 }

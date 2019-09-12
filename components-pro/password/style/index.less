@@ -1,6 +1,6 @@
-@import "../../../components/style/themes/default";
-@import "../../../components/style/mixins/index";
-@import "../../text-field/style/mixin";
+@import '../../../components/style/themes/default';
+@import '../../../components/style/mixins/index';
+@import '../../text-field/style/mixin';
 
 .@{c7n-pro-prefix}-password {
   .input;
@@ -8,14 +8,14 @@
     display: none;
   }
   &-inner-button {
-    .@{c7n-pro-prefix}-icon:before {
-      content: "\f06e";
+    .@{c7n-pro-prefix}-icon::before {
+      content: '\f06e';
     }
     &:hover {
       color: @primary-5;
     }
-    &:active .@{c7n-pro-prefix}-icon:before {
-      content: "\f070";
+    &:active .@{c7n-pro-prefix}-icon::before {
+      content: '\f070';
     }
   }
   &-fix-autofill {

@@ -5,24 +5,24 @@
 // size mixins for input
 .input-lg() {
   &-lg & {
-    padding: @input-padding-vertical-lg @input-padding-horizontal;
     height: @input-height-lg;
+    padding: @input-padding-vertical-lg @input-padding-horizontal;
   }
 }
 
 .input-sm() {
   &-sm & {
-    padding: @input-padding-vertical-sm @input-padding-horizontal;
     height: @input-height-sm;
+    padding: @input-padding-vertical-sm @input-padding-horizontal;
   }
 }
 
 // input status
 // == when focus or actived
 .active(@color: @outline-color) {
+  color: @input-active-color;
   border-color: ~`colorPalette('@{color}', 5) `;
   outline: 0;
-  color: @input-active-color;
   // box-shadow: 0 0 @outline-blur-size @outline-width fade(@color, 20%);
 }
 
@@ -32,10 +32,10 @@
 }
 
 .disabled() {
-  background-color: @input-disabled-bg;
-  opacity: 1;
-  cursor: not-allowed;
   color: @disabled-color;
+  background-color: @input-disabled-bg;
+  cursor: not-allowed;
+  opacity: 1;
   &,
   &:hover {
     border-color: @input-border-color;
@@ -46,19 +46,19 @@
 .placeholder(@color: @input-placeholder-color) {
   // Firefox
   &::-moz-placeholder {
-    text-align: left;
     color: @color;
+    text-align: left;
     opacity: 1; // Override Firefox's unusual default opacity; see https://github.com/twbs/bootstrap/pull/11526
   }
   // Internet Explorer 10+
   &:-ms-input-placeholder {
-    text-align: left;
     color: @color;
+    text-align: left;
   }
   // Safari and Chrome
   &::-webkit-input-placeholder {
-    text-align: left;
     color: @color;
+    text-align: left;
   }
 }
 
@@ -66,17 +66,17 @@
 .input(@prefix-width: @input-icon-width-base, @suffix-width: @input-icon-width-base) {
   position: relative;
   display: inline-block;
-  padding: @input-padding-vertical-base @input-padding-horizontal;
   width: 100%;
   height: @input-height-base;
-  cursor: text;
+  padding: @input-padding-vertical-base @input-padding-horizontal;
+  color: @input-color;
   font-size: inherit;
   line-height: 1;
-  color: @input-color;
   background-color: transparent;
   background-image: none;
   border: @border-width-base @border-style-base @input-border-color;
   border-radius: @border-radius-base;
+  cursor: text;
   transition: all 0.3s;
 
   .placeholder;
@@ -114,17 +114,17 @@
     position: absolute;
     top: 0;
     bottom: 0;
+    max-width: 100%;
     height: 0.2rem;
-    line-height: 0.2rem;
     margin: auto 0;
-    white-space: nowrap;
     padding: 0 @input-padding-horizontal;
+    overflow: hidden;
     color: @input-placeholder-color;
+    line-height: 0.2rem;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     opacity: 0;
     transition: all 0.3s;
-    max-width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 
   // Reset height for `textarea`s
@@ -141,14 +141,14 @@
   &-wrapper {
     position: relative;
     display: inline-block;
-    background-color: @input-wrapper-bg;
-    vertical-align: top; // <-- use 'top' for styling addonBefore/addonAfter & queryBar's TextField
     line-height: 1;
+    vertical-align: top; // <-- use 'top' for styling addonBefore/addonAfter & queryBar's TextField
+    background-color: @input-wrapper-bg;
 
     label {
       position: relative;
-      display: block;
       z-index: 1;
+      display: block;
     }
 
     .@{field-label-prefix-cls} {
@@ -160,13 +160,13 @@
   &-suffix,
   &-inner-button {
     position: absolute;
-    z-index: 1;
     top: 0.01rem;
     bottom: 0.01rem;
+    z-index: 1;
     height: 0.2rem;
-    text-align: center;
     margin: auto 0;
     line-height: 1;
+    text-align: center;
   }
 
   &-prefix {
@@ -203,17 +203,17 @@
   }
 
   &-inner-button {
+    z-index: 1;
     width: @input-button-width;
     cursor: pointer;
     opacity: 0;
-    z-index: 1;
     transition: opacity 0.3s;
   }
 
   &-wrapper:hover &-inner-button,
   &-focused &-inner-button {
-    opacity: 1;
     z-index: 2;
+    opacity: 1;
 
     &-clear-button {
       right: @suffix-width;
@@ -255,42 +255,42 @@
     overflow: hidden auto;
 
     > li {
-      height: 0.24rem;
-      line-height: 0.22rem;
       display: inline-block;
       max-width: 99%;
-      vertical-align: middle;
+      height: 0.24rem;
       margin-bottom: 0.02rem;
+      line-height: 0.22rem;
+      vertical-align: middle;
     }
   }
 
   &-multiple {
     &-value {
-      visibility: hidden;
-      height: 0;
-      border: none;
       display: block;
       width: 100%;
+      height: 0;
       padding: 0;
+      border: none;
+      visibility: hidden;
     }
 
     &-input {
       width: 0.05rem;
+      max-width: 100%;
       height: 100%;
+      margin-left: 0.04rem;
+      background-color: transparent;
       border: none;
       outline: 0;
-      background-color: transparent;
-      max-width: 100%;
-      margin-left: 0.04rem;
     }
   }
 
   &-multiple & {
     height: auto;
+    margin: 0;
     padding-top: 0;
     padding-bottom: 0;
     padding-left: 0;
-    margin: 0;
   }
 
   &-multiple &:not(:last-child) {
@@ -306,16 +306,16 @@
     cursor: default;
 
     .@{iconfont-css-prefix} {
+      margin-left: 0.08rem;
       line-height: inherit;
       cursor: pointer;
-      margin-left: 0.08rem;
     }
   }
 
   &-range {
     &-text {
-      display: block;
       position: relative;
+      display: block;
       width: 100%;
       height: 100%;
       white-space: nowrap;
@@ -326,18 +326,18 @@
     &-split,
     &-input {
       display: inline-block;
+      height: 100%;
       line-height: 0.26rem;
       text-align: center;
-      height: 100%;
     }
 
     &-start,
     &-end,
     &-input {
       width: ~'calc(50% - .1rem)';
+      background-color: transparent;
       border: none;
       outline: 0;
-      background-color: transparent;
     }
 
     &-split {
@@ -346,9 +346,9 @@
 
     &-input {
       position: absolute;
-      opacity: 0;
       color: @primary-color;
       font-weight: bold;
+      opacity: 0;
     }
   }
   &-focused &-range-input {
@@ -366,14 +366,14 @@
     &-before,
     &-after,
     &-help {
-      background-color: @input-addon-bg;
-      padding-left: 0.05rem;
-      padding-right: 0.05rem;
-      border: 0.01rem solid @input-border-color;
-      border-radius: @border-radius-base;
       display: flex;
       align-items: center;
+      padding-right: 0.05rem;
+      padding-left: 0.05rem;
       word-break: keep-all;
+      background-color: @input-addon-bg;
+      border: 0.01rem solid @input-border-color;
+      border-radius: @border-radius-base;
     }
 
     &-before {
@@ -431,33 +431,33 @@
     border: none;
   }
 
-  &-float-label:before {
-    display: block;
-    content: ' ';
+  &-float-label::before {
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
+    display: block;
     border: @border-width-base @border-style-base @input-border-color;
     border-radius: 0.05rem;
+    content: ' ';
   }
-  &-float-label&-focused:before,
-  &-float-label&-invalid:before {
+  &-float-label&-focused::before,
+  &-float-label&-invalid::before {
     border-width: 0.02rem;
   }
-  &-float-label:hover:not(&-disabled):not(&-focused):not(&-invalid):before {
+  &-float-label:hover:not(&-disabled):not(&-focused):not(&-invalid)::before {
     border-color: @input-color;
   }
 
-  &-float-label&-focused:before {
+  &-float-label&-focused::before {
     border-color: @primary-color;
   }
-  &-float-label&-invalid:before {
+  &-float-label&-invalid::before {
     border-color: @error-color;
   }
 
-  &-float-label&-disabled:before {
+  &-float-label&-disabled::before {
     border-style: dashed;
   }
 
@@ -466,12 +466,12 @@
     background-color: transparent;
   }
 
-  &-group-input:not(:last-child) &-float-label:before {
+  &-group-input:not(:last-child) &-float-label::before {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
   }
 
-  &-group-input:not(:first-child) &-float-label:before {
+  &-group-input:not(:first-child) &-float-label::before {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
   }
@@ -483,10 +483,10 @@
   }
   &-float-label &:-webkit-autofill {
     width: ~'calc(100% - .04rem)';
-    margin: 0.02rem;
     height: 0.32rem;
-    border-radius: 0.04rem;
+    margin: 0.02rem;
     padding-left: @input-padding-horizontal - 0.02rem;
+    border-radius: 0.04rem;
   }
 
   &-float-label textarea&:-webkit-autofill {
@@ -504,8 +504,8 @@
   &-underline {
     position: absolute;
     bottom: -@border-width-base;
-    height: 0;
     width: 100%;
+    height: 0;
     border-bottom: @border-width-base @border-style-base @input-baseline-color;
   }
 
@@ -513,12 +513,12 @@
     position: absolute;
     left: 0;
     width: 100%;
-    transform-origin: 50%;
-    transform: scaleX(0.5);
-    opacity: 0;
-    border-bottom: 0.02rem @border-style-base @primary-color;
-    transition: border-color 300ms cubic-bezier(0.55, 0, 0.55, 0.2);
     height: 0;
+    border-bottom: 0.02rem @border-style-base @primary-color;
+    transform: scaleX(0.5);
+    transform-origin: 50%;
+    opacity: 0;
+    transition: border-color 300ms cubic-bezier(0.55, 0, 0.55, 0.2);
   }
   //disabled underline
   &-disabled &-underline {
@@ -526,8 +526,8 @@
   }
   // focused underline
   &-focused &-underline &-ripple {
-    opacity: 1;
     transform: scaleX(1);
+    opacity: 1;
     transition: transform 300ms cubic-bezier(0.25, 0.8, 0.25, 1),
       opacity 100ms cubic-bezier(0.25, 0.8, 0.25, 1),
       border-color 300ms cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -540,21 +540,21 @@
 
 .tag-block() {
   display: inline-block;
-  color: @tag-default-color;
-  background-color: @tag-default-bg;
-  border-radius: @border-radius-base;
-  padding: 0 0.08rem;
-  overflow: hidden;
   max-width: 99%;
   margin: 0 0.02rem;
+  padding: 0 0.08rem;
+  overflow: hidden;
+  color: @tag-default-color;
   line-height: @line-height-base;
   white-space: nowrap;
+  background-color: @tag-default-bg;
+  border-radius: @border-radius-base;
   > div {
     display: inline-block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
     max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     vertical-align: middle;
 
     &:not(:last-child) {
@@ -565,8 +565,8 @@
     background-color: @error-color;
   }
   &-disabled {
-    background-color: @disabled-color;
     padding-right: 0.1rem;
+    background-color: @disabled-color;
     cursor: not-allowed;
   }
 }

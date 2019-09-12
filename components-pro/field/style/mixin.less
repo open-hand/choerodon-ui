@@ -4,8 +4,8 @@
   &-invalid &,
   &-invalid label:hover &,
   &-invalid &:hover {
-    border-color: @error-color;
     color: @error-color;
+    border-color: @error-color;
   }
 
   &-invalid&-wrapper {
@@ -30,26 +30,26 @@
   &-float-label .@{field-label-prefix-cls} {
     &-wrapper {
       position: absolute;
-      padding: 0 0.05rem;
-      margin-left: -0.05rem;
       top: 0;
-      height: 0;
       left: @input-padding-horizontal-base;
+      height: 0;
+      margin-left: -0.05rem;
+      padding: 0 0.05rem;
       border-top: 0.02rem @border-style-base @component-background;
       transform-origin: 0.1rem -230%;
       transition: all 0.2s @ease-out;
     }
 
-    &:after {
+    &::after {
       width: 0;
     }
 
     padding: 0;
     color: @label-color;
+    line-height: 34 / 13; // <-- fieldHeight / fontSize
     transform-origin: inherit;
     transition: inherit;
     pointer-events: none;
-    line-height: 34 / 13; // <-- fieldHeight / fontSize
   }
   &-float-label&-focused .@{field-label-prefix-cls} {
     color: @outline-color;
@@ -65,13 +65,13 @@
   &-float-label .@{field-label-prefix-cls},
   &-float-label&-focused .@{field-label-prefix-cls},
   &-float-label &:-webkit-autofill + .@{field-label-prefix-cls}-wrapper .@{field-label-prefix-cls} {
-    font-size: 0.15rem; // 15 * 0.8(缩放比例) = 12(目标值)
     font-weight: 500;
+    font-size: 0.15rem; // 15 * 0.8(缩放比例) = 12(目标值)
     transform: scaleY(0.8);
   }
   &-float-label & {
-    border-radius: 0.04rem;
     height: 0.36rem;
+    border-radius: 0.04rem;
   }
   &-float-label textarea& {
     height: auto;
@@ -80,7 +80,7 @@
   &-float-label&-required {
     background-color: @input-wrapper-bg;
   }
-  &-float-label&-required .@{field-label-prefix-cls}:after {
+  &-float-label&-required .@{field-label-prefix-cls}::after {
     width: 0.08rem;
   }
   &-empty:not(&-focused) {
@@ -89,10 +89,9 @@
         border-top-color: transparent;
         transform: none;
       }
-
-      transform: none;
-      font-size: inherit;
       font-weight: auto;
+      font-size: inherit;
+      transform: none;
     }
   }
   &-float-label & > ul {

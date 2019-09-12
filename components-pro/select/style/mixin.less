@@ -1,9 +1,9 @@
-@checkbox-prefix-cls: ~"@{c7n-prefix}-checkbox";
+@checkbox-prefix-cls: ~'@{c7n-prefix}-checkbox';
 
 .dropdown-menu-item () {
   &-item-group {
-    padding-top: .04rem;
-    padding-bottom: .04rem;
+    padding-top: 0.04rem;
+    padding-bottom: 0.04rem;
     &:not(:last-child) {
       border-bottom: @border-width-base @border-style-base @border-color-base;
     }
@@ -14,34 +14,34 @@
   }
 
   &-item-group-list > &-item {
-    padding-left: .2rem;
+    padding-left: 0.2rem;
   }
   &-item-group-no-title > &-item {
     padding-left: @control-padding-horizontal;
   }
 
   &-item-group-title {
-    color: @text-color-secondary;
+    height: 0.32rem;
     padding: 0 @control-padding-horizontal;
-    height: .32rem;
-    line-height: .32rem;
+    color: @text-color-secondary;
     font-size: @font-size-sm;
+    line-height: 0.32rem;
   }
 
   &-item {
     position: relative;
     display: block;
-    padding: .04rem @control-padding-horizontal;
-    line-height: .2rem;
-    font-weight: normal;
-    color: @text-color;
-    white-space: nowrap;
-    cursor: pointer;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    transition: background 0.3s ease;
-    letter-spacing: .01em;
     height: auto;
+    padding: 0.04rem @control-padding-horizontal;
+    overflow: hidden;
+    color: @text-color;
+    font-weight: normal;
+    line-height: 0.2rem;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    transition: background 0.3s ease;
 
     &:hover {
       background-color: @item-active-bg;
@@ -75,25 +75,25 @@
     }
 
     &-divider {
-      height: .01rem;
-      margin: .01rem 0;
+      height: 0.01rem;
+      margin: 0.01rem 0;
       overflow: hidden;
-      background-color: @border-color-split;
       line-height: 0;
+      background-color: @border-color-split;
     }
     .@{checkbox-prefix-cls}-wrapper {
+      margin-right: 0.08rem;
       user-select: none;
-      margin-right: .08rem;
     }
   }
 }
 
 .dropdown-menu () {
-  outline: none;
-  margin-bottom: 0;
-  list-style: none;
   max-height: 2.5rem;
+  margin-bottom: 0;
+  padding: 0.08rem 0;
   overflow: auto;
-  padding: .08rem 0;
+  list-style: none;
+  outline: none;
   .dropdown-menu-item;
 }

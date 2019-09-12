@@ -1,9 +1,9 @@
-@import "../../../components/style/themes/default";
-@import "../../../components/style/mixins/index";
-@import "mixin";
+@import '../../../components/style/themes/default';
+@import '../../../components/style/mixins/index';
+@import 'mixin';
 
-@radio-prefix-cls: ~"@{c7n-pro-prefix}-radio";
-@radio-duration: .3s;
+@radio-prefix-cls: ~'@{c7n-pro-prefix}-radio';
+@radio-duration: 0.3s;
 
 .@{radio-prefix-cls} {
   .radio-btn;
@@ -13,32 +13,32 @@
     display: inline-block;
     width: @radio-size;
     height: @radio-size;
+    vertical-align: middle;
+    background-color: #fff;
     border: @border-width-base @border-style-base @border-color-base;
     border-radius: 50%;
-    background-color: #fff;
-    vertical-align: middle;
     transition: all @radio-duration;
-    &:before {
+    &::before {
       position: absolute;
-      width: .06rem;
-      height: .06rem;
-      left: .03rem;
-      top: .03rem;
-      border-radius: .03rem;
-      content: " ";
+      top: 0.03rem;
+      left: 0.03rem;
+      width: 0.06rem;
+      height: 0.06rem;
       background-color: @primary-color;
-      opacity: 0;
+      border-radius: 0.03rem;
       transform: scale(0);
+      opacity: 0;
       transition: all @radio-duration @ease-in-out-circ;
+      content: ' ';
     }
     & + span {
-      padding-left: .08rem;
-      padding-right: .08rem;
+      padding-right: 0.08rem;
+      padding-left: 0.08rem;
     }
   }
   &:checked + &-inner {
     border-color: @primary-color;
-    &:before {
+    &::before {
       background-color: @primary-color;
       transform: scale(1);
       opacity: 1;
@@ -48,7 +48,7 @@
   &-wrapper:hover &-inner,
   &:focus + &-inner {
     border-color: @primary-7;
-    &:before {
+    &::before {
       background-color: @primary-7;
     }
   }
@@ -58,15 +58,15 @@
   }
 
   &:disabled + &-inner {
-    border-color: @disabled-color !important;
     background-color: @input-disabled-bg;
-    &:before {
+    border-color: @disabled-color !important;
+    &::before {
       background-color: @disabled-color;
     }
   }
   &-button {
-    padding: 0 .15rem;
-    line-height: .3rem;
+    padding: 0 0.15rem;
+    line-height: 0.3rem;
     background-color: #fff;
     .@{radio-prefix-cls}-inner {
       position: absolute;
@@ -74,16 +74,16 @@
       right: 0;
       bottom: 0;
       left: 0;
-      height: auto;
       width: auto;
+      height: auto;
       background-color: transparent;
       border-radius: @border-radius-base;
-      &:before {
+      &::before {
         display: none;
       }
       & + span {
-        padding: 0;
         position: relative;
+        padding: 0;
       }
     }
     .@{radio-prefix-cls}:checked + .@{radio-prefix-cls}-inner {
@@ -98,6 +98,6 @@
   }
 
   &-button + &-button {
-    margin-left: .1rem;
+    margin-left: 0.1rem;
   }
 }

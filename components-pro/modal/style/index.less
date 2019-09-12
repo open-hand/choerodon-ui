@@ -1,86 +1,86 @@
-@import "../../../components/style/themes/default";
-@import "../../../components/style/mixins/index";
+@import '../../../components/style/themes/default';
+@import '../../../components/style/mixins/index';
 
-@modal-prefix-cls: ~"@{c7n-pro-prefix}-modal";
+@modal-prefix-cls: ~'@{c7n-pro-prefix}-modal';
 
 .@{modal-prefix-cls} {
   position: fixed;
-  width: 5.2rem;
   top: 1rem;
+  width: 5.2rem;
   margin: 0 auto;
   // min-height: 2.4rem;
 
   &-center {
-    left: 0;
     right: 0;
+    left: 0;
   }
 
   &-fullscreen {
     top: 0;
+    right: 0;
     bottom: 0;
     left: 0;
-    right: 0;
     width: auto;
     .@{modal-prefix-cls}-footer {
       position: absolute;
+      right: 0;
       bottom: 0;
       left: 0;
-      right: 0;
     }
   }
 
   &-content {
     position: relative;
-    background-color: @component-background;
-    border: 0;
-    border-radius: @border-radius-base;
-    background-clip: padding-box;
-    box-shadow: @modal-content-shadow;
     height: 100%;
     min-height: inherit;
+    background-color: @component-background;
+    background-clip: padding-box;
+    border: 0;
+    border-radius: @border-radius-base;
+    box-shadow: @modal-content-shadow;
   }
 
   &-title {
     margin: 0;
-    font-size: @font-size-base + .05rem;
-    line-height: .24rem;
-    font-weight: 500;
     color: @heading-color;
+    font-weight: 500;
+    font-size: @font-size-base + 0.05rem;
+    line-height: 0.24rem;
   }
 
   &-header {
     position: relative;
-    padding: .18rem .24rem;
-    border-radius: @border-radius-base @border-radius-base 0 0;
-    background: @component-background;
+    padding: 0.18rem 0.24rem;
     color: @text-color;
+    background: @component-background;
+    border-radius: @border-radius-base @border-radius-base 0 0;
   }
 
   &-body {
-    padding: .24rem;
+    max-height: ~'calc(100vh - 1.2rem)';
+    padding: 0.24rem;
+    overflow: auto;
     font-size: @font-size-base;
     line-height: @line-height-base;
-    max-height: ~"calc(100vh - 1.2rem)";
-    overflow: auto;
   }
 
   &-footer {
-    padding: .15rem .16rem .15rem .24rem;
+    padding: 0.15rem 0.16rem 0.15rem 0.24rem;
     text-align: right;
     border-radius: 0 0 @border-radius-base @border-radius-base;
     button + button {
-      margin-left: .08rem;
       margin-bottom: 0;
+      margin-left: 0.08rem;
     }
     &-drawer {
-      text-align: left;
       position: absolute;
       bottom: 0;
       width: 100%;
+      text-align: left;
     }
     &-without-border {
-      border-top: none;
       padding-top: 0;
+      border-top: none;
     }
   }
 
@@ -96,10 +96,10 @@
   }
 
   &-drawer {
-    height: 100vh;
     top: 0;
-    left: unset;
     right: 0;
+    left: unset;
+    height: 100vh;
     transition: margin-right @animation-duration-slow @ease-in-out;
   }
 
@@ -120,19 +120,19 @@
     bottom: 0;
   }
   &-header-button {
-    cursor: pointer;
-    border: 0;
-    background: transparent;
+    width: 0.55rem;
+    height: 100%;
+    padding: 0;
+    color: @text-color-secondary;
     font-weight: 700;
+    font-size: @font-size-lg;
     line-height: 1;
     text-decoration: none;
-    transition: color .3s;
-    color: @text-color-secondary;
+    background: transparent;
+    border: 0;
     outline: 0;
-    padding: 0;
-    width: .55rem;
-    height: 100%;
-    font-size: @font-size-lg;
+    cursor: pointer;
+    transition: color 0.3s;
 
     &:focus,
     &:hover {
@@ -148,7 +148,7 @@
 .@{c7n-pro-prefix}-confirm {
   &-icon {
     // font-size: .44rem;
-    padding-right: .16rem;
+    padding-right: 0.16rem;
   }
   &-info {
     color: @info-color;
@@ -164,7 +164,7 @@
     color: @error-color;
   }
   .@{iconfont-css-prefix} {
-    font-size: .32rem;
+    font-size: 0.32rem;
   }
 }
 
@@ -174,6 +174,6 @@
   right: 0;
   bottom: 0;
   left: 0;
-  background-color: @modal-mask-bg;
   z-index: 1;
+  background-color: @modal-mask-bg;
 }

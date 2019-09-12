@@ -31,6 +31,15 @@ export function getOrderFields(fields: Fields): Field[] {
   return [...fields.values()].filter(({ order }) => order);
 }
 
+export function processData(allData: any[], dataSet: DataSet) {
+  return allData.map(data => {
+    const record =
+      data instanceof Record ? ((data.dataSet = dataSet), data) : new Record(data, dataSet);
+    record.status = RecordStatus.sync;
+    return record;
+  });
+}
+
 export function processToJSON(value) {
   if (isDate(value)) {
     value = moment(value);

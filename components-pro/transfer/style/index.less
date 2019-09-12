@@ -1,29 +1,29 @@
-@import "../../../components/style/themes/default";
-@import "../../../components/style/mixins/index";
-@import "../../select/style/mixin";
-@import "../../text-field/style/mixin";
+@import '../../../components/style/themes/default';
+@import '../../../components/style/mixins/index';
+@import '../../select/style/mixin';
+@import '../../text-field/style/mixin';
 
-@transfer-prefix-cls: ~"@{c7n-pro-prefix}-transfer";
+@transfer-prefix-cls: ~'@{c7n-pro-prefix}-transfer';
 
-@transfer-header-height: .32rem;
-@transfer-footer-height: .32rem;
+@transfer-header-height: 0.32rem;
+@transfer-footer-height: 0.32rem;
 
 .@{transfer-prefix-cls} {
   .reset-component;
   position: relative;
   display: inline-block;
-  height: 2rem;
   width: 1.8rem;
+  height: 2rem;
+  vertical-align: middle;
   border: @border-width-base @border-style-base @border-color-base;
   border-radius: @border-radius-base;
-  vertical-align: middle;
 
   &-focused {
     .active;
   }
 
   &:last-child {
-    margin-left: .08rem;
+    margin-left: 0.08rem;
   }
 
   &-wrapper {
@@ -46,17 +46,17 @@
   &-search {
     padding: 0 @control-padding-horizontal-sm;
     &-action {
-      color: @disabled-color;
       position: absolute;
-      top: .04rem;
-      right: .04rem;
-      bottom: .04rem;
-      width: .28rem;
+      top: 0.04rem;
+      right: 0.04rem;
+      bottom: 0.04rem;
+      width: 0.28rem;
+      color: @disabled-color;
       line-height: @input-height-base;
       text-align: center;
       .@{iconfont-css-prefix} {
-        transition: all .3s;
         color: @disabled-color;
+        transition: all 0.3s;
         &:hover {
           color: @text-color-secondary;
         }
@@ -68,48 +68,48 @@
   }
 
   &-header {
-    padding: .06rem @control-padding-horizontal;
-    border-radius: @border-radius-base @border-radius-base 0 0;
-    background: @component-background;
-    color: @text-color;
-    border-bottom: @border-width-base @border-style-base @border-color-split;
-    overflow: hidden;
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: @transfer-header-height;
+    padding: 0.06rem @control-padding-horizontal;
+    overflow: hidden;
+    color: @text-color;
+    background: @component-background;
+    border-bottom: @border-width-base @border-style-base @border-color-split;
+    border-radius: @border-radius-base @border-radius-base 0 0;
 
     &-title {
       position: absolute;
-      right: .12rem;
+      right: 0.12rem;
     }
   }
 
   &-body {
-    font-size: @font-size-base;
     position: relative;
     height: 100%;
+    font-size: @font-size-base;
 
     &-search-wrapper {
       position: absolute;
       top: 0;
       left: 0;
-      padding: .04rem;
       width: 100%;
+      padding: 0.04rem;
     }
   }
 
   &-body-with-search {
-    padding-top: @input-height-base + .08rem;
+    padding-top: @input-height-base + 0.08rem;
   }
 
   &-content {
     height: 100%;
+    margin: 0;
+    padding: 0;
     overflow: auto;
     list-style: none;
-    padding: 0;
-    margin: 0;
     outline: none;
 
     &-wrapper {
@@ -120,23 +120,23 @@
   }
 
   &-footer {
-    border-top: @border-width-base @border-style-base @border-color-split;
-    border-radius: 0 0 @border-radius-base @border-radius-base;
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
     height: @transfer-footer-height;
+    border-top: @border-width-base @border-style-base @border-color-split;
+    border-radius: 0 0 @border-radius-base @border-radius-base;
   }
 
   &-operation {
     display: inline-block;
-    margin-left: .08rem;
+    margin-left: 0.08rem;
     vertical-align: middle;
 
     .@{c7n-pro-prefix}-btn {
       display: block;
-      margin-bottom: .08rem;
+      margin-bottom: 0.08rem;
       + .@{c7n-pro-prefix}-btn {
         margin-left: 0;
       }

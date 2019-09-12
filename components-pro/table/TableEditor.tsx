@@ -12,6 +12,7 @@ import TableContext from './TableContext';
 import { findCell, getColumnKey, getEditorByColumnAndRecord, isRadio } from './utils';
 import { stopEvent } from '../_util/EventManager';
 import { ShowHelp } from '../field/enum';
+import autobind from '../_util/autobind';
 
 export interface TableEditorProps extends ElementProps {
   column: ColumnProps;
@@ -35,15 +36,20 @@ export default class TableEditor extends Component<TableEditorProps> {
 
   currentEditorName?: string;
 
-  saveRef = node => (this.editor = node);
+  @autobind
+  saveRef(node) {
+    this.editor = node;
+  }
 
-  handleEditorKeyEnterDown = e => {
+  @autobind
+  handleEditorKeyEnterDown(e) {
     if (!e.isDefaultPrevented()) {
       this.showNextEditor(e.shiftKey);
     }
-  };
+  }
 
-  handleEditorKeyDown = e => {
+  @autobind
+  handleEditorKeyDown(e) {
     if (e.keyCode !== KeyCode.ESC || !e.isDefaultPrevented()) {
       const { tableStore } = this.context;
       switch (e.keyCode) {
@@ -69,9 +75,10 @@ export default class TableEditor extends Component<TableEditorProps> {
       const { onKeyDown = noop } = editorProps;
       onKeyDown(e);
     }
-  };
+  }
 
-  handleEditorFocus = () => {
+  @autobind
+  handleEditorFocus() {
     const {
       currentEditorName,
       context: { tableStore },
@@ -81,16 +88,17 @@ export default class TableEditor extends Component<TableEditorProps> {
         tableStore.currentEditorName = currentEditorName;
       });
     }
-  };
+  }
 
-  handleEditorBlur = e => {
+  @autobind
+  handleEditorBlur(e) {
     this.hideEditor();
     const { editorProps } = this;
     if (editorProps) {
       const { onBlur = noop } = editorProps;
       onBlur(e);
     }
-  };
+  }
 
   hideEditor() {
     if (this.editing) {
