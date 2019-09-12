@@ -48,8 +48,6 @@ import {
   SortOrder,
 } from './enum';
 import { Lang } from '../locale-context/enum';
-import message from '../message';
-import exception from '../_util/exception';
 import isEmpty from '../_util/isEmpty';
 import * as ObjectChainValue from '../_util/ObjectChainValue';
 import Transport, { TransportProps } from './Transport';
@@ -923,6 +921,7 @@ export default class DataSet extends EventManager {
       records = ([] as Record[]).concat(records);
       if (
         records.length > 0 &&
+        (await this.fireEvent(DataSetEvents.beforeDelete, { dataSet: this, records })) !== false &&
         (await confirm($l('DataSet', 'delete_selected_row_confirm'))) !== 'cancel'
       ) {
         this.remove(records);
@@ -1669,7 +1668,7 @@ Then the query method will be auto invoke.`,
             runInAction(() => {
               this.currentPage = page;
             });
-            return result;
+            return this.handleLoadSuccess(result);
           }
         }
       } catch (e) {
@@ -1740,13 +1739,21 @@ Then the query method will be auto invoke.`,
     }
   }
 
+  private handleLoadSuccess(resp: any) {
+    const feedback = getConfig('feedback');
+    feedback.loadSuccess(resp);
+    return resp;
+  }
+
   private handleLoadFail(e) {
+    const feedback = getConfig('feedback');
     this.fireEvent(DataSetEvents.loadFailed, { dataSet: this });
-    message.error(exception(e, $l('DataSet', 'query_failure')));
+    feedback.loadFailed(e);
   }
 
   private handleSubmitSuccess(resp: any[]) {
     const { dataKey, totalKey } = this;
+    const feedback = getConfig('feedback');
     const data: object[] = [];
     let total;
     resp.forEach(item => {
@@ -1764,13 +1771,14 @@ Then the query method will be auto invoke.`,
       : data;
     this.fireEvent(DataSetEvents.submitSuccess, { dataSet: this, data: result });
     this.commitData(data, total);
-    message.success($l('DataSet', 'submit_success'));
+    feedback.submitSuccess(result);
     return result;
   }
 
   private handleSubmitFail(e) {
+    const feedback = getConfig('feedback');
     this.fireEvent(DataSetEvents.submitFailed, { dataSet: this });
-    message.error(exception(e, $l('DataSet', 'submit_failure')));
+    feedback.submitFailed(e);
     this.destroyed.forEach(record => record.reset());
   }
 

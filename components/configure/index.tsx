@@ -3,11 +3,24 @@ import { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { ReactNode } from 'react';
 import { LovConfig } from 'choerodon-ui/pro/lib/lov/Lov';
 import { RecordStatus } from 'choerodon-ui/pro/lib/data-set/enum';
+import message from 'choerodon-ui/pro/lib/message';
+import exception from 'choerodon-ui/pro/lib/_util/exception';
+import { $l } from 'choerodon-ui/pro/lib/locale-context';
 
 export type Status = {
   [RecordStatus.add]: string;
   [RecordStatus.update]: string;
   [RecordStatus.delete]: string;
+};
+
+export interface FeedBack {
+  loadSuccess(result: any);
+
+  loadFailed(error: Error);
+
+  submitSuccess(result: any[]);
+
+  submitFailed(error: Error);
 }
 
 export type Config = {
@@ -21,6 +34,7 @@ export type Config = {
   lovQueryUrl?: string | ((code: string, lovConfig?: LovConfig) => string);
   lovQueryAxiosConfig?: (code: string, lovConfig?: LovConfig) => AxiosRequestConfig;
   axios?: AxiosInstance;
+  feedback?: FeedBack;
   dataKey?: string;
   totalKey?: string;
   statusKey?: string;
@@ -36,12 +50,33 @@ export type Config = {
   modalOkFirst?: boolean;
   buttonFuncType?: string;
   renderEmpty?: (componentName?: string) => ReactNode;
-  generatePageQuery?: (pageParams: { page?: number, pageSize?: number, sortName?: string, sortOrder?: string }) => object;
-}
+  generatePageQuery?: (pageParams: {
+    page?: number;
+    pageSize?: number;
+    sortName?: string;
+    sortOrder?: string;
+  }) => object;
+};
 
 export type ConfigKeys = keyof Config;
 
-const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.map<ConfigKeys, Config[ConfigKeys]>([
+const defaultFeedback: FeedBack = {
+  loadSuccess() {},
+  loadFailed(error) {
+    message.error(exception(error, $l('DataSet', 'query_failure')));
+  },
+  submitSuccess() {
+    message.success($l('DataSet', 'submit_success'));
+  },
+  submitFailed(error) {
+    message.error(exception(error, $l('DataSet', 'submit_failure')));
+  },
+};
+
+const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.map<
+  ConfigKeys,
+  Config[ConfigKeys]
+>([
   ['prefixCls', 'c7n'],
   ['proPrefixCls', 'c7n-pro'],
   ['ripple', true],
@@ -53,7 +88,10 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['totalKey', 'total'],
   ['statusKey', '__status'],
   ['tlsKey', '__tls'],
-  ['status', { [RecordStatus.add]: 'add', [RecordStatus.update]: 'update', [RecordStatus.delete]: 'delete' }],
+  [
+    'status',
+    { [RecordStatus.add]: 'add', [RecordStatus.update]: 'update', [RecordStatus.delete]: 'delete' },
+  ],
   ['labelLayout', 'horizontal'],
   ['queryBar', 'normal'],
   ['tableBorder', true],
@@ -62,6 +100,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['tableColumnResizable', true],
   ['modalSectionBorder', true],
   ['modalOkFirst', true],
+  ['feedback', defaultFeedback],
 ]);
 
 export function getConfig<T extends ConfigKeys>(key: T): any {

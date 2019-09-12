@@ -16,6 +16,8 @@ timeline: true
 ---
 
 - 🌟 Upgrade webpack4 babel7 eslint and stylelint.
+- 🌟 `configure`: Add global configuration new properties.
+- 🌟 `<pro>DataSet`: Add beforeDelete event.
 - 🌟 `<pro>Table.Filter`: Optimize the position of the filter placeholder and cursor, and adjust the filter bar height to 40px.
 - 🌟 `<pro>Table`: The temporarily deleted line is displayed as disabled and reset when the submission fails.
 - 🌟 `<pro>DataSet.Record`: Added save and restore methods.
