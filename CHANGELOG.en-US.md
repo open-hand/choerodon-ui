@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.9
+
+`2019-09-12`
+
 - 🌟 Upgrade webpack4 babel7 eslint and stylelint.
 - 🌟 `configure`: Add global configuration new properties.
 - 🌟 `<pro>DataSet`: Add beforeDelete event.

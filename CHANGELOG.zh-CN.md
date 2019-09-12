@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.9
+
+`2019-09-12`
+
 - 🌟 升级 webpack4, babel7, eslint, stylelint。
 - 🌟 `configure`: 增加全局配置新属性。
 - 🌟 `<pro>DataSet`: 新增 beforeDelete 事件。
