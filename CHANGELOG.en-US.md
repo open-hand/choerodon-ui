@@ -24,10 +24,11 @@ timeline: true
 - 🌟 `<pro>Table`: Support SelectBox editor.
 - 🐞 `<pro>Table`: Fixed a problem where there would be no border between the non-fixed and fixed columns of the Table.
 - 🐞 `<pro>Table`: Fix the row positioning problem with the up and down key of keyboard.
-- 🐞 `<pro>DataSet`: Fix the problem when dataKey is null.
+- 🐞 `<pro>DataSet`: Fix the problem when `dataKey` is null.
 - 🐞 `<pro>DataSet`: Fixed an issue that export function can not be executed until the exportUrl property is set.
 - 🐞 `<pro>Form`: Fixed a problem where the width of the FormField was not 100% when the className was set.
 - 🐞 `<pro>TextField`: Fix the autofill and prefix style of the float label.
+- 🐞 `<pro>DatePicker`: Fix the problem when `range` is array.
 
 ## 0.8.8
 

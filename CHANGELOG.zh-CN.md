@@ -28,6 +28,7 @@ timeline: true
 - 🐞 `<pro>DataSet`: 修复必须要设置 exportUrl 才能导出的问题。
 - 🐞 `<pro>Form`: 修复 FormField 设了 className 时，宽度不是 100%的问题。
 - 🐞 `<pro>TextField`: 修复 float label 的 autofill 及 prefix 的样式问题。
+- 🐞 `<pro>DatePicker`: 修复 range 为数组时的问题。
 
 ## 0.8.8
 

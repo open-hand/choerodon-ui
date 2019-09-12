@@ -14,6 +14,17 @@ export function toRangeValue(value: any, range?: boolean | [string, string]): [a
   return [undefined, undefined];
 }
 
+export function fromRangeValue(value: any[], range?: boolean | [string, string]): any {
+  if (isArrayLike(range)) {
+    const [start, end] = range;
+    return {
+      [start]: value[0],
+      [end]: value[1],
+    };
+  }
+  return value;
+}
+
 export function toMultipleValue(value: any, range?: boolean | [string, string]) {
   if (!isNil(value)) {
     const multipleValue = isArrayLike(value) ? value.slice() : [value];

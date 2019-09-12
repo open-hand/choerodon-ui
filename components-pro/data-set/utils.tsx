@@ -107,6 +107,7 @@ function processOne(value: any, field: Field, checkRange: boolean = true) {
 export function processValue(value: any, field?: Field): any {
   if (field) {
     const multiple = field.get('multiple');
+    const range = field.get('range');
     if (multiple) {
       if (isEmpty(value)) {
         value = [];
@@ -118,7 +119,7 @@ export function processValue(value: any, field?: Field): any {
         }
       }
     }
-    if (isArray(value)) {
+    if (isArray(value) && (multiple || !range)) {
       return value.map(item => processOne(item, field));
     }
     return processOne(value, field);

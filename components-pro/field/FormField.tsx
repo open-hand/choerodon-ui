@@ -44,7 +44,7 @@ import { FIELD_SUFFIX } from '../form/utils';
 import { LabelLayout } from '../form/enum';
 import Animate from '../animate';
 import CloseButton from './CloseButton';
-import { toMultipleValue, toRangeValue } from './utils';
+import { fromRangeValue, toMultipleValue, toRangeValue } from './utils';
 
 const map: { [key: string]: FormField<FormFieldProps>[] } = {};
 
@@ -431,6 +431,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       'colIndex',
       'labelLayout',
       'pristine',
+      'range',
     ]);
     if (!this.isDisabled() && !this.isReadOnly()) {
       otherProps.onChange = this.handleChange;
@@ -756,12 +757,9 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       value = this.rangeValue;
     }
     if (value === undefined && !this.multiple) {
-      value = this.getValue();
+      value = toRangeValue(this.getValue(), this.range);
     }
-    return toRangeValue(value, this.range).map(item => this.processRenderer(item, repeat)) as [
-      any,
-      any,
-    ];
+    return (value || []).map(item => this.processRenderer(item, repeat)) as [any, any];
   }
 
   getOldValue(): any {
@@ -848,7 +846,9 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   @action
   beginRange() {
     this.setRangeTarget(0);
-    this.rangeValue = this.multiple ? [undefined, undefined] : toRangeValue(this.getValue());
+    this.rangeValue = this.multiple
+      ? [undefined, undefined]
+      : toRangeValue(this.getValue(), this.range);
   }
 
   @action
@@ -859,7 +859,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
         this.rangeValue = undefined;
       }
       if (!values.every(isNil)) {
-        this.addValue(values);
+        this.addValue(fromRangeValue(values, this.range));
       }
     }
   }

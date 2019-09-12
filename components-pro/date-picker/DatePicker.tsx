@@ -1,6 +1,7 @@
 import { createElement, CSSProperties, KeyboardEventHandler, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import moment, { isMoment, Moment, MomentInput } from 'moment';
+import isPlainObject from 'lodash/isPlainObject';
 import isString from 'lodash/isString';
 import isNil from 'lodash/isNil';
 import omit from 'lodash/omit';
@@ -111,6 +112,36 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   };
 
   @computed
+  get value(): any | undefined {
+    const { value } = this.observableProps;
+    const { range } = this;
+    if (isArrayLike(value)) {
+      return value.map(item => {
+        if (isArrayLike(item)) {
+          return item.map(this.checkMoment, this);
+        }
+        return this.checkMoment(item);
+      });
+    }
+    if (isArrayLike(range)) {
+      if (isPlainObject(value)) {
+        const [start, end] = range;
+        return {
+          [start]: this.checkMoment(value[start]),
+          [end]: this.checkMoment(value[end]),
+        };
+      }
+    }
+    return this.checkMoment(value);
+  }
+
+  set value(value: any | undefined) {
+    runInAction(() => {
+      this.observableProps.value = value;
+    });
+  }
+
+  @computed
   get defaultValidationMessages(): ValidationMessages | null {
     const label = this.getProp('label');
     return {
@@ -195,9 +226,9 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     return item;
   }
 
-  processValue(value: any): ReactNode {
-    return super.processValue(this.checkMoment(value));
-  }
+  // processValue(value: any): ReactNode {
+  //   return super.processValue(this.checkMoment(value));
+  // }
 
   getSelectedDate(): Moment {
     const { range, multiple, rangeTarget, rangeValue } = this;

@@ -28,6 +28,10 @@ function handleDataSetChange({ value, oldValue }) {
   console.log('[range dataset newValue]', value, '[oldValue]', oldValue);
 }
 
+function handleChange(value, oldValue) {
+  console.log('[range newValue]', value, '[oldValue]', oldValue);
+}
+
 class App extends React.Component {
   ds = new DataSet({
     autoCreate: true,
@@ -36,7 +40,13 @@ class App extends React.Component {
         name: 'date',
         type: 'date',
         range: ['start', 'end'],
-        defaultValue: { start: '1984-11-22', end: '2019-08-12' },
+        defaultValue: { start: '1984-11-22', end: new Date() },
+      },
+      {
+        name: 'date2',
+        type: 'date',
+        range: true,
+        defaultValue: ['1984-11-22', new Date()],
       },
       { name: 'multipleDate', type: 'date', range: true, multiple: true },
     ],
@@ -50,6 +60,25 @@ class App extends React.Component {
       <Row gutter={10}>
         <Col span={24}>
           <DatePicker dataSet={this.ds} name="date" placeholder={['Start Date', 'End Date']} />
+        </Col>
+        <Col span={24}>
+          <DatePicker dataSet={this.ds} name="date2" placeholder={['Start Date', 'End Date']} />
+        </Col>
+        <Col span={24}>
+          <DatePicker
+            range
+            defaultValue={['1984-11-22', new Date()]}
+            placeholder={['Start Date', 'End Date']}
+            onChange={handleChange}
+          />
+        </Col>
+        <Col span={24}>
+          <DatePicker
+            range={['start', 'end']}
+            defaultValue={{ start: '1984-11-22', end: new Date() }}
+            placeholder={['Start Date', 'End Date']}
+            onChange={handleChange}
+          />
         </Col>
         <Col span={24}>
           <DatePicker dataSet={this.ds} name="multipleDate" placeholder="Choose Date" />
