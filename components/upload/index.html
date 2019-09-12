@@ -1,99 +1,116 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="An enterprise-class UI design language and React-based implementation with a set of high-quality React components, one of best React UI library for enterprises">
-    <title>Choerodon UI - A UI Design Language</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="An enterprise-class UI design language and React-based implementation with a set of high-quality React components, one of best React UI library for enterprises"
+    />
+    <title> Upload - Choerodon UI</title>
     <!-- Polyfills -->
     <!--[if IE]>
-    <script src="https://as.alipayobjects.com/g/component/??es6-shim/0.35.1/es6-sham.min.js,es6-shim/0.35.1/es6-shim.min.js"></script>
+      <script src="https://as.alipayobjects.com/g/component/??es6-shim/0.35.1/es6-sham.min.js,es6-shim/0.35.1/es6-shim.min.js"></script>
     <![endif]-->
     <script>
-    (function() {
-      function isLocalStorageNameSupported() {
-        var testKey = 'test';
-        var storage = window.localStorage;
-        try {
-          storage.setItem(testKey, '1');
-          storage.removeItem(testKey);
-          return true;
-        } catch (error) {
-          return false;
+      (function() {
+        function isLocalStorageNameSupported() {
+          var testKey = 'test';
+          var storage = window.localStorage;
+          try {
+            storage.setItem(testKey, '1');
+            storage.removeItem(testKey);
+            return true;
+          } catch (error) {
+            return false;
+          }
         }
-      }
 
-      // 优先级提高到所有静态资源的前面，语言不对，加载其他静态资源没意义
-      var pathname = location.pathname;
+        // 优先级提高到所有静态资源的前面，语言不对，加载其他静态资源没意义
+        var pathname = location.pathname;
 
-      function isZhCN(pathname) {
-        return /-cn\/?$/.test(pathname);
-      }
-
-      function getLocalizedPathname(path, zhCN) {
-        var pathname = path.indexOf('/') === 0 ? path : '/' + path;
-        if (!zhCN) { // to enUS
-          return /\/?index-cn/.test(pathname) ? '/' : pathname.replace('-cn', '');
-        } else if (pathname === '/') {
-          return '/index-cn';
-        } else if (pathname.endsWith('/')) {
-          return pathname.replace(/\/$/, '-cn/');
+        function isZhCN(pathname) {
+          return /-cn\/?$/.test(pathname);
         }
-        return pathname + '-cn';
-      }
 
-      // 兼容旧的 URL， `?locale=...`
-      var queryString = location.search;
-      if (queryString) {
-        var isZhCNConfig = queryString.indexOf('zh-CN') > -1;
-        if (isZhCNConfig && !isZhCN(pathname)) {
-          location.pathname = getLocalizedPathname(pathname, isZhCNConfig);
+        function getLocalizedPathname(path, zhCN) {
+          var pathname = path.indexOf('/') === 0 ? path : '/' + path;
+          if (!zhCN) {
+            // to enUS
+            return /\/?index-cn/.test(pathname) ? '/' : pathname.replace('-cn', '');
+          } else if (pathname === '/') {
+            return '/index-cn';
+          } else if (pathname.endsWith('/')) {
+            return pathname.replace(/\/$/, '-cn/');
+          }
+          return pathname + '-cn';
         }
-      }
 
-      if (isLocalStorageNameSupported() && (pathname === '/' || pathname === '/index-cn')) {
-        var lang = (window.localStorage && localStorage.getItem('locale')) || ((navigator.language || navigator.browserLanguage).toLowerCase() === 'zh-cn' ? 'zh-CN' : 'en-US');
-        // safari is 'zh-cn', while other browser is 'zh-CN';
-        if ((lang === 'zh-CN') !== isZhCN(pathname)) {
-          location.pathname = getLocalizedPathname(pathname, lang === 'zh-CN');
+        // 兼容旧的 URL， `?locale=...`
+        var queryString = location.search;
+        if (queryString) {
+          var isZhCNConfig = queryString.indexOf('zh-CN') > -1;
+          if (isZhCNConfig && !isZhCN(pathname)) {
+            location.pathname = getLocalizedPathname(pathname, isZhCNConfig);
+          }
         }
-      }
-      document.documentElement.className += isZhCN(pathname) ? 'zh-cn' : 'en-us';
 
-      if (!window.Intl) {
-        var intlPath = 'https://as.alipayobjects.com/g/component/intl/1.0.1/??Intl.min.js';
-        if (isZhCN(pathname)) {
-          intlPath += ',locale-data/jsonp/zh.js';
-        } else {
-          intlPath += ',locale-data/jsonp/en.js';
+        if (isLocalStorageNameSupported() && (pathname === '/' || pathname === '/index-cn')) {
+          var lang =
+            (window.localStorage && localStorage.getItem('locale')) ||
+            ((navigator.language || navigator.browserLanguage).toLowerCase() === 'zh-cn'
+              ? 'zh-CN'
+              : 'en-US');
+          // safari is 'zh-cn', while other browser is 'zh-CN';
+          if ((lang === 'zh-CN') !== isZhCN(pathname)) {
+            location.pathname = getLocalizedPathname(pathname, lang === 'zh-CN');
+          }
         }
-        document.writeln('<script src="' + intlPath + '">' + '<' + '/script>');
+        document.documentElement.className += isZhCN(pathname) ? 'zh-cn' : 'en-us';
+
+        if (!window.Intl) {
+          var intlPath = 'https://as.alipayobjects.com/g/component/intl/1.0.1/??Intl.min.js';
+          if (isZhCN(pathname)) {
+            intlPath += ',locale-data/jsonp/zh.js';
+          } else {
+            intlPath += ',locale-data/jsonp/en.js';
+          }
+          document.writeln('<script src="' + intlPath + '">' + '<' + '/script>');
+        }
+        if (!window.Promise) {
+          document.writeln(
+            '<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"' +
+              '>' +
+              '<' +
+              '/' +
+              'script>',
+          );
+        }
+      })();
+    </script>
+    <link rel="icon" href="http://choerodon.io/img/favicon.ico" type="image/x-icon" />
+    
+    <link rel="stylesheet" type="text/css" href="/choerodon-ui/index-fb8963c9-1.css" />
+    
+    <link rel="stylesheet" type="text/css" href="/choerodon-ui/index-fb8963c9-2.css" />
+    
+    <link rel="stylesheet" type="text/css" href="/choerodon-ui/index-fb8963c9-3.css" />
+    
+    <link rel="stylesheet/less" type="text/css" href="/choerodon-ui/color.less" />
+    <style id="nprogress-style">
+      #nprogress {
+        display: none;
       }
-      if (!window.Promise) {
-        document.writeln('<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"' + '>' + '<' + '/' + 'script>');
-      }
-    })();
-  </script>
-  <link rel="icon" href="http://choerodon.io/img/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" type="text/css" href="/choerodon-ui/index-1.css" />
-  <link rel="stylesheet" type="text/css" href="/choerodon-ui/index-2.css" />
-  <link rel="stylesheet" type="text/css" href="/choerodon-ui/index-3.css" />
-  <link rel="stylesheet/less" type="text/css" href="/choerodon-ui/color.less" />
-  <style id="nprogress-style">
-    #nprogress {
-      display: none
-    }
-  </style>
-  <!--[if lte IE 10]>
-  <script
-    src="https://as.alipayobjects.com/g/component/??console-polyfill/0.2.2/index.js,media-match/2.0.2/media.match.min.js"></script>
-  <![endif]-->
-</head>
-<body>
-<div id="react-content">
-  <div class="page-wrapper" data-reactroot=""><header id="header" class="clearfix"><div class="c7n-row"><div class="c7n-col-xs-24 c7n-col-sm-24 c7n-col-md-5 c7n-col-lg-5 c7n-col-xl-5 c7n-col-xxl-4"><a id="logo" href="/"><img alt="logo" src="/choerodon-ui/1bf6a5fa3f014f7d70d24574cfac2e36.svg"/></a></div><div class="c7n-col-xs-0 c7n-col-sm-0 c7n-col-md-18 c7n-col-lg-19 c7n-col-xl-19 c7n-col-xxl-20"><button type="button" class="c7n-btn header-lang-button c7n-btn-sm c7n-btn-background-ghost c7n-btn-flat"><span>中文</span><div class="c7n-ripple-wrapper"></div></button><div class="c7n-select-sm version c7n-select c7n-select-has-value c7n-select-enabled c7n-select-has-border"><div class="c7n-select-selection
-            c7n-select-selection--single" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="false" tabindex="0"><div class="c7n-select-selection__rendered"><div class="c7n-select-selection-selected-value" title="0.8.8" style="opacity:1">0.8.8</div><span class="c7n-select-arrow" style="user-select:none;-webkit-user-select:none" unselectable="unselectable"><i class="icon icon-arrow_drop_down"></i><b></b></span></div></div></div><ul class="c7n-menu menu-site c7n-menu-light c7n-menu-root c7n-menu-horizontal" role="menu" aria-activedescendant="" id="nav"><li class="c7n-menu-item" role="menuitem" aria-selected="false"><a href="/"><span>Home</span></a><div class="c7n-ripple-wrapper"></div></li><li class="c7n-menu-item c7n-menu-item-selected" role="menuitem" aria-selected="true"><a href="/docs/react/introduce"><span>Components</span></a><div class="c7n-ripple-wrapper"></div></li></ul></div></div><style>
+    </style>
+    <!--[if lte IE 10]>
+      <script src="https://as.alipayobjects.com/g/component/??console-polyfill/0.2.2/index.js,media-match/2.0.2/media.match.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div id="react-content">
+      <div class="page-wrapper" data-reactroot=""><header id="header" class="clearfix"><div class="c7n-row"><div class="c7n-col-xs-24 c7n-col-sm-24 c7n-col-md-5 c7n-col-lg-5 c7n-col-xl-5 c7n-col-xxl-4"><a id="logo" href="/"><img alt="logo" src="/choerodon-ui/1bf6a5fa3f014f7d70d24574cfac2e36.svg"/></a></div><div class="c7n-col-xs-0 c7n-col-sm-0 c7n-col-md-18 c7n-col-lg-19 c7n-col-xl-19 c7n-col-xxl-20"><button type="button" class="c7n-btn header-lang-button c7n-btn-sm c7n-btn-background-ghost c7n-btn-flat"><span>中文</span><div class="c7n-ripple-wrapper"></div></button><div class="c7n-select-sm version c7n-select c7n-select-has-value c7n-select-enabled c7n-select-has-border"><div class="c7n-select-selection
+            c7n-select-selection--single" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="false" tabindex="0"><div class="c7n-select-selection__rendered"><div class="c7n-select-selection-selected-value" title="0.8.9" style="opacity:1">0.8.9</div><span class="c7n-select-arrow" style="user-select:none;-webkit-user-select:none" unselectable="unselectable"><i class="icon icon-arrow_drop_down"></i><b></b></span></div></div></div><ul class="c7n-menu menu-site c7n-menu-light c7n-menu-root c7n-menu-horizontal" role="menu" aria-activedescendant="" id="nav"><li class="c7n-menu-item" role="menuitem" aria-selected="false"><a href="/"><span>Home</span></a><div class="c7n-ripple-wrapper"></div></li><li class="c7n-menu-item c7n-menu-item-selected" role="menuitem" aria-selected="true"><a href="/docs/react/introduce"><span>Components</span></a><div class="c7n-ripple-wrapper"></div></li></ul></div></div><style>
     #header .c7n-select-selection {
       height: 24px;
       padding-top: 0;
@@ -420,6 +437,7 @@ ReactDOM<span class="token punctuation">.</span><span class="token function">ren
   <span class="token property">margin-top</span><span class="token punctuation">:</span> <span class="token number">8</span>px<span class="token punctuation">;</span>
   <span class="token property">color</span><span class="token punctuation">:</span> <span class="token hexcode">#666</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre></div></section></section><section class="code-box" id="components-upload-demo-drag"><section class="code-box-demo"><span class=""><div class="c7n-upload c7n-upload-drag"></div><div class="c7n-upload-list c7n-upload-list-text"></div></span></section><section class="code-box-meta markdown"><div class="code-box-title"><a href="#components-upload-demo-drag">Drag and Drop</a><a class="edit-button" href="https://github.com/choerodon/choerodon-ui/edit/master/components/upload/demo/drag.md" target="_blank" rel="noopener noreferrer"><i class="icon icon-edit"></i></a></div><div><p>You can drag files to a specific area, to upload. Alternatively, you can also upload by selecting.</p><p>We can upload serveral files at once in modern browsers by giving the input the <code>multiple</code> attribute.</p></div><i class="icon icon-refresh code-refresh-icon"></i><span class="code-expand-icon"><img alt="expand code" src="https://gw.alipayobjects.com/zos/rmsportal/wSAkBuJFbdxsosKKpqyq.svg" class="code-expand-icon-show"/><img alt="expand code" src="https://gw.alipayobjects.com/zos/rmsportal/OpROPHYqWmrMDBFMZtKF.svg" class="code-expand-icon-hide"/></span></section><section class="highlight-wrapper"><div class="highlight"><div class="code-box-actions"><form action="https://codepen.io/pen/define" method="POST" target="_blank"><input type="hidden" name="data" value="{&quot;title&quot;:&quot;Drag and Drop - Choerodon UI Demo&quot;,&quot;html&quot;:&quot;&lt;div id=\&quot;container\&quot; style=\&quot;padding: 24px\&quot;&gt;&lt;/div&gt;\n&lt;script&gt;\n  var mountNode = document.getElementById(&#x27;container&#x27;);\n&lt;/script&gt;&quot;,&quot;js&quot;:&quot;&quot;,&quot;css&quot;:&quot;@import &#x27;choerodon-ui/dist/choerodon-ui.css&#x27;;\n\n&quot;,&quot;editors&quot;:&quot;001&quot;,&quot;css_external&quot;:&quot;https://unpkg.com/choerodon-ui/dist/choerodon-ui.css&quot;,&quot;js_external&quot;:&quot;https://unpkg.com/react@16.6.x/umd/react.production.min.js;https://unpkg.com/react-dom@16.6.x/umd/react-dom.production.min.js;https://unpkg.com/moment/min/moment-with-locales.min.js;https://unpkg.com/mobx@4.7.0/lib/mobx.umd.min.js;https://unpkg.com/mobx-react@5.1.x/index.min.js;https://unpkg.com/choerodon-ui/dist/choerodon-ui-with-locales.js&quot;,&quot;js_pre_processor&quot;:&quot;typescript&quot;}"/><input type="submit" value="Create New Pen with Prefilled Data" class="code-box-codepen"/></form><form action="https://codesandbox.io/api/v1/sandboxes/define" method="POST" target="_blank"><input type="hidden" name="parameters" value="N4IgZglgNgpgziAXKADgQwMYGs0HMYB0AVnAPYB2SoGFALjObVSACYwoNvkYTzMBOMTE0QgoaenCYAaEIOEBaFqQC2SMRPgyQK1QxEbJ23QCMAHuoAsBAOwEADCFmmzC-RgMBWAgEYCAJhAAXxDZCHI2MwIMOARkEBpGfXVgsIiYKJJmRPpGdQAdcggVFFJ-WgACACUhDwqwflUKgHJ3WmaAbkLi0vLq2toAEQB5AFl6xpUWtqVVTu6SssrmjAALUhhG5XIFAFcIAHoWCCkDtY2tij2IaNj5osW-5oID8MjbuHvCip_fv9SQG8MgRVrQVFBsnRkqIADzHABuFQgLAAvPkEnQ0OFNuiKlIAJ6wNEgdAsY7kXCICr-SwoMzogB8MKOEHhDMKMLgGH4EBQtHZ5B-8LQ_Aqul2jAAcqQ2BUURVlBhdip9AR8LQAKKwFWMABC-IAkiwABQrTHY_jNACUXXIzK5PL5DOCISAA"/><input type="submit" value="Create New Sandbox with Prefilled Data" class="code-box-codesandbox"/></form><i class="icon icon-copy code-box-code-copy"></i></div><pre class="language-jsx"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> Upload<span class="token punctuation">,</span> Icon<span class="token punctuation">,</span> message <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'choerodon-ui'</span><span class="token punctuation">;</span>
+
 <span class="token keyword">const</span> Dragger <span class="token operator">=</span> Upload<span class="token punctuation">.</span>Dragger<span class="token punctuation">;</span>
 
 <span class="token keyword">const</span> props <span class="token operator">=</span> <span class="token punctuation">{</span>
@@ -445,9 +463,13 @@ ReactDOM<span class="token punctuation">.</span><span class="token function">ren
       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Icon</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>inbox<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span> <span class="token attr-name">className</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>c7n-upload-text<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Click or drag file to <span class="token keyword">this</span> area to upload<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span> <span class="token attr-name">className</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>c7n-upload-hint<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Support <span class="token keyword">for</span> a single or bulk upload<span class="token punctuation">.</span> Strictly prohibit <span class="token keyword">from</span> uploading company data or other band files<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span> <span class="token attr-name">className</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>c7n-upload-hint<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+      Support <span class="token keyword">for</span> a single or bulk upload<span class="token punctuation">.</span> Strictly prohibit <span class="token keyword">from</span> uploading company data or other
+      band files
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Dragger</span><span class="token punctuation">></span></span><span class="token punctuation">,</span>
-  mountNode<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div></section></section><section class="code-box" id="components-upload-demo-upload-manually"><section class="code-box-demo"><div><span class=""><div class="c7n-upload c7n-upload-select c7n-upload-select-text" style="display:"></div><div class="c7n-upload-list c7n-upload-list-text"></div></span><button disabled="" type="button" class="c7n-btn upload-demo-start c7n-btn-primary c7n-btn-flat"><span>Start Upload</span></button></div><style>.upload-demo-start {
+  mountNode<span class="token punctuation">,</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div></section></section><section class="code-box" id="components-upload-demo-upload-manually"><section class="code-box-demo"><div><span class=""><div class="c7n-upload c7n-upload-select c7n-upload-select-text" style="display:"></div><div class="c7n-upload-list c7n-upload-list-text"></div></span><button disabled="" type="button" class="c7n-btn upload-demo-start c7n-btn-primary c7n-btn-flat"><span>Start Upload</span></button></div><style>.upload-demo-start {
   margin-top: 16px;
 }</style></section><section class="code-box-meta markdown"><div class="code-box-title"><a href="#components-upload-demo-upload-manually">Upload manually</a><a class="edit-button" href="https://github.com/choerodon/choerodon-ui/edit/master/components/upload/demo/upload-manually.md" target="_blank" rel="noopener noreferrer"><i class="icon icon-edit"></i></a></div><div><p>Upload files manually after <code>beforeUpload</code> returns <code>false</code>.</p></div><i class="icon icon-refresh code-refresh-icon"></i><span class="code-expand-icon"><img alt="expand code" src="https://gw.alipayobjects.com/zos/rmsportal/wSAkBuJFbdxsosKKpqyq.svg" class="code-expand-icon-show"/><img alt="expand code" src="https://gw.alipayobjects.com/zos/rmsportal/OpROPHYqWmrMDBFMZtKF.svg" class="code-expand-icon-hide"/></span></section><section class="highlight-wrapper"><div class="highlight"><div class="code-box-actions"><form action="https://codepen.io/pen/define" method="POST" target="_blank"><input type="hidden" name="data" value="{&quot;title&quot;:&quot;Upload manually - Choerodon UI Demo&quot;,&quot;html&quot;:&quot;&lt;div id=\&quot;container\&quot; style=\&quot;padding: 24px\&quot;&gt;&lt;/div&gt;\n&lt;script&gt;\n  var mountNode = document.getElementById(&#x27;container&#x27;);\n&lt;/script&gt;&quot;,&quot;js&quot;:&quot;&quot;,&quot;css&quot;:&quot;@import &#x27;choerodon-ui/dist/choerodon-ui.css&#x27;;\n\n.upload-demo-start {\n  margin-top: 16px;\n}&quot;,&quot;editors&quot;:&quot;001&quot;,&quot;css_external&quot;:&quot;https://unpkg.com/choerodon-ui/dist/choerodon-ui.css&quot;,&quot;js_external&quot;:&quot;https://unpkg.com/react@16.6.x/umd/react.production.min.js;https://unpkg.com/react-dom@16.6.x/umd/react-dom.production.min.js;https://unpkg.com/moment/min/moment-with-locales.min.js;https://unpkg.com/mobx@4.7.0/lib/mobx.umd.min.js;https://unpkg.com/mobx-react@5.1.x/index.min.js;https://unpkg.com/choerodon-ui/dist/choerodon-ui-with-locales.js&quot;,&quot;js_pre_processor&quot;:&quot;typescript&quot;}"/><input type="submit" value="Create New Pen with Prefilled Data" class="code-box-codepen"/></form><form action="https://codesandbox.io/api/v1/sandboxes/define" method="POST" target="_blank"><input type="hidden" name="parameters" value="N4IgZglgNgpgziAXKADgQwMYGs0HMYB0AVnAPYB2SoGFALjObVSACYwoNvkYTzMBOMTE0QgoaenCYAaEIOEBaFqQC2SMRPgyQK1QxEbJ23QCMAHuoAsBAOwEADCFmmzC-RgMBWAgEYCAJhAAXxDZCHI2MwIMOARkEBpGfXUCAFcUKFI0FiUYXQUpNH5aAAJgAB1yEpKVItxwhVpSFEQSnwA2FDMAbkqg4LCImCiSZkT6RnVKiBUUUmKSgCUhDxKwflUSgHJ3Wi3e8hm5heXhABEAeQBZNY2Vbd2lVX3p2fnSrYwAC1IYDeVyApUhAAPQsCBSEHfX7_ChAiDRWIvQ5vBZbAgg8KRRFwZGVaoEwklAYgLHDAhfWgqKBjOjJUQAHnBADcShAWABecoJOhocJ_bklKQAT1gXJA6BY4PIuFa_ksXW5AD4GWCIMylZUGXAMPwIChaJqqiVmUUaqRUowAHKkNglDklZQYVIqfQEfC0ACisFdjAAQsKAJIsAAUn15_P4WwAlAdVTq9QalcEQkA"/><input type="submit" value="Create New Sandbox with Prefilled Data" class="code-box-codesandbox"/></form><i class="icon icon-copy code-box-code-copy"></i></div><pre class="language-jsx"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> Upload<span class="token punctuation">,</span> Button<span class="token punctuation">,</span> Icon<span class="token punctuation">,</span> message <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'choerodon-ui'</span><span class="token punctuation">;</span>
 <span class="token keyword">import</span> reqwest <span class="token keyword">from</span> <span class="token string">'reqwest'</span><span class="token punctuation">;</span>
@@ -548,8 +570,8 @@ ReactDOM<span class="token punctuation">.</span><span class="token function">ren
    response<span class="token punctuation">:</span> <span class="token string">'{"status": "success"}'</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">// response from server</span>
    linkProps<span class="token punctuation">:</span> <span class="token string">'{"download": "image"}'</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">// additional html props of file link  </span>
 <span class="token punctuation">}</span></code></pre></li><li><p><code>fileList</code> current list of files</p></li><li><p><code>event</code> response from server, including uploading progress, supported by advanced browsers.</p></li></ol><h2 id="show-download-links"><span>show download links</span><a href="#show-download-links" class="anchor">#</a></h2><p>Please set property <code>url</code> of property <code>fileList</code> to control content of link</p><h2 id="customRequest"><span>customRequest</span><a href="#customRequest" class="anchor">#</a></h2><ul><li><p><a href="https://github.com/react-component/upload#customrequest">https://github.com/react-component/upload#customrequest</a></p></li></ul><h2 id="IE-note"><span>IE note</span><a href="#IE-note" class="anchor">#</a></h2><ul><li><p><a href="https://github.com/react-component/upload#ie89-note">https://github.com/react-component/upload#ie89-note</a></p></li></ul></section></article></section><section class="prev-next-nav"><a class="prev-page" href="/components/transfer/"><i class="icon icon-navigate_before footer-nav-icon-before"></i><span>Transfer</span><i class="icon icon-navigate_next footer-nav-icon-after"></i></a><a class="next-page" href="/components/avatar/"><i class="icon icon-navigate_before footer-nav-icon-before"></i><span>Avatar</span><i class="icon icon-navigate_next footer-nav-icon-after"></i></a></section><footer id="footer"><div class="footer-wrap"><div class="c7n-row"><div class="c7n-col-xs-24 c7n-col-sm-24 c7n-col-md-6"><div class="footer-center"><h2><span>Resources</span></h2><div><a href="http://choerodon.io/">Choerodon</a></div></div></div><div class="c7n-col-xs-24 c7n-col-sm-24 c7n-col-md-6"><div class="footer-center"><h2><span>Help</span></h2><div><a target="_blank " href="https://github.com/choerodon/choerodon-ui">GitLab</a></div><div><a href="/changelog"><span>Change Log</span></a></div><div><a target="_blank" rel="noopener noreferrer" href="https://github.com/choerodon/choerodon-ui/issues"><span>Issues</span></a></div></div></div></div></div><div class="c7n-row bottom-bar"><div class="c7n-col-sm-24 c7n-col-md-4"></div><div class="c7n-col-sm-24 c7n-col-md-20"><span style="margin-right:12px">Copyright@ The choerodon Author. All rights reserved.</span></div></div></footer></div></div></div></div>
-</div>
-<script src="/choerodon-ui/common.js"></script>
-<script src="/choerodon-ui/index.js"></script>
-</body>
+    </div>
+    <script src="/choerodon-ui/index-de086839.js"></script>
+    
+  </body>
 </html>

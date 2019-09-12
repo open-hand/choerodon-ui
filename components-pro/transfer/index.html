@@ -1,99 +1,116 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="An enterprise-class UI design language and React-based implementation with a set of high-quality React components, one of best React UI library for enterprises">
-    <title>Choerodon UI - A UI Design Language</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="An enterprise-class UI design language and React-based implementation with a set of high-quality React components, one of best React UI library for enterprises"
+    />
+    <title>穿梭框 Transfer - Choerodon UI</title>
     <!-- Polyfills -->
     <!--[if IE]>
-    <script src="https://as.alipayobjects.com/g/component/??es6-shim/0.35.1/es6-sham.min.js,es6-shim/0.35.1/es6-shim.min.js"></script>
+      <script src="https://as.alipayobjects.com/g/component/??es6-shim/0.35.1/es6-sham.min.js,es6-shim/0.35.1/es6-shim.min.js"></script>
     <![endif]-->
     <script>
-    (function() {
-      function isLocalStorageNameSupported() {
-        var testKey = 'test';
-        var storage = window.localStorage;
-        try {
-          storage.setItem(testKey, '1');
-          storage.removeItem(testKey);
-          return true;
-        } catch (error) {
-          return false;
+      (function() {
+        function isLocalStorageNameSupported() {
+          var testKey = 'test';
+          var storage = window.localStorage;
+          try {
+            storage.setItem(testKey, '1');
+            storage.removeItem(testKey);
+            return true;
+          } catch (error) {
+            return false;
+          }
         }
-      }
 
-      // 优先级提高到所有静态资源的前面，语言不对，加载其他静态资源没意义
-      var pathname = location.pathname;
+        // 优先级提高到所有静态资源的前面，语言不对，加载其他静态资源没意义
+        var pathname = location.pathname;
 
-      function isZhCN(pathname) {
-        return /-cn\/?$/.test(pathname);
-      }
-
-      function getLocalizedPathname(path, zhCN) {
-        var pathname = path.indexOf('/') === 0 ? path : '/' + path;
-        if (!zhCN) { // to enUS
-          return /\/?index-cn/.test(pathname) ? '/' : pathname.replace('-cn', '');
-        } else if (pathname === '/') {
-          return '/index-cn';
-        } else if (pathname.endsWith('/')) {
-          return pathname.replace(/\/$/, '-cn/');
+        function isZhCN(pathname) {
+          return /-cn\/?$/.test(pathname);
         }
-        return pathname + '-cn';
-      }
 
-      // 兼容旧的 URL， `?locale=...`
-      var queryString = location.search;
-      if (queryString) {
-        var isZhCNConfig = queryString.indexOf('zh-CN') > -1;
-        if (isZhCNConfig && !isZhCN(pathname)) {
-          location.pathname = getLocalizedPathname(pathname, isZhCNConfig);
+        function getLocalizedPathname(path, zhCN) {
+          var pathname = path.indexOf('/') === 0 ? path : '/' + path;
+          if (!zhCN) {
+            // to enUS
+            return /\/?index-cn/.test(pathname) ? '/' : pathname.replace('-cn', '');
+          } else if (pathname === '/') {
+            return '/index-cn';
+          } else if (pathname.endsWith('/')) {
+            return pathname.replace(/\/$/, '-cn/');
+          }
+          return pathname + '-cn';
         }
-      }
 
-      if (isLocalStorageNameSupported() && (pathname === '/' || pathname === '/index-cn')) {
-        var lang = (window.localStorage && localStorage.getItem('locale')) || ((navigator.language || navigator.browserLanguage).toLowerCase() === 'zh-cn' ? 'zh-CN' : 'en-US');
-        // safari is 'zh-cn', while other browser is 'zh-CN';
-        if ((lang === 'zh-CN') !== isZhCN(pathname)) {
-          location.pathname = getLocalizedPathname(pathname, lang === 'zh-CN');
+        // 兼容旧的 URL， `?locale=...`
+        var queryString = location.search;
+        if (queryString) {
+          var isZhCNConfig = queryString.indexOf('zh-CN') > -1;
+          if (isZhCNConfig && !isZhCN(pathname)) {
+            location.pathname = getLocalizedPathname(pathname, isZhCNConfig);
+          }
         }
-      }
-      document.documentElement.className += isZhCN(pathname) ? 'zh-cn' : 'en-us';
 
-      if (!window.Intl) {
-        var intlPath = 'https://as.alipayobjects.com/g/component/intl/1.0.1/??Intl.min.js';
-        if (isZhCN(pathname)) {
-          intlPath += ',locale-data/jsonp/zh.js';
-        } else {
-          intlPath += ',locale-data/jsonp/en.js';
+        if (isLocalStorageNameSupported() && (pathname === '/' || pathname === '/index-cn')) {
+          var lang =
+            (window.localStorage && localStorage.getItem('locale')) ||
+            ((navigator.language || navigator.browserLanguage).toLowerCase() === 'zh-cn'
+              ? 'zh-CN'
+              : 'en-US');
+          // safari is 'zh-cn', while other browser is 'zh-CN';
+          if ((lang === 'zh-CN') !== isZhCN(pathname)) {
+            location.pathname = getLocalizedPathname(pathname, lang === 'zh-CN');
+          }
         }
-        document.writeln('<script src="' + intlPath + '">' + '<' + '/script>');
+        document.documentElement.className += isZhCN(pathname) ? 'zh-cn' : 'en-us';
+
+        if (!window.Intl) {
+          var intlPath = 'https://as.alipayobjects.com/g/component/intl/1.0.1/??Intl.min.js';
+          if (isZhCN(pathname)) {
+            intlPath += ',locale-data/jsonp/zh.js';
+          } else {
+            intlPath += ',locale-data/jsonp/en.js';
+          }
+          document.writeln('<script src="' + intlPath + '">' + '<' + '/script>');
+        }
+        if (!window.Promise) {
+          document.writeln(
+            '<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"' +
+              '>' +
+              '<' +
+              '/' +
+              'script>',
+          );
+        }
+      })();
+    </script>
+    <link rel="icon" href="http://choerodon.io/img/favicon.ico" type="image/x-icon" />
+    
+    <link rel="stylesheet" type="text/css" href="/choerodon-ui/index-fb8963c9-1.css" />
+    
+    <link rel="stylesheet" type="text/css" href="/choerodon-ui/index-fb8963c9-2.css" />
+    
+    <link rel="stylesheet" type="text/css" href="/choerodon-ui/index-fb8963c9-3.css" />
+    
+    <link rel="stylesheet/less" type="text/css" href="/choerodon-ui/color.less" />
+    <style id="nprogress-style">
+      #nprogress {
+        display: none;
       }
-      if (!window.Promise) {
-        document.writeln('<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"' + '>' + '<' + '/' + 'script>');
-      }
-    })();
-  </script>
-  <link rel="icon" href="http://choerodon.io/img/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" type="text/css" href="/choerodon-ui/index-1.css" />
-  <link rel="stylesheet" type="text/css" href="/choerodon-ui/index-2.css" />
-  <link rel="stylesheet" type="text/css" href="/choerodon-ui/index-3.css" />
-  <link rel="stylesheet/less" type="text/css" href="/choerodon-ui/color.less" />
-  <style id="nprogress-style">
-    #nprogress {
-      display: none
-    }
-  </style>
-  <!--[if lte IE 10]>
-  <script
-    src="https://as.alipayobjects.com/g/component/??console-polyfill/0.2.2/index.js,media-match/2.0.2/media.match.min.js"></script>
-  <![endif]-->
-</head>
-<body>
-<div id="react-content">
-  <div class="page-wrapper" data-reactroot=""><header id="header" class="clearfix"><div class="c7n-row"><div class="c7n-col-xs-24 c7n-col-sm-24 c7n-col-md-5 c7n-col-lg-5 c7n-col-xl-5 c7n-col-xxl-4"><a id="logo" href="/"><img alt="logo" src="/choerodon-ui/1bf6a5fa3f014f7d70d24574cfac2e36.svg"/></a></div><div class="c7n-col-xs-0 c7n-col-sm-0 c7n-col-md-18 c7n-col-lg-19 c7n-col-xl-19 c7n-col-xxl-20"><button type="button" class="c7n-btn header-lang-button c7n-btn-sm c7n-btn-background-ghost c7n-btn-flat"><span>中文</span><div class="c7n-ripple-wrapper"></div></button><div class="c7n-select-sm version c7n-select c7n-select-has-value c7n-select-enabled c7n-select-has-border"><div class="c7n-select-selection
-            c7n-select-selection--single" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="false" tabindex="0"><div class="c7n-select-selection__rendered"><div class="c7n-select-selection-selected-value" title="0.8.8" style="opacity:1">0.8.8</div><span class="c7n-select-arrow" style="user-select:none;-webkit-user-select:none" unselectable="unselectable"><i class="icon icon-arrow_drop_down"></i><b></b></span></div></div></div><ul class="c7n-menu menu-site c7n-menu-light c7n-menu-root c7n-menu-horizontal" role="menu" aria-activedescendant="" id="nav"><li class="c7n-menu-item" role="menuitem" aria-selected="false"><a href="/"><span>Home</span></a><div class="c7n-ripple-wrapper"></div></li><li class="c7n-menu-item" role="menuitem" aria-selected="false"><a href="/docs/react/introduce"><span>Components</span></a><div class="c7n-ripple-wrapper"></div></li></ul></div></div><style>
+    </style>
+    <!--[if lte IE 10]>
+      <script src="https://as.alipayobjects.com/g/component/??console-polyfill/0.2.2/index.js,media-match/2.0.2/media.match.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div id="react-content">
+      <div class="page-wrapper" data-reactroot=""><header id="header" class="clearfix"><div class="c7n-row"><div class="c7n-col-xs-24 c7n-col-sm-24 c7n-col-md-5 c7n-col-lg-5 c7n-col-xl-5 c7n-col-xxl-4"><a id="logo" href="/"><img alt="logo" src="/choerodon-ui/1bf6a5fa3f014f7d70d24574cfac2e36.svg"/></a></div><div class="c7n-col-xs-0 c7n-col-sm-0 c7n-col-md-18 c7n-col-lg-19 c7n-col-xl-19 c7n-col-xxl-20"><button type="button" class="c7n-btn header-lang-button c7n-btn-sm c7n-btn-background-ghost c7n-btn-flat"><span>中文</span><div class="c7n-ripple-wrapper"></div></button><div class="c7n-select-sm version c7n-select c7n-select-has-value c7n-select-enabled c7n-select-has-border"><div class="c7n-select-selection
+            c7n-select-selection--single" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="false" tabindex="0"><div class="c7n-select-selection__rendered"><div class="c7n-select-selection-selected-value" title="0.8.9" style="opacity:1">0.8.9</div><span class="c7n-select-arrow" style="user-select:none;-webkit-user-select:none" unselectable="unselectable"><i class="icon icon-arrow_drop_down"></i><b></b></span></div></div></div><ul class="c7n-menu menu-site c7n-menu-light c7n-menu-root c7n-menu-horizontal" role="menu" aria-activedescendant="" id="nav"><li class="c7n-menu-item" role="menuitem" aria-selected="false"><a href="/"><span>Home</span></a><div class="c7n-ripple-wrapper"></div></li><li class="c7n-menu-item" role="menuitem" aria-selected="false"><a href="/docs/react/introduce"><span>Components</span></a><div class="c7n-ripple-wrapper"></div></li></ul></div></div><style>
     #header .c7n-select-selection {
       height: 24px;
       padding-top: 0;
@@ -327,8 +344,8 @@ ReactDOM<span class="token punctuation">.</span><span class="token function">ren
   margin-bottom: .1rem;
 }
 </style></section></article></section><section class="prev-next-nav"><a class="prev-page" href="/components/time-picker/"><i class="icon icon-navigate_before footer-nav-icon-before"></i><span>TimePicker</span><i class="icon icon-navigate_next footer-nav-icon-after"></i></a><a class="next-page" href="/components/upload/"><i class="icon icon-navigate_before footer-nav-icon-before"></i><span>Upload</span><i class="icon icon-navigate_next footer-nav-icon-after"></i></a></section><footer id="footer"><div class="footer-wrap"><div class="c7n-row"><div class="c7n-col-xs-24 c7n-col-sm-24 c7n-col-md-6"><div class="footer-center"><h2><span>Resources</span></h2><div><a href="http://choerodon.io/">Choerodon</a></div></div></div><div class="c7n-col-xs-24 c7n-col-sm-24 c7n-col-md-6"><div class="footer-center"><h2><span>Help</span></h2><div><a target="_blank " href="https://github.com/choerodon/choerodon-ui">GitLab</a></div><div><a href="/changelog"><span>Change Log</span></a></div><div><a target="_blank" rel="noopener noreferrer" href="https://github.com/choerodon/choerodon-ui/issues"><span>Issues</span></a></div></div></div></div></div><div class="c7n-row bottom-bar"><div class="c7n-col-sm-24 c7n-col-md-4"></div><div class="c7n-col-sm-24 c7n-col-md-20"><span style="margin-right:12px">Copyright@ The choerodon Author. All rights reserved.</span></div></div></footer></div></div></div></div>
-</div>
-<script src="/choerodon-ui/common.js"></script>
-<script src="/choerodon-ui/index.js"></script>
-</body>
+    </div>
+    <script src="/choerodon-ui/index-de086839.js"></script>
+    
+  </body>
 </html>

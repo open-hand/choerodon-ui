@@ -1,99 +1,116 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="An enterprise-class UI design language and React-based implementation with a set of high-quality React components, one of best React UI library for enterprises">
-    <title>Choerodon UI - A UI Design Language</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="An enterprise-class UI design language and React-based implementation with a set of high-quality React components, one of best React UI library for enterprises"
+    />
+    <title> Table - Choerodon UI</title>
     <!-- Polyfills -->
     <!--[if IE]>
-    <script src="https://as.alipayobjects.com/g/component/??es6-shim/0.35.1/es6-sham.min.js,es6-shim/0.35.1/es6-shim.min.js"></script>
+      <script src="https://as.alipayobjects.com/g/component/??es6-shim/0.35.1/es6-sham.min.js,es6-shim/0.35.1/es6-shim.min.js"></script>
     <![endif]-->
     <script>
-    (function() {
-      function isLocalStorageNameSupported() {
-        var testKey = 'test';
-        var storage = window.localStorage;
-        try {
-          storage.setItem(testKey, '1');
-          storage.removeItem(testKey);
-          return true;
-        } catch (error) {
-          return false;
+      (function() {
+        function isLocalStorageNameSupported() {
+          var testKey = 'test';
+          var storage = window.localStorage;
+          try {
+            storage.setItem(testKey, '1');
+            storage.removeItem(testKey);
+            return true;
+          } catch (error) {
+            return false;
+          }
         }
-      }
 
-      // 优先级提高到所有静态资源的前面，语言不对，加载其他静态资源没意义
-      var pathname = location.pathname;
+        // 优先级提高到所有静态资源的前面，语言不对，加载其他静态资源没意义
+        var pathname = location.pathname;
 
-      function isZhCN(pathname) {
-        return /-cn\/?$/.test(pathname);
-      }
-
-      function getLocalizedPathname(path, zhCN) {
-        var pathname = path.indexOf('/') === 0 ? path : '/' + path;
-        if (!zhCN) { // to enUS
-          return /\/?index-cn/.test(pathname) ? '/' : pathname.replace('-cn', '');
-        } else if (pathname === '/') {
-          return '/index-cn';
-        } else if (pathname.endsWith('/')) {
-          return pathname.replace(/\/$/, '-cn/');
+        function isZhCN(pathname) {
+          return /-cn\/?$/.test(pathname);
         }
-        return pathname + '-cn';
-      }
 
-      // 兼容旧的 URL， `?locale=...`
-      var queryString = location.search;
-      if (queryString) {
-        var isZhCNConfig = queryString.indexOf('zh-CN') > -1;
-        if (isZhCNConfig && !isZhCN(pathname)) {
-          location.pathname = getLocalizedPathname(pathname, isZhCNConfig);
+        function getLocalizedPathname(path, zhCN) {
+          var pathname = path.indexOf('/') === 0 ? path : '/' + path;
+          if (!zhCN) {
+            // to enUS
+            return /\/?index-cn/.test(pathname) ? '/' : pathname.replace('-cn', '');
+          } else if (pathname === '/') {
+            return '/index-cn';
+          } else if (pathname.endsWith('/')) {
+            return pathname.replace(/\/$/, '-cn/');
+          }
+          return pathname + '-cn';
         }
-      }
 
-      if (isLocalStorageNameSupported() && (pathname === '/' || pathname === '/index-cn')) {
-        var lang = (window.localStorage && localStorage.getItem('locale')) || ((navigator.language || navigator.browserLanguage).toLowerCase() === 'zh-cn' ? 'zh-CN' : 'en-US');
-        // safari is 'zh-cn', while other browser is 'zh-CN';
-        if ((lang === 'zh-CN') !== isZhCN(pathname)) {
-          location.pathname = getLocalizedPathname(pathname, lang === 'zh-CN');
+        // 兼容旧的 URL， `?locale=...`
+        var queryString = location.search;
+        if (queryString) {
+          var isZhCNConfig = queryString.indexOf('zh-CN') > -1;
+          if (isZhCNConfig && !isZhCN(pathname)) {
+            location.pathname = getLocalizedPathname(pathname, isZhCNConfig);
+          }
         }
-      }
-      document.documentElement.className += isZhCN(pathname) ? 'zh-cn' : 'en-us';
 
-      if (!window.Intl) {
-        var intlPath = 'https://as.alipayobjects.com/g/component/intl/1.0.1/??Intl.min.js';
-        if (isZhCN(pathname)) {
-          intlPath += ',locale-data/jsonp/zh.js';
-        } else {
-          intlPath += ',locale-data/jsonp/en.js';
+        if (isLocalStorageNameSupported() && (pathname === '/' || pathname === '/index-cn')) {
+          var lang =
+            (window.localStorage && localStorage.getItem('locale')) ||
+            ((navigator.language || navigator.browserLanguage).toLowerCase() === 'zh-cn'
+              ? 'zh-CN'
+              : 'en-US');
+          // safari is 'zh-cn', while other browser is 'zh-CN';
+          if ((lang === 'zh-CN') !== isZhCN(pathname)) {
+            location.pathname = getLocalizedPathname(pathname, lang === 'zh-CN');
+          }
         }
-        document.writeln('<script src="' + intlPath + '">' + '<' + '/script>');
+        document.documentElement.className += isZhCN(pathname) ? 'zh-cn' : 'en-us';
+
+        if (!window.Intl) {
+          var intlPath = 'https://as.alipayobjects.com/g/component/intl/1.0.1/??Intl.min.js';
+          if (isZhCN(pathname)) {
+            intlPath += ',locale-data/jsonp/zh.js';
+          } else {
+            intlPath += ',locale-data/jsonp/en.js';
+          }
+          document.writeln('<script src="' + intlPath + '">' + '<' + '/script>');
+        }
+        if (!window.Promise) {
+          document.writeln(
+            '<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"' +
+              '>' +
+              '<' +
+              '/' +
+              'script>',
+          );
+        }
+      })();
+    </script>
+    <link rel="icon" href="http://choerodon.io/img/favicon.ico" type="image/x-icon" />
+    
+    <link rel="stylesheet" type="text/css" href="/choerodon-ui/index-fb8963c9-1.css" />
+    
+    <link rel="stylesheet" type="text/css" href="/choerodon-ui/index-fb8963c9-2.css" />
+    
+    <link rel="stylesheet" type="text/css" href="/choerodon-ui/index-fb8963c9-3.css" />
+    
+    <link rel="stylesheet/less" type="text/css" href="/choerodon-ui/color.less" />
+    <style id="nprogress-style">
+      #nprogress {
+        display: none;
       }
-      if (!window.Promise) {
-        document.writeln('<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"' + '>' + '<' + '/' + 'script>');
-      }
-    })();
-  </script>
-  <link rel="icon" href="http://choerodon.io/img/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" type="text/css" href="/choerodon-ui/index-1.css" />
-  <link rel="stylesheet" type="text/css" href="/choerodon-ui/index-2.css" />
-  <link rel="stylesheet" type="text/css" href="/choerodon-ui/index-3.css" />
-  <link rel="stylesheet/less" type="text/css" href="/choerodon-ui/color.less" />
-  <style id="nprogress-style">
-    #nprogress {
-      display: none
-    }
-  </style>
-  <!--[if lte IE 10]>
-  <script
-    src="https://as.alipayobjects.com/g/component/??console-polyfill/0.2.2/index.js,media-match/2.0.2/media.match.min.js"></script>
-  <![endif]-->
-</head>
-<body>
-<div id="react-content">
-  <div class="page-wrapper" data-reactroot=""><header id="header" class="clearfix"><div class="c7n-row"><div class="c7n-col-xs-24 c7n-col-sm-24 c7n-col-md-5 c7n-col-lg-5 c7n-col-xl-5 c7n-col-xxl-4"><a id="logo" href="/"><img alt="logo" src="/choerodon-ui/1bf6a5fa3f014f7d70d24574cfac2e36.svg"/></a></div><div class="c7n-col-xs-0 c7n-col-sm-0 c7n-col-md-18 c7n-col-lg-19 c7n-col-xl-19 c7n-col-xxl-20"><button type="button" class="c7n-btn header-lang-button c7n-btn-sm c7n-btn-background-ghost c7n-btn-flat"><span>中文</span><div class="c7n-ripple-wrapper"></div></button><div class="c7n-select-sm version c7n-select c7n-select-has-value c7n-select-enabled c7n-select-has-border"><div class="c7n-select-selection
-            c7n-select-selection--single" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="false" tabindex="0"><div class="c7n-select-selection__rendered"><div class="c7n-select-selection-selected-value" title="0.8.8" style="opacity:1">0.8.8</div><span class="c7n-select-arrow" style="user-select:none;-webkit-user-select:none" unselectable="unselectable"><i class="icon icon-arrow_drop_down"></i><b></b></span></div></div></div><ul class="c7n-menu menu-site c7n-menu-light c7n-menu-root c7n-menu-horizontal" role="menu" aria-activedescendant="" id="nav"><li class="c7n-menu-item" role="menuitem" aria-selected="false"><a href="/"><span>Home</span></a><div class="c7n-ripple-wrapper"></div></li><li class="c7n-menu-item c7n-menu-item-selected" role="menuitem" aria-selected="true"><a href="/docs/react/introduce"><span>Components</span></a><div class="c7n-ripple-wrapper"></div></li></ul></div></div><style>
+    </style>
+    <!--[if lte IE 10]>
+      <script src="https://as.alipayobjects.com/g/component/??console-polyfill/0.2.2/index.js,media-match/2.0.2/media.match.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div id="react-content">
+      <div class="page-wrapper" data-reactroot=""><header id="header" class="clearfix"><div class="c7n-row"><div class="c7n-col-xs-24 c7n-col-sm-24 c7n-col-md-5 c7n-col-lg-5 c7n-col-xl-5 c7n-col-xxl-4"><a id="logo" href="/"><img alt="logo" src="/choerodon-ui/1bf6a5fa3f014f7d70d24574cfac2e36.svg"/></a></div><div class="c7n-col-xs-0 c7n-col-sm-0 c7n-col-md-18 c7n-col-lg-19 c7n-col-xl-19 c7n-col-xxl-20"><button type="button" class="c7n-btn header-lang-button c7n-btn-sm c7n-btn-background-ghost c7n-btn-flat"><span>中文</span><div class="c7n-ripple-wrapper"></div></button><div class="c7n-select-sm version c7n-select c7n-select-has-value c7n-select-enabled c7n-select-has-border"><div class="c7n-select-selection
+            c7n-select-selection--single" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="false" tabindex="0"><div class="c7n-select-selection__rendered"><div class="c7n-select-selection-selected-value" title="0.8.9" style="opacity:1">0.8.9</div><span class="c7n-select-arrow" style="user-select:none;-webkit-user-select:none" unselectable="unselectable"><i class="icon icon-arrow_drop_down"></i><b></b></span></div></div></div><ul class="c7n-menu menu-site c7n-menu-light c7n-menu-root c7n-menu-horizontal" role="menu" aria-activedescendant="" id="nav"><li class="c7n-menu-item" role="menuitem" aria-selected="false"><a href="/"><span>Home</span></a><div class="c7n-ripple-wrapper"></div></li><li class="c7n-menu-item c7n-menu-item-selected" role="menuitem" aria-selected="true"><a href="/docs/react/introduce"><span>Components</span></a><div class="c7n-ripple-wrapper"></div></li></ul></div></div><style>
     #header .c7n-select-selection {
       height: 24px;
       padding-top: 0;
@@ -734,7 +751,7 @@ ReactDOM<span class="token punctuation">.</span><span class="token function">ren
   padding: 8px;
   border-radius: 6px;
   background: #fff;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, .2);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
 }
 
 .custom-filter-dropdown input {
@@ -744,29 +761,34 @@ ReactDOM<span class="token punctuation">.</span><span class="token function">ren
 
 .highlight {
   color: #f50;
-}</style></section><section class="code-box-meta markdown"><div class="code-box-title"><a href="#components-table-demo-custom-filter-panel">Customized filter panel</a><a class="edit-button" href="https://github.com/choerodon/choerodon-ui/edit/master/components/table/demo/custom-filter-panel.md" target="_blank" rel="noopener noreferrer"><i class="icon icon-edit"></i></a></div><div><p>Implement a customized column search example via <code>filterDropdown</code>, <code>filterDropdownVisible</code> and <code>filterDropdownVisibleChange</code>.</p></div><i class="icon icon-refresh code-refresh-icon"></i><span class="code-expand-icon"><img alt="expand code" src="https://gw.alipayobjects.com/zos/rmsportal/wSAkBuJFbdxsosKKpqyq.svg" class="code-expand-icon-show"/><img alt="expand code" src="https://gw.alipayobjects.com/zos/rmsportal/OpROPHYqWmrMDBFMZtKF.svg" class="code-expand-icon-hide"/></span></section><section class="highlight-wrapper"><div class="highlight"><div class="code-box-actions"><form action="https://codepen.io/pen/define" method="POST" target="_blank"><input type="hidden" name="data" value="{&quot;title&quot;:&quot;Customized filter panel - Choerodon UI Demo&quot;,&quot;html&quot;:&quot;&lt;div id=\&quot;container\&quot; style=\&quot;padding: 24px\&quot;&gt;&lt;/div&gt;\n&lt;script&gt;\n  var mountNode = document.getElementById(&#x27;container&#x27;);\n&lt;/script&gt;&quot;,&quot;js&quot;:&quot;&quot;,&quot;css&quot;:&quot;@import &#x27;choerodon-ui/dist/choerodon-ui.css&#x27;;\n\n.custom-filter-dropdown {\n  padding: 8px;\n  border-radius: 6px;\n  background: #fff;\n  box-shadow: 0 1px 6px rgba(0, 0, 0, .2);\n}\n\n.custom-filter-dropdown input {\n  width: 130px;\n  margin-right: 8px;\n}\n\n.highlight {\n  color: #f50;\n}&quot;,&quot;editors&quot;:&quot;001&quot;,&quot;css_external&quot;:&quot;https://unpkg.com/choerodon-ui/dist/choerodon-ui.css&quot;,&quot;js_external&quot;:&quot;https://unpkg.com/react@16.6.x/umd/react.production.min.js;https://unpkg.com/react-dom@16.6.x/umd/react-dom.production.min.js;https://unpkg.com/moment/min/moment-with-locales.min.js;https://unpkg.com/mobx@4.7.0/lib/mobx.umd.min.js;https://unpkg.com/mobx-react@5.1.x/index.min.js;https://unpkg.com/choerodon-ui/dist/choerodon-ui-with-locales.js&quot;,&quot;js_pre_processor&quot;:&quot;typescript&quot;}"/><input type="submit" value="Create New Pen with Prefilled Data" class="code-box-codepen"/></form><form action="https://codesandbox.io/api/v1/sandboxes/define" method="POST" target="_blank"><input type="hidden" name="parameters" value="N4IgZglgNgpgziAXKADgQwMYGs0HMYB0AVnAPYB2SoGFALjObVSACYwoNvkYTzMBOMTE0QgoaenCYAaEIOEBaFqQC2SMRPgyQK1QxEbJ23QCMAHuoAsBAOwEADCFmmzC-RgMBWAgEYCAJhAAXxDZCHI2MwIMOARkEBpGfXVogFcpVQVIKHp-JX5SFGUAd3IAAmAAHXKy9BYWcNxEMoAOFDMAbmqyspNSfjY8_jQG9OaANnaumpNMLFwC1IjmgGIwdemevtc4AAsR0mLm-zKfdrLJszL-XFmACntpMsfnp4CASmmg6uq0jJUstBcvlCiVyuEUKlaBVumVihAWLRds0fABmexTWEqNA3cJuCC4Xa0ZptTrVb7kX67Am7KA06FVGo0KD9VZgTz2L7BMIRGBREjMRL0RjqaoQFQofrQgBKQg8ZTABRUZQA5O5aCrpuLJfwZXLaAARADyAFkFUrVeqlKpNWKJVLVRhdqQYAVlOQFKkIAB6BpSb1Ol1uiieiDRWK28jah0qgje8KRcNwSOwnpptPckAJvkEIkqKCCujJUQAHgaADcygiALyVBJ0NDhV11spSACesFrIDqDXITTK_ks7TrAD4S76IOWR9US3AMPwIChaNOauWcWVdEtaAA5UhsMrVsrKDCpFT6Aj4WgAUVgZ8YACE2wBJFh3FVCxvkV0qz4z71zhclxHYIQiAA"/><input type="submit" value="Create New Sandbox with Prefilled Data" class="code-box-codesandbox"/></form><i class="icon icon-copy code-box-code-copy"></i></div><pre class="language-jsx"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> Table<span class="token punctuation">,</span> Input<span class="token punctuation">,</span> Button<span class="token punctuation">,</span> Icon <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'choerodon-ui'</span><span class="token punctuation">;</span>
+}</style></section><section class="code-box-meta markdown"><div class="code-box-title"><a href="#components-table-demo-custom-filter-panel">Customized filter panel</a><a class="edit-button" href="https://github.com/choerodon/choerodon-ui/edit/master/components/table/demo/custom-filter-panel.md" target="_blank" rel="noopener noreferrer"><i class="icon icon-edit"></i></a></div><div><p>Implement a customized column search example via <code>filterDropdown</code>, <code>filterDropdownVisible</code> and <code>filterDropdownVisibleChange</code>.</p></div><i class="icon icon-refresh code-refresh-icon"></i><span class="code-expand-icon"><img alt="expand code" src="https://gw.alipayobjects.com/zos/rmsportal/wSAkBuJFbdxsosKKpqyq.svg" class="code-expand-icon-show"/><img alt="expand code" src="https://gw.alipayobjects.com/zos/rmsportal/OpROPHYqWmrMDBFMZtKF.svg" class="code-expand-icon-hide"/></span></section><section class="highlight-wrapper"><div class="highlight"><div class="code-box-actions"><form action="https://codepen.io/pen/define" method="POST" target="_blank"><input type="hidden" name="data" value="{&quot;title&quot;:&quot;Customized filter panel - Choerodon UI Demo&quot;,&quot;html&quot;:&quot;&lt;div id=\&quot;container\&quot; style=\&quot;padding: 24px\&quot;&gt;&lt;/div&gt;\n&lt;script&gt;\n  var mountNode = document.getElementById(&#x27;container&#x27;);\n&lt;/script&gt;&quot;,&quot;js&quot;:&quot;&quot;,&quot;css&quot;:&quot;@import &#x27;choerodon-ui/dist/choerodon-ui.css&#x27;;\n\n.custom-filter-dropdown {\n  padding: 8px;\n  border-radius: 6px;\n  background: #fff;\n  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);\n}\n\n.custom-filter-dropdown input {\n  width: 130px;\n  margin-right: 8px;\n}\n\n.highlight {\n  color: #f50;\n}&quot;,&quot;editors&quot;:&quot;001&quot;,&quot;css_external&quot;:&quot;https://unpkg.com/choerodon-ui/dist/choerodon-ui.css&quot;,&quot;js_external&quot;:&quot;https://unpkg.com/react@16.6.x/umd/react.production.min.js;https://unpkg.com/react-dom@16.6.x/umd/react-dom.production.min.js;https://unpkg.com/moment/min/moment-with-locales.min.js;https://unpkg.com/mobx@4.7.0/lib/mobx.umd.min.js;https://unpkg.com/mobx-react@5.1.x/index.min.js;https://unpkg.com/choerodon-ui/dist/choerodon-ui-with-locales.js&quot;,&quot;js_pre_processor&quot;:&quot;typescript&quot;}"/><input type="submit" value="Create New Pen with Prefilled Data" class="code-box-codepen"/></form><form action="https://codesandbox.io/api/v1/sandboxes/define" method="POST" target="_blank"><input type="hidden" name="parameters" value="N4IgZglgNgpgziAXKADgQwMYGs0HMYB0AVnAPYB2SoGFALjObVSACYwoNvkYTzMBOMTE0QgoaenCYAaEIOEBaFqQC2SMRPgyQK1QxEbJ23QCMAHuoAsBAOwEADCFmmzC-RgMBWAgEYCAJhAAXxDZCHI2MwIMOARkEBpGfXVogFcpVQVIKHp-JX5SFGUAd3IAAmAAHXKy9BYWcNxEMoAOFDMAbmqyspNSfjY8_jQG9OaANnaumpNMLFwC1IjmgGIwdemevtc4AAsR0mLm-zKfdrLJszL-XFmACntpMsfnp_sAgEppoOrqtIyVFloLl8oUSuVwihUrQKt0ysUICxaLtmj4AMz2KZwlRoG7hNwQXC7WjNNqdao_ch_XaE3ZQWkwqo1GhQfqrMCeezfYJhCIwKIkZiJeiMdTVCAqFD9GEAJSEHjKYAKKjKAHJ3LRVdMJVL-LL5bQACIAeQAsorlWqNUpVFrxZLpWqMLtSDACspyApUhAAPQNKQ-52u90UL0QaKxO3kHWO1UEH3hSIRuBRuE9dPpnkgRP8gjElRQIV0ZKiAA8DQAbmVEQBeSoJOhocJu-tlKQAT1gdZAdQa5CaZX8lna9YAfKW_RAK6PqqW4Bh-BAULQZzUK7iyrolrQAHKkNhlGtlZQYVIqfQEfC0ACisHPjAAQu2AJIsO6q4VN8hu1VfWc--dF2XUdghCIA"/><input type="submit" value="Create New Sandbox with Prefilled Data" class="code-box-codesandbox"/></form><i class="icon icon-copy code-box-code-copy"></i></div><pre class="language-jsx"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> Table<span class="token punctuation">,</span> Input<span class="token punctuation">,</span> Button<span class="token punctuation">,</span> Icon <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'choerodon-ui'</span><span class="token punctuation">;</span>
 
-<span class="token keyword">const</span> data <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
-  key<span class="token punctuation">:</span> <span class="token string">'1'</span><span class="token punctuation">,</span>
-  name<span class="token punctuation">:</span> <span class="token string">'John Brown'</span><span class="token punctuation">,</span>
-  age<span class="token punctuation">:</span> <span class="token number">32</span><span class="token punctuation">,</span>
-  address<span class="token punctuation">:</span> <span class="token string">'New York No. 1 Lake Park'</span><span class="token punctuation">,</span>
-<span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
-  key<span class="token punctuation">:</span> <span class="token string">'2'</span><span class="token punctuation">,</span>
-  name<span class="token punctuation">:</span> <span class="token string">'Joe Black'</span><span class="token punctuation">,</span>
-  age<span class="token punctuation">:</span> <span class="token number">42</span><span class="token punctuation">,</span>
-  address<span class="token punctuation">:</span> <span class="token string">'London No. 1 Lake Park'</span><span class="token punctuation">,</span>
-<span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
-  key<span class="token punctuation">:</span> <span class="token string">'3'</span><span class="token punctuation">,</span>
-  name<span class="token punctuation">:</span> <span class="token string">'Jim Green'</span><span class="token punctuation">,</span>
-  age<span class="token punctuation">:</span> <span class="token number">32</span><span class="token punctuation">,</span>
-  address<span class="token punctuation">:</span> <span class="token string">'Sidney No. 1 Lake Park'</span><span class="token punctuation">,</span>
-<span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
-  key<span class="token punctuation">:</span> <span class="token string">'4'</span><span class="token punctuation">,</span>
-  name<span class="token punctuation">:</span> <span class="token string">'Jim Red'</span><span class="token punctuation">,</span>
-  age<span class="token punctuation">:</span> <span class="token number">32</span><span class="token punctuation">,</span>
-  address<span class="token punctuation">:</span> <span class="token string">'London No. 2 Lake Park'</span><span class="token punctuation">,</span>
-<span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> data <span class="token operator">=</span> <span class="token punctuation">[</span>
+  <span class="token punctuation">{</span>
+    key<span class="token punctuation">:</span> <span class="token string">'1'</span><span class="token punctuation">,</span>
+    name<span class="token punctuation">:</span> <span class="token string">'John Brown'</span><span class="token punctuation">,</span>
+    age<span class="token punctuation">:</span> <span class="token number">32</span><span class="token punctuation">,</span>
+    address<span class="token punctuation">:</span> <span class="token string">'New York No. 1 Lake Park'</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span>
+    key<span class="token punctuation">:</span> <span class="token string">'2'</span><span class="token punctuation">,</span>
+    name<span class="token punctuation">:</span> <span class="token string">'Joe Black'</span><span class="token punctuation">,</span>
+    age<span class="token punctuation">:</span> <span class="token number">42</span><span class="token punctuation">,</span>
+    address<span class="token punctuation">:</span> <span class="token string">'London No. 1 Lake Park'</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span>
+    key<span class="token punctuation">:</span> <span class="token string">'3'</span><span class="token punctuation">,</span>
+    name<span class="token punctuation">:</span> <span class="token string">'Jim Green'</span><span class="token punctuation">,</span>
+    age<span class="token punctuation">:</span> <span class="token number">32</span><span class="token punctuation">,</span>
+    address<span class="token punctuation">:</span> <span class="token string">'Sidney No. 1 Lake Park'</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span>
+    key<span class="token punctuation">:</span> <span class="token string">'4'</span><span class="token punctuation">,</span>
+    name<span class="token punctuation">:</span> <span class="token string">'Jim Red'</span><span class="token punctuation">,</span>
+    age<span class="token punctuation">:</span> <span class="token number">32</span><span class="token punctuation">,</span>
+    address<span class="token punctuation">:</span> <span class="token string">'London No. 2 Lake Park'</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">]</span><span class="token punctuation">;</span>
 
 <span class="token keyword">class</span> <span class="token class-name">App</span> <span class="token keyword">extends</span> <span class="token class-name">React<span class="token punctuation">.</span>Component</span> <span class="token punctuation">{</span>
   state <span class="token operator">=</span> <span class="token punctuation">{</span>
@@ -774,11 +796,11 @@ ReactDOM<span class="token punctuation">.</span><span class="token function">ren
     data<span class="token punctuation">,</span>
     searchText<span class="token punctuation">:</span> <span class="token string">''</span><span class="token punctuation">,</span>
     filtered<span class="token punctuation">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
-  <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
 
-  onInputChange <span class="token operator">=</span> <span class="token punctuation">(</span>e<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+  onInputChange <span class="token operator">=</span> e <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
     <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setState</span><span class="token punctuation">(</span><span class="token punctuation">{</span> searchText<span class="token punctuation">:</span> e<span class="token punctuation">.</span>target<span class="token punctuation">.</span>value <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
 
   onSearch <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
     <span class="token keyword">const</span> <span class="token punctuation">{</span> searchText <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">;</span>
@@ -786,66 +808,89 @@ ReactDOM<span class="token punctuation">.</span><span class="token function">ren
     <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setState</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
       filterDropdownVisible<span class="token punctuation">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
       filtered<span class="token punctuation">:</span> <span class="token operator">!</span><span class="token operator">!</span>searchText<span class="token punctuation">,</span>
-      data<span class="token punctuation">:</span> data<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span>record<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
-        <span class="token keyword">const</span> match <span class="token operator">=</span> record<span class="token punctuation">.</span>name<span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span>reg<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>match<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-          <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        <span class="token keyword">return</span> <span class="token punctuation">{</span>
-          <span class="token operator">...</span>record<span class="token punctuation">,</span>
-          name<span class="token punctuation">:</span> <span class="token punctuation">(</span>
-            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span><span class="token punctuation">></span></span>
-              <span class="token punctuation">{</span>record<span class="token punctuation">.</span>name<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span>reg<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span>text<span class="token punctuation">,</span> i<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">(</span>
-                i <span class="token operator">></span> <span class="token number">0</span> <span class="token operator">?</span> <span class="token punctuation">[</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name">className</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>highlight<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token punctuation">{</span>match<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">}</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">></span></span><span class="token punctuation">,</span> text<span class="token punctuation">]</span> <span class="token punctuation">:</span> text
-              <span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">}</span>
-            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">></span></span>
-          <span class="token punctuation">)</span><span class="token punctuation">,</span>
-        <span class="token punctuation">}</span><span class="token punctuation">;</span>
-      <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>record <span class="token operator">=</span><span class="token operator">></span> <span class="token operator">!</span><span class="token operator">!</span>record<span class="token punctuation">)</span><span class="token punctuation">,</span>
+      data<span class="token punctuation">:</span> data
+        <span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>record <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+          <span class="token keyword">const</span> match <span class="token operator">=</span> record<span class="token punctuation">.</span>name<span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span>reg<span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>match<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+          <span class="token punctuation">}</span>
+          <span class="token keyword">return</span> <span class="token punctuation">{</span>
+            <span class="token operator">...</span>record<span class="token punctuation">,</span>
+            name<span class="token punctuation">:</span> <span class="token punctuation">(</span>
+              <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span><span class="token punctuation">></span></span>
+                <span class="token punctuation">{</span>record<span class="token punctuation">.</span>name<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span>reg<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span>text<span class="token punctuation">,</span> i<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span>
+                  i <span class="token operator">></span> <span class="token number">0</span>
+                    <span class="token operator">?</span> <span class="token punctuation">[</span>
+                        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name">key</span><span class="token script language-javascript"><span class="token punctuation">=</span><span class="token punctuation">{</span>text<span class="token punctuation">}</span></span> <span class="token attr-name">className</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>highlight<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+                          <span class="token punctuation">{</span>match<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">}</span>
+                        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">></span></span><span class="token punctuation">,</span>
+                        text<span class="token punctuation">,</span>
+                      <span class="token punctuation">]</span>
+                    <span class="token punctuation">:</span> text<span class="token punctuation">,</span>
+                <span class="token punctuation">)</span><span class="token punctuation">}</span>
+              <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">></span></span>
+            <span class="token punctuation">)</span><span class="token punctuation">,</span>
+          <span class="token punctuation">}</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>record <span class="token operator">=</span><span class="token operator">></span> <span class="token operator">!</span><span class="token operator">!</span>record<span class="token punctuation">)</span><span class="token punctuation">,</span>
     <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
 
   <span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">const</span> columns <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
-      title<span class="token punctuation">:</span> <span class="token string">'Name'</span><span class="token punctuation">,</span>
-      dataIndex<span class="token punctuation">:</span> <span class="token string">'name'</span><span class="token punctuation">,</span>
-      key<span class="token punctuation">:</span> <span class="token string">'name'</span><span class="token punctuation">,</span>
-      filterDropdown<span class="token punctuation">:</span> <span class="token punctuation">(</span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">className</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>custom-filter-dropdown<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Input</span>
-            <span class="token attr-name">ref</span><span class="token script language-javascript"><span class="token punctuation">=</span><span class="token punctuation">{</span>ele <span class="token operator">=</span><span class="token operator">></span> <span class="token keyword">this</span><span class="token punctuation">.</span>searchInput <span class="token operator">=</span> ele<span class="token punctuation">}</span></span>
-            <span class="token attr-name">placeholder</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Search</span> <span class="token attr-name">name"</span>
-            <span class="token attr-name">value</span><span class="token script language-javascript"><span class="token punctuation">=</span><span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">.</span>searchText<span class="token punctuation">}</span></span>
-            <span class="token attr-name">onChange</span><span class="token script language-javascript"><span class="token punctuation">=</span><span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span>onInputChange<span class="token punctuation">}</span></span>
-            <span class="token attr-name">onPressEnter</span><span class="token script language-javascript"><span class="token punctuation">=</span><span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span>onSearch<span class="token punctuation">}</span></span>
-          <span class="token punctuation">/></span></span>
-          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Button</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>primary<span class="token punctuation">"</span></span> <span class="token attr-name">onClick</span><span class="token script language-javascript"><span class="token punctuation">=</span><span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span>onSearch<span class="token punctuation">}</span></span><span class="token punctuation">></span></span>Search<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Button</span><span class="token punctuation">></span></span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
-      <span class="token punctuation">)</span><span class="token punctuation">,</span>
-      filterIcon<span class="token punctuation">:</span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Icon</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>smile-o<span class="token punctuation">"</span></span> <span class="token attr-name">style</span><span class="token script language-javascript"><span class="token punctuation">=</span><span class="token punctuation">{</span><span class="token punctuation">{</span> color<span class="token punctuation">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">.</span>filtered <span class="token operator">?</span> <span class="token string">'#108ee9'</span> <span class="token punctuation">:</span> <span class="token string">'#aaa'</span> <span class="token punctuation">}</span><span class="token punctuation">}</span></span> <span class="token punctuation">/></span></span><span class="token punctuation">,</span>
-      filterDropdownVisible<span class="token punctuation">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">.</span>filterDropdownVisible<span class="token punctuation">,</span>
-      onFilterDropdownVisibleChange<span class="token punctuation">:</span> <span class="token punctuation">(</span>visible<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setState</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
-          filterDropdownVisible<span class="token punctuation">:</span> visible<span class="token punctuation">,</span>
-        <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token keyword">this</span><span class="token punctuation">.</span>searchInput <span class="token operator">&amp;&amp;</span> <span class="token keyword">this</span><span class="token punctuation">.</span>searchInput<span class="token punctuation">.</span><span class="token function">focus</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> columns <span class="token operator">=</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">{</span>
+        title<span class="token punctuation">:</span> <span class="token string">'Name'</span><span class="token punctuation">,</span>
+        dataIndex<span class="token punctuation">:</span> <span class="token string">'name'</span><span class="token punctuation">,</span>
+        key<span class="token punctuation">:</span> <span class="token string">'name'</span><span class="token punctuation">,</span>
+        filterDropdown<span class="token punctuation">:</span> <span class="token punctuation">(</span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">className</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>custom-filter-dropdown<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Input</span>
+              <span class="token attr-name">ref</span><span class="token script language-javascript"><span class="token punctuation">=</span><span class="token punctuation">{</span>ele <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>searchInput <span class="token operator">=</span> ele<span class="token punctuation">)</span><span class="token punctuation">}</span></span>
+              <span class="token attr-name">placeholder</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Search</span> <span class="token attr-name">name"</span>
+              <span class="token attr-name">value</span><span class="token script language-javascript"><span class="token punctuation">=</span><span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">.</span>searchText<span class="token punctuation">}</span></span>
+              <span class="token attr-name">onChange</span><span class="token script language-javascript"><span class="token punctuation">=</span><span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span>onInputChange<span class="token punctuation">}</span></span>
+              <span class="token attr-name">onPressEnter</span><span class="token script language-javascript"><span class="token punctuation">=</span><span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span>onSearch<span class="token punctuation">}</span></span>
+            <span class="token punctuation">/></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Button</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>primary<span class="token punctuation">"</span></span> <span class="token attr-name">onClick</span><span class="token script language-javascript"><span class="token punctuation">=</span><span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span>onSearch<span class="token punctuation">}</span></span><span class="token punctuation">></span></span>
+              Search
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Button</span><span class="token punctuation">></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+        <span class="token punctuation">)</span><span class="token punctuation">,</span>
+        filterIcon<span class="token punctuation">:</span> <span class="token punctuation">(</span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Icon</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>smile-o<span class="token punctuation">"</span></span> <span class="token attr-name">style</span><span class="token script language-javascript"><span class="token punctuation">=</span><span class="token punctuation">{</span><span class="token punctuation">{</span> color<span class="token punctuation">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">.</span>filtered <span class="token operator">?</span> <span class="token string">'#108ee9'</span> <span class="token punctuation">:</span> <span class="token string">'#aaa'</span> <span class="token punctuation">}</span><span class="token punctuation">}</span></span> <span class="token punctuation">/></span></span>
+        <span class="token punctuation">)</span><span class="token punctuation">,</span>
+        filterDropdownVisible<span class="token punctuation">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">.</span>filterDropdownVisible<span class="token punctuation">,</span>
+        onFilterDropdownVisibleChange<span class="token punctuation">:</span> visible <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+          <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setState</span><span class="token punctuation">(</span>
+            <span class="token punctuation">{</span>
+              filterDropdownVisible<span class="token punctuation">:</span> visible<span class="token punctuation">,</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token keyword">this</span><span class="token punctuation">.</span>searchInput <span class="token operator">&amp;&amp;</span> <span class="token keyword">this</span><span class="token punctuation">.</span>searchInput<span class="token punctuation">.</span><span class="token function">focus</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+          <span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
       <span class="token punctuation">}</span><span class="token punctuation">,</span>
-    <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
-      title<span class="token punctuation">:</span> <span class="token string">'Age'</span><span class="token punctuation">,</span>
-      dataIndex<span class="token punctuation">:</span> <span class="token string">'age'</span><span class="token punctuation">,</span>
-      key<span class="token punctuation">:</span> <span class="token string">'age'</span><span class="token punctuation">,</span>
-    <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
-      title<span class="token punctuation">:</span> <span class="token string">'Address'</span><span class="token punctuation">,</span>
-      dataIndex<span class="token punctuation">:</span> <span class="token string">'address'</span><span class="token punctuation">,</span>
-      key<span class="token punctuation">:</span> <span class="token string">'address'</span><span class="token punctuation">,</span>
-      filters<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
-        text<span class="token punctuation">:</span> <span class="token string">'London'</span><span class="token punctuation">,</span>
-        value<span class="token punctuation">:</span> <span class="token string">'London'</span><span class="token punctuation">,</span>
-      <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
-        text<span class="token punctuation">:</span> <span class="token string">'New York'</span><span class="token punctuation">,</span>
-        value<span class="token punctuation">:</span> <span class="token string">'New York'</span><span class="token punctuation">,</span>
-      <span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-      onFilter<span class="token punctuation">:</span> <span class="token punctuation">(</span>value<span class="token punctuation">,</span> record<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> record<span class="token punctuation">.</span>address<span class="token punctuation">.</span><span class="token function">indexOf</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span> <span class="token operator">===</span> <span class="token number">0</span><span class="token punctuation">,</span>
-    <span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+      <span class="token punctuation">{</span>
+        title<span class="token punctuation">:</span> <span class="token string">'Age'</span><span class="token punctuation">,</span>
+        dataIndex<span class="token punctuation">:</span> <span class="token string">'age'</span><span class="token punctuation">,</span>
+        key<span class="token punctuation">:</span> <span class="token string">'age'</span><span class="token punctuation">,</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
+        title<span class="token punctuation">:</span> <span class="token string">'Address'</span><span class="token punctuation">,</span>
+        dataIndex<span class="token punctuation">:</span> <span class="token string">'address'</span><span class="token punctuation">,</span>
+        key<span class="token punctuation">:</span> <span class="token string">'address'</span><span class="token punctuation">,</span>
+        filters<span class="token punctuation">:</span> <span class="token punctuation">[</span>
+          <span class="token punctuation">{</span>
+            text<span class="token punctuation">:</span> <span class="token string">'London'</span><span class="token punctuation">,</span>
+            value<span class="token punctuation">:</span> <span class="token string">'London'</span><span class="token punctuation">,</span>
+          <span class="token punctuation">}</span><span class="token punctuation">,</span>
+          <span class="token punctuation">{</span>
+            text<span class="token punctuation">:</span> <span class="token string">'New York'</span><span class="token punctuation">,</span>
+            value<span class="token punctuation">:</span> <span class="token string">'New York'</span><span class="token punctuation">,</span>
+          <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token punctuation">]</span><span class="token punctuation">,</span>
+        onFilter<span class="token punctuation">:</span> <span class="token punctuation">(</span>value<span class="token punctuation">,</span> record<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> record<span class="token punctuation">.</span>address<span class="token punctuation">.</span><span class="token function">indexOf</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span> <span class="token operator">===</span> <span class="token number">0</span><span class="token punctuation">,</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">]</span><span class="token punctuation">;</span>
     <span class="token keyword">return</span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Table</span> <span class="token attr-name">columns</span><span class="token script language-javascript"><span class="token punctuation">=</span><span class="token punctuation">{</span>columns<span class="token punctuation">}</span></span> <span class="token attr-name">dataSource</span><span class="token script language-javascript"><span class="token punctuation">=</span><span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">.</span>data<span class="token punctuation">}</span></span> <span class="token punctuation">/></span></span><span class="token punctuation">;</span>
   <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
@@ -854,7 +899,7 @@ ReactDOM<span class="token punctuation">.</span><span class="token function">ren
   <span class="token property">padding</span><span class="token punctuation">:</span> <span class="token number">8</span>px<span class="token punctuation">;</span>
   <span class="token property">border-radius</span><span class="token punctuation">:</span> <span class="token number">6</span>px<span class="token punctuation">;</span>
   <span class="token property">background</span><span class="token punctuation">:</span> <span class="token hexcode">#fff</span><span class="token punctuation">;</span>
-  <span class="token property">box-shadow</span><span class="token punctuation">:</span> <span class="token number">0</span> <span class="token number">1</span>px <span class="token number">6</span>px <span class="token function">rgba</span><span class="token punctuation">(</span><span class="token number">0</span>, <span class="token number">0</span>, <span class="token number">0</span>, <span class="token number">.2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token property">box-shadow</span><span class="token punctuation">:</span> <span class="token number">0</span> <span class="token number">1</span>px <span class="token number">6</span>px <span class="token function">rgba</span><span class="token punctuation">(</span><span class="token number">0</span>, <span class="token number">0</span>, <span class="token number">0</span>, <span class="token number">0.2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 
 <span class="token selector"><span class="token class">.custom-filter-dropdown</span> input </span><span class="token punctuation">{</span>
@@ -2150,39 +2195,45 @@ ReactDOM<span class="token punctuation">.</span><span class="token function">ren
   margin-bottom: 8px;
 }
 </style></section><section class="code-box-meta markdown"><div class="code-box-title"><a href="#components-table-demo-dynamic-settings">Dynamic Settings</a><a class="edit-button" href="https://github.com/choerodon/choerodon-ui/edit/master/components/table/demo/dynamic-settings.md" target="_blank" rel="noopener noreferrer"><i class="icon icon-edit"></i></a></div><div><p>Select different settings to see the result.</p></div><i class="icon icon-refresh code-refresh-icon"></i><span class="code-expand-icon"><img alt="expand code" src="https://gw.alipayobjects.com/zos/rmsportal/wSAkBuJFbdxsosKKpqyq.svg" class="code-expand-icon-show"/><img alt="expand code" src="https://gw.alipayobjects.com/zos/rmsportal/OpROPHYqWmrMDBFMZtKF.svg" class="code-expand-icon-hide"/></span></section><section class="highlight-wrapper"><div class="highlight"><div class="code-box-actions"><form action="https://codepen.io/pen/define" method="POST" target="_blank"><input type="hidden" name="data" value="{&quot;title&quot;:&quot;Dynamic Settings - Choerodon UI Demo&quot;,&quot;html&quot;:&quot;&lt;div id=\&quot;container\&quot; style=\&quot;padding: 24px\&quot;&gt;&lt;/div&gt;\n&lt;script&gt;\n  var mountNode = document.getElementById(&#x27;container&#x27;);\n&lt;/script&gt;&quot;,&quot;js&quot;:&quot;&quot;,&quot;css&quot;:&quot;@import &#x27;choerodon-ui/dist/choerodon-ui.css&#x27;;\n\n\n.components-table-demo-control-bar {\n  margin-bottom: 10px;\n}\n.components-table-demo-control-bar .c7n-form-item {\n  margin-right: 16px;\n  margin-bottom: 8px;\n}\n&quot;,&quot;editors&quot;:&quot;001&quot;,&quot;css_external&quot;:&quot;https://unpkg.com/choerodon-ui/dist/choerodon-ui.css&quot;,&quot;js_external&quot;:&quot;https://unpkg.com/react@16.6.x/umd/react.production.min.js;https://unpkg.com/react-dom@16.6.x/umd/react-dom.production.min.js;https://unpkg.com/moment/min/moment-with-locales.min.js;https://unpkg.com/mobx@4.7.0/lib/mobx.umd.min.js;https://unpkg.com/mobx-react@5.1.x/index.min.js;https://unpkg.com/choerodon-ui/dist/choerodon-ui-with-locales.js&quot;,&quot;js_pre_processor&quot;:&quot;typescript&quot;}"/><input type="submit" value="Create New Pen with Prefilled Data" class="code-box-codepen"/></form><form action="https://codesandbox.io/api/v1/sandboxes/define" method="POST" target="_blank"><input type="hidden" name="parameters" value="N4IgZglgNgpgziAXKADgQwMYGs0HMYB0AVnAPYB2SoGFALjObVSACYwoNvkYTzMBOMTE0QgoaenCYAaEIOEBaFqQC2SMRPgyQK1QxEbJ23QCMAHuoAsBAOwEADCFmmzC-RgMBWAgEYCAJhAAXxDZCHI2MwIMOARkEBpGfXUAHXJo1RQKfTgFWjQTWCUYXQVE2n5SKAUTNH4AAmA0-vqVOtxwmtJaWlVEep97FDMAbjSgtIyVLPIcvIKitlLyyurahuibcgUwUn4VBQh6FUbm1vbO_ghcAAtafp8ANmGx8ha2_g7tk27elX6ABwvcZpYJhCIwKIkZjlZKiNIQaZ7Wj1ABKQg89TAlROAHJ3LRca9EVl-Cj0cIACIAeQAslicfV8RjaEpVESEUiyUyMDdSDBKsptgBXCAAehYECkYt5_MFFAUouisQ55BJyKZBDF4UiyrgqrOLSNRrBIB1kIIdxUUBhdDhIAAPJKAG71CAsAC8KQSdDQ4QF3vqUgAnrAvSB0CxJeRcP1_JZht6AHwOiUQZ1JtIOuAYK4oWiZt71Z11VqkYWMABypDY9Q99WUGGFKn0BHwtAAorAW4wAELBgCSLAAFLjyn7ZvxcQBKV6pnN5gvBEJAA"/><input type="submit" value="Create New Sandbox with Prefilled Data" class="code-box-codesandbox"/></form><i class="icon icon-copy code-box-code-copy"></i></div><pre class="language-jsx"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> Table<span class="token punctuation">,</span> Icon<span class="token punctuation">,</span> Switch<span class="token punctuation">,</span> Radio<span class="token punctuation">,</span> Form<span class="token punctuation">,</span> Divider <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'choerodon-ui'</span><span class="token punctuation">;</span>
+
 <span class="token keyword">const</span> FormItem <span class="token operator">=</span> Form<span class="token punctuation">.</span>Item<span class="token punctuation">;</span>
 
-<span class="token keyword">const</span> columns <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
-  title<span class="token punctuation">:</span> <span class="token string">'Name'</span><span class="token punctuation">,</span>
-  dataIndex<span class="token punctuation">:</span> <span class="token string">'name'</span><span class="token punctuation">,</span>
-  key<span class="token punctuation">:</span> <span class="token string">'name'</span><span class="token punctuation">,</span>
-  width<span class="token punctuation">:</span> <span class="token number">150</span><span class="token punctuation">,</span>
-  render<span class="token punctuation">:</span> text <span class="token operator">=</span><span class="token operator">></span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>#<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token punctuation">{</span>text<span class="token punctuation">}</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span><span class="token punctuation">,</span>
-<span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
-  title<span class="token punctuation">:</span> <span class="token string">'Age'</span><span class="token punctuation">,</span>
-  dataIndex<span class="token punctuation">:</span> <span class="token string">'age'</span><span class="token punctuation">,</span>
-  key<span class="token punctuation">:</span> <span class="token string">'age'</span><span class="token punctuation">,</span>
-  width<span class="token punctuation">:</span> <span class="token number">70</span><span class="token punctuation">,</span>
-<span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
-  title<span class="token punctuation">:</span> <span class="token string">'Address'</span><span class="token punctuation">,</span>
-  dataIndex<span class="token punctuation">:</span> <span class="token string">'address'</span><span class="token punctuation">,</span>
-  key<span class="token punctuation">:</span> <span class="token string">'address'</span><span class="token punctuation">,</span>
-<span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
-  title<span class="token punctuation">:</span> <span class="token string">'Action'</span><span class="token punctuation">,</span>
-  key<span class="token punctuation">:</span> <span class="token string">'action'</span><span class="token punctuation">,</span>
-  width<span class="token punctuation">:</span> <span class="token number">360</span><span class="token punctuation">,</span>
-  render<span class="token punctuation">:</span> <span class="token punctuation">(</span>text<span class="token punctuation">,</span> record<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">(</span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span><span class="token punctuation">></span></span>
-      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>#<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Action 一 <span class="token punctuation">{</span>record<span class="token punctuation">.</span>name<span class="token punctuation">}</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span>
-      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Divider</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>vertical<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
-      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>#<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Delete<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span>
-      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Divider</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>vertical<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
-      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>#<span class="token punctuation">"</span></span> <span class="token attr-name">className</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>c7n-dropdown-link<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-        More actions <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Icon</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>down<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
-      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">></span></span>
-  <span class="token punctuation">)</span><span class="token punctuation">,</span>
-<span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> columns <span class="token operator">=</span> <span class="token punctuation">[</span>
+  <span class="token punctuation">{</span>
+    title<span class="token punctuation">:</span> <span class="token string">'Name'</span><span class="token punctuation">,</span>
+    dataIndex<span class="token punctuation">:</span> <span class="token string">'name'</span><span class="token punctuation">,</span>
+    key<span class="token punctuation">:</span> <span class="token string">'name'</span><span class="token punctuation">,</span>
+    width<span class="token punctuation">:</span> <span class="token number">150</span><span class="token punctuation">,</span>
+    render<span class="token punctuation">:</span> text <span class="token operator">=</span><span class="token operator">></span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>#<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token punctuation">{</span>text<span class="token punctuation">}</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span>
+    title<span class="token punctuation">:</span> <span class="token string">'Age'</span><span class="token punctuation">,</span>
+    dataIndex<span class="token punctuation">:</span> <span class="token string">'age'</span><span class="token punctuation">,</span>
+    key<span class="token punctuation">:</span> <span class="token string">'age'</span><span class="token punctuation">,</span>
+    width<span class="token punctuation">:</span> <span class="token number">70</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span>
+    title<span class="token punctuation">:</span> <span class="token string">'Address'</span><span class="token punctuation">,</span>
+    dataIndex<span class="token punctuation">:</span> <span class="token string">'address'</span><span class="token punctuation">,</span>
+    key<span class="token punctuation">:</span> <span class="token string">'address'</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span>
+    title<span class="token punctuation">:</span> <span class="token string">'Action'</span><span class="token punctuation">,</span>
+    key<span class="token punctuation">:</span> <span class="token string">'action'</span><span class="token punctuation">,</span>
+    width<span class="token punctuation">:</span> <span class="token number">360</span><span class="token punctuation">,</span>
+    render<span class="token punctuation">:</span> <span class="token punctuation">(</span>text<span class="token punctuation">,</span> record<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">(</span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>#<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Action 一 <span class="token punctuation">{</span>record<span class="token punctuation">.</span>name<span class="token punctuation">}</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Divider</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>vertical<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>#<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Delete<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Divider</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>vertical<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>#<span class="token punctuation">"</span></span> <span class="token attr-name">className</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>c7n-dropdown-link<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+          More actions <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Icon</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>down<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">></span></span>
+    <span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">]</span><span class="token punctuation">;</span>
 
 <span class="token keyword">const</span> data <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
 <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> <span class="token number">10</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -2214,48 +2265,48 @@ ReactDOM<span class="token punctuation">.</span><span class="token function">ren
     footer<span class="token punctuation">,</span>
     rowSelection<span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
     scroll<span class="token punctuation">:</span> undefined<span class="token punctuation">,</span>
-  <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
 
-  handleToggle <span class="token operator">=</span> <span class="token punctuation">(</span>prop<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> <span class="token punctuation">(</span>enable<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+  handleToggle <span class="token operator">=</span> prop <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> enable <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
       <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setState</span><span class="token punctuation">(</span><span class="token punctuation">{</span> <span class="token punctuation">[</span>prop<span class="token punctuation">]</span><span class="token punctuation">:</span> enable <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
 
-  handleSizeChange <span class="token operator">=</span> <span class="token punctuation">(</span>e<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+  handleSizeChange <span class="token operator">=</span> e <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
     <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setState</span><span class="token punctuation">(</span><span class="token punctuation">{</span> size<span class="token punctuation">:</span> e<span class="token punctuation">.</span>target<span class="token punctuation">.</span>value <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
 
-  handleExpandChange <span class="token operator">=</span> <span class="token punctuation">(</span>enable<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+  handleExpandChange <span class="token operator">=</span> enable <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
     <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setState</span><span class="token punctuation">(</span><span class="token punctuation">{</span> expandedRowRender<span class="token punctuation">:</span> enable <span class="token operator">?</span> expandedRowRender <span class="token punctuation">:</span> undefined <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
 
-  handleTitleChange <span class="token operator">=</span> <span class="token punctuation">(</span>enable<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+  handleTitleChange <span class="token operator">=</span> enable <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
     <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setState</span><span class="token punctuation">(</span><span class="token punctuation">{</span> title<span class="token punctuation">:</span> enable <span class="token operator">?</span> title <span class="token punctuation">:</span> undefined <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
 
-  handleHeaderChange <span class="token operator">=</span> <span class="token punctuation">(</span>enable<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+  handleHeaderChange <span class="token operator">=</span> enable <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
     <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setState</span><span class="token punctuation">(</span><span class="token punctuation">{</span> showHeader<span class="token punctuation">:</span> enable <span class="token operator">?</span> showHeader <span class="token punctuation">:</span> <span class="token boolean">false</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
 
-  handleFooterChange <span class="token operator">=</span> <span class="token punctuation">(</span>enable<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+  handleFooterChange <span class="token operator">=</span> enable <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
     <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setState</span><span class="token punctuation">(</span><span class="token punctuation">{</span> footer<span class="token punctuation">:</span> enable <span class="token operator">?</span> footer <span class="token punctuation">:</span> undefined <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
 
-  handleRowSelectionChange <span class="token operator">=</span> <span class="token punctuation">(</span>enable<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+  handleRowSelectionChange <span class="token operator">=</span> enable <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
     <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setState</span><span class="token punctuation">(</span><span class="token punctuation">{</span> rowSelection<span class="token punctuation">:</span> enable <span class="token operator">?</span> <span class="token punctuation">{</span><span class="token punctuation">}</span> <span class="token punctuation">:</span> undefined <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
 
-  handleScollChange <span class="token operator">=</span> <span class="token punctuation">(</span>enable<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+  handleScollChange <span class="token operator">=</span> enable <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
     <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setState</span><span class="token punctuation">(</span><span class="token punctuation">{</span> scroll<span class="token punctuation">:</span> enable <span class="token operator">?</span> scroll <span class="token punctuation">:</span> undefined <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
 
-  handlePaginationChange <span class="token operator">=</span> <span class="token punctuation">(</span>e<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+  handlePaginationChange <span class="token operator">=</span> e <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
     <span class="token keyword">const</span> <span class="token punctuation">{</span> value <span class="token punctuation">}</span> <span class="token operator">=</span> e<span class="token punctuation">.</span>target<span class="token punctuation">;</span>
     <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setState</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
       pagination<span class="token punctuation">:</span> value <span class="token operator">===</span> <span class="token string">'none'</span> <span class="token operator">?</span> <span class="token boolean">false</span> <span class="token punctuation">:</span> <span class="token punctuation">{</span> position<span class="token punctuation">:</span> value <span class="token punctuation">}</span><span class="token punctuation">,</span>
     <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
 
   <span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">const</span> state <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">;</span>
@@ -2359,8 +2410,8 @@ ReactDOM<span class="token punctuation">.</span><span class="token function">ren
 <span class="token keyword">return</span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Table</span> <span class="token attr-name">rowKey</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>uid<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span><span class="token punctuation">;</span>
 <span class="token comment" spellcheck="true">// or</span>
 <span class="token keyword">return</span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Table</span> <span class="token attr-name">rowKey</span><span class="token script language-javascript"><span class="token punctuation">=</span><span class="token punctuation">{</span>record <span class="token operator">=</span><span class="token operator">></span> record<span class="token punctuation">.</span>uid<span class="token punctuation">}</span></span> <span class="token punctuation">/></span></span><span class="token punctuation">;</span></code></pre></section></article></section><section class="prev-next-nav"><a class="prev-page" href="/components/tooltip/"><i class="icon icon-navigate_before footer-nav-icon-before"></i><span>Tooltip</span><i class="icon icon-navigate_next footer-nav-icon-after"></i></a><a class="next-page" href="/components/tabs/"><i class="icon icon-navigate_before footer-nav-icon-before"></i><span>Tabs</span><i class="icon icon-navigate_next footer-nav-icon-after"></i></a></section><footer id="footer"><div class="footer-wrap"><div class="c7n-row"><div class="c7n-col-xs-24 c7n-col-sm-24 c7n-col-md-6"><div class="footer-center"><h2><span>Resources</span></h2><div><a href="http://choerodon.io/">Choerodon</a></div></div></div><div class="c7n-col-xs-24 c7n-col-sm-24 c7n-col-md-6"><div class="footer-center"><h2><span>Help</span></h2><div><a target="_blank " href="https://github.com/choerodon/choerodon-ui">GitLab</a></div><div><a href="/changelog"><span>Change Log</span></a></div><div><a target="_blank" rel="noopener noreferrer" href="https://github.com/choerodon/choerodon-ui/issues"><span>Issues</span></a></div></div></div></div></div><div class="c7n-row bottom-bar"><div class="c7n-col-sm-24 c7n-col-md-4"></div><div class="c7n-col-sm-24 c7n-col-md-20"><span style="margin-right:12px">Copyright@ The choerodon Author. All rights reserved.</span></div></div></footer></div></div></div></div>
-</div>
-<script src="/choerodon-ui/common.js"></script>
-<script src="/choerodon-ui/index.js"></script>
-</body>
+    </div>
+    <script src="/choerodon-ui/index-de086839.js"></script>
+    
+  </body>
 </html>

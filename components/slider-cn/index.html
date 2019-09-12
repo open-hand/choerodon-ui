@@ -1,99 +1,116 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="An enterprise-class UI design language and React-based implementation with a set of high-quality React components, one of best React UI library for enterprises">
-    <title>Choerodon UI - A UI Design Language</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="An enterprise-class UI design language and React-based implementation with a set of high-quality React components, one of best React UI library for enterprises"
+    />
+    <title>滑动输入条 Slider - Choerodon UI</title>
     <!-- Polyfills -->
     <!--[if IE]>
-    <script src="https://as.alipayobjects.com/g/component/??es6-shim/0.35.1/es6-sham.min.js,es6-shim/0.35.1/es6-shim.min.js"></script>
+      <script src="https://as.alipayobjects.com/g/component/??es6-shim/0.35.1/es6-sham.min.js,es6-shim/0.35.1/es6-shim.min.js"></script>
     <![endif]-->
     <script>
-    (function() {
-      function isLocalStorageNameSupported() {
-        var testKey = 'test';
-        var storage = window.localStorage;
-        try {
-          storage.setItem(testKey, '1');
-          storage.removeItem(testKey);
-          return true;
-        } catch (error) {
-          return false;
+      (function() {
+        function isLocalStorageNameSupported() {
+          var testKey = 'test';
+          var storage = window.localStorage;
+          try {
+            storage.setItem(testKey, '1');
+            storage.removeItem(testKey);
+            return true;
+          } catch (error) {
+            return false;
+          }
         }
-      }
 
-      // 优先级提高到所有静态资源的前面，语言不对，加载其他静态资源没意义
-      var pathname = location.pathname;
+        // 优先级提高到所有静态资源的前面，语言不对，加载其他静态资源没意义
+        var pathname = location.pathname;
 
-      function isZhCN(pathname) {
-        return /-cn\/?$/.test(pathname);
-      }
-
-      function getLocalizedPathname(path, zhCN) {
-        var pathname = path.indexOf('/') === 0 ? path : '/' + path;
-        if (!zhCN) { // to enUS
-          return /\/?index-cn/.test(pathname) ? '/' : pathname.replace('-cn', '');
-        } else if (pathname === '/') {
-          return '/index-cn';
-        } else if (pathname.endsWith('/')) {
-          return pathname.replace(/\/$/, '-cn/');
+        function isZhCN(pathname) {
+          return /-cn\/?$/.test(pathname);
         }
-        return pathname + '-cn';
-      }
 
-      // 兼容旧的 URL， `?locale=...`
-      var queryString = location.search;
-      if (queryString) {
-        var isZhCNConfig = queryString.indexOf('zh-CN') > -1;
-        if (isZhCNConfig && !isZhCN(pathname)) {
-          location.pathname = getLocalizedPathname(pathname, isZhCNConfig);
+        function getLocalizedPathname(path, zhCN) {
+          var pathname = path.indexOf('/') === 0 ? path : '/' + path;
+          if (!zhCN) {
+            // to enUS
+            return /\/?index-cn/.test(pathname) ? '/' : pathname.replace('-cn', '');
+          } else if (pathname === '/') {
+            return '/index-cn';
+          } else if (pathname.endsWith('/')) {
+            return pathname.replace(/\/$/, '-cn/');
+          }
+          return pathname + '-cn';
         }
-      }
 
-      if (isLocalStorageNameSupported() && (pathname === '/' || pathname === '/index-cn')) {
-        var lang = (window.localStorage && localStorage.getItem('locale')) || ((navigator.language || navigator.browserLanguage).toLowerCase() === 'zh-cn' ? 'zh-CN' : 'en-US');
-        // safari is 'zh-cn', while other browser is 'zh-CN';
-        if ((lang === 'zh-CN') !== isZhCN(pathname)) {
-          location.pathname = getLocalizedPathname(pathname, lang === 'zh-CN');
+        // 兼容旧的 URL， `?locale=...`
+        var queryString = location.search;
+        if (queryString) {
+          var isZhCNConfig = queryString.indexOf('zh-CN') > -1;
+          if (isZhCNConfig && !isZhCN(pathname)) {
+            location.pathname = getLocalizedPathname(pathname, isZhCNConfig);
+          }
         }
-      }
-      document.documentElement.className += isZhCN(pathname) ? 'zh-cn' : 'en-us';
 
-      if (!window.Intl) {
-        var intlPath = 'https://as.alipayobjects.com/g/component/intl/1.0.1/??Intl.min.js';
-        if (isZhCN(pathname)) {
-          intlPath += ',locale-data/jsonp/zh.js';
-        } else {
-          intlPath += ',locale-data/jsonp/en.js';
+        if (isLocalStorageNameSupported() && (pathname === '/' || pathname === '/index-cn')) {
+          var lang =
+            (window.localStorage && localStorage.getItem('locale')) ||
+            ((navigator.language || navigator.browserLanguage).toLowerCase() === 'zh-cn'
+              ? 'zh-CN'
+              : 'en-US');
+          // safari is 'zh-cn', while other browser is 'zh-CN';
+          if ((lang === 'zh-CN') !== isZhCN(pathname)) {
+            location.pathname = getLocalizedPathname(pathname, lang === 'zh-CN');
+          }
         }
-        document.writeln('<script src="' + intlPath + '">' + '<' + '/script>');
+        document.documentElement.className += isZhCN(pathname) ? 'zh-cn' : 'en-us';
+
+        if (!window.Intl) {
+          var intlPath = 'https://as.alipayobjects.com/g/component/intl/1.0.1/??Intl.min.js';
+          if (isZhCN(pathname)) {
+            intlPath += ',locale-data/jsonp/zh.js';
+          } else {
+            intlPath += ',locale-data/jsonp/en.js';
+          }
+          document.writeln('<script src="' + intlPath + '">' + '<' + '/script>');
+        }
+        if (!window.Promise) {
+          document.writeln(
+            '<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"' +
+              '>' +
+              '<' +
+              '/' +
+              'script>',
+          );
+        }
+      })();
+    </script>
+    <link rel="icon" href="http://choerodon.io/img/favicon.ico" type="image/x-icon" />
+    
+    <link rel="stylesheet" type="text/css" href="/choerodon-ui/index-fb8963c9-1.css" />
+    
+    <link rel="stylesheet" type="text/css" href="/choerodon-ui/index-fb8963c9-2.css" />
+    
+    <link rel="stylesheet" type="text/css" href="/choerodon-ui/index-fb8963c9-3.css" />
+    
+    <link rel="stylesheet/less" type="text/css" href="/choerodon-ui/color.less" />
+    <style id="nprogress-style">
+      #nprogress {
+        display: none;
       }
-      if (!window.Promise) {
-        document.writeln('<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"' + '>' + '<' + '/' + 'script>');
-      }
-    })();
-  </script>
-  <link rel="icon" href="http://choerodon.io/img/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" type="text/css" href="/choerodon-ui/index-1.css" />
-  <link rel="stylesheet" type="text/css" href="/choerodon-ui/index-2.css" />
-  <link rel="stylesheet" type="text/css" href="/choerodon-ui/index-3.css" />
-  <link rel="stylesheet/less" type="text/css" href="/choerodon-ui/color.less" />
-  <style id="nprogress-style">
-    #nprogress {
-      display: none
-    }
-  </style>
-  <!--[if lte IE 10]>
-  <script
-    src="https://as.alipayobjects.com/g/component/??console-polyfill/0.2.2/index.js,media-match/2.0.2/media.match.min.js"></script>
-  <![endif]-->
-</head>
-<body>
-<div id="react-content">
-  <div class="page-wrapper" data-reactroot=""><header id="header" class="clearfix"><div class="c7n-row"><div class="c7n-col-xs-24 c7n-col-sm-24 c7n-col-md-5 c7n-col-lg-5 c7n-col-xl-5 c7n-col-xxl-4"><a id="logo" href="/index-cn"><img alt="logo" src="/choerodon-ui/1bf6a5fa3f014f7d70d24574cfac2e36.svg"/></a></div><div class="c7n-col-xs-0 c7n-col-sm-0 c7n-col-md-18 c7n-col-lg-19 c7n-col-xl-19 c7n-col-xxl-20"><button type="button" class="c7n-btn header-lang-button c7n-btn-sm c7n-btn-background-ghost c7n-btn-flat"><span>English</span><div class="c7n-ripple-wrapper"></div></button><div class="c7n-select-sm version c7n-select c7n-select-has-value c7n-select-enabled c7n-select-has-border"><div class="c7n-select-selection
-            c7n-select-selection--single" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="false" tabindex="0"><div class="c7n-select-selection__rendered"><div class="c7n-select-selection-selected-value" title="0.8.8" style="opacity:1">0.8.8</div><span class="c7n-select-arrow" style="user-select:none;-webkit-user-select:none" unselectable="unselectable"><i class="icon icon-arrow_drop_down"></i><b></b></span></div></div></div><ul class="c7n-menu menu-site c7n-menu-light c7n-menu-root c7n-menu-horizontal" role="menu" aria-activedescendant="" id="nav"><li class="c7n-menu-item" role="menuitem" aria-selected="false"><a href="/index-cn"><span>首页</span></a><div class="c7n-ripple-wrapper"></div></li><li class="c7n-menu-item c7n-menu-item-selected" role="menuitem" aria-selected="true"><a href="/docs/react/introduce-cn"><span>组件</span></a><div class="c7n-ripple-wrapper"></div></li></ul></div></div><style>
+    </style>
+    <!--[if lte IE 10]>
+      <script src="https://as.alipayobjects.com/g/component/??console-polyfill/0.2.2/index.js,media-match/2.0.2/media.match.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div id="react-content">
+      <div class="page-wrapper" data-reactroot=""><header id="header" class="clearfix"><div class="c7n-row"><div class="c7n-col-xs-24 c7n-col-sm-24 c7n-col-md-5 c7n-col-lg-5 c7n-col-xl-5 c7n-col-xxl-4"><a id="logo" href="/index-cn"><img alt="logo" src="/choerodon-ui/1bf6a5fa3f014f7d70d24574cfac2e36.svg"/></a></div><div class="c7n-col-xs-0 c7n-col-sm-0 c7n-col-md-18 c7n-col-lg-19 c7n-col-xl-19 c7n-col-xxl-20"><button type="button" class="c7n-btn header-lang-button c7n-btn-sm c7n-btn-background-ghost c7n-btn-flat"><span>English</span><div class="c7n-ripple-wrapper"></div></button><div class="c7n-select-sm version c7n-select c7n-select-has-value c7n-select-enabled c7n-select-has-border"><div class="c7n-select-selection
+            c7n-select-selection--single" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="false" tabindex="0"><div class="c7n-select-selection__rendered"><div class="c7n-select-selection-selected-value" title="0.8.9" style="opacity:1">0.8.9</div><span class="c7n-select-arrow" style="user-select:none;-webkit-user-select:none" unselectable="unselectable"><i class="icon icon-arrow_drop_down"></i><b></b></span></div></div></div><ul class="c7n-menu menu-site c7n-menu-light c7n-menu-root c7n-menu-horizontal" role="menu" aria-activedescendant="" id="nav"><li class="c7n-menu-item" role="menuitem" aria-selected="false"><a href="/index-cn"><span>首页</span></a><div class="c7n-ripple-wrapper"></div></li><li class="c7n-menu-item c7n-menu-item-selected" role="menuitem" aria-selected="true"><a href="/docs/react/introduce-cn"><span>组件</span></a><div class="c7n-ripple-wrapper"></div></li></ul></div></div><style>
     #header .c7n-select-selection {
       height: 24px;
       padding-top: 0;
@@ -243,7 +260,7 @@ ReactDOM<span class="token punctuation">.</span><span class="token function">ren
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span><span class="token punctuation">,</span>
   mountNode
-<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div></section></section></div><div style="padding-left:8px;padding-right:8px" class="c7n-col-12 code-boxes-col-2-1"><section class="code-box" id="components-slider-demo-input-number"><section class="code-box-demo"><div><div class="c7n-row"><div class="c7n-col-12"><div class="c7n-slider"><div class="c7n-slider-rail"></div><div class="c7n-slider-track" style="left:0%;width:0%"></div><div class="c7n-slider-step"></div><div role="slider" tabindex="0" aria-valuemin="1" aria-valuemax="20" aria-valuenow="1" aria-disabled="false" class="c7n-slider-handle" style="left:0%"></div><div class="c7n-slider-mark"></div></div></div><div class="c7n-col-4"><div class="c7n-input-number" style="margin-left:16px"><span class="c7n-input-wrapper c7n-input-has-suffix c7n-input-has-border"><div class="c7n-input-content"><div class="c7n-input-rendered-wrapper"><div class="c7n-input-rendered"><input type="text" autoComplete="off" max="20" min="1" step="1" value="1" class="c7n-input"/></div><span class="c7n-input-suffix"><div class="c7n-input-number-handler-wrap"><span unselectable="unselectable" role="button" aria-label="Increase Value" aria-disabled="false" class="c7n-input-number-handler c7n-input-number-handler-up "><i unselectable="unselectable" class="icon icon-baseline-arrow_drop_up c7n-input-number-handler-up-inner"></i></span><span unselectable="unselectable" role="button" aria-label="Decrease Value" aria-disabled="true" class="c7n-input-number-handler c7n-input-number-handler-down c7n-input-number-handler-down-disabled"><i unselectable="unselectable" class="icon icon-baseline-arrow_drop_down c7n-input-number-handler-down-inner"></i></span></div></span></div></div></span></div></div></div><div class="c7n-row"><div class="c7n-col-12"><div class="c7n-slider"><div class="c7n-slider-rail"></div><div class="c7n-slider-track" style="left:0%;width:0%"></div><div class="c7n-slider-step"></div><div role="slider" tabindex="0" aria-valuemin="0" aria-valuemax="1" aria-valuenow="0" aria-disabled="false" class="c7n-slider-handle" style="left:0%"></div><div class="c7n-slider-mark"></div></div></div><div class="c7n-col-4"><div class="c7n-input-number" style="margin-left:16px"><span class="c7n-input-wrapper c7n-input-has-suffix c7n-input-has-border"><div class="c7n-input-content"><div class="c7n-input-rendered-wrapper"><div class="c7n-input-rendered"><input type="text" autoComplete="off" max="1" min="0" step="0.01" value="0.00" class="c7n-input"/></div><span class="c7n-input-suffix"><div class="c7n-input-number-handler-wrap"><span unselectable="unselectable" role="button" aria-label="Increase Value" aria-disabled="false" class="c7n-input-number-handler c7n-input-number-handler-up "><i unselectable="unselectable" class="icon icon-baseline-arrow_drop_up c7n-input-number-handler-up-inner"></i></span><span unselectable="unselectable" role="button" aria-label="Decrease Value" aria-disabled="true" class="c7n-input-number-handler c7n-input-number-handler-down c7n-input-number-handler-down-disabled"><i unselectable="unselectable" class="icon icon-baseline-arrow_drop_down c7n-input-number-handler-down-inner"></i></span></div></span></div></div></span></div></div></div></div></section><section class="code-box-meta markdown"><div class="code-box-title"><a href="#components-slider-demo-input-number">带输入框的滑块</a><a class="edit-button" href="https://github.com/choerodon/choerodon-ui/edit/master/components/slider/demo/input-number.md" target="_blank" rel="noopener noreferrer"><i class="icon icon-edit"></i></a></div><div><p>和 <a href="/components/input-number-cn/">数字输入框</a> 组件保持同步。</p></div><i class="icon icon-refresh code-refresh-icon"></i><span class="code-expand-icon"><img alt="expand code" src="https://gw.alipayobjects.com/zos/rmsportal/wSAkBuJFbdxsosKKpqyq.svg" class="code-expand-icon-show"/><img alt="expand code" src="https://gw.alipayobjects.com/zos/rmsportal/OpROPHYqWmrMDBFMZtKF.svg" class="code-expand-icon-hide"/></span></section><section class="highlight-wrapper"><div class="highlight"><div class="code-box-actions"><form action="https://codepen.io/pen/define" method="POST" target="_blank"><input type="hidden" name="data" value="{&quot;title&quot;:&quot;带输入框的滑块 - Choerodon UI Demo&quot;,&quot;html&quot;:&quot;&lt;div id=\&quot;container\&quot; style=\&quot;padding: 24px\&quot;&gt;&lt;/div&gt;\n&lt;script&gt;\n  var mountNode = document.getElementById(&#x27;container&#x27;);\n&lt;/script&gt;&quot;,&quot;js&quot;:&quot;&quot;,&quot;css&quot;:&quot;@import &#x27;choerodon-ui/dist/choerodon-ui.css&#x27;;\n\n&quot;,&quot;editors&quot;:&quot;001&quot;,&quot;css_external&quot;:&quot;https://unpkg.com/choerodon-ui/dist/choerodon-ui.css&quot;,&quot;js_external&quot;:&quot;https://unpkg.com/react@16.6.x/umd/react.production.min.js;https://unpkg.com/react-dom@16.6.x/umd/react-dom.production.min.js;https://unpkg.com/moment/min/moment-with-locales.min.js;https://unpkg.com/mobx@4.7.0/lib/mobx.umd.min.js;https://unpkg.com/mobx-react@5.1.x/index.min.js;https://unpkg.com/choerodon-ui/dist/choerodon-ui-with-locales.js&quot;,&quot;js_pre_processor&quot;:&quot;typescript&quot;}"/><input type="submit" value="Create New Pen with Prefilled Data" class="code-box-codepen"/></form><form action="https://codesandbox.io/api/v1/sandboxes/define" method="POST" target="_blank"><input type="hidden" name="parameters" value="N4IgZglgNgpgziAXKADgQwMYGs0HMYB0AVnAPYB2SoGFALjObVSACYwoNvkYTzMBOMTE0QgoaenCYAaEIOEBaFqQC2SMRPgyQK1QxEbJ23QCMAHuoAsBAOwEADCFmmzC-RgMBWAgEYCAJhAAXxDZCHI2MwIMOARkEBpGfXVgsIiYKJJmRPpGdQAdcggVFFJ-WgACACUhDwqwflUKgHJ3WmaAbkLi0vLq2toAEQB5AFl6xpUWtqVVTu6SssrmjAALUhhG5XIFAFcIAHoWCCkDtY2tij2IaNj5osW-5oID8MjbuHvCip_fv9SQG8MgRVrQVFBsnRkqIADzHABuFQgLAAvPkEnQ0OFNuiKlIAJ6wNEgdAsY7kXCICr-SwoMzogB8MKOEHhDMKMLgGH4EBQtHZ5B-8LQ_Aqul2jAAcqQ2BUURVlBhdip9AR8LQAKKwFWMABC-IAkiwABQrTHY_jNACUXXIzK5PL5DOCISAA"/><input type="submit" value="Create New Sandbox with Prefilled Data" class="code-box-codesandbox"/></form><i class="icon icon-copy code-box-code-copy"></i></div><pre class="language-jsx"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> Slider<span class="token punctuation">,</span> InputNumber<span class="token punctuation">,</span> Row<span class="token punctuation">,</span> Col <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'choerodon-ui'</span><span class="token punctuation">;</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div></section></section></div><div style="padding-left:8px;padding-right:8px" class="c7n-col-12 code-boxes-col-2-1"><section class="code-box" id="components-slider-demo-input-number"><section class="code-box-demo"><div><div class="c7n-row"><div class="c7n-col-12"><div class="c7n-slider"><div class="c7n-slider-rail"></div><div class="c7n-slider-track" style="left:0%;width:0%"></div><div class="c7n-slider-step"></div><div role="slider" tabindex="0" aria-valuemin="1" aria-valuemax="20" aria-valuenow="1" aria-disabled="false" class="c7n-slider-handle" style="left:0%"></div><div class="c7n-slider-mark"></div></div></div><div class="c7n-col-4"><div class="c7n-input-number" style="margin-left:16px"><span class="c7n-input-wrapper c7n-input-has-value c7n-input-has-suffix c7n-input-has-border"><div class="c7n-input-content"><div class="c7n-input-rendered-wrapper"><div class="c7n-input-rendered"><input type="text" autoComplete="off" max="20" min="1" step="1" value="1" class="c7n-input"/></div><span class="c7n-input-suffix"><div class="c7n-input-number-handler-wrap"><span unselectable="unselectable" role="button" aria-label="Increase Value" aria-disabled="false" class="c7n-input-number-handler c7n-input-number-handler-up "><i unselectable="unselectable" class="icon icon-baseline-arrow_drop_up c7n-input-number-handler-up-inner"></i></span><span unselectable="unselectable" role="button" aria-label="Decrease Value" aria-disabled="true" class="c7n-input-number-handler c7n-input-number-handler-down c7n-input-number-handler-down-disabled"><i unselectable="unselectable" class="icon icon-baseline-arrow_drop_down c7n-input-number-handler-down-inner"></i></span></div></span></div></div></span></div></div></div><div class="c7n-row"><div class="c7n-col-12"><div class="c7n-slider"><div class="c7n-slider-rail"></div><div class="c7n-slider-track" style="left:0%;width:0%"></div><div class="c7n-slider-step"></div><div role="slider" tabindex="0" aria-valuemin="0" aria-valuemax="1" aria-valuenow="0" aria-disabled="false" class="c7n-slider-handle" style="left:0%"></div><div class="c7n-slider-mark"></div></div></div><div class="c7n-col-4"><div class="c7n-input-number" style="margin-left:16px"><span class="c7n-input-wrapper c7n-input-has-value c7n-input-has-suffix c7n-input-has-border"><div class="c7n-input-content"><div class="c7n-input-rendered-wrapper"><div class="c7n-input-rendered"><input type="text" autoComplete="off" max="1" min="0" step="0.01" value="0.00" class="c7n-input"/></div><span class="c7n-input-suffix"><div class="c7n-input-number-handler-wrap"><span unselectable="unselectable" role="button" aria-label="Increase Value" aria-disabled="false" class="c7n-input-number-handler c7n-input-number-handler-up "><i unselectable="unselectable" class="icon icon-baseline-arrow_drop_up c7n-input-number-handler-up-inner"></i></span><span unselectable="unselectable" role="button" aria-label="Decrease Value" aria-disabled="true" class="c7n-input-number-handler c7n-input-number-handler-down c7n-input-number-handler-down-disabled"><i unselectable="unselectable" class="icon icon-baseline-arrow_drop_down c7n-input-number-handler-down-inner"></i></span></div></span></div></div></span></div></div></div></div></section><section class="code-box-meta markdown"><div class="code-box-title"><a href="#components-slider-demo-input-number">带输入框的滑块</a><a class="edit-button" href="https://github.com/choerodon/choerodon-ui/edit/master/components/slider/demo/input-number.md" target="_blank" rel="noopener noreferrer"><i class="icon icon-edit"></i></a></div><div><p>和 <a href="/components/input-number-cn/">数字输入框</a> 组件保持同步。</p></div><i class="icon icon-refresh code-refresh-icon"></i><span class="code-expand-icon"><img alt="expand code" src="https://gw.alipayobjects.com/zos/rmsportal/wSAkBuJFbdxsosKKpqyq.svg" class="code-expand-icon-show"/><img alt="expand code" src="https://gw.alipayobjects.com/zos/rmsportal/OpROPHYqWmrMDBFMZtKF.svg" class="code-expand-icon-hide"/></span></section><section class="highlight-wrapper"><div class="highlight"><div class="code-box-actions"><form action="https://codepen.io/pen/define" method="POST" target="_blank"><input type="hidden" name="data" value="{&quot;title&quot;:&quot;带输入框的滑块 - Choerodon UI Demo&quot;,&quot;html&quot;:&quot;&lt;div id=\&quot;container\&quot; style=\&quot;padding: 24px\&quot;&gt;&lt;/div&gt;\n&lt;script&gt;\n  var mountNode = document.getElementById(&#x27;container&#x27;);\n&lt;/script&gt;&quot;,&quot;js&quot;:&quot;&quot;,&quot;css&quot;:&quot;@import &#x27;choerodon-ui/dist/choerodon-ui.css&#x27;;\n\n&quot;,&quot;editors&quot;:&quot;001&quot;,&quot;css_external&quot;:&quot;https://unpkg.com/choerodon-ui/dist/choerodon-ui.css&quot;,&quot;js_external&quot;:&quot;https://unpkg.com/react@16.6.x/umd/react.production.min.js;https://unpkg.com/react-dom@16.6.x/umd/react-dom.production.min.js;https://unpkg.com/moment/min/moment-with-locales.min.js;https://unpkg.com/mobx@4.7.0/lib/mobx.umd.min.js;https://unpkg.com/mobx-react@5.1.x/index.min.js;https://unpkg.com/choerodon-ui/dist/choerodon-ui-with-locales.js&quot;,&quot;js_pre_processor&quot;:&quot;typescript&quot;}"/><input type="submit" value="Create New Pen with Prefilled Data" class="code-box-codepen"/></form><form action="https://codesandbox.io/api/v1/sandboxes/define" method="POST" target="_blank"><input type="hidden" name="parameters" value="N4IgZglgNgpgziAXKADgQwMYGs0HMYB0AVnAPYB2SoGFALjObVSACYwoNvkYTzMBOMTE0QgoaenCYAaEIOEBaFqQC2SMRPgyQK1QxEbJ23QCMAHuoAsBAOwEADCFmmzC-RgMBWAgEYCAJhAAXxDZCHI2MwIMOARkEBpGfXVgsIiYKJJmRPpGdQAdcggVFFJ-WgACACUhDwqwflUKgHJ3WmaAbkLi0vLq2toAEQB5AFl6xpUWtqVVTu6SssrmjAALUhhG5XIFAFcIAHoWCCkDtY2tij2IaNj5osW-5oID8MjbuHvCip_fv9SQG8MgRVrQVFBsnRkqIADzHABuFQgLAAvPkEnQ0OFNuiKlIAJ6wNEgdAsY7kXCICr-SwoMzogB8MKOEHhDMKMLgGH4EBQtHZ5B-8LQ_Aqul2jAAcqQ2BUURVlBhdip9AR8LQAKKwFWMABC-IAkiwABQrTHY_jNACUXXIzK5PL5DOCISAA"/><input type="submit" value="Create New Sandbox with Prefilled Data" class="code-box-codesandbox"/></form><i class="icon icon-copy code-box-code-copy"></i></div><pre class="language-jsx"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> Slider<span class="token punctuation">,</span> InputNumber<span class="token punctuation">,</span> Row<span class="token punctuation">,</span> Col <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'choerodon-ui'</span><span class="token punctuation">;</span>
 
 <span class="token keyword">class</span> <span class="token class-name">IntegerStep</span> <span class="token keyword">extends</span> <span class="token class-name">React<span class="token punctuation">.</span>Component</span> <span class="token punctuation">{</span>
   state <span class="token operator">=</span> <span class="token punctuation">{</span>
@@ -362,8 +379,8 @@ ReactDOM<span class="token punctuation">.</span><span class="token function">ren
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Slider</span> <span class="token attr-name">marks</span><span class="token script language-javascript"><span class="token punctuation">=</span><span class="token punctuation">{</span>marks<span class="token punctuation">}</span></span> <span class="token attr-name">step</span><span class="token script language-javascript"><span class="token punctuation">=</span><span class="token punctuation">{</span><span class="token keyword">null</span><span class="token punctuation">}</span></span> <span class="token attr-name">defaultValue</span><span class="token script language-javascript"><span class="token punctuation">=</span><span class="token punctuation">{</span><span class="token number">37</span><span class="token punctuation">}</span></span> <span class="token punctuation">/></span></span>
   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span><span class="token punctuation">,</span>
   mountNode<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div></section></section></div></div><section class="markdown api-container"><h2 id="API"><span>API</span><a href="#API" class="anchor">#</a></h2><table><thead><tr><th>参数</th><th>说明</th><th>类型</th><th>默认值</th></tr></thead><tbody><tr><td>allowClear</td><td>支持清除, 单选模式有效</td><td>boolean</td><td>false</td></tr><tr><td>defaultValue</td><td>设置初始取值。当 <code>range</code> 为 <code>false</code> 时，使用 <code>number</code>，否则用 <code>[number, number]</code></td><td>number<!-- -->|<!-- -->number<!-- -->[<!-- -->]</td><td>0 or <span>0, 0</span></td></tr><tr><td>disabled</td><td>值为 <code>true</code> 时，滑块为禁用状态</td><td>boolean</td><td>false</td></tr><tr><td>dots</td><td>是否只能拖拽到刻度上</td><td>boolean</td><td>false</td></tr><tr><td>included</td><td><code>marks</code> 不为空对象时有效，值为 true 时表示值为包含关系，false 表示并列</td><td>boolean</td><td>true</td></tr><tr><td>marks</td><td>刻度标记，key 的类型必须为 <code>number</code> 且取值在闭区间 <span>min, max</span> 内，每个标签可以单独设置样式</td><td>object</td><td>{ number: string<!-- -->|<!-- -->ReactNode } or { number: { style: object, label: string<!-- -->|<!-- -->ReactNode } }</td></tr><tr><td>max</td><td>最大值</td><td>number</td><td>100</td></tr><tr><td>min</td><td>最小值</td><td>number</td><td>0</td></tr><tr><td>range</td><td>双滑块模式</td><td>boolean</td><td>false</td></tr><tr><td>step</td><td>步长，取值必须大于 0，并且可被 (max - min) 整除。当 <code>marks</code> 不为空对象时，可以设置 <code>step</code> 为 <code>null</code>，此时 Slider 的可选值仅有 marks 标出来的部分。</td><td>number<!-- -->|<!-- -->null</td><td>1</td></tr><tr><td>tipFormatter</td><td>Slider 会把当前值传给 <code>tipFormatter</code>，并在 Tooltip 中显示 <code>tipFormatter</code> 的返回值，若为 null，则隐藏 Tooltip。</td><td>Function<!-- -->|<!-- -->null</td><td>IDENTITY</td></tr><tr><td>value</td><td>设置当前取值。当 <code>range</code> 为 <code>false</code> 时，使用 <code>number</code>，否则用 <code>[number, number]</code></td><td>number<!-- -->|<!-- -->number<!-- -->[<!-- -->]</td><td></td></tr><tr><td>vertical</td><td>值为 <code>true</code> 时，Slider 为垂直方向</td><td>Boolean</td><td>false</td></tr><tr><td>onAfterChange</td><td>与 <code>onmouseup</code> 触发时机一致，把当前值作为参数传入。</td><td>Function(value)</td><td>NOOP</td></tr><tr><td>onChange</td><td>当 Slider 的值发生改变时，会触发 onChange 事件，并把改变后的值作为参数传入。</td><td>Function(value)</td><td>NOOP</td></tr></tbody></table><h2 id="方法"><span>方法</span><a href="#方法" class="anchor">#</a></h2><table><thead><tr><th>名称</th><th>描述</th></tr></thead><tbody><tr><td>blur()</td><td>移除焦点</td></tr><tr><td>focus()</td><td>获取焦点</td></tr></tbody></table></section></article></section><section class="prev-next-nav"><a class="prev-page" href="/components/select-cn/"><i class="icon icon-navigate_before footer-nav-icon-before"></i><span>Select</span><span class="chinese">选择器</span><i class="icon icon-navigate_next footer-nav-icon-after"></i></a><a class="next-page" href="/components/switch-cn/"><i class="icon icon-navigate_before footer-nav-icon-before"></i><span>Switch</span><span class="chinese">开关</span><i class="icon icon-navigate_next footer-nav-icon-after"></i></a></section><footer id="footer"><div class="footer-wrap"><div class="c7n-row"><div class="c7n-col-xs-24 c7n-col-sm-24 c7n-col-md-6"><div class="footer-center"><h2><span>相关资源</span></h2><div><a href="http://choerodon.io/">Choerodon</a></div></div></div><div class="c7n-col-xs-24 c7n-col-sm-24 c7n-col-md-6"><div class="footer-center"><h2><span>帮助</span></h2><div><a target="_blank " href="https://github.com/choerodon/choerodon-ui">GitLab</a></div><div><a href="/changelog"><span>更新记录</span></a></div><div><a target="_blank" rel="noopener noreferrer" href="https://github.com/choerodon/choerodon-ui/issues"><span>讨论列表</span></a></div></div></div></div></div><div class="c7n-row bottom-bar"><div class="c7n-col-sm-24 c7n-col-md-4"></div><div class="c7n-col-sm-24 c7n-col-md-20"><span style="margin-right:12px">Copyright@ The choerodon Author. All rights reserved.</span></div></div></footer></div></div></div></div>
-</div>
-<script src="/choerodon-ui/common.js"></script>
-<script src="/choerodon-ui/index.js"></script>
-</body>
+    </div>
+    <script src="/choerodon-ui/index-de086839.js"></script>
+    
+  </body>
 </html>
