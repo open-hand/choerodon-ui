@@ -22,6 +22,7 @@ timeline: true
 - 🌟 `<pro>Table.Filter`: 优化过滤条 placeholder 文字与光标的位置，调整过滤条高度为 40px。
 - 🌟 `<pro>Table`: 临时删除的行显示为禁用状态，提交失败时重置状态。
 - 🌟 `<pro>Table`: 编辑器支持 SelectBox。
+- 🌟 `<pro>Lov`: 增加 `conditionFieldRequired` 配置。
 - 🐞 `<pro>Table`: 修复 Table 有 Column 的 lock="right"的时候，非固定和固定列之间会没有 border 的问题。
 - 🐞 `<pro>Table`: 修复键盘的上下键操作时行高亮定位问题。
 - 🐞 `<pro>DataSet`: 修复 dataKey 为 null 时的问题。
