@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 💄 `<pro>Table`: Change the fuzzy condition count of query bar to one limits.
+
 ## 0.8.10
 
 `2019-09-16`

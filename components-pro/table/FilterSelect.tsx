@@ -165,7 +165,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
       if (current) {
         let fieldValue = current.get(value);
         if (value === paramName) {
-          return (fieldValue || [])[repeat];
+          return fieldValue;
         }
         const field = queryDataSet.getField(value);
         if (field) {
@@ -204,8 +204,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
   addQueryParams(value) {
     const { paramName } = this.props;
     if (paramName) {
-      const values = this.getQueryValues(paramName);
-      this.setQueryValue(paramName!, values.concat(value));
+      this.setQueryValue(paramName!, value);
     }
   }
 
@@ -267,6 +266,11 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
   handleBlur(e) {
     super.handleBlur(e);
     this.setSelectField(undefined);
+  }
+
+  isEditorReadOnly(): boolean {
+    const { paramName } = this.props;
+    return this.getQueryValues(paramName).length > 0 && !this.selectField;
   }
 
   @autobind
@@ -425,12 +429,13 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
       filterText,
       props: { dropdownMenuStyle },
     } = this;
+    const editable = !this.isEditorReadOnly();
     return (
       <ObserverSelect
         {...props}
         key="key"
-        combo
-        searchable
+        combo={editable}
+        searchable={editable}
         value={null}
         onInput={this.handleInput}
         onEnterDown={this.handleFieldEnterDown}
