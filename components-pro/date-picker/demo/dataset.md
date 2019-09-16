@@ -13,23 +13,36 @@ title:
 
 DataSet binding.
 
-````jsx
+```jsx
 import { DataSet, DatePicker, DateTimePicker, Row, Col } from 'choerodon-ui/pro';
 
 function handleDataSetChange({ value, oldValue }) {
-  console.log('[dataset newValue]', value && value.format(), '[oldValue]', oldValue && oldValue.format());
+  console.log(
+    '[dataset newValue]',
+    value && value.format(),
+    '[oldValue]',
+    oldValue && oldValue.format(),
+  );
 }
 
-const data = [{
-  birth: '1984-11-22',
-  creationTime: '2017-12-22 15:00:00',
-}];
+const data = [
+  {
+    birth: '1984-11-22',
+    creationTime: '2017-12-22 15:00:00',
+  },
+];
+
+function dynamicProps({ record }) {
+  return {
+    required: !!record.get('birth'),
+  };
+}
 
 class App extends React.Component {
   ds = new DataSet({
     data,
     fields: [
-      { name: 'birth', type: 'date' },
+      { name: 'birth', type: 'date', dynamicProps },
       { name: 'creationTime', type: 'dateTime' },
     ],
     events: {
@@ -51,8 +64,5 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(
-  <App />,
-  mountNode
-);
-````
+ReactDOM.render(<App />, mountNode);
+```

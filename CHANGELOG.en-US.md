@@ -15,6 +15,25 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Table`: Adjust the spacing of the advancedBar.
+
+## 0.8.11
+
+`2019-09-16`
+
+- 💄 `<pro>Table`: Change the fuzzy condition count of query bar to one limits.
+
+## 0.8.10
+
+`2019-09-16`
+
+- 🐞 `Input`: Fixed an issue with a white screen.
+- 🐞 `<pro>DataSet`: Fix the problem with the isModified method.
+
+## 0.8.9
+
+`2019-09-12`
+
 - 🌟 Upgrade webpack4 babel7 eslint and stylelint.
 - 🌟 `configure`: Add global configuration new properties.
 - 🌟 `<pro>DataSet`: Add beforeDelete event.
@@ -22,7 +41,7 @@ timeline: true
 - 🌟 `<pro>Table.Filter`: Optimize the position of the filter placeholder and cursor, and adjust the filter bar height to 40px.
 - 🌟 `<pro>Table`: The temporarily deleted line is displayed as disabled and reset when the submission fails.
 - 🌟 `<pro>Table`: Support SelectBox editor.
-- 🌟 `<pro>Table`: Adjust the spacing of the advancedBar.
+- 🌟 `<pro>Lov`: Add `conditionFieldRequired` in lov item config.
 - 🐞 `<pro>Table`: Fixed a problem where there would be no border between the non-fixed and fixed columns of the Table.
 - 🐞 `<pro>Table`: Fix the row positioning problem with the up and down key of keyboard.
 - 🐞 `<pro>DataSet`: Fix the problem when `dataKey` is null.
@@ -30,6 +49,7 @@ timeline: true
 - 🐞 `<pro>Form`: Fixed a problem where the width of the FormField was not 100% when the className was set.
 - 🐞 `<pro>TextField`: Fix the autofill and prefix style of the float label.
 - 🐞 `<pro>DatePicker`: Fix the problem when `range` is array.
+- 🐞 `<pro>DataSet.Field`: Fix `dynamicProps` cycle running.
 
 ## 0.8.8
 

@@ -40,6 +40,7 @@ function generateConditionField(
     conditionFieldSelectUrl,
     conditionFieldSelectTf,
     conditionFieldSelectVf,
+    conditionFieldRequired,
   }: LovConfigItem,
 ): void {
   if (conditionField === 'Y') {
@@ -53,6 +54,7 @@ function generateConditionField(
       lookupUrl: conditionFieldSelectUrl || undefined,
       textField: conditionFieldSelectTf || undefined,
       valueField: conditionFieldSelectVf || undefined,
+      required: conditionFieldRequired || undefined,
     };
     fields.push(field);
     if (conditionFieldType === LovFieldType.POPUP) {
@@ -140,7 +142,9 @@ export class LovCodeStore {
         const dataSetProps: DataSetProps = {
           queryUrl: lovQueryAxiosConfig ? undefined : this.getQueryUrl(code),
           transport: lovQueryAxiosConfig && {
-            read: lovQueryAxiosConfig(code, config),
+            read(...args) {
+              return lovQueryAxiosConfig(code, config, ...args);
+            },
           },
           primaryKey: valueField,
           cacheSelection: true,

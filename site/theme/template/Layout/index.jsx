@@ -11,7 +11,9 @@ import Header from './Header';
 import enLocale from '../../en-US';
 import cnLocale from '../../zh-CN';
 import * as utils from '../utils';
-import '../../mock';
+import mock from '../../mock';
+
+mock();
 
 configure({ enforceActions: 'always' });
 
@@ -27,7 +29,7 @@ if (typeof window !== 'undefined') {
 }
 
 let isMobile = false;
-enquireScreen((b) => {
+enquireScreen(b => {
   isMobile = b;
 });
 
@@ -66,7 +68,7 @@ export default class Layout extends React.Component {
       }, 0);
     }
 
-    enquireScreen((b) => {
+    enquireScreen(b => {
       this.setState({
         isMobile: !!b,
       });

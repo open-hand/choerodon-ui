@@ -32,6 +32,7 @@ export type LovConfigItem = {
   conditionFieldSelectTf?: string;
   conditionFieldSelectVf?: string;
   conditionFieldSequence: number;
+  conditionFieldRequired?: boolean;
   gridField?: string;
   gridFieldName?: string;
   gridFieldWidth?: number;
@@ -187,7 +188,10 @@ export default class Lov extends Select<LovProps> {
     const { field, record, options } = this;
     const { queryDataSet } = options;
     if (queryDataSet) {
-      queryDataSet.reset();
+      const { current } = queryDataSet;
+      if (current) {
+        current.reset();
+      }
     }
     if (field) {
       const lovPara = toJS(field.get('lovPara')) || {};

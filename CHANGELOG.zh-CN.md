@@ -15,6 +15,25 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Table`: 调整 advancedBar 的间距。
+
+## 0.8.11
+
+`2019-09-16`
+
+- 💄 `<pro>Table`: 调整查询条的模糊条件限制只能输入一个。
+
+## 0.8.10
+
+`2019-09-16`
+
+- 🐞 `Input`: 修复报错白屏的问题。
+- 🐞 `<pro>DataSet`: 修复 isModified 方法的问题。
+
+## 0.8.9
+
+`2019-09-12`
+
 - 🌟 升级 webpack4, babel7, eslint, stylelint。
 - 🌟 `configure`: 增加全局配置新属性。
 - 🌟 `<pro>DataSet`: 新增 beforeDelete 事件。
@@ -22,7 +41,7 @@ timeline: true
 - 🌟 `<pro>Table.Filter`: 优化过滤条 placeholder 文字与光标的位置，调整过滤条高度为 40px。
 - 🌟 `<pro>Table`: 临时删除的行显示为禁用状态，提交失败时重置状态。
 - 🌟 `<pro>Table`: 编辑器支持 SelectBox。
-- 🌟 `<pro>Table`: 调整 advancedBar 的间距。
+- 🌟 `<pro>Lov`: 增加 `conditionFieldRequired` 配置。
 - 🐞 `<pro>Table`: 修复 Table 有 Column 的 lock="right"的时候，非固定和固定列之间会没有 border 的问题。
 - 🐞 `<pro>Table`: 修复键盘的上下键操作时行高亮定位问题。
 - 🐞 `<pro>DataSet`: 修复 dataKey 为 null 时的问题。
@@ -30,6 +49,7 @@ timeline: true
 - 🐞 `<pro>Form`: 修复 FormField 设了 className 时，宽度不是 100%的问题。
 - 🐞 `<pro>TextField`: 修复 float label 的 autofill 及 prefix 的样式问题。
 - 🐞 `<pro>DatePicker`: 修复 range 为数组时的问题。
+- 🐞 `<pro>DataSet.Field`: 修复 dynamicProps 死循环的问题。
 
 ## 0.8.8
 

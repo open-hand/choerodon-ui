@@ -260,6 +260,8 @@ export default class Field {
 
   isDirtyComputing: boolean = false;
 
+  isDynamicPropsComputing: boolean = false;
+
   @computed
   get bindTarget(): Field | undefined {
     const { record } = this;
@@ -417,8 +419,12 @@ export default class Field {
           record = new Record(record.initData);
           record.dataSet = dataSet;
         }
-        if (dataSet && record) {
+        if (this.isDynamicPropsComputing) {
+          warning(false, `Cycle dynamicProps execution of field<${name}>.`);
+        } else if (dataSet && record) {
+          this.isDynamicPropsComputing = true;
           const props = dynamicProps({ dataSet, record, name });
+          this.isDynamicPropsComputing = false;
           if (props && propsName in props) {
             const prop = props[propsName];
             this.checkDynamicProp(propsName, prop);
