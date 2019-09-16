@@ -134,7 +134,7 @@ export default class Input extends Component<InputProps, any> {
   constructor(props) {
     super(props);
     this.state = {
-      value: fixControlledValue('value' in props ? props.value : props.defaultValue),
+      value: typeof props.value === 'undefined' ? props.defaultValue : props.value,
       focused: false,
       showPassword: false,
     };
@@ -238,6 +238,16 @@ export default class Input extends Component<InputProps, any> {
     }
     if (onBlur) {
       onBlur(e);
+    }
+  };
+
+  handleChange = e => {
+    const { onChange } = this.props;
+    if (!('value' in this.props)) {
+      this.setState({ value: e.target.value });
+    }
+    if (onChange) {
+      onChange(e);
     }
   };
 
@@ -357,22 +367,16 @@ export default class Input extends Component<InputProps, any> {
       'size',
     ]);
 
-    // if ('value' in this.props) {
-    //   otherProps.value = fixControlledValue(value);
-    //   // Input elements must be either controlled or uncontrolled,
-    //   // specify either the value prop, or the defaultValue prop, but not both.
-    //   delete otherProps.defaultValue;
-    // }
-
     return (
       <input
         {...otherProps}
-        value={value}
+        value={fixControlledValue(value)}
         className={classNames(this.getInputClassName(), className)}
         onKeyDown={this.handleKeyDown}
         ref={this.saveInput}
         onFocus={this.handleFocus}
         onBlur={this.handleBlur}
+        onChange={this.handleChange}
         type={showPassword ? 'text' : type}
       />
     );
@@ -382,7 +386,7 @@ export default class Input extends Component<InputProps, any> {
     const { maxLength, showLengthInfo } = this.props;
     const prefixCls = this.getPrefixCls();
     const { value } = this.state;
-    const inputLength = value.length;
+    const inputLength = value ? value.length : 0;
     return (maxLength && showLengthInfo) ||
       (maxLength && maxLength > 0 && inputLength === maxLength) ? (
       <div className={`${prefixCls}-length-info`}>{`${inputLength}/${maxLength}`}</div>

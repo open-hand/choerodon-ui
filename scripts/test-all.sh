@@ -6,7 +6,8 @@ if [ "$p_skip" = '--skip' ]; then
   npm run dist && \
   node ./tests/dekko/dist.test.js && \
   npm run compile && \
-  node ./tests/dekko/lib.test.js
+  node ./tests/dekko/lib.test.js && \
+  node ./scripts/prepub
 else
   npm run lint && \
   npm run dist && \
@@ -17,6 +18,7 @@ else
   LIB_DIR=es npm test && \
   LIB_DIR=lib npm test && \
   npm test && \
-  npm run test-node
+  npm run test-node && \
+  node ./scripts/prepub
 fi
 

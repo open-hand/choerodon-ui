@@ -76,6 +76,8 @@ function getWebpackConfig(modules) {
         '.json',
       ],
       alias: {
+        [`${pkg.name}/pro/lib`]: getProjectPath('components-pro'),
+        [`${pkg.name}/pro`]: getProjectPath('index-pro'),
         [`${pkg.name}/lib`]: getProjectPath('components'),
         [pkg.name]: process.cwd(),
       },
