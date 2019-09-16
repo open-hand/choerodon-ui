@@ -421,7 +421,7 @@ export default class Input extends Component<InputProps, any> {
 
   hasValue() {
     const { value } = this.state;
-    return value.length !== 0;
+    return value && value.length !== 0;
   }
 
   renderPlaceholder() {

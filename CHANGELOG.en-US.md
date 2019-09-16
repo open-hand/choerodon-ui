@@ -15,6 +15,9 @@ timeline: true
 
 ---
 
+- 🐞 `Input`: Fixed an issue with a white screen.
+- 🐞 `<pro>DataSet`: Fix the problem with the isModified method.
+
 ## 0.8.9
 
 `2019-09-12`

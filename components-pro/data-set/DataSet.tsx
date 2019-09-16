@@ -1317,7 +1317,7 @@ export default class DataSet extends EventManager {
    * @return true | false
    */
   isModified(): boolean {
-    return this.dirtyRecords.length > 0;
+    return this.records.every(record => record.status === RecordStatus.sync);
   }
 
   /**
