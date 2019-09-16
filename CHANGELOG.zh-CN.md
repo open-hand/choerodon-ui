@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Table`: 调整 advancedBar 的间距。
+
 ## 0.8.11
 
 `2019-09-16`

@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Table`: Adjust the spacing of the advancedBar.
+
 ## 0.8.11
 
 `2019-09-16`
