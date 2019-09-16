@@ -223,11 +223,11 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
     const { paramName } = this.props;
     if (paramName !== value) {
       const field = this.getQueryField(value);
-      if (field && !field.get('multiple')) {
-        return false;
+      if (field && field.get('multiple')) {
+        return true;
       }
     }
-    return true;
+    return false;
   }
 
   @autobind
