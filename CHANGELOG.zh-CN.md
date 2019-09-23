@@ -19,6 +19,7 @@ timeline: true
 - 🌟 `<pro>Button`: 调整 Button 的高度为 30px。
 - 💄 `<pro>Modal`: 更新样式。
 - 🐞 `<pro>Table`: 修复隐藏列造成的问题。
+- 🐞 `<pro>CodeArea`: 修复不受控的问题。
 
 ## 0.8.11
 

@@ -36,8 +36,6 @@ export default class TableFooter extends Component<TableFooterProps, any> {
       tableStore: { lockColumnsFootRowsHeight, overflowY, rowHeight },
     } = this.context;
     const tds = this.leafColumns.map(column => {
-      // const { hidden } = column;
-      // if (!hidden) {
       return (
         <TableFooterCell
           key={getColumnKey(column)}
@@ -46,8 +44,6 @@ export default class TableFooter extends Component<TableFooterProps, any> {
           column={column}
         />
       );
-      // }
-      // return undefined;
     });
     if (overflowY && lock !== ColumnLock.left) {
       tds.push(

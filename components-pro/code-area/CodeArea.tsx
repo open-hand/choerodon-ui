@@ -89,11 +89,12 @@ export default class CodeArea extends ObserverFormField<CodeAreaProps> {
     return otherProps;
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps, nextContext) {
     const { options } = nextProps;
     if (!isEqual(options, this.props.options)) {
       this.cmOptions = this.getCodeMirrorOptions(options);
     }
+    super.componentWillReceiveProps(nextProps, nextContext);
   }
 
   renderWrapper(): ReactNode {

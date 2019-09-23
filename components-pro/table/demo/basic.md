@@ -143,10 +143,9 @@ class App extends React.Component {
     name: 'user',
     autoQuery: true,
     pageSize: 5,
-    selection: false,
     transport: {
       read: {
-        url: '/dataset/user/mutations',
+        url: '/dataset/user/queries',
       },
       create: {
         url: '/dataset/user/mutations',
@@ -436,7 +435,13 @@ class App extends React.Component {
       this.deleteAllButton,
     ];
     return [
-      <Table key="user" buttons={buttons} dataSet={this.userDs} header="User">
+      <Table
+        key="user"
+        buttons={buttons}
+        dataSet={this.userDs}
+        header="User"
+        style={{ height: 200 }}
+      >
         <Column
           name="userid"
           header={renderColumnHeader}
@@ -445,30 +450,28 @@ class App extends React.Component {
           width={150}
           lock
           sortable
-          hidden
         />
-        <Column hidden name="age" editor width={150} sortable footer={renderColumnFooter} />
-        <Column hidden name="enable" editor width={50} minWidth={50} lock />
-        <Column hidden name="name" editor width={150} sortable />
-        <Column hidden name="code" editor width={150} sortable />
-        <Column hidden name="code_code" editor width={150} />
-        <Column hidden name="code_select" editor width={150} />
-        <Column hidden name="codeMultiple" editor width={150} />
-        <Column hidden name="codeMultiple_code" width={150} />
+        <Column name="age" editor width={150} sortable footer={renderColumnFooter} />
+        <Column name="enable" editor width={50} minWidth={50} lock />
+        <Column name="name" editor width={150} sortable />
+        <Column name="code" editor width={150} sortable />
+        <Column name="code_code" editor width={150} />
+        <Column name="code_select" editor width={150} />
+        <Column name="codeMultiple" editor width={150} />
+        <Column name="codeMultiple_code" width={150} />
         <Column name="sex" editor={<SelectBox />} width={150} />
         <Column header="性别id" renderer={sexIdRenderer} />
         <Column name="sexMultiple" editor width={150} />
-        <Column hidden name="accountMultiple" editor width={150} />
-        <Column hidden name="date.startDate" editor width={150} />
-        <Column hidden name="date.endDate" editor width={150} />
-        <Column hidden name="numberMultiple" editor width={150} minWidth={50} />
-        <Column hidden name="frozen" editor width={50} minWidth={50} lock="right" />
+        <Column name="accountMultiple" editor width={150} />
+        <Column name="date.startDate" editor width={150} />
+        <Column name="date.endDate" editor width={150} />
+        <Column name="numberMultiple" editor width={150} minWidth={50} />
+        <Column name="frozen" editor width={50} minWidth={50} lock="right" />
         <Column
           header={<span style={{ color: 'red' }}>编辑Friends</span>}
           align="center"
           renderer={this.renderEdit}
           lock="right"
-          hidden
         />
       </Table>,
       <Tabs key="tabs">

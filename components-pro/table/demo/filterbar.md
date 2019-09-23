@@ -86,10 +86,7 @@ class App extends React.Component {
     return [
       {
         header: '组合',
-        children: [
-          { name: 'name', width: 450, editor: true, hidden: true },
-          { name: 'age', editor: true },
-        ],
+        children: [{ name: 'name', width: 450, editor: true }, { name: 'age', editor: true }],
       },
       {
         header: '组合3',

@@ -19,6 +19,7 @@ timeline: true
 - 🌟 `<pro>Button`: Adjust height of Button to 30px.
 - 💄 `<pro>Modal`: Update the style.
 - 🐞 `<pro>Table`: Fix problems caused by hidden columns.
+- 🐞 `<pro>CodeArea`: Fix uncontrolled problems.
 
 ## 0.8.11
 
