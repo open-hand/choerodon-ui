@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `<pro>Table`: Adjust the spacing of the advancedBar.
+- 🌟 `<pro>Button`: Adjust height of Button to 30px.
 
 ## 0.8.11
 

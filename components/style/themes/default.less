@@ -158,11 +158,14 @@
 @btn-disable-bg: transparent;
 @btn-disable-border: @border-color-base;
 
-@btn-padding-base: 0 @padding-md - 0.01rem;
+@btn-line-height: 1.5;
+@btn-padding-base: 0 @padding-sm - 0.02rem;
 @btn-font-size-lg: @font-size-lg;
 @btn-font-size-sm: @font-size-sm;
 @btn-padding-lg: @btn-padding-base;
 @btn-padding-sm: 0 @padding-xs - 0.01rem;
+@btn-padding-top: (@btn-height-base - (@font-size-base * @btn-line-height) - 0.01rem) / 2;
+@btn-padding-bottom: (@btn-height-base - (@font-size-base * @btn-line-height)) / 2;
 
 @btn-height-base: 0.3rem;
 @btn-height-lg: 0.4rem;
