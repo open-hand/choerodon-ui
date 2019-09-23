@@ -62,12 +62,16 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
     switch (lock) {
       case ColumnLock.left:
       case true:
-        return tableStore.leftLeafColumns.filter(column => column.editor && column.name);
+        return tableStore.leftLeafColumns.filter(
+          ({ editor, name, hidden }) => editor && name && !hidden,
+        );
       case ColumnLock.right:
-        return tableStore.rightLeafColumns.filter(column => column.editor && column.name);
+        return tableStore.rightLeafColumns.filter(
+          ({ editor, name, hidden }) => editor && name && !hidden,
+        );
       default:
         return tableStore.leafColumns.filter(
-          column => column.editor && column.name && !column.lock,
+          ({ editor, name, hidden, lock: columnLock }) => editor && name && !columnLock && !hidden,
         );
     }
   }
@@ -79,11 +83,11 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
     switch (lock) {
       case ColumnLock.left:
       case true:
-        return tableStore.leftLeafColumns;
+        return tableStore.leftLeafColumns.filter(({ hidden }) => !hidden);
       case ColumnLock.right:
-        return tableStore.rightLeafColumns;
+        return tableStore.rightLeafColumns.filter(({ hidden }) => !hidden);
       default:
-        return tableStore.leafColumns;
+        return tableStore.leafColumns.filter(({ hidden }) => !hidden);
     }
   }
 

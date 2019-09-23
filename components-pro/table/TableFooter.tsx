@@ -36,18 +36,18 @@ export default class TableFooter extends Component<TableFooterProps, any> {
       tableStore: { lockColumnsFootRowsHeight, overflowY, rowHeight },
     } = this.context;
     const tds = this.leafColumns.map(column => {
-      const { hidden } = column;
-      if (!hidden) {
-        return (
-          <TableFooterCell
-            key={getColumnKey(column)}
-            prefixCls={prefixCls}
-            dataSet={dataSet}
-            column={column}
-          />
-        );
-      }
-      return undefined;
+      // const { hidden } = column;
+      // if (!hidden) {
+      return (
+        <TableFooterCell
+          key={getColumnKey(column)}
+          prefixCls={prefixCls}
+          dataSet={dataSet}
+          column={column}
+        />
+      );
+      // }
+      // return undefined;
     });
     if (overflowY && lock !== ColumnLock.left) {
       tds.push(
@@ -75,11 +75,11 @@ export default class TableFooter extends Component<TableFooterProps, any> {
     const { tableStore } = this.context;
     const { lock } = this.props;
     if (lock === 'right') {
-      return tableStore.rightLeafColumns;
+      return tableStore.rightLeafColumns.filter(({ hidden }) => !hidden);
     }
     if (lock) {
-      return tableStore.leftLeafColumns;
+      return tableStore.leftLeafColumns.filter(({ hidden }) => !hidden);
     }
-    return tableStore.leafColumns;
+    return tableStore.leafColumns.filter(({ hidden }) => !hidden);
   }
 }

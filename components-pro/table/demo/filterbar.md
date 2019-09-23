@@ -13,16 +13,19 @@ title:
 
 Filter Bar.
 
-````jsx
+```jsx
 import { DataSet, Table, Button } from 'choerodon-ui/pro';
 
 class App extends React.Component {
   state = { show: false };
 
   handleClick = () => this.setState({ show: !this.state.show });
-  
+
   handleSearchAge = () => {
-    const { ds, ds: { queryDataSet } } = this;
+    const {
+      ds,
+      ds: { queryDataSet },
+    } = this;
     if (queryDataSet) {
       const { current } = queryDataSet;
       if (current) {
@@ -33,8 +36,12 @@ class App extends React.Component {
   };
 
   buttons = [
-    <Button key="change" funcType="flat" onClick={this.handleClick}>切换列显示</Button>,
-    <Button key="age" funcType="flat" onClick={this.handleSearchAge}>查询18岁</Button>,
+    <Button key="change" funcType="flat" onClick={this.handleClick}>
+      切换列显示
+    </Button>,
+    <Button key="age" funcType="flat" onClick={this.handleSearchAge}>
+      查询18岁
+    </Button>,
   ];
 
   ds = new DataSet({
@@ -48,7 +55,13 @@ class App extends React.Component {
       { name: 'code', type: 'object', label: '代码描述', lovCode: 'LOV_CODE' },
       { name: 'sex', type: 'string', label: '性别', lookupCode: 'HR.EMPLOYEE_GENDER' },
       { name: 'date.startDate', type: 'date', label: '开始日期' },
-      { name: 'sexMultiple', type: 'string', label: '性别（多值）', lookupCode: 'HR.EMPLOYEE_GENDER', multiple: true },
+      {
+        name: 'sexMultiple',
+        type: 'string',
+        label: '性别（多值）',
+        lookupCode: 'HR.EMPLOYEE_GENDER',
+        multiple: true,
+      },
     ],
     fields: [
       { name: 'userid', type: 'string', label: '编号', required: true },
@@ -56,7 +69,13 @@ class App extends React.Component {
       { name: 'age', type: 'number', label: '年龄', max: 100, step: 1 },
       { name: 'sex', type: 'string', label: '性别', lookupCode: 'HR.EMPLOYEE_GENDER' },
       { name: 'date.startDate', type: 'date', label: '开始日期', defaultValue: new Date() },
-      { name: 'sexMultiple', type: 'string', label: '性别（多值）', lookupCode: 'HR.EMPLOYEE_GENDER', multiple: true },
+      {
+        name: 'sexMultiple',
+        type: 'string',
+        label: '性别（多值）',
+        lookupCode: 'HR.EMPLOYEE_GENDER',
+        multiple: true,
+      },
     ],
     events: {
       query: ({ params, data }) => console.log('filterbar query parameter', params, data),
@@ -68,7 +87,7 @@ class App extends React.Component {
       {
         header: '组合',
         children: [
-          { name: 'name', width: 450, editor: true },
+          { name: 'name', width: 450, editor: true, hidden: true },
           { name: 'age', editor: true },
         ],
       },
@@ -77,10 +96,7 @@ class App extends React.Component {
         children: [
           {
             header: '组合2',
-            children: [
-              { name: 'sex', editor: true },
-              { name: 'date.startDate', editor: true },
-            ],
+            children: [{ name: 'sex', editor: true }, { name: 'date.startDate', editor: true }],
           },
           { name: 'sexMultiple', editor: true },
         ],
@@ -91,13 +107,17 @@ class App extends React.Component {
 
   render() {
     return (
-      <Table dataSet={this.ds} queryBar="bar" border={false} columnResizable={false} buttons={this.buttons} columns={this.getColumns()} />
+      <Table
+        dataSet={this.ds}
+        queryBar="bar"
+        border={false}
+        columnResizable={false}
+        buttons={this.buttons}
+        columns={this.getColumns()}
+      />
     );
   }
 }
 
-ReactDOM.render(
-  <App />,
-  mountNode
-);
-````
+ReactDOM.render(<App />, mountNode);
+```

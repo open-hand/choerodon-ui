@@ -168,12 +168,12 @@ export default class TableBody extends Component<TableBodyProps, any> {
     const { tableStore } = this.context;
     const { lock } = this.props;
     if (lock === 'right') {
-      return tableStore.rightLeafColumns;
+      return tableStore.rightLeafColumns.filter(({ hidden }) => !hidden);
     }
     if (lock) {
-      return tableStore.leftLeafColumns;
+      return tableStore.leftLeafColumns.filter(({ hidden }) => !hidden);
     }
-    return tableStore.leafColumns;
+    return tableStore.leafColumns.filter(({ hidden }) => !hidden);
   }
 
   @action

@@ -152,21 +152,18 @@ export default class TableRow extends Component<TableRowProps, any> {
   };
 
   getCell = (column: ColumnProps, index: number): ReactNode => {
-    const { hidden } = column;
-    if (!hidden) {
-      const { prefixCls, record, indentSize } = this.props;
-      return (
-        <TableCell
-          key={getColumnKey(column)}
-          prefixCls={prefixCls}
-          column={column}
-          record={record}
-          indentSize={indentSize}
-        >
-          {this.hasExpandIcon(index) && this.renderExpandIcon()}
-        </TableCell>
-      );
-    }
+    const { prefixCls, record, indentSize } = this.props;
+    return (
+      <TableCell
+        key={getColumnKey(column)}
+        prefixCls={prefixCls}
+        column={column}
+        record={record}
+        indentSize={indentSize}
+      >
+        {this.hasExpandIcon(index) && this.renderExpandIcon()}
+      </TableCell>
+    );
   };
 
   focusRow(row: HTMLTableRowElement | null) {
