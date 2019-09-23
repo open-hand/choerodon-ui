@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `<pro>Table`: 调整 advancedBar 的间距。
 - 🌟 `<pro>Button`: 调整 Button 的高度为 30px。
+- 💄 `<pro>Modal`: 更新样式。
 
 ## 0.8.11
 
