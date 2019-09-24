@@ -58,11 +58,14 @@
 @border-radius-base: 0.02rem;
 @border-radius-sm: 0.02rem;
 
-// vertical paddings
+// paddings
 @padding-lg: 0.24rem; // containers
 @padding-md: 0.16rem; // small containers and buttons
 @padding-sm: 0.12rem; // Form controls and items
 @padding-xs: 0.08rem; // small items
+@padding-vertical-base: 0.01rem;
+@padding-vertical-sm: 0.01rem;
+@padding-vertical-lg: 0.06rem;
 
 // vertical padding for all form controls
 @control-padding-horizontal: @padding-sm;
@@ -159,13 +162,11 @@
 @btn-disable-border: @border-color-base;
 
 @btn-line-height: 1.5;
-@btn-padding-base: 0 @padding-sm - 0.02rem;
+@btn-padding-base: @padding-vertical-base @padding-sm - 0.02rem;
+@btn-padding-lg: @padding-vertical-lg @padding-sm - 0.02rem;
+@btn-padding-sm: @padding-vertical-sm @padding-xs - 0.02rem;
 @btn-font-size-lg: @font-size-lg;
 @btn-font-size-sm: @font-size-sm;
-@btn-padding-lg: @btn-padding-base;
-@btn-padding-sm: 0 @padding-xs - 0.01rem;
-@btn-padding-top: (@btn-height-base - (@font-size-base * @btn-line-height) - 0.01rem) / 2;
-@btn-padding-bottom: (@btn-height-base - (@font-size-base * @btn-line-height)) / 2;
 
 @btn-height-base: 0.3rem;
 @btn-height-lg: 0.4rem;
@@ -293,9 +294,9 @@
 @input-padding-horizontal-base: @input-padding-horizontal;
 @input-padding-horizontal-sm: @control-padding-horizontal-sm - 0.02rem;
 @input-padding-horizontal-lg: @input-padding-horizontal;
-@input-padding-vertical-base: 0.01rem;
-@input-padding-vertical-sm: 0.01rem;
-@input-padding-vertical-lg: 0.06rem;
+@input-padding-vertical-base: @padding-vertical-base;
+@input-padding-vertical-sm: @padding-vertical-sm;
+@input-padding-vertical-lg: @padding-vertical-lg;
 @input-placeholder-color: hsv(0, 0, 75%);
 // @input-color: fade(@text-color, 54%);
 @input-active-color: @text-color;

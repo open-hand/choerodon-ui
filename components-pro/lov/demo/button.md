@@ -69,7 +69,7 @@ class App extends React.Component {
           <Output dataSet={ds} name="code_description" />
         </Col>
         <Col span={6}>
-          <Lov dataSet={ds} name="code_string" mode="button" emptyText="请选择" />
+          <Lov dataSet={ds} name="code_string" mode="button" placeholder="请选择" />
         </Col>
       </Row>
     );

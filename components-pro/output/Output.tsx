@@ -30,10 +30,6 @@ export default class Output extends FormField<OutputProps> {
     return omit(super.getOtherProps(), ['name']);
   }
 
-  getText(): ReactNode {
-    return this.processRenderer(this.getValue());
-  }
-
   getValueKey(value) {
     if (isArrayLike(value)) {
       return value.map(this.getValueKey, this).join(',');

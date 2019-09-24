@@ -110,7 +110,6 @@ export interface ColumnProps extends ElementProps {
    * 给内置按钮加属性：command={[['edit', { color: 'red' }], ...]}
    */
   command?: Commands[] | ((props: commandProps) => Commands[]);
-  hidden?: boolean;
   children?: ColumnProps[];
 }
 /* eslint-disable react/prefer-stateless-function,react/no-unused-prop-types */

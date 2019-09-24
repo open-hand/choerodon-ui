@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `<pro>Lov`: 新增 button 模式。
+- 💄 `<pro>Lov`: 多选 Lov 弹出窗中的 Table 能选中已有的值。
 - 💄 `<pro>Table`: 调整 advancedBar 的间距。
 - 💄 `<pro>Button`: 调整 Button 的高度为 .3rem。
 - 💄 `<pro>Modal`: 更新样式。

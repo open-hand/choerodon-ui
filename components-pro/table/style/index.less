@@ -110,6 +110,9 @@
     position: absolute;
     left: -1000rem;
     z-index: 1;
+    > * {
+      display: block;
+    }
   }
 
   &-body {
@@ -353,28 +356,26 @@
   }
 
   &-advanced-query-bar {
-    padding-top: 0.12rem;
+    padding: 0.12rem 0;
     &-container {
       border-top: 0.01rem solid @border-color-split;
     }
     > span {
-      margin-bottom: 0.12rem;
+      vertical-align: middle;
     }
     &-button {
       display: inline-block;
     }
     &-more-fields-panel {
-      padding: 0.12rem 0.2rem;
-      padding-top: 0;
-      padding-bottom: 0.04rem;
+      padding: 0 0.2rem 0.04rem 0.2rem;
 
       .more-field-container {
         margin-bottom: 0.04rem;
       }
       .more-field-label {
         display: inline-block;
-        color: rgba(0, 0, 0, 0.65);
         margin-bottom: 0.04rem;
+        color: rgba(0, 0, 0, 0.65);
       }
     }
     &-key-value-bar {

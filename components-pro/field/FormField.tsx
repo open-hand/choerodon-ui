@@ -727,9 +727,14 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   }
 
   getText(): ReactNode {
-    return this.isFocused && this.editable
-      ? this.processValue(this.getValue())
-      : this.processRenderer(this.getValue());
+    const text =
+      this.isFocused && this.editable
+        ? this.processValue(this.getValue())
+        : this.processRenderer(this.getValue());
+    if (text && !isArrayLike(text) && !isValidElement(text)) {
+      return text.toString();
+    }
+    return text;
   }
 
   processText(value?: ReactNode): ReactNode {

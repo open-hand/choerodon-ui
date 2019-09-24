@@ -1,7 +1,6 @@
-import { action, computed, get, observable, ObservableMap, runInAction, set } from 'mobx';
+import { action, computed, get, observable, ObservableMap, runInAction, set, toJS } from 'mobx';
 import { MomentInput } from 'moment';
 import isObject from 'lodash/isObject';
-import isEqual from 'lodash/isEqual';
 import merge from 'lodash/merge';
 import defer from 'lodash/defer';
 import { AxiosRequestConfig } from 'axios';
@@ -19,43 +18,7 @@ import Validity from '../validator/Validity';
 import ValidationResult from '../validator/ValidationResult';
 import { LovConfig } from '../lov/Lov';
 import { ValidatorProps } from '../validator/rules';
-
-function isValueDirty(name: string, record: Record): boolean {
-  const pristineValue = record.getPristineValue(name);
-  const value = record.get(name);
-  return !isEqual(pristineValue, value);
-}
-
-function setFieldDirty(field?: Field, dirty?: boolean) {
-  if (field) {
-    if (dirty) {
-      field.dirty = true;
-    } else {
-      const { record, name } = field;
-      if (record) {
-        if (!isValueDirty(name, record)) {
-          field.dirty = false;
-        }
-      } else {
-        field.dirty = false;
-      }
-    }
-  }
-}
-
-function getParentField(name: string, record?: Record): Field | undefined {
-  if (record) {
-    const parentFieldIndex = name.lastIndexOf('.');
-    if (parentFieldIndex > -1) {
-      const parentFieldName = name.slice(0, parentFieldIndex);
-      const parentField = record.getField(parentFieldName);
-      if (parentField) {
-        return parentField;
-      }
-      return getParentField(parentFieldName, record);
-    }
-  }
-}
+import isSame from '../_util/isSame';
 
 export type Fields = ObservableMap<string, Field>;
 
@@ -256,30 +219,7 @@ export default class Field {
 
   @observable props: FieldProps & { [key: string]: any };
 
-  @observable modified: boolean;
-
-  isDirtyComputing: boolean = false;
-
   isDynamicPropsComputing: boolean = false;
-
-  @computed
-  get bindTarget(): Field | undefined {
-    const { record } = this;
-    const bind = this.get('bind');
-    if (bind && record) {
-      return record.getField(bind);
-    }
-    return undefined;
-  }
-
-  @computed
-  get parent(): Field | undefined {
-    const { bindTarget, record, name } = this;
-    if (bindTarget) {
-      return bindTarget.parent;
-    }
-    return getParentField(name, record);
-  }
 
   @computed
   get intlFields(): Field[] {
@@ -299,42 +239,14 @@ export default class Field {
 
   @computed
   get dirty(): boolean {
-    if (this.modified) {
-      return true;
+    const { record, name, intlFields } = this;
+    if (intlFields.length) {
+      return intlFields.some(langField => langField.dirty);
     }
-    const { record, name } = this;
     if (record) {
-      try {
-        this.isDirtyComputing = true;
-        const { intlFields } = this;
-        if (intlFields.length) {
-          return intlFields.some(langField =>
-            !langField.isDirtyComputing ? langField.dirty : false,
-          );
-        }
-        const { bindTarget } = this;
-        if (bindTarget && !bindTarget.isDirtyComputing) {
-          return bindTarget.dirty;
-        }
-        const { parent } = this;
-        if (parent && parent !== this && !parent.isDirtyComputing) {
-          return parent.dirty && isValueDirty(bindTarget ? bindTarget.name : name, record);
-        }
-      } catch (e) {
-        warning(false, `Field#${name}; ${e.message}`);
-      } finally {
-        this.isDirtyComputing = false;
-      }
+      return !isSame(record.getPristineValue(name), toJS(record.get(name)));
     }
     return false;
-  }
-
-  set dirty(dirty: boolean) {
-    runInAction(() => {
-      setFieldDirty(this.bindTarget, dirty);
-      setFieldDirty(this.parent, dirty);
-      this.modified = dirty;
-    });
   }
 
   get name(): string {
@@ -384,7 +296,6 @@ export default class Field {
       this.record = record;
       this.pristineProps = props;
       this.props = props;
-      this.modified = false;
       this.fetchLookup();
       this.fetchLovConfig();
     });
@@ -556,7 +467,6 @@ export default class Field {
 
   @action
   commit(): void {
-    this.dirty = false;
     this.validator.reset();
   }
 

@@ -65,7 +65,6 @@ export interface LovProps extends SelectProps, ButtonProps {
   modalProps?: ModalProps;
   noCache?: boolean;
   mode?: ViewMode;
-  emptyText?: ReactNode;
 }
 
 @observer
@@ -77,7 +76,6 @@ export default class Lov extends Select<LovProps> {
     ...Button.propTypes,
     modalProps: PropTypes.object,
     noCache: PropTypes.bool,
-    emptyText: PropTypes.node,
   };
 
   static defaultProps = {
@@ -127,12 +125,21 @@ export default class Lov extends Select<LovProps> {
 
   private openModal = action(() => {
     const config = this.getConfig();
-    const { options } = this;
+    const { options, multiple, primitive, valueField } = this;
     const { modalProps, noCache } = this.props;
     if (!this.modal && config && options) {
       const { width, title } = config;
       options.unSelectAll();
       options.clearCachedSelected();
+      if (multiple) {
+        options.setCachedSelected(
+          this.getValues().map(value => {
+            const selected = new Record(primitive ? { [valueField]: value } : toJS(value), options);
+            selected.isSelected = true;
+            return selected;
+          }),
+        );
+      }
       this.modal = open({
         title,
         children: (
@@ -157,6 +164,8 @@ export default class Lov extends Select<LovProps> {
       } as ModalProps & { children });
       if (this.resetOptions() || noCache) {
         options.query();
+      } else if (multiple) {
+        options.releaseCachedSelected();
       }
     }
   });
@@ -195,9 +204,11 @@ export default class Lov extends Select<LovProps> {
   resetOptions(): boolean {
     const { field, record, options } = this;
     const { queryDataSet } = options;
+    let dirty = false;
     if (queryDataSet) {
       const { current } = queryDataSet;
-      if (current) {
+      if (current && current.dirty) {
+        dirty = true;
         current.reset();
       }
     }
@@ -214,11 +225,11 @@ export default class Lov extends Select<LovProps> {
         return true;
       }
       options.first();
-      if (!options.length || options.isFilteredByQueryFields) {
+      if (!options.length) {
         return true;
       }
     }
-    return false;
+    return dirty;
   }
 
   setText(text) {
@@ -274,7 +285,7 @@ export default class Lov extends Select<LovProps> {
     const { className, type } = this.props;
     const props = {
       ...Button.defaultProps,
-      ...omit(this.getOtherProps(), ['name', 'emptyText']),
+      ...omit(this.getOtherProps(), ['name']),
       className,
       type,
     };
@@ -307,7 +318,7 @@ export default class Lov extends Select<LovProps> {
   }
 
   renderWrapper(): ReactNode {
-    const { mode, children, emptyText, clearButton } = this.props;
+    const { mode, children, clearButton } = this.props;
     if (mode === ViewMode.button) {
       const elements = [
         <Button
@@ -316,7 +327,7 @@ export default class Lov extends Select<LovProps> {
           disabled={this.isDisabled()}
           onClick={this.openModal}
         >
-          {children || this.getText() || emptyText || $l('Lov', 'choose')}
+          {children || this.getText() || this.getPlaceholders()[0] || $l('Lov', 'choose')}
         </Button>,
       ];
       if (clearButton) {

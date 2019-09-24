@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `<pro>Lov`: Added button mode.
+- 💄 `<pro>Lov`: In the multiple Lov's pop-up window, the the existing value will be selected.
 - 💄 `<pro>Table`: Adjust the spacing of the advancedBar.
 - 💄 `<pro>Button`: Adjust height of Button to .3rem.
 - 💄 `<pro>Modal`: Update the style.

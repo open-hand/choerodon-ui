@@ -237,8 +237,8 @@ export default class Record {
 
   @computed
   get dirty(): boolean {
-    const { fields } = this;
-    return [...fields.values()].some(({ dirty }) => dirty);
+    const { fields, status } = this;
+    return status === RecordStatus.update || [...fields.values()].some(({ dirty }) => dirty);
   }
 
   @computed
@@ -375,13 +375,11 @@ export default class Record {
     if (isString(item)) {
       let fieldName: string = item;
       const oldName = fieldName;
-      const field = this.getField(fieldName);
-      if (field) {
-        checkFieldType(value, field);
-        const bind = field.get('bind');
-        if (bind) {
-          fieldName = bind;
-        }
+      const field = this.getField(fieldName) || this.addField(fieldName);
+      checkFieldType(value, field);
+      const bind = field.get('bind');
+      if (bind) {
+        fieldName = bind;
       }
       const oldValue = toJS(this.get(fieldName));
       const newValue = processValue(value, field);
@@ -390,19 +388,11 @@ export default class Record {
         ObjectChainValue.set(this.data, fieldName, newValue, fields);
         const pristineValue = this.getPristineValue(fieldName);
         if (isSame(pristineValue, newValue)) {
-          if (field && field.dirty) {
-            field.dirty = false;
-            if (this.status === RecordStatus.update && [...fields.values()].every(f => !f.dirty)) {
-              this.status = RecordStatus.sync;
-            }
+          if (this.status === RecordStatus.update && [...fields.values()].every(f => !f.dirty)) {
+            this.status = RecordStatus.sync;
           }
-        } else {
-          if (field) {
-            field.dirty = true;
-          }
-          if (this.status === RecordStatus.sync) {
-            this.status = RecordStatus.update;
-          }
+        } else if (this.status === RecordStatus.sync) {
+          this.status = RecordStatus.update;
         }
         const { dataSet } = this;
         if (dataSet) {
@@ -422,13 +412,11 @@ export default class Record {
           }
         }
       }
-      if (field) {
-        findBindFields(field, this.fields).forEach(oneField => {
-          // oneField.dirty = field.dirty,
-          oneField.validator.reset();
-          oneField.checkValidity();
-        });
-      }
+      findBindFields(field, this.fields).forEach(oneField => {
+        // oneField.dirty = field.dirty,
+        oneField.validator.reset();
+        oneField.checkValidity();
+      });
     } else if (isPlainObject(item)) {
       Object.keys(item).forEach(key => this.set(key, item[key]));
     }
@@ -458,19 +446,6 @@ export default class Record {
       return this.ready();
     }
     return result;
-  }
-
-  mergeLocaleData(record) {
-    const { dataSet } = this;
-    if (record && dataSet) {
-      const { lang = localeContext.locale.lang } = dataSet;
-      Object.keys(record).forEach(name => {
-        const field = this.getField(name);
-        if (field && field.dirty) {
-          record[name][lang] = this.get(name);
-        }
-      });
-    }
   }
 
   @action

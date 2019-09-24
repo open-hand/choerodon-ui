@@ -7,9 +7,8 @@
 .@{btn-prefix-cls} {
   position: relative;
   display: inline-block;
+  height: @btn-height-base;
   padding: @btn-padding-base;
-  padding-top: @btn-padding-top;
-  padding-bottom: @btn-padding-bottom;
   line-height: @btn-line-height;
   text-align: center;
   vertical-align: middle;
@@ -41,16 +40,20 @@
   }
 
   &-lg {
-    padding: 0.07rem 0.12rem;
+    height: @btn-height-lg;
+    padding: @btn-height-lg;
     font-size: @font-size-lg;
+
     .@{c7n-pro-prefix}-icon {
       font-size: @font-size-lg;
     }
   }
 
   &-sm {
-    padding: 0 0.08rem;
+    height: @btn-height-sm;
+    padding: @btn-padding-sm;
     font-size: @font-size-sm;
+
     .@{c7n-pro-prefix}-icon {
       font-size: @font-size-sm;
     }
@@ -59,15 +62,18 @@
   &-flat {
     background: transparent;
     box-shadow: none;
+
     &:enabled:hover,
     &:enabled:focus {
       background-color: @btn-hover-default-color;
       box-shadow: none;
     }
+
     &:enabled:active {
       box-shadow: none;
     }
   }
+
   &-raised,
   &-raised:disabled {
     color: #fff;
@@ -79,6 +85,7 @@
 
   &:disabled {
     cursor: not-allowed;
+
     &::before {
       position: absolute;
       top: -0.01rem;
@@ -99,14 +106,17 @@
   &-primary {
     &.@{btn-prefix-cls}-raised {
       background-color: @primary-color;
+
       &:enabled:hover,
       &:enabled:focus {
         background-color: @primary-7;
       }
+
       .@{c7n-pro-prefix}-ripple {
         background-color: @ripple-light-color;
       }
     }
+
     &.@{btn-prefix-cls}-flat {
       color: @primary-color;
 
@@ -121,14 +131,17 @@
     &.@{btn-prefix-cls}-raised {
       color: @btn-default-color;
       background-color: #f5f5f5;
+
       &:enabled:hover,
       &:enabled:focus {
         background-color: #e6e6e6;
       }
+
       &:disabled {
         color: @disabled-color;
       }
     }
+
     &.@{btn-prefix-cls}-flat {
       color: #d0d0d0;
 
@@ -142,14 +155,17 @@
   &-blue {
     &.@{btn-prefix-cls}-raised {
       background-color: @blue-6;
+
       &:enabled:hover,
       &:enabled:focus {
         background-color: @blue-7;
       }
+
       .@{c7n-pro-prefix}-ripple {
         background-color: @ripple-light-color;
       }
     }
+
     &.@{btn-prefix-cls}-flat {
       color: @blue-6;
 
@@ -163,14 +179,17 @@
   &-green {
     &.@{btn-prefix-cls}-raised {
       background-color: @green-6;
+
       &:enabled:hover,
       &:enabled:focus {
         background-color: @green-7;
       }
+
       .@{c7n-pro-prefix}-ripple {
         background-color: @ripple-light-color;
       }
     }
+
     &.@{btn-prefix-cls}-flat {
       color: @green-6;
 
@@ -184,14 +203,17 @@
   &-red {
     &.@{btn-prefix-cls}-raised {
       background-color: @red-6;
+
       &:enabled:hover,
       &:enabled:focus {
         background-color: @red-7;
       }
+
       .@{c7n-pro-prefix}-ripple {
         background-color: @ripple-light-color;
       }
     }
+
     &.@{btn-prefix-cls}-flat {
       color: @red-6;
 
@@ -205,14 +227,17 @@
   &-yellow {
     &.@{btn-prefix-cls}-raised {
       background-color: @yellow-6;
+
       &:enabled:hover,
       &:enabled:focus {
         background-color: @yellow-7;
       }
+
       .@{c7n-pro-prefix}-ripple {
         background-color: @ripple-light-color;
       }
     }
+
     &.@{btn-prefix-cls}-flat {
       color: @yellow-6;
 
@@ -226,14 +251,17 @@
   &-purple {
     &.@{btn-prefix-cls}-raised {
       background-color: @purple-6;
+
       &:enabled:hover,
       &:enabled:focus {
         background-color: @purple-7;
       }
+
       .@{c7n-pro-prefix}-ripple {
         background-color: @ripple-light-color;
       }
     }
+
     &.@{btn-prefix-cls}-flat {
       color: @purple-6;
 
@@ -247,14 +275,17 @@
   &-dark {
     &.@{btn-prefix-cls}-raised {
       background-color: @dark-4;
+
       &:enabled:hover,
       &:enabled:focus {
         background-color: @dark-5;
       }
+
       .@{c7n-pro-prefix}-ripple {
         background-color: @ripple-light-color;
       }
     }
+
     &.@{btn-prefix-cls}-flat {
       color: @dark-6;
 
@@ -266,15 +297,19 @@
 
   &-default {
     color: @btn-default-color;
+
     .@{progress-cls} circle {
       stroke: @btn-default-color;
     }
+
     &.@{btn-prefix-cls}-raised:disabled {
       color: @disabled-color;
+
       .@{progress-cls} circle {
         stroke: @disabled-color;
       }
     }
+
     &:focus {
       color: @primary-color;
     }
@@ -285,27 +320,33 @@
     height: @btn-circle-size;
     padding: 0;
     border-radius: 50%;
+
     > .@{iconfont-css-prefix} {
       margin-right: 0;
       font-size: @btn-icon-size + 0.06rem;
       line-height: 1.5;
     }
+
     &.@{btn-prefix-cls}-sm {
       width: @btn-circle-size-sm;
       height: @btn-circle-size-sm;
       padding: 0;
+
       > .@{iconfont-css-prefix} {
         font-size: @btn-icon-size;
       }
     }
+
     &.@{btn-prefix-cls}-lg {
       width: @btn-circle-size-lg;
       height: @btn-circle-size-lg;
       padding: 0;
+
       > .@{iconfont-css-prefix} {
         font-size: @btn-icon-size + 0.1rem;
       }
     }
+
     &:disabled::before {
       opacity: 0.5;
     }
@@ -318,6 +359,7 @@
     & + span {
       margin-left: 0.05rem;
     }
+
     .@{progress-cls}-inner {
       width: 0.15rem;
       height: 0.15rem;

@@ -19,6 +19,7 @@ import {
   Table,
   TextField,
   NumberField,
+  DateTimePicker,
   SelectBox,
   Modal,
   Button,
@@ -371,7 +372,7 @@ class App extends React.Component {
   };
 
   renderEdit = () => {
-    return <Button funcType="flat" icon="mode_edit" onClick={this.editUser} />;
+    return <Button funcType="flat" icon="mode_edit" onClick={this.editUser} size="small" />;
   };
 
   copyButton = (
@@ -465,6 +466,7 @@ class App extends React.Component {
         <Column name="accountMultiple" editor width={150} />
         <Column name="date.startDate" editor width={150} />
         <Column name="date.endDate" editor width={150} />
+        <Column header="时间" name="time" editor={<DateTimePicker />} width={150} />
         <Column name="numberMultiple" editor width={150} minWidth={50} />
         <Column name="frozen" editor width={50} minWidth={50} lock="right" />
         <Column

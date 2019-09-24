@@ -399,13 +399,11 @@ export default class TableCell extends Component<TableCellProps> {
     };
     const classString = classNames(
       cellPrefix,
-      field
-        ? {
-            [`${cellPrefix}-dirty`]: !pristine && field.dirty,
-            [`${cellPrefix}-required`]: !inlineEdit && field.required,
-            [`${cellPrefix}-editable`]: !inlineEdit && this.hasEditor,
-          }
-        : undefined,
+      {
+        [`${cellPrefix}-dirty`]: field && !pristine && field.dirty,
+        [`${cellPrefix}-required`]: field && !inlineEdit && field.required,
+        [`${cellPrefix}-editable`]: !inlineEdit && this.hasEditor,
+      },
       className,
       cellExternalProps.className,
     );

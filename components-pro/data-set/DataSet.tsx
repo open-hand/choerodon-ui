@@ -13,6 +13,7 @@ import axiosStatic, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import isNumber from 'lodash/isNumber';
 import isArray from 'lodash/isArray';
 import isObject from 'lodash/isObject';
+import isNil from 'lodash/isNil';
 import flatMap from 'lodash/flatMap';
 import defer from 'lodash/defer';
 import debounce from 'lodash/debounce';
@@ -224,8 +225,6 @@ export default class DataSet extends EventManager {
   queryParameter: object;
 
   pending?: Promise<any>;
-
-  isFilteredByQueryFields: boolean = false;
 
   reaction: IReactionDisposer;
 
@@ -815,7 +814,8 @@ export default class DataSet extends EventManager {
         }
       }
     }
-    return Promise.reject(new Error('locate canceled'));
+    warning(false, 'Located index of Record is out of boundary.');
+    return Promise.resolve(undefined);
   }
 
   /**
@@ -1298,9 +1298,13 @@ export default class DataSet extends EventManager {
     }
   }
 
-  @action
   clearCachedSelected(): void {
-    this.cachedSelected = [];
+    this.setCachedSelected([]);
+  }
+
+  @action
+  setCachedSelected(cachedSelected: Record[]): void {
+    this.cachedSelected = cachedSelected;
   }
 
   /**
@@ -1463,7 +1467,11 @@ Then the query method will be auto invoke.`,
    * @param {any} value 参数值.
    */
   setQueryParameter(para: string, value: any) {
-    this.queryParameter[para] = value;
+    if (isNil(value)) {
+      delete this.queryParameter[para];
+    } else {
+      this.queryParameter[para] = value;
+    }
   }
 
   @action
@@ -1679,19 +1687,19 @@ Then the query method will be auto invoke.`,
   @action
   private storeSelected() {
     if (this.cacheSelectionKeys) {
-      this.cachedSelected = [
+      this.setCachedSelected([
         ...this.cachedSelected.filter(record => record.isSelected),
         ...this.currentSelected.map(record => {
           record.isCurrent = false;
           record.isCached = true;
           return record;
         }),
-      ];
+      ]);
     }
   }
 
   @action
-  private releaseCachedSelected() {
+  releaseCachedSelected() {
     const { cacheSelectionKeys, cachedSelected } = this;
     if (cacheSelectionKeys) {
       this.data.forEach(record => {
@@ -1911,12 +1919,10 @@ Then the query method will be auto invoke.`,
       }
     }
     let data: any = {};
-    this.isFilteredByQueryFields = false;
     if (queryDataSet) {
       const { current } = queryDataSet;
       if (current) {
         data = current.toJSONData();
-        this.isFilteredByQueryFields = data.__dirty;
         delete data.__dirty;
         delete data.__id;
         delete data[getConfig('statusKey')];
