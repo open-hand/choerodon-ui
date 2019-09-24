@@ -1,9 +1,9 @@
 import isObject from 'lodash/isObject';
 import isNil from 'lodash/isNil';
 import { isArrayLike } from 'mobx';
-import { FieldType } from 'choerodon-ui/pro/lib/data-set/enum';
-import Constants from 'choerodon-ui/pro/lib/data-set/Constants';
-import Field from 'choerodon-ui/pro/lib/data-set/Field';
+import { FieldType } from '../data-set/enum';
+import Constants from '../data-set/Constants';
+import Field from '../data-set/Field';
 
 export function toRangeValue(value: any, range?: boolean | [string, string]): [any, any] {
   if (isArrayLike(range)) {

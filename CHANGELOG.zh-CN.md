@@ -22,6 +22,7 @@ timeline: true
 - 💄 `<pro>Modal`: 更新样式。
 - 🐞 `<pro>Table`: 修复隐藏列造成的问题。
 - 🐞 `<pro>Table`: 修复锁定列编辑器不显示的问题。
+- 🐞 `<pro>Table`: 修复切换 DataSet 后查询条值变更不会自动查询的问题。
 - 🐞 `<pro>CodeArea`: 修复不受控的问题。
 - 🐞 `<pro>NumberField`: 修复精度问题。
 - 🐞 修复循环依赖的问题。

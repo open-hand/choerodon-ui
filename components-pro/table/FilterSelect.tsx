@@ -62,14 +62,14 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
 
   @computed
   get value(): any | undefined {
-    const { value } = this.observableProps;
+    const {
+      value,
+      optionDataSet: { queryDataSet },
+    } = this.observableProps;
     if (value) {
       return value;
     }
-    const {
-      optionDataSet: { queryDataSet },
-      paramName,
-    } = this.props;
+    const { paramName } = this.props;
     if (queryDataSet) {
       const { current } = queryDataSet;
       if (current) {
@@ -105,9 +105,16 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
 
   constructor(props, context) {
     super(props, context);
-    const { optionDataSet } = props;
-    this.on(optionDataSet.queryDataSet);
-    this.reaction = reaction(() => optionDataSet.queryDataSet, this.on);
+    const { observableProps } = this;
+    this.on(observableProps.optionDataSet.queryDataSet);
+    this.reaction = reaction(() => observableProps.optionDataSet.queryDataSet, this.on);
+  }
+
+  getObservableProps(props, context: any) {
+    return {
+      ...super.getObservableProps(props, context),
+      optionDataSet: props.optionDataSet,
+    };
   }
 
   on(ds?: DataSet) {
@@ -156,10 +163,10 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
 
   @autobind
   defaultRenderer({ value, repeat = 0 }: RenderProps) {
+    const { paramName } = this.props;
     const {
       optionDataSet: { queryDataSet },
-      paramName,
-    } = this.props;
+    } = this.observableProps;
     if (queryDataSet) {
       const { current } = queryDataSet;
       if (current) {
@@ -186,7 +193,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
   getQueryRecord(): Record | undefined {
     const {
       optionDataSet: { queryDataSet },
-    } = this.props;
+    } = this.observableProps;
     if (queryDataSet) {
       return queryDataSet.current;
     }
@@ -195,7 +202,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
   getQueryField(fieldName): Field | undefined {
     const {
       optionDataSet: { queryDataSet },
-    } = this.props;
+    } = this.observableProps;
     if (queryDataSet) {
       return queryDataSet.getField(fieldName);
     }
@@ -259,7 +266,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
       values.push(name);
       this.setValue(values);
     }
-    this.props.optionDataSet.query();
+    this.observableProps.optionDataSet.query();
   }
 
   @autobind
@@ -362,7 +369,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
     const {
       optionDataSet,
       optionDataSet: { fields },
-    } = this.props;
+    } = this.observableProps;
     const values: Set<string> = new Set<string>();
     optionDataSet.forEach(record => {
       [...fields.keys()].forEach(key => {
@@ -380,12 +387,10 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
   }
 
   getFieldSelectOptions(): ReactElement<OptionProps>[] {
+    const { paramName } = this.props;
     const {
-      props: {
-        optionDataSet: { queryDataSet },
-        paramName,
-      },
-    } = this;
+      optionDataSet: { queryDataSet },
+    } = this.observableProps;
     const data: ReactElement<OptionProps>[] = [];
     if (queryDataSet) {
       [...queryDataSet.fields.entries()].forEach(([key, field]) => {
