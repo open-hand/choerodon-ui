@@ -21,6 +21,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复隐藏列造成的问题。
 - 🐞 `<pro>Table`: 修复锁定列编辑器不显示的问题。
 - 🐞 `<pro>CodeArea`: 修复不受控的问题。
+- 🐞 `<pro>NumberField`: 修复精度问题。
 - 🐞 修复循环依赖的问题。
 
 ## 0.8.11

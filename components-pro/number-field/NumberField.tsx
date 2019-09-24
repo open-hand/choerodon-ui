@@ -10,7 +10,7 @@ import { TextField, TextFieldProps } from '../text-field/TextField';
 import autobind from '../_util/autobind';
 import keepRunning from '../_util/keepRunning';
 import Icon from '../icon';
-import { formatNumber, getNearStepValues, MAX_SAFE_INTEGER, plus } from './utils';
+import { formatNumber, getNearStepValues, getPrecision, MAX_SAFE_INTEGER, plus } from './utils';
 import { ValidationMessages } from '../validator/Validator';
 import isEmpty from '../_util/isEmpty';
 import { $l } from '../locale-context';
@@ -253,15 +253,19 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
   }
 
   getFormatOptions(): Intl.NumberFormatOptions | undefined {
-    return undefined;
+    const precision = getPrecision(this.getValue() || 0);
+    return {
+      minimumFractionDigits: precision,
+      maximumFractionDigits: precision,
+    };
   }
 
   getFormatter() {
     return formatNumber;
   }
 
-  processValue(value) {
-    return this.getFormatter()(super.processValue(value), this.lang, this.getFormatOptions());
+  processText(value: ReactNode): ReactNode {
+    return this.getFormatter()(value, this.lang, this.getFormatOptions());
   }
 }
 

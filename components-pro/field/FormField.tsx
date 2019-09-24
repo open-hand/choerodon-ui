@@ -732,13 +732,17 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       : this.processRenderer(this.getValue());
   }
 
+  processText(value?: ReactNode): ReactNode {
+    return value;
+  }
+
   processRenderer(value?: any, repeat?: number): ReactNode {
     const {
       record,
       dataSet,
       props: { renderer = this.defaultRenderer, name, maxTagTextLength },
     } = this;
-    const text = this.processValue(value);
+    const text = this.processText(this.processValue(value));
     return renderer
       ? renderer({
           value,

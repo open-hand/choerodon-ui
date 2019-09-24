@@ -3,7 +3,7 @@ import normalizeLanguage from '../_util/normalizeLanguage';
 
 export const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER || 2 ** 53 - 1;
 
-function getPrecision(value: number): number {
+export function getPrecision(value: number): number {
   const valueString = value.toString();
   if (valueString.indexOf('e-') >= 0) {
     return parseInt(valueString.slice(valueString.indexOf('e-') + 2), 10);

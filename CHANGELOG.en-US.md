@@ -21,6 +21,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix problems caused by hidden columns.
 - 🐞 `<pro>Table`: Fixed an issue where the locked column editor did not display.
 - 🐞 `<pro>CodeArea`: Fix uncontrolled problems.
+- 🐞 `<pro>NumberField`: Fix the accuracy problem.
 - 🐞 Fix circular dependencies problems.
 
 ## 0.8.11
