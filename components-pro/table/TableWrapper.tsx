@@ -71,7 +71,8 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
         );
       default:
         return tableStore.leafColumns.filter(
-          ({ editor, name, hidden, lock: columnLock }) => editor && name && !columnLock && !hidden,
+          ({ editor, name, hidden, lock: columnLock }) =>
+            editor && name && !hidden && (!columnLock || !tableStore.overflowX),
         );
     }
   }
