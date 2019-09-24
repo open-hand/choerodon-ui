@@ -7,7 +7,6 @@ import isObject from 'lodash/isObject';
 import isString from 'lodash/isString';
 import isArray from 'lodash/isArray';
 import isNumber from 'lodash/isNumber';
-import isEqual from 'lodash/isEqual';
 import warning from 'choerodon-ui/lib/_util/warning';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import Field, { FieldProps, Fields } from './Field';
@@ -18,7 +17,8 @@ import Constants from './Constants';
 import isEmpty from '../_util/isEmpty';
 import * as ObjectChainValue from '../_util/ObjectChainValue';
 import localeContext, { $l } from '../locale-context';
-import Transport, { TransportType } from './Transport';
+import Transport from './Transport';
+import axiosAdapter from '../_util/axiosAdapter';
 
 export function append(url: string, suffix?: object) {
   if (suffix) {
@@ -161,15 +161,6 @@ export function checkParentByInsert({ parent }: DataSet) {
   }
 }
 
-export function isSame(newValue, oldValue) {
-  return (isEmpty(newValue) && isEmpty(oldValue)) || isEqual(newValue, oldValue);
-}
-
-export function isSameLike(newValue, oldValue) {
-  /* eslint-disable-next-line */
-  return isSame(newValue, oldValue) || newValue == oldValue;
-}
-
 function getBaseType(type: FieldType): FieldType {
   switch (type) {
     case FieldType.dateTime:
@@ -252,15 +243,6 @@ export function doExport(url, data, method = 'post') {
   document.body.removeChild(form);
 }
 
-export function findBindFieldBy(myField: Field, fields: Fields, prop: string): Field | undefined {
-  const value = myField.get(prop);
-  const myName = myField.name;
-  return [...fields.values()].find(field => {
-    const bind = field.get('bind');
-    return bind && bind === `${myName}.${value}`;
-  });
-}
-
 export function findBindFields(myField: Field, fields: Fields): Field[] {
   const myName = myField.name;
   const myBind = myField.get('bind');
@@ -303,35 +285,6 @@ export function getFieldSorter(field: Field) {
         ? (a, b) => stringSorter(a.get(name), b.get(name))
         : (a, b) => stringSorter(b.get(name), a.get(name));
   }
-}
-
-export function getDateFormatByFieldType(type: FieldType) {
-  switch (type) {
-    case FieldType.date:
-      return Constants.DATE_FORMAT;
-    case FieldType.dateTime:
-      return Constants.DATE_TIME_FORMAT;
-    case FieldType.week:
-      return Constants.WEEK_FORMAT;
-    case FieldType.month:
-      return Constants.MONTH_FORMAT;
-    case FieldType.year:
-      return Constants.YEAR_FORMAT;
-    case FieldType.time:
-      return Constants.TIME_FORMAT;
-    default:
-      return Constants.DATE_FORMAT;
-  }
-}
-
-export function getDateFormatByField(field?: Field, type?: FieldType): string {
-  if (field) {
-    return field.get('format') || getDateFormatByFieldType(type || field.type);
-  }
-  if (type) {
-    return getDateFormatByFieldType(type);
-  }
-  return Constants.DATE_JSON_FORMAT;
 }
 
 export function generateJSONData(
@@ -379,34 +332,6 @@ export function prepareSubmitData(
 }
 
 type SubmitType = 'create' | 'update' | 'destroy' | 'submit';
-
-export function axiosAdapter(
-  config: TransportType,
-  dataSet: DataSet,
-  data?: any,
-  params?: any,
-): AxiosRequestConfig {
-  const newConfig: AxiosRequestConfig = {
-    data,
-    params,
-    method: 'post',
-  };
-  if (isString(config)) {
-    newConfig.url = config;
-  } else if (config) {
-    Object.assign(
-      newConfig,
-      typeof config === 'function' ? config({ data, dataSet, params }) : config,
-    );
-  }
-  if (newConfig.data && newConfig.method && newConfig.method.toLowerCase() === 'get') {
-    newConfig.params = {
-      ...newConfig.params,
-      ...newConfig.data,
-    };
-  }
-  return newConfig;
-}
 
 export function prepareForSubmit(
   type: SubmitType,

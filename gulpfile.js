@@ -10,10 +10,12 @@ const ts = require('gulp-typescript');
 const gulp = require('gulp');
 const rimraf = require('rimraf');
 const stripCode = require('gulp-strip-code');
+const sourcemaps = require('gulp-sourcemaps');
 const runCmd = require('./tools/runCmd');
 const getBabelCommonConfig = require('./tools/getBabelCommonConfig');
 const transformLess = require('./tools/transformLess');
 const getNpmArgs = require('./tools/utils/get-npm-args');
+const { cssInjection } = require('./tools/utils/styleUtil');
 const tsConfig = require('./tools/getTSCommonConfig')();
 const replaceLib = require('./tools/replaceLib');
 
@@ -83,22 +85,24 @@ function babelify(js, modules) {
   if (modules === false) {
     babelConfig.plugins.push(replaceLib);
   }
-  let stream = js.pipe(babel(babelConfig)).pipe(
-    through2.obj(function z(file, encoding, next) {
-      this.push(file.clone());
-      if (file.path.match(/[/\\]style[/\\]index\.js/)) {
-        const content = file.contents.toString(encoding);
-        file.contents = Buffer.from(
-          content.replace(/\/style\/?'/g, "/style/css'").replace(/\.less/g, '.css'),
-        );
-        file.path = file.path.replace(/index\.js/, 'css.js');
-        this.push(file);
-        next();
-      } else {
-        next();
-      }
-    }),
-  );
+  let stream = js
+    .pipe(sourcemaps.init())
+    .pipe(babel(babelConfig))
+    .pipe(
+      through2.obj(function z(file, encoding, next) {
+        this.push(file.clone());
+        if (file.path.match(/[/\\]style[/\\]index\.js/)) {
+          const content = file.contents.toString(encoding);
+          file.contents = Buffer.from(cssInjection(content));
+          file.path = file.path.replace(/index\.js/, 'css.js');
+          this.push(file);
+          next();
+        } else {
+          next();
+        }
+      }),
+    )
+    .pipe(sourcemaps.write('.'));
   if (modules === false) {
     stream = stream.pipe(
       stripCode({

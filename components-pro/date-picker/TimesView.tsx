@@ -7,8 +7,8 @@ import autobind from '../_util/autobind';
 import { TimeUnit, ViewMode } from './enum';
 import DaysView, { alwaysValidDate } from './DaysView';
 import { FieldType } from '../data-set/enum';
-import { getDateFormatByFieldType } from '../data-set/utils';
 import { $l } from '../locale-context';
+import { getDateFormatByFieldType } from '../field/utils';
 
 const TimeUnitQueue: unitOfTime.Base[] = [TimeUnit.hour, TimeUnit.minute, TimeUnit.second];
 

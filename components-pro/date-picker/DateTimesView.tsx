@@ -6,8 +6,8 @@ import TimesView from './TimesView';
 import autobind from '../_util/autobind';
 import { ViewMode } from './enum';
 import { FieldType } from '../data-set/enum';
-import { getDateFormatByFieldType } from '../data-set/utils';
 import { $l } from '../locale-context';
+import { getDateFormatByFieldType } from '../field/utils';
 
 export default class DateTimesView extends DaysView implements DatePickerKeyboardEvent {
   static displayName = 'DateTimesView';
@@ -40,16 +40,16 @@ export default class DateTimesView extends DaysView implements DatePickerKeyboar
   }
 
   renderFooter(): ReactNode {
-    const { prefixCls, props: { date } } = this;
+    const {
+      prefixCls,
+      props: { date },
+    } = this;
     return (
       <div className={`${prefixCls}-footer`}>
         <a className={`${prefixCls}-footer-now-btn`} onClick={this.choose.bind(this, moment())}>
           {$l('DatePicker', 'now')}
         </a>
-        <a
-          className={`${prefixCls}-footer-view-select`}
-          onClick={this.handleTimeSelect}
-        >
+        <a className={`${prefixCls}-footer-view-select`} onClick={this.handleTimeSelect}>
           {date.format(getDateFormatByFieldType(TimesView.type))}
         </a>
       </div>

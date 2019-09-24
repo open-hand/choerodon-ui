@@ -1,6 +1,9 @@
 import isObject from 'lodash/isObject';
 import isNil from 'lodash/isNil';
 import { isArrayLike } from 'mobx';
+import { FieldType } from 'choerodon-ui/pro/lib/data-set/enum';
+import Constants from 'choerodon-ui/pro/lib/data-set/Constants';
+import Field from 'choerodon-ui/pro/lib/data-set/Field';
 
 export function toRangeValue(value: any, range?: boolean | [string, string]): [any, any] {
   if (isArrayLike(range)) {
@@ -34,4 +37,33 @@ export function toMultipleValue(value: any, range?: boolean | [string, string]) 
     return multipleValue;
   }
   return [];
+}
+
+export function getDateFormatByFieldType(type: FieldType) {
+  switch (type) {
+    case FieldType.date:
+      return Constants.DATE_FORMAT;
+    case FieldType.dateTime:
+      return Constants.DATE_TIME_FORMAT;
+    case FieldType.week:
+      return Constants.WEEK_FORMAT;
+    case FieldType.month:
+      return Constants.MONTH_FORMAT;
+    case FieldType.year:
+      return Constants.YEAR_FORMAT;
+    case FieldType.time:
+      return Constants.TIME_FORMAT;
+    default:
+      return Constants.DATE_FORMAT;
+  }
+}
+
+export function getDateFormatByField(field?: Field, type?: FieldType): string {
+  if (field) {
+    return field.get('format') || getDateFormatByFieldType(type || field.type);
+  }
+  if (type) {
+    return getDateFormatByFieldType(type);
+  }
+  return Constants.DATE_JSON_FORMAT;
 }

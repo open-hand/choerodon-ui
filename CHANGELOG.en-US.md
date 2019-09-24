@@ -20,6 +20,7 @@ timeline: true
 - 💄 `<pro>Modal`: Update the style.
 - 🐞 `<pro>Table`: Fix problems caused by hidden columns.
 - 🐞 `<pro>CodeArea`: Fix uncontrolled problems.
+- 🐞 Fix circular dependencies problems.
 
 ## 0.8.11
 

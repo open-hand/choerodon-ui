@@ -32,8 +32,8 @@ import { getEditorByField } from './utils';
 import ObserverSelect, { SelectProps } from '../select/Select';
 import processFieldValue from '../_util/processFieldValue';
 import lookupStore from '../stores/LookupCodeStore';
-import { isSameLike } from '../data-set/utils';
 import Option, { OptionProps } from '../option/Option';
+import isSameLike from '../_util/isSameLike';
 
 export interface FilterSelectProps extends TextFieldProps {
   paramName?: string;

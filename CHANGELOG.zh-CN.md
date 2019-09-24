@@ -20,6 +20,7 @@ timeline: true
 - 💄 `<pro>Modal`: 更新样式。
 - 🐞 `<pro>Table`: 修复隐藏列造成的问题。
 - 🐞 `<pro>CodeArea`: 修复不受控的问题。
+- 🐞 修复循环依赖的问题。
 
 ## 0.8.11
 

@@ -23,10 +23,8 @@ import axios from '../axios';
 import Record from './Record';
 import Field, { FieldProps, Fields } from './Field';
 import {
-  axiosAdapter,
   checkParentByInsert,
   doExport,
-  findBindFieldBy,
   generateJSONData,
   generateResponseData,
   getFieldSorter,
@@ -37,6 +35,7 @@ import {
   processIntlField,
   sortTree,
 } from './utils';
+import findBindFieldBy from '../_util/findBindFieldBy';
 import EventManager from '../_util/EventManager';
 import DataSetSnapshot from './DataSetSnapshot';
 import confirm from '../modal/confirm';
@@ -52,6 +51,7 @@ import { Lang } from '../locale-context/enum';
 import isEmpty from '../_util/isEmpty';
 import * as ObjectChainValue from '../_util/ObjectChainValue';
 import Transport, { TransportProps } from './Transport';
+import axiosAdapter from '../_util/axiosAdapter';
 
 export type DataSetChildren = { [key: string]: DataSet };
 

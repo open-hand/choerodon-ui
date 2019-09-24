@@ -1,6 +1,6 @@
 'use strict';
-const { resolve } = require('./utils/projectHelper');
 const runtimeVersion = require('@babel/runtime/package.json').version;
+const { resolve } = require('./utils/projectHelper');
 
 module.exports = function(modules) {
   const plugins = [
@@ -10,12 +10,12 @@ module.exports = function(modules) {
         isTSX: true,
       },
     ],
-    resolve('babel-plugin-inline-import-data-uri'),
+    // resolve('babel-plugin-inline-import-data-uri'),
     resolve('@babel/plugin-transform-member-expression-literals'),
     resolve('@babel/plugin-transform-object-assign'),
     resolve('@babel/plugin-transform-property-literals'),
     [resolve('@babel/plugin-transform-runtime'), { version: runtimeVersion }],
-    // resolve('@babel/plugin-transform-spread'),
+    resolve('@babel/plugin-transform-spread'),
     resolve('@babel/plugin-transform-template-literals'),
     resolve('@babel/plugin-proposal-export-default-from'),
     resolve('@babel/plugin-proposal-export-namespace-from'),

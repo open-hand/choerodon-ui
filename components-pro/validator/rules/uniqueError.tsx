@@ -5,7 +5,7 @@ import { $l } from '../../locale-context';
 import isEmpty from '../../_util/isEmpty';
 import Field from '../../data-set/Field';
 import { methodReturn } from '.';
-import { axiosAdapter } from '../../data-set/utils';
+import axiosAdapter from '../../_util/axiosAdapter';
 
 const reportOtherField = action(
   ({ validator, validator: { validity } }: Field, invalid: boolean) => {

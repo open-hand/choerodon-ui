@@ -17,13 +17,11 @@ import { getConfig } from 'choerodon-ui/lib/configure';
 import DataSet from './DataSet';
 import Field, { FieldProps, Fields } from './Field';
 import {
-  axiosAdapter,
   checkFieldType,
   childrenInfoForDelete,
   findBindFields,
   generateResponseData,
   getRecordValue,
-  isSame,
   processData,
   processIntlField,
   processToJSON,
@@ -33,6 +31,8 @@ import * as ObjectChainValue from '../_util/ObjectChainValue';
 import DataSetSnapshot from './DataSetSnapshot';
 import localeContext from '../locale-context';
 import { BooleanValue, DataSetEvents, FieldIgnore, FieldType, RecordStatus } from './enum';
+import isSame from '../_util/isSame';
+import axiosAdapter from '../_util/axiosAdapter';
 
 /**
  * 记录ID生成器

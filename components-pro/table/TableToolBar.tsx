@@ -19,7 +19,7 @@ import { DataSetStatus, FieldType } from '../data-set/enum';
 import { $l } from '../locale-context';
 import Table, { Buttons } from './Table';
 import Column from './Column';
-import { findBindFieldBy } from '../data-set/utils';
+import findBindFieldBy from '../_util/findBindFieldBy';
 import autobind from '../_util/autobind';
 
 /**

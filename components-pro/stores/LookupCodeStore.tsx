@@ -7,7 +7,8 @@ import axios from '../axios';
 import Field from '../data-set/Field';
 import lovCodeStore from './LovCodeStore';
 import { FieldType } from '../data-set/enum';
-import { append, generateResponseData, isSameLike } from '../data-set/utils';
+import { append, generateResponseData } from '../data-set/utils';
+import isSameLike from '../_util/isSameLike';
 
 export type responseData = object[];
 export type responseType = responseData | undefined;

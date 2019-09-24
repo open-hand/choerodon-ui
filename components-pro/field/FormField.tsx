@@ -27,7 +27,6 @@ import autobind from '../_util/autobind';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import Field from '../data-set/Field';
-import { getDateFormatByField, isSame } from '../data-set/utils';
 import Validator, { CustomValidator, ValidationMessages } from '../validator/Validator';
 import Validity from '../validator/Validity';
 import FormContext from '../form/FormContext';
@@ -44,7 +43,8 @@ import { FIELD_SUFFIX } from '../form/utils';
 import { LabelLayout } from '../form/enum';
 import Animate from '../animate';
 import CloseButton from './CloseButton';
-import { fromRangeValue, toMultipleValue, toRangeValue } from './utils';
+import { fromRangeValue, getDateFormatByField, toMultipleValue, toRangeValue } from './utils';
+import isSame from '../_util/isSame';
 
 const map: { [key: string]: FormField<FormFieldProps>[] } = {};
 

@@ -18,7 +18,6 @@ import OptGroup from '../option/OptGroup';
 import { DataSetStatus, FieldType } from '../data-set/enum';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
-import { isSame, isSameLike } from '../data-set/utils';
 import lookupStore from '../stores/LookupCodeStore';
 import Spin from '../spin';
 import { stopEvent } from '../_util/EventManager';
@@ -26,6 +25,8 @@ import normalizeOptions from '../option/normalizeOptions';
 import { $l } from '../locale-context';
 import * as ObjectChainValue from '../_util/ObjectChainValue';
 import isEmpty from '../_util/isEmpty';
+import isSame from '../_util/isSame';
+import isSameLike from '../_util/isSameLike';
 
 function updateActiveKey(menu: Menu, activeKey: string) {
   const store = menu.getStore();

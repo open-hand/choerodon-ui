@@ -22,9 +22,9 @@ import { ButtonColor, FuncType } from '../button/enum';
 import { filterBindField } from './TableToolBar';
 import KeyValueBar, { KeyValuePair } from './KeyValueBar';
 import Record from '../data-set/Record';
-import { getDateFormatByField } from '../data-set/utils';
 import { $l } from '../locale-context';
 import autobind from '../_util/autobind';
+import { getDateFormatByField } from '../field/utils';
 
 export interface TableAdvancedQueryBarProps extends ElementProps {
   queryFields: { [key: string]: ReactElement<any> | object };
