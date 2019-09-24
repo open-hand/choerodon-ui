@@ -22,7 +22,7 @@ timeline: true
 - 💄 `<pro>Modal`: Update the style.
 - 🐞 `<pro>Table`: Fix problems caused by hidden columns.
 - 🐞 `<pro>Table`: Fixed an issue where the locked column editor did not display.
-- 🐞 `<pro>Table`: Fixed an issue where query bar value changes would not be automatically queried after switching DataSet.
+- 🐞 `<pro>Table`: Fixed an issue where query bar value changes would not be automatically queried after DataSet switched.
 - 🐞 `<pro>CodeArea`: Fix uncontrolled problems.
 - 🐞 `<pro>NumberField`: Fix the accuracy problem.
 - 🐞 Fix circular dependencies problems.
