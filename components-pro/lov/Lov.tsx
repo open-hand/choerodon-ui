@@ -7,6 +7,7 @@ import debounce from 'lodash/debounce';
 import { action, computed, observable, toJS } from 'mobx';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
+import { Size } from 'choerodon-ui/lib/_util/enum';
 import Icon from '../icon';
 import { open } from '../modal-container/ModalContainer';
 import LovView from './LovView';
@@ -19,7 +20,10 @@ import { stopEvent } from '../_util/EventManager';
 import { Select, SelectProps } from '../select/Select';
 import { ColumnAlign } from '../table/enum';
 import { FieldType } from '../data-set/enum';
-import { LovFieldType } from './enum';
+import { LovFieldType, ViewMode } from './enum';
+import Button, { ButtonProps } from '../button/Button';
+import { ButtonColor, FuncType } from '../button/enum';
+import { $l } from '../locale-context';
 
 export type LovConfigItem = {
   display?: string;
@@ -57,9 +61,11 @@ export type LovConfig = {
   queryColumns?: number;
 };
 
-export interface LovProps extends SelectProps {
+export interface LovProps extends SelectProps, ButtonProps {
   modalProps?: ModalProps;
   noCache?: boolean;
+  mode?: ViewMode;
+  emptyText?: ReactNode;
 }
 
 @observer
@@ -68,8 +74,10 @@ export default class Lov extends Select<LovProps> {
 
   static propTypes = {
     ...Select.propTypes,
+    ...Button.propTypes,
     modalProps: PropTypes.object,
     noCache: PropTypes.bool,
+    emptyText: PropTypes.node,
   };
 
   static defaultProps = {
@@ -262,6 +270,21 @@ export default class Lov extends Select<LovProps> {
     return omit(super.getOtherProps(), ['modalProps', 'noCache']);
   }
 
+  getButtonProps() {
+    const { className, type } = this.props;
+    const props = {
+      ...Button.defaultProps,
+      ...omit(this.getOtherProps(), ['name', 'emptyText']),
+      className,
+      type,
+    };
+    if (!this.isValid) {
+      props.color = ButtonColor.red;
+    }
+
+    return props;
+  }
+
   getSuffix(): ReactNode {
     const { suffix } = this.props;
     return this.wrapperSuffix(suffix || <Icon type="search" />, {
@@ -274,5 +297,41 @@ export default class Lov extends Select<LovProps> {
     if (this.modal) {
       this.modal.close();
     }
+  }
+
+  select() {
+    const { mode } = this.props;
+    if (mode !== ViewMode.button) {
+      super.select();
+    }
+  }
+
+  renderWrapper(): ReactNode {
+    const { mode, children, emptyText, clearButton } = this.props;
+    if (mode === ViewMode.button) {
+      const elements = [
+        <Button
+          key="lov_button"
+          {...this.getButtonProps()}
+          disabled={this.isDisabled()}
+          onClick={this.openModal}
+        >
+          {children || this.getText() || emptyText || $l('Lov', 'choose')}
+        </Button>,
+      ];
+      if (clearButton) {
+        elements.push(
+          <Button
+            key="lov_clear_button"
+            size={Size.small}
+            funcType={FuncType.flat}
+            icon="close"
+            onClick={this.handleClearButtonClick}
+          />,
+        );
+      }
+      return elements;
+    }
+    return super.renderWrapper();
   }
 }

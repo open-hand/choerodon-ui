@@ -83,13 +83,16 @@ export default {
     value_missing_with_label: 'Please select {label}.',
   },
   SelectBox: {
-    value_missing: 'Please make a choice',
+    value_missing: 'Please make a choice.',
     value_missing_with_label: 'Please select {label}.',
   },
   Select: {
-    value_missing: 'Please make a choice',
+    value_missing: 'Please make a choice.',
     value_missing_with_label: 'Please select {label}.',
     no_matching_results: 'No matching results.',
+  },
+  Lov: {
+    choose: 'Choose',
   },
   Transfer: {
     items: 'items',
@@ -110,8 +113,10 @@ export default {
     range_overflow: '{label} must be less than or equal to {max}.',
     range_underflow: '{label} must be greater than or equal to {min}.',
     step_mismatch: 'Please input a valid value. {near}',
-    too_long: 'Please decrease the length of the value down to {maxLength} or less characters (You have input {length} characters).',
-    too_short: 'Please increase the length of the value down to {minLength} or more characters (You have input {length} characters).',
+    too_long:
+      'Please decrease the length of the value down to {maxLength} or less characters (You have input {length} characters).',
+    too_short:
+      'Please increase the length of the value down to {minLength} or more characters (You have input {length} characters).',
     type_mismatch: 'Please input a value to match the given type.',
     value_missing: 'Please input a value.',
     value_missing_with_label: 'Please input {label}.',

@@ -1,5 +1,5 @@
 ---
-order: 3
+order: 2
 title:
   zh-CN: LOV级联
   en-US: LOV Cascade
@@ -7,17 +7,24 @@ title:
 
 ## zh-CN
 
-LOV级联。
+LOV 级联。
 
 ## en-US
 
 LOV Cascade
 
-````jsx
+```jsx
 import { DataSet, Lov, Select, Row, Col } from 'choerodon-ui/pro';
 
 function handleDataSetChange({ record, value, oldValue }) {
-  console.log('[dataset newValue]', value, '[oldValue]', oldValue, '[record.toJSONData()]', record.toJSONData());
+  console.log(
+    '[dataset newValue]',
+    value,
+    '[oldValue]',
+    oldValue,
+    '[record.toJSONData()]',
+    record.toJSONData(),
+  );
 }
 
 class App extends React.Component {
@@ -56,8 +63,5 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(
-  <App />,
-  mountNode
-);
-````
+ReactDOM.render(<App />, mountNode);
+```

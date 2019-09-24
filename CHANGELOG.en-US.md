@@ -15,8 +15,9 @@ timeline: true
 
 ---
 
-- 🌟 `<pro>Table`: Adjust the spacing of the advancedBar.
-- 🌟 `<pro>Button`: Adjust height of Button to 30px.
+- 🌟 `<pro>Lov`: Added button mode.
+- 💄 `<pro>Table`: Adjust the spacing of the advancedBar.
+- 💄 `<pro>Button`: Adjust height of Button to .3rem.
 - 💄 `<pro>Modal`: Update the style.
 - 🐞 `<pro>Table`: Fix problems caused by hidden columns.
 - 🐞 `<pro>Table`: Fixed an issue where the locked column editor did not display.

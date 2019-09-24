@@ -92,6 +92,9 @@ export interface Locale {
     value_missing;
     value_missing_with_label;
   };
+  Lov: {
+    choose;
+  };
   Transfer: {
     items;
   };

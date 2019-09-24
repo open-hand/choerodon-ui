@@ -15,8 +15,9 @@ timeline: true
 
 ---
 
-- 🌟 `<pro>Table`: 调整 advancedBar 的间距。
-- 🌟 `<pro>Button`: 调整 Button 的高度为 30px。
+- 🌟 `<pro>Lov`: 新增 button 模式。
+- 💄 `<pro>Table`: 调整 advancedBar 的间距。
+- 💄 `<pro>Button`: 调整 Button 的高度为 .3rem。
 - 💄 `<pro>Modal`: 更新样式。
 - 🐞 `<pro>Table`: 修复隐藏列造成的问题。
 - 🐞 `<pro>Table`: 修复锁定列编辑器不显示的问题。

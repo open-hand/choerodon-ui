@@ -6,3 +6,8 @@ export const enum LovFieldType {
   POPUP = 'POPUP',
   SELECT = 'SELECT',
 }
+
+export const enum ViewMode {
+  default = 'default',
+  button = 'button',
+}

@@ -91,6 +91,9 @@ export default {
     value_missing_with_label: '请选择{label}。',
     no_matching_results: '无匹配结果。',
   },
+  Lov: {
+    choose: '请选择',
+  },
   Transfer: {
     items: '项',
   },
