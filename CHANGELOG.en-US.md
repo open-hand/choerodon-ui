@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.12
+
+`2019-09-25`
+
 - 🌟 `<pro>Lov`: Added button mode.
 - 💄 `<pro>Lov`: In the multiple Lov's pop-up window, the the existing value will be selected.
 - 💄 `<pro>Table`: Adjust the spacing of the advancedBar.

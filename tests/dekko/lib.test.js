@@ -8,16 +8,19 @@ function check(dir) {
     .hasFile('index.d.ts');
 
   $(`${dir}/*`)
-    .filter(filename => (
-      !filename.endsWith('index.js')
-      && !filename.endsWith('index.d.ts')
-    ))
+    .filter(
+      filename =>
+        !filename.endsWith('index.js') &&
+        !filename.endsWith('index.d.ts') &&
+        !filename.endsWith('.map'),
+    )
     .isDirectory()
-    .filter(filename => (
-      !filename.endsWith('style')
-      && !filename.endsWith('rc-components')
-      && !filename.endsWith('_util')
-    ))
+    .filter(
+      filename =>
+        !filename.endsWith('style') &&
+        !filename.endsWith('rc-components') &&
+        !filename.endsWith('_util'),
+    )
     .hasFile('index.js')
     .hasFile('index.d.ts')
     .hasDirectory('style');
@@ -27,8 +30,7 @@ function check(dir) {
     .hasFile('index.js');
 
   if (dir === 'lib') {
-    $(`${dir}/style`)
-      .hasFile('v2-compatible-reset.css');
+    $(`${dir}/style`).hasFile('v2-compatible-reset.css');
   }
 
   // eslint-disable-next-line
