@@ -1,5 +1,5 @@
 ---
-order: 2
+order: 1
 title:
   zh-CN: 树形数据
   en-US: Tree Data
@@ -13,20 +13,21 @@ title:
 
 Tree Data.
 
-````jsx
+```jsx
 import { DataSet, Table, Button, Icon } from 'choerodon-ui/pro';
 
 const { Column } = Table;
 
 function iconRenderer({ record, text }) {
-  return [
-    <Icon key="icon" type={record.get('icon')} />,
-    <span key="text">{text}</span>,
-  ];
+  return [<Icon key="icon" type={record.get('icon')} />, <span key="text">{text}</span>];
 }
 
 function expandedRowRenderer({ record }) {
-  return <p>功能代码：{record.get('functionCode')} 入口页面：{record.get('url')}</p>;
+  return (
+    <p>
+      功能代码：{record.get('functionCode')} 入口页面：{record.get('url')}
+    </p>
+  );
 }
 
 class App extends React.Component {
@@ -63,24 +64,59 @@ class App extends React.Component {
 
   handleChangeExpandRender = () => this.setState({ expandedRender: !this.state.expandedRender });
 
-  handleChangeExpandIconIndex = () => this.setState({ expandIconColumnIndex: this.state.expandIconColumnIndex > 2 ? 0 : this.state.expandIconColumnIndex + 1 });
+  handleChangeExpandIconIndex = () =>
+    this.setState({
+      expandIconColumnIndex:
+        this.state.expandIconColumnIndex > 2 ? 0 : this.state.expandIconColumnIndex + 1,
+    });
 
   handleChangeBorder = () => this.setState({ border: !this.state.border });
 
   handleChangeMode = () => this.setState({ mode: this.state.mode === 'tree' ? 'list' : 'tree' });
 
   buttons = [
-    'add', 'save', 'delete', 'remove', 'query', 'expandAll', 'collapseAll',
-    <Button key="change-expand-type" onClick={this.handleChangeExpandIconIndex} color="blue" funcType="flat">切换展开图标索引</Button>,
-    <Button key="change-border" onClick={this.handleChangeBorder} color="blue" funcType="flat">切换边框</Button>,
-    <Button key="change-mode" onClick={this.handleChangeMode} color="blue" funcType="flat">切换树模式</Button>,
-    <Button key="change-expand-render" onClick={this.handleChangeExpandRender} color="blue" funcType="flat">切换展开行渲染</Button>,
+    'add',
+    'save',
+    'delete',
+    'remove',
+    'query',
+    'expandAll',
+    'collapseAll',
+    <Button
+      key="change-expand-type"
+      onClick={this.handleChangeExpandIconIndex}
+      color="blue"
+      funcType="flat"
+    >
+      切换展开图标索引
+    </Button>,
+    <Button key="change-border" onClick={this.handleChangeBorder} color="blue" funcType="flat">
+      切换边框
+    </Button>,
+    <Button key="change-mode" onClick={this.handleChangeMode} color="blue" funcType="flat">
+      切换树模式
+    </Button>,
+    <Button
+      key="change-expand-render"
+      onClick={this.handleChangeExpandRender}
+      color="blue"
+      funcType="flat"
+    >
+      切换展开行渲染
+    </Button>,
   ];
 
   render() {
     const { mode, expandIconColumnIndex, border, expandedRender } = this.state;
     return (
-      <Table mode={mode} buttons={this.buttons} dataSet={this.ds} expandIconColumnIndex={expandIconColumnIndex} border={border} expandedRowRenderer={expandedRender && expandedRowRenderer}>
+      <Table
+        mode={mode}
+        buttons={this.buttons}
+        dataSet={this.ds}
+        expandIconColumnIndex={expandIconColumnIndex}
+        border={border}
+        expandedRowRenderer={expandedRender && expandedRowRenderer}
+      >
         <Column name="text" editor renderer={iconRenderer} width={450} />
         <Column name="url" editor />
         <Column name="ischecked" editor />
@@ -91,8 +127,5 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(
-  <App />,
-  mountNode
-);
-````
+ReactDOM.render(<App />, mountNode);
+```

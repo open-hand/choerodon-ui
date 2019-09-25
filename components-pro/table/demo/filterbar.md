@@ -1,5 +1,5 @@
 ---
-order: 1
+order: 4
 title:
   zh-CN: 过滤条
   en-US: Filter Bar

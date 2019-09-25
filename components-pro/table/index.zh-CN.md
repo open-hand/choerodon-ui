@@ -27,7 +27,7 @@ subtitle: 表格
 | buttons | 功能按钮，可选值：`add` `delete` `remove` `save` `query` `reset` `expandAll` `collapseAll` `export` 或 数组 或 自定义按钮，数组为可选值字符串+按钮配置属性对象 | string \| \[string, object\] \|ReactNode |  |
 | queryFields | 自定义查询字段组件或默认组件属性，默认会根据 queryDataSet 中定义的 field 类型自动匹配组件 | ReactNode[] \| object |  |
 | queryFieldsLimit | 头部显示的查询字段的数量，超出限制的查询字段放入弹出窗口 | number | 1 |
-| queryBar | 查询条, 可选值：`advancedBar` `normal` `bar` `none` | string | normal |
+| queryBar | 查询条, 可选值为钩子或者内置类型：`advancedBar` `normal` `bar` `none` | string \| ({ dataSet, queryDataSet, buttons, pagination, queryFields, queryFieldsLimit }) => ReactNode | normal |
 | rowHeight | 行高 | number \| auto | 30 |
 | defaultRowExpanded | 默认行是否展开，当 dataSet 没有设置 expandField 时才有效 | boolean | false |
 | expandRowByClick | 通过点击行来展开子行 | boolean | false |

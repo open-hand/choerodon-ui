@@ -1,34 +1,31 @@
-import React, {
-  cloneElement,
-  Component,
-  ContextType,
-  isValidElement,
-  ReactElement,
-  ReactNode,
-} from 'react';
+import React, { cloneElement, Component, ReactElement, ReactNode } from 'react';
 import classNames from 'classnames';
-import { action, IReactionDisposer, isArrayLike, reaction } from 'mobx';
+import { action, isArrayLike } from 'mobx';
 import { observer } from 'mobx-react';
 import { isMoment, Moment } from 'moment';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
-import warning from 'choerodon-ui/lib/_util/warning';
 import Field from '../data-set/Field';
 import DataSet from '../data-set';
 import Button from '../button';
-import { getEditorByField } from './utils';
 import TableContext from './TableContext';
 import { ElementProps } from '../core/ViewComponent';
 import { ButtonColor, FuncType } from '../button/enum';
+import { ButtonProps } from '../button/Button';
 import { filterBindField } from './TableToolBar';
 import KeyValueBar, { KeyValuePair } from './KeyValueBar';
 import Record from '../data-set/Record';
 import { $l } from '../locale-context';
 import autobind from '../_util/autobind';
 import { getDateFormatByField } from '../field/utils';
+import { PaginationProps } from '../pagination/Pagination';
 
 export interface TableAdvancedQueryBarProps extends ElementProps {
-  queryFields: { [key: string]: ReactElement<any> | object };
+  dataSet: DataSet;
+  queryDataSet?: DataSet;
+  queryFields: ReactElement<any>[];
   queryFieldsLimit: number;
+  buttons: ReactElement<ButtonProps>[];
+  pagination?: ReactElement<PaginationProps>;
 }
 
 export interface TableAdvancedQueryBarState {
@@ -53,17 +50,7 @@ export default class TableAdvancedQueryBar extends Component<
   TableAdvancedQueryBarProps,
   TableAdvancedQueryBarState
 > {
-  static defaultProps = {
-    queryFields: [],
-  };
-
   static contextType = TableContext;
-
-  queryDataSet?: DataSet;
-
-  reaction: IReactionDisposer;
-
-  context: ContextType<typeof TableContext>;
 
   state = {
     showMoreFieldsPanel: false,
@@ -73,20 +60,32 @@ export default class TableAdvancedQueryBar extends Component<
 
   constructor(props, context) {
     super(props, context);
-    this.on(context.tableStore.dataSet.queryDataSet);
-    this.reaction = reaction(() => context.tableStore.dataSet.queryDataSet, this.on);
+    this.on(props.queryDataSet);
   }
 
-  on(dataSet) {
-    this.off();
-    dataSet.addEventListener('update', this.handleDataSetUpdate);
-    this.queryDataSet = dataSet;
+  componentWillReceiveProps(nextProps) {
+    const { queryDataSet } = this.props;
+    const { queryDataSet: newQueryDataSet } = nextProps;
+    if (queryDataSet !== newQueryDataSet) {
+      this.off(queryDataSet);
+      this.on(newQueryDataSet);
+    }
   }
 
-  off() {
-    const { queryDataSet } = this;
-    if (queryDataSet) {
-      queryDataSet.removeEventListener('update', this.handleDataSetUpdate);
+  componentWillUnmount() {
+    const { queryDataSet } = this.props;
+    this.off(queryDataSet);
+  }
+
+  on(dataSet?: DataSet) {
+    if (dataSet) {
+      dataSet.addEventListener('update', this.handleDataSetUpdate);
+    }
+  }
+
+  off(dataSet?: DataSet) {
+    if (dataSet) {
+      dataSet.removeEventListener('update', this.handleDataSetUpdate);
     }
   }
 
@@ -108,9 +107,9 @@ export default class TableAdvancedQueryBar extends Component<
     dataSet.query();
   }
 
-  getMoreFieldsButton(fields: Field[]) {
-    const { showMoreFieldsPanel } = this.state;
+  getMoreFieldsButton(fields: ReactElement<any>[]) {
     if (fields.length) {
+      const { showMoreFieldsPanel } = this.state;
       return (
         <Button
           icon="filter_list"
@@ -142,10 +141,6 @@ export default class TableAdvancedQueryBar extends Component<
     });
   }
 
-  getCurrentFields(fields: Field[], dataSet: DataSet) {
-    return this.createFields(fields, dataSet, false);
-  }
-
   getResetButton() {
     return (
       <Button
@@ -160,36 +155,28 @@ export default class TableAdvancedQueryBar extends Component<
   }
 
   getQueryBar(): ReactNode {
-    const { prefixCls, queryFieldsLimit } = this.props;
-    const {
-      tableStore: {
-        dataSet: { queryDataSet },
-      },
-    } = this.context;
-    if (queryDataSet) {
-      const fields = filterBindField(queryDataSet.fields);
-      const keys = Object.keys(fields);
-      if (keys.length) {
-        const currentFields = keys.slice(0, queryFieldsLimit).map(name => fields[name]);
-        const moreKeys = keys.slice(queryFieldsLimit);
-        let moreFieldsButton: ReactElement | undefined;
-        // let dirtyInfo;
-        if (moreKeys.length) {
-          const moreFields = keys.slice(queryFieldsLimit).map(name => fields[name]);
-          moreFieldsButton = this.getMoreFieldsButton(moreFields);
-          // dirtyInfo = this.getDirtyInfo(queryDataSet.current, moreKeys);
-        }
-        return (
-          <div className={`${prefixCls}-advanced-query-bar`}>
-            {/* {dirtyInfo} */}
-            {this.getCurrentFields(currentFields, queryDataSet)}
-            <span className={`${prefixCls}-advanced-query-bar-button`}>
-              {this.getResetButton()}
-              {moreFieldsButton}
-            </span>
-          </div>
-        );
-      }
+    const { prefixCls, queryFieldsLimit, queryFields, buttons, queryDataSet } = this.props;
+    if (queryDataSet && queryFields.length) {
+      const { showMoreFieldsPanel } = this.state;
+      const currentFields = this.createFields(
+        queryFields.slice(0, queryFieldsLimit),
+        queryDataSet,
+        false,
+      );
+      const moreFields = this.createFields(queryFields.slice(queryFieldsLimit), queryDataSet, true);
+      const moreFieldsButton: ReactElement | undefined = this.getMoreFieldsButton(moreFields);
+      return [
+        <div key="toolbar" className={`${prefixCls}-advanced-query-bar`}>
+          {/* {dirtyInfo} */}
+          {currentFields}
+          <span className={`${prefixCls}-advanced-query-bar-button`}>
+            {this.getResetButton()}
+            {moreFieldsButton}
+            {buttons}
+          </span>
+        </div>,
+        showMoreFieldsPanel ? this.renderMoreFieldsPanel(moreFields) : null,
+      ];
     }
   }
 
@@ -205,43 +192,37 @@ export default class TableAdvancedQueryBar extends Component<
     });
   }
 
-  renderMoreFieldsPanel(fields: Field[], dataSet: DataSet) {
+  renderMoreFieldsPanel(fields: ReactElement<any>[]) {
     const { prefixCls } = this.props;
     return (
       <div className={`${prefixCls}-advanced-query-bar-more-fields-panel`}>
-        {this.renderMoreFields(this.createFields(fields, dataSet, true))}
+        {this.renderMoreFields(fields)}
       </div>
     );
   }
 
-  createFields(fields: Field[], dataSet: DataSet, isMore: boolean): ReactElement[] {
-    const { queryFields } = this.props;
-    return fields.map((field, index) => {
-      const { name } = field;
+  createFields(elements: ReactElement<any>[], dataSet: DataSet, isMore: boolean): ReactElement[] {
+    return elements.map(element => {
+      const { name } = element.props;
       const props: any = {
-        key: name,
-        name,
-        dataSet,
-        autoFocus: isMore && index === 0,
         onEnterDown: this.handleFieldEnter,
         style: {
           width: pxToRem(isMore ? 250 : 260),
           marginRight: !isMore ? pxToRem(16) : 0,
         },
-        ...(isMore ? { label: field.get('label') } : { placeholder: field.get('label') }),
       };
-      const label = field.get('label');
-      if (label) {
-        if (isMore) {
-          props.label = label;
-        } else {
-          props.placeholder = label;
+      const field = dataSet.getField(name);
+      if (field) {
+        const label = field.get('label');
+        if (label) {
+          if (isMore) {
+            props.label = label;
+          } else {
+            props.placeholder = label;
+          }
         }
       }
-      const element = queryFields[name];
-      return isValidElement(element)
-        ? cloneElement(element, props)
-        : cloneElement(getEditorByField(field), { ...props, ...element });
+      return cloneElement(element, props);
     });
   }
 
@@ -343,32 +324,23 @@ export default class TableAdvancedQueryBar extends Component<
   }
 
   render() {
-    const { queryFieldsLimit } = this.props;
-    const {
-      tableStore: {
-        dataSet: { queryDataSet },
-      },
-    } = this.context;
-    const { showMoreFieldsPanel } = this.state;
-    // invalid advanced query bar
-    warning(
-      !!queryDataSet,
-      `queryBar = 'advancedBar' doesn't work, caused by missing queryDataSet`,
-    );
+    const { buttons, prefixCls } = this.props;
+    const queryBar = this.getQueryBar();
 
-    if (queryDataSet) {
-      const fields = filterBindField(queryDataSet.fields);
-      const keys = Object.keys(fields);
-      if (keys.length) {
-        const moreFields = keys.slice(queryFieldsLimit).map(name => fields[name]);
-        return (
-          <div className={this.getClassName()}>
-            {this.getQueryBar()}
-            {showMoreFieldsPanel ? this.renderMoreFieldsPanel(moreFields, queryDataSet) : null}
-            {this.renderKeyValueBar()}
-          </div>
-        );
-      }
+    if (queryBar) {
+      return (
+        <div className={this.getClassName()}>
+          {queryBar}
+          {this.renderKeyValueBar()}
+        </div>
+      );
+    }
+    if (buttons.length) {
+      return (
+        <div key="toolbar" className={`${prefixCls}-toolbar`}>
+          <span className={`${prefixCls}-toolbar-button-group`}>{buttons}</span>
+        </div>
+      );
     }
 
     return null;

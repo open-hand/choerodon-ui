@@ -1,20 +1,20 @@
 ---
-order: 5
+order: 6
 title:
-  zh-CN: 高级搜索条
-  en-US: Advanced Search Bar
+  zh-CN: 自定义搜索条
+  en-US: Custom Search Bar
 ---
 
 ## zh-CN
 
-高级搜索条。
+自定义搜索条。
 
 ## en-US
 
-Advanced Search Bar.
+Custom Search Bar.
 
 ```jsx
-import { DataSet, Table, Button } from 'choerodon-ui/pro';
+import { DataSet, Table, Button, Form } from 'choerodon-ui/pro';
 
 const optionData = [{ text: '男', value: 'M' }, { text: '女', value: 'F' }];
 
@@ -72,15 +72,36 @@ class App extends React.Component {
     return [{ name: 'name', width: 450, editor: true }, { name: 'age', editor: true }];
   }
 
+  renderBar = ({ queryFields, buttons, queryFieldsLimit, dataSet, queryDataSet, pagination }) => {
+    if (queryDataSet) {
+      return (
+        <Form columns={queryFieldsLimit} dataSet={queryDataSet}>
+          {queryFields}
+          <div newLine>
+            <Button
+              dataSet={null}
+              onClick={() => {
+                dataSet.query();
+              }}
+            >
+              查询
+            </Button>
+            <Button onClick={() => queryDataSet.reset()}>重置</Button>
+            {buttons}
+          </div>
+        </Form>
+      );
+    }
+  };
+
   render() {
     return (
       <Table
         buttons={['add']}
         dataSet={this.ds}
-        queryBar="advancedBar"
-        border={false}
+        queryBar={this.renderBar}
         columns={this.columns}
-        queryFieldsLimit={2}
+        queryFieldsLimit={3}
       />
     );
   }

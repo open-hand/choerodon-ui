@@ -3,7 +3,6 @@ order: 0
 title:
   zh-CN: 基本
   en-US: Basic
-only: true
 ---
 
 ## zh-CN
@@ -111,7 +110,7 @@ class App extends React.Component {
       },
     ],
     events: {
-      query: ({ params }) => console.log('friend query parameter', params),
+      query: ({ params, data }) => console.log('friend query parameter', params, data),
     },
   });
 
@@ -299,8 +298,8 @@ class App extends React.Component {
       indexchange: ({ record }) => console.log('current user', record),
       submit: ({ data }) => console.log('submit data', data),
       load: handleUserDSLoad,
-      query: ({ params }) => console.log('user query parameter', params),
-      export: ({ params }) => console.log('user export parameter', params),
+      query: ({ params, data }) => console.log('user query parameter', params, data),
+      export: ({ params, data }) => console.log('user export parameter', params, data),
     },
     children: {
       friends: this.friendsDs,

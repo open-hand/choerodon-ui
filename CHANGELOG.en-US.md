@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Table`: Attribute `queryBar` supports hook type.
 - 🐞 `<pro>DataSet.Field`: Fixed an issue where `dynamicProps` didn't work in some cases.
 
 ## 0.8.12

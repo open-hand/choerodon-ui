@@ -38,6 +38,7 @@ import isSameLike from '../_util/isSameLike';
 export interface FilterSelectProps extends TextFieldProps {
   paramName?: string;
   optionDataSet: DataSet;
+  queryDataSet?: DataSet;
   dropdownMenuStyle?: CSSProperties;
 }
 
@@ -45,7 +46,6 @@ export interface FilterSelectProps extends TextFieldProps {
 export default class FilterSelect extends TextField<FilterSelectProps> {
   static defaultProps = {
     ...TextField.defaultProps,
-    optionDataSet: DataSet,
     multiple: true,
     clearButton: true,
     prefix: <Icon type="filter_list" />,
@@ -62,10 +62,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
 
   @computed
   get value(): any | undefined {
-    const {
-      value,
-      optionDataSet: { queryDataSet },
-    } = this.observableProps;
+    const { value, queryDataSet } = this.observableProps;
     if (value) {
       return value;
     }
@@ -106,14 +103,15 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
   constructor(props, context) {
     super(props, context);
     const { observableProps } = this;
-    this.on(observableProps.optionDataSet.queryDataSet);
-    this.reaction = reaction(() => observableProps.optionDataSet.queryDataSet, this.on);
+    this.on(observableProps.queryDataSet);
+    this.reaction = reaction(() => observableProps.queryDataSet, this.on);
   }
 
   getObservableProps(props, context: any) {
     return {
       ...super.getObservableProps(props, context),
       optionDataSet: props.optionDataSet,
+      queryDataSet: props.queryDataSet,
     };
   }
 
@@ -153,7 +151,12 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
   }
 
   getOtherProps() {
-    return omit(super.getOtherProps(), ['paramName', 'optionDataSet', 'dropdownMenuStyle']);
+    return omit(super.getOtherProps(), [
+      'paramName',
+      'optionDataSet',
+      'queryDataSet',
+      'dropdownMenuStyle',
+    ]);
   }
 
   @autobind
@@ -164,9 +167,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
   @autobind
   defaultRenderer({ value, repeat = 0 }: RenderProps) {
     const { paramName } = this.props;
-    const {
-      optionDataSet: { queryDataSet },
-    } = this.observableProps;
+    const { queryDataSet } = this.observableProps;
     if (queryDataSet) {
       const { current } = queryDataSet;
       if (current) {
@@ -191,18 +192,14 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
   }
 
   getQueryRecord(): Record | undefined {
-    const {
-      optionDataSet: { queryDataSet },
-    } = this.observableProps;
+    const { queryDataSet } = this.observableProps;
     if (queryDataSet) {
       return queryDataSet.current;
     }
   }
 
   getQueryField(fieldName): Field | undefined {
-    const {
-      optionDataSet: { queryDataSet },
-    } = this.observableProps;
+    const { queryDataSet } = this.observableProps;
     if (queryDataSet) {
       return queryDataSet.getField(fieldName);
     }
@@ -388,9 +385,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
 
   getFieldSelectOptions(): ReactElement<OptionProps>[] {
     const { paramName } = this.props;
-    const {
-      optionDataSet: { queryDataSet },
-    } = this.observableProps;
+    const { queryDataSet } = this.observableProps;
     const data: ReactElement<OptionProps>[] = [];
     if (queryDataSet) {
       [...queryDataSet.fields.entries()].forEach(([key, field]) => {
