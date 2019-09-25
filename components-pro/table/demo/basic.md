@@ -3,6 +3,7 @@ order: 0
 title:
   zh-CN: 基本
   en-US: Basic
+only: true
 ---
 
 ## zh-CN
@@ -75,12 +76,24 @@ function nameDynamicProps({ record }) {
   return { required: record.get('sex') === 'M' };
 }
 
-function codeDynamicProps({ record }) {
-  return { textField: record.get('sex') === 'M' ? 'description' : 'description2' };
+function codeCodeDynamicProps({ record }) {
+  const field = record.getField('code');
+  if (field) {
+    const valueField = field.get('valueField');
+    return {
+      bind: `code.${valueField}`,
+    };
+  }
 }
 
 function codeDescriptionDynamicProps({ record }) {
-  return { bind: record.get('sex') === 'M' ? 'code.description' : 'code.description2' };
+  const field = record.getField('code');
+  if (field) {
+    const textField = field.get('textField');
+    return {
+      bind: `code.${textField}`,
+    };
+  }
 }
 
 class App extends React.Component {
@@ -209,15 +222,14 @@ class App extends React.Component {
         type: 'object',
         label: '代码描述',
         lovCode: 'LOV_CODE',
-        dynamicProps: codeDynamicProps,
       },
       {
         name: 'code_code',
-        bind: 'code.code',
         type: 'string',
         label: '代码',
-        maxLength: 11,
+        maxLength: 20,
         required: true,
+        dynamicProps: codeCodeDynamicProps,
       },
       {
         name: 'code_description',

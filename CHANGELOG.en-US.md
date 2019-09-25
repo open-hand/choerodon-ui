@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>DataSet.Field`: Fixed an issue where `dynamicProps` didn't work in some cases.
+
 ## 0.8.12
 
 `2019-09-25`

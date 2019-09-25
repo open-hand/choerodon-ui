@@ -259,6 +259,7 @@ export default class Record {
 
   constructor(data: object = {}, dataSet?: DataSet) {
     runInAction(() => {
+      const initData = toJS(data);
       this.fields = observable.map<string, Field>();
       this.status = RecordStatus.add;
       this.selectable = true;
@@ -266,6 +267,7 @@ export default class Record {
       this.isCurrent = false;
       this.isCached = false;
       this.id = IDGen.next().value;
+      this.data = initData;
       if (dataSet) {
         this.dataSet = dataSet;
         const { fields } = dataSet;
@@ -273,10 +275,8 @@ export default class Record {
           this.initFields(fields);
         }
       }
-      this.initData = toJS(data);
-      this.pristineData = this.processData(this.initData);
+      this.pristineData = this.processData(initData);
       this.data = this.pristineData;
-      delete this.initData;
     });
   }
 

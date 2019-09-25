@@ -324,12 +324,7 @@ export default class Field {
     if (propsName !== 'dynamicProps') {
       const dynamicProps = this.get('dynamicProps');
       if (typeof dynamicProps === 'function') {
-        const { dataSet, name } = this;
-        let { record } = this;
-        if (record && !record.data) {
-          record = new Record(record.initData);
-          record.dataSet = dataSet;
-        }
+        const { dataSet, name, record } = this;
         if (this.isDynamicPropsComputing) {
           warning(false, `Cycle dynamicProps execution of field<${name}>.`);
         } else if (dataSet && record) {
@@ -658,13 +653,15 @@ export default class Field {
     if (propsName in this.lastDynamicProps) {
       const oldProp = this.lastDynamicProps[propsName];
       if (oldProp !== newProp) {
-        defer(() => {
-          if (propsName in this.validator.props || propsName === 'validator') {
-            this.validator.reset();
-            // this.checkValidity();
-          }
-          this.handlePropChange(propsName);
-        });
+        defer(
+          action(() => {
+            if (propsName in this.validator.props || propsName === 'validator') {
+              this.validator.reset();
+              // this.checkValidity();
+            }
+            this.handlePropChange(propsName);
+          }),
+        );
       }
     }
     this.lastDynamicProps[propsName] = newProp;
