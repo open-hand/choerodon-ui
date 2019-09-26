@@ -44,13 +44,14 @@ function passwordValidator(value, name, form) {
 ReactDOM.render(
   <Form labelLayout="float" columns={3} header="Float Label">
     <TextField
-      prefix={<Icon type="phone" />}
       colSpan={3}
       label="手机号"
       pattern="1[3-9]\d{9}"
       name="phone"
       required
       placeholder="请输入手机号"
+      addonBefore="+86"
+      addonAfter="中国大陆"
     />
     <Password label="密码" name="password" required />
     <Password
@@ -71,7 +72,7 @@ ReactDOM.render(
       <Option value="en-us">英语(美国)</Option>
       <Option value="ja-jp">日本語</Option>
     </Select>
-    <EmailField label="邮箱" name="email" multiple />
+    <EmailField prefix={<Icon type="mail_outline" />} label="邮箱" name="email" multiple />
     <TextArea
       rowSpan={2}
       colSpan={2}

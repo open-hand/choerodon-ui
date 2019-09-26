@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.14
+
+`2019-09-26`
+
 - 🌟 `<pro>Field`: Added `trim` property.
 - 🌟 `<pro>DataSet`: `dataKey` and `totalKey` support deep matching, such as `dataKey = "demo.list"`.
 - 🐞 `<pro>Table`: Fixed an issue with Table querybar.
