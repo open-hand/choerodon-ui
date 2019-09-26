@@ -86,37 +86,29 @@ export default class TableToolBar extends Component<TabelToolBarProps, any> {
 
   getQueryBar(): ReactNode {
     const { prefixCls, queryFieldsLimit, queryFields, queryDataSet } = this.props;
-    if (queryDataSet) {
-      const fields = filterBindField(queryDataSet.fields);
-      const keys = Object.keys(fields);
-      if (keys.length) {
-        const currentFields = this.createFields(
-          queryFields.slice(0, queryFieldsLimit),
-          queryDataSet,
-          false,
-        );
-        const moreFields = this.createFields(
-          queryFields.slice(queryFieldsLimit),
-          queryDataSet,
-          true,
-        );
-        let more;
-        let dirtyInfo;
-        if (moreFields.length) {
-          more = this.getMoreButton(moreFields);
-          dirtyInfo = this.getDirtyInfo(queryDataSet.current, moreFields);
-        }
-        return (
-          <span className={`${prefixCls}-query-bar`}>
-            {dirtyInfo}
-            {currentFields}
-            <Button color={ButtonColor.primary} onClick={this.handleQuery}>
-              {$l('Table', 'query_button')}
-            </Button>
-            {more}
-          </span>
-        );
+    if (queryDataSet && queryFields.length) {
+      const currentFields = this.createFields(
+        queryFields.slice(0, queryFieldsLimit),
+        queryDataSet,
+        false,
+      );
+      const moreFields = this.createFields(queryFields.slice(queryFieldsLimit), queryDataSet, true);
+      let more;
+      let dirtyInfo;
+      if (moreFields.length) {
+        more = this.getMoreButton(moreFields);
+        dirtyInfo = this.getDirtyInfo(queryDataSet.current, moreFields);
       }
+      return (
+        <span className={`${prefixCls}-query-bar`}>
+          {dirtyInfo}
+          {currentFields}
+          <Button color={ButtonColor.primary} onClick={this.handleQuery}>
+            {$l('Table', 'query_button')}
+          </Button>
+          {more}
+        </span>
+      );
     }
   }
 

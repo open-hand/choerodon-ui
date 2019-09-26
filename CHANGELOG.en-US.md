@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>DataSet`: `dataKey` and `totalKey` support deep matching, such as `dataKey = "demo.list"`.
 - 🐞 `<pro>Table`: Fixed an issue with Table querybar.
 
 ## 0.8.13

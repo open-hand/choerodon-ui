@@ -4,6 +4,7 @@ import { isArrayLike } from 'mobx';
 import { AxiosRequestConfig } from 'axios';
 import isBoolean from 'lodash/isBoolean';
 import isObject from 'lodash/isObject';
+import isNil from 'lodash/isNil';
 import isString from 'lodash/isString';
 import isArray from 'lodash/isArray';
 import isNumber from 'lodash/isNumber';
@@ -354,13 +355,25 @@ export function prepareForSubmit(
 }
 
 export function generateResponseData(item: any, dataKey?: string): object[] {
-  return item
-    ? isArray(item)
-      ? item
-      : dataKey && isObject(item) && dataKey in item
-      ? item[dataKey] || []
-      : [item]
-    : [];
+  if (item) {
+    if (isArray(item)) {
+      return item;
+    }
+    if (isObject(item)) {
+      if (dataKey) {
+        const result = ObjectChainValue.get(item, dataKey);
+        if (isArray(result)) {
+          return result;
+        }
+        if (!isNil(result)) {
+          return [result];
+        }
+      } else {
+        return [item];
+      }
+    }
+  }
+  return [];
 }
 
 export function getRecordValue(

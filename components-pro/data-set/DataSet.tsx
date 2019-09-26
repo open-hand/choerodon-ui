@@ -747,7 +747,8 @@ export default class DataSet extends EventManager {
         totalCount,
         totalKey,
       } = this;
-      const params = { [totalKey]: totalCount, _r: Date.now(), ...this.generateOrderQueryString() };
+      const params = { _r: Date.now(), ...this.generateOrderQueryString() };
+      ObjectChainValue.set(params, totalKey, totalCount);
       const newConfig = axiosAdapter(exports, this, data, params);
       const adapterConfig = adapter(newConfig, 'exports') || newConfig;
       if (adapterConfig.url) {
@@ -1599,7 +1600,7 @@ Then the query method will be auto invoke.`,
     if (resp) {
       const { dataKey, totalKey } = this;
       const data: object[] = generateResponseData(resp, dataKey);
-      const total: number | undefined = resp[totalKey!];
+      const total: number | undefined = ObjectChainValue.get(resp, totalKey);
       this.loadData(data, total);
     }
     return this;
@@ -1762,17 +1763,20 @@ Then the query method will be auto invoke.`,
     let total;
     resp.forEach(item => {
       data.push(...generateResponseData(item, dataKey));
-      if (totalKey && isObject(item) && totalKey in item) {
-        total = item[totalKey];
+      if (totalKey && isObject(item)) {
+        const myTotal = ObjectChainValue.get(item, totalKey);
+        if (!isNil(myTotal)) {
+          total = myTotal;
+        }
       }
     });
-    const result = dataKey
-      ? {
-          [dataKey]: data,
-          [totalKey!]: total,
-          success: true,
-        }
-      : data;
+    const result = dataKey ? { success: true } : data;
+    if (dataKey) {
+      ObjectChainValue.set(result, dataKey, data);
+      if (totalKey) {
+        ObjectChainValue.set(result, totalKey, total);
+      }
+    }
     this.fireEvent(DataSetEvents.submitSuccess, { dataSet: this, data: result });
     this.commitData(data, total);
     feedback.submitSuccess(result);
