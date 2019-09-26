@@ -224,6 +224,7 @@ title: DataSet
 | ignore | 忽略提交, 可选值: `always` - 总是忽略 `clean` - 值未变化时忽略 `never` - 从不忽略 | string | `never` |
 | transformRequest | 在发送请求之前对数据进行处理 | (value: any) => any |  |
 | transformResponse | 在获得响应之后对数据进行处理 | (value: any) => any |  |
+| trim | 字符串值是否去掉首尾空格，可选值: `both` `left` `right` `none` | string | `both` |
 
 ### Field Values
 

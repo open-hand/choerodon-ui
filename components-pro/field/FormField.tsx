@@ -35,7 +35,7 @@ import Icon from '../icon';
 import Tooltip from '../tooltip';
 import Form from '../form/Form';
 import isEmpty from '../_util/isEmpty';
-import { FieldType } from '../data-set/enum';
+import { FieldTrim, FieldType } from '../data-set/enum';
 import ValidationResult from '../validator/ValidationResult';
 import { ShowHelp } from './enum';
 import { ValidatorProps } from '../validator/rules';
@@ -45,6 +45,7 @@ import Animate from '../animate';
 import CloseButton from './CloseButton';
 import { fromRangeValue, getDateFormatByField, toMultipleValue, toRangeValue } from './utils';
 import isSame from '../_util/isSame';
+import trim from '../_util/trim';
 
 const map: { [key: string]: FormField<FormFieldProps>[] } = {};
 
@@ -157,6 +158,12 @@ export interface FormFieldProps extends DataSetComponentProps {
    */
   pristine?: boolean;
   /**
+   * 字符串值是否去掉首尾空格
+   * 可选值: both left right none
+   * @default: both
+   */
+  trim?: FieldTrim;
+  /**
    * 校验失败回调
    */
   onInvalid?: (validationResults: ValidationResult[], validity: Validity, name?: string) => void;
@@ -248,7 +255,32 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
      * 显示提示信息的方式
      */
     showHelp: PropTypes.oneOf([ShowHelp.tooltip, ShowHelp.newLine, ShowHelp.none]),
+    /**
+     * 渲染器
+     */
     renderer: PropTypes.func,
+    /**
+     * 多值标签超出最大数量时的占位描述
+     */
+    maxTagPlaceholder: PropTypes.node,
+    /**
+     * 多值标签最大数量
+     */
+    maxTagCount: PropTypes.number,
+    /**
+     * 多值标签文案最大长度
+     */
+    maxTagTextLength: PropTypes.number,
+    /**
+     * 显示原始值
+     */
+    pristine: PropTypes.bool,
+    /**
+     * 字符串值是否去掉首尾空格
+     * 可选值: both left right none
+     * @default: both
+     */
+    trim: PropTypes.oneOf([FieldTrim.both, FieldTrim.left, FieldTrim.right, FieldTrim.none]),
     /**
      * 值变化回调
      * (value: any, oldValue: any, form?: ReactInstance) => void
@@ -269,6 +301,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     readOnly: false,
     noValidate: false,
     showHelp: 'newLine',
+    trim: FieldTrim.both,
   };
 
   emptyValue?: any = null;
@@ -606,6 +639,11 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   }
 
   @computed
+  get trim(): FieldTrim | undefined {
+    return this.getProp('trim');
+  }
+
+  @computed
   get range(): boolean {
     return this.getProp('range');
   }
@@ -899,6 +937,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       if (dataSet && name) {
         (this.record || dataSet.create({}, dataIndex)).set(name, value);
       } else {
+        value = trim(value, this.trim);
         this.validate(value);
       }
       if (!isSame(old, value)) {

@@ -20,6 +20,7 @@ import * as ObjectChainValue from '../_util/ObjectChainValue';
 import localeContext, { $l } from '../locale-context';
 import Transport from './Transport';
 import axiosAdapter from '../_util/axiosAdapter';
+import trim from '../_util/trim';
 
 export function append(url: string, suffix?: object) {
   if (suffix) {
@@ -68,6 +69,8 @@ function processOne(value: any, field: Field, checkRange: boolean = true) {
     } else if (value instanceof Date) {
       value = moment(value, Constants.DATE_JSON_FORMAT);
     } else if (!isObject(value)) {
+      const fieldTrim = field.get('trim');
+      value = trim(value, fieldTrim);
       switch (field.type) {
         case FieldType.boolean: {
           const trueValue = field.get(BooleanValue.trueValue);

@@ -9,7 +9,7 @@ import warning from 'choerodon-ui/lib/_util/warning';
 import DataSet from './DataSet';
 import Record from './Record';
 import Validator, { CustomValidator } from '../validator/Validator';
-import { DataSetEvents, FieldIgnore, FieldType, SortOrder } from './enum';
+import { DataSetEvents, FieldIgnore, FieldTrim, FieldType, SortOrder } from './enum';
 import lookupStore from '../stores/LookupCodeStore';
 import lovCodeStore from '../stores/LovCodeStore';
 import localeContext from '../locale-context';
@@ -189,6 +189,11 @@ export type FieldProps = {
    * 在获得响应之后对数据进行处理
    */
   transformResponse?: (value: any) => any;
+  /**
+   * 字符串值是否去掉首尾空格
+   * 可选值: both left right none
+   */
+  trim?: FieldTrim;
 };
 
 export default class Field {
@@ -201,6 +206,7 @@ export default class Field {
     valueField: 'value',
     trueValue: true,
     falseValue: false,
+    trim: FieldTrim.both,
   };
 
   dataSet?: DataSet;

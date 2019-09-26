@@ -71,3 +71,10 @@ export const enum FieldIgnore {
   clean = 'clean',
   never = 'never',
 }
+
+export const enum FieldTrim {
+  both = 'both',
+  left = 'left',
+  right = 'right',
+  none = 'none',
+}
