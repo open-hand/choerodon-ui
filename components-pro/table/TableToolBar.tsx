@@ -14,6 +14,7 @@ import Icon from '../icon';
 import TableContext from './TableContext';
 import { $l } from '../locale-context';
 import autobind from '../_util/autobind';
+import TableButtons from './TableButtons';
 
 /**
  * 去除级联字段
@@ -187,26 +188,13 @@ export default class TableToolBar extends Component<TabelToolBarProps, any> {
     });
   }
 
-  getButtons(): ReactNode {
-    const { prefixCls, buttons } = this.props;
-    if (buttons.length) {
-      return <span className={`${prefixCls}-toolbar-button-group`}>{buttons}</span>;
-    }
-  }
-
   render() {
-    const { prefixCls, pagination } = this.props;
-    const queryBar = this.getQueryBar();
-    const buttons = this.getButtons();
-    if (buttons || queryBar) {
-      return [
-        <div key="toolbar" className={`${prefixCls}-toolbar`}>
-          {buttons}
-          {queryBar}
-        </div>,
-        pagination,
-      ];
-    }
-    return pagination;
+    const { prefixCls, pagination = null, buttons } = this.props;
+    return [
+      <TableButtons key="toolbar" prefixCls={prefixCls} buttons={buttons}>
+        {this.getQueryBar()}
+      </TableButtons>,
+      pagination,
+    ];
   }
 }

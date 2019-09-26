@@ -18,6 +18,7 @@ import { $l } from '../locale-context';
 import autobind from '../_util/autobind';
 import { getDateFormatByField } from '../field/utils';
 import { PaginationProps } from '../pagination/Pagination';
+import TableButtons from './TableButtons';
 
 export interface TableAdvancedQueryBarProps extends ElementProps {
   dataSet: DataSet;
@@ -335,14 +336,7 @@ export default class TableAdvancedQueryBar extends Component<
         </div>
       );
     }
-    if (buttons.length) {
-      return (
-        <div key="toolbar" className={`${prefixCls}-toolbar`}>
-          <span className={`${prefixCls}-toolbar-button-group`}>{buttons}</span>
-        </div>
-      );
-    }
 
-    return null;
+    return <TableButtons key="toolbar" prefixCls={prefixCls} buttons={buttons} />;
   }
 }

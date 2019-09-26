@@ -28,6 +28,7 @@ import TableContext from './TableContext';
 import TableWrapper from './TableWrapper';
 import TableBody from './TableBody';
 import TableFooter from './TableFooter';
+import TableButtons from './TableButtons';
 import {
   ColumnLock,
   ScrollPosition,
@@ -953,12 +954,7 @@ export default class Table extends DataSetComponent<TableProps> {
         default:
       }
     }
-    return [
-      <span key="buttons" className={`${prefixCls}-toolbar-button-group`}>
-        {buttons}
-      </span>,
-      pagination,
-    ];
+    return [<TableButtons key="toolbar" prefixCls={prefixCls} buttons={buttons} />, pagination];
   }
 
   render() {

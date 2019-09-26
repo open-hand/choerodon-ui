@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>Table`: Fixed an issue with Table querybar.
+
 ## 0.8.13
 
 `2019-09-26`
