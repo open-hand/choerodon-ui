@@ -279,13 +279,18 @@
     left: 0;
   }
   &-has-value &-label-wrapper,
-  &-focused &-label-wrapper,
+  &-focused &-label-wrapper {
+    border-top-color: @component-background;
+    transform: scaleX(0.8);
+  }
   &:-webkit-autofill + &-label-wrapper {
     border-top-color: @component-background;
     transform: scaleX(0.8);
   }
   &-has-value &-label,
-  &-focused &-label,
+  &-focused &-label {
+    transform: scaleY(0.8);
+  }
   &:-webkit-autofill + &-label-wrapper &-label {
     transform: scaleY(0.8);
   }

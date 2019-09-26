@@ -18,6 +18,7 @@ timeline: true
 - 🌟 `<pro>Field`: 新增 trim 属性 。
 - 🌟 `<pro>DataSet`: dataKey 和 totalKey 支持深层匹配，如 dataKey = "demo.list" 。
 - 🐞 `<pro>Table`: 修复 Table querybar 的问题。
+- 🐞 `<pro>Field`: 修复 float label 在 firefox 下不生效的问题。
 
 ## 0.8.13
 

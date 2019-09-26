@@ -58,12 +58,18 @@
     color: @error-color;
   }
   &-float-label .@{field-label-prefix-cls}-wrapper,
-  &-float-label &:focus + .@{field-label-prefix-cls}-wrapper,
+  &-float-label &:focus + .@{field-label-prefix-cls}-wrapper {
+    transform: scaleX(0.8);
+  }
   &-float-label &:-webkit-autofill + .@{field-label-prefix-cls}-wrapper {
     transform: scaleX(0.8);
   }
   &-float-label .@{field-label-prefix-cls},
-  &-float-label&-focused .@{field-label-prefix-cls},
+  &-float-label&-focused .@{field-label-prefix-cls} {
+    font-weight: 500;
+    font-size: 0.15rem; // 15 * 0.8(缩放比例) = 12(目标值)
+    transform: scaleY(0.8);
+  }
   &-float-label &:-webkit-autofill + .@{field-label-prefix-cls}-wrapper .@{field-label-prefix-cls} {
     font-weight: 500;
     font-size: 0.15rem; // 15 * 0.8(缩放比例) = 12(目标值)

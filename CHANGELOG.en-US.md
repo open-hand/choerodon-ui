@@ -18,6 +18,7 @@ timeline: true
 - 🌟 `<pro>Field`: Added `trim` property.
 - 🌟 `<pro>DataSet`: `dataKey` and `totalKey` support deep matching, such as `dataKey = "demo.list"`.
 - 🐞 `<pro>Table`: Fixed an issue with Table querybar.
+- 🐞 `<pro>Field`: Fixed a problem where float label does not work under firefox.
 
 ## 0.8.13
 
