@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.13
+
+`2019-09-26`
+
 - 🌟 `<pro>Table`: 属性 queryBar 支持钩子类型。
 - 🐞 `<pro>DataSet.Field`: 修复 dynamicProps 在某些情况不起作用的问题。
 
