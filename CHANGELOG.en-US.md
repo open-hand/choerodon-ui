@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>DataSet`: Fixed an issue with dataKey.
+
 ## 0.8.14
 
 `2019-09-26`

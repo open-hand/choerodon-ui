@@ -4,7 +4,6 @@ import { isArrayLike } from 'mobx';
 import { AxiosRequestConfig } from 'axios';
 import isBoolean from 'lodash/isBoolean';
 import isObject from 'lodash/isObject';
-import isNil from 'lodash/isNil';
 import isString from 'lodash/isString';
 import isArray from 'lodash/isArray';
 import isNumber from 'lodash/isNumber';
@@ -365,10 +364,13 @@ export function generateResponseData(item: any, dataKey?: string): object[] {
     if (isObject(item)) {
       if (dataKey) {
         const result = ObjectChainValue.get(item, dataKey);
+        if (result === undefined) {
+          return [item];
+        }
         if (isArray(result)) {
           return result;
         }
-        if (!isNil(result)) {
+        if (isObject(result)) {
           return [result];
         }
       } else {
