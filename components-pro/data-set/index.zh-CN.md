@@ -72,7 +72,7 @@ title: DataSet
 
 | 名称 | 说明 | 参数 | 返回值 |
 | --- | --- | --- | --- |
-| ready(isSelect) | 判断记录是否准备就绪 | `isSelect` - 设为 `true` 时，判断选中的记录 | Promise&lt;boolean&gt; |
+| ready(isSelect) | 判断记录是否准备就绪 | `isSelect` - 设为 `true` 时，判断选中的记录 | Promise |
 | query(page) | 查询 | `page`&lt;optional,defualt:0&gt; - 指定页码 | Promise&lt;any&gt; |
 | submit(isSelect, noCascade) | 将数据集中的增删改的记录进行远程提交 | `isSelect` - 设为 `true` 时，只提交选中的记录 `noCascade` - 为 true 时，不提交级联数据 | Promise&lt;any&gt; |
 | reset() | 重置更改, 并清除校验状态 |  |  |
@@ -178,7 +178,7 @@ title: DataSet
 | getCascadeRecords(childName) | 根据级联名获取子级联数据 | `childName` - 级联名 | Record[] |
 | getField(fieldName) | 根据字段名获取字段 z | `fieldName` - 字段名 | Field |
 | clone() | 克隆记录，自动剔除主键值 |  | Record |
-| ready() | 判断记录是否准备就绪 |  | Promise&lt;boolean&gt; |
+| ready() | 判断记录是否准备就绪 |  | Promise |
 | reset() | 重置更改 |  |  |
 | save() | 保存当前数据至缓存 |  |  |
 | restore() | 从缓存恢复保存的数据 |  |  |

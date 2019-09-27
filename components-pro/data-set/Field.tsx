@@ -16,9 +16,9 @@ import localeContext from '../locale-context';
 import { processValue } from './utils';
 import Validity from '../validator/Validity';
 import ValidationResult from '../validator/ValidationResult';
-import { LovConfig } from '../lov/Lov';
 import { ValidatorProps } from '../validator/rules';
 import isSame from '../_util/isSame';
+import PromiseQueue from '../_util/PromiseQueue';
 
 export type Fields = ObservableMap<string, Field>;
 
@@ -217,9 +217,7 @@ export default class Field {
 
   validator: Validator = new Validator();
 
-  lookUpPending?: Promise<object[] | undefined>;
-
-  lovPending?: Promise<LovConfig | undefined>;
+  pending: PromiseQueue = new PromiseQueue();
 
   lastDynamicProps: any = {};
 
@@ -583,34 +581,26 @@ export default class Field {
   async fetchLookup() {
     const axiosConfig = lookupStore.getAxiosConfig(this);
     if (axiosConfig.url) {
-      try {
-        await (this.lookUpPending = lookupStore.fetchLookupData(axiosConfig));
-      } finally {
-        this.lookUpPending = undefined;
-      }
+      this.pending.add(lookupStore.fetchLookupData(axiosConfig));
     }
   }
 
   async fetchLovConfig() {
     const lovCode = this.get('lovCode');
     if (lovCode) {
-      try {
-        const config = await (this.lovPending = lovCodeStore.fetchConfig(lovCode));
-        if (config) {
-          runInAction(() => {
-            const { textField, valueField } = config;
-            if (textField) {
-              this.set('textField', textField);
-              this.pristineProps.textField = valueField;
-            }
-            if (valueField) {
-              this.set('valueField', valueField);
-              this.pristineProps.valueField = valueField;
-            }
-          });
-        }
-      } finally {
-        this.lovPending = undefined;
+      const config = await this.pending.add(lovCodeStore.fetchConfig(lovCode));
+      if (config) {
+        runInAction(() => {
+          const { textField, valueField } = config;
+          if (textField) {
+            this.set('textField', textField);
+            this.pristineProps.textField = valueField;
+          }
+          if (valueField) {
+            this.set('valueField', valueField);
+            this.pristineProps.valueField = valueField;
+          }
+        });
       }
     }
   }
@@ -631,21 +621,9 @@ export default class Field {
     return this.validator.validationErrorValues;
   }
 
-  async ready(): Promise<any> {
-    const { lookUpPending, lovPending } = this;
+  ready(): Promise<any> {
     const options = this.getOptions();
-    const result = await Promise.all([
-      this.lookUpPending,
-      this.lovPending,
-      options && options.ready(),
-    ]);
-    if (
-      (this.lookUpPending && this.lookUpPending !== lookUpPending) ||
-      (this.lovPending && this.lovPending !== lovPending)
-    ) {
-      return this.ready();
-    }
-    return result;
+    return Promise.all([this.pending.ready(), options && options.ready()]);
   }
 
   private findDataSetField(): Field | undefined {

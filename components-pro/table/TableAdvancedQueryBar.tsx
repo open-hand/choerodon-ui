@@ -300,6 +300,7 @@ export default class TableAdvancedQueryBar extends Component<
 
     return (
       <KeyValueBar
+        key="key-value-bar"
         prefixCls={prefixCls}
         items={items}
         onCloseBtnClick={this.handleKeyValueItemClose}

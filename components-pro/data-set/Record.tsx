@@ -52,15 +52,11 @@ export default class Record {
 
   memo?: object;
 
-  initData?: object;
-
   pristineData: object;
 
   dataSetSnapshot: { [key: string]: DataSetSnapshot } = {};
 
   cascadeRecordsMap: { [key: string]: Record[] } = {};
-
-  pending?: Promise<boolean>;
 
   @observable data: object;
 
@@ -436,16 +432,8 @@ export default class Record {
     return new Record(cloneData);
   }
 
-  async ready(): Promise<any> {
-    const { pending } = this;
-    const result = await Promise.all([
-      pending,
-      ...[...this.fields.values()].map(field => field.ready()),
-    ]);
-    if (this.pending && this.pending !== pending) {
-      return this.ready();
-    }
-    return result;
+  ready(): Promise<any> {
+    return Promise.all([...this.fields.values()].map(field => field.ready()));
   }
 
   @action

@@ -76,7 +76,7 @@ class App extends React.Component {
         maxLength: 11,
         required: true,
       },
-      { name: 'code_description', type: 'string', label: '代码描述' },
+      { name: 'code_description', bind: 'code.description', type: 'string', label: '代码描述' },
       {
         name: 'code_select',
         type: 'string',

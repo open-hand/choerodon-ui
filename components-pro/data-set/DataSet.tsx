@@ -53,6 +53,7 @@ import isEmpty from '../_util/isEmpty';
 import * as ObjectChainValue from '../_util/ObjectChainValue';
 import Transport, { TransportProps } from './Transport';
 import axiosAdapter from '../_util/axiosAdapter';
+import PromiseQueue from '../_util/PromiseQueue';
 
 export type DataSetChildren = { [key: string]: DataSet };
 
@@ -224,7 +225,7 @@ export default class DataSet extends EventManager {
 
   queryParameter: object;
 
-  pending?: Promise<any>;
+  pending: PromiseQueue = new PromiseQueue();
 
   reaction: IReactionDisposer;
 
@@ -289,13 +290,19 @@ export default class DataSet extends EventManager {
     runInAction(() => {
       set(this.props, 'queryDataSet', ds);
       if (ds) {
-        defer(() => {
-          if (ds.length === 0) {
-            ds.create();
-          } else if (!ds.current) {
-            ds.currentIndex = 0;
-          }
-        });
+        // 初始化时如果直接执行create，mobx会报错，所以使用了defer
+        ds.pending.add(
+          new Promise(reslove => {
+            defer(() => {
+              if (ds.records.length === 0) {
+                ds.create();
+              } else if (!ds.current) {
+                ds.first();
+              }
+              reslove();
+            });
+          }),
+        );
       }
     });
   }
@@ -645,7 +652,7 @@ export default class DataSet extends EventManager {
       // ssr do not auto query
       if (autoQuery && typeof window !== 'undefined') {
         this.query();
-      } else if (autoCreate && this.length === 0) {
+      } else if (autoCreate && this.records.length === 0) {
         this.create();
       }
     });
@@ -686,17 +693,12 @@ export default class DataSet extends EventManager {
    * @param isSelect 如果为true，则只等待选中的记录
    * @returns Promise
    */
-  async ready(isSelect?: boolean): Promise<any> {
-    const { pending } = this;
-    const result = await Promise.all([
-      pending,
+  ready(isSelect?: boolean): Promise<any> {
+    return Promise.all([
+      this.pending.ready(),
       ...(isSelect ? this.selected : this.data).map(record => record.ready()),
       ...[...this.fields.values()].map(field => field.ready()),
     ]);
-    if (this.pending && this.pending !== pending) {
-      return this.ready(isSelect);
-    }
-    return result;
   }
 
   /**
@@ -705,13 +707,7 @@ export default class DataSet extends EventManager {
    * @return Promise
    */
   query(page?: number): Promise<any> {
-    try {
-      const pending = this.doQuery(page);
-      this.pending = pending;
-      return pending;
-    } finally {
-      this.pending = undefined;
-    }
+    return this.pending.add(this.doQuery(page));
   }
 
   async doQuery(page): Promise<any> {
@@ -1637,8 +1633,9 @@ Then the query method will be auto invoke.`,
             data: [...created, ...updated, ...destroyed, ...cascade],
           });
           if (submitEventResult) {
-            this.pending = axiosStatic.all(axiosConfigs.map(config => this.axios(config)));
-            const result: any[] = await this.pending;
+            const result: any[] = await this.pending.add(
+              axiosStatic.all(axiosConfigs.map(config => this.axios(config))),
+            );
             return this.handleSubmitSuccess(result);
           }
         } catch (e) {
@@ -1646,7 +1643,6 @@ Then the query method will be auto invoke.`,
           throw e;
         } finally {
           this.changeSubmitStatus(DataSetStatus.ready);
-          this.pending = undefined;
         }
       }
     }

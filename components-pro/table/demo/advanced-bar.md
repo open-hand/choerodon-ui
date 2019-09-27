@@ -39,6 +39,7 @@ class App extends React.Component {
         textField: 'text',
         valueField: 'value',
         options: this.optionDs,
+        defaultValue: 'F',
       },
       { name: 'date.startDate', type: 'date', label: '开始日期' },
       {
@@ -64,7 +65,7 @@ class App extends React.Component {
       },
     ],
     events: {
-      query: ({ params }) => console.log('filterbar query parameter', params),
+      query: ({ params, data }) => console.log('advanced bar query parameter', params, data),
     },
   });
 

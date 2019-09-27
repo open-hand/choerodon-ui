@@ -2,7 +2,7 @@
 order: 6
 title:
   zh-CN: 自定义搜索条
-  en-US: Custom Search Bar
+  en-US: Customize Search Bar
 ---
 
 ## zh-CN
@@ -11,7 +11,7 @@ title:
 
 ## en-US
 
-Custom Search Bar.
+Customize Search Bar.
 
 ```jsx
 import { DataSet, Table, Button, Form } from 'choerodon-ui/pro';
@@ -64,7 +64,7 @@ class App extends React.Component {
       },
     ],
     events: {
-      query: ({ params }) => console.log('filterbar query parameter', params),
+      query: ({ params, data }) => console.log('custom bar query parameter', params, data),
     },
   });
 
