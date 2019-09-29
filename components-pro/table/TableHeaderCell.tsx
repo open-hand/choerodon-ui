@@ -17,6 +17,7 @@ import { getAlignByField, getColumnKey, getHeader } from './utils';
 import { ColumnAlign } from './enum';
 import { ShowHelp } from '../field/enum';
 import Tooltip from '../tooltip';
+import autobind from '../_util/autobind';
 
 export interface TableHeaderCellProps extends ElementProps {
   dataSet: DataSet;
@@ -46,13 +47,14 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
 
   resizeColumn?: ColumnProps;
 
-  handleClick = () => {
+  @autobind
+  handleClick() {
     const { column, dataSet } = this.props;
     const { name } = column;
     if (name) {
       dataSet.sort(name);
     }
-  };
+  }
 
   getNode(column) {
     const { getHeaderNode } = this.props;
@@ -70,17 +72,19 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
     }
   }
 
-  handleLeftResize = e => {
+  @autobind
+  handleLeftResize(e) {
     const { prevColumn } = this.props;
     this.setResizeColumn(prevColumn);
     this.resizeStart(e);
-  };
+  }
 
-  handleRightResize = e => {
+  @autobind
+  handleRightResize(e) {
     const { resizeColumn } = this.props;
     this.setResizeColumn(resizeColumn);
     this.resizeStart(e);
-  };
+  }
 
   @action
   resizeStart(e): void {
@@ -98,7 +102,8 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
       .addEventListener('mouseup', this.resizeEnd);
   }
 
-  resize = (e): void => {
+  @autobind
+  resize(e): void {
     const column = this.resizeColumn;
     const limit = this.resizeBoundary + minColumnWidth(column);
     let left = e.pageX;
@@ -106,19 +111,11 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
       left = limit;
     }
     this.resizePosition = this.setSplitLinePosition(left);
-  };
+  }
 
+  @autobind
   @action
-  resizeEnd = (): void => {
-    this.resizeEvent.removeEventListener('mousemove').removeEventListener('mouseup');
-    const column = this.resizeColumn;
-    if (this.resizePosition && column) {
-      const newWidth = Math.max(this.resizePosition - this.resizeBoundary, minColumnWidth(column));
-      if (newWidth !== column.width) {
-        set(column, 'width', newWidth);
-        return;
-      }
-    }
+  resizeEnd(): void {
     const { prefixCls } = this.props;
     const {
       tableStore: {
@@ -126,7 +123,15 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
       },
     } = this.context;
     classes(element).remove(`${prefixCls}-resizing`);
-  };
+    this.resizeEvent.removeEventListener('mousemove').removeEventListener('mouseup');
+    const column = this.resizeColumn;
+    if (this.resizePosition && column) {
+      const newWidth = Math.max(this.resizePosition - this.resizeBoundary, minColumnWidth(column));
+      if (newWidth !== column.width) {
+        set(column, 'width', newWidth);
+      }
+    }
+  }
 
   @action
   setSplitLinePosition(left: number): number | undefined {

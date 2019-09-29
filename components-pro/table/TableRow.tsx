@@ -23,6 +23,7 @@ import { ColumnLock, SelectionMode } from './enum';
 import { getColumnKey, isDisabledRow } from './utils';
 import { EXPAND_KEY } from './TableStore';
 import { ExpandedRowProps } from './ExpandedRow';
+import autobind from '../_util/autobind';
 
 export interface TableRowProps extends ElementProps {
   lock?: ColumnLock | boolean;
@@ -97,7 +98,9 @@ export default class TableRow extends Component<TableRowProps, any> {
     }
   }
 
-  private saveRef = action((node: HTMLTableRowElement | null) => {
+  @autobind
+  @action
+  private saveRef(node: HTMLTableRowElement | null) {
     if (node) {
       this.node = node;
       const { lock, record } = this.props;
@@ -108,36 +111,42 @@ export default class TableRow extends Component<TableRowProps, any> {
         set(lockColumnsBodyRowsHeight, (this.rowKey = record.key), node.offsetHeight);
       }
     }
-  });
+  }
 
-  handleMouseEnter = () => {
+  @autobind
+  handleMouseEnter() {
     this.isHover = true;
-  };
+  }
 
-  handleMouseLeave = () => {
+  @autobind
+  handleMouseLeave() {
     this.isHover = false;
-  };
+  }
 
-  handleSelectionByClick = () => {
+  @autobind
+  handleSelectionByClick() {
     this.handleSelection();
     this.handleClick();
-  };
+  }
 
-  handleSelectionByDblClick = () => {
+  @autobind
+  handleSelectionByDblClick() {
     this.handleSelection();
     const { onDoubleClick } = this.rowExternalProps;
     if (typeof onDoubleClick === 'function') {
       onDoubleClick();
     }
-  };
+  }
 
-  handleExpandChange = () => {
+  @autobind
+  handleExpandChange() {
     if (this.expandable) {
       this.isExpanded = !this.isExpanded;
     }
-  };
+  }
 
-  handleClick = () => {
+  @autobind
+  handleClick() {
     const {
       record,
       record: { dataSet },
@@ -149,9 +158,10 @@ export default class TableRow extends Component<TableRowProps, any> {
     if (typeof onClick === 'function') {
       onClick();
     }
-  };
+  }
 
-  getCell = (column: ColumnProps, index: number): ReactNode => {
+  @autobind
+  getCell(column: ColumnProps, index: number): ReactNode {
     const { prefixCls, record, indentSize } = this.props;
     return (
       <TableCell
@@ -164,7 +174,7 @@ export default class TableRow extends Component<TableRowProps, any> {
         {this.hasExpandIcon(index) && this.renderExpandIcon()}
       </TableCell>
     );
-  };
+  }
 
   focusRow(row: HTMLTableRowElement | null) {
     if (row) {

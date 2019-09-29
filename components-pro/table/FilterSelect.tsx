@@ -5,6 +5,7 @@ import isNil from 'lodash/isNil';
 import defer from 'lodash/defer';
 import noop from 'lodash/noop';
 import debounce from 'lodash/debounce';
+import throttle from 'lodash/throttle';
 import isString from 'lodash/isString';
 import { observer } from 'mobx-react';
 import {
@@ -34,12 +35,15 @@ import processFieldValue from '../_util/processFieldValue';
 import lookupStore from '../stores/LookupCodeStore';
 import Option, { OptionProps } from '../option/Option';
 import isSameLike from '../_util/isSameLike';
+import { DataSetEvents } from '../data-set/enum';
 
 export interface FilterSelectProps extends TextFieldProps {
   paramName?: string;
   optionDataSet: DataSet;
   queryDataSet?: DataSet;
   dropdownMenuStyle?: CSSProperties;
+  editable?: boolean;
+  hiddenIfNone?: boolean;
 }
 
 @observer
@@ -48,6 +52,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
     ...TextField.defaultProps,
     multiple: true,
     clearButton: true,
+    editable: true,
     prefix: <Icon type="filter_list" />,
     dropdownMenuStyle: { minWidth: pxToRem(180) },
   };
@@ -61,7 +66,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
   reaction: IReactionDisposer;
 
   @computed
-  get value(): any | undefined {
+  get value(): any {
     const { value, queryDataSet } = this.observableProps;
     if (value) {
       return value;
@@ -71,7 +76,8 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
       const { current } = queryDataSet;
       if (current) {
         const result: string[] = [];
-        [...new Set([...queryDataSet.fields.keys(), paramName])].forEach(key => {
+        const keys = queryDataSet.fields.keys();
+        [...new Set(paramName ? [...keys, paramName] : keys)].forEach((key: string) => {
           if (key) {
             const values = current.get(key);
             if (isArrayLike(values)) {
@@ -87,7 +93,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
     return undefined;
   }
 
-  set value(value: any | undefined) {
+  set value(value: any) {
     runInAction(() => {
       this.observableProps.value = value;
     });
@@ -118,7 +124,8 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
   on(ds?: DataSet) {
     this.off();
     if (ds) {
-      ds.addEventListener('update', this.handleDataSetUpdate);
+      ds.addEventListener(DataSetEvents.update, this.handleDataSetUpdate);
+      ds.addEventListener(DataSetEvents.recordReset, this.handleDataSetReset);
     }
     this.queryDataSet = ds;
   }
@@ -126,7 +133,8 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
   off() {
     const { queryDataSet } = this;
     if (queryDataSet) {
-      queryDataSet.removeEventListener('update', this.handleDataSetUpdate);
+      queryDataSet.removeEventListener(DataSetEvents.update, this.handleDataSetUpdate);
+      queryDataSet.removeEventListener(DataSetEvents.recordReset, this.handleDataSetReset);
     }
   }
 
@@ -136,6 +144,11 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
     this.off();
     this.reaction();
   }
+
+  doQuery = throttle(() => {
+    const { optionDataSet } = this.observableProps;
+    optionDataSet.query();
+  }, 500);
 
   @action
   setText(text) {
@@ -156,6 +169,8 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
       'optionDataSet',
       'queryDataSet',
       'dropdownMenuStyle',
+      'hiddenIfNone',
+      'editable',
     ]);
   }
 
@@ -235,6 +250,12 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
   }
 
   @autobind
+  handleDataSetReset() {
+    this.setValue(undefined);
+  }
+
+  @autobind
+  @action
   handleDataSetUpdate({ name, value }) {
     const values = this.getValues();
     if (isArrayLike(value)) {
@@ -258,12 +279,14 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
         this.setValue(values.filter(item => item === name));
       }
     } else if (isNil(value)) {
-      this.setValue(values.filter(item => item === name));
-    } else if (values.indexOf(name) === -1) {
-      values.push(name);
+      this.setValue(values.filter(item => item !== name));
+    } else {
+      if (values.indexOf(name) === -1) {
+        values.push(name);
+      }
       this.setValue(values);
     }
-    this.observableProps.optionDataSet.query();
+    this.doQuery();
   }
 
   @autobind
@@ -273,8 +296,8 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
   }
 
   isEditorReadOnly(): boolean {
-    const { paramName } = this.props;
-    return this.getQueryValues(paramName).length > 0 && !this.selectField;
+    const { paramName, editable } = this.props;
+    return (this.getQueryValues(paramName).length > 0 && !this.selectField) || !editable;
   }
 
   @autobind
@@ -430,6 +453,11 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
       props: { dropdownMenuStyle },
     } = this;
     const editable = !this.isEditorReadOnly();
+    const options = editable
+      ? filterText
+        ? this.getInputFilterOptions(filterText)
+        : this.getFieldSelectOptions()
+      : null;
     return (
       <ObserverSelect
         {...props}
@@ -443,7 +471,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
         checkValueOnOptionsChange={false}
         dropdownMenuStyle={dropdownMenuStyle}
       >
-        {filterText ? this.getInputFilterOptions(filterText) : this.getFieldSelectOptions()}
+        {options}
       </ObserverSelect>
     );
   }
@@ -454,6 +482,14 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
     if (record) {
       record.clear();
     }
+  }
+
+  renderWrapper(): ReactNode {
+    const { hiddenIfNone } = this.props;
+    if (this.isEmpty() && hiddenIfNone) {
+      return null;
+    }
+    return super.renderWrapper();
   }
 
   renderMultipleEditor(props: FilterSelectProps) {

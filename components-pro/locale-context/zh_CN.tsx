@@ -24,7 +24,6 @@ export default {
     column_name: '列名',
     filter_bar_placeholder: '过滤表',
     advanced_query: '高级查询',
-    hide_advanced_query: '隐藏高级查询',
     advanced_query_conditions: '高级查询条件',
   },
   Pagination: {

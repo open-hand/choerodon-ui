@@ -26,7 +26,6 @@ export interface Locale {
     column_name;
     filter_bar_placeholder;
     advanced_query;
-    hide_advanced_query;
     advanced_query_conditions;
   };
   Pagination: {

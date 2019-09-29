@@ -2,7 +2,6 @@ import Map from 'core-js/library/fn/map';
 import React, {
   cloneElement,
   FormEventHandler,
-  Fragment,
   isValidElement,
   ReactInstance,
   ReactNode,
@@ -262,7 +261,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     /**
      * 多值标签超出最大数量时的占位描述
      */
-    maxTagPlaceholder: PropTypes.node,
+    maxTagPlaceholder: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
     /**
      * 多值标签最大数量
      */
@@ -952,9 +951,9 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     if (readOnly) {
       if (rangeValue.length) {
         return (
-          <Fragment>
+          <>
             {rangeValue[0]}~{rangeValue[1]}
-          </Fragment>
+          </>
         );
       }
     }

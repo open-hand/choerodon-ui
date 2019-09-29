@@ -16,6 +16,8 @@ export const enum DataSetEvents {
   export = 'export',
   create = 'create',
   beforeDelete = 'beforeDelete',
+  reset = 'reset',
+  recordReset = 'recordReset',
 }
 
 export const enum DataSetSelection {

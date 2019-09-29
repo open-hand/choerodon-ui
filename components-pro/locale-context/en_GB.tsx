@@ -24,8 +24,7 @@ export default {
     column_name: 'Column Name',
     filter_bar_placeholder: 'Table Filter',
     advanced_query: 'Advanced Query',
-    hide_advanced_query: 'Hide Advanced Query',
-    advanced_query_conditions: 'Advanced Query Conditions',
+    advanced_query_conditions: 'Advanced Queries',
   },
   Pagination: {
     records_per_page: 'Number of items per page：',

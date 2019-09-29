@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { createPortal, render } from 'react-dom';
 import classNames from 'classnames';
 import findLast from 'lodash/findLast.js';
@@ -271,7 +271,7 @@ export default class ModalContainer extends Component<any> {
       }
     }
     return (
-      <Fragment>
+      <>
         <Animate
           component=""
           transitionAppear
@@ -282,7 +282,7 @@ export default class ModalContainer extends Component<any> {
           <Mask hidden={hidden} onClick={this.handleMaskClick} onMouseDown={stopEvent} />
         </Animate>
         {items}
-      </Fragment>
+      </>
     );
   }
 

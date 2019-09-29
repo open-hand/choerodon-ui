@@ -12,6 +12,7 @@ import { ColumnLock } from './enum';
 import DataSet from '../data-set/DataSet';
 import { getColumnKey } from './utils';
 import ColumnGroup from './ColumnGroup';
+import autobind from '../_util/autobind';
 
 export interface TableHeaderProps extends ElementProps {
   dataSet: DataSet;
@@ -34,11 +35,15 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
 
   node: HTMLTableSectionElement | null;
 
-  saveRef = node => (this.node = node);
+  @autobind
+  saveRef(node) {
+    this.node = node;
+  }
 
-  getHeaderNode = () => {
+  @autobind
+  getHeaderNode() {
     return this.node;
-  };
+  }
 
   render() {
     const { prefixCls, lock, dataSet } = this.props;

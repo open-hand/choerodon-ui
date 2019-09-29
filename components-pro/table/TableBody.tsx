@@ -14,6 +14,7 @@ import Record from '../data-set/Record';
 import { ColumnLock } from './enum';
 import ExpandedRow from './ExpandedRow';
 import { DataSetStatus } from '../data-set/enum';
+import autobind from '../_util/autobind';
 
 export interface TableBodyProps extends ElementProps {
   lock?: ColumnLock | boolean;
@@ -39,13 +40,27 @@ export default class TableBody extends Component<TableBodyProps, any> {
 
   resizeObserver?: ResizeObserver;
 
+  @computed
+  get leafColumns(): ColumnProps[] {
+    const { tableStore } = this.context;
+    const { lock } = this.props;
+    if (lock === 'right') {
+      return tableStore.rightLeafColumns.filter(({ hidden }) => !hidden);
+    }
+    if (lock) {
+      return tableStore.leftLeafColumns.filter(({ hidden }) => !hidden);
+    }
+    return tableStore.leafColumns.filter(({ hidden }) => !hidden);
+  }
+
   private handleResize = debounce(() => {
     this.syncBodyHeight();
   }, 30);
 
-  saveRef = node => {
+  @autobind
+  saveRef(node) {
     this.tableBody = node;
-  };
+  }
 
   render() {
     const { prefixCls, lock } = this.props;
@@ -124,12 +139,15 @@ export default class TableBody extends Component<TableBodyProps, any> {
     );
   }
 
-  renderExpandedRows = (
+  @autobind
+  renderExpandedRows(
     columns: ColumnProps[],
     record: Record,
     isExpanded?: boolean,
     lock?: ColumnLock | boolean,
-  ) => this.getRows(record.children || [], columns, isExpanded, lock);
+  ) {
+    return this.getRows(record.children || [], columns, isExpanded, lock);
+  }
 
   getRow(
     columns: ColumnProps[],
@@ -161,19 +179,6 @@ export default class TableBody extends Component<TableBodyProps, any> {
         {children}
       </TableRow>
     );
-  }
-
-  @computed
-  get leafColumns(): ColumnProps[] {
-    const { tableStore } = this.context;
-    const { lock } = this.props;
-    if (lock === 'right') {
-      return tableStore.rightLeafColumns.filter(({ hidden }) => !hidden);
-    }
-    if (lock) {
-      return tableStore.leftLeafColumns.filter(({ hidden }) => !hidden);
-    }
-    return tableStore.leafColumns.filter(({ hidden }) => !hidden);
   }
 
   @action

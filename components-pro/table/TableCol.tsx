@@ -4,6 +4,7 @@ import classes from 'component-classes';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { ElementProps } from '../core/ViewComponent';
 import TableContext from './TableContext';
+import autobind from '../_util/autobind';
 
 export interface TableColProps extends ElementProps {
   width?: number | string;
@@ -51,14 +52,13 @@ export default class TableCol extends PureComponent<TableColProps> {
     }
   }
 
-  handleTransitionEnd = () => {
+  @autobind
+  handleTransitionEnd() {
     this.fireResizeEnd();
-  };
+  }
 
   fireResizeEnd() {
-    const { prefixCls, onResizeEnd } = this.props;
-    const { tableStore } = this.context;
+    const { onResizeEnd } = this.props;
     onResizeEnd();
-    classes(tableStore.node.element).remove(`${prefixCls}-resizing`);
   }
 }

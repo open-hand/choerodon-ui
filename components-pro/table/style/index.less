@@ -15,12 +15,14 @@
   border-top: @table-border;
   border-bottom: @table-border;
   outline: none;
+
   table {
     font-size: inherit;
     text-align: left;
     table-layout: fixed;
     border-spacing: 0;
   }
+
   &-header {
     margin-bottom: 0.1rem;
     padding: 0.08rem;
@@ -28,10 +30,12 @@
     font-size: 0.16rem;
     border-bottom: @border-width-base @border-style-base @border-color-base;
   }
+
   &-content {
     position: relative;
     overflow: hidden;
   }
+
   &-footer {
     padding: @table-padding-vertical 0;
     text-align: left;
@@ -40,17 +44,21 @@
   &-cell {
     margin: 0;
     padding: 0.01rem;
+
     &-inner {
       position: relative;
       display: block;
       padding: @table-padding-vertical @table-padding-horizontal;
+
       &:focus {
         outline: none;
       }
+
       > * {
         vertical-align: middle;
       }
     }
+
     &-dirty {
       .@{table-prefix-cls}-cell-inner::after {
         position: absolute;
@@ -61,12 +69,15 @@
         content: ' ';
       }
     }
+
     .@{output-prefix-cls}-invalid::after {
       border-top-color: @error-color;
     }
+
     &-prefix {
       float: left;
       padding-left: @table-padding-horizontal;
+
       > * {
         vertical-align: middle;
       }
@@ -82,12 +93,15 @@
     position: relative;
     color: @heading-color;
     background-color: @table-header-bg;
+
     &:last-child {
       border-right: none;
     }
   }
+
   &-thead&-column-resizable {
     border-bottom: none;
+
     .@{table-prefix-cls}-cell {
       border-right: @table-border;
       border-bottom: @table-border;
@@ -110,6 +124,7 @@
     position: absolute;
     left: -1000rem;
     z-index: 1;
+
     > * {
       display: block !important;
     }
@@ -135,11 +150,13 @@
     position: absolute;
     top: 0;
     z-index: 1;
+
     .@{table-prefix-cls}-head,
     .@{table-prefix-cls}-body {
       overflow-x: hidden;
       overflow-y: auto;
     }
+
     .@{table-prefix-cls}-foot {
       overflow-x: hidden;
     }
@@ -154,6 +171,7 @@
     left: 0;
     box-shadow: 0.06rem 0 0.06rem -0.04rem @shadow-color;
   }
+
   &-fixed-right {
     right: 0;
     box-shadow: -0.06rem 0 0.06rem -0.04rem @shadow-color;
@@ -174,11 +192,13 @@
       border-right: @table-border;
       border-left: @table-border;
     }
+
     .@{table-prefix-cls}-footer {
       padding-right: @table-padding-horizontal;
       padding-left: @table-padding-horizontal;
       border-bottom: @table-border;
     }
+
     .@{table-prefix-cls}-thead,
     .@{table-prefix-cls}-tfoot {
       .@{table-prefix-cls}-cell:last-child {
@@ -194,15 +214,18 @@
       border-right: @table-border;
       border-bottom: @table-border;
     }
+
     .@{table-prefix-cls}-cell,
     .@{table-prefix-cls}-cell[colspan] {
       border-right: @table-border;
       border-bottom: @table-border;
       border-left: @table-border;
     }
+
     .@{table-prefix-cls}-cell-inner {
       border: @border-width-base @border-style-base transparent;
     }
+
     &:not(.@{table-prefix-cls}-scroll-position-left)
       .@{table-prefix-cls}-fixed-left
       .@{table-prefix-cls}-cell:last-child {
@@ -217,9 +240,11 @@
     height: 100%;
     cursor: col-resize;
     user-select: none;
+
     &-left {
       left: @border-width-base / -2;
     }
+
     &-right {
       right: @border-width-base / -2;
     }
@@ -233,11 +258,13 @@
     width: 0.01rem;
     background-color: @table-split-color;
   }
+
   &-resizing {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+
     .@{table-prefix-cls}-split-line {
       display: block;
     }
@@ -301,9 +328,11 @@
   &-row-disabled > td {
     color: @disabled-color !important;
     background-color: @disabled-bg !important;
+
     .@{c7n-pro-prefix}-btn {
       color: @disabled-color !important;
     }
+
     &:not(.@{table-prefix-cls}-selection-column) .@{table-prefix-cls}-cell-inner::before {
       position: absolute;
       top: 0;
@@ -318,10 +347,12 @@
   &-toolbar {
     padding-bottom: 0.1rem;
     overflow: hidden;
+
     &-button-group {
       display: inline-block;
       vertical-align: middle;
     }
+
     button span {
       font-weight: 500;
     }
@@ -329,9 +360,11 @@
 
   &-query-bar {
     float: right;
+
     > * + * {
       margin-left: 0.16rem;
     }
+
     &-dirty-info {
       display: inline-block;
       height: @input-height-base;
@@ -340,16 +373,20 @@
       vertical-align: text-bottom;
       background-color: @background-color-light;
       border-radius: @border-radius-base;
+
       > * {
         vertical-align: middle;
+
         & + * {
           margin-left: 0.05rem;
         }
       }
+
       .@{iconfont-css-prefix} {
         color: @yellow-6;
       }
     }
+
     input {
       font-weight: 500;
     }
@@ -357,57 +394,22 @@
 
   &-advanced-query-bar {
     padding: 0.12rem 0;
-    &-container {
-      border-top: 0.01rem solid @border-color-split;
-    }
-    > span {
-      vertical-align: middle;
-    }
+
     &-button {
       display: inline-block;
+      vertical-align: middle;
     }
-    &-more-fields-panel {
-      padding: 0 0.2rem 0.04rem 0.2rem;
 
-      .more-field-container {
-        margin-bottom: 0.04rem;
-      }
-      .more-field-label {
-        display: inline-block;
-        margin-bottom: 0.04rem;
-        color: rgba(0, 0, 0, 0.65);
-      }
-    }
-    &-key-value-bar {
-      padding: 0.12rem 0;
-      border-top: @border-width-base dashed @border-color-base;
+    &-options .@{table-prefix-cls}-filter-select {
+      padding-right: 0 !important;
+      padding-left: 1.2rem !important;
+      border-top-style: dashed !important;
+      cursor: default;
 
-      .pair-container {
-        display: inline-block;
-        margin-right: 0.06rem;
-        padding: 0.01rem 0.08rem;
-        color: #fff;
-        background-color: @primary-color;
-        border-radius: 0.1rem;
-
-        &:first-child {
-          margin-left: 0.06rem;
-        }
-
-        .d-flex {
-          display: flex;
-          align-items: center;
-
-          .icon {
-            margin-right: 0.01rem;
-            margin-left: 0.1rem;
-            color: @primary-color;
-            font-size: 0.15rem;
-            background-color: #fff;
-            border-radius: 50%;
-            cursor: pointer;
-          }
-        }
+      &-prefix {
+        width: 1.2rem;
+        line-height: 1.5;
+        text-align: left;
       }
     }
   }
@@ -431,15 +433,18 @@
       font-weight: normal;
       opacity: 0;
     }
+
     &-asc &-icon,
     &-desc &-icon {
       color: inherit;
       opacity: 1;
     }
+
     &-desc &-icon {
       transform: rotate(180deg);
     }
   }
+
   &:not(&-resizing) &-thead .@{table-prefix-cls}-cell-inner:hover &-sort-icon {
     opacity: 1;
   }
@@ -448,6 +453,7 @@
     border: @border-width-base @border-style-base transparent;
     cursor: pointer;
     transition: transform 0.3s;
+
     &:focus {
       color: @primary-color;
       outline: none;
@@ -456,6 +462,7 @@
 
     &-expanded {
       transform: rotate(90deg);
+
       &:focus {
         transform: rotate(90deg) scale(1.4);
       }
@@ -464,6 +471,7 @@
     &-spaced {
       visibility: hidden;
     }
+
     & + .@{c7n-pro-prefix}-checkbox {
       margin-left: @table-padding-horizontal;
     }
@@ -482,29 +490,36 @@
     line-height: 0.35rem;
     border: none;
     border-top: @table-border !important;
+
     &-wrapper {
       width: 100%;
     }
+
     .@{table-prefix-cls}-filter-select-inner-editor {
       height: @input-height-base - 0.04rem;
       padding: @input-padding-vertical-base 0;
       background-color: transparent !important;
       border: none;
+
       & + * {
         right: -0.18rem;
       }
     }
+
     &-select-field {
       padding-left: 0.08rem;
       vertical-align: middle;
     }
+
     &-multiple-block {
       border-radius: 0.12rem;
     }
   }
+
   &-columns-chooser {
     width: 0.65rem;
     border-left: @table-border;
+
     &-dropdown-menu {
       .dropdown-menu;
       min-width: 1.8rem;

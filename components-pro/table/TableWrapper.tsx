@@ -13,6 +13,7 @@ import { ColumnLock } from './enum';
 import TableEditor from './TableEditor';
 import TableCol from './TableCol';
 import { getColumnKey } from './utils';
+import autobind from '../_util/autobind';
 
 export interface TableWrapperProps extends ElementProps {
   lock?: ColumnLock | boolean;
@@ -92,12 +93,13 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
     }
   }
 
-  handleResizeEnd = () => {
+  @autobind
+  handleResizeEnd() {
     const { tableStore } = this.context;
     if (tableStore.rowHeight === 'auto') {
       this.syncFixedTableRowHeight();
     }
-  };
+  }
 
   getCol(column, width): ReactNode {
     if (!column.hidden) {
@@ -144,9 +146,10 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
     ));
   }
 
-  saveRef = node => {
+  @autobind
+  saveRef(node) {
     this.tableWrapper = node;
-  };
+  }
 
   @computed
   get tableWidth() {

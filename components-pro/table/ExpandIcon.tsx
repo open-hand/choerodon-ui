@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import shallowequal from 'lodash/isEqual';
 import Icon from '../icon';
 import { ElementProps } from '../core/ViewComponent';
+import autobind from '../_util/autobind';
 
 export interface ExpandIconProps extends ElementProps {
   expandable?: boolean;
@@ -22,11 +23,12 @@ export default class ExpandIcon extends Component<ExpandIconProps> {
     return !shallowequal(nextProps, this.props);
   }
 
-  handleClick = e => {
+  @autobind
+  handleClick(e) {
     e.stopPropagation();
     const { onChange } = this.props;
     onChange(e);
-  };
+  }
 
   render() {
     const { prefixCls, expanded, expandable } = this.props;

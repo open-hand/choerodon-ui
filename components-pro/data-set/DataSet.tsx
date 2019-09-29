@@ -725,7 +725,9 @@ export default class DataSet extends EventManager {
   async submit(isSelect?: boolean, noCascade?: boolean): Promise<any> {
     await this.ready(isSelect);
     if (await this.validate(isSelect, noCascade)) {
-      return this.write(isSelect ? this.selected : this.records, isSelect, noCascade);
+      return this.pending.add(
+        this.write(isSelect ? this.selected : this.records, isSelect, noCascade),
+      );
     }
     return false;
   }
@@ -767,6 +769,7 @@ export default class DataSet extends EventManager {
   @action
   reset(): DataSet {
     this.records = this.originalData.map(record => record.reset());
+    this.fireEvent(DataSetEvents.reset);
     return this;
   }
 
@@ -779,7 +782,9 @@ export default class DataSet extends EventManager {
     if (page > 0 && this.paging) {
       return this.locate((page - 1) * this.pageSize + this.created.length - this.destroyed.length);
     }
-    return Promise.reject(new Error('page rejected'));
+    warning(page > 0, 'Page number is incorrect.');
+    warning(this.paging, 'Can not paging query util the property<paging> of DataSet is true.');
+    return Promise.resolve();
   }
 
   /**
@@ -923,7 +928,7 @@ export default class DataSet extends EventManager {
         (await confirm($l('DataSet', 'delete_selected_row_confirm'))) !== 'cancel'
       ) {
         this.remove(records);
-        return this.write(this.destroyed);
+        return this.pending.add(this.write(this.destroyed));
       }
     }
   }
@@ -976,7 +981,7 @@ export default class DataSet extends EventManager {
   async deleteAll() {
     if (this.length > 0 && (await confirm($l('DataSet', 'delete_all_row_confirm'))) !== 'cancel') {
       this.removeAll();
-      return this.write(this.destroyed);
+      return this.pending.add(this.write(this.destroyed));
     }
   }
 
@@ -1633,8 +1638,8 @@ Then the query method will be auto invoke.`,
             data: [...created, ...updated, ...destroyed, ...cascade],
           });
           if (submitEventResult) {
-            const result: any[] = await this.pending.add(
-              axiosStatic.all(axiosConfigs.map(config => this.axios(config))),
+            const result: any[] = await axiosStatic.all(
+              axiosConfigs.map(config => this.axios(config)),
             );
             return this.handleSubmitSuccess(result);
           }

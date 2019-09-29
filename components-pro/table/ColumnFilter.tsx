@@ -13,6 +13,10 @@ import { ColumnProps } from './Column';
 import { stopEvent, stopPropagation } from '../_util/EventManager';
 import autobind from '../_util/autobind';
 
+function handleMenuClick({ domEvent }) {
+  domEvent.preventDefault();
+}
+
 export interface ColumnFilterProps {
   prefixCls?: string;
   onColumnFilterChange?: (item?: any) => void;
@@ -34,7 +38,10 @@ export default class ColumnFilter extends Component<ColumnFilterProps> {
     this.setDropDownHidden(true);
   }
 
-  saveMenu = node => (this.menu = node);
+  @autobind
+  saveMenu(node) {
+    this.menu = node;
+  }
 
   @autobind
   handleHiddenChange(hidden) {
@@ -98,10 +105,6 @@ export default class ColumnFilter extends Component<ColumnFilterProps> {
     value.hidden = true;
   }
 
-  handleMenuClick({ domEvent }) {
-    domEvent.preventDefault();
-  }
-
   getMenu(prefixCls) {
     const {
       tableStore: { leafColumns, dataSet },
@@ -129,7 +132,7 @@ export default class ColumnFilter extends Component<ColumnFilterProps> {
         selectedKeys={selectedKeys}
         onSelect={this.handleMenuSelect}
         onDeselect={this.handleMenuUnSelect}
-        onClick={this.handleMenuClick}
+        onClick={handleMenuClick}
       >
         {this.getOptions(columns)}
       </Menu>
