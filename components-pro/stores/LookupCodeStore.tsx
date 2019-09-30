@@ -145,7 +145,7 @@ export class LookupCodeStore {
       return lookupUrl;
     }
     if (lovCode && type !== FieldType.object) {
-      return lovCodeStore.getQueryUrl(lovCode);
+      return lovCodeStore.getQueryUrl(lovCode, field);
     }
   }
 

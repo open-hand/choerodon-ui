@@ -19,6 +19,7 @@ import ValidationResult from '../validator/ValidationResult';
 import { ValidatorProps } from '../validator/rules';
 import isSame from '../_util/isSame';
 import PromiseQueue from '../_util/PromiseQueue';
+import { LovConfig } from 'choerodon-ui/pro/lib/lov/Lov';
 
 export type Fields = ObservableMap<string, Field>;
 
@@ -146,6 +147,14 @@ export type FieldProps = {
    */
   lookupUrl?: string | ((code: string) => string);
   /**
+   * LOV配置请求地址
+   */
+  lovDefineUrl?: string | ((code: string) => string);
+  /**
+   * LOV查询请求地址
+   */
+  lovQueryUrl?: string | ((code: string, config: LovConfig) => string);
+  /**
    * 值列表请求的axiosConfig
    */
   lookupAxiosConfig?:
@@ -156,6 +165,14 @@ export type FieldProps = {
         record?: Record;
         lookupCode?: string;
       }) => AxiosRequestConfig);
+  /**
+   * LOV配置请求的钩子
+   */
+  lovDefineAxiosConfig?: (code: string) => AxiosRequestConfig;
+  /**
+   * LOV查询请求的钩子
+   */
+  lovQueryAxiosConfig?: (code: string, lovConfig?: LovConfig) => AxiosRequestConfig;
   /**
    * 内部字段别名绑定
    */
@@ -588,7 +605,7 @@ export default class Field {
   async fetchLovConfig() {
     const lovCode = this.get('lovCode');
     if (lovCode) {
-      const config = await this.pending.add(lovCodeStore.fetchConfig(lovCode));
+      const config = await this.pending.add(lovCodeStore.fetchConfig(lovCode, this));
       if (config) {
         runInAction(() => {
           const { textField, valueField } = config;

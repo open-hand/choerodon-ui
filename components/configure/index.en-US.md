@@ -27,7 +27,7 @@ const prefixCls = getConfig('prefixCls');
 | lovDefineUrl | Lov configure url or hook which return url | string \| ((code: string) => string) | code => \`/sys/lov/lov_define?code=\${code}\` |
 | lovDefineAxiosConfig | hook for Lov configure axios config | (code: string) => AxiosRequestConfig | - |
 | lovQueryUrl | Lov query url or hook which return url | string \| ((code: string) => string) | code => \`/common/lov/dataset/\${code}\` |
-| lovQueryAxiosConfig | hook for Lov query axios config | (code: string, lovConfig?: LovConfig) => AxiosRequestConfig | - |
+| lovQueryAxiosConfig | hook for Lov query axios config | (code: string, lovConfig?: LovConfig, { dataSet, params, data }) => AxiosRequestConfig | - |
 | axios | Replace the built-in axios instance | AxiosInstance |  |
 | dataKey | default DataSet's dataKey | string | rows |
 | totalKey | default DataSet's totalKey | string | total |

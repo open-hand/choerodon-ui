@@ -1,11 +1,11 @@
 import isNil from 'lodash/isNil';
 import { action, observable, ObservableMap, runInAction } from 'mobx';
-import { AxiosInstance } from 'axios';
+import { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import warning from 'choerodon-ui/lib/_util/warning';
 import DataSet, { DataSetProps } from '../data-set/DataSet';
 import axios from '../axios';
-import { FieldProps } from '../data-set/Field';
+import Field, { FieldProps } from '../data-set/Field';
 import { FieldType } from '../data-set/enum';
 import { LovFieldType } from '../lov/enum';
 import { LovConfig, LovConfigItem } from '../lov/Lov';
@@ -103,44 +103,55 @@ export class LovCodeStore {
     this.lovDS = observable.map<string, DataSet>();
   }
 
+  getDefineAxiosConfig(code: string, field?: Field): AxiosRequestConfig | undefined {
+    const lovDefineAxiosConfig =
+      (field && field.get('lovDefineAxiosConfig')) || getConfig('lovDefineAxiosConfig');
+    if (lovDefineAxiosConfig) {
+      return lovDefineAxiosConfig(code);
+    }
+    return {
+      url: this.getConfigUrl(code, field),
+      method: 'post',
+    };
+  }
+
   getConfig(code: string): LovConfig | undefined {
     return this.lovCodes.get(code);
   }
 
-  async fetchConfig(code: string): Promise<LovConfig | undefined> {
+  async fetchConfig(code: string, field?: Field): Promise<LovConfig | undefined> {
     let config = this.getConfig(code);
     // SSR do not fetch the lookup
     if (!config && typeof window !== 'undefined') {
-      try {
-        const lovDefineAxiosConfig = getConfig('lovDefineAxiosConfig');
-        const pending =
-          this.pendings[code] ||
-          (lovDefineAxiosConfig
-            ? this.axios(lovDefineAxiosConfig(code))
-            : this.axios.post(this.getConfigUrl(code)));
-        this.pendings[code] = pending;
-        config = await pending;
-        runInAction(() => {
-          if (config) {
-            this.lovCodes.set(code, config);
-          }
-        });
-      } finally {
-        delete this.pendings[code];
+      const axiosConfig = this.getDefineAxiosConfig(code, field);
+      if (axiosConfig) {
+        try {
+          const pending = this.pendings[code] || this.axios(axiosConfig);
+          this.pendings[code] = pending;
+          config = await pending;
+          runInAction(() => {
+            if (config) {
+              this.lovCodes.set(code, config);
+            }
+          });
+        } finally {
+          delete this.pendings[code];
+        }
       }
     }
     return config;
   }
 
-  getLovDataSet(code: string): DataSet | undefined {
+  getLovDataSet(code: string, field?: Field): DataSet | undefined {
     let ds = this.lovDS.get(code);
     if (!ds) {
       const config = this.getConfig(code);
       if (config) {
         const { lovPageSize, lovItems, parentIdField, idField, valueField, treeFlag } = config;
-        const lovQueryAxiosConfig = getConfig('lovQueryAxiosConfig');
+        const lovQueryAxiosConfig =
+          (field && field.get('lovQueryAxiosConfig')) || getConfig('lovQueryAxiosConfig');
         const dataSetProps: DataSetProps = {
-          queryUrl: lovQueryAxiosConfig ? undefined : this.getQueryUrl(code),
+          queryUrl: lovQueryAxiosConfig ? undefined : this.getQueryUrl(code, field),
           transport: lovQueryAxiosConfig && {
             read(...args) {
               return lovQueryAxiosConfig(code, config, ...args);
@@ -190,15 +201,15 @@ export class LovCodeStore {
     return ds;
   }
 
-  getConfigUrl(code: string): string {
-    const lovDefineUrl = getConfig('lovDefineUrl');
+  getConfigUrl(code: string, field?: Field): string {
+    const lovDefineUrl = (field && field.get('lovDefineUrl')) || getConfig('lovDefineUrl');
     if (typeof lovDefineUrl === 'function') {
       return lovDefineUrl(code);
     }
     return lovDefineUrl as string;
   }
 
-  getQueryUrl(code: string): string {
+  getQueryUrl(code: string, field?: Field): string {
     const config = this.getConfig(code);
     if (config) {
       const { customUrl } = config;
@@ -207,7 +218,7 @@ export class LovCodeStore {
       }
     }
 
-    const lovQueryUrl = getConfig('lovQueryUrl');
+    const lovQueryUrl = (field && field.get('lovQueryUrl')) || getConfig('lovQueryUrl');
 
     if (typeof lovQueryUrl === 'function') {
       return lovQueryUrl(code, config);

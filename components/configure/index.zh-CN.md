@@ -30,7 +30,7 @@ const prefixCls = getConfig('prefixCls');
 | lovDefineUrl | Lov 取配置的地址或返回地址的钩子 | string \| ((code: string) => string) | code => \`/sys/lov/lov_define?code=\${code}\` |
 | lovDefineAxiosConfig | 返回 Lov 配置的钩子 | (code: string) => AxiosRequestConfig | - |
 | lovQueryUrl | Lov 取值的地址或返回地址的钩子 | string \| ((code: string) => string) | code => \`/common/lov/dataset/\${code}\` |
-| lovQueryAxiosConfig | Lov 取值 Axios 逻辑的钩子 | (code: string, lovConfig?: LovConfig) => AxiosRequestConfig | - |
+| lovQueryAxiosConfig | Lov 取值 Axios 逻辑的钩子 | (code: string, lovConfig?: LovConfig, { dataSet, params, data }) => AxiosRequestConfig | - |
 | axios | 替换内置的 axios 实例 | AxiosInstance |  |
 | dataKey | 默认 DataSet 的 dataKey | string | rows |
 | totalKey | 默认 DataSet 的 totalKey | string | total |

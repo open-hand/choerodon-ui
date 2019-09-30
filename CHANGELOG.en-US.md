@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `<pro>Pagination`: Added `showSizeChangerLabel`, `sizeChangerPosition`, `sizeChangerOptionRenderer` properties.
+- 🌟 `<pro>DataSet.Field`: Added `lovDefineAxiosConfig`, `lovQueryAxiosConfig` properties.
 - 💄 `<pro>Table`: Refactor the advanced query bar.
 - 🐞 `<pro>DataSet`: Fixed an issue where the timing of the ready method was incorrect, such as query method called before the queryDataSet was ready.
 

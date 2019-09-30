@@ -215,8 +215,12 @@ title: DataSet
 | lovCode | LOV 配置代码 | string |  |
 | lovPara | LOV 查询参数对象 | object |  |
 | lookupCode | 值列表代码 | string |  |
-| lookupUrl | 值列表请求地址 | string |  |
+| lookupUrl | 值列表请求地址 | string \| (code) => string |  |
+| lovDefineUrl | lov 配置请求地址 | string \| (code) => string |  |
+| lovQueryUrl | lov 查询请求地址 | string \| (code, config) => string |  |
 | lookupAxiosConfig | 值列表请求配置或返回配置的钩子，详见[AxiosRequestConfig](#AxiosRequestConfig) | AxiosRequestConfig\| ({ dataSet, record, params, lookupCode }) => AxiosRequestConfig |  |
+| lovDefineAxiosConfig | lov 配置的请求配置或返回配置的钩子，优先级高于 lovDefineUrl，详见[AxiosRequestConfig](#AxiosRequestConfig) | AxiosRequestConfig\| (code) => AxiosRequestConfig |  |
+| lovQueryAxiosConfig | lov 查询的请求配置或返回配置的钩子，优先级高于 lovQueryUrl，详见[AxiosRequestConfig](#AxiosRequestConfig) | AxiosRequestConfig\| (code, config, { dataSet, params, data }) => AxiosRequestConfig |  |
 | bind | 内部字段别名绑定 | string |  |
 | dynamicProps | 动态属性钩子 | ({ dataSet, record, name }) => object |  |
 | cascadeMap | 快码和 LOV 查询时的级联参数映射。 例如：cascadeMap: { parentCodeValue: 'city' }，其中'city'是当前所在数据源的其他字段名，parentCodeValue 是快码和 LOV 的查询参数 | object |  |

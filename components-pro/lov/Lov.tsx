@@ -113,9 +113,9 @@ export default class Lov extends Select<LovProps> {
 
   @computed
   get options(): DataSet {
-    const { lovCode } = this;
+    const { field, lovCode } = this;
     if (lovCode) {
-      const ds = lovStore.getLovDataSet(lovCode);
+      const ds = lovStore.getLovDataSet(lovCode, field);
       if (ds) {
         return ds;
       }
