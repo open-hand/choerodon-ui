@@ -112,7 +112,7 @@ export default class TableBody extends Component<TableBodyProps, any> {
     columns: ColumnProps[],
     expanded?: boolean,
     lock?: ColumnLock | boolean,
-  ) {
+  ): ReactNode {
     return records.map((record, index) => this.getRow(columns, record, index, expanded, lock));
   }
 
@@ -145,7 +145,7 @@ export default class TableBody extends Component<TableBodyProps, any> {
     record: Record,
     isExpanded?: boolean,
     lock?: ColumnLock | boolean,
-  ) {
+  ): ReactNode {
     return this.getRows(record.children || [], columns, isExpanded, lock);
   }
 
@@ -155,7 +155,7 @@ export default class TableBody extends Component<TableBodyProps, any> {
     index: number,
     expanded?: boolean,
     lock?: ColumnLock | boolean,
-  ) {
+  ): ReactNode {
     const { prefixCls, indentSize } = this.props;
     const {
       tableStore: { isTree },

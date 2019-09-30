@@ -1,8 +1,7 @@
-import isString from 'lodash/isString';
 import { FieldTrim } from '../data-set/enum';
 
-export default function trim(value: any, fieldTrim?: FieldTrim): any {
-  if (fieldTrim && isString(value)) {
+export default function trimString(value: string, fieldTrim?: FieldTrim): string {
+  if (fieldTrim) {
     switch (fieldTrim) {
       case FieldTrim.both:
         return value.trim();

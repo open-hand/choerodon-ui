@@ -5,6 +5,7 @@ import isNumber from 'lodash/isNumber';
 import C7NProgress, { ProgressProps as C7NProgressProps } from 'choerodon-ui/lib/progress';
 import DataSet from '../data-set/DataSet';
 import { FormField } from '../field/FormField';
+import { FieldFormat } from '../data-set/enum';
 
 export interface ProgressProps extends C7NProgressProps {
   dataSet?: DataSet;
@@ -12,7 +13,7 @@ export interface ProgressProps extends C7NProgressProps {
 }
 
 @observer
-export default class Progress extends FormField<ProgressProps> {
+export default class Progress extends FormField<ProgressProps & { format?: FieldFormat | string }> {
   static displayName = 'Progress';
 
   getValue() {
@@ -25,7 +26,10 @@ export default class Progress extends FormField<ProgressProps> {
 
   render() {
     return (
-      <C7NProgress {...omit(this.props, ['dataSet', 'showHelp', 'renderer'])} percent={this.getValue()} />
+      <C7NProgress
+        {...omit(this.props, ['dataSet', 'showHelp', 'renderer'])}
+        percent={this.getValue()}
+      />
     );
   }
 }

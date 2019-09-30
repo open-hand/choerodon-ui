@@ -9,7 +9,7 @@ import warning from 'choerodon-ui/lib/_util/warning';
 import DataSet from './DataSet';
 import Record from './Record';
 import Validator, { CustomValidator } from '../validator/Validator';
-import { DataSetEvents, FieldIgnore, FieldTrim, FieldType, SortOrder } from './enum';
+import { DataSetEvents, FieldFormat, FieldIgnore, FieldTrim, FieldType, SortOrder } from './enum';
 import lookupStore from '../stores/LookupCodeStore';
 import lovCodeStore from '../stores/LovCodeStore';
 import localeContext from '../locale-context';
@@ -42,9 +42,9 @@ export type FieldProps = {
    */
   label?: string;
   /**
-   * 日期类型字段值格式化
+   * 字符串类型和日期类型字段值格式化
    */
-  format?: string;
+  format?: string | FieldFormat;
   /**
    * 正则
    */

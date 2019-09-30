@@ -33,6 +33,7 @@ title: FormField
 | maxTagTextLength | 多值标签文案最大长度 | number |  |
 | pristine | 显示原始值 | boolean | false |
 | trim | 字符串值是否去掉首尾空格，如果绑定 DataSet 需要在 DataSet 的 Field 上设置 trim，可选值: `both` `left` `right` `none` | string | `both` |
+| format | 字符串格式化，可选值: `uppercase` `lowercase` `capitalize` | string |  |
 | onInvalid | 校验失败回调 | (validationMessage, validity, name) => void |  |
 | onChange | 值变化回调 | (value, oldValue, form) => void |  |
 | onInput | 输入回调 | Function |  |

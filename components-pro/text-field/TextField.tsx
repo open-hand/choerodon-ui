@@ -20,6 +20,7 @@ import Animate from '../animate';
 import Tooltip from '../tooltip/Tooltip';
 import { GroupItemCategory } from './enum';
 import { ShowHelp } from '../field/enum';
+import { FieldFormat } from '../data-set/enum';
 
 let PLACEHOLDER_SUPPORT;
 
@@ -358,6 +359,20 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   getWrappedEditor(): ReactNode {
     return this.getEditor();
+  }
+
+  getClassName(...props): string | undefined {
+    const { prefixCls, format } = this;
+    return super.getClassName(
+      {
+        [`${prefixCls}-${format}`]: [
+          FieldFormat.uppercase,
+          FieldFormat.lowercase,
+          FieldFormat.capitalize,
+        ].includes(format as FieldFormat),
+      },
+      ...props,
+    );
   }
 
   getEditor(): ReactNode {

@@ -80,3 +80,9 @@ export const enum FieldTrim {
   right = 'right',
   none = 'none',
 }
+
+export const enum FieldFormat {
+  uppercase = 'uppercase',
+  lowercase = 'lowercase',
+  capitalize = 'capitalize',
+}

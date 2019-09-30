@@ -1,4 +1,5 @@
-import { ReactNode } from 'react';
+import { FunctionComponent, ReactNode } from 'react';
+import isFunction from 'lodash/isFunction';
 import { ColumnProps } from './Column';
 import Record from '../data-set/Record';
 import { ColumnLock } from './enum';
@@ -8,19 +9,26 @@ export interface ExpandedRowProps {
   columns: ColumnProps[];
   record: Record;
   lock?: ColumnLock | boolean;
-  children?: (
-    columns: ColumnProps[],
-    record: Record,
-    isExpanded?: boolean,
-    lock?: ColumnLock | boolean,
-  ) => ReactNode;
+  children?:
+    | ReactNode
+    | ((
+        columns: ColumnProps[],
+        record: Record,
+        isExpanded?: boolean,
+        lock?: ColumnLock | boolean,
+      ) => ReactNode);
 }
 
-export default function ExpandedRow(props: ExpandedRowProps) {
-  const { isExpanded, children, columns, record, lock } = props;
+const ExpandedRow: FunctionComponent<ExpandedRowProps> = props => {
+  const { isExpanded, children = null, columns, record, lock } = props;
 
-  if (typeof children === 'function') {
-    return children(columns, record, isExpanded, lock);
+  if (isFunction(children)) {
+    const child = children(columns, record, isExpanded, lock);
+    if (child) {
+      return child;
+    }
   }
-  return null;
-}
+  return children;
+};
+
+export default ExpandedRow;

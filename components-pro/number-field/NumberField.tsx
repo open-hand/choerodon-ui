@@ -10,12 +10,13 @@ import { TextField, TextFieldProps } from '../text-field/TextField';
 import autobind from '../_util/autobind';
 import keepRunning from '../_util/keepRunning';
 import Icon from '../icon';
-import { formatNumber, getNearStepValues, getPrecision, MAX_SAFE_INTEGER, plus } from './utils';
+import { getNearStepValues, getPrecision, MAX_SAFE_INTEGER, plus } from './utils';
 import { ValidationMessages } from '../validator/Validator';
 import isEmpty from '../_util/isEmpty';
 import { $l } from '../locale-context';
 import { FieldType } from '../data-set/enum';
 import { ValidatorProps } from '../validator/rules';
+import formatNumber from '../formatter/formatNumber';
 
 function getCurrentValidValue(value: string): number {
   return Number(value.replace(/\.$/, '')) || 0;

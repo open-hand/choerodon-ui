@@ -2,8 +2,9 @@ import React from 'react';
 import Field from '../data-set/Field';
 import { BooleanValue, FieldType } from '../data-set/enum';
 import ObserverCheckBox from '../check-box/CheckBox';
-import { formatCurrency, formatNumber } from '../number-field/utils';
 import { Lang } from '../locale-context/enum';
+import formatNumber from '../formatter/formatNumber';
+import formatCurrency from '../formatter/formatCurrency';
 
 export default function processFieldValue(
   value,

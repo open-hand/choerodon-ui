@@ -44,10 +44,6 @@ const viewComponents: { [x: string]: typeof DaysView } = {
 
 export interface DatePickerProps extends TriggerFieldProps {
   /**
-   * 日期格式，如 `YYYY-MM-DD HH:mm:ss`
-   */
-  format?: string;
-  /**
    * 显示模式date|dateTime|time|year|month|week
    */
   mode?: ViewMode;

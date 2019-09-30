@@ -192,7 +192,7 @@ title: DataSet
 | type | 字段类型，可选值：`boolean` `number` `string` `date` `dateTime` `time` `week` `month` `year` `email` `url` `intl` `object` | string | string |
 | order | 排序类型，只支持单 field 排序， 如果多个 field 设置了 order，取第一个有 order 的 field，可选值：`asc` `desc` | string |  |
 | label | 字段标签 | string |  |
-| format | 日期类型字段值格式化, 'uppercase' 'lowercase' 'capti' | string |  |
+| format | 字符串类型和日期类型字段值格式化。 字符串类型格式化可选值：'uppercase' 'lowercase' 'capitalize' | string |  |
 | pattern | 正则校验 | string \| RegExp |  |
 | maxLength | 最大长度 | number |  |
 | minLength | 最小长度 | number |  |

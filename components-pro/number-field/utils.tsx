@@ -1,6 +1,3 @@
-import { FieldType } from '../data-set/enum';
-import normalizeLanguage from '../_util/normalizeLanguage';
-
 export const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER || 2 ** 53 - 1;
 
 export function getPrecision(value: number): number {
@@ -75,72 +72,4 @@ export function getNearStepValues(
     values.push(afterStepFactor / precisionFactor);
   }
   return values;
-}
-
-let supportsLocales;
-
-export function toLocaleStringSupportsLocales() {
-  if (supportsLocales === undefined) {
-    try {
-      (0).toLocaleString('i');
-      supportsLocales = false;
-    } catch (e) {
-      supportsLocales = e.name === 'RangeError';
-    }
-  }
-  return supportsLocales;
-}
-
-function getNumberFormatOptions(
-  type: FieldType,
-  options?: Intl.NumberFormatOptions,
-): Intl.NumberFormatOptions {
-  if (type === FieldType.number) {
-    return { style: 'decimal' };
-  }
-  if (options && options.currency) {
-    return { style: 'currency' };
-  }
-  return { style: 'decimal', minimumFractionDigits: 2, maximumFractionDigits: 2 };
-}
-
-function toLocaleStringPolyfill(
-  value: number,
-  type: FieldType,
-  options?: Intl.NumberFormatOptions,
-) {
-  if (type === FieldType.number) {
-    const fraction = String(value).split('.')[1];
-    return value.toLocaleString().split('.')[0] + (fraction ? `.${fraction}` : '');
-  }
-  const currency = options && options.currency;
-  return `${currency ? `${currency} ` : ''}${value.toLocaleString()}`;
-}
-
-export function formatNumber(value, lang: string, options?: Intl.NumberFormatOptions) {
-  const v = parseFloat(value);
-  if (!isNaN(v)) {
-    if (toLocaleStringSupportsLocales()) {
-      return v.toLocaleString(normalizeLanguage(lang), {
-        ...getNumberFormatOptions(FieldType.number, options),
-        ...options,
-      });
-    }
-    return toLocaleStringPolyfill(v, FieldType.number, options);
-  }
-  return value;
-}
-
-export function formatCurrency(value, lang: string, options?: Intl.NumberFormatOptions) {
-  const v = parseFloat(value);
-  if (!isNaN(v)) {
-    if (toLocaleStringSupportsLocales()) {
-      return v.toLocaleString(normalizeLanguage(lang), {
-        ...getNumberFormatOptions(FieldType.currency, options),
-        ...options,
-      });
-    }
-    return toLocaleStringPolyfill(v, FieldType.currency, options);
-  }
-  return value;
 }

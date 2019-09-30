@@ -34,7 +34,7 @@ import Icon from '../icon';
 import Tooltip from '../tooltip';
 import Form from '../form/Form';
 import isEmpty from '../_util/isEmpty';
-import { FieldTrim, FieldType } from '../data-set/enum';
+import { FieldFormat, FieldTrim, FieldType } from '../data-set/enum';
 import ValidationResult from '../validator/ValidationResult';
 import { ShowHelp } from './enum';
 import { ValidatorProps } from '../validator/rules';
@@ -44,7 +44,7 @@ import Animate from '../animate';
 import CloseButton from './CloseButton';
 import { fromRangeValue, getDateFormatByField, toMultipleValue, toRangeValue } from './utils';
 import isSame from '../_util/isSame';
-import trim from '../_util/trim';
+import formatString from 'choerodon-ui/pro/lib/formatter/formatString';
 
 const map: { [key: string]: FormField<FormFieldProps>[] } = {};
 
@@ -74,6 +74,9 @@ export interface FormFieldProps extends DataSetComponentProps {
    * 标签名
    */
   label?: string;
+  /**
+   * 标签布局
+   */
   labelLayout?: LabelLayout;
   /**
    * 字段名
@@ -162,6 +165,11 @@ export interface FormFieldProps extends DataSetComponentProps {
    * @default: both
    */
   trim?: FieldTrim;
+  /**
+   * 日期格式，如 `YYYY-MM-DD HH:mm:ss`
+   * 字符串格式，如 `uppcase` `lowercase` `capitalize`
+   */
+  format?: string | FieldFormat;
   /**
    * 校验失败回调
    */
@@ -643,6 +651,11 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   }
 
   @computed
+  get format(): FieldFormat | string | undefined {
+    return this.getProp('format');
+  }
+
+  @computed
   get range(): boolean {
     return this.getProp('range');
   }
@@ -928,6 +941,8 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       const {
         name,
         dataSet,
+        trim,
+        format,
         observableProps: { dataIndex },
       } = this;
       const { onChange = noop } = this.props;
@@ -936,7 +951,10 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       if (dataSet && name) {
         (this.record || dataSet.create({}, dataIndex)).set(name, value);
       } else {
-        value = trim(value, this.trim);
+        value = formatString(value, {
+          trim,
+          format,
+        });
         this.validate(value);
       }
       if (!isSame(old, value)) {
