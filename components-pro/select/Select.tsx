@@ -27,6 +27,7 @@ import * as ObjectChainValue from '../_util/ObjectChainValue';
 import isEmpty from '../_util/isEmpty';
 import isSame from '../_util/isSame';
 import isSameLike from '../_util/isSameLike';
+import { Renderer } from '../field/FormField';
 
 function updateActiveKey(menu: Menu, activeKey: string) {
   const store = menu.getStore();
@@ -50,12 +51,6 @@ function getSimpleValue(value, valueField) {
   }
   return value;
 }
-
-type OptionRendererArg = {
-  record: Record;
-  text: string;
-  value: any;
-};
 
 export interface SelectProps extends TriggerFieldProps {
   /**
@@ -108,7 +103,7 @@ export interface SelectProps extends TriggerFieldProps {
    * />
    * ```
    */
-  optionRenderer?: (arg: OptionRendererArg) => ReactNode;
+  optionRenderer?: Renderer;
 }
 
 export class Select<T extends SelectProps> extends TriggerField<T> {
@@ -137,7 +132,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
      * ```js
      * <Select
      *   {...props}
-     *   optionRenderer={({ record, text, value }) => text + '$'}
+     *   optionRenderer={({ dataSet, record, text, value }) => text + '$'}
      * />
      * ```
      */
@@ -444,7 +439,9 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
       if (!('selectedKeys' in menuProps) && this.isSelected(record)) {
         selectedKeys.push(key);
       }
-      const itemContent = optionRenderer ? optionRenderer({ record, text, value }) : text;
+      const itemContent = optionRenderer
+        ? optionRenderer({ dataSet: this.options, record, text, value })
+        : text;
       const option: ReactElement = (
         <Item key={key} value={record} disabled={menuDisabled || optionDisabled}>
           {itemContent}

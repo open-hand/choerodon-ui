@@ -9,6 +9,8 @@ import ObserverSelect from '../select/Select';
 import { $l } from '../locale-context';
 import Pager from './Pager';
 import Icon from '../icon';
+import { SizeChangerPosition } from './enum';
+import { Renderer } from '../field/FormField';
 
 export type PagerType = 'page' | 'prev' | 'next' | 'first' | 'last' | 'jump-prev' | 'jump-next';
 
@@ -19,7 +21,10 @@ export interface PaginationProps extends DataSetComponentProps {
   onChange?: (page: number, pageSize: number) => void;
   itemRender?: (page: number, type: PagerType) => ReactNode;
   pageSizeOptions?: string[];
+  sizeChangerPosition?: SizeChangerPosition;
+  sizeChangerOptionRenderer?: Renderer;
   showSizeChanger?: boolean;
+  showSizeChangerLabel?: boolean;
   showTotal?: boolean;
   showPager?: boolean;
 }
@@ -52,7 +57,10 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     pageSize: PropTypes.number,
     onChange: PropTypes.func,
     itemRender: PropTypes.func,
+    sizeChangerPosition: PropTypes.oneOf([SizeChangerPosition.left, SizeChangerPosition.right]),
+    sizeChangerOptionRenderer: PropTypes.func,
     showSizeChanger: PropTypes.bool,
+    showSizeChangerLabel: PropTypes.bool,
     showTotal: PropTypes.bool,
     showPager: PropTypes.bool,
     ...DataSetComponent.propTypes,
@@ -61,7 +69,10 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
   static defaultProps = {
     suffixCls: 'pagination',
     pageSizeOptions: ['10', '20', '50', '100'],
+    sizeChangerPosition: SizeChangerPosition.left,
+    sizeChangerOptionRenderer: ({ text }) => text,
     showSizeChanger: true,
+    showSizeChangerLabel: true,
     showTotal: true,
   };
 
@@ -154,8 +165,11 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
       'pageSizeOptions',
       'itemRender',
       'showSizeChanger',
+      'showSizeChangerLabel',
       'showTotal',
       'showPager',
+      'sizeChangerPosition',
+      'sizeChangerOptionRenderer',
     ]);
   }
 
@@ -232,17 +246,24 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
   }
 
   renderSizeChange(pageSize: number): ReactNode {
-    return [
-      <span key="size-info">{$l('Pagination', 'records_per_page')}</span>,
-      <ObserverSelect
-        key="size-select"
-        onChange={this.handlePageSizeChange}
-        value={String(pageSize)}
-        clearButton={false}
-      >
-        {this.getOptions()}
-      </ObserverSelect>,
-    ];
+    const { showSizeChangerLabel, showSizeChanger, sizeChangerOptionRenderer } = this.props;
+    if (showSizeChanger) {
+      const select = (
+        <ObserverSelect
+          key="size-select"
+          onChange={this.handlePageSizeChange}
+          value={String(pageSize)}
+          clearButton={false}
+          renderer={sizeChangerOptionRenderer}
+          optionRenderer={sizeChangerOptionRenderer}
+        >
+          {this.getOptions()}
+        </ObserverSelect>
+      );
+      return showSizeChangerLabel
+        ? [<span key="size-info">{$l('Pagination', 'records_per_page')}</span>, select]
+        : select;
+    }
   }
 
   renderTotal(pageSize: number, page: number, total: number): ReactNode {
@@ -261,19 +282,22 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     }
     const {
       totalPage,
-      props: { children, showSizeChanger, showTotal, showPager },
+      props: { children, sizeChangerPosition, showTotal, showPager },
     } = this;
+
+    const sizeChanger = this.renderSizeChange(pageSize);
 
     return (
       <nav {...this.getMergedProps()}>
         {children}
-        {showSizeChanger && this.renderSizeChange(pageSize)}
+        {sizeChangerPosition === SizeChangerPosition.left && sizeChanger}
         {showTotal && this.renderTotal(pageSize, page, total)}
-        {!showPager && this.getPager(1, 'first', false, page === 1)}
+        {this.getPager(1, 'first', false, page === 1)}
         {this.getPager(page - 1, 'prev', false, page === 1)}
         {showPager && this.renderPagers(page)}
         {this.getPager(page + 1, 'next', false, page === totalPage)}
-        {!showPager && this.getPager(totalPage, 'last', false, page === totalPage)}
+        {this.getPager(totalPage, 'last', false, page === totalPage)}
+        {sizeChangerPosition === SizeChangerPosition.right && sizeChanger}
       </nav>
     );
   }

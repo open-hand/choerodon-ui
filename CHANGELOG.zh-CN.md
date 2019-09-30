@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Pagination`: 新增 showSizeChangerLabel、sizeChangerPosition、sizeChangerOptionRenderer 属性。
 - 💄 `<pro>Table`: 重构高级查询条。
 - 🐞 `<pro>DataSet`: 修复 ready 方法时序不正确的问题，如 queryDataSet 未准备好时就执行了查询。
 

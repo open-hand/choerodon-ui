@@ -482,13 +482,15 @@ export default class Record {
   reset(): Record {
     const { status, fields, dataSet, dirty } = this;
     [...fields.values()].forEach(field => field.commit());
-    this.data = this.pristineData;
-    this.memo = undefined;
-    if (status === RecordStatus.update || status === RecordStatus.delete) {
-      this.status = RecordStatus.sync;
-    }
-    if (dataSet && dirty) {
-      dataSet.fireEvent(DataSetEvents.recordReset, { record: this, dataSet });
+    if (dirty) {
+      this.data = this.pristineData;
+      this.memo = undefined;
+      if (status === RecordStatus.update || status === RecordStatus.delete) {
+        this.status = RecordStatus.sync;
+      }
+      if (dataSet) {
+        dataSet.fireEvent(DataSetEvents.recordReset, { record: this, dataSet });
+      }
     }
     return this;
   }
