@@ -75,6 +75,10 @@ export interface TriggerFieldProps extends TextFieldProps {
    * @defualt 50
    */
   triggerHiddenDelay?: number;
+  /**
+   * 下拉框变化钩子
+   */
+  onPopupHiddenChange?: (hidden: boolean) => void;
 }
 
 export default abstract class TriggerField<T extends TriggerFieldProps> extends TextField<
@@ -110,6 +114,10 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
      * @defualt 50
      */
     triggerHiddenDelay: PropTypes.number,
+    /**
+     * 下拉框变化钩子
+     */
+    onPopupHiddenChange: PropTypes.func,
     ...TextField.propTypes,
   };
 
@@ -170,6 +178,7 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
       'trigger',
       'triggerShowDelay',
       'triggerHiddenDelay',
+      'onPopupHiddenChange',
     ]);
   }
 
@@ -249,6 +258,8 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
   @autobind
   handlePopupHiddenChange(hidden: boolean) {
     this.setPopup(!hidden);
+    const { onPopupHiddenChange = noop } = this.props;
+    onPopupHiddenChange(hidden);
   }
 
   forcePopupAlign() {
