@@ -143,8 +143,7 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
             r.length
               ? total
               : total +
-                1 +
-                (rowHeight === 'auto' ? this.getRowHeight(index + rowIndex) : rowHeight),
+                (rowHeight === 'auto' ? this.getRowHeight(index + rowIndex) : rowHeight + 4),
           height,
         ),
     );

@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `<pro>DataSet.Field`: Added `lovDefineAxiosConfig`, `lovQueryAxiosConfig` properties.
 - 💄 `<pro>Table`: Refactor the advanced query bar.
 - 🐞 `<pro>DataSet`: Fixed an issue where the timing of the ready method was incorrect, such as query method called before the queryDataSet was ready.
+- 🐞 `<pro>Table`: Fix the problem of misalignment of composite columns.
 
 ## 0.8.15
 
