@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import shallowEqual from 'lodash/isEqual';
 import RadioGroup from './group';
 import RadioButton from './radioButton';
-import { RadioProps, RadioGroupContext } from './interface';
+import { RadioChangeEvent, RadioGroupContext, RadioProps } from './interface';
 import RcCheckbox from '../rc-components/checkbox';
 import { getPrefixCls } from '../configure';
 
@@ -34,6 +34,21 @@ export default class Radio extends Component<RadioProps, {}> {
     );
   }
 
+  saveCheckbox = (node: any) => {
+    this.rcCheckbox = node;
+  };
+
+  onChange = (e: RadioChangeEvent) => {
+    const { onChange } = this.props;
+    const { radioGroup } = this.context;
+    if (onChange) {
+      onChange(e);
+    }
+    if (radioGroup && radioGroup.onChange) {
+      radioGroup.onChange(e);
+    }
+  };
+
   focus() {
     this.rcCheckbox.focus();
   }
@@ -41,10 +56,6 @@ export default class Radio extends Component<RadioProps, {}> {
   blur() {
     this.rcCheckbox.blur();
   }
-
-  saveCheckbox = (node: any) => {
-    this.rcCheckbox = node;
-  };
 
   render() {
     const { props, context } = this;
@@ -54,7 +65,7 @@ export default class Radio extends Component<RadioProps, {}> {
     const radioProps: RadioProps = { ...restProps };
     if (radioGroup) {
       radioProps.name = radioGroup.name;
-      radioProps.onChange = radioGroup.onChange;
+      radioProps.onChange = this.onChange;
       radioProps.checked = props.value === radioGroup.value;
       radioProps.disabled = props.disabled || radioGroup.disabled;
     }

@@ -22,6 +22,7 @@ timeline: true
 - 💄 `<pro>Table`: Refactor the advanced query bar.
 - 🐞 `<pro>DataSet`: Fixed an issue where the timing of the ready method was incorrect, such as query method called before the queryDataSet was ready.
 - 🐞 `<pro>Table`: Fix the problem of misalignment of composite columns.
+- 🐞 `Radio.Button`: Fixed an issue where the selected style was not updated.
 
 ## 0.8.15
 

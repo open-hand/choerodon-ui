@@ -123,7 +123,6 @@ export default class RadioGroup extends Component<RadioGroupProps, RadioGroupSta
               key={String(index)}
               disabled={disabled}
               value={option}
-              onChange={this.onRadioChange}
               checked={value === option}
             >
               {option}
@@ -136,7 +135,6 @@ export default class RadioGroup extends Component<RadioGroupProps, RadioGroupSta
             key={String(index)}
             disabled={option.disabled || disabled}
             value={option.value}
-            onChange={this.onRadioChange}
             checked={value === option.value}
           >
             {option.label}
