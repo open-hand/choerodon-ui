@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Select`: 新增 searchMatcher 属性。
 - 🌟 `<pro>Pagination`: 新增 showSizeChangerLabel、sizeChangerPosition、sizeChangerOptionRenderer 属性。
 - 🌟 `<pro>DataSet.Field`: format 属性新增 uppercase lowercase capitalize 值。
 - 🌟 `<pro>DataSet.Field`: 新增 lovDefineAxiosConfig、lovQueryAxiosConfig 属性。

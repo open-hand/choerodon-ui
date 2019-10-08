@@ -1,6 +1,8 @@
 import React, { CSSProperties, isValidElement, Key, ReactElement, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import omit from 'lodash/omit';
+import debounce from 'lodash/debounce';
+import isString from 'lodash/isString';
 import isEqual from 'lodash/isEqual';
 import isNil from 'lodash/isNil';
 import noop from 'lodash/noop';
@@ -28,6 +30,7 @@ import isEmpty from '../_util/isEmpty';
 import isSame from '../_util/isSame';
 import isSameLike from '../_util/isSameLike';
 import { Renderer } from '../field/FormField';
+import Field from '../data-set/Field';
 
 function updateActiveKey(menu: Menu, activeKey: string) {
   const store = menu.getStore();
@@ -52,6 +55,13 @@ function getSimpleValue(value, valueField) {
   return value;
 }
 
+export interface SearchMatcherProps {
+  record: Record;
+  text: string;
+  textField: string;
+  valueField: string;
+}
+
 export interface SelectProps extends TriggerFieldProps {
   /**
    * 复合输入值
@@ -63,6 +73,10 @@ export interface SelectProps extends TriggerFieldProps {
    * @default false
    */
   searchable?: boolean;
+  /**
+   * 搜索匹配器。 当为字符串时，作为lookup的参数名来重新请求值列表。
+   */
+  searchMatcher?: string | ((props: SearchMatcherProps) => boolean);
   /**
    * 选项过滤
    * @param {Record} record
@@ -121,6 +135,10 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
      */
     searchable: PropTypes.bool,
     /**
+     * 搜索匹配器。 当为字符串时，作为lookup的参数名来重新请求值列表。
+     */
+    searchMatcher: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+    /**
      * 是否为原始值
      * true - 选项中valueField对应的值
      * false - 选项值对象
@@ -145,6 +163,9 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     suffixCls: 'select',
     combo: false,
     searchable: false,
+    searchMatcher({ record, text, textField }) {
+      return record.get(textField).indexOf(text) !== -1;
+    },
     dropdownMatchSelectWidth: true,
     checkValueOnOptionsChange: true,
   };
@@ -249,11 +270,6 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   }
 
   @computed
-  get popup(): boolean {
-    return this.statePopup && this.filteredOptions.length > 0;
-  }
-
-  @computed
   get primitive(): boolean {
     const type = this.getProp('type');
     return this.observableProps.primitiveValue !== false && type !== FieldType.object;
@@ -263,7 +279,14 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
 
   checkComboReaction?: IReactionDisposer;
 
-  saveMenu = node => (this.menu = node);
+  fetchLookup = debounce((field: Field, searchMatcher, value) => {
+    field.setLookupPara(searchMatcher, value);
+  }, 500);
+
+  @autobind
+  saveMenu(node) {
+    this.menu = node;
+  }
 
   checkValue() {
     this.checkValueReaction = reaction(() => this.cascadeOptions, () => this.processSelectedData());
@@ -340,6 +363,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   getOtherProps() {
     const otherProps = omit(super.getOtherProps(), [
       'searchable',
+      'searchMatcher',
       'combo',
       'multiple',
       'value',
@@ -454,6 +478,13 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
         optGroups.push(option);
       }
     });
+    if (!optGroups.length) {
+      optGroups.push(
+        <Item key="no_data" disabled>
+          {$l('Select', 'no_matching_results')}
+        </Item>,
+      );
+    }
     return (
       <Menu
         ref={this.saveMenu}
@@ -481,12 +512,14 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     };
   }
 
+  @computed
+  get loading() {
+    const { field, options } = this;
+    return options.status === DataSetStatus.loading || (field && field.pending.length > 0);
+  }
+
   getPopupContent() {
-    const { options } = this;
-    const data = this.filteredOptions;
-    return data.length ? (
-      <Spin spinning={options.status === DataSetStatus.loading}>{this.getMenu()}</Spin>
-    ) : null;
+    return <Spin spinning={this.loading}>{this.getMenu()}</Spin>;
   }
 
   @autobind
@@ -751,11 +784,19 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   }
 
   @autobind
+  @action
   handleChange(e) {
     const { value } = e.target;
     this.setText(value);
     if (this.observableProps.combo) {
       this.generateComboOption(value, text => this.setText(text));
+    }
+    if (this.searchable) {
+      const { field } = this;
+      const { searchMatcher } = this.props;
+      if (field && searchMatcher && isString(searchMatcher)) {
+        this.fetchLookup(field, searchMatcher, value);
+      }
     }
     if (!this.popup) {
       this.expand();
@@ -894,21 +935,13 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   filterData(data: Record[], text?: string): Record[] {
     const {
       textField,
+      valueField,
       searchable,
-      props: { optionsFilter },
+      props: { optionsFilter, searchMatcher },
     } = this;
     data = optionsFilter ? data.filter(optionsFilter!) : data;
-    if (searchable && text) {
-      const matchedRecords = data.filter(record => record.get(textField).indexOf(text) !== -1);
-      return matchedRecords.length
-        ? matchedRecords
-        : [
-            new Record({
-              [`${this.textField}`]: $l('Select', 'no_matching_results'),
-              [`${this.valueField}`]: null,
-              disabled: true,
-            }),
-          ];
+    if (searchable && text && typeof searchMatcher === 'function') {
+      return data.filter(record => searchMatcher({ record, text, textField, valueField }));
     }
     return data;
   }

@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Select`: Added `searchMatcher` property.
 - 🌟 `<pro>Pagination`: Added `showSizeChangerLabel`, `sizeChangerPosition`, `sizeChangerOptionRenderer` properties.
 - 🌟 `<pro>DataSet.Field`: The `format` attribute adds the `uppercase` `lowercase` `capitalize` value.
 - 🌟 `<pro>DataSet.Field`: Added `lovDefineAxiosConfig`, `lovQueryAxiosConfig` properties.

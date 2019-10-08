@@ -1,5 +1,7 @@
-import { action, get, observable, ObservableMap } from 'mobx';
+import { action, get, observable, ObservableMap, toJS } from 'mobx';
 import { AxiosInstance, AxiosRequestConfig } from 'axios';
+import queryString from 'querystringify';
+import omitBy from 'lodash/omitBy';
 import isString from 'lodash/isString';
 import warning from 'choerodon-ui/lib/_util/warning';
 import { getConfig } from 'choerodon-ui/lib/configure';
@@ -10,11 +12,25 @@ import { FieldType } from '../data-set/enum';
 import { append, generateResponseData } from '../data-set/utils';
 import isSameLike from '../_util/isSameLike';
 
+function splitKeys(lookupKey: string): string[] {
+  const [key, subKey] = lookupKey.split('?');
+  const keys: string[] = [key, ''];
+  if (subKey) {
+    const params = queryString.parse(subKey);
+    const newParams = {};
+    Object.keys(params)
+      .sort()
+      .forEach(name => (newParams[name] = params[name]));
+    keys[1] = queryString.stringify(newParams);
+  }
+  return keys;
+}
+
 export type responseData = object[];
 export type responseType = responseData | undefined;
 
 export class LookupCodeStore {
-  @observable lookupCodes: ObservableMap<string, responseData>;
+  @observable lookupCodes: ObservableMap<string, ObservableMap<string, responseData>>;
 
   pendings: { [key: string]: Promise<responseType> } = {};
 
@@ -28,17 +44,44 @@ export class LookupCodeStore {
 
   @action
   init() {
-    this.lookupCodes = observable.map<string, responseData>();
+    this.lookupCodes = observable.map<string, ObservableMap<string, responseData>>();
   }
 
+  // all(lookupKey: string, valueField: string): responseData | undefined {
+  //   const [key] = splitKeys(lookupKey);
+  //   if (key) {
+  //     const rootData = this.lookupCodes.get(key);
+  //     if (rootData) {
+  //       return [...[...rootData.values()].reduce((obj, values) => {
+  //         values.forEach(item => obj.set(item[valueField], item));
+  //         return obj;
+  //       }, observable.map<string, object>()).values()];
+  //     }
+  //   }
+  // }
+
   get(lookupKey: string): responseData | undefined {
-    return this.lookupCodes.get(lookupKey);
+    const [key, subKey] = splitKeys(lookupKey);
+    if (key) {
+      const rootData = this.lookupCodes.get(key);
+      if (rootData) {
+        return rootData.get(subKey);
+      }
+    }
   }
 
   @action
   set(lookupKey: string, data: responseData | undefined) {
     if (data) {
-      this.lookupCodes.set(lookupKey, data);
+      const [key, subKey] = splitKeys(lookupKey);
+      if (key) {
+        let rootData = this.lookupCodes.get(key);
+        if (!rootData) {
+          rootData = observable.map<string, responseData>();
+          this.lookupCodes.set(key, rootData);
+        }
+        rootData.set(subKey, data);
+      }
     }
   }
 
@@ -102,16 +145,16 @@ export class LookupCodeStore {
   getAxiosConfig(field: Field): AxiosRequestConfig {
     const lookupAxiosConfig = field.get('lookupAxiosConfig');
     let config: AxiosRequestConfig = {};
+    const { record } = field;
+    const params = toJS(field.get('lookupPara')) || {};
+    const cascadeMap = field.get('cascadeMap');
+    if (cascadeMap && record) {
+      Object.keys(cascadeMap).forEach(key => {
+        params[key] = record.get(cascadeMap[key]);
+      });
+    }
     if (typeof lookupAxiosConfig === 'function') {
       const lookupCode = field.get('lookupCode');
-      const cascadeMap = field.get('cascadeMap');
-      const { record } = field;
-      const params = {};
-      if (cascadeMap && record) {
-        Object.keys(cascadeMap).forEach(key => {
-          params[key] = record.get(cascadeMap[key]);
-        });
-      }
       config = lookupAxiosConfig({ dataSet: field.dataSet, record, params, lookupCode });
     } else if (lookupAxiosConfig) {
       config = lookupAxiosConfig;
@@ -120,6 +163,7 @@ export class LookupCodeStore {
       ...config,
       url: config.url || this.getUrl(field),
       method: config.method || getConfig('lookupAxiosMethod') || 'post',
+      params: config.params || params,
     };
   }
 
@@ -129,7 +173,7 @@ export class LookupCodeStore {
     }
     const { url, params, data } = field as AxiosRequestConfig;
     if (url) {
-      return append(url, { ...params, ...data });
+      return append(url, omitBy({ ...params, ...data }, value => value === ''));
     }
   }
 

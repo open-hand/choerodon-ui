@@ -56,7 +56,7 @@ class App extends React.Component {
         defaultValue: ['1984-11-22', new Date()],
         validator: rangeValidator,
       },
-      { name: 'multipleDate', type: 'date', range: true, multiple: true },
+      { name: 'multipleDate', type: 'date', range: true, multiple: true, required: true },
     ],
     events: {
       update: handleDataSetChange,

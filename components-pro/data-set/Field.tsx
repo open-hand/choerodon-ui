@@ -139,6 +139,10 @@ export type FieldProps = {
    */
   lovPara?: object;
   /**
+   * Lookup查询参数
+   */
+  lookupPara?: object;
+  /**
    * 值列表代码
    */
   lookupCode?: string;
@@ -539,6 +543,7 @@ export default class Field {
    * @param {String} name
    * @param {Object} value
    */
+  @action
   setLovPara(name, value) {
     const p = this.get('lovPara') || {};
     if (value === null) {
@@ -547,6 +552,22 @@ export default class Field {
       p[name] = value;
     }
     this.set('lovPara', p);
+  }
+
+  /**
+   * 设置Lookup的查询参数
+   * @param {String} name
+   * @param {Object} value
+   */
+  @action
+  setLookupPara(name, value) {
+    const p = this.get('lookupPara') || {};
+    if (value === null) {
+      delete p[name];
+    } else {
+      p[name] = value;
+    }
+    this.set('lookupPara', p);
   }
 
   getValidatorProps(): ValidatorProps | undefined {
@@ -599,10 +620,10 @@ export default class Field {
     return valid;
   }
 
-  async fetchLookup() {
+  fetchLookup() {
     const axiosConfig = lookupStore.getAxiosConfig(this);
     if (axiosConfig.url) {
-      this.pending.add(lookupStore.fetchLookupData(axiosConfig));
+      return this.pending.add(lookupStore.fetchLookupData(axiosConfig));
     }
   }
 

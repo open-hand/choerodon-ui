@@ -2,6 +2,39 @@ import Mock from 'mockjs';
 
 export default function() {
   if (typeof window !== 'undefined') {
+    Mock.mock(/\/common\/code\/HR.EMPLOYEE_GENDER\/\?key/, {
+      rows: [
+        {
+          objectVersionNumber: 1,
+          codeId: 10001,
+          codeValueId: 10029,
+          description: null,
+          meaning: '老',
+          value: 'O',
+          orderSeq: 10,
+          tag: null,
+          enabledFlag: 'Y',
+          parentCodeValueId: null,
+          parentCodeValue: null,
+          parentCodeValueMeaning: null,
+        },
+        {
+          objectVersionNumber: 1,
+          codeId: 10001,
+          codeValueId: 10030,
+          description: null,
+          meaning: '少',
+          value: 'Y',
+          orderSeq: 10,
+          tag: null,
+          enabledFlag: 'Y',
+          parentCodeValueId: null,
+          parentCodeValue: null,
+          parentCodeValueMeaning: null,
+        },
+      ],
+    });
+
     Mock.mock(/\/common\/code\/HR.EMPLOYEE_GENDER\//, {
       rows: [
         {

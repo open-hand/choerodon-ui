@@ -74,7 +74,8 @@ export default function normalizeOptions({ field, textField, valueField, multipl
     if (lookupKey) {
       data = lookupStore.get(lookupKey);
       if (!data) {
-        fetch = lookupStore.fetchLookupData(axiosConfig);
+        // fix mobx computed value issue
+        fetch = new Promise(resolve => setTimeout(() => resolve(field.fetchLookup()), 0));
       }
     }
   }
