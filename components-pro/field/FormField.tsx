@@ -118,6 +118,11 @@ export interface FormFieldProps extends DataSetComponentProps {
    */
   multiple?: boolean;
   /**
+   * 是否是范围值
+   * @default false
+   */
+  range?: boolean | [string, string];
+  /**
    * 校验器
    */
   validator?: CustomValidator;
@@ -620,7 +625,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   }
 
   getValidatorProps(): ValidatorProps {
-    const { name } = this;
+    const { name, range, multiple } = this;
     const type = this.getFieldType();
     const required = this.getProp('required');
     const customValidator = this.getProp('validator');
@@ -631,6 +636,8 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       customValidator,
       name,
       label,
+      range,
+      multiple,
       form: this.context.formNode as Form,
     };
   }
@@ -656,7 +663,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   }
 
   @computed
-  get range(): boolean {
+  get range(): boolean | [string, string] {
     return this.getProp('range');
   }
 

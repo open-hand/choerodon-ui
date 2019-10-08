@@ -19,7 +19,7 @@ import ValidationResult from '../validator/ValidationResult';
 import { ValidatorProps } from '../validator/rules';
 import isSame from '../_util/isSame';
 import PromiseQueue from '../_util/PromiseQueue';
-import { LovConfig } from 'choerodon-ui/pro/lib/lov/Lov';
+import { LovConfig } from '../lov/Lov';
 
 export type Fields = ObservableMap<string, Field>;
 
@@ -560,6 +560,8 @@ export default class Field {
       const minLength = this.get('minLength');
       const maxLength = this.get('maxLength');
       const label = this.get('label');
+      const range = this.get('range');
+      const multiple = this.get('multiple');
       return {
         type,
         required,
@@ -575,6 +577,8 @@ export default class Field {
         minLength,
         maxLength,
         label,
+        range,
+        multiple,
       };
     }
   }

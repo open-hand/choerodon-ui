@@ -32,19 +32,10 @@ const data = [
   },
 ];
 
-function dynamicProps({ record }) {
-  return {
-    required: !!record.get('birth'),
-  };
-}
-
 class App extends React.Component {
   ds = new DataSet({
     data,
-    fields: [
-      { name: 'birth', type: 'date', dynamicProps },
-      { name: 'creationTime', type: 'dateTime' },
-    ],
+    fields: [{ name: 'birth', type: 'date' }, { name: 'creationTime', type: 'dateTime' }],
     events: {
       update: handleDataSetChange,
     },

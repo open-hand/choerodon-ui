@@ -1,6 +1,5 @@
 import React, { ReactNode } from 'react';
 import { action, computed, isArrayLike, observable, runInAction } from 'mobx';
-// import isEqual from 'lodash/isEqual';
 import isString from 'lodash/isString';
 import Validity from './Validity';
 import ValidationResult from './ValidationResult';
@@ -182,7 +181,11 @@ export default class Validator {
       if (valueMiss !== true) {
         this.report(valueMiss);
       } else {
-        await this.execute(validationRules.slice(), isArrayLike(value) ? value.slice() : [value]);
+        const { multiple } = this.props;
+        await this.execute(
+          validationRules.slice(),
+          multiple && isArrayLike(value) ? value.slice() : [value],
+        );
       }
     }
     return this.validity.valid;

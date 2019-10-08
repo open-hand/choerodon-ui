@@ -22,6 +22,7 @@ timeline: true
 - 💄 `<pro>Table`: 重构高级查询条。
 - 🐞 `<pro>DataSet`: 修复 ready 方法时序不正确的问题，如 queryDataSet 未准备好时就执行了查询。
 - 🐞 `<pro>Table`: 修复复合列错位的问题。
+- 🐞 `<pro>DatePicker`: 修复自定义校验 range 值的问题。
 - 🐞 `Radio.Button`: 修复选中样式不更新的问题。
 
 ## 0.8.15

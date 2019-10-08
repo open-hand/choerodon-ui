@@ -50,5 +50,7 @@ export interface ValidatorProps {
   unique?: boolean | string;
   label?: ReactNode;
   customValidator?: CustomValidator;
+  multiple?: boolean;
+  range?: boolean | [string, string];
   form?: Form;
 }

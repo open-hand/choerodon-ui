@@ -32,6 +32,11 @@ function handleChange(value, oldValue) {
   console.log('[range newValue]', value, '[oldValue]', oldValue);
 }
 
+function rangeValidator(value, name) {
+  console.log(`[validation ${name} value]`, value);
+  return true;
+}
+
 class App extends React.Component {
   ds = new DataSet({
     autoCreate: true,
@@ -41,12 +46,15 @@ class App extends React.Component {
         type: 'date',
         range: ['start', 'end'],
         defaultValue: { start: '1984-11-22', end: new Date() },
+        required: true,
+        validator: rangeValidator,
       },
       {
         name: 'date2',
         type: 'date',
         range: true,
         defaultValue: ['1984-11-22', new Date()],
+        validator: rangeValidator,
       },
       { name: 'multipleDate', type: 'date', range: true, multiple: true },
     ],
