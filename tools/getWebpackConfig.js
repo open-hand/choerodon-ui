@@ -18,15 +18,26 @@ const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
 const postcssConfig = require('./postcssConfig');
 const CleanUpStatsPlugin = require('./utils/CleanUpStatsPlugin');
 
+const limit = 10000;
 const svgRegex = /\.svg(\?v=\d+\.\d+\.\d+)?$/;
 const svgOptions = {
-  limit: 10000,
+  limit,
   minetype: 'image/svg+xml',
 };
 
 const imageOptions = {
-  limit: 10000,
+  limit,
 };
+
+function getAssetLoader(props) {
+  return {
+    loader: 'url-loader',
+    options: {
+      ...props,
+      name: '[name].[hash:8].[ext]',
+    },
+  };
+}
 
 function getWebpackConfig(modules) {
   const pkg = require(getProjectPath('package.json'));
@@ -155,26 +166,50 @@ function getWebpackConfig(modules) {
               options: {
                 javascriptEnabled: true,
                 sourceMap: true,
-                modifyVars: {
-                  'c7n-icon-url': JSON.stringify(
-                    'https://choerodon.github.io/choerodon-ui-font/icomoon',
-                  ),
-                },
+                // modifyVars: {
+                //   'c7n-icon-url': JSON.stringify(
+                //     'https://choerodon.github.io/choerodon-ui-font/icomoon',
+                //   ),
+                // },
               },
             },
           ],
         },
-
-        // Images
-        // {
-        //   test: svgRegex,
-        //   loader: 'url-loader',
-        //   options: svgOptions,
-        // },
+        {
+          test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
+          use: getAssetLoader({
+            limit,
+            mimetype: 'application/font-woff',
+          }),
+        },
+        {
+          test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
+          use: getAssetLoader({
+            limit,
+            mimetype: 'application/font-woff',
+          }),
+        },
+        {
+          test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+          use: getAssetLoader({
+            limit,
+            mimetype: 'application/octet-stream',
+          }),
+        },
+        {
+          test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+          use: getAssetLoader({
+            limit,
+            mimetype: 'application/vnd.ms-fontobject',
+          }),
+        },
+        {
+          test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+          use: getAssetLoader(svgOptions),
+        },
         {
           test: /\.(png|jpg|jpeg|gif)(\?v=\d+\.\d+\.\d+)?$/i,
-          loader: 'url-loader',
-          options: imageOptions,
+          use: getAssetLoader(imageOptions),
         },
       ],
     },

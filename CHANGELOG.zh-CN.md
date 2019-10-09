@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.16
+
+`2019-10-09`
+
 - 🌟 `<pro>Table.Column`: 新增 tooltip 属性。
 - 🌟 `<pro>Select`: 新增 searchMatcher 属性。
 - 🌟 `<pro>Pagination`: 新增 showSizeChangerLabel、sizeChangerPosition、sizeChangerOptionRenderer 属性。

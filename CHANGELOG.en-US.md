@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.16
+
+`2019-10-09`
+
 - 🌟 `<pro>Table.Column`: Added `tooltip` property.
 - 🌟 `<pro>Select`: Added `searchMatcher` property.
 - 🌟 `<pro>Pagination`: Added `showSizeChangerLabel`, `sizeChangerPosition`, `sizeChangerOptionRenderer` properties.
