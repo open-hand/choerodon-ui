@@ -465,9 +465,9 @@ class App extends React.Component {
         />
         <Column name="age" editor width={150} sortable footer={renderColumnFooter} />
         <Column name="enable" editor width={50} minWidth={50} lock />
-        <Column name="name" editor width={150} sortable />
+        <Column name="name" editor width={150} sortable tooltip="always" />
         <Column name="code" editor width={150} sortable />
-        <Column name="code_code" editor width={150} />
+        <Column name="code_code" editor width={150} tooltip="overflow" />
         <Column name="code_select" editor width={150} />
         <Column name="codeMultiple" editor width={150} />
         <Column name="codeMultiple_code" width={150} />

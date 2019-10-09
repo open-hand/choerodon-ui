@@ -391,16 +391,20 @@ export default class Table extends DataSetComponent<TableProps> {
     this.tableStore.showCachedSeletion = !!value;
   });
 
-  private handleResize = debounce(() => {
-    if (!this.element.offsetParent) {
-      this.isHidden = true;
-    } else if (!this.isHidden) {
-      this.syncSize();
-      this.setScrollPositionClassName();
-    } else {
-      this.isHidden = false;
-    }
-  }, 30);
+  private handleResize = debounce(
+    action(() => {
+      const { element, tableStore } = this;
+      if (!element.offsetParent) {
+        tableStore.styledHidden = true;
+      } else if (!tableStore.hidden) {
+        this.syncSize();
+        this.setScrollPositionClassName();
+      } else {
+        tableStore.styledHidden = false;
+      }
+    }),
+    30,
+  );
 
   saveResizeRef = (node: HTMLDivElement | null) => {
     this.resizeLine = node;

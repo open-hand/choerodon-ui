@@ -160,9 +160,15 @@ export default class TableStore {
 
   @observable currentEditorName?: string;
 
+  @observable styledHidden?: boolean;
+
   @computed
   get dataSet(): DataSet {
     return this.props.dataSet;
+  }
+
+  get hidden(): boolean {
+    return !!this.styledHidden || this.props.hidden;
   }
 
   @computed

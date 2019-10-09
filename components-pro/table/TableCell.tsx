@@ -9,8 +9,10 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
-import { computed, isArrayLike } from 'mobx';
+import { action, computed, isArrayLike, observable } from 'mobx';
 import classNames from 'classnames';
+import ResizeObserver from 'resize-observer-polyfill';
+import debounce from 'lodash/debounce';
 import omit from 'lodash/omit';
 import isString from 'lodash/isString';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
@@ -30,7 +32,7 @@ import {
   isRadio,
 } from './utils';
 import { FormFieldProps, Renderer } from '../field/FormField';
-import { ColumnAlign, ColumnLock, TableCommandType } from './enum';
+import { ColumnAlign, ColumnLock, TableColumnTooltip, TableCommandType } from './enum';
 import ObserverCheckBox from '../check-box/CheckBox';
 import Output from '../output/Output';
 import { ShowHelp } from '../field/enum';
@@ -38,7 +40,7 @@ import Button, { ButtonProps } from '../button/Button';
 import { ButtonColor, FuncType } from '../button/enum';
 import { $l } from '../locale-context';
 import Tooltip from '../tooltip/Tooltip';
-import { RecordStatus } from '../data-set/enum';
+import { DataSetEvents, RecordStatus } from '../data-set/enum';
 import { LabelLayout } from '../form/enum';
 import { Commands } from './Table';
 import autobind from '../_util/autobind';
@@ -64,6 +66,29 @@ export default class TableCell extends Component<TableCellProps> {
 
   static contextType = TableContext;
 
+  element?: HTMLSpanElement | null;
+
+  resizeObserver?: ResizeObserver;
+
+  @observable overflow?: boolean;
+
+  // @computed
+  // get overflow() {
+  //   const { output } = this;
+  //   if (output) {
+  //     const { column } = this.props;
+  //     const { element } = output;
+  //     if (element) {
+  //       element.style.position = 'absolute';
+  //       const { offsetWidth } = element;
+  //       const minWidth = Math.min(element.parentNode.offsetWidth, columnWidth(column));
+  //       element.style.position = '';
+  //       return minWidth !== 0 && offsetWidth > minWidth;
+  //     }
+  //   }
+  //   return false;
+  // }
+
   @computed
   get cellEditor() {
     const { column, record } = this.props;
@@ -81,6 +106,66 @@ export default class TableCell extends Component<TableCellProps> {
       tableStore: { pristine },
     } = this.context;
     return !pristine && this.cellEditor && !this.cellEditorInCell;
+  }
+
+  @autobind
+  @action
+  saveOutput(node) {
+    if (node) {
+      this.disconnect();
+      const element = node.element;
+      this.element = element;
+      this.resizeObserver = new ResizeObserver(this.handleResize);
+      this.resizeObserver.observe(element.parentNode);
+      const {
+        tableStore: { dataSet },
+      } = this.context;
+      dataSet.addEventListener(DataSetEvents.update, this.handleOutputChange);
+      this.handleResize();
+    }
+  }
+
+  disconnect() {
+    this.handleResize.cancel();
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect();
+    }
+    const {
+      tableStore: { dataSet },
+    } = this.context;
+    dataSet.removeEventListener(DataSetEvents.update, this.handleOutputChange);
+  }
+
+  handleResize = debounce(() => {
+    const { element } = this;
+    const { tableStore } = this.context;
+    if (element && !tableStore.hidden) {
+      this.syncSize();
+    }
+  }, 30);
+
+  @autobind
+  handleOutputChange({ record, name }) {
+    const { record: thisRecord, column } = this.props;
+    if (record === thisRecord && column.name === name) {
+      this.handleResize();
+    }
+  }
+
+  @action
+  syncSize() {
+    const { element } = this;
+    if (element) {
+      element.style.position = 'absolute';
+      const { offsetWidth, parentNode } = element;
+      if (parentNode) {
+        const minWidth = (parentNode as HTMLElement).offsetWidth;
+        element.style.position = '';
+        this.overflow = minWidth !== 0 && offsetWidth > minWidth;
+        return;
+      }
+    }
+    this.overflow = false;
   }
 
   @autobind
@@ -332,7 +417,7 @@ export default class TableCell extends Component<TableCellProps> {
       return children;
     }
     const { column, record, indentSize } = this.props;
-    const { name } = column;
+    const { name, tooltip } = column;
     const { hasEditor } = this;
     const innerProps: any = {
       className: `${prefixCls}-inner`,
@@ -347,6 +432,9 @@ export default class TableCell extends Component<TableCellProps> {
       innerProps.style = {
         height: pxToRem(rowHeight),
       };
+      if (tooltip === TableColumnTooltip.overflow) {
+        innerProps.ref = this.saveOutput;
+      }
     }
     const indentText = children && (
       <span style={{ paddingLeft: pxToRem(indentSize * record.level) }} />
@@ -361,8 +449,7 @@ export default class TableCell extends Component<TableCellProps> {
         {checkBox}
       </span>
     );
-    return [
-      prefix,
+    const output = (
       <Output
         key="output"
         {...innerProps}
@@ -371,8 +458,22 @@ export default class TableCell extends Component<TableCellProps> {
         name={name}
         disabled={isDisabledRow(record)}
         showHelp={ShowHelp.none}
-      />,
-    ];
+      />
+    );
+    const text =
+      tooltip === TableColumnTooltip.always ||
+      (tooltip === TableColumnTooltip.overflow && this.overflow) ? (
+        <Tooltip key="tooltip" title={cloneElement(output, { ref: null, className: null })}>
+          {output}
+        </Tooltip>
+      ) : (
+        output
+      );
+    return [prefix, text];
+  }
+
+  componentWillUnmount(): void {
+    this.disconnect();
   }
 
   render() {

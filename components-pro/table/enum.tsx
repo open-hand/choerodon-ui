@@ -62,3 +62,9 @@ export const enum TablePaginationPosition {
   bottom = 'bottom',
   both = 'both',
 }
+
+export const enum TableColumnTooltip {
+  none = 'none',
+  always = 'always',
+  overflow = 'overflow',
+}

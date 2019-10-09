@@ -5,7 +5,7 @@ import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import { FormFieldProps, Renderer } from '../field/FormField';
 import { ElementProps } from '../core/ViewComponent';
-import { ColumnAlign, ColumnLock } from './enum';
+import { ColumnAlign, ColumnLock, TableColumnTooltip } from './enum';
 import { ShowHelp } from '../field/enum';
 import { Commands } from './Table';
 
@@ -99,6 +99,11 @@ export interface ColumnProps extends ElementProps {
    */
   showHelp?: ShowHelp;
   /**
+   * 用tooltip显示单元格内容
+   * 可选值：`none` `always` `overflow`
+   */
+  tooltip?: TableColumnTooltip;
+  /**
    * 设置单元格属性
    * @param {onCellProps} props
    * @return {Object} 单元格属性
@@ -112,6 +117,7 @@ export interface ColumnProps extends ElementProps {
   command?: Commands[] | ((props: commandProps) => Commands[]);
   children?: ColumnProps[];
 }
+
 /* eslint-disable react/prefer-stateless-function,react/no-unused-prop-types */
 export default class Column extends Component<ColumnProps, ComponentState> {
   static propTypes = {

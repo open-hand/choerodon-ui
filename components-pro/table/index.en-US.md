@@ -72,6 +72,7 @@ subtitle: 表格
 | onCell | 设置单元格属性 | ({ dataSet, record, column }) => object |  |
 | command | 行操作按钮集，该值为数组 或 返回数组的钩子，数组可选值：`edit` `delete` 或 \[`edit`\| `delete` , 按钮配置属性对象\] 或 自定义按钮 | (string \| \[string, object\] \| ReactNode)[] \| ({ dataSet, record }) => (string \| \[string, object\] \| ReactNode)[] |  |
 | hidden | 隐藏 | boolean |  |
+| tooltip | 用 Tooltip 显示单元格内容。可选值 `none` `always` `overflow` | string | none |
 
 ### pagination
 
