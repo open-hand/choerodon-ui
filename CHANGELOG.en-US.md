@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `<pro>DataSet.Field`: The `format` attribute adds the `uppercase` `lowercase` `capitalize` value.
 - 🌟 `<pro>DataSet.Field`: Added `lovDefineAxiosConfig`, `lovQueryAxiosConfig` properties.
 - 🌟 `<pro>TriggerField`: Added `onPopupHiddenChange` property.
+- 🌟 `<pro>`: Added Japanese.
 - 💄 `<pro>Table`: Refactor the advanced query bar.
 - 🐞 `<pro>DataSet`: Fixed an issue where the timing of the ready method was incorrect, such as query method called before the queryDataSet was ready.
 - 🐞 `<pro>Table`: Fix the problem of misalignment of composite columns.

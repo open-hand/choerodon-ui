@@ -904,12 +904,12 @@ export default class DataSet extends EventManager {
       }
     });
     const record = new Record(data, this);
-    this.current = record;
     if (isNumber(dataIndex)) {
       this.splice(dataIndex, 0, record);
     } else {
       this.push(record);
     }
+    this.current = record;
     this.fireEvent(DataSetEvents.create, { dataSet: this, record });
     return record;
   }
