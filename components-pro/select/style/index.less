@@ -1,11 +1,11 @@
-@import "../../../components/style/themes/default";
-@import "../../../components/style/mixins/index";
-@import "../../trigger-field/style/mixin";
-@import "../../field/style/mixin";
-@import "./mixin";
+@import '../../../components/style/themes/default';
+@import '../../../components/style/mixins/index';
+@import '../../trigger-field/style/mixin';
+@import '../../field/style/mixin';
+@import './mixin';
 
-@select-prefix-cls: ~"@{c7n-pro-prefix}-select";
-@checkbox-prefix-cls: ~"@{c7n-prefix}-checkbox";
+@select-prefix-cls: ~'@{c7n-pro-prefix}-select';
+@checkbox-prefix-cls: ~'@{c7n-prefix}-checkbox';
 
 .@{select-prefix-cls} {
   .trigger;
@@ -13,13 +13,29 @@
   margin: 0;
 
   &-trigger {
-    transition: transform .3s;
+    transition: transform 0.3s;
   }
 
   &-expand &-trigger {
     transform: rotate(180deg);
   }
+
   &-dropdown-menu {
     .dropdown-menu;
+  }
+
+  &-select-all-none {
+    padding: 0.08rem 0.16rem;
+    font-size: @font-size-sm;
+    border-bottom: @border-width-base @border-style-base @border-color-base;
+
+    span {
+      color: @primary-color;
+      cursor: pointer;
+    }
+
+    span + span {
+      margin-left: 0.2rem;
+    }
   }
 }

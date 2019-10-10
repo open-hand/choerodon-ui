@@ -393,6 +393,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           }}
           transitionName="zoom"
           exclusive
+          onEnd={this.handleTagAnimateEnd}
         >
           {this.renderMultipleValues()}
           {range
@@ -536,6 +537,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     this.setValue(values);
     this.afterRemoveValue(value, -1);
   }
+
+  handleTagAnimateEnd() {}
 
   @autobind
   handleRangeStart() {

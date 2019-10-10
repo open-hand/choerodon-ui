@@ -519,7 +519,22 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   }
 
   getPopupContent(): ReactNode {
-    return <Spin spinning={this.loading}>{this.getMenu()}</Spin>;
+    const menu = (
+      <Spin key="menu" spinning={this.loading}>
+        {this.getMenu()}
+      </Spin>
+    );
+    if (this.multiple) {
+      return [
+        <div key="check-all" className={`${this.prefixCls}-select-all-none`}>
+          <span onClick={this.chooseAll}>{$l('Select', 'select_all')}</span>
+          <span onClick={this.unChooseAll}>{$l('Select', 'unselect_all')}</span>
+        </div>,
+        menu,
+      ];
+    }
+
+    return menu;
   }
 
   @autobind
@@ -888,6 +903,18 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     if (record) {
       this.handleOptionSelect(record);
     }
+  }
+
+  @autobind
+  chooseAll() {
+    const { options } = this;
+    options.forEach(this.choose, this);
+  }
+
+  @autobind
+  unChooseAll() {
+    const { options } = this;
+    options.forEach(this.unChoose, this);
   }
 
   @autobind

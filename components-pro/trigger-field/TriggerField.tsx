@@ -249,6 +249,11 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
   }
 
   @autobind
+  handleTagAnimateEnd() {
+    this.forcePopupAlign();
+  }
+
+  @autobind
   handlePopupMouseDown(e) {
     e.preventDefault();
     const { onMouseDown = noop } = this.props;

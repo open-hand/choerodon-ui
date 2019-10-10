@@ -20,13 +20,14 @@ export default class PromiseQueue {
     const { queue } = this;
     queue.push(promise);
     return promise.then(
-      action(() => {
+      action(value => {
         if (!this.queueing) {
           const index = queue.indexOf(promise);
           if (index !== -1) {
             queue.splice(index, 1);
           }
         }
+        return value;
       }),
     );
   }

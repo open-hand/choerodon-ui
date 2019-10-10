@@ -90,6 +90,8 @@ export default {
     value_missing: '選択してください。 ',
     value_missing_with_label: '{label}を選択してください。 ',
     no_matching_results: '一致結果はありません。 ',
+    select_all: 'すべて選択',
+    unselect_all: 'いや',
   },
   Lov: {
     choose: '選択してください',

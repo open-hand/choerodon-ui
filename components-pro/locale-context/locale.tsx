@@ -90,6 +90,8 @@ export interface Locale {
   Select: {
     value_missing;
     value_missing_with_label;
+    select_all;
+    unselect_all;
   };
   Lov: {
     choose;

@@ -89,6 +89,8 @@ export default {
     value_missing: '请选择。',
     value_missing_with_label: '请选择{label}。',
     no_matching_results: '无匹配结果。',
+    select_all: '全选',
+    unselect_all: '无',
   },
   Lov: {
     choose: '请选择',

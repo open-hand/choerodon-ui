@@ -89,6 +89,8 @@ export default {
     value_missing: 'Please make a choice.',
     value_missing_with_label: 'Please select {label}.',
     no_matching_results: 'No matching results.',
+    select_all: 'Select All',
+    unselect_all: 'None',
   },
   Lov: {
     choose: 'Choose',
