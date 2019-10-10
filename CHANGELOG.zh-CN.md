@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: 增加 pagination 全局配置。
+
 ## 0.8.18
 
 `2019-10-10`

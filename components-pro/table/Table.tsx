@@ -1143,7 +1143,8 @@ export default class Table extends DataSetComponent<TableProps> {
   getPagination(position: TablePaginationPosition): ReactElement<PaginationProps> | undefined {
     const {
       prefixCls,
-      props: { dataSet, pagination },
+      props: { dataSet },
+      tableStore: { pagination },
     } = this;
     if (pagination !== false && dataSet && dataSet.paging) {
       const paginationPosition = getPaginationPosition(pagination);

@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: Add `pagination` global configuration.
+
 ## 0.8.18
 
 `2019-10-10`

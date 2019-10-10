@@ -6,6 +6,7 @@ import { RecordStatus } from 'choerodon-ui/pro/lib/data-set/enum';
 import message from 'choerodon-ui/pro/lib/message';
 import exception from 'choerodon-ui/pro/lib/_util/exception';
 import { $l } from 'choerodon-ui/pro/lib/locale-context';
+import { TablePaginationConfig } from 'choerodon-ui/pro/lib/table/Table';
 
 export type Status = {
   [RecordStatus.add]: string;
@@ -46,6 +47,7 @@ export type Config = {
   tableHighLightRow?: boolean;
   tableRowHeight?: 'auto' | number;
   tableColumnResizable?: boolean;
+  pagination?: TablePaginationConfig | false;
   modalSectionBorder?: boolean;
   modalOkFirst?: boolean;
   buttonFuncType?: string;

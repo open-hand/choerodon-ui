@@ -26,6 +26,7 @@ import ColumnGroups from './ColumnGroups';
 import { $l } from '../locale-context';
 import autobind from '../_util/autobind';
 import ColumnGroup from './ColumnGroup';
+import { TablePaginationConfig } from './Table';
 
 const SELECTION_KEY = '__selection-column__';
 export const EXPAND_KEY = '__expand-column__';
@@ -180,6 +181,14 @@ export default class TableStore {
       return false;
     }
     return true;
+  }
+
+  @computed
+  get pagination(): TablePaginationConfig | false | undefined {
+    if ('pagination' in this.props) {
+      return this.props.pagination;
+    }
+    return getConfig('pagination');
   }
 
   @computed
