@@ -513,12 +513,12 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   }
 
   @computed
-  get loading() {
+  get loading(): boolean {
     const { field, options } = this;
-    return options.status === DataSetStatus.loading || (field && field.pending.length > 0);
+    return options.status === DataSetStatus.loading || (!!field && field.pending.length > 0);
   }
 
-  getPopupContent() {
+  getPopupContent(): ReactNode {
     return <Spin spinning={this.loading}>{this.getMenu()}</Spin>;
   }
 

@@ -157,13 +157,13 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
 
   abstract getTriggerIconFont(): string;
 
-  abstract handlePopupAnimateAppear(key);
+  abstract handlePopupAnimateAppear(key): void;
 
-  abstract handlePopupAnimateEnd(key, exists);
+  abstract handlePopupAnimateEnd(key, exists): void;
 
   abstract getPopupStyleFromAlign(target): CSSProperties | undefined;
 
-  abstract getPopupContent();
+  abstract getPopupContent(): ReactNode;
 
   @autobind
   getRootDomNode() {

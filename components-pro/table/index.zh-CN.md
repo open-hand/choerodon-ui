@@ -22,12 +22,12 @@ subtitle: 表格
 | header | 表头 | ReactNode \| (records) => ReactNode |  |
 | footer | 表脚 | ReactNode \| (records) => ReactNode |  |
 | border | 是否显示边框 | boolean | true |
-| selectionMode | 选择记录的模式, 可选值: `rowbox` `click` `dblclick` | string | rowbox |
+| selectionMode | 选择记录的模式, 可选值: `rowbox` `click` `dblclick` | string | 'rowbox' |
 | onRow | 设置行属性 | ({ dataSet, record, index, expandedRow }) => object |  |
 | buttons | 功能按钮，可选值：`add` `delete` `remove` `save` `query` `reset` `expandAll` `collapseAll` `export` 或 数组 或 自定义按钮，数组为可选值字符串+按钮配置属性对象 | string \| \[string, object\] \|ReactNode |  |
 | queryFields | 自定义查询字段组件或默认组件属性，默认会根据 queryDataSet 中定义的 field 类型自动匹配组件 | ReactNode[] \| object |  |
 | queryFieldsLimit | 头部显示的查询字段的数量，超出限制的查询字段放入弹出窗口 | number | 1 |
-| queryBar | 查询条, 可选值为钩子或者内置类型：`advancedBar` `normal` `bar` `none` | string \| ({ dataSet, queryDataSet, buttons, pagination, queryFields, queryFieldsLimit }) => ReactNode | normal |
+| queryBar | 查询条, 可选值为钩子或者内置类型：`advancedBar` `normal` `bar` `none` | string \| ({ dataSet, queryDataSet, buttons, pagination, queryFields, queryFieldsLimit }) => ReactNode | 'normal' |
 | rowHeight | 行高 | number \| auto | 30 |
 | defaultRowExpanded | 默认行是否展开，当 dataSet 没有设置 expandField 时才有效 | boolean | false |
 | expandRowByClick | 通过点击行来展开子行 | boolean | false |
@@ -35,9 +35,9 @@ subtitle: 表格
 | expandIconColumnIndex | 展开图标所在列索引 | number |  |
 | indentSize | 展示树形数据时，每层缩进的宽度 | number | 15 |
 | filter | 数据过滤， 返回值 true - 显示 false - 不显示 | (record) => boolean |  |
-| mode | 表格展示的模式, tree 需要配合 dataSet 的`idField`和`parentField`来展示，可选值: `list` `tree` | string | list |
-| editMode | 表格编辑的模式，可选值: `cell` `inline` | string | cell |
-| filterBarFieldName | `queryBar`为`bar`时，直接输入的过滤条件的字段名 | string | params |
+| mode | 表格展示的模式, tree 需要配合 dataSet 的`idField`和`parentField`来展示，可选值: `list` `tree` | string | 'list' |
+| editMode | 表格编辑的模式，可选值: `cell` `inline` | string | 'cell' |
+| filterBarFieldName | `queryBar`为`bar`时，直接输入的过滤条件的字段名 | string | 'params' |
 | filterBarPlaceholder | `queryBar`为`bar`时输入框的占位符 | string |  |
 | pagination | 分页器，参考[配置项](#pagination)或 [pagination](/components/pagination/)，设为 false 时不展示分页 | object \| false |  |
 | highLightRow | 当前行高亮 | boolean | true |
@@ -67,12 +67,12 @@ subtitle: 表格
 | headerClassName | 列头样式名 | string |  |
 | footerStyle | 列脚内链样式 | string |  |
 | footerClassName | 列脚样式名 | string |  |
-| help | 额外信息，常用于提示 | `string` | `undefined` |
-| showHelp | 展示提示信息的方式 | `'tooltip' \| 'newLine' \| 'none'` | `'tooltip'` |
+| help | 额外信息，常用于提示 | `string` |  |
+| showHelp | 展示提示信息的方式。可选值 `tooltip` `newLine` `none` | string | 'tooltip' |
 | onCell | 设置单元格属性 | ({ dataSet, record, column }) => object |  |
 | command | 行操作按钮集，该值为数组 或 返回数组的钩子，数组可选值：`edit` `delete` 或 \[`edit`\| `delete` , 按钮配置属性对象\] 或 自定义按钮 | (string \| \[string, object\] \| ReactNode)[] \| ({ dataSet, record }) => (string \| \[string, object\] \| ReactNode)[] |  |
 | hidden | 隐藏 | boolean |  |
-| tooltip | 用 Tooltip 显示单元格内容。可选值 `none` `always` `overflow` | string | none |
+| tooltip | 用 Tooltip 显示单元格内容。可选值 `none` `always` `overflow` | string | 'none' |
 
 ### pagination
 

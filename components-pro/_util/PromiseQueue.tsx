@@ -3,6 +3,8 @@ import { action, observable, runInAction } from 'mobx';
 export default class PromiseQueue {
   @observable queue: Promise<any>[];
 
+  queueing: boolean = false;
+
   get length(): number {
     return this.queue.length;
   }
@@ -15,17 +17,29 @@ export default class PromiseQueue {
 
   @action
   add(promise: Promise<any>): Promise<any> {
-    this.queue.push(promise);
-    return promise;
+    const { queue } = this;
+    queue.push(promise);
+    return promise.then(
+      action(() => {
+        if (!this.queueing) {
+          const index = queue.indexOf(promise);
+          if (index !== -1) {
+            queue.splice(index, 1);
+          }
+        }
+      }),
+    );
   }
 
   @action
   async ready() {
+    this.queueing = true;
     const { queue } = this;
     if (queue.length) {
       await queue.pop();
       return this.ready();
     }
+    this.queueing = false;
     return Promise.resolve();
   }
 }
