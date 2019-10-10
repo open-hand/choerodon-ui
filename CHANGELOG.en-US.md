@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.17
+
+`2019-10-10`
+
 - 🐞 `<pro>Select`: Fixed an issue where the loading status did not stop.
 
 ## 0.8.16
