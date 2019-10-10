@@ -15,13 +15,12 @@ timeline: true
 
 ---
 
-- 🌟 `<pro>Select`: Added the select all and unselect all button for multiple selection.
-- 🐞 `<pro>Table`: Fixed a problem that the cell content was wrapped which was a block-level element.
-
-## 0.8.17
+## 0.8.18
 
 `2019-10-10`
 
+- 🌟 `<pro>Select`: Added the select all and unselect all button for multiple selection.
+- 🐞 `<pro>Table`: Fixed a problem that the cell content was wrapped which was a block-level element.
 - 🐞 `<pro>Select`: Fixed an issue where the loading status did not stop.
 
 ## 0.8.16
