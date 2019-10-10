@@ -1319,6 +1319,15 @@ export default class DataSet extends EventManager {
   }
 
   /**
+   * 从树形数据中获取指定索引的根节点记录
+   * @param index 索引
+   * @returns {Record}
+   */
+  getFromTree(index: number): Record | undefined {
+    return this.treeData[index];
+  }
+
+  /**
    * 判断是否有新增、变更或者删除的记录
    * @return true | false
    */
@@ -1482,7 +1491,7 @@ Then the query method will be auto invoke.`,
     const {
       paging,
       pageSize,
-      props: { autoLocateFirst },
+      props: { autoLocateFirst, idField, parentField },
     } = this;
     allData = paging ? allData.slice(0, pageSize) : allData;
     this.fireEvent(DataSetEvents.beforeLoad, { dataSet: this, data: allData });
@@ -1494,7 +1503,8 @@ Then the query method will be auto invoke.`,
       this.totalCount = allData.length;
     }
     this.releaseCachedSelected();
-    const nextRecord = autoLocateFirst && this.get(0);
+    const nextRecord =
+      autoLocateFirst && (idField && parentField ? this.getFromTree(0) : this.get(0));
     if (nextRecord) {
       nextRecord.isCurrent = true;
     }

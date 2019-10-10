@@ -114,6 +114,7 @@ title: DataSet
 | unSelectAll() | 取消全选当前页 |  |  |
 | clearCachedSelected() | 清除缓存的选中记录 |  |  |
 | get(index) | 获取指定索引的记录 | `index` - 记录索引 | Record |
+| getFromTree(index) | 从树形数据中获取指定索引的根节点记录 | `index` - 记录索引 | Record |
 | isModified() | 判断是否有新增、变更或者删除的记录 |  | boolean |
 | validate(isSelected, noCascade) | 校验数据记录是否有效 | `isSelect` - 设为 `true` 时，校验选中的记录 `noCascade` - 为 true 时，不校验级联数据 | Promise&lt;boolean&gt; |
 | getField(fieldName) | 根据字段名获取字段 | `fieldName` - 字段名 | Field |
