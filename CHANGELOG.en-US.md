@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>Table`: Fixed a problem that the cell content was wrapped which was a block-level element.
+
 ## 0.8.17
 
 `2019-10-10`
