@@ -28,6 +28,7 @@ title: Select
 | options | 下拉框选项数据源 | DataSet |  |
 | primitiveValue | 是否为原始值（建议以绑定的数据源 Field 的 type 来决定值类型，如 type 设为 object 相当于 primitiveValue 设为 false）`true` - 选项中 valueField 对应的值 `false` - 选项值对象 | boolean |  |
 | optionRenderer | 渲染 Option 本文的钩子 | ({ record, text, value }) => ReactNode |  |
+| notFoundContent | 当下拉列表为空时显示的内容 | ReactNode |  |
 
 更多属性请参考 [TriggerField](/components-pro/trigger-field/#TriggerField)。
 

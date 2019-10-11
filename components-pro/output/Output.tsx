@@ -1,6 +1,8 @@
 import React, { ReactNode } from 'react';
 import { observer } from 'mobx-react';
 import { computed, isArrayLike } from 'mobx';
+import isPlainObject from 'lodash/isPlainObject';
+import isNil from 'lodash/isNil';
 import omit from 'lodash/omit';
 import { FormField, FormFieldProps, RenderProps } from '../field/FormField';
 import autobind from '../_util/autobind';
@@ -39,14 +41,18 @@ export default class Output extends FormField<OutputProps> {
   }
 
   processValue(value: any): string {
-    const text = super.processValue(value);
-    const { field, lang } = this;
-    if (field) {
-      return processFieldValue(text, field, lang, true);
+    if (!isNil(value)) {
+      const text = isPlainObject(value) ? value : super.processValue(value);
+      const { field, lang } = this;
+      if (field) {
+        return processFieldValue(text, field, lang, true);
+      }
+      return text;
     }
-    return text;
+    return '';
   }
 
+  @autobind
   defaultRenderer({ value, text, repeat, maxTagTextLength }: RenderProps): ReactNode {
     const { field } = this;
     if (field && field.type === FieldType.boolean) {

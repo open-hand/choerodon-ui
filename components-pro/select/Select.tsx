@@ -12,6 +12,7 @@ import { action, computed, IReactionDisposer, isArrayLike, reaction, runInAction
 import Menu, { Item, ItemGroup } from 'choerodon-ui/lib/rc-components/menu';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
+import { getConfig } from 'choerodon-ui/lib/configure';
 import TriggerField, { TriggerFieldProps } from '../trigger-field/TriggerField';
 import autobind from '../_util/autobind';
 import { ValidationMessages } from '../validator/Validator';
@@ -118,6 +119,10 @@ export interface SelectProps extends TriggerFieldProps {
    * ```
    */
   optionRenderer?: Renderer;
+  /**
+   * 当下拉列表为空时显示的内容
+   */
+  notFoundContent?: ReactNode;
 }
 
 export class Select<T extends SelectProps> extends TriggerField<T> {
@@ -375,6 +380,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
       'checkValueOnOptionsChange',
       'primitiveValue',
       'optionRenderer',
+      'notFoundContent',
     ]);
     return otherProps;
   }
@@ -407,6 +413,14 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
         onChange={noop}
       />
     );
+  }
+
+  getNotFoundContent() {
+    const { notFoundContent } = this.props;
+    if (notFoundContent !== undefined) {
+      return notFoundContent;
+    }
+    return getConfig('renderEmpty')('Select');
   }
 
   @autobind
@@ -481,7 +495,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     if (!optGroups.length) {
       optGroups.push(
         <Item key="no_data" disabled>
-          {$l('Select', 'no_matching_results')}
+          {this.loading ? ' ' : this.getNotFoundContent()}
         </Item>,
       );
     }

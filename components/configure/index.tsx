@@ -14,6 +14,8 @@ export type Status = {
   [RecordStatus.delete]: string;
 };
 
+export type renderEmptyHandler = (componentName?: string) => ReactNode;
+
 export interface FeedBack {
   loadSuccess(result: any);
 
@@ -51,7 +53,7 @@ export type Config = {
   modalSectionBorder?: boolean;
   modalOkFirst?: boolean;
   buttonFuncType?: string;
-  renderEmpty?: (componentName?: string) => ReactNode;
+  renderEmpty?: renderEmptyHandler;
   generatePageQuery?: (pageParams: {
     page?: number;
     pageSize?: number;
@@ -73,6 +75,16 @@ const defaultFeedback: FeedBack = {
   submitFailed(error) {
     message.error(exception(error, $l('DataSet', 'submit_failure')));
   },
+};
+
+const defaultRenderEmpty: renderEmptyHandler = (componentName?: string): ReactNode => {
+  switch (componentName) {
+    case 'Table':
+      return $l('Table', 'empty_data');
+    case 'Select':
+      return $l('Select', 'no_matching_results');
+    default:
+  }
 };
 
 const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.map<
@@ -103,6 +115,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['modalSectionBorder', true],
   ['modalOkFirst', true],
   ['feedback', defaultFeedback],
+  ['renderEmpty', defaultRenderEmpty],
 ]);
 
 export function getConfig<T extends ConfigKeys>(key: T): any {

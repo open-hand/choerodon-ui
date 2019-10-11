@@ -1,6 +1,7 @@
 import Set from 'core-js/library/fn/set';
 import React, { cloneElement, CSSProperties, ReactElement, ReactNode } from 'react';
 import omit from 'lodash/omit';
+import isPlainObject from 'lodash/isPlainObject';
 import isNil from 'lodash/isNil';
 import defer from 'lodash/defer';
 import noop from 'lodash/noop';
@@ -196,7 +197,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
             fieldValue = (fieldValue || [])[repeat];
           }
           return `${this.getFieldLabel(field)}: ${processFieldValue(
-            super.processValue(fieldValue),
+            isPlainObject(fieldValue) ? fieldValue : super.processValue(fieldValue),
             field,
             this.lang,
           )}`;

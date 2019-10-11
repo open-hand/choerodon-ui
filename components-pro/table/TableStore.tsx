@@ -23,7 +23,6 @@ import { stopPropagation } from '../_util/EventManager';
 import { getColumnKey, getHeader } from './utils';
 import getReactNodeText from '../_util/getReactNodeText';
 import ColumnGroups from './ColumnGroups';
-import { $l } from '../locale-context';
 import autobind from '../_util/autobind';
 import ColumnGroup from './ColumnGroup';
 import { TablePaginationConfig } from './Table';
@@ -205,11 +204,7 @@ export default class TableStore {
 
   @computed
   get emptyText(): ReactNode {
-    const renderEmpty = getConfig('renderEmpty');
-    if (typeof renderEmpty === 'function') {
-      return renderEmpty('Table');
-    }
-    return $l('Table', 'empty_data');
+    return getConfig('renderEmpty')('Table');
   }
 
   @computed
