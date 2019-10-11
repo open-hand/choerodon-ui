@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.19
+
+`2019-10-11`
+
 - 🌟 `configure`: Added `pagination` global configuration.
 - 🌟 `<pro>Select`: Added `notFoundContent`, `onOption` properties.
 - 💄 `<pro>FormField`: The return value type of `renderer` is supports `ReactNode`.

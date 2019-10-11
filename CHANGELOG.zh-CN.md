@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.19
+
+`2019-10-11`
+
 - 🌟 `configure`: 增加 pagination 全局配置。
 - 🌟 `<pro>Select`: 增加 notFoundContent、onOption 属性。
 - 💄 `<pro>FormField`: renderer 返回值支持 ReactNode。
