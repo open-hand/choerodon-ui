@@ -46,7 +46,7 @@ function getOptionsFromChildren(
               },
               {
                 [textField]: children,
-                [valueField]: value === undefined ? children : value,
+                [valueField]: value === undefined && isValidElement(children) ? children : value,
               },
             ),
           );

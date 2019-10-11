@@ -101,6 +101,10 @@ export interface ElementProps {
    * 语言
    */
   lang?: Lang;
+  /**
+   * 拼写校验
+   */
+  spellCheck?: boolean;
 }
 
 /** 响应鼠标事件组件 */
@@ -215,6 +219,10 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
      * 语言
      */
     lang: PropTypes.string,
+    /**
+     * 拼写校验
+     */
+    spellCheck: PropTypes.bool,
     /**
      * 获取焦点回调
      */

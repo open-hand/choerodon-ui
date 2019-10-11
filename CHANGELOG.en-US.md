@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `configure`: Add `pagination` global configuration.
+- 💄 `<pro>FormField`: The return value type of `renderer` is supports `ReactNode`.
 - 💄 `<pro>Table`: The tree table highlights the first root record by default.
 
 ## 0.8.18

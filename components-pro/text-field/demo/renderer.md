@@ -13,19 +13,21 @@ title:
 
 Renderer.
 
-````jsx
-import { DataSet, TextField, Row, Col } from 'choerodon-ui/pro';
+```jsx
+import { DataSet, TextField, Icon, Row, Col } from 'choerodon-ui/pro';
 
 function valueRenderer({ value }) {
   return `${value}个`;
 }
 
+function colorRenderer({ text }) {
+  return <span style={{ color: 'red' }}>{text}</span>;
+}
+
 class App extends React.Component {
   ds = new DataSet({
     data: [{ count: '30' }],
-    fields: [
-      { name: 'count' },
-    ],
+    fields: [{ name: 'count' }],
   });
 
   render() {
@@ -35,15 +37,18 @@ class App extends React.Component {
           <TextField value="50" renderer={valueRenderer} />
         </Col>
         <Col span="12">
-          <TextField dataSet={this.ds} name="count" renderer={valueRenderer} />
+          <TextField
+            dataSet={this.ds}
+            name="count"
+            renderer={colorRenderer}
+            prefix={<Icon type="person" />}
+            suffix={<Icon type="dehaze" />}
+          />
         </Col>
       </Row>
     );
   }
 }
 
-ReactDOM.render(
-  <App />,
-  mountNode
-);
-````
+ReactDOM.render(<App />, mountNode);
+```

@@ -350,6 +350,7 @@ export default class Input extends Component<InputProps, any> {
       | 'showLengthInfo'
       | 'showPasswordEye'
       | 'size'
+      | 'border'
     >(this.props, [
       'placeholder',
       'prefixCls',
@@ -365,6 +366,7 @@ export default class Input extends Component<InputProps, any> {
       'showLengthInfo',
       'showPasswordEye',
       'size',
+      'border',
     ]);
 
     return (

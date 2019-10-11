@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { action, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import { EditorConfiguration } from 'codemirror';
-import { IInstance, IControlledCodeMirror as CodeMirrorProps } from 'react-codemirror2';
+import { IControlledCodeMirror as CodeMirrorProps, IInstance } from 'react-codemirror2';
+import isString from 'lodash/isString';
 import isEqual from 'lodash/isEqual';
 import omit from 'lodash/omit';
 import noop from 'lodash/noop';
@@ -100,12 +101,13 @@ export default class CodeArea extends ObserverFormField<CodeAreaProps> {
   renderWrapper(): ReactNode {
     if (CodeMirror) {
       this.cmOptions.readOnly = this.isDisabled() ? 'nocursor' : this.isReadOnly();
+      const text = this.getTextNode();
       return (
         <div {...this.getWrapperProps()}>
           <label>
             <CodeMirror
               {...this.getOtherProps()}
-              value={this.getText()}
+              value={isString(text) ? text : this.getText()}
               options={this.cmOptions}
               onBeforeChange={this.handleBeforeChange}
               onBlur={this.handleCodeMirrorBlur}
@@ -123,14 +125,14 @@ export default class CodeArea extends ObserverFormField<CodeAreaProps> {
     this.text = text;
   }
 
-  getText() {
-    return this.text === undefined ? (super.getText() as string) || '' : this.text;
+  getTextNode(): ReactNode {
+    return this.text === undefined ? (super.getTextNode() as string) || '' : this.text;
   }
 
-  processValue(value) {
+  processValue(value: any): string {
+    const text = super.processValue(value);
     const { formatter } = this.props;
-    value = super.processValue(value);
-    return formatter ? formatter.getFormatted(value) : value;
+    return formatter ? formatter.getFormatted(text) : text;
   }
 
   /**

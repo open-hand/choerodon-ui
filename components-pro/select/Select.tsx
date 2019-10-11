@@ -857,16 +857,13 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     return super.processValue(this.processObjectValue(value, textField));
   }
 
-  processValue(value) {
+  processValue(value: any): string {
     const text = this.processLookupValue(value);
     if (isEmpty(text)) {
-      if (isEmpty(value)) {
-        return '';
-      }
       if (isPlainObject(value)) {
         return ObjectChainValue.get(value, this.valueField);
       }
-      return value;
+      return super.processValue(value);
     }
     return text;
   }
@@ -906,12 +903,14 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   }
 
   @autobind
+  @action
   chooseAll() {
     const { options } = this;
     options.forEach(this.choose, this);
   }
 
   @autobind
+  @action
   unChooseAll() {
     const { options } = this;
     options.forEach(this.unChoose, this);

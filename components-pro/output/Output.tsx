@@ -2,10 +2,11 @@ import React, { ReactNode } from 'react';
 import { observer } from 'mobx-react';
 import { computed, isArrayLike } from 'mobx';
 import omit from 'lodash/omit';
-import isNil from 'lodash/isNil';
-import { FormField, FormFieldProps } from '../field/FormField';
+import { FormField, FormFieldProps, RenderProps } from '../field/FormField';
 import autobind from '../_util/autobind';
 import processFieldValue from '../_util/processFieldValue';
+import { BooleanValue, FieldType } from '../data-set/enum';
+import ObserverCheckBox from '../check-box/CheckBox';
 
 export interface OutputProps extends FormFieldProps {}
 
@@ -37,15 +38,21 @@ export default class Output extends FormField<OutputProps> {
     return this.processValue(value);
   }
 
-  processValue(value) {
-    if (!isNil(value)) {
-      value = super.processValue(value);
-      const { field, lang } = this;
-      if (field) {
-        return processFieldValue(value, field, lang, true);
-      }
+  processValue(value: any): string {
+    const text = super.processValue(value);
+    const { field, lang } = this;
+    if (field) {
+      return processFieldValue(text, field, lang, true);
     }
-    return value;
+    return text;
+  }
+
+  defaultRenderer({ value, text, repeat, maxTagTextLength }: RenderProps): ReactNode {
+    const { field } = this;
+    if (field && field.type === FieldType.boolean) {
+      return <ObserverCheckBox disabled checked={value === field.get(BooleanValue.trueValue)} />;
+    }
+    return super.defaultRenderer({ text, repeat, maxTagTextLength });
   }
 
   getRenderedValue(): ReactNode {
@@ -56,7 +63,7 @@ export default class Output extends FormField<OutputProps> {
     if (range) {
       return this.renderRangeValue(true);
     }
-    return this.getText();
+    return this.getTextNode();
   }
 
   renderWrapper(): ReactNode {

@@ -2,6 +2,7 @@ import React, { createElement, CSSProperties, isValidElement, ReactNode } from '
 import omit from 'lodash/omit';
 import defer from 'lodash/defer';
 import isArray from 'lodash/isArray';
+import isString from 'lodash/isString';
 import noop from 'lodash/noop';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
@@ -205,6 +206,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const otherPrevNode = this.getOtherPrevNode();
     const otherNextNode = this.getOtherNextNode();
     const placeholderDiv = this.renderPlaceHolder();
+    const renderedValue = this.renderRenderedValue();
     const floatLabel = this.renderFloatLabel();
     const multipleHolder = this.renderMultipleHolder();
 
@@ -213,6 +215,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         {multipleHolder}
         {otherPrevNode}
         {placeholderDiv}
+        {renderedValue}
         <label onMouseDown={this.handleMouseDown}>
           {prefix}
           {input}
@@ -384,36 +387,47 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     } = this;
     const otherProps = this.getOtherProps();
     const { height } = (style || {}) as CSSProperties;
-    return multiple ? (
-      <div key="text" className={otherProps.className}>
-        <Animate
-          component="ul"
-          componentProps={{
-            style: height && height !== 'auto' ? { height: pxToRem(toPx(height)! - 2) } : undefined,
-          }}
-          transitionName="zoom"
-          exclusive
-          onEnd={this.handleTagAnimateEnd}
-        >
-          {this.renderMultipleValues()}
-          {range
-            ? this.renderRangeEditor(otherProps)
-            : this.renderMultipleEditor({
-                ...otherProps,
-                className: `${prefixCls}-multiple-input`,
-              } as T)}
-        </Animate>
-      </div>
-    ) : range ? (
-      <span key="text" className={otherProps.className}>
-        {this.renderRangeEditor(otherProps)}
-      </span>
-    ) : (
+    if (multiple) {
+      return (
+        <div key="text" className={otherProps.className}>
+          <Animate
+            component="ul"
+            componentProps={{
+              style:
+                height && height !== 'auto' ? { height: pxToRem(toPx(height)! - 2) } : undefined,
+            }}
+            transitionName="zoom"
+            exclusive
+            onEnd={this.handleTagAnimateEnd}
+          >
+            {this.renderMultipleValues()}
+            {range
+              ? this.renderRangeEditor(otherProps)
+              : this.renderMultipleEditor({
+                  ...otherProps,
+                  className: `${prefixCls}-multiple-input`,
+                } as T)}
+          </Animate>
+        </div>
+      );
+    }
+    if (range) {
+      return (
+        <span key="text" className={otherProps.className}>
+          {this.renderRangeEditor(otherProps)}
+        </span>
+      );
+    }
+    const text = this.getTextNode();
+    if (isValidElement(text)) {
+      otherProps.style = { ...otherProps.style, textIndent: -1000 };
+    }
+    return (
       <input
         key="text"
         {...otherProps}
         placeholder={this.hasFloatLabel ? undefined : this.getPlaceholders()[0]}
-        value={this.getText()}
+        value={isString(text) ? text : this.getText()}
         readOnly={!this.editable}
       />
     );
@@ -488,6 +502,20 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   renderPlaceHolder(): ReactNode {
     if ((this.multiple || !isPlaceHolderSupport()) && !this.hasFloatLabel && !this.range) {
       return this.getPlaceHolderNode();
+    }
+  }
+
+  renderRenderedValue(): ReactNode {
+    const { prefixCls, range, multiple } = this;
+    if (!range && !multiple) {
+      const text = this.getTextNode();
+      if ((!this.isFocused || !this.editable) && isValidElement(text)) {
+        return (
+          <span key="renderedText" className={`${prefixCls}-rendered-value`}>
+            <span className={`${prefixCls}-rendered-value-inner`}>{text}</span>
+          </span>
+        );
+      }
     }
   }
 
@@ -632,8 +660,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     this.setText(undefined);
   }
 
-  getText() {
-    return this.text === undefined ? (super.getText() as string) : this.text;
+  getTextNode() {
+    return this.text === undefined ? (super.getTextNode() as string) : this.text;
   }
 
   @action

@@ -327,7 +327,7 @@ export default class Lov extends Select<LovProps> {
           disabled={this.isDisabled()}
           onClick={this.openModal}
         >
-          {children || this.getText() || this.getPlaceholders()[0] || $l('Lov', 'choose')}
+          {children || this.getTextNode() || this.getPlaceholders()[0] || $l('Lov', 'choose')}
         </Button>,
       ];
       if (clearButton) {

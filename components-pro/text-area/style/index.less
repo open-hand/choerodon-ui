@@ -1,14 +1,17 @@
-@import "../../../components/style/themes/default";
-@import "../../text-field/style/mixin";
+@import '../../../components/style/themes/default';
+@import '../../text-field/style/mixin';
 
-@textarea-prefix: ~"@{c7n-pro-prefix}-textarea";
+@textarea-prefix: ~'@{c7n-pro-prefix}-textarea';
 
 .@{textarea-prefix} {
   .input;
-  padding: @input-padding-horizontal;
+
+  &,
+  &-placeholder {
+    padding: @input-padding-horizontal;
+  }
 
   &-invalid& {
     border-color: @error-color;
   }
 }
-

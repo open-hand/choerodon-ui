@@ -13,9 +13,8 @@ title:
 
 Basic usage example.
 
-````jsx
+```jsx
 import { TextArea, Row, Col } from 'choerodon-ui/pro';
-
 
 ReactDOM.render(
   <Row gutter={10}>
@@ -29,6 +28,6 @@ ReactDOM.render(
       <TextArea placeholder="disabled" disabled />
     </Col>
   </Row>,
-  mountNode
+  mountNode,
 );
-````
+```

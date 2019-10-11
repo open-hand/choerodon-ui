@@ -44,7 +44,7 @@ import Animate from '../animate';
 import CloseButton from './CloseButton';
 import { fromRangeValue, getDateFormatByField, toMultipleValue, toRangeValue } from './utils';
 import isSame from '../_util/isSame';
-import formatString from 'choerodon-ui/pro/lib/formatter/formatString';
+import formatString from '../formatter/formatString';
 
 const map: { [key: string]: FormField<FormFieldProps>[] } = {};
 
@@ -52,7 +52,7 @@ export type Comparator = (v1: any, v2: any) => boolean;
 
 export type RenderProps = {
   value?: any;
-  text?: ReactNode;
+  text?: string;
   record?: Record | null;
   name?: string;
   dataSet?: DataSet | null;
@@ -418,7 +418,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   }
 
   @autobind
-  defaultRenderer({ text, repeat, maxTagTextLength }: RenderProps) {
+  defaultRenderer({ text, repeat, maxTagTextLength }: RenderProps): ReactNode {
     return repeat !== undefined &&
       maxTagTextLength &&
       isString(text) &&
@@ -758,12 +758,12 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     return getDateFormatByField(this.field, this.getFieldType());
   }
 
-  processValue(value: any): ReactNode {
+  processValue(value: any): string {
     if (!isNil(value)) {
       if (isMoment(value)) {
         return (value as Moment).format(this.getDateFormat());
       }
-      return value;
+      return value.toString();
     }
     return '';
   }
@@ -783,18 +783,19 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     }
   }
 
-  getText(): ReactNode {
+  getTextNode(): ReactNode {
     const text =
       this.isFocused && this.editable
         ? this.processValue(this.getValue())
         : this.processRenderer(this.getValue());
-    if (text && !isArrayLike(text) && !isValidElement(text)) {
-      return text.toString();
-    }
     return text;
   }
 
-  processText(value?: ReactNode): ReactNode {
+  getText(value: any = this.getValue()): string {
+    return this.processValue(value);
+  }
+
+  processText(value: string): string {
     return value;
   }
 
@@ -804,7 +805,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       dataSet,
       props: { renderer = this.defaultRenderer, name, maxTagTextLength },
     } = this;
-    const text = this.processText(this.processValue(value));
+    const text = this.processText(this.getText(value));
     return renderer
       ? renderer({
           value,

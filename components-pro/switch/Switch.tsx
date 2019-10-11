@@ -23,7 +23,7 @@ export default class Switch extends CheckBox<CheckBoxProps> {
     super.handleKeyDown(e);
   }
 
-  getText() {
+  getTextNode() {
     const {
       prefixCls,
       props: { children, unCheckedChildren },
