@@ -13,11 +13,24 @@ title:
 
 Lookup Code
 
-````jsx
+```jsx
 import { DataSet, SelectBox, Button, Row, Col } from 'choerodon-ui/pro';
 
 function handleDataSetChange({ record, name, value, oldValue }) {
-  console.log('[dataset newValue]', value, '[oldValue]', oldValue, `[record.get('${name}')]`, record.get(name));
+  console.log(
+    '[dataset newValue]',
+    value,
+    '[oldValue]',
+    oldValue,
+    `[record.get('${name}')]`,
+    record.get(name),
+  );
+}
+
+function handleOption({ record }) {
+  return {
+    disabled: record.index === 0,
+  };
 }
 
 class App extends React.Component {
@@ -29,7 +42,13 @@ class App extends React.Component {
       { name: 'sex', type: 'string', lookupCode: 'HR.EMPLOYEE_GENDER', defaultValue: 'F' },
       { name: 'sex2', type: 'string', lookupUrl: '/common/code/HR.EMPLOYEE_GENDER/' },
       { name: 'lov', type: 'string', lovCode: 'LOV_CODE', defaultValue: 'SYS.PROFILE_LEVEL_ID' },
-      { name: 'lov2', type: 'string', lovCode: 'LOV_CODE', defaultValue: ['SYS.PROFILE_LEVEL_ID', 'SYS.RESOURCE_TYPE'], multiple: true },
+      {
+        name: 'lov2',
+        type: 'string',
+        lovCode: 'LOV_CODE',
+        defaultValue: ['SYS.PROFILE_LEVEL_ID', 'SYS.RESOURCE_TYPE'],
+        multiple: true,
+      },
     ],
     events: {
       update: handleDataSetChange,
@@ -45,7 +64,7 @@ class App extends React.Component {
     return (
       <Row gutter={10}>
         <Col span={6}>
-          <SelectBox dataSet={this.ds} name="sex" placeholder="请选择" />
+          <SelectBox dataSet={this.ds} name="sex" placeholder="请选择" onOption={handleOption} />
         </Col>
         <Col span={6}>
           <Button onClick={this.changeLookupCode}>修改lookupCode</Button>
@@ -64,8 +83,5 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(
-  <App />,
-  mountNode
-);
-````
+ReactDOM.render(<App />, mountNode);
+```

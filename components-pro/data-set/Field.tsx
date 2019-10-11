@@ -85,11 +85,11 @@ export type FieldProps = {
   readOnly?: boolean;
   /**
    * 1.当type为object时需要显示的字段名
-   * 2.值列表的文本字段，当有lookupCode时，默认值为`meaning`
+   * 2.值列表的文本字段，默认值为`meaning`
    */
   textField?: string;
   /**
-   * 值列表的值字段，当有lookupCode时，默认值为`value`
+   * 值列表的值字段，默认值为`value`
    */
   valueField?: string;
   /**

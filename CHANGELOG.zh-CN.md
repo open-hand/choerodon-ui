@@ -16,7 +16,7 @@ timeline: true
 ---
 
 - 🌟 `configure`: 增加 pagination 全局配置。
-- 🌟 `<pro>Select`: 增加 notFoundContent 属性。
+- 🌟 `<pro>Select`: 增加 notFoundContent、onOption 属性。
 - 💄 `<pro>FormField`: renderer 返回值支持 ReactNode。
 - 💄 `<pro>Table`: 树形表格默认高亮第一条根节点记录。
 

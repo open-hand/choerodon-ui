@@ -12,6 +12,7 @@ function getOptionsFromChildren(
   fields: FieldProps[],
   textField: string,
   valueField: string,
+  disabledField: string,
   groups: string[] = [],
 ) {
   if (elements) {
@@ -26,10 +27,11 @@ function getOptionsFromChildren(
             fields,
             textField,
             valueField,
+            disabledField,
             groups.concat(props.label || ''),
           );
         } else if (type === Option) {
-          const { value, children } = child.props as OptionProps & { children };
+          const { value, children, disabled } = child.props as OptionProps & { children };
           data.push(
             groups.reduce(
               (obj, group, index) => {
@@ -47,6 +49,7 @@ function getOptionsFromChildren(
               {
                 [textField]: children,
                 [valueField]: value === undefined && isValidElement(children) ? children : value,
+                [disabledField]: disabled,
               },
             ),
           );
@@ -56,7 +59,14 @@ function getOptionsFromChildren(
   }
 }
 
-export default function normalizeOptions({ field, textField, valueField, multiple, children }) {
+export default function normalizeOptions({
+  field,
+  textField,
+  valueField,
+  disabledField,
+  multiple,
+  children,
+}) {
   const selectionType = multiple
     ? DataSetSelection.multiple
     : multiple === undefined
@@ -87,11 +97,15 @@ export default function normalizeOptions({ field, textField, valueField, multipl
     {
       name: valueField,
     },
+    {
+      name: disabledField,
+      type: FieldType.boolean,
+    },
   ];
 
   if ((!data || !data.length) && children) {
     data = [];
-    getOptionsFromChildren(children, data, fields, textField, valueField);
+    getOptionsFromChildren(children, data, fields, textField, valueField, disabledField);
   }
   const ds = new DataSet({
     data,

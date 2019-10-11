@@ -16,7 +16,7 @@ import { getConfig } from 'choerodon-ui/lib/configure';
 import TriggerField, { TriggerFieldProps } from '../trigger-field/TriggerField';
 import autobind from '../_util/autobind';
 import { ValidationMessages } from '../validator/Validator';
-import Option from '../option/Option';
+import Option, { OptionProps } from '../option/Option';
 import OptGroup from '../option/OptGroup';
 import { DataSetStatus, FieldType } from '../data-set/enum';
 import DataSet from '../data-set/DataSet';
@@ -45,6 +45,14 @@ function updateActiveKey(menu: Menu, activeKey: string) {
   });
 }
 
+const disabledField = '__disabled';
+
+function defaultOnOption({ record }) {
+  return {
+    disabled: record.get(disabledField),
+  };
+}
+
 export function getItemKey(record: Record, text: ReactNode, value: any) {
   return `item-${value || record.id}-${(isValidElement(text) ? text.key : text) || record.id}`;
 }
@@ -55,6 +63,8 @@ function getSimpleValue(value, valueField) {
   }
   return value;
 }
+
+export type onOptionProps = { dataSet: DataSet; record: Record };
 
 export interface SearchMatcherProps {
   record: Record;
@@ -123,6 +133,10 @@ export interface SelectProps extends TriggerFieldProps {
    * 当下拉列表为空时显示的内容
    */
   notFoundContent?: ReactNode;
+  /**
+   * 设置选项属性，如 disabled;
+   */
+  onOption: (props: onOptionProps) => OptionProps;
 }
 
 export class Select<T extends SelectProps> extends TriggerField<T> {
@@ -160,6 +174,14 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
      * ```
      */
     optionRenderer: PropTypes.func,
+    /**
+     * 当下拉列表为空时显示的内容
+     */
+    notFoundContent: PropTypes.node,
+    /**
+     * 设置选项属性，如 disabled;
+     */
+    onOption: PropTypes.func,
     ...TriggerField.propTypes,
   };
 
@@ -173,6 +195,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     },
     dropdownMatchSelectWidth: true,
     checkValueOnOptionsChange: true,
+    onOption: defaultOnOption,
   };
 
   static Option = Option;
@@ -199,11 +222,6 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   @computed
   get valueField(): string {
     return this.getProp('valueField') || 'value';
-  }
-
-  @computed
-  get disabledField(): string {
-    return this.getProp('disabledField') || 'disabled';
   }
 
   get currentComboOption(): Record | undefined {
@@ -271,7 +289,10 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
       multiple,
       observableProps: { children, options },
     } = this;
-    return options || normalizeOptions({ field, textField, valueField, multiple, children });
+    return (
+      options ||
+      normalizeOptions({ field, textField, valueField, disabledField, multiple, children })
+    );
   }
 
   @computed
@@ -381,6 +402,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
       'primitiveValue',
       'optionRenderer',
       'notFoundContent',
+      'onOption',
     ]);
     return otherProps;
   }
@@ -429,8 +451,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
       options,
       textField,
       valueField,
-      disabledField,
-      props: { dropdownMenuStyle, optionRenderer },
+      props: { dropdownMenuStyle, optionRenderer, onOption },
     } = this;
     if (!options) {
       return null;
@@ -472,7 +493,8 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
       });
       const value = record.get(valueField);
       const text = record.get(textField);
-      const optionDisabled = record.get(disabledField);
+      const optionProps = onOption({ dataSet: options, record });
+      const optionDisabled = menuDisabled || (optionProps && optionProps.disabled);
       const key: Key = getItemKey(record, text, value);
       if (!('selectedKeys' in menuProps) && this.isSelected(record)) {
         selectedKeys.push(key);
@@ -481,7 +503,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
         ? optionRenderer({ dataSet: this.options, record, text, value })
         : text;
       const option: ReactElement = (
-        <Item key={key} value={record} disabled={menuDisabled || optionDisabled}>
+        <Item {...optionProps} key={key} value={record} disabled={optionDisabled}>
           {itemContent}
         </Item>
       );

@@ -13,7 +13,7 @@ title:
 
 Select
 
-````jsx
+```jsx
 import { Select, Button, Row, Col } from 'choerodon-ui/pro';
 
 function handleChange(value, oldValue) {
@@ -36,7 +36,11 @@ class App extends React.Component {
           <Select placeholder="请选择" onChange={handleChange}>
             <Option value="jack">Jack</Option>
             <Option value="lucy">Lucy</Option>
-            {this.state.visible && <Option value="wu">Wu</Option>}
+            {this.state.visible && (
+              <Option value="wu" disabled>
+                Wu
+              </Option>
+            )}
           </Select>
         </Col>
         <Col span={4}>
@@ -54,8 +58,5 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(
-  <App />,
-  mountNode
-);
-````
+ReactDOM.render(<App />, mountNode);
+```

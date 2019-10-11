@@ -16,7 +16,7 @@ timeline: true
 ---
 
 - 🌟 `configure`: Added `pagination` global configuration.
-- 🌟 `<pro>Select`: Added `notFoundContent` property.
+- 🌟 `<pro>Select`: Added `notFoundContent`, `onOption` properties.
 - 💄 `<pro>FormField`: The return value type of `renderer` is supports `ReactNode`.
 - 💄 `<pro>Table`: The tree table highlights the first root record by default.
 

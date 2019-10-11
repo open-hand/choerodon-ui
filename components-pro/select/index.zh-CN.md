@@ -29,6 +29,7 @@ title: Select
 | primitiveValue | 是否为原始值（建议以绑定的数据源 Field 的 type 来决定值类型，如 type 设为 object 相当于 primitiveValue 设为 false）`true` - 选项中 valueField 对应的值 `false` - 选项值对象 | boolean |  |
 | optionRenderer | 渲染 Option 本文的钩子 | ({ record, text, value }) => ReactNode |  |
 | notFoundContent | 当下拉列表为空时显示的内容 | ReactNode |  |
+| onOption | 设置选项属性，如 disabled | ({ dataSet, record })) => object |  |
 
 更多属性请参考 [TriggerField](/components-pro/trigger-field/#TriggerField)。
 
@@ -40,12 +41,14 @@ title: Select
 
 ### Select.Option
 
-| 参数  | 说明   | 类型 | 默认值 |
-| ----- | ------ | ---- | ------ |
-| value | 选项值 | any  |        |
+| 参数     | 说明   | 类型    | 默认值 |
+| -------- | ------ | ------- | ------ |
+| value    | 选项值 | any     |        |
+| disabled | 禁用   | boolean |        |
 
 <style>
-.code-box-demo .c7n-pro-select-wrapper {
+.code-box-demo .c7n-pro-select-wrapper,
+.code-box-demo .c7n-pro-btn-wrapper {
   margin-bottom: .1rem;
 }
 </style>

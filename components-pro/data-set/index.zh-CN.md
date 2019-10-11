@@ -203,8 +203,8 @@ title: DataSet
 | validator | 校验器，当返回值为 false 或 涵盖错误信息的字符串，则为校验失败 | (value, name, record) =&gt; boolean \| string \| undefined |  |
 | required | 是否必选 | boolean | false |
 | readOnly | 是否只读 | boolean | false |
-| textField | 当 type 为 object 时需要显示的字段名; 值列表的文本字段，当有 lookupCode 时，默认值为`meaning` | string | meaning |
-| valueField | 值列表的值字段，当有 lookupCode 时，默认值为`value` | string | value |
+| textField | 值列表的文本字段 | string | meaning |
+| valueField | 值列表的值字段 | string | value |
 | trueValue | 类型为 boolean 时，true 对应的值 | boolean\|string\|number | true |
 | falseValue | 类型为 boolean 时，false 对应的值 | boolean\|string\|number | false |
 | options | 下拉框组件的菜单数据集 | DataSet |  |
