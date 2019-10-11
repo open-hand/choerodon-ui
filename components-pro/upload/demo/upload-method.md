@@ -13,7 +13,7 @@ title:
 
 Call `Upload`'s `startUpload` method directly. You can use `showUploadBtn={false}` to hide the original upload button.
 
-````jsx
+```jsx
 import { Upload, Button, Form, Output } from 'choerodon-ui/pro';
 
 const props = {
@@ -31,21 +31,23 @@ const props = {
 class Demo extends React.Component {
   upload;
 
-  saveUpload = node => this.upload = node;
+  saveUpload = node => (this.upload = node);
 
   handleBtnClick = () => {
     this.upload.startUpload();
-  }
+  };
 
   render() {
     return (
       <Form header="文件管理">
         <Output label="选择Logo" renderer={() => <Upload ref={this.saveUpload} {...props} />} />
-        <Button style={{ marginBottom: 10 }} color="blue" onClick={this.handleBtnClick}>提交</Button>
+        <Button style={{ marginBottom: 10 }} color="primary" onClick={this.handleBtnClick}>
+          提交
+        </Button>
       </Form>
     );
   }
 }
 
 ReactDOM.render(<Demo />, mountNode);
-````
+```

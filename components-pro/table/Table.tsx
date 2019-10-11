@@ -1356,7 +1356,12 @@ export default class Table extends DataSetComponent<TableProps> {
       props: { dataSet, defaultRowExpanded },
     } = this;
     if (tableStore.isTree && defaultRowExpanded && !dataSet.props.expandField) {
-      tableStore.expandedRows = dataSet.data.filter(record => !!record.children);
+      tableStore.expandedRows = dataSet.reduce<(string | number)[]>((array, record) => {
+        if (record.children) {
+          array.push(record.key);
+        }
+        return array;
+      }, []);
     }
   }
 }

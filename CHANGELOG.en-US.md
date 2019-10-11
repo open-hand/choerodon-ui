@@ -15,6 +15,9 @@ timeline: true
 
 ---
 
+- 💄 `<pro>Table`: Tree table expansion state persistence.
+- 🐞 `<pro>Table`: Fixing the collapse-all button of tree table sometimes fails to collapse the node.
+
 ## 0.8.19
 
 `2019-10-11`

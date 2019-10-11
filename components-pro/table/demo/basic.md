@@ -387,25 +387,31 @@ class App extends React.Component {
   };
 
   copyButton = (
-    <Button funcType="flat" color="blue" icon="baseline-file_copy" onClick={this.copy} key="copy">
+    <Button
+      funcType="flat"
+      color="primary"
+      icon="baseline-file_copy"
+      onClick={this.copy}
+      key="copy"
+    >
       复制
     </Button>
   );
 
   insertButton = (
-    <Button funcType="flat" color="blue" icon="merge_type" onClick={this.insert} key="insert">
+    <Button funcType="flat" color="primary" icon="merge_type" onClick={this.insert} key="insert">
       插入
     </Button>
   );
 
   createButton = (
-    <Button funcType="flat" color="blue" icon="playlist_add" onClick={this.createUser} key="add">
+    <Button funcType="flat" color="primary" icon="playlist_add" onClick={this.createUser} key="add">
       新增
     </Button>
   );
 
   importButton = (
-    <Button funcType="flat" color="blue" icon="get_app" onClick={this.importData} key="import">
+    <Button funcType="flat" color="primary" icon="get_app" onClick={this.importData} key="import">
       导入
     </Button>
   );
@@ -413,7 +419,7 @@ class App extends React.Component {
   removeAllButton = (
     <Button
       funcType="flat"
-      color="blue"
+      color="primary"
       icon="remove_circle"
       onClick={this.removeAllData}
       key="removeAll"
@@ -423,7 +429,13 @@ class App extends React.Component {
   );
 
   deleteAllButton = (
-    <Button funcType="flat" color="blue" icon="delete" onClick={this.deleteAllData} key="deleteAll">
+    <Button
+      funcType="flat"
+      color="primary"
+      icon="delete"
+      onClick={this.deleteAllData}
+      key="deleteAll"
+    >
       全部删除
     </Button>
   );

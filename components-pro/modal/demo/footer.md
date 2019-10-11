@@ -13,7 +13,7 @@ title:
 
 Custom Footer.
 
-````jsx
+```jsx
 import { Modal, Button } from 'choerodon-ui/pro';
 
 const key1 = Modal.key();
@@ -37,9 +37,7 @@ function openModal() {
         <p>Some contents...</p>
       </div>
     ),
-    footer: (
-      <Button onClick={closeModal}>关闭</Button>
-    ),
+    footer: <Button onClick={closeModal}>关闭</Button>,
   });
 }
 
@@ -77,7 +75,7 @@ function openMoreButtons() {
     footer: (okBtn, cancelBtn) => (
       <div>
         {okBtn}
-        <Button color="blue">Custom</Button>
+        <Button color="primary">Custom</Button>
         {cancelBtn}
       </div>
     ),
@@ -92,4 +90,4 @@ ReactDOM.render(
   </div>,
   mountNode,
 );
-````
+```

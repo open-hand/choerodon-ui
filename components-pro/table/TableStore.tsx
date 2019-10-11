@@ -154,7 +154,7 @@ export default class TableStore {
 
   @observable lockColumnsHeadRowsHeight: any;
 
-  @observable expandedRows: Record[];
+  @observable expandedRows: (string | number)[];
 
   @observable hoverRow?: Record;
 
@@ -530,9 +530,9 @@ export default class TableStore {
 
   isRowExpanded(record: Record): boolean {
     const { parent } = record;
-    const expanded = this.dataSet.props.expandField
-      ? record.isExpanded
-      : this.expandedRows.indexOf(record) !== -1;
+    const expanded =
+      (this.dataSet.props.expandField && record.isExpanded) ||
+      this.expandedRows.indexOf(record.key) !== -1;
     return expanded && (!this.isTree || !parent || this.isRowExpanded(parent));
   }
 
@@ -540,13 +540,14 @@ export default class TableStore {
   setRowExpanded(record: Record, expanded: boolean) {
     if (this.dataSet.props.expandField) {
       record.isExpanded = expanded;
-    } else if (expanded) {
-      this.expandedRows.push(record);
-    } else {
-      const index = this.expandedRows.indexOf(record);
-      if (index !== -1) {
-        this.expandedRows.splice(index, 1);
+    }
+    const index = this.expandedRows.indexOf(record.key);
+    if (expanded) {
+      if (index === -1) {
+        this.expandedRows.push(record.key);
       }
+    } else if (index !== -1) {
+      this.expandedRows.splice(index, 1);
     }
   }
 

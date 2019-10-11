@@ -15,6 +15,7 @@ Tree Data.
 
 ```jsx
 import { DataSet, Table, Button, Icon } from 'choerodon-ui/pro';
+import { observer } from 'mobx-react';
 
 const { Column } = Table;
 
@@ -28,6 +29,15 @@ function expandedRowRenderer({ record }) {
       功能代码：{record.get('functionCode')} 入口页面：{record.get('url')}
     </p>
   );
+}
+
+@observer
+class AddChildButton extends React.Component {
+  render() {
+    const { dataSet, ...otherProps } = this.props;
+    const { current } = dataSet;
+    return <Button {...otherProps} disabled={!current || !current.get('id')} />;
+  }
 }
 
 class App extends React.Component {
@@ -62,6 +72,10 @@ class App extends React.Component {
     expandedRender: false,
   };
 
+  handleCreateChild = () => {
+    this.ds.create({ parentId: this.ds.current.get('id') });
+  };
+
   handleChangeExpandRender = () => this.setState({ expandedRender: !this.state.expandedRender });
 
   handleChangeExpandIconIndex = () =>
@@ -82,24 +96,33 @@ class App extends React.Component {
     'query',
     'expandAll',
     'collapseAll',
+    <AddChildButton
+      key="add-child"
+      dataSet={this.ds}
+      onClick={this.handleCreateChild}
+      color="primary"
+      funcType="flat"
+    >
+      添加子节点
+    </AddChildButton>,
     <Button
       key="change-expand-type"
       onClick={this.handleChangeExpandIconIndex}
-      color="blue"
+      color="primary"
       funcType="flat"
     >
       切换展开图标索引
     </Button>,
-    <Button key="change-border" onClick={this.handleChangeBorder} color="blue" funcType="flat">
+    <Button key="change-border" onClick={this.handleChangeBorder} color="primary" funcType="flat">
       切换边框
     </Button>,
-    <Button key="change-mode" onClick={this.handleChangeMode} color="blue" funcType="flat">
+    <Button key="change-mode" onClick={this.handleChangeMode} color="primary" funcType="flat">
       切换树模式
     </Button>,
     <Button
       key="change-expand-render"
       onClick={this.handleChangeExpandRender}
-      color="blue"
+      color="primary"
       funcType="flat"
     >
       切换展开行渲染
