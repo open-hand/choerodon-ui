@@ -30,8 +30,8 @@ export default class Validity {
       .every(key => !this[key]);
   }
 
-  constructor() {
-    this.init();
+  constructor(props?: object) {
+    this.init(props);
   }
 
   reset() {
@@ -39,7 +39,7 @@ export default class Validity {
   }
 
   @action
-  init() {
+  init(props?: object) {
     this.badInput = false;
     this.customError = false;
     this.patternMismatch = false;
@@ -51,5 +51,8 @@ export default class Validity {
     this.typeMismatch = false;
     this.valueMissing = false;
     this.uniqueError = false;
+    if (props) {
+      Object.assign(this, props);
+    }
   }
 }

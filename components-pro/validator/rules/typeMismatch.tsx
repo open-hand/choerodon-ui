@@ -2,7 +2,7 @@ import isEmpty from '../../_util/isEmpty';
 import ValidationResult from '../ValidationResult';
 import { $l } from '../../locale-context';
 import { FieldType } from '../../data-set/enum';
-import { methodReturn } from '.';
+import { methodReturn, ValidatorProps } from '.';
 
 /* eslint-disable */
 const emailReg = /^([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22))*\x40([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d))*$/;
@@ -20,16 +20,21 @@ const types: { [key: string]: [((value: any) => boolean), string] } = {
   ],
 };
 
-export default function typeMismatch(value, { type }): methodReturn {
-  if (!isEmpty(value)) {
+export default function typeMismatch(value: any, props: ValidatorProps): methodReturn {
+  const { type, defaultValidationMessages } = props;
+  if (!isEmpty(value) && type) {
     const validateType = types[type];
     if (validateType) {
       const [validate, component] = validateType;
       if (validate(value)) {
+        const ruleName = 'typeMismatch';
+        const {
+          [ruleName]: validationMessage = $l(component, 'type_mismatch'),
+        } = defaultValidationMessages;
         return new ValidationResult({
-          validationMessage: $l(component, 'type_mismatch'),
+          validationMessage,
           value,
-          ruleName: 'typeMismatch',
+          ruleName,
         });
       }
     }

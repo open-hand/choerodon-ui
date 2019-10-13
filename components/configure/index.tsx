@@ -7,6 +7,7 @@ import message from 'choerodon-ui/pro/lib/message';
 import exception from 'choerodon-ui/pro/lib/_util/exception';
 import { $l } from 'choerodon-ui/pro/lib/locale-context';
 import { TablePaginationConfig } from 'choerodon-ui/pro/lib/table/Table';
+import { ValidationMessages } from 'choerodon-ui/pro/lib/validator/Validator';
 
 export type Status = {
   [RecordStatus.add]: string;
@@ -54,6 +55,7 @@ export type Config = {
   modalOkFirst?: boolean;
   buttonFuncType?: string;
   renderEmpty?: renderEmptyHandler;
+  defaultValidationMessages?: ValidationMessages;
   generatePageQuery?: (pageParams: {
     page?: number;
     pageSize?: number;

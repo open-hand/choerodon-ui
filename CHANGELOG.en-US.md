@@ -15,8 +15,12 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: Added `defaultValidationMessages` global configuration.
+- 🌟 `<pro>DataSet.Field`: Added `defaultValidationMessages` property.
+- 🌟 `<pro>FormField`: Added `validationRenderer` property.
 - 💄 `<pro>Table`: Tree table expansion state persistence.
 - 🐞 `<pro>Table`: Fixing the collapse-all button of tree table sometimes fails to collapse the node.
+- 🐞 `<pro>Validator`: Fix the problem of union unique validation.
 
 ## 0.8.19
 

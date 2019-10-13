@@ -48,10 +48,10 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
   @observable hueColor?: string;
 
   @computed
-  get defaultValidationMessages(): ValidationMessages | null {
+  get defaultValidationMessages(): ValidationMessages {
     const label = this.getProp('label');
     return {
-      valueMissing: $l('ColorPicker', label ? 'value_missing_with_label' : 'value_missing', {
+      valueMissing: $l('ColorPicker', label ? 'value_missing' : 'value_missing_no_label', {
         label,
       }),
       typeMismatch: $l('ColorPicker', 'type_mismatch'),

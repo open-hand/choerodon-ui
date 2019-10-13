@@ -47,6 +47,7 @@ const prefixCls = getConfig('prefixCls');
 | modalOkFirst | 默认 Modal 的 ok 按钮排在第一个 | boolean | true |
 | buttonFuncType | 默认 Button 的功能类型 | string | raised |
 | renderEmpty | 自定义组件空状态。 | (componentName: string) => ReactNode | - |
+| defaultValidationMessages | 自定义校验信息, 详见[ValidationMessages](#ValidationMessages) | ValitionMessages | - |
 | generatePageQuery | 分页参数转换的钩子 | ({ page?: number, pageSize?: number, sortName?: string, sortOrder?: string }) => object | - |
 | feedback | DataSet 查询和提交数据的反馈配置, 详见[Feedback](#Feedback) | Feedback |  |
 
@@ -58,3 +59,21 @@ const prefixCls = getConfig('prefixCls');
 | loadFailed(error)   | DataSet 查询失败的反馈, `error` - 异常对象 | Function |
 | submitSuccess(resp) | DataSet 提交成功的反馈, `resp` - 响应值    | Function |
 | submitFailed(error) | DataSet 提交失败的反馈, `error` - 异常对象 | Function |
+
+### ValidationMessages
+
+| 属性 | 默认值 | 类型 |
+| --- | --- | --- |
+| badInput | 请输入一个数字。 | ReactNode |
+| patternMismatch | 请输入有效的值。 | ReactNode |
+| rangeOverflow | {label}必须小于或等于{max}。 | ReactNode |
+| rangeUnderflow | {label}必须大于或等于{min}。 | ReactNode |
+| stepMismatch | 请输入有效值。最接近的有效值为{0}。 | ReactNode |
+| stepMismatchBetween | 请输入有效值。两个最接近的有效值分别为{0}和{1}。 | ReactNode |
+| tooLong | 请将该内容减少到{maxLength}个或更少字符（目前您使用了{length}个字符）。 | ReactNode |
+| tooShort | 请将该内容增加到{minLength}个或更多字符（目前您使用了{length}个字符）。 | ReactNode |
+| typeMismatch | 请输入与类型匹配的有效值。 | ReactNode |
+| valueMissing | 请输入{label}。 | ReactNode |
+| valueMissingNoLabel | 请填写此字段。 | ReactNode |
+| uniqueError | 该字段值重复，请重新填写。 | ReactNode |
+| unknown | 未知错误。 | ReactNode |

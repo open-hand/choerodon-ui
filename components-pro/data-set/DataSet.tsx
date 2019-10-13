@@ -1315,7 +1315,8 @@ export default class DataSet extends EventManager {
    * @returns {Record}
    */
   get(index: number): Record | undefined {
-    return this.data.length ? this.data[index] : undefined;
+    const { data } = this;
+    return data.length ? data[index] : undefined;
   }
 
   /**
@@ -1324,7 +1325,8 @@ export default class DataSet extends EventManager {
    * @returns {Record}
    */
   getFromTree(index: number): Record | undefined {
-    return this.treeData[index];
+    const { treeData } = this;
+    return treeData.length ? treeData[index] : undefined;
   }
 
   /**

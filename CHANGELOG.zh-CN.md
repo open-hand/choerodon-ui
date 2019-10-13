@@ -15,8 +15,12 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: 新增 defaultValidationMessages 全局配置。
+- 🌟 `<pro>DataSet.Field`: 新增 defaultValidationMessages 属性。
+- 🌟 `<pro>FormField`: 新增 validationRenderer 属性。
 - 💄 `<pro>Table`: 树形表格展开状态持久化。
 - 🐞 `<pro>Table`: 修复树形表格合并按钮有时无法关闭节点的问题。
+- 🐞 `<pro>Validator`: 修复 unique 联合唯一校验的问题。
 
 ## 0.8.19
 

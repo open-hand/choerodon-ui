@@ -5,8 +5,7 @@ import { ValidationMessages } from '../validator/Validator';
 import { $l } from '../locale-context';
 import { FieldType } from '../data-set/enum';
 
-export interface EmailFieldProps extends TextFieldProps {
-}
+export interface EmailFieldProps extends TextFieldProps {}
 
 @observer
 export default class EmailField extends TextField<EmailFieldProps> {
@@ -19,10 +18,10 @@ export default class EmailField extends TextField<EmailFieldProps> {
   }
 
   @computed
-  get defaultValidationMessages(): ValidationMessages | null {
+  get defaultValidationMessages(): ValidationMessages {
     const label = this.getProp('label');
     return {
-      valueMissing: $l('EmailField', label ? 'value_missing_with_label' : 'value_missing', { label }),
+      valueMissing: $l('EmailField', label ? 'value_missing' : 'value_missing_no_label', { label }),
       typeMismatch: $l('EmailField', 'type_mismatch'),
     };
   }

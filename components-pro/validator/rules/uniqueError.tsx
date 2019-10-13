@@ -1,77 +1,75 @@
 import isString from 'lodash/isString';
-import { action } from 'mobx';
 import ValidationResult from '../ValidationResult';
 import { $l } from '../../locale-context';
 import isEmpty from '../../_util/isEmpty';
-import Field from '../../data-set/Field';
-import { methodReturn } from '.';
+import { methodReturn, ValidatorProps } from '.';
 import axiosAdapter from '../../_util/axiosAdapter';
 
-const reportOtherField = action(
-  ({ validator, validator: { validity } }: Field, invalid: boolean) => {
-    if (invalid) {
-      if (validity.valid) {
-        validator.validationMessage = $l('Validator', 'unique');
-      }
-      validity.uniqueError = true;
-    } else {
-      validity.uniqueError = false;
-      if (validity.valid) {
-        validator.validationMessage = '';
-      }
-    }
-  },
-);
-
 export default async function uniqueError(
-  value,
-  { dataSet, record, unique, name },
+  value: any,
+  props: ValidatorProps,
 ): Promise<methodReturn> {
-  if (!isEmpty(value) && record && dataSet && unique) {
-    const fields = { [name]: value };
-    const otherFields: Field[] = [];
-    if (
-      isString(unique) &&
-      [...record.fields.entries()].some(([fieldName, field]) => {
-        if (fieldName !== name) {
-          if (field && field.get('unique') === unique) {
+  const { dataSet, record, unique, name, multiple, range, defaultValidationMessages } = props;
+  if (!isEmpty(value) && dataSet && record && unique && name && !multiple && !range) {
+    const myField = record.getField(name);
+    if (myField) {
+      let { dirty } = myField;
+      const fields = { [name]: value };
+      if (
+        isString(unique) &&
+        [...record.fields.entries()].some(([fieldName, field]) => {
+          if (
+            fieldName !== name &&
+            field &&
+            field.get('unique') === unique &&
+            !field.get('multiple') &&
+            !field.get('range')
+          ) {
             const otherValue = record.get(fieldName);
             if (isEmpty(otherValue)) {
               return true;
             }
+            if (!dirty && field.dirty) {
+              dirty = true;
+            }
             fields[fieldName] = otherValue;
-            otherFields.push(field);
           }
-        }
-        return false;
-      })
-    ) {
-      return true;
-    }
-    let invalid = dataSet.data.some(
-      item =>
-        item !== record && Object.keys(fields).every(field => fields[field] === item.get(field)),
-    );
-    if (!invalid) {
-      const {
-        totalPage,
-        axios,
-        transport: { validate = {}, adapter },
-      } = dataSet;
-      const newConfig = axiosAdapter(validate, this, { unique: [fields] });
-      const adapterConfig = adapter(newConfig, 'validate') || newConfig;
-      if (adapterConfig.url && totalPage > 1) {
-        const results: any = await axios(adapterConfig);
-        invalid = [].concat(results).some(result => !result);
+          return false;
+        })
+      ) {
+        return true;
       }
-    }
-    otherFields.forEach(otherField => reportOtherField(otherField, invalid));
-    if (invalid) {
-      return new ValidationResult({
-        validationMessage: $l('Validator', 'unique'),
-        value,
-        ruleName: 'uniqueError',
-      });
+      if (!dirty) {
+        return true;
+      }
+      let invalid = dataSet.data.some(
+        item =>
+          item !== record && Object.keys(fields).every(field => fields[field] === item.get(field)),
+      );
+      if (!invalid) {
+        const {
+          totalPage,
+          axios,
+          transport: { validate = {}, adapter },
+        } = dataSet;
+        const newConfig = axiosAdapter(validate, this, { unique: [fields] });
+        const adapterConfig = adapter(newConfig, 'validate') || newConfig;
+        if (adapterConfig.url && totalPage > 1) {
+          const results: any = await axios(adapterConfig);
+          invalid = [].concat(results).some(result => !result);
+        }
+      }
+      if (invalid) {
+        const ruleName = 'uniqueError';
+        const {
+          [ruleName]: validationMessage = $l('Validator', 'unique'),
+        } = defaultValidationMessages;
+        return new ValidationResult({
+          validationMessage,
+          value,
+          ruleName,
+        });
+      }
     }
   }
   return true;

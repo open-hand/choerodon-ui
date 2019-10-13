@@ -138,10 +138,10 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   }
 
   @computed
-  get defaultValidationMessages(): ValidationMessages | null {
+  get defaultValidationMessages(): ValidationMessages {
     const label = this.getProp('label');
     return {
-      valueMissing: $l('DatePicker', label ? 'value_missing_with_label' : 'value_missing', {
+      valueMissing: $l('DatePicker', label ? 'value_missing' : 'value_missing_no_label', {
         label,
       }),
     };

@@ -10,8 +10,6 @@ import PropTypes from 'prop-types';
 import { action, computed, isArrayLike, observable, runInAction, toJS } from 'mobx';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
-import omitBy from 'lodash/omitBy';
-import isUndefined from 'lodash/isUndefined';
 import isNumber from 'lodash/isNumber';
 import isString from 'lodash/isString';
 import isNil from 'lodash/isNil';
@@ -26,7 +24,7 @@ import autobind from '../_util/autobind';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import Field from '../data-set/Field';
-import Validator, { CustomValidator, ValidationMessages } from '../validator/Validator';
+import Validator, { ValidationMessages, CustomValidator } from '../validator/Validator';
 import Validity from '../validator/Validity';
 import FormContext from '../form/FormContext';
 import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComponent';
@@ -149,6 +147,10 @@ export interface FormFieldProps extends DataSetComponentProps {
    */
   renderer?: Renderer;
   /**
+   * 校验信息渲染器
+   */
+  validationRenderer?: (result: ValidationResult, props: ValidatorProps) => ReactNode;
+  /**
    * 多值标签超出最大数量时的占位描述
    */
   maxTagPlaceholder?: ReactNode | ((omittedValues: any[]) => ReactNode);
@@ -250,11 +252,6 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
      */
     validator: PropTypes.func,
     /**
-     * 校验提示渲染器
-     * (validationMessage: string, validity: Validity, name?: string) => ReactNode
-     */
-    validationRenderer: PropTypes.func,
-    /**
      * 校验失败回调
      * (validationMessage: ReactNode, validity: Validity, name?: string) => void
      */
@@ -271,6 +268,10 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
      * 渲染器
      */
     renderer: PropTypes.func,
+    /**
+     * 校验信息渲染器
+     */
+    validationRenderer: PropTypes.func,
     /**
      * 多值标签超出最大数量时的占位描述
      */
@@ -328,7 +329,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     if (field) {
       return field.validator;
     }
-    return new Validator();
+    return new Validator(undefined, this);
   }
 
   @computed
@@ -365,8 +366,8 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   }
 
   @computed
-  get defaultValidationMessages(): ValidationMessages | null {
-    return null;
+  get defaultValidationMessages(): ValidationMessages {
+    return {};
   }
 
   @computed
@@ -415,6 +416,31 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       return dsField;
     }
     return undefined;
+  }
+
+  @computed
+  get isValid(): boolean {
+    return this.pristine || (this.field ? this.field.valid : this.validator.validity.valid);
+  }
+
+  @computed
+  get multiple(): boolean {
+    return this.getProp('multiple');
+  }
+
+  @computed
+  get trim(): FieldTrim | undefined {
+    return this.getProp('trim');
+  }
+
+  @computed
+  get format(): FieldFormat | string | undefined {
+    return this.getProp('format');
+  }
+
+  @computed
+  get range(): boolean | [string, string] {
+    return this.getProp('range');
   }
 
   @autobind
@@ -483,35 +509,6 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     }
     otherProps.onKeyDown = this.handleKeyDown;
     return otherProps;
-  }
-
-  render() {
-    const validationMessage = this.renderValidationMessage();
-    const wrapper = this.renderWrapper();
-    const help = this.renderHelpMessage();
-    return this.hasFloatLabel ? (
-      [
-        isValidElement(wrapper) && cloneElement(wrapper, { key: 'wrapper' }),
-        <Animate transitionName="show-error" component="" transitionAppear key="validation-message">
-          {validationMessage}
-        </Animate>,
-        help,
-      ]
-    ) : (
-      <Tooltip
-        title={
-          !!(this.multiple && this.getValues().length) ||
-          this.isValidationMessageHidden(validationMessage)
-            ? null
-            : validationMessage
-        }
-        theme="light"
-        placement="bottomLeft"
-      >
-        {wrapper}
-        {help}
-      </Tooltip>
-    );
   }
 
   getWrapperClassNames(...args): string {
@@ -625,7 +622,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   }
 
   getValidatorProps(): ValidatorProps {
-    const { name, range, multiple } = this;
+    const { name, range, multiple, defaultValidationMessages } = this;
     const type = this.getFieldType();
     const required = this.getProp('required');
     const customValidator = this.getProp('validator');
@@ -638,57 +635,27 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       label,
       range,
       multiple,
+      defaultValidationMessages,
       form: this.context.formNode as Form,
     };
   }
 
-  @computed
-  get isValid(): boolean {
-    return this.pristine || (this.field ? this.field.valid : this.validator.validity.valid);
-  }
-
-  @computed
-  get multiple(): boolean {
-    return this.getProp('multiple');
-  }
-
-  @computed
-  get trim(): FieldTrim | undefined {
-    return this.getProp('trim');
-  }
-
-  @computed
-  get format(): FieldFormat | string | undefined {
-    return this.getProp('format');
-  }
-
-  @computed
-  get range(): boolean | [string, string] {
-    return this.getProp('range');
-  }
-
-  getValidationMessage(validationResult?: ValidationResult): ReactNode {
-    const { defaultValidationMessages, validator, field } = this;
-    if (defaultValidationMessages) {
-      const { validity } = validator;
-      const found = Object.keys(defaultValidationMessages).find(key =>
-        validationResult ? validationResult.ruleName === key : validity[key],
-      );
-      if (found) {
-        return defaultValidationMessages[found];
-      }
-    }
+  getValidationMessage(
+    validationResult: ValidationResult | undefined = this.validator.currentValidationResult,
+  ): ReactNode {
+    const {
+      validator,
+      props: { validationRenderer },
+    } = this;
     if (validationResult) {
+      if (validationRenderer) {
+        const validationMessage = validationRenderer(validationResult, validator.props);
+        if (validationMessage) {
+          return validationMessage;
+        }
+      }
       return validationResult.validationMessage;
     }
-    if (field) {
-      return field.validationMessage;
-    }
-    return validator.validationMessage;
-  }
-
-  getValidationErrorValues(): any[] {
-    return this.validator.validationErrorValues;
   }
 
   @autobind
@@ -1000,7 +967,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       range,
       props: { maxTagCount = valueLength, maxTagPlaceholder },
     } = this;
-    const validationErrorValues = this.getValidationErrorValues();
+    const { validationResults } = this.validator;
     const repeats: Map<any, number> = new Map<any, number>();
     const blockClassName = classNames(
       {
@@ -1014,7 +981,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       const text = range ? this.renderRangeValue(true, v, repeat) : this.processRenderer(v, repeat);
       repeats.set(key, repeat + 1);
       if (!isNil(text)) {
-        const validationResult = validationErrorValues.find(error => error.value === v);
+        const validationResult = validationResults.find(error => error.value === v);
         const className = classNames(
           {
             [`${prefixCls}-multiple-block-invalid`]: validationResult,
@@ -1081,8 +1048,8 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     const valid = await this.validate();
     const { onInvalid = noop } = this.props;
     if (!valid) {
-      const { validationErrorValues, validity } = this.validator;
-      onInvalid(validationErrorValues, validity, name);
+      const { validationResults, validity } = this.validator;
+      onInvalid(validationResults, validity, name);
     }
     return valid;
   }
@@ -1093,12 +1060,8 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       if (value === undefined) {
         value = this.multiple ? this.getValues() : this.getValue();
       }
-      const { validator, field } = this;
+      const { validator } = this;
       validator.reset();
-      if (field) {
-        validator.setProps(field.getValidatorProps());
-      }
-      validator.setControlProps(omitBy(this.getValidatorProps(), isUndefined));
       invalid = !(await validator.checkValidity(value));
     }
     return !invalid;
@@ -1138,6 +1101,35 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   getProp(propName: string) {
     const { field } = this;
     return defaultTo(field && field.get(propName), this.props[propName]);
+  }
+
+  render() {
+    const validationMessage = this.renderValidationMessage();
+    const wrapper = this.renderWrapper();
+    const help = this.renderHelpMessage();
+    return this.hasFloatLabel ? (
+      [
+        isValidElement(wrapper) && cloneElement(wrapper, { key: 'wrapper' }),
+        <Animate transitionName="show-error" component="" transitionAppear key="validation-message">
+          {validationMessage}
+        </Animate>,
+        help,
+      ]
+    ) : (
+      <Tooltip
+        title={
+          !!(this.multiple && this.getValues().length) ||
+          this.isValidationMessageHidden(validationMessage)
+            ? null
+            : validationMessage
+        }
+        theme="light"
+        placement="bottomLeft"
+      >
+        {wrapper}
+        {help}
+      </Tooltip>
+    );
   }
 }
 

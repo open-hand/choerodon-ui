@@ -106,7 +106,12 @@ export function getEditorByColumnAndRecord(
     if (editor === true) {
       const field = record.getField(name);
       if (field) {
-        if (!field.get('unique') || record.status === RecordStatus.add) {
+        if (
+          !field.get('unique') ||
+          field.get('multiple') ||
+          field.get('range') ||
+          record.status === RecordStatus.add
+        ) {
           return getEditorByField(field);
         }
       }

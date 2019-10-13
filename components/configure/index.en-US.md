@@ -44,14 +44,33 @@ const prefixCls = getConfig('prefixCls');
 | modalOkFirst | Default the ok button of Modal is ranked first | boolean | true |
 | buttonFuncType | Default Button function type | string | raised |
 | renderEmpty | set empty content of components. | (componentName: string) => ReactNode | - |
+| defaultValidationMessages | Default validation messages, More info: [ValidationMessages](#ValidationMessages) | ValitionMessages | - |
 | generatePageQuery | Hook for Paging Parameter Conversion | ({ page?: number, pageSize?: number, sortName?: string, sortOrder?: string }) => object | - |
 | feedback | The feedback of DataSet for query and submit, More info: [Feedback](#Feedback) | Feedback |  |
 
 ### Feedback
 
-| 属性 | 说明 | 类型 |
+| Property | Description | Type |
 | --- | --- | --- |
 | loadSuccess(resp) | The success feedback of DataSet for query, `resp` - response value | Function |
 | loadFailed(error) | The failed feedback of DataSet for query, `error` - error object | Function |
 | submitSuccess(resp) | The success feedback of DataSet for submit, `resp` - response value | Function |
 | submitFailed(error) | The failed feedback of DataSet for submit, `error` - error object | Function |
+
+### ValidationMessages
+
+| Property | Default | Type |
+| --- | --- | --- |
+| badInput | Please input a number. | ReactNode |
+| patternMismatch | Please input a valid value. | ReactNode |
+| rangeOverflow | {label} must be less than or equal to {max}. | ReactNode |
+| rangeUnderflow | {label} must be greater than or equal to {min}. | ReactNode |
+| stepMismatch | Please input a valid value. The closest valid value is {0}. | ReactNode |
+| stepMismatchBetween | Please input a valid value. The two closest valid values are {0} and {1}. | ReactNode |
+| tooLong | Please decrease the length of the value down to {maxLength} or less characters (You have input {length} characters). | ReactNode |
+| tooShort | Please increase the length of the value down to {minLength} or more characters (You have input {length} characters). | ReactNode |
+| typeMismatch | Please input a value to match the given type. | ReactNode |
+| valueMissing | Please input {label}. | ReactNode |
+| valueMissingNoLabel | Please input a value. | ReactNode |
+| uniqueError | The value is duplicate, please input another one. | ReactNode |
+| unknown | Unknown error. | ReactNode |

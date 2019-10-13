@@ -1,25 +1,27 @@
-import format from 'string-template';
 import isEmpty from '../../_util/isEmpty';
 import ValidationResult from '../ValidationResult';
 import { $l } from '../../locale-context';
 import { getNearStepValues } from '../../number-field/utils';
-import { methodReturn } from '.';
+import { methodReturn, ValidatorProps } from '.';
+import formatReactTemplate from '../../formatter/formatReactTemplate';
 
-export default function stepMismatch(value, { step, min, max }): methodReturn {
+export default function stepMismatch(value: any, props: ValidatorProps): methodReturn {
+  const { step, min, max, defaultValidationMessages } = props;
   if (!isEmpty(value) && step !== undefined) {
     const nearStepValues = getNearStepValues(Number(value), step, min, max);
     if (nearStepValues !== undefined) {
       const injectionOptions = {
-        near:
-          nearStepValues.length === 2
-            ? `两个最接近的有效值分别为${nearStepValues[0]}和${nearStepValues[1]}。`
-            : `最接近的有效值为${nearStepValues[0]}。`,
+        0: nearStepValues[0],
+        1: nearStepValues[1],
       };
+      const ruleName = nearStepValues.length === 2 ? 'stepMismatchBetween' : 'stepMismatch';
+      const key = nearStepValues.length === 2 ? 'step_mismatch_between' : 'step_mismatch';
+      const { [ruleName]: validationMessage = $l('Validator', key) } = defaultValidationMessages;
       return new ValidationResult({
-        validationMessage: format($l('Validator', 'step_mismatch'), injectionOptions),
+        validationMessage: formatReactTemplate(validationMessage, injectionOptions),
         injectionOptions,
         value,
-        ruleName: 'stepMismatch',
+        ruleName,
       });
     }
   }

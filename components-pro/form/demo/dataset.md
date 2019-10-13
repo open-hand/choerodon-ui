@@ -13,8 +13,22 @@ title:
 
 Bind DataSet.
 
-````jsx
-import { DataSet, Form, TextField, NumberField, Password, EmailField, UrlField, DatePicker, Select, SelectBox, Switch, Lov, Button } from 'choerodon-ui/pro';
+```jsx
+import {
+  DataSet,
+  Form,
+  TextField,
+  NumberField,
+  Password,
+  EmailField,
+  UrlField,
+  DatePicker,
+  Select,
+  SelectBox,
+  Switch,
+  Lov,
+  Button,
+} from 'choerodon-ui/pro';
 
 const { Option } = Select;
 
@@ -25,16 +39,46 @@ function passwordValidator(value, name, record) {
   return true;
 }
 
+const defaultValidationMessages = {
+  valueMissing: '请输入{label}。（自定义）',
+};
+
 class App extends React.Component {
   ds = new DataSet({
     autoCreate: true,
     fields: [
       { name: 'phone', type: 'string', label: '手机号', required: true, pattern: '^1[3-9]\\d{9}$' }, // /^1[3-9]\d{9}$/
-      { name: 'password', type: 'string', label: '密码', required: true },
-      { name: 'confirmPassword', type: 'string', label: '确认密码', required: true, validator: passwordValidator },
-      { name: 'age', type: 'number', label: '年龄', required: true, min: 18, step: 1, help: '我们需要确定你的年龄' },
+      {
+        name: 'password',
+        type: 'string',
+        label: '密码',
+        required: true,
+        defaultValidationMessages,
+      },
+      {
+        name: 'confirmPassword',
+        type: 'string',
+        label: '确认密码',
+        required: true,
+        validator: passwordValidator,
+      },
+      {
+        name: 'age',
+        type: 'number',
+        label: '年龄',
+        required: true,
+        min: 18,
+        step: 1,
+        help: '我们需要确定你的年龄',
+      },
       { name: 'sex', type: 'string', label: '性别', required: true },
-      { name: 'language', type: 'string', label: '语言', required: true, help: '超过两行的帮助信息超过两行的帮助信息超过两行的帮助信息' },
+      {
+        name: 'language',
+        type: 'string',
+        label: '语言',
+        required: true,
+        help: '超过两行的帮助信息超过两行的帮助信息超过两行的帮助信息',
+      },
       { name: 'email', type: 'email', label: '邮箱', required: true },
       { name: 'homepage', type: 'url', label: '个人主页', required: true },
       { name: 'birth', type: 'date', label: '生日', required: true },
@@ -70,16 +114,17 @@ class App extends React.Component {
         <Switch name="frozon" />
         <div>
           <Button type="submit">注册</Button>
-          <Button type="reset" style={{ marginLeft: 8 }}>重置</Button>
-          <Button onClick={this.changeField} style={{ marginLeft: 8 }}>设置代码描述的textField</Button>
+          <Button type="reset" style={{ marginLeft: 8 }}>
+            重置
+          </Button>
+          <Button onClick={this.changeField} style={{ marginLeft: 8 }}>
+            设置代码描述的textField
+          </Button>
         </div>
       </Form>
     );
   }
 }
 
-ReactDOM.render(
-  <App />,
-  mountNode
-);
-````
+ReactDOM.render(<App />, mountNode);
+```

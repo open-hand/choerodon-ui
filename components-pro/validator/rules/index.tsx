@@ -14,9 +14,9 @@ import { FieldType } from '../../data-set/enum';
 import DataSet from '../../data-set/DataSet';
 import Record from '../../data-set/Record';
 import Form from '../../form/Form';
-import { CustomValidator } from '../Validator';
+import { CustomValidator, ValidationMessages } from '../Validator';
 
-export type methodReturn = ValidationResult | boolean;
+export type methodReturn = ValidationResult | true;
 
 export type validationRule = (value, props) => methodReturn | PromiseLike<methodReturn>;
 
@@ -53,4 +53,5 @@ export interface ValidatorProps {
   multiple?: boolean;
   range?: boolean | [string, string];
   form?: Form;
+  defaultValidationMessages: ValidationMessages;
 }

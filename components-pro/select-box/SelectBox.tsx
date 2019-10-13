@@ -51,10 +51,10 @@ export default class SelectBox extends Select<SelectBoxProps> {
   static OptGroup = OptGroup;
 
   @computed
-  get defaultValidationMessages(): ValidationMessages | null {
+  get defaultValidationMessages(): ValidationMessages {
     const label = this.getProp('label');
     return {
-      valueMissing: $l('SelectBox', label ? 'value_missing_with_label' : 'value_missing', {
+      valueMissing: $l('SelectBox', label ? 'value_missing' : 'value_missing_no_label', {
         label,
       }),
     };

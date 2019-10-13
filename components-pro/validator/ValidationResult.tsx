@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { ValidationMessages } from './Validator';
 
 export default class ValidationResult {
   validationMessage?: ReactNode;
@@ -7,7 +8,7 @@ export default class ValidationResult {
 
   value?: any;
 
-  ruleName: string;
+  ruleName: keyof ValidationMessages;
 
   constructor(props: ValidationResult) {
     Object.assign(this, props);

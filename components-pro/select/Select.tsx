@@ -207,10 +207,10 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   menu?: Menu | null;
 
   @computed
-  get defaultValidationMessages(): ValidationMessages | null {
+  get defaultValidationMessages(): ValidationMessages {
     const label = this.getProp('label');
     return {
-      valueMissing: $l('Select', label ? 'value_missing_with_label' : 'value_missing', { label }),
+      valueMissing: $l('Select', label ? 'value_missing' : 'value_missing_no_label', { label }),
     };
   }
 

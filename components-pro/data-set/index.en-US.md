@@ -74,7 +74,7 @@ title: DataSet
 | --- | --- | --- | --- |
 | ready(isSelect) | 判断记录是否准备就绪 | `isSelect` - 设为 `true` 时，判断选中的记录 | Promise |
 | query(page) | 查询 | `page`&lt;optional,defualt:0&gt; - 指定页码 | Promise&lt;any&gt; |
-| submit(isSelect, noCascade) | 将数据集中的增删改的记录进行远程提交 | `isSelect` - 设为 `true` 时，只提交选中的记录 `noCascade` - 为 true 时，不提交级联数据 | Promise&lt;any&gt; |
+| submit(isSelect, noCascade) | 将数据集中的增删改的记录先进行校验再进行远程提交。submit 会抛出请求的异常，请用 promise.catch 或 try-await-catch 来处理异常。 | `isSelect` - 设为 `true` 时，只提交选中的记录 `noCascade` - 为 true 时，不提交级联数据 | Promise&lt;any&gt; `false` - 校验失败，`undefined` - 无数据提交或提交相关配置不全，如没有 submitUrl。 |
 | reset() | 重置更改, 并清除校验状态 |  |  |
 | locate(index) | 定位到指定记录, 如果`paging` 为 `true`，则做远程查询 | `index` - 记录索引 | Promise&lt;Record&gt; |
 | page(page) | 定位到指定页码，如果`paging` 为 `true`，则做远程查询 | `page` - 页码 | Promise&lt;any&gt; |
@@ -142,7 +142,7 @@ title: DataSet
 | selectAll | 全选记录事件 | ({ dataSet }) =&gt; void | `dataSet` - 数据集 |
 | unSelectAll | 撤销全选记录事件 | ({ dataSet }) =&gt; void | `dataSet` - 数据集 |
 | indexChange | 当前记录变更事件 | ({ dataSet, record, previous }) =&gt; void | `dataSet` - 数据集 `record` - 新当前记录 `previous` - 旧当前记录 |
-| fieldChange | 字段属性变更事件 | ({ dataSet, record, field, propsName, value, oldValue }) =&gt; void | `dataSet` - 数据集 `record` - 字段所属记录，dataSet 的字段无 record `field` - 当前字段 `propsName` - 属性名 `value` - 新值 `oldValue` - 旧值 |
+| fieldChange | 字段属性变更事件 | ({ dataSet, record, name, propsName, value, oldValue }) =&gt; void | `dataSet` - 数据集 `record` - 字段所属记录，dataSet 的字段无 record `name` - 字段名 `propsName` - 属性名 `value` - 新值 `oldValue` - 旧值 |
 | create | 记录创建事件 | ({ dataSet, record }) =&gt; void | `dataSet` - 数据集 `record` - 创建的记录 |
 | export | 导出事件，返回值为 false 将阻止导出 | ({ dataSet, params, data }) =&gt; boolean | `dataSet` - 数据集 `params` - 查询参数 `data` - 查询参数 |
 | beforeDelete | 数据删除前的事件， 返回值为 false 将阻止删除 | ({ dataSet, records }) =&gt; boolean | `dataSet` - 数据集 `records` - 记录集 |
@@ -212,7 +212,7 @@ title: DataSet
 | defaultValue | 默认值 | any |  |
 | multiple | 是否为值数组。 当为字符串时，作为数据分隔符，查询时会将字符串分割成数组，提交时会将数组拼接成字符串 | boolean\| string | false |
 | range | 是否为范围值。 当为 true 时，则值为\[startValue, endValue\]；当为数组时，例如\['start', 'end'\]时，则值为{ start: startValue, end: endValue } | boolean\| \[string, string\] | false |
-| unique | 唯一索引或联合唯一索引组名。当 column 的 editor 设为 true 时，编辑器只会在新增的记录显示，如果要对已有数据进行编辑，请自定义 editor | boolean\| string | false |
+| unique | 唯一索引或联合唯一索引组名。multiple 和 range 字段不适用。当 column 的 editor 设为 true 时，编辑器只会在新增的记录显示，如果要对已有数据进行编辑，请自定义 editor | boolean\| string | false |
 | lovCode | LOV 配置代码 | string |  |
 | lovPara | LOV 查询参数对象 | object |  |
 | lookupCode | 值列表代码 | string |  |
@@ -230,6 +230,7 @@ title: DataSet
 | transformRequest | 在发送请求之前对数据进行处理 | (value: any) => any |  |
 | transformResponse | 在获得响应之后对数据进行处理 | (value: any) => any |  |
 | trim | 字符串值是否去掉首尾空格，可选值: `both` `left` `right` `none` | string | `both` |
+| defaultValidationMessages | 默认校验信息，详见[ValidationMessages](/components/configure/#ValidationMessages) | ValidationMessages |  |
 
 ### Field Values
 

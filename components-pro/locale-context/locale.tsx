@@ -61,7 +61,7 @@ export interface Locale {
   };
   DatePicker: {
     value_missing;
-    value_missing_with_label;
+    value_missing_no_label;
     ok;
     today;
     now;
@@ -69,7 +69,7 @@ export interface Locale {
   };
   EmailField: {
     value_missing;
-    value_missing_with_label;
+    value_missing_no_label;
     type_mismatch;
   };
   IntlField: {
@@ -77,19 +77,19 @@ export interface Locale {
   };
   NumberField: {
     value_missing;
-    value_missing_with_label;
+    value_missing_no_label;
   };
   Radio: {
     value_missing;
-    value_missing_with_label;
+    value_missing_no_label;
   };
   SelectBox: {
     value_missing;
-    value_missing_with_label;
+    value_missing_no_label;
   };
   Select: {
     value_missing;
-    value_missing_with_label;
+    value_missing_no_label;
     select_all;
     unselect_all;
   };
@@ -101,12 +101,12 @@ export interface Locale {
   };
   UrlField: {
     value_missing;
-    value_missing_with_label;
+    value_missing_no_label;
     type_mismatch;
   };
   ColorPicker: {
     value_missing;
-    value_missing_with_label;
+    value_missing_no_label;
     type_mismatch;
   };
   Validator: {
@@ -115,11 +115,12 @@ export interface Locale {
     range_overflow;
     range_underflow;
     step_mismatch;
+    step_mismatch_between;
     too_long;
     too_short;
     type_mismatch;
     value_missing;
-    value_missing_with_label;
+    value_missing_no_label;
     unique;
     unknown;
   };

@@ -8,7 +8,7 @@ import { getConfig } from 'choerodon-ui/lib/configure';
 import warning from 'choerodon-ui/lib/_util/warning';
 import DataSet from './DataSet';
 import Record from './Record';
-import Validator, { CustomValidator } from '../validator/Validator';
+import Validator, { ValidationMessages, CustomValidator } from '../validator/Validator';
 import { DataSetEvents, FieldFormat, FieldIgnore, FieldTrim, FieldType, SortOrder } from './enum';
 import lookupStore from '../stores/LookupCodeStore';
 import lovCodeStore from '../stores/LovCodeStore';
@@ -215,6 +215,10 @@ export type FieldProps = {
    * 可选值: both left right none
    */
   trim?: FieldTrim;
+  /**
+   * 默认校验信息
+   */
+  defaultValidationMessages?: ValidationMessages;
 };
 
 export default class Field {
@@ -236,7 +240,7 @@ export default class Field {
 
   pristineProps: FieldProps;
 
-  validator: Validator = new Validator();
+  validator: Validator = new Validator(this);
 
   pending: PromiseQueue = new PromiseQueue();
 
@@ -302,17 +306,7 @@ export default class Field {
 
   @computed
   get validationMessage() {
-    const {
-      intlFields,
-      validator: {
-        validationMessage,
-        validity: { valid },
-      },
-    } = this;
-    if (valid && intlFields.length && !this.valid) {
-      return intlFields.map(field => field.validationMessage);
-    }
-    return validationMessage;
+    return this.validator.validationMessage;
   }
 
   constructor(props: FieldProps = {}, dataSet?: DataSet, record?: Record) {
@@ -393,16 +387,17 @@ export default class Field {
     const oldValue = this.get(propsName);
     if (oldValue !== value) {
       set(this.props, propsName, value);
-      const { record, dataSet } = this;
+      const { record, dataSet, name } = this;
       if (record) {
         if (propsName === 'type') {
-          record.set(this.name, processValue(record.get(this.name), this));
+          record.set(name, processValue(record.get(name), this));
         }
       }
       if (dataSet) {
         dataSet.fireEvent(DataSetEvents.fieldChange, {
           dataSet,
           record,
+          name,
           field: this,
           propsName,
           value,
@@ -583,13 +578,15 @@ export default class Field {
       const label = this.get('label');
       const range = this.get('range');
       const multiple = this.get('multiple');
+      const unique = this.get('unique');
+      const defaultValidationMessages = this.get('defaultValidationMessages');
       return {
         type,
         required,
         record,
         dataSet,
         name,
-        unique: this.dirty ? this.get('unique') : false,
+        unique,
         customValidator,
         pattern,
         max,
@@ -600,6 +597,7 @@ export default class Field {
         label,
         range,
         multiple,
+        defaultValidationMessages,
       };
     }
   }
@@ -609,12 +607,13 @@ export default class Field {
    * 只有通过record.getField()获取的field才能校验
    * @return true | false
    */
+  @action
   async checkValidity(): Promise<boolean> {
     let valid = true;
     const { record, validator, name } = this;
     if (record) {
+      validator.reset();
       const value = record.get(name);
-      validator.setProps(this.getValidatorProps());
       valid = await validator.checkValidity(value);
     }
     return valid;
@@ -652,7 +651,7 @@ export default class Field {
   }
 
   getValidationMessage() {
-    return this.validationMessage;
+    return this.validator.validationMessage;
   }
 
   getValidityState(): Validity {
@@ -660,7 +659,7 @@ export default class Field {
   }
 
   getValidationErrorValues(): ValidationResult[] {
-    return this.validator.validationErrorValues;
+    return this.validator.validationResults;
   }
 
   ready(): Promise<any> {

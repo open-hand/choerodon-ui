@@ -32,7 +32,7 @@ export default function formatReactTemplate(
             }
             return textArr;
           }
-          return format(text, { [key]: node });
+          return format(text, map);
         }
         return text;
       });

@@ -57,10 +57,10 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
   type: string = 'radio';
 
   @computed
-  get defaultValidationMessages(): ValidationMessages | null {
+  get defaultValidationMessages(): ValidationMessages {
     const label = this.getProp('label');
     return {
-      valueMissing: $l('Radio', label ? 'value_missing_with_label' : 'value_missing', { label }),
+      valueMissing: $l('Radio', label ? 'value_missing' : 'value_missing_no_label', { label }),
     };
   }
 
