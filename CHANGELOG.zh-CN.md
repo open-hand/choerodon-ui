@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.20
+
+`2019-10-13`
+
 - 🌟 `configure`: 新增 defaultValidationMessages 全局配置。
 - 🌟 `<pro>DataSet.Field`: 新增 defaultValidationMessages 属性。
 - 🌟 `<pro>DataSet`: delete 和 deleteAll 方法新增 confirmMessage 参数。
@@ -22,6 +26,7 @@ timeline: true
 - 💄 `<pro>Table`: 树形表格展开状态持久化。
 - 🐞 `<pro>Table`: 修复树形表格合并按钮有时无法关闭节点的问题。
 - 🐞 `<pro>Validator`: 修复 unique 联合唯一校验的问题。
+- 🐞 `<pro>NumberField`: 修复多选模式下步距按钮的问题。
 
 ## 0.8.19
 

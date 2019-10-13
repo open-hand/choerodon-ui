@@ -12,11 +12,11 @@ export function normalizeProps(
   props: ModalProps & confirmProps | ReactNode,
 ): ModalProps & confirmProps {
   if (
+    isString(props) ||
+    isValidElement(props) ||
     isBoolean(props) ||
     isNil(props) ||
     isNumber(props) ||
-    isString(props) ||
-    isValidElement(props) ||
     isArrayLike(props)
   ) {
     return {

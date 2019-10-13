@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.20
+
+`2019-10-13`
+
 - 🌟 `configure`: Added `defaultValidationMessages` global configuration.
 - 🌟 `<pro>DataSet.Field`: Added `defaultValidationMessages` property.
 - 🌟 `<pro>DataSet`: Added `confirmMessage` parameter for `delete` and `deleteAll` method.
@@ -22,6 +26,7 @@ timeline: true
 - 💄 `<pro>Table`: Tree table expansion state persistence.
 - 🐞 `<pro>Table`: Fixing the collapse-all button of tree table sometimes fails to collapse the node.
 - 🐞 `<pro>Validator`: Fix the problem of union unique validation.
+- 🐞 `<pro>NumberField`: Fix the problem of step button in multiple mode.
 
 ## 0.8.19
 
