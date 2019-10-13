@@ -54,6 +54,7 @@ import * as ObjectChainValue from '../_util/ObjectChainValue';
 import Transport, { TransportProps } from './Transport';
 import axiosAdapter from '../_util/axiosAdapter';
 import PromiseQueue from '../_util/PromiseQueue';
+import { ReactNode } from 'react';
 
 export type DataSetChildren = { [key: string]: DataSet };
 
@@ -917,15 +918,16 @@ export default class DataSet extends EventManager {
   /**
    * 立即删除记录
    * @param records 记录或者记录数组，默认当前记录
+   * @param confirmMessage 提示信息
    * @return Promise
    */
-  async delete(records?: Record | Record[]): Promise<any> {
+  async delete(records?: Record | Record[], confirmMessage?: ReactNode): Promise<any> {
     if (records) {
       records = ([] as Record[]).concat(records);
       if (
         records.length > 0 &&
         (await this.fireEvent(DataSetEvents.beforeDelete, { dataSet: this, records })) !== false &&
-        (await confirm($l('DataSet', 'delete_selected_row_confirm'))) !== 'cancel'
+        (await confirm(confirmMessage || $l('DataSet', 'delete_selected_row_confirm'))) !== 'cancel'
       ) {
         this.remove(records);
         return this.pending.add(this.write(this.destroyed));
@@ -976,10 +978,14 @@ export default class DataSet extends EventManager {
 
   /**
    * 删除所有记录
+   * @param confirmMessage 提示信息
    */
   @action
-  async deleteAll() {
-    if (this.length > 0 && (await confirm($l('DataSet', 'delete_all_row_confirm'))) !== 'cancel') {
+  async deleteAll(confirmMessage?: ReactNode) {
+    if (
+      this.length > 0 &&
+      (await confirm(confirmMessage || $l('DataSet', 'delete_all_row_confirm'))) !== 'cancel'
+    ) {
       this.removeAll();
       return this.pending.add(this.write(this.destroyed));
     }

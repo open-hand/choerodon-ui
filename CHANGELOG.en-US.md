@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `configure`: Added `defaultValidationMessages` global configuration.
 - 🌟 `<pro>DataSet.Field`: Added `defaultValidationMessages` property.
+- 🌟 `<pro>DataSet`: Added `confirmMessage` parameter for `delete` and `deleteAll` method.
 - 🌟 `<pro>FormField`: Added `validationRenderer` property.
 - 💄 `<pro>Table`: Tree table expansion state persistence.
 - 🐞 `<pro>Table`: Fixing the collapse-all button of tree table sometimes fails to collapse the node.

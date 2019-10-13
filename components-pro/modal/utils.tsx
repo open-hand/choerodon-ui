@@ -1,9 +1,24 @@
-import { isValidElement } from 'react';
+import { isValidElement, ReactNode } from 'react';
+import { isArrayLike } from 'mobx';
+import isNil from 'lodash/isNil';
+import isBoolean from 'lodash/isBoolean';
+import isNumber from 'lodash/isNumber';
 import isString from 'lodash/isString';
 import { ModalProps } from './Modal';
 
-export function normalizeProps(props: ModalProps & { children } | string): ModalProps & { children } {
-  if (isString(props) || isValidElement(props)) {
+export type confirmProps = { iconType?: string; type?: string; children?: any };
+
+export function normalizeProps(
+  props: ModalProps & confirmProps | ReactNode,
+): ModalProps & confirmProps {
+  if (
+    isBoolean(props) ||
+    isNil(props) ||
+    isNumber(props) ||
+    isString(props) ||
+    isValidElement(props) ||
+    isArrayLike(props)
+  ) {
     return {
       children: props,
     };
