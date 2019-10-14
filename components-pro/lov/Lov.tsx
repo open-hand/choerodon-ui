@@ -157,7 +157,7 @@ export default class Lov extends Select<LovProps> {
         destroyOnClose: true,
         style: {
           width: pxToRem(width),
-          minHeight: pxToRem(400),
+          minHeight: pxToRem(Math.min(350, window.innerHeight)),
           ...(modalProps && modalProps.style),
         },
         ...omit(modalProps, ['style']),

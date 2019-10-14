@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 💄 `<pro>Lov`: Adjust the minimum height of the Lov popup.
+
 ## 0.8.20
 
 `2019-10-13`
