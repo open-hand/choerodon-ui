@@ -15,10 +15,14 @@ timeline: true
 
 ---
 
+## 0.8.21
+
+`2019-10-14`
+
 - 💄 `<pro>Lov`: Adjust the minimum height of the Lov popup.
 - 🐞 `<pro>Lov`: Fix the problem that the unique check does not display an error.
 - 🐞 `<pro>Table.Column`: Fixed an issue with the `tooltip` property.
-- 🐞 `Modal`: Fixed an issue where the `closable` property didn't work.
+- 🐞 `Modal.SideBar`: Fixed an issue where the `closable` property didn't work.
 
 ## 0.8.20
 
