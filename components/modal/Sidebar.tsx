@@ -135,7 +135,7 @@ export default class Sidebar extends Component<SidebarProps, {}> {
         animationEnd={this.handleStatus}
         className={classString}
         footer={footer}
-        closable={false}
+        closable={'closable' in props ? props.closable : false}
       />
     );
   }

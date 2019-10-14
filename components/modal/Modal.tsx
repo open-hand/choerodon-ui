@@ -85,6 +85,7 @@ export interface ModalFuncProps {
   confirmLoading?: boolean;
   disableOk?: boolean;
   disableCancel?: boolean;
+  closable?: boolean;
   footer?: ReactNode;
 }
 

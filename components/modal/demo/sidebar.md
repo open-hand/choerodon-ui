@@ -53,6 +53,7 @@ class App extends React.Component {
           cancelText="取消"
           okText="确定"
           width={400}
+          closable
         >
           <p>Some contents...</p>
           <p>Some contents...</p>
