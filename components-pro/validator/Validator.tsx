@@ -13,6 +13,7 @@ import valueMissing from './rules/valueMissing';
 import getReactNodeText from '../_util/getReactNodeText';
 import Field from '../data-set/Field';
 import { FormField } from '../field/FormField';
+import { FieldType } from '../data-set/enum';
 
 export type CustomValidator = (
   value: any,
@@ -61,10 +62,10 @@ export default class Validator {
   }
 
   @computed
-  private get uniqueRefField(): Field | undefined {
+  private get uniqueRefFields(): Field[] {
     const { name, unique, record } = this.props;
     if (record && isString(unique)) {
-      return [...record.fields.values()].find(
+      return [...record.fields.values()].filter(
         field =>
           field.name !== name &&
           field.get('unique') === unique &&
@@ -72,18 +73,41 @@ export default class Validator {
           !field.get('range'),
       );
     }
+    return [];
+  }
+
+  @computed
+  private get bindingFieldWithValidationResult(): Field | undefined {
+    const { name, record, type } = this.props;
+    if (record && name && type === FieldType.object) {
+      return [...record.fields.values()].find(field => {
+        if (field.name !== name) {
+          const bind = field.get('bind');
+          if (isString(bind) && bind.indexOf(`${name}.`) === 0 && !field.isValid()) {
+            return true;
+          }
+        }
+        return false;
+      });
+    }
     return undefined;
   }
 
   @computed
   private get uniqueRefValidationResult(): ValidationResult | undefined {
-    if (this.innerValidationResults.every(result => result.ruleName !== 'uniqueError')) {
-      const { uniqueRefField } = this;
-      if (uniqueRefField) {
-        return uniqueRefField.validator.innerValidationResults.find(
+    const { uniqueRefFields } = this;
+    if (
+      uniqueRefFields.length &&
+      this.innerValidationResults.every(result => result.ruleName !== 'uniqueError')
+    ) {
+      let validationResult: ValidationResult | undefined;
+      uniqueRefFields.some(uniqueRefField => {
+        validationResult = uniqueRefField.validator.innerValidationResults.find(
           result => result.ruleName === 'uniqueError',
         );
-      }
+        return !!validationResult;
+      });
+      return validationResult;
     }
     return undefined;
   }
@@ -94,7 +118,15 @@ export default class Validator {
     if (uniqueRefValidationResult) {
       return [uniqueRefValidationResult];
     }
-    return this.innerValidationResults;
+    const { innerValidationResults } = this;
+    if (innerValidationResults.length) {
+      return innerValidationResults;
+    }
+    const { bindingFieldWithValidationResult } = this;
+    if (bindingFieldWithValidationResult) {
+      return bindingFieldWithValidationResult.getValidationErrorValues();
+    }
+    return [];
   }
 
   @computed
@@ -134,9 +166,9 @@ export default class Validator {
   @action
   reset() {
     this.clearErrors();
-    const { uniqueRefField } = this;
-    if (uniqueRefField) {
-      uniqueRefField.validator.clearErrors();
+    const { uniqueRefFields } = this;
+    if (uniqueRefFields.length) {
+      uniqueRefFields.forEach(uniqueRefField => uniqueRefField.validator.clearErrors());
     }
   }
 

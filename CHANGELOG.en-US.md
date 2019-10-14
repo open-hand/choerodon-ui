@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 💄 `<pro>Lov`: Adjust the minimum height of the Lov popup.
+- 🐞 `<pro>Lov`: Fix the problem that the unique check does not display an error.
 
 ## 0.8.20
 
