@@ -17,6 +17,7 @@ timeline: true
 
 - 💄 `<pro>Lov`: 调整 Lov 弹窗的最小高度。
 - 🐞 `<pro>Lov`: 修复唯一校验不显示错误的问题。
+- 🐞 `<pro>Table.Column`: 修复 tooltip 属性的问题。
 
 ## 0.8.20
 

@@ -72,23 +72,6 @@ export default class TableCell extends Component<TableCellProps> {
 
   @observable overflow?: boolean;
 
-  // @computed
-  // get overflow() {
-  //   const { output } = this;
-  //   if (output) {
-  //     const { column } = this.props;
-  //     const { element } = output;
-  //     if (element) {
-  //       element.style.position = 'absolute';
-  //       const { offsetWidth } = element;
-  //       const minWidth = Math.min(element.parentNode.offsetWidth, columnWidth(column));
-  //       element.style.position = '';
-  //       return minWidth !== 0 && offsetWidth > minWidth;
-  //     }
-  //   }
-  //   return false;
-  // }
-
   @computed
   get cellEditor() {
     const { column, record } = this.props;
@@ -113,10 +96,15 @@ export default class TableCell extends Component<TableCellProps> {
   saveOutput(node) {
     if (node) {
       this.disconnect();
+      const {
+        column: { tooltip },
+      } = this.props;
       const element = node.element;
       this.element = element;
-      this.resizeObserver = new ResizeObserver(this.handleResize);
-      this.resizeObserver.observe(element.parentNode);
+      if (tooltip === TableColumnTooltip.overflow) {
+        this.resizeObserver = new ResizeObserver(this.handleResize);
+        this.resizeObserver.observe(element.parentNode);
+      }
       const {
         tableStore: { dataSet },
       } = this.context;
@@ -155,17 +143,22 @@ export default class TableCell extends Component<TableCellProps> {
   @action
   syncSize() {
     const { element } = this;
-    if (element) {
-      element.style.position = 'absolute';
-      const { offsetWidth, parentNode } = element;
-      if (parentNode) {
-        const minWidth = (parentNode as HTMLElement).offsetWidth;
+    if (element && element.textContent) {
+      const {
+        column: { tooltip },
+      } = this.props;
+      if (tooltip === TableColumnTooltip.overflow) {
+        const { offsetWidth: minWidth } = element;
+        element.style.position = 'absolute';
+        const { offsetWidth } = element;
         element.style.position = '';
         this.overflow = minWidth !== 0 && offsetWidth > minWidth;
-        return;
+      } else {
+        this.overflow = true;
       }
+    } else {
+      this.overflow = false;
     }
-    this.overflow = false;
   }
 
   @autobind
@@ -432,7 +425,7 @@ export default class TableCell extends Component<TableCellProps> {
       innerProps.style = {
         height: pxToRem(rowHeight),
       };
-      if (tooltip === TableColumnTooltip.overflow) {
+      if (tooltip && tooltip !== TableColumnTooltip.none) {
         innerProps.ref = this.saveOutput;
       }
     }
@@ -460,15 +453,13 @@ export default class TableCell extends Component<TableCellProps> {
         showHelp={ShowHelp.none}
       />
     );
-    const text =
-      tooltip === TableColumnTooltip.always ||
-      (tooltip === TableColumnTooltip.overflow && this.overflow) ? (
-        <Tooltip key="tooltip" title={cloneElement(output, { ref: null, className: null })}>
-          {output}
-        </Tooltip>
-      ) : (
-        output
-      );
+    const text = this.overflow ? (
+      <Tooltip key="tooltip" title={cloneElement(output, { ref: null, className: null })}>
+        {output}
+      </Tooltip>
+    ) : (
+      output
+    );
     return [prefix, text];
   }
 
