@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>DatePicker`: Fixed display problem with null values in range mode.
+
 ## 0.8.21
 
 `2019-10-14`

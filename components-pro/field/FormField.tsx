@@ -758,7 +758,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     return text;
   }
 
-  getText(value: any = this.getValue()): string {
+  getText(value: any): string {
     return this.processValue(value);
   }
 

@@ -427,7 +427,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         key="text"
         {...otherProps}
         placeholder={this.hasFloatLabel ? undefined : this.getPlaceholders()[0]}
-        value={isString(text) ? text : this.getText()}
+        value={isString(text) ? text : this.getText(this.getValue())}
         readOnly={!this.editable}
       />
     );

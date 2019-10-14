@@ -107,7 +107,7 @@ export default class CodeArea extends ObserverFormField<CodeAreaProps> {
           <label>
             <CodeMirror
               {...this.getOtherProps()}
-              value={isString(text) ? text : this.getText()}
+              value={isString(text) ? text : this.getText(this.getValue())}
               options={this.cmOptions}
               onBeforeChange={this.handleBeforeChange}
               onBlur={this.handleCodeMirrorBlur}

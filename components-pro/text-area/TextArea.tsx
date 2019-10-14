@@ -56,7 +56,7 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
           <textarea
             {...this.getOtherProps()}
             readOnly={!this.editable}
-            value={isString(text) ? text : this.getText()}
+            value={isString(text) ? text : this.getText(this.getValue())}
           />
           {this.renderFloatLabel()}
         </label>
