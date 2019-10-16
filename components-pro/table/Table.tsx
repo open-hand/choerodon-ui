@@ -10,7 +10,7 @@ import isNumber from 'lodash/isNumber';
 import isString from 'lodash/isString';
 import noop from 'lodash/noop';
 import classes from 'component-classes';
-import { action, isArrayLike } from 'mobx';
+import { action, isArrayLike, runInAction } from 'mobx';
 import warning from 'choerodon-ui/lib/_util/warning';
 import { pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
@@ -335,9 +335,7 @@ export default class Table extends DataSetComponent<TableProps> {
 
   resizeObserver?: ResizeObserver;
 
-  oldWidth?: number;
-
-  isHidden?: boolean;
+  isSyncSize?: boolean;
 
   resizeLine: HTMLDivElement | null;
 
@@ -391,20 +389,23 @@ export default class Table extends DataSetComponent<TableProps> {
     this.tableStore.showCachedSeletion = !!value;
   });
 
-  private handleResize = debounce(
-    action(() => {
-      const { element, tableStore } = this;
-      if (!element.offsetParent) {
-        tableStore.styledHidden = true;
-      } else if (!tableStore.hidden) {
-        this.syncSize();
-        this.setScrollPositionClassName();
-      } else {
-        tableStore.styledHidden = false;
-      }
-    }),
-    30,
-  );
+  private handleResize = debounce(() => {
+    const { element, tableStore, isSyncSize } = this;
+    if (!isSyncSize) {
+      this.isSyncSize = true;
+      runInAction(() => {
+        if (!element.offsetParent) {
+          tableStore.styledHidden = true;
+        } else if (!tableStore.hidden) {
+          this.syncSize();
+          this.setScrollPositionClassName();
+        } else {
+          tableStore.styledHidden = false;
+        }
+      });
+      this.isSyncSize = false;
+    }
+  }, 30);
 
   saveResizeRef = (node: HTMLDivElement | null) => {
     this.resizeLine = node;
@@ -1316,11 +1317,7 @@ export default class Table extends DataSetComponent<TableProps> {
   syncSize() {
     const { element, tableStore } = this;
     if (element) {
-      const width = element.offsetWidth;
-      if (this.oldWidth !== width) {
-        this.oldWidth = tableStore.width;
-        tableStore.width = width;
-      }
+      tableStore.width = element.offsetWidth;
       const { prefixCls } = this;
       let height = this.getStyleHeight();
       if (element && isNumber(height)) {
