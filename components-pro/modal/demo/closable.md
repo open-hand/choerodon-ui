@@ -13,7 +13,7 @@ title:
 
 No Close Button.
 
-````jsx
+```jsx
 import { Modal, Button } from 'choerodon-ui/pro';
 
 const modalKey = Modal.key();
@@ -21,7 +21,7 @@ const modalKey = Modal.key();
 function openModal() {
   Modal.open({
     key: modalKey,
-    title: 'No close button',
+    title: 'Close button',
     children: (
       <div>
         <p>Some contents...</p>
@@ -33,8 +33,5 @@ function openModal() {
   });
 }
 
-ReactDOM.render(
-  <Button onClick={openModal}>Open</Button>,
-  mountNode,
-);
-````
+ReactDOM.render(<Button onClick={openModal}>Open</Button>, mountNode);
+```

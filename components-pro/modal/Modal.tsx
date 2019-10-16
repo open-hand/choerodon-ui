@@ -26,7 +26,6 @@ export interface ModalProps extends ViewComponentProps {
   fullScreen?: boolean;
   maskClosable?: boolean;
   keyboardClosable?: boolean;
-  header?: boolean;
   footer?: ((okBtn: ReactNode, cancelBtn: ReactNode) => ReactNode) | ReactNode | boolean;
   destroyOnClose?: boolean;
   okText?: ReactNode;
@@ -56,7 +55,6 @@ export default class Modal extends ViewComponent<ModalProps> {
     fullScreen: PropTypes.bool,
     maskClosable: PropTypes.bool,
     keyboardClosable: PropTypes.bool,
-    header: PropTypes.bool,
     footer: PropTypes.oneOfType([PropTypes.func, PropTypes.node, PropTypes.bool]),
     destroyOnClose: PropTypes.bool,
     okText: PropTypes.node,
@@ -79,7 +77,6 @@ export default class Modal extends ViewComponent<ModalProps> {
 
   static defaultProps = {
     suffixCls: 'modal',
-    header: true,
     closable: false,
     movable: true,
     maskClosable: false,
@@ -130,7 +127,6 @@ export default class Modal extends ViewComponent<ModalProps> {
       'keyboardClosable',
       'fullScreen',
       'title',
-      'header',
       'footer',
       'close',
       'update',
@@ -264,27 +260,25 @@ export default class Modal extends ViewComponent<ModalProps> {
   getHeader(): ReactNode {
     const {
       prefixCls,
-      props: { closable, movable, fullScreen, drawer, header },
+      props: { closable, movable, fullScreen, drawer },
     } = this;
-    if (header) {
-      const title = this.getTitle();
-      const buttons = this.getHeaderButtons();
-      if (title || closable || movable) {
-        const headerProps: any = {
-          className: classNames(`${prefixCls}-header`, {
-            [`${prefixCls}-movable`]: movable && !fullScreen && !drawer,
-          }),
-        };
-        if (movable && !fullScreen && !drawer) {
-          headerProps.onMouseDown = this.handleHeaderMouseDown;
-        }
-        return (
-          <div {...headerProps}>
-            {title}
-            {buttons}
-          </div>
-        );
+    const title = this.getTitle();
+    const buttons = this.getHeaderButtons();
+    if (title || closable || movable) {
+      const headerProps: any = {
+        className: classNames(`${prefixCls}-header`, {
+          [`${prefixCls}-movable`]: movable && !fullScreen && !drawer,
+        }),
+      };
+      if (movable && !fullScreen && !drawer) {
+        headerProps.onMouseDown = this.handleHeaderMouseDown;
       }
+      return (
+        <div {...headerProps}>
+          {title}
+          {buttons}
+        </div>
+      );
     }
   }
 

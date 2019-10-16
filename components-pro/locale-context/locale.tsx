@@ -44,10 +44,6 @@ export interface Locale {
   Modal: {
     ok;
     cancel;
-    confirm_modal_title;
-    success_modal_title;
-    error_modal_title;
-    warning_modal_title;
   };
   DataSet: {
     unsaved_data_confirm;

@@ -42,10 +42,6 @@ export default {
   Modal: {
     ok: '确定',
     cancel: '取消',
-    confirm_modal_title: '提示',
-    success_modal_title: '成功',
-    error_modal_title: '错误',
-    warning_modal_title: '警告',
   },
   DataSet: {
     unsaved_data_confirm: '有未保存的数据，是否继续？',

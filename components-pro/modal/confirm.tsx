@@ -4,7 +4,6 @@ import { getProPrefixCls } from 'choerodon-ui/lib/configure';
 import { ModalProps } from './Modal';
 import { getKey, open } from '../modal-container/ModalContainer';
 import Icon from '../icon';
-import { $l } from '../locale-context';
 import { confirmProps, normalizeProps } from './utils';
 
 export default function confirm(props: ModalProps & confirmProps | ReactNode) {
@@ -13,32 +12,38 @@ export default function confirm(props: ModalProps & confirmProps | ReactNode) {
     type = 'confirm',
     onOk = noop,
     onCancel = noop,
-    iconType = 'error',
-    header = false,
+    iconType,
     border = false,
     okCancel = true,
+    title,
     ...otherProps
   } = normalizeProps(props);
   const prefixCls = getProPrefixCls('confirm');
+  const titleNode = title && <div className={`${prefixCls}-title`}>{title}</div>;
+  const contentNode = children && <div className={`${prefixCls}-content`}>{children}</div>;
+  const iconNode = iconType && (
+    <td className={`${prefixCls}-icon ${prefixCls}-${type}`}>
+      <Icon type={iconType} />
+    </td>
+  );
   return new Promise(resolve => {
     open({
       key: getKey(),
-      title: $l('Modal', 'confirm_modal_title'),
-      header,
       border,
       destroyOnClose: true,
       okCancel,
       closable: false,
       movable: false,
-      style: { width: '4rem' },
+      style: { width: '4.16rem' },
       children: (
         <table className={prefixCls}>
           <tbody>
             <tr>
-              <td className={`${prefixCls}-icon ${prefixCls}-${type}`}>
-                <Icon type={iconType} />
+              {iconNode}
+              <td>
+                {titleNode}
+                {contentNode}
               </td>
-              <td>{children}</td>
             </tr>
           </tbody>
         </table>

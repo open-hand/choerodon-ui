@@ -20,7 +20,7 @@ export default {
   Modal: {
     okText: '確 定',
     cancelText: '取 消',
-    justOkText: 'OK',
+    justOkText: '確 定',
   },
   Popconfirm: {
     okText: '確 定',

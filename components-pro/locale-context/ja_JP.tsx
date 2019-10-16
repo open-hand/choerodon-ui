@@ -42,10 +42,6 @@ export default {
   Modal: {
     ok: 'OK',
     cancel: 'キャンセル',
-    confirm_modal_title: 'プロンプト',
-    success_modal_title: '成功',
-    error_modal_title: 'エラー',
-    warning_modal_title: '警告',
   },
   DataSet: {
     unsaved_data_confirm: '未保存のデータがあります。続行しますか？ ',

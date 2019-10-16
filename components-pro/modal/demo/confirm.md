@@ -13,7 +13,7 @@ title:
 
 Confirm.
 
-````jsx
+```jsx
 import { Modal, Button } from 'choerodon-ui/pro';
 
 function doConfirm() {
@@ -26,13 +26,16 @@ function doConfirm() {
         <p>Some contents...</p>
       </div>
     ),
-  }).then((button) => {
+  }).then(button => {
     Modal.info(`Click ${button}`);
   });
 }
 
 function info() {
-  Modal.info('您的订单已经提交!');
+  Modal.info({
+    title: 'This is title',
+    children: '您的订单已经提交!',
+  });
 }
 
 function success() {
@@ -57,4 +60,4 @@ ReactDOM.render(
   </div>,
   mountNode,
 );
-````
+```

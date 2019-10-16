@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import {
   action,
   computed,
@@ -54,7 +55,8 @@ import * as ObjectChainValue from '../_util/ObjectChainValue';
 import Transport, { TransportProps } from './Transport';
 import axiosAdapter from '../_util/axiosAdapter';
 import PromiseQueue from '../_util/PromiseQueue';
-import { ReactNode } from 'react';
+import { ModalProps } from '../modal/Modal';
+import { confirmProps } from '../modal/utils';
 
 export type DataSetChildren = { [key: string]: DataSet };
 
@@ -918,10 +920,13 @@ export default class DataSet extends EventManager {
   /**
    * 立即删除记录
    * @param records 记录或者记录数组，默认当前记录
-   * @param confirmMessage 提示信息
+   * @param confirmMessage 提示信息或弹窗的属性
    * @return Promise
    */
-  async delete(records?: Record | Record[], confirmMessage?: ReactNode): Promise<any> {
+  async delete(
+    records?: Record | Record[],
+    confirmMessage?: ReactNode | ModalProps & confirmProps,
+  ): Promise<any> {
     if (records) {
       records = ([] as Record[]).concat(records);
       if (
@@ -978,10 +983,10 @@ export default class DataSet extends EventManager {
 
   /**
    * 删除所有记录
-   * @param confirmMessage 提示信息
+   * @param confirmMessage 提示信息或弹窗的属性
    */
   @action
-  async deleteAll(confirmMessage?: ReactNode) {
+  async deleteAll(confirmMessage?: ReactNode | ModalProps & confirmProps) {
     if (
       this.length > 0 &&
       (await confirm(confirmMessage || $l('DataSet', 'delete_all_row_confirm'))) !== 'cancel'

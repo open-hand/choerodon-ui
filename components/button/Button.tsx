@@ -15,6 +15,8 @@ import Group from './ButtonGroup';
 import Ripple from '../ripple';
 import { Size } from '../_util/enum';
 import { getPrefixCls } from '../configure';
+import { ProgressType } from '../progress/enum';
+import Progress from '../progress';
 
 export type ButtonType = 'primary' | 'ghost' | 'dashed' | 'danger';
 export type ButtonShape = 'circle' | 'circle-outline';
@@ -163,11 +165,7 @@ export default class Button extends Component<ButtonProps, any> {
 
     let iconNode: any = icon ? <Icon type={icon} /> : null;
     iconNode = loading ? (
-      <div className="btn-loading">
-        <span className="dot1" />
-        <span className="dot2" />
-        <span className="dot3" />
-      </div>
+      <Progress key="loading" type={ProgressType.loading} size={Size.small} />
     ) : (
       iconNode
     );

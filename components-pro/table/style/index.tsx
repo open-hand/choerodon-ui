@@ -1,5 +1,5 @@
 import 'choerodon-ui/lib/style/index.less';
-import './index.less';
+
 // style dependencies
 import '../../output/style';
 import '../../button/style';
@@ -17,3 +17,5 @@ import '../../tooltip/style';
 import '../../validator/style';
 import '../../switch/style';
 import '../../menu/style';
+
+import './index.less';

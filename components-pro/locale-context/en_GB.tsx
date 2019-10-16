@@ -42,10 +42,6 @@ export default {
   Modal: {
     ok: 'OK',
     cancel: 'Cancel',
-    confirm_modal_title: 'Hint',
-    success_modal_title: 'Success',
-    error_modal_title: 'Error',
-    warning_modal_title: 'Warning',
   },
   DataSet: {
     unsaved_data_confirm: `There's unsaved data, continue?`,

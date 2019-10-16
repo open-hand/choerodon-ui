@@ -4,6 +4,7 @@
 @import './mixin';
 
 @btn-prefix-cls: ~'@{c7n-prefix}-btn';
+@progress-cls: ~'@{c7n-prefix}-progress';
 
 // for compatibile
 @btn-ghost-color: @text-color;
@@ -61,7 +62,19 @@
       animation: btn-loading 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.27s infinite normal;
     }
   }
+  .@{progress-cls}.@{progress-cls}-loading {
+    margin-right: 0.01rem;
+    line-height: 1;
 
+    & + span {
+      margin-left: 0.05rem;
+    }
+
+    .@{progress-cls}-inner {
+      width: 0.15rem;
+      height: 0.15rem;
+    }
+  }
   &-flat&-primary {
     .btn-flat-primary;
 

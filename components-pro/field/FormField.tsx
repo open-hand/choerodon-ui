@@ -503,6 +503,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       'labelLayout',
       'pristine',
       'range',
+      'trim',
     ]);
     if (!this.isDisabled() && !this.isReadOnly()) {
       otherProps.onChange = this.handleChange;

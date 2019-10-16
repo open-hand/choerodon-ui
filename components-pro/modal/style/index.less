@@ -21,6 +21,7 @@
     bottom: 0;
     left: 0;
     width: auto;
+
     .@{modal-prefix-cls}-footer {
       position: absolute;
       right: 0;
@@ -50,7 +51,7 @@
 
   &-header {
     position: relative;
-    padding: 0.15rem 0.2rem;
+    padding: 0.15rem 0.24rem;
     color: @text-color;
     background: @component-background;
     border-radius: @border-radius-base @border-radius-base 0 0;
@@ -58,27 +59,29 @@
 
   &-body {
     max-height: ~'calc(100vh - 1.2rem)';
-    padding: 0.2rem;
-    padding-top: 0.32rem;
+    padding: 0.24rem;
     overflow: auto;
     font-size: @font-size-base;
     line-height: @line-height-base;
   }
 
   &-footer {
-    padding: 0.2rem;
+    padding: 0.12rem 0.24rem;
     text-align: right;
     border-radius: 0 0 @border-radius-base @border-radius-base;
+
     button + button {
       margin-bottom: 0;
       margin-left: 0.08rem;
     }
+
     &-drawer {
       position: absolute;
       bottom: 0;
       width: 100%;
       text-align: left;
     }
+
     &-without-border {
       padding-top: 0;
       border-top: none;
@@ -120,6 +123,7 @@
     right: 0;
     bottom: 0;
   }
+
   &-header-button {
     width: 0.55rem;
     height: 100%;
@@ -140,6 +144,7 @@
       color: #444;
     }
   }
+
   &-movable {
     cursor: move;
     user-select: none;
@@ -148,24 +153,47 @@
 
 .@{c7n-pro-prefix}-confirm {
   &-icon {
-    // font-size: .44rem;
     padding-right: 0.16rem;
+    vertical-align: top;
+
+    .@{iconfont-css-prefix} {
+      font-size: 0.24rem;
+      line-height: 1.5;
+    }
   }
+
   &-info {
     color: @info-color;
   }
+
   &-confirm,
   &-warning {
     color: @warning-color;
   }
+
   &-success {
     color: @success-color;
   }
+
   &-error {
     color: @error-color;
   }
-  .@{iconfont-css-prefix} {
-    font-size: 0.32rem;
+
+  &-title {
+    overflow: auto;
+    color: @heading-color;
+    font-weight: 500;
+    font-size: @modal-font-size-lg;
+    line-height: 0.32rem;
+  }
+
+  &-content {
+    color: @text-color;
+    font-size: @font-size-base;
+  }
+
+  &-title + &-content {
+    margin-top: 0.08rem;
   }
 }
 

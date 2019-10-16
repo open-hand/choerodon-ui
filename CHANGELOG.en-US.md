@@ -15,6 +15,9 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>DataSet`: The `confirmMessage` parameter of `delete` and `deleteAll` methods supports the properties of the Modal.
+- 💄 `Button`: Adjust the loading status to match the `Button` of pro.
+- 💄 `<pro>Modal`: Adjust the styles of `confirm`, `info`, `success`, `error`, `warning` to match the style of the base component.
 - 🐞 `<pro>DatePicker`: Fixed display problem with null values in range mode.
 
 ## 0.8.21

@@ -7,13 +7,13 @@ title:
 
 ## zh-CN
 
-通过设定多个drawer类型的弹出框形成多层抽屉，可指定弹出层宽度。
+通过设定多个 drawer 类型的弹出框形成多层抽屉，可指定弹出层宽度。
 
 ## en-US
 
 Drawer.
 
-````jsx
+```jsx
 import { Modal, Button } from 'choerodon-ui/pro';
 
 const key1 = Modal.key();
@@ -21,7 +21,7 @@ const key2 = Modal.key();
 const key3 = Modal.key();
 
 function openSubModal2() {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     Modal.open({
       key: key3,
       title: 'Sub Mode 2',
@@ -41,7 +41,7 @@ function openSubModal2() {
 }
 
 function openSubModal1() {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     Modal.open({
       key: key2,
       title: 'Sub Mode 1',
@@ -51,11 +51,7 @@ function openSubModal1() {
       },
       children: (
         <div>
-          <Button
-            onClick={openSubModal2}
-          >
-            Open Sub Modal2...
-          </Button>
+          <Button onClick={openSubModal2}>Open Sub Modal2...</Button>
           <p>Open Sub Modal1...</p>
           <p>Open Sub Modal1...</p>
         </div>
@@ -68,6 +64,7 @@ function openSubModal1() {
 
 function openModal() {
   Modal.open({
+    closable: true,
     key: key1,
     title: 'Multilayer',
     drawer: true,
@@ -76,21 +73,16 @@ function openModal() {
     },
     children: (
       <div>
-        <Button
-          onClick={openSubModal1}
-        >
-          Open Sub Modal1...
-        </Button>
+        <Button onClick={openSubModal1}>Open Sub Modal1...</Button>
         <p>Modal...</p>
         <p>Modal...</p>
       </div>
     ),
-    afterClose: () => { window.console.log('after close'); },
+    afterClose: () => {
+      window.console.log('after close');
+    },
   });
 }
 
-ReactDOM.render(
-  <Button onClick={openModal}>Drawer</Button>,
-  mountNode,
-);
-````
+ReactDOM.render(<Button onClick={openModal}>Drawer</Button>, mountNode);
+```

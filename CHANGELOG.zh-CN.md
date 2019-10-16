@@ -15,6 +15,9 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>DataSet`: delete 和 deleteAll 方法 confirmMessage 参数支持传 Modal 的属性。
+- 💄 `Button`: 调整 loading 状态与 pro 的 Button 一致。
+- 💄 `<pro>Modal`: 调整 confirm、info、success、error、warning 样式与基础组件的样式一致。
 - 🐞 `<pro>DatePicker`: 修复 range 空值的显示问题。
 
 ## 0.8.21
