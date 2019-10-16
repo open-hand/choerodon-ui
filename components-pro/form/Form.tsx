@@ -34,6 +34,7 @@ import {
   getProperty,
   normalizeLabelWidth,
 } from './utils';
+import Output from '../output/Output';
 
 /**
  * 表单name生成器
@@ -499,11 +500,16 @@ export default class Form extends DataSetComponent<FormProps> {
           matrix[i][j] = true;
         }
       }
+      const isOutput =
+        labelLayout === LabelLayout.horizontal && (type as any).displayName === 'Output';
       const labelClassName = classNames(`${prefixCls}-label`, `${prefixCls}-label-${labelAlign}`, {
         [`${prefixCls}-required`]: required,
         [`${prefixCls}-label-vertical`]: labelLayout === LabelLayout.vertical,
+        [`${prefixCls}-label-output`]: isOutput,
       });
-      const wrapperClassName = `${prefixCls}-wrapper`;
+      const wrapperClassName = classNames(`${prefixCls}-wrapper`, {
+        [`${prefixCls}-output`]: isOutput,
+      });
       if (!noLabel) {
         cols.push(
           <td

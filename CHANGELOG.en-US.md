@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `<pro>Field`: The `dynamicProps` property supports object types. The object is a key-value pair which key is field property and value is a hook that returns the value of the field.
 - 🌟 `<pro>DataSet`: The `confirmMessage` parameter of `delete` and `deleteAll` methods supports the properties of the Modal.
+- 💄 `<pro>Output`: Adjust the line spacing in the Form.
 - 💄 `Button`: Adjust the loading status to match the `Button` of pro.
 - 💄 `<pro>Modal`: Adjust the styles of `confirm`, `info`, `success`, `error`, `warning` to match the style of the base component.
 - 🐞 `<pro>DatePicker`: Fixed display problem with null values in range mode.

@@ -6,6 +6,7 @@
 .@{field-prefix-cls} {
   display: inline-block;
   width: 100%;
+
   &-label,
   &-label-vertical {
     overflow: hidden;
@@ -13,30 +14,37 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     vertical-align: middle;
+
     label {
       display: inline-block;
     }
+
     &-right {
       text-align: right;
     }
+
     &-center {
       text-align: center;
     }
   }
+
   &-label,
   &-wrapper {
     padding: 0.1rem 0.05rem;
   }
+
   &-label-vertical {
     display: block;
     padding-top: 0;
     padding-bottom: 0;
     direction: ltr;
     text-align: left;
+
     & + .@{field-prefix-cls}-wrapper {
       padding-top: 0;
     }
   }
+
   &-label::after {
     display: inline-block;
     width: 0.08rem;
@@ -47,14 +55,22 @@
     vertical-align: middle;
     content: ' ';
   }
+
   &-required&-label::after {
     content: '*';
   }
+
   &-help {
     color: @field-help-color;
     font-size: small;
     // 帮助信息相对输入框应该另起一行
     // display: inline-block;
     word-break: break-all;
+  }
+
+  &-output,
+  &-label-output {
+    padding-top: 0.01rem;
+    padding-bottom: 0.01rem;
   }
 }

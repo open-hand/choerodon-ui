@@ -1,4 +1,5 @@
 import 'choerodon-ui/lib/style/index.less';
+import './index.less';
 
 // style dependencies
 import '../../output/style';
@@ -18,4 +19,4 @@ import '../../validator/style';
 import '../../switch/style';
 import '../../menu/style';
 
-import './index.less';
+import './filter-select.less';

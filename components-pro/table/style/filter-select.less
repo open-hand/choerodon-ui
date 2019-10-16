@@ -1,0 +1,39 @@
+@import '../../../components/style/themes/default';
+
+@table-prefix-cls: ~'@{c7n-pro-prefix}-table';
+@table-border: @border-width-base @border-style-base @border-color-base;
+
+.@{table-prefix-cls} {
+  &-filter-select {
+    .input(0.5rem, 0.65rem);
+    padding-right: 0.65rem !important;
+    padding-left: 0.46rem !important;
+    line-height: 0.35rem;
+    border: none;
+    border-top: @table-border !important;
+
+    &-wrapper {
+      width: 100%;
+    }
+
+    .@{table-prefix-cls}-filter-select-inner-editor {
+      height: @input-height-base - 0.04rem;
+      padding: @input-padding-vertical-base 0;
+      background-color: transparent !important;
+      border: none;
+
+      & + * {
+        right: -0.18rem;
+      }
+    }
+
+    &-select-field {
+      padding-left: 0.08rem;
+      vertical-align: middle;
+    }
+
+    &-multiple-block {
+      border-radius: 0.12rem;
+    }
+  }
+}
