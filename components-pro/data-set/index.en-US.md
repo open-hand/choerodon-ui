@@ -223,7 +223,7 @@ title: DataSet
 | lovDefineAxiosConfig | lov 配置的请求配置或返回配置的钩子，优先级高于 lovDefineUrl，详见[AxiosRequestConfig](#AxiosRequestConfig) | AxiosRequestConfig\| (code) => AxiosRequestConfig |  |
 | lovQueryAxiosConfig | lov 查询的请求配置或返回配置的钩子，优先级高于 lovQueryUrl，详见[AxiosRequestConfig](#AxiosRequestConfig) | AxiosRequestConfig\| (code, config, { dataSet, params, data }) => AxiosRequestConfig |  |
 | bind | 内部字段别名绑定 | string |  |
-| dynamicProps | 动态属性钩子 | ({ dataSet, record, name }) => object |  |
+| dynamicProps | 动态属性钩子或者对象。对象为字段属性和返回该字段值的钩子的键值对，建议使用对象以提高性能。 | ({ dataSet, record, name }) => object \| { fieldProp: ({ dataSet, record, name }) => value } |  |
 | cascadeMap | 快码和 LOV 查询时的级联参数映射。 例如：cascadeMap: { parentCodeValue: 'city' }，其中'city'是当前所在数据源的其他字段名，parentCodeValue 是快码和 LOV 的查询参数 | object |  |
 | currency | 货币代码，详见[Current currency & funds code list.](https://www.currency-iso.org/en/home/tables/table-a1.html) | string |  |
 | ignore | 忽略提交, 可选值: `always` - 总是忽略 `clean` - 值未变化时忽略 `never` - 从不忽略 | string | `never` |

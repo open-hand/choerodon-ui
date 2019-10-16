@@ -8,7 +8,7 @@ import { getConfig } from 'choerodon-ui/lib/configure';
 import warning from 'choerodon-ui/lib/_util/warning';
 import DataSet from './DataSet';
 import Record from './Record';
-import Validator, { ValidationMessages, CustomValidator } from '../validator/Validator';
+import Validator, { CustomValidator, ValidationMessages } from '../validator/Validator';
 import { DataSetEvents, FieldFormat, FieldIgnore, FieldTrim, FieldType, SortOrder } from './enum';
 import lookupStore from '../stores/LookupCodeStore';
 import lovCodeStore from '../stores/LovCodeStore';
@@ -22,6 +22,7 @@ import PromiseQueue from '../_util/PromiseQueue';
 import { LovConfig } from '../lov/Lov';
 
 export type Fields = ObservableMap<string, Field>;
+export type DynamicPropsArguments = { dataSet: DataSet; record: Record; name: string };
 
 export type FieldProps = {
   /**
@@ -184,7 +185,9 @@ export type FieldProps = {
   /**
    * 动态属性
    */
-  dynamicProps?: (props: { dataSet: DataSet; record: Record; name: string }) => any;
+  dynamicProps?:
+    | ((props: DynamicPropsArguments) => FieldProps | undefined)
+    | { [key: string]: (DynamicPropsArguments) => any };
   /**
    * 快码和LOV查询时的级联参数映射
    * @example
@@ -342,21 +345,25 @@ export default class Field {
   get(propsName: string): any {
     if (propsName !== 'dynamicProps') {
       const dynamicProps = this.get('dynamicProps');
-      if (typeof dynamicProps === 'function') {
-        const { dataSet, name, record } = this;
-        if (this.isDynamicPropsComputing) {
-          warning(false, `Cycle dynamicProps execution of field<${name}>.`);
-        } else if (dataSet && record) {
-          this.isDynamicPropsComputing = true;
-          const props = dynamicProps({ dataSet, record, name });
-          this.isDynamicPropsComputing = false;
+      if (dynamicProps) {
+        if (typeof dynamicProps === 'function') {
+          const props = this.executeDynamicProps(dynamicProps);
           if (props && propsName in props) {
             const prop = props[propsName];
             this.checkDynamicProp(propsName, prop);
             return prop;
           }
-          this.checkDynamicProp(propsName, undefined);
+        } else {
+          const dynamicProp = dynamicProps[propsName];
+          if (typeof dynamicProp === 'function') {
+            const prop = this.executeDynamicProps(dynamicProp);
+            if (prop !== undefined) {
+              this.checkDynamicProp(propsName, prop);
+              return prop;
+            }
+          }
         }
+        this.checkDynamicProp(propsName, undefined);
       }
     }
     const value = get(this.props, propsName);
@@ -699,6 +706,18 @@ export default class Field {
     if (propsName === 'lovCode') {
       this.fetchLookup();
       this.fetchLovConfig();
+    }
+  }
+
+  private executeDynamicProps(dynamicProps: (DynamicPropsArguments) => any) {
+    const { dataSet, name, record } = this;
+    if (this.isDynamicPropsComputing) {
+      warning(false, `Cycle dynamicProps execution of field<${name}>.`);
+    } else if (dataSet && record) {
+      this.isDynamicPropsComputing = true;
+      const props = dynamicProps({ dataSet, record, name });
+      this.isDynamicPropsComputing = false;
+      return props;
     }
   }
 }

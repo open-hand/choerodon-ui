@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Field`: dynamicProps 属性支持对象类型，对象为字段属性和返回该字段值的钩子的键值对。
 - 🌟 `<pro>DataSet`: delete 和 deleteAll 方法 confirmMessage 参数支持传 Modal 的属性。
 - 💄 `Button`: 调整 loading 状态与 pro 的 Button 一致。
 - 💄 `<pro>Modal`: 调整 confirm、info、success、error、warning 样式与基础组件的样式一致。

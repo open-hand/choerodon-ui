@@ -440,15 +440,24 @@ export function processIntlField(
         // },
       }),
     );
+    const { lang = localeContext.locale.lang } = dataSet || {};
+    const newDynamicProps =
+      typeof dynamicProps === 'function'
+        ? props => {
+            return {
+              ...dynamicProps(props),
+              bind: props.record.get(tlsKey) ? `${tlsKey}.${name}.${lang}` : undefined,
+            };
+          }
+        : {
+            ...dynamicProps,
+            bind: props => {
+              return props.record.get(tlsKey) ? `${tlsKey}.${name}.${lang}` : undefined;
+            },
+          };
     return callback(name, {
       ...fieldProps,
-      dynamicProps(props) {
-        const { lang = localeContext.locale.lang } = dataSet || {};
-        return {
-          ...(dynamicProps && dynamicProps(props)),
-          bind: props.record.get(tlsKey) ? `${tlsKey}.${name}.${lang}` : undefined,
-        };
-      },
+      dynamicProps: newDynamicProps,
     });
   }
   return callback(name, fieldProps);

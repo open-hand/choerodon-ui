@@ -71,29 +71,31 @@ function renderColumnHeader(dataset, name) {
   );
 }
 
-function nameDynamicProps({ record }) {
-  return { required: record.get('sex') === 'M' };
-}
+const nameDynamicProps = {
+  required({ record }) {
+    return record.get('sex') === 'M';
+  },
+};
 
-function codeCodeDynamicProps({ record }) {
-  const field = record.getField('code');
-  if (field) {
-    const valueField = field.get('valueField');
-    return {
-      bind: `code.${valueField}`,
-    };
-  }
-}
+const codeCodeDynamicProps = {
+  bind({ record }) {
+    const field = record.getField('code');
+    if (field) {
+      const valueField = field.get('valueField');
+      return `code.${valueField}`;
+    }
+  },
+};
 
-function codeDescriptionDynamicProps({ record }) {
-  const field = record.getField('code');
-  if (field) {
-    const textField = field.get('textField');
-    return {
-      bind: `code.${textField}`,
-    };
-  }
-}
+const codeDescriptionDynamicProps = {
+  bind({ record }) {
+    const field = record.getField('code');
+    if (field) {
+      const textField = field.get('textField');
+      return `code.${textField}`;
+    }
+  },
+};
 
 class App extends React.Component {
   friendsDs = new DataSet({
