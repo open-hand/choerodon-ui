@@ -1,5 +1,5 @@
 ---
-order: 6
+order: 8
 title:
   zh-CN: 自定义搜索条
   en-US: Customize Search Bar
@@ -72,7 +72,14 @@ class App extends React.Component {
     return [{ name: 'name', width: 450, editor: true }, { name: 'age', editor: true }];
   }
 
-  renderBar = ({ queryFields, buttons, queryFieldsLimit, dataSet, queryDataSet, pagination }) => {
+  renderBar = ({
+    queryFields,
+    buttons,
+    queryFieldsLimit = 3,
+    dataSet,
+    queryDataSet,
+    pagination,
+  }) => {
     if (queryDataSet) {
       return (
         <Form columns={queryFieldsLimit} dataSet={queryDataSet}>

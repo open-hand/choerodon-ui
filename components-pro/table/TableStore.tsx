@@ -17,7 +17,7 @@ import {
   SelectionMode,
   TableEditMode,
   TableMode,
-  TableQueryBar,
+  TableQueryBarType,
 } from './enum';
 import { stopPropagation } from '../_util/EventManager';
 import { getColumnKey, getHeader } from './utils';
@@ -173,6 +173,9 @@ export default class TableStore {
 
   @computed
   get columnResizable(): boolean {
+    if (this.currentEditRecord) {
+      return false;
+    }
     if ('columnResizable' in this.props) {
       return this.props.columnResizable;
     }
@@ -230,7 +233,7 @@ export default class TableStore {
   }
 
   @computed
-  get queryBar(): TableQueryBar {
+  get queryBar(): TableQueryBarType {
     return this.props.queryBar || getConfig('queryBar');
   }
 

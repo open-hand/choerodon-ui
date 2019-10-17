@@ -15,6 +15,11 @@ timeline: true
 
 ---
 
+- 💄 `<pro>Table`: Performance optimization.
+- 🐞 `<pro>Table`: Fixed the problem that advanced query condition bar shows the normal query field.
+- 🐞 `<pro>Table`: Fixed an issue where the record could not be operated when the delete record failed.
+- 🐞 `<pro>DataSet`: Fixed an issue where the commit data was cached again after the commit error.
+
 ## 0.8.22
 
 `2019-10-17`

@@ -1,16 +1,14 @@
-import React, { cloneElement, isValidElement, ReactElement, ReactNode } from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import ResizeObserver from 'resize-observer-polyfill';
 import { observer } from 'mobx-react';
 import omit from 'lodash/omit';
 import debounce from 'lodash/debounce';
-import isObject from 'lodash/isObject';
 import isNumber from 'lodash/isNumber';
-import isString from 'lodash/isString';
 import noop from 'lodash/noop';
 import classes from 'component-classes';
-import { action, isArrayLike, runInAction } from 'mobx';
+import { action, runInAction } from 'mobx';
 import warning from 'choerodon-ui/lib/_util/warning';
 import { pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
@@ -28,7 +26,6 @@ import TableContext from './TableContext';
 import TableWrapper from './TableWrapper';
 import TableBody from './TableBody';
 import TableFooter from './TableFooter';
-import TableButtons from './TableButtons';
 import {
   ColumnLock,
   ScrollPosition,
@@ -38,20 +35,14 @@ import {
   TableEditMode,
   TableMode,
   TablePaginationPosition,
-  TableQueryBar,
+  TableQueryBarType,
 } from './enum';
-import TableToolBar from './TableToolBar';
 import Switch from '../switch/Switch';
 import Tooltip from '../tooltip/Tooltip';
 import { $l } from '../locale-context';
-import TableFilterBar from './TableFilterBar';
-import { findIndexedSibling, getEditorByField, getHeight, getPaginationPosition } from './utils';
-import Button, { ButtonProps } from '../button/Button';
-import TableAdvancedQueryBar from './TableAdvancedQueryBar';
-import { ButtonColor, ButtonType, FuncType } from '../button/enum';
-import { DataSetStatus, FieldType } from '../data-set/enum';
-import Modal from '../modal';
-import findBindFieldBy from '../_util/findBindFieldBy';
+import TableQueryBar from './query-bar';
+import { findIndexedSibling, getHeight, getPaginationPosition } from './utils';
+import { ButtonProps } from '../button/Button';
 
 export type Buttons = TableButtonType | [TableButtonType, ButtonProps] | ReactElement<ButtonProps>;
 
@@ -163,7 +154,7 @@ export interface TableProps extends DataSetComponentProps {
    * 可选值: `advancedBar` `normal` `bar` `none`
    * @default 'normal'
    */
-  queryBar?: TableQueryBar | TableQueryBarHook;
+  queryBar?: TableQueryBarType | TableQueryBarHook;
   /**
    * @deprecated
    * 请使用 queryBar="none"
@@ -295,10 +286,10 @@ export default class Table extends DataSetComponent<TableProps> {
      */
     queryBar: PropTypes.oneOfType([
       PropTypes.oneOf([
-        TableQueryBar.advancedBar,
-        TableQueryBar.normal,
-        TableQueryBar.bar,
-        TableQueryBar.none,
+        TableQueryBarType.advancedBar,
+        TableQueryBarType.normal,
+        TableQueryBarType.bar,
+        TableQueryBarType.none,
       ]),
       PropTypes.func,
     ]),
@@ -324,7 +315,6 @@ export default class Table extends DataSetComponent<TableProps> {
     tabIndex: 0,
     selectionMode: SelectionMode.rowbox,
     queryFields: {},
-    queryFieldsLimit: 1,
     defaultRowExpanded: false,
     expandRowByClick: false,
     indentSize: 15,
@@ -354,18 +344,6 @@ export default class Table extends DataSetComponent<TableProps> {
   lastScrollTop: number;
 
   scrollPosition: ScrollPosition;
-
-  exportModal;
-
-  exportDataSet: DataSet;
-
-  get showQueryBar(): boolean {
-    const {
-      props: { showQueryBar },
-      tableStore: { queryBar },
-    } = this;
-    return showQueryBar !== false && queryBar !== TableQueryBar.none;
-  }
 
   get currentRow(): HTMLTableRowElement | null {
     return this.element.querySelector(
@@ -553,113 +531,6 @@ export default class Table extends DataSetComponent<TableProps> {
     }
   }
 
-  @autobind
-  handleButtonCreate() {
-    const { dataSet } = this.props;
-    dataSet.create({}, 0);
-  }
-
-  @autobind
-  handleButtonSubmit() {
-    const { dataSet } = this.props;
-    dataSet.submit();
-  }
-
-  @autobind
-  handleButtonDelete() {
-    const { dataSet } = this.props;
-    dataSet.delete(dataSet.selected);
-  }
-
-  @autobind
-  handleButtonRemove() {
-    const { dataSet } = this.props;
-    dataSet.remove(dataSet.selected);
-  }
-
-  @autobind
-  handleButtonReset() {
-    const { dataSet } = this.props;
-    dataSet.reset();
-  }
-
-  @autobind
-  handleQueryReset() {
-    const {
-      dataSet: { queryDataSet },
-    } = this.props;
-    if (queryDataSet) {
-      const { current } = queryDataSet;
-      if (current) {
-        current.reset();
-      }
-      this.handleQuery();
-    }
-  }
-
-  @autobind
-  handleExpandAll() {
-    const { tableStore } = this;
-    tableStore.expandAll();
-  }
-
-  @autobind
-  handleCollapseAll() {
-    const { tableStore } = this;
-    tableStore.collapseAll();
-  }
-
-  @autobind
-  async handleButtonExport() {
-    const { tableStore } = this;
-    const columnHeaders = await tableStore.getColumnHeaders();
-    this.exportDataSet = new DataSet({ data: columnHeaders, paging: false });
-    this.exportDataSet.selectAll();
-    this.exportModal = Modal.open({
-      title: $l('Table', 'choose_export_columns'),
-      children: (
-        <Table dataSet={this.exportDataSet} style={{ height: pxToRem(300) }}>
-          <Column header={$l('Table', 'column_name')} name="label" resizable={false} />
-        </Table>
-      ),
-      okText: $l('Table', 'export_button'),
-      onOk: this.handleExport,
-      style: {
-        width: pxToRem(400),
-      },
-    });
-  }
-
-  @autobind
-  handleQuery() {
-    const { dataSet } = this.props;
-    dataSet.query();
-  }
-
-  @autobind
-  handleExport() {
-    const { selected } = this.exportDataSet;
-    if (selected.length) {
-      const { dataSet } = this.props;
-      dataSet.export(
-        selected.reduce((columns, record) => {
-          let myName = record.get('name');
-          const myField = dataSet.getField(myName);
-          if (myField && myField.type === FieldType.object) {
-            const bindField = findBindFieldBy(myField, dataSet.fields, 'textField');
-            if (bindField) {
-              myName = bindField.name;
-            }
-          }
-          columns[myName] = record.get('label');
-          return columns;
-        }, {}),
-      );
-    } else {
-      return false;
-    }
-  }
-
   getOtherProps() {
     const otherProps = omit(super.getOtherProps(), [
       'columns',
@@ -753,9 +624,6 @@ export default class Table extends DataSetComponent<TableProps> {
     if (this.resizeObserver) {
       this.resizeObserver.disconnect();
     }
-    if (this.exportModal) {
-      this.exportModal.close(true);
-    }
     this.processDataSetListener(false);
   }
 
@@ -770,212 +638,36 @@ export default class Table extends DataSetComponent<TableProps> {
     }
   }
 
-  getButtonProps(type: TableButtonType): ButtonProps & { children?: ReactNode } | undefined {
-    const { isTree, dataSet } = this.tableStore;
-    const disabled = dataSet.parent ? !dataSet.parent.current : false;
-    const submitting = dataSet.status === DataSetStatus.submitting;
-    const canRemove = !submitting && dataSet.selected.length > 0;
-    switch (type) {
-      case TableButtonType.add:
-        return {
-          icon: 'playlist_add',
-          onClick: this.handleButtonCreate,
-          children: $l('Table', 'create_button'),
-          disabled,
-        };
-      case TableButtonType.save:
-        return {
-          icon: 'save',
-          onClick: this.handleButtonSubmit,
-          children: $l('Table', 'save_button'),
-          type: ButtonType.submit,
-          disabled: submitting,
-        };
-      case TableButtonType.delete:
-        return {
-          icon: 'delete',
-          onClick: this.handleButtonDelete,
-          children: $l('Table', 'delete_button'),
-          disabled: !canRemove,
-        };
-      case TableButtonType.remove:
-        return {
-          icon: 'remove_circle',
-          onClick: this.handleButtonRemove,
-          children: $l('Table', 'remove_button'),
-          disabled: !canRemove,
-        };
-      case TableButtonType.reset:
-        return {
-          icon: 'undo',
-          onClick: this.handleButtonReset,
-          children: $l('Table', 'reset_button'),
-          type: ButtonType.reset,
-        };
-      case TableButtonType.query:
-        return { icon: 'search', onClick: this.handleQuery, children: $l('Table', 'query_button') };
-      case TableButtonType.export:
-        return {
-          icon: 'export',
-          onClick: this.handleButtonExport,
-          children: $l('Table', 'export_button'),
-        };
-      case TableButtonType.expandAll:
-        return isTree
-          ? {
-              icon: 'add_box',
-              onClick: this.handleExpandAll,
-              children: $l('Table', 'expand_button'),
-            }
-          : undefined;
-      case TableButtonType.collapseAll:
-        return isTree
-          ? {
-              icon: 'short_text',
-              onClick: this.handleCollapseAll,
-              children: $l('Table', 'collapse_button'),
-            }
-          : undefined;
-      default:
-    }
-  }
-
-  getButtons(): ReactElement<ButtonProps>[] {
-    const { buttons } = this.props;
-    const children: ReactElement<ButtonProps>[] = [];
-    if (buttons) {
-      buttons.forEach(button => {
-        let props = {};
-        if (isArrayLike(button)) {
-          props = button[1];
-          button = button[0];
-        }
-        if (isString(button) && button in TableButtonType) {
-          const defaultButtonProps = this.getButtonProps(button);
-          if (defaultButtonProps) {
-            children.push(
-              <Button
-                color={ButtonColor.primary}
-                funcType={FuncType.flat}
-                key={button}
-                {...defaultButtonProps}
-                {...props}
-              />,
-            );
-          }
-        } else if (isValidElement<ButtonProps>(button)) {
-          children.push(button);
-        }
-      });
-    }
-    return children;
-  }
-
-  getQueryFields(): ReactElement<any>[] {
-    const { dataSet, queryFields } = this.props;
-    const { queryDataSet } = dataSet;
-    const result: ReactElement<any>[] = [];
-    if (queryDataSet) {
-      const { fields } = queryDataSet;
-      return [...fields.entries()].reduce((list, [name, field]) => {
-        if (!field.get('bind')) {
-          const props: any = {
-            key: name,
-            name,
-            dataSet: queryDataSet,
-          };
-          const element = queryFields![name];
-          list.push(
-            isValidElement(element)
-              ? cloneElement(element, props)
-              : cloneElement(getEditorByField(field), {
-                  ...props,
-                  ...(isObject(element) ? element : {}),
-                }),
-          );
-        }
-        return list;
-      }, result);
-    }
-    return result;
-  }
-
-  renderToolBar(props: TableQueryBarHookProps) {
-    const { prefixCls } = this;
-    return <TableToolBar key="toolbar" prefixCls={prefixCls} {...props} />;
-  }
-
-  renderFilterBar(props: TableQueryBarHookProps) {
-    const {
-      prefixCls,
-      props: { filterBarFieldName, filterBarPlaceholder },
-    } = this;
-    return (
-      <TableFilterBar
-        key="toolbar"
-        prefixCls={prefixCls}
-        paramName={filterBarFieldName!}
-        placeholder={filterBarPlaceholder}
-        {...props}
-      />
-    );
-  }
-
-  renderAdvancedQueryBar(props: TableQueryBarHookProps) {
-    const { prefixCls } = this;
-    return <TableAdvancedQueryBar key="toolbar" prefixCls={prefixCls} {...props} />;
-  }
-
-  getBar(): ReactNode {
-    const buttons = this.getButtons();
-    const pagination = this.getPagination(TablePaginationPosition.top);
-    const {
-      tableStore: { dataSet, queryBar },
-      props: { queryFieldsLimit },
-      showQueryBar,
-      prefixCls,
-    } = this;
-    if (showQueryBar) {
-      const { queryDataSet } = dataSet;
-      const queryFields = this.getQueryFields();
-      const props: TableQueryBarHookProps = {
-        dataSet,
-        queryDataSet,
-        buttons,
-        pagination,
-        queryFields,
-        queryFieldsLimit: queryFieldsLimit!,
-      };
-      if (typeof queryBar === 'function') {
-        return (queryBar as TableQueryBarHook)(props);
-      }
-      switch (queryBar) {
-        case TableQueryBar.normal:
-          return this.renderToolBar(props);
-        case TableQueryBar.bar:
-          return this.renderFilterBar(props);
-        case TableQueryBar.advancedBar:
-          return this.renderAdvancedQueryBar(props);
-        default:
-      }
-    }
-    return [<TableButtons key="toolbar" prefixCls={prefixCls} buttons={buttons} />, pagination];
-  }
-
   render() {
     const {
       prefixCls,
       tableStore,
       tableStore: { overflowX, isAnyColumnsLeftLock, isAnyColumnsRightLock },
-      props: { dataSet },
+      props: {
+        dataSet,
+        buttons,
+        queryFields,
+        queryFieldsLimit,
+        filterBarFieldName,
+        filterBarPlaceholder,
+      },
     } = this;
     const content = this.getTable();
     const context = { tableStore };
+    const pagination = this.getPagination(TablePaginationPosition.top);
     return (
       <TableContext.Provider value={context}>
         <div {...this.getWrapperProps()}>
           {this.getHeader()}
-          {this.getBar()}
+          <TableQueryBar
+            prefixCls={prefixCls}
+            buttons={buttons}
+            pagination={pagination}
+            queryFields={queryFields}
+            queryFieldsLimit={queryFieldsLimit}
+            filterBarFieldName={filterBarFieldName}
+            filterBarPlaceholder={filterBarPlaceholder}
+          />
           <Spin key="content" dataSet={dataSet}>
             <div {...this.getOtherProps()}>
               <div className={`${prefixCls}-content`}>
@@ -1116,8 +808,8 @@ export default class Table extends DataSetComponent<TableProps> {
       prefixCls,
       props: { header, dataSet },
     } = this;
-    const data = dataSet ? dataSet.data : [];
     if (header) {
+      const data = dataSet ? dataSet.records : [];
       return (
         <div key="header" className={`${prefixCls}-header`}>
           {typeof header === 'function' ? header(data) : header}
@@ -1131,8 +823,8 @@ export default class Table extends DataSetComponent<TableProps> {
       prefixCls,
       props: { footer, dataSet },
     } = this;
-    const data = dataSet ? dataSet.data : [];
     if (footer) {
+      const data = dataSet ? dataSet.records : [];
       return (
         <div key="footer" className={`${prefixCls}-footer`}>
           {typeof footer === 'function' ? footer(data) : footer}

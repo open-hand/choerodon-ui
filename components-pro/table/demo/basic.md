@@ -17,21 +17,14 @@ The most basic usage.
 import {
   DataSet,
   Table,
-  TextField,
   NumberField,
   DateTimePicker,
   SelectBox,
   Modal,
   Button,
-  Tabs,
 } from 'choerodon-ui/pro';
 
 const { Column } = Table;
-const { TabPane } = Tabs;
-
-function editorRenderer(record) {
-  return record.status === 'add' ? <TextField /> : null;
-}
 
 function sexIdRenderer({ record }) {
   return record.getField('sex').getLookupData().codeValueId;
@@ -42,14 +35,6 @@ function handleUserDSLoad({ dataSet }) {
   if (first) {
     first.selectable = false;
   }
-}
-
-function maleFilter(record) {
-  return record.get('sex') === 'M' || !record.get('sex');
-}
-
-function femaleFilter(record) {
-  return record.get('sex') === 'F';
 }
 
 function renderColumnFooter(dataset, name) {
@@ -98,61 +83,6 @@ const codeDescriptionDynamicProps = {
 };
 
 class App extends React.Component {
-  friendsDs = new DataSet({
-    queryUrl: '/dataset/user/queries',
-    fields: [
-      { name: 'name', type: 'string', label: '姓名', required: true },
-      { name: 'age', type: 'number', label: '年龄' },
-      {
-        name: 'sex',
-        type: 'string',
-        label: '性别',
-        lookupCode: 'HR.EMPLOYEE_GENDER',
-        required: true,
-      },
-    ],
-    events: {
-      query: ({ params, data }) => console.log('friend query parameter', params, data),
-    },
-  });
-
-  enemyFriendsDs = new DataSet({
-    selection: 'single',
-    fields: [
-      { name: 'name', type: 'string', label: '姓名', required: true },
-      { name: 'age', type: 'number', label: '年龄' },
-      {
-        name: 'sex',
-        type: 'string',
-        label: '性别',
-        lookupCode: 'HR.EMPLOYEE_GENDER',
-        required: true,
-      },
-    ],
-  });
-
-  enemyDs = new DataSet({
-    primaryKey: 'userid',
-    fields: [
-      { name: 'name', type: 'intl', label: '姓名', required: true },
-      { name: 'age', type: 'number', label: '年龄' },
-      {
-        name: 'sex',
-        type: 'string',
-        label: '性别',
-        lookupCode: 'HR.EMPLOYEE_GENDER',
-        required: true,
-      },
-    ],
-    children: {
-      friends: this.enemyFriendsDs,
-    },
-    events: {
-      indexChange: ({ record }) =>
-        record && console.log('enemyRecord cascadeParent', record.cascadeParent),
-    },
-  });
-
   userDs = new DataSet({
     primaryKey: 'userid',
     name: 'user',
@@ -303,10 +233,6 @@ class App extends React.Component {
       query: ({ params, data }) => console.log('user query parameter', params, data),
       export: ({ params, data }) => console.log('user export parameter', params, data),
     },
-    children: {
-      friends: this.friendsDs,
-      'other.enemy': this.enemyDs,
-    },
   });
 
   copy = () => {
@@ -329,36 +255,6 @@ class App extends React.Component {
     }
   };
 
-  openModal = record => {
-    let isCancel = false;
-    Modal.open({
-      drawer: true,
-      width: 600,
-      children: (
-        <div>
-          <Table
-            buttons={['add', 'delete']}
-            dataSet={this.friendsDs}
-            header="Friends(M)"
-            rowHeight={40}
-            filter={maleFilter}
-          >
-            <Column name="name" editor={editorRenderer} sortable />
-            <Column name="age" editor sortable />
-            <Column name="sex" editor width={150} />
-          </Table>
-          <Table dataSet={this.friendsDs} header="Friends(F)" rowHeight={40} filter={femaleFilter}>
-            <Column name="name" editor={editorRenderer} sortable />
-            <Column name="age" editor sortable />
-            <Column name="sex" editor width={150} />
-          </Table>
-        </div>
-      ),
-      onCancel: () => (isCancel = true),
-      afterClose: () => record && isCancel && this.userDs.remove(record),
-    });
-  };
-
   importData = () => {
     const { userDs } = this;
     console.log(userDs.toJSONData());
@@ -373,19 +269,6 @@ class App extends React.Component {
 
   deleteAllData = () => {
     this.userDs.deleteAll();
-  };
-
-  createUser = () => {
-    this.openModal(this.userDs.create({}, 0));
-    this.friendsDs.create({});
-  };
-
-  editUser = () => {
-    this.openModal();
-  };
-
-  renderEdit = () => {
-    return <Button funcType="flat" icon="mode_edit" onClick={this.editUser} size="small" />;
   };
 
   copyButton = (
@@ -403,12 +286,6 @@ class App extends React.Component {
   insertButton = (
     <Button funcType="flat" color="primary" icon="merge_type" onClick={this.insert} key="insert">
       插入
-    </Button>
-  );
-
-  createButton = (
-    <Button funcType="flat" color="primary" icon="playlist_add" onClick={this.createUser} key="add">
-      新增
     </Button>
   );
 
@@ -448,7 +325,7 @@ class App extends React.Component {
 
   render() {
     const buttons = [
-      this.createButton,
+      'add',
       ['save', { onClick: this.save }],
       ['delete', { color: 'red' }],
       'remove',
@@ -460,7 +337,7 @@ class App extends React.Component {
       this.removeAllButton,
       this.deleteAllButton,
     ];
-    return [
+    return (
       <Table
         key="user"
         buttons={buttons}
@@ -494,41 +371,8 @@ class App extends React.Component {
         <Column header="时间" name="time" editor={<DateTimePicker />} width={150} />
         <Column name="numberMultiple" editor width={150} minWidth={50} />
         <Column name="frozen" editor width={50} minWidth={50} lock="right" />
-        <Column
-          header={<span style={{ color: 'red' }}>编辑Friends</span>}
-          align="center"
-          renderer={this.renderEdit}
-          lock="right"
-        />
-      </Table>,
-      <Tabs key="tabs">
-        <TabPane tab="Enemy">
-          <Table
-            key="enemy"
-            highLightRow={false}
-            buttons={['add', 'delete']}
-            dataSet={this.enemyDs}
-            pagination={{ position: 'both' }}
-          >
-            <Column name="name" editor sortable />
-            <Column name="age" editor sortable />
-            <Column name="sex" editor width={150} />
-          </Table>
-        </TabPane>
-        <TabPane tab="Enemy Friends">
-          <Table
-            key="friends"
-            buttons={['add', 'delete']}
-            dataSet={this.enemyFriendsDs}
-            pagination={{ position: 'top' }}
-          >
-            <Column name="name" editor={editorRenderer} sortable />
-            <Column name="age" editor sortable />
-            <Column name="sex" editor width={150} />
-          </Table>
-        </TabPane>
-      </Tabs>,
-    ];
+      </Table>
+    );
   }
 }
 

@@ -1,19 +1,19 @@
 import React, { cloneElement, Component, ReactElement, ReactNode } from 'react';
 import { observer } from 'mobx-react';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
-import DataSet from '../data-set/DataSet';
-import Record from '../data-set/Record';
-import { ElementProps } from '../core/ViewComponent';
-import Button, { ButtonProps } from '../button/Button';
-import { PaginationProps } from '../pagination/Pagination';
-import Field, { Fields } from '../data-set/Field';
-import { ButtonColor, FuncType } from '../button/enum';
-import Modal from '../modal';
-import Form from '../form/Form';
-import Icon from '../icon';
-import TableContext from './TableContext';
-import { $l } from '../locale-context';
-import autobind from '../_util/autobind';
+import DataSet from '../../data-set/DataSet';
+import Record from '../../data-set/Record';
+import { ElementProps } from '../../core/ViewComponent';
+import Button, { ButtonProps } from '../../button/Button';
+import { PaginationProps } from '../../pagination/Pagination';
+import Field, { Fields } from '../../data-set/Field';
+import { ButtonColor, FuncType } from '../../button/enum';
+import Modal from '../../modal';
+import Form from '../../form/Form';
+import Icon from '../../icon';
+import TableContext from '../TableContext';
+import { $l } from '../../locale-context';
+import autobind from '../../_util/autobind';
 import TableButtons from './TableButtons';
 
 /**
@@ -39,7 +39,7 @@ export interface TabelToolBarProps extends ElementProps {
   dataSet: DataSet;
   queryDataSet?: DataSet;
   queryFields: ReactElement<any>[];
-  queryFieldsLimit: number;
+  queryFieldsLimit?: number;
   buttons: ReactElement<ButtonProps>[];
   pagination?: ReactElement<PaginationProps>;
 }
@@ -49,6 +49,10 @@ export default class TableToolBar extends Component<TabelToolBarProps, any> {
   static displayName = 'TableToolBar';
 
   static contextType = TableContext;
+
+  static defaultProps = {
+    queryFieldsLimit: 1,
+  };
 
   modal;
 

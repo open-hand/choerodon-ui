@@ -22,21 +22,21 @@ import {
 } from 'mobx';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
-import Icon from '../icon';
-import Field from '../data-set/Field';
-import { TextField, TextFieldProps } from '../text-field/TextField';
-import DataSet from '../data-set/DataSet';
-import Record from '../data-set/Record';
-import autobind from '../_util/autobind';
-import { FormFieldProps, RenderProps } from '../field/FormField';
-import measureTextWidth from '../_util/measureTextWidth';
-import { getEditorByField } from './utils';
-import ObserverSelect, { SelectProps } from '../select/Select';
-import processFieldValue from '../_util/processFieldValue';
-import lookupStore from '../stores/LookupCodeStore';
-import Option, { OptionProps } from '../option/Option';
-import isSameLike from '../_util/isSameLike';
-import { DataSetEvents } from '../data-set/enum';
+import Icon from '../../icon';
+import Field from '../../data-set/Field';
+import { TextField, TextFieldProps } from '../../text-field/TextField';
+import DataSet from '../../data-set/DataSet';
+import Record from '../../data-set/Record';
+import autobind from '../../_util/autobind';
+import { FormFieldProps, RenderProps } from '../../field/FormField';
+import measureTextWidth from '../../_util/measureTextWidth';
+import { getEditorByField } from '../utils';
+import ObserverSelect, { SelectProps } from '../../select/Select';
+import processFieldValue from '../../_util/processFieldValue';
+import lookupStore from '../../stores/LookupCodeStore';
+import Option, { OptionProps } from '../../option/Option';
+import isSameLike from '../../_util/isSameLike';
+import { DataSetEvents } from '../../data-set/enum';
 
 export interface FilterSelectProps extends TextFieldProps {
   paramName?: string;
@@ -45,6 +45,7 @@ export interface FilterSelectProps extends TextFieldProps {
   dropdownMenuStyle?: CSSProperties;
   editable?: boolean;
   hiddenIfNone?: boolean;
+  filter?: (string) => boolean;
 }
 
 @observer
@@ -68,9 +69,10 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
 
   @computed
   get value(): any {
+    const { filter } = this.props;
     const { value, queryDataSet } = this.observableProps;
     if (value) {
-      return value;
+      return filter ? value.filter(filter) : value;
     }
     const { paramName } = this.props;
     if (queryDataSet) {
@@ -79,7 +81,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
         const result: string[] = [];
         const keys = queryDataSet.fields.keys();
         [...new Set(paramName ? [...keys, paramName] : keys)].forEach((key: string) => {
-          if (key) {
+          if (key && (!filter || filter(key))) {
             const values = current.get(key);
             if (isArrayLike(values)) {
               values.forEach(item => !isNil(item) && result.push(key));
@@ -172,6 +174,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
       'dropdownMenuStyle',
       'hiddenIfNone',
       'editable',
+      'filter',
     ]);
   }
 

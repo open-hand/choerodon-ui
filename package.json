@@ -176,7 +176,6 @@
     "mkdirp": "^0.5.1",
     "mobx": "4.7.0",
     "mobx-react": "~6.1.1",
-    "mobx-react-devtools": "^6.0.3",
     "mockdate": "^2.0.1",
     "mockjs": "^1.0.1-beta3",
     "moment-timezone": "^0.5.23",

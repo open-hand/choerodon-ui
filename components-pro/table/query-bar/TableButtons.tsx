@@ -1,5 +1,5 @@
 import React, { ReactElement, ReactNode } from 'react';
-import { ButtonProps } from '../button/Button';
+import { ButtonProps } from '../../button/Button';
 
 export interface TableButtonProps {
   prefixCls?: string;

@@ -6,9 +6,10 @@ import { RecordStatus } from 'choerodon-ui/pro/lib/data-set/enum';
 import message from 'choerodon-ui/pro/lib/message';
 import exception from 'choerodon-ui/pro/lib/_util/exception';
 import { $l } from 'choerodon-ui/pro/lib/locale-context';
-import { TablePaginationConfig } from 'choerodon-ui/pro/lib/table/Table';
+import { TablePaginationConfig, TableQueryBarHook } from 'choerodon-ui/pro/lib/table/Table';
 import { ValidationMessages } from 'choerodon-ui/pro/lib/validator/Validator';
 import { ButtonProps } from 'choerodon-ui/pro/lib/button/Button';
+import { TableQueryBarType } from 'choerodon-ui/pro/lib/table/enum';
 
 export type Status = {
   [RecordStatus.add]: string;
@@ -46,7 +47,7 @@ export type Config = {
   tlsKey?: string;
   status?: Status;
   labelLayout?: string;
-  queryBar?: string;
+  queryBar?: TableQueryBarType | TableQueryBarHook;
   tableBorder?: boolean;
   tableHighLightRow?: boolean;
   tableRowHeight?: 'auto' | number;
@@ -111,7 +112,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
     { [RecordStatus.add]: 'add', [RecordStatus.update]: 'update', [RecordStatus.delete]: 'delete' },
   ],
   ['labelLayout', 'horizontal'],
-  ['queryBar', 'normal'],
+  ['queryBar', TableQueryBarType.normal],
   ['tableBorder', true],
   ['tableHighLightRow', true],
   ['tableRowHeight', 30],

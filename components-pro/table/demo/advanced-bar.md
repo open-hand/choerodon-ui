@@ -1,5 +1,5 @@
 ---
-order: 5
+order: 6
 title:
   zh-CN: 高级搜索条
   en-US: Advanced Search Bar

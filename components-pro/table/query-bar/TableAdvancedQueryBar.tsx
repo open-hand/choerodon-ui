@@ -1,27 +1,27 @@
 import React, { cloneElement, Component, CSSProperties, ReactElement, ReactNode } from 'react';
 import { observer } from 'mobx-react';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
-import Field from '../data-set/Field';
-import DataSet from '../data-set';
-import Button from '../button';
-import TableContext from './TableContext';
-import { ElementProps } from '../core/ViewComponent';
-import { ButtonColor } from '../button/enum';
-import { ButtonProps } from '../button/Button';
-import { $l } from '../locale-context';
-import autobind from '../_util/autobind';
-import { PaginationProps } from '../pagination/Pagination';
+import Field from '../../data-set/Field';
+import DataSet from '../../data-set';
+import Button from '../../button';
+import TableContext from '../TableContext';
+import { ElementProps } from '../../core/ViewComponent';
+import { ButtonColor } from '../../button/enum';
+import { ButtonProps } from '../../button/Button';
+import { $l } from '../../locale-context';
+import autobind from '../../_util/autobind';
+import { PaginationProps } from '../../pagination/Pagination';
 import TableButtons from './TableButtons';
 import FilterSelect from './FilterSelect';
-import Modal from '../modal';
-import Form from '../form/Form';
-import { LabelLayout } from '../form/enum';
+import Modal from '../../modal';
+import Form from '../../form/Form';
+import { LabelLayout } from '../../form/enum';
 
 export interface TableAdvancedQueryBarProps extends ElementProps {
   dataSet: DataSet;
   queryDataSet?: DataSet;
   queryFields: ReactElement<any>[];
-  queryFieldsLimit: number;
+  queryFieldsLimit?: number;
   buttons: ReactElement<ButtonProps>[];
   pagination?: ReactElement<PaginationProps>;
 }
@@ -29,6 +29,10 @@ export interface TableAdvancedQueryBarProps extends ElementProps {
 @observer
 export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryBarProps> {
   static contextType = TableContext;
+
+  static defaultProps = {
+    queryFieldsLimit: 1,
+  };
 
   moreFields: Field[];
 
@@ -52,6 +56,12 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
   handleQuery() {
     const { dataSet } = this.props;
     dataSet.query();
+  }
+
+  @autobind
+  valueFilter(value: string): boolean {
+    const { queryFields, queryFieldsLimit } = this.props;
+    return queryFields.slice(0, queryFieldsLimit).every(element => element.props.name !== value);
   }
 
   getMoreFieldsButton(fields: ReactElement<any>[]) {
@@ -158,6 +168,7 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
         queryDataSet={queryDataSet}
         prefix={`${$l('Table', 'advanced_query_conditions')}:`}
         editable={false}
+        filter={this.valueFilter}
         hiddenIfNone
       />
     );

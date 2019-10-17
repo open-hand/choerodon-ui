@@ -50,7 +50,7 @@ export const enum TableEditMode {
   inline = 'inline',
 }
 
-export const enum TableQueryBar {
+export const enum TableQueryBarType {
   normal = 'normal',
   bar = 'bar',
   none = 'none',

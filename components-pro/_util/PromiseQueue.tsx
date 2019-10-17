@@ -16,20 +16,29 @@ export default class PromiseQueue {
   }
 
   @action
+  clear(promise) {
+    if (!this.queueing) {
+      const { queue } = this;
+      const index = queue.indexOf(promise);
+      if (index !== -1) {
+        queue.splice(index, 1);
+      }
+    }
+  }
+
+  @action
   add(promise: Promise<any>): Promise<any> {
     const { queue } = this;
     queue.push(promise);
-    return promise.then(
-      action(value => {
-        if (!this.queueing) {
-          const index = queue.indexOf(promise);
-          if (index !== -1) {
-            queue.splice(index, 1);
-          }
-        }
+    return promise
+      .then(value => {
+        this.clear(promise);
         return value;
-      }),
-    );
+      })
+      .catch(error => {
+        this.clear(promise);
+        throw error;
+      });
   }
 
   @action

@@ -57,6 +57,7 @@ import axiosAdapter from '../_util/axiosAdapter';
 import PromiseQueue from '../_util/PromiseQueue';
 import { ModalProps } from '../modal/Modal';
 import { confirmProps } from '../modal/utils';
+import DataSetRequestError from './DataSetRequestError';
 
 export type DataSetChildren = { [key: string]: DataSet };
 
@@ -398,7 +399,7 @@ export default class DataSet extends EventManager {
 
   @computed
   get data(): Record[] {
-    return this.records.filter(record => record.status !== RecordStatus.delete);
+    return this.records.filter(record => !record.isRemoved);
   }
 
   set data(records: Record[]) {
@@ -1229,17 +1230,15 @@ export default class DataSet extends EventManager {
       }
       if (record && record.selectable && !record.isSelected) {
         let previous: Record | undefined;
-        runInAction(() => {
-          if (selection === DataSetSelection.single) {
-            this.selected.forEach((selected: Record) => {
-              selected.isSelected = false;
-              previous = selected;
-            });
-          }
-          if (record) {
-            record.isSelected = true;
-          }
-        });
+        if (selection === DataSetSelection.single) {
+          this.selected.forEach((selected: Record) => {
+            selected.isSelected = false;
+            previous = selected;
+          });
+        }
+        if (record) {
+          record.isSelected = true;
+        }
         if (!this.inBatchSelection) {
           this.fireEvent(DataSetEvents.select, { dataSet: this, record, previous });
         }
@@ -1450,6 +1449,7 @@ export default class DataSet extends EventManager {
       if (isNumber(total)) {
         this.totalCount = total;
       }
+      flatMap<Record>(this.dirtyRecords).forEach(record => record.commit(undefined, this));
     } else if (this.records.length) {
       warning(
         false,
@@ -1459,7 +1459,6 @@ Then the query method will be auto invoke.`,
       );
       this.query();
     }
-    flatMap<Record>(this.dirtyRecords).forEach(record => record.commit(undefined, this));
     return this;
   }
 
@@ -1668,7 +1667,7 @@ Then the query method will be auto invoke.`,
           }
         } catch (e) {
           this.handleSubmitFail(e);
-          throw e;
+          throw new DataSetRequestError(e);
         } finally {
           this.changeSubmitStatus(DataSetStatus.ready);
         }
@@ -1702,7 +1701,7 @@ Then the query method will be auto invoke.`,
         }
       } catch (e) {
         this.handleLoadFail(e);
-        throw e;
+        throw new DataSetRequestError(e);
       } finally {
         this.changeStatus(DataSetStatus.ready);
       }

@@ -1,5 +1,5 @@
 ---
-order: 4
+order: 7
 title:
   zh-CN: 过滤条
   en-US: Filter Bar
@@ -105,6 +105,7 @@ class App extends React.Component {
   render() {
     return (
       <Table
+        highLightRow={false}
         dataSet={this.ds}
         queryBar="bar"
         border={false}

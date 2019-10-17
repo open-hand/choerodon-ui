@@ -99,6 +99,11 @@ export default class Record {
   }
 
   @computed
+  get isRemoved(): boolean {
+    return this.status === RecordStatus.delete;
+  }
+
+  @computed
   get isIndeterminate(): boolean {
     const { dataSet } = this;
     if (dataSet) {
@@ -482,11 +487,11 @@ export default class Record {
   reset(): Record {
     const { status, fields, dataSet, dirty } = this;
     [...fields.values()].forEach(field => field.commit());
-    if (dirty) {
-      this.data = this.pristineData;
-      this.memo = undefined;
-      if (status === RecordStatus.update || status === RecordStatus.delete) {
-        this.status = RecordStatus.sync;
+    if (status === RecordStatus.update || status === RecordStatus.delete || dirty) {
+      this.status = RecordStatus.sync;
+      if (dirty) {
+        this.data = this.pristineData;
+        this.memo = undefined;
       }
       if (dataSet) {
         dataSet.fireEvent(DataSetEvents.recordReset, { record: this, dataSet });
@@ -514,7 +519,7 @@ export default class Record {
   @action
   clear(): Record {
     return this.set(
-      Object.keys(this.data).reduce((obj, key) => {
+      [...this.fields.keys()].reduce((obj, key) => {
         obj[key] = null;
         return obj;
       }, {}),

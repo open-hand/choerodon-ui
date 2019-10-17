@@ -19,6 +19,7 @@ import asyncComponent, { AsyncCmpLoadingFunction } from '../_util/AsyncComponent
 import message from '../message';
 import exception from '../_util/exception';
 import { $l } from '../locale-context';
+import DataSetRequestError from '../data-set/DataSetRequestError';
 
 export interface ModalProps extends ViewComponentProps {
   closable?: boolean;
@@ -229,7 +230,10 @@ export default class Modal extends ViewComponent<ModalProps> {
         this.close();
       }
     } catch (e) {
-      message.error(exception(e));
+      if (!(e instanceof DataSetRequestError)) {
+        message.error(exception(e));
+      }
+      throw e;
     }
   }
 
@@ -243,7 +247,10 @@ export default class Modal extends ViewComponent<ModalProps> {
         this.close();
       }
     } catch (e) {
-      message.error(exception(e));
+      if (!(e instanceof DataSetRequestError)) {
+        message.error(exception(e));
+      }
+      throw e;
     }
   }
 

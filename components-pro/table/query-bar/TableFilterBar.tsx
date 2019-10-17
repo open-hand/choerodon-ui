@@ -1,10 +1,10 @@
 import React, { PureComponent, ReactElement, ReactNode } from 'react';
 import FilterSelect from './FilterSelect';
 import ColumnFilter from './ColumnFilter';
-import DataSet from '../data-set/DataSet';
-import { $l } from '../locale-context';
-import { ButtonProps } from '../button/Button';
-import { PaginationProps } from '../pagination/Pagination';
+import DataSet from '../../data-set/DataSet';
+import { $l } from '../../locale-context';
+import { ButtonProps } from '../../button/Button';
+import { PaginationProps } from '../../pagination/Pagination';
 
 export interface FilterBarProps {
   prefixCls?: string;

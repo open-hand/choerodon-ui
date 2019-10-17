@@ -1,17 +1,17 @@
 import React, { Component, Key, ReactElement, ReactNode } from 'react';
 import { action, observable } from 'mobx';
 import { observer } from 'mobx-react';
-import Menu, { Item } from 'choerodon-ui/lib/rc-components/menu';
-import Button from '../button/Button';
-import Dropdown from '../dropdown/Dropdown';
-import { Size } from '../core/enum';
-import { FuncType } from '../button/enum';
-import TableContext from './TableContext';
-import { getColumnKey, getHeader } from './utils';
-import { Placements } from '../dropdown/enum';
-import { ColumnProps } from './Column';
-import { stopEvent, stopPropagation } from '../_util/EventManager';
-import autobind from '../_util/autobind';
+import Menu, { Item } from 'choerodon-ui/lib/rc-components/menu/index';
+import Button from '../../button/Button';
+import Dropdown from '../../dropdown/Dropdown';
+import { Size } from '../../core/enum';
+import { FuncType } from '../../button/enum';
+import TableContext from '../TableContext';
+import { getColumnKey, getHeader } from '../utils';
+import { Placements } from '../../dropdown/enum';
+import { ColumnProps } from '../Column';
+import { stopEvent, stopPropagation } from '../../_util/EventManager';
+import autobind from '../../_util/autobind';
 
 function handleMenuClick({ domEvent }) {
   domEvent.preventDefault();
