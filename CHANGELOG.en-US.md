@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.23
+
+`2019-10-18`
+
 - 💄 `<pro>Table`: Performance optimization.
 - 💄 `<pro>Lov`: The query condition is not cleared when it is cached.
 - 🐞 `<pro>Table`: Fixed the problem that advanced query condition bar shows the normal query field.
