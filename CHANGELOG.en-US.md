@@ -21,6 +21,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed an issue where the record could not be operated when the delete record failed.
 - 🐞 `<pro>DataSet`: Fixed an issue where the commit data was cached again after the commit error.
 - 🐞 `<pro>Lov`: Fixed an issue where the value could not be cleared in the editable state.
+- 🐞 `<pro>Select`: Fix the duplicate values problem cause by using the select-all button of multi-select.
 
 ## 0.8.22
 

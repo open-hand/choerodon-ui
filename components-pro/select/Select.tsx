@@ -941,17 +941,13 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   }
 
   @autobind
-  @action
   chooseAll() {
-    const { options } = this;
-    options.forEach(this.choose, this);
+    this.setValue(this.options.map(this.processRecordToObject, this));
   }
 
   @autobind
-  @action
   unChooseAll() {
-    const { options } = this;
-    options.forEach(this.unChoose, this);
+    this.clear();
   }
 
   @autobind
