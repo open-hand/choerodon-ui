@@ -698,6 +698,8 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
           this.choose(record);
         }
       });
+    } else {
+      this.setValue(this.emptyValue);
     }
   }
 

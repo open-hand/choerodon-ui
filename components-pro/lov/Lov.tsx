@@ -162,7 +162,7 @@ export default class Lov extends Select<LovProps> {
         },
         ...omit(modalProps, ['style']),
       } as ModalProps & { children });
-      if (this.resetOptions() || noCache) {
+      if (this.resetOptions(noCache)) {
         options.query();
       } else if (multiple) {
         options.releaseCachedSelected();
@@ -172,12 +172,14 @@ export default class Lov extends Select<LovProps> {
 
   private setFilterText = debounce(
     action((text?: string) => {
-      const { options, textField } = this;
-      this.filterText = text;
-      this.resetOptions();
-      options.setQueryParameter(textField, text);
-      if (text) {
-        options.query();
+      if (this.filterText !== text) {
+        const { options, textField } = this;
+        this.filterText = text;
+        if (text) {
+          this.resetOptions(true);
+          options.setQueryParameter(textField, text);
+          options.query();
+        }
       }
     }),
     500,
@@ -198,14 +200,14 @@ export default class Lov extends Select<LovProps> {
     const result: Record[] = [];
     const records = multiple ? options.selected : result.concat(options.current || []);
     const values = records.map(record => this.processRecordToObject(record));
-    this.setValue(multiple ? values : values[0] || null);
+    this.setValue(multiple ? values : values[0] || this.emptyValue);
   };
 
-  resetOptions(): boolean {
+  resetOptions(noCache: boolean = false): boolean {
     const { field, record, options } = this;
     const { queryDataSet } = options;
-    let dirty = false;
-    if (queryDataSet) {
+    let dirty = noCache;
+    if (queryDataSet && noCache) {
       const { current } = queryDataSet;
       if (current && current.dirty) {
         dirty = true;

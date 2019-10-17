@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import ResizeObserver from 'resize-observer-polyfill';
 import { observer } from 'mobx-react';
 import omit from 'lodash/omit';
-import debounce from 'lodash/debounce';
+import throttle from 'lodash/throttle';
 import isNumber from 'lodash/isNumber';
 import noop from 'lodash/noop';
 import classes from 'component-classes';
@@ -24,7 +24,7 @@ import Spin from '../spin';
 import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComponent';
 import TableContext from './TableContext';
 import TableWrapper from './TableWrapper';
-import TableBody from './TableBody';
+import TableTBody from './TableTBody';
 import TableFooter from './TableFooter';
 import {
   ColumnLock,
@@ -43,6 +43,7 @@ import { $l } from '../locale-context';
 import TableQueryBar from './query-bar';
 import { findIndexedSibling, getHeight, getPaginationPosition } from './utils';
 import { ButtonProps } from '../button/Button';
+import TableBody from './TableBody';
 
 export type Buttons = TableButtonType | [TableButtonType, ButtonProps] | ReactElement<ButtonProps>;
 
@@ -367,7 +368,7 @@ export default class Table extends DataSetComponent<TableProps> {
     this.tableStore.showCachedSeletion = !!value;
   });
 
-  private handleResize = debounce(() => {
+  private handleResize = throttle(() => {
     const { element, tableStore, isSyncSize } = this;
     if (!isSyncSize) {
       this.isSyncSize = true;
@@ -383,7 +384,7 @@ export default class Table extends DataSetComponent<TableProps> {
       });
       this.isSyncSize = false;
     }
-  }, 30);
+  }, 300);
 
   saveResizeRef = (node: HTMLDivElement | null) => {
     this.resizeLine = node;
@@ -885,7 +886,7 @@ export default class Table extends DataSetComponent<TableProps> {
     let tableBody: ReactNode;
     let tableFooter: ReactNode;
     if (height !== undefined || overflowX) {
-      const { lockColumnsBodyRowsHeight, leftLeafColumnsWidth, rowHeight } = this.tableStore;
+      const { lockColumnsBodyRowsHeight, rowHeight } = this.tableStore;
       let bodyHeight = height;
       let tableHeadRef;
       let tableBodyRef;
@@ -914,28 +915,20 @@ export default class Table extends DataSetComponent<TableProps> {
           {this.renderTable(true, false, false, lock)}
         </div>
       );
-      const fixedLeft = lock === true || lock === ColumnLock.left;
+
       tableBody = (
-        <div
+        <TableBody
           key="tableBody"
-          ref={tableBodyRef}
-          className={`${prefixCls}-body`}
-          style={{
-            height: pxToRem(bodyHeight),
-            width: fixedLeft ? pxToRem(leftLeafColumnsWidth + measureScrollbar()) : undefined,
-          }}
+          getRef={tableBodyRef}
+          prefixCls={prefixCls}
+          lock={lock}
+          height={bodyHeight}
           onScroll={this.handleBodyScroll}
         >
           {this.renderTable(false, true, false, lock)}
-        </div>
+        </TableBody>
       );
-      if (fixedLeft) {
-        tableBody = (
-          <div key="tableBody" style={{ width: pxToRem(leftLeafColumnsWidth), overflow: 'hidden' }}>
-            {tableBody}
-          </div>
-        );
-      }
+
       if (footer) {
         tableFooter = (
           <div
@@ -979,7 +972,7 @@ export default class Table extends DataSetComponent<TableProps> {
       prefixCls,
       props: { indentSize },
     } = this;
-    return <TableBody key="tbody" prefixCls={prefixCls} lock={lock} indentSize={indentSize!} />;
+    return <TableTBody key="tbody" prefixCls={prefixCls} lock={lock} indentSize={indentSize!} />;
   }
 
   getTableHeader(lock?: ColumnLock | boolean): ReactNode {
