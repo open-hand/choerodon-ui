@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.22
+
+`2019-10-17`
+
 - 🌟 `<pro>Field`: The `dynamicProps` property supports object types. The object is a key-value pair which key is field property and value is a hook that returns the value of the field.
 - 🌟 `<pro>DataSet`: The `confirmMessage` parameter of `delete` and `deleteAll` methods supports the properties of the Modal.
 - 💄 `<pro>Output`: Adjust the line spacing in the Form.

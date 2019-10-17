@@ -34,7 +34,6 @@ import {
   getProperty,
   normalizeLabelWidth,
 } from './utils';
-import Output from '../output/Output';
 
 /**
  * 表单name生成器
