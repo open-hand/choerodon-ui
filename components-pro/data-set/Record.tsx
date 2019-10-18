@@ -493,8 +493,8 @@ export default class Record {
         this.data = this.pristineData;
         this.memo = undefined;
       }
-      if (dataSet) {
-        dataSet.fireEvent(DataSetEvents.recordReset, { record: this, dataSet });
+      if (dataSet && !dataSet.resetInBatch) {
+        dataSet.fireEvent(DataSetEvents.reset, { records: [this], dataSet });
       }
     }
     return this;

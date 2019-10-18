@@ -235,6 +235,8 @@ export default class DataSet extends EventManager {
 
   originalData: Record[] = [];
 
+  resetInBatch: boolean = false;
+
   @observable name?: string;
 
   @observable records: Record[];
@@ -772,8 +774,10 @@ export default class DataSet extends EventManager {
    */
   @action
   reset(): DataSet {
+    this.resetInBatch = true;
     this.records = this.originalData.map(record => record.reset());
-    this.fireEvent(DataSetEvents.reset);
+    this.resetInBatch = false;
+    this.fireEvent(DataSetEvents.reset, { dataSet: this, records: this.records });
     return this;
   }
 

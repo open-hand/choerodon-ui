@@ -128,7 +128,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
     this.off();
     if (ds) {
       ds.addEventListener(DataSetEvents.update, this.handleDataSetUpdate);
-      ds.addEventListener(DataSetEvents.recordReset, this.handleDataSetReset);
+      ds.addEventListener(DataSetEvents.reset, this.handleDataSetReset);
     }
     this.queryDataSet = ds;
   }
@@ -137,7 +137,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
     const { queryDataSet } = this;
     if (queryDataSet) {
       queryDataSet.removeEventListener(DataSetEvents.update, this.handleDataSetUpdate);
-      queryDataSet.removeEventListener(DataSetEvents.recordReset, this.handleDataSetReset);
+      queryDataSet.removeEventListener(DataSetEvents.reset, this.handleDataSetReset);
     }
   }
 

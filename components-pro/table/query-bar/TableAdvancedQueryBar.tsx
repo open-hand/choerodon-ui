@@ -6,7 +6,7 @@ import DataSet from '../../data-set';
 import Button from '../../button';
 import TableContext from '../TableContext';
 import { ElementProps } from '../../core/ViewComponent';
-import { ButtonColor } from '../../button/enum';
+import { ButtonColor, FuncType } from '../../button/enum';
 import { ButtonProps } from '../../button/Button';
 import { $l } from '../../locale-context';
 import autobind from '../../_util/autobind';
@@ -67,7 +67,11 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
   getMoreFieldsButton(fields: ReactElement<any>[]) {
     if (fields.length) {
       return (
-        <Button color={ButtonColor.primary} onClick={() => this.openMore(fields)}>
+        <Button
+          funcType={FuncType.raised}
+          color={ButtonColor.primary}
+          onClick={() => this.openMore(fields)}
+        >
           {$l('Table', 'advanced_query')}
         </Button>
       );
@@ -88,7 +92,11 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
   }
 
   getResetButton() {
-    return <Button onClick={this.handleQueryReset}>{$l('Table', 'reset_button')}</Button>;
+    return (
+      <Button funcType={FuncType.raised} onClick={this.handleQueryReset}>
+        {$l('Table', 'reset_button')}
+      </Button>
+    );
   }
 
   getQueryBar(): ReactNode {
