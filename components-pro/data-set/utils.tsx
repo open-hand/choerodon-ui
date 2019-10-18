@@ -82,10 +82,11 @@ function processOne(value: any, field: Field, checkRange: boolean = true) {
           break;
         }
         case FieldType.number:
+        case FieldType.currency:
           if (!isNaN(value)) {
             value = Number(value);
           } else {
-            value = '';
+            value = undefined;
           }
           break;
         case FieldType.string:
@@ -168,6 +169,9 @@ export function checkParentByInsert({ parent }: DataSet) {
 
 function getBaseType(type: FieldType): FieldType {
   switch (type) {
+    case FieldType.number:
+    case FieldType.currency:
+      return FieldType.number;
     case FieldType.dateTime:
     case FieldType.time:
     case FieldType.week:

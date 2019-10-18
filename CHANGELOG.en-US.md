@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.24
+
+`2019-10-18`
+
 - 💄 `<pro>Table`: Adjust the advance bar button type.
 
 ## 0.8.23
