@@ -17,6 +17,7 @@ timeline: true
 
 - 🐞 `<pro>DataSet`: 修复数据在提交之后若有回写数据但没有\_id 属性时无法回写的问题。
 - 🐞 `<pro>Lov`: 修复多选 Lov 无法选值的问题。
+- 🐞 `<pro>NumberField`: 修复步距按钮的问题。
 
 ## 0.8.24
 
