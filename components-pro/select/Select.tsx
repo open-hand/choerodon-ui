@@ -698,7 +698,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
           this.choose(record);
         }
       });
-    } else {
+    } else if (!this.multiple) {
       this.setValue(this.emptyValue);
     }
   }

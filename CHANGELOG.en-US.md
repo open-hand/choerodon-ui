@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🐞 `<pro>DataSet`: Fixed an issue where data could not be written back after commit if there was write-back data but no \_id attribute from response.
+- 🐞 `<pro>Lov`: Fixed a problem where Multi-Lov could not select values.
 
 ## 0.8.24
 
