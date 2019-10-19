@@ -1,5 +1,6 @@
 import { action, computed, get, observable, ObservableMap, runInAction, set, toJS } from 'mobx';
 import { MomentInput } from 'moment';
+import isEqual from 'lodash/isEqual';
 import isObject from 'lodash/isObject';
 import merge from 'lodash/merge';
 import defer from 'lodash/defer';
@@ -13,7 +14,7 @@ import { DataSetEvents, FieldFormat, FieldIgnore, FieldTrim, FieldType, SortOrde
 import lookupStore from '../stores/LookupCodeStore';
 import lovCodeStore from '../stores/LovCodeStore';
 import localeContext from '../locale-context';
-import { processValue } from './utils';
+import { findBindFields, processValue } from './utils';
 import Validity from '../validator/Validity';
 import ValidationResult from '../validator/ValidationResult';
 import { ValidatorProps } from '../validator/rules';
@@ -276,7 +277,23 @@ export default class Field {
       return intlFields.some(langField => langField.dirty);
     }
     if (record) {
-      return !isSame(record.getPristineValue(name), toJS(record.get(name)));
+      const pristineValue = toJS(record.getPristineValue(name));
+      const value = toJS(record.get(name));
+      if (isObject(pristineValue) && isObject(value)) {
+        if (isEqual(pristineValue, value)) {
+          return false;
+        }
+        try {
+          const fields = findBindFields(this, record.fields, true);
+          if (fields.length) {
+            return fields.some(({ dirty }) => dirty);
+          }
+        } catch (e) {
+          console.error(e);
+          return true;
+        }
+      }
+      return !isSame(pristineValue, value);
     }
     return false;
   }

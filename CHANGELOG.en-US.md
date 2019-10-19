@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>DataSet`: Fixed an issue where data could not be written back after commit if there was write-back data but no \_id attribute from response.
+
 ## 0.8.24
 
 `2019-10-18`

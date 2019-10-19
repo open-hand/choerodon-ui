@@ -252,17 +252,29 @@ export function doExport(url, data, method = 'post') {
   document.body.removeChild(form);
 }
 
-export function findBindFields(myField: Field, fields: Fields): Field[] {
-  const myName = myField.name;
-  const myBind = myField.get('bind');
+export function findBindFields(myField: Field, fields: Fields, excludeSelf?: boolean): Field[] {
+  const { name } = myField;
   return [...fields.values()].filter(field => {
     if (field !== myField) {
       const bind = field.get('bind');
-      return (
-        (bind && bind.startsWith(`${myName}.`)) || (myBind && myBind.startsWith(`${field.name}.`))
-      );
+      return isString(bind) && bind.startsWith(`${name}.`);
     }
-    return true;
+    return !excludeSelf;
+  });
+}
+
+export function findBindField(
+  myField: Field | string,
+  fields: Fields,
+  callback?: (field: Field) => boolean,
+): Field | undefined {
+  const name = isString(myField) ? myField : myField.name;
+  return [...fields.values()].find(field => {
+    if (field.name !== name) {
+      const bind = field.get('bind');
+      return isString(bind) && bind.startsWith(`${name}.`) && (!callback || callback(field));
+    }
+    return false;
   });
 }
 

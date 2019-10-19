@@ -14,6 +14,7 @@ import getReactNodeText from '../_util/getReactNodeText';
 import Field from '../data-set/Field';
 import { FormField } from '../field/FormField';
 import { FieldType } from '../data-set/enum';
+import { findBindField } from '../data-set/utils';
 
 export type CustomValidator = (
   value: any,
@@ -80,15 +81,7 @@ export default class Validator {
   private get bindingFieldWithValidationResult(): Field | undefined {
     const { name, record, type } = this.props;
     if (record && name && type === FieldType.object) {
-      return [...record.fields.values()].find(field => {
-        if (field.name !== name) {
-          const bind = field.get('bind');
-          if (isString(bind) && bind.indexOf(`${name}.`) === 0 && !field.isValid()) {
-            return true;
-          }
-        }
-        return false;
-      });
+      return findBindField(name, record.fields, field => !field.isValid());
     }
     return undefined;
   }
@@ -96,20 +89,19 @@ export default class Validator {
   @computed
   private get uniqueRefValidationResult(): ValidationResult | undefined {
     const { uniqueRefFields } = this;
+    let validationResult: ValidationResult | undefined;
     if (
       uniqueRefFields.length &&
       this.innerValidationResults.every(result => result.ruleName !== 'uniqueError')
     ) {
-      let validationResult: ValidationResult | undefined;
       uniqueRefFields.some(uniqueRefField => {
         validationResult = uniqueRefField.validator.innerValidationResults.find(
           result => result.ruleName === 'uniqueError',
         );
         return !!validationResult;
       });
-      return validationResult;
     }
-    return undefined;
+    return validationResult;
   }
 
   @computed

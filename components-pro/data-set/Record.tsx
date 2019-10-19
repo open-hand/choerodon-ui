@@ -52,11 +52,11 @@ export default class Record {
 
   memo?: object;
 
-  pristineData: object;
-
   dataSetSnapshot: { [key: string]: DataSetSnapshot } = {};
 
   cascadeRecordsMap: { [key: string]: Record[] } = {};
+
+  @observable pristineData: object;
 
   @observable data: object;
 
@@ -276,8 +276,9 @@ export default class Record {
           this.initFields(fields);
         }
       }
-      this.pristineData = this.processData(initData);
-      this.data = this.pristineData;
+      const d = this.processData(initData);
+      this.pristineData = d;
+      this.data = d;
     });
   }
 
@@ -490,7 +491,7 @@ export default class Record {
     if (status === RecordStatus.update || status === RecordStatus.delete || dirty) {
       this.status = RecordStatus.sync;
       if (dirty) {
-        this.data = this.pristineData;
+        this.data = toJS(this.pristineData);
         this.memo = undefined;
       }
       if (dataSet && !dataSet.resetInBatch) {

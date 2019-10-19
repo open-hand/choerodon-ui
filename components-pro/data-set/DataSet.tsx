@@ -1453,7 +1453,7 @@ export default class DataSet extends EventManager {
       if (isNumber(total)) {
         this.totalCount = total;
       }
-      flatMap<Record>(this.dirtyRecords).forEach(record => record.commit(undefined, this));
+      flatMap<Record>(this.dirtyRecords).forEach(record => record.commit(record.toData(), this));
     } else if (this.records.length) {
       warning(
         false,
