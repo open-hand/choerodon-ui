@@ -4,7 +4,7 @@ import ResizeObserver from 'resize-observer-polyfill';
 import { observer } from 'mobx-react';
 import { action, computed } from 'mobx';
 import classes from 'component-classes';
-import debounce from 'lodash/debounce';
+import throttle from 'lodash/throttle';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { ColumnProps } from './Column';
 import { ElementProps } from '../core/ViewComponent';
@@ -53,9 +53,9 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
     return tableStore.leafColumns.filter(({ hidden }) => !hidden);
   }
 
-  private handleResize = debounce(() => {
+  private handleResize = throttle(() => {
     this.syncBodyHeight();
-  }, 30);
+  }, 300);
 
   @autobind
   saveRef(node) {
@@ -80,6 +80,7 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
 
   componentDidMount() {
     if (this.tableBody) {
+      this.handleResize();
       this.resizeObserver = new ResizeObserver(this.handleResize);
       this.resizeObserver.observe(this.tableBody);
     }

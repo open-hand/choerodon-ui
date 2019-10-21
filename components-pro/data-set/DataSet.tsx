@@ -21,7 +21,7 @@ import warning from 'choerodon-ui/lib/_util/warning';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import localeContext, { $l } from '../locale-context';
 import axios from '../axios';
-import Record from './Record';
+import Record, { processData } from './Record';
 import Field, { FieldProps, Fields } from './Field';
 import {
   checkParentByInsert,
@@ -32,7 +32,6 @@ import {
   getOrderFields,
   prepareForSubmit,
   prepareSubmitData,
-  processData,
   processIntlField,
   sortTree,
 } from './utils';

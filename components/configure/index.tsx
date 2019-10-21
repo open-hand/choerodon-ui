@@ -3,13 +3,13 @@ import { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { ReactNode } from 'react';
 import { LovConfig } from 'choerodon-ui/pro/lib/lov/Lov';
 import { RecordStatus } from 'choerodon-ui/pro/lib/data-set/enum';
-import message from 'choerodon-ui/pro/lib/message';
 import exception from 'choerodon-ui/pro/lib/_util/exception';
 import { $l } from 'choerodon-ui/pro/lib/locale-context';
 import { TablePaginationConfig, TableQueryBarHook } from 'choerodon-ui/pro/lib/table/Table';
 import { ValidationMessages } from 'choerodon-ui/pro/lib/validator/Validator';
 import { ButtonProps } from 'choerodon-ui/pro/lib/button/Button';
 import { TableQueryBarType } from 'choerodon-ui/pro/lib/table/enum';
+import message from '../message';
 
 export type Status = {
   [RecordStatus.add]: string;

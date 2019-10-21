@@ -15,6 +15,9 @@ timeline: true
 
 ---
 
+- 🐞 Fix circular dependencies problems.
+- 🐞 `Button`: Fix the problem that the loading icon is not displayed.
+
 ## 0.8.26
 
 `2019-10-21`

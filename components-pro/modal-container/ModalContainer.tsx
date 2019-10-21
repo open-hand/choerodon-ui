@@ -11,8 +11,7 @@ import Modal, { ModalProps } from '../modal/Modal';
 import Animate from '../animate';
 import Mask from './Mask';
 import { stopEvent } from '../_util/EventManager';
-
-const { suffixCls } = Modal.defaultProps;
+import { suffixCls } from '../modal/utils';
 
 const KeyGen = (function*(id) {
   while (true) {

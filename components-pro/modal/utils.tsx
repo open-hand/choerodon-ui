@@ -6,6 +6,8 @@ import isNumber from 'lodash/isNumber';
 import isString from 'lodash/isString';
 import { ModalProps } from './Modal';
 
+export const suffixCls = 'modal';
+
 export type confirmProps = { iconType?: string; type?: string; children?: any };
 
 export function normalizeProps(

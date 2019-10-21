@@ -20,6 +20,7 @@ import message from '../message';
 import exception from '../_util/exception';
 import { $l } from '../locale-context';
 import DataSetRequestError from '../data-set/DataSetRequestError';
+import { suffixCls } from './utils';
 
 export interface ModalProps extends ViewComponentProps {
   closable?: boolean;
@@ -77,7 +78,7 @@ export default class Modal extends ViewComponent<ModalProps> {
   };
 
   static defaultProps = {
-    suffixCls: 'modal',
+    suffixCls,
     closable: false,
     movable: true,
     maskClosable: false,

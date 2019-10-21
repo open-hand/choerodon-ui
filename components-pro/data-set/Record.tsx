@@ -22,7 +22,6 @@ import {
   findBindFields,
   generateResponseData,
   getRecordValue,
-  processData,
   processIntlField,
   processToJSON,
   processValue,
@@ -706,4 +705,13 @@ export default class Record {
       return dirty;
     }
   }
+}
+
+export function processData(allData: any[], dataSet: DataSet) {
+  return allData.map(data => {
+    const record =
+      data instanceof Record ? ((data.dataSet = dataSet), data) : new Record(data, dataSet);
+    record.status = RecordStatus.sync;
+    return record;
+  });
 }
