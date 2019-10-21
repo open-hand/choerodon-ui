@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>DataSet`: 新增 autoQueryAfterSubmit 属性。
+
 ## 0.8.25
 
 `2019-10-19`

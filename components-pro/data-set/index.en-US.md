@@ -15,6 +15,7 @@ title: DataSet
 | name | 对应后台 ds 的 name，自动生成约定的 submitUrl, queryUrl, tlsUrl, validateUrl | Array&lt;object&gt; |  |
 | data | 初始化数据 | Array&lt;object&gt; |  |
 | autoQuery | 初始化后自动查询 | boolean | false |
+| autoQueryAfterSubmit | 提交成功后响应的数据不符合回写条件时自动查询。注：回写条件是指响应数据中含有提交时的\_\_id 字段。 | boolean | true |
 | autoCreate | 初始化时，如果没有记录且 autoQuery 为 false，则自动创建记录 | boolean | false |
 | selection | 选择的模式, 可选值：`false` `'multiple'` `'single'` | boolean \| string | 'multiple' |
 | modifiedCheck | 查询前，当有记录更改过时，是否警告提示。 | boolean | false |
