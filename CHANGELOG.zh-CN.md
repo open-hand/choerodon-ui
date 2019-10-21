@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.26
+
+`2019-10-21`
+
 - 🌟 `<pro>DataSet`: 新增 autoQueryAfterSubmit 属性。
 - 💄 `<pro>DataSet`: 优化提交数据回写逻辑。
 - 🐞 `<pro>NumberField`: 修复步距按钮的问题。

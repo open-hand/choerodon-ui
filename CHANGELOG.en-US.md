@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.26
+
+`2019-10-21`
+
 - 🌟 `<pro>DataSet`: Added `autoQueryAfterSubmit` property.
 - 💄 `<pro>DataSet`: Optimize the commit data write-back logic.
 - 🐞 `<pro>NumberField`: Fix the problem with the step button.
