@@ -189,7 +189,8 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     const max = defaultTo(this.max, MAX_SAFE_INTEGER);
     const step = defaultTo(this.getProp('step'), 1);
     let newValue;
-    const value = this.multiple || this.isFocused ? Number(this.text || this.value) : this.value;
+    const value =
+      this.multiple || this.isFocused ? Number(this.text || this.getValue()) : this.getValue();
     if (!isNumber(value)) {
       newValue = defaultTo(this.min, 0);
     } else {
