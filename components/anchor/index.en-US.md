@@ -16,7 +16,7 @@ For displaying anchor hyperlinks on page and jumping between them.
 ### Anchor Props
 
 | Property | Description | Type | Default |
-| -------- | ----------- | ---- | ------- |
+| --- | --- | --- | --- |
 | affix | Fixed mode of Anchor | boolean | true |
 | bounds | Bounding distance of anchor area | number | 5(px) |
 | getContainer | Scrolling container | () => HTMLElement | () => window |
@@ -24,10 +24,12 @@ For displaying anchor hyperlinks on page and jumping between them.
 | offsetTop | Pixels to offset from top when calculating position of scroll | number | 0 |
 | showInkInFixed | Whether show ink-balls in Fixed mode | boolean | false |
 | onClick | set the handler to handle `click` event | Function(e: Event, link: Object) | - |
+| getCurrentAnchor | Customize the anchor highlight | () => string | - |
+| targetOffset | Anchor scroll offset, default as `offsetTop`, [example](#components-anchor-demo-targetOffset) | number | `offsetTop` |
 
 ### Link Props
 
-| Property | Description | Type | Default |
-| -------- | ----------- | ---- | ------- |
-| href | target of hyperlink | string |  |
-| title | content of  hyperlink | string\|ReactNode |  |
+| Property | Description          | Type              | Default |
+| -------- | -------------------- | ----------------- | ------- |
+| href     | target of hyperlink  | string            |         |
+| title    | content of hyperlink | string\|ReactNode |         |

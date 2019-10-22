@@ -2,13 +2,12 @@ import React, { Component, CSSProperties, MouseEvent, ReactNode } from 'react';
 import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import noop from 'lodash/noop';
+import addEventListener from '../_util/addEventListener';
 import Affix from '../affix';
 import AnchorLink from './AnchorLink';
-import getScroll from '../_util/getScroll';
-import getRequestAnimationFrame from '../_util/getRequestAnimationFrame';
-import addEventListener from '../_util/addEventListener';
 import { getPrefixCls } from '../configure';
+import scrollTo from '../_util/scrollTo';
+import getScroll from '../_util/getScroll';
 
 function getDefaultContainer() {
   return window;
@@ -36,54 +35,7 @@ function getOffsetTop(element: HTMLElement, container: AnchorContainer): number 
   return rect.top;
 }
 
-function easeInOutCubic(t: number, b: number, c: number, d: number) {
-  const cc = c - b;
-  t /= d / 2;
-  if (t < 1) {
-    return (cc / 2) * t * t * t + b;
-  }
-  return (cc / 2) * ((t -= 2) * t * t + 2) + b;
-}
-
-const reqAnimFrame = getRequestAnimationFrame();
 const sharpMatcherRegx = /#([^#]+)$/;
-
-function scrollTo(
-  href: string,
-  offsetTop = 0,
-  getContainer: () => AnchorContainer,
-  callback = noop,
-) {
-  const container = getContainer();
-  const scrollTop = getScroll(container, true);
-  const sharpLinkMatch = sharpMatcherRegx.exec(href);
-  if (!sharpLinkMatch) {
-    return;
-  }
-  const targetElement = document.getElementById(sharpLinkMatch[1]);
-  if (!targetElement) {
-    return;
-  }
-  const eleOffsetTop = getOffsetTop(targetElement, container);
-  const targetScrollTop = scrollTop + eleOffsetTop - offsetTop;
-  const startTime = Date.now();
-  const frameFunc = () => {
-    const timestamp = Date.now();
-    const time = timestamp - startTime;
-    const nextScrollTop = easeInOutCubic(time, scrollTop, targetScrollTop, 450);
-    if (container === window) {
-      window.scrollTo(window.pageXOffset, nextScrollTop);
-    } else {
-      (container as HTMLElement).scrollTop = nextScrollTop;
-    }
-    if (time < 450) {
-      reqAnimFrame(frameFunc);
-    } else {
-      callback();
-    }
-  };
-  reqAnimFrame(frameFunc);
-}
 
 type Section = {
   link: string;
@@ -102,7 +54,10 @@ export interface AnchorProps {
   affix?: boolean;
   showInkInFixed?: boolean;
   getContainer?: () => AnchorContainer;
+  /** Return customize highlight anchor */
+  getCurrentAnchor?: () => string;
   onClick?: (e: MouseEvent<HTMLElement>, link: { title: ReactNode; href: string }) => void;
+  targetOffset?: number;
 }
 
 export interface AnchorState {
@@ -148,6 +103,9 @@ export default class Anchor extends Component<AnchorProps, AnchorState> {
 
   private inkNode: HTMLSpanElement;
 
+  // scroll scope's container
+  private scrollContainer: HTMLElement | Window;
+
   private links: string[] = [];
 
   private scrollEvent: any;
@@ -178,8 +136,23 @@ export default class Anchor extends Component<AnchorProps, AnchorState> {
 
   componentDidMount() {
     const { getContainer } = this.props as AnchorDefaultProps;
-    this.scrollEvent = addEventListener(getContainer(), 'scroll', this.handleScroll);
+    this.scrollContainer = getContainer();
+    this.scrollEvent = addEventListener(this.scrollContainer, 'scroll', this.handleScroll);
     this.handleScroll();
+  }
+
+  componentDidUpdate() {
+    if (this.scrollEvent) {
+      const { getContainer } = this.props as AnchorDefaultProps;
+      const currentContainer = getContainer();
+      if (this.scrollContainer !== currentContainer) {
+        this.scrollContainer = currentContainer;
+        this.scrollEvent.remove();
+        this.scrollEvent = addEventListener(this.scrollContainer, 'scroll', this.handleScroll);
+        this.handleScroll();
+      }
+    }
+    this.updateInk();
   }
 
   componentWillUnmount() {
@@ -188,30 +161,13 @@ export default class Anchor extends Component<AnchorProps, AnchorState> {
     }
   }
 
-  componentDidUpdate() {
-    this.updateInk();
-  }
-
-  handleScroll = () => {
-    if (this.animating) {
-      return;
-    }
-    const { offsetTop, bounds } = this.props;
-    this.setState({
-      activeLink: this.getCurrentAnchor(offsetTop, bounds),
-    });
-  };
-
-  handleScrollTo = (link: string) => {
-    const { offsetTop, getContainer } = this.props as AnchorDefaultProps;
-    this.animating = true;
-    this.setState({ activeLink: link });
-    scrollTo(link, offsetTop, getContainer, () => {
-      this.animating = false;
-    });
-  };
-
   getCurrentAnchor(offsetTop = 0, bounds = 5): string {
+    const { getCurrentAnchor } = this.props;
+
+    if (typeof getCurrentAnchor === 'function') {
+      return getCurrentAnchor();
+    }
+
     const activeLink = '';
     if (typeof document === 'undefined') {
       return activeLink;
@@ -244,6 +200,55 @@ export default class Anchor extends Component<AnchorProps, AnchorState> {
     return '';
   }
 
+  handleScrollTo = (link: string) => {
+    const { offsetTop, getContainer, targetOffset } = this.props as AnchorDefaultProps;
+
+    this.setState({ activeLink: link });
+    const container = getContainer();
+    const scrollTop = getScroll(container, true);
+    const sharpLinkMatch = sharpMatcherRegx.exec(link);
+    if (!sharpLinkMatch) {
+      return;
+    }
+    const targetElement = document.getElementById(sharpLinkMatch[1]);
+    if (!targetElement) {
+      return;
+    }
+
+    const eleOffsetTop = getOffsetTop(targetElement, container);
+    let y = scrollTop + eleOffsetTop;
+    y -= targetOffset !== undefined ? targetOffset : offsetTop || 0;
+    this.animating = true;
+
+    scrollTo(y, {
+      callback: () => {
+        this.animating = false;
+      },
+      getContainer,
+    });
+  };
+
+  saveInkNode = (node: HTMLSpanElement) => {
+    this.inkNode = node;
+  };
+
+  handleScroll = () => {
+    if (this.animating) {
+      return;
+    }
+    const { activeLink } = this.state;
+    const { offsetTop, bounds, targetOffset } = this.props;
+    const currentActiveLink = this.getCurrentAnchor(
+      targetOffset !== undefined ? targetOffset : offsetTop || 0,
+      bounds,
+    );
+    if (activeLink !== currentActiveLink) {
+      this.setState({
+        activeLink: currentActiveLink,
+      });
+    }
+  };
+
   updateInk = () => {
     if (typeof document === 'undefined') {
       return;
@@ -255,10 +260,6 @@ export default class Anchor extends Component<AnchorProps, AnchorState> {
     if (linkNode) {
       this.inkNode.style.top = `${(linkNode as any).offsetTop + linkNode.clientHeight / 2 - 4.5}px`;
     }
-  };
-
-  saveInkNode = (node: HTMLSpanElement) => {
-    this.inkNode = node;
   };
 
   getPrefixCls() {

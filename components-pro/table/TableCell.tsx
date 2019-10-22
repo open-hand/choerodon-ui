@@ -11,13 +11,13 @@ import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { action, computed, isArrayLike, observable } from 'mobx';
 import classNames from 'classnames';
-import ResizeObserver from 'resize-observer-polyfill';
-import debounce from 'lodash/debounce';
+import raf from 'raf';
 import omit from 'lodash/omit';
 import isString from 'lodash/isString';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
+import ReactResizeObserver from 'choerodon-ui/lib/_util/resizeObserver';
 import { ColumnProps } from './Column';
 import Record from '../data-set/Record';
 import { ElementProps } from '../core/ViewComponent';
@@ -68,7 +68,7 @@ export default class TableCell extends Component<TableCellProps> {
 
   element?: HTMLSpanElement | null;
 
-  resizeObserver?: ResizeObserver;
+  nextFrameActionId?: number;
 
   @observable overflow?: boolean;
 
@@ -94,52 +94,55 @@ export default class TableCell extends Component<TableCellProps> {
   @autobind
   @action
   saveOutput(node) {
+    this.disconnect();
     if (node) {
-      this.disconnect();
-      const {
-        column: { tooltip },
-      } = this.props;
-      const element = node.element;
-      this.element = element;
-      if (tooltip === TableColumnTooltip.overflow) {
-        this.resizeObserver = new ResizeObserver(this.handleResize);
-        this.resizeObserver.observe(element.parentNode);
-      }
+      this.element = node.element;
       const {
         tableStore: { dataSet },
       } = this.context;
       dataSet.addEventListener(DataSetEvents.update, this.handleOutputChange);
       this.handleResize();
+    } else {
+      this.element = null;
     }
   }
 
   disconnect() {
-    this.handleResize.cancel();
-    if (this.resizeObserver) {
-      this.resizeObserver.disconnect();
-    }
     const {
       tableStore: { dataSet },
     } = this.context;
     dataSet.removeEventListener(DataSetEvents.update, this.handleOutputChange);
   }
 
-  handleResize = debounce(() => {
+  @autobind
+  handleResize() {
     const { element } = this;
     const { tableStore } = this.context;
     if (element && !tableStore.hidden) {
-      this.syncSize();
-    }
-  }, 30);
-
-  @autobind
-  handleOutputChange({ record, name }) {
-    const { record: thisRecord, column } = this.props;
-    if (record === thisRecord && column.name === name) {
-      this.handleResize();
+      raf.cancel(this.nextFrameActionId);
+      this.nextFrameActionId = raf(this.syncSize);
     }
   }
 
+  @autobind
+  handleOutputChange({ record, name }) {
+    const {
+      record: thisRecord,
+      column: { name: thisName },
+    } = this.props;
+    if (thisRecord && thisName) {
+      const field = thisRecord.getField(thisName);
+      const bind = field ? field.get('bind') : undefined;
+      if (
+        record === thisRecord &&
+        (thisName === name || (isString(bind) && bind.startsWith(`${name}.`)))
+      ) {
+        this.handleResize();
+      }
+    }
+  }
+
+  @autobind
   @action
   syncSize() {
     const { element } = this;
@@ -148,11 +151,11 @@ export default class TableCell extends Component<TableCellProps> {
         column: { tooltip },
       } = this.props;
       if (tooltip === TableColumnTooltip.overflow) {
-        const { offsetWidth: minWidth } = element;
+        const { width: minWidth } = element.getBoundingClientRect();
         element.style.position = 'absolute';
-        const { offsetWidth } = element;
+        const { width } = element.getBoundingClientRect();
         element.style.position = '';
-        this.overflow = minWidth !== 0 && offsetWidth > minWidth;
+        this.overflow = minWidth !== 0 && width > minWidth;
       } else {
         this.overflow = true;
       }
@@ -472,7 +475,7 @@ export default class TableCell extends Component<TableCellProps> {
     const {
       tableStore: { inlineEdit, pristine },
     } = this.context;
-    const { className, style, align, name, onCell } = column;
+    const { className, style, align, name, onCell, tooltip } = column;
     const command = this.getCommand();
     const field = name ? record.getField(name) : undefined;
     const cellPrefix = `${prefixCls}-cell`;
@@ -499,7 +502,7 @@ export default class TableCell extends Component<TableCellProps> {
       className,
       cellExternalProps.className,
     );
-    return (
+    const td = (
       <td
         {...cellExternalProps}
         className={classString}
@@ -508,6 +511,11 @@ export default class TableCell extends Component<TableCellProps> {
       >
         {this.getInnerNode(cellPrefix, command)}
       </td>
+    );
+    return tooltip === TableColumnTooltip.overflow ? (
+      <ReactResizeObserver onResize={this.handleResize}>{td}</ReactResizeObserver>
+    ) : (
+      td
     );
   }
 

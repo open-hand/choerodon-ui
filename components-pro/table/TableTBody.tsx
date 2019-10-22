@@ -1,11 +1,11 @@
 import React, { Component, CSSProperties, ReactNode } from 'react';
 import PropTypes from 'prop-types';
-import ResizeObserver from 'resize-observer-polyfill';
 import { observer } from 'mobx-react';
 import { action, computed } from 'mobx';
 import classes from 'component-classes';
-import throttle from 'lodash/throttle';
+import raf from 'raf';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
+import ReactResizeObserver from 'choerodon-ui/lib/_util/resizeObserver';
 import { ColumnProps } from './Column';
 import { ElementProps } from '../core/ViewComponent';
 import TableContext from './TableContext';
@@ -38,7 +38,7 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
 
   tableBody: HTMLTableSectionElement | null;
 
-  resizeObserver?: ResizeObserver;
+  nextFrameActionId?: number;
 
   @computed
   get leafColumns(): ColumnProps[] {
@@ -53,13 +53,16 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
     return tableStore.leafColumns.filter(({ hidden }) => !hidden);
   }
 
-  private handleResize = throttle(() => {
-    this.syncBodyHeight();
-  }, 300);
+  @autobind
+  handleResize() {
+    raf.cancel(this.nextFrameActionId);
+    this.nextFrameActionId = raf(this.syncBodyHeight);
+  }
 
   @autobind
   saveRef(node) {
     this.tableBody = node;
+    this.handleResize();
   }
 
   render() {
@@ -71,26 +74,16 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
     const rows = data.length
       ? this.getRows(data, leafColumns, true, lock)
       : this.getEmptyRow(leafColumns, lock);
-    return (
+    const body = (
       <tbody ref={lock ? undefined : this.saveRef} className={`${prefixCls}-tbody`}>
         {rows}
       </tbody>
     );
-  }
-
-  componentDidMount() {
-    if (this.tableBody) {
-      this.handleResize();
-      this.resizeObserver = new ResizeObserver(this.handleResize);
-      this.resizeObserver.observe(this.tableBody);
-    }
-  }
-
-  componentWillUnmount() {
-    this.handleResize.cancel();
-    if (this.resizeObserver) {
-      this.resizeObserver.disconnect();
-    }
+    return lock ? (
+      body
+    ) : (
+      <ReactResizeObserver onResize={this.handleResize}>{body}</ReactResizeObserver>
+    );
   }
 
   componentDidUpdate() {
@@ -182,10 +175,11 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
     );
   }
 
+  @autobind
   @action
   syncBodyHeight() {
     const { tableStore } = this.context;
-    if (this.tableBody) {
+    if (this.tableBody && !tableStore.hidden) {
       tableStore.bodyHeight = this.tableBody.offsetHeight;
     }
   }

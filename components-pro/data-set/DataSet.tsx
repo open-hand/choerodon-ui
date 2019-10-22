@@ -997,7 +997,7 @@ export default class DataSet extends EventManager {
   @action
   async deleteAll(confirmMessage?: ReactNode | ModalProps & confirmProps) {
     if (
-      this.length > 0 &&
+      this.records.length > 0 &&
       (await confirm(confirmMessage || $l('DataSet', 'delete_all_row_confirm'))) !== 'cancel'
     ) {
       this.removeAll();

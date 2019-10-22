@@ -1,18 +1,18 @@
 import React, { ReactElement, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import ResizeObserver from 'resize-observer-polyfill';
+import raf from 'raf';
 import { observer } from 'mobx-react';
 import omit from 'lodash/omit';
-import throttle from 'lodash/throttle';
 import isNumber from 'lodash/isNumber';
 import noop from 'lodash/noop';
 import classes from 'component-classes';
-import { action, runInAction } from 'mobx';
+import { action } from 'mobx';
 import warning from 'choerodon-ui/lib/_util/warning';
 import { pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
+import ReactResizeObserver from 'choerodon-ui/lib/_util/resizeObserver';
 import Column, { ColumnProps, defaultMinWidth } from './Column';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
@@ -324,9 +324,7 @@ export default class Table extends DataSetComponent<TableProps> {
 
   tableStore: TableStore = new TableStore(this);
 
-  resizeObserver?: ResizeObserver;
-
-  isSyncSize?: boolean;
+  nextFrameActionId?: number;
 
   resizeLine: HTMLDivElement | null;
 
@@ -368,26 +366,26 @@ export default class Table extends DataSetComponent<TableProps> {
     this.tableStore.showCachedSeletion = !!value;
   });
 
-  private handleResize = throttle(() => {
-    const { element, tableStore, isSyncSize } = this;
-    if (!isSyncSize) {
-      this.isSyncSize = true;
-      runInAction(() => {
-        if (!element.offsetParent) {
-          tableStore.styledHidden = true;
-        } else if (!tableStore.hidden) {
-          this.syncSize();
-          this.setScrollPositionClassName();
-        } else {
-          tableStore.styledHidden = false;
-        }
-      });
-      this.isSyncSize = false;
-    }
-  }, 300);
+  @autobind
+  private resize() {
+    this.syncSize();
+    this.setScrollPositionClassName();
+  }
 
   saveResizeRef = (node: HTMLDivElement | null) => {
     this.resizeLine = node;
+  };
+
+  handleResize = () => {
+    const { element, tableStore } = this;
+    if (!element.offsetParent) {
+      tableStore.styledHidden = true;
+    } else if (!tableStore.hidden) {
+      raf.cancel(this.nextFrameActionId);
+      this.nextFrameActionId = raf(this.resize);
+    } else {
+      tableStore.styledHidden = false;
+    }
   };
 
   handleDataSetLoad = () => {
@@ -605,8 +603,7 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   componentDidMount() {
-    this.resizeObserver = new ResizeObserver(this.handleResize);
-    this.resizeObserver.observe(this.element);
+    this.handleResize();
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
@@ -616,15 +613,7 @@ export default class Table extends DataSetComponent<TableProps> {
     this.processDataSetListener(true);
   }
 
-  // componentDidUpdate() {
-  //   this.handleResize();
-  // }
-
   componentWillUnmount() {
-    this.handleResize.cancel();
-    if (this.resizeObserver) {
-      this.resizeObserver.disconnect();
-    }
     this.processDataSetListener(false);
   }
 
@@ -670,15 +659,17 @@ export default class Table extends DataSetComponent<TableProps> {
             filterBarPlaceholder={filterBarPlaceholder}
           />
           <Spin key="content" dataSet={dataSet}>
-            <div {...this.getOtherProps()}>
-              <div className={`${prefixCls}-content`}>
-                {content}
-                {isAnyColumnsLeftLock && overflowX && this.getLeftFixedTable()}
-                {isAnyColumnsRightLock && overflowX && this.getRightFixedTable()}
-                <div ref={this.saveResizeRef} className={`${prefixCls}-split-line`} />
+            <ReactResizeObserver onResize={this.handleResize}>
+              <div {...this.getOtherProps()}>
+                <div className={`${prefixCls}-content`}>
+                  {content}
+                  {isAnyColumnsLeftLock && overflowX && this.getLeftFixedTable()}
+                  {isAnyColumnsRightLock && overflowX && this.getRightFixedTable()}
+                  <div ref={this.saveResizeRef} className={`${prefixCls}-split-line`} />
+                </div>
+                {this.getFooter()}
               </div>
-              {this.getFooter()}
-            </div>
+            </ReactResizeObserver>
           </Spin>
           {this.getPagination(TablePaginationPosition.bottom)}
         </div>
