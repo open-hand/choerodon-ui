@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.27
+
+`2019-10-22`
+
 - 🌟 `<pro>Form`: The `labelWidth` property of child element is exists.
 - 🐞 `<pro>Table`: Fix `ResizeObserver loop limit exceeded` error.
 - 🐞 Fix circular dependencies problems.

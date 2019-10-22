@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.27
+
+`2019-10-22`
+
 - 🌟 `<pro>Form`: 子元素可设置 labelWidth 属性。
 - 🐞 `<pro>Table`: 修复 ResizeObserver loop limit exceeded 错误。
 - 🐞 修复循环依赖的问题。
