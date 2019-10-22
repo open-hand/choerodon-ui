@@ -1,4 +1,4 @@
-import { Component, ReactNode } from 'react';
+import { PureComponent, ReactNode } from 'react';
 import { findDOMNode } from 'react-dom';
 import ResizeObserver from 'resize-observer-polyfill';
 
@@ -8,9 +8,14 @@ interface ResizeObserverProps {
   children?: ReactNode;
   disabled?: boolean;
   onResize?: (target) => void;
+  resizeProp?: 'width' | 'height' | 'both';
 }
 
-class ReactResizeObserver extends Component<ResizeObserverProps> {
+class ReactResizeObserver extends PureComponent<ResizeObserverProps> {
+  static defaultProps = {
+    resizeProp: 'both',
+  };
+
   resizeObserver: ResizeObserver | null = null;
 
   width: number = 0;
@@ -43,7 +48,7 @@ class ReactResizeObserver extends Component<ResizeObserverProps> {
   }
 
   onResize: ResizeObserverCallback = (entries: ResizeObserverEntry[]) => {
-    const { onResize } = this.props;
+    const { onResize, resizeProp } = this.props;
 
     const { target } = entries[0];
 
@@ -57,7 +62,10 @@ class ReactResizeObserver extends Component<ResizeObserverProps> {
     const fixedWidth = Math.floor(width);
     const fixedHeight = Math.floor(height);
 
-    if (this.width !== fixedWidth || this.height !== fixedHeight) {
+    if (
+      (this.width !== fixedWidth && ['width', 'both'].includes(resizeProp!)) ||
+      (this.height !== fixedHeight && ['height', 'both'].includes(resizeProp!))
+    ) {
       this.width = fixedWidth;
       this.height = fixedHeight;
 

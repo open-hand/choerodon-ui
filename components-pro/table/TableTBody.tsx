@@ -82,7 +82,9 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
     return lock ? (
       body
     ) : (
-      <ReactResizeObserver onResize={this.handleResize}>{body}</ReactResizeObserver>
+      <ReactResizeObserver onResize={this.handleResize} resizeProp="height">
+        {body}
+      </ReactResizeObserver>
     );
   }
 

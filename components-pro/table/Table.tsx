@@ -362,44 +362,45 @@ export default class Table extends DataSetComponent<TableProps> {
     ) as HTMLTableRowElement | null;
   }
 
-  private handleSwitchChange = action(value => {
-    this.tableStore.showCachedSeletion = !!value;
-  });
-
   @autobind
-  private resize() {
-    this.syncSize();
-    this.setScrollPositionClassName();
+  saveResizeRef(node: HTMLDivElement | null) {
+    this.resizeLine = node;
   }
 
-  saveResizeRef = (node: HTMLDivElement | null) => {
-    this.resizeLine = node;
-  };
+  @autobind
+  @action
+  handleSwitchChange(value) {
+    this.tableStore.showCachedSeletion = !!value;
+  }
 
-  handleResize = () => {
+  @autobind
+  handleResize() {
     const { element, tableStore } = this;
     if (!element.offsetParent) {
       tableStore.styledHidden = true;
     } else if (!tableStore.hidden) {
       raf.cancel(this.nextFrameActionId);
-      this.nextFrameActionId = raf(this.resize);
+      this.nextFrameActionId = raf(this.syncSize);
     } else {
       tableStore.styledHidden = false;
     }
-  };
+  }
 
-  handleDataSetLoad = () => {
+  @autobind
+  handleDataSetLoad() {
     this.initDefaultExpandedRows();
-  };
+  }
 
-  handleDataSetCreate = ({ record }) => {
+  @autobind
+  handleDataSetCreate({ record }) {
     const { tableStore } = this;
     if (tableStore.inlineEdit) {
       tableStore.currentEditRecord = record;
     }
-  };
+  }
 
-  handleKeyDown = e => {
+  @autobind
+  handleKeyDown(e) {
     const { tableStore } = this;
     if (!tableStore.editing) {
       try {
@@ -439,7 +440,7 @@ export default class Table extends DataSetComponent<TableProps> {
     }
     const { onKeyDown = noop } = this.props;
     onKeyDown(e);
-  };
+  }
 
   focusRow(row: HTMLTableRowElement | null) {
     if (row) {
@@ -646,20 +647,20 @@ export default class Table extends DataSetComponent<TableProps> {
     const context = { tableStore };
     const pagination = this.getPagination(TablePaginationPosition.top);
     return (
-      <TableContext.Provider value={context}>
+      <ReactResizeObserver resizeProp="width" onResize={this.handleResize}>
         <div {...this.getWrapperProps()}>
-          {this.getHeader()}
-          <TableQueryBar
-            prefixCls={prefixCls}
-            buttons={buttons}
-            pagination={pagination}
-            queryFields={queryFields}
-            queryFieldsLimit={queryFieldsLimit}
-            filterBarFieldName={filterBarFieldName}
-            filterBarPlaceholder={filterBarPlaceholder}
-          />
-          <Spin key="content" dataSet={dataSet}>
-            <ReactResizeObserver onResize={this.handleResize}>
+          <TableContext.Provider value={context}>
+            {this.getHeader()}
+            <TableQueryBar
+              prefixCls={prefixCls}
+              buttons={buttons}
+              pagination={pagination}
+              queryFields={queryFields}
+              queryFieldsLimit={queryFieldsLimit}
+              filterBarFieldName={filterBarFieldName}
+              filterBarPlaceholder={filterBarPlaceholder}
+            />
+            <Spin key="content" dataSet={dataSet}>
               <div {...this.getOtherProps()}>
                 <div className={`${prefixCls}-content`}>
                   {content}
@@ -669,11 +670,11 @@ export default class Table extends DataSetComponent<TableProps> {
                 </div>
                 {this.getFooter()}
               </div>
-            </ReactResizeObserver>
-          </Spin>
-          {this.getPagination(TablePaginationPosition.bottom)}
+            </Spin>
+            {this.getPagination(TablePaginationPosition.bottom)}
+          </TableContext.Provider>
         </div>
-      </TableContext.Provider>
+      </ReactResizeObserver>
     );
   }
 
@@ -989,11 +990,12 @@ export default class Table extends DataSetComponent<TableProps> {
     }
   }
 
+  @autobind
   @action
   syncSize() {
     const { element, tableStore } = this;
     if (element) {
-      tableStore.width = element.offsetWidth;
+      tableStore.width = Math.floor(element.getBoundingClientRect().width);
       const { prefixCls } = this;
       let height = this.getStyleHeight();
       if (element && isNumber(height)) {
@@ -1020,6 +1022,7 @@ export default class Table extends DataSetComponent<TableProps> {
         this.tableStore.height = height;
       }
     }
+    this.setScrollPositionClassName();
   }
 
   @action

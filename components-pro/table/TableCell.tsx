@@ -145,23 +145,29 @@ export default class TableCell extends Component<TableCellProps> {
   @autobind
   @action
   syncSize() {
+    this.overflow = this.computeOverFlow();
+  }
+
+  computeOverFlow(): boolean {
     const { element } = this;
     if (element && element.textContent) {
       const {
         column: { tooltip },
       } = this.props;
-      if (tooltip === TableColumnTooltip.overflow) {
-        const { width: minWidth } = element.getBoundingClientRect();
-        element.style.position = 'absolute';
-        const { width } = element.getBoundingClientRect();
-        element.style.position = '';
-        this.overflow = minWidth !== 0 && width > minWidth;
-      } else {
-        this.overflow = true;
+      if (tooltip === TableColumnTooltip.always) {
+        return true;
       }
-    } else {
-      this.overflow = false;
+      if (tooltip === TableColumnTooltip.overflow) {
+        const { width } = element.getBoundingClientRect();
+        if (width !== 0) {
+          element.style.position = 'absolute';
+          const { width: measureWidth } = element.getBoundingClientRect();
+          element.style.position = '';
+          return measureWidth > width;
+        }
+      }
     }
+    return false;
   }
 
   @autobind
@@ -513,7 +519,9 @@ export default class TableCell extends Component<TableCellProps> {
       </td>
     );
     return tooltip === TableColumnTooltip.overflow ? (
-      <ReactResizeObserver onResize={this.handleResize}>{td}</ReactResizeObserver>
+      <ReactResizeObserver onResize={this.handleResize} resizeProp="width">
+        {td}
+      </ReactResizeObserver>
     ) : (
       td
     );
