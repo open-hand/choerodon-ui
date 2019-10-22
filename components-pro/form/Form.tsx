@@ -19,6 +19,7 @@ import defaultTo from 'lodash/defaultTo';
 import { AxiosInstance } from 'axios';
 import Responsive from 'choerodon-ui/lib/responsive/Responsive';
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
+import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import axios from '../axios';
 import autobind from '../_util/autobind';
 import { FormField, FormFieldProps, getFieldsById } from '../field/FormField';
@@ -465,6 +466,7 @@ export default class Form extends DataSetComponent<FormProps> {
         newLine,
         className,
         placeholder,
+        labelWidth: fieldLabelWidth,
         ...otherProps
       } = props as any;
       let newColSpan = colSpan;
@@ -510,6 +512,9 @@ export default class Form extends DataSetComponent<FormProps> {
         [`${prefixCls}-output`]: isOutput,
       });
       if (!noLabel) {
+        if (fieldLabelWidth !== undefined) {
+          labelWidth[colIndex] = Math.max(labelWidth[colIndex], fieldLabelWidth);
+        }
         cols.push(
           <td
             key={`row-${rowIndex}-col-${colIndex}-label`}
@@ -553,7 +558,7 @@ export default class Form extends DataSetComponent<FormProps> {
     if (!noLabel) {
       for (let i = 0; i < columns; i++) {
         cols.push(
-          <col key={`label-${i}`} style={{ width: labelWidth[i % columns] }} />,
+          <col key={`label-${i}`} style={{ width: pxToRem(labelWidth[i % columns]) }} />,
           <col key={`wrapper-${i}`} />,
         );
       }

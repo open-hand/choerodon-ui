@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Form`: The `labelWidth` property of child element is exists.
 - 🐞 `<pro>Table`: Fix `ResizeObserver loop limit exceeded` error.
 - 🐞 Fix circular dependencies problems.
 - 🐞 `Button`: Fix the problem that the loading icon is not displayed.
