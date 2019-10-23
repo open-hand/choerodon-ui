@@ -1,5 +1,6 @@
 import { computed, observable, runInAction } from 'mobx';
 import { AxiosRequestConfig } from 'axios';
+import { getConfig } from 'choerodon-ui/lib/configure';
 import DataSet from './DataSet';
 
 function defaultAxiosAdapter(config: AxiosRequestConfig): AxiosRequestConfig {
@@ -8,7 +9,11 @@ function defaultAxiosAdapter(config: AxiosRequestConfig): AxiosRequestConfig {
 
 export type TransportAdapter = (config: AxiosRequestConfig, type: string) => AxiosRequestConfig;
 
-export type TransportHook = (props: { data?: any, params?: any, dataSet: DataSet }) => AxiosRequestConfig;
+export type TransportHook = (props: {
+  data?: any;
+  params?: any;
+  dataSet: DataSet;
+}) => AxiosRequestConfig;
 
 export type TransportType = AxiosRequestConfig | TransportHook | string;
 
@@ -22,10 +27,9 @@ export type TransportProps = {
   tls?: TransportType;
   exports?: TransportType;
   adapter?: TransportAdapter;
-}
+};
 
 export default class Transport {
-
   @observable props: TransportProps;
 
   dataSet: DataSet;
@@ -38,7 +42,7 @@ export default class Transport {
 
   @computed
   get create(): TransportType | undefined {
-    return this.props.create;
+    return this.props.create || this.globalTransport.create;
   }
 
   set read(read: TransportType | undefined) {
@@ -49,7 +53,7 @@ export default class Transport {
 
   @computed
   get read(): TransportType | undefined {
-    return this.props.read || this.dataSet.queryUrl;
+    return this.props.read || this.globalTransport.read || this.dataSet.queryUrl;
   }
 
   set update(update: TransportType | undefined) {
@@ -60,7 +64,7 @@ export default class Transport {
 
   @computed
   get update(): TransportType | undefined {
-    return this.props.update;
+    return this.props.update || this.globalTransport.update;
   }
 
   set destroy(destroy: TransportType | undefined) {
@@ -71,7 +75,7 @@ export default class Transport {
 
   @computed
   get destroy(): TransportType | undefined {
-    return this.props.destroy;
+    return this.props.destroy || this.globalTransport.destroy;
   }
 
   set validate(validate: TransportType | undefined) {
@@ -82,7 +86,7 @@ export default class Transport {
 
   @computed
   get validate(): TransportType | undefined {
-    return this.props.validate || this.dataSet.validateUrl;
+    return this.props.validate || this.globalTransport.validate || this.dataSet.validateUrl;
   }
 
   set submit(submit: TransportType | undefined) {
@@ -93,7 +97,7 @@ export default class Transport {
 
   @computed
   get submit(): TransportType | undefined {
-    return this.props.submit || this.dataSet.submitUrl;
+    return this.props.submit || this.globalTransport.submit || this.dataSet.submitUrl;
   }
 
   set exports(exports: TransportType | undefined) {
@@ -104,7 +108,7 @@ export default class Transport {
 
   @computed
   get exports(): TransportType | undefined {
-    return this.props.exports || this.dataSet.exportUrl;
+    return this.props.exports || this.globalTransport.exports || this.dataSet.exportUrl;
   }
 
   set tls(tls: TransportType | undefined) {
@@ -115,7 +119,7 @@ export default class Transport {
 
   @computed
   get tls(): TransportType | undefined {
-    return this.props.tls || this.dataSet.tlsUrl;
+    return this.props.tls || this.globalTransport.tls || this.dataSet.tlsUrl;
   }
 
   set adapter(adapter: TransportAdapter) {
@@ -126,7 +130,11 @@ export default class Transport {
 
   @computed
   get adapter(): TransportAdapter {
-    return this.props.adapter || defaultAxiosAdapter;
+    return this.props.adapter || this.globalTransport.adapter || defaultAxiosAdapter;
+  }
+
+  get globalTransport(): TransportProps {
+    return getConfig('transport') || {};
   }
 
   constructor(props: TransportProps = {}, dataSet: DataSet) {

@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: Added the global configuration `transport`.
+
 ## 0.8.27
 
 `2019-10-22`

@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: 增加全局配置 transport 。
+
 ## 0.8.27
 
 `2019-10-22`

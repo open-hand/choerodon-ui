@@ -47,6 +47,7 @@ const prefixCls = getConfig('prefixCls');
 | defaultValidationMessages | Default validation messages, More info: [ValidationMessages](#ValidationMessages) | ValitionMessages | - |
 | generatePageQuery | Hook for Paging Parameter Conversion | ({ page?: number, pageSize?: number, sortName?: string, sortOrder?: string }) => object | - |
 | feedback | The feedback of DataSet for query and submit, More info: [Feedback](#Feedback) | Feedback |  |
+| transport | Default transport of DataSet, More info: [Transport](/components-pro/data-set/#Transport) | Transport |  |
 
 ### Feedback
 

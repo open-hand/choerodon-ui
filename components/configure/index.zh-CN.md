@@ -50,6 +50,7 @@ const prefixCls = getConfig('prefixCls');
 | defaultValidationMessages | 自定义校验信息, 详见[ValidationMessages](#ValidationMessages) | ValitionMessages | - |
 | generatePageQuery | 分页参数转换的钩子 | ({ page?: number, pageSize?: number, sortName?: string, sortOrder?: string }) => object | - |
 | feedback | DataSet 查询和提交数据的反馈配置, 详见[Feedback](#Feedback) | Feedback |  |
+| transport | DataSet 默认 transport, 详见[Transport](/components-pro/data-set-cn/#Transport) | Transport |  |
 
 ### Feedback
 

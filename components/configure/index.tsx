@@ -9,6 +9,7 @@ import { TablePaginationConfig, TableQueryBarHook } from 'choerodon-ui/pro/lib/t
 import { ValidationMessages } from 'choerodon-ui/pro/lib/validator/Validator';
 import { ButtonProps } from 'choerodon-ui/pro/lib/button/Button';
 import { TableQueryBarType } from 'choerodon-ui/pro/lib/table/enum';
+import { TransportProps } from 'choerodon-ui/pro/lib/data-set/Transport';
 import message from '../message';
 
 export type Status = {
@@ -59,6 +60,7 @@ export type Config = {
   buttonFuncType?: string;
   renderEmpty?: renderEmptyHandler;
   defaultValidationMessages?: ValidationMessages;
+  transport?: TransportProps;
   generatePageQuery?: (pageParams: {
     page?: number;
     pageSize?: number;
