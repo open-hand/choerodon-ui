@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.28
+
+`2019-10-25`
+
 - 🌟 `configure`: 增加全局配置 transport、lookupAxiosConfig、iconfontPrefix、icons。
 - 🌟 `Icon`: 可自定义 iconfont 资源。
 - 💄 `<pro>DataSet.Field`: 优化 lookupAxiosConfig、lovDefineAxiosConfig、lovQueryAxiosConfig 的相关逻辑。

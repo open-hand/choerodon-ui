@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.28
+
+`2019-10-25`
+
 - 🌟 `configure`: Add global configuration `transport`, `lookupAxiosConfig`, `iconfontPrefix`, `icons`.
 - 🌟 `Icon`: Customizable iconfont resource.
 - 💄 `<pro>DataSet.Field`: Optimize logic related to `lookupAxiosConfig`, `lovDefineAxiosConfig`, `lovQueryAxiosConfig`.
