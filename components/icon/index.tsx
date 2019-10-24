@@ -1,7 +1,6 @@
-import React, { Component, CSSProperties, FocusEventHandler, MouseEventHandler } from 'react';
+import React, { CSSProperties, FocusEventHandler, MouseEventHandler } from 'react';
 import classNames from 'classnames';
-import omit from 'lodash/omit';
-import { categories, icons } from 'choerodon-ui-font';
+import { getConfig } from '../configure';
 
 export interface IconProps {
   type: string;
@@ -16,16 +15,13 @@ export interface IconProps {
   tabIndex?: number;
 }
 
-export default class Icon extends Component<IconProps, {}> {
-  static displayName = 'Icon';
+const Icon = function Icon(props: IconProps) {
+  const iconfontPrefix = getConfig('iconfontPrefix');
+  const { type, className = '', ...otherProps } = props;
+  const classString = classNames(iconfontPrefix, `${iconfontPrefix}-${type}`, className);
+  return <i {...otherProps} className={classString} />;
+};
 
-  static icons = icons;
+Icon.displayName = 'Icon';
 
-  static categories = categories;
-
-  render() {
-    const { type, className = '' } = this.props;
-    const classString = classNames('icon', `icon-${type}`, className);
-    return <i {...omit(this.props, ['type', 'spin'])} className={classString} />;
-  }
-}
+export default Icon;

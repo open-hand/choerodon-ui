@@ -1,6 +1,7 @@
 import React, { Component, ReactElement, ReactNode } from 'react';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
+import { icons } from 'choerodon-ui-font';
 import Icon from '../icon';
 import Select, { SelectProps } from '../select';
 import Pagination from '../pagination';
@@ -8,7 +9,6 @@ import Tooltip from '../tooltip';
 import { getPrefixCls } from '../configure';
 
 const Option = Select.Option;
-const icons = Icon.icons;
 
 export interface IconSelectProps extends SelectProps {
   prefixCls?: string;

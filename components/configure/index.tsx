@@ -1,6 +1,7 @@
 import { observable, ObservableMap, runInAction } from 'mobx';
 import { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { ReactNode } from 'react';
+import { categories } from 'choerodon-ui-font';
 import { LovConfig } from 'choerodon-ui/pro/lib/lov/Lov';
 import { RecordStatus } from 'choerodon-ui/pro/lib/data-set/enum';
 import exception from 'choerodon-ui/pro/lib/_util/exception';
@@ -9,7 +10,9 @@ import { TablePaginationConfig, TableQueryBarHook } from 'choerodon-ui/pro/lib/t
 import { ValidationMessages } from 'choerodon-ui/pro/lib/validator/Validator';
 import { ButtonProps } from 'choerodon-ui/pro/lib/button/Button';
 import { TableQueryBarType } from 'choerodon-ui/pro/lib/table/enum';
-import { TransportProps } from 'choerodon-ui/pro/lib/data-set/Transport';
+import { TransportHookProps, TransportProps } from 'choerodon-ui/pro/lib/data-set/Transport';
+import DataSet from 'choerodon-ui/pro/lib/data-set/DataSet';
+import Record from 'choerodon-ui/pro/lib/data-set/Record';
 import message from '../message';
 
 export type Status = {
@@ -33,13 +36,30 @@ export interface FeedBack {
 export type Config = {
   prefixCls?: string;
   proPrefixCls?: string;
+  iconfontPrefix?: string;
   ripple?: boolean;
   lookupUrl?: string | ((code: string) => string);
   lookupAxiosMethod?: string;
+  lookupAxiosConfig?:
+    | AxiosRequestConfig
+    | ((props: {
+        params?: any;
+        dataSet?: DataSet;
+        record?: Record;
+        lookupCode?: string;
+      }) => AxiosRequestConfig);
   lovDefineUrl?: string | ((code: string) => string);
-  lovDefineAxiosConfig?: (code: string) => AxiosRequestConfig;
-  lovQueryUrl?: string | ((code: string, lovConfig?: LovConfig) => string);
-  lovQueryAxiosConfig?: (code: string, lovConfig?: LovConfig) => AxiosRequestConfig;
+  lovDefineAxiosConfig?: AxiosRequestConfig | ((code: string) => AxiosRequestConfig);
+  lovQueryUrl?:
+    | string
+    | ((code: string, lovConfig: LovConfig | undefined, props: TransportHookProps) => string);
+  lovQueryAxiosConfig?:
+    | AxiosRequestConfig
+    | ((
+        code: string,
+        lovConfig: LovConfig | undefined,
+        props: TransportHookProps,
+      ) => AxiosRequestConfig);
   axios?: AxiosInstance;
   feedback?: FeedBack;
   dataKey?: string;
@@ -61,6 +81,7 @@ export type Config = {
   renderEmpty?: renderEmptyHandler;
   defaultValidationMessages?: ValidationMessages;
   transport?: TransportProps;
+  icons?: { [key: string]: string[] } | string[];
   generatePageQuery?: (pageParams: {
     page?: number;
     pageSize?: number;
@@ -100,6 +121,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
 >([
   ['prefixCls', 'c7n'],
   ['proPrefixCls', 'c7n-pro'],
+  ['iconfontPrefix', 'icon'],
   ['ripple', true],
   ['lookupUrl', code => `/common/code/${code}/`],
   ['lookupAxiosMethod', 'post'],
@@ -123,6 +145,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['modalOkFirst', true],
   ['feedback', defaultFeedback],
   ['renderEmpty', defaultRenderEmpty],
+  ['icons', categories],
 ]);
 
 export function getConfig<T extends ConfigKeys>(key: T): any {

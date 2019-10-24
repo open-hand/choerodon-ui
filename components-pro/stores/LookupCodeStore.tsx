@@ -1,4 +1,4 @@
-import { action, get, observable, ObservableMap, toJS } from 'mobx';
+import { action, get, observable, ObservableMap } from 'mobx';
 import { AxiosInstance, AxiosRequestConfig } from 'axios';
 import queryString from 'querystringify';
 import omitBy from 'lodash/omitBy';
@@ -11,6 +11,7 @@ import lovCodeStore from './LovCodeStore';
 import { FieldType } from '../data-set/enum';
 import { append, generateResponseData } from '../data-set/utils';
 import isSameLike from '../_util/isSameLike';
+import { getLovPara, processAxiosConfig } from './utils';
 
 function splitKeys(lookupKey: string): string[] {
   const [key, subKey] = lookupKey.split('?');
@@ -143,22 +144,15 @@ export class LookupCodeStore {
   }
 
   getAxiosConfig(field: Field): AxiosRequestConfig {
-    const lookupAxiosConfig = field.get('lookupAxiosConfig');
-    let config: AxiosRequestConfig = {};
+    const lookupAxiosConfig = field.get('lookupAxiosConfig') || getConfig('lookupAxiosConfig');
     const { record } = field;
-    const params = toJS(field.get('lookupPara')) || {};
-    const cascadeMap = field.get('cascadeMap');
-    if (cascadeMap && record) {
-      Object.keys(cascadeMap).forEach(key => {
-        params[key] = record.get(cascadeMap[key]);
-      });
-    }
-    if (typeof lookupAxiosConfig === 'function') {
-      const lookupCode = field.get('lookupCode');
-      config = lookupAxiosConfig({ dataSet: field.dataSet, record, params, lookupCode });
-    } else if (lookupAxiosConfig) {
-      config = lookupAxiosConfig;
-    }
+    const params = getLovPara(field, record);
+    const config = processAxiosConfig(lookupAxiosConfig, {
+      dataSet: field.dataSet,
+      record,
+      params,
+      lookupCode: field.get('lookupCode'),
+    });
     return {
       ...config,
       url: config.url || this.getUrl(field),
@@ -189,7 +183,7 @@ export class LookupCodeStore {
       return lookupUrl;
     }
     if (lovCode && type !== FieldType.object) {
-      return lovCodeStore.getQueryUrl(lovCode, field);
+      return lovCodeStore.getQueryAxiosConfig(lovCode, field)({ dataSet: field.dataSet }).url;
     }
   }
 

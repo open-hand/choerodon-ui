@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { observer } from 'mobx-react';
+import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
 import { action, observable } from 'mobx';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import IconItem from './IconItem';
 import Pagination from '../pagination/Pagination';
+import autobind from '../_util/autobind';
 
 export interface IconItemProps {
   prefixCls?: string;
@@ -25,7 +26,7 @@ export default class IconCategory extends Component<IconItemProps> {
 
   static propTypes = {
     prefixCls: PropTypes.string,
-    icons: PropTypes.arrayOf(PropTypes.string).isRequired,
+    icons: MobxPropTypes.arrayOrObservableArrayOf(PropTypes.string).isRequired,
     value: PropTypes.string,
     onSelect: PropTypes.func.isRequired,
     onPageChange: PropTypes.func,
@@ -47,20 +48,25 @@ export default class IconCategory extends Component<IconItemProps> {
     this.setPage(props.page);
   }
 
-  saveRef = node => (this.ul = node);
+  @autobind
+  saveRef(node) {
+    this.ul = node;
+  }
 
-  handlePageChange = (page: number) => {
+  @autobind
+  handlePageChange(page: number) {
     this.setPage(page);
     const { onPageChange, category } = this.props;
     if (onPageChange) {
       onPageChange(page, category);
     }
-  };
+  }
 
-  handleItemSelect = icon => {
+  @autobind
+  handleItemSelect(icon) {
     const { onSelect } = this.props;
     onSelect(icon);
-  };
+  }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.page && nextProps.page !== this.page) {

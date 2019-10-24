@@ -21,13 +21,15 @@ const prefixCls = getConfig('prefixCls');
 | --- | --- | --- | --- |
 | prefixCls | set prefix class | string | c7n |
 | proPrefixCls | set prefix class for pro components | string | c7n-pro |
+| iconfontPrefix | iconfont css prefix | string | icon |
+| icons | List of iconfont, used for IconPicker. | string[] \| { categoryName: string[] } | import { categories } from 'choerodon-ui-font' |
 | ripple | Whether to open the ripple effect | boolean | true |
 | lookupUrl | Lookup value url or hook which return url | string \| ((code: string) => string) | code => \`/common/code/\${code}/\` |
-| lookupAxiosMethod | Lookup and lov fetch method | string \| string | post |
+| lookupAxiosConfig | Lookup fetch axios config, more info: [AxiosRequestConfig](#AxiosRequestConfig). By default, url is lookupUrl and method is post. | AxiosRequestConfig \| ({ dataSet: DataSet, record: Record, params?: any, lookupCode: string }) => AxiosRequestConfig | post |
 | lovDefineUrl | Lov configure url or hook which return url | string \| ((code: string) => string) | code => \`/sys/lov/lov_define?code=\${code}\` |
-| lovDefineAxiosConfig | hook for Lov configure axios config | (code: string) => AxiosRequestConfig | - |
-| lovQueryUrl | Lov query url or hook which return url | string \| ((code: string) => string) | code => \`/common/lov/dataset/\${code}\` |
-| lovQueryAxiosConfig | hook for Lov query axios config | (code: string, lovConfig?: LovConfig, { dataSet, params, data }) => AxiosRequestConfig | - |
+| lovDefineAxiosConfig | hook for Lov configure axios config, more info: [AxiosRequestConfig](#AxiosRequestConfig). By default, url is lovDefineUrl and method is post. | AxiosRequestConfig \| (code: string) => AxiosRequestConfig | - |
+| lovQueryUrl | Lov query url or hook which return url | string \| ((code: string, lovConfig?: LovConfig, { dataSet, params, data }) => string) | code => \`/common/lov/dataset/\${code}\` |
+| lovQueryAxiosConfig | hook for Lov query axios config, more info: [AxiosRequestConfig](#AxiosRequestConfig). By default, url is lovQueryUrl and method is post. | AxiosRequestConfig \| (code: string, lovConfig?: LovConfig, { dataSet, params, data }) => AxiosRequestConfig | - |
 | axios | Replace the built-in axios instance | AxiosInstance |  |
 | dataKey | default DataSet's dataKey | string | rows |
 | totalKey | default DataSet's totalKey | string | total |
@@ -75,3 +77,20 @@ const prefixCls = getConfig('prefixCls');
 | valueMissingNoLabel | Please input a value. | ReactNode |
 | uniqueError | The value is duplicate, please input another one. | ReactNode |
 | unknown | Unknown error. | ReactNode |
+
+### AxiosRequestConfig
+
+| Property          | Description                 | Type                                |
+| ----------------- | --------------------------- | ----------------------------------- |
+| url               | request url address         | string                              |
+| method            | request method              | string                              |
+| baseURL           | base url                    | string                              |
+| headers           | request headers             | object                              |
+| params            | url parameters              | object                              |
+| data              | data of request body        | object                              |
+| timeout           | timeout of request          | number                              |
+| withCredentials   | cors cookie                 | boolean                             |
+| transformRequest  | transform for request data  | (data: any, headers: any) => string |
+| transformResponse | transform for response data | (data: any, headers: any) => any    |
+
+For more configuration, please refer to the official Axios documentation, or typescript: `/node_modules/axios/index.d.ts`

@@ -9,11 +9,13 @@ function defaultAxiosAdapter(config: AxiosRequestConfig): AxiosRequestConfig {
 
 export type TransportAdapter = (config: AxiosRequestConfig, type: string) => AxiosRequestConfig;
 
-export type TransportHook = (props: {
+export type TransportHookProps = {
   data?: any;
   params?: any;
-  dataSet: DataSet;
-}) => AxiosRequestConfig;
+  dataSet?: DataSet;
+};
+
+export type TransportHook = (props: TransportHookProps) => AxiosRequestConfig;
 
 export type TransportType = AxiosRequestConfig | TransportHook | string;
 

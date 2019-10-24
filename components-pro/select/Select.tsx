@@ -306,7 +306,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   checkComboReaction?: IReactionDisposer;
 
   fetchLookup = debounce((field: Field, searchMatcher, value) => {
-    field.setLookupPara(searchMatcher, value);
+    field.setLovPara(searchMatcher, value);
   }, 500);
 
   @autobind

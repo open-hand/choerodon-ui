@@ -21,6 +21,7 @@ import { ValidatorProps } from '../validator/rules';
 import isSame from '../_util/isSame';
 import PromiseQueue from '../_util/PromiseQueue';
 import { LovConfig } from '../lov/Lov';
+import { TransportHookProps } from './Transport';
 
 export type Fields = ObservableMap<string, Field>;
 export type DynamicPropsArguments = { dataSet: DataSet; record: Record; name: string };
@@ -141,10 +142,6 @@ export type FieldProps = {
    */
   lovPara?: object;
   /**
-   * Lookup查询参数
-   */
-  lookupPara?: object;
-  /**
    * 值列表代码
    */
   lookupCode?: string;
@@ -159,7 +156,9 @@ export type FieldProps = {
   /**
    * LOV查询请求地址
    */
-  lovQueryUrl?: string | ((code: string, config: LovConfig) => string);
+  lovQueryUrl?:
+    | string
+    | ((code: string, config: LovConfig | undefined, props: TransportHookProps) => string);
   /**
    * 值列表请求的axiosConfig
    */
@@ -174,11 +173,13 @@ export type FieldProps = {
   /**
    * LOV配置请求的钩子
    */
-  lovDefineAxiosConfig?: (code: string) => AxiosRequestConfig;
+  lovDefineAxiosConfig?: AxiosRequestConfig | ((code: string) => AxiosRequestConfig);
   /**
    * LOV查询请求的钩子
    */
-  lovQueryAxiosConfig?: (code: string, lovConfig?: LovConfig) => AxiosRequestConfig;
+  lovQueryAxiosConfig?:
+    | AxiosRequestConfig
+    | ((code: string, lovConfig?: LovConfig) => AxiosRequestConfig);
   /**
    * 内部字段别名绑定
    */
@@ -571,22 +572,6 @@ export default class Field {
       p[name] = value;
     }
     this.set('lovPara', p);
-  }
-
-  /**
-   * 设置Lookup的查询参数
-   * @param {String} name
-   * @param {Object} value
-   */
-  @action
-  setLookupPara(name, value) {
-    const p = this.get('lookupPara') || {};
-    if (value === null) {
-      delete p[name];
-    } else {
-      p[name] = value;
-    }
-    this.set('lookupPara', p);
   }
 
   getValidatorProps(): ValidatorProps | undefined {

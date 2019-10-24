@@ -9,6 +9,8 @@ import Field, { FieldProps } from '../data-set/Field';
 import { FieldType } from '../data-set/enum';
 import { LovFieldType } from '../lov/enum';
 import { LovConfig, LovConfigItem } from '../lov/Lov';
+import { processAxiosConfig } from './utils';
+import { TransportHookProps } from '../data-set/Transport';
 
 function getFieldType(conditionFieldType?: FieldType | LovFieldType): FieldType {
   switch (conditionFieldType) {
@@ -106,12 +108,11 @@ export class LovCodeStore {
   getDefineAxiosConfig(code: string, field?: Field): AxiosRequestConfig | undefined {
     const lovDefineAxiosConfig =
       (field && field.get('lovDefineAxiosConfig')) || getConfig('lovDefineAxiosConfig');
-    if (lovDefineAxiosConfig) {
-      return lovDefineAxiosConfig(code);
-    }
+    const config = processAxiosConfig(lovDefineAxiosConfig, code);
     return {
-      url: this.getConfigUrl(code, field),
-      method: 'post',
+      ...config,
+      url: config.url || this.getConfigUrl(code, field),
+      method: config.method || 'post',
     };
   }
 
@@ -148,14 +149,9 @@ export class LovCodeStore {
       const config = this.getConfig(code);
       if (config) {
         const { lovPageSize, lovItems, parentIdField, idField, valueField, treeFlag } = config;
-        const lovQueryAxiosConfig =
-          (field && field.get('lovQueryAxiosConfig')) || getConfig('lovQueryAxiosConfig');
         const dataSetProps: DataSetProps = {
-          queryUrl: lovQueryAxiosConfig ? undefined : this.getQueryUrl(code, field),
-          transport: lovQueryAxiosConfig && {
-            read(...args) {
-              return lovQueryAxiosConfig(code, config, ...args);
-            },
+          transport: {
+            read: this.getQueryAxiosConfig(code, field, config),
           },
           primaryKey: valueField,
           cacheSelection: true,
@@ -209,7 +205,20 @@ export class LovCodeStore {
     return lovDefineUrl as string;
   }
 
-  getQueryUrl(code: string, field?: Field): string {
+  getQueryAxiosConfig(code: string, field?: Field, config?: LovConfig) {
+    return (props: TransportHookProps) => {
+      const lovQueryAxiosConfig =
+        (field && field.get('lovQueryAxiosConfig')) || getConfig('lovQueryAxiosConfig');
+      const axiosConfig = processAxiosConfig(lovQueryAxiosConfig, code, config, props);
+      return {
+        ...axiosConfig,
+        url: axiosConfig.url || this.getQueryUrl(code, field, props),
+        method: axiosConfig.method || 'post',
+      };
+    };
+  }
+
+  getQueryUrl(code: string, field: Field | undefined, props: TransportHookProps): string {
     const config = this.getConfig(code);
     if (config) {
       const { customUrl } = config;
@@ -221,7 +230,7 @@ export class LovCodeStore {
     const lovQueryUrl = (field && field.get('lovQueryUrl')) || getConfig('lovQueryUrl');
 
     if (typeof lovQueryUrl === 'function') {
-      return lovQueryUrl(code, config);
+      return lovQueryUrl(code, config, props);
     }
     return lovQueryUrl as string;
   }

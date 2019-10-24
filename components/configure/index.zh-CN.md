@@ -24,13 +24,15 @@ const prefixCls = getConfig('prefixCls');
 | --- | --- | --- | --- |
 | prefixCls | 设置统一样式前缀 | string | c7n |
 | proPrefixCls | 设置统一样式前缀(pro 组件) | string | c7n-pro |
+| iconfontPrefix | 图标样式前缀 | string | icon |
+| icons | 图标列表，用于 IconPicker。 | string[] \| { categoryName: string[] } | import { categories } from 'choerodon-ui-font' |
 | ripple | 是否开启波纹效果 | boolean | true |
 | lookupUrl | lookup 取值的地址或返回地址的钩子 | string \| ((code: string) => string) | code => \`/common/code/\${code}/\` |
-| lookupAxiosMethod | Lookup 和 lov 默认请求方法 | string \| string | post |
+| lookupAxiosConfig | 值列表请求的配置或钩子，详见[AxiosRequestConfig](#AxiosRequestConfig)。 配置中默认 url 为 lookupUrl， method 为 post。 | AxiosRequestConfig \| ({ dataSet: DataSet, record: Record, params?: any, lookupCode: string }) => AxiosRequestConfig | - |
 | lovDefineUrl | Lov 取配置的地址或返回地址的钩子 | string \| ((code: string) => string) | code => \`/sys/lov/lov_define?code=\${code}\` |
-| lovDefineAxiosConfig | 返回 Lov 配置的钩子 | (code: string) => AxiosRequestConfig | - |
+| lovDefineAxiosConfig | 返回 Lov 配置的请求的配置或钩子，详见[AxiosRequestConfig](#AxiosRequestConfig)。 配置中默认 url 为 lovDefineUrl， method 为 post。 | AxiosRequestConfig \| (code: string, lovConfig?: LovConfig, { dataSet, params, data }) => AxiosRequestConfig | - |
 | lovQueryUrl | Lov 取值的地址或返回地址的钩子 | string \| ((code: string) => string) | code => \`/common/lov/dataset/\${code}\` |
-| lovQueryAxiosConfig | Lov 取值 Axios 逻辑的钩子 | (code: string, lovConfig?: LovConfig, { dataSet, params, data }) => AxiosRequestConfig | - |
+| lovQueryAxiosConfig | Lov 查询数据请求的配置或钩子，详见[AxiosRequestConfig](#AxiosRequestConfig)。 配置中默认 url 为 lovQueryUrl， method 为 post。 | AxiosRequestConfig \| (code: string, lovConfig?: LovConfig, { dataSet, params, data }) => AxiosRequestConfig | - |
 | axios | 替换内置的 axios 实例 | AxiosInstance |  |
 | dataKey | 默认 DataSet 的 dataKey | string | rows |
 | totalKey | 默认 DataSet 的 totalKey | string | total |
@@ -78,3 +80,20 @@ const prefixCls = getConfig('prefixCls');
 | valueMissingNoLabel | 请填写此字段。 | ReactNode |
 | uniqueError | 该字段值重复，请重新填写。 | ReactNode |
 | unknown | 未知错误。 | ReactNode |
+
+### AxiosRequestConfig
+
+| 属性              | 说明                | 类型                                |
+| ----------------- | ------------------- | ----------------------------------- |
+| url               | 地址                | string                              |
+| method            | 方法                | string                              |
+| baseURL           | 基础地址            | string                              |
+| headers           | 请求头              | object                              |
+| params            | url 参数            | object                              |
+| data              | 请求体数据          | object                              |
+| timeout           | 请求超时时间        | number                              |
+| withCredentials   | 用于跨域传递 cookie | boolean                             |
+| transformRequest  | 转变提交的数据      | (data: any, headers: any) => string |
+| transformResponse | 转变响应的数据      | (data: any, headers: any) => any    |
+
+更多配置请参考 Axios 官方文档，或参考 typescript 文件/node_modules/axios/index.d.ts

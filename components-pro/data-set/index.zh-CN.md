@@ -216,14 +216,14 @@ title: DataSet
 | range | 是否为范围值。 当为 true 时，则值为\[startValue, endValue\]；当为数组时，例如\['start', 'end'\]时，则值为{ start: startValue, end: endValue } | boolean\| \[string, string\] | false |
 | unique | 唯一索引或联合唯一索引组名。multiple 和 range 字段不适用。当 column 的 editor 设为 true 时，编辑器只会在新增的记录显示，如果要对已有数据进行编辑，请自定义 editor | boolean\| string | false |
 | lovCode | LOV 配置代码 | string |  |
-| lovPara | LOV 查询参数对象 | object |  |
+| lovPara | LOV 或 Lookup 查询参数对象 | object |  |
 | lookupCode | 值列表代码 | string |  |
 | lookupUrl | 值列表请求地址 | string \| (code) => string |  |
 | lovDefineUrl | lov 配置请求地址 | string \| (code) => string |  |
-| lovQueryUrl | lov 查询请求地址 | string \| (code, config) => string |  |
-| lookupAxiosConfig | 值列表请求配置或返回配置的钩子，详见[AxiosRequestConfig](#AxiosRequestConfig) | AxiosRequestConfig\| ({ dataSet, record, params, lookupCode }) => AxiosRequestConfig |  |
-| lovDefineAxiosConfig | lov 配置的请求配置或返回配置的钩子，优先级高于 lovDefineUrl，详见[AxiosRequestConfig](#AxiosRequestConfig) | AxiosRequestConfig\| (code) => AxiosRequestConfig |  |
-| lovQueryAxiosConfig | lov 查询的请求配置或返回配置的钩子，优先级高于 lovQueryUrl，详见[AxiosRequestConfig](#AxiosRequestConfig) | AxiosRequestConfig\| (code, config, { dataSet, params, data }) => AxiosRequestConfig |  |
+| lovQueryUrl | lov 查询请求地址 | string \| (code, config, { dataSet, params, data }) => string |  |
+| lookupAxiosConfig | 值列表请求配置或返回配置的钩子，详见[AxiosRequestConfig](/components/configure/#AxiosRequestConfig)。配置中默认 url 为 lookupUrl， method 为 post。 | AxiosRequestConfig\| ({ dataSet, record, params, lookupCode }) => AxiosRequestConfig |  |
+| lovDefineAxiosConfig | lov 配置的请求配置或返回配置的钩子，详见[AxiosRequestConfig](/components/configure/#AxiosRequestConfig)。 配置中默认 url 为 lovDefineUrl， method 为 post。 | AxiosRequestConfig\| (code) => AxiosRequestConfig |  |
+| lovQueryAxiosConfig | lov 查询的请求配置或返回配置的钩子，详见[AxiosRequestConfig](/components/configure/#AxiosRequestConfig)。 配置中默认 url 为 lovQueryUrl， method 为 post。 | AxiosRequestConfig\| (code, config, { dataSet, params, data }) => AxiosRequestConfig |  |
 | bind | 内部字段别名绑定 | string |  |
 | dynamicProps | 动态属性钩子或者对象。对象为字段属性和返回该字段值的钩子的键值对，建议使用对象以提高性能。 | ({ dataSet, record, name }) => object \| { fieldProp: ({ dataSet, record, name }) => value } |  |
 | cascadeMap | 快码和 LOV 查询时的级联参数映射。 例如：cascadeMap: { parentCodeValue: 'city' }，其中'city'是当前所在数据源的其他字段名，parentCodeValue 是快码和 LOV 的查询参数 | object |  |
@@ -270,20 +270,3 @@ title: DataSet
 | submit | create, update, destroy 的默认配置或 url 字符串 | AxiosRequestConfig \| ({ data, params, dataSet }) => AxiosRequestConfig \| string |
 | tls | 多语言数据请求的 axios 配置或 url 字符串 | AxiosRequestConfig \| ({ data, params, dataSet }) => AxiosRequestConfig \| string |
 | adapter | CRUD 配置适配器 | (config: AxiosRequestConfig, type: string) => AxiosRequestConfig |
-
-### AxiosRequestConfig
-
-| 属性              | 说明                | 类型                                |
-| ----------------- | ------------------- | ----------------------------------- |
-| url               | 地址                | string                              |
-| method            | 方法                | string                              |
-| baseURL           | 基础地址            | string                              |
-| headers           | 请求头              | object                              |
-| params            | url 参数            | object                              |
-| data              | 请求体数据          | object                              |
-| timeout           | 请求超时时间        | number                              |
-| withCredentials   | 用于跨域传递 cookie | boolean                             |
-| transformRequest  | 转变提交的数据      | (data: any, headers: any) => string |
-| transformResponse | 转变响应的数据      | (data: any, headers: any) => any    |
-
-更多配置请参考 Axios 官方文档，或参考 typescript 文件/node_modules/axios/index.d.ts

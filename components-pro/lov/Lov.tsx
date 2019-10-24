@@ -24,6 +24,7 @@ import { LovFieldType, ViewMode } from './enum';
 import Button, { ButtonProps } from '../button/Button';
 import { ButtonColor, FuncType } from '../button/enum';
 import { $l } from '../locale-context';
+import { getLovPara } from '../stores/utils';
 
 export type LovConfigItem = {
   display?: string;
@@ -216,13 +217,7 @@ export default class Lov extends Select<LovProps> {
       }
     }
     if (field) {
-      const lovPara = toJS(field.get('lovPara')) || {};
-      const cascadeMap = field.get('cascadeMap');
-      if (cascadeMap && record) {
-        Object.keys(cascadeMap).forEach(
-          cascade => (lovPara[cascade] = record.get(cascadeMap[cascade])),
-        );
-      }
+      const lovPara = getLovPara(field, record);
       if (!isEqual(lovPara, options.queryParameter)) {
         options.queryParameter = lovPara;
         return true;
