@@ -326,6 +326,8 @@ export default class Table extends DataSetComponent<TableProps> {
 
   nextFrameActionId?: number;
 
+  scrollId?: number;
+
   resizeLine: HTMLDivElement | null;
 
   tableHeadWrap: HTMLDivElement | null;
@@ -379,7 +381,9 @@ export default class Table extends DataSetComponent<TableProps> {
     if (!element.offsetParent) {
       tableStore.styledHidden = true;
     } else if (!tableStore.hidden) {
-      raf.cancel(this.nextFrameActionId);
+      if (this.nextFrameActionId !== undefined) {
+        raf.cancel(this.nextFrameActionId);
+      }
       this.nextFrameActionId = raf(this.syncSize);
     } else {
       tableStore.styledHidden = false;
@@ -577,7 +581,6 @@ export default class Table extends DataSetComponent<TableProps> {
     return super.getClassName(`${prefixCls}-scroll-position-left`, {
       [`${prefixCls}-bordered`]: border,
       [`${prefixCls}-row-height-fixed`]: isNumber(rowHeight),
-      [`${prefixCls}-has-tfoot`]: this.tableStore.hasFooter,
     });
   }
 
@@ -679,13 +682,20 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   @autobind
-  handleBodyScroll(e) {
-    this.handleBodyScrollTop(e);
-    this.handleBodyScrollLeft(e);
+  handleBodyScroll(e: React.SyntheticEvent) {
+    if (this.scrollId !== undefined) {
+      raf.cancel(this.scrollId);
+    }
+    const { currentTarget } = e;
+    e.persist();
+    this.scrollId = raf(() => {
+      this.handleBodyScrollTop(e, currentTarget);
+      this.handleBodyScrollLeft(e, currentTarget);
+    });
   }
 
-  handleBodyScrollTop(e) {
-    const { target, currentTarget } = e;
+  handleBodyScrollTop(e, currentTarget) {
+    const { target } = e;
     if (
       this.tableStore.height === undefined ||
       currentTarget !== target ||
@@ -711,8 +721,8 @@ export default class Table extends DataSetComponent<TableProps> {
     this.lastScrollTop = scrollTop;
   }
 
-  handleBodyScrollLeft(e) {
-    const { target, currentTarget } = e;
+  handleBodyScrollLeft(e, currentTarget) {
+    const { target } = e;
     const headTable = this.tableHeadWrap;
     const bodyTable = this.tableBodyWrap;
     const footTable = this.tableFootWrap;

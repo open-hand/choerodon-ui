@@ -18,6 +18,7 @@ timeline: true
 - 🌟 `configure`: 增加全局配置 transport、lookupAxiosConfig、iconfontPrefix、icons。
 - 🌟 `Icon`: 可自定义 iconfont 资源。
 - 💄 `<pro>DataSet.Field`: 优化 lookupAxiosConfig、lovDefineAxiosConfig、lovQueryAxiosConfig 的相关逻辑。
+- 💄 `<pro>Table`: 优化滚动条。
 - 🐞 `Alert`: 修复图标不显示的问题。
 - 🐞 `<pro>Form`: 修复子元素的 labelWidth 为非数字时的问题。
 

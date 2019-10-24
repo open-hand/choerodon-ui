@@ -158,6 +158,20 @@ export function checkParentByInsert({ parent }: DataSet) {
   }
 }
 
+function getValueType(value: any): FieldType {
+  return isBoolean(value)
+    ? FieldType.boolean
+    : isNumber(value)
+    ? FieldType.number
+    : isString(value)
+    ? FieldType.string
+    : isMoment(value)
+    ? FieldType.date
+    : isObject(value)
+    ? FieldType.object
+    : FieldType.auto;
+}
+
 function getBaseType(type: FieldType): FieldType {
   switch (type) {
     case FieldType.number:
@@ -178,20 +192,6 @@ function getBaseType(type: FieldType): FieldType {
   }
 }
 
-function getValueType(value: any): FieldType {
-  return isBoolean(value)
-    ? FieldType.boolean
-    : isNumber(value)
-    ? FieldType.number
-    : isString(value)
-    ? FieldType.string
-    : isMoment(value)
-    ? FieldType.date
-    : isObject(value)
-    ? FieldType.object
-    : FieldType.auto;
-}
-
 export function checkFieldType(value: any, field: Field): boolean {
   if (process.env.NODE_ENV !== 'production') {
     if (!isEmpty(value)) {
@@ -199,7 +199,11 @@ export function checkFieldType(value: any, field: Field): boolean {
         return value.every(item => checkFieldType(item, field));
       }
       const fieldType = getBaseType(field.type);
-      const valueType = getValueType(value);
+      const valueType =
+        field.type === FieldType.boolean &&
+        [field.get(BooleanValue.trueValue), field.get(BooleanValue.falseValue)].includes(value)
+          ? FieldType.boolean
+          : getValueType(value);
       if (
         fieldType !== FieldType.auto &&
         fieldType !== FieldType.reactNode &&

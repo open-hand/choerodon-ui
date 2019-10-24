@@ -119,7 +119,9 @@ export default class TableCell extends Component<TableCellProps> {
     const { element } = this;
     const { tableStore } = this.context;
     if (element && !tableStore.hidden) {
-      raf.cancel(this.nextFrameActionId);
+      if (this.nextFrameActionId !== undefined) {
+        raf.cancel(this.nextFrameActionId);
+      }
       this.nextFrameActionId = raf(this.syncSize);
     }
   }

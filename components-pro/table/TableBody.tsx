@@ -31,16 +31,21 @@ export default class TableBody extends Component<TableBodyProps> {
   render() {
     const { children, lock, prefixCls, height, onScroll } = this.props;
     const {
-      tableStore: { leftLeafColumnsWidth },
+      tableStore: { leftLeafColumnsWidth, hasFooter },
     } = this.context;
     const fixedLeft = lock === true || lock === ColumnLock.left;
+    const scrollbar = measureScrollbar();
+    const hasFooterAndNotLock = !lock && hasFooter && scrollbar;
     const tableBody = (
       <div
         ref={this.saveRef}
         className={`${prefixCls}-body`}
         style={{
-          height: pxToRem(height),
-          width: fixedLeft ? pxToRem(leftLeafColumnsWidth + measureScrollbar()) : undefined,
+          height: pxToRem(
+            hasFooterAndNotLock && height !== undefined ? height + scrollbar : height,
+          ),
+          marginBottom: hasFooterAndNotLock ? pxToRem(-scrollbar) : undefined,
+          width: fixedLeft ? pxToRem(leftLeafColumnsWidth + (scrollbar || 20)) : undefined,
         }}
         onScroll={onScroll}
       >

@@ -18,6 +18,7 @@ timeline: true
 - 🌟 `configure`: Add global configuration `transport`, `lookupAxiosConfig`, `iconfontPrefix`, `icons`.
 - 🌟 `Icon`: Customizable iconfont resource.
 - 💄 `<pro>DataSet.Field`: Optimize logic related to `lookupAxiosConfig`, `lovDefineAxiosConfig`, `lovQueryAxiosConfig`.
+- 💄 `<pro>Table`: Optimize scroll bar.
 - 🐞 `Alert`: Fix the problem that the icon is not displayed.
 - 🐞 `<pro>Form`: Fixed an issue where the child element's `labelWidth` was non-numeric.
 

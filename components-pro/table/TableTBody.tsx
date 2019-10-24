@@ -55,7 +55,9 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
 
   @autobind
   handleResize() {
-    raf.cancel(this.nextFrameActionId);
+    if (this.nextFrameActionId !== undefined) {
+      raf.cancel(this.nextFrameActionId);
+    }
     this.nextFrameActionId = raf(this.syncBodyHeight);
   }
 

@@ -146,6 +146,7 @@
   }
 
   &-foot {
+    position: relative;
     overflow-x: auto;
     background-color: @component-background;
     border-top: @table-border;
@@ -186,10 +187,6 @@
   &-scroll-position-left &-fixed-left,
   &-scroll-position-right &-fixed-right {
     box-shadow: none;
-  }
-
-  &-has-tfoot &-body {
-    overflow-x: hidden;
   }
 
   &-bordered {
