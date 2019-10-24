@@ -45,7 +45,7 @@ title: Form
 | newLine | 另起新行 | boolean |  |
 | label | 标签 | string \| ReactNode |  |
 | name | 字段名。可获取 DataSet 的字段属性，如 label，require 等，一般用于控件外需要嵌套其他元素时使用。 | string |  |
-| labelWidth | 标签宽度。同列控件中标签宽度取最大设定值。 | number\| number[] \| object |  |
+| labelWidth | 标签宽度。同列控件中标签宽度取最大设定值。子元素的 labelWidth 无法响应式。 | number |  |
 
 ### Form Responsive
 

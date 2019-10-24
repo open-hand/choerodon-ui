@@ -512,7 +512,7 @@ export default class Form extends DataSetComponent<FormProps> {
         [`${prefixCls}-output`]: isOutput,
       });
       if (!noLabel) {
-        if (fieldLabelWidth !== undefined) {
+        if (!isNaN(fieldLabelWidth)) {
           labelWidth[colIndex] = Math.max(labelWidth[colIndex], fieldLabelWidth);
         }
         cols.push(

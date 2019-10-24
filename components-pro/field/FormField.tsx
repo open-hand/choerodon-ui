@@ -77,6 +77,10 @@ export interface FormFieldProps extends DataSetComponentProps {
    */
   labelLayout?: LabelLayout;
   /**
+   * 标签宽度
+   */
+  labelWidth?: number;
+  /**
    * 字段名
    */
   name?: string;
@@ -501,6 +505,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       'rowIndex',
       'colIndex',
       'labelLayout',
+      'labelWidth',
       'pristine',
       'range',
       'trim',
