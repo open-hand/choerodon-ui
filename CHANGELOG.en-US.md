@@ -18,6 +18,7 @@ timeline: true
 - 🌟 `configure`: Add global configuration `transport`, `lookupAxiosConfig`, `iconfontPrefix`, `icons`.
 - 🌟 `Icon`: Customizable iconfont resource.
 - 💄 `<pro>DataSet.Field`: Optimize logic related to `lookupAxiosConfig`, `lovDefineAxiosConfig`, `lovQueryAxiosConfig`.
+- 🐞 `Alert`: Fix the problem that the icon is not displayed.
 
 ## 0.8.27
 

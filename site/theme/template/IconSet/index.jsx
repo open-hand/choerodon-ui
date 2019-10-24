@@ -1,23 +1,13 @@
 import React from 'react';
-import { Icon } from 'choerodon-ui';
+import { categories } from 'choerodon-ui-font';
 import Category from './Category';
 
 function renderCategories() {
-  const { categories } = Icon;
-  return Object.keys(categories)
-    .map(category => (
-      <Category
-        key={category}
-        title={category}
-        icons={categories[category]}
-      />
-    ));
+  return Object.keys(categories).map(category => (
+    <Category key={category} title={category} icons={categories[category]} />
+  ));
 }
 
-const IconSet = () => (
-  <div>
-    {renderCategories()}
-  </div>
-);
+const IconSet = () => <div>{renderCategories()}</div>;
 
 export default IconSet;

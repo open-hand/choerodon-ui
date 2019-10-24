@@ -90,24 +90,19 @@ export default class Alert extends Component<AlertProps, any> {
     if (!iconType) {
       switch (type) {
         case 'success':
-          iconType = 'check-circle';
+          iconType = 'check_circle';
           break;
         case 'info':
-          iconType = 'info-circle';
+          iconType = 'info';
           break;
         case 'error':
-          iconType = 'cross-circle';
+          iconType = 'error';
           break;
         case 'warning':
-          iconType = 'exclamation-circle';
+          iconType = 'warning';
           break;
         default:
           iconType = 'default';
-      }
-
-      // use outline icon in alert with description
-      if (description) {
-        iconType += '-o';
       }
     }
 
@@ -130,7 +125,7 @@ export default class Alert extends Component<AlertProps, any> {
 
     const closeIcon = closable ? (
       <a onClick={this.handleClose} className={`${prefixCls}-close-icon`}>
-        {closeText || <Icon type="cross" />}
+        {closeText || <Icon type="close" />}
       </a>
     ) : null;
 
