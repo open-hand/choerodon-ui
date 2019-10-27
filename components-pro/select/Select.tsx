@@ -21,7 +21,6 @@ import OptGroup from '../option/OptGroup';
 import { DataSetStatus, FieldType } from '../data-set/enum';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
-import lookupStore from '../stores/LookupCodeStore';
 import Spin from '../spin';
 import { stopEvent } from '../_util/EventManager';
 import normalizeOptions from '../option/normalizeOptions';
@@ -306,7 +305,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   checkComboReaction?: IReactionDisposer;
 
   fetchLookup = debounce((field: Field, searchMatcher, value) => {
-    field.setLovPara(searchMatcher, value);
+    field.setLovPara(searchMatcher, value === '' ? undefined : value);
   }, 500);
 
   @autobind
@@ -676,10 +675,8 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   @autobind
   handleBlur(e) {
     if (!e.isDefaultPrevented()) {
-      if (!this.popup) {
-        this.resetFilter();
-      }
       super.handleBlur(e);
+      this.resetFilter();
     }
   }
 
@@ -692,8 +689,9 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
 
   syncValueOnBlur(value) {
     if (value) {
+      const { data } = this.comboOptions;
       this.options.ready().then(() => {
-        const record = this.findByTextWithValue(value);
+        const record = this.findByTextWithValue(value, data);
         if (record) {
           this.choose(record);
         }
@@ -703,9 +701,11 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     }
   }
 
-  findByTextWithValue(text): Record | undefined {
+  findByTextWithValue(text, data: Record[]): Record | undefined {
     const { textField } = this;
-    const records = this.optionsWithCombo.filter(record => isSameLike(record.get(textField), text));
+    const records = [...data, ...this.cascadeOptions].filter(record =>
+      isSameLike(record.get(textField), text),
+    );
     if (records.length > 1) {
       const { valueField } = this;
       const value = this.getValue();
@@ -806,11 +806,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   }
 
   @autobind
-  handlePopupAnimateEnd(key, exists) {
-    if (!exists && key === 'align' && !this.isFocused) {
-      this.resetFilter();
-    }
-  }
+  handlePopupAnimateEnd(_key, _exists) {}
 
   @autobind
   handleMenuClick({
@@ -836,6 +832,22 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     this.removeComboOption(record);
   }
 
+  @action
+  setText(text?: string): void {
+    super.setText(text);
+    this.doSearch(text);
+  }
+
+  doSearch(value) {
+    if (this.searchable) {
+      const { field } = this;
+      const { searchMatcher } = this.props;
+      if (field && searchMatcher && isString(searchMatcher)) {
+        this.fetchLookup(field, searchMatcher, value);
+      }
+    }
+  }
+
   @autobind
   @action
   handleChange(e) {
@@ -844,34 +856,14 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     if (this.observableProps.combo) {
       this.generateComboOption(value, text => this.setText(text));
     }
-    if (this.searchable) {
-      const { field } = this;
-      const { searchMatcher } = this.props;
-      if (field && searchMatcher && isString(searchMatcher)) {
-        this.fetchLookup(field, searchMatcher, value);
-      }
-    }
     if (!this.popup) {
       this.expand();
     }
   }
 
-  generateLookupValue(record: Record) {
-    const { field, valueField } = this;
-    const lookupKey = field && lookupStore.getKey(field);
-    const value = record.get(valueField);
-    if (lookupKey) {
-      const data = lookupStore.get(lookupKey);
-      if (data && data.every(item => item[valueField] !== value)) {
-        data.push(record.toData());
-      }
-    }
-    return value;
-  }
-
   processRecordToObject(record: Record) {
-    const { primitive } = this;
-    return primitive ? this.generateLookupValue(record) : record.toData();
+    const { primitive, valueField } = this;
+    return primitive ? record.get(valueField) : record.toData();
   }
 
   processObjectValue(value, textField) {
@@ -885,12 +877,9 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   }
 
   processLookupValue(value) {
-    const { field, textField, valueField, primitive } = this;
-    if (field && primitive) {
-      const lookupKey = lookupStore.getKey(field);
-      if (lookupKey) {
-        return super.processValue(lookupStore.getText(lookupKey, value, valueField, textField));
-      }
+    const { field, textField, primitive } = this;
+    if (primitive && field && field.lookup) {
+      return super.processValue(field.getText(value));
     }
     return super.processValue(this.processObjectValue(value, textField));
   }

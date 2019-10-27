@@ -71,7 +71,7 @@ title: DataSet
 
 ### DataSet Methods
 
-| 名称 | 说明 | 参数 | 返回值 |
+| 名称 | 说明 | 参数 | 返回值类型 |
 | --- | --- | --- | --- |
 | ready(isSelect) | 判断记录是否准备就绪 | `isSelect` - 设为 `true` 时，判断选中的记录 | Promise |
 | query(page) | 查询 | `page`&lt;optional,defualt:0&gt; - 指定页码 | Promise&lt;any&gt; |
@@ -170,7 +170,7 @@ title: DataSet
 
 ### Record Methods
 
-| 名称 | 说明 | 参数 | 返回值 |
+| 名称 | 说明 | 参数 | 返回值类型 |
 | --- | --- | --- | --- |
 | get(fieldName) | 根据字段名获取字段值。注意：禁止通过 record.data\[fieldName\]的方式获取字段值。 | `fieldName` - 字段名 | any |
 | getPristineValue(fieldName) | 根据字段名获取字段的原始值。 | `fieldName` - 字段名 | any |
@@ -245,18 +245,19 @@ title: DataSet
 
 ### Field Methods
 
-| 名称 | 说明 | 参数 |
-| --- | --- | --- |
-| get(propsName) | 根据属性名获取属性值 | `propsName` - 属性名 |
-| set(propsName, value) | 设置属性值 | `propsName` - 属性名；`value` - 属性值 |
-| reset() | 重置设置的属性 |  |
-| checkValidity() | 校验字段值 |  |
-| setLovPara(para, value) | 设置 Lov 的查询参数 | `para` - 参数名；`value` - 参数值 |
-| getValue() | 获取当前记录的本字段值 | `lookupValue` - lookup 值 |
-| getText(lookupValue) | 根据 lookup 值获取 lookup 含义 | `lookupValue` - lookup 值，默认本字段值 |
-| getLookupData(lookupValue) | 根据 lookup 值获取 lookup 对象 | `lookupValue` - lookup 值，默认本字段值 |
-| isValid() | 是否校验通过 |  |
-| getValidationMessage() | 获取校验信息 |  |
+| 名称 | 说明 | 参数 | 返回值类型 |
+| --- | --- | --- | --- |
+| get(propsName) | 根据属性名获取属性值 | `propsName` - 属性名 | any |
+| set(propsName, value) | 设置属性值 | `propsName` - 属性名；`value` - 属性值 | - |
+| reset() | 重置设置的属性 |  | - |
+| checkValidity() | 校验字段值 |  | boolean |
+| setLovPara(para, value) | 设置 Lov 的查询参数 | `para` - 参数名；`value` - 参数值 | - |
+| getValue() | 获取当前记录的本字段值 | any |
+| getText(lookupValue) | 根据 lookup 值获取 lookup 描述 | `lookupValue` - lookup 值，默认本字段值 | string |
+| getLookupData(lookupValue) | 根据 lookup 值获取 lookup 数据对象 | `lookupValue` - lookup 值，默认本字段值 | object |
+| fetchLookup() | 请求 lookup 数据，若有缓存直接返回缓存数据。 |  | Promise&lt;object[]&gt; |
+| isValid() | 是否校验通过 |  | boolean |
+| getValidationMessage() | 获取校验信息 |  | string |
 
 ### Transport
 

@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+- 💄 `<pro>Field`: Optimize the lookup caching mechanism.
+- 🐞 `<pro>Select`: Fixed an issue where `lovQueryAxiosConfig` did not work when using `lovCode`.
+- 🐞 `<pro>Select`: Fix the problem with `searchMatcher`.
+
 ## 0.8.28
 
 `2019-10-25`

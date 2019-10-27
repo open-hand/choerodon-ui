@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const CSSSplitWebpackPlugin = require('css-split-webpack-plugin').default;
 const babelOptions = require('bisheng/lib/config/getBabelCommonConfig').default();
 const replaceLib = require('../tools/replaceLib');
@@ -117,7 +118,12 @@ module.exports = {
       // [require.resolve('@babel/plugin-transform-classes'), { loose: true }],
     );
 
-    config.plugins.push(new CSSSplitWebpackPlugin({ size: 4000 }));
+    config.plugins.push(
+      new CSSSplitWebpackPlugin({ size: 4000 }),
+      new webpack.DefinePlugin({
+        'process.env.LOGGER_LEVEL': JSON.stringify('info'),
+      }),
+    );
 
     if (isDev) {
       config.devtool = '#source-map';

@@ -33,7 +33,6 @@ import measureTextWidth from '../../_util/measureTextWidth';
 import { getEditorByField } from '../utils';
 import ObserverSelect, { SelectProps } from '../../select/Select';
 import processFieldValue from '../../_util/processFieldValue';
-import lookupStore from '../../stores/LookupCodeStore';
 import Option, { OptionProps } from '../../option/Option';
 import isSameLike from '../../_util/isSameLike';
 import { DataSetEvents } from '../../data-set/enum';
@@ -375,15 +374,12 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
 
   multipleFieldExistsValue(field: Field, current?: Record): boolean {
     if (field.get('multiple')) {
-      const lookupKey = lookupStore.getKey(field);
-      if (lookupKey) {
-        const lookupData = lookupStore.get(lookupKey);
-        if (lookupData && current) {
-          const values = current.get(field.name);
-          return lookupData.some(
-            obj => !values.some(value => isSameLike(get(obj, field.get('valueField')), value)),
-          );
-        }
+      const { lookup } = field;
+      if (lookup && current) {
+        const values = current.get(field.name);
+        return lookup.some(
+          obj => !values.some(value => isSameLike(get(obj, field.get('valueField')), value)),
+        );
       }
     }
     return false;

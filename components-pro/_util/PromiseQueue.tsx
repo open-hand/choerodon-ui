@@ -27,7 +27,7 @@ export default class PromiseQueue {
   }
 
   @action
-  add(promise: Promise<any>): Promise<any> {
+  add<T>(promise: Promise<T>): Promise<T> {
     const { queue } = this;
     queue.push(promise);
     return promise

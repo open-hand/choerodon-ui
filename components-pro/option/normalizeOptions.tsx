@@ -4,7 +4,6 @@ import { DataSetSelection, FieldType } from '../data-set/enum';
 import { FieldProps } from '../data-set/Field';
 import OptGroup, { OptGroupProps } from './OptGroup';
 import Option, { OptionProps } from './Option';
-import lookupStore from '../stores/LookupCodeStore';
 
 function getOptionsFromChildren(
   elements: ReactNode[],
@@ -79,15 +78,7 @@ export default function normalizeOptions({
     if (options) {
       return options;
     }
-    const axiosConfig = lookupStore.getAxiosConfig(field);
-    const lookupKey = lookupStore.getKey(axiosConfig);
-    if (lookupKey) {
-      data = lookupStore.get(lookupKey);
-      if (!data) {
-        // fix mobx computed value issue
-        fetch = new Promise(resolve => setTimeout(() => resolve(field.fetchLookup()), 0));
-      }
-    }
+    data = field.get('lookup');
   }
   const fields = [
     {

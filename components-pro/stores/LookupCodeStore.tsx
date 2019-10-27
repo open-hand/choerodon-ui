@@ -1,118 +1,32 @@
-import { action, get, observable, ObservableMap } from 'mobx';
+import { action } from 'mobx';
 import { AxiosInstance, AxiosRequestConfig } from 'axios';
-import queryString from 'querystringify';
-import omitBy from 'lodash/omitBy';
 import isString from 'lodash/isString';
-import warning from 'choerodon-ui/lib/_util/warning';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import axios from '../axios';
 import Field from '../data-set/Field';
 import lovCodeStore from './LovCodeStore';
 import { FieldType } from '../data-set/enum';
-import { append, generateResponseData } from '../data-set/utils';
-import isSameLike from '../_util/isSameLike';
+import { generateResponseData } from '../data-set/utils';
 import { getLovPara, processAxiosConfig } from './utils';
+import cacheAdapterEnhancer from '../axios/cacheAdapterEnhancer';
+import throttleAdapterEnhancer from '../axios/throttleAdapterEnhancer';
 
-function splitKeys(lookupKey: string): string[] {
-  const [key, subKey] = lookupKey.split('?');
-  const keys: string[] = [key, ''];
-  if (subKey) {
-    const params = queryString.parse(subKey);
-    const newParams = {};
-    Object.keys(params)
-      .sort()
-      .forEach(name => (newParams[name] = params[name]));
-    keys[1] = queryString.stringify(newParams);
-  }
-  return keys;
-}
+const adapter = throttleAdapterEnhancer(cacheAdapterEnhancer(axios.defaults.adapter!));
 
 export type responseData = object[];
 export type responseType = responseData | undefined;
 
 export class LookupCodeStore {
-  @observable lookupCodes: ObservableMap<string, ObservableMap<string, responseData>>;
-
-  pendings: { [key: string]: Promise<responseType> } = {};
-
   get axios(): AxiosInstance {
     return getConfig('axios') || axios;
-  }
-
-  constructor() {
-    this.init();
-  }
-
-  @action
-  init() {
-    this.lookupCodes = observable.map<string, ObservableMap<string, responseData>>();
-  }
-
-  // all(lookupKey: string, valueField: string): responseData | undefined {
-  //   const [key] = splitKeys(lookupKey);
-  //   if (key) {
-  //     const rootData = this.lookupCodes.get(key);
-  //     if (rootData) {
-  //       return [...[...rootData.values()].reduce((obj, values) => {
-  //         values.forEach(item => obj.set(item[valueField], item));
-  //         return obj;
-  //       }, observable.map<string, object>()).values()];
-  //     }
-  //   }
-  // }
-
-  get(lookupKey: string): responseData | undefined {
-    const [key, subKey] = splitKeys(lookupKey);
-    if (key) {
-      const rootData = this.lookupCodes.get(key);
-      if (rootData) {
-        return rootData.get(subKey);
-      }
-    }
-  }
-
-  @action
-  set(lookupKey: string, data: responseData | undefined) {
-    if (data) {
-      const [key, subKey] = splitKeys(lookupKey);
-      if (key) {
-        let rootData = this.lookupCodes.get(key);
-        if (!rootData) {
-          rootData = observable.map<string, responseData>();
-          this.lookupCodes.set(key, rootData);
-        }
-        rootData.set(subKey, data);
-      }
-    }
-  }
-
-  getByValue(lookupKey: string, value: any, valueField: string): object | undefined {
-    const lookup = this.get(lookupKey);
-    if (lookup) {
-      return lookup.find(obj => isSameLike(get(obj, valueField), value));
-    }
-  }
-
-  getText(
-    lookupKey: string,
-    value: any,
-    valueField: string,
-    textField: string,
-  ): string | undefined {
-    const found = this.getByValue(lookupKey, value, valueField);
-    if (found) {
-      return get(found, textField);
-    }
   }
 
   async fetchLookupData(
     key: AxiosRequestConfig | string,
     axiosConfig: AxiosRequestConfig = {},
-  ): Promise<responseData | undefined> {
-    let lookupKey: string | undefined;
+  ): Promise<responseType> {
     let config: AxiosRequestConfig = {};
     if (isString(key)) {
-      lookupKey = key;
       config = {
         ...axiosConfig,
         url: key,
@@ -120,23 +34,14 @@ export class LookupCodeStore {
       };
     } else {
       config = key as AxiosRequestConfig;
-      lookupKey = this.getKey(config);
     }
-    if (lookupKey) {
-      let data: responseData | undefined = this.get(lookupKey);
+    if (config.url) {
+      let data: responseData | undefined;
       // SSR do not fetch the lookup
-      if (!data && typeof window !== 'undefined') {
-        try {
-          const pending: Promise<responseType> = this.pendings[lookupKey] || this.axios(config);
-          this.pendings[lookupKey] = pending;
-          const result: responseType = await pending;
-          if (result) {
-            data = generateResponseData(result, getConfig('dataKey'));
-            this.set(lookupKey, data);
-          }
-          warning(!!data, `Lookup<${lookupKey}> is not exists`);
-        } finally {
-          delete this.pendings[lookupKey];
+      if (typeof window !== 'undefined') {
+        const result: any = await this.axios(config);
+        if (result) {
+          data = generateResponseData(result, getConfig('dataKey'));
         }
       }
       return data;
@@ -154,21 +59,12 @@ export class LookupCodeStore {
       lookupCode: field.get('lookupCode'),
     });
     return {
+      adapter,
       ...config,
       url: config.url || this.getUrl(field),
       method: config.method || getConfig('lookupAxiosMethod') || 'post',
       params: config.params || params,
     };
-  }
-
-  getKey(field: Field | AxiosRequestConfig): string | undefined {
-    if (field instanceof Field) {
-      return this.getKey(this.getAxiosConfig(field));
-    }
-    const { url, params, data } = field as AxiosRequestConfig;
-    if (url) {
-      return append(url, omitBy({ ...params, ...data }, value => value === ''));
-    }
   }
 
   getUrl(field: Field): string | undefined {
@@ -187,22 +83,9 @@ export class LookupCodeStore {
     }
   }
 
+  // @deprecate
   @action
-  clearCache(codes?: string[]) {
-    if (codes) {
-      const lookupUrl = getConfig('lookupUrl');
-      if (typeof lookupUrl === 'function') {
-        codes.forEach(code => {
-          this.lookupCodes.delete(lookupUrl(code));
-          this.lookupCodes.delete(code);
-        });
-      } else {
-        codes.forEach(code => this.lookupCodes.delete(code));
-      }
-    } else {
-      this.lookupCodes.clear();
-    }
-  }
+  clearCache() {}
 }
 
 export default new LookupCodeStore();

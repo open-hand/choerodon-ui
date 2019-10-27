@@ -22,6 +22,7 @@ import isSame from '../_util/isSame';
 import PromiseQueue from '../_util/PromiseQueue';
 import { LovConfig } from '../lov/Lov';
 import { TransportHookProps } from './Transport';
+import isSameLike from '../../pro/es/_util/isSameLike';
 
 export type Fields = ObservableMap<string, Field>;
 export type DynamicPropsArguments = { dataSet: DataSet; record: Record; name: string };
@@ -253,6 +254,16 @@ export default class Field {
 
   @observable props: FieldProps & { [key: string]: any };
 
+  @computed
+  get lookup(): object[] | undefined {
+    const lookup = this.get('lookup');
+    if (lookup) {
+      const lookupData = this.get('lookupData') || [];
+      return lookup.concat(lookupData);
+    }
+    return undefined;
+  }
+
   isDynamicPropsComputing: boolean = false;
 
   @computed
@@ -336,8 +347,11 @@ export default class Field {
       this.record = record;
       this.pristineProps = props;
       this.props = props;
-      this.fetchLookup();
-      this.fetchLovConfig();
+      const dsField = this.findDataSetField();
+      if (!dsField) {
+        this.fetchLookup();
+        this.fetchLovConfig();
+      }
     });
   }
 
@@ -440,10 +454,9 @@ export default class Field {
    */
   getLookupData(value: any = this.getValue()): object {
     const valueField = this.get('valueField');
-    const lookupKey = lookupStore.getKey(this);
     const data = {};
-    if (lookupKey) {
-      return lookupStore.getByValue(lookupKey, value, valueField) || data;
+    if (this.lookup) {
+      return this.lookup.find(obj => isSameLike(get(obj, valueField), value)) || data;
     }
     return data;
   }
@@ -465,9 +478,9 @@ export default class Field {
   getText(value: any = this.getValue(), showValueIfNotFound?: boolean): string | undefined {
     const textField = this.get('textField');
     const valueField = this.get('valueField');
-    const lookupKey = lookupStore.getKey(this);
-    if (lookupKey) {
-      const found = lookupStore.getByValue(lookupKey, value, valueField);
+    const { lookup } = this;
+    if (lookup) {
+      const found = lookup.find(obj => isSameLike(get(obj, valueField), value));
       if (found) {
         return get(found, textField);
       }
@@ -565,7 +578,7 @@ export default class Field {
    */
   @action
   setLovPara(name, value) {
-    const p = this.get('lovPara') || {};
+    const p = toJS(this.get('lovPara')) || {};
     if (value === null) {
       delete p[name];
     } else {
@@ -628,10 +641,37 @@ export default class Field {
     return valid;
   }
 
-  fetchLookup() {
+  /**
+   * 请求lookup值, 如有缓存值直接获得。
+   * @return Promise<object[]>
+   */
+  async fetchLookup(): Promise<object[] | undefined> {
     const axiosConfig = lookupStore.getAxiosConfig(this);
     if (axiosConfig.url) {
-      return this.pending.add(lookupStore.fetchLookupData(axiosConfig));
+      const result = await this.pending.add<object[] | undefined>(
+        lookupStore.fetchLookupData(axiosConfig),
+      );
+      if (result) {
+        runInAction(() => {
+          const { lookup } = this;
+          this.set('lookup', result);
+          const value = this.getValue();
+          const valueField = this.get('valueField');
+          if (value && valueField && lookup) {
+            this.set(
+              'lookupData',
+              [].concat(value).reduce<object[]>((lookupData, v) => {
+                const found = lookup.find(item => isSameLike(item[valueField], v));
+                if (found) {
+                  lookupData.push(found);
+                }
+                return lookupData;
+              }, []),
+            );
+          }
+        });
+      }
+      return result;
     }
   }
 
@@ -702,11 +742,22 @@ export default class Field {
   }
 
   private handlePropChange(propsName) {
-    if (propsName === 'type' || propsName === 'lookupUrl' || propsName === 'lookupCode') {
+    if (
+      [
+        'type',
+        'lookupUrl',
+        'lookupCode',
+        'lookupAxiosConfig',
+        'lovCode',
+        'lovQueryAxiosConfig',
+        'lovPara',
+        'cascadeMap',
+        'lovQueryUrl',
+      ].includes(propsName)
+    ) {
       this.fetchLookup();
     }
-    if (propsName === 'lovCode') {
-      this.fetchLookup();
+    if (['lovCode', 'lovDefineAxiosConfig', 'lovDefineUrl'].includes(propsName)) {
       this.fetchLovConfig();
     }
   }
