@@ -17,7 +17,8 @@ timeline: true
 
 - 💄 `<pro>Field`: Optimize the lookup caching mechanism.
 - 🐞 `<pro>Select`: Fixed an issue where `lovQueryAxiosConfig` did not work when using `lovCode`.
-- 🐞 `<pro>Select`: Fix the problem with `searchMatcher`.
+- 🐞 `<pro>Select`: Fixed the problem with `searchMatcher`.
+- 🐞 `<pro>Table`: Fixed the problem that CheckBox of unedited line is not disabled in the inline-edit mode.
 
 ## 0.8.28
 

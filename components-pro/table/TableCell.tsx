@@ -346,7 +346,7 @@ export default class TableCell extends Component<TableCellProps> {
     const { cellEditor } = this;
     if (isValidElement(cellEditor)) {
       const {
-        tableStore: { dataSet, pristine },
+        tableStore: { dataSet, pristine, inlineEdit },
       } = this.context;
       const {
         column: { name },
@@ -358,7 +358,7 @@ export default class TableCell extends Component<TableCellProps> {
         record,
         name,
         pristine,
-        disabled: isDisabledRow(record),
+        disabled: isDisabledRow(record) || (inlineEdit && !record.editing),
         indeterminate: checkField && checkField === name && record.isIndeterminate,
         labelLayout: LabelLayout.none,
       };

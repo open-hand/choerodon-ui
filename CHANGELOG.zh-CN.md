@@ -18,6 +18,7 @@ timeline: true
 - 💄 `<pro>Field`: 优化 lookup 缓存机制。
 - 🐞 `<pro>Select`: 修复使用 lovCode 时，lovQueryAxiosConfig 不起作用的问题。
 - 🐞 `<pro>Select`: 修复 searchMatcher 的问题。
+- 🐞 `<pro>Table`: 修复行内编辑模式下未编辑状态的行 CheckBox 没禁用的问题。
 
 ## 0.8.28
 
