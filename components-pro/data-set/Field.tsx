@@ -22,7 +22,7 @@ import isSame from '../_util/isSame';
 import PromiseQueue from '../_util/PromiseQueue';
 import { LovConfig } from '../lov/Lov';
 import { TransportHookProps } from './Transport';
-import isSameLike from '../../pro/es/_util/isSameLike';
+import isSameLike from '../_util/isSameLike';
 
 export type Fields = ObservableMap<string, Field>;
 export type DynamicPropsArguments = { dataSet: DataSet; record: Record; name: string };
