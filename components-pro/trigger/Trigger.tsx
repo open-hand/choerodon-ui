@@ -2,6 +2,7 @@ import React, { Children, Component, CSSProperties, isValidElement, Key, ReactNo
 import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
+import raf from 'raf';
 import { action as mobxAction, observable, runInAction } from 'mobx';
 import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
 import noop from 'lodash/noop';
@@ -133,6 +134,8 @@ export default class Trigger extends Component<TriggerProps> {
 
   preClickTime: number = 0;
 
+  animateFrameId: number = 0;
+
   @observable popupHidden?: boolean;
 
   constructor(props, context) {
@@ -250,7 +253,10 @@ export default class Trigger extends Component<TriggerProps> {
   @autobind
   handleDocumentScroll({ target }) {
     if (this.popup && target !== document && !contains(findDOMNode(this.popup), target)) {
-      this.forcePopupAlign();
+      if (this.animateFrameId) {
+        raf.cancel(this.animateFrameId);
+      }
+      this.animateFrameId = raf(this.forcePopupAlign);
     }
   }
 
@@ -381,6 +387,7 @@ export default class Trigger extends Component<TriggerProps> {
     return className.join(' ');
   }
 
+  @autobind
   forcePopupAlign() {
     if (!this.popupHidden && this.popup) {
       this.popup.forceAlign();

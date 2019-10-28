@@ -143,7 +143,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
     });
   }
 
-  handleClickWait;
+  handleClickWait: Function & Cancelable;
 
   constructor(props, context) {
     super(props, context);
@@ -170,7 +170,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
     this.handleClickWait.cancel();
   }
 
-  getHandleClick(props): Cancelable {
+  getHandleClick(props): Function & Cancelable {
     const { wait, waitType } = props;
     if (wait && waitType) {
       const options: DebounceSettings = { leading: true, trailing: true };
@@ -182,8 +182,18 @@ export default class Button extends DataSetComponent<ButtonProps> {
       }
       return debounce(this.handleClick, wait, options);
     }
-
     return debounce(this.handleClick, 0);
+  }
+
+  @autobind
+  handleClickIfBubble(e) {
+    const { wait, waitType } = this.props;
+    if (wait && waitType) {
+      e.stopPropagation();
+      this.handleClickWait(e);
+    } else {
+      this.handleClick(e);
+    }
   }
 
   @autobind
@@ -217,7 +227,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
       'waitType',
     ]);
     if (!this.isDisabled()) {
-      otherProps.onClick = this.handleClickWait;
+      otherProps.onClick = this.handleClickIfBubble;
     }
     return otherProps;
   }

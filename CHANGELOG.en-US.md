@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>Button`: Fixed an issue where click events could not prevent bubbling.
+
 ## 0.8.29
 
 `2019-10-27`

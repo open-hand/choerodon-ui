@@ -267,7 +267,8 @@ title: DataSet
 | read | 查询请求的 axios 配置或 url 字符串 | AxiosRequestConfig \| ({ data, params, dataSet }) => AxiosRequestConfig \| string |
 | update | 更新请求的 axios 配置或 url 字符串 | AxiosRequestConfig \| ({ data, params, dataSet }) => AxiosRequestConfig \| string |
 | destroy | 删除请求的 axios 配置或 url 字符串 | AxiosRequestConfig \| ({ data, params, dataSet }) => AxiosRequestConfig \| string |
-| validate | 唯一性校验请求的 axios 配置或 url 字符串 | AxiosRequestConfig \| ({ data, params, dataSet }) => AxiosRequestConfig \| string |
+| validate | 唯一性校验请求的 axios 配置或 url 字符串。当字段配了 unique 属性时，在分页总数大于 1 且当前数据集中没有重复数据的情况下，则会发起远程唯一性校验。校验的请求 data 格式为 { unique: \[{fieldName1: fieldValue1,fieldName2: fieldValue2...}\] }，响应格式为 boolean\[\]。 | AxiosRequestConfig \| ({ data, params, dataSet }) => AxiosRequestConfig \| string |
 | submit | create, update, destroy 的默认配置或 url 字符串 | AxiosRequestConfig \| ({ data, params, dataSet }) => AxiosRequestConfig \| string |
 | tls | 多语言数据请求的 axios 配置或 url 字符串 | AxiosRequestConfig \| ({ data, params, dataSet }) => AxiosRequestConfig \| string |
+| exports | 导出的配置或 url 字符串 | AxiosRequestConfig \| ({ data, params, dataSet }) => AxiosRequestConfig \| string |
 | adapter | CRUD 配置适配器 | (config: AxiosRequestConfig, type: string) => AxiosRequestConfig |

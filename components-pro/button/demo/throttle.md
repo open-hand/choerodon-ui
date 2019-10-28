@@ -7,15 +7,13 @@ title:
 
 ## zh-CN
 
-按钮点击节流。
-
+按钮点击节流。该类型按钮事件无法冒泡。
 
 ## en-US
 
-Button click throttle.
+Button click throttle. This type of Button event cannot bubble.
 
-
-````jsx
+```jsx
 import { Button } from 'choerodon-ui/pro';
 
 class App extends React.Component {
@@ -23,22 +21,30 @@ class App extends React.Component {
     num: 0,
   };
 
-  handleClick = () => {
+  handleClick = e => {
+    e.stopPropagation();
     this.setState({
       num: this.state.num + 1,
     });
-  }
+  };
+
+  handleBubbleClick = () => {
+    console.log('bubble click');
+  };
 
   render() {
-    return [
-      <Button key="throttle" onClick={this.handleClick} wait={1000} waitType="throttle">节流按钮{this.state.num}</Button>,
-      <Button key="debounce" onClick={this.handleClick} wait={1000} waitType="debounce">去抖按钮{this.state.num}</Button>,
-    ];
+    return (
+      <div onClick={this.handleBubbleClick}>
+        <Button onClick={this.handleClick} wait={1000} waitType="throttle">
+          节流按钮{this.state.num}
+        </Button>
+        <Button onClick={this.handleClick} wait={1000} waitType="debounce">
+          去抖按钮{this.state.num}
+        </Button>
+      </div>
+    );
   }
 }
 
-ReactDOM.render(
-  <App />,
-  mountNode);
-
-````
+ReactDOM.render(<App />, mountNode);
+```
