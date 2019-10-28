@@ -48,13 +48,12 @@ export default async function uniqueError(
       );
       if (!invalid) {
         const {
-          totalPage,
           axios,
           transport: { validate = {}, adapter },
         } = dataSet;
         const newConfig = axiosAdapter(validate, this, { unique: [fields] });
         const adapterConfig = adapter(newConfig, 'validate') || newConfig;
-        if (adapterConfig.url && totalPage > 1) {
+        if (adapterConfig.url) {
           const results: any = await axios(adapterConfig);
           invalid = [].concat(results).some(result => !result);
         }

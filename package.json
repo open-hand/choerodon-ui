@@ -67,7 +67,6 @@
     "js-yaml": "^3.12.2",
     "jshint": "^2.10.1",
     "jsonlint": "^1.6.3",
-    "lodash-decorators": "^6.0.1",
     "lru-cache": "^5.1.1",
     "mini-store": "^1.0.2",
     "moment": "^2.24.0",

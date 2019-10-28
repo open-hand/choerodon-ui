@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 💄 `<pro>DataSet.Field`: 去除唯一性校验调用接口时分页数必须大于 1 的限制。
 - 🐞 `<pro>Button`: 修复点击事件无法阻止冒泡的问题。
 
 ## 0.8.29
