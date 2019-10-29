@@ -32,10 +32,10 @@ import { FormFieldProps, RenderProps } from '../../field/FormField';
 import measureTextWidth from '../../_util/measureTextWidth';
 import { getEditorByField } from '../utils';
 import ObserverSelect, { SelectProps } from '../../select/Select';
-import processFieldValue from '../../_util/processFieldValue';
 import Option, { OptionProps } from '../../option/Option';
 import isSameLike from '../../_util/isSameLike';
 import { DataSetEvents } from '../../data-set/enum';
+import { processFieldValue } from '../../data-set/utils';
 
 export interface FilterSelectProps extends TextFieldProps {
   paramName?: string;

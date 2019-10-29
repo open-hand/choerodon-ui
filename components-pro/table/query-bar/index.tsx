@@ -15,13 +15,13 @@ import TableContext from '../TableContext';
 import autobind from '../../_util/autobind';
 import DataSet from '../../data-set';
 import Modal from '../../modal';
-import findBindFieldBy from '../../_util/findBindFieldBy';
 import Column from '../Column';
 import { getEditorByField } from '../utils';
 import TableToolBar from './TableToolBar';
 import TableFilterBar from './TableFilterBar';
 import TableAdvancedQueryBar from './TableAdvancedQueryBar';
 import { PaginationProps } from '../../pagination/Pagination';
+import { findBindFieldBy } from '../../data-set/utils';
 
 export interface TableQueryBarProps {
   prefixCls?: string;

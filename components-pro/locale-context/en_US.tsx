@@ -1,6 +1,7 @@
 import { Lang } from './enum';
+import { Locale } from './locale';
 
-export default {
+const locale: Locale = {
   lang: Lang.en_US,
   Table: {
     show_cached_seletion: 'Show all selected records',
@@ -133,3 +134,5 @@ export default {
     series: 'Series',
   },
 };
+
+export default locale;

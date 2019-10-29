@@ -12,11 +12,11 @@ import isNil from 'lodash/isNil';
 import isString from 'lodash/isString';
 import isNumber from 'lodash/isNumber';
 import isPlainObject from 'lodash/isPlainObject';
-import warning from 'choerodon-ui/lib/_util/warning';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import DataSet from './DataSet';
 import Field, { FieldProps, Fields } from './Field';
 import {
+  axiosConfigAdapter,
   checkFieldType,
   childrenInfoForDelete,
   findBindFields,
@@ -31,7 +31,6 @@ import DataSetSnapshot from './DataSetSnapshot';
 import localeContext from '../locale-context';
 import { BooleanValue, DataSetEvents, FieldIgnore, FieldType, RecordStatus } from './enum';
 import isSame from '../_util/isSame';
-import axiosAdapter from '../_util/axiosAdapter';
 
 /**
  * 记录ID生成器
@@ -345,7 +344,7 @@ export default class Record {
         }
         const data = this.get(fieldName);
         if (isObservableArray(data)) {
-          const records = processData(data, dataSet);
+          const records = dataSet.processData(data);
           this.cascadeRecordsMap[fieldName] = records;
           return records;
         }
@@ -446,24 +445,20 @@ export default class Record {
     const tlsKey = getConfig('tlsKey');
     const { dataSet } = this;
     if (dataSet && !this.get(tlsKey)) {
-      const {
-        transport: { tls = {}, adapter },
-        axios,
-        lang,
-      } = dataSet;
+      const { axios, lang } = dataSet;
       const { primaryKey } = dataSet.props;
-      warning(!!primaryKey, 'If you want to use IntlField, please set `primaryKey` for dataSet.');
-      const newConfig = axiosAdapter(
-        tls,
+      const newConfig = axiosConfigAdapter(
+        'tls',
         dataSet,
         {},
-        {
-          key: this.get(primaryKey),
-        },
+        primaryKey
+          ? {
+              key: this.get(primaryKey),
+            }
+          : this.toData(),
       );
-      const adapterConfig = adapter(newConfig, 'tls') || newConfig;
-      if (adapterConfig.url) {
-        const result = await axios(adapterConfig);
+      if (newConfig.url) {
+        const result = await axios(newConfig);
         if (result) {
           const dataKey = getConfig('dataKey');
           this.commitTls(generateResponseData(result, dataKey)[0]);
@@ -705,13 +700,4 @@ export default class Record {
       return dirty;
     }
   }
-}
-
-export function processData(allData: any[], dataSet: DataSet) {
-  return allData.map(data => {
-    const record =
-      data instanceof Record ? ((data.dataSet = dataSet), data) : new Record(data, dataSet);
-    record.status = RecordStatus.sync;
-    return record;
-  });
 }

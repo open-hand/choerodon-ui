@@ -21,11 +21,13 @@ import warning from 'choerodon-ui/lib/_util/warning';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import localeContext, { $l } from '../locale-context';
 import axios from '../axios';
-import Record, { processData } from './Record';
+import Record from './Record';
 import Field, { FieldProps, Fields } from './Field';
 import {
+  axiosConfigAdapter,
   checkParentByInsert,
   doExport,
+  findBindFieldBy,
   generateJSONData,
   generateResponseData,
   getFieldSorter,
@@ -35,7 +37,6 @@ import {
   processIntlField,
   sortTree,
 } from './utils';
-import findBindFieldBy from '../_util/findBindFieldBy';
 import EventManager from '../_util/EventManager';
 import DataSetSnapshot from './DataSetSnapshot';
 import confirm from '../modal/confirm';
@@ -51,7 +52,6 @@ import { Lang } from '../locale-context/enum';
 import isEmpty from '../_util/isEmpty';
 import * as ObjectChainValue from '../_util/ObjectChainValue';
 import Transport, { TransportProps } from './Transport';
-import axiosAdapter from '../_util/axiosAdapter';
 import PromiseQueue from '../_util/PromiseQueue';
 import { ModalProps } from '../modal/Modal';
 import { confirmProps } from '../modal/utils';
@@ -750,25 +750,22 @@ export default class DataSet extends EventManager {
     if (this.checkReadable(this.parent) && (await this.ready())) {
       const data = await this.generateQueryParameter();
       data._HAP_EXCEL_EXPORT_COLUMNS = columns;
-      const {
-        transport: { exports = {}, adapter },
-        totalCount,
-        totalKey,
-      } = this;
+      const { totalCount, totalKey } = this;
       const params = { _r: Date.now(), ...this.generateOrderQueryString() };
       ObjectChainValue.set(params, totalKey, totalCount);
-      const newConfig = axiosAdapter(exports, this, data, params);
-      const adapterConfig = adapter(newConfig, 'exports') || newConfig;
-      if (adapterConfig.url) {
+      const newConfig = axiosConfigAdapter('exports', this, data, params);
+      if (newConfig.url) {
         if (
           (await this.fireEvent(DataSetEvents.export, {
             dataSet: this,
-            params: adapterConfig.params,
-            data: adapterConfig.data,
+            params: newConfig.params,
+            data: newConfig.data,
           })) !== false
         ) {
-          doExport(this.axios.getUri(adapterConfig), adapterConfig.data, adapterConfig.method);
+          doExport(this.axios.getUri(newConfig), newConfig.data, newConfig.method);
         }
+      } else {
+        warning(false, 'Unable to execute the export method of dataset, please check the ');
       }
     }
   }
@@ -1549,7 +1546,7 @@ Then the query method will be auto invoke.`,
     } = this;
     allData = paging ? allData.slice(0, pageSize) : allData;
     this.fireEvent(DataSetEvents.beforeLoad, { dataSet: this, data: allData });
-    this.originalData = processData(allData, this);
+    this.originalData = this.processData(allData);
     this.records = this.originalData;
     if (total !== undefined && paging === true) {
       this.totalCount = total;
@@ -1565,6 +1562,15 @@ Then the query method will be auto invoke.`,
     this.fireEvent(DataSetEvents.indexChange, { dataSet: this, record: nextRecord });
     this.fireEvent(DataSetEvents.load, { dataSet: this });
     return this;
+  }
+
+  processData(allData: any[]): Record[] {
+    return allData.map(data => {
+      const record =
+        data instanceof Record ? ((data.dataSet = this), data) : new Record(data, this);
+      record.status = RecordStatus.sync;
+      return record;
+    });
   }
 
   private deleteRecord(record?: Record): Record | undefined {
@@ -1685,15 +1691,14 @@ Then the query method will be auto invoke.`,
         isSelect,
         noCascade,
       );
-      const { transport } = this;
       const axiosConfigs: AxiosRequestConfig[] = [];
       const submitData: object[] = [
-        ...prepareForSubmit('create', created, transport, axiosConfigs, this),
-        ...prepareForSubmit('update', updated, transport, axiosConfigs, this),
-        ...prepareForSubmit('destroy', destroyed, transport, axiosConfigs, this),
+        ...prepareForSubmit('create', created, axiosConfigs, this),
+        ...prepareForSubmit('update', updated, axiosConfigs, this),
+        ...prepareForSubmit('destroy', destroyed, axiosConfigs, this),
         ...cascade,
       ];
-      prepareForSubmit('submit', submitData, transport, axiosConfigs, this);
+      prepareForSubmit('submit', submitData, axiosConfigs, this);
       if (axiosConfigs.length) {
         try {
           this.changeSubmitStatus(DataSetStatus.submitting);
@@ -1720,21 +1725,17 @@ Then the query method will be auto invoke.`,
   private async read(page: number = 1): Promise<any> {
     if (this.checkReadable(this.parent)) {
       try {
-        const {
-          transport: { read = {}, adapter },
-        } = this;
         this.changeStatus(DataSetStatus.loading);
         const data = await this.generateQueryParameter();
-        const newConfig = axiosAdapter(read, this, data, this.generateQueryString(page));
-        const adapterConfig = adapter(newConfig, 'read') || newConfig;
-        if (adapterConfig.url) {
+        const newConfig = axiosConfigAdapter('read', this, data, this.generateQueryString(page));
+        if (newConfig.url) {
           const queryEventResult = await this.fireEvent(DataSetEvents.query, {
             dataSet: this,
-            params: adapterConfig.params,
-            data: adapterConfig.data,
+            params: newConfig.params,
+            data: newConfig.data,
           });
           if (queryEventResult) {
-            const result = await this.axios(adapterConfig);
+            const result = await this.axios(newConfig);
             runInAction(() => {
               this.currentPage = page;
             });

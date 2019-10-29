@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 💄 `configure`: Optimize the default logic for global configuration `transport`.
 - 💄 `<pro>DataSet.Field`: The rule is removed that the uniqueness check interface could not be called until the number of pages was greater than 1.
 - 🐞 `<pro>Button`: Fixed an issue where click events could not prevent bubbling.
 

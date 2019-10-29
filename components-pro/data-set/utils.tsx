@@ -17,9 +17,11 @@ import Constants from './Constants';
 import isEmpty from '../_util/isEmpty';
 import * as ObjectChainValue from '../_util/ObjectChainValue';
 import localeContext, { $l } from '../locale-context';
-import Transport from './Transport';
-import axiosAdapter from '../_util/axiosAdapter';
+import { SubmitTypes, TransportType, TransportTypes } from './Transport';
 import formatString from '../formatter/formatString';
+import { Lang } from '../locale-context/enum';
+import formatNumber from '../formatter/formatNumber';
+import formatCurrency from '../formatter/formatCurrency';
 
 export function append(url: string, suffix?: object) {
   if (suffix) {
@@ -347,21 +349,66 @@ export function prepareSubmitData(
   return [created, updated, destroyed, cascade];
 }
 
-type SubmitType = 'create' | 'update' | 'destroy' | 'submit';
+function defaultAxiosConfigAdapter(config: AxiosRequestConfig): AxiosRequestConfig {
+  return config;
+}
+
+function generateConfig(
+  config: TransportType,
+  dataSet: DataSet,
+  data?: any,
+  params?: any,
+): AxiosRequestConfig {
+  if (isString(config)) {
+    return {
+      url: config,
+    };
+  }
+  if (typeof config === 'function') {
+    return config({ data, dataSet, params });
+  }
+  return config;
+}
+
+export function axiosConfigAdapter(
+  type: TransportTypes,
+  dataSet: DataSet,
+  data?: any,
+  params?: any,
+): AxiosRequestConfig {
+  const newConfig: AxiosRequestConfig = {
+    data,
+    params,
+    method: 'post',
+  };
+  const { [type]: globalConfig, adapter: globalAdapter = defaultAxiosConfigAdapter } =
+    getConfig('transport') || {};
+  const { [type]: config, adapter } = dataSet.transport;
+  if (globalConfig) {
+    Object.assign(newConfig, generateConfig(globalConfig, dataSet, data, params));
+  }
+  if (config) {
+    Object.assign(newConfig, generateConfig(config, dataSet, data, params));
+  }
+  if (newConfig.data && newConfig.method && newConfig.method.toLowerCase() === 'get') {
+    newConfig.params = {
+      ...newConfig.params,
+      ...newConfig.data,
+    };
+  }
+  return (adapter || globalAdapter)(newConfig, type) || newConfig;
+}
 
 export function prepareForSubmit(
-  type: SubmitType,
+  type: SubmitTypes,
   data: object[],
-  transport: Transport,
   configs: AxiosRequestConfig[],
   dataSet: DataSet,
 ): object[] {
-  const { adapter, [type]: config = {} } = transport;
   if (data.length) {
-    const newConfig = axiosAdapter(config, dataSet, data);
-    const adapterConfig = adapter(newConfig, type) || newConfig;
-    if (adapterConfig.url) {
-      configs.push(adapterConfig);
+    const newConfig = axiosConfigAdapter(type, dataSet, data);
+    if (newConfig.url) {
+      configs.push(newConfig);
     } else {
       return data;
     }
@@ -438,17 +485,8 @@ export function processIntlField(
   if (type === FieldType.intl) {
     languages.forEach(language =>
       callback(`${tlsKey}.${name}.${language}`, {
-        // ...fieldProps,
         type: FieldType.string,
         label: `${supports[language]}`,
-        // dynamicProps(props) {
-        //   const { record } = props;
-        //   const field = record.getField(name);
-        //   return {
-        //     ...(dynamicProps && dynamicProps(props)),
-        //     required: field && field.required && !!record.get(tlsKey),
-        //   };
-        // },
       }),
     );
     const { lang = localeContext.locale.lang } = dataSet || {};
@@ -472,4 +510,26 @@ export function processIntlField(
     });
   }
   return callback(name, fieldProps);
+}
+
+export function findBindFieldBy(myField: Field, fields: Fields, prop: string): Field | undefined {
+  const value = myField.get(prop);
+  const myName = myField.name;
+  return [...fields.values()].find(field => {
+    const bind = field.get('bind');
+    return bind && bind === `${myName}.${value}`;
+  });
+}
+
+export function processFieldValue(value, field: Field, lang: Lang, showValueIfNotFound?: boolean) {
+  const { type } = field;
+  if (type === FieldType.number) {
+    return formatNumber(value, lang);
+  }
+  if (type === FieldType.currency) {
+    return formatCurrency(value, lang, {
+      currency: field.get('currency'),
+    });
+  }
+  return field.getText(value, showValueIfNotFound);
 }

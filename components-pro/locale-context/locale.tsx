@@ -86,6 +86,7 @@ export interface Locale {
   Select: {
     value_missing;
     value_missing_no_label;
+    no_matching_results;
     select_all;
     unselect_all;
   };

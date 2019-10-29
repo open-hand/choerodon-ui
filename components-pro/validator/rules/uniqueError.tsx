@@ -3,7 +3,7 @@ import ValidationResult from '../ValidationResult';
 import { $l } from '../../locale-context';
 import isEmpty from '../../_util/isEmpty';
 import { methodReturn, ValidatorProps } from '.';
-import axiosAdapter from '../../_util/axiosAdapter';
+import { axiosConfigAdapter } from '../../data-set/utils';
 
 export default async function uniqueError(
   value: any,
@@ -47,14 +47,9 @@ export default async function uniqueError(
           item !== record && Object.keys(fields).every(field => fields[field] === item.get(field)),
       );
       if (!invalid) {
-        const {
-          axios,
-          transport: { validate = {}, adapter },
-        } = dataSet;
-        const newConfig = axiosAdapter(validate, this, { unique: [fields] });
-        const adapterConfig = adapter(newConfig, 'validate') || newConfig;
-        if (adapterConfig.url) {
-          const results: any = await axios(adapterConfig);
+        const newConfig = axiosConfigAdapter('validate', dataSet, { unique: [fields] });
+        if (newConfig.url) {
+          const results: any = await dataSet.axios(newConfig);
           invalid = [].concat(results).some(result => !result);
         }
       }

@@ -6,9 +6,9 @@ import isNil from 'lodash/isNil';
 import omit from 'lodash/omit';
 import { FormField, FormFieldProps, RenderProps } from '../field/FormField';
 import autobind from '../_util/autobind';
-import processFieldValue from '../_util/processFieldValue';
 import { BooleanValue, FieldType } from '../data-set/enum';
 import ObserverCheckBox from '../check-box/CheckBox';
+import { processFieldValue } from '../data-set/utils';
 
 export interface OutputProps extends FormFieldProps {}
 

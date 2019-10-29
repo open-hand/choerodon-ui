@@ -1,6 +1,7 @@
 import { Lang } from './enum';
+import { Locale } from './locale';
 
-export default {
+const locale: Locale = {
   lang: Lang.zh_CN,
   Table: {
     show_cached_seletion: '显示所有已选记录',
@@ -130,3 +131,5 @@ export default {
     series: '套系类',
   },
 };
+
+export default locale;

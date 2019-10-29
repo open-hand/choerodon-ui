@@ -1,6 +1,7 @@
 import { Lang } from './enum';
+import { Locale } from './locale';
 
-export default {
+const locale: Locale = {
   lang: Lang.ja_JP,
   Table: {
     show_cached_seletion: '選択したすべてのレコードを表示',
@@ -134,3 +135,5 @@ export default {
     series: 'セット',
   },
 };
+
+export default locale;
