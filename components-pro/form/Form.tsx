@@ -459,6 +459,7 @@ export default class Form extends DataSetComponent<FormProps> {
     for (let index = 0, len = childrenArray.length; index < len; ) {
       const { props, key, type } = childrenArray[index];
       const label = getProperty(props, 'label', dataSet, record);
+      const fieldLabelWidth = getProperty(props, 'labelWidth', dataSet, record);
       const required = getProperty(props, 'required', dataSet, record);
       const {
         rowSpan = 1,
@@ -466,7 +467,6 @@ export default class Form extends DataSetComponent<FormProps> {
         newLine,
         className,
         placeholder,
-        labelWidth: fieldLabelWidth,
         ...otherProps
       } = props as any;
       let newColSpan = colSpan;

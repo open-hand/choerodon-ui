@@ -46,6 +46,10 @@ export type FieldProps = {
    */
   label?: string;
   /**
+   * 字段标签宽度
+   */
+  labelWidth?: string;
+  /**
    * 字符串类型和日期类型字段值格式化
    */
   format?: string | FieldFormat;

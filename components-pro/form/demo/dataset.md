@@ -46,7 +46,14 @@ const defaultValidationMessages = {
 class App extends React.Component {
   ds = new DataSet({
     fields: [
-      { name: 'phone', type: 'string', label: '手机号', required: true, pattern: '^1[3-9]\\d{9}$' }, // /^1[3-9]\d{9}$/
+      {
+        name: 'phone',
+        type: 'string',
+        label: '手机号',
+        labelWidth: 150,
+        required: true,
+        pattern: '^1[3-9]\\d{9}$',
+      }, // /^1[3-9]\d{9}$/
       {
         name: 'password',
         type: 'string',

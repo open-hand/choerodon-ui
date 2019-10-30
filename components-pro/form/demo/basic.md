@@ -77,7 +77,7 @@ ReactDOM.render(
   <Form id="basic" style={{ width: '4rem' }}>
     <TextField
       label="手机号"
-      labelWidth={200}
+      labelWidth={150}
       pattern="1[3-9]\d{9}"
       name="phone"
       required

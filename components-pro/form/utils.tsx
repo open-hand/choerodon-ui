@@ -20,12 +20,7 @@ export function normalizeLabelWidth(labelWidth, columns) {
   return labelWidths;
 }
 
-export function getProperty(
-  props: any,
-  key: string,
-  dataSet?: DataSet,
-  record?: Record,
-): string | undefined {
+export function getProperty(props: any, key: string, dataSet?: DataSet, record?: Record): any {
   if (props[key]) {
     return props[key];
   }
