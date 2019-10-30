@@ -707,11 +707,15 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
       isSameLike(record.get(textField), text),
     );
     if (records.length > 1) {
-      const { valueField } = this;
+      const { valueField, primitive } = this;
       const value = this.getValue();
-      const found = records.find(record => isSameLike(record.get(valueField), value));
-      if (found) {
-        return found;
+      if (value) {
+        const found = records.find(record =>
+          isSameLike(record.get(valueField), primitive ? value : value[valueField]),
+        );
+        if (found) {
+          return found;
+        }
       }
     }
     return records[0];

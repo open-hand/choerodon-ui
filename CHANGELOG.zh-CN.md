@@ -19,6 +19,7 @@ timeline: true
 - 💄 `<pro>DataSet.Field`: 去除唯一性校验调用接口时分页数必须大于 1 的限制。
 - 🐞 `<pro>Button`: 修复点击事件无法阻止冒泡的问题。
 - 🐞 `<pro>Tooltip`: 修复内容不换行，hidden 属性不受控, defaultHidden 属性不起作用等问题。
+- 🐞 `<pro>Lov`: 修复拥有相同 textField 值的多条记录，只能选中其中的第一条的问题。
 
 ## 0.8.29
 
