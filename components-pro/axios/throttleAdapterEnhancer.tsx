@@ -1,5 +1,5 @@
 import { AxiosAdapter, AxiosPromise, AxiosRequestConfig } from 'axios';
-import LRUCache from 'lru-cache';
+import Cache from '../_util/Cache';
 import { ICacheLike } from './cacheAdapterEnhancer';
 import { buildURLWithData } from './utils';
 
@@ -17,7 +17,7 @@ export default function throttleAdapterEnhancer(
   adapter: AxiosAdapter,
   options: Options = {},
 ): AxiosAdapter {
-  const { threshold = 1000, cache = new LRUCache<string, RecordedCache>({ max: 10 }) } = options;
+  const { threshold = 1000, cache = new Cache<string, RecordedCache>({ max: 10 }) } = options;
 
   const recordCacheWithRequest = (index: string, config: AxiosRequestConfig) => {
     const responsePromise = (async () => {

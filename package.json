@@ -67,7 +67,6 @@
     "js-yaml": "^3.12.2",
     "jshint": "^2.10.1",
     "jsonlint": "^1.6.3",
-    "lru-cache": "^5.1.1",
     "mini-store": "^1.0.2",
     "moment": "^2.24.0",
     "mutationobserver-shim": "^0.3.3",
@@ -83,7 +82,8 @@
     "rmc-feedback": "^1.0.0",
     "string-template": "^1.0.0",
     "tslib": "^1.9.3",
-    "warning": "~4.0.3"
+    "warning": "~4.0.3",
+    "yallist": "^3.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",

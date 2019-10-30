@@ -11,7 +11,7 @@
   position: absolute;
   z-index: 1;
   display: block;
-  white-space: nowrap;
+  max-width: @tooltip-max-width;
   background-color: transparent;
   border-radius: 0.04rem;
   box-shadow: none;
@@ -24,12 +24,13 @@
 
   // Wrapper for the tooltip content
   &-inner {
-    // max-width: @tooltip-max-width;
     position: relative;
-    min-height: 0.32rem;
+    min-width: @tooltip-min-width;
+    min-height: @tooltip-min-height;
     padding: 0.06rem 0.08rem;
     text-align: left;
     text-decoration: none;
+    word-wrap: break-word;
     border-radius: 0.04rem;
     box-shadow: 0 0.01rem 0.03rem 0 rgba(0, 0, 0, 0.2), 0 0.01rem 0.01rem 0 rgba(0, 0, 0, 0.14),
       0 0.02rem 0.01rem -0.01rem rgba(0, 0, 0, 0.12);

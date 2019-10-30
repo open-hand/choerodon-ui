@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { enquireScreen } from 'enquire-js';
 import { addLocaleData, IntlProvider } from 'react-intl';
-import { LocaleProvider, configure as UIConfigure } from 'choerodon-ui';
+import { LocaleProvider } from 'choerodon-ui';
 import { localeContext, ModalContainer } from 'choerodon-ui/pro';
 import moment from 'moment';
 import { configure } from 'mobx';
@@ -16,14 +16,6 @@ import mock from '../../mock';
 mock();
 
 configure({ enforceActions: 'always' });
-
-UIConfigure({
-  transport: {
-    tls: {
-      url: 'xxx',
-    },
-  },
-});
 
 if (typeof window !== 'undefined') {
   /* eslint-disable global-require */

@@ -18,6 +18,7 @@ timeline: true
 - 💄 `configure`: 优化全局配置 transport 的默认逻辑，由整体配置覆盖改为局部配置覆盖。
 - 💄 `<pro>DataSet.Field`: 去除唯一性校验调用接口时分页数必须大于 1 的限制。
 - 🐞 `<pro>Button`: 修复点击事件无法阻止冒泡的问题。
+- 🐞 `<pro>Tooltip`: 修复内容不换行，hidden 属性不受控, defaultHidden 属性不起作用等问题。
 
 ## 0.8.29
 

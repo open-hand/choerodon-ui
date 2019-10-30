@@ -1,5 +1,5 @@
 import { AxiosAdapter, AxiosPromise } from 'axios';
-import LRUCache from 'lru-cache';
+import Cache from '../_util/Cache';
 import { buildURLWithData, isCacheLike } from './utils';
 
 const FIVE_MINUTES = 1000 * 60 * 10;
@@ -26,7 +26,7 @@ export default function cacheAdapterEnhancer(
   const {
     enabledByDefault = true,
     cacheFlag = 'cache',
-    defaultCache = new LRUCache<string, AxiosPromise>({ maxAge: FIVE_MINUTES, max: CAPACITY }),
+    defaultCache = new Cache<string, AxiosPromise>({ maxAge: FIVE_MINUTES, max: CAPACITY }),
   } = options;
 
   return config => {

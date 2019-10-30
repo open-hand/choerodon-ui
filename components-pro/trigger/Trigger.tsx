@@ -74,6 +74,7 @@ export interface TriggerProps extends ElementProps {
   mouseEnterDelay?: number;
   mouseLeaveDelay?: number;
   transitionName?: string;
+  defaultPopupHidden?: boolean;
 }
 
 @observer
@@ -114,6 +115,7 @@ export default class Trigger extends Component<TriggerProps> {
     mouseEnterDelay: PropTypes.number,
     mouseLeaveDelay: PropTypes.number,
     transitionName: PropTypes.string,
+    defaultPopupHidden: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -122,6 +124,7 @@ export default class Trigger extends Component<TriggerProps> {
     mouseEnterDelay: 100,
     mouseLeaveDelay: 100,
     transitionName: 'slide-up',
+    defaultPopupHidden: true,
   };
 
   popup: Popup | null;
@@ -141,8 +144,7 @@ export default class Trigger extends Component<TriggerProps> {
   constructor(props, context) {
     super(props, context);
     runInAction(() => {
-      const { popupHidden = true } = this.props;
-      this.popupHidden = popupHidden;
+      this.popupHidden = 'popupHidden' in props ? props.popupHidden : props.defaultPopupHidden;
     });
   }
 
@@ -180,15 +182,14 @@ export default class Trigger extends Component<TriggerProps> {
 
   @mobxAction
   componentWillReceiveProps(nextProps) {
-    const { popupHidden, onPopupHiddenChange = noop } = nextProps;
+    const { popupHidden } = nextProps;
     if (popupHidden !== this.popupHidden && popupHidden !== undefined) {
       this.popupHidden = popupHidden;
-      onPopupHiddenChange(popupHidden);
     }
   }
 
   componentDidUpdate() {
-    const { popupHidden } = this.props;
+    const { popupHidden } = this;
     this.documentEvent.clear();
     if (!popupHidden) {
       this.documentEvent.addEventListener('scroll', this.handleDocumentScroll, true);

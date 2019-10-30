@@ -1,7 +1,7 @@
 import React, { Children, Component, isValidElement } from 'react';
 import PropTypes from 'prop-types';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure';
-import Trigger from '../trigger/Trigger';
+import Trigger, { TriggerProps } from '../trigger/Trigger';
 import { Action } from '../trigger/enum';
 import getPlacements, { AdjustOverflow } from './placements';
 
@@ -93,50 +93,10 @@ export default class Tooltip extends Component<TooltipProps, any> {
     trigger: [Action.hover],
   };
 
-  state = {
-    hidden: true,
-  };
-
   get prefixCls(): string {
     const { suffixCls, prefixCls } = this.props;
     return getProPrefixCls(suffixCls!, prefixCls);
   }
-
-  componentDidMount() {
-    const { hidden, defaultHidden } = this.props;
-    const { hidden: stateHidden } = this.state;
-
-    let initialHidden = defaultHidden;
-    if (hidden !== undefined) {
-      initialHidden = hidden;
-    }
-    if (initialHidden !== stateHidden) {
-      this.setState({
-        hidden: initialHidden,
-      });
-    }
-  }
-
-  componentWillReceiveProps(nextProps: TooltipProps) {
-    const { hidden } = nextProps;
-    if (hidden !== undefined) {
-      this.setState({
-        hidden,
-      });
-    }
-  }
-
-  handlePopupHiddenChange = (hidden: boolean) => {
-    const { onHiddenChange } = this.props;
-
-    this.setState({
-      hidden,
-    });
-
-    if (onHiddenChange) {
-      onHiddenChange(hidden);
-    }
-  };
 
   get popupContent() {
     const { title } = this.props;
@@ -182,19 +142,11 @@ export default class Tooltip extends Component<TooltipProps, any> {
     );
   }
 
-  /**
-   * FIXME: Tooltip首次渲染错位
-   * placement === 'bottom* / right*'时没有错位，其他情况有
-   *
-   * @returns
-   * @memberof Tooltip
-   */
   render() {
     const {
       prefixCls,
       popupContent,
-      props: { children, placement, mouseEnterDelay, mouseLeaveDelay, transitionName, trigger },
-      state: { hidden },
+      props: { children, placement, onHiddenChange, trigger, defaultHidden, hidden, ...restProps },
     } = this;
     const child = Children.map(children, node => {
       if (node && !isValidElement(node)) {
@@ -203,19 +155,21 @@ export default class Tooltip extends Component<TooltipProps, any> {
       return node;
     });
 
+    const extraProps: TriggerProps = { ...restProps };
+    if ('hidden' in this.props) {
+      extraProps.popupHidden = hidden;
+    }
+
     return (
       <Trigger
         prefixCls={prefixCls}
-        popupStyle={{ backgroundColor: 'transparent' }}
         action={trigger}
         builtinPlacements={this.placements}
         popupPlacement={placement}
         popupContent={popupContent}
-        onPopupHiddenChange={this.handlePopupHiddenChange}
-        mouseEnterDelay={mouseEnterDelay}
-        mouseLeaveDelay={mouseLeaveDelay}
-        popupHidden={hidden || !popupContent}
-        transitionName={transitionName}
+        onPopupHiddenChange={onHiddenChange}
+        defaultPopupHidden={defaultHidden}
+        {...extraProps}
       >
         {child}
       </Trigger>

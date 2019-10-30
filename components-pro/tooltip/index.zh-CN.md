@@ -15,9 +15,9 @@ title: Tooltip
 
 ## API
 
-| 参数 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| title | 提示文字 | string\|ReactNode\|() => ReactNode | 无 |
+| 参数  | 说明     | 类型                               | 默认值 |
+| ----- | -------- | ---------------------------------- | ------ |
+| title | 提示文字 | string\|ReactNode\|() => ReactNode | 无     |
 
 ### 共同的 API
 
@@ -27,7 +27,7 @@ title: Tooltip
 | --- | --- | --- | --- |
 | arrowPointAtCenter | 箭头是否指向目标元素中心 | boolean | `false` |
 | autoAdjustOverflow | 气泡被遮挡时自动调整位置 | boolean | `true` |
-| defaultVisible | 默认是否显隐 | boolean | false |
+| defaultHidden | 默认是否显隐 | boolean | true |
 | mouseEnterDelay | 鼠标移入后延时多少才显示 Tooltip，单位：秒 | number | 0 |
 | mouseLeaveDelay | 鼠标移出后延时多少才隐藏 Tooltip，单位：秒 | number | 0.1 |
 | overlayClassName | 卡片类名 | string | 无 |

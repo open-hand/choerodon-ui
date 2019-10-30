@@ -671,6 +671,13 @@ export default class Form extends DataSetComponent<FormProps> {
   }
 
   checkValidity() {
+    const { dataSet } = this;
+    if (dataSet) {
+      if (!dataSet.length) {
+        dataSet.create();
+      }
+      return dataSet.validate();
+    }
     return Promise.all(this.getFields().map(field => field.checkValidity())).then(results =>
       results.every(result => result),
     );
