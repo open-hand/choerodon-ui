@@ -24,6 +24,7 @@ const prefixCls = getConfig('prefixCls');
 | iconfontPrefix | iconfont css prefix | string | icon |
 | icons | List of iconfont, used for IconPicker. | string[] \| { categoryName: string[] } | import { categories } from 'choerodon-ui-font' |
 | ripple | Whether to open the ripple effect | boolean | true |
+| lookupCache | lookup cache config. `maxAge` - cache max age `max` - cache max length | object | { maxAge: 1000 _ 60 _ 10, max: 100 } |
 | lookupUrl | Lookup value url or hook which return url | string \| ((code: string) => string) | code => \`/common/code/\${code}/\` |
 | lookupAxiosConfig | Lookup fetch axios config, more info: [AxiosRequestConfig](#AxiosRequestConfig). By default, url is lookupUrl and method is post. | AxiosRequestConfig \| ({ dataSet: DataSet, record: Record, params?: any, lookupCode: string }) => AxiosRequestConfig | post |
 | lovDefineUrl | Lov configure url or hook which return url | string \| ((code: string) => string) | code => \`/sys/lov/lov_define?code=\${code}\` |

@@ -88,6 +88,16 @@ class Entry<K, V> {
   }
 }
 
+export type CacheOptions<K, V> = {
+  max?: number;
+  maxAge?: number;
+  length?: (value: V, key: K) => number;
+  stale?: boolean;
+  dispose?: (key: K, value: V) => void;
+  noDisposeOnSet?: boolean;
+  updateAgeOnGet?: boolean;
+};
+
 export default class Cache<K, V> {
   constructor(options) {
     if (typeof options === 'number') options = { max: options };

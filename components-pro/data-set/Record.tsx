@@ -444,7 +444,7 @@ export default class Record {
   async tls(): Promise<void> {
     const tlsKey = getConfig('tlsKey');
     const { dataSet } = this;
-    if (dataSet && !this.get(tlsKey)) {
+    if (dataSet && this.status !== RecordStatus.add && !this.get(tlsKey)) {
       const { axios, lang } = dataSet;
       const { primaryKey } = dataSet.props;
       const newConfig = axiosConfigAdapter(

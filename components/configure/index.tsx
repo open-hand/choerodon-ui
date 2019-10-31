@@ -1,5 +1,5 @@
 import { observable, ObservableMap, runInAction } from 'mobx';
-import { AxiosInstance, AxiosRequestConfig } from 'axios';
+import { AxiosInstance, AxiosPromise, AxiosRequestConfig } from 'axios';
 import { ReactNode } from 'react';
 import { categories } from 'choerodon-ui-font';
 import { LovConfig } from 'choerodon-ui/pro/lib/lov/Lov';
@@ -13,6 +13,7 @@ import { TableQueryBarType } from 'choerodon-ui/pro/lib/table/enum';
 import { TransportHookProps, TransportProps } from 'choerodon-ui/pro/lib/data-set/Transport';
 import DataSet from 'choerodon-ui/pro/lib/data-set/DataSet';
 import Record from 'choerodon-ui/pro/lib/data-set/Record';
+import { CacheOptions } from 'choerodon-ui/pro/lib/_util/Cache';
 import message from '../message';
 
 export type Status = {
@@ -38,6 +39,7 @@ export type Config = {
   proPrefixCls?: string;
   iconfontPrefix?: string;
   ripple?: boolean;
+  lookupCache?: CacheOptions<string, AxiosPromise>;
   lookupUrl?: string | ((code: string) => string);
   lookupAxiosMethod?: string;
   lookupAxiosConfig?:
@@ -123,6 +125,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['proPrefixCls', 'c7n-pro'],
   ['iconfontPrefix', 'icon'],
   ['ripple', true],
+  ['lookupCache', { maxAge: 1000 * 60 * 10, max: 100 }],
   ['lookupUrl', code => `/common/code/${code}/`],
   ['lookupAxiosMethod', 'post'],
   ['lovDefineUrl', code => `/sys/lov/lov_define?code=${code}`],

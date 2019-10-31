@@ -1,9 +1,8 @@
 import { AxiosAdapter, AxiosPromise } from 'axios';
+import { getConfig } from 'choerodon-ui/lib/configure';
+import { reaction } from 'mobx';
 import Cache from '../_util/Cache';
 import { buildURLWithData, isCacheLike } from './utils';
-
-const FIVE_MINUTES = 1000 * 60 * 10;
-const CAPACITY = 100;
 
 export interface ICacheLike<T> {
   get(key: string): T | undefined;
@@ -19,6 +18,30 @@ export type Options = {
   defaultCache?: ICacheLike<AxiosPromise>;
 };
 
+function getDefaultCache() {
+  const cache = new Cache<string, AxiosPromise>(getConfig('lookupCache'));
+
+  reaction(
+    () => getConfig('lookupCache'),
+    (lookupCache = {}) => {
+      if ('max' in lookupCache) {
+        cache.max = lookupCache.max;
+      }
+      if ('maxAge' in lookupCache) {
+        cache.maxAge = lookupCache.maxAge;
+      }
+      if ('stale' in lookupCache) {
+        cache.allowStale = lookupCache.stale;
+      }
+      if ('length' in lookupCache) {
+        cache.lengthCalculator = lookupCache.length;
+      }
+    },
+  );
+
+  return cache;
+}
+
 export default function cacheAdapterEnhancer(
   adapter: AxiosAdapter,
   options: Options = {},
@@ -26,7 +49,7 @@ export default function cacheAdapterEnhancer(
   const {
     enabledByDefault = true,
     cacheFlag = 'cache',
-    defaultCache = new Cache<string, AxiosPromise>({ maxAge: FIVE_MINUTES, max: CAPACITY }),
+    defaultCache = getDefaultCache(),
   } = options;
 
   return config => {
