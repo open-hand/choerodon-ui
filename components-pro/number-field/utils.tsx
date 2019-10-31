@@ -1,3 +1,5 @@
+import { Moment } from 'moment';
+
 export const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER || 2 ** 53 - 1;
 
 export function getPrecision(value: number): number {
@@ -48,9 +50,11 @@ function getBeforeStepValue(value: number, minFactor: number, stepFactor: number
 export function getNearStepValues(
   value: number,
   step: number,
-  min: number = -MAX_SAFE_INTEGER,
-  max: number = MAX_SAFE_INTEGER,
+  min: number | Moment = -MAX_SAFE_INTEGER,
+  max: number | Moment = MAX_SAFE_INTEGER,
 ): number[] | undefined {
+  min = Number(min);
+  max = Number(max);
   const precisionFactor = getPrecisionFactor(value, step);
   const valueFactor = precisionFix(value, precisionFactor);
   const minFactor = precisionFix(min, precisionFactor);

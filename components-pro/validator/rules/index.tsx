@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { Moment } from 'moment';
 import badInput from './badInput';
 import patternMismatch from './patternMismatch';
 import rangeOverflow from './rangeOverflow';
@@ -39,8 +40,8 @@ export interface ValidatorProps {
   type?: FieldType;
   required?: boolean;
   pattern?: string | RegExp;
-  min?: number;
-  max?: number;
+  min?: number | Moment;
+  max?: number | Moment;
   step?: number;
   minLength?: number;
   maxLength?: number;
@@ -53,5 +54,6 @@ export interface ValidatorProps {
   multiple?: boolean;
   range?: boolean | [string, string];
   form?: Form;
+  format?: string;
   defaultValidationMessages: ValidationMessages;
 }

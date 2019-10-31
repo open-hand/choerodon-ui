@@ -24,6 +24,7 @@ import { ViewMode } from './enum';
 import { stopEvent } from '../_util/EventManager';
 import { FieldType } from '../data-set/enum';
 import { $l } from '../locale-context';
+import { ValidatorProps } from '../validator/rules';
 
 export type RenderFunction = (
   props: object,
@@ -149,7 +150,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
 
   @computed
   get editable(): boolean {
-    return false;
+    return true;
   }
 
   get min(): Moment | undefined {
@@ -232,21 +233,28 @@ export default class DatePicker extends TriggerField<DatePickerProps>
       this.selectedDate ||
       (range && !multiple && rangeTarget !== undefined && rangeValue && rangeValue[rangeTarget]) ||
       (!multiple && this.getValue());
-    if (isMoment(selectedDate)) {
+    if (isMoment(selectedDate) && selectedDate.isValid()) {
       return selectedDate.clone();
     }
     return this.getValidDate(moment().startOf('d'));
   }
 
-  getLimit(type: string) {
-    const limit = this.getProp(type);
+  getLimit(minOrMax: 'min' | 'max') {
+    const limit = this.getProp(minOrMax);
     if (limit !== undefined) {
       const { record } = this;
       if (record && isString(limit) && record.getField(limit)) {
         return record.get(limit);
       }
-      return moment(limit);
+      return this.getLimitWithType(moment(limit), minOrMax);
     }
+  }
+
+  getLimitWithType(limit: Moment, minOrMax: 'min' | 'max') {
+    if (minOrMax === 'min') {
+      return limit.startOf('d');
+    }
+    return limit.endOf('d');
   }
 
   getPopupStyleFromAlign(): CSSProperties | undefined {
@@ -294,41 +302,30 @@ export default class DatePicker extends TriggerField<DatePickerProps>
       const el = this.popup ? this.view || this : this;
       switch (e.keyCode) {
         case KeyCode.RIGHT:
-          stopEvent(e);
           el.handleKeyDownRight(e);
           break;
         case KeyCode.LEFT:
-          stopEvent(e);
           el.handleKeyDownLeft(e);
           break;
         case KeyCode.DOWN:
-          stopEvent(e);
           el.handleKeyDownDown(e);
           break;
         case KeyCode.UP:
-          stopEvent(e);
           el.handleKeyDownUp(e);
           break;
         case KeyCode.END:
-          stopEvent(e);
           el.handleKeyDownEnd(e);
           break;
         case KeyCode.HOME:
-          stopEvent(e);
           el.handleKeyDownHome(e);
           break;
         case KeyCode.PAGE_UP:
-          stopEvent(e);
           el.handleKeyDownPageUp(e);
           break;
         case KeyCode.PAGE_DOWN:
-          stopEvent(e);
           el.handleKeyDownPageDown(e);
           break;
         case KeyCode.ENTER:
-          if (this.popup) {
-            e.preventDefault();
-          }
           el.handleKeyDownEnter(e);
           break;
         case KeyCode.TAB:
@@ -346,58 +343,66 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     super.handleKeyDown(e);
   }
 
-  handleKeyDownHome() {
-    if (!this.multiple) {
+  handleKeyDownHome(e) {
+    if (!this.multiple && !this.editable) {
+      stopEvent(e);
       this.choose(this.getSelectedDate().startOf('M'));
     }
   }
 
-  handleKeyDownEnd() {
-    if (!this.multiple) {
+  handleKeyDownEnd(e) {
+    if (!this.multiple && !this.editable) {
+      stopEvent(e);
       this.choose(this.getSelectedDate().endOf('M'));
     }
   }
 
-  handleKeyDownLeft() {
-    if (!this.multiple) {
+  handleKeyDownLeft(e) {
+    if (!this.multiple && !this.editable) {
+      stopEvent(e);
       this.choose(this.getSelectedDate().subtract(1, 'd'));
     }
   }
 
-  handleKeyDownRight() {
-    if (!this.multiple) {
+  handleKeyDownRight(e) {
+    if (!this.multiple && !this.editable) {
+      stopEvent(e);
       this.choose(this.getSelectedDate().add(1, 'd'));
     }
   }
 
-  handleKeyDownUp() {
-    if (!this.multiple) {
+  handleKeyDownUp(e) {
+    if (!this.multiple && !this.editable) {
+      stopEvent(e);
       this.choose(this.getSelectedDate().subtract(1, 'w'));
     }
   }
 
-  handleKeyDownDown() {
+  handleKeyDownDown(e) {
     if (this.multiple) {
       this.expand();
-    } else {
+    } else if (!this.editable) {
+      stopEvent(e);
       this.choose(this.getSelectedDate().add(1, 'w'));
     }
   }
 
   handleKeyDownPageUp(e) {
-    if (!this.multiple) {
+    if (!this.multiple && !this.editable) {
+      stopEvent(e);
       this.choose(this.getSelectedDate().subtract(1, e.altKey ? 'y' : 'M'));
     }
   }
 
   handleKeyDownPageDown(e) {
-    if (!this.multiple) {
+    if (!this.multiple && !this.editable) {
+      stopEvent(e);
       this.choose(this.getSelectedDate().add(1, e.altKey ? 'y' : 'M'));
     }
   }
 
-  handleKeyDownEnter() {
-    if (!this.multiple) {
+  handleKeyDownEnter(_e) {
+    if (!this.multiple && !this.editable) {
       this.choose(this.getSelectedDate());
     }
   }
@@ -424,6 +429,14 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     super.handleEnterDown(e);
     if (this.multiple && this.range) {
       this.beginRange();
+    }
+  }
+
+  syncValueOnBlur(value) {
+    if (value) {
+      this.addValue(this.checkMoment(value));
+    } else if (!this.multiple) {
+      this.setValue(this.emptyValue);
     }
   }
 
@@ -529,5 +542,15 @@ export default class DatePicker extends TriggerField<DatePickerProps>
       return filter(currentDate, selected);
     }
     return isValid;
+  }
+
+  getValidatorProps(): ValidatorProps {
+    const { min, max } = this;
+    return {
+      ...super.getValidatorProps(),
+      min,
+      max,
+      format: this.getDateFormat(),
+    };
   }
 }

@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>DatePicker`: Input enabled.
 - 🌟 `<pro>DataSet`: Added `feedback` property.
 - 🌟 `<pro>DataSet.Field`: Added `labelWidth` property.
 - 🌟 `configure`: Added lookupCache property.

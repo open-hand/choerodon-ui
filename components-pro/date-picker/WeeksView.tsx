@@ -6,6 +6,7 @@ import DaysView from './DaysView';
 import { ViewMode } from './enum';
 import { FieldType } from '../data-set/enum';
 import { $l } from '../locale-context';
+import { stopEvent } from '../_util/EventManager';
 
 export default class WeeksView extends DaysView implements DatePickerKeyboardEvent {
   static displayName = 'WeeksView';
@@ -13,6 +14,7 @@ export default class WeeksView extends DaysView implements DatePickerKeyboardEve
   static type = FieldType.week;
 
   handleKeyDownLeft(e) {
+    stopEvent(e);
     if (e.altKey) {
       this.changeViewMode(ViewMode.month);
     } else {
@@ -21,6 +23,7 @@ export default class WeeksView extends DaysView implements DatePickerKeyboardEve
   }
 
   handleKeyDownRight(e) {
+    stopEvent(e);
     if (!e.altKey) {
       this.changeSelectedDate(this.getCloneDate().add(1, 'M'));
     }

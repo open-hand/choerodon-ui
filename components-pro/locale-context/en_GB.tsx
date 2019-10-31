@@ -57,6 +57,7 @@ const locale: Locale = {
   DatePicker: {
     value_missing_no_label: 'Please choose a date.',
     value_missing: 'Please select {label}.',
+    type_mismatch: 'Please enter a valid date.',
     ok: 'OK',
     today: 'Today',
     now: 'Now',

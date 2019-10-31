@@ -58,6 +58,7 @@ const locale: Locale = {
   DatePicker: {
     value_missing_no_label: '日付を選択してください。',
     value_missing: '{label}を選択してください。',
+    type_mismatch: '有効な日付を入力してください。',
     ok: 'OK',
     today: '今日',
     now: 'この瞬間',

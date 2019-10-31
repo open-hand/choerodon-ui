@@ -5,6 +5,7 @@ import autobind from '../_util/autobind';
 import Icon from '../icon';
 import DaysView, { alwaysValidDate } from './DaysView';
 import { ViewMode } from './enum';
+import { stopEvent } from '../_util/EventManager';
 
 export default class DecadeYearsView extends DaysView {
   static displayName = 'DecadeYearView';
@@ -19,23 +20,27 @@ export default class DecadeYearsView extends DaysView {
     this.changeSelectedDate(this.getCloneDate().add(100, 'y'));
   }
 
-  handleKeyDownHome() {
+  handleKeyDownHome(e) {
+    stopEvent(e);
     const date = this.getCloneDate();
     this.changeSelectedDate(date.subtract(date.year() % 100, 'y'));
   }
 
-  handleKeyDownEnd() {
+  handleKeyDownEnd(e) {
+    stopEvent(e);
     const date = this.getCloneDate();
     this.changeSelectedDate(date.add(90 - (date.year() % 100), 'y'));
   }
 
   handleKeyDownLeft(e) {
+    stopEvent(e);
     if (!e.altKey) {
       this.changeSelectedDate(this.getCloneDate().subtract(10, 'y'));
     }
   }
 
   handleKeyDownRight(e) {
+    stopEvent(e);
     if (e.altKey) {
       this.changeViewMode(ViewMode.year);
     } else {
@@ -43,19 +48,23 @@ export default class DecadeYearsView extends DaysView {
     }
   }
 
-  handleKeyDownUp() {
+  handleKeyDownUp(e) {
+    stopEvent(e);
     this.changeSelectedDate(this.getCloneDate().subtract(30, 'y'));
   }
 
-  handleKeyDownDown() {
+  handleKeyDownDown(e) {
+    stopEvent(e);
     this.changeSelectedDate(this.getCloneDate().add(30, 'y'));
   }
 
-  handleKeyDownPageUp() {
+  handleKeyDownPageUp(e) {
+    stopEvent(e);
     this.changeSelectedDate(this.getCloneDate().subtract(100, 'y'));
   }
 
-  handleKeyDownPageDown() {
+  handleKeyDownPageDown(e) {
+    stopEvent(e);
     this.changeSelectedDate(this.getCloneDate().add(100, 'y'));
   }
 

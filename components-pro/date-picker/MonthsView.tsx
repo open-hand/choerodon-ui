@@ -5,21 +5,25 @@ import Icon from '../icon';
 import DaysView, { alwaysValidDate } from './DaysView';
 import { ViewMode } from './enum';
 import { FieldType } from '../data-set/enum';
+import { stopEvent } from '../_util/EventManager';
 
 export default class MonthsView extends DaysView {
   static displayName = 'MonthsView';
 
   static type = FieldType.month;
 
-  handleKeyDownHome() {
+  handleKeyDownHome(e) {
+    stopEvent(e);
     this.changeSelectedDate(this.getCloneDate().startOf('y'));
   }
 
-  handleKeyDownEnd() {
+  handleKeyDownEnd(e) {
+    stopEvent(e);
     this.changeSelectedDate(this.getCloneDate().endOf('y'));
   }
 
   handleKeyDownLeft(e) {
+    stopEvent(e);
     if (e.altKey) {
       this.changeViewMode(ViewMode.year);
     } else {
@@ -28,6 +32,7 @@ export default class MonthsView extends DaysView {
   }
 
   handleKeyDownRight(e) {
+    stopEvent(e);
     if (e.altKey) {
       const { mode } = this.props;
       if (mode !== ViewMode.month) {
@@ -38,19 +43,23 @@ export default class MonthsView extends DaysView {
     }
   }
 
-  handleKeyDownUp() {
+  handleKeyDownUp(e) {
+    stopEvent(e);
     this.changeSelectedDate(this.getCloneDate().subtract(3, 'M'));
   }
 
-  handleKeyDownDown() {
+  handleKeyDownDown(e) {
+    stopEvent(e);
     this.changeSelectedDate(this.getCloneDate().add(3, 'M'));
   }
 
   handleKeyDownPageUp(e) {
+    stopEvent(e);
     this.changeSelectedDate(this.getCloneDate().subtract(e.altKey ? 10 : 1, 'y'));
   }
 
   handleKeyDownPageDown(e) {
+    stopEvent(e);
     this.changeSelectedDate(this.getCloneDate().add(e.altKey ? 10 : 1, 'y'));
   }
 

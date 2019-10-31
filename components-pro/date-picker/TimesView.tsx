@@ -9,6 +9,7 @@ import DaysView, { alwaysValidDate } from './DaysView';
 import { FieldType } from '../data-set/enum';
 import { $l } from '../locale-context';
 import { getDateFormatByFieldType } from '../field/utils';
+import { stopEvent } from '../_util/EventManager';
 
 const TimeUnitQueue: unitOfTime.Base[] = [TimeUnit.hour, TimeUnit.minute, TimeUnit.second];
 
@@ -25,17 +26,20 @@ export default class TimesView extends DaysView {
     this.changeViewMode(ViewMode.dateTime);
   }
 
-  handleKeyDownHome() {
+  handleKeyDownHome(e) {
+    stopEvent(e);
     this.changeSelectedDate(this.getCloneDate().set(this.getCurrentUnit(), 0));
   }
 
-  handleKeyDownEnd() {
+  handleKeyDownEnd(e) {
+    stopEvent(e);
     const unit = this.getCurrentUnit();
     const size = unit === TimeUnit.hour ? 24 : 60;
     this.changeSelectedDate(this.getCloneDate().set(unit, size - 1));
   }
 
   handleKeyDownLeft(e) {
+    stopEvent(e);
     if (e.altKey) {
       if (this.props.mode !== ViewMode.time) {
         this.changeViewMode(ViewMode.dateTime);
@@ -46,31 +50,32 @@ export default class TimesView extends DaysView {
   }
 
   handleKeyDownRight(e) {
+    stopEvent(e);
     if (!e.altKey) {
       this.changeUnit(this.getNextUnit());
     }
   }
 
-  handleKeyDownUp() {
+  handleKeyDownUp(e) {
+    stopEvent(e);
     this.changeSelectedDate(this.getCloneDate().subtract(1, this.getCurrentUnit()));
   }
 
-  handleKeyDownDown() {
+  handleKeyDownDown(e) {
+    stopEvent(e);
     this.changeSelectedDate(this.getCloneDate().add(1, this.getCurrentUnit()));
   }
 
-  handleKeyDownPageUp() {
+  handleKeyDownPageUp(e) {
+    stopEvent(e);
     this.changeSelectedDate(this.getCloneDate().set(this.getCurrentUnit(), 0));
   }
 
-  handleKeyDownPageDown() {
+  handleKeyDownPageDown(e) {
+    stopEvent(e);
     const unit = this.getCurrentUnit();
     const size = unit === TimeUnit.hour ? 24 : 60;
     this.changeSelectedDate(this.getCloneDate().set(unit, size - 1));
-  }
-
-  handleKeyDownEnter() {
-    this.choose(this.props.date);
   }
 
   handleTimeCellClick(date: Moment, unit: unitOfTime.Base) {

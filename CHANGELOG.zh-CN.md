@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>DatePicker`: 可输入。
 - 🌟 `<pro>DataSet`: 新增 feedback 属性。
 - 🌟 `<pro>DataSet.Field`: 新增 labelWidth 属性。
 - 🌟 `configure`: 新增 lookupCache 属性。

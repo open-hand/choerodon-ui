@@ -58,6 +58,7 @@ export interface Locale {
   DatePicker: {
     value_missing;
     value_missing_no_label;
+    type_mismatch;
     ok;
     today;
     now;

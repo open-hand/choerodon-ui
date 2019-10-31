@@ -6,6 +6,7 @@ import Icon from '../icon';
 import { ViewMode } from './enum';
 import DaysView, { alwaysValidDate } from './DaysView';
 import { FieldType } from '../data-set/enum';
+import { stopEvent } from '../_util/EventManager';
 
 export default class YearsView extends DaysView {
   static displayName = 'YearsView';
@@ -27,17 +28,20 @@ export default class YearsView extends DaysView {
     this.changeSelectedDate(this.getCloneDate().add(10, 'y'));
   }
 
-  handleKeyDownHome() {
+  handleKeyDownHome(e) {
+    stopEvent(e);
     const date = this.getCloneDate();
     this.changeSelectedDate(date.subtract(date.year() % 10, 'y'));
   }
 
-  handleKeyDownEnd() {
+  handleKeyDownEnd(e) {
+    stopEvent(e);
     const date = this.getCloneDate();
     this.changeSelectedDate(date.add(9 - (date.year() % 10), 'y'));
   }
 
   handleKeyDownLeft(e) {
+    stopEvent(e);
     if (e.altKey) {
       this.changeViewMode(ViewMode.decade);
     } else {
@@ -46,6 +50,7 @@ export default class YearsView extends DaysView {
   }
 
   handleKeyDownRight(e) {
+    stopEvent(e);
     if (e.altKey) {
       if (this.props.mode !== ViewMode.year) {
         this.changeViewMode(ViewMode.month);
@@ -55,19 +60,23 @@ export default class YearsView extends DaysView {
     }
   }
 
-  handleKeyDownUp() {
+  handleKeyDownUp(e) {
+    stopEvent(e);
     this.changeSelectedDate(this.getCloneDate().subtract(3, 'y'));
   }
 
-  handleKeyDownDown() {
+  handleKeyDownDown(e) {
+    stopEvent(e);
     this.changeSelectedDate(this.getCloneDate().add(3, 'y'));
   }
 
   handleKeyDownPageUp(e) {
+    stopEvent(e);
     this.changeSelectedDate(this.getCloneDate().subtract(e.altKey ? 100 : 10, 'y'));
   }
 
   handleKeyDownPageDown(e) {
+    stopEvent(e);
     this.changeSelectedDate(this.getCloneDate().add(e.altKey ? 100 : 10, 'y'));
   }
 

@@ -57,6 +57,7 @@ const locale: Locale = {
   DatePicker: {
     value_missing_no_label: '请选择日期。',
     value_missing: '请选择{label}。',
+    type_mismatch: '请输入有效的日期。',
     ok: '确定',
     today: '今天',
     now: '此刻',

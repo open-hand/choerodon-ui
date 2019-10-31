@@ -10,6 +10,7 @@ import { DatePickerKeyboardEvent, RenderFunction } from './DatePicker';
 import { ViewMode } from './enum';
 import { FieldType } from '../data-set/enum';
 import { $l } from '../locale-context';
+import { stopEvent } from '../_util/EventManager';
 
 export function alwaysValidDate() {
   return true;
@@ -92,15 +93,18 @@ export default class DaysView extends ViewComponent<DateViewProps>
     this.changeSelectedDate(this.getCloneDate().add(1, 'M'), ViewMode.month);
   }
 
-  handleKeyDownHome() {
+  handleKeyDownHome(e) {
+    stopEvent(e);
     this.changeSelectedDate(this.getCloneDate().startOf('M'));
   }
 
-  handleKeyDownEnd() {
+  handleKeyDownEnd(e) {
+    stopEvent(e);
     this.changeSelectedDate(this.getCloneDate().endOf('M'));
   }
 
   handleKeyDownLeft(e) {
+    stopEvent(e);
     if (e.altKey) {
       this.changeViewMode(ViewMode.month);
     } else {
@@ -109,28 +113,34 @@ export default class DaysView extends ViewComponent<DateViewProps>
   }
 
   handleKeyDownRight(e) {
+    stopEvent(e);
     if (!e.altKey) {
       this.changeSelectedDate(this.getCloneDate().add(1, 'd'));
     }
   }
 
-  handleKeyDownUp() {
+  handleKeyDownUp(e) {
+    stopEvent(e);
     this.changeSelectedDate(this.getCloneDate().subtract(1, 'w'));
   }
 
-  handleKeyDownDown() {
+  handleKeyDownDown(e) {
+    stopEvent(e);
     this.changeSelectedDate(this.getCloneDate().add(1, 'w'));
   }
 
   handleKeyDownPageUp(e) {
+    stopEvent(e);
     this.changeSelectedDate(this.getCloneDate().subtract(1, e.altKey ? 'y' : 'M'));
   }
 
   handleKeyDownPageDown(e) {
+    stopEvent(e);
     this.changeSelectedDate(this.getCloneDate().add(1, e.altKey ? 'y' : 'M'));
   }
 
-  handleKeyDownEnter() {
+  handleKeyDownEnter(e) {
+    e.preventDefault();
     this.choose(this.props.date);
   }
 
