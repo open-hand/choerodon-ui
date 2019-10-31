@@ -1,6 +1,6 @@
 {
   "name": "choerodon-ui",
-  "version": "0.8.29",
+  "version": "0.8.30",
   "title": "Choerodon UI",
   "description": "An enterprise-class UI design language and React-based implementation",
   "homepage": "https://choerodon.github.io/choerodon-ui/",
@@ -82,8 +82,7 @@
     "rmc-feedback": "^1.0.0",
     "string-template": "^1.0.0",
     "tslib": "^1.9.3",
-    "warning": "~4.0.3",
-    "yallist": "^3.1.1"
+    "warning": "~4.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",

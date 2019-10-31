@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.30
+
+`2019-10-31`
+
 - 🌟 `<pro>DatePicker`: Input enabled.
 - 🌟 `<pro>DataSet`: Added `feedback` property.
 - 🌟 `<pro>DataSet.Field`: Added `labelWidth` property.

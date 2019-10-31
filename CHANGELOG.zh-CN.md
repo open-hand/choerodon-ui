@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.30
+
+`2019-10-31`
+
 - 🌟 `<pro>DatePicker`: 可输入。
 - 🌟 `<pro>DataSet`: 新增 feedback 属性。
 - 🌟 `<pro>DataSet.Field`: 新增 labelWidth 属性。

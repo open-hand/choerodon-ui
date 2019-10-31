@@ -1,4 +1,4 @@
-import Yallist from 'yallist';
+import Yallist from './Yallist';
 
 const MAX = Symbol('max');
 const LENGTH = Symbol('length');
