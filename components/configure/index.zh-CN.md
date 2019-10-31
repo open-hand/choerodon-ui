@@ -52,17 +52,8 @@ const prefixCls = getConfig('prefixCls');
 | renderEmpty | 自定义组件空状态。 | (componentName: string) => ReactNode | - |
 | defaultValidationMessages | 自定义校验信息, 详见[ValidationMessages](#ValidationMessages) | ValitionMessages | - |
 | generatePageQuery | 分页参数转换的钩子 | ({ page?: number, pageSize?: number, sortName?: string, sortOrder?: string }) => object | - |
-| feedback | DataSet 查询和提交数据的反馈配置, 详见[Feedback](#Feedback) | Feedback |  |
-| transport | DataSet 默认 transport, 详见[Transport](/components-pro/data-set-cn/#Transport) | Transport |  |
-
-### Feedback
-
-| 属性                | 说明                                       | 类型     |
-| ------------------- | ------------------------------------------ | -------- |
-| loadSuccess(resp)   | DataSet 查询成功的反馈, `resp` - 响应值    | Function |
-| loadFailed(error)   | DataSet 查询失败的反馈, `error` - 异常对象 | Function |
-| submitSuccess(resp) | DataSet 提交成功的反馈, `resp` - 响应值    | Function |
-| submitFailed(error) | DataSet 提交失败的反馈, `error` - 异常对象 | Function |
+| feedback | DataSet 查询和提交数据的反馈配置, 详见[Feedback](/components-pro/data-set/#Feedback) | Feedback |  |
+| transport | DataSet 默认 transport, 详见[Transport](/components-pro/data-set/#Transport) | Transport |  |
 
 ### ValidationMessages
 

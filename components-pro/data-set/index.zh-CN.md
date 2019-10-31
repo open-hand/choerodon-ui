@@ -31,6 +31,7 @@ title: DataSet
 | validateUrl | 远程校验查询请求的 url。 当设定 name 时， 默认 /dataset/{name}/validate | string |  |
 | exportUrl | 导出请求的 url。 当设定 name 时， 默认 /dataset/{name}/export | string |  |
 | transport | 自定义 CRUD 请求配置, 详见[Transport](#Transport) 及 [AxiosRequestConfig](#AxiosRequestConfig) | Transport |  |
+| feedback | 查询和提交数据的反馈配置, 详见[Feedback](#Feedback) | Feedback |  |
 | children | 级联行数据集, 例： { name_1: dataSet1, name_2: dataSet2 } | { name: DataSet } |  |
 | primaryKey | 主键字段名，一般用作级联行表的查询字段 | string |  |
 | idField | 树形数据当前节点 id 字段名 | string |  |
@@ -273,3 +274,12 @@ title: DataSet
 | tls | 多语言数据请求的 axios 配置或 url 字符串 | AxiosRequestConfig \| ({ data, params, dataSet }) => AxiosRequestConfig \| string |
 | exports | 导出的配置或 url 字符串 | AxiosRequestConfig \| ({ data, params, dataSet }) => AxiosRequestConfig \| string |
 | adapter | CRUD 配置适配器 | (config: AxiosRequestConfig, type: string) => AxiosRequestConfig |
+
+### Feedback
+
+| 属性                | 说明                                       | 类型     |
+| ------------------- | ------------------------------------------ | -------- |
+| loadSuccess(resp)   | DataSet 查询成功的反馈, `resp` - 响应值    | Function |
+| loadFailed(error)   | DataSet 查询失败的反馈, `error` - 异常对象 | Function |
+| submitSuccess(resp) | DataSet 提交成功的反馈, `resp` - 响应值    | Function |
+| submitFailed(error) | DataSet 提交失败的反馈, `error` - 异常对象 | Function |

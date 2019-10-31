@@ -76,21 +76,29 @@ function getPlacementStyle(placement: NotificationPlacement) {
   return style;
 }
 
-function getNotificationInstance(prefixCls: string, placement: NotificationPlacement, callback: (n: any) => void) {
+function getNotificationInstance(
+  prefixCls: string,
+  placement: NotificationPlacement,
+  callback: (n: any) => void,
+) {
   const cacheKey = `${prefixCls}-${placement}`;
   if (notificationInstance[cacheKey]) {
     callback(notificationInstance[cacheKey]);
     return;
   }
-  (Notification as any).newInstance({
-    prefixCls,
-    className: `${prefixCls}-${placement}`,
-    style: getPlacementStyle(placement),
-    getContainer: defaultGetContainer,
-  }, (notification: any) => {
-    notificationInstance[cacheKey] = notification;
-    callback(notification);
-  });
+  (Notification as any).newInstance(
+    {
+      prefixCls,
+      className: `${prefixCls}-${placement}`,
+      style: getPlacementStyle(placement),
+      getContainer: defaultGetContainer,
+      closeIcon: <Icon className={`${prefixCls}-close-icon`} type="close" />,
+    },
+    (notification: any) => {
+      notificationInstance[cacheKey] = notification;
+      callback(notification);
+    },
+  );
 }
 
 const typeToIcon = {
@@ -122,53 +130,52 @@ function notice(args: ArgsProps) {
 
   let iconNode: ReactNode = null;
   if (args.icon) {
-    iconNode = (
-      <span className={`${prefixCls}-icon`}>
-        {args.icon}
-      </span>
-    );
+    iconNode = <span className={`${prefixCls}-icon`}>{args.icon}</span>;
   } else if (args.type) {
     const iconType = typeToIcon[args.type];
     iconNode = (
-      <Icon
-        className={`${prefixCls}-icon ${prefixCls}-icon-${args.type}`}
-        type={iconType}
-      />
+      <Icon className={`${prefixCls}-icon ${prefixCls}-icon-${args.type}`} type={iconType} />
     );
   }
 
-  const autoMarginTag = (!args.description && iconNode)
-    ? <span className={`${prefixCls}-message-single-line-auto-margin`} />
-    : null;
+  const autoMarginTag =
+    !args.description && iconNode ? (
+      <span className={`${prefixCls}-message-single-line-auto-margin`} />
+    ) : null;
 
-  getNotificationInstance(outerPrefixCls, args.placement || defaultPlacement, (notification: any) => {
-    notification.notice({
-      content: (
-        <div className={iconNode ? `${prefixCls}-with-icon` : ''}>
-          {iconNode}
-          <div className={`${prefixCls}-message`}>
-            {autoMarginTag}
-            {args.message}
+  getNotificationInstance(
+    outerPrefixCls,
+    args.placement || defaultPlacement,
+    (notification: any) => {
+      notification.notice({
+        content: (
+          <div className={iconNode ? `${prefixCls}-with-icon` : ''}>
+            {iconNode}
+            <div className={`${prefixCls}-message`}>
+              {autoMarginTag}
+              {args.message}
+            </div>
+            <div className={`${prefixCls}-description`}>{args.description}</div>
+            {args.btn ? <span className={`${prefixCls}-btn`}>{args.btn}</span> : null}
           </div>
-          <div className={`${prefixCls}-description`}>{args.description}</div>
-          {args.btn ? <span className={`${prefixCls}-btn`}>{args.btn}</span> : null}
-        </div>
-      ),
-      duration,
-      closable: true,
-      onClose: args.onClose,
-      key: args.key,
-      style: args.style || {},
-      className: args.className,
-    });
-  });
+        ),
+        duration,
+        closable: true,
+        onClose: args.onClose,
+        key: args.key,
+        style: args.style || {},
+        className: args.className,
+      });
+    },
+  );
 }
 
 const api: any = {
   open: notice,
   close(key: string) {
-    Object.keys(notificationInstance)
-      .forEach(cacheKey => notificationInstance[cacheKey].removeNotice(key));
+    Object.keys(notificationInstance).forEach(cacheKey =>
+      notificationInstance[cacheKey].removeNotice(key),
+    );
   },
   config: setNotificationConfig,
   destroy() {
@@ -179,11 +186,12 @@ const api: any = {
   },
 };
 
-['success', 'info', 'warning', 'error'].forEach((type) => {
-  api[type] = (args: ArgsProps) => api.open({
-    ...args,
-    type,
-  });
+['success', 'info', 'warning', 'error'].forEach(type => {
+  api[type] = (args: ArgsProps) =>
+    api.open({
+      ...args,
+      type,
+    });
 });
 
 api.warn = api.warning;

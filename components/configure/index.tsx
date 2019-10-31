@@ -1,10 +1,10 @@
-import { observable, ObservableMap, runInAction } from 'mobx';
+import { observable, ObservableMap, runInAction, toJS } from 'mobx';
 import { AxiosInstance, AxiosPromise, AxiosRequestConfig } from 'axios';
 import { ReactNode } from 'react';
+import isObject from 'lodash/isObject';
 import { categories } from 'choerodon-ui-font';
 import { LovConfig } from 'choerodon-ui/pro/lib/lov/Lov';
 import { RecordStatus } from 'choerodon-ui/pro/lib/data-set/enum';
-import exception from 'choerodon-ui/pro/lib/_util/exception';
 import { $l } from 'choerodon-ui/pro/lib/locale-context';
 import { TablePaginationConfig, TableQueryBarHook } from 'choerodon-ui/pro/lib/table/Table';
 import { ValidationMessages } from 'choerodon-ui/pro/lib/validator/Validator';
@@ -12,9 +12,10 @@ import { ButtonProps } from 'choerodon-ui/pro/lib/button/Button';
 import { TableQueryBarType } from 'choerodon-ui/pro/lib/table/enum';
 import { TransportHookProps, TransportProps } from 'choerodon-ui/pro/lib/data-set/Transport';
 import DataSet from 'choerodon-ui/pro/lib/data-set/DataSet';
+import defaultFeedback, { FeedBack } from 'choerodon-ui/pro/lib/data-set/FeedBack';
 import Record from 'choerodon-ui/pro/lib/data-set/Record';
 import { CacheOptions } from 'choerodon-ui/pro/lib/_util/Cache';
-import message from '../message';
+import { LabelLayout } from 'choerodon-ui/pro/lib/form/enum';
 
 export type Status = {
   [RecordStatus.add]: string;
@@ -23,16 +24,6 @@ export type Status = {
 };
 
 export type renderEmptyHandler = (componentName?: string) => ReactNode;
-
-export interface FeedBack {
-  loadSuccess(result: any);
-
-  loadFailed(error: Error);
-
-  submitSuccess(result: any[]);
-
-  submitFailed(error: Error);
-}
 
 export type Config = {
   prefixCls?: string;
@@ -69,7 +60,7 @@ export type Config = {
   statusKey?: string;
   tlsKey?: string;
   status?: Status;
-  labelLayout?: string;
+  labelLayout?: LabelLayout;
   queryBar?: TableQueryBarType | TableQueryBarHook;
   tableBorder?: boolean;
   tableHighLightRow?: boolean;
@@ -93,19 +84,6 @@ export type Config = {
 };
 
 export type ConfigKeys = keyof Config;
-
-const defaultFeedback: FeedBack = {
-  loadSuccess() {},
-  loadFailed(error) {
-    message.error(exception(error, $l('DataSet', 'query_failure')));
-  },
-  submitSuccess() {
-    message.success($l('DataSet', 'submit_success'));
-  },
-  submitFailed(error) {
-    message.error(exception(error, $l('DataSet', 'submit_failure')));
-  },
-};
 
 const defaultRenderEmpty: renderEmptyHandler = (componentName?: string): ReactNode => {
   switch (componentName) {
@@ -138,7 +116,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
     'status',
     { [RecordStatus.add]: 'add', [RecordStatus.update]: 'update', [RecordStatus.delete]: 'delete' },
   ],
-  ['labelLayout', 'horizontal'],
+  ['labelLayout', LabelLayout.horizontal],
   ['queryBar', TableQueryBarType.normal],
   ['tableBorder', true],
   ['tableHighLightRow', true],
@@ -151,7 +129,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['icons', categories],
 ]);
 
-export function getConfig<T extends ConfigKeys>(key: T): any {
+export function getConfig(key: ConfigKeys): any {
   // FIXME: observable.map把构建map时传入的key类型和value类型分别做了union，
   // 丢失了一一对应的映射关系，导致函数调用者无法使用union后的返回值类型，因此需要指定本函数返回值为any
   return globalConfig.get(key);
@@ -171,8 +149,20 @@ export function getProPrefixCls(suffixCls: string, customizePrefixCls?: string):
   return `${getConfig('proPrefixCls')}-${suffixCls}`;
 }
 
+const mergeProps = ['transport', 'feedback'];
+
 export default function configure(config: Config) {
   runInAction(() => {
-    Object.keys(config).forEach((key: keyof Config) => globalConfig.set(key, config[key]));
+    Object.keys(config).forEach((key: ConfigKeys) => {
+      const value = config[key];
+      if (mergeProps.includes(key) && isObject(value)) {
+        globalConfig.set(key, {
+          ...toJS<any>(globalConfig.get(key)),
+          ...value,
+        });
+      } else {
+        globalConfig.set(key, config[key]);
+      }
+    });
   });
 }

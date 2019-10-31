@@ -56,6 +56,7 @@ import PromiseQueue from '../_util/PromiseQueue';
 import { ModalProps } from '../modal/Modal';
 import { confirmProps } from '../modal/utils';
 import DataSetRequestError from './DataSetRequestError';
+import defaultFeedback, { FeedBack } from './FeedBack';
 
 export type DataSetChildren = { [key: string]: DataSet };
 
@@ -177,6 +178,10 @@ export interface DataSetProps {
    * 自定义CRUD的请求配置
    */
   transport?: TransportProps;
+  /**
+   * 查询和提交数据的反馈配置
+   */
+  feedback?: TransportProps;
   /**
    * 级联行数据集, 当为数组时，数组成员必须是有name属性的DataSet
    * @example
@@ -401,6 +406,14 @@ export default class DataSet extends EventManager {
   @computed
   get transport(): Transport {
     return new Transport(this.props.transport, this);
+  }
+
+  @computed
+  get feedback(): FeedBack {
+    return {
+      ...getConfig('feedback'),
+      ...this.props.feedback,
+    };
   }
 
   @computed
@@ -1811,20 +1824,20 @@ Then the query method will be auto invoke.`,
   }
 
   private handleLoadSuccess(resp: any) {
-    const feedback = getConfig('feedback');
-    feedback.loadSuccess(resp);
+    const { loadSuccess = defaultFeedback.loadSuccess } = this.feedback;
+    loadSuccess(resp);
     return resp;
   }
 
   private handleLoadFail(e) {
-    const feedback = getConfig('feedback');
+    const { loadFailed = defaultFeedback.loadFailed } = this.feedback;
     this.fireEvent(DataSetEvents.loadFailed, { dataSet: this });
-    feedback.loadFailed(e);
+    loadFailed(e);
   }
 
   private handleSubmitSuccess(resp: any[]) {
     const { dataKey, totalKey } = this;
-    const feedback = getConfig('feedback');
+    const { submitSuccess = defaultFeedback.submitSuccess } = this.feedback;
     const data: object[] = [];
     let total;
     resp.forEach(item => {
@@ -1845,14 +1858,14 @@ Then the query method will be auto invoke.`,
     }
     this.fireEvent(DataSetEvents.submitSuccess, { dataSet: this, data: result });
     this.commitData(data, total);
-    feedback.submitSuccess(result);
+    submitSuccess(result);
     return result;
   }
 
   private handleSubmitFail(e) {
-    const feedback = getConfig('feedback');
+    const { submitFailed = defaultFeedback.submitFailed } = this.feedback;
     this.fireEvent(DataSetEvents.submitFailed, { dataSet: this });
-    feedback.submitFailed(e);
+    submitFailed(e);
     this.destroyed.forEach(record => record.reset());
   }
 

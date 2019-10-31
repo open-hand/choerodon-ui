@@ -22,6 +22,7 @@ import {
   SelectBox,
   Modal,
   Button,
+  notification,
 } from 'choerodon-ui/pro';
 
 const { Column } = Table;
@@ -106,6 +107,11 @@ class App extends React.Component {
       destroy: {
         url: '/dataset/user/mutations',
         method: 'delete',
+      },
+    },
+    feedback: {
+      loadSuccess() {
+        notification.success({ message: 'query success!' });
       },
     },
     queryFields: [

@@ -19,6 +19,7 @@ export default class Notification extends Component {
     transitionName: PropTypes.string,
     animation: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     style: PropTypes.object,
+    closeIcon: PropTypes.node,
   };
 
   static defaultProps = {
@@ -77,8 +78,8 @@ export default class Notification extends Component {
     return transitionName;
   }
 
-  add = (notice) => {
-    const key = notice.key = notice.key || getUuid();
+  add = notice => {
+    const key = (notice.key = notice.key || getUuid());
     this.setState(previousState => {
       const notices = previousState.notices;
       if (!notices.filter(v => v.key === key).length) {
@@ -89,7 +90,7 @@ export default class Notification extends Component {
     });
   };
 
-  remove = (key) => {
+  remove = key => {
     this.setState(previousState => {
       return {
         notices: previousState.notices.filter(notice => notice.key !== key),
@@ -99,15 +100,18 @@ export default class Notification extends Component {
 
   render() {
     const props = this.props;
-    const noticeNodes = this.state.notices.map((notice) => {
+    const noticeNodes = this.state.notices.map(notice => {
       const onClose = createChainedFunction(this.remove.bind(this, notice.key), notice.onClose);
-      return (<Notice
-        prefixCls={props.prefixCls}
-        {...notice}
-        onClose={onClose}
-      >
-        {notice.content}
-      </Notice>);
+      return (
+        <Notice
+          prefixCls={props.prefixCls}
+          {...notice}
+          onClose={onClose}
+          closeIcon={props.closeIcon}
+        >
+          {notice.content}
+        </Notice>
+      );
     });
     const className = {
       [props.prefixCls]: 1,

@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>DataSet`: Added `feedback` property.
 - 🌟 `<pro>DataSet.Field`: Added `labelWidth` property.
 - 🌟 `configure`: Added lookupCache property.
 - 💄 `configure`: Optimize the default logic for global configuration `transport`.

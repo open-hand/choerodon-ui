@@ -154,7 +154,7 @@ export default class TableToolBar extends Component<TabelToolBarProps, any> {
       const props: any = {
         autoFocus: isMore && index === 0,
         onEnterDown: this.handleFieldEnter,
-        style: { width: pxToRem(isMore ? 250 : 130) },
+        style: isMore ? undefined : { width: pxToRem(130) },
       };
       const field = dataSet.getField(name);
       if (field) {

@@ -49,7 +49,7 @@ const prefixCls = getConfig('prefixCls');
 | renderEmpty | set empty content of components. | (componentName: string) => ReactNode | - |
 | defaultValidationMessages | Default validation messages, More info: [ValidationMessages](#ValidationMessages) | ValitionMessages | - |
 | generatePageQuery | Hook for Paging Parameter Conversion | ({ page?: number, pageSize?: number, sortName?: string, sortOrder?: string }) => object | - |
-| feedback | The feedback of DataSet for query and submit, More info: [Feedback](#Feedback) | Feedback |  |
+| feedback | The feedback of DataSet for query and submit, More info: [Feedback](/components-pro/data-set/#Feedback) | Feedback |  |
 | transport | Default transport of DataSet, More info: [Transport](/components-pro/data-set/#Transport) | Transport |  |
 
 ### Feedback
