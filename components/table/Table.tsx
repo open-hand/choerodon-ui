@@ -110,7 +110,7 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
     noFilter: PropTypes.bool,
     autoScroll: PropTypes.bool,
     indentSize: PropTypes.number,
-    rowKey: PropTypes.string,
+    rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
     showHeader: PropTypes.bool,
   };
 

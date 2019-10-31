@@ -381,10 +381,7 @@ export default class Table extends DataSetComponent<TableProps> {
     if (!element.offsetParent) {
       tableStore.styledHidden = true;
     } else if (!tableStore.hidden) {
-      if (this.nextFrameActionId !== undefined) {
-        raf.cancel(this.nextFrameActionId);
-      }
-      this.nextFrameActionId = raf(this.syncSize);
+      this.syncSizeInFrame();
     } else {
       tableStore.styledHidden = false;
     }
@@ -607,7 +604,8 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   componentDidMount() {
-    this.handleResize();
+    this.syncSize();
+    this.syncSizeInFrame();
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
@@ -998,6 +996,13 @@ export default class Table extends DataSetComponent<TableProps> {
     if (style) {
       return toPx(style.height);
     }
+  }
+
+  syncSizeInFrame() {
+    if (this.nextFrameActionId !== undefined) {
+      raf.cancel(this.nextFrameActionId);
+    }
+    this.nextFrameActionId = raf(this.syncSize);
   }
 
   @autobind
