@@ -1,9 +1,10 @@
+import { isMoment } from 'moment';
 import isEmpty from '../../_util/isEmpty';
 import ValidationResult from '../ValidationResult';
 import { $l } from '../../locale-context';
 import { FieldType } from '../../data-set/enum';
 import { methodReturn, ValidatorProps } from '.';
-import { isMoment } from 'moment';
+import { toRangeValue } from '../../field/utils';
 
 /* eslint-disable */
 const emailReg = /^([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22))*\x40([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d))*$/;
@@ -12,9 +13,16 @@ const colorRgbaReg = /^[rR][gG][Bb][Aa]?\((\s*(2[0-4][0-9]|25[0-5]|[01]?[0-9][0-
 const colorHexReg = /^#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})$/;
 /* eslint-enable */
 
-const isDate = value => !isMoment(value) || !value.isValid();
+const isDate = (value, range) => {
+  if (range) {
+    return toRangeValue(value, range).some(item => item && (!isMoment(item) || !item.isValid()));
+  }
+  return !isMoment(value) || !value.isValid();
+};
 
-const types: { [key: string]: [((value: any) => boolean), string] } = {
+const types: {
+  [key: string]: [((value: any, range?: boolean | [string, string]) => boolean), string];
+} = {
   [FieldType.email]: [value => !emailReg.test(value), 'EmailField'],
   [FieldType.url]: [value => !urlReg.test(value), 'UrlField'],
   [FieldType.color]: [
@@ -30,12 +38,12 @@ const types: { [key: string]: [((value: any) => boolean), string] } = {
 };
 
 export default function typeMismatch(value: any, props: ValidatorProps): methodReturn {
-  const { type, defaultValidationMessages } = props;
+  const { type, defaultValidationMessages, range } = props;
   if (!isEmpty(value) && type) {
     const validateType = types[type];
     if (validateType) {
       const [validate, component] = validateType;
-      if (validate(value)) {
+      if (validate(value, range)) {
         const ruleName = 'typeMismatch';
         const {
           [ruleName]: validationMessage = $l(component, 'type_mismatch'),

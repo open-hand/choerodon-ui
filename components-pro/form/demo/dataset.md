@@ -99,7 +99,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <Form dataSet={this.ds} style={{ width: '4rem' }}>
+      <Form dataSet={this.ds} style={{ width: '4.5rem' }}>
         <TextField name="phone" />
         <Password name="password" />
         <Password name="confirmPassword" />

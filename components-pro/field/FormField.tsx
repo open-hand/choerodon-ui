@@ -510,9 +510,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       'range',
       'trim',
     ]);
-    if (!this.isDisabled() && !this.isReadOnly()) {
-      otherProps.onChange = this.handleChange;
-    }
+    otherProps.onChange = !this.isDisabled() && !this.isReadOnly() ? this.handleChange : noop;
     otherProps.onKeyDown = this.handleKeyDown;
     return otherProps;
   }
@@ -895,9 +893,9 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   endRange() {
     if (this.rangeValue) {
       const values = this.rangeValue.slice();
-      if (this.multiple) {
-        this.rangeValue = undefined;
-      }
+      // if (this.multiple) {
+      this.rangeValue = undefined;
+      // }
       if (!values.every(isNil)) {
         this.addValue(fromRangeValue(values, this.range));
       }

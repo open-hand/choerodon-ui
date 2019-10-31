@@ -301,6 +301,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         <input
           tabIndex={-1}
           className={`${prefixCls}-range-start`}
+          onChange={noop}
           onMouseDown={this.handleRangeStart}
           value={rangeTarget === 0 && isFocused ? '' : startValue}
           placeholder={rangeTarget === 0 && isFocused ? '' : startPlaceholder}
@@ -310,6 +311,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         <input
           tabIndex={-1}
           className={`${prefixCls}-range-end`}
+          onChange={noop}
           onMouseDown={this.handleRangeEnd}
           value={rangeTarget === 1 && isFocused ? '' : endValue}
           placeholder={rangeTarget === 1 && isFocused ? '' : endPlaceHolder}

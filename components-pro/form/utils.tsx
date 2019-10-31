@@ -24,9 +24,7 @@ export function getProperty(props: any, key: string, dataSet?: DataSet, record?:
   if (props[key]) {
     return props[key];
   }
-  const { name, dataIndex } = props;
-  record =
-    record || (dataSet && (dataIndex === undefined ? dataSet.current : dataSet.get(dataIndex)));
+  const { name } = props;
   const field = record ? record.getField(name) : dataSet && dataSet.getField(name);
   if (field) {
     const fieldProperty = field.get(key);

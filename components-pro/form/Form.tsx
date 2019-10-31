@@ -273,12 +273,26 @@ export default class Form extends DataSetComponent<FormProps> {
 
   @computed
   get dataSet(): DataSet | undefined {
+    const { record } = this;
+    if (record) {
+      return record.dataSet;
+    }
     return this.observableProps.dataSet;
   }
 
   @computed
   get record(): Record | undefined {
-    return this.observableProps.record;
+    const { record, dataSet, dataIndex } = this.observableProps;
+    if (record) {
+      return record;
+    }
+    if (dataSet) {
+      if (isNumber(dataIndex)) {
+        return dataSet.get(dataIndex);
+      }
+      return dataSet.current;
+    }
+    return undefined;
   }
 
   @computed
@@ -659,11 +673,12 @@ export default class Form extends DataSetComponent<FormProps> {
 
   @autobind
   handleReset(e) {
-    const { dataSet, onReset = noop } = this.props;
+    const { onReset = noop } = this.props;
+    const { record } = this;
     onReset(e);
     if (!e.isDefaultPrevented()) {
-      if (dataSet) {
-        dataSet.reset();
+      if (record) {
+        record.reset();
       } else {
         this.getFields().forEach(field => field.reset());
       }

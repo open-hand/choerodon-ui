@@ -791,6 +791,9 @@ export default class DataSet extends EventManager {
     this.resetInBatch = true;
     this.records = this.originalData.map(record => record.reset());
     this.resetInBatch = false;
+    if (this.props.autoCreate && this.records.length === 0) {
+      this.create();
+    }
     this.fireEvent(DataSetEvents.reset, { dataSet: this, records: this.records });
     return this;
   }

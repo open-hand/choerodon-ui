@@ -26,6 +26,7 @@ timeline: true
 - 🐞 `<pro>Tooltip`: Fixed issues that the repaired content does not wrap, the `hidden` property is not controlled, and the `defaultHidden` property does not work.
 - 🐞 `<pro>Lov`: Fixed an issue that multiple records with the same `textField` value, only the first one of them can be selected.
 - 🐞 `<pro>DataSet.Record`: Fixed a problem where multiple languages would also be queried in the created state.
+- 🐞 `<pro>DatePicker`: Fixed an issue that reset could not clear the value in range mode.
 
 ## 0.8.29
 

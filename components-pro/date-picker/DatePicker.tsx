@@ -434,7 +434,9 @@ export default class DatePicker extends TriggerField<DatePickerProps>
 
   syncValueOnBlur(value) {
     if (value) {
-      this.addValue(this.checkMoment(value));
+      if (!this.range) {
+        this.addValue(this.checkMoment(value));
+      }
     } else if (!this.multiple) {
       this.setValue(this.emptyValue);
     }
