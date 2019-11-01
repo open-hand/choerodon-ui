@@ -695,7 +695,12 @@ export default class DataSet extends EventManager {
 
   @action
   restore(snapshot: DataSetSnapshot): DataSet {
+    const previous = this.current;
     Object.assign(this, snapshot);
+    const record = this.current;
+    if (previous !== record) {
+      this.fireEvent(DataSetEvents.indexChange, { dataSet: this, record, previous });
+    }
     return this;
   }
 

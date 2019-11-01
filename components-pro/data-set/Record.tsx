@@ -680,7 +680,7 @@ export default class Record {
     return json;
   }
 
-  private normalizeCascadeData(json: any, all?: boolean, isSelect?: boolean) {
+  private normalizeCascadeData(json: any, all?: boolean, isSelect?: boolean): boolean | undefined {
     const { dataSetSnapshot, dataSet, isCurrent, status, fields } = this;
     const isDelete = status === RecordStatus.delete;
     if (dataSet) {
@@ -692,12 +692,15 @@ export default class Record {
         const keys = Object.keys(children);
         if (keys) {
           keys.forEach(name => {
-            const child = isCurrent ? children[name] : new DataSet().restore(dataSetSnapshot[name]);
-            const jsonArray = all ? child.toData() : child.toJSONData(isSelect);
-            if (jsonArray.length > 0) {
-              dirty = true;
+            const snapshot = dataSetSnapshot[name];
+            const child = isCurrent ? children[name] : snapshot && new DataSet().restore(snapshot);
+            if (child) {
+              const jsonArray = all ? child.toData() : child.toJSONData(isSelect);
+              if (jsonArray.length > 0) {
+                dirty = true;
+              }
+              ObjectChainValue.set(json, name, jsonArray, fields);
             }
-            ObjectChainValue.set(json, name, jsonArray, fields);
           });
         }
       }

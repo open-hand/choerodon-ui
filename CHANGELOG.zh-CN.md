@@ -19,6 +19,7 @@ timeline: true
 - 💄 `<pro>DataSet.Field`: dynamicProps 钩子将在 v1.0 版本中废弃，请使用 dynamicProps 对象。
 - 🐞 `<pro>DataSet`: 修复级联行的更改在头配了 transport.update 而没配 transport.submit 时无法提交的问题。
 - 🐞 `<pro>Table`: 修复切换 dataset 时，过滤条报错的问题。
+- 🐞 `<pro>DataSet`: 修复多层级联的问题。
 
 ## 0.8.30
 

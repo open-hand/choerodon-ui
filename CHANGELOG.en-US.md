@@ -19,6 +19,7 @@ timeline: true
 - 💄 `<pro>DataSet.Field`: The dynamicProps hook will be deprecated in v1.0, please use the dynamicProps object.
 - 🐞 `<pro>DataSet`: Fixed a problem where the cascading row's changes could not be committed when the cascading header dataset has `transport.update` property but no `transport.submit` property.
 - 🐞 `<pro>Table`: Fixed an issue where the filter bar reported an error when switching dataset.
+- 🐞 `<pro>DataSet`: Fixed a problem with multi-level cascading.
 
 ## 0.8.30
 

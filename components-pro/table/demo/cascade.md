@@ -3,6 +3,7 @@ order: 1
 title:
   zh-CN: 级联
   en-US: Cascade
+only: true
 ---
 
 ## zh-CN
@@ -67,6 +68,7 @@ class App extends React.Component {
 
   enemyDs = new DataSet({
     primaryKey: 'userid',
+    autoQuery: false,
     fields: [
       { name: 'name', type: 'intl', label: '姓名', required: true },
       { name: 'age', type: 'number', label: '年龄' },
@@ -90,7 +92,7 @@ class App extends React.Component {
   userDs = new DataSet({
     primaryKey: 'userid',
     name: 'user',
-    autoQuery: true,
+    autoQuery: false,
     pageSize: 5,
     fields: [
       {
@@ -122,6 +124,7 @@ class App extends React.Component {
     ],
     events: {
       submit: ({ data }) => console.log('submit data', data),
+      load: ({ dataSet }) => console.log('header ds', dataSet.slice()),
     },
     children: {
       friends: this.friendsDs,
@@ -182,7 +185,7 @@ class App extends React.Component {
   );
 
   render() {
-    const buttons = [this.createButton, 'save', 'delete'];
+    const buttons = [this.createButton, 'save', 'delete', 'query'];
     return [
       <Table key="user" buttons={buttons} dataSet={this.userDs} header="User">
         <Column name="userid" />
@@ -192,8 +195,8 @@ class App extends React.Component {
         <Column header="编辑Friends" align="center" renderer={this.renderEdit} lock="right" />
       </Table>,
       <Table
-        key="enemy"
-        header="Enemy"
+        key="cascade1"
+        header="Cascade Level 1"
         buttons={['add', 'delete']}
         dataSet={this.enemyDs}
         pagination={{ position: 'both' }}
@@ -203,8 +206,8 @@ class App extends React.Component {
         <Column name="sex" editor width={150} />
       </Table>,
       <Table
-        key="friends"
-        header="Friends"
+        key="cascade2"
+        header="Cascade Level 2"
         buttons={['add', 'delete']}
         dataSet={this.enemyFriendsDs}
         pagination={{ position: 'top' }}
