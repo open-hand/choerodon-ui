@@ -430,7 +430,7 @@ export default class TableStore {
   get indeterminate(): boolean {
     const { dataSet, showCachedSeletion } = this;
     if (dataSet) {
-      const { length } = this.data.filter(record => record.selectable);
+      const { length } = dataSet.records.filter(record => record.selectable);
       const selectedLength = showCachedSeletion
         ? dataSet.selected.length
         : dataSet.currentSelected.length;
@@ -443,7 +443,7 @@ export default class TableStore {
   get allChecked(): boolean {
     const { dataSet, showCachedSeletion } = this;
     if (dataSet) {
-      const { length } = this.data.filter(record => record.selectable);
+      const { length } = dataSet.records.filter(record => record.selectable);
       const selectedLength = showCachedSeletion
         ? dataSet.selected.length
         : dataSet.currentSelected.length;
