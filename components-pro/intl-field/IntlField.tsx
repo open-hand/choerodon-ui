@@ -38,7 +38,7 @@ export default class IntlField extends TextField<IntlFieldProps> {
       if (record) {
         this.setLoading(true);
         try {
-          await record.tls();
+          await record.tls(name);
         } catch (err) {
           message.error(exception(err));
           return;

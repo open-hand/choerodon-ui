@@ -355,6 +355,7 @@ function generateConfig(
   dataSet: DataSet,
   data?: any,
   params?: any,
+  options?: object,
 ): AxiosRequestConfig {
   if (isString(config)) {
     return {
@@ -362,7 +363,7 @@ function generateConfig(
     };
   }
   if (typeof config === 'function') {
-    return config({ data, dataSet, params });
+    return config({ ...options, data, dataSet, params });
   }
   return config;
 }
@@ -372,6 +373,7 @@ export function axiosConfigAdapter(
   dataSet: DataSet,
   data?: any,
   params?: any,
+  options?: object,
 ): AxiosRequestConfig {
   const newConfig: AxiosRequestConfig = {
     data,
@@ -382,10 +384,10 @@ export function axiosConfigAdapter(
     getConfig('transport') || {};
   const { [type]: config, adapter } = dataSet.transport;
   if (globalConfig) {
-    Object.assign(newConfig, generateConfig(globalConfig, dataSet, data, params));
+    Object.assign(newConfig, generateConfig(globalConfig, dataSet, data, params, options));
   }
   if (config) {
-    Object.assign(newConfig, generateConfig(config, dataSet, data, params));
+    Object.assign(newConfig, generateConfig(config, dataSet, data, params, options));
   }
   if (newConfig.data && newConfig.method && newConfig.method.toLowerCase() === 'get') {
     newConfig.params = {

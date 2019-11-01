@@ -15,6 +15,7 @@ export type TransportHookProps = {
   data?: any;
   params?: any;
   dataSet?: DataSet;
+  [key: string]: any;
 };
 
 export type TransportHook = (props: TransportHookProps) => AxiosRequestConfig;

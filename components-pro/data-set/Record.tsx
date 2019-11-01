@@ -441,39 +441,43 @@ export default class Record {
   }
 
   @action
-  async tls(): Promise<void> {
+  async tls(name?: string): Promise<void> {
     const tlsKey = getConfig('tlsKey');
     const { dataSet } = this;
-    if (dataSet && this.status !== RecordStatus.add && !this.get(tlsKey)) {
-      const { axios, lang } = dataSet;
-      const { primaryKey } = dataSet.props;
-      const newConfig = axiosConfigAdapter(
-        'tls',
-        dataSet,
-        {},
-        primaryKey
-          ? {
-              key: this.get(primaryKey),
-            }
-          : this.toData(),
-      );
-      if (newConfig.url) {
-        const result = await axios(newConfig);
-        if (result) {
-          const dataKey = getConfig('dataKey');
-          this.commitTls(generateResponseData(result, dataKey)[0]);
-        }
-      } else {
-        this.commitTls(
-          [...this.fields.entries()].reduce((data, [key, field]) => {
-            if (field.type === FieldType.intl) {
-              data[key] = {
-                [lang]: this.get(key),
-              };
-            }
-            return data;
-          }, {}),
+    if (dataSet && this.status !== RecordStatus.add && name) {
+      const tlsData = this.get(tlsKey) || {};
+      if (!(name in tlsData)) {
+        const { axios, lang } = dataSet;
+        const { primaryKey } = dataSet.props;
+        const newConfig = axiosConfigAdapter(
+          'tls',
+          dataSet,
+          {},
+          primaryKey
+            ? {
+                key: this.get(primaryKey),
+              }
+            : this.toData(),
+          { name },
         );
+        if (newConfig.url) {
+          const result = await axios(newConfig);
+          if (result) {
+            const dataKey = getConfig('dataKey');
+            this.commitTls(generateResponseData(result, dataKey)[0]);
+          }
+        } else {
+          this.commitTls(
+            [...this.fields.entries()].reduce((data, [key, field]) => {
+              if (field.type === FieldType.intl) {
+                data[key] = {
+                  [lang]: this.get(key),
+                };
+              }
+              return data;
+            }, {}),
+          );
+        }
       }
     }
   }

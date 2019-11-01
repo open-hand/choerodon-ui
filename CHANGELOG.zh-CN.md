@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>DataSet.Transport`: tls 钩子增加字段名 name 参数。
 - 🐞 `<pro>DataSet`: 修复级联行的更改在头配了 transport.update 而没配 transport.submit 时无法提交的问题。
 
 ## 0.8.30
