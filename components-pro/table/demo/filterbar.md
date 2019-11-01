@@ -16,10 +16,47 @@ Filter Bar.
 ```jsx
 import { DataSet, Table, Button } from 'choerodon-ui/pro';
 
-class App extends React.Component {
-  state = { show: false };
+const config = {
+  primaryKey: 'userid',
+  name: 'user',
+  autoQuery: true,
+  pageSize: 5,
+  queryFields: [
+    { name: 'name', type: 'string', label: '姓名', defaultValue: 'Hugh' },
+    { name: 'age', type: 'number', label: '年龄' },
+    { name: 'code', type: 'object', label: '代码描述', lovCode: 'LOV_CODE' },
+    { name: 'sex', type: 'string', label: '性别', lookupCode: 'HR.EMPLOYEE_GENDER' },
+    { name: 'date.startDate', type: 'date', label: '开始日期' },
+    {
+      name: 'sexMultiple',
+      type: 'string',
+      label: '性别（多值）',
+      lookupCode: 'HR.EMPLOYEE_GENDER',
+      multiple: true,
+    },
+  ],
+  fields: [
+    { name: 'userid', type: 'string', label: '编号', required: true },
+    { name: 'name', type: 'string', label: '姓名' },
+    { name: 'age', type: 'number', label: '年龄', max: 100, step: 1 },
+    { name: 'sex', type: 'string', label: '性别', lookupCode: 'HR.EMPLOYEE_GENDER' },
+    { name: 'date.startDate', type: 'date', label: '开始日期', defaultValue: new Date() },
+    {
+      name: 'sexMultiple',
+      type: 'string',
+      label: '性别（多值）',
+      lookupCode: 'HR.EMPLOYEE_GENDER',
+      multiple: true,
+    },
+  ],
+  events: {
+    query: ({ params, data }) => console.log('filterbar query parameter', params, data),
+  },
+};
 
-  handleClick = () => this.setState({ show: !this.state.show });
+class App extends React.Component {
+  handleClick = () =>
+    this.setState({ show: !this.state.show, ds: this.state.show ? this.ds2 : this.ds1 });
 
   handleSearchAge = () => {
     const {
@@ -44,43 +81,13 @@ class App extends React.Component {
     </Button>,
   ];
 
-  ds = new DataSet({
-    primaryKey: 'userid',
-    name: 'user',
-    autoQuery: true,
-    pageSize: 5,
-    queryFields: [
-      { name: 'name', type: 'string', label: '姓名', defaultValue: 'Hugh' },
-      { name: 'age', type: 'number', label: '年龄' },
-      { name: 'code', type: 'object', label: '代码描述', lovCode: 'LOV_CODE' },
-      { name: 'sex', type: 'string', label: '性别', lookupCode: 'HR.EMPLOYEE_GENDER' },
-      { name: 'date.startDate', type: 'date', label: '开始日期' },
-      {
-        name: 'sexMultiple',
-        type: 'string',
-        label: '性别（多值）',
-        lookupCode: 'HR.EMPLOYEE_GENDER',
-        multiple: true,
-      },
-    ],
-    fields: [
-      { name: 'userid', type: 'string', label: '编号', required: true },
-      { name: 'name', type: 'string', label: '姓名' },
-      { name: 'age', type: 'number', label: '年龄', max: 100, step: 1 },
-      { name: 'sex', type: 'string', label: '性别', lookupCode: 'HR.EMPLOYEE_GENDER' },
-      { name: 'date.startDate', type: 'date', label: '开始日期', defaultValue: new Date() },
-      {
-        name: 'sexMultiple',
-        type: 'string',
-        label: '性别（多值）',
-        lookupCode: 'HR.EMPLOYEE_GENDER',
-        multiple: true,
-      },
-    ],
-    events: {
-      query: ({ params, data }) => console.log('filterbar query parameter', params, data),
-    },
-  });
+  ds1 = new DataSet(config);
+  ds2 = new DataSet(config);
+
+  state = {
+    show: false,
+    ds: this.ds1,
+  };
 
   getColumns() {
     return [
@@ -106,7 +113,7 @@ class App extends React.Component {
     return (
       <Table
         highLightRow={false}
-        dataSet={this.ds}
+        dataSet={this.state.ds}
         queryBar="bar"
         border={false}
         columnResizable={false}

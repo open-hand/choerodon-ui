@@ -123,6 +123,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
     };
   }
 
+  @autobind
   on(ds?: DataSet) {
     this.off();
     if (ds) {

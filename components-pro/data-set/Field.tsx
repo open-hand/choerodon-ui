@@ -383,6 +383,28 @@ export default class Field {
       const dynamicProps = this.get('dynamicProps');
       if (dynamicProps) {
         if (typeof dynamicProps === 'function') {
+          warning(
+            false,
+            `
+The dynamicProps hook will be deprecated. Please use dynamicProps map.
+For e.g,
+Bad case:
+dynamicProps({ record }) {
+  return {
+    bind: record.get('xx'),
+    label: record.get('yy'),
+  }
+}
+Good case:
+dynamicProps = {
+  bind({ record }) {
+    return record.get('xx')
+  },
+  label({ record }) {
+    return record.get('yy'),
+  }
+}`,
+          );
           const props = this.executeDynamicProps(dynamicProps);
           if (props && propsName in props) {
             const prop = props[propsName];
@@ -728,20 +750,20 @@ export default class Field {
   }
 
   private checkDynamicProp(propsName, newProp) {
-    if (propsName in this.lastDynamicProps) {
-      const oldProp = this.lastDynamicProps[propsName];
-      if (oldProp !== newProp) {
-        defer(
-          action(() => {
-            if (propsName in this.validator.props || propsName === 'validator') {
-              this.validator.reset();
-              // this.checkValidity();
-            }
-            this.handlePropChange(propsName);
-          }),
-        );
-      }
+    // if (propsName in this.lastDynamicProps) {
+    const oldProp = this.lastDynamicProps[propsName];
+    if (oldProp !== newProp) {
+      defer(
+        action(() => {
+          if (propsName in this.validator.props || propsName === 'validator') {
+            this.validator.reset();
+            // this.checkValidity();
+          }
+          this.handlePropChange(propsName);
+        }),
+      );
     }
+    // }
     this.lastDynamicProps[propsName] = newProp;
   }
 
