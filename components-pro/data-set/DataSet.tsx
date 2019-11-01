@@ -1702,17 +1702,12 @@ Then the query method will be auto invoke.`,
 
   private async write(records: Record[], isSelect?: boolean, noCascade?: boolean): Promise<any> {
     if (records.length) {
-      const [created, updated, destroyed, cascade] = prepareSubmitData(
-        records,
-        isSelect,
-        noCascade,
-      );
+      const [created, updated, destroyed] = prepareSubmitData(records, isSelect, noCascade);
       const axiosConfigs: AxiosRequestConfig[] = [];
       const submitData: object[] = [
         ...prepareForSubmit('create', created, axiosConfigs, this),
         ...prepareForSubmit('update', updated, axiosConfigs, this),
         ...prepareForSubmit('destroy', destroyed, axiosConfigs, this),
-        ...cascade,
       ];
       prepareForSubmit('submit', submitData, axiosConfigs, this);
       if (axiosConfigs.length) {
@@ -1720,7 +1715,7 @@ Then the query method will be auto invoke.`,
           this.changeSubmitStatus(DataSetStatus.submitting);
           const submitEventResult = await this.fireEvent(DataSetEvents.submit, {
             dataSet: this,
-            data: [...created, ...updated, ...destroyed, ...cascade],
+            data: [...created, ...updated, ...destroyed],
           });
           if (submitEventResult) {
             const result: any[] = await axiosStatic.all(

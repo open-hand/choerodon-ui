@@ -322,22 +322,19 @@ export function prepareSubmitData(
   records: Record[],
   isSelect?: boolean,
   noCascade?: boolean,
-): [object[], object[], object[], object[]] {
+): [object[], object[], object[]] {
   const created: object[] = [];
   const updated: object[] = [];
   const destroyed: object[] = [];
-  const cascade: object[] = [];
 
   function storeWith(status) {
     switch (status) {
       case RecordStatus.add:
         return created;
-      case RecordStatus.update:
-        return updated;
       case RecordStatus.delete:
         return destroyed;
       default:
-        return cascade;
+        return updated;
     }
   }
 
@@ -346,7 +343,7 @@ export function prepareSubmitData(
       (noCascade && record.status === RecordStatus.sync) ||
       generateJSONData(storeWith(record.status), record, isSelect, noCascade),
   );
-  return [created, updated, destroyed, cascade];
+  return [created, updated, destroyed];
 }
 
 function defaultAxiosConfigAdapter(config: AxiosRequestConfig): AxiosRequestConfig {

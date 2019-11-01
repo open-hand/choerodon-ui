@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>DataSet`: Fixed a problem where the cascading row's changes could not be committed when the cascading header dataset has `transport.update` property but no `transport.submit` property.
+
 ## 0.8.30
 
 `2019-10-31`
