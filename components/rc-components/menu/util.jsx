@@ -1,4 +1,5 @@
 import React, { Children } from 'react';
+import warning from '../../_util/warning';
 
 export function getKeyFromChildrenIndex(child, menuEventKey, index) {
   const prefix = menuEventKey || '';
@@ -11,10 +12,10 @@ export function getMenuIdFromSubMenuEventKey(eventKey) {
 
 export function loopMenuItem(children, cb) {
   let index = -1;
-  Children.forEach(children, (c) => {
+  Children.forEach(children, c => {
     index++;
     if (c && c.type && c.type.isMenuItemGroup) {
-      Children.forEach(c.props.children, (c2) => {
+      Children.forEach(c.props.children, c2 => {
         index++;
         cb(c2, index);
       });
@@ -28,11 +29,11 @@ export function loopMenuItemRecursively(children, keys, ret) {
   if (!children || ret.find) {
     return;
   }
-  Children.forEach(children, (c) => {
+  Children.forEach(children, c => {
     if (c) {
       const construct = c.type;
-      if (!construct
-        ||
+      if (
+        !construct ||
         !(construct.isSubMenu || construct.isMenuItem || construct.isMenuItemGroup)
       ) {
         return;
@@ -105,14 +106,36 @@ export const menuAllProps = [
   'expandIcon',
 ];
 
-export const getWidth = (elem) => (
-  elem &&
-  typeof elem.getBoundingClientRect === 'function' &&
-  elem.getBoundingClientRect().width
-) || 0;
+export const getWidth = elem =>
+  (elem &&
+    typeof elem.getBoundingClientRect === 'function' &&
+    elem.getBoundingClientRect().width) ||
+  0;
 
 export const setStyle = (elem, styleProperty, value) => {
   if (elem && typeof elem.style === 'object') {
     elem.style[styleProperty] = value;
   }
 };
+
+export function getMotion({ prefixCls, motion, openAnimation, openTransitionName }) {
+  if (motion) {
+    return motion;
+  }
+
+  if (typeof openAnimation === 'object' && openAnimation) {
+    warning(false, 'Object type of `openAnimation` is removed. Please use `motion` instead.');
+  } else if (typeof openAnimation === 'string') {
+    return {
+      motionName: `${prefixCls}-open-${openAnimation}`,
+    };
+  }
+
+  if (openTransitionName) {
+    return {
+      motionName: openTransitionName,
+    };
+  }
+
+  return null;
+}

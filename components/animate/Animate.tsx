@@ -44,10 +44,10 @@ export interface AnimateProps {
   transitionAppear?: boolean;
   exclusive?: boolean;
   transitionLeave?: boolean;
-  onEnd?: (key: Key | null, flag: boolean) => void;
-  onEnter?: (key: Key | null) => void;
-  onLeave?: (key: Key | null) => void;
-  onAppear?: (key: Key | null) => void;
+  onEnd?: (key: Key | null, flag: boolean, childRef: AnimateChild) => void;
+  onEnter?: (key: Key | null, childRef: AnimateChild) => void;
+  onLeave?: (key: Key | null, childRef: AnimateChild) => void;
+  onAppear?: (key: Key | null, childRef: AnimateChild) => void;
   hiddenProp?: string;
 }
 
@@ -283,20 +283,22 @@ export default class Animate extends Component<AnimateProps> {
   }
 
   performEnter = (key: Key) => {
-    if (this.childrenRefs[key]) {
+    const childRef = this.childrenRefs[key];
+    if (childRef) {
       this.currentlyAnimatingKeys[key] = true;
-      this.childrenRefs[key].componentWillEnter(this.handleDoneAdding.bind(this, key, 'enter'));
+      childRef.componentWillEnter(this.handleDoneAdding.bind(this, key, 'enter'));
     }
   };
 
   performAppear = (key: Key) => {
-    if (this.childrenRefs[key]) {
+    const childRef = this.childrenRefs[key];
+    if (childRef) {
       this.currentlyAnimatingKeys[key] = true;
-      this.childrenRefs[key].componentWillAppear(this.handleDoneAdding.bind(this, key, 'appear'));
+      childRef.componentWillAppear(this.handleDoneAdding.bind(this, key, 'appear'));
     }
   };
 
-  handleDoneAdding = (key: Key, type) => {
+  handleDoneAdding = (key: Key, type, childRef) => {
     const { props } = this;
     const { exclusive, onAppear = noop, onEnd = noop, onEnter = noop } = props;
     delete this.currentlyAnimatingKeys[key];
@@ -307,23 +309,24 @@ export default class Animate extends Component<AnimateProps> {
       this.performLeave(key);
     } else if (type === 'appear') {
       if (animUtil.allowAppearCallback(props)) {
-        onAppear(key);
-        onEnd(key, true);
+        onAppear(key, childRef);
+        onEnd(key, true, childRef);
       }
     } else if (animUtil.allowEnterCallback(props)) {
-      onEnter(key);
-      onEnd(key, true);
+      onEnter(key, childRef);
+      onEnd(key, true, childRef);
     }
   };
 
   performLeave = (key: Key) => {
-    if (this.childrenRefs[key]) {
+    const childRef = this.childrenRefs[key];
+    if (childRef) {
       this.currentlyAnimatingKeys[key] = true;
-      this.childrenRefs[key].componentWillLeave(this.handleDoneLeaving.bind(this, key));
+      childRef.componentWillLeave(this.handleDoneLeaving.bind(this, key));
     }
   };
 
-  handleDoneLeaving = (key: Key) => {
+  handleDoneLeaving = (key: Key, childRef) => {
     const {
       props,
       state: { children },
@@ -339,8 +342,8 @@ export default class Animate extends Component<AnimateProps> {
     } else {
       const end = () => {
         if (animUtil.allowLeaveCallback(props)) {
-          onLeave(key);
-          onEnd(key, false);
+          onLeave(key, childRef);
+          onEnd(key, false, childRef);
         }
       };
       if (!isSameChildren(children, currentChildren, hiddenProp)) {

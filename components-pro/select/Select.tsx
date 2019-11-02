@@ -703,7 +703,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
 
   findByTextWithValue(text, data: Record[]): Record | undefined {
     const { textField } = this;
-    const records = [...data, ...this.cascadeOptions].filter(record =>
+    const records = [...data, ...this.filteredOptions].filter(record =>
       isSameLike(record.get(textField), text),
     );
     if (records.length > 1) {

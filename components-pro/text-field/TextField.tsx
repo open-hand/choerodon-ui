@@ -15,7 +15,7 @@ import autobind from '../_util/autobind';
 import isEmpty from '../_util/isEmpty';
 import Icon from '../icon';
 import { ValidatorProps } from '../validator/rules';
-import { preventDefault } from '../_util/EventManager';
+import { preventDefault, stopPropagation } from '../_util/EventManager';
 import measureTextWidth from '../_util/measureTextWidth';
 import Animate from '../animate';
 import Tooltip from '../tooltip/Tooltip';
@@ -144,6 +144,13 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   @observable text?: string;
 
   type: string = 'text';
+
+  tagContainer: HTMLUListElement | null;
+
+  @autobind
+  saveTagContainer(node) {
+    this.tagContainer = node;
+  }
 
   isEmpty() {
     return isEmpty(this.text) && super.isEmpty();
@@ -395,12 +402,15 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           <Animate
             component="ul"
             componentProps={{
+              ref: this.saveTagContainer,
+              onScroll: stopPropagation,
               style:
                 height && height !== 'auto' ? { height: pxToRem(toPx(height)! - 2) } : undefined,
             }}
             transitionName="zoom"
             exclusive
             onEnd={this.handleTagAnimateEnd}
+            onEnter={this.handleTagAnimateEnter}
           >
             {this.renderMultipleValues()}
             {range
@@ -571,6 +581,15 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   handleTagAnimateEnd() {}
 
   @autobind
+  handleTagAnimateEnter() {
+    const { tagContainer } = this;
+    const { style } = this.props;
+    if (tagContainer && style && style.height) {
+      tagContainer.scrollTo(0, tagContainer.getBoundingClientRect().height);
+    }
+  }
+
+  @autobind
   handleRangeStart() {
     this.setRangeTarget(0);
   }
@@ -650,10 +669,6 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       }
     }
     super.handleBlur(e);
-  }
-
-  syncValueOnBlur(value) {
-    this.prepareSetValue(value);
   }
 
   @action

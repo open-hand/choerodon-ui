@@ -21,6 +21,7 @@ timeline: true
 - 🐞 `<pro>DataSet`: 修复多层级联的问题。
 - 🐞 `<pro>Table`: 修复切换 dataset 时，过滤条报错的问题。
 - 🐞 `<pro>Table`: 修复树形全选的问题。
+- 🐞 `<pro>Lov`: 修复按回车会输入自定义值的问题。
 
 ## 0.8.30
 

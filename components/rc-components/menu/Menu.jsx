@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
 import { create, Provider } from 'mini-store';
 import noop from 'lodash/noop';
-import { default as MenuMixin, getActiveKey } from './MenuMixin';
+import SubPopupMenu, { getActiveKey } from './SubPopupMenu';
+import { getMotion } from './util';
 
-const Menu = createReactClass({
-  displayName: 'Menu',
+export default class Menu extends Component {
+  static displayName = 'Menu';
 
-  propTypes: {
+  static propTypes = {
     defaultSelectedKeys: PropTypes.arrayOf(PropTypes.string),
     selectedKeys: PropTypes.arrayOf(PropTypes.string),
     defaultOpenKeys: PropTypes.arrayOf(PropTypes.string),
@@ -29,29 +29,38 @@ const Menu = createReactClass({
     selectable: PropTypes.bool,
     multiple: PropTypes.bool,
     children: PropTypes.any,
-  },
+    focusable: PropTypes.bool,
+    style: PropTypes.object,
+    defaultActiveFirst: PropTypes.bool,
+    visible: PropTypes.bool,
+    activeKey: PropTypes.string,
+  };
 
-  mixins: [MenuMixin],
+  static defaultProps = {
+    prefixCls: 'rc-menu',
+    className: '',
+    mode: 'vertical',
+    level: 1,
+    inlineIndent: 24,
+    visible: true,
+    focusable: true,
+    style: {},
+    selectable: true,
+    onClick: noop,
+    onSelect: noop,
+    onOpenChange: noop,
+    onDeselect: noop,
+    defaultSelectedKeys: [],
+    defaultOpenKeys: [],
+    subMenuOpenDelay: 0.1,
+    subMenuCloseDelay: 0.1,
+    triggerSubMenuAction: 'hover',
+  };
 
-  isRootMenu: true,
+  isRootMenu = true;
 
-  getDefaultProps() {
-    return {
-      selectable: true,
-      onClick: noop,
-      onSelect: noop,
-      onOpenChange: noop,
-      onDeselect: noop,
-      defaultSelectedKeys: [],
-      defaultOpenKeys: [],
-      subMenuOpenDelay: 0.1,
-      subMenuCloseDelay: 0.1,
-      triggerSubMenuAction: 'hover',
-    };
-  },
-
-  getInitialState() {
-    const props = this.props;
+  constructor(props) {
+    super(props);
     let selectedKeys = props.defaultSelectedKeys;
     let openKeys = props.defaultOpenKeys;
     if ('selectedKeys' in props) {
@@ -66,24 +75,30 @@ const Menu = createReactClass({
       openKeys,
       activeKey: { '0-menu-': getActiveKey(props, props.activeKey) },
     });
+  }
 
-    return {};
-  },
-
-  componentWillReceiveProps(nextProps) {
-    if ('selectedKeys' in nextProps) {
+  updateMiniStore() {
+    if ('selectedKeys' in this.props) {
       this.store.setState({
-        selectedKeys: nextProps.selectedKeys || [],
+        selectedKeys: this.props.selectedKeys || [],
       });
     }
-    if ('openKeys' in nextProps) {
+    if ('openKeys' in this.props) {
       this.store.setState({
-        openKeys: nextProps.openKeys || [],
+        openKeys: this.props.openKeys || [],
       });
     }
-  },
+  }
 
-  onSelect(selectInfo) {
+  componentDidMount() {
+    this.updateMiniStore();
+  }
+
+  componentDidUpdate() {
+    this.updateMiniStore();
+  }
+
+  onSelect = selectInfo => {
     const props = this.props;
     if (props.selectable) {
       // root menu
@@ -104,17 +119,21 @@ const Menu = createReactClass({
         selectedKeys,
       });
     }
-  },
+  };
 
-  onClick(e) {
+  onClick = e => {
     this.props.onClick(e);
-  },
+  };
 
-  onOpenChange(event) {
+  onKeyDown = (e, callback) => {
+    this.innerMenu.getWrappedInstance().onKeyDown(e, callback);
+  };
+
+  onOpenChange = event => {
     const props = this.props;
     const openKeys = this.store.getState().openKeys.concat();
     let changed = false;
-    const processSingle = (e) => {
+    const processSingle = e => {
       let oneChanged = false;
       if (e.open) {
         oneChanged = openKeys.indexOf(e.key) === -1;
@@ -142,9 +161,9 @@ const Menu = createReactClass({
       }
       props.onOpenChange(openKeys);
     }
-  },
+  };
 
-  onDeselect(selectInfo) {
+  onDeselect = selectInfo => {
     const props = this.props;
     if (props.selectable) {
       const selectedKeys = this.store.getState().selectedKeys.concat();
@@ -163,7 +182,21 @@ const Menu = createReactClass({
         selectedKeys,
       });
     }
-  },
+  };
+
+  setInnerMenu = node => {
+    this.innerMenu = node;
+  };
+
+  getStore() {
+    const store = this.store || this.props.store;
+
+    return store;
+  }
+
+  getEventKey() {
+    return this.props.eventKey || '0-menu-';
+  }
 
   getOpenTransitionName() {
     const props = this.props;
@@ -173,22 +206,22 @@ const Menu = createReactClass({
       transitionName = `${props.prefixCls}-open-${animationName}`;
     }
     return transitionName;
-  },
+  }
 
   isInlineMode() {
     return this.props.mode === 'inline';
-  },
+  }
 
   lastOpenSubMenu() {
     let lastOpen = [];
     const { openKeys } = this.store.getState();
     if (openKeys.length) {
-      lastOpen = this.getFlatInstanceArray().filter((c) => {
+      lastOpen = this.getFlatInstanceArray().filter(c => {
         return c && openKeys.indexOf(c.props.eventKey) !== -1;
       });
     }
     return lastOpen[0];
-  },
+  }
 
   renderMenuItem(c, i, subIndex, subMenuKey) {
     if (!c) {
@@ -202,17 +235,29 @@ const Menu = createReactClass({
       subMenuKey,
     };
     return this.renderCommonMenuItem(c, i, subIndex, extraProps);
-  },
+  }
 
   render() {
-    const props = { ...this.props };
+    let props = { ...this.props };
     props.className += ` ${props.prefixCls}-root`;
+    props = {
+      ...props,
+      onClick: this.onClick,
+      onOpenChange: this.onOpenChange,
+      onDeselect: this.onDeselect,
+      onSelect: this.onSelect,
+      parentMenu: this,
+      motion: getMotion(this.props),
+    };
+
+    // delete props.openAnimation;
+    // delete props.openTransitionName;
     return (
       <Provider store={this.store}>
-        {this.renderRoot(props)}
+        <SubPopupMenu {...props} ref={this.setInnerMenu}>
+          {this.props.children}
+        </SubPopupMenu>
       </Provider>
     );
-  },
-});
-
-export default Menu;
+  }
+}

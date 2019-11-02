@@ -21,6 +21,7 @@ timeline: true
 - 🐞 `<pro>DataSet`: Fixed a problem with multi-level cascading.
 - 🐞 `<pro>Table`: Fixed an issue where the filter bar reported an error when switching dataset.
 - 🐞 `<pro>Table`: Fixed the problem of tree selection.
+- 🐞 `<pro>Lov`: Fixed an issue where pressing Enter would enter a custom value.
 
 ## 0.8.30
 

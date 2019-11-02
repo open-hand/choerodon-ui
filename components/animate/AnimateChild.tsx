@@ -32,31 +32,31 @@ export default class AnimateChild extends Component<AnimateChildProps, any> {
     this.stop();
   }
 
-  componentWillEnter(done: () => void) {
+  componentWillEnter(done: (child: AnimateChild) => void) {
     if (animUtil.isEnterSupported(this.props)) {
       this.transition('enter', done);
     } else {
-      done();
+      done(this);
     }
   }
 
-  componentWillAppear(done: () => void) {
+  componentWillAppear(done: (child: AnimateChild) => void) {
     if (animUtil.isAppearSupported(this.props)) {
       this.transition('appear', done);
     } else {
-      done();
+      done(this);
     }
   }
 
-  componentWillLeave(done: () => void) {
+  componentWillLeave(done: (child: AnimateChild) => void) {
     if (animUtil.isLeaveSupported(this.props)) {
       this.transition('leave', done);
     } else {
-      done();
+      done(this);
     }
   }
 
-  transition(animationType: string, finishCallback: () => void) {
+  transition(animationType: string, finishCallback: (child: AnimateChild) => void) {
     const node = findDOMNode(this);
     if (node) {
       const { props } = this;
@@ -65,19 +65,28 @@ export default class AnimateChild extends Component<AnimateChildProps, any> {
       this.stop();
       const end = () => {
         this.stopper = null;
-        finishCallback();
+        finishCallback(this);
       };
-      if ((isCssAnimationSupported || !animation[animationType])
-        && transitionName && props[transitionMap[animationType]]) {
-        const name = nameIsObj ? transitionName[animationType] : `${transitionName}-${animationType}`;
+      if (
+        (isCssAnimationSupported || !animation[animationType]) &&
+        transitionName &&
+        props[transitionMap[animationType]]
+      ) {
+        const name = nameIsObj
+          ? transitionName[animationType]
+          : `${transitionName}-${animationType}`;
         let activeName = `${name}-active`;
         if (nameIsObj && transitionName[`${animationType}Active`]) {
           activeName = transitionName[`${animationType}Active`];
         }
-        this.stopper = cssAnimate(node, {
-          name,
-          active: activeName,
-        }, end);
+        this.stopper = cssAnimate(
+          node,
+          {
+            name,
+            active: activeName,
+          },
+          end,
+        );
       } else {
         this.stopper = animation[animationType](node, end);
       }
@@ -95,15 +104,13 @@ export default class AnimateChild extends Component<AnimateChildProps, any> {
   render() {
     const { children, ...otherProps } = this.props;
     if (isValidElement(children)) {
-      const props = omit(otherProps,
-        [
-          'animation',
-          'transitionName',
-          'transitionEnter',
-          'transitionAppear',
-          'transitionLeave',
-        ],
-      );
+      const props = omit(otherProps, [
+        'animation',
+        'transitionName',
+        'transitionEnter',
+        'transitionAppear',
+        'transitionLeave',
+      ]);
       const { style } = children.props as any;
       return cloneElement(children, { ...props, style: { ...props.style, ...style } } as any);
     }

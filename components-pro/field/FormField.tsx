@@ -710,13 +710,17 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       } else {
         const { value } = e.target;
         if (value !== '') {
-          this.prepareSetValue(value);
+          this.syncValueOnBlur(value);
           e.preventDefault();
         }
       }
     } else {
       this.blur();
     }
+  }
+
+  syncValueOnBlur(value) {
+    this.prepareSetValue(value);
   }
 
   @autobind
