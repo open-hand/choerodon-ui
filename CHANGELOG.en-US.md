@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.31
+
+`2019-11-02`
+
 - 🌟 `<pro>DataSet.Transport`: The tls hook added name parameter for field name.
 - 💄 `<pro>DataSet.Field`: The dynamicProps hook will be deprecated in v1.0, please use the dynamicProps object.
 - 🐞 `<pro>DataSet`: Fixed a problem where the cascading row's changes could not be committed when the cascading header dataset has `transport.update` property but no `transport.submit` property.

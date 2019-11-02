@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.31
+
+`2019-11-02`
+
 - 🌟 `<pro>DataSet.Transport`: tls 钩子增加字段名 name 参数。
 - 💄 `<pro>DataSet.Field`: dynamicProps 钩子将在 v1.0 版本中废弃，请使用 dynamicProps 对象。
 - 🐞 `<pro>DataSet`: 修复级联行的更改在头配了 transport.update 而没配 transport.submit 时无法提交的问题。
