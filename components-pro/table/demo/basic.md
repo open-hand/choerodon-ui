@@ -57,6 +57,14 @@ function renderColumnHeader(dataset, name) {
   );
 }
 
+const codeDynamicProps = {
+  lovCode({ record }) {
+    if (record) {
+      return 'LOV_CODE';
+    }
+  },
+};
+
 const nameDynamicProps = {
   required({ record }) {
     return record.get('sex') === 'M';
@@ -164,7 +172,7 @@ class App extends React.Component {
         name: 'code',
         type: 'object',
         label: '代码描述',
-        lovCode: 'LOV_CODE',
+        dynamicProps: codeDynamicProps,
       },
       {
         name: 'code_code',

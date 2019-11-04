@@ -176,6 +176,7 @@ title: DataSet
 | get(fieldName) | 根据字段名获取字段值。注意：禁止通过 record.data\[fieldName\]的方式获取字段值。 | `fieldName` - 字段名 | any |
 | getPristineValue(fieldName) | 根据字段名获取字段的原始值。 | `fieldName` - 字段名 | any |
 | set(fieldName, value) | 给指定字段赋值 | `fieldName` - 字段名或者键值对对象；`value` - 值 |  |
+| init(fieldName, value) | 给指定字段初始化值。字段变为净值。 | `fieldName` - 字段名或者键值对对象；`value` - 值 |  |
 | toJSONData(noCascade, isCascadeSelect) | 转换成用于提交的 json 数据 | `noCascade` - 为 true 时，不转换级联数据 `isCascadeSelect` - 只转换级联选中的记录 | object |
 | toData() | 转换成普通数据 |  | object |
 | validate(all, noCascade) | 校验记录 | `all` - 校验所有字段，默认为 false，只校验修改或新增字段 `noCascade` - 为 true 时，不校验级联数据 | Promise&lt;boolean&gt; |
@@ -269,9 +270,9 @@ title: DataSet
 | read | 查询请求的 axios 配置或 url 字符串 | AxiosRequestConfig \| ({ data, params, dataSet }) => AxiosRequestConfig \| string |
 | update | 更新请求的 axios 配置或 url 字符串 | AxiosRequestConfig \| ({ data, params, dataSet }) => AxiosRequestConfig \| string |
 | destroy | 删除请求的 axios 配置或 url 字符串 | AxiosRequestConfig \| ({ data, params, dataSet }) => AxiosRequestConfig \| string |
-| validate | 唯一性校验请求的 axios 配置或 url 字符串。当字段配了 unique 属性时，在当前数据集中没有重复数据的情况下，则会发起远程唯一性校验。校验的请求 data 格式为 { unique: \[{fieldName1: fieldValue1,fieldName2: fieldValue2...}\] }，响应格式为 boolean\[\]。 | AxiosRequestConfig \| ({ data, params, dataSet }) => AxiosRequestConfig \| string |
+| validate | 唯一性校验请求的 axios 配置或 url 字符串。当字段配了 unique 属性时，在当前数据集中没有重复数据的情况下，则会发起远程唯一性校验。校验的请求 data 格式为 { unique: \[{fieldName1: fieldValue1,fieldName2: fieldValue2...}\] }，响应格式为 boolean \| boolean\[\]。 | AxiosRequestConfig \| ({ data, params, dataSet }) => AxiosRequestConfig \| string |
 | submit | create, update, destroy 的默认配置或 url 字符串 | AxiosRequestConfig \| ({ data, params, dataSet }) => AxiosRequestConfig \| string |
-| tls | 多语言数据请求的 axios 配置或 url 字符串 | AxiosRequestConfig \| ({ data, params, dataSet, name }) => AxiosRequestConfig \| string |
+| tls | 多语言数据请求的 axios 配置或 url 字符串。UI 接收的接口返回值格式为：\[{ name: { zh_CN: '简体中文', en_US: '美式英语', ... }}\]， 其中 name 是字段名。请使用全局配置 transport 的 tls 钩子统一处理。 | AxiosRequestConfig \| ({ data, params, dataSet, record, name }) => AxiosRequestConfig \| string |
 | exports | 导出的配置或 url 字符串 | AxiosRequestConfig \| ({ data, params, dataSet }) => AxiosRequestConfig \| string |
 | adapter | CRUD 配置适配器 | (config: AxiosRequestConfig, type: string) => AxiosRequestConfig |
 

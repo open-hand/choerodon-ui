@@ -892,7 +892,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     const text = this.processLookupValue(value);
     if (isEmpty(text)) {
       if (isPlainObject(value)) {
-        return ObjectChainValue.get(value, this.valueField);
+        return ObjectChainValue.get(value, this.valueField) || '';
       }
       return super.processValue(value);
     }

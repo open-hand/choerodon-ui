@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>DataSet.Record`: 新增 init 方法。
+- 🌟 `<pro>DataSet.Transport`: tls 钩子增加 record 参数。
+- 🐞 `<pro>DataSet.Field`: 动态 lovCode 不显示值的问题。
+
 ## 0.8.31
 
 `2019-11-02`

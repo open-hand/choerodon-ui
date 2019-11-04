@@ -117,25 +117,3 @@ export const setStyle = (elem, styleProperty, value) => {
     elem.style[styleProperty] = value;
   }
 };
-
-export function getMotion({ prefixCls, motion, openAnimation, openTransitionName }) {
-  if (motion) {
-    return motion;
-  }
-
-  if (typeof openAnimation === 'object' && openAnimation) {
-    warning(false, 'Object type of `openAnimation` is removed. Please use `motion` instead.');
-  } else if (typeof openAnimation === 'string') {
-    return {
-      motionName: `${prefixCls}-open-${openAnimation}`,
-    };
-  }
-
-  if (openTransitionName) {
-    return {
-      motionName: openTransitionName,
-    };
-  }
-
-  return null;
-}

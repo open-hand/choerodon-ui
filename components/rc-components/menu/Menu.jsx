@@ -247,7 +247,6 @@ export default class Menu extends Component {
       onDeselect: this.onDeselect,
       onSelect: this.onSelect,
       parentMenu: this,
-      motion: getMotion(this.props),
     };
 
     // delete props.openAnimation;

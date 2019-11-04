@@ -361,15 +361,6 @@ export default class Record {
     );
   }
 
-  getPristineValue(fieldName?: string): any {
-    return getRecordValue.call(
-      this,
-      this.pristineData,
-      (child, checkField) => child.getPristineValue(checkField),
-      fieldName,
-    );
-  }
-
   @action
   set(item: string | object, value?: any): Record {
     if (isString(item)) {
@@ -423,6 +414,42 @@ export default class Record {
     return this;
   }
 
+  getPristineValue(fieldName?: string): any {
+    return getRecordValue.call(
+      this,
+      this.pristineData,
+      (child, checkField) => child.getPristineValue(checkField),
+      fieldName,
+    );
+  }
+
+  setPristineValue(item: string | object, value?: any): Record {
+    const { fields, pristineData } = this;
+    if (isString(item)) {
+      let fieldName: string = item;
+      const field = this.getField(fieldName) || this.addField(fieldName);
+      const bind = field.get('bind');
+      if (bind) {
+        fieldName = bind;
+      }
+      const oldValue = toJS(this.getPristineValue(fieldName));
+      const newValue = processValue(value, field);
+      if (!isSame(newValue, oldValue)) {
+        ObjectChainValue.set(pristineData, fieldName, value, fields);
+      }
+    } else if (isPlainObject(item)) {
+      Object.keys(item).forEach(key => ObjectChainValue.set(pristineData, key, item[key]), fields);
+    }
+    return this;
+  }
+
+  @action
+  init(item: string | object, value?: any): Record {
+    this.setPristineValue(item, value);
+    this.set(item, value);
+    return this;
+  }
+
   clone(): Record {
     const { dataSet } = this;
     const cloneData = this.toData();
@@ -453,12 +480,8 @@ export default class Record {
           'tls',
           dataSet,
           {},
-          primaryKey
-            ? {
-                key: this.get(primaryKey),
-              }
-            : this.toData(),
-          { name },
+          primaryKey && { key: this.get(primaryKey) },
+          { name, record: this },
         );
         if (newConfig.url) {
           const result = await axios(newConfig);

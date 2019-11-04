@@ -23,6 +23,7 @@ import PromiseQueue from '../_util/PromiseQueue';
 import { LovConfig } from '../lov/Lov';
 import { TransportHookProps } from './Transport';
 import isSameLike from '../_util/isSameLike';
+import * as ObjectChainValue from '../_util/ObjectChainValue';
 
 export type Fields = ObservableMap<string, Field>;
 export type DynamicPropsArguments = { dataSet: DataSet; record: Record; name: string };
@@ -256,6 +257,8 @@ export default class Field {
 
   lastDynamicProps: any = {};
 
+  isDynamicPropsComputing: boolean = false;
+
   @observable props: FieldProps & { [key: string]: any };
 
   @computed
@@ -267,8 +270,6 @@ export default class Field {
     }
     return undefined;
   }
-
-  isDynamicPropsComputing: boolean = false;
 
   @computed
   get intlFields(): Field[] {
@@ -379,6 +380,15 @@ export default class Field {
    * @return {any}
    */
   get(propsName: string): any {
+    if (propsName === 'textField' || propsName === 'valueField') {
+      const lovCode = this.get('lovCode');
+      if (lovCode) {
+        const config = lovCodeStore.getConfig(lovCode);
+        if (config && config[propsName]) {
+          return config[propsName];
+        }
+      }
+    }
     if (propsName !== 'dynamicProps') {
       const dynamicProps = this.get('dynamicProps');
       if (dynamicProps) {
@@ -469,7 +479,7 @@ dynamicProps = {
           oldValue,
         });
       }
-      this.handlePropChange(propsName);
+      this.handlePropChange(propsName, value, oldValue);
     }
   }
 
@@ -523,7 +533,7 @@ dynamicProps = {
       }
     }
     if (textField && isObject(value)) {
-      return value[textField];
+      return get(value, textField);
     }
     return value;
   }
@@ -701,23 +711,10 @@ dynamicProps = {
     }
   }
 
-  async fetchLovConfig() {
+  fetchLovConfig() {
     const lovCode = this.get('lovCode');
     if (lovCode) {
-      const config = await this.pending.add(lovCodeStore.fetchConfig(lovCode, this));
-      if (config) {
-        runInAction(() => {
-          const { textField, valueField } = config;
-          if (textField) {
-            this.set('textField', textField);
-            this.pristineProps.textField = valueField;
-          }
-          if (valueField) {
-            this.set('valueField', valueField);
-            this.pristineProps.valueField = valueField;
-          }
-        });
-      }
+      this.pending.add(lovCodeStore.fetchConfig(lovCode, this));
     }
   }
 
@@ -759,7 +756,7 @@ dynamicProps = {
             this.validator.reset();
             // this.checkValidity();
           }
-          this.handlePropChange(propsName);
+          this.handlePropChange(propsName, newProp, oldProp);
         }),
       );
     }
@@ -767,7 +764,19 @@ dynamicProps = {
     this.lastDynamicProps[propsName] = newProp;
   }
 
-  private handlePropChange(propsName) {
+  private handlePropChange(propsName, newProp, oldProp) {
+    if (propsName === 'bind') {
+      const { record } = this;
+      if (record && !this.dirty) {
+        if (newProp) {
+          record.init(newProp, ObjectChainValue.get(record.data, oldProp || this.name));
+        }
+        if (oldProp) {
+          record.init(oldProp, undefined);
+        }
+      }
+      return;
+    }
     if (
       [
         'type',

@@ -397,9 +397,6 @@ export default class IconPicker extends TriggerField<IconPickerProps> {
     } = this;
     const { TabPane } = Tabs;
     if (categoryKeys.length > 1) {
-      if (categoryKeys.some(key => !isArrayLike(categories[key]))) {
-        debugger;
-      }
       const tabs = categoryKeys.map(category => (
         <TabPane key={category} tab={$l('Icon', category)} className={`${prefixCls}-tab`}>
           <IconCategory
