@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.32
+
+`2019-11-05`
+
 - 🌟 `<pro>DataSet.Record`: Added `init` method.
 - 🌟 `<pro>DataSet.Transport`: The tls hook adds the `record` parameter.
 - 🐞 `<pro>DataSet.Field`: Fixed the problem that dynamic lovCode does not display the value.
