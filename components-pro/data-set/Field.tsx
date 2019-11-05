@@ -765,7 +765,7 @@ dynamicProps = {
   }
 
   private handlePropChange(propsName, newProp, oldProp) {
-    if (propsName === 'bind') {
+    if (propsName === 'bind' && this.type !== FieldType.intl) {
       const { record } = this;
       if (record && !this.dirty) {
         if (newProp) {

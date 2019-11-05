@@ -13,21 +13,26 @@ title:
 
 DataSet binding.
 
-````jsx
+```jsx
 import { DataSet, IntlField, Row, Col } from 'choerodon-ui/pro';
 
 function handleDataSetChange({ record, name, value, oldValue }) {
-  console.log('[dataset newValue]', value, '[oldValue]', oldValue, `[record.get('${name}')]`, record.get(name));
+  console.log(
+    '[dataset newValue]',
+    value,
+    '[oldValue]',
+    oldValue,
+    `[record.get('${name}')]`,
+    record.get(name),
+  );
 }
 
 class App extends React.Component {
   ds = new DataSet({
     primaryKey: 'pk',
-    data: [{}],
-    tlsUrl: '/intl.mock',
-    fields: [
-      { name: 'first-name', type: 'string', defaultValue: 'Huazhen', required: true },
-    ],
+    data: [{ 'first-name': '吴' }],
+    tlsUrl: '/dataset/user/languages',
+    fields: [{ name: 'first-name', type: 'intl', defaultValue: 'Huazhen', required: true }],
     events: {
       update: handleDataSetChange,
     },
@@ -37,10 +42,8 @@ class App extends React.Component {
     lang: 'en_GB',
     primaryKey: 'pk',
     data: [{}],
-    tlsUrl: '/intl.mock',
-    fields: [
-      { name: 'first-name', type: 'string', required: true },
-    ],
+    tlsUrl: '/dataset/user/languages',
+    fields: [{ name: 'first-name', type: 'intl', required: true }],
     events: {
       update: handleDataSetChange,
     },
@@ -60,8 +63,5 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(
-  <App />,
-  mountNode
-);
-````
+ReactDOM.render(<App />, mountNode);
+```

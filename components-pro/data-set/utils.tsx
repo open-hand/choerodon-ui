@@ -9,7 +9,7 @@ import isArray from 'lodash/isArray';
 import isNumber from 'lodash/isNumber';
 import warning from 'choerodon-ui/lib/_util/warning';
 import { getConfig } from 'choerodon-ui/lib/configure';
-import Field, { FieldProps, Fields } from './Field';
+import Field, { DynamicPropsArguments, FieldProps, Fields } from './Field';
 import { BooleanValue, FieldType, RecordStatus, SortOrder } from './enum';
 import DataSet from './DataSet';
 import Record from './Record';
@@ -471,6 +471,18 @@ export function getRecordValue(
   }
 }
 
+function tlsBind(
+  props: DynamicPropsArguments,
+  name: string,
+  lang: Lang,
+  tlsKey: string,
+): string | undefined {
+  const tls = props.record.get(tlsKey) || {};
+  if (name in tls) {
+    return `${tlsKey}.${name}.${lang}`;
+  }
+}
+
 export function processIntlField(
   name: string,
   fieldProps: FieldProps,
@@ -494,13 +506,13 @@ export function processIntlField(
         ? props => {
             return {
               ...dynamicProps(props),
-              bind: props.record.get(tlsKey) ? `${tlsKey}.${name}.${lang}` : undefined,
+              bind: tlsBind(props, name, lang, tlsKey),
             };
           }
         : {
             ...dynamicProps,
             bind: props => {
-              return props.record.get(tlsKey) ? `${tlsKey}.${name}.${lang}` : undefined;
+              return tlsBind(props, name, lang, tlsKey);
             },
           };
     return callback(name, {

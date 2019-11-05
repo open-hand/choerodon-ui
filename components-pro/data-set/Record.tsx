@@ -423,8 +423,9 @@ export default class Record {
     );
   }
 
-  setPristineValue(item: string | object, value?: any): Record {
-    const { fields, pristineData } = this;
+  @action
+  init(item: string | object, value?: any): Record {
+    const { fields, pristineData, data } = this;
     if (isString(item)) {
       let fieldName: string = item;
       const field = this.getField(fieldName) || this.addField(fieldName);
@@ -432,21 +433,12 @@ export default class Record {
       if (bind) {
         fieldName = bind;
       }
-      const oldValue = toJS(this.getPristineValue(fieldName));
-      const newValue = processValue(value, field);
-      if (!isSame(newValue, oldValue)) {
-        ObjectChainValue.set(pristineData, fieldName, value, fields);
-      }
+      ObjectChainValue.set(pristineData, fieldName, value, fields);
+      ObjectChainValue.set(data, fieldName, value, fields);
+      field.commit();
     } else if (isPlainObject(item)) {
-      Object.keys(item).forEach(key => ObjectChainValue.set(pristineData, key, item[key]), fields);
+      Object.keys(item).forEach(key => this.init(key, item[key]));
     }
-    return this;
-  }
-
-  @action
-  init(item: string | object, value?: any): Record {
-    this.setPristineValue(item, value);
-    this.set(item, value);
     return this;
   }
 
@@ -468,10 +460,10 @@ export default class Record {
   }
 
   @action
-  async tls(name?: string): Promise<void> {
+  async tls(name?: string, value?: any): Promise<void> {
     const tlsKey = getConfig('tlsKey');
     const { dataSet } = this;
-    if (dataSet && this.status !== RecordStatus.add && name) {
+    if (dataSet && name) {
       const tlsData = this.get(tlsKey) || {};
       if (!(name in tlsData)) {
         const { axios, lang } = dataSet;
@@ -483,11 +475,11 @@ export default class Record {
           primaryKey && { key: this.get(primaryKey) },
           { name, record: this },
         );
-        if (newConfig.url) {
+        if (newConfig.url && this.status !== RecordStatus.add) {
           const result = await axios(newConfig);
           if (result) {
             const dataKey = getConfig('dataKey');
-            this.commitTls(generateResponseData(result, dataKey)[0]);
+            this.commitTls(generateResponseData(result, dataKey)[0], name);
           }
         } else {
           this.commitTls(
@@ -499,6 +491,7 @@ export default class Record {
               }
               return data;
             }, {}),
+            name,
           );
         }
       }
@@ -598,19 +591,22 @@ export default class Record {
   }
 
   @action
-  private commitTls(data) {
+  private commitTls(data = {}, name: string) {
     const { dataSet } = this;
     const lang = dataSet ? dataSet.lang : localeContext.locale.lang;
     const tlsKey = getConfig('tlsKey');
-    this.pristineData[tlsKey] = data;
     const values: object = {};
+    if (!(name in data)) {
+      data[name] = {};
+    }
     Object.keys(data).forEach(key => {
+      const value = data[key];
       const field = this.getField(key);
       if (field && field.dirty) {
         values[`${tlsKey}.${key}.${lang}`] = this.get(key);
       }
+      this.init(`${tlsKey}.${key}`, value);
     });
-    this.set(tlsKey, data);
     this.set(values);
   }
 

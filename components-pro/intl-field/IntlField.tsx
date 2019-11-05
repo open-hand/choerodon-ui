@@ -16,6 +16,7 @@ import Progress from '../progress';
 import { Size } from '../core/enum';
 import exception from '../_util/exception';
 import message from '../message';
+import isSame from '../_util/isSame';
 
 export interface IntlFieldProps extends TextFieldProps {
   modalProps?: ModalProps;
@@ -34,10 +35,13 @@ export default class IntlField extends TextField<IntlFieldProps> {
   openModal = async () => {
     if (!this.modal) {
       const { modalProps } = this.props;
-      const { record, lang, name } = this;
+      const { record, lang, name, element } = this;
       if (record) {
         this.setLoading(true);
         try {
+          if (element && !isSame(this.getValue(), element.value)) {
+            this.syncValueOnBlur(element.value);
+          }
           await record.tls(name);
         } catch (err) {
           message.error(exception(err));

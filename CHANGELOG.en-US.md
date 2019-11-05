@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>IntlField`: Fixed a conflict when a single record had multiple multi-language controls.
+
 ## 0.8.32
 
 `2019-11-05`
