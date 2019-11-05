@@ -56,6 +56,7 @@ class App extends React.Component {
     autoQuery: true,
     pageSize: 5,
     queryDataSet: this.qds,
+    selection: 'single',
     fields: [
       { name: 'userid', type: 'string', label: '编号', required: true },
       { name: 'name', type: 'string', label: '姓名' },

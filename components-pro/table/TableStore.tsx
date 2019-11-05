@@ -43,6 +43,12 @@ function renderSelectionBox({ record }) {
         dataSet.unSelect(record);
       }
     };
+    const handleClick = e => {
+      stopPropagation(e);
+      if (record.isSelected) {
+        dataSet.unSelect(record);
+      }
+    };
     if (selection === DataSetSelection.multiple) {
       return (
         <ObserverCheckBox
@@ -59,7 +65,7 @@ function renderSelectionBox({ record }) {
         <ObserverRadio
           checked={record.isSelected}
           onChange={handleChange}
-          onClick={stopPropagation}
+          onClick={handleClick}
           disabled={!record.selectable}
           value
         />

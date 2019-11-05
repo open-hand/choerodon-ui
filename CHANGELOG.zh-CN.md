@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `configure`: 日期格式化加入全局配置。
+- 🌟 `<pro>Table`: 单选按钮可通过点击撤销选择。
 - 🐞 `<pro>IntlField`: 修复单条记录有多个多语言控件时的冲突问题。
 - 🐞 `<pro>DataSet.Field`: 动态 lookupUrl 不显示值的问题。
 

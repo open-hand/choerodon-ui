@@ -18,6 +18,7 @@ timeline: true
 - 🌟 `configure`: Date formatter is added to the global configuration.
 - 🐞 `<pro>IntlField`: Fixed a conflict when a single record had multiple multi-language controls.
 - 🐞 `<pro>DataSet.Field`: Fixed the problem that dynamic `lookupUrl` does not display the value.
+- 🌟 `<pro>Table`: The radio button can be deselected by clicking on it.
 
 ## 0.8.32
 
