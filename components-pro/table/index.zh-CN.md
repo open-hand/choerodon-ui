@@ -43,6 +43,7 @@ subtitle: 表格
 | highLightRow | 当前行高亮 | boolean | true |
 | columnResizable | 可调整列宽 | boolean | true |
 | pristine | 显示原始值 | boolean | false |
+| onExpand | 点击展开图标时触发 | (expanded, record) => void |  |
 
 更多属性请参考 [DataSetComponent](/components-pro/core/#DataSetComponent)。
 

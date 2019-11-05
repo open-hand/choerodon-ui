@@ -558,6 +558,10 @@ export default class TableStore {
     } else if (index !== -1) {
       this.expandedRows.splice(index, 1);
     }
+    const { onExpand } = this.props;
+    if (onExpand) {
+      onExpand(expanded, record);
+    }
   }
 
   isRowHover(record: Record): boolean {

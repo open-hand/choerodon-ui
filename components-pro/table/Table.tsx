@@ -230,6 +230,10 @@ export interface TableProps extends DataSetComponentProps {
    * 显示原始值
    */
   pristine?: boolean;
+  /**
+   * 点击展开图标时触发
+   */
+  onExpand?: (expanded: boolean, record: Record) => void;
 }
 
 @observer
