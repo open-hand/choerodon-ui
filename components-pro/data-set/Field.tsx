@@ -24,6 +24,7 @@ import { LovConfig } from '../lov/Lov';
 import { TransportHookProps } from './Transport';
 import isSameLike from '../_util/isSameLike';
 import * as ObjectChainValue from '../_util/ObjectChainValue';
+import { buildURLWithAxiosConfig } from '../axios/utils';
 
 export type Fields = ObservableMap<string, Field>;
 export type DynamicPropsArguments = { dataSet: DataSet; record: Record; name: string };
@@ -352,11 +353,8 @@ export default class Field {
       this.record = record;
       this.pristineProps = props;
       this.props = props;
-      const dsField = this.findDataSetField();
-      if (!dsField) {
-        this.fetchLookup();
-        this.fetchLovConfig();
-      }
+      this.fetchLookup();
+      this.fetchLovConfig();
     });
   }
 
@@ -683,6 +681,16 @@ dynamicProps = {
    */
   async fetchLookup(): Promise<object[] | undefined> {
     const axiosConfig = lookupStore.getAxiosConfig(this);
+    const dsField = this.findDataSetField();
+    if (dsField) {
+      const dsConfig = lookupStore.getAxiosConfig(dsField);
+      if (
+        dsConfig.url &&
+        buildURLWithAxiosConfig(dsConfig) === buildURLWithAxiosConfig(axiosConfig)
+      ) {
+        return dsField.get('lookup');
+      }
+    }
     if (axiosConfig.url) {
       const result = await this.pending.add<object[] | undefined>(
         lookupStore.fetchLookupData(axiosConfig),

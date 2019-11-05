@@ -460,7 +460,7 @@ export default class Record {
   }
 
   @action
-  async tls(name?: string, value?: any): Promise<void> {
+  async tls(name?: string): Promise<void> {
     const tlsKey = getConfig('tlsKey');
     const { dataSet } = this;
     if (dataSet && name) {

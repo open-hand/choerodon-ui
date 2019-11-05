@@ -1,4 +1,5 @@
 import buildURL from 'axios/lib/helpers/buildURL';
+import { AxiosRequestConfig } from 'axios';
 
 export function buildSortedURL(...args: any[]) {
   const builtURL = buildURL(...args);
@@ -13,8 +14,9 @@ export function buildSortedURL(...args: any[]) {
   return builtURL;
 }
 
-export function buildURLWithData(data, ...args: any[]) {
-  const builtURL = buildSortedURL(...args);
+export function buildURLWithAxiosConfig(config: AxiosRequestConfig) {
+  const { data, url, params, paramsSerializer } = config;
+  const builtURL = buildSortedURL(url, params, paramsSerializer);
   if (data) {
     return `${builtURL}|${JSON.stringify(data)}`;
   }

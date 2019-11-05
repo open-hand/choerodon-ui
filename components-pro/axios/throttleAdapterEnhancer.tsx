@@ -1,7 +1,7 @@
 import { AxiosAdapter, AxiosPromise, AxiosRequestConfig } from 'axios';
 import Cache from '../_util/Cache';
 import { ICacheLike } from './cacheAdapterEnhancer';
-import { buildURLWithData } from './utils';
+import { buildURLWithAxiosConfig } from './utils';
 
 export type RecordedCache = {
   timestamp: number;
@@ -43,8 +43,7 @@ export default function throttleAdapterEnhancer(
   };
 
   return config => {
-    const { url, params, paramsSerializer, data } = config;
-    const index = buildURLWithData(data, url, params, paramsSerializer);
+    const index = buildURLWithAxiosConfig(config);
     const now = Date.now();
     const cachedRecord = cache.get(index) || { timestamp: now };
     if (now - cachedRecord.timestamp <= threshold) {

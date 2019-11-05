@@ -2,7 +2,7 @@ import { AxiosAdapter, AxiosPromise } from 'axios';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import { reaction } from 'mobx';
 import Cache from '../_util/Cache';
-import { buildURLWithData, isCacheLike } from './utils';
+import { buildURLWithAxiosConfig, isCacheLike } from './utils';
 
 export interface ICacheLike<T> {
   get(key: string): T | undefined;
@@ -53,14 +53,13 @@ export default function cacheAdapterEnhancer(
   } = options;
 
   return config => {
-    const { url, params, paramsSerializer, data } = config;
     const useCache =
       config[cacheFlag] !== undefined && config[cacheFlag] !== null
         ? config[cacheFlag]
         : enabledByDefault;
     if (useCache) {
       const cache: ICacheLike<AxiosPromise> = isCacheLike(useCache) ? useCache : defaultCache;
-      const index = buildURLWithData(data, url, params, paramsSerializer);
+      const index = buildURLWithAxiosConfig(config);
       let responsePromise = cache.get(index);
 
       if (!responsePromise) {

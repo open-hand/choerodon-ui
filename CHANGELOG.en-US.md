@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `configure`: Date formatter is added to the global configuration.
 - 🐞 `<pro>IntlField`: Fixed a conflict when a single record had multiple multi-language controls.
+- 🐞 `<pro>DataSet.Field`: Fixed the problem that dynamic `lookupUrl` does not display the value.
 
 ## 0.8.32
 
@@ -24,7 +25,7 @@ timeline: true
 
 - 🌟 `<pro>DataSet.Record`: Added `init` method.
 - 🌟 `<pro>DataSet.Transport`: The tls hook adds the `record` parameter.
-- 🐞 `<pro>DataSet.Field`: Fixed the problem that dynamic lovCode does not display the value.
+- 🐞 `<pro>DataSet.Field`: Fixed the problem that dynamic `lovCode` does not display the value.
 
 ## 0.8.31
 

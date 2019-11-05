@@ -40,7 +40,11 @@ class App extends React.Component {
     autoCreate: true,
     fields: [
       { name: 'sex', type: 'string', lookupCode: 'HR.EMPLOYEE_GENDER', defaultValue: 'F' },
-      { name: 'sex2', type: 'string', lookupUrl: '/common/code/HR.EMPLOYEE_GENDER/' },
+      {
+        name: 'sex2',
+        type: 'string',
+        dynamicProps: { lookupUrl: () => '/common/code/HR.EMPLOYEE_GENDER/' },
+      },
       { name: 'lov', type: 'string', lovCode: 'LOV_CODE', defaultValue: 'SYS.PROFILE_LEVEL_ID' },
       {
         name: 'lov2',
