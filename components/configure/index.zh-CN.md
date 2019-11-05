@@ -54,6 +54,19 @@ const prefixCls = getConfig('prefixCls');
 | generatePageQuery | 分页参数转换的钩子 | ({ page?: number, pageSize?: number, sortName?: string, sortOrder?: string }) => object | - |
 | feedback | DataSet 查询和提交数据的反馈配置, 详见[Feedback](/components-pro/data-set/#Feedback) | Feedback |  |
 | transport | DataSet 默认 transport, 详见[Transport](/components-pro/data-set/#Transport) | Transport |  |
+| formatter | 日期格式化。其中 jsonDate 是数据请求和响应时的格式，为空时日期会转化为 timestamp。详见[Formatter](#Formatter) | Formatter |  |
+
+### Formatter
+
+| 属性     | 默认值              | 类型   |
+| -------- | ------------------- | ------ |
+| jsonDate | YYYY-MM-DD HH:mm:ss | string |
+| date     | YYYY-MM-DD          | string |
+| dateTime | YYYY-MM-DD HH:mm:ss | string |
+| time     | HH:mm:ss            | string |
+| week     | YYYY-Wo             | string |
+| month    | YYYY-MM             | string |
+| year     | YYYY                | string |
 
 ### ValidationMessages
 

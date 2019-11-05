@@ -47,19 +47,23 @@ const prefixCls = getConfig('prefixCls');
 | modalOkFirst | Default the ok button of Modal is ranked first | boolean | true |
 | buttonFuncType | Default Button function type | string | raised |
 | renderEmpty | set empty content of components. | (componentName: string) => ReactNode | - |
-| defaultValidationMessages | Default validation messages, More info: [ValidationMessages](#ValidationMessages) | ValitionMessages | - |
+| defaultValidationMessages | Default validation messages. More info: [ValidationMessages](#ValidationMessages) | ValitionMessages | - |
 | generatePageQuery | Hook for Paging Parameter Conversion | ({ page?: number, pageSize?: number, sortName?: string, sortOrder?: string }) => object | - |
-| feedback | The feedback of DataSet for query and submit, More info: [Feedback](/components-pro/data-set/#Feedback) | Feedback |  |
-| transport | Default transport of DataSet, More info: [Transport](/components-pro/data-set/#Transport) | Transport |  |
+| feedback | The feedback of DataSet for query and submit. More info: [Feedback](/components-pro/data-set/#Feedback) | Feedback |  |
+| transport | Default transport of DataSet. More info: [Transport](/components-pro/data-set/#Transport) | Transport |  |
+| formatter | Date formatter. `jsonDate` is the format of the data in request and response, and the date is converted to timestamp when it is empty. More info:[Formatter](#Formatter) | Formatter |  |
 
-### Feedback
+### Formatter
 
-| Property | Description | Type |
-| --- | --- | --- |
-| loadSuccess(resp) | The success feedback of DataSet for query, `resp` - response value | Function |
-| loadFailed(error) | The failed feedback of DataSet for query, `error` - error object | Function |
-| submitSuccess(resp) | The success feedback of DataSet for submit, `resp` - response value | Function |
-| submitFailed(error) | The failed feedback of DataSet for submit, `error` - error object | Function |
+| 属性     | 默认值              | 类型   |
+| -------- | ------------------- | ------ |
+| jsonDate | YYYY-MM-DD HH:mm:ss | string |
+| date     | YYYY-MM-DD          | string |
+| dateTime | YYYY-MM-DD HH:mm:ss | string |
+| time     | HH:mm:ss            | string |
+| week     | YYYY-Wo             | string |
+| month    | YYYY-MM             | string |
+| year     | YYYY                | string |
 
 ### ValidationMessages
 

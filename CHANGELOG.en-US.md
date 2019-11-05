@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: Date formatter is added to the global configuration.
 - 🐞 `<pro>IntlField`: Fixed a conflict when a single record had multiple multi-language controls.
 
 ## 0.8.32

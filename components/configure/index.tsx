@@ -25,6 +25,16 @@ export type Status = {
 
 export type renderEmptyHandler = (componentName?: string) => ReactNode;
 
+export type Formatter = {
+  jsonDate?: string | null;
+  date?: string;
+  dateTime?: string;
+  time?: string;
+  year?: string;
+  month?: string;
+  week?: string;
+};
+
 export type Config = {
   prefixCls?: string;
   proPrefixCls?: string;
@@ -81,6 +91,7 @@ export type Config = {
     sortName?: string;
     sortOrder?: string;
   }) => object;
+  formatter?: Formatter;
 };
 
 export type ConfigKeys = keyof Config;
@@ -127,6 +138,18 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['feedback', defaultFeedback],
   ['renderEmpty', defaultRenderEmpty],
   ['icons', categories],
+  [
+    'formatter',
+    {
+      jsonDate: 'YYYY-MM-DD HH:mm:ss',
+      date: 'YYYY-MM-DD',
+      dateTime: 'YYYY-MM-DD HH:mm:ss',
+      time: 'HH:mm:ss',
+      year: 'YYYY',
+      month: 'YYYY-MM',
+      week: 'YYYY-Wo',
+    },
+  ],
 ]);
 
 export function getConfig(key: ConfigKeys): any {
@@ -149,7 +172,7 @@ export function getProPrefixCls(suffixCls: string, customizePrefixCls?: string):
   return `${getConfig('proPrefixCls')}-${suffixCls}`;
 }
 
-const mergeProps = ['transport', 'feedback'];
+const mergeProps = ['transport', 'feedback', 'formatter'];
 
 export default function configure(config: Config) {
   runInAction(() => {

@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: 日期格式化加入全局配置。
 - 🐞 `<pro>IntlField`: 修复单条记录有多个多语言控件时的冲突问题。
 
 ## 0.8.32

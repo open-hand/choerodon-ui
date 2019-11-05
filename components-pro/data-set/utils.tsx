@@ -13,7 +13,6 @@ import Field, { DynamicPropsArguments, FieldProps, Fields } from './Field';
 import { BooleanValue, FieldType, RecordStatus, SortOrder } from './enum';
 import DataSet from './DataSet';
 import Record from './Record';
-import Constants from './Constants';
 import isEmpty from '../_util/isEmpty';
 import * as ObjectChainValue from '../_util/ObjectChainValue';
 import localeContext, { $l } from '../locale-context';
@@ -39,7 +38,8 @@ export function processToJSON(value) {
     value = moment(value);
   }
   if (isMoment(value)) {
-    value = value.format(Constants.DATE_JSON_FORMAT);
+    const { jsonDate } = getConfig('formatter');
+    value = jsonDate ? value.format(jsonDate) : +value;
   }
   return value;
 }
@@ -59,7 +59,7 @@ function processOne(value: any, field: Field, checkRange: boolean = true) {
         value[1] = processOne(value[1], field, false);
       }
     } else if (value instanceof Date) {
-      value = moment(value, Constants.DATE_JSON_FORMAT);
+      value = moment(value);
     } else if (!isObject(value)) {
       value = formatString(value, {
         trim: field.get('trim'),
@@ -93,9 +93,11 @@ function processOne(value: any, field: Field, checkRange: boolean = true) {
         case FieldType.time:
         case FieldType.week:
         case FieldType.month:
-        case FieldType.year:
-          value = moment(value, Constants.DATE_JSON_FORMAT);
+        case FieldType.year: {
+          const { jsonDate } = getConfig('formatter');
+          value = jsonDate ? moment(value, jsonDate) : moment(value);
           break;
+        }
         default:
       }
     }
