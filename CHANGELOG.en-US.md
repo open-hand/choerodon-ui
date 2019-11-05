@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.33
+
+`2019-11-05`
+
 - 🌟 `configure`: Date formatter is added to the global configuration.
 - 🌟 `<pro>Table`: The radio button can be deselected by clicking on it.
 - 🌟 `<pro>Table`: Added `onExpand` property.

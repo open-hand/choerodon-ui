@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.33
+
+`2019-11-05`
+
 - 🌟 `configure`: 日期格式化加入全局配置。
 - 🌟 `<pro>Table`: 单选按钮可通过点击撤销选择。
 - 🌟 `<pro>Table`: 新增 onExpand 属性。
