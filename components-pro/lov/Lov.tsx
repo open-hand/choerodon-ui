@@ -157,12 +157,13 @@ export default class Lov extends Select<LovProps> {
         onClose: this.handleLovViewClose,
         onOk: this.handleLovViewOk,
         destroyOnClose: true,
+        closable: true,
+        ...modalProps,
         style: {
           width: pxToRem(width),
           minHeight: pxToRem(Math.min(350, window.innerHeight)),
           ...(modalProps && modalProps.style),
         },
-        ...omit(modalProps, ['style']),
       } as ModalProps & { children });
       if (this.resetOptions(noCache)) {
         options.query();

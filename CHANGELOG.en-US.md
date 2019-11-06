@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 💄 `<pro>Lov`: The pop-up window displays the close icon button.
+
 ## 0.8.33
 
 `2019-11-05`

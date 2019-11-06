@@ -25,7 +25,7 @@ const prefixCls = getConfig('prefixCls');
 | prefixCls | 设置统一样式前缀 | string | c7n |
 | proPrefixCls | 设置统一样式前缀(pro 组件) | string | c7n-pro |
 | iconfontPrefix | 图标样式前缀 | string | icon |
-| icons | 图标列表，用于 IconPicker。 | string[] \| { categoryName: string[] } | import { categories } from 'choerodon-ui-font' |
+| icons | 图标列表，用于 IconPicker。 | string[] \| { \[categoryName: string\]: string[] } | import { categories } from 'choerodon-ui-font' |
 | ripple | 是否开启波纹效果 | boolean | true |
 | lookupCache | lookup 缓存配置。`maxAge` - 缓存时长 `max` - 缓存数量上限 | object | { maxAge: 1000 _ 60 _ 10, max: 100 } |
 | lookupUrl | lookup 取值的地址或返回地址的钩子 | string \| ((code: string) => string) | code => \`/common/code/\${code}/\` |

@@ -22,7 +22,7 @@ const prefixCls = getConfig('prefixCls');
 | prefixCls | set prefix class | string | c7n |
 | proPrefixCls | set prefix class for pro components | string | c7n-pro |
 | iconfontPrefix | iconfont css prefix | string | icon |
-| icons | List of iconfont, used for IconPicker. | string[] \| { categoryName: string[] } | import { categories } from 'choerodon-ui-font' |
+| icons | List of iconfont, used for IconPicker. | string[] \| { \[categoryName: string\]: string[] } | import { categories } from 'choerodon-ui-font' |
 | ripple | Whether to open the ripple effect | boolean | true |
 | lookupCache | lookup cache config. `maxAge` - cache max age `max` - cache max length | object | { maxAge: 1000 _ 60 _ 10, max: 100 } |
 | lookupUrl | Lookup value url or hook which return url | string \| ((code: string) => string) | code => \`/common/code/\${code}/\` |
