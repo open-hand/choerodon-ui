@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { create, Provider } from 'mini-store';
 import noop from 'lodash/noop';
 import SubPopupMenu, { getActiveKey } from './SubPopupMenu';
-import { getMotion } from './util';
 
 export default class Menu extends Component {
   static displayName = 'Menu';
@@ -121,12 +120,16 @@ export default class Menu extends Component {
     }
   };
 
+  step(direction) {
+    return this.innerMenu.getWrappedInstance().step(direction);
+  }
+
   onClick = e => {
     this.props.onClick(e);
   };
 
   onKeyDown = (e, callback) => {
-    this.innerMenu.getWrappedInstance().onKeyDown(e, callback);
+    return this.innerMenu.getWrappedInstance().onKeyDown(e, callback);
   };
 
   onOpenChange = event => {
