@@ -255,6 +255,13 @@ export default class Lov extends Select<LovProps> {
     super.handleBlur(e);
   }
 
+  syncValueOnBlur(value) {
+    const { mode } = this.props;
+    if (mode !== ViewMode.button) {
+      super.syncValueOnBlur(value);
+    }
+  }
+
   getConfig() {
     const { lovCode } = this;
     if (lovCode) {
