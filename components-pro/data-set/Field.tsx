@@ -688,6 +688,7 @@ dynamicProps = {
         dsConfig.url &&
         buildURLWithAxiosConfig(dsConfig) === buildURLWithAxiosConfig(axiosConfig)
       ) {
+        this.set('lookup', undefined);
         return dsField.get('lookup');
       }
     }

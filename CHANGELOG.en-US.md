@@ -17,6 +17,7 @@ timeline: true
 
 - 💄 `<pro>Lov`: The pop-up window displays the close icon button.
 - 🐞 `<pro>Lov`: Fixed an issue where the value was cleared by blur in button mode.
+- 🐞 `<pro>Lov`: Fixed an issue where the input query had no results in the case with `cascadeMap`.
 
 ## 0.8.33
 

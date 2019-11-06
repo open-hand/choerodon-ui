@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import omit from 'lodash/omit';
 import isEqual from 'lodash/isEqual';
-import debounce from 'lodash/debounce';
+import isString from 'lodash/isString';
 import { action, computed, observable, toJS } from 'mobx';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
@@ -17,7 +17,7 @@ import Record from '../data-set/Record';
 import lovStore from '../stores/LovCodeStore';
 import autobind from '../_util/autobind';
 import { stopEvent } from '../_util/EventManager';
-import { Select, SelectProps } from '../select/Select';
+import { SearchMatcher, Select, SelectProps } from '../select/Select';
 import { ColumnAlign } from '../table/enum';
 import { FieldType } from '../data-set/enum';
 import { LovFieldType, ViewMode } from './enum';
@@ -88,6 +88,15 @@ export default class Lov extends Select<LovProps> {
   modal;
 
   @observable filterText?: string;
+
+  @computed
+  get searchMatcher(): SearchMatcher {
+    const { searchMatcher } = this.observableProps;
+    if (isString(searchMatcher)) {
+      return searchMatcher;
+    }
+    return this.textField;
+  }
 
   @computed
   get searchable(): boolean {
@@ -173,20 +182,18 @@ export default class Lov extends Select<LovProps> {
     }
   });
 
-  private setFilterText = debounce(
-    action((text?: string) => {
-      if (this.filterText !== text) {
-        const { options, textField } = this;
-        this.filterText = text;
-        if (text) {
-          this.resetOptions(true);
-          options.setQueryParameter(textField, text);
-          options.query();
-        }
+  @action
+  searchRemote(text) {
+    if (this.filterText !== text) {
+      const { options, searchMatcher } = this;
+      this.filterText = text;
+      if (text && isString(searchMatcher)) {
+        this.resetOptions(true);
+        options.setQueryParameter(searchMatcher, text);
+        options.query();
       }
-    }),
-    500,
-  );
+    }
+  }
 
   handleLovViewSelect = () => {
     this.modal.close();
@@ -229,13 +236,6 @@ export default class Lov extends Select<LovProps> {
       }
     }
     return dirty;
-  }
-
-  setText(text) {
-    super.setText(text);
-    if (this.editable) {
-      this.setFilterText(text);
-    }
   }
 
   @autobind
@@ -310,7 +310,7 @@ export default class Lov extends Select<LovProps> {
   }
 
   componentWillUnmount() {
-    this.setFilterText.cancel();
+    super.componentWillUnmount();
     if (this.modal) {
       this.modal.close();
     }

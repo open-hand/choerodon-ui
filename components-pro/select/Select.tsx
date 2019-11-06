@@ -30,7 +30,6 @@ import isEmpty from '../_util/isEmpty';
 import isSame from '../_util/isSame';
 import isSameLike from '../_util/isSameLike';
 import { Renderer } from '../field/FormField';
-import Field from '../data-set/Field';
 
 function updateActiveKey(menu: Menu, activeKey: string) {
   const store = menu.getStore();
@@ -42,6 +41,10 @@ function updateActiveKey(menu: Menu, activeKey: string) {
       [menuId]: activeKey,
     },
   });
+}
+
+function defaultSearchMatcher({ record, text, textField }) {
+  return record.get(textField).indexOf(text) !== -1;
 }
 
 const disabledField = '__disabled';
@@ -65,6 +68,8 @@ function getSimpleValue(value, valueField) {
 
 export type onOptionProps = { dataSet: DataSet; record: Record };
 
+export type SearchMatcher = string | ((props: SearchMatcherProps) => boolean);
+
 export interface SearchMatcherProps {
   record: Record;
   text: string;
@@ -86,7 +91,7 @@ export interface SelectProps extends TriggerFieldProps {
   /**
    * 搜索匹配器。 当为字符串时，作为lookup的参数名来重新请求值列表。
    */
-  searchMatcher?: string | ((props: SearchMatcherProps) => boolean);
+  searchMatcher?: SearchMatcher;
   /**
    * 选项过滤
    * @param {Record} record
@@ -189,9 +194,6 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     suffixCls: 'select',
     combo: false,
     searchable: false,
-    searchMatcher({ record, text, textField }) {
-      return record.get(textField).indexOf(text) !== -1;
-    },
     dropdownMatchSelectWidth: true,
     checkValueOnOptionsChange: true,
     onOption: defaultOnOption,
@@ -204,6 +206,12 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   comboOptions: DataSet = new DataSet();
 
   menu?: Menu | null;
+
+  @computed
+  get searchMatcher(): SearchMatcher {
+    const { searchMatcher = defaultSearchMatcher } = this.observableProps;
+    return searchMatcher;
+  }
 
   @computed
   get defaultValidationMessages(): ValidationMessages {
@@ -239,9 +247,9 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
 
   @computed
   get cascadeOptions(): Record[] {
-    const { record, field, options } = this;
+    const { record, field, options, searchMatcher } = this;
     const { data } = options;
-    if (field) {
+    if (field && !isString(searchMatcher)) {
       const cascadeMap = field.get('cascadeMap');
       if (cascadeMap) {
         if (record) {
@@ -304,10 +312,6 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
 
   checkComboReaction?: IReactionDisposer;
 
-  fetchLookup = debounce((field: Field, searchMatcher, value) => {
-    field.setLovPara(searchMatcher, value === '' ? undefined : value);
-  }, 500);
-
   @autobind
   saveMenu(node) {
     this.menu = node;
@@ -357,6 +361,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
 
   componentWillUnmount() {
     super.componentWillUnmount();
+    this.doSearch.cancel();
     this.clearReaction();
   }
 
@@ -413,6 +418,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
       options: props.options,
       combo: props.combo,
       primitiveValue: props.primitiveValue,
+      searchMatcher: props.searchMatcher,
     };
   }
 
@@ -839,16 +845,17 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   @action
   setText(text?: string): void {
     super.setText(text);
-    this.doSearch(text);
+    if (this.searchable && isString(this.searchMatcher)) {
+      this.doSearch(text);
+    }
   }
 
-  doSearch(value) {
-    if (this.searchable) {
-      const { field } = this;
-      const { searchMatcher } = this.props;
-      if (field && searchMatcher && isString(searchMatcher)) {
-        this.fetchLookup(field, searchMatcher, value);
-      }
+  doSearch = debounce(value => this.searchRemote(value), 500);
+
+  searchRemote(value) {
+    const { field, searchMatcher } = this;
+    if (field && isString(searchMatcher)) {
+      field.setLovPara(searchMatcher, value === '' ? undefined : value);
     }
   }
 
@@ -990,7 +997,8 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
       textField,
       valueField,
       searchable,
-      props: { optionsFilter, searchMatcher },
+      searchMatcher,
+      props: { optionsFilter },
     } = this;
     data = optionsFilter ? data.filter(optionsFilter!) : data;
     if (searchable && text && typeof searchMatcher === 'function') {
