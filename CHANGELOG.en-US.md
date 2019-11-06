@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 💄 `<pro>Lov`: The pop-up window displays the close icon button.
+- 💄 `<pro>Validator`: Remove the logic for binding field validation.
 - 🐞 `<pro>Lov`: Fixed an issue where the value was cleared by blur in button mode.
 - 🐞 `<pro>Lov`: Fixed an issue where the input query had no results in the case with `cascadeMap`.
 - 🐞 `<pro>Select`: Fixed an error in keyboard operation.

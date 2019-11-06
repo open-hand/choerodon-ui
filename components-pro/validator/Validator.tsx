@@ -13,8 +13,8 @@ import valueMissing from './rules/valueMissing';
 import getReactNodeText from '../_util/getReactNodeText';
 import Field from '../data-set/Field';
 import { FormField } from '../field/FormField';
-import { FieldType } from '../data-set/enum';
-import { findBindField } from '../data-set/utils';
+// import { FieldType } from '../data-set/enum';
+// import { findBindField } from '../data-set/utils';
 
 export type CustomValidator = (
   value: any,
@@ -77,14 +77,14 @@ export default class Validator {
     return [];
   }
 
-  @computed
-  private get bindingFieldWithValidationResult(): Field | undefined {
-    const { name, record, type } = this.props;
-    if (record && name && type === FieldType.object) {
-      return findBindField(name, record.fields, field => !field.isValid());
-    }
-    return undefined;
-  }
+  // @computed
+  // private get bindingFieldWithValidationResult(): Field | undefined {
+  //   const { name, record, type } = this.props;
+  //   if (record && name && type === FieldType.object) {
+  //     return findBindField(name, record.fields, field => !field.isValid());
+  //   }
+  //   return undefined;
+  // }
 
   @computed
   private get uniqueRefValidationResult(): ValidationResult | undefined {
@@ -114,10 +114,10 @@ export default class Validator {
     if (innerValidationResults.length) {
       return innerValidationResults;
     }
-    const { bindingFieldWithValidationResult } = this;
-    if (bindingFieldWithValidationResult) {
-      return bindingFieldWithValidationResult.getValidationErrorValues();
-    }
+    // const { bindingFieldWithValidationResult } = this;
+    // if (bindingFieldWithValidationResult) {
+    //   return bindingFieldWithValidationResult.getValidationErrorValues();
+    // }
     return [];
   }
 
