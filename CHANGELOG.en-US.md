@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.34
+
+`2019-11-07`
+
 - 💄 `<pro>Lov`: The pop-up window displays the close icon button.
 - 💄 `<pro>Validator`: Remove the logic for binding field validation.
 - 🐞 `<pro>Lov`: Fixed an issue where the value was cleared by blur in button mode.

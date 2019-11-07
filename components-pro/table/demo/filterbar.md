@@ -3,7 +3,6 @@ order: 7
 title:
   zh-CN: 过滤条
   en-US: Filter Bar
-only: true
 ---
 
 ## zh-CN
