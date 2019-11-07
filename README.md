@@ -13,9 +13,9 @@ An enterprise-class UI design language and React-based implementation.
 
 ## Environment Support
 
-* Modern browsers and Internet Explorer 9+ (with [polyfills](https://ant.design/docs/react/getting-started#Compatibility))
-* Server-side Rendering
-* [Electron](http://electron.atom.io/)
+- Modern browsers and Internet Explorer 9+ (with [polyfills](https://ant.design/docs/react/getting-started#Compatibility))
+- Server-side Rendering
+- [Electron](http://electron.atom.io/)
 
 ## Install
 
@@ -27,13 +27,15 @@ npm install choerodon-ui --save
 
 ```jsx
 import { DatePicker } from 'choerodon-ui';
-ReactDOM.render(<DatePicker />, mountNode);
+import { Table } from 'choerodon-ui/pro';
+ReactDOM.render(<><DatePicker /><Table /><>, mountNode);
 ```
 
 And import style manually:
 
 ```jsx
-import 'choerodon-ui/dist/choerodon-ui.css';  // or 'choerodon-ui/dist/choerodon-ui.less'
+import 'choerodon-ui/dist/choerodon-ui.css'; // or 'choerodon-ui/dist/choerodon-ui.less'
+import 'choerodon-ui/dist/choerodon-ui-pro.css'; // or 'choerodon-ui/dist/choerodon-ui-pro.less'
 ```
 
 Or [import components on demand](http://ant-design.gitee.io/docs/react/getting-started#Import-on-Demand)
@@ -41,7 +43,6 @@ Or [import components on demand](http://ant-design.gitee.io/docs/react/getting-s
 ### TypeScript
 
 See [Used in TypeScript](http://ant-design.gitee.io/docs/react/use-in-typescript)
-
 
 ## Internationalization
 
@@ -64,6 +65,18 @@ $ git clone https://github.com/choerodon/choerodon-ui.git
 $ cd choerodon-ui
 $ npm install
 $ npm start
+```
+
+## Deployment
+
+```bash
+$ npm run deploy
+```
+
+## publish
+
+```bash
+$ npm run pub
 ```
 
 Open your browser and visit http://127.0.0.1:8001 , see more at https://github.com/ant-design/ant-design/wiki/Development .

@@ -469,7 +469,6 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
         onInput={this.handleInput}
         onEnterDown={this.handleFieldEnterDown}
         autoFocus={this.isFocused}
-        checkValueOnOptionsChange={false}
         dropdownMenuStyle={dropdownMenuStyle}
       >
         {options}

@@ -20,6 +20,7 @@ timeline: true
 - 🐞 `<pro>Lov`: Fixed an issue where the value was cleared by blur in button mode.
 - 🐞 `<pro>Lov`: Fixed an issue where the input query had no results in the case with `cascadeMap`.
 - 🐞 `<pro>Select`: Fixed an error in keyboard operation.
+- 🐞 `<pro>Table`: Fixed an issue where the advanced filter bar fuzzy search would have duplicate values.
 
 ## 0.8.33
 

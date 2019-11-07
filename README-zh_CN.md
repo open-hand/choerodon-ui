@@ -13,9 +13,9 @@
 
 ## 支持环境
 
-* 现代浏览器和 IE9 及以上。
-* 支持服务端渲染。
-* [Electron](http://electron.atom.io/)
+- 现代浏览器和 IE9 及以上。
+- 支持服务端渲染。
+- [Electron](http://electron.atom.io/)
 
 ## 安装
 
@@ -27,13 +27,15 @@ npm install choerodon-ui --save
 
 ```jsx
 import { DatePicker } from 'choerodon-ui';
-ReactDOM.render(<DatePicker />, mountNode);
+import { Table } from 'choerodon-ui/pro';
+ReactDOM.render(<><DatePicker /><Table /><>, mountNode);
 ```
 
 引入样式：
 
 ```jsx
-import 'choerodon-ui/dist/choerodon-ui.css';  // or 'choerodon-ui/dist/choerodon-ui.less'
+import 'choerodon-ui/dist/choerodon-ui.css'; // or 'choerodon-ui/dist/choerodon-ui.less'
+import 'choerodon-ui/dist/choerodon-ui-pro.css'; // or 'choerodon-ui/dist/choerodon-ui-pro.less'
 ```
 
 你也可以[按需加载组件](http://ant-design.gitee.io/docs/react/getting-started-cn#按需加载)。
@@ -63,6 +65,18 @@ $ git clone https://github.com/choerodon/choerodon-ui.git
 $ cd choerodon-ui
 $ npm install
 $ npm start
+```
+
+## 部署
+
+```bash
+$ npm run deploy
+```
+
+## 发布
+
+```bash
+$ npm run pub
 ```
 
 打开浏览器访问 http://127.0.0.1:8001 ，更多本地开发文档参见: https://github.com/ant-design/ant-design/wiki/Development 。
