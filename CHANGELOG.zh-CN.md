@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `<pro>Table`: selectionMode 新增 mousedown 模式。
+- 🐞 `<pro>DataSet`: 修复级联行的 autoCreate 不起作用的问题。
 
 ## 0.8.34
 

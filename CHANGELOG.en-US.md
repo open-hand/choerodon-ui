@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `<pro>Table`: `selectionMode` Added `mousedown` mode.
+- 🐞 `<pro>DataSet`: Fixed an issue where the `autoCreate` of the cascading dataset did not work.
 
 ## 0.8.34
 

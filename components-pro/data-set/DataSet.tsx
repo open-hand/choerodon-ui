@@ -1541,6 +1541,8 @@ Then the query method will be auto invoke.`,
     const { current } = ds;
     if (current) {
       ds.syncChild(this, current, name);
+    } else if (this.length) {
+      this.loadData([]);
     }
   }
 
@@ -1914,7 +1916,11 @@ Then the query method will be auto invoke.`,
       ds.clearCachedSelected();
       ds.loadData(childRecords ? childRecords.slice() : []);
       if (currentRecord.status === RecordStatus.add) {
-        ds.forEach(record => (record.status = RecordStatus.add));
+        if (ds.length) {
+          ds.forEach(record => (record.status = RecordStatus.add));
+        } else if (ds.props.autoCreate) {
+          ds.create();
+        }
       }
       currentRecord.dataSetSnapshot[childName] = ds.snapshot();
       return true;

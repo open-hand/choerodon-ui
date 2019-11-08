@@ -68,6 +68,7 @@ class App extends React.Component {
   enemyDs = new DataSet({
     primaryKey: 'userid',
     autoQuery: false,
+    autoCreate: true,
     fields: [
       { name: 'name', type: 'intl', label: '姓名', required: true },
       { name: 'age', type: 'number', label: '年龄' },
@@ -92,6 +93,7 @@ class App extends React.Component {
     primaryKey: 'userid',
     name: 'user',
     autoQuery: false,
+    autoCreate: true,
     pageSize: 5,
     fields: [
       {
@@ -117,7 +119,6 @@ class App extends React.Component {
         type: 'string',
         label: '性别',
         lookupCode: 'HR.EMPLOYEE_GENDER',
-        required: true,
       },
       { name: 'enable', type: 'boolean', label: '是否开启' },
     ],
@@ -187,10 +188,10 @@ class App extends React.Component {
     const buttons = [this.createButton, 'save', 'delete', 'query'];
     return [
       <Table key="user" buttons={buttons} dataSet={this.userDs} header="User">
-        <Column name="userid" />
-        <Column name="age" width={150} />
-        <Column name="enable" width={50} />
-        <Column name="name" width={150} />
+        <Column name="userid" editor />
+        <Column name="age" editor width={150} />
+        <Column name="enable" editor width={50} />
+        <Column name="name" editor width={150} />
         <Column header="编辑Friends" align="center" renderer={this.renderEdit} lock="right" />
       </Table>,
       <Table
