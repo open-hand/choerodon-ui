@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.35
+
+`2019-11-08`
+
 - 🌟 `<pro>Table`: `selectionMode` Added `mousedown` mode.
 - 💄 `<pro>Table`: Optimize record creation in inline editing mode.
 - 🐞 `<pro>DataSet.Record`: Fixed an issue where the `create` status record became `sync` status after reset.

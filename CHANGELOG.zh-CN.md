@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.35
+
+`2019-11-08`
+
 - 🌟 `<pro>Table`: selectionMode 新增 mousedown 模式。
 - 💄 `<pro>Table`: 优化行内编辑模式下的新增记录。
 - 🐞 `<pro>DataSet.Record`: 修复新增状态的记录重置后状态变为同步的问题。
