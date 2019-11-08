@@ -130,6 +130,12 @@ export default class TableRow extends Component<TableRowProps, any> {
   }
 
   @autobind
+  handleSelectionByMouseDown() {
+    this.handleSelection();
+    this.handleMouseDown();
+  }
+
+  @autobind
   handleSelectionByDblClick() {
     this.handleSelection();
     const { onDoubleClick } = this.rowExternalProps;
@@ -147,6 +153,14 @@ export default class TableRow extends Component<TableRowProps, any> {
 
   @autobind
   handleClick() {
+    const { onClick } = this.rowExternalProps;
+    if (typeof onClick === 'function') {
+      onClick();
+    }
+  }
+
+  @autobind
+  handleMouseDown() {
     const {
       record,
       record: { dataSet },
@@ -154,9 +168,9 @@ export default class TableRow extends Component<TableRowProps, any> {
     if (dataSet && !isDisabledRow(record)) {
       dataSet.current = record;
     }
-    const { onClick } = this.rowExternalProps;
-    if (typeof onClick === 'function') {
-      onClick();
+    const { onMouseDown } = this.rowExternalProps;
+    if (typeof onMouseDown === 'function') {
+      onMouseDown();
     }
   }
 
@@ -380,6 +394,7 @@ export default class TableRow extends Component<TableRowProps, any> {
       ref: this.saveRef,
       className: classString,
       style: { ...rowExternalProps.style },
+      onMouseDown: this.handleMouseDown,
       onClick: this.handleClick,
       tabIndex: -1,
       disabled,
@@ -401,6 +416,8 @@ export default class TableRow extends Component<TableRowProps, any> {
       rowProps.onClick = this.handleSelectionByClick;
     } else if (selectionMode === SelectionMode.dblclick) {
       rowProps.onDoubleClick = this.handleSelectionByDblClick;
+    } else if (selectionMode === SelectionMode.mousedown) {
+      rowProps.onMouseDown = this.handleSelectionByMouseDown;
     }
     return [
       <tr key={key} {...rowExternalProps} {...rowProps}>

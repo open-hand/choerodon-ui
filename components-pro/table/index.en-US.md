@@ -22,7 +22,7 @@ subtitle: 表格
 | header | 表头 | ReactNode \| (records) => ReactNode |  |
 | footer | 表脚 | ReactNode \| (records) => ReactNode |  |
 | border | 是否显示边框 | boolean | true |
-| selectionMode | 选择记录的模式, 可选值: `rowbox` `click` `dblclick` | string | 'rowbox' |
+| selectionMode | 选择记录的模式, 可选值: `rowbox` `click` `dblclick` `mousedown` `none` | string | 'rowbox' |
 | onRow | 设置行属性 | ({ dataSet, record, index, expandedRow }) => object |  |
 | buttons | 功能按钮，可选值：`add` `delete` `remove` `save` `query` `reset` `expandAll` `collapseAll` `export` 或 数组 或 自定义按钮，数组为可选值字符串+按钮配置属性对象 | string \| \[string, object\] \|ReactNode |  |
 | queryFields | 自定义查询字段组件或默认组件属性，默认会根据 queryDataSet 中定义的 field 类型自动匹配组件 | ReactNode[] \| object |  |

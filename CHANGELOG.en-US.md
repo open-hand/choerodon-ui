@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Table`: `selectionMode` Added `mousedown` mode.
+
 ## 0.8.34
 
 `2019-11-07`

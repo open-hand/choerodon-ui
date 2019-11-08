@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Table`: selectionMode 新增 mousedown 模式。
+
 ## 0.8.34
 
 `2019-11-07`

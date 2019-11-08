@@ -21,6 +21,7 @@ export const enum SelectionMode {
   click = 'click',
   none = 'none',
   dblclick = 'dblclick',
+  mousedown = 'mousedown',
 }
 
 export enum TableButtonType {
