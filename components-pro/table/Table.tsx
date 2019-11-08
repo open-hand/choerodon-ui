@@ -397,10 +397,15 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   @autobind
-  handleDataSetCreate({ record }) {
+  handleDataSetCreate({ record, dataSet }) {
     const { tableStore } = this;
     if (tableStore.inlineEdit) {
-      tableStore.currentEditRecord = record;
+      if (tableStore.currentEditRecord) {
+        tableStore.currentEditRecord.reset();
+        dataSet.remove(record);
+      } else {
+        tableStore.currentEditRecord = record;
+      }
     }
   }
 
@@ -624,13 +629,15 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   processDataSetListener(flag: boolean) {
-    const { isTree, dataSet } = this.tableStore;
+    const { isTree, dataSet, inlineEdit } = this.tableStore;
     if (dataSet) {
       const handler = flag ? dataSet.addEventListener : dataSet.removeEventListener;
       if (isTree) {
         handler.call(dataSet, 'load', this.handleDataSetLoad);
       }
-      handler.call(dataSet, 'create', this.handleDataSetCreate);
+      if (inlineEdit) {
+        handler.call(dataSet, 'create', this.handleDataSetCreate);
+      }
     }
   }
 

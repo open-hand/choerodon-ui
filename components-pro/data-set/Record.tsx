@@ -502,12 +502,12 @@ export default class Record {
   reset(): Record {
     const { status, fields, dataSet, dirty } = this;
     [...fields.values()].forEach(field => field.commit());
-    if (status === RecordStatus.update || status === RecordStatus.delete || dirty) {
+    if (status === RecordStatus.update || status === RecordStatus.delete) {
       this.status = RecordStatus.sync;
-      if (dirty) {
-        this.data = toJS(this.pristineData);
-        this.memo = undefined;
-      }
+    }
+    if (status === RecordStatus.delete || dirty) {
+      this.data = toJS(this.pristineData);
+      this.memo = undefined;
       if (dataSet && !dataSet.resetInBatch) {
         dataSet.fireEvent(DataSetEvents.reset, { records: [this], dataSet });
       }

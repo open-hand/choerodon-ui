@@ -187,14 +187,14 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     const {
       tableStore: { isTree, dataSet },
     } = this.context;
-    const disabled = dataSet.parent ? !dataSet.parent.current : false;
+    const disabled = dataSet.status !== DataSetStatus.ready;
     switch (type) {
       case TableButtonType.add:
         return {
           icon: 'playlist_add',
           onClick: this.handleButtonCreate,
           children: $l('Table', 'create_button'),
-          disabled,
+          disabled: disabled || (dataSet.parent ? !dataSet.parent.current : false),
         };
       case TableButtonType.save:
         return {
@@ -202,21 +202,21 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
           onClick: this.handleButtonSubmit,
           children: $l('Table', 'save_button'),
           type: ButtonType.submit,
-          disabled: dataSet.status === DataSetStatus.submitting,
+          disabled,
         };
       case TableButtonType.delete:
         return {
           icon: 'delete',
           onClick: this.handleButtonDelete,
           children: $l('Table', 'delete_button'),
-          disabled: dataSet.status === DataSetStatus.submitting || dataSet.selected.length === 0,
+          disabled: disabled || dataSet.selected.length === 0,
         };
       case TableButtonType.remove:
         return {
           icon: 'remove_circle',
           onClick: this.handleButtonRemove,
           children: $l('Table', 'remove_button'),
-          disabled: dataSet.status === DataSetStatus.submitting || dataSet.selected.length === 0,
+          disabled: disabled || dataSet.selected.length === 0,
         };
       case TableButtonType.reset:
         return {

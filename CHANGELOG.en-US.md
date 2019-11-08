@@ -16,6 +16,8 @@ timeline: true
 ---
 
 - 🌟 `<pro>Table`: `selectionMode` Added `mousedown` mode.
+- 💄 `<pro>Table`: Optimize record creation in inline editing mode.
+- 🐞 `<pro>DataSet.Record`: Fixed an issue where the `create` status record became `sync` status after reset.
 - 🐞 `<pro>DataSet`: Fixed an issue where the `autoCreate` of the cascading dataset did not work.
 
 ## 0.8.34
