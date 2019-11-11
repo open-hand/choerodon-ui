@@ -32,6 +32,7 @@ subtitle: 表格
 | defaultRowExpanded | 默认行是否展开，当 dataSet 没有设置 expandField 时才有效 | boolean | false |
 | expandRowByClick | 通过点击行来展开子行 | boolean | false |
 | expandedRowRenderer | 展开行渲染器 | ({ dataSet, record }) => ReactNode |  |
+| expandIcon | 自定义展开图标 | ({ prefixCls, expanded, expandable, needIndentSpaced, record, onExpand }) => ReactNode |  |
 | expandIconColumnIndex | 展开图标所在列索引 | number |  |
 | indentSize | 展示树形数据时，每层缩进的宽度 | number | 15 |
 | filter | 数据过滤， 返回值 true - 显示 false - 不显示 | (record) => boolean |  |

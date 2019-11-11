@@ -25,7 +25,7 @@ import getReactNodeText from '../_util/getReactNodeText';
 import ColumnGroups from './ColumnGroups';
 import autobind from '../_util/autobind';
 import ColumnGroup from './ColumnGroup';
-import { TablePaginationConfig } from './Table';
+import { expandInconProps, TablePaginationConfig } from './Table';
 
 const SELECTION_KEY = '__selection-column__';
 export const EXPAND_KEY = '__expand-column__';
@@ -241,6 +241,11 @@ export default class TableStore {
   @computed
   get queryBar(): TableQueryBarType {
     return this.props.queryBar || getConfig('queryBar');
+  }
+
+  @computed
+  get expandIcon(): (props: expandInconProps) => ReactNode {
+    return this.props.expandIcon || getConfig('tableExpandIcon');
   }
 
   get pristine(): boolean {

@@ -279,13 +279,27 @@ export default class TableRow extends Component<TableRowProps, any> {
   }
 
   renderExpandIcon() {
-    const { prefixCls } = this.props;
+    const { prefixCls, record } = this.props;
+    const {
+      tableStore: { expandIcon },
+    } = this.context;
+    const { isExpanded: expanded, expandable, handleExpandChange } = this;
+    if (typeof expandIcon === 'function') {
+      return expandIcon({
+        prefixCls,
+        expanded,
+        expandable,
+        needIndentSpaced: !expandable,
+        record,
+        onExpand: handleExpandChange,
+      });
+    }
     return (
       <ExpandIcon
         prefixCls={prefixCls}
-        expandable={this.expandable}
-        onChange={this.handleExpandChange}
-        expanded={this.isExpanded}
+        expandable={expandable}
+        onChange={handleExpandChange}
+        expanded={expanded}
       />
     );
   }

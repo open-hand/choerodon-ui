@@ -6,7 +6,11 @@ import { categories } from 'choerodon-ui-font';
 import { LovConfig } from 'choerodon-ui/pro/lib/lov/Lov';
 import { RecordStatus } from 'choerodon-ui/pro/lib/data-set/enum';
 import { $l } from 'choerodon-ui/pro/lib/locale-context';
-import { TablePaginationConfig, TableQueryBarHook } from 'choerodon-ui/pro/lib/table/Table';
+import {
+  expandInconProps,
+  TablePaginationConfig,
+  TableQueryBarHook,
+} from 'choerodon-ui/pro/lib/table/Table';
 import { ValidationMessages } from 'choerodon-ui/pro/lib/validator/Validator';
 import { ButtonProps } from 'choerodon-ui/pro/lib/button/Button';
 import { TableQueryBarType } from 'choerodon-ui/pro/lib/table/enum';
@@ -76,6 +80,7 @@ export type Config = {
   tableHighLightRow?: boolean;
   tableRowHeight?: 'auto' | number;
   tableColumnResizable?: boolean;
+  tableExpandIcon?: (props: expandInconProps) => ReactNode;
   pagination?: TablePaginationConfig | false;
   modalSectionBorder?: boolean;
   modalOkFirst?: boolean;

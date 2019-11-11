@@ -61,6 +61,15 @@ export interface expandedRowRendererProps {
   record: Record;
 }
 
+export interface expandInconProps {
+  prefixCls?: string;
+  expanded: boolean;
+  onExpand: Function;
+  record: Record;
+  expandable: boolean;
+  needIndentSpaced: boolean;
+}
+
 export interface onRowProps {
   dataSet: DataSet;
   record: Record;
@@ -179,6 +188,10 @@ export interface TableProps extends DataSetComponentProps {
    * 展开行渲染器
    */
   expandedRowRenderer?: (props: expandedRowRendererProps) => ReactNode;
+  /**
+   * 自定义展开图标
+   */
+  expandIcon?: (props: expandInconProps) => ReactNode;
   /**
    * 展开图标所在列索引
    */

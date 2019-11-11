@@ -46,6 +46,7 @@ const prefixCls = getConfig('prefixCls');
 | tableHighLightRow | 默认 Table 当前行高亮 | boolean | true |
 | tableRowHeight | 默认 Table 行高 | auto \| number | 30 |
 | tableColumnResizable | 默认 Table 列可调整列宽 | boolean | true |
+| tableExpandIcon | 默认 Table 自定义展开图标 | ({ prefixCls, expanded, expandable, needIndentSpaced, record, onExpand }) => ReactNode |  |
 | modalSectionBorder | 默认 Modal 的头和脚有边框线 | boolean | true |
 | modalOkFirst | 默认 Modal 的 ok 按钮排在第一个 | boolean | true |
 | buttonFuncType | 默认 Button 的功能类型 | string | raised |

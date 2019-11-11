@@ -43,6 +43,7 @@ const prefixCls = getConfig('prefixCls');
 | tableHighLightRow | Default Table current line highlight | boolean | true |
 | tableRowHeight | Default Table row height | auto \| number | 30 |
 | tableColumnResizable | Default Table column resizable | boolean | true |
+| tableExpandIcon | Default Table custom expansion icon | ({ prefixCls, expanded, expandable, needIndentSpaced, record, onExpand }) => ReactNode |  |
 | modalSectionBorder | Default if Modal header and foot have a border line | boolean | true |
 | modalOkFirst | Default the ok button of Modal is ranked first | boolean | true |
 | buttonFuncType | Default Button function type | string | raised |
