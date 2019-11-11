@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.36
+
+`2019-11-11`
+
 - 🌟 `configure`: 新增 tableExpandIcon 属性。
 - 🌟 `<pro>Table`: 新增 expandIcon 属性。
 - 💄 `<pro>CodeArea`: 更新 json 格式化的例子。

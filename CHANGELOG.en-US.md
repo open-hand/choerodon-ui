@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.36
+
+`2019-11-11`
+
 - 🌟 `configure`: Added `tableExpandIcon` property.
 - 🌟 `<pro>Table`: Added `expandIcon` property.
 - 💄 `<pro>CodeArea`: Update the json-format example.
