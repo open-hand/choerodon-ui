@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `configure`: 新增 tableExpandIcon 属性。
 - 🌟 `<pro>Table`: 新增 expandIcon 属性。
+- 💄 `<pro>CodeArea`: 更新 json 格式化的例子。
 - 🐞 `<pro>Table`: 修复在 Modal 中不显示横向滚动条的问题。
 
 ## 0.8.35
