@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>Table`: Fixed an issue where horizontal scroll bars were not displayed in Modal.
+
 ## 0.8.35
 
 `2019-11-08`

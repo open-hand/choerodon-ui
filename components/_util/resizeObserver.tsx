@@ -7,7 +7,7 @@ type DomElement = Element | null;
 interface ResizeObserverProps {
   children?: ReactNode;
   disabled?: boolean;
-  onResize?: (target) => void;
+  onResize?: (width: number, height: number, target: DomElement) => void;
   resizeProp?: 'width' | 'height' | 'both';
 }
 
@@ -50,15 +50,16 @@ class ReactResizeObserver extends PureComponent<ResizeObserverProps> {
   onResize: ResizeObserverCallback = (entries: ResizeObserverEntry[]) => {
     const { onResize, resizeProp } = this.props;
 
-    const { target } = entries[0];
-
-    const { width, height } = target.getBoundingClientRect();
+    const {
+      target,
+      contentRect: { width, height },
+    } = entries[0];
 
     /**
-     * Resize observer trigger when content size changed.
-     * In most case we just care about element size,
-     * let's use `boundary` instead of `contentRect` here to avoid shaking.
+     * getBoundingClientRect return wrong size in transform case.
      */
+    // const { width, height } = target.getBoundingClientRect();
+
     const fixedWidth = Math.floor(width);
     const fixedHeight = Math.floor(height);
 
@@ -70,7 +71,7 @@ class ReactResizeObserver extends PureComponent<ResizeObserverProps> {
       this.height = fixedHeight;
 
       if (onResize) {
-        onResize(target);
+        onResize(fixedWidth, fixedHeight, target);
       }
     }
   };

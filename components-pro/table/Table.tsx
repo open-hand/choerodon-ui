@@ -380,12 +380,12 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   @autobind
-  handleResize() {
+  handleResize(width: number) {
     const { element, tableStore } = this;
     if (!element.offsetParent) {
       tableStore.styledHidden = true;
     } else if (!tableStore.hidden) {
-      this.syncSizeInFrame();
+      this.syncSizeInFrame(width);
     } else {
       tableStore.styledHidden = false;
     }
@@ -1009,19 +1009,19 @@ export default class Table extends DataSetComponent<TableProps> {
     }
   }
 
-  syncSizeInFrame() {
+  syncSizeInFrame(width: number = this.getWidth()) {
     if (this.nextFrameActionId !== undefined) {
       raf.cancel(this.nextFrameActionId);
     }
-    this.nextFrameActionId = raf(this.syncSize);
+    this.nextFrameActionId = raf(this.syncSize.bind(this, width));
   }
 
   @autobind
   @action
-  syncSize() {
+  syncSize(width: number = this.getWidth()) {
     const { element, tableStore } = this;
     if (element) {
-      tableStore.width = Math.floor(element.getBoundingClientRect().width);
+      tableStore.width = Math.floor(width);
       const { prefixCls } = this;
       let height = this.getStyleHeight();
       if (element && isNumber(height)) {
@@ -1065,5 +1065,13 @@ export default class Table extends DataSetComponent<TableProps> {
         return array;
       }, []);
     }
+  }
+
+  getWidth(): number {
+    const { wrapper } = this;
+    if (wrapper) {
+      return Math.floor(wrapper.getBoundingClientRect().width);
+    }
+    return 0;
   }
 }
