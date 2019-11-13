@@ -124,23 +124,26 @@ export default class TableRow extends Component<TableRowProps, any> {
   }
 
   @autobind
-  handleSelectionByClick() {
+  handleSelectionByClick(e) {
     this.handleSelection();
-    this.handleClick();
+    this.handleClick(e);
   }
 
   @autobind
-  handleSelectionByMouseDown() {
+  handleSelectionByMouseDown(e) {
     this.handleSelection();
-    this.handleMouseDown();
+    const { onMouseDown } = this.rowExternalProps;
+    if (typeof onMouseDown === 'function') {
+      onMouseDown(e);
+    }
   }
 
   @autobind
-  handleSelectionByDblClick() {
+  handleSelectionByDblClick(e) {
     this.handleSelection();
     const { onDoubleClick } = this.rowExternalProps;
     if (typeof onDoubleClick === 'function') {
-      onDoubleClick();
+      onDoubleClick(e);
     }
   }
 
@@ -152,15 +155,7 @@ export default class TableRow extends Component<TableRowProps, any> {
   }
 
   @autobind
-  handleClick() {
-    const { onClick } = this.rowExternalProps;
-    if (typeof onClick === 'function') {
-      onClick();
-    }
-  }
-
-  @autobind
-  handleMouseDown() {
+  handleClickCapture(e) {
     const {
       record,
       record: { dataSet },
@@ -168,9 +163,17 @@ export default class TableRow extends Component<TableRowProps, any> {
     if (dataSet && !isDisabledRow(record)) {
       dataSet.current = record;
     }
-    const { onMouseDown } = this.rowExternalProps;
-    if (typeof onMouseDown === 'function') {
-      onMouseDown();
+    const { onClickCapture } = this.rowExternalProps;
+    if (typeof onClickCapture === 'function') {
+      onClickCapture(e);
+    }
+  }
+
+  @autobind
+  handleClick(e) {
+    const { onClick } = this.rowExternalProps;
+    if (typeof onClick === 'function') {
+      onClick(e);
     }
   }
 
@@ -408,8 +411,8 @@ export default class TableRow extends Component<TableRowProps, any> {
       ref: this.saveRef,
       className: classString,
       style: { ...rowExternalProps.style },
-      onMouseDown: this.handleMouseDown,
       onClick: this.handleClick,
+      onClickCapture: this.handleClickCapture,
       tabIndex: -1,
       disabled,
       'data-index': id,

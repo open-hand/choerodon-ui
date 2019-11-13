@@ -146,7 +146,12 @@ class App extends React.Component {
   commands = ({ record }) => [
     'edit',
     ['delete', { color: 'red' }],
-    <Button key="add" funcType="flat" icon="add" />,
+    <Button
+      key="add"
+      funcType="flat"
+      icon="add"
+      onClick={() => console.log(this.ds.current.toData())}
+    />,
   ];
 
   render() {
