@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.37
+
+`2019-11-13`
+
 - 💄 `<pro>CodeArea`: Update the example of each language lint.
 - 🐞 `<pro>Table`: Fixed an issue where the value in the edit was updated to a new line when the line was switched.
 - 🐞 `<pro>NumberField`: Fixed an issue where max and min were not validated which is used as field name.

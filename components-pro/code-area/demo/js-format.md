@@ -19,8 +19,11 @@ import { CodeArea, DataSet } from 'choerodon-ui/pro';
 import JSFormatter from 'choerodon-ui/pro/lib/code-area/formatters/JSFormatter';
 // 引入 javascript lint
 import 'choerodon-ui/pro/lib/code-area/lint/javascript';
-// 提供对应语言的语法高亮
-import 'codemirror/mode/javascript/javascript';
+// 处理 codemirror 的SSR问题， 如无需SSR，请用import代替require;
+if (typeof window !== 'undefined') {
+  // 提供对应语言的语法高亮
+  require('codemirror/mode/javascript/javascript');
+}
 
 const options = { mode: 'javascript' };
 

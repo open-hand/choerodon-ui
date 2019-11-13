@@ -7,7 +7,7 @@ if (typeof window !== 'undefined') {
   require('codemirror/addon/lint/lint');
   const CodeMirror = require('codemirror');
 
-  function parseErrors(errors, output: Annotation[]) {
+  const parseErrors = function(errors, output: Annotation[]) {
     for (let i = 0; i < errors.length; i++) {
       const error = errors[i];
       if (error) {
@@ -38,9 +38,9 @@ if (typeof window !== 'undefined') {
         output.push(hint);
       }
     }
-  }
+  };
 
-  function validator(text, options) {
+  const validator = function(text, options) {
     if (!options.indent)
       // JSHint error.character actually is a column index, this fixes underlining on lines using tabs for indentation
       options.indent = 1; // JSHint default value is 4
@@ -49,7 +49,7 @@ if (typeof window !== 'undefined') {
     const result: Annotation[] = [];
     if (errors) parseErrors(errors, result);
     return result;
-  }
+  };
 
   CodeMirror.registerHelper('lint', 'javascript', validator);
 }

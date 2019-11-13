@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.37
+
+`2019-11-13`
+
 - 💄 `<pro>CodeArea`: 更新各语言 lint 的例子。
 - 🐞 `<pro>Table`: 修复编辑中的值在切换行时会更新到新行的问题。
 - 🐞 `<pro>NumberField`: 修复 max 和 min 为字段名时不校验的问题。

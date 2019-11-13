@@ -19,8 +19,11 @@ import { CodeArea, DataSet } from 'choerodon-ui/pro';
 import YAMLFormatter from 'choerodon-ui/pro/lib/code-area/formatters/YAMLFormatter';
 // 引入 yaml lint
 import 'choerodon-ui/pro/lib/code-area/lint/yaml';
-// 提供对应语言的语法高亮
-import 'codemirror/mode/yaml/yaml';
+// 处理 codemirror 的SSR问题， 如无需SSR，请用import代替require;
+if (typeof window !== 'undefined') {
+  // 提供对应语言的语法高亮
+  require('codemirror/mode/yaml/yaml');
+}
 
 const options = { mode: 'yaml' };
 
