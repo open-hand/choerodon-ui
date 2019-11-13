@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 💄 `<pro>CodeArea`: Update the example of each language lint.
+
 ## 0.8.36
 
 `2019-11-11`

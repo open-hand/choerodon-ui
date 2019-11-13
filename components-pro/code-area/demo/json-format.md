@@ -15,18 +15,14 @@ Use hotkey to format code.
 
 ```jsx
 import { CodeArea, DataSet } from 'choerodon-ui/pro';
-// 引入格式化器，注意使用模块的默认导出
+// 引入格式化器
 import JSONFormatter from 'choerodon-ui/pro/lib/code-area/formatters/JSONFormatter';
-// 处理 codemirror 的SSR问题， 如无需SSR，请用import代替require;
-if (typeof window !== 'undefined') {
-  // 提供对应语言的语法高亮
-  require('codemirror/mode/javascript/javascript');
-  require('codemirror/addon/lint/lint.css');
-  require('codemirror/addon/lint/lint');
-  require('codemirror/addon/lint/json-lint');
+// 引入 json lint
+import 'choerodon-ui/pro/lib/code-area/lint/json';
+// 提供对应语言的语法高亮
+import 'codemirror/mode/javascript/javascript';
 
-  window.jsonlint = require('jsonlint-mod');
-}
+const options = { mode: { name: 'javascript', json: true } };
 
 const jsonText = `{
   "compilerOptions": {
@@ -55,7 +51,6 @@ const jsonText = `{
 `;
 
 const jsonStyle = { height: 500 };
-const options = { mode: { name: 'javascript', json: true } };
 
 class App extends React.Component {
   ds = new DataSet({
