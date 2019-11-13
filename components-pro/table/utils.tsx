@@ -100,10 +100,11 @@ export function getEditorByColumnAndRecord(
 ): ReactElement<FormFieldProps> | undefined {
   const { name, editor } = column;
   if (record) {
+    let cellEditor = editor;
     if (typeof editor === 'function') {
-      return editor(record, name);
+      cellEditor = editor(record, name);
     }
-    if (editor === true) {
+    if (cellEditor === true) {
       const field = record.getField(name);
       if (field) {
         if (
@@ -116,8 +117,8 @@ export function getEditorByColumnAndRecord(
         }
       }
     }
-    if (isValidElement(editor)) {
-      return editor;
+    if (isValidElement(cellEditor)) {
+      return cellEditor;
     }
   }
 }

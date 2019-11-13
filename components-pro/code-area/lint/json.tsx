@@ -1,22 +1,26 @@
-import 'codemirror/addon/lint/lint.css';
-import 'codemirror/addon/lint/lint';
+/* eslint-disable global-require */
+import { Annotation } from 'codemirror';
 import jsonlintMod from 'jsonlint-mod';
-import CodeMirror, { Annotation } from 'codemirror';
 
-CodeMirror.registerHelper('lint', 'json', function(text) {
-  const found: Annotation[] = [];
-  const jsonlint = jsonlintMod.parser || jsonlintMod;
-  jsonlint.parseError = function(str, { loc }) {
-    found.push({
-      from: CodeMirror.Pos(loc.first_line - 1, loc.first_column),
-      to: CodeMirror.Pos(loc.last_line - 1, loc.last_column),
-      message: str,
-    });
-  };
-  try {
-    jsonlint.parse(text);
-  } catch (e) {
-    console.error(e);
-  }
-  return found;
-});
+if (typeof window !== 'undefined') {
+  require('codemirror/addon/lint/lint.css');
+  require('codemirror/addon/lint/lint');
+  const CodeMirror = require('codemirror');
+
+  CodeMirror.registerHelper('lint', 'json', function(text) {
+    const found: Annotation[] = [];
+    const jsonlint = jsonlintMod.parser || jsonlintMod;
+    jsonlint.parseError = function(str, { loc }) {
+      found.push({
+        from: CodeMirror.Pos(loc.first_line - 1, loc.first_column),
+        to: CodeMirror.Pos(loc.last_line - 1, loc.last_column),
+        message: str,
+      });
+    };
+    try {
+      jsonlint.parse(text);
+      // eslint-disable-next-line no-empty
+    } catch (e) {}
+    return found;
+  });
+}

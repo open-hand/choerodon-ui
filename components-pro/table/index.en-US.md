@@ -58,7 +58,7 @@ subtitle: 表格
 | header | 列头 | ReactNode \| (dataSet, name) => ReactNode |  |
 | footer | 列脚 | ReactNode \| (dataSet, name) => ReactNode |  |
 | renderer | 单元格渲染回调 | ({ value, text, name, record, dataSet }) => ReactNode |  |
-| editor | 编辑器, 设为`true`时会根据 field 的 type 自动匹配编辑器。不可编辑请使用 `false` 值，而不是在控件上加 disabled。 | FormField \| (record, name) => FormField \| `true` |  |
+| editor | 编辑器, 设为`true`时会根据 field 的 type 自动匹配编辑器。不可编辑请使用 `false` 值，而不是在控件上加 disabled。 | FormField \| ((record, name) => FormField \| boolean) \| boolean |  |
 | lock | 是否锁定， 可选值 `false` `true` `left` `right` | boolean\| string | false |
 | align | 文字对齐方式，可选值： `left` `center` `right` | string |  |
 | resizable | 是否可调整宽度 | boolean | true |
