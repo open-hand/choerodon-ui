@@ -18,6 +18,7 @@ timeline: true
 - 💄 `<pro>CodeArea`: 更新各语言 lint 的例子。
 - 🐞 `<pro>Table`: 修复编辑中的值在切换行时会更新到新行的问题。
 - 🐞 `<pro>NumberField`: 修复 max 和 min 为字段名时不校验的问题。
+- 🐞 `<pro>Lov`: 修复 valueField 设置不正确时控件上会显示弹出框中第一条数据的 textField 值的问题。
 
 ## 0.8.36
 

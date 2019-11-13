@@ -878,12 +878,14 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   }
 
   processObjectValue(value, textField) {
-    if (isPlainObject(value)) {
-      return ObjectChainValue.get(value, textField);
-    }
-    const found = this.findByValue(value);
-    if (found) {
-      return found.get(textField);
+    if (!isNil(value)) {
+      if (isPlainObject(value)) {
+        return ObjectChainValue.get(value, textField);
+      }
+      const found = this.findByValue(value);
+      if (found) {
+        return found.get(textField);
+      }
     }
   }
 

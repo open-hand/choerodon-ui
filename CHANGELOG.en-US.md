@@ -18,6 +18,7 @@ timeline: true
 - 💄 `<pro>CodeArea`: Update the example of each language lint.
 - 🐞 `<pro>Table`: Fixed an issue where the value in the edit was updated to a new line when the line was switched.
 - 🐞 `<pro>NumberField`: Fixed an issue where max and min were not validated which is used as field name.
+- 🐞 `<pro>Lov`: Fixed an issue where the textField value of the first data in the popup was displayed in control when the valueField was set incorrectly.
 
 ## 0.8.36
 
