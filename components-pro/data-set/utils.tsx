@@ -546,3 +546,10 @@ export function processFieldValue(value, field: Field, lang: Lang, showValueIfNo
   }
   return field.getText(value, showValueIfNotFound);
 }
+
+export function getLimit(limit: any, record: Record) {
+  if (isString(limit) && record.getField(limit)) {
+    return record.get(limit);
+  }
+  return limit;
+}

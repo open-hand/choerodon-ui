@@ -14,7 +14,16 @@ title:
 Cascade.
 
 ```jsx
-import { DataSet, Table, TextField, DateTimePicker, Modal, Button, Tabs } from 'choerodon-ui/pro';
+import {
+  DataSet,
+  Table,
+  TextField,
+  DateTimePicker,
+  Modal,
+  Button,
+  Lov,
+  Tabs,
+} from 'choerodon-ui/pro';
 
 const { Column } = Table;
 const { TabPane } = Tabs;
@@ -62,6 +71,9 @@ class App extends React.Component {
         lookupCode: 'HR.EMPLOYEE_GENDER',
         required: true,
       },
+      { name: 'code', type: 'object', label: '代码描述', lovCode: 'LOV_CODE' },
+      { name: 'code_code', type: 'string', bind: 'code.code' },
+      { name: 'code_description', type: 'string', bind: 'code.description' },
     ],
   });
 
@@ -208,12 +220,19 @@ class App extends React.Component {
       <Table
         key="cascade2"
         header="Cascade Level 2"
-        buttons={['add', 'delete']}
+        buttons={[
+          'add',
+          'delete',
+          <Lov dataSet={this.enemyFriendsDs} name="code" mode="button" clearButton={false}>
+            Lov
+          </Lov>,
+        ]}
         dataSet={this.enemyFriendsDs}
         pagination={{ position: 'top' }}
       >
         <Column name="name" editor={editorRenderer} sortable />
         <Column name="age" editor sortable />
+        <Column name="code" editor width={150} />
         <Column name="sex" editor width={150} />
       </Table>,
     ];

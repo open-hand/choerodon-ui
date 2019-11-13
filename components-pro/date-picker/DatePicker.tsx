@@ -153,10 +153,12 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     return true;
   }
 
+  @computed
   get min(): Moment | undefined {
     return this.getLimit('min');
   }
 
+  @computed
   get max(): Moment | undefined {
     return this.getLimit('max');
   }

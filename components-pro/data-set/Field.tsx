@@ -14,7 +14,7 @@ import { DataSetEvents, FieldFormat, FieldIgnore, FieldTrim, FieldType, SortOrde
 import lookupStore from '../stores/LookupCodeStore';
 import lovCodeStore from '../stores/LovCodeStore';
 import localeContext from '../locale-context';
-import { findBindFields, processValue } from './utils';
+import { findBindFields, getLimit, processValue } from './utils';
 import Validity from '../validator/Validity';
 import ValidationResult from '../validator/ValidationResult';
 import { ValidatorProps } from '../validator/rules';
@@ -25,6 +25,7 @@ import { TransportHookProps } from './Transport';
 import isSameLike from '../_util/isSameLike';
 import * as ObjectChainValue from '../_util/ObjectChainValue';
 import { buildURLWithAxiosConfig } from '../axios/utils';
+import { getDateFormatByField } from 'choerodon-ui/pro/lib/field/utils';
 
 export type Fields = ObservableMap<string, Field>;
 export type DynamicPropsArguments = { dataSet: DataSet; record: Record; name: string };
@@ -627,6 +628,7 @@ dynamicProps = {
       const customValidator = this.get('validator');
       const max = this.get('max');
       const min = this.get('min');
+      const format = this.get('format') || getDateFormatByField(this, this.type);
       const pattern = this.get('pattern');
       const step = this.get('step');
       const minLength = this.get('minLength');
@@ -645,14 +647,15 @@ dynamicProps = {
         unique,
         customValidator,
         pattern,
-        max,
-        min,
+        max: getLimit(max, record),
+        min: getLimit(min, record),
         step,
         minLength,
         maxLength,
         label,
         range,
         multiple,
+        format,
         defaultValidationMessages,
       };
     }

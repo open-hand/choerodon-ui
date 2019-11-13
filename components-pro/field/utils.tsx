@@ -1,10 +1,10 @@
 import isObject from 'lodash/isObject';
 import isNil from 'lodash/isNil';
 import { isArrayLike } from 'mobx';
+import moment from 'moment';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import { FieldType } from '../data-set/enum';
 import Field from '../data-set/Field';
-import moment from 'moment';
 
 export function toRangeValue(value: any, range?: boolean | [string, string]): [any, any] {
   if (isArrayLike(range)) {

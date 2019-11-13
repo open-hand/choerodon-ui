@@ -86,10 +86,12 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     return min === undefined || min < 0;
   }
 
+  @computed
   get min(): number | undefined {
     return this.getLimit('min');
   }
 
+  @computed
   get max(): number | undefined {
     return this.getLimit('max');
   }
