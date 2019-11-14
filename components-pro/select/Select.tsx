@@ -983,6 +983,9 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
         }
         return false;
       });
+      if (this.text) {
+        this.generateComboOption(this.text);
+      }
       if (
         field &&
         field.get('cascadeMap') &&

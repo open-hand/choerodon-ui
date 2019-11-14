@@ -454,11 +454,10 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
       props: { dropdownMenuStyle },
     } = this;
     const editable = !this.isEditorReadOnly();
-    const options = editable
-      ? filterText
+    const options =
+      editable && filterText
         ? this.getInputFilterOptions(filterText)
-        : this.getFieldSelectOptions()
-      : null;
+        : this.getFieldSelectOptions();
     return (
       <ObserverSelect
         {...props}

@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>Table`: Fix some problems with filterBar.
+
 ## 0.8.37
 
 `2019-11-13`
