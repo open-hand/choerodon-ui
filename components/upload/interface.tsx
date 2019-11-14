@@ -57,8 +57,12 @@ export interface UploadProps {
   onChange?: (info: UploadChangeParam) => void;
   listType?: 'text' | 'picture' | 'picture-card';
   className?: string;
+  onStart?: (file: UploadFile) => void;
   onPreview?: (file: UploadFile) => void;
   onRemove?: (file: UploadFile) => void | boolean;
+  onSuccess?: (response: any, file: UploadFile) => void;
+  onProgress?: (e: { percent: number }, file: UploadFile) => void;
+  onError?: (error: Error, response: any, file: UploadFile) => void;
   supportServerRender?: boolean;
   style?: CSSProperties;
   disabled?: boolean;

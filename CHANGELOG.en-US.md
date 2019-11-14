@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `Upload`: Added `onSuccess`, `onProgress`, `onError` properties.
 - 🐞 `<pro>Table`: Fix some problems with filterBar.
 
 ## 0.8.37

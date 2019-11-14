@@ -64,6 +64,10 @@ export default class Upload extends Component<UploadProps, UploadState> {
     if (!(window as any).FormData) {
       this.autoUpdateProgress(0, targetItem);
     }
+    const { onStart } = this.props;
+    if (onStart) {
+      onStart(file);
+    }
   };
 
   autoUpdateProgress(_: any, file: UploadFile) {
@@ -101,6 +105,10 @@ export default class Upload extends Component<UploadProps, UploadState> {
         fileList,
       });
     }
+    const { onSuccess } = this.props;
+    if (onSuccess) {
+      onSuccess(response, file);
+    }
   };
 
   onProgress = (e: { percent: number }, file: UploadFile) => {
@@ -114,6 +122,10 @@ export default class Upload extends Component<UploadProps, UploadState> {
         file: { ...targetItem },
         fileList,
       });
+    }
+    const { onProgress } = this.props;
+    if (onProgress) {
+      onProgress(e, file);
     }
   };
 
@@ -132,6 +144,10 @@ export default class Upload extends Component<UploadProps, UploadState> {
       file: { ...targetItem },
       fileList,
     });
+    const { onError } = this.props;
+    if (onError) {
+      onError(error, response, file);
+    }
   };
 
   handleRemove(file: UploadFile) {
@@ -243,11 +259,11 @@ export default class Upload extends Component<UploadProps, UploadState> {
     const prefixCls = getPrefixCls('upload', customizePrefixCls);
 
     const rcUploadProps = {
+      ...this.props,
       onStart: this.onStart,
       onError: this.onError,
       onProgress: this.onProgress,
       onSuccess: this.onSuccess,
-      ...this.props,
       beforeUpload: this.beforeUpload,
       prefixCls,
     };

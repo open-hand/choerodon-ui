@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `Upload`: 新增 onSuccess, onProgress, onError 属性。
 - 🐞 `<pro>Table`: 修复 filterBar 的一些问题。
 
 ## 0.8.37

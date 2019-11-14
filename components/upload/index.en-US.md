@@ -19,7 +19,7 @@ Uploading is the process of publishing information (web pages, text, pictures, v
 > You can consult [jQuery-File-Upload](https://github.com/blueimp/jQuery-File-Upload/wiki) about how to implement server side upload interface.
 
 | Property | Description | Type | Default |
-| -------- | ----------- | ---- | ------- |
+| --- | --- | --- | --- |
 | accept | File types that can be accepted. See [input accept Attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-accept) | string | - |
 | action | Required. Uploading URL | string | - |
 | beforeUpload | Hook function which will be executed before uploading. Uploading will be stopped with `false` or a rejected Promise returned. **Warning：this function is not supported in IE9**。 | (file, fileList) => `boolean | Promise` | - |
@@ -38,10 +38,13 @@ Uploading is the process of publishing information (web pages, text, pictures, v
 | onChange | A callback function, can be executed when uploading state is changing. See [onChange](#onChange) | Function | - |
 | onPreview | A callback function, will be executed when file link or preview icon is clicked. | Function(file) | - |
 | onRemove | A callback function, will be executed when removing file button is clicked, remove event will be prevented when return value is `false` or a Promise which resolve(false) or reject. | Function(file): `boolean | Promise` | - |
+| onSuccess   | A callback function, will be executed when upload success.   | Function(response, file) | 无   |
+| onProgress   | A callback function, will be executed when upload in progress.   | Function({ percent }, file) | 无   |
+| onError   | A callback function, will be executed when upload error.   | Function(error, response, file) | 无   |
 
 ### onChange
 
-> The function will be called when uploading is in progress, completed or  failed
+> The function will be called when uploading is in progress, completed or failed
 
 When uploading state change, it returns:
 
@@ -61,7 +64,7 @@ When uploading state change, it returns:
       name: 'xx.png'   // file name
       status: 'done', // options：uploading, done, error, removed
       response: '{"status": "success"}', // response from server
-      linkProps: '{"download": "image"}', // additional html props of file link  
+      linkProps: '{"download": "image"}', // additional html props of file link
    }
    ```
 

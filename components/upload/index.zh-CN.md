@@ -39,6 +39,9 @@ title: Upload
 | onChange | 上传文件改变时的状态，详见 [onChange](#onChange) | Function | 无 |
 | onPreview | 点击文件链接或预览图标时的回调 | Function(file) | 无 |
 | onRemove   | 点击移除文件时的回调，返回值为 false 时不移除。支持返回一个 Promise 对象，Promise 对象 resolve(false) 或 reject 时不移除。               | Function(file): `boolean | Promise` | 无   |
+| onSuccess   | 上传成功事件   | Function(response, file) | 无   |
+| onProgress   | 上传进度中事件   | Function({ percent }, file) | 无   |
+| onError   | 上传失败事件   | Function(error, response, file) | 无   |
 
 ### onChange
 
