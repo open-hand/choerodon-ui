@@ -21,6 +21,7 @@ import formatString from '../formatter/formatString';
 import { Lang } from '../locale-context/enum';
 import formatNumber from '../formatter/formatNumber';
 import formatCurrency from '../formatter/formatCurrency';
+import { getPrecision } from '../number-field/utils';
 
 export function append(url: string, suffix?: object) {
   if (suffix) {
@@ -537,7 +538,12 @@ export function findBindFieldBy(myField: Field, fields: Fields, prop: string): F
 export function processFieldValue(value, field: Field, lang: Lang, showValueIfNotFound?: boolean) {
   const { type } = field;
   if (type === FieldType.number) {
-    return formatNumber(value, lang);
+    const precision = getPrecision(value || 0);
+    const options = {
+      minimumFractionDigits: precision,
+      maximumFractionDigits: precision,
+    };
+    return formatNumber(value, lang, options);
   }
   if (type === FieldType.currency) {
     return formatCurrency(value, lang, {

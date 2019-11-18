@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>Table`: Fixed an issue where the progress of the digital editor was lost.
+
 ## 0.8.38
 
 `2019-11-18`
