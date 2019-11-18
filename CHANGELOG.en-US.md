@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.38
+
+`2019-11-18`
+
 - 🌟 `Upload`: Added `onSuccess`, `onProgress`, `onError` properties.
 - 🐞 `<pro>Table`: Fix some problems with filterBar.
 
