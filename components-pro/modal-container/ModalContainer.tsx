@@ -235,6 +235,7 @@ export default class ModalContainer extends Component<any> {
     const { modals } = this.state;
     const items = modals.map((props, index) => {
       const thisHidden = props.hidden;
+      const { drawerTransitionName = 'slide-right' } = props;
       if (hidden && !thisHidden) {
         hidden = false;
       }
@@ -253,7 +254,7 @@ export default class ModalContainer extends Component<any> {
           key={props.key}
           component="div"
           transitionAppear
-          transitionName={props.drawer ? 'slide-right' : 'zoom'}
+          transitionName={props.drawer ? drawerTransitionName : 'zoom'}
           hiddenProp="hidden"
           onEnd={this.handleAnimationEnd}
         >
