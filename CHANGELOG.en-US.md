@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `<pro>Modal`: Added `drawerTransitionName` properties.
+- 🐞 `<pro>CheckBox`: Fixed the style on IE11.
 - 🐞 `<pro>Table`: Fixed an issue where the progress of the digital editor was lost.
 
 ## 0.8.38
