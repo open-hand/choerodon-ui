@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>CheckBox`: 修复Table 勾选框在IE11上的样式问题。
 - 🐞 `<pro>Table`: 修复数字编辑器进度丢失的问题。
 
 ## 0.8.38
