@@ -25,7 +25,8 @@ import { TransportHookProps } from './Transport';
 import isSameLike from '../_util/isSameLike';
 import * as ObjectChainValue from '../_util/ObjectChainValue';
 import { buildURLWithAxiosConfig } from '../axios/utils';
-import { getDateFormatByField } from 'choerodon-ui/pro/lib/field/utils';
+import { getDateFormatByField } from '../field/utils';
+import { getPropsFromLovConfig } from './utils';
 
 export type Fields = ObservableMap<string, Field>;
 export type DynamicPropsArguments = { dataSet: DataSet; record: Record; name: string };
@@ -365,9 +366,12 @@ export default class Field {
    */
   getProps(): FieldProps & { [key: string]: any } {
     const dsField = this.findDataSetField();
+    const lovCode = this.get('lovCode');
     return merge(
       { lookupUrl: getConfig('lookupUrl') },
       Field.defaultProps,
+      getPropsFromLovConfig(lovCode, 'textField'),
+      getPropsFromLovConfig(lovCode, 'valueField'),
       dsField && dsField.props,
       this.props,
     );
@@ -379,15 +383,6 @@ export default class Field {
    * @return {any}
    */
   get(propsName: string): any {
-    if (propsName === 'textField' || propsName === 'valueField') {
-      const lovCode = this.get('lovCode');
-      if (lovCode) {
-        const config = lovCodeStore.getConfig(lovCode);
-        if (config && config[propsName]) {
-          return config[propsName];
-        }
-      }
-    }
     if (propsName !== 'dynamicProps') {
       const dynamicProps = this.get('dynamicProps');
       if (dynamicProps) {
@@ -442,6 +437,13 @@ dynamicProps = {
       const dsValue = dsField.get(propsName);
       if (dsValue !== undefined) {
         return dsValue;
+      }
+    }
+    if (propsName === 'textField' || propsName === 'valueField') {
+      const lovCode = this.get('lovCode');
+      const lovProps = getPropsFromLovConfig(lovCode, propsName);
+      if (propsName in lovProps) {
+        return lovProps[propsName];
       }
     }
     if (propsName === 'lookupUrl') {
