@@ -42,6 +42,7 @@ export interface ModalProps extends ViewComponentProps {
   update?: (props?: ModalProps) => void;
   okCancel?: boolean;
   drawer?: boolean;
+  drawerTransitionName?: string;
   key?: Key;
   border?: boolean;
   okFirst?: boolean;

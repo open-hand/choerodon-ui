@@ -31,6 +31,7 @@ title: Modal
 | onCancel | 点击取消回调，返回`false` `Promise.resolve(false)`或`Promise.reject()`不会关闭， 其他自动关闭 | () => Promise&lt;boolean&gt; |  |
 | afterClose | 关闭后回调 | () => void |  |
 | drawer | 抽屉模式 | boolean | false |
+| drawerTransitionName | 抽屉模式使用的动画 | string | 'slide-right' |
 | okCancel | 同时显示 ok 和 cancel 按钮，false 的时候只显示 ok 按钮 | boolean | true |
 | okFirst | ok 按钮是否排在第一个 | boolean | true |
 | okProps | ok 按钮属性 | object |  |
