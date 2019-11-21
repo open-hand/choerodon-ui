@@ -970,6 +970,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     const {
       filteredOptions,
       observableProps: { combo },
+      searchable,
     } = this;
     runInAction(() => {
       const newValues = values.filter(value => {
@@ -983,7 +984,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
         }
         return false;
       });
-      if (this.text) {
+      if (this.text && !searchable) {
         this.generateComboOption(this.text);
       }
       if (

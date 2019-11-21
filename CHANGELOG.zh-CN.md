@@ -16,8 +16,9 @@ timeline: true
 ---
 
 - 🌟 `<pro>Modal`: 新增 drawerTransitionName 属性。
-- 🐞 `<pro>CheckBox`: 修复Table 勾选框在IE11上的样式问题。
+- 🐞 `<pro>CheckBox`: 修复 Table 勾选框在 IE11 上的样式问题。
 - 🐞 `<pro>Table`: 修复数字编辑器进度丢失的问题。
+- 🐞 `<pro>Select`: 修复非复合搜索模式下生成 option 并可点击的问题。
 
 ## 0.8.38
 
