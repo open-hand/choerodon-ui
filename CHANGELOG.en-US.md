@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Modal`: Added `drawerAnimate` properties.
 - 🐞 `<pro>Table`: Fixed an issue where the progress of the digital editor was lost.
 
 ## 0.8.38
