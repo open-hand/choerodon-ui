@@ -7,7 +7,7 @@ title:
 
 ## zh-CN
 
-通过设定多个 drawer 类型的弹出框形成多层抽屉，可指定弹出层宽度。
+通过设定多个 drawer 类型的弹出框形成多层抽屉，可指定弹出层宽度，弹出动画。
 
 ## en-US
 
@@ -29,6 +29,7 @@ function openSubModal2() {
         width: 600,
       },
       drawer: true,
+      drawerTransitionName: 'slide-left',
       children: (
         <div>
           <p>Open Sub Modal2...</p>
