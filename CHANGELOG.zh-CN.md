@@ -20,6 +20,7 @@ timeline: true
 - 🐞 `<pro>CheckBox`: 修复 Table 勾选框在 IE11 上的样式问题。
 - 🐞 `<pro>Table`: 修复数字编辑器进度丢失的问题。
 - 🐞 `<pro>Select`: 修复非复合搜索模式下生成 option 并可点击的问题。
+- 🐞 `<pro>DataSet.Field`: 修复 dynamicProps 中 lookupUrl 相关属性不起作用的问题。
 
 ## 0.8.38
 

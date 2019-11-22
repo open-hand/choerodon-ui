@@ -39,11 +39,14 @@ class App extends React.Component {
   ds = new DataSet({
     autoCreate: true,
     fields: [
-      { name: 'sex', type: 'string', lookupCode: 'HR.EMPLOYEE_GENDER', defaultValue: 'F' },
+      { name: 'sex', type: 'string', lookupCode: 'HR.EMPLOYEE_GENDER' },
       {
         name: 'sex2',
         type: 'string',
-        dynamicProps: { lookupUrl: () => '/common/code/HR.EMPLOYEE_GENDER/' },
+        dynamicProps: {
+          lookupUrl: ({ record }) =>
+            record.get('sex') ? '/common/code/HR.EMPLOYEE_GENDER/' : null,
+        },
       },
       { name: 'lov', type: 'string', lovCode: 'LOV_CODE', defaultValue: 'SYS.PROFILE_LEVEL_ID' },
       {

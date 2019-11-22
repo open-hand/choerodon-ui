@@ -4,6 +4,7 @@ import { DataSetSelection, FieldType } from '../data-set/enum';
 import { FieldProps } from '../data-set/Field';
 import OptGroup, { OptGroupProps } from './OptGroup';
 import Option, { OptionProps } from './Option';
+import lookupStore from '../stores/LookupCodeStore';
 
 function getOptionsFromChildren(
   elements: ReactNode[],
@@ -78,6 +79,8 @@ export default function normalizeOptions({
     if (options) {
       return options;
     }
+    // 确保 lookup 相关配置介入观察
+    lookupStore.getAxiosConfig(field);
     data = field.get('lookup');
   }
   const fields = [

@@ -20,6 +20,7 @@ timeline: true
 - 🐞 `<pro>CheckBox`: Fixed the style on IE11.
 - 🐞 `<pro>Table`: Fixed an issue where the progress of the digital editor was lost.
 - 🐞 `<pro>Select`: Fixed the problem generating option and clickable in non-composite search mode.
+- 🐞 `<pro>DataSet.Field`: Fixed an issue where the lookupUrl related property in dynamicProps does not work.
 
 ## 0.8.38
 
