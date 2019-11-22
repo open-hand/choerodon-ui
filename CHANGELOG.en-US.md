@@ -19,6 +19,7 @@ timeline: true
 - 💄 `<pro>DataSet.Field`: Adjust textField and valueField to take precedence over values in the Lov configuration.
 - 🐞 `<pro>CheckBox`: Fixed the style on IE11.
 - 🐞 `<pro>Table`: Fixed an issue where the progress of the digital editor was lost.
+- 🐞 `<pro>Select`: Fixed the problem generating option and clickable in non-composite search mode.
 
 ## 0.8.38
 
