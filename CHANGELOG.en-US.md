@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 Fix circular dependencies problems.
+
 ## 0.8.39
 
 `2019-11-22`

@@ -22,7 +22,6 @@ import { Lang } from '../locale-context/enum';
 import formatNumber from '../formatter/formatNumber';
 import formatCurrency from '../formatter/formatCurrency';
 import { getPrecision } from '../number-field/utils';
-import lovCodeStore from '../stores/LovCodeStore';
 
 export function append(url: string, suffix?: object) {
   if (suffix) {
@@ -559,16 +558,4 @@ export function getLimit(limit: any, record: Record) {
     return record.get(limit);
   }
   return limit;
-}
-
-export function getPropsFromLovConfig(lovCode, propsName) {
-  if (lovCode) {
-    const config = lovCodeStore.getConfig(lovCode);
-    if (config) {
-      if (config[propsName]) {
-        return { [propsName]: config[propsName] };
-      }
-    }
-  }
-  return {};
 }

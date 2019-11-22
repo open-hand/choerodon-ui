@@ -26,7 +26,18 @@ import isSameLike from '../_util/isSameLike';
 import * as ObjectChainValue from '../_util/ObjectChainValue';
 import { buildURLWithAxiosConfig } from '../axios/utils';
 import { getDateFormatByField } from '../field/utils';
-import { getPropsFromLovConfig } from './utils';
+
+function getPropsFromLovConfig(lovCode, propsName) {
+  if (lovCode) {
+    const config = lovCodeStore.getConfig(lovCode);
+    if (config) {
+      if (config[propsName]) {
+        return { [propsName]: config[propsName] };
+      }
+    }
+  }
+  return {};
+}
 
 export type Fields = ObservableMap<string, Field>;
 export type DynamicPropsArguments = { dataSet: DataSet; record: Record; name: string };
