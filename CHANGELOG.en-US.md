@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.39
+
+`2019-11-22`
+
 - 🌟 `<pro>Modal`: Added `drawerTransitionName` properties.
 - 💄 `<pro>DataSet.Field`: Adjust textField and valueField to take precedence over values in the Lov configuration.
 - 🐞 `<pro>CheckBox`: Fixed the style on IE11.

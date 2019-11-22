@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.39
+
+`2019-11-22`
+
 - 🌟 `<pro>Modal`: 新增 drawerTransitionName 属性。
 - 💄 `<pro>DataSet.Field`: 调整 textField 和 valueField 优先级高于 Lov 配置中的值。
 - 🐞 `<pro>CheckBox`: 修复 Table 勾选框在 IE11 上的样式问题。
