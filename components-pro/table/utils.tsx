@@ -15,6 +15,7 @@ import ObserverNumberField from '../number-field/NumberField';
 import Currency from '../currency/Currency';
 import DatePicker from '../date-picker/DatePicker';
 import DateTimePicker from '../date-time-picker/DateTimePicker';
+import TimePicker from '../time-picker/TimePicker';
 import WeekPicker from '../week-picker/WeekPicker';
 import MonthPicker from '../month-picker/MonthPicker';
 import YearPicker from '../year-picker/YearPicker';
@@ -56,6 +57,8 @@ export function getEditorByField(field: Field): ReactElement<FormFieldProps> {
       return <DatePicker />;
     case FieldType.dateTime:
       return <DateTimePicker />;
+    case FieldType.time:
+      return <TimePicker />;
     case FieldType.week:
       return <WeekPicker />;
     case FieldType.month:
