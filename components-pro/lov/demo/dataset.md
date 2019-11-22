@@ -13,19 +13,39 @@ title:
 
 DataSet binding.
 
-````jsx
+```jsx
 import { DataSet, Lov, Row, Col } from 'choerodon-ui/pro';
 
 function handleDataSetChange({ record, name, value, oldValue }) {
-  console.log('[dataset]', value, '[oldValue]', oldValue, `[record.get('${name}')]`, record.get(name));
+  console.log(
+    '[dataset]',
+    value,
+    '[oldValue]',
+    oldValue,
+    `[record.get('${name}')]`,
+    record.get(name),
+  );
 }
 
 class App extends React.Component {
   ds = new DataSet({
     autoCreate: true,
     fields: [
-      { name: 'code', type: 'object', lovCode: 'LOV_CODE', lovPara: { code: '111' }, required: true },
-      { name: 'code_string', type: 'string', lovCode: 'LOV_CODE', required: true, defaultValue: 'SYS.TIME_ZONE' },
+      {
+        name: 'code',
+        textField: 'code',
+        type: 'object',
+        lovCode: 'LOV_CODE',
+        lovPara: { code: '111' },
+        required: true,
+      },
+      {
+        name: 'code_string',
+        type: 'string',
+        lovCode: 'LOV_CODE',
+        required: true,
+        defaultValue: 'SYS.TIME_ZONE',
+      },
       { name: 'code_code', type: 'string', bind: 'code.code' },
       { name: 'code_description', type: 'string', bind: 'code.description' },
     ],
@@ -48,8 +68,5 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(
-  <App />,
-  mountNode
-);
-````
+ReactDOM.render(<App />, mountNode);
+```
