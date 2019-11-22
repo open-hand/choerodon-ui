@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.40
+
+`2019-11-22`
+
 - 🐞 Fix circular dependencies problems.
 - 🐞 `<pro>Table`: Fixed an issue with the time type field editor.
 
