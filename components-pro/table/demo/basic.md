@@ -252,6 +252,7 @@ class App extends React.Component {
       load: handleUserDSLoad,
       query: ({ params, data }) => console.log('user query parameter', params, data),
       export: ({ params, data }) => console.log('user export parameter', params, data),
+      remove: ({ records }) => console.log('removed records', records),
     },
   });
 

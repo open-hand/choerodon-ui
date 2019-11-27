@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+-🌟 `<pro> DataSet`: Added `remove` event. -🌟 `<pro> DataSet`: Added `autoLocateAfterRemove` property. -💄 `<pro> DataSet`: Optimize the performance of `remove` method.
+
 ## 0.8.40
 
 `2019-11-22`

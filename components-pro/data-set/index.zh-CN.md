@@ -17,6 +17,8 @@ title: DataSet
 | autoQuery | 初始化后自动查询 | boolean | false |
 | autoQueryAfterSubmit | 提交成功后响应的数据不符合回写条件时自动查询。注：回写条件是指响应数据中含有提交时的数据时，数据将按数据状态分组进行顺序回写，如果要更准确的回写，响应数据要含有提交时的\_\_id 字段值。 | boolean | true |
 | autoCreate | 初始化时，如果没有记录且 autoQuery 为 false，则自动创建记录 | boolean | false |
+| autoLocateFirst | 数据加载后自动定位到第一条记录 | boolean | true |
+| autoLocateAfterRemove | 当前数据被删除后自动定位到其他记录 | boolean | true |
 | selection | 选择的模式, 可选值：`false` `'multiple'` `'single'` | boolean \| string | 'multiple' |
 | modifiedCheck | 查询前，当有记录更改过时，是否警告提示。 | boolean | false |
 | pageSize | 分页大小 | number | 10 |
@@ -146,6 +148,7 @@ title: DataSet
 | indexChange | 当前记录变更事件 | ({ dataSet, record, previous }) =&gt; void | `dataSet` - 数据集 `record` - 新当前记录 `previous` - 旧当前记录 |
 | fieldChange | 字段属性变更事件 | ({ dataSet, record, name, propsName, value, oldValue }) =&gt; void | `dataSet` - 数据集 `record` - 字段所属记录，dataSet 的字段无 record `name` - 字段名 `propsName` - 属性名 `value` - 新值 `oldValue` - 旧值 |
 | create | 记录创建事件 | ({ dataSet, record }) =&gt; void | `dataSet` - 数据集 `record` - 创建的记录 |
+| remove | 记录移除事件 | ({ dataSet, records }) =&gt; void | `dataSet` - 数据集 `records` - 移除的记录 |
 | export | 导出事件，返回值为 false 将阻止导出 | ({ dataSet, params, data }) =&gt; boolean | `dataSet` - 数据集 `params` - 查询参数 `data` - 查询参数 |
 | beforeDelete | 数据删除前的事件， 返回值为 false 将阻止删除 | ({ dataSet, records }) =&gt; boolean | `dataSet` - 数据集 `records` - 记录集 |
 | reset | 数据重置事件 | ({ dataSet, records }) =&gt; void | `dataSet` - 数据集 `records` - 记录集 |

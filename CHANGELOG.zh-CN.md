@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>DataSet`: 新增 remove 事件。
+- 🌟 `<pro>DataSet`: 新增 autoLocateAfterRemove 属性。
+- 💄 `<pro>DataSet`: 优化 remove 方法的性能。
+
 ## 0.8.40
 
 `2019-11-22`

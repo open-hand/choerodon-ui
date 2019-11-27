@@ -118,6 +118,11 @@ export interface DataSetProps {
    */
   autoLocateFirst?: boolean;
   /**
+   * 当前记录被删除时自动定位其他记录
+   * @default true;
+   */
+  autoLocateAfterRemove?: boolean;
+  /**
    * 选择的模式
    * @default "multiple"
    */
@@ -224,6 +229,7 @@ export default class DataSet extends EventManager {
     autoQuery: false,
     autoQueryAfterSubmit: true,
     autoLocateFirst: true,
+    autoLocateAfterRemove: true,
     selection: DataSetSelection.multiple,
     modifiedCheck: true,
     pageSize: 10,
@@ -975,20 +981,21 @@ export default class DataSet extends EventManager {
   remove(records?: Record | Record[]): void {
     if (records) {
       const data = isArrayLike(records) ? records.slice() : [records];
-      const { current, currentIndex } = this;
-      data.forEach(record => {
-        const index = this.indexOf(record);
-        if (index !== -1) {
-          this.splice(index, 1);
-        }
-      });
-      if (!this.current) {
-        const record = this.get(currentIndex) || this.get(this.length - 1);
-        if (record) {
-          record.isCurrent = true;
-        }
-        if (current !== record) {
-          this.fireEvent(DataSetEvents.indexChange, { dataSet: this, record, previous: current });
+      if (data.length) {
+        const { current, currentIndex } = this;
+        data.forEach(this.deleteRecord, this);
+        this.fireEvent(DataSetEvents.remove, { dataSet: this, records: data });
+        if (!this.current) {
+          let record;
+          if (this.props.autoLocateAfterRemove) {
+            record = this.get(currentIndex) || this.get(this.length - 1);
+            if (record) {
+              record.isCurrent = true;
+            }
+          }
+          if (current !== record) {
+            this.fireEvent(DataSetEvents.indexChange, { dataSet: this, record, previous: current });
+          }
         }
       }
     }
@@ -999,9 +1006,10 @@ export default class DataSet extends EventManager {
    */
   @action
   removeAll() {
-    const { current, length } = this;
-    if (length) {
-      this.forEach(this.deleteRecord, this);
+    const { current, data } = this;
+    if (data.length) {
+      data.forEach(this.deleteRecord, this);
+      this.fireEvent(DataSetEvents.remove, { dataSet: this, records: data });
       if (current) {
         this.fireEvent(DataSetEvents.indexChange, { dataSet: this, previous: current });
       }
