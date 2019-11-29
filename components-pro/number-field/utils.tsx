@@ -1,4 +1,5 @@
 import { Moment } from 'moment';
+import defaultTo from 'lodash/defaultTo';
 
 export const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER || 2 ** 53 - 1;
 
@@ -50,11 +51,11 @@ function getBeforeStepValue(value: number, minFactor: number, stepFactor: number
 export function getNearStepValues(
   value: number,
   step: number,
-  min: number | Moment = -MAX_SAFE_INTEGER,
-  max: number | Moment = MAX_SAFE_INTEGER,
+  min: number | Moment | null,
+  max: number | Moment | null,
 ): number[] | undefined {
-  min = Number(min);
-  max = Number(max);
+  min = defaultTo(Number(min), -MAX_SAFE_INTEGER);
+  max = defaultTo(Number(max), MAX_SAFE_INTEGER);
   const precisionFactor = getPrecisionFactor(value, step);
   const valueFactor = precisionFix(value, precisionFactor);
   const minFactor = precisionFix(min, precisionFactor);

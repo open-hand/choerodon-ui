@@ -1,4 +1,5 @@
 import { isMoment } from 'moment';
+import isNil from 'lodash/isNil';
 import isEmpty from '../../_util/isEmpty';
 import ValidationResult from '../ValidationResult';
 import { $l } from '../../locale-context';
@@ -7,7 +8,7 @@ import formatReactTemplate from '../../formatter/formatReactTemplate';
 
 export default function rangeOverflow(value: any, props: ValidatorProps): methodReturn {
   const { max, label, format, defaultValidationMessages } = props;
-  if (!isEmpty(value) && max !== undefined && Number(value) > Number(max)) {
+  if (!isEmpty(value) && !isNil(max) && Number(value) > Number(max)) {
     const injectionOptions = { max: isMoment(max) ? max.format(format) : max, label };
     const ruleName = 'rangeOverflow';
     const {

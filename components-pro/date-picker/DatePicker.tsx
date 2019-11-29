@@ -53,8 +53,8 @@ export interface DatePickerProps extends TriggerFieldProps {
    */
   cellRenderer?: (mode: ViewMode) => RenderFunction | undefined;
   filter?: (currentDate: Moment, selected: Moment) => boolean;
-  min?: MomentInput;
-  max?: MomentInput;
+  min?: MomentInput | null;
+  max?: MomentInput | null;
 }
 
 export interface DatePickerKeyboardEvent {
@@ -154,12 +154,12 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   }
 
   @computed
-  get min(): Moment | undefined {
+  get min(): Moment | undefined | null {
     return this.getLimit('min');
   }
 
   @computed
-  get max(): Moment | undefined {
+  get max(): Moment | undefined | null {
     return this.getLimit('max');
   }
 
@@ -243,7 +243,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
 
   getLimit(minOrMax: 'min' | 'max') {
     const limit = this.getProp(minOrMax);
-    if (limit !== undefined) {
+    if (!isNil(limit)) {
       const { record } = this;
       if (record && isString(limit) && record.getField(limit)) {
         return record.get(limit);
