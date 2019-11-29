@@ -87,11 +87,11 @@ export type FieldProps = {
   /**
    * 最大值
    */
-  max?: MomentInput;
+  max?: MomentInput | null;
   /**
    * 最小值
    */
-  min?: MomentInput;
+  min?: MomentInput | null;
   /**
    * 校验器
    */

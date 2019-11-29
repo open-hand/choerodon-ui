@@ -5,6 +5,7 @@ import { observer } from 'mobx-react';
 import isString from 'lodash/isString';
 import isNumber from 'lodash/isNumber';
 import defaultTo from 'lodash/defaultTo';
+import isNil from 'lodash/isNil';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { TextField, TextFieldProps } from '../text-field/TextField';
 import autobind from '../_util/autobind';
@@ -26,11 +27,11 @@ export interface NumberFieldProps extends TextFieldProps {
   /**
    * 最小值
    */
-  min?: number;
+  min?: number | null;
   /**
    * 最大值
    */
-  max?: number;
+  max?: number | null;
   /**
    * 步距
    */
@@ -83,16 +84,16 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
   @computed
   get allowNegative(): boolean {
     const { min } = this;
-    return min === undefined || min < 0;
+    return isNil(min) || min < 0;
   }
 
   @computed
-  get min(): number | undefined {
+  get min(): number | undefined | null {
     return this.getLimit('min');
   }
 
   @computed
-  get max(): number | undefined {
+  get max(): number | undefined | null {
     return this.getLimit('max');
   }
 
@@ -100,7 +101,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     return FieldType.number;
   }
 
-  getLimit(type: string): number | undefined {
+  getLimit(type: string): number | undefined | null {
     const { record } = this;
     const limit = this.getProp(type);
     if (record && isString(limit)) {

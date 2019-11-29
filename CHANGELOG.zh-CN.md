@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>DataSet.Field`: 修复 min / max 校验类型判断。
+
 ## 0.8.41
 
 `2019-11-27`

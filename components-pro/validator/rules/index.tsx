@@ -40,8 +40,8 @@ export interface ValidatorProps {
   type?: FieldType;
   required?: boolean;
   pattern?: string | RegExp;
-  min?: number | Moment;
-  max?: number | Moment;
+  min?: number | Moment | null;
+  max?: number | Moment | null;
   step?: number;
   minLength?: number;
   maxLength?: number;
