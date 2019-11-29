@@ -26,11 +26,11 @@ export interface NumberFieldProps extends TextFieldProps {
   /**
    * 最小值
    */
-  min?: number;
+  min?: number | null;
   /**
    * 最大值
    */
-  max?: number;
+  max?: number | null;
   /**
    * 步距
    */

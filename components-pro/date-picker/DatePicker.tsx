@@ -53,8 +53,8 @@ export interface DatePickerProps extends TriggerFieldProps {
    */
   cellRenderer?: (mode: ViewMode) => RenderFunction | undefined;
   filter?: (currentDate: Moment, selected: Moment) => boolean;
-  min?: MomentInput;
-  max?: MomentInput;
+  min?: MomentInput | null;
+  max?: MomentInput | null;
 }
 
 export interface DatePickerKeyboardEvent {

@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>DataSet.Field`: Fixed min / max verification type judgment.
+
 ## 0.8.41
 
 `2019-11-27`
