@@ -51,8 +51,8 @@ function getBeforeStepValue(value: number, minFactor: number, stepFactor: number
 export function getNearStepValues(
   value: number,
   step: number,
-  min: number | Moment | null,
-  max: number | Moment | null,
+  min?: number | Moment | null,
+  max?: number | Moment | null,
 ): number[] | undefined {
   min = defaultTo(Number(min), -MAX_SAFE_INTEGER);
   max = defaultTo(Number(max), MAX_SAFE_INTEGER);
