@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro> DataSet`: Added `autoLocateAfterCreate` property.
 - 🐞 `<pro>DataSet.Field`: Fixed min / max verification type judgment.
 
 ## 0.8.41

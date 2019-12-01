@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>DataSet`: 新增 autoLocateAfterCreate 属性。
 - 🐞 `<pro>DataSet.Field`: 修复 min / max 校验类型判断。
 
 ## 0.8.41

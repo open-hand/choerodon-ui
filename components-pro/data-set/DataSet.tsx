@@ -118,6 +118,11 @@ export interface DataSetProps {
    */
   autoLocateFirst?: boolean;
   /**
+   * 自动定位到新建记录
+   * @default true;
+   */
+  autoLocateAfterCreate?: boolean;
+  /**
    * 当前记录被删除时自动定位其他记录
    * @default true;
    */
@@ -229,6 +234,7 @@ export default class DataSet extends EventManager {
     autoQuery: false,
     autoQueryAfterSubmit: true,
     autoLocateFirst: true,
+    autoLocateAfterCreate: true,
     autoLocateAfterRemove: true,
     selection: DataSetSelection.multiple,
     modifiedCheck: true,
@@ -945,7 +951,9 @@ export default class DataSet extends EventManager {
     } else {
       this.push(record);
     }
-    this.current = record;
+    if (this.props.autoLocateAfterCreate) {
+      this.current = record;
+    }
     this.fireEvent(DataSetEvents.create, { dataSet: this, record });
     return record;
   }
