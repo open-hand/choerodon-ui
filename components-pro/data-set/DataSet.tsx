@@ -1089,22 +1089,19 @@ export default class DataSet extends EventManager {
    * @return 被删除的记录集
    */
   @action
-  splice(from: number, deleteCount: number, ...records: Record[]): (Record | undefined)[] {
-    if (records.length) {
+  splice(from: number, deleteCount: number, ...items: Record[]): (Record | undefined)[] {
+    const fromRecord = this.get(from);
+    const deleted = this.slice(from, from + deleteCount).map(this.deleteRecord, this);
+    if (items.length) {
       checkParentByInsert(this);
+      const { records } = this;
+      const transformedRecords = this.transferRecords(items);
+      if (fromRecord) {
+        records.splice(records.indexOf(fromRecord), 0, ...transformedRecords);
+      } else {
+        records.push(...transformedRecords);
+      }
     }
-    const deleted = this.records.filter((record, index) => {
-      if (record.status === RecordStatus.delete) {
-        from += 1;
-      }
-      if (index >= from && deleteCount > 0 && record.status !== RecordStatus.delete) {
-        this.deleteRecord(record);
-        deleteCount -= 1;
-        return true;
-      }
-      return false;
-    });
-    this.records.splice(from, 0, ...this.transferRecords(records));
     return deleted;
   }
 

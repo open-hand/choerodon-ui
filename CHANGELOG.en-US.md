@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>DataSet`: Fixed the problem with `splice` method.
+
 ## 0.8.42
 
 `2019-12-01`
