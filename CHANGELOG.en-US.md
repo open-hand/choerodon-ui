@@ -15,22 +15,26 @@ timeline: true
 
 ---
 
+## 0.8.43
+
+`2019-12-02`
+
 - 🐞 `<pro>DataSet`: Fixed the problem with `splice` method.
 
 ## 0.8.42
 
 `2019-12-01`
 
-- 🌟 `<pro> DataSet`: Added `autoLocateAfterCreate` property.
+- 🌟 `<pro>DataSet`: Added `autoLocateAfterCreate` property.
 - 🐞 `<pro>DataSet.Field`: Fixed min / max verification type judgment.
 
 ## 0.8.41
 
 `2019-11-27`
 
-- 🌟 `<pro> DataSet`: Added `remove` event.
-- 🌟 `<pro> DataSet`: Added `autoLocateAfterRemove` property.
-- 💄 `<pro> DataSet`: Optimize the performance of `remove` method.
+- 🌟 `<pro>DataSet`: Added `remove` event.
+- 🌟 `<pro>DataSet`: Added `autoLocateAfterRemove` property.
+- 💄 `<pro>DataSet`: Optimize the performance of `remove` method.
 
 ## 0.8.40
 
