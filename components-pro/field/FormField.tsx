@@ -1085,7 +1085,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       const cascadeMap = field.get('cascadeMap');
       if (
         cascadeMap &&
-        (!record || Object.keys(cascadeMap).some(cascade => !record.get(cascadeMap[cascade])))
+        (!record || Object.keys(cascadeMap).some(cascade => isNil(record.get(cascadeMap[cascade]))))
       ) {
         return true;
       }

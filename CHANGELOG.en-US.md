@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>FormField`: Fixed the problem with the cascadeMap parameter value of 0/ false to disable the child.
+
 ## 0.8.43
 
 `2019-12-02`
