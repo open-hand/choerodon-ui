@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>FormField`: 修复 cascadeMap 参数值为 0/false 禁用子级的问题。
+
 ## 0.8.43
 
 `2019-12-02`
