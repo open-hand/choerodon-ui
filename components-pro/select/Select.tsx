@@ -839,7 +839,6 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     const { valueField } = this;
     const newValue = record.get(valueField);
     this.removeValue(newValue, -1);
-    this.removeComboOption(record);
   }
 
   @action
