@@ -235,8 +235,7 @@ export default class TimesView extends DaysView {
     if (mode !== ViewMode.time) {
       this.changeSelectedDate(date);
       this.changeViewMode(mode);
-    } else {
-      super.choose(date);
     }
+    super.choose(date);
   }
 }

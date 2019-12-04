@@ -152,7 +152,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
       time: 'HH:mm:ss',
       year: 'YYYY',
       month: 'YYYY-MM',
-      week: 'YYYY-Wo',
+      week: 'GGGG-Wo',
     },
   ],
 ]);

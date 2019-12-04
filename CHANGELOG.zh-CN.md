@@ -16,6 +16,9 @@ timeline: true
 ---
 
 - 🐞 `<pro>FormField`: 修复 cascadeMap 参数值为 0/false 禁用子级的问题。
+- 🐞 `<pro>Select`: 修复多选模式下取消勾选选项消失的问题。
+- 🐞 `<pro>DatePicker`: 修复 dateTime mode 下仅选择时间未更新值的问题。
+- 🐞 `<pro>DatePicker`: 修复 week mode 下跨年选周显示问题以及禁止输入。
 
 ## 0.8.43
 
