@@ -20,11 +20,15 @@ import {
   checkFieldType,
   childrenInfoForDelete,
   findBindFields,
+  generateData,
+  generateJSONData,
   generateResponseData,
   getRecordValue,
   processIntlField,
   processToJSON,
   processValue,
+  useCascade,
+  useNormal,
 } from './utils';
 import * as ObjectChainValue from '../_util/ObjectChainValue';
 import DataSetSnapshot from './DataSetSnapshot';
@@ -280,26 +284,34 @@ export default class Record {
     });
   }
 
-  toData(): object {
-    const json = this.normalizeData();
-    this.normalizeCascadeData(json, true);
-    return json;
-  }
-
-  toJSONData(noCascade?: boolean, isCascadeSelect?: boolean): any {
-    const { status } = this;
+  toData(
+    needIgnore?: boolean,
+    noCascade?: boolean,
+    isCascadeSelect?: boolean,
+    all: boolean = true,
+  ): any {
+    const { status, dataSet } = this;
+    const dataToJSON = dataSet && dataSet.dataToJSON;
+    const cascade = noCascade === undefined && dataToJSON ? useCascade(dataToJSON) : !noCascade;
+    const normal = all || (dataToJSON && useNormal(dataToJSON));
     let dirty = status !== RecordStatus.sync;
-    const json = this.normalizeData(true);
-    if (!noCascade && this.normalizeCascadeData(json, false, isCascadeSelect)) {
+    const json = this.normalizeData(needIgnore);
+    if (cascade && this.normalizeCascadeData(json, normal, isCascadeSelect)) {
       dirty = true;
     }
     return {
       ...json,
-      __id: this.id,
+      __dirty: dirty,
+    };
+  }
+
+  toJSONData(noCascade?: boolean, isCascadeSelect?: boolean): any {
+    const { status } = this;
+    return {
+      ...this.toData(true, noCascade, isCascadeSelect, false),
       [getConfig('statusKey')]: getConfig('status')[
         status === RecordStatus.sync ? RecordStatus.update : status
       ],
-      __dirty: dirty,
     };
   }
 
@@ -699,7 +711,11 @@ export default class Record {
     return json;
   }
 
-  private normalizeCascadeData(json: any, all?: boolean, isSelect?: boolean): boolean | undefined {
+  private normalizeCascadeData(
+    json: any,
+    normal?: boolean,
+    isSelect?: boolean,
+  ): boolean | undefined {
     const { dataSetSnapshot, dataSet, isCurrent, status, fields } = this;
     const isDelete = status === RecordStatus.delete;
     if (dataSet) {
@@ -714,11 +730,14 @@ export default class Record {
             const snapshot = dataSetSnapshot[name];
             const child = isCurrent ? children[name] : snapshot && new DataSet().restore(snapshot);
             if (child) {
-              const jsonArray = all ? child.toData() : child.toJSONData(isSelect);
-              if (jsonArray.length > 0) {
+              const jsonArray =
+                normal || useNormal(child.dataToJSON)
+                  ? generateData(child)
+                  : generateJSONData(child, isSelect);
+              if (jsonArray.dirty) {
                 dirty = true;
               }
-              ObjectChainValue.set(json, name, jsonArray, fields);
+              ObjectChainValue.set(json, name, jsonArray.data, fields);
             }
           });
         }

@@ -24,10 +24,12 @@ import axios from '../axios';
 import Record from './Record';
 import Field, { FieldProps, Fields } from './Field';
 import {
+  adapterDataToJSON,
   axiosConfigAdapter,
   checkParentByInsert,
   doExport,
   findBindFieldBy,
+  generateData,
   generateJSONData,
   generateResponseData,
   getFieldSorter,
@@ -36,6 +38,7 @@ import {
   prepareSubmitData,
   processIntlField,
   sortTree,
+  useSelected,
 } from './utils';
 import EventManager from '../_util/EventManager';
 import DataSetSnapshot from './DataSetSnapshot';
@@ -44,6 +47,7 @@ import {
   DataSetEvents,
   DataSetSelection,
   DataSetStatus,
+  DataToJSON,
   FieldType,
   RecordStatus,
   SortOrder,
@@ -226,6 +230,19 @@ export interface DataSetProps {
    * 覆盖默认axios
    */
   axios?: AxiosInstance;
+  /**
+   * 数据转为json的方式
+   * dirty - 只转换变更的数据，包括本身无变更但级联有变更的数据
+   * selected - 只转换选中的数据，无关数据的变更状态
+   * all - 转换所有数据
+   * normal - 转换所有数据，且不会带上__status, __id等附加字段
+   * dirty-self - 同dirty， 但不转换级联数据
+   * selected-self - 同selected， 但不转换级联数据
+   * all-self - 同all， 但不转换级联数据
+   * normal-self - 同normal， 但不转换级联数据
+   * @default dirty
+   */
+  dataToJSON?: DataToJSON;
 }
 
 export default class DataSet extends EventManager {
@@ -240,11 +257,10 @@ export default class DataSet extends EventManager {
     modifiedCheck: true,
     pageSize: 10,
     paging: true,
+    dataToJSON: DataToJSON.dirty,
   };
 
   id?: string;
-
-  parent?: DataSet;
 
   children: DataSetChildren = {};
 
@@ -257,6 +273,10 @@ export default class DataSet extends EventManager {
   originalData: Record[] = [];
 
   resetInBatch: boolean = false;
+
+  dataToJSON: DataToJSON;
+
+  @observable parent?: DataSet;
 
   @observable name?: string;
 
@@ -653,8 +673,10 @@ export default class DataSet extends EventManager {
         name,
         children,
         queryParameter = {},
+        dataToJSON,
       } = props;
       this.name = name;
+      this.dataToJSON = dataToJSON!;
       this.records = [];
       this.fields = observable.map<string, Field>();
       this.totalCount = 0;
@@ -717,26 +739,27 @@ export default class DataSet extends EventManager {
   }
 
   toData(): object[] {
-    return this.data.map(record => record.toData());
+    return generateData(this).data;
   }
 
   toJSONData(isSelected?: boolean, noCascade?: boolean): object[] {
-    const data: object[] = [];
-    (isSelected ? this.selected : this.records).forEach(record =>
-      generateJSONData(data, record, isSelected, noCascade),
-    );
-    return data;
+    const dataToJSON = adapterDataToJSON(isSelected, noCascade);
+    if (dataToJSON) {
+      this.dataToJSON = dataToJSON;
+    }
+    return generateJSONData(this).data;
   }
 
   /**
    * 等待选中或者所有记录准备就绪
-   * @param isSelect 如果为true，则只等待选中的记录
    * @returns Promise
    */
   ready(isSelect?: boolean): Promise<any> {
     return Promise.all([
       this.pending.ready(),
-      ...(isSelect ? this.selected : this.data).map(record => record.ready()),
+      ...(isSelect || useSelected(this.dataToJSON) ? this.selected : this.data).map(record =>
+        record.ready(),
+      ),
       ...[...this.fields.values()].map(field => field.ready()),
     ]);
   }
@@ -763,10 +786,14 @@ export default class DataSet extends EventManager {
    * @return Promise
    */
   async submit(isSelect?: boolean, noCascade?: boolean): Promise<any> {
-    await this.ready(isSelect);
-    if (await this.validate(isSelect, noCascade)) {
+    const dataToJSON = adapterDataToJSON(isSelect, noCascade);
+    if (dataToJSON) {
+      this.dataToJSON = dataToJSON;
+    }
+    await this.ready();
+    if (await this.validate()) {
       return this.pending.add(
-        this.write(isSelect ? this.selected : this.records, isSelect, noCascade),
+        this.write(useSelected(this.dataToJSON) ? this.selected : this.records),
       );
     }
     return false;
@@ -1410,8 +1437,12 @@ export default class DataSet extends EventManager {
    * @return true | false
    */
   validate(isSelected?: boolean, noCascade?: boolean): Promise<boolean> {
+    const dataToJSON = adapterDataToJSON(isSelected, noCascade);
+    if (dataToJSON) {
+      this.dataToJSON = dataToJSON;
+    }
     return Promise.all(
-      (isSelected ? this.selected : this.data).map(record => record.validate(noCascade)),
+      (useSelected(this.dataToJSON) ? this.selected : this.data).map(record => record.validate()),
     ).then(results => results.every(result => result));
   }
 
@@ -1720,9 +1751,9 @@ Then the query method will be auto invoke.`,
   //     ), allData);
   // }
 
-  private async write(records: Record[], isSelect?: boolean, noCascade?: boolean): Promise<any> {
+  private async write(records: Record[]): Promise<any> {
     if (records.length) {
-      const [created, updated, destroyed] = prepareSubmitData(records, isSelect, noCascade);
+      const [created, updated, destroyed] = prepareSubmitData(records, this.dataToJSON);
       const axiosConfigs: AxiosRequestConfig[] = [];
       const submitData: object[] = [
         ...prepareForSubmit('create', created, axiosConfigs, this),

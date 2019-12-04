@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro> DataSet`: Added `dataToJSON` property, deprecated parameters of method such as `toJSONData`.
 - 🐞 `<pro>FormField`: Fixed the problem with the cascadeMap parameter value of 0/ false to disable the child.
 - 🐞 `<pro>Select`: Fixed the problem that the unchecked option disappears in multi-selection mode.
 - 🐞 `<pro>DatePicker`: Fixed the problem of updating the value in dateTime mode.

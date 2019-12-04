@@ -1,5 +1,6 @@
 import DataSet from './DataSet';
 import Record from './Record';
+import { DataToJSON } from './enum';
 
 export default class DataSetSnapshot {
   records: Record[];
@@ -14,6 +15,8 @@ export default class DataSetSnapshot {
 
   pageSize: number;
 
+  dataToJSON: DataToJSON;
+
   constructor({
     records,
     originalData,
@@ -21,6 +24,7 @@ export default class DataSetSnapshot {
     currentPage,
     pageSize,
     cachedSelected,
+    dataToJSON,
   }: DataSet) {
     this.records = records;
     this.originalData = originalData;
@@ -28,5 +32,6 @@ export default class DataSetSnapshot {
     this.currentPage = currentPage;
     this.pageSize = pageSize;
     this.cachedSelected = cachedSelected;
+    this.dataToJSON = dataToJSON;
   }
 }

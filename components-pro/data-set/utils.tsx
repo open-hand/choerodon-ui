@@ -10,7 +10,7 @@ import isNumber from 'lodash/isNumber';
 import warning from 'choerodon-ui/lib/_util/warning';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import Field, { DynamicPropsArguments, FieldProps, Fields } from './Field';
-import { BooleanValue, FieldType, RecordStatus, SortOrder } from './enum';
+import { BooleanValue, DataToJSON, FieldType, RecordStatus, SortOrder } from './enum';
 import DataSet from './DataSet';
 import Record from './Record';
 import isEmpty from '../_util/isEmpty';
@@ -22,6 +22,28 @@ import { Lang } from '../locale-context/enum';
 import formatNumber from '../formatter/formatNumber';
 import formatCurrency from '../formatter/formatCurrency';
 import { getPrecision } from '../number-field/utils';
+
+export function useNormal(dataToJSON: DataToJSON): boolean {
+  return [DataToJSON.normal, DataToJSON['normal-self']].includes(dataToJSON);
+}
+
+export function useAll(dataToJSON: DataToJSON): boolean {
+  return [DataToJSON.all, DataToJSON['all-self']].includes(dataToJSON);
+}
+
+export function useSelected(dataToJSON: DataToJSON): boolean {
+  return [DataToJSON.selected, DataToJSON['selected-self']].includes(dataToJSON);
+}
+
+export function useCascade(dataToJSON: DataToJSON): boolean {
+  return [DataToJSON.dirty, DataToJSON.selected, DataToJSON.all, DataToJSON.normal].includes(
+    dataToJSON,
+  );
+}
+
+export function useDirty(dataToJSON: DataToJSON): boolean {
+  return [DataToJSON.dirty, DataToJSON['dirty-self']].includes(dataToJSON);
+}
 
 export function append(url: string, suffix?: object) {
   if (suffix) {
@@ -308,14 +330,12 @@ export function getFieldSorter(field: Field) {
   }
 }
 
-export function generateJSONData(
-  array: object[],
-  record: Record,
-  isSelect?: boolean,
-  noCascade?: boolean,
-) {
-  const json = record.toJSONData(noCascade);
-  if (json.__dirty || isSelect) {
+export function generateRecordJSONData(array: object[], record: Record, dataToJSON: DataToJSON) {
+  const normal = useNormal(dataToJSON);
+  const json = normal
+    ? record.status !== RecordStatus.delete && record.toData()
+    : record.toJSONData();
+  if (json && (normal || useAll(dataToJSON) || !useDirty(dataToJSON) || json.__dirty)) {
     delete json.__dirty;
     array.push(json);
   }
@@ -323,8 +343,7 @@ export function generateJSONData(
 
 export function prepareSubmitData(
   records: Record[],
-  isSelect?: boolean,
-  noCascade?: boolean,
+  dataToJSON: DataToJSON,
 ): [object[], object[], object[]] {
   const created: object[] = [];
   const updated: object[] = [];
@@ -341,11 +360,7 @@ export function prepareSubmitData(
     }
   }
 
-  records.forEach(
-    record =>
-      (noCascade && record.status === RecordStatus.sync) ||
-      generateJSONData(storeWith(record.status), record, isSelect, noCascade),
-  );
+  records.forEach(record => generateRecordJSONData(storeWith(record.status), record, dataToJSON));
   return [created, updated, destroyed];
 }
 
@@ -558,4 +573,51 @@ export function getLimit(limit: any, record: Record) {
     return record.get(limit);
   }
   return limit;
+}
+
+export function adapterDataToJSON(
+  isSelected?: boolean,
+  noCascade?: boolean,
+): DataToJSON | undefined {
+  if (isSelected) {
+    if (noCascade) {
+      return DataToJSON['selected-self'];
+    }
+    return DataToJSON.selected;
+  }
+  if (noCascade) {
+    return DataToJSON['dirty-self'];
+  }
+  return undefined;
+}
+
+export function generateData(ds: DataSet): { dirty: boolean; data: object[] } {
+  let dirty = false;
+  const data: object[] = ds.data.map(record => {
+    const d = record.toData();
+    if (d.__dirty) {
+      dirty = true;
+    }
+    delete d.__dirty;
+    return d;
+  });
+  return {
+    dirty,
+    data,
+  };
+}
+
+export function generateJSONData(
+  ds: DataSet,
+  isSelect?: boolean,
+): { dirty: boolean; data: object[] } {
+  const { dataToJSON } = ds;
+  const data: object[] = [];
+  (isSelect || useSelected(dataToJSON) ? ds.selected : ds.records).forEach(record =>
+    generateRecordJSONData(data, record, dataToJSON),
+  );
+  return {
+    dirty: data.length > 0,
+    data,
+  };
 }

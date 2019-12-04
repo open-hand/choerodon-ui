@@ -3,6 +3,7 @@ order: 1
 title:
   zh-CN: 级联
   en-US: Cascade
+only: true
 ---
 
 ## zh-CN
@@ -42,6 +43,7 @@ function femaleFilter(record) {
 
 class App extends React.Component {
   friendsDs = new DataSet({
+    dataToJSON: 'normal',
     queryUrl: '/dataset/user/queries',
     fields: [
       { name: 'name', type: 'string', label: '姓名', required: true },
@@ -60,6 +62,7 @@ class App extends React.Component {
   });
 
   enemyFriendsDs = new DataSet({
+    dataToJSON: 'normal',
     selection: 'single',
     fields: [
       { name: 'name', type: 'string', label: '姓名', required: true },
@@ -186,6 +189,14 @@ class App extends React.Component {
     this.openModal();
   };
 
+  toData = () => {
+    console.log('toData', this.userDs.toData());
+  };
+
+  toJSONData = () => {
+    console.log('toJSONData', this.userDs.toJSONData());
+  };
+
   renderEdit = () => {
     return <Button funcType="flat" icon="mode_edit" onClick={this.editUser} size="small" />;
   };
@@ -196,8 +207,27 @@ class App extends React.Component {
     </Button>
   );
 
+  toDataButton = (
+    <Button funcType="flat" color="primary" onClick={this.toData} key="toData">
+      toData
+    </Button>
+  );
+
+  toJSONDataButton = (
+    <Button funcType="flat" color="primary" onClick={this.toJSONData} key="toJSONData">
+      toJSONData
+    </Button>
+  );
+
   render() {
-    const buttons = [this.createButton, 'save', 'delete', 'query'];
+    const buttons = [
+      this.createButton,
+      'save',
+      'delete',
+      'query',
+      this.toDataButton,
+      this.toJSONDataButton,
+    ];
     return [
       <Table key="user" buttons={buttons} dataSet={this.userDs} header="User">
         <Column name="userid" editor />
