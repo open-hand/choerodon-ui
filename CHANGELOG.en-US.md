@@ -16,6 +16,9 @@ timeline: true
 ---
 
 - 🐞 `<pro>FormField`: Fixed the problem with the cascadeMap parameter value of 0/ false to disable the child.
+- 🐞 `<pro>Select`: Fixed the problem that the unchecked option disappears in multi-selection mode.
+- 🐞 `<pro>DatePicker`: Fixed the problem of updating the value in dateTime mode.
+- 🐞 `<pro>DatePicker`: Fixed the week-selection display problem and disable input in week mode.
 
 ## 0.8.43
 
