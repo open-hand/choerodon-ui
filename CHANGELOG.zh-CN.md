@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.44
+
+`2019-12-05`
+
 - 🌟 `<pro>DataSet`: 新增 dataToJSON 属性, 废弃 toJSONData 等方法的参数。
 - 🐞 `<pro>FormField`: 修复 cascadeMap 参数值为 0/false 禁用子级的问题。
 - 🐞 `<pro>Select`: 修复多选模式下取消勾选选项消失的问题。

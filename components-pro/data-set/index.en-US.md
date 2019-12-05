@@ -45,7 +45,7 @@ title: DataSet
 | queryFields | 查询字段属性数组，在内部生成 queryDataSet，优先级低于 queryDataSet 属性，详见[Field Props](#Field Props) | object\[\] |  |
 | cacheSelection | 缓存选中记录，使切换分页时仍保留选中状态。当设置了 primaryKey 或有字段设置了 unique 才起作用。 | boolean | false |
 | axios | 覆盖默认 axios | AxiosInstance |  |
-| dataToJSON | 数据转为 json 的方式，详见[DataToJSON](#DataToJSON) | DataToJSON |  |
+| dataToJSON | 数据转为 json 的方式，详见[DataToJSON](#DataToJSON) | DataToJSON | dirty |
 
 ### DataSet Values
 
