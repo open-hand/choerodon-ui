@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>DataSet.Field`: Fixed the dead cycle of an incoming object parameter in dynamicProps.
+
 ## 0.8.44
 
 `2019-12-05`
