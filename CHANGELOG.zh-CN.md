@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🐞 `Progress`: 修复 Progress IE 动画样式。
 - 🐞 `<pro>DataSet.Field`: 修复 dynamicProps 中对象参数死循环。
 
 ## 0.8.44
