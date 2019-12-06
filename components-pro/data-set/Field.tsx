@@ -774,7 +774,7 @@ dynamicProps = {
   private checkDynamicProp(propsName, newProp) {
     // if (propsName in this.lastDynamicProps) {
     const oldProp = this.lastDynamicProps[propsName];
-    if (oldProp !== newProp) {
+    if (!isEqual(oldProp, newProp)) {
       defer(
         action(() => {
           if (propsName in this.validator.props || propsName === 'validator') {

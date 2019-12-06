@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>DataSet.Field`: 修复 dynamicProps 中对象参数死循环。
+
 ## 0.8.44
 
 `2019-12-05`
