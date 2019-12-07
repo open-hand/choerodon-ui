@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.45
+
+`2019-12-07`
+
 - 🐞 `Progress`: Fixed the animation style of Progress in IE.
 - 🐞 `<pro>DataSet.Field`: Fixed the dead cycle of an incoming object parameter in dynamicProps.
 
