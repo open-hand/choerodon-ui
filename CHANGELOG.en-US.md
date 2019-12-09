@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.46
+
+`2019-12-09`
+
 - 🌟 `configure`: Added `lookupBatchAxiosConfig` property.
 - 🌟 `<pro> DataSet`: Added `dirty` property, deprecated `isModified` method.
 - 💄 `<pro> DataSet.Record`: Optimize the `dirty` property, which contains whether the cascaded data has changed.
