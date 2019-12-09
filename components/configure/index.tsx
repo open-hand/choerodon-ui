@@ -123,16 +123,16 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['lookupCache', { maxAge: 1000 * 60 * 10, max: 100 }],
   ['lookupUrl', code => `/common/code/${code}/`],
   ['lookupAxiosMethod', 'post'],
-  [
-    'lookupBatchAxiosConfig',
-    codes => ({
-      url: '/common/batch',
-      params: codes.reduce((obj, code) => {
-        obj[code] = code;
-        return obj;
-      }, {}),
-    }),
-  ],
+  // [
+  //   'lookupBatchAxiosConfig',
+  //   codes => ({
+  //     url: '/common/batch',
+  //     params: codes.reduce((obj, code) => {
+  //       obj[code] = code;
+  //       return obj;
+  //     }, {}),
+  //   }),
+  // ],
   ['lovDefineUrl', code => `/sys/lov/lov_define?code=${code}`],
   ['lovQueryUrl', code => `/common/lov/dataset/${code}`],
   ['dataKey', 'rows'],
