@@ -621,3 +621,7 @@ export function generateJSONData(
     data,
   };
 }
+
+export function isDirtyRecord(record) {
+  return record.status !== RecordStatus.sync || record.dirty;
+}

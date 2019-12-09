@@ -15,6 +15,9 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>DataSet`: 新增 dirty 属性, 废弃 isModified 方法。
+- 💄 `<pro>DataSet.Record`: 优化 dirty 属性, 其包含级联数据是否变更。
+
 ## 0.8.45
 
 `2019-12-07`

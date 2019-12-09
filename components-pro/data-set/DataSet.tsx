@@ -34,6 +34,7 @@ import {
   generateResponseData,
   getFieldSorter,
   getOrderFields,
+  isDirtyRecord,
   prepareForSubmit,
   prepareSubmitData,
   processIntlField,
@@ -274,8 +275,6 @@ export default class DataSet extends EventManager {
 
   resetInBatch: boolean = false;
 
-  dataToJSON: DataToJSON;
-
   @observable parent?: DataSet;
 
   @observable name?: string;
@@ -297,6 +296,8 @@ export default class DataSet extends EventManager {
   @observable selection: DataSetSelection | false;
 
   @observable cachedSelected: Record[];
+
+  @observable dataToJSON: DataToJSON;
 
   @computed
   get axios(): AxiosInstance {
@@ -647,6 +648,11 @@ export default class DataSet extends EventManager {
     return this.records.concat(this.cachedSelected.slice());
   }
 
+  @computed
+  get dirty(): boolean {
+    return this.records.some(isDirtyRecord);
+  }
+
   private inBatchSelection: boolean = false;
 
   private syncChildrenRemote = debounce((remoteKeys: string[], current: Record) => {
@@ -873,7 +879,7 @@ export default class DataSet extends EventManager {
       if (index >= 0 && index < totalCount + this.created.length - this.destroyed.length) {
         if (
           !modifiedCheck ||
-          !this.isModified() ||
+          !this.dirty ||
           (await confirm($l('DataSet', 'unsaved_data_confirm'))) !== 'cancel'
         ) {
           await this.query(Math.floor(index / pageSize) + 1);
@@ -1407,10 +1413,11 @@ export default class DataSet extends EventManager {
 
   /**
    * 判断是否有新增、变更或者删除的记录
+   * @deprecated
    * @return true | false
    */
   isModified(): boolean {
-    return this.records.some(record => record.status !== RecordStatus.sync);
+    return this.dirty;
   }
 
   /**

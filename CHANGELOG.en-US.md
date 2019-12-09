@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+-🌟 `<pro> DataSet`: Added `dirty` property, deprecated `isModified` method. -💄 `<pro> DataSet.Record`: Optimize the `dirty` property, which contains whether the cascaded data has changed.
+
 ## 0.8.45
 
 `2019-12-07`

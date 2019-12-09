@@ -71,8 +71,9 @@ title: DataSet
 | cachedSelected | 缓存的选中记录 | readonly observable&lt;Record[]&gt; |
 | length | 数据量 | readonly observable&lt;number&gt; |
 | queryDataSet | 查询数据源 | observable&lt;DataSet&gt; |
-| parent | 级联头数据源 | readonly DataSet |
+| parent | 级联头数据源 | readonly observable&lt;DataSet&gt; |
 | children | 所有级联行数据源 | readonly \[key:string\]: DataSet} |
+| dirty | 含有状态不是 sync 的记录及 dirty 为 true 的记录 | readonly observable&lt;boolean&gt;} |
 
 ### DataSet Methods
 
@@ -121,7 +122,6 @@ title: DataSet
 | clearCachedSelected() | 清除缓存的选中记录 |  |  |
 | get(index) | 获取指定索引的记录 | `index` - 记录索引 | Record |
 | getFromTree(index) | 从树形数据中获取指定索引的根节点记录 | `index` - 记录索引 | Record |
-| isModified() | 判断是否有新增、变更或者删除的记录 |  | boolean |
 | validate() | 校验数据记录是否有效 |  | Promise&lt;boolean&gt; |
 | getField(fieldName) | 根据字段名获取字段 | `fieldName` - 字段名 | Field |
 | addField(fieldName, fieldProps) | 增加新字段 | `fieldName` - 字段名，`fieldProps` - 字段属性 | Field |
@@ -170,7 +170,7 @@ title: DataSet
 | previousRecord | 树形中前一条数据                                | Record\| undefined        |
 | nextRecord     | 树形中后一条数据                                | Record\| undefined        |
 | level          | 树形层级                                        | number                    |
-| dirty          | 数据是否发生变更                                | boolean                   |
+| dirty          | 数据是否发生变更， 包含级联数据源是否变更       | boolean                   |
 | cascadeParent  | 级联父数据                                      | Record\| undefined        |
 | index          | 在数据源中的索引                                | number                    |
 

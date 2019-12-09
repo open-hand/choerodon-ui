@@ -24,6 +24,7 @@ import {
   generateJSONData,
   generateResponseData,
   getRecordValue,
+  isDirtyRecord,
   processIntlField,
   processToJSON,
   processValue,
@@ -240,8 +241,19 @@ export default class Record {
 
   @computed
   get dirty(): boolean {
-    const { fields, status } = this;
-    return status === RecordStatus.update || [...fields.values()].some(({ dirty }) => dirty);
+    const { fields, status, dataSet, isCurrent, dataSetSnapshot } = this;
+    if (status === RecordStatus.update || [...fields.values()].some(({ dirty }) => dirty)) {
+      return true;
+    }
+    if (dataSet) {
+      const { children } = dataSet;
+      return Object.keys(children).some(key => {
+        return isCurrent
+          ? children[key].dirty
+          : !!dataSetSnapshot[key] && dataSetSnapshot[key].records.some(isDirtyRecord);
+      });
+    }
+    return false;
   }
 
   @computed
