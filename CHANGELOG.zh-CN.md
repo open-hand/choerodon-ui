@@ -18,6 +18,7 @@ timeline: true
 - 🌟 `configure`: 新增 lookupBatchAxiosConfig 属性。
 - 🌟 `<pro>DataSet`: 新增 dirty 属性, 废弃 isModified 方法。
 - 💄 `<pro>DataSet.Record`: 优化 dirty 属性, 其包含级联数据是否变更。
+- 🐞 `<pro>Table`: 修复 Table 树形结构右固定列展开图标问题。
 
 ## 0.8.45
 
