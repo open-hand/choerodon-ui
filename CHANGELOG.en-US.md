@@ -18,6 +18,7 @@ timeline: true
 - 🌟 `configure`: Added `lookupBatchAxiosConfig` property.
 - 🌟 `<pro> DataSet`: Added `dirty` property, deprecated `isModified` method.
 - 💄 `<pro> DataSet.Record`: Optimize the `dirty` property, which contains whether the cascaded data has changed.
+- 🐞 `<pro>Table`: Fixed the Table tree structure right fixed column expansion icon problem.
 
 ## 0.8.45
 

@@ -179,7 +179,12 @@ export default class TableRow extends Component<TableRowProps, any> {
 
   @autobind
   getCell(column: ColumnProps, index: number): ReactNode {
-    const { prefixCls, record, indentSize } = this.props;
+    const { prefixCls, record, indentSize, lock } = this.props;
+    const {
+      tableStore: { leafColumns, rightLeafColumns },
+    } = this.context;
+    const columnIndex =
+      lock === 'right' ? index + leafColumns.length - rightLeafColumns.length : index;
     return (
       <TableCell
         key={getColumnKey(column)}
@@ -188,7 +193,7 @@ export default class TableRow extends Component<TableRowProps, any> {
         record={record}
         indentSize={indentSize}
       >
-        {this.hasExpandIcon(index) && this.renderExpandIcon()}
+        {this.hasExpandIcon(columnIndex) && this.renderExpandIcon()}
       </TableCell>
     );
   }
