@@ -2065,10 +2065,8 @@ Then the query method will be auto invoke.`,
     if (queryDataSet) {
       const { current } = queryDataSet;
       if (current) {
-        data = current.toJSONData();
+        data = current.toData(true);
         delete data.__dirty;
-        delete data.__id;
-        delete data[getConfig('statusKey')];
       }
     }
     data = {

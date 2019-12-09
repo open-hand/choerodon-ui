@@ -26,6 +26,7 @@ import isSameLike from '../_util/isSameLike';
 import * as ObjectChainValue from '../_util/ObjectChainValue';
 import { buildURLWithAxiosConfig } from '../axios/utils';
 import { getDateFormatByField } from '../field/utils';
+import { getLovPara } from '../stores/utils';
 
 function getPropsFromLovConfig(lovCode, propsName) {
   if (lovCode) {
@@ -696,44 +697,59 @@ dynamicProps = {
    * @return Promise<object[]>
    */
   async fetchLookup(): Promise<object[] | undefined> {
-    const axiosConfig = lookupStore.getAxiosConfig(this);
+    const batch = getConfig('lookupBatchAxiosConfig');
+    const lookupCode = this.get('lookupCode');
+    const lovPara = getLovPara(this, this.record);
     const dsField = this.findDataSetField();
-    if (dsField) {
-      const dsConfig = lookupStore.getAxiosConfig(dsField);
-      if (
-        dsConfig.url &&
-        buildURLWithAxiosConfig(dsConfig) === buildURLWithAxiosConfig(axiosConfig)
-      ) {
+    let result;
+    if (batch && lookupCode && Object.keys(lovPara).length === 0) {
+      if (dsField && dsField.get('lookupCode') === lookupCode) {
         this.set('lookup', undefined);
         return dsField.get('lookup');
       }
-    }
-    if (axiosConfig.url) {
-      const result = await this.pending.add<object[] | undefined>(
-        lookupStore.fetchLookupData(axiosConfig),
+
+      result = await this.pending.add<object[] | undefined>(
+        lookupStore.fetchLookupDataInBatch(lookupCode),
       );
-      if (result) {
-        runInAction(() => {
-          const { lookup } = this;
-          this.set('lookup', result);
-          const value = this.getValue();
-          const valueField = this.get('valueField');
-          if (value && valueField && lookup) {
-            this.set(
-              'lookupData',
-              [].concat(value).reduce<object[]>((lookupData, v) => {
-                const found = lookup.find(item => isSameLike(item[valueField], v));
-                if (found) {
-                  lookupData.push(found);
-                }
-                return lookupData;
-              }, []),
-            );
-          }
-        });
+    } else {
+      const axiosConfig = lookupStore.getAxiosConfig(this);
+      if (dsField) {
+        const dsConfig = lookupStore.getAxiosConfig(dsField);
+        if (
+          dsConfig.url &&
+          buildURLWithAxiosConfig(dsConfig) === buildURLWithAxiosConfig(axiosConfig)
+        ) {
+          this.set('lookup', undefined);
+          return dsField.get('lookup');
+        }
       }
-      return result;
+      if (axiosConfig.url) {
+        result = await this.pending.add<object[] | undefined>(
+          lookupStore.fetchLookupData(axiosConfig),
+        );
+      }
     }
+    if (result) {
+      runInAction(() => {
+        const { lookup } = this;
+        this.set('lookup', result);
+        const value = this.getValue();
+        const valueField = this.get('valueField');
+        if (value && valueField && lookup) {
+          this.set(
+            'lookupData',
+            [].concat(value).reduce<object[]>((lookupData, v) => {
+              const found = lookup.find(item => isSameLike(item[valueField], v));
+              if (found) {
+                lookupData.push(found);
+              }
+              return lookupData;
+            }, []),
+          );
+        }
+      });
+    }
+    return result;
   }
 
   fetchLovConfig() {

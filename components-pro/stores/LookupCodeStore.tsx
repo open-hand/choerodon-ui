@@ -10,6 +10,7 @@ import { generateResponseData } from '../data-set/utils';
 import { getLovPara, processAxiosConfig } from './utils';
 import cacheAdapterEnhancer from '../axios/cacheAdapterEnhancer';
 import throttleAdapterEnhancer from '../axios/throttleAdapterEnhancer';
+import PromiseMerger from '../_util/PromiseMerger';
 
 const adapter = throttleAdapterEnhancer(cacheAdapterEnhancer(axios.defaults.adapter!));
 
@@ -20,6 +21,19 @@ export class LookupCodeStore {
   get axios(): AxiosInstance {
     return getConfig('axios') || axios;
   }
+
+  batchCallback = (codes): Promise<{ [key: string]: responseData }> => {
+    const lookupBatchAxiosConfig = getConfig('lookupBatchAxiosConfig');
+    if (lookupBatchAxiosConfig) {
+      return this.axios(lookupBatchAxiosConfig(codes)) as any;
+    }
+    return Promise.resolve({});
+  };
+
+  merger: PromiseMerger<responseData> = new PromiseMerger<responseData>(
+    this.batchCallback,
+    getConfig('lookupCache'),
+  );
 
   async fetchLookupData(
     key: AxiosRequestConfig | string,
@@ -46,6 +60,10 @@ export class LookupCodeStore {
       }
       return data;
     }
+  }
+
+  async fetchLookupDataInBatch(code: string): Promise<responseType> {
+    return this.merger.add(code);
   }
 
   getAxiosConfig(field: Field): AxiosRequestConfig {

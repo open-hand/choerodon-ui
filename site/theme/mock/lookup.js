@@ -2,7 +2,7 @@ import Mock from 'mockjs';
 
 export default function() {
   if (typeof window !== 'undefined') {
-    Mock.mock(/\/common\/code\/HR.EMPLOYEE_GENDER\/\?key/, {
+    const d1 = {
       rows: [
         {
           objectVersionNumber: 1,
@@ -33,9 +33,8 @@ export default function() {
           parentCodeValueMeaning: null,
         },
       ],
-    });
-
-    Mock.mock(/\/common\/code\/HR.EMPLOYEE_GENDER\//, {
+    };
+    const d2 = {
       rows: [
         {
           objectVersionNumber: 1,
@@ -66,9 +65,8 @@ export default function() {
           parentCodeValueMeaning: null,
         },
       ],
-    });
-
-    Mock.mock(/\/common\/code\/SYS.USER_STATUS\//, {
+    };
+    const d3 = {
       rows: [
         {
           objectVersionNumber: 1,
@@ -113,9 +111,8 @@ export default function() {
           parentCodeValueMeaning: null,
         },
       ],
-    });
-
-    Mock.mock(/\/common\/code\/SHENG\//, {
+    };
+    const d4 = {
       rows: [
         {
           _token: '0ac5c3561d43fb2755532be093e2b5f2',
@@ -148,9 +145,8 @@ export default function() {
           parentCodeValueMeaning: null,
         },
       ],
-    });
-
-    Mock.mock(/\/common\/code\/SHI\//, {
+    };
+    const d5 = {
       rows: [
         {
           _token: '383aa9f02290742d77bbb1200be8a95e',
@@ -213,6 +209,23 @@ export default function() {
           parentCodeValueMeaning: null,
         },
       ],
+    };
+
+    Mock.mock(/\/common\/code\/HR.EMPLOYEE_GENDER\/\?key/, d1);
+
+    Mock.mock(/\/common\/code\/HR.EMPLOYEE_GENDER\//, d2);
+
+    Mock.mock(/\/common\/code\/SYS.USER_STATUS\//, d3);
+
+    Mock.mock(/\/common\/code\/SHENG\//, d4);
+
+    Mock.mock(/\/common\/code\/SHI\//, d5);
+
+    Mock.mock(/\/common\/batch/, {
+      'HR.EMPLOYEE_GENDER': d2.rows,
+      'SYS.USER_STATUS': d3.rows,
+      SHENG: d4.rows,
+      SHI: d5.rows,
     });
   }
 }

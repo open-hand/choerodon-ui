@@ -1,3 +1,5 @@
+import { IReactionDisposer, reaction } from 'mobx';
+import { getConfig } from 'choerodon-ui/lib/configure';
 import Yallist from './Yallist';
 
 const MAX = Symbol('max');
@@ -328,4 +330,24 @@ export default class Cache<K, V> {
   prune() {
     this[CACHE].forEach((_value, key) => get(this, key, false));
   }
+}
+
+export function refreshCacheOptions(cache: Cache<any, any>): IReactionDisposer {
+  return reaction(
+    () => getConfig('lookupCache'),
+    (lookupCache = {}) => {
+      if ('max' in lookupCache) {
+        cache.max = lookupCache.max;
+      }
+      if ('maxAge' in lookupCache) {
+        cache.maxAge = lookupCache.maxAge;
+      }
+      if ('stale' in lookupCache) {
+        cache.allowStale = lookupCache.stale;
+      }
+      if ('length' in lookupCache) {
+        cache.lengthCalculator = lookupCache.length;
+      }
+    },
+  );
 }
