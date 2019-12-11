@@ -118,7 +118,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
 >([
   ['prefixCls', 'c7n'],
   ['proPrefixCls', 'c7n-pro'],
-  ['iconfontPrefix', 'icon'],
+  ['iconfontPrefix', 'c7n-icon'],
   ['ripple', true],
   ['lookupCache', { maxAge: 1000 * 60 * 10, max: 100 }],
   ['lookupUrl', code => `/common/code/${code}/`],

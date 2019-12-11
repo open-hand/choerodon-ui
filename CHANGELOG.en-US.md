@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 💄 `Icon`: Modify the default icon prefix icon -> c7n-icon.
+
 ## 0.8.46
 
 `2019-12-09`

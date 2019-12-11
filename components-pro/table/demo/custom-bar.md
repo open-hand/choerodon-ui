@@ -93,7 +93,7 @@ class App extends React.Component {
             >
               查询
             </Button>
-            <Button onClick={() => queryDataSet.reset()}>重置</Button>
+            <Button onClick={() => queryDataSet.current.reset()}>重置</Button>
             {buttons}
           </div>
         </Form>
