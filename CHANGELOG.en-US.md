@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro> DataSet`: Fix the problem that the data write-back fails when `dataToJSON` is `normal`.
+
 ## 0.8.46
 
 `2019-12-09`

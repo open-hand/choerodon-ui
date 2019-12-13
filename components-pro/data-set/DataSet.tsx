@@ -11,6 +11,8 @@ import {
   toJS,
 } from 'mobx';
 import axiosStatic, { AxiosInstance, AxiosRequestConfig } from 'axios';
+import omit from 'lodash/omit';
+import flatMap from 'lodash/flatMap';
 import isNumber from 'lodash/isNumber';
 import isArray from 'lodash/isArray';
 import isObject from 'lodash/isObject';
@@ -1519,8 +1521,12 @@ export default class DataSet extends EventManager {
   @action
   commitData(allData: any[], total?: number): DataSet {
     const { autoQueryAfterSubmit, primaryKey } = this.props;
-    // 若有响应数据，进行数据回写
-    if (allData.length) {
+    if (this.dataToJSON === DataToJSON.normal) {
+      flatMap(this.dirtyRecords).forEach(record =>
+        record.commit(omit(record.toData(), ['__dirty']), this),
+      );
+      // 若有响应数据，进行数据回写
+    } else if (allData.length) {
       const statusKey = getConfig('statusKey');
       const status = getConfig('status');
       const restCreatedData: any[] = [];
@@ -1554,7 +1560,7 @@ export default class DataSet extends EventManager {
       if (restUpdatedData.length === updated.length) {
         updated.forEach((r, index) => r.commit(restUpdatedData[index], this));
       } else {
-        updated.forEach(r => r.commit(r.toData(), this));
+        updated.forEach(r => r.commit(omit(r.toData(), ['__dirty']), this));
       }
       destroyed.forEach(r => r.commit(undefined, this));
       if (isNumber(total)) {
@@ -2051,7 +2057,7 @@ Then the query method will be auto invoke.`,
         if (primaryKey) {
           parentParam[primaryKey] = current.get(primaryKey);
         } else {
-          parentParam = current.toData();
+          parentParam = omit(current.toData(), ['__dirty']);
         }
       }
     }
@@ -2065,8 +2071,7 @@ Then the query method will be auto invoke.`,
     if (queryDataSet) {
       const { current } = queryDataSet;
       if (current) {
-        data = current.toData(true);
-        delete data.__dirty;
+        data = omit(current.toData(true), ['__dirty']);
       }
     }
     data = {
