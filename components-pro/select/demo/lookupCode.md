@@ -44,8 +44,13 @@ class App extends React.Component {
         name: 'sex2',
         type: 'string',
         dynamicProps: {
-          lookupUrl: ({ record }) =>
-            record.get('sex') ? '/common/code/HR.EMPLOYEE_GENDER/' : null,
+          lookupAxiosConfig: ({ record }) => ({
+            url: record.get('sex') ? '/common/code/HR.EMPLOYEE_GENDER/' : null,
+            transformResponse(data) {
+              console.log('transformResponse', data);
+              return data;
+            },
+          }),
         },
       },
       { name: 'lov', type: 'string', lovCode: 'LOV_CODE', defaultValue: 'SYS.PROFILE_LEVEL_ID' },

@@ -1,5 +1,6 @@
 import { action, computed, get, observable, ObservableMap, runInAction, set, toJS } from 'mobx';
 import { MomentInput } from 'moment';
+import isFunction from 'lodash/isFunction';
 import isEqual from 'lodash/isEqual';
 import isObject from 'lodash/isObject';
 import merge from 'lodash/merge';
@@ -27,6 +28,26 @@ import * as ObjectChainValue from '../_util/ObjectChainValue';
 import { buildURLWithAxiosConfig } from '../axios/utils';
 import { getDateFormatByField } from '../field/utils';
 import { getLovPara } from '../stores/utils';
+
+function isEqualDynamicProps(oldProps, newProps) {
+  if (newProps === oldProps) {
+    return true;
+  }
+  if (isObject(newProps) && isObject(oldProps)) {
+    return Object.keys(newProps).every(key => {
+      const value = newProps[key];
+      const oldValue = oldProps[key];
+      if (oldValue === value) {
+        return true;
+      }
+      if (isFunction(value) && isFunction(oldValue)) {
+        return value.toString() === oldValue.toString();
+      }
+      return isEqual(oldValue, value);
+    });
+  }
+  return isEqual(newProps, oldProps);
+}
 
 function getPropsFromLovConfig(lovCode, propsName) {
   if (lovCode) {
@@ -790,7 +811,7 @@ dynamicProps = {
   private checkDynamicProp(propsName, newProp) {
     // if (propsName in this.lastDynamicProps) {
     const oldProp = this.lastDynamicProps[propsName];
-    if (!isEqual(oldProp, newProp)) {
+    if (!isEqualDynamicProps(oldProp, newProp)) {
       defer(
         action(() => {
           if (propsName in this.validator.props || propsName === 'validator') {
