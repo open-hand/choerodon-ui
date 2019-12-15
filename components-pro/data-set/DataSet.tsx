@@ -281,6 +281,8 @@ export default class DataSet extends EventManager {
 
   @observable name?: string;
 
+  @observable parentName?: string;
+
   @observable records: Record[];
 
   @observable fields: Fields;
@@ -1584,6 +1586,7 @@ Then the query method will be auto invoke.`,
    * @param ds 头数据集
    * @param name 头数据集字段名
    */
+  @action
   bind(ds: DataSet, name: string) {
     if (!name) {
       warning(false, 'DataSet: cascade binding need a name');
@@ -1595,6 +1598,7 @@ Then the query method will be auto invoke.`,
     }
     ds.children[name] = this;
     this.parent = ds;
+    this.parentName = name;
     const { current } = ds;
     if (current) {
       ds.syncChild(this, current, name);
@@ -1644,6 +1648,7 @@ Then the query method will be auto invoke.`,
     return this;
   }
 
+  @action
   processData(allData: any[]): Record[] {
     return allData.map(data => {
       const record =

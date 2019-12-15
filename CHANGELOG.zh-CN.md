@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>DataSet.Record`: 修复在级联情况下树形节点的 parent 和 children 不正确的问题。
 - 🐞 `<pro>DataSet`: 修复 dataToJSON 为 normal, 提交数据回写失败的问题。
 
 ## 0.8.46

@@ -198,12 +198,25 @@ export default class Record {
   }
 
   @computed
+  get records(): Record[] {
+    const { dataSet } = this;
+    if (dataSet) {
+      const { cascadeParent } = this;
+      if (cascadeParent && !cascadeParent.isCurrent) {
+        return cascadeParent.getCascadeRecords(dataSet.parentName) || [];
+      }
+      return dataSet.records;
+    }
+    return [];
+  }
+
+  @computed
   get children(): Record[] | undefined {
     const { dataSet } = this;
     if (dataSet) {
       const { parentField, idField } = dataSet.props;
       if (parentField && idField) {
-        const children = dataSet.records.filter(record => {
+        const children = this.records.filter(record => {
           const childParentId = record.get(parentField);
           const id = this.get(idField);
           return !isNil(childParentId) && !isNil(id) && childParentId === id;
@@ -220,7 +233,7 @@ export default class Record {
     if (dataSet) {
       const { parentField, idField } = dataSet.props;
       if (parentField && idField) {
-        return dataSet.records.find(record => {
+        return this.records.find(record => {
           const parentId = this.get(parentField);
           const id = record.get(idField);
           return !isNil(parentId) && !isNil(id) && parentId === id;
@@ -260,13 +273,11 @@ export default class Record {
   get cascadeParent(): Record | undefined {
     const { dataSet } = this;
     if (dataSet) {
-      const { parent } = dataSet;
-      if (parent) {
-        const { children } = parent;
-        const name = Object.keys(children).find(key => children[key] === dataSet);
-        if (name) {
-          return parent.find(record => (record.getCascadeRecords(name) || []).indexOf(this) !== -1);
-        }
+      const { parent, parentName } = dataSet;
+      if (parent && parentName) {
+        return parent.find(
+          record => (record.getCascadeRecords(parentName) || []).indexOf(this) !== -1,
+        );
       }
     }
     return undefined;
@@ -368,7 +379,7 @@ export default class Record {
         }
         const data = this.get(fieldName);
         if (isObservableArray(data)) {
-          const records = dataSet.processData(data);
+          const records = childDataSet.processData(data);
           this.cascadeRecordsMap[fieldName] = records;
           return records;
         }

@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🐞 `<pro> DataSet.Record`: Fixed parent and children of tree nodes being incorrectly in cascaded.
 - 🐞 `<pro> DataSet`: Fix the problem that the data write-back fails when `dataToJSON` is `normal`.
 
 ## 0.8.46
