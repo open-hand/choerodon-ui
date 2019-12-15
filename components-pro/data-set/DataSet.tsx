@@ -478,7 +478,11 @@ export default class DataSet extends EventManager {
         case RecordStatus.delete:
           destroyed.push(record);
           break;
-        default:
+        default: {
+          if (record.dirty) {
+            updated.push(record);
+          }
+        }
       }
     });
     return [created, updated, destroyed];
