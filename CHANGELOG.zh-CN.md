@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>Select`: 修复 multiple 的 Select 全选按钮会将过滤掉的记录选中的问题。
+
 ## 0.8.47
 
 `2019-12-15`
