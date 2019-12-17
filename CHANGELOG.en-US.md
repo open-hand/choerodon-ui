@@ -17,6 +17,8 @@ timeline: true
 
 ## 0.8.47
 
+- 🐞 `<pro>Select`: Fixed the issue where multiple Select buttons would select filtered records.
+
 `2019-12-15`
 
 - 🐞 `<pro>DataSet.Field`: Fixed the dead cycle of an incoming object parameter with function value in `dynamicProps`.

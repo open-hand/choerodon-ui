@@ -943,7 +943,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
 
   @autobind
   chooseAll() {
-    this.setValue(this.options.map(this.processRecordToObject, this));
+    this.setValue(this.filteredOptions.map(this.processRecordToObject, this));
   }
 
   @autobind
