@@ -15,23 +15,24 @@ timeline: true
 
 ---
 
-## 0.8.47
-
+- 🐞 `<pro>DataSet.Record`: Fixed status error caused dirty error problem.
 - 🐞 `<pro>Select`: Fixed the issue where multiple Select buttons would select filtered records.
+
+## 0.8.47
 
 `2019-12-15`
 
 - 🐞 `<pro>DataSet.Field`: Fixed the dead cycle of an incoming object parameter with function value in `dynamicProps`.
-- 🐞 `<pro> DataSet.Record`: Fixed parent and children of tree nodes being incorrectly in cascaded.
-- 🐞 `<pro> DataSet`: Fix the problem that the data write-back fails when `dataToJSON` is `normal`.
+- 🐞 `<pro>DataSet.Record`: Fixed parent and children of tree nodes being incorrectly in cascaded.
+- 🐞 `<pro>DataSet`: Fix the problem that the data write-back fails when `dataToJSON` is `normal`.
 
 ## 0.8.46
 
 `2019-12-09`
 
 - 🌟 `configure`: Added `lookupBatchAxiosConfig` property.
-- 🌟 `<pro> DataSet`: Added `dirty` property, deprecated `isModified` method.
-- 💄 `<pro> DataSet.Record`: Optimize the `dirty` property, which contains whether the cascaded data has changed.
+- 🌟 `<pro>DataSet`: Added `dirty` property, deprecated `isModified` method.
+- 💄 `<pro>DataSet.Record`: Optimize the `dirty` property, which contains whether the cascaded data has changed.
 - 🐞 `<pro>Table`: Fixed the Table tree structure right fixed column expansion icon problem.
 
 ## 0.8.45
@@ -45,7 +46,7 @@ timeline: true
 
 `2019-12-05`
 
-- 🌟 `<pro> DataSet`: Added `dataToJSON` property, deprecated parameters of method such as `toJSONData`.
+- 🌟 `<pro>DataSet`: Added `dataToJSON` property, deprecated parameters of method such as `toJSONData`.
 - 🐞 `<pro>FormField`: Fixed the problem with the cascadeMap parameter value of 0/ false to disable the child.
 - 🐞 `<pro>Select`: Fixed the problem that the unchecked option disappears in multi-selection mode.
 - 🐞 `<pro>DatePicker`: Fixed the problem of updating the value in dateTime mode.

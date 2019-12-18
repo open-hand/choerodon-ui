@@ -412,7 +412,7 @@ export default class Record {
       if (!isSame(newValue, oldValue)) {
         const { fields } = this;
         ObjectChainValue.set(this.data, fieldName, newValue, fields);
-        const pristineValue = this.getPristineValue(fieldName);
+        const pristineValue = toJS(this.getPristineValue(fieldName));
         if (isSame(pristineValue, newValue)) {
           if (this.status === RecordStatus.update && [...fields.values()].every(f => !f.dirty)) {
             this.status = RecordStatus.sync;
