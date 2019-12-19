@@ -3,20 +3,44 @@
 
 .@{c7n-pro-prefix}-pagination {
   line-height: 0.3rem;
+
   > * {
     vertical-align: middle;
   }
+
   .@{c7n-pro-prefix}-select {
     text-align: right;
     border: none;
+
     &-wrapper {
       width: 0.9rem;
     }
   }
+
   &-page-info {
     margin: 0 0.2rem;
   }
+
   &-pager {
     height: @btn-circle-size;
+  }
+
+  &-quick-jumper {
+    display: inline-block;
+    height: 0.3rem;
+    line-height: 0.3rem;
+
+    input {
+      position: relative;
+      display: inline-block;
+      width: 0.5rem;
+      height: 0.3rem;
+      margin: 0 0.08rem;
+      padding: 0.04rem 0.11rem;
+      color: rgba(0, 0, 0, 0.65);
+      line-height: 1.5;
+      -webkit-transition: all 0.3s;
+      transition: all 0.3s;
+    }
   }
 }

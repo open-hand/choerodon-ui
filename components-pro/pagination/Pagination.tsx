@@ -3,9 +3,12 @@ import PropTypes from 'prop-types';
 import { action, computed } from 'mobx';
 import { observer } from 'mobx-react';
 import omit from 'lodash/omit';
+import debounce from 'lodash/debounce';
 import defaultTo from 'lodash/defaultTo';
 import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComponent';
 import ObserverSelect from '../select/Select';
+import ObserverNumberField from '../number-field/NumberField';
+import autobind from '../_util/autobind';
 import { $l } from '../locale-context';
 import Pager from './Pager';
 import Icon from '../icon';
@@ -24,6 +27,7 @@ export interface PaginationProps extends DataSetComponentProps {
   sizeChangerPosition?: SizeChangerPosition;
   sizeChangerOptionRenderer?: Renderer;
   showSizeChanger?: boolean;
+  showQuickJumper?: boolean;
   showSizeChangerLabel?: boolean;
   showTotal?: boolean;
   showPager?: boolean;
@@ -60,6 +64,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     sizeChangerPosition: PropTypes.oneOf([SizeChangerPosition.left, SizeChangerPosition.right]),
     sizeChangerOptionRenderer: PropTypes.func,
     showSizeChanger: PropTypes.bool,
+    showQuickJumper: PropTypes.bool,
     showSizeChangerLabel: PropTypes.bool,
     showTotal: PropTypes.bool,
     showPager: PropTypes.bool,
@@ -72,6 +77,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     sizeChangerPosition: SizeChangerPosition.left,
     sizeChangerOptionRenderer: ({ text }) => text,
     showSizeChanger: true,
+    showQuickJumper: false,
     showSizeChangerLabel: true,
     showTotal: true,
   };
@@ -156,6 +162,27 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     this.handleChange(page, this.pageSize);
   };
 
+  /**
+   * 快速跳至 input 事件
+   * @param e
+   */
+  @autobind
+  @action
+  handleJump(e) {
+    let { value } = e.target;
+    const { page, totalPage } = this;
+    value = Number(value);
+    if (isNaN(value)) {
+      value = page;
+    }
+    if (value > totalPage) {
+      value = totalPage;
+    }
+    this.jumpPage(value);
+  }
+
+  jumpPage = debounce(value => this.handlePagerClick(value), 500);
+
   getOtherProps() {
     return omit(super.getOtherProps(), [
       'total',
@@ -165,6 +192,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
       'pageSizeOptions',
       'itemRender',
       'showSizeChanger',
+      'showQuickJumper',
       'showSizeChangerLabel',
       'showTotal',
       'showPager',
@@ -275,6 +303,20 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     );
   }
 
+  /**
+   * 渲染快速跳至
+   */
+  renderQuickGo(): ReactNode {
+    const { prefixCls } = this;
+    return (
+      <div className={`${prefixCls}-quick-jumper`}>
+        {$l('Pagination', 'jump_to')}
+        <ObserverNumberField min={1} onInput={this.handleJump} />
+        {$l('Pagination', 'page')}
+      </div>
+    );
+  }
+
   render() {
     const { total, pageSize, page } = this;
     if (total === undefined || pageSize === undefined || page === undefined) {
@@ -282,7 +324,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     }
     const {
       totalPage,
-      props: { children, sizeChangerPosition, showTotal, showPager },
+      props: { children, sizeChangerPosition, showTotal, showPager, showQuickJumper },
     } = this;
 
     const sizeChanger = this.renderSizeChange(pageSize);
@@ -298,6 +340,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
         {this.getPager(page + 1, 'next', false, page === totalPage)}
         {this.getPager(totalPage, 'last', false, page === totalPage)}
         {sizeChangerPosition === SizeChangerPosition.right && sizeChanger}
+        {showQuickJumper && this.renderQuickGo()}
       </nav>
     );
   }

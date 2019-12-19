@@ -43,6 +43,7 @@ ReactDOM.render(
     showSizeChangerLabel={false}
     showTotal={false}
     showPager
+    showQuickJumper
     sizeChangerPosition="right"
     sizeChangerOptionRenderer={sizeChangerRenderer}
     itemRender={pagerRenderer}

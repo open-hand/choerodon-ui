@@ -28,6 +28,8 @@ const locale: Locale = {
     advanced_query_conditions: 'Advanced Queries',
   },
   Pagination: {
+    page: 'Page',
+    jump_to: 'Jump to',
     records_per_page: 'Number of items per page：',
   },
   Upload: {

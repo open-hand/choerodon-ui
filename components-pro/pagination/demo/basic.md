@@ -13,7 +13,7 @@ title:
 
 Basic usage example.
 
-````jsx
+```jsx
 import { Form, Switch, DataSet, Pagination } from 'choerodon-ui/pro';
 import { observer } from 'mobx-react';
 
@@ -29,22 +29,28 @@ class App extends React.Component {
       { name: 'showSizeChanger', type: 'boolean', label: 'showSizeChanger', defaultValue: true },
       { name: 'showTotal', type: 'boolean', label: 'showTotal', defaultValue: true },
       { name: 'showPager', type: 'boolean', label: 'showPager', defaultValue: false },
+      { name: 'showQuickJumper', type: 'boolean', label: 'showQuickJumper', defaultValue: false },
     ],
   });
 
   render() {
-    const { ds, ds: { current } } = this;
+    const {
+      ds,
+      ds: { current },
+    } = this;
     return (
       <div>
-        <Form columns={3} dataSet={ds} labelWidth={150}>
+        <Form columns={4} dataSet={ds} labelWidth={150}>
           <Switch name="showSizeChanger" />
           <Switch name="showTotal" />
           <Switch name="showPager" />
+          <Switch name="showQuickJumper" />
         </Form>
         <Pagination
           showSizeChanger={current.get('showSizeChanger')}
           showTotal={current.get('showTotal')}
           showPager={current.get('showPager')}
+          showQuickJumper={current.get('showQuickJumper')}
           total={90}
           onChange={handleChange}
         />
@@ -53,8 +59,5 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(
-  <App />,
-  mountNode
-);
-````
+ReactDOM.render(<App />, mountNode);
+```

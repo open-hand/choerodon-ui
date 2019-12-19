@@ -28,6 +28,8 @@ const locale: Locale = {
     advanced_query_conditions: '高级查询条件',
   },
   Pagination: {
+    page: '页',
+    jump_to: '跳至',
     records_per_page: '每页行数：',
   },
   Upload: {

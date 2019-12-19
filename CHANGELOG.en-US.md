@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Pagination`: Added `showQuickJumper` property.
 - 🐞 `<pro>DataSet.Record`: Fixed status error caused dirty error problem.
 - 🐞 `<pro>Select`: Fixed the issue where multiple Select buttons would select filtered records.
 
