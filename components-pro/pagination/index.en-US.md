@@ -25,6 +25,7 @@ title: Pagination
 | onChange | 页码改变的回调，参数是改变后的页码及每页条数 | (page, pageSize) => void |  |
 | pageSizeOptions | 指定每页可以显示多少条 | string\[] | \['10', '20', '50', '100'\] |
 | showSizeChanger | 是否显示分页大小选择器 | boolean | true |
+| showQuickJumper | 是否显示快速跳转至某页 | boolean | false |
 | showSizeChangerLabel | 是否显示分页大小选择器的标签 | boolean | true |
 | showTotal | 显示总数 | boolean | true |
 | showPager | 显示数字按钮 | boolean | false |

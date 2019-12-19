@@ -1,6 +1,7 @@
 import React, { cloneElement, Component, CSSProperties, ReactElement, ReactNode } from 'react';
 import { observer } from 'mobx-react';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
+import { getProPrefixCls } from 'choerodon-ui/lib/configure';
 import Field from '../../data-set/Field';
 import DataSet from '../../data-set';
 import Button from '../../button';
@@ -31,6 +32,7 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
   static contextType = TableContext;
 
   static defaultProps = {
+    prefixCls: getProPrefixCls('table'),
     queryFieldsLimit: 1,
   };
 

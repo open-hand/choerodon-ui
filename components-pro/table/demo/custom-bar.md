@@ -16,6 +16,8 @@ Customize Search Bar.
 ```jsx
 import { DataSet, Table, Button, Form } from 'choerodon-ui/pro';
 
+const { FilterBar } = Table;
+
 const optionData = [{ text: '男', value: 'M' }, { text: '女', value: 'F' }];
 
 class App extends React.Component {
@@ -72,31 +74,28 @@ class App extends React.Component {
     return [{ name: 'name', width: 450, editor: true }, { name: 'age', editor: true }];
   }
 
-  renderBar = ({
-    queryFields,
-    buttons,
-    queryFieldsLimit = 3,
-    dataSet,
-    queryDataSet,
-    pagination,
-  }) => {
+  renderBar = props => {
+    const { queryFields, queryDataSet, queryFieldsLimit, dataSet, buttons } = props;
     if (queryDataSet) {
       return (
-        <Form columns={queryFieldsLimit} dataSet={queryDataSet}>
-          {queryFields}
-          <div newLine>
-            <Button
-              dataSet={null}
-              onClick={() => {
-                dataSet.query();
-              }}
-            >
-              查询
-            </Button>
-            <Button onClick={() => queryDataSet.reset()}>重置</Button>
-            {buttons}
-          </div>
-        </Form>
+        <>
+          <Form columns={queryFieldsLimit} dataSet={queryDataSet}>
+            {queryFields}
+            <div newLine>
+              <Button
+                dataSet={null}
+                onClick={() => {
+                  dataSet.query();
+                }}
+              >
+                查询
+              </Button>
+              <Button onClick={() => queryDataSet.reset()}>重置</Button>
+              {buttons}
+            </div>
+          </Form>
+          <FilterBar {...props} buttons={[]} />
+        </>
       );
     }
   };

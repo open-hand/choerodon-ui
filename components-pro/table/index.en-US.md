@@ -76,6 +76,32 @@ subtitle: 表格
 | hidden | 隐藏 | boolean |  |
 | tooltip | 用 Tooltip 显示单元格内容。可选值 `none` `always` `overflow` | string | 'none' |
 
+### Table.FilterBar
+
+| 参数        | 说明                   | 类型   | 默认值   |
+| ----------- | ---------------------- | ------ | -------- |
+| paramName   | 输入的过滤条件的字段名 | string | 'params' |
+| placeholder | 输入框的占位符         | string | '过滤表' |
+
+更多属性请参考 `Table` `queryBar` 属性的钩子参数。
+
+### Table.AdvancedQueryBar
+
+| 参数             | 说明                                                     | 类型   | 默认值 |
+| ---------------- | -------------------------------------------------------- | ------ | ------ |
+| queryFieldsLimit | 头部显示的查询字段的数量，超出限制的查询字段放入弹出窗口 | number | 1      |
+
+更多属性请参考 `Table` `queryBar` 属性的钩子参数。
+
+### Table.ToolBar
+
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| queryFieldsLimit | 头部显示的查询字段的数量，超出限制的查询字段放入弹出窗口 | number | 1 |
+| pagination | 分页器，参考[pagination](/components-pro/pagination/) | PaginationComponent | null |
+
+更多属性请参考 `Table` `queryBar` 属性的钩子参数。
+
 ### pagination
 
 分页的配置项。

@@ -41,6 +41,9 @@ import Switch from '../switch/Switch';
 import Tooltip from '../tooltip/Tooltip';
 import { $l } from '../locale-context';
 import TableQueryBar from './query-bar';
+import FilterBar from './query-bar/TableFilterBar';
+import AdvancedQueryBar from './query-bar/TableAdvancedQueryBar';
+import ToolBar from './query-bar/TableToolBar';
 import { findIndexedSibling, getHeight, getPaginationPosition } from './utils';
 import { ButtonProps } from '../button/Button';
 import TableBody from './TableBody';
@@ -254,6 +257,12 @@ export default class Table extends DataSetComponent<TableProps> {
   static displayName = 'Table';
 
   static Column = Column;
+
+  static FilterBar = FilterBar;
+
+  static AdvancedQueryBar = AdvancedQueryBar;
+
+  static ToolBar = ToolBar;
 
   static propTypes = {
     columns: PropTypes.array,
