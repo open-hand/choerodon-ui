@@ -1,6 +1,7 @@
 import React, { cloneElement, Component, ReactElement, ReactNode } from 'react';
 import { observer } from 'mobx-react';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
+import { getProPrefixCls } from 'choerodon-ui/lib/configure';
 import DataSet from '../../data-set/DataSet';
 import Record from '../../data-set/Record';
 import { ElementProps } from '../../core/ViewComponent';
@@ -51,7 +52,9 @@ export default class TableToolBar extends Component<TabelToolBarProps, any> {
   static contextType = TableContext;
 
   static defaultProps = {
+    prefixCls: getProPrefixCls('table'),
     queryFieldsLimit: 1,
+    pagination: null,
   };
 
   modal;
@@ -185,7 +188,7 @@ export default class TableToolBar extends Component<TabelToolBarProps, any> {
   }
 
   render() {
-    const { prefixCls, pagination = null, buttons } = this.props;
+    const { prefixCls, pagination, buttons } = this.props;
     return [
       <TableButtons key="toolbar" prefixCls={prefixCls} buttons={buttons}>
         {this.getQueryBar()}
