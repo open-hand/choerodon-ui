@@ -365,6 +365,9 @@ class App extends React.Component {
         dataSet={this.userDs}
         header="User"
         style={{ height: 200 }}
+        pagination={{
+          showQuickJumper: true,
+        }}
       >
         <Column
           name="userid"

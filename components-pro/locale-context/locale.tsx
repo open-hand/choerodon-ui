@@ -29,6 +29,8 @@ export interface Locale {
     advanced_query_conditions;
   };
   Pagination: {
+    page;
+    jump_to;
     records_per_page;
   };
   Upload: {

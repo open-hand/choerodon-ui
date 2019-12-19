@@ -15,7 +15,8 @@ timeline: true
 
 ---
 
-- 🌟 `<pro>DataSet.Record`: 修复 status 错误导致 dirty 错误问题。
+- 🌟 `<pro>Pagination`: 新增 showQuickJumper 属性。
+- 🐞 `<pro>DataSet.Record`: 修复 status 错误导致 dirty 错误问题。
 - 🐞 `<pro>Select`: 修复 multiple 的 Select 全选按钮会将过滤掉的记录选中的问题。
 
 ## 0.8.47

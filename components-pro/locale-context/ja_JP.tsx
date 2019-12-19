@@ -28,6 +28,8 @@ const locale: Locale = {
     advanced_query_conditions: '高度なクエリ条件',
   },
   Pagination: {
+    page: 'ページ',
+    jump_to: 'ジャンプする',
     records_per_page: 'ページあたりの行数:',
   },
   Upload: {
