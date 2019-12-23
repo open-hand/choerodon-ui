@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.48
+
+`2019-12-23`
+
 - 🌟 `<pro>Table`: 开放 Table queryBar 组件。
 - 🌟 `<pro>Pagination`: 新增 showQuickJumper 属性。
 - 💄 `<pro>DataSet.Field`: 优化 options 属性。
