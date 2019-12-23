@@ -15,14 +15,15 @@ timeline: true
 
 ---
 
+- 💄 `<pro>DataSet.Field`: 优化 options 属性。
+- 💄 `<pro>ViewComponent`: 优化 onBlur 钩子可根据 preventDefault 阻止失焦。
+
 ## 0.8.48
 
 `2019-12-23`
 
 - 🌟 `<pro>Table`: 开放 Table queryBar 组件。
 - 🌟 `<pro>Pagination`: 新增 showQuickJumper 属性。
-- 💄 `<pro>DataSet.Field`: 优化 options 属性。
-- 💄 `<pro>ViewComponent`: 优化 onBlur 钩子可根据 preventDefault 阻止失焦。
 - 🐞 `<pro>DataSet.Record`: 修复 status 错误导致 dirty 错误问题。
 - 🐞 `<pro>Select`: 修复 multiple 的 Select 全选按钮会将过滤掉的记录选中的问题。
 

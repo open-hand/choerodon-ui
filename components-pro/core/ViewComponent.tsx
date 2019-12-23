@@ -9,7 +9,7 @@ import {
 import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { action, observable, runInAction } from 'mobx';
+import { action, observable } from 'mobx';
 import omit from 'lodash/omit';
 import omitBy from 'lodash/omitBy';
 import defer from 'lodash/defer';
@@ -434,40 +434,38 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
   }
 
   @autobind
+  @action
   handleFocus(e) {
-    runInAction(() => {
-      this.isFocused = true;
-      this.isFocus = true;
-      const {
-        props: { onFocus = noop },
-        prefixCls,
-      } = this;
-      onFocus(e);
-      const element = this.wrapper || findDOMNode(this);
-      if (element) {
-        classes(element).add(`${prefixCls}-focused`);
-      }
-    });
+    this.isFocused = true;
+    this.isFocus = true;
+    const {
+      props: { onFocus = noop },
+      prefixCls,
+    } = this;
+    onFocus(e);
+    const element = this.wrapper || findDOMNode(this);
+    if (element) {
+      classes(element).add(`${prefixCls}-focused`);
+    }
   }
 
   @autobind
+  @action
   handleBlur(e) {
     if (!e.isDefaultPrevented()) {
-      runInAction(() => {
-        const {
-          props: { onBlur = noop },
-          prefixCls,
-        } = this;
-        onBlur(e);
-        if (!e.isDefaultPrevented()) {
-          this.isFocused = false;
-          this.isFocus = false;
-          const element = this.wrapper || findDOMNode(this);
-          if (element) {
-            classes(element).remove(`${prefixCls}-focused`);
-          }
+      const {
+        props: { onBlur = noop },
+        prefixCls,
+      } = this;
+      onBlur(e);
+      if (!e.isDefaultPrevented()) {
+        this.isFocused = false;
+        this.isFocus = false;
+        const element = this.wrapper || findDOMNode(this);
+        if (element) {
+          classes(element).remove(`${prefixCls}-focused`);
         }
-      });
+      }
     }
   }
 
