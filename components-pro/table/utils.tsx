@@ -39,7 +39,7 @@ export function getEditorByField(field: Field): ReactElement<FormFieldProps> {
     lookupCode ||
     isString(lookupUrl) ||
     (lovCode && type !== FieldType.object) ||
-    field.getOptions()
+    field.options
   ) {
     return <ObserverSelect />;
   }

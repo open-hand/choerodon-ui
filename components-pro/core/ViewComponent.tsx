@@ -454,16 +454,18 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
   handleBlur(e) {
     if (!e.isDefaultPrevented()) {
       runInAction(() => {
-        this.isFocused = false;
-        this.isFocus = false;
         const {
           props: { onBlur = noop },
           prefixCls,
         } = this;
         onBlur(e);
-        const element = this.wrapper || findDOMNode(this);
-        if (element) {
-          classes(element).remove(`${prefixCls}-focused`);
+        if (!e.isDefaultPrevented()) {
+          this.isFocused = false;
+          this.isFocus = false;
+          const element = this.wrapper || findDOMNode(this);
+          if (element) {
+            classes(element).remove(`${prefixCls}-focused`);
+          }
         }
       });
     }

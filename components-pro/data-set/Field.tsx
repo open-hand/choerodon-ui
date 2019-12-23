@@ -11,7 +11,15 @@ import warning from 'choerodon-ui/lib/_util/warning';
 import DataSet from './DataSet';
 import Record from './Record';
 import Validator, { CustomValidator, ValidationMessages } from '../validator/Validator';
-import { DataSetEvents, FieldFormat, FieldIgnore, FieldTrim, FieldType, SortOrder } from './enum';
+import {
+  DataSetEvents,
+  DataSetSelection,
+  FieldFormat,
+  FieldIgnore,
+  FieldTrim,
+  FieldType,
+  SortOrder,
+} from './enum';
 import lookupStore from '../stores/LookupCodeStore';
 import lovCodeStore from '../stores/LovCodeStore';
 import localeContext from '../locale-context';
@@ -308,6 +316,26 @@ export default class Field {
   }
 
   @computed
+  get options(): DataSet | undefined {
+    const options = this.get('options');
+    if (options) {
+      return options;
+    }
+    // 确保 lookup 相关配置介入观察
+    lookupStore.getAxiosConfig(this);
+    const { lookup } = this;
+    if (lookup) {
+      const selection = this.get('multiple') ? DataSetSelection.multiple : DataSetSelection.single;
+      return new DataSet({
+        data: lookup,
+        paging: false,
+        selection,
+      });
+    }
+    return undefined;
+  }
+
+  @computed
   get intlFields(): Field[] {
     const { record, type, name } = this;
     const tlsKey = getConfig('tlsKey');
@@ -548,7 +576,7 @@ dynamicProps = {
   getText(value: any = this.getValue(), showValueIfNotFound?: boolean): string | undefined {
     const textField = this.get('textField');
     const valueField = this.get('valueField');
-    const { lookup } = this;
+    const { lookup, options } = this;
     if (lookup) {
       const found = lookup.find(obj => isSameLike(get(obj, valueField), value));
       if (found) {
@@ -559,9 +587,8 @@ dynamicProps = {
       }
       return undefined;
     }
-    const options = this.getOptions();
     if (options) {
-      const found = options.find(record => record.get(valueField) === value);
+      const found = options.find(record => isSameLike(record.get(valueField), value));
       if (found) {
         return found.get(textField);
       }
@@ -577,7 +604,7 @@ dynamicProps = {
   }
 
   getOptions(): DataSet | undefined {
-    return this.get('options');
+    return this.options;
   }
 
   /**
@@ -797,7 +824,7 @@ dynamicProps = {
   }
 
   ready(): Promise<any> {
-    const options = this.getOptions();
+    const { options } = this;
     return Promise.all([this.pending.ready(), options && options.ready()]);
   }
 

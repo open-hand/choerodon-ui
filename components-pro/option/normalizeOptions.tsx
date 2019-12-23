@@ -4,7 +4,6 @@ import { DataSetSelection, FieldType } from '../data-set/enum';
 import { FieldProps } from '../data-set/Field';
 import OptGroup, { OptGroupProps } from './OptGroup';
 import Option, { OptionProps } from './Option';
-import lookupStore from '../stores/LookupCodeStore';
 
 function getOptionsFromChildren(
   elements: ReactNode[],
@@ -60,29 +59,13 @@ function getOptionsFromChildren(
 }
 
 export default function normalizeOptions({
-  field,
   textField,
   valueField,
   disabledField,
   multiple,
   children,
 }) {
-  const selectionType = multiple
-    ? DataSetSelection.multiple
-    : multiple === undefined
-    ? undefined
-    : DataSetSelection.single;
-  let data: object[] | undefined = [];
-  let fetch;
-  if (field) {
-    const options = field.getOptions();
-    if (options) {
-      return options;
-    }
-    // 确保 lookup 相关配置介入观察
-    lookupStore.getAxiosConfig(field);
-    data = field.get('lookup');
-  }
+  const data: object[] = [];
   const fields = [
     {
       name: textField,
@@ -97,19 +80,14 @@ export default function normalizeOptions({
     },
   ];
 
-  if ((!data || !data.length) && children) {
-    data = [];
+  if (children) {
     getOptionsFromChildren(children, data, fields, textField, valueField, disabledField);
   }
-  const ds = new DataSet({
+  return new DataSet({
     data,
     fields,
     paging: false,
-    selection: selectionType || DataSetSelection.single,
+    selection: multiple ? DataSetSelection.multiple : DataSetSelection.single,
     autoLocateFirst: false,
   });
-  if (fetch) {
-    fetch.then(values => values && ds.loadData(values));
-  }
-  return ds;
 }

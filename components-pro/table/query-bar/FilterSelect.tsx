@@ -12,7 +12,6 @@ import { observer } from 'mobx-react';
 import {
   action,
   computed,
-  get,
   IReactionDisposer,
   isArrayLike,
   observable,
@@ -375,12 +374,11 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
 
   multipleFieldExistsValue(field: Field, current?: Record): boolean {
     if (field.get('multiple')) {
-      const { lookup } = field;
-      if (lookup && current) {
+      const { options } = field;
+      if (options && current) {
         const values = current.get(field.name);
-        return lookup.some(
-          obj => !values.some(value => isSameLike(get(obj, field.get('valueField')), value)),
-        );
+        const valueField = field.get('valueField');
+        return options.some(r => !values.some(value => isSameLike(r.get(valueField), value)));
       }
     }
     return false;

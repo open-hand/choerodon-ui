@@ -298,7 +298,8 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     } = this;
     return (
       options ||
-      normalizeOptions({ field, textField, valueField, disabledField, multiple, children })
+      (field && field.options) ||
+      normalizeOptions({ textField, valueField, disabledField, multiple, children })
     );
   }
 
