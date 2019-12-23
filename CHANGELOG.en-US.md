@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.48
+
+`2019-12-23`
+
 - 🌟 `<pro>Table`: Open `Table` `queryBar` Component.
 - 🌟 `<pro>Pagination`: Added `showQuickJumper` property.
 - 🐞 `<pro>DataSet.Record`: Fixed status error caused dirty error problem.
