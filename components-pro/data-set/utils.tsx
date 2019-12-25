@@ -592,7 +592,7 @@ export function adapterDataToJSON(
 }
 
 export function generateData(ds: DataSet): { dirty: boolean; data: object[] } {
-  let dirty = false;
+  let dirty = ds.destroyed.length > 0;
   const data: object[] = ds.data.map(record => {
     const d = record.toData();
     if (d.__dirty) {

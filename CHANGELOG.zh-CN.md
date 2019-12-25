@@ -15,9 +15,10 @@ timeline: true
 
 ---
 
-- 🐞 `Transfer`: 修复 icon。
 - 💄 `<pro>DataSet.Field`: 优化 options 属性。
 - 💄 `<pro>ViewComponent`: 优化 onBlur 钩子可根据 preventDefault 阻止失焦。
+- 🐞 `Transfer`: 修复 icon。
+- 🐞 `<pro>DataSet`: 修复 dataToJson 为 normal 时, 仅删除记录的情况下状态不为 dirty 的问题。
 
 ## 0.8.48
 
