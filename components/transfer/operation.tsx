@@ -30,7 +30,7 @@ const Operation: FunctionComponent<TransferOperationProps> = props => {
         size={Size.small}
         disabled={!leftActive}
         onClick={moveToLeft}
-        icon="left"
+        icon="keyboard_arrow_left"
       >
         {leftArrowText}
       </Button>
@@ -39,7 +39,7 @@ const Operation: FunctionComponent<TransferOperationProps> = props => {
         size={Size.small}
         disabled={!rightActive}
         onClick={moveToRight}
-        icon="right"
+        icon="keyboard_arrow_right"
       >
         {rightArrowText}
       </Button>

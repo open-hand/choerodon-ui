@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🐞 `Transfer`: Fixed icon.
 - 💄 `<pro> DataSet.Field`: Optimize the `options` property.
 - 💄 `<pro> ViewComponent`: Optimized `onBlur` hook to prevent blur based on `preventDefault` called by blur event.
 

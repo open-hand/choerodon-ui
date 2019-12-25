@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🐞 `Transfer`: 修复 icon。
 - 💄 `<pro>DataSet.Field`: 优化 options 属性。
 - 💄 `<pro>ViewComponent`: 优化 onBlur 钩子可根据 preventDefault 阻止失焦。
 
