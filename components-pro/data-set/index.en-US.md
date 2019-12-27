@@ -182,6 +182,8 @@ title: DataSet
 | getPristineValue(fieldName) | 根据字段名获取字段的原始值。 | `fieldName` - 字段名 | any |
 | set(fieldName, value) | 给指定字段赋值 | `fieldName` - 字段名或者键值对对象；`value` - 值 |  |
 | init(fieldName, value) | 给指定字段初始化值。字段变为净值。 | `fieldName` - 字段名或者键值对对象；`value` - 值 |  |
+| setState(key, value) | 设置自定义状态值。 | `key` - 键名或者键值对对象；`value` - 值 |  |
+| getState(key) | 获取自定义状态值。 | `key` - 键名 |  |
 | toJSONData() | 转换成用于提交的 json 数据, 受 DataSet 的 dataToJSON 属性影响。 |  | object |
 | toData() | 转换成普通数据, 包括所有级联数据 |  | object |
 | validate(all, noCascade) | 校验记录 | `all` - 校验所有字段，默认为 false，只校验修改或新增字段 `noCascade` - 为 true 时，不校验级联数据 | Promise&lt;boolean&gt; |

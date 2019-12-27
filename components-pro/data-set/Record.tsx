@@ -1,6 +1,7 @@
 import {
   action,
   computed,
+  get,
   isArrayLike,
   isObservableArray,
   observable,
@@ -74,6 +75,8 @@ export default class Record {
   @observable isCached: boolean;
 
   @observable editing?: boolean;
+
+  @observable state: { [key: string]: any } = {};
 
   @computed
   get key(): string | number {
@@ -623,6 +626,20 @@ export default class Record {
     [...fields.values()].forEach(field => field.commit());
     this.status = RecordStatus.sync;
     return this;
+  }
+
+  @action
+  setState(item: string | object, value?: any) {
+    if (isString(item)) {
+      set(this.state, item, value);
+    } else if (isPlainObject(item)) {
+      set(this.state, item);
+    }
+    return this;
+  }
+
+  getState(key: string) {
+    return get(this.state, key);
   }
 
   @action
