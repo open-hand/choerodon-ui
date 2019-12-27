@@ -46,7 +46,8 @@ title: Modal
 ### ModalContainer
 
 - 使用 Modal 前，需要在页面 Root 内插入 ModalContainer。如果路由切换时要清空所有 Modal，需要在 ModalContiner 传入 location，如下所示。
-- 如要使用 react-intl 之类的多语言库，请将 ModalContainer 至于 IntlProvider 之下。
+- 如果 Modal 要获取 React Context，请将 ModalContainer 至于 Context.Provider 之下。
+- 为了避免多个 ModalContainer 之间 Context 错乱， ModalContainer 务必作为第一个子元素使用。
 
 ```jsx harmony
 import { ModalContainer } from 'choerodon-ui/pro';
@@ -59,6 +60,7 @@ class App extends React.Component {
     return (
       <div>
         <ModalContainer location={location} />
+        <Main />
       </div>
     );
   }
