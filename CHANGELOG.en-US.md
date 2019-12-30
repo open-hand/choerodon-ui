@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.49
+
+`2019-12-30`
+
 - 🌟 `<pro>DataSet.Record`: Added `setState` and `getState` methods.
 - 💄 `<pro>DataSet.Field`: Optimize the `options` property.
 - 💄 `<pro>ViewComponent`: Optimized `onBlur` hook to prevent blur based on `preventDefault` called by blur event.
