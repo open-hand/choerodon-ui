@@ -76,7 +76,7 @@ export default class Record {
 
   @observable editing?: boolean;
 
-  @observable state: { [key: string]: any } = {};
+  @observable state: { [key: string]: any };
 
   @computed
   get key(): string | number {
@@ -289,6 +289,7 @@ export default class Record {
   constructor(data: object = {}, dataSet?: DataSet) {
     runInAction(() => {
       const initData = toJS(data);
+      this.state = {};
       this.fields = observable.map<string, Field>();
       this.status = RecordStatus.add;
       this.selectable = true;
@@ -374,7 +375,7 @@ export default class Record {
         }
         const snapshot = this.dataSetSnapshot[fieldName];
         if (snapshot) {
-          return snapshot.records.slice();
+          return snapshot.records.filter(r => r.status !== RecordStatus.delete);
         }
         const cascadeRecords = this.cascadeRecordsMap[fieldName];
         if (cascadeRecords) {

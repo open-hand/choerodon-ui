@@ -16,10 +16,11 @@ timeline: true
 ---
 
 - 🌟 `<pro>DataSet.Record`: Added `setState` and `getState` methods.
-- 💄 `<pro> DataSet.Field`: Optimize the `options` property.
-- 💄 `<pro> ViewComponent`: Optimized `onBlur` hook to prevent blur based on `preventDefault` called by blur event.
+- 💄 `<pro>DataSet.Field`: Optimize the `options` property.
+- 💄 `<pro>ViewComponent`: Optimized `onBlur` hook to prevent blur based on `preventDefault` called by blur event.
 - 🐞 `Transfer`: Fixed icon.
-- 🐞 `<pro> DataSet`: Fixed the problem that the dirty is false when only the records are deleted in the case that `dataToJson` is normal.
+- 🐞 `<pro>DataSet`: Fixed the problem that the dirty is false when only the records are deleted in the case that `dataToJson` is normal.
+- 🐞 `<pro>DataSet`: Fix cascading problem.
 
 ## 0.8.48
 

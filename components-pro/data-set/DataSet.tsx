@@ -1948,15 +1948,12 @@ Then the query method will be auto invoke.`,
       const ds = children[childName];
       if (previous && ds.status === DataSetStatus.ready && previous.dataSetSnapshot[childName]) {
         previous.dataSetSnapshot[childName] = ds.snapshot();
+        ds.current = undefined;
       }
       if (current) {
         const snapshot = current.dataSetSnapshot[childName];
-        const cascadeRecords = current.cascadeRecordsMap[childName];
         if (snapshot instanceof DataSetSnapshot) {
           ds.restore(snapshot);
-        } else if (cascadeRecords) {
-          delete current.cascadeRecordsMap[childName];
-          ds.loadData(cascadeRecords);
         } else if (!this.syncChild(ds, current, childName, true)) {
           ds.loadData([]);
           remoteKeys.push(childName);
@@ -1977,8 +1974,12 @@ Then the query method will be auto invoke.`,
     childName: string,
     onlyClient?: boolean,
   ): boolean {
-    const childRecords = currentRecord.get(childName);
+    const cascadeRecords = currentRecord.cascadeRecordsMap[childName];
+    const childRecords = cascadeRecords || currentRecord.get(childName);
     if (currentRecord.status === RecordStatus.add || isArrayLike(childRecords)) {
+      if (cascadeRecords) {
+        delete currentRecord.cascadeRecordsMap[childName];
+      }
       ds.clearCachedSelected();
       ds.loadData(childRecords ? childRecords.slice() : []);
       if (currentRecord.status === RecordStatus.add) {
