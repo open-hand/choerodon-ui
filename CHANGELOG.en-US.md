@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>Lov`: Fix the problem that the unique check does not display an error.
+
 ## 0.8.49
 
 `2019-12-30`

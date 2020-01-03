@@ -4,6 +4,7 @@ import { $l } from '../../locale-context';
 import isEmpty from '../../_util/isEmpty';
 import { methodReturn, ValidatorProps } from '.';
 import { axiosConfigAdapter } from '../../data-set/utils';
+import { FieldType } from '../../data-set/enum';
 
 export default async function uniqueError(
   value: any,
@@ -12,6 +13,9 @@ export default async function uniqueError(
   const { dataSet, record, unique, name, multiple, range, defaultValidationMessages } = props;
   if (!isEmpty(value) && dataSet && record && unique && name && !multiple && !range) {
     const myField = record.getField(name);
+    if (myField && myField.get('type') === FieldType.object) {
+      value = value[myField.get('valueField')];
+    }
     if (myField) {
       let { dirty } = myField;
       const fields = { [name]: value };
@@ -44,7 +48,15 @@ export default async function uniqueError(
       }
       let invalid = dataSet.data.some(
         item =>
-          item !== record && Object.keys(fields).every(field => fields[field] === item.get(field)),
+          item !== record &&
+          Object.keys(fields).every(field => {
+            const dataSetField = record.getField(name);
+            if (dataSetField && dataSetField.get('type') === FieldType.object) {
+              const valueField = dataSetField.get('valueField');
+              return fields[field] === item.get(field)[valueField];
+            }
+            return fields[field] === item.get(field);
+          }),
       );
       if (!invalid) {
         const newConfig = axiosConfigAdapter('validate', dataSet, { unique: [fields] });
