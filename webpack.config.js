@@ -1,4 +1,5 @@
 // This config is for building dist files
+const { ReplaceSource } = require('webpack-sources');
 const getWebpackConfig = require('./tools/getWebpackConfig');
 const pkg = require('./package.json');
 
@@ -41,6 +42,47 @@ if (process.env.RUN_ENV === 'PRODUCTION') {
     ignoreMomentLocale(config);
     externalMoment(config);
     addLocales(config);
+    config.plugins.push({
+      apply: compiler => {
+        const replaceLibraryConfigList = [
+          {
+            from: /choerodon-ui(-with-locales(\.min)?)/gi,
+            to: 'choerodon-ui',
+          },
+          {
+            from: /choerodon-ui-pro(-with-locales(\.min)?)/gi,
+            to: 'choerodon-ui/pro',
+          },
+        ];
+        compiler.hooks.compilation.tap('compilation', compilation => {
+          const { mainTemplate, chunkTemplate } = compilation;
+          // eslint-disable-next-line no-restricted-syntax
+          for (const template of [mainTemplate, chunkTemplate]) {
+            template.hooks.renderWithEntry.tap('UmdMainTemplatePlugin', (source, entry) => {
+              const entryName = entry.name;
+              const findReplaceCfg = replaceLibraryConfigList.find(replaceCfg => {
+                return replaceCfg.from.test(entryName);
+              });
+              if (findReplaceCfg) {
+                let newSource = source;
+                let startPos = -1;
+                // eslint-disable-next-line no-cond-assign
+                while (
+                  (startPos = newSource
+                    .source()
+                    .indexOf(entryName, startPos > 0 ? startPos : undefined)) !== -1
+                ) {
+                  newSource = new ReplaceSource(newSource);
+                  newSource.replace(startPos, startPos + entryName.length - 1, findReplaceCfg.to);
+                }
+                return newSource;
+              }
+              return source;
+            });
+          }
+        });
+      },
+    });
   });
 }
 

@@ -18,6 +18,7 @@ export default {
     'app.demo.copied': 'Copied!',
     'app.demo.codepen': 'Open in CodePen',
     'app.demo.codesandbox': 'Open in CodeSandbox',
+    'app.demo.stackblitz': 'Open in Stackblitz',
     'app.home.based-on-ant-design': '——based on Ant Design@3.4.0',
     'app.home.introduce':
       "Choerodon UI is a set of React components based on Ant Design Components that implement Google's material design for developing and serving enterprise back-end products.",

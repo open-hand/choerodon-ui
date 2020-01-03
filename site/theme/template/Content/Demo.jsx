@@ -7,6 +7,7 @@ import CopyToClipboard from 'react-copy-to-clipboard';
 import classNames from 'classnames';
 import LZString from 'lz-string';
 import { Icon, Tooltip } from 'choerodon-ui';
+import stackblitzSdk from '@stackblitz/sdk';
 import EditButton from './EditButton';
 import BrowserFrame from '../BrowserFrame';
 
@@ -44,10 +45,12 @@ export default class Demo extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
     const { expand } = this.props;
     const { codeExpand, copied, copyTooltipVisible, refreshKey } = this.state;
-    return refreshKey !== nextState.refreshKey
-      || (codeExpand || expand) !== (nextState.codeExpand || nextProps.expand)
-      || copied !== nextState.copied
-      || copyTooltipVisible !== nextState.copyTooltipVisible;
+    return (
+      refreshKey !== nextState.refreshKey ||
+      (codeExpand || expand) !== (nextState.codeExpand || nextProps.expand) ||
+      copied !== nextState.copied ||
+      copyTooltipVisible !== nextState.copyTooltipVisible
+    );
   }
 
   componentDidMount() {
@@ -63,7 +66,7 @@ export default class Demo extends React.Component {
     this.setState({ codeExpand: !codeExpand });
   };
 
-  saveAnchor = (anchor) => {
+  saveAnchor = anchor => {
     this.anchor = anchor;
   };
 
@@ -77,7 +80,7 @@ export default class Demo extends React.Component {
     });
   };
 
-  onCopyTooltipVisibleChange = (visible) => {
+  onCopyTooltipVisibleChange = visible => {
     if (visible) {
       this.setState({
         copyTooltipVisible: visible,
@@ -90,27 +93,29 @@ export default class Demo extends React.Component {
     });
   };
 
+  // eslint-disable-next-line
+  track({ type, demo }) {
+    if (!window.gtag) {
+      return;
+    }
+    window.gtag('event', 'demo', {
+      event_category: type,
+      event_label: demo,
+    });
+  }
+
   render() {
     const { state } = this;
     const { props } = this;
-    const {
-      meta,
-      src,
-      content,
-      preview,
-      highlightedCode,
-      style,
-      highlightedStyle,
-      expand,
-    } = props;
+    const { meta, src, content, preview, highlightedCode, style, highlightedStyle, expand } = props;
     if (!this.liveDemo) {
-      this.liveDemo = meta.iframe
-        ? (
-          <BrowserFrame>
-            <iframe src={src} height={meta.iframe} title="demo" />
-          </BrowserFrame>
-        )
-        : preview(React, ReactDOM);
+      this.liveDemo = meta.iframe ? (
+        <BrowserFrame>
+          <iframe src={src} height={meta.iframe} title="demo" />
+        </BrowserFrame>
+      ) : (
+        preview(React, ReactDOM)
+      );
     }
     const codeExpand = state.codeExpand || expand;
     const codeBoxClass = classNames({
@@ -118,18 +123,22 @@ export default class Demo extends React.Component {
       expand: codeExpand,
     });
 
-    const { intl: { locale } } = this.context;
+    const {
+      intl: { locale },
+    } = this.context;
     const localizedTitle = meta.title[locale] || meta.title;
     const localizeIntro = content[locale] || content;
-    const introChildren = props.utils
-      .toReactComponent(['div'].concat(localizeIntro));
+    const introChildren = props.utils.toReactComponent(['div'].concat(localizeIntro));
 
     const highlightClass = classNames({
       'highlight-wrapper': true,
       'highlight-wrapper-expand': codeExpand,
     });
 
-    const prefillStyle = `@import 'choerodon-ui/dist/choerodon-ui.css';\n\n${style || ''}`.replace(new RegExp(`#${meta.id}\\s*`, 'g'), '');
+    const prefillStyle = `@import 'choerodon-ui/dist/choerodon-ui.css';\n\n${style || ''}`.replace(
+      new RegExp(`#${meta.id}\\s*`, 'g'),
+      '',
+    );
     const html = `<div id="container" style="padding: 24px"></div>
 <script>
   var mountNode = document.getElementById('container');
@@ -138,27 +147,51 @@ export default class Demo extends React.Component {
     const codepenPrefillConfig = {
       title: `${localizedTitle} - Choerodon UI Demo`,
       html,
-      js: state.sourceCode.replace(/import\s+\{\s+(.*)\s+\}\s+from\s+'choerodon-ui';/, 'const { $1 } = window["choerodon-ui"];'),
+      js: state.sourceCode
+        .replace(
+          /import\s+\{\s+(.*)\s+\}\s+from\s+'choerodon-ui';/,
+          'const { $1 } = window["choerodon-ui"];',
+        )
+        .replace(
+          /import\s+\{\s+(.*)\s+\}\s+from\s+'choerodon-ui\/pro';/,
+          'const { $1 } = window["choerodon-ui/pro"];',
+        ),
       css: prefillStyle,
       editors: '001',
-      css_external: 'https://unpkg.com/choerodon-ui/dist/choerodon-ui.css',
+      css_external: ['choerodon-ui/dist/choerodon-ui.css', 'choerodon-ui/dist/choerodon-ui-pro.css']
+        .map(css => `https://unpkg.com/${css}`)
+        .join(';'),
       js_external: [
-        'react@16.6.x/umd/react.production.min.js',
-        'react-dom@16.6.x/umd/react-dom.production.min.js',
+        'react@16.12.x/umd/react.production.min.js',
+        'react-dom@16.12.x/umd/react-dom.production.min.js',
         'moment/min/moment-with-locales.min.js',
         'mobx@4.7.0/lib/mobx.umd.min.js',
         'mobx-react@5.1.x/index.min.js',
         'choerodon-ui/dist/choerodon-ui-with-locales.js',
-      ].map(url => `https://unpkg.com/${url}`).join(';'),
+        'choerodon-ui/dist/choerodon-ui-pro-with-locales.js',
+      ]
+        .map(url => `https://unpkg.com/${url}`)
+        .join(';'),
       js_pre_processor: 'typescript',
     };
-    const dependencies = state.sourceCode.split('\n').reduce((acc, line) => {
-      const matches = line.match(/import .+? from '(.+)';$/);
-      if (matches && matches[1]) {
-        acc[matches[1]] = 'latest';
-      }
-      return acc;
-    }, { react: 'latest', 'react-dom': 'latest', moment: 'latest', mobx: '4.7.0', 'mobx-react': '5.1.2' });
+    const dependencies = state.sourceCode.split('\n').reduce(
+      (acc, line) => {
+        const matches = line.match(/import .+? from '(.+)';$/);
+        if (matches && matches[1] && !line.includes('choerodon-ui')) {
+          acc[matches[1]] = 'latest';
+        }
+        return acc;
+      },
+      {
+        react: 'latest',
+        'react-dom': 'latest',
+        axios: 'latest',
+        moment: 'latest',
+        mobx: '4.7.0',
+        'mobx-react': '5.1.2',
+        'choerodon-ui': 'latest',
+      },
+    );
     const codesanboxPrefillConfig = {
       files: {
         'package.json': {
@@ -174,8 +207,9 @@ export default class Demo extends React.Component {
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'choerodon-ui/dist/choerodon-ui.css';
+import 'choerodon-ui/dist/choerodon-ui-pro.css';
 import './index.css';
-${state.sourceCode.replace('mountNode', 'document.getElementById(\'container\')')}
+${state.sourceCode.replace('mountNode', "document.getElementById('container')")}
           `,
         },
         'index.html': {
@@ -183,22 +217,38 @@ ${state.sourceCode.replace('mountNode', 'document.getElementById(\'container\')'
         },
       },
     };
+    const stackblitzPrefillConfig = {
+      title: `${localizedTitle} - Choerodon UI Demo`,
+      template: 'create-react-app',
+      dependencies,
+      files: {
+        'index.css': (style || '').replace(new RegExp(`#${meta.id}\\s*`, 'g'), ''),
+        'index.js': `
+import React from 'react';
+import ReactDOM from 'react-dom';
+import 'choerodon-ui/dist/choerodon-ui.css';
+import 'choerodon-ui/dist/choerodon-ui-pro.css';
+import './index.css';
+${state.sourceCode.replace('mountNode', "document.getElementById('container')")}
+          `,
+        'index.html': html,
+      },
+    };
     return (
       <section className={codeBoxClass} id={meta.id}>
         <section className="code-box-demo">
           {React.cloneElement(this.liveDemo, { key: state.refreshKey })}
-          {
-            style
-              ? <style dangerouslySetInnerHTML={{ __html: style }} />
-              : null
-          }
+          {style ? <style dangerouslySetInnerHTML={{ __html: style }} /> : null}
         </section>
         <section className="code-box-meta markdown">
           <div className="code-box-title">
             <a href={`#${meta.id}`} ref={this.saveAnchor}>
               {localizedTitle}
             </a>
-            <EditButton title={<FormattedMessage id="app.content.edit-page" />} filename={meta.filename} />
+            <EditButton
+              title={<FormattedMessage id="app.content.edit-page" />}
+              filename={meta.filename}
+            />
           </div>
           {introChildren}
           <Tooltip title="Refresh Demo">
@@ -221,35 +271,56 @@ ${state.sourceCode.replace('mountNode', 'document.getElementById(\'container\')'
             </span>
           </Tooltip>
         </section>
-        <section
-          className={highlightClass}
-          key="code"
-        >
+        <section className={highlightClass} key="code">
           <div className="highlight">
             <div className="code-box-actions">
               <form action="https://codepen.io/pen/define" method="POST" target="_blank">
                 <input type="hidden" name="data" value={JSON.stringify(codepenPrefillConfig)} />
                 <Tooltip title={<FormattedMessage id="app.demo.codepen" />}>
-                  <input type="submit" value="Create New Pen with Prefilled Data" className="code-box-codepen" />
+                  <input
+                    type="submit"
+                    value="Create New Pen with Prefilled Data"
+                    className="code-box-codepen"
+                  />
                 </Tooltip>
               </form>
-              <form action="https://codesandbox.io/api/v1/sandboxes/define" method="POST" target="_blank">
-                <input type="hidden" name="parameters" value={compress(JSON.stringify(codesanboxPrefillConfig))} />
-                <Tooltip title={<FormattedMessage id="app.demo.codesandbox" />}>
-                  <input type="submit" value="Create New Sandbox with Prefilled Data" className="code-box-codesandbox" />
-                </Tooltip>
-              </form>
-              <CopyToClipboard
-                text={state.sourceCode}
-                onCopy={this.handleCodeCopied}
+              <form
+                action="https://codesandbox.io/api/v1/sandboxes/define"
+                method="POST"
+                target="_blank"
               >
+                <input
+                  type="hidden"
+                  name="parameters"
+                  value={compress(JSON.stringify(codesanboxPrefillConfig))}
+                />
+                <Tooltip title={<FormattedMessage id="app.demo.codesandbox" />}>
+                  <input
+                    type="submit"
+                    value="Create New Sandbox with Prefilled Data"
+                    className="code-box-codesandbox"
+                  />
+                </Tooltip>
+              </form>
+              <Tooltip title={<FormattedMessage id="app.demo.stackblitz" />}>
+                <span
+                  className="code-box-stackblitz"
+                  onClick={() => {
+                    this.track({ type: 'stackblitz', demo: meta.id });
+                    stackblitzSdk.openProject(stackblitzPrefillConfig);
+                  }}
+                >
+                  <Icon type="priority" />
+                </span>
+              </Tooltip>
+              <CopyToClipboard text={state.sourceCode} onCopy={this.handleCodeCopied}>
                 <Tooltip
                   visible={state.copyTooltipVisible}
                   onVisibleChange={this.onCopyTooltipVisibleChange}
                   title={<FormattedMessage id={`app.demo.${state.copied ? 'copied' : 'copy'}`} />}
                 >
                   <Icon
-                    type={(state.copied && state.copyTooltipVisible) ? 'check' : 'copy'}
+                    type={state.copied && state.copyTooltipVisible ? 'check' : 'content_copy'}
                     className="code-box-code-copy"
                   />
                 </Tooltip>
@@ -257,16 +328,13 @@ ${state.sourceCode.replace('mountNode', 'document.getElementById(\'container\')'
             </div>
             {props.utils.toReactComponent(highlightedCode)}
           </div>
-          {
-            highlightedStyle
-              ? (
-                <div key="style" className="highlight">
-                  <pre>
-                    <code className="css" dangerouslySetInnerHTML={{ __html: highlightedStyle }} />
-                  </pre>
-                </div>
-              ) : null
-          }
+          {highlightedStyle ? (
+            <div key="style" className="highlight">
+              <pre>
+                <code className="css" dangerouslySetInnerHTML={{ __html: highlightedStyle }} />
+              </pre>
+            </div>
+          ) : null}
         </section>
       </section>
     );

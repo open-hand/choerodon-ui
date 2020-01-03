@@ -15,7 +15,8 @@ timeline: true
 
 ---
 
-- 🐞 `<pro>Lov`: Fix the problem that the unique check does not display an error.
+- 🐞 Fixed the online code editor.
+- 🐞 `<pro>Lov`: Fixed the problem that the unique check does not display an error.
 
 ## 0.8.49
 

@@ -14,7 +14,10 @@ if (fs.existsSync(path.join(__dirname, '../lib'))) {
   const versionFileContent = fs.readFileSync(versionFilePath).toString();
   fs.writeFileSync(
     versionFilePath,
-    versionFileContent.replace(`require('../../package.json')`, `{ version: '${packageInfo.version}' }`),
+    versionFileContent.replace(
+      `require('../../package.json')`,
+      `{ version: '${packageInfo.version}' }`,
+    ),
   );
   console.log('Wrote version into lib/version/index.js');
 
@@ -37,13 +40,16 @@ if (fs.existsSync(path.join(__dirname, '../dist'))) {
     let componentsLessContent = '';
 
     // Build components in one file: lib/style/components.less
-    fs.readdir(componentsPath, function (err, files) {
-      files.forEach(function (file) {
+    fs.readdir(componentsPath, function(err, files) {
+      files.forEach(function(file) {
         if (fs.existsSync(path.join(componentsPath, file, 'style', 'index.less'))) {
           componentsLessContent += `@import "${relativePath}${file}/style/index.less";\n`;
         }
       });
-      fs.writeFileSync(path.join(process.cwd(), 'lib', 'style', `${dir}.less`), componentsLessContent);
+      fs.writeFileSync(
+        path.join(process.cwd(), 'lib', 'style', `${dir}.less`),
+        componentsLessContent,
+      );
 
       // Build less entry file: dist/choerodon-ui.less
       fs.writeFileSync(
@@ -71,7 +77,7 @@ var pro = require('./lib');
 
 var pro2 = pro && pro.__esModule ? pro : { 'default': pro };
 
-exports['default'] = pro2['default'];
+exports['default'] = pro2['default'] || pro2;
 module.exports = exports['default'];
 `,
   );

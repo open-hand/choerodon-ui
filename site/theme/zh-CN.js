@@ -20,6 +20,7 @@ export default {
     'app.demo.copied': '复制成功',
     'app.demo.codepen': '在 CodePen 中打开',
     'app.demo.codesandbox': '在 CodeSandbox 中打开',
+    'app.demo.stackblitz': '在 Stackblitz 中打开',
     'app.home.based-on-ant-design': '——基于Ant Design@3.4.0',
     'app.home.introduce':
       'Choerodon UI 是一组基于 Ant Design Components 实现谷歌的 Material Design 的 React 组件，用于开发和服务于企业级后台产品。',
