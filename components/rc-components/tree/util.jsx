@@ -50,8 +50,7 @@ export function getPosition(level, index) {
 
 export function getNodeChildren(children) {
   const childList = Array.isArray(children) ? children : [children];
-  return childList
-    .filter(child => child && child.type && child.type.isTreeNode);
+  return childList.filter(child => child && child.type && child.type.isTreeNode);
 }
 
 export function isCheckDisabled(node) {
@@ -227,7 +226,7 @@ export function calcExpandedKeys(keyList, props) {
   const needExpandPathList = [];
 
   // Fill expanded nodes
-  keyList.forEach((key) => {
+  keyList.forEach(key => {
     const node = keyNodes[key];
     if (node) {
       needExpandKeys[key] = true;
@@ -290,9 +289,9 @@ export function calcCheckStateConduct(treeNodes, checkedKeys) {
     const { subNodes = [], parentPos, node } = keyNodes[key];
     if (isCheckDisabled(node)) return;
 
-    const allSubChecked = !halfChecked && subNodes
-      .filter(sub => !isCheckDisabled(sub.node))
-      .every(sub => tgtCheckedKeys[sub.key]);
+    const allSubChecked =
+      !halfChecked &&
+      subNodes.filter(sub => !isCheckDisabled(sub.node)).every(sub => tgtCheckedKeys[sub.key]);
 
     if (allSubChecked) {
       tgtCheckedKeys[key] = true;
@@ -314,7 +313,7 @@ export function calcCheckStateConduct(treeNodes, checkedKeys) {
 
     tgtCheckedKeys[key] = true;
 
-    subNodes.forEach((sub) => {
+    subNodes.forEach(sub => {
       conductDown(sub.key);
     });
   }
@@ -326,14 +325,15 @@ export function calcCheckStateConduct(treeNodes, checkedKeys) {
     }
 
     const { subNodes = [], parentPos, node } = keyNodes[key];
-    if (isCheckDisabled(node)) return;
 
     tgtCheckedKeys[key] = true;
+
+    if (isCheckDisabled(node)) return;
 
     // Conduct down
     subNodes
       .filter(sub => !isCheckDisabled(sub.node))
-      .forEach((sub) => {
+      .forEach(sub => {
         conductDown(sub.key);
       });
 
@@ -343,14 +343,13 @@ export function calcCheckStateConduct(treeNodes, checkedKeys) {
     }
   }
 
-  checkedKeys.forEach((key) => {
+  checkedKeys.forEach(key => {
     conduct(key);
   });
 
   return {
     checkedKeys: Object.keys(tgtCheckedKeys),
-    halfCheckedKeys: Object.keys(tgtHalfCheckedKeys)
-      .filter(key => !tgtCheckedKeys[key]),
+    halfCheckedKeys: Object.keys(tgtHalfCheckedKeys).filter(key => !tgtCheckedKeys[key]),
   };
 }
 
