@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🐞 Fixed the online code editor.
+- 🐞 `Tree`: Fixed the failure of defaultCheckedKeys in disable state.
 - 🐞 `<pro>Lov`: Fixed the problem that the unique check does not display an error.
 
 ## 0.8.49
@@ -27,7 +28,7 @@ timeline: true
 - 💄 `<pro>ViewComponent`: Optimized `onBlur` hook to prevent blur based on `preventDefault` called by blur event.
 - 🐞 `Transfer`: Fixed icon.
 - 🐞 `<pro>DataSet`: Fixed the problem that the dirty is false when only the records are deleted in the case that `dataToJson` is normal.
-- 🐞 `<pro>DataSet`: Fix cascading problem.
+- 🐞 `<pro>DataSet`: Fixed cascading problem.
 
 ## 0.8.48
 
