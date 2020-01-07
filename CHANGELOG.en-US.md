@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.50
+
+`2020-01-07`
+
 - 🐞 Fixed the online code editor.
 - 🐞 `Tree`: Fixed the failure of defaultCheckedKeys in disable state.
 - 🐞 `<pro>Lov`: Fixed the problem that the unique check does not display an error.
