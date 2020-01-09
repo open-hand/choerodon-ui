@@ -5,6 +5,7 @@ import isEqual from 'lodash/isEqual';
 import isObject from 'lodash/isObject';
 import merge from 'lodash/merge';
 import defer from 'lodash/defer';
+import unionBy from 'lodash/unionBy';
 import { AxiosRequestConfig } from 'axios';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import warning from 'choerodon-ui/lib/_util/warning';
@@ -308,9 +309,10 @@ export default class Field {
   @computed
   get lookup(): object[] | undefined {
     const lookup = this.get('lookup');
+    const valueField = this.get('valueField');
     if (lookup) {
       const lookupData = this.get('lookupData') || [];
-      return lookup.concat(lookupData);
+      return unionBy(lookup.concat(lookupData), valueField);
     }
     return undefined;
   }
@@ -522,7 +524,7 @@ dynamicProps = {
   @action
   set(propsName: string, value: any): void {
     const oldValue = this.get(propsName);
-    if (oldValue !== value) {
+    if (!isEqualDynamicProps(oldValue, value)) {
       set(this.props, propsName, value);
       const { record, dataSet, name } = this;
       if (record) {
@@ -879,6 +881,7 @@ dynamicProps = {
         'lovQueryUrl',
       ].includes(propsName)
     ) {
+      this.set('lookupData', undefined);
       this.fetchLookup();
     }
     if (['lovCode', 'lovDefineAxiosConfig', 'lovDefineUrl'].includes(propsName)) {

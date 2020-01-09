@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>Select`: Fixed the dynamic query lookup option repeat problem.
+
 ## 0.8.50
 
 `2020-01-07`
