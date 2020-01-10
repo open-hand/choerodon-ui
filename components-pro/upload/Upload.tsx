@@ -122,6 +122,13 @@ export interface UploadProps extends FormFieldProps {
    * @memberof UploadProps
    */
   showUploadBtn?: boolean;
+  /**
+   * 是否显示上传列表
+   *
+   * @type {boolean}
+   * @memberof UploadProps
+   */
+  showUploadList?: boolean;
 }
 
 @observer
@@ -166,6 +173,7 @@ export default class Upload extends FormField<UploadProps> {
     onUploadSuccess: PropTypes.func,
     onUploadError: PropTypes.func,
     showUploadBtn: PropTypes.bool,
+    showUploadList: PropTypes.bool,
     ...FormField.propTypes,
   };
 
@@ -182,6 +190,7 @@ export default class Upload extends FormField<UploadProps> {
     showPreviewImage: true,
     previewImageWidth: 100,
     showUploadBtn: true,
+    showUploadList: true,
     onUploadSuccess: () => message.success($l('Upload', 'upload_success')),
     onUploadError: () => message.error($l('Upload', 'upload_failure')),
   };
@@ -226,6 +235,7 @@ export default class Upload extends FormField<UploadProps> {
       'showPreviewImage',
       'previewImageWidth',
       'showUploadBtn',
+      'showUploadList',
       'onUploadSuccess',
       'onUploadError',
       'onFileChange',
@@ -256,6 +266,7 @@ export default class Upload extends FormField<UploadProps> {
         showPreviewImage,
         previewImageWidth,
         showUploadBtn,
+        showUploadList,
         extra,
       },
     } = this;
@@ -296,13 +307,14 @@ export default class Upload extends FormField<UploadProps> {
           </div>
           <div>{extra}</div>
         </div>
-
-        <UploadList
-          previewImageWidth={previewImageWidth as number}
-          showPreviewImage={showPreviewImage as boolean}
-          items={[...this.fileList]}
-          remove={this.handleRemove}
-        />
+        {showUploadList ? (
+          <UploadList
+            previewImageWidth={previewImageWidth as number}
+            showPreviewImage={showPreviewImage as boolean}
+            items={[...this.fileList]}
+            remove={this.handleRemove}
+          />
+        ) : null}
       </div>
     );
   }

@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Upload`: Added `showUploadList` property.
 - 🐞 `<pro>Select`: Fixed the dynamic query lookup option repeat problem.
 
 ## 0.8.50

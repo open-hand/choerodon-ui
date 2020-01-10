@@ -13,7 +13,7 @@ title:
 
 File Upload.
 
-````jsx
+```jsx
 import { Upload } from 'choerodon-ui/pro';
 
 const props = {
@@ -24,13 +24,13 @@ const props = {
   multiple: true,
   accept: ['.deb', '.txt', '.pdf', 'image/*'],
   uploadImmediately: true,
+  showUploadList: false,
 };
 
 ReactDOM.render(
   <div>
     <Upload {...props} />
   </div>,
-  mountNode
+  mountNode,
 );
-
-````
+```

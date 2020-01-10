@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Upload`: 新增 showUploadList 属性。
 - 🐞 `<pro>Select`: 修复动态查询 lookup 选项重复问题。
 
 ## 0.8.50
