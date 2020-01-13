@@ -5,7 +5,7 @@ exports[`renders ./components/input-number/demo/basic.md correctly 1`] = `
   class="c7n-input-number"
 >
   <span
-    class="c7n-input-wrapper c7n-input-has-label c7n-input-has-suffix c7n-input-has-border"
+    class="c7n-input-wrapper c7n-input-has-value c7n-input-has-label c7n-input-has-suffix c7n-input-has-border"
   >
     <div
       class="c7n-input-content"
@@ -152,7 +152,7 @@ exports[`renders ./components/input-number/demo/disabled.md correctly 1`] = `
     class="c7n-input-number"
   >
     <span
-      class="c7n-input-wrapper c7n-input-disabled c7n-input-has-label c7n-input-has-suffix c7n-input-has-border"
+      class="c7n-input-wrapper c7n-input-has-value c7n-input-disabled c7n-input-has-label c7n-input-has-suffix c7n-input-has-border"
     >
       <div
         class="c7n-input-content"
@@ -243,7 +243,7 @@ exports[`renders ./components/input-number/demo/formatter.md correctly 1`] = `
     class="c7n-input-number"
   >
     <span
-      class="c7n-input-wrapper c7n-input-has-label c7n-input-has-suffix c7n-input-has-border"
+      class="c7n-input-wrapper c7n-input-has-value c7n-input-has-label c7n-input-has-suffix c7n-input-has-border"
     >
       <div
         class="c7n-input-content"
@@ -312,7 +312,7 @@ exports[`renders ./components/input-number/demo/formatter.md correctly 1`] = `
     class="c7n-input-number"
   >
     <span
-      class="c7n-input-wrapper c7n-input-has-label c7n-input-has-suffix c7n-input-has-border"
+      class="c7n-input-wrapper c7n-input-has-value c7n-input-has-label c7n-input-has-suffix c7n-input-has-border"
     >
       <div
         class="c7n-input-content"

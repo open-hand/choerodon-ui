@@ -2,7 +2,7 @@ const crypto = require('crypto');
 const { createTransformer } = require('babel-jest');
 const getBabelCommonConfig = require('../../tools/getBabelCommonConfig');
 const rewriteSource = require('./rewriteSource');
-const tsJest = require('ts-jest/preprocessor');
+const tsJest = require('ts-jest');
 const pkg = require('../../package.json');
 
 const libDir = process.env.LIB_DIR || 'components';
@@ -21,7 +21,7 @@ module.exports = {
   process(src, path, config, transformOptions) {
     global.__clearBabelAntdPlugin && global.__clearBabelAntdPlugin(); // eslint-disable-line
     const babelConfig = getBabelCommonConfig();
-    babelConfig.plugins = ['transform-decorators-legacy', ...babelConfig.plugins];
+    babelConfig.plugins = [...babelConfig.plugins];
 
     if (/\/demo\//.test(path)) {
       babelConfig.plugins.push(processDemo);

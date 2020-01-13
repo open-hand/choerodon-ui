@@ -45,7 +45,7 @@ exports[`renders ./components/tree/demo/basic.md correctly 1`] = `
           />
         </span>
         <span
-          class="c7n-tree-checkbox c7n-tree-checkbox-disabled"
+          class="c7n-tree-checkbox c7n-tree-checkbox-checked c7n-tree-checkbox-disabled"
         >
           <span
             class="c7n-tree-checkbox-inner"
@@ -1127,6 +1127,7 @@ exports[`renders ./components/tree/demo/search.md correctly 1`] = `
           <input
             class="c7n-input c7n-input-sm c7n-input-search c7n-input-search-small"
             type="text"
+            value=""
           />
           <div
             class="c7n-input-label-wrapper"

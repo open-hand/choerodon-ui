@@ -1104,7 +1104,7 @@ exports[`renders ./components/form/demo/global-state.md correctly 1`] = `
             class="c7n-form-item-children"
           >
             <span
-              class="c7n-input-wrapper c7n-input-has-border"
+              class="c7n-input-wrapper c7n-input-has-value c7n-input-has-border"
             >
               <div
                 class="c7n-input-content"
@@ -1242,7 +1242,7 @@ exports[`renders ./components/form/demo/horizontal-login.md correctly 1`] = `
                     data-__field="[object Object]"
                     data-__meta="[object Object]"
                     id="password"
-                    type="text"
+                    type="password"
                     value=""
                   />
                   <div
@@ -1406,6 +1406,7 @@ exports[`renders ./components/form/demo/layout.md correctly 1`] = `
                     <input
                       class="c7n-input"
                       type="text"
+                      value=""
                     />
                     <div
                       class="c7n-input-label-wrapper"
@@ -1451,6 +1452,7 @@ exports[`renders ./components/form/demo/layout.md correctly 1`] = `
                     <input
                       class="c7n-input"
                       type="text"
+                      value=""
                     />
                     <div
                       class="c7n-input-label-wrapper"
@@ -1598,7 +1600,7 @@ exports[`renders ./components/form/demo/normal-login.md correctly 1`] = `
                     data-__field="[object Object]"
                     data-__meta="[object Object]"
                     id="password"
-                    type="text"
+                    type="password"
                     value=""
                   />
                   <div
@@ -1764,7 +1766,7 @@ exports[`renders ./components/form/demo/register.md correctly 1`] = `
                     data-__field="[object Object]"
                     data-__meta="[object Object]"
                     id="password"
-                    type="text"
+                    type="password"
                     value=""
                   />
                   <div
@@ -1820,7 +1822,7 @@ exports[`renders ./components/form/demo/register.md correctly 1`] = `
                     data-__field="[object Object]"
                     data-__meta="[object Object]"
                     id="confirm"
-                    type="text"
+                    type="password"
                     value=""
                   />
                   <div
@@ -1918,7 +1920,7 @@ exports[`renders ./components/form/demo/register.md correctly 1`] = `
             class="c7n-input-number"
           >
             <span
-              class="c7n-input-wrapper c7n-input-has-label c7n-input-has-suffix c7n-input-has-border"
+              class="c7n-input-wrapper c7n-input-has-value c7n-input-has-label c7n-input-has-suffix c7n-input-has-border"
             >
               <div
                 class="c7n-input-content"
@@ -2078,7 +2080,7 @@ exports[`renders ./components/form/demo/register.md correctly 1`] = `
                     class="c7n-select-search__field__wrap"
                   >
                     <span
-                      class="c7n-input-wrapper c7n-input-has-border"
+                      class="c7n-input-wrapper"
                     >
                       <div
                         class="c7n-input-content"
@@ -2494,7 +2496,7 @@ exports[`renders ./components/form/demo/time-related-controls.md correctly 1`] =
             tabindex="0"
           >
             <span
-              class="c7n-calendar-range-picker c7n-input-wrapper"
+              class="c7n-calendar-range-picker c7n-input-wrapper c7n-input-has-border"
             >
               <span
                 class="c7n-calendar-picker-input c7n-input"
@@ -2518,9 +2520,13 @@ exports[`renders ./components/form/demo/time-related-controls.md correctly 1`] =
                   tabindex="-1"
                   value=""
                 />
-                <i
-                  class="icon icon-date_range c7n-calendar-picker-icon"
-                />
+                <span
+                  class="c7n-input-suffix"
+                >
+                  <i
+                    class="icon icon-date_range c7n-calendar-picker-icon"
+                  />
+                </span>
               </span>
             </span>
           </span>
@@ -2547,7 +2553,7 @@ exports[`renders ./components/form/demo/time-related-controls.md correctly 1`] =
             tabindex="0"
           >
             <span
-              class="c7n-calendar-range-picker c7n-input-wrapper"
+              class="c7n-calendar-range-picker c7n-input-wrapper c7n-input-has-border"
             >
               <span
                 class="c7n-calendar-picker-input c7n-input"
@@ -2571,9 +2577,13 @@ exports[`renders ./components/form/demo/time-related-controls.md correctly 1`] =
                   tabindex="-1"
                   value=""
                 />
-                <i
-                  class="icon icon-date_range c7n-calendar-picker-icon"
-                />
+                <span
+                  class="c7n-input-suffix"
+                >
+                  <i
+                    class="icon icon-date_range c7n-calendar-picker-icon"
+                  />
+                </span>
               </span>
             </span>
           </span>
@@ -2841,7 +2851,7 @@ exports[`renders ./components/form/demo/validate-other.md correctly 1`] = `
             class="c7n-input-number"
           >
             <span
-              class="c7n-input-wrapper c7n-input-has-suffix c7n-input-has-border"
+              class="c7n-input-wrapper c7n-input-has-value c7n-input-has-suffix c7n-input-has-border"
             >
               <div
                 class="c7n-input-content"
@@ -3439,6 +3449,7 @@ exports[`renders ./components/form/demo/validate-static.md correctly 1`] = `
                     class="c7n-input"
                     id="error"
                     type="text"
+                    value=""
                   />
                   <div
                     class="c7n-input-label-wrapper"
@@ -3490,6 +3501,7 @@ exports[`renders ./components/form/demo/validate-static.md correctly 1`] = `
                     class="c7n-input"
                     id="warning"
                     type="text"
+                    value=""
                   />
                   <div
                     class="c7n-input-label-wrapper"
@@ -3536,6 +3548,7 @@ exports[`renders ./components/form/demo/validate-static.md correctly 1`] = `
                     class="c7n-input"
                     id="validating"
                     type="text"
+                    value=""
                   />
                   <div
                     class="c7n-input-label-wrapper"
@@ -3587,6 +3600,7 @@ exports[`renders ./components/form/demo/validate-static.md correctly 1`] = `
                     class="c7n-input"
                     id="success"
                     type="text"
+                    value=""
                   />
                   <div
                     class="c7n-input-label-wrapper"
@@ -3633,6 +3647,7 @@ exports[`renders ./components/form/demo/validate-static.md correctly 1`] = `
                     class="c7n-input"
                     id="warning"
                     type="text"
+                    value=""
                   />
                   <div
                     class="c7n-input-label-wrapper"
@@ -3679,6 +3694,7 @@ exports[`renders ./components/form/demo/validate-static.md correctly 1`] = `
                     class="c7n-input"
                     id="error"
                     type="text"
+                    value=""
                   />
                   <div
                     class="c7n-input-label-wrapper"
@@ -4193,7 +4209,7 @@ exports[`renders ./components/form/demo/without-form-create.md correctly 1`] = `
             class="c7n-input-number"
           >
             <span
-              class="c7n-input-wrapper c7n-input-has-suffix c7n-input-has-border"
+              class="c7n-input-wrapper c7n-input-has-value c7n-input-has-suffix c7n-input-has-border"
             >
               <div
                 class="c7n-input-content"

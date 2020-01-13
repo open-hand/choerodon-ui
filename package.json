@@ -220,8 +220,9 @@
     "stylelint-declaration-block-no-ignored-properties": "^2.1.0",
     "stylelint-order": "^3.0.0",
     "through2": "^3.0.1",
+    "ts-jest": "^24.3.0",
     "ts-loader": "^6.0.4",
-    "typescript": "3.5.x",
+    "typescript": "~3.7.2",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "unified": "^8.3.2",
     "url-loader": "^2.1.0",
@@ -234,7 +235,7 @@
     "xhr2": "^0.2.0"
   },
   "scripts": {
-    "test": "jest --config .jest.js --debug",
+    "test": "jest --config .jest.js --no-cache --debug",
     "test-node": "jest --config .jest.node.js",
     "test-all": "sh ./scripts/test-all.sh",
     "test-all-skip": "sh ./scripts/test-all.sh --skip",

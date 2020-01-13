@@ -233,7 +233,7 @@ exports[`renders ./components/slider/demo/input-number.md correctly 1`] = `
         style="margin-left:16px"
       >
         <span
-          class="c7n-input-wrapper c7n-input-has-suffix c7n-input-has-border"
+          class="c7n-input-wrapper c7n-input-has-value c7n-input-has-suffix c7n-input-has-border"
         >
           <div
             class="c7n-input-content"
@@ -334,7 +334,7 @@ exports[`renders ./components/slider/demo/input-number.md correctly 1`] = `
         style="margin-left:16px"
       >
         <span
-          class="c7n-input-wrapper c7n-input-has-suffix c7n-input-has-border"
+          class="c7n-input-wrapper c7n-input-has-value c7n-input-has-suffix c7n-input-has-border"
         >
           <div
             class="c7n-input-content"

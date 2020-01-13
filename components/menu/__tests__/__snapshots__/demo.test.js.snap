@@ -2,10 +2,25 @@
 
 exports[`renders ./components/menu/demo/horizontal.md correctly 1`] = `
 <ul
-  aria-activedescendant=""
   class="c7n-menu c7n-menu-light c7n-menu-root c7n-menu-horizontal"
   role="menu"
 >
+  <li
+    class="c7n-menu-submenu c7n-menu-submenu-horizontal c7n-menu-overflowed-submenu"
+    role="menuitem"
+    style="display:none"
+  >
+    <div
+      aria-expanded="false"
+      aria-haspopup="true"
+      class="c7n-menu-submenu-title"
+      title=""
+    >
+      <i
+        class="c7n-menu-submenu-arrow"
+      />
+    </div>
+  </li>
   <li
     aria-selected="true"
     class="c7n-menu-item c7n-menu-item-selected"
@@ -20,6 +35,22 @@ exports[`renders ./components/menu/demo/horizontal.md correctly 1`] = `
     />
   </li>
   <li
+    class="c7n-menu-submenu c7n-menu-submenu-horizontal c7n-menu-overflowed-submenu"
+    role="menuitem"
+    style="display:none"
+  >
+    <div
+      aria-expanded="false"
+      aria-haspopup="true"
+      class="c7n-menu-submenu-title"
+      title=""
+    >
+      <i
+        class="c7n-menu-submenu-arrow"
+      />
+    </div>
+  </li>
+  <li
     aria-disabled="true"
     aria-selected="false"
     class="c7n-menu-item c7n-menu-item-disabled"
@@ -29,6 +60,22 @@ exports[`renders ./components/menu/demo/horizontal.md correctly 1`] = `
       class="icon icon-apps"
     />
     Navigation Two
+  </li>
+  <li
+    class="c7n-menu-submenu c7n-menu-submenu-horizontal c7n-menu-overflowed-submenu"
+    role="menuitem"
+    style="display:none"
+  >
+    <div
+      aria-expanded="false"
+      aria-haspopup="true"
+      class="c7n-menu-submenu-title"
+      title=""
+    >
+      <i
+        class="c7n-menu-submenu-arrow"
+      />
+    </div>
   </li>
   <li
     class="c7n-menu-submenu c7n-menu-submenu-horizontal"
@@ -51,6 +98,22 @@ exports[`renders ./components/menu/demo/horizontal.md correctly 1`] = `
     </div>
   </li>
   <li
+    class="c7n-menu-submenu c7n-menu-submenu-horizontal c7n-menu-overflowed-submenu"
+    role="menuitem"
+    style="display:none"
+  >
+    <div
+      aria-expanded="false"
+      aria-haspopup="true"
+      class="c7n-menu-submenu-title"
+      title=""
+    >
+      <i
+        class="c7n-menu-submenu-arrow"
+      />
+    </div>
+  </li>
+  <li
     aria-selected="false"
     class="c7n-menu-item"
     role="menuitem"
@@ -66,12 +129,27 @@ exports[`renders ./components/menu/demo/horizontal.md correctly 1`] = `
       class="c7n-ripple-wrapper"
     />
   </li>
+  <li
+    class="c7n-menu-submenu c7n-menu-submenu-horizontal c7n-menu-overflowed-submenu"
+    role="menuitem"
+    style="visibility:hidden;position:absolute"
+  >
+    <div
+      aria-expanded="false"
+      aria-haspopup="true"
+      class="c7n-menu-submenu-title"
+      title=""
+    >
+      <i
+        class="c7n-menu-submenu-arrow"
+      />
+    </div>
+  </li>
 </ul>
 `;
 
 exports[`renders ./components/menu/demo/inline.md correctly 1`] = `
 <ul
-  aria-activedescendant=""
   class="c7n-menu c7n-menu-light c7n-menu-root c7n-menu-inline"
   role="menu"
   style="width:256px"
@@ -246,7 +324,6 @@ exports[`renders ./components/menu/demo/inline-collapsed.md correctly 1`] = `
     />
   </button>
   <ul
-    aria-activedescendant=""
     class="c7n-menu c7n-menu-light c7n-menu-root c7n-menu-inline"
     role="menu"
   >
@@ -402,7 +479,6 @@ exports[`renders ./components/menu/demo/inline-collapsed.md correctly 1`] = `
 
 exports[`renders ./components/menu/demo/sider-current.md correctly 1`] = `
 <ul
-  aria-activedescendant=""
   class="c7n-menu c7n-menu-light c7n-menu-root c7n-menu-inline"
   role="menu"
   style="width:256px"
@@ -550,7 +626,6 @@ exports[`renders ./components/menu/demo/switch-mode.md correctly 1`] = `
   <br />
   <br />
   <ul
-    aria-activedescendant=""
     class="c7n-menu c7n-menu-light c7n-menu-root c7n-menu-inline"
     role="menu"
     style="width:256px"
@@ -697,7 +772,6 @@ exports[`renders ./components/menu/demo/theme.md correctly 1`] = `
   <br />
   <br />
   <ul
-    aria-activedescendant=""
     class="c7n-menu c7n-menu-dark c7n-menu-root c7n-menu-inline"
     role="menu"
     style="width:256px"
@@ -830,7 +904,6 @@ exports[`renders ./components/menu/demo/theme.md correctly 1`] = `
 
 exports[`renders ./components/menu/demo/vertical.md correctly 1`] = `
 <ul
-  aria-activedescendant=""
   class="c7n-menu c7n-menu-light c7n-menu-root c7n-menu-vertical"
   role="menu"
   style="width:256px"

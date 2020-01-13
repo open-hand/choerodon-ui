@@ -43,7 +43,7 @@ exports[`renders ./components/list/demo/basic.md correctly 1`] = `
               <div
                 class="c7n-list-item-meta-description"
               >
-                Choerodon UI, a design language for background applications, is refined by Ant UED Team
+                Choerodon
               </div>
             </div>
           </div>
@@ -80,7 +80,7 @@ exports[`renders ./components/list/demo/basic.md correctly 1`] = `
               <div
                 class="c7n-list-item-meta-description"
               >
-                Choerodon UI, a design language for background applications, is refined by Ant UED Team
+                Choerodon
               </div>
             </div>
           </div>
@@ -117,7 +117,7 @@ exports[`renders ./components/list/demo/basic.md correctly 1`] = `
               <div
                 class="c7n-list-item-meta-description"
               >
-                Choerodon UI, a design language for background applications, is refined by Ant UED Team
+                Choerodon
               </div>
             </div>
           </div>
@@ -154,7 +154,7 @@ exports[`renders ./components/list/demo/basic.md correctly 1`] = `
               <div
                 class="c7n-list-item-meta-description"
               >
-                Choerodon UI, a design language for background applications, is refined by Ant UED Team
+                Choerodon
               </div>
             </div>
           </div>

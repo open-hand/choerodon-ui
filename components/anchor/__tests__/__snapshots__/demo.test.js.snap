@@ -35,10 +35,10 @@ exports[`renders ./components/anchor/demo/basic.md correctly 1`] = `
         >
           <a
             class="c7n-anchor-link-title"
-            href="#components-anchor-demo-fixed"
-            title="Fixed demo"
+            href="#components-anchor-demo-static"
+            title="Static demo"
           >
-            Fixed demo
+            Static demo
           </a>
         </div>
         <div
@@ -80,7 +80,7 @@ exports[`renders ./components/anchor/demo/basic.md correctly 1`] = `
 </div>
 `;
 
-exports[`renders ./components/anchor/demo/static.md correctly 1`] = `
+exports[`renders ./components/anchor/demo/customizeHighlight.md correctly 1`] = `
 <div
   class="c7n-anchor-wrapper"
   style="max-height:100vh"
@@ -111,10 +111,10 @@ exports[`renders ./components/anchor/demo/static.md correctly 1`] = `
     >
       <a
         class="c7n-anchor-link-title"
-        href="#components-anchor-demo-fixed"
-        title="Fixed demo"
+        href="#components-anchor-demo-static"
+        title="Static demo"
       >
-        Fixed demo
+        Static demo
       </a>
     </div>
     <div
@@ -148,6 +148,234 @@ exports[`renders ./components/anchor/demo/static.md correctly 1`] = `
         >
           Link Props
         </a>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders ./components/anchor/demo/onClick.md correctly 1`] = `
+<div
+  class="c7n-anchor-wrapper"
+  style="max-height:100vh"
+>
+  <div
+    class="c7n-anchor fixed"
+  >
+    <div
+      class="c7n-anchor-ink"
+    >
+      <span
+        class="c7n-anchor-ink-ball"
+      />
+    </div>
+    <div
+      class="c7n-anchor-link"
+    >
+      <a
+        class="c7n-anchor-link-title"
+        href="#components-anchor-demo-basic"
+        title="Basic demo"
+      >
+        Basic demo
+      </a>
+    </div>
+    <div
+      class="c7n-anchor-link"
+    >
+      <a
+        class="c7n-anchor-link-title"
+        href="#components-anchor-demo-static"
+        title="Static demo"
+      >
+        Static demo
+      </a>
+    </div>
+    <div
+      class="c7n-anchor-link"
+    >
+      <a
+        class="c7n-anchor-link-title"
+        href="#API"
+        title="API"
+      >
+        API
+      </a>
+      <div
+        class="c7n-anchor-link"
+      >
+        <a
+          class="c7n-anchor-link-title"
+          href="#Anchor-Props"
+          title="Anchor Props"
+        >
+          Anchor Props
+        </a>
+      </div>
+      <div
+        class="c7n-anchor-link"
+      >
+        <a
+          class="c7n-anchor-link-title"
+          href="#Link-Props"
+          title="Link Props"
+        >
+          Link Props
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders ./components/anchor/demo/static.md correctly 1`] = `
+<div
+  class="c7n-anchor-wrapper"
+  style="max-height:100vh"
+>
+  <div
+    class="c7n-anchor fixed"
+  >
+    <div
+      class="c7n-anchor-ink"
+    >
+      <span
+        class="c7n-anchor-ink-ball"
+      />
+    </div>
+    <div
+      class="c7n-anchor-link"
+    >
+      <a
+        class="c7n-anchor-link-title"
+        href="#components-anchor-demo-basic"
+        title="Basic demo"
+      >
+        Basic demo
+      </a>
+    </div>
+    <div
+      class="c7n-anchor-link"
+    >
+      <a
+        class="c7n-anchor-link-title"
+        href="#components-anchor-demo-static"
+        title="Static demo"
+      >
+        Static demo
+      </a>
+    </div>
+    <div
+      class="c7n-anchor-link"
+    >
+      <a
+        class="c7n-anchor-link-title"
+        href="#API"
+        title="API"
+      >
+        API
+      </a>
+      <div
+        class="c7n-anchor-link"
+      >
+        <a
+          class="c7n-anchor-link-title"
+          href="#Anchor-Props"
+          title="Anchor Props"
+        >
+          Anchor Props
+        </a>
+      </div>
+      <div
+        class="c7n-anchor-link"
+      >
+        <a
+          class="c7n-anchor-link-title"
+          href="#Link-Props"
+          title="Link Props"
+        >
+          Link Props
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders ./components/anchor/demo/targetOffset.md correctly 1`] = `
+<div>
+  <div
+    class=""
+  >
+    <div
+      class="c7n-anchor-wrapper"
+      style="max-height:100vh"
+    >
+      <div
+        class="c7n-anchor"
+      >
+        <div
+          class="c7n-anchor-ink"
+        >
+          <span
+            class="c7n-anchor-ink-ball"
+          />
+        </div>
+        <div
+          class="c7n-anchor-link"
+        >
+          <a
+            class="c7n-anchor-link-title"
+            href="#components-anchor-demo-basic"
+            title="Basic demo"
+          >
+            Basic demo
+          </a>
+        </div>
+        <div
+          class="c7n-anchor-link"
+        >
+          <a
+            class="c7n-anchor-link-title"
+            href="#components-anchor-demo-static"
+            title="Static demo"
+          >
+            Static demo
+          </a>
+        </div>
+        <div
+          class="c7n-anchor-link"
+        >
+          <a
+            class="c7n-anchor-link-title"
+            href="#API"
+            title="API"
+          >
+            API
+          </a>
+          <div
+            class="c7n-anchor-link"
+          >
+            <a
+              class="c7n-anchor-link-title"
+              href="#Anchor-Props"
+              title="Anchor Props"
+            >
+              Anchor Props
+            </a>
+          </div>
+          <div
+            class="c7n-anchor-link"
+          >
+            <a
+              class="c7n-anchor-link-title"
+              href="#Link-Props"
+              title="Link Props"
+            >
+              Link Props
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </div>

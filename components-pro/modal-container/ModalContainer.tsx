@@ -76,7 +76,7 @@ function hideBodyScrollBar() {
     };
     style.overflow = 'hidden';
     if (hasScrollBar()) {
-      style.paddingRight = pxToRem(measureScrollbar()) || null;
+      style.paddingRight = pxToRem(measureScrollbar()) || '';
     }
   }
 }

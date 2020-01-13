@@ -17,6 +17,7 @@ exports[`Input.Search should support custom Button 1`] = `
         <input
           class="c7n-input c7n-input-sm c7n-input-search c7n-input-search-enter-button c7n-input-search-small"
           type="text"
+          value=""
         />
       </div>
       <span
@@ -56,6 +57,7 @@ exports[`Input.Search should support custom button 1`] = `
         <input
           class="c7n-input c7n-input-sm c7n-input-search c7n-input-search-enter-button c7n-input-search-small"
           type="text"
+          value=""
         />
       </div>
       <span

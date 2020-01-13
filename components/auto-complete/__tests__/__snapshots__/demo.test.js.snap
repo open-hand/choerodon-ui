@@ -24,7 +24,7 @@ exports[`renders ./components/auto-complete/demo/basic.md correctly 1`] = `
           class="c7n-select-search__field__wrap"
         >
           <span
-            class="c7n-input-wrapper c7n-input-has-border"
+            class="c7n-input-wrapper"
           >
             <div
               class="c7n-input-content"
@@ -194,13 +194,13 @@ exports[`renders ./components/auto-complete/demo/custom.md correctly 1`] = `
           class="c7n-select-search__field__wrap"
         >
           <span
-            class="c7n-input-wrapper c7n-input-textarea"
+            class="c7n-input-wrapper c7n-input-textarea c7n-input-has-border"
           >
             <div
               class="c7n-input-rendered-wrapper"
             >
               <textarea
-                class="c7n-input custom c7n-select-search__field"
+                class="c7n-input c7n-input-textarea-element custom c7n-select-search__field"
               />
               <div
                 class="c7n-input-label-wrapper"
@@ -259,7 +259,7 @@ exports[`renders ./components/auto-complete/demo/non-case-sensitive.md correctly
           class="c7n-select-search__field__wrap"
         >
           <span
-            class="c7n-input-wrapper c7n-input-has-border"
+            class="c7n-input-wrapper"
           >
             <div
               class="c7n-input-content"
@@ -334,7 +334,7 @@ exports[`renders ./components/auto-complete/demo/options.md correctly 1`] = `
           class="c7n-select-search__field__wrap"
         >
           <span
-            class="c7n-input-wrapper c7n-input-has-border"
+            class="c7n-input-wrapper"
           >
             <div
               class="c7n-input-content"

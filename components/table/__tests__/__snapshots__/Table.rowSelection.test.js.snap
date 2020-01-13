@@ -577,7 +577,6 @@ exports[`Table.rowSelection render with default selection correctly 1`] = `
     class="c7n-dropdown  c7n-dropdown-placement-bottomLeft  c7n-dropdown-hidden"
   >
     <ul
-      aria-activedescendant=""
       class="c7n-dropdown-menu c7n-table-selection-menu c7n-dropdown-menu-light c7n-dropdown-menu-root c7n-dropdown-menu-vertical"
       role="menu"
     >
