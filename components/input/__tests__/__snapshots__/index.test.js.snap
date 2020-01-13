@@ -23,16 +23,16 @@ exports[`Input should support maxLength 1`] = `
           className="c7n-input-rendered"
         >
           <input
-            border={true}
             className="c7n-input"
             disabled={false}
             maxLength="3"
             onBlur={[Function]}
+            onChange={[Function]}
             onFocus={[Function]}
-            onInput={[Function]}
             onKeyDown={[Function]}
             readOnly={false}
             type="text"
+            value=""
           />
         </div>
       </div>
@@ -91,15 +91,15 @@ exports[`Input.Search should support suffix 1`] = `
             className="c7n-input-rendered c7n-input-rendered-sm"
           >
             <input
-              border={true}
               className="c7n-input c7n-input-sm c7n-input-search c7n-input-search-small"
               disabled={false}
               onBlur={[Function]}
+              onChange={[Function]}
               onFocus={[Function]}
-              onInput={[Function]}
               onKeyDown={[Function]}
               readOnly={false}
               type="text"
+              value=""
             />
           </div>
           <span
@@ -180,17 +180,19 @@ exports[`Input.Search should support suffix 1`] = `
 
 exports[`TextArea should support disabled 1`] = `
 <TextArea
+  border={true}
   disabled={true}
   showLengthInfo={true}
 >
   <span
-    className="c7n-input-wrapper c7n-input-textarea c7n-input-disabled"
+    className="c7n-input-wrapper c7n-input-textarea c7n-input-disabled c7n-input-has-border"
   >
     <div
       className="c7n-input-rendered-wrapper"
     >
       <textarea
-        className="c7n-input"
+        border={true}
+        className="c7n-input c7n-input-textarea-element"
         disabled={true}
         onBlur={[Function]}
         onChange={[Function]}
@@ -206,17 +208,19 @@ exports[`TextArea should support disabled 1`] = `
 
 exports[`TextArea should support maxLength 1`] = `
 <TextArea
+  border={true}
   maxLength="10"
   showLengthInfo={true}
 >
   <span
-    className="c7n-input-wrapper c7n-input-textarea"
+    className="c7n-input-wrapper c7n-input-textarea c7n-input-has-border"
   >
     <div
       className="c7n-input-rendered-wrapper"
     >
       <textarea
-        className="c7n-input"
+        border={true}
+        className="c7n-input c7n-input-textarea-element"
         maxLength="10"
         onBlur={[Function]}
         onChange={[Function]}

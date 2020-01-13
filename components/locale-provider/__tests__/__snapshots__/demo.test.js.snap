@@ -315,7 +315,7 @@ exports[`renders ./components/locale-provider/demo/all.md correctly 1`] = `
         tabindex="0"
       >
         <span
-          class="c7n-calendar-range-picker c7n-input-wrapper"
+          class="c7n-calendar-range-picker c7n-input-wrapper c7n-input-has-border"
         >
           <span
             class="c7n-calendar-picker-input c7n-input"
@@ -339,9 +339,13 @@ exports[`renders ./components/locale-provider/demo/all.md correctly 1`] = `
               tabindex="-1"
               value=""
             />
-            <i
-              class="icon icon-date_range c7n-calendar-picker-icon"
-            />
+            <span
+              class="c7n-input-suffix"
+            >
+              <i
+                class="icon icon-date_range c7n-calendar-picker-icon"
+              />
+            </span>
           </span>
         </span>
       </span>
@@ -491,7 +495,7 @@ exports[`renders ./components/locale-provider/demo/all.md correctly 1`] = `
             type="button"
           >
             <i
-              class="icon icon-left"
+              class="icon icon-keyboard_arrow_left"
             />
           </button>
           <button
@@ -500,7 +504,7 @@ exports[`renders ./components/locale-provider/demo/all.md correctly 1`] = `
             type="button"
           >
             <i
-              class="icon icon-right"
+              class="icon icon-keyboard_arrow_right"
             />
           </button>
         </div>

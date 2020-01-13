@@ -402,17 +402,21 @@ exports[`renders ./components/button/demo/loading.md correctly 1`] = `
     type="button"
   >
     <div
-      class="btn-loading"
+      class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-small"
     >
-      <span
-        class="dot1"
-      />
-      <span
-        class="dot2"
-      />
-      <span
-        class="dot3"
-      />
+      <div
+        class="c7n-progress-inner"
+      >
+        <svg
+          viewBox="0 0 50 50"
+        >
+          <circle
+            cx="25"
+            cy="25"
+            r="20"
+          />
+        </svg>
+      </div>
     </div>
     <span>
       Loading
@@ -426,17 +430,21 @@ exports[`renders ./components/button/demo/loading.md correctly 1`] = `
     type="button"
   >
     <div
-      class="btn-loading"
+      class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-small"
     >
-      <span
-        class="dot1"
-      />
-      <span
-        class="dot2"
-      />
-      <span
-        class="dot3"
-      />
+      <div
+        class="c7n-progress-inner"
+      >
+        <svg
+          viewBox="0 0 50 50"
+        >
+          <circle
+            cx="25"
+            cy="25"
+            r="20"
+          />
+        </svg>
+      </div>
     </div>
     <span>
       Loading
@@ -477,17 +485,21 @@ exports[`renders ./components/button/demo/loading.md correctly 1`] = `
     type="button"
   >
     <div
-      class="btn-loading"
+      class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-small"
     >
-      <span
-        class="dot1"
-      />
-      <span
-        class="dot2"
-      />
-      <span
-        class="dot3"
-      />
+      <div
+        class="c7n-progress-inner"
+      >
+        <svg
+          viewBox="0 0 50 50"
+        >
+          <circle
+            cx="25"
+            cy="25"
+            r="20"
+          />
+        </svg>
+      </div>
     </div>
     <div
       class="c7n-ripple-wrapper"
@@ -498,17 +510,21 @@ exports[`renders ./components/button/demo/loading.md correctly 1`] = `
     type="button"
   >
     <div
-      class="btn-loading"
+      class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-small"
     >
-      <span
-        class="dot1"
-      />
-      <span
-        class="dot2"
-      />
-      <span
-        class="dot3"
-      />
+      <div
+        class="c7n-progress-inner"
+      >
+        <svg
+          viewBox="0 0 50 50"
+        >
+          <circle
+            cx="25"
+            cy="25"
+            r="20"
+          />
+        </svg>
+      </div>
     </div>
     <div
       class="c7n-ripple-wrapper"

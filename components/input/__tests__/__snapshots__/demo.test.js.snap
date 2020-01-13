@@ -6,7 +6,7 @@ exports[`renders ./components/input/demo/addon.md correctly 1`] = `
     style="margin-bottom:16px"
   >
     <span
-      class="c7n-input-wrapper c7n-input-has-border"
+      class="c7n-input-wrapper c7n-input-has-value c7n-input-has-border"
     >
       <div
         class="c7n-input-content"
@@ -28,7 +28,7 @@ exports[`renders ./components/input/demo/addon.md correctly 1`] = `
         <div
           class="c7n-input-length-info"
         >
-          0/30
+          6/30
         </div>
       </div>
     </span>
@@ -37,7 +37,7 @@ exports[`renders ./components/input/demo/addon.md correctly 1`] = `
     style="margin-bottom:16px"
   >
     <span
-      class="c7n-input-wrapper c7n-input-has-border"
+      class="c7n-input-wrapper c7n-input-has-value c7n-input-has-border"
     >
       <div
         class="c7n-input-content"
@@ -76,6 +76,7 @@ exports[`renders ./components/input/demo/addon.md correctly 1`] = `
             <input
               class="c7n-input"
               type="text"
+              value=""
             />
             <div
               class="c7n-input-label-wrapper"
@@ -97,13 +98,13 @@ exports[`renders ./components/input/demo/addon.md correctly 1`] = `
 exports[`renders ./components/input/demo/autosize-textarea.md correctly 1`] = `
 <div>
   <span
-    class="c7n-input-wrapper c7n-input-textarea"
+    class="c7n-input-wrapper c7n-input-textarea c7n-input-has-border"
   >
     <div
       class="c7n-input-rendered-wrapper"
     >
       <textarea
-        class="c7n-input"
+        class="c7n-input c7n-input-textarea-element"
       />
       <div
         class="c7n-input-label-wrapper"
@@ -120,13 +121,13 @@ exports[`renders ./components/input/demo/autosize-textarea.md correctly 1`] = `
     style="margin:24px 0"
   />
   <span
-    class="c7n-input-wrapper c7n-input-textarea"
+    class="c7n-input-wrapper c7n-input-textarea c7n-input-has-border"
   >
     <div
       class="c7n-input-rendered-wrapper"
     >
       <textarea
-        class="c7n-input"
+        class="c7n-input c7n-input-textarea-element"
       />
       <div
         class="c7n-input-label-wrapper"
@@ -168,6 +169,7 @@ exports[`renders ./components/input/demo/basic.md correctly 1`] = `
               maxlength="50"
               required=""
               type="text"
+              value=""
             />
             <div
               class="c7n-input-label-wrapper"
@@ -200,7 +202,7 @@ exports[`renders ./components/input/demo/basic.md correctly 1`] = `
     style="padding-left:4px;padding-right:4px"
   >
     <span
-      class="c7n-input-wrapper c7n-input-disabled c7n-input-has-label c7n-input-has-border"
+      class="c7n-input-wrapper c7n-input-has-value c7n-input-disabled c7n-input-has-label c7n-input-has-border"
     >
       <div
         class="c7n-input-content"
@@ -225,7 +227,7 @@ exports[`renders ./components/input/demo/basic.md correctly 1`] = `
               <div
                 class="c7n-input-label"
               >
-                Basic usage
+                Basic
               </div>
             </div>
           </div>
@@ -233,7 +235,7 @@ exports[`renders ./components/input/demo/basic.md correctly 1`] = `
         <div
           class="c7n-input-length-info"
         >
-          0/20
+          3/20
         </div>
       </div>
     </span>
@@ -250,7 +252,7 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
       class="c7n-col-5"
     >
       <span
-        class="c7n-input-wrapper c7n-input-has-border"
+        class="c7n-input-wrapper c7n-input-has-value c7n-input-has-border"
       >
         <div
           class="c7n-input-content"
@@ -275,7 +277,7 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
       class="c7n-col-8"
     >
       <span
-        class="c7n-input-wrapper c7n-input-has-border"
+        class="c7n-input-wrapper c7n-input-has-value c7n-input-has-border"
       >
         <div
           class="c7n-input-content"
@@ -302,7 +304,7 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
     class="c7n-input-group c7n-input-group-compact"
   >
     <span
-      class="c7n-input-wrapper c7n-input-has-border"
+      class="c7n-input-wrapper c7n-input-has-value c7n-input-has-border"
       style="width:20%"
     >
       <div
@@ -324,7 +326,7 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
       </div>
     </span>
     <span
-      class="c7n-input-wrapper c7n-input-has-border"
+      class="c7n-input-wrapper c7n-input-has-value c7n-input-has-border"
       style="width:30%"
     >
       <div
@@ -386,7 +388,7 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
       </div>
     </div>
     <span
-      class="c7n-input-wrapper c7n-input-has-border"
+      class="c7n-input-wrapper c7n-input-has-value c7n-input-has-border"
       style="width:50%"
     >
       <div
@@ -448,7 +450,7 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
       </div>
     </div>
     <span
-      class="c7n-input-wrapper c7n-input-has-border"
+      class="c7n-input-wrapper c7n-input-has-value c7n-input-has-border"
       style="width:50%"
     >
       <div
@@ -535,7 +537,7 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
     class="c7n-input-group c7n-input-group-compact"
   >
     <span
-      class="c7n-input-wrapper c7n-input-has-border"
+      class="c7n-input-wrapper c7n-input-has-value c7n-input-has-border"
       style="width:50%"
     >
       <div
@@ -733,6 +735,7 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
             <input
               class="c7n-input"
               type="text"
+              value=""
             />
             <div
               class="c7n-input-label-wrapper"
@@ -748,7 +751,7 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
       </div>
     </span>
     <span
-      class="c7n-input-wrapper c7n-input-disabled c7n-input-has-border"
+      class="c7n-input-wrapper c7n-input-has-value c7n-input-disabled c7n-input-has-border"
       style="width:30px;border-left:0;pointer-events:none;background-color:#fff"
     >
       <div
@@ -786,6 +789,7 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
             <input
               class="c7n-input"
               type="text"
+              value=""
             />
             <div
               class="c7n-input-label-wrapper"
@@ -863,7 +867,7 @@ exports[`renders ./components/input/demo/group.md correctly 1`] = `
               class="c7n-select-search__field__wrap"
             >
               <span
-                class="c7n-input-wrapper c7n-input-has-border"
+                class="c7n-input-wrapper"
               >
                 <div
                   class="c7n-input-content"
@@ -1027,6 +1031,7 @@ exports[`renders ./components/input/demo/password.md correctly 1`] = `
               maxlength="50"
               required=""
               type="text"
+              value=""
             />
             <div
               class="c7n-input-label-wrapper"
@@ -1067,7 +1072,8 @@ exports[`renders ./components/input/demo/password.md correctly 1`] = `
               class="c7n-input"
               maxlength="20"
               required=""
-              type="text"
+              type="password"
+              value=""
             />
             <div
               class="c7n-input-label-wrapper"
@@ -1108,7 +1114,8 @@ exports[`renders ./components/input/demo/password.md correctly 1`] = `
               class="c7n-input"
               maxlength="20"
               required=""
-              type="text"
+              type="password"
+              value=""
             />
             <div
               class="c7n-input-label-wrapper"
@@ -1141,7 +1148,7 @@ exports[`renders ./components/input/demo/password.md correctly 1`] = `
 
 exports[`renders ./components/input/demo/presuffix.md correctly 1`] = `
 <span
-  class="c7n-input-wrapper c7n-input-has-label c7n-input-has-prefix c7n-input-has-suffix c7n-input-has-border"
+  class="c7n-input-wrapper c7n-input-has-value c7n-input-has-label c7n-input-has-prefix c7n-input-has-suffix c7n-input-has-border"
 >
   <div
     class="c7n-input-content"
@@ -1168,7 +1175,7 @@ exports[`renders ./components/input/demo/presuffix.md correctly 1`] = `
           <div
             class="c7n-input-label"
           >
-            Enter your username
+            username
           </div>
         </div>
         <span
@@ -1209,6 +1216,7 @@ exports[`renders ./components/input/demo/search-input.md correctly 1`] = `
           <input
             class="c7n-input c7n-input-sm c7n-input-search c7n-input-search-small"
             type="text"
+            value=""
           />
           <div
             class="c7n-input-label-wrapper"
@@ -1255,6 +1263,7 @@ exports[`renders ./components/input/demo/search-input.md correctly 1`] = `
           <input
             class="c7n-input c7n-input-sm c7n-input-search c7n-input-search-enter-button c7n-input-search-small"
             type="text"
+            value=""
           />
           <div
             class="c7n-input-label-wrapper"
@@ -1301,6 +1310,7 @@ exports[`renders ./components/input/demo/search-input.md correctly 1`] = `
           <input
             class="c7n-input c7n-input-lg c7n-input-search c7n-input-search-enter-button c7n-input-search-large"
             type="text"
+            value=""
           />
           <div
             class="c7n-input-label-wrapper"
@@ -1353,6 +1363,7 @@ exports[`renders ./components/input/demo/size.md correctly 1`] = `
             class="c7n-input c7n-input-lg"
             maxlength="20"
             type="text"
+            value=""
           />
           <div
             class="c7n-input-label-wrapper"
@@ -1387,6 +1398,7 @@ exports[`renders ./components/input/demo/size.md correctly 1`] = `
           <input
             class="c7n-input"
             type="text"
+            value=""
           />
           <div
             class="c7n-input-label-wrapper"
@@ -1416,6 +1428,7 @@ exports[`renders ./components/input/demo/size.md correctly 1`] = `
           <input
             class="c7n-input c7n-input-sm"
             type="text"
+            value=""
           />
           <div
             class="c7n-input-label-wrapper"
@@ -1435,13 +1448,13 @@ exports[`renders ./components/input/demo/size.md correctly 1`] = `
 
 exports[`renders ./components/input/demo/textarea.md correctly 1`] = `
 <span
-  class="c7n-input-wrapper c7n-input-textarea c7n-input-has-label"
+  class="c7n-input-wrapper c7n-input-textarea c7n-input-has-label c7n-input-has-border"
 >
   <div
     class="c7n-input-rendered-wrapper"
   >
     <textarea
-      class="c7n-input"
+      class="c7n-input c7n-input-textarea-element"
       label="textarea"
       maxlength="20"
       rows="4"

@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 💄 修改 jest 配置，更新快照。
 - 🌟 `<pro>Upload`: 新增 showUploadList 属性。
 - 🐞 `<pro>Select`: 修复动态查询 lookup 选项重复问题。
 

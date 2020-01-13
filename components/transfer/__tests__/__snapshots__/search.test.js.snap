@@ -30,13 +30,11 @@ exports[`Search should show cross icon when input value exists 1`] = `
               className="c7n-input-rendered"
             >
               <input
-                border={true}
                 className="c7n-input"
                 disabled={false}
                 onBlur={[Function]}
                 onChange={[Function]}
                 onFocus={[Function]}
-                onInput={[Function]}
                 onKeyDown={[Function]}
                 readOnly={false}
                 type="text"
@@ -92,13 +90,11 @@ exports[`Search should show cross icon when input value exists 2`] = `
               className="c7n-input-rendered"
             >
               <input
-                border={true}
                 className="c7n-input"
                 disabled={false}
                 onBlur={[Function]}
                 onChange={[Function]}
                 onFocus={[Function]}
-                onInput={[Function]}
                 onKeyDown={[Function]}
                 readOnly={false}
                 type="text"

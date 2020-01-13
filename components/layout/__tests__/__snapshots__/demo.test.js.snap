@@ -138,7 +138,6 @@ exports[`renders ./components/layout/demo/custom-trigger.md correctly 1`] = `
         class="logo"
       />
       <ul
-        aria-activedescendant=""
         class="c7n-menu c7n-menu-dark c7n-menu-root c7n-menu-inline"
         role="menu"
       >
@@ -226,11 +225,26 @@ exports[`renders ./components/layout/demo/fixed.md correctly 1`] = `
       class="logo"
     />
     <ul
-      aria-activedescendant=""
       class="c7n-menu c7n-menu-dark c7n-menu-root c7n-menu-horizontal"
       role="menu"
       style="line-height:64px"
     >
+      <li
+        class="c7n-menu-submenu c7n-menu-submenu-horizontal c7n-menu-overflowed-submenu"
+        role="menuitem"
+        style="line-height:64px;display:none"
+      >
+        <div
+          aria-expanded="false"
+          aria-haspopup="true"
+          class="c7n-menu-submenu-title"
+          title=""
+        >
+          <i
+            class="c7n-menu-submenu-arrow"
+          />
+        </div>
+      </li>
       <li
         aria-selected="false"
         class="c7n-menu-item"
@@ -240,6 +254,22 @@ exports[`renders ./components/layout/demo/fixed.md correctly 1`] = `
         <div
           class="c7n-ripple-wrapper"
         />
+      </li>
+      <li
+        class="c7n-menu-submenu c7n-menu-submenu-horizontal c7n-menu-overflowed-submenu"
+        role="menuitem"
+        style="line-height:64px;display:none"
+      >
+        <div
+          aria-expanded="false"
+          aria-haspopup="true"
+          class="c7n-menu-submenu-title"
+          title=""
+        >
+          <i
+            class="c7n-menu-submenu-arrow"
+          />
+        </div>
       </li>
       <li
         aria-selected="true"
@@ -252,6 +282,22 @@ exports[`renders ./components/layout/demo/fixed.md correctly 1`] = `
         />
       </li>
       <li
+        class="c7n-menu-submenu c7n-menu-submenu-horizontal c7n-menu-overflowed-submenu"
+        role="menuitem"
+        style="line-height:64px;display:none"
+      >
+        <div
+          aria-expanded="false"
+          aria-haspopup="true"
+          class="c7n-menu-submenu-title"
+          title=""
+        >
+          <i
+            class="c7n-menu-submenu-arrow"
+          />
+        </div>
+      </li>
+      <li
         aria-selected="false"
         class="c7n-menu-item"
         role="menuitem"
@@ -260,6 +306,22 @@ exports[`renders ./components/layout/demo/fixed.md correctly 1`] = `
         <div
           class="c7n-ripple-wrapper"
         />
+      </li>
+      <li
+        class="c7n-menu-submenu c7n-menu-submenu-horizontal c7n-menu-overflowed-submenu"
+        role="menuitem"
+        style="line-height:64px;visibility:hidden;position:absolute"
+      >
+        <div
+          aria-expanded="false"
+          aria-haspopup="true"
+          class="c7n-menu-submenu-title"
+          title=""
+        >
+          <i
+            class="c7n-menu-submenu-arrow"
+          />
+        </div>
       </li>
     </ul>
   </div>
@@ -338,7 +400,6 @@ exports[`renders ./components/layout/demo/fixed-sider.md correctly 1`] = `
         class="logo"
       />
       <ul
-        aria-activedescendant=""
         class="c7n-menu c7n-menu-dark c7n-menu-root c7n-menu-inline"
         role="menu"
       >
@@ -626,7 +687,6 @@ exports[`renders ./components/layout/demo/responsive.md correctly 1`] = `
         class="logo"
       />
       <ul
-        aria-activedescendant=""
         class="c7n-menu c7n-menu-dark c7n-menu-root c7n-menu-inline"
         role="menu"
       >
@@ -748,7 +808,6 @@ exports[`renders ./components/layout/demo/side.md correctly 1`] = `
         class="logo"
       />
       <ul
-        aria-activedescendant=""
         class="c7n-menu c7n-menu-dark c7n-menu-root c7n-menu-inline"
         role="menu"
       >
@@ -926,11 +985,26 @@ exports[`renders ./components/layout/demo/top.md correctly 1`] = `
       class="logo"
     />
     <ul
-      aria-activedescendant=""
       class="c7n-menu c7n-menu-dark c7n-menu-root c7n-menu-horizontal"
       role="menu"
       style="line-height:64px"
     >
+      <li
+        class="c7n-menu-submenu c7n-menu-submenu-horizontal c7n-menu-overflowed-submenu"
+        role="menuitem"
+        style="line-height:64px;display:none"
+      >
+        <div
+          aria-expanded="false"
+          aria-haspopup="true"
+          class="c7n-menu-submenu-title"
+          title=""
+        >
+          <i
+            class="c7n-menu-submenu-arrow"
+          />
+        </div>
+      </li>
       <li
         aria-selected="false"
         class="c7n-menu-item"
@@ -940,6 +1014,22 @@ exports[`renders ./components/layout/demo/top.md correctly 1`] = `
         <div
           class="c7n-ripple-wrapper"
         />
+      </li>
+      <li
+        class="c7n-menu-submenu c7n-menu-submenu-horizontal c7n-menu-overflowed-submenu"
+        role="menuitem"
+        style="line-height:64px;display:none"
+      >
+        <div
+          aria-expanded="false"
+          aria-haspopup="true"
+          class="c7n-menu-submenu-title"
+          title=""
+        >
+          <i
+            class="c7n-menu-submenu-arrow"
+          />
+        </div>
       </li>
       <li
         aria-selected="true"
@@ -952,6 +1042,22 @@ exports[`renders ./components/layout/demo/top.md correctly 1`] = `
         />
       </li>
       <li
+        class="c7n-menu-submenu c7n-menu-submenu-horizontal c7n-menu-overflowed-submenu"
+        role="menuitem"
+        style="line-height:64px;display:none"
+      >
+        <div
+          aria-expanded="false"
+          aria-haspopup="true"
+          class="c7n-menu-submenu-title"
+          title=""
+        >
+          <i
+            class="c7n-menu-submenu-arrow"
+          />
+        </div>
+      </li>
+      <li
         aria-selected="false"
         class="c7n-menu-item"
         role="menuitem"
@@ -960,6 +1066,22 @@ exports[`renders ./components/layout/demo/top.md correctly 1`] = `
         <div
           class="c7n-ripple-wrapper"
         />
+      </li>
+      <li
+        class="c7n-menu-submenu c7n-menu-submenu-horizontal c7n-menu-overflowed-submenu"
+        role="menuitem"
+        style="line-height:64px;visibility:hidden;position:absolute"
+      >
+        <div
+          aria-expanded="false"
+          aria-haspopup="true"
+          class="c7n-menu-submenu-title"
+          title=""
+        >
+          <i
+            class="c7n-menu-submenu-arrow"
+          />
+        </div>
       </li>
     </ul>
   </div>
@@ -1034,11 +1156,26 @@ exports[`renders ./components/layout/demo/top-side.md correctly 1`] = `
       class="logo"
     />
     <ul
-      aria-activedescendant=""
       class="c7n-menu c7n-menu-dark c7n-menu-root c7n-menu-horizontal"
       role="menu"
       style="line-height:64px"
     >
+      <li
+        class="c7n-menu-submenu c7n-menu-submenu-horizontal c7n-menu-overflowed-submenu"
+        role="menuitem"
+        style="line-height:64px;display:none"
+      >
+        <div
+          aria-expanded="false"
+          aria-haspopup="true"
+          class="c7n-menu-submenu-title"
+          title=""
+        >
+          <i
+            class="c7n-menu-submenu-arrow"
+          />
+        </div>
+      </li>
       <li
         aria-selected="false"
         class="c7n-menu-item"
@@ -1048,6 +1185,22 @@ exports[`renders ./components/layout/demo/top-side.md correctly 1`] = `
         <div
           class="c7n-ripple-wrapper"
         />
+      </li>
+      <li
+        class="c7n-menu-submenu c7n-menu-submenu-horizontal c7n-menu-overflowed-submenu"
+        role="menuitem"
+        style="line-height:64px;display:none"
+      >
+        <div
+          aria-expanded="false"
+          aria-haspopup="true"
+          class="c7n-menu-submenu-title"
+          title=""
+        >
+          <i
+            class="c7n-menu-submenu-arrow"
+          />
+        </div>
       </li>
       <li
         aria-selected="true"
@@ -1060,6 +1213,22 @@ exports[`renders ./components/layout/demo/top-side.md correctly 1`] = `
         />
       </li>
       <li
+        class="c7n-menu-submenu c7n-menu-submenu-horizontal c7n-menu-overflowed-submenu"
+        role="menuitem"
+        style="line-height:64px;display:none"
+      >
+        <div
+          aria-expanded="false"
+          aria-haspopup="true"
+          class="c7n-menu-submenu-title"
+          title=""
+        >
+          <i
+            class="c7n-menu-submenu-arrow"
+          />
+        </div>
+      </li>
+      <li
         aria-selected="false"
         class="c7n-menu-item"
         role="menuitem"
@@ -1068,6 +1237,22 @@ exports[`renders ./components/layout/demo/top-side.md correctly 1`] = `
         <div
           class="c7n-ripple-wrapper"
         />
+      </li>
+      <li
+        class="c7n-menu-submenu c7n-menu-submenu-horizontal c7n-menu-overflowed-submenu"
+        role="menuitem"
+        style="line-height:64px;visibility:hidden;position:absolute"
+      >
+        <div
+          aria-expanded="false"
+          aria-haspopup="true"
+          class="c7n-menu-submenu-title"
+          title=""
+        >
+          <i
+            class="c7n-menu-submenu-arrow"
+          />
+        </div>
       </li>
     </ul>
   </div>
@@ -1128,7 +1313,6 @@ exports[`renders ./components/layout/demo/top-side.md correctly 1`] = `
           class="c7n-layout-sider-children"
         >
           <ul
-            aria-activedescendant=""
             class="c7n-menu c7n-menu-light c7n-menu-root c7n-menu-inline"
             role="menu"
             style="height:100%"
@@ -1280,11 +1464,26 @@ exports[`renders ./components/layout/demo/top-side-2.md correctly 1`] = `
       class="logo"
     />
     <ul
-      aria-activedescendant=""
       class="c7n-menu c7n-menu-dark c7n-menu-root c7n-menu-horizontal"
       role="menu"
       style="line-height:64px"
     >
+      <li
+        class="c7n-menu-submenu c7n-menu-submenu-horizontal c7n-menu-overflowed-submenu"
+        role="menuitem"
+        style="line-height:64px;display:none"
+      >
+        <div
+          aria-expanded="false"
+          aria-haspopup="true"
+          class="c7n-menu-submenu-title"
+          title=""
+        >
+          <i
+            class="c7n-menu-submenu-arrow"
+          />
+        </div>
+      </li>
       <li
         aria-selected="false"
         class="c7n-menu-item"
@@ -1294,6 +1493,22 @@ exports[`renders ./components/layout/demo/top-side-2.md correctly 1`] = `
         <div
           class="c7n-ripple-wrapper"
         />
+      </li>
+      <li
+        class="c7n-menu-submenu c7n-menu-submenu-horizontal c7n-menu-overflowed-submenu"
+        role="menuitem"
+        style="line-height:64px;display:none"
+      >
+        <div
+          aria-expanded="false"
+          aria-haspopup="true"
+          class="c7n-menu-submenu-title"
+          title=""
+        >
+          <i
+            class="c7n-menu-submenu-arrow"
+          />
+        </div>
       </li>
       <li
         aria-selected="true"
@@ -1306,6 +1521,22 @@ exports[`renders ./components/layout/demo/top-side-2.md correctly 1`] = `
         />
       </li>
       <li
+        class="c7n-menu-submenu c7n-menu-submenu-horizontal c7n-menu-overflowed-submenu"
+        role="menuitem"
+        style="line-height:64px;display:none"
+      >
+        <div
+          aria-expanded="false"
+          aria-haspopup="true"
+          class="c7n-menu-submenu-title"
+          title=""
+        >
+          <i
+            class="c7n-menu-submenu-arrow"
+          />
+        </div>
+      </li>
+      <li
         aria-selected="false"
         class="c7n-menu-item"
         role="menuitem"
@@ -1314,6 +1545,22 @@ exports[`renders ./components/layout/demo/top-side-2.md correctly 1`] = `
         <div
           class="c7n-ripple-wrapper"
         />
+      </li>
+      <li
+        class="c7n-menu-submenu c7n-menu-submenu-horizontal c7n-menu-overflowed-submenu"
+        role="menuitem"
+        style="line-height:64px;visibility:hidden;position:absolute"
+      >
+        <div
+          aria-expanded="false"
+          aria-haspopup="true"
+          class="c7n-menu-submenu-title"
+          title=""
+        >
+          <i
+            class="c7n-menu-submenu-arrow"
+          />
+        </div>
       </li>
     </ul>
   </div>
@@ -1328,7 +1575,6 @@ exports[`renders ./components/layout/demo/top-side-2.md correctly 1`] = `
         class="c7n-layout-sider-children"
       >
         <ul
-          aria-activedescendant=""
           class="c7n-menu c7n-menu-light c7n-menu-root c7n-menu-inline"
           role="menu"
           style="height:100%;border-right:0"

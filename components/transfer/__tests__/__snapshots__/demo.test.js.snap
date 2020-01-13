@@ -118,7 +118,7 @@ exports[`renders ./components/transfer/demo/advanced.md correctly 1`] = `
       type="button"
     >
       <i
-        class="icon icon-left"
+        class="icon icon-keyboard_arrow_left"
       />
       <span>
         to left
@@ -130,7 +130,7 @@ exports[`renders ./components/transfer/demo/advanced.md correctly 1`] = `
       type="button"
     >
       <i
-        class="icon icon-right"
+        class="icon icon-keyboard_arrow_right"
       />
       <span>
         to right
@@ -362,7 +362,7 @@ exports[`renders ./components/transfer/demo/basic.md correctly 1`] = `
       type="button"
     >
       <i
-        class="icon icon-left"
+        class="icon icon-keyboard_arrow_left"
       />
     </button>
     <button
@@ -371,7 +371,7 @@ exports[`renders ./components/transfer/demo/basic.md correctly 1`] = `
       type="button"
     >
       <i
-        class="icon icon-right"
+        class="icon icon-keyboard_arrow_right"
       />
     </button>
   </div>
@@ -509,7 +509,7 @@ exports[`renders ./components/transfer/demo/custom-item.md correctly 1`] = `
       type="button"
     >
       <i
-        class="icon icon-left"
+        class="icon icon-keyboard_arrow_left"
       />
     </button>
     <button
@@ -518,7 +518,7 @@ exports[`renders ./components/transfer/demo/custom-item.md correctly 1`] = `
       type="button"
     >
       <i
-        class="icon icon-right"
+        class="icon icon-keyboard_arrow_right"
       />
     </button>
   </div>
@@ -629,7 +629,7 @@ exports[`renders ./components/transfer/demo/large-data.md correctly 1`] = `
       type="button"
     >
       <i
-        class="icon icon-left"
+        class="icon icon-keyboard_arrow_left"
       />
     </button>
     <button
@@ -638,7 +638,7 @@ exports[`renders ./components/transfer/demo/large-data.md correctly 1`] = `
       type="button"
     >
       <i
-        class="icon icon-right"
+        class="icon icon-keyboard_arrow_right"
       />
     </button>
   </div>
@@ -791,7 +791,7 @@ exports[`renders ./components/transfer/demo/search.md correctly 1`] = `
       type="button"
     >
       <i
-        class="icon icon-left"
+        class="icon icon-keyboard_arrow_left"
       />
     </button>
     <button
@@ -800,7 +800,7 @@ exports[`renders ./components/transfer/demo/search.md correctly 1`] = `
       type="button"
     >
       <i
-        class="icon icon-right"
+        class="icon icon-keyboard_arrow_right"
       />
     </button>
   </div>

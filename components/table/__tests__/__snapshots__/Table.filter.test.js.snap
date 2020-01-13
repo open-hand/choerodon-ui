@@ -137,7 +137,6 @@ exports[`Table.filter renders menu correctly 1`] = `
       class="c7n-table-filter-dropdown"
     >
       <ul
-        aria-activedescendant=""
         class="c7n-dropdown-menu  c7n-dropdown-menu-root c7n-dropdown-menu-vertical"
         role="menu"
         tabindex="0"
@@ -241,7 +240,6 @@ exports[`Table.filter renders radio filter correctly 1`] = `
       class="c7n-table-filter-dropdown"
     >
       <ul
-        aria-activedescendant=""
         class="c7n-dropdown-menu  c7n-dropdown-menu-root c7n-dropdown-menu-vertical"
         role="menu"
         tabindex="0"

@@ -6,7 +6,7 @@ exports[`renders ./components/alert/demo/banner.md correctly 1`] = `
     class="c7n-alert c7n-alert-warning c7n-alert-banner"
   >
     <i
-      class="icon icon-exclamation-circle c7n-alert-icon"
+      class="icon icon-warning c7n-alert-icon"
     />
     <span
       class="c7n-alert-message"
@@ -22,7 +22,7 @@ exports[`renders ./components/alert/demo/banner.md correctly 1`] = `
     class="c7n-alert c7n-alert-warning c7n-alert-banner"
   >
     <i
-      class="icon icon-exclamation-circle c7n-alert-icon"
+      class="icon icon-warning c7n-alert-icon"
     />
     <span
       class="c7n-alert-message"
@@ -36,7 +36,7 @@ exports[`renders ./components/alert/demo/banner.md correctly 1`] = `
       class="c7n-alert-close-icon"
     >
       <i
-        class="icon icon-cross"
+        class="icon icon-close"
       />
     </a>
   </div>
@@ -58,7 +58,7 @@ exports[`renders ./components/alert/demo/banner.md correctly 1`] = `
     class="c7n-alert c7n-alert-error c7n-alert-banner"
   >
     <i
-      class="icon icon-cross-circle c7n-alert-icon"
+      class="icon icon-error c7n-alert-icon"
     />
     <span
       class="c7n-alert-message"
@@ -104,7 +104,7 @@ exports[`renders ./components/alert/demo/closable.md correctly 1`] = `
       class="c7n-alert-close-icon"
     >
       <i
-        class="icon icon-cross"
+        class="icon icon-close"
       />
     </a>
   </div>
@@ -125,7 +125,7 @@ exports[`renders ./components/alert/demo/closable.md correctly 1`] = `
       class="c7n-alert-close-icon"
     >
       <i
-        class="icon icon-cross"
+        class="icon icon-close"
       />
     </a>
   </div>
@@ -219,7 +219,7 @@ exports[`renders ./components/alert/demo/icon.md correctly 1`] = `
     class="c7n-alert c7n-alert-success"
   >
     <i
-      class="icon icon-check-circle c7n-alert-icon"
+      class="icon icon-check_circle c7n-alert-icon"
     />
     <span
       class="c7n-alert-message"
@@ -234,7 +234,7 @@ exports[`renders ./components/alert/demo/icon.md correctly 1`] = `
     class="c7n-alert c7n-alert-info"
   >
     <i
-      class="icon icon-info-circle c7n-alert-icon"
+      class="icon icon-info c7n-alert-icon"
     />
     <span
       class="c7n-alert-message"
@@ -249,7 +249,7 @@ exports[`renders ./components/alert/demo/icon.md correctly 1`] = `
     class="c7n-alert c7n-alert-warning"
   >
     <i
-      class="icon icon-exclamation-circle c7n-alert-icon"
+      class="icon icon-warning c7n-alert-icon"
     />
     <span
       class="c7n-alert-message"
@@ -264,7 +264,7 @@ exports[`renders ./components/alert/demo/icon.md correctly 1`] = `
     class="c7n-alert c7n-alert-error"
   >
     <i
-      class="icon icon-cross-circle c7n-alert-icon"
+      class="icon icon-error c7n-alert-icon"
     />
     <span
       class="c7n-alert-message"
@@ -279,7 +279,7 @@ exports[`renders ./components/alert/demo/icon.md correctly 1`] = `
     class="c7n-alert c7n-alert-success c7n-alert-with-description"
   >
     <i
-      class="icon icon-check-circle-o c7n-alert-icon"
+      class="icon icon-check_circle c7n-alert-icon"
     />
     <span
       class="c7n-alert-message"
@@ -296,7 +296,7 @@ exports[`renders ./components/alert/demo/icon.md correctly 1`] = `
     class="c7n-alert c7n-alert-info c7n-alert-with-description"
   >
     <i
-      class="icon icon-info-circle-o c7n-alert-icon"
+      class="icon icon-info c7n-alert-icon"
     />
     <span
       class="c7n-alert-message"
@@ -313,7 +313,7 @@ exports[`renders ./components/alert/demo/icon.md correctly 1`] = `
     class="c7n-alert c7n-alert-warning c7n-alert-with-description"
   >
     <i
-      class="icon icon-exclamation-circle-o c7n-alert-icon"
+      class="icon icon-warning c7n-alert-icon"
     />
     <span
       class="c7n-alert-message"
@@ -330,7 +330,7 @@ exports[`renders ./components/alert/demo/icon.md correctly 1`] = `
     class="c7n-alert c7n-alert-error c7n-alert-with-description"
   >
     <i
-      class="icon icon-cross-circle-o c7n-alert-icon"
+      class="icon icon-error c7n-alert-icon"
     />
     <span
       class="c7n-alert-message"
@@ -363,7 +363,7 @@ exports[`renders ./components/alert/demo/smooth-closed.md correctly 1`] = `
       class="c7n-alert-close-icon"
     >
       <i
-        class="icon icon-cross"
+        class="icon icon-close"
       />
     </a>
   </div>

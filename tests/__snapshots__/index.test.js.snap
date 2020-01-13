@@ -58,6 +58,8 @@ Array [
   "version",
   "IconSelect",
   "Animate",
+  "Responsive",
   "configure",
+  "getConfig",
 ]
 `;
