@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `<pro>Upload`: 新增 showUploadList 属性。
+- 🌟 `<pro>DataSet.Field`: transformRequest 和 transformResponse 新增参数。
 - 💄 修改 jest 配置，更新快照。
 - 🐞 `<pro>Select`: 修复动态查询 lookup 选项重复问题。
 - 🐞 `<pro>DataSet`: 修复多层级联的问题。

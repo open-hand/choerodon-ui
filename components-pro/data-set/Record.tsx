@@ -684,6 +684,7 @@ export default class Record {
 
   private processData(data: object = {}): object {
     const { fields } = this;
+    const newData = { ...data };
     [...fields.entries()].forEach(([fieldName, field]) => {
       let value = ObjectChainValue.get(data, fieldName);
       const bind = field.get('bind');
@@ -700,15 +701,15 @@ export default class Record {
         value = false;
       }
       if (transformResponse) {
-        value = transformResponse(value);
+        value = transformResponse(value, data);
       }
       value = processValue(value, field);
       if (value === null) {
         value = undefined;
       }
-      ObjectChainValue.set(data, fieldName, value, fields);
+      ObjectChainValue.set(newData, fieldName, value, fields);
     });
-    return data;
+    return newData;
   }
 
   private normalizeData(needIgnore?: boolean) {
@@ -740,7 +741,7 @@ export default class Record {
           value = value.map(processToJSON).join(multiple);
         }
         if (transformRequest) {
-          value = transformRequest(value);
+          value = transformRequest(value, this);
         }
       }
       if (value !== undefined) {

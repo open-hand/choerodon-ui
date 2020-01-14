@@ -261,11 +261,11 @@ export type FieldProps = {
   /**
    * 在发送请求之前对数据进行处理
    */
-  transformRequest?: (value: any) => any;
+  transformRequest?: (value: any, record: Record) => any;
   /**
    * 在获得响应之后对数据进行处理
    */
-  transformResponse?: (value: any) => any;
+  transformResponse?: (value: any, object: any) => any;
   /**
    * 字符串值是否去掉首尾空格
    * 可选值: both left right none
