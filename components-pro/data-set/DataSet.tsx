@@ -743,12 +743,20 @@ export default class DataSet extends EventManager {
 
   @action
   restore(snapshot: DataSetSnapshot): DataSet {
-    const previous = this.current;
-    Object.assign(this, snapshot);
-    const record = this.current;
-    if (previous !== record) {
-      this.fireEvent(DataSetEvents.indexChange, { dataSet: this, record, previous });
+    if (snapshot.dataSet !== this) {
+      this.events = {};
+    } else if (snapshot.events) {
+      this.events = snapshot.events;
     }
+    this.records = snapshot.records;
+    this.originalData = snapshot.originalData;
+    this.totalCount = snapshot.totalCount;
+    this.currentPage = snapshot.currentPage;
+    this.pageSize = snapshot.pageSize;
+    this.cachedSelected = snapshot.cachedSelected;
+    this.dataToJSON = snapshot.dataToJSON;
+    this.children = snapshot.children;
+    this.current = snapshot.current;
     return this;
   }
 

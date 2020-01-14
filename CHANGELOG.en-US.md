@@ -15,9 +15,10 @@ timeline: true
 
 ---
 
-- 💄 Optimized the `jest` configuration to update the snapshot.
 - 🌟 `<pro>Upload`: Added `showUploadList` property.
+- 💄 Optimized the `jest` configuration to update the snapshot.
 - 🐞 `<pro>Select`: Fixed the dynamic query lookup option repeat problem.
+- 🐞 `<pro>DataSet`: Fixed multiple cascading issues.
 
 ## 0.8.50
 

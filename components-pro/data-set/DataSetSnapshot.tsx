@@ -3,6 +3,8 @@ import Record from './Record';
 import { DataToJSON } from './enum';
 
 export default class DataSetSnapshot {
+  dataSet: DataSet;
+
   records: Record[];
 
   current?: Record;
@@ -23,27 +25,17 @@ export default class DataSetSnapshot {
 
   children: DataSetChildren;
 
-  constructor({
-    records,
-    originalData,
-    totalCount,
-    currentPage,
-    pageSize,
-    cachedSelected,
-    dataToJSON,
-    children,
-    current,
-    events,
-  }: DataSet) {
-    this.records = records;
-    this.originalData = originalData;
-    this.totalCount = totalCount;
-    this.currentPage = currentPage;
-    this.pageSize = pageSize;
-    this.cachedSelected = cachedSelected;
-    this.dataToJSON = dataToJSON;
-    this.children = children;
-    this.current = current;
-    this.events = events;
+  constructor(dataSet: DataSet) {
+    this.dataSet = dataSet;
+    this.records = dataSet.records;
+    this.originalData = dataSet.originalData;
+    this.totalCount = dataSet.totalCount;
+    this.currentPage = dataSet.currentPage;
+    this.pageSize = dataSet.pageSize;
+    this.cachedSelected = dataSet.cachedSelected;
+    this.dataToJSON = dataSet.dataToJSON;
+    this.children = dataSet.children;
+    this.events = dataSet.events;
+    this.current = dataSet.current;
   }
 }
