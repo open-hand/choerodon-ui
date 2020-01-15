@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.51
+
+`2020-01-16`
+
 - 🌟 `<pro>ModalProvider`: 新增 ModalProvider 组件。
 - 🌟 `<pro>Upload`: 新增 showUploadList 属性。
 - 🌟 `<pro>DataSet.Field`: transformRequest 和 transformResponse 新增参数。

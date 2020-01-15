@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.51
+
+`2020-01-16`
+
 - 🌟 `<pro>ModalProvider`: Added ModalProvider Component.
 - 🌟 `<pro>DataSet.Field`: Added parameter for `transformRequest` and `transformResponse`.
 - 🌟 `<pro>Upload`: Added `showUploadList` property.
