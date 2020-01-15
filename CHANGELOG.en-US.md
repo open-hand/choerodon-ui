@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>ModalProvider`: Added ModalProvider Component.
 - 🌟 `<pro>DataSet.Field`: Added parameter for `transformRequest` and `transformResponse`.
 - 🌟 `<pro>Upload`: Added `showUploadList` property.
 - 💄 Optimized the `jest` configuration to update the snapshot.

@@ -18,5 +18,3 @@ import '../../tooltip/style';
 import '../../validator/style';
 import '../../switch/style';
 import '../../menu/style';
-
-import './filter-select.less';

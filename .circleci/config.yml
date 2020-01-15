@@ -2,7 +2,7 @@ version: 2
 jobs:
   dev_build:
     docker:
-      - image: circleci/node:8.10
+      - image: circleci/node:10.16
 
     working_directory: ~/repo
 
@@ -21,7 +21,7 @@ jobs:
 
   release_publish:
     docker:
-      - image: circleci/node:8.10
+      - image: circleci/node:10.16
 
     working_directory: ~/repo
 

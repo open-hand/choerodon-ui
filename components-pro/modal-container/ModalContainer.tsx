@@ -91,11 +91,15 @@ function showBodyScrollBar() {
   }
 }
 
+export interface ModalContainerProps {
+  location?: { pathname: string };
+}
+
 export interface ModalContainerState {
   modals: ModalProps[];
 }
 
-export default class ModalContainer extends Component<any> {
+export default class ModalContainer extends Component<ModalContainerProps> {
   static displayName = 'ModalContainer';
 
   state: ModalContainerState = {
@@ -104,7 +108,7 @@ export default class ModalContainer extends Component<any> {
 
   constructor(props, context) {
     super(props, context);
-    addInstanse(this);
+    this.top();
   }
 
   handleAnimationEnd = (modalKey, isEnter) => {
@@ -139,13 +143,18 @@ export default class ModalContainer extends Component<any> {
     }
   };
 
+  top(): ModalContainer {
+    addInstanse(this);
+    return this;
+  }
+
   componentWillUpdate(nextProps) {
     const { location } = nextProps;
     const { location: currentLocation } = this.props;
     if (location && currentLocation && location.pathname !== currentLocation.pathname) {
       this.clear();
     }
-    addInstanse(this);
+    this.top();
   }
 
   componentWillUnmount() {

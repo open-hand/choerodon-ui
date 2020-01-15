@@ -2,14 +2,16 @@
 // this file is not used if use https://www.npmjs.com/package/babel-plugin-import
 
 const ENV = process.env.NODE_ENV;
-if (ENV !== 'production' &&
+if (
+  ENV !== 'production' &&
   ENV !== 'test' &&
   typeof console !== 'undefined' &&
   console.warn &&
-  typeof window !== 'undefined') {
+  typeof window !== 'undefined'
+) {
   console.warn(
     'You are using a whole package of choerodon-ui/pro, ' +
-    'please use https://www.npmjs.com/package/babel-plugin-import to reduce app bundle size.',
+      'please use https://www.npmjs.com/package/babel-plugin-import to reduce app bundle size.',
   );
 }
 /* @remove-on-es-build-end */
@@ -75,6 +77,8 @@ export { default as Progress } from './progress';
 export { default as Modal } from './modal';
 
 export { default as ModalContainer } from './modal-container';
+
+export { default as ModalProvider } from './modal-provider';
 
 export { default as Upload } from './upload';
 

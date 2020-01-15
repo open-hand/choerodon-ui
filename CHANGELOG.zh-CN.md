@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>ModalProvider`: 新增 ModalProvider 组件。
 - 🌟 `<pro>Upload`: 新增 showUploadList 属性。
 - 🌟 `<pro>DataSet.Field`: transformRequest 和 transformResponse 新增参数。
 - 💄 修改 jest 配置，更新快照。

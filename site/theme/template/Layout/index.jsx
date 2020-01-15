@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { enquireScreen } from 'enquire-js';
 import { addLocaleData, IntlProvider } from 'react-intl';
 import { LocaleProvider } from 'choerodon-ui';
-import { localeContext, ModalContainer } from 'choerodon-ui/pro';
+import { localeContext, ModalProvider } from 'choerodon-ui/pro';
 import moment from 'moment';
 import { configure } from 'mobx';
 import Header from './Header';
@@ -90,9 +90,10 @@ export default class Layout extends React.Component {
       <IntlProvider locale={locale} messages={messages}>
         <LocaleProvider locale={componentsLocale}>
           <div className="page-wrapper">
-            <Header {...restProps} />
-            {children}
-            <ModalContainer location={location} />
+            <ModalProvider location={location}>
+              <Header {...restProps} />
+              {children}
+            </ModalProvider>
           </div>
         </LocaleProvider>
       </IntlProvider>

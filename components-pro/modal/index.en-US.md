@@ -5,7 +5,7 @@ type: Feedback
 title: Modal
 ---
 
-表单控件。
+模态框。
 
 ## 何时使用
 
@@ -43,7 +43,31 @@ title: Modal
 }
 </style>
 
-### ModalContainer
+### ModalProvider > v0.8.50
+
+- 使用 Modal 前，需要在页面根节点外包裹 [ModalProvider](/components-pro/modal-provider/#ModalProvider)。如果路由切换时要清空所有 Modal，需要在 ModalProvider 传入 location，如下所示。
+- 如果 Modal 要获取 React Context，请在对应的 Context.Provider 子节点外包裹 [ModalProvider](/components-pro/modal-provider/#ModalProvider)，并使用 ModalProvider 提供的 injectModal 或 useModal 来代替 Modal.open。
+
+```jsx harmony
+import { ModalProvider } from 'choerodon-ui/pro';
+import { withRouter } from 'react-router';
+
+@withRouter
+class App extends React.Component {
+  render() {
+    const { location } = this.props;
+    return (
+      <ModalProvider location={location}>
+        <Main />
+      </ModalProvider>
+    );
+  }
+}
+
+render(<App />, mountNode);
+```
+
+### ModalContent <= v0.8.50
 
 - 使用 Modal 前，需要在页面 Root 内插入 ModalContainer。如果路由切换时要清空所有 Modal，需要在 ModalContiner 传入 location，如下所示。
 - 如果 Modal 要获取 React Context，请将 ModalContainer 至于 Context.Provider 之下。
