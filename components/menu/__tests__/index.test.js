@@ -22,9 +22,14 @@ describe('Menu', () => {
           <Menu.Item key="submenu2">Option 2</Menu.Item>
         </SubMenu>
         <Menu.Item key="2">menu2</Menu.Item>
-      </Menu>
+      </Menu>,
     );
-    expect(wrapper.find('.c7n-menu-sub').at(0).hasClass('c7n-menu-hidden')).not.toBe(true);
+    expect(
+      wrapper
+        .find('.c7n-menu-sub')
+        .at(0)
+        .hasClass('c7n-menu-hidden'),
+    ).not.toBe(true);
   });
 
   it('should accept defaultOpenKeys in mode inline', () => {
@@ -35,9 +40,14 @@ describe('Menu', () => {
           <Menu.Item key="submenu2">Option 2</Menu.Item>
         </SubMenu>
         <Menu.Item key="2">menu2</Menu.Item>
-      </Menu>
+      </Menu>,
     );
-    expect(wrapper.find('.c7n-menu-sub').at(0).hasClass('c7n-menu-hidden')).not.toBe(true);
+    expect(
+      wrapper
+        .find('.c7n-menu-sub')
+        .at(0)
+        .hasClass('c7n-menu-hidden'),
+    ).not.toBe(true);
   });
 
   it('should accept defaultOpenKeys in mode vertical', () => {
@@ -48,9 +58,14 @@ describe('Menu', () => {
           <Menu.Item key="submenu2">Option 2</Menu.Item>
         </SubMenu>
         <Menu.Item key="2">menu2</Menu.Item>
-      </Menu>
+      </Menu>,
     );
-    expect(wrapper.find('.c7n-menu-sub').at(0).hasClass('c7n-menu-hidden')).not.toBe(true);
+    expect(
+      wrapper
+        .find('.c7n-menu-sub')
+        .at(0)
+        .hasClass('c7n-menu-hidden'),
+    ).not.toBe(true);
   });
 
   it('horizontal', () => {
@@ -61,14 +76,33 @@ describe('Menu', () => {
           <Menu.Item key="submenu2">Option 2</Menu.Item>
         </SubMenu>
         <Menu.Item key="2">menu2</Menu.Item>
-      </Menu>
+      </Menu>,
     );
-    expect(wrapper.find('.c7n-menu-sub').hostNodes().at(0).hasClass('c7n-menu-hidden')).not.toBe(true);
+    expect(
+      wrapper
+        .find('.c7n-menu-sub')
+        .hostNodes()
+        .at(0)
+        .hasClass('c7n-menu-hidden'),
+    ).not.toBe(true);
     wrapper.setProps({ openKeys: [] });
     wrapper.update();
-    expect(wrapper.find('.c7n-menu-sub').hostNodes().at(0).hasClass('c7n-menu-hidden')).toBe(true);
+    expect(
+      wrapper
+        .find('.c7n-menu-sub')
+        .hostNodes()
+        .at(0)
+        .hasClass('c7n-menu-hidden'),
+    ).toBe(true);
     wrapper.setProps({ openKeys: ['1'] });
-    expect(wrapper.find('.c7n-menu-sub').hostNodes().at(0).hasClass('c7n-menu-hidden')).not.toBe(true);
+    wrapper.update();
+    expect(
+      wrapper
+        .find('.c7n-menu-sub')
+        .hostNodes()
+        .at(0)
+        .hasClass('c7n-menu-hidden'),
+    ).not.toBe(true);
   });
 
   it('inline', () => {
@@ -79,14 +113,33 @@ describe('Menu', () => {
           <Menu.Item key="submenu2">Option 2</Menu.Item>
         </SubMenu>
         <Menu.Item key="2">menu2</Menu.Item>
-      </Menu>
+      </Menu>,
     );
-    expect(wrapper.find('.c7n-menu-sub').hostNodes().at(0).hasClass('c7n-menu-hidden')).not.toBe(true);
+    expect(
+      wrapper
+        .find('.c7n-menu-sub')
+        .hostNodes()
+        .at(0)
+        .hasClass('c7n-menu-hidden'),
+    ).not.toBe(true);
     wrapper.setProps({ openKeys: [] });
     wrapper.update();
-    expect(wrapper.find('.c7n-menu-sub').hostNodes().at(0).hasClass('c7n-menu-hidden')).toBe(true);
+    expect(
+      wrapper
+        .find('.c7n-menu-sub')
+        .hostNodes()
+        .at(0)
+        .hasClass('c7n-menu-hidden'),
+    ).toBe(true);
     wrapper.setProps({ openKeys: ['1'] });
-    expect(wrapper.find('.c7n-menu-sub').hostNodes().at(0).hasClass('c7n-menu-hidden')).not.toBe(true);
+    wrapper.update();
+    expect(
+      wrapper
+        .find('.c7n-menu-sub')
+        .hostNodes()
+        .at(0)
+        .hasClass('c7n-menu-hidden'),
+    ).not.toBe(true);
   });
 
   it('vertical', () => {
@@ -97,14 +150,33 @@ describe('Menu', () => {
           <Menu.Item key="submenu2">Option 2</Menu.Item>
         </SubMenu>
         <Menu.Item key="2">menu2</Menu.Item>
-      </Menu>
+      </Menu>,
     );
-    expect(wrapper.find('.c7n-menu-sub').hostNodes().at(0).hasClass('c7n-menu-hidden')).not.toBe(true);
+    expect(
+      wrapper
+        .find('.c7n-menu-sub')
+        .hostNodes()
+        .at(0)
+        .hasClass('c7n-menu-hidden'),
+    ).not.toBe(true);
     wrapper.setProps({ openKeys: [] });
     wrapper.update();
-    expect(wrapper.find('.c7n-menu-sub').hostNodes().at(0).hasClass('c7n-menu-hidden')).toBe(true);
+    expect(
+      wrapper
+        .find('.c7n-menu-sub')
+        .hostNodes()
+        .at(0)
+        .hasClass('c7n-menu-hidden'),
+    ).toBe(true);
     wrapper.setProps({ openKeys: ['1'] });
-    expect(wrapper.find('.c7n-menu-sub').hostNodes().at(0).hasClass('c7n-menu-hidden')).not.toBe(true);
+    wrapper.update();
+    expect(
+      wrapper
+        .find('.c7n-menu-sub')
+        .hostNodes()
+        .at(0)
+        .hasClass('c7n-menu-hidden'),
+    ).not.toBe(true);
   });
 
   // TypeError: Cannot read property 'indexOf' of undefined
@@ -115,7 +187,7 @@ describe('Menu', () => {
           <Menu.Item key="1">menu1</Menu.Item>
           <Menu.Item key="2">menu2</Menu.Item>
         </SubMenu>
-      </Menu>
+      </Menu>,
     );
     wrapper.update();
     // just expect no error emit
@@ -129,15 +201,30 @@ describe('Menu', () => {
           <Menu.Item key="submenu2">Option 2</Menu.Item>
         </SubMenu>
         <Menu.Item key="2">menu2</Menu.Item>
-      </Menu>
+      </Menu>,
     );
-    expect(wrapper.find('ul.c7n-menu-sub').at(0).hasClass('c7n-menu-hidden')).not.toBe(true);
+    expect(
+      wrapper
+        .find('ul.c7n-menu-sub')
+        .at(0)
+        .hasClass('c7n-menu-hidden'),
+    ).not.toBe(true);
     wrapper.setProps({ mode: 'vertical' });
     wrapper.update();
-    expect(wrapper.find('ul.c7n-menu-sub').at(0).hasClass('c7n-menu-hidden')).not.toBe(true);
+    expect(
+      wrapper
+        .find('ul.c7n-menu-sub')
+        .at(0)
+        .hasClass('c7n-menu-hidden'),
+    ).not.toBe(true);
     wrapper.setProps({ mode: 'inline' });
     wrapper.update();
-    expect(wrapper.find('ul.c7n-menu-sub').at(0).hasClass('c7n-menu-hidden')).not.toBe(true);
+    expect(
+      wrapper
+        .find('ul.c7n-menu-sub')
+        .at(0)
+        .hasClass('c7n-menu-hidden'),
+    ).not.toBe(true);
   });
 
   it('inlineCollapsed should works well when specify a not existed default openKeys', () => {
@@ -148,27 +235,46 @@ describe('Menu', () => {
           <span>Option</span>
         </Menu.Item>
         <SubMenu key="1" title="submenu1">
-          <Menu.Item key="submenu1">
-            Option
-          </Menu.Item>
-          <Menu.Item key="submenu2">
-            Option
-          </Menu.Item>
+          <Menu.Item key="submenu1">Option</Menu.Item>
+          <Menu.Item key="submenu2">Option</Menu.Item>
         </SubMenu>
-      </Menu>
+      </Menu>,
     );
     expect(wrapper.find('.c7n-menu-sub').length).toBe(0);
     wrapper.setProps({ inlineCollapsed: true });
-    jest.runAllTimers();
+    jest.advanceTimersByTime(1000);
     wrapper.update();
     wrapper.simulate('transitionEnd', { propertyName: 'width' });
-    wrapper.find('.c7n-menu-submenu-title').at(0).simulate('mouseEnter');
-    jest.runAllTimers();
+    wrapper
+      .find('.c7n-menu-submenu-title')
+      .at(0)
+      .simulate('mouseEnter');
+    jest.advanceTimersByTime(1000);
     wrapper.update();
-    expect(wrapper.find('.c7n-menu-submenu').at(0).hasClass('c7n-menu-submenu-vertical')).toBe(true);
-    expect(wrapper.find('.c7n-menu-submenu').at(0).hasClass('c7n-menu-submenu-open')).toBe(true);
-    expect(wrapper.find('ul.c7n-menu-sub').at(0).hasClass('c7n-menu-vertical')).toBe(true);
-    expect(wrapper.find('ul.c7n-menu-sub').at(0).hasClass('c7n-menu-hidden')).toBe(false);
+    expect(
+      wrapper
+        .find('.c7n-menu-submenu')
+        .at(0)
+        .hasClass('c7n-menu-submenu-vertical'),
+    ).toBe(true);
+    expect(
+      wrapper
+        .find('.c7n-menu-submenu')
+        .at(0)
+        .hasClass('c7n-menu-submenu-open'),
+    ).toBe(true);
+    expect(
+      wrapper
+        .find('ul.c7n-menu-sub')
+        .at(0)
+        .hasClass('c7n-menu-vertical'),
+    ).toBe(true);
+    expect(
+      wrapper
+        .find('ul.c7n-menu-sub')
+        .at(0)
+        .hasClass('c7n-menu-hidden'),
+    ).toBe(false);
   });
 
   describe('open submenu when click submenu title', () => {
@@ -181,8 +287,11 @@ describe('Menu', () => {
     });
 
     const toggleMenu = (wrapper, index, event) => {
-      wrapper.find('.c7n-menu-submenu-title').at(index).simulate(event);
-      jest.runAllTimers();
+      wrapper
+        .find('.c7n-menu-submenu-title')
+        .at(index)
+        .simulate(event);
+      jest.advanceTimersByTime(1000);
       wrapper.update();
     };
 
@@ -194,16 +303,27 @@ describe('Menu', () => {
             <Menu.Item key="submenu2">Option 2</Menu.Item>
           </SubMenu>
           <Menu.Item key="2">menu2</Menu.Item>
-        </Menu>
+        </Menu>,
       );
       expect(wrapper.find('.c7n-menu-sub').length).toBe(0);
       toggleMenu(wrapper, 0, 'click');
       expect(wrapper.find('.c7n-menu-sub').hostNodes().length).toBe(1);
-      expect(wrapper.find('.c7n-menu-sub').hostNodes().at(0).hasClass('c7n-menu-hidden')).not.toBe(true);
+      expect(
+        wrapper
+          .find('.c7n-menu-sub')
+          .hostNodes()
+          .at(0)
+          .hasClass('c7n-menu-hidden'),
+      ).not.toBe(true);
       toggleMenu(wrapper, 0, 'click');
-      expect(wrapper.find('.c7n-menu-sub').hostNodes().at(0).hasClass('c7n-menu-hidden')).toBe(true);
+      expect(
+        wrapper
+          .find('.c7n-menu-sub')
+          .hostNodes()
+          .at(0)
+          .hasClass('c7n-menu-hidden'),
+      ).toBe(true);
     });
-
 
     it('vertical', () => {
       const wrapper = mount(
@@ -213,14 +333,26 @@ describe('Menu', () => {
             <Menu.Item key="submenu2">Option 2</Menu.Item>
           </SubMenu>
           <Menu.Item key="2">menu2</Menu.Item>
-        </Menu>
+        </Menu>,
       );
       expect(wrapper.find('.c7n-menu-sub').length).toBe(0);
       toggleMenu(wrapper, 0, 'mouseenter');
       expect(wrapper.find('.c7n-menu-sub').hostNodes().length).toBe(1);
-      expect(wrapper.find('.c7n-menu-sub').hostNodes().at(0).hasClass('c7n-menu-hidden')).not.toBe(true);
+      expect(
+        wrapper
+          .find('.c7n-menu-sub')
+          .hostNodes()
+          .at(0)
+          .hasClass('c7n-menu-hidden'),
+      ).not.toBe(true);
       toggleMenu(wrapper, 0, 'mouseleave');
-      expect(wrapper.find('.c7n-menu-sub').hostNodes().at(0).hasClass('c7n-menu-hidden')).toBe(true);
+      expect(
+        wrapper
+          .find('.c7n-menu-sub')
+          .hostNodes()
+          .at(0)
+          .hasClass('c7n-menu-hidden'),
+      ).toBe(true);
     });
 
     it('horizontal', () => {
@@ -232,14 +364,26 @@ describe('Menu', () => {
             <Menu.Item key="submenu2">Option 2</Menu.Item>
           </SubMenu>
           <Menu.Item key="2">menu2</Menu.Item>
-        </Menu>
+        </Menu>,
       );
       expect(wrapper.find('.c7n-menu-sub').length).toBe(0);
       toggleMenu(wrapper, 0, 'mouseenter');
       expect(wrapper.find('.c7n-menu-sub').hostNodes().length).toBe(1);
-      expect(wrapper.find('.c7n-menu-sub').hostNodes().at(0).hasClass('c7n-menu-hidden')).not.toBe(true);
+      expect(
+        wrapper
+          .find('.c7n-menu-sub')
+          .hostNodes()
+          .at(0)
+          .hasClass('c7n-menu-hidden'),
+      ).not.toBe(true);
       toggleMenu(wrapper, 0, 'mouseleave');
-      expect(wrapper.find('.c7n-menu-sub').hostNodes().at(0).hasClass('c7n-menu-hidden')).toBe(true);
+      expect(
+        wrapper
+          .find('.c7n-menu-sub')
+          .hostNodes()
+          .at(0)
+          .hasClass('c7n-menu-hidden'),
+      ).toBe(true);
     });
   });
 });
