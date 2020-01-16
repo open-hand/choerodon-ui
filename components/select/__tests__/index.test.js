@@ -15,44 +15,66 @@ describe('Select', () => {
   });
 
   it('should have default notFoundContent', () => {
-    const wrapper = mount(
-      <Select mode="multiple" />
-    );
+    const wrapper = mount(<Select mode="multiple" />);
     wrapper.find('.c7n-select').simulate('click');
     jest.runAllTimers();
-    const dropdownWrapper = mount(wrapper.find('Trigger').instance().getComponent());
+    const dropdownWrapper = mount(
+      wrapper
+        .find('Trigger')
+        .instance()
+        .getComponent(),
+    );
     expect(dropdownWrapper.find('MenuItem').length).toBe(1);
-    expect(dropdownWrapper.find('MenuItem').at(0).text()).toBe('Not Found');
+    expect(
+      dropdownWrapper
+        .find('MenuItem')
+        .at(0)
+        .text(),
+    ).toBe('Not Found');
   });
 
   it('should support set notFoundContent to null', () => {
-    const wrapper = mount(
-      <Select mode="multiple" notFoundContent={null} />
-    );
+    const wrapper = mount(<Select mode="multiple" notFoundContent={null} />);
     wrapper.find('.c7n-select').simulate('click');
     jest.runAllTimers();
-    const dropdownWrapper = mount(wrapper.find('Trigger').instance().getComponent());
+    const dropdownWrapper = mount(
+      wrapper
+        .find('Trigger')
+        .instance()
+        .getComponent(),
+    );
     expect(dropdownWrapper.find('MenuItem').length).toBe(0);
   });
 
   it('should not have default notFoundContent when mode is combobox', () => {
-    const wrapper = mount(
-      <Select mode="combobox" />
-    );
+    const wrapper = mount(<Select mode="combobox" />);
     wrapper.find('.c7n-select').simulate('click');
     jest.runAllTimers();
-    const dropdownWrapper = mount(wrapper.find('Trigger').instance().getComponent());
+    const dropdownWrapper = mount(
+      wrapper
+        .find('Trigger')
+        .instance()
+        .getComponent(),
+    );
     expect(dropdownWrapper.find('MenuItem').length).toBe(0);
   });
 
   it('should not have notFoundContent when mode is combobox and notFoundContent is set', () => {
-    const wrapper = mount(
-      <Select mode="combobox" notFoundContent="not at all" />
-    );
+    const wrapper = mount(<Select mode="combobox" notFoundContent="not at all" />);
     wrapper.find('.c7n-select').simulate('click');
     jest.runAllTimers();
-    const dropdownWrapper = mount(wrapper.find('Trigger').instance().getComponent());
+    const dropdownWrapper = mount(
+      wrapper
+        .find('Trigger')
+        .instance()
+        .getComponent(),
+    );
     expect(dropdownWrapper.find('MenuItem').length).toBe(1);
-    expect(dropdownWrapper.find('MenuItem').at(0).text()).toBe('not at all');
+    expect(
+      dropdownWrapper
+        .find('MenuItem')
+        .at(0)
+        .text(),
+    ).toBe('not at all');
   });
 });

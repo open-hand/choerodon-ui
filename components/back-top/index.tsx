@@ -65,7 +65,13 @@ export default class BackTop extends Component<BackTopProps, any> {
   };
 
   render() {
-    const { prefixCls: customizePrefixCls, className = '', children } = this.props;
+    const {
+      prefixCls: customizePrefixCls,
+      className = '',
+      visible: propsVisible,
+      children,
+    } = this.props;
+    const { visible: stateVisible } = this.state;
     const prefixCls = getPrefixCls('back-top', customizePrefixCls);
     const classString = classNames(prefixCls, className);
 
@@ -85,7 +91,7 @@ export default class BackTop extends Component<BackTopProps, any> {
       'visible',
     ]);
 
-    const visible = 'visible' in this.props ? this.props.visible : this.state.visible;
+    const visible = 'visible' in this.props ? propsVisible : stateVisible;
 
     const backTopBtn = visible ? (
       <div {...divProps} className={classString} onClick={this.scrollToTop}>

@@ -13,7 +13,7 @@ title:
 
 Usage of basic Tag, and it could be closable by set `closable` property. Closable Tag supports `onClose` `afterClose` events.
 
-````jsx
+```jsx
 import { Tag } from 'choerodon-ui';
 
 function log(e) {
@@ -28,10 +28,16 @@ function preventDefault(e) {
 ReactDOM.render(
   <div>
     <Tag>Tag 1</Tag>
-    <Tag><a href="https://github.com/choerodon/choerodon-ui">Link</a></Tag>
-    <Tag closable onClose={log}>Tag 2</Tag>
-    <Tag closable onClose={preventDefault}>Prevent Default</Tag>
+    <Tag>
+      <a href="https://github.com/choerodon/choerodon-ui">Link</a>
+    </Tag>
+    <Tag closable onClose={log}>
+      Tag 2
+    </Tag>
+    <Tag closable onClose={preventDefault}>
+      Prevent Default
+    </Tag>
   </div>,
-  mountNode
+  mountNode,
 );
-````
+```

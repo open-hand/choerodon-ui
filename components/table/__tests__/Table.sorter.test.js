@@ -21,10 +21,12 @@ describe('Table.sorter', () => {
   function createTable(tableProps, columnProps = {}) {
     return (
       <Table
-        columns={[{
-          ...column,
-          ...columnProps,
-        }]}
+        columns={[
+          {
+            ...column,
+            ...columnProps,
+          },
+        ]}
         dataSource={data}
         pagination={false}
         {...tableProps}
@@ -42,17 +44,27 @@ describe('Table.sorter', () => {
   });
 
   it('default sort order ascend', () => {
-    const wrapper = mount(createTable({}, {
-      defaultSortOrder: 'ascend',
-    }));
+    const wrapper = mount(
+      createTable(
+        {},
+        {
+          defaultSortOrder: 'ascend',
+        },
+      ),
+    );
 
     expect(renderedNames(wrapper)).toEqual(['Jack', 'Jerry', 'Lucy', 'Tom']);
   });
 
   it('default sort order descend', () => {
-    const wrapper = mount(createTable({}, {
-      defaultSortOrder: 'descend',
-    }));
+    const wrapper = mount(
+      createTable(
+        {},
+        {
+          defaultSortOrder: 'descend',
+        },
+      ),
+    );
 
     expect(renderedNames(wrapper)).toEqual(['Tom', 'Lucy', 'Jack', 'Jerry']);
   });
@@ -68,9 +80,11 @@ describe('Table.sorter', () => {
   });
 
   it('can be controlled by sortOrder', () => {
-    const wrapper = mount(createTable({
-      columns: [{ ...column, sortOrder: 'ascend' }],
-    }));
+    const wrapper = mount(
+      createTable({
+        columns: [{ ...column, sortOrder: 'ascend' }],
+      }),
+    );
     expect(renderedNames(wrapper)).toEqual(['Jack', 'Jerry', 'Lucy', 'Tom']);
   });
 
@@ -114,9 +128,7 @@ describe('Table.sorter', () => {
       { key: 2, name: 'Tom', age: 21 },
       { key: 3, name: 'Jerry', age: 22 },
     ];
-    const wrapper = mount(
-      <Table columns={columns} dataSource={testData} />
-    );
+    const wrapper = mount(<Table columns={columns} dataSource={testData} />);
 
     expect(renderedNames(wrapper)).toEqual(['Tom', 'Lucy', 'Jack', 'Jerry']);
   });

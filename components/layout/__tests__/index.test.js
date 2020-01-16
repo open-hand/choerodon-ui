@@ -10,7 +10,7 @@ describe('Layout', () => {
       <Layout>
         <Sider>Sider</Sider>
         <Content>Content</Content>
-      </Layout>
+      </Layout>,
     );
     expect(wrapper.find('.c7n-layout').hasClass('c7n-layout-has-sider')).toBe(true);
   });
@@ -18,9 +18,11 @@ describe('Layout', () => {
   it('detect the sider inside the children', async () => {
     const wrapper = mount(
       <Layout>
-        <div><Sider>Sider</Sider></div>
+        <div>
+          <Sider>Sider</Sider>
+        </div>
         <Content>Content</Content>
-      </Layout>
+      </Layout>,
     );
     expect(wrapper.find('.c7n-layout').hasClass('c7n-layout-has-sider')).toBe(true);
   });
@@ -28,9 +30,11 @@ describe('Layout', () => {
   it('detect c7n-layout-sider-has-trigger class in sider when c7n-layout-sider-trigger div tag exists', async () => {
     const wrapper = mount(
       <Layout>
-        <div><Sider collapsible>Sider</Sider></div>
+        <div>
+          <Sider collapsible>Sider</Sider>
+        </div>
         <Content>Content</Content>
-      </Layout>
+      </Layout>,
     );
     expect(wrapper.find('.c7n-layout-sider').hasClass('c7n-layout-sider-has-trigger')).toBe(true);
   });

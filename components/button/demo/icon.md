@@ -17,16 +17,20 @@ title:
 
 If you want specific control over the positioning and placement of the `Icon`, then that should be done by placing the `Icon` component within the `Button` rather than using the `icon` property.
 
-````jsx
+```jsx
 import { Button } from 'choerodon-ui';
 
 ReactDOM.render(
   <div>
     <Button type="primary" funcType="raised" shape="circle" icon="search" />
-    <Button type="primary" funcType="raised" icon="search">Search</Button>
+    <Button type="primary" funcType="raised" icon="search">
+      Search
+    </Button>
     <Button type="primary" funcType="flat" shape="circle" icon="search" />
-    <Button type="primary" funcType="flat" icon="search">Search</Button>
+    <Button type="primary" funcType="flat" icon="search">
+      Search
+    </Button>
   </div>,
-  mountNode
+  mountNode,
 );
-````
+```

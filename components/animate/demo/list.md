@@ -9,13 +9,11 @@ title:
 
 数组成员。
 
-
 ## en-US
 
 List member.
 
-
-````jsx
+```jsx
 import { Animate, Button } from 'choerodon-ui';
 
 class App extends React.PureComponent {
@@ -25,18 +23,18 @@ class App extends React.PureComponent {
 
   insert = () => {
     const list = this.state.list.slice();
-    list.splice(2, 0, this.start += 1);
+    list.splice(2, 0, (this.start += 1));
     this.setState({ list });
-  }
+  };
 
-  remove = (value) => {
+  remove = value => {
     const list = this.state.list.slice();
     const index = list.indexOf(value);
     if (index !== -1) {
       list.splice(index, 1);
       this.setState({ list });
     }
-  }
+  };
 
   renderItems() {
     const { list } = this.state;
@@ -51,10 +49,7 @@ class App extends React.PureComponent {
     return (
       <div>
         <Button onClick={this.insert}>添加</Button>
-        <Animate
-          component="ul"
-          transitionName="fade"
-        >
+        <Animate component="ul" transitionName="fade">
           {this.renderItems()}
         </Animate>
       </div>
@@ -62,9 +57,5 @@ class App extends React.PureComponent {
   }
 }
 
-ReactDOM.render(
-  <App />,
-  mountNode
-);
-
-````
+ReactDOM.render(<App />, mountNode);
+```

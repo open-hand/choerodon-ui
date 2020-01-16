@@ -13,18 +13,16 @@ title:
 
 Basic Usage
 
-````jsx
+```jsx
 import { Responsive } from 'choerodon-ui';
 
 class App extends React.Component {
-  handleChange = (items) => {
+  handleChange = items => {
     console.log('responsive change', items);
   };
 
   renderResponsive = ([size, color]) => {
-    return (
-      <div style={{ width: size, height: size, backgroundColor: color }} />
-    );
+    return <div style={{ width: size, height: size, backgroundColor: color }} />;
   };
 
   render() {
@@ -40,9 +38,5 @@ class App extends React.Component {
   }
 }
 
-
-ReactDOM.render(
-  <App />,
-  mountNode
-);
-````
+ReactDOM.render(<App />, mountNode);
+```

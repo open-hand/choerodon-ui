@@ -13,18 +13,15 @@ title:
 
 The most basic usage.
 
-````jsx
+```jsx
 import { Switch } from 'choerodon-ui';
 
 function onChange(checked) {
   console.log(`switch to ${checked}`);
 }
 
-ReactDOM.render(
-  <Switch defaultChecked onChange={onChange} />,
-  mountNode
-);
-````
+ReactDOM.render(<Switch defaultChecked onChange={onChange} />, mountNode);
+```
 
 <style>
 .c7n-switch {

@@ -9,7 +9,7 @@ describe('List', () => {
       spinning: true,
     };
     const wrapper = render(
-      <List loading={loading} dataSource={[]} renderItem={() => <List.Item />} />
+      <List loading={loading} dataSource={[]} renderItem={() => <List.Item />} />,
     );
     expect(wrapper.find('.c7n-list-empty-text')).toHaveLength(0);
   });
@@ -19,11 +19,7 @@ describe('List', () => {
       spinning: true,
     };
     const wrapper = render(
-      <List
-        loading={loading}
-        dataSource={[1]}
-        renderItem={() => <List.Item />}
-      />
+      <List loading={loading} dataSource={[1]} renderItem={() => <List.Item />} />,
     );
     expect(wrapper.find('.c7n-spin-spinning')).toHaveLength(1);
   });
@@ -36,11 +32,7 @@ describe('List', () => {
       indicator: c7nIcon,
     };
     const wrapper = render(
-      <List
-        loading={loading}
-        dataSource={[1]}
-        renderItem={() => <List.Item />}
-      />
+      <List loading={loading} dataSource={[1]} renderItem={() => <List.Item />} />,
     );
     expect(wrapper.find('.icon-loading')).toHaveLength(1);
   });

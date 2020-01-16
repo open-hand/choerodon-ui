@@ -7,13 +7,13 @@ title:
 
 ## zh-CN
 
-手动关闭modal。
+手动关闭 modal。
 
 ## en-US
 
 Manually destroying a modal.
 
-````jsx
+```jsx
 import { Modal, Button } from 'choerodon-ui';
 
 function success() {
@@ -24,9 +24,5 @@ function success() {
   setTimeout(() => modal.destroy(), 1000);
 }
 
-
-ReactDOM.render(
-  <Button onClick={success}>Success</Button>,
-  mountNode
-);
-````
+ReactDOM.render(<Button onClick={success}>Success</Button>, mountNode);
+```

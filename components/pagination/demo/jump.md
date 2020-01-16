@@ -13,7 +13,7 @@ title:
 
 Jump to a page directly.
 
-````jsx
+```jsx
 import { Pagination } from 'choerodon-ui';
 
 function onChange(pageNumber) {
@@ -31,6 +31,6 @@ ReactDOM.render(
     total={500}
     onChange={onChange}
   />,
-  mountNode
+  mountNode,
 );
-````
+```

@@ -247,7 +247,7 @@
     "lint:style": "stylelint {site,components,components-pro}/**/*.less --syntax less",
     "lint-fix": "npm run lint-fix:script && npm run lint-fix:demo && npm run lint-fix:style",
     "lint-fix:script": "npm run lint:script -- --fix",
-    "lint-fix:demo": "eslint-tinker ./components/*/demo/*.md",
+    "lint-fix:demo": "npm run lint:demo -- --fix",
     "lint-fix:style": "npm run lint:style -- --fix",
     "sort-api": "node ./scripts/sort-api-table.js",
     "dist": "gulp dist",

@@ -9,13 +9,11 @@ title:
 
 加载。
 
-
 ## en-US
 
 Loading.
 
-
-````jsx
+```jsx
 import { Progress } from 'choerodon-ui';
 
 ReactDOM.render(
@@ -24,7 +22,6 @@ ReactDOM.render(
     <Progress type="loading" status="success" />
     <Progress type="loading" size="large" status="exception" />
   </div>,
-  mountNode
+  mountNode,
 );
-
-````
+```

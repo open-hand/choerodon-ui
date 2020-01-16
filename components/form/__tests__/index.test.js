@@ -4,9 +4,7 @@ import Form from '..';
 
 describe('Form', () => {
   it('hideRequiredMark', () => {
-    const wrapper = shallow(
-      <Form hideRequiredMark />
-    );
+    const wrapper = shallow(<Form hideRequiredMark />);
     expect(wrapper.hasClass('c7n-form-hide-required-mark')).toBe(true);
   });
 
@@ -25,14 +23,15 @@ describe('Form', () => {
     });
 
     it('get component ref', () => {
-      class TestForm extends React.Component { // eslint-disable-line
+      class TestForm extends React.Component {
+        // eslint-disable-line
         render() {
           return <Form />;
         }
       }
       const Wrapped = Form.create()(TestForm);
       let form;
-      mount(<Wrapped wrappedComponentRef={node => form = node} />);
+      mount(<Wrapped wrappedComponentRef={node => (form = node)} />);
       expect(form).toBeInstanceOf(TestForm);
     });
   });

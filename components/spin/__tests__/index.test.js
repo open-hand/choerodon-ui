@@ -7,17 +7,25 @@ describe('Spin', () => {
     const wrapper = shallow(
       <Spin style={{ background: 'red' }}>
         <div>content</div>
-      </Spin>
+      </Spin>,
     );
-    expect(wrapper.find('.c7n-spin-nested-loading').at(0).prop('style')).toBe(undefined);
-    expect(wrapper.find('.c7n-spin').at(0).prop('style').background).toBe('red');
+    expect(
+      wrapper
+        .find('.c7n-spin-nested-loading')
+        .at(0)
+        .prop('style'),
+    ).toBe(undefined);
+    expect(
+      wrapper
+        .find('.c7n-spin')
+        .at(0)
+        .prop('style').background,
+    ).toBe('red');
   });
 
-  it('should render custom indicator when it\'s set', () => {
+  it("should render custom indicator when it's set", () => {
     const customIndicator = <div className="custom-indicator" />;
-    const wrapper = render(
-      <Spin indicator={customIndicator} />
-    );
+    const wrapper = render(<Spin indicator={customIndicator} />);
     expect(wrapper).toMatchSnapshot();
   });
 });

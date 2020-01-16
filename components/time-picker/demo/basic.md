@@ -13,7 +13,7 @@ title:
 
 Click `TimePicker`, and then we could select or input a time in panel.
 
-````jsx
+```jsx
 import { TimePicker } from 'choerodon-ui';
 import moment from 'moment';
 
@@ -27,6 +27,6 @@ ReactDOM.render(
     onChange={onChange}
     defaultOpenValue={moment('00:00:00', 'HH:mm:ss')}
   />,
-  mountNode
+  mountNode,
 );
-````
+```

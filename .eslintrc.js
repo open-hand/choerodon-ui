@@ -71,6 +71,7 @@ const eslintrc = {
     'react/jsx-one-expression-per-line': 0,
     'react/jsx-props-no-spreading': 0,
     'react/no-danger': 0,
+    'react/no-deprecated': 0,
     'react/no-find-dom-node': 0,
     'react/prop-types': 0,
     'react/require-default-props': 0,
