@@ -16,43 +16,44 @@ Basic usage example.
 ```jsx
 import { ModalProvider, Modal, Button } from 'choerodon-ui/pro';
 
-const Context = React.createContext({});
+const Context = React.createContext('');
 
 const { injectModal, useModal } = ModalProvider;
+
+const ModalContent = () => {
+  const context = React.useContext(Context);
+  return context ? `Modal with context<${context}>` : 'Modal without context';
+};
 
 const openModal = (modal, title, context) => {
   modal.open({
     title: 'Inner',
-    children: context.value ? `Modal with context<${context.value}>` : 'Modal without context',
+    children: <ModalContent />,
     onOk: () => Modal.confirm('This is normal Modal confirm'),
   });
 };
 
 const InnterModal = () => {
   const modal = useModal();
-  const context = React.useContext(Context);
-  const handleClick = React.useCallback(() => openModal(modal, 'Inner', context), []);
+  const handleClick = React.useCallback(() => openModal(modal, 'Inner'), []);
   return <Button onClick={handleClick}>Open inner modal</Button>;
 };
 
 @injectModal
 class OuterModal extends React.Component {
-  static contextType = Context;
-
   handleClick = () => {
-    const context = this.context;
-
     const { Modal: modal } = this.props;
-    openModal(modal, 'Outer', context);
+    openModal(modal, 'Outer');
   };
 
   render() {
-    const context = { value: 'provider' };
     return (
       <>
         <Button onClick={this.handleClick}>Open outer modal</Button>
-        <Context.Provider value={context}>
-          <InnterModal />
+        <Context.Provider value="provider">
+          <ModalProvider>
+            <InnterModal />
+          </ModalProvider>
         </Context.Provider>
       </>
     );
