@@ -23,8 +23,8 @@ describe('Form', () => {
     });
 
     it('get component ref', () => {
+      // eslint-disable-next-line
       class TestForm extends React.Component {
-        // eslint-disable-line
         render() {
           return <Form />;
         }
