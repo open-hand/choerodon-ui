@@ -20,6 +20,7 @@ import defaultFeedback, { FeedBack } from 'choerodon-ui/pro/lib/data-set/FeedBac
 import Record from 'choerodon-ui/pro/lib/data-set/Record';
 import { CacheOptions } from 'choerodon-ui/pro/lib/_util/Cache';
 import { LabelLayout } from 'choerodon-ui/pro/lib/form/enum';
+import { ButtonColor, FuncType } from 'choerodon-ui/pro/lib/button/enum';
 
 export type Status = {
   [RecordStatus.add]: string;
@@ -82,11 +83,14 @@ export type Config = {
   tableRowHeight?: 'auto' | number;
   tableColumnResizable?: boolean;
   tableExpandIcon?: (props: expandInconProps) => ReactNode;
+  tableButtonProps?: ButtonProps;
+  tableCommandProps?: ButtonProps;
   pagination?: TablePaginationConfig | false;
   modalSectionBorder?: boolean;
   modalOkFirst?: boolean;
   modalButtonProps?: ButtonProps;
-  buttonFuncType?: string;
+  buttonFuncType?: FuncType;
+  buttonColor?: ButtonColor;
   renderEmpty?: renderEmptyHandler;
   defaultValidationMessages?: ValidationMessages;
   transport?: TransportProps;
@@ -111,6 +115,8 @@ const defaultRenderEmpty: renderEmptyHandler = (componentName?: string): ReactNo
     default:
   }
 };
+
+const defaultButtonProps = { color: ButtonColor.primary, funcType: FuncType.flat };
 
 const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.map<
   ConfigKeys,
@@ -149,8 +155,12 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['tableHighLightRow', true],
   ['tableRowHeight', 30],
   ['tableColumnResizable', true],
+  ['tableButtonProps', defaultButtonProps],
+  ['tableCommandProps', defaultButtonProps],
   ['modalSectionBorder', true],
   ['modalOkFirst', true],
+  ['buttonColor', ButtonColor.default],
+  ['buttonFuncType', FuncType.raised],
   ['feedback', defaultFeedback],
   ['renderEmpty', defaultRenderEmpty],
   ['icons', categories],

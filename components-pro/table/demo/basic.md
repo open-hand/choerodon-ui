@@ -293,61 +293,43 @@ class App extends React.Component {
   };
 
   copyButton = (
-    <Button
-      funcType="flat"
-      color="primary"
-      icon="baseline-file_copy"
-      onClick={this.copy}
-      key="copy"
-    >
+    <Button icon="baseline-file_copy" onClick={this.copy} key="copy">
       复制
     </Button>
   );
 
   insertButton = (
-    <Button funcType="flat" color="primary" icon="merge_type" onClick={this.insert} key="insert">
+    <Button icon="merge_type" onClick={this.insert} key="insert">
       插入
     </Button>
   );
 
   importButton = (
-    <Button funcType="flat" color="primary" icon="get_app" onClick={this.importData} key="import">
+    <Button icon="get_app" onClick={this.importData} key="import">
       导入
     </Button>
   );
 
   removeAllButton = (
-    <Button
-      funcType="flat"
-      color="primary"
-      icon="remove_circle"
-      onClick={this.removeAllData}
-      key="removeAll"
-    >
+    <Button icon="remove_circle" onClick={this.removeAllData} key="removeAll">
       全部移除
     </Button>
   );
 
   deleteAllButton = (
-    <Button
-      funcType="flat"
-      color="primary"
-      icon="delete"
-      onClick={this.deleteAllData}
-      key="deleteAll"
-    >
+    <Button icon="delete" onClick={this.deleteAllData} key="deleteAll">
       全部删除
     </Button>
   );
 
-  save = async () => {
-    console.log('submit result', await this.userDs.submit());
+  save = () => {
+    console.log('submit result', 'after click');
   };
 
   render() {
     const buttons = [
       'add',
-      ['save', { onClick: this.save }],
+      ['save', { afterClick: this.save }],
       ['delete', { color: 'red' }],
       'remove',
       'reset',

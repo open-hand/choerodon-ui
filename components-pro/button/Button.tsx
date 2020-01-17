@@ -123,7 +123,6 @@ export default class Button extends DataSetComponent<ButtonProps> {
   static defaultProps = {
     suffixCls: 'btn',
     type: ButtonType.button,
-    color: ButtonColor.default,
     loading: false,
     waitType: ButtonWaitType.throttle,
   };
@@ -235,7 +234,12 @@ export default class Button extends DataSetComponent<ButtonProps> {
   getClassName(...props): string | undefined {
     const {
       prefixCls,
-      props: { color, funcType = getConfig('buttonFuncType') || FuncType.raised, children, icon },
+      props: {
+        color = getConfig('buttonColor'),
+        funcType = getConfig('buttonFuncType'),
+        children,
+        icon,
+      },
     } = this;
     const childrenCount = Children.count(children);
     return super.getClassName(

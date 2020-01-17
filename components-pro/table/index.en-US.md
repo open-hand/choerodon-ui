@@ -24,7 +24,7 @@ subtitle: 表格
 | border | 是否显示边框 | boolean | true |
 | selectionMode | 选择记录的模式, 可选值: `rowbox` `click` `dblclick` `mousedown` `none` | string | 'rowbox' |
 | onRow | 设置行属性 | ({ dataSet, record, index, expandedRow }) => object |  |
-| buttons | 功能按钮，可选值：`add` `delete` `remove` `save` `query` `reset` `expandAll` `collapseAll` `export` 或 数组 或 自定义按钮，数组为可选值字符串+按钮配置属性对象 | string \| \[string, object\] \|ReactNode |  |
+| buttons | 功能按钮，内置按钮可添加 `afterClick` 钩子，用于执行除了默认行为外的动作，可选值：`add` `delete` `remove` `save` `query` `reset` `expandAll` `collapseAll` `export` 或 数组 或 自定义按钮，数组为可选值字符串+按钮配置属性对象 | string \| \[string, object\] \| ReactNode \| object |  |
 | queryFields | 自定义查询字段组件或默认组件属性，默认会根据 queryDataSet 中定义的 field 类型自动匹配组件 | ReactNode[] \| object |  |
 | queryFieldsLimit | 头部显示的查询字段的数量，超出限制的查询字段放入弹出窗口 | number |  |
 | queryBar | 查询条, 可选值为钩子或者内置类型：`advancedBar` `normal` `bar` `none` | string \| ({ dataSet, queryDataSet, buttons, pagination, queryFields, queryFieldsLimit }) => ReactNode | 'normal' |
@@ -72,7 +72,7 @@ subtitle: 表格
 | help | 额外信息，常用于提示 | `string` |  |
 | showHelp | 展示提示信息的方式。可选值 `tooltip` `newLine` `none` | string | 'tooltip' |
 | onCell | 设置单元格属性 | ({ dataSet, record, column }) => object |  |
-| command | 行操作按钮集，该值为数组 或 返回数组的钩子，数组可选值：`edit` `delete` 或 \[`edit`\| `delete` , 按钮配置属性对象\] 或 自定义按钮 | (string \| \[string, object\] \| ReactNode)[] \| ({ dataSet, record }) => (string \| \[string, object\] \| ReactNode)[] |  |
+| command | 行操作按钮集，该值为数组 或 返回数组的钩子，内置按钮可添加 `afterClick` 钩子，用于执行除了默认行为外的动作，数组可选值：`edit` `delete` 或 \[`edit`\| `delete` , 按钮配置属性对象\] 或 自定义按钮 | (string \| \[string, object\] \| ReactNode)[] \| ({ dataSet, record }) => (string \| \[string, object\] \| ReactNode \| object )[] |  |
 | hidden | 隐藏 | boolean |  |
 | tooltip | 用 Tooltip 显示单元格内容。可选值 `none` `always` `overflow` | string | 'none' |
 

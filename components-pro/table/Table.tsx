@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode } from 'react';
+import React, { MouseEventHandler, ReactElement, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import raf from 'raf';
@@ -48,7 +48,12 @@ import { findIndexedSibling, getHeight, getPaginationPosition } from './utils';
 import { ButtonProps } from '../button/Button';
 import TableBody from './TableBody';
 
-export type Buttons = TableButtonType | [TableButtonType, ButtonProps] | ReactElement<ButtonProps>;
+export type TableButtonProps = ButtonProps & { afterClick?: MouseEventHandler<any> };
+
+export type Buttons =
+  | TableButtonType
+  | [TableButtonType, TableButtonProps]
+  | ReactElement<TableButtonProps>;
 
 export interface TableQueryBarHookProps {
   dataSet: DataSet;
@@ -83,8 +88,8 @@ export interface onRowProps {
 export type TableQueryBarHook = (props: TableQueryBarHookProps) => ReactNode;
 export type Commands =
   | TableCommandType
-  | [TableCommandType, ButtonProps]
-  | ReactElement<ButtonProps>;
+  | [TableCommandType, TableButtonProps]
+  | ReactElement<TableButtonProps>;
 
 export const buttonsEnumType = PropTypes.oneOf([
   TableButtonType.add,

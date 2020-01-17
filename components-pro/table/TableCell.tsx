@@ -4,6 +4,7 @@ import React, {
   CSSProperties,
   HTMLProps,
   isValidElement,
+  MouseEventHandler,
   ReactElement,
   ReactNode,
 } from 'react';
@@ -13,11 +14,13 @@ import { action, computed, isArrayLike, observable } from 'mobx';
 import classNames from 'classnames';
 import raf from 'raf';
 import omit from 'lodash/omit';
+import isObject from 'lodash/isObject';
 import isString from 'lodash/isString';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import ReactResizeObserver from 'choerodon-ui/lib/_util/resizeObserver';
+import { getConfig } from 'choerodon-ui/lib/configure';
 import { ColumnProps } from './Column';
 import Record from '../data-set/Record';
 import { ElementProps } from '../core/ViewComponent';
@@ -37,12 +40,11 @@ import ObserverCheckBox from '../check-box/CheckBox';
 import Output from '../output/Output';
 import { ShowHelp } from '../field/enum';
 import Button, { ButtonProps } from '../button/Button';
-import { ButtonColor, FuncType } from '../button/enum';
 import { $l } from '../locale-context';
 import Tooltip from '../tooltip/Tooltip';
 import { DataSetEvents, RecordStatus } from '../data-set/enum';
 import { LabelLayout } from '../form/enum';
-import { Commands } from './Table';
+import { Commands, TableButtonProps } from './Table';
 import autobind from '../_util/autobind';
 
 export interface TableCellProps extends ElementProps {
@@ -264,7 +266,7 @@ export default class TableCell extends Component<TableCellProps> {
   getButtonProps(
     type: TableCommandType,
     record: Record,
-  ): ButtonProps & { children?: ReactNode } | undefined {
+  ): ButtonProps & { onClick: MouseEventHandler<any>; children?: ReactNode } | undefined {
     const disabled = isDisabledRow(record);
     switch (type) {
       case TableCommandType.edit:
@@ -289,52 +291,51 @@ export default class TableCell extends Component<TableCellProps> {
   renderCommand() {
     const { record } = this.props;
     const command = this.getCommand();
+    const tableCommandProps = getConfig('tableCommandProps');
     if (record.editing) {
       return [
         <Tooltip key="save" title={$l('Table', 'save_button')}>
-          <Button
-            color={ButtonColor.primary}
-            funcType={FuncType.flat}
-            icon="finished"
-            onClick={this.handleCommandSave}
-          />
+          <Button {...tableCommandProps} icon="finished" onClick={this.handleCommandSave} />
         </Tooltip>,
         <Tooltip key="cancel" title={$l('Table', 'cancel_button')}>
-          <Button
-            color={ButtonColor.primary}
-            funcType={FuncType.flat}
-            icon="cancle_a"
-            onClick={this.handleCommandCancel}
-          />
+          <Button {...tableCommandProps} icon="cancle_a" onClick={this.handleCommandCancel} />
         </Tooltip>,
       ];
     }
     if (command) {
       const children: ReactElement<ButtonProps>[] = [];
-
       command.forEach(button => {
-        let props = {};
+        let props: TableButtonProps = {};
         if (isArrayLike(button)) {
-          props = button[1];
+          props = button[1] || {};
           button = button[0];
         }
         if (isString(button) && button in TableCommandType) {
           const defaultButtonProps = this.getButtonProps(button, record);
           if (defaultButtonProps) {
+            const { afterClick, ...buttonProps } = props;
+            if (afterClick) {
+              const { onClick } = defaultButtonProps;
+              defaultButtonProps.onClick = async e => {
+                e.persist();
+                try {
+                  await onClick(e);
+                } finally {
+                  afterClick(e);
+                }
+              };
+            }
             const { title, ...otherProps } = defaultButtonProps;
             children.push(
               <Tooltip key={button} title={title}>
-                <Button
-                  color={ButtonColor.primary}
-                  funcType={FuncType.flat}
-                  {...otherProps}
-                  {...props}
-                />
+                <Button {...tableCommandProps} {...otherProps} {...buttonProps} />
               </Tooltip>,
             );
           }
         } else if (isValidElement<ButtonProps>(button)) {
-          children.push(button);
+          children.push(cloneElement(button, { ...tableCommandProps, ...button.props }));
+        } else if (isObject(button)) {
+          children.push(<Button {...tableCommandProps} {...button} />);
         }
       });
       return children;

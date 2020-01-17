@@ -45,9 +45,12 @@ const prefixCls = getConfig('prefixCls');
 | tableRowHeight | Default Table row height | auto \| number | 30 |
 | tableColumnResizable | Default Table column resizable | boolean | true |
 | tableExpandIcon | Default Table custom expansion icon | ({ prefixCls, expanded, expandable, needIndentSpaced, record, onExpand }) => ReactNode |  |
+| tableButtonProps | Default Table button props | ButtonProps | { color: 'primary', funcType: 'flat' } |
+| tableCommandProps | Default Table command props | ButtonProps | { color: 'primary', funcType: 'flat' } |
 | modalSectionBorder | Default if Modal header and foot have a border line | boolean | true |
 | modalOkFirst | Default the ok button of Modal is ranked first | boolean | true |
 | buttonFuncType | Default Button function type | string | raised |
+| buttonColor | Default Button color | string | default |
 | renderEmpty | set empty content of components. | (componentName: string) => ReactNode | - |
 | defaultValidationMessages | Default validation messages. More info: [ValidationMessages](#ValidationMessages) | ValitionMessages | - |
 | generatePageQuery | Hook for Paging Parameter Conversion | ({ page?: number, pageSize?: number, sortName?: string, sortOrder?: string }) => object | - |

@@ -48,9 +48,12 @@ const prefixCls = getConfig('prefixCls');
 | tableRowHeight | 默认 Table 行高 | auto \| number | 30 |
 | tableColumnResizable | 默认 Table 列可调整列宽 | boolean | true |
 | tableExpandIcon | 默认 Table 自定义展开图标 | ({ prefixCls, expanded, expandable, needIndentSpaced, record, onExpand }) => ReactNode |  |
+| tableButtonProps | 默认 TableButton 的属性 | ButtonProps | { color: 'primary', funcType: 'flat' } |
+| tableCommandProps | 默认 TableCommand 的属性 | ButtonProps | { color: 'primary', funcType: 'flat' } |
 | modalSectionBorder | 默认 Modal 的头和脚有边框线 | boolean | true |
 | modalOkFirst | 默认 Modal 的 ok 按钮排在第一个 | boolean | true |
 | buttonFuncType | 默认 Button 的功能类型 | string | raised |
+| buttonColor | 默认 Button 的颜色 | string | default |
 | renderEmpty | 自定义组件空状态。 | (componentName: string) => ReactNode | - |
 | defaultValidationMessages | 自定义校验信息, 详见[ValidationMessages](#ValidationMessages) | ValitionMessages | - |
 | generatePageQuery | 分页参数转换的钩子 | ({ page?: number, pageSize?: number, sortName?: string, sortOrder?: string }) => object | - |

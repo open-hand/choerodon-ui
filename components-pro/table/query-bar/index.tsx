@@ -1,14 +1,27 @@
-import React, { cloneElement, Component, isValidElement, ReactElement, ReactNode } from 'react';
+import React, {
+  cloneElement,
+  Component,
+  isValidElement,
+  MouseEventHandler,
+  ReactElement,
+  ReactNode,
+} from 'react';
 import { observer } from 'mobx-react';
 import { isArrayLike } from 'mobx';
 import isObject from 'lodash/isObject';
 import isString from 'lodash/isString';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
+import { getConfig } from 'choerodon-ui/lib/configure';
 import { TableButtonType, TableQueryBarType } from '../enum';
 import TableButtons from './TableButtons';
-import Table, { Buttons, TableQueryBarHook, TableQueryBarHookProps } from '../Table';
+import Table, {
+  Buttons,
+  TableButtonProps,
+  TableQueryBarHook,
+  TableQueryBarHookProps,
+} from '../Table';
 import Button, { ButtonProps } from '../../button/Button';
-import { ButtonColor, ButtonType, FuncType } from '../../button/enum';
+import { ButtonType } from '../../button/enum';
 import { DataSetStatus, FieldType } from '../../data-set/enum';
 import { $l } from '../../locale-context';
 import TableContext from '../TableContext';
@@ -73,7 +86,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     const {
       tableStore: { dataSet },
     } = this.context;
-    dataSet.submit();
+    return dataSet.submit();
   }
 
   @autobind
@@ -81,7 +94,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     const {
       tableStore: { dataSet },
     } = this.context;
-    dataSet.delete(dataSet.selected);
+    return dataSet.delete(dataSet.selected);
   }
 
   @autobind
@@ -154,7 +167,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     const {
       tableStore: { dataSet },
     } = this.context;
-    dataSet.query();
+    return dataSet.query();
   }
 
   @autobind
@@ -183,7 +196,9 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     }
   }
 
-  getButtonProps(type: TableButtonType): ButtonProps & { children?: ReactNode } | undefined {
+  getButtonProps(
+    type: TableButtonType,
+  ): ButtonProps & { onClick: MouseEventHandler<any>; children?: ReactNode } | undefined {
     const {
       tableStore: { isTree, dataSet },
     } = this.context;
@@ -257,27 +272,41 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     const { buttons } = this.props;
     const children: ReactElement<ButtonProps>[] = [];
     if (buttons) {
+      const tableButtonProps = getConfig('tableButtonProps');
       buttons.forEach(button => {
-        let props = {};
+        let props: TableButtonProps = {};
         if (isArrayLike(button)) {
-          props = button[1];
+          props = button[1] || {};
           button = button[0];
         }
         if (isString(button) && button in TableButtonType) {
+          const { afterClick, ...buttonProps } = props;
           const defaultButtonProps = this.getButtonProps(button);
           if (defaultButtonProps) {
+            if (afterClick) {
+              const { onClick } = defaultButtonProps;
+              defaultButtonProps.onClick = async e => {
+                e.persist();
+                try {
+                  await onClick(e);
+                } finally {
+                  afterClick(e);
+                }
+              };
+            }
             children.push(
               <Button
-                color={ButtonColor.primary}
-                funcType={FuncType.flat}
                 key={button}
+                {...tableButtonProps}
                 {...defaultButtonProps}
-                {...props}
+                {...buttonProps}
               />,
             );
           }
         } else if (isValidElement<ButtonProps>(button)) {
-          children.push(button);
+          children.push(cloneElement(button, { ...tableButtonProps, ...button.props }));
+        } else if (isObject(button)) {
+          children.push(<Button {...tableButtonProps} {...button} />);
         }
       });
     }

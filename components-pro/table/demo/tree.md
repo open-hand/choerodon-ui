@@ -96,35 +96,19 @@ class App extends React.Component {
     'query',
     'expandAll',
     'collapseAll',
-    <AddChildButton
-      key="add-child"
-      dataSet={this.ds}
-      onClick={this.handleCreateChild}
-      color="primary"
-      funcType="flat"
-    >
+    <AddChildButton key="add-child" dataSet={this.ds} onClick={this.handleCreateChild}>
       添加子节点
     </AddChildButton>,
-    <Button
-      key="change-expand-type"
-      onClick={this.handleChangeExpandIconIndex}
-      color="primary"
-      funcType="flat"
-    >
+    <Button key="change-expand-type" onClick={this.handleChangeExpandIconIndex}>
       切换展开图标索引
     </Button>,
-    <Button key="change-border" onClick={this.handleChangeBorder} color="primary" funcType="flat">
+    <Button key="change-border" onClick={this.handleChangeBorder}>
       切换边框
     </Button>,
-    <Button key="change-mode" onClick={this.handleChangeMode} color="primary" funcType="flat">
+    <Button key="change-mode" onClick={this.handleChangeMode}>
       切换树模式
     </Button>,
-    <Button
-      key="change-expand-render"
-      onClick={this.handleChangeExpandRender}
-      color="primary"
-      funcType="flat"
-    >
+    <Button key="change-expand-render" onClick={this.handleChangeExpandRender}>
       切换展开行渲染
     </Button>,
   ];

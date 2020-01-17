@@ -201,19 +201,19 @@ class App extends React.Component {
   };
 
   createButton = (
-    <Button funcType="flat" color="primary" icon="playlist_add" onClick={this.createUser} key="add">
+    <Button icon="playlist_add" onClick={this.createUser} key="add">
       新增
     </Button>
   );
 
   toDataButton = (
-    <Button funcType="flat" color="primary" onClick={this.toData} key="toData">
+    <Button onClick={this.toData} key="toData">
       toData
     </Button>
   );
 
   toJSONDataButton = (
-    <Button funcType="flat" color="primary" onClick={this.toJSONData} key="toJSONData">
+    <Button onClick={this.toJSONData} key="toJSONData">
       toJSONData
     </Button>
   );

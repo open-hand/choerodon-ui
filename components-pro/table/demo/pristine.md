@@ -109,7 +109,7 @@ class App extends React.Component {
   };
 
   createButton = (
-    <Button funcType="flat" color="primary" icon="playlist_add" onClick={this.createUser} key="add">
+    <Button icon="playlist_add" onClick={this.createUser} key="add">
       新增
     </Button>
   );
