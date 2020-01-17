@@ -173,6 +173,25 @@ class App extends React.Component {
         type: 'object',
         label: '代码描述',
         dynamicProps: codeDynamicProps,
+        transformRequest(value) {
+          return { v: 2 };
+        },
+      },
+      {
+        name: 'code.v',
+        type: 'number',
+        dynamicProps: codeDynamicProps,
+        transformRequest(value) {
+          return 5;
+        },
+      },
+      {
+        name: 'code.d.v',
+        type: 'number',
+        dynamicProps: codeDynamicProps,
+        transformRequest(value) {
+          return 5;
+        },
       },
       {
         name: 'code_code',

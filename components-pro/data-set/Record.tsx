@@ -716,8 +716,10 @@ export default class Record {
   private normalizeData(needIgnore?: boolean) {
     const { fields } = this;
     const json: any = toJS(this.data);
+    const objectFieldsList: Field[][] = [];
+    const normalFields: Field[] = [];
+    const ignoreFieldNames: Set<string> = new Set();
     [...fields.keys()].forEach(key => {
-      let value = ObjectChainValue.get(json, key);
       const field = this.getField(key);
       if (field) {
         const ignore = field.get('ignore');
@@ -725,32 +727,44 @@ export default class Record {
           needIgnore &&
           (ignore === FieldIgnore.always || (ignore === FieldIgnore.clean && !field.dirty))
         ) {
-          delete json[key];
-          return;
+          ignoreFieldNames.add(key);
+        } else {
+          const type = field.get('type');
+          if (type === FieldType.object) {
+            const level = key.split('.').length - 1;
+            objectFieldsList[level] = (objectFieldsList[level] || []).concat(field);
+          } else {
+            normalFields.push(field);
+          }
         }
-        const bind = field.get('bind');
-        const multiple = field.get('multiple');
-        const type = field.get('type');
-        const transformRequest = field.get('transformRequest');
-        if (bind) {
-          value = this.get(bind);
-        }
-        if (type === FieldType.object) {
-          return;
-        }
-        if (isString(multiple) && isArrayLike(value)) {
-          value = value.map(processToJSON).join(multiple);
-        }
-        if (transformRequest) {
-          value = transformRequest(value, this);
-        }
-      }
-      if (value !== undefined) {
-        ObjectChainValue.set(json, key, processToJSON(value), fields);
-      } else {
-        ObjectChainValue.remove(json, key);
       }
     });
+    [...objectFieldsList, normalFields].forEach(items => {
+      if (items) {
+        items.forEach(field => {
+          const { name } = field;
+          let value = ObjectChainValue.get(json, name);
+          const bind = field.get('bind');
+          const multiple = field.get('multiple');
+          const transformRequest = field.get('transformRequest');
+          if (bind) {
+            value = this.get(bind);
+          }
+          if (isString(multiple) && isArrayLike(value)) {
+            value = value.map(processToJSON).join(multiple);
+          }
+          if (transformRequest) {
+            value = transformRequest(value, this);
+          }
+          if (value !== undefined) {
+            ObjectChainValue.set(json, name, processToJSON(value), fields);
+          } else {
+            ignoreFieldNames.add(name);
+          }
+        });
+      }
+    });
+    [...ignoreFieldNames].forEach(key => ObjectChainValue.remove(json, key));
     return json;
   }
 

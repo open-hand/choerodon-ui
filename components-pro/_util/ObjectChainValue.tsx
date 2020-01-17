@@ -58,13 +58,14 @@ export function set(
 export function remove(obj: object, prop: string) {
   const index = prop.indexOf('.');
   if (index !== -1) {
-    const key = prop.slice(0, index);
-    const restKey = prop.slice(index + 1);
-    const value = mobxGet(obj, key);
-    if (isArrayLike(value)) {
-      value.forEach(item => remove(item, restKey));
-    } else if (isObject(value)) {
-      remove(value, restKey);
+    const value = mobxGet(obj, prop.slice(0, index));
+    if (value) {
+      const restKey = prop.slice(index + 1);
+      if (isArrayLike(value)) {
+        value.forEach(item => remove(item, restKey));
+      } else if (isObject(value)) {
+        remove(value, restKey);
+      }
     }
   } else {
     mobxRemove(obj, prop);
