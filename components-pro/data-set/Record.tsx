@@ -336,6 +336,7 @@ export default class Record {
     const { status } = this;
     return {
       ...this.toData(true, noCascade, isCascadeSelect, false),
+      __id: this.id,
       [getConfig('statusKey')]: getConfig('status')[
         status === RecordStatus.sync ? RecordStatus.update : status
       ],

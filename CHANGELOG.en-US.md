@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro> DataSet.Record`: Fix `toJSONData` missing `__id` attribute.
+
 ## 0.8.52
 
 `2020-01-17`
