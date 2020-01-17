@@ -289,7 +289,7 @@ export default class Lov extends Select<LovProps> {
 
   getButtonProps() {
     const { className, type } = this.props;
-    const props = {
+    const props: ButtonProps = {
       ...Button.defaultProps,
       ...omit(this.getOtherProps(), ['name']),
       className,

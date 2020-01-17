@@ -15,7 +15,12 @@ timeline: true
 
 ---
 
--🌟 `configure`: Added`tableButtonProps` `tableCommandProps` `buttonColor` properties. -🌟 `<pro> Table`: Built-in buttons for TableButton and TableCommand can add `afterClick` hook to perform actions other than the default behavior.
+## 0.8.52
+
+`2020-01-17`
+
+- 🌟 `configure`: Added`tableButtonProps` `tableCommandProps` `buttonColor` properties.
+- 🌟 `<pro> Table`: Built-in buttons for TableButton and TableCommand can add `afterClick` hook to perform actions other than the default behavior.
 
 ## 0.8.51
 

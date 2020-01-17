@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.52
+
+`2020-01-17`
+
 - 🌟 `configure`: 新增 `tableButtonProps` `tableCommandProps` `buttonColor` 属性。
 - 🌟 `<pro>Table`: TableButton 和 TableCommand 的内置按钮可添加 afterClick 钩子， 用于执行除了默认行为外的动作。
 
