@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>NumberField`: 实装 range 属性。
 - 🐞 `<pro>DataSet.Record`: 修复 toJSONData 丢失 \_\_id 属性的问题。
 - 🐞 `<pro>DataSet.Field`: 修复 type 为 object 时， transformRequest 不起作用的问题。
 
@@ -22,7 +23,7 @@ timeline: true
 
 `2020-01-17`
 
-- 🌟 `configure`: 新增 `tableButtonProps` `tableCommandProps` `buttonColor` 属性。
+- 🌟 `configure`: 新增 tableButtonProps、tableCommandProps、buttonColor 属性。
 - 🌟 `<pro>Table`: TableButton 和 TableCommand 的内置按钮可添加 afterClick 钩子， 用于执行除了默认行为外的动作。
 
 ## 0.8.51

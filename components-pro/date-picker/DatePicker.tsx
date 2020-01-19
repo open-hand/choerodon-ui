@@ -428,18 +428,19 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     }
   }
 
+  @action
   handleEnterDown(e) {
     super.handleEnterDown(e);
     if (this.multiple && this.range) {
+      this.setRangeTarget(0);
       this.beginRange();
+      this.expand();
     }
   }
 
   syncValueOnBlur(value) {
     if (value) {
-      if (!this.range) {
-        this.addValue(this.checkMoment(value));
-      }
+      this.prepareSetValue(this.checkMoment(value));
     } else if (!this.multiple) {
       this.setValue(this.emptyValue);
     }

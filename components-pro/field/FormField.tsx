@@ -887,7 +887,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
 
   @action
   beginRange() {
-    this.setRangeTarget(0);
+    this.setRangeTarget(this.rangeTarget || 0);
     this.rangeValue = this.multiple
       ? [undefined, undefined]
       : toRangeValue(this.getValue(), this.range);

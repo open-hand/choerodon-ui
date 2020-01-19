@@ -13,9 +13,11 @@ const colorRgbaReg = /^[rR][gG][Bb][Aa]?\((\s*(2[0-4][0-9]|25[0-5]|[01]?[0-9][0-
 const colorHexReg = /^#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})$/;
 /* eslint-enable */
 
-const isDate = (value, range) => {
+const isNotDate = (value, range) => {
   if (range) {
-    return toRangeValue(value, range).some(item => item && (!isMoment(item) || !item.isValid()));
+    return toRangeValue(value, range).some(
+      item => !isEmpty(item) && (!isMoment(item) || !item.isValid()),
+    );
   }
   return !isMoment(value) || !value.isValid();
 };
@@ -29,12 +31,12 @@ const types: {
     value => !(colorRgbaReg.test(value) || colorHexReg.test(value)),
     'ColorPicker',
   ],
-  [FieldType.date]: [isDate, 'DatePicker'],
-  [FieldType.dateTime]: [isDate, 'DatePicker'],
-  [FieldType.week]: [isDate, 'DatePicker'],
-  [FieldType.month]: [isDate, 'DatePicker'],
-  [FieldType.year]: [isDate, 'DatePicker'],
-  [FieldType.time]: [isDate, 'DatePicker'],
+  [FieldType.date]: [isNotDate, 'DatePicker'],
+  [FieldType.dateTime]: [isNotDate, 'DatePicker'],
+  [FieldType.week]: [isNotDate, 'DatePicker'],
+  [FieldType.month]: [isNotDate, 'DatePicker'],
+  [FieldType.year]: [isNotDate, 'DatePicker'],
+  [FieldType.time]: [isNotDate, 'DatePicker'],
 };
 
 export default function typeMismatch(value: any, props: ValidatorProps): methodReturn {

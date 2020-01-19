@@ -1,6 +1,7 @@
 import { createElement, Fragment, isValidElement, ReactNode } from 'react';
 import format from 'string-template';
 import isString from 'lodash/isString';
+import isNil from 'lodash/isNil';
 import flatMap from 'lodash/flatMap';
 
 export default function formatReactTemplate(
@@ -10,7 +11,7 @@ export default function formatReactTemplate(
   let result: ReactNode[] = [template];
   Object.keys(map).forEach(key => {
     const node = map[key];
-    if (node) {
+    if (!isNil(node)) {
       result = flatMap(result, text => {
         if (isString(text)) {
           let stringText = text;

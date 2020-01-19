@@ -1,9 +1,10 @@
 import React, { ReactNode } from 'react';
 import PropTypes from 'prop-types';
-import { computed } from 'mobx';
+import { action, computed, isArrayLike, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import isString from 'lodash/isString';
 import isNumber from 'lodash/isNumber';
+import isPlainObject from 'lodash/isPlainObject';
 import defaultTo from 'lodash/defaultTo';
 import isNil from 'lodash/isNil';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
@@ -97,6 +98,35 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     return this.getLimit('max');
   }
 
+  @computed
+  get value(): any | undefined {
+    const { value } = this.observableProps;
+    if (isArrayLike(value)) {
+      return value;
+    }
+    const { range } = this;
+    if (isArrayLike(range)) {
+      if (isPlainObject(value)) {
+        const [start, end] = range;
+        return {
+          [start]: value[start],
+          [end]: value[end],
+        };
+      }
+    }
+    return value;
+  }
+
+  set value(value: any | undefined) {
+    runInAction(() => {
+      this.observableProps.value = value;
+    });
+  }
+
+  isLowerRange(value1: number, value2: number): boolean {
+    return value1 < value2;
+  }
+
   getFieldType(): FieldType {
     return FieldType.number;
   }
@@ -144,6 +174,18 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
           />
         </div>,
       );
+    }
+  }
+
+  @action
+  handleEnterDown(e) {
+    if (this.multiple && this.range && this.text) {
+      this.prepareSetValue(this.text);
+    }
+    super.handleEnterDown(e);
+    if (this.multiple && this.range) {
+      this.setRangeTarget(0);
+      this.beginRange();
     }
   }
 
@@ -258,8 +300,8 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     return value;
   }
 
-  getFormatOptions(): Intl.NumberFormatOptions | undefined {
-    const precision = getPrecision(this.getValue() || 0);
+  getFormatOptions(value?: number): Intl.NumberFormatOptions | undefined {
+    const precision = getPrecision(isNil(value) ? this.getValue() || 0 : value);
     return {
       minimumFractionDigits: precision,
       maximumFractionDigits: precision,
@@ -271,7 +313,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
   }
 
   processText(value: string): string {
-    return this.getFormatter()(value, this.lang, this.getFormatOptions());
+    return this.getFormatter()(value, this.lang, this.getFormatOptions(Number(value)));
   }
 }
 

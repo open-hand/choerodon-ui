@@ -293,6 +293,15 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     return <div className={`${prefixCls}-group-${category}`}>{node}</div>;
   }
 
+  setRangeTarget(target) {
+    if (this.text !== undefined) {
+      this.prepareSetValue(this.text);
+      this.setText();
+    }
+    super.setRangeTarget(target);
+    defer(() => this.isFocused && this.select());
+  }
+
   renderRangeEditor(props) {
     const { prefixCls, rangeTarget, isFocused } = this;
     const [startPlaceholder, endPlaceHolder = startPlaceholder] = this.getPlaceholders();
@@ -331,9 +340,11 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           value={
             rangeTarget === undefined || !this.isFocused
               ? ''
-              : rangeTarget === 0
-              ? startValue
-              : endValue
+              : this.text === undefined
+              ? rangeTarget === 0
+                ? startValue
+                : endValue
+              : this.text
           }
           placeholder={
             rangeTarget === undefined || !this.isFocused

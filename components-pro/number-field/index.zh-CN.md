@@ -32,7 +32,7 @@ title: NumberField
 | format(value, lang, options) | 数字格式化 | `value` - 数值 `lang` - 语言代码 `options` - 详见[Intl.NumberFormatOptions](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat) |
 
 <style>
-.code-box .c7n-row {
-  margin-bottom: .24rem;
+.code-box .c7n-pro-input-number-wrapper {
+  margin-bottom: .1rem;
 }
 </style>
