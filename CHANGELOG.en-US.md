@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.53
+
+`2020-01-20`
+
 - 🌟 `<pro>NumberField`: Implement the `range` property.
 - 🐞 `<pro>DataSet.Record`: Fix `toJSONData` missing `__id` attribute.
 - 🐞 `<pro>DataSet.Field`: Fix the problem that `transformRequest` does not work when type is object.

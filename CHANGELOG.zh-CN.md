@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.53
+
+`2020-01-20`
+
 - 🌟 `<pro>NumberField`: 实装 range 属性。
 - 🐞 `<pro>DataSet.Record`: 修复 toJSONData 丢失 \_\_id 属性的问题。
 - 🐞 `<pro>DataSet.Field`: 修复 type 为 object 时， transformRequest 不起作用的问题。

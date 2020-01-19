@@ -4,11 +4,24 @@ import { $l } from '../../locale-context';
 import { getNearStepValues } from '../../number-field/utils';
 import { methodReturn, ValidatorProps } from '.';
 import formatReactTemplate from '../../formatter/formatReactTemplate';
+import { toRangeValue } from '../../field/utils';
+
+function isStepMismatch(value, step, min, max, range) {
+  if (range) {
+    let nearStepValues;
+    toRangeValue(value, range).every(item => {
+      nearStepValues = !isEmpty(item) && getNearStepValues(Number(item), step, min, max);
+      return !nearStepValues;
+    });
+    return nearStepValues;
+  }
+  return !isEmpty(value) && getNearStepValues(Number(value), step, min, max);
+}
 
 export default function stepMismatch(value: any, props: ValidatorProps): methodReturn {
-  const { step, min, max, defaultValidationMessages } = props;
-  if (!isEmpty(value) && step !== undefined) {
-    const nearStepValues = getNearStepValues(Number(value), step, min, max);
+  const { step, min, max, defaultValidationMessages, range } = props;
+  if (step !== undefined) {
+    const nearStepValues = isStepMismatch(value, step, min, max, range);
     if (nearStepValues !== undefined) {
       const injectionOptions = {
         0: nearStepValues[0],

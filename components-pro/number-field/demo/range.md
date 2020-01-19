@@ -41,6 +41,7 @@ class App extends React.Component {
         required: true,
         min: 1,
         max: 10,
+        step: 1,
         validator: rangeValidator,
       },
       {

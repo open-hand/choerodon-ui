@@ -155,9 +155,9 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
   }
 
   getInnerSpanButton(): ReactNode {
-    const { prefixCls } = this;
+    const { prefixCls, range } = this;
     const step = this.getProp('step');
-    if (step && !this.isReadOnly()) {
+    if (step && !range && !this.isReadOnly()) {
       return this.wrapperInnerSpanButton(
         <div>
           <Icon
