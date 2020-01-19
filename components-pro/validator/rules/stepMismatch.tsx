@@ -10,12 +10,16 @@ function isStepMismatch(value, step, min, max, range) {
   if (range) {
     let nearStepValues;
     toRangeValue(value, range).every(item => {
-      nearStepValues = !isEmpty(item) && getNearStepValues(Number(item), step, min, max);
+      if (!isEmpty(item)) {
+        nearStepValues = getNearStepValues(Number(item), step, min, max);
+      }
       return !nearStepValues;
     });
     return nearStepValues;
   }
-  return !isEmpty(value) && getNearStepValues(Number(value), step, min, max);
+  if (!isEmpty(value)) {
+    return getNearStepValues(Number(value), step, min, max);
+  }
 }
 
 export default function stepMismatch(value: any, props: ValidatorProps): methodReturn {

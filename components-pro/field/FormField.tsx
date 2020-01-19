@@ -897,10 +897,8 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   endRange() {
     if (this.rangeValue) {
       const values = this.rangeValue.slice();
-      // if (this.multiple) {
       this.rangeValue = undefined;
-      // }
-      if (!values.every(isNil)) {
+      if (!this.multiple || !values.every(isNil)) {
         this.addValue(fromRangeValue(values, this.range));
       }
     }

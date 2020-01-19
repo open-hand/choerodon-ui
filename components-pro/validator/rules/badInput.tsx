@@ -5,16 +5,16 @@ import { FieldType } from '../../data-set/enum';
 import { toRangeValue } from '../../field/utils';
 import { methodReturn, ValidatorProps } from '.';
 
-const isNumber = (value, range) => {
+const isBadInput = (value, range) => {
   if (range) {
-    return toRangeValue(value, range).some(item => !isEmpty(item) && !isNaN(item));
+    return toRangeValue(value, range).some(item => !isEmpty(item) && isNaN(item));
   }
-  return !isEmpty(value) && !isNaN(value);
+  return !isEmpty(value) && isNaN(value);
 };
 
 export default function badInput(value: any, props: ValidatorProps): methodReturn {
   const { type, defaultValidationMessages, range } = props;
-  if (type === FieldType.number && !isNumber(value, range)) {
+  if (type === FieldType.number && isBadInput(value, range)) {
     const ruleName = 'badInput';
     const {
       [ruleName]: validationMessage = $l('Validator', 'bad_input'),

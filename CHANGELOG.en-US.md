@@ -15,6 +15,9 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>NumberField`: Fix the verification problem.
+- 🐞 `<pro>NumberField`: Fix the problem that range value cannot be deleted by keyboard.
+
 ## 0.8.53
 
 `2020-01-20`
