@@ -15,12 +15,16 @@ timeline: true
 
 ---
 
+## 0.8.54
+
+`2020-01-20`
+
 - 🐞 `<pro>NumberField`: Fix the verification problem.
 - 🐞 `<pro>NumberField`: Fix the problem that range value cannot be deleted by keyboard.
 
 ## 0.8.53
 
-`2020-01-20`
+`2020-01-19`
 
 - 🌟 `<pro>NumberField`: Implement the `range` property.
 - 🐞 `<pro>DataSet.Record`: Fix `toJSONData` missing `__id` attribute.
