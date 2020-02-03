@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Table`: Added `spin` properties.
+
 ## 0.8.54
 
 `2020-01-20`

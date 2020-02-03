@@ -20,7 +20,7 @@ import TableStore from './TableStore';
 import TableHeader from './TableHeader';
 import autobind from '../_util/autobind';
 import Pagination, { PaginationProps } from '../pagination/Pagination';
-import Spin from '../spin';
+import Spin, { SpinProps } from '../spin';
 import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComponent';
 import TableContext from './TableContext';
 import TableWrapper from './TableWrapper';
@@ -105,6 +105,12 @@ export const buttonsEnumType = PropTypes.oneOf([
 
 export interface TablePaginationConfig extends PaginationProps {
   position?: TablePaginationPosition;
+}
+
+export type SpinIndicator = ReactElement<any>;
+
+export interface TableSpinConfig extends SpinProps {
+  indicator?: SpinIndicator;
 }
 
 export interface TableProps extends DataSetComponentProps {
@@ -255,6 +261,10 @@ export interface TableProps extends DataSetComponentProps {
    * 点击展开图标时触发
    */
   onExpand?: (expanded: boolean, record: Record) => void;
+  /**
+   * 加载条属性
+   */
+  spin?: TableSpinConfig | false;
 }
 
 @observer
@@ -339,6 +349,7 @@ export default class Table extends DataSetComponent<TableProps> {
     filterBarFieldName: PropTypes.string,
     filterBarPlaceholder: PropTypes.string,
     highLightRow: PropTypes.bool,
+    loading: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
     ...DataSetComponent.propTypes,
   };
 
@@ -351,6 +362,7 @@ export default class Table extends DataSetComponent<TableProps> {
     expandRowByClick: false,
     indentSize: 15,
     filterBarFieldName: 'params',
+    loading: false,
   };
 
   tableStore: TableStore = new TableStore(this);
@@ -597,6 +609,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'highLightRow',
       'columnResizable',
       'pristine',
+      'spin',
     ]);
     otherProps.onKeyDown = this.handleKeyDown;
     const { rowHeight } = this.tableStore;
@@ -680,6 +693,7 @@ export default class Table extends DataSetComponent<TableProps> {
         queryFieldsLimit,
         filterBarFieldName,
         filterBarPlaceholder,
+        spin,
       },
     } = this;
     const content = this.getTable();
@@ -699,7 +713,7 @@ export default class Table extends DataSetComponent<TableProps> {
               filterBarFieldName={filterBarFieldName}
               filterBarPlaceholder={filterBarPlaceholder}
             />
-            <Spin key="content" dataSet={dataSet}>
+            <Spin {...spin} key="content" dataSet={dataSet}>
               <div {...this.getOtherProps()}>
                 <div className={`${prefixCls}-content`}>
                   {content}

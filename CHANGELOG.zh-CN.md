@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Table`: 添加 table spin indicator 属性配置。
+
 ## 0.8.54
 
 `2020-01-20`
