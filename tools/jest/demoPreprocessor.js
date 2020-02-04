@@ -103,7 +103,7 @@ module.exports = {
           require.resolve('babel-plugin-import'),
           {
             libraryName: 'choerodon-ui/pro',
-            libraryDirectory: `../../../../pro/${libDir}`,
+            libraryDirectory: `../../../../../${libDir}-pro`,
           },
           'c7n-pro',
         ],

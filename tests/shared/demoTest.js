@@ -4,9 +4,13 @@ import MockDate from 'mockdate';
 import moment from 'moment';
 
 export default function demoTest(component, options = {}) {
-  const files = glob.sync(`./components/${component}/demo/*.md`);
-
-  files.forEach((file) => {
+  const regex = /-pro$/;
+  const dirname =
+    regex.test(component) > 0
+      ? `./components-pro/${component.replace(/-pro/gi, '')}`
+      : `./components/${component}`;
+  const files = glob.sync(`${dirname}/demo/*.md`);
+  files.forEach(file => {
     let testMethod = options.skip === true ? test.skip : test;
     if (Array.isArray(options.skip) && options.skip.some(c => file.includes(c))) {
       testMethod = test.skip;

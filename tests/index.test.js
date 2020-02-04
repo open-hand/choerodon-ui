@@ -10,6 +10,11 @@ describe('choerodon-ui dist files', () => {
     expect(Object.keys(choerodon)).toMatchSnapshot();
   });
 
+  it('exports modules component-pro correctly', () => {
+    const choerodon = testDist ? require('../dist/choerodon-ui-pro') : require('../components-pro'); // eslint-disable-line global-require
+    expect(Object.keys(choerodon)).toMatchSnapshot();
+  });
+
   // https://github.com/ant-design/ant-design/issues/1970
   // https://github.com/ant-design/ant-design/issues/1804
   if (testDist) {
