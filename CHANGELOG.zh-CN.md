@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Pagination`: 修复 pagination disabled 属性配置。
+
 - 🌟 `<pro>Table`: 添加 table spin indicator 属性配置。
 
 ## 0.8.54
