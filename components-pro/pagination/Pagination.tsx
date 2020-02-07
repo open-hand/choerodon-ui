@@ -216,11 +216,12 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     ));
   }
 
-  getPager(page: number, type: PagerType, active: boolean = false, disabled?: boolean) {
+  getPager(page: number, type: PagerType, active: boolean = false, disabledSender?: boolean) {
     const {
       prefixCls,
-      props: { itemRender = defaultItemRender },
+      props: { itemRender = defaultItemRender, disabled = false },
     } = this;
+    const disabledValue = disabledSender ? disabledSender : disabled;
     return (
       <Pager
         key={type === 'page' ? page : type}
@@ -229,7 +230,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
         type={type}
         onClick={this.handlePagerClick}
         renderer={itemRender}
-        disabled={disabled}
+        disabled={disabledValue}
         className={`${prefixCls}-pager`}
       />
     );
@@ -274,11 +275,17 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
   }
 
   renderSizeChange(pageSize: number): ReactNode {
-    const { showSizeChangerLabel, showSizeChanger, sizeChangerOptionRenderer } = this.props;
+    const {
+      showSizeChangerLabel,
+      showSizeChanger,
+      sizeChangerOptionRenderer,
+      disabled,
+    } = this.props;
     if (showSizeChanger) {
       const select = (
         <ObserverSelect
           key="size-select"
+          disabled={disabled}
           onChange={this.handlePageSizeChange}
           value={String(pageSize)}
           clearButton={false}
@@ -308,10 +315,11 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
    */
   renderQuickGo(): ReactNode {
     const { prefixCls } = this;
+    const { disabled } = this.props;
     return (
       <div className={`${prefixCls}-quick-jumper`}>
         {$l('Pagination', 'jump_to')}
-        <ObserverNumberField min={1} onInput={this.handleJump} />
+        <ObserverNumberField disabled={disabled} min={1} onInput={this.handleJump} />
         {$l('Pagination', 'page')}
       </div>
     );
