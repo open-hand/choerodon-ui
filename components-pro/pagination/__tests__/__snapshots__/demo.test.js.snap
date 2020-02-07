@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders ./components-pro/tree/demo/dataset.md correctly 1`] = `
+<div
+  class="c7n-spin c7n-spin-spinning"
+>
+  <div
+    class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-default c7n-spin-dot"
+  >
+    <div
+      class="c7n-progress-inner"
+    >
+      <svg
+        viewBox="0 0 50 50"
+      >
+        <circle
+          cx="25"
+          cy="25"
+          r="20"
+        />
+      </svg>
+    </div>
+  </div>
+</div>
+`;
