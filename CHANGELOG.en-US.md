@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>Table`: Fix `disabled` properties.
 - 🌟 `<pro>Table`: Added `spin` properties.
 
 ## 0.8.54
