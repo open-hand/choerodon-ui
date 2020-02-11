@@ -240,6 +240,7 @@ ${pkg.name} v${pkg.version}
   if (process.env.RUN_ENV === 'PRODUCTION') {
     const entry = ['./index'];
     const entryPro = ['./index-pro'];
+    const entryDemoDataMock = ['./site/theme/mock/browser-online-demo'];
 
     // Common config
     config.externals = {
@@ -282,6 +283,7 @@ ${pkg.name} v${pkg.version}
       entry: {
         [pkg.name]: entry,
         [`${pkg.name}-pro`]: entryPro,
+        [`${pkg.name}-demo-data-mock`]: entryDemoDataMock,
       },
       mode: 'development',
       plugins: [
@@ -296,6 +298,7 @@ ${pkg.name} v${pkg.version}
       entry: {
         [`${pkg.name}.min`]: entry,
         [`${pkg.name}-pro.min`]: entryPro,
+        [`${pkg.name}-demo-data-mock.min`]: entryDemoDataMock,
       },
       mode: 'production',
       plugins: [

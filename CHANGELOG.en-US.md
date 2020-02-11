@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🐞 Fix online data mock problem.
 - 🐞 `<pro>Table`: Fix `disabled` properties.
 - 🌟 `<pro>Table`: Added `spin` properties.
 
