@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, mount, shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import PagnationTest from './PagnationTest';
 
 const setupByMount = () => {
