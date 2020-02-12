@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>Table`: 修复 table 出现的浮动列高度不对齐问题。
 - 🐞 `<pro>Pagination`: 修复 pagination disabled 属性配置。
 
 - 🌟 `<pro>Table`: 添加 table spin indicator 属性配置。

@@ -87,7 +87,9 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
         return (
           <tr
             key={String(rowIndex)}
-            style={{ height: lock ? this.getHeaderRowStyle(rows, rowIndex) : undefined }}
+            style={{
+              height: lock ? this.getHeaderRowStyle(rows, rowIndex, columnResizable) : undefined,
+            }}
           >
             {tds}
           </tr>
@@ -130,7 +132,11 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
     return rows;
   }
 
-  getHeaderRowStyle(rows: ColumnGroup[][], rowIndex: number): string | number | undefined {
+  getHeaderRowStyle(
+    rows: ColumnGroup[][],
+    rowIndex: number,
+    columnResizable: boolean,
+  ): string | number | undefined {
     const {
       tableStore: { rowHeight },
     } = this.context;
@@ -143,7 +149,9 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
             r.length
               ? total
               : total +
-                (rowHeight === 'auto' ? this.getRowHeight(index + rowIndex) : rowHeight + 4),
+                (rowHeight === 'auto'
+                  ? this.getRowHeight(index + rowIndex)
+                  : rowHeight + (columnResizable ? 4 : 3)),
           height,
         ),
     );

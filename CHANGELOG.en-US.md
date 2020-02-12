@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>Table`: Fix the head fixed height err
 - 🐞 `<pro>Table`: Fix `disabled` properties.
 - 🌟 `<pro>Table`: Added `spin` properties.
 
