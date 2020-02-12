@@ -87,8 +87,6 @@ function generateGridField(
 export class LovCodeStore {
   @observable lovCodes: ObservableMap<string, LovConfig>;
 
-  @observable lovDS: ObservableMap<string, DataSet>;
-
   pendings = {};
 
   get axios(): AxiosInstance {
@@ -102,7 +100,6 @@ export class LovCodeStore {
   @action
   init() {
     this.lovCodes = observable.map<string, LovConfig>();
-    this.lovDS = observable.map<string, DataSet>();
   }
 
   getDefineAxiosConfig(code: string, field?: Field): AxiosRequestConfig | undefined {
@@ -144,57 +141,52 @@ export class LovCodeStore {
   }
 
   getLovDataSet(code: string, field?: Field): DataSet | undefined {
-    let ds = this.lovDS.get(code);
-    if (!ds) {
-      const config = this.getConfig(code);
-      if (config) {
-        const { lovPageSize, lovItems, parentIdField, idField, valueField, treeFlag } = config;
-        const dataSetProps: DataSetProps = {
-          transport: {
-            read: this.getQueryAxiosConfig(code, field, config),
-          },
-          primaryKey: valueField,
-          cacheSelection: true,
-        };
-        if (!isNil(lovPageSize) && !isNaN(Number(lovPageSize))) {
-          dataSetProps.pageSize = Number(lovPageSize);
-        } else {
-          dataSetProps.paging = false;
-        }
-        if (treeFlag === 'Y' && parentIdField && idField) {
-          dataSetProps.parentField = parentIdField;
-          dataSetProps.idField = idField;
-        }
-
-        if (lovItems && lovItems.length) {
-          const { querys, fields } = lovItems
-            .sort(
-              ({ conditionFieldSequence }, { conditionFieldSequence: conditionFieldSequence2 }) =>
-                conditionFieldSequence - conditionFieldSequence2,
-            )
-            .reduce(
-              (obj, configItem) => {
-                generateConditionField(obj.querys, configItem);
-                generateGridField(obj.fields, configItem, valueField);
-                return obj;
-              },
-              { querys: [] as FieldProps[], fields: [] as FieldProps[] },
-            );
-          if (querys.length) {
-            dataSetProps.queryFields = querys;
-          }
-          if (fields.length) {
-            dataSetProps.fields = fields;
-          }
-        }
-        runInAction(() => {
-          this.lovDS.set(code, (ds = new DataSet(dataSetProps)));
-        });
+    const config = this.getConfig(code);
+    if (config) {
+      const { lovPageSize, lovItems, parentIdField, idField, valueField, treeFlag } = config;
+      const dataSetProps: DataSetProps = {
+        transport: {
+          read: this.getQueryAxiosConfig(code, field, config),
+        },
+        primaryKey: valueField,
+        cacheSelection: true,
+      };
+      if (!isNil(lovPageSize) && !isNaN(Number(lovPageSize))) {
+        dataSetProps.pageSize = Number(lovPageSize);
       } else {
-        warning(false, `LOV: code<${code}> is not exists`);
+        dataSetProps.paging = false;
       }
+      if (treeFlag === 'Y' && parentIdField && idField) {
+        dataSetProps.parentField = parentIdField;
+        dataSetProps.idField = idField;
+      }
+
+      if (lovItems && lovItems.length) {
+        const { querys, fields } = lovItems
+          .sort(
+            ({ conditionFieldSequence }, { conditionFieldSequence: conditionFieldSequence2 }) =>
+              conditionFieldSequence - conditionFieldSequence2,
+          )
+          .reduce(
+            (obj, configItem) => {
+              generateConditionField(obj.querys, configItem);
+              generateGridField(obj.fields, configItem, valueField);
+              return obj;
+            },
+            { querys: [] as FieldProps[], fields: [] as FieldProps[] },
+          );
+        if (querys.length) {
+          dataSetProps.queryFields = querys;
+        }
+        if (fields.length) {
+          dataSetProps.fields = fields;
+        }
+      }
+      return new DataSet(dataSetProps);
+    } else {
+      warning(false, `LOV: code<${code}> is not exists`);
+      return undefined;
     }
-    return ds;
   }
 
   getConfigUrl(code: string, field?: Field): string {
@@ -240,11 +232,9 @@ export class LovCodeStore {
     if (codes) {
       codes.forEach(code => {
         this.lovCodes.delete(code);
-        this.lovDS.delete(code);
       });
     } else {
       this.lovCodes.clear();
-      this.lovDS.clear();
     }
   }
 }

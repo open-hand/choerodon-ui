@@ -15,9 +15,10 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Table`: Added `spin` properties.
 - 🐞 `<pro>Table`: Fix the head fixed height err
 - 🐞 `<pro>Table`: Fix `disabled` properties.
-- 🌟 `<pro>Table`: Added `spin` properties.
+- 🐞 `<pro> Lov`: Fix the problem that the record obtained in `lovQueryAxiosConfig` after the DataSet re-instantiation is one of the old DataSet instance.
 
 ## 0.8.54
 

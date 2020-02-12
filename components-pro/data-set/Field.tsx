@@ -802,10 +802,14 @@ dynamicProps = {
     return result;
   }
 
-  fetchLovConfig() {
+  async fetchLovConfig() {
     const lovCode = this.get('lovCode');
     if (lovCode) {
-      this.pending.add(lovCodeStore.fetchConfig(lovCode, this));
+      await this.pending.add(lovCodeStore.fetchConfig(lovCode, this));
+      const options = lovCodeStore.getLovDataSet(lovCode, this);
+      if (options) {
+        this.set('options', options);
+      }
     }
   }
 

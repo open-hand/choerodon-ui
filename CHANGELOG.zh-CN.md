@@ -15,10 +15,10 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Table`: 添加 table spin indicator 属性配置。
 - 🐞 `<pro>Table`: 修复 table 出现的浮动列高度不对齐问题。
 - 🐞 `<pro>Pagination`: 修复 pagination disabled 属性配置。
-
-- 🌟 `<pro>Table`: 添加 table spin indicator 属性配置。
+- 🐞 `<pro>Lov`: 修复 DataSet 重新实例化后 lovQueryAxiosConfig 中获得的 record 是旧 DataSet 实例的记录的问题。
 
 ## 0.8.54
 

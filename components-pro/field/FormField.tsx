@@ -405,12 +405,12 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
 
   @computed
   get field(): Field | undefined {
-    const { record, dataSet, name } = this;
+    const { record, dataSet, name, observableProps } = this;
     const { displayName } = this.constructor as any;
-    warning(
-      dataSet && displayName !== 'Output' ? !!name : true,
-      `${displayName} with binding DataSet need property name.`,
-    );
+    if (displayName !== 'Output' && !name) {
+      warning(!observableProps.dataSet, `${displayName} with binding DataSet need property name.`);
+      warning(!observableProps.record, `${displayName} with binding Record need property name.`);
+    }
     if (name) {
       const recordField = record ? record.getField(name) : undefined;
       const dsField = dataSet ? dataSet.getField(name) : undefined;
