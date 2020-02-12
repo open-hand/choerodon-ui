@@ -183,10 +183,9 @@ export class LovCodeStore {
         }
       }
       return new DataSet(dataSetProps);
-    } else {
-      warning(false, `LOV: code<${code}> is not exists`);
-      return undefined;
     }
+    warning(false, `LOV: code<${code}> is not exists`);
+    return undefined;
   }
 
   getConfigUrl(code: string, field?: Field): string {
