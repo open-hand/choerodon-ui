@@ -221,7 +221,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
       prefixCls,
       props: { itemRender = defaultItemRender, disabled = false },
     } = this;
-    const disabledValue = disabledSender ? disabledSender : disabled;
+    const disabledValue = disabledSender || disabled;
     return (
       <Pager
         key={type === 'page' ? page : type}

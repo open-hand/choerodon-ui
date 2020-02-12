@@ -1,20 +1,6 @@
 import React from 'react';
-import { render, mount, shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import TreeTest from './TreeTest';
-
-const setup = () => {
-  const wrapper = shallow(<TreeTest />);
-  return {
-    wrapper,
-  };
-};
-
-const setupByRender = () => {
-  const wrapper = render(<TreeTest />);
-  return {
-    wrapper,
-  };
-};
 
 const setupByMount = () => {
   const wrapper = mount(<TreeTest />);

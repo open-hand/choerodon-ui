@@ -64,6 +64,7 @@ export default class TreeTest extends React.Component {
   state = {
     count: 0,
   };
+
   ds = new DataSet({
     primaryKey: 'id',
     data: dataSet,
@@ -76,22 +77,24 @@ export default class TreeTest extends React.Component {
       { name: 'parentId', type: 'number' },
     ],
     events: {
-      select: ({ record, dataSet }) => {
-        this.setCount(dataSet);
+      select: ({ dataSetValue }) => {
+        this.setCount(dataSetValue);
       },
-      unSelect: ({ record, dataSet }) => {
-        this.setCount(dataSet);
+      unSelect: ({ dataSetValue }) => {
+        this.setCount(dataSetValue);
       },
     },
   });
-  setCount(dataSet) {
-    this.setState({ count: dataSet.selected.length });
+
+  setCount(dataSetValue) {
+    this.setState({ count: dataSetValue.selected.length });
   }
 
   render() {
+    const { count } = this.state;
     return (
       <>
-        <NumberField value={this.state.count} />
+        <NumberField value={count} />
         <Tree dataSet={this.ds} checkable renderer={nodeRenderer} />
       </>
     );
