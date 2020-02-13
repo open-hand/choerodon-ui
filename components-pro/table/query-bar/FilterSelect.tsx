@@ -198,6 +198,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
           if (field.get('multiple')) {
             fieldValue = (fieldValue || [])[repeat];
           }
+          if (field.get('bind')) return;
           return `${this.getFieldLabel(field)}: ${processFieldValue(
             isPlainObject(fieldValue) ? fieldValue : super.processValue(fieldValue),
             field,
@@ -414,7 +415,8 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
         if (
           key !== paramName &&
           (this.getValues().indexOf(key) === -1 ||
-            this.multipleFieldExistsValue(field, this.getQueryRecord()))
+            this.multipleFieldExistsValue(field, this.getQueryRecord())) &&
+          !field.get('bind')
         ) {
           data.push(
             <Option key={key} value={field}>

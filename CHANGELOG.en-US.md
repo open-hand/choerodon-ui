@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `<pro>Table`: Added `spin` properties.
+- 🐞 `<pro>Table.queryBar`: Fix the table filter bar error rendering bind field.
 - 🐞 `<pro>Table`: Fix the head fixed height err
 - 🐞 `<pro>Table`: Fix `disabled` properties.
 - 🐞 `<pro> Lov`: Fix the problem that the record obtained in `lovQueryAxiosConfig` after the DataSet re-instantiation is one of the old DataSet instance.
