@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.55
+
+`2020-02-13`
+
 - 🌟 `<pro>Table`: Added `spin` properties.
 - 🐞 Fix online data mock problem.
 - 🐞 `<pro>Table.queryBar`: Fix the table filter bar error rendering bind field.

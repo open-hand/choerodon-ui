@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.55
+
+`2020-02-13`
+
 - 🌟 `<pro>Table`: 添加 table spin indicator 属性配置。
 - 🐞 修复在线数据 mock 问题。
 - 🐞 `<pro>Table.queryBar`: 修复 queryBar 过滤条错误渲染 bind 字段。
