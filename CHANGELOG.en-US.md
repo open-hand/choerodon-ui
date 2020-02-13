@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `<pro>Table`: Added `spin` properties.
+- 🐞 Fix online data mock problem.
 - 🐞 `<pro>Table.queryBar`: Fix the table filter bar error rendering bind field.
 - 🐞 `<pro>Table`: Fix the head fixed height err
 - 🐞 `<pro>Table`: Fix `disabled` properties.
