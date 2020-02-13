@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `<pro>Table`: 添加 table spin indicator 属性配置。
+- 🐞 修复在线数据 mock 问题。
 - 🐞 `<pro>Table.queryBar`: 修复 queryBar 过滤条错误渲染 bind 字段。
 - 🐞 `<pro>Table`: 修复 table 出现的浮动列高度不对齐问题。
 - 🐞 `<pro>Pagination`: 修复 pagination disabled 属性配置。

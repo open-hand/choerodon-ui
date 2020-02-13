@@ -167,6 +167,7 @@ export default class Demo extends React.Component {
         'moment/min/moment-with-locales.min.js',
         'mobx@4.7.0/lib/mobx.umd.min.js',
         'mobx-react@5.1.x/index.min.js',
+        'choerodon-ui/dist/choerodon-ui-demo-data-mock.min.js',
         'choerodon-ui/dist/choerodon-ui-with-locales.js',
         'choerodon-ui/dist/choerodon-ui-pro-with-locales.js',
       ]
