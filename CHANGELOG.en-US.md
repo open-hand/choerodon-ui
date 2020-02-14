@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>Table`: Fix the inline edit lov rendering err.
+
 ## 0.8.55
 
 `2020-02-13`
