@@ -38,8 +38,7 @@ export function getEditorByField(field: Field): ReactElement<FormFieldProps> {
   if (
     lookupCode ||
     isString(lookupUrl) ||
-    (lovCode && type !== FieldType.object) ||
-    field.options
+    (type !== FieldType.object && (lovCode || field.options))
   ) {
     return <ObserverSelect />;
   }
