@@ -189,6 +189,7 @@ export default class Demo extends React.Component {
         axios: 'latest',
         moment: 'latest',
         mobx: '4.7.0',
+        lodash: '^4.17.15',
         'mobx-react': '5.1.2',
         'choerodon-ui': 'latest',
       },
@@ -209,6 +210,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'choerodon-ui/dist/choerodon-ui.css';
 import 'choerodon-ui/dist/choerodon-ui-pro.css';
+import 'choerodon-ui/dist/choerodon-ui-demo-data-mock.min.js';
 import './index.css';
 ${state.sourceCode.replace('mountNode', "document.getElementById('container')")}
           `,
@@ -229,6 +231,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'choerodon-ui/dist/choerodon-ui.css';
 import 'choerodon-ui/dist/choerodon-ui-pro.css';
+import 'choerodon-ui/dist/choerodon-ui-demo-data-mock.min.js';
 import './index.css';
 ${state.sourceCode.replace('mountNode', "document.getElementById('container')")}
           `,
