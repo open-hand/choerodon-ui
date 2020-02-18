@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>Button`: Fix incomplete presentation style.
 - 🐞 `<pro>Table`: Fix the inline edit lov rendering err.
 
 ## 0.8.55

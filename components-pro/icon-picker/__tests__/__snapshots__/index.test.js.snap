@@ -1,0 +1,3562 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Icon-Picker-pro renders IconPicker correctly 1`] = `
+<IconPicker
+  autoComplete="off"
+  clearButton={true}
+  multiple={false}
+  noValidate={false}
+  pageSize={100}
+  readOnly={false}
+  showHelp="newLine"
+  suffixCls="icon-picker"
+  trigger={
+    Array [
+      "focus",
+      "click",
+    ]
+  }
+  triggerHiddenDelay={50}
+  triggerShowDelay={150}
+  trim="both"
+>
+  <Tooltip
+    arrowPointAtCenter={false}
+    autoAdjustOverflow={true}
+    defaultHidden={true}
+    mouseEnterDelay={100}
+    mouseLeaveDelay={100}
+    placement="bottomLeft"
+    suffixCls="tooltip"
+    theme="light"
+    title={null}
+    transitionName="zoom-big-fast"
+    trigger={
+      Array [
+        "hover",
+      ]
+    }
+  >
+    <Trigger
+      action={
+        Array [
+          "hover",
+        ]
+      }
+      arrowPointAtCenter={false}
+      autoAdjustOverflow={true}
+      blurDelay={0}
+      builtinPlacements={
+        Object {
+          "bottom": Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tc",
+              "bc",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "bottomLeft": Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tl",
+              "bl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "bottomRight": Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tr",
+              "br",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "left": Object {
+            "offset": Array [
+              -10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "cr",
+              "cl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "leftBottom": Object {
+            "offset": Array [
+              -10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "br",
+              "bl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "leftTop": Object {
+            "offset": Array [
+              -10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tr",
+              "tl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "right": Object {
+            "offset": Array [
+              10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "cl",
+              "cr",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "rightBottom": Object {
+            "offset": Array [
+              10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "bl",
+              "br",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "rightTop": Object {
+            "offset": Array [
+              10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tl",
+              "tr",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "top": Object {
+            "offset": Array [
+              0,
+              -10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "bc",
+              "tc",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "topLeft": Object {
+            "offset": Array [
+              0,
+              -10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "bl",
+              "tl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "topRight": Object {
+            "offset": Array [
+              0,
+              -10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "br",
+              "tr",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+        }
+      }
+      defaultPopupHidden={true}
+      focusDelay={150}
+      mouseEnterDelay={100}
+      mouseLeaveDelay={100}
+      popupContent={null}
+      popupPlacement="bottomLeft"
+      prefixCls="c7n-pro-tooltip"
+      suffixCls="tooltip"
+      theme="light"
+      title={null}
+      transitionName="zoom-big-fast"
+    >
+      <TriggerChild
+        key=".$.$element"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <span
+          className="c7n-pro-icon-picker-wrapper c7n-pro-icon-picker-empty c7n-pro-icon-picker-suffix-button"
+          key=".$element"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onFocus={[Function]}
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <label
+            onMouseDown={[Function]}
+          >
+            <Trigger
+              action={
+                Array [
+                  "focus",
+                  "click",
+                ]
+              }
+              blurDelay={50}
+              builtinPlacements={
+                Object {
+                  "bottomLeft": Object {
+                    "offset": Array [
+                      0,
+                      4,
+                    ],
+                    "overflow": Object {
+                      "adjustX": 1,
+                      "adjustY": 1,
+                    },
+                    "points": Array [
+                      "tl",
+                      "bl",
+                    ],
+                  },
+                  "bottomRight": Object {
+                    "offset": Array [
+                      0,
+                      4,
+                    ],
+                    "overflow": Object {
+                      "adjustX": 1,
+                      "adjustY": 1,
+                    },
+                    "points": Array [
+                      "tr",
+                      "br",
+                    ],
+                  },
+                  "topLeft": Object {
+                    "offset": Array [
+                      0,
+                      -4,
+                    ],
+                    "overflow": Object {
+                      "adjustX": 1,
+                      "adjustY": 1,
+                    },
+                    "points": Array [
+                      "bl",
+                      "tl",
+                    ],
+                  },
+                  "topRight": Object {
+                    "offset": Array [
+                      0,
+                      -4,
+                    ],
+                    "overflow": Object {
+                      "adjustX": 1,
+                      "adjustY": 1,
+                    },
+                    "points": Array [
+                      "br",
+                      "tr",
+                    ],
+                  },
+                }
+              }
+              defaultPopupHidden={true}
+              focusDelay={150}
+              getPopupStyleFromAlign={[Function]}
+              getRootDomNode={[Function]}
+              mouseEnterDelay={150}
+              mouseLeaveDelay={50}
+              onPopupAnimateAppear={[Function]}
+              onPopupAnimateEnd={[Function]}
+              onPopupHiddenChange={[Function]}
+              popupContent={
+                <div>
+                  <Tabs
+                    activeKey="whatsNew"
+                    hideAdd={false}
+                    onChange={[Function]}
+                  >
+                    <TabPane
+                      className="c7n-pro-icon-picker-tab"
+                      placeholder={null}
+                      tab="新增"
+                    >
+                      <IconCategory
+                        category="whatsNew"
+                        icons={
+                          Array [
+                            "circulate",
+                            "knowledge",
+                            "pipeline",
+                            "role_assignments",
+                            "application_allocation",
+                            "redeploy_line",
+                            "add_column",
+                            "add_row",
+                            "application_market",
+                            "backup_line",
+                            "delete_column",
+                            "delete_row",
+                            "establish_base",
+                            "merge_cell",
+                            "rate_review1",
+                            "revocation",
+                            "split_cell",
+                            "template_configuration",
+                            "widgets_line",
+                            "project_line",
+                            "project_group",
+                            "project_filled",
+                            "scissors",
+                            "category",
+                            "subscription",
+                            "line_manage",
+                            "nearby",
+                            "authorize",
+                            "publish_cancel",
+                            "subscription_cancel",
+                            "project_program",
+                            "agile-feature",
+                            "baseline-vertical_split",
+                            "number",
+                            "popup_selection",
+                            "toggle_off",
+                            "project_program_analyze",
+                            "application_-general",
+                            "deploy_list",
+                            "auto_complete",
+                            "combo_box",
+                            "data_source",
+                            "multistage_combo_box",
+                            "API_management",
+                            "API_market",
+                            "API_publish",
+                            "API_subscription",
+                            "APIS",
+                            "auto_deploy",
+                            "sync_records",
+                            "sync_user",
+                            "test-case",
+                            "test-automation",
+                            "token",
+                            "change_size",
+                            "add_crt",
+                            "add_branch",
+                            "line",
+                            "secret",
+                            "recover",
+                            "table",
+                            "test_execution",
+                            "test_progress",
+                            "test_record",
+                            "execution_schedule",
+                            "cluster",
+                            "kubernetes_cluster",
+                            "disconnect",
+                            "running",
+                            "notification_setting",
+                            "authority",
+                            "develop_console",
+                            "frame",
+                            "record_test",
+                            "agile_epic",
+                            "agile_fault",
+                            "agile_story",
+                            "agile_subtask",
+                            "agile_task",
+                            "auto_test",
+                          ]
+                        }
+                        onPageChange={[Function]}
+                        onSelect={[Function]}
+                        pageSize={100}
+                        paging={true}
+                        prefixCls="c7n-pro-icon-picker"
+                        value="circulate"
+                      />
+                    </TabPane>
+                    <TabPane
+                      className="c7n-pro-icon-picker-tab"
+                      placeholder={null}
+                      tab="方向性"
+                    >
+                      <IconCategory
+                        category="direction"
+                        icons={
+                          Array [
+                            "baseline-arrow_drop_down",
+                            "baseline-arrow_drop_up",
+                            "baseline-arrow_left",
+                            "baseline-arrow_right",
+                            "play_90",
+                            "replay_90",
+                            "navigate_before",
+                            "navigate_next",
+                            "arrow_back",
+                            "arrow_downward",
+                            "arrow_drop_down",
+                            "arrow_drop_down_circle",
+                            "arrow_drop_up",
+                            "arrow_forward",
+                            "arrow_upward",
+                            "expand_less",
+                            "expand_more",
+                            "fast_forward",
+                            "fast_rewind",
+                            "first_page",
+                            "last_page",
+                            "skip_next",
+                            "skip_previous",
+                            "subdirectory_arrow_left",
+                            "subdirectory_arrow_right",
+                            "trending_down",
+                            "trending_flat",
+                            "trending_up",
+                            "unfold_less",
+                            "unfold_more",
+                          ]
+                        }
+                        onPageChange={[Function]}
+                        onSelect={[Function]}
+                        pageSize={100}
+                        paging={true}
+                        prefixCls="c7n-pro-icon-picker"
+                      />
+                    </TabPane>
+                    <TabPane
+                      className="c7n-pro-icon-picker-tab"
+                      placeholder={null}
+                      tab="提示建议性"
+                    >
+                      <IconCategory
+                        category="suggestion"
+                        icons={
+                          Array [
+                            "cancle_a",
+                            "cancle_b",
+                            "forbidden_a",
+                            "forbidden_b",
+                            "block",
+                            "finished",
+                            "alarm",
+                            "access_alarms",
+                            "schedule",
+                            "alarm_off",
+                            "alarm_on",
+                            "add",
+                            "add_a_photo",
+                            "alarm_add",
+                            "add_alert",
+                            "add_box",
+                            "add_circle",
+                            "control_point",
+                            "add_location",
+                            "add_shopping_cart",
+                            "queue",
+                            "add_to_queue",
+                            "cancel",
+                            "check",
+                            "check_circle",
+                            "close",
+                            "not_interested",
+                            "do_not_disturb_alt",
+                            "do_not_disturb_off",
+                            "remove",
+                            "remove_circle_outline",
+                            "remove_circle",
+                            "done",
+                            "done_all",
+                            "indeterminate_check_box",
+                            "info",
+                            "info_outline",
+                            "priority_high",
+                            "verified_user",
+                            "report",
+                            "warning",
+                          ]
+                        }
+                        onPageChange={[Function]}
+                        onSelect={[Function]}
+                        pageSize={100}
+                        paging={true}
+                        prefixCls="c7n-pro-icon-picker"
+                      />
+                    </TabPane>
+                    <TabPane
+                      className="c7n-pro-icon-picker-tab"
+                      placeholder={null}
+                      tab="编辑类"
+                    >
+                      <IconCategory
+                        category="edit"
+                        icons={
+                          Array [
+                            "border_all",
+                            "border_bottom",
+                            "border_clear",
+                            "border_color",
+                            "border_horizontal",
+                            "border_inner",
+                            "border_left",
+                            "border_outer",
+                            "border_right",
+                            "border_style",
+                            "border_top",
+                            "border_vertical",
+                            "code",
+                            "photo_library",
+                            "collections_bookmark",
+                            "palette",
+                            "colorize",
+                            "comment",
+                            "compare",
+                            "compare_arrows",
+                            "content_cut",
+                            "content_paste",
+                            "content_copy",
+                            "mode_edit",
+                            "crop",
+                            "crop_16_9",
+                            "crop_3_2",
+                            "crop_landscape",
+                            "crop_7_5",
+                            "crop_din",
+                            "crop_free",
+                            "crop_original",
+                            "crop_portrait",
+                            "crop_rotate",
+                            "crop_square",
+                            "delete",
+                            "delete_forever",
+                            "delete_sweep",
+                            "error",
+                            "error_outline",
+                            "flip",
+                            "flip_to_back",
+                            "flip_to_front",
+                            "font_download",
+                            "format_align_center",
+                            "format_align_justify",
+                            "format_align_left",
+                            "format_align_right",
+                            "format_bold",
+                            "format_clear",
+                            "format_color_fill",
+                            "format_color_reset",
+                            "format_color_text",
+                            "format_indent_decrease",
+                            "format_indent_increase",
+                            "format_italic",
+                            "format_line_spacing",
+                            "format_list_bulleted",
+                            "format_list_numbered",
+                            "format_paint",
+                            "format_quote",
+                            "format_shapes",
+                            "format_size",
+                            "format_strikethrough",
+                            "format_textdirection_l_to_r",
+                            "format_textdirection_r_to_l",
+                            "format_underlined",
+                            "fullscreen",
+                            "fullscreen_exit",
+                            "functions",
+                            "g_translate",
+                            "grid_off",
+                            "grid_on",
+                            "print",
+                            "sort",
+                            "sort_by_alpha",
+                            "text_fields",
+                            "text_format",
+                            "texture",
+                            "transform",
+                            "translate",
+                            "undo",
+                            "wrap_text",
+                            "zoom_in",
+                            "zoom_out",
+                            "zoom_out_map",
+                          ]
+                        }
+                        onPageChange={[Function]}
+                        onSelect={[Function]}
+                        pageSize={100}
+                        paging={true}
+                        prefixCls="c7n-pro-icon-picker"
+                      />
+                    </TabPane>
+                    <TabPane
+                      className="c7n-pro-icon-picker-tab"
+                      placeholder={null}
+                      tab="数据类"
+                    >
+                      <IconCategory
+                        category="data"
+                        icons={
+                          Array [
+                            "devops_chart",
+                            "agile_chart",
+                            "test_chart",
+                            "bar_chart",
+                            "burnout_map",
+                            "table_chart",
+                            "bubble_chart",
+                            "pie_chart",
+                            "pie_chart_outlined",
+                            "show_chart",
+                          ]
+                        }
+                        onPageChange={[Function]}
+                        onSelect={[Function]}
+                        pageSize={100}
+                        paging={true}
+                        prefixCls="c7n-pro-icon-picker"
+                      />
+                    </TabPane>
+                    <TabPane
+                      className="c7n-pro-icon-picker-tab"
+                      placeholder={null}
+                      tab="网站通用"
+                    >
+                      <IconCategory
+                        category="other"
+                        icons={
+                          Array [
+                            "create_new_folder",
+                            "folder_open2",
+                            "folder",
+                            "folder_open",
+                            "folder_shared",
+                            "folder_special",
+                            "note",
+                            "note_add",
+                            "lock",
+                            "unlock",
+                            "lock_open",
+                            "lock_outline",
+                            "classname",
+                            "state_over",
+                            "task_schedule",
+                            "unallocated_question",
+                            "unfinished_question",
+                            "all_reports",
+                            "iterative_workbench",
+                            "outstanding_tasks",
+                            "report_overview",
+                            "test_execute",
+                            "test_planning",
+                            "project_list",
+                            "domain_list",
+                            "IP_out",
+                            "message_notification",
+                            "all_read",
+                            "inmail_template",
+                            "mail_set",
+                            "export_EOT",
+                            "export_html",
+                            "export_PDF",
+                            "export_RTF",
+                            "export_XAR",
+                            "mail_modal",
+                            "message_modal",
+                            "message2",
+                            "usermap",
+                            "document",
+                            "pass",
+                            "operation_bug",
+                            "operation_change",
+                            "operation_event",
+                            "operation_help",
+                            "operation_new_feature",
+                            "operation_problem",
+                            "operation_service_request",
+                            "operation_subtask",
+                            "operation_task",
+                            "port",
+                            "aim_port",
+                            "saga_define",
+                            "role_tag",
+                            "agile",
+                            "quality",
+                            "appmarket",
+                            "merge_request",
+                            "APItest",
+                            "relation",
+                            "relate",
+                            "manage_project",
+                            "book",
+                            "contact_support",
+                            "ballot",
+                            "test",
+                            "priority",
+                            "compass",
+                            "sutask",
+                            "explicit-outline",
+                            "explicit2",
+                            "framework",
+                            "inbox_content",
+                            "visits",
+                            "work_log",
+                            "link",
+                            "link2",
+                            "baseline-link_off",
+                            "baseline-drag_indicator",
+                            "baseline-file_copy",
+                            "sms_outline",
+                            "versionline",
+                            "root",
+                            "micro",
+                            "publish2",
+                            "center",
+                            "filter2",
+                            "manage_person",
+                            "manage_organization",
+                            "password",
+                            "custom_Directory",
+                            "predefine",
+                            "project",
+                            "return",
+                            "API",
+                            "／",
+                            "application_model",
+                            "microservice",
+                            "instance",
+                            "instance_outline",
+                            "IAM",
+                            "routeroutline",
+                            "version",
+                            "devops",
+                            "CI",
+                            "kubernetes",
+                            "branch",
+                            "point",
+                            "wait_circle",
+                            "add_activity",
+                            "add_task",
+                            "export",
+                            "debug",
+                            "database",
+                            "Development-monitoring",
+                            "insight",
+                            "jsfiddle",
+                            "Operation-monitoring",
+                            "rocket",
+                            "wrench",
+                            "skipped_a",
+                            "skipped_b",
+                            "d_rotation",
+                            "ac_unit",
+                            "accessibility",
+                            "accessible",
+                            "account_balance",
+                            "account_balance_wallet",
+                            "account_box",
+                            "account_circle",
+                            "adb",
+                            "adjust",
+                            "airline_seat_flat",
+                            "airline_seat_flat_angled",
+                            "airline_seat_individual_suite",
+                            "airline_seat_legroom_extra",
+                            "airline_seat_legroom_normal",
+                            "airline_seat_legroom_reduced",
+                            "airline_seat_recline_extra",
+                            "airline_seat_recline_normal",
+                            "flight",
+                            "airplanemode_inactive",
+                            "airplay",
+                            "airport_shuttle",
+                            "album",
+                            "all_inclusive",
+                            "all_out",
+                            "announcement",
+                            "apps",
+                            "archive",
+                            "art_track",
+                            "aspect_ratio",
+                            "poll",
+                            "assignment",
+                            "assignment_ind",
+                            "assignment_late",
+                            "assignment_return",
+                            "assignment_returned",
+                            "assignment_turned_in",
+                            "assistant",
+                            "flag",
+                            "attach_file",
+                            "attach_money",
+                            "attachment",
+                            "audiotrack",
+                            "autorenew",
+                            "av_timer",
+                            "backspace",
+                            "cloud_upload",
+                            "battery_alert",
+                            "battery_charging_full",
+                            "battery_std",
+                            "battery_unknown",
+                            "beach_access",
+                            "beenhere",
+                            "bluetooth",
+                            "bluetooth_searching",
+                            "bluetooth_connected",
+                            "bluetooth_disabled",
+                            "blur_circular",
+                            "blur_linear",
+                            "blur_off",
+                            "blur_on",
+                            "class",
+                            "turned_in",
+                            "turned_in_not",
+                            "branding_watermark",
+                            "brightness_1",
+                            "brightness_2",
+                            "brightness_3",
+                            "brightness_4",
+                            "brightness_low",
+                            "brightness_medium",
+                            "brightness_high",
+                            "brightness_auto",
+                            "broken_image",
+                            "brush",
+                            "bug_report",
+                            "build",
+                            "burst_mode",
+                            "domain",
+                            "business_center",
+                            "cached",
+                            "cake",
+                            "phone",
+                            "call_end",
+                            "call_made",
+                            "merge_type",
+                            "call_missed",
+                            "call_missed_outgoing",
+                            "call_received",
+                            "call_split",
+                            "call_to_action",
+                            "redeem",
+                            "card_membership",
+                            "card_travel",
+                            "casino",
+                            "cast",
+                            "cast_connected",
+                            "center_focus_strong",
+                            "center_focus_weak",
+                            "change_history",
+                            "chat",
+                            "chat_bubble",
+                            "chat_bubble_outline",
+                            "check_box",
+                            "check_box_outline_blank",
+                            "child_care",
+                            "child_friendly",
+                            "chrome_reader_mode",
+                            "clear_all",
+                            "closed_caption",
+                            "wb_cloudy",
+                            "cloud_circle",
+                            "cloud_done",
+                            "cloud_download",
+                            "cloud_off",
+                            "cloud_queue",
+                            "laptop",
+                            "confirmation_number",
+                            "contact_mail",
+                            "contact_phone",
+                            "contacts",
+                            "control_point_duplicate",
+                            "copyright",
+                            "payment",
+                            "dashboard",
+                            "data_usage",
+                            "dehaze",
+                            "description",
+                            "desktop_mac",
+                            "desktop_windows",
+                            "details",
+                            "developer_board",
+                            "developer_mode",
+                            "device_hub",
+                            "phonelink",
+                            "devices_other",
+                            "dialer_sip",
+                            "dialpad",
+                            "directions",
+                            "directions_bike",
+                            "directions_boat",
+                            "directions_bus",
+                            "directions_car",
+                            "directions_railway",
+                            "directions_run",
+                            "directions_transit",
+                            "directions_walk",
+                            "disc_full",
+                            "dns",
+                            "dock",
+                            "donut_large",
+                            "donut_small",
+                            "drafts",
+                            "drag_handle",
+                            "time_to_leave",
+                            "dvr",
+                            "edit_location",
+                            "eject",
+                            "markunread",
+                            "enhanced_encryption",
+                            "equalizer",
+                            "euro_symbol",
+                            "ev_station",
+                            "today",
+                            "date_range",
+                            "insert_invitation",
+                            "event_available",
+                            "event_busy",
+                            "event_note",
+                            "event_seat",
+                            "exit_to_app",
+                            "explicit",
+                            "explore",
+                            "extension",
+                            "face",
+                            "favorite",
+                            "favorite_border",
+                            "featured_play_list",
+                            "featured_video",
+                            "sms_failed",
+                            "fiber_dvr",
+                            "fiber_manual_record",
+                            "fiber_new",
+                            "fiber_pin",
+                            "fiber_smart_record",
+                            "get_app",
+                            "file_upload",
+                            "terrain",
+                            "find_in_page",
+                            "find_replace",
+                            "fingerprint",
+                            "fitness_center",
+                            "flare",
+                            "flash_auto",
+                            "flash_off",
+                            "flash_on",
+                            "flight_land",
+                            "flight_takeoff",
+                            "question_answer",
+                            "forward",
+                            "forward_10",
+                            "forward_30",
+                            "forward_5",
+                            "free_breakfast",
+                            "games",
+                            "gavel",
+                            "gesture",
+                            "gif",
+                            "goat",
+                            "golf_course",
+                            "my_location",
+                            "location_searching",
+                            "location_disabled",
+                            "star",
+                            "gradient",
+                            "grain",
+                            "graphic_eq",
+                            "people",
+                            "group_add",
+                            "group_work",
+                            "hd",
+                            "hdr_off",
+                            "hdr_on",
+                            "hdr_strong",
+                            "hdr_weak",
+                            "headset",
+                            "headset_mic",
+                            "healing",
+                            "hearing",
+                            "help",
+                            "help_outline",
+                            "high_quality",
+                            "highlight",
+                            "highlight_off",
+                            "restore",
+                            "home",
+                            "hot_tub",
+                            "local_hotel",
+                            "hourglass_empty",
+                            "hourglass_full",
+                            "http",
+                            "image_aspect_ratio",
+                            "import_contacts",
+                            "import_export",
+                            "important_devices",
+                            "inbox",
+                            "input",
+                            "insert_comment",
+                            "insert_drive_file",
+                            "tag_faces",
+                            "invert_colors",
+                            "invert_colors_off",
+                            "iso",
+                            "kitchen",
+                            "label",
+                            "label_outline",
+                            "language",
+                            "laptop_chromebook",
+                            "laptop_mac",
+                            "laptop_windows",
+                            "open_in_new",
+                            "layers",
+                            "layers_clear",
+                            "leak_add",
+                            "leak_remove",
+                            "lens",
+                            "library_books",
+                            "library_music",
+                            "lightbulb_outline",
+                            "line_style",
+                            "line_weight",
+                            "linear_scale",
+                            "linked_camera",
+                            "list",
+                            "live_help",
+                            "live_tv",
+                            "local_play",
+                            "local_airport",
+                            "local_atm",
+                            "local_bar",
+                            "local_cafe",
+                            "local_car_wash",
+                            "local_convenience_store",
+                            "restaurant_menu",
+                            "local_drink",
+                            "local_florist",
+                            "local_gas_station",
+                            "shopping_cart",
+                            "local_hospital",
+                            "local_laundry_service",
+                            "local_library",
+                            "local_mall",
+                            "theaters",
+                            "local_offer",
+                            "local_parking",
+                            "local_pharmacy",
+                            "local_pizza",
+                            "local_shipping",
+                            "local_taxi",
+                            "location_city",
+                            "location_off",
+                            "room",
+                            "sync",
+                            "loupe",
+                            "low_priority",
+                            "loyalty",
+                            "mail_outline",
+                            "map",
+                            "markunread_mailbox",
+                            "memory",
+                            "menu",
+                            "message",
+                            "mic",
+                            "mic_none",
+                            "mic_off",
+                            "mms",
+                            "mode_comment",
+                            "monetization_on",
+                            "money_off",
+                            "monochrome_photos",
+                            "mood_bad",
+                            "more",
+                            "more_horiz",
+                            "more_vert",
+                            "motorcycle",
+                            "mouse",
+                            "move_to_inbox",
+                            "movie_creation",
+                            "movie_filter",
+                            "multiline_chart",
+                            "music_note",
+                            "music_video",
+                            "nature",
+                            "nature_people",
+                            "navigation",
+                            "near_me",
+                            "network_cell",
+                            "network_check",
+                            "network_locked",
+                            "network_wifi",
+                            "new_releases",
+                            "next_week",
+                            "nfc",
+                            "no_encryption",
+                            "signal_cellular_no_sim",
+                            "offline_pin",
+                            "ondemand_video",
+                            "opacity",
+                            "open_in_browser",
+                            "open_with",
+                            "pages",
+                            "pageview",
+                            "pan_tool",
+                            "panorama",
+                            "radio_button_unchecked",
+                            "panorama_horizontal",
+                            "panorama_vertical",
+                            "panorama_wide_angle",
+                            "party_mode",
+                            "pause",
+                            "pause_circle_filled",
+                            "pause_circle_outline",
+                            "people_outline",
+                            "perm_camera_mic",
+                            "perm_contact_calendar",
+                            "perm_data_setting",
+                            "perm_device_information",
+                            "person_outline",
+                            "perm_media",
+                            "perm_phone_msg",
+                            "perm_scan_wifi",
+                            "person",
+                            "person_add",
+                            "person_pin",
+                            "person_pin_circle",
+                            "personal_video",
+                            "pets",
+                            "pin_drop",
+                            "plus_one",
+                            "polymer",
+                            "pool",
+                            "portable_wifi_off",
+                            "portrait",
+                            "power",
+                            "power_input",
+                            "power_settings_new",
+                            "pregnant_woman",
+                            "present_to_all",
+                            "public",
+                            "publish",
+                            "queue_music",
+                            "queue_play_next",
+                            "radio",
+                            "radio_button_checked",
+                            "rate_review",
+                            "receipt",
+                            "recent_actors",
+                            "record_voice_over",
+                            "redo",
+                            "refresh",
+                            "remove_from_queue",
+                            "visibility",
+                            "remove_shopping_cart",
+                            "reorder",
+                            "repeat",
+                            "repeat_one",
+                            "replay",
+                            "replay_10",
+                            "replay_30",
+                            "replay_5",
+                            "reply",
+                            "reply_all",
+                            "restaurant",
+                            "restore_page",
+                            "ring_volume",
+                            "room_service",
+                            "rotate_90_degrees_ccw",
+                            "rotate_left",
+                            "rotate_right",
+                            "rounded_corner",
+                            "router",
+                            "rowing",
+                            "rss_feed",
+                            "rv_hookup",
+                            "satellite",
+                            "save",
+                            "scanner",
+                            "school",
+                            "screen_lock_landscape",
+                            "screen_lock_portrait",
+                            "screen_lock_rotation",
+                            "screen_rotation",
+                            "screen_share",
+                            "sd_storage",
+                            "search",
+                            "security",
+                            "select_all",
+                            "send",
+                            "share",
+                            "shop",
+                            "shop_two",
+                            "shopping_basket",
+                            "short_text",
+                            "shuffle",
+                            "slideshow",
+                            "slow_motion_video",
+                            "stay_primary_portrait",
+                            "smoke_free",
+                            "smoking_rooms",
+                            "textsms",
+                            "snooze",
+                            "spa",
+                            "space_bar",
+                            "speaker",
+                            "speaker_group",
+                            "speaker_notes",
+                            "speaker_notes_off",
+                            "speaker_phone",
+                            "spellcheck",
+                            "star_border",
+                            "star_half",
+                            "stars",
+                            "stay_primary_landscape",
+                            "stop",
+                            "stop_screen_share",
+                            "storage",
+                            "store_mall_directory",
+                            "straighten",
+                            "streetview",
+                            "strikethrough_s",
+                            "style",
+                            "subject",
+                            "subscriptions",
+                            "subtitles",
+                            "subway",
+                            "supervisor_account",
+                            "surround_sound",
+                            "sync_disabled",
+                            "sync_problem",
+                            "system_update",
+                            "system_update_alt",
+                            "tab",
+                            "tab_unselected",
+                            "tablet",
+                            "tablet_android",
+                            "tablet_mac",
+                            "tap_and_play",
+                            "thumb_down",
+                            "thumb_up",
+                            "thumbs_up_down",
+                            "timelapse",
+                            "timeline",
+                            "timer",
+                            "timer_10",
+                            "timer_3",
+                            "timer_off",
+                            "title",
+                            "toc",
+                            "toll",
+                            "tonality",
+                            "touch_app",
+                            "toys",
+                            "track_changes",
+                            "traffic",
+                            "train",
+                            "tram",
+                            "transfer_within_a_station",
+                            "tune",
+                            "tv",
+                            "unarchive",
+                            "update",
+                            "usb",
+                            "vertical_align_bottom",
+                            "vertical_align_center",
+                            "vertical_align_top",
+                            "vibration",
+                            "video_call",
+                            "video_label",
+                            "video_library",
+                            "videocam",
+                            "videocam_off",
+                            "videogame_asset",
+                            "vignette",
+                            "visibility_off",
+                            "voice_chat",
+                            "voicemail",
+                            "vpn_key",
+                            "vpn_lock",
+                            "wallpaper",
+                            "watch",
+                            "watch_later",
+                            "wb_auto",
+                            "wb_incandescent",
+                            "wb_iridescent",
+                            "wb_sunny",
+                            "wc",
+                            "web",
+                            "web_asset",
+                            "weekend",
+                            "whatshot",
+                            "widgets",
+                            "wifi",
+                            "wifi_lock",
+                            "wifi_tethering",
+                            "work",
+                            "youtube_searched_for",
+                            "git",
+                            "android",
+                          ]
+                        }
+                        onPageChange={[Function]}
+                        onSelect={[Function]}
+                        pageSize={100}
+                        paging={true}
+                        prefixCls="c7n-pro-icon-picker"
+                      />
+                    </TabPane>
+                    <TabPane
+                      className="c7n-pro-icon-picker-tab"
+                      placeholder={null}
+                      tab="套系类"
+                    >
+                      <IconCategory
+                        category="series"
+                        icons={
+                          Array [
+                            "wait_one_a",
+                            "wait_one_b",
+                            "wait_two_a",
+                            "wait_two_b",
+                            "wait_three_a",
+                            "wait_three_b",
+                            "wait_four_a",
+                            "wait_four_b",
+                            "wait_five_a",
+                            "wait_five_b",
+                            "exposure",
+                            "exposure_neg_1",
+                            "exposure_neg_2",
+                            "exposure_plus_1",
+                            "exposure_plus_2",
+                            "exposure_zero",
+                            "filter",
+                            "filter_1",
+                            "filter_2",
+                            "filter_3",
+                            "filter_4",
+                            "filter_5",
+                            "filter_6",
+                            "filter_7",
+                            "filter_8",
+                            "filter_9",
+                            "filter_9_plus",
+                            "filter_b_and_w",
+                            "filter_center_focus",
+                            "filter_drama",
+                            "filter_frames",
+                            "filter_list",
+                            "filter_none",
+                            "filter_tilt_shift",
+                            "filter_vintage",
+                            "keyboard",
+                            "keyboard_arrow_down",
+                            "keyboard_arrow_left",
+                            "keyboard_arrow_right",
+                            "keyboard_arrow_up",
+                            "keyboard_backspace",
+                            "keyboard_capslock",
+                            "keyboard_hide",
+                            "keyboard_return",
+                            "keyboard_tab",
+                            "keyboard_voice",
+                            "looks",
+                            "looks_one",
+                            "looks_two",
+                            "looks_3",
+                            "looks_4",
+                            "looks_5",
+                            "looks_6",
+                            "notifications",
+                            "notifications_active",
+                            "notifications_none",
+                            "notifications_off",
+                            "notifications_paused",
+                            "phone_android",
+                            "phone_android2",
+                            "phone_bluetooth_speaker",
+                            "phone_forwarded",
+                            "phone_in_talk",
+                            "phone_iphone",
+                            "phone_locked",
+                            "phone_missed",
+                            "phone_paused",
+                            "phonelink_erase",
+                            "phonelink_lock",
+                            "phonelink_off",
+                            "phonelink_ring",
+                            "phonelink_setup",
+                            "camera",
+                            "photo_camera",
+                            "camera_enhance",
+                            "camera_front",
+                            "camera_rear",
+                            "camera_roll",
+                            "photo",
+                            "photo_album",
+                            "photo_filter",
+                            "photo_size_select_actual",
+                            "photo_size_select_large",
+                            "photo_size_select_small",
+                            "picture_as_pdf",
+                            "picture_in_picture",
+                            "picture_in_picture_alt",
+                            "play_arrow",
+                            "play_circle_filled",
+                            "play_circle_outline",
+                            "play_for_work",
+                            "playlist_add",
+                            "playlist_add_check",
+                            "playlist_play",
+                            "sentiment_dissatisfied",
+                            "sentiment_neutral",
+                            "sentiment_satisfied",
+                            "sentiment_very_dissatisfied",
+                            "sentiment_very_satisfied",
+                            "settings",
+                            "settings_applications",
+                            "settings_backup_restore",
+                            "settings_bluetooth",
+                            "settings_brightness",
+                            "settings_cell",
+                            "settings_ethernet",
+                            "settings_input_antenna",
+                            "settings_input_composite",
+                            "settings_input_hdmi",
+                            "settings_input_svideo",
+                            "settings_overscan",
+                            "settings_phone",
+                            "settings_power",
+                            "settings_remote",
+                            "settings_system_daydream",
+                            "settings_voice",
+                            "signal_cellular_4_bar",
+                            "signal_cellular_connected_no_internet_4_bar",
+                            "signal_cellular_null",
+                            "signal_cellular_off",
+                            "signal_wifi_4_bar",
+                            "signal_wifi_4_bar_lock",
+                            "signal_wifi_off",
+                            "sim_card",
+                            "sim_card_alert",
+                            "swap_calls",
+                            "swap_horiz",
+                            "swap_vert",
+                            "swap_vertical_circle",
+                            "switch_camera",
+                            "switch_video",
+                            "view_agenda",
+                            "view_array",
+                            "view_carousel",
+                            "view_column",
+                            "view_comfy",
+                            "view_compact",
+                            "view_day",
+                            "view_headline",
+                            "view_list",
+                            "view_module",
+                            "view_quilt",
+                            "view_stream",
+                            "view_week",
+                            "volume_down",
+                            "volume_mute",
+                            "volume_off",
+                            "volume_up",
+                          ]
+                        }
+                        onPageChange={[Function]}
+                        onSelect={[Function]}
+                        pageSize={100}
+                        paging={true}
+                        prefixCls="c7n-pro-icon-picker"
+                      />
+                    </TabPane>
+                  </Tabs>
+                </div>
+              }
+              popupHidden={true}
+              popupPlacement="bottomLeft"
+              prefixCls="c7n-pro-icon-picker"
+              transitionName="slide-up"
+            >
+              <TriggerChild
+                key=".$text"
+                onBlur={[Function]}
+                onClick={[Function]}
+                onFocus={[Function]}
+                onMouseDown={[Function]}
+              >
+                <input
+                  autoComplete="off"
+                  className="c7n-pro-icon-picker"
+                  key="text"
+                  multiple={false}
+                  noValidate={false}
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onClick={[Function]}
+                  onContextMenu={[Function]}
+                  onFocus={[Function]}
+                  onKeyDown={[Function]}
+                  onMouseDown={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  readOnly={false}
+                  type="text"
+                  value=""
+                />
+              </TriggerChild>
+              <Popup
+                align={
+                  Object {
+                    "offset": Array [
+                      0,
+                      4,
+                    ],
+                    "overflow": Object {
+                      "adjustX": 1,
+                      "adjustY": 1,
+                    },
+                    "points": Array [
+                      "tl",
+                      "bl",
+                    ],
+                  }
+                }
+                className="c7n-pro-icon-picker-popup"
+                getClassNameFromAlign={[Function]}
+                getRootDomNode={[Function]}
+                getStyleFromAlign={[Function]}
+                hidden={true}
+                key="popup"
+                onAnimateAppear={[Function]}
+                onAnimateEnd={[Function]}
+                onMouseDown={[Function]}
+                suffixCls="popup"
+                transitionName="slide-up"
+              />
+            </Trigger>
+            <div
+              className="c7n-pro-icon-picker-inner-button c7n-pro-icon-picker-clear-button"
+              key="inner-button"
+            >
+              <Icon
+                onClick={[Function]}
+                type="close"
+              >
+                <i
+                  className="icon icon-close"
+                  onClick={[Function]}
+                />
+              </Icon>
+            </div>
+            <div
+              className="c7n-pro-icon-picker-suffix"
+              onMouseDown={[Function]}
+            >
+              <Icon
+                className="c7n-pro-icon-picker-trigger"
+                type="developer_board"
+              >
+                <i
+                  className="icon icon-developer_board c7n-pro-icon-picker-trigger"
+                />
+              </Icon>
+            </div>
+          </label>
+        </span>
+      </TriggerChild>
+      <Popup
+        align={
+          Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tl",
+              "bl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          }
+        }
+        className="c7n-pro-tooltip-popup"
+        getClassNameFromAlign={[Function]}
+        getRootDomNode={[Function]}
+        hidden={true}
+        key="popup"
+        onMouseDown={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        suffixCls="popup"
+        transitionName="zoom-big-fast"
+      />
+    </Trigger>
+  </Tooltip>
+</IconPicker>
+`;
+
+exports[`Icon-Picker-pro should renders dataset correctly 1`] = `
+<IconPickerTest>
+  <IconPicker
+    autoComplete="off"
+    clearButton={true}
+    dataSet={
+      DataSet {
+        "cachedSelected": Array [],
+        "children": Object {},
+        "currentPage": 1,
+        "dataToJSON": "dirty",
+        "el": undefined,
+        "events": Object {
+          "indexchange": Array [
+            Array [
+              [Function],
+              false,
+            ],
+          ],
+          "update": Array [
+            Array [
+              [Function],
+              false,
+            ],
+          ],
+        },
+        "fields": Object {
+          "icon": Field {
+            "dataSet": [Circular],
+            "isDynamicPropsComputing": false,
+            "lastDynamicProps": Object {},
+            "pending": PromiseQueue {
+              "queue": Array [],
+              "queueing": false,
+            },
+            "pristineProps": Object {
+              "defaultValue": "cancel",
+              "name": "icon",
+              "required": true,
+              "type": "string",
+            },
+            "props": Object {
+              "defaultValue": "cancel",
+              "name": "icon",
+              "required": true,
+              "type": "string",
+            },
+            "record": undefined,
+            "validator": Validator {
+              "control": undefined,
+              "field": [Circular],
+              "innerValidationResults": Array [],
+            },
+          },
+        },
+        "inBatchSelection": false,
+        "name": undefined,
+        "originalData": Array [],
+        "pageSize": 10,
+        "parent": undefined,
+        "parentName": undefined,
+        "pending": PromiseQueue {
+          "queue": Array [],
+          "queueing": false,
+        },
+        "props": Object {
+          "autoCreate": true,
+          "autoLocateAfterCreate": true,
+          "autoLocateAfterRemove": true,
+          "autoLocateFirst": true,
+          "autoQuery": false,
+          "autoQueryAfterSubmit": true,
+          "dataToJSON": "dirty",
+          "events": Object {
+            "update": [Function],
+          },
+          "fields": Array [
+            Object {
+              "defaultValue": "cancel",
+              "name": "icon",
+              "required": true,
+              "type": "string",
+            },
+          ],
+          "modifiedCheck": true,
+          "pageSize": 10,
+          "paging": true,
+          "selection": "multiple",
+        },
+        "queryParameter": Object {},
+        "records": Array [
+          Record {
+            "cascadeRecordsMap": Object {},
+            "data": Object {
+              "icon": "cancel",
+            },
+            "dataSet": [Circular],
+            "dataSetSnapshot": Object {},
+            "editing": undefined,
+            "fields": Object {
+              "icon": Field {
+                "dataSet": [Circular],
+                "isDynamicPropsComputing": false,
+                "lastDynamicProps": Object {},
+                "pending": PromiseQueue {
+                  "queue": Array [],
+                  "queueing": false,
+                },
+                "pristineProps": Object {
+                  "name": "icon",
+                },
+                "props": Object {
+                  "name": "icon",
+                },
+                "record": [Circular],
+                "validator": Validator {
+                  "control": undefined,
+                  "field": [Circular],
+                  "innerValidationResults": Array [],
+                },
+              },
+            },
+            "id": 1001,
+            "isCached": false,
+            "isCurrent": true,
+            "isSelected": false,
+            "pristineData": Object {
+              "icon": "cancel",
+            },
+            "selectable": true,
+            "state": Object {},
+            "status": "add",
+          },
+        ],
+        "resetInBatch": false,
+        "selection": "multiple",
+        "status": "ready",
+        "syncChildrenRemote": [Function],
+        "totalCount": 0,
+      }
+    }
+    multiple={false}
+    name="icon"
+    noValidate={false}
+    pageSize={100}
+    readOnly={false}
+    showHelp="newLine"
+    suffixCls="icon-picker"
+    trigger={
+      Array [
+        "focus",
+        "click",
+      ]
+    }
+    triggerHiddenDelay={50}
+    triggerShowDelay={150}
+    trim="both"
+  >
+    <Tooltip
+      arrowPointAtCenter={false}
+      autoAdjustOverflow={true}
+      defaultHidden={true}
+      mouseEnterDelay={100}
+      mouseLeaveDelay={100}
+      placement="bottomLeft"
+      suffixCls="tooltip"
+      theme="light"
+      title={null}
+      transitionName="zoom-big-fast"
+      trigger={
+        Array [
+          "hover",
+        ]
+      }
+    >
+      <Trigger
+        action={
+          Array [
+            "hover",
+          ]
+        }
+        arrowPointAtCenter={false}
+        autoAdjustOverflow={true}
+        blurDelay={0}
+        builtinPlacements={
+          Object {
+            "bottom": Object {
+              "offset": Array [
+                0,
+                10,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "tc",
+                "bc",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+            "bottomLeft": Object {
+              "offset": Array [
+                0,
+                10,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "tl",
+                "bl",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+            "bottomRight": Object {
+              "offset": Array [
+                0,
+                10,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "tr",
+                "br",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+            "left": Object {
+              "offset": Array [
+                -10,
+                0,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "cr",
+                "cl",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+            "leftBottom": Object {
+              "offset": Array [
+                -10,
+                0,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "br",
+                "bl",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+            "leftTop": Object {
+              "offset": Array [
+                -10,
+                0,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "tr",
+                "tl",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+            "right": Object {
+              "offset": Array [
+                10,
+                0,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "cl",
+                "cr",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+            "rightBottom": Object {
+              "offset": Array [
+                10,
+                0,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "bl",
+                "br",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+            "rightTop": Object {
+              "offset": Array [
+                10,
+                0,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "tl",
+                "tr",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+            "top": Object {
+              "offset": Array [
+                0,
+                -10,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "bc",
+                "tc",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+            "topLeft": Object {
+              "offset": Array [
+                0,
+                -10,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "bl",
+                "tl",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+            "topRight": Object {
+              "offset": Array [
+                0,
+                -10,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "br",
+                "tr",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+          }
+        }
+        defaultPopupHidden={true}
+        focusDelay={150}
+        mouseEnterDelay={100}
+        mouseLeaveDelay={100}
+        popupContent={null}
+        popupPlacement="bottomLeft"
+        prefixCls="c7n-pro-tooltip"
+        suffixCls="tooltip"
+        theme="light"
+        title={null}
+        transitionName="zoom-big-fast"
+      >
+        <TriggerChild
+          key=".$.$element"
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <span
+            className="c7n-pro-icon-picker-wrapper c7n-pro-icon-picker-required c7n-pro-icon-picker-suffix-button c7n-pro-icon-picker-prefix-button"
+            key=".$element"
+            onBlur={[Function]}
+            onClick={[Function]}
+            onContextMenu={[Function]}
+            onFocus={[Function]}
+            onMouseDown={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+          >
+            <label
+              onMouseDown={[Function]}
+            >
+              <div
+                className="c7n-pro-icon-picker-prefix"
+              >
+                <Icon
+                  type="cancel"
+                >
+                  <i
+                    className="icon icon-cancel"
+                  />
+                </Icon>
+              </div>
+              <Trigger
+                action={
+                  Array [
+                    "focus",
+                    "click",
+                  ]
+                }
+                blurDelay={50}
+                builtinPlacements={
+                  Object {
+                    "bottomLeft": Object {
+                      "offset": Array [
+                        0,
+                        4,
+                      ],
+                      "overflow": Object {
+                        "adjustX": 1,
+                        "adjustY": 1,
+                      },
+                      "points": Array [
+                        "tl",
+                        "bl",
+                      ],
+                    },
+                    "bottomRight": Object {
+                      "offset": Array [
+                        0,
+                        4,
+                      ],
+                      "overflow": Object {
+                        "adjustX": 1,
+                        "adjustY": 1,
+                      },
+                      "points": Array [
+                        "tr",
+                        "br",
+                      ],
+                    },
+                    "topLeft": Object {
+                      "offset": Array [
+                        0,
+                        -4,
+                      ],
+                      "overflow": Object {
+                        "adjustX": 1,
+                        "adjustY": 1,
+                      },
+                      "points": Array [
+                        "bl",
+                        "tl",
+                      ],
+                    },
+                    "topRight": Object {
+                      "offset": Array [
+                        0,
+                        -4,
+                      ],
+                      "overflow": Object {
+                        "adjustX": 1,
+                        "adjustY": 1,
+                      },
+                      "points": Array [
+                        "br",
+                        "tr",
+                      ],
+                    },
+                  }
+                }
+                defaultPopupHidden={true}
+                focusDelay={150}
+                getPopupStyleFromAlign={[Function]}
+                getRootDomNode={[Function]}
+                mouseEnterDelay={150}
+                mouseLeaveDelay={50}
+                onPopupAnimateAppear={[Function]}
+                onPopupAnimateEnd={[Function]}
+                onPopupHiddenChange={[Function]}
+                popupContent={
+                  <div>
+                    <Tabs
+                      activeKey="whatsNew"
+                      hideAdd={false}
+                      onChange={[Function]}
+                    >
+                      <TabPane
+                        className="c7n-pro-icon-picker-tab"
+                        placeholder={null}
+                        tab="新增"
+                      >
+                        <IconCategory
+                          category="whatsNew"
+                          icons={
+                            Array [
+                              "circulate",
+                              "knowledge",
+                              "pipeline",
+                              "role_assignments",
+                              "application_allocation",
+                              "redeploy_line",
+                              "add_column",
+                              "add_row",
+                              "application_market",
+                              "backup_line",
+                              "delete_column",
+                              "delete_row",
+                              "establish_base",
+                              "merge_cell",
+                              "rate_review1",
+                              "revocation",
+                              "split_cell",
+                              "template_configuration",
+                              "widgets_line",
+                              "project_line",
+                              "project_group",
+                              "project_filled",
+                              "scissors",
+                              "category",
+                              "subscription",
+                              "line_manage",
+                              "nearby",
+                              "authorize",
+                              "publish_cancel",
+                              "subscription_cancel",
+                              "project_program",
+                              "agile-feature",
+                              "baseline-vertical_split",
+                              "number",
+                              "popup_selection",
+                              "toggle_off",
+                              "project_program_analyze",
+                              "application_-general",
+                              "deploy_list",
+                              "auto_complete",
+                              "combo_box",
+                              "data_source",
+                              "multistage_combo_box",
+                              "API_management",
+                              "API_market",
+                              "API_publish",
+                              "API_subscription",
+                              "APIS",
+                              "auto_deploy",
+                              "sync_records",
+                              "sync_user",
+                              "test-case",
+                              "test-automation",
+                              "token",
+                              "change_size",
+                              "add_crt",
+                              "add_branch",
+                              "line",
+                              "secret",
+                              "recover",
+                              "table",
+                              "test_execution",
+                              "test_progress",
+                              "test_record",
+                              "execution_schedule",
+                              "cluster",
+                              "kubernetes_cluster",
+                              "disconnect",
+                              "running",
+                              "notification_setting",
+                              "authority",
+                              "develop_console",
+                              "frame",
+                              "record_test",
+                              "agile_epic",
+                              "agile_fault",
+                              "agile_story",
+                              "agile_subtask",
+                              "agile_task",
+                              "auto_test",
+                            ]
+                          }
+                          onPageChange={[Function]}
+                          onSelect={[Function]}
+                          pageSize={100}
+                          paging={true}
+                          prefixCls="c7n-pro-icon-picker"
+                          value="cancel"
+                        />
+                      </TabPane>
+                      <TabPane
+                        className="c7n-pro-icon-picker-tab"
+                        placeholder={null}
+                        tab="方向性"
+                      >
+                        <IconCategory
+                          category="direction"
+                          icons={
+                            Array [
+                              "baseline-arrow_drop_down",
+                              "baseline-arrow_drop_up",
+                              "baseline-arrow_left",
+                              "baseline-arrow_right",
+                              "play_90",
+                              "replay_90",
+                              "navigate_before",
+                              "navigate_next",
+                              "arrow_back",
+                              "arrow_downward",
+                              "arrow_drop_down",
+                              "arrow_drop_down_circle",
+                              "arrow_drop_up",
+                              "arrow_forward",
+                              "arrow_upward",
+                              "expand_less",
+                              "expand_more",
+                              "fast_forward",
+                              "fast_rewind",
+                              "first_page",
+                              "last_page",
+                              "skip_next",
+                              "skip_previous",
+                              "subdirectory_arrow_left",
+                              "subdirectory_arrow_right",
+                              "trending_down",
+                              "trending_flat",
+                              "trending_up",
+                              "unfold_less",
+                              "unfold_more",
+                            ]
+                          }
+                          onPageChange={[Function]}
+                          onSelect={[Function]}
+                          pageSize={100}
+                          paging={true}
+                          prefixCls="c7n-pro-icon-picker"
+                        />
+                      </TabPane>
+                      <TabPane
+                        className="c7n-pro-icon-picker-tab"
+                        placeholder={null}
+                        tab="提示建议性"
+                      >
+                        <IconCategory
+                          category="suggestion"
+                          icons={
+                            Array [
+                              "cancle_a",
+                              "cancle_b",
+                              "forbidden_a",
+                              "forbidden_b",
+                              "block",
+                              "finished",
+                              "alarm",
+                              "access_alarms",
+                              "schedule",
+                              "alarm_off",
+                              "alarm_on",
+                              "add",
+                              "add_a_photo",
+                              "alarm_add",
+                              "add_alert",
+                              "add_box",
+                              "add_circle",
+                              "control_point",
+                              "add_location",
+                              "add_shopping_cart",
+                              "queue",
+                              "add_to_queue",
+                              "cancel",
+                              "check",
+                              "check_circle",
+                              "close",
+                              "not_interested",
+                              "do_not_disturb_alt",
+                              "do_not_disturb_off",
+                              "remove",
+                              "remove_circle_outline",
+                              "remove_circle",
+                              "done",
+                              "done_all",
+                              "indeterminate_check_box",
+                              "info",
+                              "info_outline",
+                              "priority_high",
+                              "verified_user",
+                              "report",
+                              "warning",
+                            ]
+                          }
+                          onPageChange={[Function]}
+                          onSelect={[Function]}
+                          pageSize={100}
+                          paging={true}
+                          prefixCls="c7n-pro-icon-picker"
+                        />
+                      </TabPane>
+                      <TabPane
+                        className="c7n-pro-icon-picker-tab"
+                        placeholder={null}
+                        tab="编辑类"
+                      >
+                        <IconCategory
+                          category="edit"
+                          icons={
+                            Array [
+                              "border_all",
+                              "border_bottom",
+                              "border_clear",
+                              "border_color",
+                              "border_horizontal",
+                              "border_inner",
+                              "border_left",
+                              "border_outer",
+                              "border_right",
+                              "border_style",
+                              "border_top",
+                              "border_vertical",
+                              "code",
+                              "photo_library",
+                              "collections_bookmark",
+                              "palette",
+                              "colorize",
+                              "comment",
+                              "compare",
+                              "compare_arrows",
+                              "content_cut",
+                              "content_paste",
+                              "content_copy",
+                              "mode_edit",
+                              "crop",
+                              "crop_16_9",
+                              "crop_3_2",
+                              "crop_landscape",
+                              "crop_7_5",
+                              "crop_din",
+                              "crop_free",
+                              "crop_original",
+                              "crop_portrait",
+                              "crop_rotate",
+                              "crop_square",
+                              "delete",
+                              "delete_forever",
+                              "delete_sweep",
+                              "error",
+                              "error_outline",
+                              "flip",
+                              "flip_to_back",
+                              "flip_to_front",
+                              "font_download",
+                              "format_align_center",
+                              "format_align_justify",
+                              "format_align_left",
+                              "format_align_right",
+                              "format_bold",
+                              "format_clear",
+                              "format_color_fill",
+                              "format_color_reset",
+                              "format_color_text",
+                              "format_indent_decrease",
+                              "format_indent_increase",
+                              "format_italic",
+                              "format_line_spacing",
+                              "format_list_bulleted",
+                              "format_list_numbered",
+                              "format_paint",
+                              "format_quote",
+                              "format_shapes",
+                              "format_size",
+                              "format_strikethrough",
+                              "format_textdirection_l_to_r",
+                              "format_textdirection_r_to_l",
+                              "format_underlined",
+                              "fullscreen",
+                              "fullscreen_exit",
+                              "functions",
+                              "g_translate",
+                              "grid_off",
+                              "grid_on",
+                              "print",
+                              "sort",
+                              "sort_by_alpha",
+                              "text_fields",
+                              "text_format",
+                              "texture",
+                              "transform",
+                              "translate",
+                              "undo",
+                              "wrap_text",
+                              "zoom_in",
+                              "zoom_out",
+                              "zoom_out_map",
+                            ]
+                          }
+                          onPageChange={[Function]}
+                          onSelect={[Function]}
+                          pageSize={100}
+                          paging={true}
+                          prefixCls="c7n-pro-icon-picker"
+                        />
+                      </TabPane>
+                      <TabPane
+                        className="c7n-pro-icon-picker-tab"
+                        placeholder={null}
+                        tab="数据类"
+                      >
+                        <IconCategory
+                          category="data"
+                          icons={
+                            Array [
+                              "devops_chart",
+                              "agile_chart",
+                              "test_chart",
+                              "bar_chart",
+                              "burnout_map",
+                              "table_chart",
+                              "bubble_chart",
+                              "pie_chart",
+                              "pie_chart_outlined",
+                              "show_chart",
+                            ]
+                          }
+                          onPageChange={[Function]}
+                          onSelect={[Function]}
+                          pageSize={100}
+                          paging={true}
+                          prefixCls="c7n-pro-icon-picker"
+                        />
+                      </TabPane>
+                      <TabPane
+                        className="c7n-pro-icon-picker-tab"
+                        placeholder={null}
+                        tab="网站通用"
+                      >
+                        <IconCategory
+                          category="other"
+                          icons={
+                            Array [
+                              "create_new_folder",
+                              "folder_open2",
+                              "folder",
+                              "folder_open",
+                              "folder_shared",
+                              "folder_special",
+                              "note",
+                              "note_add",
+                              "lock",
+                              "unlock",
+                              "lock_open",
+                              "lock_outline",
+                              "classname",
+                              "state_over",
+                              "task_schedule",
+                              "unallocated_question",
+                              "unfinished_question",
+                              "all_reports",
+                              "iterative_workbench",
+                              "outstanding_tasks",
+                              "report_overview",
+                              "test_execute",
+                              "test_planning",
+                              "project_list",
+                              "domain_list",
+                              "IP_out",
+                              "message_notification",
+                              "all_read",
+                              "inmail_template",
+                              "mail_set",
+                              "export_EOT",
+                              "export_html",
+                              "export_PDF",
+                              "export_RTF",
+                              "export_XAR",
+                              "mail_modal",
+                              "message_modal",
+                              "message2",
+                              "usermap",
+                              "document",
+                              "pass",
+                              "operation_bug",
+                              "operation_change",
+                              "operation_event",
+                              "operation_help",
+                              "operation_new_feature",
+                              "operation_problem",
+                              "operation_service_request",
+                              "operation_subtask",
+                              "operation_task",
+                              "port",
+                              "aim_port",
+                              "saga_define",
+                              "role_tag",
+                              "agile",
+                              "quality",
+                              "appmarket",
+                              "merge_request",
+                              "APItest",
+                              "relation",
+                              "relate",
+                              "manage_project",
+                              "book",
+                              "contact_support",
+                              "ballot",
+                              "test",
+                              "priority",
+                              "compass",
+                              "sutask",
+                              "explicit-outline",
+                              "explicit2",
+                              "framework",
+                              "inbox_content",
+                              "visits",
+                              "work_log",
+                              "link",
+                              "link2",
+                              "baseline-link_off",
+                              "baseline-drag_indicator",
+                              "baseline-file_copy",
+                              "sms_outline",
+                              "versionline",
+                              "root",
+                              "micro",
+                              "publish2",
+                              "center",
+                              "filter2",
+                              "manage_person",
+                              "manage_organization",
+                              "password",
+                              "custom_Directory",
+                              "predefine",
+                              "project",
+                              "return",
+                              "API",
+                              "／",
+                              "application_model",
+                              "microservice",
+                              "instance",
+                              "instance_outline",
+                              "IAM",
+                              "routeroutline",
+                              "version",
+                              "devops",
+                              "CI",
+                              "kubernetes",
+                              "branch",
+                              "point",
+                              "wait_circle",
+                              "add_activity",
+                              "add_task",
+                              "export",
+                              "debug",
+                              "database",
+                              "Development-monitoring",
+                              "insight",
+                              "jsfiddle",
+                              "Operation-monitoring",
+                              "rocket",
+                              "wrench",
+                              "skipped_a",
+                              "skipped_b",
+                              "d_rotation",
+                              "ac_unit",
+                              "accessibility",
+                              "accessible",
+                              "account_balance",
+                              "account_balance_wallet",
+                              "account_box",
+                              "account_circle",
+                              "adb",
+                              "adjust",
+                              "airline_seat_flat",
+                              "airline_seat_flat_angled",
+                              "airline_seat_individual_suite",
+                              "airline_seat_legroom_extra",
+                              "airline_seat_legroom_normal",
+                              "airline_seat_legroom_reduced",
+                              "airline_seat_recline_extra",
+                              "airline_seat_recline_normal",
+                              "flight",
+                              "airplanemode_inactive",
+                              "airplay",
+                              "airport_shuttle",
+                              "album",
+                              "all_inclusive",
+                              "all_out",
+                              "announcement",
+                              "apps",
+                              "archive",
+                              "art_track",
+                              "aspect_ratio",
+                              "poll",
+                              "assignment",
+                              "assignment_ind",
+                              "assignment_late",
+                              "assignment_return",
+                              "assignment_returned",
+                              "assignment_turned_in",
+                              "assistant",
+                              "flag",
+                              "attach_file",
+                              "attach_money",
+                              "attachment",
+                              "audiotrack",
+                              "autorenew",
+                              "av_timer",
+                              "backspace",
+                              "cloud_upload",
+                              "battery_alert",
+                              "battery_charging_full",
+                              "battery_std",
+                              "battery_unknown",
+                              "beach_access",
+                              "beenhere",
+                              "bluetooth",
+                              "bluetooth_searching",
+                              "bluetooth_connected",
+                              "bluetooth_disabled",
+                              "blur_circular",
+                              "blur_linear",
+                              "blur_off",
+                              "blur_on",
+                              "class",
+                              "turned_in",
+                              "turned_in_not",
+                              "branding_watermark",
+                              "brightness_1",
+                              "brightness_2",
+                              "brightness_3",
+                              "brightness_4",
+                              "brightness_low",
+                              "brightness_medium",
+                              "brightness_high",
+                              "brightness_auto",
+                              "broken_image",
+                              "brush",
+                              "bug_report",
+                              "build",
+                              "burst_mode",
+                              "domain",
+                              "business_center",
+                              "cached",
+                              "cake",
+                              "phone",
+                              "call_end",
+                              "call_made",
+                              "merge_type",
+                              "call_missed",
+                              "call_missed_outgoing",
+                              "call_received",
+                              "call_split",
+                              "call_to_action",
+                              "redeem",
+                              "card_membership",
+                              "card_travel",
+                              "casino",
+                              "cast",
+                              "cast_connected",
+                              "center_focus_strong",
+                              "center_focus_weak",
+                              "change_history",
+                              "chat",
+                              "chat_bubble",
+                              "chat_bubble_outline",
+                              "check_box",
+                              "check_box_outline_blank",
+                              "child_care",
+                              "child_friendly",
+                              "chrome_reader_mode",
+                              "clear_all",
+                              "closed_caption",
+                              "wb_cloudy",
+                              "cloud_circle",
+                              "cloud_done",
+                              "cloud_download",
+                              "cloud_off",
+                              "cloud_queue",
+                              "laptop",
+                              "confirmation_number",
+                              "contact_mail",
+                              "contact_phone",
+                              "contacts",
+                              "control_point_duplicate",
+                              "copyright",
+                              "payment",
+                              "dashboard",
+                              "data_usage",
+                              "dehaze",
+                              "description",
+                              "desktop_mac",
+                              "desktop_windows",
+                              "details",
+                              "developer_board",
+                              "developer_mode",
+                              "device_hub",
+                              "phonelink",
+                              "devices_other",
+                              "dialer_sip",
+                              "dialpad",
+                              "directions",
+                              "directions_bike",
+                              "directions_boat",
+                              "directions_bus",
+                              "directions_car",
+                              "directions_railway",
+                              "directions_run",
+                              "directions_transit",
+                              "directions_walk",
+                              "disc_full",
+                              "dns",
+                              "dock",
+                              "donut_large",
+                              "donut_small",
+                              "drafts",
+                              "drag_handle",
+                              "time_to_leave",
+                              "dvr",
+                              "edit_location",
+                              "eject",
+                              "markunread",
+                              "enhanced_encryption",
+                              "equalizer",
+                              "euro_symbol",
+                              "ev_station",
+                              "today",
+                              "date_range",
+                              "insert_invitation",
+                              "event_available",
+                              "event_busy",
+                              "event_note",
+                              "event_seat",
+                              "exit_to_app",
+                              "explicit",
+                              "explore",
+                              "extension",
+                              "face",
+                              "favorite",
+                              "favorite_border",
+                              "featured_play_list",
+                              "featured_video",
+                              "sms_failed",
+                              "fiber_dvr",
+                              "fiber_manual_record",
+                              "fiber_new",
+                              "fiber_pin",
+                              "fiber_smart_record",
+                              "get_app",
+                              "file_upload",
+                              "terrain",
+                              "find_in_page",
+                              "find_replace",
+                              "fingerprint",
+                              "fitness_center",
+                              "flare",
+                              "flash_auto",
+                              "flash_off",
+                              "flash_on",
+                              "flight_land",
+                              "flight_takeoff",
+                              "question_answer",
+                              "forward",
+                              "forward_10",
+                              "forward_30",
+                              "forward_5",
+                              "free_breakfast",
+                              "games",
+                              "gavel",
+                              "gesture",
+                              "gif",
+                              "goat",
+                              "golf_course",
+                              "my_location",
+                              "location_searching",
+                              "location_disabled",
+                              "star",
+                              "gradient",
+                              "grain",
+                              "graphic_eq",
+                              "people",
+                              "group_add",
+                              "group_work",
+                              "hd",
+                              "hdr_off",
+                              "hdr_on",
+                              "hdr_strong",
+                              "hdr_weak",
+                              "headset",
+                              "headset_mic",
+                              "healing",
+                              "hearing",
+                              "help",
+                              "help_outline",
+                              "high_quality",
+                              "highlight",
+                              "highlight_off",
+                              "restore",
+                              "home",
+                              "hot_tub",
+                              "local_hotel",
+                              "hourglass_empty",
+                              "hourglass_full",
+                              "http",
+                              "image_aspect_ratio",
+                              "import_contacts",
+                              "import_export",
+                              "important_devices",
+                              "inbox",
+                              "input",
+                              "insert_comment",
+                              "insert_drive_file",
+                              "tag_faces",
+                              "invert_colors",
+                              "invert_colors_off",
+                              "iso",
+                              "kitchen",
+                              "label",
+                              "label_outline",
+                              "language",
+                              "laptop_chromebook",
+                              "laptop_mac",
+                              "laptop_windows",
+                              "open_in_new",
+                              "layers",
+                              "layers_clear",
+                              "leak_add",
+                              "leak_remove",
+                              "lens",
+                              "library_books",
+                              "library_music",
+                              "lightbulb_outline",
+                              "line_style",
+                              "line_weight",
+                              "linear_scale",
+                              "linked_camera",
+                              "list",
+                              "live_help",
+                              "live_tv",
+                              "local_play",
+                              "local_airport",
+                              "local_atm",
+                              "local_bar",
+                              "local_cafe",
+                              "local_car_wash",
+                              "local_convenience_store",
+                              "restaurant_menu",
+                              "local_drink",
+                              "local_florist",
+                              "local_gas_station",
+                              "shopping_cart",
+                              "local_hospital",
+                              "local_laundry_service",
+                              "local_library",
+                              "local_mall",
+                              "theaters",
+                              "local_offer",
+                              "local_parking",
+                              "local_pharmacy",
+                              "local_pizza",
+                              "local_shipping",
+                              "local_taxi",
+                              "location_city",
+                              "location_off",
+                              "room",
+                              "sync",
+                              "loupe",
+                              "low_priority",
+                              "loyalty",
+                              "mail_outline",
+                              "map",
+                              "markunread_mailbox",
+                              "memory",
+                              "menu",
+                              "message",
+                              "mic",
+                              "mic_none",
+                              "mic_off",
+                              "mms",
+                              "mode_comment",
+                              "monetization_on",
+                              "money_off",
+                              "monochrome_photos",
+                              "mood_bad",
+                              "more",
+                              "more_horiz",
+                              "more_vert",
+                              "motorcycle",
+                              "mouse",
+                              "move_to_inbox",
+                              "movie_creation",
+                              "movie_filter",
+                              "multiline_chart",
+                              "music_note",
+                              "music_video",
+                              "nature",
+                              "nature_people",
+                              "navigation",
+                              "near_me",
+                              "network_cell",
+                              "network_check",
+                              "network_locked",
+                              "network_wifi",
+                              "new_releases",
+                              "next_week",
+                              "nfc",
+                              "no_encryption",
+                              "signal_cellular_no_sim",
+                              "offline_pin",
+                              "ondemand_video",
+                              "opacity",
+                              "open_in_browser",
+                              "open_with",
+                              "pages",
+                              "pageview",
+                              "pan_tool",
+                              "panorama",
+                              "radio_button_unchecked",
+                              "panorama_horizontal",
+                              "panorama_vertical",
+                              "panorama_wide_angle",
+                              "party_mode",
+                              "pause",
+                              "pause_circle_filled",
+                              "pause_circle_outline",
+                              "people_outline",
+                              "perm_camera_mic",
+                              "perm_contact_calendar",
+                              "perm_data_setting",
+                              "perm_device_information",
+                              "person_outline",
+                              "perm_media",
+                              "perm_phone_msg",
+                              "perm_scan_wifi",
+                              "person",
+                              "person_add",
+                              "person_pin",
+                              "person_pin_circle",
+                              "personal_video",
+                              "pets",
+                              "pin_drop",
+                              "plus_one",
+                              "polymer",
+                              "pool",
+                              "portable_wifi_off",
+                              "portrait",
+                              "power",
+                              "power_input",
+                              "power_settings_new",
+                              "pregnant_woman",
+                              "present_to_all",
+                              "public",
+                              "publish",
+                              "queue_music",
+                              "queue_play_next",
+                              "radio",
+                              "radio_button_checked",
+                              "rate_review",
+                              "receipt",
+                              "recent_actors",
+                              "record_voice_over",
+                              "redo",
+                              "refresh",
+                              "remove_from_queue",
+                              "visibility",
+                              "remove_shopping_cart",
+                              "reorder",
+                              "repeat",
+                              "repeat_one",
+                              "replay",
+                              "replay_10",
+                              "replay_30",
+                              "replay_5",
+                              "reply",
+                              "reply_all",
+                              "restaurant",
+                              "restore_page",
+                              "ring_volume",
+                              "room_service",
+                              "rotate_90_degrees_ccw",
+                              "rotate_left",
+                              "rotate_right",
+                              "rounded_corner",
+                              "router",
+                              "rowing",
+                              "rss_feed",
+                              "rv_hookup",
+                              "satellite",
+                              "save",
+                              "scanner",
+                              "school",
+                              "screen_lock_landscape",
+                              "screen_lock_portrait",
+                              "screen_lock_rotation",
+                              "screen_rotation",
+                              "screen_share",
+                              "sd_storage",
+                              "search",
+                              "security",
+                              "select_all",
+                              "send",
+                              "share",
+                              "shop",
+                              "shop_two",
+                              "shopping_basket",
+                              "short_text",
+                              "shuffle",
+                              "slideshow",
+                              "slow_motion_video",
+                              "stay_primary_portrait",
+                              "smoke_free",
+                              "smoking_rooms",
+                              "textsms",
+                              "snooze",
+                              "spa",
+                              "space_bar",
+                              "speaker",
+                              "speaker_group",
+                              "speaker_notes",
+                              "speaker_notes_off",
+                              "speaker_phone",
+                              "spellcheck",
+                              "star_border",
+                              "star_half",
+                              "stars",
+                              "stay_primary_landscape",
+                              "stop",
+                              "stop_screen_share",
+                              "storage",
+                              "store_mall_directory",
+                              "straighten",
+                              "streetview",
+                              "strikethrough_s",
+                              "style",
+                              "subject",
+                              "subscriptions",
+                              "subtitles",
+                              "subway",
+                              "supervisor_account",
+                              "surround_sound",
+                              "sync_disabled",
+                              "sync_problem",
+                              "system_update",
+                              "system_update_alt",
+                              "tab",
+                              "tab_unselected",
+                              "tablet",
+                              "tablet_android",
+                              "tablet_mac",
+                              "tap_and_play",
+                              "thumb_down",
+                              "thumb_up",
+                              "thumbs_up_down",
+                              "timelapse",
+                              "timeline",
+                              "timer",
+                              "timer_10",
+                              "timer_3",
+                              "timer_off",
+                              "title",
+                              "toc",
+                              "toll",
+                              "tonality",
+                              "touch_app",
+                              "toys",
+                              "track_changes",
+                              "traffic",
+                              "train",
+                              "tram",
+                              "transfer_within_a_station",
+                              "tune",
+                              "tv",
+                              "unarchive",
+                              "update",
+                              "usb",
+                              "vertical_align_bottom",
+                              "vertical_align_center",
+                              "vertical_align_top",
+                              "vibration",
+                              "video_call",
+                              "video_label",
+                              "video_library",
+                              "videocam",
+                              "videocam_off",
+                              "videogame_asset",
+                              "vignette",
+                              "visibility_off",
+                              "voice_chat",
+                              "voicemail",
+                              "vpn_key",
+                              "vpn_lock",
+                              "wallpaper",
+                              "watch",
+                              "watch_later",
+                              "wb_auto",
+                              "wb_incandescent",
+                              "wb_iridescent",
+                              "wb_sunny",
+                              "wc",
+                              "web",
+                              "web_asset",
+                              "weekend",
+                              "whatshot",
+                              "widgets",
+                              "wifi",
+                              "wifi_lock",
+                              "wifi_tethering",
+                              "work",
+                              "youtube_searched_for",
+                              "git",
+                              "android",
+                            ]
+                          }
+                          onPageChange={[Function]}
+                          onSelect={[Function]}
+                          pageSize={100}
+                          paging={true}
+                          prefixCls="c7n-pro-icon-picker"
+                        />
+                      </TabPane>
+                      <TabPane
+                        className="c7n-pro-icon-picker-tab"
+                        placeholder={null}
+                        tab="套系类"
+                      >
+                        <IconCategory
+                          category="series"
+                          icons={
+                            Array [
+                              "wait_one_a",
+                              "wait_one_b",
+                              "wait_two_a",
+                              "wait_two_b",
+                              "wait_three_a",
+                              "wait_three_b",
+                              "wait_four_a",
+                              "wait_four_b",
+                              "wait_five_a",
+                              "wait_five_b",
+                              "exposure",
+                              "exposure_neg_1",
+                              "exposure_neg_2",
+                              "exposure_plus_1",
+                              "exposure_plus_2",
+                              "exposure_zero",
+                              "filter",
+                              "filter_1",
+                              "filter_2",
+                              "filter_3",
+                              "filter_4",
+                              "filter_5",
+                              "filter_6",
+                              "filter_7",
+                              "filter_8",
+                              "filter_9",
+                              "filter_9_plus",
+                              "filter_b_and_w",
+                              "filter_center_focus",
+                              "filter_drama",
+                              "filter_frames",
+                              "filter_list",
+                              "filter_none",
+                              "filter_tilt_shift",
+                              "filter_vintage",
+                              "keyboard",
+                              "keyboard_arrow_down",
+                              "keyboard_arrow_left",
+                              "keyboard_arrow_right",
+                              "keyboard_arrow_up",
+                              "keyboard_backspace",
+                              "keyboard_capslock",
+                              "keyboard_hide",
+                              "keyboard_return",
+                              "keyboard_tab",
+                              "keyboard_voice",
+                              "looks",
+                              "looks_one",
+                              "looks_two",
+                              "looks_3",
+                              "looks_4",
+                              "looks_5",
+                              "looks_6",
+                              "notifications",
+                              "notifications_active",
+                              "notifications_none",
+                              "notifications_off",
+                              "notifications_paused",
+                              "phone_android",
+                              "phone_android2",
+                              "phone_bluetooth_speaker",
+                              "phone_forwarded",
+                              "phone_in_talk",
+                              "phone_iphone",
+                              "phone_locked",
+                              "phone_missed",
+                              "phone_paused",
+                              "phonelink_erase",
+                              "phonelink_lock",
+                              "phonelink_off",
+                              "phonelink_ring",
+                              "phonelink_setup",
+                              "camera",
+                              "photo_camera",
+                              "camera_enhance",
+                              "camera_front",
+                              "camera_rear",
+                              "camera_roll",
+                              "photo",
+                              "photo_album",
+                              "photo_filter",
+                              "photo_size_select_actual",
+                              "photo_size_select_large",
+                              "photo_size_select_small",
+                              "picture_as_pdf",
+                              "picture_in_picture",
+                              "picture_in_picture_alt",
+                              "play_arrow",
+                              "play_circle_filled",
+                              "play_circle_outline",
+                              "play_for_work",
+                              "playlist_add",
+                              "playlist_add_check",
+                              "playlist_play",
+                              "sentiment_dissatisfied",
+                              "sentiment_neutral",
+                              "sentiment_satisfied",
+                              "sentiment_very_dissatisfied",
+                              "sentiment_very_satisfied",
+                              "settings",
+                              "settings_applications",
+                              "settings_backup_restore",
+                              "settings_bluetooth",
+                              "settings_brightness",
+                              "settings_cell",
+                              "settings_ethernet",
+                              "settings_input_antenna",
+                              "settings_input_composite",
+                              "settings_input_hdmi",
+                              "settings_input_svideo",
+                              "settings_overscan",
+                              "settings_phone",
+                              "settings_power",
+                              "settings_remote",
+                              "settings_system_daydream",
+                              "settings_voice",
+                              "signal_cellular_4_bar",
+                              "signal_cellular_connected_no_internet_4_bar",
+                              "signal_cellular_null",
+                              "signal_cellular_off",
+                              "signal_wifi_4_bar",
+                              "signal_wifi_4_bar_lock",
+                              "signal_wifi_off",
+                              "sim_card",
+                              "sim_card_alert",
+                              "swap_calls",
+                              "swap_horiz",
+                              "swap_vert",
+                              "swap_vertical_circle",
+                              "switch_camera",
+                              "switch_video",
+                              "view_agenda",
+                              "view_array",
+                              "view_carousel",
+                              "view_column",
+                              "view_comfy",
+                              "view_compact",
+                              "view_day",
+                              "view_headline",
+                              "view_list",
+                              "view_module",
+                              "view_quilt",
+                              "view_stream",
+                              "view_week",
+                              "volume_down",
+                              "volume_mute",
+                              "volume_off",
+                              "volume_up",
+                            ]
+                          }
+                          onPageChange={[Function]}
+                          onSelect={[Function]}
+                          pageSize={100}
+                          paging={true}
+                          prefixCls="c7n-pro-icon-picker"
+                        />
+                      </TabPane>
+                    </Tabs>
+                  </div>
+                }
+                popupHidden={true}
+                popupPlacement="bottomLeft"
+                prefixCls="c7n-pro-icon-picker"
+                transitionName="slide-up"
+              >
+                <TriggerChild
+                  key=".$text"
+                  onBlur={[Function]}
+                  onClick={[Function]}
+                  onFocus={[Function]}
+                  onMouseDown={[Function]}
+                >
+                  <input
+                    autoComplete="off"
+                    className="c7n-pro-icon-picker"
+                    key="text"
+                    multiple={false}
+                    name="icon"
+                    noValidate={false}
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onClick={[Function]}
+                    onContextMenu={[Function]}
+                    onFocus={[Function]}
+                    onKeyDown={[Function]}
+                    onMouseDown={[Function]}
+                    onMouseEnter={[Function]}
+                    onMouseLeave={[Function]}
+                    readOnly={false}
+                    type="text"
+                    value="cancel"
+                  />
+                </TriggerChild>
+                <Popup
+                  align={
+                    Object {
+                      "offset": Array [
+                        0,
+                        4,
+                      ],
+                      "overflow": Object {
+                        "adjustX": 1,
+                        "adjustY": 1,
+                      },
+                      "points": Array [
+                        "tl",
+                        "bl",
+                      ],
+                    }
+                  }
+                  className="c7n-pro-icon-picker-popup"
+                  getClassNameFromAlign={[Function]}
+                  getRootDomNode={[Function]}
+                  getStyleFromAlign={[Function]}
+                  hidden={true}
+                  key="popup"
+                  onAnimateAppear={[Function]}
+                  onAnimateEnd={[Function]}
+                  onMouseDown={[Function]}
+                  suffixCls="popup"
+                  transitionName="slide-up"
+                />
+              </Trigger>
+              <div
+                className="c7n-pro-icon-picker-inner-button c7n-pro-icon-picker-clear-button"
+                key="inner-button"
+              >
+                <Icon
+                  onClick={[Function]}
+                  type="close"
+                >
+                  <i
+                    className="icon icon-close"
+                    onClick={[Function]}
+                  />
+                </Icon>
+              </div>
+              <div
+                className="c7n-pro-icon-picker-suffix"
+                onMouseDown={[Function]}
+              >
+                <Icon
+                  className="c7n-pro-icon-picker-trigger"
+                  type="developer_board"
+                >
+                  <i
+                    className="icon icon-developer_board c7n-pro-icon-picker-trigger"
+                  />
+                </Icon>
+              </div>
+            </label>
+          </span>
+        </TriggerChild>
+        <Popup
+          align={
+            Object {
+              "offset": Array [
+                0,
+                10,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "tl",
+                "bl",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            }
+          }
+          className="c7n-pro-tooltip-popup"
+          getClassNameFromAlign={[Function]}
+          getRootDomNode={[Function]}
+          hidden={true}
+          key="popup"
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          suffixCls="popup"
+          transitionName="zoom-big-fast"
+        />
+      </Trigger>
+    </Tooltip>
+  </IconPicker>
+</IconPickerTest>
+`;
