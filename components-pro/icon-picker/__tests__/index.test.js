@@ -17,9 +17,14 @@ describe('Icon-Picker-pro', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('should show {value} when the property value is existed and pageSize will be 100 ', () => {
+  it('should show {value} when the property value is existed', () => {
     const wrapper = mount(<IconPicker value="add" />);
     expect(wrapper.props().value).toEqual('add');
+    expect(wrapper.props().pageSize).toEqual(100);
+  });
+
+  it('the property pageSize will be 100 ', () => {
+    const wrapper = mount(<IconPicker />);
     expect(wrapper.props().pageSize).toEqual(100);
   });
 
