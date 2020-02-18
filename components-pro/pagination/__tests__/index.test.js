@@ -9,7 +9,7 @@ const setupByMount = () => {
   };
 };
 
-describe('Tree-pro', () => {
+describe('pagination-pro', () => {
   beforeEach(() => {
     jest.useFakeTimers();
   });
