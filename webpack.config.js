@@ -68,6 +68,7 @@ if (process.env.RUN_ENV === 'PRODUCTION') {
                 let startPos = -1;
                 // eslint-disable-next-line no-cond-assign
                 while (
+                  // eslint-disable-next-line no-cond-assign
                   (startPos = newSource
                     .source()
                     .indexOf(entryName, startPos > 0 ? startPos : undefined)) !== -1
