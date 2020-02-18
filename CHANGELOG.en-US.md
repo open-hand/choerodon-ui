@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 Add xhr-mock mock config。
 - 🐞 `<pro>Button`: Fix incomplete presentation style.
 - 🐞 `<pro>Table`: Fix the inline edit lov rendering err.
 
