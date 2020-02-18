@@ -495,18 +495,18 @@ dynamicProps = {
     if (value !== undefined) {
       return value;
     }
-    const dsField = this.findDataSetField();
-    if (dsField) {
-      const dsValue = dsField.get(propsName);
-      if (dsValue !== undefined) {
-        return dsValue;
-      }
-    }
     if (propsName === 'textField' || propsName === 'valueField') {
       const lovCode = this.get('lovCode');
       const lovProps = getPropsFromLovConfig(lovCode, propsName);
       if (propsName in lovProps) {
         return lovProps[propsName];
+      }
+    }
+    const dsField = this.findDataSetField();
+    if (dsField) {
+      const dsValue = dsField.get(propsName);
+      if (dsValue !== undefined) {
+        return dsValue;
       }
     }
     if (propsName === 'lookupUrl') {

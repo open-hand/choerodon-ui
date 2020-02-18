@@ -15,6 +15,9 @@ timeline: true
 
 ---
 
+- 🐞 Fix the problem that the base component and pro component have the same name pre-variable conflict when fully relying on the style.
+- 🐞 `<pro>Lov`: Fix the problem that `valueField` and `textField` in lov configuration are invalid when `lovCode` is obtained through `dynamicProps`.
+
 ## 0.8.56
 
 `2020-02-18`
@@ -22,7 +25,6 @@ timeline: true
 - 🌟 Add xhr-mock mock config。
 - 🐞 `<pro>Button`: Fix incomplete presentation style.
 - 🐞 `<pro>Table`: Fix the inline edit lov rendering err.
-- 🐞 Fix the problem that the base component and pro component have the same name pre-variable conflict when fully relying on the style.
 
 ## 0.8.55
 

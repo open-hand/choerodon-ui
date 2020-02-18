@@ -15,6 +15,9 @@ timeline: true
 
 ---
 
+- 🐞 修复全量依赖样式时基础组件和 pro 组件存在同名预变量冲突的问题。
+- 🐞 `<pro>Lov`: 修复通过 dynamicProps 获得 lovCode 时，lov 配置中的 valueField 和 textField 无效的问题。
+
 ## 0.8.56
 
 `2020-02-18`
@@ -22,7 +25,6 @@ timeline: true
 - 🌟 添加 xhr-mock mock 配置供测试使用。
 - 🐞 `<pro>Button`: 修复演示样式显示不全的问题。
 - 🐞 `<pro>Table`: 修复行内编辑 Lov 渲染问题。
-- 🐞 修复全量依赖样式时基础组件和 pro 组件存在同名预变量冲突的问题。
 
 ## 0.8.55
 
