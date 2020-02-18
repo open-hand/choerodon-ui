@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `<pro>Table`: 添加 xhr-mock mock 配置供测试使用。
+- 🌟 添加 xhr-mock mock 配置供测试使用。
 - 🐞 `<pro>Button`: 修复演示样式显示不全的问题。
 - 🐞 `<pro>Table`: 修复行内编辑 Lov 渲染问题。
 
