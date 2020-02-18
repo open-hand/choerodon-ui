@@ -45,6 +45,8 @@ class App extends React.Component {
         <Button icon="save" loading />
         <Button funcType="flat" icon="save" color="primary" loading />
         <Button dataSet={this.ds} type="submit">数据源状态</Button>
+        <br />
+        <br />
         <Button onClick={this.handleClick}>wait promise</Button>
       </div>
     );

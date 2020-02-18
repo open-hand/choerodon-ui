@@ -50,6 +50,8 @@ class App extends React.PureComponent {
           <Button funcType="flat" color="purple">
             Purple
           </Button>
+          <br />
+          <br />
           <Button funcType="flat" color="dark">
             Dark
           </Button>

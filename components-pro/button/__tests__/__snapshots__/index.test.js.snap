@@ -1,0 +1,78 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button button-pro should support link button 1`] = `
+<a
+  class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+  href="https://choerodon.github.io/choerodon-ui/"
+  target="_blank"
+>
+  <span>
+    button-pro link
+  </span>
+  <div
+    class="c7n-ripple-wrapper"
+  />
+</a>
+`;
+
+exports[`Button renders Chinese characters correctly 1`] = `
+<button
+  class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+  type="button"
+>
+  <span>
+    按钮
+  </span>
+  <div
+    class="c7n-ripple-wrapper"
+  />
+</button>
+`;
+
+exports[`Button renders Chinese characters correctly 2`] = `
+<button
+  class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+  type="button"
+>
+  <i
+    class="icon icon-search"
+  />
+  <span>
+    按钮
+  </span>
+  <div
+    class="c7n-ripple-wrapper"
+  />
+</button>
+`;
+
+exports[`Button renders Chinese characters correctly 3`] = `
+<button
+  class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+  type="button"
+>
+  <span>
+    <i
+      class="icon icon-search"
+    />
+    按钮
+  </span>
+  <div
+    class="c7n-ripple-wrapper"
+  />
+</button>
+`;
+
+exports[`Button renders components-pro correctly 1`] = `
+<button
+  class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+  type="button"
+>
+  <span>
+     Button-Pro 
+  </span>
+  <div
+    class="c7n-ripple-wrapper"
+  />
+</button>
+`;

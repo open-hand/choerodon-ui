@@ -1,0 +1,679 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders ./components-pro/button/demo/color.md correctly 1`] = `
+<div>
+  <div>
+    <div
+      style="margin:20px 0"
+    >
+      Background Color(With raised funcType)
+    </div>
+    <button
+      class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-gray c7n-pro-btn-wrapper"
+      type="button"
+    >
+      <span>
+        Gray
+      </span>
+      <div
+        class="c7n-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-primary c7n-pro-btn-wrapper"
+      type="button"
+    >
+      <span>
+        Blue
+      </span>
+      <div
+        class="c7n-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-green c7n-pro-btn-wrapper"
+      type="button"
+    >
+      <span>
+        Green
+      </span>
+      <div
+        class="c7n-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-red c7n-pro-btn-wrapper"
+      type="button"
+    >
+      <span>
+        Red
+      </span>
+      <div
+        class="c7n-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-yellow c7n-pro-btn-wrapper"
+      type="button"
+    >
+      <span>
+        Yellow
+      </span>
+      <div
+        class="c7n-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-purple c7n-pro-btn-wrapper"
+      type="button"
+    >
+      <span>
+        Purple
+      </span>
+      <div
+        class="c7n-ripple-wrapper"
+      />
+    </button>
+    <br />
+    <br />
+    <button
+      class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-dark c7n-pro-btn-wrapper"
+      type="button"
+    >
+      <span>
+        Dark
+      </span>
+      <div
+        class="c7n-ripple-wrapper"
+      />
+    </button>
+  </div>
+  <div>
+    <div
+      style="margin:20px 0"
+    >
+      Font Color(With flat funcType)
+    </div>
+    <button
+      class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-gray c7n-pro-btn-wrapper"
+      type="button"
+    >
+      <span>
+        Gray
+      </span>
+      <div
+        class="c7n-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-primary c7n-pro-btn-wrapper"
+      type="button"
+    >
+      <span>
+        Blue
+      </span>
+      <div
+        class="c7n-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-green c7n-pro-btn-wrapper"
+      type="button"
+    >
+      <span>
+        Green
+      </span>
+      <div
+        class="c7n-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-red c7n-pro-btn-wrapper"
+      type="button"
+    >
+      <span>
+        Red
+      </span>
+      <div
+        class="c7n-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-yellow c7n-pro-btn-wrapper"
+      type="button"
+    >
+      <span>
+        Yellow
+      </span>
+      <div
+        class="c7n-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-purple c7n-pro-btn-wrapper"
+      type="button"
+    >
+      <span>
+        Purple
+      </span>
+      <div
+        class="c7n-ripple-wrapper"
+      />
+    </button>
+    <br />
+    <br />
+    <button
+      class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-dark c7n-pro-btn-wrapper"
+      type="button"
+    >
+      <span>
+        Dark
+      </span>
+      <div
+        class="c7n-ripple-wrapper"
+      />
+    </button>
+  </div>
+</div>
+`;
+
+exports[`renders ./components-pro/button/demo/disable.md correctly 1`] = `
+<div>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+    type="button"
+  >
+    <span>
+      默认可选择按钮
+    </span>
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper c7n-pro-btn-disabled"
+    disabled=""
+    type="button"
+  >
+    <span>
+      不可选择按钮
+    </span>
+  </button>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-primary c7n-pro-btn-wrapper c7n-pro-btn-disabled"
+    disabled=""
+    type="button"
+  >
+    <span>
+      不可选择按钮
+    </span>
+  </button>
+  <br />
+  <br />
+  <button
+    class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-primary c7n-pro-btn-wrapper c7n-pro-btn-disabled"
+    disabled=""
+    type="button"
+  >
+    <span>
+      不可选择按钮
+    </span>
+  </button>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-btn-disabled"
+    disabled=""
+    type="button"
+  >
+    <i
+      class="icon icon-save"
+    />
+  </button>
+</div>
+`;
+
+exports[`renders ./components-pro/button/demo/funcType.md correctly 1`] = `
+<div>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+    type="button"
+  >
+    <span>
+      默认raised按钮
+    </span>
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-wrapper"
+    type="button"
+  >
+    <span>
+      flat按钮
+    </span>
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+    type="button"
+  >
+    <span>
+      raised按钮
+    </span>
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+</div>
+`;
+
+exports[`renders ./components-pro/button/demo/href.md correctly 1`] = `
+<div>
+  <a
+    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+    href="https://choerodon.io"
+    target="_blank"
+  >
+    <span>
+      跳转按钮
+    </span>
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </a>
+  <a
+    class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-wrapper"
+    href="https://choerodon.io"
+    target="_blank"
+  >
+    <span>
+      跳转按钮
+    </span>
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </a>
+  <a
+    class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper"
+    href="https://choerodon.io"
+    target="_blank"
+  >
+    <i
+      class="icon icon-link"
+    />
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </a>
+</div>
+`;
+
+exports[`renders ./components-pro/button/demo/icon.md correctly 1`] = `
+<div>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper"
+    type="button"
+  >
+    <i
+      class="icon icon-save"
+    />
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper"
+    type="button"
+  >
+    <i
+      class="icon icon-save"
+    />
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-primary c7n-pro-btn-wrapper"
+    type="button"
+  >
+    <i
+      class="icon icon-save"
+    />
+    <span>
+      保存
+    </span>
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper"
+    type="button"
+  >
+    <i
+      class="icon icon-sync"
+    />
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper"
+    type="button"
+  >
+    <i
+      class="icon icon-sync"
+    />
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-primary c7n-pro-btn-icon-only c7n-pro-btn-wrapper"
+    type="button"
+  >
+    <i
+      class="icon icon-search"
+    />
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-btn-disabled"
+    disabled=""
+    style="color:#e12330"
+    type="button"
+  >
+    <i
+      class="icon icon-close"
+    />
+  </button>
+</div>
+`;
+
+exports[`renders ./components-pro/button/demo/loading.md correctly 1`] = `
+<div>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper c7n-pro-btn-disabled"
+    disabled=""
+    type="button"
+  >
+    <div
+      class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-small"
+      trim="both"
+    >
+      <div
+        class="c7n-progress-inner"
+      >
+        <svg
+          viewBox="0 0 50 50"
+        >
+          <circle
+            cx="25"
+            cy="25"
+            r="20"
+          />
+        </svg>
+      </div>
+    </div>
+    <span>
+      保存
+    </span>
+  </button>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-primary c7n-pro-btn-wrapper c7n-pro-btn-disabled"
+    disabled=""
+    type="button"
+  >
+    <div
+      class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-small"
+      trim="both"
+    >
+      <div
+        class="c7n-progress-inner"
+      >
+        <svg
+          viewBox="0 0 50 50"
+        >
+          <circle
+            cx="25"
+            cy="25"
+            r="20"
+          />
+        </svg>
+      </div>
+    </div>
+    <span>
+      保存
+    </span>
+  </button>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-btn-disabled"
+    disabled=""
+    type="button"
+  >
+    <div
+      class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-small"
+      trim="both"
+    >
+      <div
+        class="c7n-progress-inner"
+      >
+        <svg
+          viewBox="0 0 50 50"
+        >
+          <circle
+            cx="25"
+            cy="25"
+            r="20"
+          />
+        </svg>
+      </div>
+    </div>
+  </button>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-primary c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-btn-disabled"
+    disabled=""
+    type="button"
+  >
+    <div
+      class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-small"
+      trim="both"
+    >
+      <div
+        class="c7n-progress-inner"
+      >
+        <svg
+          viewBox="0 0 50 50"
+        >
+          <circle
+            cx="25"
+            cy="25"
+            r="20"
+          />
+        </svg>
+      </div>
+    </div>
+  </button>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper c7n-pro-btn-disabled"
+    disabled=""
+    type="submit"
+  >
+    <div
+      class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-small"
+      trim="both"
+    >
+      <div
+        class="c7n-progress-inner"
+      >
+        <svg
+          viewBox="0 0 50 50"
+        >
+          <circle
+            cx="25"
+            cy="25"
+            r="20"
+          />
+        </svg>
+      </div>
+    </div>
+    <span>
+      数据源状态
+    </span>
+  </button>
+  <br />
+  <br />
+  <button
+    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+    type="button"
+  >
+    <span>
+      wait promise
+    </span>
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+</div>
+`;
+
+exports[`renders ./components-pro/button/demo/size.md correctly 1`] = `
+<div>
+  <div>
+    <button
+      class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+      type="button"
+    >
+      <span>
+        默认raised按钮
+      </span>
+      <div
+        class="c7n-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper c7n-pro-btn-lg"
+      type="button"
+    >
+      <span>
+        大raised按钮
+      </span>
+      <div
+        class="c7n-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper c7n-pro-btn-sm"
+      type="button"
+    >
+      <span>
+        小raised按钮
+      </span>
+      <div
+        class="c7n-ripple-wrapper"
+      />
+    </button>
+  </div>
+  <div>
+    <button
+      class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-wrapper"
+      type="button"
+    >
+      <span>
+        flat按钮
+      </span>
+      <div
+        class="c7n-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-wrapper c7n-pro-btn-lg"
+      type="button"
+    >
+      <span>
+        大flat按钮
+      </span>
+      <div
+        class="c7n-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-wrapper c7n-pro-btn-sm"
+      type="button"
+    >
+      <span>
+        小flat按钮
+      </span>
+      <div
+        class="c7n-ripple-wrapper"
+      />
+    </button>
+  </div>
+  <div>
+    <button
+      class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper"
+      type="button"
+    >
+      <i
+        class="icon icon-search"
+      />
+      <div
+        class="c7n-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-btn-lg"
+      type="button"
+    >
+      <i
+        class="icon icon-search"
+      />
+      <div
+        class="c7n-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-btn-sm"
+      type="button"
+    >
+      <i
+        class="icon icon-search"
+      />
+      <div
+        class="c7n-ripple-wrapper"
+      />
+    </button>
+  </div>
+</div>
+`;
+
+exports[`renders ./components-pro/button/demo/throttle.md correctly 1`] = `
+<div>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+    type="button"
+  >
+    <span>
+      节流按钮0
+    </span>
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+    type="button"
+  >
+    <span>
+      去抖按钮0
+    </span>
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+</div>
+`;
