@@ -495,13 +495,6 @@ dynamicProps = {
     if (value !== undefined) {
       return value;
     }
-    if (propsName === 'textField' || propsName === 'valueField') {
-      const lovCode = this.get('lovCode');
-      const lovProps = getPropsFromLovConfig(lovCode, propsName);
-      if (propsName in lovProps) {
-        return lovProps[propsName];
-      }
-    }
     const dsField = this.findDataSetField();
     if (dsField) {
       const dsValue = dsField.get(propsName);
@@ -509,10 +502,19 @@ dynamicProps = {
         return dsValue;
       }
     }
+    if (propsName === 'textField' || propsName === 'valueField') {
+      const lovCode = this.get('lovCode');
+      const lovProps = getPropsFromLovConfig(lovCode, propsName);
+      if (propsName in lovProps) {
+        return lovProps[propsName];
+      }
+    }
     if (propsName === 'lookupUrl') {
       return getConfig(propsName);
     }
-    return Field.defaultProps[propsName];
+    if (dsField) {
+      return Field.defaultProps[propsName];
+    }
   }
 
   /**
@@ -806,9 +808,11 @@ dynamicProps = {
     const lovCode = this.get('lovCode');
     if (lovCode) {
       await this.pending.add(lovCodeStore.fetchConfig(lovCode, this));
-      const options = lovCodeStore.getLovDataSet(lovCode, this);
-      if (options) {
-        this.set('options', options);
+      if (this.type === FieldType.object || this.type === FieldType.auto) {
+        const options = lovCodeStore.getLovDataSet(lovCode, this);
+        if (options) {
+          this.set('options', options);
+        }
       }
     }
   }
