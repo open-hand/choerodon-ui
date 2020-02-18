@@ -2,9 +2,9 @@
 @import '../../../components/style/mixins/index';
 @import '../../radio/style/mixin';
 
-@checkbox-prefix-cls: ~'@{c7n-pro-prefix}-checkbox';
+@pro-checkbox-prefix-cls: ~'@{c7n-pro-prefix}-checkbox';
 
-.@{checkbox-prefix-cls} {
+.@{pro-checkbox-prefix-cls} {
   .radio-btn;
 
   &-inner {
@@ -94,7 +94,7 @@
   &-button {
     padding: 0 0.15rem;
     line-height: 0.3rem;
-    .@{checkbox-prefix-cls}-inner {
+    .@{pro-checkbox-prefix-cls}-inner {
       position: absolute;
       top: 0;
       right: 0;
@@ -112,10 +112,10 @@
         padding: 0;
       }
     }
-    .@{checkbox-prefix-cls}:checked + .@{checkbox-prefix-cls}-inner + span {
+    .@{pro-checkbox-prefix-cls}:checked + .@{pro-checkbox-prefix-cls}-inner + span {
       color: #fff;
     }
-    &:hover .@{checkbox-prefix-cls}-inner + span {
+    &:hover .@{pro-checkbox-prefix-cls}-inner + span {
       color: @primary-color;
     }
   }
