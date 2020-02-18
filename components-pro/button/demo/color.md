@@ -28,6 +28,8 @@ class App extends React.PureComponent {
           <Button color="red">Red</Button>
           <Button color="yellow">Yellow</Button>
           <Button color="purple">Purple</Button>
+          <br />
+          <br />
           <Button color="dark">Dark</Button>
         </div>
         <div>

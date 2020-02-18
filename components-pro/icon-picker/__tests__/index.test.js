@@ -20,7 +20,6 @@ describe('Icon-Picker-pro', () => {
   it('should show {value} when the property value is existed', () => {
     const wrapper = mount(<IconPicker value="add" />);
     expect(wrapper.props().value).toEqual('add');
-    expect(wrapper.props().pageSize).toEqual(100);
   });
 
   it('the property pageSize will be 100 ', () => {

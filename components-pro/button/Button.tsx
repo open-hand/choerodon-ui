@@ -65,6 +65,9 @@ export interface ButtonProps extends DataSetComponentProps {
 export default class Button extends DataSetComponent<ButtonProps> {
   static displayName = 'Button';
 
+  // eslint-disable-next-line camelcase
+  static __Pro_BUTTON = true;
+
   static contextType = FormContext;
 
   static propTypes = {
