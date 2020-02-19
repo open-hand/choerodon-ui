@@ -834,8 +834,9 @@ dynamicProps = {
   }
 
   ready(): Promise<any> {
-    const { options } = this;
-    return Promise.all([this.pending.ready(), options && options.ready()]);
+    // const { options } = this;
+    // return Promise.all([this.pending.ready(), options && options.ready()]);
+    return this.pending.ready();
   }
 
   private findDataSetField(): Field | undefined {
