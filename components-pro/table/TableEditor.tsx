@@ -37,6 +37,19 @@ export default class TableEditor extends Component<TableEditorProps> {
   currentEditorName?: string;
 
   @autobind
+  onWindowResize() {
+    this.forceUpdate();
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.onWindowResize);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.onWindowResize);
+  }
+
+  @autobind
   saveRef(node) {
     this.editor = node;
   }

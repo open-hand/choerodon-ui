@@ -149,11 +149,11 @@ export default class Demo extends React.Component {
       html,
       js: state.sourceCode
         .replace(
-          /import\s+\{\s+(.*)\s+\}\s+from\s+'choerodon-ui';/,
+          /import\s+\{\s+([\s\S]*)\s+\}\s+from\s+'choerodon-ui';/,
           'const { $1 } = window["choerodon-ui"];',
         )
         .replace(
-          /import\s+\{\s+(.*)\s+\}\s+from\s+'choerodon-ui\/pro';/,
+          /import\s+\{\s+([\s\S]*)\s+\}\s+from\s+'choerodon-ui\/pro';/,
           'const { $1 } = window["choerodon-ui/pro"];',
         ),
       css: prefillStyle,

@@ -1,7 +1,7 @@
-import dataset from './dataset';
-import tree from './tree';
-import lov from './lov';
-import lookup from './lookup';
+import dataset, { dsTempleList } from './dataset';
+import tree, { treeTempList } from './tree';
+import lov, { lovTempleList } from './lov';
+import lookup, { lookupTempleList } from './lookup';
 
 export default function() {
   dataset();
@@ -9,3 +9,10 @@ export default function() {
   lov();
   lookup();
 }
+
+export const mockTempleList = [
+  ...treeTempList,
+  ...lovTempleList,
+  ...lookupTempleList,
+  ...dsTempleList,
+];

@@ -2,10 +2,10 @@
 @import '../../../components/style/mixins/index';
 @import 'mixin';
 
-@radio-prefix-cls: ~'@{c7n-pro-prefix}-radio';
+@pro-radio-prefix-cls: ~'@{c7n-pro-prefix}-radio';
 @radio-duration: 0.3s;
 
-.@{radio-prefix-cls} {
+.@{pro-radio-prefix-cls} {
   .radio-btn;
 
   &-inner {
@@ -68,7 +68,7 @@
     padding: 0 0.15rem;
     line-height: 0.3rem;
     background-color: #fff;
-    .@{radio-prefix-cls}-inner {
+    .@{pro-radio-prefix-cls}-inner {
       position: absolute;
       top: 0;
       right: 0;
@@ -86,13 +86,13 @@
         padding: 0;
       }
     }
-    .@{radio-prefix-cls}:checked + .@{radio-prefix-cls}-inner {
+    .@{pro-radio-prefix-cls}:checked + .@{pro-radio-prefix-cls}-inner {
       z-index: 1;
       & + span {
         color: @primary-color;
       }
     }
-    &:hover .@{radio-prefix-cls}-inner + span {
+    &:hover .@{pro-radio-prefix-cls}-inner + span {
       color: @primary-color;
     }
   }
