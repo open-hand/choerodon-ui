@@ -53,10 +53,16 @@ class App extends React.Component {
         name: 'date2',
         type: 'date',
         range: true,
-        defaultValue: ['1984-11-22', new Date()],
+        defaultValue: ['1985-11-22', new Date()],
         validator: rangeValidator,
       },
-      { name: 'multipleDate', type: 'date', range: true, multiple: true, required: true },
+      {
+        name: 'multipleDate',
+        type: 'date',
+        range: true,
+        multiple: true,
+        required: true,
+      },
     ],
     events: {
       update: handleDataSetChange,
@@ -75,7 +81,7 @@ class App extends React.Component {
         <Col span={24}>
           <DatePicker
             range
-            defaultValue={['1984-11-22', new Date()]}
+            defaultValue={['1986-11-22', new Date()]}
             placeholder={['Start Date', 'End Date']}
             onChange={handleChange}
           />
@@ -83,7 +89,7 @@ class App extends React.Component {
         <Col span={24}>
           <DatePicker
             range={['start', 'end']}
-            defaultValue={{ start: '1984-11-22', end: new Date() }}
+            defaultValue={{ start: '1987-11-22', end: new Date() }}
             placeholder={['Start Date', 'End Date']}
             onChange={handleChange}
           />

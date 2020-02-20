@@ -1,0 +1,515 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`weeks-picker-pro renders weekPicker correctly 1`] = `
+<WeekPicker
+  autoComplete="off"
+  clearButton={true}
+  mode="week"
+  multiple={false}
+  noValidate={false}
+  readOnly={false}
+  showHelp="newLine"
+  suffixCls="calendar-picker"
+  trigger={
+    Array [
+      "focus",
+      "click",
+    ]
+  }
+  triggerHiddenDelay={50}
+  triggerShowDelay={150}
+  trim="both"
+>
+  <Tooltip
+    arrowPointAtCenter={false}
+    autoAdjustOverflow={true}
+    defaultHidden={true}
+    mouseEnterDelay={100}
+    mouseLeaveDelay={100}
+    placement="bottomLeft"
+    suffixCls="tooltip"
+    theme="light"
+    title={null}
+    transitionName="zoom-big-fast"
+    trigger={
+      Array [
+        "hover",
+      ]
+    }
+  >
+    <Trigger
+      action={
+        Array [
+          "hover",
+        ]
+      }
+      arrowPointAtCenter={false}
+      autoAdjustOverflow={true}
+      blurDelay={0}
+      builtinPlacements={
+        Object {
+          "bottom": Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tc",
+              "bc",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "bottomLeft": Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tl",
+              "bl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "bottomRight": Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tr",
+              "br",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "left": Object {
+            "offset": Array [
+              -10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "cr",
+              "cl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "leftBottom": Object {
+            "offset": Array [
+              -10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "br",
+              "bl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "leftTop": Object {
+            "offset": Array [
+              -10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tr",
+              "tl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "right": Object {
+            "offset": Array [
+              10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "cl",
+              "cr",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "rightBottom": Object {
+            "offset": Array [
+              10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "bl",
+              "br",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "rightTop": Object {
+            "offset": Array [
+              10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tl",
+              "tr",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "top": Object {
+            "offset": Array [
+              0,
+              -10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "bc",
+              "tc",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "topLeft": Object {
+            "offset": Array [
+              0,
+              -10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "bl",
+              "tl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "topRight": Object {
+            "offset": Array [
+              0,
+              -10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "br",
+              "tr",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+        }
+      }
+      defaultPopupHidden={true}
+      focusDelay={150}
+      mouseEnterDelay={100}
+      mouseLeaveDelay={100}
+      popupContent={null}
+      popupPlacement="bottomLeft"
+      prefixCls="c7n-pro-tooltip"
+      suffixCls="tooltip"
+      theme="light"
+      title={null}
+      transitionName="zoom-big-fast"
+    >
+      <TriggerChild
+        key=".$.$element"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <span
+          className="c7n-pro-calendar-picker-wrapper c7n-pro-calendar-picker-empty c7n-pro-calendar-picker-suffix-button c7n-pro-calendar-picker-not-editable"
+          key=".$element"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onFocus={[Function]}
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <label
+            onMouseDown={[Function]}
+          >
+            <Trigger
+              action={
+                Array [
+                  "focus",
+                  "click",
+                ]
+              }
+              blurDelay={50}
+              builtinPlacements={
+                Object {
+                  "bottomLeft": Object {
+                    "offset": Array [
+                      0,
+                      4,
+                    ],
+                    "overflow": Object {
+                      "adjustX": 1,
+                      "adjustY": 1,
+                    },
+                    "points": Array [
+                      "tl",
+                      "bl",
+                    ],
+                  },
+                  "bottomRight": Object {
+                    "offset": Array [
+                      0,
+                      4,
+                    ],
+                    "overflow": Object {
+                      "adjustX": 1,
+                      "adjustY": 1,
+                    },
+                    "points": Array [
+                      "tr",
+                      "br",
+                    ],
+                  },
+                  "topLeft": Object {
+                    "offset": Array [
+                      0,
+                      -4,
+                    ],
+                    "overflow": Object {
+                      "adjustX": 1,
+                      "adjustY": 1,
+                    },
+                    "points": Array [
+                      "bl",
+                      "tl",
+                    ],
+                  },
+                  "topRight": Object {
+                    "offset": Array [
+                      0,
+                      -4,
+                    ],
+                    "overflow": Object {
+                      "adjustX": 1,
+                      "adjustY": 1,
+                    },
+                    "points": Array [
+                      "br",
+                      "tr",
+                    ],
+                  },
+                }
+              }
+              defaultPopupHidden={true}
+              focusDelay={150}
+              getPopupStyleFromAlign={[Function]}
+              getRootDomNode={[Function]}
+              mouseEnterDelay={150}
+              mouseLeaveDelay={50}
+              onPopupAnimateAppear={[Function]}
+              onPopupAnimateEnd={[Function]}
+              onPopupHiddenChange={[Function]}
+              popupContent={
+                <WeeksView
+                  date={"2020-02-19T16:00:00.000Z"}
+                  isValidDate={[Function]}
+                  mode="week"
+                  onSelect={[Function]}
+                  onSelectedDateChange={[Function]}
+                  onViewModeChange={[Function]}
+                  suffixCls="calendar"
+                />
+              }
+              popupHidden={true}
+              popupPlacement="bottomLeft"
+              prefixCls="c7n-pro-calendar-picker"
+              transitionName="slide-up"
+            >
+              <TriggerChild
+                key=".$text"
+                onBlur={[Function]}
+                onClick={[Function]}
+                onFocus={[Function]}
+                onMouseDown={[Function]}
+              >
+                <input
+                  autoComplete="off"
+                  className="c7n-pro-calendar-picker"
+                  key="text"
+                  multiple={false}
+                  noValidate={false}
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onClick={[Function]}
+                  onContextMenu={[Function]}
+                  onFocus={[Function]}
+                  onKeyDown={[Function]}
+                  onMouseDown={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  readOnly={true}
+                  type="text"
+                  value=""
+                />
+              </TriggerChild>
+              <Popup
+                align={
+                  Object {
+                    "offset": Array [
+                      0,
+                      4,
+                    ],
+                    "overflow": Object {
+                      "adjustX": 1,
+                      "adjustY": 1,
+                    },
+                    "points": Array [
+                      "tl",
+                      "bl",
+                    ],
+                  }
+                }
+                className="c7n-pro-calendar-picker-popup"
+                getClassNameFromAlign={[Function]}
+                getRootDomNode={[Function]}
+                getStyleFromAlign={[Function]}
+                hidden={true}
+                key="popup"
+                onAnimateAppear={[Function]}
+                onAnimateEnd={[Function]}
+                onMouseDown={[Function]}
+                suffixCls="popup"
+                transitionName="slide-up"
+              />
+            </Trigger>
+            <div
+              className="c7n-pro-calendar-picker-inner-button c7n-pro-calendar-picker-clear-button"
+              key="inner-button"
+            >
+              <Icon
+                onClick={[Function]}
+                type="close"
+              >
+                <i
+                  className="icon icon-close"
+                  onClick={[Function]}
+                />
+              </Icon>
+            </div>
+            <div
+              className="c7n-pro-calendar-picker-suffix"
+              onMouseDown={[Function]}
+            >
+              <Icon
+                className="c7n-pro-calendar-picker-trigger"
+                type="date_range"
+              >
+                <i
+                  className="icon icon-date_range c7n-pro-calendar-picker-trigger"
+                />
+              </Icon>
+            </div>
+          </label>
+        </span>
+      </TriggerChild>
+      <Popup
+        align={
+          Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tl",
+              "bl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          }
+        }
+        className="c7n-pro-tooltip-popup"
+        getClassNameFromAlign={[Function]}
+        getRootDomNode={[Function]}
+        hidden={true}
+        key="popup"
+        onMouseDown={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        suffixCls="popup"
+        transitionName="zoom-big-fast"
+      />
+    </Trigger>
+  </Tooltip>
+</WeekPicker>
+`;

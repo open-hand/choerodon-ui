@@ -13,7 +13,7 @@ title:
 
 Multiple values via property `multiple`.
 
-````jsx
+```jsx
 import { DataSet, DatePicker, Row, Col } from 'choerodon-ui/pro';
 
 function handleChange(value, oldValue) {
@@ -21,14 +21,27 @@ function handleChange(value, oldValue) {
 }
 
 function handleDataSetChange({ record, name, value, oldValue }) {
-  console.log('[dataset multiple]', value, '[oldValue]', oldValue, `[record.get('${name}')]`, record.get(name));
+  console.log(
+    '[dataset multiple]',
+    value,
+    '[oldValue]',
+    oldValue,
+    `[record.get('${name}')]`,
+    record.get(name),
+  );
 }
 
 class App extends React.Component {
   ds = new DataSet({
     autoCreate: true,
     fields: [
-      { name: 'date', type: 'date', defaultValue: '1984-11-22,2019-08-09', required: true, multiple: ',' },
+      {
+        name: 'date',
+        type: 'date',
+        defaultValue: '1984-11-22,2019-08-09',
+        required: true,
+        multiple: ',',
+      },
     ],
     events: {
       update: handleDataSetChange,
@@ -42,15 +55,17 @@ class App extends React.Component {
           <DatePicker dataSet={this.ds} name="date" placeholder="数据源多选" />
         </Col>
         <Col span={12}>
-          <DatePicker multiple onChange={handleChange} placeholder="多选" defaultValue={new Date()} />
+          <DatePicker
+            multiple
+            onChange={handleChange}
+            placeholder="多选"
+            defaultValue={new Date()}
+          />
         </Col>
       </Row>
     );
   }
 }
 
-ReactDOM.render(
-  <App />,
-  mountNode
-);
-````
+ReactDOM.render(<App />, mountNode);
+```
