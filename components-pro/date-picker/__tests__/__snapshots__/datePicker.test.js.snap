@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`date-picker-pro renders dataSet multiple correctly 1`] = `
+exports[`date-picker-pro renders dataSet date correctly 1`] = `
 <DatePickerTest>
   <DatePicker
     autoComplete="off"

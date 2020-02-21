@@ -2,11 +2,12 @@ import React from 'react';
 import { mount } from 'enzyme';
 import moment from 'moment';
 import YearsPicker from '../../year-picker';
-// import YearsPickerTest from './YearsTest';
 import focusTest from '../../../tests/shared/focusTest';
+import triggerPopTest from '../../../tests/shared/triggerPopTest';
 
 describe('years-picker-pro', () => {
   focusTest(YearsPicker);
+  triggerPopTest(YearsPicker);
 
   it('renders YearsPicker correctly', () => {
     const wrapper = mount(<YearsPicker />);

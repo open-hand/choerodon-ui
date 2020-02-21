@@ -4,11 +4,13 @@ import moment from 'moment';
 import MockDate from 'mockdate';
 import DatePicker from '..';
 import DatePickerTest from './DatePicker';
-import { openPanel, clearInput, nextYear, nextMonth } from './utils';
+import { openPanel, nextYear, nextMonth } from './utils';
 import focusTest from '../../../tests/shared/focusTest';
+import TriggerPopTest from '../../../tests/shared/triggerPopTest';
 
 describe('date-picker-pro', () => {
   focusTest(DatePicker);
+  TriggerPopTest(DatePicker);
 
   beforeEach(() => {
     MockDate.set(moment('2020-01-22'));
@@ -41,7 +43,7 @@ describe('date-picker-pro', () => {
     ).toBe(true);
   });
 
-  it('renders dataSet multiple correctly', () => {
+  it('renders dataSet date correctly', () => {
     const wrapper = mount(<DatePickerTest />);
     expect(wrapper).toMatchSnapshot();
     expect(wrapper.find('DatePicker').props().name).toEqual('date');
@@ -50,7 +52,7 @@ describe('date-picker-pro', () => {
         .find('.c7n-pro-calendar-picker-wrapper')
         .at(0)
         .hasClass('c7n-pro-calendar-picker-multiple'),
-    ).toBe(true);
+    ).toBe(false);
     expect(
       wrapper
         .find('.c7n-pro-calendar-picker-range-end')
@@ -73,22 +75,5 @@ describe('date-picker-pro', () => {
     expect(handleChange).not.toHaveBeenCalled();
     nextMonth(wrapper);
     expect(handleChange).not.toHaveBeenCalled();
-  });
-
-  it('the clear button will clear the input value', () => {
-    const wrapper = mount(<DatePicker value={moment('2019-11-23')} />);
-    expect(
-      wrapper
-        .find('input')
-        .at(0)
-        .prop('value'),
-    ).toBe('2019-11-23');
-    clearInput(wrapper);
-    expect(
-      wrapper
-        .find('input')
-        .at(0)
-        .prop('value'),
-    ).toBe('');
   });
 });

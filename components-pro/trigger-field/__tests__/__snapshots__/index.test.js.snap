@@ -1,15 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`dateTimes-picker-pro renders dateTimesPicker correctly 1`] = `
-<DateTimePicker
+exports[`TriggerTests renders TriggerTest correctly 1`] = `
+<TriggerTest
   autoComplete="off"
   clearButton={true}
-  mode="dateTime"
   multiple={false}
   noValidate={false}
   readOnly={false}
   showHelp="newLine"
-  suffixCls="calendar-picker"
+  suffixCls="trigger-test"
   trigger={
     Array [
       "focus",
@@ -284,7 +283,7 @@ exports[`dateTimes-picker-pro renders dateTimesPicker correctly 1`] = `
         onMouseLeave={[Function]}
       >
         <span
-          className="c7n-pro-calendar-picker-wrapper c7n-pro-calendar-picker-empty c7n-pro-calendar-picker-suffix-button"
+          className="c7n-pro-trigger-test-wrapper c7n-pro-trigger-test-empty c7n-pro-trigger-test-suffix-button c7n-pro-trigger-test-prefix-button"
           key=".$element"
           onBlur={[Function]}
           onClick={[Function]}
@@ -297,6 +296,18 @@ exports[`dateTimes-picker-pro renders dateTimesPicker correctly 1`] = `
           <label
             onMouseDown={[Function]}
           >
+            <div
+              className="c7n-pro-trigger-test-prefix"
+            >
+              <span
+                className="c7n-pro-trigger-test-color"
+                style={
+                  Object {
+                    "backgroundColor": undefined,
+                  }
+                }
+              />
+            </div>
             <Trigger
               action={
                 Array [
@@ -375,19 +386,29 @@ exports[`dateTimes-picker-pro renders dateTimesPicker correctly 1`] = `
               onPopupAnimateEnd={[Function]}
               onPopupHiddenChange={[Function]}
               popupContent={
-                <DateTimesView
-                  date={"2020-02-20T16:00:00.000Z"}
-                  isValidDate={[Function]}
-                  mode="dateTime"
-                  onSelect={[Function]}
-                  onSelectedDateChange={[Function]}
-                  onViewModeChange={[Function]}
-                  suffixCls="calendar"
-                />
+                <div
+                  className="c7n-pro-trigger-test-popup-view"
+                >
+                  <div
+                    className="c7n-pro-trigger-test-popup-body"
+                    style={
+                      Object {
+                        "backgroundColor": undefined,
+                      }
+                    }
+                  >
+                    test
+                  </div>
+                  <div
+                    className="c7n-pro-trigger-test-popup-footer"
+                  >
+                    trigger-test
+                  </div>
+                </div>
               }
               popupHidden={true}
               popupPlacement="bottomLeft"
-              prefixCls="c7n-pro-calendar-picker"
+              prefixCls="c7n-pro-trigger-test"
               transitionName="slide-up"
             >
               <TriggerChild
@@ -399,7 +420,7 @@ exports[`dateTimes-picker-pro renders dateTimesPicker correctly 1`] = `
               >
                 <input
                   autoComplete="off"
-                  className="c7n-pro-calendar-picker"
+                  className="c7n-pro-trigger-test"
                   key="text"
                   multiple={false}
                   noValidate={false}
@@ -434,7 +455,7 @@ exports[`dateTimes-picker-pro renders dateTimesPicker correctly 1`] = `
                     ],
                   }
                 }
-                className="c7n-pro-calendar-picker-popup"
+                className="c7n-pro-trigger-test-popup"
                 getClassNameFromAlign={[Function]}
                 getRootDomNode={[Function]}
                 getStyleFromAlign={[Function]}
@@ -448,7 +469,7 @@ exports[`dateTimes-picker-pro renders dateTimesPicker correctly 1`] = `
               />
             </Trigger>
             <div
-              className="c7n-pro-calendar-picker-inner-button c7n-pro-calendar-picker-clear-button"
+              className="c7n-pro-trigger-test-inner-button c7n-pro-trigger-test-clear-button"
               key="inner-button"
             >
               <Icon
@@ -462,15 +483,15 @@ exports[`dateTimes-picker-pro renders dateTimesPicker correctly 1`] = `
               </Icon>
             </div>
             <div
-              className="c7n-pro-calendar-picker-suffix"
+              className="c7n-pro-trigger-test-suffix"
               onMouseDown={[Function]}
             >
               <Icon
-                className="c7n-pro-calendar-picker-trigger"
-                type="date_range"
+                className="c7n-pro-trigger-test-trigger"
+                type="palette"
               >
                 <i
-                  className="icon icon-date_range c7n-pro-calendar-picker-trigger"
+                  className="icon icon-palette c7n-pro-trigger-test-trigger"
                 />
               </Icon>
             </div>
@@ -511,5 +532,5 @@ exports[`dateTimes-picker-pro renders dateTimesPicker correctly 1`] = `
       />
     </Trigger>
   </Tooltip>
-</DateTimePicker>
+</TriggerTest>
 `;

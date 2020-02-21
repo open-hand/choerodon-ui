@@ -376,7 +376,7 @@ exports[`times-picker-pro renders timePicker correctly 1`] = `
               onPopupHiddenChange={[Function]}
               popupContent={
                 <TimesView
-                  date={"2020-02-19T16:00:00.000Z"}
+                  date={"2020-02-20T16:00:00.000Z"}
                   isValidDate={[Function]}
                   mode="time"
                   onSelect={[Function]}
