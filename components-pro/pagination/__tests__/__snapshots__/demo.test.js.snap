@@ -1,0 +1,542 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders ./components-pro/pagination/demo/basic.md correctly 1`] = `
+<div>
+  <form
+    class="c7n-pro-form c7n-pro-form-wrapper"
+    name="form-1"
+    novalidate=""
+  >
+    <table>
+      <colgroup>
+        <col
+          style="width:1.5rem"
+        />
+        <col />
+        <col
+          style="width:1.5rem"
+        />
+        <col />
+        <col
+          style="width:1.5rem"
+        />
+        <col />
+        <col
+          style="width:1.5rem"
+        />
+        <col />
+      </colgroup>
+      <tbody>
+        <tr>
+          <td
+            class="c7n-pro-field-label c7n-pro-field-label-right"
+            rowspan="1"
+          >
+            <label>
+              showSizeChanger
+            </label>
+          </td>
+          <td
+            colspan="1"
+            rowspan="1"
+          >
+            <div
+              class="c7n-pro-field-wrapper"
+            >
+              <label
+                class="c7n-pro-switch-wrapper c7n-pro-field"
+              >
+                <input
+                  checked=""
+                  class="c7n-pro-switch"
+                  name="showSizeChanger"
+                  type="checkbox"
+                  value="true"
+                />
+                <span
+                  class="c7n-pro-switch-label"
+                />
+              </label>
+            </div>
+          </td>
+          <td
+            class="c7n-pro-field-label c7n-pro-field-label-right"
+            rowspan="1"
+          >
+            <label>
+              showTotal
+            </label>
+          </td>
+          <td
+            colspan="1"
+            rowspan="1"
+          >
+            <div
+              class="c7n-pro-field-wrapper"
+            >
+              <label
+                class="c7n-pro-switch-wrapper c7n-pro-field"
+              >
+                <input
+                  checked=""
+                  class="c7n-pro-switch"
+                  name="showTotal"
+                  type="checkbox"
+                  value="true"
+                />
+                <span
+                  class="c7n-pro-switch-label"
+                />
+              </label>
+            </div>
+          </td>
+          <td
+            class="c7n-pro-field-label c7n-pro-field-label-right"
+            rowspan="1"
+          >
+            <label>
+              showPager
+            </label>
+          </td>
+          <td
+            colspan="1"
+            rowspan="1"
+          >
+            <div
+              class="c7n-pro-field-wrapper"
+            >
+              <label
+                class="c7n-pro-switch-wrapper c7n-pro-field"
+              >
+                <input
+                  class="c7n-pro-switch"
+                  name="showPager"
+                  type="checkbox"
+                  value="true"
+                />
+                <span
+                  class="c7n-pro-switch-label"
+                />
+              </label>
+            </div>
+          </td>
+          <td
+            class="c7n-pro-field-label c7n-pro-field-label-right"
+            rowspan="1"
+          >
+            <label>
+              showQuickJumper
+            </label>
+          </td>
+          <td
+            colspan="1"
+            rowspan="1"
+          >
+            <div
+              class="c7n-pro-field-wrapper"
+            >
+              <label
+                class="c7n-pro-switch-wrapper c7n-pro-field"
+              >
+                <input
+                  class="c7n-pro-switch"
+                  name="showQuickJumper"
+                  type="checkbox"
+                  value="true"
+                />
+                <span
+                  class="c7n-pro-switch-label"
+                />
+              </label>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+  <nav
+    class="c7n-pro-pagination c7n-pro-pagination-wrapper"
+  >
+    <span>
+      每页行数：
+    </span>
+    <span
+      class="c7n-pro-select-wrapper c7n-pro-select-suffix-button c7n-pro-select-not-editable"
+    >
+      <input
+        type="hidden"
+        value="10"
+      />
+      <label>
+        <input
+          autocomplete="off"
+          class="c7n-pro-select"
+          readonly=""
+          type="text"
+          value="10"
+        />
+        <div
+          class="c7n-pro-select-suffix"
+        >
+          <i
+            class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+          />
+        </div>
+      </label>
+    </span>
+    <span
+      class="c7n-pro-pagination-page-info"
+    >
+      1 - 10 / 90
+    </span>
+    <button
+      class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-pagination-pager c7n-pro-btn-disabled"
+      disabled=""
+      type="button"
+    >
+      <i
+        class="icon icon-first_page"
+      />
+    </button>
+    <button
+      class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-pagination-pager c7n-pro-btn-disabled"
+      disabled=""
+      type="button"
+    >
+      <i
+        class="icon icon-navigate_before"
+      />
+    </button>
+    <button
+      class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-pagination-pager"
+      type="button"
+    >
+      <i
+        class="icon icon-navigate_next"
+      />
+      <div
+        class="c7n-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-pagination-pager"
+      type="button"
+    >
+      <i
+        class="icon icon-last_page"
+      />
+      <div
+        class="c7n-ripple-wrapper"
+      />
+    </button>
+  </nav>
+</div>
+`;
+
+exports[`renders ./components-pro/pagination/demo/controlled.md correctly 1`] = `
+<nav
+  class="c7n-pro-pagination c7n-pro-pagination-wrapper"
+>
+  <span>
+    每页行数：
+  </span>
+  <span
+    class="c7n-pro-select-wrapper c7n-pro-select-suffix-button c7n-pro-select-not-editable"
+  >
+    <input
+      type="hidden"
+      value="20"
+    />
+    <label>
+      <input
+        autocomplete="off"
+        class="c7n-pro-select"
+        readonly=""
+        type="text"
+        value="20"
+      />
+      <div
+        class="c7n-pro-select-suffix"
+      >
+        <i
+          class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+        />
+      </div>
+    </label>
+  </span>
+  <span
+    class="c7n-pro-pagination-page-info"
+  >
+    21 - 40 / 50
+  </span>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-pagination-pager"
+    type="button"
+  >
+    <i
+      class="icon icon-first_page"
+    />
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-pagination-pager"
+    type="button"
+  >
+    <i
+      class="icon icon-navigate_before"
+    />
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-pagination-pager"
+    type="button"
+  >
+    <i
+      class="icon icon-navigate_next"
+    />
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-pagination-pager"
+    type="button"
+  >
+    <i
+      class="icon icon-last_page"
+    />
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+</nav>
+`;
+
+exports[`renders ./components-pro/pagination/demo/dataset.md correctly 1`] = `
+<nav
+  class="c7n-pro-pagination c7n-pro-pagination-wrapper"
+>
+  <span>
+    每页行数：
+  </span>
+  <span
+    class="c7n-pro-select-wrapper c7n-pro-select-suffix-button c7n-pro-select-not-editable"
+  >
+    <input
+      type="hidden"
+      value="20"
+    />
+    <label>
+      <input
+        autocomplete="off"
+        class="c7n-pro-select"
+        readonly=""
+        type="text"
+        value="20"
+      />
+      <div
+        class="c7n-pro-select-suffix"
+      >
+        <i
+          class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+        />
+      </div>
+    </label>
+  </span>
+  <span
+    class="c7n-pro-pagination-page-info"
+  >
+    1 - 0 / 0
+  </span>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-pagination-pager c7n-pro-btn-disabled"
+    disabled=""
+    type="button"
+  >
+    <i
+      class="icon icon-first_page"
+    />
+  </button>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-pagination-pager c7n-pro-btn-disabled"
+    disabled=""
+    type="button"
+  >
+    <i
+      class="icon icon-navigate_before"
+    />
+  </button>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-pagination-pager"
+    type="button"
+  >
+    <i
+      class="icon icon-navigate_next"
+    />
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-pagination-pager"
+    type="button"
+  >
+    <i
+      class="icon icon-last_page"
+    />
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+</nav>
+`;
+
+exports[`renders ./components-pro/pagination/demo/hzero.md correctly 1`] = `
+<nav
+  class="c7n-pro-pagination c7n-pro-pagination-wrapper"
+>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-pagination-pager c7n-pro-btn-disabled"
+    disabled=""
+    type="button"
+  >
+    <i
+      class="icon icon-fast_rewind"
+    />
+  </button>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-pagination-pager c7n-pro-btn-disabled"
+    disabled=""
+    type="button"
+  >
+    <i
+      class="icon icon-navigate_before"
+    />
+  </button>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-primary c7n-pro-btn-wrapper c7n-pro-pagination-pager"
+    type="button"
+  >
+    1
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-wrapper c7n-pro-pagination-pager"
+    type="button"
+  >
+    2
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-wrapper c7n-pro-pagination-pager"
+    type="button"
+  >
+    3
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-wrapper c7n-pro-pagination-pager"
+    type="button"
+  >
+    4
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-wrapper c7n-pro-pagination-pager"
+    type="button"
+  >
+    5
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-wrapper c7n-pro-pagination-pager"
+    type="button"
+  >
+    <span>
+      •••
+    </span>
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-pagination-pager"
+    type="button"
+  >
+    <i
+      class="icon icon-navigate_next"
+    />
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-pagination-pager"
+    type="button"
+  >
+    <i
+      class="icon icon-fast_forward"
+    />
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+  <span
+    class="c7n-pro-select-wrapper c7n-pro-select-suffix-button c7n-pro-select-not-editable"
+  >
+    <input
+      type="hidden"
+      value="10"
+    />
+    <label>
+      <input
+        autocomplete="off"
+        class="c7n-pro-select"
+        readonly=""
+        type="text"
+        value="10 条/页"
+      />
+      <div
+        class="c7n-pro-select-suffix"
+      >
+        <i
+          class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+        />
+      </div>
+    </label>
+  </span>
+  <div
+    class="c7n-pro-pagination-quick-jumper"
+  >
+    跳至
+    <span
+      class="c7n-pro-input-number-wrapper c7n-pro-input-number-empty"
+    >
+      <label>
+        <input
+          autocomplete="off"
+          class="c7n-pro-input-number"
+          min="1"
+          type="text"
+          value=""
+        />
+      </label>
+    </span>
+    页
+  </div>
+</nav>
+`;

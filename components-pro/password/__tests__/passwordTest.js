@@ -1,22 +1,9 @@
----
-order: 2
-title:
-  zh-CN: 数据源
-  en-US: DataSet
----
-
-## zh-CN
-
-绑定数据源。
-
-## en-US
-
-DataSet binding.
-
-```jsx
-import { DataSet, Password } from 'choerodon-ui/pro';
+import React from 'react';
+import Password from '..';
+import DataSet from '../../data-set';
 
 function handleDataSetChange({ record, name, value, oldValue }) {
+  // eslint-disable-next-line no-console
   console.log(
     '[dataset newValue]',
     value,
@@ -27,14 +14,14 @@ function handleDataSetChange({ record, name, value, oldValue }) {
   );
 }
 
-class App extends React.Component {
+class PasswordTest extends React.Component {
   ds = new DataSet({
     autoCreate: true,
     fields: [
       {
-        name: 'first-name',
+        name: 'test',
         type: 'string',
-        defaultValue: 'choerodon-pro',
+        defaultValue: 'password',
         required: true,
       },
     ],
@@ -44,9 +31,8 @@ class App extends React.Component {
   });
 
   render() {
-    return <Password dataSet={this.ds} name="first-name" />;
+    return <Password dataSet={this.ds} name="test" />;
   }
 }
 
-ReactDOM.render(<App />, mountNode);
-```
+export default PasswordTest;

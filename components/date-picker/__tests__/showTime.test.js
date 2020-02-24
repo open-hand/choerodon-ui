@@ -131,7 +131,7 @@ describe('RangePicker with showTime', () => {
     expect(onOpenChangeFn).not.toHaveBeenCalled();
   });
 
-  it('hould trigger onOk when press ok button', () => {
+  it('should trigger onOk when press ok button', () => {
     const onOkFn = jest.fn();
     const onChangeFn = jest.fn();
     const onOpenChangeFn = jest.fn();
