@@ -16,11 +16,6 @@ describe('months-picker-pro', () => {
     jest.useRealTimers();
   });
 
-  it('renders monthsPicker correctly', () => {
-    const wrapper = mount(<MonthsPicker />);
-    expect(wrapper).toMatchSnapshot();
-  });
-
   it('the month will be controlled by the value', () => {
     const wrapper = mount(<MonthsPicker value={moment('2020-02-19')} />);
     expect(

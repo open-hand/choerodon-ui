@@ -8,11 +8,6 @@ import { disableWrapper } from './utils';
 describe('weeks-picker-pro', () => {
   focusTest(WeeksPicker);
 
-  it('renders weekPicker correctly', () => {
-    const wrapper = mount(<WeeksPicker />);
-    expect(wrapper).toMatchSnapshot();
-  });
-
   it('the week will be controlled by the value', () => {
     const wrapper = mount(<WeeksPicker value={moment('2020-02-19')} />);
     expect(

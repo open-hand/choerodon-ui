@@ -1,0 +1,167 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders ./components-pro/text-area/demo/basic.md correctly 1`] = `
+<div
+  class="c7n-row"
+  style="margin-left:-5px;margin-right:-5px"
+>
+  <div
+    class="c7n-col-8"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <div
+      class="c7n-pro-textarea-wrapper c7n-pro-textarea-empty"
+    >
+      <label>
+        <textarea
+          autocomplete="off"
+          class="c7n-pro-textarea"
+          rows="4"
+          style="resize:none"
+          type="text"
+        />
+      </label>
+    </div>
+  </div>
+  <div
+    class="c7n-col-8"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <div
+      class="c7n-pro-textarea-wrapper c7n-pro-textarea-empty"
+    >
+      <label>
+        <textarea
+          autocomplete="off"
+          class="c7n-pro-textarea"
+          readonly=""
+          rows="4"
+          style="resize:none"
+          type="text"
+        />
+      </label>
+    </div>
+  </div>
+  <div
+    class="c7n-col-8"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <div
+      class="c7n-pro-textarea-wrapper c7n-pro-textarea-disabled c7n-pro-textarea-empty"
+    >
+      <label>
+        <textarea
+          autocomplete="off"
+          class="c7n-pro-textarea"
+          disabled=""
+          rows="4"
+          style="resize:none"
+          type="text"
+        />
+      </label>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders ./components-pro/text-area/demo/controlled.md correctly 1`] = `
+<div
+  class="c7n-pro-textarea-wrapper"
+>
+  <label>
+    <textarea
+      autocomplete="off"
+      class="c7n-pro-textarea"
+      rows="4"
+      style="resize:none"
+      type="text"
+    >
+      default
+    </textarea>
+  </label>
+</div>
+`;
+
+exports[`renders ./components-pro/text-area/demo/dataset.md correctly 1`] = `
+<div
+  class="c7n-pro-textarea-wrapper c7n-pro-textarea-required"
+>
+  <label>
+    <textarea
+      autocomplete="off"
+      class="c7n-pro-textarea"
+      name="content"
+      rows="4"
+      style="resize:both;transition:none"
+      type="text"
+    >
+      textarea
+    </textarea>
+  </label>
+</div>
+`;
+
+exports[`renders ./components-pro/text-area/demo/resizable.md correctly 1`] = `
+<div
+  class="c7n-row"
+  style="margin-left:-5px;margin-right:-5px"
+>
+  <div
+    class="c7n-col-8"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <div
+      class="c7n-pro-textarea-wrapper c7n-pro-textarea-empty"
+    >
+      <label>
+        <textarea
+          autocomplete="off"
+          class="c7n-pro-textarea"
+          cols="40"
+          rows="4"
+          style="resize:both;transition:none"
+          type="text"
+        />
+      </label>
+    </div>
+  </div>
+  <div
+    class="c7n-col-8"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <div
+      class="c7n-pro-textarea-wrapper c7n-pro-textarea-empty"
+    >
+      <label>
+        <textarea
+          autocomplete="off"
+          class="c7n-pro-textarea"
+          cols="40"
+          rows="4"
+          style="resize:vertical;transition:none"
+          type="text"
+        />
+      </label>
+    </div>
+  </div>
+  <div
+    class="c7n-col-8"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <div
+      class="c7n-pro-textarea-wrapper c7n-pro-textarea-empty"
+    >
+      <label>
+        <textarea
+          autocomplete="off"
+          class="c7n-pro-textarea"
+          cols="40"
+          rows="4"
+          style="resize:horizontal;transition:none"
+          type="text"
+        />
+      </label>
+    </div>
+  </div>
+</div>
+`;

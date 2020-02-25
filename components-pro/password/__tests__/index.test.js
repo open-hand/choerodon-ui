@@ -36,7 +36,7 @@ describe('Password input', () => {
     ).toBe('password');
   });
 
-  it('input control the icon type', () => {
+  it('the icon should be changed when icon can click', () => {
     const wrapper = mount(<Password value="password" />);
     expect(wrapper.find('.icon-visibility_off')).toHaveLength(1);
     expect(wrapper.find('.icon-visibility')).toHaveLength(0);

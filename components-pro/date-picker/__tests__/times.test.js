@@ -8,11 +8,6 @@ import { disableWrapper } from './utils';
 describe('times-picker-pro', () => {
   focusTest(TimesPicker);
 
-  it('renders timePicker correctly', () => {
-    const wrapper = mount(<TimesPicker />);
-    expect(wrapper).toMatchSnapshot();
-  });
-
   it('the times will be controlled by the value', () => {
     const wrapper = mount(<TimesPicker value={moment('2020-02-20 20:20:19')} />);
     expect(

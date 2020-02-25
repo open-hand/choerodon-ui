@@ -10,12 +10,12 @@ import { open } from '../modal-container/ModalContainer';
 import IntlList from './IntlList';
 import { ModalProps } from '../modal/Modal';
 import localeContext, { $l } from '../locale-context';
-import autobind from '../_util/autobind';
-import { stopEvent } from '../_util/EventManager';
 import Progress from '../progress';
 import { Size } from '../core/enum';
-import exception from '../_util/exception';
 import message from '../message';
+import exception from '../_util/exception';
+import autobind from '../_util/autobind';
+import { stopEvent } from '../_util/EventManager';
 import isSame from '../_util/isSame';
 
 export interface IntlFieldProps extends TextFieldProps {

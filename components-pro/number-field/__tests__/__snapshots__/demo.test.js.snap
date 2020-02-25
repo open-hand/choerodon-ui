@@ -1,0 +1,599 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders ./components-pro/number-field/demo/basic.md correctly 1`] = `
+<div>
+  <div
+    class="c7n-row"
+    style="margin-left:-5px;margin-right:-5px"
+  >
+    <div
+      class="c7n-col-12"
+      style="padding-left:5px;padding-right:5px"
+    >
+      <span
+        class="c7n-pro-input-number-wrapper c7n-pro-input-number-empty"
+      >
+        <label>
+          <input
+            autocomplete="off"
+            class="c7n-pro-input-number"
+            placeholder="请输入整数"
+            step="1"
+            type="text"
+            value=""
+          />
+          <div
+            class="c7n-pro-input-number-inner-button"
+          >
+            <div>
+              <i
+                class="icon icon-keyboard_arrow_up c7n-pro-input-number-plus"
+              />
+              <i
+                class="icon icon-keyboard_arrow_down c7n-pro-input-number-minus"
+              />
+            </div>
+          </div>
+        </label>
+      </span>
+    </div>
+    <div
+      class="c7n-col-12"
+      style="padding-left:5px;padding-right:5px"
+    >
+      <span
+        class="c7n-pro-input-number-wrapper c7n-pro-input-number-empty"
+      >
+        <label>
+          <input
+            autocomplete="off"
+            class="c7n-pro-input-number"
+            min="0"
+            placeholder="精确两位小数"
+            step="0.01"
+            type="text"
+            value=""
+          />
+          <div
+            class="c7n-pro-input-number-inner-button"
+          >
+            <div>
+              <i
+                class="icon icon-keyboard_arrow_up c7n-pro-input-number-plus"
+              />
+              <i
+                class="icon icon-keyboard_arrow_down c7n-pro-input-number-minus"
+              />
+            </div>
+          </div>
+        </label>
+      </span>
+    </div>
+  </div>
+  <div
+    class="c7n-row"
+    style="margin-left:-5px;margin-right:-5px"
+  >
+    <div
+      class="c7n-col-12"
+      style="padding-left:5px;padding-right:5px"
+    >
+      <span
+        class="c7n-pro-input-number-wrapper c7n-pro-input-number-empty"
+      >
+        <label>
+          <input
+            autocomplete="off"
+            class="c7n-pro-input-number"
+            max="9"
+            min="0.3"
+            placeholder="step = 1.1, min = 0.3, max = 9"
+            step="1.1"
+            type="text"
+            value=""
+          />
+          <div
+            class="c7n-pro-input-number-inner-button"
+          >
+            <div>
+              <i
+                class="icon icon-keyboard_arrow_up c7n-pro-input-number-plus"
+              />
+              <i
+                class="icon icon-keyboard_arrow_down c7n-pro-input-number-minus"
+              />
+            </div>
+          </div>
+        </label>
+      </span>
+    </div>
+    <div
+      class="c7n-col-12"
+      style="padding-left:5px;padding-right:5px"
+    >
+      <span
+        class="c7n-pro-input-number-wrapper c7n-pro-input-number-empty"
+      >
+        <label>
+          <input
+            autocomplete="off"
+            class="c7n-pro-input-number"
+            min="-0.3"
+            placeholder="step = 1.1, min = -0.3"
+            step="1.1"
+            type="text"
+            value=""
+          />
+          <div
+            class="c7n-pro-input-number-inner-button"
+          >
+            <div>
+              <i
+                class="icon icon-keyboard_arrow_up c7n-pro-input-number-plus"
+              />
+              <i
+                class="icon icon-keyboard_arrow_down c7n-pro-input-number-minus"
+              />
+            </div>
+          </div>
+        </label>
+      </span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders ./components-pro/number-field/demo/controlled.md correctly 1`] = `
+<span
+  class="c7n-pro-input-number-wrapper"
+>
+  <label>
+    <input
+      autocomplete="off"
+      class="c7n-pro-input-number"
+      type="text"
+      value="default"
+    />
+  </label>
+</span>
+`;
+
+exports[`renders ./components-pro/number-field/demo/dataset.md correctly 1`] = `
+<span
+  class="c7n-pro-input-number-wrapper c7n-pro-input-number-required"
+>
+  <label>
+    <input
+      autocomplete="off"
+      class="c7n-pro-input-number"
+      name="age"
+      type="text"
+      value="100,000,000,000,000"
+    />
+  </label>
+</span>
+`;
+
+exports[`renders ./components-pro/number-field/demo/min-max.md correctly 1`] = `
+<div
+  class="c7n-row"
+  style="margin-left:-5px;margin-right:-5px"
+>
+  <div
+    class="c7n-col-6"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <span
+      class="c7n-pro-input-number-wrapper c7n-pro-input-number-empty"
+    >
+      <label>
+        <input
+          autocomplete="off"
+          class="c7n-pro-input-number"
+          name="start"
+          placeholder="start"
+          type="text"
+          value=""
+        />
+        <div
+          class="c7n-pro-input-number-inner-button"
+        >
+          <div>
+            <i
+              class="icon icon-keyboard_arrow_up c7n-pro-input-number-plus"
+            />
+            <i
+              class="icon icon-keyboard_arrow_down c7n-pro-input-number-minus"
+            />
+          </div>
+        </div>
+      </label>
+    </span>
+  </div>
+  <div
+    class="c7n-col-6"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <span
+      class="c7n-pro-input-number-wrapper c7n-pro-input-number-empty"
+    >
+      <label>
+        <input
+          autocomplete="off"
+          class="c7n-pro-input-number"
+          name="end"
+          placeholder="end"
+          type="text"
+          value=""
+        />
+        <div
+          class="c7n-pro-input-number-inner-button"
+        >
+          <div>
+            <i
+              class="icon icon-keyboard_arrow_up c7n-pro-input-number-plus"
+            />
+            <i
+              class="icon icon-keyboard_arrow_down c7n-pro-input-number-minus"
+            />
+          </div>
+        </div>
+      </label>
+    </span>
+  </div>
+</div>
+`;
+
+exports[`renders ./components-pro/number-field/demo/multiple.md correctly 1`] = `
+<div
+  class="c7n-row"
+  style="margin-left:-5px;margin-right:-5px"
+>
+  <div
+    class="c7n-col-12"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <span
+      class="c7n-pro-input-number-wrapper c7n-pro-input-number-required c7n-pro-input-number-empty c7n-pro-input-number-multiple"
+    >
+      <input
+        class="c7n-pro-input-number-multiple-value"
+        name="size"
+        value=""
+      />
+      <div
+        class="c7n-pro-input-number-placeholder"
+      >
+        数据源多选
+      </div>
+      <label>
+        <div
+          class="c7n-pro-input-number"
+        >
+          <ul>
+            <li>
+              <input
+                autocomplete="off"
+                class="c7n-pro-input-number-multiple-input"
+                name="size"
+                type="text"
+                value=""
+              />
+            </li>
+          </ul>
+        </div>
+        <div
+          class="c7n-pro-input-number-inner-button"
+        >
+          <div>
+            <i
+              class="icon icon-keyboard_arrow_up c7n-pro-input-number-plus"
+            />
+            <i
+              class="icon icon-keyboard_arrow_down c7n-pro-input-number-minus"
+            />
+          </div>
+        </div>
+      </label>
+    </span>
+  </div>
+  <div
+    class="c7n-col-12"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <span
+      class="c7n-pro-input-number-wrapper c7n-pro-input-number-empty c7n-pro-input-number-multiple"
+    >
+      <input
+        class="c7n-pro-input-number-multiple-value"
+        value=""
+      />
+      <div
+        class="c7n-pro-input-number-placeholder"
+      >
+        多选
+      </div>
+      <label>
+        <div
+          class="c7n-pro-input-number"
+        >
+          <ul>
+            <li>
+              <input
+                autocomplete="off"
+                class="c7n-pro-input-number-multiple-input"
+                max="10"
+                min="5"
+                multiple=""
+                step="1"
+                type="text"
+                value=""
+              />
+            </li>
+          </ul>
+        </div>
+        <div
+          class="c7n-pro-input-number-inner-button"
+        >
+          <div>
+            <i
+              class="icon icon-keyboard_arrow_up c7n-pro-input-number-plus"
+            />
+            <i
+              class="icon icon-keyboard_arrow_down c7n-pro-input-number-minus"
+            />
+          </div>
+        </div>
+      </label>
+    </span>
+  </div>
+</div>
+`;
+
+exports[`renders ./components-pro/number-field/demo/range.md correctly 1`] = `
+<div
+  class="c7n-row"
+  style="margin-left:-5px;margin-right:-5px"
+>
+  <div
+    class="c7n-col-24"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <span
+      class="c7n-pro-input-number-wrapper c7n-pro-input-number-required c7n-pro-input-number-range"
+    >
+      <label>
+        <span
+          class="c7n-pro-input-number"
+        >
+          <span
+            class="c7n-pro-input-number-range-text"
+          >
+            <input
+              class="c7n-pro-input-number-range-start"
+              placeholder="Range Start"
+              readonly=""
+              tabindex="-1"
+              value="0"
+            />
+            <span
+              class="c7n-pro-input-number-range-split"
+            >
+              ~
+            </span>
+            <input
+              class="c7n-pro-input-number-range-end"
+              placeholder="Range End"
+              readonly=""
+              tabindex="-1"
+              value="4"
+            />
+            <input
+              autocomplete="off"
+              class="c7n-pro-input-number-range-input"
+              name="number1"
+              placeholder=""
+              style="left:0"
+              type="text"
+              value=""
+            />
+          </span>
+        </span>
+      </label>
+    </span>
+  </div>
+  <div
+    class="c7n-col-24"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <span
+      class="c7n-pro-input-number-wrapper c7n-pro-input-number-range"
+    >
+      <label>
+        <span
+          class="c7n-pro-input-number"
+        >
+          <span
+            class="c7n-pro-input-number-range-text"
+          >
+            <input
+              class="c7n-pro-input-number-range-start"
+              placeholder="Range Start"
+              readonly=""
+              tabindex="-1"
+              value="0"
+            />
+            <span
+              class="c7n-pro-input-number-range-split"
+            >
+              ~
+            </span>
+            <input
+              class="c7n-pro-input-number-range-end"
+              placeholder="Range End"
+              readonly=""
+              tabindex="-1"
+              value="4"
+            />
+            <input
+              autocomplete="off"
+              class="c7n-pro-input-number-range-input"
+              name="number2"
+              placeholder=""
+              style="left:0"
+              type="text"
+              value=""
+            />
+          </span>
+        </span>
+      </label>
+    </span>
+  </div>
+  <div
+    class="c7n-col-24"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <span
+      class="c7n-pro-input-number-wrapper c7n-pro-input-number-range"
+    >
+      <label>
+        <span
+          class="c7n-pro-input-number"
+        >
+          <span
+            class="c7n-pro-input-number-range-text"
+          >
+            <input
+              class="c7n-pro-input-number-range-start"
+              placeholder="Range Start"
+              readonly=""
+              tabindex="-1"
+              value="0"
+            />
+            <span
+              class="c7n-pro-input-number-range-split"
+            >
+              ~
+            </span>
+            <input
+              class="c7n-pro-input-number-range-end"
+              placeholder="Range End"
+              readonly=""
+              tabindex="-1"
+              value="4"
+            />
+            <input
+              autocomplete="off"
+              class="c7n-pro-input-number-range-input"
+              placeholder=""
+              style="left:0"
+              type="text"
+              value=""
+            />
+          </span>
+        </span>
+      </label>
+    </span>
+  </div>
+  <div
+    class="c7n-col-24"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <span
+      class="c7n-pro-input-number-wrapper c7n-pro-input-number-range"
+    >
+      <label>
+        <span
+          class="c7n-pro-input-number"
+        >
+          <span
+            class="c7n-pro-input-number-range-text"
+          >
+            <input
+              class="c7n-pro-input-number-range-start"
+              placeholder="Range Start"
+              readonly=""
+              tabindex="-1"
+              value="0"
+            />
+            <span
+              class="c7n-pro-input-number-range-split"
+            >
+              ~
+            </span>
+            <input
+              class="c7n-pro-input-number-range-end"
+              placeholder="Range End"
+              readonly=""
+              tabindex="-1"
+              value="4"
+            />
+            <input
+              autocomplete="off"
+              class="c7n-pro-input-number-range-input"
+              placeholder=""
+              style="left:0"
+              type="text"
+              value=""
+            />
+          </span>
+        </span>
+      </label>
+    </span>
+  </div>
+  <div
+    class="c7n-col-24"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <span
+      class="c7n-pro-input-number-wrapper c7n-pro-input-number-required c7n-pro-input-number-empty c7n-pro-input-number-multiple c7n-pro-input-number-range"
+    >
+      <input
+        class="c7n-pro-input-number-multiple-value"
+        name="multipleNumber"
+        value=""
+      />
+      <label>
+        <div
+          class="c7n-pro-input-number"
+        >
+          <ul>
+            <span
+              class="c7n-pro-input-number-range-text"
+            >
+              <input
+                class="c7n-pro-input-number-range-start"
+                placeholder="Input Number"
+                readonly=""
+                tabindex="-1"
+                value=""
+              />
+              <span
+                class="c7n-pro-input-number-range-split"
+              >
+                ~
+              </span>
+              <input
+                class="c7n-pro-input-number-range-end"
+                placeholder="Input Number"
+                readonly=""
+                tabindex="-1"
+                value=""
+              />
+              <input
+                autocomplete="off"
+                class="c7n-pro-input-number-range-input"
+                name="multipleNumber"
+                placeholder=""
+                style="left:0"
+                type="text"
+                value=""
+              />
+            </span>
+          </ul>
+        </div>
+      </label>
+    </span>
+  </div>
+</div>
+`;

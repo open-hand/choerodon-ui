@@ -9,11 +9,6 @@ import { disableWrapper } from './utils';
 describe('dateTimes-picker-pro', () => {
   focusTest(DateTimePicker);
 
-  it('renders dateTimesPicker correctly', () => {
-    const wrapper = mount(<DateTimePicker />);
-    expect(wrapper).toMatchSnapshot();
-  });
-
   it('the dateTime will be controlled by the value', () => {
     const wrapper = mount(<DateTimePicker value={moment('2020-02-19')} />);
     expect(

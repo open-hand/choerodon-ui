@@ -9,11 +9,6 @@ describe('years-picker-pro', () => {
   focusTest(YearsPicker);
   triggerPopTest(YearsPicker);
 
-  it('renders YearsPicker correctly', () => {
-    const wrapper = mount(<YearsPicker />);
-    expect(wrapper).toMatchSnapshot();
-  });
-
   it('the year will be controlled by the value', () => {
     const wrapper = mount(<YearsPicker value={moment('2020-02-20')} />);
     expect(
