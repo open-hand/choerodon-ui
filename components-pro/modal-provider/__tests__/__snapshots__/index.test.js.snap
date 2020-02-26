@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ModalProvider renders ModalProvider correctly 1`] = `
+<ModalProvider>
+  <ModalContainer>
+    <Portal
+      containerInfo={
+        <div
+          class="c7n-pro-modal-container"
+        >
+          <div
+            class="c7n-pro-mask c7n-pro-mask-wrapper"
+            hidden=""
+          />
+        </div>
+      }
+    >
+      <Animate
+        animation={Object {}}
+        component=""
+        componentProps={Object {}}
+        hiddenProp="hidden"
+        onEnd={[Function]}
+        transitionAppear={true}
+        transitionEnter={true}
+        transitionLeave={true}
+        transitionName="fade"
+      >
+        <AnimateChild
+          animation={Object {}}
+          key="animate_1582707529919"
+          transitionAppear={true}
+          transitionEnter={true}
+          transitionLeave={true}
+          transitionName="fade"
+        >
+          <Mask
+            hidden={true}
+            key="animate_1582707529919"
+            onClick={[Function]}
+            onMouseDown={[Function]}
+            style={Object {}}
+            suffixCls="mask"
+          >
+            <div
+              className="c7n-pro-mask c7n-pro-mask-wrapper"
+              hidden={true}
+              onBlur={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onMouseDown={[Function]}
+              style={Object {}}
+            />
+          </Mask>
+        </AnimateChild>
+      </Animate>
+    </Portal>
+  </ModalContainer>
+</ModalProvider>
+`;
