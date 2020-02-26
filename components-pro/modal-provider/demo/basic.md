@@ -14,15 +14,14 @@ title:
 Basic usage example.
 
 ```jsx
-import { createContext, useContext, useCallback } from 'react';
 import { ModalProvider, Modal, Button } from 'choerodon-ui/pro';
 
-const Context = createContext('');
+const Context = React.createContext('');
 
 const { injectModal, useModal } = ModalProvider;
 
 const ModalContent = () => {
-  const context = useContext(Context);
+  const context = React.useContext(Context);
   return context ? `Modal with context<${context}>` : 'Modal without context';
 };
 
@@ -36,7 +35,7 @@ const openModal = (modal, title, context) => {
 
 const InnerModal = () => {
   const modal = useModal();
-  const handleClick = useCallback(() => openModal(modal, 'Inner'), []);
+  const handleClick = React.useCallback(() => openModal(modal, 'Inner'), []);
   return <Button onClick={handleClick}>Open inner modal</Button>;
 };
 
@@ -49,14 +48,14 @@ class OuterModal extends React.Component {
 
   render() {
     return (
-      <>
+      <React.Fragment>
         <Button onClick={this.handleClick}>Open outer modal</Button>
         <Context.Provider value="provider">
           <ModalProvider>
             <InnerModal />
           </ModalProvider>
         </Context.Provider>
-      </>
+      </React.Fragment>
     );
   }
 }
