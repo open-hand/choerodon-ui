@@ -346,3 +346,491 @@ exports[`TextArea-pro renders TextArea-pro correctly 1`] = `
   </Tooltip>
 </TextArea>
 `;
+
+exports[`TextArea-pro the dataSet should renders correctly 1`] = `
+<TextAreaTest>
+  <TextArea
+    autoComplete="off"
+    clearButton={false}
+    dataSet={
+      DataSet {
+        "cachedSelected": Array [],
+        "children": Object {},
+        "currentPage": 1,
+        "dataToJSON": "dirty",
+        "el": undefined,
+        "events": Object {
+          "indexchange": Array [
+            Array [
+              [Function],
+              false,
+            ],
+          ],
+          "update": Array [
+            Array [
+              [Function],
+              false,
+            ],
+          ],
+        },
+        "fields": Object {
+          "content": Field {
+            "dataSet": [Circular],
+            "isDynamicPropsComputing": false,
+            "lastDynamicProps": Object {},
+            "pending": PromiseQueue {
+              "queue": Array [],
+              "queueing": false,
+            },
+            "pristineProps": Object {
+              "defaultValue": "textarea",
+              "name": "content",
+              "required": true,
+              "type": "string",
+            },
+            "props": Object {
+              "defaultValue": "textarea",
+              "name": "content",
+              "required": true,
+              "type": "string",
+            },
+            "record": undefined,
+            "validator": Validator {
+              "control": undefined,
+              "field": [Circular],
+              "innerValidationResults": Array [],
+            },
+          },
+        },
+        "inBatchSelection": false,
+        "name": undefined,
+        "originalData": Array [],
+        "pageSize": 10,
+        "parent": undefined,
+        "parentName": undefined,
+        "pending": PromiseQueue {
+          "queue": Array [],
+          "queueing": false,
+        },
+        "props": Object {
+          "autoCreate": true,
+          "autoLocateAfterCreate": true,
+          "autoLocateAfterRemove": true,
+          "autoLocateFirst": true,
+          "autoQuery": false,
+          "autoQueryAfterSubmit": true,
+          "dataToJSON": "dirty",
+          "events": Object {
+            "update": [Function],
+          },
+          "fields": Array [
+            Object {
+              "defaultValue": "textarea",
+              "name": "content",
+              "required": true,
+              "type": "string",
+            },
+          ],
+          "modifiedCheck": true,
+          "pageSize": 10,
+          "paging": true,
+          "selection": "multiple",
+        },
+        "queryParameter": Object {},
+        "records": Array [
+          Record {
+            "cascadeRecordsMap": Object {},
+            "data": Object {
+              "content": "textarea",
+            },
+            "dataSet": [Circular],
+            "dataSetSnapshot": Object {},
+            "editing": undefined,
+            "fields": Object {
+              "content": Field {
+                "dataSet": [Circular],
+                "isDynamicPropsComputing": false,
+                "lastDynamicProps": Object {},
+                "pending": PromiseQueue {
+                  "queue": Array [],
+                  "queueing": false,
+                },
+                "pristineProps": Object {
+                  "name": "content",
+                },
+                "props": Object {
+                  "name": "content",
+                },
+                "record": [Circular],
+                "validator": Validator {
+                  "control": undefined,
+                  "field": [Circular],
+                  "innerValidationResults": Array [],
+                },
+              },
+            },
+            "id": 1001,
+            "isCached": false,
+            "isCurrent": true,
+            "isSelected": false,
+            "pristineData": Object {
+              "content": "textarea",
+            },
+            "selectable": true,
+            "state": Object {},
+            "status": "add",
+          },
+        ],
+        "resetInBatch": false,
+        "selection": "multiple",
+        "status": "ready",
+        "syncChildrenRemote": [Function],
+        "totalCount": 0,
+      }
+    }
+    multiple={false}
+    name="content"
+    noValidate={false}
+    readOnly={false}
+    resize="both"
+    rows={4}
+    showHelp="newLine"
+    suffixCls="textarea"
+    trim="both"
+  >
+    <Tooltip
+      arrowPointAtCenter={false}
+      autoAdjustOverflow={true}
+      defaultHidden={true}
+      mouseEnterDelay={100}
+      mouseLeaveDelay={100}
+      placement="bottomLeft"
+      suffixCls="tooltip"
+      theme="light"
+      title={null}
+      transitionName="zoom-big-fast"
+      trigger={
+        Array [
+          "hover",
+        ]
+      }
+    >
+      <Trigger
+        action={
+          Array [
+            "hover",
+          ]
+        }
+        arrowPointAtCenter={false}
+        autoAdjustOverflow={true}
+        blurDelay={0}
+        builtinPlacements={
+          Object {
+            "bottom": Object {
+              "offset": Array [
+                0,
+                10,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "tc",
+                "bc",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+            "bottomLeft": Object {
+              "offset": Array [
+                0,
+                10,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "tl",
+                "bl",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+            "bottomRight": Object {
+              "offset": Array [
+                0,
+                10,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "tr",
+                "br",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+            "left": Object {
+              "offset": Array [
+                -10,
+                0,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "cr",
+                "cl",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+            "leftBottom": Object {
+              "offset": Array [
+                -10,
+                0,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "br",
+                "bl",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+            "leftTop": Object {
+              "offset": Array [
+                -10,
+                0,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "tr",
+                "tl",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+            "right": Object {
+              "offset": Array [
+                10,
+                0,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "cl",
+                "cr",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+            "rightBottom": Object {
+              "offset": Array [
+                10,
+                0,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "bl",
+                "br",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+            "rightTop": Object {
+              "offset": Array [
+                10,
+                0,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "tl",
+                "tr",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+            "top": Object {
+              "offset": Array [
+                0,
+                -10,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "bc",
+                "tc",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+            "topLeft": Object {
+              "offset": Array [
+                0,
+                -10,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "bl",
+                "tl",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+            "topRight": Object {
+              "offset": Array [
+                0,
+                -10,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "br",
+                "tr",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+          }
+        }
+        defaultPopupHidden={true}
+        focusDelay={150}
+        mouseEnterDelay={100}
+        mouseLeaveDelay={100}
+        popupContent={null}
+        popupPlacement="bottomLeft"
+        prefixCls="c7n-pro-tooltip"
+        suffixCls="tooltip"
+        theme="light"
+        title={null}
+        transitionName="zoom-big-fast"
+      >
+        <TriggerChild
+          key=".$.$wrapper"
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <div
+            className="c7n-pro-textarea-wrapper c7n-pro-textarea-required"
+            key=".$wrapper"
+            onBlur={[Function]}
+            onClick={[Function]}
+            onContextMenu={[Function]}
+            onFocus={[Function]}
+            onMouseDown={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+          >
+            <label>
+              <textarea
+                autoComplete="off"
+                className="c7n-pro-textarea"
+                multiple={false}
+                name="content"
+                noValidate={false}
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                readOnly={false}
+                rows={4}
+                style={
+                  Object {
+                    "resize": "both",
+                    "transition": "none",
+                  }
+                }
+                type="text"
+                value="textarea"
+              />
+            </label>
+          </div>
+        </TriggerChild>
+        <Popup
+          align={
+            Object {
+              "offset": Array [
+                0,
+                10,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "tl",
+                "bl",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            }
+          }
+          className="c7n-pro-tooltip-popup"
+          getClassNameFromAlign={[Function]}
+          getRootDomNode={[Function]}
+          hidden={true}
+          key="popup"
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          suffixCls="popup"
+          transitionName="zoom-big-fast"
+        />
+      </Trigger>
+    </Tooltip>
+  </TextArea>
+</TextAreaTest>
+`;

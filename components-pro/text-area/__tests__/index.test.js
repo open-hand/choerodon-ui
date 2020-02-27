@@ -1,6 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import TextArea from '..';
+import TextAreaTest from './textAreaTest';
 
 describe('TextArea-pro', () => {
   beforeEach(() => {
@@ -61,5 +62,11 @@ describe('TextArea-pro', () => {
         .at(0)
         .prop('value'),
     ).toBe('text-area');
+  });
+
+  it('the dataSet should renders correctly', () => {
+    const wrapper = mount(<TextAreaTest />);
+    expect(wrapper.find('TextArea').props().name).toEqual('content');
+    expect(wrapper).toMatchSnapshot();
   });
 });

@@ -26,7 +26,7 @@ describe('IntlField-pro', () => {
     expect(wrapper.find('.c7n-pro-input-focused')).toHaveLength(1);
   });
 
-  it('should33 focused when the input click or mousedown', () => {
+  it('can set the default value', () => {
     const wrapper = mount(<IntlField value="周" />);
     expect(
       wrapper

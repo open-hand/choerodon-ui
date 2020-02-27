@@ -1,22 +1,9 @@
----
-order: 2
-title:
-  zh-CN: 数据绑定
-  en-US: Dataset
----
-
-## zh-CN
-
-数据绑定
-
-## en-US
-
-Dataset.
-
-```jsx
-import { TextArea, DataSet } from 'choerodon-ui/pro';
+import React from 'react';
+import TextArea from '..';
+import DataSet from '../../data-set';
 
 function handleDataSetChange({ record, name, value, oldValue }) {
+  // eslint-disable-next-line no-console
   console.log(
     '[dataset newValue]',
     value,
@@ -27,7 +14,7 @@ function handleDataSetChange({ record, name, value, oldValue }) {
   );
 }
 
-class App extends React.Component {
+class TextAreaTest extends React.Component {
   ds = new DataSet({
     autoCreate: true,
     fields: [
@@ -48,5 +35,4 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App />, mountNode);
-```
+export default TextAreaTest;
