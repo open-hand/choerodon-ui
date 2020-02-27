@@ -1,27 +1,14 @@
----
-order: 0
-title:
-  zh-CN: 基本使用
-  en-US: Basic usage
----
+import React, { createContext, useContext, useCallback } from 'react';
+import ModalProvider from '..';
+import Modal from '../../modal';
+import Button from '../../button';
 
-## zh-CN
-
-基本使用。
-
-## en-US
-
-Basic usage example.
-
-```jsx
-import { ModalProvider, Modal, Button } from 'choerodon-ui/pro';
-
-const Context = React.createContext('');
+const Context = createContext('');
 
 const { injectModal, useModal } = ModalProvider;
 
 const ModalContent = () => {
-  const context = React.useContext(Context);
+  const context = useContext(Context);
   return context ? `Modal with context<${context}>` : 'Modal without context';
 };
 
@@ -35,12 +22,12 @@ const openModal = (modal, title, context) => {
 
 const InnerModal = () => {
   const modal = useModal();
-  const handleClick = React.useCallback(() => openModal(modal, 'Inner'), []);
+  const handleClick = useCallback(() => openModal(modal, 'Inner'), []);
   return <Button onClick={handleClick}>Open inner modal</Button>;
 };
 
 @injectModal
-class App extends React.Component {
+class ModalProviderTest extends React.Component {
   handleClick = () => {
     const { Modal: modal } = this.props;
     openModal(modal, 'Outer');
@@ -60,5 +47,4 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App />, mountNode);
-```
+export default ModalProviderTest;
