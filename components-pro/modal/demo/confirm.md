@@ -56,6 +56,8 @@ ReactDOM.render(
     <Button onClick={info}>Info</Button>
     <Button onClick={success}>Success</Button>
     <Button onClick={error}>Error</Button>
+    <br />
+    <br />
     <Button onClick={warning}>Warning</Button>
   </div>,
   mountNode,
