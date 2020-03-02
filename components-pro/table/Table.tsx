@@ -349,7 +349,6 @@ export default class Table extends DataSetComponent<TableProps> {
     filterBarFieldName: PropTypes.string,
     filterBarPlaceholder: PropTypes.string,
     highLightRow: PropTypes.bool,
-    loading: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
     ...DataSetComponent.propTypes,
   };
 
@@ -362,7 +361,6 @@ export default class Table extends DataSetComponent<TableProps> {
     expandRowByClick: false,
     indentSize: 15,
     filterBarFieldName: 'params',
-    loading: false,
   };
 
   tableStore: TableStore = new TableStore(this);
