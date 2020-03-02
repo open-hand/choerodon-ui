@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 💄 `<pro>DataSet`: 优化 ready 方法的性能。
+- 🐞 `<pro>DataSet`: 修复校验未应用 dataToJSON 配置。
 - 🐞 修复全量依赖样式时基础组件和 pro 组件存在同名预变量冲突的问题。
 - 🐞 `<pro>Lov`: 修复通过 dynamicProps 获得 lovCode 时，lov 配置中的 valueField 和 textField 无效的问题。
 - 🐞 `<pro>Select`: 修复 lovCode 字段类型为 string 时无选项的问题。

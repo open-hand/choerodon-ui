@@ -41,6 +41,7 @@ import {
   prepareSubmitData,
   processIntlField,
   sortTree,
+  useCascade,
   useSelected,
 } from './utils';
 import EventManager from '../_util/EventManager';
@@ -1464,8 +1465,12 @@ export default class DataSet extends EventManager {
     if (dataToJSON) {
       this.dataToJSON = dataToJSON;
     }
+    const cascade =
+      noCascade === undefined && this.dataToJSON ? useCascade(this.dataToJSON) : !noCascade;
     return Promise.all(
-      (useSelected(this.dataToJSON) ? this.selected : this.data).map(record => record.validate()),
+      (useSelected(this.dataToJSON) ? this.selected : this.data).map(record =>
+        record.validate(false, !cascade),
+      ),
     ).then(results => results.every(result => result));
   }
 
