@@ -512,7 +512,7 @@ dynamicProps = {
     if (propsName === 'lookupUrl') {
       return getConfig(propsName);
     }
-    if (dsField) {
+    if (this.record) {
       return Field.defaultProps[propsName];
     }
   }
