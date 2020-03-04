@@ -32,7 +32,7 @@ ReactDOM.render(
       </SelectBox>
     </Col>
     <Col span={12}>
-      <SelectBox mode="button" value="jack" disabled multiple onChange={handleChange}>
+      <SelectBox mode="button" multiple onChange={handleChange}>
         <Option value="jack">Jack</Option>
         <Option value="lucy">Lucy</Option>
         <Option value="wu">Wu</Option>
