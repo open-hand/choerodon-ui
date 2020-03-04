@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Radio-pro should render correctly 1`] = `
+<label
+  class="c7n-pro-radio-wrapper"
+>
+  <input
+    class="c7n-pro-radio"
+    type="radio"
+    value="on"
+  />
+  <span
+    class="c7n-pro-radio-inner"
+  />
+  <span
+    class="c7n-pro-radio-label"
+  >
+    Test
+  </span>
+</label>
+`;

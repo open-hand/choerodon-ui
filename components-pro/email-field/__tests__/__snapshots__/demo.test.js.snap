@@ -1,0 +1,1414 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders ./components-pro/select/demo/basic.md correctly 1`] = `
+<div
+  class="c7n-row"
+  style="margin-left:-5px;margin-right:-5px"
+>
+  <div
+    class="c7n-col-8"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <span
+      class="c7n-pro-select-wrapper c7n-pro-select-empty c7n-pro-select-suffix-button c7n-pro-select-not-editable"
+    >
+      <input
+        type="hidden"
+        value=""
+      />
+      <label>
+        <input
+          autocomplete="off"
+          class="c7n-pro-select"
+          placeholder="请选择"
+          readonly=""
+          type="text"
+          value=""
+        />
+        <div
+          class="c7n-pro-select-inner-button c7n-pro-select-clear-button"
+        >
+          <i
+            class="icon icon-close"
+          />
+        </div>
+        <div
+          class="c7n-pro-select-suffix"
+        >
+          <i
+            class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+          />
+        </div>
+      </label>
+    </span>
+  </div>
+  <div
+    class="c7n-col-4"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <button
+      class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+      type="button"
+    >
+      <span>
+        修改选项
+      </span>
+      <div
+        class="c7n-ripple-wrapper"
+      />
+    </button>
+  </div>
+  <div
+    class="c7n-col-12"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <span
+      class="c7n-pro-select-wrapper c7n-pro-select-disabled c7n-pro-select-empty c7n-pro-select-suffix-button"
+    >
+      <input
+        type="hidden"
+        value=""
+      />
+      <label>
+        <input
+          autocomplete="off"
+          class="c7n-pro-select"
+          disabled=""
+          placeholder="请选择"
+          readonly=""
+          type="text"
+          value=""
+        />
+        <div
+          class="c7n-pro-select-suffix"
+        >
+          <i
+            class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+          />
+        </div>
+      </label>
+    </span>
+  </div>
+</div>
+`;
+
+exports[`renders ./components-pro/select/demo/cascade.md correctly 1`] = `
+<div
+  class="c7n-row"
+  style="margin-left:-5px;margin-right:-5px"
+>
+  <div
+    class="c7n-col-12"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <span
+      class="c7n-pro-select-wrapper c7n-pro-select-suffix-button c7n-pro-select-not-editable"
+    >
+      <input
+        name="sheng"
+        type="hidden"
+        value="10206"
+      />
+      <label>
+        <input
+          autocomplete="off"
+          class="c7n-pro-select"
+          readonly=""
+          type="text"
+          value="10206"
+        />
+        <div
+          class="c7n-pro-select-inner-button c7n-pro-select-clear-button"
+        >
+          <i
+            class="icon icon-close"
+          />
+        </div>
+        <div
+          class="c7n-pro-select-suffix"
+        >
+          <i
+            class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+          />
+        </div>
+      </label>
+    </span>
+  </div>
+  <div
+    class="c7n-col-12"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <span
+      class="c7n-pro-select-wrapper c7n-pro-select-empty c7n-pro-select-suffix-button c7n-pro-select-not-editable"
+    >
+      <input
+        name="shi"
+        type="hidden"
+        value=""
+      />
+      <label>
+        <input
+          autocomplete="off"
+          class="c7n-pro-select"
+          readonly=""
+          type="text"
+          value=""
+        />
+        <div
+          class="c7n-pro-select-inner-button c7n-pro-select-clear-button"
+        >
+          <i
+            class="icon icon-close"
+          />
+        </div>
+        <div
+          class="c7n-pro-select-suffix"
+        >
+          <i
+            class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+          />
+        </div>
+      </label>
+    </span>
+  </div>
+</div>
+`;
+
+exports[`renders ./components-pro/select/demo/combo.md correctly 1`] = `
+<div
+  class="c7n-row"
+  style="margin-left:-5px;margin-right:-5px"
+>
+  <div
+    class="c7n-col-12"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <span
+      class="c7n-pro-select-wrapper c7n-pro-select-suffix-button"
+    >
+      <input
+        type="hidden"
+        value="fox"
+      />
+      <label>
+        <input
+          autocomplete="off"
+          class="c7n-pro-select"
+          placeholder="复合"
+          type="text"
+          value="fox"
+        />
+        <div
+          class="c7n-pro-select-inner-button c7n-pro-select-clear-button"
+        >
+          <i
+            class="icon icon-close"
+          />
+        </div>
+        <div
+          class="c7n-pro-select-suffix"
+        >
+          <i
+            class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+          />
+        </div>
+      </label>
+    </span>
+  </div>
+  <div
+    class="c7n-col-12"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <span
+      class="c7n-pro-select-wrapper c7n-pro-select-suffix-button"
+    >
+      <input
+        name="name"
+        type="hidden"
+        value="fox2"
+      />
+      <label>
+        <input
+          autocomplete="off"
+          class="c7n-pro-select"
+          placeholder="复合+可搜索"
+          type="text"
+          value="fox2"
+        />
+        <div
+          class="c7n-pro-select-inner-button c7n-pro-select-clear-button"
+        >
+          <i
+            class="icon icon-close"
+          />
+        </div>
+        <div
+          class="c7n-pro-select-suffix"
+        >
+          <i
+            class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+          />
+        </div>
+      </label>
+    </span>
+  </div>
+</div>
+`;
+
+exports[`renders ./components-pro/select/demo/controlled.md correctly 1`] = `
+<span
+  class="c7n-pro-select-wrapper c7n-pro-select-suffix-button c7n-pro-select-not-editable"
+>
+  <input
+    name="last-name"
+    type="hidden"
+    value="wu"
+  />
+  <label>
+    <input
+      autocomplete="off"
+      class="c7n-pro-select"
+      placeholder="请选择"
+      readonly=""
+      type="text"
+      value="Wu"
+    />
+    <div
+      class="c7n-pro-select-inner-button c7n-pro-select-clear-button"
+    >
+      <i
+        class="icon icon-close"
+      />
+    </div>
+    <div
+      class="c7n-pro-select-suffix"
+    >
+      <i
+        class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+      />
+    </div>
+  </label>
+</span>
+`;
+
+exports[`renders ./components-pro/select/demo/dataset.md correctly 1`] = `
+<span
+  class="c7n-pro-select-wrapper c7n-pro-select-suffix-button c7n-pro-select-not-editable"
+>
+  <input
+    name="user"
+    type="hidden"
+    value="wu"
+  />
+  <label>
+    <input
+      autocomplete="off"
+      class="c7n-pro-select"
+      readonly=""
+      type="text"
+      value="Wu"
+    />
+    <div
+      class="c7n-pro-select-inner-button c7n-pro-select-clear-button"
+    >
+      <i
+        class="icon icon-close"
+      />
+    </div>
+    <div
+      class="c7n-pro-select-suffix"
+    >
+      <i
+        class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+      />
+    </div>
+  </label>
+</span>
+`;
+
+exports[`renders ./components-pro/select/demo/dataset-options.md correctly 1`] = `
+<div
+  class="c7n-row"
+  style="margin-left:-5px;margin-right:-5px"
+>
+  <div
+    class="c7n-col-8"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <span
+      class="c7n-pro-select-wrapper c7n-pro-select-empty c7n-pro-select-suffix-button c7n-pro-select-multiple c7n-pro-select-not-editable"
+    >
+      <input
+        class="c7n-pro-select-multiple-value"
+        name="user"
+        value=""
+      />
+      <label>
+        <div
+          class="c7n-pro-select"
+        >
+          <ul>
+            <li>
+              <input
+                autocomplete="off"
+                class="c7n-pro-select-multiple-input"
+                readonly=""
+                style="position:absolute;left:0;top:0;z-index:-1"
+                type="text"
+                value=""
+              />
+            </li>
+          </ul>
+        </div>
+        <div
+          class="c7n-pro-select-inner-button c7n-pro-select-clear-button"
+        >
+          <i
+            class="icon icon-close"
+          />
+        </div>
+        <div
+          class="c7n-pro-select-suffix"
+        >
+          <i
+            class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+          />
+        </div>
+      </label>
+    </span>
+  </div>
+  <div
+    class="c7n-col-8"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <span
+      class="c7n-pro-select-wrapper c7n-pro-select-empty c7n-pro-select-suffix-button c7n-pro-select-multiple c7n-pro-select-not-editable"
+    >
+      <input
+        class="c7n-pro-select-multiple-value"
+        name="account"
+        value=""
+      />
+      <label>
+        <div
+          class="c7n-pro-select"
+        >
+          <ul>
+            <li>
+              <input
+                autocomplete="off"
+                class="c7n-pro-select-multiple-input"
+                readonly=""
+                style="position:absolute;left:0;top:0;z-index:-1"
+                type="text"
+                value=""
+              />
+            </li>
+          </ul>
+        </div>
+        <div
+          class="c7n-pro-select-inner-button c7n-pro-select-clear-button"
+        >
+          <i
+            class="icon icon-close"
+          />
+        </div>
+        <div
+          class="c7n-pro-select-suffix"
+        >
+          <i
+            class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+          />
+        </div>
+      </label>
+    </span>
+  </div>
+  <div
+    class="c7n-col-8"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <button
+      class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+      type="button"
+    >
+      <span>
+        切换选项
+      </span>
+      <div
+        class="c7n-ripple-wrapper"
+      />
+    </button>
+  </div>
+</div>
+`;
+
+exports[`renders ./components-pro/select/demo/filter.md correctly 1`] = `
+<div>
+  <span
+    class="c7n-pro-select-wrapper c7n-pro-select-suffix-button c7n-pro-select-not-editable"
+  >
+    <input
+      name="last-name"
+      type="hidden"
+      value="huazhen"
+    />
+    <label>
+      <input
+        autocomplete="off"
+        class="c7n-pro-select"
+        readonly=""
+        type="text"
+        value="Huazhen"
+      />
+      <div
+        class="c7n-pro-select-inner-button c7n-pro-select-clear-button"
+      >
+        <i
+          class="icon icon-close"
+        />
+      </div>
+      <div
+        class="c7n-pro-select-suffix"
+      >
+        <i
+          class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+        />
+      </div>
+    </label>
+  </span>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+    type="button"
+  >
+    <span>
+      切换过滤条件
+    </span>
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+</div>
+`;
+
+exports[`renders ./components-pro/select/demo/group.md correctly 1`] = `
+<span
+  class="c7n-pro-select-wrapper c7n-pro-select-empty c7n-pro-select-suffix-button c7n-pro-select-not-editable"
+>
+  <input
+    type="hidden"
+    value=""
+  />
+  <label>
+    <input
+      autocomplete="off"
+      class="c7n-pro-select"
+      readonly=""
+      type="text"
+      value=""
+    />
+    <div
+      class="c7n-pro-select-inner-button c7n-pro-select-clear-button"
+    >
+      <i
+        class="icon icon-close"
+      />
+    </div>
+    <div
+      class="c7n-pro-select-suffix"
+    >
+      <i
+        class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+      />
+    </div>
+  </label>
+</span>
+`;
+
+exports[`renders ./components-pro/select/demo/lookupCode.md correctly 1`] = `
+<div
+  class="c7n-row"
+  style="margin-left:-5px;margin-right:-5px"
+>
+  <div
+    class="c7n-col-6"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <span
+      class="c7n-pro-select-wrapper c7n-pro-select-empty c7n-pro-select-suffix-button c7n-pro-select-not-editable"
+    >
+      <input
+        name="sex"
+        type="hidden"
+        value=""
+      />
+      <label>
+        <input
+          autocomplete="off"
+          class="c7n-pro-select"
+          placeholder="请选择"
+          readonly=""
+          type="text"
+          value=""
+        />
+        <div
+          class="c7n-pro-select-inner-button c7n-pro-select-clear-button"
+        >
+          <i
+            class="icon icon-close"
+          />
+        </div>
+        <div
+          class="c7n-pro-select-suffix"
+        >
+          <i
+            class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+          />
+        </div>
+      </label>
+    </span>
+  </div>
+  <div
+    class="c7n-col-6"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <button
+      class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+      type="button"
+    >
+      <span>
+        修改lookupCode
+      </span>
+      <div
+        class="c7n-ripple-wrapper"
+      />
+    </button>
+  </div>
+  <div
+    class="c7n-col-12"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <span
+      class="c7n-pro-select-wrapper c7n-pro-select-empty c7n-pro-select-suffix-button c7n-pro-select-not-editable"
+    >
+      <input
+        name="sex2"
+        type="hidden"
+        value=""
+      />
+      <label>
+        <input
+          autocomplete="off"
+          class="c7n-pro-select"
+          placeholder="请选择"
+          readonly=""
+          type="text"
+          value=""
+        />
+        <div
+          class="c7n-pro-select-inner-button c7n-pro-select-clear-button"
+        >
+          <i
+            class="icon icon-close"
+          />
+        </div>
+        <div
+          class="c7n-pro-select-suffix"
+        >
+          <i
+            class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+          />
+        </div>
+      </label>
+    </span>
+  </div>
+  <div
+    class="c7n-col-12"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <span
+      class="c7n-pro-select-wrapper c7n-pro-select-suffix-button c7n-pro-select-not-editable"
+    >
+      <input
+        name="lov"
+        type="hidden"
+        value="SYS.PROFILE_LEVEL_ID"
+      />
+      <label>
+        <input
+          autocomplete="off"
+          class="c7n-pro-select"
+          placeholder="请选择"
+          readonly=""
+          type="text"
+          value="SYS.PROFILE_LEVEL_ID"
+        />
+        <div
+          class="c7n-pro-select-inner-button c7n-pro-select-clear-button"
+        >
+          <i
+            class="icon icon-close"
+          />
+        </div>
+        <div
+          class="c7n-pro-select-suffix"
+        >
+          <i
+            class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+          />
+        </div>
+      </label>
+    </span>
+  </div>
+  <div
+    class="c7n-col-12"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <span
+      class="c7n-pro-select-wrapper c7n-pro-select-suffix-button c7n-pro-select-multiple c7n-pro-select-not-editable"
+    >
+      <input
+        class="c7n-pro-select-multiple-value"
+        name="lov2"
+        value="SYS.PROFILE_LEVEL_ID,SYS.RESOURCE_TYPE"
+      />
+      <div
+        class="c7n-pro-select-placeholder"
+      >
+        请选择
+      </div>
+      <label>
+        <div
+          class="c7n-pro-select"
+        >
+          <ul>
+            <li
+              class="c7n-pro-select-multiple-block"
+            >
+              <div>
+                SYS.PROFILE_LEVEL_ID
+              </div>
+              <i
+                class="icon icon-cancel"
+                tabindex="-1"
+              />
+            </li>
+            <li
+              class="c7n-pro-select-multiple-block"
+            >
+              <div>
+                SYS.RESOURCE_TYPE
+              </div>
+              <i
+                class="icon icon-cancel"
+                tabindex="-1"
+              />
+            </li>
+            <li>
+              <input
+                autocomplete="off"
+                class="c7n-pro-select-multiple-input"
+                readonly=""
+                style="position:absolute;left:0;top:0;z-index:-1"
+                type="text"
+                value=""
+              />
+            </li>
+          </ul>
+        </div>
+        <div
+          class="c7n-pro-select-inner-button c7n-pro-select-clear-button"
+        >
+          <i
+            class="icon icon-close"
+          />
+        </div>
+        <div
+          class="c7n-pro-select-suffix"
+        >
+          <i
+            class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+          />
+        </div>
+      </label>
+    </span>
+  </div>
+</div>
+`;
+
+exports[`renders ./components-pro/select/demo/multiple.md correctly 1`] = `
+<div
+  class="c7n-row"
+  style="margin-left:-5px;margin-right:-5px"
+>
+  <div
+    class="c7n-col-24"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <span
+      class="c7n-pro-select-wrapper c7n-pro-select-suffix-button c7n-pro-select-multiple c7n-pro-select-not-editable"
+    >
+      <input
+        class="c7n-pro-select-multiple-value"
+        name="user"
+        value="wu"
+      />
+      <div
+        class="c7n-pro-select-placeholder"
+      >
+        数据源多选
+      </div>
+      <label>
+        <div
+          class="c7n-pro-select"
+        >
+          <ul>
+            <li
+              class="c7n-pro-select-multiple-block"
+            >
+              <div>
+                Wu
+              </div>
+              <i
+                class="icon icon-cancel"
+                tabindex="-1"
+              />
+            </li>
+            <li>
+              <input
+                autocomplete="off"
+                class="c7n-pro-select-multiple-input"
+                readonly=""
+                style="position:absolute;left:0;top:0;z-index:-1"
+                type="text"
+                value=""
+              />
+            </li>
+          </ul>
+        </div>
+        <div
+          class="c7n-pro-select-inner-button c7n-pro-select-clear-button"
+        >
+          <i
+            class="icon icon-close"
+          />
+        </div>
+        <div
+          class="c7n-pro-select-suffix"
+        >
+          <i
+            class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+          />
+        </div>
+      </label>
+    </span>
+  </div>
+  <div
+    class="c7n-col-12"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <span
+      class="c7n-pro-select-wrapper c7n-pro-select-suffix-button c7n-pro-select-multiple c7n-pro-select-not-editable"
+    >
+      <input
+        class="c7n-pro-select-multiple-value"
+        value="jack,wu"
+      />
+      <div
+        class="c7n-pro-select-placeholder"
+      >
+        多选
+      </div>
+      <label>
+        <div
+          class="c7n-pro-select"
+        >
+          <ul>
+            <li
+              class="c7n-pro-select-multiple-block"
+            >
+              <div>
+                Jack
+              </div>
+              <i
+                class="icon icon-cancel"
+                tabindex="-1"
+              />
+            </li>
+            <li
+              class="c7n-pro-select-multiple-block"
+            >
+              <div>
+                Wu
+              </div>
+              <i
+                class="icon icon-cancel"
+                tabindex="-1"
+              />
+            </li>
+            <li>
+              <input
+                autocomplete="off"
+                class="c7n-pro-select-multiple-input"
+                readonly=""
+                style="position:absolute;left:0;top:0;z-index:-1"
+                type="text"
+                value=""
+              />
+            </li>
+          </ul>
+        </div>
+        <div
+          class="c7n-pro-select-inner-button c7n-pro-select-clear-button"
+        >
+          <i
+            class="icon icon-close"
+          />
+        </div>
+        <div
+          class="c7n-pro-select-suffix"
+        >
+          <i
+            class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+          />
+        </div>
+      </label>
+    </span>
+  </div>
+  <div
+    class="c7n-col-12"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <span
+      class="c7n-pro-select-wrapper c7n-pro-select-empty c7n-pro-select-suffix-button c7n-pro-select-multiple"
+    >
+      <input
+        class="c7n-pro-select-multiple-value"
+        value=""
+      />
+      <div
+        class="c7n-pro-select-placeholder"
+      >
+        多选+搜索
+      </div>
+      <label>
+        <div
+          class="c7n-pro-select"
+        >
+          <ul
+            style="height:0.28rem"
+          >
+            <li>
+              <input
+                autocomplete="off"
+                class="c7n-pro-select-multiple-input"
+                type="text"
+                value=""
+              />
+            </li>
+          </ul>
+        </div>
+        <div
+          class="c7n-pro-select-inner-button c7n-pro-select-clear-button"
+        >
+          <i
+            class="icon icon-close"
+          />
+        </div>
+        <div
+          class="c7n-pro-select-suffix"
+        >
+          <i
+            class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+          />
+        </div>
+      </label>
+    </span>
+  </div>
+  <div
+    class="c7n-col-12"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <span
+      class="c7n-pro-select-wrapper c7n-pro-select-empty c7n-pro-select-suffix-button c7n-pro-select-multiple"
+    >
+      <input
+        class="c7n-pro-select-multiple-value"
+        value=""
+      />
+      <div
+        class="c7n-pro-select-placeholder"
+      >
+        多选+复合
+      </div>
+      <label>
+        <div
+          class="c7n-pro-select"
+        >
+          <ul>
+            <li>
+              <input
+                autocomplete="off"
+                class="c7n-pro-select-multiple-input"
+                type="text"
+                value=""
+              />
+            </li>
+          </ul>
+        </div>
+        <div
+          class="c7n-pro-select-inner-button c7n-pro-select-clear-button"
+        >
+          <i
+            class="icon icon-close"
+          />
+        </div>
+        <div
+          class="c7n-pro-select-suffix"
+        >
+          <i
+            class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+          />
+        </div>
+      </label>
+    </span>
+  </div>
+  <div
+    class="c7n-col-12"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <span
+      class="c7n-pro-select-wrapper c7n-pro-select-empty c7n-pro-select-suffix-button c7n-pro-select-multiple"
+    >
+      <input
+        class="c7n-pro-select-multiple-value"
+        value=""
+      />
+      <div
+        class="c7n-pro-select-placeholder"
+      >
+        多选+复合+过滤
+      </div>
+      <label>
+        <div
+          class="c7n-pro-select"
+        >
+          <ul>
+            <li>
+              <input
+                autocomplete="off"
+                class="c7n-pro-select-multiple-input"
+                type="text"
+                value=""
+              />
+            </li>
+          </ul>
+        </div>
+        <div
+          class="c7n-pro-select-inner-button c7n-pro-select-clear-button"
+        >
+          <i
+            class="icon icon-close"
+          />
+        </div>
+        <div
+          class="c7n-pro-select-suffix"
+        >
+          <i
+            class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+          />
+        </div>
+      </label>
+    </span>
+  </div>
+  <div
+    class="c7n-col-12"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <span
+      class="c7n-pro-select-wrapper c7n-pro-select-disabled c7n-pro-select-suffix-button c7n-pro-select-multiple"
+    >
+      <input
+        class="c7n-pro-select-multiple-value"
+        value="jack,wu"
+      />
+      <div
+        class="c7n-pro-select-placeholder"
+      >
+        多选+禁用
+      </div>
+      <label>
+        <div
+          class="c7n-pro-select"
+        >
+          <ul>
+            <li
+              class="c7n-pro-select-multiple-block-disabled c7n-pro-select-multiple-block"
+            >
+              <div>
+                Jack
+              </div>
+            </li>
+            <li
+              class="c7n-pro-select-multiple-block-disabled c7n-pro-select-multiple-block"
+            >
+              <div>
+                Wu
+              </div>
+            </li>
+            <li>
+              <input
+                autocomplete="off"
+                class="c7n-pro-select-multiple-input"
+                disabled=""
+                readonly=""
+                style="position:absolute;left:0;top:0;z-index:-1"
+                type="text"
+                value=""
+              />
+            </li>
+          </ul>
+        </div>
+        <div
+          class="c7n-pro-select-suffix"
+        >
+          <i
+            class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+          />
+        </div>
+      </label>
+    </span>
+  </div>
+  <div
+    class="c7n-col-12"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <span
+      class="c7n-pro-select-wrapper c7n-pro-select-suffix-button c7n-pro-select-multiple c7n-pro-select-not-editable"
+    >
+      <input
+        class="c7n-pro-select-multiple-value"
+        value="jack,wu"
+      />
+      <div
+        class="c7n-pro-select-placeholder"
+      >
+        多选+只读
+      </div>
+      <label>
+        <div
+          class="c7n-pro-select"
+        >
+          <ul>
+            <li
+              class="c7n-pro-select-multiple-block"
+            >
+              <div>
+                Jack
+              </div>
+            </li>
+            <li
+              class="c7n-pro-select-multiple-block"
+            >
+              <div>
+                Wu
+              </div>
+            </li>
+            <li>
+              <input
+                autocomplete="off"
+                class="c7n-pro-select-multiple-input"
+                readonly=""
+                style="position:absolute;left:0;top:0;z-index:-1"
+                type="text"
+                value=""
+              />
+            </li>
+          </ul>
+        </div>
+        <div
+          class="c7n-pro-select-suffix"
+        >
+          <i
+            class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+          />
+        </div>
+      </label>
+    </span>
+  </div>
+</div>
+`;
+
+exports[`renders ./components-pro/select/demo/non-primitive.md correctly 1`] = `
+<span
+  class="c7n-pro-select-wrapper c7n-pro-select-empty c7n-pro-select-suffix-button c7n-pro-select-not-editable"
+>
+  <input
+    type="hidden"
+    value=""
+  />
+  <label>
+    <input
+      autocomplete="off"
+      class="c7n-pro-select"
+      placeholder="请选择"
+      readonly=""
+      type="text"
+      value=""
+    />
+    <div
+      class="c7n-pro-select-inner-button c7n-pro-select-clear-button"
+    >
+      <i
+        class="icon icon-close"
+      />
+    </div>
+    <div
+      class="c7n-pro-select-suffix"
+    >
+      <i
+        class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+      />
+    </div>
+  </label>
+</span>
+`;
+
+exports[`renders ./components-pro/select/demo/option-renderer.md correctly 1`] = `
+<div
+  class="c7n-row"
+  style="margin-left:-5px;margin-right:-5px"
+>
+  <div
+    class="c7n-col-8"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <span
+      class="c7n-pro-select-wrapper c7n-pro-select-empty c7n-pro-select-suffix-button c7n-pro-select-not-editable"
+    >
+      <input
+        name="user"
+        type="hidden"
+        value=""
+      />
+      <span
+        class="c7n-pro-select-rendered-value"
+      >
+        <span
+          class="c7n-pro-select-rendered-value-inner"
+        >
+          <div
+            style="width:100%"
+          >
+             
+          </div>
+        </span>
+      </span>
+      <label>
+        <input
+          autocomplete="off"
+          class="c7n-pro-select"
+          readonly=""
+          style="text-indent:-1000px"
+          type="text"
+          value=""
+        />
+        <div
+          class="c7n-pro-select-inner-button c7n-pro-select-clear-button"
+        >
+          <i
+            class="icon icon-close"
+          />
+        </div>
+        <div
+          class="c7n-pro-select-suffix"
+        >
+          <i
+            class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+          />
+        </div>
+      </label>
+    </span>
+  </div>
+</div>
+`;
+
+exports[`renders ./components-pro/select/demo/readonly.md correctly 1`] = `
+<div
+  class="c7n-row"
+  style="margin-left:-5px;margin-right:-5px"
+>
+  <div
+    class="c7n-col-12"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <span
+      class="c7n-pro-select-wrapper c7n-pro-select-suffix-button c7n-pro-select-not-editable"
+    >
+      <input
+        name="last-name"
+        type="hidden"
+        value="jack"
+      />
+      <label>
+        <input
+          autocomplete="off"
+          class="c7n-pro-select"
+          placeholder="请选择"
+          readonly=""
+          type="text"
+          value="Jack"
+        />
+        <div
+          class="c7n-pro-select-suffix"
+        >
+          <i
+            class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+          />
+        </div>
+      </label>
+    </span>
+  </div>
+  <div
+    class="c7n-col-12"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <span
+      class="c7n-pro-select-wrapper c7n-pro-select-suffix-button c7n-pro-select-not-editable"
+    >
+      <input
+        name="first-name"
+        type="hidden"
+        value="huazhen"
+      />
+      <label>
+        <input
+          autocomplete="off"
+          class="c7n-pro-select"
+          readonly=""
+          type="text"
+          value="huazhen"
+        />
+        <div
+          class="c7n-pro-select-suffix"
+        >
+          <i
+            class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+          />
+        </div>
+      </label>
+    </span>
+  </div>
+</div>
+`;
+
+exports[`renders ./components-pro/select/demo/searchable.md correctly 1`] = `
+<div
+  class="c7n-row"
+>
+  <div
+    class="c7n-col-8"
+  >
+    <span
+      class="c7n-pro-select-wrapper c7n-pro-select-suffix-button"
+    >
+      <input
+        name="last-name"
+        type="hidden"
+        value="huazhen"
+      />
+      <label>
+        <input
+          autocomplete="off"
+          class="c7n-pro-select"
+          type="text"
+          value="Huazhen"
+        />
+        <div
+          class="c7n-pro-select-inner-button c7n-pro-select-clear-button"
+        >
+          <i
+            class="icon icon-close"
+          />
+        </div>
+        <div
+          class="c7n-pro-select-suffix"
+        >
+          <i
+            class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+          />
+        </div>
+      </label>
+    </span>
+  </div>
+  <div
+    class="c7n-col-8"
+  >
+    <span
+      class="c7n-pro-select-wrapper c7n-pro-select-empty c7n-pro-select-suffix-button"
+    >
+      <input
+        name="first-name"
+        type="hidden"
+        value=""
+      />
+      <label>
+        <input
+          autocomplete="off"
+          class="c7n-pro-select"
+          type="text"
+          value=""
+        />
+        <div
+          class="c7n-pro-select-inner-button c7n-pro-select-clear-button"
+        >
+          <i
+            class="icon icon-close"
+          />
+        </div>
+        <div
+          class="c7n-pro-select-suffix"
+        >
+          <i
+            class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+          />
+        </div>
+      </label>
+    </span>
+  </div>
+  <div
+    class="c7n-col-8"
+  >
+    <span
+      class="c7n-pro-select-wrapper c7n-pro-select-empty c7n-pro-select-suffix-button"
+    >
+      <input
+        name="sex"
+        type="hidden"
+        value=""
+      />
+      <label>
+        <input
+          autocomplete="off"
+          class="c7n-pro-select"
+          type="text"
+          value=""
+        />
+        <div
+          class="c7n-pro-select-inner-button c7n-pro-select-clear-button"
+        >
+          <i
+            class="icon icon-close"
+          />
+        </div>
+        <div
+          class="c7n-pro-select-suffix"
+        >
+          <i
+            class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+          />
+        </div>
+      </label>
+    </span>
+  </div>
+</div>
+`;

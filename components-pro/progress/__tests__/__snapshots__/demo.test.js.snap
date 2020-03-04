@@ -1,0 +1,627 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders ./components-pro/progress/demo/basic.md correctly 1`] = `
+<div>
+  <div
+    class="c7n-progress c7n-progress-line c7n-progress-status-normal c7n-progress-show-info c7n-progress-default"
+    trim="both"
+    value="40"
+  >
+    <div>
+      <div
+        class="c7n-progress-outer"
+      >
+        <div
+          class="c7n-progress-inner"
+        >
+          <div
+            class="c7n-progress-bg"
+            style="width:40%;height:8px"
+          />
+        </div>
+      </div>
+      <span
+        class="c7n-progress-text"
+      >
+        40%
+      </span>
+    </div>
+  </div>
+  <div
+    class="c7n-progress c7n-progress-line c7n-progress-status-active c7n-progress-show-info c7n-progress-default"
+    trim="both"
+    value="50"
+  >
+    <div>
+      <div
+        class="c7n-progress-outer"
+      >
+        <div
+          class="c7n-progress-inner"
+        >
+          <div
+            class="c7n-progress-bg"
+            style="width:50%;height:8px"
+          />
+        </div>
+      </div>
+      <span
+        class="c7n-progress-text"
+      >
+        50%
+      </span>
+    </div>
+  </div>
+  <div
+    class="c7n-progress c7n-progress-line c7n-progress-status-exception c7n-progress-show-info c7n-progress-default"
+    trim="both"
+    value="70"
+  >
+    <div>
+      <div
+        class="c7n-progress-outer"
+      >
+        <div
+          class="c7n-progress-inner"
+        >
+          <div
+            class="c7n-progress-bg"
+            style="width:70%;height:8px"
+          />
+        </div>
+      </div>
+      <span
+        class="c7n-progress-text"
+      >
+        <i
+          class="icon icon-cancel"
+        />
+      </span>
+    </div>
+  </div>
+  <div
+    class="c7n-progress c7n-progress-line c7n-progress-status-success c7n-progress-show-info c7n-progress-default"
+    trim="both"
+    value="50"
+  >
+    <div>
+      <div
+        class="c7n-progress-outer"
+      >
+        <div
+          class="c7n-progress-inner"
+        >
+          <div
+            class="c7n-progress-bg"
+            style="width:50%;height:8px"
+          />
+        </div>
+      </div>
+      <span
+        class="c7n-progress-text"
+      >
+        <i
+          class="icon icon-check_circle"
+        />
+      </span>
+    </div>
+  </div>
+  <div
+    class="c7n-progress c7n-progress-line c7n-progress-status-normal c7n-progress-default"
+    trim="both"
+    value="40"
+  >
+    <div>
+      <div
+        class="c7n-progress-outer"
+      >
+        <div
+          class="c7n-progress-inner"
+        >
+          <div
+            class="c7n-progress-bg"
+            style="width:40%;height:8px"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders ./components-pro/progress/demo/circle.md correctly 1`] = `
+<div>
+  <div
+    class="c7n-progress c7n-progress-circle c7n-progress-status-normal c7n-progress-show-info c7n-progress-small"
+    trim="both"
+    value="75"
+  >
+    <div
+      class="c7n-progress-inner"
+      style="width:120px;height:120px;font-size:24px"
+    >
+      <svg
+        class="c7n-progress-circle "
+        viewBox="0 0 100 100"
+      >
+        <path
+          class="c7n-progress-circle-trail"
+          d="M 50,50 m 0,-47
+     a 47,47 0 1 1 0,94
+     a 47,47 0 1 1 0,-94"
+          fill-opacity="0"
+          stroke="#f3f3f3"
+          stroke-width="6"
+          style="stroke-dasharray:295.3097094374406px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s"
+        />
+        <path
+          class="c7n-progress-circle-path"
+          d="M 50,50 m 0,-47
+     a 47,47 0 1 1 0,94
+     a 47,47 0 1 1 0,-94"
+          fill-opacity="0"
+          stroke="#2db7f5"
+          stroke-linecap="round"
+          stroke-width="6"
+          style="stroke-dasharray:221.48228207808043px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s"
+        />
+      </svg>
+      <span
+        class="c7n-progress-text"
+      >
+        75%
+      </span>
+    </div>
+  </div>
+  <div
+    class="c7n-progress c7n-progress-circle c7n-progress-status-success c7n-progress-show-info c7n-progress-default"
+    trim="both"
+    value="100"
+  >
+    <div
+      class="c7n-progress-inner"
+      style="width:120px;height:120px;font-size:24px"
+    >
+      <svg
+        class="c7n-progress-circle "
+        viewBox="0 0 100 100"
+      >
+        <path
+          class="c7n-progress-circle-trail"
+          d="M 50,50 m 0,-47
+     a 47,47 0 1 1 0,94
+     a 47,47 0 1 1 0,-94"
+          fill-opacity="0"
+          stroke="#f3f3f3"
+          stroke-width="6"
+          style="stroke-dasharray:295.3097094374406px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s"
+        />
+        <path
+          class="c7n-progress-circle-path"
+          d="M 50,50 m 0,-47
+     a 47,47 0 1 1 0,94
+     a 47,47 0 1 1 0,-94"
+          fill-opacity="0"
+          stroke="#2db7f5"
+          stroke-linecap="round"
+          stroke-width="6"
+          style="stroke-dasharray:295.3097094374406px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s"
+        />
+      </svg>
+      <span
+        class="c7n-progress-text"
+      >
+        Done
+      </span>
+    </div>
+  </div>
+  <div
+    class="c7n-progress c7n-progress-circle c7n-progress-status-exception c7n-progress-show-info c7n-progress-large"
+    trim="both"
+    value="35"
+  >
+    <div
+      class="c7n-progress-inner"
+      style="width:120px;height:120px;font-size:24px"
+    >
+      <svg
+        class="c7n-progress-circle "
+        viewBox="0 0 100 100"
+      >
+        <path
+          class="c7n-progress-circle-trail"
+          d="M 50,50 m 0,-47
+     a 47,47 0 1 1 0,94
+     a 47,47 0 1 1 0,-94"
+          fill-opacity="0"
+          stroke="#f3f3f3"
+          stroke-width="6"
+          style="stroke-dasharray:295.3097094374406px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s"
+        />
+        <path
+          class="c7n-progress-circle-path"
+          d="M 50,50 m 0,-47
+     a 47,47 0 1 1 0,94
+     a 47,47 0 1 1 0,-94"
+          fill-opacity="0"
+          stroke="#2db7f5"
+          stroke-linecap="round"
+          stroke-width="6"
+          style="stroke-dasharray:103.3583983031042px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s"
+        />
+      </svg>
+      <span
+        class="c7n-progress-text"
+      >
+        <i
+          class="icon icon-close"
+        />
+      </span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders ./components-pro/progress/demo/controller.md correctly 1`] = `
+<div>
+  <div
+    class="c7n-progress c7n-progress-line c7n-progress-status-active c7n-progress-show-info c7n-progress-default"
+    trim="both"
+    value="0"
+  >
+    <div>
+      <div
+        class="c7n-progress-outer"
+      >
+        <div
+          class="c7n-progress-inner"
+        >
+          <div
+            class="c7n-progress-bg"
+            style="width:0%;height:8px"
+          />
+        </div>
+      </div>
+      <span
+        class="c7n-progress-text"
+      >
+        0%
+      </span>
+    </div>
+  </div>
+  <div
+    class="c7n-progress c7n-progress-circle c7n-progress-status-active c7n-progress-show-info c7n-progress-default"
+    trim="both"
+    value="0"
+  >
+    <div
+      class="c7n-progress-inner"
+      style="width:120px;height:120px;font-size:24px"
+    >
+      <svg
+        class="c7n-progress-circle "
+        viewBox="0 0 100 100"
+      >
+        <path
+          class="c7n-progress-circle-trail"
+          d="M 50,50 m 0,-47
+     a 47,47 0 1 1 0,94
+     a 47,47 0 1 1 0,-94"
+          fill-opacity="0"
+          stroke="#f3f3f3"
+          stroke-width="6"
+          style="stroke-dasharray:295.3097094374406px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s"
+        />
+        <path
+          class="c7n-progress-circle-path"
+          d="M 50,50 m 0,-47
+     a 47,47 0 1 1 0,94
+     a 47,47 0 1 1 0,-94"
+          fill-opacity="0"
+          stroke="#2db7f5"
+          stroke-linecap="round"
+          stroke-width="0"
+          style="stroke-dasharray:0px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s"
+        />
+      </svg>
+      <span
+        class="c7n-progress-text"
+      >
+        0%
+      </span>
+    </div>
+  </div>
+  <div
+    class="c7n-progress c7n-progress-circle c7n-progress-status-active c7n-progress-show-info c7n-progress-default"
+    trim="both"
+    value="0"
+  >
+    <div
+      class="c7n-progress-inner"
+      style="width:120px;height:120px;font-size:24px"
+    >
+      <svg
+        class="c7n-progress-circle "
+        viewBox="0 0 100 100"
+      >
+        <path
+          class="c7n-progress-circle-trail"
+          d="M 50,50 m 0,47
+     a 47,47 0 1 1 0,-94
+     a 47,47 0 1 1 0,94"
+          fill-opacity="0"
+          stroke="#f3f3f3"
+          stroke-width="6"
+          style="stroke-dasharray:220.30970943744057px 295.3097094374406px;stroke-dashoffset:-37.5px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s"
+        />
+        <path
+          class="c7n-progress-circle-path"
+          d="M 50,50 m 0,47
+     a 47,47 0 1 1 0,-94
+     a 47,47 0 1 1 0,94"
+          fill-opacity="0"
+          stroke="#2db7f5"
+          stroke-linecap="round"
+          stroke-width="0"
+          style="stroke-dasharray:0px 295.3097094374406px;stroke-dashoffset:-37.5px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s"
+        />
+      </svg>
+      <span
+        class="c7n-progress-text"
+      >
+        0%
+      </span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders ./components-pro/progress/demo/dashboard.md correctly 1`] = `
+<div>
+  <div
+    class="c7n-progress c7n-progress-circle c7n-progress-status-normal c7n-progress-show-info c7n-progress-default"
+    trim="both"
+    value="75"
+  >
+    <div
+      class="c7n-progress-inner"
+      style="width:120px;height:120px;font-size:24px"
+    >
+      <svg
+        class="c7n-progress-circle "
+        viewBox="0 0 100 100"
+      >
+        <path
+          class="c7n-progress-circle-trail"
+          d="M 50,50 m 0,47
+     a 47,47 0 1 1 0,-94
+     a 47,47 0 1 1 0,94"
+          fill-opacity="0"
+          stroke="#f3f3f3"
+          stroke-width="6"
+          style="stroke-dasharray:220.30970943744057px 295.3097094374406px;stroke-dashoffset:-37.5px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s"
+        />
+        <path
+          class="c7n-progress-circle-path"
+          d="M 50,50 m 0,47
+     a 47,47 0 1 1 0,-94
+     a 47,47 0 1 1 0,94"
+          fill-opacity="0"
+          stroke="#2db7f5"
+          stroke-linecap="round"
+          stroke-width="6"
+          style="stroke-dasharray:165.23228207808043px 295.3097094374406px;stroke-dashoffset:-37.5px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s"
+        />
+      </svg>
+      <span
+        class="c7n-progress-text"
+      >
+        75%
+      </span>
+    </div>
+  </div>
+  <div
+    class="c7n-progress c7n-progress-circle c7n-progress-status-success c7n-progress-show-info c7n-progress-default"
+    trim="both"
+    value="100"
+  >
+    <div
+      class="c7n-progress-inner"
+      style="width:120px;height:120px;font-size:24px"
+    >
+      <svg
+        class="c7n-progress-circle "
+        viewBox="0 0 100 100"
+      >
+        <path
+          class="c7n-progress-circle-trail"
+          d="M 50,50 m 0,47
+     a 47,47 0 1 1 0,-94
+     a 47,47 0 1 1 0,94"
+          fill-opacity="0"
+          stroke="#f3f3f3"
+          stroke-width="6"
+          style="stroke-dasharray:220.30970943744057px 295.3097094374406px;stroke-dashoffset:-37.5px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s"
+        />
+        <path
+          class="c7n-progress-circle-path"
+          d="M 50,50 m 0,47
+     a 47,47 0 1 1 0,-94
+     a 47,47 0 1 1 0,94"
+          fill-opacity="0"
+          stroke="#2db7f5"
+          stroke-linecap="round"
+          stroke-width="6"
+          style="stroke-dasharray:220.30970943744057px 295.3097094374406px;stroke-dashoffset:-37.5px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s"
+        />
+      </svg>
+      <span
+        class="c7n-progress-text"
+      >
+        <i
+          class="icon icon-check"
+        />
+      </span>
+    </div>
+  </div>
+  <div
+    class="c7n-progress c7n-progress-circle c7n-progress-status-exception c7n-progress-show-info c7n-progress-default"
+    trim="both"
+    value="25"
+  >
+    <div
+      class="c7n-progress-inner"
+      style="width:120px;height:120px;font-size:24px"
+    >
+      <svg
+        class="c7n-progress-circle "
+        viewBox="0 0 100 100"
+      >
+        <path
+          class="c7n-progress-circle-trail"
+          d="M 50,50 m 0,47
+     a 47,47 0 1 1 0,-94
+     a 47,47 0 1 1 0,94"
+          fill-opacity="0"
+          stroke="#f3f3f3"
+          stroke-width="6"
+          style="stroke-dasharray:220.30970943744057px 295.3097094374406px;stroke-dashoffset:-37.5px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s"
+        />
+        <path
+          class="c7n-progress-circle-path"
+          d="M 50,50 m 0,47
+     a 47,47 0 1 1 0,-94
+     a 47,47 0 1 1 0,94"
+          fill-opacity="0"
+          stroke="#2db7f5"
+          stroke-linecap="round"
+          stroke-width="6"
+          style="stroke-dasharray:55.077427359360144px 295.3097094374406px;stroke-dashoffset:-37.5px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s"
+        />
+      </svg>
+      <span
+        class="c7n-progress-text"
+      >
+        <i
+          class="icon icon-close"
+        />
+      </span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders ./components-pro/progress/demo/dataset.md correctly 1`] = `
+<div
+  class="c7n-progress c7n-progress-line c7n-progress-status-normal c7n-progress-show-info c7n-progress-default"
+  name="percent"
+  trim="both"
+>
+  <div>
+    <div
+      class="c7n-progress-outer"
+    >
+      <div
+        class="c7n-progress-inner"
+      >
+        <div
+          class="c7n-progress-bg"
+          style="width:20%;height:8px"
+        />
+      </div>
+    </div>
+    <span
+      class="c7n-progress-text"
+    >
+      20%
+    </span>
+  </div>
+</div>
+`;
+
+exports[`renders ./components-pro/progress/demo/format.md correctly 1`] = `
+<div
+  class="c7n-progress c7n-progress-line c7n-progress-status-success c7n-progress-show-info c7n-progress-default"
+  trim="both"
+  value="100"
+>
+  <div>
+    <div
+      class="c7n-progress-outer"
+    >
+      <div
+        class="c7n-progress-inner"
+      >
+        <div
+          class="c7n-progress-bg"
+          style="width:100%;height:8px"
+        />
+      </div>
+    </div>
+    <span
+      class="c7n-progress-text"
+    >
+      Done
+    </span>
+  </div>
+</div>
+`;
+
+exports[`renders ./components-pro/progress/demo/loading.md correctly 1`] = `
+<div>
+  <div
+    class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-small"
+    trim="both"
+  >
+    <div
+      class="c7n-progress-inner"
+    >
+      <svg
+        viewBox="0 0 50 50"
+      >
+        <circle
+          cx="25"
+          cy="25"
+          r="20"
+        />
+      </svg>
+    </div>
+  </div>
+  <div
+    class="c7n-progress c7n-progress-loading c7n-progress-status-success c7n-progress-show-info c7n-progress-default"
+    trim="both"
+  >
+    <div
+      class="c7n-progress-inner"
+    >
+      <svg
+        viewBox="0 0 50 50"
+      >
+        <circle
+          cx="25"
+          cy="25"
+          r="20"
+        />
+      </svg>
+    </div>
+  </div>
+  <div
+    class="c7n-progress c7n-progress-loading c7n-progress-status-exception c7n-progress-show-info c7n-progress-large"
+    trim="both"
+  >
+    <div
+      class="c7n-progress-inner"
+    >
+      <svg
+        viewBox="0 0 50 50"
+      >
+        <circle
+          cx="25"
+          cy="25"
+          r="20"
+        />
+      </svg>
+    </div>
+  </div>
+</div>
+`;

@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Filed:`: 添加 Form 下 Tooltip 特有样式名称
+- 🐞 `<pro>SelectBox`: 修复 SelectBox multiple disable 状态无法查看文本。
 - 💄 `<pro>DataSet`: 优化 ready 方法的性能。
 - 🐞 `<pro>DataSet`: 修复校验未应用 dataToJSON 配置。
 - 🐞 修复全量依赖样式时基础组件和 pro 组件存在同名预变量冲突的问题。
