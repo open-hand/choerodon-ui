@@ -13,7 +13,7 @@ title:
 
 Button View Mode.
 
-````jsx
+```jsx
 import { SelectBox, Row, Col } from 'choerodon-ui/pro';
 
 function handleChange(value, oldValue) {
@@ -32,13 +32,13 @@ ReactDOM.render(
       </SelectBox>
     </Col>
     <Col span={12}>
-      <SelectBox mode="button" multiple onChange={handleChange}>
+      <SelectBox mode="button" value="jack" disabled multiple onChange={handleChange}>
         <Option value="jack">Jack</Option>
         <Option value="lucy">Lucy</Option>
         <Option value="wu">Wu</Option>
       </SelectBox>
     </Col>
   </Row>,
-  mountNode
+  mountNode,
 );
-````
+```
