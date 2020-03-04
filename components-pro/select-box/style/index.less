@@ -67,6 +67,13 @@
     background-color: @input-required-bg;
   }
 
+  .@{checkbox-prefix-cls}-button
+    .@{checkbox-prefix-cls}:checked
+    + .@{checkbox-prefix-cls}-inner
+    + span {
+    color: #3f51b5;
+  }
+
   &-vertical {
     .@{radio-prefix-cls}-wrapper,
     .@{checkbox-prefix-cls}-wrapper {
