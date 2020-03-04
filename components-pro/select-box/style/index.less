@@ -3,8 +3,8 @@
 @import '../../field/style/mixin';
 
 @select-box-prefix: ~'@{c7n-pro-prefix}-select-box';
-@checkbox-prefix-cls: ~'@{c7n-pro-prefix}-checkbox';
-@radio-prefix-cls: ~'@{c7n-pro-prefix}-radio';
+@pro-checkbox-prefix-cls: ~'@{c7n-pro-prefix}-checkbox';
+@pro-radio-prefix-cls: ~'@{c7n-pro-prefix}-radio';
 
 .@{select-box-prefix} {
   .validation;
@@ -25,23 +25,23 @@
     background-color: transparent;
   }
 
-  .@{radio-prefix-cls}-button {
+  .@{pro-radio-prefix-cls}-button {
     margin-top: 0;
     margin-bottom: 0;
     margin-left: 0;
 
-    + .@{radio-prefix-cls}-button {
+    + .@{pro-radio-prefix-cls}-button {
       margin-left: 0;
     }
 
-    .@{radio-prefix-cls}-inner {
+    .@{pro-radio-prefix-cls}-inner {
       right: -0.005rem;
       left: -0.005rem;
       border-radius: 0;
     }
 
     &:first-child {
-      & .@{radio-prefix-cls}-inner,
+      & .@{pro-radio-prefix-cls}-inner,
       & {
         border-top-left-radius: @border-radius-base;
         border-bottom-left-radius: @border-radius-base;
@@ -49,7 +49,7 @@
     }
 
     &:last-child {
-      & .@{radio-prefix-cls}-inner,
+      & .@{pro-radio-prefix-cls}-inner,
       & {
         border-top-right-radius: @border-radius-base;
         border-bottom-right-radius: @border-radius-base;
@@ -57,13 +57,13 @@
     }
   }
 
-  &-invalid .@{radio-prefix-cls}-inner,
-  &-invalid .@{checkbox-prefix-cls}-inner {
+  &-invalid .@{pro-radio-prefix-cls}-inner,
+  &-invalid .@{pro-checkbox-prefix-cls}-inner {
     border-color: @error-color;
   }
 
-  &-required:not(&-float-label):not(&-disabled) .@{radio-prefix-cls}-inner,
-  &-required:not(&-float-label):not(&-disabled) .@{checkbox-prefix-cls}-inner {
+  &-required:not(&-float-label):not(&-disabled) .@{pro-radio-prefix-cls}-inner,
+  &-required:not(&-float-label):not(&-disabled) .@{pro-checkbox-prefix-cls}-inner {
     background-color: @input-required-bg;
   }
 
@@ -75,23 +75,23 @@
   }
 
   &-vertical {
-    .@{radio-prefix-cls}-wrapper,
-    .@{checkbox-prefix-cls}-wrapper {
+    .@{pro-radio-prefix-cls}-wrapper,
+    .@{pro-checkbox-prefix-cls}-wrapper {
       display: block;
       margin-top: 0.07rem;
       margin-bottom: 0.07rem;
     }
 
-    .@{checkbox-prefix-cls}-button {
+    .@{pro-checkbox-prefix-cls}-button {
       margin-left: 0;
     }
 
-    .@{radio-prefix-cls}-button {
+    .@{pro-radio-prefix-cls}-button {
       margin-top: 0;
       margin-bottom: 0;
       text-align: center;
 
-      .@{radio-prefix-cls}-inner {
+      .@{pro-radio-prefix-cls}-inner {
         top: -0.005rem;
         right: 0;
         bottom: -0.005rem;
@@ -100,7 +100,7 @@
       }
 
       &:first-child {
-        & .@{radio-prefix-cls}-inner,
+        & .@{pro-radio-prefix-cls}-inner,
         & {
           border-top-right-radius: @border-radius-base;
           border-bottom-left-radius: 0;
@@ -108,7 +108,7 @@
       }
 
       &:last-child {
-        & .@{radio-prefix-cls}-inner,
+        & .@{pro-radio-prefix-cls}-inner,
         & {
           border-top-right-radius: 0;
           border-bottom-left-radius: @border-radius-base;

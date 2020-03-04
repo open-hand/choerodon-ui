@@ -15,6 +15,13 @@ timeline: true
 
 ---
 
+- 💄 `<pro>DataSet`: Optimize the performance of the `ready` method.
+- 🐞 `<pro>DataSet`: Fix `validate` did not apply `dataToJSON` configuration.
+- 🐞 Fix the problem that the base component and pro component have the same name pre-variable conflict when fully relying on the style.
+- 🐞 `<pro>Lov`: Fix the problem that `valueField` and `textField` in lov configuration are invalid when `lovCode` is obtained through `dynamicProps`.
+- 🐞 `<pro>Select`: Fix the problem of no option when `lovCode` field's type is string.
+- 🐞 `<pro>TableEditor`: Fix the editor of the table in the `Modal`, and then change the window size, the positioning will be incorrect.
+
 ## 0.8.56
 
 `2020-02-18`

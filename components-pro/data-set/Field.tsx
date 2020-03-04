@@ -512,7 +512,9 @@ dynamicProps = {
     if (propsName === 'lookupUrl') {
       return getConfig(propsName);
     }
-    return Field.defaultProps[propsName];
+    if (this.record) {
+      return Field.defaultProps[propsName];
+    }
   }
 
   /**
@@ -806,9 +808,11 @@ dynamicProps = {
     const lovCode = this.get('lovCode');
     if (lovCode) {
       await this.pending.add(lovCodeStore.fetchConfig(lovCode, this));
-      const options = lovCodeStore.getLovDataSet(lovCode, this);
-      if (options) {
-        this.set('options', options);
+      if (this.type === FieldType.object || this.type === FieldType.auto) {
+        const options = lovCodeStore.getLovDataSet(lovCode, this);
+        if (options) {
+          this.set('options', options);
+        }
       }
     }
   }
@@ -830,8 +834,9 @@ dynamicProps = {
   }
 
   ready(): Promise<any> {
-    const { options } = this;
-    return Promise.all([this.pending.ready(), options && options.ready()]);
+    // const { options } = this;
+    // return Promise.all([this.pending.ready(), options && options.ready()]);
+    return this.pending.ready();
   }
 
   private findDataSetField(): Field | undefined {
