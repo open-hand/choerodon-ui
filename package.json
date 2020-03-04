@@ -236,7 +236,7 @@
     "xhr2": "^0.2.0"
   },
   "scripts": {
-    "test": "jest --config .jest.js --no-cache --debug",
+    "test": "jest --config .jest.js --no-cache --debug --coverage",
     "test-node": "jest --config .jest.node.js",
     "test-all": "sh ./scripts/test-all.sh",
     "test-all-skip": "sh ./scripts/test-all.sh --skip",

@@ -9,7 +9,7 @@ const setupByMount = () => {
   };
 };
 
-describe('pagination-pro', () => {
+describe('Tree-pro', () => {
   beforeEach(() => {
     jest.useFakeTimers();
   });
@@ -33,5 +33,14 @@ describe('pagination-pro', () => {
     const { wrapper } = setupByMount();
     wrapper.setProps({ disabled: true });
     expect(wrapper.find('Select').prop('disabled')).toBe(true);
+  });
+
+  it('set showQuickJumper and click handle ', () => {
+    const { wrapper } = setupByMount();
+    wrapper
+      .find('Pager')
+      .at(3)
+      .simulate('click');
+    expect(wrapper).toMatchSnapshot();
   });
 });

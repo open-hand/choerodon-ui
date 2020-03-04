@@ -1,5 +1,5 @@
 import React from 'react';
-import Password from '..';
+import IntlField from '..';
 import DataSet from '../../data-set';
 
 function handleDataSetChange({ record, name, value, oldValue }) {
@@ -14,14 +14,16 @@ function handleDataSetChange({ record, name, value, oldValue }) {
   );
 }
 
-class PasswordTest extends React.Component {
+class IntlFieldTest extends React.Component {
   ds = new DataSet({
-    autoCreate: true,
+    primaryKey: 'pk',
+    data: [{ 'first-name': '吴' }],
+    tlsUrl: '/dataset/user/languages',
     fields: [
       {
-        name: 'test',
-        type: 'string',
-        defaultValue: 'password',
+        name: 'first-name',
+        type: 'intl',
+        defaultValue: 'Huazhen',
         required: true,
       },
     ],
@@ -31,8 +33,8 @@ class PasswordTest extends React.Component {
   });
 
   render() {
-    return <Password dataSet={this.ds} name="test" />;
+    return <IntlField dataSet={this.ds} name="first-name" />;
   }
 }
 
-export default PasswordTest;
+export default IntlFieldTest;

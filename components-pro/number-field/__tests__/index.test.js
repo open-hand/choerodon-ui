@@ -1,27 +1,18 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import NumberField from '..';
-import NumberFieldTest from './numberField';
+import NumberDataTest from './numberData';
 import focusTest from '../../../tests/shared/focusTest';
 import mountTest from '../../../tests/shared/mountTest';
-import DataSet from '../../data-set';
+
+mountTest(NumberField);
+focusTest(NumberField);
 
 describe('NumberField', () => {
-  mountTest(NumberField);
-  focusTest(NumberField);
-
-  beforeEach(() => {
-    jest.useFakeTimers();
-  });
-
-  afterEach(() => {
-    jest.useRealTimers();
-  });
-
-  it('renders NumberField correctly', () => {
-    const wrapper = mount(<NumberField />);
-    expect(wrapper).toMatchSnapshot();
-  });
+  // it('renders NumberField correctly', () => {
+  //   const wrapper = mount(<NumberField />);
+  //   expect(wrapper).toMatchSnapshot();
+  // });
 
   it('step renders correctly', () => {
     const wrapper = mount(<NumberField />);
@@ -31,9 +22,35 @@ describe('NumberField', () => {
     expect(wrapper.find('.c7n-pro-input-number-inner-button')).toHaveLength(1);
   });
 
+  it('step click renders correctly', () => {
+    const wrapper = mount(<NumberField value={18} />);
+    expect(
+      wrapper
+        .find('input')
+        .at(0)
+        .prop('value'),
+    ).toBe('18');
+    wrapper.setProps({ value: 12 });
+    wrapper.update();
+    expect(
+      wrapper
+        .find('input')
+        .at(0)
+        .prop('value'),
+    ).toBe('12');
+  });
+
   it('the range value should render correctly', () => {
-    const wrapper = mount(<NumberFieldTest />);
-    expect(wrapper).toMatchSnapshot();
+    const handleChange = jest.fn();
+    const wrapper = mount(
+      <NumberField
+        range={['start', 'end']}
+        defaultValue={{ start: 0, end: 4 }}
+        placeholder={['Range Start', 'Range End']}
+        onChange={handleChange}
+      />,
+    );
+    // expect(wrapper).toMatchSnapshot();
     expect(
       wrapper
         .find('.c7n-pro-input-number-range-start')
@@ -48,32 +65,18 @@ describe('NumberField', () => {
     ).toBe('4');
   });
 
+  it('input should render readOnly correctly', () => {
+    const wrapper = mount(<NumberField />);
+    expect(wrapper.prop('readOnly')).toBe(false);
+    wrapper.setProps({ readOnly: true });
+    wrapper.update();
+    expect(wrapper.prop('readOnly')).toBe(true);
+  });
+
   it('the dataset value should render correctly', () => {
-    const handleDataSetChange = jest.fn();
-    const rangeValidator = jest.fn();
-    const ds = new DataSet({
-      autoCreate: true,
-      fields: [
-        {
-          name: 'number',
-          type: 'number',
-          range: ['start', 'end'],
-          defaultValue: { start: 1, end: 5 },
-          required: true,
-          min: 1,
-          max: 10,
-          step: 1,
-          validator: rangeValidator,
-        },
-      ],
-      events: {
-        update: handleDataSetChange,
-      },
-    });
-    const wrapper = mount(
-      <NumberField dataSet={ds} name="number" placeholder={['Range Start', 'Range End']} />,
-    );
+    const wrapper = mount(<NumberDataTest />);
+    expect(wrapper.find('NumberField').props().name).toEqual('age');
+    expect(wrapper.find('input').props().value).toEqual('10,000,000');
     expect(wrapper).toMatchSnapshot();
-    expect(wrapper.find('NumberField').props().name).toEqual('number');
   });
 });

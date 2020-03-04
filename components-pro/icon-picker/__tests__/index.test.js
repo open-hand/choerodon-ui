@@ -1,7 +1,18 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import IconPicker from '..';
+import IconCategory from '../IconCategory';
+import IconItem from '../IconItem';
 import IconPickerTest from './IconPicker';
+import mountTest from '../../../tests/shared/mountTest';
+import focusTest from '../../../tests/shared/focusTest';
+import TriggerPopTest from '../../../tests/shared/triggerPopTest';
+
+mountTest(IconPicker);
+mountTest(IconItem);
+mountTest(IconPickerTest);
+focusTest(IconPicker);
+TriggerPopTest(IconPicker);
 
 describe('Icon-Picker-pro', () => {
   beforeEach(() => {
@@ -14,7 +25,11 @@ describe('Icon-Picker-pro', () => {
 
   it('renders IconPicker correctly', () => {
     const wrapper = mount(<IconPicker />);
+    const wrapper1 = mount(<IconCategory />);
+    const wrapper2 = mount(<IconItem />);
     expect(wrapper).toMatchSnapshot();
+    expect(wrapper1).toMatchSnapshot();
+    expect(wrapper2).toMatchSnapshot();
   });
 
   it('should show {value} when the property value is existed', () => {
@@ -37,6 +52,14 @@ describe('Icon-Picker-pro', () => {
         .at(0)
         .prop('value'),
     ).toBe('');
+  });
+  it('input should render readOnly correctly', () => {
+    const wrapper = mount(<IconPicker />);
+    expect(wrapper.prop('readOnly')).toBe(false);
+    wrapper.setProps({ readOnly: true });
+    wrapper.update();
+    expect(wrapper.prop('readOnly')).toBe(true);
+    expect(wrapper.instance().renderIconCategories()).toMatchSnapshot();
   });
 
   it('should renders dataset correctly', () => {

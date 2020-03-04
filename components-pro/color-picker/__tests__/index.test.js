@@ -1,15 +1,29 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import ColorPicker from '..';
-import ColorPickerTest from './ColorPickerTest';
+import mountTest from '../../../tests/shared/mountTest';
+import focusTest from '../../../tests/shared/focusTest';
+import triggerTest from '../../../tests/shared/triggerPopTest';
+import ColorPickerTest from './ColorPicker';
+
+mountTest(ColorPicker);
+focusTest(ColorPicker);
+triggerTest(ColorPicker);
 
 describe('color-picker-pro', () => {
+  const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+
   beforeEach(() => {
     jest.useFakeTimers();
   });
 
   afterEach(() => {
+    errorSpy.mockReset();
     jest.useRealTimers();
+  });
+
+  afterAll(() => {
+    errorSpy.mockRestore();
   });
 
   it('renders ColorPicker correctly', () => {
@@ -20,6 +34,9 @@ describe('color-picker-pro', () => {
   it('ColorPicker has the defaultProps clearButton', () => {
     const wrapper = mount(<ColorPicker />);
     expect(wrapper.props().clearButton).toEqual(false);
+    expect(wrapper.props().triggerHiddenDelay).toEqual(50);
+    expect(wrapper.props().triggerShowDelay).toEqual(150);
+    expect(wrapper.props().trigger).toEqual(['focus', 'click']);
   });
 
   it('should has the defaultValue', () => {
@@ -33,7 +50,8 @@ describe('color-picker-pro', () => {
   });
 
   it('the color will be controlled by the value', () => {
-    const wrapper = mount(<ColorPicker value="#f1c7f2" />);
+    const handleChange = jest.fn();
+    const wrapper = mount(<ColorPicker value="#f1c7f2" onChange={handleChange} />);
     expect(
       wrapper
         .find('input')
@@ -50,27 +68,26 @@ describe('color-picker-pro', () => {
     ).toBe('#00ff00');
   });
 
-  it('should show expand face when click the input', () => {
-    const wrapper = mount(<ColorPicker />);
-    wrapper.find('input').simulate('click');
+  it('can not click or input when the readOnly true and default false', () => {
+    const handleChange = jest.fn();
+    const handlePopupChange = jest.fn();
+    const wrapper = mount(
+      <ColorPicker onChange={handleChange} onPopupHiddenChange={handlePopupChange} />,
+    );
+    expect(wrapper.prop('readOnly')).toBe(false);
+    wrapper.setProps({ readOnly: true });
+    wrapper.update();
+    expect(wrapper.prop('readOnly')).toBe(true);
+
+    wrapper.find('input').simulate('change');
     jest.runAllTimers();
     wrapper.update();
-    expect(
-      wrapper
-        .find('.c7n-pro-color-picker-wrapper')
-        .at(0)
-        .hasClass('c7n-pro-color-picker-expand'),
-    ).toBe(true);
+    expect(handleChange).not.toHaveBeenCalled();
   });
-
   it('should renders dataset default value correctly', () => {
     const wrapper = mount(<ColorPickerTest />);
     expect(wrapper.find('ColorPicker').props().name).toEqual('color');
-    expect(
-      wrapper
-        .find('input')
-        .at(0)
-        .prop('value'),
-    ).toBe('#00ff12');
+    expect(wrapper.find('input').prop('value')).toBe('#00ff12');
+    expect(wrapper).toMatchSnapshot();
   });
 });

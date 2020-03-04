@@ -10,6 +10,6 @@ export default class PaginationTest extends React.Component {
   });
 
   render() {
-    return <Pagination {...this.props} dataSet={this.ds} />;
+    return <Pagination showPager {...this.props} dataSet={this.ds} />;
   }
 }

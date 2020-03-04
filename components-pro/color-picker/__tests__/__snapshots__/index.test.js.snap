@@ -545,3 +545,689 @@ exports[`color-picker-pro renders ColorPicker correctly 1`] = `
   </Tooltip>
 </ColorPicker>
 `;
+
+exports[`color-picker-pro should renders dataset default value correctly 1`] = `
+<ColorPickerTest>
+  <ColorPicker
+    autoComplete="off"
+    clearButton={false}
+    dataSet={
+      DataSet {
+        "cachedSelected": Array [],
+        "children": Object {},
+        "currentPage": 1,
+        "dataToJSON": "dirty",
+        "el": undefined,
+        "events": Object {
+          "indexchange": Array [
+            Array [
+              [Function],
+              false,
+            ],
+          ],
+          "update": Array [
+            Array [
+              [Function],
+              false,
+            ],
+          ],
+        },
+        "fields": Object {
+          "color": Field {
+            "dataSet": [Circular],
+            "isDynamicPropsComputing": false,
+            "lastDynamicProps": Object {},
+            "pending": PromiseQueue {
+              "queue": Array [],
+              "queueing": false,
+            },
+            "pristineProps": Object {
+              "defaultValue": "#00ff12",
+              "name": "color",
+              "required": true,
+              "type": "color",
+            },
+            "props": Object {
+              "defaultValue": "#00ff12",
+              "name": "color",
+              "required": true,
+              "type": "color",
+            },
+            "record": undefined,
+            "validator": Validator {
+              "control": undefined,
+              "field": [Circular],
+              "innerValidationResults": Array [],
+            },
+          },
+        },
+        "inBatchSelection": false,
+        "name": undefined,
+        "originalData": Array [],
+        "pageSize": 10,
+        "parent": undefined,
+        "parentName": undefined,
+        "pending": PromiseQueue {
+          "queue": Array [],
+          "queueing": false,
+        },
+        "props": Object {
+          "autoCreate": true,
+          "autoLocateAfterCreate": true,
+          "autoLocateAfterRemove": true,
+          "autoLocateFirst": true,
+          "autoQuery": false,
+          "autoQueryAfterSubmit": true,
+          "dataToJSON": "dirty",
+          "events": Object {
+            "update": [Function],
+          },
+          "fields": Array [
+            Object {
+              "defaultValue": "#00ff12",
+              "name": "color",
+              "required": true,
+              "type": "color",
+            },
+          ],
+          "modifiedCheck": true,
+          "pageSize": 10,
+          "paging": true,
+          "selection": "multiple",
+        },
+        "queryParameter": Object {},
+        "records": Array [
+          Record {
+            "cascadeRecordsMap": Object {},
+            "data": Object {
+              "color": "#00ff12",
+            },
+            "dataSet": [Circular],
+            "dataSetSnapshot": Object {},
+            "editing": undefined,
+            "fields": Object {
+              "color": Field {
+                "dataSet": [Circular],
+                "isDynamicPropsComputing": false,
+                "lastDynamicProps": Object {},
+                "pending": PromiseQueue {
+                  "queue": Array [],
+                  "queueing": false,
+                },
+                "pristineProps": Object {
+                  "name": "color",
+                },
+                "props": Object {
+                  "name": "color",
+                },
+                "record": [Circular],
+                "validator": Validator {
+                  "control": undefined,
+                  "field": [Circular],
+                  "innerValidationResults": Array [],
+                },
+              },
+            },
+            "id": 1001,
+            "isCached": false,
+            "isCurrent": true,
+            "isSelected": false,
+            "pristineData": Object {
+              "color": "#00ff12",
+            },
+            "selectable": true,
+            "state": Object {},
+            "status": "add",
+          },
+        ],
+        "resetInBatch": false,
+        "selection": "multiple",
+        "status": "ready",
+        "syncChildrenRemote": [Function],
+        "totalCount": 0,
+      }
+    }
+    multiple={false}
+    name="color"
+    noValidate={false}
+    readOnly={false}
+    showHelp="newLine"
+    suffixCls="color-picker"
+    trigger={
+      Array [
+        "focus",
+        "click",
+      ]
+    }
+    triggerHiddenDelay={50}
+    triggerShowDelay={150}
+    trim="both"
+  >
+    <Tooltip
+      arrowPointAtCenter={false}
+      autoAdjustOverflow={true}
+      defaultHidden={true}
+      mouseEnterDelay={100}
+      mouseLeaveDelay={100}
+      placement="bottomLeft"
+      suffixCls="tooltip"
+      theme="light"
+      title={null}
+      transitionName="zoom-big-fast"
+      trigger={
+        Array [
+          "hover",
+        ]
+      }
+    >
+      <Trigger
+        action={
+          Array [
+            "hover",
+          ]
+        }
+        arrowPointAtCenter={false}
+        autoAdjustOverflow={true}
+        blurDelay={0}
+        builtinPlacements={
+          Object {
+            "bottom": Object {
+              "offset": Array [
+                0,
+                10,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "tc",
+                "bc",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+            "bottomLeft": Object {
+              "offset": Array [
+                0,
+                10,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "tl",
+                "bl",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+            "bottomRight": Object {
+              "offset": Array [
+                0,
+                10,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "tr",
+                "br",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+            "left": Object {
+              "offset": Array [
+                -10,
+                0,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "cr",
+                "cl",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+            "leftBottom": Object {
+              "offset": Array [
+                -10,
+                0,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "br",
+                "bl",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+            "leftTop": Object {
+              "offset": Array [
+                -10,
+                0,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "tr",
+                "tl",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+            "right": Object {
+              "offset": Array [
+                10,
+                0,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "cl",
+                "cr",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+            "rightBottom": Object {
+              "offset": Array [
+                10,
+                0,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "bl",
+                "br",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+            "rightTop": Object {
+              "offset": Array [
+                10,
+                0,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "tl",
+                "tr",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+            "top": Object {
+              "offset": Array [
+                0,
+                -10,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "bc",
+                "tc",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+            "topLeft": Object {
+              "offset": Array [
+                0,
+                -10,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "bl",
+                "tl",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+            "topRight": Object {
+              "offset": Array [
+                0,
+                -10,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "br",
+                "tr",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+          }
+        }
+        defaultPopupHidden={true}
+        focusDelay={150}
+        mouseEnterDelay={100}
+        mouseLeaveDelay={100}
+        popupContent={null}
+        popupPlacement="bottomLeft"
+        prefixCls="c7n-pro-tooltip"
+        suffixCls="tooltip"
+        theme="light"
+        title={null}
+        transitionName="zoom-big-fast"
+      >
+        <TriggerChild
+          key=".$.$element"
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <span
+            className="c7n-pro-color-picker-wrapper c7n-pro-color-picker-required c7n-pro-color-picker-suffix-button c7n-pro-color-picker-prefix-button"
+            key=".$element"
+            onBlur={[Function]}
+            onClick={[Function]}
+            onContextMenu={[Function]}
+            onFocus={[Function]}
+            onMouseDown={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+          >
+            <label
+              onMouseDown={[Function]}
+            >
+              <div
+                className="c7n-pro-color-picker-prefix"
+              >
+                <span
+                  className="c7n-pro-color-picker-color"
+                  style={
+                    Object {
+                      "backgroundColor": "#00ff12",
+                    }
+                  }
+                />
+              </div>
+              <Trigger
+                action={
+                  Array [
+                    "focus",
+                    "click",
+                  ]
+                }
+                blurDelay={50}
+                builtinPlacements={
+                  Object {
+                    "bottomLeft": Object {
+                      "offset": Array [
+                        0,
+                        4,
+                      ],
+                      "overflow": Object {
+                        "adjustX": 1,
+                        "adjustY": 1,
+                      },
+                      "points": Array [
+                        "tl",
+                        "bl",
+                      ],
+                    },
+                    "bottomRight": Object {
+                      "offset": Array [
+                        0,
+                        4,
+                      ],
+                      "overflow": Object {
+                        "adjustX": 1,
+                        "adjustY": 1,
+                      },
+                      "points": Array [
+                        "tr",
+                        "br",
+                      ],
+                    },
+                    "topLeft": Object {
+                      "offset": Array [
+                        0,
+                        -4,
+                      ],
+                      "overflow": Object {
+                        "adjustX": 1,
+                        "adjustY": 1,
+                      },
+                      "points": Array [
+                        "bl",
+                        "tl",
+                      ],
+                    },
+                    "topRight": Object {
+                      "offset": Array [
+                        0,
+                        -4,
+                      ],
+                      "overflow": Object {
+                        "adjustX": 1,
+                        "adjustY": 1,
+                      },
+                      "points": Array [
+                        "br",
+                        "tr",
+                      ],
+                    },
+                  }
+                }
+                defaultPopupHidden={true}
+                focusDelay={150}
+                getPopupStyleFromAlign={[Function]}
+                getRootDomNode={[Function]}
+                mouseEnterDelay={150}
+                mouseLeaveDelay={50}
+                onPopupAnimateAppear={[Function]}
+                onPopupAnimateEnd={[Function]}
+                onPopupHiddenChange={[Function]}
+                popupContent={
+                  <div
+                    className="c7n-pro-color-picker-popup-view"
+                  >
+                    <div
+                      className="c7n-pro-color-picker-popup-body"
+                      style={
+                        Object {
+                          "backgroundColor": "#00ff12",
+                        }
+                      }
+                    >
+                      <div
+                        className="c7n-pro-color-picker-popup-body-gradient"
+                        onClick={[Function]}
+                      />
+                      <div
+                        className="c7n-pro-color-picker-popup-body-selector"
+                        onMouseDown={[Function]}
+                      />
+                    </div>
+                    <div
+                      className="c7n-pro-color-picker-popup-footer"
+                    >
+                      <div
+                        className="c7n-pro-color-picker-popup-footer-slider"
+                      >
+                        <div
+                          className="hue"
+                          onClick={[Function]}
+                        />
+                        <div
+                          className="c7n-pro-color-picker-popup-footer-slider-pointer"
+                          onMouseDown={[Function]}
+                        />
+                      </div>
+                      <div
+                        className="c7n-pro-color-picker-popup-footer-slider opacity"
+                      >
+                        <div
+                          className="c7n-pro-color-picker-popup-footer-slider-pointer"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                }
+                popupHidden={true}
+                popupPlacement="bottomLeft"
+                prefixCls="c7n-pro-color-picker"
+                transitionName="slide-up"
+              >
+                <TriggerChild
+                  key=".$text"
+                  onBlur={[Function]}
+                  onClick={[Function]}
+                  onFocus={[Function]}
+                  onMouseDown={[Function]}
+                >
+                  <input
+                    autoComplete="off"
+                    className="c7n-pro-color-picker"
+                    key="text"
+                    multiple={false}
+                    name="color"
+                    noValidate={false}
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onClick={[Function]}
+                    onContextMenu={[Function]}
+                    onFocus={[Function]}
+                    onKeyDown={[Function]}
+                    onMouseDown={[Function]}
+                    onMouseEnter={[Function]}
+                    onMouseLeave={[Function]}
+                    readOnly={false}
+                    type="text"
+                    value="#00ff12"
+                  />
+                </TriggerChild>
+                <Popup
+                  align={
+                    Object {
+                      "offset": Array [
+                        0,
+                        4,
+                      ],
+                      "overflow": Object {
+                        "adjustX": 1,
+                        "adjustY": 1,
+                      },
+                      "points": Array [
+                        "tl",
+                        "bl",
+                      ],
+                    }
+                  }
+                  className="c7n-pro-color-picker-popup"
+                  getClassNameFromAlign={[Function]}
+                  getRootDomNode={[Function]}
+                  getStyleFromAlign={[Function]}
+                  hidden={true}
+                  key="popup"
+                  onAnimateAppear={[Function]}
+                  onAnimateEnd={[Function]}
+                  onMouseDown={[Function]}
+                  suffixCls="popup"
+                  transitionName="slide-up"
+                />
+              </Trigger>
+              <div
+                className="c7n-pro-color-picker-suffix"
+                onMouseDown={[Function]}
+              >
+                <Icon
+                  className="c7n-pro-color-picker-trigger"
+                  type="palette"
+                >
+                  <i
+                    className="icon icon-palette c7n-pro-color-picker-trigger"
+                  />
+                </Icon>
+              </div>
+            </label>
+          </span>
+        </TriggerChild>
+        <Popup
+          align={
+            Object {
+              "offset": Array [
+                0,
+                10,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "tl",
+                "bl",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            }
+          }
+          className="c7n-pro-tooltip-popup"
+          getClassNameFromAlign={[Function]}
+          getRootDomNode={[Function]}
+          hidden={true}
+          key="popup"
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          suffixCls="popup"
+          transitionName="zoom-big-fast"
+        />
+      </Trigger>
+    </Tooltip>
+  </ColorPicker>
+</ColorPickerTest>
+`;

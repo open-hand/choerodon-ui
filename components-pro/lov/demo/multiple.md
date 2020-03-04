@@ -38,7 +38,7 @@ class App extends React.Component {
         lovCode: 'LOV_CODE',
         multiple: true,
         required: true,
-        defaultValue: [{}],
+        defaultValue: ['Mock'],
       },
     ],
     cacheSelection: true,
