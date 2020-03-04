@@ -1,0 +1,187 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders ./components-pro/dropdown/demo/basic.md correctly 1`] = `
+<div>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+    type="button"
+  >
+    <span>
+      Click
+      <i
+        class="icon icon-arrow_drop_down"
+      />
+    </span>
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+</div>
+`;
+
+exports[`renders ./components-pro/dropdown/demo/context-menu.md correctly 1`] = `
+<span
+  style="user-select:none"
+>
+  Right Click on Me
+</span>
+`;
+
+exports[`renders ./components-pro/dropdown/demo/event.md correctly 1`] = `
+<button
+  class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+  type="button"
+>
+  <span>
+    Click me, Click menu item 
+    <i
+      class="icon icon-arrow_drop_down"
+    />
+  </span>
+  <div
+    class="c7n-ripple-wrapper"
+  />
+</button>
+`;
+
+exports[`renders ./components-pro/dropdown/demo/item.md correctly 1`] = `
+<button
+  class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+  type="button"
+>
+  <span>
+    Click me 
+    <i
+      class="icon icon-arrow_drop_down"
+    />
+  </span>
+  <div
+    class="c7n-ripple-wrapper"
+  />
+</button>
+`;
+
+exports[`renders ./components-pro/dropdown/demo/overlay-visible.md correctly 1`] = `
+<button
+  class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+  type="button"
+>
+  <span>
+    Click me 
+    <i
+      class="icon icon-arrow_drop_down"
+    />
+  </span>
+  <div
+    class="c7n-ripple-wrapper"
+  />
+</button>
+`;
+
+exports[`renders ./components-pro/dropdown/demo/placement.md correctly 1`] = `
+<div>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+    type="button"
+  >
+    <span>
+      bottomLeft
+    </span>
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+    type="button"
+  >
+    <span>
+      bottomCenter
+    </span>
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+    type="button"
+  >
+    <span>
+      bottomRight
+    </span>
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+  <br />
+  <button
+    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+    type="button"
+  >
+    <span>
+      topLeft
+    </span>
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+    type="button"
+  >
+    <span>
+      topCenter
+    </span>
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+    type="button"
+  >
+    <span>
+      topRight
+    </span>
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+</div>
+`;
+
+exports[`renders ./components-pro/dropdown/demo/sub-menu.md correctly 1`] = `
+<button
+  class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+  type="button"
+>
+  <span>
+    Cascading menu 
+    <i
+      class="icon icon-arrow_drop_down"
+    />
+  </span>
+  <div
+    class="c7n-ripple-wrapper"
+  />
+</button>
+`;
+
+exports[`renders ./components-pro/dropdown/demo/trigger.md correctly 1`] = `
+<div>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+    type="button"
+  >
+    <span>
+      Hover me 
+      <i
+        class="icon icon-arrow_drop_down"
+      />
+    </span>
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+</div>
+`;

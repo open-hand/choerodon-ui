@@ -1,0 +1,302 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders ./components-pro/radio/demo/basic.md correctly 1`] = `
+<div>
+  <label
+    class="c7n-pro-radio-wrapper"
+  >
+    <input
+      checked=""
+      class="c7n-pro-radio"
+      name="base"
+      type="radio"
+      value="A"
+    />
+    <span
+      class="c7n-pro-radio-inner"
+    />
+    <span
+      class="c7n-pro-radio-label"
+    >
+      A
+    </span>
+  </label>
+  <label
+    class="c7n-pro-radio-wrapper"
+  >
+    <input
+      class="c7n-pro-radio"
+      name="base"
+      type="radio"
+      value="B"
+    />
+    <span
+      class="c7n-pro-radio-inner"
+    />
+    <span
+      class="c7n-pro-radio-label"
+    >
+      B
+    </span>
+  </label>
+  <label
+    class="c7n-pro-radio-wrapper"
+  >
+    <input
+      class="c7n-pro-radio"
+      name="base"
+      type="radio"
+      value="C"
+    />
+    <span
+      class="c7n-pro-radio-inner"
+    />
+    <span
+      class="c7n-pro-radio-label"
+    >
+      C
+    </span>
+  </label>
+</div>
+`;
+
+exports[`renders ./components-pro/radio/demo/button.md correctly 1`] = `
+<div>
+  <label
+    class="c7n-pro-radio-wrapper c7n-pro-radio-button"
+  >
+    <input
+      checked=""
+      class="c7n-pro-radio"
+      name="base"
+      type="radio"
+      value="A"
+    />
+    <span
+      class="c7n-pro-radio-inner"
+    />
+    <span
+      class="c7n-pro-radio-label"
+    >
+      A
+    </span>
+  </label>
+  <label
+    class="c7n-pro-radio-wrapper c7n-pro-radio-button"
+  >
+    <input
+      class="c7n-pro-radio"
+      name="base"
+      type="radio"
+      value="B"
+    />
+    <span
+      class="c7n-pro-radio-inner"
+    />
+    <span
+      class="c7n-pro-radio-label"
+    >
+      B
+    </span>
+  </label>
+  <label
+    class="c7n-pro-radio-wrapper c7n-pro-radio-button"
+  >
+    <input
+      class="c7n-pro-radio"
+      name="base"
+      type="radio"
+      value="C"
+    />
+    <span
+      class="c7n-pro-radio-inner"
+    />
+    <span
+      class="c7n-pro-radio-label"
+    >
+      C
+    </span>
+  </label>
+</div>
+`;
+
+exports[`renders ./components-pro/radio/demo/controlled.md correctly 1`] = `
+<div>
+  <label
+    class="c7n-pro-radio-wrapper"
+  >
+    <input
+      checked=""
+      class="c7n-pro-radio"
+      name="controlled"
+      type="radio"
+      value="A"
+    />
+    <span
+      class="c7n-pro-radio-inner"
+    />
+    <span
+      class="c7n-pro-radio-label"
+    >
+      A
+    </span>
+  </label>
+  <label
+    class="c7n-pro-radio-wrapper"
+  >
+    <input
+      class="c7n-pro-radio"
+      name="controlled"
+      type="radio"
+      value="B"
+    />
+    <span
+      class="c7n-pro-radio-inner"
+    />
+    <span
+      class="c7n-pro-radio-label"
+    >
+      B
+    </span>
+  </label>
+  <label
+    class="c7n-pro-radio-wrapper"
+  >
+    <input
+      class="c7n-pro-radio"
+      name="controlled"
+      type="radio"
+      value="C"
+    />
+    <span
+      class="c7n-pro-radio-inner"
+    />
+    <span
+      class="c7n-pro-radio-label"
+    >
+      C
+    </span>
+  </label>
+</div>
+`;
+
+exports[`renders ./components-pro/radio/demo/dataset.md correctly 1`] = `
+<div>
+  <label
+    class="c7n-pro-radio-wrapper"
+  >
+    <input
+      checked=""
+      class="c7n-pro-radio"
+      name="bind"
+      type="radio"
+      value="A"
+    />
+    <span
+      class="c7n-pro-radio-inner"
+    />
+    <span
+      class="c7n-pro-radio-label"
+    >
+      A
+    </span>
+  </label>
+  <label
+    class="c7n-pro-radio-wrapper"
+  >
+    <input
+      class="c7n-pro-radio"
+      name="bind"
+      type="radio"
+      value="B"
+    />
+    <span
+      class="c7n-pro-radio-inner"
+    />
+    <span
+      class="c7n-pro-radio-label"
+    >
+      B
+    </span>
+  </label>
+  <label
+    class="c7n-pro-radio-wrapper"
+  >
+    <input
+      class="c7n-pro-radio"
+      name="bind"
+      type="radio"
+      value="C"
+    />
+    <span
+      class="c7n-pro-radio-inner"
+    />
+    <span
+      class="c7n-pro-radio-label"
+    >
+      C
+    </span>
+  </label>
+</div>
+`;
+
+exports[`renders ./components-pro/radio/demo/readonly.md correctly 1`] = `
+<div>
+  <label
+    class="c7n-pro-radio-wrapper c7n-pro-radio-disabled"
+  >
+    <input
+      class="c7n-pro-radio"
+      disabled=""
+      name="rd"
+      type="radio"
+      value="on"
+    />
+    <span
+      class="c7n-pro-radio-inner"
+    />
+    <span
+      class="c7n-pro-radio-label"
+    >
+      A
+    </span>
+  </label>
+  <label
+    class="c7n-pro-radio-wrapper"
+  >
+    <input
+      class="c7n-pro-radio"
+      name="rd"
+      type="radio"
+      value="on"
+    />
+    <span
+      class="c7n-pro-radio-inner"
+    />
+    <span
+      class="c7n-pro-radio-label"
+    >
+      B
+    </span>
+  </label>
+  <label
+    class="c7n-pro-radio-wrapper"
+  >
+    <input
+      checked=""
+      class="c7n-pro-radio"
+      name="rd"
+      type="radio"
+      value="C"
+    />
+    <span
+      class="c7n-pro-radio-inner"
+    />
+    <span
+      class="c7n-pro-radio-label"
+    >
+      C
+    </span>
+  </label>
+</div>
+`;

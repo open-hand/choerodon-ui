@@ -19,7 +19,7 @@ import { observer } from 'mobx-react';
 import noop from 'lodash/noop';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import warning from 'choerodon-ui/lib/_util/warning';
-import { getProPrefixCls } from 'choerodon-ui/lib/configure';
+import { getProPrefixCls, getConfig } from 'choerodon-ui/lib/configure';
 import autobind from '../_util/autobind';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
@@ -1009,6 +1009,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
         );
         return (
           <Tooltip
+            suffixCls={`form-tooltip ${getConfig('proPrefixCls')}-tooltip`}
             key={`${key}-${repeat}`}
             title={validationMessage}
             theme="light"
@@ -1123,6 +1124,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       ]
     ) : (
       <Tooltip
+        suffixCls={`form-tooltip ${getConfig('proPrefixCls')}-tooltip`}
         title={
           !!(this.multiple && this.getValues().length) ||
           this.isValidationMessageHidden(validationMessage)
