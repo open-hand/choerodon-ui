@@ -4,10 +4,18 @@ import moment from 'moment';
 import DateTimePicker from '../../date-time-picker';
 import DateTimesTest from './DateTimeTest';
 import focusTest from '../../../tests/shared/focusTest';
-import { disableWrapper } from './utils';
+import { disableWrapper, simulateCode } from './utils';
 
 describe('dateTimes-picker-pro', () => {
   focusTest(DateTimePicker);
+
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
+  });
 
   it('the dateTime will be controlled by the value', () => {
     const wrapper = mount(<DateTimePicker value={moment('2020-02-19')} />);
@@ -30,6 +38,15 @@ describe('dateTimes-picker-pro', () => {
   it('should has disabled property can not do anything', () => {
     const wrapper = mount(<DateTimePicker />);
     disableWrapper(wrapper);
+  });
+
+  it('the keyDown event { right } keyCode should render correctly', () => {
+    const wrapper = mount(<DateTimePicker mode="dateTime" />);
+    wrapper.find('input').simulate('click');
+    jest.runAllTimers();
+    wrapper.update();
+    simulateCode(wrapper, 39);
+    wrapper.update();
   });
 
   it('should renders dataset default value correctly', () => {

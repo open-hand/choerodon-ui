@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import moment from 'moment';
 import MonthsPicker from '../../month-picker';
 import focusTest from '../../../tests/shared/focusTest';
-import { disableWrapper } from './utils';
+import { disableWrapper, simulateCode } from './utils';
 
 describe('months-picker-pro', () => {
   focusTest(MonthsPicker);
@@ -40,7 +40,7 @@ describe('months-picker-pro', () => {
   });
 
   it('should has min-max value', () => {
-    const wrapper = mount(<MonthsPicker min={new Date()} />);
+    const wrapper = mount(<MonthsPicker min={moment('2021-01-01')} />);
     wrapper.find('.c7n-pro-calendar-picker-wrapper').simulate('click');
     jest.runAllTimers();
     expect(
@@ -49,5 +49,27 @@ describe('months-picker-pro', () => {
         .at(0)
         .hasClass('c7n-pro-calendar-picker-popup'),
     ).toBe(true);
+  });
+
+  it('the choose method should render correctly', () => {
+    const wrapper = mount(<MonthsPicker />);
+    wrapper.instance().choose(moment('2021-01-01'));
+    jest.runAllTimers();
+  });
+
+  it('the keyDown event keyCode should render correctly', () => {
+    const wrapper = mount(<MonthsPicker mode="month" />);
+    wrapper.find('input').simulate('click');
+    jest.runAllTimers();
+    wrapper.update();
+    simulateCode(wrapper, 39);
+    simulateCode(wrapper, 37);
+    simulateCode(wrapper, 40);
+    simulateCode(wrapper, 38);
+    simulateCode(wrapper, 35);
+    simulateCode(wrapper, 36);
+    simulateCode(wrapper, 33);
+    simulateCode(wrapper, 34);
+    wrapper.update();
   });
 });

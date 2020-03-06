@@ -11,19 +11,12 @@ focusTest(ColorPicker);
 triggerTest(ColorPicker);
 
 describe('color-picker-pro', () => {
-  const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-
   beforeEach(() => {
     jest.useFakeTimers();
   });
 
   afterEach(() => {
-    errorSpy.mockReset();
     jest.useRealTimers();
-  });
-
-  afterAll(() => {
-    errorSpy.mockRestore();
   });
 
   it('renders ColorPicker correctly', () => {
@@ -36,7 +29,6 @@ describe('color-picker-pro', () => {
     expect(wrapper.props().clearButton).toEqual(false);
     expect(wrapper.props().triggerHiddenDelay).toEqual(50);
     expect(wrapper.props().triggerShowDelay).toEqual(150);
-    expect(wrapper.props().trigger).toEqual(['focus', 'click']);
   });
 
   it('should has the defaultValue', () => {
@@ -70,10 +62,7 @@ describe('color-picker-pro', () => {
 
   it('can not click or input when the readOnly true and default false', () => {
     const handleChange = jest.fn();
-    const handlePopupChange = jest.fn();
-    const wrapper = mount(
-      <ColorPicker onChange={handleChange} onPopupHiddenChange={handlePopupChange} />,
-    );
+    const wrapper = mount(<ColorPicker onChange={handleChange} />);
     expect(wrapper.prop('readOnly')).toBe(false);
     wrapper.setProps({ readOnly: true });
     wrapper.update();
@@ -84,6 +73,66 @@ describe('color-picker-pro', () => {
     wrapper.update();
     expect(handleChange).not.toHaveBeenCalled();
   });
+  it('should trigger dataset default value correctly', () => {
+    const wrapper = mount(<ColorPicker />);
+    expect(
+      wrapper
+        .find('.c7n-pro-color-picker-popup')
+        .at(0)
+        .prop('hidden'),
+    ).toEqual(true);
+    wrapper.find('input').simulate('click');
+    jest.runAllTimers();
+    wrapper.update();
+    expect(
+      wrapper
+        .find('.c7n-pro-color-picker-popup')
+        .at(0)
+        .prop('hidden'),
+    ).toEqual(false);
+  });
+
+  it('footer-slider click event render correctly', () => {
+    const wrapper = mount(<ColorPicker />);
+    wrapper.find('input').simulate('click');
+    jest.runAllTimers();
+    wrapper.find('.hue').simulate('click');
+    jest.runAllTimers();
+    expect(wrapper).toMatchSnapshot();
+  });
+
+  it('the change event trigger when the body popup clicked', () => {
+    const handleChange = jest.fn();
+    const wrapper = mount(<ColorPicker onChange={handleChange} />);
+    wrapper.find('input').simulate('click');
+    jest.runAllTimers();
+    wrapper.find('.c7n-pro-color-picker-popup-body-gradient').simulate('click');
+    jest.runAllTimers();
+    expect(handleChange).toHaveBeenCalled();
+  });
+
+  it('the panel body click event render correctly', () => {
+    const wrapper = mount(<ColorPicker />);
+    wrapper.find('input').simulate('click');
+    jest.runAllTimers();
+    wrapper.find('.c7n-pro-color-picker-popup-body-selector').simulate('mousedown');
+    expect(wrapper).toMatchSnapshot();
+  });
+
+  it('the sliderPointer of footer click event render correctly', () => {
+    const wrapper = mount(<ColorPicker />);
+    wrapper.find('input').simulate('click');
+    jest.runAllTimers();
+    wrapper
+      .find('.c7n-pro-color-picker-popup-footer-slider-pointer')
+      .at(0)
+      .simulate('mousedown');
+    jest.runAllTimers();
+    wrapper.instance().setColor('#ff00ee');
+    jest.runAllTimers();
+    expect(wrapper).toMatchSnapshot();
+  });
+
   it('should renders dataset default value correctly', () => {
     const wrapper = mount(<ColorPickerTest />);
     expect(wrapper.find('ColorPicker').props().name).toEqual('color');

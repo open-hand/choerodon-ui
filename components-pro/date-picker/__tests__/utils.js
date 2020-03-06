@@ -27,3 +27,8 @@ export const disableWrapper = wrapper => {
       .hasClass('c7n-pro-calendar-picker-disabled'),
   ).toBe(true);
 };
+
+export const simulateCode = (wrapper, keycode) => {
+  wrapper.find('input').simulate('keydown', { keyCode: keycode });
+  jest.runAllTimers();
+};

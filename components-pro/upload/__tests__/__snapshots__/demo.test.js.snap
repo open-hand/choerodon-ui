@@ -426,13 +426,14 @@ exports[`renders ./components-pro/upload/demo/upload-method.md correctly 1`] = `
             class="c7n-pro-field-wrapper"
           >
             <button
-              class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper c7n-pro-field"
+              class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-primary c7n-pro-btn-wrapper c7n-pro-field"
               colindex="0"
               rowindex="1"
+              style="margin-bottom:10px"
               type="button"
             >
               <span>
-                选择文件
+                提交
               </span>
               <div
                 class="c7n-ripple-wrapper"

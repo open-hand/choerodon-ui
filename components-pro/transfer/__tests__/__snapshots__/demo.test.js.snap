@@ -2,6 +2,21 @@
 
 exports[`renders ./components-pro/transfer/demo/basic.md correctly 1`] = `
 <div>
+  <label
+    class="c7n-pro-switch-wrapper"
+  >
+    <input
+      class="c7n-pro-switch"
+      type="checkbox"
+      value="true"
+    />
+    <span
+      class="c7n-pro-switch-label"
+    >
+      disabled
+    </span>
+  </label>
+  <br />
   <span
     class="c7n-pro-transfer-wrapper"
   >
@@ -666,6 +681,199 @@ exports[`renders ./components-pro/transfer/demo/dataset.md correctly 1`] = `
                 </span>
               </label>
               Huazhen
+              <div
+                class="c7n-ripple-wrapper"
+              />
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </span>
+  <span
+    class="c7n-pro-transfer-wrapper"
+  >
+    <div
+      class="c7n-pro-transfer c7n-pro-transfer-with-header"
+    >
+      <div
+        class="c7n-pro-transfer-header"
+      >
+        <label
+          class="c7n-pro-checkbox-wrapper"
+        >
+          <input
+            class="c7n-pro-checkbox"
+            type="checkbox"
+            value="true"
+          />
+          <i
+            class="c7n-pro-checkbox-inner"
+          />
+          <span
+            class="c7n-pro-checkbox-label"
+          >
+            <span
+              class="c7n-pro-transfer-header-selected"
+            >
+              2项
+            </span>
+          </span>
+        </label>
+      </div>
+      <div
+        class="c7n-pro-transfer-body"
+      >
+        <div
+          class="c7n-pro-transfer-content-wrapper"
+        >
+          <ul
+            class="c7n-pro-transfer-content  c7n-pro-transfer-content-root c7n-pro-transfer-content-vertical"
+            role="menu"
+            tabindex="0"
+          >
+            <li
+              aria-disabled="false"
+              aria-selected="false"
+              class="c7n-pro-transfer-content-item c7n-pro-transfer-content-item-active"
+              role="menuitem"
+            >
+              <label
+                class="c7n-checkbox-wrapper"
+              >
+                <span
+                  class="c7n-checkbox"
+                >
+                  <input
+                    class="c7n-checkbox-input"
+                    tabindex="-1"
+                    type="checkbox"
+                  />
+                  <span
+                    class="c7n-checkbox-inner"
+                  />
+                </span>
+              </label>
+              Jack
+              <div
+                class="c7n-ripple-wrapper"
+              />
+            </li>
+            <li
+              aria-disabled="false"
+              aria-selected="false"
+              class="c7n-pro-transfer-content-item"
+              role="menuitem"
+            >
+              <label
+                class="c7n-checkbox-wrapper"
+              >
+                <span
+                  class="c7n-checkbox"
+                >
+                  <input
+                    class="c7n-checkbox-input"
+                    tabindex="-1"
+                    type="checkbox"
+                  />
+                  <span
+                    class="c7n-checkbox-inner"
+                  />
+                </span>
+              </label>
+              Lucy
+              <div
+                class="c7n-ripple-wrapper"
+              />
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c7n-pro-transfer-operation"
+    >
+      <button
+        class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-primary c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-btn-sm c7n-pro-btn-disabled"
+        disabled=""
+        type="button"
+      >
+        <i
+          class="icon icon-navigate_before"
+        />
+      </button>
+      <button
+        class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-primary c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-btn-sm c7n-pro-btn-disabled"
+        disabled=""
+        type="button"
+      >
+        <i
+          class="icon icon-navigate_next"
+        />
+      </button>
+    </div>
+    <div
+      class="c7n-pro-transfer c7n-pro-transfer-with-header"
+    >
+      <div
+        class="c7n-pro-transfer-header"
+      >
+        <label
+          class="c7n-pro-checkbox-wrapper"
+        >
+          <input
+            class="c7n-pro-checkbox"
+            type="checkbox"
+            value="true"
+          />
+          <i
+            class="c7n-pro-checkbox-inner"
+          />
+          <span
+            class="c7n-pro-checkbox-label"
+          >
+            <span
+              class="c7n-pro-transfer-header-selected"
+            >
+              1项
+            </span>
+          </span>
+        </label>
+      </div>
+      <div
+        class="c7n-pro-transfer-body"
+      >
+        <div
+          class="c7n-pro-transfer-content-wrapper"
+        >
+          <ul
+            class="c7n-pro-transfer-content  c7n-pro-transfer-content-root c7n-pro-transfer-content-vertical"
+            role="menu"
+            tabindex="0"
+          >
+            <li
+              aria-disabled="false"
+              aria-selected="false"
+              class="c7n-pro-transfer-content-item c7n-pro-transfer-content-item-active"
+              role="menuitem"
+            >
+              <label
+                class="c7n-checkbox-wrapper"
+              >
+                <span
+                  class="c7n-checkbox"
+                >
+                  <input
+                    class="c7n-checkbox-input"
+                    tabindex="-1"
+                    type="checkbox"
+                  />
+                  <span
+                    class="c7n-checkbox-inner"
+                  />
+                </span>
+              </label>
+              Wu
               <div
                 class="c7n-ripple-wrapper"
               />

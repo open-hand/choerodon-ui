@@ -1,0 +1,281 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders ./components-pro/switch/demo/basic.md correctly 1`] = `
+<label
+  class="c7n-pro-switch-wrapper"
+>
+  <input
+    checked=""
+    class="c7n-pro-switch"
+    type="checkbox"
+    value="true"
+  />
+  <span
+    class="c7n-pro-switch-label"
+  />
+</label>
+`;
+
+exports[`renders ./components-pro/switch/demo/controlled.md correctly 1`] = `
+<div>
+  <label
+    class="c7n-pro-switch-wrapper"
+  >
+    <input
+      checked=""
+      class="c7n-pro-switch"
+      name="controlled"
+      type="checkbox"
+      value="A"
+    />
+    <span
+      class="c7n-pro-switch-label"
+    />
+  </label>
+  <br />
+  <label
+    class="c7n-pro-switch-wrapper"
+  >
+    <input
+      class="c7n-pro-switch"
+      name="controlled"
+      type="checkbox"
+      value="B"
+    />
+    <span
+      class="c7n-pro-switch-label"
+    />
+  </label>
+  <br />
+  <label
+    class="c7n-pro-switch-wrapper"
+  >
+    <input
+      class="c7n-pro-switch"
+      name="controlled"
+      type="checkbox"
+      value="C"
+    />
+    <span
+      class="c7n-pro-switch-label"
+    />
+  </label>
+</div>
+`;
+
+exports[`renders ./components-pro/switch/demo/dataset.md correctly 1`] = `
+<div>
+  <label
+    class="c7n-pro-switch-wrapper"
+  >
+    <input
+      checked=""
+      class="c7n-pro-switch"
+      name="bind"
+      type="checkbox"
+      value="A"
+    />
+    <span
+      class="c7n-pro-switch-label"
+    />
+  </label>
+  <label
+    class="c7n-pro-switch-wrapper"
+  >
+    <input
+      class="c7n-pro-switch"
+      name="bind"
+      type="checkbox"
+      value="B"
+    />
+    <span
+      class="c7n-pro-switch-label"
+    />
+  </label>
+  <label
+    class="c7n-pro-switch-wrapper"
+  >
+    <input
+      class="c7n-pro-switch"
+      name="bind"
+      type="checkbox"
+      value="C"
+    />
+    <span
+      class="c7n-pro-switch-label"
+    />
+  </label>
+  <label
+    class="c7n-pro-switch-wrapper"
+  >
+    <input
+      class="c7n-pro-switch"
+      name="bind2"
+      type="checkbox"
+      value="true"
+    />
+    <span
+      class="c7n-pro-switch-label"
+    />
+  </label>
+  <label
+    class="c7n-pro-switch-wrapper"
+  >
+    <input
+      class="c7n-pro-switch"
+      name="bind3"
+      type="checkbox"
+      value="Y"
+    />
+    <span
+      class="c7n-pro-switch-label"
+    />
+  </label>
+</div>
+`;
+
+exports[`renders ./components-pro/switch/demo/readonly.md correctly 1`] = `
+<div>
+  <label
+    class="c7n-pro-switch-wrapper c7n-pro-switch-disabled"
+  >
+    <input
+      class="c7n-pro-switch"
+      disabled=""
+      name="rd"
+      type="checkbox"
+      value="true"
+    />
+    <span
+      class="c7n-pro-switch-label"
+    />
+  </label>
+  <br />
+  <label
+    class="c7n-pro-switch-wrapper"
+  >
+    <input
+      class="c7n-pro-switch"
+      name="rd"
+      type="checkbox"
+      value="true"
+    />
+    <span
+      class="c7n-pro-switch-label"
+    />
+  </label>
+  <br />
+  <label
+    class="c7n-pro-switch-wrapper"
+  >
+    <input
+      checked=""
+      class="c7n-pro-switch"
+      name="rd"
+      type="checkbox"
+      value="C"
+    />
+    <span
+      class="c7n-pro-switch-label"
+    />
+  </label>
+</div>
+`;
+
+exports[`renders ./components-pro/switch/demo/size.md correctly 1`] = `
+<div>
+  <label
+    class="c7n-pro-switch-wrapper c7n-pro-switch-lg"
+  >
+    <input
+      checked=""
+      class="c7n-pro-switch"
+      type="checkbox"
+      value="true"
+    />
+    <span
+      class="c7n-pro-switch-label"
+    />
+  </label>
+  <br />
+  <label
+    class="c7n-pro-switch-wrapper"
+  >
+    <input
+      checked=""
+      class="c7n-pro-switch"
+      type="checkbox"
+      value="true"
+    />
+    <span
+      class="c7n-pro-switch-label"
+    />
+  </label>
+  <br />
+  <label
+    class="c7n-pro-switch-wrapper c7n-pro-switch-sm"
+  >
+    <input
+      checked=""
+      class="c7n-pro-switch"
+      type="checkbox"
+      value="true"
+    />
+    <span
+      class="c7n-pro-switch-label"
+    />
+  </label>
+</div>
+`;
+
+exports[`renders ./components-pro/switch/demo/text.md correctly 1`] = `
+<div>
+  <label
+    class="c7n-pro-switch-wrapper"
+  >
+    <input
+      checked=""
+      class="c7n-pro-switch"
+      type="checkbox"
+      value="true"
+    />
+    <span
+      class="c7n-pro-switch-label"
+    >
+      开
+    </span>
+  </label>
+  <br />
+  <label
+    class="c7n-pro-switch-wrapper"
+  >
+    <input
+      class="c7n-pro-switch"
+      type="checkbox"
+      value="true"
+    />
+    <span
+      class="c7n-pro-switch-label"
+    >
+      0
+    </span>
+  </label>
+  <br />
+  <label
+    class="c7n-pro-switch-wrapper"
+  >
+    <input
+      class="c7n-pro-switch"
+      type="checkbox"
+      value="true"
+    />
+    <span
+      class="c7n-pro-switch-label"
+    >
+      <i
+        class="icon icon-close"
+      />
+    </span>
+  </label>
+</div>
+`;

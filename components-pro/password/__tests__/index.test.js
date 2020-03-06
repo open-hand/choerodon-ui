@@ -30,6 +30,45 @@ describe('Password input', () => {
     expect(wrapper.find('.c7n-pro-password-inner-button')).toHaveLength(0);
   });
 
+  it('renders input correctly', () => {
+    const handleInput = jest.fn();
+    const wrapper = mount(<Password value="reveal" onInput={handleInput} />);
+    wrapper
+      .find('.c7n-pro-password')
+      .at(0)
+      .simulate('input', { target: { value: 'revealValue' } });
+    jest.runAllTimers();
+    expect(handleInput).toHaveBeenCalled();
+  });
+
+  it('renders reveal correctly', () => {
+    const wrapper = mount(<Password value="reveal" />);
+    expect(
+      wrapper
+        .find('.c7n-pro-password')
+        .at(0)
+        .prop('type'),
+    ).toBe('password');
+    wrapper.instance().doReveal(wrapper.instance());
+    jest.runAllTimers();
+    wrapper.update();
+    expect(
+      wrapper
+        .find('.c7n-pro-password')
+        .at(0)
+        .prop('type'),
+    ).toBe('text');
+    wrapper.instance().resetReveal(wrapper.instance());
+    jest.runAllTimers();
+    wrapper.update();
+    expect(
+      wrapper
+        .find('.c7n-pro-password')
+        .at(0)
+        .prop('type'),
+    ).toBe('password');
+  });
+
   it('the value will be controlled', () => {
     const wrapper = mount(<Password value="password" />);
     expect(
