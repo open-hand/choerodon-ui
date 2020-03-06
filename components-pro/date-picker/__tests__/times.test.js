@@ -51,7 +51,7 @@ describe('times-picker-pro', () => {
   });
 
   it('should has disabled property can not do anything', () => {
-    const wrapper = mount(<TimesPicker />);
+    const wrapper = mount(<TimesPicker mode="month" />);
     disableWrapper(wrapper);
   });
 });

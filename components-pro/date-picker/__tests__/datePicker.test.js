@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import moment from 'moment';
-import MockDate from 'mockdate';
+// import MockDate from 'mockdate';
 import DatePicker from '..';
 import DatePickerTest from './DatePicker';
 import { openPanel, nextYear, nextMonth, simulateCode } from './utils';
@@ -89,7 +89,7 @@ describe('date-picker-pro', () => {
     wrapper.update();
   });
 
-  it('the keyDown event space keyCode should render correctly', () => {
+  it('the keyDown event {space} keyCode should render correctly', () => {
     const wrapper = mount(<DatePicker />);
     wrapper.find('input').simulate('keydown', { keyCode: 32 });
     jest.runAllTimers();

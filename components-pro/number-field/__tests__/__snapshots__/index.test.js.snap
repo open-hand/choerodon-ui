@@ -1492,12 +1492,12 @@ exports[`NumberField-pro step1 renders correctly 1`] = `
 <NumberField
   autoComplete="off"
   clearButton={false}
-  min={-1}
+  min={null}
   multiple={false}
   noValidate={false}
   readOnly={false}
   showHelp="newLine"
-  step={0.01}
+  step={1.1}
   suffixCls="input-number"
   trim="both"
 >
@@ -1782,7 +1782,7 @@ exports[`NumberField-pro step1 renders correctly 1`] = `
               autoComplete="off"
               className="c7n-pro-input-number"
               key="text"
-              min={-1}
+              min={null}
               multiple={false}
               noValidate={false}
               onBlur={[Function]}
@@ -1790,7 +1790,7 @@ exports[`NumberField-pro step1 renders correctly 1`] = `
               onFocus={[Function]}
               onKeyDown={[Function]}
               readOnly={false}
-              step={0.01}
+              step={1.1}
               type="text"
               value=""
             />
@@ -2349,6 +2349,8 @@ exports[`NumberField-pro the input number should add when the {plus} icon clicke
 <NumberField
   autoComplete="off"
   clearButton={false}
+  max={10}
+  min={0}
   multiple={false}
   noValidate={false}
   readOnly={false}
@@ -2638,6 +2640,8 @@ exports[`NumberField-pro the input number should add when the {plus} icon clicke
               autoComplete="off"
               className="c7n-pro-input-number"
               key="text"
+              max={10}
+              min={0}
               multiple={false}
               noValidate={false}
               onBlur={[Function]}
@@ -2722,6 +2726,8 @@ exports[`NumberField-pro the input number should reduce when the {minus} icon cl
 <NumberField
   autoComplete="off"
   clearButton={false}
+  max={0}
+  min={-10}
   multiple={false}
   noValidate={false}
   readOnly={false}
@@ -3011,6 +3017,8 @@ exports[`NumberField-pro the input number should reduce when the {minus} icon cl
               autoComplete="off"
               className="c7n-pro-input-number"
               key="text"
+              max={0}
+              min={-10}
               multiple={false}
               noValidate={false}
               onBlur={[Function]}
@@ -3020,7 +3028,7 @@ exports[`NumberField-pro the input number should reduce when the {minus} icon cl
               readOnly={false}
               step={1}
               type="text"
-              value="0"
+              value="-10"
             />
             <div
               className="c7n-pro-input-number-inner-button"

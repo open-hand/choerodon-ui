@@ -36,6 +36,10 @@ describe('NumberField-pro', () => {
     wrapper.update();
     wrapper.setProps({ min: -1 });
     wrapper.update();
+    wrapper.setProps({ step: 1.1 });
+    wrapper.update();
+    wrapper.setProps({ min: null });
+    wrapper.update();
     expect(wrapper).toMatchSnapshot();
   });
 
@@ -57,7 +61,7 @@ describe('NumberField-pro', () => {
         .at(0)
         .prop('value'),
     ).toBe('18');
-    wrapper.setProps({ value: 198 });
+    wrapper.setProps({ value: '198' });
     wrapper.update();
     expect(
       wrapper
@@ -65,7 +69,7 @@ describe('NumberField-pro', () => {
         .at(0)
         .prop('value'),
     ).toBe('198');
-    wrapper.setProps({ value: -1 });
+    wrapper.setProps({ value: '-1' });
     wrapper.update();
     expect(
       wrapper
@@ -73,7 +77,7 @@ describe('NumberField-pro', () => {
         .at(0)
         .prop('value'),
     ).toBe('-1');
-    wrapper.setProps({ value: 1 });
+    wrapper.setProps({ value: '1' });
     wrapper.update();
     expect(
       wrapper
@@ -81,6 +85,22 @@ describe('NumberField-pro', () => {
         .at(0)
         .prop('value'),
     ).toBe('1');
+    wrapper.setProps({ value: '12' });
+    wrapper.update();
+    expect(
+      wrapper
+        .find('input')
+        .at(0)
+        .prop('value'),
+    ).toBe('12');
+    wrapper.setProps({ value: null });
+    wrapper.update();
+    expect(
+      wrapper
+        .find('input')
+        .at(0)
+        .prop('value'),
+    ).toBe('');
   });
 
   it('step multiple renders correctly', () => {
@@ -125,7 +145,7 @@ describe('NumberField-pro', () => {
   });
 
   it('the input number should add when the {plus} icon clicked', () => {
-    const wrapper = mount(<NumberField step={1} />);
+    const wrapper = mount(<NumberField step={1} min={0} max={10} />);
     wrapper
       .find('.c7n-pro-input-number-plus')
       .at(0)
@@ -136,7 +156,7 @@ describe('NumberField-pro', () => {
   });
 
   it('the input number should reduce when the {minus} icon clicked', () => {
-    const wrapper = mount(<NumberField step={1} />);
+    const wrapper = mount(<NumberField step={1} min={-10} max={0} />);
     wrapper
       .find('.c7n-pro-input-number-minus')
       .at(0)
@@ -144,6 +164,28 @@ describe('NumberField-pro', () => {
     jest.runOnlyPendingTimers();
     wrapper.update();
     expect(wrapper).toMatchSnapshot();
+  });
+
+  it('the input1 number should reduce when the {minus} icon clicked', () => {
+    const wrapper = mount(<NumberField step={1.1} min={-0.3} />);
+    expect(wrapper.find('.c7n-pro-input-number').prop('value')).toBe('');
+    wrapper
+      .find('.c7n-pro-input-number-minus')
+      .at(0)
+      .simulate('mousedown');
+    jest.runOnlyPendingTimers();
+    wrapper.update();
+    expect(wrapper.find('.c7n-pro-input-number').prop('value')).toBe('-0.3');
+  });
+  it('the restrictInput method render correctly', () => {
+    const wrapper = mount(<NumberField step={1.1} min={0.3} max={9} />);
+    wrapper.instance().restrictInput('8');
+    jest.runOnlyPendingTimers();
+    wrapper.update();
+    expect(wrapper.find('.c7n-pro-input-number').prop('value')).toBe('');
+    wrapper.instance().step(true);
+    jest.runOnlyPendingTimers();
+    wrapper.update();
   });
 
   it('the keydown event should render keyCode { up, down } correctly', () => {

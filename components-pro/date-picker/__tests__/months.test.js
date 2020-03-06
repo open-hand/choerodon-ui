@@ -52,7 +52,7 @@ describe('months-picker-pro', () => {
   });
 
   it('the choose method should render correctly', () => {
-    const wrapper = mount(<MonthsPicker />);
+    const wrapper = mount(<MonthsPicker mode="month" />);
     wrapper.instance().choose(moment('2021-01-01'));
     jest.runAllTimers();
   });
