@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import moment from 'moment';
 import WeeksPicker from '../../week-picker';
 import focusTest from '../../../tests/shared/focusTest';
-import { disableWrapper } from './utils';
+import { disableWrapper, simulateCode } from './utils';
 
 describe('weeks-picker-pro', () => {
   focusTest(WeeksPicker);
@@ -29,5 +29,15 @@ describe('weeks-picker-pro', () => {
   it('should has disabled property can not do anything', () => {
     const wrapper = mount(<WeeksPicker />);
     disableWrapper(wrapper);
+  });
+
+  it('the keyDown event keyCode should render correctly', () => {
+    const wrapper = mount(<WeeksPicker />);
+    wrapper.find('input').simulate('click');
+    jest.runAllTimers();
+    wrapper.update();
+    simulateCode(wrapper, 39);
+    simulateCode(wrapper, 37);
+    wrapper.update();
   });
 });

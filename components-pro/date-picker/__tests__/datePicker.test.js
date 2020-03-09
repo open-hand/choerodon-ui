@@ -1,7 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import moment from 'moment';
-// import MockDate from 'mockdate';
 import DatePicker from '..';
 import DatePickerTest from './DatePicker';
 import { openPanel, nextYear, nextMonth, simulateCode } from './utils';
@@ -96,6 +95,13 @@ describe('date-picker-pro', () => {
     wrapper.update();
   });
 
+  it('the mode { decade } should render correctly', () => {
+    const wrapper = mount(<DatePicker mode="decade" />);
+    wrapper.find('input').simulate('keydown', { keyCode: 32 });
+    jest.runAllTimers();
+    wrapper.update();
+  });
+
   it('the keyDown event { esc, enter } keyCode should render correctly', () => {
     const wrapper = mount(<DatePicker />);
     wrapper.find('input').simulate('click');
@@ -111,7 +117,7 @@ describe('date-picker-pro', () => {
 
   it('the { multiple, min, max } property should render correctly', () => {
     const wrapper = mount(
-      <DatePicker mode="date" multiple min={moment('2019-02-10')} max={moment('2021-02-10')} />,
+      <DatePicker mode="month" multiple min={moment('2019-02-10')} max={moment('2021-02-10')} />,
     );
     wrapper
       .find('input')
@@ -125,10 +131,5 @@ describe('date-picker-pro', () => {
       .simulate('keydown', { keyCode: 13 });
     jest.runAllTimers();
     wrapper.update();
-    wrapper
-      .find('input')
-      .at(0)
-      .simulate('blur');
-    jest.runAllTimers();
   });
 });
