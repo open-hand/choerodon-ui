@@ -1,7 +1,8 @@
 import React from 'react';
-import { render, mount, shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import { setup, teardown } from './mock';
 import Upload from '..';
+
 const props = {
   headers: {
     'Access-Control-Allow-Origin': '*',
@@ -35,8 +36,8 @@ describe('Tree-pro', () => {
     expect(wrapper.find('Tooltip').prop('title')).toBe('点击上传');
   });
 
-  it('should have a Tooltip inside  ', () => {
-    const props = {
+  it('should have a Tooltip inside', () => {
+    const props1 = {
       headers: {
         'Access-Control-Allow-Origin': '*',
       },
@@ -45,7 +46,7 @@ describe('Tree-pro', () => {
       accept: ['.deb', '.txt', '.pdf', 'image/*'],
       uploadImmediately: false,
     };
-    const wrapper = mount(<Upload {...props} />);
+    const wrapper = mount(<Upload {...props1} />);
     wrapper
       .find('.c7n-pro-btn-icon-only')
       .first()
