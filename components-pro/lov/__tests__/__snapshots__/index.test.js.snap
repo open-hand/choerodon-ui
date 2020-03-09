@@ -1,0 +1,761 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Lov-pro render mode button 1`] = `
+<Lov
+  autoComplete="off"
+  checkValueOnOptionsChange={false}
+  clearButton={true}
+  combo={false}
+  dataSet={
+    DataSet {
+      "cachedSelected": Array [],
+      "children": Object {},
+      "currentPage": 1,
+      "dataToJSON": "dirty",
+      "el": undefined,
+      "events": Object {
+        "indexchange": Array [
+          Array [
+            [Function],
+            false,
+          ],
+        ],
+      },
+      "fields": Object {
+        "code": Field {
+          "dataSet": [Circular],
+          "isDynamicPropsComputing": false,
+          "lastDynamicProps": Object {},
+          "pending": PromiseQueue {
+            "queue": Array [
+              Promise {},
+            ],
+            "queueing": false,
+          },
+          "pristineProps": Object {
+            "lovCode": "LOV_CODE",
+            "lovPara": Object {
+              "code": "111",
+            },
+            "name": "code",
+            "required": true,
+            "textField": "code",
+            "type": "object",
+          },
+          "props": Object {
+            "lovCode": "LOV_CODE",
+            "lovPara": Object {
+              "code": "111",
+            },
+            "name": "code",
+            "required": true,
+            "textField": "code",
+            "type": "object",
+          },
+          "record": undefined,
+          "validator": Validator {
+            "control": undefined,
+            "field": [Circular],
+            "innerValidationResults": Array [],
+          },
+        },
+        "code_code": Field {
+          "dataSet": [Circular],
+          "isDynamicPropsComputing": false,
+          "lastDynamicProps": Object {},
+          "pending": PromiseQueue {
+            "queue": Array [],
+            "queueing": false,
+          },
+          "pristineProps": Object {
+            "bind": "code.code",
+            "name": "code_code",
+            "type": "string",
+          },
+          "props": Object {
+            "bind": "code.code",
+            "name": "code_code",
+            "type": "string",
+          },
+          "record": undefined,
+          "validator": Validator {
+            "control": undefined,
+            "field": [Circular],
+            "innerValidationResults": Array [],
+          },
+        },
+        "code_description": Field {
+          "dataSet": [Circular],
+          "isDynamicPropsComputing": false,
+          "lastDynamicProps": Object {},
+          "pending": PromiseQueue {
+            "queue": Array [],
+            "queueing": false,
+          },
+          "pristineProps": Object {
+            "bind": "code.description",
+            "name": "code_description",
+            "type": "string",
+          },
+          "props": Object {
+            "bind": "code.description",
+            "name": "code_description",
+            "type": "string",
+          },
+          "record": undefined,
+          "validator": Validator {
+            "control": undefined,
+            "field": [Circular],
+            "innerValidationResults": Array [],
+          },
+        },
+      },
+      "inBatchSelection": false,
+      "name": undefined,
+      "originalData": Array [],
+      "pageSize": 10,
+      "parent": undefined,
+      "parentName": undefined,
+      "pending": PromiseQueue {
+        "queue": Array [],
+        "queueing": false,
+      },
+      "props": Object {
+        "autoCreate": true,
+        "autoLocateAfterCreate": true,
+        "autoLocateAfterRemove": true,
+        "autoLocateFirst": true,
+        "autoQuery": false,
+        "autoQueryAfterSubmit": true,
+        "dataToJSON": "dirty",
+        "fields": Array [
+          Object {
+            "lovCode": "LOV_CODE",
+            "lovPara": Object {
+              "code": "111",
+            },
+            "name": "code",
+            "required": true,
+            "textField": "code",
+            "type": "object",
+          },
+          Object {
+            "bind": "code.code",
+            "name": "code_code",
+            "type": "string",
+          },
+          Object {
+            "bind": "code.description",
+            "name": "code_description",
+            "type": "string",
+          },
+        ],
+        "modifiedCheck": true,
+        "pageSize": 10,
+        "paging": true,
+        "selection": "multiple",
+      },
+      "queryParameter": Object {},
+      "records": Array [
+        Record {
+          "cascadeRecordsMap": Object {},
+          "data": Object {
+            "code": undefined,
+          },
+          "dataSet": [Circular],
+          "dataSetSnapshot": Object {},
+          "editing": undefined,
+          "fields": Object {
+            "code": Field {
+              "dataSet": [Circular],
+              "isDynamicPropsComputing": false,
+              "lastDynamicProps": Object {},
+              "pending": PromiseQueue {
+                "queue": Array [
+                  Promise {},
+                ],
+                "queueing": false,
+              },
+              "pristineProps": Object {
+                "name": "code",
+              },
+              "props": Object {
+                "name": "code",
+              },
+              "record": [Circular],
+              "validator": Validator {
+                "control": undefined,
+                "field": [Circular],
+                "innerValidationResults": Array [],
+              },
+            },
+            "code_code": Field {
+              "dataSet": [Circular],
+              "isDynamicPropsComputing": false,
+              "lastDynamicProps": Object {},
+              "pending": PromiseQueue {
+                "queue": Array [],
+                "queueing": false,
+              },
+              "pristineProps": Object {
+                "name": "code_code",
+              },
+              "props": Object {
+                "name": "code_code",
+              },
+              "record": [Circular],
+              "validator": Validator {
+                "control": undefined,
+                "field": [Circular],
+                "innerValidationResults": Array [],
+              },
+            },
+            "code_description": Field {
+              "dataSet": [Circular],
+              "isDynamicPropsComputing": false,
+              "lastDynamicProps": Object {},
+              "pending": PromiseQueue {
+                "queue": Array [],
+                "queueing": false,
+              },
+              "pristineProps": Object {
+                "name": "code_description",
+              },
+              "props": Object {
+                "name": "code_description",
+              },
+              "record": [Circular],
+              "validator": Validator {
+                "control": undefined,
+                "field": [Circular],
+                "innerValidationResults": Array [],
+              },
+            },
+          },
+          "id": 1001,
+          "isCached": false,
+          "isCurrent": true,
+          "isSelected": false,
+          "pristineData": Object {
+            "code": undefined,
+          },
+          "selectable": true,
+          "state": Object {},
+          "status": "add",
+        },
+      ],
+      "resetInBatch": false,
+      "selection": "multiple",
+      "status": "ready",
+      "syncChildrenRemote": [Function],
+      "totalCount": 0,
+    }
+  }
+  dropdownMatchSelectWidth={true}
+  mode="button"
+  multiple={false}
+  name="code"
+  noValidate={false}
+  onOption={[Function]}
+  readOnly={false}
+  searchable={false}
+  showHelp="newLine"
+  suffixCls="select"
+  trigger={
+    Array [
+      "focus",
+      "click",
+    ]
+  }
+  triggerHiddenDelay={50}
+  triggerShowDelay={150}
+  trim="both"
+>
+  <Tooltip
+    arrowPointAtCenter={false}
+    autoAdjustOverflow={true}
+    defaultHidden={true}
+    mouseEnterDelay={100}
+    mouseLeaveDelay={100}
+    placement="bottomLeft"
+    suffixCls="tooltip"
+    theme="light"
+    title={null}
+    transitionName="zoom-big-fast"
+    trigger={
+      Array [
+        "hover",
+      ]
+    }
+  >
+    <Trigger
+      action={
+        Array [
+          "hover",
+        ]
+      }
+      arrowPointAtCenter={false}
+      autoAdjustOverflow={true}
+      blurDelay={0}
+      builtinPlacements={
+        Object {
+          "bottom": Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tc",
+              "bc",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "bottomLeft": Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tl",
+              "bl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "bottomRight": Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tr",
+              "br",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "left": Object {
+            "offset": Array [
+              -10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "cr",
+              "cl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "leftBottom": Object {
+            "offset": Array [
+              -10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "br",
+              "bl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "leftTop": Object {
+            "offset": Array [
+              -10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tr",
+              "tl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "right": Object {
+            "offset": Array [
+              10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "cl",
+              "cr",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "rightBottom": Object {
+            "offset": Array [
+              10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "bl",
+              "br",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "rightTop": Object {
+            "offset": Array [
+              10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tl",
+              "tr",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "top": Object {
+            "offset": Array [
+              0,
+              -10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "bc",
+              "tc",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "topLeft": Object {
+            "offset": Array [
+              0,
+              -10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "bl",
+              "tl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "topRight": Object {
+            "offset": Array [
+              0,
+              -10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "br",
+              "tr",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+        }
+      }
+      defaultPopupHidden={true}
+      focusDelay={150}
+      mouseEnterDelay={100}
+      mouseLeaveDelay={100}
+      popupContent={null}
+      popupPlacement="bottomLeft"
+      prefixCls="c7n-pro-tooltip"
+      suffixCls="tooltip"
+      theme="light"
+      title={null}
+      transitionName="zoom-big-fast"
+    >
+      <TriggerChild
+        key=".$.0=2$lov_button"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <Button
+          autoComplete="off"
+          key=".0:$lov_button"
+          loading={false}
+          mode="button"
+          noValidate={false}
+          onBlur={[Function]}
+          onChange={[Function]}
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          suffixCls="btn"
+          type="button"
+          waitType="throttle"
+        >
+          <Ripple
+            disabled={false}
+          >
+            <RippleChild
+              key=".0"
+              prefixCls="c7n-ripple"
+            >
+              <MouseDown
+                rippleChild={
+                  <button
+                    autoComplete="off"
+                    className="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+                    disabled={false}
+                    mode="button"
+                    noValidate={false}
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onClick={[Function]}
+                    onContextMenu={[Function]}
+                    onFocus={[Function]}
+                    onKeyDown={[Function]}
+                    onMouseDown={[Function]}
+                    onMouseEnter={[Function]}
+                    onMouseLeave={[Function]}
+                    type="button"
+                  >
+                    <span>
+                      请选择
+                    </span>
+                  </button>
+                }
+              >
+                <button
+                  autoComplete="off"
+                  className="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+                  disabled={false}
+                  mode="button"
+                  noValidate={false}
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onClick={[Function]}
+                  onContextMenu={[Function]}
+                  onFocus={[Function]}
+                  onKeyDown={[Function]}
+                  onMouseDown={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  type="button"
+                >
+                  <span>
+                    请选择
+                  </span>
+                  <Animate
+                    animation={Object {}}
+                    component="div"
+                    componentProps={
+                      Object {
+                        "className": "c7n-ripple-wrapper",
+                      }
+                    }
+                    hiddenProp="hidden"
+                    key="ripple"
+                    transitionAppear={false}
+                    transitionEnter={true}
+                    transitionLeave={true}
+                    transitionName="fade"
+                  >
+                    <div
+                      className="c7n-ripple-wrapper"
+                    />
+                  </Animate>
+                </button>
+              </MouseDown>
+            </RippleChild>
+          </Ripple>
+        </Button>
+      </TriggerChild>
+      <TriggerChild
+        key=".$.0=2$lov_clear_button"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <Button
+          funcType="flat"
+          icon="close"
+          key=".0:$lov_clear_button"
+          loading={false}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onFocus={[Function]}
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          size="small"
+          suffixCls="btn"
+          type="button"
+          waitType="throttle"
+        >
+          <Ripple
+            disabled={false}
+          >
+            <RippleChild
+              key=".0"
+              prefixCls="c7n-ripple"
+            >
+              <MouseDown
+                rippleChild={
+                  <button
+                    className="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-btn-sm"
+                    disabled={false}
+                    onBlur={[Function]}
+                    onClick={[Function]}
+                    onContextMenu={[Function]}
+                    onFocus={[Function]}
+                    onMouseDown={[Function]}
+                    onMouseEnter={[Function]}
+                    onMouseLeave={[Function]}
+                    type="button"
+                  >
+                    <Icon
+                      type="close"
+                    />
+                  </button>
+                }
+              >
+                <button
+                  className="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-btn-sm"
+                  disabled={false}
+                  onBlur={[Function]}
+                  onClick={[Function]}
+                  onContextMenu={[Function]}
+                  onFocus={[Function]}
+                  onMouseDown={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  type="button"
+                >
+                  <Icon
+                    type="close"
+                  >
+                    <i
+                      className="icon icon-close"
+                    />
+                  </Icon>
+                  <Animate
+                    animation={Object {}}
+                    component="div"
+                    componentProps={
+                      Object {
+                        "className": "c7n-ripple-wrapper",
+                      }
+                    }
+                    hiddenProp="hidden"
+                    key="ripple"
+                    transitionAppear={false}
+                    transitionEnter={true}
+                    transitionLeave={true}
+                    transitionName="fade"
+                  >
+                    <div
+                      className="c7n-ripple-wrapper"
+                    />
+                  </Animate>
+                </button>
+              </MouseDown>
+            </RippleChild>
+          </Ripple>
+        </Button>
+      </TriggerChild>
+      <Popup
+        align={
+          Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tl",
+              "bl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          }
+        }
+        className="c7n-pro-tooltip-popup"
+        getClassNameFromAlign={[Function]}
+        getRootDomNode={[Function]}
+        hidden={true}
+        key="popup"
+        onMouseDown={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        suffixCls="popup"
+        transitionName="zoom-big-fast"
+      />
+    </Trigger>
+  </Tooltip>
+</Lov>
+`;
