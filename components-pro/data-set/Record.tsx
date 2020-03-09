@@ -9,6 +9,8 @@ import {
   set,
   toJS,
 } from 'mobx';
+import merge from 'lodash/merge';
+import isObject from 'lodash/isObject';
 import isNil from 'lodash/isNil';
 import isString from 'lodash/isString';
 import isNumber from 'lodash/isNumber';
@@ -601,7 +603,7 @@ export default class Record {
         }
       }
       if (data) {
-        const newData = this.processData(data);
+        const newData = this.processData(data, true);
         this.pristineData = newData;
         Object.keys(newData).forEach(key => {
           const newValue = newData[key];
@@ -683,7 +685,7 @@ export default class Record {
     );
   }
 
-  private processData(data: object = {}): object {
+  private processData(data: object = {}, needMerge?: boolean): object {
     const { fields } = this;
     const newData = { ...data };
     [...fields.entries()].forEach(([fieldName, field]) => {
@@ -707,6 +709,12 @@ export default class Record {
       value = processValue(value, field);
       if (value === null) {
         value = undefined;
+      }
+      if (needMerge && isObject(value)) {
+        const oldValue = this.get(fieldName);
+        if (isObject(oldValue)) {
+          value = merge(oldValue, value);
+        }
       }
       ObjectChainValue.set(newData, fieldName, value, fields);
     });
