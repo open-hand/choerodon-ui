@@ -13,7 +13,7 @@ title:
 
 Controlled TextArea
 
-````jsx
+```jsx
 import { TextArea } from 'choerodon-ui/pro';
 
 class App extends React.Component {
@@ -29,19 +29,18 @@ class App extends React.Component {
     this.setState({
       value,
     });
-  }
+  };
 
-  handleInput = (e) => {
+  handleInput = e => {
     console.log('[textarea]', e.target.value);
-  }
+  };
 
   render() {
-    return <TextArea value={this.state.value} onChange={this.handleChange} onInput={this.handleInput} />;
+    return (
+      <TextArea value={this.state.value} onChange={this.handleChange} onInput={this.handleInput} />
+    );
   }
 }
 
-ReactDOM.render(
-  <App />,
-  mountNode
-);
-````
+ReactDOM.render(<App />, mountNode);
+```

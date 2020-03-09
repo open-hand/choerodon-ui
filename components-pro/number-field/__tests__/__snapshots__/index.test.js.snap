@@ -1,0 +1,3473 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NumberField-pro renders NumberField correctly 1`] = `
+<NumberField
+  autoComplete="off"
+  clearButton={false}
+  multiple={false}
+  noValidate={false}
+  readOnly={false}
+  showHelp="newLine"
+  suffixCls="input-number"
+  trim="both"
+>
+  <Tooltip
+    arrowPointAtCenter={false}
+    autoAdjustOverflow={true}
+    defaultHidden={true}
+    mouseEnterDelay={100}
+    mouseLeaveDelay={100}
+    placement="bottomLeft"
+    suffixCls="form-tooltip c7n-pro-tooltip"
+    theme="light"
+    title={null}
+    transitionName="zoom-big-fast"
+    trigger={
+      Array [
+        "hover",
+      ]
+    }
+  >
+    <Trigger
+      action={
+        Array [
+          "hover",
+        ]
+      }
+      arrowPointAtCenter={false}
+      autoAdjustOverflow={true}
+      blurDelay={0}
+      builtinPlacements={
+        Object {
+          "bottom": Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tc",
+              "bc",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "bottomLeft": Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tl",
+              "bl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "bottomRight": Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tr",
+              "br",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "left": Object {
+            "offset": Array [
+              -10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "cr",
+              "cl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "leftBottom": Object {
+            "offset": Array [
+              -10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "br",
+              "bl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "leftTop": Object {
+            "offset": Array [
+              -10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tr",
+              "tl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "right": Object {
+            "offset": Array [
+              10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "cl",
+              "cr",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "rightBottom": Object {
+            "offset": Array [
+              10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "bl",
+              "br",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "rightTop": Object {
+            "offset": Array [
+              10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tl",
+              "tr",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "top": Object {
+            "offset": Array [
+              0,
+              -10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "bc",
+              "tc",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "topLeft": Object {
+            "offset": Array [
+              0,
+              -10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "bl",
+              "tl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "topRight": Object {
+            "offset": Array [
+              0,
+              -10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "br",
+              "tr",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+        }
+      }
+      defaultPopupHidden={true}
+      focusDelay={150}
+      mouseEnterDelay={100}
+      mouseLeaveDelay={100}
+      popupContent={null}
+      popupPlacement="bottomLeft"
+      prefixCls="c7n-pro-form-tooltip c7n-pro-tooltip"
+      suffixCls="form-tooltip c7n-pro-tooltip"
+      theme="light"
+      title={null}
+      transitionName="zoom-big-fast"
+    >
+      <TriggerChild
+        key=".$.$element"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <span
+          className="c7n-pro-input-number-wrapper c7n-pro-input-number-empty"
+          key=".$element"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onFocus={[Function]}
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <label
+            onMouseDown={[Function]}
+          >
+            <input
+              autoComplete="off"
+              className="c7n-pro-input-number"
+              key="text"
+              multiple={false}
+              noValidate={false}
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              readOnly={false}
+              type="text"
+              value=""
+            />
+          </label>
+        </span>
+      </TriggerChild>
+      <Popup
+        align={
+          Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tl",
+              "bl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          }
+        }
+        className="c7n-pro-form-tooltip c7n-pro-tooltip-popup"
+        getClassNameFromAlign={[Function]}
+        getRootDomNode={[Function]}
+        hidden={true}
+        key="popup"
+        onMouseDown={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        suffixCls="popup"
+        transitionName="zoom-big-fast"
+      />
+    </Trigger>
+  </Tooltip>
+</NumberField>
+`;
+
+exports[`NumberField-pro step multiple renders correctly 1`] = `
+<NumberField
+  autoComplete="off"
+  clearButton={false}
+  max={10}
+  min={5}
+  multiple={true}
+  noValidate={false}
+  onChange={[MockFunction]}
+  readOnly={false}
+  showHelp="newLine"
+  step={1}
+  suffixCls="input-number"
+  trim="both"
+>
+  <Tooltip
+    arrowPointAtCenter={false}
+    autoAdjustOverflow={true}
+    defaultHidden={true}
+    mouseEnterDelay={100}
+    mouseLeaveDelay={100}
+    placement="bottomLeft"
+    suffixCls="form-tooltip c7n-pro-tooltip"
+    theme="light"
+    title={null}
+    transitionName="zoom-big-fast"
+    trigger={
+      Array [
+        "hover",
+      ]
+    }
+  >
+    <Trigger
+      action={
+        Array [
+          "hover",
+        ]
+      }
+      arrowPointAtCenter={false}
+      autoAdjustOverflow={true}
+      blurDelay={0}
+      builtinPlacements={
+        Object {
+          "bottom": Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tc",
+              "bc",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "bottomLeft": Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tl",
+              "bl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "bottomRight": Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tr",
+              "br",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "left": Object {
+            "offset": Array [
+              -10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "cr",
+              "cl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "leftBottom": Object {
+            "offset": Array [
+              -10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "br",
+              "bl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "leftTop": Object {
+            "offset": Array [
+              -10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tr",
+              "tl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "right": Object {
+            "offset": Array [
+              10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "cl",
+              "cr",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "rightBottom": Object {
+            "offset": Array [
+              10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "bl",
+              "br",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "rightTop": Object {
+            "offset": Array [
+              10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tl",
+              "tr",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "top": Object {
+            "offset": Array [
+              0,
+              -10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "bc",
+              "tc",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "topLeft": Object {
+            "offset": Array [
+              0,
+              -10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "bl",
+              "tl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "topRight": Object {
+            "offset": Array [
+              0,
+              -10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "br",
+              "tr",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+        }
+      }
+      defaultPopupHidden={true}
+      focusDelay={150}
+      mouseEnterDelay={100}
+      mouseLeaveDelay={100}
+      popupContent={null}
+      popupPlacement="bottomLeft"
+      prefixCls="c7n-pro-form-tooltip c7n-pro-tooltip"
+      suffixCls="form-tooltip c7n-pro-tooltip"
+      theme="light"
+      title={null}
+      transitionName="zoom-big-fast"
+    >
+      <TriggerChild
+        key=".$.$element"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <span
+          className="c7n-pro-input-number-wrapper c7n-pro-input-number-empty c7n-pro-input-number-multiple"
+          key=".$element"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onFocus={[Function]}
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <input
+            className="c7n-pro-input-number-multiple-value"
+            key="value"
+            onChange={[Function]}
+            value=""
+          />
+          <label
+            onMouseDown={[Function]}
+          >
+            <div
+              className="c7n-pro-input-number"
+              key="text"
+            >
+              <Animate
+                animation={Object {}}
+                component="ul"
+                componentProps={
+                  Object {
+                    "onScroll": [Function],
+                    "ref": [Function],
+                    "style": undefined,
+                  }
+                }
+                exclusive={true}
+                onEnd={[Function]}
+                onEnter={[Function]}
+                transitionAppear={false}
+                transitionEnter={true}
+                transitionLeave={true}
+                transitionName="zoom"
+              >
+                <ul
+                  onScroll={[Function]}
+                >
+                  <AnimateChild
+                    animation={Object {}}
+                    key="text"
+                    transitionAppear={false}
+                    transitionEnter={true}
+                    transitionLeave={true}
+                    transitionName="zoom"
+                  >
+                    <li
+                      key="text"
+                      style={Object {}}
+                    >
+                      <input
+                        autoComplete="off"
+                        className="c7n-pro-input-number-multiple-input"
+                        max={10}
+                        min={5}
+                        multiple={true}
+                        noValidate={false}
+                        onBlur={[Function]}
+                        onChange={[Function]}
+                        onFocus={[Function]}
+                        onKeyDown={[Function]}
+                        step={1}
+                        style={Object {}}
+                        type="text"
+                        value=""
+                      />
+                    </li>
+                  </AnimateChild>
+                </ul>
+              </Animate>
+            </div>
+            <div
+              className="c7n-pro-input-number-inner-button"
+              key="inner-button"
+            >
+              <div>
+                <Icon
+                  className="c7n-pro-input-number-plus"
+                  key="plus"
+                  onMouseDown={[Function]}
+                  type="keyboard_arrow_up"
+                >
+                  <i
+                    className="icon icon-keyboard_arrow_up c7n-pro-input-number-plus"
+                    onMouseDown={[Function]}
+                  />
+                </Icon>
+                <Icon
+                  className="c7n-pro-input-number-minus"
+                  key="minus"
+                  onMouseDown={[Function]}
+                  type="keyboard_arrow_down"
+                >
+                  <i
+                    className="icon icon-keyboard_arrow_down c7n-pro-input-number-minus"
+                    onMouseDown={[Function]}
+                  />
+                </Icon>
+              </div>
+            </div>
+          </label>
+        </span>
+      </TriggerChild>
+      <Popup
+        align={
+          Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tl",
+              "bl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          }
+        }
+        className="c7n-pro-form-tooltip c7n-pro-tooltip-popup"
+        getClassNameFromAlign={[Function]}
+        getRootDomNode={[Function]}
+        hidden={true}
+        key="popup"
+        onMouseDown={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        suffixCls="popup"
+        transitionName="zoom-big-fast"
+      />
+    </Trigger>
+  </Tooltip>
+</NumberField>
+`;
+
+exports[`NumberField-pro step null renders correctly 1`] = `
+<NumberField
+  autoComplete="off"
+  clearButton={false}
+  min={null}
+  multiple={false}
+  noValidate={false}
+  readOnly={false}
+  showHelp="newLine"
+  step={null}
+  suffixCls="input-number"
+  trim="both"
+>
+  <Tooltip
+    arrowPointAtCenter={false}
+    autoAdjustOverflow={true}
+    defaultHidden={true}
+    mouseEnterDelay={100}
+    mouseLeaveDelay={100}
+    placement="bottomLeft"
+    suffixCls="form-tooltip c7n-pro-tooltip"
+    theme="light"
+    title={null}
+    transitionName="zoom-big-fast"
+    trigger={
+      Array [
+        "hover",
+      ]
+    }
+  >
+    <Trigger
+      action={
+        Array [
+          "hover",
+        ]
+      }
+      arrowPointAtCenter={false}
+      autoAdjustOverflow={true}
+      blurDelay={0}
+      builtinPlacements={
+        Object {
+          "bottom": Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tc",
+              "bc",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "bottomLeft": Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tl",
+              "bl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "bottomRight": Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tr",
+              "br",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "left": Object {
+            "offset": Array [
+              -10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "cr",
+              "cl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "leftBottom": Object {
+            "offset": Array [
+              -10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "br",
+              "bl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "leftTop": Object {
+            "offset": Array [
+              -10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tr",
+              "tl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "right": Object {
+            "offset": Array [
+              10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "cl",
+              "cr",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "rightBottom": Object {
+            "offset": Array [
+              10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "bl",
+              "br",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "rightTop": Object {
+            "offset": Array [
+              10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tl",
+              "tr",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "top": Object {
+            "offset": Array [
+              0,
+              -10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "bc",
+              "tc",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "topLeft": Object {
+            "offset": Array [
+              0,
+              -10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "bl",
+              "tl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "topRight": Object {
+            "offset": Array [
+              0,
+              -10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "br",
+              "tr",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+        }
+      }
+      defaultPopupHidden={true}
+      focusDelay={150}
+      mouseEnterDelay={100}
+      mouseLeaveDelay={100}
+      popupContent={null}
+      popupPlacement="bottomLeft"
+      prefixCls="c7n-pro-form-tooltip c7n-pro-tooltip"
+      suffixCls="form-tooltip c7n-pro-tooltip"
+      theme="light"
+      title={null}
+      transitionName="zoom-big-fast"
+    >
+      <TriggerChild
+        key=".$.$element"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <span
+          className="c7n-pro-input-number-wrapper c7n-pro-input-number-empty"
+          key=".$element"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onFocus={[Function]}
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <label
+            onMouseDown={[Function]}
+          >
+            <input
+              autoComplete="off"
+              className="c7n-pro-input-number"
+              key="text"
+              min={null}
+              multiple={false}
+              noValidate={false}
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              readOnly={false}
+              step={null}
+              type="text"
+              value=""
+            />
+          </label>
+        </span>
+      </TriggerChild>
+      <Popup
+        align={
+          Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tl",
+              "bl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          }
+        }
+        className="c7n-pro-form-tooltip c7n-pro-tooltip-popup"
+        getClassNameFromAlign={[Function]}
+        getRootDomNode={[Function]}
+        hidden={true}
+        key="popup"
+        onMouseDown={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        suffixCls="popup"
+        transitionName="zoom-big-fast"
+      />
+    </Trigger>
+  </Tooltip>
+</NumberField>
+`;
+
+exports[`NumberField-pro step null renders correctly 2`] = `
+<NumberField
+  autoComplete="off"
+  clearButton={false}
+  min={20}
+  multiple={false}
+  noValidate={false}
+  readOnly={false}
+  showHelp="newLine"
+  step={20}
+  suffixCls="input-number"
+  trim="both"
+>
+  <Tooltip
+    arrowPointAtCenter={false}
+    autoAdjustOverflow={true}
+    defaultHidden={true}
+    mouseEnterDelay={100}
+    mouseLeaveDelay={100}
+    placement="bottomLeft"
+    suffixCls="form-tooltip c7n-pro-tooltip"
+    theme="light"
+    title={null}
+    transitionName="zoom-big-fast"
+    trigger={
+      Array [
+        "hover",
+      ]
+    }
+  >
+    <Trigger
+      action={
+        Array [
+          "hover",
+        ]
+      }
+      arrowPointAtCenter={false}
+      autoAdjustOverflow={true}
+      blurDelay={0}
+      builtinPlacements={
+        Object {
+          "bottom": Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tc",
+              "bc",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "bottomLeft": Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tl",
+              "bl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "bottomRight": Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tr",
+              "br",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "left": Object {
+            "offset": Array [
+              -10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "cr",
+              "cl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "leftBottom": Object {
+            "offset": Array [
+              -10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "br",
+              "bl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "leftTop": Object {
+            "offset": Array [
+              -10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tr",
+              "tl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "right": Object {
+            "offset": Array [
+              10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "cl",
+              "cr",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "rightBottom": Object {
+            "offset": Array [
+              10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "bl",
+              "br",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "rightTop": Object {
+            "offset": Array [
+              10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tl",
+              "tr",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "top": Object {
+            "offset": Array [
+              0,
+              -10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "bc",
+              "tc",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "topLeft": Object {
+            "offset": Array [
+              0,
+              -10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "bl",
+              "tl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "topRight": Object {
+            "offset": Array [
+              0,
+              -10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "br",
+              "tr",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+        }
+      }
+      defaultPopupHidden={true}
+      focusDelay={150}
+      mouseEnterDelay={100}
+      mouseLeaveDelay={100}
+      popupContent={null}
+      popupPlacement="bottomLeft"
+      prefixCls="c7n-pro-form-tooltip c7n-pro-tooltip"
+      suffixCls="form-tooltip c7n-pro-tooltip"
+      theme="light"
+      title={null}
+      transitionName="zoom-big-fast"
+    >
+      <TriggerChild
+        key=".$.$element"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <span
+          className="c7n-pro-input-number-wrapper c7n-pro-input-number-empty"
+          key=".$element"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onFocus={[Function]}
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <label
+            onMouseDown={[Function]}
+          >
+            <input
+              autoComplete="off"
+              className="c7n-pro-input-number"
+              key="text"
+              min={20}
+              multiple={false}
+              noValidate={false}
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              readOnly={false}
+              step={20}
+              type="text"
+              value=""
+            />
+            <div
+              className="c7n-pro-input-number-inner-button"
+              key="inner-button"
+            >
+              <div>
+                <Icon
+                  className="c7n-pro-input-number-plus"
+                  key="plus"
+                  onMouseDown={[Function]}
+                  type="keyboard_arrow_up"
+                >
+                  <i
+                    className="icon icon-keyboard_arrow_up c7n-pro-input-number-plus"
+                    onMouseDown={[Function]}
+                  />
+                </Icon>
+                <Icon
+                  className="c7n-pro-input-number-minus"
+                  key="minus"
+                  onMouseDown={[Function]}
+                  type="keyboard_arrow_down"
+                >
+                  <i
+                    className="icon icon-keyboard_arrow_down c7n-pro-input-number-minus"
+                    onMouseDown={[Function]}
+                  />
+                </Icon>
+              </div>
+            </div>
+          </label>
+        </span>
+      </TriggerChild>
+      <Popup
+        align={
+          Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tl",
+              "bl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          }
+        }
+        className="c7n-pro-form-tooltip c7n-pro-tooltip-popup"
+        getClassNameFromAlign={[Function]}
+        getRootDomNode={[Function]}
+        hidden={true}
+        key="popup"
+        onMouseDown={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        suffixCls="popup"
+        transitionName="zoom-big-fast"
+      />
+    </Trigger>
+  </Tooltip>
+</NumberField>
+`;
+
+exports[`NumberField-pro step1 renders correctly 1`] = `
+<NumberField
+  autoComplete="off"
+  clearButton={false}
+  min={null}
+  multiple={false}
+  noValidate={false}
+  readOnly={false}
+  showHelp="newLine"
+  step={1.1}
+  suffixCls="input-number"
+  trim="both"
+>
+  <Tooltip
+    arrowPointAtCenter={false}
+    autoAdjustOverflow={true}
+    defaultHidden={true}
+    mouseEnterDelay={100}
+    mouseLeaveDelay={100}
+    placement="bottomLeft"
+    suffixCls="form-tooltip c7n-pro-tooltip"
+    theme="light"
+    title={null}
+    transitionName="zoom-big-fast"
+    trigger={
+      Array [
+        "hover",
+      ]
+    }
+  >
+    <Trigger
+      action={
+        Array [
+          "hover",
+        ]
+      }
+      arrowPointAtCenter={false}
+      autoAdjustOverflow={true}
+      blurDelay={0}
+      builtinPlacements={
+        Object {
+          "bottom": Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tc",
+              "bc",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "bottomLeft": Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tl",
+              "bl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "bottomRight": Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tr",
+              "br",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "left": Object {
+            "offset": Array [
+              -10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "cr",
+              "cl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "leftBottom": Object {
+            "offset": Array [
+              -10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "br",
+              "bl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "leftTop": Object {
+            "offset": Array [
+              -10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tr",
+              "tl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "right": Object {
+            "offset": Array [
+              10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "cl",
+              "cr",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "rightBottom": Object {
+            "offset": Array [
+              10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "bl",
+              "br",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "rightTop": Object {
+            "offset": Array [
+              10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tl",
+              "tr",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "top": Object {
+            "offset": Array [
+              0,
+              -10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "bc",
+              "tc",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "topLeft": Object {
+            "offset": Array [
+              0,
+              -10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "bl",
+              "tl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "topRight": Object {
+            "offset": Array [
+              0,
+              -10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "br",
+              "tr",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+        }
+      }
+      defaultPopupHidden={true}
+      focusDelay={150}
+      mouseEnterDelay={100}
+      mouseLeaveDelay={100}
+      popupContent={null}
+      popupPlacement="bottomLeft"
+      prefixCls="c7n-pro-form-tooltip c7n-pro-tooltip"
+      suffixCls="form-tooltip c7n-pro-tooltip"
+      theme="light"
+      title={null}
+      transitionName="zoom-big-fast"
+    >
+      <TriggerChild
+        key=".$.$element"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <span
+          className="c7n-pro-input-number-wrapper c7n-pro-input-number-empty"
+          key=".$element"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onFocus={[Function]}
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <label
+            onMouseDown={[Function]}
+          >
+            <input
+              autoComplete="off"
+              className="c7n-pro-input-number"
+              key="text"
+              min={null}
+              multiple={false}
+              noValidate={false}
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              readOnly={false}
+              step={1.1}
+              type="text"
+              value=""
+            />
+            <div
+              className="c7n-pro-input-number-inner-button"
+              key="inner-button"
+            >
+              <div>
+                <Icon
+                  className="c7n-pro-input-number-plus"
+                  key="plus"
+                  onMouseDown={[Function]}
+                  type="keyboard_arrow_up"
+                >
+                  <i
+                    className="icon icon-keyboard_arrow_up c7n-pro-input-number-plus"
+                    onMouseDown={[Function]}
+                  />
+                </Icon>
+                <Icon
+                  className="c7n-pro-input-number-minus"
+                  key="minus"
+                  onMouseDown={[Function]}
+                  type="keyboard_arrow_down"
+                >
+                  <i
+                    className="icon icon-keyboard_arrow_down c7n-pro-input-number-minus"
+                    onMouseDown={[Function]}
+                  />
+                </Icon>
+              </div>
+            </div>
+          </label>
+        </span>
+      </TriggerChild>
+      <Popup
+        align={
+          Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tl",
+              "bl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          }
+        }
+        className="c7n-pro-form-tooltip c7n-pro-tooltip-popup"
+        getClassNameFromAlign={[Function]}
+        getRootDomNode={[Function]}
+        hidden={true}
+        key="popup"
+        onMouseDown={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        suffixCls="popup"
+        transitionName="zoom-big-fast"
+      />
+    </Trigger>
+  </Tooltip>
+</NumberField>
+`;
+
+exports[`NumberField-pro the dataset value should render correctly 1`] = `
+<NumberDataTest>
+  <NumberField
+    autoComplete="off"
+    clearButton={false}
+    dataSet={
+      DataSet {
+        "cachedSelected": Array [],
+        "children": Object {},
+        "currentPage": 1,
+        "dataToJSON": "dirty",
+        "el": undefined,
+        "events": Object {
+          "indexchange": Array [
+            Array [
+              [Function],
+              false,
+            ],
+          ],
+          "update": Array [
+            Array [
+              [Function],
+              false,
+            ],
+          ],
+        },
+        "fields": Object {
+          "age": Field {
+            "dataSet": [Circular],
+            "isDynamicPropsComputing": false,
+            "lastDynamicProps": Object {},
+            "pending": PromiseQueue {
+              "queue": Array [],
+              "queueing": false,
+            },
+            "pristineProps": Object {
+              "defaultValue": 10000000,
+              "name": "age",
+              "required": true,
+              "type": "number",
+            },
+            "props": Object {
+              "defaultValue": 10000000,
+              "name": "age",
+              "required": true,
+              "type": "number",
+            },
+            "record": undefined,
+            "validator": Validator {
+              "control": undefined,
+              "field": [Circular],
+              "innerValidationResults": Array [],
+            },
+          },
+        },
+        "inBatchSelection": false,
+        "name": undefined,
+        "originalData": Array [],
+        "pageSize": 10,
+        "parent": undefined,
+        "parentName": undefined,
+        "pending": PromiseQueue {
+          "queue": Array [],
+          "queueing": false,
+        },
+        "props": Object {
+          "autoCreate": true,
+          "autoLocateAfterCreate": true,
+          "autoLocateAfterRemove": true,
+          "autoLocateFirst": true,
+          "autoQuery": false,
+          "autoQueryAfterSubmit": true,
+          "dataToJSON": "dirty",
+          "events": Object {
+            "update": [Function],
+          },
+          "fields": Array [
+            Object {
+              "defaultValue": 10000000,
+              "name": "age",
+              "required": true,
+              "type": "number",
+            },
+          ],
+          "modifiedCheck": true,
+          "pageSize": 10,
+          "paging": true,
+          "selection": "multiple",
+        },
+        "queryParameter": Object {},
+        "records": Array [
+          Record {
+            "cascadeRecordsMap": Object {},
+            "data": Object {
+              "age": 10000000,
+            },
+            "dataSet": [Circular],
+            "dataSetSnapshot": Object {},
+            "editing": undefined,
+            "fields": Object {
+              "age": Field {
+                "dataSet": [Circular],
+                "isDynamicPropsComputing": false,
+                "lastDynamicProps": Object {},
+                "pending": PromiseQueue {
+                  "queue": Array [],
+                  "queueing": false,
+                },
+                "pristineProps": Object {
+                  "name": "age",
+                },
+                "props": Object {
+                  "name": "age",
+                },
+                "record": [Circular],
+                "validator": Validator {
+                  "control": undefined,
+                  "field": [Circular],
+                  "innerValidationResults": Array [],
+                },
+              },
+            },
+            "id": 1001,
+            "isCached": false,
+            "isCurrent": true,
+            "isSelected": false,
+            "pristineData": Object {
+              "age": 10000000,
+            },
+            "selectable": true,
+            "state": Object {},
+            "status": "add",
+          },
+        ],
+        "resetInBatch": false,
+        "selection": "multiple",
+        "status": "ready",
+        "syncChildrenRemote": [Function],
+        "totalCount": 0,
+      }
+    }
+    multiple={false}
+    name="age"
+    noValidate={false}
+    readOnly={false}
+    showHelp="newLine"
+    suffixCls="input-number"
+    trim="both"
+  >
+    <Tooltip
+      arrowPointAtCenter={false}
+      autoAdjustOverflow={true}
+      defaultHidden={true}
+      mouseEnterDelay={100}
+      mouseLeaveDelay={100}
+      placement="bottomLeft"
+      suffixCls="form-tooltip c7n-pro-tooltip"
+      theme="light"
+      title={null}
+      transitionName="zoom-big-fast"
+      trigger={
+        Array [
+          "hover",
+        ]
+      }
+    >
+      <Trigger
+        action={
+          Array [
+            "hover",
+          ]
+        }
+        arrowPointAtCenter={false}
+        autoAdjustOverflow={true}
+        blurDelay={0}
+        builtinPlacements={
+          Object {
+            "bottom": Object {
+              "offset": Array [
+                0,
+                10,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "tc",
+                "bc",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+            "bottomLeft": Object {
+              "offset": Array [
+                0,
+                10,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "tl",
+                "bl",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+            "bottomRight": Object {
+              "offset": Array [
+                0,
+                10,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "tr",
+                "br",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+            "left": Object {
+              "offset": Array [
+                -10,
+                0,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "cr",
+                "cl",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+            "leftBottom": Object {
+              "offset": Array [
+                -10,
+                0,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "br",
+                "bl",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+            "leftTop": Object {
+              "offset": Array [
+                -10,
+                0,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "tr",
+                "tl",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+            "right": Object {
+              "offset": Array [
+                10,
+                0,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "cl",
+                "cr",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+            "rightBottom": Object {
+              "offset": Array [
+                10,
+                0,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "bl",
+                "br",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+            "rightTop": Object {
+              "offset": Array [
+                10,
+                0,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "tl",
+                "tr",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+            "top": Object {
+              "offset": Array [
+                0,
+                -10,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "bc",
+                "tc",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+            "topLeft": Object {
+              "offset": Array [
+                0,
+                -10,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "bl",
+                "tl",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+            "topRight": Object {
+              "offset": Array [
+                0,
+                -10,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "br",
+                "tr",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            },
+          }
+        }
+        defaultPopupHidden={true}
+        focusDelay={150}
+        mouseEnterDelay={100}
+        mouseLeaveDelay={100}
+        popupContent={null}
+        popupPlacement="bottomLeft"
+        prefixCls="c7n-pro-form-tooltip c7n-pro-tooltip"
+        suffixCls="form-tooltip c7n-pro-tooltip"
+        theme="light"
+        title={null}
+        transitionName="zoom-big-fast"
+      >
+        <TriggerChild
+          key=".$.$element"
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <span
+            className="c7n-pro-input-number-wrapper c7n-pro-input-number-required"
+            key=".$element"
+            onBlur={[Function]}
+            onClick={[Function]}
+            onContextMenu={[Function]}
+            onFocus={[Function]}
+            onMouseDown={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+          >
+            <label
+              onMouseDown={[Function]}
+            >
+              <input
+                autoComplete="off"
+                className="c7n-pro-input-number"
+                key="text"
+                multiple={false}
+                name="age"
+                noValidate={false}
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                readOnly={false}
+                type="text"
+                value="10,000,000"
+              />
+            </label>
+          </span>
+        </TriggerChild>
+        <Popup
+          align={
+            Object {
+              "offset": Array [
+                0,
+                10,
+              ],
+              "overflow": Object {
+                "adjustX": 1,
+                "adjustY": 1,
+              },
+              "points": Array [
+                "tl",
+                "bl",
+              ],
+              "targetOffset": Array [
+                0,
+                0,
+              ],
+            }
+          }
+          className="c7n-pro-form-tooltip c7n-pro-tooltip-popup"
+          getClassNameFromAlign={[Function]}
+          getRootDomNode={[Function]}
+          hidden={true}
+          key="popup"
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          suffixCls="popup"
+          transitionName="zoom-big-fast"
+        />
+      </Trigger>
+    </Tooltip>
+  </NumberField>
+</NumberDataTest>
+`;
+
+exports[`NumberField-pro the input number should add when the {plus} icon clicked 1`] = `
+<NumberField
+  autoComplete="off"
+  clearButton={false}
+  max={10}
+  min={0}
+  multiple={false}
+  noValidate={false}
+  readOnly={false}
+  showHelp="newLine"
+  step={1}
+  suffixCls="input-number"
+  trim="both"
+>
+  <Tooltip
+    arrowPointAtCenter={false}
+    autoAdjustOverflow={true}
+    defaultHidden={true}
+    mouseEnterDelay={100}
+    mouseLeaveDelay={100}
+    placement="bottomLeft"
+    suffixCls="form-tooltip c7n-pro-tooltip"
+    theme="light"
+    title={null}
+    transitionName="zoom-big-fast"
+    trigger={
+      Array [
+        "hover",
+      ]
+    }
+  >
+    <Trigger
+      action={
+        Array [
+          "hover",
+        ]
+      }
+      arrowPointAtCenter={false}
+      autoAdjustOverflow={true}
+      blurDelay={0}
+      builtinPlacements={
+        Object {
+          "bottom": Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tc",
+              "bc",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "bottomLeft": Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tl",
+              "bl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "bottomRight": Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tr",
+              "br",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "left": Object {
+            "offset": Array [
+              -10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "cr",
+              "cl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "leftBottom": Object {
+            "offset": Array [
+              -10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "br",
+              "bl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "leftTop": Object {
+            "offset": Array [
+              -10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tr",
+              "tl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "right": Object {
+            "offset": Array [
+              10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "cl",
+              "cr",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "rightBottom": Object {
+            "offset": Array [
+              10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "bl",
+              "br",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "rightTop": Object {
+            "offset": Array [
+              10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tl",
+              "tr",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "top": Object {
+            "offset": Array [
+              0,
+              -10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "bc",
+              "tc",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "topLeft": Object {
+            "offset": Array [
+              0,
+              -10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "bl",
+              "tl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "topRight": Object {
+            "offset": Array [
+              0,
+              -10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "br",
+              "tr",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+        }
+      }
+      defaultPopupHidden={true}
+      focusDelay={150}
+      mouseEnterDelay={100}
+      mouseLeaveDelay={100}
+      popupContent={null}
+      popupPlacement="bottomLeft"
+      prefixCls="c7n-pro-form-tooltip c7n-pro-tooltip"
+      suffixCls="form-tooltip c7n-pro-tooltip"
+      theme="light"
+      title={null}
+      transitionName="zoom-big-fast"
+    >
+      <TriggerChild
+        key=".$.$element"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <span
+          className="c7n-pro-input-number-wrapper"
+          key=".$element"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onFocus={[Function]}
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <label
+            onMouseDown={[Function]}
+          >
+            <input
+              autoComplete="off"
+              className="c7n-pro-input-number"
+              key="text"
+              max={10}
+              min={0}
+              multiple={false}
+              noValidate={false}
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              readOnly={false}
+              step={1}
+              type="text"
+              value="0"
+            />
+            <div
+              className="c7n-pro-input-number-inner-button"
+              key="inner-button"
+            >
+              <div>
+                <Icon
+                  className="c7n-pro-input-number-plus"
+                  key="plus"
+                  onMouseDown={[Function]}
+                  type="keyboard_arrow_up"
+                >
+                  <i
+                    className="icon icon-keyboard_arrow_up c7n-pro-input-number-plus"
+                    onMouseDown={[Function]}
+                  />
+                </Icon>
+                <Icon
+                  className="c7n-pro-input-number-minus"
+                  key="minus"
+                  onMouseDown={[Function]}
+                  type="keyboard_arrow_down"
+                >
+                  <i
+                    className="icon icon-keyboard_arrow_down c7n-pro-input-number-minus"
+                    onMouseDown={[Function]}
+                  />
+                </Icon>
+              </div>
+            </div>
+          </label>
+        </span>
+      </TriggerChild>
+      <Popup
+        align={
+          Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tl",
+              "bl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          }
+        }
+        className="c7n-pro-form-tooltip c7n-pro-tooltip-popup"
+        getClassNameFromAlign={[Function]}
+        getRootDomNode={[Function]}
+        hidden={true}
+        key="popup"
+        onMouseDown={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        suffixCls="popup"
+        transitionName="zoom-big-fast"
+      />
+    </Trigger>
+  </Tooltip>
+</NumberField>
+`;
+
+exports[`NumberField-pro the input number should reduce when the {minus} icon clicked 1`] = `
+<NumberField
+  autoComplete="off"
+  clearButton={false}
+  max={0}
+  min={-10}
+  multiple={false}
+  noValidate={false}
+  readOnly={false}
+  showHelp="newLine"
+  step={1}
+  suffixCls="input-number"
+  trim="both"
+>
+  <Tooltip
+    arrowPointAtCenter={false}
+    autoAdjustOverflow={true}
+    defaultHidden={true}
+    mouseEnterDelay={100}
+    mouseLeaveDelay={100}
+    placement="bottomLeft"
+    suffixCls="form-tooltip c7n-pro-tooltip"
+    theme="light"
+    title={null}
+    transitionName="zoom-big-fast"
+    trigger={
+      Array [
+        "hover",
+      ]
+    }
+  >
+    <Trigger
+      action={
+        Array [
+          "hover",
+        ]
+      }
+      arrowPointAtCenter={false}
+      autoAdjustOverflow={true}
+      blurDelay={0}
+      builtinPlacements={
+        Object {
+          "bottom": Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tc",
+              "bc",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "bottomLeft": Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tl",
+              "bl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "bottomRight": Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tr",
+              "br",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "left": Object {
+            "offset": Array [
+              -10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "cr",
+              "cl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "leftBottom": Object {
+            "offset": Array [
+              -10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "br",
+              "bl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "leftTop": Object {
+            "offset": Array [
+              -10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tr",
+              "tl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "right": Object {
+            "offset": Array [
+              10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "cl",
+              "cr",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "rightBottom": Object {
+            "offset": Array [
+              10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "bl",
+              "br",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "rightTop": Object {
+            "offset": Array [
+              10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tl",
+              "tr",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "top": Object {
+            "offset": Array [
+              0,
+              -10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "bc",
+              "tc",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "topLeft": Object {
+            "offset": Array [
+              0,
+              -10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "bl",
+              "tl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "topRight": Object {
+            "offset": Array [
+              0,
+              -10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "br",
+              "tr",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+        }
+      }
+      defaultPopupHidden={true}
+      focusDelay={150}
+      mouseEnterDelay={100}
+      mouseLeaveDelay={100}
+      popupContent={null}
+      popupPlacement="bottomLeft"
+      prefixCls="c7n-pro-form-tooltip c7n-pro-tooltip"
+      suffixCls="form-tooltip c7n-pro-tooltip"
+      theme="light"
+      title={null}
+      transitionName="zoom-big-fast"
+    >
+      <TriggerChild
+        key=".$.$element"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <span
+          className="c7n-pro-input-number-wrapper"
+          key=".$element"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onFocus={[Function]}
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <label
+            onMouseDown={[Function]}
+          >
+            <input
+              autoComplete="off"
+              className="c7n-pro-input-number"
+              key="text"
+              max={0}
+              min={-10}
+              multiple={false}
+              noValidate={false}
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              readOnly={false}
+              step={1}
+              type="text"
+              value="-10"
+            />
+            <div
+              className="c7n-pro-input-number-inner-button"
+              key="inner-button"
+            >
+              <div>
+                <Icon
+                  className="c7n-pro-input-number-plus"
+                  key="plus"
+                  onMouseDown={[Function]}
+                  type="keyboard_arrow_up"
+                >
+                  <i
+                    className="icon icon-keyboard_arrow_up c7n-pro-input-number-plus"
+                    onMouseDown={[Function]}
+                  />
+                </Icon>
+                <Icon
+                  className="c7n-pro-input-number-minus"
+                  key="minus"
+                  onMouseDown={[Function]}
+                  type="keyboard_arrow_down"
+                >
+                  <i
+                    className="icon icon-keyboard_arrow_down c7n-pro-input-number-minus"
+                    onMouseDown={[Function]}
+                  />
+                </Icon>
+              </div>
+            </div>
+          </label>
+        </span>
+      </TriggerChild>
+      <Popup
+        align={
+          Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tl",
+              "bl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          }
+        }
+        className="c7n-pro-form-tooltip c7n-pro-tooltip-popup"
+        getClassNameFromAlign={[Function]}
+        getRootDomNode={[Function]}
+        hidden={true}
+        key="popup"
+        onMouseDown={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        suffixCls="popup"
+        transitionName="zoom-big-fast"
+      />
+    </Trigger>
+  </Tooltip>
+</NumberField>
+`;
+
+exports[`NumberField-pro the keydown event should render keyCode { up, down } correctly 1`] = `
+<NumberField
+  autoComplete="off"
+  clearButton={false}
+  multiple={false}
+  noValidate={false}
+  readOnly={false}
+  showHelp="newLine"
+  step={1}
+  suffixCls="input-number"
+  trim="both"
+>
+  <Tooltip
+    arrowPointAtCenter={false}
+    autoAdjustOverflow={true}
+    defaultHidden={true}
+    mouseEnterDelay={100}
+    mouseLeaveDelay={100}
+    placement="bottomLeft"
+    suffixCls="form-tooltip c7n-pro-tooltip"
+    theme="light"
+    title={null}
+    transitionName="zoom-big-fast"
+    trigger={
+      Array [
+        "hover",
+      ]
+    }
+  >
+    <Trigger
+      action={
+        Array [
+          "hover",
+        ]
+      }
+      arrowPointAtCenter={false}
+      autoAdjustOverflow={true}
+      blurDelay={0}
+      builtinPlacements={
+        Object {
+          "bottom": Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tc",
+              "bc",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "bottomLeft": Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tl",
+              "bl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "bottomRight": Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tr",
+              "br",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "left": Object {
+            "offset": Array [
+              -10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "cr",
+              "cl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "leftBottom": Object {
+            "offset": Array [
+              -10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "br",
+              "bl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "leftTop": Object {
+            "offset": Array [
+              -10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tr",
+              "tl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "right": Object {
+            "offset": Array [
+              10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "cl",
+              "cr",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "rightBottom": Object {
+            "offset": Array [
+              10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "bl",
+              "br",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "rightTop": Object {
+            "offset": Array [
+              10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tl",
+              "tr",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "top": Object {
+            "offset": Array [
+              0,
+              -10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "bc",
+              "tc",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "topLeft": Object {
+            "offset": Array [
+              0,
+              -10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "bl",
+              "tl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "topRight": Object {
+            "offset": Array [
+              0,
+              -10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "br",
+              "tr",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+        }
+      }
+      defaultPopupHidden={true}
+      focusDelay={150}
+      mouseEnterDelay={100}
+      mouseLeaveDelay={100}
+      popupContent={null}
+      popupPlacement="bottomLeft"
+      prefixCls="c7n-pro-form-tooltip c7n-pro-tooltip"
+      suffixCls="form-tooltip c7n-pro-tooltip"
+      theme="light"
+      title={null}
+      transitionName="zoom-big-fast"
+    >
+      <TriggerChild
+        key=".$.$element"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <span
+          className="c7n-pro-input-number-wrapper"
+          key=".$element"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onFocus={[Function]}
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <label
+            onMouseDown={[Function]}
+          >
+            <input
+              autoComplete="off"
+              className="c7n-pro-input-number"
+              key="text"
+              multiple={false}
+              noValidate={false}
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              readOnly={false}
+              step={1}
+              type="text"
+              value="-1"
+            />
+            <div
+              className="c7n-pro-input-number-inner-button"
+              key="inner-button"
+            >
+              <div>
+                <Icon
+                  className="c7n-pro-input-number-plus"
+                  key="plus"
+                  onMouseDown={[Function]}
+                  type="keyboard_arrow_up"
+                >
+                  <i
+                    className="icon icon-keyboard_arrow_up c7n-pro-input-number-plus"
+                    onMouseDown={[Function]}
+                  />
+                </Icon>
+                <Icon
+                  className="c7n-pro-input-number-minus"
+                  key="minus"
+                  onMouseDown={[Function]}
+                  type="keyboard_arrow_down"
+                >
+                  <i
+                    className="icon icon-keyboard_arrow_down c7n-pro-input-number-minus"
+                    onMouseDown={[Function]}
+                  />
+                </Icon>
+              </div>
+            </div>
+          </label>
+        </span>
+      </TriggerChild>
+      <Popup
+        align={
+          Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tl",
+              "bl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          }
+        }
+        className="c7n-pro-form-tooltip c7n-pro-tooltip-popup"
+        getClassNameFromAlign={[Function]}
+        getRootDomNode={[Function]}
+        hidden={true}
+        key="popup"
+        onMouseDown={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        suffixCls="popup"
+        transitionName="zoom-big-fast"
+      />
+    </Trigger>
+  </Tooltip>
+</NumberField>
+`;

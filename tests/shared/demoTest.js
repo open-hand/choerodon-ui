@@ -8,7 +8,7 @@ export default function demoTest(component, options = {}) {
   const regex = /-pro$/;
   const dirname =
     regex.test(component) > 0
-      ? `./components-pro/${component.replace(/-pro/gi, '')}`
+      ? `./components-pro/${component.replace(/-pro$/gi, '')}`
       : `./components/${component}`;
   const files = glob.sync(`${dirname}/demo/*.md`);
   setup();

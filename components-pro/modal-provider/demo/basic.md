@@ -27,20 +27,20 @@ const ModalContent = () => {
 
 const openModal = (modal, title, context) => {
   modal.open({
-    title: 'Inner',
+    title,
     children: <ModalContent />,
     onOk: () => Modal.confirm('This is normal Modal confirm'),
   });
 };
 
-const InnterModal = () => {
+const InnerModal = () => {
   const modal = useModal();
   const handleClick = React.useCallback(() => openModal(modal, 'Inner'), []);
   return <Button onClick={handleClick}>Open inner modal</Button>;
 };
 
 @injectModal
-class OuterModal extends React.Component {
+class App extends React.Component {
   handleClick = () => {
     const { Modal: modal } = this.props;
     openModal(modal, 'Outer');
@@ -48,17 +48,17 @@ class OuterModal extends React.Component {
 
   render() {
     return (
-      <>
+      <React.Fragment>
         <Button onClick={this.handleClick}>Open outer modal</Button>
         <Context.Provider value="provider">
           <ModalProvider>
-            <InnterModal />
+            <InnerModal />
           </ModalProvider>
         </Context.Provider>
-      </>
+      </React.Fragment>
     );
   }
 }
 
-ReactDOM.render(<OuterModal />, mountNode);
+ReactDOM.render(<App />, mountNode);
 ```

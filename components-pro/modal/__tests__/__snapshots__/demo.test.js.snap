@@ -1,0 +1,199 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders ./components-pro/modal/demo/basic.md correctly 1`] = `
+<button
+  class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+  type="button"
+>
+  <span>
+    Open
+  </span>
+  <div
+    class="c7n-ripple-wrapper"
+  />
+</button>
+`;
+
+exports[`renders ./components-pro/modal/demo/closable.md correctly 1`] = `
+<button
+  class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+  type="button"
+>
+  <span>
+    Open
+  </span>
+  <div
+    class="c7n-ripple-wrapper"
+  />
+</button>
+`;
+
+exports[`renders ./components-pro/modal/demo/confirm.md correctly 1`] = `
+<div>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+    type="button"
+  >
+    <span>
+      Confirm
+    </span>
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+    type="button"
+  >
+    <span>
+      Info
+    </span>
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+    type="button"
+  >
+    <span>
+      Success
+    </span>
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+    type="button"
+  >
+    <span>
+      Error
+    </span>
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+  <br />
+  <br />
+  <button
+    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+    type="button"
+  >
+    <span>
+      Warning
+    </span>
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+</div>
+`;
+
+exports[`renders ./components-pro/modal/demo/drawer.md correctly 1`] = `
+<button
+  class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+  type="button"
+>
+  <span>
+    Drawer
+  </span>
+  <div
+    class="c7n-ripple-wrapper"
+  />
+</button>
+`;
+
+exports[`renders ./components-pro/modal/demo/footer.md correctly 1`] = `
+<div>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+    type="button"
+  >
+    <span>
+      Custom
+    </span>
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+    type="button"
+  >
+    <span>
+      No Footer
+    </span>
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+    type="button"
+  >
+    <span>
+      More Buttons
+    </span>
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+</div>
+`;
+
+exports[`renders ./components-pro/modal/demo/fullscreen.md correctly 1`] = `
+<button
+  class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+  type="button"
+>
+  <span>
+    Open
+  </span>
+  <div
+    class="c7n-ripple-wrapper"
+  />
+</button>
+`;
+
+exports[`renders ./components-pro/modal/demo/multilayer.md correctly 1`] = `
+<button
+  class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+  type="button"
+>
+  <span>
+    Open
+  </span>
+  <div
+    class="c7n-ripple-wrapper"
+  />
+</button>
+`;
+
+exports[`renders ./components-pro/modal/demo/offset.md correctly 1`] = `
+<button
+  class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+  type="button"
+>
+  <span>
+    Open
+  </span>
+  <div
+    class="c7n-ripple-wrapper"
+  />
+</button>
+`;
+
+exports[`renders ./components-pro/modal/demo/sync.md correctly 1`] = `
+<button
+  class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+  type="button"
+>
+  <span>
+    Open
+  </span>
+  <div
+    class="c7n-ripple-wrapper"
+  />
+</button>
+`;

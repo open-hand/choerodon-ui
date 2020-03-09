@@ -295,7 +295,6 @@ exports[`renders ./components-pro/check-box/demo/readonly.md correctly 1`] = `
     class="c7n-pro-checkbox-wrapper c7n-pro-checkbox-disabled"
   >
     <input
-      checked=""
       class="c7n-pro-checkbox"
       disabled=""
       name="rd"

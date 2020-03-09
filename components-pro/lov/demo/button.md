@@ -43,7 +43,6 @@ class App extends React.Component {
         type: 'string',
         lovCode: 'LOV_CODE',
         required: true,
-        defaultValue: 'SYS.TIME_ZONE',
       },
       { name: 'code_code', type: 'string', bind: 'code.code' },
       { name: 'code_description', type: 'string', bind: 'code.description' },
@@ -56,22 +55,26 @@ class App extends React.Component {
   render() {
     const { ds } = this;
     return (
-      <Row gutter={10}>
-        <Col span={6}>
-          <Lov dataSet={ds} name="code" mode="button" clearButton={false} icon="check">
-            请选择
-          </Lov>
-        </Col>
-        <Col span={6}>
-          <Output dataSet={ds} name="code_code" />
-        </Col>
-        <Col span={6}>
-          <Output dataSet={ds} name="code_description" />
-        </Col>
-        <Col span={6}>
-          <Lov dataSet={ds} name="code_string" mode="button" placeholder="请选择" />
-        </Col>
-      </Row>
+      <React.Fragment>
+        <Row gutter={10}>
+          <Col span={6}>
+            <Lov dataSet={ds} name="code" mode="button" clearButton={false} icon="check">
+              请选择
+            </Lov>
+          </Col>
+          <Col span={10}>
+            <Output dataSet={ds} name="code_code" />
+          </Col>
+          <Col span={6}>
+            <Output dataSet={ds} name="code_description" />
+          </Col>
+        </Row>
+        <Row gutter={10}>
+          <Col span={24}>
+            <Lov dataSet={ds} name="code_string" mode="button" placeholder="请选择" />
+          </Col>
+        </Row>
+      </React.Fragment>
     );
   }
 }

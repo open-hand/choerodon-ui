@@ -1,0 +1,248 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`modal-pro render close correctly 1`] = `
+<div
+  class="c7n-pro-modal c7n-pro-modal-center c7n-pro-modal-border c7n-pro-modal-wrapper"
+  tabindex="-1"
+>
+  <div
+    class="c7n-pro-modal-content"
+  >
+    <div
+      class="c7n-pro-modal-header c7n-pro-modal-movable"
+    >
+      <div
+        class="c7n-pro-modal-header-buttons"
+      >
+        <button
+          class="c7n-pro-modal-header-button"
+          type="button"
+        >
+          <i
+            class="icon icon-close"
+          />
+        </button>
+      </div>
+    </div>
+    <div
+      class="c7n-pro-modal-footer"
+    >
+      <div>
+        <button
+          class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-primary c7n-pro-btn-wrapper"
+          type="button"
+        >
+          <span>
+            确定
+          </span>
+          <div
+            class="c7n-ripple-wrapper"
+          />
+        </button>
+        <button
+          class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+          type="button"
+        >
+          <span>
+            取消
+          </span>
+          <div
+            class="c7n-ripple-wrapper"
+          />
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`modal-pro render correctly without footer 1`] = `
+<div
+  class="c7n-pro-modal c7n-pro-modal-center c7n-pro-modal-border c7n-pro-modal-wrapper"
+  tabindex="-1"
+>
+  <div
+    class="c7n-pro-modal-content"
+  >
+    <div
+      class="c7n-pro-modal-header c7n-pro-modal-movable"
+    />
+  </div>
+</div>
+`;
+
+exports[`modal-pro renders modal-pro correctly 1`] = `
+<Modal
+  autoFocus={true}
+  closable={false}
+  destroyOnClose={true}
+  drawer={false}
+  fullScreen={false}
+  keyboardClosable={true}
+  maskClosable={false}
+  movable={true}
+  okCancel={true}
+  suffixCls="modal"
+>
+  <div
+    autoFocus={true}
+    className="c7n-pro-modal c7n-pro-modal-center c7n-pro-modal-border c7n-pro-modal-wrapper"
+    onBlur={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    tabIndex={-1}
+  >
+    <div
+      className="c7n-pro-modal-content"
+    >
+      <div
+        className="c7n-pro-modal-header c7n-pro-modal-movable"
+        onMouseDown={[Function]}
+      />
+      <div
+        className="c7n-pro-modal-footer"
+      >
+        <div>
+          <Button
+            color="primary"
+            funcType="raised"
+            key="ok"
+            loading={false}
+            onClick={[Function]}
+            suffixCls="btn"
+            type="button"
+            waitType="throttle"
+          >
+            <Ripple
+              disabled={false}
+            >
+              <RippleChild
+                key=".0"
+                prefixCls="c7n-ripple"
+              >
+                <MouseDown
+                  rippleChild={
+                    <button
+                      className="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-primary c7n-pro-btn-wrapper"
+                      disabled={false}
+                      onBlur={[Function]}
+                      onClick={[Function]}
+                      onFocus={[Function]}
+                      type="button"
+                    >
+                      <span>
+                        确定
+                      </span>
+                    </button>
+                  }
+                >
+                  <button
+                    className="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-primary c7n-pro-btn-wrapper"
+                    disabled={false}
+                    onBlur={[Function]}
+                    onClick={[Function]}
+                    onFocus={[Function]}
+                    onMouseDown={[Function]}
+                    type="button"
+                  >
+                    <span>
+                      确定
+                    </span>
+                    <Animate
+                      animation={Object {}}
+                      component="div"
+                      componentProps={
+                        Object {
+                          "className": "c7n-ripple-wrapper",
+                        }
+                      }
+                      hiddenProp="hidden"
+                      key="ripple"
+                      transitionAppear={false}
+                      transitionEnter={true}
+                      transitionLeave={true}
+                      transitionName="fade"
+                    >
+                      <div
+                        className="c7n-ripple-wrapper"
+                      />
+                    </Animate>
+                  </button>
+                </MouseDown>
+              </RippleChild>
+            </Ripple>
+          </Button>
+          <Button
+            funcType="raised"
+            key="cancel"
+            loading={false}
+            onClick={[Function]}
+            suffixCls="btn"
+            type="button"
+            waitType="throttle"
+          >
+            <Ripple
+              disabled={false}
+            >
+              <RippleChild
+                key=".0"
+                prefixCls="c7n-ripple"
+              >
+                <MouseDown
+                  rippleChild={
+                    <button
+                      className="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+                      disabled={false}
+                      onBlur={[Function]}
+                      onClick={[Function]}
+                      onFocus={[Function]}
+                      type="button"
+                    >
+                      <span>
+                        取消
+                      </span>
+                    </button>
+                  }
+                >
+                  <button
+                    className="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+                    disabled={false}
+                    onBlur={[Function]}
+                    onClick={[Function]}
+                    onFocus={[Function]}
+                    onMouseDown={[Function]}
+                    type="button"
+                  >
+                    <span>
+                      取消
+                    </span>
+                    <Animate
+                      animation={Object {}}
+                      component="div"
+                      componentProps={
+                        Object {
+                          "className": "c7n-ripple-wrapper",
+                        }
+                      }
+                      hiddenProp="hidden"
+                      key="ripple"
+                      transitionAppear={false}
+                      transitionEnter={true}
+                      transitionLeave={true}
+                      transitionName="fade"
+                    >
+                      <div
+                        className="c7n-ripple-wrapper"
+                      />
+                    </Animate>
+                  </button>
+                </MouseDown>
+              </RippleChild>
+            </Ripple>
+          </Button>
+        </div>
+      </div>
+    </div>
+  </div>
+</Modal>
+`;

@@ -1,0 +1,92 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders ./components-pro/color-picker/demo/basic.md correctly 1`] = `
+<span
+  class="c7n-pro-color-picker-wrapper c7n-pro-color-picker-suffix-button c7n-pro-color-picker-prefix-button"
+>
+  <label>
+    <div
+      class="c7n-pro-color-picker-prefix"
+    >
+      <span
+        class="c7n-pro-color-picker-color"
+        style="background-color:#f1c7f2"
+      />
+    </div>
+    <input
+      autocomplete="off"
+      class="c7n-pro-color-picker"
+      type="text"
+      value="#f1c7f2"
+    />
+    <div
+      class="c7n-pro-color-picker-suffix"
+    >
+      <i
+        class="icon icon-palette c7n-pro-color-picker-trigger"
+      />
+    </div>
+  </label>
+</span>
+`;
+
+exports[`renders ./components-pro/color-picker/demo/controlled.md correctly 1`] = `
+<span
+  class="c7n-pro-color-picker-wrapper c7n-pro-color-picker-suffix-button c7n-pro-color-picker-prefix-button"
+>
+  <label>
+    <div
+      class="c7n-pro-color-picker-prefix"
+    >
+      <span
+        class="c7n-pro-color-picker-color"
+        style="background-color:#0000ff"
+      />
+    </div>
+    <input
+      autocomplete="off"
+      class="c7n-pro-color-picker"
+      type="text"
+      value="#0000ff"
+    />
+    <div
+      class="c7n-pro-color-picker-suffix"
+    >
+      <i
+        class="icon icon-palette c7n-pro-color-picker-trigger"
+      />
+    </div>
+  </label>
+</span>
+`;
+
+exports[`renders ./components-pro/color-picker/demo/dataset.md correctly 1`] = `
+<span
+  class="c7n-pro-color-picker-wrapper c7n-pro-color-picker-required c7n-pro-color-picker-suffix-button c7n-pro-color-picker-prefix-button"
+>
+  <label>
+    <div
+      class="c7n-pro-color-picker-prefix"
+    >
+      <span
+        class="c7n-pro-color-picker-color"
+        style="background-color:#00ff00"
+      />
+    </div>
+    <input
+      autocomplete="off"
+      class="c7n-pro-color-picker"
+      name="color"
+      type="text"
+      value="#00ff00"
+    />
+    <div
+      class="c7n-pro-color-picker-suffix"
+    >
+      <i
+        class="icon icon-palette c7n-pro-color-picker-trigger"
+      />
+    </div>
+  </label>
+</span>
+`;

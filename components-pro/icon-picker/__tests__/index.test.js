@@ -1,7 +1,18 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import IconPicker from '..';
+import IconItem from '../IconItem';
 import IconPickerTest from './IconPicker';
+import mountTest from '../../../tests/shared/mountTest';
+import focusTest from '../../../tests/shared/focusTest';
+import TriggerPopTest from '../../../tests/shared/triggerPopTest';
+import { simulateCode } from './utils';
+
+mountTest(IconPicker);
+mountTest(IconItem);
+mountTest(IconPickerTest);
+focusTest(IconPicker);
+TriggerPopTest(IconPicker);
 
 describe('Icon-Picker-pro', () => {
   beforeEach(() => {
@@ -23,9 +34,53 @@ describe('Icon-Picker-pro', () => {
     expect(wrapper.props().pageSize).toEqual(100);
   });
 
-  it('the property pageSize will be 100 ', () => {
+  it('the selected click render correctly', () => {
     const wrapper = mount(<IconPicker />);
-    expect(wrapper.props().pageSize).toEqual(100);
+    wrapper.find('input').simulate('click');
+    jest.runAllTimers();
+    wrapper.find('.c7n-pro-icon-picker-item-selected > div').simulate('click');
+    jest.runAllTimers();
+    wrapper.update();
+    expect(wrapper).toMatchSnapshot();
+  });
+
+  it('the keydown event should render correctly', () => {
+    const wrapper = mount(<IconPicker />);
+    wrapper.find('input').simulate('click');
+    jest.runAllTimers();
+    wrapper.update();
+    simulateCode(wrapper, 39);
+    simulateCode(wrapper, 37);
+    simulateCode(wrapper, 40);
+    simulateCode(wrapper, 38);
+    simulateCode(wrapper, 35);
+    simulateCode(wrapper, 36);
+    simulateCode(wrapper, 33);
+    simulateCode(wrapper, 34);
+    simulateCode(wrapper, 13);
+    simulateCode(wrapper, 10);
+    wrapper.update();
+    expect(wrapper).toMatchSnapshot();
+  });
+  it('the keydown event should render keyCode {sp } correctly', () => {
+    const wrapper = mount(<IconPicker />);
+    wrapper.find('input').simulate('keydown', { keyCode: 32 });
+    jest.runAllTimers();
+    wrapper.update();
+    expect(wrapper).toMatchSnapshot();
+  });
+  it('the keydown event should render keyCode { esc, tab } correctly', () => {
+    const wrapper = mount(<IconPicker />);
+    wrapper.find('input').simulate('click');
+    jest.runAllTimers();
+    wrapper.update();
+    simulateCode(wrapper, 9);
+    wrapper.update();
+    wrapper.find('input').simulate('click');
+    jest.runAllTimers();
+    simulateCode(wrapper, 27);
+    wrapper.update();
+    expect(wrapper).toMatchSnapshot();
   });
 
   it('input should nothing when click firstly  ', () => {
@@ -38,6 +93,14 @@ describe('Icon-Picker-pro', () => {
         .at(0)
         .prop('value'),
     ).toBe('');
+  });
+  it('input should render readOnly correctly', () => {
+    const wrapper = mount(<IconPicker />);
+    expect(wrapper.prop('readOnly')).toBe(false);
+    wrapper.setProps({ readOnly: true });
+    wrapper.update();
+    expect(wrapper.prop('readOnly')).toBe(true);
+    expect(wrapper.instance().renderIconCategories()).toMatchSnapshot();
   });
 
   it('should renders dataset correctly', () => {

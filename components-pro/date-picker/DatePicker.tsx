@@ -492,9 +492,9 @@ export default class DatePicker extends TriggerField<DatePickerProps>
 
   getValidDate(date: Moment): Moment {
     const { min, max } = this;
-    if (min && date.isBefore(min)) {
+    if (min && date.isSameOrBefore(min)) {
       date = min;
-    } else if (max && date.isAfter(max)) {
+    } else if (max && date.isSameOrAfter(max)) {
       date = max;
     }
     return date;

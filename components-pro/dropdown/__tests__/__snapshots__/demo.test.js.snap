@@ -7,7 +7,7 @@ exports[`renders ./components-pro/dropdown/demo/basic.md correctly 1`] = `
     type="button"
   >
     <span>
-      Click
+      Click me 
       <i
         class="icon icon-arrow_drop_down"
       />

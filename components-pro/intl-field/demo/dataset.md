@@ -32,7 +32,14 @@ class App extends React.Component {
     primaryKey: 'pk',
     data: [{ 'first-name': '吴' }],
     tlsUrl: '/dataset/user/languages',
-    fields: [{ name: 'first-name', type: 'intl', defaultValue: 'Huazhen', required: true }],
+    fields: [
+      {
+        name: 'first-name',
+        type: 'intl',
+        defaultValue: 'Huazhen',
+        required: true,
+      },
+    ],
     events: {
       update: handleDataSetChange,
     },
@@ -43,7 +50,13 @@ class App extends React.Component {
     primaryKey: 'pk',
     data: [{}],
     tlsUrl: '/dataset/user/languages',
-    fields: [{ name: 'first-name', type: 'intl', required: true }],
+    fields: [
+      {
+        name: 'first-name',
+        type: 'intl',
+        required: true,
+      },
+    ],
     events: {
       update: handleDataSetChange,
     },

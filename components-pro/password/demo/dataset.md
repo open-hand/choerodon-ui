@@ -13,18 +13,30 @@ title:
 
 DataSet binding.
 
-````jsx
+```jsx
 import { DataSet, Password } from 'choerodon-ui/pro';
 
 function handleDataSetChange({ record, name, value, oldValue }) {
-  console.log('[dataset newValue]', value, '[oldValue]', oldValue, `[record.get('${name}')]`, record.get(name));
+  console.log(
+    '[dataset newValue]',
+    value,
+    '[oldValue]',
+    oldValue,
+    `[record.get('${name}')]`,
+    record.get(name),
+  );
 }
 
 class App extends React.Component {
   ds = new DataSet({
     autoCreate: true,
     fields: [
-      { name: 'first-name', type: 'string', defaultValue: 'Huazhen', required: true },
+      {
+        name: 'first-name',
+        type: 'string',
+        defaultValue: 'choerodon-pro',
+        required: true,
+      },
     ],
     events: {
       update: handleDataSetChange,
@@ -36,8 +48,5 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(
-  <App />,
-  mountNode
-);
-````
+ReactDOM.render(<App />, mountNode);
+```

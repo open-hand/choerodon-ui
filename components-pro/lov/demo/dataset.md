@@ -44,7 +44,6 @@ class App extends React.Component {
         type: 'string',
         lovCode: 'LOV_CODE',
         required: true,
-        defaultValue: 'SYS.TIME_ZONE',
       },
       { name: 'code_code', type: 'string', bind: 'code.code' },
       { name: 'code_description', type: 'string', bind: 'code.description' },

@@ -13,7 +13,7 @@ title:
 
 Controlled TextField
 
-````jsx
+```jsx
 import { Password } from 'choerodon-ui/pro';
 
 class App extends React.Component {
@@ -29,19 +29,18 @@ class App extends React.Component {
     this.setState({
       value,
     });
-  }
+  };
 
-  handleInput = (e) => {
+  handleInput = e => {
     console.log('[input]', e.target.value);
-  }
+  };
 
   render() {
-    return <Password value={this.state.value} onChange={this.handleChange} onInput={this.handleInput} />;
+    return (
+      <Password value={this.state.value} onChange={this.handleChange} onInput={this.handleInput} />
+    );
   }
 }
 
-ReactDOM.render(
-  <App />,
-  mountNode
-);
-````
+ReactDOM.render(<App />, mountNode);
+```
