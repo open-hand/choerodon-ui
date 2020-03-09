@@ -129,6 +129,12 @@ export default class CodeArea extends ObserverFormField<CodeAreaProps> {
     return this.text === undefined ? (super.getTextNode() as string) || '' : this.text;
   }
 
+  @action
+  setValue(value: any): void {
+    super.setValue(value);
+    this.setText(undefined);
+  }
+
   processValue(value: any): string {
     const text = super.processValue(value);
     const { formatter } = this.props;

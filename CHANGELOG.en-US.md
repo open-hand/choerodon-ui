@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>CodeArea`: FIX CodeArea text controlled
 - 🌟 `<pro>Filed:`: Add class name for formFiled Tooltip .
 - 🐞 `<pro>SelectBox`: Fix SelectBox multiple disable can't read the Text。
 - 💄 `<pro>DataSet`: Optimize the performance of the `ready` method.
