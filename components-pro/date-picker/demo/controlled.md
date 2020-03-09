@@ -13,18 +13,18 @@ title:
 
 The most basic usage.
 
-````jsx
+```jsx
 import { DatePicker } from 'choerodon-ui/pro';
 
 class App extends React.Component {
-  state = {}
+  state = {};
 
-  handleChange = (moment) => {
+  handleChange = moment => {
     console.log('[controlled]', moment && moment.format());
     this.setState({
       moment,
     });
-  }
+  };
 
   render() {
     return (
@@ -33,8 +33,5 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(
-  <App />,
-  mountNode
-);
-````
+ReactDOM.render(<App />, mountNode);
+```

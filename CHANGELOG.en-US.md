@@ -19,6 +19,7 @@ timeline: true
 - 🌟 `<pro>Filed:`: Add class name for formFiled Tooltip .
 - 💄 `<pro>DataSet`: Optimize the performance of the `ready` method.
 - 💄 `<pro>DataSet.Record`: Use the merge method to write back with object fields.
+- 🐞 `<pro>DatePicker`: Fixed the problem that when DatePicker sets the default value, the maximum date cannot select the minimum default value
 - 🐞 `<pro>CodeArea`: FIX CodeArea text controlled
 - 🐞 `<pro>SelectBox`: Fix SelectBox multiple disable can't read the Text.
 - 🐞 `<pro>DataSet`: Fix `validate` did not apply `dataToJSON` configuration.

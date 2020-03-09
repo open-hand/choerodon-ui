@@ -17,6 +17,7 @@ describe('years-picker-pro', () => {
   afterEach(() => {
     jest.useRealTimers();
   });
+
   it('the year will be controlled by the value', () => {
     const wrapper = mount(<YearsPicker value={moment('2020-02-20')} />);
     expect(
