@@ -15,11 +15,12 @@ timeline: true
 
 ---
 
-- 🐞 `<pro>CodeArea`: FIX CodeArea text controlled
+- 🌟 `<pro>DataSet`: Added `cascadeParams` property.
 - 🌟 `<pro>Filed:`: Add class name for formFiled Tooltip .
-- 🐞 `<pro>SelectBox`: Fix SelectBox multiple disable can't read the Text。
 - 💄 `<pro>DataSet`: Optimize the performance of the `ready` method.
 - 💄 `<pro>DataSet.Record`: Use the merge method to write back with object fields.
+- 🐞 `<pro>CodeArea`: FIX CodeArea text controlled
+- 🐞 `<pro>SelectBox`: Fix SelectBox multiple disable can't read the Text.
 - 🐞 `<pro>DataSet`: Fix `validate` did not apply `dataToJSON` configuration.
 - 🐞 Fix the problem that the base component and pro component have the same name pre-variable conflict when fully relying on the style.
 - 🐞 `<pro>Lov`: Fix the problem that `valueField` and `textField` in lov configuration are invalid when `lovCode` is obtained through `dynamicProps`.

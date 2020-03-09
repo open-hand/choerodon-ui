@@ -44,6 +44,11 @@ class App extends React.Component {
   friendsDs = new DataSet({
     dataToJSON: 'normal',
     queryUrl: '/dataset/user/queries',
+    cascadeParams(parent) {
+      return {
+        __parent: parent.toData(),
+      };
+    },
     fields: [
       { name: 'name', type: 'string', label: '姓名', required: true },
       { name: 'age', type: 'number', label: '年龄' },

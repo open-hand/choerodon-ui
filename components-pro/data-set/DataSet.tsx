@@ -247,6 +247,10 @@ export interface DataSetProps {
    * @default dirty
    */
   dataToJSON?: DataToJSON;
+  /**
+   * 级联查询参数
+   */
+  cascadeParams?: (parent: Record, primaryKey?: string) => object;
 }
 
 export default class DataSet extends EventManager {
@@ -262,6 +266,12 @@ export default class DataSet extends EventManager {
     pageSize: 10,
     paging: true,
     dataToJSON: DataToJSON.dirty,
+    cascadeParams(parent, primaryKey) {
+      if (primaryKey) {
+        return { [primaryKey]: parent.get(primaryKey) };
+      }
+      return omit(parent.toData(), ['__dirty']);
+    },
   };
 
   id?: string;
@@ -2068,22 +2078,26 @@ Then the query method will be auto invoke.`,
     return { ...pageQuery, ...order };
   }
 
-  private async generateQueryParameter(): Promise<any> {
-    const { parent, queryDataSet } = this;
-    let parentParam = {};
+  private getParentParams(): object {
+    const {
+      parent,
+      props: { cascadeParams },
+    } = this;
     if (parent) {
       const {
         props: { primaryKey },
         current,
       } = parent;
       if (current) {
-        if (primaryKey) {
-          parentParam[primaryKey] = current.get(primaryKey);
-        } else {
-          parentParam = omit(current.toData(), ['__dirty']);
-        }
+        return cascadeParams!(current, primaryKey);
       }
     }
+    return {};
+  }
+
+  private async generateQueryParameter(): Promise<any> {
+    const { queryDataSet } = this;
+    const parentParams = this.getParentParams();
     if (queryDataSet) {
       await queryDataSet.ready();
       if (!(await queryDataSet.validate())) {
@@ -2100,7 +2114,7 @@ Then the query method will be auto invoke.`,
     data = {
       ...data,
       ...this.queryParameter,
-      ...parentParam,
+      ...parentParams,
     };
     return Object.keys(data).reduce((p, key) => {
       const value = data[key];

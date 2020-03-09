@@ -46,6 +46,7 @@ title: DataSet
 | cacheSelection | 缓存选中记录，使切换分页时仍保留选中状态。当设置了 primaryKey 或有字段设置了 unique 才起作用。 | boolean | false |
 | axios | 覆盖默认 axios | AxiosInstance |  |
 | dataToJSON | 数据转为 json 的方式，详见[DataToJSON](#DataToJSON) | DataToJSON | dirty |
+| cascadeParams | 级联查询参数 | (record, primaryKey) => object | (record, primaryKey) => primaryKey ? record.get(primaryKey) : record.toData() |
 
 ### DataSet Values
 
