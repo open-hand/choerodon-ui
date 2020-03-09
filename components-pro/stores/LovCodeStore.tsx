@@ -140,6 +140,7 @@ export class LovCodeStore {
     return config;
   }
 
+  // lovCode 作为key 缓存了 ds
   getLovDataSet(code: string, field?: Field): DataSet | undefined {
     const config = this.getConfig(code);
     if (config) {

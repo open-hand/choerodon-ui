@@ -1,20 +1,25 @@
 import { IReactionDisposer, reaction } from 'mobx';
 import { getConfig } from 'choerodon-ui/lib/configure';
-import Yallist from './Yallist';
+import Yallist from './Yallist'; // 双向链表 -> 缓存更新性能优化
 
-const MAX = Symbol('max');
-const LENGTH = Symbol('length');
-const LENGTH_CALCULATOR = Symbol('lengthCalculator');
-const ALLOW_STALE = Symbol('allowStale');
-const MAX_AGE = Symbol('maxAge');
-const DISPOSE = Symbol('dispose');
-const NO_DISPOSE_ON_SET = Symbol('noDisposeOnSet');
-const LIST = Symbol('list');
-const CACHE = Symbol('cache');
-const UPDATE_AGE_ON_GET = Symbol('updateAgeOnGet');
+const MAX = Symbol('max'); // 最大值
+const LENGTH = Symbol('length'); // 长度
+const LENGTH_CALCULATOR = Symbol('lengthCalculator'); // 长度计算
+const ALLOW_STALE = Symbol('allowStale'); // 允许过时
+const MAX_AGE = Symbol('maxAge'); // 最大时效（缓存时长）
+const DISPOSE = Symbol('dispose'); // 处置 处理
+const NO_DISPOSE_ON_SET = Symbol('noDisposeOnSet'); // 不可处理
+const LIST = Symbol('list'); // 列表
+const CACHE = Symbol('cache'); // 缓存
+const UPDATE_AGE_ON_GET = Symbol('updateAgeOnGet'); // 获取更新时效
 
 const naiveLength = () => 1;
 
+/**
+ * 是否过时
+ * @param self
+ * @param hit
+ */
 function isStale(self, hit): boolean {
   if (!hit || (!hit.maxAge && !self[MAX_AGE])) return false;
 
@@ -22,6 +27,11 @@ function isStale(self, hit): boolean {
   return hit.maxAge ? diff > hit.maxAge : self[MAX_AGE] && diff > self[MAX_AGE];
 }
 
+/**
+ * 删除
+ * @param self
+ * @param node
+ */
 function del(self, node) {
   if (node) {
     const hit = node.value;
@@ -33,6 +43,12 @@ function del(self, node) {
   }
 }
 
+/**
+ * 获取
+ * @param self
+ * @param key
+ * @param doUse
+ */
 function get(self, key, doUse) {
   const node = self[CACHE].get(key);
   if (node) {
@@ -48,6 +64,10 @@ function get(self, key, doUse) {
   }
 }
 
+/**
+ * 修整
+ * @param self
+ */
 function trim(self) {
   if (self[LENGTH] > self[MAX]) {
     for (let walker = self[LIST].tail; self[LENGTH] > self[MAX] && walker !== null; ) {
@@ -61,6 +81,13 @@ function trim(self) {
   }
 }
 
+/**
+ * 遍历步骤
+ * @param self
+ * @param fn
+ * @param node
+ * @param thisp
+ */
 function forEachStep(self, fn, node, thisp) {
   let hit = node.value;
   if (isStale(self, hit)) {
@@ -70,6 +97,9 @@ function forEachStep(self, fn, node, thisp) {
   if (hit) fn.call(thisp, hit.value, hit.key, self);
 }
 
+/**
+ * 构造 Entry 类
+ */
 class Entry<K, V> {
   key: K;
 
@@ -90,6 +120,9 @@ class Entry<K, V> {
   }
 }
 
+/**
+ * 声明缓存类型
+ */
 export type CacheOptions<K, V> = {
   max?: number;
   maxAge?: number;
@@ -100,6 +133,9 @@ export type CacheOptions<K, V> = {
   updateAgeOnGet?: boolean;
 };
 
+/**
+ * 导出 Cache 类
+ */
 export default class Cache<K, V> {
   constructor(options) {
     if (typeof options === 'number') options = { max: options };
