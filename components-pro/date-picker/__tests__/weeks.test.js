@@ -8,6 +8,14 @@ import { disableWrapper, simulateCode } from './utils';
 describe('weeks-picker-pro', () => {
   focusTest(WeeksPicker);
 
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+
   it('the week will be controlled by the value', () => {
     const wrapper = mount(<WeeksPicker value={moment('2020-02-19')} />);
     expect(

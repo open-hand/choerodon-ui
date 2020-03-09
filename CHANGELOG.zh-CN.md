@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>DatePicker`: 修复 DatePicker 设置默认值时，最大值日期无法选择最小默认值问题
 - 🐞 `<pro>CodeArea`: 修复 CodeArea text 受控问题
 - 🌟 `<pro>Filed:`: 添加 Form 下 Tooltip 特有样式名称
 - 🐞 `<pro>SelectBox`: 修复 SelectBox multiple disable 状态无法查看文本。

@@ -13,8 +13,16 @@ title:
 
 Specify Max value and Min value.
 
-````jsx
-import { DataSet, DatePicker, MonthPicker, YearPicker, DateTimePicker, Row, Col } from 'choerodon-ui/pro';
+```jsx
+import {
+  DataSet,
+  DatePicker,
+  MonthPicker,
+  YearPicker,
+  DateTimePicker,
+  Row,
+  Col,
+} from 'choerodon-ui/pro';
 import moment from 'moment';
 
 function filterDate(currentDate) {
@@ -26,8 +34,16 @@ class App extends React.Component {
   ds = new DataSet({
     autoCreate: true,
     fields: [
-      { name: 'startDate', type: 'date', max: 'endDate' },
-      { name: 'endDate', type: 'date', min: 'startDate' },
+      {
+        name: 'startDate',
+        type: 'date',
+        max: 'endDate',
+      },
+      {
+        name: 'endDate',
+        type: 'date',
+        min: 'startDate',
+      },
     ],
   });
 
@@ -47,7 +63,7 @@ class App extends React.Component {
           <MonthPicker min={new Date()} placeholder="Date min" />
         </Col>
         <Col span={12}>
-          <YearPicker max="2019-02-10" placeholder="string max" />
+          <YearPicker max="2021-12-10" placeholder="string max" />
         </Col>
         <Col span={12}>
           <DateTimePicker min={moment()} placeholder="Select date time" />
@@ -57,8 +73,5 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(
-  <App />,
-  mountNode
-);
-````
+ReactDOM.render(<App />, mountNode);
+```
