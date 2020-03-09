@@ -22,19 +22,6 @@ describe('modal triggers callbacks correctly', () => {
     return document.body.querySelectorAll(className);
   };
 
-  function confirm(args) {
-    Modal.confirm({
-      title: 'Confirm Test',
-      destroyOnClose: true,
-      children: (
-        <div>
-          <p>Some confirm...</p>
-        </div>
-      ),
-      ...args,
-    });
-  }
-
   function open(args) {
     Modal.open({
       title: 'Modal Test',

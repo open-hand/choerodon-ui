@@ -6,7 +6,6 @@ import IntlFieldTest from './intlField';
 import focusTest from '../../../tests/shared/focusTest';
 import mountTest from '../../../tests/shared/mountTest';
 import { open } from '../../modal-container/ModalContainer';
-// import { ModalProps } from '../../modal/Modal';
 import DataSet from '../../data-set';
 
 mountTest(IntlList);

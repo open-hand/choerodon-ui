@@ -12,7 +12,7 @@ const ModalContent = () => {
   return context ? `Modal with context<${context}>` : 'Modal without context';
 };
 
-const openModal = (modal, title, context) => {
+const openModal = (modal, title) => {
   modal.open({
     title,
     children: <ModalContent />,
