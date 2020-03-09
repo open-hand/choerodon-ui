@@ -1,0 +1,298 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders ./components-pro/lov/demo/button.md correctly 1`] = `
+Array [
+  <div
+    class="c7n-row"
+    style="margin-left:-5px;margin-right:-5px"
+  >
+    <div
+      class="c7n-col-6"
+      style="padding-left:5px;padding-right:5px"
+    >
+      <button
+        autocomplete="off"
+        class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+        mode="button"
+        type="button"
+      >
+        <i
+          class="icon icon-check"
+        />
+        <span>
+          请选择
+        </span>
+        <div
+          class="c7n-ripple-wrapper"
+        />
+      </button>
+    </div>
+    <div
+      class="c7n-col-10"
+      style="padding-left:5px;padding-right:5px"
+    >
+      <span
+        class="c7n-pro-output c7n-pro-output-wrapper"
+      />
+    </div>
+    <div
+      class="c7n-col-6"
+      style="padding-left:5px;padding-right:5px"
+    >
+      <span
+        class="c7n-pro-output c7n-pro-output-wrapper"
+      />
+    </div>
+  </div>,
+  <div
+    class="c7n-row"
+    style="margin-left:-5px;margin-right:-5px"
+  >
+    <div
+      class="c7n-col-24"
+      style="padding-left:5px;padding-right:5px"
+    >
+      <button
+        autocomplete="off"
+        class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+        mode="button"
+        type="button"
+      >
+        <span>
+          请选择
+        </span>
+        <div
+          class="c7n-ripple-wrapper"
+        />
+      </button>
+      <button
+        class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-btn-sm"
+        type="button"
+      >
+        <i
+          class="icon icon-close"
+        />
+        <div
+          class="c7n-ripple-wrapper"
+        />
+      </button>
+    </div>
+  </div>,
+]
+`;
+
+exports[`renders ./components-pro/lov/demo/cascade.md correctly 1`] = `
+<div
+  class="c7n-row"
+  style="margin-left:-5px;margin-right:-5px"
+>
+  <div
+    class="c7n-col-12"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <span
+      class="c7n-pro-select-wrapper c7n-pro-select-empty c7n-pro-select-suffix-button c7n-pro-select-not-editable"
+    >
+      <input
+        name="mySex"
+        type="hidden"
+        value=""
+      />
+      <label>
+        <input
+          autocomplete="off"
+          class="c7n-pro-select"
+          readonly=""
+          type="text"
+          value=""
+        />
+        <div
+          class="c7n-pro-select-inner-button c7n-pro-select-clear-button"
+        >
+          <i
+            class="icon icon-close"
+          />
+        </div>
+        <div
+          class="c7n-pro-select-suffix"
+        >
+          <i
+            class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+          />
+        </div>
+      </label>
+    </span>
+  </div>
+  <div
+    class="c7n-col-12"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <span
+      class="c7n-pro-select-wrapper c7n-pro-select-disabled c7n-pro-select-empty c7n-pro-select-suffix-button"
+    >
+      <input
+        name="code"
+        type="hidden"
+        value=""
+      />
+      <label>
+        <input
+          autocomplete="off"
+          class="c7n-pro-select"
+          disabled=""
+          readonly=""
+          type="text"
+          value=""
+        />
+        <div
+          class="c7n-pro-select-suffix"
+        >
+          <i
+            class="icon icon-search"
+          />
+        </div>
+      </label>
+    </span>
+  </div>
+</div>
+`;
+
+exports[`renders ./components-pro/lov/demo/dataset.md correctly 1`] = `
+<div
+  class="c7n-row"
+  style="margin-left:-5px;margin-right:-5px"
+>
+  <div
+    class="c7n-col-12"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <span
+      class="c7n-pro-select-wrapper c7n-pro-select-required c7n-pro-select-empty c7n-pro-select-suffix-button"
+    >
+      <input
+        name="code"
+        type="hidden"
+        value=""
+      />
+      <label>
+        <input
+          autocomplete="off"
+          class="c7n-pro-select"
+          placeholder="请选择快码"
+          type="text"
+          value=""
+        />
+        <div
+          class="c7n-pro-select-inner-button c7n-pro-select-clear-button"
+        >
+          <i
+            class="icon icon-close"
+          />
+        </div>
+        <div
+          class="c7n-pro-select-suffix"
+        >
+          <i
+            class="icon icon-search"
+          />
+        </div>
+      </label>
+    </span>
+  </div>
+  <div
+    class="c7n-col-12"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <span
+      class="c7n-pro-select-wrapper c7n-pro-select-required c7n-pro-select-empty c7n-pro-select-suffix-button"
+    >
+      <input
+        name="code_string"
+        type="hidden"
+        value=""
+      />
+      <label>
+        <input
+          autocomplete="off"
+          class="c7n-pro-select"
+          placeholder="请选择快码"
+          type="text"
+          value=""
+        />
+        <div
+          class="c7n-pro-select-inner-button c7n-pro-select-clear-button"
+        >
+          <i
+            class="icon icon-close"
+          />
+        </div>
+        <div
+          class="c7n-pro-select-suffix"
+        >
+          <i
+            class="icon icon-search"
+          />
+        </div>
+      </label>
+    </span>
+  </div>
+</div>
+`;
+
+exports[`renders ./components-pro/lov/demo/multiple.md correctly 1`] = `
+<span
+  class="c7n-pro-select-wrapper c7n-pro-select-required c7n-pro-select-suffix-button c7n-pro-select-multiple"
+>
+  <input
+    class="c7n-pro-select-multiple-value"
+    name="code"
+    value="Mock"
+  />
+  <div
+    class="c7n-pro-select-placeholder"
+  >
+    复选LOV
+  </div>
+  <label>
+    <div
+      class="c7n-pro-select"
+    >
+      <ul>
+        <li
+          class="c7n-pro-select-multiple-block"
+        >
+          <div>
+            Mock
+          </div>
+          <i
+            class="icon icon-cancel"
+            tabindex="-1"
+          />
+        </li>
+        <li>
+          <input
+            autocomplete="off"
+            class="c7n-pro-select-multiple-input"
+            type="text"
+            value=""
+          />
+        </li>
+      </ul>
+    </div>
+    <div
+      class="c7n-pro-select-inner-button c7n-pro-select-clear-button"
+    >
+      <i
+        class="icon icon-close"
+      />
+    </div>
+    <div
+      class="c7n-pro-select-suffix"
+    >
+      <i
+        class="icon icon-search"
+      />
+    </div>
+  </label>
+</span>
+`;

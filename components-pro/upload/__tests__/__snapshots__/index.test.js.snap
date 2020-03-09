@@ -554,3 +554,558 @@ exports[`Tree-pro should have a Tooltip inside   1`] = `
   </div>
 </Upload>
 `;
+
+exports[`Tree-pro should have a Tooltip inside 1`] = `
+<Upload
+  accept={
+    Array [
+      ".deb",
+      ".txt",
+      ".pdf",
+      "image/*",
+    ]
+  }
+  action=""
+  data={Object {}}
+  fileListMaxLength={0}
+  headers={
+    Object {
+      "Access-Control-Allow-Origin": "*",
+    }
+  }
+  multiple={true}
+  name="file"
+  noValidate={false}
+  onUploadError={[Function]}
+  onUploadSuccess={[Function]}
+  previewImageWidth={100}
+  readOnly={false}
+  showHelp="newLine"
+  showPreviewImage={true}
+  showUploadBtn={true}
+  showUploadList={true}
+  suffixCls="upload"
+  trim="both"
+  uploadImmediately={false}
+>
+  <div
+    className="c7n-pro-upload"
+  >
+    <div
+      className="flex-wrapper"
+    >
+      <div
+        className="c7n-pro-upload-select"
+      >
+        <Button
+          key="upload-btn"
+          loading={false}
+          onClick={[Function]}
+          suffixCls="btn"
+          type="button"
+          waitType="throttle"
+        >
+          <Ripple
+            disabled={false}
+          >
+            <RippleChild
+              key=".0"
+              prefixCls="c7n-ripple"
+            >
+              <MouseDown
+                rippleChild={
+                  <button
+                    className="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+                    disabled={false}
+                    onBlur={[Function]}
+                    onClick={[Function]}
+                    onFocus={[Function]}
+                    type="button"
+                  >
+                    <Icon
+                      type="insert_drive_file"
+                    />
+                    <span>
+                      选择文件
+                    </span>
+                  </button>
+                }
+              >
+                <button
+                  className="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+                  disabled={false}
+                  onBlur={[Function]}
+                  onClick={[Function]}
+                  onFocus={[Function]}
+                  onMouseDown={[Function]}
+                  type="button"
+                >
+                  <Icon
+                    type="insert_drive_file"
+                  >
+                    <i
+                      className="icon icon-insert_drive_file"
+                    />
+                  </Icon>
+                  <span>
+                    选择文件
+                  </span>
+                  <Animate
+                    animation={Object {}}
+                    component="div"
+                    componentProps={
+                      Object {
+                        "className": "c7n-ripple-wrapper",
+                      }
+                    }
+                    hiddenProp="hidden"
+                    key="ripple"
+                    transitionAppear={false}
+                    transitionEnter={true}
+                    transitionLeave={true}
+                    transitionName="fade"
+                  >
+                    <div
+                      className="c7n-ripple-wrapper"
+                    />
+                  </Animate>
+                </button>
+              </MouseDown>
+            </RippleChild>
+          </Ripple>
+        </Button>
+        <input
+          accept=".deb,.txt,.pdf,image/*"
+          action=""
+          className="c7n-pro-upload"
+          headers={
+            Object {
+              "Access-Control-Allow-Origin": "*",
+            }
+          }
+          hidden={true}
+          key="upload"
+          multiple={true}
+          name="file"
+          noValidate={false}
+          onBlur={[Function]}
+          onChange={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          type="file"
+        />
+        <Tooltip
+          arrowPointAtCenter={false}
+          autoAdjustOverflow={true}
+          defaultHidden={true}
+          mouseEnterDelay={100}
+          mouseLeaveDelay={100}
+          placement="right"
+          suffixCls="tooltip"
+          theme="dark"
+          title="点击上传"
+          transitionName="zoom-big-fast"
+          trigger={
+            Array [
+              "hover",
+            ]
+          }
+        >
+          <Trigger
+            action={
+              Array [
+                "hover",
+              ]
+            }
+            arrowPointAtCenter={false}
+            autoAdjustOverflow={true}
+            blurDelay={0}
+            builtinPlacements={
+              Object {
+                "bottom": Object {
+                  "offset": Array [
+                    0,
+                    10,
+                  ],
+                  "overflow": Object {
+                    "adjustX": 1,
+                    "adjustY": 1,
+                  },
+                  "points": Array [
+                    "tc",
+                    "bc",
+                  ],
+                  "targetOffset": Array [
+                    0,
+                    0,
+                  ],
+                },
+                "bottomLeft": Object {
+                  "offset": Array [
+                    0,
+                    10,
+                  ],
+                  "overflow": Object {
+                    "adjustX": 1,
+                    "adjustY": 1,
+                  },
+                  "points": Array [
+                    "tl",
+                    "bl",
+                  ],
+                  "targetOffset": Array [
+                    0,
+                    0,
+                  ],
+                },
+                "bottomRight": Object {
+                  "offset": Array [
+                    0,
+                    10,
+                  ],
+                  "overflow": Object {
+                    "adjustX": 1,
+                    "adjustY": 1,
+                  },
+                  "points": Array [
+                    "tr",
+                    "br",
+                  ],
+                  "targetOffset": Array [
+                    0,
+                    0,
+                  ],
+                },
+                "left": Object {
+                  "offset": Array [
+                    -10,
+                    0,
+                  ],
+                  "overflow": Object {
+                    "adjustX": 1,
+                    "adjustY": 1,
+                  },
+                  "points": Array [
+                    "cr",
+                    "cl",
+                  ],
+                  "targetOffset": Array [
+                    0,
+                    0,
+                  ],
+                },
+                "leftBottom": Object {
+                  "offset": Array [
+                    -10,
+                    0,
+                  ],
+                  "overflow": Object {
+                    "adjustX": 1,
+                    "adjustY": 1,
+                  },
+                  "points": Array [
+                    "br",
+                    "bl",
+                  ],
+                  "targetOffset": Array [
+                    0,
+                    0,
+                  ],
+                },
+                "leftTop": Object {
+                  "offset": Array [
+                    -10,
+                    0,
+                  ],
+                  "overflow": Object {
+                    "adjustX": 1,
+                    "adjustY": 1,
+                  },
+                  "points": Array [
+                    "tr",
+                    "tl",
+                  ],
+                  "targetOffset": Array [
+                    0,
+                    0,
+                  ],
+                },
+                "right": Object {
+                  "offset": Array [
+                    10,
+                    0,
+                  ],
+                  "overflow": Object {
+                    "adjustX": 1,
+                    "adjustY": 1,
+                  },
+                  "points": Array [
+                    "cl",
+                    "cr",
+                  ],
+                  "targetOffset": Array [
+                    0,
+                    0,
+                  ],
+                },
+                "rightBottom": Object {
+                  "offset": Array [
+                    10,
+                    0,
+                  ],
+                  "overflow": Object {
+                    "adjustX": 1,
+                    "adjustY": 1,
+                  },
+                  "points": Array [
+                    "bl",
+                    "br",
+                  ],
+                  "targetOffset": Array [
+                    0,
+                    0,
+                  ],
+                },
+                "rightTop": Object {
+                  "offset": Array [
+                    10,
+                    0,
+                  ],
+                  "overflow": Object {
+                    "adjustX": 1,
+                    "adjustY": 1,
+                  },
+                  "points": Array [
+                    "tl",
+                    "tr",
+                  ],
+                  "targetOffset": Array [
+                    0,
+                    0,
+                  ],
+                },
+                "top": Object {
+                  "offset": Array [
+                    0,
+                    -10,
+                  ],
+                  "overflow": Object {
+                    "adjustX": 1,
+                    "adjustY": 1,
+                  },
+                  "points": Array [
+                    "bc",
+                    "tc",
+                  ],
+                  "targetOffset": Array [
+                    0,
+                    0,
+                  ],
+                },
+                "topLeft": Object {
+                  "offset": Array [
+                    0,
+                    -10,
+                  ],
+                  "overflow": Object {
+                    "adjustX": 1,
+                    "adjustY": 1,
+                  },
+                  "points": Array [
+                    "bl",
+                    "tl",
+                  ],
+                  "targetOffset": Array [
+                    0,
+                    0,
+                  ],
+                },
+                "topRight": Object {
+                  "offset": Array [
+                    0,
+                    -10,
+                  ],
+                  "overflow": Object {
+                    "adjustX": 1,
+                    "adjustY": 1,
+                  },
+                  "points": Array [
+                    "br",
+                    "tr",
+                  ],
+                  "targetOffset": Array [
+                    0,
+                    0,
+                  ],
+                },
+              }
+            }
+            defaultPopupHidden={true}
+            focusDelay={150}
+            mouseEnterDelay={100}
+            mouseLeaveDelay={100}
+            popupContent={
+              <div>
+                <div
+                  className="c7n-pro-tooltip-popup-arrow c7n-pro-tooltip-popup-arrow-dark"
+                />
+                <div
+                  className="c7n-pro-tooltip-popup-inner c7n-pro-tooltip-popup-inner-dark"
+                >
+                  点击上传
+                </div>
+              </div>
+            }
+            popupPlacement="right"
+            prefixCls="c7n-pro-tooltip"
+            suffixCls="tooltip"
+            theme="dark"
+            title="点击上传"
+            transitionName="zoom-big-fast"
+          >
+            <TriggerChild
+              key=".$.0"
+              onMouseEnter={[Function]}
+              onMouseLeave={[Function]}
+            >
+              <Button
+                color="primary"
+                key=".0"
+                loading={false}
+                onBlur={[Function]}
+                onClick={[Function]}
+                onContextMenu={[Function]}
+                onFocus={[Function]}
+                onMouseDown={[Function]}
+                onMouseEnter={[Function]}
+                onMouseLeave={[Function]}
+                suffixCls="btn"
+                type="button"
+                waitType="throttle"
+              >
+                <Ripple
+                  disabled={false}
+                >
+                  <RippleChild
+                    key=".0"
+                    prefixCls="c7n-ripple"
+                  >
+                    <MouseDown
+                      rippleChild={
+                        <button
+                          className="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-primary c7n-pro-btn-icon-only c7n-pro-btn-wrapper"
+                          disabled={false}
+                          onBlur={[Function]}
+                          onClick={[Function]}
+                          onContextMenu={[Function]}
+                          onFocus={[Function]}
+                          onMouseDown={[Function]}
+                          onMouseEnter={[Function]}
+                          onMouseLeave={[Function]}
+                          type="button"
+                        >
+                          <Icon
+                            type="file_upload"
+                          />
+                        </button>
+                      }
+                    >
+                      <button
+                        className="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-primary c7n-pro-btn-icon-only c7n-pro-btn-wrapper"
+                        disabled={false}
+                        onBlur={[Function]}
+                        onClick={[Function]}
+                        onContextMenu={[Function]}
+                        onFocus={[Function]}
+                        onMouseDown={[Function]}
+                        onMouseEnter={[Function]}
+                        onMouseLeave={[Function]}
+                        type="button"
+                      >
+                        <Icon
+                          type="file_upload"
+                        >
+                          <i
+                            className="icon icon-file_upload"
+                          />
+                        </Icon>
+                        <Animate
+                          animation={Object {}}
+                          component="div"
+                          componentProps={
+                            Object {
+                              "className": "c7n-ripple-wrapper",
+                            }
+                          }
+                          hiddenProp="hidden"
+                          key="ripple"
+                          transitionAppear={false}
+                          transitionEnter={true}
+                          transitionLeave={true}
+                          transitionName="fade"
+                        >
+                          <div
+                            className="c7n-ripple-wrapper"
+                          />
+                        </Animate>
+                      </button>
+                    </MouseDown>
+                  </RippleChild>
+                </Ripple>
+              </Button>
+            </TriggerChild>
+            <Popup
+              align={
+                Object {
+                  "offset": Array [
+                    10,
+                    0,
+                  ],
+                  "overflow": Object {
+                    "adjustX": 1,
+                    "adjustY": 1,
+                  },
+                  "points": Array [
+                    "cl",
+                    "cr",
+                  ],
+                  "targetOffset": Array [
+                    0,
+                    0,
+                  ],
+                }
+              }
+              className="c7n-pro-tooltip-popup"
+              getClassNameFromAlign={[Function]}
+              getRootDomNode={[Function]}
+              hidden={true}
+              key="popup"
+              onMouseDown={[Function]}
+              onMouseEnter={[Function]}
+              onMouseLeave={[Function]}
+              suffixCls="popup"
+              transitionName="zoom-big-fast"
+            />
+          </Trigger>
+        </Tooltip>
+      </div>
+      <div />
+    </div>
+    <UploadList
+      items={Array []}
+      noValidate={false}
+      previewImageWidth={100}
+      readOnly={false}
+      remove={[Function]}
+      showHelp="newLine"
+      showPreviewImage={true}
+      suffixCls="upload-list"
+      trim="both"
+    >
+      <div
+        className="c7n-pro-upload-list-empty"
+      />
+    </UploadList>
+  </div>
+</Upload>
+`;
