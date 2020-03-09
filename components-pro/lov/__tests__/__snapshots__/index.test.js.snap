@@ -1,5 +1,39 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Lov-pro render correctly 1`] = `
+<span
+  class="c7n-pro-select-wrapper c7n-pro-select-empty c7n-pro-select-suffix-button c7n-pro-select-not-editable"
+>
+  <input
+    type="hidden"
+    value=""
+  />
+  <label>
+    <input
+      autocomplete="off"
+      class="c7n-pro-select"
+      readonly=""
+      type="text"
+      value=""
+    />
+    <div
+      class="c7n-pro-select-inner-button c7n-pro-select-clear-button"
+    >
+      <i
+        class="icon icon-close"
+      />
+    </div>
+    <div
+      class="c7n-pro-select-suffix"
+    >
+      <i
+        class="icon icon-search"
+      />
+    </div>
+  </label>
+</span>
+`;
+
 exports[`Lov-pro render mode button 1`] = `
 <Lov
   autoComplete="off"

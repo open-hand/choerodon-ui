@@ -2,7 +2,6 @@ import React from 'react';
 import { mount } from 'enzyme';
 import Lov from '..';
 import DataSet from '../../data-set';
-import Stores from '..';
 
 describe('Lov-pro', () => {
   it('render correctly', () => {
@@ -30,10 +29,5 @@ describe('Lov-pro', () => {
     const wrapper = mount(<Lov dataSet={ds} name="code" mode="button" />);
     expect(wrapper.find('button').length).toBe(2);
     expect(wrapper).toMatchSnapshot();
-  });
-
-  it('render mode button', () => {
-    const wrapper = mount(<Lov dataSet={ds} name="code" mode="button" />);
-    expect(wrapper.find('button').length).toBe(2);
   });
 });
