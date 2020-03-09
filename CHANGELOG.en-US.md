@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>DatePicker`: Fixed the problem that when DatePicker sets the default value, the maximum date cannot select the minimum default value
 - 🐞 `<pro>CodeArea`: FIX CodeArea text controlled
 - 🌟 `<pro>Filed:`: Add class name for formFiled Tooltip .
 - 🐞 `<pro>SelectBox`: Fix SelectBox multiple disable can't read the Text。

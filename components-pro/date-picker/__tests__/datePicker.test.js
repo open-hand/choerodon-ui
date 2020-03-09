@@ -132,4 +132,51 @@ describe('date-picker-pro', () => {
     jest.runAllTimers();
     wrapper.update();
   });
+
+  it('the { min, max } property should render month-picker correctly', () => {
+    const wrapper = mount(
+      <DatePicker mode="month" min={moment('2019-02-10')} max={moment('2021-02-10')} />,
+    );
+    wrapper
+      .find('input')
+      .at(0)
+      .simulate('click');
+    jest.runAllTimers();
+    wrapper.update();
+  });
+
+  it('the { min, max } property should render year-picker correctly', () => {
+    const wrapper = mount(
+      <DatePicker mode="year" min={moment('2019-02-10')} max={moment('2021-02-10')} />,
+    );
+    wrapper
+      .find('input')
+      .at(0)
+      .simulate('click');
+    jest.runAllTimers();
+    wrapper.update();
+  });
+  it('the { min, max } property should render date-time-picker correctly', () => {
+    const wrapper = mount(
+      <DatePicker mode="dateTime" min={moment('2019-02-10')} max={moment('2021-02-10')} />,
+    );
+    wrapper
+      .find('input')
+      .at(0)
+      .simulate('click');
+    jest.runAllTimers();
+    wrapper.update();
+  });
+
+  it('the { min, max } property should render decadeYear-picker correctly', () => {
+    const wrapper = mount(
+      <DatePicker mode="decade" min={moment('2019-02-10')} max={moment('2021-02-10')} />,
+    );
+    wrapper
+      .find('input')
+      .at(0)
+      .simulate('click');
+    jest.runAllTimers();
+    wrapper.update();
+  });
 });
