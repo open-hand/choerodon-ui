@@ -18,13 +18,14 @@ import lovStore from '../stores/LovCodeStore';
 import autobind from '../_util/autobind';
 import { stopEvent } from '../_util/EventManager';
 import { SearchMatcher, Select, SelectProps } from '../select/Select';
-import { ColumnAlign } from '../table/enum';
+import { ColumnAlign, TableQueryBarType } from '../table/enum';
 import { FieldType } from '../data-set/enum';
 import { LovFieldType, ViewMode } from './enum';
 import Button, { ButtonProps } from '../button/Button';
 import { ButtonColor, FuncType } from '../button/enum';
 import { $l } from '../locale-context';
 import { getLovPara } from '../stores/utils';
+import { TableQueryBarHook } from '../table/Table';
 
 export type LovConfigItem = {
   display?: string;
@@ -60,6 +61,7 @@ export type LovConfig = {
   placeholder?: string;
   editableFlag?: 'Y' | 'N';
   queryColumns?: number;
+  queryBar?: TableQueryBarType | TableQueryBarHook;
 };
 
 export interface LovProps extends SelectProps, ButtonProps {

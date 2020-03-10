@@ -15,8 +15,9 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Lov`: Add `queryBar` configuration.
 - 🌟 `<pro>DataSet`: Added `cascadeParams` property.
-- 🌟 `<pro>Filed:`: Add class name for formFiled Tooltip .
+- 🌟 `<pro>Filed`: Add class name for formFiled Tooltip .
 - 💄 `<pro>DataSet`: Optimize the performance of the `ready` method.
 - 💄 `<pro>DataSet.Record`: Use the merge method to write back with object fields.
 - 🐞 `<pro>DatePicker`: Fixed the problem that when DatePicker sets the default value, the maximum date cannot select the minimum default value
