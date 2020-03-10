@@ -26,6 +26,7 @@ import { ButtonColor, FuncType } from '../button/enum';
 import { $l } from '../locale-context';
 import { getLovPara } from '../stores/utils';
 import { TableQueryBarHook } from '../table/Table';
+import { FieldProps } from '../data-set/Field';
 
 export type LovConfigItem = {
   display?: string;
@@ -44,6 +45,7 @@ export type LovConfigItem = {
   gridFieldWidth?: number;
   gridFieldAlign?: ColumnAlign;
   gridFieldSequence: number;
+  fieldProps?: FieldProps;
 };
 
 export type LovConfig = {

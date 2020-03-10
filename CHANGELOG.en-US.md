@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `<pro>Lov`: Add `queryBar` configuration.
+- 🌟 `<pro>Lov`: Add `queryBar` `fieldProps` configuration.
 - 🌟 `<pro>DataSet`: Added `cascadeParams` property.
 - 🌟 `<pro>Filed`: Add class name for formFiled Tooltip .
 - 💄 `<pro>DataSet`: Optimize the performance of the `ready` method.
