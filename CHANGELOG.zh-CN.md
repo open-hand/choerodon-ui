@@ -15,11 +15,14 @@ timeline: true
 
 ---
 
-- 🐞 `<pro>DatePicker`: 修复 DatePicker 设置默认值时，最大值日期无法选择最小默认值问题
-- 🐞 `<pro>CodeArea`: 修复 CodeArea text 受控问题
-- 🌟 `<pro>Filed:`: 添加 Form 下 Tooltip 特有样式名称
-- 🐞 `<pro>SelectBox`: 修复 SelectBox multiple disable 状态无法查看文本。
+- 🌟 `<pro>Lov`: 添加 queryBar, fieldProps 配置。
+- 🌟 `<pro>DataSet`: 新增 cascadeParams 属性。
+- 🌟 `<pro>Filed`: 添加 Form 下 Tooltip 特有样式名称。
 - 💄 `<pro>DataSet`: 优化 ready 方法的性能。
+- 💄 `<pro>DataSet.Record`: 使用 merge 方法来回写 object 类型字段。
+- 🐞 `<pro>DatePicker`: 修复 DatePicker 设置默认值时，最大值日期无法选择最小默认值问题。
+- 🐞 `<pro>CodeArea`: 修复 CodeArea text 受控问题。
+- 🐞 `<pro>SelectBox`: 修复 SelectBox multiple disable 状态无法查看文本。
 - 🐞 `<pro>DataSet`: 修复校验未应用 dataToJSON 配置。
 - 🐞 修复全量依赖样式时基础组件和 pro 组件存在同名预变量冲突的问题。
 - 🐞 `<pro>Lov`: 修复通过 dynamicProps 获得 lovCode 时，lov 配置中的 valueField 和 textField 无效的问题。

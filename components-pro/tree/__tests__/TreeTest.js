@@ -6,7 +6,7 @@ import NumberField from '../../number-field';
 function nodeRenderer({ record }) {
   return record.get('text');
 }
-const dataSet = [
+const dataSetData = [
   {
     expand: false,
     functionCode: 'HR',
@@ -67,7 +67,7 @@ export default class TreeTest extends React.Component {
 
   ds = new DataSet({
     primaryKey: 'id',
-    data: dataSet,
+    data: dataSetData,
     parentField: 'parentId',
     expandField: 'expand',
     idField: 'id',
@@ -77,17 +77,19 @@ export default class TreeTest extends React.Component {
       { name: 'parentId', type: 'number' },
     ],
     events: {
-      select: ({ dataSetValue }) => {
-        this.setCount(dataSetValue);
+      select: ({ dataSet }) => {
+        this.setCount(dataSet);
       },
-      unSelect: ({ dataSetValue }) => {
-        this.setCount(dataSetValue);
+      unSelect: ({ dataSet }) => {
+        this.setCount(dataSet);
       },
     },
   });
 
   setCount(dataSetValue) {
-    this.setState({ count: dataSetValue.selected.length });
+    if (dataSetValue) {
+      this.setState({ count: dataSetValue.selected.length });
+    }
   }
 
   render() {

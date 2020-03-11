@@ -80,7 +80,7 @@ export default class LovView extends Component<LovViewProps> {
   render() {
     const {
       dataSet,
-      config: { height, treeFlag, queryColumns },
+      config: { height, treeFlag, queryColumns, queryBar },
       multiple,
     } = this.props;
     const tableProps: TableProps = {
@@ -90,6 +90,7 @@ export default class LovView extends Component<LovViewProps> {
       dataSet,
       columns: this.getColumns(),
       queryFieldsLimit: queryColumns,
+      queryBar,
     };
     if (multiple) {
       tableProps.selectionMode = SelectionMode.rowbox;

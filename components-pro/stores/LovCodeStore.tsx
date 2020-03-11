@@ -43,6 +43,7 @@ function generateConditionField(
     conditionFieldSelectTf,
     conditionFieldSelectVf,
     conditionFieldRequired,
+    fieldProps,
   }: LovConfigItem,
 ): void {
   if (conditionField === 'Y') {
@@ -57,6 +58,7 @@ function generateConditionField(
       textField: conditionFieldSelectTf || undefined,
       valueField: conditionFieldSelectVf || undefined,
       required: conditionFieldRequired || undefined,
+      ...fieldProps,
     };
     fields.push(field);
     if (conditionFieldType === LovFieldType.POPUP) {
@@ -72,7 +74,7 @@ function generateConditionField(
 
 function generateGridField(
   fields: FieldProps[],
-  { gridField, gridFieldName, display }: LovConfigItem,
+  { gridField, gridFieldName, display, fieldProps }: LovConfigItem,
   valueField?: string,
 ): void {
   if (gridField === 'Y') {
@@ -80,6 +82,7 @@ function generateGridField(
       name: gridFieldName,
       label: display,
       unique: valueField === gridFieldName,
+      ...fieldProps,
     });
   }
 }

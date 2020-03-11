@@ -26,8 +26,12 @@ describe('Tree-pro', () => {
   it('should input value is equal to one', () => {
     const { wrapper } = setupByMount();
     wrapper.find('.c7n-tree-node-content-wrapper').simulate('click');
-    jest.runAllTimers();
     expect(wrapper.find('NumberField').prop('value')).toBe(1);
-    expect(wrapper).toMatchSnapshot();
+  });
+
+  it('tree expand the treeNode', () => {
+    const { wrapper } = setupByMount();
+    wrapper.find('Icon').simulate('click');
+    expect(wrapper.find('TreeNode').length).toBe(4);
   });
 });
