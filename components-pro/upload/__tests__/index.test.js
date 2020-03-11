@@ -41,7 +41,7 @@ describe('Tree-pro', () => {
       headers: {
         'Access-Control-Allow-Origin': '*',
       },
-      action: '',
+      action: 'http://upload.com/',
       multiple: true,
       accept: ['.deb', '.txt', '.pdf', 'image/*'],
       uploadImmediately: false,
@@ -52,5 +52,42 @@ describe('Tree-pro', () => {
       .first()
       .simulate('click');
     expect(wrapper).toMatchSnapshot();
+  });
+
+  it('uplaod the file to the server', () => {
+    const fileChange = jest.fn();
+    global.URL.createObjectURL = jest.fn(() => 'details');
+    const file = new File(['foo'], 'foo.txt', {
+      type: 'text/plain',
+    });
+    const props1 = {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      },
+      action: 'http://upload.com/',
+      multiple: true,
+      accept: ['.deb', '.txt', '.pdf', 'image/*'],
+      uploadImmediately: true,
+      onFileChange: fileChange,
+    };
+    const wrapper = mount(<Upload {...props1} />);
+    wrapper.find('input').simulate('change', {
+      target: {
+        files: [file],
+      },
+    });
+    expect(fileChange).toHaveBeenCalled();
+  });
+
+  it('return when targetItem is null', () => {
+    const fileList = [{ uid: 'file' }];
+    const wrapper = mount(
+      <Upload type="drag" fileList={fileList}>
+        <button type="button">upload</button>
+      </Upload>,
+    ).instance();
+    expect(wrapper.handleSuccess('', '', { uid: 'fileItem' })).toBe(undefined);
+    expect(wrapper.handleProgress('', { uid: 'fileItem' })).toBe(undefined);
+    expect(wrapper.handleError('', '', '', { uid: 'fileItem' })).toBe(undefined);
   });
 });
