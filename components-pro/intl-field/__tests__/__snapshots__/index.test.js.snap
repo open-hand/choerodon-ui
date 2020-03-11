@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`IntlField-pro onCancel should be called when the methods handleCancel trigger1 1`] = `
+exports[`IntlField-pro { ok, cancel } button click render correctly 1`] = `
 <IntlField
   autoComplete="off"
   clearButton={false}
