@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.57
+
+`2020-03-12`
+
 - 🌟 `<pro>Lov`: 添加 queryBar, fieldProps 配置。
 - 🌟 `<pro>DataSet`: 新增 cascadeParams 属性。
 - 🌟 `<pro>Filed`: 添加 Form 下 Tooltip 特有样式名称。
