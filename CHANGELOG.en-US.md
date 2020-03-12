@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.57
+
+`2020-03-12`
+
 - 🌟 `<pro>Lov`: Add `queryBar` `fieldProps` configuration.
 - 🌟 `<pro>DataSet`: Added `cascadeParams` property.
 - 🌟 `<pro>Filed`: Add class name for formFiled Tooltip .
