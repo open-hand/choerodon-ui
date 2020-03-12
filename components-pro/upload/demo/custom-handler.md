@@ -7,22 +7,20 @@ title:
 
 ## zh-CN
 
-可以自定义上传请求得到响应后的处理方式，包括成功和失败。
-这将覆盖默认的处理行为。
+可以自定义上传请求得到响应后的处理方式，包括成功和失败。这将覆盖默认的处理行为。
 
 ## en-US
 
-Customize the response handler, including success and failure.
-This will override the default handlers.
+Customize the response handler, including success and failure. This will override the default handlers.
 
-````jsx
+```jsx
 import { Upload, message } from 'choerodon-ui/pro';
 
 const props = {
   headers: {
     'Access-Control-Allow-Origin': '*',
   },
-  action: '//localhost:3000/upload',
+  action: 'https://www.mocky.io/v2/5e6887c22f00004d49d8ad29',
   multiple: true,
   accept: ['.deb', '.txt', '.pdf', 'image/*'],
   uploadImmediately: false,
@@ -34,7 +32,6 @@ ReactDOM.render(
   <div>
     <Upload {...props} />
   </div>,
-  mountNode
+  mountNode,
 );
-
-````
+```

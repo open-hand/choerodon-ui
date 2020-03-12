@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { action, observable, runInAction } from 'mobx';
@@ -325,10 +326,11 @@ export default class Upload extends FormField<UploadProps> {
 
   startUpload = () => {
     const fileList = [...this.fileList];
+    console.log('fileStart', fileList);
     if (fileList.length) {
       // <-- 当有文件时才上传
       this.uploadFiles(fileList);
-      this.nativeInputElement.value = '';
+      // this.nativeInputElement.value = '';
     } else {
       Modal.error($l('Upload', 'no_file'));
     }
@@ -344,6 +346,9 @@ export default class Upload extends FormField<UploadProps> {
   @autobind
   @action
   handleChange(e: any) {
+    if (e.target.value === '') {
+      return;
+    }
     const fileList = e.target.files;
     const files = Array.from(fileList).slice(0);
     this.fileList = [];
@@ -353,10 +358,10 @@ export default class Upload extends FormField<UploadProps> {
       file.url = URL.createObjectURL(file);
       fileBuffer.push(file);
     });
+    console.log('buffer', fileBuffer);
     this.fileList = fileBuffer;
-    e.target.value = '';
-
     const { uploadImmediately, onFileChange } = this.props;
+    e.target.value = '';
     if (uploadImmediately) {
       this.uploadFiles(this.fileList);
     }
@@ -395,6 +400,7 @@ export default class Upload extends FormField<UploadProps> {
     const that = this;
     files.forEach((file: UploadFile, index: number) => {
       file.uid = this.getUid(index);
+      console.log('file', file);
       setTimeout(function() {
         // that.handleStart(file);
         that.upload(file);
@@ -420,7 +426,7 @@ export default class Upload extends FormField<UploadProps> {
 
     // 修改文件状态，方便UploadList判断是否展示进度条
     file.status = 'uploading';
-
+    console.log('xhr', xhr);
     if (xhr.upload) {
       xhr.upload.onprogress = e => {
         let percent = 0;
@@ -441,6 +447,7 @@ export default class Upload extends FormField<UploadProps> {
     xhr.onload = () => {
       // 以二开头的状态码都认为是成功，暂定？
       const isSuccessful = xhr.status.toString().startsWith('2');
+      console.log('isSuccess', isSuccessful);
       if (isSuccessful) {
         this.handleSuccess(xhr.status, xhr.response, file);
       } else {
@@ -500,6 +507,7 @@ export default class Upload extends FormField<UploadProps> {
   handleProgress(percent: number, file: UploadFile) {
     const { onUploadProgress } = this.props;
     const targetItem = this.getFileItem(file);
+    console.log('target', targetItem);
     if (targetItem) {
       targetItem.percent = percent;
       if (onUploadProgress) {
@@ -545,6 +553,7 @@ export default class Upload extends FormField<UploadProps> {
    * @memberof Upload
    */
   isAcceptFiles(fileList: UploadFile[]): boolean {
+    console.log('isAccept', fileList.slice(0));
     const { accept } = this.props;
     if (!accept) {
       return true;

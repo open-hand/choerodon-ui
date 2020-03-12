@@ -20,7 +20,7 @@ const props = {
   headers: {
     'Access-Control-Allow-Origin': '*',
   },
-  action: '//localhost:3000/upload',
+  action: 'https://www.mocky.io/v2/5e6887c22f00004d49d8ad29',
   multiple: true,
   accept: ['.deb', '.txt', '.pdf', 'image/*'],
   uploadImmediately: false,
