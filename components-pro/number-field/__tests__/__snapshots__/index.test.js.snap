@@ -1935,6 +1935,7 @@ exports[`NumberField-pro the dataset value should render correctly 1`] = `
           "autoLocateFirst": true,
           "autoQuery": false,
           "autoQueryAfterSubmit": true,
+          "cascadeParams": [Function],
           "dataToJSON": "dirty",
           "events": Object {
             "update": [Function],

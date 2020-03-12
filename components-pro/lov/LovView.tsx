@@ -45,6 +45,7 @@ export default class LovView extends Component<LovViewProps> {
     dataSet.selection = this.selection;
   }
 
+  /* istanbul ignore next */
   getColumns(): ColumnProps[] | undefined {
     const {
       config: { lovItems },
@@ -63,6 +64,7 @@ export default class LovView extends Component<LovViewProps> {
       : undefined;
   }
 
+  /* istanbul ignore next */
   handleKeyDown = e => {
     if (e.keyCode === KeyCode.ENTER) {
       const { onEnterDown } = this.props;

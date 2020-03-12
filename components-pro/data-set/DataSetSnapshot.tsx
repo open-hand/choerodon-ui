@@ -2,6 +2,7 @@ import DataSet, { DataSetChildren } from './DataSet';
 import Record from './Record';
 import { DataToJSON } from './enum';
 
+/* istanbul ignore next */
 export default class DataSetSnapshot {
   dataSet: DataSet;
 

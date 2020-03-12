@@ -161,6 +161,7 @@ exports[`Lov-pro render mode button 1`] = `
         "autoLocateFirst": true,
         "autoQuery": false,
         "autoQueryAfterSubmit": true,
+        "cascadeParams": [Function],
         "dataToJSON": "dirty",
         "fields": Array [
           Object {
@@ -312,7 +313,7 @@ exports[`Lov-pro render mode button 1`] = `
     mouseEnterDelay={100}
     mouseLeaveDelay={100}
     placement="bottomLeft"
-    suffixCls="tooltip"
+    suffixCls="form-tooltip c7n-pro-tooltip"
     theme="light"
     title={null}
     transitionName="zoom-big-fast"
@@ -557,8 +558,8 @@ exports[`Lov-pro render mode button 1`] = `
       mouseLeaveDelay={100}
       popupContent={null}
       popupPlacement="bottomLeft"
-      prefixCls="c7n-pro-tooltip"
-      suffixCls="tooltip"
+      prefixCls="c7n-pro-form-tooltip c7n-pro-tooltip"
+      suffixCls="form-tooltip c7n-pro-tooltip"
       theme="light"
       title={null}
       transitionName="zoom-big-fast"
@@ -778,7 +779,7 @@ exports[`Lov-pro render mode button 1`] = `
             ],
           }
         }
-        className="c7n-pro-tooltip-popup"
+        className="c7n-pro-form-tooltip c7n-pro-tooltip-popup"
         getClassNameFromAlign={[Function]}
         getRootDomNode={[Function]}
         hidden={true}
