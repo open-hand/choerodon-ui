@@ -270,8 +270,15 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged"
+      "pre-commit": "pretty-quick --staged",
+      "pre-push": "lint-staged"
     }
+  },
+  "lint-staged": {
+    "./**/*.{jsx,tsx,ts,js,css,md,less}": [
+      "npm run lint", 
+      "git add" 
+    ]
   },
   "sideEffects": [
     "dist/*",
