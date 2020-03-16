@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 💄 `<pro>LocaleContext`: 优化日语配置完善文档。
 - 🌟 `<pro>Lov`: 添加 queryBar, fieldProps 配置。
 - 🌟 `<pro>DataSet`: 新增 cascadeParams 属性。
 - 🌟 `<pro>Filed`: 添加 Form 下 Tooltip 特有样式名称。

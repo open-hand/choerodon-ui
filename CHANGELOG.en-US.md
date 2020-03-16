@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 💄 `<pro>LocaleContext`: Optimize japansese configuration support and Fix the document.
 - 🌟 `<pro>Lov`: Add `queryBar` `fieldProps` configuration.
 - 🌟 `<pro>DataSet`: Added `cascadeParams` property.
 - 🌟 `<pro>Filed`: Add class name for formFiled Tooltip .
