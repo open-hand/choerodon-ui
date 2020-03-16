@@ -32329,7 +32329,11 @@ exports[`Icon-Picker-pro the keydown event should render keyCode { esc, tab } co
 </IconPicker>
 `;
 
+<<<<<<< HEAD
 exports[`Icon-Picker-pro the keydown event should render keyCode {sp } correctly 1`] = `
+=======
+exports[`Icon-Picker-pro the keydown event should render keyCode {space} correctly 1`] = `
+>>>>>>> choerodon/master
 <IconPicker
   autoComplete="off"
   clearButton={true}

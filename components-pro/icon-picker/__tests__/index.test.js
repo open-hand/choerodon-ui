@@ -62,7 +62,7 @@ describe('Icon-Picker-pro', () => {
     wrapper.update();
     expect(wrapper).toMatchSnapshot();
   });
-  it('the keydown event should render keyCode {sp } correctly', () => {
+  it('the keydown event should render keyCode {space} correctly', () => {
     const wrapper = mount(<IconPicker />);
     wrapper.find('input').simulate('keydown', { keyCode: 32 });
     jest.runAllTimers();

@@ -30,7 +30,7 @@ describe('NumberField-pro', () => {
     expect(wrapper.find('.c7n-pro-input-number-inner-button')).toHaveLength(1);
   });
 
-  it('step1 renders correctly', () => {
+  it('step should have different value', () => {
     const wrapper = mount(<NumberField step={0.1} min={0.1} />);
     wrapper.setProps({ step: 0.01 });
     wrapper.update();
@@ -43,7 +43,7 @@ describe('NumberField-pro', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('step null renders correctly', () => {
+  it('{step,min} null renders correctly', () => {
     const wrapper = mount(<NumberField step={null} min={null} />);
     expect(wrapper).toMatchSnapshot();
     wrapper.setProps({ step: 20 });
@@ -53,7 +53,7 @@ describe('NumberField-pro', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('step click renders correctly', () => {
+  it('step icon click renders correctly', () => {
     const wrapper = mount(<NumberField value={18} />);
     expect(
       wrapper
@@ -166,7 +166,7 @@ describe('NumberField-pro', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('the input1 number should reduce when the {minus} icon clicked', () => {
+  it('{min,step} should control the input value', () => {
     const wrapper = mount(<NumberField step={1.1} min={-0.3} />);
     expect(wrapper.find('.c7n-pro-input-number').prop('value')).toBe('');
     wrapper

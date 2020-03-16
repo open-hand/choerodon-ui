@@ -99,7 +99,7 @@ describe('IntlField-pro', () => {
     expect(wrapper1).toMatchSnapshot();
   });
 
-  it('onCancel should be called when the methods handleCancel trigger1', () => {
+  it('{ ok, cancel } button click render correctly', () => {
     const wrapper = mount(<IntlField />);
     expect(_pro('.c7n-pro-modal-container')).toHaveLength(0);
     wrapper.find('.c7n-pro-input-suffix').simulate('click');
@@ -115,7 +115,7 @@ describe('IntlField-pro', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('modal should be called when the methods handleCancel trigger1', () => {
+  it('the input keydown event , keyCode {down}', () => {
     const wrapper = mount(<IntlField />);
     expect(_pro('.c7n-pro-modal-container')).toHaveLength(0);
     wrapper.find('input').simulate('keydown', { keyCode: 40 });
