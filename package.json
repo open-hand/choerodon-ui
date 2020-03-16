@@ -247,7 +247,7 @@
     "lint:script": "eslint '**/*.{js,jsx,ts,tsx}' --ext '.js,.jsx,.ts,.tsx'",
     "lint:md": "remark components/",
     "lint:demo": "cross-env RUN_ENV=DEMO eslint components/*/demo/*.md --ext '.md'",
-    "lint:style": "stylelint {site,components,components-pro}/**/*.less --syntax less",
+    "lint:style": "stylelint '{site,components,components-git}/**/*.less' --syntax less",
     "lint-fix": "npm run lint-fix:script && npm run lint-fix:demo && npm run lint-fix:style",
     "lint-fix:script": "npm run lint:script -- --fix",
     "lint-fix:demo": "npm run lint:demo -- --fix",
@@ -274,9 +274,18 @@
     }
   },
   "lint-staged": {
-    "./**/*.{jsx,tsx,ts,js,css,md}": [
-      "npm run lint", 
-      "git add" 
+    "*.ts":[
+      "npm run lint:tsc"
+    ],
+    "**/*.{js,jsx,ts,tsx}": [ 
+      "npm run lint:script"
+    ],
+    "{site,components,components-pro}/**/*.less":[
+      "npm run lint:style"
+    ],
+    "components/*/demo/*.md":[
+      "npm run lint:demo",
+      "git add"
     ]
   },
   "sideEffects": [
