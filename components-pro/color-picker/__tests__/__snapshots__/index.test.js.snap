@@ -1544,6 +1544,7 @@ exports[`color-picker-pro should renders dataset default value correctly 1`] = `
           "autoLocateFirst": true,
           "autoQuery": false,
           "autoQueryAfterSubmit": true,
+          "cascadeParams": [Function],
           "dataToJSON": "dirty",
           "events": Object {
             "update": [Function],

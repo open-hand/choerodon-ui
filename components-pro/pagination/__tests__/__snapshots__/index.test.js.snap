@@ -38,6 +38,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
           "autoLocateFirst": true,
           "autoQuery": true,
           "autoQueryAfterSubmit": true,
+          "cascadeParams": [Function],
           "dataToJSON": "dirty",
           "modifiedCheck": true,
           "name": "user",
@@ -876,6 +877,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
                                     "autoLocateFirst": false,
                                     "autoQuery": false,
                                     "autoQueryAfterSubmit": true,
+                                    "cascadeParams": [Function],
                                     "data": Array [
                                       Object {
                                         "__disabled": undefined,
@@ -1561,6 +1563,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
                                         "autoLocateFirst": false,
                                         "autoQuery": false,
                                         "autoQueryAfterSubmit": true,
+                                        "cascadeParams": [Function],
                                         "data": Array [
                                           Object {
                                             "__disabled": undefined,
@@ -2262,6 +2265,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
                                         "autoLocateFirst": false,
                                         "autoQuery": false,
                                         "autoQueryAfterSubmit": true,
+                                        "cascadeParams": [Function],
                                         "data": Array [
                                           Object {
                                             "__disabled": undefined,
@@ -2963,6 +2967,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
                                         "autoLocateFirst": false,
                                         "autoQuery": false,
                                         "autoQueryAfterSubmit": true,
+                                        "cascadeParams": [Function],
                                         "data": Array [
                                           Object {
                                             "__disabled": undefined,
@@ -3691,6 +3696,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
                                     "autoLocateFirst": false,
                                     "autoQuery": false,
                                     "autoQueryAfterSubmit": true,
+                                    "cascadeParams": [Function],
                                     "data": Array [
                                       Object {
                                         "__disabled": undefined,
@@ -4376,6 +4382,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
                                         "autoLocateFirst": false,
                                         "autoQuery": false,
                                         "autoQueryAfterSubmit": true,
+                                        "cascadeParams": [Function],
                                         "data": Array [
                                           Object {
                                             "__disabled": undefined,
@@ -5077,6 +5084,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
                                         "autoLocateFirst": false,
                                         "autoQuery": false,
                                         "autoQueryAfterSubmit": true,
+                                        "cascadeParams": [Function],
                                         "data": Array [
                                           Object {
                                             "__disabled": undefined,
@@ -5778,6 +5786,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
                                         "autoLocateFirst": false,
                                         "autoQuery": false,
                                         "autoQueryAfterSubmit": true,
+                                        "cascadeParams": [Function],
                                         "data": Array [
                                           Object {
                                             "__disabled": undefined,
@@ -6506,6 +6515,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
                                     "autoLocateFirst": false,
                                     "autoQuery": false,
                                     "autoQueryAfterSubmit": true,
+                                    "cascadeParams": [Function],
                                     "data": Array [
                                       Object {
                                         "__disabled": undefined,
@@ -7191,6 +7201,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
                                         "autoLocateFirst": false,
                                         "autoQuery": false,
                                         "autoQueryAfterSubmit": true,
+                                        "cascadeParams": [Function],
                                         "data": Array [
                                           Object {
                                             "__disabled": undefined,
@@ -7892,6 +7903,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
                                         "autoLocateFirst": false,
                                         "autoQuery": false,
                                         "autoQueryAfterSubmit": true,
+                                        "cascadeParams": [Function],
                                         "data": Array [
                                           Object {
                                             "__disabled": undefined,
@@ -8593,6 +8605,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
                                         "autoLocateFirst": false,
                                         "autoQuery": false,
                                         "autoQueryAfterSubmit": true,
+                                        "cascadeParams": [Function],
                                         "data": Array [
                                           Object {
                                             "__disabled": undefined,
@@ -9321,6 +9334,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
                                     "autoLocateFirst": false,
                                     "autoQuery": false,
                                     "autoQueryAfterSubmit": true,
+                                    "cascadeParams": [Function],
                                     "data": Array [
                                       Object {
                                         "__disabled": undefined,
@@ -10006,6 +10020,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
                                         "autoLocateFirst": false,
                                         "autoQuery": false,
                                         "autoQueryAfterSubmit": true,
+                                        "cascadeParams": [Function],
                                         "data": Array [
                                           Object {
                                             "__disabled": undefined,
@@ -10707,6 +10722,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
                                         "autoLocateFirst": false,
                                         "autoQuery": false,
                                         "autoQueryAfterSubmit": true,
+                                        "cascadeParams": [Function],
                                         "data": Array [
                                           Object {
                                             "__disabled": undefined,
@@ -11408,6 +11424,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
                                         "autoLocateFirst": false,
                                         "autoQuery": false,
                                         "autoQueryAfterSubmit": true,
+                                        "cascadeParams": [Function],
                                         "data": Array [
                                           Object {
                                             "__disabled": undefined,

@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 💄 `<pro>LocaleContext`: Optimize japansese configuration support and Fix the document.
+  
 ## 0.8.57
 
 `2020-03-12`

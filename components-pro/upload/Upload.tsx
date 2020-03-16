@@ -409,6 +409,7 @@ export default class Upload extends FormField<UploadProps> {
    * @returns {void}
    * @memberof Upload
    */
+  /* istanbul ignore next */
   @autobind
   upload(file: any): void {
     const { data, action: formAction, headers, name: filename } = this.props;

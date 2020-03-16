@@ -1017,6 +1017,7 @@ exports[`IntlField-pro renders dataset correctly 1`] = `
           "autoLocateFirst": true,
           "autoQuery": false,
           "autoQueryAfterSubmit": true,
+          "cascadeParams": [Function],
           "data": Array [
             Object {
               "first-name": "吴",
@@ -1839,6 +1840,7 @@ exports[`IntlField-pro renders dataset correctly 2`] = `
         "autoLocateFirst": true,
         "autoQuery": false,
         "autoQueryAfterSubmit": true,
+        "cascadeParams": [Function],
         "data": Array [
           Object {},
         ],

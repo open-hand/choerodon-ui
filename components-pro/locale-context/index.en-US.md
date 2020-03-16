@@ -1,14 +1,14 @@
 ---
 category: Pro Components
-subtitle: 国际化
+subtitle: internationalization
 cols: 1
 type: Other
 title: LocaleContext
 ---
 
-为组件内建文案提供统一的国际化支持。
+Provide unified internationlization support for component built-incopywriting
 
-## 使用
+## use
 
 ```jsx
 import { localeContext } from 'choerodon-ui/pro';
@@ -19,9 +19,9 @@ localeContext.setLocale(zh_CN);
 
 ```
 
-我们提供了英语，中文，俄语，法语，德语等多种语言支持，所有语言包可以在 [这里](https://github.com/choerodon/choerodon-ui/blob/master/components-pro/locale-context/) 找到。
+we provide the American English，British English ，Chinese，Jappanese，all the language can find here [here](https://github.com/choerodon/choerodon-ui/blob/master/components-pro/locale-context/) 找到。
 
-注意：如果你需要使用 UMD 版的 dist 文件，应该引入 `choerodon-ui/pro/dist/choerodon-ui/pro-with-locales.js`，同时引入 moment 对应的 locale，然后按以下方式使用：
+note：if use want to use  UMD dist file，yuo shuould import `choerodon-ui/pro/dist/choerodon-ui/pro-with-locales.js`，and import moment the locale file，and use like here：
 
 ```jsx
 const { localeContext, locales } = window['choerodon-ui/pro'];
@@ -31,13 +31,18 @@ const { localeContext, locales } = window['choerodon-ui/pro'];
 localeContext.setLocale(zh_CN);
 ```
 
-### 增加语言包
+### Add the language 
 
-如果你找不到你需要的语言包，欢迎你在 [简体中文语言包](https://github.com/choerodon/choerodon-ui/blob/master/components-pro/locale-context/zh_CN.tsx) 的基础上创建一个新的语言包，并给我们 Pull Request。
+if you can't find the language whitch you want，we are wecome to you can create a package base on [chinese basic package](https://github.com/choerodon/choerodon-ui/blob/master/components-pro/locale-context/zh_CN.tsx) ，and Pull Request。
 
 ## API Methods
 
-| 方法 | 说明 | 参数类型 | 默认值 |
+| Property | Description | Type | Default |
 | --- | --- | --- | --- |
-| setLocale(locale) | 语言包配置，语言包可到 `choerodon-ui/pro/lib/locale-context/` 目录下寻找 | object | choerodon-ui/pro/lib/locale-context/zh_CN |
-| setSupports(supports) | IntlField支持的可编辑语言，默认可参考 `choerodon-ui/pro/lib/locale-context/supports`  | object | { zh_CN:'简体中文', en_GB: 'English' } |
+| setLocale(locale) | language package can find in `choerodon-ui/pro/lib/locale-context/` | object | choerodon-ui/pro/lib/locale-context/zh_CN |
+| setSupports(supports) | IntlField support language，defaule  `choerodon-ui/pro/lib/locale-context/supports`  | object | {
+  zh_CN: '简体中文',
+  en_GB: 'English',
+  en_US: 'English(US)',
+  ja_JP: '日本語',
+} |

@@ -4,13 +4,13 @@ const transformIgnorePatterns = [
   '/dist/',
   'node_modules/[^/]+?/(?!(es|node_modules)/)', // Ignore modules without es dir
 ];
-
 module.exports = {
   verbose: true,
   testURL: 'http://localhost/',
   setupFiles: ['./tests/setup.js'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'md'],
   modulePathIgnorePatterns: ['/_site/'],
+  moduleNameMapper: { '\\.(css|scss|less)$': 'identity-obj-proxy' },
   testPathIgnorePatterns: ['/node_modules/', 'dekko', 'node'],
   transform: {
     '\\.tsx?$': './tools/jest/codePreprocessor',
@@ -31,6 +31,13 @@ module.exports = {
     '!components-pro/*/locale/index.tsx',
     '!components-pro/*/__tests__/**/type.tsx',
     '!components-pro/**/*/interface.{ts,tsx}',
+    '!components/style/v2-compatible-reset.tsx',
+    '!components/responsive/*.{ts,tsx}',
+    '!components/mention/*.{ts,tsx}',
+    '!components/configure/*.{ts,tsx}',
+    '!components/align/*.{ts,tsx}',
+    '!components-pro/code-area/lint/*.{ts,tsx}',
+    '!components-pro/_util/*.{ts,tsx}',
   ],
   transformIgnorePatterns,
   snapshotSerializers: ['enzyme-to-json/serializer'],
@@ -40,4 +47,6 @@ module.exports = {
     },
   },
   cacheDirectory: `./.jest-cache/${libDir || 'default'}`,
+  // here is to make coverage html build in _site/coverage
+  // coverageDirectory: './_site/coverage',
 };

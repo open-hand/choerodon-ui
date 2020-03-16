@@ -165,9 +165,11 @@
     "gulp-strip-code": "^0.1.4",
     "gulp-typescript": "^5.0.1",
     "husky": "^3.0.2",
+    "identity-obj-proxy": "^3.0.0",
     "immutability-helper": "^3.0.0",
     "intersection-observer": "^0.7.0",
     "jest": "^24.8.0",
+    "jsdom": "^16.2.1",
     "jsonml.js": "^0.1.0",
     "less": "^3.10.3",
     "less-plugin-npm-import": "^2.1.0",
@@ -245,7 +247,7 @@
     "lint:script": "eslint '**/*.{js,jsx,ts,tsx}' --ext '.js,.jsx,.ts,.tsx'",
     "lint:md": "remark components/",
     "lint:demo": "cross-env RUN_ENV=DEMO eslint components/*/demo/*.md --ext '.md'",
-    "lint:style": "stylelint {site,components,components-pro}/**/*.less --syntax less",
+    "lint:style": "stylelint '{site,components,components-git}/**/*.less' --syntax less",
     "lint-fix": "npm run lint-fix:script && npm run lint-fix:demo && npm run lint-fix:style",
     "lint-fix:script": "npm run lint:script -- --fix",
     "lint-fix:demo": "npm run lint:demo -- --fix",
@@ -256,6 +258,7 @@
     "tsc": "tsc",
     "start": "rimraf _site && node ./scripts/generateColorLess.js && cross-env NODE_ENV=development BROWSER=chrome bisheng start -c ./site/bisheng.config.js",
     "site": "rimraf _site && cross-env NODE_ENV=production bisheng build --ssr -c ./site/bisheng.config.js",
+    "site-with-test": "rimraf _site && cross-env NODE_ENV=production bisheng build --ssr -c ./site/bisheng.config.js && jest choerodon-ui --notify --config=.jest.js --no-cache --coverage",
     "site-dev": "rimraf _site && cross-env NODE_ENV=development bisheng build --ssr -c ./site/bisheng.config.js && node ./scripts/generateColorLess.js",
     "predeploy": "npm run site",
     "deploy": "bisheng gh-pages --push-only",
@@ -267,8 +270,23 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged"
+      "pre-commit": "lint-staged"
     }
+  },
+  "lint-staged": {
+    "*.ts":[
+      "npm run lint:tsc"
+    ],
+    "**/*.{js,jsx,ts,tsx}": [ 
+      "npm run lint:script"
+    ],
+    "{site,components,components-pro}/**/*.less":[
+      "npm run lint:style"
+    ],
+    "components/*/demo/*.md":[
+      "npm run lint:demo",
+      "git add"
+    ]
   },
   "sideEffects": [
     "dist/*",

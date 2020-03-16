@@ -24,7 +24,7 @@ describe('Upload', () => {
     expect(ref).toBeDefined();
   });
 
-  it('return promise in beforeUpload', done => {
+  it('return promise in beforeUpload', () => {
     const data = jest.fn();
     const props = {
       action: 'http://upload.com',
@@ -33,7 +33,6 @@ describe('Upload', () => {
       onChange: ({ file }) => {
         if (file.status !== 'uploading') {
           expect(data).toHaveBeenCalled();
-          done();
         }
       },
     };

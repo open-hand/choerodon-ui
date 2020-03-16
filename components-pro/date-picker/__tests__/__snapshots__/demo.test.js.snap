@@ -339,7 +339,7 @@ exports[`renders ./components-pro/date-picker/demo/min-max.md correctly 1`] = `
     style="padding-left:5px;padding-right:5px"
   >
     <span
-      class="c7n-pro-calendar-picker-wrapper c7n-pro-calendar-picker-suffix-button"
+      class="c7n-pro-calendar-picker-wrapper c7n-pro-calendar-picker-empty c7n-pro-calendar-picker-suffix-button"
     >
       <label>
         <input
@@ -348,7 +348,7 @@ exports[`renders ./components-pro/date-picker/demo/min-max.md correctly 1`] = `
           name="startDate"
           placeholder="start date"
           type="text"
-          value="2016-11-22"
+          value=""
         />
         <div
           class="c7n-pro-calendar-picker-inner-button c7n-pro-calendar-picker-clear-button"
@@ -372,7 +372,7 @@ exports[`renders ./components-pro/date-picker/demo/min-max.md correctly 1`] = `
     style="padding-left:5px;padding-right:5px"
   >
     <span
-      class="c7n-pro-calendar-picker-wrapper c7n-pro-calendar-picker-suffix-button"
+      class="c7n-pro-calendar-picker-wrapper c7n-pro-calendar-picker-empty c7n-pro-calendar-picker-suffix-button"
     >
       <label>
         <input
@@ -381,7 +381,7 @@ exports[`renders ./components-pro/date-picker/demo/min-max.md correctly 1`] = `
           name="endDate"
           placeholder="end date"
           type="text"
-          value="2020-03-19"
+          value=""
         />
         <div
           class="c7n-pro-calendar-picker-inner-button c7n-pro-calendar-picker-clear-button"
@@ -444,7 +444,7 @@ exports[`renders ./components-pro/date-picker/demo/min-max.md correctly 1`] = `
         <input
           autocomplete="off"
           class="c7n-pro-calendar-picker"
-          min="Tue Nov 22 2016 00:00:00 GMT+0800 (GMT+08:00)"
+          min="Tue Nov 22 2016 00:00:00 GMT+0800 (中国标准时间)"
           placeholder="Date min"
           type="text"
           value=""

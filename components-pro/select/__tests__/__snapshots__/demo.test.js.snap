@@ -1,0 +1,102 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders ./components-pro/email-field/demo/basic.md correctly 1`] = `
+<div
+  class="c7n-row"
+  style="margin-left:-5px;margin-right:-5px"
+>
+  <div
+    class="c7n-col-8"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <span
+      class="c7n-pro-input-wrapper c7n-pro-input-empty"
+    >
+      <label>
+        <input
+          autocomplete="off"
+          class="c7n-pro-input"
+          placeholder="请输入"
+          type="email"
+          value=""
+        />
+      </label>
+    </span>
+  </div>
+  <div
+    class="c7n-col-8"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <span
+      class="c7n-pro-input-wrapper"
+    >
+      <label>
+        <input
+          autocomplete="off"
+          class="c7n-pro-input"
+          placeholder="清除按钮"
+          type="email"
+          value="点击清除"
+        />
+        <div
+          class="c7n-pro-input-inner-button c7n-pro-input-clear-button"
+        >
+          <i
+            class="icon icon-close"
+          />
+        </div>
+      </label>
+    </span>
+  </div>
+  <div
+    class="c7n-col-8"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <span
+      class="c7n-pro-input-wrapper c7n-pro-input-disabled"
+    >
+      <label>
+        <input
+          autocomplete="off"
+          class="c7n-pro-input"
+          disabled=""
+          readonly=""
+          type="email"
+          value="不可用"
+        />
+      </label>
+    </span>
+  </div>
+</div>
+`;
+
+exports[`renders ./components-pro/email-field/demo/controlled.md correctly 1`] = `
+<span
+  class="c7n-pro-input-wrapper"
+>
+  <label>
+    <input
+      autocomplete="off"
+      class="c7n-pro-input"
+      type="email"
+      value="abc@123.com"
+    />
+  </label>
+</span>
+`;
+
+exports[`renders ./components-pro/email-field/demo/dataset.md correctly 1`] = `
+<span
+  class="c7n-pro-input-wrapper c7n-pro-input-required"
+>
+  <label>
+    <input
+      autocomplete="off"
+      class="c7n-pro-input"
+      name="email"
+      type="email"
+      value="123@abc.com"
+    />
+  </label>
+</span>
+`;
