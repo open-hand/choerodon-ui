@@ -1,0 +1,15 @@
+---
+category: Pro Components
+type: Feedback
+title: Spin
+subtitle: 加载中
+---
+
+用于页面和区块的加载中状态。
+
+## 何时使用
+
+页面局部处于等待异步数据或正在渲染过程时，合适的加载动效会有效缓解用户的焦虑。
+
+更多案列和属性请参考 [Spin](/components/spin/)。
+
