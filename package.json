@@ -274,16 +274,16 @@
     }
   },
   "lint-staged": {
-    "*.ts":[
+    "*.ts": [
       "npm run lint:tsc"
     ],
-    "**/*.{js,jsx,ts,tsx}": [ 
+    "**/*.{js,jsx,ts,tsx}": [
       "npm run lint:script"
     ],
-    "{site,components,components-pro}/**/*.less":[
+    "{site,components,components-pro}/**/*.less": [
       "npm run lint:style"
     ],
-    "components/*/demo/*.md":[
+    "components/*/demo/*.md": [
       "npm run lint:demo",
       "git add"
     ]

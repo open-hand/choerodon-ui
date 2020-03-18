@@ -57,7 +57,7 @@ class App extends React.Component {
       },
     });
   handleExpand = (expandKeys,nodeObj)=> {
-   console.log(`this is expand ${expandKeys} obj ${nodeObj}`)
+   console.log(`this is expand ${expandKeys} obj ${JSON.stringify(nodeObj)}`)
   }
 
   render() {
@@ -82,7 +82,7 @@ class App extends React.Component {
                     defaultExpandAll
                     defaultCheckedKeys={['2']}
                     draggable
-                    onExpand=handleExpand
+                    onExpand={this.handleExpand}
                     showIcon
                     checkField='ischecked'
                     renderer={nodeRenderer}
