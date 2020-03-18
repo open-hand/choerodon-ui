@@ -1,9 +1,9 @@
-/* eslint-disable no-console */
 import React, { ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { action, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import omit from 'lodash/omit';
+import uniqBy from 'lodash/uniqBy';
 import Button from '../button/Button';
 import { ButtonColor } from '../button/enum';
 import autobind from '../_util/autobind';
@@ -12,6 +12,7 @@ import Icon from '../icon';
 import message from '../message';
 import Modal from '../modal';
 import { UploadFile } from './interface';
+import { T } from './utils';
 import UploadList from './UploadList';
 import Tooltip from '../tooltip/Tooltip';
 import { $l } from '../locale-context';
@@ -78,6 +79,18 @@ export interface UploadProps extends FormFieldProps {
    */
   onFileChange?: (fileList: UploadFile[]) => void;
   /**
+   * 上传之前的回调
+   *
+   * @memberof UploadProps
+   */
+  beforeUpload?: (file: UploadFile, FileList: UploadFile[]) => boolean | PromiseLike<void>;
+  /**
+   * 删除后的回调
+   *
+   * @memberof UploadProps
+   */
+  onRemoveFile?: (file: UploadFile) => void | boolean | Promise<void | boolean>;
+  /**
    * 上传进度变化的回调
    *
    * @memberof UploadProps
@@ -130,6 +143,41 @@ export interface UploadProps extends FormFieldProps {
    * @memberof UploadProps
    */
   showUploadList?: boolean;
+  /**
+   * 默认显示的上传列表
+   *
+   * @type {array}
+   * @memberof UploadProps
+   */
+  defaultFileList?: Array<UploadFile>;
+  /**
+   * 已经上传的列表
+   *
+   * @type {array}
+   * @memberof UploadProps
+   */
+  uploadFileList?: Array<UploadFile>;
+  /**
+   * 上传请求时是否携带 cookie
+   *
+   * @type {boolean}
+   * @memberof UploadProps
+   */
+  withCredentials?: boolean;
+  /**
+   * 是否以追加形式添加文件至列表中
+   *
+   * @type {boolean}
+   * @memberof UploadProps
+   */
+  appendUpload?: boolean;
+  /**
+   * 是否每次上传全部文件
+   *
+   * @type {boolean}
+   * @memberof UploadProps
+   */
+  partialUpload?: boolean;
 }
 
 @observer
@@ -170,11 +218,17 @@ export default class Upload extends FormField<UploadProps> {
     previewImageWidth: PropTypes.number,
     extra: PropTypes.any,
     onFileChange: PropTypes.func,
+    beforeUpload: PropTypes.func,
+    onRemoveFile: PropTypes.func,
     onUploadProgress: PropTypes.func,
     onUploadSuccess: PropTypes.func,
     onUploadError: PropTypes.func,
     showUploadBtn: PropTypes.bool,
     showUploadList: PropTypes.bool,
+    uploadFileList: PropTypes.array,
+    withCredentials: PropTypes.bool,
+    appendUpload: PropTypes.bool,
+    partialUpload: PropTypes.bool,
     ...FormField.propTypes,
   };
 
@@ -186,12 +240,16 @@ export default class Upload extends FormField<UploadProps> {
     data: {},
     action: '',
     name: 'file',
+    withCredentials: false,
+    appendUpload: false,
+    partialUpload: true,
     uploadImmediately: true,
     fileListMaxLength: 0,
     showPreviewImage: true,
     previewImageWidth: 100,
     showUploadBtn: true,
     showUploadList: true,
+    beforeUpload: T,
     onUploadSuccess: () => message.success($l('Upload', 'upload_success')),
     onUploadError: () => message.error($l('Upload', 'upload_failure')),
   };
@@ -218,8 +276,16 @@ export default class Upload extends FormField<UploadProps> {
   constructor(props, context) {
     super(props, context);
     runInAction(() => {
-      this.fileList = [];
+      this.fileList = props.uploadFileList || props.defaultFileList || [];
     });
+  }
+
+  @action
+  componentWillReceiveProps(nextProps) {
+    const { uploadFileList } = nextProps;
+    if (uploadFileList !== this.fileList && uploadFileList !== undefined) {
+      this.fileList = uniqBy(uploadFileList, (item: UploadFile) => item.uid);
+    }
   }
 
   getOtherProps() {
@@ -237,9 +303,15 @@ export default class Upload extends FormField<UploadProps> {
       'previewImageWidth',
       'showUploadBtn',
       'showUploadList',
+      'onRemoveFile',
       'onUploadSuccess',
       'onUploadError',
       'onFileChange',
+      'beforeUpload',
+      'withCredentials',
+      'partialUpload',
+      'appendUpload',
+      'uploadFileList',
     ]);
     return otherProps;
   }
@@ -324,9 +396,31 @@ export default class Upload extends FormField<UploadProps> {
     this.startUpload();
   };
 
+  /**
+   * 文件上传前的回调
+   *
+   * @param {UploadFile}
+   * @param {UploadFile[]}
+   * @memberof Upload
+   */
+  beforeUpload = (file: UploadFile, fileList: UploadFile[]) => {
+    const { beforeUpload } = this.props;
+    if (!beforeUpload) {
+      return true;
+    }
+    const result = beforeUpload(file, fileList);
+    if (result === false) {
+      this.removeFileItem(file);
+      return false;
+    }
+    if (result && (result as PromiseLike<any>).then) {
+      return result;
+    }
+    return true;
+  };
+
   startUpload = () => {
     const fileList = [...this.fileList];
-    console.log('fileStart', fileList);
     if (fileList.length) {
       // <-- 当有文件时才上传
       this.uploadFiles(fileList);
@@ -349,17 +443,22 @@ export default class Upload extends FormField<UploadProps> {
     if (e.target.value === '') {
       return;
     }
+    const { appendUpload, defaultFileList, uploadFileList } = this.props;
     const fileList = e.target.files;
-    const files = Array.from(fileList).slice(0);
-    this.fileList = [];
+    const files: any = Array.from(fileList).slice(0);
+    const tempFileList =
+      appendUpload || defaultFileList || uploadFileList ? this.fileList.slice() : [];
     const fileBuffer: UploadFile[] = [];
     files.forEach((file: UploadFile, index: number) => {
       file.uid = this.getUid(index);
       file.url = URL.createObjectURL(file);
+      const res = this.beforeUpload(file, files);
+      if (!res) {
+        return;
+      }
       fileBuffer.push(file);
     });
-    console.log('buffer', fileBuffer);
-    this.fileList = fileBuffer;
+    this.fileList = [...tempFileList, ...fileBuffer];
     const { uploadImmediately, onFileChange } = this.props;
     e.target.value = '';
     if (uploadImmediately) {
@@ -378,11 +477,13 @@ export default class Upload extends FormField<UploadProps> {
    * @memberof Upload
    */
   @autobind
+  @action
   uploadFiles(fileList: UploadFile[]): void {
     const {
       action: formAction,
       accept,
       fileListMaxLength = 0, // <-- convince ts
+      partialUpload,
     } = this.props;
     if (!formAction) {
       Modal.error($l('Upload', 'upload_path_unset'));
@@ -396,13 +497,18 @@ export default class Upload extends FormField<UploadProps> {
       Modal.error(`${$l('Upload', 'file_list_max_length')}: ${fileListMaxLength}`);
       return;
     }
-    const files = Array.from(fileList).slice(0);
+    const files = partialUpload
+      ? Array.from(fileList)
+          .slice(0)
+          .filter(item => !item.status || item.status !== 'success')
+      : Array.from(fileList).slice(0);
     const that = this;
+    if (!files.length) {
+      message.info('文件都已上传！');
+    }
     files.forEach((file: UploadFile, index: number) => {
       file.uid = this.getUid(index);
-      console.log('file', file);
-      setTimeout(function() {
-        // that.handleStart(file);
+      setTimeout(() => {
         that.upload(file);
       }, 0);
     });
@@ -416,8 +522,15 @@ export default class Upload extends FormField<UploadProps> {
    * @memberof Upload
    */
   @autobind
+  @action
   upload(file: any): void {
-    const { data, action: formAction, headers, name: filename } = this.props;
+    const {
+      data,
+      action: formAction,
+      headers,
+      name: filename,
+      withCredentials: xhrWithCredentials,
+    } = this.props;
     if (typeof XMLHttpRequest === 'undefined') {
       return;
     }
@@ -426,7 +539,6 @@ export default class Upload extends FormField<UploadProps> {
 
     // 修改文件状态，方便UploadList判断是否展示进度条
     file.status = 'uploading';
-    console.log('xhr', xhr);
     if (xhr.upload) {
       xhr.upload.onprogress = e => {
         let percent = 0;
@@ -443,13 +555,15 @@ export default class Upload extends FormField<UploadProps> {
     // TODO: `filename` default value needs better implementation
     formData.append(filename || 'file', file);
     const errorMsg = `cannot post ${formAction} ${xhr.status}`;
+    if (xhrWithCredentials && 'withCredentials' in xhr) {
+      xhr.withCredentials = true;
+    }
     xhr.open('post', formAction, true);
     xhr.onload = () => {
       // 以二开头的状态码都认为是成功，暂定？
       const isSuccessful = xhr.status.toString().startsWith('2');
-      console.log('isSuccess', isSuccessful);
       if (isSuccessful) {
-        this.handleSuccess(xhr.status, xhr.response, file);
+        this.handleSuccess(xhr.status, JSON.parse(xhr.response), file);
       } else {
         this.handleError(new Error(errorMsg), getResponse(xhr), xhr.response, file);
       }
@@ -507,7 +621,6 @@ export default class Upload extends FormField<UploadProps> {
   handleProgress(percent: number, file: UploadFile) {
     const { onUploadProgress } = this.props;
     const targetItem = this.getFileItem(file);
-    console.log('target', targetItem);
     if (targetItem) {
       targetItem.percent = percent;
       if (onUploadProgress) {
@@ -540,9 +653,25 @@ export default class Upload extends FormField<UploadProps> {
     }
   }
 
+  @action
   handleRemove = (file: UploadFile) => {
-    this.removeFileItem(file);
+    // this.removeFileItem(file);
+    // this.upload.abort(file);
+    file.status = 'removed';
+    this.handleOnRemove(file);
   };
+
+  handleOnRemove(file: UploadFile) {
+    const { onRemoveFile } = this.props;
+    Promise.resolve(typeof onRemoveFile === 'function' ? onRemoveFile(file) : onRemoveFile).then(
+      ret => {
+        if (ret === false) {
+          return;
+        }
+        this.removeFileItem(file);
+      },
+    );
+  }
 
   /**
    * 判断文件后缀名是否合格
@@ -553,7 +682,6 @@ export default class Upload extends FormField<UploadProps> {
    * @memberof Upload
    */
   isAcceptFiles(fileList: UploadFile[]): boolean {
-    console.log('isAccept', fileList.slice(0));
     const { accept } = this.props;
     if (!accept) {
       return true;
@@ -606,9 +734,14 @@ export default class Upload extends FormField<UploadProps> {
    */
   @action
   removeFileItem(file: UploadFile): void {
-    const { fileList } = this;
     const matchKey = file.uid !== undefined ? 'uid' : 'name';
-    const index = fileList.findIndex(item => item[matchKey] === file[matchKey]);
-    fileList.splice(index, 1);
+    const index = this.fileList.findIndex(item => item[matchKey] === file[matchKey]);
+    const { uploadFileList } = this.props;
+    if (uploadFileList && uploadFileList.length) {
+      uploadFileList.splice(index, 1);
+      this.fileList.splice(index, 1);
+    } else {
+      this.fileList.splice(index, 1);
+    }
   }
 }

@@ -1,5 +1,5 @@
 ---
-order: 3
+order: 6
 title:
   zh-CN: 自定义响应处理方法
   en-US: Customize The Response Handler
@@ -15,16 +15,17 @@ Customize the response handler, including success and failure. This will overrid
 
 ```jsx
 import { Upload, message } from 'choerodon-ui/pro';
+import { actionUrl } from './actionUrl';
 
 const props = {
   headers: {
     'Access-Control-Allow-Origin': '*',
   },
-  action: 'https://www.mocky.io/v2/5e6887c22f00004d49d8ad29',
+  action: actionUrl,
   multiple: true,
   accept: ['.deb', '.txt', '.pdf', 'image/*'],
   uploadImmediately: false,
-  onUploadSuccess: response => message.success(response),
+  onUploadSuccess: response => message.success(response.message),
   onUploadError: (error, response, file) => console.log(error, response, file),
 };
 

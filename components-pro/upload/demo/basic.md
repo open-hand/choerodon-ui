@@ -15,12 +15,13 @@ File Upload.
 
 ```jsx
 import { Upload } from 'choerodon-ui/pro';
+import { actionUrl } from './actionUrl';
 
 const props = {
   headers: {
     'Access-Control-Allow-Origin': '*',
   },
-  action: 'https://www.mocky.io/v2/5e6887c22f00004d49d8ad29',
+  action: actionUrl,
   multiple: true,
   accept: ['.deb', '.txt', '.pdf', 'image/*'],
   uploadImmediately: true,

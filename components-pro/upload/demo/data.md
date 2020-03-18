@@ -1,5 +1,5 @@
 ---
-order: 4
+order: 7
 title:
   zh-CN: 附加额外数据
   en-US: Append Extra Data
@@ -15,12 +15,13 @@ Append an extra `FormData` instance to a file upload request. Please checkout th
 
 ```jsx
 import { Upload } from 'choerodon-ui/pro';
+import { actionUrl } from './actionUrl';
 
 const props = {
   headers: {
     'Access-Control-Allow-Origin': '*',
   },
-  action: 'https://www.mocky.io/v2/5e6887c22f00004d49d8ad29',
+  action: actionUrl,
   multiple: true,
   accept: ['.deb', '.txt', '.pdf', 'image/*'],
   uploadImmediately: false,

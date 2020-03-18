@@ -1,5 +1,5 @@
 ---
-order: 2
+order: 4
 title:
   zh-CN: 数量限制
   en-US: Count Constraint
@@ -14,17 +14,31 @@ title:
 Constraint the amount of filed being uploaded at one time.
 
 ```jsx
-import { Upload } from 'choerodon-ui/pro';
+import { Upload, message } from 'choerodon-ui/pro';
+import { actionUrl } from './actionUrl';
+
+const handleBefore = (file, fileList) => {
+  const isJPG = file.type === 'image/jpeg';
+  if (!isJPG) {
+    message.error('You can only upload JPG file!');
+  }
+  const isLt2M = file.size / 1024 / 1024 < 2;
+  if (!isLt2M) {
+    message.error('Image must smaller than 2MB!');
+  }
+  return isJPG && isLt2M;
+};
 
 const props = {
   headers: {
     'Access-Control-Allow-Origin': '*',
   },
-  action: 'https://www.mocky.io/v2/5e6887c22f00004d49d8ad29',
+  action: actionUrl,
   multiple: true,
   accept: ['.deb', '.txt', '.pdf', 'image/*'],
   uploadImmediately: false,
   fileListMaxLength: 2,
+  beforeUpload: handleBefore,
 };
 
 ReactDOM.render(
