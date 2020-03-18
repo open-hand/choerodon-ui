@@ -16,6 +16,8 @@ DataSet Binding.
 ````jsx
 import { DataSet, Form, TextField, NumberField, SelectBox, Switch, Button, Spin } from 'choerodon-ui/pro';
 
+const { Option } = SelectBox;
+
 class App extends React.Component {
  ds = new DataSet({
     primaryKey: 'userid',
