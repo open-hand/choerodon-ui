@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 💄 `<pro>LocaleContext`: Optimize japansese configuration support and Fix the document.
+- 💄 `<pro>Table`: Optimize table tooltip，table border-bottom style issue.
   
 ## 0.8.57
 
