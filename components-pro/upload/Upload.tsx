@@ -504,7 +504,7 @@ export default class Upload extends FormField<UploadProps> {
       : Array.from(fileList).slice(0);
     const that = this;
     if (!files.length) {
-      message.info('文件都已上传！');
+      message.info($l('Upload', 'been_uploaded'));
     }
     files.forEach((file: UploadFile, index: number) => {
       file.uid = this.getUid(index);

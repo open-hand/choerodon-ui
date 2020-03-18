@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 💄 `<pro>Upload`: Optimize Upload Document.
+- 🌟 `<pro>Upload`: Added defaultFileList, uploadFileList, withCredentials, appendUpload, partialUpload properties and beforeUpload, onRemoveFile callbacks.
 - 💄 `<pro>LocaleContext`: Optimize japansese configuration support and Fix the document.
   
 ## 0.8.57
