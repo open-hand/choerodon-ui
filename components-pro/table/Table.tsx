@@ -5,6 +5,7 @@ import raf from 'raf';
 import { observer } from 'mobx-react';
 import omit from 'lodash/omit';
 import isNumber from 'lodash/isNumber';
+import isUndefined from 'lodash/isUndefined';
 import noop from 'lodash/noop';
 import classes from 'component-classes';
 import { action } from 'mobx';
@@ -110,6 +111,7 @@ export interface TablePaginationConfig extends PaginationProps {
 export type SpinIndicator = ReactElement<any>;
 
 export interface TableSpinConfig extends SpinProps {
+  spinning?: boolean;
   indicator?: SpinIndicator;
 }
 
@@ -644,6 +646,18 @@ export default class Table extends DataSetComponent<TableProps> {
     });
   }
 
+  /**
+   * 获取传入的 Spin props
+   */
+  getSpinProps() {
+    const { spin, dataSet } = this.props;
+    if (spin && !isUndefined(spin.spinning)) return { ...spin };
+    return {
+      ...spin,
+      dataSet,
+    };
+  }
+
   componentWillMount() {
     super.componentWillMount();
     this.initDefaultExpandedRows();
@@ -685,13 +699,11 @@ export default class Table extends DataSetComponent<TableProps> {
       tableStore,
       tableStore: { overflowX, isAnyColumnsLeftLock, isAnyColumnsRightLock },
       props: {
-        dataSet,
         buttons,
         queryFields,
         queryFieldsLimit,
         filterBarFieldName,
         filterBarPlaceholder,
-        spin,
       },
     } = this;
     const content = this.getTable();
@@ -711,7 +723,7 @@ export default class Table extends DataSetComponent<TableProps> {
               filterBarFieldName={filterBarFieldName}
               filterBarPlaceholder={filterBarPlaceholder}
             />
-            <Spin {...spin} key="content" dataSet={dataSet}>
+            <Spin {...this.getSpinProps()} key="content">
               <div {...this.getOtherProps()}>
                 <div className={`${prefixCls}-content`}>
                   {content}

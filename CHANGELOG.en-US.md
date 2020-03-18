@@ -15,7 +15,9 @@ timeline: true
 
 ---
 
-- 💄 `<pro>LocaleContext`: Optimize japansese configuration support and Fix the document.
+- 🌟 `<pro>Table`: Expand `spin` configuration, add related demo.
+- 🌟 `<pro>Spin`: Add dataSet binding demo.
+- 💄 `<pro>LocaleContext`: Optimize japanese configuration support and Fix the document.
 - 💄 `<pro>Table`: Optimize table tooltip，table border-bottom style issue.
   
 ## 0.8.57

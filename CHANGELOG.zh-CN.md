@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Table`: 扩展 spin 配置, 新增相关 demo。
+- 🌟 `<pro>Spin`: 新增绑定数据源demo.
 - 💄 `<pro>LocaleContext`: 优化日语配置完善文档。
 - 💄 `<pro>Table`: 优化 table tooltip、table border-bottom 样式问题。
   
