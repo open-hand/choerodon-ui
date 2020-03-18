@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 💄 `<pro>LocaleContext`: 优化日语配置完善文档。
+  
 ## 0.8.57
 
 `2020-03-12`

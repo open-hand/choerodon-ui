@@ -1,3 +1,4 @@
+/* istanbul ignore next */
 export default class DataSetRequestError extends Error {
   constructor(error: Error) {
     super(error.message);

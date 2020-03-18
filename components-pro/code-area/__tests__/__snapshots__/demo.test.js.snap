@@ -1,0 +1,201 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders ./components-pro/code-area/demo/basic.md correctly 1`] = `
+<div
+  class="c7n-row"
+  style="margin-left:-5px;margin-right:-5px"
+>
+  <div
+    class="c7n-col-8"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <div
+      class="c7n-pro-code-area-wrapper"
+    >
+      <label>
+        <div
+          class="react-codemirror2 c7n-pro-code-area"
+        />
+      </label>
+    </div>
+  </div>
+  <div
+    class="c7n-col-8"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <div
+      class="c7n-pro-code-area-wrapper"
+    >
+      <label>
+        <div
+          class="react-codemirror2 c7n-pro-code-area"
+        />
+      </label>
+    </div>
+    <label
+      class="c7n-pro-switch-wrapper"
+    >
+      <input
+        checked=""
+        class="c7n-pro-switch"
+        type="checkbox"
+        value="true"
+      />
+      <span
+        class="c7n-pro-switch-label"
+      >
+        只读
+      </span>
+    </label>
+  </div>
+  <div
+    class="c7n-col-8"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <div
+      class="c7n-pro-code-area-wrapper c7n-pro-code-area-disabled"
+    >
+      <label>
+        <div
+          class="react-codemirror2 c7n-pro-code-area"
+        />
+      </label>
+    </div>
+    <label
+      class="c7n-pro-switch-wrapper"
+    >
+      <input
+        checked=""
+        class="c7n-pro-switch"
+        type="checkbox"
+        value="true"
+      />
+      <span
+        class="c7n-pro-switch-label"
+      >
+        禁用
+      </span>
+    </label>
+  </div>
+</div>
+`;
+
+exports[`renders ./components-pro/code-area/demo/controlled.md correctly 1`] = `
+<div
+  class="c7n-pro-code-area-wrapper"
+>
+  <label>
+    <div
+      class="react-codemirror2 c7n-pro-code-area"
+    />
+  </label>
+</div>
+`;
+
+exports[`renders ./components-pro/code-area/demo/dataset.md correctly 1`] = `
+<div
+  class="c7n-pro-code-area-wrapper c7n-pro-code-area-required"
+>
+  <label>
+    <div
+      class="react-codemirror2 c7n-pro-code-area"
+    />
+  </label>
+</div>
+`;
+
+exports[`renders ./components-pro/code-area/demo/html-format.md correctly 1`] = `
+<div>
+  <h4>
+    HTML
+  </h4>
+  <div
+    class="c7n-pro-code-area-wrapper c7n-pro-code-area-required"
+  >
+    <label>
+      <div
+        class="react-codemirror2 c7n-pro-code-area"
+      />
+    </label>
+  </div>
+</div>
+`;
+
+exports[`renders ./components-pro/code-area/demo/js-format.md correctly 1`] = `
+<div>
+  <h4>
+    Javascript
+  </h4>
+  <div
+    class="c7n-pro-code-area-wrapper c7n-pro-code-area-required"
+  >
+    <label>
+      <div
+        class="react-codemirror2 c7n-pro-code-area"
+      />
+    </label>
+  </div>
+</div>
+`;
+
+exports[`renders ./components-pro/code-area/demo/json-format.md correctly 1`] = `
+<div>
+  <h4>
+    JSON
+  </h4>
+  <div
+    class="c7n-pro-code-area-wrapper c7n-pro-code-area-required"
+  >
+    <label>
+      <div
+        class="react-codemirror2 c7n-pro-code-area"
+      />
+    </label>
+  </div>
+</div>
+`;
+
+exports[`renders ./components-pro/code-area/demo/theme.md correctly 1`] = `
+<div>
+  <div
+    class="c7n-pro-code-area-wrapper c7n-pro-code-area-required"
+  >
+    <label>
+      <div
+        class="react-codemirror2 c7n-pro-code-area"
+      />
+    </label>
+  </div>
+  <label
+    class="c7n-pro-switch-wrapper"
+  >
+    <input
+      class="c7n-pro-switch"
+      type="checkbox"
+      value="true"
+    />
+    <span
+      class="c7n-pro-switch-label"
+    >
+      idea
+    </span>
+  </label>
+</div>
+`;
+
+exports[`renders ./components-pro/code-area/demo/yaml-format.md correctly 1`] = `
+<div>
+  <h4>
+    YAML
+  </h4>
+  <div
+    class="c7n-pro-code-area-wrapper c7n-pro-code-area-required"
+  >
+    <label>
+      <div
+        class="react-codemirror2 c7n-pro-code-area"
+      />
+    </label>
+  </div>
+</div>
+`;

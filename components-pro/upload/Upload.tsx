@@ -521,6 +521,7 @@ export default class Upload extends FormField<UploadProps> {
    * @returns {void}
    * @memberof Upload
    */
+  /* istanbul ignore next */
   @autobind
   @action
   upload(file: any): void {

@@ -1,9 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Range should show tooltip when hovering range handler 1`] = `
-<Range
-  autoComplete="off"
-  clearButton={false}
+exports[`CodeArea-pro the codeArea javascript formatter and lint test 1`] = `
+<CodeArea
   dataSet={
     DataSet {
       "cachedSelected": Array [],
@@ -18,15 +16,9 @@ exports[`Range should show tooltip when hovering range handler 1`] = `
             false,
           ],
         ],
-        "update": Array [
-          Array [
-            [MockFunction],
-            false,
-          ],
-        ],
       },
       "fields": Object {
-        "range": Field {
+        "content": Field {
           "dataSet": [Circular],
           "isDynamicPropsComputing": false,
           "lastDynamicProps": Object {},
@@ -35,1026 +27,72 @@ exports[`Range should show tooltip when hovering range handler 1`] = `
             "queueing": false,
           },
           "pristineProps": Object {
-            "defaultValue": 50,
-            "max": 100,
-            "min": 0,
-            "name": "range",
-            "step": 1,
-          },
-          "props": Object {
-            "defaultValue": 50,
-            "max": 100,
-            "min": 0,
-            "name": "range",
-            "step": 1,
-          },
-          "record": undefined,
-          "validator": Validator {
-            "control": undefined,
-            "field": [Circular],
-            "innerValidationResults": Array [],
-          },
+            "defaultValue": "function getOptions() {
+      var options = {
+        \\"compilerOptions\\": {
+          \\"strictNullChecks\\": true,
+          \\"moduleResolution\\": \\"node\\",
+          \\"allowSyntheticDefaultImports\\": true,
+          \\"experimentalDecorators\\": true,
+          \\"jsx\\": \\"preserve\\",
+          \\"noUnusedParameters\\": true,
+          \\"noUnusedLocals\\": true,
+          \\"declaration\\": true,
+          \\"target\\": \\"es6\\",
+          \\"lib\\": [
+            \\"dom\\",
+            \\"dom.iterable\\",
+            \\"es7\\",
+            \\"es2017.object\\"
+          ]
         },
-      },
-      "inBatchSelection": false,
-      "name": undefined,
-      "originalData": Array [],
-      "pageSize": 10,
-      "parent": undefined,
-      "parentName": undefined,
-      "pending": PromiseQueue {
-        "queue": Array [],
-        "queueing": false,
-      },
-      "props": Object {
-        "autoCreate": true,
-        "autoLocateAfterCreate": true,
-        "autoLocateAfterRemove": true,
-        "autoLocateFirst": true,
-        "autoQuery": false,
-        "autoQueryAfterSubmit": true,
-        "cascadeParams": [Function],
-        "dataToJSON": "dirty",
-        "events": Object {
-          "update": [MockFunction],
-        },
-        "fields": Array [
-          Object {
-            "defaultValue": 50,
-            "max": 100,
-            "min": 0,
-            "name": "range",
-            "step": 1,
-          },
-        ],
-        "modifiedCheck": true,
-        "pageSize": 10,
-        "paging": true,
-        "selection": "multiple",
-      },
-      "queryParameter": Object {},
-      "records": Array [
-        Record {
-          "cascadeRecordsMap": Object {},
-          "data": Object {
-            "range": 50,
-          },
-          "dataSet": [Circular],
-          "dataSetSnapshot": Object {},
-          "editing": undefined,
-          "fields": Object {
-            "range": Field {
-              "dataSet": [Circular],
-              "isDynamicPropsComputing": false,
-              "lastDynamicProps": Object {},
-              "pending": PromiseQueue {
-                "queue": Array [],
-                "queueing": false,
-              },
-              "pristineProps": Object {
-                "name": "range",
-              },
-              "props": Object {
-                "name": "range",
-              },
-              "record": [Circular],
-              "validator": Validator {
-                "control": undefined,
-                "field": [Circular],
-                "innerValidationResults": Array [],
-              },
-            },
-          },
-          "id": 1001,
-          "isCached": false,
-          "isCurrent": true,
-          "isSelected": false,
-          "pristineData": Object {
-            "range": 50,
-          },
-          "selectable": true,
-          "state": Object {},
-          "status": "add",
-        },
-      ],
-      "resetInBatch": false,
-      "selection": "multiple",
-      "status": "ready",
-      "syncChildrenRemote": [Function],
-      "totalCount": 0,
-    }
-  }
-  max={100}
-  min={0}
-  multiple={false}
-  noValidate={false}
-  readOnly={false}
-  showHelp="newLine"
-  step={1}
-  suffixCls="range"
-  trim="both"
-  vertical={false}
->
-  <Tooltip
-    arrowPointAtCenter={false}
-    autoAdjustOverflow={true}
-    defaultHidden={true}
-    mouseEnterDelay={100}
-    mouseLeaveDelay={100}
-    placement="bottomLeft"
-    suffixCls="form-tooltip c7n-pro-tooltip"
-    theme="light"
-    title={null}
-    transitionName="zoom-big-fast"
-    trigger={
-      Array [
-        "hover",
-      ]
-    }
-  >
-    <Trigger
-      action={
-        Array [
-          "hover",
+        \\"exclude\\": [
+          \\"node_modules\\",
+          \\"lib\\",
+          \\"es\\"
         ]
-      }
-      arrowPointAtCenter={false}
-      autoAdjustOverflow={true}
-      blurDelay={0}
-      builtinPlacements={
-        Object {
-          "bottom": Object {
-            "offset": Array [
-              0,
-              10,
-            ],
-            "overflow": Object {
-              "adjustX": 1,
-              "adjustY": 1,
-            },
-            "points": Array [
-              "tc",
-              "bc",
-            ],
-            "targetOffset": Array [
-              0,
-              0,
-            ],
-          },
-          "bottomLeft": Object {
-            "offset": Array [
-              0,
-              10,
-            ],
-            "overflow": Object {
-              "adjustX": 1,
-              "adjustY": 1,
-            },
-            "points": Array [
-              "tl",
-              "bl",
-            ],
-            "targetOffset": Array [
-              0,
-              0,
-            ],
-          },
-          "bottomRight": Object {
-            "offset": Array [
-              0,
-              10,
-            ],
-            "overflow": Object {
-              "adjustX": 1,
-              "adjustY": 1,
-            },
-            "points": Array [
-              "tr",
-              "br",
-            ],
-            "targetOffset": Array [
-              0,
-              0,
-            ],
-          },
-          "left": Object {
-            "offset": Array [
-              -10,
-              0,
-            ],
-            "overflow": Object {
-              "adjustX": 1,
-              "adjustY": 1,
-            },
-            "points": Array [
-              "cr",
-              "cl",
-            ],
-            "targetOffset": Array [
-              0,
-              0,
-            ],
-          },
-          "leftBottom": Object {
-            "offset": Array [
-              -10,
-              0,
-            ],
-            "overflow": Object {
-              "adjustX": 1,
-              "adjustY": 1,
-            },
-            "points": Array [
-              "br",
-              "bl",
-            ],
-            "targetOffset": Array [
-              0,
-              0,
-            ],
-          },
-          "leftTop": Object {
-            "offset": Array [
-              -10,
-              0,
-            ],
-            "overflow": Object {
-              "adjustX": 1,
-              "adjustY": 1,
-            },
-            "points": Array [
-              "tr",
-              "tl",
-            ],
-            "targetOffset": Array [
-              0,
-              0,
-            ],
-          },
-          "right": Object {
-            "offset": Array [
-              10,
-              0,
-            ],
-            "overflow": Object {
-              "adjustX": 1,
-              "adjustY": 1,
-            },
-            "points": Array [
-              "cl",
-              "cr",
-            ],
-            "targetOffset": Array [
-              0,
-              0,
-            ],
-          },
-          "rightBottom": Object {
-            "offset": Array [
-              10,
-              0,
-            ],
-            "overflow": Object {
-              "adjustX": 1,
-              "adjustY": 1,
-            },
-            "points": Array [
-              "bl",
-              "br",
-            ],
-            "targetOffset": Array [
-              0,
-              0,
-            ],
-          },
-          "rightTop": Object {
-            "offset": Array [
-              10,
-              0,
-            ],
-            "overflow": Object {
-              "adjustX": 1,
-              "adjustY": 1,
-            },
-            "points": Array [
-              "tl",
-              "tr",
-            ],
-            "targetOffset": Array [
-              0,
-              0,
-            ],
-          },
-          "top": Object {
-            "offset": Array [
-              0,
-              -10,
-            ],
-            "overflow": Object {
-              "adjustX": 1,
-              "adjustY": 1,
-            },
-            "points": Array [
-              "bc",
-              "tc",
-            ],
-            "targetOffset": Array [
-              0,
-              0,
-            ],
-          },
-          "topLeft": Object {
-            "offset": Array [
-              0,
-              -10,
-            ],
-            "overflow": Object {
-              "adjustX": 1,
-              "adjustY": 1,
-            },
-            "points": Array [
-              "bl",
-              "tl",
-            ],
-            "targetOffset": Array [
-              0,
-              0,
-            ],
-          },
-          "topRight": Object {
-            "offset": Array [
-              0,
-              -10,
-            ],
-            "overflow": Object {
-              "adjustX": 1,
-              "adjustY": 1,
-            },
-            "points": Array [
-              "br",
-              "tr",
-            ],
-            "targetOffset": Array [
-              0,
-              0,
-            ],
-          },
-        }
-      }
-      defaultPopupHidden={true}
-      focusDelay={150}
-      mouseEnterDelay={100}
-      mouseLeaveDelay={100}
-      popupContent={null}
-      popupPlacement="bottomLeft"
-      prefixCls="c7n-pro-form-tooltip c7n-pro-tooltip"
-      suffixCls="form-tooltip c7n-pro-tooltip"
-      theme="light"
-      title={null}
-      transitionName="zoom-big-fast"
-    >
-      <TriggerChild
-        key=".$.$wrapper"
-        onMouseEnter={[Function]}
-        onMouseLeave={[Function]}
-      >
-        <label
-          className="c7n-pro-range-wrapper"
-          key=".$wrapper"
-          onBlur={[Function]}
-          onClick={[Function]}
-          onContextMenu={[Function]}
-          onFocus={[Function]}
-          onMouseDown={[Function]}
-          onMouseEnter={[Function]}
-          onMouseLeave={[Function]}
-        >
-          <input
-            autoComplete="off"
-            className="c7n-pro-range"
-            max={100}
-            min={0}
-            multiple={false}
-            noValidate={false}
-            onBlur={[Function]}
-            onChange={[Function]}
-            onFocus={[Function]}
-            onKeyDown={[Function]}
-            step={1}
-            type="range"
-            value={0}
-          />
-          <div
-            className="c7n-pro-range-track"
-            onMouseDown={[Function]}
-          >
-            <div
-              className="c7n-pro-range-draghandle"
-              style={
-                Object {
-                  "left": 0,
-                }
-              }
-            />
-            <div
-              className="c7n-pro-range-selection"
-              style={
-                Object {
-                  "width": 0,
-                }
-              }
-            />
-          </div>
-        </label>
-      </TriggerChild>
-      <Popup
-        align={
-          Object {
-            "offset": Array [
-              0,
-              10,
-            ],
-            "overflow": Object {
-              "adjustX": 1,
-              "adjustY": 1,
-            },
-            "points": Array [
-              "tl",
-              "bl",
-            ],
-            "targetOffset": Array [
-              0,
-              0,
-            ],
-          }
-        }
-        className="c7n-pro-form-tooltip c7n-pro-tooltip-popup"
-        getClassNameFromAlign={[Function]}
-        getRootDomNode={[Function]}
-        hidden={true}
-        key="popup"
-        onMouseDown={[Function]}
-        onMouseEnter={[Function]}
-        onMouseLeave={[Function]}
-        suffixCls="popup"
-        transitionName="zoom-big-fast"
-      />
-    </Trigger>
-  </Tooltip>
-</Range>
-`;
+      };
 
-exports[`Range should show tooltip when hovering range handler 2`] = `
-<Range
-  autoComplete="off"
-  clearButton={false}
-  dataSet={
-    DataSet {
-      "cachedSelected": Array [],
-      "children": Object {},
-      "currentPage": 1,
-      "dataToJSON": "dirty",
-      "el": undefined,
-      "events": Object {
-        "indexchange": Array [
-          Array [
-            [Function],
-            false,
-          ],
-        ],
-        "update": Array [
-          Array [
-            [MockFunction],
-            false,
-          ],
-        ],
-      },
-      "fields": Object {
-        "range": Field {
-          "dataSet": [Circular],
-          "isDynamicPropsComputing": false,
-          "lastDynamicProps": Object {},
-          "pending": PromiseQueue {
-            "queue": Array [],
-            "queueing": false,
-          },
-          "pristineProps": Object {
-            "defaultValue": 50,
-            "max": 100,
-            "min": 0,
-            "name": "range",
-            "step": 1,
+      return options;
+    }
+    ",
+            "name": "content",
+            "required": true,
+            "type": "string",
           },
           "props": Object {
-            "defaultValue": 50,
-            "max": 100,
-            "min": 0,
-            "name": "range",
-            "step": 1,
-          },
-          "record": undefined,
-          "validator": Validator {
-            "control": undefined,
-            "field": [Circular],
-            "innerValidationResults": Array [],
-          },
+            "defaultValue": "function getOptions() {
+      var options = {
+        \\"compilerOptions\\": {
+          \\"strictNullChecks\\": true,
+          \\"moduleResolution\\": \\"node\\",
+          \\"allowSyntheticDefaultImports\\": true,
+          \\"experimentalDecorators\\": true,
+          \\"jsx\\": \\"preserve\\",
+          \\"noUnusedParameters\\": true,
+          \\"noUnusedLocals\\": true,
+          \\"declaration\\": true,
+          \\"target\\": \\"es6\\",
+          \\"lib\\": [
+            \\"dom\\",
+            \\"dom.iterable\\",
+            \\"es7\\",
+            \\"es2017.object\\"
+          ]
         },
-      },
-      "inBatchSelection": false,
-      "name": undefined,
-      "originalData": Array [],
-      "pageSize": 10,
-      "parent": undefined,
-      "parentName": undefined,
-      "pending": PromiseQueue {
-        "queue": Array [],
-        "queueing": false,
-      },
-      "props": Object {
-        "autoCreate": true,
-        "autoLocateAfterCreate": true,
-        "autoLocateAfterRemove": true,
-        "autoLocateFirst": true,
-        "autoQuery": false,
-        "autoQueryAfterSubmit": true,
-        "cascadeParams": [Function],
-        "dataToJSON": "dirty",
-        "events": Object {
-          "update": [MockFunction],
-        },
-        "fields": Array [
-          Object {
-            "defaultValue": 50,
-            "max": 100,
-            "min": 0,
-            "name": "range",
-            "step": 1,
-          },
-        ],
-        "modifiedCheck": true,
-        "pageSize": 10,
-        "paging": true,
-        "selection": "multiple",
-      },
-      "queryParameter": Object {},
-      "records": Array [
-        Record {
-          "cascadeRecordsMap": Object {},
-          "data": Object {
-            "range": 50,
-          },
-          "dataSet": [Circular],
-          "dataSetSnapshot": Object {},
-          "editing": undefined,
-          "fields": Object {
-            "range": Field {
-              "dataSet": [Circular],
-              "isDynamicPropsComputing": false,
-              "lastDynamicProps": Object {},
-              "pending": PromiseQueue {
-                "queue": Array [],
-                "queueing": false,
-              },
-              "pristineProps": Object {
-                "name": "range",
-              },
-              "props": Object {
-                "name": "range",
-              },
-              "record": [Circular],
-              "validator": Validator {
-                "control": undefined,
-                "field": [Circular],
-                "innerValidationResults": Array [],
-              },
-            },
-          },
-          "id": 1001,
-          "isCached": false,
-          "isCurrent": true,
-          "isSelected": false,
-          "pristineData": Object {
-            "range": 50,
-          },
-          "selectable": true,
-          "state": Object {},
-          "status": "add",
-        },
-      ],
-      "resetInBatch": false,
-      "selection": "multiple",
-      "status": "ready",
-      "syncChildrenRemote": [Function],
-      "totalCount": 0,
-    }
-  }
-  max={100}
-  min={0}
-  multiple={false}
-  noValidate={false}
-  readOnly={false}
-  showHelp="newLine"
-  step={1}
-  suffixCls="range"
-  trim="both"
-  vertical={false}
->
-  <Tooltip
-    arrowPointAtCenter={false}
-    autoAdjustOverflow={true}
-    defaultHidden={true}
-    mouseEnterDelay={100}
-    mouseLeaveDelay={100}
-    placement="bottomLeft"
-    suffixCls="form-tooltip c7n-pro-tooltip"
-    theme="light"
-    title={null}
-    transitionName="zoom-big-fast"
-    trigger={
-      Array [
-        "hover",
-      ]
-    }
-  >
-    <Trigger
-      action={
-        Array [
-          "hover",
+        \\"exclude\\": [
+          \\"node_modules\\",
+          \\"lib\\",
+          \\"es\\"
         ]
-      }
-      arrowPointAtCenter={false}
-      autoAdjustOverflow={true}
-      blurDelay={0}
-      builtinPlacements={
-        Object {
-          "bottom": Object {
-            "offset": Array [
-              0,
-              10,
-            ],
-            "overflow": Object {
-              "adjustX": 1,
-              "adjustY": 1,
-            },
-            "points": Array [
-              "tc",
-              "bc",
-            ],
-            "targetOffset": Array [
-              0,
-              0,
-            ],
-          },
-          "bottomLeft": Object {
-            "offset": Array [
-              0,
-              10,
-            ],
-            "overflow": Object {
-              "adjustX": 1,
-              "adjustY": 1,
-            },
-            "points": Array [
-              "tl",
-              "bl",
-            ],
-            "targetOffset": Array [
-              0,
-              0,
-            ],
-          },
-          "bottomRight": Object {
-            "offset": Array [
-              0,
-              10,
-            ],
-            "overflow": Object {
-              "adjustX": 1,
-              "adjustY": 1,
-            },
-            "points": Array [
-              "tr",
-              "br",
-            ],
-            "targetOffset": Array [
-              0,
-              0,
-            ],
-          },
-          "left": Object {
-            "offset": Array [
-              -10,
-              0,
-            ],
-            "overflow": Object {
-              "adjustX": 1,
-              "adjustY": 1,
-            },
-            "points": Array [
-              "cr",
-              "cl",
-            ],
-            "targetOffset": Array [
-              0,
-              0,
-            ],
-          },
-          "leftBottom": Object {
-            "offset": Array [
-              -10,
-              0,
-            ],
-            "overflow": Object {
-              "adjustX": 1,
-              "adjustY": 1,
-            },
-            "points": Array [
-              "br",
-              "bl",
-            ],
-            "targetOffset": Array [
-              0,
-              0,
-            ],
-          },
-          "leftTop": Object {
-            "offset": Array [
-              -10,
-              0,
-            ],
-            "overflow": Object {
-              "adjustX": 1,
-              "adjustY": 1,
-            },
-            "points": Array [
-              "tr",
-              "tl",
-            ],
-            "targetOffset": Array [
-              0,
-              0,
-            ],
-          },
-          "right": Object {
-            "offset": Array [
-              10,
-              0,
-            ],
-            "overflow": Object {
-              "adjustX": 1,
-              "adjustY": 1,
-            },
-            "points": Array [
-              "cl",
-              "cr",
-            ],
-            "targetOffset": Array [
-              0,
-              0,
-            ],
-          },
-          "rightBottom": Object {
-            "offset": Array [
-              10,
-              0,
-            ],
-            "overflow": Object {
-              "adjustX": 1,
-              "adjustY": 1,
-            },
-            "points": Array [
-              "bl",
-              "br",
-            ],
-            "targetOffset": Array [
-              0,
-              0,
-            ],
-          },
-          "rightTop": Object {
-            "offset": Array [
-              10,
-              0,
-            ],
-            "overflow": Object {
-              "adjustX": 1,
-              "adjustY": 1,
-            },
-            "points": Array [
-              "tl",
-              "tr",
-            ],
-            "targetOffset": Array [
-              0,
-              0,
-            ],
-          },
-          "top": Object {
-            "offset": Array [
-              0,
-              -10,
-            ],
-            "overflow": Object {
-              "adjustX": 1,
-              "adjustY": 1,
-            },
-            "points": Array [
-              "bc",
-              "tc",
-            ],
-            "targetOffset": Array [
-              0,
-              0,
-            ],
-          },
-          "topLeft": Object {
-            "offset": Array [
-              0,
-              -10,
-            ],
-            "overflow": Object {
-              "adjustX": 1,
-              "adjustY": 1,
-            },
-            "points": Array [
-              "bl",
-              "tl",
-            ],
-            "targetOffset": Array [
-              0,
-              0,
-            ],
-          },
-          "topRight": Object {
-            "offset": Array [
-              0,
-              -10,
-            ],
-            "overflow": Object {
-              "adjustX": 1,
-              "adjustY": 1,
-            },
-            "points": Array [
-              "br",
-              "tr",
-            ],
-            "targetOffset": Array [
-              0,
-              0,
-            ],
-          },
-        }
-      }
-      defaultPopupHidden={true}
-      focusDelay={150}
-      mouseEnterDelay={100}
-      mouseLeaveDelay={100}
-      popupContent={null}
-      popupPlacement="bottomLeft"
-      prefixCls="c7n-pro-form-tooltip c7n-pro-tooltip"
-      suffixCls="form-tooltip c7n-pro-tooltip"
-      theme="light"
-      title={null}
-      transitionName="zoom-big-fast"
-    >
-      <TriggerChild
-        key=".$.$wrapper"
-        onMouseEnter={[Function]}
-        onMouseLeave={[Function]}
-      >
-        <label
-          className="c7n-pro-range-wrapper"
-          key=".$wrapper"
-          onBlur={[Function]}
-          onClick={[Function]}
-          onContextMenu={[Function]}
-          onFocus={[Function]}
-          onMouseDown={[Function]}
-          onMouseEnter={[Function]}
-          onMouseLeave={[Function]}
-        >
-          <input
-            autoComplete="off"
-            className="c7n-pro-range"
-            max={100}
-            min={0}
-            multiple={false}
-            noValidate={false}
-            onBlur={[Function]}
-            onChange={[Function]}
-            onFocus={[Function]}
-            onKeyDown={[Function]}
-            step={1}
-            type="range"
-            value={0}
-          />
-          <div
-            className="c7n-pro-range-track"
-            onMouseDown={[Function]}
-          >
-            <div
-              className="c7n-pro-range-draghandle"
-              style={
-                Object {
-                  "left": 0,
-                }
-              }
-            />
-            <div
-              className="c7n-pro-range-selection"
-              style={
-                Object {
-                  "width": 0,
-                }
-              }
-            />
-          </div>
-        </label>
-      </TriggerChild>
-      <Popup
-        align={
-          Object {
-            "offset": Array [
-              0,
-              10,
-            ],
-            "overflow": Object {
-              "adjustX": 1,
-              "adjustY": 1,
-            },
-            "points": Array [
-              "tl",
-              "bl",
-            ],
-            "targetOffset": Array [
-              0,
-              0,
-            ],
-          }
-        }
-        className="c7n-pro-form-tooltip c7n-pro-tooltip-popup"
-        getClassNameFromAlign={[Function]}
-        getRootDomNode={[Function]}
-        hidden={true}
-        key="popup"
-        onMouseDown={[Function]}
-        onMouseEnter={[Function]}
-        onMouseLeave={[Function]}
-        suffixCls="popup"
-        transitionName="zoom-big-fast"
-      />
-    </Trigger>
-  </Tooltip>
-</Range>
-`;
+      };
 
-exports[`Range the range drag test  1`] = `
-<Range
-  autoComplete="off"
-  clearButton={false}
-  dataSet={
-    DataSet {
-      "cachedSelected": Array [],
-      "children": Object {},
-      "currentPage": 1,
-      "dataToJSON": "dirty",
-      "el": undefined,
-      "events": Object {
-        "indexchange": Array [
-          Array [
-            [Function],
-            false,
-          ],
-        ],
-        "update": Array [
-          Array [
-            [MockFunction],
-            false,
-          ],
-        ],
-      },
-      "fields": Object {
-        "range": Field {
-          "dataSet": [Circular],
-          "isDynamicPropsComputing": false,
-          "lastDynamicProps": Object {},
-          "pending": PromiseQueue {
-            "queue": Array [],
-            "queueing": false,
-          },
-          "pristineProps": Object {
-            "defaultValue": 0,
-            "max": 100,
-            "min": 0,
-            "name": "range",
-            "step": 1,
-          },
-          "props": Object {
-            "defaultValue": 0,
-            "max": 100,
-            "min": 0,
-            "name": "range",
-            "step": 1,
+      return options;
+    }
+    ",
+            "name": "content",
+            "required": true,
+            "type": "string",
           },
           "record": undefined,
           "validator": Validator {
@@ -1083,16 +121,40 @@ exports[`Range the range drag test  1`] = `
         "autoQueryAfterSubmit": true,
         "cascadeParams": [Function],
         "dataToJSON": "dirty",
-        "events": Object {
-          "update": [MockFunction],
-        },
         "fields": Array [
           Object {
-            "defaultValue": 0,
-            "max": 100,
-            "min": 0,
-            "name": "range",
-            "step": 1,
+            "defaultValue": "function getOptions() {
+      var options = {
+        \\"compilerOptions\\": {
+          \\"strictNullChecks\\": true,
+          \\"moduleResolution\\": \\"node\\",
+          \\"allowSyntheticDefaultImports\\": true,
+          \\"experimentalDecorators\\": true,
+          \\"jsx\\": \\"preserve\\",
+          \\"noUnusedParameters\\": true,
+          \\"noUnusedLocals\\": true,
+          \\"declaration\\": true,
+          \\"target\\": \\"es6\\",
+          \\"lib\\": [
+            \\"dom\\",
+            \\"dom.iterable\\",
+            \\"es7\\",
+            \\"es2017.object\\"
+          ]
+        },
+        \\"exclude\\": [
+          \\"node_modules\\",
+          \\"lib\\",
+          \\"es\\"
+        ]
+      };
+
+      return options;
+    }
+    ",
+            "name": "content",
+            "required": true,
+            "type": "string",
           },
         ],
         "modifiedCheck": true,
@@ -1105,13 +167,40 @@ exports[`Range the range drag test  1`] = `
         Record {
           "cascadeRecordsMap": Object {},
           "data": Object {
-            "range": 0,
+            "content": "function getOptions() {
+      var options = {
+        \\"compilerOptions\\": {
+          \\"strictNullChecks\\": true,
+          \\"moduleResolution\\": \\"node\\",
+          \\"allowSyntheticDefaultImports\\": true,
+          \\"experimentalDecorators\\": true,
+          \\"jsx\\": \\"preserve\\",
+          \\"noUnusedParameters\\": true,
+          \\"noUnusedLocals\\": true,
+          \\"declaration\\": true,
+          \\"target\\": \\"es6\\",
+          \\"lib\\": [
+            \\"dom\\",
+            \\"dom.iterable\\",
+            \\"es7\\",
+            \\"es2017.object\\"
+          ]
+        },
+        \\"exclude\\": [
+          \\"node_modules\\",
+          \\"lib\\",
+          \\"es\\"
+        ]
+      };
+
+      return options;
+    }",
           },
           "dataSet": [Circular],
           "dataSetSnapshot": Object {},
           "editing": undefined,
           "fields": Object {
-            "range": Field {
+            "content": Field {
               "dataSet": [Circular],
               "isDynamicPropsComputing": false,
               "lastDynamicProps": Object {},
@@ -1120,10 +209,10 @@ exports[`Range the range drag test  1`] = `
                 "queueing": false,
               },
               "pristineProps": Object {
-                "name": "range",
+                "name": "content",
               },
               "props": Object {
-                "name": "range",
+                "name": "content",
               },
               "record": [Circular],
               "validator": Validator {
@@ -1138,7 +227,34 @@ exports[`Range the range drag test  1`] = `
           "isCurrent": true,
           "isSelected": false,
           "pristineData": Object {
-            "range": 0,
+            "content": "function getOptions() {
+      var options = {
+        \\"compilerOptions\\": {
+          \\"strictNullChecks\\": true,
+          \\"moduleResolution\\": \\"node\\",
+          \\"allowSyntheticDefaultImports\\": true,
+          \\"experimentalDecorators\\": true,
+          \\"jsx\\": \\"preserve\\",
+          \\"noUnusedParameters\\": true,
+          \\"noUnusedLocals\\": true,
+          \\"declaration\\": true,
+          \\"target\\": \\"es6\\",
+          \\"lib\\": [
+            \\"dom\\",
+            \\"dom.iterable\\",
+            \\"es7\\",
+            \\"es2017.object\\"
+          ]
+        },
+        \\"exclude\\": [
+          \\"node_modules\\",
+          \\"lib\\",
+          \\"es\\"
+        ]
+      };
+
+      return options;
+    }",
           },
           "selectable": true,
           "state": Object {},
@@ -1152,16 +268,25 @@ exports[`Range the range drag test  1`] = `
       "totalCount": 0,
     }
   }
-  max={100}
-  min={0}
-  multiple={false}
+  formatHotKey="Alt-F"
+  formatter={JSFormatter {}}
+  name="content"
   noValidate={false}
+  options={
+    Object {
+      "mode": "javascript",
+    }
+  }
   readOnly={false}
   showHelp="newLine"
-  step={1}
-  suffixCls="range"
+  style={
+    Object {
+      "height": 500,
+    }
+  }
+  suffixCls="code-area"
   trim="both"
-  vertical={false}
+  unFormatHotKey="Alt-R"
 >
   <Tooltip
     arrowPointAtCenter={false}
@@ -1422,13 +547,13 @@ exports[`Range the range drag test  1`] = `
       transitionName="zoom-big-fast"
     >
       <TriggerChild
-        key=".$.$wrapper"
+        key=".$.0"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
       >
-        <label
-          className="c7n-pro-range-wrapper"
-          key=".$wrapper"
+        <div
+          className="c7n-pro-code-area-wrapper c7n-pro-code-area-required"
+          key=".0"
           onBlur={[Function]}
           onClick={[Function]}
           onContextMenu={[Function]}
@@ -1436,44 +561,63 @@ exports[`Range the range drag test  1`] = `
           onMouseDown={[Function]}
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
+          style={Object {}}
         >
-          <input
-            autoComplete="off"
-            className="c7n-pro-range"
-            max={100}
-            min={0}
-            multiple={false}
-            noValidate={false}
-            onBlur={[Function]}
-            onChange={[Function]}
-            onFocus={[Function]}
-            onKeyDown={[Function]}
-            step={1}
-            type="range"
-            value={0}
-          />
-          <div
-            className="c7n-pro-range-track"
-            onMouseDown={[Function]}
-          >
-            <div
-              className="c7n-pro-range-draghandle"
-              style={
+          <label>
+            <Controlled
+              className="c7n-pro-code-area"
+              editorDidMount={[Function]}
+              formatter={JSFormatter {}}
+              name="content"
+              noValidate={false}
+              onBeforeChange={[Function]}
+              onBlur={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              options={
                 Object {
-                  "left": 0,
+                  "gutters": Array [
+                    "CodeMirror-lint-markers",
+                  ],
+                  "lineNumbers": true,
+                  "lint": true,
+                  "mode": "javascript",
+                  "readOnly": false,
+                  "theme": "neat",
                 }
               }
-            />
-            <div
-              className="c7n-pro-range-selection"
               style={
                 Object {
-                  "width": 0,
+                  "height": 500,
                 }
               }
-            />
-          </div>
-        </label>
+              value="function getOptions() {
+  var options = {
+    compilerOptions: {
+      strictNullChecks: true,
+      moduleResolution: \\"node\\",
+      allowSyntheticDefaultImports: true,
+      experimentalDecorators: true,
+      jsx: \\"preserve\\",
+      noUnusedParameters: true,
+      noUnusedLocals: true,
+      declaration: true,
+      target: \\"es6\\",
+      lib: [\\"dom\\", \\"dom.iterable\\", \\"es7\\", \\"es2017.object\\"]
+    },
+    exclude: [\\"node_modules\\", \\"lib\\", \\"es\\"]
+  };
+
+  return options;
+}
+"
+            >
+              <div
+                className="react-codemirror2 c7n-pro-code-area"
+              />
+            </Controlled>
+          </label>
+        </div>
       </TriggerChild>
       <Popup
         align={
@@ -1509,5 +653,643 @@ exports[`Range the range drag test  1`] = `
       />
     </Trigger>
   </Tooltip>
-</Range>
+</CodeArea>
+`;
+
+exports[`CodeArea-pro the codeArea json formatter and lint test 1`] = `
+<CodeArea
+  dataSet={
+    DataSet {
+      "cachedSelected": Array [],
+      "children": Object {},
+      "currentPage": 1,
+      "dataToJSON": "dirty",
+      "el": undefined,
+      "events": Object {
+        "indexchange": Array [
+          Array [
+            [Function],
+            false,
+          ],
+        ],
+      },
+      "fields": Object {
+        "content": Field {
+          "dataSet": [Circular],
+          "isDynamicPropsComputing": false,
+          "lastDynamicProps": Object {},
+          "pending": PromiseQueue {
+            "queue": Array [],
+            "queueing": false,
+          },
+          "pristineProps": Object {
+            "defaultValue": "{
+      \\"compilerOptions\\": {
+        \\"strictNullChecks\\": true,
+        \\"moduleResolution\\": \\"node\\",
+        \\"allowSyntheticDefaultImports\\": true,
+        \\"experimentalDecorators\\": true,
+        \\"jsx\\": \\"preserve\\",
+        \\"noUnusedParameters\\": true,
+        \\"noUnusedLocals\\": true,
+        \\"declaration\\": true,
+        \\"target\\": \\"es6\\",
+        \\"lib\\": [
+          \\"dom\\",
+          \\"dom.iterable\\",
+          \\"es7\\",
+          \\"es2017.object\\"
+        ]
+      },
+      \\"exclude\\": [
+        \\"node_modules\\",
+        \\"lib\\",
+        \\"es\\"
+      ]
+    }
+    ",
+            "name": "content",
+            "required": true,
+            "type": "string",
+          },
+          "props": Object {
+            "defaultValue": "{
+      \\"compilerOptions\\": {
+        \\"strictNullChecks\\": true,
+        \\"moduleResolution\\": \\"node\\",
+        \\"allowSyntheticDefaultImports\\": true,
+        \\"experimentalDecorators\\": true,
+        \\"jsx\\": \\"preserve\\",
+        \\"noUnusedParameters\\": true,
+        \\"noUnusedLocals\\": true,
+        \\"declaration\\": true,
+        \\"target\\": \\"es6\\",
+        \\"lib\\": [
+          \\"dom\\",
+          \\"dom.iterable\\",
+          \\"es7\\",
+          \\"es2017.object\\"
+        ]
+      },
+      \\"exclude\\": [
+        \\"node_modules\\",
+        \\"lib\\",
+        \\"es\\"
+      ]
+    }
+    ",
+            "name": "content",
+            "required": true,
+            "type": "string",
+          },
+          "record": undefined,
+          "validator": Validator {
+            "control": undefined,
+            "field": [Circular],
+            "innerValidationResults": Array [],
+          },
+        },
+      },
+      "inBatchSelection": false,
+      "name": undefined,
+      "originalData": Array [],
+      "pageSize": 10,
+      "parent": undefined,
+      "parentName": undefined,
+      "pending": PromiseQueue {
+        "queue": Array [],
+        "queueing": false,
+      },
+      "props": Object {
+        "autoCreate": true,
+        "autoLocateAfterCreate": true,
+        "autoLocateAfterRemove": true,
+        "autoLocateFirst": true,
+        "autoQuery": false,
+        "autoQueryAfterSubmit": true,
+        "cascadeParams": [Function],
+        "dataToJSON": "dirty",
+        "fields": Array [
+          Object {
+            "defaultValue": "{
+      \\"compilerOptions\\": {
+        \\"strictNullChecks\\": true,
+        \\"moduleResolution\\": \\"node\\",
+        \\"allowSyntheticDefaultImports\\": true,
+        \\"experimentalDecorators\\": true,
+        \\"jsx\\": \\"preserve\\",
+        \\"noUnusedParameters\\": true,
+        \\"noUnusedLocals\\": true,
+        \\"declaration\\": true,
+        \\"target\\": \\"es6\\",
+        \\"lib\\": [
+          \\"dom\\",
+          \\"dom.iterable\\",
+          \\"es7\\",
+          \\"es2017.object\\"
+        ]
+      },
+      \\"exclude\\": [
+        \\"node_modules\\",
+        \\"lib\\",
+        \\"es\\"
+      ]
+    }
+    ",
+            "name": "content",
+            "required": true,
+            "type": "string",
+          },
+        ],
+        "modifiedCheck": true,
+        "pageSize": 10,
+        "paging": true,
+        "selection": "multiple",
+      },
+      "queryParameter": Object {},
+      "records": Array [
+        Record {
+          "cascadeRecordsMap": Object {},
+          "data": Object {
+            "content": "{
+      \\"compilerOptions\\": {
+        \\"strictNullChecks\\": true,
+        \\"moduleResolution\\": \\"node\\",
+        \\"allowSyntheticDefaultImports\\": true,
+        \\"experimentalDecorators\\": true,
+        \\"jsx\\": \\"preserve\\",
+        \\"noUnusedParameters\\": true,
+        \\"noUnusedLocals\\": true,
+        \\"declaration\\": true,
+        \\"target\\": \\"es6\\",
+        \\"lib\\": [
+          \\"dom\\",
+          \\"dom.iterable\\",
+          \\"es7\\",
+          \\"es2017.object\\"
+        ]
+      },
+      \\"exclude\\": [
+        \\"node_modules\\",
+        \\"lib\\",
+        \\"es\\"
+      ]
+    }",
+          },
+          "dataSet": [Circular],
+          "dataSetSnapshot": Object {},
+          "editing": undefined,
+          "fields": Object {
+            "content": Field {
+              "dataSet": [Circular],
+              "isDynamicPropsComputing": false,
+              "lastDynamicProps": Object {},
+              "pending": PromiseQueue {
+                "queue": Array [],
+                "queueing": false,
+              },
+              "pristineProps": Object {
+                "name": "content",
+              },
+              "props": Object {
+                "name": "content",
+              },
+              "record": [Circular],
+              "validator": Validator {
+                "control": undefined,
+                "field": [Circular],
+                "innerValidationResults": Array [],
+              },
+            },
+          },
+          "id": 1001,
+          "isCached": false,
+          "isCurrent": true,
+          "isSelected": false,
+          "pristineData": Object {
+            "content": "{
+      \\"compilerOptions\\": {
+        \\"strictNullChecks\\": true,
+        \\"moduleResolution\\": \\"node\\",
+        \\"allowSyntheticDefaultImports\\": true,
+        \\"experimentalDecorators\\": true,
+        \\"jsx\\": \\"preserve\\",
+        \\"noUnusedParameters\\": true,
+        \\"noUnusedLocals\\": true,
+        \\"declaration\\": true,
+        \\"target\\": \\"es6\\",
+        \\"lib\\": [
+          \\"dom\\",
+          \\"dom.iterable\\",
+          \\"es7\\",
+          \\"es2017.object\\"
+        ]
+      },
+      \\"exclude\\": [
+        \\"node_modules\\",
+        \\"lib\\",
+        \\"es\\"
+      ]
+    }",
+          },
+          "selectable": true,
+          "state": Object {},
+          "status": "add",
+        },
+      ],
+      "resetInBatch": false,
+      "selection": "multiple",
+      "status": "ready",
+      "syncChildrenRemote": [Function],
+      "totalCount": 0,
+    }
+  }
+  formatHotKey="Home"
+  formatter={JSONFormatter {}}
+  name="content"
+  noValidate={false}
+  options={
+    Object {
+      "mode": Object {
+        "json": true,
+        "name": "javascript",
+      },
+    }
+  }
+  readOnly={false}
+  showHelp="newLine"
+  style={
+    Object {
+      "height": 500,
+    }
+  }
+  suffixCls="code-area"
+  trim="both"
+  unFormatHotKey="End"
+>
+  <Tooltip
+    arrowPointAtCenter={false}
+    autoAdjustOverflow={true}
+    defaultHidden={true}
+    mouseEnterDelay={100}
+    mouseLeaveDelay={100}
+    placement="bottomLeft"
+    suffixCls="form-tooltip c7n-pro-tooltip"
+    theme="light"
+    title={null}
+    transitionName="zoom-big-fast"
+    trigger={
+      Array [
+        "hover",
+      ]
+    }
+  >
+    <Trigger
+      action={
+        Array [
+          "hover",
+        ]
+      }
+      arrowPointAtCenter={false}
+      autoAdjustOverflow={true}
+      blurDelay={0}
+      builtinPlacements={
+        Object {
+          "bottom": Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tc",
+              "bc",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "bottomLeft": Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tl",
+              "bl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "bottomRight": Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tr",
+              "br",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "left": Object {
+            "offset": Array [
+              -10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "cr",
+              "cl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "leftBottom": Object {
+            "offset": Array [
+              -10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "br",
+              "bl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "leftTop": Object {
+            "offset": Array [
+              -10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tr",
+              "tl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "right": Object {
+            "offset": Array [
+              10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "cl",
+              "cr",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "rightBottom": Object {
+            "offset": Array [
+              10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "bl",
+              "br",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "rightTop": Object {
+            "offset": Array [
+              10,
+              0,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tl",
+              "tr",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "top": Object {
+            "offset": Array [
+              0,
+              -10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "bc",
+              "tc",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "topLeft": Object {
+            "offset": Array [
+              0,
+              -10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "bl",
+              "tl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+          "topRight": Object {
+            "offset": Array [
+              0,
+              -10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "br",
+              "tr",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          },
+        }
+      }
+      defaultPopupHidden={true}
+      focusDelay={150}
+      mouseEnterDelay={100}
+      mouseLeaveDelay={100}
+      popupContent={null}
+      popupPlacement="bottomLeft"
+      prefixCls="c7n-pro-form-tooltip c7n-pro-tooltip"
+      suffixCls="form-tooltip c7n-pro-tooltip"
+      theme="light"
+      title={null}
+      transitionName="zoom-big-fast"
+    >
+      <TriggerChild
+        key=".$.0"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <div
+          className="c7n-pro-code-area-wrapper c7n-pro-code-area-required"
+          key=".0"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onFocus={[Function]}
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          style={Object {}}
+        >
+          <label>
+            <Controlled
+              className="c7n-pro-code-area"
+              editorDidMount={[Function]}
+              formatter={JSONFormatter {}}
+              name="content"
+              noValidate={false}
+              onBeforeChange={[Function]}
+              onBlur={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              options={
+                Object {
+                  "gutters": Array [
+                    "CodeMirror-lint-markers",
+                  ],
+                  "lineNumbers": true,
+                  "lint": true,
+                  "mode": Object {
+                    "json": true,
+                    "name": "javascript",
+                  },
+                  "readOnly": false,
+                  "theme": "neat",
+                }
+              }
+              style={
+                Object {
+                  "height": 500,
+                }
+              }
+              value="{
+  \\"compilerOptions\\": {
+    \\"strictNullChecks\\": true,
+    \\"moduleResolution\\": \\"node\\",
+    \\"allowSyntheticDefaultImports\\": true,
+    \\"experimentalDecorators\\": true,
+    \\"jsx\\": \\"preserve\\",
+    \\"noUnusedParameters\\": true,
+    \\"noUnusedLocals\\": true,
+    \\"declaration\\": true,
+    \\"target\\": \\"es6\\",
+    \\"lib\\": [\\"dom\\", \\"dom.iterable\\", \\"es7\\", \\"es2017.object\\"]
+  },
+  \\"exclude\\": [\\"node_modules\\", \\"lib\\", \\"es\\"]
+}
+"
+            >
+              <div
+                className="react-codemirror2 c7n-pro-code-area"
+              />
+            </Controlled>
+          </label>
+        </div>
+      </TriggerChild>
+      <Popup
+        align={
+          Object {
+            "offset": Array [
+              0,
+              10,
+            ],
+            "overflow": Object {
+              "adjustX": 1,
+              "adjustY": 1,
+            },
+            "points": Array [
+              "tl",
+              "bl",
+            ],
+            "targetOffset": Array [
+              0,
+              0,
+            ],
+          }
+        }
+        className="c7n-pro-form-tooltip c7n-pro-tooltip-popup"
+        getClassNameFromAlign={[Function]}
+        getRootDomNode={[Function]}
+        hidden={true}
+        key="popup"
+        onMouseDown={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        suffixCls="popup"
+        transitionName="zoom-big-fast"
+      />
+    </Trigger>
+  </Tooltip>
+</CodeArea>
 `;

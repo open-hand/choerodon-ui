@@ -2980,6 +2980,7 @@ exports[`Icon-Picker-pro should renders dataset correctly 1`] = `
           "autoLocateFirst": true,
           "autoQuery": false,
           "autoQueryAfterSubmit": true,
+          "cascadeParams": [Function],
           "dataToJSON": "dirty",
           "events": Object {
             "update": [Function],
@@ -32328,7 +32329,11 @@ exports[`Icon-Picker-pro the keydown event should render keyCode { esc, tab } co
 </IconPicker>
 `;
 
+<<<<<<< HEAD
+exports[`Icon-Picker-pro the keydown event should render keyCode {sp } correctly 1`] = `
+=======
 exports[`Icon-Picker-pro the keydown event should render keyCode {space} correctly 1`] = `
+>>>>>>> choerodon/master
 <IconPicker
   autoComplete="off"
   clearButton={true}

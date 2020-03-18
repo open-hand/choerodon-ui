@@ -58,11 +58,13 @@ const dsLanguagesT = {
         zh_CN: '@cname()',
         en_GB: '@name()',
         en_US: '@name()',
+        ja_JP: '桥本@clast()',
       },
       'first-name': {
         zh_CN: '@cname()',
         en_GB: '@name()',
         en_US: '@name()',
+        ja_JP: '本田@clast()',
       },
     },
   ],
