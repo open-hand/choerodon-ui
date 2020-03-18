@@ -21,6 +21,7 @@ subtitle: 树形控件
 | defaultExpandAll | 默认展开所有树节点当dataSet绑定expandField 时候忽略 | boolean | false |
 | defaultExpandedKeys | 默认展开指定的树节点当dataSet绑定expandField 时候忽略 | string[]	| [] |
 | defaultCheckedKeys | 默认选中复选框的树节点当dataSet绑定checkField 时候忽略 | string[] | [] |
+| defaultSelectKeys | 默认选择节点当，默认绑定dataSet的 idField | string[] | [] |
 
 更多案列和属性请参考 [Tree](/components/tree/)。
 

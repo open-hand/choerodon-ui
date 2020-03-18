@@ -97,10 +97,12 @@ export default class Tree extends Component<TreeProps> {
 
 
   componentWillReceiveProps(nextProps) {
-    const {defaultExpandAll,defaultExpandedKeys,defaultCheckedKeys} = this.props;
+    const {defaultExpandAll,defaultSelectedKeys,defaultExpandedKeys,defaultCheckedKeys} = this.props;
     if(defaultExpandAll !== nextProps.defaultExpandAll ||
       defaultExpandedKeys !== nextProps.defaultExpandedKeys ||
-      defaultCheckedKeys !== nextProps.defaultCheckKeys){
+      defaultCheckedKeys !== nextProps.defaultCheckKeys ||
+      defaultSelectedKeys !== nextProps.defaultSelectedKeys
+      ){
       this.processDataSetListener(false);
       this.processDataSetListener(true);
     }
@@ -122,6 +124,7 @@ export default class Tree extends Component<TreeProps> {
   handleDataSetLoad() {
     this.initDefaultExpandedRows();
     this.initDefaultCheckRows();
+    this.initDefaultSelectRows();
   }
 
   @action
@@ -145,6 +148,29 @@ export default class Tree extends Component<TreeProps> {
       },
     } = this;
     this.stateCheckedKeys = this.dealDefalutCheckExpand(dataSet,defaultCheckedKeys)
+  }
+
+  @action
+  initDefaultSelectRows(){
+    const {
+      props: {
+        dataSet,
+        defaultSelectedKeys,
+      },
+    } = this;
+    if(dataSet && (defaultSelectedKeys)){
+      const { idField } = dataSet.props;
+      defaultSelectedKeys.map(selectKey => {
+        const found = dataSet.find(
+          record => selectKey === String(idField ? record.get(idField) : record.id),
+        );
+        if(found){
+          dataSet.select(found)
+        }
+        return null
+      })
+    }
+
   }
 
   /**
