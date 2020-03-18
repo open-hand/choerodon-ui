@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 💄 `<pro>LocaleContext`: 优化日语配置完善文档。
+- 💄 `<pro>Table`: 优化 table tooltip、table border-bottom 样式问题。
   
 ## 0.8.57
 

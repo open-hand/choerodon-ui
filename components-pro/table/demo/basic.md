@@ -374,6 +374,7 @@ class App extends React.Component {
           name="userid"
           header={renderColumnHeader}
           style={{ color: 'red' }}
+          tooltip="overflow"
           editor
           width={150}
           lock
