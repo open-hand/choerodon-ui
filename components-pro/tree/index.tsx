@@ -2,7 +2,7 @@ import Set from 'core-js/library/fn/set';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
-import { computed, observable, runInAction } from 'mobx';
+import { computed, action, observable, runInAction } from 'mobx';
 import noop from 'lodash/noop';
 import C7NTree, {
   TreeNode,
@@ -10,6 +10,7 @@ import C7NTree, {
   TreeNodeExpandEvent,
   TreeProps as C7NTreeProps,
 } from 'choerodon-ui/lib/tree';
+import autobind from 'choerodon-ui/pro/lib/_util/autobind';
 import DataSet from '../data-set/DataSet';
 import { getKey, getTreeNodes, NodeRenderer } from './util';
 import { BooleanValue, DataSetSelection } from '../data-set/enum';
@@ -87,6 +88,96 @@ export default class Tree extends Component<TreeProps> {
   @observable stateExpandedKeys: string[];
 
   stateForceRenderKeys: string[] = [];
+
+
+  componentWillMount() {
+    this.handleDataSetLoad();
+    this.processDataSetListener(true);
+  }
+
+
+  componentWillReceiveProps(nextProps) {
+    const {defaultExpandAll,defaultExpandedKeys,defaultCheckedKeys} = this.props;
+    if(defaultExpandAll !== nextProps.defaultExpandAll ||
+      defaultExpandedKeys !== nextProps.defaultExpandedKeys ||
+      defaultCheckedKeys !== nextProps.defaultCheckKeys){
+      this.processDataSetListener(false);
+      this.processDataSetListener(true);
+    }
+  }
+
+  componentWillUnmount() {
+    this.processDataSetListener(false);
+  }
+
+  processDataSetListener(flag: boolean) {
+    const { dataSet } = this.props;
+    if (dataSet) {
+      const handler = flag ? dataSet.addEventListener : dataSet.removeEventListener;
+      handler.call(dataSet, 'load', this.handleDataSetLoad);
+    }
+  }
+
+  @autobind
+  handleDataSetLoad() {
+    this.initDefaultExpandedRows();
+    this.initDefaultCheckRows();
+  }
+
+  @action
+  initDefaultExpandedRows() {
+    const {
+      props: {
+        defaultExpandAll,
+        dataSet,
+        defaultExpandedKeys,
+      },
+    } = this;
+    this.stateExpandedKeys = this.dealDefalutCheckExpand(dataSet,defaultExpandedKeys,defaultExpandAll)
+  }
+
+  @action
+  initDefaultCheckRows(){
+    const {
+      props: {
+        dataSet,
+        defaultCheckedKeys,
+      },
+    } = this;
+    this.stateCheckedKeys = this.dealDefalutCheckExpand(dataSet,defaultCheckedKeys)
+  }
+
+  /**
+   * 处理tree的props expand check的默认事件
+   * @param dataSet
+   * @param defalutAll
+   * @param defalutKeys
+   */
+  dealDefalutCheckExpand(dataSet:DataSet|undefined,defalutKeys:string[]|undefined,defalutAll?:boolean){
+    let defalutStateKeys: string[] = []
+    if(dataSet){
+      const {idField, expandField} = dataSet.props;
+      if ( defalutAll && !expandField) {
+        defalutStateKeys = dataSet.reduce<(string)[]>((array, record) => {
+          if (record.children) {
+            array.push(getKey(record, idField));
+          }
+          return array;
+        }, []);
+      }else if(defalutKeys && !expandField){
+        defalutStateKeys = dataSet.reduce<(string)[]>((array, record) => {
+          defalutKeys.map((key) => {
+            if(getKey(record,idField) === key){
+              array.push(key)
+            }
+            return null
+          })
+          return array;
+        },[]);
+      }
+    }
+    return defalutStateKeys
+  }
 
   @computed
   get forceRenderKeys() {
@@ -166,6 +257,7 @@ export default class Tree extends Component<TreeProps> {
     }
     return true;
   }
+
 
   setCheck(eventObj: TreeNodeEvent) {
     const { dataSet } = this.props;
