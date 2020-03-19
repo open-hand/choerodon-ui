@@ -101,6 +101,10 @@ export interface FormFieldProps extends DataSetComponentProps {
    */
   readOnly?: boolean;
   /**
+   * 是否禁用
+   */
+  disabled?: boolean;
+  /**
    * 对照表单id
    */
   form?: string;
@@ -229,6 +233,10 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
      */
     readOnly: PropTypes.bool,
     /**
+     * 是否禁用
+     */
+    disabled: PropTypes.bool,
+    /**
      * 对照表单id
      */
     form: PropTypes.string,
@@ -316,6 +324,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
 
   static defaultProps = {
     readOnly: false,
+    disabled: false,
     noValidate: false,
     showHelp: 'newLine',
     trim: FieldTrim.both,
@@ -376,7 +385,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
 
   @computed
   get editable(): boolean {
-    return !this.isReadOnly();
+    return !this.isDisabled() && !this.isReadOnly();
   }
 
   @computed
@@ -1077,8 +1086,8 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   isDisabled() {
     const { disabled } = this.context;
     const { field, record } = this;
-    if (disabled) {
-      return disabled;
+    if (disabled || (this.getProp('disabled') as boolean)) {
+      return disabled || (this.getProp('disabled') as boolean);
     }
     if (field) {
       const cascadeMap = field.get('cascadeMap');

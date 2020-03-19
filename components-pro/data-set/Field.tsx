@@ -138,6 +138,11 @@ export type FieldProps = {
    */
   readOnly?: boolean;
   /**
+   * 是否禁用
+   * @default false
+   */
+  disabled?: boolean;
+  /**
    * 1.当type为object时需要显示的字段名
    * 2.值列表的文本字段，默认值为`meaning`
    */
@@ -282,6 +287,7 @@ export default class Field {
     type: FieldType.auto,
     required: false,
     readOnly: false,
+    disabled: false,
     group: false,
     textField: 'meaning',
     valueField: 'value',
@@ -649,11 +655,27 @@ dynamicProps = {
   }
 
   /**
+   * 是否禁用
+   * @return true | false
+   */
+  get disabled(): boolean {
+    return this.get('disabled');
+  }
+
+  /**
    * 设置是否只读
    * @param readOnly 是否只读
    */
   set readOnly(readOnly: boolean) {
     this.set('readOnly', readOnly);
+  }
+
+  /**
+   * 设置是否禁用
+   * @param disabled 是否禁用
+   */
+  set disabled(disabled: boolean) {
+    this.set('disabled', disabled);
   }
 
   /**
