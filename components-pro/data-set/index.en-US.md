@@ -216,6 +216,7 @@ title: DataSet
 | validator | 校验器，当返回值为 false 或 涵盖错误信息的字符串，则为校验失败 | (value, name, record) =&gt; boolean \| string \| undefined |  |
 | required | 是否必选 | boolean | false |
 | readOnly | 是否只读 | boolean | false |
+| disabled | 是否禁用 | boolean | false |
 | textField | 值列表的文本字段 | string | meaning |
 | valueField | 值列表的值字段 | string | value |
 | trueValue | 类型为 boolean 时，true 对应的值 | boolean\|string\|number | true |
@@ -253,6 +254,7 @@ title: DataSet
 | type     | 类型     | observable&lt;string&gt;  |
 | required | 是否必选 | observable&lt;boolean&gt; |
 | readOnly | 是否只读 | observable&lt;boolean&gt; |
+| disabled | 是否禁用 | observable&lt;boolean&gt; |
 
 ### Field Methods
 
