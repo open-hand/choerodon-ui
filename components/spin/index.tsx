@@ -99,17 +99,6 @@ export default class Spin extends Component<SpinProps, SpinState> {
     }
   }
 
-  getIndicatorWidth(size?: Size) {
-    switch (size) {
-      case Size.small:
-        return 20;
-      case Size.large:
-        return 50;
-      default:
-        return 30;
-    }
-  }
-
   renderIndicator(prefixCls) {
     const { indicator, size } = this.props;
     const dotClassName = `${prefixCls}-dot`;
@@ -120,7 +109,7 @@ export default class Spin extends Component<SpinProps, SpinState> {
     }
     return (
       <Progress
-        width={this.getIndicatorWidth(size)}
+        size={size}
         className={dotClassName}
         type={ProgressType.loading}
       />
