@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `<pro>DataSet.Field`: Add `disabled` property.
 - 🌟 `<pro>Table`: Expand `spin` configuration, add related demo.
+- 🌟 `configure`: Add tableSpinProps properties.
 - 🌟 `<pro>Spin`: Add dataSet binding demo.
 - 💄 `<pro>LocaleContext`: Optimize japanese configuration support and Fix the document.
 - 💄 `<pro>Table`: Optimize table tooltip，table border-bottom style issue.
