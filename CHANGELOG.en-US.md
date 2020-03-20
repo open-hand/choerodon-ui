@@ -20,7 +20,8 @@ timeline: true
 - 🌟 `<pro>Spin`: Add dataSet binding demo.
 - 💄 `<pro>LocaleContext`: Optimize japanese configuration support and Fix the document.
 - 💄 `<pro>Table`: Optimize table tooltip，table border-bottom style issue.
-  
+- 🐞 `Spin`: Fix invalid size property issue.
+
 ## 0.8.57
 
 `2020-03-12`

@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `<pro>Spin`: 新增绑定数据源demo.
 - 💄 `<pro>LocaleContext`: 优化日语配置完善文档。
 - 💄 `<pro>Table`: 优化 table tooltip、table border-bottom 样式问题。
+- 🐞 `Spin`: 修复 size 属性无效问题。
   
 ## 0.8.57
 
