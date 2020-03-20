@@ -13,7 +13,7 @@ title: Configure
 ```jsx
 import { configure, getConfig } from 'choerodon-ui';
 
-configure({ prefixCls: 'ant' });
+configure({ prefixCls: 'c7n' });
 
 const prefixCls = getConfig('prefixCls');
 ```
@@ -48,6 +48,7 @@ const prefixCls = getConfig('prefixCls');
 | tableRowHeight | 默认 Table 行高 | auto \| number | 30 |
 | tableColumnResizable | 默认 Table 列可调整列宽 | boolean | true |
 | tableExpandIcon | 默认 Table 自定义展开图标 | ({ prefixCls, expanded, expandable, needIndentSpaced, record, onExpand }) => ReactNode |  |
+| tableSpinProps | 默认 Table spin 的属性 | SpinProps | { size: Size.default, wrapperClassName: '' } |
 | tableButtonProps | 默认 TableButton 的属性 | ButtonProps | { color: 'primary', funcType: 'flat' } |
 | tableCommandProps | 默认 TableCommand 的属性 | ButtonProps | { color: 'primary', funcType: 'flat' } |
 | modalSectionBorder | 默认 Modal 的头和脚有边框线 | boolean | true |

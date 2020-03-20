@@ -9,6 +9,7 @@ import isUndefined from 'lodash/isUndefined';
 import noop from 'lodash/noop';
 import classes from 'component-classes';
 import { action } from 'mobx';
+import { getConfig } from 'choerodon-ui/lib/configure';
 import warning from 'choerodon-ui/lib/_util/warning';
 import { pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
@@ -709,6 +710,8 @@ export default class Table extends DataSetComponent<TableProps> {
     const content = this.getTable();
     const context = { tableStore };
     const pagination = this.getPagination(TablePaginationPosition.top);
+    const tableSpinProps = getConfig('tableSpinProps');
+
     return (
       <ReactResizeObserver resizeProp="width" onResize={this.handleResize}>
         <div {...this.getWrapperProps()}>
@@ -723,7 +726,7 @@ export default class Table extends DataSetComponent<TableProps> {
               filterBarFieldName={filterBarFieldName}
               filterBarPlaceholder={filterBarPlaceholder}
             />
-            <Spin {...this.getSpinProps()} key="content">
+            <Spin {...tableSpinProps} {...this.getSpinProps()} key="content">
               <div {...this.getOtherProps()}>
                 <div className={`${prefixCls}-content`}>
                   {content}
