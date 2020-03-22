@@ -22,6 +22,7 @@ timeline: true
 - 💄 `<pro>LocaleContext`: 优化日语配置完善文档。
 - 💄 `<pro>Table`: 优化 table tooltip、table border-bottom 样式问题。
 - 🐞 `Spin`: 修复 size 属性无效问题。
+- 🐞 `<pro>TimePicker`: 修复 chrome 下鼠标滚轮报错的问题。
   
 ## 0.8.57
 

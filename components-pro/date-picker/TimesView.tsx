@@ -21,6 +21,25 @@ export default class TimesView extends DaysView {
 
   @observable currentUnit?: unitOfTime.Base;
 
+  panel: HTMLDivElement | null;
+
+  @autobind
+  savePanel(node) {
+    this.panel = node;
+  }
+
+  componentDidMount(): void {
+    if (this.panel) {
+      this.panel.addEventListener('mousewheel', this.handleWheel, { passive: false });
+    }
+  }
+
+  componentWillUnmount(): void {
+    if (this.panel) {
+      this.panel.removeEventListener('mousewheel', this.handleWheel);
+    }
+  }
+
   @autobind
   handleDateTimeSelect() {
     this.changeViewMode(ViewMode.dateTime);
@@ -84,12 +103,12 @@ export default class TimesView extends DaysView {
   }
 
   @autobind
-  async handleWheel(e) {
+  handleWheel(e) {
     e.preventDefault();
     if (e.deltaY > 0) {
-      await this.changeSelectedDate(this.getCloneDate().add(1, this.getCurrentUnit()));
+      this.changeSelectedDate(this.getCloneDate().add(1, this.getCurrentUnit()));
     } else if (e.deltaY < 0) {
-      await this.changeSelectedDate(this.getCloneDate().subtract(1, this.getCurrentUnit()));
+      this.changeSelectedDate(this.getCloneDate().subtract(1, this.getCurrentUnit()));
     }
   }
 
@@ -143,8 +162,8 @@ export default class TimesView extends DaysView {
     const className = this.getPanelClass();
     return (
       <div
+        ref={this.savePanel}
         className={`${className} ${this.prefixCls}-${this.getCurrentUnit()}`}
-        onWheel={this.handleWheel}
       >
         <div className={`${className}-inner`}>{this.renderPanelBody()}</div>
       </div>

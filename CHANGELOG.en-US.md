@@ -22,6 +22,7 @@ timeline: true
 - 💄 `<pro>LocaleContext`: Optimize japanese configuration support and Fix the document.
 - 💄 `<pro>Table`: Optimize table tooltip，table border-bottom style issue.
 - 🐞 `Spin`: Fix invalid size property issue.
+- 🐞 `<pro>TimePicker`: Fix mouse wheel error report under chrome.
 
 ## 0.8.57
 
