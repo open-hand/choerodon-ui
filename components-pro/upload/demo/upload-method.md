@@ -1,5 +1,5 @@
 ---
-order: 6
+order: 9
 title:
   zh-CN: 上传方法
   en-US: Upload method
@@ -15,12 +15,13 @@ Call `Upload`'s `startUpload` method directly. You can use `showUploadBtn={false
 
 ```jsx
 import { Upload, Button, Form, Output } from 'choerodon-ui/pro';
+import { actionUrl } from './actionUrl';
 
 const props = {
   headers: {
     'Access-Control-Allow-Origin': '*',
   },
-  action: '//localhost:3000/upload',
+  action: actionUrl,
   multiple: true,
   accept: ['.deb', '.txt', '.pdf', 'image/*'],
   uploadImmediately: false,
