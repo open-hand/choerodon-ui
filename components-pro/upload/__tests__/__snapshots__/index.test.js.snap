@@ -12,6 +12,7 @@ exports[`Tree-pro should have a Tooltip inside 1`] = `
   }
   action="http://upload.com/"
   data={Object {}}
+  disabled={false}
   fileListMaxLength={0}
   headers={
     Object {
@@ -123,6 +124,7 @@ exports[`Tree-pro should have a Tooltip inside 1`] = `
           accept=".deb,.txt,.pdf,image/*"
           action="http://upload.com/"
           className="c7n-pro-upload"
+          disabled={false}
           headers={
             Object {
               "Access-Control-Allow-Origin": "*",
@@ -537,6 +539,7 @@ exports[`Tree-pro should have a Tooltip inside 1`] = `
       <div />
     </div>
     <UploadList
+      disabled={false}
       items={Array []}
       noValidate={false}
       previewImageWidth={100}

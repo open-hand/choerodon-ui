@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>TimePicker`: format 和 step 能影响组件的显示。
+- 🌟 `<pro>DataSet.Field`: 扩展 step 属性，用于时间组件的步距限制。
 - 🌟 `<pro>DataSet.Field`: 新增 disabled 属性。
 - 🌟 `<pro>Table`: 扩展 spin 配置, 新增相关 demo。
 - 🌟 `configure`: 新增 tableSpinProps 属性。

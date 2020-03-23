@@ -4,6 +4,7 @@ exports[`TextArea-pro renders TextArea-pro correctly 1`] = `
 <TextArea
   autoComplete="off"
   clearButton={false}
+  disabled={false}
   multiple={false}
   noValidate={false}
   readOnly={false}
@@ -291,6 +292,7 @@ exports[`TextArea-pro renders TextArea-pro correctly 1`] = `
             <textarea
               autoComplete="off"
               className="c7n-pro-textarea"
+              disabled={false}
               multiple={false}
               noValidate={false}
               onBlur={[Function]}
@@ -489,6 +491,7 @@ exports[`TextArea-pro the dataSet should renders correctly 1`] = `
         "totalCount": 0,
       }
     }
+    disabled={false}
     multiple={false}
     name="content"
     noValidate={false}
@@ -777,6 +780,7 @@ exports[`TextArea-pro the dataSet should renders correctly 1`] = `
               <textarea
                 autoComplete="off"
                 className="c7n-pro-textarea"
+                disabled={false}
                 multiple={false}
                 name="content"
                 noValidate={false}

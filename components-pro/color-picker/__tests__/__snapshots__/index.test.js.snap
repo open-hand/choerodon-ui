@@ -4,6 +4,7 @@ exports[`color-picker-pro footer-slider click event render correctly 1`] = `
 <ColorPicker
   autoComplete="off"
   clearButton={false}
+  disabled={false}
   multiple={false}
   noValidate={false}
   readOnly={false}
@@ -446,6 +447,7 @@ exports[`color-picker-pro footer-slider click event render correctly 1`] = `
                 <input
                   autoComplete="off"
                   className="c7n-pro-color-picker"
+                  disabled={false}
                   key="text"
                   multiple={false}
                   noValidate={false}
@@ -930,6 +932,7 @@ exports[`color-picker-pro renders ColorPicker correctly 1`] = `
 <ColorPicker
   autoComplete="off"
   clearButton={false}
+  disabled={false}
   multiple={false}
   noValidate={false}
   readOnly={false}
@@ -1372,6 +1375,7 @@ exports[`color-picker-pro renders ColorPicker correctly 1`] = `
                 <input
                   autoComplete="off"
                   className="c7n-pro-color-picker"
+                  disabled={false}
                   key="text"
                   multiple={false}
                   noValidate={false}
@@ -1614,6 +1618,7 @@ exports[`color-picker-pro should renders dataset default value correctly 1`] = `
         "totalCount": 0,
       }
     }
+    disabled={false}
     multiple={false}
     name="color"
     noValidate={false}
@@ -2057,6 +2062,7 @@ exports[`color-picker-pro should renders dataset default value correctly 1`] = `
                   <input
                     autoComplete="off"
                     className="c7n-pro-color-picker"
+                    disabled={false}
                     key="text"
                     multiple={false}
                     name="color"
@@ -2163,6 +2169,7 @@ exports[`color-picker-pro the panel body click event render correctly 1`] = `
 <ColorPicker
   autoComplete="off"
   clearButton={false}
+  disabled={false}
   multiple={false}
   noValidate={false}
   readOnly={false}
@@ -2605,6 +2612,7 @@ exports[`color-picker-pro the panel body click event render correctly 1`] = `
                 <input
                   autoComplete="off"
                   className="c7n-pro-color-picker"
+                  disabled={false}
                   key="text"
                   multiple={false}
                   noValidate={false}
@@ -3173,6 +3181,7 @@ exports[`color-picker-pro the sliderPointer of footer click event render correct
 <ColorPicker
   autoComplete="off"
   clearButton={false}
+  disabled={false}
   multiple={false}
   noValidate={false}
   readOnly={false}
@@ -3615,6 +3624,7 @@ exports[`color-picker-pro the sliderPointer of footer click event render correct
                 <input
                   autoComplete="off"
                   className="c7n-pro-color-picker"
+                  disabled={false}
                   key="text"
                   multiple={false}
                   noValidate={false}

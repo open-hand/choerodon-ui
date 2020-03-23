@@ -212,7 +212,7 @@ title: DataSet
 | minLength | 最小长度 | number |  |
 | max | 最大值。 fieldName 指向当前记录的 fieldName 值作为最大值。 | number \| MomentInput \| fieldName |  |
 | min | 最小值。 fieldName 指向当前记录的 fieldName 值作为最小值。 | number \| MomentInput \| fieldName |  |
-| step | 步距 | number |  |
+| step | 步距 | number \| { hour: number, minute: number, second: number } |  |
 | validator | 校验器，当返回值为 false 或 涵盖错误信息的字符串，则为校验失败 | (value, name, record) =&gt; boolean \| string \| undefined |  |
 | required | 是否必选 | boolean | false |
 | readOnly | 是否只读 | boolean | false |

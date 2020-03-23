@@ -1,5 +1,8 @@
-import { Moment } from 'moment';
+import { isMoment, Moment, unitOfTime } from 'moment';
+import isNumber from 'lodash/isNumber';
 import defaultTo from 'lodash/defaultTo';
+import { TimeStep } from '../date-picker/DatePicker';
+import { TimeUnit } from '../date-picker/enum';
 
 export const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER || 2 ** 53 - 1;
 
@@ -48,33 +51,62 @@ function getBeforeStepValue(value: number, minFactor: number, stepFactor: number
   return value - ((value - minFactor) % stepFactor);
 }
 
-export function getNearStepValues(
-  value: number,
+function getNearStepMoments(
+  value: Moment,
   step: number,
+  unit: unitOfTime.Base,
+): Moment[] | undefined {
+  const unitValue = value.get(unit);
+  const mod = unitValue % step;
+  if (mod !== 0) {
+    const before = unitValue - mod;
+    const after = before + step;
+    return [value.clone().set(unit, before), value.clone().set(unit, after)];
+  }
+}
+
+export function getNearStepValues<T extends Moment | number>(
+  value: T,
+  step: number | TimeStep,
   min?: number | Moment | null,
   max?: number | Moment | null,
-): number[] | undefined {
-  min = defaultTo(Number(min), -MAX_SAFE_INTEGER);
-  max = defaultTo(Number(max), MAX_SAFE_INTEGER);
-  const precisionFactor = getPrecisionFactor(value, step);
-  const valueFactor = precisionFix(value, precisionFactor);
-  const minFactor = precisionFix(min, precisionFactor);
-  const minFactorBase = min === -MAX_SAFE_INTEGER ? 0 : minFactor;
-  const maxFactor = precisionFix(max, precisionFactor);
-  const stepFactor = precisionFix(step, precisionFactor);
-  let beforeStepFactor = getBeforeStepValue(valueFactor, minFactorBase, stepFactor);
-  if (beforeStepFactor === valueFactor) {
-    return undefined;
+): T[] | undefined {
+  if (isNumber(step)) {
+    if (isNumber(value)) {
+      min = defaultTo(Number(min), -MAX_SAFE_INTEGER);
+      max = defaultTo(Number(max), MAX_SAFE_INTEGER);
+      const precisionFactor = getPrecisionFactor(value, step);
+      const valueFactor = precisionFix(value, precisionFactor);
+      const minFactor = precisionFix(min, precisionFactor);
+      const minFactorBase = min === -MAX_SAFE_INTEGER ? 0 : minFactor;
+      const maxFactor = precisionFix(max, precisionFactor);
+      const stepFactor = precisionFix(step, precisionFactor);
+      let beforeStepFactor = getBeforeStepValue(valueFactor, minFactorBase, stepFactor);
+      if (beforeStepFactor === valueFactor) {
+        return undefined;
+      }
+      if (beforeStepFactor > maxFactor) {
+        beforeStepFactor = getBeforeStepValue(maxFactor, minFactorBase, stepFactor);
+      } else if (beforeStepFactor < minFactor) {
+        beforeStepFactor = minFactor;
+      }
+      const afterStepFactor = beforeStepFactor + stepFactor;
+      const values: number[] = [beforeStepFactor / precisionFactor];
+      if (afterStepFactor <= maxFactor) {
+        values.push(afterStepFactor / precisionFactor);
+      }
+      return values as T[];
+    }
+  } else if (isMoment(value)) {
+    const { hour, minute, second } = step;
+    if (second) {
+      return getNearStepMoments(value, second, TimeUnit.second) as T[];
+    }
+    if (minute) {
+      return getNearStepMoments(value, minute, TimeUnit.minute) as T[];
+    }
+    if (hour) {
+      return getNearStepMoments(value, hour, TimeUnit.hour) as T[];
+    }
   }
-  if (beforeStepFactor > maxFactor) {
-    beforeStepFactor = getBeforeStepValue(maxFactor, minFactorBase, stepFactor);
-  } else if (beforeStepFactor < minFactor) {
-    beforeStepFactor = minFactor;
-  }
-  const afterStepFactor = beforeStepFactor + stepFactor;
-  const values: number[] = [beforeStepFactor / precisionFactor];
-  if (afterStepFactor <= maxFactor) {
-    values.push(afterStepFactor / precisionFactor);
-  }
-  return values;
 }

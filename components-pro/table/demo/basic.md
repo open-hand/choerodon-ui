@@ -3,6 +3,7 @@ order: 0
 title:
   zh-CN: 基本
   en-US: Basic
+only: true
 ---
 
 ## zh-CN
@@ -262,7 +263,7 @@ class App extends React.Component {
       { name: 'enable', type: 'boolean', label: '是否开启', unique: 'uniqueGroup' },
       { name: 'frozen', type: 'boolean', label: '是否冻结', trueValue: 'Y', falseValue: 'N' },
       { name: 'date.startDate', type: 'date', label: '开始日期', defaultValue: new Date() },
-      { name: 'date.endDate', type: 'dateTime', label: '结束日期' },
+      { name: 'date.endDate', type: 'time', range: true, label: '结束日期' },
     ],
     events: {
       selectAll: ({ dataSet }) => console.log('select all', dataSet.selected),

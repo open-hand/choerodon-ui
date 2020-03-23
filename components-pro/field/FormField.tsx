@@ -732,7 +732,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     e.stopPropagation();
   }
 
-  getDateFormat() {
+  getDateFormat(): string {
     return getDateFormatByField(this.field, this.getFieldType());
   }
 
@@ -1080,12 +1080,8 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
 
   isDisabled() {
     const { disabled } = this.context;
-    if (disabled) {
+    if (disabled || this.getProp('disabled')) {
       return true;
-    }
-    const fieldDisabled: boolean = this.getProp('disabled') as boolean;
-    if (fieldDisabled) {
-      return fieldDisabled;
     }
     const { field, record } = this;
     if (field) {

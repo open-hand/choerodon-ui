@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>TimePicker`: `format` and `step` can affect the display of the component.
+- 🌟 `<pro>DataSet.Field`: extended step property, used for step limit of time component.
 - 🌟 `<pro>DataSet.Field`: Add `disabled` property.
 - 🌟 `<pro>Table`: Expand `spin` configuration, add related demo.
 - 🌟 `configure`: Add tableSpinProps properties.

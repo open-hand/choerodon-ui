@@ -12,15 +12,7 @@ import warning from 'choerodon-ui/lib/_util/warning';
 import DataSet from './DataSet';
 import Record from './Record';
 import Validator, { CustomValidator, ValidationMessages } from '../validator/Validator';
-import {
-  DataSetEvents,
-  DataSetSelection,
-  FieldFormat,
-  FieldIgnore,
-  FieldTrim,
-  FieldType,
-  SortOrder,
-} from './enum';
+import { DataSetEvents, DataSetSelection, FieldFormat, FieldIgnore, FieldTrim, FieldType, SortOrder } from './enum';
 import lookupStore from '../stores/LookupCodeStore';
 import lovCodeStore from '../stores/LovCodeStore';
 import localeContext from '../locale-context';
@@ -37,6 +29,7 @@ import * as ObjectChainValue from '../_util/ObjectChainValue';
 import { buildURLWithAxiosConfig } from '../axios/utils';
 import { getDateFormatByField } from '../field/utils';
 import { getLovPara } from '../stores/utils';
+import { TimeStep } from '../date-picker/DatePicker';
 
 function isEqualDynamicProps(oldProps, newProps) {
   if (newProps === oldProps) {
@@ -114,7 +107,7 @@ export type FieldProps = {
   /**
    * 步距
    */
-  step?: number;
+  step?: number | TimeStep;
   /**
    * 最大值
    */
@@ -221,11 +214,11 @@ export type FieldProps = {
   lookupAxiosConfig?:
     | AxiosRequestConfig
     | ((props: {
-        params?: any;
-        dataSet?: DataSet;
-        record?: Record;
-        lookupCode?: string;
-      }) => AxiosRequestConfig);
+    params?: any;
+    dataSet?: DataSet;
+    record?: Record;
+    lookupCode?: string;
+  }) => AxiosRequestConfig);
   /**
    * LOV配置请求的钩子
    */

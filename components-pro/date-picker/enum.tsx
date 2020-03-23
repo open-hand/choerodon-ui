@@ -12,4 +12,5 @@ export const enum TimeUnit {
   'hour' = 'h',
   'minute' = 'm',
   'second' = 's',
+  'a' = 'a',
 }

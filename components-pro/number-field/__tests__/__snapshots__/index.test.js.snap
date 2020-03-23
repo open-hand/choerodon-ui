@@ -4,6 +4,7 @@ exports[`NumberField-pro {step,min} null renders correctly 1`] = `
 <NumberField
   autoComplete="off"
   clearButton={false}
+  disabled={false}
   min={null}
   multiple={false}
   noValidate={false}
@@ -293,6 +294,7 @@ exports[`NumberField-pro {step,min} null renders correctly 1`] = `
             <input
               autoComplete="off"
               className="c7n-pro-input-number"
+              disabled={false}
               key="text"
               min={null}
               multiple={false}
@@ -350,6 +352,7 @@ exports[`NumberField-pro {step,min} null renders correctly 2`] = `
 <NumberField
   autoComplete="off"
   clearButton={false}
+  disabled={false}
   min={20}
   multiple={false}
   noValidate={false}
@@ -639,6 +642,7 @@ exports[`NumberField-pro {step,min} null renders correctly 2`] = `
             <input
               autoComplete="off"
               className="c7n-pro-input-number"
+              disabled={false}
               key="text"
               min={20}
               multiple={false}
@@ -725,6 +729,7 @@ exports[`NumberField-pro renders NumberField correctly 1`] = `
 <NumberField
   autoComplete="off"
   clearButton={false}
+  disabled={false}
   multiple={false}
   noValidate={false}
   readOnly={false}
@@ -1012,6 +1017,7 @@ exports[`NumberField-pro renders NumberField correctly 1`] = `
             <input
               autoComplete="off"
               className="c7n-pro-input-number"
+              disabled={false}
               key="text"
               multiple={false}
               noValidate={false}
@@ -1067,6 +1073,7 @@ exports[`NumberField-pro step multiple renders correctly 1`] = `
 <NumberField
   autoComplete="off"
   clearButton={false}
+  disabled={false}
   max={10}
   min={5}
   multiple={true}
@@ -1401,6 +1408,7 @@ exports[`NumberField-pro step multiple renders correctly 1`] = `
                       <input
                         autoComplete="off"
                         className="c7n-pro-input-number-multiple-input"
+                        disabled={false}
                         max={10}
                         min={5}
                         multiple={true}
@@ -1492,6 +1500,7 @@ exports[`NumberField-pro step should have different value 1`] = `
 <NumberField
   autoComplete="off"
   clearButton={false}
+  disabled={false}
   min={null}
   multiple={false}
   noValidate={false}
@@ -1781,6 +1790,7 @@ exports[`NumberField-pro step should have different value 1`] = `
             <input
               autoComplete="off"
               className="c7n-pro-input-number"
+              disabled={false}
               key="text"
               min={null}
               multiple={false}
@@ -2005,6 +2015,7 @@ exports[`NumberField-pro the dataset value should render correctly 1`] = `
         "totalCount": 0,
       }
     }
+    disabled={false}
     multiple={false}
     name="age"
     noValidate={false}
@@ -2293,6 +2304,7 @@ exports[`NumberField-pro the dataset value should render correctly 1`] = `
               <input
                 autoComplete="off"
                 className="c7n-pro-input-number"
+                disabled={false}
                 key="text"
                 multiple={false}
                 name="age"
@@ -2350,6 +2362,7 @@ exports[`NumberField-pro the input number should add when the {plus} icon clicke
 <NumberField
   autoComplete="off"
   clearButton={false}
+  disabled={false}
   max={10}
   min={0}
   multiple={false}
@@ -2640,6 +2653,7 @@ exports[`NumberField-pro the input number should add when the {plus} icon clicke
             <input
               autoComplete="off"
               className="c7n-pro-input-number"
+              disabled={false}
               key="text"
               max={10}
               min={0}
@@ -2727,6 +2741,7 @@ exports[`NumberField-pro the input number should reduce when the {minus} icon cl
 <NumberField
   autoComplete="off"
   clearButton={false}
+  disabled={false}
   max={0}
   min={-10}
   multiple={false}
@@ -3017,6 +3032,7 @@ exports[`NumberField-pro the input number should reduce when the {minus} icon cl
             <input
               autoComplete="off"
               className="c7n-pro-input-number"
+              disabled={false}
               key="text"
               max={0}
               min={-10}
@@ -3104,6 +3120,7 @@ exports[`NumberField-pro the keydown event should render keyCode { up, down } co
 <NumberField
   autoComplete="off"
   clearButton={false}
+  disabled={false}
   multiple={false}
   noValidate={false}
   readOnly={false}
@@ -3392,6 +3409,7 @@ exports[`NumberField-pro the keydown event should render keyCode { up, down } co
             <input
               autoComplete="off"
               className="c7n-pro-input-number"
+              disabled={false}
               key="text"
               multiple={false}
               noValidate={false}

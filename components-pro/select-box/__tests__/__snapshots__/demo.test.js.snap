@@ -20,7 +20,7 @@ exports[`renders ./components-pro/select-box/demo/basic.md correctly 1`] = `
         >
           <input
             class="c7n-pro-radio"
-            name="__group-2__"
+            name="__group-3__"
             novalidate=""
             type="radio"
             value="jack"
@@ -39,7 +39,7 @@ exports[`renders ./components-pro/select-box/demo/basic.md correctly 1`] = `
         >
           <input
             class="c7n-pro-radio"
-            name="__group-2__"
+            name="__group-3__"
             novalidate=""
             type="radio"
             value="lucy"
@@ -59,7 +59,7 @@ exports[`renders ./components-pro/select-box/demo/basic.md correctly 1`] = `
           <input
             class="c7n-pro-radio"
             disabled=""
-            name="__group-2__"
+            name="__group-3__"
             novalidate=""
             type="radio"
             value="wu"
@@ -108,7 +108,7 @@ exports[`renders ./components-pro/select-box/demo/basic.md correctly 1`] = `
           <input
             class="c7n-pro-radio"
             disabled=""
-            name="__group-4__"
+            name="__group-5__"
             novalidate=""
             type="radio"
             value="jack"
@@ -128,7 +128,7 @@ exports[`renders ./components-pro/select-box/demo/basic.md correctly 1`] = `
           <input
             class="c7n-pro-radio"
             disabled=""
-            name="__group-4__"
+            name="__group-5__"
             novalidate=""
             type="radio"
             value="lucy"
@@ -148,7 +148,7 @@ exports[`renders ./components-pro/select-box/demo/basic.md correctly 1`] = `
           <input
             class="c7n-pro-radio"
             disabled=""
-            name="__group-4__"
+            name="__group-5__"
             novalidate=""
             type="radio"
             value="wu"
@@ -188,7 +188,7 @@ exports[`renders ./components-pro/select-box/demo/button.md correctly 1`] = `
         >
           <input
             class="c7n-pro-radio"
-            name="__group-6__"
+            name="__group-8__"
             novalidate=""
             type="radio"
             value="jack"
@@ -207,7 +207,7 @@ exports[`renders ./components-pro/select-box/demo/button.md correctly 1`] = `
         >
           <input
             class="c7n-pro-radio"
-            name="__group-6__"
+            name="__group-8__"
             novalidate=""
             type="radio"
             value="lucy"
@@ -226,7 +226,7 @@ exports[`renders ./components-pro/select-box/demo/button.md correctly 1`] = `
         >
           <input
             class="c7n-pro-radio"
-            name="__group-6__"
+            name="__group-8__"
             novalidate=""
             type="radio"
             value="wu"
@@ -258,7 +258,7 @@ exports[`renders ./components-pro/select-box/demo/button.md correctly 1`] = `
         >
           <input
             class="c7n-pro-checkbox"
-            name="__group-8__"
+            name="__group-11__"
             novalidate=""
             type="checkbox"
             value="jack"
@@ -277,7 +277,7 @@ exports[`renders ./components-pro/select-box/demo/button.md correctly 1`] = `
         >
           <input
             class="c7n-pro-checkbox"
-            name="__group-8__"
+            name="__group-11__"
             novalidate=""
             type="checkbox"
             value="lucy"
@@ -296,7 +296,7 @@ exports[`renders ./components-pro/select-box/demo/button.md correctly 1`] = `
         >
           <input
             class="c7n-pro-checkbox"
-            name="__group-8__"
+            name="__group-11__"
             novalidate=""
             type="checkbox"
             value="wu"
@@ -328,7 +328,7 @@ exports[`renders ./components-pro/select-box/demo/controlled.md correctly 1`] = 
     >
       <input
         class="c7n-pro-radio"
-        name="__group-10__"
+        name="__group-14__"
         novalidate=""
         type="radio"
         value="jack"
@@ -347,7 +347,7 @@ exports[`renders ./components-pro/select-box/demo/controlled.md correctly 1`] = 
     >
       <input
         class="c7n-pro-radio"
-        name="__group-10__"
+        name="__group-14__"
         novalidate=""
         type="radio"
         value="lucy"
@@ -367,7 +367,7 @@ exports[`renders ./components-pro/select-box/demo/controlled.md correctly 1`] = 
       <input
         checked=""
         class="c7n-pro-radio"
-        name="__group-10__"
+        name="__group-14__"
         novalidate=""
         type="radio"
         value="wu"
@@ -757,7 +757,7 @@ exports[`renders ./components-pro/select-box/demo/multiple.md correctly 1`] = `
         >
           <input
             class="c7n-pro-checkbox"
-            name="__group-12__"
+            name="__group-17__"
             novalidate=""
             type="checkbox"
             value="jack"
@@ -776,7 +776,7 @@ exports[`renders ./components-pro/select-box/demo/multiple.md correctly 1`] = `
         >
           <input
             class="c7n-pro-checkbox"
-            name="__group-12__"
+            name="__group-17__"
             novalidate=""
             type="checkbox"
             value="lucy"
@@ -795,7 +795,7 @@ exports[`renders ./components-pro/select-box/demo/multiple.md correctly 1`] = `
         >
           <input
             class="c7n-pro-checkbox"
-            name="__group-12__"
+            name="__group-17__"
             novalidate=""
             type="checkbox"
             value="wu"
@@ -835,7 +835,7 @@ exports[`renders ./components-pro/select-box/demo/readonly.md correctly 1`] = `
         >
           <input
             class="c7n-pro-radio"
-            name="__group-14__"
+            name="__group-20__"
             novalidate=""
             type="radio"
             value="jack"
@@ -854,7 +854,7 @@ exports[`renders ./components-pro/select-box/demo/readonly.md correctly 1`] = `
         >
           <input
             class="c7n-pro-radio"
-            name="__group-14__"
+            name="__group-20__"
             novalidate=""
             type="radio"
             value="lucy"
@@ -873,7 +873,7 @@ exports[`renders ./components-pro/select-box/demo/readonly.md correctly 1`] = `
         >
           <input
             class="c7n-pro-radio"
-            name="__group-14__"
+            name="__group-20__"
             novalidate=""
             type="radio"
             value="wu"
@@ -1022,7 +1022,7 @@ exports[`renders ./components-pro/select-box/demo/vertical.md correctly 1`] = `
         >
           <input
             class="c7n-pro-radio"
-            name="__group-16__"
+            name="__group-23__"
             novalidate=""
             type="radio"
             value="jack"
@@ -1041,7 +1041,7 @@ exports[`renders ./components-pro/select-box/demo/vertical.md correctly 1`] = `
         >
           <input
             class="c7n-pro-radio"
-            name="__group-16__"
+            name="__group-23__"
             novalidate=""
             type="radio"
             value="lucy"
@@ -1060,7 +1060,7 @@ exports[`renders ./components-pro/select-box/demo/vertical.md correctly 1`] = `
         >
           <input
             class="c7n-pro-radio"
-            name="__group-16__"
+            name="__group-23__"
             novalidate=""
             type="radio"
             value="wu"
@@ -1092,7 +1092,7 @@ exports[`renders ./components-pro/select-box/demo/vertical.md correctly 1`] = `
         >
           <input
             class="c7n-pro-checkbox"
-            name="__group-18__"
+            name="__group-26__"
             novalidate=""
             type="checkbox"
             value="jack"
@@ -1111,7 +1111,7 @@ exports[`renders ./components-pro/select-box/demo/vertical.md correctly 1`] = `
         >
           <input
             class="c7n-pro-checkbox"
-            name="__group-18__"
+            name="__group-26__"
             novalidate=""
             type="checkbox"
             value="lucy"
@@ -1130,7 +1130,7 @@ exports[`renders ./components-pro/select-box/demo/vertical.md correctly 1`] = `
         >
           <input
             class="c7n-pro-checkbox"
-            name="__group-18__"
+            name="__group-26__"
             novalidate=""
             type="checkbox"
             value="wu"
