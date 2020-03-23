@@ -2,23 +2,32 @@ import React, {
   cloneElement,
   Component,
   CSSProperties,
-  MouseEventHandler,
   ReactElement,
   ReactNode,
+  MouseEvent,
+  DragEvent,
 } from 'react';
 import classNames from 'classnames';
+import DirectoryTree from './DirectoryTree';
 import animation from '../_util/openAnimation';
-import RcTree, { TreeNode } from '../rc-components/tree';
-import { TreeEvent } from './enum';
+import RcTree, { TreeNode, TreeProps as RcTreeProps } from '../rc-components/tree';
+import {TreeNodeProps} from '../rc-components/tree/TreeNode'
 import Icon from '../icon';
 import Progress from '../progress';
 import { ProgressType } from '../progress/enum';
 import { Size } from '../_util/enum';
 import { getPrefixCls } from '../configure';
+import { EventDataNode, DataNode } from '../rc-components/tree/interface';
 
 export { TreeNode };
 
-export interface TreeNodeAttribute {
+export {EventDataNode,DataNode,TreeNodeProps}
+
+export { ExpandAction as DirectoryTreeExpandAction, DirectoryTreeProps } from './DirectoryTree';
+
+
+
+export interface C7ndTreeNodeAttribute {
   eventKey: string;
   prefixCls: string;
   className: string;
@@ -26,8 +35,8 @@ export interface TreeNodeAttribute {
   selected: boolean;
   checked: boolean;
   halfChecked: boolean;
-  children: React.ReactNode;
-  title: React.ReactNode;
+  children: ReactNode;
+  title: ReactNode;
   pos: string;
   dragOver: boolean;
   dragOverGapTop: boolean;
@@ -38,12 +47,12 @@ export interface TreeNodeAttribute {
   disableCheckbox: boolean;
 }
 
-export interface TreeNodeProps {
+export interface C7nTreeNodeProps {
   className?: string;
   checkable?: boolean;
   disabled?: boolean;
   disableCheckbox?: boolean;
-  title?: string | React.ReactNode;
+  title?: string | ReactNode;
   key?: string;
   eventKey?: string;
   isLeaf?: boolean;
@@ -52,31 +61,56 @@ export interface TreeNodeProps {
   loading?: boolean;
   selected?: boolean;
   selectable?: boolean;
-  icon?: ((treeNode: TreeNodeAttribute) => React.ReactNode) | React.ReactNode;
-  children?: React.ReactNode;
+  icon?: ((treeNode: C7ndTreeNodeAttribute) => ReactNode) | ReactNode;
+  children?: ReactNode;
   [customProp: string]: any;
 }
 
-export interface TreeNodeEvent {
-  event: TreeEvent;
-  node: TreeNode;
+export interface C7nTreeNode extends Component<C7nTreeNodeProps, {}> {}
+
+export interface C7nTreeNodeBaseEvent {
+  node: C7nTreeNode;
+  nativeEvent: MouseEvent;
+}
+
+export interface C7nTreeNodeCheckedEvent extends C7nTreeNodeBaseEvent {
+  event: 'check';
   checked?: boolean;
-  checkedNodes?: TreeNode[];
+  checkedNodes?: C7nTreeNode[];
+}
+
+export interface C7nTreeNodeSelectedEvent extends C7nTreeNodeBaseEvent {
+  event: 'select';
   selected?: boolean;
-  selectedNodes?: TreeNode[];
+  selectedNodes?: DataNode[];
 }
 
-export interface TreeNodeExpandEvent {
-  node: TreeNode;
-  expanded: boolean;
+export interface C7nTreeNodeExpandedEvent extends C7nTreeNodeBaseEvent {
+  expanded?: boolean;
 }
 
-export interface TreeNodeMouseEvent {
-  node: TreeNode;
-  event: MouseEventHandler<any>;
+export interface C7nTreeNodeMouseEvent {
+  node: C7nTreeNode;
+  event: DragEvent<HTMLElement>;
 }
 
-export interface TreeProps {
+export interface C7nTreeNodeDragEnterEvent extends C7nTreeNodeMouseEvent {
+  expandedKeys: string[];
+}
+
+export interface C7nTreeNodeDropEvent {
+  node: C7nTreeNode;
+  dragNode: C7nTreeNode;
+  dragNodesKeys: string[];
+  dropPosition: number;
+  dropToGap?: boolean;
+  event: MouseEvent<HTMLElement>;
+}
+
+// [Legacy] Compatible for v3
+export type TreeNodeNormal = DataNode;
+
+export interface TreeProps extends Omit<RcTreeProps, 'prefixCls'> {
   showLine?: boolean;
   className?: string;
   /** 是否支持多选 */
@@ -87,8 +121,12 @@ export interface TreeProps {
   checkStrictly?: boolean;
   /** 是否支持选中 */
   checkable?: boolean;
+  /** 是否禁用树 */
+  disabled?: boolean;
   /** 默认展开所有树节点 */
   defaultExpandAll?: boolean;
+  /** 默认展开对应树节点 */
+  defaultExpandParent?: boolean;
   /** 默认展开指定的树节点 */
   defaultExpandedKeys?: string[];
   /** （受控）展开指定的树节点 */
@@ -101,43 +139,19 @@ export interface TreeProps {
   selectedKeys?: string[];
   /** 默认选中的树节点 */
   defaultSelectedKeys?: string[];
-  /** 展开/收起节点时触发 */
-  onExpand?: (expandedKeys: string[], e: TreeNodeExpandEvent) => void | PromiseLike<any>;
-  /** 点击复选框触发 */
-  onCheck?: (checkedKeys: string[], e: TreeNodeEvent) => void;
+  selectable?: boolean;
   /** 点击树节点触发 */
-  onSelect?: (selectedKeys: string[], e: TreeNodeEvent) => void;
-  /** filter some AntTreeNodes as you need. it should return true */
-  filterAntTreeNode?: (node: TreeNode) => boolean;
-  /** 异步加载数据 */
-  loadData?: (node: TreeNode) => PromiseLike<any>;
-  /** 响应右键点击 */
-  onRightClick?: (options: TreeNodeMouseEvent) => void;
+  filterC7nTreeNode?: (node: C7nTreeNode) => boolean;
+  loadedKeys?: string[];
   /** 设置节点可拖拽（IE>8） */
   draggable?: boolean;
-  /** 开始拖拽时调用 */
-  onDragStart?: (options: TreeNodeMouseEvent) => void;
-  /** dragenter 触发时调用 */
-  onDragEnter?: (options: TreeNodeMouseEvent) => void;
-  /** dragover 触发时调用 */
-  onDragOver?: (options: TreeNodeMouseEvent) => void;
-  /** dragleave 触发时调用 */
-  onDragLeave?: (options: TreeNodeMouseEvent) => void;
-  /** drop 触发时调用 */
-  onDrop?: (options: TreeNodeMouseEvent) => void;
   style?: CSSProperties;
   showIcon?: boolean;
-  icon?: (nodeProps: TreeNodeAttribute) => ReactNode;
+  icon?: ((nodeProps: C7ndTreeNodeAttribute) =>ReactNode) | ReactNode;
   switcherIcon?: ReactElement<any>;
   prefixCls?: string;
-  filterTreeNode?: (node: TreeNode) => boolean;
-  focusable?: boolean;
-  tabIndex?: string | number;
-  openTransitionName?: string;
-  openAnimation?: string | object;
-  selectable?: boolean;
-  defaultExpandParent?: boolean;
-  children?: any;
+  children?: ReactNode;
+  blockNode?: boolean;
 }
 
 export default class Tree extends Component<TreeProps, any> {
@@ -145,13 +159,15 @@ export default class Tree extends Component<TreeProps, any> {
 
   static TreeNode = TreeNode;
 
+  static DirectoryTree = DirectoryTree;
+
   static defaultProps = {
     checkable: false,
     showIcon: false,
     openAnimation: animation,
   };
 
-  renderSwitcherIcon = ({ isLeaf, loading }: TreeNodeProps) => {
+  renderSwitcherIcon = ({ isLeaf, loading }: C7nTreeNodeProps) => {
     const { showLine, switcherIcon } = this.props;
     const prefixCls = this.getPrefixCls();
     if (loading) {
@@ -182,6 +198,12 @@ export default class Tree extends Component<TreeProps, any> {
     return <Icon type="arrow_drop_down" className={switcherCls} />;
   };
 
+    tree: any;
+
+    setTreeRef = (node: any) => {
+      this.tree = node;
+    };
+
   getPrefixCls() {
     const { prefixCls } = this.props;
     return getPrefixCls('tree', prefixCls);
@@ -189,13 +211,16 @@ export default class Tree extends Component<TreeProps, any> {
 
   render() {
     const props = this.props;
-    const { className, showIcon, checkable, children } = props;
+    const { className, showIcon, children } = props;
+    const { checkable } = props;
     const prefixCls = this.getPrefixCls();
     return (
       <RcTree
+        itemHeight={20}
+        ref={this.setTreeRef}
         {...props}
         className={classNames(!showIcon && `${prefixCls}-icon-hide`, className)}
-        checkable={checkable ? <span className={`${prefixCls}-checkbox-inner`} /> : checkable}
+        checkable={checkable ? <span className={`${prefixCls}-checkbox-inner`} /> : 0 }
         switcherIcon={this.renderSwitcherIcon}
         prefixCls={prefixCls}
       >
