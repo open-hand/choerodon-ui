@@ -10,6 +10,7 @@ import {
   Key,
   EventDataNode,
 } from '../interface';
+// @ts-ignore
 import { getPosition, isTreeNode } from '../util';
 import { TreeNodeProps } from '../TreeNode';
 
