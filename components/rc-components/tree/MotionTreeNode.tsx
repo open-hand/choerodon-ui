@@ -2,6 +2,7 @@ import * as React from 'react';
 import classNames from 'classnames';
 // @ts-ignore
 import CSSMotion from 'rc-animate/lib/CSSMotion';
+// @ts-ignore
 import TreeNode, { TreeNodeProps } from './TreeNode';
 import { FlattenNode } from './interface';
 import { getTreeNodeProps, TreeNodeRequiredProps } from './utils/treeUtil';
