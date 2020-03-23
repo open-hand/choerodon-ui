@@ -49,3 +49,5 @@ components/rc-components/dialog/*.jsx
 /.history
 jest_*
 .jest-cache/
+components/rc-components/tree/**/*.js
+components/rc-components/tree/*.jsx

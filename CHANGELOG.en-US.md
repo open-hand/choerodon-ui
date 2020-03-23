@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Tree`: Add `defaultExpandAll` and more property.
+- 🌟 `Tree`: Add `load` virtual scroll and more property .
 - 💄 `<pro>LocaleContext`: Optimize japansese configuration support and Fix the document.
   
 ## 0.8.57
