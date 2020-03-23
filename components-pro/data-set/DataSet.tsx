@@ -306,7 +306,7 @@ export default class DataSet extends EventManager {
 
   @observable status: DataSetStatus;
 
-  @observable currentPage: numbnper;
+  @observable currentPage: number;
 
   @observable selection: DataSetSelection | false;
 

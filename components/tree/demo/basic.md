@@ -31,8 +31,7 @@ class Demo extends React.Component {
     return (
       <Tree
         checkable
-        defaultExpandAll
-        renderSwitcher
+        defaultExpandedKeys={['0-0-0', '0-0-1']}
         defaultSelectedKeys={['0-0-0', '0-0-1']}
         defaultCheckedKeys={['0-0-0', '0-0-1']}
         onSelect={this.onSelect}

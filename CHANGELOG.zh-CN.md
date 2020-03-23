@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Tree`: 新增 defaultExpandAll 等默认属性。
+- 🌟 `Tree`: 新增 tree 的虚拟滚动以及其他如load等属性。
 - 💄 `<pro>LocaleContext`: 优化日语配置完善文档。
   
 ## 0.8.57
