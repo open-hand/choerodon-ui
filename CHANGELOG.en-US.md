@@ -18,13 +18,14 @@ timeline: true
 - 🌟 `<pro>TimePicker`: `format` and `step` can affect the display of the component.
 - 🌟 `<pro>DataSet.Field`: extended step property, used for step limit of time component.
 - 🌟 `<pro>DataSet.Field`: Add `disabled` property.
-- 🌟 `<pro>Table`: Expand `spin` configuration, add related demo.
+- 🌟 `<pro>Table`: Expand `spin` configuration, add spin & custom inline demo.
 - 🌟 `configure`: Add tableSpinProps properties.
 - 🌟 `<pro>Spin`: Add dataSet binding demo.
 - 💄 `<pro>LocaleContext`: Optimize japanese configuration support and Fix the document.
 - 💄 `<pro>Table`: Optimize table tooltip，table border-bottom style issue.
 - 🐞 `Spin`: Fix invalid size property issue.
 - 🐞 `<pro>TimePicker`: Fix mouse wheel error report under chrome.
+- 🐞 `<pro>Table`: Fix editor property type.
 
 ## 0.8.57
 
