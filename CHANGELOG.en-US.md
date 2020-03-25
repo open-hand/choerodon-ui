@@ -19,13 +19,14 @@ timeline: true
 - 🌟 `<pro>DataSet.Field`: extended step property, used for step limit of time component.
 - 🌟 `<pro>DataSet.Field`: Add `disabled` property.
 - 🌟 `<pro>Table`: Expand `spin` configuration, add spin & custom inline demo.
-- 🌟 `configure`: Add tableSpinProps properties.
+- 🌟 `configure`: Add `tableSpinProps` properties.
 - 🌟 `<pro>Spin`: Add dataSet binding demo.
 - 💄 `<pro>LocaleContext`: Optimize japanese configuration support and Fix the document.
 - 💄 `<pro>Table`: Optimize table tooltip，table border-bottom style issue.
-- 🐞 `Spin`: Fix invalid size property issue.
+- 💄 `<pro>DataSet`: Optimize `autoLocateAfterRemove`, reset the reserved selected state after deletion failed and locate to delete item first.
+- 🐞 `Spin`: Fix invalid `size` property issue.
 - 🐞 `<pro>TimePicker`: Fix mouse wheel error report under chrome.
-- 🐞 `<pro>Table`: Fix editor property type.
+- 🐞 `<pro>Table`: Fix `editor` property type.
 
 ## 0.8.57
 

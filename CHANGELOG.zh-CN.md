@@ -23,6 +23,7 @@ timeline: true
 - 🌟 `<pro>Spin`: 新增绑定数据源demo.
 - 💄 `<pro>LocaleContext`: 优化日语配置完善文档。
 - 💄 `<pro>Table`: 优化 table tooltip、table border-bottom 样式问题。
+- 💄 `<pro>DataSet`: 优化 autoLocateAfterRemove, 删除失败后重置保留选中状态并定位到删除项第一条。
 - 🐞 `Spin`: 修复 size 属性无效问题。
 - 🐞 `<pro>TimePicker`: 修复 chrome 下鼠标滚轮报错的问题。
 - 🐞 `<pro>Table`: 修复 editor 属性声明类型。
