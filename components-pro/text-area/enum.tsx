@@ -4,3 +4,10 @@ export const enum ResizeType {
   horizontal = 'horizontal',
   none = 'none',
 }
+
+export interface AutoSizeType {
+  minRows?: number;
+  maxRows?: number;
+  minCols?: number;
+  maxCols?: number;
+}

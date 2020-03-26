@@ -22,6 +22,7 @@ subtitle: 文本域
 | cols | 文本域宽 | number  | - |
 | rows | 文本域高 | number  | - |
 | resize | 是否能够拖拽调整大小，可选值： `none` `both` `vertical` `horizontal` | string  | none |
+| autoSize | 自适应内容高度，可设置为 true\| false 或对象：{ minRows: 2, maxRows: 6, minCols: 1, maxCols: 2 } | boolean\| object  | false |
 
 更多属性请参考 [FormField](/components-pro/field/#FormField)。
 
