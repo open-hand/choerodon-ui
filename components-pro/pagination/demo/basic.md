@@ -14,7 +14,7 @@ title:
 Basic usage example.
 
 ```jsx
-import { Form, Switch, DataSet, Pagination } from 'choerodon-ui/pro';
+import { Form, Switch, DataSet, Pagination, NumberField, Button } from 'choerodon-ui/pro';
 import { observer } from 'mobx-react';
 
 function handleChange(page, pageSize) {
@@ -23,6 +23,20 @@ function handleChange(page, pageSize) {
 
 @observer
 class App extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: null,
+    };
+  }
+
+  handleChange = (value, oldValue) => {
+    this.setState({
+      value,
+    });
+  }
+
   ds = new DataSet({
     autoCreate: true,
     fields: [
@@ -30,6 +44,8 @@ class App extends React.Component {
       { name: 'showTotal', type: 'boolean', label: 'showTotal', defaultValue: true },
       { name: 'showPager', type: 'boolean', label: 'showPager', defaultValue: false },
       { name: 'showQuickJumper', type: 'boolean', label: 'showQuickJumper', defaultValue: false },
+      { name: 'hideOnSinglePage', type: 'boolean', label: 'hideOnSinglePage', defaultValue: false },
+      { name: 'total', type: 'number', label: 'total', defaultValue: 90 },
     ],
   });
 
@@ -37,6 +53,7 @@ class App extends React.Component {
     const {
       ds,
       ds: { current },
+      state: { value },
     } = this;
     return (
       <div>
@@ -45,13 +62,16 @@ class App extends React.Component {
           <Switch name="showTotal" />
           <Switch name="showPager" />
           <Switch name="showQuickJumper" />
+          <Switch name="hideOnSinglePage" />
+          <NumberField name="total" value={value} onChange={this.handleChange} />
         </Form>
         <Pagination
           showSizeChanger={current.get('showSizeChanger')}
-          showTotal={current.get('showTotal')}
+          showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} 页`}
           showPager={current.get('showPager')}
           showQuickJumper={current.get('showQuickJumper')}
-          total={90}
+          total={current.get('total')}
+          hideOnSinglePage={current.get('hideOnSinglePage')}
           onChange={handleChange}
         />
       </div>
