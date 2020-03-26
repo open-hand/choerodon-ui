@@ -30,6 +30,7 @@ const locale: Locale = {
   Pagination: {
     page: '页',
     jump_to: '跳至',
+    jump_to_confirm: '确定',
     records_per_page: '每页行数：',
   },
   Upload: {

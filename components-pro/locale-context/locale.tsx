@@ -31,6 +31,7 @@ export interface Locale {
   Pagination: {
     page;
     jump_to;
+    jump_to_confirm;
     records_per_page;
   };
   Upload: {
