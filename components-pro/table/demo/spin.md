@@ -1,5 +1,5 @@
 ---
-order: 10
+order: 11
 title:
   zh-CN: Spin 受控
   en-US: Spin
