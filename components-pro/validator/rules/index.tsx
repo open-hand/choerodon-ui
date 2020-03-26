@@ -16,6 +16,7 @@ import DataSet from '../../data-set/DataSet';
 import Record from '../../data-set/Record';
 import Form from '../../form/Form';
 import { CustomValidator, ValidationMessages } from '../Validator';
+import { TimeStep } from '../../date-picker/DatePicker';
 
 export type methodReturn = ValidationResult | true;
 
@@ -42,7 +43,7 @@ export interface ValidatorProps {
   pattern?: string | RegExp;
   min?: number | Moment | null;
   max?: number | Moment | null;
-  step?: number;
+  step?: number | TimeStep;
   minLength?: number;
   maxLength?: number;
   dataSet?: DataSet;

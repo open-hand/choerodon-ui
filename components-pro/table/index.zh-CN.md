@@ -112,8 +112,11 @@ subtitle: 表格
 
 ### spin
 
-分页的配置项。
+spin的配置项。
 
 | 参数      | 说明       | 类型         | 默认值 |
 | --------- | ---------- | ------------ | ------ |
 | indicator | 加载指示符 | ReactElement | -      |
+| spinning | 是否旋转 | boolean | -      |
+
+更多案列和属性请参考 [Spin](/components-pro/spin/)。

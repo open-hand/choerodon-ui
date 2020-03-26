@@ -20,6 +20,7 @@ title: DatePicker
 | min | 最小日期 | MomentInput |   |
 | max | 最大日期 | MomentInput |   |
 | format | 日期格式，如 `YYYY-MM-DD HH:mm:ss` | string |   |
+| step | 时间步距 | { hour: number, minute: number, second: number } |  |
 | filter | 日期过滤 | (currentDate, selected) => boolean |   |
 | cellRenderer | 单元格渲染, view可选值：`date` `dateTime` `time` `week` `month` `year` `decade` | (view) => (props, text, currentDate, selected) => ReactNode |   |
 

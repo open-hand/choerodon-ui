@@ -1050,13 +1050,13 @@ export default class DataSet extends EventManager {
     if (records) {
       const data = isArrayLike(records) ? records.slice() : [records];
       if (data.length) {
-        const { current, currentIndex } = this;
+        const { current } = this;
         data.forEach(this.deleteRecord, this);
         this.fireEvent(DataSetEvents.remove, { dataSet: this, records: data });
         if (!this.current) {
           let record;
           if (this.props.autoLocateAfterRemove) {
-            record = this.get(currentIndex) || this.get(this.length - 1);
+            record = this.get(0);
             if (record) {
               record.isCurrent = true;
             }
@@ -1956,11 +1956,22 @@ Then the query method will be auto invoke.`,
     return result;
   }
 
+  @action
   private handleSubmitFail(e) {
+    const { current } = this;
     const { submitFailed = defaultFeedback.submitFailed } = this.feedback;
     this.fireEvent(DataSetEvents.submitFailed, { dataSet: this });
     submitFailed(e);
-    this.destroyed.forEach(record => record.reset());
+    if (this.props.autoLocateAfterRemove && current) {
+      current.isCurrent = false;
+    }
+    this.destroyed.forEach((record, index) => {
+      record.reset();
+      record.isSelected = true;
+      if (this.props.autoLocateAfterRemove && index === 0) {
+        record.isCurrent = true;
+      }
+    });
   }
 
   private syncChildren(current?: Record, previous?: Record) {

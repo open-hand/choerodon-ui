@@ -33,6 +33,12 @@ export type RenderFunction = (
   selected: Moment,
 ) => ReactNode;
 
+export type TimeStep = {
+  hour?: number;
+  minute?: number;
+  second?: number;
+}
+
 const viewComponents: { [x: string]: typeof DaysView } = {
   [ViewMode.decade]: DecadeYearsView,
   [ViewMode.year]: YearsView,
@@ -55,6 +61,7 @@ export interface DatePickerProps extends TriggerFieldProps {
   filter?: (currentDate: Moment, selected: Moment) => boolean;
   min?: MomentInput | null;
   max?: MomentInput | null;
+  step?: TimeStep;
 }
 
 export interface DatePickerKeyboardEvent {
@@ -99,6 +106,14 @@ export default class DatePicker extends TriggerField<DatePickerProps>
      * 最大日期
      */
     max: PropTypes.any,
+    /**
+     * 时间步距
+     */
+    step: PropTypes.shape({
+      hour: PropTypes.number,
+      minute: PropTypes.number,
+      second: PropTypes.number,
+    }),
     ...TriggerField.propTypes,
   };
 
@@ -193,6 +208,8 @@ export default class DatePicker extends TriggerField<DatePickerProps>
       onSelectedDateChange: this.handleSelectedDateChange,
       onViewModeChange: this.handelViewModeChange,
       isValidDate: this.isValidDate,
+      format: this.getDateFormat(),
+      step: this.getProp('step') || {},
     } as DateViewProps);
   }
 
@@ -278,7 +295,8 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     });
   }
 
-  handlePopupAnimateAppear() {}
+  handlePopupAnimateAppear() {
+  }
 
   @autobind
   handlePopupAnimateEnd(key, exists) {

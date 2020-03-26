@@ -1207,6 +1207,7 @@ exports[`Icon-Picker-pro renders IconPicker correctly 1`] = `
 <IconPicker
   autoComplete="off"
   clearButton={true}
+  disabled={false}
   multiple={false}
   noValidate={false}
   pageSize={100}
@@ -2794,6 +2795,7 @@ exports[`Icon-Picker-pro renders IconPicker correctly 1`] = `
                 <input
                   autoComplete="off"
                   className="c7n-pro-icon-picker"
+                  disabled={false}
                   key="text"
                   multiple={false}
                   noValidate={false}
@@ -3050,6 +3052,7 @@ exports[`Icon-Picker-pro should renders dataset correctly 1`] = `
         "totalCount": 0,
       }
     }
+    disabled={false}
     multiple={false}
     name="icon"
     noValidate={false}
@@ -4649,6 +4652,7 @@ exports[`Icon-Picker-pro should renders dataset correctly 1`] = `
                   <input
                     autoComplete="off"
                     className="c7n-pro-icon-picker"
+                    disabled={false}
                     key="text"
                     multiple={false}
                     name="icon"
@@ -4769,6 +4773,7 @@ exports[`Icon-Picker-pro the keydown event should render correctly 1`] = `
 <IconPicker
   autoComplete="off"
   clearButton={true}
+  disabled={false}
   multiple={false}
   noValidate={false}
   pageSize={100}
@@ -6367,6 +6372,7 @@ exports[`Icon-Picker-pro the keydown event should render correctly 1`] = `
                 <input
                   autoComplete="off"
                   className="c7n-pro-icon-picker"
+                  disabled={false}
                   key="text"
                   multiple={false}
                   noValidate={false}
@@ -17419,6 +17425,7 @@ exports[`Icon-Picker-pro the keydown event should render keyCode { esc, tab } co
 <IconPicker
   autoComplete="off"
   clearButton={true}
+  disabled={false}
   multiple={false}
   noValidate={false}
   pageSize={100}
@@ -19006,6 +19013,7 @@ exports[`Icon-Picker-pro the keydown event should render keyCode { esc, tab } co
                 <input
                   autoComplete="off"
                   className="c7n-pro-icon-picker"
+                  disabled={false}
                   key="text"
                   multiple={false}
                   noValidate={false}
@@ -32329,14 +32337,11 @@ exports[`Icon-Picker-pro the keydown event should render keyCode { esc, tab } co
 </IconPicker>
 `;
 
-<<<<<<< HEAD
-exports[`Icon-Picker-pro the keydown event should render keyCode {sp } correctly 1`] = `
-=======
 exports[`Icon-Picker-pro the keydown event should render keyCode {space} correctly 1`] = `
->>>>>>> choerodon/master
 <IconPicker
   autoComplete="off"
   clearButton={true}
+  disabled={false}
   multiple={false}
   noValidate={false}
   pageSize={100}
@@ -33924,6 +33929,7 @@ exports[`Icon-Picker-pro the keydown event should render keyCode {space} correct
                 <input
                   autoComplete="off"
                   className="c7n-pro-icon-picker"
+                  disabled={false}
                   key="text"
                   multiple={false}
                   noValidate={false}
@@ -46113,6 +46119,7 @@ exports[`Icon-Picker-pro the selected click render correctly 1`] = `
 <IconPicker
   autoComplete="off"
   clearButton={true}
+  disabled={false}
   multiple={false}
   noValidate={false}
   pageSize={100}
@@ -47711,6 +47718,7 @@ exports[`Icon-Picker-pro the selected click render correctly 1`] = `
                 <input
                   autoComplete="off"
                   className="c7n-pro-icon-picker"
+                  disabled={false}
                   key="text"
                   multiple={false}
                   noValidate={false}

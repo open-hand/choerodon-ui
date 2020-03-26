@@ -20,6 +20,7 @@ import {
   MonthPicker,
   YearPicker,
   DateTimePicker,
+  TimePicker,
   Row,
   Col,
 } from 'choerodon-ui/pro';
@@ -63,6 +64,11 @@ class App extends React.Component {
         multiple: true,
         required: true,
       },
+      {
+        name: 'time',
+        type: 'time',
+        range: true,
+      },
     ],
     events: {
       update: handleDataSetChange,
@@ -93,6 +99,9 @@ class App extends React.Component {
             placeholder={['Start Date', 'End Date']}
             onChange={handleChange}
           />
+        </Col>
+        <Col span={24}>
+          <TimePicker dataSet={this.ds} name="time" placeholder="Choose Time" />
         </Col>
         <Col span={24}>
           <DatePicker dataSet={this.ds} name="multipleDate" placeholder="Choose Date" />

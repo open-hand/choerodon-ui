@@ -54,6 +54,7 @@ exports[`renders ./components-pro/text-area/demo/basic.md correctly 1`] = `
           autocomplete="off"
           class="c7n-pro-textarea"
           disabled=""
+          readonly=""
           rows="4"
           style="resize:none"
           type="text"

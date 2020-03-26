@@ -1,11 +1,5 @@
 import Map from 'core-js/library/fn/map';
-import React, {
-  cloneElement,
-  FormEventHandler,
-  isValidElement,
-  ReactInstance,
-  ReactNode,
-} from 'react';
+import React, { cloneElement, FormEventHandler, isValidElement, ReactInstance, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { action, computed, isArrayLike, observable, runInAction, toJS } from 'mobx';
 import classNames from 'classnames';
@@ -19,12 +13,12 @@ import { observer } from 'mobx-react';
 import noop from 'lodash/noop';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import warning from 'choerodon-ui/lib/_util/warning';
-import { getProPrefixCls, getConfig } from 'choerodon-ui/lib/configure';
+import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
 import autobind from '../_util/autobind';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import Field from '../data-set/Field';
-import Validator, { ValidationMessages, CustomValidator } from '../validator/Validator';
+import Validator, { CustomValidator, ValidationMessages } from '../validator/Validator';
 import Validity from '../validator/Validity';
 import FormContext from '../form/FormContext';
 import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComponent';
@@ -100,6 +94,10 @@ export interface FormFieldProps extends DataSetComponentProps {
    * 是否只读
    */
   readOnly?: boolean;
+  /**
+   * 是否禁用
+   */
+  disabled?: boolean;
   /**
    * 对照表单id
    */
@@ -229,6 +227,10 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
      */
     readOnly: PropTypes.bool,
     /**
+     * 是否禁用
+     */
+    disabled: PropTypes.bool,
+    /**
      * 对照表单id
      */
     form: PropTypes.string,
@@ -316,6 +318,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
 
   static defaultProps = {
     readOnly: false,
+    disabled: false,
     noValidate: false,
     showHelp: 'newLine',
     trim: FieldTrim.both,
@@ -376,7 +379,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
 
   @computed
   get editable(): boolean {
-    return !this.isReadOnly();
+    return !this.isDisabled() && !this.isReadOnly();
   }
 
   @computed
@@ -450,9 +453,9 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   @autobind
   defaultRenderer({ text, repeat, maxTagTextLength }: RenderProps): ReactNode {
     return repeat !== undefined &&
-      maxTagTextLength &&
-      isString(text) &&
-      text.length > maxTagTextLength
+    maxTagTextLength &&
+    isString(text) &&
+    text.length > maxTagTextLength
       ? `${text.slice(0, maxTagTextLength)}...`
       : text;
   }
@@ -729,7 +732,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     e.stopPropagation();
   }
 
-  getDateFormat() {
+  getDateFormat(): string {
     return getDateFormatByField(this.field, this.getFieldType());
   }
 
@@ -783,14 +786,14 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     const text = this.processText(this.getText(value));
     return renderer
       ? renderer({
-          value,
-          text,
-          record,
-          dataSet,
-          name,
-          repeat,
-          maxTagTextLength,
-        })
+        value,
+        text,
+        record,
+        dataSet,
+        name,
+        repeat,
+        maxTagTextLength,
+      })
       : text;
   }
 
@@ -883,7 +886,8 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     this.removeValues([value], index);
   }
 
-  afterRemoveValue(_value, _repeat: number) {}
+  afterRemoveValue(_value, _repeat: number) {
+  }
 
   @action
   beginRange() {
@@ -1076,10 +1080,10 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
 
   isDisabled() {
     const { disabled } = this.context;
-    const { field, record } = this;
-    if (disabled) {
-      return disabled;
+    if (disabled || this.getProp('disabled')) {
+      return true;
     }
+    const { field, record } = this;
     if (field) {
       const cascadeMap = field.get('cascadeMap');
       if (
@@ -1142,8 +1146,6 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
 }
 
 @observer
-export default class ObserverFormField<T extends FormFieldProps> extends FormField<
-  T & FormFieldProps
-> {
+export default class ObserverFormField<T extends FormFieldProps> extends FormField<T & FormFieldProps> {
   static defaultProps = FormField.defaultProps;
 }

@@ -286,6 +286,7 @@ exports[`Lov-pro render mode button 1`] = `
       "totalCount": 0,
     }
   }
+  disabled={false}
   dropdownMatchSelectWidth={true}
   mode="button"
   multiple={false}
@@ -571,6 +572,7 @@ exports[`Lov-pro render mode button 1`] = `
       >
         <Button
           autoComplete="off"
+          disabled={false}
           key=".0:$lov_button"
           loading={false}
           mode="button"

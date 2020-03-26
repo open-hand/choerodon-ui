@@ -19,6 +19,7 @@ title: FormField
 | defaultValue | 默认值 | any |  |
 | required | 是否必输 | boolean | false |
 | readOnly | 是否只读 | boolean | false |
+| disabled | 是否禁用 | boolean | false |
 | form | 对照表单 id | string |  |
 | dataIndex | 对照 record 在 DataSet 中的 index | number | ds.currentIndex |
 | record | 对照 record, 优先级高于 dataSet 和 dataIndex | Record |  |

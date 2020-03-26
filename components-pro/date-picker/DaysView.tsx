@@ -6,7 +6,7 @@ import noop from 'lodash/noop';
 import ViewComponent, { ViewComponentProps } from '../core/ViewComponent';
 import autobind from '../_util/autobind';
 import Icon from '../icon';
-import { DatePickerKeyboardEvent, RenderFunction } from './DatePicker';
+import { DatePickerKeyboardEvent, RenderFunction, TimeStep } from './DatePicker';
 import { ViewMode } from './enum';
 import { FieldType } from '../data-set/enum';
 import { $l } from '../locale-context';
@@ -21,6 +21,8 @@ export interface DateViewProps extends ViewComponentProps {
   min?: Moment;
   max?: Moment;
   mode: ViewMode;
+  format: string;
+  step: TimeStep;
   renderer?: RenderFunction;
   isValidDate?: (currentDate: Moment, selected: Moment) => boolean;
   onSelect?: (selectedDate: Moment) => void;
