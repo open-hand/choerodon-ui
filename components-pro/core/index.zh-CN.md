@@ -21,7 +21,7 @@ title: ViewComponent
 | title | 悬浮提示，建议用[ToolTip]组件 | string  |  |
 | hidden | 是否隐藏 | boolean  | false |
 | autoFocus | 自动获取焦点，多个组件同时设置该参数时，以节点树的顺序最末的组件获取焦点 | boolean  | false |
-| size | 组件大小<未实现>，可选值 `default` `small` `big` | string  | default |
+| size | 组件大小<未实现>，可选值 `default` `small` `large` | string  | default |
 | onFocus | 获取焦点回调 | Function |  |
 | onBlur | 失去焦点回调 | Function |  |
 | onClick | 单击回调 | Function |  |

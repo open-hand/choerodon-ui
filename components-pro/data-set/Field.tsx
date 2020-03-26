@@ -35,7 +35,7 @@ function isEqualDynamicProps(oldProps, newProps) {
   if (newProps === oldProps) {
     return true;
   }
-  if (isObject(newProps) && isObject(oldProps)) {
+  if (isObject(newProps) && isObject(oldProps) && Object.keys(newProps).length) {
     return Object.keys(newProps).every(key => {
       const value = newProps[key];
       const oldValue = oldProps[key];

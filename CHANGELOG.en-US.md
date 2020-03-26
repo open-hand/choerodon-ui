@@ -15,18 +15,22 @@ timeline: true
 
 ---
 
-- 🌟 `<pro>TimePicker`: `format` and `step` can affect the display of the component.
-- 🌟 `<pro>DataSet.Field`: extended step property, used for step limit of time component.
-- 🌟 `<pro>DataSet.Field`: Add `disabled` property.
-- 🌟 `<pro>Table`: Expand `spin` configuration, add spin & custom inline demo.
+- `<pro>TimePicker`:
+  - 🌟  `format` and `step` can affect the display of the component.
+  - 🐞  Fix mouse wheel error report under chrome.
+- `<pro>DataSet.Field`:
+  - 🌟 Extended step property, used for step limit of time component.
+  - 🌟 Add `disabled` property.
+  - 🐞 Fix `dynamicProps` null value comparison.
+- 🌟 `<pro>Table`:
+  - 🌟 Expand `spin` configuration, add spin & custom inline demo.
+  - 💄 Optimize table tooltip，table border-bottom style issue.
+  - 🐞 Fix the type definition of `editor` property.
 - 🌟 `configure`: Add `tableSpinProps` properties.
 - 🌟 `<pro>Spin`: Add dataSet binding demo.
 - 💄 `<pro>LocaleContext`: Optimize japanese configuration support and Fix the document.
-- 💄 `<pro>Table`: Optimize table tooltip，table border-bottom style issue.
 - 💄 `<pro>DataSet`: Optimize `autoLocateAfterRemove`, reset the reserved selected state after deletion failed and locate to delete item first.
 - 🐞 `Spin`: Fix invalid `size` property issue.
-- 🐞 `<pro>TimePicker`: Fix mouse wheel error report under chrome.
-- 🐞 `<pro>Table`: Fix `editor` property type.
 
 ## 0.8.57
 
