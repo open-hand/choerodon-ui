@@ -179,7 +179,7 @@ exports[`renders ./components/spin/demo/size.md correctly 1`] = `
     class="c7n-spin c7n-spin-sm c7n-spin-spinning"
   >
     <div
-      class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-default c7n-spin-dot"
+      class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-small c7n-spin-dot"
     >
       <div
         class="c7n-progress-inner"
@@ -221,7 +221,7 @@ exports[`renders ./components/spin/demo/size.md correctly 1`] = `
     class="c7n-spin c7n-spin-lg c7n-spin-spinning"
   >
     <div
-      class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-default c7n-spin-dot"
+      class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-large c7n-spin-dot"
     >
       <div
         class="c7n-progress-inner"

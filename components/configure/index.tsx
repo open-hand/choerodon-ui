@@ -13,6 +13,8 @@ import {
 } from 'choerodon-ui/pro/lib/table/Table';
 import { ValidationMessages } from 'choerodon-ui/pro/lib/validator/Validator';
 import { ButtonProps } from 'choerodon-ui/pro/lib/button/Button';
+import { SpinProps } from 'choerodon-ui/lib/spin';
+import { Size } from 'choerodon-ui/lib/_util/enum';
 import { TableQueryBarType } from 'choerodon-ui/pro/lib/table/enum';
 import { TransportHookProps, TransportProps } from 'choerodon-ui/pro/lib/data-set/Transport';
 import DataSet from 'choerodon-ui/pro/lib/data-set/DataSet';
@@ -51,11 +53,11 @@ export type Config = {
   lookupAxiosConfig?:
     | AxiosRequestConfig
     | ((props: {
-        params?: any;
-        dataSet?: DataSet;
-        record?: Record;
-        lookupCode?: string;
-      }) => AxiosRequestConfig);
+    params?: any;
+    dataSet?: DataSet;
+    record?: Record;
+    lookupCode?: string;
+  }) => AxiosRequestConfig);
   lookupBatchAxiosConfig?: (codes: string[]) => AxiosRequestConfig;
   lovDefineUrl?: string | ((code: string) => string);
   lovDefineAxiosConfig?: AxiosRequestConfig | ((code: string) => AxiosRequestConfig);
@@ -65,10 +67,10 @@ export type Config = {
   lovQueryAxiosConfig?:
     | AxiosRequestConfig
     | ((
-        code: string,
-        lovConfig: LovConfig | undefined,
-        props: TransportHookProps,
-      ) => AxiosRequestConfig);
+    code: string,
+    lovConfig: LovConfig | undefined,
+    props: TransportHookProps,
+  ) => AxiosRequestConfig);
   axios?: AxiosInstance;
   feedback?: FeedBack;
   dataKey?: string;
@@ -83,6 +85,7 @@ export type Config = {
   tableRowHeight?: 'auto' | number;
   tableColumnResizable?: boolean;
   tableExpandIcon?: (props: expandInconProps) => ReactNode;
+  tableSpinProps?: SpinProps;
   tableButtonProps?: ButtonProps;
   tableCommandProps?: ButtonProps;
   pagination?: TablePaginationConfig | false;
@@ -117,6 +120,8 @@ const defaultRenderEmpty: renderEmptyHandler = (componentName?: string): ReactNo
 };
 
 const defaultButtonProps = { color: ButtonColor.primary, funcType: FuncType.flat };
+
+const defaultSpinProps = { size: Size.default, wrapperClassName: '' };
 
 const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.map<
   ConfigKeys,
@@ -155,6 +160,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['tableHighLightRow', true],
   ['tableRowHeight', 30],
   ['tableColumnResizable', true],
+  ['tableSpinProps', defaultSpinProps],
   ['tableButtonProps', defaultButtonProps],
   ['tableCommandProps', defaultButtonProps],
   ['modalSectionBorder', true],

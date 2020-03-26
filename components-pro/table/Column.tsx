@@ -45,8 +45,8 @@ export interface ColumnProps extends ElementProps {
    */
   editor?:
     | ReactElement<FormFieldProps>
-    | ((record: Record, name?: string) => ReactElement<FormFieldProps>)
-    | true;
+    | ((record: Record, name?: string) => ReactElement<FormFieldProps> | boolean)
+    | boolean;
   /**
    * 是否锁定
    * 可选值： false | true | 'left' | 'right'

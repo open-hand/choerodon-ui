@@ -4,6 +4,7 @@ exports[`IntlField-pro { ok, cancel } button click render correctly 1`] = `
 <IntlField
   autoComplete="off"
   clearButton={false}
+  disabled={false}
   multiple={false}
   noValidate={false}
   readOnly={false}
@@ -291,6 +292,7 @@ exports[`IntlField-pro { ok, cancel } button click render correctly 1`] = `
             <input
               autoComplete="off"
               className="c7n-pro-input"
+              disabled={false}
               key="text"
               multiple={false}
               noValidate={false}
@@ -359,6 +361,7 @@ exports[`IntlField-pro renders IntlField correctly 1`] = `
 <IntlField
   autoComplete="off"
   clearButton={false}
+  disabled={false}
   multiple={false}
   noValidate={false}
   readOnly={false}
@@ -646,6 +649,7 @@ exports[`IntlField-pro renders IntlField correctly 1`] = `
             <input
               autoComplete="off"
               className="c7n-pro-input"
+              disabled={false}
               key="text"
               multiple={false}
               noValidate={false}
@@ -783,6 +787,29 @@ exports[`IntlField-pro renders dataset correctly 1`] = `
               "innerValidationResults": Array [],
             },
           },
+          "__tls.first-name.ja_JP": Field {
+            "dataSet": [Circular],
+            "isDynamicPropsComputing": false,
+            "lastDynamicProps": Object {},
+            "pending": PromiseQueue {
+              "queue": Array [],
+              "queueing": false,
+            },
+            "pristineProps": Object {
+              "label": "日本語",
+              "type": "string",
+            },
+            "props": Object {
+              "label": "日本語",
+              "type": "string",
+            },
+            "record": undefined,
+            "validator": Validator {
+              "control": undefined,
+              "field": [Circular],
+              "innerValidationResults": Array [],
+            },
+          },
           "__tls.first-name.zh_CN": Field {
             "dataSet": [Circular],
             "isDynamicPropsComputing": false,
@@ -813,6 +840,7 @@ exports[`IntlField-pro renders dataset correctly 1`] = `
               "bind": undefined,
               "cascadeMap": undefined,
               "defaultValidationMessages": undefined,
+              "disabled": undefined,
               "format": undefined,
               "help": undefined,
               "label": undefined,
@@ -921,6 +949,27 @@ exports[`IntlField-pro renders dataset correctly 1`] = `
                   "innerValidationResults": Array [],
                 },
               },
+              "__tls.first-name.ja_JP": Field {
+                "dataSet": [Circular],
+                "isDynamicPropsComputing": false,
+                "lastDynamicProps": Object {},
+                "pending": PromiseQueue {
+                  "queue": Array [],
+                  "queueing": false,
+                },
+                "pristineProps": Object {
+                  "name": "__tls.first-name.ja_JP",
+                },
+                "props": Object {
+                  "name": "__tls.first-name.ja_JP",
+                },
+                "record": [Circular],
+                "validator": Validator {
+                  "control": undefined,
+                  "field": [Circular],
+                  "innerValidationResults": Array [],
+                },
+              },
               "__tls.first-name.zh_CN": Field {
                 "dataSet": [Circular],
                 "isDynamicPropsComputing": false,
@@ -949,6 +998,7 @@ exports[`IntlField-pro renders dataset correctly 1`] = `
                   "bind": undefined,
                   "cascadeMap": undefined,
                   "defaultValidationMessages": undefined,
+                  "disabled": undefined,
                   "format": undefined,
                   "help": undefined,
                   "label": undefined,
@@ -1095,6 +1145,27 @@ exports[`IntlField-pro renders dataset correctly 1`] = `
                   "innerValidationResults": Array [],
                 },
               },
+              "__tls.first-name.ja_JP": Field {
+                "dataSet": [Circular],
+                "isDynamicPropsComputing": false,
+                "lastDynamicProps": Object {},
+                "pending": PromiseQueue {
+                  "queue": Array [],
+                  "queueing": false,
+                },
+                "pristineProps": Object {
+                  "name": "__tls.first-name.ja_JP",
+                },
+                "props": Object {
+                  "name": "__tls.first-name.ja_JP",
+                },
+                "record": [Circular],
+                "validator": Validator {
+                  "control": undefined,
+                  "field": [Circular],
+                  "innerValidationResults": Array [],
+                },
+              },
               "__tls.first-name.zh_CN": Field {
                 "dataSet": [Circular],
                 "isDynamicPropsComputing": false,
@@ -1123,6 +1194,7 @@ exports[`IntlField-pro renders dataset correctly 1`] = `
                   "bind": undefined,
                   "cascadeMap": undefined,
                   "defaultValidationMessages": undefined,
+                  "disabled": undefined,
                   "format": undefined,
                   "help": undefined,
                   "label": undefined,
@@ -1184,6 +1256,7 @@ exports[`IntlField-pro renders dataset correctly 1`] = `
         "totalCount": 1,
       }
     }
+    disabled={false}
     multiple={false}
     name="first-name"
     noValidate={false}
@@ -1472,6 +1545,7 @@ exports[`IntlField-pro renders dataset correctly 1`] = `
               <input
                 autoComplete="off"
                 className="c7n-pro-input"
+                disabled={false}
                 key="text"
                 multiple={false}
                 name="first-name"
@@ -1610,6 +1684,29 @@ exports[`IntlField-pro renders dataset correctly 2`] = `
             "innerValidationResults": Array [],
           },
         },
+        "__tls.first.ja_JP": Field {
+          "dataSet": [Circular],
+          "isDynamicPropsComputing": false,
+          "lastDynamicProps": Object {},
+          "pending": PromiseQueue {
+            "queue": Array [],
+            "queueing": false,
+          },
+          "pristineProps": Object {
+            "label": "日本語",
+            "type": "string",
+          },
+          "props": Object {
+            "label": "日本語",
+            "type": "string",
+          },
+          "record": undefined,
+          "validator": Validator {
+            "control": undefined,
+            "field": [Circular],
+            "innerValidationResults": Array [],
+          },
+        },
         "__tls.first.zh_CN": Field {
           "dataSet": [Circular],
           "isDynamicPropsComputing": false,
@@ -1640,6 +1737,7 @@ exports[`IntlField-pro renders dataset correctly 2`] = `
             "bind": undefined,
             "cascadeMap": undefined,
             "defaultValidationMessages": undefined,
+            "disabled": undefined,
             "format": undefined,
             "help": undefined,
             "label": undefined,
@@ -1745,6 +1843,27 @@ exports[`IntlField-pro renders dataset correctly 2`] = `
                 "innerValidationResults": Array [],
               },
             },
+            "__tls.first.ja_JP": Field {
+              "dataSet": [Circular],
+              "isDynamicPropsComputing": false,
+              "lastDynamicProps": Object {},
+              "pending": PromiseQueue {
+                "queue": Array [],
+                "queueing": false,
+              },
+              "pristineProps": Object {
+                "name": "__tls.first.ja_JP",
+              },
+              "props": Object {
+                "name": "__tls.first.ja_JP",
+              },
+              "record": [Circular],
+              "validator": Validator {
+                "control": undefined,
+                "field": [Circular],
+                "innerValidationResults": Array [],
+              },
+            },
             "__tls.first.zh_CN": Field {
               "dataSet": [Circular],
               "isDynamicPropsComputing": false,
@@ -1773,6 +1892,7 @@ exports[`IntlField-pro renders dataset correctly 2`] = `
                 "bind": undefined,
                 "cascadeMap": undefined,
                 "defaultValidationMessages": undefined,
+                "disabled": undefined,
                 "format": undefined,
                 "help": undefined,
                 "label": undefined,
@@ -1916,6 +2036,27 @@ exports[`IntlField-pro renders dataset correctly 2`] = `
                 "innerValidationResults": Array [],
               },
             },
+            "__tls.first.ja_JP": Field {
+              "dataSet": [Circular],
+              "isDynamicPropsComputing": false,
+              "lastDynamicProps": Object {},
+              "pending": PromiseQueue {
+                "queue": Array [],
+                "queueing": false,
+              },
+              "pristineProps": Object {
+                "name": "__tls.first.ja_JP",
+              },
+              "props": Object {
+                "name": "__tls.first.ja_JP",
+              },
+              "record": [Circular],
+              "validator": Validator {
+                "control": undefined,
+                "field": [Circular],
+                "innerValidationResults": Array [],
+              },
+            },
             "__tls.first.zh_CN": Field {
               "dataSet": [Circular],
               "isDynamicPropsComputing": false,
@@ -1944,6 +2085,7 @@ exports[`IntlField-pro renders dataset correctly 2`] = `
                 "bind": undefined,
                 "cascadeMap": undefined,
                 "defaultValidationMessages": undefined,
+                "disabled": undefined,
                 "format": undefined,
                 "help": undefined,
                 "label": undefined,
@@ -2004,6 +2146,7 @@ exports[`IntlField-pro renders dataset correctly 2`] = `
       "totalCount": 1,
     }
   }
+  disabled={false}
   multiple={false}
   name="first"
   noValidate={false}
@@ -2292,6 +2435,7 @@ exports[`IntlField-pro renders dataset correctly 2`] = `
             <input
               autoComplete="off"
               className="c7n-pro-input"
+              disabled={false}
               key="text"
               multiple={false}
               name="first"

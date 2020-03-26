@@ -268,6 +268,7 @@ exports[`CodeArea-pro the codeArea javascript formatter and lint test 1`] = `
       "totalCount": 0,
     }
   }
+  disabled={false}
   formatHotKey="Alt-F"
   formatter={JSFormatter {}}
   name="content"
@@ -566,6 +567,7 @@ exports[`CodeArea-pro the codeArea javascript formatter and lint test 1`] = `
           <label>
             <Controlled
               className="c7n-pro-code-area"
+              disabled={false}
               editorDidMount={[Function]}
               formatter={JSFormatter {}}
               name="content"
@@ -904,6 +906,7 @@ exports[`CodeArea-pro the codeArea json formatter and lint test 1`] = `
       "totalCount": 0,
     }
   }
+  disabled={false}
   formatHotKey="Home"
   formatter={JSONFormatter {}}
   name="content"
@@ -1205,6 +1208,7 @@ exports[`CodeArea-pro the codeArea json formatter and lint test 1`] = `
           <label>
             <Controlled
               className="c7n-pro-code-area"
+              disabled={false}
               editorDidMount={[Function]}
               formatter={JSONFormatter {}}
               name="content"

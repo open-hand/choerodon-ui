@@ -10,7 +10,7 @@ title: Configure
 ```jsx
 import { configure, getConfig } from 'choerodon-ui';
 
-configure({ prefixCls: 'ant' });
+configure({ prefixCls: 'c7n' });
 
 const prefixCls = getConfig('prefixCls');
 ```
@@ -45,6 +45,7 @@ const prefixCls = getConfig('prefixCls');
 | tableRowHeight | Default Table row height | auto \| number | 30 |
 | tableColumnResizable | Default Table column resizable | boolean | true |
 | tableExpandIcon | Default Table custom expansion icon | ({ prefixCls, expanded, expandable, needIndentSpaced, record, onExpand }) => ReactNode |  |
+| tableSpinProps | Default Table spin props | SpinProps | { size: Size.default, wrapperClassName: '' } |
 | tableButtonProps | Default Table button props | ButtonProps | { color: 'primary', funcType: 'flat' } |
 | tableCommandProps | Default Table command props | ButtonProps | { color: 'primary', funcType: 'flat' } |
 | modalSectionBorder | Default if Modal header and foot have a border line | boolean | true |

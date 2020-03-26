@@ -144,6 +144,7 @@ exports[`Range should show tooltip when hovering range handler 1`] = `
       "totalCount": 0,
     }
   }
+  disabled={false}
   max={100}
   min={0}
   multiple={false}
@@ -432,6 +433,7 @@ exports[`Range should show tooltip when hovering range handler 1`] = `
           <input
             autoComplete="off"
             className="c7n-pro-range"
+            disabled={false}
             max={100}
             min={0}
             multiple={false}
@@ -648,6 +650,7 @@ exports[`Range should show tooltip when hovering range handler 2`] = `
       "totalCount": 0,
     }
   }
+  disabled={false}
   max={100}
   min={0}
   multiple={false}
@@ -936,6 +939,7 @@ exports[`Range should show tooltip when hovering range handler 2`] = `
           <input
             autoComplete="off"
             className="c7n-pro-range"
+            disabled={false}
             max={100}
             min={0}
             multiple={false}
@@ -1152,6 +1156,7 @@ exports[`Range the range drag test  1`] = `
       "totalCount": 0,
     }
   }
+  disabled={false}
   max={100}
   min={0}
   multiple={false}
@@ -1440,6 +1445,7 @@ exports[`Range the range drag test  1`] = `
           <input
             autoComplete="off"
             className="c7n-pro-range"
+            disabled={false}
             max={100}
             min={0}
             multiple={false}
