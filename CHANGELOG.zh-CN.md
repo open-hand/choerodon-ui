@@ -15,9 +15,39 @@ timeline: true
 
 ---
 
-- 🌟 `<pro>Tree`: 新增 defaultExpandAll 等默认属性。
-- 🌟 `Tree`: 新增 tree 的虚拟滚动以及其他如load等属性。
-- 💄 `<pro>LocaleContext`: 优化日语配置完善文档。
+- 🌟 `<pro>Skeleton`: 
+  - 🌟 `<pro>Skeleton`:添加Skeleton Pro组件,实现与dataSet绑定使用
+  - 🌟 `<pro>Skeleton`:添加skeletonTitile	是否显示标题占位图,等同于tiltle属性
+- 🌟 `Skeleton`: 新增Skeleton组件在需要等待加载内容的位置提供一个占位图形组合
+- 🌟 `<pro>Tree`: 
+  - 🌟 新增 `<pro>Tree` defaultExpandAll	默认展开所有树节点当dataSet绑定expandField 时候忽略
+  - 🌟 新增 `<pro>Tree`defaultExpandedKeys	默认展开指定的树节点当dataSet绑定expandField 时候忽略
+  - 🌟 新增 `<pro>Tree`defaultCheckedKeys	默认选中复选框的树节点当dataSet绑定checkField 时候忽略
+  - 🌟 新增 `<pro>Tree`defaultSelectKeys	默认选择节点当，默认绑定dataSet的 idField
+- 🌟 `Tree`
+  - 🌟 新增 Tree onLoad节点加载完毕时触发
+  - 🌟 新增 Tree treeDatatreeNodes 数据，如果设置则不需要手动构造 TreeNode 节点（key 在整个树范围内唯一）
+  - 🌟 新增 TreeNode checkable当树为 checkable 时，设置独立节点是否展示 Checkbox
+  - 🌟 新增 DirectoryTree expandAction目录展开逻辑，可选 false 'click' 'doubleClick'
+  - 🌟 新增 Tree blockNode是否节点占据一行
+  - 🌟 新增 Tree 使用 height 属性则切换为虚拟滚动
+- `<pro>TimePicker`:
+  -  format 和 step 能影响组件的显示。
+  - 🐞 修复 chrome 下鼠标滚轮报错的问题。
+- `<pro>DataSet.Field`:
+  -  扩展 step 属性，用于时间组件的步距限制。
+  -  新增 disabled 属性。
+  - 🐞 修复动态属性空值判断比较。
+-  `<pro>Table`:
+  -  扩展 spin 配置, 新增 spin & custom inline demo。
+  -  优化 table tooltip、table border-bottom 样式问题。
+  - 🐞 修复 editor 属性类型定义。
+-  `Icon`: 增加新的图标。
+-  `configure`: 新增 tableSpinProps 属性。
+-  `<pro>Spin`: 新增绑定数据源demo.
+-  `<pro>LocaleContext`: 优化日语配置完善文档。
+-  `<pro>DataSet`: 优化 autoLocateAfterRemove, 删除失败后重置保留选中状态并定位到删除项第一条。
+- 🐞 `Spin`: 修复 size 属性无效问题。
   
 ## 0.8.57
 
