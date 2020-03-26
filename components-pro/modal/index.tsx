@@ -1,4 +1,4 @@
-import Modal from './Modal';
+import Modal, { destroyFns } from './Modal';
 import { getKey, open } from '../modal-container/ModalContainer';
 import confirm from './confirm';
 import { normalizeProps } from './utils';
@@ -36,6 +36,14 @@ Modal.warning = function(props) {
     okCancel: false,
     ...normalizeProps(props),
   });
+};
+Modal.destroyAll = function destroyAllFn() {
+  while (destroyFns.length) {
+    const close = destroyFns.pop();
+    if (close) {
+      close();
+    }
+  }
 };
 
 export default Modal;

@@ -22,18 +22,21 @@ import { $l } from '../locale-context';
 import DataSetRequestError from '../data-set/DataSetRequestError';
 import { suffixCls } from './utils';
 
+export const destroyFns: Array<() => void> = [];
+
 export interface ModalProps extends ViewComponentProps {
   closable?: boolean;
   movable?: boolean;
   fullScreen?: boolean;
   maskClosable?: boolean;
   keyboardClosable?: boolean;
+  confirmLoading?: boolean;
   footer?: ((okBtn: ReactNode, cancelBtn: ReactNode) => ReactNode) | ReactNode | boolean;
   destroyOnClose?: boolean;
   okText?: ReactNode;
   cancelText?: ReactNode;
-  okProps?: ButtonProps;
-  cancelProps?: ButtonProps;
+  okProps?: ButtonProps | any;
+  cancelProps?: ButtonProps | any;
   onClose?: () => Promise<boolean | undefined>;
   onOk?: () => Promise<boolean | undefined>;
   onCancel?: () => Promise<boolean | undefined>;
@@ -57,6 +60,7 @@ export default class Modal extends ViewComponent<ModalProps> {
     movable: PropTypes.bool,
     fullScreen: PropTypes.bool,
     maskClosable: PropTypes.bool,
+    confirmLoading: PropTypes.bool,
     keyboardClosable: PropTypes.bool,
     footer: PropTypes.oneOfType([PropTypes.func, PropTypes.node, PropTypes.bool]),
     destroyOnClose: PropTypes.bool,
@@ -89,6 +93,7 @@ export default class Modal extends ViewComponent<ModalProps> {
     fullScreen: false,
     drawer: false,
     autoFocus: true,
+    confirmLoading: false,
   };
 
   static key;
@@ -104,6 +109,8 @@ export default class Modal extends ViewComponent<ModalProps> {
   static error;
 
   static warning;
+
+  static destroyAll: () => void;
 
   moveEvent: EventManager = new EventManager(typeof window === 'undefined' ? undefined : document);
 
@@ -146,6 +153,8 @@ export default class Modal extends ViewComponent<ModalProps> {
       'cancelProps',
       'border',
       'okFirst',
+      'drawerTransitionName',
+      'confirmLoading',
     ]);
     if (this.props.keyboardClosable) {
       otherProps.autoFocus = true;
@@ -355,6 +364,7 @@ export default class Modal extends ViewComponent<ModalProps> {
     const {
       okProps,
       cancelProps,
+      confirmLoading,
       drawer,
       okText = $l('Modal', 'ok'),
       cancelText = $l('Modal', 'cancel'),
@@ -370,9 +380,10 @@ export default class Modal extends ViewComponent<ModalProps> {
         funcType={funcType}
         color={ButtonColor.primary}
         onClick={this.handleOk}
+        loading={confirmLoading}
         {...okProps}
       >
-        {okText}
+        { okText }
       </Button>
     );
     const cancelBtn = (
@@ -383,7 +394,7 @@ export default class Modal extends ViewComponent<ModalProps> {
         onClick={this.handleCancel}
         {...cancelProps}
       >
-        {cancelText}
+        { cancelText }
       </Button>
     );
 
