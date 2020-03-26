@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { createPortal, render } from 'react-dom';
+import ReactDOM, { createPortal, render } from 'react-dom';
 import classNames from 'classnames';
 import findLast from 'lodash/findLast.js';
 import noop from 'lodash/noop';
@@ -7,7 +7,7 @@ import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import warning from 'choerodon-ui/lib/_util/warning';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure';
-import Modal, { ModalProps } from '../modal/Modal';
+import Modal, { ModalProps, destroyFns } from '../modal/Modal';
 import Animate from '../animate';
 import Mask from './Mask';
 import { stopEvent } from '../_util/EventManager';
@@ -168,6 +168,8 @@ export default class ModalContainer extends Component<ModalContainerProps> {
 
   open(props: ModalProps) {
     const { modals } = this.state;
+    // eslint-disable-next-line no-console
+    console.log('props', props);
     if (!props.key) {
       props.key = getKey();
       warning(
@@ -190,6 +192,24 @@ export default class ModalContainer extends Component<ModalContainerProps> {
     if (target) {
       Object.assign(target, props, { hidden: true });
       this.setState({ modals });
+    }
+  }
+
+  destroy() {
+    const unmountResult = ReactDOM.unmountComponentAtNode(getRoot());
+    if (unmountResult && getRoot().parentNode) {
+      getRoot().parentNode.removeChild(getRoot());
+    }
+    // const triggerCancel = args.some(param => param && param.triggerCancel);
+    // if (props.onCancel && triggerCancel) {
+    //   props.onCancel();
+    // }
+    for (let i = 0; i < destroyFns.length; i++) {
+      const fn = destroyFns[i];
+      if (fn === close) {
+        destroyFns.splice(i, 1);
+        break;
+      }
     }
   }
 
@@ -329,10 +349,6 @@ export function open(props: ModalProps & { children }) {
     }
   }
 
-  function show() {
-    container.open(props);
-  }
-
   function update(newProps) {
     container.update({ ...props, ...newProps });
   }
@@ -344,6 +360,16 @@ export function open(props: ModalProps & { children }) {
     ...props,
   };
   container.open(props);
+
+  destroyFns.push(close);
+  // eslint-disable-next-line no-console
+  console.log('destroyFns', destroyFns);
+
+  function show(newProps) {
+    // eslint-disable-next-line no-console
+    console.log('object', props);
+    container.open({ ...props, ...newProps });
+  }
 
   return {
     close,

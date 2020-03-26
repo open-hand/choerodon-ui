@@ -462,7 +462,7 @@ export default class Form extends DataSetComponent<FormProps> {
 
     function completeLine() {
       if (cols.length) {
-        rows.push(<tr key={`row-${rowIndex}`}>{cols}</tr>);
+        rows.push((<tr key={`row-${rowIndex}`}>{cols}</tr>));
         cols = [];
       }
       rowIndex++;
@@ -535,7 +535,9 @@ export default class Form extends DataSetComponent<FormProps> {
             className={labelClassName}
             rowSpan={rowSpan}
           >
-            <label>{label}</label>
+            <label>
+              {label}
+            </label>
           </td>,
         );
       }
@@ -579,10 +581,10 @@ export default class Form extends DataSetComponent<FormProps> {
     }
     return [
       this.getHeader(),
-      <table key="form-body">
+      (<table key="form-body">
         {cols.length ? <colgroup>{cols}</colgroup> : undefined}
         <tbody>{rows}</tbody>
-      </table>,
+      </table>),
     ];
   }
 
@@ -617,7 +619,6 @@ export default class Form extends DataSetComponent<FormProps> {
         </form>
       );
     }
-
     return (
       <Responsive
         items={[

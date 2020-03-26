@@ -53,7 +53,7 @@ class App extends React.Component {
         labelWidth: 150,
         required: true,
         pattern: '^1[3-9]\\d{9}$',
-      }, // /^1[3-9]\d{9}$/
+      },
       {
         name: 'password',
         type: 'string',
