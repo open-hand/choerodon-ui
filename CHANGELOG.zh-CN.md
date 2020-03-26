@@ -48,7 +48,8 @@ timeline: true
 -  `<pro>LocaleContext`: 优化日语配置完善文档。
 -  `<pro>DataSet`: 优化 autoLocateAfterRemove, 删除失败后重置保留选中状态并定位到删除项第一条。
 - 🐞 `Spin`: 修复 size 属性无效问题。
-
+- 💄 `<pro>Upload`: 优化完善Upload文档。
+- 🌟 `<pro>Upload`: 新增 defaultFileList,uploadFileList,withCredentials,appendUpload,partialUpload 属性以及 beforeUpload, onRemoveFile回调。
 ## 0.8.57
 
 `2020-03-12`

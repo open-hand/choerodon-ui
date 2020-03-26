@@ -11,6 +11,8 @@ exports[`Tree-pro should have a Tooltip inside 1`] = `
     ]
   }
   action="http://upload.com/"
+  appendUpload={false}
+  beforeUpload={[Function]}
   data={Object {}}
   disabled={false}
   fileListMaxLength={0}
@@ -24,6 +26,7 @@ exports[`Tree-pro should have a Tooltip inside 1`] = `
   noValidate={false}
   onUploadError={[Function]}
   onUploadSuccess={[Function]}
+  partialUpload={true}
   previewImageWidth={100}
   readOnly={false}
   showHelp="newLine"
@@ -33,6 +36,7 @@ exports[`Tree-pro should have a Tooltip inside 1`] = `
   suffixCls="upload"
   trim="both"
   uploadImmediately={false}
+  withCredentials={false}
 >
   <div
     className="c7n-pro-upload"

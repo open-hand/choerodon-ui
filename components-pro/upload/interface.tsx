@@ -6,7 +6,7 @@ export interface UploadFile {
   lastModified?: string;
   lastModifiedDate?: Date;
   url?: string;
-  status?: 'error' | 'success' | 'uploading' | 'done';
+  status?: 'error' | 'success' | 'uploading' | 'done' | 'removed';
   percent?: number;
   thumbUrl?: string;
   originFileObj?: File;

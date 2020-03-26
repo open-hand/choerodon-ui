@@ -48,8 +48,8 @@ timeline: true
 -  `<pro>LocaleContext`: Optimize japanese configuration support and Fix the document.
 -  `<pro>DataSet`: Optimize `autoLocateAfterRemove`, reset the reserved selected state after deletion failed and locate to delete item first.
 - 🐞 `Spin`: Fix invalid `size` property issue.
-
-
+- 💄 `<pro>Upload`: Optimize Upload Document.
+- 🌟 `<pro>Upload`: Added defaultFileList, uploadFileList, withCredentials, appendUpload, partialUpload properties and beforeUpload, onRemoveFile callbacks.
 ## 0.8.57
 
 `2020-03-12`
