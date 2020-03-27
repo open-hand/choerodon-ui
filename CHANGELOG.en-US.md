@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.58
+
+`2020-03-27`
+
 - 🌟 `Icon`: Added new icon.
 - 🌟 `Tree`: Support virtual scrolling.
 - 🌟 `Tree`: Added `onLoad` callback.
@@ -43,6 +47,7 @@ timeline: true
 - 🐞 `Spin`: Fixed invalid `size` property problem.
 - 🐞 `<pro>Upload`: Fixed IE 11 compatibility issues.
 - 🐞 `<pro>Table`: Fixed `editor` type error.
+- 🐞 `<pro>Table`: Fixed filterBar lookup value undefined.
 - 🐞 `<pro>DataSet.Field`: Fixed `dynamicProps` null judgment comparison.
 - 🐞 `<pro>TimePicker`: Fixed the mouse wheel error report under chrome.
 

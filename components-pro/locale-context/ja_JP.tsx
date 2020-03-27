@@ -30,6 +30,7 @@ const locale: Locale = {
   Pagination: {
     page: 'ページ',
     jump_to: 'ジャンプする',
+    jump_to_confirm: 'を選択します',
     records_per_page: 'ページあたりの行数:',
   },
   Upload: {
