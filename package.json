@@ -279,6 +279,9 @@
     "**/*.{js,jsx,ts,tsx}": [
       "npm run lint:script"
     ],
+    "{site,components,components-pro}/**/*.less": [
+      "npm run lint:style"
+    ],
     "components/*/demo/*.md": [
       "npm run lint:demo",
       "git add"
