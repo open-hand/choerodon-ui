@@ -77,7 +77,9 @@
     "prop-types": "^15.7.2",
     "querystringify": "^2.1.0",
     "raf": "^3.4.1",
+    "rc-animate": "^2.10.3",
     "rc-editor-core": "~0.8.3",
+    "rc-virtual-list": "^1.1.1",
     "react-codemirror2": "5.1.0",
     "react-lazy-load": "^3.0.13",
     "react-slick": "~0.25.2",
@@ -242,7 +244,7 @@
     "test-node": "jest --config .jest.node.js",
     "test-all": "sh ./scripts/test-all.sh",
     "test-all-skip": "sh ./scripts/test-all.sh --skip",
-    "lint": "npm run lint:tsc && npm run lint:script && npm run lint:demo && npm run lint:style",
+    "lint": "npm run lint:script && npm run lint:demo && npm run lint:style",
     "lint:tsc": "npm run tsc",
     "lint:script": "eslint **/*.{js,jsx,ts,tsx} --ext '.js,.jsx,.ts,.tsx'",
     "lint:md": "remark components/",
@@ -274,14 +276,8 @@
     }
   },
   "lint-staged": {
-    "*.ts": [
-      "npm run lint:tsc"
-    ],
     "**/*.{js,jsx,ts,tsx}": [
       "npm run lint:script"
-    ],
-    "{site,components,components-pro}/**/*.less": [
-      "npm run lint:style"
     ],
     "components/*/demo/*.md": [
       "npm run lint:demo",

@@ -25,7 +25,9 @@ timeline: true
 - 🌟 `<pro>Pagination`: Add hideOnSinglePage property。
 - 🌟 `<pro>TextArea`: Add autoSize property。
 - 💄 `<pro>Upload`: Optimize Upload Document.
-- 🌟 `<pro>Upload`: Add defaultFileList, uploadFileList, withCredentials, appendUpload, partialUpload properties and beforeUpload, onRemoveFile callbacks.
+- 🌟 `<pro>Upload`: Added defaultFileList, uploadFileList, withCredentials, appendUpload, partialUpload properties and beforeUpload, onRemoveFile callbacks.
+- 🌟 `<pro>Tree`: Add `defaultExpandAll` and more property.
+- 🌟 `Tree`: Add `load` virtual scroll and more property .
 - 💄 `<pro>LocaleContext`: Optimize japansese configuration support and Fix the document.
 - 💄 `<pro>Table`: Optimize table tooltip，table border-bottom style issue.
 - 💄 `<pro>DataSet`: Optimize `autoLocateAfterRemove`, reset the reserved selected state after deletion failed and locate to delete item first.

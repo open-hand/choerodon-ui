@@ -26,6 +26,8 @@ timeline: true
 - 🌟 `<pro>TextArea`: 新增 autoSize属性。
 - 💄 `<pro>Upload`: 优化完善Upload文档。
 - 🌟 `<pro>Upload`: 新增 defaultFileList,uploadFileList,withCredentials,appendUpload,partialUpload 属性以及 beforeUpload, onRemoveFile回调。
+- 🌟 `<pro>Tree`: 新增 defaultExpandAll 等默认属性。
+- 🌟 `Tree`: 新增 tree 的虚拟滚动以及其他如load等属性。
 - 💄 `<pro>LocaleContext`: 优化日语配置完善文档。
 - 💄 `<pro>Table`: 优化 table tooltip、table border-bottom 样式问题。
 - 💄 `<pro>DataSet`: 优化 autoLocateAfterRemove, 删除失败后重置保留选中状态并定位到删除项第一条。

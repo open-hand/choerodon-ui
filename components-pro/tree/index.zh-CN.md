@@ -18,6 +18,10 @@ subtitle: 树形控件
 | dataSet | 绑定的数据源 | DataSet |  |
 | renderer | 节点渲染钩子，只在绑定数据源时起效 | ({ dataSet, record, text }) => ReactNode |  |
 | titleField | 节点文字对应数据源的字段，只在绑定数据源时起效 | string |  |
+| defaultExpandAll | 默认展开所有树节点当dataSet绑定expandField 时候忽略 | boolean | false |
+| defaultExpandedKeys | 默认展开指定的树节点当dataSet绑定expandField 时候忽略 | string[]	| [] |
+| defaultCheckedKeys | 默认选中复选框的树节点当dataSet绑定checkField 时候忽略 | string[] | [] |
+| defaultSelectKeys | 默认选择节点当，默认绑定dataSet的 idField | string[] | [] |
 
 更多案列和属性请参考 [Tree](/components/tree/)。
 
