@@ -22,6 +22,8 @@ import { $l } from '../locale-context';
 import DataSetRequestError from '../data-set/DataSetRequestError';
 import { suffixCls } from './utils';
 
+export const destroyFns: Array<() => void> = [];
+
 export interface ModalProps extends ViewComponentProps {
   closable?: boolean;
   movable?: boolean;
@@ -105,6 +107,8 @@ export default class Modal extends ViewComponent<ModalProps> {
 
   static warning;
 
+  static destroyAll: () => void;
+
   moveEvent: EventManager = new EventManager(typeof window === 'undefined' ? undefined : document);
 
   okCancelEvent: EventManager = new EventManager();
@@ -146,6 +150,7 @@ export default class Modal extends ViewComponent<ModalProps> {
       'cancelProps',
       'border',
       'okFirst',
+      'drawerTransitionName',
     ]);
     if (this.props.keyboardClosable) {
       otherProps.autoFocus = true;
@@ -372,7 +377,7 @@ export default class Modal extends ViewComponent<ModalProps> {
         onClick={this.handleOk}
         {...okProps}
       >
-        {okText}
+        { okText }
       </Button>
     );
     const cancelBtn = (
@@ -383,7 +388,7 @@ export default class Modal extends ViewComponent<ModalProps> {
         onClick={this.handleCancel}
         {...cancelProps}
       >
-        {cancelText}
+        { cancelText }
       </Button>
     );
 

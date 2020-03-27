@@ -31,6 +31,9 @@ timeline: true
 - 🌟 `<pro>Skeleton`: Added Skeleton Pro component.
 - 🌟 `<pro>Tree`: Support virtual scrolling.
 - 🌟 `<pro>Tree`: Added `defaultExpandAll`, `defaultExpandedKeys`, `defaultCheckedKeys`, `defaultSelectKeys` properties.
+- 💄 `<pro>Pagination`: Optimized showTotal, showQuickJumper properties.
+- 🌟 `<pro>Pagination`: Added hideOnSinglePage properties.
+- 🌟 `<pro>TextArea`: Added autoSize properties.
 - 🌟 `<pro>Upload`: Added `beforeUpload`, `onRemoveFile` callback.
 - 🌟 `<pro>Upload`: Added `defaultFileList`, `uploadFileList`, `withCredentials`, `appendUpload`, `partialUpload` properties.
 - 💄 `<pro>Table`: Optimized table `tooltip` style.

@@ -24,10 +24,11 @@ title: Pagination
 | pageSize | 分页数 | number |  |
 | onChange | 页码改变的回调，参数是改变后的页码及每页条数 | (page, pageSize) => void |  |
 | pageSizeOptions | 指定每页可以显示多少条 | string\[] | \['10', '20', '50', '100'\] |
-| showQuickJumper | 是否显示快速跳转至某页 | boolean | false |
+| showQuickJumper | 是否显示快速跳转至某页 | boolean \| { goButton: ReactNode } | false |
+| hideOnSinglePage | 只有一页时是否隐藏分页器 | boolean | false |
 | showSizeChanger | 是否显示分页大小选择器 | boolean | true |
 | showSizeChangerLabel | 是否显示分页大小选择器的标签 | boolean | true |
-| showTotal | 显示总数 | boolean | true |
+| showTotal | 显示总数，当传入function时可自定义显示数据总量和当前数据顺序  | boolean \| Function(total, range) | true |
 | showPager | 显示数字按钮 | boolean | false |
 | itemRender | 按钮渲染。`type` - 按钮类型，可选值：`first` `last` `prev` `next` `jump-prev` `jump-next` | (page, type) => ReactNode |  |
 | sizeChangerPosition | 分页大小选择器的位置，可选值: `left` `right` | string | left |

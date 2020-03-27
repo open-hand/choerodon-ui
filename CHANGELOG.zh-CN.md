@@ -31,6 +31,9 @@ timeline: true
 - 🌟 `<pro>Skeleton`: 新增 Skeleton Pro 组件。
 - 🌟 `<pro>Tree`: 支持虚拟滚动。
 - 🌟 `<pro>Tree`: 新增 defaultExpandAll, defaultExpandedKeys, defaultCheckedKeys, defaultSelectKeys 属性。
+- 💄 `<pro>Pagination`: 优化showTotal, showQuickJumper属性。
+- 🌟 `<pro>Pagination`: 新增 hideOnSinglePage属性。
+- 🌟 `<pro>TextArea`: 新增 autoSize属性。
 - 🌟 `<pro>Upload`: 新增 beforeUpload, onRemoveFile 回调。
 - 🌟 `<pro>Upload`: 新增 defaultFileList, uploadFileList, withCredentials, appendUpload, partialUpload 属性。
 - 💄 `<pro>Table`: 优化 table tooltip、table border-bottom 样式问题。
