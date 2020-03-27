@@ -1,7 +1,8 @@
 ---
 category: Components
-type: 数据展示
+type: Data Display
 title: Tree
+subtitle: 树形控件
 ---
 
 多层次的结构列表。

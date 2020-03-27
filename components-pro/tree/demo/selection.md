@@ -17,7 +17,7 @@ DataSet.
 
 ````jsx
 import { DataSet, Tree } from 'choerodon-ui/pro';
-import {Row, Col} from 'choerodon-ui';
+import { Row, Col } from 'choerodon-ui';
 
 function nodeRenderer({ record }) {
   return record.get('text');
@@ -28,9 +28,9 @@ class App extends React.Component {
     primaryKey: 'id',
     queryUrl: '/tree-less.mock',
     autoQuery: true,
-    expandField:'expand',
-    selection:false,
-    checkField:'ischecked',
+    expandField: 'expand',
+    selection: false,
+    checkField: 'ischecked',
     parentField: 'parentId',
     idField: 'id',
     fields: [
@@ -43,28 +43,29 @@ class App extends React.Component {
       unSelect: ({ record, dataSet }) => console.log('unSelect', record, dataSet),
     },
   });
+
   render() {
     return (
-     <>
-       <Row>
-         <Col span={12}>
-             <Tree
-                    dataSet={this.ds}
-                    checkable
-                    showLine
-                    draggable
-                    showIcon
-                    renderer={nodeRenderer}
-                  />
-         </Col>
-       </Row>
-     </>
+      <>
+        <Row>
+          <Col span={12}>
+            <Tree
+              dataSet={this.ds}
+              checkable
+              showLine
+              draggable
+              showIcon
+              renderer={nodeRenderer}
+            />
+          </Col>
+        </Row>
+      </>
     );
   }
 }
 
 ReactDOM.render(
   <App />,
-  mountNode
+  mountNode,
 );
 ````
