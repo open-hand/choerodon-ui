@@ -53,12 +53,11 @@ class App extends React.Component {
           }),
         },
       },
-      { name: 'lov', type: 'string', lovCode: 'LOV_CODE', defaultValue: 'SYS.PROFILE_LEVEL_ID' },
       {
         name: 'lov2',
         type: 'string',
-        lovCode: 'LOV_CODE',
-        defaultValue: ['SYS.PROFILE_LEVEL_ID', 'SYS.RESOURCE_TYPE'],
+        lookupCode: 'SHI',
+        defaultValue: ['QP', 'XH'],
         multiple: true,
       },
     ],
@@ -85,10 +84,14 @@ class App extends React.Component {
           <Select dataSet={this.ds} name="sex2" placeholder="请选择" />
         </Col>
         <Col span={12}>
-          <Select dataSet={this.ds} name="lov" placeholder="请选择" />
-        </Col>
-        <Col span={12}>
-          <Select dataSet={this.ds} name="lov2" placeholder="请选择" />
+          <Select 
+            dataSet={this.ds} 
+            name="lov2" 
+            placeholder="请选择" 
+            maxTagCount={2} 
+            maxTagTextLength={3} 
+            maxTagPlaceholder={restValues => `+${restValues.length}...`}
+          />
         </Col>
       </Row>
     );

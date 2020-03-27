@@ -40,6 +40,7 @@ export interface Locale {
     upload_failure;
     no_file;
     upload_path_unset;
+    been_uploaded;
     not_acceptable_prompt;
     file_list_max_length;
   };

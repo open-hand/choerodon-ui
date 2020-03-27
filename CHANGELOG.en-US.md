@@ -15,22 +15,33 @@ timeline: true
 
 ---
 
-- `<pro>TimePicker`:
-  - 🌟  `format` and `step` can affect the display of the component.
-  - 🐞  Fix mouse wheel error report under chrome.
-- `<pro>DataSet.Field`:
-  - 🌟 Extended step property, used for step limit of time component.
-  - 🌟 Add `disabled` property.
-  - 🐞 Fix `dynamicProps` null value comparison.
-- 🌟 `<pro>Table`:
-  - 🌟 Expand `spin` configuration, add spin & custom inline demo.
-  - 💄 Optimize table tooltip，table border-bottom style issue.
-  - 🐞 Fix the type definition of `editor` property.
-- 🌟 `configure`: Add `tableSpinProps` properties.
-- 🌟 `<pro>Spin`: Add dataSet binding demo.
-- 💄 `<pro>LocaleContext`: Optimize japanese configuration support and Fix the document.
-- 💄 `<pro>DataSet`: Optimize `autoLocateAfterRemove`, reset the reserved selected state after deletion failed and locate to delete item first.
-- 🐞 `Spin`: Fix invalid `size` property issue.
+- 🌟 `Icon`: Added new icon.
+- 🌟 `Tree`: Support virtual scrolling.
+- 🌟 `Tree`: Added `onLoad` callback.
+- 🌟 `Tree`: Added `treeDatatreeNodes`, `treeData`, `blockNode` properties.
+- 🌟 `Tree.TreeNode`: Added `checkable` property.
+- 🌟 `Tree.DirectoryTree`:  Added a built-in directory tree.
+- 🌟 `Skeleton`: Added `Skeleton` component.
+- 🌟 `configure`:  Added `tableSpinProps` global configuration.
+- 🌟 `<pro>Spin`: Added demo.
+- 🌟 `<pro>DataSet.Field`: Added `disabled` property.
+- 🌟 `<pro>DataSet.Field`: Extended `step` property, used for step limit of time component.
+- 🌟 `<pro>TimePicker`: `format` and `step` can affect the display of the component.
+- 🌟 `<pro>Table`: Extended `spin` property, Added spin & custom inline demo.
+- 🌟 `<pro>Skeleton`: Added Skeleton Pro component.
+- 🌟 `<pro>Tree`: Support virtual scrolling.
+- 🌟 `<pro>Tree`: Added `defaultExpandAll`, `defaultExpandedKeys`, `defaultCheckedKeys`, `defaultSelectKeys` properties.
+- 🌟 `<pro>Upload`: Added `beforeUpload`, `onRemoveFile` callback.
+- 🌟 `<pro>Upload`: Added `defaultFileList`, `uploadFileList`, `withCredentials`, `appendUpload`, `partialUpload` properties.
+- 💄 `<pro>Table`: Optimized table `tooltip` style.
+- 💄 `<pro>Upload`: Optimized Upload doc.  
+- 💄 `<pro>LocaleContext`: Optimized Japanese configuration documentation.
+- 💄 `<pro>DataSet`: Optimized `autoLocateAfterRemove`, reset the reserved selected state after deletion failed and locate to delete item 1.
+- 🐞 `Spin`: Fixed invalid `size` property problem.
+- 🐞 `<pro>Upload`: Fixed IE 11 compatibility issues.
+- 🐞 `<pro>Table`: Fixed `editor` type error.
+- 🐞 `<pro>DataSet.Field`: Fixed `dynamicProps` null judgment comparison.
+- 🐞 `<pro>TimePicker`: Fixed the mouse wheel error report under chrome.
 
 ## 0.8.57
 
@@ -54,7 +65,7 @@ timeline: true
 
 `2020-02-18`
 
-- 🌟 Add xhr-mock mock config。
+- 🌟 Add xhr-mock mock config.
 - 🐞 `<pro>Button`: Fix incomplete presentation style.
 - 🐞 `<pro>Table`: Fix the inline edit lov rendering err.
 
@@ -619,7 +630,7 @@ timeline: true
 - 🐞 `<pro>DataSet`: Fix the problem that the transport hooks does not pass `params`.
 - 🐞 `<pro>Lov`: Fix the problem when the Field.type is string, the text is not displayed.
 - 🐞 `<pro>SelectBox`: Fix the problem that children changes are not rendered.
-- 🐞 `Modal`: Fix the problem that `width` property doesn't work with `SideBar`。
+- 🐞 `Modal`: Fix the problem that `width` property doesn't work with `SideBar`.
 
 ## 0.7.6
 
@@ -870,7 +881,7 @@ timeline: true
 
 - 🌟 `Icon`: Add new icons.
 - 🌟 `Table`: Add onColumnFilterChange. Callback executed when ColumnFilter is changed.
-- 💄 `Demo`: Fix bisheng demo site can't expand code by click the button。
+- 💄 `Demo`: Fix bisheng demo site can't expand code by click the button.
 - 💄 `Avatar`: Fix avatar Chinese text positioning is not accurate.
 
 ## 0.4.0
@@ -1088,7 +1099,7 @@ timeline: true
 - 🌟 `Pagination`: Added prop `tiny` for table pagination theme.
 - 💄 `Tab`: Adjust the icons.
 - 🐞 `Table`: Fixed error for the choose value of fiter bar.
-- 🐞 `Ripple`: Fixed error for style of child node。
+- 🐞 `Ripple`: Fixed error for style of child node.
 - 🌟 `Icon`: Add new icons.
 - 🐞 `Input`: Fix prefix and suffix.
 
@@ -1097,9 +1108,9 @@ timeline: true
 `2018-05-02`
 
 - Table
-  - 🌟 `FilterBar`: Added multiple choose function by prop `column.filterMultiple`。
-  - 🐞 `FilterBar`: Fixed column filter error。
-  - 🐞 Fixed the issue that the expand icon does not rotate by center。
+  - 🌟 `FilterBar`: Added multiple choose function by prop `column.filterMultiple`.
+  - 🐞 `FilterBar`: Fixed column filter error.
+  - 🐞 Fixed the issue that the expand icon does not rotate by center.
 - 🐞 `Modal.Sidebar`: Fix Button's loading display.
 
 ## 0.1.0
@@ -1117,16 +1128,16 @@ timeline: true
 
 - 💄 Adjust Table row's expanded icon.
 - 🐞 Fixed rc-components error under IE9.
-- 🌟 Added `placement` for message to position。
-- 🌟 Added `bottom` for message's config。
-- 🌟 Added `footer` for Select。
+- 🌟 Added `placement` for message to position.
+- 🌟 Added `bottom` for message's config.
+- 🌟 Added `footer` for Select.
 
 ## 0.0.4
 
 `2018-04-25`
 
 - 💄 Adjust Table's filter bar to forbid OR logic by default.
-- 💄 Adjust the style of Select's clear icon 。
+- 💄 Adjust the style of Select's clear icon .
 - 🌟 Added `funcType` for Modal to button function.
 
 ## 0.0.3

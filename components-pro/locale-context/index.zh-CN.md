@@ -30,6 +30,15 @@ const { localeContext, locales } = window['choerodon-ui/pro'];
 
 localeContext.setLocale(zh_CN);
 ```
+注意：设置 IntlField 多语言输入。注意一般是在整个项目外层设置语言支持，不推荐在业务组件中使用，因为会修改全局的支持情况。
+
+```jsx
+import { localeContext } from 'choerodon-ui/pro';
+
+...
+
+localeContext.setSupport({zh_CN: '简体中文',en_GB: 'English',en_US: 'English(US)',ja_JP:'日本語');
+```
 
 ### 增加语言包
 
@@ -40,4 +49,4 @@ localeContext.setLocale(zh_CN);
 | 方法 | 说明 | 参数类型 | 默认值 |
 | --- | --- | --- | --- |
 | setLocale(locale) | 语言包配置，语言包可到 `choerodon-ui/pro/lib/locale-context/` 目录下寻找 | object | choerodon-ui/pro/lib/locale-context/zh_CN |
-| setSupports(supports) | IntlField支持的可编辑语言，默认可参考 `choerodon-ui/pro/lib/locale-context/supports`  | object | {zh_CN: '简体中文',en_GB: 'English',en_US: 'English(US)',ja_JP: '日本語',} |
+| setSupports(supports) | IntlField支持的可编辑语言，默认可参考ja_JP,en_GB,en_US, zh_CN`choerodon-ui/pro/lib/locale-context/supports`  | object | {zh_CN: '简体中文',en_GB: 'English',en_US: 'English(US)'} |

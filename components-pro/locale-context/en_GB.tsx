@@ -38,6 +38,7 @@ const locale: Locale = {
     upload_success: 'Upload successfully',
     upload_failure: 'Fail to upload',
     no_file: 'No File',
+    been_uploaded: 'File uploaded',
     upload_path_unset: 'Upload path unset',
     not_acceptable_prompt: 'Upload List contains unacceptable file, accept:',
     file_list_max_length: 'Number of files exceeded the maximum',
