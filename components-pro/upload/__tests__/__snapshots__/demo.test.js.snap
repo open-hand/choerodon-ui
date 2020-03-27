@@ -427,8 +427,8 @@ exports[`renders ./components-pro/upload/demo/upload-method.md correctly 1`] = `
           >
             <button
               class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-primary c7n-pro-btn-wrapper c7n-pro-field"
-              colindex="0"
-              rowindex="1"
+              colIndex="0"
+              rowIndex="1"
               style="margin-bottom:10px"
               type="button"
             >

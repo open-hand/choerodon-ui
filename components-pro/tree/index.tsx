@@ -1,19 +1,47 @@
 import Set from 'core-js/library/fn/set';
-import React, { Component } from 'react';
+import React, { Component,MouseEvent} from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
-import { computed, observable, runInAction } from 'mobx';
+import { computed, action, observable, runInAction } from 'mobx';
 import noop from 'lodash/noop';
 import C7NTree, {
   TreeNode,
-  TreeNodeEvent,
-  TreeNodeExpandEvent,
+  DataNode,
+  C7nTreeNodeProps,
+  EventDataNode,
   TreeProps as C7NTreeProps,
 } from 'choerodon-ui/lib/tree';
+import autobind from 'choerodon-ui/pro/lib/_util/autobind';
 import DataSet from '../data-set/DataSet';
 import { getKey, getTreeNodes, NodeRenderer } from './util';
 import { BooleanValue, DataSetSelection } from '../data-set/enum';
 import Spin from '../spin';
+
+interface C7nNodeEvent extends EventDataNode {
+  eventKey:string
+} 
+interface TreeNodeCheckedEvent {
+  event: 'check';
+  node: C7nNodeEvent;
+  checked: boolean;
+  nativeEvent: MouseEvent;
+  checkedNodes: DataNode[];
+  checkedNodesPositions?: { node: DataNode; pos: string }[];
+  halfCheckedKeys?: string[];
+}
+
+interface C7nTreeNodeSelectedEvent {
+  event: "select";
+  selected: boolean;
+  node: C7nNodeEvent;
+  selectedNodes: DataNode[];
+  nativeEvent:MouseEvent;
+}
+interface C7nTreeNodeExpandedEvent {
+  expanded:boolean;
+  nativeEvent:MouseEvent;
+  node:C7nNodeEvent;
+}
 
 export interface TreeProps extends C7NTreeProps {
   dataSet?: DataSet;
@@ -25,6 +53,7 @@ function defaultRenderer({ text }) {
   return text;
 }
 
+const keyPropType = PropTypes.oneOfType([PropTypes.string, PropTypes.number]);
 @observer
 export default class Tree extends Component<TreeProps> {
   static displayName = 'Tree<PRO>';
@@ -32,13 +61,13 @@ export default class Tree extends Component<TreeProps> {
   static propTypes = {
     prefixCls: PropTypes.string,
     className: PropTypes.string,
+    style: PropTypes.object,
     tabIndex: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     children: PropTypes.any,
     treeData: PropTypes.array, // Generate treeNode by children
     showLine: PropTypes.bool,
     showIcon: PropTypes.bool,
     icon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-    focusable: PropTypes.bool,
     selectable: PropTypes.bool,
     disabled: PropTypes.bool,
     multiple: PropTypes.bool,
@@ -48,15 +77,15 @@ export default class Tree extends Component<TreeProps> {
     defaultExpandParent: PropTypes.bool,
     autoExpandParent: PropTypes.bool,
     defaultExpandAll: PropTypes.bool,
-    defaultExpandedKeys: PropTypes.arrayOf(PropTypes.string),
-    expandedKeys: PropTypes.arrayOf(PropTypes.string),
-    defaultCheckedKeys: PropTypes.arrayOf(PropTypes.string),
+    defaultExpandedKeys: PropTypes.arrayOf(keyPropType),
+    expandedKeys: PropTypes.arrayOf(keyPropType),
+    defaultCheckedKeys: PropTypes.arrayOf(keyPropType),
     checkedKeys: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
+      PropTypes.arrayOf(keyPropType),
       PropTypes.object,
     ]),
-    defaultSelectedKeys: PropTypes.arrayOf(PropTypes.string),
-    selectedKeys: PropTypes.arrayOf(PropTypes.string),
+    defaultSelectedKeys: PropTypes.arrayOf(keyPropType),
+    selectedKeys: PropTypes.arrayOf(keyPropType),
     onClick: PropTypes.func,
     onDoubleClick: PropTypes.func,
     onExpand: PropTypes.func,
@@ -64,7 +93,7 @@ export default class Tree extends Component<TreeProps> {
     onSelect: PropTypes.func,
     onLoad: PropTypes.func,
     loadData: PropTypes.func,
-    loadedKeys: PropTypes.arrayOf(PropTypes.string),
+    loadedKeys: PropTypes.arrayOf(keyPropType),
     onMouseEnter: PropTypes.func,
     onMouseLeave: PropTypes.func,
     onRightClick: PropTypes.func,
@@ -75,8 +104,7 @@ export default class Tree extends Component<TreeProps> {
     onDragEnd: PropTypes.func,
     onDrop: PropTypes.func,
     filterTreeNode: PropTypes.func,
-    openTransitionName: PropTypes.string,
-    openAnimation: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    motion: PropTypes.object,
     switcherIcon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   };
 
@@ -87,6 +115,122 @@ export default class Tree extends Component<TreeProps> {
   @observable stateExpandedKeys: string[];
 
   stateForceRenderKeys: string[] = [];
+
+
+  componentWillMount() {
+    this.handleDataSetLoad();
+    this.processDataSetListener(true);
+  }
+
+
+  componentWillReceiveProps(nextProps) {
+    const {defaultExpandAll,defaultSelectedKeys,defaultExpandedKeys,defaultCheckedKeys} = this.props;
+    if(defaultExpandAll !== nextProps.defaultExpandAll ||
+      defaultExpandedKeys !== nextProps.defaultExpandedKeys ||
+      defaultCheckedKeys !== nextProps.defaultCheckKeys ||
+      defaultSelectedKeys !== nextProps.defaultSelectedKeys
+      ){
+      this.processDataSetListener(false);
+      this.processDataSetListener(true);
+    }
+  }
+
+  componentWillUnmount() {
+    this.processDataSetListener(false);
+  }
+
+  processDataSetListener(flag: boolean) {
+    const { dataSet } = this.props;
+    if (dataSet) {
+      const handler = flag ? dataSet.addEventListener : dataSet.removeEventListener;
+      handler.call(dataSet, 'load', this.handleDataSetLoad);
+    }
+  }
+
+  @autobind
+  handleDataSetLoad() {
+    this.initDefaultExpandedRows();
+    this.initDefaultCheckRows();
+    this.initDefaultSelectRows();
+  }
+
+  @action
+  initDefaultExpandedRows() {
+    const {
+      props: {
+        defaultExpandAll,
+        dataSet,
+        defaultExpandedKeys,
+      },
+    } = this;
+    this.stateExpandedKeys = this.dealDefalutCheckExpand(dataSet,defaultExpandedKeys,defaultExpandAll)
+  }
+
+  @action
+  initDefaultCheckRows(){
+    const {
+      props: {
+        dataSet,
+        defaultCheckedKeys,
+      },
+    } = this;
+    this.stateCheckedKeys = this.dealDefalutCheckExpand(dataSet,defaultCheckedKeys)
+  }
+
+  @action
+  initDefaultSelectRows(){
+    const {
+      props: {
+        dataSet,
+        defaultSelectedKeys,
+      },
+    } = this;
+    if(dataSet && (defaultSelectedKeys)){
+      const { idField } = dataSet.props;
+      defaultSelectedKeys.map(selectKey => {
+        const found = dataSet.find(
+          record => selectKey === String(idField ? record.get(idField) : record.id),
+        );
+        if(found){
+          dataSet.select(found)
+        }
+        return null
+      })
+    }
+
+  }
+
+  /**
+   * 处理tree的props expand check的默认事件
+   * @param dataSet
+   * @param defalutAll
+   * @param defalutKeys
+   */
+  dealDefalutCheckExpand(dataSet:DataSet|undefined,defalutKeys:string[]|undefined,defalutAll?:boolean){
+    let defalutStateKeys: string[] = []
+    if(dataSet){
+      const {idField, expandField} = dataSet.props;
+      if ( defalutAll && !expandField) {
+        defalutStateKeys = dataSet.reduce<(string)[]>((array, record) => {
+          if (record.children) {
+            array.push(getKey(record, idField));
+          }
+          return array;
+        }, []);
+      }else if(defalutKeys && !expandField){
+        defalutStateKeys = dataSet.reduce<(string)[]>((array, record) => {
+          defalutKeys.map((key) => {
+            if(getKey(record,idField) === key){
+              array.push(key)
+            }
+            return null
+          })
+          return array;
+        },[]);
+      }
+    }
+    return defalutStateKeys
+  }
 
   @computed
   get forceRenderKeys() {
@@ -150,16 +294,16 @@ export default class Tree extends Component<TreeProps> {
     });
   }
 
-  setExpand(eventObj: TreeNodeExpandEvent) {
+  setExpand(eventObj: C7nTreeNodeExpandedEvent) {
     const { dataSet } = this.props;
     if (dataSet) {
       const { expandField, idField } = dataSet.props;
       if (expandField) {
         const { node, expanded } = eventObj;
-        const { eventKey } = node.props;
+        const { eventKey } = node;
         const found = dataSet.find(record => eventKey === getKey(record, idField));
         if (found) {
-          found.isExpanded = expanded;
+          found.isExpanded = !!expanded;
           return false;
         }
       }
@@ -167,13 +311,14 @@ export default class Tree extends Component<TreeProps> {
     return true;
   }
 
-  setCheck(eventObj: TreeNodeEvent) {
+
+  setCheck(eventObj: C7nTreeNodeProps) {
     const { dataSet } = this.props;
     if (dataSet) {
       const { checkField, idField } = dataSet.props;
       if (checkField) {
         const { node, checked } = eventObj;
-        const { eventKey } = node.props;
+        const { eventKey } = node;
         const found = dataSet.find(
           record => eventKey === String(idField ? record.get(idField) : record.id),
         );
@@ -194,32 +339,34 @@ export default class Tree extends Component<TreeProps> {
     return true;
   }
 
-  handleExpand = (expandedKeys: string[], eventObj: TreeNodeExpandEvent) => {
+  handleExpand = (expandedKeys: string[], eventObj: C7nTreeNodeExpandedEvent) => {
     if (this.setExpand(eventObj)) {
       runInAction(() => {
         this.stateExpandedKeys = expandedKeys;
       });
     }
     const { onExpand = noop } = this.props;
+    // @ts-ignore
     onExpand(expandedKeys, eventObj);
   };
 
-  handleCheck = (checkedKeys: string[], eventObj: TreeNodeEvent) => {
+  handleCheck = (checkedKeys: string[], eventObj: TreeNodeCheckedEvent) => {
     if (this.setCheck(eventObj)) {
       runInAction(() => {
         this.stateCheckedKeys = checkedKeys;
       });
     }
     const { onCheck = noop } = this.props;
+    // @ts-ignore
     onCheck(checkedKeys, eventObj);
   };
 
-  handleSelect = (_selectedKeys: string[], eventObj: TreeNodeEvent) => {
+  handleSelect = (_selectedKeys: string[], eventObj: C7nTreeNodeSelectedEvent) => {
     const { dataSet } = this.props;
     if (dataSet) {
       const { idField } = dataSet.props;
       const { node, selected } = eventObj;
-      const { eventKey } = node.props;
+      const { eventKey } = node;
       const found = dataSet.find(
         record => eventKey === String(idField ? record.get(idField) : record.id),
       );
@@ -244,8 +391,11 @@ export default class Tree extends Component<TreeProps> {
         renderer,
         titleField,
       );
+      // @ts-ignore
       props.onExpand = this.handleExpand;
+      // @ts-ignore
       props.onCheck = this.handleCheck;
+      // @ts-ignore
       props.onSelect = this.handleSelect;
       props.expandedKeys = this.expandedKeys.slice();
       props.checkedKeys = this.checkedKeys.slice();

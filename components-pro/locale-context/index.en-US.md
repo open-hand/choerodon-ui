@@ -30,6 +30,16 @@ const { localeContext, locales } = window['choerodon-ui/pro'];
 
 localeContext.setLocale(zh_CN);
 ```
+note：set IntlField support language。usually use it in container project to set the IntlField support . when you change the support in bussiness component it would affect the whole situation 。
+
+```jsx
+import { localeContext } from 'choerodon-ui/pro';
+
+...
+...
+
+localeContext.setSupport({zh_CN: '简体中文',en_GB: 'English',en_US: 'English(US)',ja_JP:'日本語');
+```
 
 ### Add the language 
 
@@ -40,9 +50,8 @@ if you can't find the language whitch you want，we are wecome to you can create
 | Property | Description | Type | Default |
 | --- | --- | --- | --- |
 | setLocale(locale) | language package can find in `choerodon-ui/pro/lib/locale-context/` | object | choerodon-ui/pro/lib/locale-context/zh_CN |
-| setSupports(supports) | IntlField support language，defaule  `choerodon-ui/pro/lib/locale-context/supports`  | object | {
+| setSupports(supports) | IntlField support language，defaule  ja_JP,en_GB,en_US,zh_CN`choerodon-ui/pro/lib/locale-context/supports`  | object | {
   zh_CN: '简体中文',
   en_GB: 'English',
   en_US: 'English(US)',
-  ja_JP: '日本語',
 } |

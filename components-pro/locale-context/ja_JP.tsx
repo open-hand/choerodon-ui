@@ -38,6 +38,7 @@ const locale: Locale = {
     upload_success: 'アップロード成功',
     upload_failure: 'アップロードに失敗しました',
     no_file: 'ファイルなし',
+    been_uploaded: 'アップロードされたファイル',
     upload_path_unset: 'アップロードパスが設定されていません',
     not_acceptable_prompt: 'アップロードタイプのファイルが一致しません。予想:',
     file_list_max_length: 'ファイル数が上限を超えています',

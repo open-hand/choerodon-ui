@@ -15,19 +15,41 @@ timeline: true
 
 ---
 
-- 🌟 `<pro>TimePicker`: `format` and `step` can affect the display of the component.
-- 🌟 `<pro>DataSet.Field`: extended step property, used for step limit of time component.
-- 🌟 `<pro>DataSet.Field`: Add `disabled` property.
-- 🌟 `<pro>Table`: Expand `spin` configuration, add spin & custom inline demo.
-- 🌟 `configure`: Add `tableSpinProps` properties.
-- 🌟 `<pro>Spin`: Add dataSet binding demo.
-- 💄 `<pro>LocaleContext`: Optimize japanese configuration support and Fix the document.
-- 💄 `<pro>Table`: Optimize table tooltip，table border-bottom style issue.
-- 💄 `<pro>DataSet`: Optimize `autoLocateAfterRemove`, reset the reserved selected state after deletion failed and locate to delete item first.
+- 🌟 `<pro>Skeleton`:
+  - 🌟 Add `<pro>Skeleton`Add Skeleton Pro bind the dataSet
+  - 🌟 Add `<pro>Skeleton` Add skeletonTitile	Show title placeholder，equal to the title property
+- 🌟 `Skeleton`: Add component Provide a placeholder while you wait for content to load, or to visualise content that doesn't exist yet
+- 🌟 `<pro>Tree`:
+  - 🌟 Add `<pro>Tree`defaultExpandAll	defalut expand all the node , when dataSet bind expandField ignore it
+  - 🌟 Add `<pro>Tree`defaultExpandedKeys	defalut expand these node dataSetbind expandField ignore it
+  - 🌟 Add `<pro>Tree`defaultCheckedKeys	defalut check these node when dataSet bind checkField ignore it
+  - 🌟 Add `<pro>Tree`defaultSelectKeys	defalut select these node when dataSet bind idField ignore it
+- 🌟 `Tree`
+  - 🌟 Add Tree onLoad	Callback function for when a treeNode is loaded
+  - 🌟 Add Tree treeData	treeNodes data Array, if set it then you need not to construct children TreeNode. (key should be unique across the whole array)
+  - 🌟 Add TreeNode checkable	When Tree is checkable, set TreeNode display Checkbox or not
+  - 🌟 Add DirectoryTree  expandAction	Directory open logic, optional false 'click' 'doubleClick'
+  - 🌟 Add Tree blockNode	Whether treeNode fill remaining horizontal space
+-   🌟 Add Tree Use virtual list through height prop.
+- `<pro>TimePicker`:
+  -   `format` and `step` can affect the display of the component.
+  - 🐞  Fix mouse wheel error report under chrome.
+- `<pro>DataSet.Field`:
+  -  Extended step property, used for step limit of time component.
+  -  Add `disabled` property.
+  - 🐞 Fix `dynamicProps` null value comparison.
+-  `<pro>Table`:
+  -  Expand `spin` configuration, add spin & custom inline demo.
+  -  Optimize table tooltip，table border-bottom style issue.
+  - 🐞 Fix the type definition of `editor` property.
+-  `Icon`: Add new icons.
+-  `configure`: Add `tableSpinProps` properties.
+-  `<pro>Spin`: Add dataSet binding demo.
+-  `<pro>LocaleContext`: Optimize japanese configuration support and Fix the document.
+-  `<pro>DataSet`: Optimize `autoLocateAfterRemove`, reset the reserved selected state after deletion failed and locate to delete item first.
 - 🐞 `Spin`: Fix invalid `size` property issue.
-- 🐞 `<pro>TimePicker`: Fix mouse wheel error report under chrome.
-- 🐞 `<pro>Table`: Fix `editor` property type.
-
+- 💄 `<pro>Upload`: Optimize Upload Document.
+- 🌟 `<pro>Upload`: Added defaultFileList, uploadFileList, withCredentials, appendUpload, partialUpload properties and beforeUpload, onRemoveFile callbacks.
 ## 0.8.57
 
 `2020-03-12`

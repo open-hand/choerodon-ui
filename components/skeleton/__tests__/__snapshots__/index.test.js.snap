@@ -1,0 +1,486 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Skeleton avatar element active 1`] = `
+<div
+  class="c7n-skeleton c7n-skeleton-element c7n-skeleton-active"
+>
+  <span
+    class="c7n-skeleton-avatar c7n-skeleton-avatar-circle"
+  />
+</div>
+`;
+
+exports[`Skeleton avatar element shape 1`] = `
+<div
+  class="c7n-skeleton c7n-skeleton-element"
+>
+  <span
+    class="c7n-skeleton-avatar c7n-skeleton-avatar-circle"
+  />
+</div>
+`;
+
+exports[`Skeleton avatar element shape 2`] = `
+<div
+  class="c7n-skeleton c7n-skeleton-element"
+>
+  <span
+    class="c7n-skeleton-avatar c7n-skeleton-avatar-square"
+  />
+</div>
+`;
+
+exports[`Skeleton avatar element size 1`] = `
+<div
+  class="c7n-skeleton c7n-skeleton-element"
+>
+  <span
+    class="c7n-skeleton-avatar c7n-skeleton-avatar-sm c7n-skeleton-avatar-circle"
+  />
+</div>
+`;
+
+exports[`Skeleton avatar element size 2`] = `
+<div
+  class="c7n-skeleton c7n-skeleton-element"
+>
+  <span
+    class="c7n-skeleton-avatar c7n-skeleton-avatar-circle"
+  />
+</div>
+`;
+
+exports[`Skeleton avatar element size 3`] = `
+<div
+  class="c7n-skeleton c7n-skeleton-element"
+>
+  <span
+    class="c7n-skeleton-avatar c7n-skeleton-avatar-lg c7n-skeleton-avatar-circle"
+  />
+</div>
+`;
+
+exports[`Skeleton avatar element size 4`] = `
+<div
+  class="c7n-skeleton c7n-skeleton-element"
+>
+  <span
+    class="c7n-skeleton-avatar c7n-skeleton-avatar-circle"
+    style="width: 20px; height: 20px; line-height: 20px;"
+  />
+</div>
+`;
+
+exports[`Skeleton avatar shape 1`] = `
+<div
+  class="c7n-skeleton c7n-skeleton-with-avatar"
+>
+  <div
+    class="c7n-skeleton-header"
+  >
+    <span
+      class="c7n-skeleton-avatar c7n-skeleton-avatar-lg c7n-skeleton-avatar-circle"
+    />
+  </div>
+  <div
+    class="c7n-skeleton-content"
+  >
+    <h3
+      class="c7n-skeleton-title"
+      style="width: 50%;"
+    />
+    <ul
+      class="c7n-skeleton-paragraph"
+    >
+      <li />
+      <li />
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`Skeleton avatar shape 2`] = `
+<div
+  class="c7n-skeleton c7n-skeleton-with-avatar"
+>
+  <div
+    class="c7n-skeleton-header"
+  >
+    <span
+      class="c7n-skeleton-avatar c7n-skeleton-avatar-lg c7n-skeleton-avatar-square"
+    />
+  </div>
+  <div
+    class="c7n-skeleton-content"
+  >
+    <h3
+      class="c7n-skeleton-title"
+      style="width: 50%;"
+    />
+    <ul
+      class="c7n-skeleton-paragraph"
+    >
+      <li />
+      <li />
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`Skeleton avatar size 1`] = `
+<div
+  class="c7n-skeleton c7n-skeleton-with-avatar"
+>
+  <div
+    class="c7n-skeleton-header"
+  >
+    <span
+      class="c7n-skeleton-avatar c7n-skeleton-avatar-sm c7n-skeleton-avatar-circle"
+    />
+  </div>
+  <div
+    class="c7n-skeleton-content"
+  >
+    <h3
+      class="c7n-skeleton-title"
+      style="width: 50%;"
+    />
+    <ul
+      class="c7n-skeleton-paragraph"
+    >
+      <li />
+      <li />
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`Skeleton avatar size 2`] = `
+<div
+  class="c7n-skeleton c7n-skeleton-with-avatar"
+>
+  <div
+    class="c7n-skeleton-header"
+  >
+    <span
+      class="c7n-skeleton-avatar c7n-skeleton-avatar-circle"
+    />
+  </div>
+  <div
+    class="c7n-skeleton-content"
+  >
+    <h3
+      class="c7n-skeleton-title"
+      style="width: 50%;"
+    />
+    <ul
+      class="c7n-skeleton-paragraph"
+    >
+      <li />
+      <li />
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`Skeleton avatar size 3`] = `
+<div
+  class="c7n-skeleton c7n-skeleton-with-avatar"
+>
+  <div
+    class="c7n-skeleton-header"
+  >
+    <span
+      class="c7n-skeleton-avatar c7n-skeleton-avatar-lg c7n-skeleton-avatar-circle"
+    />
+  </div>
+  <div
+    class="c7n-skeleton-content"
+  >
+    <h3
+      class="c7n-skeleton-title"
+      style="width: 50%;"
+    />
+    <ul
+      class="c7n-skeleton-paragraph"
+    >
+      <li />
+      <li />
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`Skeleton avatar size 4`] = `
+<div
+  class="c7n-skeleton c7n-skeleton-with-avatar"
+>
+  <div
+    class="c7n-skeleton-header"
+  >
+    <span
+      class="c7n-skeleton-avatar c7n-skeleton-avatar-circle"
+      style="width: 20px; height: 20px; line-height: 20px;"
+    />
+  </div>
+  <div
+    class="c7n-skeleton-content"
+  >
+    <h3
+      class="c7n-skeleton-title"
+      style="width: 50%;"
+    />
+    <ul
+      class="c7n-skeleton-paragraph"
+    >
+      <li />
+      <li />
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`Skeleton button element active 1`] = `
+<div
+  class="c7n-skeleton c7n-skeleton-element c7n-skeleton-active"
+>
+  <span
+    class="c7n-skeleton-button"
+  />
+</div>
+`;
+
+exports[`Skeleton button element shape 1`] = `
+<div
+  class="c7n-skeleton c7n-skeleton-element"
+>
+  <span
+    class="c7n-skeleton-button"
+  />
+</div>
+`;
+
+exports[`Skeleton button element shape 2`] = `
+<div
+  class="c7n-skeleton c7n-skeleton-element"
+>
+  <span
+    class="c7n-skeleton-button c7n-skeleton-button-round"
+  />
+</div>
+`;
+
+exports[`Skeleton button element shape 3`] = `
+<div
+  class="c7n-skeleton c7n-skeleton-element"
+>
+  <span
+    class="c7n-skeleton-button c7n-skeleton-button-circle"
+  />
+</div>
+`;
+
+exports[`Skeleton button element size 1`] = `
+<div
+  class="c7n-skeleton c7n-skeleton-element"
+>
+  <span
+    class="c7n-skeleton-button"
+  />
+</div>
+`;
+
+exports[`Skeleton button element size 2`] = `
+<div
+  class="c7n-skeleton c7n-skeleton-element"
+>
+  <span
+    class="c7n-skeleton-button c7n-skeleton-button-lg"
+  />
+</div>
+`;
+
+exports[`Skeleton button element size 3`] = `
+<div
+  class="c7n-skeleton c7n-skeleton-element"
+>
+  <span
+    class="c7n-skeleton-button c7n-skeleton-button-sm"
+  />
+</div>
+`;
+
+exports[`Skeleton input element active 1`] = `
+<div
+  class="c7n-skeleton c7n-skeleton-element c7n-skeleton-active"
+>
+  <span
+    class="c7n-skeleton-input"
+  />
+</div>
+`;
+
+exports[`Skeleton input element size 1`] = `
+<div
+  class="c7n-skeleton c7n-skeleton-element"
+>
+  <span
+    class="c7n-skeleton-input c7n-skeleton-input-sm"
+  />
+</div>
+`;
+
+exports[`Skeleton input element size 2`] = `
+<div
+  class="c7n-skeleton c7n-skeleton-element"
+>
+  <span
+    class="c7n-skeleton-input"
+  />
+</div>
+`;
+
+exports[`Skeleton input element size 3`] = `
+<div
+  class="c7n-skeleton c7n-skeleton-element"
+>
+  <span
+    class="c7n-skeleton-input c7n-skeleton-input-lg"
+  />
+</div>
+`;
+
+exports[`Skeleton paragraph rows 1`] = `
+<div
+  class="c7n-skeleton"
+>
+  <div
+    class="c7n-skeleton-content"
+  >
+    <h3
+      class="c7n-skeleton-title"
+      style="width: 38%;"
+    />
+    <ul
+      class="c7n-skeleton-paragraph"
+    >
+      <li />
+      <li />
+      <li />
+      <li />
+      <li
+        style="width: 61%;"
+      />
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`Skeleton paragraph width 1`] = `
+<div
+  class="c7n-skeleton"
+>
+  <div
+    class="c7n-skeleton-content"
+  >
+    <h3
+      class="c7n-skeleton-title"
+      style="width: 38%;"
+    />
+    <ul
+      class="c7n-skeleton-paragraph"
+    >
+      <li />
+      <li />
+      <li
+        style="width: 93%;"
+      />
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`Skeleton paragraph width 2`] = `
+<div
+  class="c7n-skeleton"
+>
+  <div
+    class="c7n-skeleton-content"
+  >
+    <h3
+      class="c7n-skeleton-title"
+      style="width: 38%;"
+    />
+    <ul
+      class="c7n-skeleton-paragraph"
+    >
+      <li
+        style="width: 28%;"
+      />
+      <li
+        style="width: 93%;"
+      />
+      <li />
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`Skeleton should square avatar 1`] = `
+<div
+  class="c7n-skeleton c7n-skeleton-with-avatar"
+>
+  <div
+    class="c7n-skeleton-header"
+  >
+    <span
+      class="c7n-skeleton-avatar c7n-skeleton-avatar-lg c7n-skeleton-avatar-square"
+    />
+  </div>
+  <div
+    class="c7n-skeleton-content"
+  >
+    <h3
+      class="c7n-skeleton-title"
+    />
+  </div>
+</div>
+`;
+
+exports[`Skeleton should without avatar and paragraph 1`] = `
+<div
+  class="c7n-skeleton"
+>
+  <div
+    class="c7n-skeleton-content"
+  >
+    <h3
+      class="c7n-skeleton-title"
+    />
+  </div>
+</div>
+`;
+
+exports[`Skeleton title width 1`] = `
+<div
+  class="c7n-skeleton"
+>
+  <div
+    class="c7n-skeleton-content"
+  >
+    <h3
+      class="c7n-skeleton-title"
+      style="width: 93%;"
+    />
+    <ul
+      class="c7n-skeleton-paragraph"
+    >
+      <li />
+      <li />
+      <li
+        style="width: 61%;"
+      />
+    </ul>
+  </div>
+</div>
+`;
