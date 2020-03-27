@@ -55,7 +55,7 @@ export interface ViewComponentProps
   autoFocus?: boolean;
   /**
    * 组件大小<未实现>
-   * 可选值 `default` `small` `big`
+   * 可选值 `default` `small` `large`
    */
   size?: Size;
   /**

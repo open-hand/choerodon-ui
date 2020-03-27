@@ -7,7 +7,7 @@ import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import warning from 'choerodon-ui/lib/_util/warning';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure';
-import Modal, { ModalProps } from '../modal/Modal';
+import Modal, { ModalProps, destroyFns } from '../modal/Modal';
 import Animate from '../animate';
 import Mask from './Mask';
 import { stopEvent } from '../_util/EventManager';
@@ -329,10 +329,6 @@ export function open(props: ModalProps & { children }) {
     }
   }
 
-  function show() {
-    container.open(props);
-  }
-
   function update(newProps) {
     container.update({ ...props, ...newProps });
   }
@@ -344,6 +340,12 @@ export function open(props: ModalProps & { children }) {
     ...props,
   };
   container.open(props);
+
+  destroyFns.push(close);
+
+  function show(newProps) {
+    container.open({ ...props, ...newProps });
+  }
 
   return {
     close,

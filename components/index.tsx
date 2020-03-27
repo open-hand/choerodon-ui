@@ -97,6 +97,8 @@ export { default as Steps } from './steps';
 
 export { default as Switch } from './switch';
 
+export { default as Skeleton } from './skeleton';
+
 export { default as Table } from './table';
 
 export { default as Transfer } from './transfer';

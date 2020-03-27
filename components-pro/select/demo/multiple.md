@@ -55,7 +55,7 @@ class App extends React.Component {
           </Select>
         </Col>
         <Col span={12}>
-          <Select multiple placeholder="多选" onChange={handleChange} defaultValue={['jack', 'wu']}>
+          <Select multiple placeholder="多选" onChange={handleChange} defaultValue={['jack', 'wu', 'lucy']}>
             <Option value="jack">Jack</Option>
             <Option value="lucy">Lucy</Option>
             <Option value="wu">Wu</Option>

@@ -16,7 +16,6 @@ Resizable.
 ````jsx
 import { TextArea, Row, Col } from 'choerodon-ui/pro';
 
-
 ReactDOM.render(
   <Row gutter={10}>
     <Col span={8}>

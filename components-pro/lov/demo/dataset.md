@@ -41,7 +41,7 @@ class App extends React.Component {
       },
       {
         name: 'code_string',
-        type: 'string',
+        type: 'object',
         lovCode: 'LOV_CODE',
         required: true,
       },

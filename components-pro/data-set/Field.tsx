@@ -35,7 +35,7 @@ function isEqualDynamicProps(oldProps, newProps) {
   if (newProps === oldProps) {
     return true;
   }
-  if (isObject(newProps) && isObject(oldProps)) {
+  if (isObject(newProps) && isObject(oldProps) && Object.keys(newProps).length) {
     return Object.keys(newProps).every(key => {
       const value = newProps[key];
       const oldValue = oldProps[key];
@@ -451,25 +451,24 @@ export default class Field {
         if (typeof dynamicProps === 'function') {
           warning(
             false,
-            `
-The dynamicProps hook will be deprecated. Please use dynamicProps map.
-For e.g,
-Bad case:
-dynamicProps({ record }) {
-  return {
-    bind: record.get('xx'),
-    label: record.get('yy'),
-  }
-}
-Good case:
-dynamicProps = {
-  bind({ record }) {
-    return record.get('xx')
-  },
-  label({ record }) {
-    return record.get('yy'),
-  }
-}`,
+            ` The dynamicProps hook will be deprecated. Please use dynamicProps map.
+              For e.g,
+              Bad case:
+              dynamicProps({ record }) {
+                return {
+                  bind: record.get('xx'),
+                  label: record.get('yy'),
+                }
+              }
+              Good case:
+              dynamicProps = {
+                bind({ record }) {
+                  return record.get('xx')
+                },
+                label({ record }) {
+                  return record.get('yy'),
+                }
+              }`,
           );
           const props = this.executeDynamicProps(dynamicProps);
           if (props && propsName in props) {
@@ -577,8 +576,8 @@ dynamicProps = {
    * @return {string}
    */
   getText(value: any = this.getValue(), showValueIfNotFound?: boolean): string | undefined {
-    const textField = this.get('textField');
-    const valueField = this.get('valueField');
+    const textField = this.get('textField') || 'meaning';
+    const valueField = this.get('valueField') || 'value';
     const { lookup, options } = this;
     if (lookup) {
       const found = lookup.find(obj => isSameLike(get(obj, valueField), value));

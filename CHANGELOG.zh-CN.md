@@ -15,19 +15,37 @@ timeline: true
 
 ---
 
-- 🌟 `<pro>TimePicker`: format 和 step 能影响组件的显示。
-- 🌟 `<pro>DataSet.Field`: 扩展 step 属性，用于时间组件的步距限制。
+- 🌟 `Icon`: 增加新的图标。
+- 🌟 `Tree`: 支持虚拟滚动。
+- 🌟 `Tree`: 新增 onLoad 回调。
+- 🌟 `Tree`: 新增 treeDatatreeNodes, treeData, blockNode 属性。
+- 🌟 `Tree.TreeNode`: 新增 checkable 属性。
+- 🌟 `Tree.DirectoryTree`: 新增内置的目录树。
+- 🌟 `Skeleton`: 新增Skeleton组件。
+- 🌟 `configure`: 新增 tableSpinProps 全局配置。
+- 🌟 `<pro>Spin`: 新增绑定数据源demo。
 - 🌟 `<pro>DataSet.Field`: 新增 disabled 属性。
-- 🌟 `<pro>Table`: 扩展 spin 配置, 新增 spin & custom inline demo。
-- 🌟 `configure`: 新增 tableSpinProps 属性。
-- 🌟 `<pro>Spin`: 新增绑定数据源demo.
-- 💄 `<pro>LocaleContext`: 优化日语配置完善文档。
+- 🌟 `<pro>DataSet.Field`: 扩展 step 属性，用于时间组件的步距限制。
+- 🌟 `<pro>TimePicker`: format 和 step 能影响组件的显示。
+- 🌟 `<pro>Table`: 扩展 spin 配置，新增 spin & custom inline demo。
+- 🌟 `<pro>Skeleton`: 新增 Skeleton Pro 组件。
+- 🌟 `<pro>Tree`: 支持虚拟滚动。
+- 🌟 `<pro>Tree`: 新增 defaultExpandAll, defaultExpandedKeys, defaultCheckedKeys, defaultSelectKeys 属性。
+- 🌟 `<pro>TextArea`: 新增 autoSize属性。
+- 🌟 `<pro>Pagination`: 新增 hideOnSinglePage 属性。
+- 🌟 `<pro>Upload`: 新增 beforeUpload, onRemoveFile 回调。
+- 🌟 `<pro>Upload`: 新增 defaultFileList, uploadFileList, withCredentials, appendUpload, partialUpload 属性。
 - 💄 `<pro>Table`: 优化 table tooltip、table border-bottom 样式问题。
+- 💄 `<pro>Upload`: 完善Upload文档。  
+- 💄 `<pro>LocaleContext`: 优化日语配置, 完善文档。
+- 💄 `<pro>Pagination`: 优化 showTotal, showQuickJumper 属性。
 - 💄 `<pro>DataSet`: 优化 autoLocateAfterRemove, 删除失败后重置保留选中状态并定位到删除项第一条。
 - 🐞 `Spin`: 修复 size 属性无效问题。
+- 🐞 `<pro>Upload`: 修复 IE 11 兼容问题。
+- 🐞 `<pro>Table`: 修复 editor 属性类型定义。
+- 🐞 `<pro>DataSet.Field`: 修复动态属性空值判断比较。
 - 🐞 `<pro>TimePicker`: 修复 chrome 下鼠标滚轮报错的问题。
-- 🐞 `<pro>Table`: 修复 editor 属性声明类型。
-  
+
 ## 0.8.57
 
 `2020-03-12`

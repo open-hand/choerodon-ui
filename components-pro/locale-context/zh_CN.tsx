@@ -30,6 +30,7 @@ const locale: Locale = {
   Pagination: {
     page: '页',
     jump_to: '跳至',
+    jump_to_confirm: '确定',
     records_per_page: '每页行数：',
   },
   Upload: {
@@ -38,6 +39,7 @@ const locale: Locale = {
     upload_success: '上传成功',
     upload_failure: '上传失败',
     no_file: '没有文件',
+    been_uploaded: '文件已上传',
     upload_path_unset: '未设置上传路径',
     not_acceptable_prompt: '含有上传类型不匹配的文件，期待：',
     file_list_max_length: '文件数量超过最大限制',

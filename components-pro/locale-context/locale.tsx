@@ -31,6 +31,7 @@ export interface Locale {
   Pagination: {
     page;
     jump_to;
+    jump_to_confirm;
     records_per_page;
   };
   Upload: {
@@ -40,6 +41,7 @@ export interface Locale {
     upload_failure;
     no_file;
     upload_path_unset;
+    been_uploaded;
     not_acceptable_prompt;
     file_list_max_length;
   };

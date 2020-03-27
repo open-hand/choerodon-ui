@@ -5,9 +5,11 @@ import { observer } from 'mobx-react';
 import omit from 'lodash/omit';
 import debounce from 'lodash/debounce';
 import defaultTo from 'lodash/defaultTo';
+import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComponent';
 import ObserverSelect from '../select/Select';
 import ObserverNumberField from '../number-field/NumberField';
+import Button from '../button';
 import autobind from '../_util/autobind';
 import { $l } from '../locale-context';
 import Pager from './Pager';
@@ -27,10 +29,12 @@ export interface PaginationProps extends DataSetComponentProps {
   sizeChangerPosition?: SizeChangerPosition;
   sizeChangerOptionRenderer?: Renderer;
   showSizeChanger?: boolean;
-  showQuickJumper?: boolean;
+  showQuickJumper?: boolean | { goButton?: React.ReactNode };
   showSizeChangerLabel?: boolean;
-  showTotal?: boolean;
+  showTotal?: boolean | ((total: number, range: [number, number]) => React.ReactNode);
   showPager?: boolean;
+  hideOnSinglePage?: boolean;
+  simple?: boolean;
 }
 
 function defaultItemRender(page: number, type: PagerType) {
@@ -64,10 +68,11 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     sizeChangerPosition: PropTypes.oneOf([SizeChangerPosition.left, SizeChangerPosition.right]),
     sizeChangerOptionRenderer: PropTypes.func,
     showSizeChanger: PropTypes.bool,
-    showQuickJumper: PropTypes.bool,
+    showQuickJumper: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
     showSizeChangerLabel: PropTypes.bool,
-    showTotal: PropTypes.bool,
+    showTotal: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
     showPager: PropTypes.bool,
+    simple: PropTypes.bool,
     ...DataSetComponent.propTypes,
   };
 
@@ -76,11 +81,15 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     pageSizeOptions: ['10', '20', '50', '100'],
     sizeChangerPosition: SizeChangerPosition.left,
     sizeChangerOptionRenderer: ({ text }) => text,
+    hideOnSinglePage: false,
     showSizeChanger: true,
     showQuickJumper: false,
     showSizeChangerLabel: true,
     showTotal: true,
+    simple: false,
   };
+
+  goInputText: number;
 
   @computed
   get pageSize(): number {
@@ -162,14 +171,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     this.handleChange(page, this.pageSize);
   };
 
-  /**
-   * 快速跳至 input 事件
-   * @param e
-   */
-  @autobind
-  @action
-  handleJump(e) {
-    let { value } = e.target;
+  getValidValue(value) {
     const { page, totalPage } = this;
     value = Number(value);
     if (isNaN(value)) {
@@ -178,10 +180,55 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     if (value > totalPage) {
       value = totalPage;
     }
+    return value
+  }
+
+  jumpPage = debounce(value => this.handlePagerClick(value), 200);
+
+  /**
+   * 快速跳至 input 事件
+   * @param e
+   */
+  @autobind
+  @action
+  handleJump(e) {
+    let { value } = e.target;
+    const { page, totalPage, props: { showQuickJumper } } = this;
+    value = Number(value);
+    if (isNaN(value)) {
+      value = page;
+    }
+    if (value > totalPage) {
+      value = totalPage;
+    }
+    this.goInputText = value;
+    if (showQuickJumper) {
+      return;
+    } 
     this.jumpPage(value);
   }
 
-  jumpPage = debounce(value => this.handlePagerClick(value), 500);
+  @autobind
+  handleJumpChange(value) {
+    const { page, totalPage, props: { showQuickJumper } } = this;
+    value = Number(value);
+    if (isNaN(value)) {
+      value = page;
+    }
+    if (value > totalPage) {
+      value = totalPage;
+    }
+    if (showQuickJumper) {
+      this.jumpPage(value);
+    }
+  }
+
+  @autobind
+  handleJumpGo(e) {
+    if (e.keyCode === KeyCode.ENTER || e.type === 'click') {
+      this.jumpPage(this.goInputText);
+    }
+  }
 
   getOtherProps() {
     return omit(super.getOtherProps(), [
@@ -198,6 +245,8 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
       'showPager',
       'sizeChangerPosition',
       'sizeChangerOptionRenderer',
+      'hideOnSinglePage',
+      'simple',
     ]);
   }
 
@@ -302,7 +351,17 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
   }
 
   renderTotal(pageSize: number, page: number, total: number): ReactNode {
-    const { prefixCls } = this;
+    const { prefixCls, props: { showTotal } } = this;
+    if (typeof showTotal === 'function') {
+      return (
+        <span key="total" className={`${prefixCls}-page-info`}>
+          {showTotal(total, [
+            pageSize * (page - 1) + 1,
+            Math.min(pageSize * page, total),
+          ])}
+        </span>
+      );
+    }
     return (
       <span key="total" className={`${prefixCls}-page-info`}>
         {pageSize * (page - 1) + 1} - {Math.min(pageSize * page, total)} / {total}
@@ -315,27 +374,101 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
    */
   renderQuickGo(): ReactNode {
     const { prefixCls } = this;
-    const { disabled } = this.props;
+    const { disabled, showQuickJumper } = this.props;
+    let gotoButton: any = null;
+
+    if (showQuickJumper instanceof Object && 'goButton' in showQuickJumper ) {
+      const { goButton } = showQuickJumper;
+      gotoButton =
+        typeof goButton === 'boolean' ? (
+          <Button
+            className={`${prefixCls}-go-button`}
+            onClick={this.handleJumpGo}
+            onKeyUp={this.handleJumpGo}
+            disabled={disabled}
+          >
+            {$l('Pagination', 'jump_to_confirm')}
+          </Button>
+        ) : (
+          <span
+            className={`${prefixCls}-go-button`}
+            onClick={this.handleJumpGo}
+            onKeyUp={this.handleJumpGo}
+          >
+            {goButton}
+          </span>
+        );
+    }
+
     return (
       <div className={`${prefixCls}-quick-jumper`}>
         {$l('Pagination', 'jump_to')}
-        <ObserverNumberField disabled={disabled} min={1} onInput={this.handleJump} />
+        <ObserverNumberField disabled={disabled} min={1} onChange={this.handleJumpChange} onInput={this.handleJump} />
         {$l('Pagination', 'page')}
+        {gotoButton}
       </div>
     );
   }
 
+  renderSimple(): ReactNode {
+    const { prefixCls, props: { disabled } } = this;
+    const {
+      total,
+      page,
+      totalPage,
+    } = this;
+    return (
+      <nav {...this.getMergedProps()}>
+        {this.getPager(page - 1, 'prev', false, page === 1)}
+        <li
+          className={`${prefixCls}-simple-pager`}
+        >
+          <ObserverNumberField disabled={disabled} min={1} onInput={this.handleJump} />
+          <span className={`${prefixCls}-slash`}>／</span>
+          {total}
+        </li>
+        {this.getPager(page + 1, 'next', false, page === totalPage)}
+      </nav>
+    );
+  }
+
   render() {
-    const { total, pageSize, page } = this;
+    const {
+      total,
+      pageSize,
+      page,
+      props: { hideOnSinglePage, simple },
+      prefixCls,
+    } = this;
     if (total === undefined || pageSize === undefined || page === undefined) {
       return null;
     }
+    if (hideOnSinglePage === true && total <= pageSize) {
+      return null;
+    }
+
     const {
       totalPage,
       props: { children, sizeChangerPosition, showTotal, showPager, showQuickJumper },
     } = this;
 
     const sizeChanger = this.renderSizeChange(pageSize);
+
+    if (simple) {
+      return (
+        <nav {...this.getMergedProps()}>
+          {this.getPager(page - 1, 'prev', false, page === 1)}
+          <li
+           className={`${prefixCls}-simple-pager`}
+          >
+            <ObserverNumberField value={page} min={1} onChange={this.handleJumpChange} onInput={this.handleJump} />
+            <span>／</span>
+            {totalPage}
+          </li>
+          {this.getPager(page + 1, 'next', false, page === totalPage)}
+        </nav>
+      );
+    }
 
     return (
       <nav {...this.getMergedProps()}>

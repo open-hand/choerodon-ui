@@ -13,14 +13,15 @@ title:
 
 Display hint on the top-right corner, such as acceptable types.
 
-````jsx
+```jsx
 import { Upload } from 'choerodon-ui/pro';
+
 
 const props = {
   headers: {
     'Access-Control-Allow-Origin': '*',
   },
-  action: '//localhost:3000/upload',
+  action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
   multiple: true,
   accept: ['image/*'],
   uploadImmediately: false,
@@ -32,7 +33,6 @@ ReactDOM.render(
   <div>
     <Upload {...props} />
   </div>,
-  mountNode
+  mountNode,
 );
-
-````
+```
