@@ -67,7 +67,7 @@ class App extends React.Component {
         </Form>
         <Pagination
           showSizeChanger={current.get('showSizeChanger')}
-          showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} 页`}
+          showTotal={current.get('showTotal')}
           showPager={current.get('showPager')}
           showQuickJumper={current.get('showQuickJumper')}
           total={current.get('total')}

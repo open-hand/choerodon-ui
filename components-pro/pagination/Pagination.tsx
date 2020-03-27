@@ -31,7 +31,7 @@ export interface PaginationProps extends DataSetComponentProps {
   showSizeChanger?: boolean;
   showQuickJumper?: boolean | { goButton?: React.ReactNode };
   showSizeChangerLabel?: boolean;
-  showTotal?: boolean | Function;
+  showTotal?: boolean | ((total: number, range: [number, number]) => React.ReactNode);
   showPager?: boolean;
   hideOnSinglePage?: boolean;
   simple?: boolean;

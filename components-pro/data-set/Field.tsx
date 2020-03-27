@@ -510,7 +510,9 @@ export default class Field {
     if (propsName === 'lookupUrl') {
       return getConfig(propsName);
     }
-    return Field.defaultProps[propsName];
+    if (this.record) {
+      return Field.defaultProps[propsName];
+    }
   }
 
   /**
@@ -574,8 +576,8 @@ export default class Field {
    * @return {string}
    */
   getText(value: any = this.getValue(), showValueIfNotFound?: boolean): string | undefined {
-    const textField = this.get('textField');
-    const valueField = this.get('valueField');
+    const textField = this.get('textField') || "meaning";
+    const valueField = this.get('valueField') || "value";
     const { lookup, options } = this;
     if (lookup) {
       const found = lookup.find(obj => isSameLike(get(obj, valueField), value));

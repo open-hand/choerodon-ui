@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ReactDOM, { createPortal, render } from 'react-dom';
+import { createPortal, render } from 'react-dom';
 import classNames from 'classnames';
 import findLast from 'lodash/findLast.js';
 import noop from 'lodash/noop';
@@ -168,8 +168,6 @@ export default class ModalContainer extends Component<ModalContainerProps> {
 
   open(props: ModalProps) {
     const { modals } = this.state;
-    // eslint-disable-next-line no-console
-    console.log('props', props);
     if (!props.key) {
       props.key = getKey();
       warning(
@@ -192,24 +190,6 @@ export default class ModalContainer extends Component<ModalContainerProps> {
     if (target) {
       Object.assign(target, props, { hidden: true });
       this.setState({ modals });
-    }
-  }
-
-  destroy() {
-    const unmountResult = ReactDOM.unmountComponentAtNode(getRoot());
-    if (unmountResult && getRoot().parentNode) {
-      getRoot().parentNode.removeChild(getRoot());
-    }
-    // const triggerCancel = args.some(param => param && param.triggerCancel);
-    // if (props.onCancel && triggerCancel) {
-    //   props.onCancel();
-    // }
-    for (let i = 0; i < destroyFns.length; i++) {
-      const fn = destroyFns[i];
-      if (fn === close) {
-        destroyFns.splice(i, 1);
-        break;
-      }
     }
   }
 
@@ -362,12 +342,8 @@ export function open(props: ModalProps & { children }) {
   container.open(props);
 
   destroyFns.push(close);
-  // eslint-disable-next-line no-console
-  console.log('destroyFns', destroyFns);
 
   function show(newProps) {
-    // eslint-disable-next-line no-console
-    console.log('object', props);
     container.open({ ...props, ...newProps });
   }
 
