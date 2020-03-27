@@ -15,7 +15,7 @@ Upload file list as append
 
 ```jsx
 import { Upload, message } from 'choerodon-ui/pro';
-import { actionUrl } from './actionUrl';
+
 
 class App extends React.Component {
   render() {
@@ -23,7 +23,7 @@ class App extends React.Component {
       headers: {
         'Access-Control-Allow-Origin': '*',
       },
-      action: actionUrl,
+      action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
       multiple: true,
       accept: ['.deb', '.txt', '.pdf', 'image/*'],
       uploadImmediately: false,

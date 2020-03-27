@@ -15,13 +15,13 @@ Display hint on the top-right corner, such as acceptable types.
 
 ```jsx
 import { Upload } from 'choerodon-ui/pro';
-import { actionUrl } from './actionUrl';
+
 
 const props = {
   headers: {
     'Access-Control-Allow-Origin': '*',
   },
-  action: actionUrl,
+  action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
   multiple: true,
   accept: ['image/*'],
   uploadImmediately: false,

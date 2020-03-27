@@ -15,7 +15,7 @@ Don't remove after returning false with `onRemoveFile`
 
 ```jsx
 import { Upload, message, DataSet } from 'choerodon-ui/pro';
-import { actionUrl } from './actionUrl';
+
 
 class App extends React.Component {
   handleRemove = file => {
@@ -28,7 +28,7 @@ class App extends React.Component {
       headers: {
         'Access-Control-Allow-Origin': '*',
       },
-      action: actionUrl,
+      action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
       multiple: true,
       accept: ['.deb', '.txt', '.pdf', 'image/*'],
       uploadImmediately: false,

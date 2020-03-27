@@ -22,7 +22,7 @@ function getTreeNode(record, children, idField, text) {
       eventKey={key}
       // @ts-ignore
       hasChildren={!!record.children}
-      selectable={record.selectable}
+      selectable={!!(record.dataSet.selection?record.selectable:false)}
     >
       {children}
     </TreeNode>

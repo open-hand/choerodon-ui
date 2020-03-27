@@ -15,13 +15,13 @@ Click a button to upload after selecting files.
 
 ```jsx
 import { Upload, message } from 'choerodon-ui/pro';
-import { actionUrl } from './actionUrl';
+
 
 const props = {
   headers: {
     'Access-Control-Allow-Origin': '*',
   },
-  action: actionUrl,
+  action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
   multiple: true,
   accept: ['.deb', '.txt', '.pdf', 'image/*'],
   uploadImmediately: false,

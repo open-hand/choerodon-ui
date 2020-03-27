@@ -15,7 +15,7 @@ Constraint the amount of filed being uploaded at one time.
 
 ```jsx
 import { Upload, message } from 'choerodon-ui/pro';
-import { actionUrl } from './actionUrl';
+
 
 const handleBefore = (file, fileList) => {
   const isJPG = file.type === 'image/jpeg';
@@ -33,7 +33,7 @@ const props = {
   headers: {
     'Access-Control-Allow-Origin': '*',
   },
-  action: actionUrl,
+  action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
   multiple: true,
   accept: ['.deb', '.txt', '.pdf', 'image/*'],
   uploadImmediately: false,
