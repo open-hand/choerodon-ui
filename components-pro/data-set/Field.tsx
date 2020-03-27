@@ -451,25 +451,24 @@ export default class Field {
         if (typeof dynamicProps === 'function') {
           warning(
             false,
-            `
-The dynamicProps hook will be deprecated. Please use dynamicProps map.
-For e.g,
-Bad case:
-dynamicProps({ record }) {
-  return {
-    bind: record.get('xx'),
-    label: record.get('yy'),
-  }
-}
-Good case:
-dynamicProps = {
-  bind({ record }) {
-    return record.get('xx')
-  },
-  label({ record }) {
-    return record.get('yy'),
-  }
-}`,
+            ` The dynamicProps hook will be deprecated. Please use dynamicProps map.
+              For e.g,
+              Bad case:
+              dynamicProps({ record }) {
+                return {
+                  bind: record.get('xx'),
+                  label: record.get('yy'),
+                }
+              }
+              Good case:
+              dynamicProps = {
+                bind({ record }) {
+                  return record.get('xx')
+                },
+                label({ record }) {
+                  return record.get('yy'),
+                }
+              }`,
           );
           const props = this.executeDynamicProps(dynamicProps);
           if (props && propsName in props) {
@@ -511,9 +510,7 @@ dynamicProps = {
     if (propsName === 'lookupUrl') {
       return getConfig(propsName);
     }
-    if (this.record) {
-      return Field.defaultProps[propsName];
-    }
+    return Field.defaultProps[propsName];
   }
 
   /**

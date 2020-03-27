@@ -21,6 +21,9 @@ timeline: true
 - 🌟 `<pro>Table`: 扩展 spin 配置, 新增 spin & custom inline demo。
 - 🌟 `configure`: 新增 tableSpinProps 属性。
 - 🌟 `<pro>Spin`: 新增绑定数据源demo.
+- 💄 `<pro>Pagination`: 优化showTotal, showQuickJumper属性。
+- 🌟 `<pro>Pagination`: 新增 hideOnSinglePage属性。
+- 🌟 `<pro>TextArea`: 新增 autoSize属性。
 - 💄 `<pro>Upload`: 优化完善Upload文档。
 - 🌟 `<pro>Upload`: 新增 defaultFileList,uploadFileList,withCredentials,appendUpload,partialUpload 属性以及 beforeUpload, onRemoveFile回调。
 - 💄 `<pro>LocaleContext`: 优化日语配置完善文档。

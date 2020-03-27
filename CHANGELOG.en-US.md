@@ -21,8 +21,11 @@ timeline: true
 - 🌟 `<pro>Table`: Expand `spin` configuration, add spin & custom inline demo.
 - 🌟 `configure`: Add `tableSpinProps` properties.
 - 🌟 `<pro>Spin`: Add dataSet binding demo.
+- 💄 `<pro>Pagination`: Optimize showTotal, showQuickJumper property。
+- 🌟 `<pro>Pagination`: Add hideOnSinglePage property。
+- 🌟 `<pro>TextArea`: Add autoSize property。
 - 💄 `<pro>Upload`: Optimize Upload Document.
-- 🌟 `<pro>Upload`: Added defaultFileList, uploadFileList, withCredentials, appendUpload, partialUpload properties and beforeUpload, onRemoveFile callbacks.
+- 🌟 `<pro>Upload`: Add defaultFileList, uploadFileList, withCredentials, appendUpload, partialUpload properties and beforeUpload, onRemoveFile callbacks.
 - 💄 `<pro>LocaleContext`: Optimize japansese configuration support and Fix the document.
 - 💄 `<pro>Table`: Optimize table tooltip，table border-bottom style issue.
 - 💄 `<pro>DataSet`: Optimize `autoLocateAfterRemove`, reset the reserved selected state after deletion failed and locate to delete item first.
