@@ -29,7 +29,8 @@ const ModalContent = ({ modal }) => {
   });
   function toggleOkDisabled() {
     modal.update({
-      okProps: { disabled: !modal.props.okProps.disabled, children: '保存11' },
+      okProps: { disabled: !modal.props.okProps.disabled },
+      okText: "保存",
     });
   }
   console.log('modal', modal);
@@ -49,28 +50,14 @@ const ModalContent = ({ modal }) => {
   );
 };
 
-let modalNew;
-
 function openModal() {
-  modalNew = Modal.open({
+  Modal.open({
     key: modalKey,
     title: 'Basic',
     children: <ModalContent />,
-    okText: '点击',
+    okText: '确定',
     okProps: { disabled: true },
   });
-  // setTimeout(() => {
-  //   modalNew.update({
-  //     title: 'update',
-  //     // children: (
-  //     //   <div>
-  //     //     <p>Some contents...</p>
-  //     //     <p>Some contents...</p>
-  //     //     <p>Some contents...</p>
-  //     //   </div>
-  //     // ),
-  //   });
-  // }, 2000);
 }
 
 ReactDOM.render(<Button onClick={openModal}>Open</Button>, mountNode);
