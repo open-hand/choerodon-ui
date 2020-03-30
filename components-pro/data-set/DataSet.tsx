@@ -1962,7 +1962,7 @@ Then the query method will be auto invoke.`,
     const { submitFailed = defaultFeedback.submitFailed } = this.feedback;
     this.fireEvent(DataSetEvents.submitFailed, { dataSet: this });
     submitFailed(e);
-    if (this.props.autoLocateAfterRemove && current) {
+    if (this.props.autoLocateAfterRemove && current && this.destroyed) {
       current.isCurrent = false;
     }
     this.destroyed.forEach((record, index) => {

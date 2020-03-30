@@ -11,7 +11,6 @@ Almost anything can be represented in a tree structure. Examples include directo
 ## API
 
 ### Tree props
-
 | Property | Description | Type | Default |
 | -------- | ----------- | ---- | ------- |
 | dataSet | The data source binded to the tree. | DataSet |  |

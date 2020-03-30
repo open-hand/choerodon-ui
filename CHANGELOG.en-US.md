@@ -15,6 +15,12 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>DataSet`: Fixed `current` pointing after submission failed.
+
+## 0.8.58
+
+`2020-03-27`
+
 - 🌟 `Icon`: Added new icon.
 - 🌟 `Tree`: Support virtual scrolling.
 - 🌟 `Tree`: Added `onLoad` callback.
@@ -31,18 +37,19 @@ timeline: true
 - 🌟 `<pro>Skeleton`: Added Skeleton Pro component.
 - 🌟 `<pro>Tree`: Support virtual scrolling.
 - 🌟 `<pro>Tree`: Added `defaultExpandAll`, `defaultExpandedKeys`, `defaultCheckedKeys`, `defaultSelectKeys` properties.
-- 💄 `<pro>Pagination`: Optimized showTotal, showQuickJumper properties.
 - 🌟 `<pro>Pagination`: Added hideOnSinglePage properties.
 - 🌟 `<pro>TextArea`: Added autoSize properties.
 - 🌟 `<pro>Upload`: Added `beforeUpload`, `onRemoveFile` callback.
 - 🌟 `<pro>Upload`: Added `defaultFileList`, `uploadFileList`, `withCredentials`, `appendUpload`, `partialUpload` properties.
 - 💄 `<pro>Table`: Optimized table `tooltip` style.
 - 💄 `<pro>Upload`: Optimized Upload doc.  
+- 💄 `<pro>Pagination`: Optimized `showTotal`, `showQuickJumper` properties.
 - 💄 `<pro>LocaleContext`: Optimized Japanese configuration documentation.
 - 💄 `<pro>DataSet`: Optimized `autoLocateAfterRemove`, reset the reserved selected state after deletion failed and locate to delete item 1.
 - 🐞 `Spin`: Fixed invalid `size` property problem.
 - 🐞 `<pro>Upload`: Fixed IE 11 compatibility issues.
 - 🐞 `<pro>Table`: Fixed `editor` type error.
+- 🐞 `<pro>Table`: Fixed filterBar lookup value undefined.
 - 🐞 `<pro>DataSet.Field`: Fixed `dynamicProps` null judgment comparison.
 - 🐞 `<pro>TimePicker`: Fixed the mouse wheel error report under chrome.
 
