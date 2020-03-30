@@ -15,7 +15,6 @@ timeline: true
 
 ---
 
-- 🐞 `<pro>Pagination`: Fixed the display problem when the total number of pages is 4.
 - 🐞 `<pro>DataSet`: Fixed `current` pointing after submission failed.
 
 ## 0.8.58
