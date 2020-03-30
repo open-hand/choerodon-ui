@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>DataSet`: Fixed `current` pointing after submission failed.
+
 ## 0.8.58
 
 `2020-03-27`
