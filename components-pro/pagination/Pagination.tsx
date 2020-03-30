@@ -289,7 +289,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     const { totalPage } = this;
     const bufferSize = 2;
     const pagerList: any[] = [];
-    if (totalPage <= 1 + bufferSize) {
+    if (totalPage <= 2 + bufferSize) {
       for (let i = 1; i <= totalPage; i++) {
         pagerList.push(this.getPager(i, 'page', page === i));
       }
@@ -299,7 +299,6 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
       if (page - 1 <= bufferSize) {
         right = 1 + bufferSize * 2;
       }
-
       if (totalPage - page <= bufferSize) {
         left = totalPage - bufferSize * 2;
       }
