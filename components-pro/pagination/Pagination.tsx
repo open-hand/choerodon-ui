@@ -204,7 +204,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     this.goInputText = value;
     if (showQuickJumper) {
       return;
-    } 
+    }
     this.jumpPage(value);
   }
 
@@ -287,10 +287,10 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
 
   renderPagers(page: number): ReactNode {
     const { totalPage } = this;
-    const bufferSize = 2;
+    const bufferSize = 1;
     const pagerList: any[] = [];
-    if (totalPage <= 1 + bufferSize) {
-      for (let i = 1; i <= totalPage; i++) {
+    if (totalPage <= 3 + bufferSize * 2) {
+      for (let i = 1; i <= totalPage; i += 1) {
         pagerList.push(this.getPager(i, 'page', page === i));
       }
     } else {

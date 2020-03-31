@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>Pagination`: Fixed paging calculation error.
 - 🐞 `<pro>DataSet`: Fixed `current` pointing after submission failed.
 
 ## 0.8.58

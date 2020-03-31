@@ -23,20 +23,6 @@ function handleChange(page, pageSize) {
 
 @observer
 class App extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: null,
-    };
-  }
-
-  handleChange = (value, oldValue) => {
-    this.setState({
-      value,
-    });
-  }
-
   ds = new DataSet({
     autoCreate: true,
     fields: [
@@ -53,7 +39,6 @@ class App extends React.Component {
     const {
       ds,
       ds: { current },
-      state: { value },
     } = this;
     return (
       <div>
@@ -63,7 +48,7 @@ class App extends React.Component {
           <Switch name="showPager" />
           <Switch name="showQuickJumper" />
           <Switch name="hideOnSinglePage" />
-          <NumberField name="total" value={value} onChange={this.handleChange} />
+          <NumberField name="total" />
         </Form>
         <Pagination
           showSizeChanger={current.get('showSizeChanger')}
