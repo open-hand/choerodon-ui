@@ -44,8 +44,8 @@ class App extends React.Component {
       <div>
         <Progress type="circle" percent={this.state.percent} />
         <ButtonGroup>
-          <Button onClick={this.decline} icon="minus" />
-          <Button onClick={this.increase} icon="plus" />
+          <Button funcType="raised" shape="circle" onClick={this.decline} icon="remove" />
+          <Button funcType="raised" shape="circle" onClick={this.increase} icon="add" />
         </ButtonGroup>
       </div>
     );

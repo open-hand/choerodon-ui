@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>CodeArea`: Fixed defocus update error.
 - 🐞 `<pro>Pagination`: Fixed paging calculation error.
 - 🐞 `<pro>DataSet`: Fixed `current` pointing after submission failed.
 

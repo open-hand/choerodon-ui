@@ -47,12 +47,12 @@ class App extends React.Component {
   ds = new DataSet({
     autoCreate: true,
     fields: [
-      { name: 'content', type: 'string', defaultValue: jsonText, required: true },
+      { name: 'content', type: 'string', defaultValue: jsonText, required: true, readOnly: true },
     ],
   });
 
   render() {
-    return <CodeArea dataSet={this.ds} name="content" readOnly style={style} />;
+    return <CodeArea dataSet={this.ds} name="content" style={style} />;
   }
 }
 
