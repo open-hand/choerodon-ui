@@ -1,5 +1,59 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`renders ./components-pro/upload/demo/appendUpload.md correctly 1`] = `
+<div
+  class="c7n-pro-upload"
+>
+  <div
+    class="flex-wrapper"
+  >
+    <div
+      class="c7n-pro-upload-select"
+    >
+      <button
+        class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+        type="button"
+      >
+        <i
+          class="icon icon-insert_drive_file"
+        />
+        <span>
+          选择文件
+        </span>
+        <div
+          class="c7n-ripple-wrapper"
+        />
+      </button>
+      <input
+        accept=".deb,.txt,.pdf,image/*"
+        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+        class="c7n-pro-upload"
+        headers="[object Object]"
+        hidden=""
+        multiple=""
+        name="file"
+        type="file"
+      />
+      <button
+        class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-primary c7n-pro-btn-icon-only c7n-pro-btn-wrapper"
+        type="button"
+      >
+        <i
+          class="icon icon-file_upload"
+        />
+        <div
+          class="c7n-ripple-wrapper"
+        />
+      </button>
+    </div>
+    <div />
+  </div>
+  <div
+    class="c7n-pro-upload-list-empty"
+  />
+</div>
+`;
+
 exports[`renders ./components-pro/upload/demo/async.md correctly 1`] = `
 <div>
   <div
@@ -27,7 +81,7 @@ exports[`renders ./components-pro/upload/demo/async.md correctly 1`] = `
         </button>
         <input
           accept=".deb,.txt,.pdf,image/*"
-          action="//localhost:3000/upload"
+          action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
           class="c7n-pro-upload"
           headers="[object Object]"
           hidden=""
@@ -83,7 +137,7 @@ exports[`renders ./components-pro/upload/demo/basic.md correctly 1`] = `
         </button>
         <input
           accept=".deb,.txt,.pdf,image/*"
-          action="//localhost:3000/upload"
+          action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
           class="c7n-pro-upload"
           headers="[object Object]"
           hidden=""
@@ -93,6 +147,77 @@ exports[`renders ./components-pro/upload/demo/basic.md correctly 1`] = `
         />
       </div>
       <div />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders ./components-pro/upload/demo/beforeUpload.md correctly 1`] = `
+<div
+  class="c7n-pro-upload"
+>
+  <div
+    class="flex-wrapper"
+  >
+    <div
+      class="c7n-pro-upload-select"
+    >
+      <button
+        class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+        type="button"
+      >
+        <i
+          class="icon icon-insert_drive_file"
+        />
+        <span>
+          选择文件
+        </span>
+        <div
+          class="c7n-ripple-wrapper"
+        />
+      </button>
+      <input
+        accept=".deb,.txt,.pdf,image/*"
+        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+        class="c7n-pro-upload"
+        headers="[object Object]"
+        hidden=""
+        multiple=""
+        name="file"
+        type="file"
+      />
+      <button
+        class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-primary c7n-pro-btn-icon-only c7n-pro-btn-wrapper"
+        type="button"
+      >
+        <i
+          class="icon icon-file_upload"
+        />
+        <div
+          class="c7n-ripple-wrapper"
+        />
+      </button>
+    </div>
+    <div />
+  </div>
+  <div
+    class="c7n-pro-upload-list"
+  >
+    <div
+      class="c7n-pro-upload-list-item c7n-pro-upload-list-item-success"
+    >
+      <img
+        src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+        width="100"
+      />
+      <span
+        class="c7n-pro-upload-list-item-name"
+      >
+        xxx.jpg
+      </span>
+      <i
+        class="icon icon-close c7n-pro-upload-list-item-icon c7n-pro-upload-list-item-remove"
+      />
     </div>
   </div>
 </div>
@@ -125,7 +250,7 @@ exports[`renders ./components-pro/upload/demo/custom-handler.md correctly 1`] = 
         </button>
         <input
           accept=".deb,.txt,.pdf,image/*"
-          action="//localhost:3000/upload"
+          action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
           class="c7n-pro-upload"
           headers="[object Object]"
           hidden=""
@@ -181,7 +306,7 @@ exports[`renders ./components-pro/upload/demo/data.md correctly 1`] = `
         </button>
         <input
           accept=".deb,.txt,.pdf,image/*"
-          action="//localhost:3000/upload"
+          action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
           class="c7n-pro-upload"
           headers="[object Object]"
           hidden=""
@@ -237,7 +362,7 @@ exports[`renders ./components-pro/upload/demo/extra.md correctly 1`] = `
         </button>
         <input
           accept="image/*"
-          action="//localhost:3000/upload"
+          action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
           class="c7n-pro-upload"
           extra="[object Object]"
           headers="[object Object]"
@@ -298,7 +423,7 @@ exports[`renders ./components-pro/upload/demo/length.md correctly 1`] = `
         </button>
         <input
           accept=".deb,.txt,.pdf,image/*"
-          action="//localhost:3000/upload"
+          action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
           class="c7n-pro-upload"
           headers="[object Object]"
           hidden=""
@@ -324,6 +449,60 @@ exports[`renders ./components-pro/upload/demo/length.md correctly 1`] = `
       class="c7n-pro-upload-list-empty"
     />
   </div>
+</div>
+`;
+
+exports[`renders ./components-pro/upload/demo/remove.md correctly 1`] = `
+<div
+  class="c7n-pro-upload"
+>
+  <div
+    class="flex-wrapper"
+  >
+    <div
+      class="c7n-pro-upload-select"
+    >
+      <button
+        class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+        type="button"
+      >
+        <i
+          class="icon icon-insert_drive_file"
+        />
+        <span>
+          选择文件
+        </span>
+        <div
+          class="c7n-ripple-wrapper"
+        />
+      </button>
+      <input
+        accept=".deb,.txt,.pdf,image/*"
+        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+        class="c7n-pro-upload"
+        headers="[object Object]"
+        hidden=""
+        multiple=""
+        name="file"
+        type="file"
+      />
+      <button
+        class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-primary c7n-pro-btn-icon-only c7n-pro-btn-wrapper"
+        type="button"
+      >
+        <i
+          class="icon icon-file_upload"
+        />
+        <div
+          class="c7n-ripple-wrapper"
+        />
+      </button>
+    </div>
+    <div />
+  </div>
+  <div
+    class="c7n-pro-upload-list-empty"
+  />
 </div>
 `;
 
@@ -392,7 +571,7 @@ exports[`renders ./components-pro/upload/demo/upload-method.md correctly 1`] = `
                     </button>
                     <input
                       accept=".deb,.txt,.pdf,image/*"
-                      action="//localhost:3000/upload"
+                      action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                       class="c7n-pro-upload"
                       headers="[object Object]"
                       hidden=""
@@ -427,8 +606,8 @@ exports[`renders ./components-pro/upload/demo/upload-method.md correctly 1`] = `
           >
             <button
               class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-primary c7n-pro-btn-wrapper c7n-pro-field"
-              colIndex="0"
-              rowIndex="1"
+              colindex="0"
+              rowindex="1"
               style="margin-bottom:10px"
               type="button"
             >
