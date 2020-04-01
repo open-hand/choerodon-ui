@@ -1,4 +1,620 @@
 
+.c7n-pro-color-picker-empty .c7n-pro-color-picker-clear-button {
+  display: none;
+}
+.c7n-pro-color-picker-empty .c7n-pro-color-picker-clear-button + * {
+  opacity: 1 !important;
+}
+.c7n-pro-color-picker-empty .c7n-pro-color-picker-placeholder {
+  opacity: 1;
+}
+.c7n-pro-color-picker > ul {
+  position: relative;
+  margin: 0;
+  padding: 0.02rem 0 0 0;
+  overflow: hidden auto;
+}
+.c7n-pro-color-picker > ul > li {
+  display: inline-block;
+  max-width: 99%;
+  height: 0.24rem;
+  margin-bottom: 0.02rem;
+  line-height: 0.22rem;
+  vertical-align: middle;
+}
+.c7n-pro-color-picker-multiple-value {
+  display: block;
+  width: 100%;
+  height: 0;
+  padding: 0;
+  border: none;
+  visibility: hidden;
+}
+.c7n-pro-color-picker-multiple-input {
+  width: 0.05rem;
+  max-width: 100%;
+  height: 100%;
+  margin-left: 0.04rem;
+  background-color: transparent;
+  border: none;
+  outline: 0;
+}
+.c7n-pro-color-picker-multiple .c7n-pro-color-picker {
+  height: auto;
+  margin: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 0;
+}
+.c7n-pro-color-picker-multiple .c7n-pro-color-picker:not(:last-child) {
+  padding-right: 0.48rem;
+}
+.c7n-pro-color-picker-multiple:not(.c7n-pro-color-picker-suffix-button) .c7n-pro-color-picker:not(:last-child) {
+  padding-right: 0.24rem;
+}
+.c7n-pro-color-picker-multiple-block {
+  display: inline-block;
+  max-width: 99%;
+  margin: 0 0.02rem;
+  padding: 0 0.08rem;
+  overflow: hidden;
+  color: #fff;
+  line-height: 1.5;
+  white-space: nowrap;
+  background-color: #3f51b5;
+  border-radius: 0.02rem;
+  cursor: default;
+}
+.c7n-pro-color-picker-multiple-block > div {
+  height: 100%;
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+}
+.c7n-pro-color-picker-multiple-block > div:not(:last-child) {
+  max-width: calc(100% - .26rem);
+}
+.c7n-pro-color-picker-multiple-block-invalid {
+  background-color: #d50000;
+}
+.c7n-pro-color-picker-multiple-block-disabled {
+  padding-right: 0.1rem;
+  background-color: rgba(0, 0, 0, 0.25);
+  cursor: not-allowed;
+}
+.c7n-pro-color-picker-multiple-block .icon {
+  height: 100%;
+  margin-left: 0.08rem;
+  line-height: inherit;
+  cursor: pointer;
+}
+.c7n-pro-color-picker-range-text {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  white-space: nowrap;
+}
+.c7n-pro-color-picker-range-start,
+.c7n-pro-color-picker-range-end,
+.c7n-pro-color-picker-range-split,
+.c7n-pro-color-picker-range-input {
+  display: inline-block;
+  height: 100%;
+  line-height: 0.26rem;
+  text-align: center;
+}
+.c7n-pro-color-picker-range-start,
+.c7n-pro-color-picker-range-end,
+.c7n-pro-color-picker-range-input {
+  width: calc(50% - .1rem);
+  background-color: transparent;
+  border: none;
+  outline: 0;
+}
+.c7n-pro-color-picker-range-split {
+  width: 0.2rem;
+}
+.c7n-pro-color-picker-range-input {
+  position: absolute;
+  color: #3f51b5;
+  font-weight: bold;
+  opacity: 0;
+}
+.c7n-pro-color-picker-focused .c7n-pro-color-picker-range-input {
+  opacity: 1;
+}
+.c7n-pro-color-picker-group {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.c7n-pro-color-picker-group-wrapper {
+  display: inline-block;
+  width: 100%;
+}
+.c7n-pro-color-picker-group-before,
+.c7n-pro-color-picker-group-after,
+.c7n-pro-color-picker-group-help {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding-right: 0.05rem;
+  padding-left: 0.05rem;
+  word-break: keep-all;
+  background-color: #eee;
+  border: 0.01rem solid rgba(0, 0, 0, 0.2);
+  border-radius: 0.02rem;
+}
+.c7n-pro-color-picker-group-before {
+  border-right: none;
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+.c7n-pro-color-picker-group-after,
+.c7n-pro-color-picker-group-help {
+  border-left: none;
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+.c7n-pro-color-picker-group-help:not(:last-child) {
+  border-radius: 0 !important;
+}
+.c7n-pro-color-picker-group-input {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+.c7n-pro-color-picker-group-input:not(:last-child) .c7n-pro-color-picker {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.c7n-pro-color-picker-group-input:not(:first-child) .c7n-pro-color-picker {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.c7n-pro-color-picker-group-input .c7n-pro-color-picker-wrapper {
+  width: 100%;
+}
+.c7n-pro-color-picker:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 10rem #fff inset;
+          box-shadow: 0 0 0 10rem #fff inset;
+}
+.c7n-pro-color-picker-required {
+  background-color: #feffe6;
+}
+.c7n-pro-color-picker-invalid .c7n-pro-color-picker,
+.c7n-pro-color-picker-invalid label:hover .c7n-pro-color-picker,
+.c7n-pro-color-picker-invalid .c7n-pro-color-picker:hover {
+  color: #d50000;
+  border-color: #d50000;
+}
+.c7n-pro-color-picker-invalid.c7n-pro-color-picker-wrapper {
+  background-color: #fcebeb;
+}
+.c7n-pro-color-picker-invalid .c7n-pro-color-picker-clear-button {
+  background: -webkit-gradient(linear, left top, right top, from(rgba(255, 255, 255, 0)), color-stop(20%, #fcebeb), to(#fcebeb)) !important;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), #fcebeb 20%, #fcebeb) !important;
+}
+.c7n-pro-color-picker-underline {
+  position: absolute;
+  bottom: -0.01rem;
+  width: 100%;
+  height: 0;
+  border-bottom: 0.01rem solid rgba(0, 0, 0, 0.54);
+}
+.c7n-pro-color-picker-ripple {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 0;
+  border-bottom: 0.02rem solid #3f51b5;
+  -webkit-transform: scaleX(0.5);
+      -ms-transform: scaleX(0.5);
+          transform: scaleX(0.5);
+  -webkit-transform-origin: 50%;
+      -ms-transform-origin: 50%;
+          transform-origin: 50%;
+  opacity: 0;
+  -webkit-transition: border-color 300ms cubic-bezier(0.55, 0, 0.55, 0.2);
+  transition: border-color 300ms cubic-bezier(0.55, 0, 0.55, 0.2);
+}
+.c7n-pro-color-picker-disabled .c7n-pro-color-picker-underline {
+  border-bottom: 0.01rem dotted rgba(0, 0, 0, 0.42);
+}
+.c7n-pro-color-picker-focused .c7n-pro-color-picker-underline .c7n-pro-color-picker-ripple {
+  -webkit-transform: scaleX(1);
+      -ms-transform: scaleX(1);
+          transform: scaleX(1);
+  opacity: 1;
+  -webkit-transition: opacity 100ms cubic-bezier(0.25, 0.8, 0.25, 1), border-color 300ms cubic-bezier(0.25, 0.8, 0.25, 1), -webkit-transform 300ms cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: opacity 100ms cubic-bezier(0.25, 0.8, 0.25, 1), border-color 300ms cubic-bezier(0.25, 0.8, 0.25, 1), -webkit-transform 300ms cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: transform 300ms cubic-bezier(0.25, 0.8, 0.25, 1), opacity 100ms cubic-bezier(0.25, 0.8, 0.25, 1), border-color 300ms cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: transform 300ms cubic-bezier(0.25, 0.8, 0.25, 1), opacity 100ms cubic-bezier(0.25, 0.8, 0.25, 1), border-color 300ms cubic-bezier(0.25, 0.8, 0.25, 1), -webkit-transform 300ms cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.c7n-pro-color-picker-invalid .c7n-pro-color-picker-underline {
+  border-color: #d50000;
+}
+.c7n-pro-color-picker-float-label .c7n-pro-field-label {
+  padding: 0;
+  color: rgba(0, 0, 0, 0.6);
+  line-height: 2.61538462;
+  -webkit-transform-origin: inherit;
+      -ms-transform-origin: inherit;
+          transform-origin: inherit;
+  -webkit-transition: inherit;
+  transition: inherit;
+  pointer-events: none;
+}
+.c7n-pro-color-picker-float-label .c7n-pro-field-label-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0.1rem;
+  height: 0;
+  margin-left: -0.05rem;
+  padding: 0 0.05rem;
+  border-top: 0.02rem solid #fff;
+  -webkit-transform-origin: 0.1rem -230%;
+      -ms-transform-origin: 0.1rem -230%;
+          transform-origin: 0.1rem -230%;
+  -webkit-transition: all 0.2s cubic-bezier(0.215, 0.61, 0.355, 1);
+  transition: all 0.2s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+.c7n-pro-color-picker-float-label .c7n-pro-field-label::after {
+  width: 0;
+}
+.c7n-pro-color-picker-float-label.c7n-pro-color-picker-focused .c7n-pro-field-label {
+  color: #3f51b5;
+}
+.c7n-pro-color-picker-float-label.c7n-pro-color-picker-invalid .c7n-pro-field-label {
+  color: #d50000;
+}
+.c7n-pro-color-picker-float-label .c7n-pro-field-label-wrapper,
+.c7n-pro-color-picker-float-label .c7n-pro-color-picker:focus + .c7n-pro-field-label-wrapper {
+  -webkit-transform: scaleX(0.8);
+      -ms-transform: scaleX(0.8);
+          transform: scaleX(0.8);
+}
+.c7n-pro-color-picker-float-label .c7n-pro-color-picker:-webkit-autofill + .c7n-pro-field-label-wrapper {
+  -webkit-transform: scaleX(0.8);
+          transform: scaleX(0.8);
+}
+.c7n-pro-color-picker-float-label .c7n-pro-field-label,
+.c7n-pro-color-picker-float-label.c7n-pro-color-picker-focused .c7n-pro-field-label {
+  font-weight: 500;
+  font-size: 0.15rem;
+  -webkit-transform: scaleY(0.8);
+      -ms-transform: scaleY(0.8);
+          transform: scaleY(0.8);
+}
+.c7n-pro-color-picker-float-label .c7n-pro-color-picker:-webkit-autofill + .c7n-pro-field-label-wrapper .c7n-pro-field-label {
+  font-weight: 500;
+  font-size: 0.15rem;
+  -webkit-transform: scaleY(0.8);
+          transform: scaleY(0.8);
+}
+.c7n-pro-color-picker-float-label .c7n-pro-color-picker {
+  height: 0.36rem;
+  border-radius: 0.04rem;
+}
+.c7n-pro-color-picker-float-label textarea.c7n-pro-color-picker {
+  height: auto;
+}
+.c7n-pro-color-picker-float-label.c7n-pro-color-picker-invalid,
+.c7n-pro-color-picker-float-label.c7n-pro-color-picker-required {
+  background-color: #fff;
+}
+.c7n-pro-color-picker-float-label.c7n-pro-color-picker-required .c7n-pro-field-label::after {
+  width: 0.08rem;
+}
+.c7n-pro-color-picker-empty:not(.c7n-pro-color-picker-focused) .c7n-pro-field-label {
+  font-weight: auto;
+  font-size: inherit;
+  -webkit-transform: none;
+      -ms-transform: none;
+          transform: none;
+}
+.c7n-pro-color-picker-empty:not(.c7n-pro-color-picker-focused) .c7n-pro-field-label-wrapper {
+  border-top-color: transparent;
+  -webkit-transform: none;
+      -ms-transform: none;
+          transform: none;
+}
+.c7n-pro-color-picker-float-label .c7n-pro-color-picker > ul {
+  margin-top: 0.05rem;
+  margin-left: 0.03rem;
+}
+.c7n-pro-color-picker-float-label .c7n-pro-color-picker-multiple-block {
+  border-radius: 0.12rem;
+}
+.c7n-pro-color-picker-prefix-button.c7n-pro-color-picker-float-label .c7n-pro-field-label-wrapper {
+  left: 0.24rem;
+}
+.c7n-pro-color-picker-float-label .c7n-pro-color-picker {
+  border: none;
+}
+.c7n-pro-color-picker-float-label::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: block;
+  border: 0.01rem solid rgba(0, 0, 0, 0.2);
+  border-radius: 0.05rem;
+  content: ' ';
+}
+.c7n-pro-color-picker-float-label.c7n-pro-color-picker-focused::before,
+.c7n-pro-color-picker-float-label.c7n-pro-color-picker-invalid::before {
+  border-width: 0.02rem;
+}
+.c7n-pro-color-picker-float-label:hover:not(.c7n-pro-color-picker-disabled):not(.c7n-pro-color-picker-focused):not(.c7n-pro-color-picker-invalid)::before {
+  border-color: #000000;
+}
+.c7n-pro-color-picker-float-label.c7n-pro-color-picker-focused::before {
+  border-color: #3f51b5;
+}
+.c7n-pro-color-picker-float-label.c7n-pro-color-picker-invalid::before {
+  border-color: #d50000;
+}
+.c7n-pro-color-picker-float-label.c7n-pro-color-picker-disabled::before {
+  border-style: dashed;
+}
+.c7n-pro-color-picker-float-label.c7n-pro-color-picker-disabled .c7n-pro-color-picker,
+.c7n-pro-color-picker-float-label.c7n-pro-color-picker-disabled .c7n-pro-color-picker:hover {
+  background-color: transparent;
+}
+.c7n-pro-color-picker-group-input:not(:last-child) .c7n-pro-color-picker-float-label::before {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.c7n-pro-color-picker-group-input:not(:first-child) .c7n-pro-color-picker-float-label::before {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.c7n-pro-color-picker-float-label-group .c7n-pro-color-picker-group-before,
+.c7n-pro-color-picker-float-label-group .c7n-pro-color-picker-group-after,
+.c7n-pro-color-picker-float-label-group .c7n-pro-color-picker-group-help {
+  border-radius: 4px;
+}
+.c7n-pro-color-picker-float-label .c7n-pro-color-picker:-webkit-autofill {
+  width: calc(100% - .04rem);
+  height: 0.32rem;
+  margin: 0.02rem;
+  padding-left: 0.08rem;
+  border-radius: 0.04rem;
+}
+.c7n-pro-color-picker-float-label textarea.c7n-pro-color-picker:-webkit-autofill {
+  height: auto;
+}
+.c7n-pro-color-picker-prefix-button.c7n-pro-color-picker-float-label .c7n-pro-color-picker:-webkit-autofill {
+  padding-left: 0.22rem;
+}
+.c7n-pro-color-picker-uppercase {
+  text-transform: uppercase;
+}
+.c7n-pro-color-picker-lowercase {
+  text-transform: lowercase;
+}
+.c7n-pro-color-picker-capitalize {
+  text-transform: capitalize;
+}
+.c7n-pro-color-picker-popup {
+  border-radius: 0.02rem;
+}
+.c7n-pro-color-picker-popup.slide-up-enter.slide-up-enter-active.c7n-pro-color-picker-popup-placement-bottomLeft,
+.c7n-pro-color-picker-popup.slide-up-enter.slide-up-enter-active.c7n-pro-color-picker-popup-placement-bottomRight,
+.c7n-pro-color-picker-popup.slide-up-appear.slide-up-appear-active.c7n-pro-color-picker-popup-placement-bottomLeft,
+.c7n-pro-color-picker-popup.slide-up-appear.slide-up-appear-active.c7n-pro-color-picker-popup-placement-bottomRight {
+  -webkit-animation-name: antSlideUpIn;
+          animation-name: antSlideUpIn;
+}
+.c7n-pro-color-picker-popup.slide-up-enter.slide-up-enter-active.c7n-pro-color-picker-popup-placement-topLeft,
+.c7n-pro-color-picker-popup.slide-up-enter.slide-up-enter-active.c7n-pro-color-picker-popup-placement-topRight,
+.c7n-pro-color-picker-popup.slide-up-appear.slide-up-appear-active.c7n-pro-color-picker-popup-placement-topLeft,
+.c7n-pro-color-picker-popup.slide-up-appear.slide-up-appear-active.c7n-pro-color-picker-popup-placement-topRight {
+  -webkit-animation-name: antSlideDownIn;
+          animation-name: antSlideDownIn;
+}
+.c7n-pro-color-picker-popup.slide-up-leave.slide-up-leave-active.c7n-pro-color-picker-popup-placement-bottomLeft,
+.c7n-pro-color-picker-popup.slide-up-leave.slide-up-leave-active.c7n-pro-color-picker-popup-placement-bottomRight {
+  -webkit-animation-name: antSlideUpOut;
+          animation-name: antSlideUpOut;
+}
+.c7n-pro-color-picker-popup.slide-up-leave.slide-up-leave-active.c7n-pro-color-picker-popup-placement-topLeft,
+.c7n-pro-color-picker-popup.slide-up-leave.slide-up-leave-active.c7n-pro-color-picker-popup-placement-topRight {
+  -webkit-animation-name: antSlideDownOut;
+          animation-name: antSlideDownOut;
+}
+.c7n-pro-color-picker-prefix {
+  height: 0.18rem;
+  padding: 0 0.03rem;
+}
+.c7n-pro-color-picker-color {
+  display: block;
+  height: 100%;
+  border-radius: 0.02rem;
+}
+.c7n-pro-color-picker-popup {
+  width: 2.8rem;
+  padding: 0.05rem;
+  line-height: 1.5;
+  background-clip: padding-box;
+}
+.c7n-pro-color-picker-popup-body {
+  position: relative;
+  height: 1.5rem;
+}
+.c7n-pro-color-picker-popup-body-gradient {
+  height: 100%;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgba(0, 0, 0, 0)), to(#000)), -webkit-gradient(linear, left top, right top, color-stop(0, #fff), to(rgba(255, 255, 255, 0)));
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0, #000 100%), linear-gradient(to right, #fff 0, rgba(255, 255, 255, 0) 100%);
+}
+.c7n-pro-color-picker-popup-body-selector {
+  position: absolute;
+  top: -0.05rem;
+  right: -0.05rem;
+  width: 0.1rem;
+  height: 0.1rem;
+  border: 0.01rem solid #fff;
+  border-radius: 50%;
+}
+.c7n-pro-color-picker-popup-body-selector:hover,
+.c7n-pro-color-picker-popup-body-selector :active {
+  cursor: pointer;
+}
+.c7n-pro-color-picker-popup-footer {
+  padding: 0.12rem 0.15rem;
+}
+.c7n-pro-color-picker-popup-footer-slider {
+  position: relative;
+  height: 0.12rem;
+}
+.c7n-pro-color-picker-popup-footer-slider .hue {
+  height: 100%;
+  background: -webkit-gradient(linear, left top, right top, color-stop(0, red), color-stop(16%, #ff0), color-stop(33%, #0f0), color-stop(50%, #0ff), color-stop(67%, #00f), color-stop(84%, #f0f), to(#ff0004));
+  background: linear-gradient(to right, red 0, #ff0 16%, #0f0 33%, #0ff 50%, #00f 67%, #f0f 84%, #ff0004 100%);
+  border-radius: 0.02rem;
+}
+.c7n-pro-color-picker-popup-footer-slider.opacity {
+  display: none;
+  background: -webkit-gradient(linear, left top, right top, from(#ff0000), to(rgba(255, 0, 0, 0)));
+  background: linear-gradient(to right, #ff0000, rgba(255, 0, 0, 0));
+}
+.c7n-pro-color-picker-popup-footer-slider-pointer {
+  position: absolute;
+  top: -0.01rem;
+  left: -0.07rem;
+  width: 0.14rem;
+  height: 0.14rem;
+  background-color: #fff;
+  border-radius: 50%;
+  -webkit-box-shadow: 0 0.02rem 0.08rem rgba(0, 0, 0, 0.12);
+          box-shadow: 0 0.02rem 0.08rem rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+}
+
+/* stylelint-disable at-rule-empty-line-before,at-rule-name-space-after,at-rule-no-unknown */
+/* stylelint-disable no-duplicate-selectors */
+/* stylelint-disable declaration-bang-space-before,no-duplicate-selectors */
+/* stylelint-disable declaration-bang-space-before,no-duplicate-selectors */
+.c7n-pro-calendar-picker {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  height: 0.3rem;
+  padding: 0.01rem 0.1rem;
+  color: #000000;
+  font-size: inherit;
+  line-height: 1;
+  background-color: transparent;
+  background-image: none;
+  border: 0.01rem solid rgba(0, 0, 0, 0.2);
+  border-radius: 0.02rem;
+  cursor: text;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
+  -webkit-transition-property: opacity, color, background-color, border;
+  transition-property: opacity, color, background-color, border;
+  /* stylelint-disable */
+}
+.c7n-pro-calendar-picker::-moz-placeholder {
+  color: #bfbfbf;
+  opacity: 1;
+}
+.c7n-pro-calendar-picker:-ms-input-placeholder {
+  color: #bfbfbf;
+}
+.c7n-pro-calendar-picker::-webkit-input-placeholder {
+  color: #bfbfbf;
+}
+.c7n-pro-calendar-picker::-moz-placeholder {
+  color: #bfbfbf;
+  text-align: left;
+  opacity: 1;
+}
+.c7n-pro-calendar-picker:-ms-input-placeholder {
+  color: #bfbfbf;
+  text-align: left;
+}
+.c7n-pro-calendar-picker::-webkit-input-placeholder {
+  color: #bfbfbf;
+  text-align: left;
+}
+label:hover .c7n-pro-calendar-picker,
+.c7n-pro-calendar-picker:hover {
+  border-color: #6374c2;
+}
+.c7n-pro-calendar-picker:focus,
+.c7n-pro-calendar-picker-focused .c7n-pro-calendar-picker {
+  color: #000000;
+  border-color: #6374c2;
+  outline: 0;
+}
+.c7n-pro-calendar-picker-disabled .c7n-pro-calendar-picker,
+.c7n-pro-calendar-picker-disabled label:hover .c7n-pro-calendar-picker,
+.c7n-pro-calendar-picker:disabled {
+  color: rgba(0, 0, 0, 0.25);
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+  opacity: 1;
+}
+.c7n-pro-calendar-picker-disabled .c7n-pro-calendar-picker,
+.c7n-pro-calendar-picker-disabled label:hover .c7n-pro-calendar-picker,
+.c7n-pro-calendar-picker:disabled,
+.c7n-pro-calendar-picker-disabled .c7n-pro-calendar-picker:hover,
+.c7n-pro-calendar-picker-disabled label:hover .c7n-pro-calendar-picker:hover,
+.c7n-pro-calendar-picker:disabled:hover {
+  border-color: rgba(0, 0, 0, 0.2);
+}
+.c7n-pro-calendar-picker-disabled .c7n-pro-calendar-picker-prefix,
+.c7n-pro-calendar-picker-disabled .c7n-pro-calendar-picker-suffix,
+.c7n-pro-calendar-picker-disabled.c7n-pro-calendar-picker-prefix-button .c7n-pro-calendar-picker-prefix,
+.c7n-pro-calendar-picker-disabled.c7n-pro-calendar-picker-suffix-button .c7n-pro-calendar-picker-suffix,
+.c7n-pro-calendar-picker-disabled .c7n-pro-calendar-picker-inner-button,
+.c7n-pro-calendar-picker-disabled input {
+  cursor: not-allowed;
+}
+.c7n-pro-calendar-picker-not-editable .c7n-pro-calendar-picker {
+  cursor: default;
+}
+.c7n-pro-calendar-picker-placeholder,
+.c7n-pro-calendar-picker-rendered-value {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  max-width: 100%;
+  height: 0.3rem;
+  margin: auto 0;
+  padding: 0 0.1rem;
+  line-height: 0.3rem;
+  white-space: pre;
+  border: 0.01rem solid transparent;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+.c7n-pro-calendar-picker-placeholder-inner,
+.c7n-pro-calendar-picker-rendered-value-inner {
+  display: inline-block;
+  width: 100%;
+  overflow: hidden;
+}
+.c7n-pro-calendar-picker-placeholder {
+  color: #bfbfbf;
+  white-space: nowrap;
+  opacity: 0;
+}
+textarea.c7n-pro-calendar-picker {
+  max-width: 100%;
+  height: auto;
+  vertical-align: bottom;
+}
 .c7n-pro-calendar-picker-lg .c7n-pro-calendar-picker {
   height: 0.4rem;
   padding: 0.06rem 0.1rem;
