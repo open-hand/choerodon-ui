@@ -20,7 +20,7 @@ describe('Tree-pro', () => {
 
   it('should have a input', () => {
     const { wrapper } = setupByMount();
-    expect(wrapper.find('input').length).toBe(1);
+    expect(wrapper.find('input').length).toBe(2);
   });
 
   it('should input value is equal to one', () => {

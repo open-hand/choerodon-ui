@@ -1,0 +1,618 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders ./components/skeleton/demo/active.md correctly 1`] = `
+<div
+  class="c7n-skeleton c7n-skeleton-active"
+>
+  <div
+    class="c7n-skeleton-content"
+  >
+    <h3
+      class="c7n-skeleton-title"
+      style="width:38%"
+    />
+    <ul
+      class="c7n-skeleton-paragraph"
+    >
+      <li />
+      <li />
+      <li
+        style="width:61%"
+      />
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`renders ./components/skeleton/demo/basic.md correctly 1`] = `
+<div
+  class="c7n-skeleton"
+>
+  <div
+    class="c7n-skeleton-content"
+  >
+    <h3
+      class="c7n-skeleton-title"
+      style="width:38%"
+    />
+    <ul
+      class="c7n-skeleton-paragraph"
+    >
+      <li />
+      <li />
+      <li
+        style="width:61%"
+      />
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`renders ./components/skeleton/demo/children.md correctly 1`] = `
+<div
+  class="article"
+>
+  <div>
+    <h4>
+      Choerodon UI of React
+    </h4>
+    <p>
+      Following the Ant Design specification, we developed a React UI library Choerodon UI that contains a set of high quality components and demos for building rich, interactive user interfaces.
+    </p>
+  </div>
+  <button
+    class="c7n-btn c7n-btn-flat"
+    type="button"
+  >
+    <span>
+      Show Skeleton
+    </span>
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+</div>
+`;
+
+exports[`renders ./components/skeleton/demo/complex.md correctly 1`] = `
+<div
+  class="c7n-skeleton c7n-skeleton-with-avatar"
+>
+  <div
+    class="c7n-skeleton-header"
+  >
+    <span
+      class="c7n-skeleton-avatar c7n-skeleton-avatar-lg c7n-skeleton-avatar-circle"
+    />
+  </div>
+  <div
+    class="c7n-skeleton-content"
+  >
+    <h3
+      class="c7n-skeleton-title"
+      style="width:50%"
+    />
+    <ul
+      class="c7n-skeleton-paragraph"
+    >
+      <li />
+      <li />
+      <li />
+      <li />
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`renders ./components/skeleton/demo/element.md correctly 1`] = `
+<div>
+  <div>
+    <form
+      class="c7n-form c7n-form-inline"
+      style="margin-bottom:16px"
+    >
+      <div
+        class="c7n-form-item"
+      >
+        <div
+          class="c7n-form-item-control-wrapper"
+        >
+          <div
+            class="c7n-form-item-control"
+          >
+            <span
+              class="c7n-form-item-children"
+            >
+              <span
+                class="c7n-switch"
+                tabindex="0"
+              >
+                <span
+                  class="c7n-switch-inner"
+                />
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="c7n-form-item"
+      >
+        <div
+          class="c7n-form-item-control-wrapper"
+        >
+          <div
+            class="c7n-form-item-control"
+          >
+            <span
+              class="c7n-form-item-children"
+            >
+              <div
+                class="c7n-radio-group-wrapper"
+              >
+                <div
+                  class="c7n-radio-group"
+                >
+                  <label
+                    class="c7n-radio-button-wrapper c7n-radio-button-wrapper-checked"
+                  >
+                    <span
+                      class="c7n-radio-button c7n-radio-button-checked"
+                    >
+                      <input
+                        checked=""
+                        class="c7n-radio-button-input"
+                        type="radio"
+                        value="default"
+                      />
+                      <span
+                        class="c7n-radio-button-inner"
+                      />
+                    </span>
+                    <span>
+                      Default
+                    </span>
+                  </label>
+                  <label
+                    class="c7n-radio-button-wrapper"
+                  >
+                    <span
+                      class="c7n-radio-button"
+                    >
+                      <input
+                        class="c7n-radio-button-input"
+                        type="radio"
+                        value="large"
+                      />
+                      <span
+                        class="c7n-radio-button-inner"
+                      />
+                    </span>
+                    <span>
+                      Large
+                    </span>
+                  </label>
+                  <label
+                    class="c7n-radio-button-wrapper"
+                  >
+                    <span
+                      class="c7n-radio-button"
+                    >
+                      <input
+                        class="c7n-radio-button-input"
+                        type="radio"
+                        value="small"
+                      />
+                      <span
+                        class="c7n-radio-button-inner"
+                      />
+                    </span>
+                    <span>
+                      Small
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="c7n-form-item"
+      >
+        <div
+          class="c7n-form-item-control-wrapper"
+        >
+          <div
+            class="c7n-form-item-control"
+          >
+            <span
+              class="c7n-form-item-children"
+            >
+              <div
+                class="c7n-radio-group-wrapper"
+              >
+                <div
+                  class="c7n-radio-group"
+                >
+                  <label
+                    class="c7n-radio-button-wrapper c7n-radio-button-wrapper-checked"
+                  >
+                    <span
+                      class="c7n-radio-button c7n-radio-button-checked"
+                    >
+                      <input
+                        checked=""
+                        class="c7n-radio-button-input"
+                        type="radio"
+                        value="default"
+                      />
+                      <span
+                        class="c7n-radio-button-inner"
+                      />
+                    </span>
+                    <span>
+                      Default
+                    </span>
+                  </label>
+                  <label
+                    class="c7n-radio-button-wrapper"
+                  >
+                    <span
+                      class="c7n-radio-button"
+                    >
+                      <input
+                        class="c7n-radio-button-input"
+                        type="radio"
+                        value="round"
+                      />
+                      <span
+                        class="c7n-radio-button-inner"
+                      />
+                    </span>
+                    <span>
+                      Round
+                    </span>
+                  </label>
+                  <label
+                    class="c7n-radio-button-wrapper"
+                  >
+                    <span
+                      class="c7n-radio-button"
+                    >
+                      <input
+                        class="c7n-radio-button-input"
+                        type="radio"
+                        value="circle"
+                      />
+                      <span
+                        class="c7n-radio-button-inner"
+                      />
+                    </span>
+                    <span>
+                      Circle
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </span>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div
+      class="c7n-skeleton c7n-skeleton-element"
+    >
+      <span
+        class="c7n-skeleton-button"
+      />
+    </div>
+  </div>
+  <br />
+  <div>
+    <form
+      class="c7n-form c7n-form-inline"
+      style="margin-bottom:16px"
+    >
+      <div
+        class="c7n-form-item"
+      >
+        <div
+          class="c7n-form-item-control-wrapper"
+        >
+          <div
+            class="c7n-form-item-control"
+          >
+            <span
+              class="c7n-form-item-children"
+            >
+              <span
+                class="c7n-switch"
+                tabindex="0"
+              >
+                <span
+                  class="c7n-switch-inner"
+                />
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="c7n-form-item"
+      >
+        <div
+          class="c7n-form-item-control-wrapper"
+        >
+          <div
+            class="c7n-form-item-control"
+          >
+            <span
+              class="c7n-form-item-children"
+            >
+              <div
+                class="c7n-radio-group-wrapper"
+              >
+                <div
+                  class="c7n-radio-group"
+                >
+                  <label
+                    class="c7n-radio-button-wrapper c7n-radio-button-wrapper-checked"
+                  >
+                    <span
+                      class="c7n-radio-button c7n-radio-button-checked"
+                    >
+                      <input
+                        checked=""
+                        class="c7n-radio-button-input"
+                        type="radio"
+                        value="default"
+                      />
+                      <span
+                        class="c7n-radio-button-inner"
+                      />
+                    </span>
+                    <span>
+                      Default
+                    </span>
+                  </label>
+                  <label
+                    class="c7n-radio-button-wrapper"
+                  >
+                    <span
+                      class="c7n-radio-button"
+                    >
+                      <input
+                        class="c7n-radio-button-input"
+                        type="radio"
+                        value="large"
+                      />
+                      <span
+                        class="c7n-radio-button-inner"
+                      />
+                    </span>
+                    <span>
+                      Large
+                    </span>
+                  </label>
+                  <label
+                    class="c7n-radio-button-wrapper"
+                  >
+                    <span
+                      class="c7n-radio-button"
+                    >
+                      <input
+                        class="c7n-radio-button-input"
+                        type="radio"
+                        value="small"
+                      />
+                      <span
+                        class="c7n-radio-button-inner"
+                      />
+                    </span>
+                    <span>
+                      Small
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="c7n-form-item"
+      >
+        <div
+          class="c7n-form-item-control-wrapper"
+        >
+          <div
+            class="c7n-form-item-control"
+          >
+            <span
+              class="c7n-form-item-children"
+            >
+              <div
+                class="c7n-radio-group-wrapper"
+              >
+                <div
+                  class="c7n-radio-group"
+                >
+                  <label
+                    class="c7n-radio-button-wrapper"
+                  >
+                    <span
+                      class="c7n-radio-button"
+                    >
+                      <input
+                        class="c7n-radio-button-input"
+                        type="radio"
+                        value="square"
+                      />
+                      <span
+                        class="c7n-radio-button-inner"
+                      />
+                    </span>
+                    <span>
+                      Square
+                    </span>
+                  </label>
+                  <label
+                    class="c7n-radio-button-wrapper c7n-radio-button-wrapper-checked"
+                  >
+                    <span
+                      class="c7n-radio-button c7n-radio-button-checked"
+                    >
+                      <input
+                        checked=""
+                        class="c7n-radio-button-input"
+                        type="radio"
+                        value="circle"
+                      />
+                      <span
+                        class="c7n-radio-button-inner"
+                      />
+                    </span>
+                    <span>
+                      Circle
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </span>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div
+      class="c7n-skeleton c7n-skeleton-element"
+    >
+      <span
+        class="c7n-skeleton-avatar c7n-skeleton-avatar-circle"
+      />
+    </div>
+  </div>
+  <br />
+  <div>
+    <form
+      class="c7n-form c7n-form-inline"
+      style="margin-bottom:16px"
+    >
+      <div
+        class="c7n-form-item"
+      >
+        <div
+          class="c7n-form-item-control-wrapper"
+        >
+          <div
+            class="c7n-form-item-control"
+          >
+            <span
+              class="c7n-form-item-children"
+            >
+              <span
+                class="c7n-switch"
+                tabindex="0"
+              >
+                <span
+                  class="c7n-switch-inner"
+                />
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="c7n-form-item"
+      >
+        <div
+          class="c7n-form-item-control-wrapper"
+        >
+          <div
+            class="c7n-form-item-control"
+          >
+            <span
+              class="c7n-form-item-children"
+            >
+              <div
+                class="c7n-radio-group-wrapper"
+              >
+                <div
+                  class="c7n-radio-group"
+                >
+                  <label
+                    class="c7n-radio-button-wrapper c7n-radio-button-wrapper-checked"
+                  >
+                    <span
+                      class="c7n-radio-button c7n-radio-button-checked"
+                    >
+                      <input
+                        checked=""
+                        class="c7n-radio-button-input"
+                        type="radio"
+                        value="default"
+                      />
+                      <span
+                        class="c7n-radio-button-inner"
+                      />
+                    </span>
+                    <span>
+                      Default
+                    </span>
+                  </label>
+                  <label
+                    class="c7n-radio-button-wrapper"
+                  >
+                    <span
+                      class="c7n-radio-button"
+                    >
+                      <input
+                        class="c7n-radio-button-input"
+                        type="radio"
+                        value="large"
+                      />
+                      <span
+                        class="c7n-radio-button-inner"
+                      />
+                    </span>
+                    <span>
+                      Large
+                    </span>
+                  </label>
+                  <label
+                    class="c7n-radio-button-wrapper"
+                  >
+                    <span
+                      class="c7n-radio-button"
+                    >
+                      <input
+                        class="c7n-radio-button-input"
+                        type="radio"
+                        value="small"
+                      />
+                      <span
+                        class="c7n-radio-button-inner"
+                      />
+                    </span>
+                    <span>
+                      Small
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </span>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div
+      class="c7n-skeleton c7n-skeleton-element"
+    >
+      <span
+        class="c7n-skeleton-input"
+        style="width:300px"
+      />
+    </div>
+  </div>
+</div>
+`;

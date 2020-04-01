@@ -90,6 +90,20 @@ exports[`renders ./components-pro/modal/demo/confirm.md correctly 1`] = `
 </div>
 `;
 
+exports[`renders ./components-pro/modal/demo/destory.md correctly 1`] = `
+<button
+  class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+  type="button"
+>
+  <span>
+    Open
+  </span>
+  <div
+    class="c7n-ripple-wrapper"
+  />
+</button>
+`;
+
 exports[`renders ./components-pro/modal/demo/drawer.md correctly 1`] = `
 <button
   class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
@@ -185,6 +199,20 @@ exports[`renders ./components-pro/modal/demo/offset.md correctly 1`] = `
 `;
 
 exports[`renders ./components-pro/modal/demo/sync.md correctly 1`] = `
+<button
+  class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+  type="button"
+>
+  <span>
+    Open
+  </span>
+  <div
+    class="c7n-ripple-wrapper"
+  />
+</button>
+`;
+
+exports[`renders ./components-pro/modal/demo/update.md correctly 1`] = `
 <button
   class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
   type="button"

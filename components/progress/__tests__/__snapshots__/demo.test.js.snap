@@ -175,22 +175,22 @@ exports[`renders ./components/progress/demo/circle-dynamic.md correctly 1`] = `
     class="c7n-btn-group"
   >
     <button
-      class="c7n-btn c7n-btn-icon-only c7n-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-icon-only c7n-btn-raised"
       type="button"
     >
       <i
-        class="icon icon-minus"
+        class="icon icon-remove"
       />
       <div
         class="c7n-ripple-wrapper"
       />
     </button>
     <button
-      class="c7n-btn c7n-btn-icon-only c7n-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-icon-only c7n-btn-raised"
       type="button"
     >
       <i
-        class="icon icon-plus"
+        class="icon icon-add"
       />
       <div
         class="c7n-ripple-wrapper"
@@ -401,22 +401,22 @@ exports[`renders ./components/progress/demo/dynamic.md correctly 1`] = `
     class="c7n-btn-group"
   >
     <button
-      class="c7n-btn c7n-btn-icon-only c7n-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-icon-only c7n-btn-raised"
       type="button"
     >
       <i
-        class="icon icon-minus"
+        class="icon icon-remove"
       />
       <div
         class="c7n-ripple-wrapper"
       />
     </button>
     <button
-      class="c7n-btn c7n-btn-icon-only c7n-btn-flat"
+      class="c7n-btn c7n-btn-circle c7n-btn-icon-only c7n-btn-raised"
       type="button"
     >
       <i
-        class="icon icon-plus"
+        class="icon icon-add"
       />
       <div
         class="c7n-ripple-wrapper"

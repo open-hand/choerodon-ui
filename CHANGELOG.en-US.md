@@ -17,6 +17,8 @@ timeline: true
 
 - 🐞 `TreeSelect`: Fixed Css error and tree check error.
 - 🐞 `<pro>Tooltip`: Fixed the Button disable ,can't use the mouseEvent 
+- 🐞 `<pro>CodeArea`: Fixed defocus update error.
+- 🐞 `<pro>Pagination`: Fixed paging calculation error.
 - 🐞 `<pro>DataSet`: Fixed `current` pointing after submission failed.
 
 ## 0.8.58

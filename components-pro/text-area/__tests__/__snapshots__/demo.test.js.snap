@@ -1,5 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`renders ./components-pro/text-area/demo/autoSize.md correctly 1`] = `
+<div
+  class="c7n-pro-textarea-wrapper c7n-pro-textarea-empty"
+>
+  <label>
+    <textarea
+      autocomplete="off"
+      class="c7n-pro-textarea"
+      placeholder="适应文本高度"
+      rows="4"
+      style="min-rows:2px;max-rows:8px;resize:vertical"
+      type="text"
+    />
+  </label>
+</div>
+`;
+
 exports[`renders ./components-pro/text-area/demo/basic.md correctly 1`] = `
 <div
   class="c7n-row"
@@ -16,6 +33,7 @@ exports[`renders ./components-pro/text-area/demo/basic.md correctly 1`] = `
         <textarea
           autocomplete="off"
           class="c7n-pro-textarea"
+          placeholder="Basic usage"
           rows="4"
           style="resize:none"
           type="text"
@@ -34,6 +52,7 @@ exports[`renders ./components-pro/text-area/demo/basic.md correctly 1`] = `
         <textarea
           autocomplete="off"
           class="c7n-pro-textarea"
+          placeholder="readOnly"
           readonly=""
           rows="4"
           style="resize:none"
@@ -54,6 +73,7 @@ exports[`renders ./components-pro/text-area/demo/basic.md correctly 1`] = `
           autocomplete="off"
           class="c7n-pro-textarea"
           disabled=""
+          placeholder="disabled"
           readonly=""
           rows="4"
           style="resize:none"
@@ -65,6 +85,23 @@ exports[`renders ./components-pro/text-area/demo/basic.md correctly 1`] = `
 </div>
 `;
 
+exports[`renders ./components-pro/text-area/demo/cols-autoSize.md correctly 1`] = `
+<div
+  class="c7n-pro-textarea-wrapper c7n-pro-textarea-empty"
+>
+  <label>
+    <textarea
+      autocomplete="off"
+      class="c7n-pro-textarea"
+      placeholder="设置宽高适应"
+      rows="4"
+      style="min-rows:2px;max-rows:8px;min-cols:1px;max-cols:2px;resize:vertical"
+      type="text"
+    />
+  </label>
+</div>
+`;
+
 exports[`renders ./components-pro/text-area/demo/controlled.md correctly 1`] = `
 <div
   class="c7n-pro-textarea-wrapper"
@@ -73,6 +110,7 @@ exports[`renders ./components-pro/text-area/demo/controlled.md correctly 1`] = `
     <textarea
       autocomplete="off"
       class="c7n-pro-textarea"
+      placeholder=""
       rows="4"
       style="resize:none"
       type="text"
@@ -92,8 +130,9 @@ exports[`renders ./components-pro/text-area/demo/dataset.md correctly 1`] = `
       autocomplete="off"
       class="c7n-pro-textarea"
       name="content"
+      placeholder=""
       rows="4"
-      style="resize:both;transition:none"
+      style="resize:both"
       type="text"
     >
       textarea
@@ -119,8 +158,9 @@ exports[`renders ./components-pro/text-area/demo/resizable.md correctly 1`] = `
           autocomplete="off"
           class="c7n-pro-textarea"
           cols="40"
+          placeholder="resize both"
           rows="4"
-          style="resize:both;transition:none"
+          style="resize:both"
           type="text"
         />
       </label>
@@ -138,8 +178,9 @@ exports[`renders ./components-pro/text-area/demo/resizable.md correctly 1`] = `
           autocomplete="off"
           class="c7n-pro-textarea"
           cols="40"
+          placeholder="resize vertical"
           rows="4"
-          style="resize:vertical;transition:none"
+          style="resize:vertical"
           type="text"
         />
       </label>
@@ -157,8 +198,9 @@ exports[`renders ./components-pro/text-area/demo/resizable.md correctly 1`] = `
           autocomplete="off"
           class="c7n-pro-textarea"
           cols="40"
+          placeholder="resize horizontal"
           rows="4"
-          style="resize:horizontal;transition:none"
+          style="resize:horizontal"
           type="text"
         />
       </label>

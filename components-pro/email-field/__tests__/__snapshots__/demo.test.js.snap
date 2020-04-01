@@ -626,50 +626,12 @@ exports[`renders ./components-pro/select/demo/lookupCode.md correctly 1`] = `
     style="padding-left:5px;padding-right:5px"
   >
     <span
-      class="c7n-pro-select-wrapper c7n-pro-select-suffix-button c7n-pro-select-not-editable"
-    >
-      <input
-        name="lov"
-        type="hidden"
-        value="SYS.PROFILE_LEVEL_ID"
-      />
-      <label>
-        <input
-          autocomplete="off"
-          class="c7n-pro-select"
-          placeholder="请选择"
-          readonly=""
-          type="text"
-          value="SYS.PROFILE_LEVEL_ID"
-        />
-        <div
-          class="c7n-pro-select-inner-button c7n-pro-select-clear-button"
-        >
-          <i
-            class="icon icon-close"
-          />
-        </div>
-        <div
-          class="c7n-pro-select-suffix"
-        >
-          <i
-            class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
-          />
-        </div>
-      </label>
-    </span>
-  </div>
-  <div
-    class="c7n-col-12"
-    style="padding-left:5px;padding-right:5px"
-  >
-    <span
       class="c7n-pro-select-wrapper c7n-pro-select-suffix-button c7n-pro-select-multiple c7n-pro-select-not-editable"
     >
       <input
         class="c7n-pro-select-multiple-value"
         name="lov2"
-        value="SYS.PROFILE_LEVEL_ID,SYS.RESOURCE_TYPE"
+        value="QP,XH"
       />
       <div
         class="c7n-pro-select-placeholder"
@@ -685,7 +647,7 @@ exports[`renders ./components-pro/select/demo/lookupCode.md correctly 1`] = `
               class="c7n-pro-select-multiple-block"
             >
               <div>
-                SYS.PROFILE_LEVEL_ID
+                QP
               </div>
               <i
                 class="icon icon-cancel"
@@ -696,7 +658,7 @@ exports[`renders ./components-pro/select/demo/lookupCode.md correctly 1`] = `
               class="c7n-pro-select-multiple-block"
             >
               <div>
-                SYS.RESOURCE_TYPE
+                XH
               </div>
               <i
                 class="icon icon-cancel"
@@ -811,7 +773,7 @@ exports[`renders ./components-pro/select/demo/multiple.md correctly 1`] = `
     >
       <input
         class="c7n-pro-select-multiple-value"
-        value="jack,wu"
+        value="jack,wu,lucy"
       />
       <div
         class="c7n-pro-select-placeholder"
@@ -839,6 +801,17 @@ exports[`renders ./components-pro/select/demo/multiple.md correctly 1`] = `
             >
               <div>
                 Wu
+              </div>
+              <i
+                class="icon icon-cancel"
+                tabindex="-1"
+              />
+            </li>
+            <li
+              class="c7n-pro-select-multiple-block"
+            >
+              <div>
+                Lucy
               </div>
               <i
                 class="icon icon-cancel"

@@ -787,29 +787,6 @@ exports[`IntlField-pro renders dataset correctly 1`] = `
               "innerValidationResults": Array [],
             },
           },
-          "__tls.first-name.ja_JP": Field {
-            "dataSet": [Circular],
-            "isDynamicPropsComputing": false,
-            "lastDynamicProps": Object {},
-            "pending": PromiseQueue {
-              "queue": Array [],
-              "queueing": false,
-            },
-            "pristineProps": Object {
-              "label": "日本語",
-              "type": "string",
-            },
-            "props": Object {
-              "label": "日本語",
-              "type": "string",
-            },
-            "record": undefined,
-            "validator": Validator {
-              "control": undefined,
-              "field": [Circular],
-              "innerValidationResults": Array [],
-            },
-          },
           "__tls.first-name.zh_CN": Field {
             "dataSet": [Circular],
             "isDynamicPropsComputing": false,
@@ -941,27 +918,6 @@ exports[`IntlField-pro renders dataset correctly 1`] = `
                 },
                 "props": Object {
                   "name": "__tls.first-name.en_US",
-                },
-                "record": [Circular],
-                "validator": Validator {
-                  "control": undefined,
-                  "field": [Circular],
-                  "innerValidationResults": Array [],
-                },
-              },
-              "__tls.first-name.ja_JP": Field {
-                "dataSet": [Circular],
-                "isDynamicPropsComputing": false,
-                "lastDynamicProps": Object {},
-                "pending": PromiseQueue {
-                  "queue": Array [],
-                  "queueing": false,
-                },
-                "pristineProps": Object {
-                  "name": "__tls.first-name.ja_JP",
-                },
-                "props": Object {
-                  "name": "__tls.first-name.ja_JP",
                 },
                 "record": [Circular],
                 "validator": Validator {
@@ -1137,27 +1093,6 @@ exports[`IntlField-pro renders dataset correctly 1`] = `
                 },
                 "props": Object {
                   "name": "__tls.first-name.en_US",
-                },
-                "record": [Circular],
-                "validator": Validator {
-                  "control": undefined,
-                  "field": [Circular],
-                  "innerValidationResults": Array [],
-                },
-              },
-              "__tls.first-name.ja_JP": Field {
-                "dataSet": [Circular],
-                "isDynamicPropsComputing": false,
-                "lastDynamicProps": Object {},
-                "pending": PromiseQueue {
-                  "queue": Array [],
-                  "queueing": false,
-                },
-                "pristineProps": Object {
-                  "name": "__tls.first-name.ja_JP",
-                },
-                "props": Object {
-                  "name": "__tls.first-name.ja_JP",
                 },
                 "record": [Circular],
                 "validator": Validator {
@@ -1684,29 +1619,6 @@ exports[`IntlField-pro renders dataset correctly 2`] = `
             "innerValidationResults": Array [],
           },
         },
-        "__tls.first.ja_JP": Field {
-          "dataSet": [Circular],
-          "isDynamicPropsComputing": false,
-          "lastDynamicProps": Object {},
-          "pending": PromiseQueue {
-            "queue": Array [],
-            "queueing": false,
-          },
-          "pristineProps": Object {
-            "label": "日本語",
-            "type": "string",
-          },
-          "props": Object {
-            "label": "日本語",
-            "type": "string",
-          },
-          "record": undefined,
-          "validator": Validator {
-            "control": undefined,
-            "field": [Circular],
-            "innerValidationResults": Array [],
-          },
-        },
         "__tls.first.zh_CN": Field {
           "dataSet": [Circular],
           "isDynamicPropsComputing": false,
@@ -1835,27 +1747,6 @@ exports[`IntlField-pro renders dataset correctly 2`] = `
               },
               "props": Object {
                 "name": "__tls.first.en_US",
-              },
-              "record": [Circular],
-              "validator": Validator {
-                "control": undefined,
-                "field": [Circular],
-                "innerValidationResults": Array [],
-              },
-            },
-            "__tls.first.ja_JP": Field {
-              "dataSet": [Circular],
-              "isDynamicPropsComputing": false,
-              "lastDynamicProps": Object {},
-              "pending": PromiseQueue {
-                "queue": Array [],
-                "queueing": false,
-              },
-              "pristineProps": Object {
-                "name": "__tls.first.ja_JP",
-              },
-              "props": Object {
-                "name": "__tls.first.ja_JP",
               },
               "record": [Circular],
               "validator": Validator {
@@ -2028,27 +1919,6 @@ exports[`IntlField-pro renders dataset correctly 2`] = `
               },
               "props": Object {
                 "name": "__tls.first.en_US",
-              },
-              "record": [Circular],
-              "validator": Validator {
-                "control": undefined,
-                "field": [Circular],
-                "innerValidationResults": Array [],
-              },
-            },
-            "__tls.first.ja_JP": Field {
-              "dataSet": [Circular],
-              "isDynamicPropsComputing": false,
-              "lastDynamicProps": Object {},
-              "pending": PromiseQueue {
-                "queue": Array [],
-                "queueing": false,
-              },
-              "pristineProps": Object {
-                "name": "__tls.first.ja_JP",
-              },
-              "props": Object {
-                "name": "__tls.first.ja_JP",
               },
               "record": [Circular],
               "validator": Validator {

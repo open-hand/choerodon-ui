@@ -22,7 +22,7 @@ describe('Currency', () => {
       },
     });
     const wrapper = mount(<Currency dataSet={ds} name="money" />);
-    expect(wrapper.find('input').prop('value')).toEqual(expect.stringContaining('US$'));
+    expect(wrapper.find('input').prop('value')).toEqual(expect.stringContaining('$100,000,000,000,000.00'));
   });
   it('should show ￥ in a input value', () => {
     const handleDataSetChange = jest.fn();

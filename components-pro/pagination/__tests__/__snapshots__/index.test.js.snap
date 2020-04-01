@@ -55,6 +55,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
         "totalCount": 0,
       }
     }
+    hideOnSinglePage={false}
     pageSizeOptions={
       Array [
         "10",
@@ -68,6 +69,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
     showSizeChanger={true}
     showSizeChangerLabel={true}
     showTotal={true}
+    simple={false}
     sizeChangerOptionRenderer={[Function]}
     sizeChangerPosition="left"
     suffixCls="pagination"
