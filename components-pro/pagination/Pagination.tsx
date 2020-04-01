@@ -250,6 +250,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     ]);
   }
 
+  @action
   getOptions(): ReactNode {
     const { pageSize } = this;
     const { pageSizeOptions } = this.props;

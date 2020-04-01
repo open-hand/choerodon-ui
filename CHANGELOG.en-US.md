@@ -20,6 +20,7 @@ timeline: true
 - 🐞 `<pro>TextArea`: Fixed `autoSize` property.
 - 🐞 `<pro>CodeArea`: Fixed defocus update error.
 - 🐞 `<pro>Pagination`: Fixed paging calculation error.
+- 🐞 `<pro>Table.pagination`: Fixed `pageSizeOptions` property.
 - 🐞 `<pro>DataSet`: Fixed `current` pointing after submission failed.
 
 ## 0.8.58

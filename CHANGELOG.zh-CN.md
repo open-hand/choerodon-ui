@@ -20,6 +20,7 @@ timeline: true
 - 🐞 `<pro>TextArea`: 修复 autoSize 属性。
 - 🐞 `<pro>CodeArea`: 修复失焦更新错误。
 - 🐞 `<pro>Pagination`: 修复分页计算错误。
+- 🐞 `<pro>Table.pagination`: 修复 `pageSizeOptions` 修改报错。
 - 🐞 `<pro>DataSet`: 修复提交失败后 current 指向问题。
 
 ## 0.8.58
