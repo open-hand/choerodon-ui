@@ -1,20 +1,23 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders ./components-pro/text-area/demo/autoSize.md correctly 1`] = `
-<div
-  class="c7n-pro-textarea-wrapper c7n-pro-textarea-empty"
->
-  <label>
-    <textarea
-      autocomplete="off"
-      class="c7n-pro-textarea"
-      placeholder="适应文本高度"
-      rows="4"
-      style="min-rows:2px;max-rows:8px;resize:vertical"
-      type="text"
-    />
-  </label>
-</div>
+Array [
+  <div
+    class="c7n-pro-textarea-wrapper c7n-pro-textarea-empty"
+  >
+    <label>
+      <textarea
+        autocomplete="off"
+        class="c7n-pro-textarea"
+        placeholder="适应文本高度"
+        rows="2"
+        style="resize:none"
+        type="text"
+      />
+    </label>
+  </div>,
+  <span />,
+]
 `;
 
 exports[`renders ./components-pro/text-area/demo/basic.md correctly 1`] = `
@@ -40,6 +43,7 @@ exports[`renders ./components-pro/text-area/demo/basic.md correctly 1`] = `
         />
       </label>
     </div>
+    <span />
   </div>
   <div
     class="c7n-col-8"
@@ -60,6 +64,7 @@ exports[`renders ./components-pro/text-area/demo/basic.md correctly 1`] = `
         />
       </label>
     </div>
+    <span />
   </div>
   <div
     class="c7n-col-8"
@@ -81,64 +86,52 @@ exports[`renders ./components-pro/text-area/demo/basic.md correctly 1`] = `
         />
       </label>
     </div>
+    <span />
   </div>
 </div>
 `;
 
-exports[`renders ./components-pro/text-area/demo/cols-autoSize.md correctly 1`] = `
-<div
-  class="c7n-pro-textarea-wrapper c7n-pro-textarea-empty"
->
-  <label>
-    <textarea
-      autocomplete="off"
-      class="c7n-pro-textarea"
-      placeholder="设置宽高适应"
-      rows="4"
-      style="min-rows:2px;max-rows:8px;min-cols:1px;max-cols:2px;resize:vertical"
-      type="text"
-    />
-  </label>
-</div>
-`;
-
 exports[`renders ./components-pro/text-area/demo/controlled.md correctly 1`] = `
-<div
-  class="c7n-pro-textarea-wrapper"
->
-  <label>
-    <textarea
-      autocomplete="off"
-      class="c7n-pro-textarea"
-      placeholder=""
-      rows="4"
-      style="resize:none"
-      type="text"
-    >
-      default
-    </textarea>
-  </label>
-</div>
+Array [
+  <div
+    class="c7n-pro-textarea-wrapper"
+  >
+    <label>
+      <textarea
+        autocomplete="off"
+        class="c7n-pro-textarea"
+        rows="4"
+        style="resize:none"
+        type="text"
+      >
+        default
+      </textarea>
+    </label>
+  </div>,
+  <span />,
+]
 `;
 
 exports[`renders ./components-pro/text-area/demo/dataset.md correctly 1`] = `
-<div
-  class="c7n-pro-textarea-wrapper c7n-pro-textarea-required"
->
-  <label>
-    <textarea
-      autocomplete="off"
-      class="c7n-pro-textarea"
-      name="content"
-      placeholder=""
-      rows="4"
-      style="resize:both"
-      type="text"
-    >
-      textarea
-    </textarea>
-  </label>
-</div>
+Array [
+  <div
+    class="c7n-pro-textarea-wrapper c7n-pro-textarea-required"
+  >
+    <label>
+      <textarea
+        autocomplete="off"
+        class="c7n-pro-textarea"
+        name="content"
+        rows="4"
+        style="resize:both;transition:none"
+        type="text"
+      >
+        textarea
+      </textarea>
+    </label>
+  </div>,
+  <span />,
+]
 `;
 
 exports[`renders ./components-pro/text-area/demo/resizable.md correctly 1`] = `
@@ -160,11 +153,12 @@ exports[`renders ./components-pro/text-area/demo/resizable.md correctly 1`] = `
           cols="40"
           placeholder="resize both"
           rows="4"
-          style="resize:both"
+          style="resize:both;transition:none"
           type="text"
         />
       </label>
     </div>
+    <span />
   </div>
   <div
     class="c7n-col-8"
@@ -180,11 +174,12 @@ exports[`renders ./components-pro/text-area/demo/resizable.md correctly 1`] = `
           cols="40"
           placeholder="resize vertical"
           rows="4"
-          style="resize:vertical"
+          style="resize:vertical;transition:none"
           type="text"
         />
       </label>
     </div>
+    <span />
   </div>
   <div
     class="c7n-col-8"
@@ -200,11 +195,12 @@ exports[`renders ./components-pro/text-area/demo/resizable.md correctly 1`] = `
           cols="40"
           placeholder="resize horizontal"
           rows="4"
-          style="resize:horizontal"
+          style="resize:horizontal;transition:none"
           type="text"
         />
       </label>
     </div>
+    <span />
   </div>
 </div>
 `;

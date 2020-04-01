@@ -18,6 +18,7 @@ exports[`renders ./components-pro/code-area/demo/basic.md correctly 1`] = `
         />
       </label>
     </div>
+    <span />
   </div>
   <div
     class="c7n-col-8"
@@ -32,6 +33,7 @@ exports[`renders ./components-pro/code-area/demo/basic.md correctly 1`] = `
         />
       </label>
     </div>
+    <span />
     <label
       class="c7n-pro-switch-wrapper"
     >
@@ -47,6 +49,7 @@ exports[`renders ./components-pro/code-area/demo/basic.md correctly 1`] = `
         只读
       </span>
     </label>
+    <span />
   </div>
   <div
     class="c7n-col-8"
@@ -61,6 +64,7 @@ exports[`renders ./components-pro/code-area/demo/basic.md correctly 1`] = `
         />
       </label>
     </div>
+    <span />
     <label
       class="c7n-pro-switch-wrapper"
     >
@@ -76,32 +80,39 @@ exports[`renders ./components-pro/code-area/demo/basic.md correctly 1`] = `
         禁用
       </span>
     </label>
+    <span />
   </div>
 </div>
 `;
 
 exports[`renders ./components-pro/code-area/demo/controlled.md correctly 1`] = `
-<div
-  class="c7n-pro-code-area-wrapper"
->
-  <label>
-    <div
-      class="react-codemirror2 c7n-pro-code-area"
-    />
-  </label>
-</div>
+Array [
+  <div
+    class="c7n-pro-code-area-wrapper"
+  >
+    <label>
+      <div
+        class="react-codemirror2 c7n-pro-code-area"
+      />
+    </label>
+  </div>,
+  <span />,
+]
 `;
 
 exports[`renders ./components-pro/code-area/demo/dataset.md correctly 1`] = `
-<div
-  class="c7n-pro-code-area-wrapper c7n-pro-code-area-required"
->
-  <label>
-    <div
-      class="react-codemirror2 c7n-pro-code-area"
-    />
-  </label>
-</div>
+Array [
+  <div
+    class="c7n-pro-code-area-wrapper c7n-pro-code-area-required"
+  >
+    <label>
+      <div
+        class="react-codemirror2 c7n-pro-code-area"
+      />
+    </label>
+  </div>,
+  <span />,
+]
 `;
 
 exports[`renders ./components-pro/code-area/demo/html-format.md correctly 1`] = `
@@ -118,6 +129,7 @@ exports[`renders ./components-pro/code-area/demo/html-format.md correctly 1`] = 
       />
     </label>
   </div>
+  <span />
 </div>
 `;
 
@@ -135,6 +147,7 @@ exports[`renders ./components-pro/code-area/demo/js-format.md correctly 1`] = `
       />
     </label>
   </div>
+  <span />
 </div>
 `;
 
@@ -152,6 +165,7 @@ exports[`renders ./components-pro/code-area/demo/json-format.md correctly 1`] = 
       />
     </label>
   </div>
+  <span />
 </div>
 `;
 
@@ -166,6 +180,7 @@ exports[`renders ./components-pro/code-area/demo/theme.md correctly 1`] = `
       />
     </label>
   </div>
+  <span />
   <label
     class="c7n-pro-switch-wrapper"
   >
@@ -180,6 +195,7 @@ exports[`renders ./components-pro/code-area/demo/theme.md correctly 1`] = `
       idea
     </span>
   </label>
+  <span />
 </div>
 `;
 
@@ -197,5 +213,6 @@ exports[`renders ./components-pro/code-area/demo/yaml-format.md correctly 1`] = 
       />
     </label>
   </div>
+  <span />
 </div>
 `;

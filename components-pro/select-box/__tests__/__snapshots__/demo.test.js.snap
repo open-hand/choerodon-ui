@@ -34,6 +34,7 @@ exports[`renders ./components-pro/select-box/demo/basic.md correctly 1`] = `
             Jack
           </span>
         </label>
+        <span />
         <label
           class="c7n-pro-radio-wrapper"
         >
@@ -53,6 +54,7 @@ exports[`renders ./components-pro/select-box/demo/basic.md correctly 1`] = `
             Lucy
           </span>
         </label>
+        <span />
         <label
           class="c7n-pro-radio-wrapper c7n-pro-radio-disabled"
         >
@@ -73,8 +75,10 @@ exports[`renders ./components-pro/select-box/demo/basic.md correctly 1`] = `
             Wu
           </span>
         </label>
+        <span />
       </form>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-4"
@@ -122,6 +126,7 @@ exports[`renders ./components-pro/select-box/demo/basic.md correctly 1`] = `
             Jack
           </span>
         </label>
+        <span />
         <label
           class="c7n-pro-radio-wrapper c7n-pro-radio-disabled"
         >
@@ -142,6 +147,7 @@ exports[`renders ./components-pro/select-box/demo/basic.md correctly 1`] = `
             Lucy
           </span>
         </label>
+        <span />
         <label
           class="c7n-pro-radio-wrapper c7n-pro-radio-disabled"
         >
@@ -162,8 +168,10 @@ exports[`renders ./components-pro/select-box/demo/basic.md correctly 1`] = `
             Wu
           </span>
         </label>
+        <span />
       </form>
     </span>
+    <span />
   </div>
 </div>
 `;
@@ -202,6 +210,7 @@ exports[`renders ./components-pro/select-box/demo/button.md correctly 1`] = `
             Jack
           </span>
         </label>
+        <span />
         <label
           class="c7n-pro-radio-wrapper c7n-pro-radio-button"
         >
@@ -221,6 +230,7 @@ exports[`renders ./components-pro/select-box/demo/button.md correctly 1`] = `
             Lucy
           </span>
         </label>
+        <span />
         <label
           class="c7n-pro-radio-wrapper c7n-pro-radio-button"
         >
@@ -240,8 +250,10 @@ exports[`renders ./components-pro/select-box/demo/button.md correctly 1`] = `
             Wu
           </span>
         </label>
+        <span />
       </form>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-12"
@@ -272,6 +284,7 @@ exports[`renders ./components-pro/select-box/demo/button.md correctly 1`] = `
             Jack
           </span>
         </label>
+        <span />
         <label
           class="c7n-pro-checkbox-wrapper c7n-pro-checkbox-button"
         >
@@ -291,6 +304,7 @@ exports[`renders ./components-pro/select-box/demo/button.md correctly 1`] = `
             Lucy
           </span>
         </label>
+        <span />
         <label
           class="c7n-pro-checkbox-wrapper c7n-pro-checkbox-button"
         >
@@ -310,79 +324,87 @@ exports[`renders ./components-pro/select-box/demo/button.md correctly 1`] = `
             Wu
           </span>
         </label>
+        <span />
       </form>
     </span>
+    <span />
   </div>
 </div>
 `;
 
 exports[`renders ./components-pro/select-box/demo/controlled.md correctly 1`] = `
-<span
-  class="c7n-pro-select-box-wrapper c7n-pro-select-box-suffix-button c7n-pro-select-box-not-editable"
->
-  <form
-    class="c7n-pro-select-box"
+Array [
+  <span
+    class="c7n-pro-select-box-wrapper c7n-pro-select-box-suffix-button c7n-pro-select-box-not-editable"
   >
-    <label
-      class="c7n-pro-radio-wrapper"
+    <form
+      class="c7n-pro-select-box"
     >
-      <input
-        class="c7n-pro-radio"
-        name="__group-14__"
-        novalidate=""
-        type="radio"
-        value="jack"
-      />
-      <span
-        class="c7n-pro-radio-inner"
-      />
-      <span
-        class="c7n-pro-radio-label"
+      <label
+        class="c7n-pro-radio-wrapper"
       >
-        Jack
-      </span>
-    </label>
-    <label
-      class="c7n-pro-radio-wrapper"
-    >
-      <input
-        class="c7n-pro-radio"
-        name="__group-14__"
-        novalidate=""
-        type="radio"
-        value="lucy"
-      />
-      <span
-        class="c7n-pro-radio-inner"
-      />
-      <span
-        class="c7n-pro-radio-label"
+        <input
+          class="c7n-pro-radio"
+          name="__group-14__"
+          novalidate=""
+          type="radio"
+          value="jack"
+        />
+        <span
+          class="c7n-pro-radio-inner"
+        />
+        <span
+          class="c7n-pro-radio-label"
+        >
+          Jack
+        </span>
+      </label>
+      <span />
+      <label
+        class="c7n-pro-radio-wrapper"
       >
-        Lucy
-      </span>
-    </label>
-    <label
-      class="c7n-pro-radio-wrapper"
-    >
-      <input
-        checked=""
-        class="c7n-pro-radio"
-        name="__group-14__"
-        novalidate=""
-        type="radio"
-        value="wu"
-      />
-      <span
-        class="c7n-pro-radio-inner"
-      />
-      <span
-        class="c7n-pro-radio-label"
+        <input
+          class="c7n-pro-radio"
+          name="__group-14__"
+          novalidate=""
+          type="radio"
+          value="lucy"
+        />
+        <span
+          class="c7n-pro-radio-inner"
+        />
+        <span
+          class="c7n-pro-radio-label"
+        >
+          Lucy
+        </span>
+      </label>
+      <span />
+      <label
+        class="c7n-pro-radio-wrapper"
       >
-        Wu
-      </span>
-    </label>
-  </form>
-</span>
+        <input
+          checked=""
+          class="c7n-pro-radio"
+          name="__group-14__"
+          novalidate=""
+          type="radio"
+          value="wu"
+        />
+        <span
+          class="c7n-pro-radio-inner"
+        />
+        <span
+          class="c7n-pro-radio-label"
+        >
+          Wu
+        </span>
+      </label>
+      <span />
+    </form>
+  </span>,
+  <span />,
+]
 `;
 
 exports[`renders ./components-pro/select-box/demo/dataset.md correctly 1`] = `
@@ -434,6 +456,7 @@ exports[`renders ./components-pro/select-box/demo/dataset.md correctly 1`] = `
                         Jack
                       </span>
                     </label>
+                    <span />
                     <label
                       class="c7n-pro-radio-wrapper"
                     >
@@ -454,6 +477,7 @@ exports[`renders ./components-pro/select-box/demo/dataset.md correctly 1`] = `
                         Huazhen
                       </span>
                     </label>
+                    <span />
                     <label
                       class="c7n-pro-radio-wrapper"
                     >
@@ -473,6 +497,7 @@ exports[`renders ./components-pro/select-box/demo/dataset.md correctly 1`] = `
                         Lucy
                       </span>
                     </label>
+                    <span />
                     <label
                       class="c7n-pro-radio-wrapper"
                     >
@@ -492,6 +517,7 @@ exports[`renders ./components-pro/select-box/demo/dataset.md correctly 1`] = `
                         Niu
                       </span>
                     </label>
+                    <span />
                     <label
                       class="c7n-pro-radio-wrapper"
                     >
@@ -511,8 +537,10 @@ exports[`renders ./components-pro/select-box/demo/dataset.md correctly 1`] = `
                         Shao
                       </span>
                     </label>
+                    <span />
                   </div>
                 </span>
+                <span />
               </div>
               <div
                 class="c7n-col-12"
@@ -543,6 +571,7 @@ exports[`renders ./components-pro/select-box/demo/dataset.md correctly 1`] = `
                         Jack
                       </span>
                     </label>
+                    <span />
                     <label
                       class="c7n-pro-checkbox-wrapper"
                     >
@@ -562,6 +591,7 @@ exports[`renders ./components-pro/select-box/demo/dataset.md correctly 1`] = `
                         Lucy
                       </span>
                     </label>
+                    <span />
                     <label
                       class="c7n-pro-checkbox-wrapper"
                     >
@@ -582,8 +612,10 @@ exports[`renders ./components-pro/select-box/demo/dataset.md correctly 1`] = `
                         Wu
                       </span>
                     </label>
+                    <span />
                   </div>
                 </span>
+                <span />
               </div>
             </div>
           </div>
@@ -610,6 +642,7 @@ exports[`renders ./components-pro/select-box/demo/lookupCode.md correctly 1`] = 
         class="c7n-pro-select-box"
       />
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-6"
@@ -638,6 +671,7 @@ exports[`renders ./components-pro/select-box/demo/lookupCode.md correctly 1`] = 
         class="c7n-pro-select-box"
       />
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-12"
@@ -650,6 +684,7 @@ exports[`renders ./components-pro/select-box/demo/lookupCode.md correctly 1`] = 
         class="c7n-pro-select-box"
       />
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-12"
@@ -662,6 +697,7 @@ exports[`renders ./components-pro/select-box/demo/lookupCode.md correctly 1`] = 
         class="c7n-pro-select-box"
       />
     </span>
+    <span />
   </div>
 </div>
 `;
@@ -700,6 +736,7 @@ exports[`renders ./components-pro/select-box/demo/multiple.md correctly 1`] = `
             Jack
           </span>
         </label>
+        <span />
         <label
           class="c7n-pro-checkbox-wrapper"
         >
@@ -719,6 +756,7 @@ exports[`renders ./components-pro/select-box/demo/multiple.md correctly 1`] = `
             Lucy
           </span>
         </label>
+        <span />
         <label
           class="c7n-pro-checkbox-wrapper"
         >
@@ -739,8 +777,10 @@ exports[`renders ./components-pro/select-box/demo/multiple.md correctly 1`] = `
             Wu
           </span>
         </label>
+        <span />
       </form>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-12"
@@ -771,6 +811,7 @@ exports[`renders ./components-pro/select-box/demo/multiple.md correctly 1`] = `
             Jack
           </span>
         </label>
+        <span />
         <label
           class="c7n-pro-checkbox-wrapper"
         >
@@ -790,6 +831,7 @@ exports[`renders ./components-pro/select-box/demo/multiple.md correctly 1`] = `
             Lucy
           </span>
         </label>
+        <span />
         <label
           class="c7n-pro-checkbox-wrapper"
         >
@@ -809,8 +851,10 @@ exports[`renders ./components-pro/select-box/demo/multiple.md correctly 1`] = `
             Wu
           </span>
         </label>
+        <span />
       </form>
     </span>
+    <span />
   </div>
 </div>
 `;
@@ -849,6 +893,7 @@ exports[`renders ./components-pro/select-box/demo/readonly.md correctly 1`] = `
             Jack
           </span>
         </label>
+        <span />
         <label
           class="c7n-pro-radio-wrapper"
         >
@@ -868,6 +913,7 @@ exports[`renders ./components-pro/select-box/demo/readonly.md correctly 1`] = `
             Lucy
           </span>
         </label>
+        <span />
         <label
           class="c7n-pro-radio-wrapper"
         >
@@ -887,8 +933,10 @@ exports[`renders ./components-pro/select-box/demo/readonly.md correctly 1`] = `
             Wu
           </span>
         </label>
+        <span />
       </form>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-12"
@@ -919,6 +967,7 @@ exports[`renders ./components-pro/select-box/demo/readonly.md correctly 1`] = `
             Jack
           </span>
         </label>
+        <span />
         <label
           class="c7n-pro-radio-wrapper"
         >
@@ -939,6 +988,7 @@ exports[`renders ./components-pro/select-box/demo/readonly.md correctly 1`] = `
             Huazhen
           </span>
         </label>
+        <span />
         <label
           class="c7n-pro-radio-wrapper"
         >
@@ -958,6 +1008,7 @@ exports[`renders ./components-pro/select-box/demo/readonly.md correctly 1`] = `
             Lucy
           </span>
         </label>
+        <span />
         <label
           class="c7n-pro-radio-wrapper"
         >
@@ -977,6 +1028,7 @@ exports[`renders ./components-pro/select-box/demo/readonly.md correctly 1`] = `
             Niu
           </span>
         </label>
+        <span />
         <label
           class="c7n-pro-radio-wrapper"
         >
@@ -996,8 +1048,10 @@ exports[`renders ./components-pro/select-box/demo/readonly.md correctly 1`] = `
             Shao
           </span>
         </label>
+        <span />
       </form>
     </span>
+    <span />
   </div>
 </div>
 `;
@@ -1036,6 +1090,7 @@ exports[`renders ./components-pro/select-box/demo/vertical.md correctly 1`] = `
             Jack
           </span>
         </label>
+        <span />
         <label
           class="c7n-pro-radio-wrapper c7n-pro-radio-button"
         >
@@ -1055,6 +1110,7 @@ exports[`renders ./components-pro/select-box/demo/vertical.md correctly 1`] = `
             Lucy
           </span>
         </label>
+        <span />
         <label
           class="c7n-pro-radio-wrapper c7n-pro-radio-button"
         >
@@ -1074,8 +1130,10 @@ exports[`renders ./components-pro/select-box/demo/vertical.md correctly 1`] = `
             Wu
           </span>
         </label>
+        <span />
       </form>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-12"
@@ -1106,6 +1164,7 @@ exports[`renders ./components-pro/select-box/demo/vertical.md correctly 1`] = `
             Jack
           </span>
         </label>
+        <span />
         <label
           class="c7n-pro-checkbox-wrapper c7n-pro-checkbox-button"
         >
@@ -1125,6 +1184,7 @@ exports[`renders ./components-pro/select-box/demo/vertical.md correctly 1`] = `
             Lucy
           </span>
         </label>
+        <span />
         <label
           class="c7n-pro-checkbox-wrapper c7n-pro-checkbox-button"
         >
@@ -1144,8 +1204,10 @@ exports[`renders ./components-pro/select-box/demo/vertical.md correctly 1`] = `
             Wu
           </span>
         </label>
+        <span />
       </form>
     </span>
+    <span />
   </div>
 </div>
 `;

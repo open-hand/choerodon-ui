@@ -77,6 +77,7 @@ exports[`renders ./components-pro/form/demo/basic.md correctly 1`] = `
                 </div>
               </div>
             </div>
+            <span />
           </div>
         </td>
       </tr>
@@ -122,6 +123,7 @@ exports[`renders ./components-pro/form/demo/basic.md correctly 1`] = `
                 </div>
               </label>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -186,6 +188,7 @@ exports[`renders ./components-pro/form/demo/basic.md correctly 1`] = `
                 </div>
               </div>
             </div>
+            <span />
           </div>
         </td>
       </tr>
@@ -300,6 +303,7 @@ exports[`renders ./components-pro/form/demo/basic.md correctly 1`] = `
                     男
                   </span>
                 </label>
+                <span />
                 <label
                   class="c7n-pro-radio-wrapper"
                 >
@@ -319,8 +323,10 @@ exports[`renders ./components-pro/form/demo/basic.md correctly 1`] = `
                     女
                   </span>
                 </label>
+                <span />
               </div>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -443,6 +449,7 @@ exports[`renders ./components-pro/form/demo/basic.md correctly 1`] = `
                 </div>
               </div>
             </div>
+            <span />
           </div>
         </td>
       </tr>
@@ -494,6 +501,7 @@ exports[`renders ./components-pro/form/demo/basic.md correctly 1`] = `
                 </div>
               </div>
             </div>
+            <span />
           </div>
         </td>
       </tr>
@@ -542,6 +550,7 @@ exports[`renders ./components-pro/form/demo/basic.md correctly 1`] = `
                 </div>
               </label>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -638,6 +647,7 @@ exports[`renders ./components-pro/form/demo/dataset.md correctly 1`] = `
                 />
               </label>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -681,6 +691,7 @@ exports[`renders ./components-pro/form/demo/dataset.md correctly 1`] = `
                 </div>
               </label>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -724,6 +735,7 @@ exports[`renders ./components-pro/form/demo/dataset.md correctly 1`] = `
                 </div>
               </label>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -792,6 +804,7 @@ exports[`renders ./components-pro/form/demo/dataset.md correctly 1`] = `
                 </div>
               </div>
             </div>
+            <span />
           </div>
         </td>
       </tr>
@@ -836,6 +849,7 @@ exports[`renders ./components-pro/form/demo/dataset.md correctly 1`] = `
                     男
                   </span>
                 </label>
+                <span />
                 <label
                   class="c7n-pro-radio-wrapper"
                 >
@@ -855,8 +869,10 @@ exports[`renders ./components-pro/form/demo/dataset.md correctly 1`] = `
                     女
                   </span>
                 </label>
+                <span />
               </div>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -945,6 +961,7 @@ exports[`renders ./components-pro/form/demo/dataset.md correctly 1`] = `
                 />
               </label>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -977,6 +994,7 @@ exports[`renders ./components-pro/form/demo/dataset.md correctly 1`] = `
                 />
               </label>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -1023,6 +1041,7 @@ exports[`renders ./components-pro/form/demo/dataset.md correctly 1`] = `
                 </div>
               </label>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -1074,6 +1093,7 @@ exports[`renders ./components-pro/form/demo/dataset.md correctly 1`] = `
                 </div>
               </label>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -1105,6 +1125,7 @@ exports[`renders ./components-pro/form/demo/dataset.md correctly 1`] = `
                 class="c7n-pro-switch-label"
               />
             </label>
+            <span />
           </div>
         </td>
       </tr>
@@ -1241,6 +1262,7 @@ exports[`renders ./components-pro/form/demo/disabled.md correctly 1`] = `
                 </div>
               </div>
             </div>
+            <span />
           </div>
         </td>
       </tr>
@@ -1281,6 +1303,7 @@ exports[`renders ./components-pro/form/demo/disabled.md correctly 1`] = `
                 />
               </label>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -1340,6 +1363,7 @@ exports[`renders ./components-pro/form/demo/disabled.md correctly 1`] = `
                 </div>
               </div>
             </div>
+            <span />
           </div>
         </td>
       </tr>
@@ -1445,6 +1469,7 @@ exports[`renders ./components-pro/form/demo/disabled.md correctly 1`] = `
                     男
                   </span>
                 </label>
+                <span />
                 <label
                   class="c7n-pro-radio-wrapper c7n-pro-radio-disabled"
                 >
@@ -1465,8 +1490,10 @@ exports[`renders ./components-pro/form/demo/disabled.md correctly 1`] = `
                     女
                   </span>
                 </label>
+                <span />
               </div>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -1583,6 +1610,7 @@ exports[`renders ./components-pro/form/demo/disabled.md correctly 1`] = `
                 </div>
               </div>
             </div>
+            <span />
           </div>
         </td>
       </tr>
@@ -1636,6 +1664,7 @@ exports[`renders ./components-pro/form/demo/disabled.md correctly 1`] = `
                 </div>
               </div>
             </div>
+            <span />
           </div>
         </td>
       </tr>
@@ -1678,6 +1707,7 @@ exports[`renders ./components-pro/form/demo/disabled.md correctly 1`] = `
                 </div>
               </label>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -1997,6 +2027,7 @@ exports[`renders ./components-pro/form/demo/float-label.md correctly 1`] = `
                     男
                   </span>
                 </label>
+                <span />
                 <label
                   class="c7n-pro-radio-wrapper"
                 >
@@ -2016,6 +2047,7 @@ exports[`renders ./components-pro/form/demo/float-label.md correctly 1`] = `
                     女
                   </span>
                 </label>
+                <span />
               </div>
               <div
                 class="c7n-pro-field-label-wrapper"
@@ -2152,7 +2184,6 @@ exports[`renders ./components-pro/form/demo/float-label.md correctly 1`] = `
                   class="c7n-pro-textarea"
                   label="简介"
                   name="description"
-                  placeholder="请输入简介"
                   required=""
                   rows="4"
                   style="height:80px;resize:none"
@@ -2342,6 +2373,7 @@ exports[`renders ./components-pro/form/demo/float-label.md correctly 1`] = `
                 class="c7n-pro-switch-label"
               />
             </label>
+            <span />
           </div>
         </td>
       </tr>
@@ -2373,6 +2405,7 @@ exports[`renders ./components-pro/form/demo/float-label.md correctly 1`] = `
                 是否显示
               </span>
             </label>
+            <span />
           </div>
         </td>
       </tr>
@@ -2478,6 +2511,7 @@ exports[`renders ./components-pro/form/demo/header.md correctly 1`] = `
                 </div>
               </label>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -2523,6 +2557,7 @@ exports[`renders ./components-pro/form/demo/header.md correctly 1`] = `
                 </div>
               </label>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -2568,6 +2603,7 @@ exports[`renders ./components-pro/form/demo/header.md correctly 1`] = `
                 </div>
               </label>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -2616,6 +2652,7 @@ exports[`renders ./components-pro/form/demo/header.md correctly 1`] = `
                 </div>
               </label>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -2660,6 +2697,7 @@ exports[`renders ./components-pro/form/demo/header.md correctly 1`] = `
                     男
                   </span>
                 </label>
+                <span />
                 <label
                   class="c7n-pro-radio-wrapper"
                 >
@@ -2679,8 +2717,10 @@ exports[`renders ./components-pro/form/demo/header.md correctly 1`] = `
                     女
                   </span>
                 </label>
+                <span />
               </div>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -2734,6 +2774,7 @@ exports[`renders ./components-pro/form/demo/header.md correctly 1`] = `
                 </div>
               </label>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -2768,6 +2809,7 @@ exports[`renders ./components-pro/form/demo/header.md correctly 1`] = `
                 />
               </label>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -2802,6 +2844,7 @@ exports[`renders ./components-pro/form/demo/header.md correctly 1`] = `
                 />
               </label>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -2850,6 +2893,7 @@ exports[`renders ./components-pro/form/demo/header.md correctly 1`] = `
                 </div>
               </label>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -2956,6 +3000,7 @@ exports[`renders ./components-pro/form/demo/layout.md correctly 1`] = `
                 />
               </label>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -3001,6 +3046,7 @@ exports[`renders ./components-pro/form/demo/layout.md correctly 1`] = `
                 </div>
               </label>
             </span>
+            <span />
           </div>
         </td>
         <td
@@ -3064,6 +3110,7 @@ exports[`renders ./components-pro/form/demo/layout.md correctly 1`] = `
                 </div>
               </div>
             </div>
+            <span />
           </div>
         </td>
         <td
@@ -3107,6 +3154,7 @@ exports[`renders ./components-pro/form/demo/layout.md correctly 1`] = `
                 </div>
               </label>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -3151,6 +3199,7 @@ exports[`renders ./components-pro/form/demo/layout.md correctly 1`] = `
                     男
                   </span>
                 </label>
+                <span />
                 <label
                   class="c7n-pro-radio-wrapper"
                 >
@@ -3170,8 +3219,10 @@ exports[`renders ./components-pro/form/demo/layout.md correctly 1`] = `
                     女
                   </span>
                 </label>
+                <span />
               </div>
             </span>
+            <span />
           </div>
         </td>
         <td
@@ -3223,6 +3274,7 @@ exports[`renders ./components-pro/form/demo/layout.md correctly 1`] = `
                 </div>
               </label>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -3256,6 +3308,7 @@ exports[`renders ./components-pro/form/demo/layout.md correctly 1`] = `
                 />
               </label>
             </span>
+            <span />
           </div>
         </td>
         <td
@@ -3282,7 +3335,6 @@ exports[`renders ./components-pro/form/demo/layout.md correctly 1`] = `
                   class="c7n-pro-textarea"
                   label="简介"
                   name="description"
-                  placeholder=""
                   required=""
                   rows="4"
                   style="height:80px;resize:none"
@@ -3350,6 +3402,7 @@ exports[`renders ./components-pro/form/demo/layout.md correctly 1`] = `
                 </div>
               </div>
             </div>
+            <span />
           </div>
         </td>
       </tr>
@@ -3398,6 +3451,7 @@ exports[`renders ./components-pro/form/demo/layout.md correctly 1`] = `
                 </div>
               </label>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -3487,6 +3541,7 @@ exports[`renders ./components-pro/form/demo/layout-vertical.md correctly 1`] = `
                 />
               </label>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -3529,6 +3584,7 @@ exports[`renders ./components-pro/form/demo/layout-vertical.md correctly 1`] = `
                 </div>
               </label>
             </span>
+            <span />
           </div>
         </td>
         <td
@@ -3617,6 +3673,7 @@ exports[`renders ./components-pro/form/demo/layout-vertical.md correctly 1`] = `
                 </div>
               </label>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -3658,6 +3715,7 @@ exports[`renders ./components-pro/form/demo/layout-vertical.md correctly 1`] = `
                     男
                   </span>
                 </label>
+                <span />
                 <label
                   class="c7n-pro-radio-wrapper"
                 >
@@ -3677,8 +3735,10 @@ exports[`renders ./components-pro/form/demo/layout-vertical.md correctly 1`] = `
                     女
                   </span>
                 </label>
+                <span />
               </div>
             </span>
+            <span />
           </div>
         </td>
         <td
@@ -3727,6 +3787,7 @@ exports[`renders ./components-pro/form/demo/layout-vertical.md correctly 1`] = `
                 </div>
               </label>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -3757,6 +3818,7 @@ exports[`renders ./components-pro/form/demo/layout-vertical.md correctly 1`] = `
                 />
               </label>
             </span>
+            <span />
           </div>
         </td>
         <td
@@ -3780,6 +3842,7 @@ exports[`renders ./components-pro/form/demo/layout-vertical.md correctly 1`] = `
                 />
               </label>
             </div>
+            <span />
           </div>
         </td>
       </tr>
@@ -3811,6 +3874,7 @@ exports[`renders ./components-pro/form/demo/layout-vertical.md correctly 1`] = `
                 />
               </label>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -3856,6 +3920,7 @@ exports[`renders ./components-pro/form/demo/layout-vertical.md correctly 1`] = `
                 </div>
               </label>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -3938,6 +4003,7 @@ exports[`renders ./components-pro/form/demo/placeholder.md correctly 1`] = `
                 />
               </label>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -3976,6 +4042,7 @@ exports[`renders ./components-pro/form/demo/placeholder.md correctly 1`] = `
                 </div>
               </label>
             </span>
+            <span />
           </div>
         </td>
         <td
@@ -4056,6 +4123,7 @@ exports[`renders ./components-pro/form/demo/placeholder.md correctly 1`] = `
                 </div>
               </label>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -4092,6 +4160,7 @@ exports[`renders ./components-pro/form/demo/placeholder.md correctly 1`] = `
                     男
                   </span>
                 </label>
+                <span />
                 <label
                   class="c7n-pro-radio-wrapper"
                 >
@@ -4111,8 +4180,10 @@ exports[`renders ./components-pro/form/demo/placeholder.md correctly 1`] = `
                     女
                   </span>
                 </label>
+                <span />
               </div>
             </span>
+            <span />
           </div>
         </td>
         <td
@@ -4157,6 +4228,7 @@ exports[`renders ./components-pro/form/demo/placeholder.md correctly 1`] = `
                 </div>
               </label>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -4183,6 +4255,7 @@ exports[`renders ./components-pro/form/demo/placeholder.md correctly 1`] = `
                 />
               </label>
             </span>
+            <span />
           </div>
         </td>
         <td
@@ -4209,6 +4282,7 @@ exports[`renders ./components-pro/form/demo/placeholder.md correctly 1`] = `
                 />
               </label>
             </div>
+            <span />
           </div>
         </td>
       </tr>
@@ -4236,6 +4310,7 @@ exports[`renders ./components-pro/form/demo/placeholder.md correctly 1`] = `
                 />
               </label>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -4277,6 +4352,7 @@ exports[`renders ./components-pro/form/demo/placeholder.md correctly 1`] = `
                 </div>
               </label>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -4374,6 +4450,7 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
                     />
                   </label>
                 </span>
+                <span />
               </div>
             </td>
           </tr>
@@ -4418,6 +4495,7 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
                     </div>
                   </label>
                 </span>
+                <span />
               </div>
             </td>
           </tr>
@@ -4462,6 +4540,7 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
                     </div>
                   </label>
                 </span>
+                <span />
               </div>
             </td>
           </tr>
@@ -4519,6 +4598,7 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
                     </div>
                   </div>
                 </div>
+                <span />
               </div>
             </td>
           </tr>
@@ -4563,6 +4643,7 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
                         男
                       </span>
                     </label>
+                    <span />
                     <label
                       class="c7n-pro-radio-wrapper"
                     >
@@ -4583,8 +4664,10 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
                         女
                       </span>
                     </label>
+                    <span />
                   </div>
                 </span>
+                <span />
               </div>
             </td>
           </tr>
@@ -4667,6 +4750,7 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
                     />
                   </label>
                 </span>
+                <span />
               </div>
             </td>
           </tr>
@@ -4700,6 +4784,7 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
                     />
                   </label>
                 </span>
+                <span />
               </div>
             </td>
           </tr>
@@ -4739,6 +4824,7 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
                     </div>
                   </label>
                 </span>
+                <span />
               </div>
             </td>
           </tr>
@@ -4784,6 +4870,7 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
                     </div>
                   </label>
                 </span>
+                <span />
               </div>
             </td>
           </tr>
@@ -4816,6 +4903,7 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
                     class="c7n-pro-switch-label"
                   />
                 </label>
+                <span />
               </div>
             </td>
           </tr>
@@ -4869,6 +4957,7 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
                     />
                   </label>
                 </span>
+                <span />
               </div>
             </td>
           </tr>
@@ -4912,6 +5001,7 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
                     </div>
                   </label>
                 </span>
+                <span />
               </div>
             </td>
           </tr>
@@ -4955,6 +5045,7 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
                     </div>
                   </label>
                 </span>
+                <span />
               </div>
             </td>
           </tr>
@@ -5023,6 +5114,7 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
                     </div>
                   </div>
                 </div>
+                <span />
               </div>
             </td>
           </tr>
@@ -5067,6 +5159,7 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
                         男
                       </span>
                     </label>
+                    <span />
                     <label
                       class="c7n-pro-radio-wrapper"
                     >
@@ -5087,8 +5180,10 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
                         女
                       </span>
                     </label>
+                    <span />
                   </div>
                 </span>
+                <span />
               </div>
             </td>
           </tr>
@@ -5177,6 +5272,7 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
                     />
                   </label>
                 </span>
+                <span />
               </div>
             </td>
           </tr>
@@ -5209,6 +5305,7 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
                     />
                   </label>
                 </span>
+                <span />
               </div>
             </td>
           </tr>
@@ -5255,6 +5352,7 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
                     </div>
                   </label>
                 </span>
+                <span />
               </div>
             </td>
           </tr>
@@ -5306,6 +5404,7 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
                     </div>
                   </label>
                 </span>
+                <span />
               </div>
             </td>
           </tr>
@@ -5338,6 +5437,7 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
                     class="c7n-pro-switch-label"
                   />
                 </label>
+                <span />
               </div>
             </td>
           </tr>
@@ -5437,6 +5537,7 @@ exports[`renders ./components-pro/form/demo/record.md correctly 1`] = `
                 />
               </label>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -5480,6 +5581,7 @@ exports[`renders ./components-pro/form/demo/record.md correctly 1`] = `
                 </div>
               </label>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -5523,6 +5625,7 @@ exports[`renders ./components-pro/form/demo/record.md correctly 1`] = `
                 </div>
               </label>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -5593,6 +5696,7 @@ exports[`renders ./components-pro/form/demo/record.md correctly 1`] = `
                 </div>
               </div>
             </div>
+            <span />
           </div>
         </td>
       </tr>
@@ -5637,6 +5741,7 @@ exports[`renders ./components-pro/form/demo/record.md correctly 1`] = `
                     男
                   </span>
                 </label>
+                <span />
                 <label
                   class="c7n-pro-radio-wrapper"
                 >
@@ -5656,8 +5761,10 @@ exports[`renders ./components-pro/form/demo/record.md correctly 1`] = `
                     女
                   </span>
                 </label>
+                <span />
               </div>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -5746,6 +5853,7 @@ exports[`renders ./components-pro/form/demo/record.md correctly 1`] = `
                 />
               </label>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -5778,6 +5886,7 @@ exports[`renders ./components-pro/form/demo/record.md correctly 1`] = `
                 />
               </label>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -5824,6 +5933,7 @@ exports[`renders ./components-pro/form/demo/record.md correctly 1`] = `
                 </div>
               </label>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -5875,6 +5985,7 @@ exports[`renders ./components-pro/form/demo/record.md correctly 1`] = `
                 </div>
               </label>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -6002,6 +6113,7 @@ exports[`renders ./components-pro/form/demo/responsive.md correctly 1`] = `
                 </div>
               </div>
             </div>
+            <span />
           </div>
         </td>
       </tr>
@@ -6047,6 +6159,7 @@ exports[`renders ./components-pro/form/demo/responsive.md correctly 1`] = `
                 </div>
               </label>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -6111,6 +6224,7 @@ exports[`renders ./components-pro/form/demo/responsive.md correctly 1`] = `
                 </div>
               </div>
             </div>
+            <span />
           </div>
         </td>
       </tr>
@@ -6225,6 +6339,7 @@ exports[`renders ./components-pro/form/demo/responsive.md correctly 1`] = `
                     男
                   </span>
                 </label>
+                <span />
                 <label
                   class="c7n-pro-radio-wrapper"
                 >
@@ -6244,8 +6359,10 @@ exports[`renders ./components-pro/form/demo/responsive.md correctly 1`] = `
                     女
                   </span>
                 </label>
+                <span />
               </div>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -6338,6 +6455,7 @@ exports[`renders ./components-pro/form/demo/responsive.md correctly 1`] = `
                 />
               </label>
             </span>
+            <span />
           </div>
         </td>
       </tr>
@@ -6389,6 +6507,7 @@ exports[`renders ./components-pro/form/demo/responsive.md correctly 1`] = `
                 </div>
               </div>
             </div>
+            <span />
           </div>
         </td>
       </tr>
@@ -6437,6 +6556,7 @@ exports[`renders ./components-pro/form/demo/responsive.md correctly 1`] = `
                 </div>
               </label>
             </span>
+            <span />
           </div>
         </td>
       </tr>

@@ -2,7 +2,7 @@
 
 exports[`renders ./components/tree-select/demo/basic.md correctly 1`] = `
 <div
-  class="c7n-select c7n-select-enabled c7n-select-allow-clear"
+  class="c7n-select c7n-select-has-border c7n-select-enabled c7n-select-allow-clear"
   style="width:300px"
 >
   <div
@@ -48,7 +48,7 @@ exports[`renders ./components/tree-select/demo/basic.md correctly 1`] = `
 
 exports[`renders ./components/tree-select/demo/checkable.md correctly 1`] = `
 <div
-  class="c7n-select c7n-select-has-value c7n-select-enabled"
+  class="c7n-select c7n-select-has-border c7n-select-has-value c7n-select-multiple c7n-select-enabled"
   style="width:300px"
 >
   <div
@@ -58,43 +58,49 @@ exports[`renders ./components/tree-select/demo/checkable.md correctly 1`] = `
             c7n-select-selection--multiple"
     role="combobox"
   >
-    <ul
+    <div
       class="c7n-select-selection__rendered"
     >
-      <li
-        class="c7n-select-selection__choice"
-        style="user-select:none;-webkit-user-select:none"
-        title="Node1"
-        unselectable="unselectable"
-      >
-        <span
-          class="c7n-select-selection__choice__remove"
-        />
-        <span
-          class="c7n-select-selection__choice__content"
+      <ul>
+        <li
+          class="c7n-select-selection__choice"
+          style="user-select:none;-webkit-user-select:none"
+          title="Node1"
+          unselectable="unselectable"
         >
-          Node1
-        </span>
-      </li>
-      <li
-        class="c7n-select-search c7n-select-search--inline"
-      >
-        <span
-          class="c7n-select-search__field__wrap"
-        >
-          <input
-            class="c7n-select-search__field"
-            role="textbox"
-            value=""
-          />
           <span
-            class="c7n-select-search__field__mirror"
+            class="c7n-select-selection__choice__remove"
           >
-             
+            <i
+              class="icon icon-cancel"
+            />
           </span>
-        </span>
-      </li>
-    </ul>
+          <span
+            class="c7n-select-selection__choice__content"
+          >
+            Node1
+          </span>
+        </li>
+        <li
+          class="c7n-select-search c7n-select-search--inline"
+        >
+          <span
+            class="c7n-select-search__field__wrap"
+          >
+            <input
+              class="c7n-select-search__field"
+              role="textbox"
+              value=""
+            />
+            <span
+              class="c7n-select-search__field__mirror"
+            >
+               
+            </span>
+          </span>
+        </li>
+      </ul>
+    </div>
     <span
       class="c7n-select-search__field__placeholder"
       style="display:none"
@@ -114,7 +120,7 @@ exports[`renders ./components/tree-select/demo/checkable.md correctly 1`] = `
 
 exports[`renders ./components/tree-select/demo/multiple.md correctly 1`] = `
 <div
-  class="c7n-select c7n-select-enabled c7n-select-allow-clear"
+  class="c7n-select c7n-select-has-border c7n-select-multiple c7n-select-enabled c7n-select-allow-clear"
   style="width:300px"
 >
   <div
@@ -124,28 +130,30 @@ exports[`renders ./components/tree-select/demo/multiple.md correctly 1`] = `
             c7n-select-selection--multiple"
     role="combobox"
   >
-    <ul
+    <div
       class="c7n-select-selection__rendered"
     >
-      <li
-        class="c7n-select-search c7n-select-search--inline"
-      >
-        <span
-          class="c7n-select-search__field__wrap"
+      <ul>
+        <li
+          class="c7n-select-search c7n-select-search--inline"
         >
-          <input
-            class="c7n-select-search__field"
-            role="textbox"
-            value=""
-          />
           <span
-            class="c7n-select-search__field__mirror"
+            class="c7n-select-search__field__wrap"
           >
-             
+            <input
+              class="c7n-select-search__field"
+              role="textbox"
+              value=""
+            />
+            <span
+              class="c7n-select-search__field__mirror"
+            >
+               
+            </span>
           </span>
-        </span>
-      </li>
-    </ul>
+        </li>
+      </ul>
+    </div>
     <span
       class="c7n-select-search__field__placeholder"
       style="display:block"
@@ -165,7 +173,7 @@ exports[`renders ./components/tree-select/demo/multiple.md correctly 1`] = `
 
 exports[`renders ./components/tree-select/demo/treeData.md correctly 1`] = `
 <div
-  class="c7n-select c7n-select-enabled"
+  class="c7n-select c7n-select-has-border c7n-select-enabled"
   style="width:300px"
 >
   <div

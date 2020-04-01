@@ -320,6 +320,22 @@ exports[`IntlField-pro { ok, cancel } button click render correctly 1`] = `
           </label>
         </span>
       </TriggerChild>
+      <TriggerChild
+        key=".$text-null/.1"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <span
+          key="text-null/.1"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onFocus={[Function]}
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        />
+      </TriggerChild>
       <Popup
         align={
           Object {
@@ -676,6 +692,22 @@ exports[`IntlField-pro renders IntlField correctly 1`] = `
             </div>
           </label>
         </span>
+      </TriggerChild>
+      <TriggerChild
+        key=".$text-null/.1"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <span
+          key="text-null/.1"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onFocus={[Function]}
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        />
       </TriggerChild>
       <Popup
         align={
@@ -1509,6 +1541,22 @@ exports[`IntlField-pro renders dataset correctly 1`] = `
             </label>
           </span>
         </TriggerChild>
+        <TriggerChild
+          key=".$text-null/.1"
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <span
+            key="text-null/.1"
+            onBlur={[Function]}
+            onClick={[Function]}
+            onContextMenu={[Function]}
+            onFocus={[Function]}
+            onMouseDown={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+          />
+        </TriggerChild>
         <Popup
           align={
             Object {
@@ -2333,6 +2381,22 @@ exports[`IntlField-pro renders dataset correctly 2`] = `
             </div>
           </label>
         </span>
+      </TriggerChild>
+      <TriggerChild
+        key=".$text-null/.1"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <span
+          key="text-null/.1"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onFocus={[Function]}
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        />
       </TriggerChild>
       <Popup
         align={

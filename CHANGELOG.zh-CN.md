@@ -15,8 +15,9 @@ timeline: true
 
 ---
 
-- 🐞 `TreeSelect`: 修复样式问题，和tree的check事件错误.
-- 🐞 `<pro>Tooltip`: 修复button disable 后无法触发显示。
+- 🐞 `TreeSelect`: 修复样式和tree check事件错误.
+- 🐞 `<pro>Tooltip`: 修复 button disabled 状态下无法触发显示。
+- 🐞 `<pro>TextArea`: 修复 autoSize 属性。
 - 🐞 `<pro>CodeArea`: 修复失焦更新错误。
 - 🐞 `<pro>Pagination`: 修复分页计算错误。
 - 🐞 `<pro>DataSet`: 修复提交失败后 current 指向问题。

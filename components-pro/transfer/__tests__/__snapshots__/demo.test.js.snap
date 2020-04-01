@@ -16,6 +16,7 @@ exports[`renders ./components-pro/transfer/demo/basic.md correctly 1`] = `
       disabled
     </span>
   </label>
+  <span />
   <br />
   <span
     class="c7n-pro-transfer-wrapper"
@@ -48,6 +49,7 @@ exports[`renders ./components-pro/transfer/demo/basic.md correctly 1`] = `
             </span>
           </span>
         </label>
+        <span />
         <span
           class="c7n-pro-transfer-header-title"
         >
@@ -200,6 +202,7 @@ exports[`renders ./components-pro/transfer/demo/basic.md correctly 1`] = `
             </span>
           </span>
         </label>
+        <span />
         <span
           class="c7n-pro-transfer-header-title"
         >
@@ -247,203 +250,209 @@ exports[`renders ./components-pro/transfer/demo/basic.md correctly 1`] = `
       </div>
     </div>
   </span>
+  <span />
 </div>
 `;
 
 exports[`renders ./components-pro/transfer/demo/controlled.md correctly 1`] = `
-<span
-  class="c7n-pro-transfer-wrapper"
->
-  <div
-    class="c7n-pro-transfer c7n-pro-transfer-with-header"
+Array [
+  <span
+    class="c7n-pro-transfer-wrapper"
   >
     <div
-      class="c7n-pro-transfer-header"
-    >
-      <label
-        class="c7n-pro-checkbox-wrapper"
-      >
-        <input
-          class="c7n-pro-checkbox"
-          type="checkbox"
-          value="true"
-        />
-        <i
-          class="c7n-pro-checkbox-inner"
-        />
-        <span
-          class="c7n-pro-checkbox-label"
-        >
-          <span
-            class="c7n-pro-transfer-header-selected"
-          >
-            2项
-          </span>
-        </span>
-      </label>
-    </div>
-    <div
-      class="c7n-pro-transfer-body"
+      class="c7n-pro-transfer c7n-pro-transfer-with-header"
     >
       <div
-        class="c7n-pro-transfer-content-wrapper"
+        class="c7n-pro-transfer-header"
       >
-        <ul
-          class="c7n-pro-transfer-content  c7n-pro-transfer-content-root c7n-pro-transfer-content-vertical"
-          role="menu"
-          tabindex="0"
+        <label
+          class="c7n-pro-checkbox-wrapper"
         >
-          <li
-            aria-disabled="false"
-            aria-selected="false"
-            class="c7n-pro-transfer-content-item c7n-pro-transfer-content-item-active"
-            role="menuitem"
+          <input
+            class="c7n-pro-checkbox"
+            type="checkbox"
+            value="true"
+          />
+          <i
+            class="c7n-pro-checkbox-inner"
+          />
+          <span
+            class="c7n-pro-checkbox-label"
           >
-            <label
-              class="c7n-checkbox-wrapper"
+            <span
+              class="c7n-pro-transfer-header-selected"
             >
-              <span
-                class="c7n-checkbox"
-              >
-                <input
-                  class="c7n-checkbox-input"
-                  tabindex="-1"
-                  type="checkbox"
-                />
-                <span
-                  class="c7n-checkbox-inner"
-                />
-              </span>
-            </label>
-            Jack
-            <div
-              class="c7n-ripple-wrapper"
-            />
-          </li>
-          <li
-            aria-disabled="false"
-            aria-selected="false"
-            class="c7n-pro-transfer-content-item"
-            role="menuitem"
+              2项
+            </span>
+          </span>
+        </label>
+        <span />
+      </div>
+      <div
+        class="c7n-pro-transfer-body"
+      >
+        <div
+          class="c7n-pro-transfer-content-wrapper"
+        >
+          <ul
+            class="c7n-pro-transfer-content  c7n-pro-transfer-content-root c7n-pro-transfer-content-vertical"
+            role="menu"
+            tabindex="0"
           >
-            <label
-              class="c7n-checkbox-wrapper"
+            <li
+              aria-disabled="false"
+              aria-selected="false"
+              class="c7n-pro-transfer-content-item c7n-pro-transfer-content-item-active"
+              role="menuitem"
             >
-              <span
-                class="c7n-checkbox"
+              <label
+                class="c7n-checkbox-wrapper"
               >
-                <input
-                  class="c7n-checkbox-input"
-                  tabindex="-1"
-                  type="checkbox"
-                />
                 <span
-                  class="c7n-checkbox-inner"
-                />
-              </span>
-            </label>
-            Lucy
-            <div
-              class="c7n-ripple-wrapper"
-            />
-          </li>
-        </ul>
+                  class="c7n-checkbox"
+                >
+                  <input
+                    class="c7n-checkbox-input"
+                    tabindex="-1"
+                    type="checkbox"
+                  />
+                  <span
+                    class="c7n-checkbox-inner"
+                  />
+                </span>
+              </label>
+              Jack
+              <div
+                class="c7n-ripple-wrapper"
+              />
+            </li>
+            <li
+              aria-disabled="false"
+              aria-selected="false"
+              class="c7n-pro-transfer-content-item"
+              role="menuitem"
+            >
+              <label
+                class="c7n-checkbox-wrapper"
+              >
+                <span
+                  class="c7n-checkbox"
+                >
+                  <input
+                    class="c7n-checkbox-input"
+                    tabindex="-1"
+                    type="checkbox"
+                  />
+                  <span
+                    class="c7n-checkbox-inner"
+                  />
+                </span>
+              </label>
+              Lucy
+              <div
+                class="c7n-ripple-wrapper"
+              />
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
-  <div
-    class="c7n-pro-transfer-operation"
-  >
-    <button
-      class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-primary c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-btn-sm c7n-pro-btn-disabled"
-      disabled=""
-      type="button"
-    >
-      <i
-        class="icon icon-navigate_before"
-      />
-    </button>
-    <button
-      class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-primary c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-btn-sm c7n-pro-btn-disabled"
-      disabled=""
-      type="button"
-    >
-      <i
-        class="icon icon-navigate_next"
-      />
-    </button>
-  </div>
-  <div
-    class="c7n-pro-transfer c7n-pro-transfer-with-header"
-  >
     <div
-      class="c7n-pro-transfer-header"
+      class="c7n-pro-transfer-operation"
     >
-      <label
-        class="c7n-pro-checkbox-wrapper"
+      <button
+        class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-primary c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-btn-sm c7n-pro-btn-disabled"
+        disabled=""
+        type="button"
       >
-        <input
-          class="c7n-pro-checkbox"
-          type="checkbox"
-          value="true"
-        />
         <i
-          class="c7n-pro-checkbox-inner"
+          class="icon icon-navigate_before"
         />
-        <span
-          class="c7n-pro-checkbox-label"
-        >
-          <span
-            class="c7n-pro-transfer-header-selected"
-          >
-            1项
-          </span>
-        </span>
-      </label>
+      </button>
+      <button
+        class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-primary c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-btn-sm c7n-pro-btn-disabled"
+        disabled=""
+        type="button"
+      >
+        <i
+          class="icon icon-navigate_next"
+        />
+      </button>
     </div>
     <div
-      class="c7n-pro-transfer-body"
+      class="c7n-pro-transfer c7n-pro-transfer-with-header"
     >
       <div
-        class="c7n-pro-transfer-content-wrapper"
+        class="c7n-pro-transfer-header"
       >
-        <ul
-          class="c7n-pro-transfer-content  c7n-pro-transfer-content-root c7n-pro-transfer-content-vertical"
-          role="menu"
-          tabindex="0"
+        <label
+          class="c7n-pro-checkbox-wrapper"
         >
-          <li
-            aria-disabled="false"
-            aria-selected="false"
-            class="c7n-pro-transfer-content-item c7n-pro-transfer-content-item-active"
-            role="menuitem"
+          <input
+            class="c7n-pro-checkbox"
+            type="checkbox"
+            value="true"
+          />
+          <i
+            class="c7n-pro-checkbox-inner"
+          />
+          <span
+            class="c7n-pro-checkbox-label"
           >
-            <label
-              class="c7n-checkbox-wrapper"
+            <span
+              class="c7n-pro-transfer-header-selected"
             >
-              <span
-                class="c7n-checkbox"
+              1项
+            </span>
+          </span>
+        </label>
+        <span />
+      </div>
+      <div
+        class="c7n-pro-transfer-body"
+      >
+        <div
+          class="c7n-pro-transfer-content-wrapper"
+        >
+          <ul
+            class="c7n-pro-transfer-content  c7n-pro-transfer-content-root c7n-pro-transfer-content-vertical"
+            role="menu"
+            tabindex="0"
+          >
+            <li
+              aria-disabled="false"
+              aria-selected="false"
+              class="c7n-pro-transfer-content-item c7n-pro-transfer-content-item-active"
+              role="menuitem"
+            >
+              <label
+                class="c7n-checkbox-wrapper"
               >
-                <input
-                  class="c7n-checkbox-input"
-                  tabindex="-1"
-                  type="checkbox"
-                />
                 <span
-                  class="c7n-checkbox-inner"
-                />
-              </span>
-            </label>
-            Wu
-            <div
-              class="c7n-ripple-wrapper"
-            />
-          </li>
-        </ul>
+                  class="c7n-checkbox"
+                >
+                  <input
+                    class="c7n-checkbox-input"
+                    tabindex="-1"
+                    type="checkbox"
+                  />
+                  <span
+                    class="c7n-checkbox-inner"
+                  />
+                </span>
+              </label>
+              Wu
+              <div
+                class="c7n-ripple-wrapper"
+              />
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
-</span>
+  </span>,
+  <span />,
+]
 `;
 
 exports[`renders ./components-pro/transfer/demo/dataset.md correctly 1`] = `
@@ -478,6 +487,7 @@ exports[`renders ./components-pro/transfer/demo/dataset.md correctly 1`] = `
             </span>
           </span>
         </label>
+        <span />
       </div>
       <div
         class="c7n-pro-transfer-body"
@@ -647,6 +657,7 @@ exports[`renders ./components-pro/transfer/demo/dataset.md correctly 1`] = `
             </span>
           </span>
         </label>
+        <span />
       </div>
       <div
         class="c7n-pro-transfer-body"
@@ -690,6 +701,7 @@ exports[`renders ./components-pro/transfer/demo/dataset.md correctly 1`] = `
       </div>
     </div>
   </span>
+  <span />
   <span
     class="c7n-pro-transfer-wrapper"
   >
@@ -720,6 +732,7 @@ exports[`renders ./components-pro/transfer/demo/dataset.md correctly 1`] = `
             </span>
           </span>
         </label>
+        <span />
       </div>
       <div
         class="c7n-pro-transfer-body"
@@ -839,6 +852,7 @@ exports[`renders ./components-pro/transfer/demo/dataset.md correctly 1`] = `
             </span>
           </span>
         </label>
+        <span />
       </div>
       <div
         class="c7n-pro-transfer-body"
@@ -883,6 +897,7 @@ exports[`renders ./components-pro/transfer/demo/dataset.md correctly 1`] = `
       </div>
     </div>
   </span>
+  <span />
 </div>
 `;
 
@@ -925,6 +940,7 @@ exports[`renders ./components-pro/transfer/demo/lookupCode.md correctly 1`] = `
               </span>
             </span>
           </label>
+          <span />
         </div>
         <div
           class="c7n-pro-transfer-body"
@@ -1015,6 +1031,7 @@ exports[`renders ./components-pro/transfer/demo/lookupCode.md correctly 1`] = `
               </span>
             </span>
           </label>
+          <span />
         </div>
         <div
           class="c7n-pro-transfer-body"
@@ -1057,6 +1074,7 @@ exports[`renders ./components-pro/transfer/demo/lookupCode.md correctly 1`] = `
         </div>
       </div>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-6"
@@ -1108,6 +1126,7 @@ exports[`renders ./components-pro/transfer/demo/lookupCode.md correctly 1`] = `
               </span>
             </span>
           </label>
+          <span />
         </div>
         <div
           class="c7n-pro-transfer-body"
@@ -1198,6 +1217,7 @@ exports[`renders ./components-pro/transfer/demo/lookupCode.md correctly 1`] = `
               </span>
             </span>
           </label>
+          <span />
         </div>
         <div
           class="c7n-pro-transfer-body"
@@ -1240,6 +1260,7 @@ exports[`renders ./components-pro/transfer/demo/lookupCode.md correctly 1`] = `
         </div>
       </div>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-24"
@@ -1275,6 +1296,7 @@ exports[`renders ./components-pro/transfer/demo/lookupCode.md correctly 1`] = `
               </span>
             </span>
           </label>
+          <span />
         </div>
         <div
           class="c7n-pro-transfer-body"
@@ -1365,6 +1387,7 @@ exports[`renders ./components-pro/transfer/demo/lookupCode.md correctly 1`] = `
               </span>
             </span>
           </label>
+          <span />
         </div>
         <div
           class="c7n-pro-transfer-body"
@@ -1407,6 +1430,7 @@ exports[`renders ./components-pro/transfer/demo/lookupCode.md correctly 1`] = `
         </div>
       </div>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-24"
@@ -1442,6 +1466,7 @@ exports[`renders ./components-pro/transfer/demo/lookupCode.md correctly 1`] = `
               </span>
             </span>
           </label>
+          <span />
         </div>
         <div
           class="c7n-pro-transfer-body"
@@ -1532,6 +1557,7 @@ exports[`renders ./components-pro/transfer/demo/lookupCode.md correctly 1`] = `
               </span>
             </span>
           </label>
+          <span />
         </div>
         <div
           class="c7n-pro-transfer-body"
@@ -1574,344 +1600,355 @@ exports[`renders ./components-pro/transfer/demo/lookupCode.md correctly 1`] = `
         </div>
       </div>
     </span>
+    <span />
   </div>
 </div>
 `;
 
 exports[`renders ./components-pro/transfer/demo/searchable.md correctly 1`] = `
-<span
-  class="c7n-pro-transfer-wrapper"
->
-  <div
-    class="c7n-pro-transfer c7n-pro-transfer-with-header"
+Array [
+  <span
+    class="c7n-pro-transfer-wrapper"
   >
     <div
-      class="c7n-pro-transfer-header"
+      class="c7n-pro-transfer c7n-pro-transfer-with-header"
     >
-      <label
-        class="c7n-pro-checkbox-wrapper"
+      <div
+        class="c7n-pro-transfer-header"
       >
-        <input
-          class="c7n-pro-checkbox"
-          type="checkbox"
-          value="true"
-        />
-        <i
-          class="c7n-pro-checkbox-inner"
-        />
-        <span
-          class="c7n-pro-checkbox-label"
+        <label
+          class="c7n-pro-checkbox-wrapper"
+        >
+          <input
+            class="c7n-pro-checkbox"
+            type="checkbox"
+            value="true"
+          />
+          <i
+            class="c7n-pro-checkbox-inner"
+          />
+          <span
+            class="c7n-pro-checkbox-label"
+          >
+            <span
+              class="c7n-pro-transfer-header-selected"
+            >
+              2项
+            </span>
+          </span>
+        </label>
+        <span />
+      </div>
+      <div
+        class="c7n-pro-transfer-body c7n-pro-transfer-body-with-search"
+      >
+        <div
+          class="c7n-pro-transfer-body-search-wrapper"
         >
           <span
-            class="c7n-pro-transfer-header-selected"
+            class="c7n-pro-input-wrapper c7n-pro-input-empty c7n-pro-input-suffix-button"
           >
-            2项
+            <label>
+              <input
+                autocomplete="off"
+                class="c7n-pro-input"
+                type="text"
+                value=""
+              />
+              <div
+                class="c7n-pro-input-inner-button c7n-pro-input-clear-button"
+              >
+                <i
+                  class="icon icon-close"
+                />
+              </div>
+              <div
+                class="c7n-pro-input-suffix"
+              >
+                <i
+                  class="icon icon-search"
+                />
+              </div>
+            </label>
           </span>
-        </span>
-      </label>
-    </div>
-    <div
-      class="c7n-pro-transfer-body c7n-pro-transfer-body-with-search"
-    >
-      <div
-        class="c7n-pro-transfer-body-search-wrapper"
-      >
-        <span
-          class="c7n-pro-input-wrapper c7n-pro-input-empty c7n-pro-input-suffix-button"
+          <span />
+        </div>
+        <div
+          class="c7n-pro-transfer-content-wrapper"
         >
-          <label>
-            <input
-              autocomplete="off"
-              class="c7n-pro-input"
-              type="text"
-              value=""
-            />
-            <div
-              class="c7n-pro-input-inner-button c7n-pro-input-clear-button"
-            >
-              <i
-                class="icon icon-close"
-              />
-            </div>
-            <div
-              class="c7n-pro-input-suffix"
-            >
-              <i
-                class="icon icon-search"
-              />
-            </div>
-          </label>
-        </span>
-      </div>
-      <div
-        class="c7n-pro-transfer-content-wrapper"
-      >
-        <ul
-          class="c7n-pro-transfer-content  c7n-pro-transfer-content-root c7n-pro-transfer-content-vertical"
-          role="menu"
-        >
-          <li
-            aria-disabled="false"
-            aria-selected="false"
-            class="c7n-pro-transfer-content-item c7n-pro-transfer-content-item-active"
-            role="menuitem"
+          <ul
+            class="c7n-pro-transfer-content  c7n-pro-transfer-content-root c7n-pro-transfer-content-vertical"
+            role="menu"
           >
-            <label
-              class="c7n-checkbox-wrapper"
+            <li
+              aria-disabled="false"
+              aria-selected="false"
+              class="c7n-pro-transfer-content-item c7n-pro-transfer-content-item-active"
+              role="menuitem"
             >
-              <span
-                class="c7n-checkbox"
+              <label
+                class="c7n-checkbox-wrapper"
               >
-                <input
-                  class="c7n-checkbox-input"
-                  tabindex="-1"
-                  type="checkbox"
-                />
                 <span
-                  class="c7n-checkbox-inner"
-                />
-              </span>
-            </label>
-            Jack
-            <div
-              class="c7n-ripple-wrapper"
-            />
-          </li>
-          <li
-            aria-disabled="false"
-            aria-selected="false"
-            class="c7n-pro-transfer-content-item"
-            role="menuitem"
-          >
-            <label
-              class="c7n-checkbox-wrapper"
+                  class="c7n-checkbox"
+                >
+                  <input
+                    class="c7n-checkbox-input"
+                    tabindex="-1"
+                    type="checkbox"
+                  />
+                  <span
+                    class="c7n-checkbox-inner"
+                  />
+                </span>
+              </label>
+              Jack
+              <div
+                class="c7n-ripple-wrapper"
+              />
+            </li>
+            <li
+              aria-disabled="false"
+              aria-selected="false"
+              class="c7n-pro-transfer-content-item"
+              role="menuitem"
             >
-              <span
-                class="c7n-checkbox"
+              <label
+                class="c7n-checkbox-wrapper"
               >
-                <input
-                  class="c7n-checkbox-input"
-                  tabindex="-1"
-                  type="checkbox"
-                />
                 <span
-                  class="c7n-checkbox-inner"
-                />
-              </span>
-            </label>
-            Lucy
-            <div
-              class="c7n-ripple-wrapper"
-            />
-          </li>
-        </ul>
+                  class="c7n-checkbox"
+                >
+                  <input
+                    class="c7n-checkbox-input"
+                    tabindex="-1"
+                    type="checkbox"
+                  />
+                  <span
+                    class="c7n-checkbox-inner"
+                  />
+                </span>
+              </label>
+              Lucy
+              <div
+                class="c7n-ripple-wrapper"
+              />
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
-  <div
-    class="c7n-pro-transfer-operation"
-  >
-    <button
-      class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-primary c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-btn-sm c7n-pro-btn-disabled"
-      disabled=""
-      type="button"
-    >
-      <i
-        class="icon icon-navigate_before"
-      />
-    </button>
-    <button
-      class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-primary c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-btn-sm c7n-pro-btn-disabled"
-      disabled=""
-      type="button"
-    >
-      <i
-        class="icon icon-navigate_next"
-      />
-    </button>
-  </div>
-  <div
-    class="c7n-pro-transfer c7n-pro-transfer-with-header"
-  >
     <div
-      class="c7n-pro-transfer-header"
+      class="c7n-pro-transfer-operation"
     >
-      <label
-        class="c7n-pro-checkbox-wrapper"
+      <button
+        class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-primary c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-btn-sm c7n-pro-btn-disabled"
+        disabled=""
+        type="button"
       >
-        <input
-          class="c7n-pro-checkbox"
-          type="checkbox"
-          value="true"
-        />
         <i
-          class="c7n-pro-checkbox-inner"
+          class="icon icon-navigate_before"
         />
-        <span
-          class="c7n-pro-checkbox-label"
+      </button>
+      <button
+        class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-primary c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-btn-sm c7n-pro-btn-disabled"
+        disabled=""
+        type="button"
+      >
+        <i
+          class="icon icon-navigate_next"
+        />
+      </button>
+    </div>
+    <div
+      class="c7n-pro-transfer c7n-pro-transfer-with-header"
+    >
+      <div
+        class="c7n-pro-transfer-header"
+      >
+        <label
+          class="c7n-pro-checkbox-wrapper"
+        >
+          <input
+            class="c7n-pro-checkbox"
+            type="checkbox"
+            value="true"
+          />
+          <i
+            class="c7n-pro-checkbox-inner"
+          />
+          <span
+            class="c7n-pro-checkbox-label"
+          >
+            <span
+              class="c7n-pro-transfer-header-selected"
+            >
+              1项
+            </span>
+          </span>
+        </label>
+        <span />
+      </div>
+      <div
+        class="c7n-pro-transfer-body c7n-pro-transfer-body-with-search"
+      >
+        <div
+          class="c7n-pro-transfer-body-search-wrapper"
         >
           <span
-            class="c7n-pro-transfer-header-selected"
+            class="c7n-pro-input-wrapper c7n-pro-input-empty c7n-pro-input-suffix-button"
           >
-            1项
-          </span>
-        </span>
-      </label>
-    </div>
-    <div
-      class="c7n-pro-transfer-body c7n-pro-transfer-body-with-search"
-    >
-      <div
-        class="c7n-pro-transfer-body-search-wrapper"
-      >
-        <span
-          class="c7n-pro-input-wrapper c7n-pro-input-empty c7n-pro-input-suffix-button"
-        >
-          <label>
-            <input
-              autocomplete="off"
-              class="c7n-pro-input"
-              type="text"
-              value=""
-            />
-            <div
-              class="c7n-pro-input-inner-button c7n-pro-input-clear-button"
-            >
-              <i
-                class="icon icon-close"
+            <label>
+              <input
+                autocomplete="off"
+                class="c7n-pro-input"
+                type="text"
+                value=""
               />
-            </div>
-            <div
-              class="c7n-pro-input-suffix"
-            >
-              <i
-                class="icon icon-search"
-              />
-            </div>
-          </label>
-        </span>
-      </div>
-      <div
-        class="c7n-pro-transfer-content-wrapper"
-      >
-        <ul
-          class="c7n-pro-transfer-content  c7n-pro-transfer-content-root c7n-pro-transfer-content-vertical"
-          role="menu"
-        >
-          <li
-            aria-disabled="false"
-            aria-selected="false"
-            class="c7n-pro-transfer-content-item c7n-pro-transfer-content-item-active"
-            role="menuitem"
-          >
-            <label
-              class="c7n-checkbox-wrapper"
-            >
-              <span
-                class="c7n-checkbox"
+              <div
+                class="c7n-pro-input-inner-button c7n-pro-input-clear-button"
               >
-                <input
-                  class="c7n-checkbox-input"
-                  tabindex="-1"
-                  type="checkbox"
+                <i
+                  class="icon icon-close"
                 />
-                <span
-                  class="c7n-checkbox-inner"
+              </div>
+              <div
+                class="c7n-pro-input-suffix"
+              >
+                <i
+                  class="icon icon-search"
                 />
-              </span>
+              </div>
             </label>
-            Huazhen
-            <div
-              class="c7n-ripple-wrapper"
-            />
-          </li>
-        </ul>
+          </span>
+          <span />
+        </div>
+        <div
+          class="c7n-pro-transfer-content-wrapper"
+        >
+          <ul
+            class="c7n-pro-transfer-content  c7n-pro-transfer-content-root c7n-pro-transfer-content-vertical"
+            role="menu"
+          >
+            <li
+              aria-disabled="false"
+              aria-selected="false"
+              class="c7n-pro-transfer-content-item c7n-pro-transfer-content-item-active"
+              role="menuitem"
+            >
+              <label
+                class="c7n-checkbox-wrapper"
+              >
+                <span
+                  class="c7n-checkbox"
+                >
+                  <input
+                    class="c7n-checkbox-input"
+                    tabindex="-1"
+                    type="checkbox"
+                  />
+                  <span
+                    class="c7n-checkbox-inner"
+                  />
+                </span>
+              </label>
+              Huazhen
+              <div
+                class="c7n-ripple-wrapper"
+              />
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
-</span>
+  </span>,
+  <span />,
+]
 `;
 
 exports[`renders ./components-pro/transfer/demo/single.md correctly 1`] = `
-<span
-  class="c7n-pro-transfer-wrapper"
->
-  <div
-    class="c7n-pro-transfer"
+Array [
+  <span
+    class="c7n-pro-transfer-wrapper"
   >
     <div
-      class="c7n-pro-transfer-body"
+      class="c7n-pro-transfer"
     >
       <div
-        class="c7n-pro-transfer-content-wrapper"
+        class="c7n-pro-transfer-body"
       >
-        <ul
-          class="c7n-pro-transfer-content  c7n-pro-transfer-content-root c7n-pro-transfer-content-vertical"
-          role="menu"
-          tabindex="0"
+        <div
+          class="c7n-pro-transfer-content-wrapper"
         >
-          <li
-            aria-disabled="false"
-            aria-selected="false"
-            class="c7n-pro-transfer-content-item c7n-pro-transfer-content-item-active"
-            role="menuitem"
+          <ul
+            class="c7n-pro-transfer-content  c7n-pro-transfer-content-root c7n-pro-transfer-content-vertical"
+            role="menu"
+            tabindex="0"
           >
-            Jack
-            <div
-              class="c7n-ripple-wrapper"
-            />
-          </li>
-          <li
-            aria-disabled="false"
-            aria-selected="false"
-            class="c7n-pro-transfer-content-item"
-            role="menuitem"
-          >
-            Lucy
-            <div
-              class="c7n-ripple-wrapper"
-            />
-          </li>
-          <li
-            aria-disabled="false"
-            aria-selected="false"
-            class="c7n-pro-transfer-content-item"
-            role="menuitem"
-          >
-            Wu
-            <div
-              class="c7n-ripple-wrapper"
-            />
-          </li>
-        </ul>
+            <li
+              aria-disabled="false"
+              aria-selected="false"
+              class="c7n-pro-transfer-content-item c7n-pro-transfer-content-item-active"
+              role="menuitem"
+            >
+              Jack
+              <div
+                class="c7n-ripple-wrapper"
+              />
+            </li>
+            <li
+              aria-disabled="false"
+              aria-selected="false"
+              class="c7n-pro-transfer-content-item"
+              role="menuitem"
+            >
+              Lucy
+              <div
+                class="c7n-ripple-wrapper"
+              />
+            </li>
+            <li
+              aria-disabled="false"
+              aria-selected="false"
+              class="c7n-pro-transfer-content-item"
+              role="menuitem"
+            >
+              Wu
+              <div
+                class="c7n-ripple-wrapper"
+              />
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
-  <div
-    class="c7n-pro-transfer"
-  >
     <div
-      class="c7n-pro-transfer-body"
+      class="c7n-pro-transfer"
     >
       <div
-        class="c7n-pro-transfer-content-wrapper"
+        class="c7n-pro-transfer-body"
       >
-        <ul
-          class="c7n-pro-transfer-content  c7n-pro-transfer-content-root c7n-pro-transfer-content-vertical"
-          role="menu"
-          tabindex="0"
+        <div
+          class="c7n-pro-transfer-content-wrapper"
         >
-          <li
-            aria-disabled="true"
-            aria-selected="false"
-            class="c7n-pro-transfer-content-item c7n-pro-transfer-content-item-disabled"
-            role="menuitem"
+          <ul
+            class="c7n-pro-transfer-content  c7n-pro-transfer-content-root c7n-pro-transfer-content-vertical"
+            role="menu"
+            tabindex="0"
           >
-            无匹配结果。
-          </li>
-        </ul>
+            <li
+              aria-disabled="true"
+              aria-selected="false"
+              class="c7n-pro-transfer-content-item c7n-pro-transfer-content-item-disabled"
+              role="menuitem"
+            >
+              无匹配结果。
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
-</span>
+  </span>,
+  <span />,
+]
 `;

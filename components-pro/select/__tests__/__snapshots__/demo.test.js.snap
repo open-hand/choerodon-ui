@@ -22,6 +22,7 @@ exports[`renders ./components-pro/email-field/demo/basic.md correctly 1`] = `
         />
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-8"
@@ -47,6 +48,7 @@ exports[`renders ./components-pro/email-field/demo/basic.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-8"
@@ -66,37 +68,44 @@ exports[`renders ./components-pro/email-field/demo/basic.md correctly 1`] = `
         />
       </label>
     </span>
+    <span />
   </div>
 </div>
 `;
 
 exports[`renders ./components-pro/email-field/demo/controlled.md correctly 1`] = `
-<span
-  class="c7n-pro-input-wrapper"
->
-  <label>
-    <input
-      autocomplete="off"
-      class="c7n-pro-input"
-      type="email"
-      value="abc@123.com"
-    />
-  </label>
-</span>
+Array [
+  <span
+    class="c7n-pro-input-wrapper"
+  >
+    <label>
+      <input
+        autocomplete="off"
+        class="c7n-pro-input"
+        type="email"
+        value="abc@123.com"
+      />
+    </label>
+  </span>,
+  <span />,
+]
 `;
 
 exports[`renders ./components-pro/email-field/demo/dataset.md correctly 1`] = `
-<span
-  class="c7n-pro-input-wrapper c7n-pro-input-required"
->
-  <label>
-    <input
-      autocomplete="off"
-      class="c7n-pro-input"
-      name="email"
-      type="email"
-      value="123@abc.com"
-    />
-  </label>
-</span>
+Array [
+  <span
+    class="c7n-pro-input-wrapper c7n-pro-input-required"
+  >
+    <label>
+      <input
+        autocomplete="off"
+        class="c7n-pro-input"
+        name="email"
+        type="email"
+        value="123@abc.com"
+      />
+    </label>
+  </span>,
+  <span />,
+]
 `;

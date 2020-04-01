@@ -33,6 +33,7 @@ exports[`renders ./components-pro/password/demo/basic.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-12"
@@ -55,59 +56,66 @@ exports[`renders ./components-pro/password/demo/basic.md correctly 1`] = `
         />
       </label>
     </span>
+    <span />
   </div>
 </div>
 `;
 
 exports[`renders ./components-pro/password/demo/controlled.md correctly 1`] = `
-<span
-  class="c7n-pro-password-wrapper"
->
-  <input
-    class="c7n-pro-password-fix-autofill"
-    tabindex="-1"
-  />
-  <label>
+Array [
+  <span
+    class="c7n-pro-password-wrapper"
+  >
     <input
-      autocomplete="off"
-      class="c7n-pro-password"
-      type="password"
-      value="default"
+      class="c7n-pro-password-fix-autofill"
+      tabindex="-1"
     />
-    <div
-      class="c7n-pro-password-inner-button"
-    >
-      <i
-        class="icon icon-visibility_off"
+    <label>
+      <input
+        autocomplete="off"
+        class="c7n-pro-password"
+        type="password"
+        value="default"
       />
-    </div>
-  </label>
-</span>
+      <div
+        class="c7n-pro-password-inner-button"
+      >
+        <i
+          class="icon icon-visibility_off"
+        />
+      </div>
+    </label>
+  </span>,
+  <span />,
+]
 `;
 
 exports[`renders ./components-pro/password/demo/dataset.md correctly 1`] = `
-<span
-  class="c7n-pro-password-wrapper c7n-pro-password-required"
->
-  <input
-    class="c7n-pro-password-fix-autofill"
-    tabindex="-1"
-  />
-  <label>
+Array [
+  <span
+    class="c7n-pro-password-wrapper c7n-pro-password-required"
+  >
     <input
-      autocomplete="off"
-      class="c7n-pro-password"
-      name="first-name"
-      type="password"
-      value="choerodon-pro"
+      class="c7n-pro-password-fix-autofill"
+      tabindex="-1"
     />
-    <div
-      class="c7n-pro-password-inner-button"
-    >
-      <i
-        class="icon icon-visibility_off"
+    <label>
+      <input
+        autocomplete="off"
+        class="c7n-pro-password"
+        name="first-name"
+        type="password"
+        value="choerodon-pro"
       />
-    </div>
-  </label>
-</span>
+      <div
+        class="c7n-pro-password-inner-button"
+      >
+        <i
+          class="icon icon-visibility_off"
+        />
+      </div>
+    </label>
+  </span>,
+  <span />,
+]
 `;

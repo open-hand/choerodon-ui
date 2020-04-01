@@ -14,7 +14,7 @@ title:
 Don't remove after returning false with `onRemoveFile`
 
 ```jsx
-import { Upload, message, DataSet } from 'choerodon-ui/pro';
+import { Upload } from 'choerodon-ui/pro';
 
 
 class App extends React.Component {

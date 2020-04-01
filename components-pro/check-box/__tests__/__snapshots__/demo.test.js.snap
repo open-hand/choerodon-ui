@@ -21,6 +21,7 @@ exports[`renders ./components-pro/check-box/demo/basic.md correctly 1`] = `
       A
     </span>
   </label>
+  <span />
   <label
     class="c7n-pro-checkbox-wrapper"
   >
@@ -39,6 +40,7 @@ exports[`renders ./components-pro/check-box/demo/basic.md correctly 1`] = `
       B
     </span>
   </label>
+  <span />
   <label
     class="c7n-pro-checkbox-wrapper"
   >
@@ -57,6 +59,7 @@ exports[`renders ./components-pro/check-box/demo/basic.md correctly 1`] = `
       C
     </span>
   </label>
+  <span />
   <label
     class="c7n-pro-checkbox-wrapper"
   >
@@ -75,6 +78,7 @@ exports[`renders ./components-pro/check-box/demo/basic.md correctly 1`] = `
       C
     </span>
   </label>
+  <span />
 </div>
 `;
 
@@ -99,6 +103,7 @@ exports[`renders ./components-pro/check-box/demo/button.md correctly 1`] = `
       A
     </span>
   </label>
+  <span />
   <label
     class="c7n-pro-checkbox-wrapper c7n-pro-checkbox-button"
   >
@@ -117,6 +122,7 @@ exports[`renders ./components-pro/check-box/demo/button.md correctly 1`] = `
       B
     </span>
   </label>
+  <span />
   <label
     class="c7n-pro-checkbox-wrapper c7n-pro-checkbox-button"
   >
@@ -135,6 +141,7 @@ exports[`renders ./components-pro/check-box/demo/button.md correctly 1`] = `
       C
     </span>
   </label>
+  <span />
 </div>
 `;
 
@@ -159,6 +166,7 @@ exports[`renders ./components-pro/check-box/demo/controlled.md correctly 1`] = `
       A
     </span>
   </label>
+  <span />
   <label
     class="c7n-pro-checkbox-wrapper"
   >
@@ -177,6 +185,7 @@ exports[`renders ./components-pro/check-box/demo/controlled.md correctly 1`] = `
       B
     </span>
   </label>
+  <span />
   <label
     class="c7n-pro-checkbox-wrapper"
   >
@@ -195,6 +204,7 @@ exports[`renders ./components-pro/check-box/demo/controlled.md correctly 1`] = `
       C
     </span>
   </label>
+  <span />
 </div>
 `;
 
@@ -219,6 +229,7 @@ exports[`renders ./components-pro/check-box/demo/dataset.md correctly 1`] = `
       A
     </span>
   </label>
+  <span />
   <label
     class="c7n-pro-checkbox-wrapper"
   >
@@ -237,6 +248,7 @@ exports[`renders ./components-pro/check-box/demo/dataset.md correctly 1`] = `
       B
     </span>
   </label>
+  <span />
   <label
     class="c7n-pro-checkbox-wrapper"
   >
@@ -255,6 +267,7 @@ exports[`renders ./components-pro/check-box/demo/dataset.md correctly 1`] = `
       C
     </span>
   </label>
+  <span />
   <label
     class="c7n-pro-checkbox-wrapper"
   >
@@ -268,6 +281,7 @@ exports[`renders ./components-pro/check-box/demo/dataset.md correctly 1`] = `
       class="c7n-pro-checkbox-inner"
     />
   </label>
+  <span />
   <label
     class="c7n-pro-checkbox-wrapper"
   >
@@ -286,6 +300,7 @@ exports[`renders ./components-pro/check-box/demo/dataset.md correctly 1`] = `
       是否展开
     </span>
   </label>
+  <span />
 </div>
 `;
 
@@ -310,6 +325,7 @@ exports[`renders ./components-pro/check-box/demo/readonly.md correctly 1`] = `
       A
     </span>
   </label>
+  <span />
   <label
     class="c7n-pro-checkbox-wrapper"
   >
@@ -328,6 +344,7 @@ exports[`renders ./components-pro/check-box/demo/readonly.md correctly 1`] = `
       B
     </span>
   </label>
+  <span />
   <label
     class="c7n-pro-checkbox-wrapper"
   >
@@ -347,5 +364,6 @@ exports[`renders ./components-pro/check-box/demo/readonly.md correctly 1`] = `
       C
     </span>
   </label>
+  <span />
 </div>
 `;

@@ -1,37 +1,40 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Lov-pro render correctly 1`] = `
-<span
-  class="c7n-pro-select-wrapper c7n-pro-select-empty c7n-pro-select-suffix-button c7n-pro-select-not-editable"
->
-  <input
-    type="hidden"
-    value=""
-  />
-  <label>
+Array [
+  <span
+    class="c7n-pro-select-wrapper c7n-pro-select-empty c7n-pro-select-suffix-button c7n-pro-select-not-editable"
+  >
     <input
-      autocomplete="off"
-      class="c7n-pro-select"
-      readonly=""
-      type="text"
+      type="hidden"
       value=""
     />
-    <div
-      class="c7n-pro-select-inner-button c7n-pro-select-clear-button"
-    >
-      <i
-        class="icon icon-close"
+    <label>
+      <input
+        autocomplete="off"
+        class="c7n-pro-select"
+        readonly=""
+        type="text"
+        value=""
       />
-    </div>
-    <div
-      class="c7n-pro-select-suffix"
-    >
-      <i
-        class="icon icon-search"
-      />
-    </div>
-  </label>
-</span>
+      <div
+        class="c7n-pro-select-inner-button c7n-pro-select-clear-button"
+      >
+        <i
+          class="icon icon-close"
+        />
+      </div>
+      <div
+        class="c7n-pro-select-suffix"
+      >
+        <i
+          class="icon icon-search"
+        />
+      </div>
+    </label>
+  </span>,
+  <span />,
+]
 `;
 
 exports[`Lov-pro render mode button 1`] = `
@@ -759,6 +762,22 @@ exports[`Lov-pro render mode button 1`] = `
             </RippleChild>
           </Ripple>
         </Button>
+      </TriggerChild>
+      <TriggerChild
+        key=".$text-null/.1"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <span
+          key="text-null/.1"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onFocus={[Function]}
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        />
       </TriggerChild>
       <Popup
         align={

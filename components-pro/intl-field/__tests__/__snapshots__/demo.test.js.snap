@@ -29,6 +29,7 @@ exports[`renders ./components-pro/intl-field/demo/dataset.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-12"
@@ -55,6 +56,7 @@ exports[`renders ./components-pro/intl-field/demo/dataset.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
 </div>
 `;

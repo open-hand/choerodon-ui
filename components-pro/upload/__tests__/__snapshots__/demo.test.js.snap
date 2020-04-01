@@ -587,6 +587,7 @@ exports[`renders ./components-pro/upload/demo/upload-method.md correctly 1`] = `
                 />
               </div>
             </span>
+            <span />
           </div>
         </td>
       </tr>

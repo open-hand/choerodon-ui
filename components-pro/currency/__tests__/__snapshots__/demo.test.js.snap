@@ -22,6 +22,7 @@ exports[`renders ./components-pro/currency/demo/basic.md correctly 1`] = `
           />
         </label>
       </span>
+      <span />
     </div>
     <div
       class="c7n-col-12"
@@ -40,38 +41,45 @@ exports[`renders ./components-pro/currency/demo/basic.md correctly 1`] = `
           />
         </label>
       </span>
+      <span />
     </div>
   </div>
 </div>
 `;
 
 exports[`renders ./components-pro/currency/demo/controlled.md correctly 1`] = `
-<span
-  class="c7n-pro-input-number-wrapper"
->
-  <label>
-    <input
-      autocomplete="off"
-      class="c7n-pro-input-number"
-      type="text"
-      value="100.00"
-    />
-  </label>
-</span>
+Array [
+  <span
+    class="c7n-pro-input-number-wrapper"
+  >
+    <label>
+      <input
+        autocomplete="off"
+        class="c7n-pro-input-number"
+        type="text"
+        value="100.00"
+      />
+    </label>
+  </span>,
+  <span />,
+]
 `;
 
 exports[`renders ./components-pro/currency/demo/dataset.md correctly 1`] = `
-<span
-  class="c7n-pro-input-number-wrapper c7n-pro-input-number-required"
->
-  <label>
-    <input
-      autocomplete="off"
-      class="c7n-pro-input-number"
-      name="money"
-      type="text"
-      value="$100,000,000,000,000.00"
-    />
-  </label>
-</span>
+Array [
+  <span
+    class="c7n-pro-input-number-wrapper c7n-pro-input-number-required"
+  >
+    <label>
+      <input
+        autocomplete="off"
+        class="c7n-pro-input-number"
+        name="money"
+        type="text"
+        value="$100,000,000,000,000.00"
+      />
+    </label>
+  </span>,
+  <span />,
+]
 `;

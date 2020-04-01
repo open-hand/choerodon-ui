@@ -89,8 +89,6 @@ export default function calculateNodeHeight(
   useCache = false,
   minRows: number | null = null,
   maxRows: number | null = null,
-  minCols: number | null = null,
-  maxCols: number | null = null,
 ) {
   if (!hiddenTextarea) {
     hiddenTextarea = document.createElement('textarea');
@@ -120,21 +118,15 @@ export default function calculateNodeHeight(
 
   let minHeight = Number.MIN_SAFE_INTEGER;
   let maxHeight = Number.MAX_SAFE_INTEGER;
-  let minWidth = Number.MIN_SAFE_INTEGER;
-  let maxWidth = Number.MAX_SAFE_INTEGER;
   let height = hiddenTextarea.scrollHeight;
-  let width = hiddenTextarea.scrollWidth;
   let overflowY: any;
-  let overflowX: any;
 
   if (boxSizing === 'border-box') {
     // border-box: add border, since height = content + padding + border
     height += borderSize;
-    width += borderSize;
   } else if (boxSizing === 'content-box') {
     // remove padding, since height = content
     height -= paddingSize;
-    width -= paddingSize;
   }
 
   if (minRows !== null || maxRows !== null) {
@@ -157,32 +149,11 @@ export default function calculateNodeHeight(
       height = Math.min(maxHeight, height);
     }
   }
-  if (minCols !== null || maxCols !== null) {
-    // measure height of a textarea with a single row
-    hiddenTextarea.value = ' ';
-    const singleRowWidth = hiddenTextarea.scrollWidth - paddingSize;
-    if (minCols !== null) {
-      minWidth = singleRowWidth * minCols;
-      if (boxSizing === 'border-box') {
-        minWidth = minWidth + paddingSize + borderSize;
-      }
-      width = Math.max(minWidth, width);
-    }
-    if (maxCols !== null) {
-      maxWidth = singleRowWidth * maxCols;
-      if (boxSizing === 'border-box') {
-        maxWidth = maxWidth + paddingSize + borderSize;
-      }
-      overflowX = width > maxWidth ? '' : 'hidden';
-      width = Math.min(maxWidth, width);
-    }
-  }
+
   // Remove scroll bar flash when autosize without maxRows
   if (!maxRows) {
     overflowY = 'hidden';
   }
-  if (!maxCols) {
-    overflowX = 'hidden';
-  }
-  return { height, minHeight, maxHeight, overflowY, width, minWidth, maxWidth, overflowX };
+
+  return { height, minHeight, maxHeight, overflowY };
 }

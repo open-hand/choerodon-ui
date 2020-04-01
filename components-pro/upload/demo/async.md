@@ -14,7 +14,7 @@ title:
 Click a button to upload after selecting files.
 
 ```jsx
-import { Upload, message } from 'choerodon-ui/pro';
+import { Upload } from 'choerodon-ui/pro';
 
 
 const props = {

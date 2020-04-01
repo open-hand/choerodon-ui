@@ -469,6 +469,22 @@ exports[`Range should show tooltip when hovering range handler 1`] = `
           </div>
         </label>
       </TriggerChild>
+      <TriggerChild
+        key=".$text-null/.1"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <span
+          key="text-null/.1"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onFocus={[Function]}
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        />
+      </TriggerChild>
       <Popup
         align={
           Object {
@@ -975,6 +991,22 @@ exports[`Range should show tooltip when hovering range handler 2`] = `
           </div>
         </label>
       </TriggerChild>
+      <TriggerChild
+        key=".$text-null/.1"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <span
+          key="text-null/.1"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onFocus={[Function]}
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        />
+      </TriggerChild>
       <Popup
         align={
           Object {
@@ -1480,6 +1512,22 @@ exports[`Range the range drag test  1`] = `
             />
           </div>
         </label>
+      </TriggerChild>
+      <TriggerChild
+        key=".$text-null/.1"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <span
+          key="text-null/.1"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onFocus={[Function]}
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        />
       </TriggerChild>
       <Popup
         align={

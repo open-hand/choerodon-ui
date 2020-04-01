@@ -21,6 +21,7 @@ exports[`renders ./components-pro/radio/demo/basic.md correctly 1`] = `
       A
     </span>
   </label>
+  <span />
   <label
     class="c7n-pro-radio-wrapper"
   >
@@ -39,6 +40,7 @@ exports[`renders ./components-pro/radio/demo/basic.md correctly 1`] = `
       B
     </span>
   </label>
+  <span />
   <label
     class="c7n-pro-radio-wrapper"
   >
@@ -57,6 +59,7 @@ exports[`renders ./components-pro/radio/demo/basic.md correctly 1`] = `
       C
     </span>
   </label>
+  <span />
 </div>
 `;
 
@@ -81,6 +84,7 @@ exports[`renders ./components-pro/radio/demo/button.md correctly 1`] = `
       A
     </span>
   </label>
+  <span />
   <label
     class="c7n-pro-radio-wrapper c7n-pro-radio-button"
   >
@@ -99,6 +103,7 @@ exports[`renders ./components-pro/radio/demo/button.md correctly 1`] = `
       B
     </span>
   </label>
+  <span />
   <label
     class="c7n-pro-radio-wrapper c7n-pro-radio-button"
   >
@@ -117,6 +122,7 @@ exports[`renders ./components-pro/radio/demo/button.md correctly 1`] = `
       C
     </span>
   </label>
+  <span />
 </div>
 `;
 
@@ -141,6 +147,7 @@ exports[`renders ./components-pro/radio/demo/controlled.md correctly 1`] = `
       A
     </span>
   </label>
+  <span />
   <label
     class="c7n-pro-radio-wrapper"
   >
@@ -159,6 +166,7 @@ exports[`renders ./components-pro/radio/demo/controlled.md correctly 1`] = `
       B
     </span>
   </label>
+  <span />
   <label
     class="c7n-pro-radio-wrapper"
   >
@@ -177,6 +185,7 @@ exports[`renders ./components-pro/radio/demo/controlled.md correctly 1`] = `
       C
     </span>
   </label>
+  <span />
 </div>
 `;
 
@@ -201,6 +210,7 @@ exports[`renders ./components-pro/radio/demo/dataset.md correctly 1`] = `
       A
     </span>
   </label>
+  <span />
   <label
     class="c7n-pro-radio-wrapper"
   >
@@ -219,6 +229,7 @@ exports[`renders ./components-pro/radio/demo/dataset.md correctly 1`] = `
       B
     </span>
   </label>
+  <span />
   <label
     class="c7n-pro-radio-wrapper"
   >
@@ -237,6 +248,7 @@ exports[`renders ./components-pro/radio/demo/dataset.md correctly 1`] = `
       C
     </span>
   </label>
+  <span />
 </div>
 `;
 
@@ -261,6 +273,7 @@ exports[`renders ./components-pro/radio/demo/readonly.md correctly 1`] = `
       A
     </span>
   </label>
+  <span />
   <label
     class="c7n-pro-radio-wrapper"
   >
@@ -279,6 +292,7 @@ exports[`renders ./components-pro/radio/demo/readonly.md correctly 1`] = `
       B
     </span>
   </label>
+  <span />
   <label
     class="c7n-pro-radio-wrapper"
   >
@@ -298,5 +312,6 @@ exports[`renders ./components-pro/radio/demo/readonly.md correctly 1`] = `
       C
     </span>
   </label>
+  <span />
 </div>
 `;

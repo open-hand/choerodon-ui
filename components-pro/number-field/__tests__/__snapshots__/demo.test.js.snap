@@ -36,6 +36,7 @@ exports[`renders ./components-pro/number-field/demo/basic.md correctly 1`] = `
           </div>
         </label>
       </span>
+      <span />
     </div>
     <div
       class="c7n-col-12"
@@ -68,6 +69,7 @@ exports[`renders ./components-pro/number-field/demo/basic.md correctly 1`] = `
           </div>
         </label>
       </span>
+      <span />
     </div>
   </div>
   <div
@@ -106,6 +108,7 @@ exports[`renders ./components-pro/number-field/demo/basic.md correctly 1`] = `
           </div>
         </label>
       </span>
+      <span />
     </div>
     <div
       class="c7n-col-12"
@@ -138,40 +141,47 @@ exports[`renders ./components-pro/number-field/demo/basic.md correctly 1`] = `
           </div>
         </label>
       </span>
+      <span />
     </div>
   </div>
 </div>
 `;
 
 exports[`renders ./components-pro/number-field/demo/controlled.md correctly 1`] = `
-<span
-  class="c7n-pro-input-number-wrapper"
->
-  <label>
-    <input
-      autocomplete="off"
-      class="c7n-pro-input-number"
-      type="text"
-      value="default"
-    />
-  </label>
-</span>
+Array [
+  <span
+    class="c7n-pro-input-number-wrapper"
+  >
+    <label>
+      <input
+        autocomplete="off"
+        class="c7n-pro-input-number"
+        type="text"
+        value="default"
+      />
+    </label>
+  </span>,
+  <span />,
+]
 `;
 
 exports[`renders ./components-pro/number-field/demo/dataset.md correctly 1`] = `
-<span
-  class="c7n-pro-input-number-wrapper c7n-pro-input-number-required"
->
-  <label>
-    <input
-      autocomplete="off"
-      class="c7n-pro-input-number"
-      name="age"
-      type="text"
-      value="100,000,000,000,000"
-    />
-  </label>
-</span>
+Array [
+  <span
+    class="c7n-pro-input-number-wrapper c7n-pro-input-number-required"
+  >
+    <label>
+      <input
+        autocomplete="off"
+        class="c7n-pro-input-number"
+        name="age"
+        type="text"
+        value="100,000,000,000,000"
+      />
+    </label>
+  </span>,
+  <span />,
+]
 `;
 
 exports[`renders ./components-pro/number-field/demo/min-max.md correctly 1`] = `
@@ -209,6 +219,7 @@ exports[`renders ./components-pro/number-field/demo/min-max.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-6"
@@ -240,6 +251,7 @@ exports[`renders ./components-pro/number-field/demo/min-max.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
 </div>
 `;
@@ -296,6 +308,7 @@ exports[`renders ./components-pro/number-field/demo/multiple.md correctly 1`] = 
         </div>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-12"
@@ -346,6 +359,7 @@ exports[`renders ./components-pro/number-field/demo/multiple.md correctly 1`] = 
         </div>
       </label>
     </span>
+    <span />
   </div>
 </div>
 `;
@@ -401,6 +415,7 @@ exports[`renders ./components-pro/number-field/demo/range.md correctly 1`] = `
         </span>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-24"
@@ -448,6 +463,7 @@ exports[`renders ./components-pro/number-field/demo/range.md correctly 1`] = `
         </span>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-24"
@@ -494,6 +510,7 @@ exports[`renders ./components-pro/number-field/demo/range.md correctly 1`] = `
         </span>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-24"
@@ -540,6 +557,7 @@ exports[`renders ./components-pro/number-field/demo/range.md correctly 1`] = `
         </span>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-24"
@@ -594,6 +612,7 @@ exports[`renders ./components-pro/number-field/demo/range.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
 </div>
 `;

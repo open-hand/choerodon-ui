@@ -14,7 +14,7 @@ title:
 Upload file list as append
 
 ```jsx
-import { Upload, message } from 'choerodon-ui/pro';
+import { Upload } from 'choerodon-ui/pro';
 
 
 class App extends React.Component {

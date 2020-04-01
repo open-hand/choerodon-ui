@@ -27,6 +27,7 @@ exports[`renders ./components-pro/range/demo/basic.md correctly 1`] = `
       />
     </div>
   </label>
+  <span />
   <label
     class="c7n-pro-range-wrapper c7n-pro-range-disabled"
     style="margin:0.2rem 0 0 0"
@@ -54,6 +55,7 @@ exports[`renders ./components-pro/range/demo/basic.md correctly 1`] = `
       />
     </div>
   </label>
+  <span />
 </div>
 `;
 
@@ -85,6 +87,7 @@ exports[`renders ./components-pro/range/demo/controlled.md correctly 1`] = `
       />
     </div>
   </label>
+  <span />
   <span
     class="c7n-pro-input-wrapper"
     style="margin:0.2rem 0 0 0"
@@ -99,36 +102,40 @@ exports[`renders ./components-pro/range/demo/controlled.md correctly 1`] = `
       />
     </label>
   </span>
+  <span />
 </div>
 `;
 
 exports[`renders ./components-pro/range/demo/dataset.md correctly 1`] = `
-<label
-  class="c7n-pro-range-wrapper"
->
-  <input
-    autocomplete="off"
-    class="c7n-pro-range"
-    max="100"
-    min="0"
-    name="range"
-    step="1"
-    type="range"
-    value="20"
-  />
-  <div
-    class="c7n-pro-range-track"
+Array [
+  <label
+    class="c7n-pro-range-wrapper"
   >
-    <div
-      class="c7n-pro-range-draghandle"
-      style="left:11.11111111111111%"
+    <input
+      autocomplete="off"
+      class="c7n-pro-range"
+      max="100"
+      min="0"
+      name="range"
+      step="1"
+      type="range"
+      value="20"
     />
     <div
-      class="c7n-pro-range-selection"
-      style="width:11.11111111111111%"
-    />
-  </div>
-</label>
+      class="c7n-pro-range-track"
+    >
+      <div
+        class="c7n-pro-range-draghandle"
+        style="left:11.11111111111111%"
+      />
+      <div
+        class="c7n-pro-range-selection"
+        style="width:11.11111111111111%"
+      />
+    </div>
+  </label>,
+  <span />,
+]
 `;
 
 exports[`renders ./components-pro/range/demo/verticalRange.md correctly 1`] = `
@@ -160,5 +167,6 @@ exports[`renders ./components-pro/range/demo/verticalRange.md correctly 1`] = `
       />
     </div>
   </label>
+  <span />
 </div>
 `;

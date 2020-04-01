@@ -43,7 +43,6 @@ class App extends React.Component {
     if (!isLt2M) {
       message.error('Image must smaller than 2MB!');
     }
-    console.log('this_up', this.state.uploadFileList);
     if (isJPG && isLt2M) {
       this.setState({
         uploadFileList: [...this.state.uploadFileList, file],

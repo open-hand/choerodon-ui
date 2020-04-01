@@ -891,6 +891,22 @@ exports[`color-picker-pro footer-slider click event render correctly 1`] = `
           </label>
         </span>
       </TriggerChild>
+      <TriggerChild
+        key=".$text-null/.1"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <span
+          key="text-null/.1"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onFocus={[Function]}
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        />
+      </TriggerChild>
       <Popup
         align={
           Object {
@@ -1438,6 +1454,22 @@ exports[`color-picker-pro renders ColorPicker correctly 1`] = `
             </div>
           </label>
         </span>
+      </TriggerChild>
+      <TriggerChild
+        key=".$text-null/.1"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <span
+          key="text-null/.1"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onFocus={[Function]}
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        />
       </TriggerChild>
       <Popup
         align={
@@ -2126,6 +2158,22 @@ exports[`color-picker-pro should renders dataset default value correctly 1`] = `
               </div>
             </label>
           </span>
+        </TriggerChild>
+        <TriggerChild
+          key=".$text-null/.1"
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <span
+            key="text-null/.1"
+            onBlur={[Function]}
+            onClick={[Function]}
+            onContextMenu={[Function]}
+            onFocus={[Function]}
+            onMouseDown={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+          />
         </TriggerChild>
         <Popup
           align={
@@ -3139,6 +3187,22 @@ exports[`color-picker-pro the panel body click event render correctly 1`] = `
             </div>
           </label>
         </span>
+      </TriggerChild>
+      <TriggerChild
+        key=".$text-null/.1"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <span
+          key="text-null/.1"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onFocus={[Function]}
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        />
       </TriggerChild>
       <Popup
         align={
@@ -4194,6 +4258,22 @@ exports[`color-picker-pro the sliderPointer of footer click event render correct
             </div>
           </label>
         </span>
+      </TriggerChild>
+      <TriggerChild
+        key=".$text-null/.1"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <span
+          key="text-null/.1"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onFocus={[Function]}
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        />
       </TriggerChild>
       <Popup
         align={

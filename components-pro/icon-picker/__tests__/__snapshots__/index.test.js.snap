@@ -3789,6 +3789,22 @@ exports[`Icon-Picker-pro renders IconPicker correctly 1`] = `
           </label>
         </span>
       </TriggerChild>
+      <TriggerChild
+        key=".$text-null/.1"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <span
+          key="text-null/.1"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onFocus={[Function]}
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        />
+      </TriggerChild>
       <Popup
         align={
           Object {
@@ -6104,6 +6120,22 @@ exports[`Icon-Picker-pro should renders dataset correctly 1`] = `
               </div>
             </label>
           </span>
+        </TriggerChild>
+        <TriggerChild
+          key=".$text-null/.1"
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <span
+            key="text-null/.1"
+            onBlur={[Function]}
+            onClick={[Function]}
+            onContextMenu={[Function]}
+            onFocus={[Function]}
+            onMouseDown={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+          />
         </TriggerChild>
         <Popup
           align={
@@ -22804,6 +22836,22 @@ exports[`Icon-Picker-pro the keydown event should render correctly 1`] = `
             </div>
           </label>
         </span>
+      </TriggerChild>
+      <TriggerChild
+        key=".$text-null/.1"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <span
+          key="text-null/.1"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onFocus={[Function]}
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        />
       </TriggerChild>
       <Popup
         align={
@@ -42261,6 +42309,22 @@ exports[`Icon-Picker-pro the keydown event should render keyCode { esc, tab } co
           </label>
         </span>
       </TriggerChild>
+      <TriggerChild
+        key=".$text-null/.1"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <span
+          key="text-null/.1"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onFocus={[Function]}
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        />
+      </TriggerChild>
       <Popup
         align={
           Object {
@@ -60286,6 +60350,22 @@ exports[`Icon-Picker-pro the keydown event should render keyCode {space} correct
           </label>
         </span>
       </TriggerChild>
+      <TriggerChild
+        key=".$text-null/.1"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <span
+          key="text-null/.1"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onFocus={[Function]}
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        />
+      </TriggerChild>
       <Popup
         align={
           Object {
@@ -75456,6 +75536,22 @@ exports[`Icon-Picker-pro the selected click render correctly 1`] = `
             </div>
           </label>
         </span>
+      </TriggerChild>
+      <TriggerChild
+        key=".$text-null/.1"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <span
+          key="text-null/.1"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onFocus={[Function]}
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        />
       </TriggerChild>
       <Popup
         align={

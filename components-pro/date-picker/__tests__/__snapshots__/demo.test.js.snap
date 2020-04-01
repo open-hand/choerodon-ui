@@ -36,6 +36,7 @@ exports[`renders ./components-pro/date-picker/demo/basic.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-12"
@@ -68,6 +69,7 @@ exports[`renders ./components-pro/date-picker/demo/basic.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-12"
@@ -100,6 +102,7 @@ exports[`renders ./components-pro/date-picker/demo/basic.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-12"
@@ -132,6 +135,7 @@ exports[`renders ./components-pro/date-picker/demo/basic.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-12"
@@ -164,6 +168,7 @@ exports[`renders ./components-pro/date-picker/demo/basic.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-12"
@@ -197,6 +202,7 @@ exports[`renders ./components-pro/date-picker/demo/basic.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-12"
@@ -223,38 +229,42 @@ exports[`renders ./components-pro/date-picker/demo/basic.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
 </div>
 `;
 
 exports[`renders ./components-pro/date-picker/demo/controlled.md correctly 1`] = `
-<span
-  class="c7n-pro-calendar-picker-wrapper c7n-pro-calendar-picker-empty c7n-pro-calendar-picker-suffix-button"
->
-  <label>
-    <input
-      autocomplete="off"
-      class="c7n-pro-calendar-picker"
-      placeholder="controlled"
-      type="text"
-      value=""
-    />
-    <div
-      class="c7n-pro-calendar-picker-inner-button c7n-pro-calendar-picker-clear-button"
-    >
-      <i
-        class="icon icon-close"
+Array [
+  <span
+    class="c7n-pro-calendar-picker-wrapper c7n-pro-calendar-picker-empty c7n-pro-calendar-picker-suffix-button"
+  >
+    <label>
+      <input
+        autocomplete="off"
+        class="c7n-pro-calendar-picker"
+        placeholder="controlled"
+        type="text"
+        value=""
       />
-    </div>
-    <div
-      class="c7n-pro-calendar-picker-suffix"
-    >
-      <i
-        class="icon icon-date_range c7n-pro-calendar-picker-trigger"
-      />
-    </div>
-  </label>
-</span>
+      <div
+        class="c7n-pro-calendar-picker-inner-button c7n-pro-calendar-picker-clear-button"
+      >
+        <i
+          class="icon icon-close"
+        />
+      </div>
+      <div
+        class="c7n-pro-calendar-picker-suffix"
+      >
+        <i
+          class="icon icon-date_range c7n-pro-calendar-picker-trigger"
+        />
+      </div>
+    </label>
+  </span>,
+  <span />,
+]
 `;
 
 exports[`renders ./components-pro/date-picker/demo/dataset.md correctly 1`] = `
@@ -293,6 +303,7 @@ exports[`renders ./components-pro/date-picker/demo/dataset.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-12"
@@ -325,6 +336,7 @@ exports[`renders ./components-pro/date-picker/demo/dataset.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
 </div>
 `;
@@ -365,6 +377,7 @@ exports[`renders ./components-pro/date-picker/demo/format.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-12"
@@ -397,6 +410,7 @@ exports[`renders ./components-pro/date-picker/demo/format.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
 </div>
 `;
@@ -438,6 +452,7 @@ exports[`renders ./components-pro/date-picker/demo/min-max.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-12"
@@ -471,6 +486,7 @@ exports[`renders ./components-pro/date-picker/demo/min-max.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-12"
@@ -504,6 +520,7 @@ exports[`renders ./components-pro/date-picker/demo/min-max.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-12"
@@ -537,6 +554,7 @@ exports[`renders ./components-pro/date-picker/demo/min-max.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-12"
@@ -570,6 +588,7 @@ exports[`renders ./components-pro/date-picker/demo/min-max.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-12"
@@ -603,6 +622,7 @@ exports[`renders ./components-pro/date-picker/demo/min-max.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
 </div>
 `;
@@ -683,6 +703,7 @@ exports[`renders ./components-pro/date-picker/demo/multiple.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-12"
@@ -743,6 +764,7 @@ exports[`renders ./components-pro/date-picker/demo/multiple.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
 </div>
 `;
@@ -812,6 +834,7 @@ exports[`renders ./components-pro/date-picker/demo/range.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-24"
@@ -873,6 +896,7 @@ exports[`renders ./components-pro/date-picker/demo/range.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-24"
@@ -933,6 +957,7 @@ exports[`renders ./components-pro/date-picker/demo/range.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-24"
@@ -993,6 +1018,7 @@ exports[`renders ./components-pro/date-picker/demo/range.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-24"
@@ -1054,6 +1080,7 @@ exports[`renders ./components-pro/date-picker/demo/range.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-24"
@@ -1122,66 +1149,73 @@ exports[`renders ./components-pro/date-picker/demo/range.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
 </div>
 `;
 
 exports[`renders ./components-pro/date-picker/demo/renderer.md correctly 1`] = `
-<span
-  class="c7n-pro-calendar-picker-wrapper c7n-pro-calendar-picker-empty c7n-pro-calendar-picker-suffix-button"
->
-  <label>
-    <input
-      autocomplete="off"
-      class="c7n-pro-calendar-picker"
-      placeholder="Select date"
-      type="text"
-      value=""
-    />
-    <div
-      class="c7n-pro-calendar-picker-inner-button c7n-pro-calendar-picker-clear-button"
-    >
-      <i
-        class="icon icon-close"
+Array [
+  <span
+    class="c7n-pro-calendar-picker-wrapper c7n-pro-calendar-picker-empty c7n-pro-calendar-picker-suffix-button"
+  >
+    <label>
+      <input
+        autocomplete="off"
+        class="c7n-pro-calendar-picker"
+        placeholder="Select date"
+        type="text"
+        value=""
       />
-    </div>
-    <div
-      class="c7n-pro-calendar-picker-suffix"
-    >
-      <i
-        class="icon icon-date_range c7n-pro-calendar-picker-trigger"
-      />
-    </div>
-  </label>
-</span>
+      <div
+        class="c7n-pro-calendar-picker-inner-button c7n-pro-calendar-picker-clear-button"
+      >
+        <i
+          class="icon icon-close"
+        />
+      </div>
+      <div
+        class="c7n-pro-calendar-picker-suffix"
+      >
+        <i
+          class="icon icon-date_range c7n-pro-calendar-picker-trigger"
+        />
+      </div>
+    </label>
+  </span>,
+  <span />,
+]
 `;
 
 exports[`renders ./components-pro/date-picker/demo/step.md correctly 1`] = `
-<span
-  class="c7n-pro-calendar-picker-wrapper c7n-pro-calendar-picker-empty c7n-pro-calendar-picker-suffix-button"
->
-  <label>
-    <input
-      autocomplete="off"
-      class="c7n-pro-calendar-picker"
-      name="time"
-      type="text"
-      value=""
-    />
-    <div
-      class="c7n-pro-calendar-picker-inner-button c7n-pro-calendar-picker-clear-button"
-    >
-      <i
-        class="icon icon-close"
+Array [
+  <span
+    class="c7n-pro-calendar-picker-wrapper c7n-pro-calendar-picker-empty c7n-pro-calendar-picker-suffix-button"
+  >
+    <label>
+      <input
+        autocomplete="off"
+        class="c7n-pro-calendar-picker"
+        name="time"
+        type="text"
+        value=""
       />
-    </div>
-    <div
-      class="c7n-pro-calendar-picker-suffix"
-    >
-      <i
-        class="icon icon-date_range c7n-pro-calendar-picker-trigger"
-      />
-    </div>
-  </label>
-</span>
+      <div
+        class="c7n-pro-calendar-picker-inner-button c7n-pro-calendar-picker-clear-button"
+      >
+        <i
+          class="icon icon-close"
+        />
+      </div>
+      <div
+        class="c7n-pro-calendar-picker-suffix"
+      >
+        <i
+          class="icon icon-date_range c7n-pro-calendar-picker-trigger"
+        />
+      </div>
+    </label>
+  </span>,
+  <span />,
+]
 `;

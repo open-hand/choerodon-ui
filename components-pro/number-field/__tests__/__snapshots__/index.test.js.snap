@@ -311,6 +311,22 @@ exports[`NumberField-pro {step,min} null renders correctly 1`] = `
           </label>
         </span>
       </TriggerChild>
+      <TriggerChild
+        key=".$text-null/.1"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <span
+          key="text-null/.1"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onFocus={[Function]}
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        />
+      </TriggerChild>
       <Popup
         align={
           Object {
@@ -688,6 +704,22 @@ exports[`NumberField-pro {step,min} null renders correctly 2`] = `
           </label>
         </span>
       </TriggerChild>
+      <TriggerChild
+        key=".$text-null/.1"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <span
+          key="text-null/.1"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onFocus={[Function]}
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        />
+      </TriggerChild>
       <Popup
         align={
           Object {
@@ -1031,6 +1063,22 @@ exports[`NumberField-pro renders NumberField correctly 1`] = `
             />
           </label>
         </span>
+      </TriggerChild>
+      <TriggerChild
+        key=".$text-null/.1"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <span
+          key="text-null/.1"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onFocus={[Function]}
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        />
       </TriggerChild>
       <Popup
         align={
@@ -1459,6 +1507,22 @@ exports[`NumberField-pro step multiple renders correctly 1`] = `
           </label>
         </span>
       </TriggerChild>
+      <TriggerChild
+        key=".$text-null/.1"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <span
+          key="text-null/.1"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onFocus={[Function]}
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        />
+      </TriggerChild>
       <Popup
         align={
           Object {
@@ -1835,6 +1899,22 @@ exports[`NumberField-pro step should have different value 1`] = `
             </div>
           </label>
         </span>
+      </TriggerChild>
+      <TriggerChild
+        key=".$text-null/.1"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <span
+          key="text-null/.1"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onFocus={[Function]}
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        />
       </TriggerChild>
       <Popup
         align={
@@ -2320,6 +2400,22 @@ exports[`NumberField-pro the dataset value should render correctly 1`] = `
             </label>
           </span>
         </TriggerChild>
+        <TriggerChild
+          key=".$text-null/.1"
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <span
+            key="text-null/.1"
+            onBlur={[Function]}
+            onClick={[Function]}
+            onContextMenu={[Function]}
+            onFocus={[Function]}
+            onMouseDown={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+          />
+        </TriggerChild>
         <Popup
           align={
             Object {
@@ -2700,6 +2796,22 @@ exports[`NumberField-pro the input number should add when the {plus} icon clicke
           </label>
         </span>
       </TriggerChild>
+      <TriggerChild
+        key=".$text-null/.1"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <span
+          key="text-null/.1"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onFocus={[Function]}
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        />
+      </TriggerChild>
       <Popup
         align={
           Object {
@@ -3079,6 +3191,22 @@ exports[`NumberField-pro the input number should reduce when the {minus} icon cl
           </label>
         </span>
       </TriggerChild>
+      <TriggerChild
+        key=".$text-null/.1"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <span
+          key="text-null/.1"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onFocus={[Function]}
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        />
+      </TriggerChild>
       <Popup
         align={
           Object {
@@ -3453,6 +3581,22 @@ exports[`NumberField-pro the keydown event should render keyCode { up, down } co
             </div>
           </label>
         </span>
+      </TriggerChild>
+      <TriggerChild
+        key=".$text-null/.1"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <span
+          key="text-null/.1"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onFocus={[Function]}
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        />
       </TriggerChild>
       <Popup
         align={

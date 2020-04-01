@@ -19,7 +19,6 @@ describe('LocaleContext', () => {
       zh_CN: '简体中文',
       en_GB: 'English',
       en_US: 'English(US)',
-      ja_JP: '日本語',
     });
     localeContext.setSupports({ zh_CN: '简体中文', en_GB: 'English', ja_JP: '日本語' });
     expect(localeContext.supports).toEqual({

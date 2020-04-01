@@ -26,6 +26,7 @@ Array [
           class="c7n-ripple-wrapper"
         />
       </button>
+      <span />
     </div>
     <div
       class="c7n-col-10"
@@ -34,6 +35,7 @@ Array [
       <span
         class="c7n-pro-output c7n-pro-output-wrapper"
       />
+      <span />
     </div>
     <div
       class="c7n-col-6"
@@ -42,6 +44,7 @@ Array [
       <span
         class="c7n-pro-output c7n-pro-output-wrapper"
       />
+      <span />
     </div>
   </div>,
   <div
@@ -76,6 +79,7 @@ Array [
           class="c7n-ripple-wrapper"
         />
       </button>
+      <span />
     </div>
   </div>,
 ]
@@ -122,6 +126,7 @@ exports[`renders ./components-pro/lov/demo/cascade.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-12"
@@ -153,6 +158,7 @@ exports[`renders ./components-pro/lov/demo/cascade.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
 </div>
 `;
@@ -198,6 +204,7 @@ exports[`renders ./components-pro/lov/demo/dataset.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-12"
@@ -235,64 +242,68 @@ exports[`renders ./components-pro/lov/demo/dataset.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
 </div>
 `;
 
 exports[`renders ./components-pro/lov/demo/multiple.md correctly 1`] = `
-<span
-  class="c7n-pro-select-wrapper c7n-pro-select-required c7n-pro-select-suffix-button c7n-pro-select-multiple"
->
-  <input
-    class="c7n-pro-select-multiple-value"
-    name="code"
-    value="Mock"
-  />
-  <div
-    class="c7n-pro-select-placeholder"
+Array [
+  <span
+    class="c7n-pro-select-wrapper c7n-pro-select-required c7n-pro-select-suffix-button c7n-pro-select-multiple"
   >
-    复选LOV
-  </div>
-  <label>
+    <input
+      class="c7n-pro-select-multiple-value"
+      name="code"
+      value="Mock"
+    />
     <div
-      class="c7n-pro-select"
+      class="c7n-pro-select-placeholder"
     >
-      <ul>
-        <li
-          class="c7n-pro-select-multiple-block"
-        >
-          <div>
-            Mock
-          </div>
-          <i
-            class="icon icon-cancel"
-            tabindex="-1"
-          />
-        </li>
-        <li>
-          <input
-            autocomplete="off"
-            class="c7n-pro-select-multiple-input"
-            type="text"
-            value=""
-          />
-        </li>
-      </ul>
+      复选LOV
     </div>
-    <div
-      class="c7n-pro-select-inner-button c7n-pro-select-clear-button"
-    >
-      <i
-        class="icon icon-close"
-      />
-    </div>
-    <div
-      class="c7n-pro-select-suffix"
-    >
-      <i
-        class="icon icon-search"
-      />
-    </div>
-  </label>
-</span>
+    <label>
+      <div
+        class="c7n-pro-select"
+      >
+        <ul>
+          <li
+            class="c7n-pro-select-multiple-block"
+          >
+            <div>
+              Mock
+            </div>
+            <i
+              class="icon icon-cancel"
+              tabindex="-1"
+            />
+          </li>
+          <li>
+            <input
+              autocomplete="off"
+              class="c7n-pro-select-multiple-input"
+              type="text"
+              value=""
+            />
+          </li>
+        </ul>
+      </div>
+      <div
+        class="c7n-pro-select-inner-button c7n-pro-select-clear-button"
+      >
+        <i
+          class="icon icon-close"
+        />
+      </div>
+      <div
+        class="c7n-pro-select-suffix"
+      >
+        <i
+          class="icon icon-search"
+        />
+      </div>
+    </label>
+  </span>,
+  <span />,
+]
 `;

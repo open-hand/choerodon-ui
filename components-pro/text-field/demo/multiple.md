@@ -41,6 +41,9 @@ class App extends React.Component {
         <Col span={12}>
           <TextField dataSet={this.ds} name="user" placeholder="数据源多选" />
         </Col>
+        <Col span={12}>
+          <TextField multiple onChange={handleChange} placeholder="多选" defaultValue={['wu']} />
+        </Col>
       </Row>
     );
   }

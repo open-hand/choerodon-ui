@@ -1,19 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders ./components-pro/switch/demo/basic.md correctly 1`] = `
-<label
-  class="c7n-pro-switch-wrapper"
->
-  <input
-    checked=""
-    class="c7n-pro-switch"
-    type="checkbox"
-    value="true"
-  />
-  <span
-    class="c7n-pro-switch-label"
-  />
-</label>
+Array [
+  <label
+    class="c7n-pro-switch-wrapper"
+  >
+    <input
+      checked=""
+      class="c7n-pro-switch"
+      type="checkbox"
+      value="true"
+    />
+    <span
+      class="c7n-pro-switch-label"
+    />
+  </label>,
+  <span />,
+]
 `;
 
 exports[`renders ./components-pro/switch/demo/controlled.md correctly 1`] = `
@@ -32,6 +35,7 @@ exports[`renders ./components-pro/switch/demo/controlled.md correctly 1`] = `
       class="c7n-pro-switch-label"
     />
   </label>
+  <span />
   <br />
   <label
     class="c7n-pro-switch-wrapper"
@@ -46,6 +50,7 @@ exports[`renders ./components-pro/switch/demo/controlled.md correctly 1`] = `
       class="c7n-pro-switch-label"
     />
   </label>
+  <span />
   <br />
   <label
     class="c7n-pro-switch-wrapper"
@@ -60,6 +65,7 @@ exports[`renders ./components-pro/switch/demo/controlled.md correctly 1`] = `
       class="c7n-pro-switch-label"
     />
   </label>
+  <span />
 </div>
 `;
 
@@ -79,6 +85,7 @@ exports[`renders ./components-pro/switch/demo/dataset.md correctly 1`] = `
       class="c7n-pro-switch-label"
     />
   </label>
+  <span />
   <label
     class="c7n-pro-switch-wrapper"
   >
@@ -92,6 +99,7 @@ exports[`renders ./components-pro/switch/demo/dataset.md correctly 1`] = `
       class="c7n-pro-switch-label"
     />
   </label>
+  <span />
   <label
     class="c7n-pro-switch-wrapper"
   >
@@ -105,6 +113,7 @@ exports[`renders ./components-pro/switch/demo/dataset.md correctly 1`] = `
       class="c7n-pro-switch-label"
     />
   </label>
+  <span />
   <label
     class="c7n-pro-switch-wrapper"
   >
@@ -118,6 +127,7 @@ exports[`renders ./components-pro/switch/demo/dataset.md correctly 1`] = `
       class="c7n-pro-switch-label"
     />
   </label>
+  <span />
   <label
     class="c7n-pro-switch-wrapper"
   >
@@ -131,6 +141,7 @@ exports[`renders ./components-pro/switch/demo/dataset.md correctly 1`] = `
       class="c7n-pro-switch-label"
     />
   </label>
+  <span />
 </div>
 `;
 
@@ -150,6 +161,7 @@ exports[`renders ./components-pro/switch/demo/readonly.md correctly 1`] = `
       class="c7n-pro-switch-label"
     />
   </label>
+  <span />
   <br />
   <label
     class="c7n-pro-switch-wrapper"
@@ -164,6 +176,7 @@ exports[`renders ./components-pro/switch/demo/readonly.md correctly 1`] = `
       class="c7n-pro-switch-label"
     />
   </label>
+  <span />
   <br />
   <label
     class="c7n-pro-switch-wrapper"
@@ -179,6 +192,7 @@ exports[`renders ./components-pro/switch/demo/readonly.md correctly 1`] = `
       class="c7n-pro-switch-label"
     />
   </label>
+  <span />
 </div>
 `;
 
@@ -197,6 +211,7 @@ exports[`renders ./components-pro/switch/demo/size.md correctly 1`] = `
       class="c7n-pro-switch-label"
     />
   </label>
+  <span />
   <br />
   <label
     class="c7n-pro-switch-wrapper"
@@ -211,6 +226,7 @@ exports[`renders ./components-pro/switch/demo/size.md correctly 1`] = `
       class="c7n-pro-switch-label"
     />
   </label>
+  <span />
   <br />
   <label
     class="c7n-pro-switch-wrapper c7n-pro-switch-sm"
@@ -225,6 +241,7 @@ exports[`renders ./components-pro/switch/demo/size.md correctly 1`] = `
       class="c7n-pro-switch-label"
     />
   </label>
+  <span />
 </div>
 `;
 
@@ -245,6 +262,7 @@ exports[`renders ./components-pro/switch/demo/text.md correctly 1`] = `
       开
     </span>
   </label>
+  <span />
   <br />
   <label
     class="c7n-pro-switch-wrapper"
@@ -260,6 +278,7 @@ exports[`renders ./components-pro/switch/demo/text.md correctly 1`] = `
       0
     </span>
   </label>
+  <span />
   <br />
   <label
     class="c7n-pro-switch-wrapper"
@@ -277,5 +296,6 @@ exports[`renders ./components-pro/switch/demo/text.md correctly 1`] = `
       />
     </span>
   </label>
+  <span />
 </div>
 `;

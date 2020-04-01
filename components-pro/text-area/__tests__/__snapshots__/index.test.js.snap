@@ -301,7 +301,6 @@ exports[`TextArea-pro renders TextArea-pro correctly 1`] = `
               onChange={[Function]}
               onFocus={[Function]}
               onKeyDown={[Function]}
-              placeholder=""
               readOnly={false}
               rows={4}
               style={
@@ -314,6 +313,22 @@ exports[`TextArea-pro renders TextArea-pro correctly 1`] = `
             />
           </label>
         </div>
+      </TriggerChild>
+      <TriggerChild
+        key=".$text-null/.1"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <span
+          key="text-null/.1"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onContextMenu={[Function]}
+          onFocus={[Function]}
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        />
       </TriggerChild>
       <Popup
         align={
@@ -793,12 +808,12 @@ exports[`TextArea-pro the dataSet should renders correctly 1`] = `
                 onChange={[Function]}
                 onFocus={[Function]}
                 onKeyDown={[Function]}
-                placeholder=""
                 readOnly={false}
                 rows={4}
                 style={
                   Object {
                     "resize": "both",
+                    "transition": "none",
                   }
                 }
                 type="text"
@@ -806,6 +821,22 @@ exports[`TextArea-pro the dataSet should renders correctly 1`] = `
               />
             </label>
           </div>
+        </TriggerChild>
+        <TriggerChild
+          key=".$text-null/.1"
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <span
+            key="text-null/.1"
+            onBlur={[Function]}
+            onClick={[Function]}
+            onContextMenu={[Function]}
+            onFocus={[Function]}
+            onMouseDown={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+          />
         </TriggerChild>
         <Popup
           align={

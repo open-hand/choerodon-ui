@@ -1,103 +1,112 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders ./components-pro/icon-picker/demo/basic.md correctly 1`] = `
-<span
-  class="c7n-pro-icon-picker-wrapper c7n-pro-icon-picker-empty c7n-pro-icon-picker-suffix-button"
->
-  <label>
-    <input
-      autocomplete="off"
-      class="c7n-pro-icon-picker"
-      type="text"
-      value=""
-    />
-    <div
-      class="c7n-pro-icon-picker-inner-button c7n-pro-icon-picker-clear-button"
-    >
-      <i
-        class="icon icon-close"
+Array [
+  <span
+    class="c7n-pro-icon-picker-wrapper c7n-pro-icon-picker-empty c7n-pro-icon-picker-suffix-button"
+  >
+    <label>
+      <input
+        autocomplete="off"
+        class="c7n-pro-icon-picker"
+        type="text"
+        value=""
       />
-    </div>
-    <div
-      class="c7n-pro-icon-picker-suffix"
-    >
-      <i
-        class="icon icon-developer_board c7n-pro-icon-picker-trigger"
-      />
-    </div>
-  </label>
-</span>
+      <div
+        class="c7n-pro-icon-picker-inner-button c7n-pro-icon-picker-clear-button"
+      >
+        <i
+          class="icon icon-close"
+        />
+      </div>
+      <div
+        class="c7n-pro-icon-picker-suffix"
+      >
+        <i
+          class="icon icon-developer_board c7n-pro-icon-picker-trigger"
+        />
+      </div>
+    </label>
+  </span>,
+  <span />,
+]
 `;
 
 exports[`renders ./components-pro/icon-picker/demo/controlled.md correctly 1`] = `
-<span
-  class="c7n-pro-icon-picker-wrapper c7n-pro-icon-picker-suffix-button c7n-pro-icon-picker-prefix-button"
->
-  <label>
-    <div
-      class="c7n-pro-icon-picker-prefix"
-    >
-      <i
-        class="icon icon-add"
+Array [
+  <span
+    class="c7n-pro-icon-picker-wrapper c7n-pro-icon-picker-suffix-button c7n-pro-icon-picker-prefix-button"
+  >
+    <label>
+      <div
+        class="c7n-pro-icon-picker-prefix"
+      >
+        <i
+          class="icon icon-add"
+        />
+      </div>
+      <input
+        autocomplete="off"
+        class="c7n-pro-icon-picker"
+        type="text"
+        value="add"
       />
-    </div>
-    <input
-      autocomplete="off"
-      class="c7n-pro-icon-picker"
-      type="text"
-      value="add"
-    />
-    <div
-      class="c7n-pro-icon-picker-inner-button c7n-pro-icon-picker-clear-button"
-    >
-      <i
-        class="icon icon-close"
-      />
-    </div>
-    <div
-      class="c7n-pro-icon-picker-suffix"
-    >
-      <i
-        class="icon icon-developer_board c7n-pro-icon-picker-trigger"
-      />
-    </div>
-  </label>
-</span>
+      <div
+        class="c7n-pro-icon-picker-inner-button c7n-pro-icon-picker-clear-button"
+      >
+        <i
+          class="icon icon-close"
+        />
+      </div>
+      <div
+        class="c7n-pro-icon-picker-suffix"
+      >
+        <i
+          class="icon icon-developer_board c7n-pro-icon-picker-trigger"
+        />
+      </div>
+    </label>
+  </span>,
+  <span />,
+]
 `;
 
 exports[`renders ./components-pro/icon-picker/demo/dataset.md correctly 1`] = `
-<span
-  class="c7n-pro-icon-picker-wrapper c7n-pro-icon-picker-required c7n-pro-icon-picker-suffix-button c7n-pro-icon-picker-prefix-button"
->
-  <label>
-    <div
-      class="c7n-pro-icon-picker-prefix"
-    >
-      <i
-        class="icon icon-cancel"
+Array [
+  <span
+    class="c7n-pro-icon-picker-wrapper c7n-pro-icon-picker-required c7n-pro-icon-picker-suffix-button c7n-pro-icon-picker-prefix-button"
+  >
+    <label>
+      <div
+        class="c7n-pro-icon-picker-prefix"
+      >
+        <i
+          class="icon icon-cancel"
+        />
+      </div>
+      <input
+        autocomplete="off"
+        class="c7n-pro-icon-picker"
+        name="icon"
+        type="text"
+        value="cancel"
       />
-    </div>
-    <input
-      autocomplete="off"
-      class="c7n-pro-icon-picker"
-      name="icon"
-      type="text"
-      value="cancel"
-    />
-    <div
-      class="c7n-pro-icon-picker-inner-button c7n-pro-icon-picker-clear-button"
-    >
-      <i
-        class="icon icon-close"
-      />
-    </div>
-    <div
-      class="c7n-pro-icon-picker-suffix"
-    >
-      <i
-        class="icon icon-developer_board c7n-pro-icon-picker-trigger"
-      />
-    </div>
-  </label>
-</span>
+      <div
+        class="c7n-pro-icon-picker-inner-button c7n-pro-icon-picker-clear-button"
+      >
+        <i
+          class="icon icon-close"
+        />
+      </div>
+      <div
+        class="c7n-pro-icon-picker-suffix"
+      >
+        <i
+          class="icon icon-developer_board c7n-pro-icon-picker-trigger"
+        />
+      </div>
+    </label>
+  </span>,
+  <span />,
+]
 `;

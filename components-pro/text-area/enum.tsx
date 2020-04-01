@@ -8,6 +8,4 @@ export const enum ResizeType {
 export interface AutoSizeType {
   minRows?: number;
   maxRows?: number;
-  minCols?: number;
-  maxCols?: number;
 }

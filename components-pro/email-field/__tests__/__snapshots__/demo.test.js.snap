@@ -41,6 +41,7 @@ exports[`renders ./components-pro/select/demo/basic.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-4"
@@ -88,6 +89,7 @@ exports[`renders ./components-pro/select/demo/basic.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
 </div>
 `;
@@ -133,6 +135,7 @@ exports[`renders ./components-pro/select/demo/cascade.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-12"
@@ -170,6 +173,7 @@ exports[`renders ./components-pro/select/demo/cascade.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
 </div>
 `;
@@ -214,6 +218,7 @@ exports[`renders ./components-pro/select/demo/combo.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-12"
@@ -251,79 +256,86 @@ exports[`renders ./components-pro/select/demo/combo.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
 </div>
 `;
 
 exports[`renders ./components-pro/select/demo/controlled.md correctly 1`] = `
-<span
-  class="c7n-pro-select-wrapper c7n-pro-select-suffix-button c7n-pro-select-not-editable"
->
-  <input
-    name="last-name"
-    type="hidden"
-    value="wu"
-  />
-  <label>
+Array [
+  <span
+    class="c7n-pro-select-wrapper c7n-pro-select-suffix-button c7n-pro-select-not-editable"
+  >
     <input
-      autocomplete="off"
-      class="c7n-pro-select"
-      placeholder="请选择"
-      readonly=""
-      type="text"
-      value="Wu"
+      name="last-name"
+      type="hidden"
+      value="wu"
     />
-    <div
-      class="c7n-pro-select-inner-button c7n-pro-select-clear-button"
-    >
-      <i
-        class="icon icon-close"
+    <label>
+      <input
+        autocomplete="off"
+        class="c7n-pro-select"
+        placeholder="请选择"
+        readonly=""
+        type="text"
+        value="Wu"
       />
-    </div>
-    <div
-      class="c7n-pro-select-suffix"
-    >
-      <i
-        class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
-      />
-    </div>
-  </label>
-</span>
+      <div
+        class="c7n-pro-select-inner-button c7n-pro-select-clear-button"
+      >
+        <i
+          class="icon icon-close"
+        />
+      </div>
+      <div
+        class="c7n-pro-select-suffix"
+      >
+        <i
+          class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+        />
+      </div>
+    </label>
+  </span>,
+  <span />,
+]
 `;
 
 exports[`renders ./components-pro/select/demo/dataset.md correctly 1`] = `
-<span
-  class="c7n-pro-select-wrapper c7n-pro-select-suffix-button c7n-pro-select-not-editable"
->
-  <input
-    name="user"
-    type="hidden"
-    value="wu"
-  />
-  <label>
+Array [
+  <span
+    class="c7n-pro-select-wrapper c7n-pro-select-suffix-button c7n-pro-select-not-editable"
+  >
     <input
-      autocomplete="off"
-      class="c7n-pro-select"
-      readonly=""
-      type="text"
-      value="Wu"
+      name="user"
+      type="hidden"
+      value="wu"
     />
-    <div
-      class="c7n-pro-select-inner-button c7n-pro-select-clear-button"
-    >
-      <i
-        class="icon icon-close"
+    <label>
+      <input
+        autocomplete="off"
+        class="c7n-pro-select"
+        readonly=""
+        type="text"
+        value="Wu"
       />
-    </div>
-    <div
-      class="c7n-pro-select-suffix"
-    >
-      <i
-        class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
-      />
-    </div>
-  </label>
-</span>
+      <div
+        class="c7n-pro-select-inner-button c7n-pro-select-clear-button"
+      >
+        <i
+          class="icon icon-close"
+        />
+      </div>
+      <div
+        class="c7n-pro-select-suffix"
+      >
+        <i
+          class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+        />
+      </div>
+    </label>
+  </span>,
+  <span />,
+]
 `;
 
 exports[`renders ./components-pro/select/demo/dataset-options.md correctly 1`] = `
@@ -376,6 +388,7 @@ exports[`renders ./components-pro/select/demo/dataset-options.md correctly 1`] =
         </div>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-8"
@@ -422,6 +435,7 @@ exports[`renders ./components-pro/select/demo/dataset-options.md correctly 1`] =
         </div>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-8"
@@ -476,6 +490,7 @@ exports[`renders ./components-pro/select/demo/filter.md correctly 1`] = `
       </div>
     </label>
   </span>
+  <span />
   <button
     class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
     type="button"
@@ -491,37 +506,40 @@ exports[`renders ./components-pro/select/demo/filter.md correctly 1`] = `
 `;
 
 exports[`renders ./components-pro/select/demo/group.md correctly 1`] = `
-<span
-  class="c7n-pro-select-wrapper c7n-pro-select-empty c7n-pro-select-suffix-button c7n-pro-select-not-editable"
->
-  <input
-    type="hidden"
-    value=""
-  />
-  <label>
+Array [
+  <span
+    class="c7n-pro-select-wrapper c7n-pro-select-empty c7n-pro-select-suffix-button c7n-pro-select-not-editable"
+  >
     <input
-      autocomplete="off"
-      class="c7n-pro-select"
-      readonly=""
-      type="text"
+      type="hidden"
       value=""
     />
-    <div
-      class="c7n-pro-select-inner-button c7n-pro-select-clear-button"
-    >
-      <i
-        class="icon icon-close"
+    <label>
+      <input
+        autocomplete="off"
+        class="c7n-pro-select"
+        readonly=""
+        type="text"
+        value=""
       />
-    </div>
-    <div
-      class="c7n-pro-select-suffix"
-    >
-      <i
-        class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
-      />
-    </div>
-  </label>
-</span>
+      <div
+        class="c7n-pro-select-inner-button c7n-pro-select-clear-button"
+      >
+        <i
+          class="icon icon-close"
+        />
+      </div>
+      <div
+        class="c7n-pro-select-suffix"
+      >
+        <i
+          class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+        />
+      </div>
+    </label>
+  </span>,
+  <span />,
+]
 `;
 
 exports[`renders ./components-pro/select/demo/lookupCode.md correctly 1`] = `
@@ -566,6 +584,7 @@ exports[`renders ./components-pro/select/demo/lookupCode.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-6"
@@ -620,6 +639,7 @@ exports[`renders ./components-pro/select/demo/lookupCode.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-12"
@@ -693,6 +713,7 @@ exports[`renders ./components-pro/select/demo/lookupCode.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
 </div>
 `;
@@ -763,6 +784,7 @@ exports[`renders ./components-pro/select/demo/multiple.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-12"
@@ -846,6 +868,7 @@ exports[`renders ./components-pro/select/demo/multiple.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-12"
@@ -896,6 +919,7 @@ exports[`renders ./components-pro/select/demo/multiple.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-12"
@@ -944,6 +968,7 @@ exports[`renders ./components-pro/select/demo/multiple.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-12"
@@ -992,6 +1017,7 @@ exports[`renders ./components-pro/select/demo/multiple.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-12"
@@ -1050,6 +1076,7 @@ exports[`renders ./components-pro/select/demo/multiple.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-12"
@@ -1107,43 +1134,47 @@ exports[`renders ./components-pro/select/demo/multiple.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
 </div>
 `;
 
 exports[`renders ./components-pro/select/demo/non-primitive.md correctly 1`] = `
-<span
-  class="c7n-pro-select-wrapper c7n-pro-select-empty c7n-pro-select-suffix-button c7n-pro-select-not-editable"
->
-  <input
-    type="hidden"
-    value=""
-  />
-  <label>
+Array [
+  <span
+    class="c7n-pro-select-wrapper c7n-pro-select-empty c7n-pro-select-suffix-button c7n-pro-select-not-editable"
+  >
     <input
-      autocomplete="off"
-      class="c7n-pro-select"
-      placeholder="请选择"
-      readonly=""
-      type="text"
+      type="hidden"
       value=""
     />
-    <div
-      class="c7n-pro-select-inner-button c7n-pro-select-clear-button"
-    >
-      <i
-        class="icon icon-close"
+    <label>
+      <input
+        autocomplete="off"
+        class="c7n-pro-select"
+        placeholder="请选择"
+        readonly=""
+        type="text"
+        value=""
       />
-    </div>
-    <div
-      class="c7n-pro-select-suffix"
-    >
-      <i
-        class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
-      />
-    </div>
-  </label>
-</span>
+      <div
+        class="c7n-pro-select-inner-button c7n-pro-select-clear-button"
+      >
+        <i
+          class="icon icon-close"
+        />
+      </div>
+      <div
+        class="c7n-pro-select-suffix"
+      >
+        <i
+          class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+        />
+      </div>
+    </label>
+  </span>,
+  <span />,
+]
 `;
 
 exports[`renders ./components-pro/select/demo/option-renderer.md correctly 1`] = `
@@ -1201,6 +1232,7 @@ exports[`renders ./components-pro/select/demo/option-renderer.md correctly 1`] =
         </div>
       </label>
     </span>
+    <span />
   </div>
 </div>
 `;
@@ -1240,6 +1272,7 @@ exports[`renders ./components-pro/select/demo/readonly.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-12"
@@ -1270,6 +1303,7 @@ exports[`renders ./components-pro/select/demo/readonly.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
 </div>
 `;
@@ -1312,6 +1346,7 @@ exports[`renders ./components-pro/select/demo/searchable.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-8"
@@ -1347,6 +1382,7 @@ exports[`renders ./components-pro/select/demo/searchable.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
   <div
     class="c7n-col-8"
@@ -1382,6 +1418,7 @@ exports[`renders ./components-pro/select/demo/searchable.md correctly 1`] = `
         </div>
       </label>
     </span>
+    <span />
   </div>
 </div>
 `;
