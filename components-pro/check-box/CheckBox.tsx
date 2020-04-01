@@ -42,6 +42,12 @@ export class CheckBox<T extends CheckBoxProps> extends Radio<T & CheckBoxProps> 
     ...Radio.propTypes,
   };
 
+  /**
+   * tooltip disable sign
+   */
+  // eslint-disable-next-line camelcase
+  static __Pro_CHECKBOX = true;
+
   static defaultProps = {
     ...Radio.defaultProps,
     suffixCls: 'checkbox',
