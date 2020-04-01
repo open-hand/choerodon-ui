@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.59
+
+`2020-04-01`
+
 - 🐞 `TreeSelect`: 修复样式和tree check事件错误.
 - 🐞 `<pro>Tooltip`: 修复 button disabled 状态下无法触发显示。
 - 🐞 `<pro>TextArea`: 修复 autoSize 属性。

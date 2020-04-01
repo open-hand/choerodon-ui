@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.59
+
+`2020-04-01`
+
 - 🐞 `TreeSelect`: Fixed CSS error and tree check error.
 - 🐞 `<pro>Tooltip`: Fixed can not trigger display in button disabled state.
 - 🐞 `<pro>TextArea`: Fixed `autoSize` property.
