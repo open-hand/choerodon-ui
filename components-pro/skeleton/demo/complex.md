@@ -14,8 +14,8 @@ title:
 Complex combination with avatar and multiple paragraphs.
 
 ```jsx
-import { TextArea,Button, DataSet,Skeleton } from 'choerodon-ui/pro';
-import {Avatar,Row, Col} from 'choerodon-ui'
+import { TextArea, Button, DataSet, Skeleton } from 'choerodon-ui/pro';
+import { Avatar } from 'choerodon-ui';
 
 function handleDataSetChange({ record, name, value, oldValue }) {
   console.log(
@@ -48,18 +48,16 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="article">
-      <Skeleton dataSet={this.ds} active avatar paragraph={{ rows: 4 }}>
-            <Avatar style={{verticalAlign: 'top'}}    src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-            <TextArea cols={60} rows={6}  dataSet={this.ds} name="text" resize="both" />
-      </Skeleton> 
-      <Row>
-        <Col span={24}>
-        <Button onClick={() => this.ds.query() } >Show Skeleton </Button>
-        </Col>
-      </Row>
-      </div>
-    )
+      <>
+        <Skeleton dataSet={this.ds} active avatar paragraph={{ rows: 4 }}>
+          <Avatar style={{ verticalAlign: 'top' }} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+          <TextArea cols={60} rows={6} dataSet={this.ds} name="text" resize="both" />
+        </Skeleton>
+        <div style={{ padding: '0.1rem 0 0.1rem 0.32rem' }}>
+          <Button onClick={() => this.ds.query()}>Show Skeleton </Button>
+        </div>
+      </>
+    );
   }
 }
 

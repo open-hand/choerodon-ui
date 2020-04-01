@@ -14,7 +14,7 @@ title:
 Display active animation.
 
 ```jsx
-import { DataSet, Tree, Skeleton } from 'choerodon-ui/pro';
+import { DataSet, Tree, Skeleton, Button } from 'choerodon-ui/pro';
 
 function nodeRenderer({ record }) {
   return record.get('text');
@@ -41,20 +41,27 @@ class App extends React.Component {
 
   render() {
     return (
-      <Skeleton height={200} paragraph={{ rows: 10,style:{width:'5rem'}}} active dataSet={this.ds} skeletonTitile={false} >
-        <Tree
-          dataSet={this.ds}
-          checkable
-          renderer={nodeRenderer}
-        />
-      </Skeleton>
+      <>
+        <Skeleton height={200} paragraph={{
+          rows: 10,
+          style: { width: '5rem' },
+        }} active dataSet={this.ds} skeletonTitile={false}>
+          <Tree
+            dataSet={this.ds}
+            checkable
+            renderer={nodeRenderer}
+          />
+        </Skeleton>
+        <div style={{ padding: '0.1rem 0 0.1rem 0.25rem' }}>
+          <Button onClick={() => this.ds.query()}>Show Skeleton </Button>
+        </div>
+      </>
     );
   }
 }
 
 ReactDOM.render(
   <App />,
-  mountNode
+  mountNode,
 );
-
 ```
