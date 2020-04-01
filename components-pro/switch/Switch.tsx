@@ -8,6 +8,12 @@ import autobind from '../_util/autobind';
 export default class Switch extends CheckBox<CheckBoxProps> {
   static displayName = 'Switch';
 
+  /**
+   * tooltip disable sign
+   */
+  // eslint-disable-next-line camelcase
+  static __Pro_SWITCH = true;
+
   static defaultProps = {
     ...CheckBox.defaultProps,
     suffixCls: 'switch',

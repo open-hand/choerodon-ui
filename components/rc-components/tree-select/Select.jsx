@@ -297,7 +297,9 @@ export default class Select extends Component {
       return;
     }
   };
-
+  /**
+   * 选择值
+   */
   onSelect = (selectedKeys, info) => {
     const item = info.node;
     let value = this.state.value;
@@ -584,22 +586,27 @@ export default class Select extends Component {
   getCheckedNodes(info, props) {
     // TODO treeCheckable does not support tags/dynamic
     let { checkedNodes } = info;
-    // if inputValue existing, tree is checkStrictly
+    let checkNodeProps = checkedNodes.forEach(item => {
+      if(!item.props){
+        item.props = item
+      }
+      return item
+    })
     if (props.treeCheckStrictly || this.state.inputValue) {
-      return checkedNodes;
+      return checkNodeProps;
     }
     const checkedNodesPositions = info.checkedNodesPositions;
     if (props.showCheckedStrategy === SHOW_ALL) {
-      checkedNodes = checkedNodes;
+      checkNodeProps = checkNodeProps;
     } else if (props.showCheckedStrategy === SHOW_PARENT) {
       const posArr = filterParentPosition(checkedNodesPositions.map(itemObj => itemObj.pos));
-      checkedNodes = checkedNodesPositions
+      checkNodeProps = checkedNodesPositions
         .filter(itemObj => posArr.indexOf(itemObj.pos) !== -1)
         .map(itemObj => itemObj.node);
     } else {
-      checkedNodes = checkedNodes.filter(n => !n.props.children);
+      checkNodeProps = checkNodeProps.filter(n => !n.props.children);
     }
-    return checkedNodes;
+    return checkNodeProps;
   }
 
   getDeselectedValue(selectedValue) {
@@ -696,6 +703,10 @@ export default class Select extends Component {
     }
   }
 
+  /**
+   * 移除select值
+   * @param {*} selectedVal 
+   */
   removeSelected(selectedVal) {
     const props = this.props;
     if (props.disabled) {
@@ -941,7 +952,9 @@ export default class Select extends Component {
           <span
             className={`${prefixCls}-selection__choice__remove`}
             onClick={this.removeSelected.bind(this, singleValue.value)}
-          />
+          >
+            <i className="icon icon-cancel" />
+          </span>
           <span className={`${prefixCls}-selection__choice__content`}>{content}</span>
         </li>
       );
@@ -955,14 +968,15 @@ export default class Select extends Component {
     const className = `${prefixCls}-selection__rendered`;
     if (choiceTransitionName) {
       return (
-        <Animate
-          className={className}
-          component="ul"
-          transitionName={choiceTransitionName}
-          onLeave={this.onChoiceAnimationLeave}
-        >
-          {selectedValueNodes}
-        </Animate>
+        <div className={className}>
+          <Animate
+            component="ul"
+            transitionName={choiceTransitionName}
+            onLeave={this.onChoiceAnimationLeave}
+          >
+            {selectedValueNodes}
+          </Animate>
+        </div>
       );
     }
     return <ul className={className}>{selectedValueNodes}</ul>;
@@ -1024,10 +1038,12 @@ export default class Select extends Component {
     const rootCls = {
       [className]: !!className,
       [prefixCls]: 1,
+      [`${prefixCls}-has-border`]: 1,
       [`${prefixCls}-open`]: open,
       [`${prefixCls}-focused`]: open || focused,
       [`${prefixCls}-has-value`]: inputValue || (value.length && value[0]),
       [`${prefixCls}-has-label`]: label,
+      [`${prefixCls}-multiple`]: multiple,
       // [`${prefixCls}-combobox`]: isCombobox(props),
       [`${prefixCls}-disabled`]: disabled,
       [`${prefixCls}-enabled`]: !disabled,

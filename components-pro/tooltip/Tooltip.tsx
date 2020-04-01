@@ -46,6 +46,64 @@ export interface TooltipProps {
   theme?: TooltipTheme;
 }
 
+const splitObject = (obj:any,keys:string[]) => {
+  const picked:any = {};
+  const ommitted:any = {...obj};
+  keys.forEach(key => {
+    if(obj && key in obj){
+      picked[key] = obj[key];
+      delete ommitted[key];
+    }
+  });
+  return { picked, ommitted };
+}
+
+  /**
+   * Fix the tooltip won't hide when child element is button 
+   * @param element ReactElement
+   */
+  function getDisabledCompatobleChildren(element:React.ReactElement<any>){
+    const elementType = element.type as any
+    if(
+        ( elementType.__Pro_BUTTON === true ||
+          elementType.__Pro_SWITCH === true ||
+          elementType.__Pro_CHECKBOX === true || 
+          element.type === 'button') &&
+          element.props.disabled 
+        ){
+          const {picked, ommitted} = splitObject(element.props.style,[
+            'position',
+            'left',
+            'right',
+            'top',
+            'bottom',
+            'float',
+            'display',
+            'zIndex',
+          ]);
+          const spanStyle = {
+            display:'inline-block',
+            ...picked,
+            cursor:'not-allowed',
+            width:element.props.block ? '100%':null,
+          };
+          const buttonStyle = {
+            ...ommitted,
+            pointerEvents:'none',
+          };
+          const child = React.cloneElement(element,{
+            style:buttonStyle,
+            className:null,
+          });
+          return (
+            <span style={spanStyle} className={element.props.classNames}>
+              {child}
+            </span>
+          )
+        }
+        return element
+   }
+
 export default class Tooltip extends Component<TooltipProps, any> {
   static displayName = 'Tooltip';
 
@@ -142,6 +200,7 @@ export default class Tooltip extends Component<TooltipProps, any> {
     );
   }
 
+
   render() {
     const {
       prefixCls,
@@ -149,9 +208,9 @@ export default class Tooltip extends Component<TooltipProps, any> {
       props: { children, placement, onHiddenChange, trigger, defaultHidden, hidden, ...restProps },
     } = this;
     const child = Children.map(children, node => {
-      if (node && !isValidElement(node)) {
-        return <span key={`text-${node}`}>{node}</span>;
-      }
+      node = getDisabledCompatobleChildren(
+        isValidElement(node) ? node : <span key={`text-${node}`}>{node}</span>,
+      )
       return node;
     });
 

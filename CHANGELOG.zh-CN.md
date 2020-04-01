@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `TreeSelect`: 修复样式问题，和tree的check事件错误.
+- 🐞 `<pro>Tooltip`: 修复button disable 后无法触发显示。
 - 🐞 `<pro>DataSet`: 修复提交失败后 current 指向问题。
 
 ## 0.8.58

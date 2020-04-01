@@ -1,14 +1,42 @@
 @import '../../style/themes/default';
 @import '../../style/mixins/index';
-@import '../../tree/style/mixin';
+@import '../../tree/style/index';
 @import '../../checkbox/style/mixin';
 
-@select-prefix-cls: ~'@{c7n-prefix}-select';
+@tree-select-prefix-cls: ~'@{c7n-prefix}-tree-select';
 @select-tree-prefix-cls: ~'@{c7n-prefix}-select-tree';
+@select-prefix-cls: ~'@{c7n-prefix}-select';
 
+.antCheckboxFn(@checkbox-prefix-cls: ~'@{select-tree-prefix-cls}-checkbox');
 .antCheckboxFn(@checkbox-prefix-cls: ~'@{c7n-prefix}-select-tree-checkbox');
+.antTreeFn(@select-tree-prefix-cls);
+
+
+// ========================== Tree ==========================
+
 
 .@{select-tree-prefix-cls} {
+  // >>> Switcher
+  & &-switcher {
+    .antTreeSwitcherIcon();
+    flex: none;
+
+    width: @tree-title-height;
+    height: @tree-title-height;
+    margin: 0;
+    line-height: @tree-title-height;
+    text-align: center;
+    cursor: pointer;
+
+    &-noop {
+      cursor: default;
+    }
+
+    &_close .@{iconfont-css-prefix}-arrow_drop_down {
+      transform: rotate(-90deg);
+    }
+  }
+
   .reset-component;
   margin: 0;
   margin-top: -0.04rem;
@@ -145,5 +173,31 @@
       color: @disabled-color;
       cursor: not-allowed;
     }
+    padding: @padding-xs (@padding-xs / 2) 0;
+    &-rtl {
+      direction: rtl;
+    }
+    // ======================== Tree ========================
+    .@{select-tree-prefix-cls} {
+      border-radius: 0;
+
+      &-list-holder-inner {
+        align-items: stretch;
+
+        .@{select-tree-prefix-cls}-treenode {
+          padding-bottom: @padding-xs;
+          .@{select-tree-prefix-cls}-node-content-wrapper {
+            flex: auto;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+.@{select-prefix-cls} {
+  &-search__field__placeholder {
+    top:25%;
   }
 }
