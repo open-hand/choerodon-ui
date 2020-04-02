@@ -15,11 +15,13 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>Field`: 修复 DataSet 的 Field 无法获取 valueField 和 textField 默认值的问题。
+
 ## 0.8.59
 
 `2020-04-01`
 
-- 🐞 `TreeSelect`: 修复样式和tree check事件错误.
+- 🐞 `TreeSelect`: 修复样式和tree check事件错误。
 - 🐞 `<pro>Tooltip`: 修复 button disabled 状态下无法触发显示。
 - 🐞 `<pro>TextArea`: 修复 autoSize 属性。
 - 🐞 `<pro>CodeArea`: 修复失焦更新错误。

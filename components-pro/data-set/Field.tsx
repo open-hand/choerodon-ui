@@ -445,6 +445,14 @@ export default class Field {
    * @return {any}
    */
   get(propsName: string): any {
+    const prop = this.getProp(propsName);
+    if (prop !== undefined) {
+      return prop;
+    }
+    return Field.defaultProps[propsName];
+  }
+
+  private getProp(propsName: string): any {
     if (propsName !== 'dynamicProps') {
       const dynamicProps = this.get('dynamicProps');
       if (dynamicProps) {
@@ -495,7 +503,7 @@ export default class Field {
     }
     const dsField = this.findDataSetField();
     if (dsField) {
-      const dsValue = dsField.get(propsName);
+      const dsValue = dsField.getProp(propsName);
       if (dsValue !== undefined) {
         return dsValue;
       }
@@ -510,9 +518,7 @@ export default class Field {
     if (propsName === 'lookupUrl') {
       return getConfig(propsName);
     }
-    if (this.record) {
-      return Field.defaultProps[propsName];
-    }
+    return undefined;
   }
 
   /**
@@ -576,8 +582,8 @@ export default class Field {
    * @return {string}
    */
   getText(value: any = this.getValue(), showValueIfNotFound?: boolean): string | undefined {
-    const textField = this.get('textField') || 'meaning';
-    const valueField = this.get('valueField') || 'value';
+    const textField = this.get('textField');
+    const valueField = this.get('valueField');
     const { lookup, options } = this;
     if (lookup) {
       const found = lookup.find(obj => isSameLike(get(obj, valueField), value));

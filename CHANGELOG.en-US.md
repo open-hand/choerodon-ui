@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>Field`: Fix the problem that the DataSet Field cannot get the default values of `valueField` and `textField`.
+
 ## 0.8.59
 
 `2020-04-01`
