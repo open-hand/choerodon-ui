@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>Table`: 修复新增行横向滚动 lock 列错误错位问题。
 - 🐞 `<pro>Field`: 修复 DataSet 的 Field 无法获取 valueField 和 textField 默认值的问题。
 
 ## 0.8.59

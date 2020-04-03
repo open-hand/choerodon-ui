@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>Table`: Fixed the new row lateral roll lock column error misalignment issue.
 - 🐞 `<pro>Field`: Fix the problem that the DataSet Field cannot get the default values of `valueField` and `textField`.
 
 ## 0.8.59
