@@ -39,6 +39,12 @@ class App extends React.Component {
         defaultValue: 'Huazhen',
         required: true,
       },
+      {
+        name: 'last-name',
+        type: 'intl',
+        maxLength: 5,
+        required: true,
+      },
     ],
     events: {
       update: handleDataSetChange,
@@ -65,11 +71,14 @@ class App extends React.Component {
   render() {
     return (
       <Row gutter={10}>
-        <Col span={12}>
+        <Col span={8}>
           <IntlField dataSet={this.ds} name="first-name" />
         </Col>
-        <Col span={12}>
+        <Col span={8}>
           <IntlField placeholder="默认英文" dataSet={this.ds2} name="first-name" />
+        </Col>
+        <Col span={8}>
+          <IntlField placeholder="限制输入长度" dataSet={this.ds} name="last-name" maxLengths={{ en_GB: 5, en_US: 10 }} />
         </Col>
       </Row>
     );

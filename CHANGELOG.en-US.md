@@ -16,7 +16,8 @@ timeline: true
 ---
 
 - 🐞 `<pro>Table`: Fixed the new row lateral roll lock column error misalignment issue.
-- 🐞 `<pro>Field`: Fix the problem that the DataSet Field cannot get the default values of `valueField` and `textField`.
+- 🐞 `<pro>Field`: Fixed the problem that the DataSet Field cannot get the default values of `valueField` and `textField`.
+- 🌟 `<pro>IntlField`: Added `maxLengths` property.
 
 ## 0.8.59
 

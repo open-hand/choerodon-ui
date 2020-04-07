@@ -12,6 +12,7 @@ export interface IntlListProps {
   record?: Record;
   name?: string;
   lang: Lang;
+  maxLengths?: object;
 }
 
 @observer
@@ -20,19 +21,24 @@ export default class IntlList extends Component<IntlListProps> {
     record: PropTypes.object,
     name: PropTypes.string,
     lang: PropTypes.string,
+    maxLengths: PropTypes.object,
   };
 
   renderOptions() {
-    const { name, lang } = this.props;
+    const { name, lang, maxLengths } = this.props;
     const { supports } = localeContext;
     const tlsKey = getConfig('tlsKey');
-    return Object.keys(supports).map(key => (
-      <ObserverTextField
-        name={name ? `${tlsKey}.${name}.${key}` : key}
-        autoFocus={key === lang}
-        key={key}
-      />
-    ));
+    return Object.keys(supports).map(key => {
+      const maxLengthProps = maxLengths && maxLengths[key] ? { maxLength: maxLengths[key] } : {};
+      return (
+        <ObserverTextField
+          {...maxLengthProps}
+          name={name ? `${tlsKey}.${name}.${key}` : key}
+          autoFocus={key === lang}
+          key={key}
+        />
+      );
+    });
   }
 
   render() {

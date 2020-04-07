@@ -20,6 +20,7 @@ title: IntlField
 | 参数      | 说明                                     | 类型        |默认值 |
 |-----------|------------------------------------------|------------|--------|
 | modalProps | 弹窗属性，详见[ModalProps](/components/modal/#Modal) | object  |  |
+| maxLengths | 多语言弹窗内选项输入最大长度(主语言 Field maxLength 配置优先) | object |  |
 
 更多属性请参考 [ViewComponent](/components-pro/text-field/#TextField)。
 

@@ -20,6 +20,7 @@ import isSame from '../_util/isSame';
 
 export interface IntlFieldProps extends TextFieldProps {
   modalProps?: ModalProps;
+  maxLengths?: object;
 }
 
 @observer
@@ -34,8 +35,9 @@ export default class IntlField extends TextField<IntlFieldProps> {
 
   openModal = async () => {
     if (!this.modal) {
-      const { modalProps } = this.props;
+      const { modalProps, maxLengths } = this.props;
       const { record, lang, name, element } = this;
+      const maxLengthList = { ...maxLengths, [lang]: element.maxLength };
       if (record) {
         this.setLoading(true);
         try {
@@ -54,7 +56,7 @@ export default class IntlField extends TextField<IntlFieldProps> {
 
       this.modal = open({
         title: $l('IntlField', 'modal_title'),
-        children: <IntlList record={record} name={name} lang={lang} />,
+        children: <IntlList record={record} name={name} lang={lang} maxLengths={maxLengthList} />,
         onClose: this.handleIntlListClose,
         onOk: this.handleIntlListOk,
         onCancel: this.handleIntlListCancel,
