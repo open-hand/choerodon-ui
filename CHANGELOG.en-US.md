@@ -15,7 +15,10 @@ timeline: true
 
 ---
 
-- 🐞 `<pro>Field`: Fix the problem that the DataSet Field cannot get the default values of `valueField` and `textField`.
+- 🌟 `<pro>IntlField`: Added `maxLengths` property.
+- 🐞 `<pro>Table`: Fixed the new row lateral roll lock column error misalignment issue.
+- 🐞 `<pro>Field`: Fixed the problem that the DataSet Field cannot get the default values of `valueField` and `textField`.
+- 🐞 `Collapse.CollapsePanel`: Fixed CollapsePanel TS type error.
 
 ## 0.8.59
 

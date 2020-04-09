@@ -13,7 +13,7 @@ export interface CollapsePanelProps {
   forceRender?: boolean;
 }
 
-export default function CollapsePanel(props: CollapsePanelProps) {
+const CollapsePanel: React.FC<CollapsePanelProps> = (props: CollapsePanelProps) => {
   const { prefixCls, className = '', showArrow = true } = props;
   const collapsePanelClassName = classNames(
     {
@@ -22,4 +22,6 @@ export default function CollapsePanel(props: CollapsePanelProps) {
     className,
   );
   return <RcCollapse.Panel {...props} className={collapsePanelClassName} />;
-}
+};
+
+export default CollapsePanel;

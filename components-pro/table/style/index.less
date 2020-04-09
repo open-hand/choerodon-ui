@@ -235,6 +235,24 @@
       .@{table-prefix-cls}-cell:last-child {
       border-right: none;
     }
+
+    &:not(.@{table-prefix-cls}-scroll-position-right)
+    .@{table-prefix-cls}-fixed-right
+    .@{table-prefix-cls}-cell:last-child {
+      border-left: none;
+    }
+
+    &:not(.@{table-prefix-cls}-scroll-position-left)
+    .@{table-prefix-cls}-body
+    .@{table-prefix-cls}-cell:last-child {
+      border-right: @table-border;
+    }
+
+    &:not(.@{table-prefix-cls}-scroll-position-right)
+    .@{table-prefix-cls}-body
+    .@{table-prefix-cls}-cell:last-child {
+      border-left:  @table-border;
+    }
   }
 
   &-resizer {

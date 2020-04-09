@@ -166,6 +166,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       'restrict',
       'placeholder',
       'placeHolder',
+      'maxLengths',
     ]);
     otherProps.type = this.type;
     otherProps.maxLength = this.getProp('maxLength');
