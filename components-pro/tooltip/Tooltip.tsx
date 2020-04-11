@@ -1,6 +1,7 @@
 import React, { Children, Component, isValidElement } from 'react';
 import PropTypes from 'prop-types';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure';
+import Button from 'choerodon-ui/lib/button';
 import Trigger, { TriggerProps } from '../trigger/Trigger';
 import { Action } from '../trigger/enum';
 import getPlacements, { AdjustOverflow } from './placements';
@@ -68,6 +69,7 @@ const splitObject = (obj:any,keys:string[]) => {
         ( elementType.__Pro_BUTTON === true ||
           elementType.__Pro_SWITCH === true ||
           elementType.__Pro_CHECKBOX === true || 
+          (element.type as typeof Button).__ANT_BUTTON || 
           element.type === 'button') &&
           element.props.disabled 
         ){

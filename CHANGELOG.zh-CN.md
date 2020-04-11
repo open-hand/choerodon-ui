@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>Tooltip`: 修复Tooltip 在基础组件和pro组件下面对于button的disable都生效
 - 🌟 `<pro>IntlField`: 新增 maxLengths 属性。
 - 🐞 `<pro>Table`: 修复新增行横向滚动 lock 列错误错位问题。
 - 🐞 `<pro>Field`: 修复 DataSet 的 Field 无法获取 valueField 和 textField 默认值的问题。
