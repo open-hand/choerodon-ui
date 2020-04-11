@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>DatePicker`: Fix DatePicker selected the time onChange would be called tow times
 - 🐞 `<pro>Tooltip`: Fix Tooltip in basic component and pro component of buttton disable is all available.
 - 🌟 `<pro>IntlField`: Added `maxLengths` property.
 - 🐞 `<pro>Table`: Fixed the new row lateral roll lock column error misalignment issue.
