@@ -1315,17 +1315,97 @@ const lessTreeMock = {
   success: true,
   total: 10,
 };
+const asyncTreeMock = {
+  rows: [
+    {
+      expand: false,
+      functionCode: 'EMPLOYEE_REACT',
+      icon: 'record_test',
+      id: 7,
+      ischecked: true,
+      score: 10,
+      shortcutId: null,
+      text: '员工管理(react)',
+      url: 'hap-core/hr/employee',
+      symbol: '1',
+    },
+    {
+      expand: false,
+      functionCode: 'HR_UNIT',
+      icon: 'fa fa-cube',
+      id: 73,
+      ischecked: true,
+      score: 10,
+      shortcutId: null,
+      text: '组织管理',
+      url: 'hr/org_unit.html',
+      symbol: '0',
+    },
+    {
+      expand: false,
+      functionCode: 'COMPANY_REACT',
+      icon: 'mail_set',
+      id: 12,
+      ischecked: true,
+      score: 10,
+      shortcutId: null,
+      text: '公司管理(react)',
+      url: 'hap-core/hr/company',
+      symbol: '1',
+    },
+    {
+      expand: false,
+      functionCode: 'ORGUNIT_REACT',
+      icon: 'authority',
+      id: 5,
+      ischecked: true,
+      score: 10,
+      shortcutId: null,
+      text: '组织管理(react)',
+      url: 'hap-core/hr/orgunit',
+      symbol: '1',
+    },
+    {
+      expand: false,
+      functionCode: 'POSITION_REACT',
+      icon: 'agile_subtask',
+      id: 6,
+      ischecked: true,
+      score: 10,
+      shortcutId: null,
+      text: '岗位管理(react)',
+      url: 'hap-core/hr/position',
+      symbol: '1',
+    },
+    {
+      expand: false,
+      functionCode: 'HR_POSITION',
+      icon: 'fa fa-user-secret',
+      id: 75,
+      ischecked: true,
+      score: 20,
+      shortcutId: null,
+      text: '岗位管理',
+      url: 'hr/position.html',
+      symbol: '0',
+    },
+  ],
+  success: true,
+  total: 10,
+};
 
 
 const treeRule = /\/tree.mock/;
 const lessTreeRule = /\/tree-less.mock/
+const asyncRule = /\/tree-async.mock/
 const treeData = Mock.mock(mockTemple);
 const lessTreeData = Mock.mock(lessTreeMock)
 export default function() {
   if (typeof window !== 'undefined') {
     Mock.mock(treeRule, mockTemple);
-    Mock.mock(lessTreeRule,lessTreeMock)
+    Mock.mock(lessTreeRule,lessTreeMock);
+    Mock.mock(asyncRule,asyncTreeMock)
   }
 }
 
-export const treeTempList = [{ rule: treeRule, data: treeData },{rule:lessTreeRule,data:lessTreeData}];
+export const treeTempList = [{ rule: treeRule, data: treeData },{rule:lessTreeRule,data:lessTreeData},{rule:asyncRule,data:asyncTreeMock}];
