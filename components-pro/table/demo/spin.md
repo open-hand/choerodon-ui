@@ -31,7 +31,7 @@ class App extends React.Component {
     name: 'user',
     autoQuery: true,
     pageSize: 5,
-    cacheSelection: true,
+    cacheSelection: true, // 缓存选中记录
     queryFields: [
       { name: 'name', type: 'string', label: '姓名' },
       { name: 'age', type: 'number', label: '年龄' },
