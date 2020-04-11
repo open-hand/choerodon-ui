@@ -1,7 +1,7 @@
 ---
 order: 12
 title:
-  zh-CN: 树形数据
+  zh-CN: 树形数据异步懒加载
   en-US: Tree Data
 ---
 
