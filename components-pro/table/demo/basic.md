@@ -28,6 +28,7 @@ import {
 const { Column } = Table;
 
 function sexIdRenderer({ record }) {
+  // 获取性别codeValueId
   return record.getField('sex').getLookupData().codeValueId;
 }
 
@@ -66,12 +67,14 @@ const codeDynamicProps = {
 };
 
 const nameDynamicProps = {
+  // 当Sex为M(男)的时候 该属性为必须输入字段 即为 field 中 require = true
   required({ record }) {
     return record.get('sex') === 'M';
   },
 };
 
 const codeCodeDynamicProps = {
+  // 代码code_code值绑定 为 字段code 的 值列表的值字段为code.codevalue
   bind({ record }) {
     const field = record.getField('code');
     if (field) {
@@ -117,6 +120,7 @@ class App extends React.Component {
         method: 'delete',
       },
       tls({ name }) {
+        // 多语言数据请求的 axios 配置或 url 字符串。UI 接收的接口返回值格式为：[{ name: { zh_CN: '简体中文', en_US: '美式英语', ... }}]
         console.log('fieldName', name);
         return {
           url: '/dataset/user/languages',
@@ -124,8 +128,10 @@ class App extends React.Component {
       },
     },
     feedback: {
-      loadSuccess() {
+      loadSuccess(resp) {
+        //  DataSet 查询成功的反馈 可以return 一个resp 来修改响应结果
         notification.success({ message: 'query success!' });
+        console.log('resp',resp)
       },
     },
     queryFields: [
@@ -140,7 +146,7 @@ class App extends React.Component {
         type: 'string',
         label: '编号',
         required: true,
-        unique: true,
+        unique: true, // 唯一索引或联合唯一索引组名 设置可编辑只有新增才能编辑,确保该字段或字段组唯一性
         help: '主键，区分用户',
       },
       {
@@ -174,6 +180,7 @@ class App extends React.Component {
         label: '代码描述',
         dynamicProps: codeDynamicProps,
         transformRequest(value) {
+          // 在发送请求之前对数据进行处理
           return { v: 2 };
         },
       },

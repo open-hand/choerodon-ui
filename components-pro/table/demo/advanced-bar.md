@@ -38,7 +38,7 @@ class App extends React.Component {
         label: '性别',
         textField: 'text',
         valueField: 'value',
-        options: this.optionDs,
+        options: this.optionDs, // 下拉框组件的菜单数据集
         defaultValue: 'F',
       },
       { name: 'date.startDate', type: 'date', label: '开始日期' },

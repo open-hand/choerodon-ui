@@ -139,8 +139,15 @@ export default class Tooltip extends Component<TooltipProps, any> {
   // mouse events don't trigger at disabled button in Chrome
   // https://github.com/react-component/tooltip/issues/18
   getDisabledCompatibleChildren(element: ReactElement<any>) {
+    const elementType = element.type as any
     if (
-      ((element.type as typeof Button).__ANT_BUTTON || element.type === 'button') &&
+      (( elementType.__Pro_BUTTON === true ||
+        elementType.__Pro_SWITCH === true ||
+        elementType.__Pro_CHECKBOX === true || 
+        (element.type as typeof Button).__ANT_BUTTON || 
+        element.type === 'button') &&
+        element.props.disabled 
+      ) &&
       element.props.disabled &&
       this.isHoverTrigger()
     ) {
