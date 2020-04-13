@@ -26,6 +26,6 @@ Almost anything can be represented in a tree structure. Examples include directo
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | titleField | when there have dataSet ,the node text would bing titleField | string |  |
-| selection | selection is false  Tree checkable is true ,You can implement the whole treenode click to trigger check   | string||boolean | - |
+| selection | selection is false  Tree checkable is true ,You can implement the whole treenode click to trigger check   | string\|\|boolean | - |
 
 More cases and properties please refer to [Tree](/components/tree/)。

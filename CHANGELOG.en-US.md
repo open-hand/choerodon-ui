@@ -14,7 +14,7 @@ timeline: true
 - Major version release is not included in this schedule for breaking change and new features.
 
 ---
-
+- 🐞 `<pro>Tree`: Fixed when use dataSet the move(record) the child tree node also exist
 - 🐞 `<pro>DatePicker`: Fix DatePicker selected the time onChange would be called tow times
 - 🐞 `<pro>Tooltip`: Fix Tooltip in basic component and pro component of buttton disable is all available.
 - 🌟 `<pro>IntlField`: Added `maxLengths` property.

@@ -15,7 +15,8 @@ timeline: true
 
 ---
 
-- 🐞 `<pro>DatePicker`: 修复DatePicker 选择日期后onChange 两次触发的问题
+- 🐞 `<pro>Tree`: 修复当Tree 使用DataSet.remoove 后tree子结点没有没删除。
+- 🐞 `<pro>DatePicker`: 修复DatePicker 选择日期后onChange 两次触发的问题。
 - 🐞 `<pro>Tooltip`: 修复Tooltip 在基础组件和pro组件下面对于button的disable都生效
 - 🌟 `<pro>IntlField`: 新增 maxLengths 属性。
 - 🐞 `<pro>Table`: 修复新增行横向滚动 lock 列错误错位问题。
