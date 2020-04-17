@@ -14,10 +14,11 @@ timeline: true
 - Major version release is not included in this schedule for breaking change and new features.
 
 ---
-- 🐞 `<pro>Tree`: Fixed when use dataSet the move(record) the child tree node also exist
-- 🐞 `<pro>DatePicker`: Fix DatePicker selected the time onChange would be called tow times
-- 🐞 `<pro>Tooltip`: Fix Tooltip in basic component and pro component of buttton disable is all available.
+
 - 🌟 `<pro>IntlField`: Added `maxLengths` property.
+- 🐞 `<pro>Tree`: Fixed when use dataSet the move(record) the child tree node also exist.
+- 🐞 `<pro>DatePicker`: Fix DatePicker selected the time onChange would be called tow times.
+- 🐞 `<pro>Tooltip`: Fix Tooltip in basic component and pro component of buttton disable is all available.
 - 🐞 `<pro>Table`: Fixed the new row lateral roll lock column error misalignment issue.
 - 🐞 `<pro>Field`: Fixed the problem that the DataSet Field cannot get the default values of `valueField` and `textField`.
 - 🐞 `Collapse.CollapsePanel`: Fixed CollapsePanel TS type error.
