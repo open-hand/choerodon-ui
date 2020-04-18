@@ -27,7 +27,7 @@ subtitle: 树形控件
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | titleField | 节点文字对应数据源的字段，只在绑定数据源时起效 | string |  |
-| selection | selection 为 false  Tree checkable 为 true 可以实现整个treenode点击触发check  | string||boolean | - |
+| selection | selection 为 false  Tree checkable 为 true 可以实现整个treenode点击触发check  | string \|\| boolean | - |
 
 更多案列和属性请参考 [Tree](/components/tree/)。
 

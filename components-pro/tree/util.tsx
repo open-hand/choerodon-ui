@@ -38,15 +38,18 @@ export function getTreeNodes(
 ) {
   const { idField } = dataSet.props;
   return records.map(record => {
-    const children =
-      forceRenderKeys.indexOf(getKey(record, idField)) !== -1
-        ? getTreeNodes(dataSet, record.children, forceRenderKeys, renderer)
-        : null;
-    return getTreeNode(
-      record,
-      children,
-      idField,
-      renderer({ dataSet, record, text: record.get(titleField) }),
-    );
+    if(record.status !== 'delete'){
+        const children =
+        forceRenderKeys.indexOf(getKey(record, idField)) !== -1
+          ? getTreeNodes(dataSet, record.children, forceRenderKeys, renderer)
+          : null;
+      return getTreeNode(
+        record,
+        children,
+        idField,
+        renderer({ dataSet, record, text: record.get(titleField) }),
+      );
+    }
+    return null
   });
 }
