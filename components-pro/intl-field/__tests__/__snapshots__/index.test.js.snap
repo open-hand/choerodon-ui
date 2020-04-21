@@ -271,6 +271,11 @@ exports[`IntlField-pro { ok, cancel } button click render correctly 1`] = `
       transitionName="zoom-big-fast"
     >
       <TriggerChild
+        isClickScrollbar={
+          Object {
+            "value": false,
+          }
+        }
         key=".$.$element"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
@@ -321,6 +326,11 @@ exports[`IntlField-pro { ok, cancel } button click render correctly 1`] = `
         </span>
       </TriggerChild>
       <TriggerChild
+        isClickScrollbar={
+          Object {
+            "value": false,
+          }
+        }
         key=".$text-null/.1"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
@@ -365,6 +375,7 @@ exports[`IntlField-pro { ok, cancel } button click render correctly 1`] = `
         onMouseDown={[Function]}
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        onMouseUp={[Function]}
         suffixCls="popup"
         transitionName="zoom-big-fast"
       />
@@ -644,6 +655,11 @@ exports[`IntlField-pro renders IntlField correctly 1`] = `
       transitionName="zoom-big-fast"
     >
       <TriggerChild
+        isClickScrollbar={
+          Object {
+            "value": false,
+          }
+        }
         key=".$.$element"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
@@ -694,6 +710,11 @@ exports[`IntlField-pro renders IntlField correctly 1`] = `
         </span>
       </TriggerChild>
       <TriggerChild
+        isClickScrollbar={
+          Object {
+            "value": false,
+          }
+        }
         key=".$text-null/.1"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
@@ -738,6 +759,7 @@ exports[`IntlField-pro renders IntlField correctly 1`] = `
         onMouseDown={[Function]}
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        onMouseUp={[Function]}
         suffixCls="popup"
         transitionName="zoom-big-fast"
       />
@@ -1491,6 +1513,11 @@ exports[`IntlField-pro renders dataset correctly 1`] = `
         transitionName="zoom-big-fast"
       >
         <TriggerChild
+          isClickScrollbar={
+            Object {
+              "value": false,
+            }
+          }
           key=".$.$element"
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
@@ -1542,6 +1569,11 @@ exports[`IntlField-pro renders dataset correctly 1`] = `
           </span>
         </TriggerChild>
         <TriggerChild
+          isClickScrollbar={
+            Object {
+              "value": false,
+            }
+          }
           key=".$text-null/.1"
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
@@ -1586,6 +1618,7 @@ exports[`IntlField-pro renders dataset correctly 1`] = `
           onMouseDown={[Function]}
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
+          onMouseUp={[Function]}
           suffixCls="popup"
           transitionName="zoom-big-fast"
         />
@@ -2332,6 +2365,11 @@ exports[`IntlField-pro renders dataset correctly 2`] = `
       transitionName="zoom-big-fast"
     >
       <TriggerChild
+        isClickScrollbar={
+          Object {
+            "value": false,
+          }
+        }
         key=".$.$element"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
@@ -2383,6 +2421,11 @@ exports[`IntlField-pro renders dataset correctly 2`] = `
         </span>
       </TriggerChild>
       <TriggerChild
+        isClickScrollbar={
+          Object {
+            "value": false,
+          }
+        }
         key=".$text-null/.1"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
@@ -2427,6 +2470,7 @@ exports[`IntlField-pro renders dataset correctly 2`] = `
         onMouseDown={[Function]}
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        onMouseUp={[Function]}
         suffixCls="popup"
         transitionName="zoom-big-fast"
       />

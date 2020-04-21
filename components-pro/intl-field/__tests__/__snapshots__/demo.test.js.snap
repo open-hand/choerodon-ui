@@ -6,7 +6,7 @@ exports[`renders ./components-pro/intl-field/demo/dataset.md correctly 1`] = `
   style="margin-left:-5px;margin-right:-5px"
 >
   <div
-    class="c7n-col-12"
+    class="c7n-col-8"
     style="padding-left:5px;padding-right:5px"
   >
     <span
@@ -32,7 +32,7 @@ exports[`renders ./components-pro/intl-field/demo/dataset.md correctly 1`] = `
     <span />
   </div>
   <div
-    class="c7n-col-12"
+    class="c7n-col-8"
     style="padding-left:5px;padding-right:5px"
   >
     <span
@@ -44,6 +44,34 @@ exports[`renders ./components-pro/intl-field/demo/dataset.md correctly 1`] = `
           class="c7n-pro-input"
           name="first-name"
           placeholder="默认英文"
+          type="text"
+          value=""
+        />
+        <div
+          class="c7n-pro-input-suffix"
+        >
+          <i
+            class="icon icon-language"
+          />
+        </div>
+      </label>
+    </span>
+    <span />
+  </div>
+  <div
+    class="c7n-col-8"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <span
+      class="c7n-pro-input-wrapper c7n-pro-input-required c7n-pro-input-empty c7n-pro-input-suffix-button"
+    >
+      <label>
+        <input
+          autocomplete="off"
+          class="c7n-pro-input"
+          maxlength="5"
+          name="last-name"
+          placeholder="限制输入长度"
           type="text"
           value=""
         />

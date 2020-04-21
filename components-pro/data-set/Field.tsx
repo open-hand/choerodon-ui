@@ -273,6 +273,10 @@ export type FieldProps = {
    * 默认校验信息
    */
   defaultValidationMessages?: ValidationMessages;
+  /**
+   * 额外信息，常用于提示
+   */
+  help?: string;
 };
 
 export default class Field {

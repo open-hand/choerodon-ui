@@ -1483,6 +1483,11 @@ exports[`Icon-Picker-pro renders IconPicker correctly 1`] = `
       transitionName="zoom-big-fast"
     >
       <TriggerChild
+        isClickScrollbar={
+          Object {
+            "value": false,
+          }
+        }
         key=".$.$element"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
@@ -2786,6 +2791,11 @@ exports[`Icon-Picker-pro renders IconPicker correctly 1`] = `
               transitionName="slide-up"
             >
               <TriggerChild
+                isClickScrollbar={
+                  Object {
+                    "value": false,
+                  }
+                }
                 key=".$text"
                 onBlur={[Function]}
                 onClick={[Function]}
@@ -2839,6 +2849,7 @@ exports[`Icon-Picker-pro renders IconPicker correctly 1`] = `
                 onAnimateAppear={[Function]}
                 onAnimateEnd={[Function]}
                 onMouseDown={[Function]}
+                onMouseUp={[Function]}
                 suffixCls="popup"
                 transitionName="slide-up"
               />
@@ -2874,6 +2885,11 @@ exports[`Icon-Picker-pro renders IconPicker correctly 1`] = `
         </span>
       </TriggerChild>
       <TriggerChild
+        isClickScrollbar={
+          Object {
+            "value": false,
+          }
+        }
         key=".$text-null/.1"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
@@ -2918,6 +2934,7 @@ exports[`Icon-Picker-pro renders IconPicker correctly 1`] = `
         onMouseDown={[Function]}
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        onMouseUp={[Function]}
         suffixCls="popup"
         transitionName="zoom-big-fast"
       />
@@ -3345,6 +3362,11 @@ exports[`Icon-Picker-pro should renders dataset correctly 1`] = `
         transitionName="zoom-big-fast"
       >
         <TriggerChild
+          isClickScrollbar={
+            Object {
+              "value": false,
+            }
+          }
           key=".$.$element"
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
@@ -4659,6 +4681,11 @@ exports[`Icon-Picker-pro should renders dataset correctly 1`] = `
                 transitionName="slide-up"
               >
                 <TriggerChild
+                  isClickScrollbar={
+                    Object {
+                      "value": false,
+                    }
+                  }
                   key=".$text"
                   onBlur={[Function]}
                   onClick={[Function]}
@@ -4713,6 +4740,7 @@ exports[`Icon-Picker-pro should renders dataset correctly 1`] = `
                   onAnimateAppear={[Function]}
                   onAnimateEnd={[Function]}
                   onMouseDown={[Function]}
+                  onMouseUp={[Function]}
                   suffixCls="popup"
                   transitionName="slide-up"
                 />
@@ -4748,6 +4776,11 @@ exports[`Icon-Picker-pro should renders dataset correctly 1`] = `
           </span>
         </TriggerChild>
         <TriggerChild
+          isClickScrollbar={
+            Object {
+              "value": false,
+            }
+          }
           key=".$text-null/.1"
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
@@ -4792,6 +4825,7 @@ exports[`Icon-Picker-pro should renders dataset correctly 1`] = `
           onMouseDown={[Function]}
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
+          onMouseUp={[Function]}
           suffixCls="popup"
           transitionName="zoom-big-fast"
         />
@@ -5081,6 +5115,11 @@ exports[`Icon-Picker-pro the keydown event should render correctly 1`] = `
       transitionName="zoom-big-fast"
     >
       <TriggerChild
+        isClickScrollbar={
+          Object {
+            "value": false,
+          }
+        }
         key=".$.$element"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
@@ -6395,6 +6434,11 @@ exports[`Icon-Picker-pro the keydown event should render correctly 1`] = `
               transitionName="slide-up"
             >
               <TriggerChild
+                isClickScrollbar={
+                  Object {
+                    "value": false,
+                  }
+                }
                 key=".$text"
                 onBlur={[Function]}
                 onClick={[Function]}
@@ -6448,6 +6492,7 @@ exports[`Icon-Picker-pro the keydown event should render correctly 1`] = `
                 onAnimateAppear={[Function]}
                 onAnimateEnd={[Function]}
                 onMouseDown={[Function]}
+                onMouseUp={[Function]}
                 suffixCls="popup"
                 transitionName="slide-up"
               >
@@ -13344,6 +13389,7 @@ exports[`Icon-Picker-pro the keydown event should render correctly 1`] = `
                           onBlur={[Function]}
                           onFocus={[Function]}
                           onMouseDown={[Function]}
+                          onMouseUp={[Function]}
                         >
                           <div
                             className="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-icon-picker-popup"
@@ -13351,6 +13397,7 @@ exports[`Icon-Picker-pro the keydown event should render correctly 1`] = `
                             onBlur={[Function]}
                             onFocus={[Function]}
                             onMouseDown={[Function]}
+                            onMouseUp={[Function]}
                           >
                             <div>
                               <Tabs
@@ -17417,6 +17464,11 @@ exports[`Icon-Picker-pro the keydown event should render correctly 1`] = `
         </span>
       </TriggerChild>
       <TriggerChild
+        isClickScrollbar={
+          Object {
+            "value": false,
+          }
+        }
         key=".$text-null/.1"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
@@ -17461,6 +17513,7 @@ exports[`Icon-Picker-pro the keydown event should render correctly 1`] = `
         onMouseDown={[Function]}
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        onMouseUp={[Function]}
         suffixCls="popup"
         transitionName="zoom-big-fast"
       />
@@ -17749,6 +17802,11 @@ exports[`Icon-Picker-pro the keydown event should render keyCode { esc, tab } co
       transitionName="zoom-big-fast"
     >
       <TriggerChild
+        isClickScrollbar={
+          Object {
+            "value": false,
+          }
+        }
         key=".$.$element"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
@@ -19052,6 +19110,11 @@ exports[`Icon-Picker-pro the keydown event should render keyCode { esc, tab } co
               transitionName="slide-up"
             >
               <TriggerChild
+                isClickScrollbar={
+                  Object {
+                    "value": false,
+                  }
+                }
                 key=".$text"
                 onBlur={[Function]}
                 onClick={[Function]}
@@ -19105,6 +19168,7 @@ exports[`Icon-Picker-pro the keydown event should render keyCode { esc, tab } co
                 onAnimateAppear={[Function]}
                 onAnimateEnd={[Function]}
                 onMouseDown={[Function]}
+                onMouseUp={[Function]}
                 suffixCls="popup"
                 transitionName="slide-up"
               >
@@ -28276,6 +28340,7 @@ exports[`Icon-Picker-pro the keydown event should render keyCode { esc, tab } co
                           onBlur={[Function]}
                           onFocus={[Function]}
                           onMouseDown={[Function]}
+                          onMouseUp={[Function]}
                         >
                           <div
                             className="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-icon-picker-popup"
@@ -28283,6 +28348,7 @@ exports[`Icon-Picker-pro the keydown event should render keyCode { esc, tab } co
                             onBlur={[Function]}
                             onFocus={[Function]}
                             onMouseDown={[Function]}
+                            onMouseUp={[Function]}
                           >
                             <div>
                               <Tabs
@@ -32349,6 +32415,11 @@ exports[`Icon-Picker-pro the keydown event should render keyCode { esc, tab } co
         </span>
       </TriggerChild>
       <TriggerChild
+        isClickScrollbar={
+          Object {
+            "value": false,
+          }
+        }
         key=".$text-null/.1"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
@@ -32393,6 +32464,7 @@ exports[`Icon-Picker-pro the keydown event should render keyCode { esc, tab } co
         onMouseDown={[Function]}
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        onMouseUp={[Function]}
         suffixCls="popup"
         transitionName="zoom-big-fast"
       />
@@ -32681,6 +32753,11 @@ exports[`Icon-Picker-pro the keydown event should render keyCode {space} correct
       transitionName="zoom-big-fast"
     >
       <TriggerChild
+        isClickScrollbar={
+          Object {
+            "value": false,
+          }
+        }
         key=".$.$element"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
@@ -33984,6 +34061,11 @@ exports[`Icon-Picker-pro the keydown event should render keyCode {space} correct
               transitionName="slide-up"
             >
               <TriggerChild
+                isClickScrollbar={
+                  Object {
+                    "value": false,
+                  }
+                }
                 key=".$text"
                 onBlur={[Function]}
                 onClick={[Function]}
@@ -34037,6 +34119,7 @@ exports[`Icon-Picker-pro the keydown event should render keyCode {space} correct
                 onAnimateAppear={[Function]}
                 onAnimateEnd={[Function]}
                 onMouseDown={[Function]}
+                onMouseUp={[Function]}
                 suffixCls="popup"
                 transitionName="slide-up"
               >
@@ -42070,6 +42153,7 @@ exports[`Icon-Picker-pro the keydown event should render keyCode {space} correct
                           onBlur={[Function]}
                           onFocus={[Function]}
                           onMouseDown={[Function]}
+                          onMouseUp={[Function]}
                         >
                           <div
                             className="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-icon-picker-popup"
@@ -42077,6 +42161,7 @@ exports[`Icon-Picker-pro the keydown event should render keyCode {space} correct
                             onBlur={[Function]}
                             onFocus={[Function]}
                             onMouseDown={[Function]}
+                            onMouseUp={[Function]}
                           >
                             <div>
                               <Tabs
@@ -46143,6 +46228,11 @@ exports[`Icon-Picker-pro the keydown event should render keyCode {space} correct
         </span>
       </TriggerChild>
       <TriggerChild
+        isClickScrollbar={
+          Object {
+            "value": false,
+          }
+        }
         key=".$text-null/.1"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
@@ -46187,6 +46277,7 @@ exports[`Icon-Picker-pro the keydown event should render keyCode {space} correct
         onMouseDown={[Function]}
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        onMouseUp={[Function]}
         suffixCls="popup"
         transitionName="zoom-big-fast"
       />
@@ -46475,6 +46566,11 @@ exports[`Icon-Picker-pro the selected click render correctly 1`] = `
       transitionName="zoom-big-fast"
     >
       <TriggerChild
+        isClickScrollbar={
+          Object {
+            "value": false,
+          }
+        }
         key=".$.$element"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
@@ -47789,6 +47885,11 @@ exports[`Icon-Picker-pro the selected click render correctly 1`] = `
               transitionName="slide-up"
             >
               <TriggerChild
+                isClickScrollbar={
+                  Object {
+                    "value": false,
+                  }
+                }
                 key=".$text"
                 onBlur={[Function]}
                 onClick={[Function]}
@@ -47842,6 +47943,7 @@ exports[`Icon-Picker-pro the selected click render correctly 1`] = `
                 onAnimateAppear={[Function]}
                 onAnimateEnd={[Function]}
                 onMouseDown={[Function]}
+                onMouseUp={[Function]}
                 suffixCls="popup"
                 transitionName="slide-up"
               >
@@ -53600,6 +53702,7 @@ exports[`Icon-Picker-pro the selected click render correctly 1`] = `
                           onBlur={[Function]}
                           onFocus={[Function]}
                           onMouseDown={[Function]}
+                          onMouseUp={[Function]}
                         >
                           <div
                             className="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-icon-picker-popup"
@@ -53607,6 +53710,7 @@ exports[`Icon-Picker-pro the selected click render correctly 1`] = `
                             onBlur={[Function]}
                             onFocus={[Function]}
                             onMouseDown={[Function]}
+                            onMouseUp={[Function]}
                           >
                             <div>
                               <Tabs
@@ -57673,6 +57777,11 @@ exports[`Icon-Picker-pro the selected click render correctly 1`] = `
         </span>
       </TriggerChild>
       <TriggerChild
+        isClickScrollbar={
+          Object {
+            "value": false,
+          }
+        }
         key=".$text-null/.1"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
@@ -57717,6 +57826,7 @@ exports[`Icon-Picker-pro the selected click render correctly 1`] = `
         onMouseDown={[Function]}
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        onMouseUp={[Function]}
         suffixCls="popup"
         transitionName="zoom-big-fast"
       />

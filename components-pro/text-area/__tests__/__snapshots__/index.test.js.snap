@@ -275,6 +275,11 @@ exports[`TextArea-pro renders TextArea-pro correctly 1`] = `
       transitionName="zoom-big-fast"
     >
       <TriggerChild
+        isClickScrollbar={
+          Object {
+            "value": false,
+          }
+        }
         key=".$.$wrapper"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
@@ -315,6 +320,11 @@ exports[`TextArea-pro renders TextArea-pro correctly 1`] = `
         </div>
       </TriggerChild>
       <TriggerChild
+        isClickScrollbar={
+          Object {
+            "value": false,
+          }
+        }
         key=".$text-null/.1"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
@@ -359,6 +369,7 @@ exports[`TextArea-pro renders TextArea-pro correctly 1`] = `
         onMouseDown={[Function]}
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        onMouseUp={[Function]}
         suffixCls="popup"
         transitionName="zoom-big-fast"
       />
@@ -781,6 +792,11 @@ exports[`TextArea-pro the dataSet should renders correctly 1`] = `
         transitionName="zoom-big-fast"
       >
         <TriggerChild
+          isClickScrollbar={
+            Object {
+              "value": false,
+            }
+          }
           key=".$.$wrapper"
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
@@ -823,6 +839,11 @@ exports[`TextArea-pro the dataSet should renders correctly 1`] = `
           </div>
         </TriggerChild>
         <TriggerChild
+          isClickScrollbar={
+            Object {
+              "value": false,
+            }
+          }
           key=".$text-null/.1"
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
@@ -867,6 +888,7 @@ exports[`TextArea-pro the dataSet should renders correctly 1`] = `
           onMouseDown={[Function]}
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
+          onMouseUp={[Function]}
           suffixCls="popup"
           transitionName="zoom-big-fast"
         />

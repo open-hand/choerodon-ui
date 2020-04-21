@@ -6,7 +6,7 @@ const dsMutationsT = {
   success: '@boolean()',
 };
 const dsQueriesT = {
-  'rows|10': [
+  'rows|200': [
     {
       userid: '@guid()',
       'age|18-100': 34,

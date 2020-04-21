@@ -415,6 +415,11 @@ exports[`Tree-pro should have a Tooltip inside 1`] = `
             transitionName="zoom-big-fast"
           >
             <TriggerChild
+              isClickScrollbar={
+                Object {
+                  "value": false,
+                }
+              }
               key=".$.0"
               onMouseEnter={[Function]}
               onMouseLeave={[Function]}
@@ -534,6 +539,7 @@ exports[`Tree-pro should have a Tooltip inside 1`] = `
               onMouseDown={[Function]}
               onMouseEnter={[Function]}
               onMouseLeave={[Function]}
+              onMouseUp={[Function]}
               suffixCls="popup"
               transitionName="zoom-big-fast"
             />

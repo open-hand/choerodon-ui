@@ -569,6 +569,11 @@ exports[`Lov-pro render mode button 1`] = `
       transitionName="zoom-big-fast"
     >
       <TriggerChild
+        isClickScrollbar={
+          Object {
+            "value": false,
+          }
+        }
         key=".$.0=2$lov_button"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
@@ -671,6 +676,11 @@ exports[`Lov-pro render mode button 1`] = `
         </Button>
       </TriggerChild>
       <TriggerChild
+        isClickScrollbar={
+          Object {
+            "value": false,
+          }
+        }
         key=".$.0=2$lov_clear_button"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
@@ -764,6 +774,11 @@ exports[`Lov-pro render mode button 1`] = `
         </Button>
       </TriggerChild>
       <TriggerChild
+        isClickScrollbar={
+          Object {
+            "value": false,
+          }
+        }
         key=".$text-null/.1"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
@@ -808,6 +823,7 @@ exports[`Lov-pro render mode button 1`] = `
         onMouseDown={[Function]}
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        onMouseUp={[Function]}
         suffixCls="popup"
         transitionName="zoom-big-fast"
       />

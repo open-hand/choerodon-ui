@@ -272,6 +272,11 @@ exports[`Password input renders Password correctly 1`] = `
       transitionName="zoom-big-fast"
     >
       <TriggerChild
+        isClickScrollbar={
+          Object {
+            "value": false,
+          }
+        }
         key=".$.$element"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
@@ -327,6 +332,11 @@ exports[`Password input renders Password correctly 1`] = `
         </span>
       </TriggerChild>
       <TriggerChild
+        isClickScrollbar={
+          Object {
+            "value": false,
+          }
+        }
         key=".$text-null/.1"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
@@ -371,6 +381,7 @@ exports[`Password input renders Password correctly 1`] = `
         onMouseDown={[Function]}
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        onMouseUp={[Function]}
         suffixCls="popup"
         transitionName="zoom-big-fast"
       />

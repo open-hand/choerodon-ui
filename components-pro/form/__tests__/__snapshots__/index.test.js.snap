@@ -791,6 +791,11 @@ exports[`Select disable test 1`] = `
                         transitionName="zoom-big-fast"
                       >
                         <TriggerChild
+                          isClickScrollbar={
+                            Object {
+                              "value": false,
+                            }
+                          }
                           key=".$.$element"
                           onMouseEnter={[Function]}
                           onMouseLeave={[Function]}
@@ -829,6 +834,11 @@ exports[`Select disable test 1`] = `
                           </span>
                         </TriggerChild>
                         <TriggerChild
+                          isClickScrollbar={
+                            Object {
+                              "value": false,
+                            }
+                          }
                           key=".$text-null/.1"
                           onMouseEnter={[Function]}
                           onMouseLeave={[Function]}
@@ -873,6 +883,7 @@ exports[`Select disable test 1`] = `
                           onMouseDown={[Function]}
                           onMouseEnter={[Function]}
                           onMouseLeave={[Function]}
+                          onMouseUp={[Function]}
                           suffixCls="popup"
                           transitionName="zoom-big-fast"
                         />
@@ -1178,6 +1189,11 @@ exports[`Select disable test 1`] = `
                         transitionName="zoom-big-fast"
                       >
                         <TriggerChild
+                          isClickScrollbar={
+                            Object {
+                              "value": false,
+                            }
+                          }
                           key=".$.$element"
                           onMouseEnter={[Function]}
                           onMouseLeave={[Function]}
@@ -1234,6 +1250,11 @@ exports[`Select disable test 1`] = `
                           </span>
                         </TriggerChild>
                         <TriggerChild
+                          isClickScrollbar={
+                            Object {
+                              "value": false,
+                            }
+                          }
                           key=".$text-null/.1"
                           onMouseEnter={[Function]}
                           onMouseLeave={[Function]}
@@ -1278,6 +1299,7 @@ exports[`Select disable test 1`] = `
                           onMouseDown={[Function]}
                           onMouseEnter={[Function]}
                           onMouseLeave={[Function]}
+                          onMouseUp={[Function]}
                           suffixCls="popup"
                           transitionName="zoom-big-fast"
                         />
@@ -1583,6 +1605,11 @@ exports[`Select disable test 1`] = `
                         transitionName="zoom-big-fast"
                       >
                         <TriggerChild
+                          isClickScrollbar={
+                            Object {
+                              "value": false,
+                            }
+                          }
                           key=".$.$wrapper"
                           onMouseEnter={[Function]}
                           onMouseLeave={[Function]}
@@ -1932,6 +1959,11 @@ exports[`Select disable test 1`] = `
                                     transitionName="zoom-big-fast"
                                   >
                                     <TriggerChild
+                                      isClickScrollbar={
+                                        Object {
+                                          "value": false,
+                                        }
+                                      }
                                       key=".$.0"
                                       onMouseEnter={[Function]}
                                       onMouseLeave={[Function]}
@@ -1988,6 +2020,7 @@ exports[`Select disable test 1`] = `
                                       onMouseDown={[Function]}
                                       onMouseEnter={[Function]}
                                       onMouseLeave={[Function]}
+                                      onMouseUp={[Function]}
                                       suffixCls="popup"
                                       transitionName="zoom-big-fast"
                                     />
@@ -2003,6 +2036,11 @@ exports[`Select disable test 1`] = `
                           </div>
                         </TriggerChild>
                         <TriggerChild
+                          isClickScrollbar={
+                            Object {
+                              "value": false,
+                            }
+                          }
                           key=".$text-null/.1"
                           onMouseEnter={[Function]}
                           onMouseLeave={[Function]}
@@ -2047,6 +2085,7 @@ exports[`Select disable test 1`] = `
                           onMouseDown={[Function]}
                           onMouseEnter={[Function]}
                           onMouseLeave={[Function]}
+                          onMouseUp={[Function]}
                           suffixCls="popup"
                           transitionName="zoom-big-fast"
                         />
@@ -2351,6 +2390,11 @@ exports[`Select disable test 1`] = `
                         transitionName="zoom-big-fast"
                       >
                         <TriggerChild
+                          isClickScrollbar={
+                            Object {
+                              "value": false,
+                            }
+                          }
                           key=".$.$element"
                           onMouseEnter={[Function]}
                           onMouseLeave={[Function]}
@@ -2389,6 +2433,11 @@ exports[`Select disable test 1`] = `
                           </span>
                         </TriggerChild>
                         <TriggerChild
+                          isClickScrollbar={
+                            Object {
+                              "value": false,
+                            }
+                          }
                           key=".$text-null/.1"
                           onMouseEnter={[Function]}
                           onMouseLeave={[Function]}
@@ -2433,6 +2482,7 @@ exports[`Select disable test 1`] = `
                           onMouseDown={[Function]}
                           onMouseEnter={[Function]}
                           onMouseLeave={[Function]}
+                          onMouseUp={[Function]}
                           suffixCls="popup"
                           transitionName="zoom-big-fast"
                         />

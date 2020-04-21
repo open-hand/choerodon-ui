@@ -372,6 +372,11 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
             transitionName="zoom-big-fast"
           >
             <TriggerChild
+              isClickScrollbar={
+                Object {
+                  "value": false,
+                }
+              }
               key=".$.$element"
               onMouseEnter={[Function]}
               onMouseLeave={[Function]}
@@ -11790,6 +11795,11 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
                     transitionName="slide-up"
                   >
                     <TriggerChild
+                      isClickScrollbar={
+                        Object {
+                          "value": false,
+                        }
+                      }
                       key=".$text"
                       onBlur={[Function]}
                       onClick={[Function]}
@@ -11842,6 +11852,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
                       onAnimateAppear={[Function]}
                       onAnimateEnd={[Function]}
                       onMouseDown={[Function]}
+                      onMouseUp={[Function]}
                       suffixCls="popup"
                       transitionName="slide-up"
                     />
@@ -11863,6 +11874,11 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
               </span>
             </TriggerChild>
             <TriggerChild
+              isClickScrollbar={
+                Object {
+                  "value": false,
+                }
+              }
               key=".$text-null/.1"
               onMouseEnter={[Function]}
               onMouseLeave={[Function]}
@@ -11907,6 +11923,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
               onMouseDown={[Function]}
               onMouseEnter={[Function]}
               onMouseLeave={[Function]}
+              onMouseUp={[Function]}
               suffixCls="popup"
               transitionName="zoom-big-fast"
             />
