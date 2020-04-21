@@ -17,7 +17,7 @@ timeline: true
 
 ## 0.8.60
 
-`2020-04-01`
+`2020-04-21`
 
 - 🌟 `<pro>IntlField`: Added `maxLengths` property.
 - 🌟 `<pro>Table`: Added `virtual` properties to support virtual scrolling and add demo.
