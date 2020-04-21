@@ -6223,6 +6223,15 @@ textarea.c7n-pro-table-filter-select {
 .c7n-pro-table-bordered:not(.c7n-pro-table-scroll-position-left) .c7n-pro-table-fixed-left .c7n-pro-table-cell:last-child {
   border-right: none;
 }
+.c7n-pro-table-bordered:not(.c7n-pro-table-scroll-position-right) .c7n-pro-table-fixed-right .c7n-pro-table-cell:last-child {
+  border-left: none;
+}
+.c7n-pro-table-bordered:not(.c7n-pro-table-scroll-position-left) .c7n-pro-table-body .c7n-pro-table-cell:last-child {
+  border-right: 0.01rem solid #e0e0e0;
+}
+.c7n-pro-table-bordered:not(.c7n-pro-table-scroll-position-right) .c7n-pro-table-body .c7n-pro-table-cell:last-child {
+  border-left: 0.01rem solid #e0e0e0;
+}
 .c7n-pro-table-resizer {
   position: absolute;
   top: 0;
