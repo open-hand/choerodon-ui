@@ -24,6 +24,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the new row lateral roll lock column error misalignment issue.
 - 🐞 `<pro>Field`: Fixed the problem that the DataSet Field cannot get the default values of `valueField` and `textField`.
 - 🐞 `Collapse.CollapsePanel`: Fixed CollapsePanel TS type error.
+- 🐞 `<pro>Trigger`: Fixed the problem that the Trigger click on the scroll bar causes the pop-up to disappear in IE11.
 
 ## 0.8.59
 
