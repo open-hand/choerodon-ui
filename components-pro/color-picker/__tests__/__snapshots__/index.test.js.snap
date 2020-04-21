@@ -279,6 +279,11 @@ exports[`color-picker-pro footer-slider click event render correctly 1`] = `
       transitionName="zoom-big-fast"
     >
       <TriggerChild
+        isClickScrollbar={
+          Object {
+            "value": false,
+          }
+        }
         key=".$.$element"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
@@ -438,6 +443,11 @@ exports[`color-picker-pro footer-slider click event render correctly 1`] = `
               transitionName="slide-up"
             >
               <TriggerChild
+                isClickScrollbar={
+                  Object {
+                    "value": false,
+                  }
+                }
                 key=".$text"
                 onBlur={[Function]}
                 onClick={[Function]}
@@ -491,6 +501,7 @@ exports[`color-picker-pro footer-slider click event render correctly 1`] = `
                 onAnimateAppear={[Function]}
                 onAnimateEnd={[Function]}
                 onMouseDown={[Function]}
+                onMouseUp={[Function]}
                 suffixCls="popup"
                 transitionName="slide-up"
               >
@@ -815,6 +826,7 @@ exports[`color-picker-pro footer-slider click event render correctly 1`] = `
                           onBlur={[Function]}
                           onFocus={[Function]}
                           onMouseDown={[Function]}
+                          onMouseUp={[Function]}
                         >
                           <div
                             className="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-color-picker-popup"
@@ -822,6 +834,7 @@ exports[`color-picker-pro footer-slider click event render correctly 1`] = `
                             onBlur={[Function]}
                             onFocus={[Function]}
                             onMouseDown={[Function]}
+                            onMouseUp={[Function]}
                           >
                             <div
                               className="c7n-pro-color-picker-popup-view"
@@ -892,6 +905,11 @@ exports[`color-picker-pro footer-slider click event render correctly 1`] = `
         </span>
       </TriggerChild>
       <TriggerChild
+        isClickScrollbar={
+          Object {
+            "value": false,
+          }
+        }
         key=".$text-null/.1"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
@@ -936,6 +954,7 @@ exports[`color-picker-pro footer-slider click event render correctly 1`] = `
         onMouseDown={[Function]}
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        onMouseUp={[Function]}
         suffixCls="popup"
         transitionName="zoom-big-fast"
       />
@@ -1223,6 +1242,11 @@ exports[`color-picker-pro renders ColorPicker correctly 1`] = `
       transitionName="zoom-big-fast"
     >
       <TriggerChild
+        isClickScrollbar={
+          Object {
+            "value": false,
+          }
+        }
         key=".$.$element"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
@@ -1382,6 +1406,11 @@ exports[`color-picker-pro renders ColorPicker correctly 1`] = `
               transitionName="slide-up"
             >
               <TriggerChild
+                isClickScrollbar={
+                  Object {
+                    "value": false,
+                  }
+                }
                 key=".$text"
                 onBlur={[Function]}
                 onClick={[Function]}
@@ -1435,6 +1464,7 @@ exports[`color-picker-pro renders ColorPicker correctly 1`] = `
                 onAnimateAppear={[Function]}
                 onAnimateEnd={[Function]}
                 onMouseDown={[Function]}
+                onMouseUp={[Function]}
                 suffixCls="popup"
                 transitionName="slide-up"
               />
@@ -1456,6 +1486,11 @@ exports[`color-picker-pro renders ColorPicker correctly 1`] = `
         </span>
       </TriggerChild>
       <TriggerChild
+        isClickScrollbar={
+          Object {
+            "value": false,
+          }
+        }
         key=".$text-null/.1"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
@@ -1500,6 +1535,7 @@ exports[`color-picker-pro renders ColorPicker correctly 1`] = `
         onMouseDown={[Function]}
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        onMouseUp={[Function]}
         suffixCls="popup"
         transitionName="zoom-big-fast"
       />
@@ -1926,6 +1962,11 @@ exports[`color-picker-pro should renders dataset default value correctly 1`] = `
         transitionName="zoom-big-fast"
       >
         <TriggerChild
+          isClickScrollbar={
+            Object {
+              "value": false,
+            }
+          }
           key=".$.$element"
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
@@ -2085,6 +2126,11 @@ exports[`color-picker-pro should renders dataset default value correctly 1`] = `
                 transitionName="slide-up"
               >
                 <TriggerChild
+                  isClickScrollbar={
+                    Object {
+                      "value": false,
+                    }
+                  }
                   key=".$text"
                   onBlur={[Function]}
                   onClick={[Function]}
@@ -2139,6 +2185,7 @@ exports[`color-picker-pro should renders dataset default value correctly 1`] = `
                   onAnimateAppear={[Function]}
                   onAnimateEnd={[Function]}
                   onMouseDown={[Function]}
+                  onMouseUp={[Function]}
                   suffixCls="popup"
                   transitionName="slide-up"
                 />
@@ -2160,6 +2207,11 @@ exports[`color-picker-pro should renders dataset default value correctly 1`] = `
           </span>
         </TriggerChild>
         <TriggerChild
+          isClickScrollbar={
+            Object {
+              "value": false,
+            }
+          }
           key=".$text-null/.1"
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
@@ -2204,6 +2256,7 @@ exports[`color-picker-pro should renders dataset default value correctly 1`] = `
           onMouseDown={[Function]}
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
+          onMouseUp={[Function]}
           suffixCls="popup"
           transitionName="zoom-big-fast"
         />
@@ -2492,6 +2545,11 @@ exports[`color-picker-pro the panel body click event render correctly 1`] = `
       transitionName="zoom-big-fast"
     >
       <TriggerChild
+        isClickScrollbar={
+          Object {
+            "value": false,
+          }
+        }
         key=".$.$element"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
@@ -2651,6 +2709,11 @@ exports[`color-picker-pro the panel body click event render correctly 1`] = `
               transitionName="slide-up"
             >
               <TriggerChild
+                isClickScrollbar={
+                  Object {
+                    "value": true,
+                  }
+                }
                 key=".$text"
                 onBlur={[Function]}
                 onClick={[Function]}
@@ -2704,6 +2767,7 @@ exports[`color-picker-pro the panel body click event render correctly 1`] = `
                 onAnimateAppear={[Function]}
                 onAnimateEnd={[Function]}
                 onMouseDown={[Function]}
+                onMouseUp={[Function]}
                 suffixCls="popup"
                 transitionName="slide-up"
               >
@@ -3112,6 +3176,7 @@ exports[`color-picker-pro the panel body click event render correctly 1`] = `
                           onBlur={[Function]}
                           onFocus={[Function]}
                           onMouseDown={[Function]}
+                          onMouseUp={[Function]}
                         >
                           <div
                             className="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-color-picker-popup"
@@ -3119,6 +3184,7 @@ exports[`color-picker-pro the panel body click event render correctly 1`] = `
                             onBlur={[Function]}
                             onFocus={[Function]}
                             onMouseDown={[Function]}
+                            onMouseUp={[Function]}
                           >
                             <div
                               className="c7n-pro-color-picker-popup-view"
@@ -3189,6 +3255,11 @@ exports[`color-picker-pro the panel body click event render correctly 1`] = `
         </span>
       </TriggerChild>
       <TriggerChild
+        isClickScrollbar={
+          Object {
+            "value": false,
+          }
+        }
         key=".$text-null/.1"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
@@ -3233,6 +3304,7 @@ exports[`color-picker-pro the panel body click event render correctly 1`] = `
         onMouseDown={[Function]}
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        onMouseUp={[Function]}
         suffixCls="popup"
         transitionName="zoom-big-fast"
       />
@@ -3520,6 +3592,11 @@ exports[`color-picker-pro the sliderPointer of footer click event render correct
       transitionName="zoom-big-fast"
     >
       <TriggerChild
+        isClickScrollbar={
+          Object {
+            "value": false,
+          }
+        }
         key=".$.$element"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
@@ -3679,6 +3756,11 @@ exports[`color-picker-pro the sliderPointer of footer click event render correct
               transitionName="slide-up"
             >
               <TriggerChild
+                isClickScrollbar={
+                  Object {
+                    "value": true,
+                  }
+                }
                 key=".$text"
                 onBlur={[Function]}
                 onClick={[Function]}
@@ -3732,6 +3814,7 @@ exports[`color-picker-pro the sliderPointer of footer click event render correct
                 onAnimateAppear={[Function]}
                 onAnimateEnd={[Function]}
                 onMouseDown={[Function]}
+                onMouseUp={[Function]}
                 suffixCls="popup"
                 transitionName="slide-up"
               >
@@ -4183,6 +4266,7 @@ exports[`color-picker-pro the sliderPointer of footer click event render correct
                           onBlur={[Function]}
                           onFocus={[Function]}
                           onMouseDown={[Function]}
+                          onMouseUp={[Function]}
                         >
                           <div
                             className="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-color-picker-popup"
@@ -4190,6 +4274,7 @@ exports[`color-picker-pro the sliderPointer of footer click event render correct
                             onBlur={[Function]}
                             onFocus={[Function]}
                             onMouseDown={[Function]}
+                            onMouseUp={[Function]}
                           >
                             <div
                               className="c7n-pro-color-picker-popup-view"
@@ -4260,6 +4345,11 @@ exports[`color-picker-pro the sliderPointer of footer click event render correct
         </span>
       </TriggerChild>
       <TriggerChild
+        isClickScrollbar={
+          Object {
+            "value": false,
+          }
+        }
         key=".$text-null/.1"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
@@ -4304,6 +4394,7 @@ exports[`color-picker-pro the sliderPointer of footer click event render correct
         onMouseDown={[Function]}
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        onMouseUp={[Function]}
         suffixCls="popup"
         transitionName="zoom-big-fast"
       />

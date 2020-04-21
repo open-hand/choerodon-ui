@@ -154,6 +154,8 @@ export default class TableStore {
 
   @observable height?: number;
 
+  @observable lastScrollTop?: number;
+
   @observable lockColumnsBodyRowsHeight: any;
 
   @observable lockColumnsFootRowsHeight: any;
@@ -521,6 +523,11 @@ export default class TableStore {
   @action
   showEditor(name: string) {
     this.currentEditorName = name;
+  }
+
+  @action
+  setLastScrollTop(lastScrollTop: number) {
+    this.lastScrollTop = lastScrollTop;
   }
 
   @action

@@ -34,11 +34,30 @@ exports[`renders ./components-pro/tree/demo/checkexpand.md correctly 1`] = `
       <div
         class="c7n-spin-container c7n-spin-blur"
       >
-        <ul
+        <div
           class="c7n-tree c7n-tree-show-line"
-          role="tree-node"
-          unselectable="on"
-        />
+        >
+          <div
+            role="tree"
+          >
+            <input
+              style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
+              tabindex="0"
+              value=""
+            />
+          </div>
+          <div
+            checkable="1"
+            class="c7n-tree-list"
+          >
+            <div>
+              <div
+                class="c7n-tree-list-holder-inner"
+                style="display:flex;flex-direction:column"
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -72,11 +91,30 @@ exports[`renders ./components-pro/tree/demo/checkexpand.md correctly 1`] = `
       <div
         class="c7n-spin-container c7n-spin-blur"
       >
-        <ul
+        <div
           class="c7n-tree c7n-tree-show-line"
-          role="tree-node"
-          unselectable="on"
-        />
+        >
+          <div
+            role="tree"
+          >
+            <input
+              style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
+              tabindex="0"
+              value=""
+            />
+          </div>
+          <div
+            checkable="1"
+            class="c7n-tree-list"
+          >
+            <div>
+              <div
+                class="c7n-tree-list-holder-inner"
+                style="display:flex;flex-direction:column"
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -111,11 +149,30 @@ exports[`renders ./components-pro/tree/demo/dataset.md correctly 1`] = `
   <div
     class="c7n-spin-container c7n-spin-blur"
   >
-    <ul
+    <div
       class="c7n-tree c7n-tree-icon-hide"
-      role="tree-node"
-      unselectable="on"
-    />
+    >
+      <div
+        role="tree"
+      >
+        <input
+          style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
+          tabindex="0"
+          value=""
+        />
+      </div>
+      <div
+        checkable="1"
+        class="c7n-tree-list"
+      >
+        <div>
+          <div
+            class="c7n-tree-list-holder-inner"
+            style="display:flex;flex-direction:column"
+          />
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 `;
@@ -154,11 +211,30 @@ exports[`renders ./components-pro/tree/demo/selection.md correctly 1`] = `
       <div
         class="c7n-spin-container c7n-spin-blur"
       >
-        <ul
+        <div
           class="c7n-tree c7n-tree-show-line"
-          role="tree-node"
-          unselectable="on"
-        />
+        >
+          <div
+            role="tree"
+          >
+            <input
+              style="width:0;height:0;display:flex;overflow:hidden;opacity:0;border:0;padding:0;margin:0"
+              tabindex="0"
+              value=""
+            />
+          </div>
+          <div
+            checkable="1"
+            class="c7n-tree-list"
+          >
+            <div>
+              <div
+                class="c7n-tree-list-holder-inner"
+                style="display:flex;flex-direction:column"
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

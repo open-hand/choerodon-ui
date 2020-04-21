@@ -6,6 +6,7 @@ import { observer } from 'mobx-react';
 import omit from 'lodash/omit';
 import isNumber from 'lodash/isNumber';
 import isUndefined from 'lodash/isUndefined';
+import debounce from 'lodash/debounce';
 import noop from 'lodash/noop';
 import classes from 'component-classes';
 import { action } from 'mobx';
@@ -268,6 +269,14 @@ export interface TableProps extends DataSetComponentProps {
    * 加载条属性
    */
   spin?: TableSpinConfig | false;
+  /**
+   * 虚拟滚动
+   */
+  virtual?: boolean;
+  /**
+   * 虚拟滚动是否显示加载
+   */
+  virtualSpin?: boolean;
 }
 
 @observer
@@ -364,6 +373,8 @@ export default class Table extends DataSetComponent<TableProps> {
     expandRowByClick: false,
     indentSize: 15,
     filterBarFieldName: 'params',
+    virtual: false,
+    virtualSpin: false,
   };
 
   tableStore: TableStore = new TableStore(this);
@@ -389,6 +400,14 @@ export default class Table extends DataSetComponent<TableProps> {
   lastScrollTop: number;
 
   scrollPosition: ScrollPosition;
+
+  refUpperPlaceholder: Array<HTMLDivElement | null> = [];
+
+  refUnderPlaceholder: Array<HTMLDivElement | null> = [];
+
+  refSpin: HTMLDivElement | null = null;
+
+  refScroll: HTMLDivElement | null = null;
 
   get currentRow(): HTMLTableRowElement | null {
     return this.element.querySelector(
@@ -611,6 +630,8 @@ export default class Table extends DataSetComponent<TableProps> {
       'columnResizable',
       'pristine',
       'spin',
+      'virtual',
+      'virtualSpin',
     ]);
     otherProps.onKeyDown = this.handleKeyDown;
     const { rowHeight } = this.tableStore;
@@ -700,6 +721,10 @@ export default class Table extends DataSetComponent<TableProps> {
       tableStore,
       tableStore: { overflowX, isAnyColumnsLeftLock, isAnyColumnsRightLock },
       props: {
+        style,
+        spin,
+        virtual,
+        virtualSpin,
         buttons,
         queryFields,
         queryFieldsLimit,
@@ -711,6 +736,7 @@ export default class Table extends DataSetComponent<TableProps> {
     const context = { tableStore };
     const pagination = this.getPagination(TablePaginationPosition.top);
     const tableSpinProps = getConfig('tableSpinProps');
+    const styleHeight = style ? toPx(style.height) : 0;
 
     return (
       <ReactResizeObserver resizeProp="width" onResize={this.handleResize}>
@@ -727,6 +753,26 @@ export default class Table extends DataSetComponent<TableProps> {
               filterBarPlaceholder={filterBarPlaceholder}
             />
             <Spin {...tableSpinProps} {...this.getSpinProps()} key="content">
+              {virtual && <div
+                ref={(node) => this.refSpin = node}
+                style={{
+                  display: 'none',
+                }}
+              >
+                {virtualSpin && <Spin
+                  key="virtual"
+                  spinning
+                  style={{
+                    height: pxToRem(styleHeight),
+                    lineHeight: pxToRem(styleHeight),
+                    position: 'absolute',
+                    width: '100%',
+                    zIndex: 4,
+                  }}
+                  {...tableSpinProps}
+                  {...spin}
+                />}
+              </div>}
               <div {...this.getOtherProps()}>
                 <div className={`${prefixCls}-content`}>
                   {content}
@@ -757,8 +803,20 @@ export default class Table extends DataSetComponent<TableProps> {
     });
   }
 
+  /**
+   * 滚动结束隐藏spin
+   */
+  setSpin = debounce(() => {
+    this.refSpin!.style.display = 'none';
+  }, 300);
+
   handleBodyScrollTop(e, currentTarget) {
     const { target } = e;
+    const {
+      tableStore: { rowHeight, height },
+      observableProps: { dataSet },
+      props: { virtual },
+    } = this;
     if (
       this.tableStore.height === undefined ||
       currentTarget !== target ||
@@ -780,6 +838,28 @@ export default class Table extends DataSetComponent<TableProps> {
       if (fixedColumnsBodyRight && target !== fixedColumnsBodyRight) {
         fixedColumnsBodyRight.scrollTop = scrollTop;
       }
+      if (virtual) {
+        this.refSpin!.style.display = 'block';
+        this.setSpin();
+      }
+    }
+    if (virtual) {
+      const startIndex = Math.max(Math.round((scrollTop / Number(rowHeight)) - 3), 0);
+      const endIndex = Math.min(Math.round((scrollTop + height) / Number(rowHeight) + 2), dataSet.length);
+      this.refUpperPlaceholder.map(upperNode => {
+        if (upperNode) {
+          upperNode.style.height = `${startIndex * Number(rowHeight)}px`;
+          upperNode.style.display = startIndex === 0 ? 'none' : 'block';
+        }
+        return null;
+      });
+      this.refUnderPlaceholder.map(underNode => {
+        if (underNode) {
+          underNode.style.display = endIndex === dataSet.length ? 'none' : 'block';
+        }
+        return null;
+      });
+      this.tableStore.setLastScrollTop(scrollTop);
     }
     this.lastScrollTop = scrollTop;
   }
@@ -846,27 +926,83 @@ export default class Table extends DataSetComponent<TableProps> {
     }
   }
 
+  @autobind
+  saveRef(node) {
+    this.refScroll = node;
+  }
+
   renderTable(
     hasHeader: boolean,
     hasBody: boolean,
     hasFooter: boolean,
     lock?: ColumnLock | boolean,
   ): ReactNode {
-    const { prefixCls } = this;
-    return (
-      <TableWrapper
-        prefixCls={prefixCls}
-        key="tableWrapper"
-        lock={lock}
-        hasBody={hasBody}
-        hasHeader={hasHeader}
-        hasFooter={hasFooter}
-      >
-        {hasHeader && this.getTableHeader(lock)}
-        {hasBody && this.getTableBody(lock)}
-        {hasFooter && this.getTableFooter(lock)}
-      </TableWrapper>
-    );
+    const {
+      prefixCls,
+      tableStore: { rowHeight, height },
+      observableProps: { dataSet },
+      props: { virtual },
+    } = this;
+
+    const virtualH = Math.round(dataSet.length * Number(rowHeight));
+
+    return virtual && height ?
+      (
+        <>
+          <TableWrapper
+            prefixCls={prefixCls}
+            key="tableWrapper-header"
+            lock={lock}
+            hasBody={false}
+            hasHeader={hasHeader}
+            hasFooter={false}
+          >
+            {hasHeader && this.getTableHeader(lock)}
+          </TableWrapper>
+          {hasBody &&
+          <div
+            className={`${prefixCls}-tbody-wrapper`}
+            style={{ height: virtualH }}
+            ref={this.saveRef}
+          >
+            <div className='refUpperPlaceholder' style={{ display: 'none' }} ref={(node) => this.refUpperPlaceholder.push(node)} />
+            <TableWrapper
+              prefixCls={prefixCls}
+              key="tableWrapper-body"
+              lock={lock}
+              hasBody={hasBody}
+              hasHeader={false}
+              hasFooter={false}
+            >
+              {hasBody && this.getTableBody(lock)}
+            </TableWrapper>
+            <div className='refUnderPlaceholder' style={{ display: 'none' }} ref={(node) => this.refUnderPlaceholder.push(node)} />
+          </div>}
+          <TableWrapper
+            prefixCls={prefixCls}
+            key="tableWrapper-footer"
+            lock={lock}
+            hasBody={false}
+            hasHeader={false}
+            hasFooter={hasFooter}
+          >
+            {hasFooter && this.getTableFooter(lock)}
+          </TableWrapper>
+        </>
+      ) : (
+        <TableWrapper
+          prefixCls={prefixCls}
+          key="tableWrapper"
+          lock={lock}
+          hasBody={hasBody}
+          hasHeader={hasHeader}
+          hasFooter={hasFooter}
+        >
+          {hasHeader && this.getTableHeader(lock)}
+          {hasBody && this.getTableBody(lock)}
+          {hasFooter && this.getTableFooter(lock)}
+        </TableWrapper>
+      );
   }
 
   getHeader(): ReactNode {

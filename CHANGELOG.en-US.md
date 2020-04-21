@@ -15,13 +15,16 @@ timeline: true
 
 ---
 
-- 🐞 `<pro>DatePicker`: Fix DatePicker selected the time onChange would be called tow times
-- 🐞 `<pro>Tooltip`: Fix Tooltip in basic component and pro component of buttton disable is all available.
+## 0.8.60
+
+`2020-04-21`
+
 - 🌟 `<pro>IntlField`: Added `maxLengths` property.
-- 🐞 `<pro>Tree`: Fixed when use dataSet the move(record) the child tree node also exist.
-- 🐞 `<pro>DatePicker`: Fix DatePicker selected the time onChange would be called tow times.
-- 🐞 `<pro>Tooltip`: Fix Tooltip in basic component and pro component of buttton disable is all available.
+- 🌟 `<pro>Table`: Added `virtual` properties to support virtual scrolling and add demo.
 - 🐞 `<pro>Table`: Fixed the new row lateral roll lock column error misalignment issue.
+- 🐞 `<pro>Tooltip`: Fixed the Button `disabled` state without triggering.
+- 🐞 `<pro>Tree`: Fixed when use dataSet the move(record) the child tree node also exist.
+- 🐞 `<pro>DatePicker`: Fixed the problem that onChange triggered many times after selection.
 - 🐞 `<pro>Field`: Fixed the problem that the DataSet Field cannot get the default values of `valueField` and `textField`.
 - 🐞 `Collapse.CollapsePanel`: Fixed CollapsePanel TS type error.
 - 🐞 `<pro>Trigger`: Fixed the problem that the Trigger click on the scroll bar causes the pop-up to disappear in IE11.

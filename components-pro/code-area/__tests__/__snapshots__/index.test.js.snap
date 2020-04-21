@@ -548,6 +548,11 @@ exports[`CodeArea-pro the codeArea javascript formatter and lint test 1`] = `
       transitionName="zoom-big-fast"
     >
       <TriggerChild
+        isClickScrollbar={
+          Object {
+            "value": false,
+          }
+        }
         key=".$.0"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
@@ -622,6 +627,11 @@ exports[`CodeArea-pro the codeArea javascript formatter and lint test 1`] = `
         </div>
       </TriggerChild>
       <TriggerChild
+        isClickScrollbar={
+          Object {
+            "value": false,
+          }
+        }
         key=".$text-null/.1"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
@@ -666,6 +676,7 @@ exports[`CodeArea-pro the codeArea javascript formatter and lint test 1`] = `
         onMouseDown={[Function]}
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        onMouseUp={[Function]}
         suffixCls="popup"
         transitionName="zoom-big-fast"
       />
@@ -1205,6 +1216,11 @@ exports[`CodeArea-pro the codeArea json formatter and lint test 1`] = `
       transitionName="zoom-big-fast"
     >
       <TriggerChild
+        isClickScrollbar={
+          Object {
+            "value": false,
+          }
+        }
         key=".$.0"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
@@ -1278,6 +1294,11 @@ exports[`CodeArea-pro the codeArea json formatter and lint test 1`] = `
         </div>
       </TriggerChild>
       <TriggerChild
+        isClickScrollbar={
+          Object {
+            "value": false,
+          }
+        }
         key=".$text-null/.1"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
@@ -1322,6 +1343,7 @@ exports[`CodeArea-pro the codeArea json formatter and lint test 1`] = `
         onMouseDown={[Function]}
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        onMouseUp={[Function]}
         suffixCls="popup"
         transitionName="zoom-big-fast"
       />

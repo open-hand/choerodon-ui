@@ -67,14 +67,28 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
     this.handleResize();
   }
 
+  /**
+   * 虚拟滚动计算可视化数据
+   */
+  @autobind
+  processData() {
+    const {
+      tableStore: { data, lastScrollTop = 0, height, rowHeight },
+    } = this.context;
+    const startIndex = Math.max(Math.round((lastScrollTop / rowHeight) - 3), 0);
+    const endIndex = Math.min(Math.round((lastScrollTop + height) / rowHeight + 2), data.length);
+    return data.slice(startIndex, endIndex);
+  }
+
   render() {
     const { prefixCls, lock } = this.props;
     const { leafColumns } = this;
     const {
-      tableStore: { data },
+      tableStore: { data, props: { virtual }, height },
     } = this.context;
+    const rowData = virtual && height ? this.processData() : data;
     const rows = data.length
-      ? this.getRows(data, leafColumns, true, lock)
+      ? this.getRows(rowData, leafColumns, true, lock)
       : this.getEmptyRow(leafColumns, lock);
     const body = (
       <tbody ref={lock ? undefined : this.saveRef} className={`${prefixCls}-tbody`}>

@@ -415,6 +415,11 @@ exports[`Range should show tooltip when hovering range handler 1`] = `
       transitionName="zoom-big-fast"
     >
       <TriggerChild
+        isClickScrollbar={
+          Object {
+            "value": false,
+          }
+        }
         key=".$.$wrapper"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
@@ -470,6 +475,11 @@ exports[`Range should show tooltip when hovering range handler 1`] = `
         </label>
       </TriggerChild>
       <TriggerChild
+        isClickScrollbar={
+          Object {
+            "value": false,
+          }
+        }
         key=".$text-null/.1"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
@@ -514,6 +524,7 @@ exports[`Range should show tooltip when hovering range handler 1`] = `
         onMouseDown={[Function]}
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        onMouseUp={[Function]}
         suffixCls="popup"
         transitionName="zoom-big-fast"
       />
@@ -937,6 +948,11 @@ exports[`Range should show tooltip when hovering range handler 2`] = `
       transitionName="zoom-big-fast"
     >
       <TriggerChild
+        isClickScrollbar={
+          Object {
+            "value": false,
+          }
+        }
         key=".$.$wrapper"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
@@ -992,6 +1008,11 @@ exports[`Range should show tooltip when hovering range handler 2`] = `
         </label>
       </TriggerChild>
       <TriggerChild
+        isClickScrollbar={
+          Object {
+            "value": false,
+          }
+        }
         key=".$text-null/.1"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
@@ -1036,6 +1057,7 @@ exports[`Range should show tooltip when hovering range handler 2`] = `
         onMouseDown={[Function]}
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        onMouseUp={[Function]}
         suffixCls="popup"
         transitionName="zoom-big-fast"
       />
@@ -1459,6 +1481,11 @@ exports[`Range the range drag test  1`] = `
       transitionName="zoom-big-fast"
     >
       <TriggerChild
+        isClickScrollbar={
+          Object {
+            "value": false,
+          }
+        }
         key=".$.$wrapper"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
@@ -1514,6 +1541,11 @@ exports[`Range the range drag test  1`] = `
         </label>
       </TriggerChild>
       <TriggerChild
+        isClickScrollbar={
+          Object {
+            "value": false,
+          }
+        }
         key=".$text-null/.1"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
@@ -1558,6 +1590,7 @@ exports[`Range the range drag test  1`] = `
         onMouseDown={[Function]}
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        onMouseUp={[Function]}
         suffixCls="popup"
         transitionName="zoom-big-fast"
       />
