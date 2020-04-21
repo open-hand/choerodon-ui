@@ -10,6 +10,9 @@ export interface TriggerChildProps {
   onMouseLeave?: hook;
   onFocus?: hook;
   onBlur?: hook;
+  isClickScrollbar: {
+    value: boolean | undefined
+  };
 }
 
 export default class TriggerChild extends PureComponent<TriggerChildProps> {
@@ -32,6 +35,13 @@ export default class TriggerChild extends PureComponent<TriggerChildProps> {
   constructor(props, context) {
     super(props, context);
     const createChains = eventName => e => {
+      if (eventName === 'Blur') {
+        const { isClickScrollbar: { value } } = this.props
+        if (value) {
+          e.target.focus();
+          return
+        }
+      }
       const { [`on${eventName}`]: handle, children } = this.props as { [key: string]: any };
       const child = Children.only(children);
       if (handle) {

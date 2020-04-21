@@ -23,7 +23,7 @@ function getPopupClassNameFromAlign(builtinPlacements, prefixCls, align): string
   const found = Object.keys(builtinPlacements).find(
     placement =>
       ({}.hasOwnProperty.call(builtinPlacements, placement) &&
-      isPointsEq(builtinPlacements[placement].points, points)),
+        isPointsEq(builtinPlacements[placement].points, points)),
   );
   return found ? `${prefixCls}-popup-placement-${found}` : '';
 }
@@ -127,6 +127,17 @@ export default class Trigger extends Component<TriggerProps> {
     defaultPopupHidden: true,
   };
 
+  // 兼容ie11
+  // 在ie11上当pop的内容存在滚动条的时候 点击滚动条会导致当前组件失去焦点
+  // 给组件设置的 preventDefault 不会起到作用
+  // 根据 handlePopupMouseDown  handlePopupMouseUp 设置一个标识符来判断当前点击的是否是弹出框
+  // 不应该使用 state 将isClickScrollbar放到state里面会导致渲染导致在chrome下无法点击滚动条进行拖动
+  isClickScrollbar: {
+    value: boolean
+  } = {
+      value: false,
+    };
+
   popup: Popup | null;
 
   popupTask: TaskRunner = new TaskRunner();
@@ -173,7 +184,7 @@ export default class Trigger extends Component<TriggerProps> {
           newChildProps.onFocus = this.handleEvent;
           newChildProps.onBlur = this.handleEvent;
         }
-        return <TriggerChild {...newChildProps}>{child}</TriggerChild>;
+        return <TriggerChild isClickScrollbar={this.isClickScrollbar} {...newChildProps}>{child}</TriggerChild>;
       }
       return child;
     });
@@ -335,6 +346,7 @@ export default class Trigger extends Component<TriggerProps> {
         align={this.getPopupAlign()}
         onAlign={onPopupAlign}
         onMouseDown={this.handlePopupMouseDown}
+        onMouseUp={this.handlePopupMouseUp}
         getRootDomNode={getRootDomNode}
         onAnimateAppear={onPopupAnimateAppear}
         onAnimateEnter={onPopupAnimateEnter}
@@ -359,7 +371,13 @@ export default class Trigger extends Component<TriggerProps> {
 
   @autobind
   handlePopupMouseDown(e) {
+    this.isClickScrollbar.value = true
     e.preventDefault();
+  }
+
+  @autobind
+  handlePopupMouseUp() {
+    this.isClickScrollbar.value = false
   }
 
   @autobind
