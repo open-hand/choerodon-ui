@@ -3,7 +3,6 @@ order: 13
 title:
   zh-CN: optionRenderer 输入属性
   en-US: optionRenderer Input Property
-only: true
 ---
 
 ## zh-CN
