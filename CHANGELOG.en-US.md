@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 💄 `<pro>Tree`: Optimized treePro use treeData create treeNode
+
 ## 0.8.60
 
 `2020-04-21`
@@ -66,7 +68,7 @@ timeline: true
 - 🌟 `<pro>Upload`: Added `beforeUpload`, `onRemoveFile` callback.
 - 🌟 `<pro>Upload`: Added `defaultFileList`, `uploadFileList`, `withCredentials`, `appendUpload`, `partialUpload` properties.
 - 💄 `<pro>Table`: Optimized table `tooltip` style.
-- 💄 `<pro>Upload`: Optimized Upload doc.  
+- 💄 `<pro>Upload`: Optimized Upload doc.
 - 💄 `<pro>Pagination`: Optimized `showTotal`, `showQuickJumper` properties.
 - 💄 `<pro>LocaleContext`: Optimized Japanese configuration documentation.
 - 💄 `<pro>DataSet`: Optimized `autoLocateAfterRemove`, reset the reserved selected state after deletion failed and locate to delete item 1.

@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 💄 `<pro>Tree`: 优化了treePro 使用treeData来构造子节点
+
 ## 0.8.60
 
 `2020-04-21`
@@ -66,7 +68,7 @@ timeline: true
 - 🌟 `<pro>Upload`: 新增 beforeUpload, onRemoveFile 回调。
 - 🌟 `<pro>Upload`: 新增 defaultFileList, uploadFileList, withCredentials, appendUpload, partialUpload 属性。
 - 💄 `<pro>Table`: 优化 table tooltip、table border-bottom 样式问题。
-- 💄 `<pro>Upload`: 完善Upload文档。  
+- 💄 `<pro>Upload`: 完善Upload文档。
 - 💄 `<pro>LocaleContext`: 优化日语配置, 完善文档。
 - 💄 `<pro>Pagination`: 优化 showTotal, showQuickJumper 属性。
 - 💄 `<pro>DataSet`: 优化 autoLocateAfterRemove, 删除失败后重置保留选中状态并定位到删除项第一条。

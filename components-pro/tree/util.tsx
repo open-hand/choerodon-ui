@@ -1,7 +1,27 @@
 import React, { ReactNode } from 'react';
-import { TreeNode } from 'choerodon-ui/lib/tree';
+import { TreeNodeProps } from 'choerodon-ui/lib/tree';
 import Record from '../data-set/Record';
 import DataSet from '../data-set/DataSet';
+
+export type IconType = React.ReactNode | ((props: TreeNodeProps) => React.ReactNode);
+export interface DataNode {
+  children?: DataNode[];
+  isLeaf?: boolean;
+  key: string | number;
+  title?: React.ReactNode;
+  selectable?: boolean;
+  eventKey: string | number;
+
+  switcherIcon?: IconType;
+  checkable?: boolean;
+  disabled?: boolean;
+  icon?: IconType;
+  disableCheckbox?: boolean;
+
+  /** Set style of TreeNode. This is not recommend if you don't have any force requirement */
+  className?: string;
+  style?: React.CSSProperties;
+}
 
 export type NodeRenderer = (props: {
   record?: Record | null;
@@ -13,19 +33,17 @@ export function getKey(record, idField) {
   return String(idField ? record.get(idField) : record.id);
 }
 
-function getTreeNode(record, children, idField, text) {
+function getTreeNode(record, children, idField, text):DataNode {
   const key = getKey(record, idField);
   return (
-    <TreeNode
-      title={text}
-      key={key}
-      eventKey={key}
-      // @ts-ignore
-      hasChildren={!!record.children}
-      selectable={!!(record.dataSet.selection?record.selectable:false)}
-    >
-      {children}
-    </TreeNode>
+    {
+      title:text,
+      key,
+      isLeaf:!record.children,
+      eventKey:key,
+      selectable:!!(record.dataSet.selection?record.selectable:false),
+      children,
+    }
   );
 }
 

@@ -19,7 +19,7 @@ import Spin from '../spin';
 
 interface C7nNodeEvent extends EventDataNode {
   eventKey:string
-} 
+}
 interface TreeNodeCheckedEvent {
   event: 'check';
   node: C7nNodeEvent;
@@ -384,7 +384,7 @@ export default class Tree extends Component<TreeProps> {
     const { dataSet, renderer = defaultRenderer, titleField, ...otherProps } = this.props;
     if (dataSet) {
       const props: TreeProps = {};
-      props.children = getTreeNodes(
+      props.treeData = getTreeNodes(
         dataSet,
         dataSet.treeData,
         this.forceRenderKeys,
