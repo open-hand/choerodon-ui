@@ -15,7 +15,9 @@ timeline: true
 
 ---
 
-- 💄 `<pro>Tree`: Optimized treePro use treeData create treeNode
+
+- 💄 `<pro>Tree`: Optimized treePro use treeData create treeNode.
+- 🐞 `<pro>Table`: Fixed the virtual right fixed columns have a blank.
 
 ## 0.8.60
 
