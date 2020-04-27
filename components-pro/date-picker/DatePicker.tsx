@@ -245,7 +245,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     return item;
   }
 
-;;  // 避免出现影响过多组件使用继承覆盖原有方法 Fix onchange moment use ValueOf to get the Timestamp compare
+ // 避免出现影响过多组件使用继承覆盖原有方法 Fix onchange moment use ValueOf to get the Timestamp compare
   @action
   setValue(value: any): void {
     if (!this.isReadOnly()) {
@@ -275,13 +275,20 @@ export default class DatePicker extends TriggerField<DatePickerProps>
         });
         this.validate(value);
       }
-      if (!isSame(old, value) && !isSame(moment(old).valueOf(), moment(value).valueOf())) {
+      if (!isSame(this.momentToTimestamp(old), this.momentToTimestamp(value))) {
         onChange(value, toJS(old), formNode);
       }
       this.value = value;
     }
 
     this.setText(undefined);
+  }
+
+  momentToTimestamp(value){
+    if(isMoment(value)) {
+      return moment(value).valueOf()
+    }
+    return value
   }
 
   // processValue(value: any): ReactNode {
