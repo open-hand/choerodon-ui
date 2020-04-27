@@ -75,8 +75,11 @@ function renderSelectionBox({ record }) {
 }
 
 function mergeDefaultProps(columns: ColumnProps[], defaultKey: number[] = [0]): ColumnProps[] {
-  return columns.reduce<ColumnProps[]>((newColumns, column) => {
-    if (isPlainObject(column)) {
+  const columnsNew:any[] = [];
+  const leftFixedColumns:any[] = [];
+  const rightFixedColumns:any[] = [];
+  columns.forEach((column:ColumnProps) => {
+    if(isPlainObject(column)){
       const newColumn: ColumnProps = { ...Column.defaultProps, ...column };
       if (isNil(getColumnKey(newColumn))) {
         newColumn.key = `anonymous-${defaultKey[0]++}`;
@@ -85,10 +88,16 @@ function mergeDefaultProps(columns: ColumnProps[], defaultKey: number[] = [0]): 
       if (children) {
         newColumn.children = mergeDefaultProps(children, defaultKey);
       }
-      newColumns.push(newColumn);
+      if (column.lock === ColumnLock.left || column.lock === true) {
+        leftFixedColumns.push(column);
+      } else if (column.lock === ColumnLock.right) {
+        rightFixedColumns.push(column);
+      } else {
+        columnsNew.push(column);
+      }
     }
-    return newColumns;
-  }, []);
+  })
+  return leftFixedColumns.concat(columnsNew, rightFixedColumns);
 }
 
 function normalizeColumns(

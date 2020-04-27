@@ -155,12 +155,14 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
   get tableWidth() {
     const { lock, hasBody } = this.props;
     const {
-      tableStore: { overflowY, overflowX },
+      tableStore: { overflowY, overflowX,props: { virtual } },
     } = this.context;
     if (overflowX) {
       let tableWidth = this.leafColumnsWidth;
-      if (tableWidth !== undefined && overflowY && lock !== ColumnLock.left && !hasBody) {
-        tableWidth += measureScrollbar();
+      if (tableWidth !== undefined && overflowY && lock !== ColumnLock.left && !hasBody ) {
+        if(!(virtual && lock === ColumnLock.right)){
+          tableWidth += measureScrollbar();
+        }
       }
       return pxToRem(tableWidth);
     }
