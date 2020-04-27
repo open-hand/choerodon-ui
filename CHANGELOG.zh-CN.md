@@ -15,9 +15,12 @@ timeline: true
 
 ---
 
-- 💄 `<pro>Tree`: 优化了treePro 使用treeData来构造子节点
-- 🐞 `<pro>Table`: 修复table 的居右的表格出现空白问题。
+- 🌟 `<pro>Currency`: 添加精度控制 demo.
+- 🌟 `<pro>Table`: 添加切换字段编辑器（lov / select）demo.
+- 💄 `<pro>Tree`: 优化了 treePro, 使用treeData来构造子节点。
 - 🐞 `<pro>DatePicker`: 修复多选出现无法赋值的问题。
+- 🐞 `<pro>Select`: 修复 dropdownMatchSelectWidth 属性无效的问题。
+- 🐞 `<pro>Table`: 修复虚拟滚动下 table 的居右的表格出现滚动条空白问题。
 
 ## 0.8.60
 
@@ -28,7 +31,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复新增行横向滚动 lock 列错误错位问题。
 - 🐞 `<pro>DatePicker`: 修复选择后 onChange 多次触发的问题。
 - 🐞 `<pro>Tooltip`: 修复 Button disabled 状态下不触发问题。
-- 🐞 `<pro>Tree`: 修复当Tree 使用DataSet.remoove 后tree子结点没有没删除。
+- 🐞 `<pro>Tree`: 修复当 Tree 使用 DataSet.remove 后 tree 子结点没有没删除。
 - 🐞 `<pro>Field`: 修复 DataSet 的 Field 无法获取 valueField 和 textField 默认值的问题。
 - 🐞 `Collapse.CollapsePanel`: 修复 CollapsePanel TS 使用问题。
 - 🐞 `<pro>Trigger`: 修复 Trigger IE11 下点击滚动条导致弹出框消失的问题。

@@ -1,5 +1,4 @@
 import React, { Children } from 'react';
-import warning from '../../_util/warning';
 
 export function getKeyFromChildrenIndex(child, menuEventKey, index) {
   const prefix = menuEventKey || '';
@@ -106,11 +105,16 @@ export const menuAllProps = [
   'expandIcon',
 ];
 
-export const getWidth = elem =>
-  (elem &&
+export const getWidth = elem => {
+  let width =
+    elem &&
     typeof elem.getBoundingClientRect === 'function' &&
-    elem.getBoundingClientRect().width) ||
-  0;
+    elem.getBoundingClientRect().width;
+  if (width) {
+    width = +width.toFixed(6);
+  }
+  return width || 0;
+};
 
 export const setStyle = (elem, styleProperty, value) => {
   if (elem && typeof elem.style === 'object') {
