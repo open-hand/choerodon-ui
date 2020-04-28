@@ -21,6 +21,7 @@ timeline: true
 - 🌟 `<pro>Tree`: 添加 `TreeNodeRenderer` 属性支持客制化tree node结点渲染.
 - 💄 `<pro>Tree`: 优化了 treePro, 使用treeData来构造子节点。
 - 🐞 `<pro>DatePicker`: 修复多选出现无法赋值的问题。
+- 🐞 `inputNumber`: 修复数字输入框银行家舍入改为四舍五入。
 - 🐞 `<pro>Select`: 修复 dropdownMatchSelectWidth 属性无效的问题。
 - 🐞 `<pro>Table`: 修复虚拟滚动下 table 的居右的表格出现滚动条空白问题。
 

@@ -28,6 +28,8 @@ const DELAY = 600;
  */
 const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER || Math.pow(2, 53) - 1;
 
+const isValidProps = value => value !== undefined && value !== null;
+
 export default class InputNumber extends Component {
   static propTypes = {
     value: PropTypes.oneOfType([
@@ -352,11 +354,14 @@ export default class InputNumber extends Component {
   }
 
   toNumber(num) {
-    if (this.isNotCompleteNumber(num)) {
+    const { precision } = this.props;
+    // num.length > 16 => This is to prevent input of large numbers
+    const numberIsTooLarge = num && num.length > 16 ;
+    if (this.isNotCompleteNumber(num) || numberIsTooLarge) {
       return num;
     }
-    if ('precision' in this.props) {
-      return Number(Number(num).toFixed(this.props.precision));
+    if (isValidProps(precision)) {
+      return Math.round(num * Math.pow(10, precision)) / Math.pow(10, precision);
     }
     return Number(num);
   }
