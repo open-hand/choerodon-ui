@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-
+- 🐞 `<pro>Upload`: 修复上传成功response解析问题。
 - 🌟 `<pro>Currency`: 添加精度控制 demo.
 - 🌟 `<pro>Table`: 添加切换字段编辑器（lov / select）demo.
 - 🌟 `<pro>Tree`: 添加 `TreeNodeRenderer` 属性支持客制化tree node结点渲染.

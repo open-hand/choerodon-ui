@@ -564,7 +564,7 @@ export default class Upload extends FormField<UploadProps> {
       // 以二开头的状态码都认为是成功，暂定？
       const isSuccessful = xhr.status.toString().startsWith('2');
       if (isSuccessful) {
-        this.handleSuccess(xhr.status, JSON.parse(xhr.response), file);
+        this.handleSuccess(xhr.status, xhr.response, file);
       } else {
         this.handleError(new Error(errorMsg), getResponse(xhr), xhr.response, file);
       }

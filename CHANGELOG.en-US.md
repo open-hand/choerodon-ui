@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>Upload`: Fixed the parsing problem of successful upload response.
 - 🌟 `<pro>Currency`: Added demo.
 - 🌟 `<pro>Table`: Added a toggle field editor (lov / select) demo.
 - 🌟 `<pro>Tree`: Added `TreeNodeRenderer` property to support the customize tree node.
