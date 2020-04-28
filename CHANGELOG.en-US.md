@@ -15,10 +15,13 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Currency`: Added demo.
+- 🌟 `<pro>Table`: Added a toggle field editor (lov / select) demo.
 - 🌟 `<pro>Tree`: Added `TreeNodeRenderer` property to support the customize tree node.
-- 💄 `<pro>Tree`: Optimized treePro use treeData create treeNode.
-- 🐞 `<pro>Table`: Fixed the virtual right fixed columns have a blank.
-- 🐞 `<pro>DatePicker`: Fixed when multiple select can't set value.
+- 💄 `<pro>Tree`: Optimized treePro use `treeData` create treeNode.
+- 🐞 `<pro>Table`: Fixed the problem of blank scroll bar under virtual scrolling.
+- 🐞 `<pro>Select`: Fixed the problem that the `dropdownMatchSelectWidth` property is invalid.
+- 🐞 `<pro>DatePicker`: Fixed inability to assign values when selecting multiple items.
 
 ## 0.8.60
 
