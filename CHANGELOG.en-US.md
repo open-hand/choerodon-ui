@@ -22,6 +22,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the problem of blank scroll bar under virtual scrolling.
 - 🐞 `<pro>Select`: Fixed the problem that the `dropdownMatchSelectWidth` property is invalid.
 - 🐞 `<pro>DatePicker`: Fixed inability to assign values when selecting multiple items.
+- 💄 `AutoComplete`: Optimize the type of dataSource.
 
 ## 0.8.60
 

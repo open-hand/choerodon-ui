@@ -20,7 +20,7 @@ export interface DataSourceItemObject {
   text: string;
 }
 
-export type DataSourceItemType = string | DataSourceItemObject;
+export type DataSourceItemType = string | DataSourceItemObject | ReactElement;
 
 export interface AutoCompleteInputProps {
   onChange?: FormEventHandler<any>;
@@ -35,7 +35,7 @@ export type ValidInputElement =
 export interface AutoCompleteProps extends AbstractSelectProps {
   value?: SelectValue;
   defaultValue?: SelectValue;
-  dataSource: DataSourceItemType[];
+  dataSource?: DataSourceItemType[];
   optionLabelProp?: string;
   onChange?: (value: SelectValue) => void;
   onSelect?: (value: SelectValue, option: Object) => any;
@@ -69,8 +69,8 @@ export default class AutoComplete extends Component<AutoCompleteProps, {}> {
       children && isValidElement(children) && children.type !== Option ? (
         Children.only(children)
       ) : (
-        <Input border={false} />
-      );
+          <Input border={false} />
+        );
     const elementProps = { ...(element as ReactElement<any>).props };
 
     delete elementProps.children;
@@ -116,24 +116,24 @@ export default class AutoComplete extends Component<AutoCompleteProps, {}> {
     } else {
       options = dataSource
         ? dataSource.map(item => {
-            if (isValidElement(item)) {
-              return item;
-            }
-            switch (typeof item) {
-              case 'string':
-                return <Option key={item as string}>{item}</Option>;
-              case 'object':
-                return (
-                  <Option key={(item as DataSourceItemObject).value}>
-                    {(item as DataSourceItemObject).text}
-                  </Option>
-                );
-              default:
-                throw new Error(
-                  'AutoComplete[dataSource] only supports type `string[] | Object[]`.',
-                );
-            }
-          })
+          if (isValidElement(item)) {
+            return item;
+          }
+          switch (typeof item) {
+            case 'string':
+              return <Option key={item as string}>{item}</Option>;
+            case 'object':
+              return (
+                <Option key={(item as DataSourceItemObject).value}>
+                  {(item as DataSourceItemObject).text}
+                </Option>
+              );
+            default:
+              throw new Error(
+                'AutoComplete[dataSource] only supports type `string[] | Object[]`.',
+              );
+          }
+        })
         : [];
     }
 
