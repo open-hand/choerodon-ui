@@ -23,6 +23,7 @@ timeline: true
 - 🐞 `inputNumber`: Fixed the NumberInput round.
 - 🐞 `<pro>Select`: Fixed the problem that the `dropdownMatchSelectWidth` property is invalid.
 - 🐞 `<pro>DatePicker`: Fixed inability to assign values when selecting multiple items.
+- 💄 `AutoComplete`: Optimize the type of dataSource.
 
 ## 0.8.60
 
