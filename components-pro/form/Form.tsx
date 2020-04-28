@@ -259,8 +259,6 @@ export default class Form extends DataSetComponent<FormProps> {
 
   name = NameGen.next().value;
 
-  refForm: HTMLDivElement | null = null;
-
   constructor(props, context) {
     super(props, context);
     runInAction(() => {
