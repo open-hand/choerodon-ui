@@ -535,7 +535,7 @@ export default class Form extends DataSetComponent<FormProps> {
             className={labelClassName}
             rowSpan={rowSpan}
           >
-            <label>
+            <label title={isString(label) ? label : ''}>
               {label}
             </label>
           </td>,

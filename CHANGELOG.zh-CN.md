@@ -12,15 +12,20 @@ timeline: true
 - 修订版本号：每周末会进行日常 bugfix 更新。（如果有紧急的 bugfix，则任何时候都可发布）
 - 次版本号：每月发布一个带有新特性的向下兼容的版本。
 - 主版本号：含有破坏性更新和新特性，不在发布周期内。
-- 💄 `AutoComplete`: 优化 dataSource 属性的类型。
 
 ---
 
-- 🐞 `<pro>Upload`: 修复上传成功response解析问题。
-- 🌟 `<pro>Currency`: 添加精度控制 demo.
-- 🌟 `<pro>Table`: 添加切换字段编辑器（lov / select）demo.
-- 🌟 `<pro>Tree`: 添加 `TreeNodeRenderer` 属性支持客制化tree node结点渲染.
+## 0.8.61
+
+`2020-04-28`
+
+- 🌟 `<pro>Currency`: 添加精度控制 demo。
+- 🌟 `<pro>Table`: 添加切换字段编辑器（lov / select）demo。
+- 🌟 `<pro>Tree`: 添加 TreeNodeRenderer 属性支持客制化 tree node 结点渲染。
+- 💄 `AutoComplete`: 优化 dataSource 属性的类型。
 - 💄 `<pro>Tree`: 优化了 treePro, 使用treeData来构造子节点。
+- 🐞 `<pro>Form`: 修复 label 样式。
+- 🐞 `<pro>Upload`: 修复上传成功response解析问题。
 - 🐞 `<pro>DatePicker`: 修复多选出现无法赋值的问题。
 - 🐞 `inputNumber`: 修复数字输入框银行家舍入改为四舍五入。
 - 🐞 `<pro>Select`: 修复 dropdownMatchSelectWidth 属性无效的问题。
