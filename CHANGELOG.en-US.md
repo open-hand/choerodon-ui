@@ -15,9 +15,9 @@ timeline: true
 
 ---
 
-
 - 🌟 `<pro>Currency`: Added demo.
 - 🌟 `<pro>Table`: Added a toggle field editor (lov / select) demo.
+- 🌟 `<pro>Tree`: Added `TreeNodeRenderer` property to support the customize tree node.
 - 💄 `<pro>Tree`: Optimized treePro use `treeData` create treeNode.
 - 🐞 `<pro>Table`: Fixed the problem of blank scroll bar under virtual scrolling.
 - 🐞 `<pro>Select`: Fixed the problem that the `dropdownMatchSelectWidth` property is invalid.

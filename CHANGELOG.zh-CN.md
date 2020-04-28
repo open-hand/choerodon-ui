@@ -15,8 +15,10 @@ timeline: true
 
 ---
 
+
 - 🌟 `<pro>Currency`: 添加精度控制 demo.
 - 🌟 `<pro>Table`: 添加切换字段编辑器（lov / select）demo.
+- 🌟 `<pro>Tree`: 添加 `TreeNodeRenderer` 属性支持客制化tree node结点渲染.
 - 💄 `<pro>Tree`: 优化了 treePro, 使用treeData来构造子节点。
 - 🐞 `<pro>DatePicker`: 修复多选出现无法赋值的问题。
 - 🐞 `<pro>Select`: 修复 dropdownMatchSelectWidth 属性无效的问题。
