@@ -13,7 +13,7 @@ import C7NTree, {
 } from 'choerodon-ui/lib/tree';
 import autobind from 'choerodon-ui/pro/lib/_util/autobind';
 import DataSet from '../data-set/DataSet';
-import { getKey, getTreeNodes, NodeRenderer } from './util';
+import { getKey, getTreeNodes, NodeRenderer, TreeNodeRenderer} from './util';
 import { BooleanValue, DataSetSelection } from '../data-set/enum';
 import Spin from '../spin';
 
@@ -42,15 +42,19 @@ interface C7nTreeNodeExpandedEvent {
   nativeEvent:MouseEvent;
   node:C7nNodeEvent;
 }
-
 export interface TreeProps extends C7NTreeProps {
   dataSet?: DataSet;
   renderer?: NodeRenderer;
   titleField?: string;
+  treeNodeRenderer?:TreeNodeRenderer;
 }
 
 function defaultRenderer({ text }) {
   return text;
+}
+
+function defaultNodeCover(){
+  return {};
 }
 
 const keyPropType = PropTypes.oneOfType([PropTypes.string, PropTypes.number]);
@@ -381,7 +385,7 @@ export default class Tree extends Component<TreeProps> {
   };
 
   render() {
-    const { dataSet, renderer = defaultRenderer, titleField, ...otherProps } = this.props;
+    const { dataSet, renderer = defaultRenderer, titleField, treeNodeRenderer = defaultNodeCover,loadData ,...otherProps } = this.props;
     if (dataSet) {
       const props: TreeProps = {};
       props.treeData = getTreeNodes(
@@ -389,6 +393,9 @@ export default class Tree extends Component<TreeProps> {
         dataSet.treeData,
         this.forceRenderKeys,
         renderer,
+        // @ts-ignore
+        treeNodeRenderer,
+        loadData,
         titleField,
       );
       // @ts-ignore
@@ -397,6 +404,7 @@ export default class Tree extends Component<TreeProps> {
       props.onCheck = this.handleCheck;
       // @ts-ignore
       props.onSelect = this.handleSelect;
+      props.loadData = loadData;
       props.expandedKeys = this.expandedKeys.slice();
       props.checkedKeys = this.checkedKeys.slice();
       props.multiple = dataSet.props.selection === DataSetSelection.multiple;

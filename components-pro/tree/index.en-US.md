@@ -20,6 +20,23 @@ Almost anything can be represented in a tree structure. Examples include directo
 | defaultExpandedKeys | defalut expand these node dataSetbind expandField ignore it  | string[]	| [] |
 | defaultCheckedKeys | defalut check these node when dataSet bind checkField ignore it  | string[] | [] |
 | defaultSelectKeys | defalut select these node when dataSet bind idField ignore it | string[] | [] |
+| treeNodeRenderer |  customize cover Tree node props  | ((props: {record?: Record \| null;dataSet?: DataSet \| null;}) => TreeNodeRendererProps )|() => {} |
+
+
+### TreeNodeRenderer props
+
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| checkable | When Tree is checkable, set TreeNode display Checkbox or not | boolean | - |
+| disableCheckbox | Disables the checkbox of the treeNode | boolean | false |  |
+| disabled | Disables the treeNode | boolean | false |  |
+| icon | customize icon. When you pass component, whose render will receive full TreeNode props as component props | ReactNode/Function(props):ReactNode | - |  |
+| isLeaf | Determines if this is a leaf node(effective when `loadData` is specified) | boolean | false |  |
+| title | Title | string\|ReactNode | '---' |  |
+| switcherIcon | customize node expand icon | React.ReactNode | ((props: TreeNodeProps) => React.ReactNode) |  |
+| className | child node classname | string |  |
+| style | child node style | React.CSSProperties  |  |
+
 
 ### DataSet related
 

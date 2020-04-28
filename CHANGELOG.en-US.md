@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-
+- 🌟 `<pro>Tree`: Added `TreeNodeRenderer` property to support the customize tree node.
 - 💄 `<pro>Tree`: Optimized treePro use treeData create treeNode.
 - 🐞 `<pro>Table`: Fixed the virtual right fixed columns have a blank.
 - 🐞 `<pro>DatePicker`: Fixed when multiple select can't set value.

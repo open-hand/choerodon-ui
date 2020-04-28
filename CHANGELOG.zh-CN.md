@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Tree`: 添加 `TreeNodeRenderer` 属性支持客制化tree node结点渲染.
 - 💄 `<pro>Tree`: 优化了treePro 使用treeData来构造子节点
 - 🐞 `<pro>Table`: 修复table 的居右的表格出现空白问题。
 - 🐞 `<pro>DatePicker`: 修复多选出现无法赋值的问题。
