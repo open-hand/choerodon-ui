@@ -15,16 +15,21 @@ timeline: true
 
 ---
 
-- 🐞 `<pro>Upload`: Fixed the parsing problem of successful upload response.
+## 0.8.61
+
+`2020-04-28`
+
 - 🌟 `<pro>Currency`: Added demo.
 - 🌟 `<pro>Table`: Added a toggle field editor (lov / select) demo.
 - 🌟 `<pro>Tree`: Added `TreeNodeRenderer` property to support the customize tree node.
+- 💄 `AutoComplete`: Optimized the type of dataSource.
 - 💄 `<pro>Tree`: Optimized treePro use `treeData` create treeNode.
-- 🐞 `<pro>Table`: Fixed the problem of blank scroll bar under virtual scrolling.
+- 🐞 `<pro>Form`: Fixed label style.
 - 🐞 `inputNumber`: Fixed the NumberInput round.
+- 🐞 `<pro>Table`: Fixed the problem of blank scroll bar under virtual scrolling.
+- 🐞 `<pro>Upload`: Fixed the parsing problem of successful upload response.
 - 🐞 `<pro>Select`: Fixed the problem that the `dropdownMatchSelectWidth` property is invalid.
 - 🐞 `<pro>DatePicker`: Fixed inability to assign values when selecting multiple items.
-- 💄 `AutoComplete`: Optimize the type of dataSource.
 
 ## 0.8.60
 

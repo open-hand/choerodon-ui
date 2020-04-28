@@ -259,6 +259,8 @@ export default class Form extends DataSetComponent<FormProps> {
 
   name = NameGen.next().value;
 
+  refForm: HTMLDivElement | null = null;
+
   constructor(props, context) {
     super(props, context);
     runInAction(() => {
@@ -535,7 +537,7 @@ export default class Form extends DataSetComponent<FormProps> {
             className={labelClassName}
             rowSpan={rowSpan}
           >
-            <label>
+            <label title={isString(label) ? label : ''}>
               {label}
             </label>
           </td>,

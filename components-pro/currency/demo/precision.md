@@ -44,6 +44,7 @@ class App extends React.Component {
             dataSet={this.ds} 
             name="money" 
             renderer={({ value, record }) => {
+              // 仅为示例，具体精度处理根据需求调整
               return record.get('precision') > 99 || record.get('precision') < 0  ? value : value.toFixed(record.get('precision'));
              }
             } 
