@@ -504,7 +504,9 @@ exports[`Select disable test 1`] = `
                 key="row-0-col-0-label"
                 rowSpan={1}
               >
-                <label>
+                <label
+                  title="手机号"
+                >
                   手机号
                 </label>
               </td>
@@ -901,7 +903,9 @@ exports[`Select disable test 1`] = `
                 key="row-1-col-0-label"
                 rowSpan={1}
               >
-                <label>
+                <label
+                  title="密码"
+                >
                   密码
                 </label>
               </td>
@@ -1317,7 +1321,9 @@ exports[`Select disable test 1`] = `
                 key="row-2-col-0-label"
                 rowSpan={1}
               >
-                <label>
+                <label
+                  title="年龄"
+                >
                   年龄
                 </label>
               </td>
@@ -2103,7 +2109,9 @@ exports[`Select disable test 1`] = `
                 key="row-3-col-0-label"
                 rowSpan={1}
               >
-                <label>
+                <label
+                  title="邮箱"
+                >
                   邮箱
                 </label>
               </td>
@@ -2500,7 +2508,9 @@ exports[`Select disable test 1`] = `
                 key="row-4-col-0-label"
                 rowSpan={1}
               >
-                <label />
+                <label
+                  title=""
+                />
               </td>
               <td
                 colSpan={1}

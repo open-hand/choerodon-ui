@@ -531,7 +531,9 @@ exports[`renders ./components-pro/upload/demo/upload-method.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-label-output"
           rowspan="1"
         >
-          <label>
+          <label
+            title="选择Logo"
+          >
             选择Logo
           </label>
         </td>
@@ -596,7 +598,9 @@ exports[`renders ./components-pro/upload/demo/upload-method.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right"
           rowspan="1"
         >
-          <label />
+          <label
+            title=""
+          />
         </td>
         <td
           colspan="1"

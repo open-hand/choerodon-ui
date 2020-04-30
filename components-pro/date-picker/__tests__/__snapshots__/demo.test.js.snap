@@ -789,6 +789,15 @@ exports[`renders ./components-pro/date-picker/demo/range.md correctly 1`] = `
             class="c7n-pro-calendar-picker-range-text"
           >
             <input
+              autocomplete="off"
+              class="c7n-pro-calendar-picker-range-input"
+              name="date"
+              placeholder=""
+              style="left:0"
+              type="text"
+              value=""
+            />
+            <input
               class="c7n-pro-calendar-picker-range-start"
               placeholder="Start Date"
               readonly=""
@@ -806,15 +815,6 @@ exports[`renders ./components-pro/date-picker/demo/range.md correctly 1`] = `
               readonly=""
               tabindex="-1"
               value="2016-11-22"
-            />
-            <input
-              autocomplete="off"
-              class="c7n-pro-calendar-picker-range-input"
-              name="date"
-              placeholder=""
-              style="left:0"
-              type="text"
-              value=""
             />
           </span>
         </span>
@@ -850,6 +850,15 @@ exports[`renders ./components-pro/date-picker/demo/range.md correctly 1`] = `
           <span
             class="c7n-pro-calendar-picker-range-text"
           >
+            <input
+              autocomplete="off"
+              class="c7n-pro-calendar-picker-range-input"
+              name="date2"
+              placeholder=""
+              style="left:0"
+              type="text"
+              value=""
+            />
             <input
               class="c7n-pro-calendar-picker-range-start"
               placeholder="Start Date"
@@ -869,15 +878,6 @@ exports[`renders ./components-pro/date-picker/demo/range.md correctly 1`] = `
               tabindex="-1"
               value="2016-11-22"
             />
-            <input
-              autocomplete="off"
-              class="c7n-pro-calendar-picker-range-input"
-              name="date2"
-              placeholder=""
-              style="left:0"
-              type="text"
-              value=""
-            />
           </span>
         </span>
         <div
@@ -912,6 +912,14 @@ exports[`renders ./components-pro/date-picker/demo/range.md correctly 1`] = `
           <span
             class="c7n-pro-calendar-picker-range-text"
           >
+            <input
+              autocomplete="off"
+              class="c7n-pro-calendar-picker-range-input"
+              placeholder=""
+              style="left:0"
+              type="text"
+              value=""
+            />
             <input
               class="c7n-pro-calendar-picker-range-start"
               placeholder="Start Date"
@@ -931,14 +939,6 @@ exports[`renders ./components-pro/date-picker/demo/range.md correctly 1`] = `
               tabindex="-1"
               value="2016-11-22"
             />
-            <input
-              autocomplete="off"
-              class="c7n-pro-calendar-picker-range-input"
-              placeholder=""
-              style="left:0"
-              type="text"
-              value=""
-            />
           </span>
         </span>
         <div
@@ -974,6 +974,14 @@ exports[`renders ./components-pro/date-picker/demo/range.md correctly 1`] = `
             class="c7n-pro-calendar-picker-range-text"
           >
             <input
+              autocomplete="off"
+              class="c7n-pro-calendar-picker-range-input"
+              placeholder=""
+              style="left:0"
+              type="text"
+              value=""
+            />
+            <input
               class="c7n-pro-calendar-picker-range-start"
               placeholder="Start Date"
               readonly=""
@@ -991,14 +999,6 @@ exports[`renders ./components-pro/date-picker/demo/range.md correctly 1`] = `
               readonly=""
               tabindex="-1"
               value="2016-11-22"
-            />
-            <input
-              autocomplete="off"
-              class="c7n-pro-calendar-picker-range-input"
-              placeholder=""
-              style="left:0"
-              type="text"
-              value=""
             />
           </span>
         </span>
@@ -1035,6 +1035,15 @@ exports[`renders ./components-pro/date-picker/demo/range.md correctly 1`] = `
             class="c7n-pro-calendar-picker-range-text"
           >
             <input
+              autocomplete="off"
+              class="c7n-pro-calendar-picker-range-input"
+              name="time"
+              placeholder=""
+              style="left:0"
+              type="text"
+              value=""
+            />
+            <input
               class="c7n-pro-calendar-picker-range-start"
               placeholder="Choose Time"
               readonly=""
@@ -1051,15 +1060,6 @@ exports[`renders ./components-pro/date-picker/demo/range.md correctly 1`] = `
               placeholder="Choose Time"
               readonly=""
               tabindex="-1"
-              value=""
-            />
-            <input
-              autocomplete="off"
-              class="c7n-pro-calendar-picker-range-input"
-              name="time"
-              placeholder=""
-              style="left:0"
-              type="text"
               value=""
             />
           </span>
@@ -1103,6 +1103,15 @@ exports[`renders ./components-pro/date-picker/demo/range.md correctly 1`] = `
               class="c7n-pro-calendar-picker-range-text"
             >
               <input
+                autocomplete="off"
+                class="c7n-pro-calendar-picker-range-input"
+                name="multipleDate"
+                placeholder=""
+                style="left:0"
+                type="text"
+                value=""
+              />
+              <input
                 class="c7n-pro-calendar-picker-range-start"
                 placeholder="Choose Date"
                 readonly=""
@@ -1119,15 +1128,6 @@ exports[`renders ./components-pro/date-picker/demo/range.md correctly 1`] = `
                 placeholder="Choose Date"
                 readonly=""
                 tabindex="-1"
-                value=""
-              />
-              <input
-                autocomplete="off"
-                class="c7n-pro-calendar-picker-range-input"
-                name="multipleDate"
-                placeholder=""
-                style="left:0"
-                type="text"
                 value=""
               />
             </span>
