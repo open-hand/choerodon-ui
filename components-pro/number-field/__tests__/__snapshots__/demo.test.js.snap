@@ -384,6 +384,15 @@ exports[`renders ./components-pro/number-field/demo/range.md correctly 1`] = `
             class="c7n-pro-input-number-range-text"
           >
             <input
+              autocomplete="off"
+              class="c7n-pro-input-number-range-input"
+              name="number1"
+              placeholder=""
+              style="left:0"
+              type="text"
+              value=""
+            />
+            <input
               class="c7n-pro-input-number-range-start"
               placeholder="Range Start"
               readonly=""
@@ -401,15 +410,6 @@ exports[`renders ./components-pro/number-field/demo/range.md correctly 1`] = `
               readonly=""
               tabindex="-1"
               value="4"
-            />
-            <input
-              autocomplete="off"
-              class="c7n-pro-input-number-range-input"
-              name="number1"
-              placeholder=""
-              style="left:0"
-              type="text"
-              value=""
             />
           </span>
         </span>
@@ -431,25 +431,6 @@ exports[`renders ./components-pro/number-field/demo/range.md correctly 1`] = `
           <span
             class="c7n-pro-input-number-range-text"
           >
-            <input
-              class="c7n-pro-input-number-range-start"
-              placeholder="Range Start"
-              readonly=""
-              tabindex="-1"
-              value="0"
-            />
-            <span
-              class="c7n-pro-input-number-range-split"
-            >
-              ~
-            </span>
-            <input
-              class="c7n-pro-input-number-range-end"
-              placeholder="Range End"
-              readonly=""
-              tabindex="-1"
-              value="4"
-            />
             <input
               autocomplete="off"
               class="c7n-pro-input-number-range-input"
@@ -459,26 +440,6 @@ exports[`renders ./components-pro/number-field/demo/range.md correctly 1`] = `
               type="text"
               value=""
             />
-          </span>
-        </span>
-      </label>
-    </span>
-    <span />
-  </div>
-  <div
-    class="c7n-col-24"
-    style="padding-left:5px;padding-right:5px"
-  >
-    <span
-      class="c7n-pro-input-number-wrapper c7n-pro-input-number-range"
-    >
-      <label>
-        <span
-          class="c7n-pro-input-number"
-        >
-          <span
-            class="c7n-pro-input-number-range-text"
-          >
             <input
               class="c7n-pro-input-number-range-start"
               placeholder="Range Start"
@@ -497,14 +458,6 @@ exports[`renders ./components-pro/number-field/demo/range.md correctly 1`] = `
               readonly=""
               tabindex="-1"
               value="4"
-            />
-            <input
-              autocomplete="off"
-              class="c7n-pro-input-number-range-input"
-              placeholder=""
-              style="left:0"
-              type="text"
-              value=""
             />
           </span>
         </span>
@@ -527,6 +480,14 @@ exports[`renders ./components-pro/number-field/demo/range.md correctly 1`] = `
             class="c7n-pro-input-number-range-text"
           >
             <input
+              autocomplete="off"
+              class="c7n-pro-input-number-range-input"
+              placeholder=""
+              style="left:0"
+              type="text"
+              value=""
+            />
+            <input
               class="c7n-pro-input-number-range-start"
               placeholder="Range Start"
               readonly=""
@@ -545,6 +506,26 @@ exports[`renders ./components-pro/number-field/demo/range.md correctly 1`] = `
               tabindex="-1"
               value="4"
             />
+          </span>
+        </span>
+      </label>
+    </span>
+    <span />
+  </div>
+  <div
+    class="c7n-col-24"
+    style="padding-left:5px;padding-right:5px"
+  >
+    <span
+      class="c7n-pro-input-number-wrapper c7n-pro-input-number-range"
+    >
+      <label>
+        <span
+          class="c7n-pro-input-number"
+        >
+          <span
+            class="c7n-pro-input-number-range-text"
+          >
             <input
               autocomplete="off"
               class="c7n-pro-input-number-range-input"
@@ -552,6 +533,25 @@ exports[`renders ./components-pro/number-field/demo/range.md correctly 1`] = `
               style="left:0"
               type="text"
               value=""
+            />
+            <input
+              class="c7n-pro-input-number-range-start"
+              placeholder="Range Start"
+              readonly=""
+              tabindex="-1"
+              value="0"
+            />
+            <span
+              class="c7n-pro-input-number-range-split"
+            >
+              ~
+            </span>
+            <input
+              class="c7n-pro-input-number-range-end"
+              placeholder="Range End"
+              readonly=""
+              tabindex="-1"
+              value="4"
             />
           </span>
         </span>
@@ -580,6 +580,15 @@ exports[`renders ./components-pro/number-field/demo/range.md correctly 1`] = `
               class="c7n-pro-input-number-range-text"
             >
               <input
+                autocomplete="off"
+                class="c7n-pro-input-number-range-input"
+                name="multipleNumber"
+                placeholder=""
+                style="left:0"
+                type="text"
+                value=""
+              />
+              <input
                 class="c7n-pro-input-number-range-start"
                 placeholder="Input Number"
                 readonly=""
@@ -596,15 +605,6 @@ exports[`renders ./components-pro/number-field/demo/range.md correctly 1`] = `
                 placeholder="Input Number"
                 readonly=""
                 tabindex="-1"
-                value=""
-              />
-              <input
-                autocomplete="off"
-                class="c7n-pro-input-number-range-input"
-                name="multipleNumber"
-                placeholder=""
-                style="left:0"
-                type="text"
                 value=""
               />
             </span>

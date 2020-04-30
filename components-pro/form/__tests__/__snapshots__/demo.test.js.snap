@@ -21,7 +21,9 @@ exports[`renders ./components-pro/form/demo/basic.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="手机号"
+          >
             手机号
           </label>
         </td>
@@ -86,7 +88,9 @@ exports[`renders ./components-pro/form/demo/basic.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="密码"
+          >
             密码
           </label>
         </td>
@@ -132,7 +136,9 @@ exports[`renders ./components-pro/form/demo/basic.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="确认密码"
+          >
             确认密码
           </label>
         </td>
@@ -197,7 +203,9 @@ exports[`renders ./components-pro/form/demo/basic.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="年龄"
+          >
             年龄
           </label>
         </td>
@@ -267,7 +275,9 @@ exports[`renders ./components-pro/form/demo/basic.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="性别"
+          >
             性别
           </label>
         </td>
@@ -335,7 +345,9 @@ exports[`renders ./components-pro/form/demo/basic.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="语言"
+          >
             语言
           </label>
         </td>
@@ -393,7 +405,9 @@ exports[`renders ./components-pro/form/demo/basic.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="邮箱"
+          >
             邮箱
           </label>
         </td>
@@ -458,7 +472,9 @@ exports[`renders ./components-pro/form/demo/basic.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="个人主页"
+          >
             个人主页
           </label>
         </td>
@@ -510,7 +526,9 @@ exports[`renders ./components-pro/form/demo/basic.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="生日"
+          >
             生日
           </label>
         </td>
@@ -559,7 +577,9 @@ exports[`renders ./components-pro/form/demo/basic.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right"
           rowspan="1"
         >
-          <label />
+          <label
+            title=""
+          />
         </td>
         <td
           colspan="1"
@@ -623,7 +643,9 @@ exports[`renders ./components-pro/form/demo/dataset.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="手机号"
+          >
             手机号
           </label>
         </td>
@@ -656,7 +678,9 @@ exports[`renders ./components-pro/form/demo/dataset.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="密码"
+          >
             密码
           </label>
         </td>
@@ -700,7 +724,9 @@ exports[`renders ./components-pro/form/demo/dataset.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="确认密码"
+          >
             确认密码
           </label>
         </td>
@@ -744,7 +770,9 @@ exports[`renders ./components-pro/form/demo/dataset.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="年龄"
+          >
             年龄
           </label>
         </td>
@@ -813,7 +841,9 @@ exports[`renders ./components-pro/form/demo/dataset.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="性别"
+          >
             性别
           </label>
         </td>
@@ -881,7 +911,9 @@ exports[`renders ./components-pro/form/demo/dataset.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="语言"
+          >
             语言
           </label>
         </td>
@@ -937,7 +969,9 @@ exports[`renders ./components-pro/form/demo/dataset.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="邮箱"
+          >
             邮箱
           </label>
         </td>
@@ -970,7 +1004,9 @@ exports[`renders ./components-pro/form/demo/dataset.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="个人主页"
+          >
             个人主页
           </label>
         </td>
@@ -1003,7 +1039,9 @@ exports[`renders ./components-pro/form/demo/dataset.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="生日"
+          >
             生日
           </label>
         </td>
@@ -1050,7 +1088,9 @@ exports[`renders ./components-pro/form/demo/dataset.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right"
           rowspan="1"
         >
-          <label>
+          <label
+            title="代码描述"
+          >
             代码描述
           </label>
         </td>
@@ -1102,7 +1142,9 @@ exports[`renders ./components-pro/form/demo/dataset.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right"
           rowspan="1"
         >
-          <label>
+          <label
+            title="是否冻结"
+          >
             是否冻结
           </label>
         </td>
@@ -1135,7 +1177,9 @@ exports[`renders ./components-pro/form/demo/dataset.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right"
           rowspan="1"
         >
-          <label />
+          <label
+            title=""
+          />
         </td>
         <td
           colspan="1"
@@ -1212,7 +1256,9 @@ exports[`renders ./components-pro/form/demo/disabled.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="手机号"
+          >
             手机号
           </label>
         </td>
@@ -1272,7 +1318,9 @@ exports[`renders ./components-pro/form/demo/disabled.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="密码"
+          >
             密码
           </label>
         </td>
@@ -1313,7 +1361,9 @@ exports[`renders ./components-pro/form/demo/disabled.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="确认密码"
+          >
             确认密码
           </label>
         </td>
@@ -1373,7 +1423,9 @@ exports[`renders ./components-pro/form/demo/disabled.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="年龄"
+          >
             年龄
           </label>
         </td>
@@ -1433,7 +1485,9 @@ exports[`renders ./components-pro/form/demo/disabled.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="性别"
+          >
             性别
           </label>
         </td>
@@ -1503,7 +1557,9 @@ exports[`renders ./components-pro/form/demo/disabled.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="语言"
+          >
             语言
           </label>
         </td>
@@ -1555,7 +1611,9 @@ exports[`renders ./components-pro/form/demo/disabled.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="邮箱"
+          >
             邮箱
           </label>
         </td>
@@ -1620,7 +1678,9 @@ exports[`renders ./components-pro/form/demo/disabled.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="个人主页"
+          >
             个人主页
           </label>
         </td>
@@ -1674,7 +1734,9 @@ exports[`renders ./components-pro/form/demo/disabled.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="生日"
+          >
             生日
           </label>
         </td>
@@ -1717,7 +1779,9 @@ exports[`renders ./components-pro/form/demo/disabled.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right"
           rowspan="1"
         >
-          <label />
+          <label
+            title=""
+          />
         </td>
         <td
           colspan="1"
@@ -2478,7 +2542,9 @@ exports[`renders ./components-pro/form/demo/header.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="手机号"
+          >
             手机号
           </label>
         </td>
@@ -2521,7 +2587,9 @@ exports[`renders ./components-pro/form/demo/header.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="密码"
+          >
             密码
           </label>
         </td>
@@ -2567,7 +2635,9 @@ exports[`renders ./components-pro/form/demo/header.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="确认密码"
+          >
             确认密码
           </label>
         </td>
@@ -2613,7 +2683,9 @@ exports[`renders ./components-pro/form/demo/header.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="年龄"
+          >
             年龄
           </label>
         </td>
@@ -2662,7 +2734,9 @@ exports[`renders ./components-pro/form/demo/header.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="性别"
+          >
             性别
           </label>
         </td>
@@ -2730,7 +2804,9 @@ exports[`renders ./components-pro/form/demo/header.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="语言"
+          >
             语言
           </label>
         </td>
@@ -2784,7 +2860,9 @@ exports[`renders ./components-pro/form/demo/header.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="邮箱"
+          >
             邮箱
           </label>
         </td>
@@ -2819,7 +2897,9 @@ exports[`renders ./components-pro/form/demo/header.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="个人主页"
+          >
             个人主页
           </label>
         </td>
@@ -2854,7 +2934,9 @@ exports[`renders ./components-pro/form/demo/header.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="生日"
+          >
             生日
           </label>
         </td>
@@ -2903,7 +2985,9 @@ exports[`renders ./components-pro/form/demo/header.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right"
           rowspan="1"
         >
-          <label />
+          <label
+            title=""
+          />
         </td>
         <td
           colspan="1"
@@ -2974,7 +3058,9 @@ exports[`renders ./components-pro/form/demo/layout.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="手机号"
+          >
             手机号
           </label>
         </td>
@@ -3010,7 +3096,9 @@ exports[`renders ./components-pro/form/demo/layout.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="密码"
+          >
             密码
           </label>
         </td>
@@ -3054,7 +3142,9 @@ exports[`renders ./components-pro/form/demo/layout.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="2"
         >
-          <label>
+          <label
+            title="年龄"
+          >
             年龄
           </label>
         </td>
@@ -3118,7 +3208,9 @@ exports[`renders ./components-pro/form/demo/layout.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="确认密码"
+          >
             确认密码
           </label>
         </td>
@@ -3164,7 +3256,9 @@ exports[`renders ./components-pro/form/demo/layout.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="性别"
+          >
             性别
           </label>
         </td>
@@ -3230,7 +3324,9 @@ exports[`renders ./components-pro/form/demo/layout.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="语言"
+          >
             语言
           </label>
         </td>
@@ -3284,7 +3380,9 @@ exports[`renders ./components-pro/form/demo/layout.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right"
           rowspan="1"
         >
-          <label>
+          <label
+            title="邮箱"
+          >
             邮箱
           </label>
         </td>
@@ -3316,7 +3414,9 @@ exports[`renders ./components-pro/form/demo/layout.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="2"
         >
-          <label>
+          <label
+            title="简介"
+          >
             简介
           </label>
         </td>
@@ -3356,7 +3456,9 @@ exports[`renders ./components-pro/form/demo/layout.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title=""
+          >
             <span>
               个人主页
             </span>
@@ -3412,7 +3514,9 @@ exports[`renders ./components-pro/form/demo/layout.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="生日"
+          >
             生日
           </label>
         </td>
@@ -3461,7 +3565,9 @@ exports[`renders ./components-pro/form/demo/layout.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right"
           rowspan="1"
         >
-          <label />
+          <label
+            title=""
+          />
         </td>
         <td
           colspan="5"
@@ -4426,7 +4532,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
               class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
               rowspan="1"
             >
-              <label>
+              <label
+                title="手机号"
+              >
                 手机号
               </label>
             </td>
@@ -4460,7 +4568,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
               class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
               rowspan="1"
             >
-              <label>
+              <label
+                title="密码"
+              >
                 密码
               </label>
             </td>
@@ -4505,7 +4615,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
               class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
               rowspan="1"
             >
-              <label>
+              <label
+                title="确认密码"
+              >
                 确认密码
               </label>
             </td>
@@ -4550,7 +4662,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
               class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
               rowspan="1"
             >
-              <label>
+              <label
+                title="年龄"
+              >
                 年龄
               </label>
             </td>
@@ -4608,7 +4722,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
               class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
               rowspan="1"
             >
-              <label>
+              <label
+                title="性别"
+              >
                 性别
               </label>
             </td>
@@ -4677,7 +4793,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
               class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
               rowspan="1"
             >
-              <label>
+              <label
+                title="语言"
+              >
                 语言
               </label>
             </td>
@@ -4726,7 +4844,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
               class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
               rowspan="1"
             >
-              <label>
+              <label
+                title="邮箱"
+              >
                 邮箱
               </label>
             </td>
@@ -4760,7 +4880,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
               class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
               rowspan="1"
             >
-              <label>
+              <label
+                title="个人主页"
+              >
                 个人主页
               </label>
             </td>
@@ -4794,7 +4916,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
               class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
               rowspan="1"
             >
-              <label>
+              <label
+                title="生日"
+              >
                 生日
               </label>
             </td>
@@ -4834,7 +4958,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
               class="c7n-pro-field-label c7n-pro-field-label-right"
               rowspan="1"
             >
-              <label>
+              <label
+                title="代码描述"
+              >
                 代码描述
               </label>
             </td>
@@ -4880,7 +5006,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
               class="c7n-pro-field-label c7n-pro-field-label-right"
               rowspan="1"
             >
-              <label>
+              <label
+                title="是否冻结"
+              >
                 是否冻结
               </label>
             </td>
@@ -4934,7 +5062,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
               class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
               rowspan="1"
             >
-              <label>
+              <label
+                title="手机号"
+              >
                 手机号
               </label>
             </td>
@@ -4967,7 +5097,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
               class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
               rowspan="1"
             >
-              <label>
+              <label
+                title="密码"
+              >
                 密码
               </label>
             </td>
@@ -5011,7 +5143,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
               class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
               rowspan="1"
             >
-              <label>
+              <label
+                title="确认密码"
+              >
                 确认密码
               </label>
             </td>
@@ -5055,7 +5189,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
               class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
               rowspan="1"
             >
-              <label>
+              <label
+                title="年龄"
+              >
                 年龄
               </label>
             </td>
@@ -5124,7 +5260,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
               class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
               rowspan="1"
             >
-              <label>
+              <label
+                title="性别"
+              >
                 性别
               </label>
             </td>
@@ -5193,7 +5331,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
               class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
               rowspan="1"
             >
-              <label>
+              <label
+                title="语言"
+              >
                 语言
               </label>
             </td>
@@ -5249,7 +5389,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
               class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
               rowspan="1"
             >
-              <label>
+              <label
+                title="邮箱"
+              >
                 邮箱
               </label>
             </td>
@@ -5282,7 +5424,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
               class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
               rowspan="1"
             >
-              <label>
+              <label
+                title="个人主页"
+              >
                 个人主页
               </label>
             </td>
@@ -5315,7 +5459,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
               class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
               rowspan="1"
             >
-              <label>
+              <label
+                title="生日"
+              >
                 生日
               </label>
             </td>
@@ -5362,7 +5508,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
               class="c7n-pro-field-label c7n-pro-field-label-right"
               rowspan="1"
             >
-              <label>
+              <label
+                title="代码描述"
+              >
                 代码描述
               </label>
             </td>
@@ -5414,7 +5562,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
               class="c7n-pro-field-label c7n-pro-field-label-right"
               rowspan="1"
             >
-              <label>
+              <label
+                title="是否冻结"
+              >
                 是否冻结
               </label>
             </td>
@@ -5447,7 +5597,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
               class="c7n-pro-field-label c7n-pro-field-label-right"
               rowspan="1"
             >
-              <label />
+              <label
+                title=""
+              />
             </td>
             <td
               colspan="1"
@@ -5513,7 +5665,9 @@ exports[`renders ./components-pro/form/demo/record.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="手机号"
+          >
             手机号
           </label>
         </td>
@@ -5547,7 +5701,9 @@ exports[`renders ./components-pro/form/demo/record.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="密码"
+          >
             密码
           </label>
         </td>
@@ -5591,7 +5747,9 @@ exports[`renders ./components-pro/form/demo/record.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="确认密码"
+          >
             确认密码
           </label>
         </td>
@@ -5635,7 +5793,9 @@ exports[`renders ./components-pro/form/demo/record.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="年龄"
+          >
             年龄
           </label>
         </td>
@@ -5706,7 +5866,9 @@ exports[`renders ./components-pro/form/demo/record.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="性别"
+          >
             性别
           </label>
         </td>
@@ -5774,7 +5936,9 @@ exports[`renders ./components-pro/form/demo/record.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="语言"
+          >
             语言
           </label>
         </td>
@@ -5830,7 +5994,9 @@ exports[`renders ./components-pro/form/demo/record.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="邮箱"
+          >
             邮箱
           </label>
         </td>
@@ -5863,7 +6029,9 @@ exports[`renders ./components-pro/form/demo/record.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="个人主页"
+          >
             个人主页
           </label>
         </td>
@@ -5896,7 +6064,9 @@ exports[`renders ./components-pro/form/demo/record.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="生日"
+          >
             生日
           </label>
         </td>
@@ -5943,7 +6113,9 @@ exports[`renders ./components-pro/form/demo/record.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right"
           rowspan="1"
         >
-          <label>
+          <label
+            title="代码描述"
+          >
             代码描述
           </label>
         </td>
@@ -5995,7 +6167,9 @@ exports[`renders ./components-pro/form/demo/record.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right"
           rowspan="1"
         >
-          <label />
+          <label
+            title=""
+          />
         </td>
         <td
           colspan="1"
@@ -6058,7 +6232,9 @@ exports[`renders ./components-pro/form/demo/responsive.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="手机号"
+          >
             手机号
           </label>
         </td>
@@ -6123,7 +6299,9 @@ exports[`renders ./components-pro/form/demo/responsive.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="密码"
+          >
             密码
           </label>
         </td>
@@ -6169,7 +6347,9 @@ exports[`renders ./components-pro/form/demo/responsive.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="确认密码"
+          >
             确认密码
           </label>
         </td>
@@ -6234,7 +6414,9 @@ exports[`renders ./components-pro/form/demo/responsive.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="年龄"
+          >
             年龄
           </label>
         </td>
@@ -6304,7 +6486,9 @@ exports[`renders ./components-pro/form/demo/responsive.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="性别"
+          >
             性别
           </label>
         </td>
@@ -6372,7 +6556,9 @@ exports[`renders ./components-pro/form/demo/responsive.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="语言"
+          >
             语言
           </label>
         </td>
@@ -6430,7 +6616,9 @@ exports[`renders ./components-pro/form/demo/responsive.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="邮箱"
+          >
             邮箱
           </label>
         </td>
@@ -6465,7 +6653,9 @@ exports[`renders ./components-pro/form/demo/responsive.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="个人主页"
+          >
             个人主页
           </label>
         </td>
@@ -6517,7 +6707,9 @@ exports[`renders ./components-pro/form/demo/responsive.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
           rowspan="1"
         >
-          <label>
+          <label
+            title="生日"
+          >
             生日
           </label>
         </td>
@@ -6566,7 +6758,9 @@ exports[`renders ./components-pro/form/demo/responsive.md correctly 1`] = `
           class="c7n-pro-field-label c7n-pro-field-label-right"
           rowspan="1"
         >
-          <label />
+          <label
+            title=""
+          />
         </td>
         <td
           colspan="1"
