@@ -315,6 +315,30 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     }
     return (
       <span key="text" className={`${prefixCls}-range-text`}>
+        {/* 确保 range-input 为第一个 当点击label的时候出了会让element聚焦以外还会让 label的第一个表单元素聚焦 因此导致意料之外的bug */}
+        <input
+          {...props}
+          className={`${prefixCls}-range-input`}
+          key="text"
+          value={
+            rangeTarget === undefined || !this.isFocused
+              ? ''
+              : this.text === undefined
+                ? rangeTarget === 0
+                  ? startValue
+                  : endValue
+                : this.text
+          }
+          placeholder={
+            rangeTarget === undefined || !this.isFocused
+              ? ''
+              : rangeTarget === 0
+                ? startPlaceholder
+                : endPlaceHolder
+          }
+          readOnly={!this.editable}
+          style={editorStyle}
+        />
         <input
           tabIndex={-1}
           className={`${prefixCls}-range-start`}
@@ -333,29 +357,6 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           value={rangeTarget === 1 && isFocused ? '' : endValue}
           placeholder={rangeTarget === 1 && isFocused ? '' : endPlaceHolder}
           readOnly
-        />
-        <input
-          {...props}
-          className={`${prefixCls}-range-input`}
-          key="text"
-          value={
-            rangeTarget === undefined || !this.isFocused
-              ? ''
-              : this.text === undefined
-              ? rangeTarget === 0
-                ? startValue
-                : endValue
-              : this.text
-          }
-          placeholder={
-            rangeTarget === undefined || !this.isFocused
-              ? ''
-              : rangeTarget === 0
-              ? startPlaceholder
-              : endPlaceHolder
-          }
-          readOnly={!this.editable}
-          style={editorStyle}
         />
       </span>
     );
@@ -428,9 +429,9 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
             {range
               ? this.renderRangeEditor(otherProps)
               : this.renderMultipleEditor({
-                  ...otherProps,
-                  className: `${prefixCls}-multiple-input`,
-                } as T)}
+                ...otherProps,
+                className: `${prefixCls}-multiple-input`,
+              } as T)}
           </Animate>
         </div>
       );
@@ -590,7 +591,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     this.afterRemoveValue(value, -1);
   }
 
-  handleTagAnimateEnd() {}
+  handleTagAnimateEnd() { }
 
   @autobind
   handleTagAnimateEnter() {
@@ -602,12 +603,21 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   @autobind
-  handleRangeStart() {
+  handleRangeStart(event: React.MouseEvent<HTMLInputElement, MouseEvent>) {
+    // 进行切换的时候默认不会收起 popup 因为点击start的时候也会触发 trigger 的 handleClick
+    // 导致在设置了 isClickToHide 的情况下回收起
+    // handleRangeEnd 同理
+    if (this.rangeTarget === 1) {
+      event.preventDefault();
+    }
     this.setRangeTarget(0);
   }
 
   @autobind
-  handleRangeEnd() {
+  handleRangeEnd(event: React.MouseEvent<HTMLInputElement, MouseEvent>) {
+    if (this.rangeTarget === 0) {
+      event.preventDefault();
+    }
     this.setRangeTarget(1);
   }
 
@@ -662,6 +672,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   @autobind
   handleClearButtonClick() {
+    this.setRangeTarget(0);
     this.clear();
   }
 

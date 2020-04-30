@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>DatePicker`: Fixed the problem of unable to continue selecting values and popover interaction after clearing in range mode.
+
 ## 0.8.61
 
 `2020-04-28`
