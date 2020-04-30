@@ -607,7 +607,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     // 进行切换的时候默认不会收起 popup 因为点击start的时候也会触发 trigger 的 handleClick
     // 导致在设置了 isClickToHide 的情况下回收起
     // handleRangeEnd 同理
-    if (this.rangeTarget === 1) {
+    if (this.rangeTarget === 1 && this.isFocused) {
       event.preventDefault();
     }
     this.setRangeTarget(0);
@@ -615,7 +615,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   @autobind
   handleRangeEnd(event: React.MouseEvent<HTMLInputElement, MouseEvent>) {
-    if (this.rangeTarget === 0) {
+    if (this.rangeTarget === 0 && this.isFocused) {
       event.preventDefault();
     }
     this.setRangeTarget(1);
