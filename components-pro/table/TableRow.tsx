@@ -20,7 +20,7 @@ import { ElementProps } from '../core/ViewComponent';
 import TableContext from './TableContext';
 import ExpandIcon from './ExpandIcon';
 import { ColumnLock, SelectionMode } from './enum';
-import { getColumnKey, isDisabledRow } from './utils';
+import { getColumnKey, isDisabledRow, isSelectedRow } from './utils';
 import { EXPAND_KEY } from './TableStore';
 import { ExpandedRowProps } from './ExpandedRow';
 import autobind from '../_util/autobind';
@@ -381,6 +381,7 @@ export default class TableRow extends Component<TableRowProps, any> {
         lockColumnsBodyRowsHeight,
         overflowX,
         highLightRow,
+        selectedHighLightRow,
         props: { onRow, rowRenderer, selectionMode },
       },
     } = this.context;
@@ -398,6 +399,7 @@ export default class TableRow extends Component<TableRowProps, any> {
     };
     this.rowExternalProps = rowExternalProps;
     const disabled = isDisabledRow(record);
+    const selected = isSelectedRow(record);
     const rowPrefixCls = `${prefixCls}-row`;
     const classString = classNames(
       rowPrefixCls,
@@ -405,6 +407,7 @@ export default class TableRow extends Component<TableRowProps, any> {
         [`${rowPrefixCls}-current`]: highLightRow && isCurrent,
         [`${rowPrefixCls}-hover`]: highLightRow && !isCurrent && this.isHover,
         [`${rowPrefixCls}-highlight`]: highLightRow,
+        [`${rowPrefixCls}-selected`]: selectedHighLightRow && selected,
         [`${rowPrefixCls}-disabled`]: disabled,
       },
       rowExternalProps.className,

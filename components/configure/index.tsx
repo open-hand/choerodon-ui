@@ -82,6 +82,7 @@ export type Config = {
   queryBar?: TableQueryBarType | TableQueryBarHook;
   tableBorder?: boolean;
   tableHighLightRow?: boolean;
+  tableSelectedHighLightRow?: boolean;
   tableRowHeight?: 'auto' | number;
   tableColumnResizable?: boolean;
   tableExpandIcon?: (props: expandInconProps) => ReactNode;
@@ -158,6 +159,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['queryBar', TableQueryBarType.normal],
   ['tableBorder', true],
   ['tableHighLightRow', true],
+  ['tableSelectedHighLightRow', false],
   ['tableRowHeight', 30],
   ['tableColumnResizable', true],
   ['tableSpinProps', defaultSpinProps],
