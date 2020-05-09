@@ -15,11 +15,12 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Table`: Added table tree support the paging.
+- 💄 Optimize the documentation used in create-react-app.
 - 🐞 `<pro>Table`: Fixed filterBar drop-down style.
 - 🐞 `<pro>SelectBox`: Fixed dataset required control style.
 - 🐞 `<pro>DatePicker`: Fixed max/min restricted after emptying is not optional.
 - 🐞 `<pro>DatePicker`: Fixed the problem of unable to continue selecting values and popover interaction after clearing in range mode.
-- 💄 Optimize the documentation used in create-react-app.
 
 ## 0.8.61
 
