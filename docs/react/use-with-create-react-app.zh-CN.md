@@ -52,10 +52,10 @@ $ yarn start
 └── yarn.lock
 ```
 
-现在从 yarn 或 npm 安装并引入 choerodon-ui。
+现在从 yarn 或 npm 安装并引入 choerodon-ui 以及相关的依赖
 
 ```bash
-$ yarn add choerodon-ui
+$ yarn add choerodon-ui mobx react-mobx axios
 ```
 
 修改 `src/App.js`，引入 choerodon-ui 的按钮组件。
@@ -78,10 +78,11 @@ class App extends Component {
 export default App;
 ```
 
-修改 `src/App.css`，在文件顶部引入 `choerodon-ui/dist/choerodon-ui.css`。
+修改 `src/App.css`，在文件顶部引入 `choerodon-ui/dist/choerodon-ui.css` 如果你需要使用pro的组件需要同时引入 `choerodon-ui/dist/choerodon-ui-pro.css`。
 
 ```css
 @import '~choerodon-ui/dist/choerodon-ui.css';
+@import '~choerodon-ui/dist/choerodon-ui-pro.css';
 
 .App {
   text-align: center;
@@ -98,10 +99,10 @@ export default App;
 
 此时我们需要对 create-react-app 的默认配置进行自定义，这里我们使用 [react-app-rewired](https://github.com/timarney/react-app-rewired) （一个对 create-react-app 进行自定义配置的社区解决方案）。
 
-引入 react-app-rewired 并修改 package.json 里的启动配置。
+引入 react-app-rewired 并修改 package.json 里的启动配置。由于新的 [react-app-rewired@2.x](https://github.com/timarney/react-app-rewired#alternatives) 版本的关系，你还需要安装 [customize-cra](https://github.com/arackaf/customize-cra)。
 
 ```
-$ yarn add react-app-rewired --dev
+$ yarn add react-app-rewired customize-cra
 ```
 
 ```diff
@@ -111,8 +112,8 @@ $ yarn add react-app-rewired --dev
 +   "start": "react-app-rewired start",
 -   "build": "react-scripts build",
 +   "build": "react-app-rewired build",
--   "test": "react-scripts test --env=jsdom",
-+   "test": "react-app-rewired test --env=jsdom",
+-   "test": "react-scripts test",
++   "test": "react-app-rewired test",
 }
 ```
 
@@ -127,27 +128,42 @@ module.exports = function override(config, env) {
 
 ### 使用 babel-plugin-import
 
-[babel-plugin-import](https://github.com/ant-design/babel-plugin-import) 是一个用于按需加载组件代码和样式的 babel 插件（[原理](/docs/react/getting-started#按需加载)），现在我们尝试安装它并修改 `config-overrides.js` 文件。
+[babel-plugin-import](https://github.com/ant-design/babel-plugin-import) 是一个用于按需加载组件代码和样式的 babel 插件（[原理](/docs/react/getting-started#按需加载)），现在我们尝试安装它并修改 `config-overrides.js` 文件。因为我们指定了style为true 所以需要引入less以及less-loader
 
 ```bash
 $ yarn add babel-plugin-import --dev
+$ yarn add less less-loader
 ```
 
 ```diff
-+ const { injectBabelPlugin } = require('react-app-rewired');
++ const { override, fixBabelImports, addLessLoader } = require('customize-cra');
 
-  module.exports = function override(config, env) {
-+   config = injectBabelPlugin(['import', { libraryName: 'choerodon-ui', libraryDirectory: 'es', style: 'css' }], config);
-    return config;
-  };
+- module.exports = function override(config, env) {
+-   // do stuff with the webpack config...
+-   return config;
+- };
++ module.exports = override(
++   fixBabelImports('import', {
++     libraryName: 'choerodon-ui',
++     libraryDirectory: 'lib',
++     style: true,
++   }),
++   fixBabelImports('import', {
++     libraryName: 'choerodon-ui/pro',
++     libraryDirectory: 'lib',
++     style: true,
++   }),
++   addLessLoader()
++ );
 ```
 
-然后移除前面在 `src/App.css` 里全量添加的 `@import '~choerodon-ui/dist/choerodon-ui.css';` 样式代码，并且按下面的格式引入模块。
+然后移除前面在 `src/App.css` 里全量添加的 `@import '~choerodon-ui/dist/choerodon-ui.css';` 以及 `choerodon-ui/dist/choerodon-ui-pro.css` 样式代码，并且按下面的格式引入模块。
 
 ```diff
   // src/App.js
   import React, { Component } from 'react';
 - import Button from 'choerodon-ui/lib/button';
+
 + import { Button } from 'choerodon-ui';
   import './App.css';
 
@@ -168,24 +184,34 @@ $ yarn add babel-plugin-import --dev
 
 ### 自定义主题
 
-按照 [配置主题](/docs/react/customize-theme) 的要求，自定义主题需要用到 less 变量覆盖功能。我们可以引入 react-app-rewire 的 less 插件 [react-app-rewire-less](http://npmjs.com/react-app-rewire-less) 来帮助加载 less 样式，同时修改 `config-overrides.js` 文件。
+按照 [配置主题](/docs/react/customize-theme) 的要求，自定义主题需要用到 less 变量覆盖功能。我们可以引入 `customize-cra` 中提供的 less 相关的函数 [addLessLoader](https://github.com/arackaf/customize-cra#addlessloaderloaderoptions) 来帮助加载 less 样式，同时修改 `config-overrides.js` 文件如下。如果 addLessLoader 出现错误可以及时参考对应的[issue](https://github.com/arackaf/customize-cra/issues)。
 
 ```bash
-$ yarn add react-app-rewire-less --dev
+$ yarn add less less-loader
 ```
 
 ```diff
-  const { injectBabelPlugin } = require('react-app-rewired');
-+ const rewireLess = require('react-app-rewire-less');
+const { override, fixBabelImports, addLessLoader } = require('customize-cra');
 
-  module.exports = function override(config, env) {
--   config = injectBabelPlugin(['import', { libraryName: 'choerodon-ui', style: 'css' }], config);
-+   config = injectBabelPlugin(['import', { libraryName: 'choerodon-ui', style: true }], config);
-+   config = rewireLess.withLoaderOptions({
-+     modifyVars: { "@primary-color": "#1DA57A" },
-+   })(config, env);
-    return config;
-  };
+module.exports = override(
+   fixBabelImports('import', {
+     libraryName: 'choerodon-ui',
+     libraryDirectory: 'lib',
+     style: true,
+   }),
+   fixBabelImports('import', {
+     libraryName: 'choerodon-ui/pro',
+     libraryDirectory: 'lib',
+     style: true,
+   }),
+-  addLessLoader()
++ addLessLoader({
++   lessOptions: { // 如果使用less-loader@5，请移除 lessOptions 这一级直接配置选项。
++     javascriptEnabled: true,
++     modifyVars: { '@primary-color': '#1DA57A' },
++   },
++ }),
+);
 ```
 
 这里利用了 [less-loader](https://github.com/webpack/less-loader#less-options) 的 `modifyVars` 来进行主题配置，
