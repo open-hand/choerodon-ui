@@ -17,6 +17,7 @@ timeline: true
 
 - 🐞 `<pro>Table`: Fixed filterBar drop-down style.
 - 🐞 `<pro>SelectBox`: Fixed dataset required control style.
+- 🐞 `<pro>DatePicker`: Fixed max/min restricted after emptying is not optional.
 - 🐞 `<pro>DatePicker`: Fixed the problem of unable to continue selecting values and popover interaction after clearing in range mode.
 
 ## 0.8.61

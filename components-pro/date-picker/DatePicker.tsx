@@ -312,7 +312,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     if (!isNil(limit)) {
       const { record } = this;
       if (record && isString(limit) && record.getField(limit)) {
-        return this.getLimitWithType(moment(record.get(limit)), minOrMax);
+        return record.get(limit) ? this.getLimitWithType(moment(record.get(limit)), minOrMax) : record.get(limit);
       }
       return this.getLimitWithType(moment(limit), minOrMax);
     }

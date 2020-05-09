@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import moment, { Moment } from 'moment';
+import { Moment } from 'moment';
 import classNames from 'classnames';
 import autobind from '../_util/autobind';
 import Icon from '../icon';
@@ -73,9 +73,8 @@ export default class DecadeYearsView extends DaysView {
       prefixCls,
       props: { date },
     } = this;
-    const current = date || moment().startOf('d');
-    const year = current.year() % 100;
-    const from = current.clone().subtract(year, 'y');
+    const year = date.year() % 100;
+    const from = date.clone().subtract(year, 'y');
     const to = from.clone().add(99, 'y');
     return (
       <div className={`${prefixCls}-header`}>
@@ -101,12 +100,11 @@ export default class DecadeYearsView extends DaysView {
       prefixCls,
       props: { date, renderer = this.renderCell, isValidDate = alwaysValidDate },
     } = this;
-    const current = date || moment().startOf('d');
-    const selected = current.clone().subtract(current.year() % 10, 'y');
-    const from = current
+    const selected = date.clone().subtract(date.year() % 10, 'y');
+    const from = date
       .clone()
       .startOf('y')
-      .subtract(current.year() % 100, 'y');
+      .subtract(date.year() % 100, 'y');
     const to = from.clone().add(100, 'y');
     const prevYear = from.clone().subtract(10, 'y');
     const lastYear = to.clone().add(10, 'y');
