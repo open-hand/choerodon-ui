@@ -451,7 +451,7 @@ exports[`renders ./components-pro/form/demo/basic.md correctly 1`] = `
                     type="button"
                   >
                     <span>
-                      Click me 
+                      Click me
                       <i
                         class="icon icon-arrow_drop_down"
                       />
@@ -1160,7 +1160,7 @@ exports[`renders ./components-pro/form/demo/dataset.md correctly 1`] = `
             >
               <input
                 class="c7n-pro-switch"
-                name="frozon"
+                name="frozen"
                 type="checkbox"
                 value="true"
               />
@@ -1660,7 +1660,7 @@ exports[`renders ./components-pro/form/demo/disabled.md correctly 1`] = `
                     type="button"
                   >
                     <span>
-                      Click me 
+                      Click me
                       <i
                         class="icon icon-arrow_drop_down"
                       />
@@ -5024,7 +5024,7 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
                 >
                   <input
                     class="c7n-pro-switch"
-                    name="frozon"
+                    name="frozen"
                     type="checkbox"
                     value="true"
                   />
@@ -5580,7 +5580,7 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
                 >
                   <input
                     class="c7n-pro-switch"
-                    name="frozon"
+                    name="frozen"
                     type="checkbox"
                     value="true"
                   />

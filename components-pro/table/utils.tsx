@@ -189,6 +189,10 @@ export function isDisabledRow(record: Record) {
   return record.isCached || record.status === RecordStatus.delete;
 }
 
+export function isSelectedRow(record: Record) {
+  return record.isSelected;
+}
+
 export function getHeader(column: ColumnProps, dataSet: DataSet): ReactNode {
   const { header, name } = column;
   if (typeof header === 'function') {
