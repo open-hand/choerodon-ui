@@ -9,6 +9,7 @@ import isArray from 'lodash/isArray';
 import isNumber from 'lodash/isNumber';
 import warning from 'choerodon-ui/lib/_util/warning';
 import { getConfig } from 'choerodon-ui/lib/configure';
+import isNil from 'lodash/isNil';
 import Field, { DynamicPropsArguments, FieldProps, Fields } from './Field';
 import { BooleanValue, DataToJSON, FieldType, RecordStatus, SortOrder } from './enum';
 import DataSet from './DataSet';
@@ -177,6 +178,37 @@ export function sortTree(children: Record[], orderField: Field): Record[] {
     });
   }
   return children;
+}
+
+// 递归生成树获取树形结构数据
+function availableTree(idField,parentField,parentId,allData){
+  let result = []
+  allData.forEach(element => {
+    if(element[parentField] === parentId){
+      const childresult = availableTree(idField,parentField,element[idField],allData);
+      result= result.concat(element).concat(childresult)
+    }
+  });
+  return result;
+}
+
+
+// 获取单个页面能够展示的数据
+export function sliceTree(idField,parentField,allData,pageSize){
+  let availableTreeData= []
+  if(allData.length) {
+   let parentLength = 0
+   allData.forEach(( item ) => {
+      if(item){
+        if(isNil(item[parentField]) && !isNil(idField) && parentLength < pageSize){
+          parentLength++
+          const childresult = availableTree(idField,parentField,item[idField],allData)
+          availableTreeData= availableTreeData.concat(item).concat(childresult)
+        }
+      }
+    })
+  }
+  return availableTreeData
 }
 
 export function checkParentByInsert({ parent }: DataSet) {
@@ -398,6 +430,7 @@ export function axiosConfigAdapter(
     params,
     method: 'post',
   };
+
   const { [type]: globalConfig, adapter: globalAdapter = defaultAxiosConfigAdapter } =
     getConfig('transport') || {};
   const { [type]: config, adapter } = dataSet.transport;
@@ -414,6 +447,14 @@ export function axiosConfigAdapter(
     };
   }
   return (adapter || globalAdapter)(newConfig, type) || newConfig;
+}
+
+// 查询顶层父亲节点
+export function findRootParent(children:Record){
+  if(children.parent){
+    return findRootParent(children.parent)
+  }
+  return children
 }
 
 export function prepareForSubmit(

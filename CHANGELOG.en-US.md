@@ -15,9 +15,11 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Table`: Added table tree support the paging.
 - 🌟 `configure`: Added `tableSelectedHighLightRow` property.
 - 🌟 `<pro>Table`: Added `selectedHighLightRow` property to support selected line highlight.
-- 💄 Optimized the documentation used in create-react-app.
+- 💄 Optimize the documentation used in create-react-app.
+- 🐞 `<pro>Table`: Fixed column fieild support incomplete .
 - 🐞 `<pro>Table`: Fixed filterBar drop-down style.
 - 🐞 `<pro>SelectBox`: Fixed dataset required control style.
 - 🐞 `<pro>DatePicker`: Fixed max/min restricted after emptying is not optional.

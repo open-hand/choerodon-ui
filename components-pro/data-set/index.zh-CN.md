@@ -23,7 +23,7 @@ title: DataSet
 | selection | 选择的模式, 可选值：`false` `'multiple'` `'single'` | boolean \| string | 'multiple' |
 | modifiedCheck | 查询前，当有记录更改过时，是否警告提示。 | boolean | false |
 | pageSize | 分页大小 | number | 10 |
-| paging | 是否分页 | boolean | true |
+| paging | 是否分页, `server` 主要为table的tree服务,约定total为根节点数目,index的定位都是基于根节点, 为`server`时候保证同时存在idField 和parentField(根节点为空或者undefind) 不然表现和原有版本一致 | boolean \| `server`| true |
 | dataKey | 查询返回的 json 中对应的数据的 key, 当为 null 时对应整个 json 数据, json 不是数组时自动作为新数组的第一条数据 | string \| null | rows |
 | totalKey | 查询返回的 json 中对应的总数的 key | string | total |
 | queryDataSet | 查询条件数据源 | DataSet |  |
@@ -84,16 +84,16 @@ title: DataSet
 | query(page) | 查询 | `page`&lt;optional,defualt:0&gt; - 指定页码 | Promise&lt;any&gt; |
 | submit() | 将数据集中的增删改的记录先进行校验再进行远程提交。submit 会抛出请求的异常，请用 promise.catch 或 try-await-catch 来处理异常。 |  | Promise&lt;any&gt; `false` - 校验失败，`undefined` - 无数据提交或提交相关配置不全，如没有 submitUrl。 |
 | reset() | 重置更改, 并清除校验状态 |  |  |
-| locate(index) | 定位到指定记录, 如果`paging` 为 `true`，则做远程查询 | `index` - 记录索引 | Promise&lt;Record&gt; |
-| page(page) | 定位到指定页码，如果`paging` 为 `true`，则做远程查询 | `page` - 页码 | Promise&lt;any&gt; |
-| first() | 定位到第一条记录，如果`paging` 为 `true`，则做远程查询 |  | Promise&lt;Record&gt; |
-| last() | 定位到最后一条记录，如果`paging` 为 `true`，则做远程查询 |  | Promise&lt;Record&gt; |
-| pre() | 定位到上一条记录，如果`paging` 为 `true`，则做远程查询 |  | Promise&lt;Record&gt; |
-| next() | 定位到下一条记录，如果`paging` 为 `true`，则做远程查询 |  | Promise&lt;Record&gt; |
-| firstPage() | 定位到第一页，如果`paging` 为 `true`，则做远程查询 |  | Promise&lt;any&gt; |
-| lastPage() | 定位到最后一页，如果`paging` 为 `true`，则做远程查询 |  | Promise&lt;any&gt; |
-| prePage() | 定位到上一页，如果`paging` 为 `true`，则做远程查询 |  | Promise&lt;any&gt; |
-| nextPage() | 定位到下一页，如果`paging` 为 `true`，则做远程查询 |  | Promise&lt;any&gt; |
+| locate(index) | 定位到指定记录, 如果`paging` 为 `true`和`server`，则做远程查询 为`server`指代的是根节点节点的index坐标| `index` - 记录索引 | Promise&lt;Record&gt; |
+| page(page) | 定位到指定页码，如果`paging` 为 `true`和`server`，则做远程查询 | `page` - 页码 | Promise&lt;any&gt; |
+| first() | 定位到第一条记录，如果`paging` 为 `true`和`server`，则做远程查询 为`server`指代的第一个根节点 |  | Promise&lt;Record&gt; |
+| last() | 定位到最后一条记录，如果`paging` 为 `true`和`server`，则做远程查询 为`server`指代的是最后的根节点  | Promise&lt;Record&gt; |
+| pre() | 定位到上一条记录，如果`paging` 为 `true`和`server`，则做远程查询 为`server`指代的当前根节点的上一个根节点 |  | Promise&lt;Record&gt; |
+| next() | 定位到下一条记录，如果`paging` 为 `true`和`server`，则做远程查询 为`server`指代的当前根节点的下一个根节点 |  | Promise&lt;Record&gt; |
+| firstPage() | 定位到第一页，如果`paging` 为 `true`和`server`，则做远程查询 |  | Promise&lt;any&gt; |
+| lastPage() | 定位到最后一页，如果`paging` 为 `true`和`server`，则做远程查询 |  | Promise&lt;any&gt; |
+| prePage() | 定位到上一页，如果`paging` 为 `true`和`server`，则做远程查询 |  | Promise&lt;any&gt; |
+| nextPage() | 定位到下一页，如果`paging` 为 `true`和`server`，则做远程查询 |  | Promise&lt;any&gt; |
 | create(data, index) | 创建一条记录 | `data` - 记录数据对象；`index`&lt;optional,default:0&gt; - 记录所在的索引 | Record |
 | delete(records, confirmMessage: ReactNode \| ModalProps) | 立即删除记录 | `records` - 删除的记录或记录组 `confirmMessage` - 自定义提示信息或弹窗的属性 |  |
 | remove(records) | 临时删除记录 | `records` - 删除的记录或记录组 |  |

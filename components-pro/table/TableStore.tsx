@@ -89,12 +89,12 @@ function mergeDefaultProps(columns: ColumnProps[], defaultKey: number[] = [0]): 
       if (children) {
         newColumn.children = mergeDefaultProps(children, defaultKey);
       }
-      if (column.lock === ColumnLock.left || column.lock === true) {
-        leftFixedColumns.push(column);
-      } else if (column.lock === ColumnLock.right) {
-        rightFixedColumns.push(column);
+      if (newColumn.lock === ColumnLock.left || newColumn.lock === true) {
+        leftFixedColumns.push(newColumn);
+      } else if (newColumn.lock === ColumnLock.right) {
+        rightFixedColumns.push(newColumn);
       } else {
-        columnsNew.push(column);
+        columnsNew.push(newColumn);
       }
     }
   })
@@ -675,3 +675,4 @@ export default class TableStore {
     return columns;
   }
 }
+
