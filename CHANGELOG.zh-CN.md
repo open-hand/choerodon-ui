@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `<pro>Table`: 添加tree Table 对于分页的支持.
 - 💄 优化在create-react-app中使用的文档。
+- 🐞 `<pro>Table`: 修复使用 column 属性支持不全面。
 - 🐞 `<pro>Table`: 修复 filterBar 下拉样式。
 - 🐞 `<pro>SelectBox`: 修复 DataSet 必输控制样式。
 - 🐞 `<pro>DatePicker`: 修复 max/min 限制清空之后不可选问题。

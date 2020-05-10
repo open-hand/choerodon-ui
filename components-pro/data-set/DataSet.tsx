@@ -899,14 +899,6 @@ export default class DataSet extends EventManager {
     if (page > 0 && this.paging) {
       return this.locate((page - 1) * this.pageSize + this.created.length - this.destroyed.length);
     }
-
-    // if (page > 0 && this.paging === 'server' ) {
-    //   // 判断是否加载更多了的子集，加载了更多子集处理为当前record 加页面数量满足定位于下一页第一个
-    //   if(this.records.slice().length > this.pageSize) {
-    //     return this.locate(this.records.slice().length +  (page - 2) * this.pageSize + this.created.length - this.destroyed.length)
-    //   };
-    //   return this.locate((page - 1) * this.pageSize + this.created.length - this.destroyed.length);
-    // }
     warning(page > 0, 'Page number is incorrect.');
     warning(!!this.paging, 'Can not paging query util the property<paging> of DataSet is true or `server`.');
     return Promise.resolve();
@@ -925,11 +917,7 @@ export default class DataSet extends EventManager {
       this.current = currentRecord;
       return currentRecord;
     }
-    if (paging) {
-      // // 当为tree 的时候最大长度不为total值为当前页面加载的子节点数和所有父节点总合
-      // if(paging === 'server' && this.records.slice().length > this.pageSize) {
-      //    index = index - this.records.slice().length + pageSize
-      // }
+    if (paging === true || paging === 'server') {
       if (index >= 0 && index < totalCount + this.created.length - this.destroyed.length ) {
         if (
           !modifiedCheck ||
@@ -1682,7 +1670,6 @@ Then the query method will be auto invoke.`,
       pageSize,
       props: { autoLocateFirst, idField, parentField },
     } = this;
-    allData = paging === true ? allData.slice(0, pageSize) : allData;
     switch(paging){
       case true:
         allData = allData.slice(0, pageSize);
@@ -1696,7 +1683,7 @@ Then the query method will be auto invoke.`,
     this.fireEvent(DataSetEvents.beforeLoad, { dataSet: this, data: allData });
     this.originalData = this.processData(allData);
     this.records = this.originalData;
-    if (total !== undefined && paging) {
+    if (total !== undefined && (paging === true || paging === 'server')) {
       this.totalCount = total;
     }else if(idField && parentField && paging === 'server'){
       // 异步情况复用以前的total
