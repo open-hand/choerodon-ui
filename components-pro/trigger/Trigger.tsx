@@ -184,7 +184,9 @@ export default class Trigger extends Component<TriggerProps> {
           newChildProps.onFocus = this.handleEvent;
           newChildProps.onBlur = this.handleEvent;
         }
-        return <TriggerChild isClickScrollbar={this.isClickScrollbar} {...newChildProps}>{child}</TriggerChild>;
+        newChildProps.isClickScrollbar = this.isClickScrollbar;
+        newChildProps.popupHidden = this.popupHidden;
+        return <TriggerChild {...newChildProps}>{child}</TriggerChild>;
       }
       return child;
     });
