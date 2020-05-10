@@ -36,7 +36,7 @@ class App extends React.Component {
       homepage: 'https://choerodon.io',
       birth: '1984-11-22',
       code: 'HR.EMPLOYEE_GENDER',
-      frozon: 'true',
+      frozen: 'true',
     }],
     fields: [
       { name: 'phone', type: 'string', label: '手机号', required: true, pattern: '^1[3-9]\\d{9}$' }, // /^1[3-9]\d{9}$/
@@ -49,7 +49,7 @@ class App extends React.Component {
       { name: 'homepage', type: 'url', label: '个人主页', required: true },
       { name: 'birth', type: 'date', label: '生日', required: true },
       { name: 'code', type: 'object', label: '代码描述', lovCode: 'LOV_CODE' },
-      { name: 'frozon', type: 'boolean', label: '是否冻结' },
+      { name: 'frozen', type: 'boolean', label: '是否冻结' },
     ],
   });
 
@@ -75,7 +75,7 @@ class App extends React.Component {
             <UrlField name="homepage" />
             <DatePicker name="birth" />
             <Lov name="code" />
-            <Switch name="frozon" />
+            <Switch name="frozen" />
           </Form>
         </Col>
         <Col span={12}>
@@ -97,7 +97,7 @@ class App extends React.Component {
             <UrlField name="homepage" />
             <DatePicker name="birth" />
             <Lov name="code" />
-            <Switch name="frozon" />
+            <Switch name="frozen" />
             <div>
               <Button type="submit">注册</Button>
               <Button type="reset" style={{ marginLeft: 8 }}>重置</Button>

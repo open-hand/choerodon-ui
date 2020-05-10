@@ -42,6 +42,7 @@ const prefixCls = getConfig('prefixCls');
 | queryBar | default table's queryBar | string | normal |
 | tableBorder | default table's border | boolean | true |
 | tableHighLightRow | Default Table current line highlight | boolean | true |
+| tableSelectedHighLightRow | Default Table selected line highlight | boolean | false |
 | tableRowHeight | Default Table row height | auto \| number | 30 |
 | tableColumnResizable | Default Table column resizable | boolean | true |
 | tableExpandIcon | Default Table custom expansion icon | ({ prefixCls, expanded, expandable, needIndentSpaced, record, onExpand }) => ReactNode |  |

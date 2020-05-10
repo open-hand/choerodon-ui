@@ -42,6 +42,7 @@ subtitle: 表格
 | filterBarPlaceholder | `queryBar`为`bar`时输入框的占位符 | string |  |
 | pagination | 分页器，参考[配置项](#pagination)或 [pagination](/components/pagination/)，设为 false 时不展示分页 | object \| false |  |
 | highLightRow | 当前行高亮 | boolean | true |
+| selectedHighLightRow | 勾选行高亮 | boolean | false |
 | columnResizable | 可调整列宽 | boolean | true |
 | pristine | 显示原始值 | boolean | false |
 | onExpand | 点击展开图标时触发 | (expanded, record) => void |  |

@@ -321,6 +321,24 @@
     }
   }
 
+  &-row-selected&-row:hover {
+    &,
+    & + .@{table-prefix-cls}-expanded-row {
+      & > td {
+        background-color: @item-active-bg;
+      }
+    }
+  }
+
+  &-row-selected {
+    &,
+    & + .@{table-prefix-cls}-expanded-row {
+      & > td {
+        background-color: @table-selected-row-bg;
+      }
+    }
+  }
+
   &-cell-editable &-cell-inner {
     border-color: @table-editable-cell-border-color;
   }

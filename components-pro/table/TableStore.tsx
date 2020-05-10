@@ -37,6 +37,7 @@ function renderSelectionBox({ record }) {
   if (dataSet) {
     const { selection } = dataSet;
     const handleChange = value => {
+      // console.log(handleChange)
       if (value) {
         dataSet.select(record);
       } else {
@@ -233,6 +234,17 @@ export default class TableStore {
       return this.props.highLightRow;
     }
     if (getConfig('tableHighLightRow') === false) {
+      return false;
+    }
+    return true;
+  }
+
+  @computed
+  get selectedHighLightRow(): boolean {
+    if ('selectedHighLightRow' in this.props) {
+      return this.props.selectedHighLightRow;
+    }
+    if (getConfig('tableSelectedHighLightRow') === false) {
       return false;
     }
     return true;

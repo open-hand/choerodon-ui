@@ -254,6 +254,10 @@ export interface TableProps extends DataSetComponentProps {
    */
   highLightRow?: boolean;
   /**
+   * 勾选高亮行
+   */
+  selectedHighLightRow?: boolean;
+  /**
    * 可调整列宽
    */
   columnResizable?: boolean;
@@ -361,6 +365,7 @@ export default class Table extends DataSetComponent<TableProps> {
     filterBarFieldName: PropTypes.string,
     filterBarPlaceholder: PropTypes.string,
     highLightRow: PropTypes.bool,
+    selectedHighLightRow: PropTypes.bool,
     ...DataSetComponent.propTypes,
   };
 
@@ -627,6 +632,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'filterBarPlaceholder',
       'pagination',
       'highLightRow',
+      'selectedHighLightRow',
       'columnResizable',
       'pristine',
       'spin',
