@@ -15,12 +15,16 @@ timeline: true
 
 ---
 
-- 🌟 `<pro>Table`: 添加tree Table 对于分页的支持.
+## 0.8.62
+
+`2020-05-11`
+
 - 🌟 `configure`: 新增 tableSelectedHighLightRow 属性。
+- 🌟 `<pro>Table`: 添加tree Table 对于分页的支持.
 - 🌟 `<pro>Table`: 添加 selectedHighLightRow 属性，支持勾选行高亮。
 - 💄 优化在create-react-app中使用的文档。
-- 🐞 `<pro>Table`: 修复使用 column 属性支持不全面。
 - 🐞 `<pro>Table`: 修复 filterBar 下拉样式。
+- 🐞 `<pro>Table`: 修复使用 column 属性支持不全面。
 - 🐞 `<pro>SelectBox`: 修复 DataSet 必输控制样式。
 - 🐞 `<pro>DatePicker`: 修复 max/min 限制清空之后不可选问题。
 - 🐞 `<pro>DatePicker`: 修复 range 模式下清除后无法继续选值及弹窗交互问题。
