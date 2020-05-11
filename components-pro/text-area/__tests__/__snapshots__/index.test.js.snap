@@ -283,6 +283,7 @@ exports[`TextArea-pro renders TextArea-pro correctly 1`] = `
         key=".$.$wrapper"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <div
           className="c7n-pro-textarea-wrapper c7n-pro-textarea-empty"
@@ -328,6 +329,7 @@ exports[`TextArea-pro renders TextArea-pro correctly 1`] = `
         key=".$text-null/.1"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <span
           key="text-null/.1"
@@ -800,6 +802,7 @@ exports[`TextArea-pro the dataSet should renders correctly 1`] = `
           key=".$.$wrapper"
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
+          popupHidden={true}
         >
           <div
             className="c7n-pro-textarea-wrapper c7n-pro-textarea-required"
@@ -847,6 +850,7 @@ exports[`TextArea-pro the dataSet should renders correctly 1`] = `
           key=".$text-null/.1"
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
+          popupHidden={true}
         >
           <span
             key="text-null/.1"

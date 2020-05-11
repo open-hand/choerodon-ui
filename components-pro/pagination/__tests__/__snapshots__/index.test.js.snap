@@ -380,6 +380,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
               key=".$.$element"
               onMouseEnter={[Function]}
               onMouseLeave={[Function]}
+              popupHidden={true}
             >
               <span
                 className="c7n-pro-select-wrapper c7n-pro-select-suffix-button c7n-pro-select-not-editable"
@@ -11805,6 +11806,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
                       onClick={[Function]}
                       onFocus={[Function]}
                       onMouseDown={[Function]}
+                      popupHidden={true}
                     >
                       <input
                         autoComplete="off"
@@ -11882,6 +11884,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
               key=".$text-null/.1"
               onMouseEnter={[Function]}
               onMouseLeave={[Function]}
+              popupHidden={true}
             >
               <span
                 key="text-null/.1"

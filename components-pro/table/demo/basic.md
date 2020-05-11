@@ -373,6 +373,13 @@ class App extends React.Component {
         dataSet={this.userDs}
         header="User"
         style={{ height: 200 }}
+        onRow={({ dataSet, record, index, expandedRow }) => {
+          if(index === 2) {
+            return {
+              style: { height: 50 },
+            };
+          }
+        }}
         pagination={{
           showQuickJumper: true,
         }}

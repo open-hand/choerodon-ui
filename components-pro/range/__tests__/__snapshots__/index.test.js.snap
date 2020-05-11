@@ -423,6 +423,7 @@ exports[`Range should show tooltip when hovering range handler 1`] = `
         key=".$.$wrapper"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <label
           className="c7n-pro-range-wrapper"
@@ -483,6 +484,7 @@ exports[`Range should show tooltip when hovering range handler 1`] = `
         key=".$text-null/.1"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <span
           key="text-null/.1"
@@ -956,6 +958,7 @@ exports[`Range should show tooltip when hovering range handler 2`] = `
         key=".$.$wrapper"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <label
           className="c7n-pro-range-wrapper"
@@ -1016,6 +1019,7 @@ exports[`Range should show tooltip when hovering range handler 2`] = `
         key=".$text-null/.1"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <span
           key="text-null/.1"
@@ -1489,6 +1493,7 @@ exports[`Range the range drag test  1`] = `
         key=".$.$wrapper"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <label
           className="c7n-pro-range-wrapper"
@@ -1549,6 +1554,7 @@ exports[`Range the range drag test  1`] = `
         key=".$text-null/.1"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <span
           key="text-null/.1"

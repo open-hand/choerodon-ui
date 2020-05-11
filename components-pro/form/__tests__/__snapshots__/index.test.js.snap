@@ -801,6 +801,7 @@ exports[`Select disable test 1`] = `
                           key=".$.$element"
                           onMouseEnter={[Function]}
                           onMouseLeave={[Function]}
+                          popupHidden={true}
                         >
                           <span
                             className="c7n-pro-input-wrapper c7n-pro-field c7n-pro-input-required"
@@ -844,6 +845,7 @@ exports[`Select disable test 1`] = `
                           key=".$text-null/.1"
                           onMouseEnter={[Function]}
                           onMouseLeave={[Function]}
+                          popupHidden={true}
                         >
                           <span
                             key="text-null/.1"
@@ -1201,6 +1203,7 @@ exports[`Select disable test 1`] = `
                           key=".$.$element"
                           onMouseEnter={[Function]}
                           onMouseLeave={[Function]}
+                          popupHidden={true}
                         >
                           <span
                             className="c7n-pro-password-wrapper c7n-pro-field c7n-pro-password-required c7n-pro-password-empty"
@@ -1262,6 +1265,7 @@ exports[`Select disable test 1`] = `
                           key=".$text-null/.1"
                           onMouseEnter={[Function]}
                           onMouseLeave={[Function]}
+                          popupHidden={true}
                         >
                           <span
                             key="text-null/.1"
@@ -1619,6 +1623,7 @@ exports[`Select disable test 1`] = `
                           key=".$.$wrapper"
                           onMouseEnter={[Function]}
                           onMouseLeave={[Function]}
+                          popupHidden={true}
                         >
                           <div
                             className="c7n-pro-input-number-group-wrapper"
@@ -1973,6 +1978,7 @@ exports[`Select disable test 1`] = `
                                       key=".$.0"
                                       onMouseEnter={[Function]}
                                       onMouseLeave={[Function]}
+                                      popupHidden={true}
                                     >
                                       <Icon
                                         key=".0"
@@ -2050,6 +2056,7 @@ exports[`Select disable test 1`] = `
                           key=".$text-null/.1"
                           onMouseEnter={[Function]}
                           onMouseLeave={[Function]}
+                          popupHidden={true}
                         >
                           <span
                             key="text-null/.1"
@@ -2406,6 +2413,7 @@ exports[`Select disable test 1`] = `
                           key=".$.$element"
                           onMouseEnter={[Function]}
                           onMouseLeave={[Function]}
+                          popupHidden={true}
                         >
                           <span
                             className="c7n-pro-input-wrapper c7n-pro-field c7n-pro-input-required"
@@ -2449,6 +2457,7 @@ exports[`Select disable test 1`] = `
                           key=".$text-null/.1"
                           onMouseEnter={[Function]}
                           onMouseLeave={[Function]}
+                          popupHidden={true}
                         >
                           <span
                             key="text-null/.1"

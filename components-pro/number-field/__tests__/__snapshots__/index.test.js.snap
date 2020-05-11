@@ -281,6 +281,7 @@ exports[`NumberField-pro {step,min} null renders correctly 1`] = `
         key=".$.$element"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <span
           className="c7n-pro-input-number-wrapper c7n-pro-input-number-empty"
@@ -325,6 +326,7 @@ exports[`NumberField-pro {step,min} null renders correctly 1`] = `
         key=".$text-null/.1"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <span
           key="text-null/.1"
@@ -656,6 +658,7 @@ exports[`NumberField-pro {step,min} null renders correctly 2`] = `
         key=".$.$element"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <span
           className="c7n-pro-input-number-wrapper c7n-pro-input-number-empty"
@@ -729,6 +732,7 @@ exports[`NumberField-pro {step,min} null renders correctly 2`] = `
         key=".$text-null/.1"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <span
           key="text-null/.1"
@@ -1058,6 +1062,7 @@ exports[`NumberField-pro renders NumberField correctly 1`] = `
         key=".$.$element"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <span
           className="c7n-pro-input-number-wrapper c7n-pro-input-number-empty"
@@ -1100,6 +1105,7 @@ exports[`NumberField-pro renders NumberField correctly 1`] = `
         key=".$text-null/.1"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <span
           key="text-null/.1"
@@ -1433,6 +1439,7 @@ exports[`NumberField-pro step multiple renders correctly 1`] = `
         key=".$.$element"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <span
           className="c7n-pro-input-number-wrapper c7n-pro-input-number-empty c7n-pro-input-number-multiple"
@@ -1554,6 +1561,7 @@ exports[`NumberField-pro step multiple renders correctly 1`] = `
         key=".$text-null/.1"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <span
           key="text-null/.1"
@@ -1885,6 +1893,7 @@ exports[`NumberField-pro step should have different value 1`] = `
         key=".$.$element"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <span
           className="c7n-pro-input-number-wrapper c7n-pro-input-number-empty"
@@ -1958,6 +1967,7 @@ exports[`NumberField-pro step should have different value 1`] = `
         key=".$text-null/.1"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <span
           key="text-null/.1"
@@ -2426,6 +2436,7 @@ exports[`NumberField-pro the dataset value should render correctly 1`] = `
           key=".$.$element"
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
+          popupHidden={true}
         >
           <span
             className="c7n-pro-input-number-wrapper c7n-pro-input-number-required"
@@ -2469,6 +2480,7 @@ exports[`NumberField-pro the dataset value should render correctly 1`] = `
           key=".$text-null/.1"
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
+          popupHidden={true}
         >
           <span
             key="text-null/.1"
@@ -2802,6 +2814,7 @@ exports[`NumberField-pro the input number should add when the {plus} icon clicke
         key=".$.$element"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <span
           className="c7n-pro-input-number-wrapper"
@@ -2876,6 +2889,7 @@ exports[`NumberField-pro the input number should add when the {plus} icon clicke
         key=".$text-null/.1"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <span
           key="text-null/.1"
@@ -3208,6 +3222,7 @@ exports[`NumberField-pro the input number should reduce when the {minus} icon cl
         key=".$.$element"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <span
           className="c7n-pro-input-number-wrapper"
@@ -3282,6 +3297,7 @@ exports[`NumberField-pro the input number should reduce when the {minus} icon cl
         key=".$text-null/.1"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <span
           key="text-null/.1"
@@ -3612,6 +3628,7 @@ exports[`NumberField-pro the keydown event should render keyCode { up, down } co
         key=".$.$element"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <span
           className="c7n-pro-input-number-wrapper"
@@ -3684,6 +3701,7 @@ exports[`NumberField-pro the keydown event should render keyCode { up, down } co
         key=".$text-null/.1"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <span
           key="text-null/.1"
