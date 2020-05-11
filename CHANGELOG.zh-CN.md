@@ -24,6 +24,7 @@ timeline: true
 - 🐞 `<pro>SelectBox`: 修复 DataSet 必输控制样式。
 - 🐞 `<pro>DatePicker`: 修复 max/min 限制清空之后不可选问题。
 - 🐞 `<pro>DatePicker`: 修复 range 模式下清除后无法继续选值及弹窗交互问题。
+- 🐞 `<pro>Trigger`: 修复双击选择后失去焦点弹出框重新弹出的问题。
 
 ## 0.8.61
 
