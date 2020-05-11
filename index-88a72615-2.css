@@ -15121,7 +15121,7 @@ li.c7n-select-tree-treenode-disabled > .c7n-select-tree-node-content-wrapper:hov
 }
 .c7n-pro-checkbox:checked + .c7n-pro-checkbox-inner,
 .c7n-pro-checkbox-indeterminate .c7n-pro-checkbox-inner {
-  background-color: #3f51b5;
+  background-color: #3f51b5 !important;
   border-color: #3f51b5;
 }
 .c7n-pro-checkbox:checked + .c7n-pro-checkbox-inner::after,

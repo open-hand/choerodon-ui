@@ -6289,6 +6289,14 @@ textarea.c7n-pro-table-filter-select {
 .c7n-pro-table-row-current:hover.c7n-pro-table-row-highlight + .c7n-pro-table-expanded-row > td {
   background-color: rgba(140, 158, 255, 0.12);
 }
+.c7n-pro-table-row-selected.c7n-pro-table-row:hover > td,
+.c7n-pro-table-row-selected.c7n-pro-table-row:hover + .c7n-pro-table-expanded-row > td {
+  background-color: rgba(140, 158, 255, 0.12);
+}
+.c7n-pro-table-row-selected > td,
+.c7n-pro-table-row-selected + .c7n-pro-table-expanded-row > td {
+  background-color: rgba(161, 194, 250, 0.16);
+}
 .c7n-pro-table-cell-editable .c7n-pro-table-cell-inner {
   border-color: rgba(0, 0, 0, 0.2);
 }
