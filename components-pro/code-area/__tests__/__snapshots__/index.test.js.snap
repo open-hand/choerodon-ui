@@ -556,6 +556,7 @@ exports[`CodeArea-pro the codeArea javascript formatter and lint test 1`] = `
         key=".$.0"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <div
           className="c7n-pro-code-area-wrapper c7n-pro-code-area-required"
@@ -635,6 +636,7 @@ exports[`CodeArea-pro the codeArea javascript formatter and lint test 1`] = `
         key=".$text-null/.1"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <span
           key="text-null/.1"
@@ -1224,6 +1226,7 @@ exports[`CodeArea-pro the codeArea json formatter and lint test 1`] = `
         key=".$.0"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <div
           className="c7n-pro-code-area-wrapper c7n-pro-code-area-required"
@@ -1302,6 +1305,7 @@ exports[`CodeArea-pro the codeArea json formatter and lint test 1`] = `
         key=".$text-null/.1"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <span
           key="text-null/.1"

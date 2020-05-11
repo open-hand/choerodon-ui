@@ -65,7 +65,7 @@ subtitle: 表格
 | lock | 是否锁定， 可选值 `false` `true` `left` `right` | boolean\| string | false |
 | align | 文字对齐方式，可选值： `left` `center` `right` | string |  |
 | resizable | 是否可调整宽度 | boolean | true |
-| sortable | 是否可排序 | boolean | false |
+| sortable | 是否可排序（后端请求排序，前端排序请自定义 header 自行实现） | boolean | false |
 | style | 列单元格内链样式 | object |  |
 | className | 列单元格样式名 | string |  |
 | headerStyle | 列头内链样式 | string |  |

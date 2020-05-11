@@ -423,6 +423,7 @@ exports[`Tree-pro should have a Tooltip inside 1`] = `
               key=".$.0"
               onMouseEnter={[Function]}
               onMouseLeave={[Function]}
+              popupHidden={true}
             >
               <Button
                 color="primary"

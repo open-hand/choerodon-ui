@@ -577,6 +577,7 @@ exports[`Lov-pro render mode button 1`] = `
         key=".$.0=2$lov_button"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <Button
           autoComplete="off"
@@ -684,6 +685,7 @@ exports[`Lov-pro render mode button 1`] = `
         key=".$.0=2$lov_clear_button"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <Button
           funcType="flat"
@@ -782,6 +784,7 @@ exports[`Lov-pro render mode button 1`] = `
         key=".$text-null/.1"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <span
           key="text-null/.1"

@@ -279,6 +279,7 @@ exports[`IntlField-pro { ok, cancel } button click render correctly 1`] = `
         key=".$.$element"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <span
           className="c7n-pro-input-wrapper c7n-pro-input-empty c7n-pro-input-suffix-button"
@@ -334,6 +335,7 @@ exports[`IntlField-pro { ok, cancel } button click render correctly 1`] = `
         key=".$text-null/.1"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <span
           key="text-null/.1"
@@ -663,6 +665,7 @@ exports[`IntlField-pro renders IntlField correctly 1`] = `
         key=".$.$element"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <span
           className="c7n-pro-input-wrapper c7n-pro-input-empty c7n-pro-input-suffix-button"
@@ -718,6 +721,7 @@ exports[`IntlField-pro renders IntlField correctly 1`] = `
         key=".$text-null/.1"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <span
           key="text-null/.1"
@@ -1521,6 +1525,7 @@ exports[`IntlField-pro renders dataset correctly 1`] = `
           key=".$.$element"
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
+          popupHidden={true}
         >
           <span
             className="c7n-pro-input-wrapper c7n-pro-input-required c7n-pro-input-suffix-button"
@@ -1577,6 +1582,7 @@ exports[`IntlField-pro renders dataset correctly 1`] = `
           key=".$text-null/.1"
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
+          popupHidden={true}
         >
           <span
             key="text-null/.1"
@@ -2373,6 +2379,7 @@ exports[`IntlField-pro renders dataset correctly 2`] = `
         key=".$.$element"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <span
           className="c7n-pro-input-wrapper c7n-pro-input-required c7n-pro-input-empty c7n-pro-input-suffix-button"
@@ -2429,6 +2436,7 @@ exports[`IntlField-pro renders dataset correctly 2`] = `
         key=".$text-null/.1"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <span
           key="text-null/.1"

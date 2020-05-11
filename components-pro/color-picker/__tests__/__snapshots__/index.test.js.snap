@@ -287,6 +287,7 @@ exports[`color-picker-pro footer-slider click event render correctly 1`] = `
         key=".$.$element"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <span
           className="c7n-pro-color-picker-wrapper c7n-pro-color-picker-suffix-button c7n-pro-color-picker-prefix-button c7n-pro-color-picker-expand"
@@ -453,6 +454,7 @@ exports[`color-picker-pro footer-slider click event render correctly 1`] = `
                 onClick={[Function]}
                 onFocus={[Function]}
                 onMouseDown={[Function]}
+                popupHidden={false}
               >
                 <input
                   autoComplete="off"
@@ -913,6 +915,7 @@ exports[`color-picker-pro footer-slider click event render correctly 1`] = `
         key=".$text-null/.1"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <span
           key="text-null/.1"
@@ -1250,6 +1253,7 @@ exports[`color-picker-pro renders ColorPicker correctly 1`] = `
         key=".$.$element"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <span
           className="c7n-pro-color-picker-wrapper c7n-pro-color-picker-empty c7n-pro-color-picker-suffix-button c7n-pro-color-picker-prefix-button"
@@ -1416,6 +1420,7 @@ exports[`color-picker-pro renders ColorPicker correctly 1`] = `
                 onClick={[Function]}
                 onFocus={[Function]}
                 onMouseDown={[Function]}
+                popupHidden={true}
               >
                 <input
                   autoComplete="off"
@@ -1494,6 +1499,7 @@ exports[`color-picker-pro renders ColorPicker correctly 1`] = `
         key=".$text-null/.1"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <span
           key="text-null/.1"
@@ -1970,6 +1976,7 @@ exports[`color-picker-pro should renders dataset default value correctly 1`] = `
           key=".$.$element"
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
+          popupHidden={true}
         >
           <span
             className="c7n-pro-color-picker-wrapper c7n-pro-color-picker-required c7n-pro-color-picker-suffix-button c7n-pro-color-picker-prefix-button"
@@ -2136,6 +2143,7 @@ exports[`color-picker-pro should renders dataset default value correctly 1`] = `
                   onClick={[Function]}
                   onFocus={[Function]}
                   onMouseDown={[Function]}
+                  popupHidden={true}
                 >
                   <input
                     autoComplete="off"
@@ -2215,6 +2223,7 @@ exports[`color-picker-pro should renders dataset default value correctly 1`] = `
           key=".$text-null/.1"
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
+          popupHidden={true}
         >
           <span
             key="text-null/.1"
@@ -2553,6 +2562,7 @@ exports[`color-picker-pro the panel body click event render correctly 1`] = `
         key=".$.$element"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <span
           className="c7n-pro-color-picker-wrapper c7n-pro-color-picker-empty c7n-pro-color-picker-suffix-button c7n-pro-color-picker-prefix-button c7n-pro-color-picker-expand"
@@ -2719,6 +2729,7 @@ exports[`color-picker-pro the panel body click event render correctly 1`] = `
                 onClick={[Function]}
                 onFocus={[Function]}
                 onMouseDown={[Function]}
+                popupHidden={false}
               >
                 <input
                   autoComplete="off"
@@ -3263,6 +3274,7 @@ exports[`color-picker-pro the panel body click event render correctly 1`] = `
         key=".$text-null/.1"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <span
           key="text-null/.1"
@@ -3600,6 +3612,7 @@ exports[`color-picker-pro the sliderPointer of footer click event render correct
         key=".$.$element"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <span
           className="c7n-pro-color-picker-wrapper c7n-pro-color-picker-empty c7n-pro-color-picker-suffix-button c7n-pro-color-picker-prefix-button c7n-pro-color-picker-expand"
@@ -3766,6 +3779,7 @@ exports[`color-picker-pro the sliderPointer of footer click event render correct
                 onClick={[Function]}
                 onFocus={[Function]}
                 onMouseDown={[Function]}
+                popupHidden={false}
               >
                 <input
                   autoComplete="off"
@@ -4353,6 +4367,7 @@ exports[`color-picker-pro the sliderPointer of footer click event render correct
         key=".$text-null/.1"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <span
           key="text-null/.1"

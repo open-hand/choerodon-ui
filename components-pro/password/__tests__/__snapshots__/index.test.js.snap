@@ -280,6 +280,7 @@ exports[`Password input renders Password correctly 1`] = `
         key=".$.$element"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <span
           className="c7n-pro-password-wrapper c7n-pro-password-empty"
@@ -340,6 +341,7 @@ exports[`Password input renders Password correctly 1`] = `
         key=".$text-null/.1"
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
+        popupHidden={true}
       >
         <span
           key="text-null/.1"

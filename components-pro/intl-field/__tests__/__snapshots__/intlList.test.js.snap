@@ -326,6 +326,7 @@ exports[`IntlList-pro renders IntlField correctly 1`] = `
                           key=".$.$element"
                           onMouseEnter={[Function]}
                           onMouseLeave={[Function]}
+                          popupHidden={true}
                         >
                           <span
                             className="c7n-pro-input-wrapper c7n-pro-field c7n-pro-input-empty"
@@ -369,6 +370,7 @@ exports[`IntlList-pro renders IntlField correctly 1`] = `
                           key=".$text-null/.1"
                           onMouseEnter={[Function]}
                           onMouseLeave={[Function]}
+                          popupHidden={true}
                         >
                           <span
                             key="text-null/.1"
@@ -715,6 +717,7 @@ exports[`IntlList-pro renders IntlField correctly 1`] = `
                           key=".$.$element"
                           onMouseEnter={[Function]}
                           onMouseLeave={[Function]}
+                          popupHidden={true}
                         >
                           <span
                             className="c7n-pro-input-wrapper c7n-pro-field c7n-pro-input-empty"
@@ -758,6 +761,7 @@ exports[`IntlList-pro renders IntlField correctly 1`] = `
                           key=".$text-null/.1"
                           onMouseEnter={[Function]}
                           onMouseLeave={[Function]}
+                          popupHidden={true}
                         >
                           <span
                             key="text-null/.1"
@@ -1104,6 +1108,7 @@ exports[`IntlList-pro renders IntlField correctly 1`] = `
                           key=".$.$element"
                           onMouseEnter={[Function]}
                           onMouseLeave={[Function]}
+                          popupHidden={true}
                         >
                           <span
                             className="c7n-pro-input-wrapper c7n-pro-field c7n-pro-input-empty"
@@ -1147,6 +1152,7 @@ exports[`IntlList-pro renders IntlField correctly 1`] = `
                           key=".$text-null/.1"
                           onMouseEnter={[Function]}
                           onMouseLeave={[Function]}
+                          popupHidden={true}
                         >
                           <span
                             key="text-null/.1"

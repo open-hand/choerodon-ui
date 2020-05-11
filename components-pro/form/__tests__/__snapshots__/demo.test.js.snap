@@ -451,7 +451,7 @@ exports[`renders ./components-pro/form/demo/basic.md correctly 1`] = `
                     type="button"
                   >
                     <span>
-                      Click me
+                      Click me 
                       <i
                         class="icon icon-arrow_drop_down"
                       />
@@ -1660,7 +1660,7 @@ exports[`renders ./components-pro/form/demo/disabled.md correctly 1`] = `
                     type="button"
                   >
                     <span>
-                      Click me
+                      Click me 
                       <i
                         class="icon icon-arrow_drop_down"
                       />
