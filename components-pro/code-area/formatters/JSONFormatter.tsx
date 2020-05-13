@@ -8,7 +8,14 @@ export class JSONFormatter implements CodeAreaFormatter {
   static defaultOptions: Options = { parser: 'json', plugins: [plugins] };
 
   getFormatted(rawText: string, options = JSONFormatter.defaultOptions): string {
-    return prettier.format(rawText, options);
+    let t = rawText
+    try {
+      t = prettier.format(rawText, options)
+    } catch (error) {
+      // 
+    }
+    return t
+
   }
 
   getRaw(formattedText: string): string {
