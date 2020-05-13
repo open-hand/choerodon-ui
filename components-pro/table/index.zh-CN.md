@@ -48,6 +48,7 @@ subtitle: 表格
 | onExpand | 点击展开图标时触发 | (expanded, record) => void |  |
 | virtual | 是否开启虚拟滚动,当设置表格高度 `style={{ height: xxx }}` 时有效 | boolean | false |
 | virtualSpin | 是否开启虚拟滚动Spin | boolean | false |
+| autoHeight | 是否开启高度自适应 | boolean \| { type: 'minHeight' \| 'maxHeight', diff: number(80) } | false |
 
 更多属性请参考 [DataSetComponent](/components-pro/core/#DataSetComponent)。
 

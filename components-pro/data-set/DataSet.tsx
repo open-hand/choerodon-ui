@@ -155,7 +155,7 @@ export interface DataSetProps {
   /**
    * 前端分页、后端分页还是不分页
    */
-  paging?: boolean | `server`;
+  paging?: boolean | 'server';
   /**
    * 查询返回的json中对应的数据的key
    * @default "rows"
@@ -598,7 +598,7 @@ export default class DataSet extends EventManager {
   }
 
   @computed
-  get paging(): boolean | `server` {
+  get paging(): boolean | 'server' {
     const { idField, parentField, paging } = this.props;
     return (paging === `server`)&&parentField&&idField ? paging : (parentField === undefined || idField === undefined) && !!paging! ;
   }

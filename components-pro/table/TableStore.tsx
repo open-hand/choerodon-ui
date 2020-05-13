@@ -25,7 +25,7 @@ import getReactNodeText from '../_util/getReactNodeText';
 import ColumnGroups from './ColumnGroups';
 import autobind from '../_util/autobind';
 import ColumnGroup from './ColumnGroup';
-import { expandInconProps, TablePaginationConfig } from './Table';
+import { expandIconProps, TablePaginationConfig } from './Table';
 
 const SELECTION_KEY = '__selection-column__';
 export const EXPAND_KEY = '__expand-column__';
@@ -37,7 +37,6 @@ function renderSelectionBox({ record }) {
   if (dataSet) {
     const { selection } = dataSet;
     const handleChange = value => {
-      // console.log(handleChange)
       if (value) {
         dataSet.select(record);
       } else {
@@ -267,7 +266,7 @@ export default class TableStore {
   }
 
   @computed
-  get expandIcon(): (props: expandInconProps) => ReactNode {
+  get expandIcon(): (props: expandIconProps) => ReactNode {
     return this.props.expandIcon || getConfig('tableExpandIcon');
   }
 

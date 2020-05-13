@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Table`: Added `autoHeight` property.
+
 ## 0.8.62
 
 `2020-05-11`

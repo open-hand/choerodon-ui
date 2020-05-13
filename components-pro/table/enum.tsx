@@ -69,3 +69,8 @@ export const enum TableColumnTooltip {
   always = 'always',
   overflow = 'overflow',
 }
+
+export const enum TableAutoHeightType {
+  maxHeight = 'maxHeight',
+  minHeight = 'minHeight',
+}

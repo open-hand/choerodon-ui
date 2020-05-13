@@ -7,7 +7,7 @@ import { LovConfig } from 'choerodon-ui/pro/lib/lov/Lov';
 import { RecordStatus } from 'choerodon-ui/pro/lib/data-set/enum';
 import { $l } from 'choerodon-ui/pro/lib/locale-context';
 import {
-  expandInconProps,
+  expandIconProps,
   TablePaginationConfig,
   TableQueryBarHook,
 } from 'choerodon-ui/pro/lib/table/Table';
@@ -85,7 +85,7 @@ export type Config = {
   tableSelectedHighLightRow?: boolean;
   tableRowHeight?: 'auto' | number;
   tableColumnResizable?: boolean;
-  tableExpandIcon?: (props: expandInconProps) => ReactNode;
+  tableExpandIcon?: (props: expandIconProps) => ReactNode;
   tableSpinProps?: SpinProps;
   tableButtonProps?: ButtonProps;
   tableCommandProps?: ButtonProps;

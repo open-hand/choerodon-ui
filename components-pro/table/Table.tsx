@@ -7,6 +7,7 @@ import omit from 'lodash/omit';
 import isNumber from 'lodash/isNumber';
 import isUndefined from 'lodash/isUndefined';
 import debounce from 'lodash/debounce';
+import isObject from 'lodash/isObject';
 import noop from 'lodash/noop';
 import classes from 'component-classes';
 import { action } from 'mobx';
@@ -39,6 +40,7 @@ import {
   TableMode,
   TablePaginationPosition,
   TableQueryBarType,
+  TableAutoHeightType,
 } from './enum';
 import Switch from '../switch/Switch';
 import Tooltip from '../tooltip/Tooltip';
@@ -72,7 +74,7 @@ export interface expandedRowRendererProps {
   record: Record;
 }
 
-export interface expandInconProps {
+export interface expandIconProps {
   prefixCls?: string;
   expanded: boolean;
   onExpand: Function;
@@ -209,7 +211,7 @@ export interface TableProps extends DataSetComponentProps {
   /**
    * 自定义展开图标
    */
-  expandIcon?: (props: expandInconProps) => ReactNode;
+  expandIcon?: (props: expandIconProps) => ReactNode;
   /**
    * 展开图标所在列索引
    */
@@ -281,6 +283,11 @@ export interface TableProps extends DataSetComponentProps {
    * 虚拟滚动是否显示加载
    */
   virtualSpin?: boolean;
+
+  /**
+   * 是否开启自适应高度
+   */
+  autoHeight: boolean | { type: TableAutoHeightType, diff: number };
 }
 
 @observer
@@ -380,6 +387,7 @@ export default class Table extends DataSetComponent<TableProps> {
     filterBarFieldName: 'params',
     virtual: false,
     virtualSpin: false,
+    autoHeight: false,
   };
 
   tableStore: TableStore = new TableStore(this);
@@ -638,6 +646,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'spin',
       'virtual',
       'virtualSpin',
+      'autoHeight',
     ]);
     otherProps.onKeyDown = this.handleKeyDown;
     const { rowHeight } = this.tableStore;
@@ -1087,12 +1096,12 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   getTable(lock?: ColumnLock | boolean): ReactNode {
-    const { prefixCls } = this;
+    const { prefixCls, props: { autoHeight } } = this;
     const { overflowX, height, hasFooter: footer } = this.tableStore;
     let tableHead: ReactNode;
     let tableBody: ReactNode;
     let tableFooter: ReactNode;
-    if (height !== undefined || overflowX) {
+    if (height !== undefined || overflowX || autoHeight) {
       const { lockColumnsBodyRowsHeight, rowHeight } = this.tableStore;
       let bodyHeight = height;
       let tableHeadRef;
@@ -1212,6 +1221,31 @@ export default class Table extends DataSetComponent<TableProps> {
     this.nextFrameActionId = raf(this.syncSize.bind(this, width));
   }
 
+  getContentHeight() {
+    const { wrapper, element, prefixCls, props: { autoHeight } } = this;
+    if (autoHeight) {
+      const { top: parentTop, height: parentHeight } = wrapper.parentNode.getBoundingClientRect();
+      const { top: tableTop } = element.getBoundingClientRect();
+      let type = TableAutoHeightType.minHeight;
+      let diff = 80;
+      if (isObject(autoHeight)) {
+        type = autoHeight.type || TableAutoHeightType.minHeight;
+        diff = autoHeight.diff || 80;
+      }
+      if(wrapper){
+        if (type === TableAutoHeightType.minHeight) {
+          return parentHeight - (tableTop -  parentTop) - diff;
+        }
+        const tableBody: HTMLDivElement | null = element.querySelector(`.${prefixCls}-body`);
+        if (tableBody) {
+          tableBody.style.maxHeight = pxToRem(parentHeight - (tableTop -  parentTop) - diff) || '';
+          tableBody.style.overflow = 'auto';
+        }
+      }
+    }
+    return this.getStyleHeight();
+  };
+
   @autobind
   @action
   syncSize(width: number = this.getWidth()) {
@@ -1219,7 +1253,7 @@ export default class Table extends DataSetComponent<TableProps> {
     if (element) {
       tableStore.width = Math.floor(width);
       const { prefixCls } = this;
-      let height = this.getStyleHeight();
+      let height = this.getContentHeight();
       if (element && isNumber(height)) {
         const tableTitle: HTMLDivElement | null = element.querySelector(`.${prefixCls}-title`);
         const tableHeader: HTMLTableSectionElement | null = element.querySelector(
