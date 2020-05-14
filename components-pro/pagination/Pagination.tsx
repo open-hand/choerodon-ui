@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import PropTypes from 'prop-types';
-import { action, computed } from 'mobx';
+import { action, computed, runInAction } from "mobx";
 import { observer } from 'mobx-react';
 import omit from 'lodash/omit';
 import debounce from 'lodash/debounce';
@@ -16,6 +16,7 @@ import Pager from './Pager';
 import Icon from '../icon';
 import { SizeChangerPosition } from './enum';
 import { Renderer } from '../field/FormField';
+import confirm from '../modal/confirm';
 
 export type PagerType = 'page' | 'prev' | 'next' | 'first' | 'last' | 'jump-prev' | 'jump-next';
 
@@ -91,6 +92,8 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
 
   goInputText: number;
 
+  lastPageSize: number;
+
   @computed
   get pageSize(): number {
     const { dataSet, pageSize } = this.observableProps;
@@ -140,14 +143,31 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     };
   }
 
-  handlePageSizeChange = (value: number) => {
-    this.handleChange(this.page, Number(value));
+  handlePageSizeChange = async (value: number, oldValue: number) => {
+    const { dataSet } = this.props;
+    if (dataSet) {
+      dataSet.pageSize = value;
+    }
+    if (!this.lastPageSize) this.lastPageSize = oldValue;
+    if (
+      !dataSet?.props.modifiedCheck ||
+      !dataSet.dirty ||
+      (await confirm($l("DataSet", "unsaved_data_confirm"))) !== "cancel") {
+      this.handleChange(this.page, Number(value));
+    } else {
+      runInAction(() => {
+        if (dataSet) {
+          dataSet.pageSize = this.lastPageSize;
+        }
+      });
+    }
   };
 
   @action
   handleChange(page: number, pageSize: number) {
     const { dataSet, onChange } = this.props;
     if (this.pageSize !== pageSize) {
+      this.lastPageSize = pageSize;
       this.observableProps.pageSize = pageSize;
       this.observableProps.page = 1;
       if (dataSet) {

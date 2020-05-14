@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `<pro>Table`: 新增 autoHeight 属性，支持高度自适应。
+- 💄 `<pro>Table`: 优化切换 pageSize 未保存提示。
 - 🐞 `<pro>CodeArea`: 修复在绑定dataSet的情况下,手动修改过codeArea中的数据后使用record.set更新数据但是组件视图不更新的问题。
 
 ## 0.8.62
@@ -23,7 +24,7 @@ timeline: true
 `2020-05-11`
 
 - 🌟 `configure`: 新增 tableSelectedHighLightRow 属性。
-- 🌟 `<pro>Table`: 添加tree Table 对于分页的支持.
+- 🌟 `<pro>Table`: 添加 tree Table 对于分页的支持.
 - 🌟 `<pro>Table`: 添加 selectedHighLightRow 属性，支持勾选行高亮。
 - 💄 优化在create-react-app中使用的文档。
 - 🐞 `<pro>Table`: 修复 filterBar 下拉样式。
