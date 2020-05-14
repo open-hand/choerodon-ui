@@ -194,7 +194,6 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     suffixCls: 'select',
     combo: false,
     searchable: false,
-    dropdownMatchSelectWidth: true,
     checkValueOnOptionsChange: true,
     onOption: defaultOnOption,
   };
@@ -581,8 +580,9 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
 
   @autobind
   getPopupStyleFromAlign(target): CSSProperties | undefined {
+    const { dropdownMatchSelectWidth = getConfig('dropdownMatchSelectWidth') } = this.props;
     if (target) {
-      if (this.props.dropdownMatchSelectWidth) {
+      if (dropdownMatchSelectWidth) {
         return {
           width: pxToRem(target.getBoundingClientRect().width),
         };

@@ -49,6 +49,8 @@ const prefixCls = getConfig('prefixCls');
 | tableSpinProps | Default Table spin props | SpinProps | { size: Size.default, wrapperClassName: '' } |
 | tableButtonProps | Default Table button props | ButtonProps | { color: 'primary', funcType: 'flat' } |
 | tableCommandProps | Default Table command props | ButtonProps | { color: 'primary', funcType: 'flat' } |
+| pagination | 默认 pagination 的属性 | TablePaginationConfig \| false | 详见[Pagination](/components-pro/pagination/#Pagination) |
+| dropdownMatchSelectWidth | 默认下拉框匹配输入框宽度 | boolean | true |
 | modalSectionBorder | Default if Modal header and foot have a border line | boolean | true |
 | modalOkFirst | Default the ok button of Modal is ranked first | boolean | true |
 | buttonFuncType | Default Button function type | string | raised |

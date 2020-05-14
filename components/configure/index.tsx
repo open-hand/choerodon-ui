@@ -106,6 +106,7 @@ export type Config = {
     sortOrder?: string;
   }) => object;
   formatter?: Formatter;
+  dropdownMatchSelectWidth?: boolean;
 };
 
 export type ConfigKeys = keyof Config;
@@ -184,6 +185,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
       week: 'GGGG-Wo',
     },
   ],
+  ['dropdownMatchSelectWidth', true],
 ]);
 
 export function getConfig(key: ConfigKeys): any {
