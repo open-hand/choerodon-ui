@@ -1,4 +1,4 @@
-import React, { cloneElement, isValidElement, Key, ReactNode } from 'react';
+import React, { cloneElement, isValidElement, Key, ReactNode, CSSProperties } from 'react';
 import PropTypes from 'prop-types';
 import omit from 'lodash/omit';
 import defer from 'lodash/defer';
@@ -29,6 +29,9 @@ export interface ModalProps extends ViewComponentProps {
   movable?: boolean;
   fullScreen?: boolean;
   maskClosable?: boolean;
+  maskStyle?: CSSProperties;
+  mask?: boolean,
+  maskClassName?: string,
   keyboardClosable?: boolean;
   footer?: ((okBtn: ReactNode, cancelBtn: ReactNode) => ReactNode) | ReactNode | boolean;
   destroyOnClose?: boolean;
@@ -59,6 +62,9 @@ export default class Modal extends ViewComponent<ModalProps> {
     movable: PropTypes.bool,
     fullScreen: PropTypes.bool,
     maskClosable: PropTypes.bool,
+    maskStyle: PropTypes.object,
+    mask: PropTypes.bool,
+    maskClassName: PropTypes.string,
     keyboardClosable: PropTypes.bool,
     footer: PropTypes.oneOfType([PropTypes.func, PropTypes.node, PropTypes.bool]),
     destroyOnClose: PropTypes.bool,
@@ -85,6 +91,7 @@ export default class Modal extends ViewComponent<ModalProps> {
     closable: false,
     movable: true,
     maskClosable: false,
+    mask: true,
     keyboardClosable: true,
     okCancel: true,
     destroyOnClose: true,
@@ -131,6 +138,9 @@ export default class Modal extends ViewComponent<ModalProps> {
       'closable',
       'movable',
       'maskClosable',
+      'maskStyle',
+      'mask',
+      'maskClassName',
       'keyboardClosable',
       'fullScreen',
       'title',
@@ -377,7 +387,7 @@ export default class Modal extends ViewComponent<ModalProps> {
         onClick={this.handleOk}
         {...okProps}
       >
-        { okText }
+        {okText}
       </Button>
     );
     const cancelBtn = (
@@ -388,7 +398,7 @@ export default class Modal extends ViewComponent<ModalProps> {
         onClick={this.handleCancel}
         {...cancelProps}
       >
-        { cancelText }
+        {cancelText}
       </Button>
     );
 

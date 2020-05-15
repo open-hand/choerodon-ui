@@ -2,7 +2,7 @@ import React from 'react';
 import Modal from '..';
 
 describe('modal triggers callbacks correctly', () => {
-  const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+  const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => { });
 
   beforeEach(() => {
     jest.useFakeTimers();
@@ -22,7 +22,7 @@ describe('modal triggers callbacks correctly', () => {
     return document.body.querySelectorAll(className);
   };
 
-  function open(args) {
+  function open (args) {
     Modal.open({
       title: 'Modal Test',
       destroyOnClose: true,
@@ -121,4 +121,48 @@ describe('modal triggers callbacks correctly', () => {
       expect(_pro(`.c7n-pro-confirm-${type}`)).toHaveLength(1);
     });
   });
+
+  it('should has maskClassName when set maskClassName', () => {
+    ['success', 'warning', 'error', 'open', 'confirm', 'info'].forEach(type => {
+      const maskClassName = 'maskClassName'
+
+      Modal[type]({
+        title: 'title',
+        children: 'content',
+        maskClassName,
+      });
+      expect(_pro(`.c7n-pro-mask.c7n-pro-mask-wrapper.${maskClassName}`)).toHaveLength(1);
+    });
+  });
+
+  it('should has maskStyle when set maskStyle', () => {
+    ['success', 'warning', 'error', 'open', 'confirm', 'info'].forEach(type => {
+      const maskStyle = {
+        background: 'red',
+      }
+
+      Modal[type]({
+        title: 'title',
+        children: 'content',
+        maskStyle,
+      });
+      expect(_pro(`.c7n-pro-mask.c7n-pro-mask-wrapper`)).toHaveLength(1);
+      expect(_pro(`.c7n-pro-mask.c7n-pro-mask-wrapper`)[0].style.background).toBe('red');
+    });
+  });
+
+  it('should not render mask when set mask to false', () => {
+    ['success', 'warning', 'error', 'open', 'confirm', 'info'].forEach(type => {
+      const mask = false
+      Modal[type]({
+        title: 'title',
+        children: 'content',
+        mask,
+      });
+      jest.runAllTimers();
+      expect(_pro(`.c7n-pro-mask.c7n-pro-mask-wrapper`)).toHaveLength(0);
+    });
+
+  });
+
 });
