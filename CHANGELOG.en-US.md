@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `<pro>Table`: Added `autoHeight` property.
 - 🌟 `configure`: Added `dropdownMatchSelectWidth` property.
+- 🌟 `<pro>Modal`: Added `mask`, `maskStyle` and `maskClass` property, support Modal custom mask style.
 - 💄 `<pro>Table`: Optimized switch pageSize no save prompt.
 - 🐞 `<pro>CodeArea`: Fixed the problem of using record.set to update data after manually modifying the data in codeArea in the case of binding dataSet but the component view is not updated.
 

@@ -21,6 +21,9 @@ title: Modal
 | movable | 可移动， drawer 无法移动 | boolean | true |
 | fullScreen | 全屏显示 | boolean | false |
 | maskClosable | 点击蒙层是否允许关闭 | boolean | false |
+| mask | 是否显示蒙层 | boolean | true |
+| maskStyle | 蒙层样式 | CSSProperties |  |
+| maskClassName | 蒙层自定义样式名 | string |  |
 | keyboardClosable | 按 esc 键是否允许关闭 | boolean | true |
 | destroyOnClose | 关闭时是否销毁 | boolean | true |
 | footer | 底部内容 | ReactNode 或`(okBtn: ReactNode, cancelBtn: ReactNode) => ReactNode` |  |

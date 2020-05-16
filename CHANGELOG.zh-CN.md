@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `<pro>Table`: 新增 autoHeight 属性，支持高度自适应。
 - 🌟 `configure`: 新增 dropdownMatchSelectWidth 属性全局配置。
+- 🌟 `<pro>Modal`: 新增 mask maskStyle maskClass 属性，支持Modal自定义遮罩样式。
 - 💄 `<pro>Table`: 优化切换 pageSize 未保存提示。
 - 🐞 `<pro>CodeArea`: 修复在绑定dataSet的情况下,手动修改过codeArea中的数据后使用record.set更新数据但是组件视图不更新的问题。
 

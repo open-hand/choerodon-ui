@@ -13,7 +13,7 @@ import Mask from './Mask';
 import { stopEvent } from '../_util/EventManager';
 import { suffixCls } from '../modal/utils';
 
-const KeyGen = (function*(id) {
+const KeyGen = (function* (id) {
   while (true) {
     yield `${getProPrefixCls(suffixCls)}-${id}`;
     id += 1;
@@ -279,6 +279,9 @@ export default class ModalContainer extends Component<ModalContainerProps> {
         hideBodyScrollBar();
       }
     }
+
+    const modal = findLast(modals, ({ hidden: modalHidden }) => !modalHidden);
+    const { maskStyle, mask, maskClassName } = modal || {};
     return (
       <>
         <Animate
@@ -288,7 +291,7 @@ export default class ModalContainer extends Component<ModalContainerProps> {
           hiddenProp="hidden"
           {...animationProps}
         >
-          <Mask hidden={hidden} onClick={this.handleMaskClick} onMouseDown={stopEvent} />
+          {mask && <Mask style={maskStyle} className={maskClassName} hidden={hidden} onClick={this.handleMaskClick} onMouseDown={stopEvent} />}
         </Animate>
         {items}
       </>
