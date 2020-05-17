@@ -4,6 +4,7 @@ import { action, computed, runInAction } from "mobx";
 import { observer } from 'mobx-react';
 import omit from 'lodash/omit';
 import debounce from 'lodash/debounce';
+import isObject from 'lodash/isObject';
 import defaultTo from 'lodash/defaultTo';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComponent';
@@ -398,7 +399,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     const { disabled, showQuickJumper } = this.props;
     let gotoButton: any = null;
 
-    if (showQuickJumper instanceof Object && 'goButton' in showQuickJumper ) {
+    if (isObject(showQuickJumper) && 'goButton' in showQuickJumper ) {
       const { goButton } = showQuickJumper;
       gotoButton =
         typeof goButton === 'boolean' ? (

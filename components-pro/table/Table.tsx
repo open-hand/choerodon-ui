@@ -287,7 +287,7 @@ export interface TableProps extends DataSetComponentProps {
   /**
    * 是否开启自适应高度
    */
-  autoHeight: boolean | { type: TableAutoHeightType, diff: number };
+  autoHeight?: boolean | { type: TableAutoHeightType, diff: number };
 }
 
 @observer

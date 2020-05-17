@@ -6,7 +6,7 @@ import { methodReturn, ValidatorProps } from '.';
 import formatReactTemplate from '../../formatter/formatReactTemplate';
 
 function isEmptyArray(value: any): boolean {
-  return isEmpty(value) || (isArrayLike(value) && value.length === 0);
+  return isEmpty(value) || (isArrayLike(value) && (value.length === 0 || value.every(item => isEmptyArray(item))));
 }
 
 export default function valueMissing(value: any, props: ValidatorProps): methodReturn {
