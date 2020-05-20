@@ -25,7 +25,7 @@ class App extends React.Component {
     primaryKey: 'userid',
     name: 'user',
     autoQuery: true,
-    pageSize: 50,
+    pageSize: 10,
     fields: [
       {
         name: 'userid',
@@ -184,7 +184,7 @@ class App extends React.Component {
         style={{ height: 300 }}
         columns={columns}
         pagination={{
-          pageSizeOptions: ['50', '100', '500', '1000'],
+          pageSizeOptions: ['10', '50', '100', '200'],
         }}
       />
     );

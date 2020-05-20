@@ -444,6 +444,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
 
     if (editor.type === (ObserverSelect as any)) {
       (editorProps as SelectProps).dropdownMenuStyle = this.props.dropdownMenuStyle;
+      (editorProps as SelectProps).dropdownMatchSelectWidth = false;
     }
     return cloneElement<FormFieldProps>(editor, editorProps);
   }

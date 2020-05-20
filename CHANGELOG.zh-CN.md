@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `<pro>Modal`: 新增 mask maskStyle maskClass 属性，支持Modal自定义遮罩样式。
 - 💄 `<pro>Table`: 优化切换 pageSize 未保存提示。
 - 🐞 `<pro>DatePicker`: 修复 range 模式下必输校验错误问题。
+- 🐞 `<pro>Table.FilterSelect`: 修复 FilterSelect 编辑器下拉宽度。
 - 🐞 `<pro>CodeArea`: 修复在绑定dataSet的情况下,手动修改过codeArea中的数据后使用record.set更新数据但是组件视图不更新的问题。
 
 ## 0.8.62

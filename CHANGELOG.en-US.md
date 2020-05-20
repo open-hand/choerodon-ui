@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `<pro>Modal`: Added `mask`, `maskStyle` and `maskClass` property, support Modal custom mask style.
 - 💄 `<pro>Table`: Optimized switch pageSize no save prompt.
 - 🐞 `<pro>DatePicker`: Fixed the must-in check error problem in range mode.
+- 🐞 `<pro>Table.FilterSelect`: Fixed `FilterSelect` editor drop-down width.
 - 🐞 `<pro>CodeArea`: Fixed the problem of using record.set to update data after manually modifying the data in codeArea in the case of binding dataSet but the component view is not updated.
 
 ## 0.8.62
@@ -31,7 +32,7 @@ timeline: true
 - 🌟 `<pro>Table`: Added `selectedHighLightRow` property to support selected line highlight.
 - 💄 Optimize the documentation used in create-react-app.
 - 🐞 `<pro>Table`: Fixed filterBar drop-down style.
-- 🐞 `<pro>Table`: Fixed column fieild support incomplete .
+- 🐞 `<pro>Table`: Fixed column field support incomplete .
 - 🐞 `<pro>SelectBox`: Fixed dataset required control style.
 - 🐞 `<pro>DatePicker`: Fixed max/min restricted after emptying is not optional.
 - 🐞 `<pro>DatePicker`: Fixed the problem of unable to continue selecting values and popover interaction after clearing in range mode.
