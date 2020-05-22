@@ -22,6 +22,7 @@ timeline: true
 - 🐞 `<pro>DatePicker`: 修复 range 模式下必输校验错误问题。
 - 🐞 `<pro>Table.FilterSelect`: 修复 FilterSelect 编辑器下拉宽度。
 - 🐞 `<pro>CodeArea`: 修复在绑定dataSet的情况下,手动修改过codeArea中的数据后使用record.set更新数据但是组件视图不更新的问题。
+- 🐞 `<pro>`: 修复当form初始设置了disabled为true,在随后更改为false后 textField textArea 为readonly的问题。
 
 ## 0.8.62
 
