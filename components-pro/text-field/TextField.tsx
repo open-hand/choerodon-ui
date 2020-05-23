@@ -336,7 +336,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
                 ? startPlaceholder
                 : endPlaceHolder
           }
-          readOnly={!this.editable}
+          readOnly={this.isReadOnly()}
           style={editorStyle}
         />
         <input
@@ -453,7 +453,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         {...otherProps}
         placeholder={this.hasFloatLabel ? undefined : this.getPlaceholders()[0]}
         value={isString(text) ? text : this.getText(this.getValue())}
-        readOnly={!this.editable}
+        readOnly={this.isReadOnly()}
       />
     );
   }

@@ -22,6 +22,7 @@ timeline: true
 - 🐞 `<pro>DatePicker`: Fixed the must-in check error problem in range mode.
 - 🐞 `<pro>Table.FilterSelect`: Fixed `FilterSelect` editor drop-down width.
 - 🐞 `<pro>CodeArea`: Fixed the problem of using record.set to update data after manually modifying the data in codeArea in the case of binding dataSet but the component view is not updated.
+- 🐞 `<pro>`: Fixed the problem that when the form initially set disabled to true and then changed to false later, the textField textArea was readonly.
 
 ## 0.8.62
 
