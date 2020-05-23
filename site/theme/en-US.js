@@ -10,6 +10,7 @@ export default {
   proComponentsLocale,
   messages: {
     'app.header.menu.home': 'Home',
+    'app.header.menu.gitee': 'Gitee',
     'app.header.menu.components': 'Components',
     'app.header.lang': '中文',
     'app.content.edit-page': 'Edit this page on GitHub!',

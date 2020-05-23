@@ -17,12 +17,13 @@ timeline: true
 
 - 🌟 `<pro>Table`: 新增 autoHeight 属性，支持高度自适应。
 - 🌟 `configure`: 新增 dropdownMatchSelectWidth 属性全局配置。
+- 🌟 `<pro>Trigger`: 新增 getPopupContainer 属性。
 - 🌟 `<pro>Modal`: 新增 mask maskStyle maskClass 属性，支持Modal自定义遮罩样式。
 - 💄 `<pro>Table`: 优化切换 pageSize 未保存提示。
 - 🐞 `<pro>DatePicker`: 修复 range 模式下必输校验错误问题。
 - 🐞 `<pro>Table.FilterSelect`: 修复 FilterSelect 编辑器下拉宽度。
 - 🐞 `<pro>CodeArea`: 修复在绑定dataSet的情况下,手动修改过codeArea中的数据后使用record.set更新数据但是组件视图不更新的问题。
-- 🐞 `<pro>`: 修复当form初始设置了disabled为true,在随后更改为false后 textField textArea 为readonly的问题。
+- 🐞 `<pro>Form`: 修复 Form disabled 由 true 改为 false 后，TextField & TextArea 只读的问题。
 
 ## 0.8.62
 

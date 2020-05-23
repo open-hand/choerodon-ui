@@ -69,6 +69,7 @@ export interface TriggerProps extends ElementProps {
   getRootDomNode?: () => Element | null | Text;
   getPopupStyleFromAlign?: (target: Node | Window, align: object) => object | undefined;
   getPopupClassNameFromAlign?: (align: object) => string | undefined;
+  getPopupContainer?: (triggerNode: HTMLElement) => HTMLElement;
   focusDelay?: number;
   blurDelay?: number;
   mouseEnterDelay?: number;
@@ -110,6 +111,7 @@ export default class Trigger extends Component<TriggerProps> {
     onPopupAlign: PropTypes.func,
     onPopupHiddenChange: PropTypes.func,
     getPopupStyleFromAlign: PropTypes.func,
+    getPopupContainer: PropTypes.func,
     focusDelay: PropTypes.number,
     blurDelay: PropTypes.number,
     mouseEnterDelay: PropTypes.number,
@@ -328,6 +330,7 @@ export default class Trigger extends Component<TriggerProps> {
       getPopupStyleFromAlign,
       getRootDomNode = this.getRootDomNode,
       transitionName,
+      getPopupContainer,
     } = this.props;
     const visible = !this.popupHidden && popupContent;
     const mouseProps: any = {};
@@ -356,6 +359,7 @@ export default class Trigger extends Component<TriggerProps> {
         onAnimateEnd={onPopupAnimateEnd}
         getStyleFromAlign={getPopupStyleFromAlign}
         getClassNameFromAlign={this.getPopupClassNameFromAlign}
+        getPopupContainer={getPopupContainer}
         {...mouseProps}
       >
         {popupContent}

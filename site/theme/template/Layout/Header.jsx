@@ -128,6 +128,11 @@ export default class Header extends React.Component {
             <FormattedMessage id="app.header.menu.home" />
           </Link>
         </Menu.Item>
+        <Menu.Item key="gitee">
+          <a href="https://graysheep.gitee.io/choerodon-ui/index-cn">
+            <FormattedMessage id="app.header.menu.gitee" />
+          </a>
+        </Menu.Item>
         <Menu.Item key="docs/react">
           <Link to={utils.getLocalizedPathname('/docs/react/introduce', isZhCN)}>
             <FormattedMessage id="app.header.menu.components" />

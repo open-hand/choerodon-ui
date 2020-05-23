@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import omit from 'lodash/omit';
 import shallowEqual from 'lodash/isEqual';
 import noop from 'lodash/noop';
+import isElement from 'lodash/isElement';
 import Align from 'choerodon-ui/lib/align';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure';
 import Animate from '../animate';
@@ -13,12 +14,17 @@ import autobind from '../_util/autobind';
 
 let popupContainer;
 
-function getContainer() {
+function getContainer(getPopupContainer, getRootDomNode) {
   if (!popupContainer && typeof window !== 'undefined') {
     const doc = window.document;
     popupContainer = doc.createElement('div');
     popupContainer.className = getProPrefixCls('popup-container');
-    doc.body.appendChild(popupContainer);
+    const mountNode = getPopupContainer ? getPopupContainer(getRootDomNode) : doc.body;
+    if (isElement(mountNode)) {
+      mountNode.appendChild(popupContainer);
+    } else {
+      doc.body.appendChild(popupContainer);
+    }
   }
   return popupContainer;
 }
@@ -36,6 +42,7 @@ export interface PopupProps extends ViewComponentProps {
   align: object;
   onAlign?: (source: Node, align: object, target: Node | Window) => void;
   getRootDomNode?: () => Node;
+  getPopupContainer?: (triggerNode: Element) => HTMLElement;
   transitionName?: string;
   onAnimateAppear?: (key: Key | null) => void;
   onAnimateEnter?: (key: Key | null) => void;
@@ -52,6 +59,7 @@ export default class Popup extends ViewComponent<PopupProps> {
     align: PropTypes.object,
     onAlign: PropTypes.func,
     getRootDomNode: PropTypes.func,
+    getPopupContainer: PropTypes.func,
     transitionName: PropTypes.string,
     onAnimateAppear: PropTypes.func,
     onAnimateEnter: PropTypes.func,
@@ -84,6 +92,7 @@ export default class Popup extends ViewComponent<PopupProps> {
       'align',
       'transitionName',
       'getRootDomNode',
+      'getPopupContainer',
       'getClassNameFromAlign',
       'getStyleFromAlign',
       'onAlign',
@@ -101,6 +110,7 @@ export default class Popup extends ViewComponent<PopupProps> {
       align,
       transitionName,
       getRootDomNode,
+      getPopupContainer,
       children,
       onAnimateAppear = noop,
       onAnimateEnter = noop,
@@ -110,7 +120,7 @@ export default class Popup extends ViewComponent<PopupProps> {
     if (!hidden) {
       this.contentRendered = true;
     }
-    const container = getContainer();
+    const container = getContainer(getPopupContainer, getRootDomNode);
     return container && this.contentRendered
       ? createPortal(
           <Animate

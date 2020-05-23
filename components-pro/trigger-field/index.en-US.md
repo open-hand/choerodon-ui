@@ -20,5 +20,6 @@ title: TriggerField
 | triggerShowDelay | 下拉框显示延迟 | number | 150 |
 | triggerHiddenDelay | 下拉框隐藏延迟 | number | 50 |
 | onPopupHiddenChange | 下拉框变化的钩子 | (hidden: boolean) => void |  |
+| getPopupContainer | 定义浮层的容器，默认为 body | (triggerNode: HTMLElement) => HTMLElement; |  |
 
 更多属性请参考 [TextField](/components-pro/text-field/#TextField)。

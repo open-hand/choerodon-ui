@@ -17,12 +17,13 @@ timeline: true
 
 - 🌟 `<pro>Table`: Added `autoHeight` property.
 - 🌟 `configure`: Added `dropdownMatchSelectWidth` property.
+- 🌟 `<pro>Trigger`: Added `getPopupContainer` property.
 - 🌟 `<pro>Modal`: Added `mask`, `maskStyle` and `maskClass` property, support Modal custom mask style.
 - 💄 `<pro>Table`: Optimized switch pageSize no save prompt.
 - 🐞 `<pro>DatePicker`: Fixed the must-in check error problem in range mode.
 - 🐞 `<pro>Table.FilterSelect`: Fixed `FilterSelect` editor drop-down width.
 - 🐞 `<pro>CodeArea`: Fixed the problem of using record.set to update data after manually modifying the data in codeArea in the case of binding dataSet but the component view is not updated.
-- 🐞 `<pro>`: Fixed the problem that when the form initially set disabled to true and then changed to false later, the textField textArea was readonly.
+- 🐞 `<pro>Form`: Fixed the problem that `TextField` & `TextArea` is `readonly` after `Form` `disabled` is changed from true to false.
 
 ## 0.8.62
 

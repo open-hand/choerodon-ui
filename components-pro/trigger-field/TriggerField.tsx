@@ -79,6 +79,11 @@ export interface TriggerFieldProps extends TextFieldProps {
    * 下拉框变化钩子
    */
   onPopupHiddenChange?: (hidden: boolean) => void;
+  /**
+   * 定义浮层的容器，默认为 body
+   * @param triggerNode
+   */
+  getPopupContainer?: (triggerNode: HTMLElement) => HTMLElement;
 }
 
 export default abstract class TriggerField<T extends TriggerFieldProps> extends TextField<
@@ -118,6 +123,10 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
      * 下拉框变化钩子
      */
     onPopupHiddenChange: PropTypes.func,
+    /**
+     * 定义浮层的容器，默认为 body
+     */
+    getPopupContainer: PropTypes.func,
     ...TextField.propTypes,
   };
 
@@ -179,6 +188,7 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
       'triggerShowDelay',
       'triggerHiddenDelay',
       'onPopupHiddenChange',
+      'getPopupContainer',
     ]);
   }
 
@@ -197,6 +207,7 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
         trigger,
         triggerShowDelay,
         triggerHiddenDelay,
+        getPopupContainer,
       },
     } = this;
     let content;
@@ -229,6 +240,7 @@ export default abstract class TriggerField<T extends TriggerFieldProps> extends 
         onPopupHiddenChange={this.handlePopupHiddenChange}
         getPopupStyleFromAlign={this.getPopupStyleFromAlign}
         getRootDomNode={this.getRootDomNode}
+        getPopupContainer={getPopupContainer}
       >
         {this.getEditor()}
       </Trigger>

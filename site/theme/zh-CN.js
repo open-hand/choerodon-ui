@@ -12,6 +12,7 @@ export default {
   proComponentsLocale,
   messages: {
     'app.header.menu.home': '首页',
+    'app.header.menu.gitee': '国内镜像',
     'app.header.menu.components': '组件',
     'app.header.lang': 'English',
     'app.content.edit-page': '在 Github 上编辑此页！',
