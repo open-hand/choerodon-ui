@@ -90,6 +90,33 @@ exports[`renders ./components-pro/modal/demo/confirm.md correctly 1`] = `
 </div>
 `;
 
+exports[`renders ./components-pro/modal/demo/customizedMask.md correctly 1`] = `
+<div>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+    type="button"
+  >
+    <span>
+       Customized mask style 
+    </span>
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+  <button
+    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+    type="button"
+  >
+    <span>
+      No mask
+    </span>
+    <div
+      class="c7n-ripple-wrapper"
+    />
+  </button>
+</div>
+`;
+
 exports[`renders ./components-pro/modal/demo/destory.md correctly 1`] = `
 <button
   class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"

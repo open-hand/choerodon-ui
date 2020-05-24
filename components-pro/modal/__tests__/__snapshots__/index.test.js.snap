@@ -79,6 +79,7 @@ exports[`modal-pro renders modal-pro correctly 1`] = `
   drawer={false}
   fullScreen={false}
   keyboardClosable={true}
+  mask={true}
   maskClosable={false}
   movable={true}
   okCancel={true}

@@ -15,11 +15,14 @@ timeline: true
 
 ---
 
+
 - 🌟 `<pro>Table`: Added `autoHeight` property.
-- 🌟 `configure`: Added `dropdownMatchSelectWidth` property.
+- 🌟 `configure`: Added `dropdownMatchSelectWidth` & `lovTriggerMode` property.
 - 🌟 `<pro>Trigger`: Added `getPopupContainer` property.
+- 🌟 `<pro>Lov`: Added `tableProps` & `triggerMode` properties.
 - 🌟 `<pro>Modal`: Added `mask`, `maskStyle` and `maskClass` property, support Modal custom mask style.
 - 💄 `<pro>Table`: Optimized switch pageSize no save prompt.
+- 🐞 `<pro>Lov`: Fixed the problem that it cannot be opened after the route switch is not closed.
 - 🐞 `<pro>DatePicker`: Fixed the must-in check error problem in range mode.
 - 🐞 `<pro>Table.FilterSelect`: Fixed `FilterSelect` editor drop-down width.
 - 🐞 `<pro>CodeArea`: Fixed the problem of using record.set to update data after manually modifying the data in codeArea in the case of binding dataSet but the component view is not updated.

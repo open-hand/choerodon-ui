@@ -90,7 +90,6 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
         clearButton={false}
         combo={false}
         disabled={false}
-        dropdownMatchSelectWidth={true}
         key="size-select"
         multiple={false}
         noValidate={false}
@@ -11823,7 +11822,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
                         onMouseDown={[Function]}
                         onMouseEnter={[Function]}
                         onMouseLeave={[Function]}
-                        readOnly={true}
+                        readOnly={false}
                         type="text"
                         value="20"
                       />

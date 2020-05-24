@@ -182,7 +182,6 @@ exports[`renders ./components-pro/date-picker/demo/basic.md correctly 1`] = `
           autocomplete="off"
           class="c7n-pro-calendar-picker"
           placeholder="Select week"
-          readonly=""
           type="text"
           value=""
         />

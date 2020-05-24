@@ -21,7 +21,6 @@ exports[`renders ./components-pro/select/demo/basic.md correctly 1`] = `
           autocomplete="off"
           class="c7n-pro-select"
           placeholder="请选择"
-          readonly=""
           type="text"
           value=""
         />
@@ -76,7 +75,6 @@ exports[`renders ./components-pro/select/demo/basic.md correctly 1`] = `
           class="c7n-pro-select"
           disabled=""
           placeholder="请选择"
-          readonly=""
           type="text"
           value=""
         />
@@ -115,7 +113,6 @@ exports[`renders ./components-pro/select/demo/cascade.md correctly 1`] = `
         <input
           autocomplete="off"
           class="c7n-pro-select"
-          readonly=""
           type="text"
           value="10206"
         />
@@ -153,7 +150,6 @@ exports[`renders ./components-pro/select/demo/cascade.md correctly 1`] = `
         <input
           autocomplete="off"
           class="c7n-pro-select"
-          readonly=""
           type="text"
           value=""
         />
@@ -276,7 +272,6 @@ Array [
         autocomplete="off"
         class="c7n-pro-select"
         placeholder="请选择"
-        readonly=""
         type="text"
         value="Wu"
       />
@@ -314,7 +309,6 @@ Array [
       <input
         autocomplete="off"
         class="c7n-pro-select"
-        readonly=""
         type="text"
         value="Wu"
       />
@@ -470,7 +464,6 @@ exports[`renders ./components-pro/select/demo/filter.md correctly 1`] = `
       <input
         autocomplete="off"
         class="c7n-pro-select"
-        readonly=""
         type="text"
         value="Huazhen"
       />
@@ -518,7 +511,6 @@ Array [
       <input
         autocomplete="off"
         class="c7n-pro-select"
-        readonly=""
         type="text"
         value=""
       />
@@ -564,7 +556,6 @@ exports[`renders ./components-pro/select/demo/lookupCode.md correctly 1`] = `
           autocomplete="off"
           class="c7n-pro-select"
           placeholder="请选择"
-          readonly=""
           type="text"
           value=""
         />
@@ -619,7 +610,6 @@ exports[`renders ./components-pro/select/demo/lookupCode.md correctly 1`] = `
           autocomplete="off"
           class="c7n-pro-select"
           placeholder="请选择"
-          readonly=""
           type="text"
           value=""
         />
@@ -1153,7 +1143,6 @@ Array [
         autocomplete="off"
         class="c7n-pro-select"
         placeholder="请选择"
-        readonly=""
         type="text"
         value=""
       />
@@ -1211,7 +1200,6 @@ exports[`renders ./components-pro/select/demo/option-renderer.md correctly 1`] =
         <input
           autocomplete="off"
           class="c7n-pro-select"
-          readonly=""
           style="text-indent:-1000px"
           type="text"
           value=""
