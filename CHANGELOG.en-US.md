@@ -15,9 +15,12 @@ timeline: true
 
 ---
 
+## 0.8.63
 
-- 🌟 `<pro>Table`: Added `autoHeight` property.
+`2020-05-24`
+
 - 🌟 `configure`: Added `dropdownMatchSelectWidth` & `lovTriggerMode` property.
+- 🌟 `<pro>Table`: Added `autoHeight` property.
 - 🌟 `<pro>Trigger`: Added `getPopupContainer` property.
 - 🌟 `<pro>Lov`: Added `tableProps` & `triggerMode` properties.
 - 🌟 `<pro>Modal`: Added `mask`, `maskStyle` and `maskClass` property, support Modal custom mask style.

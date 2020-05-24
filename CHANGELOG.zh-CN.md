@@ -15,8 +15,12 @@ timeline: true
 
 ---
 
-- 🌟 `<pro>Table`: 新增 autoHeight 属性，支持高度自适应。
+## 0.8.63
+
+`2020-05-24`
+
 - 🌟 `configure`: 新增 dropdownMatchSelectWidth, lovTriggerMode 属性全局配置。
+- 🌟 `<pro>Table`: 新增 autoHeight 属性，支持高度自适应。
 - 🌟 `<pro>Trigger`: 新增 getPopupContainer 属性。
 - 🌟 `<pro>Lov`: 新增 tableProps triggerMode 属性。
 - 🌟 `<pro>Modal`: 新增 mask, maskStyle, maskClass 属性，支持Modal自定义遮罩样式。
