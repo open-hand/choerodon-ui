@@ -8,6 +8,7 @@ import { action, computed, observable, toJS } from 'mobx';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { Size } from 'choerodon-ui/lib/_util/enum';
+import { getConfig } from 'choerodon-ui/lib/configure';
 import Icon from '../icon';
 import { open } from '../modal-container/ModalContainer';
 import LovView from './LovView';
@@ -20,12 +21,12 @@ import { stopEvent } from '../_util/EventManager';
 import { SearchMatcher, Select, SelectProps } from '../select/Select';
 import { ColumnAlign, TableQueryBarType } from '../table/enum';
 import { FieldType } from '../data-set/enum';
-import { LovFieldType, ViewMode } from './enum';
+import { LovFieldType, ViewMode, TriggerMode } from './enum';
 import Button, { ButtonProps } from '../button/Button';
 import { ButtonColor, FuncType } from '../button/enum';
 import { $l } from '../locale-context';
 import { getLovPara } from '../stores/utils';
-import { TableQueryBarHook } from '../table/Table';
+import { TableQueryBarHook, TableProps } from '../table/Table';
 import { FieldProps } from '../data-set/Field';
 
 export type LovConfigItem = {
@@ -68,8 +69,10 @@ export type LovConfig = {
 
 export interface LovProps extends SelectProps, ButtonProps {
   modalProps?: ModalProps;
+  tableProps?: TableProps;
   noCache?: boolean;
   mode?: ViewMode;
+  triggerMode?: TriggerMode;
 }
 
 @observer
@@ -80,7 +83,9 @@ export default class Lov extends Select<LovProps> {
     ...Select.propTypes,
     ...Button.propTypes,
     modalProps: PropTypes.object,
+    tableProps: PropTypes.object,
     noCache: PropTypes.bool,
+    triggerMode: PropTypes.string,
   };
 
   static defaultProps = {
@@ -105,8 +110,9 @@ export default class Lov extends Select<LovProps> {
   @computed
   get searchable(): boolean {
     const config = this.getConfig();
+    const triggerMode = this.getTriggerMode();
     if (config) {
-      return config.editableFlag === 'Y';
+      return config.editableFlag === 'Y' && triggerMode !== TriggerMode.input;
     }
     return !!this.props.searchable;
   }
@@ -146,7 +152,7 @@ export default class Lov extends Select<LovProps> {
   private openModal = action(() => {
     const config = this.getConfig();
     const { options, multiple, primitive, valueField } = this;
-    const { modalProps } = this.props;
+    const { modalProps, tableProps } = this.props;
     const noCache = this.getProp('noCache');
     if (!this.modal && config && options) {
       const { width, title } = config;
@@ -167,6 +173,7 @@ export default class Lov extends Select<LovProps> {
           <LovView
             dataSet={options}
             config={config}
+            tableProps={tableProps}
             onDoubleClick={this.handleLovViewSelect}
             onEnterDown={this.handleLovViewSelect}
             multiple={this.multiple}
@@ -293,8 +300,23 @@ export default class Lov extends Select<LovProps> {
     return [];
   }
 
+  onClick = () => {
+    return this.isDisabled() || this.isReadOnly() ? undefined : this.openModal();
+  };
+
+  getTriggerMode() {
+    const { triggerMode } = this.props;
+    if (triggerMode !== undefined) {
+      return triggerMode;
+    }
+    return getConfig('lovTriggerMode');
+  }
+
   getOtherProps() {
-    return omit(super.getOtherProps(), ['modalProps', 'noCache']);
+    const otherProps = omit(super.getOtherProps(), ['modalProps', 'noCache', 'tableProps']);
+    const triggerMode = this.getTriggerMode();
+    if (triggerMode === TriggerMode.input) otherProps.onClick = this.onClick;
+    return otherProps;
   }
 
   getButtonProps() {
@@ -319,6 +341,28 @@ export default class Lov extends Select<LovProps> {
     });
   }
 
+  getInnerSpanButton(): ReactNode {
+    const {
+      props: { clearButton },
+      prefixCls,
+    } = this;
+    if (clearButton && !this.isReadOnly()) {
+      return this.wrapperInnerSpanButton(
+        <Icon
+          type="close"
+          onClick={(e) => {
+            const triggerMode = this.getTriggerMode();
+            if (triggerMode === TriggerMode.input) e.preventDefault();
+            this.handleClearButtonClick();
+          }}
+        />,
+        {
+          className: `${prefixCls}-clear-button`,
+        },
+      );
+    }
+  }
+
   componentWillUnmount() {
     super.componentWillUnmount();
     if (this.modal) {
@@ -328,7 +372,8 @@ export default class Lov extends Select<LovProps> {
 
   select() {
     const { mode } = this.props;
-    if (mode !== ViewMode.button) {
+    const triggerMode = this.getTriggerMode();
+    if (mode !== ViewMode.button && triggerMode !== TriggerMode.input) {
       super.select();
     }
   }

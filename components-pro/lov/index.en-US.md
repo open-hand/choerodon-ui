@@ -18,6 +18,8 @@ title: Lov
 | 参数       | 说明                                                 | 类型             | 默认值  |
 | ---------- | ---------------------------------------------------- | ---------------- | ------- |
 | modalProps | 弹窗属性，详见[ModalProps](/components/modal/#Modal) | object           |         |
+| tableProps | 表格属性，详见[TableProps](/components-pro/table/#Table) | object           |         |
+| triggerMode | 触发弹窗模式,可选值: `icon` `input`          | string           |   icon      |
 | noCache    | 弹窗时自动重新查询                                   | string\| boolean | false   |
 | mode       | 显示模式，可选值: `default` `button`                 | string           | default |
 

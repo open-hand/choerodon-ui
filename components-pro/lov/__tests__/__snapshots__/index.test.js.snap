@@ -13,7 +13,6 @@ Array [
       <input
         autocomplete="off"
         class="c7n-pro-select"
-        readonly=""
         type="text"
         value=""
       />
@@ -290,7 +289,6 @@ exports[`Lov-pro render mode button 1`] = `
     }
   }
   disabled={false}
-  dropdownMatchSelectWidth={true}
   mode="button"
   multiple={false}
   name="code"

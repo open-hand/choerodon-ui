@@ -12,6 +12,7 @@ import { ColumnProps } from '../table/Column';
 export interface LovViewProps {
   dataSet: DataSet;
   config: LovConfig;
+  tableProps?: TableProps;
   multiple: boolean;
   values: any[];
   onDoubleClick: () => void;
@@ -22,6 +23,7 @@ export default class LovView extends Component<LovViewProps> {
   static propTypes = {
     dataSet: PropTypes.object.isRequired,
     config: PropTypes.object.isRequired,
+    tableProps: PropTypes.object,
     onDoubleClick: PropTypes.func.isRequired,
     onEnterDown: PropTypes.func.isRequired,
   };
@@ -84,8 +86,10 @@ export default class LovView extends Component<LovViewProps> {
       dataSet,
       config: { height, treeFlag, queryColumns, queryBar },
       multiple,
+      tableProps,
     } = this.props;
-    const tableProps: TableProps = {
+    const lovTableProps: TableProps = {
+      ...tableProps,
       autoFocus: true,
       mode: treeFlag === 'Y' ? TableMode.tree : TableMode.list,
       onKeyDown: this.handleKeyDown,
@@ -95,14 +99,16 @@ export default class LovView extends Component<LovViewProps> {
       queryBar,
     };
     if (multiple) {
-      tableProps.selectionMode = SelectionMode.rowbox;
+      lovTableProps.selectionMode = SelectionMode.rowbox;
     } else {
-      tableProps.selectionMode = SelectionMode.none;
-      tableProps.onRow = this.handleRow;
+      lovTableProps.selectionMode = tableProps?.selectionMode ? tableProps.selectionMode : SelectionMode.none;
+      lovTableProps.onRow = this.handleRow;
     }
+
     if (height) {
-      tableProps.style = { height };
+      lovTableProps.style = { ...lovTableProps.style, height };
     }
-    return <Table {...tableProps} />;
+
+    return <Table {...lovTableProps} />;
   }
 }

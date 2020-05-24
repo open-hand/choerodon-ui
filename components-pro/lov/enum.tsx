@@ -11,3 +11,8 @@ export const enum ViewMode {
   default = 'default',
   button = 'button',
 }
+
+export const enum TriggerMode {
+  icon = 'icon',
+  input = 'input',
+}
