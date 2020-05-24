@@ -16,6 +16,7 @@ import { ButtonProps } from 'choerodon-ui/pro/lib/button/Button';
 import { SpinProps } from 'choerodon-ui/lib/spin';
 import { Size } from 'choerodon-ui/lib/_util/enum';
 import { TableQueryBarType } from 'choerodon-ui/pro/lib/table/enum';
+import { TriggerMode } from 'choerodon-ui/pro/lib/lov/enum';
 import { TransportHookProps, TransportProps } from 'choerodon-ui/pro/lib/data-set/Transport';
 import DataSet from 'choerodon-ui/pro/lib/data-set/DataSet';
 import defaultFeedback, { FeedBack } from 'choerodon-ui/pro/lib/data-set/FeedBack';
@@ -71,6 +72,7 @@ export type Config = {
     lovConfig: LovConfig | undefined,
     props: TransportHookProps,
   ) => AxiosRequestConfig);
+  lovTriggerMode?: TriggerMode;
   axios?: AxiosInstance;
   feedback?: FeedBack;
   dataKey?: string;
@@ -148,6 +150,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   // ],
   ['lovDefineUrl', code => `/sys/lov/lov_define?code=${code}`],
   ['lovQueryUrl', code => `/common/lov/dataset/${code}`],
+  ['lovTriggerMode', TriggerMode.icon],
   ['dataKey', 'rows'],
   ['totalKey', 'total'],
   ['statusKey', '__status'],
