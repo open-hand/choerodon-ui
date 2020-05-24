@@ -11,16 +11,17 @@ describe('ModalProvider', () => {
     jest.useRealTimers();
   });
 
-  it('the hidden property change show when click the button', () => {
+  it('the mask appears when click the button', () => {
     const wrapper = mount(<ModalProviderTest />);
-    expect(wrapper.find('.c7n-pro-mask-wrapper').prop('hidden')).toBe(true);
+    expect(wrapper.find('.c7n-pro-mask-wrapper').length).toBe(0);
     wrapper
       .find('button')
       .at(1)
       .simulate('click');
     jest.runAllTimers();
     wrapper.update();
-    expect(wrapper.find('.c7n-pro-mask-wrapper').prop('hidden')).toBe(false);
+    expect(wrapper.find('.c7n-pro-mask-wrapper').length).toBe(1);
+
   });
 
   it('the modal show when click the button', () => {
