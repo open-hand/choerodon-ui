@@ -23,6 +23,7 @@ import {
   Modal,
   Button,
   notification,
+  AutoComplete,
 } from 'choerodon-ui/pro';
 
 const { Column } = Table;
@@ -95,6 +96,14 @@ const codeDescriptionDynamicProps = {
 };
 
 class App extends React.Component {
+  options = new DataSet({
+    fields: [{
+      name: 'value', type: 'string',
+    }, {
+      name: 'meaning', type: 'string',
+    }],
+  })
+
   userDs = new DataSet({
     primaryKey: 'userid',
     name: 'user',
@@ -111,9 +120,9 @@ class App extends React.Component {
       update: ({ data }) =>
         data.length
           ? {
-              url: `/dataset/user/mutations/${data[0].userid}`,
-              data: data[0],
-            }
+            url: `/dataset/user/mutations/${data[0].userid}`,
+            data: data[0],
+          }
           : null,
       destroy: {
         url: '/dataset/user/mutations',
@@ -131,7 +140,7 @@ class App extends React.Component {
       loadSuccess(resp) {
         //  DataSet 查询成功的反馈 可以return 一个resp 来修改响应结果
         notification.success({ message: 'query success!' });
-        console.log('resp',resp)
+        console.log('resp', resp)
       },
     },
     queryFields: [
@@ -164,6 +173,12 @@ class App extends React.Component {
         max: 100,
         step: 1,
         help: '用户年龄，可以排序',
+      },
+      {
+        name: 'email',
+        type: 'string',
+        label: '邮箱',
+        help: '用户邮箱，可以自动补全',
       },
       {
         name: 'numberMultiple',
@@ -352,6 +367,19 @@ class App extends React.Component {
     console.log('submit result', 'after click');
   };
 
+  handeValueChange = (v) => {
+    const value = v.target.value
+    const suffixList = ['@qq.com', '@163.com', '@hand-china.com']
+    if (value.indexOf('@') !== -1) {
+      this.options.loadData([])
+    } else {
+      this.options.loadData(suffixList.map(suffix => ({
+        value: `${value}${suffix}`,
+        meaning: `${value}${suffix}`,
+      })))
+    }
+  }
+
   render() {
     const buttons = [
       'add',
@@ -374,7 +402,7 @@ class App extends React.Component {
         header="User"
         style={{ height: 200 }}
         onRow={({ dataSet, record, index, expandedRow }) => {
-          if(index === 2) {
+          if (index === 2) {
             return {
               style: { height: 50 },
             };
@@ -395,6 +423,7 @@ class App extends React.Component {
           sortable
         />
         <Column name="age" editor width={150} sortable footer={renderColumnFooter} />
+        <Column name="email" editor={() => { return <AutoComplete onFocus={this.handeValueChange} onInput={this.handeValueChange} options={this.options} /> }} />
         <Column name="enable" editor width={50} minWidth={50} lock />
         <Column name="name" editor width={150} sortable tooltip="always" />
         <Column name="code" editor width={150} sortable />

@@ -119,3 +119,5 @@ export { default as Animate } from './animate';
 export { default as CodeArea } from './code-area';
 
 export { default as Skeleton } from './skeleton';
+
+export { default as AutoComplete } from './auto-complete';

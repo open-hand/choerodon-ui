@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>AutoComplete`: 新增 AutoComplete Pro 组件。
+
 ## 0.8.63
 
 `2020-05-24`

@@ -11,6 +11,7 @@ const dsQueriesT = {
       userid: '@guid()',
       'age|18-100': 34,
       name: '@cname()',
+      email:'@first()',
       code_description: '员工状态',
       code_code: 'HR.EMPLOYEE_STATUS',
       code_select: 'HR.EMPLOYEE_GENDER',
