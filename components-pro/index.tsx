@@ -11,7 +11,7 @@ if (
 ) {
   console.warn(
     'You are using a whole package of choerodon-ui/pro, ' +
-      'please use https://www.npmjs.com/package/babel-plugin-import to reduce app bundle size.',
+    'please use https://www.npmjs.com/package/babel-plugin-import to reduce app bundle size.',
   );
 }
 /* @remove-on-es-build-end */
@@ -119,3 +119,5 @@ export { default as Animate } from './animate';
 export { default as CodeArea } from './code-area';
 
 export { default as Skeleton } from './skeleton';
+
+export { default as AutoComplete } from './auto-complete';

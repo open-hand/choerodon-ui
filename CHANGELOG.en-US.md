@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>AutoComplete`: Added `AutoComplete` Pro component.
+
 ## 0.8.63
 
 `2020-05-24`
