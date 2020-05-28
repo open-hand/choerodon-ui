@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Cascader`: 新增 Cascader Pro 组件。
 - 🌟 `<pro>AutoComplete`: 新增 AutoComplete Pro 组件。
 
 ## 0.8.63

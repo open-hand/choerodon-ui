@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Cascader`: Added `Cascader` Pro component.
 - 🌟 `<pro>AutoComplete`: Added `AutoComplete` Pro component.
 
 ## 0.8.63
