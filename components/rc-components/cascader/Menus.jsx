@@ -13,6 +13,7 @@ export default class Menus extends Component {
     prefixCls: 'rc-cascader-menus',
     visible: false,
     expandTrigger: 'click',
+    expandIcon:'>',
   };
 
   static propTypes = {
@@ -24,11 +25,12 @@ export default class Menus extends Component {
     onSelect: PropTypes.func,
     visible: PropTypes.bool,
     dropdownMenuColumnStyle: PropTypes.object,
+    expandIcon:PropTypes.node,
   };
 
   constructor(props) {
     super(props);
-
+    
     this.menuItems = {};
   }
 
@@ -43,15 +45,21 @@ export default class Menus extends Component {
   }
 
   getOption(option, menuIndex) {
-    const { prefixCls, expandTrigger } = this.props;
+    const { prefixCls, expandTrigger, expandIcon } = this.props;
     const onSelect = this.props.onSelect.bind(this, option, menuIndex);
     let expandProps = {
       onClick: onSelect,
     };
     let menuItemCls = `${prefixCls}-menu-item`;
+    let expandIconNode = null;
     const hasChildren = option.children && option.children.length > 0;
     if (hasChildren || option.isLeaf === false) {
       menuItemCls += ` ${prefixCls}-menu-item-expand`;
+      expandIconNode = (
+        <span className={`${prefixCls}-menu-item-expand-icon`}>
+          {expandIcon}
+        </span>
+      );
     }
     if (expandTrigger === 'hover' && hasChildren) {
       expandProps = {
@@ -78,12 +86,13 @@ export default class Menus extends Component {
     }
     return (
       <li
-        key={option.value}
+        key={option.key || option.value}
         className={menuItemCls}
         title={title}
         {...expandProps}
       >
         {option.label}
+        {expandIconNode}
       </li>
     );
   }

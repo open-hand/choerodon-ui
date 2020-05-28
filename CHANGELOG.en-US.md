@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `<pro>Cascader`: Added `Cascader` Pro component.
 - 🌟 `<pro>AutoComplete`: Added `AutoComplete` Pro component.
+- 🐞 `Cascader`: Fixed the cascader not has expandable icon.
 
 ## 0.8.63
 
