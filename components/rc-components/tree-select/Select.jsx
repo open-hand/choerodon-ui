@@ -28,6 +28,7 @@ import { SHOW_ALL, SHOW_CHILD, SHOW_PARENT } from './strategies';
 import { SelectPropTypes } from './PropTypes';
 import Button from '../../button/Button';
 import { getLabelFromPropsValue, getMapKey } from '../select/util';
+import isEmpty from 'lodash/isEmpty';
 
 function filterFn(input, child) {
   return (
@@ -87,6 +88,7 @@ export default class Select extends Component {
     showArrow: true,
     dropdownMatchSelectWidth: true,
     dropdownStyle: {},
+    autoClearSearchValue: true,
     onDropdownVisibleChange: () => {
       return true;
     },
@@ -102,6 +104,7 @@ export default class Select extends Component {
     treeCheckable: false,
     treeNodeFilterProp: 'value',
     treeNodeLabelProp: 'title',
+    searchValue:'',
   };
 
   static SHOW_ALL = SHOW_ALL;
@@ -120,10 +123,10 @@ export default class Select extends Component {
     this.renderedTreeData = this.renderTreeData();
     value = this.addLabelToValue(props, value);
     value = this.getValue(props, value, props.inputValue ? '__strict' : true);
-    const inputValue = props.inputValue || '';
-    // if (props.combobox) {
-    //   inputValue = value.length ? String(value[0].value) : '';
-    // }
+    let inputValue = props.inputValue || '';
+    if (!isEmpty(props.searchValue)) {
+      inputValue = String(props.searchValue)
+    }
     this.state = {
       value,
       inputValue,
@@ -171,17 +174,24 @@ export default class Select extends Component {
       this.setState({
         value,
       });
-      // if (nextProps.combobox) {
-      //   this.setState({
-      //     inputValue: value.length ? String(value[0].key) : '',
-      //   });
-      // }
+      if (nextProps.searchValue !== this.props.searchValue) {
+        this.setState({
+          inputValue: String(nextProps.searchValue)
+        });
+      }
     }
-    if (nextProps.inputValue !== this.props.inputValue) {
+    if(isEmpty(this.props.searchValue)){
+      if (nextProps.inputValue !== this.props.inputValue ) {
+        this.setState({
+          inputValue: nextProps.inputValue,
+        });
+      }
+    }else{
       this.setState({
-        inputValue: nextProps.inputValue,
+        inputValue: this.props.searchValue,
       });
     }
+    
     if ('open' in nextProps) {
       this.setState({
         open: nextProps.open,
@@ -228,7 +238,7 @@ export default class Select extends Component {
     const val = event.target.value;
     const { props } = this;
     this.setState({
-      inputValue: val,
+      inputValue:isEmpty(this.props.searchValue)? val :this.props.searchValue,
       open: true,
     });
     if (props.treeCheckable && !val) {
@@ -374,9 +384,17 @@ export default class Select extends Component {
     }
 
     this.fireChange(value, extraInfo);
-    if (props.inputValue === null) {
+    // 选中后判断是否需要清楚搜索值
+    if(props.autoClearSearchValue ){
+      this.clearSearchInput()
+    }
+    if (props.inputValue && isEmpty(this.props.searchValue)) {
       this.setState({
         inputValue: '',
+      });
+    }else{
+      this.setState({
+        inputValue: this.props.searchValue,
       });
     }
   };
@@ -405,10 +423,10 @@ export default class Select extends Component {
     this._checkedNodes = [];
     if (state.inputValue || state.value.length) {
       this.setOpenState(false);
-      if (typeof props.inputValue === 'undefined') {
+      if (typeof props.inputValue === 'undefined' ) {
         this.setState(
           {
-            inputValue: '',
+            inputValue: isEmpty(this.props.searchValue) ? '':this.props.searchValue,
           },
           () => {
             this.fireChange([]);
@@ -668,7 +686,7 @@ export default class Select extends Component {
   clearSearchInput() {
     this.getInputDOMNode().focus();
     if (!('inputValue' in this.props)) {
-      this.setState({ inputValue: '' });
+      this.setState({ inputValue: isEmpty(this.props.searchValue)? '' : isEmpty(this.props.searchValue) });
     }
   }
 
