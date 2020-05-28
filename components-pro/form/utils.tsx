@@ -35,3 +35,5 @@ export function getProperty(props: any, key: string, dataSet?: DataSet, record?:
     }
   }
 }
+
+export const defaultExcludeUseColonTag: string[] = ['div', 'button', 'Button'];

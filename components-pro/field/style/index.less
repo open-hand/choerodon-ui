@@ -40,7 +40,7 @@
     direction: ltr;
     text-align: left;
 
-    & + .@{field-prefix-cls}-wrapper {
+    &+.@{field-prefix-cls}-wrapper {
       padding-top: 0;
     }
   }
@@ -57,6 +57,25 @@
   }
 
   &-required&-label::after {
+    content: '*';
+  }
+
+  &-required&-label-useColon,
+  &-label&-label-useColon::after {
+    position: relative;
+    top: -0.01rem;
+    width: 0;
+    margin: 0 0.1rem 0 0.01rem;
+    color: @label-colon-color;
+    vertical-align: baseline;
+    content: ':';
+  }
+
+  &-required&-label&-label-useColon::before {
+    display: inline-block;
+    margin-right: 0.02rem;
+    color: @label-required-color;
+    line-height: 1;
     content: '*';
   }
 

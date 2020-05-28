@@ -53,7 +53,7 @@ class FormTest extends React.Component {
 
   render() {
     return (
-      <Form dataSet={this.ds} style={{ width: '4.5rem' }}>
+      <Form dataSet={this.ds} style={{ width: '4.5rem' }} {...this.props}>
         <TextField name="phone" />
         <Password name="password" />
         <NumberField name="age" addonAfter="周岁" showHelp="tooltip" />
@@ -123,5 +123,11 @@ describe('Select', () => {
     const wrapper = mount(<FormTest disabled />);
     jest.runAllTimers();
     expect(wrapper).toMatchSnapshot();
+  });
+
+  it('useColon test', () => {
+    const wrapper = mount(<FormTest useColon />);
+    jest.runAllTimers();
+    expect(wrapper.find('.c7n-pro-field-label-useColon')).toHaveLength(4);
   });
 });

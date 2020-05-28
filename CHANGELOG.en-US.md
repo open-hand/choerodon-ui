@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `<pro>AutoComplete`: Added `AutoComplete` Pro component.
+- 🌟 `<pro>Form`: Added useColon, excludeUseColonTagList attributes and global configuration.
 
 ## 0.8.63
 

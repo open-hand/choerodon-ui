@@ -62,6 +62,8 @@ const prefixCls = getConfig('prefixCls');
 | feedback | The feedback of DataSet for query and submit. More info: [Feedback](/components-pro/data-set/#Feedback) | Feedback |  |
 | transport | Default transport of DataSet. More info: [Transport](/components-pro/data-set/#Transport) | Transport |  |
 | formatter | Date formatter. `jsonDate` is the format of the data in request and response, and the date is converted to timestamp when it is empty. More info:[Formatter](#Formatter) | Formatter |  |
+| useColon | Form是否使用冒号,当开启时会在所有的label后面加上冒号,并且必填的*号会被移到最前方 | boolean | false |
+| excludeUseColonTagList | Form中不使用冒号的标签的列表,当为自定义组件的时候,需要设置displayName作为标签名 | string[] | ['div','button','Button'] |
 
 ### Formatter
 
