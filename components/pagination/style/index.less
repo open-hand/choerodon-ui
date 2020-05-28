@@ -250,6 +250,7 @@
       input {
         .input;
         width: 0.5rem;
+        height: @input-height-base;
         margin: 0 0.08rem;
       }
     }
@@ -354,6 +355,7 @@
   }
 
   &-small &-options {
+    height: @pagination-item-size-sm;
     &-quick-jumper {
       height: @pagination-item-size-sm;
       line-height: @pagination-item-size-sm;
@@ -361,7 +363,15 @@
       input {
         .input-sm;
         width: 0.44rem;
+        height: @pagination-item-size-sm;
       }
+    }
+  }
+  
+  &-large {
+    font-size: @font-size-base;
+    i.icon {
+      font-size: @font-size-base;
     }
   }
 
@@ -413,6 +423,7 @@
   }
 
   &-large &-options {
+    height: @pagination-item-size-lg;
     &-quick-jumper {
       height: @pagination-item-size-lg;
       line-height: @pagination-item-size-lg;
@@ -420,6 +431,7 @@
       input {
         .input-sm;
         width: 0.44rem;
+        height: @pagination-item-size-lg;
       }
     }
   }

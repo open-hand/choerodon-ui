@@ -782,7 +782,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
   }
 
   // 查找相邻的节点
-  findTreeParentChidren(options,activeValue,direction){
+  findTreeParentChidren(_options,activeValue,direction){
     if(direction > 0){
       if(activeValue.children && activeValue.children.length > 0){
         return activeValue.children[0]

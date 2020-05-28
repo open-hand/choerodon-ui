@@ -19,6 +19,7 @@ timeline: true
 - 🌟 `<pro>AutoComplete`: 新增 AutoComplete Pro 组件。
 - 🌟 `TreeSelect`: 新增 searchValue 和 autoClearSearchValue 属性 。
 - 🐞 `Cascader`: 修复cascader不存在展开符号的问题。
+- 🐞 `Pagination`: 修复pagination在不同size下样式错位问题。
 
 ## 0.8.63
 
