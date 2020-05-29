@@ -24,6 +24,7 @@ import Record from 'choerodon-ui/pro/lib/data-set/Record';
 import { CacheOptions } from 'choerodon-ui/pro/lib/_util/Cache';
 import { LabelLayout } from 'choerodon-ui/pro/lib/form/enum';
 import { ButtonColor, FuncType } from 'choerodon-ui/pro/lib/button/enum';
+import { defaultExcludeUseColonTag } from 'choerodon-ui/pro/lib/form/utils';
 
 export type Status = {
   [RecordStatus.add]: string;
@@ -52,8 +53,8 @@ export type Config = {
   lookupUrl?: string | ((code: string) => string);
   lookupAxiosMethod?: string;
   lookupAxiosConfig?:
-    | AxiosRequestConfig
-    | ((props: {
+  | AxiosRequestConfig
+  | ((props: {
     params?: any;
     dataSet?: DataSet;
     record?: Record;
@@ -63,11 +64,11 @@ export type Config = {
   lovDefineUrl?: string | ((code: string) => string);
   lovDefineAxiosConfig?: AxiosRequestConfig | ((code: string) => AxiosRequestConfig);
   lovQueryUrl?:
-    | string
-    | ((code: string, lovConfig: LovConfig | undefined, props: TransportHookProps) => string);
+  | string
+  | ((code: string, lovConfig: LovConfig | undefined, props: TransportHookProps) => string);
   lovQueryAxiosConfig?:
-    | AxiosRequestConfig
-    | ((
+  | AxiosRequestConfig
+  | ((
     code: string,
     lovConfig: LovConfig | undefined,
     props: TransportHookProps,
@@ -100,7 +101,7 @@ export type Config = {
   renderEmpty?: renderEmptyHandler;
   defaultValidationMessages?: ValidationMessages;
   transport?: TransportProps;
-  icons?: { [key: string]: string[] } | string[];
+  icons?: { [key: string]: string[]; } | string[];
   generatePageQuery?: (pageParams: {
     page?: number;
     pageSize?: number;
@@ -109,6 +110,8 @@ export type Config = {
   }) => object;
   formatter?: Formatter;
   dropdownMatchSelectWidth?: boolean;
+  useColon?: boolean,
+  excludeUseColonTagList?: string[];
 };
 
 export type ConfigKeys = keyof Config;
@@ -189,6 +192,8 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
     },
   ],
   ['dropdownMatchSelectWidth', true],
+  ['useColon', false],
+  ['excludeUseColonTagList', defaultExcludeUseColonTag],
 ]);
 
 export function getConfig(key: ConfigKeys): any {
