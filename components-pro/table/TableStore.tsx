@@ -30,9 +30,19 @@ import { expandIconProps, TablePaginationConfig } from './Table';
 const SELECTION_KEY = '__selection-column__';
 export const EXPAND_KEY = '__expand-column__';
 
-export type HeaderText = { name: string; label: string };
+export type HeaderText = { name: string; label: string; };
 
-function renderSelectionBox({ record }) {
+export const getIdList = (startId: number, endId: number) => {
+  const idList: any[] = [];
+  const min = Math.min(startId, endId);
+  const max = Math.max(startId, endId);
+  for (let i = min; i <= max; i++) {
+    idList.push(i);
+  }
+  return idList;
+};
+
+function renderSelectionBox({ record, store }: { record: any, store: TableStore; }) {
   const { dataSet } = record;
   if (dataSet) {
     const { selection } = dataSet;
@@ -43,18 +53,37 @@ function renderSelectionBox({ record }) {
         dataSet.unSelect(record);
       }
     };
+
     const handleClick = e => {
       stopPropagation(e);
       if (record.isSelected) {
         dataSet.unSelect(record);
       }
     };
+
+    const handleMouseDown = () => {
+      if (store.useMouseBatchChoose) {
+        store.mouseBatchChooseStartId = record.id;
+        store.mouseBatchChooseEndId = record.id;
+        store.mouseBatchChooseState = true;
+      }
+    };
+
+    const handleMouseEnter = () => {
+      if (store.useMouseBatchChoose && store.mouseBatchChooseState) {
+        store.mouseBatchChooseEndId = record.id;
+        store.changeMouseBatchChooseIdList(getIdList(store.mouseBatchChooseStartId, store.mouseBatchChooseEndId));
+      }
+    };
+
     if (selection === DataSetSelection.multiple) {
       return (
         <ObserverCheckBox
           checked={record.isSelected}
           onChange={handleChange}
           onClick={stopPropagation}
+          onMouseDown={handleMouseDown}
+          onMouseEnter={handleMouseEnter}
           disabled={!record.selectable}
           value
         />
@@ -66,6 +95,8 @@ function renderSelectionBox({ record }) {
           checked={record.isSelected}
           onChange={handleChange}
           onClick={handleClick}
+          onMouseDown={handleMouseDown}
+          onMouseEnter={handleMouseEnter}
           disabled={!record.selectable}
           value
         />
@@ -75,11 +106,11 @@ function renderSelectionBox({ record }) {
 }
 
 function mergeDefaultProps(columns: ColumnProps[], defaultKey: number[] = [0]): ColumnProps[] {
-  const columnsNew:any[] = [];
-  const leftFixedColumns:any[] = [];
-  const rightFixedColumns:any[] = [];
-  columns.forEach((column:ColumnProps) => {
-    if(isPlainObject(column)){
+  const columnsNew: any[] = [];
+  const leftFixedColumns: any[] = [];
+  const rightFixedColumns: any[] = [];
+  columns.forEach((column: ColumnProps) => {
+    if (isPlainObject(column)) {
       const newColumn: ColumnProps = { ...Column.defaultProps, ...column };
       if (isNil(getColumnKey(newColumn))) {
         newColumn.key = `anonymous-${defaultKey[0]++}`;
@@ -96,7 +127,7 @@ function mergeDefaultProps(columns: ColumnProps[], defaultKey: number[] = [0]): 
         columnsNew.push(newColumn);
       }
     }
-  })
+  });
   return leftFixedColumns.concat(columnsNew, rightFixedColumns);
 }
 
@@ -178,6 +209,14 @@ export default class TableStore {
   @observable currentEditorName?: string;
 
   @observable styledHidden?: boolean;
+
+  mouseBatchChooseStartId: number = 0;
+
+  mouseBatchChooseEndId: number = 0;
+
+  mouseBatchChooseState: boolean = false;
+
+  @observable mouseBatchChooseIdList?: number[];
 
   @computed
   get dataSet(): DataSet {
@@ -314,6 +353,12 @@ export default class TableStore {
       return selection && selectionMode === SelectionMode.rowbox;
     }
     return false;
+  }
+
+  @computed
+  get useMouseBatchChoose(): boolean {
+    const { useMouseBatchChoose } = this.props;
+    return useMouseBatchChoose || getConfig('tableUseMouseBatchChoose') || false;
   }
 
   @computed
@@ -555,6 +600,11 @@ export default class TableStore {
     this.currentEditorName = undefined;
   }
 
+  @action
+  changeMouseBatchChooseIdList(idList: number[]) {
+    this.mouseBatchChooseIdList = idList;
+  }
+
   showNextEditor(name: string, reserve: boolean) {
     if (reserve) {
       this.dataSet.pre();
@@ -660,7 +710,7 @@ export default class TableStore {
         key: SELECTION_KEY,
         resizable: false,
         className: `${getProPrefixCls(suffixCls!, prefixCls)}-selection-column`,
-        renderer: renderSelectionBox,
+        renderer: ({ record }) => renderSelectionBox({ record, store: this }),
         align: ColumnAlign.center,
         width: 50,
         lock: true,
@@ -674,4 +724,3 @@ export default class TableStore {
     return columns;
   }
 }
-

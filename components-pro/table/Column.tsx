@@ -11,8 +11,8 @@ import { Commands } from './Table';
 
 export const defaultMinWidth = 100;
 
-export type onCellProps = { dataSet: DataSet; record: Record; column: ColumnProps };
-export type commandProps = { dataSet: DataSet; record: Record };
+export type onCellProps = { dataSet: DataSet; record: Record; column: ColumnProps; };
+export type commandProps = { dataSet: DataSet; record: Record; };
 
 export interface ColumnProps extends ElementProps {
   /**
@@ -44,9 +44,9 @@ export interface ColumnProps extends ElementProps {
    * 编辑器
    */
   editor?:
-    | ReactElement<FormFieldProps>
-    | ((record: Record, name?: string) => ReactElement<FormFieldProps> | boolean)
-    | boolean;
+  | ReactElement<FormFieldProps>
+  | ((record: Record, name?: string) => ReactElement<FormFieldProps> | boolean)
+  | boolean;
   /**
    * 是否锁定
    * 可选值： false | true | 'left' | 'right'
