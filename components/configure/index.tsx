@@ -110,8 +110,9 @@ export type Config = {
   }) => object;
   formatter?: Formatter;
   dropdownMatchSelectWidth?: boolean;
-  useColon?: boolean,
+  useColon?: boolean;
   excludeUseColonTagList?: string[];
+  tableUseMouseBatchChoose?: boolean;
 };
 
 export type ConfigKeys = keyof Config;
@@ -194,6 +195,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['dropdownMatchSelectWidth', true],
   ['useColon', false],
   ['excludeUseColonTagList', defaultExcludeUseColonTag],
+  ['tableUseMouseBatchChoose', false],
 ]);
 
 export function getConfig(key: ConfigKeys): any {
