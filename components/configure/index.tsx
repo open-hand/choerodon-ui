@@ -112,6 +112,7 @@ export type Config = {
   dropdownMatchSelectWidth?: boolean;
   useColon?: boolean,
   excludeUseColonTagList?: string[];
+  TableAlwaysShowRowBox?: boolean;
 };
 
 export type ConfigKeys = keyof Config;
@@ -194,6 +195,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['dropdownMatchSelectWidth', true],
   ['useColon', false],
   ['excludeUseColonTagList', defaultExcludeUseColonTag],
+  ['TableAlwaysShowRowBox', false],
 ]);
 
 export function getConfig(key: ConfigKeys): any {

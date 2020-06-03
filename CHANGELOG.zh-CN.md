@@ -17,6 +17,8 @@ timeline: true
 
 - 🌟 `<pro>AutoComplete`: 新增 AutoComplete Pro 组件。
 - 🌟 `<pro>Form`: 新增 useColon, excludeUseColonTagList 属性以及全局配置。
+- 🌟 `<pro>Table`: 新增 alwaysShowRowBox 属性以及全局配置 TableAlwaysShowRowBox。
+- 🐞 `<pro>Table`: 修复在非 rowbox 模式下,对点击已选择的内容无法取消选择的问题以及hover类在current行上不被添加的问题。
 
 ## 0.8.63
 

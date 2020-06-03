@@ -270,7 +270,7 @@ export default class TableRow extends Component<TableRowProps, any> {
     const { record } = this.props;
     const { dataSet } = record;
     if (dataSet) {
-      dataSet.select(record);
+      dataSet[record.isSelected ? 'unSelect' : 'select'](record);
     }
   }
 
@@ -330,14 +330,14 @@ export default class TableRow extends Component<TableRowProps, any> {
         const rowExternalProps =
           typeof onRow === 'function'
             ? onRow({
-                dataSet: record.dataSet!,
-                record,
-                expandedRow: true,
-                index,
-              })
+              dataSet: record.dataSet!,
+              record,
+              expandedRow: true,
+              index,
+            })
             : {};
         const classString = classNames(`${prefixCls}-expanded-row`, rowExternalProps.className);
-        const rowProps: HTMLProps<HTMLTableRowElement> & { style: CSSProperties } = {
+        const rowProps: HTMLProps<HTMLTableRowElement> & { style: CSSProperties; } = {
           key: `${record.key}-expanded-row`,
           className: classString,
           style: { ...rowExternalProps.style },
@@ -390,11 +390,11 @@ export default class TableRow extends Component<TableRowProps, any> {
       ...(typeof rowRenderer === 'function' ? rowRenderer(record, index) : {}),
       ...(typeof onRow === 'function'
         ? onRow({
-            dataSet: dataSet!,
-            record,
-            expandedRow: false,
-            index,
-          })
+          dataSet: dataSet!,
+          record,
+          expandedRow: false,
+          index,
+        })
         : {}),
     };
     this.rowExternalProps = rowExternalProps;
@@ -405,7 +405,7 @@ export default class TableRow extends Component<TableRowProps, any> {
       rowPrefixCls,
       {
         [`${rowPrefixCls}-current`]: highLightRow && isCurrent,
-        [`${rowPrefixCls}-hover`]: highLightRow && !isCurrent && this.isHover,
+        [`${rowPrefixCls}-hover`]: highLightRow && this.isHover,
         [`${rowPrefixCls}-highlight`]: highLightRow,
         [`${rowPrefixCls}-selected`]: selectedHighLightRow && selected,
         [`${rowPrefixCls}-disabled`]: disabled,

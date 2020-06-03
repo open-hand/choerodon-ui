@@ -17,6 +17,8 @@ timeline: true
 
 - 🌟 `<pro>AutoComplete`: Added `AutoComplete` Pro component.
 - 🌟 `<pro>Form`: Added useColon, excludeUseColonTagList attributes and global configuration.
+- 🌟 `<pro>Table`: Added `alwaysShowRowBox` attributes and global configuration `TableAlwaysShowRowBox`.
+- 🐞 `<pro>Table`: Fix the problem that in non-rowbox mode, click on the selected content cannot cancel the selection and hover class is not added on the current row
 
 ## 0.8.63
 

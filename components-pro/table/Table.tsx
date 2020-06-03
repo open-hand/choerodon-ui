@@ -53,7 +53,7 @@ import { findIndexedSibling, getHeight, getPaginationPosition } from './utils';
 import { ButtonProps } from '../button/Button';
 import TableBody from './TableBody';
 
-export type TableButtonProps = ButtonProps & { afterClick?: MouseEventHandler<any> };
+export type TableButtonProps = ButtonProps & { afterClick?: MouseEventHandler<any>; };
 
 export type Buttons =
   | TableButtonType
@@ -143,6 +143,10 @@ export interface TableProps extends DataSetComponentProps {
    */
   selectionMode?: SelectionMode;
   /**
+   * 在其他模式下是不是要是要rowbox
+   */
+  alwaysShowRowBox?: boolean;
+  /**
    * 设置行属性
    * @param {onRowProps} props
    * @return {Object} 行属性
@@ -173,7 +177,7 @@ export interface TableProps extends DataSetComponentProps {
    * type:week => DatePicker[mode=week]
    * default => TextField
    */
-  queryFields?: { [key: string]: ReactElement<any> };
+  queryFields?: { [key: string]: ReactElement<any>; };
   /**
    * 头部显示的查询字段的数量，超出限制的查询字段放入弹出窗口
    * @default 1
@@ -287,7 +291,7 @@ export interface TableProps extends DataSetComponentProps {
   /**
    * 是否开启自适应高度
    */
-  autoHeight?: boolean | { type: TableAutoHeightType, diff: number };
+  autoHeight?: boolean | { type: TableAutoHeightType, diff: number; };
 }
 
 @observer
@@ -363,6 +367,7 @@ export default class Table extends DataSetComponent<TableProps> {
      * @default 30
      */
     rowHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf(['auto'])]),
+    alwaysShowRowBox:PropTypes.bool,
     defaultRowExpanded: PropTypes.bool,
     expandRowByClick: PropTypes.bool,
     indentSize: PropTypes.number,
@@ -621,6 +626,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'border',
       'style',
       'selectionMode',
+      'alwaysShowRowBox',
       'onRow',
       'rowRenderer',
       'buttons',
@@ -975,24 +981,24 @@ export default class Table extends DataSetComponent<TableProps> {
             {hasHeader && this.getTableHeader(lock)}
           </TableWrapper>
           {hasBody &&
-          <div
-            className={`${prefixCls}-tbody-wrapper`}
-            style={{ height: virtualH }}
-            ref={this.saveRef}
-          >
-            <div className='refUpperPlaceholder' style={{ display: 'none' }} ref={(node) => this.refUpperPlaceholder.push(node)} />
-            <TableWrapper
-              prefixCls={prefixCls}
-              key="tableWrapper-body"
-              lock={lock}
-              hasBody={hasBody}
-              hasHeader={false}
-              hasFooter={false}
+            <div
+              className={`${prefixCls}-tbody-wrapper`}
+              style={{ height: virtualH }}
+              ref={this.saveRef}
             >
-              {hasBody && this.getTableBody(lock)}
-            </TableWrapper>
-            <div className='refUnderPlaceholder' style={{ display: 'none' }} ref={(node) => this.refUnderPlaceholder.push(node)} />
-          </div>}
+              <div className='refUpperPlaceholder' style={{ display: 'none' }} ref={(node) => this.refUpperPlaceholder.push(node)} />
+              <TableWrapper
+                prefixCls={prefixCls}
+                key="tableWrapper-body"
+                lock={lock}
+                hasBody={hasBody}
+                hasHeader={false}
+                hasFooter={false}
+              >
+                {hasBody && this.getTableBody(lock)}
+              </TableWrapper>
+              <div className='refUnderPlaceholder' style={{ display: 'none' }} ref={(node) => this.refUnderPlaceholder.push(node)} />
+            </div>}
           <TableWrapper
             prefixCls={prefixCls}
             key="tableWrapper-footer"
@@ -1232,13 +1238,13 @@ export default class Table extends DataSetComponent<TableProps> {
         type = autoHeight.type || TableAutoHeightType.minHeight;
         diff = autoHeight.diff || 80;
       }
-      if(wrapper){
+      if (wrapper) {
         if (type === TableAutoHeightType.minHeight) {
-          return parentHeight - (tableTop -  parentTop) - diff;
+          return parentHeight - (tableTop - parentTop) - diff;
         }
         const tableBody: HTMLDivElement | null = element.querySelector(`.${prefixCls}-body`);
         if (tableBody) {
-          tableBody.style.maxHeight = pxToRem(parentHeight - (tableTop -  parentTop) - diff) || '';
+          tableBody.style.maxHeight = pxToRem(parentHeight - (tableTop - parentTop) - diff) || '';
           tableBody.style.overflow = 'auto';
         }
       }

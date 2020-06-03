@@ -30,13 +30,17 @@ import { expandIconProps, TablePaginationConfig } from './Table';
 const SELECTION_KEY = '__selection-column__';
 export const EXPAND_KEY = '__expand-column__';
 
-export type HeaderText = { name: string; label: string };
+export type HeaderText = { name: string; label: string; };
 
-function renderSelectionBox({ record }) {
+function renderSelectionBox({ record, store }: { record: any, store: TableStore; }) {
   const { dataSet } = record;
   if (dataSet) {
     const { selection } = dataSet;
     const handleChange = value => {
+      if (store.props.selectionMode === SelectionMode.mousedown) {
+        // 将处理逻辑交给 mousedown 的处理逻辑 不然会两次触发导致不被勾选上
+        return;
+      }
       if (value) {
         dataSet.select(record);
       } else {
@@ -75,11 +79,11 @@ function renderSelectionBox({ record }) {
 }
 
 function mergeDefaultProps(columns: ColumnProps[], defaultKey: number[] = [0]): ColumnProps[] {
-  const columnsNew:any[] = [];
-  const leftFixedColumns:any[] = [];
-  const rightFixedColumns:any[] = [];
-  columns.forEach((column:ColumnProps) => {
-    if(isPlainObject(column)){
+  const columnsNew: any[] = [];
+  const leftFixedColumns: any[] = [];
+  const rightFixedColumns: any[] = [];
+  columns.forEach((column: ColumnProps) => {
+    if (isPlainObject(column)) {
       const newColumn: ColumnProps = { ...Column.defaultProps, ...column };
       if (isNil(getColumnKey(newColumn))) {
         newColumn.key = `anonymous-${defaultKey[0]++}`;
@@ -96,7 +100,7 @@ function mergeDefaultProps(columns: ColumnProps[], defaultKey: number[] = [0]): 
         columnsNew.push(newColumn);
       }
     }
-  })
+  });
   return leftFixedColumns.concat(columnsNew, rightFixedColumns);
 }
 
@@ -186,6 +190,11 @@ export default class TableStore {
 
   get hidden(): boolean {
     return !!this.styledHidden || this.props.hidden;
+  }
+
+  @computed
+  get alwaysShowRowBox(): boolean {
+    return this.props.alwaysShowRowBox || getConfig('TableAlwaysShowRowBox') || false;
   }
 
   @computed
@@ -308,10 +317,11 @@ export default class TableStore {
 
   @computed
   get hasRowBox(): boolean {
-    const { dataSet, selectionMode } = this.props;
+    const { dataSet } = this.props;
+    const { alwaysShowRowBox } = this;
     if (dataSet) {
-      const { selection } = dataSet;
-      return selection && selectionMode === SelectionMode.rowbox;
+      const { selection, selectionMode } = dataSet;
+      return selection && (selectionMode === SelectionMode.rowbox || alwaysShowRowBox);
     }
     return false;
   }
@@ -660,7 +670,7 @@ export default class TableStore {
         key: SELECTION_KEY,
         resizable: false,
         className: `${getProPrefixCls(suffixCls!, prefixCls)}-selection-column`,
-        renderer: renderSelectionBox,
+        renderer: ({ record }) => renderSelectionBox({ record, store: this }),
         align: ColumnAlign.center,
         width: 50,
         lock: true,
