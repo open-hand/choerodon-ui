@@ -19,6 +19,7 @@ timeline: true
 - 🌟 `<pro>AutoComplete`: Added `AutoComplete` Pro component.
 - 🌟 `TreeSelect`: Added `searchValue` & `autoClearSearchValue` properties .
 - 🌟 `<pro>Form`: Added useColon, excludeUseColonTagList attributes and global configuration.
+- 🐞 Fixed the input,form,autoComplete style.
 - 🐞 `Cascader`: Fixed the cascader not has expandable icon.
 - 🐞 `Pagination`: Fixed the pagination size diff style dislocation.
 

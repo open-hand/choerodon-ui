@@ -19,6 +19,7 @@ timeline: true
 - 🌟 `<pro>AutoComplete`: 新增 AutoComplete Pro 组件。
 - 🌟 `TreeSelect`: 新增 searchValue 和 autoClearSearchValue 属性 。
 - 🌟 `<pro>Form`: 新增 useColon, excludeUseColonTagList 属性以及全局配置。
+- 🐞 修复基础组件 input,form,autoComplete 的样式问题.
 - 🐞 `Cascader`: 修复cascader不存在展开符号的问题。
 - 🐞 `Pagination`: 修复pagination在不同size下样式错位问题。
 

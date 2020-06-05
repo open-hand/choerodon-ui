@@ -5,14 +5,15 @@
 
 // size mixins for input
 .input-lg() {
-  // padding: @input-padding-vertical-lg @input-padding-horizontal-lg;
+  height: @input-height-lg;
+  padding: @input-padding-vertical-lg @input-padding-horizontal-lg;
   font-size: @font-size-lg;
 }
 
 .input-sm() {
-  font-size: @font-size-sm;
+  height: @input-height-sm;
+  padding: @input-padding-vertical-sm @input-padding-horizontal-sm;
 }
-
 // input status
 // == when focus or actived
 .active(@color: @outline-color) {
@@ -275,6 +276,17 @@
       transition: all 0.2s @ease-out;
     }
   }
+  
+  &-rendered-lg &-label{
+    font-size: @font-size-lg;
+    line-height: @input-height-lg;
+  }
+  
+  &-rendered-sm &-label{
+    font-size: @font-size-sm ;
+    line-height: @input-height-sm  ;
+  }
+
   &-has-prefix &-label-wrapper {
     left: 0;
   }
