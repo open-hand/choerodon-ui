@@ -17,8 +17,9 @@ timeline: true
 
 - 🌟 `<pro>Cascader`: Added `Cascader` Pro component.
 - 🌟 `<pro>AutoComplete`: Added `AutoComplete` Pro component.
-- 🌟 `TreeSelect`: Added `searchValue` & `autoClearSearchValue` properties .
+- 🌟 `<pro>Table`: Added `autoMaxWidth` propertise to self-adaption width and export demo .
 - 🌟 `<pro>Form`: Added useColon, excludeUseColonTagList attributes and global configuration.
+- 🌟 `TreeSelect`: Added `searchValue` & `autoClearSearchValue` properties .
 - 🌟 `Avatar`: Added `alt` properties description.
 - 🌟 `DatePicker`: Added `onPanelChange`,`mode` properties description.
 - 🌟 `Modal`: Added `keyboard`,`okButtonProps`,`cancelButtonProps` properties .

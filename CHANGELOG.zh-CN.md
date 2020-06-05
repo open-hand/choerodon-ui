@@ -17,8 +17,9 @@ timeline: true
 
 - 🌟 `<pro>Cascader`: 新增 Cascader Pro 组件。
 - 🌟 `<pro>AutoComplete`: 新增 AutoComplete Pro 组件。
-- 🌟 `TreeSelect`: 新增 searchValue 和 autoClearSearchValue 属性 。
+- 🌟 `<pro>Table`: 新增 `autoMaxWidth` 属性实现双击自适应最大宽度以及导出案例 .
 - 🌟 `<pro>Form`: 新增 useColon, excludeUseColonTagList 属性以及全局配置。
+- 🌟 `TreeSelect`: 新增 searchValue 和 autoClearSearchValue 属性 。
 - 🌟 `Avatar`: 增加 `alt` 属性描述 .
 - 🌟 `DatePicker`: 增加 `onPanelChange`,`mode` 属性描述 .
 - 🌟 `Modal`: 增加 `keyboard`,`okButtonProps`,`cancelButtonProps` 属性 .

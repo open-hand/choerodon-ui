@@ -29,6 +29,10 @@ export interface ColumnProps extends ElementProps {
    */
   minWidth?: number;
   /**
+   * 内部最大宽度
+   */
+  innerMaxWidth?:number;
+  /**
    * 列头
    */
   header?: ReactNode | ((dataSet: DataSet, name?: string) => ReactNode);
@@ -134,6 +138,10 @@ export default class Column extends Component<ColumnProps, ComponentState> {
      * 最小列宽
      */
     minWidth: PropTypes.number,
+    /**
+     * 列内部中最大能撑开的宽度
+     */
+    innerMaxWidth: PropTypes.number,
     /**
      * 列头
      */

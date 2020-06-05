@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { action, set } from 'mobx';
 import { observer } from 'mobx-react';
 import omit from 'lodash/omit';
+import debounce from 'lodash/debounce';
 import defaultTo from 'lodash/defaultTo';
 import isString from 'lodash/isString';
 import classes from 'component-classes';
@@ -76,14 +77,51 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
   handleLeftResize(e) {
     const { prevColumn } = this.props;
     this.setResizeColumn(prevColumn);
-    this.resizeStart(e);
+    e.persist()
+    this.setresizeStart(e);
   }
 
   @autobind
   handleRightResize(e) {
     const { resizeColumn } = this.props;
     this.setResizeColumn(resizeColumn);
-    this.resizeStart(e);
+    e.persist()
+    this.setresizeStart(e);
+  }
+
+  private setresizeStart = debounce(
+    (e) => {
+      this.resizeStart(e)
+    },
+    300,
+  );
+
+  @autobind
+  handleLeftDoubleClick(_e) {
+    if(this.setresizeStart){
+      this.setresizeStart.cancel()
+      this.resizeDoubleClick()
+    }
+  }
+
+  @autobind
+  handleRightDoubleClick(_e) {
+    if(this.setresizeStart){
+      this.setresizeStart.cancel()
+      this.resizeDoubleClick()
+    }
+  }
+
+  @autobind
+  @action
+  resizeDoubleClick(): void {
+    const column = this.resizeColumn;
+    const {tableStore:{props:{autoMaxWidth}}} = this.context
+    if (autoMaxWidth && column && column.innerMaxWidth) {
+      if (column.innerMaxWidth !== column.width) {
+        set(column, 'width', column.innerMaxWidth);
+      }
+    }
   }
 
   @action
@@ -158,6 +196,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
       <div
         key="pre"
         className={`${resizerPrefixCls} ${resizerPrefixCls}-left`}
+        onDoubleClick={this.handleLeftDoubleClick}
         onMouseDown={this.handleLeftResize}
       />
     );
@@ -165,6 +204,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
       <div
         key="next"
         className={`${resizerPrefixCls} ${resizerPrefixCls}-right`}
+        onDoubleClick={this.handleRightDoubleClick}
         onMouseDown={this.handleRightResize}
       />
     );
@@ -264,5 +304,6 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
 
   componentWillUnmount() {
     this.resizeEvent.clear();
+    this.setresizeStart.cancel();
   }
 }
