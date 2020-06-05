@@ -22,6 +22,7 @@ timeline: true
 - 🌟 `Avatar`: Added `alt` properties description.
 - 🌟 `DatePicker`: Added `onPanelChange`,`mode` properties description.
 - 🌟 `Modal`: Added `keyboard`,`okButtonProps`,`cancelButtonProps` properties .
+- 🌟 `Progress`: Added `strokeColor` properties .
 - 🐞 Fixed the input,form,autoComplete style.
 - 🐞 `Cascader`: Fixed the cascader not has expandable icon.
 - 🐞 `Pagination`: Fixed the pagination size diff style dislocation.

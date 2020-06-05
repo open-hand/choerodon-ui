@@ -8,6 +8,12 @@ import { Size } from '../_util/enum';
 import { ProgressPosition, ProgressStatus, ProgressType } from './enum';
 import { getPrefixCls } from '../configure';
 
+const statusColorMap = {
+  normal: '#108ee9',
+  exception: '#ff5500',
+  success: '#87d068',
+};
+
 export interface ProgressProps {
   prefixCls?: string;
   className?: string;
@@ -19,6 +25,7 @@ export interface ProgressProps {
   showInfo?: boolean;
   strokeWidth?: number;
   trailColor?: string;
+  strokeColor?: string;
   width?: number;
   style?: CSSProperties;
   gapDegree?: number;
@@ -60,6 +67,7 @@ export default class Progress extends Component<ProgressProps, {}> {
     percent: PropTypes.number,
     width: PropTypes.number,
     strokeWidth: PropTypes.number,
+    strokeColor: PropTypes.string,
     trailColor: PropTypes.string,
     format: PropTypes.func,
     gapDegree: PropTypes.number,
@@ -79,6 +87,7 @@ export default class Progress extends Component<ProgressProps, {}> {
       successPercent,
       type,
       strokeWidth,
+      strokeColor,
       width,
       showInfo,
       gapDegree = 0,
@@ -116,6 +125,7 @@ export default class Progress extends Component<ProgressProps, {}> {
       const percentStyle = {
         width: `${percent}%`,
         height: strokeWidth || (size === Size.small ? 6 : 8),
+        background: strokeColor,
       };
       const successPercentStyle = {
         width: `${successPercent}%`,
@@ -156,6 +166,7 @@ export default class Progress extends Component<ProgressProps, {}> {
             strokeWidth={circleWidth}
             trailWidth={circleWidth}
             trailColor={trailColor}
+            strokeColor={(statusColorMap as any)[progressStatus]}
             prefixCls={prefixCls}
             gapDegree={gapDeg}
             gapPosition={gapPos}
