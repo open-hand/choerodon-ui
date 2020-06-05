@@ -23,6 +23,7 @@ timeline: true
 - 🌟 `DatePicker`: Added `onPanelChange`,`mode` properties description.
 - 🌟 `Modal`: Added `keyboard`,`okButtonProps`,`cancelButtonProps` properties .
 - 🌟 `Progress`: Added `strokeColor` properties .
+- 🌟 `Table`: Added `pagination` gloabal schema and export example .
 - 🌟 `Switch`: Added `checkedValue`,`unCheckedValue` properties .
 - 🐞 Fixed the input,form,autoComplete style.
 - 🐞 `Cascader`: Fixed the cascader not has expandable icon.
