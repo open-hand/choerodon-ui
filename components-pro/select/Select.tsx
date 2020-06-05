@@ -66,6 +66,8 @@ function getSimpleValue(value, valueField) {
   return value;
 }
 
+export type OverFlower = 'visible' | 'hidden' | 'clip' | 'scroll' | 'auto'  | undefined
+
 export type onOptionProps = { dataSet: DataSet; record: Record };
 
 export type SearchMatcher = string | ((props: SearchMatcherProps) => boolean);
@@ -587,8 +589,14 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
           width: pxToRem(target.getBoundingClientRect().width),
         };
       }
+      let overflowJudge:OverFlower = "auto"
+      // @ts-ignore 解决ie 出现无法查看所有内容的问题
+      if ( window && (!!window.ActiveXObject || "ActiveXObject" in window)){
+        overflowJudge = "scroll"
+      }
       return {
         minWidth: pxToRem(target.getBoundingClientRect().width),
+        overflowY:overflowJudge,
       };
     }
   }

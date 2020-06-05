@@ -27,6 +27,7 @@ timeline: true
 - 🌟 `Progress`: Added `strokeColor` properties .
 - 🌟 `Table`: Added `pagination` gloabal schema and export example .
 - 🌟 `Switch`: Added `checkedValue`,`unCheckedValue` properties .
+- 🐞 `<pro>Select`: Fixed ie11 dropdownMatchSelectWidth is always hidden text .
 - 🐞 Fixed the input,form,autoComplete style.
 - 🐞 `Cascader`: Fixed the cascader not has expandable icon.
 - 🐞 `Pagination`: Fixed the pagination size diff style dislocation.

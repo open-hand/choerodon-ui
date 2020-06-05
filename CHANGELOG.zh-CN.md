@@ -28,6 +28,7 @@ timeline: true
 - 🌟 `Table`: 增加 `pagination` 全局配置 和 导出列子 .
 - 🌟 `Switch`: 增加 `checkedValue`,`unCheckedValue` 属性 .
 - 🐞 修复基础组件 input,form,autoComplete 的样式问题.
+- 🐞 `<pro>Select`: 修复 ie11 设置 dropdownMatchSelectWidth 文字显示不全 .
 - 🐞 `Cascader`: 修复cascader不存在展开符号的问题。
 - 🐞 `Pagination`: 修复pagination在不同size下样式错位问题。
 
