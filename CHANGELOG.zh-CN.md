@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `<pro>AutoComplete`: 新增 AutoComplete Pro 组件。
 - 🌟 `<pro>Form`: 新增 useColon, excludeUseColonTagList 属性以及全局配置。
+- 🐞 `<pro>Table`: 修复 Table 中 pagination 可以输入pageSize的问题。
 
 ## 0.8.63
 

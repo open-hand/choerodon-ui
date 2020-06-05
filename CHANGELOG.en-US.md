@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `<pro>AutoComplete`: Added `AutoComplete` Pro component.
 - 🌟 `<pro>Form`: Added useColon, excludeUseColonTagList attributes and global configuration.
+- 🐞 `<pro>Table`: Fix the problem that pageSize can be input for paging in Table.
 
 ## 0.8.63
 

@@ -193,10 +193,10 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     return super.getWrapperClassNames(
       {
         [`${prefixCls}-empty`]: this.isEmpty(),
-        [`${prefixCls}-suffix-button`]: isValidElement<{ onClick }>(suffix),
+        [`${prefixCls}-suffix-button`]: isValidElement<{ onClick; }>(suffix),
         [`${prefixCls}-multiple`]: multiple,
         [`${prefixCls}-range`]: range,
-        [`${prefixCls}-prefix-button`]: isValidElement<{ onClick }>(prefix),
+        [`${prefixCls}-prefix-button`]: isValidElement<{ onClick; }>(prefix),
       },
       ...args,
     );
@@ -453,7 +453,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         {...otherProps}
         placeholder={this.hasFloatLabel ? undefined : this.getPlaceholders()[0]}
         value={isString(text) ? text : this.getText(this.getValue())}
-        readOnly={this.isReadOnly()}
+        readOnly={!this.editable}
       />
     );
   }
