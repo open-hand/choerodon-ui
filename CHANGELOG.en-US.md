@@ -29,6 +29,7 @@ timeline: true
 - 🌟 `Switch`: Added `checkedValue`,`unCheckedValue` properties .
 - 🐞 `<pro>Select`: Fixed ie11 dropdownMatchSelectWidth is always hidden text .
 - 🐞 Fixed the input,form,autoComplete style.
+- 🐞 `Table`: Fixed table checked style can't cancel .
 - 🐞 `Cascader`: Fixed the cascader not has expandable icon.
 - 🐞 `Pagination`: Fixed the pagination size diff style dislocation.
 

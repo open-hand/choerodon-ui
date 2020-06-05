@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 ---
 order: 26
 title:
