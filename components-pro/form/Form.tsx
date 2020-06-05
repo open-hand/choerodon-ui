@@ -20,6 +20,7 @@ import { AxiosInstance } from 'axios';
 import Responsive from 'choerodon-ui/lib/responsive/Responsive';
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
+import isFunction from 'lodash/isFunction';
 import axios from '../axios';
 import autobind from '../_util/autobind';
 import { FormField, FormFieldProps, getFieldsById } from '../field/FormField';
@@ -34,12 +35,13 @@ import {
   FIELD_SUFFIX,
   getProperty,
   normalizeLabelWidth,
+  defaultExcludeUseColonTag,
 } from './utils';
 
 /**
  * 表单name生成器
  */
-const NameGen: IterableIterator<string> = (function*(start: number) {
+const NameGen: IterableIterator<string> = (function* (start: number) {
   while (true) {
     start += 1;
     yield `form-${start}`;
@@ -73,6 +75,14 @@ export interface FormProps extends DataSetComponentProps {
    * Ajax提交时的参数回调
    */
   processParams?: (e: FormEvent<any>) => any;
+  /**
+   * 是否使用冒号
+   */
+  useColon?: boolean,
+  /**
+   * 不使用冒号的列表
+   */
+  excludeUseColonTagList?: string[],
   /**
    * 内部控件的标签的宽度
    */
@@ -178,6 +188,8 @@ export default class Form extends DataSetComponent<FormProps> {
         [ResponsiveKeys.xxl]: labelWidthPropTypes,
       }),
     ]),
+    useColon: PropTypes.bool,
+    excludeUseColonTagList: PropTypes.array,
     /**
      * 标签文字对齐方式
      * 可选值： 'left' | 'center' | 'right'
@@ -301,6 +313,16 @@ export default class Form extends DataSetComponent<FormProps> {
   }
 
   @computed
+  get useColon(): boolean {
+    return this.observableProps.useColon || getConfig('useColon') || false;
+  }
+
+  @computed
+  get excludeUseColonTagList(): string[] {
+    return this.observableProps.excludeUseColonTagList || getConfig('excludeUseColonTagList') || defaultExcludeUseColonTag;
+  }
+
+  @computed
   get columns(): number {
     const { columns } = this.observableProps;
     if (isNumber(columns)) {
@@ -382,6 +404,8 @@ export default class Form extends DataSetComponent<FormProps> {
       labelWidth: defaultTo(props.labelWidth, context.labelWidth),
       pristine: 'pristine' in props ? props.pristine : context.pristine,
       columns: props.columns,
+      useColon: props.useColon,
+      excludeUseColonTagList: props.excludeUseColonTagList,
     };
   }
 
@@ -398,6 +422,8 @@ export default class Form extends DataSetComponent<FormProps> {
       'columns',
       'pristine',
       'axios',
+      'useColon',
+      'excludeUseColonTagList',
     ]);
     otherProps.onSubmit = this.handleSubmit;
     otherProps.onReset = this.handleReset;
@@ -436,6 +462,8 @@ export default class Form extends DataSetComponent<FormProps> {
       columns,
       labelLayout,
       labelAlign,
+      useColon,
+      excludeUseColonTagList,
       props: { children },
     } = this;
     const prefixCls = getProPrefixCls(FIELD_SUFFIX);
@@ -470,8 +498,14 @@ export default class Form extends DataSetComponent<FormProps> {
       matrix[rowIndex] = matrix[rowIndex] || [];
     }
 
-    for (let index = 0, len = childrenArray.length; index < len; ) {
+    for (let index = 0, len = childrenArray.length; index < len;) {
       const { props, key, type } = childrenArray[index];
+
+      let TagName = type;
+      if (isFunction(type)) {
+        TagName = (type as any).displayName;
+      }
+
       const label = getProperty(props, 'label', dataSet, record);
       const fieldLabelWidth = getProperty(props, 'labelWidth', dataSet, record);
       const required = getProperty(props, 'required', dataSet, record);
@@ -521,6 +555,7 @@ export default class Form extends DataSetComponent<FormProps> {
         [`${prefixCls}-required`]: required,
         [`${prefixCls}-label-vertical`]: labelLayout === LabelLayout.vertical,
         [`${prefixCls}-label-output`]: isOutput,
+        [`${prefixCls}-label-useColon`]: useColon && !excludeUseColonTagList.find(v => v === TagName),
       });
       const wrapperClassName = classNames(`${prefixCls}-wrapper`, {
         [`${prefixCls}-output`]: isOutput,
