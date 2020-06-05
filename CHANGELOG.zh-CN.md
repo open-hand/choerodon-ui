@@ -19,6 +19,7 @@ timeline: true
 - 🌟 `<pro>AutoComplete`: 新增 AutoComplete Pro 组件。
 - 🌟 `<pro>Table`: 新增 `autoMaxWidth` 属性实现双击自适应最大宽度以及导出案例 .
 - 🌟 `<pro>Form`: 新增 useColon, excludeUseColonTagList 属性以及全局配置。
+- 🌟 `<pro>Pagination`: 增加 pagination pager 的类名区别.
 - 🌟 `TreeSelect`: 新增 searchValue 和 autoClearSearchValue 属性 。
 - 🌟 `Avatar`: 增加 `alt` 属性描述 .
 - 🌟 `DatePicker`: 增加 `onPanelChange`,`mode` 属性描述 .

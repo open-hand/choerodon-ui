@@ -19,6 +19,7 @@ timeline: true
 - 🌟 `<pro>AutoComplete`: Added `AutoComplete` Pro component.
 - 🌟 `<pro>Table`: Added `autoMaxWidth` propertise to self-adaption width and export demo .
 - 🌟 `<pro>Form`: Added useColon, excludeUseColonTagList attributes and global configuration.
+- 🌟 `<pro>Pagination`: Added the pagination pager className diffrence.
 - 🌟 `TreeSelect`: Added `searchValue` & `autoClearSearchValue` properties .
 - 🌟 `Avatar`: Added `alt` properties description.
 - 🌟 `DatePicker`: Added `onPanelChange`,`mode` properties description.
