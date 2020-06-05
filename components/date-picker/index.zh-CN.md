@@ -52,6 +52,8 @@ subtitle: 日期选择框
 | size | 输入框大小，`large` 高度为 40px，`small` 为 24px，默认是 32px | string | 无 |
 | style | 自定义输入框样式 | object | {} |
 | onOpenChange | 弹出日历和关闭日历的回调 | function(status) | 无 |
+| onPanelChange | 日期面板变化时的回调 | function(value, mode) | - |
+| mode | 日期面板的状态 | `time|date|month|year` | 'date' |
 
 ### 共同的方法
 
