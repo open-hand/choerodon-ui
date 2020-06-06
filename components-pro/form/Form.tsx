@@ -571,7 +571,9 @@ export default class Form extends DataSetComponent<FormProps> {
             rowSpan={rowSpan}
           >
             <label title={isString(label) ? label : ''}>
-              {label}
+              <span>
+                {label}
+              </span>
             </label>
           </td>,
         );
@@ -610,6 +612,12 @@ export default class Form extends DataSetComponent<FormProps> {
       for (let i = 0; i < columns; i++) {
         cols.push(
           <col key={`label-${i}`} style={{ width: pxToRem(labelWidth[i % columns]) }} />,
+          <col key={`wrapper-${i}`} />,
+        );
+      }
+    } else {
+      for (let i = 0; i < columns; i++) {
+        cols.push(
           <col key={`wrapper-${i}`} />,
         );
       }

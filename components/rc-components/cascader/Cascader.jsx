@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import arrayTreeFilter from 'array-tree-filter';
 import isEqual from 'lodash/isEqual';
 import Trigger from '../trigger';
+import Icon from '../../icon';
 import Menus from './Menus';
 import KeyCode from '../../_util/KeyCode';
 
@@ -53,7 +54,7 @@ export default class Cascader extends Component {
     popupPlacement: 'bottomLeft',
     builtinPlacements: BUILT_IN_PLACEMENTS,
     expandTrigger: 'click',
-    expandIcon: '>',
+    expandIcon: <Icon type="navigate_next" />,
   };
 
   static propTypes = {

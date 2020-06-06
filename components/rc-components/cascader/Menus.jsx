@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import arrayTreeFilter from 'array-tree-filter';
 import { findDOMNode } from 'react-dom';
+import Icon from '../../icon';
 
 export default class Menus extends Component {
   static defaultProps = {
@@ -13,7 +14,7 @@ export default class Menus extends Component {
     prefixCls: 'rc-cascader-menus',
     visible: false,
     expandTrigger: 'click',
-    expandIcon:'>',
+    expandIcon: <Icon type="navigate_next" />,
   };
 
   static propTypes = {
@@ -30,7 +31,7 @@ export default class Menus extends Component {
 
   constructor(props) {
     super(props);
-    
+
     this.menuItems = {};
   }
 
