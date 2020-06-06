@@ -53,7 +53,7 @@ import { findIndexedSibling, getHeight, getPaginationPosition } from './utils';
 import { ButtonProps } from '../button/Button';
 import TableBody from './TableBody';
 
-export type TableButtonProps = ButtonProps & { afterClick?: MouseEventHandler<any> };
+export type TableButtonProps = ButtonProps & { afterClick?: MouseEventHandler<any>; };
 
 export type Buttons =
   | TableButtonType
@@ -173,7 +173,7 @@ export interface TableProps extends DataSetComponentProps {
    * type:week => DatePicker[mode=week]
    * default => TextField
    */
-  queryFields?: { [key: string]: ReactElement<any> };
+  queryFields?: { [key: string]: ReactElement<any>; };
   /**
    * 头部显示的查询字段的数量，超出限制的查询字段放入弹出窗口
    * @default 1
@@ -185,6 +185,11 @@ export interface TableProps extends DataSetComponentProps {
    * @default 'normal'
    */
   queryBar?: TableQueryBarType | TableQueryBarHook;
+  /**
+   * 是否使用拖拽选择
+   * @default false
+   */
+  useMouseBatchChoose?: boolean;
   /**
    * @deprecated
    * 请使用 queryBar="none"
@@ -291,7 +296,7 @@ export interface TableProps extends DataSetComponentProps {
   /**
    * 是否开启宽度双击最大值
    */
-  autoMaxWidth?: boolean
+  autoMaxWidth?: boolean;
 }
 
 @observer
@@ -362,6 +367,7 @@ export default class Table extends DataSetComponent<TableProps> {
       ]),
       PropTypes.func,
     ]),
+    useMouseBatchChoose: PropTypes.bool,
     /**
      * 行高
      * @default 30
@@ -653,6 +659,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'virtual',
       'virtualSpin',
       'autoHeight',
+      'useMouseBatchChoose',
       'autoMaxWidth',
     ]);
     otherProps.onKeyDown = this.handleKeyDown;
@@ -702,6 +709,25 @@ export default class Table extends DataSetComponent<TableProps> {
     };
   }
 
+
+  @autobind
+  handleDragMouseUp() {
+    const { dataSet, mouseBatchChooseIdList } = this.tableStore;
+    if (this.tableStore.mouseBatchChooseState) {
+      this.tableStore.mouseBatchChooseState = false;
+      const { mouseBatchChooseStartId, mouseBatchChooseEndId } = this.tableStore;
+      if (mouseBatchChooseStartId === mouseBatchChooseEndId) {
+        return;
+      }
+      (mouseBatchChooseIdList || []).forEach((id: number) => {
+        const record = dataSet.find((innerRecord) => innerRecord.id === id);
+        if (record) {
+          dataSet.select(record);
+        }
+      });
+    }
+  };
+
   componentWillMount() {
     super.componentWillMount();
     this.initDefaultExpandedRows();
@@ -711,6 +737,16 @@ export default class Table extends DataSetComponent<TableProps> {
   componentDidMount() {
     this.syncSize();
     this.syncSizeInFrame();
+    // 为什么使用 pointerup
+    // 因为需要对disabled的元素进行特殊处理
+    // 因为状态的改变依赖 mouseup 而在disabled的元素上 无法触发mouseup事件
+    // 导致状态无法进行修正
+    // 以下两种方案通过 pointer-events:none 进行处理
+    // https://stackoverflow.com/questions/322378/javascript-check-if-mouse-button-down
+    // https://stackoverflow.com/questions/62081666/the-event-of-the-document-is-not-triggered-when-it-is-on-a-disabled-element
+    // 而使用指针事件可以突破disabled的限制
+    // https://stackoverflow.com/questions/62126515/how-to-get-the-state-of-the-mouse-through-javascript/62127845#62127845
+    document.addEventListener('pointerup', this.handleDragMouseUp);
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
@@ -722,6 +758,7 @@ export default class Table extends DataSetComponent<TableProps> {
 
   componentWillUnmount() {
     this.processDataSetListener(false);
+    document.removeEventListener('pointerup', this.handleDragMouseUp);
   }
 
   processDataSetListener(flag: boolean) {
@@ -982,24 +1019,24 @@ export default class Table extends DataSetComponent<TableProps> {
             {hasHeader && this.getTableHeader(lock)}
           </TableWrapper>
           {hasBody &&
-          <div
-            className={`${prefixCls}-tbody-wrapper`}
-            style={{ height: virtualH }}
-            ref={this.saveRef}
-          >
-            <div className='refUpperPlaceholder' style={{ display: 'none' }} ref={(node) => this.refUpperPlaceholder.push(node)} />
-            <TableWrapper
-              prefixCls={prefixCls}
-              key="tableWrapper-body"
-              lock={lock}
-              hasBody={hasBody}
-              hasHeader={false}
-              hasFooter={false}
+            <div
+              className={`${prefixCls}-tbody-wrapper`}
+              style={{ height: virtualH }}
+              ref={this.saveRef}
             >
-              {hasBody && this.getTableBody(lock)}
-            </TableWrapper>
-            <div className='refUnderPlaceholder' style={{ display: 'none' }} ref={(node) => this.refUnderPlaceholder.push(node)} />
-          </div>}
+              <div className='refUpperPlaceholder' style={{ display: 'none' }} ref={(node) => this.refUpperPlaceholder.push(node)} />
+              <TableWrapper
+                prefixCls={prefixCls}
+                key="tableWrapper-body"
+                lock={lock}
+                hasBody={hasBody}
+                hasHeader={false}
+                hasFooter={false}
+              >
+                {hasBody && this.getTableBody(lock)}
+              </TableWrapper>
+              <div className='refUnderPlaceholder' style={{ display: 'none' }} ref={(node) => this.refUnderPlaceholder.push(node)} />
+            </div>}
           <TableWrapper
             prefixCls={prefixCls}
             key="tableWrapper-footer"
@@ -1239,13 +1276,13 @@ export default class Table extends DataSetComponent<TableProps> {
         type = autoHeight.type || TableAutoHeightType.minHeight;
         diff = autoHeight.diff || 80;
       }
-      if(wrapper){
+      if (wrapper) {
         if (type === TableAutoHeightType.minHeight) {
-          return parentHeight - (tableTop -  parentTop) - diff;
+          return parentHeight - (tableTop - parentTop) - diff;
         }
         const tableBody: HTMLDivElement | null = element.querySelector(`.${prefixCls}-body`);
         if (tableBody) {
-          tableBody.style.maxHeight = pxToRem(parentHeight - (tableTop -  parentTop) - diff) || '';
+          tableBody.style.maxHeight = pxToRem(parentHeight - (tableTop - parentTop) - diff) || '';
           tableBody.style.overflow = 'auto';
         }
       }

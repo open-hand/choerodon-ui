@@ -330,14 +330,14 @@ export default class TableRow extends Component<TableRowProps, any> {
         const rowExternalProps =
           typeof onRow === 'function'
             ? onRow({
-                dataSet: record.dataSet!,
-                record,
-                expandedRow: true,
-                index,
-              })
+              dataSet: record.dataSet!,
+              record,
+              expandedRow: true,
+              index,
+            })
             : {};
         const classString = classNames(`${prefixCls}-expanded-row`, rowExternalProps.className);
-        const rowProps: HTMLProps<HTMLTableRowElement> & { style: CSSProperties } = {
+        const rowProps: HTMLProps<HTMLTableRowElement> & { style: CSSProperties; } = {
           key: `${record.key}-expanded-row`,
           className: classString,
           style: { ...rowExternalProps.style },
@@ -382,6 +382,8 @@ export default class TableRow extends Component<TableRowProps, any> {
         overflowX,
         highLightRow,
         selectedHighLightRow,
+        mouseBatchChooseIdList,
+        mouseBatchChooseState,
         props: { onRow, rowRenderer, selectionMode },
       },
     } = this.context;
@@ -390,11 +392,11 @@ export default class TableRow extends Component<TableRowProps, any> {
       ...(typeof rowRenderer === 'function' ? rowRenderer(record, index) : {}),
       ...(typeof onRow === 'function'
         ? onRow({
-            dataSet: dataSet!,
-            record,
-            expandedRow: false,
-            index,
-          })
+          dataSet: dataSet!,
+          record,
+          expandedRow: false,
+          index,
+        })
         : {}),
     };
     this.rowExternalProps = rowExternalProps;
@@ -409,6 +411,7 @@ export default class TableRow extends Component<TableRowProps, any> {
         [`${rowPrefixCls}-highlight`]: highLightRow,
         [`${rowPrefixCls}-selected`]: selectedHighLightRow && selected,
         [`${rowPrefixCls}-disabled`]: disabled,
+        [`${rowPrefixCls}-mouse-batch-choose`]: mouseBatchChooseState && (mouseBatchChooseIdList || []).includes(id),
       },
       rowExternalProps.className,
     );
