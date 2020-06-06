@@ -66,6 +66,7 @@ function getSimpleValue(value, valueField) {
   return value;
 }
 
+
 export type onOptionProps = { dataSet: DataSet; record: Record };
 
 export type SearchMatcher = string | ((props: SearchMatcherProps) => boolean);
@@ -456,7 +457,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
       options,
       textField,
       valueField,
-      props: { dropdownMenuStyle, optionRenderer, onOption },
+      props: { dropdownMenuStyle, optionRenderer, onOption, dropdownMatchSelectWidth = getConfig('dropdownMatchSelectWidth') },
     } = this;
     if (!options) {
       return null;
@@ -465,6 +466,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     const groups = options.getGroups();
     const optGroups: ReactElement<any>[] = [];
     const selectedKeys: Key[] = [];
+    let overflowYAdd = {}
     this.filteredOptions.forEach(record => {
       let previousGroup: ReactElement<any> | undefined;
       groups.every(field => {
@@ -526,6 +528,10 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
         </Item>,
       );
     }
+    // @ts-ignore 判断ie浏览器处理 下拉栏覆盖问题
+    if(!dropdownMatchSelectWidth && (!!window.ActiveXObject || "ActiveXObject" in window)){
+      overflowYAdd = {overflowY: 'scroll'}
+    }
     return (
       <Menu
         ref={this.saveMenu}
@@ -535,7 +541,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
         selectedKeys={selectedKeys}
         prefixCls={this.getMenuPrefixCls()}
         onClick={this.handleMenuClick}
-        style={dropdownMenuStyle}
+        style={{...dropdownMenuStyle,...overflowYAdd}}
         focusable={false}
         {...menuProps}
       >

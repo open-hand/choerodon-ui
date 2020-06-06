@@ -15,6 +15,7 @@ import SelectionBox from './SelectionBox';
 import SelectionCheckboxAll from './SelectionCheckboxAll';
 import Column from './Column';
 import ColumnGroup from './ColumnGroup';
+import {getConfig, getPrefixCls } from '../configure'
 import createBodyRow from './createBodyRow';
 import {
   findColumnByFilterValue,
@@ -44,7 +45,6 @@ import FilterBar from './FilterBar';
 import { VALUE_OR } from './FilterSelect';
 import RcTable from '../rc-components/table';
 import { Size } from '../_util/enum';
-import { getPrefixCls } from '../configure';
 
 function findBodyDom(dom: Element | HTMLDivElement, reg: RegExp): any {
   if (dom.childElementCount > 0) {
@@ -944,8 +944,10 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
     const prefixCls = this.getPrefixCls();
     const position = pagination.position || 'bottom';
     const total = pagination.total || this.getLocalData().length;
+    const pagnationProps = getConfig('pagination');
     return total > 0 && (position === paginationPosition || position === 'both') ? (
       <Pagination
+        {...pagnationProps}
         key={`pagination-${paginationPosition}`}
         {...pagination}
         className={classNames(pagination.className, `${prefixCls}-pagination`)}

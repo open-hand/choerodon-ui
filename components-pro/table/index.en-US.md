@@ -6,7 +6,7 @@ title: Table
 subtitle: 表格
 ---
 
-展示行列数据。
+展示行列数据，导出和分页配置参见底部。
 
 ## 何时使用
 
@@ -29,6 +29,7 @@ subtitle: 表格
 | queryFields | 自定义查询字段组件或默认组件属性，默认会根据 queryDataSet 中定义的 field 类型自动匹配组件 | ReactNode[] \| object |  |
 | queryFieldsLimit | 头部显示的查询字段的数量，超出限制的查询字段放入弹出窗口 | number |  |
 | queryBar | 查询条, 可选值为钩子或者内置类型：`advancedBar` `normal` `bar` `none` | string \| ({ dataSet, queryDataSet, buttons, pagination, queryFields, queryFieldsLimit }) => ReactNode | 'normal' |
+| useMouseBatchChoose | 是否使用鼠标批量选择,开启后在rowbox的情况下可以进行鼠标拖动批量选择,在起始的rowbox处按下,在结束位置松开 | boolean | false |
 | rowHeight | 行高 | number \| auto | 30 |
 | defaultRowExpanded | 默认行是否展开，当 dataSet 没有设置 expandField 时才有效 | boolean | false |
 | expandRowByClick | 通过点击行来展开子行 | boolean | false |
@@ -50,6 +51,7 @@ subtitle: 表格
 | virtual | 是否开启虚拟滚动,当设置表格高度 `style={{ height: xxx }}` 时有效 | boolean | false |
 | virtualSpin | 是否开启虚拟滚动Spin | boolean | false |
 | autoHeight | 是否开启高度自适应 | boolean \| { type: 'minHeight' \| 'maxHeight', diff: number } | false |
+| autoMaxWidth | 是否开启双击侧边栏宽度最大自适应| boolean | false |
 
 更多属性请参考 [DataSetComponent](/components-pro/core/#DataSetComponent)。
 
@@ -125,3 +127,6 @@ spin的配置项。
 | spinning | whether Spin is spinning | boolean | - |
 
 More cases and properties please refer to [Spin](/components-pro/spin/)。
+
+### 导出配置
+

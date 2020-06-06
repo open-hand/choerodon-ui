@@ -7,6 +7,7 @@ import debounce from 'lodash/debounce';
 import isObject from 'lodash/isObject';
 import defaultTo from 'lodash/defaultTo';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
+import isString from 'lodash/isString';
 import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComponent';
 import ObserverSelect from '../select/Select';
 import ObserverNumberField from '../number-field/NumberField';
@@ -293,6 +294,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
       props: { itemRender = defaultItemRender, disabled = false },
     } = this;
     const disabledValue = disabledSender || disabled;
+    const classNamePager = isString(type) ? `${prefixCls}-pager-${type}` : ``
     return (
       <Pager
         key={type === 'page' ? page : type}
@@ -302,7 +304,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
         onClick={this.handlePagerClick}
         renderer={itemRender}
         disabled={disabledValue}
-        className={`${prefixCls}-pager`}
+        className={`${prefixCls}-pager ${classNamePager}`}
       />
     );
   }

@@ -11,8 +11,8 @@ import { Commands } from './Table';
 
 export const defaultMinWidth = 100;
 
-export type onCellProps = { dataSet: DataSet; record: Record; column: ColumnProps };
-export type commandProps = { dataSet: DataSet; record: Record };
+export type onCellProps = { dataSet: DataSet; record: Record; column: ColumnProps; };
+export type commandProps = { dataSet: DataSet; record: Record; };
 
 export interface ColumnProps extends ElementProps {
   /**
@@ -29,6 +29,10 @@ export interface ColumnProps extends ElementProps {
    */
   minWidth?: number;
   /**
+   * 内部最大宽度
+   */
+  innerMaxWidth?:number;
+  /**
    * 列头
    */
   header?: ReactNode | ((dataSet: DataSet, name?: string) => ReactNode);
@@ -44,9 +48,9 @@ export interface ColumnProps extends ElementProps {
    * 编辑器
    */
   editor?:
-    | ReactElement<FormFieldProps>
-    | ((record: Record, name?: string) => ReactElement<FormFieldProps> | boolean)
-    | boolean;
+  | ReactElement<FormFieldProps>
+  | ((record: Record, name?: string) => ReactElement<FormFieldProps> | boolean)
+  | boolean;
   /**
    * 是否锁定
    * 可选值： false | true | 'left' | 'right'
@@ -134,6 +138,10 @@ export default class Column extends Component<ColumnProps, ComponentState> {
      * 最小列宽
      */
     minWidth: PropTypes.number,
+    /**
+     * 列内部中最大能撑开的宽度
+     */
+    innerMaxWidth: PropTypes.number,
     /**
      * 列头
      */

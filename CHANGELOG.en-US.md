@@ -15,9 +15,26 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Cascader`: Added `Cascader` Pro component.
 - 🌟 `<pro>AutoComplete`: Added `AutoComplete` Pro component.
+- 🌟 `<pro>Table`: Added `autoMaxWidth` propertise to self-adaption width and export demo .
 - 🌟 `<pro>Form`: Added useColon, excludeUseColonTagList attributes and global configuration.
 - 🌟 `<pro>Table`: Added `alwaysShowRowBox` attributes and global configuration `TableAlwaysShowRowBox`.
+- 🌟 `<pro>Table`: Added `useMouseBatchChoose` attributes and global configuration `tableUseMouseBatchChoose`.
+- 🌟 `<pro>Pagination`: Added the pagination pager className diffrence.
+- 🌟 `TreeSelect`: Added `searchValue` & `autoClearSearchValue` properties .
+- 🌟 `Avatar`: Added `alt` properties description.
+- 🌟 `DatePicker`: Added `onPanelChange`,`mode` properties description.
+- 🌟 `Modal`: Added `keyboard`,`okButtonProps`,`cancelButtonProps` properties .
+- 🌟 `Progress`: Added `strokeColor` properties .
+- 🌟 `Table`: Added `pagination` gloabal schema and export example .
+- 🌟 `Switch`: Added `checkedValue`,`unCheckedValue` properties .
+- 🐞 `<pro>Select`: Fixed ie11 dropdownMatchSelectWidth is always hidden text .
+- 🐞 Fixed the input,form,autoComplete style.
+- 🐞 `Table`: Fixed table checked style can't cancel .
+- 🐞 `Cascader`: Fixed the cascader not has expandable icon.
+- 🐞 `Pagination`: Fixed the pagination size diff style dislocation.
+- 🐞 `<pro>Table`: Fix the problem that pageSize can be input for paging in Table.
 - 🐞 `<pro>Table`: Fix the problem that in non-rowbox mode, click on the selected content cannot cancel the selection and hover class is not added on the current row
 
 ## 0.8.63

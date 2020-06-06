@@ -45,6 +45,9 @@ title: TreeSelect
 | onChange | 选中树节点时调用此函数 | function(value, label, extra) | - |
 | onSearch | 文本框值变化时回调 | function(value: string) | - |
 | onSelect | 被选中时调用 | function(value, node, extra) | - |
+| searchValue | 搜索框的值，可以通过 `onSearch` 获取用户输入 | string | - |
+| autoClearSearchValue | 当多选模式下值被选择，自动清空搜索框 | boolean | true |
+
 
 ### Tree 方法
 

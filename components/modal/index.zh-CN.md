@@ -41,6 +41,9 @@ title: Modal
 | onCancel | 点击遮罩层或右上角叉或取消按钮的回调 | function(e) | 无 |
 | onOk | 点击确定回调 | function(e) | 无 |
 | funcType | 按钮功能 | string | 无 |
+| keyboard | 是否支持键盘esc关闭 | boolean | true |
+| okButtonProps | ok 按钮 props | [ButtonProps](/components/button) | - |
+| cancelButtonProps | cancel 按钮 props | [ButtonProps](/components/button) | - |
 
 #### 注意
 

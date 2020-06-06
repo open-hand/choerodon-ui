@@ -382,6 +382,8 @@ export default class TableRow extends Component<TableRowProps, any> {
         overflowX,
         highLightRow,
         selectedHighLightRow,
+        mouseBatchChooseIdList,
+        mouseBatchChooseState,
         props: { onRow, rowRenderer, selectionMode },
       },
     } = this.context;
@@ -409,6 +411,7 @@ export default class TableRow extends Component<TableRowProps, any> {
         [`${rowPrefixCls}-highlight`]: highLightRow,
         [`${rowPrefixCls}-selected`]: selectedHighLightRow && selected,
         [`${rowPrefixCls}-disabled`]: disabled,
+        [`${rowPrefixCls}-mouse-batch-choose`]: mouseBatchChooseState && (mouseBatchChooseIdList || []).includes(id),
       },
       rowExternalProps.className,
     );

@@ -190,6 +190,11 @@ export interface TableProps extends DataSetComponentProps {
    */
   queryBar?: TableQueryBarType | TableQueryBarHook;
   /**
+   * 是否使用拖拽选择
+   * @default false
+   */
+  useMouseBatchChoose?: boolean;
+  /**
    * @deprecated
    * 请使用 queryBar="none"
    */
@@ -291,7 +296,11 @@ export interface TableProps extends DataSetComponentProps {
   /**
    * 是否开启自适应高度
    */
-  autoHeight?: boolean | { type: TableAutoHeightType, diff: number; };
+  autoHeight?: boolean | { type: TableAutoHeightType, diff: number };
+  /**
+   * 是否开启宽度双击最大值
+   */
+  autoMaxWidth?: boolean;
 }
 
 @observer
@@ -362,6 +371,7 @@ export default class Table extends DataSetComponent<TableProps> {
       ]),
       PropTypes.func,
     ]),
+    useMouseBatchChoose: PropTypes.bool,
     /**
      * 行高
      * @default 30
@@ -378,6 +388,7 @@ export default class Table extends DataSetComponent<TableProps> {
     filterBarPlaceholder: PropTypes.string,
     highLightRow: PropTypes.bool,
     selectedHighLightRow: PropTypes.bool,
+    autoMaxWidth: PropTypes.bool,
     ...DataSetComponent.propTypes,
   };
 
@@ -393,6 +404,7 @@ export default class Table extends DataSetComponent<TableProps> {
     virtual: false,
     virtualSpin: false,
     autoHeight: false,
+    autoMaxWidth:false,
   };
 
   tableStore: TableStore = new TableStore(this);
@@ -653,6 +665,8 @@ export default class Table extends DataSetComponent<TableProps> {
       'virtual',
       'virtualSpin',
       'autoHeight',
+      'useMouseBatchChoose',
+      'autoMaxWidth',
     ]);
     otherProps.onKeyDown = this.handleKeyDown;
     const { rowHeight } = this.tableStore;
@@ -701,6 +715,25 @@ export default class Table extends DataSetComponent<TableProps> {
     };
   }
 
+
+  @autobind
+  handleDragMouseUp() {
+    const { dataSet, mouseBatchChooseIdList } = this.tableStore;
+    if (this.tableStore.mouseBatchChooseState) {
+      this.tableStore.mouseBatchChooseState = false;
+      const { mouseBatchChooseStartId, mouseBatchChooseEndId } = this.tableStore;
+      if (mouseBatchChooseStartId === mouseBatchChooseEndId) {
+        return;
+      }
+      (mouseBatchChooseIdList || []).forEach((id: number) => {
+        const record = dataSet.find((innerRecord) => innerRecord.id === id);
+        if (record) {
+          dataSet.select(record);
+        }
+      });
+    }
+  };
+
   componentWillMount() {
     super.componentWillMount();
     this.initDefaultExpandedRows();
@@ -710,6 +743,16 @@ export default class Table extends DataSetComponent<TableProps> {
   componentDidMount() {
     this.syncSize();
     this.syncSizeInFrame();
+    // 为什么使用 pointerup
+    // 因为需要对disabled的元素进行特殊处理
+    // 因为状态的改变依赖 mouseup 而在disabled的元素上 无法触发mouseup事件
+    // 导致状态无法进行修正
+    // 以下两种方案通过 pointer-events:none 进行处理
+    // https://stackoverflow.com/questions/322378/javascript-check-if-mouse-button-down
+    // https://stackoverflow.com/questions/62081666/the-event-of-the-document-is-not-triggered-when-it-is-on-a-disabled-element
+    // 而使用指针事件可以突破disabled的限制
+    // https://stackoverflow.com/questions/62126515/how-to-get-the-state-of-the-mouse-through-javascript/62127845#62127845
+    document.addEventListener('pointerup', this.handleDragMouseUp);
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
@@ -721,6 +764,7 @@ export default class Table extends DataSetComponent<TableProps> {
 
   componentWillUnmount() {
     this.processDataSetListener(false);
+    document.removeEventListener('pointerup', this.handleDragMouseUp);
   }
 
   processDataSetListener(flag: boolean) {
