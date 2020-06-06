@@ -143,6 +143,10 @@ export interface TableProps extends DataSetComponentProps {
    */
   selectionMode?: SelectionMode;
   /**
+   * 在其他模式下是不是要是要rowbox
+   */
+  alwaysShowRowBox?: boolean;
+  /**
    * 设置行属性
    * @param {onRowProps} props
    * @return {Object} 行属性
@@ -373,6 +377,7 @@ export default class Table extends DataSetComponent<TableProps> {
      * @default 30
      */
     rowHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf(['auto'])]),
+    alwaysShowRowBox:PropTypes.bool,
     defaultRowExpanded: PropTypes.bool,
     expandRowByClick: PropTypes.bool,
     indentSize: PropTypes.number,
@@ -633,6 +638,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'border',
       'style',
       'selectionMode',
+      'alwaysShowRowBox',
       'onRow',
       'rowRenderer',
       'buttons',

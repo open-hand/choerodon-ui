@@ -112,6 +112,7 @@ export type Config = {
   dropdownMatchSelectWidth?: boolean;
   useColon?: boolean;
   excludeUseColonTagList?: string[];
+  TableAlwaysShowRowBox?: boolean;
   tableUseMouseBatchChoose?: boolean;
 };
 
@@ -195,6 +196,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['dropdownMatchSelectWidth', true],
   ['useColon', false],
   ['excludeUseColonTagList', defaultExcludeUseColonTag],
+  ['TableAlwaysShowRowBox', false],
   ['tableUseMouseBatchChoose', false],
 ]);
 

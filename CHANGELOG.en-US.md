@@ -19,6 +19,7 @@ timeline: true
 - 🌟 `<pro>AutoComplete`: Added `AutoComplete` Pro component.
 - 🌟 `<pro>Table`: Added `autoMaxWidth` propertise to self-adaption width and export demo .
 - 🌟 `<pro>Form`: Added useColon, excludeUseColonTagList attributes and global configuration.
+- 🌟 `<pro>Table`: Added `alwaysShowRowBox` attributes and global configuration `TableAlwaysShowRowBox`.
 - 🌟 `<pro>Table`: Added `useMouseBatchChoose` attributes and global configuration `tableUseMouseBatchChoose`.
 - 🌟 `<pro>Pagination`: Added the pagination pager className diffrence.
 - 🌟 `TreeSelect`: Added `searchValue` & `autoClearSearchValue` properties .
@@ -34,6 +35,7 @@ timeline: true
 - 🐞 `Cascader`: Fixed the cascader not has expandable icon.
 - 🐞 `Pagination`: Fixed the pagination size diff style dislocation.
 - 🐞 `<pro>Table`: Fix the problem that pageSize can be input for paging in Table.
+- 🐞 `<pro>Table`: Fix the problem that in non-rowbox mode, click on the selected content cannot cancel the selection and hover class is not added on the current row
 
 ## 0.8.63
 

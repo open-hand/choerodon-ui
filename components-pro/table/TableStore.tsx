@@ -47,6 +47,10 @@ function renderSelectionBox({ record, store }: { record: any, store: TableStore;
   if (dataSet) {
     const { selection } = dataSet;
     const handleChange = value => {
+      if (store.props.selectionMode === SelectionMode.mousedown) {
+        // 将处理逻辑交给 mousedown 的处理逻辑 不然会两次触发导致不被勾选上
+        return;
+      }
       if (value) {
         dataSet.select(record);
       } else {
@@ -228,6 +232,11 @@ export default class TableStore {
   }
 
   @computed
+  get alwaysShowRowBox(): boolean {
+    return this.props.alwaysShowRowBox || getConfig('TableAlwaysShowRowBox') || false;
+  }
+
+  @computed
   get columnResizable(): boolean {
     if (this.currentEditRecord) {
       return false;
@@ -347,10 +356,11 @@ export default class TableStore {
 
   @computed
   get hasRowBox(): boolean {
-    const { dataSet, selectionMode } = this.props;
+    const { dataSet } = this.props;
+    const { alwaysShowRowBox } = this;
     if (dataSet) {
-      const { selection } = dataSet;
-      return selection && selectionMode === SelectionMode.rowbox;
+      const { selection, selectionMode } = dataSet;
+      return selection && (selectionMode === SelectionMode.rowbox || alwaysShowRowBox);
     }
     return false;
   }

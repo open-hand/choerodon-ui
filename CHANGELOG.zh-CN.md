@@ -19,6 +19,7 @@ timeline: true
 - 🌟 `<pro>AutoComplete`: 新增 AutoComplete Pro 组件。
 - 🌟 `<pro>Table`: 新增 `autoMaxWidth` 属性实现双击自适应最大宽度以及导出案例 .
 - 🌟 `<pro>Form`: 新增 useColon, excludeUseColonTagList 属性以及全局配置。
+- 🌟 `<pro>Table`: 新增 alwaysShowRowBox 属性以及全局配置 TableAlwaysShowRowBox。
 - 🌟 `<pro>Table`: 新增 useMouseBatchChoose 属性以及全局配置 tableUseMouseBatchChoose。
 - 🌟 `<pro>Pagination`: 增加 pagination pager 的类名区别.
 - 🌟 `TreeSelect`: 新增 searchValue 和 autoClearSearchValue 属性 。
@@ -34,6 +35,7 @@ timeline: true
 - 🐞 `Cascader`: 修复cascader不存在展开符号的问题。
 - 🐞 `Pagination`: 修复pagination在不同size下样式错位问题。
 - 🐞 `<pro>Table`: 修复 Table 中 pagination 可以输入pageSize的问题。
+- 🐞 `<pro>Table`: 修复在非 rowbox 模式下,对点击已选择的内容无法取消选择的问题以及hover类在current行上不被添加的问题。
 
 ## 0.8.63
 

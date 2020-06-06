@@ -270,7 +270,7 @@ export default class TableRow extends Component<TableRowProps, any> {
     const { record } = this.props;
     const { dataSet } = record;
     if (dataSet) {
-      dataSet.select(record);
+      dataSet[record.isSelected ? 'unSelect' : 'select'](record);
     }
   }
 
@@ -407,7 +407,7 @@ export default class TableRow extends Component<TableRowProps, any> {
       rowPrefixCls,
       {
         [`${rowPrefixCls}-current`]: highLightRow && isCurrent,
-        [`${rowPrefixCls}-hover`]: highLightRow && !isCurrent && this.isHover,
+        [`${rowPrefixCls}-hover`]: highLightRow && this.isHover,
         [`${rowPrefixCls}-highlight`]: highLightRow,
         [`${rowPrefixCls}-selected`]: selectedHighLightRow && selected,
         [`${rowPrefixCls}-disabled`]: disabled,
