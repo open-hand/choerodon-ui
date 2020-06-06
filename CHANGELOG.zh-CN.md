@@ -15,8 +15,23 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Cascader`: 新增 Cascader Pro 组件。
 - 🌟 `<pro>AutoComplete`: 新增 AutoComplete Pro 组件。
+- 🌟 `<pro>Table`: 新增 `autoMaxWidth` 属性实现双击自适应最大宽度以及导出案例 .
 - 🌟 `<pro>Form`: 新增 useColon, excludeUseColonTagList 属性以及全局配置。
+- 🌟 `<pro>Pagination`: 增加 pagination pager 的类名区别.
+- 🌟 `TreeSelect`: 新增 searchValue 和 autoClearSearchValue 属性 。
+- 🌟 `Avatar`: 增加 `alt` 属性描述 .
+- 🌟 `DatePicker`: 增加 `onPanelChange`,`mode` 属性描述 .
+- 🌟 `Modal`: 增加 `keyboard`,`okButtonProps`,`cancelButtonProps` 属性 .
+- 🌟 `Progress`: 增加 `strokeColor` 属性 .
+- 🌟 `Table`: 增加 `pagination` 全局配置 和 导出列子 .
+- 🌟 `Switch`: 增加 `checkedValue`,`unCheckedValue` 属性 .
+- 🐞 `<pro>Select`: 修复 ie11 设置 dropdownMatchSelectWidth 文字显示不全 .
+- 🐞 修复基础组件 input,form,autoComplete 的样式问题.
+- 🐞 `Table`: 修复table 勾选后样式无法取消 .
+- 🐞 `Cascader`: 修复cascader不存在展开符号的问题。
+- 🐞 `Pagination`: 修复pagination在不同size下样式错位问题。
 - 🐞 `<pro>Table`: 修复 Table 中 pagination 可以输入pageSize的问题。
 
 ## 0.8.63

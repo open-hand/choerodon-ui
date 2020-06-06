@@ -20,7 +20,7 @@ ReactDOM.render(
   <div>
     <Pagination
       total={85}
-      showTotal={total => `Total ${total} items`}
+      showTotal={total => `总共 ${total} 条`}
       pageSize={20}
       defaultCurrent={1}
       tiny={false}
@@ -29,7 +29,7 @@ ReactDOM.render(
     <br />
     <Pagination
       total={85}
-      showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} items`}
+      showTotal={(total, range) => `${range[0]}-${range[1]} 总共 ${total} 条`}
       pageSize={20}
       defaultCurrent={1}
       tiny={false}

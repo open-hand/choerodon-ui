@@ -10,7 +10,7 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
-import { action, computed, isArrayLike, observable } from 'mobx';
+import { action, computed, isArrayLike, observable, set } from 'mobx';
 import classNames from 'classnames';
 import raf from 'raf';
 import omit from 'lodash/omit';
@@ -21,7 +21,7 @@ import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import ReactResizeObserver from 'choerodon-ui/lib/_util/resizeObserver';
 import { getConfig } from 'choerodon-ui/lib/configure';
-import { ColumnProps } from './Column';
+import { ColumnProps, minColumnWidth } from './Column';
 import Record from '../data-set/Record';
 import { ElementProps } from '../core/ViewComponent';
 import TableContext from './TableContext';
@@ -150,6 +150,31 @@ export default class TableCell extends Component<TableCellProps> {
   @action
   syncSize() {
     this.overflow = this.computeOverFlow();
+    this.setMaxColmnWidth()
+  }
+  
+  @action
+  setMaxColmnWidth(): void {
+    const { element } = this;
+    if (element && element.textContent) {
+      const {
+        column,
+      } = this.props;
+      const { innerMaxWidth } = column
+      if (column) {
+        const { width } = element.getBoundingClientRect();
+        if (width !== 0) {
+          element.style.position = 'absolute';
+          let { width: measureWidth } = element.getBoundingClientRect();
+          element.style.position = '';
+          measureWidth = 20 + measureWidth
+          const newWidth = Math.max(measureWidth, minColumnWidth(column),column.width?column.width:0);
+          if(!innerMaxWidth || newWidth > innerMaxWidth){
+            set(column, 'innerMaxWidth', newWidth);
+          }
+        }
+      }
+    }
   }
 
   computeOverFlow(): boolean {
@@ -414,7 +439,7 @@ export default class TableCell extends Component<TableCellProps> {
   getInnerNode(prefixCls, command?: Commands[]) {
     const {
       context: {
-        tableStore: { rowHeight, expandIconAsCell, hasCheckFieldColumn, pristine },
+        tableStore: { rowHeight, expandIconAsCell, hasCheckFieldColumn, pristine, props:{ autoMaxWidth } },
       },
       props: { children },
     } = this;
@@ -437,7 +462,7 @@ export default class TableCell extends Component<TableCellProps> {
       innerProps.style = {
         height: pxToRem(rowHeight),
       };
-      if (tooltip && tooltip !== TableColumnTooltip.none) {
+      if(autoMaxWidth|| (tooltip && tooltip !== TableColumnTooltip.none)){
         innerProps.ref = this.saveOutput;
       }
     }
@@ -482,7 +507,7 @@ export default class TableCell extends Component<TableCellProps> {
   render() {
     const { column, prefixCls, record } = this.props;
     const {
-      tableStore: { inlineEdit, pristine },
+      tableStore: { inlineEdit, pristine,props:{autoMaxWidth} },
     } = this.context;
     const { className, style, align, name, onCell, tooltip } = column;
     const command = this.getCommand();
@@ -521,7 +546,7 @@ export default class TableCell extends Component<TableCellProps> {
         {this.getInnerNode(cellPrefix, command)}
       </td>
     );
-    return tooltip === TableColumnTooltip.overflow ? (
+    return (autoMaxWidth || tooltip === TableColumnTooltip.overflow) ? (
       <ReactResizeObserver onResize={this.handleResize} resizeProp="width">
         {td}
       </ReactResizeObserver>

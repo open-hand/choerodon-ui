@@ -1,40 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import noop from 'lodash/noop';
-import classNames from 'classnames';
+const classNames = require('classnames');
 
-export default class Switch extends Component {
-  static propTypes = {
-    className: PropTypes.string,
-    prefixCls: PropTypes.string,
-    disabled: PropTypes.bool,
-    checkedChildren: PropTypes.any,
-    unCheckedChildren: PropTypes.any,
-    onChange: PropTypes.func,
-    onMouseUp: PropTypes.func,
-    onClick: PropTypes.func,
-    tabIndex: PropTypes.number,
-    checked: PropTypes.bool,
-    defaultChecked: PropTypes.bool,
-    autoFocus: PropTypes.bool,
-  };
+function noop() {
+}
 
-  static defaultProps = {
-    prefixCls: 'rc-switch',
-    checkedChildren: null,
-    unCheckedChildren: null,
-    className: '',
-    defaultChecked: false,
-    onChange: noop,
-    onClick: noop,
-  };
-
+class Switch extends Component {
   constructor(props) {
     super(props);
 
     let checked = false;
     if ('checked' in props) {
       checked = !!props.checked;
+    } else if('value' in props) {
+      checked = props.checkedValue === props.value
     } else {
       checked = !!props.defaultChecked;
     }
@@ -53,7 +32,12 @@ export default class Switch extends Component {
       this.setState({
         checked: !!nextProps.checked,
       });
-    }
+    
+    } else if('value' in nextProps) {
+      this.setState({
+        checked: nextProps.checkedValue === nextProps.value,
+      });
+    } 
   }
 
   setChecked(checked) {
@@ -65,7 +49,12 @@ export default class Switch extends Component {
         checked,
       });
     }
-    this.props.onChange(checked);
+
+
+    
+    const { checkedValue = true, unCheckedValue = false } = this.props;
+    const value = checked ? checkedValue : unCheckedValue;
+    this.props.onChange(value);
   }
 
   toggle = () => {
@@ -73,7 +62,7 @@ export default class Switch extends Component {
     const checked = !this.state.checked;
     this.setChecked(checked);
     onClick(checked);
-  };
+  }
 
   handleKeyDown = (e) => {
     if (e.keyCode === 37) { // Left
@@ -83,7 +72,7 @@ export default class Switch extends Component {
     } else if (e.keyCode === 32 || e.keyCode === 13) { // Space, Enter
       this.toggle();
     }
-  };
+  }
 
   // Handle auto focus when click switch in Chrome
   handleMouseUp = (e) => {
@@ -93,7 +82,7 @@ export default class Switch extends Component {
     if (this.props.onMouseUp) {
       this.props.onMouseUp(e);
     }
-  };
+  }
 
   focus() {
     this.node.focus();
@@ -105,13 +94,11 @@ export default class Switch extends Component {
 
   saveNode = (node) => {
     this.node = node;
-  };
+  }
 
   render() {
-    const {
-      className, prefixCls, disabled,
-      checkedChildren, tabIndex, unCheckedChildren, ...restProps
-    } = this.props;
+    const { className, prefixCls, disabled, loadingIcon,  checkedValue,  unCheckedValue, // modified by njq.niu@hand-china.com
+      checkedChildren, tabIndex, unCheckedChildren, ...restProps } = this.props;
     const checked = this.state.checked;
     const switchTabIndex = disabled ? -1 : (tabIndex || 0);
     const switchClassName = classNames({
@@ -130,6 +117,7 @@ export default class Switch extends Component {
         onClick={this.toggle}
         onMouseUp={this.handleMouseUp}
       >
+        {loadingIcon}
         <span className={`${prefixCls}-inner`}>
           {checked ? checkedChildren : unCheckedChildren}
         </span>
@@ -137,3 +125,35 @@ export default class Switch extends Component {
     );
   }
 }
+
+Switch.propTypes = {
+  className: PropTypes.string,
+  prefixCls: PropTypes.string,
+  disabled: PropTypes.bool,
+  checkedChildren: PropTypes.any,
+  unCheckedChildren: PropTypes.any,
+  onChange: PropTypes.func,
+  onMouseUp: PropTypes.func,
+  onClick: PropTypes.func,
+  tabIndex: PropTypes.number,
+  checked: PropTypes.bool,
+  defaultChecked: PropTypes.bool,
+  autoFocus: PropTypes.bool,
+  loadingIcon: PropTypes.node,
+  checkedValue: PropTypes.any, 
+  unCheckedValue: PropTypes.any 
+};
+
+Switch.defaultProps = {
+  prefixCls: 'rc-switch',
+  checkedChildren: null,
+  unCheckedChildren: null,
+  className: '',
+  defaultChecked: false,
+  checkedValue: true, 
+  unCheckedValue: false, 
+  onChange: noop,
+  onClick: noop,
+};
+
+export default Switch;

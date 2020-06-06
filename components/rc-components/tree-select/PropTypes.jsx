@@ -90,6 +90,7 @@ export const SelectPropTypes = {
   treeCheckStrictly: PropTypes.bool,
   treeIcon: PropTypes.bool,
   treeLine: PropTypes.bool,
+  autoClearSearchValue: PropTypes.bool,
   treeDefaultExpandAll: PropTypes.bool,
   treeCheckable: PropTypes.oneOfType([
     PropTypes.bool,
@@ -103,4 +104,5 @@ export const SelectPropTypes = {
     PropTypes.object,
   ]),
   loadData: PropTypes.func,
+  searchValue:PropTypes.string,
 };

@@ -29,3 +29,4 @@ title: Progress
 | type | 类型，可选 `line` `circle` `dashboard` `loading` | string | line |
 | width `(type=circle)` | 圆形进度条画布宽度，单位 px | number | 132 |
 | successPercent | 已完成的分段百分比，`type="line"` 时有效 | number | 0 |
+| strokeColor | 进度条的色彩 | string | - |

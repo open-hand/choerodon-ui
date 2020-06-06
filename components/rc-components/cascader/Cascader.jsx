@@ -53,6 +53,7 @@ export default class Cascader extends Component {
     popupPlacement: 'bottomLeft',
     builtinPlacements: BUILT_IN_PLACEMENTS,
     expandTrigger: 'click',
+    expandIcon: '>',
   };
 
   static propTypes = {
@@ -74,6 +75,7 @@ export default class Cascader extends Component {
     children: PropTypes.node,
     onKeyDown: PropTypes.func,
     expandTrigger: PropTypes.string,
+    expandIcon: PropTypes.node,
   };
 
   constructor(props) {

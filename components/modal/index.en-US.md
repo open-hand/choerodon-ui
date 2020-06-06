@@ -40,6 +40,10 @@ and so on.
 | onCancel | Specify a function that will be called when a user clicks mask, close button on top right or Cancel button | function(e) | - |
 | onOk | Specify a function that will be called when a user clicks the OK button | function(e) | - |
 | funcType | Button `funcType` | string | - |
+| keyboard | Whether support press esc to close | Boolean | true |
+| okButtonProps | ok button props | [ButtonProps](/components/button) | - |
+| cancelButtonProps | cancel button props | [ButtonProps](/components/button) | - |
+
 
 #### Note
 

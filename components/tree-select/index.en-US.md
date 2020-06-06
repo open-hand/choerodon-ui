@@ -45,6 +45,8 @@ Any data whose entries are defined in a hierarchical manner is fit to use this c
 | onChange | A callback function, can be executed when selected treeNodes or input value change | function(value, label, extra) | - |
 | onSearch | A callback function, can be executed when the search input changes. | function(value: string) | - |
 | onSelect | A callback function, can be executed when you select a treeNode. | function(value, node, extra) | - |
+| searchValue | work with `onSearch` to make search value controlled. | string | - |
+| autoClearSearchValue | auto clear search input value when multiple select is selected/deselected | boolean | true |
 
 ### Tree Methods
 

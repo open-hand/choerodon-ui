@@ -128,6 +128,10 @@ class App extends React.Component {
         url: '/dataset/user/mutations',
         method: 'delete',
       },
+      exports:{
+        url:'http://gitee.com/xurime/excelize/raw/master/test/SharedStrings.xlsx',
+        method:'get',
+      },
       tls({ name }) {
         // 多语言数据请求的 axios 配置或 url 字符串。UI 接收的接口返回值格式为：[{ name: { zh_CN: '简体中文', en_US: '美式英语', ... }}]
         console.log('fieldName', name);
@@ -399,6 +403,7 @@ class App extends React.Component {
         key="user"
         buttons={buttons}
         dataSet={this.userDs}
+        autoMaxWidth={true}
         header="User"
         style={{ height: 200 }}
         onRow={({ dataSet, record, index, expandedRow }) => {
@@ -407,9 +412,6 @@ class App extends React.Component {
               style: { height: 50 },
             };
           }
-        }}
-        pagination={{
-          showQuickJumper: true,
         }}
       >
         <Column
