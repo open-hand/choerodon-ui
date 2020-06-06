@@ -28,3 +28,4 @@ If it will take a long time to complete an operation, you can use `Progress` to 
 | type | to set the type, options: `line` `circle` `dashboard` `loading` | string | `line` |
 | width `(type=circle)` | to set the canvas width of the circular progress bar, unit: `px` | number | 132 |
 | successPercent | segmented success percent, works when `type="line"` | number | 0 |
+| strokeColor | color of progress bar | string | - |

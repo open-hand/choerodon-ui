@@ -17,7 +17,7 @@ Tiny size pagination.
 import { Pagination } from 'choerodon-ui';
 
 function showTotal(total) {
-  return `Total ${total} items`;
+  return `总共 ${total} 条`;
 }
 
 ReactDOM.render(

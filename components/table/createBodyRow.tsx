@@ -44,9 +44,9 @@ export default function createTableRow(Cmp = 'tr') {
     }
 
     subscribe() {
-      const { state } = this;
       const { store, rowKey } = this.props;
       this.unsubscribe = store.subscribe(() => {
+        const { state } = this;
         const { selectedRowKeys } = this.store.getState();
         const selected = selectedRowKeys.indexOf(rowKey) >= 0;
         if (selected !== state.selected) {

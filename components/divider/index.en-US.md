@@ -19,5 +19,8 @@ A divider line separates different content.
 | Property | Description | Type | Default |
 | -------- | ----------- | ---- | ------- |
 | dashed | whether line is dashed | Boolean | false |
+| type | direction type of divider | enum: `horizontal` `vertical` | `horizontal` |` |
+| orientation | position of title inside divider | enum: `left` `right` `center` | `center` |
+| style | style object of container | object | - |
 | type | direction type of divider | enum: `horizontal` `vertical` | `horizontal` |
-| orientation | this is optional, if not set it will have the text in the center | enum: `left` `right` | `center` |
+

@@ -1,7 +1,7 @@
 import React, { Component, CSSProperties, MouseEvent, ReactInstance, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import Button from '../button';
-import { ButtonFuncType, ButtonType } from '../button/Button';
+import { ButtonFuncType, ButtonType, ButtonProps } from '../button/Button';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import { getConfirmLocale } from './locale';
 import Dialog from '../rc-components/dialog';
@@ -58,6 +58,8 @@ export interface ModalProps {
   keyboard?: boolean;
   funcType?: ButtonFuncType;
   center?: boolean;
+  okButtonProps?: ButtonProps;
+  cancelButtonProps?: ButtonProps;
 }
 
 export interface ModalFuncProps {
@@ -150,6 +152,8 @@ export default class Modal extends Component<ModalProps, {}> {
     disableCancel: PropTypes.bool,
     okType: PropTypes.string,
     maskTransitionName: PropTypes.string,
+    okButtonProps: PropTypes.object,
+    cancelButtonProps: PropTypes.object,
   };
 
   handleCancel = (e: any) => {
@@ -193,6 +197,8 @@ export default class Modal extends Component<ModalProps, {}> {
       funcType,
       disableOk,
       disableCancel,
+      cancelButtonProps,
+      okButtonProps,
     } = this.props;
     return (
       <div>
@@ -200,6 +206,7 @@ export default class Modal extends Component<ModalProps, {}> {
           disabled={disableCancel || confirmLoading}
           onClick={this.handleCancel}
           funcType={funcType}
+          {...cancelButtonProps}
         >
           {cancelText || locale.cancelText}
         </Button>
@@ -209,6 +216,7 @@ export default class Modal extends Component<ModalProps, {}> {
           disabled={disableOk}
           loading={confirmLoading}
           onClick={this.handleOk}
+          {...okButtonProps}
         >
           {okText || locale.okText}
         </Button>

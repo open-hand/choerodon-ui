@@ -50,6 +50,7 @@ subtitle: 表格
 | virtual | 是否开启虚拟滚动,当设置表格高度 `style={{ height: xxx }}` 时有效 | boolean | false |
 | virtualSpin | 是否开启虚拟滚动Spin | boolean | false |
 | autoHeight | 是否开启高度自适应 | boolean \| { type: 'minHeight' \| 'maxHeight', diff: number(80) } | false |
+| autoMaxWidth | 是否开启双击侧边栏宽度最大自适应 | boolean | false |
 
 更多属性请参考 [DataSetComponent](/components-pro/core/#DataSetComponent)。
 
@@ -125,3 +126,80 @@ spin的配置项。
 | spinning | 是否旋转 | boolean | -      |
 
 更多案列和属性请参考 [Spin](/components-pro/spin/)。
+
+### 分页配置
+
+分页功能配置可以按照如下配置进行全局配置
+
+
+```js
+import { configure } from 'choerodon-ui';
+
+configure({
+  pagination: {pageSizeOptions: ['10', '20', '50', '100', '1000']},
+});
+
+```
+
+全局配置操作，建议在初始化的时候进行。更多的配置参考[pagination](/components-pro/pagination/);
+
+
+### 导出配置
+
+可以根据需求进行全局配置，和局部配置
+
+```js
+import { configure } from 'choerodon-ui';
+import { DataSet } from 'choerodon-ui/pro';
+
+// 全局配置
+
+const basicUrl = ``;
+
+configure(
+  {
+    transport: {
+      exports: ({ dataSet, name: fieldName }) => {
+        const _token = dataSet.current.get('_token');
+        return {
+          url: `${basicUrl}/v1/export`,
+          method: 'POST',
+          params: { _token, fieldName },
+          transformResponse: res => {
+            try {
+             const aLink = document.createElement("a");
+             const blob = new Blob([res.data], {type: "application/vnd.ms-excel"})
+             aLink.href = URL.createObjectURL(blob)
+             aLink.download = fieldName
+             aLink.click()
+             document.body.appendChild(aLink)
+            } catch (e) {
+              // do nothing, use default error deal
+            }
+          },
+        };
+      },
+    },
+  })
+
+  // 局部使用
+  // eslint-disable-next-line no-unused-vars
+  const tableDs = new DataSet({
+    primaryKey: 'userid',
+    name: 'user',
+    autoQuery: true,
+    pageSize: 5,
+    cacheSelection: true,
+    transport: {
+    exports: ({dataSet }) => {
+        const fileId = dataSet.name
+        return ({
+            url: `/_api/table/${fileId}`,
+            method: 'get',
+        })
+    },
+   },
+  })
+
+```
+局部的使用demo方法参见[table](/components-pro/table#components-pro-table-demo-basic);

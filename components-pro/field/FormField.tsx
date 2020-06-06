@@ -377,7 +377,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     return {};
   }
 
-  @computed
+  // @computed
   get editable(): boolean {
     return !this.isDisabled() && !this.isReadOnly();
   }

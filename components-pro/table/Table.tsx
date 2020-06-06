@@ -292,7 +292,11 @@ export interface TableProps extends DataSetComponentProps {
   /**
    * 是否开启自适应高度
    */
-  autoHeight?: boolean | { type: TableAutoHeightType, diff: number; };
+  autoHeight?: boolean | { type: TableAutoHeightType, diff: number };
+  /**
+   * 是否开启宽度双击最大值
+   */
+  autoMaxWidth?: boolean;
 }
 
 @observer
@@ -379,6 +383,7 @@ export default class Table extends DataSetComponent<TableProps> {
     filterBarPlaceholder: PropTypes.string,
     highLightRow: PropTypes.bool,
     selectedHighLightRow: PropTypes.bool,
+    autoMaxWidth: PropTypes.bool,
     ...DataSetComponent.propTypes,
   };
 
@@ -394,6 +399,7 @@ export default class Table extends DataSetComponent<TableProps> {
     virtual: false,
     virtualSpin: false,
     autoHeight: false,
+    autoMaxWidth:false,
   };
 
   tableStore: TableStore = new TableStore(this);
@@ -654,6 +660,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'virtualSpin',
       'autoHeight',
       'useMouseBatchChoose',
+      'autoMaxWidth',
     ]);
     otherProps.onKeyDown = this.handleKeyDown;
     const { rowHeight } = this.tableStore;
