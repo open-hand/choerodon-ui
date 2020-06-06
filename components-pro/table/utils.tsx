@@ -148,7 +148,7 @@ export function findCell(
   const { node, dataSet, overflowX, currentEditRecord } = tableStore;
   const current = currentEditRecord || dataSet.current;
   const tableCellPrefixCls = `${prefixCls}-cell`;
-  if (name !== undefined && current) {
+  if (name !== undefined && current && node.element) {
     const wrapperSelector =
       overflowX && lock ? `.${prefixCls}-fixed-${lock === true ? ColumnLock.left : lock} ` : '';
     const selector = `${wrapperSelector}tr[data-index="${current.id}"] td[data-index="${name}"] span.${tableCellPrefixCls}-inner`;
