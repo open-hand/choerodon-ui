@@ -32,6 +32,7 @@ timeline: true
 - 🐞 `Table`: 修复table 勾选后样式无法取消 .
 - 🐞 `Cascader`: 修复cascader不存在展开符号的问题。
 - 🐞 `Pagination`: 修复pagination在不同size下样式错位问题。
+- 🐞 `<pro>Table`: 修复 Table 中 pagination 可以输入pageSize的问题。
 
 ## 0.8.63
 

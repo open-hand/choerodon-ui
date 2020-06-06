@@ -32,6 +32,7 @@ timeline: true
 - 🐞 `Table`: Fixed table checked style can't cancel .
 - 🐞 `Cascader`: Fixed the cascader not has expandable icon.
 - 🐞 `Pagination`: Fixed the pagination size diff style dislocation.
+- 🐞 `<pro>Table`: Fix the problem that pageSize can be input for paging in Table.
 
 ## 0.8.63
 
