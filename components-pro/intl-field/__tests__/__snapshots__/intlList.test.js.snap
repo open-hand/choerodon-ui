@@ -30,6 +30,11 @@ exports[`IntlList-pro renders IntlField correctly 1`] = `
         <table
           key="form-body"
         >
+          <colgroup>
+            <col
+              key="wrapper-0"
+            />
+          </colgroup>
           <tbody>
             <tr
               key="row-0"

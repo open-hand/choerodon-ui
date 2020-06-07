@@ -54,6 +54,8 @@ Array [
   "Animate",
   "CodeArea",
   "Skeleton",
+  "AutoComplete",
+  "Cascader",
 ]
 `;
 

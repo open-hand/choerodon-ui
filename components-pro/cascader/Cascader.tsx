@@ -13,6 +13,8 @@ import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import cloneDeep from 'lodash/cloneDeep';
+import isFunction from 'lodash/isFunction';
+import isObject from 'lodash/isObject';
 import TriggerField, { TriggerFieldProps } from '../trigger-field/TriggerField';
 import autobind from '../_util/autobind';
 import { ValidationMessages } from '../validator/Validator';
@@ -78,7 +80,7 @@ function getSimpleValue(value, valueField) {
  * @param arrNext
  */
 function arraySameLike(arr, arrNext): boolean {
-  if (arr instanceof Array && arrNext instanceof Array) {
+  if ( isArrayLike(arr) &&  isArrayLike(arrNext)) {
     return arr.toString() === arrNext.toString();
   }
   return false;
@@ -212,7 +214,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     if (options instanceof DataSet) {
       returnActiveValue(options.treeData, 0);
     }
-    if (options instanceof Array) {
+    if (isArrayLike(options)) {
       returnActiveValue(options, 0);
     }
     return result;
@@ -293,7 +295,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
       observableProps: { children, options },
     } = this;
     let dealOption;
-    if (options instanceof Array) {
+    if (isArrayLike(options)) {
       dealOption = this.addOptionsParent(options, undefined);
     } else {
       dealOption = options;
@@ -442,14 +444,14 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
   findParentRecodTree(record: Record, fn?: any) {
     const recordTree: any[] = [];
     if (record) {
-      if (fn instanceof Function) {
+      if ( isFunction(fn)) {
         recordTree.push(fn(record));
       } else {
         recordTree.push(record);
       }
     }
     if (record && record.parent) {
-      if (fn instanceof Function) {
+      if (isFunction(fn)) {
         return [...this.findParentRecodTree(record.parent, fn), ...recordTree];
       }
       return [...this.findParentRecodTree(record.parent), ...recordTree];
@@ -466,7 +468,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     if (value instanceof Record) {
       return value.get(key);
     }
-    if (value instanceof Object) {
+    if (isObject(value)) {
       return value[key];
     }
     return value;
@@ -549,7 +551,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
       }
       return treeRecords;
     };
-    if (options instanceof Array) {
+    if (isArrayLike(options)) {
       optGroups = treePropsChange(options);
     } else if (options instanceof DataSet) {
       optGroups = treePropsChange(options.treeData);
@@ -571,7 +573,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
         if (inputValue && arraySameLike(this.treeValueToArray(this.activeValue), inputValue) || this.activeValue.children) {
           activeValue = this.findParentRecodTree(this.activeValue);
         } else if (this.activeValue) {
-          if (options instanceof Array) {
+          if (isArrayLike(options)) {
             activeValue = this.findParentRecodTree(this.findActiveRecord(inputValue, this.options));
           } else if (options instanceof DataSet) {
             activeValue = this.findParentRecodTree(this.findActiveRecord(inputValue, this.options.treeData));
@@ -716,7 +718,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
   // 按键第一个和最后一个的位置
   handleKeyDownFirstLast(e, direction: number) {
     stopEvent(e);
-    if (this.options instanceof Array) {
+    if (isArrayLike(this.options)) {
       if (isEmpty(toJS(this.activeValue))) {
         this.setActiveValue(this.options[0]);
       } else {
@@ -740,7 +742,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
   // 查找同级位置
   findTreeDataUpDown(options, value, direction, fn?: any) {
     const nowIndexList = value.parent ? value.parent.children : options;
-    if (nowIndexList instanceof Array) {
+    if (isArrayLike(nowIndexList)) {
       const nowIndex = fn !== undefined ? fn : nowIndexList.findIndex(ele => ele.value === value);
       const length = nowIndexList.length;
       if (nowIndex + direction >= length) {
@@ -762,7 +764,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
   // 上下按键判断
   handleKeyDownPrevNext(e, direction: number) {
     if (!this.editable) {
-      if (this.options instanceof Array) {
+      if (isArrayLike(this.options)) {
         if (isEmpty(toJS(this.activeValue))) {
           this.setActiveValue(this.options[0]);
         } else {
@@ -799,7 +801,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
 
   handleKeyLeftRightNext(e, direction: number) {
     if (!this.editable) {
-      if (this.options instanceof Array) {
+      if (isArrayLike(this.options)) {
         if (isEmpty(toJS(this.activeValue))) {
           this.setActiveValue(this.options[0]);
         } else {
@@ -828,7 +830,8 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
         this.setPopup(true);
       } else if (value instanceof Record && !value.get(disabledField)) {
         this.choose(value);
-      } else if (value instanceof Object && !value.disabled) {
+      } else if (!value.disabled && isObject(value)) {
+        // @ts-ignore
         this.choose(value);
       }
     }
@@ -1063,7 +1066,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     if (record instanceof Record && record.dataSet!.getFromTree(0)) {
       return primitive ? this.treeValueToArray(record) : this.treeToArray(record);
     }
-    if (record instanceof Object) {
+    if (isObject(record)) {
       return primitive ? this.treeValueToArray(record) : this.treeToArray(record);
     }
   }
@@ -1141,7 +1144,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
   processObjectValue(value, textField) {
     if (!isNil(value)) {
       const found = this.findByValue(value);
-      if (found && value instanceof Array) {
+      if (found && isArrayLike(value)) {
         return this.treeTextToArray(found);
       }
       if (isPlainObject(value)) {
@@ -1153,7 +1156,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
   processLookupValue(value) {
     const { field, textField, primitive } = this;
     const processvalue = this.processObjectValue(value, textField);
-    if (processvalue instanceof Array) {
+    if (isArrayLike(processvalue)) {
       return processvalue.join('/');
     }
     if (primitive && field) {
@@ -1174,7 +1177,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
   }
 
   toValueString(value: any): string | undefined {
-    if (value instanceof Array) {
+    if (isArrayLike(value)) {
       return value.join('/');
     }
     return value;
@@ -1230,7 +1233,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
   @autobind
   chooseAll() {
     const chooseAll = [];
-    if (this.options instanceof Array) {
+    if (isArrayLike(this.options)) {
       const findLeafItem = (option) => {
         option.forEach((item: CascaderOptionType) => {
           if (isEmpty(item.children) && !item.disabled) {

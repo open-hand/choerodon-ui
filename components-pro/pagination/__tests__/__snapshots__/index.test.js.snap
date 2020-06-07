@@ -11822,7 +11822,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
                         onMouseDown={[Function]}
                         onMouseEnter={[Function]}
                         onMouseLeave={[Function]}
-                        readOnly={false}
+                        readOnly={true}
                         type="text"
                         value="20"
                       />
@@ -11944,7 +11944,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
       </span>
       <Pager
         active={false}
-        className="c7n-pro-pagination-pager"
+        className="c7n-pro-pagination-pager c7n-pro-pagination-pager-first"
         disabled={true}
         key="first"
         onClick={[Function]}
@@ -11953,7 +11953,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
         type="first"
       >
         <Button
-          className="c7n-pro-pagination-pager"
+          className="c7n-pro-pagination-pager c7n-pro-pagination-pager-first"
           disabled={true}
           funcType="flat"
           loading={false}
@@ -11966,7 +11966,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
             disabled={true}
           >
             <button
-              className="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-pagination-pager c7n-pro-btn-disabled"
+              className="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-pagination-pager c7n-pro-pagination-pager-first c7n-pro-btn-disabled"
               disabled={true}
               type="button"
             >
@@ -11983,7 +11983,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
       </Pager>
       <Pager
         active={false}
-        className="c7n-pro-pagination-pager"
+        className="c7n-pro-pagination-pager c7n-pro-pagination-pager-prev"
         disabled={true}
         key="prev"
         onClick={[Function]}
@@ -11992,7 +11992,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
         type="prev"
       >
         <Button
-          className="c7n-pro-pagination-pager"
+          className="c7n-pro-pagination-pager c7n-pro-pagination-pager-prev"
           disabled={true}
           funcType="flat"
           loading={false}
@@ -12005,7 +12005,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
             disabled={true}
           >
             <button
-              className="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-pagination-pager c7n-pro-btn-disabled"
+              className="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-pagination-pager c7n-pro-pagination-pager-prev c7n-pro-btn-disabled"
               disabled={true}
               type="button"
             >
@@ -12022,7 +12022,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
       </Pager>
       <Pager
         active={false}
-        className="c7n-pro-pagination-pager"
+        className="c7n-pro-pagination-pager c7n-pro-pagination-pager-next"
         disabled={false}
         key="next"
         onClick={[Function]}
@@ -12031,7 +12031,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
         type="next"
       >
         <Button
-          className="c7n-pro-pagination-pager"
+          className="c7n-pro-pagination-pager c7n-pro-pagination-pager-next"
           disabled={false}
           funcType="flat"
           loading={false}
@@ -12050,7 +12050,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
               <MouseDown
                 rippleChild={
                   <button
-                    className="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-pagination-pager"
+                    className="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-pagination-pager c7n-pro-pagination-pager-next"
                     disabled={false}
                     onBlur={[Function]}
                     onClick={[Function]}
@@ -12064,7 +12064,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
                 }
               >
                 <button
-                  className="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-pagination-pager"
+                  className="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-pagination-pager c7n-pro-pagination-pager-next"
                   disabled={false}
                   onBlur={[Function]}
                   onClick={[Function]}
@@ -12106,7 +12106,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
       </Pager>
       <Pager
         active={false}
-        className="c7n-pro-pagination-pager"
+        className="c7n-pro-pagination-pager c7n-pro-pagination-pager-last"
         disabled={false}
         key="last"
         onClick={[Function]}
@@ -12115,7 +12115,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
         type="last"
       >
         <Button
-          className="c7n-pro-pagination-pager"
+          className="c7n-pro-pagination-pager c7n-pro-pagination-pager-last"
           disabled={false}
           funcType="flat"
           loading={false}
@@ -12134,7 +12134,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
               <MouseDown
                 rippleChild={
                   <button
-                    className="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-pagination-pager"
+                    className="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-pagination-pager c7n-pro-pagination-pager-last"
                     disabled={false}
                     onBlur={[Function]}
                     onClick={[Function]}
@@ -12148,7 +12148,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
                 }
               >
                 <button
-                  className="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-pagination-pager"
+                  className="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-pagination-pager c7n-pro-pagination-pager-last"
                   disabled={false}
                   onBlur={[Function]}
                   onClick={[Function]}

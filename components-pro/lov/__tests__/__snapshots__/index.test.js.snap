@@ -13,6 +13,7 @@ Array [
       <input
         autocomplete="off"
         class="c7n-pro-select"
+        readonly=""
         type="text"
         value=""
       />

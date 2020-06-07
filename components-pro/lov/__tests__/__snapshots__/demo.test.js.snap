@@ -106,6 +106,7 @@ exports[`renders ./components-pro/lov/demo/cascade.md correctly 1`] = `
         <input
           autocomplete="off"
           class="c7n-pro-select"
+          readonly=""
           type="text"
           value=""
         />
@@ -144,6 +145,7 @@ exports[`renders ./components-pro/lov/demo/cascade.md correctly 1`] = `
           autocomplete="off"
           class="c7n-pro-select"
           disabled=""
+          readonly=""
           type="text"
           value=""
         />
@@ -183,6 +185,7 @@ exports[`renders ./components-pro/lov/demo/dataset.md correctly 1`] = `
           autocomplete="off"
           class="c7n-pro-select"
           placeholder="请选择快码"
+          readonly=""
           triggermode="input"
           type="text"
           value=""

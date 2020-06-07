@@ -1297,7 +1297,7 @@ exports[`renders ./components/pagination/demo/size.md correctly 1`] = `
     <li
       class="c7n-pagination-total-text"
     >
-      Total 50 items
+      总共 50 条
     </li>
     <li
       aria-disabled="true"
@@ -1724,7 +1724,7 @@ exports[`renders ./components/pagination/demo/size.md correctly 1`] = `
     <li
       class="c7n-pagination-total-text"
     >
-      Total 50 items
+      总共 50 条
     </li>
     <li
       aria-disabled="true"
@@ -2150,7 +2150,7 @@ exports[`renders ./components/pagination/demo/tiny.md correctly 1`] = `
     <li
       class="c7n-pagination-total-text"
     >
-      Total 50 items
+      总共 50 条
     </li>
     <li
       aria-disabled="true"
@@ -2231,7 +2231,7 @@ exports[`renders ./components/pagination/demo/total.md correctly 1`] = `
     <li
       class="c7n-pagination-total-text"
     >
-      Total 85 items
+      总共 85 条
     </li>
     <li
       aria-disabled="true"
@@ -2360,7 +2360,7 @@ exports[`renders ./components/pagination/demo/total.md correctly 1`] = `
     <li
       class="c7n-pagination-total-text"
     >
-      1-20 of 85 items
+      1-20 总共 85 条
     </li>
     <li
       aria-disabled="true"

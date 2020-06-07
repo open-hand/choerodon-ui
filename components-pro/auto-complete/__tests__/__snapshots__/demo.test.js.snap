@@ -1,0 +1,110 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders ./components-pro/auto-complete/demo/basic.md correctly 1`] = `
+Array [
+  <span
+    class="c7n-pro-auto-complete-wrapper c7n-pro-auto-complete-empty c7n-pro-auto-complete-suffix-button"
+  >
+    <input
+      type="hidden"
+      value=""
+    />
+    <label>
+      <input
+        autocomplete="off"
+        class="c7n-pro-auto-complete"
+        type="text"
+        value=""
+      />
+      <div
+        class="c7n-pro-auto-complete-inner-button c7n-pro-auto-complete-clear-button"
+      >
+        <i
+          class="icon icon-close"
+        />
+      </div>
+      <div
+        class="c7n-pro-auto-complete-suffix"
+      >
+        <i
+          class="icon icon- c7n-pro-auto-complete-trigger"
+        />
+      </div>
+    </label>
+  </span>,
+  <span />,
+]
+`;
+
+exports[`renders ./components-pro/auto-complete/demo/dataSet.md correctly 1`] = `
+Array [
+  <span
+    class="c7n-pro-auto-complete-wrapper c7n-pro-auto-complete-suffix-button"
+  >
+    <input
+      name="user"
+      type="hidden"
+      value="wu"
+    />
+    <label>
+      <input
+        autocomplete="off"
+        class="c7n-pro-auto-complete"
+        type="text"
+        value="wu"
+      />
+      <div
+        class="c7n-pro-auto-complete-inner-button c7n-pro-auto-complete-clear-button"
+      >
+        <i
+          class="icon icon-close"
+        />
+      </div>
+      <div
+        class="c7n-pro-auto-complete-suffix"
+      >
+        <i
+          class="icon icon- c7n-pro-auto-complete-trigger"
+        />
+      </div>
+    </label>
+  </span>,
+  <span />,
+]
+`;
+
+exports[`renders ./components-pro/auto-complete/demo/dynamicOption.md correctly 1`] = `
+Array [
+  <span
+    class="c7n-pro-auto-complete-wrapper c7n-pro-auto-complete-empty c7n-pro-auto-complete-suffix-button"
+  >
+    <input
+      type="hidden"
+      value=""
+    />
+    <label>
+      <input
+        autocomplete="off"
+        class="c7n-pro-auto-complete"
+        type="text"
+        value=""
+      />
+      <div
+        class="c7n-pro-auto-complete-inner-button c7n-pro-auto-complete-clear-button"
+      >
+        <i
+          class="icon icon-close"
+        />
+      </div>
+      <div
+        class="c7n-pro-auto-complete-suffix"
+      >
+        <i
+          class="icon icon- c7n-pro-auto-complete-trigger"
+        />
+      </div>
+    </label>
+  </span>,
+  <span />,
+]
+`;

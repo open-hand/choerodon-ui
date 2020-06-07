@@ -203,7 +203,7 @@ describe('Select', () => {
         .find('input')
         .at(0)
         .prop('value'),
-    ).toBe('wu');
+    ).toBe('');
   });
   it('dataset set value render right number item', () => {
     const handleDataSetChange = jest.fn();

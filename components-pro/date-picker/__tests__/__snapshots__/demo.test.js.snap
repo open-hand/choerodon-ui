@@ -182,6 +182,7 @@ exports[`renders ./components-pro/date-picker/demo/basic.md correctly 1`] = `
           autocomplete="off"
           class="c7n-pro-calendar-picker"
           placeholder="Select week"
+          readonly=""
           type="text"
           value=""
         />
@@ -532,7 +533,7 @@ exports[`renders ./components-pro/date-picker/demo/min-max.md correctly 1`] = `
         <input
           autocomplete="off"
           class="c7n-pro-calendar-picker"
-          min="Tue Nov 22 2016 00:00:00 GMT+0800 (China Standard Time)"
+          min="Tue Nov 22 2016 00:00:00 GMT+0800 (中国标准时间)"
           placeholder="Date min"
           type="text"
           value=""
