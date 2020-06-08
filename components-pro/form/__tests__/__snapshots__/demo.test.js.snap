@@ -24,7 +24,9 @@ exports[`renders ./components-pro/form/demo/basic.md correctly 1`] = `
           <label
             title="手机号"
           >
-            手机号
+            <span>
+              手机号
+            </span>
           </label>
         </td>
         <td
@@ -91,7 +93,9 @@ exports[`renders ./components-pro/form/demo/basic.md correctly 1`] = `
           <label
             title="密码"
           >
-            密码
+            <span>
+              密码
+            </span>
           </label>
         </td>
         <td
@@ -139,7 +143,9 @@ exports[`renders ./components-pro/form/demo/basic.md correctly 1`] = `
           <label
             title="确认密码"
           >
-            确认密码
+            <span>
+              确认密码
+            </span>
           </label>
         </td>
         <td
@@ -206,7 +212,9 @@ exports[`renders ./components-pro/form/demo/basic.md correctly 1`] = `
           <label
             title="年龄"
           >
-            年龄
+            <span>
+              年龄
+            </span>
           </label>
         </td>
         <td
@@ -278,7 +286,9 @@ exports[`renders ./components-pro/form/demo/basic.md correctly 1`] = `
           <label
             title="性别"
           >
-            性别
+            <span>
+              性别
+            </span>
           </label>
         </td>
         <td
@@ -348,7 +358,9 @@ exports[`renders ./components-pro/form/demo/basic.md correctly 1`] = `
           <label
             title="语言"
           >
-            语言
+            <span>
+              语言
+            </span>
           </label>
         </td>
         <td
@@ -371,6 +383,7 @@ exports[`renders ./components-pro/form/demo/basic.md correctly 1`] = `
                   autocomplete="off"
                   class="c7n-pro-select"
                   label="语言"
+                  readonly=""
                   required=""
                   type="text"
                   value=""
@@ -407,7 +420,9 @@ exports[`renders ./components-pro/form/demo/basic.md correctly 1`] = `
           <label
             title="邮箱"
           >
-            邮箱
+            <span>
+              邮箱
+            </span>
           </label>
         </td>
         <td
@@ -474,7 +489,9 @@ exports[`renders ./components-pro/form/demo/basic.md correctly 1`] = `
           <label
             title="个人主页"
           >
-            个人主页
+            <span>
+              个人主页
+            </span>
           </label>
         </td>
         <td
@@ -528,7 +545,9 @@ exports[`renders ./components-pro/form/demo/basic.md correctly 1`] = `
           <label
             title="生日"
           >
-            生日
+            <span>
+              生日
+            </span>
           </label>
         </td>
         <td
@@ -578,7 +597,9 @@ exports[`renders ./components-pro/form/demo/basic.md correctly 1`] = `
         >
           <label
             title=""
-          />
+          >
+            <span />
+          </label>
         </td>
         <td
           colspan="1"
@@ -645,7 +666,9 @@ exports[`renders ./components-pro/form/demo/dataset.md correctly 1`] = `
           <label
             title="手机号"
           >
-            手机号
+            <span>
+              手机号
+            </span>
           </label>
         </td>
         <td
@@ -680,7 +703,9 @@ exports[`renders ./components-pro/form/demo/dataset.md correctly 1`] = `
           <label
             title="密码"
           >
-            密码
+            <span>
+              密码
+            </span>
           </label>
         </td>
         <td
@@ -726,7 +751,9 @@ exports[`renders ./components-pro/form/demo/dataset.md correctly 1`] = `
           <label
             title="确认密码"
           >
-            确认密码
+            <span>
+              确认密码
+            </span>
           </label>
         </td>
         <td
@@ -772,7 +799,9 @@ exports[`renders ./components-pro/form/demo/dataset.md correctly 1`] = `
           <label
             title="年龄"
           >
-            年龄
+            <span>
+              年龄
+            </span>
           </label>
         </td>
         <td
@@ -843,7 +872,9 @@ exports[`renders ./components-pro/form/demo/dataset.md correctly 1`] = `
           <label
             title="性别"
           >
-            性别
+            <span>
+              性别
+            </span>
           </label>
         </td>
         <td
@@ -913,7 +944,9 @@ exports[`renders ./components-pro/form/demo/dataset.md correctly 1`] = `
           <label
             title="语言"
           >
-            语言
+            <span>
+              语言
+            </span>
           </label>
         </td>
         <td
@@ -935,6 +968,7 @@ exports[`renders ./components-pro/form/demo/dataset.md correctly 1`] = `
                 <input
                   autocomplete="off"
                   class="c7n-pro-select"
+                  readonly=""
                   type="text"
                   value=""
                 />
@@ -970,7 +1004,9 @@ exports[`renders ./components-pro/form/demo/dataset.md correctly 1`] = `
           <label
             title="邮箱"
           >
-            邮箱
+            <span>
+              邮箱
+            </span>
           </label>
         </td>
         <td
@@ -1005,7 +1041,9 @@ exports[`renders ./components-pro/form/demo/dataset.md correctly 1`] = `
           <label
             title="个人主页"
           >
-            个人主页
+            <span>
+              个人主页
+            </span>
           </label>
         </td>
         <td
@@ -1040,7 +1078,9 @@ exports[`renders ./components-pro/form/demo/dataset.md correctly 1`] = `
           <label
             title="生日"
           >
-            生日
+            <span>
+              生日
+            </span>
           </label>
         </td>
         <td
@@ -1089,7 +1129,9 @@ exports[`renders ./components-pro/form/demo/dataset.md correctly 1`] = `
           <label
             title="代码描述"
           >
-            代码描述
+            <span>
+              代码描述
+            </span>
           </label>
         </td>
         <td
@@ -1111,6 +1153,7 @@ exports[`renders ./components-pro/form/demo/dataset.md correctly 1`] = `
                 <input
                   autocomplete="off"
                   class="c7n-pro-select"
+                  readonly=""
                   type="text"
                   value=""
                 />
@@ -1142,7 +1185,9 @@ exports[`renders ./components-pro/form/demo/dataset.md correctly 1`] = `
           <label
             title="是否冻结"
           >
-            是否冻结
+            <span>
+              是否冻结
+            </span>
           </label>
         </td>
         <td
@@ -1176,7 +1221,9 @@ exports[`renders ./components-pro/form/demo/dataset.md correctly 1`] = `
         >
           <label
             title=""
-          />
+          >
+            <span />
+          </label>
         </td>
         <td
           colspan="1"
@@ -1256,7 +1303,9 @@ exports[`renders ./components-pro/form/demo/disabled.md correctly 1`] = `
           <label
             title="手机号"
           >
-            手机号
+            <span>
+              手机号
+            </span>
           </label>
         </td>
         <td
@@ -1291,6 +1340,7 @@ exports[`renders ./components-pro/form/demo/disabled.md correctly 1`] = `
                         label="手机号"
                         name="phone"
                         pattern="1[3-9]\\\\d{9}"
+                        readonly=""
                         required=""
                         type="text"
                         value=""
@@ -1317,7 +1367,9 @@ exports[`renders ./components-pro/form/demo/disabled.md correctly 1`] = `
           <label
             title="密码"
           >
-            密码
+            <span>
+              密码
+            </span>
           </label>
         </td>
         <td
@@ -1341,6 +1393,7 @@ exports[`renders ./components-pro/form/demo/disabled.md correctly 1`] = `
                   disabled=""
                   label="密码"
                   name="password"
+                  readonly=""
                   required=""
                   type="password"
                   value=""
@@ -1359,7 +1412,9 @@ exports[`renders ./components-pro/form/demo/disabled.md correctly 1`] = `
           <label
             title="确认密码"
           >
-            确认密码
+            <span>
+              确认密码
+            </span>
           </label>
         </td>
         <td
@@ -1392,6 +1447,7 @@ exports[`renders ./components-pro/form/demo/disabled.md correctly 1`] = `
                         disabled=""
                         label="确认密码"
                         name="confirmPassword"
+                        readonly=""
                         required=""
                         type="password"
                         value=""
@@ -1420,7 +1476,9 @@ exports[`renders ./components-pro/form/demo/disabled.md correctly 1`] = `
           <label
             title="年龄"
           >
-            年龄
+            <span>
+              年龄
+            </span>
           </label>
         </td>
         <td
@@ -1450,6 +1508,7 @@ exports[`renders ./components-pro/form/demo/disabled.md correctly 1`] = `
                         label="年龄"
                         min="18"
                         name="age"
+                        readonly=""
                         required=""
                         step="1"
                         type="text"
@@ -1481,7 +1540,9 @@ exports[`renders ./components-pro/form/demo/disabled.md correctly 1`] = `
           <label
             title="性别"
           >
-            性别
+            <span>
+              性别
+            </span>
           </label>
         </td>
         <td
@@ -1553,7 +1614,9 @@ exports[`renders ./components-pro/form/demo/disabled.md correctly 1`] = `
           <label
             title="语言"
           >
-            语言
+            <span>
+              语言
+            </span>
           </label>
         </td>
         <td
@@ -1577,6 +1640,7 @@ exports[`renders ./components-pro/form/demo/disabled.md correctly 1`] = `
                   class="c7n-pro-select"
                   disabled=""
                   label="语言"
+                  readonly=""
                   required=""
                   type="text"
                   value=""
@@ -1606,7 +1670,9 @@ exports[`renders ./components-pro/form/demo/disabled.md correctly 1`] = `
           <label
             title="邮箱"
           >
-            邮箱
+            <span>
+              邮箱
+            </span>
           </label>
         </td>
         <td
@@ -1635,6 +1701,7 @@ exports[`renders ./components-pro/form/demo/disabled.md correctly 1`] = `
                         disabled=""
                         label="邮箱"
                         name="email"
+                        readonly=""
                         required=""
                         type="email"
                         value=""
@@ -1672,7 +1739,9 @@ exports[`renders ./components-pro/form/demo/disabled.md correctly 1`] = `
           <label
             title="个人主页"
           >
-            个人主页
+            <span>
+              个人主页
+            </span>
           </label>
         </td>
         <td
@@ -1706,6 +1775,7 @@ exports[`renders ./components-pro/form/demo/disabled.md correctly 1`] = `
                         disabled=""
                         label="个人主页"
                         name="homepage"
+                        readonly=""
                         required=""
                         type="url"
                         value=""
@@ -1727,7 +1797,9 @@ exports[`renders ./components-pro/form/demo/disabled.md correctly 1`] = `
           <label
             title="生日"
           >
-            生日
+            <span>
+              生日
+            </span>
           </label>
         </td>
         <td
@@ -1771,7 +1843,9 @@ exports[`renders ./components-pro/form/demo/disabled.md correctly 1`] = `
         >
           <label
             title=""
-          />
+          >
+            <span />
+          </label>
         </td>
         <td
           colspan="1"
@@ -1781,6 +1855,9 @@ exports[`renders ./components-pro/form/demo/disabled.md correctly 1`] = `
             class="c7n-pro-field-wrapper"
           >
             <table>
+              <colgroup>
+                <col />
+              </colgroup>
               <tbody>
                 <tr>
                   <td
@@ -1853,6 +1930,11 @@ exports[`renders ./components-pro/form/demo/float-label.md correctly 1`] = `
     Float Label
   </div>
   <table>
+    <colgroup>
+      <col />
+      <col />
+      <col />
+    </colgroup>
     <tbody>
       <tr>
         <td
@@ -1978,6 +2060,7 @@ exports[`renders ./components-pro/form/demo/float-label.md correctly 1`] = `
                   disabled=""
                   label="确认密码"
                   name="confirmPassword"
+                  readonly=""
                   required=""
                   type="password"
                   value=""
@@ -2135,6 +2218,7 @@ exports[`renders ./components-pro/form/demo/float-label.md correctly 1`] = `
                   autocomplete="off"
                   class="c7n-pro-select"
                   label="语言"
+                  readonly=""
                   required=""
                   type="text"
                   value=""
@@ -2533,7 +2617,9 @@ exports[`renders ./components-pro/form/demo/header.md correctly 1`] = `
           <label
             title="手机号"
           >
-            手机号
+            <span>
+              手机号
+            </span>
           </label>
         </td>
         <td
@@ -2578,7 +2664,9 @@ exports[`renders ./components-pro/form/demo/header.md correctly 1`] = `
           <label
             title="密码"
           >
-            密码
+            <span>
+              密码
+            </span>
           </label>
         </td>
         <td
@@ -2626,7 +2714,9 @@ exports[`renders ./components-pro/form/demo/header.md correctly 1`] = `
           <label
             title="确认密码"
           >
-            确认密码
+            <span>
+              确认密码
+            </span>
           </label>
         </td>
         <td
@@ -2674,7 +2764,9 @@ exports[`renders ./components-pro/form/demo/header.md correctly 1`] = `
           <label
             title="年龄"
           >
-            年龄
+            <span>
+              年龄
+            </span>
           </label>
         </td>
         <td
@@ -2725,7 +2817,9 @@ exports[`renders ./components-pro/form/demo/header.md correctly 1`] = `
           <label
             title="性别"
           >
-            性别
+            <span>
+              性别
+            </span>
           </label>
         </td>
         <td
@@ -2795,7 +2889,9 @@ exports[`renders ./components-pro/form/demo/header.md correctly 1`] = `
           <label
             title="语言"
           >
-            语言
+            <span>
+              语言
+            </span>
           </label>
         </td>
         <td
@@ -2818,6 +2914,7 @@ exports[`renders ./components-pro/form/demo/header.md correctly 1`] = `
                   autocomplete="off"
                   class="c7n-pro-select"
                   label="语言"
+                  readonly=""
                   required=""
                   type="text"
                   value=""
@@ -2850,7 +2947,9 @@ exports[`renders ./components-pro/form/demo/header.md correctly 1`] = `
           <label
             title="邮箱"
           >
-            邮箱
+            <span>
+              邮箱
+            </span>
           </label>
         </td>
         <td
@@ -2887,7 +2986,9 @@ exports[`renders ./components-pro/form/demo/header.md correctly 1`] = `
           <label
             title="个人主页"
           >
-            个人主页
+            <span>
+              个人主页
+            </span>
           </label>
         </td>
         <td
@@ -2924,7 +3025,9 @@ exports[`renders ./components-pro/form/demo/header.md correctly 1`] = `
           <label
             title="生日"
           >
-            生日
+            <span>
+              生日
+            </span>
           </label>
         </td>
         <td
@@ -2974,7 +3077,9 @@ exports[`renders ./components-pro/form/demo/header.md correctly 1`] = `
         >
           <label
             title=""
-          />
+          >
+            <span />
+          </label>
         </td>
         <td
           colspan="1"
@@ -3048,7 +3153,9 @@ exports[`renders ./components-pro/form/demo/layout.md correctly 1`] = `
           <label
             title="手机号"
           >
-            手机号
+            <span>
+              手机号
+            </span>
           </label>
         </td>
         <td
@@ -3086,7 +3193,9 @@ exports[`renders ./components-pro/form/demo/layout.md correctly 1`] = `
           <label
             title="密码"
           >
-            密码
+            <span>
+              密码
+            </span>
           </label>
         </td>
         <td
@@ -3132,7 +3241,9 @@ exports[`renders ./components-pro/form/demo/layout.md correctly 1`] = `
           <label
             title="年龄"
           >
-            年龄
+            <span>
+              年龄
+            </span>
           </label>
         </td>
         <td
@@ -3198,7 +3309,9 @@ exports[`renders ./components-pro/form/demo/layout.md correctly 1`] = `
           <label
             title="确认密码"
           >
-            确认密码
+            <span>
+              确认密码
+            </span>
           </label>
         </td>
         <td
@@ -3246,7 +3359,9 @@ exports[`renders ./components-pro/form/demo/layout.md correctly 1`] = `
           <label
             title="性别"
           >
-            性别
+            <span>
+              性别
+            </span>
           </label>
         </td>
         <td
@@ -3314,7 +3429,9 @@ exports[`renders ./components-pro/form/demo/layout.md correctly 1`] = `
           <label
             title="语言"
           >
-            语言
+            <span>
+              语言
+            </span>
           </label>
         </td>
         <td
@@ -3337,6 +3454,7 @@ exports[`renders ./components-pro/form/demo/layout.md correctly 1`] = `
                   autocomplete="off"
                   class="c7n-pro-select"
                   label="语言"
+                  readonly=""
                   required=""
                   type="text"
                   value=""
@@ -3369,7 +3487,9 @@ exports[`renders ./components-pro/form/demo/layout.md correctly 1`] = `
           <label
             title="邮箱"
           >
-            邮箱
+            <span>
+              邮箱
+            </span>
           </label>
         </td>
         <td
@@ -3403,7 +3523,9 @@ exports[`renders ./components-pro/form/demo/layout.md correctly 1`] = `
           <label
             title="简介"
           >
-            简介
+            <span>
+              简介
+            </span>
           </label>
         </td>
         <td
@@ -3446,7 +3568,9 @@ exports[`renders ./components-pro/form/demo/layout.md correctly 1`] = `
             title=""
           >
             <span>
-              个人主页
+              <span>
+                个人主页
+              </span>
             </span>
           </label>
         </td>
@@ -3503,7 +3627,9 @@ exports[`renders ./components-pro/form/demo/layout.md correctly 1`] = `
           <label
             title="生日"
           >
-            生日
+            <span>
+              生日
+            </span>
           </label>
         </td>
         <td
@@ -3553,7 +3679,9 @@ exports[`renders ./components-pro/form/demo/layout.md correctly 1`] = `
         >
           <label
             title=""
-          />
+          >
+            <span />
+          </label>
         </td>
         <td
           colspan="5"
@@ -3604,6 +3732,11 @@ exports[`renders ./components-pro/form/demo/layout-vertical.md correctly 1`] = `
   novalidate=""
 >
   <table>
+    <colgroup>
+      <col />
+      <col />
+      <col />
+    </colgroup>
     <tbody>
       <tr>
         <td
@@ -3859,6 +3992,7 @@ exports[`renders ./components-pro/form/demo/layout-vertical.md correctly 1`] = `
                   autocomplete="off"
                   class="c7n-pro-select"
                   label="语言"
+                  readonly=""
                   required=""
                   type="text"
                   value=""
@@ -4069,6 +4203,11 @@ exports[`renders ./components-pro/form/demo/placeholder.md correctly 1`] = `
   novalidate=""
 >
   <table>
+    <colgroup>
+      <col />
+      <col />
+      <col />
+    </colgroup>
     <tbody>
       <tr>
         <td
@@ -4299,6 +4438,7 @@ exports[`renders ./components-pro/form/demo/placeholder.md correctly 1`] = `
                   class="c7n-pro-select"
                   label="语言"
                   placeholder="语言"
+                  readonly=""
                   required=""
                   type="text"
                   value=""
@@ -4519,7 +4659,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
               <label
                 title="手机号"
               >
-                手机号
+                <span>
+                  手机号
+                </span>
               </label>
             </td>
             <td
@@ -4555,7 +4697,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
               <label
                 title="密码"
               >
-                密码
+                <span>
+                  密码
+                </span>
               </label>
             </td>
             <td
@@ -4602,7 +4746,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
               <label
                 title="确认密码"
               >
-                确认密码
+                <span>
+                  确认密码
+                </span>
               </label>
             </td>
             <td
@@ -4649,7 +4795,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
               <label
                 title="年龄"
               >
-                年龄
+                <span>
+                  年龄
+                </span>
               </label>
             </td>
             <td
@@ -4709,7 +4857,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
               <label
                 title="性别"
               >
-                性别
+                <span>
+                  性别
+                </span>
               </label>
             </td>
             <td
@@ -4780,7 +4930,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
               <label
                 title="语言"
               >
-                语言
+                <span>
+                  语言
+                </span>
               </label>
             </td>
             <td
@@ -4831,7 +4983,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
               <label
                 title="邮箱"
               >
-                邮箱
+                <span>
+                  邮箱
+                </span>
               </label>
             </td>
             <td
@@ -4867,7 +5021,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
               <label
                 title="个人主页"
               >
-                个人主页
+                <span>
+                  个人主页
+                </span>
               </label>
             </td>
             <td
@@ -4903,7 +5059,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
               <label
                 title="生日"
               >
-                生日
+                <span>
+                  生日
+                </span>
               </label>
             </td>
             <td
@@ -4921,7 +5079,6 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
                       autocomplete="off"
                       class="c7n-pro-calendar-picker"
                       name="birth"
-                      readonly=""
                       type="text"
                       value="1984-11-22"
                     />
@@ -4946,7 +5103,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
               <label
                 title="代码描述"
               >
-                代码描述
+                <span>
+                  代码描述
+                </span>
               </label>
             </td>
             <td
@@ -4994,7 +5153,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
               <label
                 title="是否冻结"
               >
-                是否冻结
+                <span>
+                  是否冻结
+                </span>
               </label>
             </td>
             <td
@@ -5050,7 +5211,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
               <label
                 title="手机号"
               >
-                手机号
+                <span>
+                  手机号
+                </span>
               </label>
             </td>
             <td
@@ -5085,7 +5248,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
               <label
                 title="密码"
               >
-                密码
+                <span>
+                  密码
+                </span>
               </label>
             </td>
             <td
@@ -5131,7 +5296,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
               <label
                 title="确认密码"
               >
-                确认密码
+                <span>
+                  确认密码
+                </span>
               </label>
             </td>
             <td
@@ -5177,7 +5344,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
               <label
                 title="年龄"
               >
-                年龄
+                <span>
+                  年龄
+                </span>
               </label>
             </td>
             <td
@@ -5248,7 +5417,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
               <label
                 title="性别"
               >
-                性别
+                <span>
+                  性别
+                </span>
               </label>
             </td>
             <td
@@ -5319,7 +5490,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
               <label
                 title="语言"
               >
-                语言
+                <span>
+                  语言
+                </span>
               </label>
             </td>
             <td
@@ -5341,6 +5514,7 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
                     <input
                       autocomplete="off"
                       class="c7n-pro-select"
+                      readonly=""
                       type="text"
                       value="简体中文"
                     />
@@ -5376,7 +5550,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
               <label
                 title="邮箱"
               >
-                邮箱
+                <span>
+                  邮箱
+                </span>
               </label>
             </td>
             <td
@@ -5411,7 +5587,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
               <label
                 title="个人主页"
               >
-                个人主页
+                <span>
+                  个人主页
+                </span>
               </label>
             </td>
             <td
@@ -5446,7 +5624,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
               <label
                 title="生日"
               >
-                生日
+                <span>
+                  生日
+                </span>
               </label>
             </td>
             <td
@@ -5495,7 +5675,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
               <label
                 title="代码描述"
               >
-                代码描述
+                <span>
+                  代码描述
+                </span>
               </label>
             </td>
             <td
@@ -5549,7 +5731,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
               <label
                 title="是否冻结"
               >
-                是否冻结
+                <span>
+                  是否冻结
+                </span>
               </label>
             </td>
             <td
@@ -5583,7 +5767,9 @@ exports[`renders ./components-pro/form/demo/pristine.md correctly 1`] = `
             >
               <label
                 title=""
-              />
+              >
+                <span />
+              </label>
             </td>
             <td
               colspan="1"
@@ -5652,7 +5838,9 @@ exports[`renders ./components-pro/form/demo/record.md correctly 1`] = `
           <label
             title="手机号"
           >
-            手机号
+            <span>
+              手机号
+            </span>
           </label>
         </td>
         <td
@@ -5688,7 +5876,9 @@ exports[`renders ./components-pro/form/demo/record.md correctly 1`] = `
           <label
             title="密码"
           >
-            密码
+            <span>
+              密码
+            </span>
           </label>
         </td>
         <td
@@ -5734,7 +5924,9 @@ exports[`renders ./components-pro/form/demo/record.md correctly 1`] = `
           <label
             title="确认密码"
           >
-            确认密码
+            <span>
+              确认密码
+            </span>
           </label>
         </td>
         <td
@@ -5780,7 +5972,9 @@ exports[`renders ./components-pro/form/demo/record.md correctly 1`] = `
           <label
             title="年龄"
           >
-            年龄
+            <span>
+              年龄
+            </span>
           </label>
         </td>
         <td
@@ -5853,7 +6047,9 @@ exports[`renders ./components-pro/form/demo/record.md correctly 1`] = `
           <label
             title="性别"
           >
-            性别
+            <span>
+              性别
+            </span>
           </label>
         </td>
         <td
@@ -5923,7 +6119,9 @@ exports[`renders ./components-pro/form/demo/record.md correctly 1`] = `
           <label
             title="语言"
           >
-            语言
+            <span>
+              语言
+            </span>
           </label>
         </td>
         <td
@@ -5945,6 +6143,7 @@ exports[`renders ./components-pro/form/demo/record.md correctly 1`] = `
                 <input
                   autocomplete="off"
                   class="c7n-pro-select"
+                  readonly=""
                   type="text"
                   value=""
                 />
@@ -5980,7 +6179,9 @@ exports[`renders ./components-pro/form/demo/record.md correctly 1`] = `
           <label
             title="邮箱"
           >
-            邮箱
+            <span>
+              邮箱
+            </span>
           </label>
         </td>
         <td
@@ -6015,7 +6216,9 @@ exports[`renders ./components-pro/form/demo/record.md correctly 1`] = `
           <label
             title="个人主页"
           >
-            个人主页
+            <span>
+              个人主页
+            </span>
           </label>
         </td>
         <td
@@ -6050,7 +6253,9 @@ exports[`renders ./components-pro/form/demo/record.md correctly 1`] = `
           <label
             title="生日"
           >
-            生日
+            <span>
+              生日
+            </span>
           </label>
         </td>
         <td
@@ -6099,7 +6304,9 @@ exports[`renders ./components-pro/form/demo/record.md correctly 1`] = `
           <label
             title="代码描述"
           >
-            代码描述
+            <span>
+              代码描述
+            </span>
           </label>
         </td>
         <td
@@ -6152,7 +6359,9 @@ exports[`renders ./components-pro/form/demo/record.md correctly 1`] = `
         >
           <label
             title=""
-          />
+          >
+            <span />
+          </label>
         </td>
         <td
           colspan="1"
@@ -6218,7 +6427,9 @@ exports[`renders ./components-pro/form/demo/responsive.md correctly 1`] = `
           <label
             title="手机号"
           >
-            手机号
+            <span>
+              手机号
+            </span>
           </label>
         </td>
         <td
@@ -6285,7 +6496,9 @@ exports[`renders ./components-pro/form/demo/responsive.md correctly 1`] = `
           <label
             title="密码"
           >
-            密码
+            <span>
+              密码
+            </span>
           </label>
         </td>
         <td
@@ -6333,7 +6546,9 @@ exports[`renders ./components-pro/form/demo/responsive.md correctly 1`] = `
           <label
             title="确认密码"
           >
-            确认密码
+            <span>
+              确认密码
+            </span>
           </label>
         </td>
         <td
@@ -6400,7 +6615,9 @@ exports[`renders ./components-pro/form/demo/responsive.md correctly 1`] = `
           <label
             title="年龄"
           >
-            年龄
+            <span>
+              年龄
+            </span>
           </label>
         </td>
         <td
@@ -6472,7 +6689,9 @@ exports[`renders ./components-pro/form/demo/responsive.md correctly 1`] = `
           <label
             title="性别"
           >
-            性别
+            <span>
+              性别
+            </span>
           </label>
         </td>
         <td
@@ -6542,7 +6761,9 @@ exports[`renders ./components-pro/form/demo/responsive.md correctly 1`] = `
           <label
             title="语言"
           >
-            语言
+            <span>
+              语言
+            </span>
           </label>
         </td>
         <td
@@ -6565,6 +6786,7 @@ exports[`renders ./components-pro/form/demo/responsive.md correctly 1`] = `
                   autocomplete="off"
                   class="c7n-pro-select"
                   label="语言"
+                  readonly=""
                   required=""
                   type="text"
                   value=""
@@ -6601,7 +6823,9 @@ exports[`renders ./components-pro/form/demo/responsive.md correctly 1`] = `
           <label
             title="邮箱"
           >
-            邮箱
+            <span>
+              邮箱
+            </span>
           </label>
         </td>
         <td
@@ -6638,7 +6862,9 @@ exports[`renders ./components-pro/form/demo/responsive.md correctly 1`] = `
           <label
             title="个人主页"
           >
-            个人主页
+            <span>
+              个人主页
+            </span>
           </label>
         </td>
         <td
@@ -6692,7 +6918,9 @@ exports[`renders ./components-pro/form/demo/responsive.md correctly 1`] = `
           <label
             title="生日"
           >
-            生日
+            <span>
+              生日
+            </span>
           </label>
         </td>
         <td
@@ -6742,7 +6970,651 @@ exports[`renders ./components-pro/form/demo/responsive.md correctly 1`] = `
         >
           <label
             title=""
-          />
+          >
+            <span />
+          </label>
+        </td>
+        <td
+          colspan="1"
+          rowspan="1"
+        >
+          <div
+            class="c7n-pro-field-wrapper"
+          >
+            <div
+              class="c7n-pro-field"
+            >
+              <button
+                class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+                type="submit"
+              >
+                <span>
+                  注册
+                </span>
+                <div
+                  class="c7n-ripple-wrapper"
+                />
+              </button>
+              <button
+                class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+                style="margin-left:8px"
+                type="reset"
+              >
+                <span>
+                  重置
+                </span>
+                <div
+                  class="c7n-ripple-wrapper"
+                />
+              </button>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</form>
+`;
+
+exports[`renders ./components-pro/form/demo/use-colon.md correctly 1`] = `
+<form
+  class="c7n-pro-form c7n-pro-form-wrapper"
+  id="basic"
+  name="form-14"
+  novalidate=""
+  style="width:4rem"
+>
+  <table>
+    <colgroup>
+      <col
+        style="width:1.5rem"
+      />
+      <col />
+    </colgroup>
+    <tbody>
+      <tr>
+        <td
+          class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required c7n-pro-field-label-useColon"
+          rowspan="1"
+        >
+          <label
+            title="手机号"
+          >
+            <span>
+              手机号
+            </span>
+          </label>
+        </td>
+        <td
+          colspan="1"
+          rowspan="1"
+        >
+          <div
+            class="c7n-pro-field-wrapper"
+          >
+            <div
+              class="c7n-pro-input-group-wrapper"
+            >
+              <div
+                class="c7n-pro-input-group"
+              >
+                <div
+                  class="c7n-pro-input-group-before"
+                >
+                  +86
+                </div>
+                <div
+                  class="c7n-pro-input-group-input"
+                >
+                  <span
+                    class="c7n-pro-input-wrapper c7n-pro-field c7n-pro-input-required c7n-pro-input-empty"
+                  >
+                    <label>
+                      <input
+                        autocomplete="off"
+                        class="c7n-pro-input"
+                        label="手机号"
+                        name="phone"
+                        pattern="1[3-9]\\\\d{9}"
+                        required=""
+                        type="text"
+                        value=""
+                      />
+                      <div
+                        class="c7n-pro-input-inner-button c7n-pro-input-clear-button"
+                      >
+                        <i
+                          class="icon icon-close"
+                        />
+                      </div>
+                    </label>
+                  </span>
+                </div>
+                <div
+                  class="c7n-pro-input-group-after"
+                >
+                  中国大陆
+                </div>
+              </div>
+            </div>
+            <span />
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td
+          class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required c7n-pro-field-label-useColon"
+          rowspan="1"
+        >
+          <label
+            title="密码"
+          >
+            <span>
+              密码
+            </span>
+          </label>
+        </td>
+        <td
+          colspan="1"
+          rowspan="1"
+        >
+          <div
+            class="c7n-pro-field-wrapper"
+          >
+            <span
+              class="c7n-pro-password-wrapper c7n-pro-field c7n-pro-password-required c7n-pro-password-empty"
+            >
+              <input
+                class="c7n-pro-password-fix-autofill"
+                tabindex="-1"
+              />
+              <label>
+                <input
+                  autocomplete="off"
+                  class="c7n-pro-password"
+                  label="密码"
+                  name="password"
+                  required=""
+                  type="password"
+                  value=""
+                />
+                <div
+                  class="c7n-pro-password-inner-button"
+                >
+                  <i
+                    class="icon icon-visibility_off"
+                  />
+                </div>
+              </label>
+            </span>
+            <span />
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td
+          class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required c7n-pro-field-label-useColon"
+          rowspan="1"
+        >
+          <label
+            title="确认密码"
+          >
+            <span>
+              确认密码
+            </span>
+          </label>
+        </td>
+        <td
+          colspan="1"
+          rowspan="1"
+        >
+          <div
+            class="c7n-pro-field-wrapper"
+          >
+            <div
+              class="c7n-pro-password-group-wrapper"
+            >
+              <div
+                class="c7n-pro-password-group"
+              >
+                <div
+                  class="c7n-pro-password-group-input"
+                >
+                  <span
+                    class="c7n-pro-password-wrapper c7n-pro-field c7n-pro-password-required c7n-pro-password-empty"
+                  >
+                    <input
+                      class="c7n-pro-password-fix-autofill"
+                      tabindex="-1"
+                    />
+                    <label>
+                      <input
+                        autocomplete="off"
+                        class="c7n-pro-password"
+                        label="确认密码"
+                        name="confirmPassword"
+                        required=""
+                        type="password"
+                        value=""
+                      />
+                      <div
+                        class="c7n-pro-password-inner-button"
+                      >
+                        <i
+                          class="icon icon-visibility_off"
+                        />
+                      </div>
+                    </label>
+                  </span>
+                </div>
+                <div
+                  class="c7n-pro-password-group-help"
+                >
+                  <i
+                    class="icon icon-help"
+                  />
+                </div>
+              </div>
+            </div>
+            <span />
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td
+          class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-label-useColon"
+          rowspan="1"
+        >
+          <label
+            title="年龄"
+          >
+            <span>
+              年龄
+            </span>
+          </label>
+        </td>
+        <td
+          colspan="1"
+          rowspan="1"
+        >
+          <div
+            class="c7n-pro-field-wrapper"
+          >
+            <div
+              class="c7n-pro-input-number-group-wrapper"
+            >
+              <div
+                class="c7n-pro-input-number-group"
+              >
+                <div
+                  class="c7n-pro-input-number-group-input"
+                >
+                  <span
+                    class="c7n-pro-input-number-wrapper c7n-pro-field c7n-pro-input-number-empty"
+                  >
+                    <label>
+                      <input
+                        autocomplete="off"
+                        class="c7n-pro-input-number"
+                        label="年龄"
+                        min="18"
+                        name="age"
+                        step="1"
+                        type="text"
+                        value=""
+                      />
+                      <div
+                        class="c7n-pro-input-number-inner-button"
+                      >
+                        <div>
+                          <i
+                            class="icon icon-keyboard_arrow_up c7n-pro-input-number-plus"
+                          />
+                          <i
+                            class="icon icon-keyboard_arrow_down c7n-pro-input-number-minus"
+                          />
+                        </div>
+                      </div>
+                    </label>
+                  </span>
+                </div>
+                <div
+                  class="c7n-pro-input-number-group-after"
+                >
+                  周岁
+                </div>
+              </div>
+            </div>
+            <div
+              class="c7n-pro-field-help"
+            >
+              我们需要确定你的年龄
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td
+          class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-label-useColon"
+          rowspan="1"
+        >
+          <label
+            title="性别"
+          >
+            <span>
+              性别
+            </span>
+          </label>
+        </td>
+        <td
+          colspan="1"
+          rowspan="1"
+        >
+          <div
+            class="c7n-pro-field-wrapper"
+          >
+            <span
+              class="c7n-pro-select-box-wrapper c7n-pro-field c7n-pro-select-box-suffix-button c7n-pro-select-box-not-editable"
+            >
+              <div
+                class="c7n-pro-select-box"
+              >
+                <label
+                  class="c7n-pro-radio-wrapper"
+                >
+                  <input
+                    class="c7n-pro-radio"
+                    name="sex"
+                    novalidate=""
+                    type="radio"
+                    value="M"
+                  />
+                  <span
+                    class="c7n-pro-radio-inner"
+                  />
+                  <span
+                    class="c7n-pro-radio-label"
+                  >
+                    男
+                  </span>
+                </label>
+                <span />
+                <label
+                  class="c7n-pro-radio-wrapper"
+                >
+                  <input
+                    class="c7n-pro-radio"
+                    name="sex"
+                    novalidate=""
+                    type="radio"
+                    value="F"
+                  />
+                  <span
+                    class="c7n-pro-radio-inner"
+                  />
+                  <span
+                    class="c7n-pro-radio-label"
+                  >
+                    女
+                  </span>
+                </label>
+                <span />
+              </div>
+            </span>
+            <span />
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td
+          class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required c7n-pro-field-label-useColon"
+          rowspan="1"
+        >
+          <label
+            title="语言"
+          >
+            <span>
+              语言
+            </span>
+          </label>
+        </td>
+        <td
+          colspan="1"
+          rowspan="1"
+        >
+          <div
+            class="c7n-pro-field-wrapper"
+          >
+            <span
+              class="c7n-pro-select-wrapper c7n-pro-field c7n-pro-select-required c7n-pro-select-empty c7n-pro-select-suffix-button c7n-pro-select-not-editable"
+            >
+              <input
+                name="language"
+                type="hidden"
+                value=""
+              />
+              <label>
+                <input
+                  autocomplete="off"
+                  class="c7n-pro-select"
+                  label="语言"
+                  readonly=""
+                  required=""
+                  type="text"
+                  value=""
+                />
+                <div
+                  class="c7n-pro-select-inner-button c7n-pro-select-clear-button"
+                >
+                  <i
+                    class="icon icon-close"
+                  />
+                </div>
+                <div
+                  class="c7n-pro-select-suffix"
+                >
+                  <i
+                    class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+                  />
+                </div>
+              </label>
+            </span>
+            <div
+              class="c7n-pro-field-help"
+            >
+              超过两行的帮助信息超过两行的帮助信息超过两行的帮助信息
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td
+          class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required c7n-pro-field-label-useColon"
+          rowspan="1"
+        >
+          <label
+            title="邮箱"
+          >
+            <span>
+              邮箱
+            </span>
+          </label>
+        </td>
+        <td
+          colspan="1"
+          rowspan="1"
+        >
+          <div
+            class="c7n-pro-field-wrapper"
+          >
+            <div
+              class="c7n-pro-input-group-wrapper"
+            >
+              <div
+                class="c7n-pro-input-group"
+              >
+                <div
+                  class="c7n-pro-input-group-input"
+                >
+                  <span
+                    class="c7n-pro-input-wrapper c7n-pro-field c7n-pro-input-required c7n-pro-input-empty"
+                  >
+                    <label>
+                      <input
+                        autocomplete="off"
+                        class="c7n-pro-input"
+                        label="邮箱"
+                        name="email"
+                        required=""
+                        type="email"
+                        value=""
+                      />
+                    </label>
+                  </span>
+                </div>
+                <div
+                  class="c7n-pro-input-group-after"
+                >
+                  <button
+                    class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-wrapper c7n-pro-btn-sm"
+                    type="button"
+                  >
+                    <span>
+                      Click me 
+                      <i
+                        class="icon icon-arrow_drop_down"
+                      />
+                    </span>
+                    <div
+                      class="c7n-ripple-wrapper"
+                    />
+                  </button>
+                </div>
+              </div>
+            </div>
+            <span />
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td
+          class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required c7n-pro-field-label-useColon"
+          rowspan="1"
+        >
+          <label
+            title="个人主页"
+          >
+            <span>
+              个人主页
+            </span>
+          </label>
+        </td>
+        <td
+          colspan="1"
+          rowspan="1"
+        >
+          <div
+            class="c7n-pro-field-wrapper"
+          >
+            <div
+              class="c7n-pro-input-group-wrapper"
+            >
+              <div
+                class="c7n-pro-input-group"
+              >
+                <div
+                  class="c7n-pro-input-group-before"
+                >
+                  Http://
+                </div>
+                <div
+                  class="c7n-pro-input-group-input"
+                >
+                  <span
+                    class="c7n-pro-input-wrapper c7n-pro-field c7n-pro-input-required c7n-pro-input-empty"
+                  >
+                    <label>
+                      <input
+                        autocomplete="off"
+                        class="c7n-pro-input"
+                        label="个人主页"
+                        name="homepage"
+                        required=""
+                        type="url"
+                        value=""
+                      />
+                    </label>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <span />
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td
+          class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required c7n-pro-field-label-useColon"
+          rowspan="1"
+        >
+          <label
+            title="生日"
+          >
+            <span>
+              生日
+            </span>
+          </label>
+        </td>
+        <td
+          colspan="1"
+          rowspan="1"
+        >
+          <div
+            class="c7n-pro-field-wrapper"
+          >
+            <span
+              class="c7n-pro-calendar-picker-wrapper c7n-pro-field c7n-pro-calendar-picker-required c7n-pro-calendar-picker-empty c7n-pro-calendar-picker-suffix-button"
+            >
+              <label>
+                <input
+                  autocomplete="off"
+                  class="c7n-pro-calendar-picker"
+                  label="生日"
+                  name="birth"
+                  required=""
+                  type="text"
+                  value=""
+                />
+                <div
+                  class="c7n-pro-calendar-picker-inner-button c7n-pro-calendar-picker-clear-button"
+                >
+                  <i
+                    class="icon icon-close"
+                  />
+                </div>
+                <div
+                  class="c7n-pro-calendar-picker-suffix"
+                >
+                  <i
+                    class="icon icon-date_range c7n-pro-calendar-picker-trigger"
+                  />
+                </div>
+              </label>
+            </span>
+            <span />
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td
+          class="c7n-pro-field-label c7n-pro-field-label-right"
+          rowspan="1"
+        >
+          <label
+            title=""
+          >
+            <span />
+          </label>
         </td>
         <td
           colspan="1"

@@ -534,7 +534,9 @@ exports[`renders ./components-pro/upload/demo/upload-method.md correctly 1`] = `
           <label
             title="选择Logo"
           >
-            选择Logo
+            <span>
+              选择Logo
+            </span>
           </label>
         </td>
         <td
@@ -600,7 +602,9 @@ exports[`renders ./components-pro/upload/demo/upload-method.md correctly 1`] = `
         >
           <label
             title=""
-          />
+          >
+            <span />
+          </label>
         </td>
         <td
           colspan="1"

@@ -414,6 +414,9 @@ exports[`renders ./components-pro/select-box/demo/dataset.md correctly 1`] = `
   novalidate=""
 >
   <table>
+    <colgroup>
+      <col />
+    </colgroup>
     <tbody>
       <tr>
         <td

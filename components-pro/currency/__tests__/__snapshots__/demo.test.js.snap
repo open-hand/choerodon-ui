@@ -37,7 +37,7 @@ exports[`renders ./components-pro/currency/demo/basic.md correctly 1`] = `
             class="c7n-pro-input-number"
             currency="CNY"
             type="text"
-            value="CN¥10,000.00"
+            value="¥10,000.00"
           />
         </label>
       </span>
@@ -76,7 +76,7 @@ Array [
         class="c7n-pro-input-number"
         name="money"
         type="text"
-        value="$100,000,000,000,000.00"
+        value="US$100,000,000,000,000.00"
       />
     </label>
   </span>,

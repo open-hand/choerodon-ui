@@ -507,7 +507,9 @@ exports[`Select disable test 1`] = `
                 <label
                   title="手机号"
                 >
-                  手机号
+                  <span>
+                    手机号
+                  </span>
                 </label>
               </td>
               <td
@@ -827,7 +829,7 @@ exports[`Select disable test 1`] = `
                                 noValidate={false}
                                 onChange={[Function]}
                                 onKeyDown={[Function]}
-                                readOnly={false}
+                                readOnly={true}
                                 type="text"
                                 value="1800000000"
                               />
@@ -906,7 +908,9 @@ exports[`Select disable test 1`] = `
                 <label
                   title="密码"
                 >
-                  密码
+                  <span>
+                    密码
+                  </span>
                 </label>
               </td>
               <td
@@ -1231,7 +1235,7 @@ exports[`Select disable test 1`] = `
                                 noValidate={false}
                                 onChange={[Function]}
                                 onKeyDown={[Function]}
-                                readOnly={false}
+                                readOnly={true}
                                 type="password"
                                 value=""
                               />
@@ -1310,7 +1314,9 @@ exports[`Select disable test 1`] = `
                 <label
                   title="年龄"
                 >
-                  年龄
+                  <span>
+                    年龄
+                  </span>
                 </label>
               </td>
               <td
@@ -1641,7 +1647,7 @@ exports[`Select disable test 1`] = `
                                       noValidate={false}
                                       onChange={[Function]}
                                       onKeyDown={[Function]}
-                                      readOnly={false}
+                                      readOnly={true}
                                       type="text"
                                       value="18"
                                     />
@@ -2070,7 +2076,9 @@ exports[`Select disable test 1`] = `
                 <label
                   title="邮箱"
                 >
-                  邮箱
+                  <span>
+                    邮箱
+                  </span>
                 </label>
               </td>
               <td
@@ -2390,7 +2398,7 @@ exports[`Select disable test 1`] = `
                                 noValidate={false}
                                 onChange={[Function]}
                                 onKeyDown={[Function]}
-                                readOnly={false}
+                                readOnly={true}
                                 type="email"
                                 value="xxx@choerodon.io"
                               />
@@ -2468,7 +2476,9 @@ exports[`Select disable test 1`] = `
               >
                 <label
                   title=""
-                />
+                >
+                  <span />
+                </label>
               </td>
               <td
                 colSpan={1}

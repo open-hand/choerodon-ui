@@ -14,12 +14,26 @@ exports[`Cascader can be selected 1`] = `
           title="Zhejiang"
         >
           Zhejiang
+          <span
+            class="c7n-cascader-menu-item-expand-icon"
+          >
+            <i
+              class="icon icon-navigate_next"
+            />
+          </span>
         </li>
         <li
           class="c7n-cascader-menu-item c7n-cascader-menu-item-expand"
           title="Jiangsu"
         >
           Jiangsu
+          <span
+            class="c7n-cascader-menu-item-expand-icon"
+          >
+            <i
+              class="icon icon-navigate_next"
+            />
+          </span>
         </li>
       </ul>
       <ul
@@ -30,6 +44,13 @@ exports[`Cascader can be selected 1`] = `
           title="Hangzhou"
         >
           Hangzhou
+          <span
+            class="c7n-cascader-menu-item-expand-icon"
+          >
+            <i
+              class="icon icon-navigate_next"
+            />
+          </span>
         </li>
       </ul>
     </div>
@@ -51,12 +72,26 @@ exports[`Cascader can be selected 2`] = `
           title="Zhejiang"
         >
           Zhejiang
+          <span
+            class="c7n-cascader-menu-item-expand-icon"
+          >
+            <i
+              class="icon icon-navigate_next"
+            />
+          </span>
         </li>
         <li
           class="c7n-cascader-menu-item c7n-cascader-menu-item-expand"
           title="Jiangsu"
         >
           Jiangsu
+          <span
+            class="c7n-cascader-menu-item-expand-icon"
+          >
+            <i
+              class="icon icon-navigate_next"
+            />
+          </span>
         </li>
       </ul>
       <ul
@@ -67,6 +102,13 @@ exports[`Cascader can be selected 2`] = `
           title="Hangzhou"
         >
           Hangzhou
+          <span
+            class="c7n-cascader-menu-item-expand-icon"
+          >
+            <i
+              class="icon icon-navigate_next"
+            />
+          </span>
         </li>
       </ul>
       <ul
@@ -98,12 +140,26 @@ exports[`Cascader can be selected 3`] = `
           title="Zhejiang"
         >
           Zhejiang
+          <span
+            class="c7n-cascader-menu-item-expand-icon"
+          >
+            <i
+              class="icon icon-navigate_next"
+            />
+          </span>
         </li>
         <li
           class="c7n-cascader-menu-item c7n-cascader-menu-item-expand"
           title="Jiangsu"
         >
           Jiangsu
+          <span
+            class="c7n-cascader-menu-item-expand-icon"
+          >
+            <i
+              class="icon icon-navigate_next"
+            />
+          </span>
         </li>
       </ul>
       <ul
@@ -114,6 +170,13 @@ exports[`Cascader can be selected 3`] = `
           title="Hangzhou"
         >
           Hangzhou
+          <span
+            class="c7n-cascader-menu-item-expand-icon"
+          >
+            <i
+              class="icon icon-navigate_next"
+            />
+          </span>
         </li>
       </ul>
       <ul
@@ -155,12 +218,26 @@ exports[`Cascader popup correctly when panel is open 1`] = `
           title="Zhejiang"
         >
           Zhejiang
+          <span
+            class="c7n-cascader-menu-item-expand-icon"
+          >
+            <i
+              class="icon icon-navigate_next"
+            />
+          </span>
         </li>
         <li
           class="c7n-cascader-menu-item c7n-cascader-menu-item-expand"
           title="Jiangsu"
         >
           Jiangsu
+          <span
+            class="c7n-cascader-menu-item-expand-icon"
+          >
+            <i
+              class="icon icon-navigate_next"
+            />
+          </span>
         </li>
       </ul>
     </div>
@@ -182,12 +259,26 @@ exports[`Cascader popup correctly with defaultValue 1`] = `
           title="Zhejiang"
         >
           Zhejiang
+          <span
+            class="c7n-cascader-menu-item-expand-icon"
+          >
+            <i
+              class="icon icon-navigate_next"
+            />
+          </span>
         </li>
         <li
           class="c7n-cascader-menu-item c7n-cascader-menu-item-expand"
           title="Jiangsu"
         >
           Jiangsu
+          <span
+            class="c7n-cascader-menu-item-expand-icon"
+          >
+            <i
+              class="icon icon-navigate_next"
+            />
+          </span>
         </li>
       </ul>
       <ul
@@ -198,6 +289,13 @@ exports[`Cascader popup correctly with defaultValue 1`] = `
           title="Hangzhou"
         >
           Hangzhou
+          <span
+            class="c7n-cascader-menu-item-expand-icon"
+          >
+            <i
+              class="icon icon-navigate_next"
+            />
+          </span>
         </li>
       </ul>
       <ul
