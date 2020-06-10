@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.64
+
+`2020-06-10`
+
 - 🌟 `Progress`: Added `strokeColor` properties.
 - 🌟 `Avatar`: Added `alt` properties description.
 - 🌟 `Switch`: Added `checkedValue`,`unCheckedValue` properties.

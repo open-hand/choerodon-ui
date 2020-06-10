@@ -356,10 +356,10 @@ export default class TableStore {
 
   @computed
   get hasRowBox(): boolean {
-    const { dataSet } = this.props;
+    const { dataSet, selectionMode } = this.props;
     const { alwaysShowRowBox } = this;
     if (dataSet) {
-      const { selection, selectionMode } = dataSet;
+      const { selection } = dataSet;
       return selection && (selectionMode === SelectionMode.rowbox || alwaysShowRowBox);
     }
     return false;

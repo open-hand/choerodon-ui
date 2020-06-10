@@ -686,7 +686,6 @@ exports[`renders ./components-pro/form/demo/dataset.md correctly 1`] = `
                   autocomplete="off"
                   class="c7n-pro-input"
                   name="phone"
-                  readonly=""
                   type="text"
                   value=""
                 />
@@ -728,7 +727,6 @@ exports[`renders ./components-pro/form/demo/dataset.md correctly 1`] = `
                   autocomplete="off"
                   class="c7n-pro-password"
                   name="password"
-                  readonly=""
                   type="password"
                   value=""
                 />
@@ -777,7 +775,6 @@ exports[`renders ./components-pro/form/demo/dataset.md correctly 1`] = `
                   autocomplete="off"
                   class="c7n-pro-password"
                   name="confirmPassword"
-                  readonly=""
                   type="password"
                   value=""
                 />
@@ -831,10 +828,21 @@ exports[`renders ./components-pro/form/demo/dataset.md correctly 1`] = `
                         autocomplete="off"
                         class="c7n-pro-input-number"
                         name="age"
-                        readonly=""
                         type="text"
                         value=""
                       />
+                      <div
+                        class="c7n-pro-input-number-inner-button"
+                      >
+                        <div>
+                          <i
+                            class="icon icon-keyboard_arrow_up c7n-pro-input-number-plus"
+                          />
+                          <i
+                            class="icon icon-keyboard_arrow_down c7n-pro-input-number-minus"
+                          />
+                        </div>
+                      </div>
                     </label>
                   </span>
                 </div>

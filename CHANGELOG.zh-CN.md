@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.64
+
+`2020-06-10`
+
 - 🌟 `Avatar`: 增加 alt 属性描述。
 - 🌟 `DatePicker`: 增加 onPanelChange, mode 属性描述。
 - 🌟 `Progress`: 增加 strokeColor 属性。

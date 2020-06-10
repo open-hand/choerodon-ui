@@ -528,10 +528,13 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
         </Item>,
       );
     }
-    // @ts-ignore 判断ie浏览器处理 下拉栏覆盖问题
-    if(!dropdownMatchSelectWidth && (!!window.ActiveXObject || "ActiveXObject" in window)){
-      overflowYAdd = {overflowY: 'scroll'}
+    if(typeof window !== 'undefined') {
+      // @ts-ignore 判断ie浏览器处理 下拉栏覆盖问题
+      if(!dropdownMatchSelectWidth && (!!window.ActiveXObject || "ActiveXObject" in window)){
+        overflowYAdd = {overflowY: 'scroll'}
+      }
     }
+
     return (
       <Menu
         ref={this.saveMenu}
