@@ -1,0 +1,213 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders ./components-pro/cascader/demo/basic.md correctly 1`] = `
+Array [
+  <span
+    class="c7n-pro-cascader-wrapper c7n-pro-cascader-suffix-button c7n-pro-cascader-not-editable"
+  >
+    <input
+      name="id"
+      type="hidden"
+      value="2/7"
+    />
+    <label>
+      <input
+        autocomplete="off"
+        class="c7n-pro-cascader"
+        readonly=""
+        type="text"
+        value="2,7"
+      />
+      <div
+        class="c7n-pro-cascader-inner-button c7n-pro-cascader-clear-button"
+      >
+        <i
+          class="icon icon-close"
+        />
+      </div>
+      <div
+        class="c7n-pro-cascader-suffix"
+      >
+        <i
+          class="icon icon-baseline-arrow_drop_down c7n-pro-cascader-trigger"
+        />
+      </div>
+    </label>
+  </span>,
+  <span />,
+]
+`;
+
+exports[`renders ./components-pro/cascader/demo/basicController.md correctly 1`] = `
+Array [
+  <span
+    class="c7n-pro-cascader-wrapper c7n-pro-cascader-suffix-button c7n-pro-cascader-not-editable"
+  >
+    <input
+      type="hidden"
+      value="zhejiang/hangzhou/xihu"
+    />
+    <label>
+      <input
+        autocomplete="off"
+        class="c7n-pro-cascader"
+        options="[object Object],[object Object]"
+        placeholder="Please select"
+        readonly=""
+        type="text"
+        value="Zhejiang/Hangzhou/West Lake"
+      />
+      <div
+        class="c7n-pro-cascader-inner-button c7n-pro-cascader-clear-button"
+      >
+        <i
+          class="icon icon-close"
+        />
+      </div>
+      <div
+        class="c7n-pro-cascader-suffix"
+      >
+        <i
+          class="icon icon-baseline-arrow_drop_down c7n-pro-cascader-trigger"
+        />
+      </div>
+    </label>
+  </span>,
+  <span />,
+]
+`;
+
+exports[`renders ./components-pro/cascader/demo/disabled.md correctly 1`] = `
+Array [
+  <span
+    class="c7n-pro-cascader-wrapper c7n-pro-cascader-suffix-button c7n-pro-cascader-not-editable"
+  >
+    <input
+      type="hidden"
+      value="zhejiang/hangzhou/xihu"
+    />
+    <label>
+      <input
+        autocomplete="off"
+        class="c7n-pro-cascader"
+        options="[object Object],[object Object]"
+        placeholder="Please select"
+        readonly=""
+        type="text"
+        value="Zhejiang/Hangzhou/West Lake"
+      />
+      <div
+        class="c7n-pro-cascader-inner-button c7n-pro-cascader-clear-button"
+      >
+        <i
+          class="icon icon-close"
+        />
+      </div>
+      <div
+        class="c7n-pro-cascader-suffix"
+      >
+        <i
+          class="icon icon-baseline-arrow_drop_down c7n-pro-cascader-trigger"
+        />
+      </div>
+    </label>
+  </span>,
+  <span />,
+]
+`;
+
+exports[`renders ./components-pro/cascader/demo/hover.md correctly 1`] = `
+Array [
+  <span
+    class="c7n-pro-cascader-wrapper c7n-pro-cascader-empty c7n-pro-cascader-suffix-button c7n-pro-cascader-not-editable"
+  >
+    <input
+      name="id"
+      type="hidden"
+      value=""
+    />
+    <label>
+      <input
+        autocomplete="off"
+        class="c7n-pro-cascader"
+        readonly=""
+        type="text"
+        value=""
+      />
+      <div
+        class="c7n-pro-cascader-inner-button c7n-pro-cascader-clear-button"
+      >
+        <i
+          class="icon icon-close"
+        />
+      </div>
+      <div
+        class="c7n-pro-cascader-suffix"
+      >
+        <i
+          class="icon icon-baseline-arrow_drop_down c7n-pro-cascader-trigger"
+        />
+      </div>
+    </label>
+  </span>,
+  <span />,
+]
+`;
+
+exports[`renders ./components-pro/cascader/demo/multiple.md correctly 1`] = `
+Array [
+  <span
+    class="c7n-pro-cascader-wrapper c7n-pro-cascader-suffix-button c7n-pro-cascader-multiple c7n-pro-cascader-not-editable"
+  >
+    <input
+      class="c7n-pro-cascader-multiple-value"
+      name="id"
+      value="2,7"
+    />
+    <label>
+      <div
+        class="c7n-pro-cascader"
+      >
+        <ul>
+          <li
+            class="c7n-pro-cascader-multiple-block"
+          >
+            <div>
+              2,7
+            </div>
+            <i
+              class="icon icon-cancel"
+              tabindex="-1"
+            />
+          </li>
+          <li>
+            <input
+              autocomplete="off"
+              class="c7n-pro-cascader-multiple-input"
+              readonly=""
+              style="position:absolute;left:0;top:0;z-index:-1"
+              type="text"
+              value=""
+            />
+          </li>
+        </ul>
+      </div>
+      <div
+        class="c7n-pro-cascader-inner-button c7n-pro-cascader-clear-button"
+      >
+        <i
+          class="icon icon-close"
+        />
+      </div>
+      <div
+        class="c7n-pro-cascader-suffix"
+      >
+        <i
+          class="icon icon-baseline-arrow_drop_down c7n-pro-cascader-trigger"
+        />
+      </div>
+    </label>
+  </span>,
+  <span />,
+]
+`;
