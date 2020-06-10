@@ -122,7 +122,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
         set(column, 'width', column.innerMaxWidth);
       }else if(column.minWidth){
           set(column, 'width', column.minWidth);
-        }
+      }
     }
   }
 
