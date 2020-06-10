@@ -3,6 +3,7 @@ order: 0
 title:
   zh-CN: 基本
   en-US: Basic
+only: true
 ---
 
 ## zh-CN
@@ -420,7 +421,8 @@ class App extends React.Component {
           style={{ color: 'red' }}
           tooltip="overflow"
           editor
-          width={150}
+          width={200}
+          minWidth={150}
           lock
           sortable
         />
