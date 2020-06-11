@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 💄 `<pro>Table`: Modify handleSelection trigger timing, export modal add closable.
+
 ## 0.8.64
 
 `2020-06-10`

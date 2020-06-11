@@ -154,6 +154,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
           <Column header={$l('Table', 'column_name')} name="label" resizable={false} />
         </Table>
       ),
+      closable: true,
       okText: $l('Table', 'export_button'),
       onOk: this.handleExport,
       style: {

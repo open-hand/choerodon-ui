@@ -15,6 +15,9 @@ timeline: true
 
 ---
 
+
+- 💄 `<pro>Table`: 修改 handleSelection 触发时机，导出 modal添加 closable。
+
 ## 0.8.64
 
 `2020-06-10`

@@ -125,26 +125,26 @@ export default class TableRow extends Component<TableRowProps, any> {
 
   @autobind
   handleSelectionByClick(e) {
-    this.handleSelection();
     this.handleClick(e);
+    this.handleSelection();
   }
 
   @autobind
   handleSelectionByMouseDown(e) {
-    this.handleSelection();
     const { onMouseDown } = this.rowExternalProps;
     if (typeof onMouseDown === 'function') {
       onMouseDown(e);
     }
+    this.handleSelection();
   }
 
   @autobind
   handleSelectionByDblClick(e) {
-    this.handleSelection();
     const { onDoubleClick } = this.rowExternalProps;
     if (typeof onDoubleClick === 'function') {
       onDoubleClick(e);
     }
+    this.handleSelection();
   }
 
   @autobind
