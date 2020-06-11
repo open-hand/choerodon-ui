@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 💄 `<pro>Table`: Modify handleSelection trigger timing, export modal add closable.
+- 💄 `<pro>Form`: Added `FormVirtualGroup` component of Form component.
 
 ## 0.8.64
 

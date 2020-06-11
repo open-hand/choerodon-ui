@@ -49,6 +49,10 @@ title: Form
 | name | 字段名。可获取 DataSet 的字段属性，如 label，require 等，一般用于控件外需要嵌套其他元素时使用。 | string |  |
 | labelWidth | 标签宽度。同列控件中标签宽度取最大设定值。子元素的 labelWidth 无法响应式。 | number |  |
 
+### Form.FormVirtualGroup
+
+当需要对Form的一些表单控件进行分组控制的时候可以使用,例如统一控制某些表单控件的显隐,此外,使用**FormVirtualGroup**可以统一对表单控件进行属性注入,例如统一的**className**等.注意,FormVirtualGroup组件本身不会产生实际的dom结果,其结果与去掉**FormVirtualGroup**然后将显隐控制等逐一写入表单控件中的写法完全一致,
+
 ### Form Responsive
 
 响应式可设置参数`columns` `labelWidth` `labelAlign` `labelLayout` 为一个键值对。
