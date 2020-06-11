@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 💄 `<pro>Table`: Modify handleSelection trigger timing, export modal add closable.
+- 🐞 `<pro>Table`: Fixed alwaysShowRowBox priority issues.
 
 ## 0.8.64
 

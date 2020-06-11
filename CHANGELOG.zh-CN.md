@@ -17,6 +17,7 @@ timeline: true
 
 
 - 💄 `<pro>Table`: 修改 handleSelection 触发时机，导出 modal添加 closable。
+- 🐞 `<pro>Table`: 修复 alwaysShowRowBox 优先级问题。
 
 ## 0.8.64
 

@@ -233,7 +233,14 @@ export default class TableStore {
 
   @computed
   get alwaysShowRowBox(): boolean {
-    return this.props.alwaysShowRowBox || getConfig('TableAlwaysShowRowBox') || false;
+    if ('alwaysShowRowBox' in this.props) {
+      return this.props.alwaysShowRowBox;
+    }
+    const alwaysShowRowBox = getConfig('TableAlwaysShowRowBox');
+    if (typeof alwaysShowRowBox !== 'undefined') {
+      return alwaysShowRowBox;
+    }
+    return false;
   }
 
   @computed
