@@ -18,6 +18,7 @@ timeline: true
 - 💄 `<pro>Table`: Modify handleSelection trigger timing, export modal add closable.
 - 💄 `<pro>Form`: Added `FormVirtualGroup` component of Form component.
 - 🐞 `<pro>`: Fix suffix icon of select lov and other components disappeared in hzer project.
+- 🐞 `<pro>DatePicker`: Fix the problem that the selection box will still pop up when you click the second input after setting disabled in range mode.
 
 ## 0.8.64
 

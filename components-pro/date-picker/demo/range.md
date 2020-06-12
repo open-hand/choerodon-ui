@@ -87,6 +87,7 @@ class App extends React.Component {
         <Col span={24}>
           <DatePicker
             range
+            disabled
             defaultValue={['1986-11-22', new Date()]}
             placeholder={['Start Date', 'End Date']}
             onChange={handleChange}
