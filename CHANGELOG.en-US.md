@@ -15,8 +15,13 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>DataSet`: Added `modifiedCheckMessage` property.
+- 🌟 `<pro>Form`: Added `FormVirtualGroup` component of Form component.
+- 💄 `<pro>Form`: Added `FormVirtualGroup` component of Form component.
 - 💄 `<pro>Table`: Modify handleSelection trigger timing, export modal add closable.
+- 🐞 Fixed suffix icon of select lov and other components disappeared.
 - 🐞 `<pro>Table`: Fixed alwaysShowRowBox priority issues.
+- 🐞 `<pro>DatePicker`: Fix the problem that the selection box will still pop up when you click the second input after setting disabled in range mode.
 
 ## 0.8.64
 

@@ -148,6 +148,11 @@ export interface DataSetProps {
    */
   modifiedCheck?: boolean;
   /**
+   * 查询前，当有记录更改过时， 提示信息或弹窗的属性 modifiedCheckMessage
+   * @default
+   */
+  modifiedCheckMessage?: ReactNode | ModalProps & confirmProps,
+  /**
    * 分页大小
    * @default 10
    */
@@ -910,7 +915,7 @@ export default class DataSet extends EventManager {
    */
   async locate(index: number): Promise<Record | undefined> {
     const { paging, pageSize, totalCount } = this;
-    const { modifiedCheck } = this.props;
+    const { modifiedCheck, modifiedCheckMessage } = this.props;
     let currentRecord = this.findInAllPage(index);
     if (currentRecord ) {
       this.current = currentRecord;
@@ -921,7 +926,7 @@ export default class DataSet extends EventManager {
         if (
           !modifiedCheck ||
           !this.dirty ||
-          (await confirm($l('DataSet', 'unsaved_data_confirm'))) !== 'cancel'
+          (await confirm(modifiedCheckMessage || $l('DataSet', 'unsaved_data_confirm'))) !== 'cancel'
         ) {
           await this.query(Math.floor(index / pageSize) + 1);
           currentRecord = this.findInAllPage(index);

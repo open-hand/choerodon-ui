@@ -1,12 +1,49 @@
-@import '../../select/style/index.less';
-@select-prefix-cls: ~'@{c7n-pro-prefix}-auto-complete';
+@import '../../../components/style/themes/default';
+@import '../../../components/style/mixins/index';
+@import '../../trigger-field/style/mixin';
+@import '../../field/style/mixin';
+@import '../../select/style/mixin';
 
-.@{select-prefix-cls} {
+@auto-complete-prefix-cls: ~'@{c7n-pro-prefix}-auto-complete';
+@checkbox-prefix-cls: ~'@{c7n-prefix}-checkbox';
+
+.@{auto-complete-prefix-cls} {
+  .trigger;
+
+  margin: 0;
+
+  &-trigger {
+    transition: transform 0.3s;
+  }
+
+  &-expand &-trigger {
+    transform: rotate(180deg);
+  }
+
+  &-dropdown-menu {
+    .dropdown-menu;
+  }
+  
   &-inner-button&-clear-button {
     right: 0.01rem;
   }
 
   &-suffix {
-    display: none;
+      display: none;
+  }
+
+  &-select-all-none {
+    padding: 0.08rem 0.16rem;
+    font-size: @font-size-sm;
+    border-bottom: @border-width-base @border-style-base @border-color-base;
+
+    span {
+      color: @primary-color;
+      cursor: pointer;
+    }
+
+    span + span {
+      margin-left: 0.2rem;
+    }
   }
 }

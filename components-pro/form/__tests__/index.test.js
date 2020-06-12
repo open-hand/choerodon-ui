@@ -8,6 +8,7 @@ import Password from '../../password';
 import Button from '../../button';
 import EmailField from '../../email-field';
 
+const { FormVirtualGroup } = Form;
 class FormTest extends React.Component {
   ds = new DataSet({
     data: [
@@ -51,7 +52,7 @@ class FormTest extends React.Component {
     this.ds.current.getField('code').set('textField', 'description');
   };
 
-  render() {
+  render () {
     return (
       <Form dataSet={this.ds} style={{ width: '4.5rem' }} {...this.props}>
         <TextField name="phone" />
@@ -66,6 +67,76 @@ class FormTest extends React.Component {
           <Button onClick={this.changeField} style={{ marginLeft: 8 }}>
             设置代码描述的textField
           </Button>
+        </div>
+      </Form>
+    );
+  }
+}
+
+
+class GroupForm extends React.Component {
+
+  state = {
+    showGroup: true,
+    showGroup2: true,
+  };
+
+  toggleShow = () => {
+    this.setState((prevState) => ({
+      showGroup: !prevState.showGroup,
+    }));
+  };
+
+  toggleShow2 = () => {
+    this.setState((prevState) => ({
+      showGroup2: !prevState.showGroup2,
+    }));
+  };
+
+  render () {
+    const { showGroup, showGroup2 } = this.state;
+    return (
+      <Form id="basic" style={{ width: '4rem' }}>
+        <TextField
+          label="手机号"
+          labelWidth={150}
+          pattern="1[3-9]\d{9}"
+          name="phone"
+          required
+          clearButton
+          addonBefore="+86"
+          addonAfter="中国大陆"
+        />
+        {
+          showGroup && (
+            <FormVirtualGroup className="virtual-group">
+              <TextField
+                label="姓名1"
+              />
+              <TextField
+                label="姓名2"
+              />
+              {
+                showGroup2 && (
+                  <FormVirtualGroup className="virtual-group2">
+                    <TextField
+                      label="姓名3"
+                    />
+                    <TextField
+                      label="姓名4"
+                    />
+                    <TextField
+                      label="姓名5"
+                    />
+                  </FormVirtualGroup>
+                )
+              }
+            </FormVirtualGroup>
+          )
+        }
+        <div>
+          <Button type="button" onClick={this.toggleShow}>切换</Button>
+          <Button type="button" onClick={this.toggleShow2}>切换2</Button>
         </div>
       </Form>
     );
@@ -129,5 +200,32 @@ describe('Select', () => {
     const wrapper = mount(<FormTest useColon />);
     jest.runAllTimers();
     expect(wrapper.find('.c7n-pro-field-label-useColon')).toHaveLength(4);
+  });
+
+  // 测试嵌套写法
+  it('use nested', () => {
+    const wrapper = mount(<GroupForm />);
+    jest.runAllTimers();
+    expect(wrapper.find('input').length).toBe(6);
+    expect(wrapper.find('.c7n-pro-input-wrapper.virtual-group').length).toBe(2);
+    expect(wrapper.find('.c7n-pro-input-wrapper.virtual-group2').length).toBe(3);
+    expect(wrapper.find('button').length).toBe(2);
+    const b1 = wrapper.find('button').at(0);
+    const b2 = wrapper.find('button').at(1);
+
+    // 消除
+    b1.simulate('click');
+    expect(wrapper.find('input').length).toBe(1);
+    expect(wrapper.find('.c7n-pro-input-wrapper.virtual-group').length).toBe(0);
+    expect(wrapper.find('.c7n-pro-input-wrapper.virtual-group2').length).toBe(0);
+    b1.simulate('click');
+    b2.simulate('click');
+    expect(wrapper.find('input').length).toBe(3);
+    expect(wrapper.find('.c7n-pro-input-wrapper.virtual-group').length).toBe(2);
+    expect(wrapper.find('.c7n-pro-input-wrapper.virtual-group2').length).toBe(0);
+    b2.simulate('click');
+    expect(wrapper.find('input').length).toBe(6);
+    expect(wrapper.find('.c7n-pro-input-wrapper.virtual-group').length).toBe(2);
+    expect(wrapper.find('.c7n-pro-input-wrapper.virtual-group2').length).toBe(3);
   });
 });

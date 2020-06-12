@@ -1,12 +1,4 @@
-import React, {
-  cloneElement,
-  Component,
-  CSSProperties,
-  HTMLProps,
-  isValidElement,
-  Key,
-  ReactNode,
-} from 'react';
+import React, { cloneElement, Component, CSSProperties, HTMLProps, isValidElement, Key, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { action, computed, get, remove, set } from 'mobx';
@@ -124,27 +116,28 @@ export default class TableRow extends Component<TableRowProps, any> {
   }
 
   @autobind
-  handleSelectionByClick(e) {
-    this.handleClick(e);
-    this.handleSelection();
+  async handleSelectionByClick(e) {
+    if (await this.handleClick(e) !== false) {
+      this.handleSelection();
+    }
   }
 
   @autobind
   handleSelectionByMouseDown(e) {
+    this.handleSelection();
     const { onMouseDown } = this.rowExternalProps;
     if (typeof onMouseDown === 'function') {
       onMouseDown(e);
     }
-    this.handleSelection();
   }
 
   @autobind
   handleSelectionByDblClick(e) {
+    this.handleSelection();
     const { onDoubleClick } = this.rowExternalProps;
     if (typeof onDoubleClick === 'function') {
       onDoubleClick(e);
     }
-    this.handleSelection();
   }
 
   @autobind
@@ -173,7 +166,7 @@ export default class TableRow extends Component<TableRowProps, any> {
   handleClick(e) {
     const { onClick } = this.rowExternalProps;
     if (typeof onClick === 'function') {
-      onClick(e);
+      return onClick(e);
     }
   }
 
