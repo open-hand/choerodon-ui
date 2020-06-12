@@ -17,6 +17,7 @@ timeline: true
 
 - 💄 `<pro>Table`: Modify handleSelection trigger timing, export modal add closable.
 - 💄 `<pro>Form`: Added `FormVirtualGroup` component of Form component.
+- 🐞 `<pro>`: Fix suffix icon of select lov and other components disappeared in hzer project.
 
 ## 0.8.64
 
