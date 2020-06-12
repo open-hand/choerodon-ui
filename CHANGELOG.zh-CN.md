@@ -19,6 +19,7 @@ timeline: true
 - 💄 `<pro>Table`: 修改 handleSelection 触发时机，导出 modal添加 closable。
 - 💄 `<pro>Form`: 新增 FormVirtualGroup 子组件。
 - 🐞 `<pro>`: 修复 select lov 等组件的 suffix icon 在hzer工程中消失的问题。
+- 🐞 `<pro>DatePicker`: 修复range模式下设置disabled后点击第二个input依旧会弹出选择框的问题。
 
 ## 0.8.64
 

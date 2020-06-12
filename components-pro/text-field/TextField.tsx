@@ -346,6 +346,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           onMouseDown={this.handleRangeStart}
           value={rangeTarget === 0 && isFocused ? '' : startValue}
           placeholder={rangeTarget === 0 && isFocused ? '' : startPlaceholder}
+          disabled={props.disabled === undefined ? false : props.disabled}
           readOnly
         />
         <span className={`${prefixCls}-range-split`}>~</span>
@@ -356,6 +357,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           onMouseDown={this.handleRangeEnd}
           value={rangeTarget === 1 && isFocused ? '' : endValue}
           placeholder={rangeTarget === 1 && isFocused ? '' : endPlaceHolder}
+          disabled={props.disabled === undefined ? false : props.disabled}
           readOnly
         />
       </span>
