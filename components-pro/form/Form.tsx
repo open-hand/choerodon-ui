@@ -6,6 +6,7 @@ import React, {
   isValidElement,
   ReactElement,
   ReactNode,
+  cloneElement,
 } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -21,6 +22,7 @@ import Responsive from 'choerodon-ui/lib/responsive/Responsive';
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import isFunction from 'lodash/isFunction';
+import isArray from 'lodash/isArray';
 import axios from '../axios';
 import autobind from '../_util/autobind';
 import { FormField, FormFieldProps, getFieldsById } from '../field/FormField';
@@ -37,7 +39,7 @@ import {
   normalizeLabelWidth,
   defaultExcludeUseColonTag,
 } from './utils';
-
+import FormVirtualGroup from './FormVirtualGroup';
 /**
  * 表单name生成器
  */
@@ -153,6 +155,8 @@ const labelLayoutPropTypes = PropTypes.oneOf([
 @observer
 export default class Form extends DataSetComponent<FormProps> {
   static displayName = 'Form';
+
+  static FormVirtualGroup = FormVirtualGroup;
 
   static propTypes = {
     /**
@@ -484,7 +488,34 @@ export default class Form extends DataSetComponent<FormProps> {
         ) {
           noLabel = false;
         }
-        childrenArray.push(child);
+        const setChild = (arr, outChild, groupProps = {}) => {
+          if (!outChild?.type) {
+            return;
+          }
+          if (outChild?.type && (outChild.type as any).displayName === 'FormVirtualGroup') {
+            if (!outChild.props.children) {
+              return;
+            }
+            if (isArray(outChild.props.children)) {
+              outChild.props.children.forEach((c) => {
+                setChild(arr, c, omit(outChild.props, ['children']));
+              });
+            } else if (outChild?.type && (outChild.type as any).displayName === 'FormVirtualGroup') {
+              setChild(arr, outChild.props.children, omit(outChild.props, ['children']));
+            } else {
+              arr.push(cloneElement(outChild.props.children, {
+                ...groupProps,
+                ...outChild.props.children.props,
+              }));
+            }
+          } else {
+            arr.push(cloneElement(outChild, {
+              ...groupProps,
+              ...outChild.props,
+            }));
+          }
+        };
+        setChild(childrenArray, child);
       }
     });
 

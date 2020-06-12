@@ -17,6 +17,7 @@ timeline: true
 
 
 - 💄 `<pro>Table`: 修改 handleSelection 触发时机，导出 modal添加 closable。
+- 💄 `<pro>Form`: 新增 FormVirtualGroup 子组件。
 
 ## 0.8.64
 

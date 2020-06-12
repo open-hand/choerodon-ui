@@ -36,6 +36,10 @@ title: Form
 
 更多属性请参考 [DataSetComponent](/components-pro/core/#DataSetComponent)。
 
+### Form.FormVirtualGroup
+
+当需要对Form的一些表单控件进行分组控制的时候可以使用,例如统一控制某些表单控件的显隐,此外,使用**FormVirtualGroup**可以统一对表单控件进行属性注入,例如统一的**className**等.注意,FormVirtualGroup组件本身不会产生实际的dom结果,其结果与去掉**FormVirtualGroup**然后将显隐控制等逐一写入表单控件中的写法完全一致,
+
 ### Form Layout
 
 #### Form 子元素属性
