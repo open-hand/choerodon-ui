@@ -12,7 +12,6 @@ export interface TextAreaProps extends TextFieldProps {
   rows?: number;
   resize?: ResizeType;
   autoSize?: boolean | AutoSizeType;
-  placeholder?: string;
 }
 
 @observer
@@ -38,13 +37,6 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
     resize: ResizeType.none,
     rows: 4,
     autoSize: false,
-    placeholder: '',
-  };
-
-  textAreaRef: HTMLTextAreaElement;
-
-  saveTextArea = (textArea: HTMLTextAreaElement) => {
-    this.textAreaRef = textArea;
   };
 
   getOtherProps() {
@@ -60,8 +52,8 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
     if (autoSize) {
       const { minRows, maxRows } = autoSize as AutoSizeType;
       otherProps.rows = minRows;
-      if (this.textAreaRef) {
-        textAreaStyles = calculateNodeHeight(this.textAreaRef, true, minRows, maxRows);
+      if (this.element) {
+        textAreaStyles = calculateNodeHeight(this.element, true, minRows, maxRows);
       }
     }
     otherProps.style = { ...style, ...textAreaStyles };
@@ -77,8 +69,7 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
           <textarea
             {...this.getOtherProps()}
             placeholder={this.hasFloatLabel ? undefined : this.getPlaceholders()[0]}
-            readOnly={this.isReadOnly()}
-            ref={this.saveTextArea}
+            readOnly={!this.editable}
             value={isString(text) ? text : this.getText(this.getValue())}
           />
           {this.renderFloatLabel()}
