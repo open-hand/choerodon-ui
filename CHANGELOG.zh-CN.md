@@ -15,13 +15,18 @@ timeline: true
 
 ---
 
+## 0.8.65
 
+`2020-06-15`
+
+- 🌟 `configure`: 新增 tableDefaultRenderer 属性.
 - 🌟 `<pro>Form`: 新增 FormVirtualGroup 子组件。
 - 🌟 `<pro>DataSet`: 新增 modifiedCheckMessage 属性。
 - 💄 `<pro>Table`: 修改 handleSelection 触发时机，导出 modal添加 closable。
 - 💄 `<pro>Form`: 新增 FormVirtualGroup 子组件。
 - 🐞 修复 select lov 等组件的 suffix icon 消失的问题。
 - 🐞 `<pro>Table`: 修复 alwaysShowRowBox 优先级问题。
+- 🐞 `<pro>TextArea`: 修复 TextArea autofocus 无效问题。
 - 🐞 `<pro>DatePicker`: 修复range模式下设置disabled后点击第二个input依旧会弹出选择框的问题。
 
 ## 0.8.64
@@ -39,7 +44,7 @@ timeline: true
 - 🌟 `<pro>AutoComplete`: 新增 AutoComplete Pro 组件。
 - 🌟 `<pro>Form`: 新增 useColon, excludeUseColonTagList 属性以及全局配置。
 - 🌟 `<pro>Table`: 新增 autoMaxWidth 属性实现双击自适应最大宽度以及导出案例。
-- 🌟 `<pro>Table`: 新增 alwaysShowRowBox 属性以及全局配置 TableAlwaysShowRowBox。
+- 🌟 `<pro>Table`: 新增 alwaysShowRowBox 属性以及全局配置 tableAlwaysShowRowBox。
 - 🌟 `<pro>Table`: 新增 useMouseBatchChoose 属性以及全局配置 tableUseMouseBatchChoose。
 - 🌟 `<pro>Pagination`: 增加 pagination pager 的类名区别。
 - 🐞 修复基础组件 input,form, autoComplete 的样式问题。

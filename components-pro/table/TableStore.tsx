@@ -236,7 +236,7 @@ export default class TableStore {
     if ('alwaysShowRowBox' in this.props) {
       return this.props.alwaysShowRowBox;
     }
-    const alwaysShowRowBox = getConfig('TableAlwaysShowRowBox');
+    const alwaysShowRowBox = getConfig('tableAlwaysShowRowBox');
     if (typeof alwaysShowRowBox !== 'undefined') {
       return alwaysShowRowBox;
     }

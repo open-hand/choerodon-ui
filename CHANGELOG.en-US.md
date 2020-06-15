@@ -15,12 +15,18 @@ timeline: true
 
 ---
 
+## 0.8.65
+
+`2020-06-15`
+
+- 🌟 `configure`: Added `tableDefaultRenderer` property.
 - 🌟 `<pro>DataSet`: Added `modifiedCheckMessage` property.
 - 🌟 `<pro>Form`: Added `FormVirtualGroup` component of Form component.
 - 💄 `<pro>Form`: Added `FormVirtualGroup` component of Form component.
 - 💄 `<pro>Table`: Modify handleSelection trigger timing, export modal add closable.
 - 🐞 Fixed suffix icon of select lov and other components disappeared.
 - 🐞 `<pro>Table`: Fixed alwaysShowRowBox priority issues.
+- 🐞 `<pro>TextArea`: Fixed TextArea autofocus invalid issue.
 - 🐞 `<pro>DatePicker`: Fix the problem that the selection box will still pop up when you click the second input after setting disabled in range mode.
 
 ## 0.8.64
@@ -39,7 +45,7 @@ timeline: true
 - 🌟 `<pro>AutoComplete`: Added `AutoComplete` Pro component.
 - 🌟 `<pro>Table`: Added `autoMaxWidth` properties to self-adaption width and export demo.
 - 🌟 `<pro>Form`: Added useColon, excludeUseColonTagList attributes and global configuration.
-- 🌟 `<pro>Table`: Added `alwaysShowRowBox` attributes and global configuration `TableAlwaysShowRowBox`.
+- 🌟 `<pro>Table`: Added `alwaysShowRowBox` attributes and global configuration `tableAlwaysShowRowBox`.
 - 🌟 `<pro>Table`: Added `useMouseBatchChoose` attributes and global configuration `tableUseMouseBatchChoose`.
 - 🐞 `<pro>Select`: Fixed ie11 `dropdownMatchSelectWidth` is always hidden text.
 - 🐞 Fixed the input,form,autoComplete style.
