@@ -25,6 +25,7 @@ import { CacheOptions } from 'choerodon-ui/pro/lib/_util/Cache';
 import { LabelLayout } from 'choerodon-ui/pro/lib/form/enum';
 import { ButtonColor, FuncType } from 'choerodon-ui/pro/lib/button/enum';
 import { defaultExcludeUseColonTag } from 'choerodon-ui/pro/lib/form/utils';
+import { Renderer } from 'choerodon-ui/pro/lib/field/FormField';
 
 export type Status = {
   [RecordStatus.add]: string;
@@ -92,6 +93,9 @@ export type Config = {
   tableSpinProps?: SpinProps;
   tableButtonProps?: ButtonProps;
   tableCommandProps?: ButtonProps;
+  tableDefaultRenderer?: Renderer;
+  tableAlwaysShowRowBox?: boolean;
+  tableUseMouseBatchChoose?: boolean;
   pagination?: TablePaginationConfig | false;
   modalSectionBorder?: boolean;
   modalOkFirst?: boolean;
@@ -112,8 +116,6 @@ export type Config = {
   dropdownMatchSelectWidth?: boolean;
   useColon?: boolean;
   excludeUseColonTagList?: string[];
-  TableAlwaysShowRowBox?: boolean;
-  tableUseMouseBatchChoose?: boolean;
 };
 
 export type ConfigKeys = keyof Config;
@@ -174,6 +176,9 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['tableSpinProps', defaultSpinProps],
   ['tableButtonProps', defaultButtonProps],
   ['tableCommandProps', defaultButtonProps],
+  ['tableAlwaysShowRowBox', false],
+  ['tableUseMouseBatchChoose', false],
+  ['tableDefaultRenderer', ''],
   ['modalSectionBorder', true],
   ['modalOkFirst', true],
   ['buttonColor', ButtonColor.default],
@@ -196,8 +201,6 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['dropdownMatchSelectWidth', true],
   ['useColon', false],
   ['excludeUseColonTagList', defaultExcludeUseColonTag],
-  ['TableAlwaysShowRowBox', false],
-  ['tableUseMouseBatchChoose', false],
 ]);
 
 export function getConfig(key: ConfigKeys): any {

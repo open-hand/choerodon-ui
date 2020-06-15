@@ -4,6 +4,7 @@ import { computed, isArrayLike } from 'mobx';
 import isPlainObject from 'lodash/isPlainObject';
 import isNil from 'lodash/isNil';
 import omit from 'lodash/omit';
+import { getConfig } from 'choerodon-ui/lib/configure';
 import { FormField, FormFieldProps, RenderProps } from '../field/FormField';
 import autobind from '../_util/autobind';
 import { BooleanValue, FieldType } from '../data-set/enum';
@@ -69,7 +70,7 @@ export default class Output extends FormField<OutputProps> {
     if (range) {
       return this.renderRangeValue(true);
     }
-    return this.getTextNode();
+    return this.getTextNode() || getConfig('tableDefaultRenderer');
   }
 
   renderWrapper(): ReactNode {

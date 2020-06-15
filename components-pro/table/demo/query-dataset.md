@@ -3,6 +3,7 @@ order: 9
 title:
   zh-CN: 自定义查询 DataSet
   en-US: Customize Query DataSet
+only: true
 ---
 
 ## zh-CN
@@ -79,7 +80,7 @@ class App extends React.Component {
   render() {
     return (
       <Table dataSet={this.ds}>
-        <Column name="name" editor width={450} />
+        <Column name="name" editor width={450} renderer={({text}) => `${text}网`} />
         <Column name="age" editor />
         <Column name="sex" editor />
         <Column name="date.startDate" editor />

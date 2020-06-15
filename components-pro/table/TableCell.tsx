@@ -150,24 +150,24 @@ export default class TableCell extends Component<TableCellProps> {
   @action
   syncSize() {
     this.overflow = this.computeOverFlow();
-    this.setMaxColmnWidth()
+    this.setMaxColumnWidth()
   }
-  
+
   @action
-  setMaxColmnWidth(): void {
+  setMaxColumnWidth(): void {
     const { element } = this;
     if (element && element.textContent) {
       const {
         column,
       } = this.props;
-      const { innerMaxWidth } = column
+      const { innerMaxWidth } = column;
       if (column) {
         const { width } = element.getBoundingClientRect();
         if (width !== 0) {
           element.style.position = 'absolute';
           let { width: measureWidth } = element.getBoundingClientRect();
           element.style.position = '';
-          measureWidth = 20 + measureWidth
+          measureWidth = 20 + measureWidth;
           const newWidth = Math.max(measureWidth, minColumnWidth(column),column.width?column.width:0);
           if(!innerMaxWidth || newWidth > innerMaxWidth){
             set(column, 'innerMaxWidth', newWidth);
