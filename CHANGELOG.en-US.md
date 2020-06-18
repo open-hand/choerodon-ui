@@ -15,6 +15,9 @@ timeline: true
 
 ---
 
+
+- 🐞 `<pro>Form`: Fix the problem that there is no label when there is only a single FormVirtualGroup in Form.
+
 ## 0.8.65
 
 `2020-06-15`
