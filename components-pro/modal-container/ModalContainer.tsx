@@ -39,7 +39,7 @@ export function getKey(): string {
 }
 
 let root;
-let defaultBodyStyle: { overflow; paddingRight } | undefined;
+let defaultBodyStyle: { overflow; paddingRight; } | undefined;
 
 function getRoot() {
   if (typeof window !== 'undefined') {
@@ -92,7 +92,7 @@ function showBodyScrollBar() {
 }
 
 export interface ModalContainerProps {
-  location?: { pathname: string };
+  location?: { pathname: string; };
 }
 
 export interface ModalContainerState {
@@ -291,7 +291,11 @@ export default class ModalContainer extends Component<ModalContainerProps> {
           hiddenProp="hidden"
           {...animationProps}
         >
-          {mask && <Mask style={maskStyle} className={maskClassName} hidden={hidden} onClick={this.handleMaskClick} onMouseDown={stopEvent} />}
+          {
+            mask ? (
+              <Mask style={maskStyle} className={maskClassName} hidden={hidden} onClick={this.handleMaskClick} onMouseDown={stopEvent} />
+            ) : <div hidden={hidden} />
+          }
         </Animate>
         {items}
       </>
@@ -318,7 +322,7 @@ export function getContainer(loop?: boolean) {
   }
 }
 
-export function open(props: ModalProps & { children }) {
+export function open(props: ModalProps & { children; }) {
   const container = getContainer();
 
   async function close(destroy?: boolean) {

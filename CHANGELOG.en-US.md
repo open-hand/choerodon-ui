@@ -15,6 +15,9 @@ timeline: true
 
 ---
 
+
+- 🐞 `<pro>Table`: Fixed an issue where the body did not resume scrolling after hiding the modal when mask was set to false.
+
 ## 0.8.65
 
 `2020-06-15`
