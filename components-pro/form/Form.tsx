@@ -481,14 +481,14 @@ export default class Form extends DataSetComponent<FormProps> {
     const childrenArray: ReactElement<any>[] = [];
     Children.forEach(children, child => {
       if (isValidElement(child)) {
-        if (
-          noLabel === true &&
-          labelLayout === LabelLayout.horizontal &&
-          getProperty(child.props, 'label', dataSet, record)
-        ) {
-          noLabel = false;
-        }
         const setChild = (arr, outChild, groupProps = {}) => {
+          if (
+            noLabel === true &&
+            labelLayout === LabelLayout.horizontal &&
+            getProperty(outChild.props, 'label', dataSet, record)
+          ) {
+            noLabel = false;
+          }
           if (!outChild?.type) {
             return;
           }
