@@ -232,6 +232,8 @@ const lovDefineRule = /\/sys\/lov\/lov_define\?code=LOV_CODE/;
 
 export default function() {
   if (typeof window !== 'undefined') {
+    Mock.setup({timeout:0})
+    
     Mock.mock(dataSetLovRule, dataSetLovTemple);
 
     Mock.mock(lovDefineRule, lovDefineTemple);

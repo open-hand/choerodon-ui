@@ -230,6 +230,8 @@ const rul6 = /\/common\/batch/;
 
 export default function() {
   if (typeof window !== 'undefined') {
+    Mock.setup({timeout:0})
+
     Mock.mock(rul1, d1);
 
     Mock.mock(rul2, d2);

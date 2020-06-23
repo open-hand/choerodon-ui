@@ -17,6 +17,7 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>Table`: 修复了`autoLocateFirst` 在table切换页面时候也存在自动定位第一条问题 。
 - 🐞 `<pro>Select`: 修复 Select对于restricted 的效果支持,实现文字输入限制 。
 - 🐞 `<pro>Form`: 修复 Form中只有单个的FormVirtualGroup的时候没有label的问题。
 - 🐞 `<pro>Table`: 修复了设置mask为false的情况下隐藏modal后body未恢复滚动的问题。

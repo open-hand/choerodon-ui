@@ -915,7 +915,7 @@ export default class DataSet extends EventManager {
    */
   async locate(index: number): Promise<Record | undefined> {
     const { paging, pageSize, totalCount } = this;
-    const { modifiedCheck, modifiedCheckMessage } = this.props;
+    const { modifiedCheck, modifiedCheckMessage, autoLocateFirst } = this.props;
     let currentRecord = this.findInAllPage(index);
     if (currentRecord ) {
       this.current = currentRecord;
@@ -931,7 +931,7 @@ export default class DataSet extends EventManager {
           await this.query(Math.floor(index / pageSize) + 1);
           currentRecord = this.findInAllPage(index);
           if (currentRecord) {
-            this.current = currentRecord;
+            this.current = autoLocateFirst ? currentRecord: undefined;
             return currentRecord;
           }
         }
