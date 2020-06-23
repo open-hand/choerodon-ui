@@ -15,8 +15,9 @@ timeline: true
 
 ---
 
-- 🐞 `<pro>Table`: Fixed`autoLocateFirst` in table change the page auto locate the first record 。
-- 🐞 `<pro>Select`: Fixed Select restricted support to limit the import 。
+- 🐞 `<pro>Select`: Fixed ie11 element.scrollTo err .
+- 🐞 `<pro>Table`: Fixed`autoLocateFirst` in table change the page auto locate the first record .
+- 🐞 `<pro>Select`: Fixed Select restricted support to limit the import .
 - 🐞 `<pro>Form`: Fix the problem that there is no label when there is only a single FormVirtualGroup in Form.
 - 🐞 `<pro>Table`: Fixed an issue where the body did not resume scrolling after hiding the modal when mask was set to false.
 
