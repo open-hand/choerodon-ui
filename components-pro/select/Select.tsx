@@ -876,19 +876,32 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   @autobind
   @action
   handleChange(e) {
-    const { value } = e.target;
-    this.setText(value);
+    const {
+      target,
+      target: { value },
+    } = e;
+    const restricted = this.restrictInput(value);
+    if (restricted !== value) {
+      const selectionEnd = target.selectionEnd + restricted.length - value.length;
+      target.value = restricted;
+      target.setSelectionRange(selectionEnd, selectionEnd);
+    }
+    this.setText(restricted);
     if (this.observableProps.combo) {
-      this.generateComboOption(value, text => this.setText(text));
+      this.generateComboOption(restricted, text => this.setText(text));
     }
     if (!this.popup) {
       this.expand();
     }
   }
 
+  
+
   processRecordToObject(record: Record) {
     const { primitive, valueField } = this;
-    return primitive ? record.get(valueField) : record.toData();
+    // 如果为原始值那么 restricted 失效 
+    const restricted = this.restrictInput(record.get(valueField));
+    return primitive ? restricted : record.toData();
   }
 
   processObjectValue(value, textField) {
