@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { action } from 'mobx';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
+import { getConfig } from 'choerodon-ui/lib/configure';
+import { pick } from 'lodash';
 import DataSet from '../data-set/DataSet';
 import Table, { TableProps } from '../table/Table';
 import { SelectionMode, TableMode } from '../table/enum';
@@ -54,15 +56,15 @@ export default class LovView extends Component<LovViewProps> {
     } = this.props;
     return lovItems
       ? lovItems
-          .filter(({ gridField }) => gridField === 'Y')
-          .sort(({ gridFieldSequence: seq1 }, { gridFieldSequence: seq2 }) => seq1 - seq2)
-          .map<ColumnProps>(({ display, gridFieldName, gridFieldWidth, gridFieldAlign }) => ({
-            key: gridFieldName,
-            header: display,
-            name: gridFieldName,
-            width: gridFieldWidth,
-            align: gridFieldAlign,
-          }))
+        .filter(({ gridField }) => gridField === 'Y')
+        .sort(({ gridFieldSequence: seq1 }, { gridFieldSequence: seq2 }) => seq1 - seq2)
+        .map<ColumnProps>(({ display, gridFieldName, gridFieldWidth, gridFieldAlign }) => ({
+          key: gridFieldName,
+          header: display,
+          name: gridFieldName,
+          width: gridFieldWidth,
+          align: gridFieldAlign,
+        }))
       : undefined;
   }
 
@@ -89,6 +91,7 @@ export default class LovView extends Component<LovViewProps> {
       tableProps,
     } = this.props;
     const lovTableProps: TableProps = {
+      ...getConfig('lovTableProps'),
       ...tableProps,
       autoFocus: true,
       mode: treeFlag === 'Y' ? TableMode.tree : TableMode.list,
@@ -108,6 +111,12 @@ export default class LovView extends Component<LovViewProps> {
     if (height) {
       lovTableProps.style = { ...lovTableProps.style, height };
     }
+
+    // 优化优先级 让 部分tableProps属性 的优先级大于dataSet的设置
+    // 目前需要处理 selectionMode
+    Object.assign(lovTableProps, pick({ ...getConfig('lovTableProps'), ...tableProps }, [
+      'selectionMode',
+    ]));
 
     return <Table {...lovTableProps} />;
   }

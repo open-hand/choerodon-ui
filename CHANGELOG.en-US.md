@@ -15,10 +15,11 @@ timeline: true
 
 ---
 
-
+- 🌟 `configure`: Added `lovTableProps` property.
 - 🐞 `<pro>Form`: Fix the problem that there is no label when there is only a single FormVirtualGroup in Form.
 - 🐞 `<pro>Table`: Fixed an issue where the body did not resume scrolling after hiding the modal when mask was set to false.
 - 🐞 `<pro>Lov`: Fix the problem that `onChange` event triggered when blur.
+- 🐞 `<pro>Lov`: Adjust the priority of selectionMode in tableProps to the highest.
 
 ## 0.8.65
 

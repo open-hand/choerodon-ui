@@ -70,6 +70,7 @@ const prefixCls = getConfig('prefixCls');
 | formatter | 日期格式化。其中 jsonDate 是数据请求和响应时的格式，为空时日期会转化为 timestamp。详见[Formatter](#Formatter) | Formatter |  |
 | useColon | Form中是否使用冒号,当开启时会在所有的label后面加上冒号,并且必填的*号会被移到最前方 | boolean | false |
 | excludeUseColonTagList | Form中不使用冒号的标签的列表,当为自定义组件的时候,需要设置displayName作为标签名 | string[] | ['div','button','Button'] |
+| lovTableProps | 全局配置lov的tableProps,当同时存在lovTableProps以及的时候会进行一层合并 | [TableProps](/components-pro/table/) | {} |
 
 ### Formatter
 
