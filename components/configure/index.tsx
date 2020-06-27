@@ -10,6 +10,7 @@ import {
   expandIconProps,
   TablePaginationConfig,
   TableQueryBarHook,
+  TableProps,
 } from 'choerodon-ui/pro/lib/table/Table';
 import { ValidationMessages } from 'choerodon-ui/pro/lib/validator/Validator';
 import { ButtonProps } from 'choerodon-ui/pro/lib/button/Button';
@@ -116,6 +117,7 @@ export type Config = {
   dropdownMatchSelectWidth?: boolean;
   useColon?: boolean;
   excludeUseColonTagList?: string[];
+  lovTableProps?: TableProps;
 };
 
 export type ConfigKeys = keyof Config;
@@ -201,6 +203,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['dropdownMatchSelectWidth', true],
   ['useColon', false],
   ['excludeUseColonTagList', defaultExcludeUseColonTag],
+  ['lovTableProps', {}],
 ]);
 
 export function getConfig(key: ConfigKeys): any {
