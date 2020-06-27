@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>Select`: Fixed ie11 element.scrollTo err .
 - 🐞 `<pro>Table`: Fixed`autoLocateFirst` in table change the page auto locate the first record 。
 - 🐞 `<pro>Select`: Fixed Select restricted support to limit the import 。
 - 🐞 `<pro>Form`: Fix the problem that there is no label when there is only a single FormVirtualGroup in Form.

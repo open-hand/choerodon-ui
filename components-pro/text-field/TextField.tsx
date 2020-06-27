@@ -600,7 +600,12 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const { tagContainer } = this;
     const { style } = this.props;
     if (tagContainer && style && style.height) {
-      tagContainer.scrollTo(0, tagContainer.getBoundingClientRect().height);
+      if(tagContainer.scrollTo){
+        tagContainer.scrollTo(0, tagContainer.getBoundingClientRect().height);
+      }else{
+        tagContainer.scrollTop = tagContainer.getBoundingClientRect().height
+      }
+      
     }
   }
 
