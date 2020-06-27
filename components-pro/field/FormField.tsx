@@ -38,7 +38,7 @@ import { fromRangeValue, getDateFormatByField, toMultipleValue, toRangeValue } f
 import isSame from '../_util/isSame';
 import formatString from '../formatter/formatString';
 
-const map: { [key: string]: FormField<FormFieldProps>[] } = {};
+const map: { [key: string]: FormField<FormFieldProps>[]; } = {};
 
 export type Comparator = (v1: any, v2: any) => boolean;
 
@@ -453,9 +453,9 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   @autobind
   defaultRenderer({ text, repeat, maxTagTextLength }: RenderProps): ReactNode {
     return repeat !== undefined &&
-    maxTagTextLength &&
-    isString(text) &&
-    text.length > maxTagTextLength
+      maxTagTextLength &&
+      isString(text) &&
+      text.length > maxTagTextLength
       ? `${text.slice(0, maxTagTextLength)}...`
       : text;
   }
@@ -942,7 +942,8 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
         });
         this.validate(value);
       }
-      if (!isSame(old, value)) {
+      // 转成实际的数据再进行判断
+      if (!isSame(toJS(old), toJS(value))) {
         onChange(value, toJS(old), formNode);
       }
       this.value = value;
@@ -1006,11 +1007,11 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
         const inner = readOnly ? (
           <span className={className}>{text}</span>
         ) : (
-          <li className={className}>
-            <div>{text}</div>
-            {closeBtn}
-          </li>
-        );
+            <li className={className}>
+              <div>{text}</div>
+              {closeBtn}
+            </li>
+          );
         return (
           <Tooltip
             suffixCls={`form-tooltip ${getConfig('proPrefixCls')}-tooltip`}
@@ -1127,21 +1128,21 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
         help,
       ]
     ) : (
-      <Tooltip
-        suffixCls={`form-tooltip ${getConfig('proPrefixCls')}-tooltip`}
-        title={
-          !!(this.multiple && this.getValues().length) ||
-          this.isValidationMessageHidden(validationMessage)
-            ? null
-            : validationMessage
-        }
-        theme="light"
-        placement="bottomLeft"
-      >
-        {wrapper}
-        {help}
-      </Tooltip>
-    );
+        <Tooltip
+          suffixCls={`form-tooltip ${getConfig('proPrefixCls')}-tooltip`}
+          title={
+            !!(this.multiple && this.getValues().length) ||
+              this.isValidationMessageHidden(validationMessage)
+              ? null
+              : validationMessage
+          }
+          theme="light"
+          placement="bottomLeft"
+        >
+          {wrapper}
+          {help}
+        </Tooltip>
+      );
   }
 }
 

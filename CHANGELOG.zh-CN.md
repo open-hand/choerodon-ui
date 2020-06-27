@@ -14,12 +14,13 @@ timeline: true
 - 主版本号：含有破坏性更新和新特性，不在发布周期内。
 
 
-- 🐞 `<pro>Form`: 修复 Form中只有单个的FormVirtualGroup的时候没有label的问题。
-
 ---
 
-
+- 🌟 `configure`: 新增 lovTableProps 属性全局配置。
+- 🐞 `<pro>Form`: 修复 Form中只有单个的FormVirtualGroup的时候没有label的问题。
 - 🐞 `<pro>Table`: 修复了设置mask为false的情况下隐藏modal后body未恢复滚动的问题。
+- 🐞 `<pro>Lov`: 修复当blur的时候触发了 `onChange` 事件的问题。
+- 🐞 `<pro>Lov`: 调整tableProps中selectionMode的优先级为最高.
 
 ## 0.8.65
 
