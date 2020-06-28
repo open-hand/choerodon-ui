@@ -903,7 +903,7 @@ exports[`renders ./components-pro/date-picker/demo/range.md correctly 1`] = `
     style="padding-left:5px;padding-right:5px"
   >
     <span
-      class="c7n-pro-calendar-picker-wrapper c7n-pro-calendar-picker-suffix-button c7n-pro-calendar-picker-range"
+      class="c7n-pro-calendar-picker-wrapper c7n-pro-calendar-picker-disabled c7n-pro-calendar-picker-suffix-button c7n-pro-calendar-picker-range"
     >
       <label>
         <span
@@ -915,6 +915,7 @@ exports[`renders ./components-pro/date-picker/demo/range.md correctly 1`] = `
             <input
               autocomplete="off"
               class="c7n-pro-calendar-picker-range-input"
+              disabled=""
               placeholder=""
               style="left:0"
               type="text"
@@ -922,6 +923,7 @@ exports[`renders ./components-pro/date-picker/demo/range.md correctly 1`] = `
             />
             <input
               class="c7n-pro-calendar-picker-range-start"
+              disabled=""
               placeholder="Start Date"
               readonly=""
               tabindex="-1"
@@ -934,6 +936,7 @@ exports[`renders ./components-pro/date-picker/demo/range.md correctly 1`] = `
             </span>
             <input
               class="c7n-pro-calendar-picker-range-end"
+              disabled=""
               placeholder="End Date"
               readonly=""
               tabindex="-1"
@@ -941,13 +944,6 @@ exports[`renders ./components-pro/date-picker/demo/range.md correctly 1`] = `
             />
           </span>
         </span>
-        <div
-          class="c7n-pro-calendar-picker-inner-button c7n-pro-calendar-picker-clear-button"
-        >
-          <i
-            class="icon icon-close"
-          />
-        </div>
         <div
           class="c7n-pro-calendar-picker-suffix"
         >

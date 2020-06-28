@@ -79,6 +79,7 @@ exports[`renders ./components-pro/text-area/demo/basic.md correctly 1`] = `
           class="c7n-pro-textarea"
           disabled=""
           placeholder="disabled"
+          readonly=""
           rows="4"
           style="resize:none"
           type="text"

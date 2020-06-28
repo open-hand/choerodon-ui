@@ -15,15 +15,19 @@ timeline: true
 
 ---
 
+## 0.8.66
+
+`2020-06-28`
 
 - 🌟 `configure`: Added `lovTableProps` property.
-- 🐞 `<pro>Select`: Fixed ie11 element.scrollTo err .
-- 🐞 `<pro>Table`: Fixed`autoLocateFirst` in table change the page auto locate the first record 。
-- 🐞 `<pro>Select`: Fixed Select restricted support to limit the import 。
-- 🐞 `<pro>Form`: Fix the problem that there is no label when there is only a single FormVirtualGroup in Form.
-- 🐞 `<pro>Table`: Fixed an issue where the body did not resume scrolling after hiding the modal when mask was set to false.
-- 🐞 `<pro>Lov`: Fix the problem that `onChange` event triggered when blur.
-- 🐞 `<pro>Lov`: Adjust the priority of selectionMode in tableProps to the highest.
+- 💄 `Icon`: Updated `Icon` List.
+- 🐞 `<pro>Select`: Fixed IE element.scrollTo err.
+- 🐞 `<pro>Select`: Fixed `Select` restrict support to limit the import.
+- 🐞 `<pro>Lov`: Fixed the problem that `onChange` event triggered when blur.
+- 🐞 `<pro>Lov`: Adjust the priority of `selectionMode` in tableProps to the highest.
+- 🐞 `<pro>Table`: Fixed`autoLocateFirst` in table change the page auto locate the first record.
+- 🐞 `<pro>Table`: Fixed an issue where the body did not resume scrolling after hiding the modal when `mask` was set to false.
+- 🐞 `<pro>Form`: Fixed the problem that there is no label when there is only a single `FormVirtualGroup` in Form.
 
 ## 0.8.65
 
