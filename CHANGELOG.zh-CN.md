@@ -14,9 +14,14 @@ timeline: true
 - 主版本号：含有破坏性更新和新特性，不在发布周期内。
 
 
+<<<<<<< HEAD
+
 ---
 
 - 🌟 `configure`: 新增 lovTableProps 属性全局配置。
+- 🐞 `<pro>Select`: 修复了`Select` 在ie无法使用element.scrollTo 的方法 。
+- 🐞 `<pro>Table`: 修复了`autoLocateFirst` 在table切换页面时候也存在自动定位第一条问题 。
+- 🐞 `<pro>Select`: 修复 Select对于restricted 的效果支持,实现文字输入限制 。
 - 🐞 `<pro>Form`: 修复 Form中只有单个的FormVirtualGroup的时候没有label的问题。
 - 🐞 `<pro>Table`: 修复了设置mask为false的情况下隐藏modal后body未恢复滚动的问题。
 - 🐞 `<pro>Lov`: 修复当blur的时候触发了 `onChange` 事件的问题。

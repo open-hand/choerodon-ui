@@ -8,6 +8,7 @@ const uploadRule = /\/upload/;
 const uploadData = Mock.mock(mockTemple);
 export default function() {
   if (typeof window !== 'undefined') {
+    Mock.setup({timeout:0})
     Mock.mock(uploadRule, mockTemple);
   }
 }

@@ -1402,6 +1402,7 @@ const treeData = Mock.mock(mockTemple);
 const lessTreeData = Mock.mock(lessTreeMock)
 export default function() {
   if (typeof window !== 'undefined') {
+    Mock.setup({timeout:0})
     Mock.mock(treeRule, mockTemple);
     Mock.mock(lessTreeRule,lessTreeMock);
     Mock.mock(asyncRule,asyncTreeMock)
