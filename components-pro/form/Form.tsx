@@ -105,6 +105,10 @@ export interface FormProps extends DataSetComponentProps {
    */
   columns?: ColumnsType;
   /**
+   * 显示原始值
+   */
+  pristine?: boolean;
+  /**
    * 表单头，若提供则同时显示表单头和表单头下方的分隔线
    *
    * @type {string} 暂定为string方便写样式
@@ -238,6 +242,7 @@ export default class Form extends DataSetComponent<FormProps> {
         [ResponsiveKeys.xxl]: PropTypes.number,
       }),
     ]),
+    pristine: PropTypes.bool,
     /**
      * 表单头
      */

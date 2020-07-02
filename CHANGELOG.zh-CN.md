@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🐞 `<pro>Form`: 修复当设置useColon为true,labelLayout为vertical的时候required的字段的label显示不正确的问题.
+- 🐞 `<pro>Form`: 修复在typescript中使用的Form的时候,无法使用pristine属性的问题.
 
 
 ## 0.8.66
