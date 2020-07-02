@@ -15,6 +15,9 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>Form`: Fix the problem that the label of the required field is displayed incorrectly when useColon is true and labelLayout is vertical.
+
+
 ## 0.8.66
 
 `2020-06-28`

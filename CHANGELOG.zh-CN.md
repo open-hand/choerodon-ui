@@ -15,6 +15,9 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>Form`: 修复当设置useColon为true,labelLayout为vertical的时候required的字段的label显示不正确的问题.
+
+
 ## 0.8.66
 
 `2020-06-28`
