@@ -1,0 +1,128 @@
+{
+  "title": {
+    "zh": "中文分类",
+    "en": "Category"
+  },
+  "demos": [
+    {
+      "filename": "basic.js",
+      "title": {
+        "zh": "基本使用",
+        "en": "Basic usage"
+      },
+      "description": {
+        "zh": "基本使用。\n",
+        "en": "Basic usage example.\n"
+      },
+      "order": 0,
+      "screenshot": "",
+      "height": 152,
+      "category": "pro"
+    },
+    {
+      "filename": "controlled.js",
+      "title": {
+        "zh": "受控代码框",
+        "en": "Controlled Code Area"
+      },
+      "description": {
+        "zh": "受控代码框。\n",
+        "en": "Controlled Code Area.\n"
+      },
+      "order": 1,
+      "screenshot": "",
+      "height": 128,
+      "category": "pro"
+    },
+    {
+      "filename": "dataset.js",
+      "title": {
+        "zh": "数据绑定",
+        "en": "Dataset"
+      },
+      "description": {
+        "zh": "数据绑定\n",
+        "en": "Dataset.\n"
+      },
+      "order": 2,
+      "screenshot": "",
+      "height": 648,
+      "category": "pro"
+    },
+    {
+      "filename": "theme.js",
+      "title": {
+        "zh": "主题",
+        "en": "Theme"
+      },
+      "description": {
+        "zh": "使用不同主题。\n",
+        "en": "Using different themes.\n"
+      },
+      "order": 3,
+      "screenshot": "",
+      "height": 647,
+      "category": "pro"
+    },
+    {
+      "filename": "js-format.js",
+      "title": {
+        "zh": "Javascript格式化",
+        "en": "Javascript Format"
+      },
+      "description": {
+        "zh": "使用快捷键格式化代码，要传入一个 formatter 对象。默认的格式化快捷键是`Alt + F`，去格式化快捷键是`Alt + R`，可以通过属性手动配置。\n",
+        "en": "Use hotkey to format code.\n"
+      },
+      "order": 4,
+      "screenshot": "",
+      "height": 617,
+      "category": "pro"
+    },
+    {
+      "filename": "json-format.js",
+      "title": {
+        "zh": "JSON格式化",
+        "en": "JSON Format"
+      },
+      "description": {
+        "zh": "使用快捷键格式化代码，要传入一个 formatter 对象。默认的格式化快捷键是`Alt + F`，去格式化快捷键是`Alt + R`，可以通过属性手动配置。\n",
+        "en": "Use hotkey to format code.\n"
+      },
+      "order": 5,
+      "screenshot": "",
+      "height": 617,
+      "category": "pro"
+    },
+    {
+      "filename": "html-format.js",
+      "title": {
+        "zh": "HTML格式化",
+        "en": "HTML Format"
+      },
+      "description": {
+        "zh": "使用快捷键格式化代码，要传入一个 formatter 对象。默认的格式化快捷键是`Alt + F`，去格式化快捷键是`Alt + R`，可以通过属性手动配置。\n",
+        "en": "Use hotkey to format code.\n"
+      },
+      "order": 6,
+      "screenshot": "",
+      "height": 317,
+      "category": "pro"
+    },
+    {
+      "filename": "yaml-format.js",
+      "title": {
+        "zh": "YAML格式化",
+        "en": "YAML Format"
+      },
+      "description": {
+        "zh": "使用快捷键格式化代码，要传入一个 formatter 对象。默认的格式化快捷键是`Alt + F`，去格式化快捷键是`Alt + R`，可以通过属性手动配置。\n",
+        "en": "Use hotkey to format code.\n"
+      },
+      "order": 7,
+      "screenshot": "",
+      "height": 317,
+      "category": "pro"
+    }
+  ]
+}

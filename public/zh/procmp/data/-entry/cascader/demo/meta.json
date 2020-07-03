@@ -1,0 +1,78 @@
+{
+  "title": {
+    "zh": "中文分类",
+    "en": "Category"
+  },
+  "demos": [
+    {
+      "filename": "basicController.js",
+      "title": {
+        "zh": "基础受控",
+        "en": "controller"
+      },
+      "description": {
+        "zh": "基础受控。\n",
+        "en": "controller\n"
+      },
+      "order": 1,
+      "screenshot": "",
+      "category": "pro"
+    },
+    {
+      "filename": "basic.js",
+      "title": {
+        "zh": "数据源选项",
+        "en": "DataSet Options"
+      },
+      "description": {
+        "zh": "数据源选项。\n",
+        "en": "DataSet Options\n"
+      },
+      "order": 2,
+      "screenshot": "",
+      "category": "pro"
+    },
+    {
+      "filename": "multiple.js",
+      "title": {
+        "zh": "多选",
+        "en": "mutiple"
+      },
+      "description": {
+        "zh": "多选\n",
+        "en": "mutiple\n"
+      },
+      "order": 2,
+      "screenshot": "",
+      "category": "pro"
+    },
+    {
+      "filename": "hover.js",
+      "title": {
+        "zh": "鼠标移动上去触发选择",
+        "en": "hover"
+      },
+      "description": {
+        "zh": "鼠标移动上去触发选择\n",
+        "en": "hover \n"
+      },
+      "order": 3,
+      "screenshot": "",
+      "category": "pro"
+    },
+    {
+      "filename": "disabled.js",
+      "title": {
+        "zh": "选择框禁用",
+        "en": "menu item disabled"
+      },
+      "description": {
+        "zh": "选择框禁用\n",
+        "en": "menu item disabled\n"
+      },
+      "order": 4,
+      "screenshot": "",
+      "category": "pro"
+    }
+  ]
+}

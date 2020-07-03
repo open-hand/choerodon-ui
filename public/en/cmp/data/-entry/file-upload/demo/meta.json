@@ -1,0 +1,120 @@
+{
+  "title": {
+    "zh": "中文分类",
+    "en": "Category"
+  },
+  "demos": [
+    {
+      "filename": "basic.js",
+      "title": {
+        "zh": "点击上传",
+        "en": "Upload by clicking"
+      },
+      "description": {
+        "zh": "经典款式，用户点击按钮弹出文件选择框。\n",
+        "en": "Classic mode. File selection dialog pops up when upload button is clicked.\n"
+      },
+      "order": 0,
+      "height": 123,
+      "screenshot": ""
+    },
+    {
+      "filename": "avatar.js",
+      "title": {
+        "zh": "用户头像",
+        "en": "Avatar"
+      },
+      "description": {
+        "zh": "点击上传用户头像，并使用 `beforeUpload` 限制用户上传的图片格式和大小。\n\n> `beforeUpload` 的返回值可以是一个 Promise 以支持也支持异步检查：[示例](http://react-component.github.io/upload/examples/beforeUpload.html)。\n",
+        "en": "Click to upload user's avatar, and validate size and format of picture with `beforeUpload`.\n\n> The return value of function `beforeUpload` can be a Promise to check asynchronously. [demo](http://react-component.github.io/upload/examples/beforeUpload.html)\n"
+      },
+      "order": 1,
+      "height": 230,
+      "screenshot": ""
+    },
+    {
+      "filename": "defaultFileList.js",
+      "title": {
+        "zh": "已上传的文件列表",
+        "en": "Default Files"
+      },
+      "description": {
+        "zh": "使用 `defaultFileList` 设置已上传的内容。\n",
+        "en": "Use `defaultFileList` for uploaded files when page init.\n"
+      },
+      "order": 2,
+      "height": 213,
+      "screenshot": ""
+    },
+    {
+      "filename": "picture-card.js",
+      "title": {
+        "zh": "照片墙",
+        "en": "Pictures Wall"
+      },
+      "description": {
+        "zh": "用户可以上传图片并在列表中显示缩略图。当上传照片数到达限制后，上传按钮消失。\n",
+        "en": "After users upload picture, the thumbnail will be shown in list. The upload button will disappear when count meets limitation.\n"
+      },
+      "order": 3,
+      "height": 205,
+      "screenshot": ""
+    },
+    {
+      "filename": "fileList.js",
+      "title": {
+        "zh": "完全控制的上传列表",
+        "en": "Complete control over file list"
+      },
+      "description": {
+        "zh": "使用 `fileList` 对列表进行完全控制，可以实现各种自定义功能，以下演示三种情况：\n\n1) 上传列表数量的限制。\n\n2) 读取远程路径并显示链接。\n\n3) 按照服务器返回信息筛选成功上传的文件。\n",
+        "en": "You can gain full control over filelist by configuring `fileList`. You can accomplish all kinds of customed functions. The following shows three circumstances:\n\n1) limit the number of uploaded files.\n\n2) read from response and show file link.\n\n3) filter successfully uploaded files according to response from server.\n"
+      },
+      "order": 4,
+      "height": 150,
+      "screenshot": ""
+    },
+    {
+      "filename": "drag.js",
+      "title": {
+        "zh": "拖拽上传",
+        "en": "Drag and Drop"
+      },
+      "description": {
+        "zh": "把文件拖入指定区域，完成上传，同样支持点击上传。\n\n设置 `multiple` 后，在 `IE10+` 可以一次上传多个文件。\n",
+        "en": "You can drag files to a specific area, to upload. Alternatively, you can also upload by selecting.\n\nWe can upload serveral files at once in modern browsers by giving the input the `multiple` attribute.\n"
+      },
+      "order": 5,
+      "height": 242,
+      "screenshot": ""
+    },
+    {
+      "filename": "picture-style.js",
+      "title": {
+        "zh": "图片列表样式",
+        "en": "Pictures with list style"
+      },
+      "description": {
+        "zh": "上传文件为图片，可展示本地缩略图。`IE8/9` 不支持浏览器本地缩略图展示（[Ref](https://developer.mozilla.org/en-US/docs/Web/API/FileReader/readAsDataURL)），可以写 `thumbUrl` 属性来代替。\n",
+        "en": "If uploaded file is a picture, the thumbnail can be shown. `IE8/9` do not support local thumbnail show. Please use `thumbUrl` instead.\n\n"
+      },
+      "order": 6,
+      "height": 413,
+      "screenshot": ""
+    },
+    {
+      "filename": "upload-manually.js",
+      "title": {
+        "zh": "手动上传",
+        "en": "Upload manually"
+      },
+      "description": {
+        "zh": "`beforeUpload` 返回 `false` 后，手动上传文件。\n",
+        "en": "Upload files manually after `beforeUpload` returns `false`.\n"
+      },
+      "order": 7,
+      "height": 169,
+      "screenshot": ""
+    }
+  ]
+}

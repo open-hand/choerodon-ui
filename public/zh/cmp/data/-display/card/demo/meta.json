@@ -1,0 +1,148 @@
+{
+  "title": {
+    "zh": "中文分类",
+    "en": "Category"
+  },
+  "demos": [
+    {
+      "filename": "basic.js",
+      "title": {
+        "zh": "典型卡片",
+        "en": "Basic card"
+      },
+      "description": {
+        "zh": "包含标题、内容、操作区域。\n",
+        "en": "A basic card containing a title, content and an extra corner content.\n"
+      },
+      "order": 0,
+      "height": 256,
+      "screenshot": ""
+    },
+    {
+      "filename": "simple.js",
+      "title": {
+        "zh": "简洁卡片",
+        "en": "Simple card"
+      },
+      "description": {
+        "zh": "只包含内容区域。\n",
+        "en": "A simple card only containing a content area.\n"
+      },
+      "order": 2,
+      "height": 200,
+      "screenshot": ""
+    },
+    {
+      "filename": "flexible-content.js",
+      "title": {
+        "zh": "更灵活的内容展示",
+        "en": "Customized content"
+      },
+      "description": {
+        "zh": "可以利用 `Card.Meta` 支持更灵活的内容。\n",
+        "en": "You can use `Card.Meta` to support more flexible content.\n"
+      },
+      "order": 3,
+      "height": 480,
+      "screenshot": ""
+    },
+    {
+      "filename": "in-column.js",
+      "title": {
+        "zh": "栅格卡片",
+        "en": "Card in column"
+      },
+      "description": {
+        "zh": "在系统概览页面常常和栅格进行配合。\n",
+        "en": "Cards usually cooperate with grid column layout in overview page.\n"
+      },
+      "order": 4,
+      "height": 276,
+      "screenshot": ""
+    },
+    {
+      "filename": "loading.js",
+      "title": {
+        "zh": "预加载的卡片",
+        "en": "Loading card"
+      },
+      "description": {
+        "zh": "数据读入前会有文本块样式。\n",
+        "en": "Shows a loading indicator while the contents of the card is being fetched.\n"
+      },
+      "order": 5,
+      "height": 314,
+      "screenshot": ""
+    },
+    {
+      "filename": "grid-card.js",
+      "title": {
+        "zh": "网格型内嵌卡片",
+        "en": "Grid card"
+      },
+      "description": {
+        "zh": "一种常见的卡片内容区隔模式。\n",
+        "en": "Grid style card content.\n"
+      },
+      "order": 6,
+      "height": 333,
+      "screenshot": ""
+    },
+    {
+      "filename": "inner.js",
+      "title": {
+        "zh": "内部卡片",
+        "en": "Inner card"
+      },
+      "description": {
+        "zh": "可以放在普通卡片内部，展示多层级结构的信息。\n",
+        "en": "It can be placed inside the ordinary card to display the information of the multilevel structure.\n"
+      },
+      "order": 7,
+      "height": 452,
+      "screenshot": ""
+    },
+    {
+      "filename": "tabs.js",
+      "title": {
+        "zh": "带页签的卡片",
+        "en": "With tabs"
+      },
+      "description": {
+        "zh": "可承载更多内容。\n",
+        "en": "More content can be hosted.\n"
+      },
+      "order": 8,
+      "height": 417,
+      "screenshot": ""
+    },
+    {
+      "filename": "meta.js",
+      "title": {
+        "zh": "支持更多内容配置",
+        "en": "Support more content configuration"
+      },
+      "description": {
+        "zh": "一种支持封面、头像、标题和描述信息的卡片。\n",
+        "en": "A Card that supports `cover`, `avatar`, `title` and `description`.\n"
+      },
+      "order": 9,
+      "height": 414,
+      "screenshot": ""
+    },
+    {
+      "filename": "border-less.js",
+      "title": {
+        "zh": "无边框",
+        "en": "No border"
+      },
+      "description": {
+        "zh": "在灰色背景上使用无边框的卡片。\n",
+        "en": "A borderless card on a gray background.\n"
+      },
+      "order": 1,
+      "height": 314,
+      "screenshot": ""
+    }
+  ]
+}

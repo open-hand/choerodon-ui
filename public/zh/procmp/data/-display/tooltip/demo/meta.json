@@ -1,0 +1,83 @@
+{
+  "title": {
+    "zh": "中文分类",
+    "en": "Category"
+  },
+  "demos": [
+    {
+      "filename": "basic.js",
+      "title": {
+        "zh": "基本",
+        "en": "Basic"
+      },
+      "description": {
+        "zh": "最简单的用法。\n",
+        "en": "The simplest usage.\n"
+      },
+      "order": 0,
+      "screenshot": "",
+      "height": 112,
+      "category": "pro"
+    },
+    {
+      "filename": "placement.js",
+      "title": {
+        "zh": "位置",
+        "en": "Placement"
+      },
+      "description": {
+        "zh": "位置有 12 个方向。\n\n目前``left和top类的位置有首次渲染错位的bug，right和bottom可以正常使用。`\n`",
+        "en": "The ToolTip has 12 placements choice.\n"
+      },
+      "order": 1,
+      "screenshot": "",
+      "height": 283,
+      "category": "pro"
+    },
+    {
+      "filename": "arrow-point-at-center.js",
+      "title": {
+        "zh": "箭头指向",
+        "en": "Arrow pointing at the center"
+      },
+      "description": {
+        "zh": "设置了 `arrowPointAtCenter` 后，箭头将指向目标元素的中心。\n",
+        "en": "By specifying `arrowPointAtCenter` prop, the arrow will point to the center of the target element.\n"
+      },
+      "order": 2,
+      "screenshot": "",
+      "height": 131,
+      "category": "pro"
+    },
+    {
+      "filename": "under-control.js",
+      "title": {
+        "zh": "受控",
+        "en": "Under control"
+      },
+      "description": {
+        "zh": "通过`hidden`属性控制Tooltip的行为。\n\n设置`hidden`属性后，将不再监听鼠标悬浮等事件，`Tooltip`的显示与否完全取决于`hidden`属性。此特性可用于编程控制错误信息的显示。\n",
+        "en": "Control a Tooltip's behavior via setting `hidden` property.\n\nAfter defining `hidden` property, the `Tooltip` component won't listen to regular events like mouse hover. The visibility of the `Tooltip` depends entirely on the `hidden` property. This feature can be used for displaying error message programatically.\n"
+      },
+      "order": 4,
+      "screenshot": "",
+      "height": 131,
+      "category": "pro"
+    },
+    {
+      "filename": "theme.js",
+      "title": {
+        "zh": "主题",
+        "en": "Theme"
+      },
+      "description": {
+        "zh": "通过`theme`属性控制Tooltip的主题颜色。\n\n显示红色错误信息时，建议使用亮色主题。\n",
+        "en": "Control a Tooltip's theme color via setting `theme` property.\n\nWhen dealing with red error message, light theme is recommended.\n"
+      },
+      "order": 5,
+      "screenshot": "",
+      "height": 131,
+      "category": "pro"
+    }
+  ]
+}

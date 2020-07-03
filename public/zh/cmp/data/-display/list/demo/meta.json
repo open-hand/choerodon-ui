@@ -1,0 +1,92 @@
+{
+  "title": {
+    "zh": "中文分类",
+    "en": "Category"
+  },
+  "demos": [
+    {
+      "filename": "simple.js",
+      "title": {
+        "zh": "简单列表",
+        "en": "Simple list"
+      },
+      "description": {
+        "zh": "列表拥有大、中、小三种尺寸。\n\n通过设置 `size` 为 `large` `small` 分别把按钮设为大、小尺寸。若不设置 `size`，则尺寸为中。\n\n可通过设置 `header` 和 `footer`，来自定义列表头部和尾部。\n",
+        "en": "Choerodon UI supports a default list size as well as a large and small size.\n\nIf a large or small list is desired, set the size property to either large or small respectively. Omit the size property for a list with the default size.\n\nCustomizing the header and footer of list by setting `header` and `footer` property.\n"
+      },
+      "order": 0,
+      "height": 1166,
+      "screenshot": ""
+    },
+    {
+      "filename": "basic.js",
+      "title": {
+        "zh": "基础列表",
+        "en": "Basic list"
+      },
+      "description": {
+        "zh": "基础列表。\n",
+        "en": "Basic list.\n"
+      },
+      "order": 1,
+      "height": 384,
+      "screenshot": ""
+    },
+    {
+      "filename": "loadmore.js",
+      "title": {
+        "zh": "加载更多",
+        "en": "Load more"
+      },
+      "description": {
+        "zh": "可通过 `loadMore` 属性实现加载更多功能。\n",
+        "en": "Load more list with `loadMore` property.\n"
+      },
+      "order": 2,
+      "height": 502,
+      "screenshot": ""
+    },
+    {
+      "filename": "vertical.js",
+      "title": {
+        "zh": "竖排列表样式",
+        "en": "Vertical"
+      },
+      "description": {
+        "zh": "通过设置 `itemLayout` 属性为 `vertical` 可实现竖排列表样式。\n",
+        "en": "Setting `itemLayout` property with `vertical` to create a vertical list.\n"
+      },
+      "order": 3,
+      "height": 1154,
+      "screenshot": ""
+    },
+    {
+      "filename": "grid.js",
+      "title": {
+        "zh": "栅格列表",
+        "en": "Grid"
+      },
+      "description": {
+        "zh": "可以通过设置 `List` 的 `grid` 属性来实现栅格列表，`column` 可设置期望显示的列数。\n",
+        "en": "Creating a grid list by setting the `grid` property of List\n"
+      },
+      "order": 4,
+      "height": 238,
+      "screenshot": ""
+    },
+    {
+      "filename": "resposive.js",
+      "title": {
+        "zh": "响应式的栅格列表",
+        "en": "Responsive grid list"
+      },
+      "description": {
+        "zh": "响应式的栅格列表。尺寸与 [Layout Grid](/components/grid-cn/#Col) 保持一致。\n",
+        "en": "Responsive grid list. The size property is as same as [Layout Grid](/components/grid/#Col).\n"
+      },
+      "order": 5,
+      "height": 383,
+      "screenshot": ""
+    }
+  ]
+}

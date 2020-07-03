@@ -1,0 +1,66 @@
+{
+  "title": {
+    "zh": "中文分类",
+    "en": "Category"
+  },
+  "demos": [
+    {
+      "filename": "basic.js",
+      "title": {
+        "zh": "基本使用",
+        "en": "Basic usage"
+      },
+      "description": {
+        "zh": "基本使用。\n",
+        "en": "Basic usage example.\n"
+      },
+      "order": 0,
+      "screenshot": "",
+      "height": 177,
+      "category": "pro"
+    },
+    {
+      "filename": "controlled.js",
+      "title": {
+        "zh": "受控货币输入框",
+        "en": "Controlled Currency"
+      },
+      "description": {
+        "zh": "受控货币输入框\n",
+        "en": "Controlled Currency\n"
+      },
+      "order": 1,
+      "screenshot": "",
+      "category": "pro"
+    },
+    {
+      "filename": "dataset.js",
+      "title": {
+        "zh": "数据源",
+        "en": "DataSet"
+      },
+      "description": {
+        "zh": "绑定数据源。\n",
+        "en": "DataSet binding.\n"
+      },
+      "order": 2,
+      "screenshot": "",
+      "category": "pro"
+    },
+    {
+      "filename": "precision.js",
+      "title": {
+        "zh": "精度控制",
+        "en": "Precision"
+      },
+      "description": {
+        "zh": "根据字段值，控制值显示及精度。\n",
+        "en": "Control value display and accuracy according to field value.\n\n"
+      },
+      "order": 3,
+      "screenshot": "",
+      "height": 177,
+      "category": "pro"
+    }
+  ]
+}

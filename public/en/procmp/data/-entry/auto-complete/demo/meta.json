@@ -1,0 +1,53 @@
+{
+  "title": {
+    "zh": "中文分类",
+    "en": "Category"
+  },
+  "demos": [
+    {
+      "filename": "basic.js",
+      "title": {
+        "zh": "基本使用",
+        "en": "Basic usage"
+      },
+      "description": {
+        "zh": "基本使用。\n",
+        "en": "Basic usage example.\n"
+      },
+      "order": 0,
+      "screenshot": "",
+      "height": 123,
+      "category": "pro"
+    },
+    {
+      "filename": "dataSet.js",
+      "title": {
+        "zh": "绑定数据源",
+        "en": "Basic usage"
+      },
+      "description": {
+        "zh": "绑定数据源\n",
+        "en": "Basic usage example.\n"
+      },
+      "order": 0,
+      "screenshot": "",
+      "height": 123,
+      "category": "pro"
+    },
+    {
+      "filename": "dynamicOption.js",
+      "title": {
+        "zh": "动态选项",
+        "en": "Dynamic Option"
+      },
+      "description": {
+        "zh": "动态选项。\n",
+        "en": "Dynamic Option.\n"
+      },
+      "order": 0,
+      "screenshot": "",
+      "height": 123,
+      "category": "pro"
+    }
+  ]
+}

@@ -1,0 +1,293 @@
+{
+  "title": {
+    "zh": "中文分类",
+    "en": "Category"
+  },
+  "demos": [
+    {
+      "filename": "basic.js",
+      "title": {
+        "zh": "基本",
+        "en": "Basic"
+      },
+      "description": {
+        "zh": "最简单的用法。\n",
+        "en": "The most basic usage.\n"
+      },
+      "order": 0,
+      "screenshot": "",
+      "height": 630,
+      "category": "pro"
+    },
+    {
+      "filename": "cascade.js",
+      "title": {
+        "zh": "级联",
+        "en": "Cascade"
+      },
+      "description": {
+        "zh": "级联。\n",
+        "en": "Cascade.\n"
+      },
+      "order": 1,
+      "screenshot": "",
+      "height": 730,
+      "category": "pro"
+    },
+    {
+      "filename": "pristine.js",
+      "title": {
+        "zh": "显示原始值",
+        "en": "Pristine"
+      },
+      "description": {
+        "zh": "显示原始值。\n",
+        "en": "Pristine.\n"
+      },
+      "order": 2,
+      "screenshot": "",
+      "height": 374,
+      "category": "pro"
+    },
+    {
+      "filename": "inline-edit.js",
+      "title": {
+        "zh": "行内编辑",
+        "en": "Inline Edit"
+      },
+      "description": {
+        "zh": "行内编辑。\n",
+        "en": "Inline Edit.\n"
+      },
+      "order": 3,
+      "screenshot": "",
+      "height": 374,
+      "category": "pro"
+    },
+    {
+      "filename": "tree.js",
+      "title": {
+        "zh": "树形数据",
+        "en": "Tree Data"
+      },
+      "description": {
+        "zh": "树形数据。\n",
+        "en": "Tree Data.\n"
+      },
+      "order": 4,
+      "screenshot": "",
+      "height": 497,
+      "category": "pro"
+    },
+    {
+      "filename": "column-group.js",
+      "title": {
+        "zh": "组合列",
+        "en": "Grouped Columns"
+      },
+      "description": {
+        "zh": "组合列。\n",
+        "en": "Grouped Columns.\n"
+      },
+      "order": 5,
+      "screenshot": "",
+      "height": 440,
+      "category": "pro"
+    },
+    {
+      "filename": "advanced-bar.js",
+      "title": {
+        "zh": "高级搜索条",
+        "en": "Advanced Search Bar"
+      },
+      "description": {
+        "zh": "高级搜索条。\n",
+        "en": "Advanced Search Bar.\n"
+      },
+      "order": 6,
+      "screenshot": "",
+      "height": 430,
+      "category": "pro"
+    },
+    {
+      "filename": "filterbar.js",
+      "title": {
+        "zh": "过滤条",
+        "en": "Filter Bar"
+      },
+      "description": {
+        "zh": "过滤条。\n",
+        "en": "Filter Bar.\n"
+      },
+      "order": 7,
+      "screenshot": "",
+      "height": 478,
+      "category": "pro"
+    },
+    {
+      "filename": "custom-bar.js",
+      "title": {
+        "zh": "自定义搜索条",
+        "en": "Customize Search Bar"
+      },
+      "description": {
+        "zh": "自定义搜索条。\n",
+        "en": "Customize Search Bar.\n"
+      },
+      "order": 8,
+      "screenshot": "",
+      "height": 525,
+      "category": "pro"
+    },
+    {
+      "filename": "query-dataset.js",
+      "title": {
+        "zh": "自定义查询 DataSet",
+        "en": "Customize Query DataSet"
+      },
+      "description": {
+        "zh": "自定义查询 DataSet。\n",
+        "en": "Customize Query DataSet.\n"
+      },
+      "order": 9,
+      "screenshot": "",
+      "height": 375,
+      "category": "pro"
+    },
+    {
+      "filename": "custom-inline.js",
+      "title": {
+        "zh": "自定义行内编辑",
+        "en": "Custom inline"
+      },
+      "description": {
+        "zh": "自定义行内编辑\n",
+        "en": "Custom inline.\n"
+      },
+      "order": 10,
+      "screenshot": "",
+      "height": 375,
+      "category": "pro"
+    },
+    {
+      "filename": "spin.js",
+      "title": {
+        "zh": "Spin 受控",
+        "en": "Spin"
+      },
+      "description": {
+        "zh": "Table Spin 受控。\n",
+        "en": "Table Spin.\n"
+      },
+      "order": 11,
+      "screenshot": "",
+      "height": 375,
+      "category": "pro"
+    },
+    {
+      "filename": "tree-async.js",
+      "title": {
+        "zh": "树形数据异步懒加载",
+        "en": "Tree Data"
+      },
+      "description": {
+        "zh": "异步懒加载实现\n",
+        "en": "Asynchronous lazy loading implementation, concerns: 1.icon rendering problem, 2.onExpand event trigger\n"
+      },
+      "order": 12,
+      "screenshot": "",
+      "height": 435,
+      "category": "pro"
+    },
+    {
+      "filename": "virtual.js",
+      "title": {
+        "zh": "虚拟滚动",
+        "en": "Virtual Scroll"
+      },
+      "description": {
+        "zh": "虚拟滚动，virtual 配合 height 使用。\n\n当前版本还有一些问题，拖动滚动不顺滑等，非必需情况（大数据需求并同时对功能性需求很高）下使用建议不使用。\n\n后续会不断完善此功能，感谢理解。\n",
+        "en": "Virtual Scroll.\n"
+      },
+      "order": 13,
+      "screenshot": "",
+      "height": 438,
+      "category": "pro"
+    },
+    {
+      "filename": "mobx-action.js",
+      "title": {
+        "zh": "按钮受控",
+        "en": "Button controlled"
+      },
+      "description": {
+        "zh": "结合 mobx 处理一些按钮状态控制。\n",
+        "en": "Combined with mobx to handle some button state control.\n"
+      },
+      "order": 14,
+      "screenshot": "",
+      "height": 375,
+      "category": "pro"
+    },
+    {
+      "filename": "dynamic-editor.js",
+      "title": {
+        "zh": "切换字段编辑器",
+        "en": "Switch editor"
+      },
+      "description": {
+        "zh": "切换字段编辑器，根据其他字段值决定为 lov / select.\n",
+        "en": "Switch field editor to lov /select. based on other field values.\n"
+      },
+      "order": 15,
+      "screenshot": "",
+      "height": 240,
+      "category": "pro"
+    },
+    {
+      "filename": "tree-async-paging.js",
+      "title": {
+        "zh": "树形数据异步分页",
+        "en": "Tree Data"
+      },
+      "description": {
+        "zh": "异步懒加载实现，加父亲节点分页\n",
+        "en": "Asynchronous lazy loading implementation, concerns: 1.icon rendering problem, 2.onExpand event trigger，parent paging\n"
+      },
+      "order": 16,
+      "screenshot": "",
+      "height": 435,
+      "category": "pro"
+    },
+    {
+      "filename": "autoHeight.js",
+      "title": {
+        "zh": "自适应高度",
+        "en": "AutoHeight"
+      },
+      "description": {
+        "zh": "自适应高度(需要父级元素非仅由 Table 撑开)。\n\nautoHeight:\n\n| 类型 | —— | 默认值 / 自定义 |\n| --- | --- |  --- |\n| boolean |  | false |\n| boolean |  | true = { type: 'minHeight', diff: 80 } |\n| object |  | { type: 'minHeight' \\| 'maxHeight', diff: number(Table 自适应底部预留调整参数) } |\n",
+        "en": "AutoHeight.\n"
+      },
+      "order": 17,
+      "screenshot": "",
+      "height": 593,
+      "category": "pro"
+    },
+    {
+      "filename": "useMouseBatchChoose.js",
+      "title": {
+        "zh": "鼠标批量选择",
+        "en": "useMouseBatchChoose"
+      },
+      "description": {
+        "zh": "点击开始的rowbox,将鼠标移动到结束的rowbox上,对两个rowbox之间的选项进行选中。\n",
+        "en": "Click the starting rowbox, move the mouse to the ending rowbox, and select the options between the two rowboxes.\n"
+      },
+      "order": 18,
+      "screenshot": "",
+      "height": 630,
+      "category": "pro"
+    }
+  ]
+}

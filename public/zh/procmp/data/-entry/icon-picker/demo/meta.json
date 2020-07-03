@@ -1,0 +1,50 @@
+{
+  "title": {
+    "zh": "中文分类",
+    "en": "Category"
+  },
+  "demos": [
+    {
+      "filename": "basic.js",
+      "title": {
+        "zh": "基本使用",
+        "en": "Basic Usage"
+      },
+      "description": {
+        "zh": "图标选择器。\n",
+        "en": "Icon Picker.\n"
+      },
+      "order": 0,
+      "screenshot": "",
+      "category": "pro"
+    },
+    {
+      "filename": "controlled.js",
+      "title": {
+        "zh": "受控图标选择器",
+        "en": "Controlled Icon Picker"
+      },
+      "description": {
+        "zh": "受控图标选择器\n",
+        "en": "Controlled Icon Picker\n"
+      },
+      "order": 1,
+      "screenshot": "",
+      "category": "pro"
+    },
+    {
+      "filename": "dataset.js",
+      "title": {
+        "zh": "数据源",
+        "en": "DataSet"
+      },
+      "description": {
+        "zh": "绑定数据源。\n",
+        "en": "DataSet binding.\n"
+      },
+      "order": 2,
+      "screenshot": "",
+      "category": "pro"
+    }
+  ]
+}
