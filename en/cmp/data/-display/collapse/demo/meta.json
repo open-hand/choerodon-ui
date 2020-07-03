@@ -1,0 +1,92 @@
+{
+  "title": {
+    "zh": "中文分类",
+    "en": "Category"
+  },
+  "demos": [
+    {
+      "filename": "basic.js",
+      "title": {
+        "zh": "折叠面板",
+        "en": "Collapse"
+      },
+      "description": {
+        "zh": "可以同时展开多个面板，这个例子默认展开了第一个。\n",
+        "en": "More than one panel can be expanded at a time, the first panel is initialized to be active in this case.\n"
+      },
+      "order": 0,
+      "height": 287,
+      "screenshot": ""
+    },
+    {
+      "filename": "accordion.js",
+      "title": {
+        "zh": "手风琴",
+        "en": "Accordion"
+      },
+      "description": {
+        "zh": "手风琴，每次只打开一个 tab。默认打开第一个。\n",
+        "en": "Accordion mode, only one panel can be expanded at a time. The first panel will be expanded by default.\n"
+      },
+      "order": 1,
+      "height": 235,
+      "screenshot": ""
+    },
+    {
+      "filename": "mix.js",
+      "title": {
+        "zh": "面板嵌套",
+        "en": "Nested panel"
+      },
+      "description": {
+        "zh": "嵌套折叠面板。\n",
+        "en": "`Collapse` is nested inside the `Collapse`.\n"
+      },
+      "order": 2,
+      "height": 235,
+      "screenshot": ""
+    },
+    {
+      "filename": "custom.js",
+      "title": {
+        "zh": "自定义面板",
+        "en": "Custom Panel"
+      },
+      "description": {
+        "zh": "自定义各个面板的背景色、圆角和边距。\n",
+        "en": "Customize the background, border and margin styles for each panel.\n"
+      },
+      "order": 3,
+      "height": 342,
+      "screenshot": ""
+    },
+    {
+      "filename": "noarrow.js",
+      "title": {
+        "zh": "隐藏箭头",
+        "en": "No arrow"
+      },
+      "description": {
+        "zh": "你可以通过 `showArrow={false}` 隐藏 `CollapsePanel` 组件的箭头图标。\n",
+        "en": "You can disable showing arrow icon by passing `showArrow={false}` to `CollapsePanel` component.\n"
+      },
+      "order": 4,
+      "height": 240,
+      "screenshot": ""
+    },
+    {
+      "filename": "borderless.js",
+      "title": {
+        "zh": "简洁风格",
+        "en": "Borderless"
+      },
+      "description": {
+        "zh": "一套没有边框的简洁样式。\n",
+        "en": "A borderless style of Collapse.\n"
+      },
+      "order": 5,
+      "height": 273,
+      "screenshot": ""
+    }
+  ]
+}

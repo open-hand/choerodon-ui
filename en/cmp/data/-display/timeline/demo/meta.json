@@ -1,0 +1,64 @@
+{
+  "title": {
+    "zh": "中文分类",
+    "en": "Category"
+  },
+  "demos": [
+    {
+      "filename": "basic.js",
+      "title": {
+        "zh": "基本用法",
+        "en": "Basic"
+      },
+      "description": {
+        "zh": "基本的时间轴。\n",
+        "en": "Basic timeline.\n"
+      },
+      "order": 0,
+      "height": 278,
+      "screenshot": ""
+    },
+    {
+      "filename": "color.js",
+      "title": {
+        "zh": "圆圈颜色",
+        "en": "Color"
+      },
+      "description": {
+        "zh": "圆圈颜色，绿色用于已完成、成功状态，红色表示告警或错误状态，蓝色可表示正在进行或其他默认状态。\n",
+        "en": "Set the color of circles. `green` means completed or success status, `red` means warning or error, and `blue` means ongoing or other default status.\n"
+      },
+      "order": 1,
+      "height": 325,
+      "screenshot": ""
+    },
+    {
+      "filename": "pending.js",
+      "title": {
+        "zh": "最后一个",
+        "en": "Last node"
+      },
+      "description": {
+        "zh": "当任务状态正在发生，还在记录过程中，可用幽灵节点来表示当前的时间节点（用于时间正序排列）。当 pending 值为 false ，可用定制元件替换默认时间图点。\n",
+        "en": "When the timeline is incomplete and ongoing, put a ghost node at last. set `pending={true}` or `pending={a React Element}`. Used in ascend chronological order. When `pending` is not false, set `pendingDot={a React Element}` to replace the default pending dot.\n"
+      },
+      "order": 2,
+      "height": 278,
+      "screenshot": ""
+    },
+    {
+      "filename": "custom.js",
+      "title": {
+        "zh": "自定义时间轴点",
+        "en": "Custom"
+      },
+      "description": {
+        "zh": "可以设置为图标或其他自定义元素。\n",
+        "en": "Set a node as an icon or other custom element.\n"
+      },
+      "order": 4,
+      "height": 278,
+      "screenshot": ""
+    }
+  ]
+}

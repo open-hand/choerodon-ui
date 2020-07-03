@@ -1,0 +1,64 @@
+{
+  "title": {
+    "zh": "中文分类",
+    "en": "Category"
+  },
+  "demos": [
+    {
+      "filename": "basic.js",
+      "title": {
+        "zh": "基本",
+        "en": "Basic"
+      },
+      "description": {
+        "zh": "一个通用的日历面板，支持年/月切换。\n",
+        "en": "A basic calendar component with Year/Month switch.\n"
+      },
+      "order": 0,
+      "height": 886,
+      "screenshot": ""
+    },
+    {
+      "filename": "notice-calendar.js",
+      "title": {
+        "zh": "通知事项日历",
+        "en": "Notice Calendar"
+      },
+      "description": {
+        "zh": "一个复杂的应用示例，用 `dateCellRender` 和 `monthCellRender` 函数来自定义需要渲染的数据。\n",
+        "en": "This component can be rendered by using `dateCellRender` and `monthCellRender` with the data you need.\n"
+      },
+      "order": 1,
+      "height": 886,
+      "screenshot": ""
+    },
+    {
+      "filename": "card.js",
+      "title": {
+        "zh": "卡片模式",
+        "en": "Card"
+      },
+      "description": {
+        "zh": "用于嵌套在空间有限的容器中。\n",
+        "en": "Nested inside a container element for rendering in limited space.\n"
+      },
+      "order": 2,
+      "height": 415,
+      "screenshot": ""
+    },
+    {
+      "filename": "select.js",
+      "title": {
+        "zh": "选择功能",
+        "en": "Selectable Calendar"
+      },
+      "description": {
+        "zh": "一个通用的日历面板，支持年/月切换。\n",
+        "en": "A basic calendar component with Year/Month switch.\n"
+      },
+      "order": 3,
+      "height": 923,
+      "screenshot": ""
+    }
+  ]
+}

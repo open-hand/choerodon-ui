@@ -1,0 +1,74 @@
+{
+  "title": {
+    "zh": "中文分类",
+    "en": "Category"
+  },
+  "demos": [
+    {
+      "filename": "basic.js",
+      "title": {
+        "zh": "基本",
+        "en": "Basic"
+      },
+      "description": {
+        "zh": "基本标签的用法，可以通过添加 `closable` 变为可关闭标签。可关闭标签具有 `onClose` `afterClose` 两个事件。\n",
+        "en": "Usage of basic Tag, and it could be closable by set `closable` property. Closable Tag supports `onClose` `afterClose` events.\n"
+      },
+      "order": 0,
+      "screenshot": ""
+    },
+    {
+      "filename": "colorful.js",
+      "title": {
+        "zh": "多彩标签",
+        "en": "Colorful Tag"
+      },
+      "description": {
+        "zh": "我们添加了多种预设色彩的标签样式，用作不同场景使用。如果预设值不能满足你的需求，可以设置为具体的色值。\n",
+        "en": "We preset a series of colorful tag style for different situation usage.\nAnd you can always set it to a hex color string for custom color.\n"
+      },
+      "order": 1,
+      "height": 269,
+      "screenshot": ""
+    },
+    {
+      "filename": "control.js",
+      "title": {
+        "zh": "动态添加和删除",
+        "en": "Add & Remove Dynamically"
+      },
+      "description": {
+        "zh": "用数组生成一组标签，可以动态添加和删除，通过监听删除动画结束的事件 `afterClose` 实现。\n",
+        "en": "Generating a set of Tags by array, you can add and remove dynamically.\nIt's based on `afterClose` event, which will be triggered while the close animation end.\n"
+      },
+      "order": 2,
+      "screenshot": ""
+    },
+    {
+      "filename": "checkable.js",
+      "title": {
+        "zh": "可选择",
+        "en": "Checkable"
+      },
+      "description": {
+        "zh": "可通过 `CheckableTag` 实现类似 Checkbox 的效果，点击切换选中效果。\n\n> 该组件为完全受控组件，不支持非受控用法。\n",
+        "en": "`CheckableTag` works like Checkbox, click it to toggle checked state.\n\n> it is an absolute controlled component and has no uncontrolled mode.\n"
+      },
+      "order": 3,
+      "screenshot": ""
+    },
+    {
+      "filename": "hot-tags.js",
+      "title": {
+        "zh": "热门标签",
+        "en": "Hot Tags"
+      },
+      "description": {
+        "zh": "选择你感兴趣的话题。\n",
+        "en": "Select your favourite topics.\n"
+      },
+      "order": 4,
+      "screenshot": ""
+    }
+  ]
+}
