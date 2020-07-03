@@ -1,0 +1,218 @@
+{
+  "title": {
+    "zh": "中文分类",
+    "en": "Category"
+  },
+  "demos": [
+    {
+      "filename": "basic.js",
+      "title": {
+        "zh": "基本使用",
+        "en": "Basic Usage"
+      },
+      "description": {
+        "zh": "表单。\n",
+        "en": "Form.\n"
+      },
+      "order": 0,
+      "screenshot": "",
+      "height": 648,
+      "category": "pro"
+    },
+    {
+      "filename": "use-colon.js",
+      "title": {
+        "zh": "设置冒号模式",
+        "en": "Use Colon"
+      },
+      "description": {
+        "zh": "设置冒号模式\n",
+        "en": "Use Colon\n"
+      },
+      "order": 0,
+      "screenshot": "",
+      "height": 648,
+      "category": "pro"
+    },
+    {
+      "filename": "dataset.js",
+      "title": {
+        "zh": "数据源",
+        "en": "DataSet"
+      },
+      "description": {
+        "zh": "表单绑定数据源。\n",
+        "en": "Bind DataSet.\n"
+      },
+      "order": 1,
+      "screenshot": "",
+      "height": 727,
+      "category": "pro"
+    },
+    {
+      "filename": "record.js",
+      "title": {
+        "zh": "数据源记录",
+        "en": "Record"
+      },
+      "description": {
+        "zh": "表单绑定数据源某条记录。\n",
+        "en": "Bind Record.\n"
+      },
+      "order": 2,
+      "screenshot": "",
+      "height": 679,
+      "category": "pro"
+    },
+    {
+      "filename": "layout.js",
+      "title": {
+        "zh": "布局",
+        "en": "Layout"
+      },
+      "description": {
+        "zh": "布局。\n",
+        "en": "Layout.\n"
+      },
+      "order": 3,
+      "screenshot": "",
+      "height": 462,
+      "category": "pro"
+    },
+    {
+      "filename": "layout-vertical.js",
+      "title": {
+        "zh": "垂直布局",
+        "en": "Vertical Layout"
+      },
+      "description": {
+        "zh": "垂直布局。\n",
+        "en": "Vertical Layout.\n"
+      },
+      "order": 4,
+      "screenshot": "",
+      "height": 595,
+      "category": "pro"
+    },
+    {
+      "filename": "placeholder.js",
+      "title": {
+        "zh": "占位符显示标签",
+        "en": "Placeholder Label"
+      },
+      "description": {
+        "zh": "占位符显示标签。\n",
+        "en": "Placeholder Label.\n"
+      },
+      "order": 5,
+      "screenshot": "",
+      "height": 462,
+      "category": "pro"
+    },
+    {
+      "filename": "float-label.js",
+      "title": {
+        "zh": "浮动标签",
+        "en": "Float Label"
+      },
+      "description": {
+        "zh": "浮动标签。\n",
+        "en": "Float Label.\n"
+      },
+      "order": 6,
+      "screenshot": "",
+      "height": 644,
+      "category": "pro"
+    },
+    {
+      "filename": "header.js",
+      "title": {
+        "zh": "表单头",
+        "en": "Form Header"
+      },
+      "description": {
+        "zh": "表单头。\n",
+        "en": "Form Header.\n"
+      },
+      "order": 7,
+      "screenshot": "",
+      "height": 642,
+      "category": "pro"
+    },
+    {
+      "filename": "responsive.js",
+      "title": {
+        "zh": "响应式",
+        "en": "Responsive"
+      },
+      "description": {
+        "zh": "响应式。\n",
+        "en": "Responsive.\n"
+      },
+      "order": 8,
+      "screenshot": "",
+      "height": 269,
+      "category": "pro"
+    },
+    {
+      "filename": "disabled.js",
+      "title": {
+        "zh": "禁用",
+        "en": "Disabled"
+      },
+      "description": {
+        "zh": "表单。\n",
+        "en": "Form.\n"
+      },
+      "order": 9,
+      "screenshot": "",
+      "height": 668,
+      "category": "pro"
+    },
+    {
+      "filename": "pristine.js",
+      "title": {
+        "zh": "显示原始值",
+        "en": "Show Pristine Value"
+      },
+      "description": {
+        "zh": "显示原始值。\n",
+        "en": "Show Pristine Value.\n"
+      },
+      "order": 9,
+      "screenshot": "",
+      "height": 727,
+      "category": "pro"
+    },
+    {
+      "filename": "float-label copy.js",
+      "title": {
+        "zh": "Modal中使用浮动标签",
+        "en": "Float Label in a Modal"
+      },
+      "description": {
+        "zh": "Modal中使用浮动标签Form。\n",
+        "en": "Float Label in a Modal.\n"
+      },
+      "order": 10,
+      "screenshot": "",
+      "height": 123,
+      "category": "pro"
+    },
+    {
+      "filename": "virtualGroup.js",
+      "title": {
+        "zh": "虚拟分组",
+        "en": "virtualGroup"
+      },
+      "description": {
+        "zh": "虚拟分组\n",
+        "en": "virtualGroup\n"
+      },
+      "order": 13,
+      "screenshot": "",
+      "height": 443,
+      "category": "pro"
+    }
+  ]
+}

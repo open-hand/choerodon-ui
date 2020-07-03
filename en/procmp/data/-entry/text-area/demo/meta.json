@@ -1,0 +1,83 @@
+{
+  "title": {
+    "zh": "中文分类",
+    "en": "Category"
+  },
+  "demos": [
+    {
+      "filename": "basic.js",
+      "title": {
+        "zh": "基本使用",
+        "en": "Basic usage"
+      },
+      "description": {
+        "zh": "基本使用。\n",
+        "en": "Basic usage example.\n"
+      },
+      "order": 0,
+      "screenshot": "",
+      "height": 167,
+      "category": "pro"
+    },
+    {
+      "filename": "controlled.js",
+      "title": {
+        "zh": "受控输入框",
+        "en": "Controlled TextArea"
+      },
+      "description": {
+        "zh": "受控输入框\n",
+        "en": "Controlled TextArea\n"
+      },
+      "order": 1,
+      "screenshot": "",
+      "height": 167,
+      "category": "pro"
+    },
+    {
+      "filename": "dataset.js",
+      "title": {
+        "zh": "数据绑定",
+        "en": "Dataset"
+      },
+      "description": {
+        "zh": "数据绑定\n",
+        "en": "Dataset.\n"
+      },
+      "order": 2,
+      "screenshot": "",
+      "height": 167,
+      "category": "pro"
+    },
+    {
+      "filename": "resizable.js",
+      "title": {
+        "zh": "拖拽调整大小",
+        "en": "Resizable "
+      },
+      "description": {
+        "zh": "拖拽调整大小\n",
+        "en": "Resizable.\n"
+      },
+      "order": 3,
+      "screenshot": "",
+      "height": 167,
+      "category": "pro"
+    },
+    {
+      "filename": "autoSize.js",
+      "title": {
+        "zh": "适应文本高度",
+        "en": "Adapt text height"
+      },
+      "description": {
+        "zh": "`autoSize` 属性默认只有高度会自动变化。另外 `autoSize` 可以设定为一个对象，指定最大最小行列数。\n",
+        "en": "The `autoSize` property defaults to the fact that only the height changes automatically. In addition, `autoSize` can be set as an object, specifying the maximum and minimum number of rows and columns.\n"
+      },
+      "order": 4,
+      "screenshot": "",
+      "height": 140,
+      "category": "pro"
+    }
+  ]
+}

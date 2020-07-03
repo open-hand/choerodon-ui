@@ -1,0 +1,78 @@
+{
+  "title": {
+    "zh": "中文分类",
+    "en": "Category"
+  },
+  "demos": [
+    {
+      "filename": "basic.js",
+      "title": {
+        "zh": "基本使用",
+        "en": "Basic Usage"
+      },
+      "description": {
+        "zh": "请确保Radio具有相同的name属性以实现单选功能。\n",
+        "en": "Make sure that Radio has the same name property to implement the radio function.\n"
+      },
+      "order": 0,
+      "screenshot": "",
+      "category": "pro"
+    },
+    {
+      "filename": "controlled.js",
+      "title": {
+        "zh": "受控单选框",
+        "en": "Controlled Radio"
+      },
+      "description": {
+        "zh": "受控单选框\n",
+        "en": "Controlled Radio\n"
+      },
+      "order": 1,
+      "screenshot": "",
+      "category": "pro"
+    },
+    {
+      "filename": "dataset.js",
+      "title": {
+        "zh": "绑定数据源",
+        "en": "DataSet Binding"
+      },
+      "description": {
+        "zh": "绑定数据源\n",
+        "en": "DataSet Binding\n"
+      },
+      "order": 2,
+      "screenshot": "",
+      "category": "pro"
+    },
+    {
+      "filename": "readonly.js",
+      "title": {
+        "zh": "只读",
+        "en": "Read Only"
+      },
+      "description": {
+        "zh": "只读。\n",
+        "en": "Read Only.\n"
+      },
+      "order": 3,
+      "screenshot": "",
+      "category": "pro"
+    },
+    {
+      "filename": "button.js",
+      "title": {
+        "zh": "按钮显示效果",
+        "en": "Button display"
+      },
+      "description": {
+        "zh": "显示成按钮。\n",
+        "en": "Button display.\n"
+      },
+      "order": 5,
+      "screenshot": "",
+      "category": "pro"
+    }
+  ]
+}

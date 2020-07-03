@@ -1,0 +1,218 @@
+{
+  "title": {
+    "zh": "中文分类",
+    "en": "Category"
+  },
+  "demos": [
+    {
+      "filename": "basic.js",
+      "title": {
+        "zh": "基本使用",
+        "en": "Basic Usage"
+      },
+      "description": {
+        "zh": "下拉选择器。\n",
+        "en": "Select\n"
+      },
+      "order": 0,
+      "screenshot": "",
+      "height": 133,
+      "category": "pro"
+    },
+    {
+      "filename": "controlled.js",
+      "title": {
+        "zh": "受控下拉选择器",
+        "en": "Controlled Select"
+      },
+      "description": {
+        "zh": "受控下拉选择器。\n",
+        "en": "Controlled Select.\n"
+      },
+      "order": 1,
+      "screenshot": "",
+      "height": 133,
+      "category": "pro"
+    },
+    {
+      "filename": "lookupCode.js",
+      "title": {
+        "zh": "值列表代码",
+        "en": "Lookup Code"
+      },
+      "description": {
+        "zh": "值列表代码。\n",
+        "en": "Lookup Code\n"
+      },
+      "order": 2,
+      "screenshot": "",
+      "height": 173,
+      "category": "pro"
+    },
+    {
+      "filename": "dataset.js",
+      "title": {
+        "zh": "绑定数据源",
+        "en": "DataSet Binding"
+      },
+      "description": {
+        "zh": "下拉选择器。\n",
+        "en": "Select\n"
+      },
+      "order": 3,
+      "screenshot": "",
+      "height": 133,
+      "category": "pro"
+    },
+    {
+      "filename": "dataset-options.js",
+      "title": {
+        "zh": "数据源选项",
+        "en": "DataSet Options"
+      },
+      "description": {
+        "zh": "数据源选项。\n",
+        "en": "DataSet Options\n"
+      },
+      "order": 4,
+      "screenshot": "",
+      "height": 133,
+      "category": "pro"
+    },
+    {
+      "filename": "group.js",
+      "title": {
+        "zh": "分组",
+        "en": "Group"
+      },
+      "description": {
+        "zh": "有两种方式进行选项分组：\n\n1. 用 `OptGroup` 进行选项分组。\n2. 为OptionDs的Field添加group属性，属性值为从1开始的序数，用来指定分组的优先级。\n\n",
+        "en": "From the stack to the horizontal arrangement.\n\nYou can create a basic grid system by using a single set of `Row` and` Col` grid assembly, all of the columns (Col) must be placed in `Row`.\n"
+      },
+      "order": 5,
+      "screenshot": "",
+      "height": 133,
+      "category": "pro"
+    },
+    {
+      "filename": "filter.js",
+      "title": {
+        "zh": "过滤",
+        "en": "Filter"
+      },
+      "description": {
+        "zh": "通过属性`optionsFilter`过滤选项。\n",
+        "en": "Through the property `optionsFilter` the options will be filtered.\n"
+      },
+      "order": 6,
+      "screenshot": "",
+      "height": 133,
+      "category": "pro"
+    },
+    {
+      "filename": "searchable.js",
+      "title": {
+        "zh": "可搜索",
+        "en": "Searchable"
+      },
+      "description": {
+        "zh": "可搜索。\n",
+        "en": "Searchable.\n"
+      },
+      "order": 7,
+      "screenshot": "",
+      "height": 133,
+      "category": "pro"
+    },
+    {
+      "filename": "readonly.js",
+      "title": {
+        "zh": "只读",
+        "en": "Read Only"
+      },
+      "description": {
+        "zh": "只读。\n",
+        "en": "Read Only.\n"
+      },
+      "order": 8,
+      "screenshot": "",
+      "height": 133,
+      "category": "pro"
+    },
+    {
+      "filename": "combo.js",
+      "title": {
+        "zh": "复合下拉框",
+        "en": "ComboBox"
+      },
+      "description": {
+        "zh": "复合下拉框。\n",
+        "en": "ComboBox.\n"
+      },
+      "order": 9,
+      "screenshot": "",
+      "height": 133,
+      "category": "pro"
+    },
+    {
+      "filename": "multiple.js",
+      "title": {
+        "zh": "多值",
+        "en": "Multiple"
+      },
+      "description": {
+        "zh": "通过属性`multiple`设置为多值。\n",
+        "en": "Multiple values via property `multiple`.\n"
+      },
+      "order": 10,
+      "screenshot": "",
+      "height": 257,
+      "category": "pro"
+    },
+    {
+      "filename": "cascade.js",
+      "title": {
+        "zh": "选项级联",
+        "en": "Options Cascade"
+      },
+      "description": {
+        "zh": "选项级联。\n",
+        "en": "Options Cascade\n"
+      },
+      "order": 11,
+      "screenshot": "",
+      "height": 133,
+      "category": "pro"
+    },
+    {
+      "filename": "non-primitive.js",
+      "title": {
+        "zh": "非原始值",
+        "en": "Non Primitive Value"
+      },
+      "description": {
+        "zh": "非原始值。\n",
+        "en": "Non Primitive Value.\n"
+      },
+      "order": 12,
+      "screenshot": "",
+      "height": 133,
+      "category": "pro"
+    },
+    {
+      "filename": "option-renderer.js",
+      "title": {
+        "zh": "optionRenderer 输入属性",
+        "en": "optionRenderer Input Property"
+      },
+      "description": {
+        "zh": "使用`optionRenderer`属性。\n",
+        "en": "Use `optionRenderer` input property.\n"
+      },
+      "order": 13,
+      "screenshot": "",
+      "height": 133,
+      "category": "pro"
+    }
+  ]
+}

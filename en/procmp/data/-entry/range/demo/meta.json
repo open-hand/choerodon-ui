@@ -1,0 +1,68 @@
+{
+  "title": {
+    "zh": "中文分类",
+    "en": "Category"
+  },
+  "demos": [
+    {
+      "filename": "basic.js",
+      "title": {
+        "zh": "基本使用",
+        "en": "Basic Usage"
+      },
+      "description": {
+        "zh": "带有 range 控件的数字字段。\n",
+        "en": "Numeric field with range control\n"
+      },
+      "order": 0,
+      "screenshot": "",
+      "height": 137,
+      "category": "pro"
+    },
+    {
+      "filename": "controlled.js",
+      "title": {
+        "zh": "受控",
+        "en": "Controlled"
+      },
+      "description": {
+        "zh": "受控。\n",
+        "en": "Controlled\n"
+      },
+      "order": 1,
+      "screenshot": "",
+      "height": 155,
+      "category": "pro"
+    },
+    {
+      "filename": "dataset.js",
+      "title": {
+        "zh": "绑定数据源",
+        "en": "DataSet Binding"
+      },
+      "description": {
+        "zh": "绑定数据源。\n",
+        "en": "DataSet Binding\n"
+      },
+      "order": 2,
+      "screenshot": "",
+      "height": 105,
+      "category": "pro"
+    },
+    {
+      "filename": "verticalRange.js",
+      "title": {
+        "zh": "垂直",
+        "en": "vertical"
+      },
+      "description": {
+        "zh": "垂直方向的 Range。\n",
+        "en": "The vertical direction of the Range\n"
+      },
+      "order": 3,
+      "screenshot": "",
+      "height": 293,
+      "category": "pro"
+    }
+  ]
+}

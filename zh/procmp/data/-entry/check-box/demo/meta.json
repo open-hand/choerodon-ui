@@ -1,0 +1,78 @@
+{
+  "title": {
+    "zh": "中文分类",
+    "en": "Category"
+  },
+  "demos": [
+    {
+      "filename": "basic.js",
+      "title": {
+        "zh": "基本使用",
+        "en": "Basic Usage"
+      },
+      "description": {
+        "zh": "",
+        "en": ""
+      },
+      "order": 0,
+      "screenshot": "",
+      "category": "pro"
+    },
+    {
+      "filename": "controlled.js",
+      "title": {
+        "zh": "受控复选框",
+        "en": "Controlled CheckBox"
+      },
+      "description": {
+        "zh": "受控复选框\n",
+        "en": "Controlled CheckBox\n"
+      },
+      "order": 1,
+      "screenshot": "",
+      "category": "pro"
+    },
+    {
+      "filename": "dataset.js",
+      "title": {
+        "zh": "绑定数据源",
+        "en": "DataSet Binding"
+      },
+      "description": {
+        "zh": "绑定数据源\n",
+        "en": "DataSet Binding\n"
+      },
+      "order": 2,
+      "screenshot": "",
+      "category": "pro"
+    },
+    {
+      "filename": "readonly.js",
+      "title": {
+        "zh": "只读",
+        "en": "Read Only"
+      },
+      "description": {
+        "zh": "只读。\n",
+        "en": "Read Only.\n"
+      },
+      "order": 3,
+      "screenshot": "",
+      "category": "pro"
+    },
+    {
+      "filename": "button.js",
+      "title": {
+        "zh": "按钮显示效果",
+        "en": "Button display"
+      },
+      "description": {
+        "zh": "显示成按钮。\n",
+        "en": "Button display.\n"
+      },
+      "order": 4,
+      "screenshot": "",
+      "category": "pro"
+    }
+  ]
+}

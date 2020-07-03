@@ -1,0 +1,94 @@
+{
+  "title": {
+    "zh": "中文分类",
+    "en": "Category"
+  },
+  "demos": [
+    {
+      "filename": "basic.js",
+      "title": {
+        "zh": "基本使用",
+        "en": "Basic usage"
+      },
+      "description": {
+        "zh": "基本使用。\n",
+        "en": "Basic usage example.\n"
+      },
+      "order": 0,
+      "screenshot": "",
+      "category": "pro"
+    },
+    {
+      "filename": "renderer.js",
+      "title": {
+        "zh": "使用renderer",
+        "en": "Use renderer"
+      },
+      "description": {
+        "zh": "使用renderer属性覆盖默认渲染行为。\n",
+        "en": "Use `renderer` property to override the default render process.\n"
+      },
+      "order": 1,
+      "screenshot": "",
+      "category": "pro"
+    },
+    {
+      "filename": "dataset.js",
+      "title": {
+        "zh": "数据源",
+        "en": "DataSet"
+      },
+      "description": {
+        "zh": "绑定数据源。\n",
+        "en": "DataSet binding.\n"
+      },
+      "order": 2,
+      "screenshot": "",
+      "category": "pro"
+    },
+    {
+      "filename": "form.js",
+      "title": {
+        "zh": "在表单中使用",
+        "en": "Use in Form"
+      },
+      "description": {
+        "zh": "表单绑定数据源，与其他字段混合使用。\n",
+        "en": "Use with other `FormField`s in a `Form` with `DataSet`.\n"
+      },
+      "order": 3,
+      "height": 343,
+      "screenshot": "",
+      "category": "pro"
+    },
+    {
+      "filename": "multiple.js",
+      "title": {
+        "zh": "多值",
+        "en": "Multiple"
+      },
+      "description": {
+        "zh": "通过属性`multiple`设置为多值。\n",
+        "en": "Multiple values via property `multiple`.\n"
+      },
+      "order": 4,
+      "screenshot": "",
+      "category": "pro"
+    },
+    {
+      "filename": "range.js",
+      "title": {
+        "zh": "范围值",
+        "en": "Range"
+      },
+      "description": {
+        "zh": "通过属性`range`设置为范围值。\n",
+        "en": "Range values via property `range`.\n"
+      },
+      "order": 5,
+      "screenshot": "",
+      "height": 180,
+      "category": "pro"
+    }
+  ]
+}

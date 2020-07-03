@@ -1,0 +1,98 @@
+{
+  "title": {
+    "zh": "中文分类",
+    "en": "Category"
+  },
+  "demos": [
+    {
+      "filename": "basic.js",
+      "title": {
+        "zh": "基本使用",
+        "en": "Basic Usage"
+      },
+      "description": {
+        "zh": "基本使用。\n",
+        "en": "Basic Usage.\n"
+      },
+      "order": 0,
+      "screenshot": "",
+      "height": 317,
+      "category": "pro"
+    },
+    {
+      "filename": "controlled.js",
+      "title": {
+        "zh": "受控穿梭框",
+        "en": "Controlled Transfer"
+      },
+      "description": {
+        "zh": "受控穿梭框。\n",
+        "en": "Controlled Transfer.\n"
+      },
+      "order": 1,
+      "screenshot": "",
+      "height": 293,
+      "category": "pro"
+    },
+    {
+      "filename": "dataset.js",
+      "title": {
+        "zh": "绑定数据源",
+        "en": "DataSet Binding"
+      },
+      "description": {
+        "zh": "绑定数据源。\n",
+        "en": "DataSet Binding\n"
+      },
+      "order": 2,
+      "screenshot": "",
+      "height": 293,
+      "category": "pro"
+    },
+    {
+      "filename": "lookupCode.js",
+      "title": {
+        "zh": "值列表代码",
+        "en": "Lookup Code"
+      },
+      "description": {
+        "zh": "值列表代码。\n",
+        "en": "Lookup Code\n"
+      },
+      "order": 3,
+      "screenshot": "",
+      "height": 893,
+      "category": "pro"
+    },
+    {
+      "filename": "searchable.js",
+      "title": {
+        "zh": "可搜索",
+        "en": "Searchable"
+      },
+      "description": {
+        "zh": "可搜索。\n",
+        "en": "Searchable.\n"
+      },
+      "order": 5,
+      "screenshot": "",
+      "height": 293,
+      "category": "pro"
+    },
+    {
+      "filename": "single.js",
+      "title": {
+        "zh": "单选",
+        "en": "Radio select"
+      },
+      "description": {
+        "zh": "单选。\n",
+        "en": "Radio select.\n"
+      },
+      "order": 5,
+      "screenshot": "",
+      "height": 293,
+      "category": "pro"
+    }
+  ]
+}
