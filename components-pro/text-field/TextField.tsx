@@ -219,20 +219,22 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const multipleHolder = this.renderMultipleHolder();
 
     return (
-      <span key="element" {...this.getWrapperProps()}>
-        {multipleHolder}
-        {otherPrevNode}
-        {placeholderDiv}
-        {renderedValue}
-        <label onMouseDown={this.handleMouseDown}>
-          {prefix}
-          {input}
-          {floatLabel}
-          {button}
-          {suffix}
-        </label>
+      <>
+        <span key="element" {...this.getWrapperProps()}>
+          {multipleHolder}
+          {otherPrevNode}
+          {placeholderDiv}
+          {renderedValue}
+          <label onMouseDown={this.handleMouseDown}>
+            {prefix}
+            {input}
+            {floatLabel}
+            {button}
+            {suffix}
+          </label>
+        </span>
         {otherNextNode}
-      </span>
+      </>
     );
   }
 
@@ -605,7 +607,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       }else{
         tagContainer.scrollTop = tagContainer.getBoundingClientRect().height
       }
-      
+
     }
   }
 

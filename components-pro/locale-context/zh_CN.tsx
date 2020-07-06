@@ -93,6 +93,7 @@ const locale: Locale = {
     no_matching_results: '无匹配结果。',
     select_all: '全选',
     unselect_all: '无',
+    common_item: '常用项',
   },
   Lov: {
     choose: '请选择',
