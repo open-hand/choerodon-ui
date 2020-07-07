@@ -31,7 +31,7 @@ title: Select
 | notFoundContent | 当下拉列表为空时显示的内容 | ReactNode |  |
 | onOption | 设置选项属性，如 disabled | ({ dataSet, record })) => object |  |
 | commonItem | 设置常用项 | Array&lt;string&gt;  | undefined |
-| maxCommonTagPlaceholder | 设置常用项标签超出最大数量时的占位描述 | ReactNode | (restValues) => ReactNode |  |
+| maxCommonTagPlaceholder | 设置常用项标签超出最大数量时的占位描述 | ReactNode \| (restValues) => ReactNode |  |
 | maxCommonTagCount | 设置常用项标签最大数量 | number |  |
 | maxCommonTagTextLength | 设置常用项标签文案最大长度 | number |  |
 

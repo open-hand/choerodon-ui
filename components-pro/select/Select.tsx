@@ -501,6 +501,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     if (!options) {
       return undefined;
     }
+    const values = this.getValues();
     if (commonItem) {
       const valueLength = commonItem.length;
       const tags = commonItem.slice(0, maxCommonTagCount).map((item) => {
@@ -519,7 +520,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
           });
           return (<Tag
             key={item}
-            className={`${this.prefixCls}-common-item`}
+            className={values.includes(item) ? `${this.prefixCls}-common-item ${this.prefixCls}-common-item-selected` : `${this.prefixCls}-common-item`}
             // @ts-ignore
             onClick={() => this.handleCommonItemClick(textRecord)}
           >
