@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `<pro>Select`: 新增 commonItem, maxCommonTagPlaceholder, maxCommonTagCount, maxCommonTagTextLength 常用项相关属性。
+- 🐞 `<pro>DatePciker`: 文档修复。
 - 🐞 `<pro>Form`: 修复当设置 useColon为true, labelLayout为vertical 的时候 required 的字段 label 显示不正确的问题.
 - 🐞 `<pro>Form`: 修复在 typescript 中使用的 Form 的时候,无法使用 pristine 属性的问题.
 
