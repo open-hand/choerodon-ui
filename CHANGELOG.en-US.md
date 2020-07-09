@@ -18,6 +18,7 @@ timeline: true
 - 🌟 `configure`: Added `collapseExpandIconPosition`, `collapseExpandIcon`, `collapseTrigger` properties.
 - 🌟 `Collapse`: Added `expandIcon`, `expandIconPosition`, `trigger` properties.
 - 🌟 `<pro>Select`: Added `commonItem`, `maxCommonTagPlaceholder`, `maxCommonTagCount`, `maxCommonTagTextLengthproperty` properties.
+- 🐞 `<pro>DatePciker`: Document repair.
 - 🐞 `<pro>Form`: Fixed the problem that the label of the `required` field is displayed incorrectly when `useColon` is true and `labelLayout` is vertical.
 - 🐞 `<pro>Form`: Fixed the problem that the `pristine` attribute cannot be used when `Form` used in typescript.
 
