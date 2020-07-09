@@ -154,6 +154,7 @@ export class LovCodeStore {
         },
         primaryKey: valueField,
         cacheSelection: true,
+        autoLocateFirst: false,
       };
       if (!isNil(lovPageSize) && !isNaN(Number(lovPageSize))) {
         dataSetProps.pageSize = Number(lovPageSize);

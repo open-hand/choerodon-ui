@@ -19,7 +19,7 @@ import lovStore from '../stores/LovCodeStore';
 import autobind from '../_util/autobind';
 import { stopEvent } from '../_util/EventManager';
 import { SearchMatcher, Select, SelectProps } from '../select/Select';
-import { ColumnAlign, TableQueryBarType } from '../table/enum';
+import { ColumnAlign, TableQueryBarType, SelectionMode } from '../table/enum';
 import { FieldType } from '../data-set/enum';
 import { LovFieldType, ViewMode, TriggerMode } from './enum';
 import Button, { ButtonProps } from '../button/Button';
@@ -190,7 +190,7 @@ export default class Lov extends Select<LovProps> {
           minHeight: pxToRem(Math.min(350, window.innerHeight)),
           ...(modalProps && modalProps.style),
         },
-      } as ModalProps & { children });
+      } as ModalProps & { children; });
       if (this.resetOptions(noCache)) {
         options.query();
       } else if (multiple) {
@@ -224,10 +224,28 @@ export default class Lov extends Select<LovProps> {
 
   handleLovViewOk = async () => {
     const { options, multiple } = this;
+
+    // 根据 mode 进行区分 假如 存在 rowbox 这些 不应该以 current 作为基准
+    let selectionMode = {
+      selectionMode: multiple ? SelectionMode.rowbox : SelectionMode.none,
+      ...getConfig('lovTableProps'),
+      ...this.props.tableProps,
+    }.selectionMode;
+
+    if ({
+      ...getConfig('lovTableProps'),
+      ...this.props.tableProps,
+    }.alwaysShowRowBox) {
+      selectionMode = SelectionMode.rowbox;
+    }
+
     const result: Record[] = [];
-    const records = multiple ? options.selected : result.concat(options.current || []);
+    const records = selectionMode === SelectionMode.rowbox ? options.selected : result.concat(options.current || []);
     const values = records.map(record => this.processRecordToObject(record));
-    this.setValue(multiple ? values : values[0] || this.emptyValue);
+
+    if (values[0]) {
+      this.setValue(multiple ? values : values[0] || this.emptyValue);
+    }
   };
 
   resetOptions(noCache: boolean = false): boolean {
