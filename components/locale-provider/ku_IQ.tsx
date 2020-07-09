@@ -41,4 +41,8 @@ export default {
     uploadError: 'Xeta barkirine',
     previewFile: 'Pelê pêşbibîne',
   },
+  Collapse: {
+    fold: 'Fold',
+    unfold: 'Unfold',
+  },
 };

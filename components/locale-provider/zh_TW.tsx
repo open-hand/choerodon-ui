@@ -41,4 +41,8 @@ export default {
     uploadError: '上傳失敗',
     previewFile: '檔案預覽',
   },
+  Collapse: {
+    fold: '收起',
+    unfold: '展开',
+  },
 };

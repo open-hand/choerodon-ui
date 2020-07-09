@@ -15,6 +15,7 @@ import {
 import { ValidationMessages } from 'choerodon-ui/pro/lib/validator/Validator';
 import { ButtonProps } from 'choerodon-ui/pro/lib/button/Button';
 import { SpinProps } from 'choerodon-ui/lib/spin';
+import { PanelProps } from 'choerodon-ui/lib/collapse';
 import { Size } from 'choerodon-ui/lib/_util/enum';
 import { TableQueryBarType } from 'choerodon-ui/pro/lib/table/enum';
 import { TriggerMode } from 'choerodon-ui/pro/lib/lov/enum';
@@ -51,6 +52,9 @@ export type Config = {
   proPrefixCls?: string;
   iconfontPrefix?: string;
   ripple?: boolean;
+  collapseExpandIconPosition?: string;
+  collapseExpandIcon?: (panelProps: PanelProps) => ReactNode | 'text';
+  collapseTrigger?: string;
   lookupCache?: CacheOptions<string, AxiosPromise>;
   lookupUrl?: string | ((code: string) => string);
   lookupAxiosMethod?: string;
@@ -144,6 +148,8 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['proPrefixCls', 'c7n-pro'],
   ['iconfontPrefix', 'icon'],
   ['ripple', true],
+  ['collapseExpandIconPosition', 'left'],
+  ['collapseTrigger', 'header'],
   ['lookupCache', { maxAge: 1000 * 60 * 10, max: 100 }],
   ['lookupUrl', code => `/common/code/${code}/`],
   ['lookupAxiosMethod', 'post'],

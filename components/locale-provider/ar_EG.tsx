@@ -41,4 +41,8 @@ export default {
     uploadError: 'مشكلة فى الرفع',
     previewFile: 'استعرض الملف',
   },
+  Collapse: {
+    fold: 'Fold',
+    unfold: 'Unfold',
+  },
 };

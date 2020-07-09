@@ -41,4 +41,8 @@ export default {
     uploadError: 'Erro ao carregar',
     previewFile: 'Pré-visualizar',
   },
+  Collapse: {
+    fold: 'Fold',
+    unfold: 'Unfold',
+  },
 };

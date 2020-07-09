@@ -41,4 +41,8 @@ export default {
     uploadError: 'Lỗi tải lên',
     previewFile: 'Xem thử tập tin',
   },
+  Collapse: {
+    fold: 'Fold',
+    unfold: 'Unfold',
+  },
 };

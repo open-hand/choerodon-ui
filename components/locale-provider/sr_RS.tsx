@@ -41,4 +41,8 @@ export default {
     uploadError: 'Greška prilikom slanja',
     previewFile: 'Pogledaj fajl',
   },
+  Collapse: {
+    fold: 'Fold',
+    unfold: 'Unfold',
+  },
 };

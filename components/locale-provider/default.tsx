@@ -45,4 +45,8 @@ export default {
     uploadError: 'Upload error',
     previewFile: 'Preview file',
   },
+  Collapse: {
+    fold: 'Fold',
+    unfold: 'Unfold',
+  },
 };

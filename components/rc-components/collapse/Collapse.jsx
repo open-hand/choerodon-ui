@@ -1,6 +1,7 @@
 import React, { Children, cloneElement, Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { getConfig } from 'choerodon-ui/lib/configure';
 import CollapsePanel from './Panel';
 import openAnimationFactory from './openAnimationFactory';
 
@@ -90,7 +91,7 @@ export default class Collapse extends Component {
 
   getItems() {
     const activeKey = this.state.activeKey;
-    const { prefixCls, accordion, destroyInactivePanel } = this.props;
+    const { prefixCls, accordion, destroyInactivePanel, expandIcon } = this.props;
     const newChildren = [];
 
     Children.forEach(this.props.children, (child, index) => {
@@ -105,6 +106,8 @@ export default class Collapse extends Component {
         isActive = activeKey.indexOf(key) > -1;
       }
 
+      const trigger = this.props.trigger || getConfig('collapseTrigger');
+
       const props = {
         key,
         header,
@@ -115,6 +118,8 @@ export default class Collapse extends Component {
         openAnimation: this.state.openAnimation,
         children: child.props.children,
         onItemClick: disabled ? null : () => this.onClickItem(key),
+        expandIcon,
+        trigger,
       };
 
       newChildren.push(cloneElement(child, props));
@@ -131,13 +136,13 @@ export default class Collapse extends Component {
   }
 
   render() {
-    const { prefixCls, className, style } = this.props;
+    const { prefixCls, className, style, accordion } = this.props;
     const collapseClassName = classNames({
       [prefixCls]: true,
       [className]: !!className,
     });
     return (
-      <div className={collapseClassName} style={style}>
+      <div className={collapseClassName} style={style} role={accordion ? 'tablist' : null}>
         {this.getItems()}
       </div>
     );

@@ -41,4 +41,8 @@ export default {
     uploadError: 'Помилка завантаження',
     previewFile: 'Попередній перегляд файлу',
   },
+  Collapse: {
+    fold: 'Fold',
+    unfold: 'Unfold',
+  },
 };

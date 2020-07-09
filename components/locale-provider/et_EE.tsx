@@ -41,4 +41,8 @@ export default {
     uploadError: 'Üleslaadimise tõrge',
     previewFile: 'Faili eelvaade',
   },
+  Collapse: {
+    fold: 'Fold',
+    unfold: 'Unfold',
+  },
 };

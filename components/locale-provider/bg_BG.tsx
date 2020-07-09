@@ -41,4 +41,8 @@ export default {
     uploadError: 'Грешка при качването',
     previewFile: 'Преглед',
   },
+  Collapse: {
+    fold: 'Fold',
+    unfold: 'Unfold',
+  },
 };

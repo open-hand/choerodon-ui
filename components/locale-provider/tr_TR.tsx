@@ -41,4 +41,8 @@ export default {
     uploadError: 'Yükleme Hatası',
     previewFile: `Dosyayı Önizle`,
   },
+  Collapse: {
+    fold: 'Fold',
+    unfold: 'Unfold',
+  },
 };

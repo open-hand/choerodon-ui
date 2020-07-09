@@ -41,4 +41,8 @@ export default {
     uploadError: 'خطا در آپلود',
     previewFile: 'مشاهده‌ی فایل',
   },
+  Collapse: {
+    fold: 'Fold',
+    unfold: 'Unfold',
+  },
 };

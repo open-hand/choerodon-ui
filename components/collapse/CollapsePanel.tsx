@@ -11,6 +11,8 @@ export interface CollapsePanelProps {
   showArrow?: boolean;
   prefixCls?: string;
   forceRender?: boolean;
+  id?: string;
+  extra?: React.ReactNode;
 }
 
 const CollapsePanel: React.FC<CollapsePanelProps> = (props: CollapsePanelProps) => {

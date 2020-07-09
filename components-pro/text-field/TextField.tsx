@@ -218,9 +218,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const floatLabel = this.renderFloatLabel();
     const multipleHolder = this.renderMultipleHolder();
 
-    return (
-      <>
-        <span key="element" {...this.getWrapperProps()}>
+    const element = (
+      <span key="element" {...this.getWrapperProps()}>
           {multipleHolder}
           {otherPrevNode}
           {placeholderDiv}
@@ -232,10 +231,19 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
             {button}
             {suffix}
           </label>
-        </span>
-        {otherNextNode}
-      </>
+      </span>
     );
+
+    if (otherNextNode) {
+      return (
+        <>
+          {element}
+          {otherNextNode}
+        </>
+      );
+    }
+
+    return element;
   }
 
   renderGroup(): ReactNode {

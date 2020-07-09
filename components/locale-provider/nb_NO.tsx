@@ -41,4 +41,8 @@ export default {
     uploadError: 'Feil ved opplastning',
     previewFile: 'Forhåndsvisning',
   },
+  Collapse: {
+    fold: 'Fold',
+    unfold: 'Unfold',
+  },
 };

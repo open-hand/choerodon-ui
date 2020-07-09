@@ -41,4 +41,8 @@ export default {
     uploadError: 'Ошибка при закачке',
     previewFile: 'Предпросмотр файла',
   },
+  Collapse: {
+    fold: 'Fold',
+    unfold: 'Unfold',
+  },
 };
