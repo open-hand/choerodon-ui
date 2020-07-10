@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 collapseExpandIconPosition, collapseExpandIcon, collapseTrigger 属性全局配置。
+- 🌟 `configure`: 新增 collapseExpandIconPosition, collapseExpandIcon, collapseTrigger 全局配置。
 - 🌟 `Collapse`: 新增 expandIcon, expandIconPosition, trigger 属性。
 - 🌟 `<pro>Select`: 新增 commonItem, maxCommonTagPlaceholder, maxCommonTagCount, maxCommonTagTextLength 常用项相关属性。
 - 🐞 `<pro>DatePciker`: 文档修复。

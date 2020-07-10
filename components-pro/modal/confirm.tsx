@@ -12,6 +12,7 @@ export default function confirm(props: ModalProps & confirmProps | ReactNode) {
     type = 'confirm',
     onOk = noop,
     onCancel = noop,
+    onClose = noop,
     iconType,
     border = false,
     okCancel = true,
@@ -57,6 +58,13 @@ export default function confirm(props: ModalProps & confirmProps | ReactNode) {
       },
       onCancel: async () => {
         const result = await onCancel();
+        if (result !== false) {
+          resolve('cancel');
+        }
+        return result;
+      },
+      onClose: async () => {
+        const result = await onClose();
         if (result !== false) {
           resolve('cancel');
         }
