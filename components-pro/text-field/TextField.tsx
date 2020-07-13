@@ -218,22 +218,32 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const floatLabel = this.renderFloatLabel();
     const multipleHolder = this.renderMultipleHolder();
 
-    return (
+    const element = (
       <span key="element" {...this.getWrapperProps()}>
-        {multipleHolder}
-        {otherPrevNode}
-        {placeholderDiv}
-        {renderedValue}
-        <label onMouseDown={this.handleMouseDown}>
-          {prefix}
-          {input}
-          {floatLabel}
-          {button}
-          {suffix}
-        </label>
-        {otherNextNode}
+          {multipleHolder}
+          {otherPrevNode}
+          {placeholderDiv}
+          {renderedValue}
+          <label onMouseDown={this.handleMouseDown}>
+            {prefix}
+            {input}
+            {floatLabel}
+            {button}
+            {suffix}
+          </label>
       </span>
     );
+
+    if (otherNextNode) {
+      return (
+        <>
+          {element}
+          {otherNextNode}
+        </>
+      );
+    }
+
+    return element;
   }
 
   renderGroup(): ReactNode {
@@ -605,7 +615,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       }else{
         tagContainer.scrollTop = tagContainer.getBoundingClientRect().height
       }
-      
+
     }
   }
 

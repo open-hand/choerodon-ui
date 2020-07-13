@@ -13,25 +13,37 @@ timeline: true
 - 次版本号：每月发布一个带有新特性的向下兼容的版本。
 - 主版本号：含有破坏性更新和新特性，不在发布周期内。
 
-
-<<<<<<< HEAD
-
 ---
 
+- 🌟 `configure`: 新增 collapseExpandIconPosition, collapseExpandIcon, collapseTrigger 全局配置。
+- 🌟 `Collapse`: 新增 expandIcon, expandIconPosition, trigger 属性。
+- 🌟 `<pro>Select`: 新增 commonItem, maxCommonTagPlaceholder, maxCommonTagCount, maxCommonTagTextLength 常用项相关属性。
+- 🐞 `<pro>DatePciker`: 文档修复。
+- 🐞 `<pro>Form`: 修复当设置 useColon为true, labelLayout为vertical 的时候 required 的字段 label 显示不正确的问题.
+- 🐞 `<pro>Form`: 修复在 typescript 中使用的 Form 的时候,无法使用 pristine 属性的问题.
+- 🐞 `<pro>Lov`: 修复在单选模式下lov table自动定位到数据第一条并且在显示rowbox的情况点击确定会选择current作为选项即使此时没有选中选项.
+- 🐞 `<pro>DataSet`: 修复在设置了primaryKey的情况下,在新增一条未提交的情况下删除一条数据,当接口返回204时,会将response作为数据填入到record中的问题。
+
+
+## 0.8.66
+
+`2020-06-28`
+
 - 🌟 `configure`: 新增 lovTableProps 属性全局配置。
-- 🐞 `<pro>Select`: 修复了`Select` 在ie无法使用element.scrollTo 的方法 。
-- 🐞 `<pro>Table`: 修复了`autoLocateFirst` 在table切换页面时候也存在自动定位第一条问题 。
-- 🐞 `<pro>Select`: 修复 Select对于restricted 的效果支持,实现文字输入限制 。
-- 🐞 `<pro>Form`: 修复 Form中只有单个的FormVirtualGroup的时候没有label的问题。
-- 🐞 `<pro>Table`: 修复了设置mask为false的情况下隐藏modal后body未恢复滚动的问题。
-- 🐞 `<pro>Lov`: 修复当blur的时候触发了 `onChange` 事件的问题。
+- 💄 `Icon`: 更新 Icon 列表。
+- 🐞 `<pro>Lov`: 修复当blur的时候触发了 onChange 事件的问题。
 - 🐞 `<pro>Lov`: 调整tableProps中selectionMode的优先级为最高.
+- 🐞 `<pro>Select`: 修复 Select 对于 restrict 的效果支持, 实现文字输入限制。
+- 🐞 `<pro>Select`: 修复 Select 在 IE 无法使用 element.scrollTo 的方法。
+- 🐞 `<pro>Form`: 修复 Form 中只有单个的 FormVirtualGroup 的时候没有 label 的问题。
+- 🐞 `<pro>Table`: 修复 autoLocateFirst 在table切换页面时候也存在自动定位第一条问题。
+- 🐞 `<pro>Table`: 修复设置 mask 为 false 的情况下隐藏 modal 后 body 未恢复滚动的问题。
 
 ## 0.8.65
 
 `2020-06-15`
 
-- 🌟 `configure`: 新增 tableDefaultRenderer 属性.
+- 🌟 `configure`: 新增 tableDefaultRenderer 属性。
 - 🌟 `<pro>Form`: 新增 FormVirtualGroup 子组件。
 - 🌟 `<pro>DataSet`: 新增 modifiedCheckMessage 属性。
 - 💄 `<pro>Table`: 修改 handleSelection 触发时机，导出 modal添加 closable。

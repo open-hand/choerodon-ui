@@ -12,7 +12,7 @@ title: DataSet
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| name | 对应后台 ds 的 name，自动生成约定的 submitUrl, queryUrl, tlsUrl, validateUrl | Array&lt;object&gt; |  |
+| name | 对应后台 ds 的 name，自动生成约定的 submitUrl, queryUrl, tlsUrl, validateUrl | string |  |
 | data | 初始化数据 | Array&lt;object&gt; |  |
 | autoQuery | 初始化后自动查询 | boolean | false |
 | autoQueryAfterSubmit | 提交成功后响应的数据不符合回写条件时自动查询。注：回写条件是指响应数据中含有提交时的数据，数据将按数据状态分组进行顺序回写，如果要更准确的回写，响应数据要含有提交时的\_\_id 字段值。 | boolean | true |

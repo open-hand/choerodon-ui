@@ -41,4 +41,8 @@ export default {
     uploadError: 'アップロードエラー',
     previewFile: 'ファイルをプレビュー',
   },
+  Collapse: {
+    fold: '折る',
+    unfold: '展開する',
+  },
 };

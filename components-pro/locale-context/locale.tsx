@@ -94,6 +94,7 @@ export interface Locale {
     no_matching_results;
     select_all;
     unselect_all;
+    common_item;
   };
   Lov: {
     choose;

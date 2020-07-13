@@ -7657,3 +7657,325 @@ exports[`renders ./components-pro/form/demo/use-colon.md correctly 1`] = `
   </table>
 </form>
 `;
+
+exports[`renders ./components-pro/form/demo/virtualGroup.md correctly 1`] = `
+<form
+  class="c7n-pro-form c7n-pro-form-wrapper"
+  id="basic"
+  name="form-15"
+  novalidate=""
+  style="width:4rem"
+>
+  <table>
+    <colgroup>
+      <col
+        style="width:1.5rem"
+      />
+      <col />
+    </colgroup>
+    <tbody>
+      <tr>
+        <td
+          class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
+          rowspan="1"
+        >
+          <label
+            title="手机号"
+          >
+            <span>
+              手机号
+            </span>
+          </label>
+        </td>
+        <td
+          colspan="1"
+          rowspan="1"
+        >
+          <div
+            class="c7n-pro-field-wrapper"
+          >
+            <div
+              class="c7n-pro-input-group-wrapper"
+            >
+              <div
+                class="c7n-pro-input-group"
+              >
+                <div
+                  class="c7n-pro-input-group-before"
+                >
+                  +86
+                </div>
+                <div
+                  class="c7n-pro-input-group-input"
+                >
+                  <span
+                    class="c7n-pro-input-wrapper c7n-pro-field c7n-pro-input-required c7n-pro-input-empty"
+                  >
+                    <label>
+                      <input
+                        autocomplete="off"
+                        class="c7n-pro-input"
+                        label="手机号"
+                        name="phone"
+                        pattern="1[3-9]\\\\d{9}"
+                        required=""
+                        type="text"
+                        value=""
+                      />
+                      <div
+                        class="c7n-pro-input-inner-button c7n-pro-input-clear-button"
+                      >
+                        <i
+                          class="icon icon-close"
+                        />
+                      </div>
+                    </label>
+                  </span>
+                </div>
+                <div
+                  class="c7n-pro-input-group-after"
+                >
+                  中国大陆
+                </div>
+              </div>
+            </div>
+            <span />
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td
+          class="c7n-pro-field-label c7n-pro-field-label-right"
+          rowspan="1"
+        >
+          <label
+            title="姓名1"
+          >
+            <span>
+              姓名1
+            </span>
+          </label>
+        </td>
+        <td
+          colspan="1"
+          rowspan="1"
+        >
+          <div
+            class="c7n-pro-field-wrapper"
+          >
+            <span
+              class="c7n-pro-input-wrapper c7n-pro-field virtual-group c7n-pro-input-empty"
+            >
+              <label>
+                <input
+                  autocomplete="off"
+                  class="c7n-pro-input"
+                  label="姓名1"
+                  type="text"
+                  value=""
+                />
+              </label>
+            </span>
+            <span />
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td
+          class="c7n-pro-field-label c7n-pro-field-label-right"
+          rowspan="1"
+        >
+          <label
+            title="姓名2"
+          >
+            <span>
+              姓名2
+            </span>
+          </label>
+        </td>
+        <td
+          colspan="1"
+          rowspan="1"
+        >
+          <div
+            class="c7n-pro-field-wrapper"
+          >
+            <span
+              class="c7n-pro-input-wrapper c7n-pro-field virtual-group c7n-pro-input-empty"
+            >
+              <label>
+                <input
+                  autocomplete="off"
+                  class="c7n-pro-input"
+                  label="姓名2"
+                  type="text"
+                  value=""
+                />
+              </label>
+            </span>
+            <span />
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td
+          class="c7n-pro-field-label c7n-pro-field-label-right"
+          rowspan="1"
+        >
+          <label
+            title="姓名3"
+          >
+            <span>
+              姓名3
+            </span>
+          </label>
+        </td>
+        <td
+          colspan="1"
+          rowspan="1"
+        >
+          <div
+            class="c7n-pro-field-wrapper"
+          >
+            <span
+              class="c7n-pro-input-wrapper c7n-pro-field virtual-group2 c7n-pro-input-empty"
+            >
+              <label>
+                <input
+                  autocomplete="off"
+                  class="c7n-pro-input"
+                  label="姓名3"
+                  type="text"
+                  value=""
+                />
+              </label>
+            </span>
+            <span />
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td
+          class="c7n-pro-field-label c7n-pro-field-label-right"
+          rowspan="1"
+        >
+          <label
+            title="姓名4"
+          >
+            <span>
+              姓名4
+            </span>
+          </label>
+        </td>
+        <td
+          colspan="1"
+          rowspan="1"
+        >
+          <div
+            class="c7n-pro-field-wrapper"
+          >
+            <span
+              class="c7n-pro-input-wrapper c7n-pro-field virtual-group2 c7n-pro-input-empty"
+            >
+              <label>
+                <input
+                  autocomplete="off"
+                  class="c7n-pro-input"
+                  label="姓名4"
+                  type="text"
+                  value=""
+                />
+              </label>
+            </span>
+            <span />
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td
+          class="c7n-pro-field-label c7n-pro-field-label-right"
+          rowspan="1"
+        >
+          <label
+            title="姓名5"
+          >
+            <span>
+              姓名5
+            </span>
+          </label>
+        </td>
+        <td
+          colspan="1"
+          rowspan="1"
+        >
+          <div
+            class="c7n-pro-field-wrapper"
+          >
+            <span
+              class="c7n-pro-input-wrapper c7n-pro-field virtual-group2 c7n-pro-input-empty"
+            >
+              <label>
+                <input
+                  autocomplete="off"
+                  class="c7n-pro-input"
+                  label="姓名5"
+                  type="text"
+                  value=""
+                />
+              </label>
+            </span>
+            <span />
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td
+          class="c7n-pro-field-label c7n-pro-field-label-right"
+          rowspan="1"
+        >
+          <label
+            title=""
+          >
+            <span />
+          </label>
+        </td>
+        <td
+          colspan="1"
+          rowspan="1"
+        >
+          <div
+            class="c7n-pro-field-wrapper"
+          >
+            <div
+              class="c7n-pro-field"
+            >
+              <button
+                class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+                type="button"
+              >
+                <span>
+                  切换
+                </span>
+                <div
+                  class="c7n-ripple-wrapper"
+                />
+              </button>
+              <button
+                class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+                type="button"
+              >
+                <span>
+                  切换2
+                </span>
+                <div
+                  class="c7n-ripple-wrapper"
+                />
+              </button>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</form>
+`;

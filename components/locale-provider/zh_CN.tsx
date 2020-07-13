@@ -44,4 +44,8 @@ export default {
     uploadError: '上传错误',
     previewFile: '预览文件',
   },
+  Collapse: {
+    fold: '收起',
+    unfold: '展开',
+  },
 };

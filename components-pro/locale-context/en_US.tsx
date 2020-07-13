@@ -93,6 +93,7 @@ const locale: Locale = {
     no_matching_results: 'No matching results.',
     select_all: 'Select All',
     unselect_all: 'None',
+    common_item: 'Common Items',
   },
   Lov: {
     choose: 'Choose',

@@ -39,4 +39,8 @@ export default {
     uploadError: '업로드 실패',
     previewFile: '파일 미리보기',
   },
+  Collapse: {
+    fold: 'Fold',
+    unfold: 'Unfold',
+  },
 };

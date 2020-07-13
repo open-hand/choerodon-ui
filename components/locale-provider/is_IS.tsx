@@ -41,4 +41,8 @@ export default {
     uploadError: 'Villa við að hlaða upp',
     previewFile: 'Forskoða skrá',
   },
+  Collapse: {
+    fold: 'Fold',
+    unfold: 'Unfold',
+  },
 };

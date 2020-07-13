@@ -10,6 +10,7 @@ import isPlainObject from 'lodash/isPlainObject';
 import { observer } from 'mobx-react';
 import { action, computed, IReactionDisposer, isArrayLike, reaction, runInAction } from 'mobx';
 import Menu, { Item, ItemGroup } from 'choerodon-ui/lib/rc-components/menu';
+import Tag from 'choerodon-ui/lib/tag';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { getConfig } from 'choerodon-ui/lib/configure';
@@ -85,6 +86,22 @@ export interface SelectProps extends TriggerFieldProps {
    */
   combo?: boolean;
   /**
+   * 常用项
+   */
+  commonItem?: string[],
+  /**
+   * 常用项标签超出最大数量时的占位描述
+   */
+  maxCommonTagPlaceholder?: ReactNode | ((omittedValues: any[]) => ReactNode);
+  /**
+   * 常用项标签最大数量
+   */
+  maxCommonTagCount?: number;
+  /**
+   * 常用项标签文案最大长度
+   */
+  maxCommonTagTextLength?: number;
+  /**
    * 可搜索
    * @default false
    */
@@ -153,6 +170,23 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
      * @default false
      */
     combo: PropTypes.bool,
+    /**
+     * 常用项
+     * @default undefined
+     */
+    commonItem: PropTypes.array,
+    /**
+     * 多值标签超出最大数量时的占位描述
+     */
+    maxCommonTagPlaceholder: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+    /**
+     * 多值标签最大数量
+     */
+    maxCommonTagCount: PropTypes.number,
+    /**
+     * 多值标签文案最大长度
+     */
+    maxCommonTagTextLength: PropTypes.number,
     /**
      * 过滤器
      * @default false
@@ -396,6 +430,10 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
       'searchable',
       'searchMatcher',
       'combo',
+      'commonItem',
+      'maxCommonTagPlaceholder',
+      'maxCommonTagCount',
+      'maxCommonTagTextLength',
       'multiple',
       'value',
       'name',
@@ -418,6 +456,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
       children: props.children,
       options: props.options,
       combo: props.combo,
+      commonItem: props.commonItem,
       primitiveValue: props.primitiveValue,
       searchMatcher: props.searchMatcher,
     };
@@ -449,6 +488,65 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
       return notFoundContent;
     }
     return getConfig('renderEmpty')('Select');
+  }
+
+  getOtherNextNode(): ReactNode {
+    const {
+      options,
+      textField,
+      valueField,
+      observableProps: { commonItem },
+      props: { maxCommonTagCount, maxCommonTagPlaceholder, maxCommonTagTextLength },
+    } = this;
+    if (!options) {
+      return undefined;
+    }
+    const values = this.getValues();
+    if (commonItem) {
+      const valueLength = commonItem.length;
+      const tags = commonItem.slice(0, maxCommonTagCount).map((item) => {
+          let text = item;
+          let textRecord: Record;
+          options.map((record) => {
+            if (record.get(valueField) === item) {
+              text = maxCommonTagTextLength &&
+              isString(record.get(textField)) &&
+              record.get(textField).length > maxCommonTagTextLength
+                ? `${record.get(textField).slice(0, maxCommonTagTextLength)}...`
+                : record.get(textField);
+              textRecord = record;
+            }
+            return null;
+          });
+          return (<Tag
+            key={item}
+            className={values.includes(item) ? `${this.prefixCls}-common-item ${this.prefixCls}-common-item-selected` : `${this.prefixCls}-common-item`}
+            // @ts-ignore
+            onClick={() => this.handleCommonItemClick(textRecord)}
+          >
+            {text}
+          </Tag>);
+        });
+      if (valueLength > maxCommonTagCount) {
+        let content: ReactNode = `+ ${valueLength - Number(maxCommonTagCount)} ...`;
+        if (maxCommonTagPlaceholder) {
+          const omittedValues = commonItem.slice(maxCommonTagCount, valueLength);
+          content =
+            typeof maxCommonTagPlaceholder === 'function'
+              ? maxCommonTagPlaceholder(omittedValues)
+              : maxCommonTagPlaceholder;
+        }
+        tags.push(
+          <Tag className={`${this.prefixCls}-common-item`} key="maxCommonTagPlaceholder">
+            {content}
+          </Tag>,
+        );
+      }
+      return (<div className={`${this.prefixCls}-common-item-wrapper`}>
+        <span className={`${this.prefixCls}-common-item-label`}>{$l('Select', 'common_item')}</span>
+        {tags}
+      </div>);
+    }
   }
 
   @autobind
@@ -846,6 +944,15 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     }
   }
 
+  @autobind
+  handleCommonItemClick(value) {
+    if (this.multiple && this.isSelected(value)) {
+      this.unChoose(value);
+    } else {
+      this.choose(value);
+    }
+  }
+
   handleOptionSelect(record: Record) {
     this.prepareSetValue(this.processRecordToObject(record));
   }
@@ -895,11 +1002,11 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     }
   }
 
-  
+
 
   processRecordToObject(record: Record) {
     const { primitive, valueField } = this;
-    // 如果为原始值那么 restricted 失效 
+    // 如果为原始值那么 restricted 失效
     const restricted = this.restrictInput(record.get(valueField));
     return primitive ? restricted : record.toData();
   }

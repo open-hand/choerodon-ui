@@ -21,6 +21,12 @@ A content area which can be collapsed and expanded.
 | activeKey | Key of the active panel | string\[]\|string | No default value. In `accordion` mode, it's the key of the first panel. |
 | defaultActiveKey | Key of the initial active panel | string | - |
 | onChange | Callback function executed when active panel is changed | Function | - |
+| bordered | Toggles rendering of the border around the collapse block | boolean | true |
+| accordion | If true, Collapse renders as Accordion	 | boolean | false |
+| expandIcon | Allow to customize collapse icon | (panelProps) => ReactNode \| `text`(Default icon + text) | - |
+| expandIconPosition | Set expand icon position | `left` \| `right` | `left` |
+| destroyInactivePanel | Destroy Inactive Panel | boolean | false |
+| trigger | trigger position | `header` \| `icon` | `header` |
 
 ### Collapse.Panel
 
@@ -31,3 +37,5 @@ A content area which can be collapsed and expanded.
 | key | Unique key identifying the panel from among its siblings | string | - |
 | showArrow | If `false`, panel will not show arrow icon | boolean | `true` |
 | forceRender | Forced render of content on panel, instead of lazy rending after clicking on header | boolean | `false` |
+| showArrow	| If false, panel will not show arrow icon	| boolean	|  true |
+| extra	| The extra element in the corner | ReactNode | - |	

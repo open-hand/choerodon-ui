@@ -261,6 +261,69 @@ exports[`renders ./components-pro/select/demo/combo.md correctly 1`] = `
 </div>
 `;
 
+exports[`renders ./components-pro/select/demo/common-item.md correctly 1`] = `
+Array [
+  <span
+    class="c7n-pro-select-wrapper c7n-pro-select-suffix-button c7n-pro-select-not-editable"
+    style="width:300px"
+  >
+    <input
+      name="user"
+      type="hidden"
+      value="wu"
+    />
+    <label>
+      <input
+        autocomplete="off"
+        class="c7n-pro-select"
+        readonly=""
+        type="text"
+        value="Wu"
+      />
+      <div
+        class="c7n-pro-select-inner-button c7n-pro-select-clear-button"
+      >
+        <i
+          class="icon icon-close"
+        />
+      </div>
+      <div
+        class="c7n-pro-select-suffix"
+      >
+        <i
+          class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+        />
+      </div>
+    </label>
+  </span>,
+  <div
+    class="c7n-pro-select-common-item-wrapper"
+  >
+    <span
+      class="c7n-pro-select-common-item-label"
+    >
+      常用项
+    </span>
+    <div
+      class="c7n-tag c7n-pro-select-common-item"
+    >
+      Jack
+    </div>
+    <div
+      class="c7n-tag c7n-pro-select-common-item c7n-pro-select-common-item-selected"
+    >
+      Wu
+    </div>
+    <div
+      class="c7n-tag c7n-pro-select-common-item"
+    >
+      Kack2...
+    </div>
+  </div>,
+  <span />,
+]
+`;
+
 exports[`renders ./components-pro/select/demo/controlled.md correctly 1`] = `
 Array [
   <span

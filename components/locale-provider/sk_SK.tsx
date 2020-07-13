@@ -41,4 +41,8 @@ export default {
     uploadError: 'Chyba pri nahrávaní',
     previewFile: 'Zobraziť súbor',
   },
+  Collapse: {
+    fold: 'Fold',
+    unfold: 'Unfold',
+  },
 };

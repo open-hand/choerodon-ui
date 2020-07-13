@@ -41,4 +41,8 @@ export default {
     uploadError: 'Napaka pri nalaganju',
     previewFile: 'Predogled datoteke',
   },
+  Collapse: {
+    fold: 'Fold',
+    unfold: 'Unfold',
+  },
 };

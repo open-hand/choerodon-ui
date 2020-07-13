@@ -41,4 +41,8 @@ export default {
     uploadError: 'Virhe lähetyksessä',
     previewFile: 'Esikatsele tiedostoa',
   },
+  Collapse: {
+    fold: 'Fold',
+    unfold: 'Unfold',
+  },
 };

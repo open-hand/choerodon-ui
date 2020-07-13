@@ -15,15 +15,28 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: Added `collapseExpandIconPosition`, `collapseExpandIcon`, `collapseTrigger` properties.
+- 🌟 `Collapse`: Added `expandIcon`, `expandIconPosition`, `trigger` properties.
+- 🌟 `<pro>Select`: Added `commonItem`, `maxCommonTagPlaceholder`, `maxCommonTagCount`, `maxCommonTagTextLengthproperty` properties.
+- 🐞 `<pro>DatePciker`: Document repair.
+- 🐞 `<pro>Form`: Fixed the problem that the label of the `required` field is displayed incorrectly when `useColon` is true and `labelLayout` is vertical.
+- 🐞 `<pro>Form`: Fixed the problem that the `pristine` attribute cannot be used when `Form` used in typescript.
+- 🐞 `<pro>Lov`: Fixed lov table automatically positioning to the first data item in single-select mode and clicking OK when rowbox is displayed will select current as the option even if no option is selected at this time.
+- 🐞 `<pro>DataSet`: Fix the problem that when a PrimaryKey is set, a piece of data is deleted if a new piece is not submitted, and when the interface returns 204, the response will be filled into the record as data.
+
+## 0.8.66
+
+`2020-06-28`
 
 - 🌟 `configure`: Added `lovTableProps` property.
-- 🐞 `<pro>Select`: Fixed ie11 element.scrollTo err .
-- 🐞 `<pro>Table`: Fixed`autoLocateFirst` in table change the page auto locate the first record 。
-- 🐞 `<pro>Select`: Fixed Select restricted support to limit the import 。
-- 🐞 `<pro>Form`: Fix the problem that there is no label when there is only a single FormVirtualGroup in Form.
-- 🐞 `<pro>Table`: Fixed an issue where the body did not resume scrolling after hiding the modal when mask was set to false.
-- 🐞 `<pro>Lov`: Fix the problem that `onChange` event triggered when blur.
-- 🐞 `<pro>Lov`: Adjust the priority of selectionMode in tableProps to the highest.
+- 💄 `Icon`: Updated `Icon` List.
+- 🐞 `<pro>Select`: Fixed IE element.scrollTo err.
+- 🐞 `<pro>Select`: Fixed `Select` restrict support to limit the import.
+- 🐞 `<pro>Lov`: Fixed the problem that `onChange` event triggered when blur.
+- 🐞 `<pro>Lov`: Adjust the priority of `selectionMode` in tableProps to the highest.
+- 🐞 `<pro>Table`: Fixed`autoLocateFirst` in table change the page auto locate the first record.
+- 🐞 `<pro>Table`: Fixed an issue where the body did not resume scrolling after hiding the modal when `mask` was set to false.
+- 🐞 `<pro>Form`: Fixed the problem that there is no label when there is only a single `FormVirtualGroup` in Form.
 
 ## 0.8.65
 

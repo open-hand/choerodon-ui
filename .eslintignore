@@ -21,3 +21,4 @@ dist
 **/*.d.ts
 tools
 .jest-cache
+public

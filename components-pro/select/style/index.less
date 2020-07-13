@@ -18,6 +18,10 @@
 
   &-expand &-trigger {
     transform: rotate(180deg);
+
+    &-common-item-wrapper {
+      display: none !important;
+    }
   }
 
   &-dropdown-menu {
@@ -37,5 +41,21 @@
     span + span {
       margin-left: 0.2rem;
     }
+  }
+
+  &-common-item {
+    margin-top: 0.04rem;
+    color: @label-color;
+    background: @component-background;
+  }
+
+  &-common-item-selected {
+    color: @primary-color;
+  }
+
+  &-common-item-label {
+    display: inline-block;
+    margin-top: 0.04rem;
+    margin-right: 0.04rem;
   }
 }

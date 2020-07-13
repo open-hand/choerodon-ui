@@ -41,4 +41,8 @@ export default {
     uploadError: 'Σφάλμα μεταφόρτωσης',
     previewFile: 'Προεπισκόπηση αρχείου',
   },
+  Collapse: {
+    fold: 'Fold',
+    unfold: 'Unfold',
+  },
 };

@@ -1971,7 +1971,9 @@ Then the query method will be auto invoke.`,
   private handleSubmitSuccess(resp: any[]) {
     const { dataKey, totalKey } = this;
     const { submitSuccess = defaultFeedback.submitSuccess } = this.feedback;
-    const data: object[] = [];
+    const data: {
+      [props:string]:any
+    }[] = [];
     let total;
     resp.forEach(item => {
       data.push(...generateResponseData(item, dataKey));
@@ -1990,7 +1992,13 @@ Then the query method will be auto invoke.`,
       }
     }
     this.fireEvent(DataSetEvents.submitSuccess, { dataSet: this, data: result });
-    this.commitData(data, total);
+    // 针对 204 的情况进行特殊处理
+    // 不然在设置了 primaryKey 的情况 下,在先新增一条再使用delete的情况下，会将204这个请求内容填入到record中
+    if (!(data[0] && data[0].status === 204 && data[0].statusText === "No Content")) {
+      this.commitData(data, total);
+    } else {
+      this.commitData([], total);
+    }
     submitSuccess(result);
     return result;
   }
