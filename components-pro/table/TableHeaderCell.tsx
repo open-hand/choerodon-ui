@@ -223,7 +223,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
   }
 
   render() {
-    const { column, prefixCls, dataSet, rowSpan, colSpan, provided,snapshot  } = this.props;
+    const { column, prefixCls, dataSet, rowSpan, colSpan, provided, snapshot } = this.props;
     const {
       tableStore: { rowHeight,columnMaxDeep, columnResizable,props:{dragColumn,columnsDragRender= {} } },
     } = this.context;
@@ -336,7 +336,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
         style={cellStyle}
       >
         <div {...innerProps} />
-        {columnResizable && this.renderResizer()}
+        {columnResizable && !dragColumn && this.renderResizer()}
       </th>
     );
   }

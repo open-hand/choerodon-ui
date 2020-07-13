@@ -20,7 +20,7 @@ import { ElementProps } from '../core/ViewComponent';
 import TableContext from './TableContext';
 import TableRow from './TableRow';
 import Record from '../data-set/Record';
-import { ColumnLock ,DragColumnAlign} from './enum';
+import { ColumnLock , DragColumnAlign} from './enum';
 import ExpandedRow from './ExpandedRow';
 import { DataSetStatus } from '../data-set/enum';
 import autobind from '../_util/autobind';
@@ -99,8 +99,8 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
   }
 
   render() {
-    const { prefixCls, lock ,indentSize,dragColumnAlign} = this.props;
-    const { leafColumns,leafColumnsBody } = this;
+    const { prefixCls, lock , indentSize, dragColumnAlign} = this.props;
+    const { leafColumns, leafColumnsBody } = this;
     const {
       tableStore: { data, props: { virtual,dragColumnAlign:propsDragColumnAlign,rowDragRender={}},dataSet, height,dragRow },
     } = this.context;
@@ -113,7 +113,7 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
       <Droppable
         droppableId="table"
         key="table"
-        isDropDisabled = {(dragColumnAlign || propsDragColumnAlign) ? !(dragColumnAlign && propsDragColumnAlign)  :!dragRow }
+        isDropDisabled={(dragColumnAlign || propsDragColumnAlign) ? !(dragColumnAlign && propsDragColumnAlign) : !dragRow}
         renderClone={(
           provided: DraggableProvided,
           snapshot: DraggableStateSnapshot,
@@ -244,9 +244,9 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
     expanded?: boolean,
     lock?: ColumnLock | boolean,
   ): ReactNode {
-    const { prefixCls, indentSize,dragColumnAlign } = this.props;
+    const { prefixCls, indentSize, dragColumnAlign } = this.props;
     const {
-      tableStore: { isTree,props:{dragColumnAlign:propsDragColumnAlign,rowDragRender = {}},dragRow },
+      tableStore: { isTree, props:{dragColumnAlign:propsDragColumnAlign, rowDragRender = {}},dragRow },
     } = this.context;
     const {draggableProps} = rowDragRender
     const children = isTree && (
@@ -258,7 +258,7 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
       <Draggable
         draggableId={record.key.toString()}
         index={index}
-        isDragDisabled = {(dragColumnAlign || propsDragColumnAlign) ?!(dragColumnAlign && propsDragColumnAlign)  :!dragRow }
+        isDragDisabled={(dragColumnAlign || propsDragColumnAlign) ? !(dragColumnAlign && propsDragColumnAlign) : !dragRow}
         key={record.key}
       >
         {(

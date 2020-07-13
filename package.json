@@ -1,6 +1,6 @@
 {
   "name": "choerodon-ui",
-  "version": "0.8.65",
+  "version": "0.8.66",
   "title": "Choerodon UI",
   "description": "An enterprise-class UI design language and React-based implementation",
   "homepage": "https://choerodon.github.io/choerodon-ui/",
@@ -47,6 +47,8 @@
   },
   "dependencies": {
     "@babel/runtime": "7.x",
+    "element-resize-event": "^3.0.2",
+    "dom-lib": "^1.2.1",
     "@types/react-beautiful-dnd": "^13.0.0",
     "add-dom-event-listener": "1.x",
     "array-tree-filter": "^2.0.0",

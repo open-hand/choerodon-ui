@@ -15,12 +15,12 @@ timeline: true
 
 ---
 
-- 🌟 `<pro>Table`: 新增 Table 拖拽功能 。
-- 🌟 `Steps`: 新增 Steps.Group 组件可以配置Step 分组 。
+- 🌟 `<pro>Table`: 新增Table拖拽功能。
+- 🌟 `Steps`: 新增 Steps.Group 组件可以配置Step分组。
 - 🌟 `configure`: 新增 collapseExpandIconPosition, collapseExpandIcon, collapseTrigger 全局配置。
 - 🌟 `Collapse`: 新增 expandIcon, expandIconPosition, trigger 属性。
 - 🌟 `<pro>Select`: 新增 commonItem, maxCommonTagPlaceholder, maxCommonTagCount, maxCommonTagTextLength 常用项相关属性。
-- 🐞 `Progress`: 修复无法修改 Circle Progress strokeColor 属性 颜色的问题。
+- 🐞 `Progress`: 修复无法修改 Circle Progress strokeColor属性颜色的问题。
 - 🐞 `<pro>DatePciker`: 文档修复。
 - 🐞 `<pro>Form`: 修复当设置 useColon为true, labelLayout为vertical 的时候 required 的字段 label 显示不正确的问题.
 - 🐞 `<pro>Form`: 修复在 typescript 中使用的 Form 的时候,无法使用 pristine 属性的问题.

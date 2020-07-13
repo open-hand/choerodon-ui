@@ -27,7 +27,7 @@ import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import ReactResizeObserver from 'choerodon-ui/lib/_util/resizeObserver';
 import Column, { ColumnProps, defaultMinWidth } from './Column';
-import TableRow,{TableRowProps} from './TableRow';
+import TableRow,{ TableRowProps } from './TableRow';
 import TableHeaderCell,{TableHeaderCellProps} from './TableHeaderCell';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
@@ -136,6 +136,9 @@ export interface Instance {
   headtr:React.ReactElement;
 }
 
+/**
+ * DraggableRubric 可以获取拖动起来item的index和id从列表获取信息
+ */
 export interface DragTableHeaderCellProps extends TableHeaderCellProps{
   rubric: DraggableRubric
 }
@@ -495,7 +498,7 @@ export default class Table extends DataSetComponent<TableProps> {
     /**
      * 开启行拖拽
      */
-  dragRow: PropTypes.bool,
+    dragRow: PropTypes.bool,
     ...DataSetComponent.propTypes,
   };
 
@@ -983,30 +986,30 @@ export default class Table extends DataSetComponent<TableProps> {
   };
 
   @action
-  reorderColumns(columns: ColumnProps[], startIndex: number, endIndex: number){
-   const cloneColumns = columns.slice()
-   const [dropItem] = cloneColumns.slice(endIndex, endIndex+1);
-   const [dragItem] = cloneColumns.slice(startIndex, startIndex+1);
-   const normalColumnLock = (lock) => {
-     if(lock === true){
-       return ColumnLock.left
-     }
-     if(!lock){
-       return false
-     }
-     return lock
-   }
-   if( 
-    dropItem && 
-    dragItem && 
-    dropItem.key !== DRAG_KEY && 
-    dragItem.key !== DRAG_KEY && 
-    normalColumnLock(dragItem.lock) === normalColumnLock(dropItem.lock)){
-    const [removed] = columns.splice(startIndex, 1)
-    if(columns.length ){
-       columns.splice(endIndex, 0, removed);
+  reorderColumns(columns: ColumnProps[], startIndex: number, endIndex: number) {
+    const cloneColumns = columns.slice()
+    const [dropItem] = cloneColumns.slice(endIndex, endIndex + 1);
+    const [dragItem] = cloneColumns.slice(startIndex, startIndex + 1);
+    const normalColumnLock = (lock) => {
+      if (lock === true) {
+        return ColumnLock.left
+      }
+      if (!lock) {
+        return false
+      }
+      return lock
     }
-   }
+    if (
+      dropItem &&
+      dragItem &&
+      dropItem.key !== DRAG_KEY &&
+      dragItem.key !== DRAG_KEY &&
+      normalColumnLock(dragItem.lock) === normalColumnLock(dropItem.lock)) {
+      const [removed] = columns.splice(startIndex, 1)
+      if (columns.length) {
+        columns.splice(endIndex, 0, removed);
+      }
+    }
   };
 
   @autobind
@@ -1068,7 +1071,7 @@ export default class Table extends DataSetComponent<TableProps> {
       return;
     }
     const fixedColumnsBodyLeft = this.fixedColumnsBodyLeft;
-    const dragColumnsBodyLeft = this.dragColumnsBodyLeft
+    const dragColumnsBodyLeft = this.dragColumnsBodyLeft;
     const bodyTable = this.tableBodyWrap;
     const fixedColumnsBodyRight = this.fixedColumnsBodyRight;
     const dragColumnsBodyRight = this.dragColumnsBodyRight; 
@@ -1357,12 +1360,12 @@ export default class Table extends DataSetComponent<TableProps> {
         tableBodyRef = node => (this.tableBodyWrap = node);
       } else if (lock === 'right') {
         if(dragColumnAlign === DragColumnAlign.right){
-          tableBodyRef = node => (this.dragColumnsBodyRight = node)
+          tableBodyRef = node => (this.dragColumnsBodyRight = node);
         }
         tableBodyRef = node => (this.fixedColumnsBodyRight = node);
       } else {
         if(dragColumnAlign === DragColumnAlign.left){
-          tableBodyRef = node => (this.dragColumnsBodyLeft = node)
+          tableBodyRef = node => (this.dragColumnsBodyLeft = node);
         }
         tableBodyRef = node => (this.fixedColumnsBodyLeft = node);
       }

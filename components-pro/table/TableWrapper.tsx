@@ -9,7 +9,7 @@ import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import TableContext from './TableContext';
 import { ElementProps } from '../core/ViewComponent';
 import { ColumnProps, minColumnWidth } from './Column';
-import { ColumnLock,DragColumnAlign } from './enum';
+import { ColumnLock, DragColumnAlign } from './enum';
 import TableEditor from './TableEditor';
 import TableCol from './TableCol';
 import { getColumnKey } from './utils';
@@ -164,9 +164,9 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
 
   @computed
   get tableWidth() {
-    const { lock, hasBody,dragColumnAlign } = this.props;
+    const { lock, hasBody, dragColumnAlign } = this.props;
     const {
-      tableStore: { overflowY, overflowX,props: { virtual },columns },
+      tableStore: { overflowY, overflowX,props: { virtual }, columns },
     } = this.context;
 
     if(dragColumnAlign && columns && columns.length > 0){

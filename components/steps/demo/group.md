@@ -21,7 +21,7 @@ const StepGroup = Steps.StepGroup;
 
 ReactDOM.render(
   <Steps className="group-demo" current={0}>
-    <StepGroup headerIcon="instance" headerText="必填填项" >
+    <StepGroup headerIcon="instance" headerText="必填项" >
       <Step title="标题名称"  />
       <Step title="标题名称"  />
     </StepGroup>
