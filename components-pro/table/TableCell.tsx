@@ -51,6 +51,7 @@ export interface TableCellProps extends ElementProps {
   column: ColumnProps;
   record: Record;
   indentSize: number;
+  isDragging: boolean;
 }
 
 let inTab: boolean = false;
@@ -536,11 +537,22 @@ export default class TableCell extends Component<TableCellProps> {
       className,
       cellExternalProps.className,
     );
+    const widthDraggingStyle = ():React.CSSProperties =>{
+      const draggingStyle:React.CSSProperties = {}
+      if(column.width){
+        draggingStyle.width = pxToRem(column.width)
+      }
+      if(column.minWidth){
+        draggingStyle.minWidth = pxToRem(column.minWidth)
+      }
+      draggingStyle.whiteSpace = "nowrap"
+      return draggingStyle
+    }
     const td = (
       <td
         {...cellExternalProps}
         className={classString}
-        style={omit(cellStyle, ['width', 'height'])}
+        style={{...omit(cellStyle, ['width', 'height']),...widthDraggingStyle()}}
         data-index={getColumnKey(column)}
       >
         {this.getInnerNode(cellPrefix, command)}

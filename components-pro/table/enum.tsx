@@ -9,6 +9,11 @@ export const enum ColumnAlign {
   right = 'right',
 }
 
+export const enum DragColumnAlign {
+  left = 'left',
+  right = 'right',
+}
+
 export const enum ScrollPosition {
   left = 'left',
   right = 'right',

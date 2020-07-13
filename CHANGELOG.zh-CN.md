@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Table`: 新增 Table 拖拽功能 。
 - 🌟 `Steps`: 新增 Steps.Group 组件可以配置Step 分组 。
 - 🌟 `configure`: 新增 collapseExpandIconPosition, collapseExpandIcon, collapseTrigger 全局配置。
 - 🌟 `Collapse`: 新增 expandIcon, expandIconPosition, trigger 属性。
