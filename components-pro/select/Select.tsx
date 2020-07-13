@@ -1078,7 +1078,16 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
 
   @autobind
   chooseAll() {
-    this.setValue(this.filteredOptions.map(this.processRecordToObject, this));
+    const {
+      options,
+      props: { onOption },
+    } = this;
+    const selectedOptions = this.filteredOptions.filter((record) => {
+      const optionProps = onOption({ dataSet: options, record });
+      const optionDisabled = (optionProps && optionProps.disabled);
+      return !optionDisabled;
+    });
+    this.setValue(selectedOptions.map(this.processRecordToObject, this));
   }
 
   @autobind
