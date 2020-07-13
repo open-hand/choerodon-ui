@@ -1,6 +1,6 @@
 import React, { Component, CSSProperties } from 'react';
 import PropTypes from 'prop-types';
-import RcSteps, { Step } from '../rc-components/steps';
+import RcSteps, { Step, StepGroup } from '../rc-components/steps';
 import { Size } from '../_util/enum';
 import { getPrefixCls } from '../configure';
 
@@ -13,6 +13,9 @@ export interface StepsProps {
   direction?: 'horizontal' | 'vertical';
   progressDot?: boolean | Function;
   style?: CSSProperties;
+  headerRender?: () => React.ReactElement<any>;
+  headerIcon:string;
+  headerText:string;
 }
 
 export interface StepProps {
@@ -31,6 +34,8 @@ export default class Steps extends Component<StepsProps, any> {
   static displayName = 'Steps';
 
   static Step = Step as React.ClassicComponentClass<StepProps>;
+
+  static StepGroup = StepGroup as React.ClassicComponentClass<StepProps>;
 
   static defaultProps = {
     iconPrefix: 'icon',

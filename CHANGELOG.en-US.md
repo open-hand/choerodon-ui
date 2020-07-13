@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `Steps`: Added Steps.Group Component to grouping Step Components 。
 - 🌟 `configure`: Added `collapseExpandIconPosition`, `collapseExpandIcon`, `collapseTrigger` properties.
 - 🌟 `Collapse`: Added `expandIcon`, `expandIconPosition`, `trigger` properties.
 - 🌟 `<pro>Select`: Added `commonItem`, `maxCommonTagPlaceholder`, `maxCommonTagCount`, `maxCommonTagTextLengthproperty` properties.

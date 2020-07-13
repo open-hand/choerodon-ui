@@ -532,7 +532,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
           [`${prefixCls}-treenode-selected`]: selected,
           [`${prefixCls}-treenode-loading`]: loading,
           [`${prefixCls}-treenode-active`]: active,
-
+          [`${prefixCls}-treenode-checkable`]:this.isCheckable(),
           'drag-over': !disabled && dragOver,
           'drag-over-gap-top': !disabled && dragOverGapTop,
           'drag-over-gap-bottom': !disabled && dragOverGapBottom,
