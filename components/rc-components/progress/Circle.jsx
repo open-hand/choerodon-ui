@@ -72,7 +72,10 @@ class Circle extends Component {
       className,
       ...restProps
     } = this.props;
-    const { pathString, trailPathStyle, strokePathStyle } = this.getPathStyles();
+    const { pathString } = this.getPathStyles();
+    let {trailPathStyle, strokePathStyle } = this.getPathStyles();
+    trailPathStyle = trailColor ? {...trailPathStyle,stroke:trailColor}: trailPathStyle;
+    strokePathStyle = strokeColor ? {...strokePathStyle,stroke:strokeColor} : strokePathStyle;
     delete restProps.percent;
     delete restProps.gapDegree;
     delete restProps.gapPosition;

@@ -41,8 +41,6 @@
   "license": "MIT",
   "peerDependencies": {
     "axios": ">=0.18.0",
-    "react": ">=16.6.0",
-    "react-dom": ">=16.6.0",
     "mobx": ">4.5.0 <4.8.0",
     "mobx-react": ">=5.1.0",
     "lodash": ">=4.17.0"
@@ -51,6 +49,7 @@
     "@babel/runtime": "7.x",
     "element-resize-event": "^3.0.2",
     "dom-lib": "^1.2.1",
+    "@types/react-beautiful-dnd": "^13.0.0",
     "add-dom-event-listener": "1.x",
     "array-tree-filter": "^2.0.0",
     "async-validator": "1.x",
@@ -82,7 +81,10 @@
     "rc-animate": "^2.10.3",
     "rc-editor-core": "~0.8.3",
     "rc-virtual-list": "^1.1.1",
+    "react": ">=16.6.0",
+    "react-beautiful-dnd": "^13.0.0",
     "react-codemirror2": "5.1.0",
+    "react-dom": ">=16.6.0",
     "react-lazy-load": "^3.0.13",
     "react-slick": "~0.25.2",
     "resize-observer-polyfill": "^1.5.1",

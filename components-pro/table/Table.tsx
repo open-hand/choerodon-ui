@@ -11,16 +11,27 @@ import isObject from 'lodash/isObject';
 import noop from 'lodash/noop';
 import classes from 'component-classes';
 import { action } from 'mobx';
-import { getConfig } from 'choerodon-ui/lib/configure';
+import { 
+  DragDropContext,
+  DropResult,
+  ResponderProvided,
+  DroppableProps, 
+  DraggableProps,
+  DraggableRubric,
+  DraggableStateSnapshot,
+} from 'react-beautiful-dnd';
+import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
 import warning from 'choerodon-ui/lib/_util/warning';
 import { pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import ReactResizeObserver from 'choerodon-ui/lib/_util/resizeObserver';
 import Column, { ColumnProps, defaultMinWidth } from './Column';
+import TableRow,{ TableRowProps } from './TableRow';
+import TableHeaderCell,{TableHeaderCellProps} from './TableHeaderCell';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
-import TableStore from './TableStore';
+import TableStore,{DRAG_KEY} from './TableStore';
 import TableHeader from './TableHeader';
 import autobind from '../_util/autobind';
 import Pagination, { PaginationProps } from '../pagination/Pagination';
@@ -41,6 +52,7 @@ import {
   TablePaginationPosition,
   TableQueryBarType,
   TableAutoHeightType,
+  DragColumnAlign,
 } from './enum';
 import Switch from '../switch/Switch';
 import Tooltip from '../tooltip/Tooltip';
@@ -118,6 +130,64 @@ export interface TableSpinConfig extends SpinProps {
   spinning?: boolean;
   indicator?: SpinIndicator;
 }
+
+export interface Instance {
+  tbody:React.ReactElement;
+  headtr:React.ReactElement;
+}
+
+/**
+ * DraggableRubric 可以获取拖动起来item的index和id从列表获取信息
+ */
+export interface DragTableHeaderCellProps extends TableHeaderCellProps{
+  rubric: DraggableRubric
+}
+export interface DragTableRowProps extends TableRowProps {
+  rubric: DraggableRubric
+}
+export type DragRenderClone = (DragTableRowProps | DragTableHeaderCellProps)
+
+export type DragIconRender = ({column:ColumnProps,dataSet:DataSet,snapshot:DraggableStateSnapshot} | {record: Record})
+
+export interface DragRender {
+  droppableProps: DroppableProps;
+  draggableProps: DraggableProps;
+  renderClone: (dragRenderProps:DragRenderClone) => ReactElement<any>;
+  renderIcon: (DragIconRender) => ReactElement<any>;
+};
+
+let _instance;
+// 构造一个单例table来防止body下不能有table元素的报错
+export const instance = () :Instance => {
+  // Using a table as the portal so that we do not get react
+  // warnings when mounting a tr element
+  const _tableContain = ():Instance => {
+    const table: HTMLElement = document.createElement('table');
+      table.classList.add(`${getProPrefixCls('table')}-drag-container`);
+      const thead: HTMLElement = document.createElement('thead');
+      thead.classList.add(`${getProPrefixCls('table')}-thead`)
+      table.appendChild(thead);
+      const headtr: HTMLElement = document.createElement('tr');
+      thead.appendChild(headtr);
+      const tbody: HTMLElement = document.createElement('tbody');
+      tbody.classList.add(`${getProPrefixCls('table')}-tbody`)
+      table.appendChild(tbody);
+      if (!document.body) {
+        throw new Error('document.body required a body to append');
+      }
+    document.body.appendChild(table);
+    return {
+      // @ts-ignore
+      tbody,
+      // @ts-ignore
+      headtr,
+    }
+  }
+  if(_instance){
+    return _instance 
+  }
+  return _instance = _tableContain()
+};
 
 export interface TableProps extends DataSetComponentProps {
   columns?: ColumnProps[];
@@ -301,6 +371,30 @@ export interface TableProps extends DataSetComponentProps {
    * 是否开启宽度双击最大值
    */
   autoMaxWidth?: boolean;
+  /**
+   * 设置drag框体位置
+   */
+  dragColumnAlign?: DragColumnAlign;
+  /**
+   * 开启列拖拽，但是无法使用宽度拖拽
+   */
+  dragColumn?: boolean;
+  /**
+   * 开启行拖拽
+   */
+  dragRow?: boolean;
+  /**
+   * 拖拽触发事件
+   */
+  onDragEnd?:(dataSet:DataSet,columns:ColumnProps[],resultDrag: DropResult, provided: ResponderProvided) => void
+  /**
+   * 渲染列拖拽
+   */
+  columnsDragRender?:DragRender;
+  /**
+   * 渲染行拖拽
+   */
+  rowDragRender?:DragRender;
 }
 
 @observer
@@ -314,6 +408,10 @@ export default class Table extends DataSetComponent<TableProps> {
   static AdvancedQueryBar = AdvancedQueryBar;
 
   static ToolBar = ToolBar;
+
+  static TableRow = TableRow;
+
+  static TableHeaderCell = TableHeaderCell;
 
   static propTypes = {
     columns: PropTypes.array,
@@ -389,6 +487,18 @@ export default class Table extends DataSetComponent<TableProps> {
     highLightRow: PropTypes.bool,
     selectedHighLightRow: PropTypes.bool,
     autoMaxWidth: PropTypes.bool,
+    /**
+     * 设置drag框体位置
+     */
+    dragColumnAlign: PropTypes.oneOf([DragColumnAlign.left, DragColumnAlign.right]),
+    /**
+     * 开启列拖拽，但是无法使用宽度拖拽
+     */
+    dragColumn: PropTypes.bool,
+    /**
+     * 开启行拖拽
+     */
+    dragRow: PropTypes.bool,
     ...DataSetComponent.propTypes,
   };
 
@@ -405,6 +515,8 @@ export default class Table extends DataSetComponent<TableProps> {
     virtualSpin: false,
     autoHeight: false,
     autoMaxWidth:false,
+    dragRow:false,
+    dragColumn:false,
   };
 
   tableStore: TableStore = new TableStore(this);
@@ -424,6 +536,10 @@ export default class Table extends DataSetComponent<TableProps> {
   fixedColumnsBodyLeft: HTMLDivElement | null;
 
   fixedColumnsBodyRight: HTMLDivElement | null;
+
+  dragColumnsBodyLeft: HTMLDivElement | null;
+
+  dragColumnsBodyRight: HTMLDivElement | null;
 
   lastScrollLeft: number;
 
@@ -667,6 +783,10 @@ export default class Table extends DataSetComponent<TableProps> {
       'autoHeight',
       'useMouseBatchChoose',
       'autoMaxWidth',
+      'dragColumnAlign',
+      'dragColumn',
+      'dragRow',
+      'onDragEnd',
     ]);
     otherProps.onKeyDown = this.handleKeyDown;
     const { rowHeight } = this.tableStore;
@@ -795,6 +915,8 @@ export default class Table extends DataSetComponent<TableProps> {
         queryFieldsLimit,
         filterBarFieldName,
         filterBarPlaceholder,
+        dragColumnAlign,
+        dragRow,
       },
     } = this;
     const content = this.getTable();
@@ -804,6 +926,7 @@ export default class Table extends DataSetComponent<TableProps> {
     const styleHeight = style ? toPx(style.height) : 0;
 
     return (
+      
       <ReactResizeObserver resizeProp="width" onResize={this.handleResize}>
         <div {...this.getWrapperProps()}>
           <TableContext.Provider value={context}>
@@ -843,6 +966,8 @@ export default class Table extends DataSetComponent<TableProps> {
                   {content}
                   {isAnyColumnsLeftLock && overflowX && this.getLeftFixedTable()}
                   {isAnyColumnsRightLock && overflowX && this.getRightFixedTable()}
+                  {dragRow && dragColumnAlign === DragColumnAlign.left  && isAnyColumnsLeftLock && this.getLeftFixedTable(DragColumnAlign.left )}
+                  {dragRow && dragColumnAlign === DragColumnAlign.right &&  isAnyColumnsRightLock && this.getRightFixedTable(DragColumnAlign.right )}
                   <div ref={this.saveResizeRef} className={`${prefixCls}-split-line`} />
                 </div>
                 {this.getFooter()}
@@ -853,6 +978,62 @@ export default class Table extends DataSetComponent<TableProps> {
         </div>
       </ReactResizeObserver>
     );
+  }
+
+  @action
+  reorderDataSet(dataset: DataSet, startIndex: number, endIndex: number){
+    dataset.move(startIndex, endIndex)
+  };
+
+  @action
+  reorderColumns(columns: ColumnProps[], startIndex: number, endIndex: number) {
+    const cloneColumns = columns.slice()
+    const [dropItem] = cloneColumns.slice(endIndex, endIndex + 1);
+    const [dragItem] = cloneColumns.slice(startIndex, startIndex + 1);
+    const normalColumnLock = (lock) => {
+      if (lock === true) {
+        return ColumnLock.left
+      }
+      if (!lock) {
+        return false
+      }
+      return lock
+    }
+    if (
+      dropItem &&
+      dragItem &&
+      dropItem.key !== DRAG_KEY &&
+      dragItem.key !== DRAG_KEY &&
+      normalColumnLock(dragItem.lock) === normalColumnLock(dropItem.lock)) {
+      const [removed] = columns.splice(startIndex, 1)
+      if (columns.length) {
+        columns.splice(endIndex, 0, removed);
+      }
+    }
+  };
+
+  @autobind
+  onDragEnd(resultDrag: DropResult, provided: ResponderProvided) {
+    const {onDragEnd}  = this.props
+    if(resultDrag && resultDrag.destination){
+      if (resultDrag.destination.droppableId === 'table') {
+        this.reorderDataSet(
+          this.tableStore.dataSet,
+          resultDrag.source.index,
+          resultDrag.destination.index,
+        );
+      }
+      if(resultDrag.destination.droppableId === "tableHeader"){
+        this.reorderColumns(
+          this.tableStore.columns,
+          resultDrag.source.index,
+          resultDrag.destination.index,
+        );
+      }
+    }
+    if(onDragEnd){
+      onDragEnd(this.tableStore.dataSet,this.tableStore.columns,resultDrag,provided)
+    }
   }
 
   @autobind
@@ -890,8 +1071,10 @@ export default class Table extends DataSetComponent<TableProps> {
       return;
     }
     const fixedColumnsBodyLeft = this.fixedColumnsBodyLeft;
+    const dragColumnsBodyLeft = this.dragColumnsBodyLeft;
     const bodyTable = this.tableBodyWrap;
     const fixedColumnsBodyRight = this.fixedColumnsBodyRight;
+    const dragColumnsBodyRight = this.dragColumnsBodyRight; 
     const { scrollTop } = target;
     if (scrollTop !== this.lastScrollTop) {
       if (fixedColumnsBodyLeft && target !== fixedColumnsBodyLeft) {
@@ -903,6 +1086,15 @@ export default class Table extends DataSetComponent<TableProps> {
       if (fixedColumnsBodyRight && target !== fixedColumnsBodyRight) {
         fixedColumnsBodyRight.scrollTop = scrollTop;
       }
+
+      if (dragColumnsBodyLeft && target !== dragColumnsBodyLeft) {
+        dragColumnsBodyLeft.scrollTop = scrollTop;
+      }
+
+      if (dragColumnsBodyRight && target !== dragColumnsBodyRight) {
+        dragColumnsBodyRight.scrollTop = scrollTop;
+      }
+
       if (virtual) {
         this.refSpin!.style.display = 'block';
         this.setSpin();
@@ -1001,6 +1193,7 @@ export default class Table extends DataSetComponent<TableProps> {
     hasBody: boolean,
     hasFooter: boolean,
     lock?: ColumnLock | boolean,
+    dragColumnAlign?: DragColumnAlign,
   ): ReactNode {
     const {
       prefixCls,
@@ -1021,8 +1214,9 @@ export default class Table extends DataSetComponent<TableProps> {
             hasBody={false}
             hasHeader={hasHeader}
             hasFooter={false}
+            dragColumnAlign={dragColumnAlign}
           >
-            {hasHeader && this.getTableHeader(lock)}
+            {hasHeader && this.getTableHeader(lock,dragColumnAlign)}
           </TableWrapper>
           {hasBody &&
             <div
@@ -1038,8 +1232,9 @@ export default class Table extends DataSetComponent<TableProps> {
                 hasBody={hasBody}
                 hasHeader={false}
                 hasFooter={false}
+                dragColumnAlign={dragColumnAlign}
               >
-                {hasBody && this.getTableBody(lock)}
+                {hasBody && this.getTableBody(lock,dragColumnAlign)}
               </TableWrapper>
               <div className='refUnderPlaceholder' style={{ display: 'none' }} ref={(node) => this.refUnderPlaceholder.push(node)} />
             </div>}
@@ -1050,8 +1245,9 @@ export default class Table extends DataSetComponent<TableProps> {
             hasBody={false}
             hasHeader={false}
             hasFooter={hasFooter}
+            dragColumnAlign={dragColumnAlign}
           >
-            {hasFooter && this.getTableFooter(lock)}
+            {hasFooter && this.getTableFooter(lock,dragColumnAlign)}
           </TableWrapper>
         </>
       ) : (
@@ -1062,10 +1258,11 @@ export default class Table extends DataSetComponent<TableProps> {
           hasBody={hasBody}
           hasHeader={hasHeader}
           hasFooter={hasFooter}
+          dragColumnAlign={dragColumnAlign}
         >
-          {hasHeader && this.getTableHeader(lock)}
-          {hasBody && this.getTableBody(lock)}
-          {hasFooter && this.getTableFooter(lock)}
+          {hasHeader && this.getTableHeader(lock,dragColumnAlign)}
+          {hasBody && this.getTableBody(lock,dragColumnAlign)}
+          {hasFooter && this.getTableFooter(lock,dragColumnAlign)}
         </TableWrapper>
       );
   }
@@ -1145,13 +1342,13 @@ export default class Table extends DataSetComponent<TableProps> {
     }
   }
 
-  getTable(lock?: ColumnLock | boolean): ReactNode {
+  getTable(lock?: ColumnLock | boolean,dragColumnAlign?:DragColumnAlign): ReactNode {
     const { prefixCls, props: { autoHeight } } = this;
     const { overflowX, height, hasFooter: footer } = this.tableStore;
     let tableHead: ReactNode;
     let tableBody: ReactNode;
     let tableFooter: ReactNode;
-    if (height !== undefined || overflowX || autoHeight) {
+    if ((!dragColumnAlign && overflowX )|| height !== undefined || autoHeight) {
       const { lockColumnsBodyRowsHeight, rowHeight } = this.tableStore;
       let bodyHeight = height;
       let tableHeadRef;
@@ -1162,8 +1359,14 @@ export default class Table extends DataSetComponent<TableProps> {
         tableFootRef = node => (this.tableFootWrap = node);
         tableBodyRef = node => (this.tableBodyWrap = node);
       } else if (lock === 'right') {
+        if(dragColumnAlign === DragColumnAlign.right){
+          tableBodyRef = node => (this.dragColumnsBodyRight = node);
+        }
         tableBodyRef = node => (this.fixedColumnsBodyRight = node);
       } else {
+        if(dragColumnAlign === DragColumnAlign.left){
+          tableBodyRef = node => (this.dragColumnsBodyLeft = node);
+        }
         tableBodyRef = node => (this.fixedColumnsBodyLeft = node);
       }
       if (bodyHeight !== undefined) {
@@ -1178,7 +1381,7 @@ export default class Table extends DataSetComponent<TableProps> {
 
       tableHead = (
         <div key="tableHead" ref={tableHeadRef} className={`${prefixCls}-head`}>
-          {this.renderTable(true, false, false, lock)}
+          {this.renderTable(true, false, false, lock,dragColumnAlign)}
         </div>
       );
 
@@ -1191,7 +1394,7 @@ export default class Table extends DataSetComponent<TableProps> {
           height={bodyHeight}
           onScroll={this.handleBodyScroll}
         >
-          {this.renderTable(false, true, false, lock)}
+          {this.renderTable(false, true, false, lock,dragColumnAlign)}
         </TableBody>
       );
 
@@ -1203,58 +1406,66 @@ export default class Table extends DataSetComponent<TableProps> {
             className={`${prefixCls}-foot`}
             onScroll={this.handleBodyScroll}
           >
-            {this.renderTable(false, false, true, lock)}
+            {this.renderTable(false, false, true, lock,dragColumnAlign)}
           </div>
         );
       }
     } else {
-      tableBody = this.renderTable(true, true, footer, lock);
+      tableBody = this.renderTable(true, true, footer, lock,dragColumnAlign);
     }
     return [tableHead, tableBody, tableFooter];
   }
 
-  getLeftFixedTable(): ReactNode {
+  getLeftFixedTable(dragColumnAlign?: DragColumnAlign ): ReactNode {
     const { overflowX, height } = this.tableStore;
-    if (!overflowX && height === undefined) {
+    if ((!dragColumnAlign && !overflowX ) && height === undefined) {
       return;
     }
     const { prefixCls } = this;
-    const table = this.getTable(ColumnLock.left);
+    const table = this.getTable(ColumnLock.left,dragColumnAlign);
     return <div className={`${prefixCls}-fixed-left`}>{table}</div>;
   }
 
-  getRightFixedTable(): ReactNode | undefined {
+  getRightFixedTable(dragColumnAlign?: DragColumnAlign ): ReactNode | undefined {
     const { overflowX, height } = this.tableStore;
-    if (!overflowX && height === undefined) {
+    if ((!dragColumnAlign && !overflowX ) && height === undefined) {
       return;
     }
     const { prefixCls } = this;
-    const table = this.getTable(ColumnLock.right);
+    const table = this.getTable(ColumnLock.right,dragColumnAlign);
     return <div className={`${prefixCls}-fixed-right`}>{table}</div>;
   }
 
-  getTableBody(lock?: ColumnLock | boolean): ReactNode {
+  getTableBody(lock?: ColumnLock | boolean,dragColumnAlign?:DragColumnAlign): ReactNode {
     const {
       prefixCls,
       props: { indentSize },
     } = this;
-    return <TableTBody key="tbody" prefixCls={prefixCls} lock={lock} indentSize={indentSize!} />;
+    return (
+      <DragDropContext onDragEnd={this.onDragEnd}>
+        <TableTBody  key="tbody" prefixCls={prefixCls} lock={lock} indentSize={indentSize!} dragColumnAlign= {dragColumnAlign} />
+      </DragDropContext>
+    );
   }
 
-  getTableHeader(lock?: ColumnLock | boolean): ReactNode {
+  getTableHeader(lock?: ColumnLock | boolean,dragColumnAlign?:DragColumnAlign): ReactNode {
     const {
       prefixCls,
       props: { dataSet },
     } = this;
-    return <TableHeader key="thead" prefixCls={prefixCls} lock={lock} dataSet={dataSet} />;
+    return (
+      <DragDropContext onDragEnd={this.onDragEnd}>
+        <TableHeader key="thead" prefixCls={prefixCls} lock={lock} dataSet={dataSet} dragColumnAlign= {dragColumnAlign} />
+      </DragDropContext>
+    );
   }
 
-  getTableFooter(lock?: ColumnLock | boolean): ReactNode {
+  getTableFooter(lock?: ColumnLock | boolean,dragColumnAlign?:DragColumnAlign): ReactNode {
     const {
       prefixCls,
       props: { dataSet },
     } = this;
-    return <TableFooter key="tfoot" prefixCls={prefixCls} lock={lock} dataSet={dataSet} />;
+    return <TableFooter key="tfoot" prefixCls={prefixCls} lock={lock} dataSet={dataSet} dragColumnAlign={dragColumnAlign} />;
   }
 
   getStyleHeight(): number | undefined {

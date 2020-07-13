@@ -7,7 +7,12 @@ import debounce from 'lodash/debounce';
 import defaultTo from 'lodash/defaultTo';
 import isString from 'lodash/isString';
 import classes from 'component-classes';
+import {
+  DraggableProvided,
+  DraggableStateSnapshot,
+} from 'react-beautiful-dnd';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
+import { isFunction } from 'lodash';
 import { ColumnProps, minColumnWidth } from './Column';
 import TableContext from './TableContext';
 import { ElementProps } from '../core/ViewComponent';
@@ -19,6 +24,7 @@ import { ColumnAlign } from './enum';
 import { ShowHelp } from '../field/enum';
 import Tooltip from '../tooltip';
 import autobind from '../_util/autobind';
+import {SELECTION_KEY,DRAG_KEY} from './TableStore'
 
 export interface TableHeaderCellProps extends ElementProps {
   dataSet: DataSet;
@@ -28,6 +34,8 @@ export interface TableHeaderCellProps extends ElementProps {
   rowSpan?: number;
   colSpan?: number;
   getHeaderNode: () => HTMLTableSectionElement | null;
+  snapshot: DraggableStateSnapshot,
+  provided: DraggableProvided;
 }
 
 @observer
@@ -215,10 +223,11 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
   }
 
   render() {
-    const { column, prefixCls, dataSet, rowSpan, colSpan } = this.props;
+    const { column, prefixCls, dataSet, rowSpan, colSpan, provided, snapshot } = this.props;
     const {
-      tableStore: { rowHeight, columnResizable },
+      tableStore: { rowHeight,columnMaxDeep, columnResizable,props:{dragColumn,columnsDragRender= {} } },
     } = this.context;
+    const {renderIcon} = columnsDragRender
     const sortPrefixCls = `${prefixCls}-sort`;
     const {
       headerClassName,
@@ -249,7 +258,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
         ),
       ],
     };
-    const cellStyle: CSSProperties = {
+    let cellStyle: CSSProperties = {
       textAlign:
         align ||
         (command || (children && children.length) ? ColumnAlign.center : getAlignByField(field)),
@@ -260,6 +269,23 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
         height: pxToRem(rowHeight),
       };
     }
+    const dragIcon = () => {
+      if(renderIcon && isFunction(renderIcon)){
+        return renderIcon({
+          column,
+          dataSet,
+          snapshot,
+        })
+      }
+      if(column && column.key === DRAG_KEY){
+        return <Icon type="baseline-drag_indicator" />
+      }
+      return null
+    }
+    if(column.key !== SELECTION_KEY && dragColumn && columnMaxDeep <= 1){
+      innerProps.children.push(dragIcon())
+    }
+    
     if (showHelp !== ShowHelp.none) {
       const fieldHelp = defaultTo(field && field.get('help'), help);
       if (fieldHelp) {
@@ -273,6 +299,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
         } else {
           innerProps.children.push(helpIcon);
         }
+
       }
     }
     if (sortable && name) {
@@ -290,16 +317,26 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
         innerProps.children.push(icon);
       }
     }
+    if(dragColumn && provided.draggableProps.style){
+      cellStyle = {...omit(cellStyle, ['width', 'height']),...provided.draggableProps.style,cursor: 'move'}
+    }
     return (
       <th
         className={classList.join(' ')}
-        style={omit(cellStyle, ['width', 'height'])}
         rowSpan={rowSpan}
+        ref= {(ref)=>{
+          if(ref){
+            provided.innerRef(ref)
+          }
+        }}
+        {...provided.draggableProps}
+        {...provided.dragHandleProps}
         colSpan={colSpan}
         data-index={getColumnKey(column)}
+        style={cellStyle}
       >
         <div {...innerProps} />
-        {columnResizable && this.renderResizer()}
+        {columnResizable && !dragColumn && this.renderResizer()}
       </th>
     );
   }

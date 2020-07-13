@@ -15,9 +15,12 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Table`: Added Table drag feature.
+- 🌟 `Steps`: Added `Steps.Group` Component to grouping Step Components.
 - 🌟 `configure`: Added `collapseExpandIconPosition`, `collapseExpandIcon`, `collapseTrigger` properties.
 - 🌟 `Collapse`: Added `expandIcon`, `expandIconPosition`, `trigger` properties.
 - 🌟 `<pro>Select`: Added `commonItem`, `maxCommonTagPlaceholder`, `maxCommonTagCount`, `maxCommonTagTextLengthproperty` properties.
+- 🐞 `Progress`: Fixed Circle Progress can't change the color by strokeColor properties.
 - 🐞 `<pro>DatePciker`: Document repair.
 - 🐞 `<pro>Select`: Fixed a problem with the disabled option being checked by clicking the Select button.
 - 🐞 `<pro>Form`: Fixed the problem that the label of the `required` field is displayed incorrectly when `useColon` is true and `labelLayout` is vertical.
