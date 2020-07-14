@@ -17,7 +17,11 @@ title: API
 | primitiveValue            | 是否为原始值（建议以绑定的数据源 Field 的 type 来决定值类型，如 type 设为 object 相当于 primitiveValue 设为 false）`true` - 选项中 valueField 对应的值 `false` - 选项值对象 | boolean                                                        |                                                                             |
 | optionRenderer            | 渲染 Option 本文的钩子                                                                                                                                                      | ({ record, text, value }) => ReactNode                         |                                                                             |
 | notFoundContent           | 当下拉列表为空时显示的内容                                                                                                                                                  | ReactNode                                                      |                                                                             |
-| onOption                  | 设置选项属性，如 disabled                                                                                                                                                   | ({ dataSet, record })) => object                               |                                                                             |
+| onOption                  | 设置选项属性，如 disabled    
+| commonItem | 设置常用项 | Array&lt;string&gt; | undefined |
+| maxCommonTagPlaceholder | 设置常用项标签超出最大数量时的占位描述 | ReactNode \| (restValues) => ReactNode |  |
+| maxCommonTagCount | 设置常用项标签最大数量 | number |  |
+| maxCommonTagTextLength | 设置常用项标签文案最大长度 | number |  |                                                                                                                          | ({ dataSet, record })) => object                               |                                                                             |
 
 更多属性请参考 [TriggerField](/zh/procmp/abstract/trigger-field/#TriggerField)。
 
