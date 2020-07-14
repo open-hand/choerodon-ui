@@ -213,6 +213,21 @@
       "screenshot": "",
       "height": 133,
       "category": "pro"
+    },
+    {
+      "filename": "common-item.js",
+      "title": {
+        "zh": "常用项",
+        "en": "Common Item"
+      },
+      "description": {
+        "zh": "设置常用项。\n",
+        "en": "Common Item.\n"
+      },
+      "order": 14,
+      "screenshot": "",
+      "height": 200,
+      "category": "pro"
     }
   ]
 }

@@ -39,6 +39,12 @@ title: API
 | virtualSpin           | 是否开启虚拟滚动 Spin                                                                                                                                                                                                          | boolean                                                                                                | false    |
 | autoHeight            | 是否开启高度自适应                                                                                                                                                                                                             | boolean \| { type: 'minHeight' \| 'maxHeight', diff: number(80) }                                      | false    |
 | autoMaxWidth          | 是否开启双击侧边栏宽度最大自适应,初次双击为最大值再次双击为`minWidth`                                                                                                                                                          | boolean                                                                                                | false    |
+| dragColumnAlign | 增加一个可拖拽列，实现行拖拽 | 'left'\|'right' |  |
+| dragColumn | 打开列拖拽,组合列无法使用 | boolean | false |
+| dragRow | 行拖拽，实现行的拖拽，会导致拖拽列的一些事件失效，可以用dragColumnAlign来避免，树形数据无法使用 | boolean | false |
+| onDragEnd | 完成拖拽后的触发事件，可以通过 resultDrag.destination.droppableId === 'table' or ‘tableHeader’ 来判断是行拖拽还是列拖拽 | (dataSet:DataSet,columns:ColumnProps[],resultDrag: DropResult, provided: ResponderProvided) => void |  |
+| columnsDragRender | 控制列的拖拽渲染，从这里可以实现对默认的拖拽的一些自定义的设置，需要参阅react-beautiful-dnd | 请查看DragRender[配置项](#dragRender)  |  |
+| rowDragRender | 控制列的拖拽渲染，从这里可以实现对默认的拖拽的一些自定义的设置，需要参阅react-beautiful-dnd | 请查看DragRender[配置项](#dragRender) |  |
 
 更多属性请参考 [DataSetComponent](/zh/procmp/abstract/#DataSetComponent)。
 
@@ -103,6 +109,23 @@ title: API
 | 参数     | 说明               | 类型                        | 默认值   |
 | -------- | ------------------ | --------------------------- | -------- |
 | position | 指定分页显示的位置 | 'top' \| 'bottom' \| 'both' | 'bottom' |
+
+### dragRender
+
+可以满足自定义更多的渲染需求，注意会覆盖默认值，建议阅读 中文地址[react-beautiful-dnd](https://github.com/chinanf-boy/react-beautiful-dnd-zh)或者英文地址[react-beautiful-dnd](https://github.com/atlassian/react-beautiful-dnd) 以及当前table[代码示例](https://github.com/choerodon/choerodon-ui/blob/master/components-pro/table/TableTBody.tsx)
+
+可以注意一下设置
+新增拖拽例的key值 DRAG_KEY = '__drag-column__';
+防止拖拽在dom结构外报错的table 类名 c7n-pro-table-drag-container
+
+
+| 参数     | 说明               | 类型                        | 默认值   |
+| -------- | ------------------ | --------------------------- | -------- |
+| droppableProps | droppableProps 参考文档 | object |  |
+| draggableProps | DraggableProps 参考文档 | object |  |
+| renderClone | 拖拽起来的时候会在body下面新增加一个table 会在这个table注入元素 | `(DragTableRowProps \| DragTableHeaderCellProps) => ReactElement<any>` | |
+| renderIcon | 可以自定义图标图标 | 当为row时候`（{record}）=> ReactElement<any>`   为column 时候 `（{column，dataSet, snapshot}）=> ReactElement<any>` |  |
+
 
 ### spin
 

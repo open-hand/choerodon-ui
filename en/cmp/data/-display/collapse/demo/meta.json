@@ -87,6 +87,20 @@
       "order": 5,
       "height": 273,
       "screenshot": ""
+    },
+    {
+      "filename": "expand-icon.js",
+      "title": {
+        "zh": "自定义图标",
+        "en": "Borderless"
+      },
+      "description": {
+        "zh": "自定义图标、位置、点击触发区域。\n",
+        "en": "Custom icon, location, click trigger area.\n"
+      },
+      "order": 6,
+      "height": 273,
+      "screenshot": ""
     }
   ]
 }

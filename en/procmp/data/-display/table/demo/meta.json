@@ -288,6 +288,21 @@
       "screenshot": "",
       "height": 630,
       "category": "pro"
+    },
+    {
+      "filename": "drag.js",
+      "title": {
+        "zh": "拖拽集成",
+        "en": "Drag"
+      },
+      "description": {
+        "zh": "点击对应按钮查看不同类型拖拽示例。\n",
+        "en": " Click on the corresponding button to see different types of drag and drop examples.\n"
+      },
+      "order": 19,
+      "screenshot": "",
+      "height": 485,
+      "category": "pro"
     }
   ]
 }
