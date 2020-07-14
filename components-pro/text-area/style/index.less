@@ -11,6 +11,14 @@
     padding: @input-padding-horizontal;
   }
 
+  &-required {
+    background-color: transparent;
+
+    & .@{textarea-prefix} {
+      background-color: @input-required-bg;
+    }
+  }
+
   &-invalid& {
     border-color: @error-color;
   }
