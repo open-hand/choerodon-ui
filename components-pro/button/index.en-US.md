@@ -21,7 +21,7 @@ subtitle: 按钮
 | type | 设置按钮类型，可选值为 `button` `submit` `reset` | string | `button` |
 | color | 设置按钮颜色风格，可选值为 `default` `primary` `blue` `yellow` `red` `dark` `green` `purple` | string | `default` |
 | funcType | 设置按钮展现模式，可选值为 `flat` `raised` | string | `raised` |
-| loading | 设置按钮是否是加载状态 | boolean | `false` |
+| loading | 设置按钮是否是加载状态,**注意设置false与不设置的表现是不一样的**，不设置时，当onClick为返回`Promise`的时候,会自动开启loading，设置为`false`时不会开启loading状态，当设置为`true`的时候则一直使用loading状态，建议通过onClick控制loading状态 | boolean |  |
 | icon | 设置按钮图标 | string | - |
 | href | 点击跳转的地址，指定此属性 button 的行为和 a 链接一致 | string | - |
 | target | 相当于 a 链接的 target 属性，href 存在时生效 | string | - |

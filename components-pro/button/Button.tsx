@@ -126,7 +126,6 @@ export default class Button extends DataSetComponent<ButtonProps> {
   static defaultProps = {
     suffixCls: 'btn',
     type: ButtonType.button,
-    loading: false,
     waitType: ButtonWaitType.throttle,
   };
 
@@ -153,15 +152,26 @@ export default class Button extends DataSetComponent<ButtonProps> {
   }
 
   getObservableProps(props, context) {
+    let loading = false;
+    if ('loading' in props) {
+      loading = props.loading;
+    }
     return {
       dataSet: 'dataSet' in props ? props.dataSet : context.dataSet,
-      loading: props.loading,
+      loading,
       type: props.type,
     };
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
-    super.componentWillReceiveProps(nextProps, nextContext);
+    let loading = this.loading;
+    if ('loading' in nextProps) {
+      loading = nextProps.loading;
+    }
+    super.componentWillReceiveProps({
+      ...nextProps,
+      loading,
+    }, nextContext);
     const { wait, waitType } = this.props;
     if (wait !== nextProps.wait || waitType !== nextProps.waitType) {
       this.handleClickWait = this.getHandleClick(nextProps);
@@ -262,8 +272,8 @@ export default class Button extends DataSetComponent<ButtonProps> {
     const buttonIcon: any = this.loading ? (
       <Progress key="loading" type={ProgressType.loading} size={Size.small} />
     ) : (
-      icon && <Icon type={icon} />
-    );
+        icon && <Icon type={icon} />
+      );
     const hasString = Children.toArray(children).some(child => isString(child));
     const Cmp = href ? 'a' : 'button';
     const props = this.getMergedProps();
