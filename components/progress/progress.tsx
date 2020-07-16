@@ -8,12 +8,6 @@ import { Size } from '../_util/enum';
 import { ProgressPosition, ProgressStatus, ProgressType } from './enum';
 import { getPrefixCls } from '../configure';
 
-const statusColorMap = {
-  normal: '#108ee9',
-  exception: '#ff5500',
-  success: '#87d068',
-};
-
 export interface ProgressProps {
   prefixCls?: string;
   className?: string;
@@ -166,7 +160,7 @@ export default class Progress extends Component<ProgressProps, {}> {
             strokeWidth={circleWidth}
             trailWidth={circleWidth}
             trailColor={trailColor}
-            strokeColor={(statusColorMap as any)[progressStatus]}
+            strokeColor={strokeColor}
             prefixCls={prefixCls}
             gapDegree={gapDeg}
             gapPosition={gapPos}

@@ -68,6 +68,12 @@ export function processToJSON(value) {
   return value;
 }
 
+export const arrayMove = (array:Record[],from:number,to:number) => {
+  const startIndex = to < 0 ? array.length + to : to;
+  const item = array.splice(from,1)[0]
+  array.splice(startIndex,0,item)
+}
+
 function processOne(value: any, field: Field, checkRange: boolean = true) {
   if (!isEmpty(value)) {
     const range = field.get('range');

@@ -21,7 +21,7 @@ exports[`renders ./components/progress/demo/circle.md correctly 1`] = `
           fill-opacity="0"
           stroke="#f3f3f3"
           stroke-width="6"
-          style="stroke-dasharray:295.3097094374406px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s"
+          style="stroke-dasharray:295.3097094374406px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s;stroke:#f3f3f3"
         />
         <path
           class="c7n-progress-circle-path"
@@ -29,7 +29,6 @@ exports[`renders ./components/progress/demo/circle.md correctly 1`] = `
      a 47,47 0 1 1 0,94
      a 47,47 0 1 1 0,-94"
           fill-opacity="0"
-          stroke="#108ee9"
           stroke-linecap="round"
           stroke-width="6"
           style="stroke-dasharray:221.48228207808043px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s"
@@ -61,7 +60,7 @@ exports[`renders ./components/progress/demo/circle.md correctly 1`] = `
           fill-opacity="0"
           stroke="#f3f3f3"
           stroke-width="6"
-          style="stroke-dasharray:295.3097094374406px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s"
+          style="stroke-dasharray:295.3097094374406px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s;stroke:#f3f3f3"
         />
         <path
           class="c7n-progress-circle-path"
@@ -69,7 +68,6 @@ exports[`renders ./components/progress/demo/circle.md correctly 1`] = `
      a 47,47 0 1 1 0,94
      a 47,47 0 1 1 0,-94"
           fill-opacity="0"
-          stroke="#ff5500"
           stroke-linecap="round"
           stroke-width="6"
           style="stroke-dasharray:206.7167966062084px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s"
@@ -103,7 +101,7 @@ exports[`renders ./components/progress/demo/circle.md correctly 1`] = `
           fill-opacity="0"
           stroke="#f3f3f3"
           stroke-width="6"
-          style="stroke-dasharray:295.3097094374406px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s"
+          style="stroke-dasharray:295.3097094374406px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s;stroke:#f3f3f3"
         />
         <path
           class="c7n-progress-circle-path"
@@ -111,7 +109,6 @@ exports[`renders ./components/progress/demo/circle.md correctly 1`] = `
      a 47,47 0 1 1 0,94
      a 47,47 0 1 1 0,-94"
           fill-opacity="0"
-          stroke="#87d068"
           stroke-linecap="round"
           stroke-width="6"
           style="stroke-dasharray:295.3097094374406px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s"
@@ -150,7 +147,7 @@ exports[`renders ./components/progress/demo/circle-dynamic.md correctly 1`] = `
           fill-opacity="0"
           stroke="#f3f3f3"
           stroke-width="6"
-          style="stroke-dasharray:295.3097094374406px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s"
+          style="stroke-dasharray:295.3097094374406px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s;stroke:#f3f3f3"
         />
         <path
           class="c7n-progress-circle-path"
@@ -158,7 +155,6 @@ exports[`renders ./components/progress/demo/circle-dynamic.md correctly 1`] = `
      a 47,47 0 1 1 0,94
      a 47,47 0 1 1 0,-94"
           fill-opacity="0"
-          stroke="#108ee9"
           stroke-linecap="round"
           stroke-width="0"
           style="stroke-dasharray:0px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s"
@@ -221,7 +217,7 @@ exports[`renders ./components/progress/demo/circle-mini.md correctly 1`] = `
           fill-opacity="0"
           stroke="#f3f3f3"
           stroke-width="6"
-          style="stroke-dasharray:295.3097094374406px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s"
+          style="stroke-dasharray:295.3097094374406px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s;stroke:#f3f3f3"
         />
         <path
           class="c7n-progress-circle-path"
@@ -229,7 +225,6 @@ exports[`renders ./components/progress/demo/circle-mini.md correctly 1`] = `
      a 47,47 0 1 1 0,94
      a 47,47 0 1 1 0,-94"
           fill-opacity="0"
-          stroke="#108ee9"
           stroke-linecap="round"
           stroke-width="6"
           style="stroke-dasharray:88.59291283123217px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s"
@@ -261,7 +256,7 @@ exports[`renders ./components/progress/demo/circle-mini.md correctly 1`] = `
           fill-opacity="0"
           stroke="#f3f3f3"
           stroke-width="6"
-          style="stroke-dasharray:295.3097094374406px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s"
+          style="stroke-dasharray:295.3097094374406px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s;stroke:#f3f3f3"
         />
         <path
           class="c7n-progress-circle-path"
@@ -269,7 +264,6 @@ exports[`renders ./components/progress/demo/circle-mini.md correctly 1`] = `
      a 47,47 0 1 1 0,94
      a 47,47 0 1 1 0,-94"
           fill-opacity="0"
-          stroke="#ff5500"
           stroke-linecap="round"
           stroke-width="6"
           style="stroke-dasharray:206.7167966062084px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s"
@@ -303,7 +297,7 @@ exports[`renders ./components/progress/demo/circle-mini.md correctly 1`] = `
           fill-opacity="0"
           stroke="#f3f3f3"
           stroke-width="6"
-          style="stroke-dasharray:295.3097094374406px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s"
+          style="stroke-dasharray:295.3097094374406px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s;stroke:#f3f3f3"
         />
         <path
           class="c7n-progress-circle-path"
@@ -311,7 +305,6 @@ exports[`renders ./components/progress/demo/circle-mini.md correctly 1`] = `
      a 47,47 0 1 1 0,94
      a 47,47 0 1 1 0,-94"
           fill-opacity="0"
-          stroke="#87d068"
           stroke-linecap="round"
           stroke-width="6"
           style="stroke-dasharray:295.3097094374406px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s"
@@ -349,7 +342,7 @@ exports[`renders ./components/progress/demo/dashboard.md correctly 1`] = `
         fill-opacity="0"
         stroke="#f3f3f3"
         stroke-width="6"
-        style="stroke-dasharray:220.30970943744057px 295.3097094374406px;stroke-dashoffset:-37.5px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s"
+        style="stroke-dasharray:220.30970943744057px 295.3097094374406px;stroke-dashoffset:-37.5px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s;stroke:#f3f3f3"
       />
       <path
         class="c7n-progress-circle-path"
@@ -357,7 +350,6 @@ exports[`renders ./components/progress/demo/dashboard.md correctly 1`] = `
      a 47,47 0 1 1 0,-94
      a 47,47 0 1 1 0,94"
         fill-opacity="0"
-        stroke="#108ee9"
         stroke-linecap="round"
         stroke-width="6"
         style="stroke-dasharray:165.23228207808043px 295.3097094374406px;stroke-dashoffset:-37.5px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s"
@@ -447,7 +439,7 @@ exports[`renders ./components/progress/demo/format.md correctly 1`] = `
           fill-opacity="0"
           stroke="#f3f3f3"
           stroke-width="6"
-          style="stroke-dasharray:295.3097094374406px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s"
+          style="stroke-dasharray:295.3097094374406px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s;stroke:#f3f3f3"
         />
         <path
           class="c7n-progress-circle-path"
@@ -455,7 +447,6 @@ exports[`renders ./components/progress/demo/format.md correctly 1`] = `
      a 47,47 0 1 1 0,94
      a 47,47 0 1 1 0,-94"
           fill-opacity="0"
-          stroke="#108ee9"
           stroke-linecap="round"
           stroke-width="6"
           style="stroke-dasharray:221.48228207808043px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s"
@@ -487,7 +478,7 @@ exports[`renders ./components/progress/demo/format.md correctly 1`] = `
           fill-opacity="0"
           stroke="#f3f3f3"
           stroke-width="6"
-          style="stroke-dasharray:295.3097094374406px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s"
+          style="stroke-dasharray:295.3097094374406px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s;stroke:#f3f3f3"
         />
         <path
           class="c7n-progress-circle-path"
@@ -495,7 +486,6 @@ exports[`renders ./components/progress/demo/format.md correctly 1`] = `
      a 47,47 0 1 1 0,94
      a 47,47 0 1 1 0,-94"
           fill-opacity="0"
-          stroke="#87d068"
           stroke-linecap="round"
           stroke-width="6"
           style="stroke-dasharray:295.3097094374406px 295.3097094374406px;stroke-dashoffset:-0px;transition:stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s"

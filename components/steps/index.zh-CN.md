@@ -33,6 +33,14 @@ title: Steps
 | progressDot | 点状步骤条，可以设置为一个 function | Boolean or (iconDot, {index, status, title, description}) => ReactNode | false |
 | size | 指定大小，目前支持普通（`default`）和迷你（`small`） | string | default |
 | status | 指定当前步骤的状态，可选 `wait` `process` `finish` `error` | string | process |
+| headerRender | 头部对应渲染| headerRender?: () => React.ReactElement<any> |  |
+| headerIcon | 头部对应icon | string |  |
+| headerText | 头部对应描述 | string |  |
+
+
+### Steps.Group
+
+参考[Steps](#Steps)
 
 ### Steps.Step
 

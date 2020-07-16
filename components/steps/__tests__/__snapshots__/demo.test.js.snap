@@ -228,6 +228,145 @@ exports[`renders ./components/steps/demo/error.md correctly 1`] = `
 </div>
 `;
 
+exports[`renders ./components/steps/demo/group.md correctly 1`] = `
+<div
+  class="c7n-steps c7n-steps-horizontal group-demo c7n-steps-label-horizontal"
+>
+  <div
+    class="c7n-steps c7n-steps-horizontal c7n-steps-group c7n-steps-label-horizontal"
+  >
+    <div
+      class="c7n-steps-header"
+    >
+      <i
+        class="icon icon-instance c7n-steps-header-icon"
+      />
+      <span
+        class="c7n-steps-header-title"
+      >
+        必填项
+      </span>
+    </div>
+    <div
+      class="c7n-steps-item c7n-steps-item-process"
+    >
+      <div
+        class="c7n-steps-item-tail"
+      />
+      <div
+        class="c7n-steps-item-icon"
+      >
+        <span
+          class="c7n-steps-icon"
+        >
+          1
+        </span>
+      </div>
+      <div
+        class="c7n-steps-item-content"
+      >
+        <div
+          class="c7n-steps-item-title"
+        >
+          标题名称
+        </div>
+      </div>
+    </div>
+    <div
+      class="c7n-steps-item c7n-steps-item-wait"
+    >
+      <div
+        class="c7n-steps-item-tail"
+      />
+      <div
+        class="c7n-steps-item-icon"
+      >
+        <span
+          class="c7n-steps-icon"
+        >
+          2
+        </span>
+      </div>
+      <div
+        class="c7n-steps-item-content"
+      >
+        <div
+          class="c7n-steps-item-title"
+        >
+          标题名称
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="c7n-steps c7n-steps-horizontal c7n-steps-group group-next c7n-steps-label-horizontal"
+  >
+    <div
+      class="c7n-steps-header"
+    >
+      <i
+        class="icon icon-mail_modal c7n-steps-header-icon"
+      />
+      <span
+        class="c7n-steps-header-title"
+      >
+        选填项
+      </span>
+    </div>
+    <div
+      class="c7n-steps-item c7n-steps-item-wait"
+    >
+      <div
+        class="c7n-steps-item-tail"
+      />
+      <div
+        class="c7n-steps-item-icon"
+      >
+        <span
+          class="c7n-steps-icon"
+        >
+          3
+        </span>
+      </div>
+      <div
+        class="c7n-steps-item-content"
+      >
+        <div
+          class="c7n-steps-item-title"
+        >
+          标题名称
+        </div>
+      </div>
+    </div>
+    <div
+      class="c7n-steps-item c7n-steps-item-wait"
+    >
+      <div
+        class="c7n-steps-item-tail"
+      />
+      <div
+        class="c7n-steps-item-icon"
+      >
+        <span
+          class="c7n-steps-icon"
+        >
+          4
+        </span>
+      </div>
+      <div
+        class="c7n-steps-item-content"
+      >
+        <div
+          class="c7n-steps-item-title"
+        >
+          标题名称
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`renders ./components/steps/demo/icon.md correctly 1`] = `
 <div
   class="c7n-steps c7n-steps-horizontal c7n-steps-label-horizontal"
