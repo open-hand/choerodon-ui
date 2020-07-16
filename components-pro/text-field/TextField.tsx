@@ -10,6 +10,7 @@ import { action, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
+import { getConfig } from 'choerodon-ui/lib/configure';
 import { FormField, FormFieldProps } from '../field/FormField';
 import autobind from '../_util/autobind';
 import isEmpty from '../_util/isEmpty';
@@ -136,7 +137,6 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   static defaultProps = {
     ...FormField.defaultProps,
     suffixCls: 'input',
-    autoComplete: 'off',
     clearButton: false,
     multiple: false,
   };
@@ -167,10 +167,12 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       'placeholder',
       'placeHolder',
       'maxLengths',
+      'autoComplete',
     ]);
     otherProps.type = this.type;
     otherProps.maxLength = this.getProp('maxLength');
     otherProps.onKeyDown = this.handleKeyDown;
+    otherProps.autoComplete = this.props.autoComplete || getConfig('textFieldAutoComplete') || 'off';
     return otherProps;
   }
 
@@ -220,17 +222,17 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
     const element = (
       <span key="element" {...this.getWrapperProps()}>
-          {multipleHolder}
-          {otherPrevNode}
-          {placeholderDiv}
-          {renderedValue}
-          <label onMouseDown={this.handleMouseDown}>
-            {prefix}
-            {input}
-            {floatLabel}
-            {button}
-            {suffix}
-          </label>
+        {multipleHolder}
+        {otherPrevNode}
+        {placeholderDiv}
+        {renderedValue}
+        <label onMouseDown={this.handleMouseDown}>
+          {prefix}
+          {input}
+          {floatLabel}
+          {button}
+          {suffix}
+        </label>
       </span>
     );
 
@@ -610,10 +612,10 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const { tagContainer } = this;
     const { style } = this.props;
     if (tagContainer && style && style.height) {
-      if(tagContainer.scrollTo){
+      if (tagContainer.scrollTo) {
         tagContainer.scrollTo(0, tagContainer.getBoundingClientRect().height);
-      }else{
-        tagContainer.scrollTop = tagContainer.getBoundingClientRect().height
+      } else {
+        tagContainer.scrollTop = tagContainer.getBoundingClientRect().height;
       }
 
     }
