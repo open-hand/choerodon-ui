@@ -38,8 +38,10 @@ import {
   getProperty,
   normalizeLabelWidth,
   defaultExcludeUseColonTag,
+  findFirstInvalidElement,
 } from './utils';
 import FormVirtualGroup from './FormVirtualGroup';
+
 /**
  * 表单name生成器
  */
@@ -462,6 +464,34 @@ export default class Form extends DataSetComponent<FormProps> {
       ...props,
       [`${prefixCls}-float-label`]: labelLayout === LabelLayout.float,
     });
+  }
+
+  componentWillMount() {
+    this.processDataSetListener(true);
+  }
+
+
+  componentWillUnmount() {
+    this.processDataSetListener(false);
+  }
+
+  processDataSetListener(flag: boolean) {
+    const { dataSet } = this;
+    if (dataSet) {
+      const handler = flag ? dataSet.addEventListener : dataSet.removeEventListener;
+      handler.call(dataSet, 'validate', this.handleDataSetValidate);
+    }
+  }
+
+  // 处理校验失败定位
+  @autobind
+  async handleDataSetValidate({ result }) {
+    if (!await result) {
+      const item = this.element ? findFirstInvalidElement(this.element) : null;
+      if (item) {
+        item.focus();
+      }
+    }
   }
 
   rasterizedChildren() {

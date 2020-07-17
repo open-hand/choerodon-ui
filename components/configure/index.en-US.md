@@ -67,6 +67,9 @@ const prefixCls = getConfig('prefixCls');
 | useColon | Form是否使用冒号,当开启时会在所有的label后面加上冒号,并且必填的*号会被移到最前方 | boolean | false |
 | excludeUseColonTagList | Form中不使用冒号的标签的列表,当为自定义组件的时候,需要设置displayName作为标签名 | string[] | ['div','button','Button'] |
 | lovTableProps | 全局配置lov的tableProps,当同时存在lovTableProps以及的时候会进行一层合并 | [TableProps](/components-pro/table/) | {} |
+| collapseExpandIconPosition | 全局配置 collapse 图标位置 |  `left` \| `right` | `left` |
+| collapseExpandIcon | 全局配置 collapse 自定义切换图标| (panelProps) => ReactNode \| `text`(预置icon + 展开收起文字) | 无 |
+| collapseTrigger | 全局配置切换面板的触发位置 | `header` \| `icon` | `header` |
 | textFieldAutoComplete | 全局配置textField的autoComplete属性 | 可选值: `on` `off` |  |
 | resultStatusRenderer | custom status render，you can add status renderer or cover status renderer, support the gloabal config | object-> {string:react.ReactNode} | - |
 

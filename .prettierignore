@@ -25,3 +25,4 @@ components/*/*.jsx
 .eslintignore
 **/*.yml
 components/style/color/*.less
+public

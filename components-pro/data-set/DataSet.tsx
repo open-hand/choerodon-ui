@@ -1504,11 +1504,15 @@ export default class DataSet extends EventManager {
     }
     const cascade =
       noCascade === undefined && this.dataToJSON ? useCascade(this.dataToJSON) : !noCascade;
-    return Promise.all(
+    const validateResult = Promise.all(
       (useSelected(this.dataToJSON) ? this.selected : this.data).map(record =>
         record.validate(false, !cascade),
       ),
     ).then(results => results.every(result => result));
+
+    this.fireEvent(DataSetEvents.validate, { dataSet: this, result: validateResult });
+
+    return validateResult;
   }
 
   /**

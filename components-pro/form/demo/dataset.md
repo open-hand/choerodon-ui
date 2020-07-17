@@ -31,6 +31,7 @@ import {
 } from 'choerodon-ui/pro';
 
 const { Option } = Select;
+const { FormVirtualGroup }=Form;
 
 function passwordValidator(value, name, record) {
   if (value !== record.get('password')) {
@@ -58,36 +59,31 @@ class App extends React.Component {
         name: 'password',
         type: 'string',
         label: '密码',
-        required: true,
         defaultValidationMessages,
       },
       {
         name: 'confirmPassword',
         type: 'string',
         label: '确认密码',
-        required: true,
-        validator: passwordValidator,
       },
       {
         name: 'age',
         type: 'number',
         label: '年龄',
-        required: true,
         min: 18,
         step: 1,
         help: '我们需要确定你的年龄',
       },
-      { name: 'sex', type: 'string', label: '性别', required: true },
+      { name: 'sex', type: 'string', label: '性别' },
       {
         name: 'language',
         type: 'string',
         label: '语言',
-        required: true,
         help: '超过两行的帮助信息超过两行的帮助信息超过两行的帮助信息',
       },
-      { name: 'email', type: 'email', label: '邮箱', required: true },
-      { name: 'homepage', type: 'url', label: '个人主页', required: true },
-      { name: 'birth', type: 'date', label: '生日', required: true },
+      { name: 'email', type: 'email', label: '邮箱' },
+      { name: 'homepage', type: 'url', label: '个人主页' },
+      { name: 'birth', type: 'date', label: '生日' },
       { name: 'code', type: 'object', label: '代码描述', lovCode: 'LOV_CODE' },
       { name: 'frozen', type: 'boolean', label: '是否冻结' },
     ],
@@ -113,6 +109,10 @@ class App extends React.Component {
           <Option value="en-us">英语(美国)</Option>
           <Option value="ja-jp">日本語</Option>
         </Select>
+        <FormVirtualGroup className="virtual-group">
+          <EmailField name="email" />
+          <UrlField name="homepage" />
+        </FormVirtualGroup>
         <EmailField name="email" />
         <UrlField name="homepage" />
         <DatePicker name="birth" />

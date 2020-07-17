@@ -18,6 +18,7 @@ export const enum DataSetEvents {
   remove = 'remove',
   beforeDelete = 'beforeDelete',
   reset = 'reset',
+  validate = 'validate',
 }
 
 export const enum DataSetSelection {

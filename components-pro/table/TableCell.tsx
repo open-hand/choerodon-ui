@@ -151,7 +151,7 @@ export default class TableCell extends Component<TableCellProps> {
   @action
   syncSize() {
     this.overflow = this.computeOverFlow();
-    this.setMaxColumnWidth()
+    this.setMaxColumnWidth();
   }
 
   @action
@@ -169,8 +169,8 @@ export default class TableCell extends Component<TableCellProps> {
           let { width: measureWidth } = element.getBoundingClientRect();
           element.style.position = '';
           measureWidth = 20 + measureWidth;
-          const newWidth = Math.max(measureWidth, minColumnWidth(column),column.width?column.width:0);
-          if(!innerMaxWidth || newWidth > innerMaxWidth){
+          const newWidth = Math.max(measureWidth, minColumnWidth(column), column.width ? column.width : 0);
+          if (!innerMaxWidth || newWidth > innerMaxWidth) {
             set(column, 'innerMaxWidth', newWidth);
           }
         }
@@ -440,7 +440,7 @@ export default class TableCell extends Component<TableCellProps> {
   getInnerNode(prefixCls, command?: Commands[]) {
     const {
       context: {
-        tableStore: { rowHeight, expandIconAsCell, hasCheckFieldColumn, pristine, props:{ autoMaxWidth } },
+        tableStore: { rowHeight, expandIconAsCell, hasCheckFieldColumn, pristine, props: { autoMaxWidth } },
       },
       props: { children },
     } = this;
@@ -463,7 +463,7 @@ export default class TableCell extends Component<TableCellProps> {
       innerProps.style = {
         height: pxToRem(rowHeight),
       };
-      if(autoMaxWidth|| (tooltip && tooltip !== TableColumnTooltip.none)){
+      if (autoMaxWidth || (tooltip && tooltip !== TableColumnTooltip.none)) {
         innerProps.ref = this.saveOutput;
       }
     }
@@ -508,7 +508,7 @@ export default class TableCell extends Component<TableCellProps> {
   render() {
     const { column, prefixCls, record } = this.props;
     const {
-      tableStore: { inlineEdit, pristine,props:{autoMaxWidth} },
+      tableStore: { inlineEdit, pristine, props: { autoMaxWidth } },
     } = this.context;
     const { className, style, align, name, onCell, tooltip } = column;
     const command = this.getCommand();
@@ -517,10 +517,10 @@ export default class TableCell extends Component<TableCellProps> {
     const cellExternalProps: HTMLProps<HTMLTableCellElement> =
       typeof onCell === 'function'
         ? onCell({
-            dataSet: record.dataSet!,
-            record,
-            column,
-          })
+          dataSet: record.dataSet!,
+          record,
+          column,
+        })
         : {};
     const cellStyle: CSSProperties = {
       textAlign: align || (command ? ColumnAlign.center : getAlignByField(field)),
@@ -537,22 +537,22 @@ export default class TableCell extends Component<TableCellProps> {
       className,
       cellExternalProps.className,
     );
-    const widthDraggingStyle = ():React.CSSProperties =>{
-      const draggingStyle:React.CSSProperties = {}
-      if(column.width){
-        draggingStyle.width = pxToRem(column.width)
+    const widthDraggingStyle = (): React.CSSProperties => {
+      const draggingStyle: React.CSSProperties = {};
+      if (column.width) {
+        draggingStyle.width = pxToRem(column.width);
       }
-      if(column.minWidth){
-        draggingStyle.minWidth = pxToRem(column.minWidth)
+      if (column.minWidth) {
+        draggingStyle.minWidth = pxToRem(column.minWidth);
       }
-      draggingStyle.whiteSpace = "nowrap"
-      return draggingStyle
-    }
+      draggingStyle.whiteSpace = 'nowrap';
+      return draggingStyle;
+    };
     const td = (
       <td
         {...cellExternalProps}
         className={classString}
-        style={{...omit(cellStyle, ['width', 'height']),...widthDraggingStyle()}}
+        style={{ ...omit(cellStyle, ['width', 'height']), ...widthDraggingStyle() }}
         data-index={getColumnKey(column)}
       >
         {this.getInnerNode(cellPrefix, command)}

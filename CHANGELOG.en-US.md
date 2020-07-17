@@ -15,10 +15,20 @@ timeline: true
 
 ---
 
-- 🌟 `Result`: Added the Result component.
+- 🌟 `Result`: Added the `Result` component.
+- 🌟 `configure`: Added `textFieldAutoComplete`, `resultStatusRenderer` properties。
+- 🌟 `<pro>Form`: Added `Form` submit check automatically to check failed component feature.
+- 🌟 `<pro>Table`: Added `Table` submit check automatically to check failed cell feature.
+- 🐞 `<pro>TextArea`: Fixes the problem that after setting required and resize properties in `Form` at the same time, the background color does not change along with the width and height.
+- 🐞 `<pro>Button`: Modified the loading mechanism to fix the problem that the query button does not enter the loading state in the Table.
+
+## 0.8.67
+
+`2020-07-14`
+
 - 🌟 `<pro>Table`: Added Table drag feature.
 - 🌟 `Steps`: Added `Steps.Group` Component to grouping Step Components.
-- 🌟 `configure`: Added `collapseExpandIconPosition`, `collapseExpandIcon`, `collapseTrigger`, `textFieldAutoComplete` properties.
+- 🌟 `configure`: Added `collapseExpandIconPosition`, `collapseExpandIcon`, `collapseTrigger` properties.
 - 🌟 `Collapse`: Added `expandIcon`, `expandIconPosition`, `trigger` properties.
 - 🌟 `<pro>Select`: Added `commonItem`, `maxCommonTagPlaceholder`, `maxCommonTagCount`, `maxCommonTagTextLengthproperty` properties.
 - 🐞 `Progress`: Fixed Circle Progress can't change the color by strokeColor properties.
@@ -28,9 +38,6 @@ timeline: true
 - 🐞 `<pro>Form`: Fixed the problem that the `pristine` attribute cannot be used when `Form` used in typescript.
 - 🐞 `<pro>Lov`: Fixed lov table automatically positioning to the first data item in single-select mode and clicking OK when rowbox is displayed will select current as the option even if no option is selected at this time.
 - 🐞 `<pro>DataSet`: Fix the problem that when a PrimaryKey is set, a piece of data is deleted if a new piece is not submitted, and when the interface returns 204, the response will be filled into the record as data.
-- 🐞 `<pro>TextArea`: Fixes the problem that after setting required and resize properties in Form at the same time, the background color does not change along with the width and height.
-- 🐞 `<pro>Button`: Modified the loading mechanism to fix the problem that the query button does not enter the loading state in the Table.
-
 
 ## 0.8.66
 

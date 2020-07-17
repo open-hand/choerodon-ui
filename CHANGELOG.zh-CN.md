@@ -16,9 +16,20 @@ timeline: true
 ---
 
 - 🌟 `Result`: 新增Result组件。
+- 🌟 `configure`: 新增 `textFieldAutoComplete`, `resultStatusRenderer` 全局配置。
+- 🌟 `<pro>DataSet`: 新增 `DataSet` `validate` 校验事件。
+- 🌟 `<pro>Form`: 新增 Form 提交校验自动定位到校验未通过组件功能。
+- 🌟 `<pro>Table`: 新增 Table 提交校验自动定位到校验未通过单元格功能。
+- 🐞 `<pro>TextArea`: 修复了在Form中同时设置了required跟resize属性后,背景色不跟着宽高一起变化的问题.
+- 🐞 `<pro>Button`: 修改了loading机制,修复query按钮在Table中不进入loading状态的问题.
+
+## 0.8.67
+
+`2020-07-14`
+
 - 🌟 `<pro>Table`: 新增Table拖拽功能。
 - 🌟 `Steps`: 新增 Steps.Group 组件可以配置Step分组。
-- 🌟 `configure`: 新增 collapseExpandIconPosition, collapseExpandIcon, collapseTrigger, textFieldAutoComplete 全局配置。
+- 🌟 `configure`: 新增 collapseExpandIconPosition, collapseExpandIcon, collapseTrigger 全局配置。
 - 🌟 `Collapse`: 新增 expandIcon, expandIconPosition, trigger 属性。
 - 🌟 `<pro>Select`: 新增 commonItem, maxCommonTagPlaceholder, maxCommonTagCount, maxCommonTagTextLength 常用项相关属性。
 - 🐞 `Progress`: 修复无法修改 Circle Progress strokeColor属性颜色的问题。
@@ -28,8 +39,6 @@ timeline: true
 - 🐞 `<pro>Form`: 修复在 typescript 中使用的 Form 的时候,无法使用 pristine 属性的问题.
 - 🐞 `<pro>Lov`: 修复在单选模式下lov table自动定位到数据第一条并且在显示rowbox的情况点击确定会选择current作为选项即使此时没有选中选项.
 - 🐞 `<pro>DataSet`: 修复在设置了primaryKey的情况下,在新增一条未提交的情况下删除一条数据,当接口返回204时,会将response作为数据填入到record中的问题。
-- 🐞 `<pro>TextArea`: 修复了在Form中同时设置了required跟resize属性后,背景色不跟着宽高一起变化的问题.
-- 🐞 `<pro>Button`: 修改了loading机制,修复query按钮在Table中不进入loading状态的问题.
 
 ## 0.8.66
 
