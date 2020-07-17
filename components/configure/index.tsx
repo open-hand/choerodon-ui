@@ -123,6 +123,7 @@ export type Config = {
   excludeUseColonTagList?: string[];
   lovTableProps?: TableProps;
   textFieldAutoComplete?: 'on' | 'off';
+  resultStatusRenderer?: object;
 };
 
 export type ConfigKeys = keyof Config;

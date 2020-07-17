@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `Result`: Added the Result component.
 - 🌟 `<pro>Table`: Added Table drag feature.
 - 🌟 `Steps`: Added `Steps.Group` Component to grouping Step Components.
 - 🌟 `configure`: Added `collapseExpandIconPosition`, `collapseExpandIcon`, `collapseTrigger`, `textFieldAutoComplete` properties.
@@ -27,6 +28,7 @@ timeline: true
 - 🐞 `<pro>Form`: Fixed the problem that the `pristine` attribute cannot be used when `Form` used in typescript.
 - 🐞 `<pro>Lov`: Fixed lov table automatically positioning to the first data item in single-select mode and clicking OK when rowbox is displayed will select current as the option even if no option is selected at this time.
 - 🐞 `<pro>DataSet`: Fix the problem that when a PrimaryKey is set, a piece of data is deleted if a new piece is not submitted, and when the interface returns 204, the response will be filled into the record as data.
+- 🐞 `<pro>TextArea`: Fixes the problem that after setting required and resize properties in Form at the same time, the background color does not change along with the width and height.
 - 🐞 `<pro>Button`: Modified the loading mechanism to fix the problem that the query button does not enter the loading state in the Table.
 
 
