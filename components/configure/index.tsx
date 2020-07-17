@@ -122,6 +122,7 @@ export type Config = {
   useColon?: boolean;
   excludeUseColonTagList?: string[];
   lovTableProps?: TableProps;
+  textFieldAutoComplete?: 'on' | 'off';
   resultStatusRenderer?: object;
 };
 
@@ -211,6 +212,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['useColon', false],
   ['excludeUseColonTagList', defaultExcludeUseColonTag],
   ['lovTableProps', {}],
+  ['textFieldAutoComplete', undefined],
 ]);
 
 export function getConfig(key: ConfigKeys): any {
