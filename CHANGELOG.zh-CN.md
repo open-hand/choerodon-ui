@@ -17,7 +17,7 @@ timeline: true
 
 - 🌟 `<pro>Table`: 新增Table拖拽功能。
 - 🌟 `Steps`: 新增 Steps.Group 组件可以配置Step分组。
-- 🌟 `configure`: 新增 collapseExpandIconPosition, collapseExpandIcon, collapseTrigger 全局配置。
+- 🌟 `configure`: 新增 collapseExpandIconPosition, collapseExpandIcon, collapseTrigger, textFieldAutoComplete 全局配置。
 - 🌟 `Collapse`: 新增 expandIcon, expandIconPosition, trigger 属性。
 - 🌟 `<pro>Select`: 新增 commonItem, maxCommonTagPlaceholder, maxCommonTagCount, maxCommonTagTextLength 常用项相关属性。
 - 🐞 `Progress`: 修复无法修改 Circle Progress strokeColor属性颜色的问题。
