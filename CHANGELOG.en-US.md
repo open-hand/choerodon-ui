@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `Result`: Added the Result component.
 - 🌟 `<pro>Table`: Added Table drag feature.
 - 🌟 `Steps`: Added `Steps.Group` Component to grouping Step Components.
 - 🌟 `configure`: Added `collapseExpandIconPosition`, `collapseExpandIcon`, `collapseTrigger` properties.

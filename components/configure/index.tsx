@@ -122,6 +122,7 @@ export type Config = {
   useColon?: boolean;
   excludeUseColonTagList?: string[];
   lovTableProps?: TableProps;
+  resultStatusRenderer?: object;
 };
 
 export type ConfigKeys = keyof Config;
