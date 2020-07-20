@@ -26,6 +26,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复在 `autoHeight` 属性 `type: maxHeight` 下固定列滑动不同步问题。
 - 🐞 `<pro>TextArea`: 修复在 Form 中同时设置了required 跟 resize 属性后，背景色不跟着宽高一起变化的问题。
 - 🐞 `<pro>Button`: 修改 loading 机制，修复 query 按钮在 Table 中不进入 loading 状态的问题。
+- 🐞 `<pro>Form`: 修改了在冒号模式下,必填项与非必填项的label颜色不一致的问题。
 
 ## 0.8.67
 
