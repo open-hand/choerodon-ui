@@ -32,6 +32,8 @@ timeline: true
 - 🌟 `Collapse`: Added `expandIcon`, `expandIconPosition`, `trigger` properties.
 - 🌟 `<pro>Select`: Added `commonItem`, `maxCommonTagPlaceholder`, `maxCommonTagCount`, `maxCommonTagTextLengthproperty` properties.
 - 🐞 `Progress`: Fixed Circle Progress can't change the color by strokeColor properties.
+- 🐞 `<pro>Table`: Fixed table use inline mode the lookup auto pack up.
+- 🐞 `<pro>Table`: Fixed table the scroll auto automatic sliding.
 - 🐞 `<pro>DatePciker`: Document repair.
 - 🐞 `<pro>Select`: Fixed a problem with the disabled option being checked by clicking the Select button.
 - 🐞 `<pro>Form`: Fixed the problem that the label of the `required` field is displayed incorrectly when `useColon` is true and `labelLayout` is vertical.

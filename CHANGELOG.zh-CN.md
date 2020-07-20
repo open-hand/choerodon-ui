@@ -33,6 +33,8 @@ timeline: true
 - 🌟 `Collapse`: 新增 expandIcon, expandIconPosition, trigger 属性。
 - 🌟 `<pro>Select`: 新增 commonItem, maxCommonTagPlaceholder, maxCommonTagCount, maxCommonTagTextLength 常用项相关属性。
 - 🐞 `Progress`: 修复无法修改 Circle Progress strokeColor属性颜色的问题。
+- 🐞 `<pro>Table`: 修复 table 使用inline模式出现lookup自动收起问题。
+- 🐞 `<pro>Table`: 修复 table在IE浏览器下滑动条回弹问题。
 - 🐞 `<pro>DatePciker`: 文档修复。
 - 🐞 `<pro>Select`: 修复点击全选按钮导致禁用选项也被勾选的问题。
 - 🐞 `<pro>Form`: 修复当设置 useColon为true, labelLayout为vertical 的时候 required 的字段 label 显示不正确的问题.
