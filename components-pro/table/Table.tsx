@@ -400,6 +400,10 @@ export interface TableProps extends DataSetComponentProps {
    * 渲染行拖拽
    */
   rowDragRender?: DragRender;
+  /**
+   * 是否开启回车跳转下一行编辑
+   */
+  editorNextKeyEnterDown?: boolean;
 }
 
 @observer

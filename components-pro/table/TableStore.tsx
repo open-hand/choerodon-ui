@@ -321,6 +321,17 @@ export default class TableStore {
   }
 
   @computed
+  get editorNextKeyEnterDown(): boolean {
+    if ('editorNextKeyEnterDown' in this.props) {
+      return this.props.editorNextKeyEnterDown;
+    }
+    if (getConfig('tableEditorNextKeyEnterDown') === false) {
+      return false;
+    }
+    return true;
+  }
+
+  @computed
   get border(): boolean {
     if ('border' in this.props) {
       return this.props.border;

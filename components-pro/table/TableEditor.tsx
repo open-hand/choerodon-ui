@@ -56,7 +56,9 @@ export default class TableEditor extends Component<TableEditorProps> {
 
   @autobind
   handleEditorKeyEnterDown(e) {
-    if (!e.isDefaultPrevented()) {
+    const { tableStore } = this.context;
+    const editorNextKeyEnterDown = tableStore.editorNextKeyEnterDown;
+    if (!e.isDefaultPrevented() && editorNextKeyEnterDown) {
       this.showNextEditor(e.shiftKey);
     }
   }

@@ -15,15 +15,16 @@ timeline: true
 
 ---
 
-- 🌟 `Result`: 新增Result组件。
-- 🌟 `configure`: 新增 `textFieldAutoComplete`, `resultStatusRenderer` 全局配置。
+- 🌟 `Result`: 新增 Result 组件。
+- 🌟 `configure`: 新增 `textFieldAutoComplete`, `resultStatusRenderer`, `tableEditorNextKeyEnterDown` 全局配置。
 - 🌟 `<pro>DataSet`: 新增 `DataSet` `validate` 校验事件。
-- 🌟 `<pro>Form`: 新增 Form 提交校验自动定位到校验未通过组件功能。
-- 🌟 `<pro>Table`: 新增 Table 提交校验自动定位到校验未通过单元格功能。
-- 🐞 `<pro>Table`: 修复 table 在 IE 浏览器下滑动条回弹问题。
-- 🐞 `<pro>Table`: 修复 table 使用 inline 模式出现 lookup 自动收起问题。
-- 🐞 `<pro>TextArea`: 修复了在 Form 中同时设置了required 跟 resize 属性后，背景色不跟着宽高一起变化的问题。
-- 🐞 `<pro>Button`: 修改了loading 机制,修复 query 按钮在 Table 中不进入 loading 状态的问题。
+- 🌟 `<pro>Form`: 新增提交校验自动定位到校验未通过组件功能。
+- 🌟 `<pro>Table`: 新增提交校验自动定位到校验未通过单元格功能。
+- 🌟 `<pro>Table`: 新增控制行内编辑器回车跳转下一行编辑器属性 `editorNextKeyEnterDown`。
+- 🐞 `<pro>Table`: 修复在 IE 浏览器下滑动条回弹问题。
+- 🐞 `<pro>Table`: 修复使用 inline 模式出现 lookup 自动收起问题。
+- 🐞 `<pro>TextArea`: 修复在 Form 中同时设置了required 跟 resize 属性后，背景色不跟着宽高一起变化的问题。
+- 🐞 `<pro>Button`: 修改 loading 机制，修复 query 按钮在 Table 中不进入 loading 状态的问题。
 
 ## 0.8.67
 
