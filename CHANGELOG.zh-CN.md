@@ -21,6 +21,7 @@ timeline: true
 - 🌟 `<pro>Form`: 新增提交校验自动定位到校验未通过组件功能。
 - 🌟 `<pro>Table`: 新增提交校验自动定位到校验未通过单元格功能。
 - 🌟 `<pro>Table`: 新增控制行内编辑器回车跳转下一行编辑器属性 `editorNextKeyEnterDown`。
+- 🐞 `Table`: 修复在 IE && 火狐浏览器下 scrollIntoViewIfNeeded 方法兼容性问题。
 - 🐞 `<pro>Table`: 修复在 IE 浏览器下滑动条回弹问题。
 - 🐞 `<pro>Table`: 修复使用 inline 模式出现 lookup 自动收起问题。
 - 🐞 `<pro>Table`: 修复在 `autoHeight` 属性 `type: maxHeight` 下固定列滑动不同步问题。

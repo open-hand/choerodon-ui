@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `<pro>Form`: Added `Form` submit check automatically to check failed component feature.
 - 🌟 `<pro>Table`: Added `editorNextKeyEnterDown` property.
 - 🌟 `<pro>Table`: Added `Table` submit check automatically to check failed cell feature.
+- 🐞 `Table`: Fixed the compatibility issue of `scrollIntoViewIfNeeded` method in IE && Firefox.
 - 🐞 `<pro>Table`: Fixed `Table` the scroll auto automatic sliding.
 - 🐞 `<pro>Table`: Fixed `Table` use inline mode the lookup auto pack up.
 - 🐞 `<pro>Table`: Modified the judgment mechanism of `useMouseBatchChoose`, and fixed the problem that the attribute behaves as true when global setting true and component setting false.

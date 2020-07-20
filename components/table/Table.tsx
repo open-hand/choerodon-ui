@@ -3,6 +3,8 @@ import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import noop from 'lodash/noop';
+import scrollIntoView from 'scroll-into-view-if-needed';
+import smoothScrollIntoView from 'smooth-scroll-into-view-if-needed';
 import Pagination from '../pagination';
 import Icon from '../icon';
 import Spin, { SpinProps } from '../spin';
@@ -674,16 +676,23 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
     const { pagination: statePagination } = this.state;
     const pagination = { ...statePagination };
     if (autoScroll) {
+      const scrollIntoViewSmoothly =
+        'scrollBehavior' in document.documentElement.style
+          ? scrollIntoView
+          : smoothScrollIntoView;
       setTimeout(() => {
         if (this.refTable && this.refTable.clientHeight > document.body.clientHeight) {
-          this.refTable.scrollIntoView({
-            block: 'start',
-          });
+          scrollIntoViewSmoothly(this.refTable, { block: 'start', behavior: 'smooth', scrollMode: 'if-needed' });
         } else if (this.refTable) {
           // @ts-ignore
-          this.refTable.scrollIntoViewIfNeeded({
-            block: 'start',
-          });
+          if (this.refTable.scrollIntoViewIfNeeded) {
+            // @ts-ignore
+            this.refTable.scrollIntoViewIfNeeded({
+              block: 'start',
+            });
+          } else {
+            scrollIntoViewSmoothly(this.refTable, { block: 'start', behavior: 'smooth', scrollMode: 'if-needed' });
+          }
         }
       }, 10);
       if (this.refTable) {
