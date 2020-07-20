@@ -19,7 +19,9 @@ timeline: true
 - 🌟 `configure`: Added `textFieldAutoComplete`, `resultStatusRenderer` properties。
 - 🌟 `<pro>Form`: Added `Form` submit check automatically to check failed component feature.
 - 🌟 `<pro>Table`: Added `Table` submit check automatically to check failed cell feature.
-- 🐞 `<pro>TextArea`: Fixes the problem that after setting required and resize properties in `Form` at the same time, the background color does not change along with the width and height.
+- 🐞 `<pro>Table`: Fixed table the scroll auto automatic sliding.
+- 🐞 `<pro>Table`: Fixed table use inline mode the lookup auto pack up.
+- 🐞 `<pro>TextArea`: Fixed the problem that after setting required and resize properties in `Form` at the same time, the background color does not change along with the width and height.
 - 🐞 `<pro>Button`: Modified the loading mechanism to fix the problem that the query button does not enter the loading state in the Table.
 
 ## 0.8.67
@@ -32,8 +34,6 @@ timeline: true
 - 🌟 `Collapse`: Added `expandIcon`, `expandIconPosition`, `trigger` properties.
 - 🌟 `<pro>Select`: Added `commonItem`, `maxCommonTagPlaceholder`, `maxCommonTagCount`, `maxCommonTagTextLengthproperty` properties.
 - 🐞 `Progress`: Fixed Circle Progress can't change the color by strokeColor properties.
-- 🐞 `<pro>Table`: Fixed table use inline mode the lookup auto pack up.
-- 🐞 `<pro>Table`: Fixed table the scroll auto automatic sliding.
 - 🐞 `<pro>DatePciker`: Document repair.
 - 🐞 `<pro>Select`: Fixed a problem with the disabled option being checked by clicking the Select button.
 - 🐞 `<pro>Form`: Fixed the problem that the label of the `required` field is displayed incorrectly when `useColon` is true and `labelLayout` is vertical.
