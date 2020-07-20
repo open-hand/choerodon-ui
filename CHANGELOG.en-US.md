@@ -22,6 +22,7 @@ timeline: true
 - 🌟 `<pro>Table`: Added `Table` submit check automatically to check failed cell feature.
 - 🐞 `<pro>Table`: Fixed `Table` the scroll auto automatic sliding.
 - 🐞 `<pro>Table`: Fixed `Table` use inline mode the lookup auto pack up.
+- 🐞 `<pro>Table`: Fixed the problem of out-of-sync when sliding fixed columns under the `autoHeight` property `type: maxHeight`.
 - 🐞 `<pro>TextArea`: Fixed the problem that after setting required and resize properties in `Form` at the same time, the background color does not change along with the width and height.
 - 🐞 `<pro>Button`: Modified the loading mechanism to fix the problem that the query button does not enter the loading state in the Table.
 

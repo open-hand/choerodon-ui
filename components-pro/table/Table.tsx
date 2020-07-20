@@ -1069,10 +1069,10 @@ export default class Table extends DataSetComponent<TableProps> {
     const {
       tableStore: { rowHeight, height },
       observableProps: { dataSet },
-      props: { virtual },
+      props: { virtual, autoHeight },
     } = this;
     if (
-      this.tableStore.height === undefined ||
+      (this.tableStore.height === undefined && !autoHeight) ||
       currentTarget !== target ||
       target === this.tableFootWrap
     ) {
@@ -1357,6 +1357,7 @@ export default class Table extends DataSetComponent<TableProps> {
     let tableBody: ReactNode;
     let tableFooter: ReactNode;
     if ((!dragColumnAlign && overflowX) || height !== undefined || autoHeight) {
+      if (autoHeight) this.syncSize();
       const { lockColumnsBodyRowsHeight, rowHeight } = this.tableStore;
       let bodyHeight = height;
       let tableHeadRef;
@@ -1505,10 +1506,12 @@ export default class Table extends DataSetComponent<TableProps> {
         if (type === TableAutoHeightType.minHeight) {
           return parentHeight - (tableTop - parentTop) - diff;
         }
-        const tableBody: HTMLDivElement | null = element.querySelector(`.${prefixCls}-body`);
+        const tableBody: HTMLDivElement[] | null = element.querySelectorAll(`.${prefixCls}-body`);
         if (tableBody) {
-          tableBody.style.maxHeight = pxToRem(parentHeight - (tableTop - parentTop) - diff) || '';
-          tableBody.style.overflow = 'auto';
+          tableBody.forEach(tbody => {
+            tbody.style.maxHeight = pxToRem(parentHeight - (tableTop - parentTop) - diff) || '';
+            tbody.style.overflow = 'auto';
+          });
         }
       }
     }

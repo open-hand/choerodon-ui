@@ -190,7 +190,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['tableCommandProps', defaultButtonProps],
   ['tableAlwaysShowRowBox', false],
   ['tableUseMouseBatchChoose', false],
-  ['tableEditorNextKeyEnterDown', false],
+  ['tableEditorNextKeyEnterDown', true],
   ['modalSectionBorder', true],
   ['modalOkFirst', true],
   ['buttonColor', ButtonColor.default],
