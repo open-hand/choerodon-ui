@@ -24,6 +24,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed `Table` use inline mode the lookup auto pack up.
 - 🐞 `<pro>TextArea`: Fixed the problem that after setting required and resize properties in `Form` at the same time, the background color does not change along with the width and height.
 - 🐞 `<pro>Button`: Modified the loading mechanism to fix the problem that the query button does not enter the loading state in the Table.
+- 🐞 `<pro>Form`: Modified the problem of replacing the label color of mandatory and non-mandatory items in colon mode.
 
 ## 0.8.67
 
