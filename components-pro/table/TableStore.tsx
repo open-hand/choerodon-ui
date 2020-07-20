@@ -402,7 +402,13 @@ export default class TableStore {
   @computed
   get useMouseBatchChoose(): boolean {
     const { useMouseBatchChoose } = this.props;
-    return useMouseBatchChoose || getConfig('tableUseMouseBatchChoose') || false;
+    if (useMouseBatchChoose !== undefined) {
+      return useMouseBatchChoose;
+    }
+    if (getConfig('tableUseMouseBatchChoose') !== undefined) {
+      return getConfig('tableUseMouseBatchChoose');
+    }
+    return false;
   }
 
   @computed
