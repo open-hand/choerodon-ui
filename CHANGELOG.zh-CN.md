@@ -23,8 +23,10 @@ timeline: true
 - 🌟 `<pro>Table`: 新增控制行内编辑器回车跳转下一行编辑器属性 `editorNextKeyEnterDown`。
 - 🐞 `<pro>Table`: 修复在 IE 浏览器下滑动条回弹问题。
 - 🐞 `<pro>Table`: 修复使用 inline 模式出现 lookup 自动收起问题。
+- 🐞 `<pro>Table`: 修改了useMouseBatchChoose的判定机制,修复了在全局设置true,组件设置false时属性表现为true的问题。
 - 🐞 `<pro>TextArea`: 修复在 Form 中同时设置了required 跟 resize 属性后，背景色不跟着宽高一起变化的问题。
 - 🐞 `<pro>Button`: 修改 loading 机制，修复 query 按钮在 Table 中不进入 loading 状态的问题。
+
 
 ## 0.8.67
 

@@ -22,6 +22,7 @@ timeline: true
 - 🌟 `<pro>Table`: Added `Table` submit check automatically to check failed cell feature.
 - 🐞 `<pro>Table`: Fixed `Table` the scroll auto automatic sliding.
 - 🐞 `<pro>Table`: Fixed `Table` use inline mode the lookup auto pack up.
+- 🐞 `<pro>Table`: Modified the judgment mechanism of `useMouseBatchChoose`, and fixed the problem that the attribute behaves as true when global setting true and component setting false.
 - 🐞 `<pro>TextArea`: Fixed the problem that after setting required and resize properties in `Form` at the same time, the background color does not change along with the width and height.
 - 🐞 `<pro>Button`: Modified the loading mechanism to fix the problem that the query button does not enter the loading state in the Table.
 
