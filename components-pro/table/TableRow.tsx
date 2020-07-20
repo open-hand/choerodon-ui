@@ -205,21 +205,35 @@ export default class TableRow extends Component<TableRowProps, any> {
   focusRow(row: HTMLTableRowElement | null) {
     if (row) {
       const {
-        tableStore: { node, overflowY, currentEditorName },
+        tableStore: { node, overflowY, currentEditorName, inlineEdit},
       } = this.context;
       const { lock, record } = this.props;
+      /**
+       * 判断是否为ie浏览器
+       */
+      // @ts-ignore
+      const isIE:boolean = !!window.ActiveXObject || "ActiveXObject" in window
+      // 当不是为lock 和 当前不是编辑状态的时候
       if (!lock && !currentEditorName) {
         const { element } = node;
+        // table 包含目前被focus的element
+        // 找到当前组件对应record生成的组件对象 然后遍历 每个 tr里面不是focus的目标那么这个函数触发row.focus
         if (
           element &&
           element.contains(document.activeElement) &&
+          !inlineEdit &&   // 这里的原因是因为当编辑状态为inline的时候currentEditorName永远为undefine所以暂时屏蔽掉
           Array.from<HTMLTableRowElement>(
             element.querySelectorAll(`tr[data-index="${record.id}"]`),
           ).every(tr => !tr.contains(document.activeElement))
         ) {
-          row.focus();
+          if (isIE) {
+            element.setActive(); // IE/Edge 暂时这样使用保证ie下可以被检测到已经激活
+          } else {
+            element.focus(); // All other browsers
+          }
         }
       }
+
       if (overflowY) {
         const { offsetParent } = row;
         if (offsetParent) {
