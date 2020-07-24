@@ -430,6 +430,7 @@ export default class TableRow extends Component<TableRowProps, any> {
         [`${rowPrefixCls}-selected`]: selectedHighLightRow && selected,
         [`${rowPrefixCls}-disabled`]: disabled,
         [`${rowPrefixCls}-mouse-batch-choose`]: mouseBatchChooseState && (mouseBatchChooseIdList || []).includes(id),
+        [`${rowPrefixCls}-expanded`]:this.isExpanded,
       },
       rowExternalProps.className,
     );
