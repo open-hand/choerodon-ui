@@ -21,7 +21,8 @@ timeline: true
 - 🌟 `configure`: Added `collapseExpandIconPosition`, `collapseExpandIcon`, `collapseTrigger` properties.
 - 🌟 `Collapse`: Added `expandIcon`, `expandIconPosition`, `trigger` properties.
 - 🌟 `<pro>Select`: Added `commonItem`, `maxCommonTagPlaceholder`, `maxCommonTagCount`, `maxCommonTagTextLengthproperty` properties.
-- 🌟`<pro>Table`: Added table tree expand className.
+- 🌟 `<pro>Table`: Added table tree expand className.
+- 🐞 `<pro>Table`: Fixed table autoHeight is `auto` , The style is error.
 - 🐞 `Progress`: Fixed Circle Progress can't change the color by strokeColor properties.
 - 🐞 `<pro>Table`: Fixed table use inline mode the lookup auto pack up.
 - 🐞 `<pro>Table`: Fixed table the scroll auto automatic sliding.

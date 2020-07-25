@@ -21,7 +21,8 @@ timeline: true
 - 🌟 `configure`: 新增 collapseExpandIconPosition, collapseExpandIcon, collapseTrigger 全局配置。
 - 🌟 `Collapse`: 新增 expandIcon, expandIconPosition, trigger 属性。
 - 🌟 `<pro>Select`: 新增 commonItem, maxCommonTagPlaceholder, maxCommonTagCount, maxCommonTagTextLength 常用项相关属性。
-- 🌟 `<pro>Table`: 新增table tree 展开类名.
+- 🌟 `<pro>Table`: 新增 table tree 展开类名。
+- 🐞 `<pro>Table`: 修复 table autoHeight 为auto时候出现样式问题。
 - 🐞 `Progress`: 修复无法修改 Circle Progress strokeColor属性颜色的问题。
 - 🐞 `<pro>Table`: 修复 table 使用inline模式出现lookup自动收起问题。
 - 🐞 `<pro>Table`: 修复 table在IE浏览器下滑动条回弹问题。
