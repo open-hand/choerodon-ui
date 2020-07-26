@@ -56,6 +56,7 @@ const prefixCls = getConfig('prefixCls');
 | tableDefaultRenderer | 默认 Table 为空时 renderer 的内容 | ReactNode | '' |
 | tableAlwaysShowRowBox | Table是否一直显示rowbox,开启后在其他模式下也会显示rowbox | boolean | false |
 | tableUseMouseBatchChoose | Table是否使用鼠标批量选择,开启后在rowbox的情况下可以进行鼠标拖动批量选择,在起始的rowbox处按下,在结束位置松开 | boolean | false |
+| tableEditorNextKeyEnterDown | Table是否开启可编辑行回车编辑下一行 | boolean | true |
 | pagination | 默认 pagination 的属性 | TablePaginationConfig \| false | 详见[Pagination](/components-pro/pagination/#Pagination) |
 | dropdownMatchSelectWidth | 默认下拉框匹配输入框宽度 | boolean | true |
 | modalSectionBorder | 默认 Modal 的头和脚有边框线 | boolean | true |
@@ -71,6 +72,10 @@ const prefixCls = getConfig('prefixCls');
 | useColon | Form中是否使用冒号,当开启时会在所有的label后面加上冒号,并且必填的*号会被移到最前方 | boolean | false |
 | excludeUseColonTagList | Form中不使用冒号的标签的列表,当为自定义组件的时候,需要设置displayName作为标签名 | string[] | ['div','button','Button'] |
 | lovTableProps | 全局配置lov的tableProps,当同时存在lovTableProps以及的时候会进行一层合并 | [TableProps](/components-pro/table/) | {} |
+| collapseExpandIconPosition | 全局配置 collapse 图标位置 |  `left` \| `right` | `left` |
+| collapseExpandIcon | 全局配置 collapse 自定义切换图标| (panelProps) => ReactNode \| `text`(预置icon + 展开收起文字) | 无 |
+| collapseTrigger | 全局配置切换面板的触发位置 | `header` \| `icon` | `header` |
+| textFieldAutoComplete | 全局配置textField的autoComplete属性 | 可选值: `on` `off` |  |
 | resultStatusRenderer | 自定义状态展示,可以覆盖现有状态展示，也可以增加状态展示，支持全局配置 | object -> {string:react.ReactNode} | - |
 
 ### Formatter

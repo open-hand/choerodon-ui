@@ -171,6 +171,22 @@ export function findFirstFocusableElement(node: HTMLElement): HTMLElement | unde
   }
 }
 
+// 用于校验定位 focus 第一个非法单元格
+export function findFirstFocusableInvalidElement(node: HTMLElement): HTMLElement | undefined {
+  if (node.children) {
+    let found: HTMLElement | undefined;
+    [...(node.children as HTMLCollectionOf<HTMLElement>)].some(child => {
+      if (child.tabIndex > -1 && child.className.includes('invalid')) {
+        found = child;
+      } else {
+        found = findFirstFocusableInvalidElement(child);
+      }
+      return !!found;
+    });
+    return found;
+  }
+}
+
 export function findIndexedSibling(element, direction): HTMLTableRowElement | null {
   const sibling: HTMLTableRowElement | null =
     direction > 0 ? element.nextElementSibling : element.previousElementSibling;

@@ -15,7 +15,26 @@ timeline: true
 
 ---
 
-- 🌟 `Result`: 新增Result组件。
+- 🌟 `Result`: 新增 Result 组件。
+- 🌟 `configure`: 新增 `textFieldAutoComplete`, `resultStatusRenderer`, `tableEditorNextKeyEnterDown` 全局配置。
+- 🌟 `<pro>DataSet`: 新增 `DataSet` `validate` 校验事件。
+- 🌟 `<pro>Form`: 新增提交校验自动定位到校验未通过组件功能。
+- 🌟 `<pro>Table`: 新增提交校验自动定位到校验未通过单元格功能。
+- 🌟 `<pro>Table`: 新增控制行内编辑器回车跳转下一行编辑器属性 `editorNextKeyEnterDown`。
+- 🐞 `Table`: 修复在 IE && 火狐浏览器下 scrollIntoViewIfNeeded 方法兼容性问题。
+- 🐞 `<pro>Table`: 修复在 IE 浏览器下滑动条回弹问题。
+- 🐞 `<pro>Table`: 修复使用 inline 模式出现 lookup 自动收起问题。
+- 🐞 `<pro>Table`: 修复在 `autoHeight` 属性 `type: maxHeight` 下固定列滑动不同步问题。
+- 🐞 `<pro>Table`: 修改了 useMouseBatchChoose 的判定机制，修复在全局设置与组件设置优先级问题。
+- 🐞 `<pro>Form`: 修改了在冒号模式下,必填项与非必填项的label颜色不一致的问题。
+- 🐞 `<pro>Button`: 修改 loading 机制，修复 query 按钮在 Table 中不进入 loading 状态的问题。
+- 🐞 `<pro>TextArea`: 修复在 Form 中同时设置了required 跟 resize 属性后，背景色不跟着宽高一起变化的问题。
+
+
+## 0.8.67
+
+`2020-07-14`
+
 - 🌟 `<pro>Table`: 新增Table拖拽功能。
 - 🌟 `Steps`: 新增 Steps.Group 组件可以配置Step分组。
 - 🌟 `configure`: 新增 collapseExpandIconPosition, collapseExpandIcon, collapseTrigger 全局配置。
@@ -24,16 +43,12 @@ timeline: true
 - 🌟 `<pro>Table`: 新增 table tree 展开类名。
 - 🐞 `<pro>Table`: 修复 table autoHeight 为auto时候出现样式问题。
 - 🐞 `Progress`: 修复无法修改 Circle Progress strokeColor属性颜色的问题。
-- 🐞 `<pro>Table`: 修复 table 使用inline模式出现lookup自动收起问题。
-- 🐞 `<pro>Table`: 修复 table在IE浏览器下滑动条回弹问题。
 - 🐞 `<pro>DatePciker`: 文档修复。
 - 🐞 `<pro>Select`: 修复点击全选按钮导致禁用选项也被勾选的问题。
 - 🐞 `<pro>Form`: 修复当设置 useColon为true, labelLayout为vertical 的时候 required 的字段 label 显示不正确的问题.
 - 🐞 `<pro>Form`: 修复在 typescript 中使用的 Form 的时候,无法使用 pristine 属性的问题.
 - 🐞 `<pro>Lov`: 修复在单选模式下lov table自动定位到数据第一条并且在显示rowbox的情况点击确定会选择current作为选项即使此时没有选中选项.
 - 🐞 `<pro>DataSet`: 修复在设置了primaryKey的情况下,在新增一条未提交的情况下删除一条数据,当接口返回204时,会将response作为数据填入到record中的问题。
-- 🐞 `<pro>TextArea`: 修复了在Form中同时设置了required跟resize属性后,背景色不跟着宽高一起变化的问题.
-- 🐞 `<pro>Button`: 修改了loading机制,修复query按钮在Table中不进入loading状态的问题.
 
 ## 0.8.66
 

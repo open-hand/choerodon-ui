@@ -37,3 +37,33 @@ export function getProperty(props: any, key: string, dataSet?: DataSet, record?:
 }
 
 export const defaultExcludeUseColonTag: string[] = ['div', 'button', 'Button'];
+
+function findFocusableElement(node: HTMLElement): HTMLElement | undefined {
+  if (node.children) {
+    let found: HTMLElement | undefined;
+    [...(node.children as HTMLCollectionOf<HTMLElement>)].some(child => {
+      if (child.tabIndex > -1) {
+        found = child;
+      } else {
+        found = findFocusableElement(child);
+      }
+      return !!found;
+    });
+    return found;
+  }
+}
+
+export function findFirstInvalidElement(node: HTMLElement): HTMLElement | undefined {
+  if (node.children) {
+    let found: HTMLElement | undefined;
+    [...(node.children as HTMLCollectionOf<HTMLElement>)].some(child => {
+      if (child.className.includes('invalid')) {
+        found = findFocusableElement(child);
+      } else {
+        found = findFirstInvalidElement(child);
+      }
+      return !!found;
+    });
+    return found;
+  }
+}

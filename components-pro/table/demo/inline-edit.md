@@ -44,7 +44,6 @@ class App extends React.Component {
         name: 'userid',
         type: 'string',
         label: '编号',
-        required: true,
         unique: true,
         help: '主键，区分用户',
       },
@@ -53,7 +52,6 @@ class App extends React.Component {
         name: 'age',
         type: 'number',
         label: '年龄',
-        unique: 'uniqueGroup',
         max: 100,
         step: 1,
         help: '用户年龄，可以排序',
@@ -153,8 +151,8 @@ class App extends React.Component {
     return (
       <Table dataSet={this.ds} buttons={this.buttons} editMode="inline">
         <Column name="userid" style={{ color: 'red' }} editor width={150} lock sortable />
-        <Column name="age" editor width={150} sortable />
         <Column name="enable" editor width={50} minWidth={50} lock />
+        <Column name="age" editor width={150} sortable />
         <Column name="name" editor width={150} sortable />
         <Column name="code" editor width={150} sortable />
         <Column name="code_code" editor width={150} />

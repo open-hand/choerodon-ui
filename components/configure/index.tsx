@@ -101,6 +101,7 @@ export type Config = {
   tableDefaultRenderer?: Renderer;
   tableAlwaysShowRowBox?: boolean;
   tableUseMouseBatchChoose?: boolean;
+  tableEditorNextKeyEnterDown?: boolean;
   pagination?: TablePaginationConfig | false;
   modalSectionBorder?: boolean;
   modalOkFirst?: boolean;
@@ -122,6 +123,7 @@ export type Config = {
   useColon?: boolean;
   excludeUseColonTagList?: string[];
   lovTableProps?: TableProps;
+  textFieldAutoComplete?: 'on' | 'off';
   resultStatusRenderer?: object;
 };
 
@@ -181,13 +183,14 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['tableHighLightRow', true],
   ['tableSelectedHighLightRow', false],
   ['tableRowHeight', 30],
+  ['tableDefaultRenderer', ''],
   ['tableColumnResizable', true],
   ['tableSpinProps', defaultSpinProps],
   ['tableButtonProps', defaultButtonProps],
   ['tableCommandProps', defaultButtonProps],
   ['tableAlwaysShowRowBox', false],
   ['tableUseMouseBatchChoose', false],
-  ['tableDefaultRenderer', ''],
+  ['tableEditorNextKeyEnterDown', true],
   ['modalSectionBorder', true],
   ['modalOkFirst', true],
   ['buttonColor', ButtonColor.default],
@@ -211,6 +214,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['useColon', false],
   ['excludeUseColonTagList', defaultExcludeUseColonTag],
   ['lovTableProps', {}],
+  ['textFieldAutoComplete', undefined],
 ]);
 
 export function getConfig(key: ConfigKeys): any {

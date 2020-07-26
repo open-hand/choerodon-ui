@@ -5,7 +5,7 @@ import isPlainObject from 'lodash/isPlainObject';
 import defer from 'lodash/defer';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
-import Icon from 'choerodon-ui/lib/icon'
+import Icon from 'choerodon-ui/lib/icon';
 import { isFunction } from 'lodash';
 import Column, { ColumnProps, columnWidth } from './Column';
 import DataSet from '../data-set/DataSet';
@@ -228,7 +228,7 @@ export default class TableStore {
 
   @observable mouseBatchChooseIdList?: number[];
 
-  @observable columnDeep: number ;
+  @observable columnDeep: number;
 
   @computed
   get dataSet(): DataSet {
@@ -267,10 +267,10 @@ export default class TableStore {
 
   @computed
   get dragRow(): boolean {
-    if(this.isTree){
+    if (this.isTree) {
       return false;
     }
-    return this.props.dragRow
+    return this.props.dragRow;
   }
 
   @computed
@@ -315,6 +315,17 @@ export default class TableStore {
       return this.props.selectedHighLightRow;
     }
     if (getConfig('tableSelectedHighLightRow') === false) {
+      return false;
+    }
+    return true;
+  }
+
+  @computed
+  get editorNextKeyEnterDown(): boolean {
+    if ('editorNextKeyEnterDown' in this.props) {
+      return this.props.editorNextKeyEnterDown;
+    }
+    if (getConfig('tableEditorNextKeyEnterDown') === false) {
       return false;
     }
     return true;
@@ -391,7 +402,13 @@ export default class TableStore {
   @computed
   get useMouseBatchChoose(): boolean {
     const { useMouseBatchChoose } = this.props;
-    return useMouseBatchChoose || getConfig('tableUseMouseBatchChoose') || false;
+    if (useMouseBatchChoose !== undefined) {
+      return useMouseBatchChoose;
+    }
+    if (getConfig('tableUseMouseBatchChoose') !== undefined) {
+      return getConfig('tableUseMouseBatchChoose');
+    }
+    return false;
   }
 
   @computed
@@ -422,7 +439,7 @@ export default class TableStore {
     );
   }
 
-  set columns(columns: ColumnProps[]){
+  set columns(columns: ColumnProps[]) {
     runInAction(() => {
       set(this.props, 'columns', columns);
     });
@@ -595,16 +612,16 @@ export default class TableStore {
     return this.props.editMode === TableEditMode.inline;
   }
 
-  @computed 
+  @computed
   get columnMaxDeep() {
-    return this.columnDeep
+    return this.columnDeep;
   }
 
-  set columnMaxDeep(deep:number) {
+  set columnMaxDeep(deep: number) {
     runInAction(() => {
-      this.columnDeep = Math.max(this.columnDeep,deep);
-    })
-    
+      this.columnDeep = Math.max(this.columnDeep, deep);
+    });
+
   }
 
   private handleSelectAllChange = action(value => {
@@ -776,35 +793,35 @@ export default class TableStore {
     return columns;
   }
 
-  renderDrageBox({record}) {
-    const {rowDragRender} = this.props
-      if( rowDragRender && isFunction(rowDragRender.renderIcon)){
-        return  rowDragRender.renderIcon({record})
-      }
-      return (<Icon type="baseline-drag_indicator" />)
+  renderDrageBox({ record }) {
+    const { rowDragRender } = this.props;
+    if (rowDragRender && isFunction(rowDragRender.renderIcon)) {
+      return rowDragRender.renderIcon({ record });
+    }
+    return (<Icon type="baseline-drag_indicator" />);
   }
 
   private addDragColumn(columns: ColumnProps[]): ColumnProps[] {
-    const { suffixCls, prefixCls,dragColumnAlign } = this.props;
-    if(dragColumnAlign){
-      const dragColumn : ColumnProps = {
+    const { suffixCls, prefixCls, dragColumnAlign } = this.props;
+    if (dragColumnAlign) {
+      const dragColumn: ColumnProps = {
         key: DRAG_KEY,
-        resizable:false,
+        resizable: false,
         className: `${getProPrefixCls(suffixCls!, prefixCls)}-drag-column`,
-        renderer:({ record }) => this.renderDrageBox({record}),
+        renderer: ({ record }) => this.renderDrageBox({ record }),
         align: ColumnAlign.center,
-        width:50,
-      } 
-      if(dragColumnAlign === DragColumnAlign.left) {
-        dragColumn.lock = ColumnLock.left
+        width: 50,
+      };
+      if (dragColumnAlign === DragColumnAlign.left) {
+        dragColumn.lock = ColumnLock.left;
         columns.unshift(dragColumn);
       }
 
-      if(dragColumnAlign === DragColumnAlign.right) {
-        dragColumn.lock = ColumnLock.right
-        columns.push(dragColumn)
+      if (dragColumnAlign === DragColumnAlign.right) {
+        dragColumn.lock = ColumnLock.right;
+        columns.push(dragColumn);
       }
-      
+
     }
     return columns;
   }

@@ -25,6 +25,7 @@ import ExpandedRow from './ExpandedRow';
 import { DataSetStatus } from '../data-set/enum';
 import autobind from '../_util/autobind';
 import { instance } from './Table';
+import { findFirstFocusableInvalidElement } from './utils';
 
 export interface TableTBodyProps extends ElementProps {
   lock?: ColumnLock | boolean;
@@ -130,7 +131,7 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
               indentSize,
               prefixCls,
               column:leafColumnsBody,
-              record, 
+              record,
               index:record.id,
               dragColumnAlign,
               rubric,
@@ -178,6 +179,33 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
           {body}
         </ReactResizeObserver>
       );
+  }
+
+  componentWillMount() {
+    this.processDataSetListener(true);
+  }
+
+
+  componentWillUnmount() {
+    this.processDataSetListener(false);
+  }
+
+  processDataSetListener(flag: boolean) {
+    const { tableStore: { dataSet } } = this.context;
+    if (dataSet) {
+      const handler = flag ? dataSet.addEventListener : dataSet.removeEventListener;
+      handler.call(dataSet, 'validate', this.handleDataSetValidate);
+    }
+  }
+
+  @autobind
+  async handleDataSetValidate({ result }) {
+    if (!await result) {
+      const cell = this.tableBody ? findFirstFocusableInvalidElement(this.tableBody) : null;
+      if (cell) {
+        cell.focus();
+      }
+    }
   }
 
   componentDidUpdate() {

@@ -15,7 +15,24 @@ timeline: true
 
 ---
 
-- 🌟 `Result`: Added the Result component.
+- 🌟 `Result`: Added the `Result` component.
+- 🌟 `configure`: Added `textFieldAutoComplete`, `resultStatusRenderer`, `tableEditorNextKeyEnterDown` properties。
+- 🌟 `<pro>Form`: Added `Form` submit check automatically to check failed component feature.
+- 🌟 `<pro>Table`: Added `editorNextKeyEnterDown` property.
+- 🌟 `<pro>Table`: Added `Table` submit check automatically to check failed cell feature.
+- 🐞 `Table`: Fixed the compatibility issue of `scrollIntoViewIfNeeded` method in IE && Firefox.
+- 🐞 `<pro>Table`: Fixed `Table` the scroll auto automatic sliding.
+- 🐞 `<pro>Table`: Fixed `Table` use inline mode the lookup auto pack up.
+- 🐞 `<pro>Table`: Modified the judgment mechanism of `useMouseBatchChoose`, and fixed the problem that the attribute behaves as true when global setting true and component setting false.
+- 🐞 `<pro>Table`: Fixed the problem of out-of-sync when sliding fixed columns under the `autoHeight` property `type: maxHeight`.
+- 🐞 `<pro>Form`: Modified the problem of replacing the label color of mandatory and non-mandatory items in colon mode.
+- 🐞 `<pro>Button`: Modified the loading mechanism to fix the problem that the query button does not enter the loading state in the Table.
+- 🐞 `<pro>TextArea`: Fixed the problem that after setting required and resize properties in `Form` at the same time, the background color does not change along with the width and height.
+
+## 0.8.67
+
+`2020-07-14`
+
 - 🌟 `<pro>Table`: Added Table drag feature.
 - 🌟 `Steps`: Added `Steps.Group` Component to grouping Step Components.
 - 🌟 `configure`: Added `collapseExpandIconPosition`, `collapseExpandIcon`, `collapseTrigger` properties.
@@ -24,17 +41,12 @@ timeline: true
 - 🌟 `<pro>Table`: Added table tree expand className.
 - 🐞 `<pro>Table`: Fixed table autoHeight is `auto` , The style is error.
 - 🐞 `Progress`: Fixed Circle Progress can't change the color by strokeColor properties.
-- 🐞 `<pro>Table`: Fixed table use inline mode the lookup auto pack up.
-- 🐞 `<pro>Table`: Fixed table the scroll auto automatic sliding.
 - 🐞 `<pro>DatePciker`: Document repair.
 - 🐞 `<pro>Select`: Fixed a problem with the disabled option being checked by clicking the Select button.
 - 🐞 `<pro>Form`: Fixed the problem that the label of the `required` field is displayed incorrectly when `useColon` is true and `labelLayout` is vertical.
 - 🐞 `<pro>Form`: Fixed the problem that the `pristine` attribute cannot be used when `Form` used in typescript.
 - 🐞 `<pro>Lov`: Fixed lov table automatically positioning to the first data item in single-select mode and clicking OK when rowbox is displayed will select current as the option even if no option is selected at this time.
 - 🐞 `<pro>DataSet`: Fix the problem that when a PrimaryKey is set, a piece of data is deleted if a new piece is not submitted, and when the interface returns 204, the response will be filled into the record as data.
-- 🐞 `<pro>TextArea`: Fixes the problem that after setting required and resize properties in Form at the same time, the background color does not change along with the width and height.
-- 🐞 `<pro>Button`: Modified the loading mechanism to fix the problem that the query button does not enter the loading state in the Table.
-
 
 ## 0.8.66
 

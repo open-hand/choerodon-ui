@@ -1,16 +1,16 @@
 Choerodon-ui authors:
 
 HughHzWu <99571603@qq.com>
+Huihuawk <huihua_wk@163.com>
 DouglasDong <ad546971975@gmail.com>
-Vink Dong <dong@wenqi.us>
 binjie09 <binjie09@gmail.com>
-fan <fan@choerodon.io>
 hulingfangzi <hulingfangzi@163.com>
 xuhailin <xuhailin_xhl@sina.com>
 
 Choerodon-ui/pro authors:
 
 HughHzWu <99571603@qq.com>
+Huihuawk <huihua_wk@163.com>
 HuangQiii <598260403@qq.com>
 syf <2654525303@qq.com>
 binjie09 <binjie09@gmail.com>
