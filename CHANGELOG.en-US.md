@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `imageCrop`: Added the `imageCrop` component.
 - 🌟 `Result`: Added the `Result` component.
 - 🌟 `Upload`: Added `requestFileKeys` properties.
 - 🌟 `configure`: Added `textFieldAutoComplete`, `resultStatusRenderer`, `tableEditorNextKeyEnterDown` properties。

@@ -48,4 +48,7 @@ export default {
     fold: '收起',
     unfold: '展开',
   },
+  imageCrop: {
+    editImage: '编辑图片',
+  },
 };

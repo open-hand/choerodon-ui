@@ -49,4 +49,7 @@ export default {
     fold: 'Fold',
     unfold: 'Unfold',
   },
+  imageCrop: {
+    editImage: 'Edit image',
+  },
 };

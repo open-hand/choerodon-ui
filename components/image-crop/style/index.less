@@ -1,0 +1,82 @@
+@import '../../style/themes/default';
+@import '../../style/mixins/index';
+
+@image-crop-prefix-cls: ~'@{c7n-prefix}-image-crop';
+
+.@{image-crop-prefix-cls}-modal {
+  .c7n-modal-body {
+    padding-bottom: 16px;
+  }
+
+  .@{image-crop-prefix-cls}-container {
+    position: relative;
+    width: 100%;
+    height: 40vh;
+    margin-bottom: 16px;
+  }
+
+  .@{image-crop-prefix-cls}-avatar {
+    &-content {
+      h5 {
+        margin-bottom: 24px;
+        font-size: 18px;
+        text-align: center;
+      }
+    }
+
+    &-row {
+      margin-top: .9rem;
+    }
+
+    &-col {
+      text-align: center;
+    }
+  }
+
+  .@{image-crop-prefix-cls}-control {
+    display: flex;
+    align-items: center;
+    width: 60%;
+    margin-right: auto;
+    margin-left: auto;
+
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      padding: 0;
+      font-style: normal;
+      background: transparent;
+      border: 0;
+      outline: 0;
+      cursor: pointer;
+
+      &[disabled] {
+        cursor: default;
+      }
+    }
+
+    &.zoom button {
+      font-size: 18px;
+    }
+
+    &.rotate button {
+      font-size: 16px;
+
+      &:first-of-type {
+        transform: rotate(-20deg);
+      }
+
+      &:last-of-type {
+        transform: rotate(20deg);
+      }
+    }
+
+    .c7n-slider {
+      flex: 1;
+      margin: 0 8px;
+    }
+  }
+}

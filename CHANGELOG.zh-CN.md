@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `imageCrop`: 新增 imageCrop 组件.
 - 🌟 `Result`: 新增 Result 组件。
 - 🌟 `Upload`: 新增 `requestFileKeys` 上传文件属性。
 - 🌟 `configure`: 新增 `textFieldAutoComplete`, `resultStatusRenderer`, `tableEditorNextKeyEnterDown` 全局配置。
