@@ -7,13 +7,7 @@ import { UploadFile, UploadListProps } from './interface';
 import Animate from '../animate';
 import { ProgressType } from '../progress/enum';
 import { getPrefixCls } from '../configure';
-
-// https://developer.mozilla.org/en-US/docs/Web/API/FileReader/readAsDataURL
-const previewFile = (file: File, callback: Function) => {
-  const reader = new FileReader();
-  reader.onloadend = () => callback(reader.result);
-  reader.readAsDataURL(file);
-};
+import { previewImage } from './utils';
 
 const isImageUrl = (url: string): boolean => {
   return /^data:image\//.test(url) || /\.(webp|svg|png|gif|jpg|jpeg)$/.test(url);
@@ -28,6 +22,7 @@ export default class UploadList extends Component<UploadListProps, any> {
       strokeWidth: 2,
       showInfo: false,
     },
+    previewFile: previewImage,
     showRemoveIcon: true,
     showPreviewIcon: true,
   };
@@ -49,7 +44,7 @@ export default class UploadList extends Component<UploadListProps, any> {
   };
 
   componentDidUpdate() {
-    const { listType, items } = this.props;
+    const { listType, items, previewFile } = this.props;
     if (listType !== 'picture' && listType !== 'picture-card') {
       return;
     }
@@ -59,18 +54,19 @@ export default class UploadList extends Component<UploadListProps, any> {
         typeof window === 'undefined' ||
         !(window as any).FileReader ||
         !(window as any).File ||
-        !(file.originFileObj instanceof File) ||
+        !(file.originFileObj instanceof File || file.originFileObj instanceof Blob) ||
         file.thumbUrl !== undefined
       ) {
         return;
       }
-      /* eslint-disable-next-line */
       file.thumbUrl = '';
-      previewFile(file.originFileObj, (previewDataUrl: string) => {
-        /* eslint-disable-next-line */
-        file.thumbUrl = previewDataUrl;
-        this.forceUpdate();
-      });
+      if (previewFile) {
+        previewFile(file.originFileObj as File).then((previewDataUrl: string) => {
+          // Need append '' to avoid dead loop
+          file.thumbUrl = previewDataUrl || '';
+          this.forceUpdate();
+        });
+      }
     });
   }
 

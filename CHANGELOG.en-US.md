@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `Result`: Added the `Result` component.
+- 🌟 `Upload`: Added `requestFileKeys` properties.
 - 🌟 `configure`: Added `textFieldAutoComplete`, `resultStatusRenderer`, `tableEditorNextKeyEnterDown` properties。
 - 🌟 `<pro>Form`: Added `Form` submit check automatically to check failed component feature.
 - 🌟 `<pro>Table`: Added `editorNextKeyEnterDown` property.
@@ -28,7 +29,7 @@ timeline: true
 - 🐞 `<pro>Form`: Modified the problem of replacing the label color of mandatory and non-mandatory items in colon mode.
 - 🐞 `<pro>Button`: Modified the loading mechanism to fix the problem that the query button does not enter the loading state in the Table.
 - 🐞 `<pro>TextArea`: Fixed the problem that after setting required and resize properties in `Form` at the same time, the background color does not change along with the width and height.
-
+requestFileKeys
 ## 0.8.67
 
 `2020-07-14`

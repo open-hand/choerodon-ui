@@ -1,4 +1,5 @@
 import { CSSProperties } from 'react';
+import { Area } from '../image-crop';
 
 export type UploadFileStatus = 'error' | 'success' | 'done' | 'uploading' | 'removed';
 
@@ -12,17 +13,19 @@ export interface UploadFile {
   name: string;
   filename?: string;
   lastModified?: string;
-  lastModifiedDate?: Date;
+  lastModifiedDate?: Date | number;
   url?: string;
   status?: UploadFileStatus;
   percent?: number;
   thumbUrl?: string;
-  originFileObj?: File;
+  originFileObj?: File | Blob;
   response?: any;
   error?: any;
   linkProps?: any;
   type: string;
+  imageCropArea?: Area;
 }
+
 
 export interface UploadChangeParam {
   file: UploadFile;
@@ -53,7 +56,7 @@ export interface UploadProps {
   showUploadList?: boolean | ShowUploadListInterface;
   multiple?: boolean;
   accept?: string;
-  beforeUpload?: (file: UploadFile, FileList: UploadFile[]) => boolean | PromiseLike<any>;
+  beforeUpload?: (file: UploadFile, FileList: UploadFile[]) => boolean | PromiseLike<any | Blob>;
   onChange?: (info: UploadChangeParam) => void;
   listType?: 'text' | 'picture' | 'picture-card';
   className?: string;
@@ -68,8 +71,10 @@ export interface UploadProps {
   disabled?: boolean;
   prefixCls?: string;
   customRequest?: (option: any) => void;
+  previewFile?: PreviewFileHandler;
   withCredentials?: boolean;
   locale?: UploadLocale;
+  requestFileKeys?:string[]|string;
 }
 
 export interface UploadState {
@@ -77,6 +82,7 @@ export interface UploadState {
   dragState: string;
 }
 
+type PreviewFileHandler = (file: File | Blob) => PromiseLike<string>;
 export interface UploadListProps {
   listType?: 'text' | 'picture' | 'picture-card';
   onPreview?: (file: UploadFile) => void;
@@ -87,4 +93,5 @@ export interface UploadListProps {
   showRemoveIcon?: boolean;
   showPreviewIcon?: boolean;
   locale: UploadLocale;
+  previewFile?: PreviewFileHandler;
 }

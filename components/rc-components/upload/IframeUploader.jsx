@@ -5,6 +5,11 @@ import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import getUid from './uid';
 import warning from '../../_util/warning';
+import isString from 'lodash/isString';
+import isArray from 'lodash/isArray';
+import isObject  from 'lodash/isObject';
+import toString  from 'lodash/toString';
+import isNil  from 'lodash/isNil';
 
 const IFRAME_STYLE = {
   position: 'absolute',
@@ -232,24 +237,86 @@ class IframeUploader extends Component {
   post(file) {
     const formNode = this.getFormNode();
     const dataSpan = this.getFormDataNode();
-    let { data } = this.props;
+    let { data, requestFileKeys } = this.props;
     const { onStart } = this.props;
     if (typeof data === 'function') {
       data = data(file);
     }
-    const inputs = document.createDocumentFragment();
-    for (const key in data) {
-      if (data.hasOwnProperty(key)) {
-        const input = document.createElement('input');
-        input.setAttribute('name', key);
-        input.value = data[key];
-        inputs.appendChild(input);
-      }
-    }
+    const inputs = this.requestFileInput(requestFileKeys, file, data)
     dataSpan.appendChild(inputs);
     formNode.submit();
     dataSpan.innerHTML = '';
     onStart(file);
+  }
+/**
+ * 
+ * @param { 需要加入的参数 } requestFileKeys 
+ * @param { 文件内容 } file 
+ * @param { props的必传参数 } data 
+ */
+ requestFileInput(requestFileKeys,file,data) {
+
+   const inputs = document.createDocumentFragment();
+    /** 
+     * 添加注入的data数据
+     */
+    if (data) {
+      for (const key in data) {
+        if (data.hasOwnProperty(key)) {
+          const input = document.createElement('input');
+          input.setAttribute('name', key);
+          input.value = data[key];
+          /**
+           * 添加文件数据
+           */
+          inputs.appendChild(input);
+        }
+      }
+    } 
+
+    const toStringValue = (value) => {
+      if(isNil(value)){
+        return '';
+      }
+      if(isString(value)){
+        return value
+      }
+      if(isObject(value)) {
+        return JSON.stringify(value)
+      }
+      return toString(value)
+    }
+    
+    /**
+     * 
+     * @param {所有数据} obj 
+     * @param {需要传出的参数keys} arrayString 
+     */
+    const ArrayToObject = (obj,arrayString) => {
+      arrayString.forEach(item => {
+        const input = document.createElement('input');
+        input.setAttribute('name', toStringValue(item));
+        input.value = toStringValue(obj[toStringValue(item)]);
+        /**
+         * 添加文件数据
+         */
+        inputs.appendChild(input);
+      })
+    }
+    
+    /**
+     * 判断是否需要增加key
+     */
+    if(isString(requestFileKeys) || isArray(requestFileKeys)){
+      let requestFileKeysFile = ['uid','type','name','lastModifiedDate'];
+      if(isString(requestFileKeys)){
+        requestFileKeysFile.push(requestFileKeys);
+      }else{
+        requestFileKeysFile = [...requestFileKeysFile,...requestFileKeys]
+      }
+      ArrayToObject(file,requestFileKeysFile)
+    }
+    return inputs
   }
 
   saveIframe = (node) => {

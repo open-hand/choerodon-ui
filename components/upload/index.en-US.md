@@ -41,6 +41,7 @@ Uploading is the process of publishing information (web pages, text, pictures, v
 | onSuccess   | A callback function, will be executed when upload success.   | Function(response, file) | 无   |
 | onProgress   | A callback function, will be executed when upload in progress.   | Function({ percent }, file) | 无   |
 | onError   | A callback function, will be executed when upload error.   | Function(error, response, file) | 无   |
+| requestFileKeys   | can upload the file props to the server   | string,string[] | 无   |
 
 ### onChange
 

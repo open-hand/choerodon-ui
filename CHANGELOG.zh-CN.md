@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `Result`: 新增 Result 组件。
+- 🌟 `Upload`: 新增 `requestFileKeys` 上传文件属性。
 - 🌟 `configure`: 新增 `textFieldAutoComplete`, `resultStatusRenderer`, `tableEditorNextKeyEnterDown` 全局配置。
 - 🌟 `<pro>DataSet`: 新增 `DataSet` `validate` 校验事件。
 - 🌟 `<pro>Form`: 新增提交校验自动定位到校验未通过组件功能。
