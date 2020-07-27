@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `imageCrop`: 新增 imageCrop 组件.
+- 🌟 `imageCrop`: 新增 imageCrop 组件。
 - 🌟 `Result`: 新增 Result 组件。
 - 🌟 `Upload`: 新增 `requestFileKeys` 上传文件属性。
 - 🌟 `configure`: 新增 `textFieldAutoComplete`, `resultStatusRenderer`, `tableEditorNextKeyEnterDown` 全局配置。
@@ -23,7 +23,10 @@ timeline: true
 - 🌟 `<pro>Form`: 新增提交校验自动定位到校验未通过组件功能。
 - 🌟 `<pro>Table`: 新增提交校验自动定位到校验未通过单元格功能。
 - 🌟 `<pro>Table`: 新增控制行内编辑器回车跳转下一行编辑器属性 `editorNextKeyEnterDown`。
-- 🐞 `Table`: 修复在 IE && 火狐浏览器下 scrollIntoViewIfNeeded 方法兼容性问题。
+- 🌟 `<pro>Table`: 新增 table tree 展开类名。
+- 🌟 `<pro>Table`: 新增 table 拖拽全局配置。
+- 🐞 `<pro>Table`: 修复 table autoHeight 为auto时候出现样式问题。
+- 🐞 `<pro>Table`: 修复在 IE && 火狐浏览器下 scrollIntoViewIfNeeded 方法兼容性问题。
 - 🐞 `<pro>Table`: 修复在 IE 浏览器下滑动条回弹问题。
 - 🐞 `<pro>Table`: 修复使用 inline 模式出现 lookup 自动收起问题。
 - 🐞 `<pro>Table`: 修复在 `autoHeight` 属性 `type: maxHeight` 下固定列滑动不同步问题。
@@ -42,8 +45,6 @@ timeline: true
 - 🌟 `configure`: 新增 collapseExpandIconPosition, collapseExpandIcon, collapseTrigger 全局配置。
 - 🌟 `Collapse`: 新增 expandIcon, expandIconPosition, trigger 属性。
 - 🌟 `<pro>Select`: 新增 commonItem, maxCommonTagPlaceholder, maxCommonTagCount, maxCommonTagTextLength 常用项相关属性。
-- 🌟 `<pro>Table`: 新增 table tree 展开类名。
-- 🐞 `<pro>Table`: 修复 table autoHeight 为auto时候出现样式问题。
 - 🐞 `Progress`: 修复无法修改 Circle Progress strokeColor属性颜色的问题。
 - 🐞 `<pro>DatePciker`: 文档修复。
 - 🐞 `<pro>Select`: 修复点击全选按钮导致禁用选项也被勾选的问题。

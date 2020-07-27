@@ -402,7 +402,9 @@ export default class TableRow extends Component<TableRowProps, any> {
         selectedHighLightRow,
         mouseBatchChooseIdList,
         mouseBatchChooseState,
-        props: { onRow, rowRenderer, selectionMode, dragRow, dragColumnAlign: dragColumnAlignProps },
+        dragColumnAlign: dragColumnAlignProps,
+        dragRow,
+        props: { onRow, rowRenderer, selectionMode },
       },
     } = this.context;
     const { dataSet, isCurrent, key, id } = record;

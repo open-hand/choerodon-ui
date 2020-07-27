@@ -64,7 +64,7 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
     const { prefixCls, lock, dataSet,dragColumnAlign } = this.props;
     const { groupedColumns } = this;
     const {
-      tableStore: { overflowY,columnMaxDeep, columnResizable,props:{dragColumn,columnsDragRender={}}},
+      tableStore: { overflowY,columnMaxDeep, columnResizable,dragColumn,props:{columnsDragRender={}}},
     } = this.context;
     const {droppableProps,draggableProps,renderClone} = columnsDragRender
     const {tableStore} = this.context;

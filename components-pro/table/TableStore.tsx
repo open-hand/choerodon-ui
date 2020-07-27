@@ -266,19 +266,38 @@ export default class TableStore {
   }
 
   @computed
-  get dragRow(): boolean {
-    if (this.isTree) {
-      return false;
-    }
-    return this.props.dragRow;
-  }
-
-  @computed
   get pagination(): TablePaginationConfig | false | undefined {
     if ('pagination' in this.props) {
       return this.props.pagination;
     }
     return getConfig('pagination');
+  }
+
+  @computed
+  get dragColumnAlign():DragColumnAlign | undefined {
+    if('dragColumnAlign' in this.props) {
+      return this.props.dragColumnAlign;
+    }
+    return getConfig('tableDragColumnAlign');
+  }
+
+  @computed
+  get dragColumn():boolean | undefined {
+    if('dragColumn' in this.props) {
+      return this.props.dragColumn;
+    }
+    return getConfig('tableDragColumn');
+  }
+
+  @computed
+  get dragRow():boolean | undefined {
+    if (this.isTree) {
+      return false;
+    }
+    if('dragRow' in this.props) {
+      return this.props.dragRow;
+    }
+    return getConfig('tableDragRow');
   }
 
   @computed
@@ -802,8 +821,8 @@ export default class TableStore {
   }
 
   private addDragColumn(columns: ColumnProps[]): ColumnProps[] {
-    const { suffixCls, prefixCls, dragColumnAlign } = this.props;
-    if (dragColumnAlign) {
+    const { dragColumnAlign, dragRow, props: { suffixCls, prefixCls } } = this
+    if (dragColumnAlign && dragRow) {
       const dragColumn: ColumnProps = {
         key: DRAG_KEY,
         resizable: false,

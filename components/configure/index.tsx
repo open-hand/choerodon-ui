@@ -17,7 +17,7 @@ import { ButtonProps } from 'choerodon-ui/pro/lib/button/Button';
 import { SpinProps } from 'choerodon-ui/lib/spin';
 import { PanelProps } from 'choerodon-ui/lib/collapse';
 import { Size } from 'choerodon-ui/lib/_util/enum';
-import { TableQueryBarType } from 'choerodon-ui/pro/lib/table/enum';
+import { TableQueryBarType, DragColumnAlign } from 'choerodon-ui/pro/lib/table/enum';
 import { TriggerMode } from 'choerodon-ui/pro/lib/lov/enum';
 import { TransportHookProps, TransportProps } from 'choerodon-ui/pro/lib/data-set/Transport';
 import DataSet from 'choerodon-ui/pro/lib/data-set/DataSet';
@@ -125,6 +125,9 @@ export type Config = {
   lovTableProps?: TableProps;
   textFieldAutoComplete?: 'on' | 'off';
   resultStatusRenderer?: object;
+  tableDragColumnAlign?: DragColumnAlign;
+  tableDragColumn?: boolean;
+  tableDragRow?: boolean;
 };
 
 export type ConfigKeys = keyof Config;
@@ -215,6 +218,8 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['excludeUseColonTagList', defaultExcludeUseColonTag],
   ['lovTableProps', {}],
   ['textFieldAutoComplete', undefined],
+  ['tableDragRow', false],
+  ['tableDragColumn', false],
 ]);
 
 export function getConfig(key: ConfigKeys): any {

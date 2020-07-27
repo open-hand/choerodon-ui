@@ -22,15 +22,18 @@ timeline: true
 - 🌟 `<pro>Form`: Added `Form` submit check automatically to check failed component feature.
 - 🌟 `<pro>Table`: Added `editorNextKeyEnterDown` property.
 - 🌟 `<pro>Table`: Added `Table` submit check automatically to check failed cell feature.
-- 🐞 `Table`: Fixed the compatibility issue of `scrollIntoViewIfNeeded` method in IE && Firefox.
-- 🐞 `<pro>Table`: Fixed `Table` the scroll auto automatic sliding.
+- 🌟 `<pro>Table`: Added table tree expand className.
+- 🌟 `<pro>Table`: Added table global dragging setting.
+- 🐞 `<pro>Table`: Fixed table autoHeight is `auto` , The style is error.
+- 🐞 `<pro>Table`: Fixed the compatibility issue of `scrollIntoViewIfNeeded` method in IE && Firefox.
+- 🐞 `<pro>Table`: Fixed `Table` the scroll auto automatic sliding in IE.
 - 🐞 `<pro>Table`: Fixed `Table` use inline mode the lookup auto pack up.
-- 🐞 `<pro>Table`: Modified the judgment mechanism of `useMouseBatchChoose`, and fixed the problem that the attribute behaves as true when global setting true and component setting false.
 - 🐞 `<pro>Table`: Fixed the problem of out-of-sync when sliding fixed columns under the `autoHeight` property `type: maxHeight`.
+- 🐞 `<pro>Table`: Modified the judgment mechanism of `useMouseBatchChoose`, and fixed the problem that the attribute behaves as true when global setting true and component setting false.
 - 🐞 `<pro>Form`: Modified the problem of replacing the label color of mandatory and non-mandatory items in colon mode.
 - 🐞 `<pro>Button`: Modified the loading mechanism to fix the problem that the query button does not enter the loading state in the Table.
 - 🐞 `<pro>TextArea`: Fixed the problem that after setting required and resize properties in `Form` at the same time, the background color does not change along with the width and height.
-requestFileKeys
+
 ## 0.8.67
 
 `2020-07-14`
@@ -40,8 +43,6 @@ requestFileKeys
 - 🌟 `configure`: Added `collapseExpandIconPosition`, `collapseExpandIcon`, `collapseTrigger` properties.
 - 🌟 `Collapse`: Added `expandIcon`, `expandIconPosition`, `trigger` properties.
 - 🌟 `<pro>Select`: Added `commonItem`, `maxCommonTagPlaceholder`, `maxCommonTagCount`, `maxCommonTagTextLengthproperty` properties.
-- 🌟 `<pro>Table`: Added table tree expand className.
-- 🐞 `<pro>Table`: Fixed table autoHeight is `auto` , The style is error.
 - 🐞 `Progress`: Fixed Circle Progress can't change the color by strokeColor properties.
 - 🐞 `<pro>DatePciker`: Document repair.
 - 🐞 `<pro>Select`: Fixed a problem with the disabled option being checked by clicking the Select button.
