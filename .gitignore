@@ -39,7 +39,7 @@ components/**/*.d.ts
 components/style/core/fonts
 components-pro/**/*.js
 components-pro/**/*.jsx
-components-pro/**/*.d.ts
+#components-pro/**/*.d.ts
 !components/rc-components/**/*.jsx
 !components/rc-components/**/*.js
 components/rc-components/dialog/*.jsx

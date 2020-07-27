@@ -123,3 +123,5 @@ export { default as Skeleton } from './skeleton';
 export { default as AutoComplete } from './auto-complete';
 
 export { default as Cascader } from './cascader';
+
+export { default as PerformanceTable } from './performance-table';

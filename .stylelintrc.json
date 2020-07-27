@@ -12,5 +12,5 @@
     "no-descending-specificity": null,
     "declaration-empty-line-before": null
   },
-  "ignoreFiles": ["components/style/color/{bezierEasing,colorPalette,tinyColor}.less"]
+  "ignoreFiles": ["components/style/color/{bezierEasing,colorPalette,tinyColor}.less", "components-pro/performance-table/style/*.less"]
 }

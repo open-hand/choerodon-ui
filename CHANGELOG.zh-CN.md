@@ -15,20 +15,20 @@ timeline: true
 
 ---
 
-- 🌟 `imageCrop`: 新增 imageCrop 组件。
 - 🌟 `Result`: 新增 Result 组件。
+- 🌟 `ImageCrop`: 新增 ImageCrop 组件。
+- 🌟 `<pro>PerformanceTable`: 新增 PerformanceTable 组件。
 - 🌟 `Upload`: 新增 `requestFileKeys` 上传文件属性。
-- 🌟 `configure`: 新增 `textFieldAutoComplete`, `resultStatusRenderer`, `tableEditorNextKeyEnterDown` 全局配置。
+- 🌟 `configure`: 新增 `textFieldAutoComplete`, `resultStatusRenderer`, `tableEditorNextKeyEnterDown`, `tableDragRow`, `tableDragColumn`, `tableDragColumnAlign` 全局配置。
 - 🌟 `<pro>DataSet`: 新增 `DataSet` `validate` 校验事件。
 - 🌟 `<pro>Form`: 新增提交校验自动定位到校验未通过组件功能。
+- 🌟 `<pro>Table`: 新增 table tree 展开类名。
 - 🌟 `<pro>Table`: 新增提交校验自动定位到校验未通过单元格功能。
 - 🌟 `<pro>Table`: 新增控制行内编辑器回车跳转下一行编辑器属性 `editorNextKeyEnterDown`。
-- 🌟 `<pro>Table`: 新增 table tree 展开类名。
-- 🌟 `<pro>Table`: 新增 table 拖拽全局配置。
-- 🐞 `<pro>Table`: 修复 table autoHeight 为auto时候出现样式问题。
-- 🐞 `<pro>Table`: 修复在 IE && 火狐浏览器下 scrollIntoViewIfNeeded 方法兼容性问题。
 - 🐞 `<pro>Table`: 修复在 IE 浏览器下滑动条回弹问题。
 - 🐞 `<pro>Table`: 修复使用 inline 模式出现 lookup 自动收起问题。
+- 🐞 `<pro>Table`: 修复 table autoHeight 为auto时候出现样式问题。
+- 🐞 `<pro>Table`: 修复在 IE && 火狐浏览器下 scrollIntoViewIfNeeded 方法兼容性问题。
 - 🐞 `<pro>Table`: 修复在 `autoHeight` 属性 `type: maxHeight` 下固定列滑动不同步问题。
 - 🐞 `<pro>Table`: 修改了 useMouseBatchChoose 的判定机制，修复在全局设置与组件设置优先级问题。
 - 🐞 `<pro>Form`: 修改了在冒号模式下,必填项与非必填项的label颜色不一致的问题。
@@ -88,7 +88,7 @@ timeline: true
 - 🌟 `Avatar`: 增加 alt 属性描述。
 - 🌟 `DatePicker`: 增加 onPanelChange, mode 属性描述。
 - 🌟 `Progress`: 增加 strokeColor 属性。
-- 🌟 `Table`: 增加 pagination 全局配置 和 导出列子。
+- 🌟 `Table`: 增加 pagination 全局配置和导出例子。
 - 🌟 `Switch`: 增加 checkedValue, unCheckedValue 属性。
 - 🌟 `TreeSelect`: 新增 searchValue 和 autoClearSearchValue 属性。
 - 🌟 `Modal`: 增加 keyboard, okButtonProps, cancelButtonProps 属性。

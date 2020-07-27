@@ -367,7 +367,7 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
     }
 
     /**
-     * Upload  
+     * Upload
      */
     const renderUpload = useCallback(() => {
         const upload: React.ReactElement<UploadProps> = Array.isArray(children) ? children[0] : children;
@@ -487,14 +487,18 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
                         async (blob) => {
                             let newFile: Blob | UploadFile | null = blob;
                             if (newFile) {
+                                // @ts-ignore
                                 newFile.lastModifiedDate = Date.now();
+                                // @ts-ignore
                                 newFile.name = name;
+                                // @ts-ignore
                                 newFile.uid = uid;
                                 // @ts-ignore
                                 newFile.imageCropArea = cropPixelsRef.current;
                                 if (resolveRef && rejectRef && resolveRef.current && rejectRef.current) {
                                     if (typeof beforeUploadRef.current !== 'function') return resolveRef.current(newFile);
 
+                                  // @ts-ignore
                                     const res = beforeUploadRef.current(newFile, [newFile]);
 
                                     if (typeof res !== 'boolean' && !res) {
@@ -539,6 +543,7 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
 
 
     return (
+        // @ts-ignore
         <LocaleReceiver componentName="imageCrop" defaultLocale={defaultLocale.imageCrop}>
             {(locale) => (
                 <>
@@ -547,6 +552,7 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
                         <Modal
                             visible={modalVisible}
                             wrapClassName={`${prefixCls}-modal`}
+                            // @ts-ignore
                             title={modalTitle || ((locale as Locale).imageCrop && (locale as Locale).imageCrop?.editImage) ? (locale as Locale).imageCrop?.editImage : 'Edit image'} // 当不存在的语言使用英文
                             width={modalWidth}
                             onOk={onOk}

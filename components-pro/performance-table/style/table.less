@@ -1,0 +1,260 @@
+@import '../../../components/style/themes/default';
+
+&-table {
+  border: 1px solid @border-color-base;
+  position: relative;
+  overflow: hidden;
+
+  &-column-resizing {
+    cursor: ew-resize;
+    .user-select();
+  }
+
+  &-row {
+    overflow: hidden;
+    position: absolute;
+    height: 36px;
+    width: 100%;
+    top: 0;
+    border-bottom: 1px solid @border-color-base;
+  }
+
+  //&-hover &-row:hover {
+  //  background: @table-header-bg;
+  //}
+  //
+  //&-hover &-row-header:hover {
+  //  background: transparent;
+  //}
+
+  //&-hover &-row:hover &-cell-group {
+  //  background: @table-header-bg;
+  //}
+  //
+  &-hover &-row:hover &-cell {
+    background: @table-header-bg;
+  }
+
+  &-row-header &-cell {
+    background: @table-header-bg;
+    border-right: .01rem solid @border-color-base;
+
+    &:last-child {
+      border-right: none;
+    }
+  }
+
+  &-row-header &-cell-group-shadow {
+    .box-shadow(0, 2px, 3px, rgba(0, 0, 0, 0.28));
+    z-index: 5;
+  }
+  //
+  //&-hover &-row:hover &-cell-group {
+  //  background: @table-header-bg;
+  //}
+  //
+  //&-hover &-row:hover &-cell {
+  //  background: @table-header-bg;
+  //}
+
+  &-header-row-wrapper {
+    z-index: 2;
+    position: relative;
+  }
+
+  &-affix-header {
+    z-index: 3;
+    visibility: hidden;
+
+    &.fixed {
+      visibility: visible;
+    }
+  }
+
+  &-body-row-wrapper {
+    position: relative;
+    overflow: hidden;
+    z-index: 0;
+  }
+
+  &-body-info {
+    .icon {
+      margin: 0 10px;
+    }
+
+    width: 100%;
+    text-align: center;
+    top: 50%;
+    position: absolute;
+    margin-top: -20px;
+    line-height: 40px;
+
+    &-wheel-area {
+      width: 100%;
+    }
+  }
+
+  &-cell {
+    height: 36px;
+    border-style: solid;
+    border-width: 0;
+    border-color: @border-color-base;
+    display: block;
+    overflow: hidden;
+    position: absolute;
+    white-space: normal;
+    background: @body-background;
+
+    &.first {
+      border-left-width: 0;
+    }
+
+    &-wrap1 {
+      display: table;
+    }
+
+    &-wrap2 {
+      display: table-row;
+    }
+
+    &-wrap3 {
+      display: table-cell;
+      vertical-align: middle;
+    }
+
+    &-content {
+      padding: 8px;
+      .ellipsis();
+    }
+
+    &-header {
+      &-sortable {
+        cursor: pointer;
+      }
+
+      &-sort-wrapper {
+        display: inline-block;
+      }
+
+      &-icon-sort {
+        width: 10px;
+        height: 10px;
+      }
+
+      &-icon-sort::after {
+        content: '↑↓';
+        font-family: -webkit-pictograph;
+      }
+
+      &-icon-sort-asc::after {
+        content: '↑';
+        color: @primary-color;
+      }
+
+      &-icon-sort-desc::after {
+        content: '↓';
+        color: @primary-color;
+      }
+    }
+  }
+
+  &-column-resize-spanner {
+    height: 36px;
+    width: 6px;
+    z-index: 3;
+    position: absolute;
+    cursor: ew-resize !important;
+    outline: none;
+
+    &:hover {
+      background: @primary-color;
+    }
+  }
+
+  &-cell-group {
+    &-fixed-left {
+      position: absolute;
+      z-index: 4;
+      background: @body-background;
+    }
+
+    &-fixed-right {
+      position: absolute;
+      z-index: 4;
+      background: @body-background;
+      margin-left: 10px;
+    }
+
+    &-left-shadow {
+      .box-shadow(3px, 0px, 5px, rgba(9, 9, 9, 0.08));
+    }
+
+    &-shadow,
+    &-right-shadow {
+      .box-shadow(-3px, 0px, 5px, rgba(9, 9, 9, 0.08));
+    }
+  }
+
+  &-mouse-area {
+    display: none;
+    background: @primary-color;
+    left: -1px;
+    top: 0;
+    position: absolute;
+    width: 1px;
+    z-index: 6;
+  }
+
+  &-bordered &-cell {
+    border-width: 0 1px 0 0;
+  }
+
+  &-word-wrap &-cell-content {
+    white-space: unset;
+    word-break: break-all;
+    word-wrap: break-word;
+  }
+
+  &-row-expanded {
+    position: absolute;
+    height: 46px;
+    bottom: 0;
+    width: 100%;
+    z-index: 4;
+    border-top: 1px solid #eee;
+    padding: 10px;
+    background: #f5f5f5;
+  }
+
+  &-loader-wrapper {
+    visibility: hidden;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+
+  &-loader {
+    width: 100%;
+    text-align: center;
+    top: 50%;
+    position: absolute;
+    margin-top: -20px;
+    line-height: 40px;
+
+    &-icon {
+      .set-side-length(18px);
+      .loader-spin;
+
+      display: inline-block;
+      position: relative;
+      margin-right: 12px;
+      // Make sure loader vertical-align center
+      padding-top: 3px;
+    }
+  }
+
+  &-loading &-loader-wrapper {
+    visibility: visible;
+  }
+}

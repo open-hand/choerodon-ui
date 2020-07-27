@@ -4,6 +4,9 @@ components/*/__tests__/type.tsx
 components-pro/**/*.js
 components-pro/**/*.jsx
 components-pro/*/__tests__/type.tsx
+components-pro/performance-table/*.tsx
+components-pro/performance-table/utils/*.ts
+components-pro/performance-table/utils/*.tsx
 !components/*/__tests__/**/*.js
 !components/*/demo/*
 !components-pro/*/__tests__/**/*.js
