@@ -16,6 +16,11 @@ export interface Locale {
   Transfer?: Object;
   Select?: Object;
   Upload?: Object;
+  imageCrop?: imageCrop;
+}
+
+interface imageCrop {
+  editImage: 'string' ,
 }
 
 export interface LocaleProviderProps {

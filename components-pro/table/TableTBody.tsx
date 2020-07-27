@@ -103,7 +103,7 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
     const { prefixCls, lock , indentSize, dragColumnAlign} = this.props;
     const { leafColumns, leafColumnsBody } = this;
     const {
-      tableStore: { data, props: { virtual,dragColumnAlign:propsDragColumnAlign,rowDragRender={}},dataSet, height,dragRow },
+      tableStore: { data, dragColumnAlign: propsDragColumnAlign, props: { virtual,rowDragRender={}},dataSet, height, dragRow },
     } = this.context;
     const {droppableProps,renderClone} = rowDragRender
     const rowData = virtual && height ? this.processData() : data;
@@ -274,7 +274,7 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
   ): ReactNode {
     const { prefixCls, indentSize, dragColumnAlign } = this.props;
     const {
-      tableStore: { isTree, props:{dragColumnAlign:propsDragColumnAlign, rowDragRender = {}},dragRow },
+      tableStore: { isTree, dragColumnAlign:propsDragColumnAlign, props:{ rowDragRender = {}},dragRow },
     } = this.context;
     const {draggableProps} = rowDragRender
     const children = isTree && (

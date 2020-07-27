@@ -15,13 +15,18 @@ timeline: true
 
 ---
 
+- 🌟 `imageCrop`: 新增 imageCrop 组件。
 - 🌟 `Result`: 新增 Result 组件。
+- 🌟 `Upload`: 新增 `requestFileKeys` 上传文件属性。
 - 🌟 `configure`: 新增 `textFieldAutoComplete`, `resultStatusRenderer`, `tableEditorNextKeyEnterDown` 全局配置。
 - 🌟 `<pro>DataSet`: 新增 `DataSet` `validate` 校验事件。
 - 🌟 `<pro>Form`: 新增提交校验自动定位到校验未通过组件功能。
 - 🌟 `<pro>Table`: 新增提交校验自动定位到校验未通过单元格功能。
 - 🌟 `<pro>Table`: 新增控制行内编辑器回车跳转下一行编辑器属性 `editorNextKeyEnterDown`。
-- 🐞 `Table`: 修复在 IE && 火狐浏览器下 scrollIntoViewIfNeeded 方法兼容性问题。
+- 🌟 `<pro>Table`: 新增 table tree 展开类名。
+- 🌟 `<pro>Table`: 新增 table 拖拽全局配置。
+- 🐞 `<pro>Table`: 修复 table autoHeight 为auto时候出现样式问题。
+- 🐞 `<pro>Table`: 修复在 IE && 火狐浏览器下 scrollIntoViewIfNeeded 方法兼容性问题。
 - 🐞 `<pro>Table`: 修复在 IE 浏览器下滑动条回弹问题。
 - 🐞 `<pro>Table`: 修复使用 inline 模式出现 lookup 自动收起问题。
 - 🐞 `<pro>Table`: 修复在 `autoHeight` 属性 `type: maxHeight` 下固定列滑动不同步问题。

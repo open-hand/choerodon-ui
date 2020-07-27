@@ -225,7 +225,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
   render() {
     const { column, prefixCls, dataSet, rowSpan, colSpan, provided, snapshot } = this.props;
     const {
-      tableStore: { rowHeight,columnMaxDeep, columnResizable,props:{dragColumn,columnsDragRender= {} } },
+      tableStore: { rowHeight,columnMaxDeep, columnResizable,dragColumn,props:{columnsDragRender= {} } },
     } = this.context;
     const {renderIcon} = columnsDragRender
     const sortPrefixCls = `${prefixCls}-sort`;

@@ -108,6 +108,7 @@ class AjaxUploader extends Component {
   }
 
   post(file) {
+    const { requestFileKeys } = this.props;
     if (!this._isMounted) {
       return;
     }
@@ -124,6 +125,7 @@ class AjaxUploader extends Component {
       filename: props.name,
       file,
       data,
+      requestFileKeys, // 判断传递的是数据不是文件
       headers: props.headers,
       withCredentials: props.withCredentials,
       onProgress: onProgress ? e => {

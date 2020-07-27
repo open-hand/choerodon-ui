@@ -402,7 +402,9 @@ export default class TableRow extends Component<TableRowProps, any> {
         selectedHighLightRow,
         mouseBatchChooseIdList,
         mouseBatchChooseState,
-        props: { onRow, rowRenderer, selectionMode, dragRow, dragColumnAlign: dragColumnAlignProps },
+        dragColumnAlign: dragColumnAlignProps,
+        dragRow,
+        props: { onRow, rowRenderer, selectionMode },
       },
     } = this.context;
     const { dataSet, isCurrent, key, id } = record;
@@ -430,6 +432,7 @@ export default class TableRow extends Component<TableRowProps, any> {
         [`${rowPrefixCls}-selected`]: selectedHighLightRow && selected,
         [`${rowPrefixCls}-disabled`]: disabled,
         [`${rowPrefixCls}-mouse-batch-choose`]: mouseBatchChooseState && (mouseBatchChooseIdList || []).includes(id),
+        [`${rowPrefixCls}-expanded`]:this.isExpanded,
       },
       rowExternalProps.className,
     );

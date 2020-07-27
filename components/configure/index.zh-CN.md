@@ -57,6 +57,9 @@ const prefixCls = getConfig('prefixCls');
 | tableAlwaysShowRowBox | Table是否一直显示rowbox,开启后在其他模式下也会显示rowbox | boolean | false |
 | tableUseMouseBatchChoose | Table是否使用鼠标批量选择,开启后在rowbox的情况下可以进行鼠标拖动批量选择,在起始的rowbox处按下,在结束位置松开 | boolean | false |
 | tableEditorNextKeyEnterDown | Table是否开启可编辑行回车编辑下一行 | boolean | true |
+| tableDragRow | Table是否开启行拖拽 | boolean | false |
+| tableDragColumn | Table是否开启列拖拽 | boolean | false |
+| tableDragColumnAlign | Table列拖拽的模式 | 'left'\|'right' | - |
 | pagination | 默认 pagination 的属性 | TablePaginationConfig \| false | 详见[Pagination](/components-pro/pagination/#Pagination) |
 | dropdownMatchSelectWidth | 默认下拉框匹配输入框宽度 | boolean | true |
 | modalSectionBorder | 默认 Modal 的头和脚有边框线 | boolean | true |

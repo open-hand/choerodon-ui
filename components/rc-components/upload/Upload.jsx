@@ -31,6 +31,10 @@ class Upload extends Component {
     onReady: PropTypes.func,
     withCredentials: PropTypes.bool,
     supportServerRender: PropTypes.bool,
+    requestFileKeys: PropTypes.oneOfType([
+      PropTypes.array,
+      PropTypes.string,
+    ]),
   }
 
   static defaultProps = {

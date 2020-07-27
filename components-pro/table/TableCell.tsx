@@ -506,7 +506,7 @@ export default class TableCell extends Component<TableCellProps> {
   }
 
   render() {
-    const { column, prefixCls, record } = this.props;
+    const { column, prefixCls, record, isDragging } = this.props;
     const {
       tableStore: { inlineEdit, pristine, props: { autoMaxWidth } },
     } = this.context;
@@ -537,17 +537,19 @@ export default class TableCell extends Component<TableCellProps> {
       className,
       cellExternalProps.className,
     );
-    const widthDraggingStyle = (): React.CSSProperties => {
-      const draggingStyle: React.CSSProperties = {};
-      if (column.width) {
-        draggingStyle.width = pxToRem(column.width);
+    const widthDraggingStyle = ():React.CSSProperties =>{
+      const draggingStyle:React.CSSProperties = {}
+      if (isDragging) {
+        if (column.width) {
+          draggingStyle.width = pxToRem(column.width)
+        }
+        if (column.minWidth) {
+          draggingStyle.minWidth = pxToRem(column.minWidth)
+        }
+        draggingStyle.whiteSpace = "nowrap"
       }
-      if (column.minWidth) {
-        draggingStyle.minWidth = pxToRem(column.minWidth);
-      }
-      draggingStyle.whiteSpace = 'nowrap';
-      return draggingStyle;
-    };
+      return draggingStyle
+    }
     const td = (
       <td
         {...cellExternalProps}

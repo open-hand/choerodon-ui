@@ -524,8 +524,6 @@ export default class Table extends DataSetComponent<TableProps> {
     virtualSpin: false,
     autoHeight: false,
     autoMaxWidth: false,
-    dragRow: false,
-    dragColumn: false,
   };
 
   tableStore: TableStore = new TableStore(this);
@@ -913,7 +911,7 @@ export default class Table extends DataSetComponent<TableProps> {
     const {
       prefixCls,
       tableStore,
-      tableStore: { overflowX, isAnyColumnsLeftLock, isAnyColumnsRightLock },
+      tableStore: { overflowX, isAnyColumnsLeftLock, isAnyColumnsRightLock, dragRow, dragColumnAlign },
       props: {
         style,
         spin,
@@ -924,8 +922,6 @@ export default class Table extends DataSetComponent<TableProps> {
         queryFieldsLimit,
         filterBarFieldName,
         filterBarPlaceholder,
-        dragColumnAlign,
-        dragRow,
       },
     } = this;
     const content = this.getTable();

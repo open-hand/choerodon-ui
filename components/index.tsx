@@ -134,3 +134,7 @@ export { default as configure } from './configure';
 export { default as getConfig } from './get-config';
 
 export { default as Result } from './result';
+
+export { default as ImageCrop } from './image-crop';
+
+

@@ -1,3 +1,9 @@
+import isString from 'lodash/isString';
+import isArray from 'lodash/isArray';
+import isObject  from 'lodash/isObject';
+import toString  from 'lodash/toString';
+import isNil  from 'lodash/isNil';
+
 function getError(option, xhr) {
   const msg = `cannot post ${option.action} ${xhr.status}'`;
   const err = new Error(msg);
@@ -31,6 +37,62 @@ function getBody(xhr) {
 //  action: String,
 //  headers: Object,
 // }
+
+
+function requestFileFormData(requestFileKeys,option) {
+
+  const formData = new FormData();
+  /** 
+   * 添加注入的data数据
+   */
+  if (option.data) {
+    Object.keys(option.data).map(key => {
+      formData.append(key, option.data[key]);
+    });
+  }
+  /**
+   * 添加文件数据
+   */
+  formData.append(option.filename, option.file);
+
+  const toStringValue = (value) => {
+    if(isNil(value)){
+      return '';
+    }
+    if(isString(value)){
+      return value
+    }
+    if(isObject(value)) {
+      return JSON.stringify(value)
+    }
+    return toString(value)
+  }
+  
+  /**
+   * 
+   * @param {所有数据} obj 
+   * @param {需要传出的参数keys} arrayString 
+   */
+  const ArrayToObject = (obj,arrayString) => {
+    arrayString.forEach(item => {
+      formData.append(toStringValue(item), toStringValue(obj[toStringValue(item)]));
+    })
+  }
+  
+  /**
+   * 判断是否需要增加key
+   */
+  if(isString(requestFileKeys) || isArray(requestFileKeys)){
+    let requestFileKeysFile = ['uid','type','name','lastModifiedDate'];
+    if(isString(requestFileKeys)){
+      requestFileKeysFile.push(requestFileKeys);
+    }else{
+      requestFileKeysFile = [...requestFileKeysFile,...requestFileKeys]
+    }
+    ArrayToObject(option.file,requestFileKeysFile)
+  }
+  return formData
+}
 export default function upload(option) {
   const xhr = new XMLHttpRequest();
 
@@ -43,15 +105,9 @@ export default function upload(option) {
     };
   }
 
-  const formData = new FormData();
 
-  if (option.data) {
-    Object.keys(option.data).map(key => {
-      formData.append(key, option.data[key]);
-    });
-  }
+  const formData =  requestFileFormData(option.requestFileKeys,option)
 
-  formData.append(option.filename, option.file);
 
   xhr.onerror = function error(e) {
     option.onError(e);
