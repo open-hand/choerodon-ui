@@ -15,10 +15,15 @@ timeline: true
 
 ---
 
-- 🌟 `ImageCrop`: Added the `ImageCrop` component.
+## 0.8.68
+
+`2020-07-28`
+
 - 🌟 `Result`: Added the `Result` component.
 - 🌟 `Upload`: Added `requestFileKeys` properties.
+- 🌟 `ImageCrop`: Added the `ImageCrop` component.
 - 🌟 `configure`: Added `textFieldAutoComplete`, `resultStatusRenderer`, `tableEditorNextKeyEnterDown`, `tableDragRow`, `tableDragColumn`, `tableDragColumnAlign` properties.
+- 🌟 `<pro>PerformanceTable`: Added `PerformanceTable` component.
 - 🌟 `<pro>Form`: Added `Form` submit check automatically to check failed component feature.
 - 🌟 `<pro>Table`: Added table tree expand className.
 - 🌟 `<pro>Table`: Added `editorNextKeyEnterDown` property.

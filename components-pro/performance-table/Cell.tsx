@@ -81,7 +81,7 @@ class Cell extends React.PureComponent<CellProps> {
 
   renderTreeNodeExpandIcon() {
     const { rowData, renderTreeToggle, hasChildren, expanded } = this.props;
-    const expandButton = <i className={this.addPrefix('expand-icon')} />;
+    const expandButton = <i className={this.addPrefix('expand-icon icon')} />;
 
     if (this.isTreeCol() && hasChildren) {
       return (

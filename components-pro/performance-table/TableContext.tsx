@@ -2,7 +2,7 @@ import createContext from './utils/createContext';
 import translateDOMPositionXY from './utils/translateDOMPositionXY';
 import isRTL from './utils/isRTL';
 
-interface Props {
+export interface Props {
   rtl: boolean;
   hasCustomTreeCol: boolean;
   translateDOMPositionXY: (style: React.CSSProperties, x: number, y: number) => void;

@@ -1,16 +1,17 @@
 //treeTable
 
-&-table-cell-expanded &-table-cell-expand-icon:before {
-  content: ' - ';
+&-table-cell-expanded &-table-cell-expand-icon {
+  transform: rotate(90deg);
+  &:::after {
+    content: "\E969";
+  }
 }
 
 &-table-cell-expand-icon {
-  width: 10px;
   cursor: pointer;
   outline: none;
-  &:before {
-    font-family: -webkit-pictograph;
-    content: ' + ';
+  &::after {
+    content: "\E969";
   }
 }
 

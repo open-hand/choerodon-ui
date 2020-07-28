@@ -23,7 +23,7 @@ class ColumnResizeHandler extends React.Component<ColumnResizeHandlerProps> {
     onColumnResizeMove: PropTypes.func,
   };
   static defaultProps = {
-    classPrefix: defaultClassPrefix('table-column-resize-spanner'),
+    classPrefix: defaultClassPrefix('performance-table-column-resize-spanner'),
   };
 
   columnWidth = 0;

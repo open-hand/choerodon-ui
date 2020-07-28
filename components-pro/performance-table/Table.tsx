@@ -20,6 +20,7 @@ import {
   on,
   getOffset,
 } from 'dom-lib';
+import { toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 
 import Row from './Row';
 import CellGroup from './CellGroup';
@@ -704,7 +705,6 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   ) => {
     this._cacheCells = null;
 
-    console.log(index);
     this.setState({ isColumnResizing: false, [`${dataKey}_${index}_width`]: columnWidth });
 
     addStyle(this.mouseAreaRef.current, { display: 'none' });
@@ -1634,6 +1634,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     const styles = {
       width: width || 'auto',
       height: this.getTableHeight(),
+      lineHeight: `${toPx(this.getRowHeight())}px`,
       ...style,
     };
 

@@ -15,25 +15,30 @@ timeline: true
 
 ---
 
+
+## 0.8.68
+
+`2020-07-28`
+
 - 🌟 `Result`: 新增 Result 组件。
 - 🌟 `ImageCrop`: 新增 ImageCrop 组件。
-- 🌟 `<pro>PerformanceTable`: 新增 PerformanceTable 组件。
-- 🌟 `Upload`: 新增 `requestFileKeys` 上传文件属性。
+- 🌟 `Upload`: 新增 requestFileKeys 上传文件属性。
 - 🌟 `configure`: 新增 `textFieldAutoComplete`, `resultStatusRenderer`, `tableEditorNextKeyEnterDown`, `tableDragRow`, `tableDragColumn`, `tableDragColumnAlign` 全局配置。
-- 🌟 `<pro>DataSet`: 新增 `DataSet` `validate` 校验事件。
+- 🌟 `<pro>PerformanceTable`: 新增 PerformanceTable 组件。
+- 🌟 `<pro>DataSet`: 新增 DataSet validate 校验事件。
 - 🌟 `<pro>Form`: 新增提交校验自动定位到校验未通过组件功能。
 - 🌟 `<pro>Table`: 新增 table tree 展开类名。
 - 🌟 `<pro>Table`: 新增提交校验自动定位到校验未通过单元格功能。
-- 🌟 `<pro>Table`: 新增控制行内编辑器回车跳转下一行编辑器属性 `editorNextKeyEnterDown`。
+- 🌟 `<pro>Table`: 新增控制行内编辑器回车跳转下一行编辑器属性 editorNextKeyEnterDown。
 - 🐞 `<pro>Table`: 修复在 IE 浏览器下滑动条回弹问题。
 - 🐞 `<pro>Table`: 修复使用 inline 模式出现 lookup 自动收起问题。
 - 🐞 `<pro>Table`: 修复 table autoHeight 为auto时候出现样式问题。
 - 🐞 `<pro>Table`: 修复在 IE && 火狐浏览器下 scrollIntoViewIfNeeded 方法兼容性问题。
-- 🐞 `<pro>Table`: 修复在 `autoHeight` 属性 `type: maxHeight` 下固定列滑动不同步问题。
+- 🐞 `<pro>Table`: 修复在 autoHeight 属性 type: maxHeight 下固定列滑动不同步问题。
 - 🐞 `<pro>Table`: 修改了 useMouseBatchChoose 的判定机制，修复在全局设置与组件设置优先级问题。
 - 🐞 `<pro>Form`: 修改了在冒号模式下,必填项与非必填项的label颜色不一致的问题。
 - 🐞 `<pro>Button`: 修改 loading 机制，修复 query 按钮在 Table 中不进入 loading 状态的问题。
-- 🐞 `<pro>TextArea`: 修复在 Form 中同时设置了required 跟 resize 属性后，背景色不跟着宽高一起变化的问题。
+- 🐞 `<pro>TextArea`: 修复在 Form 中同时设置了 required 跟 resize 属性后，背景色不跟着宽高一起变化的问题。
 
 
 ## 0.8.67

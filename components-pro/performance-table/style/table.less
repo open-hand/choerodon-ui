@@ -6,7 +6,7 @@
   overflow: hidden;
 
   &-column-resizing {
-    cursor: ew-resize;
+    cursor: col-resize;
     .user-select();
   }
 
@@ -19,27 +19,31 @@
     border-bottom: 1px solid @border-color-base;
   }
 
-  //&-hover &-row:hover {
-  //  background: @table-header-bg;
-  //}
-  //
-  //&-hover &-row-header:hover {
-  //  background: transparent;
-  //}
+  &-hover &-row:hover {
+   background: @performance-table-header-bg;
+  }
+  
+  &-hover &-row-header:hover {
+   background: @performance-table-header-bg;
+  }
 
-  //&-hover &-row:hover &-cell-group {
-  //  background: @table-header-bg;
-  //}
-  //
+  &-hover &-row:hover &-cell-group {
+   background: @performance-table-header-bg;
+  }
+  
   &-hover &-row:hover &-cell {
-    background: @table-header-bg;
+    background: @performance-table-header-bg;
+  }
+
+  &-row-header {
+    background: @performance-table-header-bg;
   }
 
   &-row-header &-cell {
-    background: @table-header-bg;
+    background: @performance-table-header-bg;
     border-right: .01rem solid @border-color-base;
 
-    &:last-child {
+    &-last {
       border-right: none;
     }
   }
@@ -48,14 +52,14 @@
     .box-shadow(0, 2px, 3px, rgba(0, 0, 0, 0.28));
     z-index: 5;
   }
-  //
-  //&-hover &-row:hover &-cell-group {
-  //  background: @table-header-bg;
-  //}
-  //
-  //&-hover &-row:hover &-cell {
-  //  background: @table-header-bg;
-  //}
+  
+  &-hover &-row:hover &-cell-group {
+   background: @performance-table-header-bg;
+  }
+  
+  &-hover &-row:hover &-cell {
+   background: @performance-table-header-bg;
+  }
 
   &-header-row-wrapper {
     z-index: 2;
@@ -95,7 +99,7 @@
   }
 
   &-cell {
-    height: 36px;
+    height: 30px;
     border-style: solid;
     border-width: 0;
     border-color: @border-color-base;
@@ -123,8 +127,15 @@
     }
 
     &-content {
-      padding: 8px;
+      padding: 0 .1rem;
+      line-height: inherit;
       .ellipsis();
+
+      &:hover {
+        .icon::after {
+          opacity: 1;
+        }
+      }
     }
 
     &-header {
@@ -137,23 +148,29 @@
       }
 
       &-icon-sort {
-        width: 10px;
-        height: 10px;
-      }
+        font-family: icomoon!important;
 
-      &-icon-sort::after {
-        content: '↑↓';
-        font-family: -webkit-pictograph;
+        &::after {
+          content: "\E5D8";
+          color: rgba(0,0,0,.45);
+          opacity: 0;
+        }
       }
 
       &-icon-sort-asc::after {
-        content: '↑';
-        color: @primary-color;
+        content: "\E5D8";
+        color: inherit;
+        opacity: 1;
+      }
+
+      &-icon-sort-desc {
+        transform: rotate(180deg);
       }
 
       &-icon-sort-desc::after {
-        content: '↓';
-        color: @primary-color;
+        content: "\E5D8";
+        color: inherit;
+        opacity: 1;
       }
     }
   }
@@ -163,12 +180,8 @@
     width: 6px;
     z-index: 3;
     position: absolute;
-    cursor: ew-resize !important;
+    cursor: col-resize !important;
     outline: none;
-
-    &:hover {
-      background: @primary-color;
-    }
   }
 
   &-cell-group {

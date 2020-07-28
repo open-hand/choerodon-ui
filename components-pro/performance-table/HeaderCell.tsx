@@ -100,7 +100,7 @@ class HeaderCell extends React.PureComponent<HeaderCellProps, HeaderCelltate> {
     const { sortable, sortColumn, sortType = '', dataKey } = this.props;
 
     if (sortable) {
-      const iconClasses = classNames(this.addPrefix('icon-sort'), {
+      const iconClasses = classNames(this.addPrefix('icon-sort icon'), {
         [this.addPrefix(`icon-sort-${sortType}`)]: sortColumn === dataKey,
       });
       return (
