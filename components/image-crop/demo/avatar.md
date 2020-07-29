@@ -1,25 +1,23 @@
 ---
-order: 0
+order: 1
 title:
-  zh-CN: 头像显示
+  zh-CN: 头像裁剪
   en-US: Basic 
 ---
 
 ## zh-CN
 
-从堆叠到水平排列。
-
-使用单一的一组 `Row` 和 `Col` 栅格组件，就可以创建一个基本的栅格系统，所有列（Col）必须放在 `Row` 内。
+头像裁剪，进行url配置就可以实现常用的头像裁剪。
 
 ## en-US
 
-From the stack to the horizontal arrangement.
-
-You can create a basic grid system by using a single set of `Row` and `Col` grid assembly, all of the columns (Col) must be placed in `Row`.
+just only to configure the url you can upload the avatar .
 
 ```jsx
-import { ImageCrop,Button } from 'choerodon-ui';
+import { ImageCrop, Avatar } from 'choerodon-ui';
 import { useState, useCallback } from 'react';
+
+const AvatarUploader = ImageCrop.AvatarUploader
 
 const  Demo = () => {
     const [visable,setVisiable] = useState(false)
@@ -28,8 +26,7 @@ const  Demo = () => {
         setVisiable(true)
     },[])
 
-    const hanleOk = useCallback(({url,blob}) => {
-        console.log(url,blob); 
+    const hanleOk = useCallback(() => {
         setVisiable(false);
     },[])
 
@@ -40,8 +37,8 @@ const  Demo = () => {
 
     return (
         <>
-            <Button onClick={hanleClick} funcType="raised">查看头像</Button>
-            <ImageCrop avatarTitle="浏览头像" modalVisible={visable} hasAvatar onOk={hanleOk} onCancel={hanleCancel} on src ='https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png' rotate zoom grid aspect={1/1} aspectControl />
+            <Avatar onClick={hanleClick} style={{ backgroundColor: '#87d068' }} >我绿了</Avatar>
+            <AvatarUploader onUploadOk={hanleOk} onClose={hanleCancel} uploadUrl='https://www.mocky.io/v2/5cc8019d300000980a055e76'  visible={visable} />
         </>
     )
 }

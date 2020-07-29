@@ -19,8 +19,23 @@ export interface Locale {
   imageCrop?: imageCrop;
 }
 
-interface imageCrop {
-  editImage: 'string' ,
+export interface imageCrop {
+  editImage: string,
+  avatarUploadError: string,
+  avatarServerError: string,
+  avatarUpload: string,
+  avatarReminder: string,
+  preview: string,
+  reUpload: string,
+  imageTooLarge: string,
+  imageUploadError: string,
+  imageDragHere: string,
+  pleaseUpload: string,
+  uploadType: string,
+  picture: string,
+  cancelButton: string,
+  saveButton: string,
+  changeAvatar: string,
 }
 
 export interface LocaleProviderProps {

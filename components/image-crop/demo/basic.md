@@ -1,47 +1,43 @@
 ---
-order: 1
+order: 0
 title:
-  zh-CN: 基础裁剪
-  en-US: Basic 
+  zh-CN: basic
+  en-US: 基础
 ---
 
 ## zh-CN
 
-从堆叠到水平排列。
-
-使用单一的一组 `Row` 和 `Col` 栅格组件，就可以创建一个基本的栅格系统，所有列（Col）必须放在 `Row` 内。
+基础
 
 ## en-US
 
-From the stack to the horizontal arrangement.
-
-You can create a basic grid system by using a single set of `Row` and `Col` grid assembly, all of the columns (Col) must be placed in `Row`.
+basic
 
 ```jsx
-import { ImageCrop,Button } from 'choerodon-ui';
+import { ImageCrop, Button } from 'choerodon-ui';
 import { useState, useCallback } from 'react';
 
-const  Demo = () => {
-    const [visable,setVisiable] = useState(false)
+const Demo = () => {
+    const [visable, setVisiable] = useState(false)
 
-    const hanleClick = useCallback(()=>{
+    const hanleClick = useCallback(() => {
         setVisiable(true)
-    },[])
+    }, [])
 
-    const hanleOk = useCallback(({url,blob}) => {
-        console.log(url,blob); 
+    const hanleOk = useCallback(({ url, blob, area }) => {
+        console.log(url, blob, area);
         setVisiable(false);
-    },[])
+    }, [])
 
     const hanleCancel = useCallback(() => {
         setVisiable(false);
         console.log('close')
-    },[])
+    }, [])
 
     return (
         <>
-            <Button onClick={hanleClick} funcType="raised">查看裁剪</Button>
-            <ImageCrop modalVisible={visable} onOk={hanleOk} onCancel={hanleCancel} on src ='https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png' rotate zoom grid aspect={1/1} aspectControl />
+            <Button onClick={hanleClick} funcType="raised">裁剪并下载</Button>
+            <ImageCrop modalVisible={visable} onOk={hanleOk} onCancel={hanleCancel} on src='https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png' rotate zoom grid aspect={12 / 13} aspectControl />
         </>
     )
 }
