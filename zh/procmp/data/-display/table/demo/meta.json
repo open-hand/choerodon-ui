@@ -95,6 +95,21 @@
       "category": "pro"
     },
     {
+      "filename": "row-combine.js",
+      "title": {
+        "zh": "组合行",
+        "en": "Grouped Rows"
+      },
+      "description": {
+        "zh": "组合行。\n",
+        "en": "Grouped Rows.\n"
+      },
+      "order": 5,
+      "screenshot": "",
+      "height": 440,
+      "category": "pro"
+    },
+    {
       "filename": "advanced-bar.js",
       "title": {
         "zh": "高级搜索条",

@@ -27,6 +27,7 @@ title: API
 | onSuccess           | 上传成功事件                                                                                                                                                                   | Function(response, file)                                           | 无     |
 | onProgress          | 上传进度中事件                                                                                                                                                                 | Function({ percent }, file)                                        | 无     |
 | onError             | 上传失败事件                                                                                                                                                                   | Function(error, response, file)                                    | 无     |
+ | requestFileKeys   | 可以传输文件上面的一些props信息给后台   | string,string[] | 无   |
 
 ### onChange
 

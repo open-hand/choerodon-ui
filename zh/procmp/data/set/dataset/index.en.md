@@ -5,6 +5,10 @@ abstract: true
 
 数据源。
 
+**Precautions**
+
+> DataSet internally converts ordinary data objects into observable objects. Loading more than 1000+ in a single `loadData | create` or traversing to create a record will be time-consuming. For projects with strict performance requirements, other solutions are recommended. The amount of data.
+
 ## API
 
 ### DataSet Props

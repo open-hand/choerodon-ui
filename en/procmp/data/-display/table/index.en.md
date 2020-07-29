@@ -4,9 +4,22 @@ subtitle: 表格
 order: 0
 ---
 
-展示行列数据，导出和分页配置参见底部。
+Display row and column data, see the bottom for export and paging configuration.
 
-## 何时使用
+## When to use
 
-- 当有大量结构化的数据需要展现时；
-- 当需要对数据进行排序、搜索、分页、自定义操作等复杂行为时。
+-When there is a large amount of structured data to show;
+-When complex behaviors such as sorting, searching, paging, and customizing data are required.
+
+**Precautions**
+
+> Pro Table has many integrated functions and complex logic, so there are certain performance problems, so you must pay attention to it before developing technology selection.
+
+**Performance bottleneck**
+
+-Multi-field: single-line field 50+ (10 items) affects the first rendering speed, and has little effect
+-Large amount of data: The total number of cells in a single rendering exceeds 1000+
+
+**Processing plan**
+
+> Use basic tables or big data tables according to specific scenarios and needs

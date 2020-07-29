@@ -1,0 +1,248 @@
+{
+  "title": {
+    "zh": "中文分类",
+    "en": "Category"
+  },
+  "demos": [
+    {
+      "filename": "basic.js",
+      "title": {
+        "zh": "基本",
+        "en": "Basic"
+      },
+      "description": {
+        "zh": "最简单的用法。\n",
+        "en": "The most basic usage.\n"
+      },
+      "order": 0,
+      "screenshot": "",
+      "height": 520,
+      "category": "pro"
+    }, {
+      "filename": "resizable-column.js",
+      "title": {
+        "zh": "调整列宽",
+        "en": "Resizable"
+      },
+      "description": {
+        "zh": "把鼠标移动到列分割线的时候，会显示出一个蓝色的移动手柄，点击不松开并左右拖动就可以调整列的宽度。\n",
+        "en": "The most basic usage.\n"
+      },
+      "order": 1,
+      "screenshot": "",
+      "height": 520,
+      "category": "pro"
+    }, {
+      "filename": "fluid-column.js",
+      "title": {
+        "zh": "流体列宽",
+        "en": "FlexGrow"
+      },
+      "description": {
+        "zh": "如果需要把某列设置为自动宽度，需要配置 flexGrow 属性。 flexGrow 是 number 类型。会按照所有 flexGrow 总和比例撑满剩下的宽度。\n\n 注意: 设置 flexGrow 以后，就不能设置 width 和 resizable 属性。 可以通过 minWidth 设置一个最小宽度。\n",
+        "en": "The most basic usage.\n"
+      },
+      "order": 2,
+      "screenshot": "",
+      "height": 520,
+      "category": "pro"
+    }, {
+      "filename": "fixed-column.js",
+      "title": {
+        "zh": "锁定列",
+        "en": "Fixed"
+      },
+      "description": {
+        "zh": "Fixed 锁定列。\n",
+        "en": "The most basic usage.\n"
+      },
+      "order": 3,
+      "screenshot": "",
+      "height": 520,
+      "category": "pro"
+    }, {
+      "filename": "word-wrap.js",
+      "title": {
+        "zh": "自动换行",
+        "en": "WordWrap"
+      },
+      "description": {
+        "zh": "如果想让单元格自动换行，需要设置 wordWrap。\n",
+        "en": "The most basic usage.\n"
+      },
+      "order": 4,
+      "screenshot": "",
+      "height": 520,
+      "category": "pro"
+    }, {
+      "filename": "custom-column.js",
+      "title": {
+        "zh": "自定义单元格",
+        "en": "Custom"
+      },
+      "description": {
+        "zh": "根据不同的业务场景，单元格中可以自己定义显示的内容。\n",
+        "en": "The most basic usage.\n"
+      },
+      "order": 5,
+      "screenshot": "",
+      "height": 520,
+      "category": "pro"
+    }, {
+      "filename": "sort.js",
+      "title": {
+        "zh": "排序",
+        "en": "Sort"
+      },
+      "description": {
+        "zh": "设置 sortable，同时在 performanceTable 定义一个 onSortColumn 回调函数，点击列头排序图标的时候，会触发该方法，并返回 sortColumn 和 sortType。\n",
+        "en": "The most basic usage.\n"
+      },
+      "order": 5,
+      "screenshot": "",
+      "height": 440,
+      "category": "pro"
+    },
+    {
+      "filename": "advanced-bar.js",
+      "title": {
+        "zh": "高级搜索条",
+        "en": "Advanced Search Bar"
+      },
+      "description": {
+        "zh": "高级搜索条。\n",
+        "en": "Advanced Search Bar.\n"
+      },
+      "order": 6,
+      "screenshot": "",
+      "height": 520,
+      "category": "pro"
+    }, {
+      "filename": "tree.js",
+      "title": {
+        "zh": "树形",
+        "en": "Tree"
+      },
+      "description": {
+        "zh": "树形表格，主要为了展示有结构关系的数据，需要在 Table 组件上设置一个 isTree 属性，同时 data 中的数据需要通过 children 来定义关系结构。\n",
+        "en": "The most basic usage.\n"
+      },
+      "order": 7,
+      "screenshot": "",
+      "height": 520,
+      "category": "pro"
+    }, {
+      "filename": "expanded.js",
+      "title": {
+        "zh": "可展开",
+        "en": "Expanded"
+      },
+      "description": {
+        "zh": "实现一个可以展开的 Table ,需要以下几个属性的组合完成。\n\n 第一步：给 Table 设置属性 renderRowExpanded(rowData) => React.Node 用来返回需要在展开面板中渲染的内容\nrowExpandedHeight 设置可展开区域的高度， 默认是 100 \n expandedRowKeys（受控） 和 defaultExpandedRowKeys 用来配置需要展开的行。\n\n 需要注意的是这两个属性接收的参数是一个的数组，数组中是 rowKey。\n rowKey 给每一行数据对一个唯一 key , 对应 data 中的一个唯一值的 key。\n\n 第二步：自定义 Cell \n 自定义一个 Cell， 在内部放一个可以操作按钮，用于操作 expandedRowKeys 中的。\n",
+        "en": "The most basic usage.\n"
+      },
+      "order": 8,
+      "screenshot": "",
+      "height": 520,
+      "category": "pro"
+    }, {
+      "filename": "edit.js",
+      "title": {
+        "zh": "可编辑",
+        "en": "Edit"
+      },
+      "description": {
+        "zh": "可编辑的表格。\n",
+        "en": "The most basic usage.\n"
+      },
+      "order": 9,
+      "screenshot": "",
+      "height": 520,
+      "category": "pro"
+    }, {
+      "filename": "column-group.js",
+      "title": {
+        "zh": "组合列",
+        "en": "ColumnGroup"
+      },
+      "description": {
+        "zh": "在某些情况下，需要合并列来组织数据之间的关系，设置 colSpan 属性，同时通过 children 设置表头分组。\n",
+        "en": "The most basic usage.\n"
+      },
+      "order": 10,
+      "screenshot": "",
+      "height": 520,
+      "category": "pro"
+    }, {
+      "filename": "auto-height.js",
+      "title": {
+        "zh": "自动高度",
+        "en": "AutoHeight"
+      },
+      "description": {
+        "zh": "自适应高度。\n",
+        "en": "The most basic usage.\n"
+      },
+      "order": 11,
+      "screenshot": "",
+      "height": 520,
+      "category": "pro"
+    }, {
+      "filename": "large-lists.js",
+      "title": {
+        "zh": "虚拟滚动",
+        "en": "Virtual"
+      },
+      "description": {
+        "zh": "虚拟滚动，大数据表格。\n",
+        "en": "The most basic usage.\n"
+      },
+      "order": 12,
+      "screenshot": "",
+      "height": 520,
+      "category": "pro"
+    }, {
+      "filename": "affix-horizontal-scrollbar.js",
+      "title": {
+        "zh": "固定横向滚动条页面底部",
+        "en": "Affix Horizontal Scrollbar"
+      },
+      "description": {
+        "zh": "固定横向滚动条页面底部。\n",
+        "en": "The most basic usage.\n"
+      },
+      "order": 13,
+      "screenshot": "",
+      "height": 520,
+      "category": "pro"
+    }, {
+      "filename": "colspan.js",
+      "title": {
+        "zh": "合并单元格",
+        "en": "Colspan"
+      },
+      "description": {
+        "zh": "合并单元格。\n",
+        "en": "The most basic usage.\n"
+      },
+      "order": 14,
+      "screenshot": "",
+      "height": 520,
+      "category": "pro"
+    }, {
+      "filename": "empty.js",
+      "title": {
+        "zh": "空表格",
+        "en": "Empty"
+      },
+      "description": {
+        "zh": "空表格。\n",
+        "en": "The most basic usage.\n"
+      },
+      "order": 15,
+      "screenshot": "",
+      "height": 520,
+      "category": "pro"
+    }
+  ]
+}

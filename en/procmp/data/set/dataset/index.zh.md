@@ -5,6 +5,10 @@ abstract: true
 
 数据源。
 
+**注意事项**
+
+> DataSet 内部会将普通数据对象转成可观察对象，单次 `loadData | create` 加载超过 1000+ 或遍历创建 record 时会有明显耗时，在对性能有严格要求的项目建议采取其他方案处理大数据量。
+
 ## API
 
 ### DataSet Props
