@@ -58,7 +58,15 @@ class Scrollbar extends React.PureComponent<ScrollbarProps, State> {
     this.initBarOffset();
   }
 
-  componentWillUnmount() {
+  componentDidUpdate(prevProps) {
+    if (this.props.vertical && this.props.scrollLength !== prevProps.scrollLength) {
+      this.initBarOffset();
+    } else if (!this.props.vertical && this.props.scrollLength !== prevProps.scrollLength){
+      this.initBarOffset();
+    }
+  }
+
+    componentWillUnmount() {
     this.releaseMouseMoves();
   }
 
