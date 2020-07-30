@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>PerformanceTable`: Fixed Scrollbar re-rendering calculation rules.
+
 ## 0.8.68
 
 `2020-07-28`
