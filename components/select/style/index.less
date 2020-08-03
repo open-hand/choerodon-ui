@@ -251,8 +251,8 @@
         > ul > li,
         .@{select-prefix-cls}-selection__rendered > ul > li,
         .@{select-prefix-cls}-selection__choice__remove > i.@{iconfont-css-prefix} {
-          height: @input-height-lg - 0.08rem;
-          line-height: @input-height-lg - 0.08rem;
+          height: @input-height-lg - 0.1rem;
+          line-height: @input-height-lg - 0.1rem;
         }
       }
     }
@@ -275,8 +275,8 @@
         > ul > li,
         .@{select-prefix-cls}-selection__rendered > ul > li,
         .@{select-prefix-cls}-selection__choice__remove > i.@{iconfont-css-prefix} {
-          height: @input-height-sm - 0.08rem;
-          line-height: @input-height-sm - 0.08rem;
+          height: @input-height-sm - 0.1rem;
+          line-height: @input-height-sm - 0.1rem;
         }
       }
     }
@@ -365,7 +365,7 @@
       .@{select-prefix-cls}-selection__rendered {
         height: auto;
         min-height: 0.36rem;
-        padding: 0.07rem 0.04rem 0 0.04rem;
+        padding: 0.1rem 0.04rem 0 0.04rem;
       }
 
       .@{select-prefix-cls}-selection__placeholder,
@@ -379,8 +379,8 @@
       .@{select-prefix-cls}-selection__rendered > ul > li {
         // for tree-select
         box-sizing: content-box;
-        height: @input-height-base - 0.08rem;
-        line-height: @input-height-base - 0.08rem;
+        height: @input-height-base - 0.1rem;
+        line-height: @input-height-base - 0.1rem;
       }
 
       .@{select-prefix-cls}-selection__choice {
@@ -412,8 +412,10 @@
           cursor: pointer;
           > i.@{iconfont-css-prefix} {
             float: right;
-            height: @input-height-base - 0.08rem;
-            line-height: @input-height-base - 0.08rem;
+            height: @input-height-base - 0.1rem;
+            color: @tag-multiple-color;
+            font-size: 0.16rem;
+            line-height: @input-height-base - 0.1rem;
           }
         }
       }
@@ -423,9 +425,10 @@
   &-multiple {
     .@{select-prefix-cls}-selection--multiple {
       .@{select-prefix-cls}-selection__choice {
-        padding: 0 0.08rem 0 0.08rem;
+        padding: 0 0.02rem 0 0.08rem;
         background-color: rgba(0, 0, 0, 0.08);
-        &__remove {
+        &__remove
+        > i.@{iconfont-css-prefix} {
           color: rgba(0, 0, 0, 0.54);
         }
         &.@{select-prefix-cls}-selection__max {
@@ -446,7 +449,7 @@
   &-tags {
     .@{select-prefix-cls}-selection--multiple {
       .@{select-prefix-cls}-selection__choice {
-        padding: 0 0.08rem 0 0.08rem;
+        padding: 0 0.02rem 0 0.08rem;
         color: @tag-default-color;
         background-color: @tag-default-bg;
       }
