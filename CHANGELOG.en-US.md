@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 💄 `Select`: Optimized `Select` tags styles.
 - 🐞 `<pro>PerformanceTable`: Fixed Scrollbar re-rendering calculation rules.
 
 ## 0.8.68
@@ -44,7 +45,7 @@ timeline: true
 
 `2020-07-14`
 
-- 🌟 `<pro>Table`: Added Table drag feature.
+- 🌟 `<pro>Table`: Added `Table` drag feature.
 - 🌟 `Steps`: Added `Steps.Group` Component to grouping Step Components.
 - 🌟 `configure`: Added `collapseExpandIconPosition`, `collapseExpandIcon`, `collapseTrigger` properties.
 - 🌟 `Collapse`: Added `expandIcon`, `expandIconPosition`, `trigger` properties.

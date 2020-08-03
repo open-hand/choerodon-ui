@@ -489,6 +489,12 @@
     border-color: @error-color;
   }
 
+  &-float-label&-disabled {
+    i {
+      color: @disabled-color;
+    }
+  }
+
   &-float-label&-disabled::before {
     border-style: dashed;
   }
@@ -589,10 +595,10 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    vertical-align: middle;
+    vertical-align: top;
 
     &:not(:last-child) {
-      max-width: ~'calc(100% - .26rem)';
+      max-width: ~'calc(100% - .24rem)';
     }
   }
   &-invalid {

@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 💄 `Select`: 优化 Select tags 样式。
 - 🐞 `<pro>PerformanceTable`: 修复 Scrollbar 重渲染计算规则。
 
 ## 0.8.68
