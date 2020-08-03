@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>NumberField`: Added `nonStrictStep` attribute.
+- 🌟 `configure`: Added `numberFieldNonStrictStep` global configuration.
 - 💄 `Select`: Optimized `Select` tags styles.
 - 🐞 `<pro>PerformanceTable`: Fixed Scrollbar re-rendering calculation rules.
 

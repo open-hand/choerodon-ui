@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>NumberField`: 新增 nonStrictStep 属性。
+- 🌟 `configure`: 新增 numberFieldNonStrictStep 全局配置。
 - 💄 `Select`: 优化 Select tags 样式。
 - 🐞 `<pro>PerformanceTable`: 修复 Scrollbar 重渲染计算规则。
 

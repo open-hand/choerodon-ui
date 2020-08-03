@@ -4,10 +4,12 @@ import { action, computed, isArrayLike, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import isString from 'lodash/isString';
 import isNumber from 'lodash/isNumber';
+import omit from 'lodash/omit';
 import isPlainObject from 'lodash/isPlainObject';
 import defaultTo from 'lodash/defaultTo';
 import isNil from 'lodash/isNil';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
+import { getConfig } from 'choerodon-ui/lib/configure';
 import { TextField, TextFieldProps } from '../text-field/TextField';
 import autobind from '../_util/autobind';
 import keepRunning from '../_util/keepRunning';
@@ -37,6 +39,10 @@ export interface NumberFieldProps extends TextFieldProps {
    * 步距
    */
   step?: number;
+  /**
+ * 非严格步距
+ */
+  nonStrictStep?: boolean;
 }
 
 export class NumberField<T extends NumberFieldProps> extends TextField<T & NumberFieldProps> {
@@ -77,9 +83,26 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
 
   @computed
   get allowDecimal(): boolean {
-    const { min } = this;
+    const { min, nonStrictStep } = this;
+    // 非严格步距下允许输入小数
+    if (nonStrictStep) {
+      return true;
+    }
     const step = this.getProp('step');
     return !step || (step as number) % 1 !== 0 || (!!min && (min as number) % 1 !== 0);
+  }
+
+  @computed
+  get nonStrictStep(): boolean {
+    const nonStrictStep = this.getProp('nonStrictStep');
+    if (nonStrictStep !== undefined) {
+      return nonStrictStep;
+    }
+    const numberFieldNonStrictStep = getConfig('numberFieldNonStrictStep');
+    if (numberFieldNonStrictStep !== undefined) {
+      return numberFieldNonStrictStep;
+    }
+    return false;
   }
 
   @computed
@@ -146,11 +169,14 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
   getValidatorProps(): ValidatorProps {
     const { min, max } = this;
     const step = this.getProp('step');
+    const nonStrictStep = this.nonStrictStep;
+
     return {
       ...super.getValidatorProps(),
       min,
       max,
       step,
+      nonStrictStep,
     };
   }
 
@@ -229,10 +255,19 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     this.step(false);
   }
 
+  getOtherProps() {
+    const otherProps = omit(super.getOtherProps(), [
+      'nonStrictStep',
+    ]);
+    return otherProps;
+  }
+
   step(isPlus: boolean) {
     const min = defaultTo(this.min, -MAX_SAFE_INTEGER);
     const max = defaultTo(this.max, MAX_SAFE_INTEGER);
     const step = defaultTo(this.getProp('step'), 1);
+    const nonStrictStep = this.nonStrictStep;
+    // 需要处理非严格模式
     let newValue;
     const value =
       this.multiple || this.isFocused ? Number(this.text || this.getValue()) : this.getValue();
@@ -242,7 +277,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
       const currentValue = getCurrentValidValue(String(value));
       newValue = currentValue;
       const nearStep = getNearStepValues(currentValue, step as number, min, max);
-      if (nearStep) {
+      if (nonStrictStep === false && nearStep) {
         switch (nearStep.length) {
           case 1:
             newValue = nearStep[0];
@@ -258,6 +293,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
           newValue = min;
         } else if (nextValue > max) {
           const nearMaxStep = getNearStepValues(max as number, step as number, min, max as number);
+
           if (nearMaxStep) {
             newValue = nearMaxStep[0];
           } else {
@@ -275,6 +311,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
         this.prepareSetValue(newValue);
       }
     }
+
   }
 
   prepareSetValue(value: any): void {
