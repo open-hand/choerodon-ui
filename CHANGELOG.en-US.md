@@ -14,7 +14,7 @@ timeline: true
 - Major version release is not included in this schedule for breaking change and new features.
 
 ---
-
+- 🌟 `imageCrop`: Added the `avatarUpload` component.
 - 💄 `Select`: Optimized `Select` tags styles.
 - 🐞 `<pro>PerformanceTable`: Fixed Scrollbar re-rendering calculation rules.
 
