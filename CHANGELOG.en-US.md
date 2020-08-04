@@ -17,6 +17,7 @@ timeline: true
 - 🌟 `imageCrop`: Added the `avatarUpload` component.
 - 💄 `Select`: Optimized `Select` tags styles.
 - 🐞 `<pro>PerformanceTable`: Fixed Scrollbar re-rendering calculation rules.
+- 🐞 `<pro>TextField`: Fixed the width exceeding when using addon in table.
 
 ## 0.8.68
 
