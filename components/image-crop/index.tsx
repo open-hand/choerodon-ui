@@ -1,61 +1,69 @@
-import React, { useState, useCallback, useRef, forwardRef, Ref } from 'react';
+import React, { useState, useCallback, useRef, forwardRef, Ref, ReactElement } from 'react';
 import Cropper from 'react-easy-crop';
 import isFunction from 'lodash/isFunction';
-import Avatar from '../avatar';
 import { getPrefixCls } from '../configure';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
-import Modal from '../modal';
+import Modal, { ModalProps } from '../modal';
 import Slider from '../slider';
-import Row from '../row';
-import Col from '../col';
 import { UploadFile, UploadProps } from '../upload/interface';
 import defaultLocale from '../locale-provider/default';
 import Button from '../button';
 import { Locale } from '../locale-provider';
 import Upload from '../upload';
+import AvatarUploader from './avatarUpload';
 
-// 兼容ie11 remove 方法
-(function (arr) {
-    arr.forEach(function (item) {
-        // eslint-disable-next-line no-prototype-builtins
-        if (item.hasOwnProperty('remove')) {
-            return;
-        }
-        Object.defineProperty(item, 'remove', {
-            configurable: true,
-            enumerable: true,
-            writable: true,
-            value: function remove() {
-                if (this.parentNode === null) {
-                    return;
-                }
-                this.parentNode.removeChild(this);
-            },
-        });
-    });
-
-    // 兼容IE
-    if (!HTMLCanvasElement.prototype.toBlob) {
-        Object.defineProperty(HTMLCanvasElement.prototype, 'toBlob', {
-            value(callback, type, quality) {
-                const canvas = this;
-                setTimeout(function () {
-                    const binStr = atob(canvas.toDataURL(type, quality).split(',')[1]);
-                    const len = binStr.length;
-                    const arrArray = new Uint8Array(len);
-                    for (let i = 0; i < len; i++) {
-                        arrArray[i] = binStr.charCodeAt(i);
+// ssr 
+if (typeof window !== 'undefined') {
+    // 兼容ie11 remove 方法
+    (function (arr) {
+        arr.forEach(function (item) {
+            // eslint-disable-next-line no-prototype-builtins
+            if (item.hasOwnProperty('remove')) {
+                return;
+            }
+            Object.defineProperty(item, 'remove', {
+                configurable: true,
+                enumerable: true,
+                writable: true,
+                value: function remove() {
+                    if (this.parentNode === null) {
+                        return;
                     }
-                    callback(new Blob([arrArray], { type: type || 'image/png' }));
-                });
-            },
+                    this.parentNode.removeChild(this);
+                },
+            });
         });
-    }
-})([Element.prototype, CharacterData.prototype, DocumentType.prototype]);
+
+        // 兼容IE
+        if (!HTMLCanvasElement.prototype.toBlob) {
+            Object.defineProperty(HTMLCanvasElement.prototype, 'toBlob', {
+                value(callback, type, quality) {
+                    const canvas = this;
+                    setTimeout(function () {
+                        const binStr = atob(canvas.toDataURL(type, quality).split(',')[1]);
+                        const len = binStr.length;
+                        const arrArray = new Uint8Array(len);
+                        for (let i = 0; i < len; i++) {
+                            arrArray[i] = binStr.charCodeAt(i);
+                        }
+                        callback(new Blob([arrArray], { type: type || 'image/png' }));
+                    });
+                },
+            });
+        }
+    })([Element.prototype, CharacterData.prototype, DocumentType.prototype]);
+}
+
+
 
 const MIN_ZOOM = 1;
 const MAX_ZOOM = 3;
 const ZOOM_STEP = 0.1;
+
+interface CompoundedComponent
+    extends React.ForwardRefExoticComponent<ImgCropProps> {
+    AvatarUploader: typeof AvatarUploader;
+}
 
 export interface ImageCropLocale {
     imageCrop?: string;
@@ -115,13 +123,14 @@ export interface ImgCropProps {
     modalWidth?: number | string,
     modalOk?: string,
     modalCancel?: string,
+    modalProps?: ModalProps,
     onCancel?: () => void,
     onOk?: ({ url: string, blob: Blob, area: Area }) => void,
     modalVisible?: boolean,
     children?: React.ReactElement<UploadProps> | React.ReactElement<any>,
+    cropContent?: (crop: ReactElement<EasyCropProps>) => React.ReactElement<any>,
+    onCropComplete?: ({ url: string, blob: Blob, area: Area }) => void,
     prefixCls?: string,
-    avatarTitle: string,
-    hasAvatar: boolean,
     serverCrop: boolean,
 }
 
@@ -219,42 +228,6 @@ const balanceRate = (rate: number): BalanceRate => {
     }
 }
 
-
-const avatarRender = (src, prefixCls) => {
-    const avatarList = [{
-        src,
-        size: 80,
-        icon: "person",
-        text: "80×80",
-    }, {
-        src,
-        size: 40,
-        icon: "person",
-        text: "40×40",
-    }, {
-        src,
-        size: 20,
-        icon: "person",
-        text: "20×20",
-    }]
-    if (src) {
-        return (
-            avatarList.map(
-                // eslint-disable-next-line react/jsx-key
-                itemProps => (<Row key={itemProps.text} className={`${prefixCls}-avatar-row`} type="flex" justify="center" align="top">
-                    <Col key="image" span={24} className={`${prefixCls}-avatar-col`}>
-                        <Avatar {...itemProps} />
-                    </Col>
-                    <Col key="text" span={24} className={`${prefixCls}-avatar-col`}>
-                        <span>{itemProps.text}</span>
-                    </Col>
-                </Row>),
-            )
-        )
-    };
-    return null
-}
-
 // 图片转化为canvas
 const imageToCanvas = (image) => {
     const canvas = document.createElement('canvas');
@@ -269,13 +242,13 @@ const imageToCanvas = (image) => {
 }
 
 
+
+
 const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
     const {
         aspect,
         shape,
         grid,
-        avatarTitle,
-        hasAvatar,
         zoom,
         rotate,
         beforeCrop,
@@ -290,6 +263,9 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
         onOk: onModalOk,
         src: imageSrc,
         serverCrop,
+        modalProps,
+        cropContent,
+        onCropComplete,
         prefixCls: customizePrefixCls,
     } = props;
 
@@ -321,8 +297,6 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
     const [rotateVal, setRotateVal] = useState(0);
     const [xRate, setXRate] = useState(defaultRateXY().x);
     const [yRate, setYRate] = useState(defaultRateXY().y);
-
-    const [cropImageSrc, setCropImageSrc] = useState('');
 
     const beforeUploadRef = React.useRef<(file: UploadFile, FileList: UploadFile[]) => boolean | PromiseLike<any | Blob>>(); // 返回上传组件的上传之前的钩子函数
     const fileRef = React.useRef<UploadFile>(); // 记录文件的参数
@@ -426,11 +400,17 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
      */
     const onComplete = useCallback((croppedAreaPixels) => {
         cropPixelsRef.current = croppedAreaPixels;
-        if (hasAvatar) {
+        if (isFunction(onCropComplete)) {
             const naturalModalImg: Element | HTMLImageElement | null = document.querySelector(`.${prefixClsMedia}`);
-            const canvas = imageCropCanvas(naturalModalImg)
+            const canvas = serverCrop ? imageToCanvas(naturalModalImg) : imageCropCanvas(naturalModalImg)
             if (canvas) {
-                setCropImageSrc(canvas.toDataURL())
+                canvas.toBlob((blob) => {
+                    let area = {}
+                    if (cropPixelsRef.current) {
+                        area = cropPixelsRef.current
+                    }
+                    onCropComplete({ url: canvas.toDataURL(), blob, area })
+                })
             }
         }
     }, [rotateVal, hasRotate]);
@@ -531,7 +511,6 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
                             area = cropPixelsRef.current
                         }
                         onModalOk({ url: canvas.toDataURL(), blob, area })
-
                     })
                 }
             }
@@ -540,7 +519,22 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
     }, [hasRotate, onClose, rotateVal]);
 
 
-
+    const RenderCrop = (
+        <EasyCrop
+            ref={ref}
+            src={src}
+            aspect={aspectControl ? (xRate / yRate) : aspect}
+            shape={shape}
+            grid={grid}
+            hasZoom={hasZoom}
+            zoomVal={zoomVal}
+            rotateVal={rotateVal}
+            setZoomVal={setZoomVal}
+            setRotateVal={setRotateVal}
+            onComplete={onComplete}
+            prefixCls={prefixCls}
+        />
+    )
 
     return (
         // @ts-ignore
@@ -555,36 +549,14 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
                             // @ts-ignore
                             title={modalTitle || ((locale as Locale).imageCrop && (locale as Locale).imageCrop?.editImage) ? (locale as Locale).imageCrop?.editImage : 'Edit image'} // 当不存在的语言使用英文
                             width={modalWidth}
+                            destroyOnClose
+                            maskClosable={false}
+                            {...modalProps}
                             onOk={onOk}
                             onCancel={onClose}
-                            maskClosable={false}
-                            destroyOnClose
                             {...modalTextProps}
                         >
-                            <Row className={`${prefixCls}-crop-content`} gutter={8}>
-                                <Col key="crop" span={hasAvatar ? 18 : 24} >
-                                    <EasyCrop
-                                        ref={ref}
-                                        src={src}
-                                        aspect={aspectControl ? (xRate / yRate) : aspect}
-                                        shape={shape}
-                                        grid={grid}
-                                        hasZoom={hasZoom}
-                                        zoomVal={zoomVal}
-                                        rotateVal={rotateVal}
-                                        setZoomVal={setZoomVal}
-                                        setRotateVal={setRotateVal}
-                                        onComplete={onComplete}
-                                        prefixCls={prefixCls}
-                                    />
-                                </Col>
-                                {hasAvatar && (
-                                    <Col className={`${prefixCls}-avatar-content`} key="avatar" span={6}>
-                                        <h5>{avatarTitle}</h5>
-                                        {avatarRender(cropImageSrc, prefixCls)}
-                                    </Col>
-                                )}
-                            </Row>
+                            {cropContent ? cropContent(RenderCrop) : RenderCrop}
                             {hasZoom && (
                                 <div className={`${prefixCls}-control zoom`}>
                                     <Button onClick={subZoomVal} disabled={isMinZoom}>
@@ -659,7 +631,7 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
             )}
         </LocaleReceiver>
     );
-});
+}) as CompoundedComponent
 
 
 ImgCrop.defaultProps = {
@@ -667,11 +639,12 @@ ImgCrop.defaultProps = {
     grid: false,
     zoom: true,
     rotate: false,
-    modalWidth: 800,
+    modalWidth: 600,
     modalVisible: true,
     serverCrop: false,
-    hasAvatar: false,
 };
 
+ImgCrop.AvatarUploader = AvatarUploader
 
 export default ImgCrop;
+
