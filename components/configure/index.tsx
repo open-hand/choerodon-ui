@@ -128,6 +128,7 @@ export type Config = {
   tableDragColumnAlign?: DragColumnAlign;
   tableDragColumn?: boolean;
   tableDragRow?: boolean;
+  numberFieldNonStrictStep?: boolean,
 };
 
 export type ConfigKeys = keyof Config;
@@ -220,6 +221,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['textFieldAutoComplete', undefined],
   ['tableDragRow', false],
   ['tableDragColumn', false],
+  ['numberFieldNonStrictStep', false],
 ]);
 
 export function getConfig(key: ConfigKeys): any {

@@ -15,7 +15,9 @@ timeline: true
 
 ---
 
-- 🌟 `imageCrop`: Added the `avatarUpload` component.
+- 🌟 `configure`: Added `numberFieldNonStrictStep` global configuration.
+- 🌟 `ImageCrop`: Added the `avatarUpload` component.
+- 🌟 `<pro>NumberField`: Added `nonStrictStep` attribute.
 - 💄 `Select`: Optimized `Select` tags styles.
 - 🐞 `<pro>PerformanceTable`: Fixed Scrollbar re-rendering calculation rules.
 - 🐞 `<pro>TextField`: Fixed the width exceeding when using addon in table.

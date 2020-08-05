@@ -24,8 +24,8 @@ function isStepMismatch(value, step, min, max, range) {
 }
 
 export default function stepMismatch(value: any, props: ValidatorProps): methodReturn {
-  const { step, min, max, defaultValidationMessages, range, format } = props;
-  if (step !== undefined) {
+  const { step, min, max, defaultValidationMessages, range, format, nonStrictStep } = props;
+  if (step !== undefined && nonStrictStep === false) {
     const nearStepValues = isStepMismatch(value, step, min, max, range);
     if (nearStepValues !== undefined) {
       const [before, after] = nearStepValues;

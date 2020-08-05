@@ -15,7 +15,9 @@ timeline: true
 
 ---
 
-- 🌟 `imageCrop`:添加 `avatarUpload` 头像上传组件。
+- 🌟 `configure`: 新增 numberFieldNonStrictStep 全局配置。
+- 🌟 `ImageCrop`:添加 avatarUpload 头像上传组件。
+- 🌟 `<pro>NumberField`: 新增 nonStrictStep 属性。
 - 💄 `Select`: 优化 Select tags 样式。
 - 🐞 `<pro>PerformanceTable`: 修复 Scrollbar 重渲染计算规则。
 - 🐞 `<pro>TextField`: 修复在table中使用addon出现宽度超出。

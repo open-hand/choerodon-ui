@@ -80,6 +80,7 @@ const prefixCls = getConfig('prefixCls');
 | collapseTrigger | 全局配置切换面板的触发位置 | `header` \| `icon` | `header` |
 | textFieldAutoComplete | 全局配置textField的autoComplete属性 | 可选值: `on` `off` |  |
 | resultStatusRenderer | 自定义状态展示,可以覆盖现有状态展示，也可以增加状态展示，支持全局配置 | object -> {string:react.ReactNode} | - |
+| numberFieldNonStrictStep | 全局配置 NumberField 的 nonStrictStep 属性 | boolean | false |
 
 ### Formatter
 
