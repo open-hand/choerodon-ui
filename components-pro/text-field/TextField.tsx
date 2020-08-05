@@ -209,6 +209,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   renderInputElement(): ReactNode {
+    const { addonBefore, addonAfter} = this.props;
     const input = this.getWrappedEditor();
     const button = this.getInnerSpanButton();
     const suffix = this.getSuffix();
@@ -219,9 +220,15 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const renderedValue = this.renderRenderedValue();
     const floatLabel = this.renderFloatLabel();
     const multipleHolder = this.renderMultipleHolder();
+    const wrapperProps = this.getWrapperProps()
+
+    // 修复设置宽度导致拥有addon出现宽度超出
+    if(addonAfter || addonBefore){
+      wrapperProps.style = omit(wrapperProps.style, 'width')
+    }
 
     const element = (
-      <span key="element" {...this.getWrapperProps()}>
+      <span key="element" {...wrapperProps}>
         {multipleHolder}
         {otherPrevNode}
         {placeholderDiv}
@@ -458,6 +465,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       );
     }
     const text = this.getTextNode();
+
     if (isValidElement(text)) {
       otherProps.style = { ...otherProps.style, textIndent: -1000 };
     }
