@@ -1,13 +1,13 @@
 ---
 order: 1
 title:
-  zh-CN: 头像裁剪
-  en-US: Basic 
+  zh-CN: 头像切换
+  en-US: avatar change
 ---
 
 ## zh-CN
 
-头像裁剪，进行url配置就可以实现常用的头像裁剪。
+头像切换，进行url配置就可以实现常用的头像切换。
 
 ## en-US
 

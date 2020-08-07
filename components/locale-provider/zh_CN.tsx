@@ -53,7 +53,7 @@ export default {
     avatarUploadError: '头像上传失败',
     avatarServerError: '服务器错误',
     avatarUpload: '头像上传',
-    avatarReminder: `您可以在此裁剪、旋转图片，然后点击“保存”完成头像的修改`,
+    avatarReminder: '您可以在此裁剪、旋转图片，然后点击“保存”完成头像的修改',
     preview: '预览',
     reUpload: '重新上传',
     imageTooLarge:'图片过大，请重新上传',

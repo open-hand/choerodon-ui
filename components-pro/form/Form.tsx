@@ -575,6 +575,7 @@ export default class Form extends DataSetComponent<FormProps> {
       const label = getProperty(props, 'label', dataSet, record);
       const fieldLabelWidth = getProperty(props, 'labelWidth', dataSet, record);
       const required = getProperty(props, 'required', dataSet, record);
+      const readOnly = getProperty(props, 'readOnly', dataSet, record);
       const {
         rowSpan = 1,
         colSpan = 1,
@@ -619,6 +620,7 @@ export default class Form extends DataSetComponent<FormProps> {
         labelLayout === LabelLayout.horizontal && (type as any).displayName === 'Output';
       const labelClassName = classNames(`${prefixCls}-label`, `${prefixCls}-label-${labelAlign}`, {
         [`${prefixCls}-required`]: required,
+        [`${prefixCls}-readonly`]: readOnly,
         [`${prefixCls}-label-vertical`]: labelLayout === LabelLayout.vertical,
         [`${prefixCls}-label-output`]: isOutput,
         [`${prefixCls}-label-useColon`]: useColon && !excludeUseColonTagList.find(v => v === TagName),

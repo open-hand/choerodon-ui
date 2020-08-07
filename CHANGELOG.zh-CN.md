@@ -16,12 +16,13 @@ timeline: true
 ---
 
 - 🌟 `configure`: 新增 numberFieldNonStrictStep 全局配置。
-- 🌟 `ImageCrop`:添加 avatarUpload 头像上传组件。
+- 🌟 `ImageCrop`:添加 AvatarUpload 头像上传组件。
 - 🌟 `<pro>NumberField`: 新增 nonStrictStep 属性。
 - 💄 `Select`: 优化 Select tags 样式。
+- 💄 `<pro>Form`: 优化 Form readOnly 类名。
 - 🐞 `<pro>PerformanceTable`: 修复 Scrollbar 重渲染计算规则。
-- 🐞 `<pro>TextField`: 修复在table中使用addon出现宽度超出。
-- 🐞 `<pro>Table`: 修复tabletree中使用expandField绑定逻辑操作错误。
+- 🐞 `<pro>TextField`: 修复在 table 中使用 addon 出现宽度超出。
+- 🐞 `<pro>Table`: 修复 tabletree 中使用 expandField 绑定逻辑操作错误。
 - 🐞 `<pro>Table`: 修复在table中对CheckBox以及Switch进行校验的时候会有两个校验框的错误。
 
 ## 0.8.68
