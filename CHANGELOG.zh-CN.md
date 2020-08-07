@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.69
+
+`2020-08-07`
+
 - 🌟 `configure`: 新增 numberFieldNonStrictStep 全局配置。
 - 🌟 `ImageCrop`:添加 AvatarUpload 头像上传组件。
 - 🌟 `<pro>NumberField`: 新增 nonStrictStep 属性。

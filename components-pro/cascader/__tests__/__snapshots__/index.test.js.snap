@@ -2,7 +2,6 @@
 
 exports[`Cascader-pro Cascader dataset set value render right number item 1`] = `
 <Cascader
-  autoComplete="off"
   clearButton={true}
   dataSet={
     DataSet {
@@ -3288,7 +3287,6 @@ exports[`Cascader-pro Cascader dataset set value render right number item 1`] = 
 
 exports[`Cascader-pro dataset set Cascader value 1`] = `
 <Cascader
-  autoComplete="off"
   clearButton={true}
   dataSet={
     DataSet {

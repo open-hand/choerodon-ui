@@ -20,6 +20,12 @@ exports[`Select disable test 1`] = `
               false,
             ],
           ],
+          "validate": Array [
+            Array [
+              [Function],
+              false,
+            ],
+          ],
         },
         "fields": Object {
           "age": Field {
@@ -521,7 +527,6 @@ exports[`Select disable test 1`] = `
                   className="c7n-pro-field-wrapper"
                 >
                   <TextField
-                    autoComplete="off"
                     className="c7n-pro-field"
                     clearButton={false}
                     colIndex={0}
@@ -922,7 +927,6 @@ exports[`Select disable test 1`] = `
                   className="c7n-pro-field-wrapper"
                 >
                   <Password
-                    autoComplete="off"
                     className="c7n-pro-field"
                     clearButton={false}
                     colIndex={0}
@@ -1329,7 +1333,6 @@ exports[`Select disable test 1`] = `
                 >
                   <NumberField
                     addonAfter="周岁"
-                    autoComplete="off"
                     className="c7n-pro-field"
                     clearButton={false}
                     colIndex={0}
@@ -1633,6 +1636,7 @@ exports[`Select disable test 1`] = `
                                 <span
                                   className="c7n-pro-input-number-wrapper c7n-pro-field c7n-pro-input-number-disabled c7n-pro-input-number-required"
                                   key="element"
+                                  style={Object {}}
                                 >
                                   <label
                                     onMouseDown={[Function]}
@@ -2090,7 +2094,6 @@ exports[`Select disable test 1`] = `
                   className="c7n-pro-field-wrapper"
                 >
                   <EmailField
-                    autoComplete="off"
                     className="c7n-pro-field"
                     clearButton={false}
                     colIndex={0}
@@ -2493,7 +2496,6 @@ exports[`Select disable test 1`] = `
                     key="null"
                   >
                     <Button
-                      loading={false}
                       suffixCls="btn"
                       type="submit"
                       waitType="throttle"
@@ -2513,7 +2515,6 @@ exports[`Select disable test 1`] = `
                       </Ripple>
                     </Button>
                     <Button
-                      loading={false}
                       style={
                         Object {
                           "marginLeft": 8,
@@ -2543,7 +2544,6 @@ exports[`Select disable test 1`] = `
                       </Ripple>
                     </Button>
                     <Button
-                      loading={false}
                       onClick={[Function]}
                       style={
                         Object {

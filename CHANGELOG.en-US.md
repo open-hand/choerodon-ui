@@ -15,11 +15,15 @@ timeline: true
 
 ---
 
+## 0.8.69
+
+`2020-08-07`
+
 - 🌟 `configure`: Added `numberFieldNonStrictStep` global configuration.
 - 🌟 `ImageCrop`: Added the AvatarUpload component.
 - 🌟 `<pro>NumberField`: Added `nonStrictStep` attribute.
 - 💄 `Select`: Optimized `Select` tags styles.
-- 💄 `<pro>Form`: Optimized Form readOnly className。
+- 💄 `<pro>Form`: Optimized `Form` readOnly className.
 - 🐞 `Menu`: Fixed the error report of the drop-down keyboard event.
 - 🐞 `<pro>PerformanceTable`: Fixed Scrollbar re-rendering calculation rules.
 - 🐞 `<pro>TextField`: Fixed the width exceeding when using addon in table.

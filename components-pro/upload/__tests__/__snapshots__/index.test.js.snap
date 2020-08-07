@@ -49,7 +49,6 @@ exports[`Tree-pro should have a Tooltip inside 1`] = `
       >
         <Button
           key="upload-btn"
-          loading={false}
           onClick={[Function]}
           suffixCls="btn"
           type="button"
@@ -428,7 +427,6 @@ exports[`Tree-pro should have a Tooltip inside 1`] = `
               <Button
                 color="primary"
                 key=".0"
-                loading={false}
                 onBlur={[Function]}
                 onClick={[Function]}
                 onContextMenu={[Function]}

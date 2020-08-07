@@ -364,6 +364,48 @@ exports[`renders ./components-pro/number-field/demo/multiple.md correctly 1`] = 
 </div>
 `;
 
+exports[`renders ./components-pro/number-field/demo/non-step-strictly.md correctly 1`] = `
+<div>
+  <div
+    class="c7n-row"
+    style="margin-left:-5px;margin-right:-5px"
+  >
+    <div
+      class="c7n-col-12"
+      style="padding-left:5px;padding-right:5px"
+    >
+      <span
+        class="c7n-pro-input-number-wrapper"
+      >
+        <label>
+          <input
+            autocomplete="off"
+            class="c7n-pro-input-number"
+            placeholder="非严格步距,可以输入小数以及整数"
+            step="3"
+            type="text"
+            value="5"
+          />
+          <div
+            class="c7n-pro-input-number-inner-button"
+          >
+            <div>
+              <i
+                class="icon icon-keyboard_arrow_up c7n-pro-input-number-plus"
+              />
+              <i
+                class="icon icon-keyboard_arrow_down c7n-pro-input-number-minus"
+              />
+            </div>
+          </div>
+        </label>
+      </span>
+      <span />
+    </div>
+  </div>
+</div>
+`;
+
 exports[`renders ./components-pro/number-field/demo/range.md correctly 1`] = `
 <div
   class="c7n-row"

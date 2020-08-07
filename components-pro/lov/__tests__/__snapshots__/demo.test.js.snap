@@ -186,7 +186,6 @@ exports[`renders ./components-pro/lov/demo/dataset.md correctly 1`] = `
           class="c7n-pro-select"
           placeholder="请选择快码"
           readonly=""
-          triggermode="input"
           type="text"
           value=""
         />

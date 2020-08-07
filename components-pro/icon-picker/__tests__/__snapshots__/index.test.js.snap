@@ -1663,7 +1663,6 @@ exports[`Icon-Picker-pro input should render readOnly correctly 1`] = `
 
 exports[`Icon-Picker-pro renders IconPicker correctly 1`] = `
 <IconPicker
-  autoComplete="off"
   clearButton={true}
   disabled={false}
   multiple={false}
@@ -3865,7 +3864,6 @@ exports[`Icon-Picker-pro renders IconPicker correctly 1`] = `
 exports[`Icon-Picker-pro should renders dataset correctly 1`] = `
 <IconPickerTest>
   <IconPicker
-    autoComplete="off"
     clearButton={true}
     dataSet={
       DataSet {
@@ -6217,7 +6215,6 @@ exports[`Icon-Picker-pro should renders dataset correctly 1`] = `
 
 exports[`Icon-Picker-pro the keydown event should render correctly 1`] = `
 <IconPicker
-  autoComplete="off"
   clearButton={true}
   disabled={false}
   multiple={false}
@@ -19826,7 +19823,6 @@ exports[`Icon-Picker-pro the keydown event should render correctly 1`] = `
                                                         className="c7n-pro-pagination-pager c7n-pro-pagination-pager-first"
                                                         disabled={false}
                                                         funcType="flat"
-                                                        loading={false}
                                                         onClick={[Function]}
                                                         suffixCls="btn"
                                                         type="button"
@@ -19910,7 +19906,6 @@ exports[`Icon-Picker-pro the keydown event should render correctly 1`] = `
                                                         className="c7n-pro-pagination-pager c7n-pro-pagination-pager-prev"
                                                         disabled={false}
                                                         funcType="flat"
-                                                        loading={false}
                                                         onClick={[Function]}
                                                         suffixCls="btn"
                                                         type="button"
@@ -19994,7 +19989,6 @@ exports[`Icon-Picker-pro the keydown event should render correctly 1`] = `
                                                         className="c7n-pro-pagination-pager c7n-pro-pagination-pager-next"
                                                         disabled={false}
                                                         funcType="flat"
-                                                        loading={false}
                                                         onClick={[Function]}
                                                         suffixCls="btn"
                                                         type="button"
@@ -20078,7 +20072,6 @@ exports[`Icon-Picker-pro the keydown event should render correctly 1`] = `
                                                         className="c7n-pro-pagination-pager c7n-pro-pagination-pager-last"
                                                         disabled={false}
                                                         funcType="flat"
-                                                        loading={false}
                                                         onClick={[Function]}
                                                         suffixCls="btn"
                                                         type="button"
@@ -22954,7 +22947,6 @@ exports[`Icon-Picker-pro the keydown event should render correctly 1`] = `
 
 exports[`Icon-Picker-pro the keydown event should render keyCode { esc, tab } correctly 1`] = `
 <IconPicker
-  autoComplete="off"
   clearButton={true}
   disabled={false}
   multiple={false}
@@ -39410,7 +39402,6 @@ exports[`Icon-Picker-pro the keydown event should render keyCode { esc, tab } co
                                                         className="c7n-pro-pagination-pager c7n-pro-pagination-pager-first"
                                                         disabled={true}
                                                         funcType="flat"
-                                                        loading={false}
                                                         onClick={[Function]}
                                                         suffixCls="btn"
                                                         type="button"
@@ -39449,7 +39440,6 @@ exports[`Icon-Picker-pro the keydown event should render keyCode { esc, tab } co
                                                         className="c7n-pro-pagination-pager c7n-pro-pagination-pager-prev"
                                                         disabled={true}
                                                         funcType="flat"
-                                                        loading={false}
                                                         onClick={[Function]}
                                                         suffixCls="btn"
                                                         type="button"
@@ -39488,7 +39478,6 @@ exports[`Icon-Picker-pro the keydown event should render keyCode { esc, tab } co
                                                         className="c7n-pro-pagination-pager c7n-pro-pagination-pager-next"
                                                         disabled={false}
                                                         funcType="flat"
-                                                        loading={false}
                                                         onClick={[Function]}
                                                         suffixCls="btn"
                                                         type="button"
@@ -39572,7 +39561,6 @@ exports[`Icon-Picker-pro the keydown event should render keyCode { esc, tab } co
                                                         className="c7n-pro-pagination-pager c7n-pro-pagination-pager-last"
                                                         disabled={false}
                                                         funcType="flat"
-                                                        loading={false}
                                                         onClick={[Function]}
                                                         suffixCls="btn"
                                                         type="button"
@@ -42448,7 +42436,6 @@ exports[`Icon-Picker-pro the keydown event should render keyCode { esc, tab } co
 
 exports[`Icon-Picker-pro the keydown event should render keyCode {space} correctly 1`] = `
 <IconPicker
-  autoComplete="off"
   clearButton={true}
   disabled={false}
   multiple={false}
@@ -57473,7 +57460,6 @@ exports[`Icon-Picker-pro the keydown event should render keyCode {space} correct
                                                         className="c7n-pro-pagination-pager c7n-pro-pagination-pager-first"
                                                         disabled={true}
                                                         funcType="flat"
-                                                        loading={false}
                                                         onClick={[Function]}
                                                         suffixCls="btn"
                                                         type="button"
@@ -57512,7 +57498,6 @@ exports[`Icon-Picker-pro the keydown event should render keyCode {space} correct
                                                         className="c7n-pro-pagination-pager c7n-pro-pagination-pager-prev"
                                                         disabled={true}
                                                         funcType="flat"
-                                                        loading={false}
                                                         onClick={[Function]}
                                                         suffixCls="btn"
                                                         type="button"
@@ -57551,7 +57536,6 @@ exports[`Icon-Picker-pro the keydown event should render keyCode {space} correct
                                                         className="c7n-pro-pagination-pager c7n-pro-pagination-pager-next"
                                                         disabled={false}
                                                         funcType="flat"
-                                                        loading={false}
                                                         onClick={[Function]}
                                                         suffixCls="btn"
                                                         type="button"
@@ -57635,7 +57619,6 @@ exports[`Icon-Picker-pro the keydown event should render keyCode {space} correct
                                                         className="c7n-pro-pagination-pager c7n-pro-pagination-pager-last"
                                                         disabled={false}
                                                         funcType="flat"
-                                                        loading={false}
                                                         onClick={[Function]}
                                                         suffixCls="btn"
                                                         type="button"
@@ -60511,7 +60494,6 @@ exports[`Icon-Picker-pro the keydown event should render keyCode {space} correct
 
 exports[`Icon-Picker-pro the selected click render correctly 1`] = `
 <IconPicker
-  autoComplete="off"
   clearButton={true}
   disabled={false}
   multiple={false}
@@ -72682,7 +72664,6 @@ exports[`Icon-Picker-pro the selected click render correctly 1`] = `
                                                         className="c7n-pro-pagination-pager c7n-pro-pagination-pager-first"
                                                         disabled={true}
                                                         funcType="flat"
-                                                        loading={false}
                                                         onClick={[Function]}
                                                         suffixCls="btn"
                                                         type="button"
@@ -72721,7 +72702,6 @@ exports[`Icon-Picker-pro the selected click render correctly 1`] = `
                                                         className="c7n-pro-pagination-pager c7n-pro-pagination-pager-prev"
                                                         disabled={true}
                                                         funcType="flat"
-                                                        loading={false}
                                                         onClick={[Function]}
                                                         suffixCls="btn"
                                                         type="button"
@@ -72760,7 +72740,6 @@ exports[`Icon-Picker-pro the selected click render correctly 1`] = `
                                                         className="c7n-pro-pagination-pager c7n-pro-pagination-pager-next"
                                                         disabled={false}
                                                         funcType="flat"
-                                                        loading={false}
                                                         onClick={[Function]}
                                                         suffixCls="btn"
                                                         type="button"
@@ -72844,7 +72823,6 @@ exports[`Icon-Picker-pro the selected click render correctly 1`] = `
                                                         className="c7n-pro-pagination-pager c7n-pro-pagination-pager-last"
                                                         disabled={false}
                                                         funcType="flat"
-                                                        loading={false}
                                                         onClick={[Function]}
                                                         suffixCls="btn"
                                                         type="button"

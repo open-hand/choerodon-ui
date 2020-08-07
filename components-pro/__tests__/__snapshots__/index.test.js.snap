@@ -56,5 +56,6 @@ Array [
   "Skeleton",
   "AutoComplete",
   "Cascader",
+  "PerformanceTable",
 ]
 `;

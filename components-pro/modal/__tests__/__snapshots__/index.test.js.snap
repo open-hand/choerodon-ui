@@ -108,7 +108,6 @@ exports[`modal-pro renders modal-pro correctly 1`] = `
             color="primary"
             funcType="raised"
             key="ok"
-            loading={false}
             onClick={[Function]}
             suffixCls="btn"
             type="button"
@@ -176,7 +175,6 @@ exports[`modal-pro renders modal-pro correctly 1`] = `
           <Button
             funcType="raised"
             key="cancel"
-            loading={false}
             onClick={[Function]}
             suffixCls="btn"
             type="button"

@@ -2,7 +2,6 @@
 
 exports[`NumberField-pro {step,min} null renders correctly 1`] = `
 <NumberField
-  autoComplete="off"
   clearButton={false}
   disabled={false}
   min={null}
@@ -379,7 +378,6 @@ exports[`NumberField-pro {step,min} null renders correctly 1`] = `
 
 exports[`NumberField-pro {step,min} null renders correctly 2`] = `
 <NumberField
-  autoComplete="off"
   clearButton={false}
   disabled={false}
   min={20}
@@ -785,7 +783,6 @@ exports[`NumberField-pro {step,min} null renders correctly 2`] = `
 
 exports[`NumberField-pro renders NumberField correctly 1`] = `
 <NumberField
-  autoComplete="off"
   clearButton={false}
   disabled={false}
   multiple={false}
@@ -1158,7 +1155,6 @@ exports[`NumberField-pro renders NumberField correctly 1`] = `
 
 exports[`NumberField-pro step multiple renders correctly 1`] = `
 <NumberField
-  autoComplete="off"
   clearButton={false}
   disabled={false}
   max={10}
@@ -1614,7 +1610,6 @@ exports[`NumberField-pro step multiple renders correctly 1`] = `
 
 exports[`NumberField-pro step should have different value 1`] = `
 <NumberField
-  autoComplete="off"
   clearButton={false}
   disabled={false}
   min={null}
@@ -2021,7 +2016,6 @@ exports[`NumberField-pro step should have different value 1`] = `
 exports[`NumberField-pro the dataset value should render correctly 1`] = `
 <NumberDataTest>
   <NumberField
-    autoComplete="off"
     clearButton={false}
     dataSet={
       DataSet {
@@ -2534,7 +2528,6 @@ exports[`NumberField-pro the dataset value should render correctly 1`] = `
 
 exports[`NumberField-pro the input number should add when the {plus} icon clicked 1`] = `
 <NumberField
-  autoComplete="off"
   clearButton={false}
   disabled={false}
   max={10}
@@ -2942,7 +2935,6 @@ exports[`NumberField-pro the input number should add when the {plus} icon clicke
 
 exports[`NumberField-pro the input number should reduce when the {minus} icon clicked 1`] = `
 <NumberField
-  autoComplete="off"
   clearButton={false}
   disabled={false}
   max={0}
@@ -3350,7 +3342,6 @@ exports[`NumberField-pro the input number should reduce when the {minus} icon cl
 
 exports[`NumberField-pro the keydown event should render keyCode { up, down } correctly 1`] = `
 <NumberField
-  autoComplete="off"
   clearButton={false}
   disabled={false}
   multiple={false}

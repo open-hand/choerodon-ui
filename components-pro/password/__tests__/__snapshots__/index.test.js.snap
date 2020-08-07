@@ -2,7 +2,6 @@
 
 exports[`Password input renders Password correctly 1`] = `
 <Password
-  autoComplete="off"
   clearButton={false}
   disabled={false}
   multiple={false}

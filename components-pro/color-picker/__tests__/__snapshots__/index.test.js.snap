@@ -2,7 +2,6 @@
 
 exports[`color-picker-pro footer-slider click event render correctly 1`] = `
 <ColorPicker
-  autoComplete="off"
   clearButton={false}
   disabled={false}
   multiple={false}
@@ -968,7 +967,6 @@ exports[`color-picker-pro footer-slider click event render correctly 1`] = `
 
 exports[`color-picker-pro renders ColorPicker correctly 1`] = `
 <ColorPicker
-  autoComplete="off"
   clearButton={false}
   disabled={false}
   multiple={false}
@@ -1553,7 +1551,6 @@ exports[`color-picker-pro renders ColorPicker correctly 1`] = `
 exports[`color-picker-pro should renders dataset default value correctly 1`] = `
 <ColorPickerTest>
   <ColorPicker
-    autoComplete="off"
     clearButton={false}
     dataSet={
       DataSet {
@@ -2277,7 +2274,6 @@ exports[`color-picker-pro should renders dataset default value correctly 1`] = `
 
 exports[`color-picker-pro the panel body click event render correctly 1`] = `
 <ColorPicker
-  autoComplete="off"
   clearButton={false}
   disabled={false}
   multiple={false}
@@ -3327,7 +3323,6 @@ exports[`color-picker-pro the panel body click event render correctly 1`] = `
 
 exports[`color-picker-pro the sliderPointer of footer click event render correctly 1`] = `
 <ColorPicker
-  autoComplete="off"
   clearButton={false}
   disabled={false}
   multiple={false}

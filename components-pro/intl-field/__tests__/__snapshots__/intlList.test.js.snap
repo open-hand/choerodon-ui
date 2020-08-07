@@ -48,7 +48,6 @@ exports[`IntlList-pro renders IntlField correctly 1`] = `
                   className="c7n-pro-field-wrapper"
                 >
                   <TextField
-                    autoComplete="off"
                     autoFocus={false}
                     className="c7n-pro-field"
                     clearButton={false}
@@ -439,7 +438,6 @@ exports[`IntlList-pro renders IntlField correctly 1`] = `
                   className="c7n-pro-field-wrapper"
                 >
                   <TextField
-                    autoComplete="off"
                     autoFocus={false}
                     className="c7n-pro-field"
                     clearButton={false}
@@ -830,7 +828,6 @@ exports[`IntlList-pro renders IntlField correctly 1`] = `
                   className="c7n-pro-field-wrapper"
                 >
                   <TextField
-                    autoComplete="off"
                     autoFocus={false}
                     className="c7n-pro-field"
                     clearButton={false}

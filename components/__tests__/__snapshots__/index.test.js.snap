@@ -62,5 +62,7 @@ Array [
   "Responsive",
   "configure",
   "getConfig",
+  "Result",
+  "ImageCrop",
 ]
 `;

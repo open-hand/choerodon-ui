@@ -2,7 +2,6 @@
 
 exports[`Range should show tooltip when hovering range handler 1`] = `
 <Range
-  autoComplete="off"
   clearButton={false}
   dataSet={
     DataSet {
@@ -537,7 +536,6 @@ exports[`Range should show tooltip when hovering range handler 1`] = `
 
 exports[`Range should show tooltip when hovering range handler 2`] = `
 <Range
-  autoComplete="off"
   clearButton={false}
   dataSet={
     DataSet {
@@ -1072,7 +1070,6 @@ exports[`Range should show tooltip when hovering range handler 2`] = `
 
 exports[`Range the range drag test  1`] = `
 <Range
-  autoComplete="off"
   clearButton={false}
   dataSet={
     DataSet {

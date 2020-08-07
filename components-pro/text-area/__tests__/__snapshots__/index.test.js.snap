@@ -2,7 +2,6 @@
 
 exports[`TextArea-pro renders TextArea-pro correctly 1`] = `
 <TextArea
-  autoComplete="off"
   autoSize={false}
   clearButton={false}
   disabled={false}
@@ -382,7 +381,6 @@ exports[`TextArea-pro renders TextArea-pro correctly 1`] = `
 exports[`TextArea-pro the dataSet should renders correctly 1`] = `
 <TextAreaTest>
   <TextArea
-    autoComplete="off"
     autoSize={false}
     clearButton={false}
     dataSet={

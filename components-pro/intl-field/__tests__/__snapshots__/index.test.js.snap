@@ -2,7 +2,6 @@
 
 exports[`IntlField-pro { ok, cancel } button click render correctly 1`] = `
 <IntlField
-  autoComplete="off"
   clearButton={false}
   disabled={false}
   multiple={false}
@@ -388,7 +387,6 @@ exports[`IntlField-pro { ok, cancel } button click render correctly 1`] = `
 
 exports[`IntlField-pro renders IntlField correctly 1`] = `
 <IntlField
-  autoComplete="off"
   clearButton={false}
   disabled={false}
   multiple={false}
@@ -775,7 +773,6 @@ exports[`IntlField-pro renders IntlField correctly 1`] = `
 exports[`IntlField-pro renders dataset correctly 1`] = `
 <IntlFieldTest>
   <IntlField
-    autoComplete="off"
     clearButton={false}
     dataSet={
       DataSet {
@@ -1636,7 +1633,6 @@ exports[`IntlField-pro renders dataset correctly 1`] = `
 
 exports[`IntlField-pro renders dataset correctly 2`] = `
 <IntlField
-  autoComplete="off"
   clearButton={false}
   dataSet={
     DataSet {
