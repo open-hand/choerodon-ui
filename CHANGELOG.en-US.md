@@ -22,6 +22,7 @@ timeline: true
 - 🐞 `<pro>PerformanceTable`: Fixed Scrollbar re-rendering calculation rules.
 - 🐞 `<pro>TextField`: Fixed the width exceeding when using addon in table.
 - 🐞 `<pro>Table`: Fixed the table expandFiled bind err in table tree.
+- 🐞 `<pro>Table`: Fix the error that there will be two check boxes when checking CheckBox and Switch in the table.
 
 ## 0.8.68
 

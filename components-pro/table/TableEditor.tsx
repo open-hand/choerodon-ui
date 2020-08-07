@@ -155,6 +155,7 @@ export default class TableEditor extends Component<TableEditorProps> {
         onBlur: this.handleEditorBlur,
         tabIndex: -1,
         showHelp: ShowHelp.none,
+        _inTable: true,
       };
       return cloneElement<FormFieldProps>(cellEditor, newEditorProps);
     }
