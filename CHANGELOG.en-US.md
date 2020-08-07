@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `<pro>NumberField`: Added `nonStrictStep` attribute.
 - 💄 `Select`: Optimized `Select` tags styles.
 - 💄 `<pro>Form`: Optimized Form readOnly className。
+- 🐞 `Menu`: Fixed the error report of the drop-down keyboard event.
 - 🐞 `<pro>PerformanceTable`: Fixed Scrollbar re-rendering calculation rules.
 - 🐞 `<pro>TextField`: Fixed the width exceeding when using addon in table.
 - 🐞 `<pro>Table`: Fixed the table expandFiled bind err in table tree.

@@ -71,7 +71,7 @@
     "jshint": "^2.10.1",
     "jsonlint": "^1.6.3",
     "jsonlint-mod": "^1.7.5",
-    "mini-store": "^3.0.5",
+    "mini-store": "^2.0.0",
     "moment": "^2.24.0",
     "mutationobserver-shim": "^0.3.3",
     "prettier": "~1.18.2",

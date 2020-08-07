@@ -69,6 +69,8 @@ export function saveRef(c) {
   }
 }
 
+export function getWrappedInstance() { return SubPopupMenu }
+
 export class SubPopupMenu extends Component {
   static propTypes = {
     onSelect: PropTypes.func,
