@@ -63,6 +63,10 @@ export function getFieldsById(id): FormField<FormFieldProps>[] {
 
 export interface FormFieldProps extends DataSetComponentProps {
   /**
+   * 内部属性,标记该组件是否位于table中,适用于CheckBox以及switch等组件
+   */
+  _inTable?: boolean,
+  /**
    * 标签名
    */
   label?: string;
@@ -205,6 +209,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   static contextType = FormContext;
 
   static propTypes = {
+    _inTable: PropTypes.bool,
     type: PropTypes.string,
     /**
      * 字段名
@@ -508,6 +513,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       'rowIndex',
       'colIndex',
       'labelLayout',
+      '_inTable',
       'labelWidth',
       'pristine',
       'range',
@@ -1119,6 +1125,8 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     const validationMessage = this.renderValidationMessage();
     const wrapper = this.renderWrapper();
     const help = this.renderHelpMessage();
+    const { _inTable } = this.props;
+    const TooltipWrapper: any = _inTable ? React.Fragment : Tooltip;
     return this.hasFloatLabel ? (
       [
         isValidElement(wrapper) && cloneElement(wrapper, { key: 'wrapper' }),
@@ -1128,7 +1136,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
         help,
       ]
     ) : (
-        <Tooltip
+        <TooltipWrapper
           suffixCls={`form-tooltip ${getConfig('proPrefixCls')}-tooltip`}
           title={
             !!(this.multiple && this.getValues().length) ||
@@ -1141,7 +1149,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
         >
           {wrapper}
           {help}
-        </Tooltip>
+        </TooltipWrapper>
       );
   }
 }

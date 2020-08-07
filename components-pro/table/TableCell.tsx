@@ -388,6 +388,7 @@ export default class TableCell extends Component<TableCellProps> {
         disabled: isDisabledRow(record) || (inlineEdit && !record.editing),
         indeterminate: checkField && checkField === name && record.isIndeterminate,
         labelLayout: LabelLayout.none,
+        _inTable:true,
       };
       return cloneElement(cellEditor, newEditorProps as FormFieldProps);
     }

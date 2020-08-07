@@ -22,6 +22,7 @@ timeline: true
 - 🐞 `<pro>PerformanceTable`: 修复 Scrollbar 重渲染计算规则。
 - 🐞 `<pro>TextField`: 修复在table中使用addon出现宽度超出。
 - 🐞 `<pro>Table`: 修复tabletree中使用expandField绑定逻辑操作错误。
+- 🐞 `<pro>Table`: 修复在table中对CheckBox以及Switch进行校验的时候会有两个校验框的错误。
 
 ## 0.8.68
 
