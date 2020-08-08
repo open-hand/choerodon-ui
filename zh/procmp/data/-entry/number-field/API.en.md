@@ -9,6 +9,7 @@ title: API
 | min  | 最小值 | number |        |
 | max  | 最大值 | number |        |
 | step | 步距   | number |        |
+| nonStrictStep | 非严格步距，在非严格步距下，允许输入值不为步距的倍数加上最小值，也允许在设置整数步距的情况下输入小数   | boolean | false |
 
 更多属性请参考 [TextField](/zh/procmp/data-entry/text-field/#TextField)。
 

@@ -1,0 +1,87 @@
+{
+  "title": {
+    "zh": "中文分类",
+    "en": "Category"
+  },
+  "demos": [
+    {
+      "filename": "basic.js",
+      "title": {
+        "zh": "基本",
+        "en": "Basic"
+      },
+      "description": {
+        "zh": "最简单的用法。\n",
+        "en": "The simplest usage.\n"
+      },
+      "order": 0,
+      "screenshot": ""
+    },
+    {
+      "filename": "image-down.js",
+      "title": {
+        "zh": "图片裁剪下载",
+        "en": "Dwonload image"
+      },
+      "description": {
+        "zh": "图片裁剪下载。\n",
+        "en": "Dwonload image.\n"
+      },
+      "order": 1,
+      "screenshot": ""
+    },
+    {
+      "filename": "text.js",
+      "title": {
+        "zh": "文案展现",
+        "en": "Show copywriting"
+      },
+      "description": {
+        "zh": "给评分组件加上文案展示。\n",
+        "en": "Add copywriting in rate components.\n"
+      },
+      "order": 2,
+      "screenshot": ""
+    },
+    {
+      "filename": "upload.js",
+      "title": {
+        "zh": "图片裁剪并上传",
+        "en": "image crop and upload"
+      },
+      "description": {
+        "zh": "图片裁剪并上传，不可以使用upload上传类型和上传前的钩子其他upload的配置可以正常使用。\n",
+        "en": "image crop and upload, you can't use the upload `beforeUpload`and `accept` of props , others can normal use .\n"
+      },
+      "order": 3,
+      "screenshot": ""
+    },
+    {
+      "filename": "upload-server.js",
+      "title": {
+        "zh": "图片服务端裁剪",
+        "en": "image crop by server"
+      },
+      "description": {
+        "zh": "图片服务端裁剪，把完整的裁剪信息和原图传输到服务器。\n",
+        "en": "image crop by server, it would upload the natural image and the crop info to server.\n"
+      },
+      "order": 4,
+      "screenshot": ""
+    },
+    {
+      "filename": "edict-render.js",
+      "title": {
+        "zh": "裁剪区域自定义渲染",
+        "en": "crop edict custom render "
+      },
+      "description": {
+        "zh": "支持在裁剪区域设置想要的渲染样式。\n",
+        "en": "You can render the crop area what you want.\n"
+      },
+      "order": 5,
+      "height": 207,
+      "screenshot": ""
+    }
+  ]
+}
