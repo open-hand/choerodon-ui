@@ -189,6 +189,20 @@ describe('NumberField-pro', () => {
     expect(wrapper.find('.c7n-pro-input-number').prop('value')).toBe('6');
   });
 
+  it('the input number should show correctly when set formatter ', () => {
+    const wrapper = mount(<NumberField step={1} defaultValue={5000} formatter={(value)=>value} />);
+    const noFormatterWrapper = mount(<NumberField step={1} defaultValue={5000} />);
+
+    expect(wrapper.find('.c7n-pro-input-number').prop('value')).toBe('5000');
+    expect(noFormatterWrapper.find('.c7n-pro-input-number').prop('value')).toBe('5,000');
+
+  });
+
+  it('the input number should show correctly when set formatterOptions ', () => {
+    const wrapper = mount(<NumberField step={0.1} defaultValue={5000.3} formatterOptions={{options:{useGrouping:false}}}  />);
+    expect(wrapper.find('.c7n-pro-input-number').prop('value')).toBe('5000.3');
+  });
+
 
   it('{min,step} should control the input value', () => {
     const wrapper = mount(<NumberField step={1.1} min={-0.3} />);

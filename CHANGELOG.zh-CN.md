@@ -15,6 +15,9 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>NumberField`: 新增 formatter,formatterOptions 属性。
+- 🌟 `configure`: 新增 numberFieldFormatter,numberFieldFormatterOptions 全局配置。
+
 ## 0.8.69
 
 `2020-08-07`

@@ -15,6 +15,9 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: Added `formatter`,`formatterOptions` global configuration.
+- 🌟 `<pro>NumberField`: Added `numberFieldFormatter`,`numberFieldFormatterOptions` attribute.
+
 ## 0.8.69
 
 `2020-08-07`
