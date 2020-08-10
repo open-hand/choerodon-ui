@@ -28,6 +28,7 @@ import { LabelLayout } from 'choerodon-ui/pro/lib/form/enum';
 import { ButtonColor, FuncType } from 'choerodon-ui/pro/lib/button/enum';
 import { defaultExcludeUseColonTag } from 'choerodon-ui/pro/lib/form/utils';
 import { Renderer } from 'choerodon-ui/pro/lib/field/FormField';
+import { FormatNumberFunc, FormatNumberFuncOptions } from 'choerodon-ui/pro/lib/number-field/NumberField';
 
 export type Status = {
   [RecordStatus.add]: string;
@@ -128,7 +129,9 @@ export type Config = {
   tableDragColumnAlign?: DragColumnAlign;
   tableDragColumn?: boolean;
   tableDragRow?: boolean;
-  numberFieldNonStrictStep?: boolean,
+  numberFieldNonStrictStep?: boolean;
+  numberFieldFormatter?: FormatNumberFunc;
+  numberFieldFormatterOptions?:FormatNumberFuncOptions;
 };
 
 export type ConfigKeys = keyof Config;
@@ -222,6 +225,8 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['tableDragRow', false],
   ['tableDragColumn', false],
   ['numberFieldNonStrictStep', false],
+  ['numberFieldFormatter', undefined],
+  ['numberFieldFormatterOptions',undefined],
 ]);
 
 export function getConfig(key: ConfigKeys): any {

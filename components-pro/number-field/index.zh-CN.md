@@ -23,6 +23,9 @@ title: NumberField
 | max  | 最大值 | number |        |
 | step | 步距   | number |        |
 | nonStrictStep | 非严格步距，在非严格步距下，允许输入值不为步距的倍数加上最小值，也允许在设置整数步距的情况下输入小数   | boolean | false |
+| formatter | 格式器,默认值为static的[format](https://github.com/choerodon/choerodon-ui/blob/master/components-pro/number-field/NumberField.tsx)   | FormatNumberFunc: (value: string, lang: string, options: Intl.NumberFormatOptions) => string |        |
+| formatterOptions | 格式器参数,可以与全局值以及默认值进行合并,默认值[参考](https://github.com/choerodon/choerodon-ui/blob/master/components-pro/number-field/NumberField.tsx)   | FormatNumberFuncOptions: { lang?: string, options?: Intl.NumberFormatOptions } |        |
+
 
 更多属性请参考 [TextField](/components-pro/text-field/#TextField)。
 
