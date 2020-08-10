@@ -71,6 +71,10 @@ export default function createPicker(TheCalendar: ComponentClass): any {
     onPickerIconClick = (e: MouseEvent<HTMLElement>) => {
       e.preventDefault();
       e.stopPropagation();
+      const { disabled } = this.props;
+      if (disabled) {
+        return;
+      }
       const { focused } = this.state;
       this.picker.setOpen(!focused);
     };
@@ -210,7 +214,7 @@ export default function createPicker(TheCalendar: ComponentClass): any {
         focused,
       };
 
-      const input = ({ value: inputValue }: { value: Moment | null }) => (
+      const input = ({ value: inputValue }: { value: Moment | null; }) => (
         <Input
           {...inputProps}
           ref={this.saveInput}

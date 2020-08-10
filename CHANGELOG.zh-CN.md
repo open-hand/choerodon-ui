@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `<pro>NumberField`: 新增 formatter,formatterOptions 属性。
 - 🌟 `configure`: 新增 numberFieldFormatter,numberFieldFormatterOptions 全局配置。
+- 🐞 `DatePicker`: 修复disabled在icon上不生效的问题。
 
 ## 0.8.69
 

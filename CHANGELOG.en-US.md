@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `configure`: Added `formatter`,`formatterOptions` global configuration.
 - 🌟 `<pro>NumberField`: Added `numberFieldFormatter`,`numberFieldFormatterOptions` attribute.
+- 🐞 `DatePicker`: Fix the problem that disabled does not take effect on the icon.
 
 ## 0.8.69
 
