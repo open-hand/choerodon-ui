@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>FormField`: 修复 _inTable 下给Fragment设置了属性的错误
+
 ## 0.8.69
 
 `2020-08-07`
