@@ -20,11 +20,19 @@ import isEmpty from '../_util/isEmpty';
 import { $l } from '../locale-context';
 import { FieldType } from '../data-set/enum';
 import { ValidatorProps } from '../validator/rules';
-import formatNumber from '../formatter/formatNumber';
+import defaultFormatNumber from '../formatter/formatNumber';
 
 function getCurrentValidValue(value: string): number {
   return Number(value.replace(/\.$/, '')) || 0;
 }
+
+export type FormatNumberFunc = (value: string, lang: string, options: Intl.NumberFormatOptions) => string;
+
+export type FormatNumberFuncOptions = {
+  lang?: string,
+  options?: Intl.NumberFormatOptions;
+};
+
 
 export interface NumberFieldProps extends TextFieldProps {
   /**
@@ -40,9 +48,18 @@ export interface NumberFieldProps extends TextFieldProps {
    */
   step?: number;
   /**
- * 非严格步距
- */
+   * 非严格步距
+   */
   nonStrictStep?: boolean;
+  /**
+   * 格式器
+   */
+  formatter?: FormatNumberFunc;
+  /**
+   * 格式器参数
+   */
+  formatterOptions?: FormatNumberFuncOptions;
+
 }
 
 export class NumberField<T extends NumberFieldProps> extends TextField<T & NumberFieldProps> {
@@ -61,6 +78,18 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
      * 步距
      */
     step: PropTypes.number,
+    /**
+     * 非严格步距
+     */
+    nonStrictStep: PropTypes.bool,
+    /**
+     * 格式器
+     */
+    formatter: PropTypes.func,
+    /**
+     * 格式器参数
+     */
+    formatterOptions: PropTypes.object,
     ...TextField.propTypes,
   };
 
@@ -69,7 +98,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     suffixCls: 'input-number',
   };
 
-  static format = formatNumber;
+  static format = defaultFormatNumber;
 
   @computed
   get defaultValidationMessages(): ValidationMessages {
@@ -258,6 +287,8 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
   getOtherProps() {
     const otherProps = omit(super.getOtherProps(), [
       'nonStrictStep',
+      'formatter',
+      'formatterOptions',
     ]);
     return otherProps;
   }
@@ -337,20 +368,46 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     return value;
   }
 
-  getFormatOptions(value?: number): Intl.NumberFormatOptions | undefined {
+  getFormatOptions(value?: number): FormatNumberFuncOptions {
     const precision = getPrecision(isNil(value) ? this.getValue() || 0 : value);
-    return {
-      minimumFractionDigits: precision,
-      maximumFractionDigits: precision,
+    const defaultOptions = {
+      lang: this.lang,
+      options: {
+        minimumFractionDigits: precision,
+        maximumFractionDigits: precision,
+      },
     };
+
+    const formatterOptions: FormatNumberFuncOptions = this.getProp('formatterOptions') || {};
+    const numberFieldFormatterOptions: FormatNumberFuncOptions = getConfig('numberFieldFormatterOptions') || {};
+    if (formatterOptions) {
+      return {
+        lang: formatterOptions.lang || numberFieldFormatterOptions.lang || defaultOptions.lang,
+        options: {
+          ...defaultOptions.options,
+          ...numberFieldFormatterOptions.options,
+          ...formatterOptions.options,
+        },
+      };
+    }
+    return defaultOptions;
   }
 
   getFormatter() {
-    return formatNumber;
+    const formatter = this.getProp('formatter');
+    if (formatter !== undefined) {
+      return formatter;
+    }
+    const numberFieldFormatter = getConfig('numberFieldFormatter');
+    if (numberFieldFormatter !== undefined) {
+      return numberFieldFormatter;
+    }
+    return defaultFormatNumber;
   }
 
   processText(value: string): string {
-    return this.getFormatter()(value, this.lang, this.getFormatOptions(Number(value)));
+    const formatOptions = this.getFormatOptions(Number(value));
+    return this.getFormatter()(value, formatOptions.lang, formatOptions.options);
   }
 }
 
@@ -358,5 +415,5 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
 export default class ObserverNumberField extends NumberField<NumberFieldProps> {
   static defaultProps = NumberField.defaultProps;
 
-  static format = formatNumber;
+  static format = defaultFormatNumber;
 }

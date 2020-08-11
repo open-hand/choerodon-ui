@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: Added `formatter`,`formatterOptions` global configuration.
+- 🌟 `<pro>NumberField`: Added `numberFieldFormatter`,`numberFieldFormatterOptions` attribute.
 - 🐞 `<pro>FormField`: Fixed an error setting a property to the Fragment under _inTable.
 
 ## 0.8.69
