@@ -1126,7 +1126,6 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     const wrapper = this.renderWrapper();
     const help = this.renderHelpMessage();
     const { _inTable } = this.props;
-    const TooltipWrapper: any = _inTable ? React.Fragment : Tooltip;
     return this.hasFloatLabel ? (
       [
         isValidElement(wrapper) && cloneElement(wrapper, { key: 'wrapper' }),
@@ -1136,7 +1135,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
         help,
       ]
     ) : (
-        <TooltipWrapper
+        <Tooltip
           suffixCls={`form-tooltip ${getConfig('proPrefixCls')}-tooltip`}
           title={
             !!(this.multiple && this.getValues().length) ||
@@ -1146,10 +1145,11 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
           }
           theme="light"
           placement="bottomLeft"
+          hidden={!!_inTable}
         >
           {wrapper}
           {help}
-        </TooltipWrapper>
+        </Tooltip>
       );
   }
 }
