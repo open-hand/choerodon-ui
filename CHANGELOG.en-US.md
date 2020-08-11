@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `configure`: Added `formatter`,`formatterOptions` global configuration.
 - 🌟 `<pro>NumberField`: Added `numberFieldFormatter`,`numberFieldFormatterOptions` attribute.
+- 🐞 `DatePicker`: Fixed the problem that disabled does not take effect on the icon.
 - 🐞 `<pro>FormField`: Fixed an error setting a property to the Fragment under _inTable.
 
 ## 0.8.69

@@ -15,9 +15,10 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 numberFieldFormatter,numberFieldFormatterOptions 全局配置。
-- 🌟 `<pro>NumberField`: 新增 formatter,formatterOptions 属性。
-- 🐞 `<pro>FormField`: 修复 _inTable 下给Fragment设置了属性的错误。
+- 🌟 `configure`: 新增 numberFieldFormatter, numberFieldFormatterOptions 全局配置。
+- 🌟 `<pro>NumberField`: 新增 formatter, formatterOptions 属性。
+- 🐞 `DatePicker`: 修复 disabled 在 icon 上不生效的问题。
+- 🐞 `<pro>FormField`: 修复 _inTable 下给 Fragment 设置了属性的错误。
 
 ## 0.8.69
 

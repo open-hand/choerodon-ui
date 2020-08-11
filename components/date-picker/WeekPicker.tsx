@@ -86,6 +86,10 @@ export default class WeekPicker extends Component<any, any> {
   onPickerIconClick: MouseEventHandler<HTMLElement> = e => {
     e.preventDefault();
     e.stopPropagation();
+    const { disabled } = this.props;
+    if (disabled) {
+      return;
+    }
     const { focused } = this.state;
     this.picker.setOpen(!focused);
   };
