@@ -240,3 +240,75 @@ export function getPaginationPosition(pagination?: TablePaginationConfig): Table
 export function getHeight(el: HTMLElement) {
   return el.getBoundingClientRect().height;
 }
+
+/**
+ * 合并指定的对象参数
+ * @param keys 需要合并的关键字
+ * @param newObj 传入的新对象
+ * @param oldObj 返回的旧对象
+ */
+export function mergeObject(keys:string[],newObj:object,oldObj:object) {
+  let mergedObj = oldObj
+  if(keys.length > 0){
+    keys.forEach(key =>{
+      if(key in newObj){
+        oldObj[key] = newObj[key];
+        mergedObj = {...oldObj};
+      }
+    })
+  }
+  return mergedObj
+}
+
+/**
+ * 更具是否是react节点生成对象返回不同值
+ * @param key 返回的属性
+ * @param column 可能是reactnode 也可能是columprops 对象
+ */
+function getColumnChildrenValue(key:string,column:ColumnProps|ReactElement):string{
+  if(React.isValidElement(column)){
+    return column.props[key]
+  }
+  return column[key]
+}
+
+/**
+ * 如果找不到给js最大值9007199254740991
+ */
+export function changeIndexOf(array:string[],value:string):number {
+  if(array.indexOf(value) === -1){
+    return 9007199254740991
+  }
+  return array.indexOf(value)
+}
+
+/**
+ * 实现首次进入就开始排序
+ * @param newColumns 需要这样排序以及合并参数的列表
+ * @param originalColumns 原始列表
+ */
+export function reorderingColumns(newColumns: ColumnProps[], originalColumns: ColumnProps[] ) {
+  if (newColumns && newColumns.length > 0 && originalColumns.length > 0) {
+    // 暂时定性为对存在name的进行排序
+    const nameColumns = originalColumns.filter(columnItem => getColumnChildrenValue('name',columnItem));
+    const noNameColumns = originalColumns.filter(columnItem => !getColumnChildrenValue('name',columnItem));
+    if (nameColumns && newColumns && nameColumns.length > 0 && newColumns.length > 0) {
+      const newColumnsStr = newColumns.map(function (obj) {
+        return getColumnChildrenValue('name',obj);
+      }).join(",");
+      const newColumnsNameArray = newColumnsStr.split(',')
+      if (newColumnsNameArray.length > 0) {
+        nameColumns.sort((prev, next) => {
+          if (getColumnChildrenValue('name',prev) && getColumnChildrenValue('name',next)) {
+            return changeIndexOf(newColumnsNameArray,getColumnChildrenValue('name',prev)) - changeIndexOf(newColumnsNameArray,getColumnChildrenValue('name',next))
+          }
+          return 1
+        })
+        return [...nameColumns, ...noNameColumns]
+      }
+    }
+  }
+  return originalColumns
+}
+
+

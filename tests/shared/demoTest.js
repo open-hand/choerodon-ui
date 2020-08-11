@@ -1,8 +1,11 @@
+import React from "react";
 import glob from 'glob';
 import { render } from 'enzyme';
 import MockDate from 'mockdate';
 import moment from 'moment';
 import { setup } from '../utils';
+
+React.useLayoutEffect = React.useEffect;
 
 export default function demoTest(component, options = {}) {
   const regex = /-pro$/;
