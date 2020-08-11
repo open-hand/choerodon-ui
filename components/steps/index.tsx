@@ -14,8 +14,8 @@ export interface StepsProps {
   progressDot?: boolean | Function;
   style?: CSSProperties;
   headerRender?: () => React.ReactElement<any>;
-  headerIcon:string;
-  headerText:string;
+  headerIcon?:string;
+  headerText?:string;
 }
 
 export interface StepProps {
@@ -35,7 +35,7 @@ export default class Steps extends Component<StepsProps, any> {
 
   static Step = Step as React.ClassicComponentClass<StepProps>;
 
-  static StepGroup = StepGroup as React.ClassicComponentClass<StepProps>;
+  static StepGroup = StepGroup as React.ClassicComponentClass<StepsProps>;
 
   static defaultProps = {
     iconPrefix: 'icon',
