@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `<pro>NumberField`: 新增 formatter, formatterOptions 属性。
 - 🐞 `DatePicker`: 修复 disabled 在 icon 上不生效的问题。
 - 🐞 `<pro>FormField`: 修复 _inTable 下给 Fragment 设置了属性的错误。
+- 🐞 修改peerDependencies了中的mobx-react依赖限制
 
 ## 0.8.69
 
