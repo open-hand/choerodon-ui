@@ -35,8 +35,10 @@ function expandedRowRenderer({ record }) {
 
 // icon 渲染问题， 首先判断record的值和自定义状态来判断出叶节点和父节点进行不同的渲染
 function expandicon({ prefixCls, expanded, expandable, needIndentSpaced, record, onExpand }){
-
-  if(record.get('parentId')){
+   
+  // 1. 这里是只要parentId存在或者text不是组织管理就可以渲染为叶节点
+  // 判断它为子节点的方法
+  if(record.get('parentId') && record.get('text') !== '组织管理'){
     // 子结点渲染
      return (<span style={{paddingLeft:'0.18rem'}}/>)
   }
@@ -45,7 +47,9 @@ function expandicon({ prefixCls, expanded, expandable, needIndentSpaced, record,
    // 自定义状态渲染
      return (<Spin tip="loding"  delay={200} size="small" />)
   } 
-
+  
+  // 2. 以上条件都不满足就渲染为父亲节点，所以只要你有方法判定它属于叶节点还是子节点都可以达到目的
+  // 这里代码表明它的图标为小三角而且绑定了展开事件等
   const iconPrefixCls = `${prefixCls}-expand-icon`;
   const classString = classNames(iconPrefixCls, {
             [`${iconPrefixCls}-expanded`]: expanded,

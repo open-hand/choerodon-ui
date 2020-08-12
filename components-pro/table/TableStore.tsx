@@ -21,9 +21,10 @@ import {
   TableMode,
   TableQueryBarType,
   DragColumnAlign,
+  ColumnsEditType,
 } from './enum';
 import { stopPropagation } from '../_util/EventManager';
-import { getColumnKey, getHeader } from './utils';
+import { getColumnKey, getHeader, reorderingColumns, mergeObject  } from './utils';
 import getReactNodeText from '../_util/getReactNodeText';
 import ColumnGroups from './ColumnGroups';
 import autobind from '../_util/autobind';
@@ -115,19 +116,26 @@ function renderSelectionBox({ record, store }: { record: any, store: TableStore;
   }
 }
 
-function mergeDefaultProps(columns: ColumnProps[], defaultKey: number[] = [0]): ColumnProps[] {
+function mergeDefaultProps(columns: ColumnProps[],columnsMergeCoverage?:ColumnProps[],defaultKey: number[] = [0]): ColumnProps[] {
   const columnsNew: any[] = [];
   const leftFixedColumns: any[] = [];
   const rightFixedColumns: any[] = [];
   columns.forEach((column: ColumnProps) => {
     if (isPlainObject(column)) {
-      const newColumn: ColumnProps = { ...Column.defaultProps, ...column };
+      let newColumn: ColumnProps = { ...Column.defaultProps, ...column };
       if (isNil(getColumnKey(newColumn))) {
         newColumn.key = `anonymous-${defaultKey[0]++}`;
       }
       const { children } = newColumn;
       if (children) {
-        newColumn.children = mergeDefaultProps(children, defaultKey);
+        newColumn.children = mergeDefaultProps(children,columnsMergeCoverage,defaultKey);
+      }
+      // TODO 后续可以加key
+      if(columnsMergeCoverage && columnsMergeCoverage.length > 0){
+        const mergeItem = columnsMergeCoverage.find(columnItem => columnItem.name === column.name)
+        if(mergeItem){
+          newColumn = mergeObject(['header'],mergeItem,column)
+        }
       }
       if (newColumn.lock === ColumnLock.left || newColumn.lock === true) {
         leftFixedColumns.push(newColumn);
@@ -143,6 +151,7 @@ function mergeDefaultProps(columns: ColumnProps[], defaultKey: number[] = [0]): 
 
 function normalizeColumns(
   elements: ReactNode,
+  columnsMergeCoverage?:ColumnProps[],
   parent: ColumnProps | null = null,
   defaultKey: number[] = [0],
 ) {
@@ -154,7 +163,7 @@ function normalizeColumns(
       return;
     }
     const { props, key } = element;
-    const column: any = {
+    let column: any = {
       ...props,
     };
     if (isNil(getColumnKey(column))) {
@@ -163,10 +172,18 @@ function normalizeColumns(
     if (parent) {
       column.lock = parent.lock;
     }
-    column.children = normalizeColumns(column.children, column, defaultKey);
+    column.children = normalizeColumns(column.children,columnsMergeCoverage, column, defaultKey);
     if (key) {
       column.key = key;
     }
+    // 后续可以加key
+    if(columnsMergeCoverage && columnsMergeCoverage.length > 0){
+     const mergeItem = columnsMergeCoverage.find(columnItem => columnItem.name === column.name)
+     if(mergeItem){
+      column = mergeObject(['header'],mergeItem,column)
+     }
+    }
+
     if (column.lock === ColumnLock.left || column.lock === true) {
       leftFixedColumns.push(column);
     } else if (column.lock === ColumnLock.right) {
@@ -230,6 +247,7 @@ export default class TableStore {
 
   @observable columnDeep: number;
 
+  
   @computed
   get dataSet(): DataSet {
     return this.props.dataSet;
@@ -283,6 +301,9 @@ export default class TableStore {
 
   @computed
   get dragColumn():boolean | undefined {
+    if(this.columnMaxDeep > 1){
+      return false;
+    }
     if('dragColumn' in this.props) {
       return this.props.dragColumn;
     }
@@ -450,10 +471,26 @@ export default class TableStore {
 
   @computed
   get columns(): ColumnProps[] {
-    const { columns, children } = this.props;
+    const { columnsMergeCoverage } = this.props;
+    let { columns, children } = this.props;
+    if (this.headersOderable) {
+      if (columnsMergeCoverage && columns) {
+        columns = reorderingColumns(columnsMergeCoverage, columns)
+      } else {
+        children = reorderingColumns(columnsMergeCoverage, children)
+      }
+    }
+    // 分开处理可以满足于只修改表头信息场景不改变顺序 
     return observable.array(
       this.addExpandColumn(
-        this.addDragColumn(this.addSelectionColumn(columns ? mergeDefaultProps(columns) : normalizeColumns(children))),
+        this.addDragColumn(this.addSelectionColumn(columns
+          ? mergeDefaultProps(columns, this.headersEditable
+            ? columnsMergeCoverage
+            : undefined)
+          : normalizeColumns(children, this.headersEditable
+            ? columnsMergeCoverage :
+            undefined),
+        )),
       ),
     );
   }
@@ -462,6 +499,22 @@ export default class TableStore {
     runInAction(() => {
       set(this.props, 'columns', columns);
     });
+  }
+
+  /**
+   * 表头支持编辑
+   */
+  @computed 
+  get headersEditable (){
+    return (this.props.columnsEditType === ColumnsEditType.header || this.props.columnsEditType === ColumnsEditType.all) && !!this.props.columnsMergeCoverage
+  }
+
+  /**
+   * 表头支持排序
+   */
+  @computed 
+  get headersOderable (){
+    return (this.props.columnsEditType === ColumnsEditType.order || this.props.columnsEditType === ColumnsEditType.all) && !!this.props.columnsMergeCoverage
   }
 
   @computed
@@ -640,7 +693,6 @@ export default class TableStore {
     runInAction(() => {
       this.columnDeep = Math.max(this.columnDeep, deep);
     });
-
   }
 
   private handleSelectAllChange = action(value => {

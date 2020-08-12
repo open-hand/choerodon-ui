@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Table`: 新增 columnsMergeCoverage columnsOnChange columnsEdictType 属性实现表头修改。
 - 🌟 `configure`: 新增 numberFieldFormatter, numberFieldFormatterOptions 全局配置。
 - 🌟 `<pro>NumberField`: 新增 formatter, formatterOptions 属性。
 - 🐞 `DatePicker`: 修复 disabled 在 icon 上不生效的问题。

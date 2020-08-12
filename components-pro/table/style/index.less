@@ -61,6 +61,14 @@
         content: ' ';
       }
 
+      &-edit {
+        background-color: transparent;
+        input {
+          font-weight: 700;
+          border-color: transparent;
+        }
+      }
+
       > * {
         vertical-align: middle;
       }
@@ -100,11 +108,30 @@
     position: relative;
     color: @heading-color;
     background-color: @table-header-bg;
-
     &:last-child {
       border-right: none;
     }
   }
+
+
+  &-bordered &-thead &-cell-editor:hover {
+    border-color: @table-editable-cell-border-color;
+    cursor: text;
+    .icon {
+      cursor: pointer;
+    }
+  }
+
+  &-bordered &-thead &-header-edit {
+    .icon {
+      cursor: pointer;
+    }
+  }
+
+  &-bordered &-thead &-cell-editing {
+    padding: 0 0;
+  }
+
 
   &-thead&-column-resizable {
     border-bottom: none;

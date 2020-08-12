@@ -10,7 +10,7 @@ import debounce from 'lodash/debounce';
 import isObject from 'lodash/isObject';
 import noop from 'lodash/noop';
 import classes from 'component-classes';
-import { action } from 'mobx';
+import { action, toJS } from 'mobx';
 import {
   DragDropContext,
   DropResult,
@@ -53,6 +53,7 @@ import {
   TableQueryBarType,
   TableAutoHeightType,
   DragColumnAlign,
+  ColumnsEditType,
 } from './enum';
 import Switch from '../switch/Switch';
 import Tooltip from '../tooltip/Tooltip';
@@ -156,6 +157,12 @@ export interface DragRender {
   draggableProps: DraggableProps;
   renderClone: (dragRenderProps: DragRenderClone) => ReactElement<any>;
   renderIcon: (DragIconRender) => ReactElement<any>;
+}
+
+export interface ChangeColumns {
+  column:ColumnProps;
+  columns:ColumnProps[];
+  type:ColumnsEditType;
 }
 
 let _instance;
@@ -404,6 +411,18 @@ export interface TableProps extends DataSetComponentProps {
    * 是否开启回车跳转下一行编辑
    */
   editorNextKeyEnterDown?: boolean;
+  /**
+   * 优先级高于colums，可以实现表头文字修改和列的位置修改
+   */
+  columnsMergeCoverage?:ColumnProps[];
+  /**
+   * 拖拽列和修改表头触发事件
+   */
+  columnsOnChange?:(change:ChangeColumns) => void;
+  /**
+   * 合并列信息选择，目前可以选择表头文字或者表的位置进行合并。
+  */
+  columnsEditType:ColumnsEditType,
 }
 
 @observer
@@ -508,6 +527,8 @@ export default class Table extends DataSetComponent<TableProps> {
      * 开启行拖拽
      */
     dragRow: PropTypes.bool,
+    columnsMergeCoverage: PropTypes.array,
+    columnsEditType:PropTypes.oneOf([ColumnsEditType.all, ColumnsEditType.header, ColumnsEditType.order]),
     ...DataSetComponent.propTypes,
   };
 
@@ -524,6 +545,7 @@ export default class Table extends DataSetComponent<TableProps> {
     virtualSpin: false,
     autoHeight: false,
     autoMaxWidth: false,
+    columnsEditType: ColumnsEditType.all,
   };
 
   tableStore: TableStore = new TableStore(this);
@@ -794,6 +816,9 @@ export default class Table extends DataSetComponent<TableProps> {
       'dragColumn',
       'dragRow',
       'onDragEnd',
+      'columnsOnChange',
+      'columnsMergeCoverage',
+      'columnsEditType',
     ]);
     otherProps.onKeyDown = this.handleKeyDown;
     const { rowHeight } = this.tableStore;
@@ -991,27 +1016,33 @@ export default class Table extends DataSetComponent<TableProps> {
 
   @action
   reorderColumns(columns: ColumnProps[], startIndex: number, endIndex: number) {
-    const cloneColumns = columns.slice();
-    const [dropItem] = cloneColumns.slice(endIndex, endIndex + 1);
-    const [dragItem] = cloneColumns.slice(startIndex, startIndex + 1);
-    const normalColumnLock = (lock) => {
-      if (lock === true) {
-        return ColumnLock.left;
-      }
-      if (!lock) {
-        return false;
-      }
-      return lock;
-    };
-    if (
-      dropItem &&
-      dragItem &&
-      dropItem.key !== DRAG_KEY &&
-      dragItem.key !== DRAG_KEY &&
-      normalColumnLock(dragItem.lock) === normalColumnLock(dropItem.lock)) {
-      const [removed] = columns.splice(startIndex, 1);
-      if (columns.length) {
-        columns.splice(endIndex, 0, removed);
+    const { columnsOnChange } = this.props;
+    if(startIndex !== endIndex){
+      const cloneColumns = columns.slice();
+      const [dropItem] = cloneColumns.slice(endIndex, endIndex + 1);
+      const [dragItem] = cloneColumns.slice(startIndex, startIndex + 1);
+      const normalColumnLock = (lock) => {
+        if (lock === true) {
+          return ColumnLock.left;
+        }
+        if (!lock) {
+          return false;
+        }
+        return lock;
+      };
+      if (
+        dropItem &&
+        dragItem &&
+        dropItem.key !== DRAG_KEY &&
+        dragItem.key !== DRAG_KEY &&
+        normalColumnLock(dragItem.lock) === normalColumnLock(dropItem.lock)) {
+        const [removed] = columns.splice(startIndex, 1);
+        if (columns.length) {
+          columns.splice(endIndex, 0, removed);
+          if(columnsOnChange){
+            columnsOnChange({column:toJS(removed),columns:toJS(columns),type:ColumnsEditType.order})
+          }
+        }
       }
     }
   };
@@ -1036,7 +1067,7 @@ export default class Table extends DataSetComponent<TableProps> {
       }
     }
     if (onDragEnd) {
-      onDragEnd(this.tableStore.dataSet, this.tableStore.columns, resultDrag, provided);
+      onDragEnd(this.tableStore.dataSet, toJS(this.tableStore.columns), resultDrag, provided);
     }
   }
 

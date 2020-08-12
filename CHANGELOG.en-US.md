@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Table`: Added `columnsMergeCoverage` `columnsOnChange` `columnsEdictType` properties to edict column.
 - 🌟 `configure`: Added `formatter`,`formatterOptions` global configuration.
 - 🌟 `<pro>NumberField`: Added `numberFieldFormatter`,`numberFieldFormatterOptions` attribute.
 - 🐞 `DatePicker`: Fixed the problem that disabled does not take effect on the icon.

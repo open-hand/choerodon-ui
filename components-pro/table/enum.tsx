@@ -79,3 +79,10 @@ export const enum TableAutoHeightType {
   maxHeight = 'maxHeight',
   minHeight = 'minHeight',
 }
+
+export const enum  ColumnsEditType{
+  header = 'header',
+  order = 'order',
+  all = 'all',
+}
+
