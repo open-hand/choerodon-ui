@@ -21,7 +21,7 @@ import Icon from '../icon';
 import DataSet from '../data-set/DataSet';
 import EventManager from '../_util/EventManager';
 import { getAlignByField, getColumnKey, getHeader } from './utils';
-import { ColumnAlign, ColumnsEditType } from './enum';
+import { ColumnAlign, ColumnsEditType, DragColumnAlign } from './enum';
 import { ShowHelp } from '../field/enum';
 import Tooltip from '../tooltip';
 import autobind from '../_util/autobind';
@@ -270,8 +270,9 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
         columnMaxDeep,
         columnResizable,
         dragColumn,
+        dragRow,
         headersEditable,
-        props: { columnsDragRender = {} },
+        props: { columnsDragRender = {},dragColumnAlign },
       },
     } = this.context;
     const { renderIcon } = columnsDragRender
@@ -396,11 +397,18 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
         })
       }
       if (column && column.key === DRAG_KEY) {
+        // 修复数据为空造成的th无法撑开
+        cellStyle.width = pxToRem(column.width)
         return <Icon type="baseline-drag_indicator" />
       }
       return null
     }
-    if (column.key !== SELECTION_KEY && dragColumn && columnMaxDeep <= 1) {
+    if (
+      column.key !== SELECTION_KEY
+      && dragRow
+      && (dragColumnAlign === DragColumnAlign.left || dragColumnAlign === DragColumnAlign.right)
+      && columnMaxDeep <= 1
+    ) {
       innerProps.children.push(dragIcon())
     }
 

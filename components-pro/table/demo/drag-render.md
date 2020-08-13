@@ -1,17 +1,18 @@
 ---
-order: 19
+order: 21
 title:
-  zh-CN: 拖拽
-  en-US: Drag
+  zh-CN: 拖拽渲染示例
+  en-US: Drag Render
 ---
 
 ## zh-CN
 
-拖拽。
+可以通过rowDragRender里面方法进行对于整体的拖拽空控制，比如droppableProps，droppableProps 控制是否可以拖动和放入等，可以查看react-beautiful-dnd。这里是控制renderClone	拖拽起来的时候会在body下面新增加一个table 会在这个table注入元素	比如下面的示例可以实现在类名为c7n-pro-table-drag-container 的 table里面渲染对应的元素，这里你可以增加样式覆盖完成你想要的拖拽样式，由于拖拽使用的Fixed定位所以会导致table的长度变化，你可以根据业务修改合适的colums的宽度来让表现更加自然。renderIcon 来渲染 拖拽的自定义ICON。
+
 
 ## en-US
 
-Drag.
+You can use the rowDragRender method to control the overall drag and drop, such as droppableProps, droppableProps control whether you can drag and drop, etc., you can check react-beautiful-dnd. Here is to control renderClone to add a new table below the body when it is dragged and inject elements into this table. For example, the following example can be implemented to render the corresponding elements in the table with the class name c7n-pro-table-drag-container. Here you can add style coverage to complete the drag-and-drop style you want. Due to the fixed positioning used by drag-and-drop, the length of the table will change. You can modify the width of the appropriate colums according to your business to make the performance more natural. renderIcon to render the drag-and-drop custom ICON.
 
 ```jsx
 import {
@@ -27,6 +28,8 @@ import {
 
 const { Column } = Table;
 
+const {TableRow} = Table;
+
 class EditButton extends React.Component {
   handleClick = e => {
     const { record, onClick } = this.props;
@@ -41,13 +44,7 @@ class EditButton extends React.Component {
 
 
 class App extends React.Component {
-   constructor(props) {
-    super(props)
-    this.state = {
-      dragColumnAlign: undefined,
-    }
-  }
-
+  
   userDs = new DataSet({
     primaryKey: 'userid',
     name: 'user',
@@ -115,36 +112,17 @@ class App extends React.Component {
     return <EditButton onClick={this.editUser} record={record} />;
   };
 
-  createUser = (align) => {
-    console.log(align)
-    this.setState({
-        dragColumnAlign:align,
-    })
-  };
 
-  leftDrag = (
-    <Button icon="fast_rewind" key="left" onClick={()=>{this.createUser('left')}} >
-     左侧拖拽
-    </Button>
-  );
-
-  rightDrag = (
-    <Button icon="fast_forward" key="right" onClick={()=>{this.createUser('right')}} >
-     右侧拖拽
-    </Button>
-  );
-
-  noneDrag = (
-    <Button icon="graphic_eq" key="none" onClick={()=>{this.createUser(undefined)}} >
-     直接拖拽
-    </Button>
-  );
+  renderDragRow = (props) =>  {
+     delete props.dragColumnAlign;
+     return <TableRow {...props}/>
+  }
 
 
   render() {
-    const buttons = [this.leftDrag ,this.noneDrag, this.rightDrag, 'save', 'delete', 'reset'];
+    const buttons = ['save', 'delete', 'reset'];
     return (
-      <Table dragColumnAlign={this.state.dragColumnAlign} dragRow={true} dragColumn={true}  key="user" buttons={buttons} dataSet={this.userDs} pristine>
+      <Table rowDragRender={{renderClone:this.renderDragRow}} dragColumnAlign='left' dragRow={true}  key="user" buttons={buttons} dataSet={this.userDs} pristine>
         <Column name="userid" />
         <Column name="age" />
         <Column name="enable" />
@@ -156,4 +134,10 @@ class App extends React.Component {
 }
 
 ReactDOM.render(<App />, mountNode);
+```
+```css
+  .c7n-pro-table-drag-container .c7n-pro-table-cell {
+    background: #99CC00;
+  }
+
 ```

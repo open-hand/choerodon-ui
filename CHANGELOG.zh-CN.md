@@ -18,6 +18,7 @@ timeline: true
 - 🌟 `<pro>Table`: 新增 columnsMergeCoverage columnsOnChange columnsEdictType 属性实现表头修改。
 - 🌟 `configure`: 新增 numberFieldFormatter, numberFieldFormatterOptions 全局配置。
 - 🌟 `<pro>NumberField`: 新增 formatter, formatterOptions 属性。
+- 🐞 `<pro>Table`: 修复拖拽样式问题，添加拖拽渲染行例子。
 - 🐞 `<pro>Table`: 修复表头文字长度过长导致排序以及提示 icon 不可见。
 - 🐞 `DatePicker`: 修复 disabled 在 icon 上不生效的问题。
 - 🐞 `Steps`: 修复 Steps typescript 报错问题。
