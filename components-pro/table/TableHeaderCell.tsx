@@ -330,9 +330,15 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
       if (isValidElement(headerChild)) {
         return cloneElement(headerChild, { key: 'text' })
       }
-      if (isString(headerChild)) {
-        const widthEdit = iconQuantity ? `calc(100% - ${pxToRem(iconQuantity * 24)})` : '100%'
-        if (headersEditable && !key) {
+      if (isString(headerChild) ) {
+        const widthEdit = iconQuantity ? `calc(100% - ${pxToRem(iconQuantity * 24)})` : undefined
+        const spanStyle = {
+          display: 'inline-block',
+          width: widthEdit,
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+        }
+        if ((headersEditable && !key)) {
           const editProps = {
             defaultValue: headerChild,
             value: headerChild,
@@ -352,7 +358,11 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
             autoFocus
             onBlur={this.onHeaderBlur}
             {...editProps}
-          /> : <span onClick={() => { this.setEditing(true) }} style={{ display: 'inline-block', width: widthEdit }} key="text" >{headerChild}</span>)
+          /> : <span onClick={() => { this.setEditing(true) }} style={spanStyle} key="text" >{headerChild}</span>)
+        }
+        // 当文字在左边无法查看到icon处理
+        if (cellStyle.textAlign !== ColumnAlign.right && iconQuantity) {
+          return <span key="text" style={spanStyle}>{headerChild}</span>
         }
 
         return (<span key="text">{headerNode}</span>)

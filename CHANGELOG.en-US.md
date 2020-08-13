@@ -18,6 +18,7 @@ timeline: true
 - 🌟 `<pro>Table`: Added `columnsMergeCoverage` `columnsOnChange` `columnsEdictType` properties to edict column.
 - 🌟 `configure`: Added `formatter`,`formatterOptions` global configuration.
 - 🌟 `<pro>NumberField`: Added `numberFieldFormatter`,`numberFieldFormatterOptions` attribute.
+- 🐞 `<pro>Table`: Fixed the table text align left overflow would't look the icon.
 - 🐞 `Steps`: Fixed the steps typescript lint error.
 - 🐞 `DatePicker`: Fixed the problem that disabled does not take effect on the icon.
 - 🐞 `<pro>FormField`: Fixed an error setting a property to the Fragment under _inTable.
