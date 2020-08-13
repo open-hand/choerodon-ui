@@ -15,12 +15,13 @@ timeline: true
 
 ---
 
-- 🌟 `<pro>Table`: Added `columnsMergeCoverage` `columnsOnChange` `columnsEdictType` properties to edict column.
 - 🌟 `configure`: Added `formatter`,`formatterOptions` global configuration.
+- 🌟 `<pro>Table`: Added `columnsMergeCoverage` `columnsOnChange` `columnsEdictType` properties to edict column.
 - 🌟 `<pro>NumberField`: Added `numberFieldFormatter`,`numberFieldFormatterOptions` attribute.
+- 💄 Modified the mobx-react dependency restriction in peerDependencies.
 - 🐞 `DatePicker`: Fixed the problem that disabled does not take effect on the icon.
+- 🐞 `<pro>TextArea`: Fixed the style problem of `TextArea` component.
 - 🐞 `<pro>FormField`: Fixed an error setting a property to the Fragment under _inTable.
-- 🐞 Modified the mobx-react dependency restriction in peerDependencies
 
 ## 0.8.69
 

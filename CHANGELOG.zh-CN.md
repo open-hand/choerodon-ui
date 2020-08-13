@@ -15,12 +15,13 @@ timeline: true
 
 ---
 
-- 🌟 `<pro>Table`: 新增 columnsMergeCoverage columnsOnChange columnsEdictType 属性实现表头修改。
 - 🌟 `configure`: 新增 numberFieldFormatter, numberFieldFormatterOptions 全局配置。
 - 🌟 `<pro>NumberField`: 新增 formatter, formatterOptions 属性。
+- 🌟 `<pro>Table`: 新增 columnsMergeCoverage columnsOnChange columnsEdictType 属性实现表头修改。
+- 💄 修改 peerDependencies 中 mobx-react 依赖限制。
 - 🐞 `DatePicker`: 修复 disabled 在 icon 上不生效的问题。
+- 🐞 `<pro>TextArea`: 修复 TextArea 组件必输、禁用样式问题。
 - 🐞 `<pro>FormField`: 修复 _inTable 下给 Fragment 设置了属性的错误。
-- 🐞 修改peerDependencies了中的mobx-react依赖限制
 
 ## 0.8.69
 
