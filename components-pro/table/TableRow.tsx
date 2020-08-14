@@ -3,10 +3,7 @@ import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { action, computed, get, remove, set } from 'mobx';
 import classNames from 'classnames';
-import {
-  DraggableProvided,
-  DraggableStateSnapshot,
-} from 'react-beautiful-dnd';
+import { DraggableProvided, DraggableStateSnapshot } from 'react-beautiful-dnd';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import omit from 'lodash/omit';
@@ -16,11 +13,12 @@ import Record from '../data-set/Record';
 import { ElementProps } from '../core/ViewComponent';
 import TableContext from './TableContext';
 import ExpandIcon from './ExpandIcon';
-import { ColumnLock, SelectionMode, DragColumnAlign } from './enum';
-import { getColumnKey, isDisabledRow, isSelectedRow } from './utils';
-import { EXPAND_KEY, DRAG_KEY } from './TableStore';
+import { ColumnLock, DragColumnAlign, SelectionMode } from './enum';
+import { getColumnKey, isDisabledRow, isSelectedRow, findFirstFocusableElement } from './utils';
+import { DRAG_KEY, EXPAND_KEY } from './TableStore';
 import { ExpandedRowProps } from './ExpandedRow';
 import autobind from '../_util/autobind';
+import { RecordStatus } from '../data-set/enum';
 
 export interface TableRowProps extends ElementProps {
   lock?: ColumnLock | boolean;
@@ -221,7 +219,7 @@ export default class TableRow extends Component<TableRowProps, any> {
         if (
           element &&
           element.contains(document.activeElement) &&
-          !inlineEdit &&   // 这里的原因是因为当编辑状态为inline的时候currentEditorName永远为undefine所以暂时屏蔽掉
+          !inlineEdit &&   // 这里的原因是因为当编辑状态为inline的时候currentEditorName永远为 undefined 所以暂时屏蔽掉
           Array.from<HTMLTableRowElement>(
             element.querySelectorAll(`tr[data-index="${record.id}"]`),
           ).every(tr => !tr.contains(document.activeElement))
@@ -266,6 +264,12 @@ export default class TableRow extends Component<TableRowProps, any> {
     const { record } = this.props;
     if (record.isCurrent) {
       this.focusRow(this.node);
+      if (record.status === RecordStatus.add) {
+        const cell = this.node ? findFirstFocusableElement(this.node) : null;
+        if (cell) {
+          cell.focus();
+        }
+      }
     }
   }
 

@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `<pro>NumberField`: Added `numberFieldFormatter`,`numberFieldFormatterOptions` attribute.
 - 🌟 `<pro>FormField`: Modify the label type to receive string and ReactNode at the same time. At the same time, the label type of Field Props in the DataSet is modified.
 - 💄 Modified the mobx-react dependency restriction in peerDependencies.
+- 💄 `<pro>Table`: The editable row is automatically positioned to the first editable cell.
 - 🐞 `Steps`: Fixed the steps typescript lint error.
 - 🐞 `DatePicker`: Fixed the problem that disabled does not take effect on the icon.
 - 🐞 `<pro>Table`: Fixed the table drag style error and add table dragging render demo.

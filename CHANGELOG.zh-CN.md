@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `<pro>Table`: 新增 columnsMergeCoverage columnsOnChange columnsEdictType 属性实现表头修改。
 - 🌟 `<pro>FormField`: 修改label类型,可以同时接收string以及ReactNode。同时修改了DataSet中 Field Props 的label类型。
 - 💄 修改 peerDependencies 中 mobx-react 依赖限制。
+- 💄 `<pro>Table`: 可编辑行自动定位至第一个可编辑单元格。
 - 🐞 `Steps`: 修复 Steps typescript 报错问题。
 - 🐞 `DatePicker`: 修复 disabled 在 icon 上不生效的问题。
 - 🐞 `<pro>Table`: 修复拖拽样式问题，添加拖拽渲染行例子。
