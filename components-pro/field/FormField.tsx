@@ -69,7 +69,7 @@ export interface FormFieldProps extends DataSetComponentProps {
   /**
    * 标签名
    */
-  label?: string;
+  label?: string | ReactNode;
   /**
    * 标签布局
    */
@@ -231,10 +231,6 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
      * 是否只读
      */
     readOnly: PropTypes.bool,
-    /**
-     * 是否禁用
-     */
-    disabled: PropTypes.bool,
     /**
      * 对照表单id
      */

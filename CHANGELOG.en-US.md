@@ -18,6 +18,7 @@ timeline: true
 - 🌟 `configure`: Added `formatter`,`formatterOptions` global configuration. RenderEmpty document modification.
 - 🌟 `<pro>Table`: Added `columnsMergeCoverage` `columnsOnChange` `columnsEdictType` properties to edict column.
 - 🌟 `<pro>NumberField`: Added `numberFieldFormatter`,`numberFieldFormatterOptions` attribute.
+- 🌟 `<pro>FormField`: Modify the label type to receive string and ReactNode at the same time. At the same time, the label type of Field Props in the DataSet is modified.
 - 💄 Modified the mobx-react dependency restriction in peerDependencies.
 - 🐞 `Steps`: Fixed the steps typescript lint error.
 - 🐞 `DatePicker`: Fixed the problem that disabled does not take effect on the icon.

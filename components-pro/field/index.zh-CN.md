@@ -13,7 +13,7 @@ title: FormField
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| label | 标签, 只在 Form 下生效 | ReactNode |  |
+| label | 标签, 只在 Form 下生效 | string \| ReactNode |  |
 | name | 字段名 | string |  |
 | value | <受控>当前值 | any |  |
 | defaultValue | 默认值 | any |  |
