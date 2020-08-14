@@ -99,13 +99,14 @@ export default class TimesView extends DaysView {
 
   componentDidMount(): void {
     if (this.panel) {
-      this.panel.addEventListener('mousewheel', this.handleWheel, { passive: false });
+      // 兼容Firefox wheel为通用事件
+      this.panel.addEventListener('wheel', this.handleWheel, { passive: false });
     }
   }
 
   componentWillUnmount(): void {
     if (this.panel) {
-      this.panel.removeEventListener('mousewheel', this.handleWheel);
+      this.panel.removeEventListener('wheel', this.handleWheel);
     }
   }
 

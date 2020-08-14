@@ -25,6 +25,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复表头文字长度过长导致排序以及提示 icon 不可见。
 - 🐞 `<pro>TextArea`: 修复 TextArea 组件必输、禁用样式问题。
 - 🐞 `<pro>FormField`: 修复 _inTable 下给 Fragment 设置了属性的错误。
+- 🐞 `<pro>DatePicker`: 修复 TimePicker 在Firefox下无法滚动的问题。
 
 ## 0.8.69
 

@@ -25,6 +25,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the table text align left overflow would't look the icon.
 - 🐞 `<pro>TextArea`: Fixed the style problem of `TextArea` component.
 - 🐞 `<pro>FormField`: Fixed an error setting a property to the Fragment under _inTable.
+- 🐞 `<pro>DatePicker`: Fix the problem that TimePicker cannot scroll under Firefox.
 
 ## 0.8.69
 
