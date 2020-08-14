@@ -9,6 +9,7 @@ import unionBy from 'lodash/unionBy';
 import { AxiosRequestConfig } from 'axios';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import warning from 'choerodon-ui/lib/_util/warning';
+import { ReactNode } from 'react';
 import DataSet from './DataSet';
 import Record from './Record';
 import Validator, { CustomValidator, ValidationMessages } from '../validator/Validator';
@@ -83,7 +84,7 @@ export type FieldProps = {
   /**
    * 字段标签
    */
-  label?: string;
+  label?: string | ReactNode;
   /**
    * 字段标签宽度
    */

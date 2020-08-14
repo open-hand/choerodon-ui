@@ -18,6 +18,7 @@ timeline: true
 - 🌟 `configure`: 新增 numberFieldFormatter, numberFieldFormatterOptions 全局配置。
 - 🌟 `<pro>NumberField`: 新增 formatter, formatterOptions 属性。
 - 🌟 `<pro>Table`: 新增 columnsMergeCoverage columnsOnChange columnsEdictType 属性实现表头修改。
+- 🌟 `<pro>FormField`: 修改label类型,可以同时接收string以及ReactNode。同时修改了DataSet中 Field Props 的label类型。
 - 💄 修改 peerDependencies 中 mobx-react 依赖限制。
 - 🐞 `Steps`: 修复 Steps typescript 报错问题。
 - 🐞 `DatePicker`: 修复 disabled 在 icon 上不生效的问题。
