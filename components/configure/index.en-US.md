@@ -62,7 +62,7 @@ const prefixCls = getConfig('prefixCls');
 | modalOkFirst | Default the ok button of Modal is ranked first | boolean | true |
 | buttonFuncType | Default Button function type | string | raised |
 | buttonColor | Default Button color | string | default |
-| renderEmpty | set empty content of components. | (componentName: string) => ReactNode | - |
+| renderEmpty | 自定义组件空状态。componentName会接收到的值为 `Table` `Select`,在实现函数的时候需要对这两个输入进行处理,**注意需要同时处理Table以及Select**,默认值参考源代码的[defaultRenderEmpty](https://github.com/choerodon/choerodon-ui/blob/master/components/configure/index.tsx) | (componentName: string) => ReactNode | - |
 | defaultValidationMessages | Default validation messages. More info: [ValidationMessages](#ValidationMessages) | ValitionMessages | - |
 | generatePageQuery | Hook for Paging Parameter Conversion | ({ page?: number, pageSize?: number, sortName?: string, sortOrder?: string }) => object | - |
 | feedback | The feedback of DataSet for query and submit. More info: [Feedback](/components-pro/data-set/#Feedback) | Feedback |  |

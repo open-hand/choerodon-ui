@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `formatter`,`formatterOptions` global configuration.
+- 🌟 `configure`: Added `formatter`,`formatterOptions` global configuration. RenderEmpty document modification.
 - 🌟 `<pro>Table`: Added `columnsMergeCoverage` `columnsOnChange` `columnsEdictType` properties to edict column.
 - 🌟 `<pro>NumberField`: Added `numberFieldFormatter`,`numberFieldFormatterOptions` attribute.
 - 💄 Modified the mobx-react dependency restriction in peerDependencies.
