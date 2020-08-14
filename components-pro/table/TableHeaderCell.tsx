@@ -21,7 +21,7 @@ import Icon from '../icon';
 import DataSet from '../data-set/DataSet';
 import EventManager from '../_util/EventManager';
 import { getAlignByField, getColumnKey, getHeader } from './utils';
-import { ColumnAlign, ColumnsEditType } from './enum';
+import { ColumnAlign, ColumnsEditType, DragColumnAlign } from './enum';
 import { ShowHelp } from '../field/enum';
 import Tooltip from '../tooltip';
 import autobind from '../_util/autobind';
@@ -270,8 +270,9 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
         columnMaxDeep,
         columnResizable,
         dragColumn,
+        dragRow,
         headersEditable,
-        props: { columnsDragRender = {} },
+        props: { columnsDragRender = {},dragColumnAlign },
       },
     } = this.context;
     const { renderIcon } = columnsDragRender
@@ -330,9 +331,15 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
       if (isValidElement(headerChild)) {
         return cloneElement(headerChild, { key: 'text' })
       }
-      if (isString(headerChild)) {
-        const widthEdit = iconQuantity ? `calc(100% - ${pxToRem(iconQuantity * 24)})` : '100%'
-        if (headersEditable && !key) {
+      if (isString(headerChild) ) {
+        const widthEdit = iconQuantity ? `calc(100% - ${pxToRem(iconQuantity * 24)})` : undefined
+        const spanStyle = {
+          display: 'inline-block',
+          width: widthEdit,
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+        }
+        if ((headersEditable && !key)) {
           const editProps = {
             defaultValue: headerChild,
             value: headerChild,
@@ -352,7 +359,11 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
             autoFocus
             onBlur={this.onHeaderBlur}
             {...editProps}
-          /> : <span onClick={() => { this.setEditing(true) }} style={{ display: 'inline-block', width: widthEdit }} key="text" >{headerChild}</span>)
+          /> : <span onClick={() => { this.setEditing(true) }} style={spanStyle} key="text" >{headerChild}</span>)
+        }
+        // 当文字在左边无法查看到icon处理
+        if (cellStyle.textAlign !== ColumnAlign.right && iconQuantity) {
+          return <span key="text" style={spanStyle}>{headerChild}</span>
         }
 
         return (<span key="text">{headerNode}</span>)
@@ -386,11 +397,18 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
         })
       }
       if (column && column.key === DRAG_KEY) {
+        // 修复数据为空造成的th无法撑开
+        cellStyle.width = pxToRem(column.width)
         return <Icon type="baseline-drag_indicator" />
       }
       return null
     }
-    if (column.key !== SELECTION_KEY && dragColumn && columnMaxDeep <= 1) {
+    if (
+      column.key !== SELECTION_KEY
+      && dragRow
+      && (dragColumnAlign === DragColumnAlign.left || dragColumnAlign === DragColumnAlign.right)
+      && columnMaxDeep <= 1
+    ) {
       innerProps.children.push(dragIcon())
     }
 

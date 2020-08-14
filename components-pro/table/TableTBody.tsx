@@ -130,7 +130,7 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
               lock:false,
               indentSize,
               prefixCls,
-              column:leafColumnsBody,
+              columns:leafColumnsBody,
               record,
               index:record.id,
               dragColumnAlign,

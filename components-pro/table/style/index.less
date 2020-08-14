@@ -236,7 +236,16 @@
         border-right: @table-border;
       }
     }
-
+    
+    .@{table-prefix-cls}-drag-left {
+      .@{table-prefix-cls}-thead,
+      .@{table-prefix-cls}-tfoot {
+        .@{table-prefix-cls}-cell:last-child {
+          border-right: none;
+        }
+      }
+    }
+    
     .@{table-prefix-cls}-thead {
       border-bottom: none;
     }
