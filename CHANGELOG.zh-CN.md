@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `configure`: 新增 numberFieldFormatter, numberFieldFormatterOptions 全局配置，renderEmpty文档修改。
+- - 🌟 `<pro>DataSet`: 增加 dataSet 排序中间态。
 - 🌟 `<pro>NumberField`: 新增 formatter, formatterOptions 属性。
 - 🌟 `<pro>Table`: 新增 columnsMergeCoverage columnsOnChange columnsEdictType 属性实现表头修改。
 - 🌟 `<pro>FormField`: 修改label类型,可以同时接收string以及ReactNode。同时修改了DataSet中 Field Props 的label类型。

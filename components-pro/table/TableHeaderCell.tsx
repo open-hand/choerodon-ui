@@ -332,14 +332,16 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
         return cloneElement(headerChild, { key: 'text' })
       }
       if (isString(headerChild) ) {
-        const widthEdit = iconQuantity ? `calc(100% - ${pxToRem(iconQuantity * 24)})` : undefined
+        const widthEdit = iconQuantity
+          ? `calc(100% - ${pxToRem(iconQuantity * 24)})`
+          : headersEditable && !key ? `100%` : undefined;
         const spanStyle = {
           display: 'inline-block',
           width: widthEdit,
           overflow: 'hidden',
           textOverflow: 'ellipsis',
         }
-        if ((headersEditable && !key)) {
+        if (headersEditable && !key) {
           const editProps = {
             defaultValue: headerChild,
             value: headerChild,
