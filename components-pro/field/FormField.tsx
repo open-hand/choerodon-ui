@@ -1130,23 +1130,28 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
         </Animate>,
         help,
       ]
-    ) : (
-        <Tooltip
-          suffixCls={`form-tooltip ${getConfig('proPrefixCls')}-tooltip`}
-          title={
-            !!(this.multiple && this.getValues().length) ||
-              this.isValidationMessageHidden(validationMessage)
-              ? null
-              : validationMessage
-          }
-          theme="light"
-          placement="bottomLeft"
-          hidden={!!_inTable}
-        >
+    ) :
+      _inTable ?
+        <>
           {wrapper}
           {help}
-        </Tooltip>
-      );
+        </>
+        : (
+          <Tooltip
+            suffixCls={`form-tooltip ${getConfig('proPrefixCls')}-tooltip`}
+            title={
+              !!(this.multiple && this.getValues().length) ||
+                this.isValidationMessageHidden(validationMessage)
+                ? null
+                : validationMessage
+            }
+            theme="light"
+            placement="bottomLeft"
+          >
+            {wrapper}
+            {help}
+          </Tooltip>
+        );
   }
 }
 
