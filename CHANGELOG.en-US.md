@@ -20,12 +20,11 @@ timeline: true
 - 🌟 `<pro>DataSet`: Added dataSet sort intermediate state.
 - 🌟 `<pro>Table`: Added `columnsMergeCoverage` `columnsOnChange` `columnsEdictType` properties to edict column.
 - 🌟 `<pro>NumberField`: Added `numberFieldFormatter`,`numberFieldFormatterOptions` attribute.
-- 🌟 `<pro>FormField`: Modify the label type to receive string and ReactNode at the same time. At the same time, the label type of Field Props in the DataSet is modified.
 - 💄 Modified the mobx-react dependency restriction in peerDependencies.
 - 💄 `<pro>Table`: The editable row is automatically positioned to the first editable cell.
+- 💄 `<pro>FormField`: Modify the label type to receive string and ReactNode at the same time. At the same time, the label type of Field Props in the DataSet is modified.
 - 🐞 `Steps`: Fixed the steps typescript lint error.
 - 🐞 `DatePicker`: Fixed the problem that disabled does not take effect on the icon.
-- 🐞 `Breadcrumb`: Fixed breadcrumb dropdown styles contaminate the global drop-down problem.
 - 🐞 `<pro>Table`: Fixed the table drag style error and add table dragging render demo.
 - 🐞 `<pro>Table`: Fixed the table text align left overflow would't look the icon.
 - 🐞 `<pro>TextArea`: Fixed the style problem of `TextArea` component.
