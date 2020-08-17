@@ -30,6 +30,7 @@ timeline: true
 - 🐞 `<pro>TextArea`: Fixed the style problem of `TextArea` component.
 - 🐞 `<pro>FormField`: Fixed an error setting a property to the Fragment under _inTable.
 - 🐞 `<pro>DatePicker`: Fix the problem that TimePicker cannot scroll under Firefox.
+- 🐞 `<pro>TextField`: Fix the problem that TextField cannot correctly control maxLength in Chinese input, and optimize the Chinese input experience.
 
 ## 0.8.69
 

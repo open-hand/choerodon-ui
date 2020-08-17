@@ -209,7 +209,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   renderInputElement(): ReactNode {
-    const { addonBefore, addonAfter} = this.props;
+    const { addonBefore, addonAfter } = this.props;
     const input = this.getWrappedEditor();
     const button = this.getInnerSpanButton();
     const suffix = this.getSuffix();
@@ -220,11 +220,11 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const renderedValue = this.renderRenderedValue();
     const floatLabel = this.renderFloatLabel();
     const multipleHolder = this.renderMultipleHolder();
-    const wrapperProps = this.getWrapperProps()
+    const wrapperProps = this.getWrapperProps();
 
     // 修复设置宽度导致拥有addon出现宽度超出
-    if(addonAfter || addonBefore){
-      wrapperProps.style = omit(wrapperProps.style, 'width')
+    if (addonAfter || addonBefore) {
+      wrapperProps.style = omit(wrapperProps.style, 'width');
     }
 
     const element = (
@@ -747,15 +747,24 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   handleChange(e) {
     const {
       target,
+      type,
       target: { value },
     } = e;
-    const restricted = this.restrictInput(value);
-    if (restricted !== value) {
-      const selectionEnd = target.selectionEnd + restricted.length - value.length;
-      target.value = restricted;
-      target.setSelectionRange(selectionEnd, selectionEnd);
+    if (type === 'compositionend') {
+      this.lock = false;
     }
-    this.setText(restricted);
+
+    if (!this.lock) {
+      const restricted = this.restrictInput(value);
+      if (restricted !== value) {
+        const selectionEnd = target.selectionEnd + restricted.length - value.length;
+        target.value = restricted;
+        target.setSelectionRange(selectionEnd, selectionEnd);
+      }
+      this.setText(restricted);
+    } else {
+      this.setText(value);
+    }
   }
 
   restrictInput(value: string): string {

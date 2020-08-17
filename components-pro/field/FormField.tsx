@@ -327,6 +327,8 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
 
   emptyValue?: any = null;
 
+  lock: boolean = false;
+
   @observable rangeTarget?: 0 | 1;
 
   @observable rangeValue?: [any, any];
@@ -517,6 +519,8 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     ]);
     otherProps.onChange = !this.isDisabled() && !this.isReadOnly() ? this.handleChange : noop;
     otherProps.onKeyDown = this.handleKeyDown;
+    otherProps.onCompositionStart = this.handleCompositionStart;
+    otherProps.onCompositionEnd = this.handleChange;
     return otherProps;
   }
 
@@ -684,7 +688,13 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   }
 
   @autobind
+  handleCompositionStart() {
+    this.lock = true;
+  }
+
+  @autobind
   handleChange(e) {
+    this.lock = false;
     e.preventDefault();
     e.stopPropagation();
   }
