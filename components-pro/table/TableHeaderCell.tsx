@@ -317,13 +317,13 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
             <Icon type="help_outline" className={`${prefixCls}-help-icon`} />
           </Tooltip>
         );
-        iconQuantity++
+        iconQuantity += 24
       }
     }
     // 排序按钮
     if (sortable && name) {
       const sortProps = headersEditable ? { onClick: this.handleClick } : {};
-      iconQuantity++
+      iconQuantity += 18
       sortableIcon = <Icon key="sort" type="arrow_upward" className={`${sortPrefixCls}-icon`} {...sortProps} />;
     }
 
@@ -333,7 +333,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
       }
       if (isString(headerChild) ) {
         const widthEdit = iconQuantity
-          ? `calc(100% - ${pxToRem(iconQuantity * 24)})`
+          ? `calc(100% - ${pxToRem(iconQuantity)})`
           : headersEditable && !key ? `100%` : undefined;
         const spanStyle = {
           display: 'inline-block',

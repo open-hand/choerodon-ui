@@ -15,11 +15,11 @@ import autobind from '../_util/autobind';
 
 let popupContainer;
 
-function getContainer(getPopupContainer, getRootDomNode,containerClassName) {
+function getContainer(getPopupContainer, getRootDomNode) {
   if (!popupContainer && typeof window !== 'undefined') {
     const doc = window.document;
     popupContainer = doc.createElement('div');
-    popupContainer.className = ClassNames(getProPrefixCls('popup-container'),containerClassName);
+    popupContainer.className = ClassNames(getProPrefixCls('popup-container'));
     const mountNode = getPopupContainer ? getPopupContainer(getRootDomNode) : doc.body;
     if (isElement(mountNode)) {
       mountNode.appendChild(popupContainer);
@@ -41,7 +41,6 @@ const PopupKeyGen: IterableIterator<string> = (function*(start: number) {
 
 export interface PopupProps extends ViewComponentProps {
   align: object;
-  containerClassName?: string;
   onAlign?: (source: Node, align: object, target: Node | Window) => void;
   getRootDomNode?: () => Node;
   getPopupContainer?: (triggerNode: Element) => HTMLElement;
@@ -69,7 +68,6 @@ export default class Popup extends ViewComponent<PopupProps> {
     onAnimateEnd: PropTypes.func,
     getStyleFromAlign: PropTypes.func,
     getClassNameFromAlign: PropTypes.func,
-    containerClassName: PropTypes.string,
     ...ViewComponent.propTypes,
   };
 
@@ -103,7 +101,6 @@ export default class Popup extends ViewComponent<PopupProps> {
       'onAnimateEnter',
       'onAnimateLeave',
       'onAnimateEnd',
-      'containerClassName',
     ]);
     return otherProps;
   }
@@ -120,12 +117,11 @@ export default class Popup extends ViewComponent<PopupProps> {
       onAnimateEnter = noop,
       onAnimateLeave = noop,
       onAnimateEnd = noop,
-      containerClassName = noop,
     } = this.props;
     if (!hidden) {
       this.contentRendered = true;
     }
-    const container = getContainer(getPopupContainer, getRootDomNode, containerClassName);
+    const container = getContainer(getPopupContainer, getRootDomNode);
     return container && this.contentRendered
       ? createPortal(
           <Animate

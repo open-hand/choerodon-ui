@@ -24,6 +24,7 @@ timeline: true
 - 💄 Modified the mobx-react dependency restriction in peerDependencies.
 - 🐞 `Steps`: Fixed the steps typescript lint error.
 - 🐞 `DatePicker`: Fixed the problem that disabled does not take effect on the icon.
+- 🐞 `Breadcrumb`: Fixed breadcrumb dropdown styles contaminate the global drop-down problem.
 - 🐞 `<pro>Table`: Fixed the table drag style error and add table dragging render demo.
 - 🐞 `<pro>Table`: Fixed the table text align left overflow would't look the icon.
 - 🐞 `<pro>TextArea`: Fixed the style problem of `TextArea` component.

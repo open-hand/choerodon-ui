@@ -27,7 +27,7 @@ export interface DropDownProps {
   transitionName?: string;
   placement?: Placements;
   forceRender?: boolean;
-  containerClassName?:string;
+  popupClassName?:string;
 }
 
 export interface DropdownState {
@@ -59,7 +59,7 @@ export default class Dropdown extends PureComponent<DropDownProps> {
     prefixCls: PropTypes.string,
     defaultHidden: PropTypes.bool,
     defaultVisible: PropTypes.bool,
-    containerClassName: PropTypes.string,
+    popupClassName: PropTypes.string,
   };
 
   static defaultProps = {
@@ -177,7 +177,7 @@ export default class Dropdown extends PureComponent<DropDownProps> {
     const {
       prefixCls,
       state: { hidden },
-      props: { children, placement,containerClassName },
+      props: { children, placement, popupClassName },
     } = this;
 
     return (
@@ -188,7 +188,7 @@ export default class Dropdown extends PureComponent<DropDownProps> {
         popupPlacement={placement}
         popupContent={this.getMenuElement()}
         popupStyle={popupStyle}
-        containerClassName={containerClassName}
+        popupClassName={popupClassName}
         onPopupHiddenChange={this.handlePopupHiddenChange}
         popupHidden={hidden}
       >
