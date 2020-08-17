@@ -1,53 +1,141 @@
-import React, { Component, ReactNode } from 'react';
-import PropTypes from 'prop-types';
+import React, { ReactNode, useState, useCallback } from 'react';
+import classNames from 'classnames';
 import { getPrefixCls } from '../configure';
+import DropDown, { DropDownProps } from '../../components-pro/dropdown/Dropdown';
+import { Placements } from '../../components-pro/dropdown/enum'
+import Icon from '../icon';
+import List, { ListProps } from '../list';
+
+
+export interface menuListItemProps {
+  href?: string;
+  listItemName?: string;
+  listChildren?: ({ listItemName, href }: { listItemName: string, href: string }) => React.ReactNode;
+  onClick?: React.MouseEventHandler<HTMLAnchorElement | HTMLSpanElement>;
+}
 
 export interface BreadcrumbItemProps {
   prefixCls?: string;
   separator?: ReactNode;
   href?: string;
+  overlay?: DropDownProps['overlay'];
+  dropdownProps?: DropDownProps;
+  listProps?: ListProps;
+  menuList?: menuListItemProps[];
+  onClick?: React.MouseEventHandler<HTMLAnchorElement | HTMLSpanElement>;
 }
 
-export default class BreadcrumbItem extends Component<BreadcrumbItemProps, any> {
-  static displayName = 'BreadcrumbItem';
+interface BreadcrumbItemInterface extends React.FC<BreadcrumbItemProps> {
+  __ANT_BREADCRUMB_ITEM: boolean;
+}
 
-  static __ANT_BREADCRUMB_ITEM = true;
-
-  static defaultProps = {
-    separator: '/',
-  };
-
-  static propTypes = {
-    prefixCls: PropTypes.string,
-    separator: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
-    href: PropTypes.string,
-  };
-
-  render() {
-    const { prefixCls: customizePrefixCls, separator, children, ...restProps } = this.props;
-    const prefixCls = getPrefixCls('breadcrumb', customizePrefixCls);
-    let link;
-    if ('href' in this.props) {
-      link = (
-        <a className={`${prefixCls}-link`} {...restProps}>
-          {children}
-        </a>
-      );
-    } else {
-      link = (
-        <span className={`${prefixCls}-link`} {...restProps}>
-          {children}
-        </span>
-      );
+const BreadcrumbItem: BreadcrumbItemInterface = ({
+  prefixCls: customizePrefixCls,
+  separator = '/',
+  menuList = [],
+  children,
+  overlay,
+  listProps,
+  dropdownProps,
+  ...restProps
+}) => {
+  const prefixCls = getPrefixCls('breadcrumb', customizePrefixCls);
+  const [active, setActive] = useState(false)
+  const isMenuListOn = !!(menuList && menuList.length > 0);
+  const onVisibleChange = async (visible: boolean) => {
+    if (menuList.length > 0) {
+      setActive(!visible)
     }
-    if (children) {
-      return (
-        <span>
-          {link}
-          <span className={`${prefixCls}-separator`}>{separator}</span>
-        </span>
-      );
-    }
-    return null;
   }
+  /**
+   * 渲染Link
+   * @param childrenLink 
+   * @param restPropsLink 
+   */
+  const renderLink = (childrenLink, restPropsLink, classNameLink, key): React.ReactNode => {
+    if (key in restPropsLink) {
+      return (
+        <a className={`${prefixCls}-${classNameLink}`} {...restPropsLink}>
+          {childrenLink}
+        </a>
+      )
+    }
+    return (
+      <span className={`${prefixCls}-${classNameLink}`} {...restPropsLink}>
+        {childrenLink}
+      </span>
+    )
+  }
+
+  /**
+   * 渲染List列表
+   */
+  const renderList = (
+    <List
+      className={`${prefixCls}-overlay-menu-list`}
+      grid={{ gutter: 16, column: 4 }}
+      {...listProps}
+      dataSource={menuList}
+      renderItem={item => {
+        const { href } = item
+        const { listChildren, listItemName, ...listRestProps } = item
+        let titleItem = listItemName || href;
+        titleItem = listChildren ? listChildren({ href, listItemName }) : listItemName;
+        return (
+          renderLink(titleItem, listRestProps, 'overlay-menu-list-item', 'href')
+        )
+      }}
+    />
+  );
+
+  const overlayMenu = overlay || (isMenuListOn && renderList);
+
+  const onOverlayClick = useCallback(() => {
+    setTimeout(() => {
+      setActive(false)
+    }, 300)
+  }, [])
+
+  const renderBreadcrumbMenu = (linkItem: React.ReactNode) => {
+    if (overlayMenu) {
+      return (
+        <DropDown containerClassName={`${prefixCls}-overlay-container`} onOverlayClick={onOverlayClick} overlay={overlayMenu} placement={isMenuListOn ? Placements.bottomLeft : Placements.bottomCenter} {...dropdownProps} onHiddenChange={onVisibleChange} >
+          <span className={classNames(`${prefixCls}-overlay-link`, {
+            [`${prefixCls}-overlay-border`]: active,
+            [`${prefixCls}-overlay-menu`]: isMenuListOn,
+          })}>
+            {linkItem}
+            {isMenuListOn || <Icon type="arrow_drop_down" />}
+            <i className={classNames(`${prefixCls}-overlay-cover`, {
+              [`${prefixCls}-overlay-cover-active`]: active,
+            })} />
+          </span>
+        </DropDown>
+      )
+    }
+    return linkItem;
+  }
+
+  let link: string | React.ReactNode = renderLink(children, restProps, `link`, 'href');
+
+
+
+  // wrap to dropDown
+  link = renderBreadcrumbMenu(link);
+
+  if (children) {
+    return (
+      <span>
+        {link}
+        {separator && separator !== '' && (
+          <span className={`${prefixCls}-separator`}>{separator}</span>
+        )}
+      </span>
+    );
+  }
+  return null;
 }
+
+BreadcrumbItem.__ANT_BREADCRUMB_ITEM = true;
+
+export default BreadcrumbItem;

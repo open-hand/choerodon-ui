@@ -16,6 +16,8 @@ timeline: true
 ---
 
 - 🌟 `configure`: Added `formatter`,`formatterOptions` global configuration. RenderEmpty document modification.
+- 🌟 `Breadcrumb`: Added breadcrumbItem `menuList` `overlay` Props。
+- 🌟 `<pro>DataSet`: Added dataSet sort intermediate state.
 - 🌟 `<pro>Table`: Added `columnsMergeCoverage` `columnsOnChange` `columnsEdictType` properties to edict column.
 - 🌟 `<pro>NumberField`: Added `numberFieldFormatter`,`numberFieldFormatterOptions` attribute.
 - 🌟 `<pro>FormField`: Modify the label type to receive string and ReactNode at the same time. At the same time, the label type of Field Props in the DataSet is modified.

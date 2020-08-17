@@ -135,9 +135,3 @@ class App extends React.Component {
 
 ReactDOM.render(<App />, mountNode);
 ```
-```css
-  .c7n-pro-table-drag-container .c7n-pro-table-cell {
-    background: #99CC00;
-  }
-
-```

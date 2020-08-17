@@ -76,6 +76,7 @@ export interface TriggerProps extends ElementProps {
   mouseLeaveDelay?: number;
   transitionName?: string;
   defaultPopupHidden?: boolean;
+  containerClassName?: string;
 }
 
 @observer
@@ -118,6 +119,7 @@ export default class Trigger extends Component<TriggerProps> {
     mouseLeaveDelay: PropTypes.number,
     transitionName: PropTypes.string,
     defaultPopupHidden: PropTypes.bool,
+    containerClassName: PropTypes.string,
   };
 
   static defaultProps = {
@@ -331,6 +333,7 @@ export default class Trigger extends Component<TriggerProps> {
       getRootDomNode = this.getRootDomNode,
       transitionName,
       getPopupContainer,
+      containerClassName,
     } = this.props;
     const visible = !this.popupHidden && popupContent;
     const mouseProps: any = {};
@@ -360,6 +363,7 @@ export default class Trigger extends Component<TriggerProps> {
         getStyleFromAlign={getPopupStyleFromAlign}
         getClassNameFromAlign={this.getPopupClassNameFromAlign}
         getPopupContainer={getPopupContainer}
+        containerClassName= {containerClassName}
         {...mouseProps}
       >
         {popupContent}
