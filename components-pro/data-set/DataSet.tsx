@@ -1317,6 +1317,7 @@ export default class DataSet extends EventManager {
 
   /**
    * 服务端排序
+   * 排序新增加中间态
    * @param fieldName
    */
   @action
@@ -1329,12 +1330,17 @@ export default class DataSet extends EventManager {
           current.order = undefined;
         }
       });
-      if (!field.order || field.order === SortOrder.desc) {
-        field.order = SortOrder.asc;
-      } else {
-        field.order = SortOrder.desc;
+      switch (field.order) {
+        case SortOrder.asc:
+          field.order = SortOrder.desc;
+          break;
+        case SortOrder.desc:
+          field.order = undefined;
+          break;
+        default:
+          field.order = SortOrder.asc;
       }
-      if (this.paging) {
+      if (this.paging || !field.order) {
         this.query();
       } else {
         this.records = this.records.sort(getFieldSorter(field));

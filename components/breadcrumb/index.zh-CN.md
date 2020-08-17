@@ -22,6 +22,32 @@ title: Breadcrumb
 | routes | router 的路由栈信息 | object\[] |  | - |
 | separator | 分隔符自定义 | string\|ReactNode |  | '/' |
 
+
+## BreadcrumbItem API
+
+| 参数 | 说明 | 类型 | 可选值 | 默认值 |
+| --- | --- | --- | --- | --- |
+| separator | 分隔符自定义 | ReactNode |  | - |
+| href | 链接地址 | string |  | - |
+| overlay | 下拉框内渲染 | object\[] |  | - |
+| dropdownProps | 下拉框的属性配置详细请查看基础组件的dropdown | DropDownProps |  | - |
+| menuList | 配置横向下拉列表的展示 | object\[] |  | - |
+| ListProps | 当使用menulist的渲染 | object\[] |  | - |
+| onClick | 点击触发的回调函数| (e) => {} |  | - |
+
+
+## menuList API
+
+| 参数 | 说明 | 类型 | 可选值 | 默认值 |
+| --- | --- | --- | --- | --- |
+| listItemName | 列表显示文字 | string |  | - |
+| href | 链接地址 | string |  | - |
+| listChildren | 可以获取显示文字渲染出想要的展示 | `({ listItemName, href }: { listItemName: string, href: string }) => React.ReactNode`|  | - |
+| onClick | 点击触发回调函数 | (e) => {}  |  | - |
+
+
+
+
 > 2.0 之后，`linkRender` 和 `nameRender` 被移除，请使用 `itemRender` 来代替。
 
 ### 和 browserHistory 配合

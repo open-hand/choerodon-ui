@@ -528,6 +528,9 @@ export default class Table extends DataSetComponent<TableProps> {
      */
     dragRow: PropTypes.bool,
     columnsMergeCoverage: PropTypes.array,
+    columnsDragRender: PropTypes.object,
+    expandIcon:PropTypes.func,
+    rowDragRender: PropTypes.object,
     columnsEditType:PropTypes.oneOf([ColumnsEditType.all, ColumnsEditType.header, ColumnsEditType.order]),
     ...DataSetComponent.propTypes,
   };
@@ -806,6 +809,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'selectedHighLightRow',
       'columnResizable',
       'pristine',
+      'expandIcon',
       'spin',
       'virtual',
       'virtualSpin',
@@ -819,6 +823,8 @@ export default class Table extends DataSetComponent<TableProps> {
       'columnsOnChange',
       'columnsMergeCoverage',
       'columnsEditType',
+      'rowDragRender',
+      'columnsDragRender',
     ]);
     otherProps.onKeyDown = this.handleKeyDown;
     const { rowHeight } = this.tableStore;
@@ -1050,6 +1056,7 @@ export default class Table extends DataSetComponent<TableProps> {
   @autobind
   onDragEnd(resultDrag: DropResult, provided: ResponderProvided) {
     const { onDragEnd } = this.props;
+    // TODO onDragEndBefore
     if (resultDrag && resultDrag.destination) {
       if (resultDrag.destination.droppableId === 'table') {
         this.reorderDataSet(
@@ -1066,6 +1073,9 @@ export default class Table extends DataSetComponent<TableProps> {
         );
       }
     }
+    /**
+     * 相应变化后的数据
+     */
     if (onDragEnd) {
       onDragEnd(this.tableStore.dataSet, toJS(this.tableStore.columns), resultDrag, provided);
     }

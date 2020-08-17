@@ -22,6 +22,28 @@ A breadcrumb displays the current location within a hierarchy. It allows going b
 | routes | The routing stack information of router | object\[] |  | - |
 | separator | Custom separator | string\|ReactNode |  | `/` |
 
+## BreadcrumbItem API
+
+| Property | Description | Type | Optional | Default |
+| --- | --- | --- | --- | --- |
+| separator | Separator customization | ReactNode |  | - |
+| href | link address | string |  | - |
+| overlay | Rendering in the drop-down box | object\[] |  | - |
+| dropdownProps | For details on the property configuration of the drop-down box, please see the dropdown of the basic component| DropDownProps |  | - |
+| menuList | Configure the display of horizontal drop-down lists | object\[] |  | - |
+| ListProps | When using menulist rendering | object\[] |  | - |
+| onClick | Click to trigger the callback function | (e) => {} |  | - |
+
+
+## menuList API
+
+| Property | Description | Type | Optional | Default |
+| --- | --- | --- | --- | --- |
+| listItemName | List display text | string |  | - |
+| href | link address | string |  | - |
+| listChildren | You can get the display text and render the desired display | `({ listItemName, href }: { listItemName: string, href: string }) => React.ReactNode`|  | - |
+| onClick | Click to trigger the callback function | (e) => {}  |  | - |
+
 ### Use with browserHistory
 
 The link of Breadcrumb item targets `#` by default, you can use `itemRender` to make a `browserHistory` Link.
