@@ -98,8 +98,16 @@ const BreadcrumbItem: BreadcrumbItemInterface = ({
 
   const renderBreadcrumbMenu = (linkItem: React.ReactNode) => {
     if (overlayMenu) {
+      const dropDownProps = {
+        popupClassName: isMenuListOn ? `${prefixCls}-overlay-popup` : undefined,
+        onOverlayClick,
+        overlay: overlayMenu,
+        placement: isMenuListOn ? Placements.bottomLeft : Placements.bottomCenter,
+        onHiddenChange: onVisibleChange,
+        ...dropdownProps,
+      }
       return (
-        <DropDown containerClassName={`${prefixCls}-overlay-container`} onOverlayClick={onOverlayClick} overlay={overlayMenu} placement={isMenuListOn ? Placements.bottomLeft : Placements.bottomCenter} {...dropdownProps} onHiddenChange={onVisibleChange} >
+        <DropDown {...dropDownProps}>
           <span className={classNames(`${prefixCls}-overlay-link`, {
             [`${prefixCls}-overlay-border`]: active,
             [`${prefixCls}-overlay-menu`]: isMenuListOn,
