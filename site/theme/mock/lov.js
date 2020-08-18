@@ -122,19 +122,121 @@ const dataSetLovTemple = {
       parentCodeId: null,
       parentCodeDescription: null,
     },
-  ],
-  success: true,
-  total: 35,
-};
-const dataSetLovTemple1 = {
-  rows: [
     {
-      _token: '5fd2371f43d3c75c44682b0750e7bfb5',
-      objectVersionNumber: 2,
-      code: 'HR.EMPLOYEE_GENDER',
-      codeId: 10001,
+      _token: '31cb91cfc0d1d59335ba6607e42c640c',
+      objectVersionNumber: 1,
+      code: 'SYS.USER_STATUS11',
+      codeId: 10011,
       codeValues: null,
-      description: '性别',
+      description: '用户状态11',
+      type: 'USER',
+      enabledFlag: 'Y',
+      parentCodeId: null,
+      parentCodeDescription: null,
+    },
+    {
+      _token: '12cb91cfc0d1d59335ba6607e42c640c',
+      objectVersionNumber: 1,
+      code: 'SYS.USER_STATUS12',
+      codeId: 10012,
+      codeValues: null,
+      description: '用户状态12',
+      type: 'USER',
+      enabledFlag: 'Y',
+      parentCodeId: null,
+      parentCodeDescription: null,
+    },
+    {
+      _token: '13cb91cfc0d1d59335ba6607e42c640c',
+      objectVersionNumber: 1,
+      code: 'SYS.USER_STATUS13',
+      codeId: 10013,
+      codeValues: null,
+      description: '用户状态13',
+      type: 'USER',
+      enabledFlag: 'Y',
+      parentCodeId: null,
+      parentCodeDescription: null,
+    },
+    {
+      _token: '14cb91cfc0d1d59335ba6607e42c640c2',
+      objectVersionNumber: 1,
+      code: 'SYS.USER_STATUS14',
+      codeId: 10014,
+      codeValues: null,
+      description: '用户状态14',
+      type: 'USER',
+      enabledFlag: 'Y',
+      parentCodeId: null,
+      parentCodeDescription: null,
+    },
+    {
+      _token: '15cb91cfc0d1d59335ba6607e42c640c',
+      objectVersionNumber: 1,
+      code: 'SYS.USER_STATUS15',
+      codeId: 10015,
+      codeValues: null,
+      description: '用户状态15',
+      type: 'USER',
+      enabledFlag: 'Y',
+      parentCodeId: null,
+      parentCodeDescription: null,
+    },
+    {
+      _token: '16cb91cfc0d1d59335ba6607e42c640c',
+      objectVersionNumber: 1,
+      code: 'SYS.USER_STATUS16',
+      codeId: 10016,
+      codeValues: null,
+      description: '用户状态16',
+      type: 'USER',
+      enabledFlag: 'Y',
+      parentCodeId: null,
+      parentCodeDescription: null,
+    },
+    {
+      _token: '17cb91cfc0d1d59335ba6607e42c640c',
+      objectVersionNumber: 1,
+      code: 'SYS.USER_STATUS17',
+      codeId: 10017,
+      codeValues: null,
+      description: '用户状态17',
+      type: 'USER',
+      enabledFlag: 'Y',
+      parentCodeId: null,
+      parentCodeDescription: null,
+    },
+    {
+      _token: '18cb91cfc0d1d59335ba6607e42c640c',
+      objectVersionNumber: 1,
+      code: 'SYS.USER_STATUS18',
+      codeId: 10018,
+      codeValues: null,
+      description: '用户状态18',
+      type: 'USER',
+      enabledFlag: 'Y',
+      parentCodeId: null,
+      parentCodeDescription: null,
+    },
+    {
+      _token: '19cb91cfc0d1d59335ba6607e42c640c',
+      objectVersionNumber: 1,
+      code: 'SYS.USER_STATUS19',
+      codeId: 10019,
+      codeValues: null,
+      description: '用户状态19',
+      type: 'USER',
+      enabledFlag: 'Y',
+      parentCodeId: null,
+      parentCodeDescription: null,
+    },
+    {
+      _token: '20cb91cfc0d1d59335ba6607e42c640c',
+      objectVersionNumber: 1,
+      code: 'SYS.USER_STATUS20',
+      codeId: 10020,
+      codeValues: null,
+      description: '用户状态20',
       type: 'USER',
       enabledFlag: 'Y',
       parentCodeId: null,
@@ -145,28 +247,110 @@ const dataSetLovTemple1 = {
   total: 35,
 };
 
-// const dataSetLovTemple = {
-//   'rows|10': [
-//     {
-//       _token: '@guid()',
-//       'objectVersionNumber|1-10': 1,
-//       code: "@pick(['HR', 'SYS']).@upper(@word)",
-//       'codeId|+1': 10001,
-//       codeValues: '@ctitle()',
-//       description: '@ctitle()',
-//       type: '@name',
-//       enabledFlag: /[NY]/,
-//       parentCodeId: [/1[0-9]{10}/, /1[0-9]{10}/],
-//       parentCodeDescription: '@sentence(3, 6)',
-//     },
-//   ],
-//   success: true,
-//   total: 35,
-// };
+const dataSetLovMockTemple = {
+  'rows|10': [
+    {
+      _token: '@guid()',
+      'objectVersionNumber|1-10': 1,
+      code: "@pick(['HR', 'SYS']).@upper(@word)",
+      'codeId|+1': 10001,
+      codeValues: '@ctitle()',
+      description: '@ctitle()',
+      type: '@name',
+      enabledFlag: /[NY]/,
+      parentCodeId: [/1[0-9]{10}/, /1[0-9]{10}/],
+      parentCodeDescription: '@sentence(3, 6)',
+    },
+  ],
+  success: true,
+  total: 35,
+};
+
 const lovDefineTemple = {
   _token: '@guid()',
   objectVersionNumber: 1,
   code: 'LOV_CODE',
+  description: '快码',
+  height: 300,
+  lovId: 10015,
+  lovItems: [
+    {
+      _token: '@guid()',
+      objectVersionNumber: 1,
+      lovItemId: 10033,
+      lovId: 10015,
+      display: '代码',
+      gridFieldName: 'code',
+      gridFieldWidth: 300,
+      gridFieldAlign: 'left',
+      autocompleteField: 'Y',
+      conditionField: 'Y',
+      isAutocomplete: 'N',
+      gridField: 'Y',
+      conditionFieldWidth: null,
+      conditionFieldLabelWidth: null,
+      conditionFieldType: null,
+      conditionFieldName: null,
+      conditionFieldTextfield: null,
+      conditionFieldNewline: 'N',
+      conditionFieldSelectUrl: null,
+      conditionFieldSelectVf: null,
+      conditionFieldSelectTf: null,
+      conditionFieldSelectCode: null,
+      conditionFieldLovCode: null,
+      conditionFieldSequence: 1,
+      gridFieldSequence: 1,
+    },
+    {
+      _token: '@guid()',
+      objectVersionNumber: 1,
+      lovItemId: 10034,
+      lovId: 10015,
+      display: '描述',
+      gridFieldName: 'description',
+      gridFieldWidth: 300,
+      gridFieldAlign: 'left',
+      autocompleteField: 'Y',
+      conditionField: 'Y',
+      isAutocomplete: 'N',
+      gridField: 'Y',
+      conditionFieldWidth: null,
+      conditionFieldLabelWidth: null,
+      conditionFieldType: null,
+      conditionFieldName: null,
+      conditionFieldTextfield: null,
+      conditionFieldNewline: 'N',
+      conditionFieldSelectUrl: null,
+      conditionFieldSelectVf: null,
+      conditionFieldSelectTf: null,
+      conditionFieldSelectCode: null,
+      conditionFieldLovCode: null,
+      conditionFieldSequence: 2,
+      gridFieldSequence: 2,
+    },
+  ],
+  placeholder: '请选择快码',
+  sqlId: 'CodeMapper.select',
+  customSql: null,
+  queryColumns: 1,
+  customUrl: null,
+  textField: 'description',
+  title: '父级快码',
+  valueField: 'code',
+  width: 500,
+  delayLoad: 'N',
+  needQueryParam: 'N',
+  editableFlag: 'Y',
+  canPopup: 'Y',
+  lovPageSize: '10',
+  treeFlag: 'N',
+  idField: null,
+  parentIdField: null,
+};
+const lovMockDefineTemple = {
+  _token: '@guid()',
+  objectVersionNumber: 1,
+  code: 'LOV_MOCK_CODE',
   description: '快码',
   height: 300,
   lovId: 10015,
@@ -244,25 +428,36 @@ const lovDefineTemple = {
   idField: null,
   parentIdField: null,
 };
+
 const dataSetLovData = Mock.mock(dataSetLovTemple);
-const dataSetLovData1 = Mock.mock(dataSetLovTemple1);
+const dataSetLovMockData = Mock.mock(dataSetLovMockTemple);
+
 const lovDefineData = Mock.mock(lovDefineTemple);
+const lovDefineMockData = Mock.mock(lovMockDefineTemple);
+
 const dataSetLovRule = /\/common\/lov\/dataset\/LOV_CODE/;
-const dataSetLovRule1 = /\/common\/lov\/dataset\/LOV_CODE\?codeId/;
+const dataSetLovMockRule = /\/common\/lov\/dataset\/LOV_MOCK_CODE/;
+
 const lovDefineRule = /\/sys\/lov\/lov_define\?code=LOV_CODE/;
+const lovDefineMockRule = /\/sys\/lov\/lov_define\?code=LOV_MOCK_CODE/;
 
 export default function() {
   if (typeof window !== 'undefined') {
-    Mock.setup({timeout:0})
+    Mock.setup({timeout:0});
 
     Mock.mock(dataSetLovRule, dataSetLovTemple);
 
+    Mock.mock(dataSetLovMockRule, dataSetLovMockTemple);
+
     Mock.mock(lovDefineRule, lovDefineTemple);
+
+    Mock.mock(lovDefineMockRule, lovMockDefineTemple);
   }
 }
 
 export const lovTempleList = [
   { rule: dataSetLovRule, data: dataSetLovData },
-  { rule: dataSetLovRule1, data: dataSetLovData1 },
+  { rule: dataSetLovMockRule, data: dataSetLovMockData },
   { rule: lovDefineRule, data: lovDefineData },
+  { rule: lovDefineMockRule, data: lovDefineMockData },
 ];

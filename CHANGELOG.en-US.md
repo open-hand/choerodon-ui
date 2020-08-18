@@ -16,11 +16,12 @@ timeline: true
 ---
 
 - 🌟 `configure`: Added `formatter`,`formatterOptions` global configuration. RenderEmpty document modification.
-- 🌟 `Breadcrumb`: Added breadcrumbItem `menuList` `overlay` Props。
-- 🌟 `<pro>DataSet`: Added dataSet sort intermediate state.
+- 🌟 `Breadcrumb`: Added breadcrumbItem `menuList` `overlay` properties.
+- 🌟 `<pro>Lov`: Added `paramMatcher` property.
 - 🌟 `<pro>Table`: Added `columnsMergeCoverage` `columnsOnChange` `columnsEdictType` properties to edict column.
 - 🌟 `<pro>NumberField`: Added `numberFieldFormatter`,`numberFieldFormatterOptions` attribute.
 - 💄 Modified the mobx-react dependency restriction in peerDependencies.
+- 💄 `<pro>Table`: Optimized the sorting interaction, increase the click to switch the intermediate state.
 - 💄 `<pro>Table`: The editable row is automatically positioned to the first editable cell.
 - 💄 `<pro>FormField`: Modify the label type to receive string and ReactNode at the same time. At the same time, the label type of Field Props in the DataSet is modified.
 - 🐞 `Steps`: Fixed the steps typescript lint error.

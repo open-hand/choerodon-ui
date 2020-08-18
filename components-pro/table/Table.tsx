@@ -1469,14 +1469,14 @@ export default class Table extends DataSetComponent<TableProps> {
     }
     const { prefixCls } = this;
     const table = this.getTable(ColumnLock.left, dragColumnAlign);
-    const isDragLeft = dragColumnAlign === DragColumnAlign.left
+    const isDragLeft = dragColumnAlign === DragColumnAlign.left;
     const FixedTableClassName = classNames(`${prefixCls}-fixed-left`, {
       [`${prefixCls}-drag-left`]: isDragLeft,
-    })
-    let styleNOShadow = {} 
-    if(isDragLeft){
-      if(this.tableStore.leftLeafColumns.length !== 1){
-        styleNOShadow = { boxShadow: 'none' }
+    });
+    let styleNOShadow = {};
+    if (isDragLeft) {
+      if (this.tableStore.leftLeafColumns.length !== 1) {
+        styleNOShadow = { boxShadow: 'none' };
       }
     }
     return <div style={styleNOShadow} className={FixedTableClassName}>{table}</div>;

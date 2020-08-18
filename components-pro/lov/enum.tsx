@@ -16,3 +16,9 @@ export const enum TriggerMode {
   icon = 'icon',
   input = 'input',
 }
+
+export const enum PrefixRule {
+  start = 'start',
+  end = 'end',
+  include = 'include',
+}
