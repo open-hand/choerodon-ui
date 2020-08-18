@@ -79,6 +79,15 @@ export interface SearchMatcherProps {
   valueField: string;
 }
 
+export type ParamMatcher = string | ((props: ParamMatcherProps) => string);
+
+export interface ParamMatcherProps {
+  record: Record | undefined;
+  text: string;
+  textField: string;
+  valueField: string;
+}
+
 export interface SelectProps extends TriggerFieldProps {
   /**
    * 复合输入值
@@ -110,6 +119,10 @@ export interface SelectProps extends TriggerFieldProps {
    * 搜索匹配器。 当为字符串时，作为lookup的参数名来重新请求值列表。
    */
   searchMatcher?: SearchMatcher;
+  /**
+   * 参数匹配器。 当为字符串时，参数拼接。
+   */
+  paramMatcher?: ParamMatcher;
   /**
    * 选项过滤
    * @param {Record} record
@@ -197,6 +210,10 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
      */
     searchMatcher: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
     /**
+     * 参数匹配器。 当为字符串时，参数拼接。
+     */
+    paramMatcher: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+    /**
      * 是否为原始值
      * true - 选项中valueField对应的值
      * false - 选项值对象
@@ -245,6 +262,12 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   get searchMatcher(): SearchMatcher {
     const { searchMatcher = defaultSearchMatcher } = this.observableProps;
     return searchMatcher;
+  }
+
+  @computed
+  get paramMatcher(): ParamMatcher {
+    const { paramMatcher } = this.observableProps;
+    return paramMatcher;
   }
 
   @computed
@@ -429,6 +452,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     const otherProps = omit(super.getOtherProps(), [
       'searchable',
       'searchMatcher',
+      'paramMatcher',
       'combo',
       'commonItem',
       'maxCommonTagPlaceholder',
@@ -459,6 +483,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
       commonItem: props.commonItem,
       primitiveValue: props.primitiveValue,
       searchMatcher: props.searchMatcher,
+      paramMatcher: props.paramMatcher,
     };
   }
 

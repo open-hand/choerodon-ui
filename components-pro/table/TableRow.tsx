@@ -14,7 +14,7 @@ import { ElementProps } from '../core/ViewComponent';
 import TableContext from './TableContext';
 import ExpandIcon from './ExpandIcon';
 import { ColumnLock, DragColumnAlign, SelectionMode } from './enum';
-import { getColumnKey, isDisabledRow, isSelectedRow, findFirstFocusableElement } from './utils';
+import { findFirstFocusableElement, getColumnKey, isDisabledRow, isSelectedRow } from './utils';
 import { DRAG_KEY, EXPAND_KEY } from './TableStore';
 import { ExpandedRowProps } from './ExpandedRow';
 import autobind from '../_util/autobind';
@@ -261,11 +261,10 @@ export default class TableRow extends Component<TableRowProps, any> {
   }
 
   componentDidMount() {
-    const { record } = this.props;
+    const { lock, record } = this.props;
     if (record.isCurrent) {
-      this.focusRow(this.node);
       if (record.status === RecordStatus.add) {
-        const cell = this.node ? findFirstFocusableElement(this.node) : null;
+        const cell = this.node && lock !== ColumnLock.right ? findFirstFocusableElement(this.node) : null;
         if (cell) {
           cell.focus();
         }

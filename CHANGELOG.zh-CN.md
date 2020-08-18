@@ -16,11 +16,12 @@ timeline: true
 ---
 
 - 🌟 `configure`: 新增 numberFieldFormatter, numberFieldFormatterOptions 全局配置，renderEmpty文档修改。
-- 🌟 `Breadcrumb`: 增加 breadcrumbItem menuList overlay 属性。
-- 🌟 `<pro>DataSet`: 增加 dataSet 排序中间态。
+- 🌟 `Breadcrumb`: 新增 breadcrumbItem menuList overlay 属性。
+- 🌟 `<pro>Lov`: 新增 paramMatcher 参数匹配器属性。
 - 🌟 `<pro>NumberField`: 新增 formatter, formatterOptions 属性。
 - 🌟 `<pro>Table`: 新增 columnsMergeCoverage columnsOnChange columnsEdictType 属性实现表头修改。
 - 💄 修改 peerDependencies 中 mobx-react 依赖限制。
+- 💄 `<pro>Table`: 优化排序交互，增加点击切换中间态。
 - 💄 `<pro>Table`: 可编辑行自动定位至第一个可编辑单元格。
 - 💄 `<pro>FormField`: 优化 label 类型,可以同时接收 string 以及 ReactNode。同时修改了 DataSet.Field Props label 类型。
 - 🐞 `Steps`: 修复 Steps typescript 报错问题。
@@ -28,16 +29,16 @@ timeline: true
 - 🐞 `<pro>Table`: 修复拖拽样式问题，添加拖拽渲染行例子。
 - 🐞 `<pro>Table`: 修复表头文字长度过长导致排序以及提示 icon 不可见。
 - 🐞 `<pro>TextArea`: 修复 TextArea 组件必输、禁用样式问题。
-- 🐞 `<pro>FormField`: 修复 _inTable 下给 Fragment 设置了属性的错误。
 - 🐞 `<pro>DatePicker`: 修复 TimePicker 在 Firefox 下无法滚动的问题。
-- 🐞 `<pro>TextField`: 修复 TextField 在中文输入无法正确的控制maxLength的问题，并且优化中文输入体验。
+- 🐞 `<pro>FormField`: 修复 _inTable 下给 Fragment 设置了属性的错误。
+- 🐞 `<pro>TextField`: 修复 TextField 在中文输入无法正确的控制 maxLength 的问题，并优化中文输入体验。
 
 ## 0.8.69
 
 `2020-08-07`
 
 - 🌟 `configure`: 新增 numberFieldNonStrictStep 全局配置。
-- 🌟 `ImageCrop`:添加 AvatarUpload 头像上传组件。
+- 🌟 `ImageCrop`:新增 AvatarUpload 头像上传组件。
 - 🌟 `<pro>NumberField`: 新增 nonStrictStep 属性。
 - 💄 `Select`: 优化 Select tags 样式。
 - 💄 `<pro>Form`: 优化 Form readOnly 类名。

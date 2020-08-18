@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 import omit from 'lodash/omit';
 import isEqual from 'lodash/isEqual';
 import isString from 'lodash/isString';
+import isFunction from 'lodash/isFunction';
 import { action, computed, observable, toJS } from 'mobx';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
@@ -18,7 +19,7 @@ import Record from '../data-set/Record';
 import lovStore from '../stores/LovCodeStore';
 import autobind from '../_util/autobind';
 import { stopEvent } from '../_util/EventManager';
-import { SearchMatcher, Select, SelectProps } from '../select/Select';
+import { ParamMatcher, SearchMatcher, Select, SelectProps } from '../select/Select';
 import { ColumnAlign, TableQueryBarType, SelectionMode } from '../table/enum';
 import { FieldType } from '../data-set/enum';
 import { LovFieldType, ViewMode, TriggerMode } from './enum';
@@ -105,6 +106,12 @@ export default class Lov extends Select<LovProps> {
       return searchMatcher;
     }
     return this.textField;
+  }
+
+  @computed
+  get paramMatcher(): ParamMatcher {
+    const { paramMatcher } = this.observableProps;
+    return paramMatcher;
   }
 
   @computed
@@ -199,14 +206,24 @@ export default class Lov extends Select<LovProps> {
     }
   });
 
+  /**
+   * 处理 Lov input 查询参数
+   * @param text
+   */
   @action
   searchRemote(text) {
     if (this.filterText !== text) {
-      const { options, searchMatcher } = this;
+      const { options, searchMatcher, paramMatcher, record, textField, valueField } = this;
       this.filterText = text;
       if (text && isString(searchMatcher)) {
         this.resetOptions(true);
-        options.setQueryParameter(searchMatcher, text);
+        let textMatcher = text;
+        if (isString(paramMatcher)) {
+          textMatcher = text + paramMatcher;
+        } else if (isFunction(paramMatcher)){
+          textMatcher = paramMatcher({ record, text, textField, valueField }) || text;
+        }
+        options.setQueryParameter(searchMatcher, textMatcher);
         options.query();
       }
     }
