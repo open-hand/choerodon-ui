@@ -28,6 +28,7 @@ timeline: true
 - 🐞 `DatePicker`: Fixed the problem that disabled does not take effect on the icon.
 - 🐞 `<pro>Table`: Fixed the table drag style error and add table dragging render demo.
 - 🐞 `<pro>Table`: Fixed the table text align left overflow would't look the icon.
+- 🐞 `<pro>TriggerField`: Fixed `getPopupContainer` API.
 - 🐞 `<pro>TextArea`: Fixed the style problem of `TextArea` component.
 - 🐞 `<pro>FormField`: Fixed an error setting a property to the Fragment under _inTable.
 - 🐞 `<pro>DatePicker`: Fix the problem that TimePicker cannot scroll under Firefox.

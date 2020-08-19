@@ -28,6 +28,7 @@ timeline: true
 - 🐞 `DatePicker`: 修复 disabled 在 icon 上不生效的问题。
 - 🐞 `<pro>Table`: 修复拖拽样式问题，添加拖拽渲染行例子。
 - 🐞 `<pro>Table`: 修复表头文字长度过长导致排序以及提示 icon 不可见。
+- 🐞 `<pro>TriggerField`: 修复 getPopupContainer API。
 - 🐞 `<pro>TextArea`: 修复 TextArea 组件必输、禁用样式问题。
 - 🐞 `<pro>DatePicker`: 修复 TimePicker 在 Firefox 下无法滚动的问题。
 - 🐞 `<pro>FormField`: 修复 _inTable 下给 Fragment 设置了属性的错误。

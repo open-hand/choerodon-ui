@@ -1,5 +1,4 @@
 import React, { CSSProperties, Key } from 'react';
-import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
 import omit from 'lodash/omit';
 import shallowEqual from 'lodash/isEqual';
@@ -7,6 +6,7 @@ import noop from 'lodash/noop';
 import isElement from 'lodash/isElement';
 import ClassNames from 'classnames'
 import Align from 'choerodon-ui/lib/align';
+import Portal from 'choerodon-ui/lib/rc-components/util/Portal';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure';
 import Animate from '../animate';
 import ViewComponent, { ViewComponentProps } from '../core/ViewComponent';
@@ -14,21 +14,6 @@ import PopupInner from './PopupInner';
 import autobind from '../_util/autobind';
 
 let popupContainer;
-
-function getContainer(getPopupContainer, getRootDomNode) {
-  if (!popupContainer && typeof window !== 'undefined') {
-    const doc = window.document;
-    popupContainer = doc.createElement('div');
-    popupContainer.className = ClassNames(getProPrefixCls('popup-container'));
-    const mountNode = getPopupContainer ? getPopupContainer(getRootDomNode) : doc.body;
-    if (isElement(mountNode)) {
-      mountNode.appendChild(popupContainer);
-    } else {
-      doc.body.appendChild(popupContainer);
-    }
-  }
-  return popupContainer;
-}
 
 /**
  * 记录ID生成器
@@ -111,7 +96,6 @@ export default class Popup extends ViewComponent<PopupProps> {
       align,
       transitionName,
       getRootDomNode,
-      getPopupContainer,
       children,
       onAnimateAppear = noop,
       onAnimateEnter = noop,
@@ -121,37 +105,56 @@ export default class Popup extends ViewComponent<PopupProps> {
     if (!hidden) {
       this.contentRendered = true;
     }
-    const container = getContainer(getPopupContainer, getRootDomNode);
-    return container && this.contentRendered
-      ? createPortal(
-          <Animate
-            component=""
-            exclusive
-            transitionAppear
-            transitionName={transitionName}
-            hiddenProp="hidden"
-            onAppear={onAnimateAppear}
-            onEnter={onAnimateEnter}
-            onLeave={onAnimateLeave}
-            onEnd={onAnimateEnd}
+
+    return this.contentRendered ? (
+      <Portal
+        key={this.popupKey}
+        getContainer={this.getContainer}
+      >
+        <Animate
+          component=""
+          exclusive
+          transitionAppear
+          transitionName={transitionName}
+          hiddenProp="hidden"
+          onAppear={onAnimateAppear}
+          onEnter={onAnimateEnter}
+          onLeave={onAnimateLeave}
+          onEnd={onAnimateEnd}
+        >
+          <Align
+            ref={this.saveRef}
+            key="align"
+            childrenProps={{ hidden: 'hidden' }}
+            align={align}
+            onAlign={this.onAlign}
+            target={getRootDomNode}
+            hidden={hidden}
+            monitorWindowResize
           >
-            <Align
-              ref={this.saveRef}
-              key="align"
-              childrenProps={{ hidden: 'hidden' }}
-              align={align}
-              onAlign={this.onAlign}
-              target={getRootDomNode}
-              hidden={hidden}
-              monitorWindowResize
-            >
-              <PopupInner {...omit(this.getMergedProps(), ['ref'])}>{children}</PopupInner>
-            </Align>
-          </Animate>,
-          container,
-          this.popupKey,
-        )
-      : null;
+            <PopupInner {...omit(this.getMergedProps(), ['ref'])}>{children}</PopupInner>
+          </Align>
+        </Animate>
+      </Portal>
+    ) : null;
+  }
+
+
+  @autobind
+  getContainer() {
+    const { getPopupContainer, getRootDomNode = noop } = this.props;
+    if (typeof window !== 'undefined') {
+      const doc = window.document;
+      popupContainer = doc.createElement('div');
+      popupContainer.className = ClassNames(getProPrefixCls('popup-container'));
+      const mountNode = getPopupContainer ? getPopupContainer(getRootDomNode()) : doc.body;
+      if (isElement(mountNode)) {
+        mountNode.appendChild(popupContainer);
+      } else {
+        doc.body.appendChild(popupContainer);
+      }
+    }
+    return popupContainer;
   }
 
   @autobind
