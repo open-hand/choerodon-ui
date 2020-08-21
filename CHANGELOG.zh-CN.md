@@ -15,10 +15,14 @@ timeline: true
 
 ---
 
-- 🌟 `Cascader`: 新增 cascader menuMode 单弹框属性，支持singleMenuStyle，singleMenuItemStyle，singlePleaseRender，singleMenuItemRender 属性配置。
+## 0.8.70
+
+`2020-08-21`
+
 - 🌟 `configure`: 新增 numberFieldFormatter, numberFieldFormatterOptions 全局配置，renderEmpty文档修改。
-- 🌟 `Breadcrumb`: 新增 breadcrumbItem menuList overlay 属性。
 - 🌟 `Upload`: 新增 dragUploadList，onDragEnd 属性。
+- 🌟 `Breadcrumb`: 新增 breadcrumbItem menuList overlay 属性。
+- 🌟 `Cascader`: 新增 cascader menuMode 单弹框属性，支持singleMenuStyle，singleMenuItemStyle，singlePleaseRender，singleMenuItemRender 属性配置。
 - 🌟 `<pro>Lov`: 新增 paramMatcher 参数匹配器属性。
 - 🌟 `<pro>NumberField`: 新增 formatter, formatterOptions 属性。
 - 🌟 `<pro>Table`: 新增 columnsMergeCoverage columnsOnChange columnsEdictType 属性实现表头修改。

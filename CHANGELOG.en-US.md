@@ -15,10 +15,14 @@ timeline: true
 
 ---
 
-- 🌟 `Cascader`: Added cascader new `menuMode` support the single menu, with `singleMenuStyle` `singleMenuItemStyle` `singlePleaseRender` `singleMenuItemRender` properties.
+## 0.8.70
+
+`2020-08-21`
+
 - 🌟 `configure`: Added `formatter`,`formatterOptions` global configuration. RenderEmpty document modification.
-- 🌟 `Breadcrumb`: Added breadcrumbItem `menuList` `overlay` properties.
 - 🌟 `Upload`: Added `dragUploadList`, `onDragEnd` properties.
+- 🌟 `Breadcrumb`: Added breadcrumbItem `menuList` `overlay` properties.
+- 🌟 `Cascader`: Added cascader new `menuMode` support the single menu, with `singleMenuStyle` `singleMenuItemStyle` `singlePleaseRender` `singleMenuItemRender` properties.
 - 🌟 `<pro>Lov`: Added `paramMatcher` property.
 - 🌟 `<pro>Table`: Added `columnsMergeCoverage` `columnsOnChange` `columnsEdictType` properties to edict column.
 - 🌟 `<pro>NumberField`: Added `numberFieldFormatter`,`numberFieldFormatterOptions` attribute.
