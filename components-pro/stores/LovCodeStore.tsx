@@ -205,10 +205,11 @@ export class LovCodeStore {
     return (props: TransportHookProps) => {
       const lovQueryAxiosConfig =
         (field && field.get('lovQueryAxiosConfig')) || getConfig('lovQueryAxiosConfig');
-      const axiosConfig = processAxiosConfig(lovQueryAxiosConfig, code, config, props);
+      const lovQueryUrl = this.getQueryUrl(code, field, props);
+      const axiosConfig = processAxiosConfig(lovQueryAxiosConfig, code, config, props, lovQueryUrl);
       return {
         ...axiosConfig,
-        url: axiosConfig.url || this.getQueryUrl(code, field, props),
+        url: axiosConfig.url || lovQueryUrl,
         method: axiosConfig.method || 'post',
       };
     };

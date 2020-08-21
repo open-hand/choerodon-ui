@@ -7,6 +7,7 @@ import { changeConfirmLocale, ModalLocale } from '../modal/locale';
 export interface Locale {
   locale: string;
   Pagination?: Object;
+  Cascader?: Object;
   DatePicker?: Object;
   TimePicker?: Object;
   Calendar?: Object;

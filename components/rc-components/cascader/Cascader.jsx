@@ -7,7 +7,7 @@ import Icon from '../../icon';
 import Menus from './Menus';
 import MenusSingle from './MenusSingle';
 import KeyCode from '../../_util/KeyCode';
-import Locale from './locale/en_US'
+import Locale from './locale/en_US';
 
 const BUILT_IN_PLACEMENTS = {
   bottomLeft: {

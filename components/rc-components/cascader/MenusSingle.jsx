@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import arrayTreeFilter from 'array-tree-filter';
 import { findDOMNode } from 'react-dom';
-import Icon from '../../icon';
-import Locale from './locale/en_US'
-import isFunction from 'lodash/isFunction'
-import { is } from 'core-js/fn/object';
+import Locale from './locale/en_US';
+import isFunction from 'lodash/isFunction';
 
 export default class Menus extends Component {
   static defaultProps = {
@@ -19,8 +17,8 @@ export default class Menus extends Component {
     expandTrigger: 'click',
     isTabSelected: false,
     locale: Locale,
-    singleMenuStyle: { width:'3rem'},
-    singleMenuItemStyle: { minWidth: '1rem'},
+    singleMenuStyle: { width: '3rem' },
+    singleMenuItemStyle: { minWidth: '1rem' },
   };
 
   static propTypes = {
@@ -64,15 +62,15 @@ export default class Menus extends Component {
       this.scrollActiveItemToView();
     }
   }
-  
+
   /**
-   * render th li list 
-   * @param {*} option 
-   * @param {*} menuIndex 
+   * render th li list
+   * @param {*} option
+   * @param {*} menuIndex
    */
   getOption(option, menuIndex) {
     const { prefixCls, expandTrigger, singleMenuItemStyle } = this.props;
-    const onSelect = this.props.onSelect.bind(this, option, menuIndex,false);
+    const onSelect = this.props.onSelect.bind(this, option, menuIndex, false);
     let expandProps = {
       onClick: onSelect,
     };
@@ -116,7 +114,7 @@ export default class Menus extends Component {
 
   /**
    *  be active value is a array of items
-   * @param string[] values 
+   * @param string[] values
    */
   getActiveOptions(values) {
     const activeValue = values || this.props.activeValue;
@@ -168,9 +166,9 @@ export default class Menus extends Component {
   };
 
   /**
-   * render th li list 
-   * @param {*} option 
-   * @param {*} menuIndex 
+   * render th li list
+   * @param {*} option
+   * @param {*} menuIndex
    */
   getTabItem(option, menuIndex) {
     const { prefixCls, singleMenuItemRender } = this.props;
@@ -186,9 +184,9 @@ export default class Menus extends Component {
     } else if (typeof option.label === 'string') {
       title = option.label;
     }
-    let label = option.label
-    if(isFunction(singleMenuItemRender)){
-      label = singleMenuItemItem(option.label)
+    let label = option.label;
+    if (isFunction(singleMenuItemRender)) {
+      label = singleMenuItemItem(option.label);
     }
     return (
       <span
@@ -203,35 +201,35 @@ export default class Menus extends Component {
 
   render() {
     const { prefixCls, dropdownMenuColumnStyle, isTabSelected, locale, singleMenuStyle, singlePleaseRender } = this.props;
-    const showOptions = this.getShowOptions()
-    let showOptionsIndex = showOptions.length - 1 
-    const activeOptions = this.getActiveOptions()
-    const dropdownMenuColumnStyleSingle = {...dropdownMenuColumnStyle,...singleMenuStyle}
-    const tabItemRender = activeOptions.map( (item,indexItem) => (this.getTabItem(item,indexItem)))
-    if(showOptions && activeOptions && !isTabSelected && showOptions.length > activeOptions.length){
-       const pleaseRenderProps = {
-        key:"please_check" ,
+    const showOptions = this.getShowOptions();
+    let showOptionsIndex = showOptions.length - 1;
+    const activeOptions = this.getActiveOptions();
+    const dropdownMenuColumnStyleSingle = { ...dropdownMenuColumnStyle, ...singleMenuStyle };
+    const tabItemRender = activeOptions.map((item, indexItem) => (this.getTabItem(item, indexItem)));
+    if (showOptions && activeOptions && !isTabSelected && showOptions.length > activeOptions.length) {
+      const pleaseRenderProps = {
+        key: 'please_check',
         className: `${prefixCls}-menu-tab-item ${prefixCls}-menu-tab-please`,
-        text:locale.pleaseSelect
-       }
-       if(isFunction(singlePleaseRender)){
-        tabItemRender.push(singlePleaseRender(pleaseRenderProps))
-       }else{
-        tabItemRender.push(<span {...pleaseRenderProps}>{pleaseRenderProps.text}</span>)
-       }
-       
+        text: locale.pleaseSelect,
+      };
+      if (isFunction(singlePleaseRender)) {
+        tabItemRender.push(singlePleaseRender(pleaseRenderProps));
+      } else {
+        tabItemRender.push(<span {...pleaseRenderProps}>{pleaseRenderProps.text}</span>);
+      }
+
     }
-    if(isTabSelected){
-      showOptionsIndex = activeOptions.length - 1
+    if (isTabSelected) {
+      showOptionsIndex = activeOptions.length - 1;
     }
-    
+
     return (
       <div className={`${prefixCls}-mode-single `}>
         <div className={`${prefixCls}-menu-tab`}>
           {tabItemRender}
         </div>
         <ul className={`${prefixCls}-menu ${prefixCls}-menu-single `} key={showOptionsIndex} style={dropdownMenuColumnStyleSingle}>
-            {showOptions[showOptionsIndex].map(option => this.getOption(option, showOptionsIndex))}
+          {showOptions[showOptionsIndex].map(option => this.getOption(option, showOptionsIndex))}
         </ul>
       </div>
     );
