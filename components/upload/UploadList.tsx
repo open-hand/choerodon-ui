@@ -1,5 +1,6 @@
 import React, { Component, CSSProperties, SyntheticEvent } from 'react';
 import classNames from 'classnames';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import Icon from '../icon';
 import Tooltip from '../tooltip';
 import Progress from '../progress';
@@ -11,6 +12,15 @@ import { previewImage } from './utils';
 
 const isImageUrl = (url: string): boolean => {
   return /^data:image\//.test(url) || /\.(webp|svg|png|gif|jpg|jpeg)$/.test(url);
+};
+
+// a little function to help us with reordering the result
+const reorder = (list, startIndex, endIndex): UploadFile[] => {
+  const result: UploadFile[] = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
+
+  return result;
 };
 
 export default class UploadList extends Component<UploadListProps, any> {
@@ -25,6 +35,7 @@ export default class UploadList extends Component<UploadListProps, any> {
     previewFile: previewImage,
     showRemoveIcon: true,
     showPreviewIcon: true,
+    dragUploadList: false,
   };
 
   handleClose = (file: UploadFile) => {
@@ -70,6 +81,26 @@ export default class UploadList extends Component<UploadListProps, any> {
     });
   }
 
+  /**
+   * 拖拽事件
+   * @param result
+   */
+  onDragEnd = (result) => {
+    const { items, onDragEnd } = this.props;
+    // dropped outside the list
+    if (!result.destination) {
+      return;
+    }
+
+    const dragItems = reorder(
+      items,
+      result.source.index,
+      result.destination.index,
+    );
+
+    onDragEnd(dragItems);
+  };
+
   render() {
     const {
       prefixCls: customizePrefixCls,
@@ -78,9 +109,10 @@ export default class UploadList extends Component<UploadListProps, any> {
       showPreviewIcon,
       showRemoveIcon,
       locale,
+      dragUploadList,
     } = this.props;
     const prefixCls = getPrefixCls('upload', customizePrefixCls);
-    const list = items.map(file => {
+    const list = items.map((file, index) => {
       let progress;
       let icon = <Icon type={file.status === 'uploading' ? 'loading' : 'attach_file'} />;
 
@@ -201,6 +233,28 @@ export default class UploadList extends Component<UploadListProps, any> {
           </span>
         );
 
+      if (dragUploadList) {
+        return (
+          <Draggable key={file.uid} draggableId={String(file.uid)} index={index}>
+            {provided => (
+              <div
+                className={infoUploadingClass}
+                key={file.uid}
+                ref={provided.innerRef}
+                {...provided.draggableProps}
+                {...provided.dragHandleProps}
+              >
+                <div className={`${prefixCls}-list-item-info`}>{iconAndPreview}</div>
+                {actions}
+                <Animate transitionName="fade" component="">
+                  {progress}
+                </Animate>
+              </div>
+            )}
+          </Draggable>
+        );
+      }
+
       return (
         <div className={infoUploadingClass} key={file.uid}>
           <div className={`${prefixCls}-list-item-info`}>{iconAndPreview}</div>
@@ -214,8 +268,35 @@ export default class UploadList extends Component<UploadListProps, any> {
     const listClassNames = classNames({
       [`${prefixCls}-list`]: true,
       [`${prefixCls}-list-${listType}`]: true,
+      [`${prefixCls}-list-drag`]: dragUploadList,
     });
     const animationDirection = listType === 'picture-card' ? 'animate-inline' : 'animate';
+    if (dragUploadList) {
+      return (
+        <DragDropContext onDragEnd={this.onDragEnd}>
+          <Droppable droppableId="droppable" direction="horizontal">
+            {(provided, snapshot) => (
+              <div
+                ref={provided.innerRef}
+                style={{
+                  background: snapshot.isDraggingOver ? '#f2f9f4' : '',
+                  border: snapshot.isDraggingOver ? '2px dashed #1ab16f' : '',
+                  display: 'inline-flex',
+                  maxWidth: '100%',
+                  flexWrap: 'wrap',
+                  overflow: 'auto',
+                }}
+                {...provided.droppableProps}
+                className={listClassNames}
+              >
+                {list}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+      );
+    }
     return (
       <Animate
         transitionName={`${prefixCls}-${animationDirection}`}

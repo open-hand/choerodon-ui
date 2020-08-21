@@ -175,6 +175,27 @@ export default class Upload extends Component<UploadProps, UploadState> {
     this.handleRemove(file);
   };
 
+  /**
+   * 拖拽触发回调
+   * @param uploadFiles 拖拽后文件列表
+   */
+  onDragEnd = (uploadFiles: UploadFile[]) => {
+    const { onDragEnd } = this.props;
+    if (onDragEnd) {
+      const result = onDragEnd(uploadFiles);
+      if (result !== false) {
+        this.setState({
+          fileList: uploadFiles,
+        });
+      } else {
+        return false;
+      }
+    }
+    this.setState({
+      fileList: uploadFiles,
+    });
+  };
+
   onChange = (info: UploadChangeParam) => {
     if (!('fileList' in this.props)) {
       this.setState({ fileList: info.fileList });
@@ -228,7 +249,7 @@ export default class Upload extends Component<UploadProps, UploadState> {
   };
 
   renderUploadList = (uploadLocale: UploadLocale) => {
-    const { showUploadList, listType, onPreview, locale, previewFile } = this.props;
+    const { showUploadList, listType, onPreview, locale, previewFile, dragUploadList } = this.props;
     const { fileList } = this.state;
     const { showRemoveIcon, showPreviewIcon } = showUploadList as any;
     return (
@@ -236,6 +257,8 @@ export default class Upload extends Component<UploadProps, UploadState> {
         listType={listType}
         items={fileList}
         onPreview={onPreview}
+        dragUploadList={dragUploadList}
+        onDragEnd={this.onDragEnd}
         previewFile={previewFile}
         onRemove={this.handleManualRemove}
         showRemoveIcon={showRemoveIcon}
@@ -254,6 +277,7 @@ export default class Upload extends Component<UploadProps, UploadState> {
       type,
       disabled,
       children,
+      dragUploadList,
     } = this.props;
     const { fileList, dragState } = this.state;
 
@@ -305,6 +329,7 @@ export default class Upload extends Component<UploadProps, UploadState> {
       [`${prefixCls}-select`]: true,
       [`${prefixCls}-select-${listType}`]: true,
       [`${prefixCls}-disabled`]: disabled,
+      [`${prefixCls}-drag-btn`]: dragUploadList,
     });
 
     const uploadButton = (

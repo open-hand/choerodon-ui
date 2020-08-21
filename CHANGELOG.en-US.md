@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `configure`: Added `formatter`,`formatterOptions` global configuration. RenderEmpty document modification.
 - 🌟 `Breadcrumb`: Added breadcrumbItem `menuList` `overlay` properties.
+- 🌟 `Upload`: Added `dragUploadList`, `onDragEnd` properties.
 - 🌟 `<pro>Lov`: Added `paramMatcher` property.
 - 🌟 `<pro>Table`: Added `columnsMergeCoverage` `columnsOnChange` `columnsEdictType` properties to edict column.
 - 🌟 `<pro>NumberField`: Added `numberFieldFormatter`,`numberFieldFormatterOptions` attribute.
@@ -30,10 +31,10 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the table text align left overflow would't look the icon.
 - 🐞 `<pro>TriggerField`: Fixed `getPopupContainer` API.
 - 🐞 `<pro>TextArea`: Fixed the style problem of `TextArea` component.
-- 🐞 `<pro>FormField`: Fixed an error setting a property to the Fragment under _inTable.
+- 🐞 `<pro>Form`: Fix the conflict between `useColon` and global configuration.
 - 🐞 `<pro>DatePicker`: Fix the problem that TimePicker cannot scroll under Firefox.
+- 🐞 `<pro>FormField`: Fixed an error setting a property to the Fragment under _inTable.
 - 🐞 `<pro>TextField`: Fix the problem that TextField cannot correctly control maxLength in Chinese input, and optimize the Chinese input experience.
-- 🐞 `<pro>Form`: Fix the conflict between useColon and global configuration.
 
 ## 0.8.69
 

@@ -55,6 +55,7 @@ export interface UploadProps {
   headers?: HttpRequestHeader;
   showUploadList?: boolean | ShowUploadListInterface;
   multiple?: boolean;
+  dragUploadList?: boolean;
   accept?: string;
   beforeUpload?: (file: UploadFile, FileList: UploadFile[]) => boolean | PromiseLike<any | Blob>;
   onChange?: (info: UploadChangeParam) => void;
@@ -62,6 +63,7 @@ export interface UploadProps {
   className?: string;
   onStart?: (file: UploadFile) => void;
   onPreview?: (file: UploadFile) => void;
+  onDragEnd?: (files: UploadFile[]) => void | boolean;
   onRemove?: (file: UploadFile) => void | boolean;
   onSuccess?: (response: any, file: UploadFile) => void;
   onProgress?: (e: { percent: number }, file: UploadFile) => void;
@@ -87,10 +89,12 @@ export interface UploadListProps {
   listType?: 'text' | 'picture' | 'picture-card';
   onPreview?: (file: UploadFile) => void;
   onRemove?: (file: UploadFile) => void | boolean;
+  onDragEnd: (files: UploadFile[]) => void | boolean;
   items?: Array<UploadFile>;
   progressAttr?: Object;
   prefixCls?: string;
   showRemoveIcon?: boolean;
+  dragUploadList?: boolean;
   showPreviewIcon?: boolean;
   locale: UploadLocale;
   previewFile?: PreviewFileHandler;

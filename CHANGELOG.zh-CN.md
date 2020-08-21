@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `configure`: 新增 numberFieldFormatter, numberFieldFormatterOptions 全局配置，renderEmpty文档修改。
 - 🌟 `Breadcrumb`: 新增 breadcrumbItem menuList overlay 属性。
+- 🌟 `Upload`: 新增 dragUploadList，onDragEnd 属性。
 - 🌟 `<pro>Lov`: 新增 paramMatcher 参数匹配器属性。
 - 🌟 `<pro>NumberField`: 新增 formatter, formatterOptions 属性。
 - 🌟 `<pro>Table`: 新增 columnsMergeCoverage columnsOnChange columnsEdictType 属性实现表头修改。
@@ -26,6 +27,7 @@ timeline: true
 - 💄 `<pro>FormField`: 优化 label 类型,可以同时接收 string 以及 ReactNode。同时修改了 DataSet.Field Props label 类型。
 - 🐞 `Steps`: 修复 Steps typescript 报错问题。
 - 🐞 `DatePicker`: 修复 disabled 在 icon 上不生效的问题。
+- 🐞 `<pro>Form`: 修复 useColon 与全局配置的冲突。
 - 🐞 `<pro>Table`: 修复拖拽样式问题，添加拖拽渲染行例子。
 - 🐞 `<pro>Table`: 修复表头文字长度过长导致排序以及提示 icon 不可见。
 - 🐞 `<pro>TriggerField`: 修复 getPopupContainer API。
@@ -33,7 +35,6 @@ timeline: true
 - 🐞 `<pro>DatePicker`: 修复 TimePicker 在 Firefox 下无法滚动的问题。
 - 🐞 `<pro>FormField`: 修复 _inTable 下给 Fragment 设置了属性的错误。
 - 🐞 `<pro>TextField`: 修复 TextField 在中文输入无法正确的控制 maxLength 的问题，并优化中文输入体验。
-- 🐞 `<pro>Form`: 修复 useColon与全局配置的冲突。
 
 ## 0.8.69
 

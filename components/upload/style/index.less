@@ -31,8 +31,9 @@
     display: table;
     width: @upload-pictrue-card-size;
     height: @upload-pictrue-card-size;
-    margin-right: 0.08rem;
-    margin-bottom: 0.08rem;
+    //margin-right: 0.08rem;
+    //margin-bottom: 0.08rem;
+    margin: 0.04rem;
     text-align: center;
     vertical-align: top;
     background-color: @background-color-light;
@@ -52,6 +53,16 @@
 
     &:hover {
       border-color: @primary-color;
+    }
+  }
+
+  &&-drag-btn {
+    display: inline-flex;
+
+    > .@{upload-prefix-cls} {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
   }
 
@@ -116,6 +127,12 @@
     &:hover .@{iconfont-css-prefix}-plus {
       color: @text-color-secondary;
     }
+  }
+}
+
+.@{upload-prefix-cls}-list-drag {
+  &::before {
+    display: none !important;
   }
 }
 
@@ -204,6 +221,7 @@
       position: relative;
       height: 0.66rem;
       padding: 0.08rem;
+      background-color: #fff;
       border: @border-width-base @border-style-base @border-color-base;
       border-radius: @border-radius-base;
       &:hover {
@@ -290,7 +308,8 @@
       float: left;
       width: @upload-pictrue-card-size;
       height: @upload-pictrue-card-size;
-      margin: 0 0.08rem 0.08rem 0;
+      //margin: 0 0.08rem 0.08rem 0;
+      margin: 0.04rem;
     }
 
     .@{upload-item}-info {

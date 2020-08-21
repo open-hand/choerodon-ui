@@ -40,12 +40,14 @@ class Demo extends React.Component {
 
   render() {
     return (
-      <Form header="文件管理">
-        <Output label="选择Logo" renderer={() => <Upload ref={this.saveUpload} {...props} />} />
-        <Button style={{ marginBottom: 10 }} color="primary" onClick={this.handleBtnClick}>
-          提交
-        </Button>
-      </Form>
+        <>
+          <Form header="文件管理">
+            <Output label="选择Logo" renderer={() => <Upload ref={this.saveUpload} {...props} />} />
+          </Form>
+          <Button style={{ marginBottom: 10 }} color="primary" onClick={this.handleBtnClick}>
+            提交
+          </Button>
+        </>
     );
   }
 }
