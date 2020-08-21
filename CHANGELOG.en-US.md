@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `Cascader`: Added cascader new `menuMode` support the single menu, with `singleMenuStyle` `singleMenuItemStyle` `singlePleaseRender` `singleMenuItemRender` properties.
 - 🌟 `configure`: Added `formatter`,`formatterOptions` global configuration. RenderEmpty document modification.
 - 🌟 `Breadcrumb`: Added breadcrumbItem `menuList` `overlay` properties.
 - 🌟 `Upload`: Added `dragUploadList`, `onDragEnd` properties.

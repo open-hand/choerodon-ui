@@ -161,4 +161,10 @@ describe('Cascader', () => {
     // Simulate onKeyDown will not trigger onChange by default, so the value is still '123'
     expect(wrapper.state('inputValue')).toBe('123');
   });
+
+  it('when use single mode you can look only menu items',() => {
+    const wrapper = mount(<Cascader options={options} menuMode="single" />)
+    wrapper.find('input').simulate('click');
+    expect(wrapper.find('.c7n-cascader-menu-single').length).toBe(1);  
+  })
 });

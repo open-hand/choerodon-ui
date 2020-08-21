@@ -5,7 +5,9 @@ import isEqual from 'lodash/isEqual';
 import Trigger from '../trigger';
 import Icon from '../../icon';
 import Menus from './Menus';
+import MenusSingle from './MenusSingle';
 import KeyCode from '../../_util/KeyCode';
+import Locale from './locale/en_US'
 
 const BUILT_IN_PLACEMENTS = {
   bottomLeft: {
@@ -55,6 +57,8 @@ export default class Cascader extends Component {
     builtinPlacements: BUILT_IN_PLACEMENTS,
     expandTrigger: 'click',
     expandIcon: <Icon type="navigate_next" />,
+    menuMode:'multiple',
+    locale:Locale,
   };
 
   static propTypes = {
@@ -77,6 +81,12 @@ export default class Cascader extends Component {
     onKeyDown: PropTypes.func,
     expandTrigger: PropTypes.string,
     expandIcon: PropTypes.node,
+    menuMode: PropTypes.string,
+    locale: PropTypes.object,
+    singleMenuStyle: PropTypes.object,
+    singleMenuItemStyle: PropTypes.object,
+    singlePleaseRender: PropTypes.func,
+    singleMenuItemRender: PropTypes.func,
   };
 
   constructor(props) {
@@ -92,6 +102,7 @@ export default class Cascader extends Component {
       popupVisible: props.popupVisible,
       activeValue: initialValue,
       value: initialValue,
+      isTabSelected: false,
     };
   }
 
@@ -153,7 +164,7 @@ export default class Cascader extends Component {
   handlePopupVisibleChange = popupVisible => {
     this.setPopupVisible(popupVisible);
   };
-  handleMenuSelect = (targetOption, menuIndex, e) => {
+  handleMenuSelect = (targetOption, menuIndex,isTabSelected = false,e) => {
     // Keep focused state for keyboard support
     const triggerNode = this.trigger.getRootDomNode();
     if (triggerNode && triggerNode.focus) {
@@ -171,7 +182,7 @@ export default class Cascader extends Component {
       if (changeOnSelect) {
         this.handleChange(activeOptions, { visible: true }, e);
       }
-      this.setState({ activeValue });
+      this.setState({ activeValue,isTabSelected });
       loadData(activeOptions);
       return;
     }
@@ -195,6 +206,7 @@ export default class Cascader extends Component {
     if ('value' in this.props || (e.type === 'keydown' && e.keyCode !== KeyCode.ENTER)) {
       delete newState.value;
     }
+    newState.isTabSelected = isTabSelected
     this.setState(newState);
   };
   handleKeyDown = e => {
@@ -259,7 +271,7 @@ export default class Cascader extends Component {
     }
     const activeOptions = this.getActiveOptions(activeValue);
     const targetOption = activeOptions[activeOptions.length - 1];
-    this.handleMenuSelect(targetOption, activeOptions.length - 1, e);
+    this.handleMenuSelect(targetOption, activeOptions.length - 1, false , e);
 
     if (this.props.onKeyDown) {
       this.props.onKeyDown(e);
@@ -280,21 +292,42 @@ export default class Cascader extends Component {
       builtinPlacements,
       popupPlacement,
       children,
+      locale,
+      menuMode,
+      singleMenuStyle,
+      singleMenuItemStyle,
       ...restProps
     } = this.props;
     // Did not show popup when there is no options
     let menus = <div />;
     let emptyMenuClassName = '';
     if (options && options.length > 0) {
-      menus = (
-        <Menus
-          {...this.props}
-          value={this.state.value}
-          activeValue={this.state.activeValue}
-          onSelect={this.handleMenuSelect}
-          visible={this.state.popupVisible}
-        />
-      );
+      if( menuMode === "multiple") {
+        menus = (
+          <Menus
+            {...this.props}
+            value={this.state.value}
+            activeValue={this.state.activeValue}
+            onSelect={this.handleMenuSelect}
+            visible={this.state.popupVisible}
+          />)
+      }else if (menuMode === "single" ){
+        menus = (
+          <MenusSingle
+            {...this.props}
+            isTabSelected={this.state.isTabSelected}
+            value={this.state.value}
+            activeValue={this.state.activeValue}
+            onSelect={this.handleMenuSelect}
+            visible={this.state.popupVisible}
+            locale={locale}
+            singleMenuStyle={singleMenuStyle}
+            singleMenuItemStyle={singleMenuItemStyle}
+          />)
+
+      } else {
+        throw new Error('please use correct mode for menu ex "single" and "multiple"')
+      }
     } else {
       emptyMenuClassName = ` ${prefixCls}-menus-empty`;
     }

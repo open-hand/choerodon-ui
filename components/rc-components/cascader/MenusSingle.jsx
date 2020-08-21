@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import arrayTreeFilter from 'array-tree-filter';
 import { findDOMNode } from 'react-dom';
 import Icon from '../../icon';
+import Locale from './locale/en_US'
+import isFunction from 'lodash/isFunction'
+import { is } from 'core-js/fn/object';
 
 export default class Menus extends Component {
   static defaultProps = {
@@ -14,19 +17,36 @@ export default class Menus extends Component {
     prefixCls: 'rc-cascader-menus',
     visible: false,
     expandTrigger: 'click',
-    expandIcon: <Icon type="navigate_next" />,
+    isTabSelected: false,
+    locale: Locale,
+    singleMenuStyle: { width:'3rem'},
+    singleMenuItemStyle: { minWidth: '1rem'},
   };
 
   static propTypes = {
+    // 选择的值
     value: PropTypes.array,
+    // 当前激活的值
     activeValue: PropTypes.array,
+    // 可选内容
     options: PropTypes.array.isRequired,
+    // 注入样式开头
     prefixCls: PropTypes.string,
+    // 触发展开事件
     expandTrigger: PropTypes.string,
+    // 被选择后触发
     onSelect: PropTypes.func,
+    // 是否可见
     visible: PropTypes.bool,
+    // 下拉列表的样式配置
     dropdownMenuColumnStyle: PropTypes.object,
-    expandIcon:PropTypes.node,
+    // 标识是由于tab select 触发的事件
+    isTabSelected: PropTypes.bool,
+    locale: PropTypes.object,
+    singleMenuStyle: PropTypes.object,
+    singleMenuItemStyle: PropTypes.object,
+    singlePleaseRender: PropTypes.func,
+    singleMenuItemRender: PropTypes.func,
   };
 
   constructor(props) {
@@ -44,24 +64,20 @@ export default class Menus extends Component {
       this.scrollActiveItemToView();
     }
   }
-
+  
+  /**
+   * render th li list 
+   * @param {*} option 
+   * @param {*} menuIndex 
+   */
   getOption(option, menuIndex) {
-    const { prefixCls, expandTrigger, expandIcon } = this.props;
+    const { prefixCls, expandTrigger, singleMenuItemStyle } = this.props;
     const onSelect = this.props.onSelect.bind(this, option, menuIndex,false);
     let expandProps = {
       onClick: onSelect,
     };
     let menuItemCls = `${prefixCls}-menu-item`;
-    let expandIconNode = null;
-    const hasChildren = option.children && option.children.length > 0;
-    if (hasChildren || option.isLeaf === false) {
-      menuItemCls += ` ${prefixCls}-menu-item-expand`;
-      expandIconNode = (
-        <span className={`${prefixCls}-menu-item-expand-icon`}>
-          {expandIcon}
-        </span>
-      );
-    }
+    // TODO: add item style
     if (expandTrigger === 'hover' && hasChildren) {
       expandProps = {
         onMouseEnter: this.delayOnSelect.bind(this, onSelect),
@@ -90,14 +106,18 @@ export default class Menus extends Component {
         key={option.key || option.value}
         className={menuItemCls}
         title={title}
+        style={singleMenuItemStyle}
         {...expandProps}
       >
         {option.label}
-        {expandIconNode}
       </li>
     );
   }
 
+  /**
+   *  be active value is a array of items
+   * @param string[] values 
+   */
   getActiveOptions(values) {
     const activeValue = values || this.props.activeValue;
     const options = this.props.options;
@@ -147,15 +167,72 @@ export default class Menus extends Component {
     this.menuItems[index] = node;
   };
 
-  render() {
-    const { prefixCls, dropdownMenuColumnStyle } = this.props;
+  /**
+   * render th li list 
+   * @param {*} option 
+   * @param {*} menuIndex 
+   */
+  getTabItem(option, menuIndex) {
+    const { prefixCls, singleMenuItemRender } = this.props;
+    const onSelect = this.props.onSelect.bind(this, option, menuIndex, true);
+    let expandProps = {
+      onClick: onSelect,
+    };
+    let menuItemCls = `${prefixCls}-menu-tab-item`;
+
+    let title = '';
+    if (option.title) {
+      title = option.title;
+    } else if (typeof option.label === 'string') {
+      title = option.label;
+    }
+    let label = option.label
+    if(isFunction(singleMenuItemRender)){
+      label = singleMenuItemItem(option.label)
+    }
     return (
-      <div>
-        {this.getShowOptions().map((options, menuIndex) =>
-          <ul className={`${prefixCls}-menu`} key={menuIndex} style={dropdownMenuColumnStyle}>
-            {options.map(option => this.getOption(option, menuIndex))}
-          </ul>,
-        )}
+      <span
+        key={option.key || option.value}
+        className={menuItemCls}
+        {...expandProps}
+      >
+        {label}
+      </span>
+    );
+  }
+
+  render() {
+    const { prefixCls, dropdownMenuColumnStyle, isTabSelected, locale, singleMenuStyle, singlePleaseRender } = this.props;
+    const showOptions = this.getShowOptions()
+    let showOptionsIndex = showOptions.length - 1 
+    const activeOptions = this.getActiveOptions()
+    const dropdownMenuColumnStyleSingle = {...dropdownMenuColumnStyle,...singleMenuStyle}
+    const tabItemRender = activeOptions.map( (item,indexItem) => (this.getTabItem(item,indexItem)))
+    if(showOptions && activeOptions && !isTabSelected && showOptions.length > activeOptions.length){
+       const pleaseRenderProps = {
+        key:"please_check" ,
+        className: `${prefixCls}-menu-tab-item ${prefixCls}-menu-tab-please`,
+        text:locale.pleaseSelect
+       }
+       if(isFunction(singlePleaseRender)){
+        tabItemRender.push(singlePleaseRender(pleaseRenderProps))
+       }else{
+        tabItemRender.push(<span {...pleaseRenderProps}>{pleaseRenderProps.text}</span>)
+       }
+       
+    }
+    if(isTabSelected){
+      showOptionsIndex = activeOptions.length - 1
+    }
+    
+    return (
+      <div className={`${prefixCls}-mode-single `}>
+        <div className={`${prefixCls}-menu-tab`}>
+          {tabItemRender}
+        </div>
+        <ul className={`${prefixCls}-menu ${prefixCls}-menu-single `} key={showOptionsIndex} style={dropdownMenuColumnStyleSingle}>
+            {showOptions[showOptionsIndex].map(option => this.getOption(option, showOptionsIndex))}
+        </ul>
       </div>
     );
   }
