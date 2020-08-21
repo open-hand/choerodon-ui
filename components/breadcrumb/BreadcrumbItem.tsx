@@ -1,8 +1,8 @@
 import React, { ReactNode, useState, useCallback } from 'react';
 import classNames from 'classnames';
+import DropDown, { DropDownProps } from 'choerodon-ui/pro/lib/dropdown/Dropdown';
+import { Placements } from 'choerodon-ui/pro/lib/dropdown/enum'
 import { getPrefixCls } from '../configure';
-import DropDown, { DropDownProps } from '../../components-pro/dropdown/Dropdown';
-import { Placements } from '../../components-pro/dropdown/enum'
 import Icon from '../icon';
 import List, { ListProps } from '../list';
 
@@ -49,8 +49,8 @@ const BreadcrumbItem: BreadcrumbItemInterface = ({
   }
   /**
    * 渲染Link
-   * @param childrenLink 
-   * @param restPropsLink 
+   * @param childrenLink
+   * @param restPropsLink
    */
   const renderLink = (childrenLink, restPropsLink, classNameLink, key): React.ReactNode => {
     if (key in restPropsLink) {

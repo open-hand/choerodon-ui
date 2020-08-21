@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react';
-import { NumberField, NumberFieldProps } from '../number-field/NumberField';
+import { NumberField, NumberFieldProps, FormatNumberFuncOptions } from '../number-field/NumberField';
 import { FieldType } from '../data-set/enum';
 import formatCurrency from '../formatter/formatCurrency';
 
@@ -21,9 +21,11 @@ export default class Currency extends NumberField<CurrencyProps> {
     return formatCurrency;
   }
 
-  getFormatOptions(): Intl.NumberFormatOptions | undefined {
+  getFormatOptions(): FormatNumberFuncOptions {
     return {
-      currency: this.getProp('currency'),
+      options: {
+        currency: this.getProp('currency'),
+      },
     };
   }
 }
