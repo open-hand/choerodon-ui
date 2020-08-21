@@ -33,6 +33,7 @@ timeline: true
 - 🐞 `<pro>FormField`: Fixed an error setting a property to the Fragment under _inTable.
 - 🐞 `<pro>DatePicker`: Fix the problem that TimePicker cannot scroll under Firefox.
 - 🐞 `<pro>TextField`: Fix the problem that TextField cannot correctly control maxLength in Chinese input, and optimize the Chinese input experience.
+- 🐞 `<pro>Form`: Fix the conflict between useColon and global configuration.
 
 ## 0.8.69
 

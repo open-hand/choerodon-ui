@@ -33,6 +33,7 @@ timeline: true
 - 🐞 `<pro>DatePicker`: 修复 TimePicker 在 Firefox 下无法滚动的问题。
 - 🐞 `<pro>FormField`: 修复 _inTable 下给 Fragment 设置了属性的错误。
 - 🐞 `<pro>TextField`: 修复 TextField 在中文输入无法正确的控制 maxLength 的问题，并优化中文输入体验。
+- 🐞 `<pro>Form`: 修复 useColon与全局配置的冲突。
 
 ## 0.8.69
 

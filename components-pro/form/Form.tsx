@@ -325,12 +325,34 @@ export default class Form extends DataSetComponent<FormProps> {
 
   @computed
   get useColon(): boolean {
-    return this.observableProps.useColon || getConfig('useColon') || false;
+    const { useColon } = this.observableProps;
+
+    if (useColon !== undefined) {
+      return useColon;
+    }
+
+    const configUseColon = getConfig('useColon');
+    if (configUseColon !== undefined) {
+      return configUseColon;
+    }
+
+    return false;
   }
 
   @computed
   get excludeUseColonTagList(): string[] {
-    return this.observableProps.excludeUseColonTagList || getConfig('excludeUseColonTagList') || defaultExcludeUseColonTag;
+    const { excludeUseColonTagList } = this.observableProps;
+
+    if (excludeUseColonTagList !== undefined) {
+      return excludeUseColonTagList;
+    }
+
+    const configExcludeUseColonTagList = getConfig('excludeUseColonTagList');
+    if (configExcludeUseColonTagList !== undefined) {
+      return configExcludeUseColonTagList;
+    }
+
+    return defaultExcludeUseColonTag;
   }
 
   @computed
