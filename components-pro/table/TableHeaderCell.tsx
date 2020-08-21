@@ -13,7 +13,7 @@ import {
   DraggableStateSnapshot,
 } from 'react-beautiful-dnd';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
-import { isFunction } from 'lodash';
+import { isFunction, isNil } from 'lodash';
 import { ColumnProps, minColumnWidth } from './Column';
 import TableContext from './TableContext';
 import { ElementProps } from '../core/ViewComponent';
@@ -331,17 +331,17 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
       if (isValidElement(headerChild)) {
         return cloneElement(headerChild, { key: 'text' })
       }
-      if (isString(headerChild) ) {
+      if (isString(headerChild) || (isNil(headerChild) && headersEditable)) {
         const widthEdit = iconQuantity
           ? `calc(100% - ${pxToRem(iconQuantity)})`
-          : headersEditable && !key ? `100%` : undefined;
-        const spanStyle = {
+          : headersEditable && !!name ? `100%` : undefined;
+        const spanStyle:CSSProperties = {
           display: 'inline-block',
           width: widthEdit,
           overflow: 'hidden',
           textOverflow: 'ellipsis',
         }
-        if (headersEditable && !key) {
+        if (headersEditable && !!name) {
           const editProps = {
             defaultValue: headerChild,
             value: headerChild,
@@ -356,6 +356,10 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
                 {...editProps}
               />
             )
+          }
+          // 当为null 和 undefined 也可以编辑
+          if(!headerChild){
+            spanStyle.height = '100%';
           }
           return (this.editing ? <ObserverTextField
             autoFocus
