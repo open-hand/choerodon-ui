@@ -548,7 +548,7 @@ export default class Table extends DataSetComponent<TableProps> {
     virtualSpin: false,
     autoHeight: false,
     autoMaxWidth: false,
-    columnsEditType: ColumnsEditType.all,
+    columnsMergeCoverage:[],
   };
 
   tableStore: TableStore = new TableStore(this);
