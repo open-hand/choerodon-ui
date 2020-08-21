@@ -63,23 +63,27 @@
     &-clear {
       position: absolute;
       top: 50%;
-      right: 0;
+      right: .01rem;
       z-index: 2;
-      display: none;
       width: 0.2rem;
       height: 0.2rem;
       margin-top: -0.08rem;
       color: @input-color;
       background: @component-background;
       cursor: pointer;
+      opacity: 0;
       transition: color 0.3s ease, opacity 0.15s ease;
+    }
+
+    &:hover &-clear {
+      opacity: 1;
     }
 
     // arrow
     &-arrow {
       position: absolute;
       top: 50%;
-      right: 0;
+      right: .01rem;
       z-index: 1;
       width: 0.2rem;
       height: 0.2rem;
@@ -159,6 +163,40 @@
     }
     &:only-child {
       border-radius: @border-radius-base;
+    }
+    &-single {
+      border-right: 0;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+    &-single &-item {
+      float: left;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    &-tab {
+      margin-bottom: .1rem;
+      padding: 0.08rem 0.16rem 0 0 ;
+      font-size: 0.12rem;
+      border-bottom: 0.01rem solid #e0e0e0;
+      &-item {
+        padding: 0.05rem @control-padding-horizontal;
+        color: @primary-color;
+        line-height: 0.22rem;
+        white-space: nowrap;
+        cursor: pointer;
+        transition: all 0.3s;
+        &:hover {
+          background: @item-hover-bg;
+        }
+      }
+      &-please{
+        cursor: text;
+        &:hover {
+          background: none;
+        }
+      }
     }
   }
   &-menu-item {

@@ -422,7 +422,7 @@ export interface TableProps extends DataSetComponentProps {
   /**
    * 合并列信息选择，目前可以选择表头文字或者表的位置进行合并。
   */
-  columnsEditType:ColumnsEditType,
+  columnsEditType?:ColumnsEditType,
 }
 
 @observer

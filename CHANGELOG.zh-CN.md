@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `Cascader`: 新增 cascader menuMode 单弹框属性，支持singleMenuStyle，singleMenuItemStyle，singlePleaseRender，singleMenuItemRender 属性配置。
 - 🌟 `configure`: 新增 numberFieldFormatter, numberFieldFormatterOptions 全局配置，renderEmpty文档修改。
 - 🌟 `Breadcrumb`: 新增 breadcrumbItem menuList overlay 属性。
 - 🌟 `Upload`: 新增 dragUploadList，onDragEnd 属性。

@@ -2,6 +2,7 @@ import Pagination from '../rc-components/pagination/locale/zh_CN';
 import DatePicker from '../date-picker/locale/zh_CN';
 import TimePicker from '../time-picker/locale/zh_CN';
 import Calendar from '../calendar/locale/zh_CN';
+import Cascader from '../rc-components/cascader/locale/zh_CN';
 
 export default {
   locale: 'zh-cn',
@@ -9,6 +10,7 @@ export default {
   DatePicker,
   TimePicker,
   Calendar,
+  Cascader,
   Table: {
     filterTitle: '筛选',
     filterConfirm: '确定',

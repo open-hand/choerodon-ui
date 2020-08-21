@@ -43,6 +43,7 @@ subtitle: 级联选择
 | value | 指定选中项 | string\[] | - |
 | onChange | 选择完成后的回调 | `(value, selectedOptions) => void` | - |
 | onPopupVisibleChange | 显示/隐藏浮层的回调 | `(value) => void` | - |
+| menuMode | 单框弹出形式切换| `single` \| `multiple` | - |
 
 `showSearch` 为对象时，其中的字段：
 
@@ -52,6 +53,18 @@ subtitle: 级联选择
 | matchInputWidth | 搜索结果列表是否与输入框同宽 | boolean |  |
 | render | 用于渲染 filter 后的选项 | `function(inputValue, path): ReactNode` |  |
 | sort | 用于排序 filter 后的选项 | `function(a, b, inputValue)` |  |
+
+`menuMode` 为 `single`，其中可以添加的配置：
+
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| singleMenuStyle | 由于渲染在body下可以方便按照业务配置弹出框的大小 | `CSSProperties` |  |
+| singleMenuItemStyle | 由于渲染在body下可以方便按照业务配置超出大小样式和最小宽度等 | `CSSProperties` |  |
+| singlePleaseRender | 设置需要的提示配置 | `({key,className,text}:{key: string,className: string,text: string}) => ReactElement<any>` |  |
+| singleMenuItemRender | 头部可以渲染出想要的tab样子 | ` (title:string) => ReactElement<any>` |  |
+
+无法配置的参数 `expandIcon`，
+
 
 ## 方法
 

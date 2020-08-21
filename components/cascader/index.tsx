@@ -5,16 +5,20 @@ import React, {
   KeyboardEvent,
   ReactNode,
   MouseEventHandler,
+  ReactElement,
 } from 'react';
 import arrayTreeFilter from 'array-tree-filter';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
+import isEmpty from 'lodash/isEmpty';
 import Input from '../input';
 import Icon from '../icon';
 import RcCascader from '../rc-components/cascader';
 import KeyCode from '../_util/KeyCode';
 import { Size } from '../_util/enum';
 import { getPrefixCls } from '../configure';
+import LocaleReceiver from '../locale-provider/LocaleReceiver';
+import enUS from '../rc-components/pagination/locale/en_US';
 
 export interface CascaderOptionType {
   value: string;
@@ -36,6 +40,12 @@ export interface ShowSearchType {
   sort?: (a: CascaderOptionType[], b: CascaderOptionType[], inputValue: string) => number;
   matchInputWidth?: boolean;
 }
+
+export enum MenuMode {
+  single = 'single',
+  multiple = 'multiple',
+}
+export type CascaderLocale = any;
 
 export interface CascaderProps {
   /** 可选项数据源 */
@@ -78,6 +88,16 @@ export interface CascaderProps {
   getPopupContainer?: (triggerNode?: HTMLElement) => HTMLElement;
   popupVisible?: boolean;
   label?: string;
+  /** 单框弹出形式切换 */
+  menuMode?: MenuMode;
+  /** 由于渲染在body下可以方便按照业务配置弹出框的大小 */
+  singleMenuStyle: CSSProperties,
+  /** 由于渲染在body下可以方便按照业务配置超出大小样式和最小宽度等 */
+  singleMenuItemStyle: CSSProperties,
+  /** 设置需要的提示问题配置 */
+  singlePleaseRender: ({key,className,text}:{key: string,className: string,text: string}) => ReactElement<any>,
+   /** 头部可以渲染出想要的tab样子 */
+  singleMenuItemRender: (title:string) => ReactElement<any>,
 }
 
 export interface CascaderState {
@@ -140,6 +160,7 @@ export default class Cascader extends Component<CascaderProps, CascaderState> {
     disabled: false,
     allowClear: true,
     notFoundContent: 'Not Found',
+    menuMode:MenuMode.multiple,
   };
 
   cachedOptions: CascaderOptionType[];
@@ -329,6 +350,7 @@ export default class Cascader extends Component<CascaderProps, CascaderState> {
       className,
       style,
       showSearch = false,
+      allowClear,
       ...otherProps
     } = props;
     const prefixCls = getPrefixCls('cascader', customizePrefixCls);
@@ -373,6 +395,11 @@ export default class Cascader extends Component<CascaderProps, CascaderState> {
       'sortFilteredOption',
       'notFoundContent',
       'allowClear',
+      'menueMode',
+      'singleMenuStyle',
+      'singleMenuItemStyle',
+      'singlePleaseRender',
+      'singleMenuItemRender',
     ]);
 
     let options = props.options;
@@ -398,6 +425,14 @@ export default class Cascader extends Component<CascaderProps, CascaderState> {
       dropdownMenuColumnStyle.width = this.input.input.offsetWidth;
     }
 
+    const clearIcon =
+      (allowClear && !disabled && value.length > 0) || state.inputValue ? (
+        <Icon
+          type="close"
+          className={`${prefixCls}-picker-clear`}
+          onClick={this.clearSelection} />
+      ) : null;
+
     const input = children || (
       <span style={style} className={pickerCls}>
         <span className={`${prefixCls}-picker-label`}>{this.getLabel()}</span>
@@ -416,24 +451,40 @@ export default class Cascader extends Component<CascaderProps, CascaderState> {
           onKeyDown={this.handleKeyDown}
           onChange={showSearch ? this.handleInputChange : undefined}
         />
+        {clearIcon}
         <Icon type="arrow_drop_down" className={arrowCls} />
       </span>
     );
 
+    /**
+     * 添加多语言配置
+     * @param locale any
+     */
+    const renderCascader = (locale: CascaderLocale) => {
+      // 只配置部分语言其他英语即可
+      const cascaderLocal = isEmpty(locale) ? enUS.Cascader : locale
+      return (
+        <RcCascader
+          {...props}
+          inputPrefixCls={inputPrefixCls}
+          prefixCls={prefixCls}
+          options={options}
+          value={value}
+          popupVisible={state.popupVisible}
+          onPopupVisibleChange={this.handlePopupVisibleChange}
+          onChange={this.handleChange}
+          dropdownMenuColumnStyle={dropdownMenuColumnStyle}
+          locale={cascaderLocal}
+        >
+          {input}
+        </RcCascader>
+      )
+    }
+
     return (
-      <RcCascader
-        {...props}
-        inputPrefixCls={inputPrefixCls}
-        prefixCls={prefixCls}
-        options={options}
-        value={value}
-        popupVisible={state.popupVisible}
-        onPopupVisibleChange={this.handlePopupVisibleChange}
-        onChange={this.handleChange}
-        dropdownMenuColumnStyle={dropdownMenuColumnStyle}
-      >
-        {input}
-      </RcCascader>
+     <LocaleReceiver componentName="Cascader" defaultLocale={enUS}>
+       {renderCascader}
+     </LocaleReceiver>
     );
   }
 }

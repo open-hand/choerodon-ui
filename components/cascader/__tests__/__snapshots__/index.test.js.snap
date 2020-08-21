@@ -339,6 +339,7 @@ exports[`Cascader support controlled mode 1`] = `
           <input
             autocomplete="off"
             class="c7n-input c7n-cascader-input "
+            menumode="multiple"
             readonly=""
             type="text"
             value=""
@@ -348,7 +349,49 @@ exports[`Cascader support controlled mode 1`] = `
     </div>
   </span>
   <i
+    class="icon icon-close c7n-cascader-picker-clear"
+  />
+  <i
     class="icon icon-arrow_drop_down c7n-cascader-picker-arrow"
   />
 </span>
+`;
+
+exports[`Cascader when use single mode you can look only menu items 1`] = `
+<div>
+  <div
+    class="c7n-cascader-menus  c7n-cascader-menus-placement-bottomLeft "
+  >
+    <div
+      class="c7n-cascader-mode-single "
+    >
+      <div
+        class="c7n-cascader-menu-tab"
+      >
+        <span
+          class="c7n-cascader-menu-tab-item c7n-cascader-menu-tab-please"
+        />
+      </div>
+      <ul
+        class="c7n-cascader-menu c7n-cascader-menu-single "
+        style="width:3rem"
+      >
+        <li
+          class="c7n-cascader-menu-item"
+          style="min-width:1rem"
+          title="Zhejiang"
+        >
+          Zhejiang
+        </li>
+        <li
+          class="c7n-cascader-menu-item"
+          style="min-width:1rem"
+          title="Jiangsu"
+        >
+          Jiangsu
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
 `;
