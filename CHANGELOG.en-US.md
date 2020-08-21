@@ -35,6 +35,7 @@ timeline: true
 - 🐞 `<pro>DatePicker`: Fix the problem that TimePicker cannot scroll under Firefox.
 - 🐞 `<pro>FormField`: Fixed an error setting a property to the Fragment under _inTable.
 - 🐞 `<pro>TextField`: Fix the problem that TextField cannot correctly control maxLength in Chinese input, and optimize the Chinese input experience.
+- 🐞 `<pro>Table`: Fix the wrong children type of Column. This error will cause the combined column to not be used in TypeScript.
 
 ## 0.8.69
 
