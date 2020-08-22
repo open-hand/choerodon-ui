@@ -30,6 +30,7 @@ title: API
 | value | selected value | string\[] | - |
 | onChange | callback when finishing cascader select | `(value, selectedOptions) => void` | - |
 | onPopupVisibleChange | callback when popup shown or hidden | `(value) => void` | - |
+| menuMode | Single box pop-up form switch| `single` \| `multiple` | - |
 
 Fields in `showSearch`:
 
@@ -39,6 +40,15 @@ Fields in `showSearch`:
 | matchInputWidth | Whether the width of result list equals to input's | boolean |  |
 | render | Used to render filtered options. | `function(inputValue, path): ReactNode` |  |
 | sort | Used to sort filtered options. | `function(a, b, inputValue)` |  |
+
+When `menuMode` is `single` configuration can be added：
+
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| singleMenuStyle | Because rendering under the Body makes it easy to configure the size of the pop-up box according to the business | `CSSProperties` |  |
+| singleMenuItemStyle | Because rendering under the Body can easily be configured according to the business beyond the size style, minimum width and so on | `CSSProperties` |  |
+| singlePleaseRender | Set the required prompt configuration | `({key,className,text}:{key: string,className: string,text: string}) => ReactElement<any>` |  |
+| singleMenuItemRender | The header can render the desired TAB | ` (title:string) => ReactElement<any>` |  |
 
 ## Methods
 

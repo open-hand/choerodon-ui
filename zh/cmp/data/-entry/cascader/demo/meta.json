@@ -143,6 +143,20 @@
       "order": 9,
       "height": 129,
       "screenshot": ""
+    },
+    {
+      "filename": "lazy.js",
+      "title": {
+        "zh": "单栏选择",
+        "en": "single menu select"
+      },
+      "description": {
+        "zh": "每次选项都只可以选择一个menu弹出，可以实现大量数据的选择情况。可以通过头部来切换选择层级\n",
+        "en": "Only one menu pop-up can be selected for each option, which can realize the selection of large amounts of data. You can switch the selection level through the head. \n"
+      },
+      "order": 10,
+      "height": 129,
+      "screenshot": ""
     }
   ]
 }

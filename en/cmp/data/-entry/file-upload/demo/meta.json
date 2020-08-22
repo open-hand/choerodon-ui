@@ -115,6 +115,20 @@
       "order": 7,
       "height": 169,
       "screenshot": ""
+    },
+    {
+      "filename": "picture-card.js",
+      "title": {
+        "zh": "可拖拽照片墙",
+        "en": "Pictures Wall"
+      },
+      "description": {
+        "zh": "用户可以上传图片并在列表中显示缩略图，可拖拽照片墙。当上传照片数到达限制后，上传按钮消失。\n",
+        "en": "After users upload picture, the thumbnail will be shown in list. The upload button will disappear when count meets limitation.\n"
+      },
+      "order": 8,
+      "height": 205,
+      "screenshot": ""
     }
   ]
 }

@@ -12,6 +12,7 @@ title: API
 | customRequest       | override for the default xhr behavior allowing for additional customization and ability to implement your own XMLHttpRequest                                                         | Function                                                           | -       |
 | data                | Uploading params or function which can return uploading params.                                                                                                                      | object\|function(file)                                             | -       |
 | defaultFileList     | Default list of files that have been uploaded.                                                                                                                                       | object\[]                                                          | -       |
+| dragUploadList | disable drag `picture-card` | boolean | false |
 | disabled            | disable upload button                                                                                                                                                                | boolean                                                            | false   |
 | fileList            | List of files that have been uploaded (controlled)                                                                                                                                   | object\[]                                                          | -       |
 | headers             | Set request headers, valid above IE10.                                                                                                                                               | object                                                             | -       |
@@ -27,6 +28,7 @@ title: API
 | onSuccess           | A callback function, will be executed when upload success.                                                                                                                           | Function(response, file)                                           | 无      |
 | onProgress          | A callback function, will be executed when upload in progress.                                                                                                                       | Function({ percent }, file)                                        | 无      |
 | onError             | A callback function, will be executed when upload error.                                                                                                                             | Function(error, response, file)                                    | 无      |
+| onDragEnd   | A callback function, will drag `picture-card`   | Function(fileList) | -   |
 | requestFileKeys   | can upload the file props to the server   | string,string[] | 无   |
 
 ### onChange

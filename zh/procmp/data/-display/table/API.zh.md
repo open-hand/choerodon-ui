@@ -45,6 +45,9 @@ title: API
 | onDragEnd | 完成拖拽后的触发事件，可以通过 resultDrag.destination.droppableId === 'table' or ‘tableHeader’ 来判断是行拖拽还是列拖拽 | (dataSet:DataSet,columns:ColumnProps[],resultDrag: DropResult, provided: ResponderProvided) => void |  |
 | columnsDragRender | 控制列的拖拽渲染，从这里可以实现对默认的拖拽的一些自定义的设置，需要参阅react-beautiful-dnd | 请查看DragRender[配置项](#dragRender)  |  |
 | rowDragRender | 控制列的拖拽渲染，从这里可以实现对默认的拖拽的一些自定义的设置，需要参阅react-beautiful-dnd | 请查看DragRender[配置项](#dragRender) |  |
+| columnsMergeCoverage | 优先级高于colums，可以实现表头文字修改自定义修改和列的位置自定义修改 | ColumnProps[] | [] |
+| columnsOnChange | 拖拽列和修改表头文字触发事件 | `(change:{columns:columnProps[]:colum:columnProps,type:string}) => void` | - |
+| columnsEditType | 合并列信息选择，目前可以选择表头文字或者表的位置进行合并 | `order`  `all`  `header` | - |
 
 更多属性请参考 [DataSetComponent](/zh/procmp/abstract/#DataSetComponent)。
 

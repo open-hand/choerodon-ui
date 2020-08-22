@@ -12,6 +12,7 @@ title: API
 | customRequest       | 通过覆盖默认的上传行为，可以自定义自己的上传实现                                                                                                                               | Function                                                           | 无     |
 | data                | 上传所需参数或返回上传参数的方法                                                                                                                                               | object\|function(file)                                             | 无     |
 | defaultFileList     | 默认已经上传的文件列表                                                                                                                                                         | object\[]                                                          | 无     |
+| dragUploadList | 是否开启拖拽`picture-card` | boolean | false |
 | disabled            | 是否禁用                                                                                                                                                                       | boolean                                                            | false  |
 | fileList            | 已经上传的文件列表（受控）                                                                                                                                                     | object\[]                                                          | 无     |
 | headers             | 设置上传的请求头部，IE10 以上有效                                                                                                                                              | object                                                             | 无     |
@@ -27,6 +28,7 @@ title: API
 | onSuccess           | 上传成功事件                                                                                                                                                                   | Function(response, file)                                           | 无     |
 | onProgress          | 上传进度中事件                                                                                                                                                                 | Function({ percent }, file)                                        | 无     |
 | onError             | 上传失败事件                                                                                                                                                                   | Function(error, response, file)                                    | 无     |
+| onDragEnd   | 拖拽`picture-card`事件   | Function(fileList) | 无   |
  | requestFileKeys   | 可以传输文件上面的一些props信息给后台   | string,string[] | 无   |
 
 ### onChange
