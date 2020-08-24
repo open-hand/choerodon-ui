@@ -15,6 +15,9 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>Table`: Fix the wrong children type of Column. This error will cause the combined column to not be used in TypeScript.
+
+
 ## 0.8.71
 
 `2020-08-21`
