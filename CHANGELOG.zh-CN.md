@@ -15,8 +15,9 @@ timeline: true
 
 ---
 
-- 🐞 `<pro>Table`: 修复 Column 错误的children类型,该错误会导致在typescript中无法使用组合列。
-- 🐞 `<pro>NumberField`: 修复在Table中使用的时候在某些情况下上下箭头会失效的问题。
+- 🌟 `Progress`: 新增 showPointer 属性。
+- 🐞 `<pro>Table`: 修复 Column 错误的 children 类型,该错误会导致在 TS 中无法使用组合列。
+- 🐞 `<pro>NumberField`: 修复在 Table 中使用的时候在某些情况下上下箭头会失效的问题。
 
 ## 0.8.71
 
@@ -25,7 +26,7 @@ timeline: true
 - 🌟 `configure`: 新增 numberFieldFormatter, numberFieldFormatterOptions 全局配置，renderEmpty文档修改。
 - 🌟 `Upload`: 新增 dragUploadList，onDragEnd 属性。
 - 🌟 `Breadcrumb`: 新增 breadcrumbItem menuList overlay 属性。
-- 🌟 `Cascader`: 新增 cascader menuMode 单弹框属性，支持singleMenuStyle，singleMenuItemStyle，singlePleaseRender，singleMenuItemRender 属性配置。
+- 🌟 `Cascader`: 新增 Cascader menuMode 单弹框属性，支持singleMenuStyle，singleMenuItemStyle，singlePleaseRender，singleMenuItemRender 属性配置。
 - 🌟 `<pro>Lov`: 新增 paramMatcher 参数匹配器属性。
 - 🌟 `<pro>NumberField`: 新增 formatter, formatterOptions 属性。
 - 🌟 `<pro>Table`: 新增 columnsMergeCoverage columnsOnChange columnsEdictType 属性实现表头修改。

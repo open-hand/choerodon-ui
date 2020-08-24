@@ -15,8 +15,9 @@ timeline: true
 
 ---
 
-- 🐞 `<pro>Table`: Fix the wrong children type of Column. This error will cause the combined column to not be used in TypeScript.
-- 🐞 `<pro>NumberField`: Fix the problem that the up and down arrows will fail in some cases when used in Table.
+- 🌟 `Progress`: Added `showPointer` property.
+- 🐞 `<pro>Table`: Fixed the wrong children type of Column. This error will cause the combined column to not be used in TypeScript.
+- 🐞 `<pro>NumberField`: Fixed the problem that the up and down arrows will fail in some cases when used in Table.
 
 
 ## 0.8.71
