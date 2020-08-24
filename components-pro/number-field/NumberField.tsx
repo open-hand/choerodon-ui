@@ -335,12 +335,13 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
         }
       }
     }
-    if (this.value !== newValue) {
-      if (this.multiple) {
-        this.setText(String(newValue));
-      } else {
-        this.prepareSetValue(newValue);
-      }
+    // 不要进行对比操作,在table中使用的时候,因为NumberField会作为editor使用,所以在 对第一个cell只点击一次的情况下(例如plus)
+    // 此时切换到第二个cell进行编辑，无法进行上次操作(同上次的plus)
+    // this.value !== newValue
+    if (this.multiple) {
+      this.setText(String(newValue));
+    } else {
+      this.prepareSetValue(newValue);
     }
 
   }

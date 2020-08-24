@@ -3,7 +3,6 @@ order: 0
 title:
   zh-CN: 自定义格式
   en-US: formatter
-only: true
 ---
 
 ## zh-CN
