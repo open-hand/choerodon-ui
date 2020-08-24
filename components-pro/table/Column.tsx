@@ -14,7 +14,7 @@ export const defaultMinWidth = 100;
 export type onCellProps = { dataSet: DataSet; record: Record; column: ColumnProps; };
 export type commandProps = { dataSet: DataSet; record: Record; };
 
-export interface ColumnProps extends ElementProps {
+export interface ColumnPropsBase extends ElementProps {
   /**
    * 列对照的字段名
    */
@@ -31,7 +31,7 @@ export interface ColumnProps extends ElementProps {
   /**
    * 内部最大宽度
    */
-  innerMaxWidth?:number;
+  innerMaxWidth?: number;
   /**
    * 列头
    */
@@ -119,11 +119,19 @@ export interface ColumnProps extends ElementProps {
    * 给内置按钮加属性：command={[['edit', { color: 'red' }], ...]}
    */
   command?: Commands[] | ((props: commandProps) => Commands[]);
+}
+
+export interface ColumnProps extends ColumnPropsBase {
   children?: ColumnProps[];
 }
 
+export interface ColumnPropsInner extends ColumnPropsBase {
+  children?: ReactElement<ColumnProps>[] | ReactElement<ColumnProps>;
+}
+
 /* eslint-disable react/prefer-stateless-function,react/no-unused-prop-types */
-export default class Column extends Component<ColumnProps, ComponentState> {
+export default class Column extends Component<ColumnPropsInner, ComponentState> {
+
   static propTypes = {
     /**
      * 列对照的字段名
