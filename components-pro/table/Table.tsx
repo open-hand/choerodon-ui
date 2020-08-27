@@ -148,15 +148,21 @@ export interface DragTableRowProps extends TableRowProps {
   rubric: DraggableRubric
 }
 
-export type DragRenderClone = (DragTableRowProps | DragTableHeaderCellProps)
+export interface RowRenderIcon { 
+  column: ColumnProps;
+  dataSet: DataSet;
+  snapshot: DraggableStateSnapshot;
+}
 
-export type DragIconRender = ({ column: ColumnProps, dataSet: DataSet, snapshot: DraggableStateSnapshot } | { record: Record })
+export interface ColumnRenderIcon {
+  record: Record;
+}
 
 export interface DragRender {
-  droppableProps: DroppableProps;
-  draggableProps: DraggableProps;
-  renderClone: (dragRenderProps: DragRenderClone) => ReactElement<any>;
-  renderIcon: (DragIconRender) => ReactElement<any>;
+  droppableProps?: DroppableProps;
+  draggableProps?: DraggableProps;
+  renderClone?: ((dragRenderProps: DragTableRowProps) => ReactElement<any>) | ((dragRenderProps: DragTableHeaderCellProps) => ReactElement<any>);
+  renderIcon?: ((rowRenderIcon:RowRenderIcon) => ReactElement<any>) | ((columnRenderIcon:ColumnRenderIcon) => ReactElement<any>);
 }
 
 export interface ChangeColumns {
