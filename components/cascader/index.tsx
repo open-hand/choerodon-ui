@@ -395,11 +395,12 @@ export default class Cascader extends Component<CascaderProps, CascaderState> {
       'sortFilteredOption',
       'notFoundContent',
       'allowClear',
-      'menueMode',
       'singleMenuStyle',
       'singleMenuItemStyle',
       'singlePleaseRender',
       'singleMenuItemRender',
+      'menuMode',
+      'defaultValue',
     ]);
 
     let options = props.options;

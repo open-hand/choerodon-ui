@@ -140,6 +140,13 @@ const locale: Locale = {
     other: 'Webサイト全般',
     series: 'セット',
   },
+  Cascader: {
+    please_select:'選んでください',
+    value_missing_no_label: '選択してください。',
+    value_missing: '{label}を選択してください。',
+    select_all: 'すべて選択',
+    unselect_all: 'いや',
+  },
 };
 
 export default locale;
