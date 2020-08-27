@@ -1,10 +1,11 @@
 import React, { ReactNode, useState, useCallback } from 'react';
 import classNames from 'classnames';
-import DropDown, { DropDownProps } from 'choerodon-ui/pro/lib/dropdown/Dropdown';
-import { Placements } from 'choerodon-ui/pro/lib/dropdown/enum'
+import DropDown, { DropDownProps } from '../dropdown';
+import { Placements } from '../dropdown/enum';
 import { getPrefixCls } from '../configure';
 import Icon from '../icon';
 import List, { ListProps } from '../list';
+import buildPlacements from './placements'
 
 
 export interface menuListItemProps {
@@ -44,7 +45,7 @@ const BreadcrumbItem: BreadcrumbItemInterface = ({
   const isMenuListOn = !!(menuList && menuList.length > 0);
   const onVisibleChange = async (visible: boolean) => {
     if (menuList.length > 0) {
-      setActive(!visible)
+      setActive(visible)
     }
   }
   /**
@@ -73,7 +74,7 @@ const BreadcrumbItem: BreadcrumbItemInterface = ({
   const renderList = (
     <List
       className={`${prefixCls}-overlay-menu-list`}
-      grid={{ gutter: 16, column: 4 }}
+      grid={{ gutter: 0, column: 3 }}
       {...listProps}
       dataSource={menuList}
       renderItem={item => {
@@ -82,7 +83,9 @@ const BreadcrumbItem: BreadcrumbItemInterface = ({
         let titleItem = listItemName || href;
         titleItem = listChildren ? listChildren({ href, listItemName }) : listItemName;
         return (
-          renderLink(titleItem, listRestProps, 'overlay-menu-list-item', 'href')
+          <List.Item>
+            {renderLink(titleItem, listRestProps, 'overlay-menu-list-item', 'href')}
+          </List.Item>
         )
       }}
     />
@@ -98,12 +101,14 @@ const BreadcrumbItem: BreadcrumbItemInterface = ({
 
   const renderBreadcrumbMenu = (linkItem: React.ReactNode) => {
     if (overlayMenu) {
+      const buildASPlacements = buildPlacements as unknown as Placements
       const dropDownProps = {
-        popupClassName: isMenuListOn ? `${prefixCls}-overlay-popup` : undefined,
+        overlayClassName: isMenuListOn ? `${prefixCls}-overlay-popup` : undefined,
         onOverlayClick,
         overlay: overlayMenu,
         placement: isMenuListOn ? Placements.bottomLeft : Placements.bottomCenter,
-        onHiddenChange: onVisibleChange,
+        onVisibleChange,
+        overlayPlacements: buildASPlacements,
         ...dropdownProps,
       }
       return (

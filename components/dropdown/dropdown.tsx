@@ -4,6 +4,7 @@ import DropdownButton from './dropdown-button';
 import warning from '../_util/warning';
 import RcDropdown from '../rc-components/dropdown';
 import { getPrefixCls } from '../configure';
+import { Placements } from './enum';
 
 export interface DropDownProps {
   trigger?: ('click' | 'hover' | 'contextMenu')[];
@@ -16,8 +17,10 @@ export interface DropDownProps {
   prefixCls?: string;
   className?: string;
   transitionName?: string;
+  overlayClassName?:string;
   placement?: 'topLeft' | 'topCenter' | 'topRight' | 'bottomLeft' | 'bottomCenter' | 'bottomRight';
   forceRender?: boolean;
+  overlayPlacements?: Placements;
 }
 
 export default class Dropdown extends Component<DropDownProps, any> {
