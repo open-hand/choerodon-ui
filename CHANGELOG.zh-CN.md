@@ -18,6 +18,7 @@ timeline: true
 - 🌟 `Progress`: 新增 showPointer 属性。
 - 🐞 `<pro>Table`: 修复 Column 错误的 children 类型,该错误会导致在 TS 中无法使用组合列。
 - 🐞 `<pro>NumberField`: 修复在 Table 中使用的时候在某些情况下上下箭头会失效的问题。
+- 🐞 `<pro>FormField`: 修复在 Form 中子组件的newLine属性在TypeScript中类型出现报错的问题。
 
 ## 0.8.71
 

@@ -142,6 +142,10 @@ export interface FormFieldProps extends DataSetComponentProps {
    */
   help?: string;
   /**
+   * 另起新行
+   */
+  newLine?: boolean;
+  /**
    * 显示提示信息的方式
    *
    * @type {ShowHelp}
@@ -249,6 +253,10 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
      * 表单下控件跨越的行数
      */
     rowSpan: PropTypes.number,
+    /**
+     * 另起新行
+     */
+    newLine: PropTypes.bool,
     /**
      * 表单下控件跨越的列数
      */
