@@ -31,8 +31,21 @@ subtitle: 级联选择
 | primitiveValue | 是否为原始值（建议以绑定的数据源 Field 的 type 来决定值类型，如 type 设为 object 相当于 primitiveValue 设为 false）`true` - 选项中 valueField 对应的值 `false` - 选项值对象 | boolean |  |
 | notFoundContent | 当下拉列表为空时显示的内容 | ReactNode |  |
 | onOption | 设置选项属性，如 disabled | ({ dataSet, record })) => object \| ({ options, item })) => object |  |
+| menuMode | Single box pop-up form switch| `single` \| `multiple` | - |
 
 更多属性请参考 [TriggerField](/components-pro/trigger-field/#TriggerField)。
+
+When `menuMode` is `single` configuration can be added：
+
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| singleMenuStyle | Because rendering under the Body makes it easy to configure the size of the pop-up box according to the business | `CSSProperties` |  |
+| singleMenuItemStyle | Because rendering under the Body can easily be configured according to the business beyond the size style, minimum width and so on | `CSSProperties` |  |
+| singlePleaseRender | Set the required prompt configuration | `({key,className,text}:{key: string,className: string,text: string}) => ReactElement<any>` |  |
+| singleMenuItemRender | The header can render the desired TAB | ` (title:string) => ReactElement<any>` |  |
+
+Parameters that cannot be configured `expandIcon`，
+
 
 
 > 注意，如果需要获得中国省市区数据，可以参考 [china-division](https://gist.github.com/afc163/7582f35654fd03d5be7009444345ea17)。

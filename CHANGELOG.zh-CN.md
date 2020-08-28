@@ -16,6 +16,10 @@ timeline: true
 ---
 
 - 🌟 `Progress`: 新增 showPointer 属性。
+- 🌟 `<pro>Cascader`: 新增加 Cascader 单列表模式。
+- 🌟 `<pro>Table`: 添加拖拽放置前事件回调 onDragEndBefore。
+- 💄 `Breadcrumb`: 优化 Breadcrumb 符合 MD 设计。
+- 🐞 `<pro>Table`: 修复 inline 模式下面无法显示 Tooltip 。
 - 🐞 `<pro>Table`: 修复 Column 错误的 children 类型,该错误会导致在 TS 中无法使用组合列。
 - 🐞 `<pro>NumberField`: 修复在 Table 中使用的时候在某些情况下上下箭头会失效的问题。
 

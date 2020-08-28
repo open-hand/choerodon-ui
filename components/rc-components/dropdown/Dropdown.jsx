@@ -24,6 +24,7 @@ export default class Dropdown extends Component {
     getPopupContainer: PropTypes.func,
     visible: PropTypes.bool,
     defaultVisible: PropTypes.bool,
+    overlayPlacements:PropTypes.object,
   };
 
   static defaultProps = {
@@ -132,10 +133,12 @@ export default class Dropdown extends Component {
       showAction,
       hideAction,
       overlayClassName,
+      overlayPlacements,
       overlayStyle,
       trigger,
       ...otherProps
     } = this.props;
+    const builtinPlacements = overlayPlacements || placements
     return (
       <Trigger
         {...otherProps}
@@ -143,7 +146,7 @@ export default class Dropdown extends Component {
         ref={this.saveTrigger}
         popupClassName={overlayClassName}
         popupStyle={overlayStyle}
-        builtinPlacements={placements}
+        builtinPlacements={builtinPlacements}
         action={trigger}
         showAction={showAction}
         hideAction={hideAction}

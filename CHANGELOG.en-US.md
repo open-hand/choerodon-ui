@@ -16,6 +16,10 @@ timeline: true
 ---
 
 - 🌟 `Progress`: Added `showPointer` property.
+- 🌟 `<pro>Cascader`: Added Cascader SingleMenu.
+- 🌟 `<pro>Table`: Added event `onDragEndBefore` callback before drag and drop.
+- 💄 `Breadcrumb`: Optimized the breadcrumb to MD design.
+- 🐞 `<pro>Table`: Fixed inline mode can't show Tooltip.
 - 🐞 `<pro>Table`: Fixed the wrong children type of Column. This error will cause the combined column to not be used in TypeScript.
 - 🐞 `<pro>NumberField`: Fixed the problem that the up and down arrows will fail in some cases when used in Table.
 

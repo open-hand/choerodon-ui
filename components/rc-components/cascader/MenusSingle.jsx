@@ -4,6 +4,7 @@ import arrayTreeFilter from 'array-tree-filter';
 import { findDOMNode } from 'react-dom';
 import Locale from './locale/en_US';
 import isFunction from 'lodash/isFunction';
+import Icon from '../../icon';
 
 export default class Menus extends Component {
   static defaultProps = {
@@ -17,8 +18,8 @@ export default class Menus extends Component {
     expandTrigger: 'click',
     isTabSelected: false,
     locale: Locale,
-    singleMenuStyle: { width: '3rem' },
-    singleMenuItemStyle: { minWidth: '1rem' },
+    singleMenuStyle: { width:'3rem'},
+    singleMenuItemStyle: { minWidth: '1rem'},
   };
 
   static propTypes = {
@@ -74,6 +75,7 @@ export default class Menus extends Component {
     let expandProps = {
       onClick: onSelect,
     };
+    const hasChildren = option.children && option.children.length > 0;
     let menuItemCls = `${prefixCls}-menu-item`;
     // TODO: add item style
     if (expandTrigger === 'hover' && hasChildren) {
@@ -177,16 +179,9 @@ export default class Menus extends Component {
       onClick: onSelect,
     };
     let menuItemCls = `${prefixCls}-menu-tab-item`;
-
-    let title = '';
-    if (option.title) {
-      title = option.title;
-    } else if (typeof option.label === 'string') {
-      title = option.label;
-    }
-    let label = option.label;
-    if (isFunction(singleMenuItemRender)) {
-      label = singleMenuItemItem(option.label);
+    let label = option.label
+    if(isFunction(singleMenuItemRender)){
+      label = singleMenuItemItem(option.label)
     }
     return (
       <span
@@ -195,41 +190,48 @@ export default class Menus extends Component {
         {...expandProps}
       >
         {label}
+        <Icon type="arrow_drop_down" />
       </span>
     );
   }
 
   render() {
     const { prefixCls, dropdownMenuColumnStyle, isTabSelected, locale, singleMenuStyle, singlePleaseRender } = this.props;
-    const showOptions = this.getShowOptions();
-    let showOptionsIndex = showOptions.length - 1;
-    const activeOptions = this.getActiveOptions();
-    const dropdownMenuColumnStyleSingle = { ...dropdownMenuColumnStyle, ...singleMenuStyle };
-    const tabItemRender = activeOptions.map((item, indexItem) => (this.getTabItem(item, indexItem)));
-    if (showOptions && activeOptions && !isTabSelected && showOptions.length > activeOptions.length) {
-      const pleaseRenderProps = {
-        key: 'please_check',
+    const showOptions = this.getShowOptions()
+    let showOptionsIndex = showOptions.length - 1
+    const activeOptions = this.getActiveOptions()
+    const dropdownMenuColumnStyleSingle = {...dropdownMenuColumnStyle,...singleMenuStyle}
+    const tabItemRender = activeOptions.map((item,indexItem) => (this.getTabItem(item,indexItem)))
+    let tabItemRenderResult 
+    if(showOptions && activeOptions && !isTabSelected && showOptions.length > activeOptions.length){
+       const pleaseRenderProps = {
+        key:"please_check" ,
         className: `${prefixCls}-menu-tab-item ${prefixCls}-menu-tab-please`,
-        text: locale.pleaseSelect,
-      };
-      if (isFunction(singlePleaseRender)) {
-        tabItemRender.push(singlePleaseRender(pleaseRenderProps));
-      } else {
-        tabItemRender.push(<span {...pleaseRenderProps}>{pleaseRenderProps.text}</span>);
-      }
-
+        text:locale.pleaseSelect
+       }
+       if(isFunction(singlePleaseRender)){
+        tabItemRenderResult = singlePleaseRender(pleaseRenderProps)
+       }else{
+        const pleaseItem = (    
+            <span {...pleaseRenderProps}>
+              {pleaseRenderProps.text}
+              <Icon type="arrow_drop_down" />
+            </span>
+        )
+        tabItemRenderResult = tabItemRender.length > 0 ? [...tabItemRender,pleaseItem] : pleaseItem;
+       }
     }
-    if (isTabSelected) {
-      showOptionsIndex = activeOptions.length - 1;
+    if(isTabSelected){
+      showOptionsIndex = activeOptions.length - 1 < 0 ? 0 : activeOptions.length - 1
     }
 
     return (
       <div className={`${prefixCls}-mode-single `}>
         <div className={`${prefixCls}-menu-tab`}>
-          {tabItemRender}
+          {tabItemRenderResult || tabItemRender }
         </div>
         <ul className={`${prefixCls}-menu ${prefixCls}-menu-single `} key={showOptionsIndex} style={dropdownMenuColumnStyleSingle}>
-          {showOptions[showOptionsIndex].map(option => this.getOption(option, showOptionsIndex))}
+            {showOptions[showOptionsIndex].map(option => this.getOption(option, showOptionsIndex))}
         </ul>
       </div>
     );

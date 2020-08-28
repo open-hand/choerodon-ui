@@ -47,39 +47,39 @@ export function getEditorByField(field: Field): ReactElement<FormFieldProps> {
   }
   switch (type) {
     case FieldType.boolean:
-      return <ObserverCheckBox _inTable />;
+      return <ObserverCheckBox />;
     case FieldType.number:
-      return <ObserverNumberField _inTable />;
+      return <ObserverNumberField />;
     case FieldType.currency:
-      return <Currency _inTable />;
+      return <Currency />;
     case FieldType.date:
-      return <DatePicker _inTable />;
+      return <DatePicker />;
     case FieldType.dateTime:
-      return <DateTimePicker _inTable />;
+      return <DateTimePicker />;
     case FieldType.time:
-      return <TimePicker _inTable />;
+      return <TimePicker />;
     case FieldType.week:
-      return <WeekPicker _inTable />;
+      return <WeekPicker />;
     case FieldType.month:
-      return <MonthPicker _inTable />;
+      return <MonthPicker />;
     case FieldType.year:
-      return <YearPicker _inTable />;
+      return <YearPicker />;
     case FieldType.intl:
-      return <IntlField _inTable />;
+      return <IntlField />;
     case FieldType.email:
-      return <EmailField _inTable />;
+      return <EmailField />;
     case FieldType.url:
-      return <UrlField _inTable />;
+      return <UrlField />;
     case FieldType.color:
-      return <ColorPicker _inTable />;
+      return <ColorPicker />;
     case FieldType.string:
-      return <ObserverTextField _inTable />;
+      return <ObserverTextField />;
     default:
       warning(
         false,
         `Table auto editor: No editor exists on the field<${name}>'s type<${type}>, so use the TextField as default editor`,
       );
-      return <ObserverTextField _inTable />;
+      return <ObserverTextField />;
   }
 }
 

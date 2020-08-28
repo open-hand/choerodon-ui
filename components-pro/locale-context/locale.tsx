@@ -137,6 +137,13 @@ export interface Locale {
     other;
     series;
   };
+  Cascader:{
+    please_select;
+    value_missing_no_label;
+    value_missing;
+    select_all;
+    unselect_all;
+  }
 }
 
 export default zh_CN;

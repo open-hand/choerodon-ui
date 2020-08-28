@@ -136,6 +136,13 @@ const locale: Locale = {
     other: '网站通用',
     series: '套系类',
   },
+  Cascader: {
+    please_select:'请选择',
+    value_missing_no_label: '请选择。',
+    value_missing: '请选择{label}。',
+    select_all: '全选',
+    unselect_all: '无',
+  },
 };
 
 export default locale;

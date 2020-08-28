@@ -148,15 +148,21 @@ export interface DragTableRowProps extends TableRowProps {
   rubric: DraggableRubric
 }
 
-export type DragRenderClone = (DragTableRowProps | DragTableHeaderCellProps)
+export interface RowRenderIcon { 
+  column: ColumnProps;
+  dataSet: DataSet;
+  snapshot: DraggableStateSnapshot;
+}
 
-export type DragIconRender = ({ column: ColumnProps, dataSet: DataSet, snapshot: DraggableStateSnapshot } | { record: Record })
+export interface ColumnRenderIcon {
+  record: Record;
+}
 
 export interface DragRender {
-  droppableProps: DroppableProps;
-  draggableProps: DraggableProps;
-  renderClone: (dragRenderProps: DragRenderClone) => ReactElement<any>;
-  renderIcon: (DragIconRender) => ReactElement<any>;
+  droppableProps?: DroppableProps;
+  draggableProps?: DraggableProps;
+  renderClone?: ((dragRenderProps: DragTableRowProps) => ReactElement<any>) | ((dragRenderProps: DragTableHeaderCellProps) => ReactElement<any>);
+  renderIcon?: ((rowRenderIcon:RowRenderIcon) => ReactElement<any>) | ((columnRenderIcon:ColumnRenderIcon) => ReactElement<any>);
 }
 
 export interface ChangeColumns {
@@ -423,6 +429,10 @@ export interface TableProps extends DataSetComponentProps {
    * 合并列信息选择，目前可以选择表头文字或者表的位置进行合并。
   */
   columnsEditType?:ColumnsEditType,
+  /**
+   * 拖拽触发事件位置切换前回调
+   */
+  onDragEndBefore?:(dataSet: DataSet, columns: ColumnProps[], resultDrag: DropResult, provided: ResponderProvided) => DropResult | boolean | void,
 }
 
 @observer
@@ -529,9 +539,10 @@ export default class Table extends DataSetComponent<TableProps> {
     dragRow: PropTypes.bool,
     columnsMergeCoverage: PropTypes.array,
     columnsDragRender: PropTypes.object,
-    expandIcon:PropTypes.func,
+    expandIcon: PropTypes.func,
     rowDragRender: PropTypes.object,
-    columnsEditType:PropTypes.oneOf([ColumnsEditType.all, ColumnsEditType.header, ColumnsEditType.order]),
+    columnsEditType: PropTypes.oneOf([ColumnsEditType.all, ColumnsEditType.header, ColumnsEditType.order]),
+    onDragEndBefore: PropTypes.func,
     ...DataSetComponent.propTypes,
   };
 
@@ -825,6 +836,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'columnsEditType',
       'rowDragRender',
       'columnsDragRender',
+      'onDragEndBefore',
     ]);
     otherProps.onKeyDown = this.handleKeyDown;
     const { rowHeight } = this.tableStore;
@@ -1055,21 +1067,41 @@ export default class Table extends DataSetComponent<TableProps> {
 
   @autobind
   onDragEnd(resultDrag: DropResult, provided: ResponderProvided) {
-    const { onDragEnd } = this.props;
-    // TODO onDragEndBefore
-    if (resultDrag && resultDrag.destination) {
-      if (resultDrag.destination.droppableId === 'table') {
+    const { onDragEnd, onDragEndBefore } = this.props;
+    // TODO onDragEndBefore 
+    // @ts-ignore ts 中判断是否属于目标类型的方法
+    const isDropresult = (dropResult: any): dropResult is DropResult => {
+      if (dropResult && dropResult.destination) {
+        return ((typeof (dropResult as DropResult).source.index === 'number')
+          && (typeof (dropResult as DropResult).destination === 'object')
+          && (typeof (dropResult as DropResult).destination!.index === 'number'))
+      }
+    }
+
+    let resultBefore
+    if (onDragEndBefore) {
+      const result = onDragEndBefore(this.tableStore.dataSet, toJS(this.tableStore.columns), resultDrag, provided)
+      if (result === false) {
+        return
+      }
+      if (result && isDropresult(result)) {
+        resultBefore = result;
+      }
+    }
+    resultBefore = resultDrag
+    if (resultBefore && resultBefore.destination) {
+      if (resultBefore.destination.droppableId === 'table') {
         this.reorderDataSet(
           this.tableStore.dataSet,
-          resultDrag.source.index,
-          resultDrag.destination.index,
+          resultBefore.source.index,
+          resultBefore.destination.index,
         );
       }
-      if (resultDrag.destination.droppableId === 'tableHeader') {
+      if (resultBefore.destination.droppableId === 'tableHeader') {
         this.reorderColumns(
           this.tableStore.columns,
-          resultDrag.source.index,
-          resultDrag.destination.index,
+          resultBefore.source.index,
+          resultBefore.destination.index,
         );
       }
     }

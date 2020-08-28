@@ -204,7 +204,7 @@ export default class List extends Component<ListProps> {
     );
 
     return (
-      <div className={classString} {...omit(rest, ['prefixCls', 'rowKey', 'renderItem'])}>
+      <div className={classString} {...omit(rest, ['prefixCls', 'rowKey', 'renderItem','selectable'])}>
         {header && <div className={`${prefixCls}-header`}>{header}</div>}
         {content}
         {children}

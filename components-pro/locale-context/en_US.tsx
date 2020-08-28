@@ -139,6 +139,13 @@ const locale: Locale = {
     other: 'Application',
     series: 'Series',
   },
+  Cascader: {
+    please_select: 'Please select',
+    value_missing_no_label: 'Please make a choice.',
+    value_missing: 'Please select {label}.',
+    select_all: 'Select All',
+    unselect_all: 'None',
+  },
 };
 
 export default locale;

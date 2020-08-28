@@ -24,14 +24,34 @@ const renderLink = ({listItemName}) => {
 
 const data = [
   {
-    href: 'http://www.baidu.com/',
+    href: 'https://choerodon.gitee.io/choerodon-ui',
     listChildren:renderLink,
-    listItemName:'百度',
+    listItemName:'蔬菜',
   },
   {
-    href: 'https://www.qq.com/',
+    href: 'https://choerodon.gitee.io/choerodon-ui',
     listChildren:renderLink,
-    listItemName:'腾讯',
+    listItemName:'上衣',
+  },
+  {
+    href: 'https://choerodon.gitee.io/choerodon-ui',
+    listChildren:renderLink,
+    listItemName:'手表',
+  },
+  {
+    href: 'https://choerodon.gitee.io/choerodon-ui',
+    listChildren:renderLink,
+    listItemName:'外套',
+  },
+  {
+    href: 'https://choerodon.gitee.io/choerodon-ui',
+    listChildren:renderLink,
+    listItemName:'项链',
+  },
+  {
+    href: 'https://choerodon.gitee.io/choerodon-ui',
+    listChildren:renderLink,
+    listItemName:'水果',
   },
 ];
 
