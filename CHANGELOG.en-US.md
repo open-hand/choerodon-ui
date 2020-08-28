@@ -22,7 +22,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed inline mode can't show Tooltip.
 - 🐞 `<pro>Table`: Fixed the wrong children type of Column. This error will cause the combined column to not be used in TypeScript.
 - 🐞 `<pro>NumberField`: Fixed the problem that the up and down arrows will fail in some cases when used in Table.
-
+- 🐞 `<pro>FormField`: Fix the problem that the newLine property of the sub-component in the Form is incorrectly reported in TypeScript.
 
 ## 0.8.71
 
