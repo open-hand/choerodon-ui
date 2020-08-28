@@ -531,6 +531,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
         [`${prefixCls}-invalid`]: !this.isValid,
         [`${prefixCls}-float-label`]: this.hasFloatLabel,
         [`${prefixCls}-required`]: this.getProp('required'),
+        [`${prefixCls}-readonly`]: this.getProp('readOnly'),
       },
       ...args,
     );
@@ -562,8 +563,10 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       if (label) {
         const prefixCls = getProPrefixCls(FIELD_SUFFIX);
         const required = this.getProp('required');
+        const readOnly = this.getProp('readOnly');
         const classString = classNames(`${prefixCls}-label`, {
           [`${prefixCls}-required`]: required,
+          [`${prefixCls}-readonly`]: readOnly,
         });
         return (
           <div className={`${prefixCls}-label-wrapper`}>
