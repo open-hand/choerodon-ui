@@ -168,7 +168,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   @computed
   get editable(): boolean {
     const mode = this.getViewMode();
-    return mode !== ViewMode.week;
+    return super.editable && mode !== ViewMode.week;
   }
 
   @computed
