@@ -134,7 +134,7 @@ export default class TableEditor extends Component<TableEditorProps> {
   renderEditor(): ReactElement<FormFieldProps> | undefined {
     const { column } = this.props;
     const {
-      tableStore: { dataSet, currentEditRecord, rowHeight, pristine },
+      tableStore: { dataSet, currentEditRecord, rowHeight, pristine, inlineEdit },
     } = this.context;
     const record = currentEditRecord || dataSet.current;
     const cellEditor = getEditorByColumnAndRecord(column, record);
@@ -155,7 +155,8 @@ export default class TableEditor extends Component<TableEditorProps> {
         onBlur: this.handleEditorBlur,
         tabIndex: -1,
         showHelp: ShowHelp.none,
-        _inTable: true,
+        // 目前测试inline时候需要放开限制
+        _inTable: !inlineEdit,
       };
       return cloneElement<FormFieldProps>(cellEditor, newEditorProps);
     }
