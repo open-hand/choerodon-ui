@@ -45,6 +45,7 @@ const eslintrc = {
     'jsx-a11y/anchor-has-content': 0,
     'jsx-a11y/anchor-is-valid': 0,
     'jsx-a11y/click-events-have-key-events': 0,
+    'jsx-a11y/control-has-associated-label': "off",
     'jsx-a11y/label-has-associated-control': 0,
     'jsx-a11y/no-noninteractive-tabindex': 0,
     'jsx-a11y/no-noninteractive-element-interact': 0,

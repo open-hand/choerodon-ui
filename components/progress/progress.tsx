@@ -14,7 +14,7 @@ export interface ProgressProps {
   type?: ProgressType;
   percent?: number;
   successPercent?: number;
-  format?: (percent: number) => string;
+  format?: (percent: number) => React.ReactNode;
   status?: ProgressStatus;
   showInfo?: boolean;
   showPointer?: boolean;

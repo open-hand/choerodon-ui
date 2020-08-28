@@ -1,0 +1,24 @@
+@import '../../../components/style/themes/default';
+
+.@{c7n-pro-prefix}-rich-text {
+  &-preview {
+    width: 100%;
+    padding: 0.12rem 0.15rem;
+    overflow: scroll;
+    word-break: break-all;
+    border: 1px solid @input-border-color;
+  }
+
+  &-quill {
+    height: calc(100% - 0.42rem);
+
+    .ql-container {
+      border-top: none !important;
+    }
+  }
+
+  &-wrapper {
+    height: 100%;
+  }
+}
+

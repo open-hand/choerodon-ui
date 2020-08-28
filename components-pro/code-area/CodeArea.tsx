@@ -58,8 +58,6 @@ export default class CodeArea extends ObserverFormField<CodeAreaProps> {
 
   @observable text?: string;
 
-  emptyValue?: any = '';
-
   midText: string;
 
   constructor(props, content) {

@@ -125,3 +125,5 @@ export { default as AutoComplete } from './auto-complete';
 export { default as Cascader } from './cascader';
 
 export { default as PerformanceTable } from './performance-table';
+
+export { default as RichText } from './rich-text';
