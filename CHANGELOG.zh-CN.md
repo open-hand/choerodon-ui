@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: 新增 lovModalProps 全局配置。
 - 🌟 `Progress`: 新增 showPointer 属性。
 - 🌟 `<pro>Cascader`: 新增 Cascader 单列表模式。
 - 🌟 `<pro>RichText`: 新增 RichText 富文本编辑组件。

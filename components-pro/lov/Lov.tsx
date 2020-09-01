@@ -159,7 +159,8 @@ export default class Lov extends Select<LovProps> {
   private openModal = action(() => {
     const config = this.getConfig();
     const { options, multiple, primitive, valueField } = this;
-    const { modalProps, tableProps } = this.props;
+    const { tableProps } = this.props;
+    const modalProps = this.getModalProps();
     const noCache = this.getProp('noCache');
     if (!this.modal && config && options) {
       const { width, title } = config;
@@ -348,6 +349,14 @@ export default class Lov extends Select<LovProps> {
       return triggerMode;
     }
     return getConfig('lovTriggerMode');
+  }
+
+  getModalProps() {
+    const { modalProps } = this.props;
+    if (modalProps !== undefined) {
+      return modalProps;
+    }
+    return getConfig('lovModalProps');
   }
 
   getOtherProps() {

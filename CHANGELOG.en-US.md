@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: Added `lovModalProps` global configuration.
 - 🌟 `Progress`: Added `showPointer` property.
 - 🌟 `<pro>RichText`: Added `RichText` component.
 - 🌟 `<pro>Cascader`: Added `Cascader` SingleMenu.

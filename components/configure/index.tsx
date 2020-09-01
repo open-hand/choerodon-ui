@@ -29,6 +29,7 @@ import { ButtonColor, FuncType } from 'choerodon-ui/pro/lib/button/enum';
 import { defaultExcludeUseColonTag } from 'choerodon-ui/pro/lib/form/utils';
 import { Renderer } from 'choerodon-ui/pro/lib/field/FormField';
 import { FormatNumberFunc, FormatNumberFuncOptions } from 'choerodon-ui/pro/lib/number-field/NumberField';
+import { ModalProps } from 'choerodon-ui/pro/lib/modal/Modal';
 
 export type Status = {
   [RecordStatus.add]: string;
@@ -81,6 +82,7 @@ export type Config = {
     props: TransportHookProps,
   ) => AxiosRequestConfig);
   lovTriggerMode?: TriggerMode;
+  lovModalProps?: ModalProps;
   axios?: AxiosInstance;
   feedback?: FeedBack;
   dataKey?: string;
@@ -176,6 +178,8 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['lovDefineUrl', code => `/sys/lov/lov_define?code=${code}`],
   ['lovQueryUrl', code => `/common/lov/dataset/${code}`],
   ['lovTriggerMode', TriggerMode.icon],
+  ['lovTableProps', {}],
+  ['lovModalProps', {}],
   ['dataKey', 'rows'],
   ['totalKey', 'total'],
   ['statusKey', '__status'],
@@ -220,7 +224,6 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['dropdownMatchSelectWidth', true],
   ['useColon', false],
   ['excludeUseColonTagList', defaultExcludeUseColonTag],
-  ['lovTableProps', {}],
   ['textFieldAutoComplete', undefined],
   ['tableDragRow', false],
   ['tableDragColumn', false],
