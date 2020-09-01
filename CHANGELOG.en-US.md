@@ -23,6 +23,7 @@ timeline: true
 - 💄 `Progress`: Updated `format` def.
 - 💄 `Breadcrumb`: Optimized the `Breadcrumb` to MD design.
 - 💄 `<pro>Lov`: Reopen the pop-up window in `noCache` mode to reset the number of pages.
+- 🐞 `Table`: Fixed Table expand icon can't response to the expansion event. 
 - 🐞 `<pro>Table`: Fixed inline mode can't show Tooltip.
 - 🐞 `<pro>Table`: Fixed the wrong children type of Column. This error will cause the combined column to not be used in TypeScript.
 - 🐞 `<pro>NumberField`: Fixed the problem that the up and down arrows will fail in some cases when used in Table.
