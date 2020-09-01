@@ -16,5 +16,8 @@ By setting `type=dashboard`, you can get a dashboard style of progress easily.
 ````jsx
 import { Progress } from 'choerodon-ui';
 
-ReactDOM.render(<Progress type="dashboard" percent={75} />, mountNode);
+ReactDOM.render(<>
+  <Progress type="dashboard" percent={75} />
+  <Progress type="dashboard" showPointer percent={75} />
+</>, mountNode);
 ````

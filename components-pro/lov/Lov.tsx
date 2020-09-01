@@ -267,8 +267,11 @@ export default class Lov extends Select<LovProps> {
 
   resetOptions(noCache: boolean = false): boolean {
     const { field, record, options } = this;
-    const { queryDataSet } = options;
+    const { queryDataSet, props: { pageSize } } = options;
     let dirty = noCache;
+    if (noCache) {
+      options.pageSize = pageSize || 10;
+    }
     if (queryDataSet && noCache) {
       const { current } = queryDataSet;
       if (current && current.dirty) {
