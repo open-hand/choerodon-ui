@@ -24,6 +24,7 @@ timeline: true
 - 💄 `Breadcrumb`: 优化 Breadcrumb 符合 MD 设计。
 - 💄 `<pro>Lov`: noCache 模式下面重新打开弹窗重置分页数。
 - 🐞 `Table`: 修复基础Table出现的展开icon无法响应展开事件 。
+- 🐞 `<pro>TextField`: 修复Select Text 等在多值输入输入遮盖问题。
 - 🐞 `<pro>Table`: 修复 inline 模式下面无法显示 Tooltip 。
 - 🐞 `<pro>Table`: 修复 Column 错误的 children 类型,该错误会导致在 TS 中无法使用组合列。
 - 🐞 `<pro>NumberField`: 修复在 Table 中使用的时候在某些情况下上下箭头会失效的问题。
