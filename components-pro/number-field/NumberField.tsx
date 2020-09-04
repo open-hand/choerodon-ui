@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactInstance, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { action, computed, isArrayLike, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
@@ -59,7 +59,10 @@ export interface NumberFieldProps extends TextFieldProps {
    * 格式器参数
    */
   formatterOptions?: FormatNumberFuncOptions;
-
+  /**
+   * 值变化回调
+   */
+  onChange?: (value: number, oldValue: number, form?: ReactInstance) => void;
 }
 
 export class NumberField<T extends NumberFieldProps> extends TextField<T & NumberFieldProps> {
