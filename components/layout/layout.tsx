@@ -6,7 +6,7 @@ import { getPrefixCls } from '../configure';
 
 export interface BasicProps extends HTMLAttributes<HTMLDivElement> {
   prefixCls?: string;
-  displayName: string;
+  displayName?: string;
   hasSider?: boolean;
 }
 

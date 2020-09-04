@@ -7,6 +7,7 @@ import omit from 'lodash/omit';
 import isNumber from 'lodash/isNumber';
 import isString from 'lodash/isString';
 import isNil from 'lodash/isNil';
+import isLdEmpty from 'lodash/isEmpty';
 import defaultTo from 'lodash/defaultTo';
 import { isMoment, Moment } from 'moment';
 import { observer } from 'mobx-react';
@@ -1112,7 +1113,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       const cascadeMap = field.get('cascadeMap');
       if (
         cascadeMap &&
-        (!record || Object.keys(cascadeMap).some(cascade => isNil(record.get(cascadeMap[cascade]))))
+        (!record || Object.keys(cascadeMap).some(cascade => isLdEmpty(record.get(cascadeMap[cascade]))))
       ) {
         return true;
       }
