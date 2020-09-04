@@ -101,6 +101,7 @@ class ExpandableRow extends Component {
       indentSize,
       record,
       fixed,
+      expanded,
     } = this.props;
 
     this.expandIconAsCell = fixed !== 'right' ? this.props.expandIconAsCell : false;
@@ -110,6 +111,8 @@ class ExpandableRow extends Component {
 
     const expandableRowProps = {
       indentSize,
+      // not used in TableRow, but it's required to re-render TableRow when `expanded` changes
+      expanded,
       onRowClick: this.handleRowClick,
       hasExpandIcon: this.hasExpandIcon,
       renderExpandIcon: this.renderExpandIcon,
@@ -121,5 +124,5 @@ class ExpandableRow extends Component {
 }
 
 export default connect(({ expandedRowKeys }, { rowKey }) => ({
-  expanded: !!~expandedRowKeys.indexOf(rowKey),
+  expanded: expandedRowKeys.includes(rowKey),
 }))(ExpandableRow);
