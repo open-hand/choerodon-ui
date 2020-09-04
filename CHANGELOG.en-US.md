@@ -32,6 +32,7 @@ timeline: true
 - 🐞 `<pro>NumberField`: Fixed the problem that the up and down arrows will fail in some cases when used in Table.
 - 🐞 `<pro>FormField`: Fix the problem that the newLine property of the sub-component in the Form is incorrectly reported in TypeScript.
 - 🐞 `<pro>DatePicker`: Fix the problem that DatePicker is set to read-only, but the cursor can still be displayed.
+- 🐞 `Tabs`: Fix the problem that the position of the activeBar is incorrect when the defaultActiveKey set is not the first one when used in Modal
 
 ## 0.8.71
 

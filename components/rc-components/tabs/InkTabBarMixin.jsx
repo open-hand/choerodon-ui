@@ -1,4 +1,4 @@
-import { isTransformSupported, setTransform } from './utils';
+import { isTransformSupported, setTransform,getLeft,getTop } from './utils';
 import React from 'react';
 import classnames from 'classnames';
 
@@ -43,7 +43,6 @@ function componentDidUpdate(component, init) {
   const { styles } = component.props;
   const rootNode = component.root;
   const wrapNode = component.nav || rootNode;
-  const containerOffset = offset(wrapNode);
   const inkBarNode = component.inkBar;
   const activeTab = component.activeTab;
   const inkBarNodeStyle = inkBarNode.style;
@@ -54,10 +53,9 @@ function componentDidUpdate(component, init) {
   }
   if (activeTab) {
     const tabNode = activeTab;
-    const tabOffset = offset(tabNode);
     const transformSupported = isTransformSupported(inkBarNodeStyle);
     if (tabBarPosition === 'top' || tabBarPosition === 'bottom') {
-      let left = tabOffset.left - containerOffset.left;
+      let left = getLeft(tabNode, wrapNode);
       let width = tabNode.offsetWidth;
 
       // If tabNode'width width equal to wrapNode'width when tabBarPosition is top or bottom
@@ -82,7 +80,7 @@ function componentDidUpdate(component, init) {
         inkBarNodeStyle.right = `${wrapNode.offsetWidth - left - width}px`;
       }
     } else {
-      let top = tabOffset.top - containerOffset.top;
+      let top = getTop(tabNode, wrapNode);
       let height = tabNode.offsetHeight;
       if (styles.inkBar && styles.inkBar.height !== undefined) {
         height = parseFloat(styles.inkBar.height, 10);

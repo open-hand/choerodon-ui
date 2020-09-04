@@ -32,6 +32,7 @@ timeline: true
 - 🐞 `<pro>NumberField`: 修复在 Table 中使用的时候在某些情况下上下箭头会失效的问题。
 - 🐞 `<pro>FormField`: 修复在 Form 中子组件的 newLine 属性在 TypeScript 中类型出现报错的问题。
 - 🐞 `<pro>DatePicker`: 修复 DatePicker 中设置了readonly,但是依旧可以让光标显示的问题
+- 🐞 `Tabs`: 修复在 Modal 中使用的时候当设置的defaultActiveKey不为第一个的时候,activeBar的位置不正确的问题
 
 
 ## 0.8.71
