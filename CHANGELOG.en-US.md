@@ -25,6 +25,7 @@ timeline: true
 - 💄 `<pro>Modal`: Optimized the `okFirst` property in `drawer` mode.
 - 💄 `<pro>Lov`: Reopen the pop-up window in `noCache` mode to reset the number of pages.
 - 🐞 `Table`: Fixed Table expand icon can't response to the expansion event.
+- 🐞 `<pro>Upload`: Fixed the file type error when using `beforeUpload` and `uploadImmediately`.
 - 🐞 `<pro>TextField`: Fixed Select or Text component, when use multiple the values would be covered.
 - 🐞 `<pro>Table`: Fixed inline mode can't show Tooltip.
 - 🐞 `<pro>FormField`: Fixed the multi-select `cascade` mode clearing without disabling subcomponents.

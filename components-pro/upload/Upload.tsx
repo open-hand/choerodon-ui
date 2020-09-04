@@ -462,7 +462,9 @@ export default class Upload extends FormField<UploadProps> {
     const { uploadImmediately, onFileChange } = this.props;
     e.target.value = '';
     if (uploadImmediately) {
-      this.uploadFiles(this.fileList);
+      if(!(fileBuffer && fileBuffer.length === 0)) {
+        this.uploadFiles(this.fileList);
+      }
     }
     if (onFileChange) {
       onFileChange(this.fileList.slice());
@@ -489,6 +491,7 @@ export default class Upload extends FormField<UploadProps> {
       Modal.error($l('Upload', 'upload_path_unset'));
       return;
     }
+
     if (!this.isAcceptFiles(fileList)) {
       Modal.error($l('Upload', 'not_acceptable_prompt') + accept!.join(','));
       return;

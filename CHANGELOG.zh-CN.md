@@ -25,6 +25,7 @@ timeline: true
 - 💄 `<pro>Modal`: 优化 drawer 模式下 okFirst 属性。
 - 💄 `<pro>Lov`: noCache 模式下面重新打开弹窗重置分页数。
 - 🐞 `Table`: 修复基础 Table 出现的展开 icon 无法响应展开事件。
+- 🐞 `<pro>Upload`: 修复当使用 beforeUpload 和 uploadImmediately 导致文件类型报错。
 - 🐞 `<pro>TextField`: 修复 Select Text 等在多值输入时遮盖问题。
 - 🐞 `<pro>FormField`: 修复多选级联模式清空未禁用子组件。
 - 🐞 `<pro>Table`: 修复 inline 模式下面无法显示 Tooltip 。
