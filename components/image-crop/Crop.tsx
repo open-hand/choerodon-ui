@@ -311,16 +311,18 @@ export default class Crop extends Component<CropProps, any> {
     }
 
     loadImage(src) {
-        const { crossOrigin, rotation } = this.props;
-        const img: ImageCrop = new Image();
-        img.src = src;
-        if (crossOrigin === 'anonymous' || crossOrigin === 'use-credentials') {
-            img.crossOrigin = 'anonymous';
+        if(typeof window !== 'undefined'){
+            const { crossOrigin, rotation } = this.props;
+            const img: ImageCrop = new Image();
+            img.src = src;
+            if (crossOrigin === 'anonymous' || crossOrigin === 'use-credentials') {
+                img.crossOrigin = 'anonymous';
+            }
+            img.onload = () => {
+                const imgRotate = rotation || 0;
+                this.initImageSize(img, imgRotate);
+            };
         }
-        img.onload = () => {
-            const imgRotate = rotation || 0;
-            this.initImageSize(img, imgRotate);
-        };
     }
 
     render() {

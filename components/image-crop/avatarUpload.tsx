@@ -249,11 +249,13 @@ export default class AvatarUploader extends Component<AvatarUploadProps, any> {
   }
 
   loadImage(src) {
-    const img = new Image();
-    img.src = src;
-    img.onload = () => {
-      this.initImageSize(img);
-    };
+    if(typeof window !== 'undefined'){
+      const img = new Image();
+      img.src = src;
+      img.onload = () => {
+        this.initImageSize(img);
+      };
+    }
   }
 
   getPreviewProps(previewSize) {
