@@ -125,13 +125,13 @@ export interface CascaderProps extends TriggerFieldProps {
   /** 单框弹出形式切换 */
   menuMode?: MenuMode;
   /** 由于渲染在body下可以方便按照业务配置弹出框的大小 */
-  singleMenuStyle: CSSProperties,
+  singleMenuStyle?: CSSProperties,
   /** 由于渲染在body下可以方便按照业务配置超出大小样式和最小宽度等 */
-  singleMenuItemStyle: CSSProperties,
+  singleMenuItemStyle?: CSSProperties,
   /** 设置需要的提示问题配置 */
-  singlePleaseRender: ({key,className,text}:{key: string,className: string,text: string}) => ReactElement<any>,
+  singlePleaseRender?: ({key,className,text}:{key: string,className: string,text: string}) => ReactElement<any>,
   /** 头部可以渲染出想要的tab样子 */
-  singleMenuItemRender: (title:string) => ReactElement<any>,
+  singleMenuItemRender?: (title:string) => ReactElement<any>,
 }
 
 export class Cascader<T extends CascaderProps> extends TriggerField<T> {
