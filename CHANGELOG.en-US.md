@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.72
+
+`2020-09-07`
+
 - 🌟 `configure`: Added `lovModalProps` global configuration.
 - 🌟 `Progress`: Added `showPointer` property.
 - 🌟 `<pro>RichText`: Added `RichText` component.
@@ -24,7 +28,6 @@ timeline: true
 - 💄 `Breadcrumb`: Optimized the `Breadcrumb` to MD design.
 - 💄 `<pro>Modal`: Optimized the `okFirst` property in `drawer` mode.
 - 💄 `<pro>Lov`: Reopen the pop-up window in `noCache` mode to reset the number of pages.
-- 🐞 `Table`: Fixed Table expand icon can't response to the expansion event.
 - 🐞 `<pro>Upload`: Fixed the file type error when using `beforeUpload` and `uploadImmediately`.
 - 🐞 `<pro>TextField`: Fixed Select or Text component, when use multiple the values would be covered.
 - 🐞 `<pro>Table`: Fixed inline mode can't show Tooltip.
@@ -32,8 +35,9 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the wrong children type of Column. This error will cause the combined column to not be used in TypeScript.
 - 🐞 `<pro>NumberField`: Fixed the problem that the up and down arrows will fail in some cases when used in Table.
 - 🐞 `<pro>FormField`: Fix the problem that the newLine property of the sub-component in the Form is incorrectly reported in TypeScript.
-- 🐞 `<pro>DatePicker`: Fix the problem that DatePicker is set to read-only, but the cursor can still be displayed.
-- 🐞 `Tabs`: Fix the problem that the position of the activeBar is incorrect when the defaultActiveKey set is not the first one when used in Modal
+- 🐞 `<pro>DatePicker`: Fix the problem that DatePicker is set to `readOnly`, but the cursor can still be displayed.
+- 🐞 `Table`: Fixed Table expand icon can't response to the expansion event.
+- 🐞 `Tabs`: Fix the problem that the position of the activeBar is incorrect when the `defaultActiveKey` set is not the first one when used in Modal
 
 ## 0.8.71
 
