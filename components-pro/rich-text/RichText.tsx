@@ -2,12 +2,11 @@ import React, { ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { toJS } from 'mobx';
-import { Delta } from 'quill';
-import ReactQuill from 'react-quill';
 import { ReactQuillProps } from 'react-quill/lib';
 import 'react-quill/dist/quill.snow.css';
 import isEqual from 'lodash/isEqual';
 import omit from 'lodash/omit';
+import { Delta } from './quill';
 import ObserverFormField from '../field';
 import DataSet from '../data-set/DataSet';
 import { FormFieldProps } from '../field/FormField';
@@ -61,7 +60,7 @@ export default class RichText extends ObserverFormField<RichTextProps> {
     toolbar: RichTextToolbarType.normal,
   };
 
-  editor: ReactQuill;
+  editor: any;
 
   toolbarId: string = randomWord(false, 32, 64);
 

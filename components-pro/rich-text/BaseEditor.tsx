@@ -1,16 +1,15 @@
-import React, { Component } from 'react';
+import React, { Component, ComponentClass } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { findDOMNode } from 'react-dom';
-import { DeltaOperation, DeltaStatic, Sources, StringMap } from 'quill';
-import ReactQuill, { Quill } from 'react-quill';
-import { Range, UnprivilegedEditor } from 'react-quill/lib';
+import { Range, ReactQuillProps, UnprivilegedEditor } from 'react-quill/lib';
 import QuillImageDropAndPaste from 'quill-image-drop-and-paste';
 import 'react-quill/dist/quill.snow.css';
 import isEqual from 'lodash/isEqual';
 import isObject from 'lodash/isObject';
 import omit from 'lodash/omit';
 import LightBox from 'react-image-lightbox';
+import { DeltaOperation, DeltaStatic, Sources, StringMap } from './quill';
 import autobind from '../_util/autobind';
 import RichTextViewer from './RichTextViewer';
 import { RichTextToolbarType } from './enum';
@@ -19,10 +18,21 @@ import Toolbar from './toolbar';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 
-/**
- * 注册图片拖拽、粘贴
- */
-Quill.register('modules/imageDropAndPaste', QuillImageDropAndPaste);
+let ReactQuill: ComponentClass<ReactQuillProps>;
+
+let Quill: any;
+
+if (typeof window !== 'undefined') {
+  // eslint-disable-next-line global-require
+  ReactQuill = require('react-quill');
+  // eslint-disable-next-line global-require
+  Quill = require('react-quill').Quill;
+
+  /**
+   * 注册图片拖拽、粘贴
+   */
+  Quill.register('modules/imageDropAndPaste', QuillImageDropAndPaste);
+}
 
 export interface BaseEditorProps {
   dataSet?: DataSet;
@@ -84,7 +94,7 @@ export default class BaseEditor extends Component<BaseEditorProps> {
     src: '',
   };
 
-  editor: ReactQuill;
+  editor: any;
 
   deltaOps?: DeltaOperation[];
 
@@ -166,19 +176,21 @@ export default class BaseEditor extends Component<BaseEditorProps> {
         />
       );
     }
-    return (
-      <>
-        <Toolbar id={toolbarId} dataSet={dataSet} toolbar={toolbar} prefixCls={className} />
-        <ReactQuill
-          {...this.getOtherProps()}
-          className={`${className}-quill`}
-          defaultValue={value}
-          ref={this.saveRef('editor')}
-          onChange={this.handleRichTextChange}
-          bounds={className}
-        />
-      </>
-    );
+    if (ReactQuill) {
+      return (
+        <>
+          <Toolbar id={toolbarId} dataSet={dataSet} toolbar={toolbar} prefixCls={className} />
+          <ReactQuill
+            {...this.getOtherProps()}
+            className={`${className}-quill`}
+            defaultValue={value}
+            ref={this.saveRef('editor')}
+            onChange={this.handleRichTextChange}
+            bounds={className}
+          />
+        </>
+      );
+    }
   }
 
   render() {

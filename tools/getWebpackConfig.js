@@ -10,7 +10,7 @@ const path = require('path');
 const webpack = require('webpack');
 const WebpackBar = require('webpackbar');
 const webpackMerge = require('webpack-merge');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserJSPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
@@ -267,13 +267,10 @@ ${pkg.name} v${pkg.version}
     config.output.libraryTarget = 'umd';
     config.optimization = {
       minimizer: [
-        new UglifyJsPlugin({
+        new TerserJSPlugin({
           cache: true,
           parallel: true,
           sourceMap: true,
-          uglifyOptions: {
-            warnings: false,
-          },
         }),
       ],
     };
