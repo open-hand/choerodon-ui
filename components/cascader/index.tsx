@@ -18,7 +18,7 @@ import KeyCode from '../_util/KeyCode';
 import { Size } from '../_util/enum';
 import { getPrefixCls } from '../configure';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
-import enUS from '../rc-components/pagination/locale/en_US';
+import enUS from '../rc-components/cascader/locale/en_US';
 
 export interface CascaderOptionType {
   value: string;
