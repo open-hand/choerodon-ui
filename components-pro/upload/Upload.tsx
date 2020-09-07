@@ -5,6 +5,7 @@ import { observer } from 'mobx-react';
 import omit from 'lodash/omit';
 import uniqBy from 'lodash/uniqBy';
 import { T } from 'choerodon-ui/lib/upload/utils';
+import isEmpty from 'lodash/isEmpty';
 import Button from '../button/Button';
 import { ButtonColor } from '../button/enum';
 import autobind from '../_util/autobind';
@@ -462,7 +463,9 @@ export default class Upload extends FormField<UploadProps> {
     const { uploadImmediately, onFileChange } = this.props;
     e.target.value = '';
     if (uploadImmediately) {
-      this.uploadFiles(this.fileList);
+      if(!isEmpty(fileBuffer)) {
+        this.uploadFiles(this.fileList);
+      }
     }
     if (onFileChange) {
       onFileChange(this.fileList.slice());
@@ -489,6 +492,7 @@ export default class Upload extends FormField<UploadProps> {
       Modal.error($l('Upload', 'upload_path_unset'));
       return;
     }
+
     if (!this.isAcceptFiles(fileList)) {
       Modal.error($l('Upload', 'not_acceptable_prompt') + accept!.join(','));
       return;

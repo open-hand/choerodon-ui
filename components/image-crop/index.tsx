@@ -377,7 +377,7 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
                 },
             };
         }
-        if (imageSrc) {
+        if (imageSrc && (typeof window !== 'undefined')) {
             const newimage = new Image();
             newimage.src = imageSrc;
             newimage.crossOrigin = "anonymous"
