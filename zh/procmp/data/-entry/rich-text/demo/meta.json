@@ -1,0 +1,83 @@
+{
+  "title": {
+    "zh": "中文分类",
+    "en": "Category"
+  },
+  "demos": [
+    {
+      "filename": "basic.js",
+      "title": {
+        "zh": "基本使用",
+        "en": "Basic Usage"
+      },
+      "description": {
+        "zh": "基本使用。\n",
+        "en": "Basic Usage.\n"
+      },
+      "order": 0,
+      "height": 330,
+      "screenshot": "",
+      "category": "pro"
+    },
+    {
+      "filename": "default-options.js",
+      "title": {
+        "zh": "简单的格式化工具栏",
+        "en": "Simply format the toolbar."
+      },
+      "description": {
+        "zh": "简单的格式化工具栏，数组写法工具栏在 RichText 组件内，外层包裹需考虑工具栏高度。\n",
+        "en": "Simply format the toolbar. The array format toolbar is in the RichText component, and the height of the toolbar should be considered for the outer wrapper.\n"
+      },
+      "order": 1,
+      "screenshot": "",
+      "height": 330,
+      "category": "pro"
+    },
+    {
+      "filename": "controlled.js",
+      "title": {
+        "zh": "受控",
+        "en": "Controlled"
+      },
+      "description": {
+        "zh": "受控\n",
+        "en": "Controlled\n"
+      },
+      "order": 2,
+      "screenshot": "",
+      "height": 330,
+      "category": "pro"
+    },
+    {
+      "filename": "dataset.js",
+      "title": {
+        "zh": "绑定数据源",
+        "en": "DataSet Binding"
+      },
+      "description": {
+        "zh": "绑定数据源\n",
+        "en": "DataSet Binding\n"
+      },
+      "order": 4,
+      "screenshot": "",
+      "height": 330,
+      "category": "pro"
+    },
+    {
+      "filename": "button.js",
+      "title": {
+        "zh": "自定义工具栏",
+        "en": "Custom toolbar"
+      },
+      "description": {
+        "zh": "自定义工具栏。\n",
+        "en": "Custom toolbar.\n"
+      },
+      "order": 5,
+      "height": 600,
+      "screenshot": "",
+      "category": "pro"
+    }
+  ]
+}

@@ -73,6 +73,20 @@
       "order": 4,
       "screenshot": "",
       "category": "pro"
+    },
+    {
+      "filename": "singleOptions.js",
+      "title": {
+        "zh": "单列表模式",
+        "en": "SingleMenu"
+      },
+      "description": {
+        "zh": "单列表模式\n",
+        "en": "Single Menu mode\n"
+      },
+      "order": 5,
+      "screenshot": "",
+      "category": "pro"
     }
   ]
 }

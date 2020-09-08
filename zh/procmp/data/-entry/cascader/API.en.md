@@ -20,4 +20,15 @@ title: API
 
 更多属性请参考 [TriggerField](/zh/procmp/abstract/trigger-field/#TriggerField)。
 
+When `menuMode` is `single` configuration can be added：
+
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| singleMenuStyle | Because rendering under the Body makes it easy to configure the size of the pop-up box according to the business | `CSSProperties` |  |
+| singleMenuItemStyle | Because rendering under the Body can easily be configured according to the business beyond the size style, minimum width and so on | `CSSProperties` |  |
+| singlePleaseRender | Set the required prompt configuration | `({key,className,text}:{key: string,className: string,text: string}) => ReactElement<any>` |  |
+| singleMenuItemRender | The header can render the desired TAB | ` (title:string) => ReactElement<any>` |  |
+
+Parameters that cannot be configured `expandIcon`，
+
 > 注意，如果需要获得中国省市区数据，可以参考 [china-division](https://gist.github.com/afc163/7582f35654fd03d5be7009444345ea17)。

@@ -131,7 +131,7 @@ title: API
 
 ### dragRender
 
-可以满足自定义更多的渲染需求，注意会覆盖默认值，建议阅读 中文地址[react-beautiful-dnd](https://github.com/chinanf-boy/react-beautiful-dnd-zh)或者英文地址[react-beautiful-dnd](https://github.com/atlassian/react-beautiful-dnd) 以及当前table[代码示例](https://github.com/choerodon/choerodon-ui/blob/master/components-pro/table/TableTBody.tsx)
+可以满足自定义更多的渲染需求，注意会覆盖默认值，建议阅读 中文地址[react-beautiful-dnd](https://github.com/chinanf-boy/react-beautiful-dnd-zh)或者英文地址[react-beautiful-dnd](https://github.com/atlassian/react-beautiful-dnd) 以及当前table[代码示例](https://github.com/choerodon/choerodon-ui/blob/master/components-pro/table/TableTBody.tsx).Here is to control renderClone to add a new table below the body when it is dragged and inject elements into this table. For example, the following example can be implemented to render the corresponding elements in the table with the class name c7n-pro-table-drag-container. Here you can add style coverage to complete the drag-and-drop style you want. Due to the fixed positioning used by drag-and-drop, the length of the table will change. You can modify the width of the appropriate colums according to your business to make the performance more natural. renderIcon to render the drag-and-drop custom ICON.
 
 可以注意一下设置
 新增拖拽例的key值 DRAG_KEY = '__drag-column__';

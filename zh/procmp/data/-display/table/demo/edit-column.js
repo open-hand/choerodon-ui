@@ -13,8 +13,6 @@ import {
 
 const { Column } = Table;
 
-const { TableRow } = Table;
-
 class EditButton extends React.Component {
   handleClick = (e) => {
     const { record, onClick } = this.props;
@@ -33,7 +31,23 @@ class EditButton extends React.Component {
   }
 }
 
+const columnsNew = [
+  { name: 'age', header: '芳龄' },
+  { name: 'name', header: '贵姓' },
+  { name: 'userid', header: '排位' },
+  { name: 'enable', header: '甄选' },
+];
+
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      editColumns: 'order',
+      columnsNew: columnsNew,
+      isDragColumn: true,
+    };
+  }
+
   userDs = new DataSet({
     primaryKey: 'userid',
     name: 'user',
@@ -57,6 +71,7 @@ class App extends React.Component {
         label: '年龄',
         max: 100,
         step: 1,
+        help: '用户年龄，可以排序',
       },
       {
         name: 'sex',
@@ -99,25 +114,118 @@ class App extends React.Component {
     return <EditButton onClick={this.editUser} record={record} />;
   };
 
-  renderDragRow = (props) => {
-    delete props.dragColumnAlign;
-    return <TableRow {...props} />;
+  handleEditType = (editType) => {
+    console.log(editType);
+    this.setState({
+      editColumns: editType,
+    });
+  };
+
+  handleColumns = () => {
+    console.log(this.state.columnsNew.length);
+    if (this.state.columnsNew.length > 2) {
+      this.setState({
+        columnsNew: columnsNew.slice(0, 2),
+      });
+    } else {
+      this.setState({
+        columnsNew: columnsNew,
+      });
+    }
+  };
+
+  handleDrageColmns = () => {
+    this.setState({
+      isDragColumn: !this.state.isDragColumn,
+    });
+  };
+
+  editAll = (
+    <Button
+      icon="brightness_o"
+      key="all"
+      onClick={() => {
+        this.handleEditType('all');
+      }}
+    >
+      全修改
+    </Button>
+  );
+
+  editHeader = (
+    <Button
+      icon="brightness_2-o"
+      key="header"
+      onClick={() => {
+        this.handleEditType('header');
+      }}
+    >
+      只触发表头修改
+    </Button>
+  );
+
+  editOrder = (
+    <Button
+      icon="brightness_3-o"
+      key="order"
+      onClick={() => {
+        this.handleEditType('order');
+      }}
+    >
+      只触发位置修改
+    </Button>
+  );
+
+  editColmns = (
+    <Button
+      icon="brightness_4-o"
+      key="columns"
+      onClick={() => {
+        this.handleColumns();
+      }}
+    >
+      更改合并列
+    </Button>
+  );
+
+  DrageColmns = (
+    <Button
+      icon="brightness_5-o"
+      key="drag"
+      onClick={() => {
+        this.handleDrageColmns();
+      }}
+    >
+      是否可拖拽列
+    </Button>
+  );
+
+  columnsOnChange = (data) => {
+    console.log(data);
   };
 
   render() {
-    const buttons = ['save', 'delete', 'reset'];
+    const buttons = [
+      this.editAll,
+      this.editHeader,
+      this.editOrder,
+      this.editColmns,
+      this.DrageColmns,
+    ];
     return (
       <Table
-        rowDragRender={{ renderClone: this.renderDragRow }}
-        dragColumnAlign="left"
-        dragRow={true}
+        columnsOnChange={this.columnsOnChange}
+        columnsEditType={this.state.editColumns}
+        columnsMergeCoverage={this.state.columnsNew}
+        dragColumn={this.state.isDragColumn}
+        dragRow
         key="user"
         buttons={buttons}
         dataSet={this.userDs}
         pristine
       >
         <Column name="userid" />
-        <Column name="age" />
+        <Column sortable name="age" header="年龄fucker" />
         <Column name="enable" />
         <Column name="name" />
         <Column
