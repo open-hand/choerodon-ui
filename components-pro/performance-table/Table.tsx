@@ -446,7 +446,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
           {
             // @ts-ignore
             <HeaderCell>
-              {column.title}
+              {isFunction(column.title) ? column.title() : column.title}
             </HeaderCell>
           }
           {typeof column.render === 'function' ? (

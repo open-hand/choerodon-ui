@@ -15,6 +15,9 @@ timeline: true
 
 ---
 
+
+- 💄 `<pro>PerformanceTable`: Optimized the return of `title` support function.
+
 ## 0.8.72
 
 `2020-09-07`
