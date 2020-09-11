@@ -236,7 +236,7 @@
         border-right: @table-border;
       }
     }
-    
+
     .@{table-prefix-cls}-drag-left {
       .@{table-prefix-cls}-thead,
       .@{table-prefix-cls}-tfoot {
@@ -245,7 +245,7 @@
         }
       }
     }
-    
+
     .@{table-prefix-cls}-thead {
       border-bottom: none;
     }
@@ -490,6 +490,62 @@
         text-align: left;
       }
     }
+  }
+
+  &-professional-query-bar {
+    display: flex;
+    padding: 0.06rem 0;
+    border-bottom: @table-border;
+
+    //&-form-wrapper {
+    //  display: flex;
+    //  flex-grow: 3;
+    //  flex-wrap: wrap;
+    //}
+    //
+    //&-form {
+    //  display: flex;
+    //  flex-shrink: 0;
+    //  flex-wrap: wrap;
+    //  align-items: center;
+    //  margin-bottom: 0.16rem;
+    //
+    //  &:last-child {
+    //    margin-bottom: 0;
+    //  }
+    //}
+
+    .c7n-pro-field-label, .c7n-pro-field-wrapper {
+      padding: 0.1rem 0.02rem;
+    }
+
+    &-button {
+      display: inline-flex;
+      flex-grow: 1;
+      flex-shrink: 0;
+      align-items: flex-start;
+      justify-content: flex-end;
+      padding: 0.1rem 0 0.1rem 0.7rem;
+
+      span {
+        vertical-align: baseline;
+      }
+    }
+
+    //&-form-label {
+    //  display: inline-block;
+    //  width: 0.8rem;
+    //  padding-right: 0.05rem;
+    //  overflow: hidden;
+    //  white-space: nowrap;
+    //  text-align: right;
+    //  text-overflow: ellipsis;
+    //}
+  }
+
+  &-professional-toolbar {
+    padding-top: 0.1rem;
+    text-align: right;
   }
 
   &-pagination {

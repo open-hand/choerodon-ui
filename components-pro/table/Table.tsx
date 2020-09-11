@@ -61,6 +61,7 @@ import { $l } from '../locale-context';
 import TableQueryBar from './query-bar';
 import FilterBar from './query-bar/TableFilterBar';
 import AdvancedQueryBar from './query-bar/TableAdvancedQueryBar';
+import TableProfessionalBar from './query-bar/TableProfessionalBar';
 import ToolBar from './query-bar/TableToolBar';
 import { findIndexedSibling, getHeight, getPaginationPosition } from './utils';
 import { ButtonProps } from '../button/Button';
@@ -148,7 +149,7 @@ export interface DragTableRowProps extends TableRowProps {
   rubric: DraggableRubric
 }
 
-export interface RowRenderIcon { 
+export interface RowRenderIcon {
   column: ColumnProps;
   dataSet: DataSet;
   snapshot: DraggableStateSnapshot;
@@ -273,7 +274,7 @@ export interface TableProps extends DataSetComponentProps {
   queryFieldsLimit?: number;
   /**
    * 显示查询条
-   * 可选值: `advancedBar` `normal` `bar` `none`
+   * 可选值: `advancedBar` `normal` `bar` `none` `professionalBar`
    * @default 'normal'
    */
   queryBar?: TableQueryBarType | TableQueryBarHook;
@@ -380,7 +381,6 @@ export interface TableProps extends DataSetComponentProps {
    * 虚拟滚动是否显示加载
    */
   virtualSpin?: boolean;
-
   /**
    * 是否开启自适应高度
    */
@@ -445,6 +445,8 @@ export default class Table extends DataSetComponent<TableProps> {
 
   static AdvancedQueryBar = AdvancedQueryBar;
 
+  static TableProfessionalBar = TableProfessionalBar;
+
   static ToolBar = ToolBar;
 
   static TableRow = TableRow;
@@ -504,6 +506,7 @@ export default class Table extends DataSetComponent<TableProps> {
         TableQueryBarType.normal,
         TableQueryBarType.bar,
         TableQueryBarType.none,
+        TableQueryBarType.professionalBar,
       ]),
       PropTypes.func,
     ]),
@@ -1068,7 +1071,7 @@ export default class Table extends DataSetComponent<TableProps> {
   @autobind
   onDragEnd(resultDrag: DropResult, provided: ResponderProvided) {
     const { onDragEnd, onDragEndBefore } = this.props;
-    // TODO onDragEndBefore 
+    // TODO onDragEndBefore
     // @ts-ignore ts 中判断是否属于目标类型的方法
     const isDropresult = (dropResult: any): dropResult is DropResult => {
       if (dropResult && dropResult.destination) {

@@ -33,6 +33,7 @@ import { getEditorByField } from '../utils';
 import TableToolBar from './TableToolBar';
 import TableFilterBar from './TableFilterBar';
 import TableAdvancedQueryBar from './TableAdvancedQueryBar';
+import TableProfessionalBar from './TableProfessionalBar';
 import { PaginationProps } from '../../pagination/Pagination';
 import { findBindFieldBy } from '../../data-set/utils';
 
@@ -373,6 +374,11 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     return <TableAdvancedQueryBar key="toolbar" prefixCls={prefixCls} {...props} />;
   }
 
+  renderProfessionalBar(props: TableQueryBarHookProps) {
+    const { prefixCls } = this.props;
+    return <TableProfessionalBar key="toolbar" prefixCls={prefixCls} {...props} />;
+  }
+
   render() {
     const buttons = this.getButtons();
     const {
@@ -403,6 +409,8 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
           return this.renderFilterBar(props);
         case TableQueryBarType.advancedBar:
           return this.renderAdvancedQueryBar(props);
+        case TableQueryBarType.professionalBar:
+          return this.renderProfessionalBar(props);
         default:
       }
     }

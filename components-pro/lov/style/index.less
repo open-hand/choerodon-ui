@@ -1,0 +1,21 @@
+@import '../../../components/style/themes/default';
+
+@modal-prefix-cls: ~'@{c7n-pro-prefix}-modal';
+@table-prefix-cls: ~'@{c7n-pro-prefix}-table';
+
+
+.@{modal-prefix-cls} {
+  &-body {
+    .@{table-prefix-cls} {
+      &-professional-query-bar {
+        &-button {
+          padding: 0.1rem 0 0.1rem 0.4rem;
+
+          span {
+            vertical-align: middle;
+          }
+        }
+      }
+    }
+  }
+}

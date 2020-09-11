@@ -1,7 +1,7 @@
 import React, { cloneElement, Component, CSSProperties, isValidElement } from 'react';
 import PropTypes from 'prop-types';
 import { action, set, toJS, observable, runInAction } from 'mobx';
-import classNames from 'classnames'; 
+import classNames from 'classnames';
 import { observer } from 'mobx-react';
 import omit from 'lodash/omit';
 import debounce from 'lodash/debounce';
@@ -25,7 +25,7 @@ import { ColumnAlign, ColumnsEditType, DragColumnAlign } from './enum';
 import { ShowHelp } from '../field/enum';
 import Tooltip from '../tooltip';
 import autobind from '../_util/autobind';
-import {SELECTION_KEY,DRAG_KEY} from './TableStore';
+import { SELECTION_KEY, DRAG_KEY } from './TableStore';
 import ObserverTextField from '../text-field/TextField';
 
 export interface TableHeaderCellProps extends ElementProps {
@@ -60,15 +60,15 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
 
   @observable editing: boolean;
 
-  constructor(props: TableHeaderCellProps){
+  constructor(props: TableHeaderCellProps) {
     super(props);
     runInAction(() => {
       this.editing = false;
-    })
+    });
   }
 
   @action
-  setEditing(editing:boolean) {
+  setEditing(editing: boolean) {
     this.editing = editing;
   }
 
@@ -101,7 +101,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
   handleLeftResize(e) {
     const { prevColumn } = this.props;
     this.setResizeColumn(prevColumn);
-    e.persist()
+    e.persist();
     this.setresizeStart(e);
   }
 
@@ -109,30 +109,30 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
   handleRightResize(e) {
     const { resizeColumn } = this.props;
     this.setResizeColumn(resizeColumn);
-    e.persist()
+    e.persist();
     this.setresizeStart(e);
   }
 
   private setresizeStart = debounce(
     (e) => {
-      this.resizeStart(e)
+      this.resizeStart(e);
     },
     300,
   );
 
   @autobind
   handleLeftDoubleClick(_e) {
-    if(this.setresizeStart){
-      this.setresizeStart.cancel()
-      this.resizeDoubleClick()
+    if (this.setresizeStart) {
+      this.setresizeStart.cancel();
+      this.resizeDoubleClick();
     }
   }
 
   @autobind
   handleRightDoubleClick(_e) {
-    if(this.setresizeStart){
-      this.setresizeStart.cancel()
-      this.resizeDoubleClick()
+    if (this.setresizeStart) {
+      this.setresizeStart.cancel();
+      this.resizeDoubleClick();
     }
   }
 
@@ -140,12 +140,12 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
   @action
   resizeDoubleClick(): void {
     const column = this.resizeColumn;
-    const {tableStore:{props:{autoMaxWidth}}} = this.context
+    const { tableStore: { props: { autoMaxWidth } } } = this.context;
     if (autoMaxWidth && column && column.innerMaxWidth) {
       if (column.innerMaxWidth !== column.width) {
         set(column, 'width', column.innerMaxWidth);
-      }else if(column.minWidth){
-          set(column, 'width', column.minWidth);
+      } else if (column.minWidth) {
+        set(column, 'width', column.minWidth);
       }
     }
   }
@@ -240,24 +240,24 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
 
 
   @action
-  onChangeHeader = (value)  => {
+  onChangeHeader = (value) => {
     const {
       tableStore: {
-        props: {columnsOnChange},
+        props: { columnsOnChange },
         columns,
       },
     } = this.context;
-    const {column} = this.props;
+    const { column } = this.props;
     set(column, 'header', value);
-    if(columnsOnChange){
-      columnsOnChange({column:toJS(column),columns:toJS(columns),type:ColumnsEditType.header});
+    if (columnsOnChange) {
+      columnsOnChange({ column: toJS(column), columns: toJS(columns), type: ColumnsEditType.header });
     }
-  }
+  };
 
-  
+
   @autobind
   @action
-  onHeaderBlur(){
+  onHeaderBlur() {
     this.setEditing(false);
   }
 
@@ -272,10 +272,10 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
         dragColumn,
         dragRow,
         headersEditable,
-        props: { columnsDragRender = {},dragColumnAlign },
+        props: { columnsDragRender = {}, dragColumnAlign },
       },
     } = this.context;
-    const { renderIcon } = columnsDragRender
+    const { renderIcon } = columnsDragRender;
     const sortPrefixCls = `${prefixCls}-sort`;
     const {
       headerClassName,
@@ -306,8 +306,8 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
 
     // 计数有多少个icon
     let iconQuantity = 0;
-    let helpIcon
-    let sortableIcon
+    let helpIcon;
+    let sortableIcon;
     // 帮助按钮
     if (showHelp !== ShowHelp.none) {
       const fieldHelp = defaultTo(field && field.get('help'), help);
@@ -317,65 +317,67 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
             <Icon type="help_outline" className={`${prefixCls}-help-icon`} />
           </Tooltip>
         );
-        iconQuantity += 24
+        iconQuantity += 24;
       }
     }
     // 排序按钮
     if (sortable && name) {
       const sortProps = headersEditable ? { onClick: this.handleClick } : {};
-      iconQuantity += 18
+      iconQuantity += 18;
       sortableIcon = <Icon key="sort" type="arrow_upward" className={`${sortPrefixCls}-icon`} {...sortProps} />;
     }
 
     const headerChildren = (headerChild) => {
       if (isValidElement(headerChild)) {
-        return cloneElement(headerChild, { key: 'text' })
+        return cloneElement(headerChild, { key: 'text' });
       }
       if (isString(headerChild) || (isNil(headerChild) && headersEditable)) {
         const widthEdit = iconQuantity
           ? `calc(100% - ${pxToRem(iconQuantity)})`
           : headersEditable && !!name ? `100%` : undefined;
-        const spanStyle:CSSProperties = {
+        const spanStyle: CSSProperties = {
           display: 'inline-block',
-          width: widthEdit,
+          maxWidth: widthEdit,
           overflow: 'hidden',
           textOverflow: 'ellipsis',
-        }
+        };
         if (headersEditable && !!name) {
           const editProps = {
             defaultValue: headerChild,
             value: headerChild,
             onChange: this.onChangeHeader,
-            key: "text",
+            key: 'text',
             style: { width: widthEdit },
             className: `${prefixCls}-cell-inner-edit`,
-          }
+          };
           if (dragColumn) {
             return (
               <ObserverTextField
                 {...editProps}
               />
-            )
+            );
           }
           // 当为null 和 undefined 也可以编辑
-          if(!headerChild){
+          if (!headerChild) {
             spanStyle.height = '100%';
           }
           return (this.editing ? <ObserverTextField
             autoFocus
             onBlur={this.onHeaderBlur}
             {...editProps}
-          /> : <span onClick={() => { this.setEditing(true) }} style={spanStyle} key="text" >{headerChild}</span>)
+          /> : <span onClick={() => {
+            this.setEditing(true);
+          }} style={spanStyle} key="text">{headerChild}</span>);
         }
         // 当文字在左边无法查看到icon处理
         if (cellStyle.textAlign !== ColumnAlign.right && iconQuantity) {
-          return <span key="text" style={spanStyle}>{headerChild}</span>
+          return <span key="text" style={spanStyle}>{headerChild}</span>;
         }
 
-        return (<span key="text">{headerNode}</span>)
+        return (<span key="text">{headerNode}</span>);
       }
-      return headerChild
-    }
+      return headerChild;
+    };
 
     const innerProps: any = {
       className: classNames(`${prefixCls}-cell-inner`, {
@@ -400,22 +402,22 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
           column,
           dataSet,
           snapshot,
-        })
+        });
       }
       if (column && column.key === DRAG_KEY) {
         // 修复数据为空造成的th无法撑开
-        cellStyle.width = pxToRem(column.width)
-        return <Icon type="baseline-drag_indicator" />
+        cellStyle.width = pxToRem(column.width);
+        return <Icon type="baseline-drag_indicator" />;
       }
-      return null
-    }
+      return null;
+    };
     if (
       column.key !== SELECTION_KEY
       && dragRow
       && (dragColumnAlign === DragColumnAlign.left || dragColumnAlign === DragColumnAlign.right)
       && columnMaxDeep <= 1
     ) {
-      innerProps.children.push(dragIcon())
+      innerProps.children.push(dragIcon());
     }
 
     if (helpIcon) {
@@ -434,7 +436,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
         }
       }
       if (!headersEditable) {
-        innerProps.onClick = this.handleClick
+        innerProps.onClick = this.handleClick;
       }
       if (cellStyle.textAlign === ColumnAlign.right) {
         innerProps.children.unshift(sortableIcon);
@@ -443,7 +445,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
       }
     }
     if (dragColumn && provided.draggableProps.style) {
-      cellStyle = { ...omit(cellStyle, ['width', 'height']), ...provided.draggableProps.style, cursor: 'move' }
+      cellStyle = { ...omit(cellStyle, ['width', 'height']), ...provided.draggableProps.style, cursor: 'move' };
     }
     return (
       <th
@@ -451,7 +453,7 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
         rowSpan={rowSpan}
         ref={(ref) => {
           if (ref) {
-            provided.innerRef(ref)
+            provided.innerRef(ref);
           }
         }}
         {...provided.draggableProps}

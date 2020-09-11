@@ -6,7 +6,8 @@ import { getConfig } from 'choerodon-ui/lib/configure';
 import { pick } from 'lodash';
 import DataSet from '../data-set/DataSet';
 import Table, { TableProps } from '../table/Table';
-import { SelectionMode, TableMode } from '../table/enum';
+import TableProfessionalBar from '../table/query-bar/TableProfessionalBar';
+import { SelectionMode, TableMode, TableQueryBarType } from '../table/enum';
 import { DataSetSelection } from '../data-set/enum';
 import { LovConfig } from './Lov';
 import { ColumnProps } from '../table/Column';
@@ -110,6 +111,11 @@ export default class LovView extends Component<LovViewProps> {
 
     if (height) {
       lovTableProps.style = { ...lovTableProps.style, height };
+    }
+
+    const isProfessionalBar = getConfig('queryBar') === TableQueryBarType.professionalBar;
+    if (!lovTableProps.queryBar && isProfessionalBar) {
+      lovTableProps.queryBar = (props) => <TableProfessionalBar {...props} queryBarProps={{ labelWidth: 80 }} />;
     }
 
     // 优化优先级 让 部分tableProps属性 的优先级大于dataSet的设置

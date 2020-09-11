@@ -36,7 +36,7 @@ export function filterBindField(fields: Fields): { [key: string]: Field } {
   );
 }
 
-export interface TabelToolBarProps extends ElementProps {
+export interface TableToolBarProps extends ElementProps {
   dataSet: DataSet;
   queryDataSet?: DataSet;
   queryFields: ReactElement<any>[];
@@ -46,7 +46,7 @@ export interface TabelToolBarProps extends ElementProps {
 }
 
 @observer
-export default class TableToolBar extends Component<TabelToolBarProps, any> {
+export default class TableToolBar extends Component<TableToolBarProps, any> {
   static displayName = 'TableToolBar';
 
   static contextType = TableContext;
@@ -80,9 +80,11 @@ export default class TableToolBar extends Component<TabelToolBarProps, any> {
   }
 
   @autobind
-  handleQuery() {
-    const { dataSet } = this.props;
-    dataSet.query();
+  async handleQuery() {
+    const { dataSet, queryDataSet } = this.props;
+    if (await queryDataSet?.validate()) {
+      dataSet.query();
+    }
   }
 
   componentWillUnmount() {

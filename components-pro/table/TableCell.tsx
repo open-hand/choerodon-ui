@@ -539,7 +539,7 @@ export default class TableCell extends Component<TableCellProps> {
       cellExternalProps.className,
     );
     const widthDraggingStyle = ():React.CSSProperties =>{
-      const draggingStyle:React.CSSProperties = {}
+      const draggingStyle:React.CSSProperties = {};
       if (isDragging) {
         if (column.width) {
           draggingStyle.width = pxToRem(column.width)
@@ -550,7 +550,7 @@ export default class TableCell extends Component<TableCellProps> {
         draggingStyle.whiteSpace = "nowrap"
       }
       return draggingStyle
-    }
+    };
     const td = (
       <td
         {...cellExternalProps}

@@ -26,6 +26,7 @@ const locale: Locale = {
     filter_bar_placeholder: '过滤表',
     advanced_query: '高级查询',
     advanced_query_conditions: '高级查询条件',
+    more: '更多',
   },
   Pagination: {
     page: '页',

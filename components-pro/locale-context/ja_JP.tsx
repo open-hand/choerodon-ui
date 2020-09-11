@@ -26,6 +26,7 @@ const locale: Locale = {
     filter_bar_placeholder: 'フィルターテーブル',
     advanced_query: '高度なクエリ',
     advanced_query_conditions: '高度なクエリ条件',
+    more: 'もっと',
   },
   Pagination: {
     page: 'ページ',

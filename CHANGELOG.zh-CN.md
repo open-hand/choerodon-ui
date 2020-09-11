@@ -16,6 +16,7 @@ timeline: true
 ---
 
 
+- 🌟 `<pro>Table`: 新增专业查询条 TableProfessionalBar。
 - 💄 `<pro>PerformanceTable`: 优化 title 支持函数返回。
 
 ## 0.8.72

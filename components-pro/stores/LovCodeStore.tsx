@@ -108,7 +108,7 @@ export class LovCodeStore {
   getDefineAxiosConfig(code: string, field?: Field): AxiosRequestConfig | undefined {
     const lovDefineAxiosConfig =
       (field && field.get('lovDefineAxiosConfig')) || getConfig('lovDefineAxiosConfig');
-    const config = processAxiosConfig(lovDefineAxiosConfig, code);
+    const config = processAxiosConfig(lovDefineAxiosConfig, code, field);
     return {
       ...config,
       url: config.url || this.getConfigUrl(code, field),

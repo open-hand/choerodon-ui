@@ -16,6 +16,7 @@ timeline: true
 ---
 
 
+- 🌟 `<pro>Table`: Added TableProfessionalBar.
 - 💄 `<pro>PerformanceTable`: Optimized the return of `title` support function.
 
 ## 0.8.72
