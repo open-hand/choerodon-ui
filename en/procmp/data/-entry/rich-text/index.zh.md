@@ -1,5 +1,5 @@
 ---
-title: Select
+title: RichText
 subtitle: 富文本编辑器
 order: 0
 ---

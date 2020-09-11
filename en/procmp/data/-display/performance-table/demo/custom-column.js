@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { PerformanceTable } from 'choerodon-ui/pro';
+import { PerformanceTable, CheckBox } from 'choerodon-ui/pro';
 import { Popover } from 'choerodon-ui';
 
 const NameCell = ({ rowData, dataIndex }) => {
@@ -21,7 +21,7 @@ const NameCell = ({ rowData, dataIndex }) => {
         </p>
       </>
     )}>
-      <a>{rowData[dataIndex].toLocaleString()}</a>
+      {rowData[dataIndex].toLocaleString()}
     </Popover>
   );
 };
@@ -39,32 +39,80 @@ const ActionCell = ({ rowData, dataIndex }) => {
   );
 };
 
+
 class CustomColumnTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: fakeData
+      data: fakeData,
+      checkValues: [],
     };
   }
 
-  render() {
+  handleChange = (value, oldValue) => {
+    console.log('[controlled]', value, '[oldValues]', oldValue);
+    const { checkValues } = this.state;
+    if (value) {
+      checkValues.push(value);
+    } else {
+      checkValues.splice(checkValues.indexOf(value), 1);
+    }
+    this.setState({
+      checkValues,
+    });
+  };
+
+  handleCheckAllChange = (value, oldValue) => {
+    console.log('[controlled]', value, '[oldValues]', oldValue);
     const { data } = this.state;
+    if (value) {
+      this.setState({
+        checkValues: data.map(i => i.id),
+      });
+    } else {
+      this.setState({
+        checkValues: [],
+      });
+    }
+  };
+
+
+  CheckCell = ({ rowData }) => {
+    const { checkValues } = this.state;
+    return (
+      <CheckBox
+        name="controlled"
+        value={rowData.id}
+        checked={checkValues.indexOf(rowData.id) !== -1}
+        onChange={this.handleChange}
+      />
+    );
+  };
+
+  render() {
+    const { data, checkValues } = this.state;
     const columns = [
       {
-        title: 'Id',
+        title: (
+          <CheckBox
+            name="controlled"
+            checked={checkValues.length === data.length}
+            onChange={this.handleCheckAllChange}
+          />
+        ),
         dataIndex: 'id',
         key: 'id',
         width: 80,
-        align: "center",
+        align: 'center',
         fixed: true,
-        render: ({rowData, dataIndex}) => NameCell({rowData, dataIndex}),
+        render: ({ rowData, dataIndex }) => this.CheckCell({ rowData, dataIndex }),
       },
       {
         title: 'firstName',
         dataIndex: 'firstName',
         key: 'firstName',
         width: 130,
-        render: ({rowData, dataIndex}) => NameCell({rowData, dataIndex}),
+        render: ({ rowData, dataIndex }) => NameCell({ rowData, dataIndex }),
       },
       {
         title: 'lastName',
@@ -82,7 +130,7 @@ class CustomColumnTable extends React.Component {
         title: 'Date',
         key: 'date',
         width: 300,
-        align: "right",
+        align: 'right',
         render: ({ rowData }) => <span>{rowData.date.toLocaleString()}</span>,
       },
       {
@@ -91,22 +139,15 @@ class CustomColumnTable extends React.Component {
         key: 'action',
         width: 300,
         fixed: 'right',
-        render: ({rowData, dataIndex}) => ActionCell({rowData, dataIndex}),
+        render: ({ rowData, dataIndex }) => ActionCell({ rowData, dataIndex }),
       },
     ];
     return (
-        <PerformanceTable
-          height={400}
-          data={data}
-          columns={columns}
-          headerHeight={50}
-          rowHeight={rowData => {
-            if (rowData.firstName === 'Janis') {
-              return 30;
-            }
-            return 64;
-          }}
-        />
+      <PerformanceTable
+        height={400}
+        data={data}
+        columns={columns}
+      />
     );
   }
 }

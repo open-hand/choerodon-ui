@@ -16,8 +16,9 @@
       },
       "order": 0,
       "screenshot": "",
-      "height": 520,
-      "category": "pro"
+      "height": 580,
+      "category": "pro",
+      "iframe": "https://choerodon-ui.gitee.io/c7n-performance-table/components-pro/performance-table-cn/"
     }, {
       "filename": "resizable-column.js",
       "title": {
@@ -30,7 +31,8 @@
       },
       "order": 1,
       "screenshot": "",
-      "height": 520,
+      "height": 580,
+      "iframe": "https://choerodon-ui.gitee.io/c7n-performance-table/components-pro/icon-picker-cn/",
       "category": "pro"
     }, {
       "filename": "fluid-column.js",
@@ -44,7 +46,8 @@
       },
       "order": 2,
       "screenshot": "",
-      "height": 520,
+      "height": 580,
+      "iframe": "https://choerodon-ui.gitee.io/c7n-performance-table/components-pro/email-field-cn/",
       "category": "pro"
     }, {
       "filename": "fixed-column.js",
@@ -58,7 +61,8 @@
       },
       "order": 3,
       "screenshot": "",
-      "height": 520,
+      "height": 580,
+      "iframe": "https://choerodon-ui.gitee.io/c7n-performance-table/components-pro/dropdown-cn/",
       "category": "pro"
     }, {
       "filename": "word-wrap.js",
@@ -72,7 +76,8 @@
       },
       "order": 4,
       "screenshot": "",
-      "height": 520,
+      "height": 580,
+      "iframe": "https://choerodon-ui.gitee.io/c7n-performance-table/components-pro/modal-cn/",
       "category": "pro"
     }, {
       "filename": "custom-column.js",
@@ -86,7 +91,8 @@
       },
       "order": 5,
       "screenshot": "",
-      "height": 520,
+      "height": 580,
+      "iframe": "https://choerodon-ui.gitee.io/c7n-performance-table/components-pro/code-area-cn/",
       "category": "pro"
     }, {
       "filename": "sort.js",
@@ -101,21 +107,7 @@
       "order": 5,
       "screenshot": "",
       "height": 440,
-      "category": "pro"
-    },
-    {
-      "filename": "advanced-bar.js",
-      "title": {
-        "zh": "高级搜索条",
-        "en": "Advanced Search Bar"
-      },
-      "description": {
-        "zh": "高级搜索条。\n",
-        "en": "Advanced Search Bar.\n"
-      },
-      "order": 6,
-      "screenshot": "",
-      "height": 520,
+      "iframe": "https://choerodon-ui.gitee.io/c7n-performance-table/components-pro/intl-field-cn/",
       "category": "pro"
     }, {
       "filename": "tree.js",
@@ -129,7 +121,8 @@
       },
       "order": 7,
       "screenshot": "",
-      "height": 520,
+      "height": 580,
+      "iframe": "https://choerodon-ui.gitee.io/c7n-performance-table/components-pro/lov-cn/",
       "category": "pro"
     }, {
       "filename": "expanded.js",
@@ -143,7 +136,8 @@
       },
       "order": 8,
       "screenshot": "",
-      "height": 520,
+      "height": 580,
+      "iframe": "https://choerodon-ui.gitee.io/c7n-performance-table/components-pro/date-picker-cn/",
       "category": "pro"
     }, {
       "filename": "edit.js",
@@ -157,7 +151,8 @@
       },
       "order": 9,
       "screenshot": "",
-      "height": 520,
+      "height": 580,
+      "iframe": "https://choerodon-ui.gitee.io/c7n-performance-table/components-pro/color-picker-cn/",
       "category": "pro"
     }, {
       "filename": "column-group.js",
@@ -171,7 +166,8 @@
       },
       "order": 10,
       "screenshot": "",
-      "height": 520,
+      "height": 580,
+      "iframe": "https://choerodon-ui.gitee.io/c7n-performance-table/components-pro/check-box-cn/",
       "category": "pro"
     }, {
       "filename": "auto-height.js",
@@ -185,7 +181,8 @@
       },
       "order": 11,
       "screenshot": "",
-      "height": 520,
+      "height": 580,
+      "iframe": "https://choerodon-ui.gitee.io/c7n-performance-table/components-pro/auto-complete-cn/",
       "category": "pro"
     }, {
       "filename": "large-lists.js",
@@ -199,7 +196,8 @@
       },
       "order": 12,
       "screenshot": "",
-      "height": 520,
+      "height": 580,
+      "iframe": "https://choerodon-ui.gitee.io/c7n-performance-table/components-pro/form-cn/",
       "category": "pro"
     }, {
       "filename": "affix-horizontal-scrollbar.js",
@@ -213,7 +211,8 @@
       },
       "order": 13,
       "screenshot": "",
-      "height": 520,
+      "height": 580,
+      "iframe": "https://choerodon-ui.gitee.io/c7n-performance-table/components-pro/auto-complete-cn/",
       "category": "pro"
     }, {
       "filename": "colspan.js",
@@ -227,7 +226,8 @@
       },
       "order": 14,
       "screenshot": "",
-      "height": 520,
+      "height": 580,
+      "iframe": "https://choerodon-ui.gitee.io/c7n-performance-table/components-pro/cascader-cn/",
       "category": "pro"
     }, {
       "filename": "empty.js",
@@ -241,7 +241,8 @@
       },
       "order": 15,
       "screenshot": "",
-      "height": 520,
+      "height": 580,
+      "iframe": "https://choerodon-ui.gitee.io/c7n-performance-table/components-pro/currency-cn/",
       "category": "pro"
     }
   ]
