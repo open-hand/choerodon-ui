@@ -18,6 +18,7 @@ timeline: true
 
 - 🌟 `<pro>Table`: 新增专业查询条 TableProfessionalBar。
 - 💄 `<pro>PerformanceTable`: 优化 title 支持函数返回。
+- 💄 `<pro>Table`: 优化查询条件未通过时点击查询出现 loading 效果。
 
 ## 0.8.72
 
@@ -35,7 +36,7 @@ timeline: true
 - 🐞 `<pro>Upload`: 修复当使用 beforeUpload 和 uploadImmediately 导致文件类型报错。
 - 🐞 `<pro>TextField`: 修复 Select Text 等在多值输入时遮盖问题。
 - 🐞 `<pro>FormField`: 修复多选级联模式清空未禁用子组件。
-- 🐞 `<pro>Table`: 修复 inline 模式下面无法显示 Tooltip 。
+- 🐞 `<pro>Table`: 修复 inline 模式下面无法显示 Tooltip。
 - 🐞 `<pro>Table`: 修复 Column 错误的 children 类型,该错误会导致在 TS 中无法使用组合列。
 - 🐞 `<pro>NumberField`: 修复在 Table 中使用的时候在某些情况下上下箭头会失效的问题。
 - 🐞 `<pro>FormField`: 修复在 Form 中子组件的 newLine 属性在 TypeScript 中类型出现报错的问题。

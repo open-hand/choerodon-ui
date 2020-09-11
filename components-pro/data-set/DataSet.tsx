@@ -1889,8 +1889,8 @@ Then the query method will be auto invoke.`,
   private async read(page: number = 1): Promise<any> {
     if (this.checkReadable(this.parent)) {
       try {
-        this.changeStatus(DataSetStatus.loading);
         const data = await this.generateQueryParameter();
+        this.changeStatus(DataSetStatus.loading);
         const newConfig = axiosConfigAdapter('read', this, data, this.generateQueryString(page));
         if (newConfig.url) {
           const queryEventResult = await this.fireEvent(DataSetEvents.query, {
