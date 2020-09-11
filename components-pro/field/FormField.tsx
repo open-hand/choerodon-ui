@@ -8,6 +8,7 @@ import isNumber from 'lodash/isNumber';
 import isString from 'lodash/isString';
 import isNil from 'lodash/isNil';
 import isLdEmpty from 'lodash/isEmpty';
+import isObject from 'lodash/isObject';
 import defaultTo from 'lodash/defaultTo';
 import { isMoment, Moment } from 'moment';
 import { observer } from 'mobx-react';
@@ -465,9 +466,9 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   @autobind
   defaultRenderer({ text, repeat, maxTagTextLength }: RenderProps): ReactNode {
     return repeat !== undefined &&
-      maxTagTextLength &&
-      isString(text) &&
-      text.length > maxTagTextLength
+    maxTagTextLength &&
+    isString(text) &&
+    text.length > maxTagTextLength
       ? `${text.slice(0, maxTagTextLength)}...`
       : text;
   }
@@ -1031,11 +1032,11 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
         const inner = readOnly ? (
           <span className={className}>{text}</span>
         ) : (
-            <li className={className}>
-              <div>{text}</div>
-              {closeBtn}
-            </li>
-          );
+          <li className={className}>
+            <div>{text}</div>
+            {closeBtn}
+          </li>
+        );
         return (
           <Tooltip
             suffixCls={`form-tooltip ${getConfig('proPrefixCls')}-tooltip`}
@@ -1113,7 +1114,12 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       const cascadeMap = field.get('cascadeMap');
       if (
         cascadeMap &&
-        (!record || Object.keys(cascadeMap).some(cascade => isLdEmpty(record.get(cascadeMap[cascade]))))
+        (!record || Object.keys(cascadeMap).some(cascade => {
+          if (isObject(record.get(cascadeMap[cascade]))) {
+            return isLdEmpty(record.get(cascadeMap[cascade]));
+          }
+          return isNil(record.get(cascadeMap[cascade]));
+        }))
       ) {
         return true;
       }
@@ -1145,14 +1151,14 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     const help = this.renderHelpMessage();
     const { _inTable } = this.props;
     return this.hasFloatLabel ? (
-      [
-        isValidElement(wrapper) && cloneElement(wrapper, { key: 'wrapper' }),
-        <Animate transitionName="show-error" component="" transitionAppear key="validation-message">
-          {validationMessage}
-        </Animate>,
-        help,
-      ]
-    ) :
+        [
+          isValidElement(wrapper) && cloneElement(wrapper, { key: 'wrapper' }),
+          <Animate transitionName="show-error" component="" transitionAppear key="validation-message">
+            {validationMessage}
+          </Animate>,
+          help,
+        ]
+      ) :
       _inTable ?
         <>
           {wrapper}
@@ -1163,7 +1169,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
             suffixCls={`form-tooltip ${getConfig('proPrefixCls')}-tooltip`}
             title={
               !!(this.multiple && this.getValues().length) ||
-                this.isValidationMessageHidden(validationMessage)
+              this.isValidationMessageHidden(validationMessage)
                 ? null
                 : validationMessage
             }

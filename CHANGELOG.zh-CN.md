@@ -19,6 +19,7 @@ timeline: true
 - 🌟 `<pro>Table`: 新增专业查询条 TableProfessionalBar。
 - 💄 `<pro>PerformanceTable`: 优化 title 支持函数返回。
 - 💄 `<pro>Table`: 优化查询条件未通过时点击查询出现 loading 效果。
+- 🐞 `<pro>FormField`: 修复级联模式错误禁用子组件。
 
 ## 0.8.72
 
