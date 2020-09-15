@@ -67,7 +67,7 @@ import { findIndexedSibling, getHeight, getPaginationPosition } from './utils';
 import { ButtonProps } from '../button/Button';
 import TableBody from './TableBody';
 
-export type TableButtonProps = ButtonProps & { afterClick?: MouseEventHandler<any>; };
+export type TableButtonProps = ButtonProps & { afterClick?: MouseEventHandler<any>; children?: ReactNode; };
 
 export type Buttons =
   | TableButtonType
