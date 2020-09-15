@@ -20,6 +20,7 @@ timeline: true
 - 💄 `<pro>PerformanceTable`: Optimized the return of `title` support function.
 - 💄 `<pro>Table`: Optimized the query conditions does not show the loading effect by clicking the query.
 - 🐞 `<pro>FormField`: Fixed cascade mode error to disable sub-components.
+- 🐞 `<pro>Table`: Fixed the issue that editable lines are automatically positioned to radio buttons.
 
 ## 0.8.72
 

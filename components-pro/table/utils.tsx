@@ -160,7 +160,7 @@ export function findFirstFocusableElement(node: HTMLElement): HTMLElement | unde
   if (node.children) {
     let found: HTMLElement | undefined;
     [...(node.children as HTMLCollectionOf<HTMLElement>)].some(child => {
-      if (child.tabIndex > -1 && child.getAttribute('type') !== 'checkbox') {
+      if (child.tabIndex > -1 && child.getAttribute('type') !== 'checkbox' && child.getAttribute('type') !== 'radio') {
         found = child;
       } else {
         found = findFirstFocusableElement(child);
