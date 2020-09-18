@@ -68,4 +68,8 @@ export default {
     saveButton:'保存',
     changeAvatar:'修改头像',
   },
+  PerformanceTable: {
+    emptyMessage: '暂无数据',
+    loading: '加载中...',
+  },
 };

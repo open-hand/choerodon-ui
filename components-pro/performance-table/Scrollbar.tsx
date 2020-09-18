@@ -192,15 +192,16 @@ class Scrollbar extends React.PureComponent<ScrollbarProps, State> {
     const { handlePressed } = this.state;
     // @ts-ignore
     const addPrefix = prefix(classPrefix);
+
     const classes = classNames(classPrefix, className, {
-      [addPrefix('vertical')]: vertical,
-      [addPrefix('horizontal')]: !vertical,
-      [addPrefix('hide')]: scrollLength <= length,
-      [addPrefix('pressed')]: handlePressed,
+      [addPrefix('vertical') as unknown as string]: vertical,
+      [addPrefix('horizontal')as unknown as string]: !vertical,
+      [addPrefix('hide')as unknown as string]: scrollLength <= length,
+      [addPrefix('pressed') as unknown as string]: handlePressed,
     });
 
     const styles: React.CSSProperties = {
-      [vertical ? 'height' : 'width']: `${(length / scrollLength) * 100}%`,
+      [vertical ? 'height' : 'width' ]: `${(length / scrollLength) * 100}%`,
       [vertical ? 'minHeight' : 'minWidth']: SCROLLBAR_MIN_WIDTH,
     };
     const unhandled = getUnhandledProps(Scrollbar, rest);

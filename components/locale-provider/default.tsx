@@ -69,4 +69,8 @@ export default {
     saveButton:'Save',
     changeAvatar:'Modify avatar',
   },
+  PerformanceTable: {
+    emptyMessage: 'No data found',
+    loading: 'Loading...',
+  },
 };

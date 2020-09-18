@@ -8,9 +8,9 @@ import Slider from '../slider';
 import { UploadFile, UploadProps } from '../upload/interface';
 import defaultLocale from '../locale-provider/default';
 import Button from '../button';
-import { Locale } from '../locale-provider';
 import Upload from '../upload';
 import AvatarUploader from './avatarUpload';
+import { imageCrop } from '../locale-provider'
 
 // ssr 
 if (typeof window !== 'undefined') {
@@ -537,98 +537,98 @@ const ImgCrop = forwardRef((props: ImgCropProps, ref) => {
     )
 
     return (
-        // @ts-ignore
         <LocaleReceiver componentName="imageCrop" defaultLocale={defaultLocale.imageCrop}>
-            {(locale) => (
-                <>
-                    {renderUpload()}
-                    {src && modalVisible && (
-                        <Modal
-                            visible={modalVisible}
-                            wrapClassName={`${prefixCls}-modal`}
-                            // @ts-ignore
-                            title={modalTitle || ((locale as Locale).imageCrop && (locale as Locale).imageCrop?.editImage) ? (locale as Locale).imageCrop?.editImage : 'Edit image'} // 当不存在的语言使用英文
-                            width={modalWidth}
-                            destroyOnClose
-                            maskClosable={false}
-                            {...modalProps}
-                            onOk={onOk}
-                            onCancel={onClose}
-                            {...modalTextProps}
-                        >
-                            {cropContent ? cropContent(RenderCrop) : RenderCrop}
-                            {hasZoom && (
-                                <div className={`${prefixCls}-control zoom`}>
-                                    <Button onClick={subZoomVal} disabled={isMinZoom}>
-                                        －
-                                     </Button>
-                                    <Slider
-                                        min={MIN_ZOOM}
-                                        max={MAX_ZOOM}
-                                        step={ZOOM_STEP}
-                                        value={zoomVal}
-                                        onChange={(sliderValue: number) => (setZoomVal(sliderValue))}
-                                    />
-                                    <Button onClick={addZoomVal} disabled={isMaxZoom}>
-                                        ＋
-                                     </Button>
-                                </div>
-                            )}
-                            {hasRotate && (
-                                <div className={`${prefixCls}-control rotate`}>
-                                    <Button onClick={subRotateVal} disabled={isMinRotate}>
-                                        ↺
-                                    </Button>
-                                    <Slider
-                                        min={MIN_ROTATE}
-                                        max={MAX_ROTATE}
-                                        step={ROTATE_STEP}
-                                        value={rotateVal}
-                                        onChange={(sliderValue: number) => (setRotateVal(sliderValue))}
-                                    />
-                                    <Button onClick={addRotateVal} disabled={isMaxRotate}>
-                                        ↻
-                                    </Button>
-                                </div>
-                            )}
-                            {hasAspectControl && (
-                                <div className={`${prefixCls}-control yrate`}>
-                                    <Button onClick={subRotateVal} disabled={isMinRotate}>
-                                        y
-                                    </Button>
-                                    <Slider
-                                        min={MIN_RATE}
-                                        max={MAX_RATE}
-                                        step={RATE_STEP}
-                                        value={yRate}
-                                        onChange={(sliderValue: number) => (setYRate(sliderValue))}
-                                    />
-                                    <Button onClick={addRotateVal} disabled={isMaxRotate}>
-                                        100
-                                    </Button>
-                                </div>
-                            )}
-                            {hasAspectControl && (
-                                <div className={`${prefixCls}-control xrate`}>
-                                    <Button onClick={subRotateVal} disabled={isMinRotate}>
-                                        x
-                                    </Button>
-                                    <Slider
-                                        min={MIN_RATE}
-                                        max={MAX_RATE}
-                                        step={RATE_STEP}
-                                        value={xRate}
-                                        onChange={(sliderValue: number) => (setXRate(sliderValue))}
-                                    />
-                                    <Button onClick={addRotateVal} disabled={isMaxRotate}>
-                                        100
-                                    </Button>
-                                </div>
-                            )}
-                        </Modal>
-                    )}
-                </>
-            )}
+            {(locale: imageCrop) => {
+                return (
+                    <>
+                        {renderUpload()}
+                        {src && modalVisible && (
+                            <Modal
+                                visible={modalVisible}
+                                wrapClassName={`${prefixCls}-modal`}
+                                title={modalTitle || locale  && locale.editImage ? locale.editImage : 'Edit image'} // 当不存在的语言使用英文
+                                width={modalWidth}
+                                destroyOnClose
+                                maskClosable={false}
+                                {...modalProps}
+                                onOk={onOk}
+                                onCancel={onClose}
+                                {...modalTextProps}
+                            >
+                                {cropContent ? cropContent(RenderCrop) : RenderCrop}
+                                {hasZoom && (
+                                    <div className={`${prefixCls}-control zoom`}>
+                                        <Button onClick={subZoomVal} disabled={isMinZoom}>
+                                            －
+                                         </Button>
+                                        <Slider
+                                            min={MIN_ZOOM}
+                                            max={MAX_ZOOM}
+                                            step={ZOOM_STEP}
+                                            value={zoomVal}
+                                            onChange={(sliderValue: number) => (setZoomVal(sliderValue))}
+                                        />
+                                        <Button onClick={addZoomVal} disabled={isMaxZoom}>
+                                            ＋
+                                         </Button>
+                                    </div>
+                                )}
+                                {hasRotate && (
+                                    <div className={`${prefixCls}-control rotate`}>
+                                        <Button onClick={subRotateVal} disabled={isMinRotate}>
+                                            ↺
+                                        </Button>
+                                        <Slider
+                                            min={MIN_ROTATE}
+                                            max={MAX_ROTATE}
+                                            step={ROTATE_STEP}
+                                            value={rotateVal}
+                                            onChange={(sliderValue: number) => (setRotateVal(sliderValue))}
+                                        />
+                                        <Button onClick={addRotateVal} disabled={isMaxRotate}>
+                                            ↻
+                                        </Button>
+                                    </div>
+                                )}
+                                {hasAspectControl && (
+                                    <div className={`${prefixCls}-control yrate`}>
+                                        <Button onClick={subRotateVal} disabled={isMinRotate}>
+                                            y
+                                        </Button>
+                                        <Slider
+                                            min={MIN_RATE}
+                                            max={MAX_RATE}
+                                            step={RATE_STEP}
+                                            value={yRate}
+                                            onChange={(sliderValue: number) => (setYRate(sliderValue))}
+                                        />
+                                        <Button onClick={addRotateVal} disabled={isMaxRotate}>
+                                            100
+                                        </Button>
+                                    </div>
+                                )}
+                                {hasAspectControl && (
+                                    <div className={`${prefixCls}-control xrate`}>
+                                        <Button onClick={subRotateVal} disabled={isMinRotate}>
+                                            x
+                                        </Button>
+                                        <Slider
+                                            min={MIN_RATE}
+                                            max={MAX_RATE}
+                                            step={RATE_STEP}
+                                            value={xRate}
+                                            onChange={(sliderValue: number) => (setXRate(sliderValue))}
+                                        />
+                                        <Button onClick={addRotateVal} disabled={isMaxRotate}>
+                                            100
+                                        </Button>
+                                    </div>
+                                )}
+                            </Modal>
+                        )}
+                    </>
+                )
+            }}
         </LocaleReceiver>
     );
 }) as CompoundedComponent

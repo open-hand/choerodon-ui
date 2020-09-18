@@ -21,7 +21,9 @@ import {
   getOffset,
 } from 'dom-lib';
 import { toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
-
+import LocaleReceiver from 'choerodon-ui/lib/locale-provider/LocaleReceiver';
+import { PerformanceTable as PerformanceTableLocal } from 'choerodon-ui/lib/locale-provider'
+import defaultLocale from 'choerodon-ui/lib/locale-provider/default';
 import Row from './Row';
 import CellGroup from './CellGroup';
 import Scrollbar from './Scrollbar';
@@ -972,7 +974,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   }
 
   // @ts-ignore
-  addPrefix = (name: string) => prefix(this.props.classPrefix)(name);
+  addPrefix = (name: string):string => prefix(this.props.classPrefix)(name);
 
   calculateRowMaxHeight() {
     const { wordWrap } = this.props;
@@ -1512,31 +1514,37 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     const bottomRowStyles = { height: bottomHideHeight };
 
     return (
-      <div
-        ref={this.tableBodyRef}
-        className={this.addPrefix('body-row-wrapper')}
-        style={bodyStyles}
-        onScroll={this.handleBodyScroll}
-      >
-        <div
-          style={wheelStyles}
-          className={this.addPrefix('body-wheel-area')}
-          ref={this.wheelWrapperRef}
+      <LocaleReceiver componentName="PerformanceTable" defaultLocale={defaultLocale.PerformanceTable}>
+        {(locale: PerformanceTableLocal) => {
+          return (
+            <div
+          ref={this.tableBodyRef}
+          className={this.addPrefix('body-row-wrapper')}
+          style={bodyStyles}
+          onScroll={this.handleBodyScroll}
         >
-          {topHideHeight ? <Row style={topRowStyles} className="virtualized" /> : null}
-          {this._visibleRows}
-          {bottomHideHeight ? <Row style={bottomRowStyles} className="virtualized" /> : null}
-        </div>
+          <div
+            style={wheelStyles}
+            className={this.addPrefix('body-wheel-area')}
+            ref={this.wheelWrapperRef}
+          >
+            {topHideHeight ? <Row style={topRowStyles} className="virtualized" /> : null}
+            {this._visibleRows}
+            {bottomHideHeight ? <Row style={bottomRowStyles} className="virtualized" /> : null}
+          </div>
 
-        {this.renderInfo()}
-        {this.renderScrollbar()}
-        {this.renderLoading()}
-      </div>
+          {this.renderInfo(locale)}
+          {this.renderScrollbar()}
+          {this.renderLoading(locale)}
+        </div>
+          )
+        }}
+      </LocaleReceiver>
     );
   }
 
-  renderInfo() {
-    const { locale, renderEmpty, loading } = this.props;
+  renderInfo(locale: PerformanceTableLocal) {
+    const { renderEmpty, loading } = this.props;
     if (this._visibleRows.length || loading) {
       return null;
     }
@@ -1581,8 +1589,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   /**
    *  show loading
    */
-  renderLoading() {
-    const { locale, loading, loadAnimation, renderLoading } = this.props;
+  renderLoading(locale: PerformanceTableLocal) {
+    const {loading, loadAnimation, renderLoading } = this.props;
 
     if (!loadAnimation && !loading) {
       return null;
