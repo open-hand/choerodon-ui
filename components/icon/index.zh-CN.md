@@ -28,6 +28,61 @@ toc: false
 <Icon type="add_location" />
 ```
 
+## 如何自定义项目的图标
+
+1. font 库 自定义方式
+```css
+/* 建立字体文件，设置你新建立的字体名称以及对应的url 地址 */
+@font-face
+{
+font-family: myFirstFont;
+src: url('×××.ttf'),
+     url('×××.eot'); /* IE9 */
+     font-weight: normal;
+     font-style: normal;
+     font-display: block;
+}
+/* 设置类名把刚刚确定的字体设置优先级最高 */
+.c7ntest1 {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'myFirstFont' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+/* 定义类名使用的字体，利用伪类来实现对应样式的展现 */
+.icon-clubs:before {
+  content: "\e918";
+}
+```
+
+```
+<Icon style={{color:'green'}} customFontName="myFirstFont" type="maozi" />
+```
+
+2. 第二种方案使用svg引用第三方库实现
+
+```
+import { Icon } from 'choerodon-ui';
+import { createFromIconfontCN } from '@ant-design/icons';
+const MyIcon = createFromIconfontCN({
+  scriptUrl: '//at.alicdn.com/t/font_2066932_6wpzydfnv8g.js', // 在 iconfont.cn 上生成
+});
+ReactDOM.render(
+  <>
+    <MyIcon type="icon-maozi" />
+  </>,
+  mountNode);
+```
+
+具体的方案操作详细查看[choerodon-ui-icon](https://www.yuque.com/docs/share/938b2da6-2066-472d-8d58-ca85990791be?# 《choerodon-ui-icon》)
+
 ## 图标列表
 
 > 点击图标复制代码。
@@ -43,6 +98,7 @@ ReactDOM.render(<IconSet className="icons" />, mountNode);
 
 ```jsx
 <Icon type="add_location" style={{ fontSize: 16, color: '#08c' }} />
+
 ```
 
 图标的属性说明如下：
@@ -50,6 +106,8 @@ ReactDOM.render(<IconSet className="icons" />, mountNode);
 属性 | 说明 | 类型 | 默认值
 -----|-----|-----|------
 type | 图标类型 | string | -
+customFontName | 自定义字体库 | string | -
+
 
 <style>
 .c7n-icon-block {

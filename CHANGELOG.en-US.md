@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-
+- 🌟 `Icon`: Added `customFontName` for who want the icon font customization.
 - 🌟 `<pro>Table`: Added TableProfessionalBar.
 - 💄 `<pro>PerformanceTable`: Optimized multilingual presentation.
 - 💄 `<pro>PerformanceTable`: Optimized the return of `title` support function.

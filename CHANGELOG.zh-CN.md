@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-
+- 🌟 `Icon`: 新增 customFontName 属性满足当客户自定字体图标时候使用。
 - 🌟 `<pro>Table`: 新增专业查询条 TableProfessionalBar。
 - 💄 `<pro>PerformanceTable`: 优化多语言展示。
 - 💄 `<pro>PerformanceTable`: 优化 title 支持函数返回。
