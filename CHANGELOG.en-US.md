@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `Icon`: Added `customFontName` for who want the icon font customization.
 - 🌟 `<pro>Table`: Added TableProfessionalBar.
+- 🌟 `<pro>Table`: Added `exportMode` the clicent mode would export the excel by frontend.
 - 💄 `<pro>PerformanceTable`: Optimized multilingual presentation.
 - 💄 `<pro>PerformanceTable`: Optimized the return of `title` support function.
 - 💄 `<pro>Table`: Optimized the query conditions does not show the loading effect by clicking the query.

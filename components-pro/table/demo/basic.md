@@ -108,6 +108,7 @@ class App extends React.Component {
     primaryKey: 'userid',
     name: 'user',
     autoQuery: true,
+    exportMode:'client',
     pageSize: 5,
     transport: {
       read: {

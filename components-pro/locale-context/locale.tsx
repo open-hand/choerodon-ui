@@ -27,6 +27,7 @@ export interface Locale {
     filter_bar_placeholder;
     advanced_query;
     advanced_query_conditions;
+    max_export;
     more;
   };
   Pagination: {

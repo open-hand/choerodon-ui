@@ -10,6 +10,7 @@ import isNumber from 'lodash/isNumber';
 import warning from 'choerodon-ui/lib/_util/warning';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import isNil from 'lodash/isNil';
+import { isEmpty as _isEmpty } from 'lodash';
 import Field, { DynamicPropsArguments, FieldProps, Fields } from './Field';
 import { BooleanValue, DataToJSON, FieldType, RecordStatus, SortOrder } from './enum';
 import DataSet from './DataSet';
@@ -68,10 +69,10 @@ export function processToJSON(value) {
   return value;
 }
 
-export const arrayMove = (array:Record[],from:number,to:number) => {
+export const arrayMove = (array: Record[], from: number, to: number) => {
   const startIndex = to < 0 ? array.length + to : to;
-  const item = array.splice(from,1)[0]
-  array.splice(startIndex,0,item)
+  const item = array.splice(from, 1)[0]
+  array.splice(startIndex, 0, item)
 }
 
 function processOne(value: any, field: Field, checkRange: boolean = true) {
@@ -158,6 +159,97 @@ export function processValue(value: any, field?: Field): any {
   return value;
 }
 
+// 处理单个range
+const processRangeToText = (resultValue, field): string => {
+  return resultValue.map((item) => {
+    const valueRange = isMoment(item)
+      ? item.format()
+      : isObject(item)
+        ? item[field.get('textField')]
+        : item.toString()
+    return valueRange
+  }).join(`~`)
+}
+
+export function processExportValue(value: any, field?: Field): any {
+  if (field) {
+    const multiple = field.get('multiple');
+    const range = field.get('range');
+    if (multiple) {
+      if (isEmpty(value)) {
+        value = [];
+      } else if (!isArray(value)) {
+        if (isString(multiple) && isString(value)) {
+          value = value.split(multiple);
+        } else {
+          value = [value];
+        }
+      }
+    }
+    if (isArray(value) && (multiple || !range)) {
+      if (field && !_isEmpty(field.lookup)) {
+        return value.map(item => field.getText(processOne(item, field))).join(',')
+      }
+      return value.map(item => {
+        const itemValue = processOne(item, field)
+        if (field && field.get('textField') && itemValue && isObject(itemValue)) {
+          return itemValue[field.get('textField')]
+        }
+        return itemValue
+      }).join(',');
+    }
+    if (isArray(value) && multiple && range) {
+      if (field && !_isEmpty(field.lookup)) {
+        return value.map(item => field.getText(processRangeToText(processOne(item, field), field))).join(',')
+      }
+      return value.map(item => {
+        return processRangeToText(processOne(item, field), field)
+      }).join(',');
+    }
+    if (field && !_isEmpty(field.lookup)) {
+      return field.getText(processOne(value, field))
+    }
+    const resultValue = processOne(value, field)
+    if (isMoment(resultValue)) {
+      return resultValue.format()
+    }
+    if (field && field.get('textField') && resultValue && isObject(resultValue)) {
+      if (range && isArrayLike(resultValue)) {
+        return processRangeToText(resultValue, field);
+      }
+      return resultValue[field.get('textField')]
+    }
+    return resultValue;
+  }
+  return value;
+}
+
+/**
+ * 实现如果名字是带有属性含义`.`找到能够导出的值
+ * @param dataItem 一行数据
+ * @param name 对应的fieldname
+ * @param isBind 是否是从绑定获取值
+ */
+export function getSplitValue(dataItem: any, name: string, isBind: boolean = true): any {
+  const nameArray = name.split('.');
+  if (nameArray.length > 1) {
+    let levelValue = dataItem
+    for (let i = 0; i < nameArray.length; i++) {
+      if (!isObject(levelValue)) {
+        break;
+      }
+      if (isBind || i !== 0) {
+        levelValue = levelValue[nameArray[i]]
+      }
+    }
+    return levelValue;
+  }
+  if (isBind) {
+    return dataItem[name]
+  }
+  return dataItem;
+}
+
 export function childrenInfoForDelete(json: {}, children: { [key: string]: DataSet }): {} {
   return Object.keys(children).reduce((data, name) => {
     const child = children[name];
@@ -187,12 +279,12 @@ export function sortTree(children: Record[], orderField: Field): Record[] {
 }
 
 // 递归生成树获取树形结构数据
-function availableTree(idField,parentField,parentId,allData){
+function availableTree(idField, parentField, parentId, allData) {
   let result = []
   allData.forEach(element => {
-    if(element[parentField] === parentId){
-      const childresult = availableTree(idField,parentField,element[idField],allData);
-      result= result.concat(element).concat(childresult)
+    if (element[parentField] === parentId) {
+      const childresult = availableTree(idField, parentField, element[idField], allData);
+      result = result.concat(element).concat(childresult)
     }
   });
   return result;
@@ -200,16 +292,16 @@ function availableTree(idField,parentField,parentId,allData){
 
 
 // 获取单个页面能够展示的数据
-export function sliceTree(idField,parentField,allData,pageSize){
-  let availableTreeData= []
-  if(allData.length) {
-   let parentLength = 0
-   allData.forEach(( item ) => {
-      if(item){
-        if(isNil(item[parentField]) && !isNil(idField) && parentLength < pageSize){
+export function sliceTree(idField, parentField, allData, pageSize) {
+  let availableTreeData = []
+  if (allData.length) {
+    let parentLength = 0
+    allData.forEach((item) => {
+      if (item) {
+        if (isNil(item[parentField]) && !isNil(idField) && parentLength < pageSize) {
           parentLength++
-          const childresult = availableTree(idField,parentField,item[idField],allData)
-          availableTreeData= availableTreeData.concat(item).concat(childresult)
+          const childresult = availableTree(idField, parentField, item[idField], allData)
+          availableTreeData = availableTreeData.concat(item).concat(childresult)
         }
       }
     })
@@ -227,14 +319,14 @@ function getValueType(value: any): FieldType {
   return isBoolean(value)
     ? FieldType.boolean
     : isNumber(value)
-    ? FieldType.number
-    : isString(value)
-    ? FieldType.string
-    : isMoment(value)
-    ? FieldType.date
-    : isObject(value)
-    ? FieldType.object
-    : FieldType.auto;
+      ? FieldType.number
+      : isString(value)
+        ? FieldType.string
+        : isMoment(value)
+          ? FieldType.date
+          : isObject(value)
+            ? FieldType.object
+            : FieldType.auto;
 }
 
 function getBaseType(type: FieldType): FieldType {
@@ -266,7 +358,7 @@ export function checkFieldType(value: any, field: Field): boolean {
       const fieldType = getBaseType(field.type);
       const valueType =
         field.type === FieldType.boolean &&
-        [field.get(BooleanValue.trueValue), field.get(BooleanValue.falseValue)].includes(value)
+          [field.get(BooleanValue.trueValue), field.get(BooleanValue.falseValue)].includes(value)
           ? FieldType.boolean
           : getValueType(value);
       if (
@@ -286,7 +378,12 @@ export function checkFieldType(value: any, field: Field): boolean {
 }
 
 let iframe;
-
+/**
+ * 目前定义为服务端请求的方法
+ * @param url 导出地址
+ * @param data 导出传递参数
+ * @param method 默认post请求
+ */
 export function doExport(url, data, method = 'post') {
   if (!iframe) {
     iframe = document.createElement('iframe');
@@ -456,8 +553,8 @@ export function axiosConfigAdapter(
 }
 
 // 查询顶层父亲节点
-export function findRootParent(children:Record){
-  if(children.parent){
+export function findRootParent(children: Record) {
+  if (children.parent) {
     return findRootParent(children.parent)
   }
   return children
@@ -569,17 +666,17 @@ export function processIntlField(
     const newDynamicProps =
       typeof dynamicProps === 'function'
         ? props => {
-            return {
-              ...dynamicProps(props),
-              bind: tlsBind(props, name, lang, tlsKey),
-            };
-          }
-        : {
-            ...dynamicProps,
-            bind: props => {
-              return tlsBind(props, name, lang, tlsKey);
-            },
+          return {
+            ...dynamicProps(props),
+            bind: tlsBind(props, name, lang, tlsKey),
           };
+        }
+        : {
+          ...dynamicProps,
+          bind: props => {
+            return tlsBind(props, name, lang, tlsKey);
+          },
+        };
     return callback(name, {
       ...fieldProps,
       dynamicProps: newDynamicProps,

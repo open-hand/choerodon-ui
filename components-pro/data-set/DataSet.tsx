@@ -21,6 +21,7 @@ import defer from 'lodash/defer';
 import debounce from 'lodash/debounce';
 import warning from 'choerodon-ui/lib/_util/warning';
 import { getConfig } from 'choerodon-ui/lib/configure';
+import XLSX from 'xlsx';
 import localeContext, { $l } from '../locale-context';
 import axios from '../axios';
 import Record from './Record';
@@ -46,6 +47,8 @@ import {
   sliceTree,
   findRootParent,
   arrayMove,
+  processExportValue,
+  getSplitValue,
 } from './utils';
 import EventManager from '../_util/EventManager';
 import DataSetSnapshot from './DataSetSnapshot';
@@ -58,6 +61,7 @@ import {
   FieldType,
   RecordStatus,
   SortOrder,
+  ExportMode,
 } from './enum';
 import { Lang } from '../locale-context/enum';
 import isEmpty from '../_util/isEmpty';
@@ -200,6 +204,10 @@ export interface DataSetProps {
    * 导出请求的url
    */
   exportUrl?: string;
+  /**
+   * 导出模式
+   */
+  exportMode?: ExportMode;
   /**
    * 自定义CRUD的请求配置
    */
@@ -453,6 +461,13 @@ export default class DataSet extends EventManager {
     });
   }
 
+  /**
+   * 服务端导出还是客户端导出
+   */
+  get exportMode(): ExportMode {
+    return this.props.exportMode || getConfig('exportMode') || ExportMode.server;
+  }
+
   set transport(transport: Transport) {
     runInAction(() => {
       this.props.transport = transport instanceof Transport ? transport.props : transport;
@@ -561,11 +576,11 @@ export default class DataSet extends EventManager {
     if (current) {
       const index = this.indexOf(current);
       if (index !== -1) {
-        if(this.paging === 'server'){
+        if (this.paging === 'server') {
           const currentParent = findRootParent(current)
           let parentIndex = -1
-          this.treeData.forEach((item,indexTree) => {
-            if(this.indexOf(item) === this.indexOf(currentParent)){
+          this.treeData.forEach((item, indexTree) => {
+            if (this.indexOf(item) === this.indexOf(currentParent)) {
               parentIndex = indexTree;
             }
           })
@@ -606,7 +621,7 @@ export default class DataSet extends EventManager {
   @computed
   get paging(): boolean | 'server' {
     const { idField, parentField, paging } = this.props;
-    return (paging === `server`)&&parentField&&idField ? paging : (parentField === undefined || idField === undefined) && !!paging! ;
+    return (paging === `server`) && parentField && idField ? paging : (parentField === undefined || idField === undefined) && !!paging!;
   }
 
   set paging(paging) {
@@ -855,8 +870,9 @@ export default class DataSet extends EventManager {
   /**
    * 导出数据
    * @param object columns 导出的列
+   * @param number exportQuantity 导出数量
    */
-  async export(columns: any = {}): Promise<void> {
+  async export(columns: any = {}, exportQuantity: number = 0): Promise<void> {
     if (this.checkReadable(this.parent) && (await this.ready())) {
       const data = await this.generateQueryParameter();
       data._HAP_EXCEL_EXPORT_COLUMNS = columns;
@@ -872,12 +888,54 @@ export default class DataSet extends EventManager {
             data: newConfig.data,
           })) !== false
         ) {
-          doExport(this.axios.getUri(newConfig), newConfig.data, newConfig.method);
+          const ExportQuantity = exportQuantity > 1000 ? 1000 : exportQuantity;
+          if (this.exportMode === ExportMode.client) {
+            this.doClientExport(data, ExportQuantity)
+          } else {
+            doExport(this.axios.getUri(newConfig), newConfig.data, newConfig.method);
+          }
         }
       } else {
         warning(false, 'Unable to execute the export method of dataset, please check the ');
       }
     }
+  }
+
+  private async doClientExport(data: any, quantity: number) {
+    const columnsExport = data._HAP_EXCEL_EXPORT_COLUMNS
+    delete data._HAP_EXCEL_EXPORT_COLUMNS
+    const params = { ...this.generateQueryString(0), pagesize: quantity }
+    const newConfig = axiosConfigAdapter('read', this, data, params);
+    const result = await this.axios(newConfig);
+    const newResult: any[] = []
+    if (result[this.dataKey] && result[this.dataKey].length > 0) {
+      const processData = toJS(this.processData(result[this.dataKey])).map((item) => item.data)
+      processData.forEach((itemValue) => {
+        const dataItem = {}
+        const columnsExportkeys = Object.keys(columnsExport);
+        for (let i = 0; i < columnsExportkeys.length; i += 1) {
+          const firstRecord = this.records[0] || this
+          const exportField = firstRecord.getField(columnsExportkeys[i])
+          let processItemValue = getSplitValue(toJS(itemValue), columnsExportkeys[i])
+          // 处理bind 情况
+          if (exportField && isNil(processItemValue) && exportField.get('bind')) {
+            processItemValue = getSplitValue(
+              getSplitValue(toJS(itemValue), exportField.get('bind')),
+              columnsExportkeys[i],
+              true,
+            )
+
+          }
+          dataItem[columnsExportkeys[i]] = processExportValue(processItemValue, exportField)
+        }
+        newResult.push(dataItem);
+      })
+    }
+    newResult.unshift(columnsExport)
+    const ws = XLSX.utils.json_to_sheet(newResult, { skipHeader: true }); /* 新建空workbook，然后加入worksheet */
+    const wb = XLSX.utils.book_new();  /* 新建book */
+    XLSX.utils.book_append_sheet(wb, ws); /* 生成xlsx文件(book,sheet数据,sheet命名) */
+    XLSX.writeFile(wb, `${this.name}.xlsx`); /* 写文件(book,xlsx文件名称) */
   }
 
   /**
@@ -918,12 +976,12 @@ export default class DataSet extends EventManager {
     const { paging, pageSize, totalCount } = this;
     const { modifiedCheck, modifiedCheckMessage, autoLocateFirst } = this.props;
     let currentRecord = this.findInAllPage(index);
-    if (currentRecord ) {
+    if (currentRecord) {
       this.current = currentRecord;
       return currentRecord;
     }
     if (paging === true || paging === 'server') {
-      if (index >= 0 && index < totalCount + this.created.length - this.destroyed.length ) {
+      if (index >= 0 && index < totalCount + this.created.length - this.destroyed.length) {
         if (
           !modifiedCheck ||
           !this.dirty ||
@@ -932,7 +990,7 @@ export default class DataSet extends EventManager {
           await this.query(Math.floor(index / pageSize) + 1);
           currentRecord = this.findInAllPage(index);
           if (currentRecord) {
-            this.current = autoLocateFirst ? currentRecord: undefined;
+            this.current = autoLocateFirst ? currentRecord : undefined;
             return currentRecord;
           }
         }
@@ -1188,8 +1246,8 @@ export default class DataSet extends EventManager {
   /**
    * 切换记录的顺序
    */
-  move(from:number, to:number){
-    arrayMove(this.records,from,to)
+  move(from: number, to: number) {
+    arrayMove(this.records, from, to)
   }
 
   /**
@@ -1603,8 +1661,8 @@ export default class DataSet extends EventManager {
         const record = data.__id
           ? this.findRecordById(data.__id)
           : primaryKey &&
-            dataStatus !== status[RecordStatus.add] &&
-            this.records.find(r => r.get(primaryKey) === data[primaryKey]);
+          dataStatus !== status[RecordStatus.add] &&
+          this.records.find(r => r.get(primaryKey) === data[primaryKey]);
         if (record) {
           record.commit(data, this);
         } else if (dataStatus === status[RecordStatus.add]) {
@@ -1692,12 +1750,12 @@ Then the query method will be auto invoke.`,
       pageSize,
       props: { autoLocateFirst, idField, parentField },
     } = this;
-    switch(paging){
+    switch (paging) {
       case true:
         allData = allData.slice(0, pageSize);
-      break;
+        break;
       case 'server':
-        allData = idField && parentField ? sliceTree(idField,parentField,allData,pageSize) : allData.slice(0, pageSize);
+        allData = idField && parentField ? sliceTree(idField, parentField, allData, pageSize) : allData.slice(0, pageSize);
         break;
       default:
         break;
@@ -1707,12 +1765,12 @@ Then the query method will be auto invoke.`,
     this.records = this.originalData;
     if (total !== undefined && (paging === true || paging === 'server')) {
       this.totalCount = total;
-    }else if(idField && parentField && paging === 'server'){
+    } else if (idField && parentField && paging === 'server') {
       // 异步情况复用以前的total
-      if(!this.totalCount){
+      if (!this.totalCount) {
         this.totalCount = this.treeData.length
       }
-    } else{
+    } else {
       this.totalCount = allData.length;
     }
     this.releaseCachedSelected();
@@ -1761,11 +1819,11 @@ Then the query method will be auto invoke.`,
   private findInAllPage(index: number): Record | undefined {
     const { paging } = this;
     let indexRecord
-    if (paging === true ) {
+    if (paging === true) {
       indexRecord = this.data[this.getIndexInCurrentPage(index)];
-    }else if(paging === 'server'){
-      indexRecord  = this.treeData[this.getIndexInCurrentPage(index)];
-    }else{
+    } else if (paging === 'server') {
+      indexRecord = this.treeData[this.getIndexInCurrentPage(index)];
+    } else {
       indexRecord = this.data[index]
     };
     return indexRecord;
@@ -1990,7 +2048,7 @@ Then the query method will be auto invoke.`,
     const { dataKey, totalKey } = this;
     const { submitSuccess = defaultFeedback.submitSuccess } = this.feedback;
     const data: {
-      [props:string]:any
+      [props: string]: any
     }[] = [];
     let total;
     resp.forEach(item => {

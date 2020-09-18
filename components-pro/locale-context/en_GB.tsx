@@ -26,6 +26,7 @@ const locale: Locale = {
     filter_bar_placeholder: 'Table Filter',
     advanced_query: 'Advanced Query',
     advanced_query_conditions: 'Advanced Queries',
+    max_export:'Maximum Export Quantity',
     more: 'More',
   },
   Pagination: {

@@ -12,6 +12,8 @@ import isObject from 'lodash/isObject';
 import isString from 'lodash/isString';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { getConfig } from 'choerodon-ui/lib/configure';
+import Row from 'choerodon-ui/lib/row';
+import Col from 'choerodon-ui/lib/col';
 import { TableButtonType, TableQueryBarType } from '../enum';
 import TableButtons from './TableButtons';
 import Table, {
@@ -22,7 +24,7 @@ import Table, {
 } from '../Table';
 import Button, { ButtonProps } from '../../button/Button';
 import { ButtonType } from '../../button/enum';
-import { DataSetStatus, FieldType } from '../../data-set/enum';
+import { DataSetStatus, FieldType, ExportMode } from '../../data-set/enum';
 import { $l } from '../../locale-context';
 import TableContext from '../TableContext';
 import autobind from '../../_util/autobind';
@@ -36,6 +38,7 @@ import TableAdvancedQueryBar from './TableAdvancedQueryBar';
 import TableProfessionalBar from './TableProfessionalBar';
 import { PaginationProps } from '../../pagination/Pagination';
 import { findBindFieldBy } from '../../data-set/utils';
+import NumberField from '../../number-field';
 
 export interface TableQueryBarProps {
   prefixCls?: string;
@@ -57,6 +60,8 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
   exportModal;
 
   exportDataSet: DataSet;
+
+  exportQuantity: number;
 
   get showQueryBar(): boolean {
     const {
@@ -146,14 +151,34 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
   async handleButtonExport() {
     const { tableStore } = this.context;
     const columnHeaders = await tableStore.getColumnHeaders();
+    const changeQuantity = (value: number) => {
+      this.exportQuantity = value;
+    }
+    const { prefixCls } = this.props;
     this.exportDataSet = new DataSet({ data: columnHeaders, paging: false });
     this.exportDataSet.selectAll();
+    this.exportQuantity = tableStore.dataSet.totalCount
     this.exportModal = Modal.open({
       title: $l('Table', 'choose_export_columns'),
       children: (
-        <Table dataSet={this.exportDataSet} style={{ height: pxToRem(300) }}>
-          <Column header={$l('Table', 'column_name')} name="label" resizable={false} />
-        </Table>
+        <>
+          <Table dataSet={this.exportDataSet} style={{ height: pxToRem(300) }}>
+            <Column header={$l('Table', 'column_name')} name="label" resizable={false} />
+          </Table>
+          {
+            tableStore.dataSet.exportMode === ExportMode.client
+              ? (
+                <Row className={`${prefixCls}-export-quantity`}>
+                  <Col span={11} >
+                  <span>{$l('Table','max_export')}</span>
+                  </Col>
+                  <Col span={13}>
+                    <NumberField onChange={changeQuantity} defaultValue={this.exportQuantity} max={1000} clearButton min={0} step={1} />
+                  </Col>
+                </Row>
+              ) : undefined
+          }
+        </>
       ),
       closable: true,
       okText: $l('Table', 'export_button'),
@@ -192,6 +217,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
           columns[myName] = record.get('label');
           return columns;
         }, {}),
+        this.exportQuantity,
       );
     } else {
       return false;
