@@ -38,6 +38,17 @@ export default class Switch extends CheckBox<CheckBoxProps> {
     return <span className={`${prefixCls}-label`}>{text}</span>;
   }
 
+  renderSwitchFloatLabel() {
+    const {
+      prefixCls,
+    } = this;
+    return (
+      <span className={`${prefixCls}-float-label`}>
+        {this.getLabelChildren()}
+      </span>
+    )
+  }
+
   renderInner(): ReactNode {
     return undefined;
   }
