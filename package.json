@@ -101,7 +101,8 @@
     "string-template": "^1.0.0",
     "tslib": "^1.9.3",
     "warning": "~4.0.3",
-    "xhr-mock": "^2.5.1"
+    "xhr-mock": "^2.5.1",
+    "xlsx": "^0.16.7"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
@@ -258,10 +259,10 @@
     "test-all-skip": "sh ./scripts/test-all.sh --skip",
     "lint": "npm run lint:script && npm run lint:demo && npm run lint:style",
     "lint:tsc": "npm run tsc",
-    "lint:script": "eslint **/*.{js,jsx,ts,tsx} --ext '.js,.jsx,.ts,.tsx'",
+    "lint:script": "eslint '**/*.{js,jsx,ts,tsx}' --ext '.js,.jsx,.ts,.tsx'",
     "lint:md": "remark components/",
     "lint:demo": "cross-env RUN_ENV=DEMO eslint components/*/demo/*.md --ext '.md'",
-    "lint:style": "stylelint {site,components,components-git}/**/*.less --syntax less",
+    "lint:style": "stylelint '{site,components,components-git}/**/*.less' --syntax less",
     "lint-fix": "npm run lint-fix:script && npm run lint-fix:demo && npm run lint-fix:style",
     "lint-fix:script": "npm run lint:script -- --fix",
     "lint-fix:demo": "npm run lint:demo -- --fix",

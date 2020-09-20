@@ -27,6 +27,7 @@ const locale: Locale = {
     advanced_query: '高度なクエリ',
     advanced_query_conditions: '高度なクエリ条件',
     more: 'もっと',
+    max_export:'最大輸出数量',
   },
   Pagination: {
     page: 'ページ',

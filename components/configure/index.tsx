@@ -4,7 +4,7 @@ import { ReactNode } from 'react';
 import isObject from 'lodash/isObject';
 import { categories } from 'choerodon-ui-font';
 import { LovConfig } from 'choerodon-ui/pro/lib/lov/Lov';
-import { RecordStatus } from 'choerodon-ui/pro/lib/data-set/enum';
+import { RecordStatus, ExportMode } from 'choerodon-ui/pro/lib/data-set/enum';
 import { $l } from 'choerodon-ui/pro/lib/locale-context';
 import {
   expandIconProps,
@@ -90,6 +90,7 @@ export type Config = {
   statusKey?: string;
   tlsKey?: string;
   status?: Status;
+  exportMode?: ExportMode;
   labelLayout?: LabelLayout;
   queryBar?: TableQueryBarType | TableQueryBarHook;
   tableBorder?: boolean;

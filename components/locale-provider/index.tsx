@@ -18,6 +18,7 @@ export interface Locale {
   Select?: Object;
   Upload?: Object;
   imageCrop?: imageCrop;
+  performanceTable?: PerformanceTable;
 }
 
 export interface imageCrop {
@@ -37,6 +38,11 @@ export interface imageCrop {
   cancelButton: string,
   saveButton: string,
   changeAvatar: string,
+}
+
+export interface PerformanceTable {
+  emptyMessage: string;
+  loading:string;
 }
 
 export interface LocaleProviderProps {

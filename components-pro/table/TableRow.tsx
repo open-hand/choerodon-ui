@@ -395,7 +395,7 @@ export default class TableRow extends Component<TableRowProps, any> {
   }
 
   render() {
-    const { prefixCls, columns, record, lock, hidden, index, provided, snapshot, dragColumnAlign } = this.props;
+    const { prefixCls, columns, record, lock, hidden, index, provided, snapshot, dragColumnAlign, className} = this.props;
     const {
       tableStore: {
         rowHeight,
@@ -436,6 +436,7 @@ export default class TableRow extends Component<TableRowProps, any> {
         [`${rowPrefixCls}-disabled`]: disabled,
         [`${rowPrefixCls}-mouse-batch-choose`]: mouseBatchChooseState && (mouseBatchChooseIdList || []).includes(id),
         [`${rowPrefixCls}-expanded`]:this.isExpanded,
+        [`${className}`]: className , // 增加可以自定义类名满足拖拽功能
       },
       rowExternalProps.className,
     );

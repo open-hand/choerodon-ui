@@ -21,6 +21,11 @@ export const enum DataSetEvents {
   validate = 'validate',
 }
 
+export const enum ExportMode {
+  server = 'server',
+  client = 'client',
+}
+
 export const enum DataSetSelection {
   single = 'single',
   multiple = 'multiple',

@@ -27,6 +27,7 @@ const locale: Locale = {
     advanced_query: 'Advanced Query',
     advanced_query_conditions: 'Advanced Queries',
     more: 'More',
+    max_export:'Maximum Export Quantity',
   },
   Pagination: {
     page: 'Page',

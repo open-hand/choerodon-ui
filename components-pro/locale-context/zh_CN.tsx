@@ -27,6 +27,7 @@ const locale: Locale = {
     advanced_query: '高级查询',
     advanced_query_conditions: '高级查询条件',
     more: '更多',
+    max_export:'最大导出数量',
   },
   Pagination: {
     page: '页',

@@ -444,6 +444,7 @@ export default class Field {
     );
   }
 
+
   /**
    * 根据属性名获取属性值
    * @param propsName 属性名

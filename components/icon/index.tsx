@@ -6,19 +6,20 @@ export interface IconProps {
   type: string;
   className?: string;
   title?: string;
+  customFontName?: string;
   onClick?: MouseEventHandler<any>;
   onFocus?: FocusEventHandler<any>;
   onMouseDown?: MouseEventHandler<any>;
   onMouseUp?: MouseEventHandler<any>;
   onMouseLeave?: MouseEventHandler<any>;
   style?: CSSProperties;
-  tabIndex?: number;
+  tabIndex?: number; 
 }
 
 const Icon = function Icon(props: IconProps) {
   const iconfontPrefix = getConfig('iconfontPrefix');
-  const { type, className = '', ...otherProps } = props;
-  const classString = classNames(iconfontPrefix, `${iconfontPrefix}-${type}`, className);
+  const { type, customFontName, className = '', ...otherProps } = props;
+  const classString = classNames(iconfontPrefix, customFontName, `${iconfontPrefix}-${type}`, className);
   return <i {...otherProps} className={classString} />;
 };
 

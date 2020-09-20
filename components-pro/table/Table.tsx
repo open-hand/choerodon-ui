@@ -1071,7 +1071,6 @@ export default class Table extends DataSetComponent<TableProps> {
   @autobind
   onDragEnd(resultDrag: DropResult, provided: ResponderProvided) {
     const { onDragEnd, onDragEndBefore } = this.props;
-    // TODO onDragEndBefore
     // @ts-ignore ts 中判断是否属于目标类型的方法
     const isDropresult = (dropResult: any): dropResult is DropResult => {
       if (dropResult && dropResult.destination) {
