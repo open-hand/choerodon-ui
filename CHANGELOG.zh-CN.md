@@ -21,9 +21,10 @@ timeline: true
 - 💄 `<pro>PerformanceTable`: 优化多语言展示。
 - 💄 `<pro>PerformanceTable`: 优化 title 支持函数返回。
 - 💄 `<pro>Table`: 优化查询条件未通过时点击查询出现 loading 效果。
-- 🐞 `<pro>Switch`: 修复 Switch 在 labelLayout 等于 float 的时候出现表头丢失问题。
+- 💄 `<pro>Table`: 优化 TableButtonProps 类型,现在可以在 ts 中正确的使用 children 来改变预设按钮的文字。
 - 🐞 `<pro>Table`: 修复可编辑行自动定位至单选框问题。
 - 🐞 `<pro>FormField`: 修复级联模式错误禁用子组件。
+- 🐞 `<pro>Switch`: 修复 Switch 在 labelLayout 等于 float 的时候出现表头丢失问题。
 
 ## 0.8.72
 

@@ -21,8 +21,9 @@ timeline: true
 - 💄 `<pro>PerformanceTable`: Optimized multilingual presentation.
 - 💄 `<pro>PerformanceTable`: Optimized the return of `title` support function.
 - 💄 `<pro>Table`: Optimized the query conditions does not show the loading effect by clicking the query.
-- 🐞 `<pro>Switch`: Fixed switch when `labelLayout` is float, the label cant't find. 
+- 💄 `<pro>Table`: Optimize the TableButtonProps type, now you can correctly use children in ts to change the text of the default button.
 - 🐞 `<pro>FormField`: Fixed cascade mode error to disable sub-components.
+- 🐞 `<pro>Switch`: Fixed switch when `labelLayout` is float, the label cant't find. 
 - 🐞 `<pro>Table`: Fixed the issue that editable lines are automatically positioned to radio buttons.
 
 ## 0.8.72
