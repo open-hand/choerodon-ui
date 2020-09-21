@@ -198,7 +198,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
           if (field.get('multiple')) {
             fieldValue = (fieldValue || [])[repeat];
           }
-          if (field.get('bind')) return;
+          if (field.get('bind') || !fieldValue) return;
           return `${this.getFieldLabel(field)}: ${processFieldValue(
             isPlainObject(fieldValue) ? fieldValue : super.processValue(fieldValue),
             field,
@@ -280,7 +280,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
         }
         this.setValue(filtered);
       } else {
-        this.setValue(values.filter(item => item === name));
+        this.setValue(values.filter(item => item !== name));
       }
     } else if (isNil(value)) {
       this.setValue(values.filter(item => item !== name));
@@ -483,6 +483,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
     if (record) {
       record.clear();
     }
+    // this.setValue(this.emptyValue);
   }
 
   renderWrapper(): ReactNode {

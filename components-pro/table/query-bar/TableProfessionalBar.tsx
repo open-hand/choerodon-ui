@@ -87,6 +87,7 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
     if (queryDataSet && queryFields.length) {
       const currentFields = (
         <Form
+          useColon={false}
           dataSet={queryDataSet}
           columns={queryFieldsLimit}
           labelLayout={LabelLayout.horizontal}
@@ -98,11 +99,6 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
       );
 
       const moreFields = queryFields.slice(queryFieldsLimit);
-      // const currentFields = this.createFields(
-      //   queryFields.slice(0, queryFieldsLimit),
-      //   queryDataSet,
-      // );
-      // const moreFields = this.createFields(queryFields.slice(queryFieldsLimit), queryDataSet);
       const moreFieldsButton: ReactElement | undefined = this.getMoreFieldsButton(moreFields);
 
       return (
@@ -120,33 +116,6 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
     }
   }
 
-  // createFields(elements: ReactElement<any>[], dataSet: DataSet): ReactElement[] {
-  //   const { prefixCls } = this.props;
-  //   return elements.map(element => {
-  //     const { name, style } = element.props;
-  //     const props: any = {
-  //       onEnterDown: this.handleFieldEnter,
-  //       labelLayout: LabelLayout.horizontal,
-  //       style: {
-  //         marginRight: pxToRem(8),
-  //         // width: pxToRem(180),
-  //         // flexGrow
-  //         ...style,
-  //       },
-  //     };
-  //     const field = dataSet.getField(name);
-  //     if (field) {
-  //       const label = field.get('label');
-  //       if (label) {
-  //         props.label = label;
-  //       }
-  //     }
-  //     return (<>
-  //       <span title={isString(props.label) ? props.label : ''} className={`${prefixCls}-professional-query-bar-form-label`}>{props.label}</span>
-  //       {cloneElement(element, props)}
-  //     </>);
-  //   });
-  // }
 
   @autobind
   handleQueryReset() {
