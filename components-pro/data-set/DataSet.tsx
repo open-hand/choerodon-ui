@@ -2173,10 +2173,15 @@ Then the query method will be auto invoke.`,
     return true;
   }
 
+  /**
+   * page相关请求设置
+   * @param page 在那个页面
+   * @param pageSizeInner 页面大小
+   */
   private generatePageQueryString(page: number, pageSizeInner?: number) {
     const { paging, pageSize } = this;
     if (isNumber(pageSizeInner)) {
-      return { page, pageSize: pageSizeInner }
+      return { page, pagesize: pageSizeInner }
     }
     if (paging === true || paging === 'server') {
       return { page, pagesize: pageSize };
@@ -2200,6 +2205,11 @@ Then the query method will be auto invoke.`,
     return {};
   }
 
+  /**
+   * 返回configure 配置的值
+   * @param page 在那个页面
+   * @param pageSizeInner 页面大小 
+   */
   private generateQueryString(page: number,pageSizeInner?: number) {
     const order = this.generateOrderQueryString();
     const pageQuery = this.generatePageQueryString(page, pageSizeInner);
