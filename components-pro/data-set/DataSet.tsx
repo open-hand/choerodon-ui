@@ -904,7 +904,7 @@ export default class DataSet extends EventManager {
   private async doClientExport(data: any, quantity: number) {
     const columnsExport = data._HAP_EXCEL_EXPORT_COLUMNS
     delete data._HAP_EXCEL_EXPORT_COLUMNS
-    const params = { ...this.generateQueryString(0), pagesize: quantity }
+    const params = { ...this.generateQueryString(1, quantity)}
     const newConfig = axiosConfigAdapter('read', this, data, params);
     const result = await this.axios(newConfig);
     const newResult: any[] = []
@@ -2173,8 +2173,11 @@ Then the query method will be auto invoke.`,
     return true;
   }
 
-  private generatePageQueryString(page: number) {
+  private generatePageQueryString(page: number, pageSizeInner?: number) {
     const { paging, pageSize } = this;
+    if (isNumber(pageSizeInner)) {
+      return { page, pageSize: pageSizeInner }
+    }
     if (paging === true || paging === 'server') {
       return { page, pagesize: pageSize };
     }
@@ -2197,9 +2200,9 @@ Then the query method will be auto invoke.`,
     return {};
   }
 
-  private generateQueryString(page: number) {
+  private generateQueryString(page: number,pageSizeInner?: number) {
     const order = this.generateOrderQueryString();
-    const pageQuery = this.generatePageQueryString(page);
+    const pageQuery = this.generatePageQueryString(page, pageSizeInner);
     const generatePageQuery = getConfig('generatePageQuery');
     if (typeof generatePageQuery === 'function') {
       return generatePageQuery({
