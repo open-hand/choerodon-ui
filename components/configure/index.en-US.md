@@ -61,6 +61,7 @@ const prefixCls = getConfig('prefixCls');
 | dropdownMatchSelectWidth | 默认下拉框匹配输入框宽度 | boolean | true |
 | modalSectionBorder | Default if Modal header and foot have a border line | boolean | true |
 | modalOkFirst | Default the ok button of Modal is ranked first | boolean | true |
+| drawerOkFirst | The ok button of the default Modal drawer is ranked first, and has a higher priority than modalOkFirst | boolean \| undefined | undefined |
 | buttonFuncType | Default Button function type | string | raised |
 | buttonColor | Default Button color | string | default |
 | renderEmpty | 自定义组件空状态。componentName会接收到的值为 `Table` `Select`,在实现函数的时候需要对这两个输入进行处理,**注意需要同时处理Table以及Select**,默认值参考源代码的[defaultRenderEmpty](https://github.com/choerodon/choerodon-ui/blob/master/components/configure/index.tsx) | (componentName: string) => ReactNode | - |

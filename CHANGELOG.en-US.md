@@ -15,10 +15,11 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: Added `drawerOkFirst` global configuration.
 - 🌟 `Icon`: Added `customFontName` for who want the icon font customization.
 - 🌟 `<pro>Table`: Added TableProfessionalBar.
 - 🌟 `<pro>Table`: Added `exportMode` the client mode would export the excel by frontend.
-- 💄 `<pro>PerformanceTable`: Optimized multilingual presentation.
+- 💄 `<pro>PerformanceTable`: Optimized multilingual presentation && `bordered` true.
 - 💄 `<pro>PerformanceTable`: Optimized the return of `title` support function.
 - 💄 `<pro>Table`: Optimized the query conditions does not show the loading effect by clicking the query.
 - 💄 `<pro>Table`: Optimize the TableButtonProps type, now you can correctly use children in ts to change the text of the default button.

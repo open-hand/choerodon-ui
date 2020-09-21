@@ -109,6 +109,7 @@ export type Config = {
   pagination?: TablePaginationConfig | false;
   modalSectionBorder?: boolean;
   modalOkFirst?: boolean;
+  drawerOkFirst?: boolean | undefined;
   modalButtonProps?: ButtonProps;
   buttonFuncType?: FuncType;
   buttonColor?: ButtonColor;
@@ -205,6 +206,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['tableEditorNextKeyEnterDown', true],
   ['modalSectionBorder', true],
   ['modalOkFirst', true],
+  ['drawerOkFirst', undefined],
   ['buttonColor', ButtonColor.default],
   ['buttonFuncType', FuncType.raised],
   ['feedback', defaultFeedback],

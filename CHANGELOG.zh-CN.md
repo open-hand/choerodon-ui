@@ -15,10 +15,11 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: 新增 drawerOkFirst 全局配置。
 - 🌟 `Icon`: 新增 customFontName 属性满足当客户自定字体图标时候使用。
 - 🌟 `<pro>Table`: 新增专业查询条 TableProfessionalBar。
 - 🌟 `<pro>Table`: 添加 exportMode 属性 client 模式可以实现前端导出表格。
-- 💄 `<pro>PerformanceTable`: 优化多语言展示。
+- 💄 `<pro>PerformanceTable`: 优化多语言展示，默认 bordered 开启。
 - 💄 `<pro>PerformanceTable`: 优化 title 支持函数返回。
 - 💄 `<pro>Table`: 优化查询条件未通过时点击查询出现 loading 效果。
 - 💄 `<pro>Table`: 优化 TableButtonProps 类型,现在可以在 ts 中正确的使用 children 来改变预设按钮的文字。

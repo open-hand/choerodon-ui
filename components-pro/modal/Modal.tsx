@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import omit from 'lodash/omit';
 import defer from 'lodash/defer';
 import noop from 'lodash/noop';
+import isNil from 'lodash/isNil';
 import classNames from 'classnames';
 import classes from 'component-classes';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
@@ -423,13 +424,21 @@ export default class Modal extends ViewComponent<ModalProps> {
   }
 
   getDefaultFooter = (okBtn: ReactNode, cancelBtn: ReactNode) => {
-    const { okCancel, okFirst = getConfig('modalOkFirst') } = this.props;
-    const buttons = [okBtn];
+    const { okCancel, drawer, okFirst = getConfig('modalOkFirst') } = this.props;
+    let buttons = [okBtn];
+    const drawerOkFirst = getConfig('drawerOkFirst');
     if (okCancel) {
       if (okFirst) {
         buttons.push(cancelBtn);
       } else {
         buttons.unshift(cancelBtn);
+      }
+      if (drawer && !isNil(drawerOkFirst)) {
+        if (drawerOkFirst) {
+          buttons = [okBtn, cancelBtn];
+        } else {
+          buttons = [cancelBtn, okBtn];
+        }
       }
     }
     return <div>{buttons}</div>;
