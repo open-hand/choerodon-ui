@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.73
+
+`2020-09-21`
+
 - 🌟 `configure`: 新增 drawerOkFirst 全局配置。
 - 🌟 `Icon`: 新增 customFontName 属性满足当客户自定字体图标时候使用。
 - 🌟 `<pro>Table`: 新增专业查询条 TableProfessionalBar。

@@ -157,12 +157,16 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
 
   @autobind
   handleQueryReset() {
-    const { queryDataSet } = this.props;
+    const { queryDataSet, dataSet, queryFields } = this.props;
     if (queryDataSet) {
       const { current } = queryDataSet;
       if (current) {
         current.reset();
       }
+      dataSet.fireEvent('queryBarReset', {
+        dataSet,
+        queryFields,
+      });
       this.handleQuery();
     }
   }

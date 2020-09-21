@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.73
+
+`2020-09-21`
+
 - 🌟 `configure`: Added `drawerOkFirst` global configuration.
 - 🌟 `Icon`: Added `customFontName` for who want the icon font customization.
 - 🌟 `<pro>Table`: Added TableProfessionalBar.
