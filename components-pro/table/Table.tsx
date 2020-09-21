@@ -61,7 +61,7 @@ import { $l } from '../locale-context';
 import TableQueryBar from './query-bar';
 import FilterBar from './query-bar/TableFilterBar';
 import AdvancedQueryBar from './query-bar/TableAdvancedQueryBar';
-import TableProfessionalBar from './query-bar/TableProfessionalBar';
+import ProfessionalBar from './query-bar/TableProfessionalBar';
 import ToolBar from './query-bar/TableToolBar';
 import { findIndexedSibling, getHeight, getPaginationPosition } from './utils';
 import { ButtonProps } from '../button/Button';
@@ -445,7 +445,7 @@ export default class Table extends DataSetComponent<TableProps> {
 
   static AdvancedQueryBar = AdvancedQueryBar;
 
-  static TableProfessionalBar = TableProfessionalBar;
+  static ProfessionalBar = ProfessionalBar;
 
   static ToolBar = ToolBar;
 

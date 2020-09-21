@@ -169,6 +169,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     rowExpandedHeight: 100,
     hover: true,
     showHeader: true,
+    bordered: true,
     rowKey: 'key',
     translate3d: true,
     shouldUpdateScroll: true,

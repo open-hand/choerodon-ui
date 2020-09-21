@@ -483,7 +483,6 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
     if (record) {
       record.clear();
     }
-    // this.setValue(this.emptyValue);
   }
 
   renderWrapper(): ReactNode {
