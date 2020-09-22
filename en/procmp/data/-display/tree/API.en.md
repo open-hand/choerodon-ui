@@ -36,4 +36,6 @@ title: API
 | titleField | when there have dataSet ,the node text would bing titleField                                           | string            |        |
 | selection  | selection is false Tree checkable is true ,You can implement the whole treenode click to trigger check | string\|\|boolean | -      |
 
+dataSet The data format adopts a flat structure, and there is a structure of Id and parentId
+
 More cases and properties please refer to [Tree](/zh/cmp/data-display/tree/)。

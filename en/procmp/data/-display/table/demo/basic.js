@@ -102,6 +102,7 @@ class App extends React.Component {
     name: 'user',
     autoQuery: true,
     pageSize: 5,
+    exportMode: 'client', // 客户端导出默认为服务器导出
     transport: {
       read: {
         url: '/dataset/user/queries',

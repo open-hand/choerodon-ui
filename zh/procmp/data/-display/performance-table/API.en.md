@@ -11,14 +11,14 @@ title: API
 | affixHorizontalScrollbar | boolean,number                                                                    | Affix the table horizontal scrollbar to the specified position on the page                    |
 | autoHeight               | boolean                                                                           | Automatic height                                                                              |
 | bodyRef                  | React.Ref                                                                         | A ref attached to the table body element                                                      |
-| bordered                 | boolean                                                                           | Show border                                                                                   |
+| bordered                 | boolean`(true)`                                                                           | Show border                                                                                   |
 | cellBordered             | boolean                                                                           | Show cell border                                                                              |
 | data \*                  | Array&lt;Object&gt;                                                               | Table data                                                                                    |
 | defaultExpandAllRows     | boolean                                                                           | Expand all nodes By default                                                                   |
 | defaultExpandedRowKeys   | string[]                                                                          | Specify the default expanded row by `rowkey`                                                  |
 | defaultSortType          | enum: 'desc', 'asc'                                                               | Sort type                                                                                     |
 | expandedRowKeys          | string[]                                                                          | Specify the default expanded row by `rowkey` (Controlled)                                     |
-| headerHeight             | number`(40)`                                                                      | Table Header Height                                                                           |
+| headerHeight             | number`(30)`                                                                      | Table Header Height                                                                           |
 | height                   | number`(200)`                                                                     | Table height                                                                                  |
 | hover                    | boolean `(true)`                                                                  | The row of the table has a mouseover effect                                                   |
 | isTree                   | boolean                                                                           | Show as Tree table                                                                            |

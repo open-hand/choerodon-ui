@@ -11,14 +11,14 @@ title: API
 | affixHorizontalScrollbar | boolean,number                                                                    | 将横向滚动条固定在页面底部的指定位置                         |
 | autoHeight               | boolean                                                                           | 自动高度                                                     |
 | bodyRef                  | React.Ref                                                                         | 表格主体部分上的 ref                                         |
-| bordered                 | boolean                                                                           | 表格边框                                                     |
+| bordered                 | boolean`(true)`                                                                           | 表格边框                                                     |
 | cellBordered             | boolean                                                                           | 单元格边框                                                   |
 | data \*                  | Array&lt;Object&gt;                                                               | 表格数据                                                     |
 | defaultExpandAllRows     | boolean                                                                           | 默认展开所有节点                                             |
 | defaultExpandedRowKeys   | string[]                                                                          | 通过 rowKey 指定默认展开的行                                 |
 | defaultSortType          | enum: 'desc', 'asc'                                                               | 排序类型                                                     |
 | expandedRowKeys          | string[]                                                                          | 通过 rowKey 指定展开的行 (受控)                              |
-| headerHeight             | number`(40)`                                                                      | 表头高度                                                     |
+| headerHeight             | number`(30)`                                                                      | 表头高度                                                     |
 | height                   | number`(200)`                                                                     | 高度                                                         |
 | hover                    | boolean `(true)`                                                                  | 表格的行设置鼠标悬停效果                                     |
 | isTree                   | boolean                                                                           | 是否展示为树表格                                             |

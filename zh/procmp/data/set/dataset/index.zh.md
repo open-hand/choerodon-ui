@@ -45,12 +45,13 @@ abstract: true
 | parentField | 树形数据当前父节点 id 字段名 | string |  |
 | expandField | 树形数据标记节点是否展开的字段名 | string |  |
 | checkField | 树形数据标记节点是否为选中的字段名，在展开按钮后面会显示 checkbox | string |  |
-| fields | 字段属性数组，详见[Field Props](#Field Props) | object\[\] |  |
-| queryFields | 查询字段属性数组，在内部生成 queryDataSet，优先级低于 queryDataSet 属性，详见[Field Props](#Field Props) | object\[\] |  |
+| fields | 字段属性数组，详见[Field Props](#field-props) | object\[\] |  |
+| queryFields | 查询字段属性数组，在内部生成 queryDataSet，优先级低于 queryDataSet 属性，详见[Field Props](#field-props) | object\[\] |  |
 | cacheSelection | 缓存选中记录，使切换分页时仍保留选中状态。当设置了 primaryKey 或有字段设置了 unique 才起作用。 | boolean | false |
 | axios | 覆盖默认 axios | AxiosInstance |  |
-| dataToJSON | 数据转为 json 的方式，详见[DataToJSON](#DataToJSON) | DataToJSON | dirty |
+| dataToJSON | 数据转为 json 的方式，详见[DataToJSON](#dataToJSON) | DataToJSON | dirty |
 | cascadeParams | 级联查询参数 | (record, primaryKey) => object | (record, primaryKey) => primaryKey ? record.get(primaryKey) : record.toData() |
+| exportMode | 导出模式选择：前端导出，后端导出 | `client|server` | ‘client’ |
 
 ### DataSet Values
 
