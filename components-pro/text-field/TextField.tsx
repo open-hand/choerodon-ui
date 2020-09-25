@@ -14,6 +14,7 @@ import { getConfig } from 'choerodon-ui/lib/configure';
 import { FormField, FormFieldProps } from '../field/FormField';
 import autobind from '../_util/autobind';
 import isEmpty from '../_util/isEmpty';
+import isIE from "../_util/isIE";
 import Icon from '../icon';
 import { ValidatorProps } from '../validator/rules';
 import { preventDefault, stopPropagation } from '../_util/EventManager';
@@ -227,13 +228,17 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       wrapperProps.style = omit(wrapperProps.style, 'width');
     }
 
+    // 修复ie下出现多层model导致的输入框遮盖问题
+    // fixed the input would shadow each other in ie brower 
+    const  ZIndexOfIEProps:{style:CSSProperties}|{}  = isIE() ? {style:{zIndex:'auto'}}:{};
+
     const element = (
-      <span key="element" {...wrapperProps}>
+      <span  key="element" {...wrapperProps}>
         {multipleHolder}
         {otherPrevNode}
         {placeholderDiv}
         {renderedValue}
-        <label onMouseDown={this.handleMouseDown}>
+        <label {...ZIndexOfIEProps} onMouseDown={this.handleMouseDown}>
           {prefix}
           {input}
           {floatLabel}

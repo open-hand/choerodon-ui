@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🐞 `TextField`: Fixed when multiple in Modal, the lower model input would be displayed.
 - 🐞 `<pro>Pagination`: Fixed when change the page, the quickJumpInput don't change.
 
 ## 0.8.73
