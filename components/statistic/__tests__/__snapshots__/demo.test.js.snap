@@ -1,0 +1,349 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders ./components/statistic/demo/basic.md correctly 1`] = `
+<div
+  class="c7n-row"
+  style="margin-left:-8px;margin-right:-8px"
+>
+  <div
+    class="c7n-col-12"
+    style="padding-left:8px;padding-right:8px"
+  >
+    <div
+      class="c7n-statistic"
+    >
+      <div
+        class="c7n-statistic-title"
+      >
+        Active Users
+      </div>
+      <div
+        class="c7n-statistic-content"
+      >
+        <span
+          class="c7n-statistic-content-value"
+        >
+          <span
+            class="c7n-statistic-content-value-int"
+          >
+            112,893
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div
+    class="c7n-col-12"
+    style="padding-left:8px;padding-right:8px"
+  >
+    <div
+      class="c7n-statistic"
+    >
+      <div
+        class="c7n-statistic-title"
+      >
+        Account Balance (CNY)
+      </div>
+      <div
+        class="c7n-statistic-content"
+      >
+        <span
+          class="c7n-statistic-content-value"
+        >
+          <span
+            class="c7n-statistic-content-value-int"
+          >
+            112,893
+          </span>
+          <span
+            class="c7n-statistic-content-value-decimal"
+          >
+            .00
+          </span>
+        </span>
+      </div>
+    </div>
+    <button
+      class="c7n-btn c7n-btn-primary c7n-btn-flat"
+      style="margin-top:16px"
+      type="button"
+    >
+      <span>
+        Recharge
+      </span>
+      <div
+        class="c7n-ripple-wrapper"
+      />
+    </button>
+  </div>
+</div>
+`;
+
+exports[`renders ./components/statistic/demo/card.md correctly 1`] = `
+<div
+  class="site-statistic-demo-card"
+>
+  <div
+    class="c7n-row"
+    style="margin-left:-8px;margin-right:-8px"
+  >
+    <div
+      class="c7n-col-12"
+      style="padding-left:8px;padding-right:8px"
+    >
+      <div
+        class="c7n-card c7n-card-bordered"
+      >
+        <div
+          class="c7n-card-body"
+        >
+          <div
+            class="c7n-statistic"
+          >
+            <div
+              class="c7n-statistic-title"
+            >
+              Active
+            </div>
+            <div
+              class="c7n-statistic-content"
+              style="color:#3f8600"
+            >
+              <span
+                class="c7n-statistic-content-prefix"
+              >
+                <i
+                  class="icon icon-backup-o"
+                />
+              </span>
+              <span
+                class="c7n-statistic-content-value"
+              >
+                <span
+                  class="c7n-statistic-content-value-int"
+                >
+                  11
+                </span>
+                <span
+                  class="c7n-statistic-content-value-decimal"
+                >
+                  .28
+                </span>
+              </span>
+              <span
+                class="c7n-statistic-content-suffix"
+              >
+                %
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c7n-col-12"
+      style="padding-left:8px;padding-right:8px"
+    >
+      <div
+        class="c7n-card c7n-card-bordered"
+      >
+        <div
+          class="c7n-card-body"
+        >
+          <div
+            class="c7n-statistic"
+          >
+            <div
+              class="c7n-statistic-title"
+            >
+              Idle
+            </div>
+            <div
+              class="c7n-statistic-content"
+              style="color:#cf1322"
+            >
+              <span
+                class="c7n-statistic-content-prefix"
+              >
+                <i
+                  class="icon icon-cloud_download-o"
+                />
+              </span>
+              <span
+                class="c7n-statistic-content-value"
+              >
+                <span
+                  class="c7n-statistic-content-value-int"
+                >
+                  9
+                </span>
+                <span
+                  class="c7n-statistic-content-value-decimal"
+                >
+                  .30
+                </span>
+              </span>
+              <span
+                class="c7n-statistic-content-suffix"
+              >
+                %
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders ./components/statistic/demo/countdown.md correctly 1`] = `
+<div
+  class="c7n-row"
+  style="margin-left:-8px;margin-right:-8px"
+>
+  <div
+    class="c7n-col-12"
+    style="padding-left:8px;padding-right:8px"
+  >
+    <div
+      class="c7n-statistic"
+    >
+      <div
+        class="c7n-statistic-title"
+      >
+        Countdown
+      </div>
+      <div
+        class="c7n-statistic-content"
+      >
+        <span
+          class="c7n-statistic-content-value"
+        >
+          00:00:00
+        </span>
+      </div>
+    </div>
+  </div>
+  <div
+    class="c7n-col-12"
+    style="padding-left:8px;padding-right:8px"
+  >
+    <div
+      class="c7n-statistic"
+    >
+      <div
+        class="c7n-statistic-title"
+      >
+        Million Seconds
+      </div>
+      <div
+        class="c7n-statistic-content"
+      >
+        <span
+          class="c7n-statistic-content-value"
+        >
+          00:00:00:000
+        </span>
+      </div>
+    </div>
+  </div>
+  <div
+    class="c7n-col-24"
+    style="padding-left:8px;padding-right:8px;margin-top:32px"
+  >
+    <div
+      class="c7n-statistic"
+    >
+      <div
+        class="c7n-statistic-title"
+      >
+        Day Level
+      </div>
+      <div
+        class="c7n-statistic-content"
+      >
+        <span
+          class="c7n-statistic-content-value"
+        >
+          0 天 0 时 0 分 0 秒
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders ./components/statistic/demo/unit.md correctly 1`] = `
+<div
+  class="c7n-row"
+  style="margin-left:-8px;margin-right:-8px"
+>
+  <div
+    class="c7n-col-12"
+    style="padding-left:8px;padding-right:8px"
+  >
+    <div
+      class="c7n-statistic"
+    >
+      <div
+        class="c7n-statistic-title"
+      >
+        Feedback
+      </div>
+      <div
+        class="c7n-statistic-content"
+      >
+        <span
+          class="c7n-statistic-content-prefix"
+        >
+          <i
+            class="icon icon-people_outline-o"
+          />
+        </span>
+        <span
+          class="c7n-statistic-content-value"
+        >
+          <span
+            class="c7n-statistic-content-value-int"
+          >
+            1,128
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div
+    class="c7n-col-12"
+    style="padding-left:8px;padding-right:8px"
+  >
+    <div
+      class="c7n-statistic"
+    >
+      <div
+        class="c7n-statistic-title"
+      >
+        Unmerged
+      </div>
+      <div
+        class="c7n-statistic-content"
+      >
+        <span
+          class="c7n-statistic-content-value"
+        >
+          <span
+            class="c7n-statistic-content-value-int"
+          >
+            93
+          </span>
+        </span>
+        <span
+          class="c7n-statistic-content-suffix"
+        >
+          / 100
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+`;

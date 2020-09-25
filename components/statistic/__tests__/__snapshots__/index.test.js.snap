@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Statistic support negetive number 1`] = `
+<div
+  class="c7n-statistic"
+>
+  <div
+    class="c7n-statistic-title"
+  >
+    Account Balance (CNY)
+  </div>
+  <div
+    class="c7n-statistic-content"
+  >
+    <span
+      class="c7n-statistic-content-value"
+    >
+      <span
+        class="c7n-statistic-content-value-int"
+      >
+        -112,893
+      </span>
+      <span
+        class="c7n-statistic-content-value-decimal"
+      >
+        .12
+      </span>
+    </span>
+  </div>
+</div>
+`;

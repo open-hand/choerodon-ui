@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `Statistic`: Added Statistic to display statistic data with description .
 - 🐞 `TextField`: Fixed when multiple in Modal, the lower model input would be displayed.
 - 🐞 `<pro>Pagination`: Fixed when change the page, the quickJumpInput don't change.
 
