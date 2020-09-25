@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import PropTypes from 'prop-types';
-import { action, computed, runInAction } from "mobx";
+import { action, computed, runInAction, observable } from "mobx";
 import { observer } from 'mobx-react';
 import omit from 'lodash/omit';
 import debounce from 'lodash/debounce';
@@ -96,6 +96,8 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
 
   lastPageSize: number;
 
+  @observable pageInput?:  number | ` ` | '';
+
   @computed
   get pageSize(): number {
     const { dataSet, pageSize } = this.observableProps;
@@ -135,6 +137,16 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     }
     return 1;
   }
+
+  @action
+  setpageInput(v : number | undefined | '' | ` `) {
+    // want to forceUpdate the render when change the value 
+    if(this.pageInput === ''){
+      this.pageInput = ` `;
+    }
+    this.pageInput = v;
+  }
+  
 
   getObservableProps(props, context) {
     return {
@@ -187,10 +199,12 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
 
   handlePagerClick = page => {
     const { dataSet } = this.props;
-    if (dataSet) {
+    if(dataSet && dataSet.currentPage !== page){
       dataSet.page(page);
     }
-    this.handleChange(page, this.pageSize);
+    if(this.page !== page){
+      this.handleChange(page, this.pageSize);
+    }
   };
 
   getValidValue(value) {
@@ -240,8 +254,10 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     if (value > totalPage) {
       value = totalPage;
     }
-    if (showQuickJumper) {
+
+    if (showQuickJumper ) {
       this.jumpPage(value);
+      this.setpageInput('');
     }
   }
 
@@ -427,32 +443,10 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     return (
       <div className={`${prefixCls}-quick-jumper`}>
         {$l('Pagination', 'jump_to')}
-        <ObserverNumberField disabled={disabled} min={1} onChange={this.handleJumpChange} onInput={this.handleJump} />
+        <ObserverNumberField value={this.pageInput} disabled={disabled} min={1} onChange={this.handleJumpChange} onInput={this.handleJump} />
         {$l('Pagination', 'page')}
         {gotoButton}
       </div>
-    );
-  }
-
-  renderSimple(): ReactNode {
-    const { prefixCls, props: { disabled } } = this;
-    const {
-      total,
-      page,
-      totalPage,
-    } = this;
-    return (
-      <nav {...this.getMergedProps()}>
-        {this.getPager(page - 1, 'prev', false, page === 1)}
-        <li
-          className={`${prefixCls}-simple-pager`}
-        >
-          <ObserverNumberField disabled={disabled} min={1} onInput={this.handleJump} />
-          <span className={`${prefixCls}-slash`}>／</span>
-          {total}
-        </li>
-        {this.getPager(page + 1, 'next', false, page === totalPage)}
-      </nav>
     );
   }
 

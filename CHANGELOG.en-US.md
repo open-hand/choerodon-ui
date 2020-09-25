@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>Pagination`: Fixed when change the page, the quickJumpInput don't change.
+
 ## 0.8.73
 
 `2020-09-21`
