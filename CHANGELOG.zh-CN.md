@@ -16,9 +16,11 @@ timeline: true
 ---
 
 - 🌟 `Statistic`: 新增 Statistic 组件展示统计数据和描述。
-- 💄 `<pro>Form`: 优化 Form 布局间隔配置.
-- 🐞 `<pro>TextField`: 修复在多个 modal 下面低层级的 modal 框里面 input 没有被覆盖会导致重叠。
+- 🌟 `<pro>Field`: 新增 multiLine 属性，支持 Table 单元格多行展示编辑。
+- 💄 `<pro>Form`: 优化 Form 布局间隔配置。
+- 🐞 `<pro>Skeleton`: 重命名 skeletonTitle 属性。
 - 🐞 `<pro>Pagination`: 修复输入页面的时候，快速跳转框里面的数字不会自动清除。
+- 🐞 `<pro>TextField`: 修复在多个 modal 下面低层级的 modal 框里面 input 没有被覆盖会导致重叠。
 
 ## 0.8.73
 

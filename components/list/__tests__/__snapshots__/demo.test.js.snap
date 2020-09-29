@@ -320,6 +320,146 @@ exports[`renders ./components/list/demo/grid.md correctly 1`] = `
               </div>
             </div>
           </div>
+          <div
+            class="c7n-col-6"
+          >
+            <div
+              class="c7n-list-item"
+              style="padding-left:8px;padding-right:8px"
+            >
+              <div
+                class="c7n-list-item-content c7n-list-item-content-single"
+              >
+                <div
+                  class="c7n-card c7n-card-bordered"
+                >
+                  <div
+                    class="c7n-card-head"
+                  >
+                    <div
+                      class="c7n-card-head-wrapper"
+                    >
+                      <div
+                        class="c7n-card-head-title"
+                      >
+                        Title 5
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="c7n-card-body"
+                  >
+                    Card content
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="c7n-col-6"
+          >
+            <div
+              class="c7n-list-item"
+              style="padding-left:8px;padding-right:8px"
+            >
+              <div
+                class="c7n-list-item-content c7n-list-item-content-single"
+              >
+                <div
+                  class="c7n-card c7n-card-bordered"
+                >
+                  <div
+                    class="c7n-card-head"
+                  >
+                    <div
+                      class="c7n-card-head-wrapper"
+                    >
+                      <div
+                        class="c7n-card-head-title"
+                      >
+                        Title 6
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="c7n-card-body"
+                  >
+                    Card content
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="c7n-col-6"
+          >
+            <div
+              class="c7n-list-item"
+              style="padding-left:8px;padding-right:8px"
+            >
+              <div
+                class="c7n-list-item-content c7n-list-item-content-single"
+              >
+                <div
+                  class="c7n-card c7n-card-bordered"
+                >
+                  <div
+                    class="c7n-card-head"
+                  >
+                    <div
+                      class="c7n-card-head-wrapper"
+                    >
+                      <div
+                        class="c7n-card-head-title"
+                      >
+                        Title 7
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="c7n-card-body"
+                  >
+                    Card content
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="c7n-col-6"
+          >
+            <div
+              class="c7n-list-item"
+              style="padding-left:8px;padding-right:8px"
+            >
+              <div
+                class="c7n-list-item-content c7n-list-item-content-single"
+              >
+                <div
+                  class="c7n-card c7n-card-bordered"
+                >
+                  <div
+                    class="c7n-card-head"
+                  >
+                    <div
+                      class="c7n-card-head-wrapper"
+                    >
+                      <div
+                        class="c7n-card-head-title"
+                      >
+                        Title 8
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="c7n-card-body"
+                  >
+                    Card content
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

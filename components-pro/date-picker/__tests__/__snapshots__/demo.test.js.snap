@@ -217,6 +217,7 @@ exports[`renders ./components-pro/date-picker/demo/basic.md correctly 1`] = `
           class="c7n-pro-calendar-picker"
           disabled=""
           placeholder="禁用"
+          readonly=""
           type="text"
           value=""
         />

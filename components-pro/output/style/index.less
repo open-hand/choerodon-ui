@@ -21,4 +21,19 @@
     width: 0.01rem;
     content: '';
   }
+
+  &-multi-value-invalid {
+    color: @error-color;
+  }
+
+  &-multi-label-required::after {
+    display: inline-block;
+    width: 0.08rem;
+    margin-left: 0.04rem;
+    color: @label-required-color;
+    font-family: SimSun, sans-serif;
+    line-height: 1;
+    vertical-align: middle;
+    content: '*';
+  }
 }

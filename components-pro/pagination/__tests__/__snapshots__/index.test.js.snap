@@ -50,7 +50,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
         "records": Array [],
         "resetInBatch": false,
         "selection": "multiple",
-        "status": "loading",
+        "status": "ready",
         "syncChildrenRemote": [Function],
         "totalCount": 0,
       }
@@ -11815,6 +11815,8 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
                         onBlur={[Function]}
                         onChange={[Function]}
                         onClick={[Function]}
+                        onCompositionEnd={[Function]}
+                        onCompositionStart={[Function]}
                         onContextMenu={[Function]}
                         onFocus={[Function]}
                         onKeyDown={[Function]}

@@ -16,9 +16,11 @@ timeline: true
 ---
 
 - 🌟 `Statistic`: Added Statistic to display statistic data with description.
+- 🌟 `<pro>Field`: Added the `multiLine` attribute to support multi-line display and editing of Table cells.
 - 💄 `<pro>Form`: Optimized Form Layout interval configuration.
-- 🐞 `<pro>TextField`: Fixed when multiple in Modal, the lower model input would be displayed.
+- 🐞 `<pro>Skeleton`: Rename `skeletonTitle` property.
 - 🐞 `<pro>Pagination`: Fixed when change the page, the quickJumpInput don't change.
+- 🐞 `<pro>TextField`: Fixed when multiple in Modal, the lower model input would be displayed.
 
 ## 0.8.73
 

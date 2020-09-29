@@ -2578,7 +2578,7 @@ exports[`Cascader-pro Cascader dataset set value render right number item 1`] = 
       ],
       "resetInBatch": false,
       "selection": "mutiple",
-      "status": "loading",
+      "status": "ready",
       "syncChildrenRemote": [Function],
       "totalCount": 11,
     }
@@ -3006,6 +3006,8 @@ exports[`Cascader-pro Cascader dataset set value render right number item 1`] = 
                   onBlur={[Function]}
                   onChange={[Function]}
                   onClick={[Function]}
+                  onCompositionEnd={[Function]}
+                  onCompositionStart={[Function]}
                   onContextMenu={[Function]}
                   onFocus={[Function]}
                   onKeyDown={[Function]}
@@ -3048,92 +3050,87 @@ exports[`Cascader-pro Cascader dataset set value render right number item 1`] = 
                 transitionName="slide-up"
               >
                 <Portal
-                  containerInfo={
-                    <div
-                      class="c7n-pro-popup-container"
-                    >
+                  getContainer={[Function]}
+                  key="popup-key-3"
+                >
+                  <Portal
+                    containerInfo={
                       <div
-                        class="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-cascader-popup c7n-pro-cascader-popup-placement-bottomLeft"
-                        style="left: -999px; top: -995px;"
+                        class="c7n-pro-popup-container"
                       >
                         <div
-                          class="c7n-spin-nested-loading"
+                          class="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-cascader-popup c7n-pro-cascader-popup-placement-bottomLeft"
+                          style="left: -999px; top: -995px;"
                         >
                           <div
-                            class="c7n-spin-container"
+                            class="c7n-spin-nested-loading"
                           >
-                            <div>
-                              无匹配结果。
+                            <div
+                              class="c7n-spin-container"
+                            >
+                              <div>
+                                无匹配结果。
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  }
-                  key="popup-key-3"
-                >
-                  <Animate
-                    animation={Object {}}
-                    component=""
-                    componentProps={Object {}}
-                    exclusive={true}
-                    hiddenProp="hidden"
-                    onAppear={[Function]}
-                    onEnd={[Function]}
-                    onEnter={[Function]}
-                    onLeave={[Function]}
-                    transitionAppear={true}
-                    transitionEnter={true}
-                    transitionLeave={true}
-                    transitionName="slide-up"
+                    }
                   >
-                    <AnimateChild
+                    <Animate
                       animation={Object {}}
-                      key="align"
+                      component=""
+                      componentProps={Object {}}
+                      exclusive={true}
+                      hiddenProp="hidden"
+                      onAppear={[Function]}
+                      onEnd={[Function]}
+                      onEnter={[Function]}
+                      onLeave={[Function]}
                       transitionAppear={true}
                       transitionEnter={true}
                       transitionLeave={true}
                       transitionName="slide-up"
                     >
-                      <Align
-                        align={
-                          Object {
-                            "offset": Array [
-                              0,
-                              4,
-                            ],
-                            "overflow": Object {
-                              "adjustX": 1,
-                              "adjustY": 1,
-                            },
-                            "points": Array [
-                              "tl",
-                              "bl",
-                            ],
-                          }
-                        }
-                        childrenProps={
-                          Object {
-                            "hidden": "hidden",
-                          }
-                        }
-                        hidden={false}
+                      <AnimateChild
+                        animation={Object {}}
                         key="align"
-                        monitorBufferTime={50}
-                        monitorWindowResize={true}
-                        onAlign={[Function]}
-                        style={Object {}}
-                        target={[Function]}
+                        transitionAppear={true}
+                        transitionEnter={true}
+                        transitionLeave={true}
+                        transitionName="slide-up"
                       >
-                        <PopupInner
-                          className="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-cascader-popup"
+                        <Align
+                          align={
+                            Object {
+                              "offset": Array [
+                                0,
+                                4,
+                              ],
+                              "overflow": Object {
+                                "adjustX": 1,
+                                "adjustY": 1,
+                              },
+                              "points": Array [
+                                "tl",
+                                "bl",
+                              ],
+                            }
+                          }
+                          childrenProps={
+                            Object {
+                              "hidden": "hidden",
+                            }
+                          }
                           hidden={false}
-                          onBlur={[Function]}
-                          onFocus={[Function]}
-                          onMouseDown={[Function]}
-                          onMouseUp={[Function]}
+                          key="align"
+                          monitorBufferTime={50}
+                          monitorWindowResize={true}
+                          onAlign={[Function]}
+                          style={Object {}}
+                          target={[Function]}
                         >
-                          <div
+                          <PopupInner
                             className="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-cascader-popup"
                             hidden={false}
                             onBlur={[Function]}
@@ -3141,57 +3138,66 @@ exports[`Cascader-pro Cascader dataset set value render right number item 1`] = 
                             onMouseDown={[Function]}
                             onMouseUp={[Function]}
                           >
-                            <Spin
-                              key="menu"
-                              spinning={false}
+                            <div
+                              className="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-cascader-popup"
+                              hidden={false}
+                              onBlur={[Function]}
+                              onFocus={[Function]}
+                              onMouseDown={[Function]}
+                              onMouseUp={[Function]}
                             >
                               <Spin
-                                size="default"
+                                key="menu"
                                 spinning={false}
-                                wrapperClassName=""
                               >
-                                <Animate
-                                  animation={Object {}}
-                                  className="c7n-spin-nested-loading"
-                                  component="div"
-                                  componentProps={Object {}}
-                                  transitionAppear={false}
-                                  transitionEnter={true}
-                                  transitionLeave={true}
-                                  transitionName="fade"
+                                <Spin
+                                  size="default"
+                                  spinning={false}
+                                  wrapperClassName=""
                                 >
-                                  <div
+                                  <Animate
+                                    animation={Object {}}
                                     className="c7n-spin-nested-loading"
+                                    component="div"
+                                    componentProps={Object {}}
+                                    transitionAppear={false}
+                                    transitionEnter={true}
+                                    transitionLeave={true}
+                                    transitionName="fade"
                                   >
-                                    <AnimateChild
-                                      animation={Object {}}
-                                      key="container"
-                                      transitionAppear={false}
-                                      transitionEnter={true}
-                                      transitionLeave={true}
-                                      transitionName="fade"
+                                    <div
+                                      className="c7n-spin-nested-loading"
                                     >
-                                      <div
-                                        className="c7n-spin-container"
+                                      <AnimateChild
+                                        animation={Object {}}
                                         key="container"
-                                        style={Object {}}
+                                        transitionAppear={false}
+                                        transitionEnter={true}
+                                        transitionLeave={true}
+                                        transitionName="fade"
                                       >
                                         <div
-                                          key="no_data"
+                                          className="c7n-spin-container"
+                                          key="container"
+                                          style={Object {}}
                                         >
-                                          无匹配结果。
+                                          <div
+                                            key="no_data"
+                                          >
+                                            无匹配结果。
+                                          </div>
                                         </div>
-                                      </div>
-                                    </AnimateChild>
-                                  </div>
-                                </Animate>
+                                      </AnimateChild>
+                                    </div>
+                                  </Animate>
+                                </Spin>
                               </Spin>
-                            </Spin>
-                          </div>
-                        </PopupInner>
-                      </Align>
-                    </AnimateChild>
-                  </Animate>
+                            </div>
+                          </PopupInner>
+                        </Align>
+                      </AnimateChild>
+                    </Animate>
+                  </Portal>
                 </Portal>
               </Popup>
             </Trigger>
@@ -5890,7 +5896,7 @@ exports[`Cascader-pro dataset set Cascader value 1`] = `
               ],
               "resetInBatch": false,
               "selection": "mutiple",
-              "status": "loading",
+              "status": "ready",
               "syncChildrenRemote": [Function],
               "totalCount": 11,
             },
@@ -8470,7 +8476,7 @@ exports[`Cascader-pro dataset set Cascader value 1`] = `
               ],
               "resetInBatch": false,
               "selection": "mutiple",
-              "status": "loading",
+              "status": "ready",
               "syncChildrenRemote": [Function],
               "totalCount": 11,
             },
@@ -11081,7 +11087,7 @@ exports[`Cascader-pro dataset set Cascader value 1`] = `
               ],
               "resetInBatch": false,
               "selection": "mutiple",
-              "status": "loading",
+              "status": "ready",
               "syncChildrenRemote": [Function],
               "totalCount": 11,
             },
@@ -11576,6 +11582,8 @@ exports[`Cascader-pro dataset set Cascader value 1`] = `
                   onBlur={[Function]}
                   onChange={[Function]}
                   onClick={[Function]}
+                  onCompositionEnd={[Function]}
+                  onCompositionStart={[Function]}
                   onContextMenu={[Function]}
                   onFocus={[Function]}
                   onKeyDown={[Function]}

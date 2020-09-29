@@ -50,7 +50,7 @@ exports[`renders ./components-pro/text-area/demo/basic.md correctly 1`] = `
     style="padding-left:5px;padding-right:5px"
   >
     <div
-      class="c7n-pro-textarea-wrapper c7n-pro-textarea-empty"
+      class="c7n-pro-textarea-wrapper c7n-pro-textarea-readonly c7n-pro-textarea-empty"
     >
       <label>
         <textarea

@@ -30,14 +30,14 @@ describe('Skeleton', () => {
           beforeLoad:() => sleep(5000),
         },
       });
-    
+
       render() {
         return (
           <div className="article">
           <Skeleton dataSet={this.ds} skeletonTitle={false}  active avatar paragraph={{ rows: 4 }}>
                 <Avatar style={{verticalAlign: 'top'}}    src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
                 <TextArea cols={60} rows={6}  dataSet={this.ds} name="text" resize="both" />
-          </Skeleton> 
+          </Skeleton>
           <Row>
             <Col span={24}>
             <Button onClick={() => this.ds.query() } >Show Skeleton </Button>
@@ -55,5 +55,5 @@ describe('Skeleton', () => {
     expect(wapper.find('.c7n-skeleton-content').length).toBe(1)
   });
 
- 
+
 });

@@ -16,6 +16,8 @@ import noop from 'lodash/noop';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import warning from 'choerodon-ui/lib/_util/warning';
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
+import Row from 'choerodon-ui/lib/row';
+import Col from 'choerodon-ui/lib/col';
 import autobind from '../_util/autobind';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
@@ -28,7 +30,7 @@ import Icon from '../icon';
 import Tooltip from '../tooltip';
 import Form from '../form/Form';
 import isEmpty from '../_util/isEmpty';
-import { FieldFormat, FieldTrim, FieldType } from '../data-set/enum';
+import { FieldFormat, FieldTrim, FieldType, RecordStatus } from '../data-set/enum';
 import ValidationResult from '../validator/ValidationResult';
 import { ShowHelp } from './enum';
 import { ValidatorProps } from '../validator/rules';
@@ -448,6 +450,14 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     return this.getProp('multiple');
   }
 
+  /**
+   * 获取字段多行属性
+   */
+  @computed
+  get multiLine(): boolean {
+    return this.getProp('multiLine');
+  }
+
   @computed
   get trim(): FieldTrim | undefined {
     return this.getProp('trim');
@@ -471,6 +481,17 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     text.length > maxTagTextLength
       ? `${text.slice(0, maxTagTextLength)}...`
       : text;
+  }
+
+  /**
+   * 处理多行关联字段校验
+   * @param field
+   */
+  multiLineValidator(field): Validator {
+    if (field) {
+      return field.validator;
+    }
+    return new Validator(undefined, this);
   }
 
   /**
@@ -832,6 +853,23 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     return (value || []).map(item => this.processRenderer(item, repeat)) as [any, any];
   }
 
+
+  /**
+   * 处理获取多行编辑关联字段
+   */
+  processMultipleLineValue(): (Field | undefined)[] {
+    const {
+      record,
+      props: { name },
+      dataSet,
+    } = this;
+    return dataSet?.props.fields?.map(field => {
+      if (field.bind && field.bind.split('.')[0] === name) {
+        return record?.getField(field.name) || dataSet?.getField(field.name);
+      }
+    }) || [];
+  }
+
   getOldValue(): any {
     return this.getValue();
   }
@@ -982,6 +1020,84 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
         return (
           <>
             {rangeValue[0]}~{rangeValue[1]}
+          </>
+        );
+      }
+    }
+  }
+
+  /**
+   * 只读模式下多行单元格渲染
+   * @param readOnly
+   */
+  renderMultiLine(readOnly?: boolean): ReactNode {
+    const multiLineFields = this.processMultipleLineValue();
+    const { record, prefixCls } = this;
+    if (readOnly) {
+      if (multiLineFields.length) {
+        return (
+          <>
+            {multiLineFields.map(field => {
+              if (field) {
+                const { validationResults } = this.multiLineValidator(field);
+                const required = defaultTo(field && field.get('required'), this.props.required);
+                const repeats: Map<any, number> = new Map<any, number>();
+                const validationResult = validationResults.find(error => error.value === record?.get(field.get('name')));
+                const validationMessage =
+                  validationResult && this.renderValidationMessage(validationResult);
+                const key = this.getValueKey(record?.get(field.get('name')));
+                const repeat = repeats.get(key) || 0;
+                const validationHidden = this.isValidationMessageHidden(validationMessage);
+                const inner = record?.status === RecordStatus.add ? '' :
+                  <span className={`${prefixCls}-multi-value-invalid`}>ReactDom invalid</span>;
+                const validationInner = validationHidden ? inner : (
+                  <Tooltip
+                    suffixCls={`form-tooltip ${getConfig('proPrefixCls')}-tooltip`}
+                    key={`${key}-${repeat}`}
+                    title={validationMessage}
+                    theme="light"
+                    placement="bottomLeft"
+                    hidden={validationHidden}
+                  >
+                    {validationMessage}
+                  </Tooltip>
+                );
+                return (
+                  <Row key={`${record?.index}-multi-${field.get('name')}`} className={`${prefixCls}-multi`}>
+                    <Col
+                      span={8}
+                      className={required ? `${prefixCls}-multi-label ${prefixCls}-multi-label-required` : `${prefixCls}-multi-label`}
+                    >
+                      {field.get('label')}
+                    </Col>
+                    <Col
+                      span={16}
+                      className={
+                        validationHidden ?
+                          `${prefixCls}-multi-value` :
+                          `${prefixCls}-multi-value ${prefixCls}-multi-value-invalid`
+                      }
+                    >
+                      {record?.get(field.get('name')) ?
+                        (
+                          <Tooltip
+                            suffixCls={`form-tooltip ${getConfig('proPrefixCls')}-tooltip`}
+                            key={`${key}-${repeat}`}
+                            title={validationMessage}
+                            theme="light"
+                            placement="bottomLeft"
+                            hidden={validationHidden}
+                          >
+                            {record?.get(field.get('name'))}
+                          </Tooltip>
+                        ) : validationInner
+                      }
+                    </Col>
+                  </Row>
+                );
+              }
+              return null;
+            })}
           </>
         );
       }

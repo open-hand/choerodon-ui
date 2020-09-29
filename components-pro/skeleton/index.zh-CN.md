@@ -23,6 +23,5 @@ title: Skeleton
 | skeletonTitle | 是否显示标题占位图,等同于title属性 | boolean  | true |
 
 
-
 更多案列和属性请参考 [Skeleton](/components/skeleton/)。
 

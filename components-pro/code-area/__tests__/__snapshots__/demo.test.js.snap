@@ -25,7 +25,7 @@ exports[`renders ./components-pro/code-area/demo/basic.md correctly 1`] = `
     style="padding-left:5px;padding-right:5px"
   >
     <div
-      class="c7n-pro-code-area-wrapper"
+      class="c7n-pro-code-area-wrapper c7n-pro-code-area-readonly"
     >
       <label>
         <div
@@ -103,7 +103,7 @@ Array [
 exports[`renders ./components-pro/code-area/demo/dataset.md correctly 1`] = `
 Array [
   <div
-    class="c7n-pro-code-area-wrapper c7n-pro-code-area-required"
+    class="c7n-pro-code-area-wrapper c7n-pro-code-area-required c7n-pro-code-area-readonly"
   >
     <label>
       <div

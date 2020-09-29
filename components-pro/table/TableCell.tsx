@@ -227,14 +227,14 @@ export default class TableCell extends Component<TableCellProps> {
   @autobind
   handleFocus(e) {
     const { tableStore } = this.context;
-    const { currentEditorName, dataSet, inlineEdit } = tableStore;
+    const { dataSet, inlineEdit } = tableStore;
     const {
       prefixCls,
       record,
       column,
       column: { lock },
     } = this.props;
-    if (!currentEditorName && !isDisabledRow(record) && (!inlineEdit || record.editing)) {
+    if (!isDisabledRow(record) && (!inlineEdit || record.editing)) {
       dataSet.current = record;
       this.showEditor(e.currentTarget, lock);
       if (!this.cellEditor || isRadio(this.cellEditor)) {
@@ -379,6 +379,7 @@ export default class TableCell extends Component<TableCellProps> {
         column: { name },
         record,
       } = this.props;
+      const field = record.getField(name);
       const { checkField } = dataSet.props;
       const newEditorProps = {
         ...cellEditor.props,
@@ -390,6 +391,12 @@ export default class TableCell extends Component<TableCellProps> {
         labelLayout: LabelLayout.none,
         _inTable:true,
       };
+      /**
+       * 渲染多行编辑器
+       */
+      if (field?.get('multiLine')) {
+        return cellEditor;
+      }
       return cloneElement(cellEditor, newEditorProps as FormFieldProps);
     }
   }
@@ -441,7 +448,7 @@ export default class TableCell extends Component<TableCellProps> {
   getInnerNode(prefixCls, command?: Commands[]) {
     const {
       context: {
-        tableStore: { rowHeight, expandIconAsCell, hasCheckFieldColumn, pristine, props: { autoMaxWidth } },
+        tableStore: { dataSet, rowHeight, expandIconAsCell, hasCheckFieldColumn, pristine, props: { autoMaxWidth } },
       },
       props: { children },
     } = this;
@@ -451,6 +458,16 @@ export default class TableCell extends Component<TableCellProps> {
     const { column, record, indentSize } = this.props;
     const { name, tooltip } = column;
     const { hasEditor } = this;
+    // 计算多行编辑单元格高度
+    const field = record.getField(name);
+    let rows = 0;
+    if (field?.get('multiLine')) {
+      rows = dataSet.props.fields?.map(fields => {
+        if (fields.bind && fields.bind.split('.')[0] === name) {
+          return record.getField(fields.name) || dataSet.getField(fields.name);
+        }
+      }).filter(f => f).length;
+    }
     const innerProps: any = {
       className: `${prefixCls}-inner`,
       tabIndex: hasEditor && !isDisabledRow(record) ? 0 : -1,
@@ -462,7 +479,7 @@ export default class TableCell extends Component<TableCellProps> {
     }
     if (rowHeight !== 'auto') {
       innerProps.style = {
-        height: pxToRem(rowHeight),
+        height: pxToRem(rows > 0 ? rowHeight * rows + 5 : rowHeight),
       };
       if (autoMaxWidth || (tooltip && tooltip !== TableColumnTooltip.none)) {
         innerProps.ref = this.saveOutput;

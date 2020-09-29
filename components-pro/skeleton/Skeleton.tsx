@@ -4,49 +4,50 @@ import React from 'react';
 import omit from 'lodash/omit';
 import { DataSetStatus } from '../data-set/enum';
 import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComponent';
-import SkeletonButton from './Button'
+import SkeletonButton from './Button';
 import SkeletonInput from './Input';
 import Avatar from './Avatar';
 
 export interface SkeletonProps extends DataSetComponentProps, Omit<C7nSkeletonProps, 'title'> {
-    skeletonTitle?: boolean,
+  skeletonTitle?: boolean,
 }
 
 
 @observer
-export default class Skeleton extends DataSetComponent<SkeletonProps>{
-    static displayName = 'Skeletions'
+export default class Skeleton extends DataSetComponent<SkeletonProps> {
+  static displayName = 'Skeletions';
 
-    static Button = SkeletonButton
+  static Button = SkeletonButton;
 
-    static Input = SkeletonInput
+  static Input = SkeletonInput;
 
-    static Avatar = Avatar
+  static Avatar = Avatar;
 
-    static defaultProps: Partial<SkeletonProps> = {
-        skeletonTitle: true,
+  static defaultProps: Partial<SkeletonProps> = {
+    skeletonTitle: true,
+  };
+
+  getOtherProps() {
+    const otherProps = omit(super.getOtherProps(), [
+      'skeletonTitle',
+    ]);
+    return otherProps;
+  }
+
+  render() {
+    const { dataSet, skeletonTitle, ...otherProps } = this.props;
+    const props: C7nSkeletonProps = {
+      title: skeletonTitle,
+    };
+    const omitProps = omit(otherProps, 'title');
+
+    if (dataSet) {
+      // @ts-ignore
+      props.loading = dataSet.status !== DataSetStatus.ready;
     }
 
-    getOtherProps() {
-        const otherProps = omit(super.getOtherProps(), [
-            'skeletonTitle',
-        ]);
-        return otherProps;
-    }
-
-    render() {
-        const { dataSet, skeletonTitle, ...otherProps } = this.props;
-        const props: C7nSkeletonProps = {
-            title: skeletonTitle,
-        }
-        const omitProps = omit(otherProps, 'title')
-
-        if (dataSet) {
-            props.loading = dataSet.status !== DataSetStatus.ready;
-        }
-
-        return <C7nSkeleton {...omitProps} {...props} />;
-    }
+    return <C7nSkeleton {...omitProps} {...props} />;
+  }
 }
 
 

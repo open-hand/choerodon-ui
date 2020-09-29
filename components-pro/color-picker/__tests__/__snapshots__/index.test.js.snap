@@ -465,6 +465,8 @@ exports[`color-picker-pro footer-slider click event render correctly 1`] = `
                   onBlur={[Function]}
                   onChange={[Function]}
                   onClick={[Function]}
+                  onCompositionEnd={[Function]}
+                  onCompositionStart={[Function]}
                   onContextMenu={[Function]}
                   onFocus={[Function]}
                   onKeyDown={[Function]}
@@ -507,329 +509,112 @@ exports[`color-picker-pro footer-slider click event render correctly 1`] = `
                 transitionName="slide-up"
               >
                 <Portal
-                  containerInfo={
-                    <div
-                      class="c7n-pro-popup-container"
-                    >
-                      <div
-                        class="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-color-picker-popup c7n-pro-color-picker-popup-placement-bottomLeft"
-                        style="left: -999px; top: -995px;"
-                      >
-                        <div
-                          class="c7n-pro-color-picker-popup-view"
-                        >
-                          <div
-                            class="c7n-pro-color-picker-popup-body"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-body-gradient"
-                            />
-                            <div
-                              class="c7n-pro-color-picker-popup-body-selector"
-                              style="left: 0px; top: 0px;"
-                            />
-                          </div>
-                          <div
-                            class="c7n-pro-color-picker-popup-footer"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider"
-                            >
-                              <div
-                                class="hue"
-                              />
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                                style="left: 0px;"
-                              />
-                            </div>
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider opacity"
-                            >
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-color-picker-popup c7n-pro-color-picker-popup-placement-bottomLeft"
-                        hidden=""
-                        style="left: -999px; top: -995px;"
-                      >
-                        <div
-                          class="c7n-pro-color-picker-popup-view"
-                        >
-                          <div
-                            class="c7n-pro-color-picker-popup-body"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-body-gradient"
-                            />
-                            <div
-                              class="c7n-pro-color-picker-popup-body-selector"
-                              style="left: 0px; top: 0px;"
-                            />
-                          </div>
-                          <div
-                            class="c7n-pro-color-picker-popup-footer"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider"
-                            >
-                              <div
-                                class="hue"
-                              />
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                                style="left: 0px;"
-                              />
-                            </div>
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider opacity"
-                            >
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-color-picker-popup c7n-pro-color-picker-popup-placement-bottomLeft"
-                        style="left: -999px; top: -995px;"
-                      >
-                        <div
-                          class="c7n-pro-color-picker-popup-view"
-                        >
-                          <div
-                            class="c7n-pro-color-picker-popup-body"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-body-gradient"
-                            />
-                            <div
-                              class="c7n-pro-color-picker-popup-body-selector"
-                              style="left: 0px; top: 0px;"
-                            />
-                          </div>
-                          <div
-                            class="c7n-pro-color-picker-popup-footer"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider"
-                            >
-                              <div
-                                class="hue"
-                              />
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                                style="left: 0px;"
-                              />
-                            </div>
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider opacity"
-                            >
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-color-picker-popup c7n-pro-color-picker-popup-placement-bottomLeft"
-                        style="left: -999px; top: -995px;"
-                      >
-                        <div
-                          class="c7n-pro-color-picker-popup-view"
-                        >
-                          <div
-                            class="c7n-pro-color-picker-popup-body"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-body-gradient"
-                            />
-                            <div
-                              class="c7n-pro-color-picker-popup-body-selector"
-                              style="left: 0px; top: 0px;"
-                            />
-                          </div>
-                          <div
-                            class="c7n-pro-color-picker-popup-footer"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider"
-                            >
-                              <div
-                                class="hue"
-                              />
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                                style="left: 0px;"
-                              />
-                            </div>
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider opacity"
-                            >
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-color-picker-popup c7n-pro-color-picker-popup-placement-bottomLeft"
-                        style="left: -999px; top: -995px;"
-                      >
-                        <div
-                          class="c7n-pro-color-picker-popup-view"
-                        >
-                          <div
-                            class="c7n-pro-color-picker-popup-body"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-body-gradient"
-                            />
-                            <div
-                              class="c7n-pro-color-picker-popup-body-selector"
-                              style="left: 0px; top: 0px;"
-                            />
-                          </div>
-                          <div
-                            class="c7n-pro-color-picker-popup-footer"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider"
-                            >
-                              <div
-                                class="hue"
-                              />
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                                style="left: 0px;"
-                              />
-                            </div>
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider opacity"
-                            >
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-color-picker-popup c7n-pro-color-picker-popup-placement-bottomLeft"
-                        style="left: -999px; top: -995px;"
-                      >
-                        <div
-                          class="c7n-pro-color-picker-popup-view"
-                        >
-                          <div
-                            class="c7n-pro-color-picker-popup-body"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-body-gradient"
-                            />
-                            <div
-                              class="c7n-pro-color-picker-popup-body-selector"
-                              style="left: 0px; top: 0px;"
-                            />
-                          </div>
-                          <div
-                            class="c7n-pro-color-picker-popup-footer"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider"
-                            >
-                              <div
-                                class="hue"
-                              />
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                                style="left: 0px;"
-                              />
-                            </div>
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider opacity"
-                            >
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  }
+                  getContainer={[Function]}
                   key="popup-key-25"
                 >
-                  <Animate
-                    animation={Object {}}
-                    component=""
-                    componentProps={Object {}}
-                    exclusive={true}
-                    hiddenProp="hidden"
-                    onAppear={[Function]}
-                    onEnd={[Function]}
-                    onEnter={[Function]}
-                    onLeave={[Function]}
-                    transitionAppear={true}
-                    transitionEnter={true}
-                    transitionLeave={true}
-                    transitionName="slide-up"
+                  <Portal
+                    containerInfo={
+                      <div
+                        class="c7n-pro-popup-container"
+                      >
+                        <div
+                          class="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-color-picker-popup c7n-pro-color-picker-popup-placement-bottomLeft"
+                          style="left: -999px; top: -995px;"
+                        >
+                          <div
+                            class="c7n-pro-color-picker-popup-view"
+                          >
+                            <div
+                              class="c7n-pro-color-picker-popup-body"
+                            >
+                              <div
+                                class="c7n-pro-color-picker-popup-body-gradient"
+                              />
+                              <div
+                                class="c7n-pro-color-picker-popup-body-selector"
+                                style="left: 0px; top: 0px;"
+                              />
+                            </div>
+                            <div
+                              class="c7n-pro-color-picker-popup-footer"
+                            >
+                              <div
+                                class="c7n-pro-color-picker-popup-footer-slider"
+                              >
+                                <div
+                                  class="hue"
+                                />
+                                <div
+                                  class="c7n-pro-color-picker-popup-footer-slider-pointer"
+                                />
+                              </div>
+                              <div
+                                class="c7n-pro-color-picker-popup-footer-slider opacity"
+                              >
+                                <div
+                                  class="c7n-pro-color-picker-popup-footer-slider-pointer"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    }
                   >
-                    <AnimateChild
+                    <Animate
                       animation={Object {}}
-                      key="align"
+                      component=""
+                      componentProps={Object {}}
+                      exclusive={true}
+                      hiddenProp="hidden"
+                      onAppear={[Function]}
+                      onEnd={[Function]}
+                      onEnter={[Function]}
+                      onLeave={[Function]}
                       transitionAppear={true}
                       transitionEnter={true}
                       transitionLeave={true}
                       transitionName="slide-up"
                     >
-                      <Align
-                        align={
-                          Object {
-                            "offset": Array [
-                              0,
-                              4,
-                            ],
-                            "overflow": Object {
-                              "adjustX": 1,
-                              "adjustY": 1,
-                            },
-                            "points": Array [
-                              "tl",
-                              "bl",
-                            ],
-                          }
-                        }
-                        childrenProps={
-                          Object {
-                            "hidden": "hidden",
-                          }
-                        }
-                        hidden={false}
+                      <AnimateChild
+                        animation={Object {}}
                         key="align"
-                        monitorBufferTime={50}
-                        monitorWindowResize={true}
-                        onAlign={[Function]}
-                        style={Object {}}
-                        target={[Function]}
+                        transitionAppear={true}
+                        transitionEnter={true}
+                        transitionLeave={true}
+                        transitionName="slide-up"
                       >
-                        <PopupInner
-                          className="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-color-picker-popup"
+                        <Align
+                          align={
+                            Object {
+                              "offset": Array [
+                                0,
+                                4,
+                              ],
+                              "overflow": Object {
+                                "adjustX": 1,
+                                "adjustY": 1,
+                              },
+                              "points": Array [
+                                "tl",
+                                "bl",
+                              ],
+                            }
+                          }
+                          childrenProps={
+                            Object {
+                              "hidden": "hidden",
+                            }
+                          }
                           hidden={false}
-                          onBlur={[Function]}
-                          onFocus={[Function]}
-                          onMouseDown={[Function]}
-                          onMouseUp={[Function]}
+                          key="align"
+                          monitorBufferTime={50}
+                          monitorWindowResize={true}
+                          onAlign={[Function]}
+                          style={Object {}}
+                          target={[Function]}
                         >
-                          <div
+                          <PopupInner
                             className="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-color-picker-popup"
                             hidden={false}
                             onBlur={[Function]}
@@ -838,54 +623,63 @@ exports[`color-picker-pro footer-slider click event render correctly 1`] = `
                             onMouseUp={[Function]}
                           >
                             <div
-                              className="c7n-pro-color-picker-popup-view"
+                              className="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-color-picker-popup"
+                              hidden={false}
+                              onBlur={[Function]}
+                              onFocus={[Function]}
+                              onMouseDown={[Function]}
+                              onMouseUp={[Function]}
                             >
                               <div
-                                className="c7n-pro-color-picker-popup-body"
-                                style={
-                                  Object {
-                                    "backgroundColor": "#ff00NaN",
+                                className="c7n-pro-color-picker-popup-view"
+                              >
+                                <div
+                                  className="c7n-pro-color-picker-popup-body"
+                                  style={
+                                    Object {
+                                      "backgroundColor": "#ff00NaN",
+                                    }
                                   }
-                                }
-                              >
-                                <div
-                                  className="c7n-pro-color-picker-popup-body-gradient"
-                                  onClick={[Function]}
-                                />
-                                <div
-                                  className="c7n-pro-color-picker-popup-body-selector"
-                                  onMouseDown={[Function]}
-                                />
-                              </div>
-                              <div
-                                className="c7n-pro-color-picker-popup-footer"
-                              >
-                                <div
-                                  className="c7n-pro-color-picker-popup-footer-slider"
                                 >
                                   <div
-                                    className="hue"
+                                    className="c7n-pro-color-picker-popup-body-gradient"
                                     onClick={[Function]}
                                   />
                                   <div
-                                    className="c7n-pro-color-picker-popup-footer-slider-pointer"
+                                    className="c7n-pro-color-picker-popup-body-selector"
                                     onMouseDown={[Function]}
                                   />
                                 </div>
                                 <div
-                                  className="c7n-pro-color-picker-popup-footer-slider opacity"
+                                  className="c7n-pro-color-picker-popup-footer"
                                 >
                                   <div
-                                    className="c7n-pro-color-picker-popup-footer-slider-pointer"
-                                  />
+                                    className="c7n-pro-color-picker-popup-footer-slider"
+                                  >
+                                    <div
+                                      className="hue"
+                                      onClick={[Function]}
+                                    />
+                                    <div
+                                      className="c7n-pro-color-picker-popup-footer-slider-pointer"
+                                      onMouseDown={[Function]}
+                                    />
+                                  </div>
+                                  <div
+                                    className="c7n-pro-color-picker-popup-footer-slider opacity"
+                                  >
+                                    <div
+                                      className="c7n-pro-color-picker-popup-footer-slider-pointer"
+                                    />
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
-                        </PopupInner>
-                      </Align>
-                    </AnimateChild>
-                  </Animate>
+                          </PopupInner>
+                        </Align>
+                      </AnimateChild>
+                    </Animate>
+                  </Portal>
                 </Portal>
               </Popup>
             </Trigger>
@@ -1430,6 +1224,8 @@ exports[`color-picker-pro renders ColorPicker correctly 1`] = `
                   onBlur={[Function]}
                   onChange={[Function]}
                   onClick={[Function]}
+                  onCompositionEnd={[Function]}
+                  onCompositionStart={[Function]}
                   onContextMenu={[Function]}
                   onFocus={[Function]}
                   onKeyDown={[Function]}
@@ -2153,6 +1949,8 @@ exports[`color-picker-pro should renders dataset default value correctly 1`] = `
                     onBlur={[Function]}
                     onChange={[Function]}
                     onClick={[Function]}
+                    onCompositionEnd={[Function]}
+                    onCompositionStart={[Function]}
                     onContextMenu={[Function]}
                     onFocus={[Function]}
                     onKeyDown={[Function]}
@@ -2737,6 +2535,8 @@ exports[`color-picker-pro the panel body click event render correctly 1`] = `
                   onBlur={[Function]}
                   onChange={[Function]}
                   onClick={[Function]}
+                  onCompositionEnd={[Function]}
+                  onCompositionStart={[Function]}
                   onContextMenu={[Function]}
                   onFocus={[Function]}
                   onKeyDown={[Function]}
@@ -2779,413 +2579,111 @@ exports[`color-picker-pro the panel body click event render correctly 1`] = `
                 transitionName="slide-up"
               >
                 <Portal
-                  containerInfo={
-                    <div
-                      class="c7n-pro-popup-container"
-                    >
-                      <div
-                        class="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-color-picker-popup c7n-pro-color-picker-popup-placement-bottomLeft"
-                        style="left: -999px; top: -995px;"
-                      >
-                        <div
-                          class="c7n-pro-color-picker-popup-view"
-                        >
-                          <div
-                            class="c7n-pro-color-picker-popup-body"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-body-gradient"
-                            />
-                            <div
-                              class="c7n-pro-color-picker-popup-body-selector"
-                              style="left: 0px; top: 0px;"
-                            />
-                          </div>
-                          <div
-                            class="c7n-pro-color-picker-popup-footer"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider"
-                            >
-                              <div
-                                class="hue"
-                              />
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                                style="left: 0px;"
-                              />
-                            </div>
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider opacity"
-                            >
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-color-picker-popup c7n-pro-color-picker-popup-placement-bottomLeft"
-                        hidden=""
-                        style="left: -999px; top: -995px;"
-                      >
-                        <div
-                          class="c7n-pro-color-picker-popup-view"
-                        >
-                          <div
-                            class="c7n-pro-color-picker-popup-body"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-body-gradient"
-                            />
-                            <div
-                              class="c7n-pro-color-picker-popup-body-selector"
-                              style="left: 0px; top: 0px;"
-                            />
-                          </div>
-                          <div
-                            class="c7n-pro-color-picker-popup-footer"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider"
-                            >
-                              <div
-                                class="hue"
-                              />
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                                style="left: 0px;"
-                              />
-                            </div>
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider opacity"
-                            >
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-color-picker-popup c7n-pro-color-picker-popup-placement-bottomLeft"
-                        style="left: -999px; top: -995px;"
-                      >
-                        <div
-                          class="c7n-pro-color-picker-popup-view"
-                        >
-                          <div
-                            class="c7n-pro-color-picker-popup-body"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-body-gradient"
-                            />
-                            <div
-                              class="c7n-pro-color-picker-popup-body-selector"
-                              style="left: 0px; top: 0px;"
-                            />
-                          </div>
-                          <div
-                            class="c7n-pro-color-picker-popup-footer"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider"
-                            >
-                              <div
-                                class="hue"
-                              />
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                                style="left: 0px;"
-                              />
-                            </div>
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider opacity"
-                            >
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-color-picker-popup c7n-pro-color-picker-popup-placement-bottomLeft"
-                        style="left: -999px; top: -995px;"
-                      >
-                        <div
-                          class="c7n-pro-color-picker-popup-view"
-                        >
-                          <div
-                            class="c7n-pro-color-picker-popup-body"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-body-gradient"
-                            />
-                            <div
-                              class="c7n-pro-color-picker-popup-body-selector"
-                              style="left: 0px; top: 0px;"
-                            />
-                          </div>
-                          <div
-                            class="c7n-pro-color-picker-popup-footer"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider"
-                            >
-                              <div
-                                class="hue"
-                              />
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                                style="left: 0px;"
-                              />
-                            </div>
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider opacity"
-                            >
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-color-picker-popup c7n-pro-color-picker-popup-placement-bottomLeft"
-                        style="left: -999px; top: -995px;"
-                      >
-                        <div
-                          class="c7n-pro-color-picker-popup-view"
-                        >
-                          <div
-                            class="c7n-pro-color-picker-popup-body"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-body-gradient"
-                            />
-                            <div
-                              class="c7n-pro-color-picker-popup-body-selector"
-                              style="left: 0px; top: 0px;"
-                            />
-                          </div>
-                          <div
-                            class="c7n-pro-color-picker-popup-footer"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider"
-                            >
-                              <div
-                                class="hue"
-                              />
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                                style="left: 0px;"
-                              />
-                            </div>
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider opacity"
-                            >
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-color-picker-popup c7n-pro-color-picker-popup-placement-bottomLeft"
-                        style="left: -999px; top: -995px;"
-                      >
-                        <div
-                          class="c7n-pro-color-picker-popup-view"
-                        >
-                          <div
-                            class="c7n-pro-color-picker-popup-body"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-body-gradient"
-                            />
-                            <div
-                              class="c7n-pro-color-picker-popup-body-selector"
-                              style="left: 0px; top: 0px;"
-                            />
-                          </div>
-                          <div
-                            class="c7n-pro-color-picker-popup-footer"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider"
-                            >
-                              <div
-                                class="hue"
-                              />
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                                style="left: 0px;"
-                              />
-                            </div>
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider opacity"
-                            >
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-color-picker-popup c7n-pro-color-picker-popup-placement-bottomLeft"
-                        style="left: -999px; top: -995px;"
-                      >
-                        <div
-                          class="c7n-pro-color-picker-popup-view"
-                        >
-                          <div
-                            class="c7n-pro-color-picker-popup-body"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-body-gradient"
-                            />
-                            <div
-                              class="c7n-pro-color-picker-popup-body-selector"
-                              style="left: 0px; top: 0px;"
-                            />
-                          </div>
-                          <div
-                            class="c7n-pro-color-picker-popup-footer"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider"
-                            >
-                              <div
-                                class="hue"
-                              />
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                                style="left: 0px;"
-                              />
-                            </div>
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider opacity"
-                            >
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-color-picker-popup c7n-pro-color-picker-popup-placement-bottomLeft"
-                        style="left: -999px; top: -995px;"
-                      >
-                        <div
-                          class="c7n-pro-color-picker-popup-view"
-                        >
-                          <div
-                            class="c7n-pro-color-picker-popup-body"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-body-gradient"
-                            />
-                            <div
-                              class="c7n-pro-color-picker-popup-body-selector"
-                              style="left: 0px; top: 0px;"
-                            />
-                          </div>
-                          <div
-                            class="c7n-pro-color-picker-popup-footer"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider"
-                            >
-                              <div
-                                class="hue"
-                              />
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                                style="left: 0px;"
-                              />
-                            </div>
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider opacity"
-                            >
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  }
+                  getContainer={[Function]}
                   key="popup-key-29"
                 >
-                  <Animate
-                    animation={Object {}}
-                    component=""
-                    componentProps={Object {}}
-                    exclusive={true}
-                    hiddenProp="hidden"
-                    onAppear={[Function]}
-                    onEnd={[Function]}
-                    onEnter={[Function]}
-                    onLeave={[Function]}
-                    transitionAppear={true}
-                    transitionEnter={true}
-                    transitionLeave={true}
-                    transitionName="slide-up"
+                  <Portal
+                    containerInfo={
+                      <div
+                        class="c7n-pro-popup-container"
+                      >
+                        <div
+                          class="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-color-picker-popup c7n-pro-color-picker-popup-placement-bottomLeft"
+                          style="left: -999px; top: -995px;"
+                        >
+                          <div
+                            class="c7n-pro-color-picker-popup-view"
+                          >
+                            <div
+                              class="c7n-pro-color-picker-popup-body"
+                            >
+                              <div
+                                class="c7n-pro-color-picker-popup-body-gradient"
+                              />
+                              <div
+                                class="c7n-pro-color-picker-popup-body-selector"
+                              />
+                            </div>
+                            <div
+                              class="c7n-pro-color-picker-popup-footer"
+                            >
+                              <div
+                                class="c7n-pro-color-picker-popup-footer-slider"
+                              >
+                                <div
+                                  class="hue"
+                                />
+                                <div
+                                  class="c7n-pro-color-picker-popup-footer-slider-pointer"
+                                />
+                              </div>
+                              <div
+                                class="c7n-pro-color-picker-popup-footer-slider opacity"
+                              >
+                                <div
+                                  class="c7n-pro-color-picker-popup-footer-slider-pointer"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    }
                   >
-                    <AnimateChild
+                    <Animate
                       animation={Object {}}
-                      key="align"
+                      component=""
+                      componentProps={Object {}}
+                      exclusive={true}
+                      hiddenProp="hidden"
+                      onAppear={[Function]}
+                      onEnd={[Function]}
+                      onEnter={[Function]}
+                      onLeave={[Function]}
                       transitionAppear={true}
                       transitionEnter={true}
                       transitionLeave={true}
                       transitionName="slide-up"
                     >
-                      <Align
-                        align={
-                          Object {
-                            "offset": Array [
-                              0,
-                              4,
-                            ],
-                            "overflow": Object {
-                              "adjustX": 1,
-                              "adjustY": 1,
-                            },
-                            "points": Array [
-                              "tl",
-                              "bl",
-                            ],
-                          }
-                        }
-                        childrenProps={
-                          Object {
-                            "hidden": "hidden",
-                          }
-                        }
-                        hidden={false}
+                      <AnimateChild
+                        animation={Object {}}
                         key="align"
-                        monitorBufferTime={50}
-                        monitorWindowResize={true}
-                        onAlign={[Function]}
-                        style={Object {}}
-                        target={[Function]}
+                        transitionAppear={true}
+                        transitionEnter={true}
+                        transitionLeave={true}
+                        transitionName="slide-up"
                       >
-                        <PopupInner
-                          className="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-color-picker-popup"
+                        <Align
+                          align={
+                            Object {
+                              "offset": Array [
+                                0,
+                                4,
+                              ],
+                              "overflow": Object {
+                                "adjustX": 1,
+                                "adjustY": 1,
+                              },
+                              "points": Array [
+                                "tl",
+                                "bl",
+                              ],
+                            }
+                          }
+                          childrenProps={
+                            Object {
+                              "hidden": "hidden",
+                            }
+                          }
                           hidden={false}
-                          onBlur={[Function]}
-                          onFocus={[Function]}
-                          onMouseDown={[Function]}
-                          onMouseUp={[Function]}
+                          key="align"
+                          monitorBufferTime={50}
+                          monitorWindowResize={true}
+                          onAlign={[Function]}
+                          style={Object {}}
+                          target={[Function]}
                         >
-                          <div
+                          <PopupInner
                             className="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-color-picker-popup"
                             hidden={false}
                             onBlur={[Function]}
@@ -3194,54 +2692,63 @@ exports[`color-picker-pro the panel body click event render correctly 1`] = `
                             onMouseUp={[Function]}
                           >
                             <div
-                              className="c7n-pro-color-picker-popup-view"
+                              className="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-color-picker-popup"
+                              hidden={false}
+                              onBlur={[Function]}
+                              onFocus={[Function]}
+                              onMouseDown={[Function]}
+                              onMouseUp={[Function]}
                             >
                               <div
-                                className="c7n-pro-color-picker-popup-body"
-                                style={
-                                  Object {
-                                    "backgroundColor": undefined,
+                                className="c7n-pro-color-picker-popup-view"
+                              >
+                                <div
+                                  className="c7n-pro-color-picker-popup-body"
+                                  style={
+                                    Object {
+                                      "backgroundColor": undefined,
+                                    }
                                   }
-                                }
-                              >
-                                <div
-                                  className="c7n-pro-color-picker-popup-body-gradient"
-                                  onClick={[Function]}
-                                />
-                                <div
-                                  className="c7n-pro-color-picker-popup-body-selector"
-                                  onMouseDown={[Function]}
-                                />
-                              </div>
-                              <div
-                                className="c7n-pro-color-picker-popup-footer"
-                              >
-                                <div
-                                  className="c7n-pro-color-picker-popup-footer-slider"
                                 >
                                   <div
-                                    className="hue"
+                                    className="c7n-pro-color-picker-popup-body-gradient"
                                     onClick={[Function]}
                                   />
                                   <div
-                                    className="c7n-pro-color-picker-popup-footer-slider-pointer"
+                                    className="c7n-pro-color-picker-popup-body-selector"
                                     onMouseDown={[Function]}
                                   />
                                 </div>
                                 <div
-                                  className="c7n-pro-color-picker-popup-footer-slider opacity"
+                                  className="c7n-pro-color-picker-popup-footer"
                                 >
                                   <div
-                                    className="c7n-pro-color-picker-popup-footer-slider-pointer"
-                                  />
+                                    className="c7n-pro-color-picker-popup-footer-slider"
+                                  >
+                                    <div
+                                      className="hue"
+                                      onClick={[Function]}
+                                    />
+                                    <div
+                                      className="c7n-pro-color-picker-popup-footer-slider-pointer"
+                                      onMouseDown={[Function]}
+                                    />
+                                  </div>
+                                  <div
+                                    className="c7n-pro-color-picker-popup-footer-slider opacity"
+                                  >
+                                    <div
+                                      className="c7n-pro-color-picker-popup-footer-slider-pointer"
+                                    />
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
-                        </PopupInner>
-                      </Align>
-                    </AnimateChild>
-                  </Animate>
+                          </PopupInner>
+                        </Align>
+                      </AnimateChild>
+                    </Animate>
+                  </Portal>
                 </Portal>
               </Popup>
             </Trigger>
@@ -3786,6 +3293,8 @@ exports[`color-picker-pro the sliderPointer of footer click event render correct
                   onBlur={[Function]}
                   onChange={[Function]}
                   onClick={[Function]}
+                  onCompositionEnd={[Function]}
+                  onCompositionStart={[Function]}
                   onContextMenu={[Function]}
                   onFocus={[Function]}
                   onKeyDown={[Function]}
@@ -3828,456 +3337,114 @@ exports[`color-picker-pro the sliderPointer of footer click event render correct
                 transitionName="slide-up"
               >
                 <Portal
-                  containerInfo={
-                    <div
-                      class="c7n-pro-popup-container"
-                    >
-                      <div
-                        class="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-color-picker-popup c7n-pro-color-picker-popup-placement-bottomLeft"
-                        style="left: -999px; top: -995px;"
-                      >
-                        <div
-                          class="c7n-pro-color-picker-popup-view"
-                        >
-                          <div
-                            class="c7n-pro-color-picker-popup-body"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-body-gradient"
-                            />
-                            <div
-                              class="c7n-pro-color-picker-popup-body-selector"
-                              style="left: 0px; top: 0px;"
-                            />
-                          </div>
-                          <div
-                            class="c7n-pro-color-picker-popup-footer"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider"
-                            >
-                              <div
-                                class="hue"
-                              />
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                                style="left: 0px;"
-                              />
-                            </div>
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider opacity"
-                            >
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-color-picker-popup c7n-pro-color-picker-popup-placement-bottomLeft"
-                        hidden=""
-                        style="left: -999px; top: -995px;"
-                      >
-                        <div
-                          class="c7n-pro-color-picker-popup-view"
-                        >
-                          <div
-                            class="c7n-pro-color-picker-popup-body"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-body-gradient"
-                            />
-                            <div
-                              class="c7n-pro-color-picker-popup-body-selector"
-                              style="left: 0px; top: 0px;"
-                            />
-                          </div>
-                          <div
-                            class="c7n-pro-color-picker-popup-footer"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider"
-                            >
-                              <div
-                                class="hue"
-                              />
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                                style="left: 0px;"
-                              />
-                            </div>
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider opacity"
-                            >
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-color-picker-popup c7n-pro-color-picker-popup-placement-bottomLeft"
-                        style="left: -999px; top: -995px;"
-                      >
-                        <div
-                          class="c7n-pro-color-picker-popup-view"
-                        >
-                          <div
-                            class="c7n-pro-color-picker-popup-body"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-body-gradient"
-                            />
-                            <div
-                              class="c7n-pro-color-picker-popup-body-selector"
-                              style="left: 0px; top: 0px;"
-                            />
-                          </div>
-                          <div
-                            class="c7n-pro-color-picker-popup-footer"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider"
-                            >
-                              <div
-                                class="hue"
-                              />
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                                style="left: 0px;"
-                              />
-                            </div>
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider opacity"
-                            >
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-color-picker-popup c7n-pro-color-picker-popup-placement-bottomLeft"
-                        style="left: -999px; top: -995px;"
-                      >
-                        <div
-                          class="c7n-pro-color-picker-popup-view"
-                        >
-                          <div
-                            class="c7n-pro-color-picker-popup-body"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-body-gradient"
-                            />
-                            <div
-                              class="c7n-pro-color-picker-popup-body-selector"
-                              style="left: 0px; top: 0px;"
-                            />
-                          </div>
-                          <div
-                            class="c7n-pro-color-picker-popup-footer"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider"
-                            >
-                              <div
-                                class="hue"
-                              />
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                                style="left: 0px;"
-                              />
-                            </div>
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider opacity"
-                            >
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-color-picker-popup c7n-pro-color-picker-popup-placement-bottomLeft"
-                        style="left: -999px; top: -995px;"
-                      >
-                        <div
-                          class="c7n-pro-color-picker-popup-view"
-                        >
-                          <div
-                            class="c7n-pro-color-picker-popup-body"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-body-gradient"
-                            />
-                            <div
-                              class="c7n-pro-color-picker-popup-body-selector"
-                              style="left: 0px; top: 0px;"
-                            />
-                          </div>
-                          <div
-                            class="c7n-pro-color-picker-popup-footer"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider"
-                            >
-                              <div
-                                class="hue"
-                              />
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                                style="left: 0px;"
-                              />
-                            </div>
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider opacity"
-                            >
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-color-picker-popup c7n-pro-color-picker-popup-placement-bottomLeft"
-                        style="left: -999px; top: -995px;"
-                      >
-                        <div
-                          class="c7n-pro-color-picker-popup-view"
-                        >
-                          <div
-                            class="c7n-pro-color-picker-popup-body"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-body-gradient"
-                            />
-                            <div
-                              class="c7n-pro-color-picker-popup-body-selector"
-                              style="left: 0px; top: 0px;"
-                            />
-                          </div>
-                          <div
-                            class="c7n-pro-color-picker-popup-footer"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider"
-                            >
-                              <div
-                                class="hue"
-                              />
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                                style="left: 0px;"
-                              />
-                            </div>
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider opacity"
-                            >
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-color-picker-popup c7n-pro-color-picker-popup-placement-bottomLeft"
-                        style="left: -999px; top: -995px;"
-                      >
-                        <div
-                          class="c7n-pro-color-picker-popup-view"
-                        >
-                          <div
-                            class="c7n-pro-color-picker-popup-body"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-body-gradient"
-                            />
-                            <div
-                              class="c7n-pro-color-picker-popup-body-selector"
-                              style="left: 0px; top: 0px;"
-                            />
-                          </div>
-                          <div
-                            class="c7n-pro-color-picker-popup-footer"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider"
-                            >
-                              <div
-                                class="hue"
-                              />
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                                style="left: 0px;"
-                              />
-                            </div>
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider opacity"
-                            >
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-color-picker-popup c7n-pro-color-picker-popup-placement-bottomLeft"
-                        style="left: -999px; top: -995px;"
-                      >
-                        <div
-                          class="c7n-pro-color-picker-popup-view"
-                        >
-                          <div
-                            class="c7n-pro-color-picker-popup-body"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-body-gradient"
-                            />
-                            <div
-                              class="c7n-pro-color-picker-popup-body-selector"
-                              style="left: 0px; top: 0px;"
-                            />
-                          </div>
-                          <div
-                            class="c7n-pro-color-picker-popup-footer"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider"
-                            >
-                              <div
-                                class="hue"
-                              />
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                                style="left: 0px;"
-                              />
-                            </div>
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider opacity"
-                            >
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-color-picker-popup c7n-pro-color-picker-popup-placement-bottomLeft"
-                        style="left: -999px; top: -995px;"
-                      >
-                        <div
-                          class="c7n-pro-color-picker-popup-view"
-                        >
-                          <div
-                            class="c7n-pro-color-picker-popup-body"
-                            style="background-color: rgb(255, 0, 238);"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-body-gradient"
-                            />
-                            <div
-                              class="c7n-pro-color-picker-popup-body-selector"
-                              style="left: 0px; top: 0px;"
-                            />
-                          </div>
-                          <div
-                            class="c7n-pro-color-picker-popup-footer"
-                          >
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider"
-                            >
-                              <div
-                                class="hue"
-                              />
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                                style="left: 0px;"
-                              />
-                            </div>
-                            <div
-                              class="c7n-pro-color-picker-popup-footer-slider opacity"
-                            >
-                              <div
-                                class="c7n-pro-color-picker-popup-footer-slider-pointer"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  }
+                  getContainer={[Function]}
                   key="popup-key-31"
                 >
-                  <Animate
-                    animation={Object {}}
-                    component=""
-                    componentProps={Object {}}
-                    exclusive={true}
-                    hiddenProp="hidden"
-                    onAppear={[Function]}
-                    onEnd={[Function]}
-                    onEnter={[Function]}
-                    onLeave={[Function]}
-                    transitionAppear={true}
-                    transitionEnter={true}
-                    transitionLeave={true}
-                    transitionName="slide-up"
+                  <Portal
+                    containerInfo={
+                      <div
+                        class="c7n-pro-popup-container"
+                      >
+                        <div
+                          class="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-color-picker-popup c7n-pro-color-picker-popup-placement-bottomLeft"
+                          style="left: -999px; top: -995px;"
+                        >
+                          <div
+                            class="c7n-pro-color-picker-popup-view"
+                          >
+                            <div
+                              class="c7n-pro-color-picker-popup-body"
+                              style="background-color: rgb(255, 0, 238);"
+                            >
+                              <div
+                                class="c7n-pro-color-picker-popup-body-gradient"
+                              />
+                              <div
+                                class="c7n-pro-color-picker-popup-body-selector"
+                                style="left: 0px; top: 0px;"
+                              />
+                            </div>
+                            <div
+                              class="c7n-pro-color-picker-popup-footer"
+                            >
+                              <div
+                                class="c7n-pro-color-picker-popup-footer-slider"
+                              >
+                                <div
+                                  class="hue"
+                                />
+                                <div
+                                  class="c7n-pro-color-picker-popup-footer-slider-pointer"
+                                  style="left: 0px;"
+                                />
+                              </div>
+                              <div
+                                class="c7n-pro-color-picker-popup-footer-slider opacity"
+                              >
+                                <div
+                                  class="c7n-pro-color-picker-popup-footer-slider-pointer"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    }
                   >
-                    <AnimateChild
+                    <Animate
                       animation={Object {}}
-                      key="align"
+                      component=""
+                      componentProps={Object {}}
+                      exclusive={true}
+                      hiddenProp="hidden"
+                      onAppear={[Function]}
+                      onEnd={[Function]}
+                      onEnter={[Function]}
+                      onLeave={[Function]}
                       transitionAppear={true}
                       transitionEnter={true}
                       transitionLeave={true}
                       transitionName="slide-up"
                     >
-                      <Align
-                        align={
-                          Object {
-                            "offset": Array [
-                              0,
-                              4,
-                            ],
-                            "overflow": Object {
-                              "adjustX": 1,
-                              "adjustY": 1,
-                            },
-                            "points": Array [
-                              "tl",
-                              "bl",
-                            ],
-                          }
-                        }
-                        childrenProps={
-                          Object {
-                            "hidden": "hidden",
-                          }
-                        }
-                        hidden={false}
+                      <AnimateChild
+                        animation={Object {}}
                         key="align"
-                        monitorBufferTime={50}
-                        monitorWindowResize={true}
-                        onAlign={[Function]}
-                        style={Object {}}
-                        target={[Function]}
+                        transitionAppear={true}
+                        transitionEnter={true}
+                        transitionLeave={true}
+                        transitionName="slide-up"
                       >
-                        <PopupInner
-                          className="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-color-picker-popup"
+                        <Align
+                          align={
+                            Object {
+                              "offset": Array [
+                                0,
+                                4,
+                              ],
+                              "overflow": Object {
+                                "adjustX": 1,
+                                "adjustY": 1,
+                              },
+                              "points": Array [
+                                "tl",
+                                "bl",
+                              ],
+                            }
+                          }
+                          childrenProps={
+                            Object {
+                              "hidden": "hidden",
+                            }
+                          }
                           hidden={false}
-                          onBlur={[Function]}
-                          onFocus={[Function]}
-                          onMouseDown={[Function]}
-                          onMouseUp={[Function]}
+                          key="align"
+                          monitorBufferTime={50}
+                          monitorWindowResize={true}
+                          onAlign={[Function]}
+                          style={Object {}}
+                          target={[Function]}
                         >
-                          <div
+                          <PopupInner
                             className="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-color-picker-popup"
                             hidden={false}
                             onBlur={[Function]}
@@ -4286,54 +3453,63 @@ exports[`color-picker-pro the sliderPointer of footer click event render correct
                             onMouseUp={[Function]}
                           >
                             <div
-                              className="c7n-pro-color-picker-popup-view"
+                              className="c7n-pro-popup c7n-pro-popup-wrapper c7n-pro-color-picker-popup"
+                              hidden={false}
+                              onBlur={[Function]}
+                              onFocus={[Function]}
+                              onMouseDown={[Function]}
+                              onMouseUp={[Function]}
                             >
                               <div
-                                className="c7n-pro-color-picker-popup-body"
-                                style={
-                                  Object {
-                                    "backgroundColor": undefined,
+                                className="c7n-pro-color-picker-popup-view"
+                              >
+                                <div
+                                  className="c7n-pro-color-picker-popup-body"
+                                  style={
+                                    Object {
+                                      "backgroundColor": undefined,
+                                    }
                                   }
-                                }
-                              >
-                                <div
-                                  className="c7n-pro-color-picker-popup-body-gradient"
-                                  onClick={[Function]}
-                                />
-                                <div
-                                  className="c7n-pro-color-picker-popup-body-selector"
-                                  onMouseDown={[Function]}
-                                />
-                              </div>
-                              <div
-                                className="c7n-pro-color-picker-popup-footer"
-                              >
-                                <div
-                                  className="c7n-pro-color-picker-popup-footer-slider"
                                 >
                                   <div
-                                    className="hue"
+                                    className="c7n-pro-color-picker-popup-body-gradient"
                                     onClick={[Function]}
                                   />
                                   <div
-                                    className="c7n-pro-color-picker-popup-footer-slider-pointer"
+                                    className="c7n-pro-color-picker-popup-body-selector"
                                     onMouseDown={[Function]}
                                   />
                                 </div>
                                 <div
-                                  className="c7n-pro-color-picker-popup-footer-slider opacity"
+                                  className="c7n-pro-color-picker-popup-footer"
                                 >
                                   <div
-                                    className="c7n-pro-color-picker-popup-footer-slider-pointer"
-                                  />
+                                    className="c7n-pro-color-picker-popup-footer-slider"
+                                  >
+                                    <div
+                                      className="hue"
+                                      onClick={[Function]}
+                                    />
+                                    <div
+                                      className="c7n-pro-color-picker-popup-footer-slider-pointer"
+                                      onMouseDown={[Function]}
+                                    />
+                                  </div>
+                                  <div
+                                    className="c7n-pro-color-picker-popup-footer-slider opacity"
+                                  >
+                                    <div
+                                      className="c7n-pro-color-picker-popup-footer-slider-pointer"
+                                    />
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
-                        </PopupInner>
-                      </Align>
-                    </AnimateChild>
-                  </Animate>
+                          </PopupInner>
+                        </Align>
+                      </AnimateChild>
+                    </Animate>
+                  </Portal>
                 </Portal>
               </Popup>
             </Trigger>

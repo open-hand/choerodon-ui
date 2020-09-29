@@ -327,7 +327,7 @@ exports[`renders ./components-pro/check-box/demo/readonly.md correctly 1`] = `
   </label>
   <span />
   <label
-    class="c7n-pro-checkbox-wrapper"
+    class="c7n-pro-checkbox-wrapper c7n-pro-checkbox-readonly"
   >
     <input
       class="c7n-pro-checkbox"
@@ -346,7 +346,7 @@ exports[`renders ./components-pro/check-box/demo/readonly.md correctly 1`] = `
   </label>
   <span />
   <label
-    class="c7n-pro-checkbox-wrapper"
+    class="c7n-pro-checkbox-wrapper c7n-pro-checkbox-readonly"
   >
     <input
       checked=""

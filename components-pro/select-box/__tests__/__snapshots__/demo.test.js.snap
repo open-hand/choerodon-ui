@@ -872,13 +872,13 @@ exports[`renders ./components-pro/select-box/demo/readonly.md correctly 1`] = `
     style="padding-left:5px;padding-right:5px"
   >
     <span
-      class="c7n-pro-select-box-wrapper c7n-pro-select-box-suffix-button c7n-pro-select-box-not-editable"
+      class="c7n-pro-select-box-wrapper c7n-pro-select-box-readonly c7n-pro-select-box-suffix-button c7n-pro-select-box-not-editable"
     >
       <form
         class="c7n-pro-select-box"
       >
         <label
-          class="c7n-pro-radio-wrapper"
+          class="c7n-pro-radio-wrapper c7n-pro-radio-readonly"
         >
           <input
             class="c7n-pro-radio"
@@ -898,7 +898,7 @@ exports[`renders ./components-pro/select-box/demo/readonly.md correctly 1`] = `
         </label>
         <span />
         <label
-          class="c7n-pro-radio-wrapper"
+          class="c7n-pro-radio-wrapper c7n-pro-radio-readonly"
         >
           <input
             class="c7n-pro-radio"
@@ -918,7 +918,7 @@ exports[`renders ./components-pro/select-box/demo/readonly.md correctly 1`] = `
         </label>
         <span />
         <label
-          class="c7n-pro-radio-wrapper"
+          class="c7n-pro-radio-wrapper c7n-pro-radio-readonly"
         >
           <input
             class="c7n-pro-radio"
@@ -946,13 +946,13 @@ exports[`renders ./components-pro/select-box/demo/readonly.md correctly 1`] = `
     style="padding-left:5px;padding-right:5px"
   >
     <span
-      class="c7n-pro-select-box-wrapper c7n-pro-select-box-suffix-button c7n-pro-select-box-not-editable"
+      class="c7n-pro-select-box-wrapper c7n-pro-select-box-readonly c7n-pro-select-box-suffix-button c7n-pro-select-box-not-editable"
     >
       <form
         class="c7n-pro-select-box"
       >
         <label
-          class="c7n-pro-radio-wrapper"
+          class="c7n-pro-radio-wrapper c7n-pro-radio-readonly"
         >
           <input
             class="c7n-pro-radio"
@@ -972,7 +972,7 @@ exports[`renders ./components-pro/select-box/demo/readonly.md correctly 1`] = `
         </label>
         <span />
         <label
-          class="c7n-pro-radio-wrapper"
+          class="c7n-pro-radio-wrapper c7n-pro-radio-readonly"
         >
           <input
             checked=""
@@ -993,7 +993,7 @@ exports[`renders ./components-pro/select-box/demo/readonly.md correctly 1`] = `
         </label>
         <span />
         <label
-          class="c7n-pro-radio-wrapper"
+          class="c7n-pro-radio-wrapper c7n-pro-radio-readonly"
         >
           <input
             class="c7n-pro-radio"
@@ -1013,7 +1013,7 @@ exports[`renders ./components-pro/select-box/demo/readonly.md correctly 1`] = `
         </label>
         <span />
         <label
-          class="c7n-pro-radio-wrapper"
+          class="c7n-pro-radio-wrapper c7n-pro-radio-readonly"
         >
           <input
             class="c7n-pro-radio"
@@ -1033,7 +1033,7 @@ exports[`renders ./components-pro/select-box/demo/readonly.md correctly 1`] = `
         </label>
         <span />
         <label
-          class="c7n-pro-radio-wrapper"
+          class="c7n-pro-radio-wrapper c7n-pro-radio-readonly"
         >
           <input
             class="c7n-pro-radio"
