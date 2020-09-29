@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import PropTypes from 'prop-types';
-import { action, computed, runInAction } from "mobx";
+import { action, computed, runInAction, observable } from "mobx";
 import { observer } from 'mobx-react';
 import omit from 'lodash/omit';
 import debounce from 'lodash/debounce';
@@ -95,6 +95,8 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
   goInputText: number;
 
   lastPageSize: number;
+
+  @observable pageInput?: number | '';
 
   @computed
   get pageSize(): number {
@@ -240,8 +242,10 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     if (value > totalPage) {
       value = totalPage;
     }
-    if (showQuickJumper) {
+
+    if (showQuickJumper && value !== '') {
       this.jumpPage(value);
+      this.pageInput = '';
     }
   }
 
@@ -353,6 +357,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
       showSizeChanger,
       sizeChangerOptionRenderer,
       disabled,
+      prefixCls,
     } = this.props;
     if (showSizeChanger) {
       const select = (
@@ -369,7 +374,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
         </ObserverSelect>
       );
       return showSizeChangerLabel
-        ? [<span key="size-info">{$l('Pagination', 'records_per_page')}</span>, select]
+        ? [<span className={`${prefixCls}-perpage`} key="size-info">{$l('Pagination', 'records_per_page')}</span>, select]
         : select;
     }
   }
@@ -401,7 +406,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     const { disabled, showQuickJumper } = this.props;
     let gotoButton: any = null;
 
-    if (isObject(showQuickJumper) && 'goButton' in showQuickJumper ) {
+    if (isObject(showQuickJumper) && 'goButton' in showQuickJumper) {
       const { goButton } = showQuickJumper;
       gotoButton =
         typeof goButton === 'boolean' ? (
@@ -414,45 +419,23 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
             {$l('Pagination', 'jump_to_confirm')}
           </Button>
         ) : (
-          <span
-            className={`${prefixCls}-go-button`}
-            onClick={this.handleJumpGo}
-            onKeyUp={this.handleJumpGo}
-          >
-            {goButton}
-          </span>
-        );
+            <span
+              className={`${prefixCls}-go-button`}
+              onClick={this.handleJumpGo}
+              onKeyUp={this.handleJumpGo}
+            >
+              {goButton}
+            </span>
+          );
     }
 
     return (
       <div className={`${prefixCls}-quick-jumper`}>
         {$l('Pagination', 'jump_to')}
-        <ObserverNumberField disabled={disabled} min={1} onChange={this.handleJumpChange} onInput={this.handleJump} />
+        <ObserverNumberField value={this.pageInput} disabled={disabled} min={1} onChange={this.handleJumpChange} onInput={this.handleJump} />
         {$l('Pagination', 'page')}
         {gotoButton}
       </div>
-    );
-  }
-
-  renderSimple(): ReactNode {
-    const { prefixCls, props: { disabled } } = this;
-    const {
-      total,
-      page,
-      totalPage,
-    } = this;
-    return (
-      <nav {...this.getMergedProps()}>
-        {this.getPager(page - 1, 'prev', false, page === 1)}
-        <li
-          className={`${prefixCls}-simple-pager`}
-        >
-          <ObserverNumberField disabled={disabled} min={1} onInput={this.handleJump} />
-          <span className={`${prefixCls}-slash`}>／</span>
-          {total}
-        </li>
-        {this.getPager(page + 1, 'next', false, page === totalPage)}
-      </nav>
     );
   }
 
@@ -483,7 +466,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
         <nav {...this.getMergedProps()}>
           {this.getPager(page - 1, 'prev', false, page === 1)}
           <li
-           className={`${prefixCls}-simple-pager`}
+            className={`${prefixCls}-simple-pager`}
           >
             <ObserverNumberField value={page} min={1} onChange={this.handleJumpChange} onInput={this.handleJump} />
             <span>／</span>
