@@ -211,3 +211,41 @@ Array [
   <span />,
 ]
 `;
+
+exports[`renders ./components-pro/cascader/demo/singleMenue.md correctly 1`] = `
+Array [
+  <span
+    class="c7n-pro-cascader-wrapper c7n-pro-cascader-suffix-button c7n-pro-cascader-not-editable"
+  >
+    <input
+      name="id"
+      type="hidden"
+      value="2/7"
+    />
+    <label>
+      <input
+        autocomplete="off"
+        class="c7n-pro-cascader"
+        readonly=""
+        type="text"
+        value="2,7"
+      />
+      <div
+        class="c7n-pro-cascader-inner-button c7n-pro-cascader-clear-button"
+      >
+        <i
+          class="icon icon-close"
+        />
+      </div>
+      <div
+        class="c7n-pro-cascader-suffix"
+      >
+        <i
+          class="icon icon-baseline-arrow_drop_down c7n-pro-cascader-trigger"
+        />
+      </div>
+    </label>
+  </span>,
+  <span />,
+]
+`;

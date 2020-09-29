@@ -173,6 +173,11 @@ export type FieldProps = {
    */
   multiple?: boolean | string;
   /**
+   * 是否为多行类型
+   * @default false
+   */
+  multiLine?: boolean;
+  /**
    * 是否为范围值
    * 当为true时，则值为[startValue, endValue]
    * 当为数组时，例如['start', 'end']时，则值为{ start: startValue, end: endValue }

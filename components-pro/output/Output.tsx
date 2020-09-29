@@ -63,12 +63,18 @@ export default class Output extends FormField<OutputProps> {
   }
 
   getRenderedValue(): ReactNode {
-    const { multiple, range } = this;
+    const { multiple, range, multiLine } = this;
     if (multiple) {
       return this.renderMultipleValues(true);
     }
     if (range) {
       return this.renderRangeValue(true);
+    }
+    /**
+     * 多行单元格渲染
+     */
+    if (multiLine) {
+      return this.renderMultiLine(true);
     }
     return this.getTextNode() || getConfig('tableDefaultRenderer');
   }

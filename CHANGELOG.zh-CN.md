@@ -15,6 +15,9 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Field`: 新增 multiLine 属性，支持 Table 单元格多行展示编辑。
+- 🐞 `<pro>Skeleton`: 重命名 skeletonTitle 属性。
+
 ## 0.8.73
 
 `2020-09-21`

@@ -1146,7 +1146,7 @@ exports[`renders ./components-pro/select/demo/multiple.md correctly 1`] = `
     style="padding-left:5px;padding-right:5px"
   >
     <span
-      class="c7n-pro-select-wrapper c7n-pro-select-suffix-button c7n-pro-select-multiple c7n-pro-select-not-editable"
+      class="c7n-pro-select-wrapper c7n-pro-select-readonly c7n-pro-select-suffix-button c7n-pro-select-multiple c7n-pro-select-not-editable"
     >
       <input
         class="c7n-pro-select-multiple-value"
@@ -1310,7 +1310,7 @@ exports[`renders ./components-pro/select/demo/readonly.md correctly 1`] = `
     style="padding-left:5px;padding-right:5px"
   >
     <span
-      class="c7n-pro-select-wrapper c7n-pro-select-suffix-button c7n-pro-select-not-editable"
+      class="c7n-pro-select-wrapper c7n-pro-select-readonly c7n-pro-select-suffix-button c7n-pro-select-not-editable"
     >
       <input
         name="last-name"
@@ -1342,7 +1342,7 @@ exports[`renders ./components-pro/select/demo/readonly.md correctly 1`] = `
     style="padding-left:5px;padding-right:5px"
   >
     <span
-      class="c7n-pro-select-wrapper c7n-pro-select-suffix-button c7n-pro-select-not-editable"
+      class="c7n-pro-select-wrapper c7n-pro-select-readonly c7n-pro-select-suffix-button c7n-pro-select-not-editable"
     >
       <input
         name="first-name"

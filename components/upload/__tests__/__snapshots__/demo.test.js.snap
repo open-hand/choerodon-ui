@@ -131,6 +131,252 @@ exports[`renders ./components/upload/demo/drag.md correctly 1`] = `
 </span>
 `;
 
+exports[`renders ./components/upload/demo/drag-picture-card.md correctly 1`] = `
+<div
+  class="clearfix"
+>
+  <span
+    class=""
+  >
+    <div
+      class="c7n-upload-list c7n-upload-list-picture-card c7n-upload-list-drag"
+      data-rbd-droppable-context-id="0"
+      data-rbd-droppable-id="droppable"
+      style="background:;border:;display:inline-flex;max-width:100%;flex-wrap:wrap;overflow:auto"
+    >
+      <div
+        aria-describedby="rbd-hidden-text-0-hidden-text-0"
+        class="c7n-upload-list-item c7n-upload-list-item-done"
+        data-rbd-drag-handle-context-id="0"
+        data-rbd-drag-handle-draggable-id="-1"
+        data-rbd-draggable-context-id="0"
+        data-rbd-draggable-id="-1"
+        draggable="false"
+        role="button"
+        tabindex="0"
+      >
+        <div
+          class="c7n-upload-list-item-info"
+        >
+          <span>
+            <a
+              class="c7n-upload-list-item-thumbnail"
+              href="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <img
+                alt="xxx.png"
+                src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+              />
+            </a>
+            <a
+              class="c7n-upload-list-item-name"
+              href="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+              rel="noopener noreferrer"
+              target="_blank"
+              title="xxx.png"
+            >
+              xxx.png
+            </a>
+          </span>
+        </div>
+        <span
+          class="c7n-upload-list-item-actions"
+        >
+          <a
+            href="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+            rel="noopener noreferrer"
+            target="_blank"
+            title="Preview file"
+          >
+            <i
+              class="icon icon-visibility"
+            />
+          </a>
+          <i
+            class="icon icon-delete"
+            title="Remove file"
+          />
+        </span>
+      </div>
+      <div
+        aria-describedby="rbd-hidden-text-0-hidden-text-0"
+        class="c7n-upload-list-item c7n-upload-list-item-done"
+        data-rbd-drag-handle-context-id="0"
+        data-rbd-drag-handle-draggable-id="-2"
+        data-rbd-draggable-context-id="0"
+        data-rbd-draggable-id="-2"
+        draggable="false"
+        role="button"
+        tabindex="0"
+      >
+        <div
+          class="c7n-upload-list-item-info"
+        >
+          <span>
+            <a
+              class="c7n-upload-list-item-thumbnail"
+              href="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <img
+                alt="xxx.png"
+                src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+              />
+            </a>
+            <a
+              class="c7n-upload-list-item-name"
+              href="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+              rel="noopener noreferrer"
+              target="_blank"
+              title="xxx.png"
+            >
+              xxx.png
+            </a>
+          </span>
+        </div>
+        <span
+          class="c7n-upload-list-item-actions"
+        >
+          <a
+            href="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+            rel="noopener noreferrer"
+            target="_blank"
+            title="Preview file"
+          >
+            <i
+              class="icon icon-visibility"
+            />
+          </a>
+          <i
+            class="icon icon-delete"
+            title="Remove file"
+          />
+        </span>
+      </div>
+      <div
+        aria-describedby="rbd-hidden-text-0-hidden-text-0"
+        class="c7n-upload-list-item c7n-upload-list-item-done"
+        data-rbd-drag-handle-context-id="0"
+        data-rbd-drag-handle-draggable-id="-3"
+        data-rbd-draggable-context-id="0"
+        data-rbd-draggable-id="-3"
+        draggable="false"
+        role="button"
+        tabindex="0"
+      >
+        <div
+          class="c7n-upload-list-item-info"
+        >
+          <span>
+            <a
+              class="c7n-upload-list-item-thumbnail"
+              href="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <img
+                alt="xxx.png"
+                src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+              />
+            </a>
+            <a
+              class="c7n-upload-list-item-name"
+              href="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+              rel="noopener noreferrer"
+              target="_blank"
+              title="xxx.png"
+            >
+              xxx.png
+            </a>
+          </span>
+        </div>
+        <span
+          class="c7n-upload-list-item-actions"
+        >
+          <a
+            href="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+            rel="noopener noreferrer"
+            target="_blank"
+            title="Preview file"
+          >
+            <i
+              class="icon icon-visibility"
+            />
+          </a>
+          <i
+            class="icon icon-delete"
+            title="Remove file"
+          />
+        </span>
+      </div>
+      <div
+        aria-describedby="rbd-hidden-text-0-hidden-text-0"
+        class="c7n-upload-list-item c7n-upload-list-item-done"
+        data-rbd-drag-handle-context-id="0"
+        data-rbd-drag-handle-draggable-id="-4"
+        data-rbd-draggable-context-id="0"
+        data-rbd-draggable-id="-4"
+        draggable="false"
+        role="button"
+        tabindex="0"
+      >
+        <div
+          class="c7n-upload-list-item-info"
+        >
+          <span>
+            <a
+              class="c7n-upload-list-item-thumbnail"
+              href="https://s1.ax1x.com/2020/07/05/Up8j76.jpg"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <img
+                alt="test.jpg"
+                src="https://s1.ax1x.com/2020/07/05/Up8j76.jpg"
+              />
+            </a>
+            <a
+              class="c7n-upload-list-item-name"
+              href="https://s1.ax1x.com/2020/07/05/Up8j76.jpg"
+              rel="noopener noreferrer"
+              target="_blank"
+              title="test.jpg"
+            >
+              test.jpg
+            </a>
+          </span>
+        </div>
+        <span
+          class="c7n-upload-list-item-actions"
+        >
+          <a
+            href="https://s1.ax1x.com/2020/07/05/Up8j76.jpg"
+            rel="noopener noreferrer"
+            target="_blank"
+            title="Preview file"
+          >
+            <i
+              class="icon icon-visibility"
+            />
+          </a>
+          <i
+            class="icon icon-delete"
+            title="Remove file"
+          />
+        </span>
+      </div>
+    </div>
+    <div
+      class="c7n-upload c7n-upload-select c7n-upload-select-picture-card c7n-upload-drag-btn"
+      style="display:"
+    />
+  </span>
+</div>
+`;
+
 exports[`renders ./components/upload/demo/fileList.md correctly 1`] = `
 <span
   class=""

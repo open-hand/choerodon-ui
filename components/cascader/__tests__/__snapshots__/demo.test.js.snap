@@ -139,6 +139,9 @@ exports[`renders ./components/cascader/demo/custom-render.md correctly 1`] = `
     </div>
   </span>
   <i
+    class="icon icon-close c7n-cascader-picker-clear"
+  />
+  <i
     class="icon icon-arrow_drop_down c7n-cascader-picker-arrow"
   />
 </span>
@@ -189,6 +192,9 @@ exports[`renders ./components/cascader/demo/default-value.md correctly 1`] = `
       </div>
     </div>
   </span>
+  <i
+    class="icon icon-close c7n-cascader-picker-clear"
+  />
   <i
     class="icon icon-arrow_drop_down c7n-cascader-picker-arrow"
   />
@@ -356,6 +362,52 @@ exports[`renders ./components/cascader/demo/search.md correctly 1`] = `
           <input
             autocomplete="off"
             class="c7n-input c7n-cascader-input "
+            type="text"
+            value=""
+          />
+          <div
+            class="c7n-input-label-wrapper"
+          >
+            <div
+              class="c7n-input-label"
+            >
+              Please select
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </span>
+  <i
+    class="icon icon-arrow_drop_down c7n-cascader-picker-arrow"
+  />
+</span>
+`;
+
+exports[`renders ./components/cascader/demo/single-mode.md correctly 1`] = `
+<span
+  class="c7n-cascader-picker"
+  tabindex="0"
+>
+  <span
+    class="c7n-cascader-picker-label"
+  />
+  <span
+    class="c7n-input-wrapper c7n-input-has-border"
+  >
+    <div
+      class="c7n-input-content"
+    >
+      <div
+        class="c7n-input-rendered-wrapper"
+      >
+        <div
+          class="c7n-input-rendered"
+        >
+          <input
+            autocomplete="off"
+            class="c7n-input c7n-cascader-input "
+            readonly=""
             type="text"
             value=""
           />

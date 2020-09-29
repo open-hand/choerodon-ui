@@ -79,7 +79,6 @@
     "prettier": "~1.18.2",
     "prop-types": "^15.7.2",
     "quill-delta-to-html": "^0.8.4",
-    "quill-image-drop-and-paste": "^1.1.1",
     "querystringify": "^2.1.0",
     "raf": "^3.4.1",
     "rc-animate": "^2.10.3",

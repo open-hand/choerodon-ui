@@ -15,6 +15,9 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Field`: Added the `multiLine` attribute to support multi-line display and editing of Table cells.
+- 🐞 `<pro>Skeleton`: Rename `skeletonTitle` property.
+
 ## 0.8.73
 
 `2020-09-21`

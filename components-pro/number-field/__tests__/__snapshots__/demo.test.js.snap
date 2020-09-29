@@ -184,6 +184,112 @@ Array [
 ]
 `;
 
+exports[`renders ./components-pro/number-field/demo/formatter.md correctly 1`] = `
+<div>
+  <div
+    class="c7n-row"
+    style="margin-left:-5px;margin-right:-5px"
+  >
+    <div
+      class="c7n-col-12"
+      style="padding-left:5px;padding-right:5px"
+    >
+      <span
+        class="c7n-pro-input-number-wrapper c7n-pro-input-number-empty"
+      >
+        <label>
+          <input
+            autocomplete="off"
+            class="c7n-pro-input-number"
+            placeholder="请输入整数"
+            step="1"
+            type="text"
+            value=""
+          />
+          <div
+            class="c7n-pro-input-number-inner-button"
+          >
+            <div>
+              <i
+                class="icon icon-keyboard_arrow_up c7n-pro-input-number-plus"
+              />
+              <i
+                class="icon icon-keyboard_arrow_down c7n-pro-input-number-minus"
+              />
+            </div>
+          </div>
+        </label>
+      </span>
+      <span />
+    </div>
+    <div
+      class="c7n-col-12"
+      style="padding-left:5px;padding-right:5px"
+    >
+      <span
+        class="c7n-pro-input-number-wrapper c7n-pro-input-number-empty"
+      >
+        <label>
+          <input
+            autocomplete="off"
+            class="c7n-pro-input-number"
+            placeholder="请输入小数"
+            step="0.1"
+            type="text"
+            value=""
+          />
+          <div
+            class="c7n-pro-input-number-inner-button"
+          >
+            <div>
+              <i
+                class="icon icon-keyboard_arrow_up c7n-pro-input-number-plus"
+              />
+              <i
+                class="icon icon-keyboard_arrow_down c7n-pro-input-number-minus"
+              />
+            </div>
+          </div>
+        </label>
+      </span>
+      <span />
+    </div>
+    <div
+      class="c7n-col-12"
+      style="padding-left:5px;padding-right:5px"
+    >
+      <span
+        class="c7n-pro-input-number-wrapper c7n-pro-input-number-empty"
+      >
+        <label>
+          <input
+            autocomplete="off"
+            class="c7n-pro-input-number"
+            placeholder="请输入整数"
+            step="1"
+            type="text"
+            value=""
+          />
+          <div
+            class="c7n-pro-input-number-inner-button"
+          >
+            <div>
+              <i
+                class="icon icon-keyboard_arrow_up c7n-pro-input-number-plus"
+              />
+              <i
+                class="icon icon-keyboard_arrow_down c7n-pro-input-number-minus"
+              />
+            </div>
+          </div>
+        </label>
+      </span>
+      <span />
+    </div>
+  </div>
+</div>
+`;
+
 exports[`renders ./components-pro/number-field/demo/min-max.md correctly 1`] = `
 <div
   class="c7n-row"

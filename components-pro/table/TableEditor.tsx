@@ -5,11 +5,13 @@ import { observer } from 'mobx-react';
 import noop from 'lodash/noop';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
+import Row from 'choerodon-ui/lib/row';
+import Col from 'choerodon-ui/lib/col';
 import { ColumnProps } from './Column';
 import { ElementProps } from '../core/ViewComponent';
 import { FormField, FormFieldProps } from '../field/FormField';
 import TableContext from './TableContext';
-import { findCell, getColumnKey, getEditorByColumnAndRecord, isRadio } from './utils';
+import { findCell, getColumnKey, getEditorByColumnAndRecord, getEditorByField, isRadio } from './utils';
 import { stopEvent } from '../_util/EventManager';
 import { ShowHelp } from '../field/enum';
 import autobind from '../_util/autobind';
@@ -41,12 +43,34 @@ export default class TableEditor extends Component<TableEditorProps> {
     this.forceUpdate();
   }
 
+  /**
+   * 触发多行编辑器失焦切换编辑/只读模式
+   * @param e
+   */
+  @autobind
+  onWindowClick(e) {
+    const { prefixCls } = this.props;
+    if (e.target.className !== `${prefixCls}-content`) {
+      this.handleEditorBlur(e);
+    }
+  }
+
   componentDidMount() {
+    const { column: { name } } = this.props;
+    const {
+      tableStore: { dataSet, currentEditRecord },
+    } = this.context;
+    const record = currentEditRecord || dataSet.current;
+    const field = record?.getField(name) || dataSet.getField(name);
+    if (field?.get('multiLine')) {
+      window.addEventListener('click', this.onWindowClick);
+    }
     window.addEventListener('resize', this.onWindowResize);
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.onWindowResize);
+    window.removeEventListener('click', this.onWindowClick);
   }
 
   @autobind
@@ -115,6 +139,21 @@ export default class TableEditor extends Component<TableEditorProps> {
     }
   }
 
+  /**
+   * 多行编辑切换编辑器阻止冒泡
+   * @param e
+   */
+  @autobind
+  handleEditorClick(e) {
+    const { editorProps } = this;
+    if (editorProps) {
+      const { onClick = noop } = editorProps;
+      onClick(e);
+    }
+    stopEvent(e);
+  }
+
+  @autobind
   hideEditor() {
     if (this.editing) {
       const { tableStore } = this.context;
@@ -131,12 +170,71 @@ export default class TableEditor extends Component<TableEditorProps> {
     tableStore.showNextEditor(column.name, reserve);
   }
 
+  /**
+   * 渲染多行编辑单元格
+   */
+  renderMultiLineEditor(): ReactElement<FormFieldProps> | undefined {
+    const { column: { name }, prefixCls } = this.props;
+    const {
+      tableStore: { dataSet, currentEditRecord, rowHeight, inlineEdit },
+    } = this.context;
+    const record = currentEditRecord || dataSet.current;
+    const multiLineFields = dataSet.props.fields.map(field => {
+      if (field.bind && field.bind.split('.')[0] === name) {
+        return record.getField(field.name) || dataSet.getField(field.name);
+      }
+      return null;
+    }).filter(f => f);
+    if (multiLineFields && multiLineFields.length) {
+      return (
+        <div>
+          {multiLineFields.map((fields, index) => {
+            if (fields) {
+              const editor = getEditorByField(fields);
+              this.editorProps = editor.props;
+              const { style = {}, ...otherProps } = this.editorProps;
+              if (rowHeight !== 'auto') {
+                style.height = pxToRem(rowHeight);
+              }
+              const newEditorProps = {
+                ...otherProps,
+                style,
+                ref: index === 0 ? this.saveRef : '',
+                record,
+                name: fields.get('name'),
+                onKeyDown: this.handleEditorKeyDown,
+                onEnterDown: this.handleEditorKeyEnterDown,
+                onClick: this.handleEditorClick,
+                tabIndex: -1,
+                showHelp: ShowHelp.none,
+                // 目前测试inline时候需要放开限制
+                _inTable: !inlineEdit,
+              };
+              return (
+                <Row key={`${record?.index}-multi-${fields.get('name')}`} className={`${prefixCls}-multi`}>
+                  <Col span={8} className={`${prefixCls}-multi-label`}>{fields.get('label')}</Col>
+                  <Col span={16} className={`${prefixCls}-multi-value`}>{cloneElement<FormFieldProps>(editor, newEditorProps)}</Col>
+                </Row>
+              );
+            }
+            return null;
+          })}
+        </div>
+      );
+    }
+  }
+
   renderEditor(): ReactElement<FormFieldProps> | undefined {
     const { column } = this.props;
     const {
       tableStore: { dataSet, currentEditRecord, rowHeight, pristine, inlineEdit },
     } = this.context;
     const record = currentEditRecord || dataSet.current;
+    const field = record?.getField(column.name);
+    // 多行编辑拦截返回渲染器
+    if (!pristine && field && field.get('multiLine')) {
+      return this.renderMultiLineEditor();
+    }
     const cellEditor = getEditorByColumnAndRecord(column, record);
     if (!pristine && isValidElement(cellEditor) && !isRadio(cellEditor)) {
       this.editorProps = cellEditor.props;

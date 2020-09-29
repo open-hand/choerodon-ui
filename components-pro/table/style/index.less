@@ -152,6 +152,20 @@
     line-height: inherit;
     white-space: nowrap;
     text-overflow: ellipsis;
+
+    .@{output-prefix-cls}-multi {
+      div {
+        overflow: hidden;
+        line-height: inherit;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      .@{c7n-pro-prefix}-validation-message {
+        padding-left: 0;
+        font-size: inherit;
+      }
+    }
   }
 
   &-editor {
@@ -161,6 +175,14 @@
 
     > * {
       display: block !important;
+    }
+
+    .@{table-prefix-cls}-multi-label {
+      opacity: 0;
+    }
+
+    .@{table-prefix-cls}-multi-value > * {
+      width: calc(100% - 10px);
     }
   }
 

@@ -251,12 +251,12 @@ exports[`renders ./components-pro/lov/demo/dataset.md correctly 1`] = `
 exports[`renders ./components-pro/lov/demo/multiple.md correctly 1`] = `
 Array [
   <span
-    class="c7n-pro-select-wrapper c7n-pro-select-required c7n-pro-select-suffix-button c7n-pro-select-multiple"
+    class="c7n-pro-select-wrapper c7n-pro-select-required c7n-pro-select-empty c7n-pro-select-suffix-button c7n-pro-select-multiple c7n-pro-select-not-editable"
   >
     <input
       class="c7n-pro-select-multiple-value"
       name="code"
-      value="Mock"
+      value=""
     />
     <div
       class="c7n-pro-select-placeholder"
@@ -268,21 +268,12 @@ Array [
         class="c7n-pro-select"
       >
         <ul>
-          <li
-            class="c7n-pro-select-multiple-block"
-          >
-            <div>
-              Mock
-            </div>
-            <i
-              class="icon icon-cancel"
-              tabindex="-1"
-            />
-          </li>
           <li>
             <input
               autocomplete="off"
               class="c7n-pro-select-multiple-input"
+              readonly=""
+              style="position:absolute;left:0;top:0;z-index:-1"
               type="text"
               value=""
             />

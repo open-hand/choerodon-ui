@@ -164,7 +164,7 @@ exports[`renders ./components-pro/switch/demo/readonly.md correctly 1`] = `
   <span />
   <br />
   <label
-    class="c7n-pro-switch-wrapper"
+    class="c7n-pro-switch-wrapper c7n-pro-switch-readonly"
   >
     <input
       class="c7n-pro-switch"
@@ -179,7 +179,7 @@ exports[`renders ./components-pro/switch/demo/readonly.md correctly 1`] = `
   <span />
   <br />
   <label
-    class="c7n-pro-switch-wrapper"
+    class="c7n-pro-switch-wrapper c7n-pro-switch-readonly"
   >
     <input
       checked=""

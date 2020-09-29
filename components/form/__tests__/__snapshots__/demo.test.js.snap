@@ -2039,6 +2039,9 @@ exports[`renders ./components/form/demo/register.md correctly 1`] = `
               </div>
             </span>
             <i
+              class="icon icon-close c7n-cascader-picker-clear"
+            />
+            <i
               class="icon icon-arrow_drop_down c7n-cascader-picker-arrow"
             />
           </span>
@@ -3934,6 +3937,9 @@ exports[`renders ./components/form/demo/validate-static.md correctly 1`] = `
                 </div>
               </div>
             </span>
+            <i
+              class="icon icon-close c7n-cascader-picker-clear"
+            />
             <i
               class="icon icon-arrow_drop_down c7n-cascader-picker-arrow"
             />

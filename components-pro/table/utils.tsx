@@ -26,6 +26,7 @@ import IntlField from '../intl-field/IntlField';
 import UrlField from '../url-field/UrlField';
 import EmailField from '../email-field/EmailField';
 import ColorPicker from '../color-picker/ColorPicker';
+import Output from '../output/Output';
 import DataSet from '../data-set/DataSet';
 import TableStore from './TableStore';
 import { TablePaginationConfig } from './Table';
@@ -34,6 +35,7 @@ export function getEditorByField(field: Field): ReactElement<FormFieldProps> {
   const lookupCode = field.get('lookupCode');
   const lookupUrl = field.get('lookupUrl');
   const lovCode = field.get('lovCode');
+  const multiLine = field.get('multiLine');
   const { type, name } = field;
   if (
     lookupCode ||
@@ -44,6 +46,9 @@ export function getEditorByField(field: Field): ReactElement<FormFieldProps> {
   }
   if (lovCode) {
     return <Lov />;
+  }
+  if (multiLine) {
+    return <Output />;
   }
   switch (type) {
     case FieldType.boolean:
