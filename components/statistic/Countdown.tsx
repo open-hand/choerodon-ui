@@ -15,10 +15,10 @@ function getTime(value?: countdownValueType) {
   return new Date(value as any).getTime();
 }
 
-const Countdown :React.FC<CountdownProps> = (props) => {
+const Countdown: React.FC<CountdownProps> = (props) => {
   const { value, format, onFinish } = props;
   // 强制渲染界面
-  const [, forceUpdate]  = useReducer( x => x + 1 , 0);
+  const [, forceUpdate] = useReducer(x => x + 1, 0);
   const timeStamp = getTime(value);
   const countdownRef = useRef<() => void>();
   const idRef = useRef<NodeJS.Timeout | null>();
@@ -26,7 +26,7 @@ const Countdown :React.FC<CountdownProps> = (props) => {
   // 触发渲染界面，如果达到目标位置不执行
   countdownRef.current = () => {
     forceUpdate();
-    if( timeStamp <= Date.now()){
+    if (timeStamp <= Date.now()) {
       clearInterval(Number(idRef.current))
       if (onFinish && timeStamp < Date.now()) {
         onFinish();
@@ -36,23 +36,23 @@ const Countdown :React.FC<CountdownProps> = (props) => {
 
   // 启动计时器
   useEffect(() => {
-    if( timeStamp >= Date.now()){
-      if(!idRef.current){
+    if (timeStamp >= Date.now()) {
+      if (!idRef.current) {
         idRef.current = setInterval(() => {
           (countdownRef as any).current();
         }, REFRESH_INTERVAL);
       }
-    }else{
+    } else {
       clearInterval(Number(idRef.current))
     }
     return () => clearInterval(Number(idRef.current));
-  }, [format,value]);
+  }, [format, value]);
 
   // Countdown do not need display the timeStamp
   const valueRender = (node: React.ReactElement<HTMLDivElement>) =>
     cloneElement(node, {
       title: undefined,
-  });
+    });
 
   return (
     <Statistic valueRender={valueRender} {...props} formatter={(valueFormatter: countdownValueType, config: FormatConfig) => formatCountdown(valueFormatter, { ...config, format })} />

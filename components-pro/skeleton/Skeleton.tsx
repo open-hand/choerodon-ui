@@ -1,14 +1,14 @@
-import C7nSkeleton,{SkeletonProps as C7nSkeletonProps} from 'choerodon-ui/lib/skeleton';
+import C7nSkeleton, { SkeletonProps as C7nSkeletonProps } from 'choerodon-ui/lib/skeleton';
 import { observer } from 'mobx-react';
 import React from 'react';
 import omit from 'lodash/omit';
 import { DataSetStatus } from '../data-set/enum';
-import DataSetComponent,{ DataSetComponentProps } from '../data-set/DataSetComponent';
+import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComponent';
 import SkeletonButton from './Button'
 import SkeletonInput from './Input';
 import Avatar from './Avatar';
 
-export interface SkeletonProps extends DataSetComponentProps,Omit<C7nSkeletonProps,'title'>{
+export interface SkeletonProps extends DataSetComponentProps, Omit<C7nSkeletonProps, 'title'> {
     skeletonTitle?: boolean,
 }
 
@@ -23,28 +23,28 @@ export default class Skeleton extends DataSetComponent<SkeletonProps>{
 
     static Avatar = Avatar
 
-    static defaultProps:Partial<SkeletonProps> = {
-        skeletonTitle:true,
+    static defaultProps: Partial<SkeletonProps> = {
+        skeletonTitle: true,
     }
 
     getOtherProps() {
         const otherProps = omit(super.getOtherProps(), [
-          'skeletonTitle',
+            'skeletonTitle',
         ]);
         return otherProps;
     }
 
-    render(){
+    render() {
         const { dataSet, skeletonTitle, ...otherProps } = this.props;
-        const props:C7nSkeletonProps = {
+        const props: C7nSkeletonProps = {
             title: skeletonTitle,
-        }  
-        const omitProps = omit(otherProps,'title')
-        
+        }
+        const omitProps = omit(otherProps, 'title')
+
         if (dataSet) {
             props.loading = dataSet.status !== DataSetStatus.ready;
         }
-        
+
         return <C7nSkeleton {...omitProps} {...props} />;
     }
 }

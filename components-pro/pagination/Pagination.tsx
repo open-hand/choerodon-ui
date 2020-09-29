@@ -96,7 +96,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
 
   lastPageSize: number;
 
-  @observable pageInput?:  number | ` ` | '';
+  @observable pageInput?: number | '';
 
   @computed
   get pageSize(): number {
@@ -137,16 +137,6 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     }
     return 1;
   }
-
-  @action
-  setpageInput(v : number | undefined | '' | ` `) {
-    // want to forceUpdate the render when change the value 
-    if(this.pageInput === ''){
-      this.pageInput = ` `;
-    }
-    this.pageInput = v;
-  }
-  
 
   getObservableProps(props, context) {
     return {
@@ -199,12 +189,10 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
 
   handlePagerClick = page => {
     const { dataSet } = this.props;
-    if(dataSet && dataSet.currentPage !== page){
+    if (dataSet) {
       dataSet.page(page);
     }
-    if(this.page !== page){
-      this.handleChange(page, this.pageSize);
-    }
+    this.handleChange(page, this.pageSize);
   };
 
   getValidValue(value) {
@@ -255,9 +243,9 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
       value = totalPage;
     }
 
-    if (showQuickJumper ) {
+    if (showQuickJumper && value !== '') {
       this.jumpPage(value);
-      this.setpageInput('');
+      this.pageInput = '';
     }
   }
 
@@ -418,7 +406,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     const { disabled, showQuickJumper } = this.props;
     let gotoButton: any = null;
 
-    if (isObject(showQuickJumper) && 'goButton' in showQuickJumper ) {
+    if (isObject(showQuickJumper) && 'goButton' in showQuickJumper) {
       const { goButton } = showQuickJumper;
       gotoButton =
         typeof goButton === 'boolean' ? (
@@ -431,14 +419,14 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
             {$l('Pagination', 'jump_to_confirm')}
           </Button>
         ) : (
-          <span
-            className={`${prefixCls}-go-button`}
-            onClick={this.handleJumpGo}
-            onKeyUp={this.handleJumpGo}
-          >
-            {goButton}
-          </span>
-        );
+            <span
+              className={`${prefixCls}-go-button`}
+              onClick={this.handleJumpGo}
+              onKeyUp={this.handleJumpGo}
+            >
+              {goButton}
+            </span>
+          );
     }
 
     return (
@@ -478,7 +466,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
         <nav {...this.getMergedProps()}>
           {this.getPager(page - 1, 'prev', false, page === 1)}
           <li
-           className={`${prefixCls}-simple-pager`}
+            className={`${prefixCls}-simple-pager`}
           >
             <ObserverNumberField value={page} min={1} onChange={this.handleJumpChange} onInput={this.handleJump} />
             <span>／</span>

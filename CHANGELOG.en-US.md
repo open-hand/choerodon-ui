@@ -17,7 +17,7 @@ timeline: true
 
 - 🌟 `Statistic`: Added Statistic to display statistic data with description.
 - 💄 `<pro>Form`: Optimized Form Layout interval configuration.
-- 🐞 `TextField`: Fixed when multiple in Modal, the lower model input would be displayed.
+- 🐞 `<pro>TextField`: Fixed when multiple in Modal, the lower model input would be displayed.
 - 🐞 `<pro>Pagination`: Fixed when change the page, the quickJumpInput don't change.
 
 ## 0.8.73
