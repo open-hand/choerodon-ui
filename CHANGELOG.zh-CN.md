@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `Statistic`: 新增 Statistic 组件展示统计数据和描述。
+- 💄 `<pro>Form`: 优化 Form 布局间隔配置.
 - 🐞 `TextField`: 修复在多个 modal 下面低层级的 modal 框里面 input 没有被覆盖会导致重叠。
 - 🐞 `<pro>Pagination`: 修复输入页面的时候，快速跳转框里面的数字不会自动清除。
 

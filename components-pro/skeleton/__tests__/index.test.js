@@ -34,7 +34,7 @@ describe('Skeleton', () => {
       render() {
         return (
           <div className="article">
-          <Skeleton dataSet={this.ds} skeletonTitile={false}  active avatar paragraph={{ rows: 4 }}>
+          <Skeleton dataSet={this.ds} skeletonTitle={false}  active avatar paragraph={{ rows: 4 }}>
                 <Avatar style={{verticalAlign: 'top'}}    src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
                 <TextArea cols={60} rows={6}  dataSet={this.ds} name="text" resize="both" />
           </Skeleton> 

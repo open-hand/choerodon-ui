@@ -369,6 +369,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
       showSizeChanger,
       sizeChangerOptionRenderer,
       disabled,
+      prefixCls,
     } = this.props;
     if (showSizeChanger) {
       const select = (
@@ -385,7 +386,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
         </ObserverSelect>
       );
       return showSizeChangerLabel
-        ? [<span key="size-info">{$l('Pagination', 'records_per_page')}</span>, select]
+        ? [<span className={`${prefixCls}-perpage`} key="size-info">{$l('Pagination', 'records_per_page')}</span>, select]
         : select;
     }
   }

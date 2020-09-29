@@ -6,6 +6,7 @@ import React, {
   isValidElement,
   ReactElement,
   ReactNode,
+  CSSProperties,
   cloneElement,
 } from 'react';
 import PropTypes from 'prop-types';
@@ -58,6 +59,7 @@ export type LabelWidthType = LabelWidth | { [key in ResponsiveKeys]: LabelWidth 
 export type LabelAlignType = LabelAlign | { [key in ResponsiveKeys]: LabelAlign };
 export type LabelLayoutType = LabelLayout | { [key in ResponsiveKeys]: LabelLayout };
 export type ColumnsType = number | { [key in ResponsiveKeys]: number };
+export type SeparateSpacing = {width: number, height: number}
 
 export interface FormProps extends DataSetComponentProps {
   /**
@@ -143,6 +145,10 @@ export interface FormProps extends DataSetComponentProps {
    * 提交失败回调
    */
   onError?: (error: Error) => void;
+  /**
+   * 切分单元格间隔，当label布局为默认值horizontal时候使用padding修改单元格横向间距可能需要结合labelwidth效果会更好
+   */
+  separateSpacing?:SeparateSpacing;
   axios?: AxiosInstance;
 }
 
@@ -265,6 +271,7 @@ export default class Form extends DataSetComponent<FormProps> {
      * 提交失败回调
      */
     onError: PropTypes.func,
+    separateSpacing:PropTypes.object,
     ...DataSetComponent.propTypes,
   };
 
@@ -293,6 +300,7 @@ export default class Form extends DataSetComponent<FormProps> {
   get axios(): AxiosInstance {
     return this.observableProps.axios || getConfig('axios') || axios;
   }
+
 
   @computed
   get dataSet(): DataSet | undefined {
@@ -423,6 +431,22 @@ export default class Form extends DataSetComponent<FormProps> {
     return this.observableProps.pristine;
   }
 
+  @computed
+  get separateSpacing(): SeparateSpacing | undefined {
+    const { separateSpacing } = this.props;
+    if(separateSpacing && (separateSpacing.width || separateSpacing.height)) {
+      const separateSpacingCopy = {width:0,height:0}
+      if(separateSpacing.width){
+        separateSpacingCopy.width = separateSpacing.width
+      }
+      if(separateSpacing.height){
+        separateSpacingCopy.height = separateSpacing.height
+      }
+      return separateSpacingCopy
+    }
+    return undefined;
+  }
+
   isDisabled() {
     return super.isDisabled() || this.context.disabled;
   }
@@ -457,6 +481,7 @@ export default class Form extends DataSetComponent<FormProps> {
       'axios',
       'useColon',
       'excludeUseColonTagList',
+      'separateSpacing',
     ]);
     otherProps.onSubmit = this.handleSubmit;
     otherProps.onReset = this.handleReset;
@@ -536,6 +561,7 @@ export default class Form extends DataSetComponent<FormProps> {
     const matrix: (boolean | undefined)[][] = [[]];
     let noLabel = true;
     const childrenArray: ReactElement<any>[] = [];
+    const separateSpacingWidth: number =  this.separateSpacing ? this.separateSpacing.width/2: 0;
     Children.forEach(children, child => {
       if (isValidElement(child)) {
         const setChild = (arr, outChild, groupProps = {}) => {
@@ -659,6 +685,9 @@ export default class Form extends DataSetComponent<FormProps> {
             key={`row-${rowIndex}-col-${colIndex}-label`}
             className={labelClassName}
             rowSpan={rowSpan}
+            style={this.labelLayout === LabelLayout.horizontal 
+              && separateSpacingWidth 
+              ? {paddingLeft: pxToRem(separateSpacingWidth + 5)}: undefined }
           >
             <label title={isString(label) ? label : ''}>
               <span>
@@ -683,6 +712,9 @@ export default class Form extends DataSetComponent<FormProps> {
           key={`row-${rowIndex}-col-${colIndex}-field`}
           colSpan={noLabel ? newColSpan : newColSpan * 2 - 1}
           rowSpan={rowSpan}
+          style={this.labelLayout === LabelLayout.horizontal 
+            && separateSpacingWidth 
+            ? {paddingRight: pxToRem(separateSpacingWidth + 5)}: undefined }
         >
           {labelLayout === LabelLayout.vertical && (
             <label className={labelClassName}>{label}</label>
@@ -698,10 +730,20 @@ export default class Form extends DataSetComponent<FormProps> {
       index++;
     }
     cols = [];
+    // 优化当使用separateSoacing label宽度太窄问题
+    const labelWidthProcess = (widthInner: number) => {
+      if(isNumber(widthInner)){
+        if(this.labelLayout === LabelLayout.horizontal){
+          return separateSpacingWidth + widthInner
+        }
+        return widthInner
+      }
+      return separateSpacingWidth + defaultLabelWidth
+    }
     if (!noLabel) {
       for (let i = 0; i < columns; i++) {
         cols.push(
-          <col key={`label-${i}`} style={{ width: pxToRem(labelWidth[i % columns]) }} />,
+          <col key={`label-${i}`} style={{ width: pxToRem(labelWidthProcess(labelWidth[i % columns])) }} />,
           <col key={`wrapper-${i}`} />,
         );
       }
@@ -712,9 +754,27 @@ export default class Form extends DataSetComponent<FormProps> {
         );
       }
     }
+
+    let tableStyle: CSSProperties | undefined;
+
+    if (this.separateSpacing) {
+      if (this.labelLayout === LabelLayout.horizontal) {
+        tableStyle = {
+          borderCollapse: 'separate',
+          borderSpacing: `0rem ${pxToRem(this.separateSpacing.height)}`,
+        }
+      } else {
+        tableStyle = {
+          borderCollapse: 'separate',
+          borderSpacing: `${pxToRem(this.separateSpacing.width)} ${pxToRem(this.separateSpacing.height)}`,
+        }
+      }
+    }
+
+
     return [
       this.getHeader(),
-      (<table key="form-body">
+      (<table style={tableStyle} key="form-body">
         {cols.length ? <colgroup>{cols}</colgroup> : undefined}
         <tbody>{rows}</tbody>
       </table>),

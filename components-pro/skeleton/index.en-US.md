@@ -20,7 +20,7 @@ Provide a placeholder while you wait for content to load, or to visualise conten
 
 | Property | Description | Type | Default |
 | --- | --- | --- | --- |
-| skeletonTitile | Show title placeholder，equal to the title property   | boolean | true |
+| skeletonTitle | Show title placeholder，equal to the title property   | boolean | true |
 
 
 More cases and properties please refer to [Skeleton](/components/skeleton/)。

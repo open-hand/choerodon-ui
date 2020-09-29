@@ -45,7 +45,7 @@ class App extends React.Component {
         <Skeleton height={200} paragraph={{
           rows: 10,
           style: { width: '5rem' },
-        }} active dataSet={this.ds} skeletonTitile={false}>
+        }} active dataSet={this.ds} skeletonTitle={false}>
           <Tree
             dataSet={this.ds}
             checkable

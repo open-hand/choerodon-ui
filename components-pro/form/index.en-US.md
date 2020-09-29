@@ -48,6 +48,7 @@ title: Form
 | label | 标签 | string \| ReactNode |  |
 | name | 字段名。可获取 DataSet 的字段属性，如 label，require 等，一般用于控件外需要嵌套其他元素时使用。 | string |  |
 | labelWidth | 标签宽度。同列控件中标签宽度取最大设定值。子元素的 labelWidth 无法响应式。 | number |  |
+| separateSpacing | 切分单元格间隔，当label布局为默认值horizontal时候使用padding修改单元格横向间距可能需要结合labelwidth效果会更好 | {width:number,height:number} | - |
 
 ### Form.FormVirtualGroup
 
