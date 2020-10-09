@@ -215,6 +215,7 @@ title: DataSet
 | min | 最小值。 fieldName 指向当前记录的 fieldName 值作为最小值。 | number \| MomentInput \| fieldName |  |
 | step | 步距 | number \| { hour: number, minute: number, second: number } |  |
 | validator | 校验器，当返回值为 false 或 涵盖错误信息的字符串，则为校验失败 | (value, name, record) =&gt; boolean \| string \| undefined |  |
+| nonStrictStep | 非严格步距，在非严格步距下，允许输入值不为步距的倍数加上最小值，也允许在设置整数步距的情况下输入小数   | boolean | false |
 | required | 是否必选 | boolean | false |
 | readOnly | 是否只读 | boolean | false |
 | disabled | 是否禁用 | boolean | false |

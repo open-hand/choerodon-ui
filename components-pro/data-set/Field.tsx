@@ -110,6 +110,10 @@ export type FieldProps = {
    */
   step?: number | TimeStep;
   /**
+   * 非严格步距
+   */
+  nonStrictStep?: boolean;
+  /**
    * 最大值
    */
   max?: MomentInput | null;
@@ -728,6 +732,7 @@ export default class Field {
       const format = this.get('format') || getDateFormatByField(this, this.type);
       const pattern = this.get('pattern');
       const step = this.get('step');
+      const nonStrictStep = this.get('nonStrictStep') || getConfig('numberFieldNonStrictStep');
       const minLength = this.get('minLength');
       const maxLength = this.get('maxLength');
       const label = this.get('label');
@@ -747,6 +752,7 @@ export default class Field {
         max: getLimit(max, record),
         min: getLimit(min, record),
         step,
+        nonStrictStep,
         minLength,
         maxLength,
         label,
