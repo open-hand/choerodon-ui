@@ -83,6 +83,11 @@ export const SelectPropTypes = {
   dropdownStyle: PropTypes.object,
   dropdownPopupAlign: PropTypes.object,
   onDropdownVisibleChange: PropTypes.func,
+  maxTagCount: PropTypes.number,
+  maxTagPlaceholder: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.func,
+  ]),
   maxTagTextLength: PropTypes.number,
   showCheckedStrategy: PropTypes.oneOf([
     SHOW_ALL, SHOW_PARENT, SHOW_CHILD,

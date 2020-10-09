@@ -191,7 +191,7 @@ export default class Select extends Component {
         inputValue: this.props.searchValue,
       });
     }
-    
+
     if ('open' in nextProps) {
       this.setState({
         open: nextProps.open,
@@ -723,7 +723,7 @@ export default class Select extends Component {
 
   /**
    * 移除select值
-   * @param {*} selectedVal 
+   * @param {*} selectedVal
    */
   removeSelected(selectedVal) {
     const props = this.props;
@@ -919,7 +919,7 @@ export default class Select extends Component {
   renderTopControlNode() {
     const { value } = this.state;
     const props = this.props;
-    const { choiceTransitionName, prefixCls, maxTagTextLength, choiceRender } = props;
+    const { labelInValue, choiceTransitionName, prefixCls, maxTagTextLength, maxTagCount, maxTagPlaceholder,  choiceRender } = props;
     const multiple = isMultiple(props);
 
     // single and not combobox, input is inside dropdown
@@ -952,7 +952,14 @@ export default class Select extends Component {
       );
     }
 
-    const selectedValueNodes = value.map(singleValue => {
+    // Check if `maxTagCount` is set
+    let myValueList = value;
+    if (maxTagCount >= 0) {
+      myValueList = value.slice(0, maxTagCount);
+    }
+
+
+    const selectedValueNodes = myValueList.map(singleValue => {
       let content = singleValue.label;
       const title = content;
       if (maxTagTextLength && typeof content === 'string' && content.length > maxTagTextLength) {
@@ -977,6 +984,30 @@ export default class Select extends Component {
         </li>
       );
     });
+    if (maxTagCount >= 0 && maxTagCount < value.length) {
+      let content = `+ ${value.length - maxTagCount} ...`;
+      if (typeof maxTagPlaceholder === 'string') {
+        content = maxTagPlaceholder;
+      } else if (typeof maxTagPlaceholder === 'function') {
+        const restValueList = value.slice(maxTagCount);
+        content = maxTagPlaceholder(
+          labelInValue ? restValueList : restValueList.map(({ value }) => value)
+        );
+      }
+      const restNodeSelect = (
+        <li
+          style={UNSELECTABLE_STYLE}
+          {...UNSELECTABLE_ATTRIBUTE}
+          onMouseDown={preventDefaultEvent}
+          className={`${prefixCls}-selection__choice`}
+          key="rc-tree-select-internal-max-tag-counter"
+          title={content}
+        >
+          <span className={`${prefixCls}-selection__choice__content`}>{content}</span>
+        </li>
+      );
+      selectedValueNodes.push(restNodeSelect);
+    }
 
     selectedValueNodes.push(
       <li className={`${prefixCls}-search ${prefixCls}-search--inline`} key="__input">

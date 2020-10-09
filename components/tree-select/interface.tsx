@@ -1,5 +1,5 @@
 import { CSSProperties, ReactNode } from 'react';
-import { AbstractSelectProps } from '../select';
+import { AbstractSelectProps, SelectValue } from '../select';
 
 export interface TreeData {
   key: string;
@@ -33,4 +33,10 @@ export interface TreeSelectProps extends AbstractSelectProps {
   getPopupContainer?: (triggerNode: Element) => HTMLElement;
   autoClearSearchValue?:boolean;
   searchValue?:string;
+  /**
+   * 多值标签
+   */
+  maxTagTextLength?: number;
+  maxTagCount?: number;
+  maxTagPlaceholder?: ReactNode | ((omittedValues: SelectValue[]) => ReactNode);
 }

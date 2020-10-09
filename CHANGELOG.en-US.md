@@ -15,7 +15,8 @@ timeline: true
 
 ---
 
-- 🌟 `Statistic`: Added Statistic to display statistic data with description.
+- 🌟 `Statistic`: Added `Statistic` to display statistic data with description.
+- 🌟 `TreeSelect`: Added `maxTagCount`,`maxTagPlaceholder`, `maxTagTextLength` properties.
 - 🌟 `<pro>Field`: Added the `multiLine` attribute to support multi-line display and editing of Table cells.
 - 💄 `<pro>Form`: Optimized Form Layout interval configuration.
 - 🐞 `<pro>Skeleton`: Rename `skeletonTitle` property.
