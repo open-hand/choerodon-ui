@@ -20,8 +20,7 @@ title: Skeleton
 
 | 属性 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| skeletonTitle | 是否显示标题占位图,等同于tiltle属性 | boolean  | true |
-
+| skeletonTitle | 是否显示标题占位图,等同于title属性 | boolean  | true |
 
 
 更多案列和属性请参考 [Skeleton](/components/skeleton/)。
