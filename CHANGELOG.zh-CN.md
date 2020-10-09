@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `<pro>Field`: 新增 multiLine 属性，支持 Table 单元格多行展示编辑。
 - 🐞 `<pro>Skeleton`: 重命名 skeletonTitle 属性。
+- 🐞 `<pro>PerformanceTable`: 修复在 Tabs 中使用偶发的滚动条宽度计算错误问题。
 
 ## 0.8.73
 

@@ -1017,7 +1017,9 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       }
 
       this._cacheCells = null;
-      this.setState({ width: nextWidth });
+      if (nextWidth !== 0) {
+        this.setState({ width: nextWidth });
+      }
     }
     this.setOffsetByAffix();
   };

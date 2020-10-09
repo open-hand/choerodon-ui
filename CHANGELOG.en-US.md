@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `<pro>Field`: Added the `multiLine` attribute to support multi-line display and editing of Table cells.
 - 🐞 `<pro>Skeleton`: Rename `skeletonTitle` property.
+- 🐞 `<pro>PerformanceTable`: Fixed the problem of using occasional scroll bar width calculation error in Tabs.
 
 ## 0.8.73
 
