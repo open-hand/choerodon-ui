@@ -145,6 +145,14 @@ const locale: Locale = {
     select_all: '全选',
     unselect_all: '无',
   },
+  Screening:{
+    selected:'已选',
+    pack_up:'收起',
+    more:'更多',
+    multi_select:'多选',
+    confirm:'确认',
+    cancel:'取消',
+  },
 };
 
 export default locale;

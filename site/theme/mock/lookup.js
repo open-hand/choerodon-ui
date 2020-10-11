@@ -214,12 +214,138 @@ const d6 = {
   SHENG: d4.rows,
   SHI: d5.rows,
 };
+
+const d7 = {
+  rows: [
+    {
+      _token: '383aa9f02290742d77bbb1200be8a95e',
+      objectVersionNumber: 2,
+      codeId: 10067,
+      codeValueId: 10204,
+      description: '女裤装',
+      meaning: '女裤装',
+      value: 'womenPants',
+      orderSeq: null,
+      tag: null,
+    },
+    {
+      _token: '68db92966e875bdd16a9d38ef27e90d8',
+      objectVersionNumber: 2,
+      codeId: 10067,
+      codeValueId: 10205,
+      description: '男下装',
+      meaning: '男下装',
+      value: 'manPants',
+      orderSeq: null,
+      tag: null,
+      enabledFlag: 'Y',
+    },
+    {
+      _token: '380ee41f753c1aa563dfdc48aded0309',
+      objectVersionNumber: 1,
+      codeId: 10067,
+      codeValueId: 10208,
+      description: '中大童装',
+      meaning: '中大童装',
+      value: 'kidsOverSize',
+      orderSeq: 10,
+      tag: null,
+      enabledFlag: 'Y',
+    },
+    {
+      _token: 'f5167255b276b5cdd677d175eee0a122',
+      objectVersionNumber: 1,
+      codeId: 10067,
+      codeValueId: 10209,
+      description: '运动服',
+      meaning: '运动服',
+      value: 'sportWear',
+      orderSeq: 10,
+      tag: null,
+      enabledFlag: 'Y',
+    },
+    {
+      _token: 'f5167255b276b5cdd677d175eee0a123',
+      objectVersionNumber: 1,
+      codeId: 10067,
+      codeValueId: 10209,
+      description: '运动服',
+      meaning: '运动服',
+      value: 'sportWear',
+      orderSeq: 10,
+      tag: null,
+      enabledFlag: 'Y',
+    },
+    {
+      _token: 'f5167255b276b5cdd677d175eee0a124',
+      objectVersionNumber: 1,
+      codeId: 10067,
+      codeValueId: 10209,
+      description: '睡衣/家居服',
+      meaning: '睡衣/家居服',
+      value: 'nighty',
+      orderSeq: 10,
+      tag: null,
+      enabledFlag: 'Y',
+    },
+    {
+      _token: 'f5167255b276b5cdd677d175eee0a125',
+      objectVersionNumber: 1,
+      codeId: 10067,
+      codeValueId: 10209,
+      description: '内裤',
+      meaning: '内裤',
+      value: 'brlefs',
+      orderSeq: 10,
+      tag: null,
+      enabledFlag: 'Y',
+    },
+    {
+      _token: 'f5167255b276b5cdd677d175eee0a126',
+      objectVersionNumber: 1,
+      codeId: 10067,
+      codeValueId: 10209,
+      description: '婴幼童装',
+      meaning: '婴幼童装',
+      value: 'chilrenWear',
+      orderSeq: 10,
+      tag: null,
+      enabledFlag: 'Y',
+    },
+    {
+      _token: 'f5167255b276b5cdd677d175eee0a127',
+      objectVersionNumber: 1,
+      codeId: 10067,
+      codeValueId: 10209,
+      description: '女裙装/套装',
+      meaning: '女裙装/套装',
+      value: 'jupeSult',
+      orderSeq: 10,
+      tag: null,
+      enabledFlag: 'Y',
+    },
+    {
+      _token: 'f5167255b276b5cdd677d175eee0a128',
+      objectVersionNumber: 1,
+      codeId: 10067,
+      codeValueId: 10209,
+      description: '保暖内衣',
+      meaning: '保暖内衣',
+      value: 'thermalUnderWear',
+      orderSeq: 10,
+      tag: null,
+      enabledFlag: 'Y',
+    },
+  ],
+};
+
 const data1 = Mock.mock(d1);
 const data2 = Mock.mock(d2);
 const data3 = Mock.mock(d3);
 const data4 = Mock.mock(d4);
 const data5 = Mock.mock(d5);
 const data6 = Mock.mock(d6);
+const data7 = Mock.mock(d7);
 
 const rul1 = /\/common\/code\/HR.EMPLOYEE_GENDER\/\?key/;
 const rul2 = /\/common\/code\/HR.EMPLOYEE_GENDER\//;
@@ -227,6 +353,7 @@ const rul3 = /\/common\/code\/SYS.USER_STATUS\//;
 const rul4 = /\/common\/code\/SHENG\//;
 const rul5 = /\/common\/code\/SHI\//;
 const rul6 = /\/common\/batch/;
+const rul7 = /\/common\/code\/WEAR\//;
 
 export default function() {
   if (typeof window !== 'undefined') {
@@ -243,6 +370,8 @@ export default function() {
     Mock.mock(rul5, d5);
 
     Mock.mock(rul6, d6);
+
+    Mock.mock(rul7, d7);
   }
 }
 
@@ -252,5 +381,6 @@ export const lookupTempleList = [
   { rule: rul3, value: data3 },
   { rule: rul4, value: data4 },
   { rule: rul5, value: data5 },
-  { rule: rul5, value: data6 },
+  { rule: rul6, value: data6 },
+  { rule: rul7, value: data7 },
 ];
