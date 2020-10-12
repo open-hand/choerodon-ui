@@ -145,6 +145,14 @@ export interface Locale {
     value_missing;
     select_all;
     unselect_all;
+  };
+  Screening:{
+    selected;
+    pack_up;
+    more;
+    multi_select;
+    confirm;
+    cancel;
   }
 }
 

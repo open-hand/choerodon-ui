@@ -148,6 +148,14 @@ const locale: Locale = {
     select_all: 'Select All',
     unselect_all: 'None',
   },
+  Screening:{
+    selected:'Selected',
+    pack_up:'Pack up',
+    more:'More',
+    multi_select:'Multi-select',
+    confirm:'Confirm',
+    cancel:'Cancel',
+  },
 };
 
 export default locale;

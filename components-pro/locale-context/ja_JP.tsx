@@ -149,6 +149,14 @@ const locale: Locale = {
     select_all: 'すべて選択',
     unselect_all: 'いや',
   },
+  Screening:{
+    selected:'選択済み',
+    pack_up:'片付け',
+    more:'もっと',
+    multi_select:'複数の選択肢',
+    confirm:'確認',
+    cancel:'キャンセル',
+  },
 };
 
 export default locale;
