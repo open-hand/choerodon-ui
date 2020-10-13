@@ -16,8 +16,8 @@ cols: 1
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| tagRender | 顶部的tag位置的渲染可以自定义已选值的展示 | `({ labelTitle, propsTabs }) => ReactElement<any>` | - |
-| onChange | 当值改变触发的回调方法 | `value: any, oldValue: any) => void` | - |
+| tagRender | 顶部的tag位置的渲染可以自定义已选值的展示 | `({ labelTitle, TagsProps }) => ReactElement<any>` | - |
+| onChange | 当值改变触发的回调方法 | `(value: any, oldValue: any) => void` | - |
 
 ### ScreeningItem
 
@@ -30,7 +30,7 @@ cols: 1
 | renderer | 整个选择框的渲染 | `(props: RenderProps) => ReactNode` | - |
 | colProps | 栅格布局配置（详见基础组件） | ColProps | - |
 | rowProps | 栅格布局配置 详见基础组件） | RowProps | - |
-| optionRenderer | 自定义控制选项的展示 | ` ({text,value,record}) => ReactElement<any>;` | - |
+| optionRenderer | 自定义控制选项的展示 | `({text,value,record}) => ReactElement<any>;` | - |
 
 ### PropsTab 
 
@@ -43,6 +43,7 @@ cols: 1
 
 
 更多属性请参考 [DataSetComponent](/components-pro/core/#DataSetComponent)。
+
 
 
 

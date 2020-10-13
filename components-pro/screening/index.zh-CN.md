@@ -2,7 +2,7 @@
 category: Pro Components
 type: Data Entry
 title: Screening
-subtitle: 加载中
+subtitle: 筛选控件
 cols: 1
 ---
 
@@ -17,8 +17,8 @@ cols: 1
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| tagRender | 顶部的tag位置的渲染可以自定义已选值的展示 | `({ labelTitle, propsTabs }) => ReactElement<any>` | - |
-| onChange | 当值改变触发的回调方法 | `value: any, oldValue: any) => void` | - |
+| tagRender | 顶部的tag位置的渲染可以自定义已选值的展示 | `({ labelTitle, TagsProps }) => ReactElement<any>` | - |
+| onChange | 当值改变触发的回调方法 | `(value: any, oldValue: any) => void` | - |
 
 ### ScreeningItem
 

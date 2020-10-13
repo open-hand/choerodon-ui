@@ -15,7 +15,7 @@ import DataSet from '../data-set';
 import Record from '../data-set/Record';
 import { $l } from '../locale-context';
 
-export interface PropsTab {
+export interface TagProps {
   text: string;
   label: string;
   handleClose: (key) => void;
@@ -24,7 +24,7 @@ export interface PropsTab {
 export interface ScreeningProps extends DataSetComponentProps {
   dataSet: DataSet;
   children: ReactElement<ScreeningItemProps>[];
-  tagRender?: ({ labelTitle, propsTabs }: { labelTitle: string, propsTabs: PropsTab[] }) => ReactElement<any>;
+  tagRender?: ({ labelTitle, tagsProps }: { labelTitle: string, tagsProps: TagProps[] }) => ReactElement<any>;
   onChange?: (value: any, oldValue: any) => void;
 }
 
@@ -132,7 +132,7 @@ export default class Screening extends DataSetComponent<ScreeningProps> {
     const { dataSet } = this;
     const prefixCls = this.prefixCls;
     const { tagRender } = this.props;
-    const propsTabs: PropsTab[] = []
+    const tagsProps: TagProps[] = []
     if (dataSet) {
       Object.keys(mergeValue).forEach(key => {
         const value = mergeValue[key];
@@ -157,26 +157,26 @@ export default class Screening extends DataSetComponent<ScreeningProps> {
           }
         }
         if (text && label) {
-          const propsTab = {
+          const tagProps = {
             text,
             label,
             handleClose: (filedName: string) => { this.handleCloseItem(filedName) },
             key,
           }
-          propsTabs.push(propsTab)
+          tagsProps.push(tagProps)
         }
       })
       const labelTitle = `${$l('Screening', 'selected')}:`
       const labelNode = (<span className={`${prefixCls}-choosed-label`}>{labelTitle}</span>)
-      if (propsTabs.length > 0) {
+      if (tagsProps.length > 0) {
         return tagRender ? tagRender({
           labelTitle,
-          propsTabs,
+          tagsProps,
         }) : (
             <div className={`${prefixCls}-choosed`}>
               <div className={`${prefixCls}-choosed-title`}>{labelNode}</div>
               <div className={`${prefixCls}-choosed-content`}>
-                {propsTabs.map(tagItemProps => (
+                {tagsProps.map(tagItemProps => (
                   <Tag
                     onClose={(e) => {
                       e.preventDefault();
