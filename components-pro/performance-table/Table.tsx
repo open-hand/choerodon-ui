@@ -91,6 +91,7 @@ interface TableState {
   cacheData: object[];
   fixedHeader: boolean;
   fixedHorizontalScrollbar?: boolean;
+  isTree?: boolean;
 
   [key: string]: any;
 }
@@ -106,37 +107,49 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
   static propTypes = {
     columns: PropTypes.array,
-    width: PropTypes.number,
-    data: PropTypes.arrayOf(PropTypes.object),
-    height: PropTypes.number,
     autoHeight: PropTypes.bool,
-    minHeight: PropTypes.number,
-    rowHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-    headerHeight: PropTypes.number,
-    rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    isTree: PropTypes.bool,
-    defaultExpandAllRows: PropTypes.bool,
-    defaultExpandedRowKeys: PropTypes.arrayOf(
-      PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    ),
-    expandedRowKeys: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
-    renderTreeToggle: PropTypes.func,
-    renderRowExpanded: PropTypes.func,
-    rowExpandedHeight: PropTypes.number,
-    locale: PropTypes.object,
-    style: PropTypes.object,
-    sortColumn: PropTypes.string,
-    sortType: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-    defaultSortType: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-    disabledScroll: PropTypes.bool,
-    hover: PropTypes.bool,
-    loading: PropTypes.bool,
+    affixHeader: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
+    affixHorizontalScrollbar: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
+    bordered: PropTypes.bool,
+    bodyRef: PropTypes.func,
     className: PropTypes.string,
     classPrefix: PropTypes.string,
     children: PropTypes.any,
-    bordered: PropTypes.bool,
     cellBordered: PropTypes.bool,
+    data: PropTypes.arrayOf(PropTypes.object),
+    defaultExpandAllRows: PropTypes.bool,
+    defaultExpandedRowKeys: PropTypes.arrayOf(
+      PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    ),
+    defaultSortType: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+    disabledScroll: PropTypes.bool,
+    expandedRowKeys: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
+    hover: PropTypes.bool,
+    height: PropTypes.number,
+    headerHeight: PropTypes.number,
+    locale: PropTypes.object,
+    loading: PropTypes.bool,
+    loadAnimation: PropTypes.bool,
+    minHeight: PropTypes.number,
+    rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    rowHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
+    renderTreeToggle: PropTypes.func,
+    renderRowExpanded: PropTypes.func,
+    rowExpandedHeight: PropTypes.number,
+    renderEmpty: PropTypes.func,
+    renderLoading: PropTypes.func,
+    rowClassName: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
+    rtl: PropTypes.bool,
+    style: PropTypes.object,
+    sortColumn: PropTypes.string,
+    sortType: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+    showHeader: PropTypes.bool,
+    shouldUpdateScroll: PropTypes.bool,
+    translate3d: PropTypes.bool,
     wordWrap: PropTypes.bool,
+    width: PropTypes.number,
+    virtualized: PropTypes.bool,
+    isTree: PropTypes.bool,
     onRowClick: PropTypes.func,
     onRowContextMenu: PropTypes.func,
     onScroll: PropTypes.func,
@@ -144,19 +157,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     onExpandChange: PropTypes.func,
     onTouchStart: PropTypes.func,
     onTouchMove: PropTypes.func,
-    bodyRef: PropTypes.func,
-    loadAnimation: PropTypes.bool,
-    showHeader: PropTypes.bool,
-    rowClassName: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
-    virtualized: PropTypes.bool,
-    renderEmpty: PropTypes.func,
-    renderLoading: PropTypes.func,
-    translate3d: PropTypes.bool,
-    affixHeader: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
-    affixHorizontalScrollbar: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
-    rtl: PropTypes.bool,
-    onDataUpdated: PropTypes.func,
-    shouldUpdateScroll: PropTypes.bool,
+    onDataUpdated: PropTypes.func
   };
   static defaultProps = {
     classPrefix: defaultClassPrefix('performance-table'),
@@ -180,9 +181,10 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   };
 
   static getDerivedStateFromProps(props: TableProps, state: TableState) {
-    if (props.data !== state.cacheData) {
+    if (props.data !== state.cacheData || props.isTree !== state.isTree) {
       return {
         cacheData: props.data,
+        isTree: props.isTree,
         data: props.isTree ? flattenData(props.data) : props.data,
       };
     }
@@ -254,6 +256,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       throw new Error('The `rowKey` is required when set isTree');
     }
     this.state = {
+      isTree,
       expandedRowKeys,
       shouldFixedColumn,
       cacheData: data,
@@ -346,17 +349,39 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     return !eq(this.props, nextProps) || !isEqual(this.state, nextState);
   }
 
-  componentDidUpdate(prevProps: TableProps) {
-    this.calculateTableContextHeight(prevProps);
-    this.calculateTableContentWidth(prevProps);
-    this.calculateRowMaxHeight();
-    if (prevProps.data !== this.props.data) {
+  componentDidUpdate(prevProps: TableProps, prevState: TableState) {
+    const { rowHeight, data, height, children } = prevProps;
+
+    if (data !== this.props.data) {
+      this.calculateRowMaxHeight();
       this.props.onDataUpdated?.(this.props.data, this.scrollTo);
-      if (this.props.shouldUpdateScroll) {
+
+      const maxHeight =
+        this.props.data.length * (typeof rowHeight === 'function' ? rowHeight({}) : rowHeight);
+      // 当开启允许更新滚动条，或者滚动条位置大于表格的最大高度，则初始滚动条位置
+      if (this.props.shouldUpdateScroll || Math.abs(this.scrollY) > maxHeight) {
         this.scrollTo({ x: 0, y: 0 });
       }
     } else {
       this.updatePosition();
+    }
+
+    if (
+      // 当 Table 的 data 发生变化，需要重新计算高度
+    data !== this.props.data ||
+      // 当 Table 内容区的高度发生变化需要重新计算
+      height !== this.props.height ||
+      // 当 Table 内容区的高度发生变化需要重新计算
+      prevState.contentHeight !== this.state.contentHeight ||
+    // 当 expandedRowKeys 发生变化，需要重新计算 Table 高度，如果重算会导致滚动条不显示。
+      prevState.expandedRowKeys !== this.state.expandedRowKeys ||
+      prevProps.expandedRowKeys !== this.props.expandedRowKeys
+    ) {
+      this.calculateTableContextHeight(prevProps);
+    }
+
+    if (children !== this.props.children) {
+      this.calculateTableContentWidth(prevProps);
     }
   }
 
@@ -589,6 +614,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
         if (showHeader && headerHeight) {
           const headerCellProps = {
+            index,
             dataKey: columnChildren[1].props.dataKey,
             isHeaderCell: true,
             sortable: column.props.sortable,
@@ -1220,11 +1246,12 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   renderRow(props: TableRowProps, cells: any[], shouldRenderExpandedRow?: boolean, rowData?: any) {
     const { rowClassName } = this.props;
     const { shouldFixedColumn, width, contentWidth } = this.state;
+    const { depth, ...restRowProps } = props;
 
     if (typeof rowClassName === 'function') {
-      props.className = rowClassName(rowData);
+      restRowProps.className = rowClassName(rowData);
     } else {
-      props.className = rowClassName;
+      restRowProps.className = rowClassName;
     }
 
     const rowStyles: React.CSSProperties = {};
@@ -1270,7 +1297,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       }
 
       return (
-        <Row {...props} style={rowStyles}>
+        <Row {...restRowProps} data-depth={depth} style={rowStyles}>
           {fixedLeftCellGroupWidth ? (
             <CellGroup
               fixed="left"
@@ -1306,7 +1333,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     }
 
     return (
-      <Row {...props} style={rowStyles}>
+      <Row {...restRowProps} data-depth={depth} style={rowStyles}>
         <CellGroup>{mergeCells(cells)}</CellGroup>
         {shouldRenderExpandedRow && this.renderRowExpanded(rowData)}
       </Row>
@@ -1446,7 +1473,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
             const expandedRowKeys = this.getExpandedRowKeys();
             depth = parents.length;
 
-            // 树节点如果被关闭，则不渲染
+            //  如果是 Tree Table,  判断当前的行是否展开/折叠，如果是折叠则不显示该行。
             // @ts-ignore
             if (!shouldShowRowByExpanded(expandedRowKeys, parents)) {
               continue;
@@ -1557,7 +1584,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   }
 
   renderScrollbar() {
-    const { disabledScroll, affixHorizontalScrollbar } = this.props;
+    const { disabledScroll, affixHorizontalScrollbar, id } = this.props;
     const { contentWidth, contentHeight, width, fixedHorizontalScrollbar } = this.state;
     const bottom = typeof affixHorizontalScrollbar === 'number' ? affixHorizontalScrollbar : 0;
 
@@ -1571,6 +1598,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     return (
       <div>
         <Scrollbar
+          tableId={id}
           className={classNames({ fixed: fixedHorizontalScrollbar })}
           style={{ width, bottom: fixedHorizontalScrollbar ? bottom : undefined }}
           length={this.state.width}
@@ -1660,7 +1688,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
           hasCustomTreeCol,
         }}
       >
-        <div {...unhandled} className={clesses} style={styles} ref={this.tableRef}>
+        <div role="grid" {...unhandled} className={clesses} style={styles} ref={this.tableRef}>
           {showHeader && this.renderTableHeader(headerCells, rowWidth)}
           {columns && columns.length ? this.renderTableBody(bodyCells, rowWidth) : children && this.renderTableBody(bodyCells, rowWidth)}
           {showHeader && this.renderMouseArea()}
