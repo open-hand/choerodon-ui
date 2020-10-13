@@ -22,6 +22,7 @@ timeline: true
 - 🌟 `<pro>Field`: Added the `nonStrictStep` attribute.
 - 💄 `<pro>Form`: Optimized Form Layout interval configuration.
 - 🐞 `<pro>Skeleton`: Rename `skeletonTitle` property.
+- 🐞 `<pro>Table`: Fixed the problem of lateral scroll misalignment under `autoHeight` property.
 - 🐞 `<pro>Pagination`: Fixed when change the page, the quickJumpInput don't change.
 - 🐞 `<pro>TextField`: Fixed when multiple in Modal, the lower model input would be displayed.
 - 🐞 `<pro>PerformanceTable`: Fixed the problem of using occasional scroll bar width calculation error in Tabs.

@@ -87,7 +87,6 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
     if (queryDataSet && queryFields.length) {
       const currentFields = (
         <Form
-          useColon={false}
           dataSet={queryDataSet}
           columns={queryFieldsLimit}
           labelLayout={LabelLayout.horizontal}

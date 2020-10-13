@@ -22,6 +22,7 @@ import autobind from '../_util/autobind';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import Field from '../data-set/Field';
+import { findBindFields } from '../data-set/utils';
 import Validator, { CustomValidator, ValidationMessages } from '../validator/Validator';
 import Validity from '../validator/Validity';
 import FormContext from '../form/FormContext';
@@ -54,6 +55,7 @@ export type RenderProps = {
   dataSet?: DataSet | null;
   repeat?: number;
   maxTagTextLength?: number;
+  multiLineFields?: Field[];
 };
 
 export type Renderer = (props: RenderProps) => ReactNode;
@@ -853,23 +855,6 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     return (value || []).map(item => this.processRenderer(item, repeat)) as [any, any];
   }
 
-
-  /**
-   * 处理获取多行编辑关联字段
-   */
-  processMultipleLineValue(): (Field | undefined)[] {
-    const {
-      record,
-      props: { name },
-      dataSet,
-    } = this;
-    return dataSet?.props.fields?.map(field => {
-      if (field.bind && field.bind.split('.')[0] === name) {
-        return record?.getField(field.name) || dataSet?.getField(field.name);
-      }
-    }) || [];
-  }
-
   getOldValue(): any {
     return this.getValue();
   }
@@ -1031,25 +1016,40 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
    * @param readOnly
    */
   renderMultiLine(readOnly?: boolean): ReactNode {
-    const multiLineFields = this.processMultipleLineValue();
-    const { record, prefixCls } = this;
+    const {
+      record,
+      field,
+      dataSet,
+      prefixCls,
+      props: { renderer },
+    } = this;
+    const multiLineFields = findBindFields(field as Field, record!.fields, true);
+    if (renderer) {
+      return renderer({
+        multiLineFields,
+        record,
+        dataSet,
+        name,
+      });
+    }
     if (readOnly) {
       if (multiLineFields.length) {
         return (
           <>
-            {multiLineFields.map(field => {
-              if (field) {
-                const { validationResults } = this.multiLineValidator(field);
-                const required = defaultTo(field && field.get('required'), this.props.required);
+            {multiLineFields.map(fieldItem => {
+              if (fieldItem) {
+                const { validationResults } = this.multiLineValidator(fieldItem);
+                const required = defaultTo(fieldItem && fieldItem.get('required'), this.props.required);
                 const repeats: Map<any, number> = new Map<any, number>();
-                const validationResult = validationResults.find(error => error.value === record?.get(field.get('name')));
+                const validationResult = validationResults.find(error => error.value === record?.get(fieldItem.get('name')));
                 const validationMessage =
                   validationResult && this.renderValidationMessage(validationResult);
-                const key = this.getValueKey(record?.get(field.get('name')));
+                const key = this.getValueKey(record?.get(fieldItem.get('name')));
                 const repeat = repeats.get(key) || 0;
                 const validationHidden = this.isValidationMessageHidden(validationMessage);
+                const text = this.processText(this.getText(record?.get(fieldItem.get('name'))));
                 const inner = record?.status === RecordStatus.add ? '' :
-                  <span className={`${prefixCls}-multi-value-invalid`}>ReactDom invalid</span>;
+                  <span className={`${prefixCls}-multi-value-invalid`}>{text}</span>;
                 const validationInner = validationHidden ? inner : (
                   <Tooltip
                     suffixCls={`form-tooltip ${getConfig('proPrefixCls')}-tooltip`}
@@ -1063,12 +1063,12 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
                   </Tooltip>
                 );
                 return (
-                  <Row key={`${record?.index}-multi-${field.get('name')}`} className={`${prefixCls}-multi`}>
+                  <Row key={`${record?.index}-multi-${fieldItem.get('name')}`} className={`${prefixCls}-multi`}>
                     <Col
                       span={8}
                       className={required ? `${prefixCls}-multi-label ${prefixCls}-multi-label-required` : `${prefixCls}-multi-label`}
                     >
-                      {field.get('label')}
+                      {fieldItem.get('label')}
                     </Col>
                     <Col
                       span={16}
@@ -1078,7 +1078,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
                           `${prefixCls}-multi-value ${prefixCls}-multi-value-invalid`
                       }
                     >
-                      {record?.get(field.get('name')) ?
+                      {record?.get(fieldItem.get('name')) ?
                         (
                           <Tooltip
                             suffixCls={`form-tooltip ${getConfig('proPrefixCls')}-tooltip`}
@@ -1088,7 +1088,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
                             placement="bottomLeft"
                             hidden={validationHidden}
                           >
-                            {record?.get(field.get('name'))}
+                            {text}
                           </Tooltip>
                         ) : validationInner
                       }

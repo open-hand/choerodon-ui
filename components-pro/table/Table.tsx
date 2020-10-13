@@ -1591,8 +1591,8 @@ export default class Table extends DataSetComponent<TableProps> {
         if (tableBody) {
           tableBody.forEach(tbody => {
             tbody.style.maxHeight = pxToRem(parentHeight - (tableTop - parentTop) - diff) || '';
-            tbody.style.overflow = 'auto';
           });
+          return parentHeight - (tableTop - parentTop) - diff || 0;
         }
       }
     }
