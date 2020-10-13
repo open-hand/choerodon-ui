@@ -1,0 +1,64 @@
+{
+  "title": {
+    "zh": "中文分类",
+    "en": "Category"
+  },
+  "demos": [
+    {
+      "filename": "basic.js",
+      "title": {
+        "zh": "基本",
+        "en": "Basic"
+      },
+      "description": {
+        "zh": "简单的展示。\n",
+        "en": "Simplest Usage.\n"
+      },
+      "order": 0,
+      "height": 253,
+      "screenshot": ""
+    },
+    {
+      "filename": "card.js",
+      "title": {
+        "zh": "在卡片中使用",
+        "en": "In Card"
+      },
+      "height": 253,
+      "description": {
+        "zh": "在卡片中展示统计数值。\n",
+        "en": "Display statistic data in Card. \n"
+      },
+      "order": 1,
+      "screenshot": ""
+    },
+    {
+      "filename": "countdown.js",
+      "title": {
+        "zh": "倒计时组件",
+        "en": "Countdown component"
+      },
+      "height": 253,
+      "description": {
+        "zh": "倒计时组件。\n",
+        "en": "Countdown component.\n"
+      },
+      "order": 2,
+      "screenshot": ""
+    },
+    {
+      "filename": "unit.js",
+      "title": {
+        "zh": "单位",
+        "en": "Unit"
+      },
+      "description": {
+        "zh": "通过前缀和后缀添加单位。\n",
+        "en": "Add unit through `prefix` and `suffix`. \n"
+      },
+      "height": 125,
+      "order": 3,
+      "screenshot": ""
+    }
+  ]
+}
