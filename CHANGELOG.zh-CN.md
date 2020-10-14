@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 💄 `<pro>TextField`: 优化IE下输入框包含readOnly属性导致键盘BackSpace页面后退。
 
 ## 0.8.74
 

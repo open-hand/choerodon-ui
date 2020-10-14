@@ -731,6 +731,14 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   @autobind
   handleKeyDown(e) {
     const { menu } = this;
+    /**
+     * 修复ie出现点击backSpace的页面回到上一页问题
+     */
+    if (isIE()){
+      if(e.keyCode === KeyCode.BACKSPACE){
+        e.preventDefault();
+      }
+    }
     if (!this.isDisabled() && !this.isReadOnly() && menu) {
       if (this.popup && menu.onKeyDown(e)) {
         stopEvent(e);
