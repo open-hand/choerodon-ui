@@ -21,8 +21,8 @@ timeline: true
 - 🌟 `<pro>Screening`: Added `Screening` component.
 - 🌟 `<pro>Field`: Added the `nonStrictStep` attribute.
 - 💄 `<pro>Form`: Optimized Form Layout interval configuration.
-- 🐞 `<pro>Select`: Fix the flashing problem of Select under ie.
-- 🐞 `<pro>Upload`: Fix that Upload and Button cannot be aligned under ie.
+- 🐞 `<pro>Select`: Fixed the flashing problem of Select under ie.
+- 🐞 `<pro>Upload`: Fixed that Upload and Button cannot be aligned under ie.
 - 🐞 `<pro>Skeleton`: Rename `skeletonTitle` property.
 - 🐞 `<pro>Table`: Fixed the problem of lateral scroll misalignment under `autoHeight` property.
 - 🐞 `<pro>Pagination`: Fixed when change the page, the quickJumpInput don't change.
