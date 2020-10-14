@@ -31,6 +31,7 @@ import isEmpty from '../_util/isEmpty';
 import isSame from '../_util/isSame';
 import isSameLike from '../_util/isSameLike';
 import { Renderer } from '../field/FormField';
+import isIE from '../_util/isIE';
 
 function updateActiveKey(menu: Menu, activeKey: string) {
   const store = menu.getStore();
@@ -589,7 +590,11 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     const groups = options.getGroups();
     const optGroups: ReactElement<any>[] = [];
     const selectedKeys: Key[] = [];
-    let overflowYAdd = {}
+    /**
+     * fixed when ie the scroll width would cover the item width
+     */
+    const IeMenuStyle = !dropdownMatchSelectWidth && isIE() ? {padding: '.08rem'} : {} ; 
+    const IeItemStyle = !dropdownMatchSelectWidth && isIE() ? {overflow:'visible'} : {} ; 
     this.filteredOptions.forEach(record => {
       let previousGroup: ReactElement<any> | undefined;
       groups.every(field => {
@@ -633,7 +638,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
         ? optionRenderer({ dataSet: this.options, record, text, value })
         : text;
       const option: ReactElement = (
-        <Item {...optionProps} key={key} value={record} disabled={optionDisabled}>
+        <Item style={IeItemStyle} {...optionProps}   key={key} value={record} disabled={optionDisabled}>
           {itemContent}
         </Item>
       );
@@ -651,12 +656,6 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
         </Item>,
       );
     }
-    if(typeof window !== 'undefined') {
-      // @ts-ignore 判断ie浏览器处理 下拉栏覆盖问题
-      if(!dropdownMatchSelectWidth && (!!window.ActiveXObject || "ActiveXObject" in window)){
-        overflowYAdd = {overflowY: 'scroll'}
-      }
-    }
 
     return (
       <Menu
@@ -667,7 +666,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
         selectedKeys={selectedKeys}
         prefixCls={this.getMenuPrefixCls()}
         onClick={this.handleMenuClick}
-        style={{...dropdownMenuStyle,...overflowYAdd}}
+        style={{...IeMenuStyle,...dropdownMenuStyle}}
         focusable={false}
         {...menuProps}
       >

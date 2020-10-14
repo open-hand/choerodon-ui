@@ -17,6 +17,7 @@ import { UploadFile } from './interface';
 import UploadList from './UploadList';
 import Tooltip from '../tooltip/Tooltip';
 import { $l } from '../locale-context';
+import isIE from '../_util/isIE';
 
 /**
  * 把XMLHttpRequest对象的返回信息转化为字符串
@@ -372,8 +373,13 @@ export default class Upload extends FormField<UploadProps> {
       </Tooltip>
     );
 
+    /**
+     * to solve the ie11 dispaly inline-block with the button cause unaligned
+     */
+    const IeStyle = isIE() ? {display: '-ms-inline-flexbox'} : {} ;
+
     return (
-      <div className={`${prefixCls}`}>
+      <div className={`${prefixCls}`} style={IeStyle}>
         <div className="flex-wrapper">
           <div className={`${prefixCls}-select`}>
             {inputWrapperBtn}

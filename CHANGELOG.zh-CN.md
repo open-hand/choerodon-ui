@@ -21,6 +21,8 @@ timeline: true
 - 🌟 `<pro>Screening`: 新增 Screening 组件。
 - 🌟 `<pro>Field`: 新增 nonStrictStep 属性。
 - 💄 `<pro>Form`: 优化 Form 布局间隔配置。
+- 🐞 `<pro>Select`: 修复 ie 下 Select 闪动问题。
+- 🐞 `<pro>Select`: 修复 ie 下 Upload 与 Button 无法对齐。
 - 🐞 `<pro>Skeleton`: 重命名 skeletonTitle 属性。
 - 🐞 `<pro>Table`: 修复 autoHeight 属性下横向滚动错位问题。
 - 🐞 `<pro>Pagination`: 修复输入页面的时候，快速跳转框里面的数字不会自动清除。
