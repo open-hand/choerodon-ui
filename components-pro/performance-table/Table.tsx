@@ -350,7 +350,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   }
 
   componentDidUpdate(prevProps: TableProps, prevState: TableState) {
-    const { rowHeight, data, height, children } = prevProps;
+    const { rowHeight, data, height } = prevProps;
 
     if (data !== this.props.data) {
       this.calculateRowMaxHeight();
@@ -380,9 +380,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       this.calculateTableContextHeight(prevProps);
     }
 
-    if (children !== this.props.children) {
-      this.calculateTableContentWidth(prevProps);
-    }
+    this.calculateTableContentWidth(prevProps);
   }
 
   componentWillUnmount() {
@@ -1539,6 +1537,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       height: contentHeight,
       minHeight: height,
       pointerEvents: isScrolling ? 'none' : undefined,
+      width: '100%',
     };
     const topRowStyles = { height: topHideHeight };
     const bottomRowStyles = { height: bottomHideHeight };
@@ -1548,26 +1547,26 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         {(locale: PerformanceTableLocal) => {
           return (
             <div
-          ref={this.tableBodyRef}
-          className={this.addPrefix('body-row-wrapper')}
-          style={bodyStyles}
-          onScroll={this.handleBodyScroll}
-        >
-          <div
-            style={wheelStyles}
-            className={this.addPrefix('body-wheel-area')}
-            ref={this.wheelWrapperRef}
-          >
-            {topHideHeight ? <Row style={topRowStyles} className="virtualized" /> : null}
-            {this._visibleRows}
-            {bottomHideHeight ? <Row style={bottomRowStyles} className="virtualized" /> : null}
-          </div>
+              ref={this.tableBodyRef}
+              className={this.addPrefix('body-row-wrapper')}
+              style={bodyStyles}
+              onScroll={this.handleBodyScroll}
+            >
+              <div
+                style={wheelStyles}
+                className={this.addPrefix('body-wheel-area')}
+                ref={this.wheelWrapperRef}
+              >
+                {topHideHeight ? <Row style={topRowStyles} className="virtualized" /> : null}
+                {this._visibleRows}
+                {bottomHideHeight ? <Row style={bottomRowStyles} className="virtualized" /> : null}
+              </div>
 
-          {this.renderInfo(locale)}
-          {this.renderScrollbar()}
-          {this.renderLoading(locale)}
-        </div>
-          )
+              {this.renderInfo(locale)}
+              {this.renderScrollbar()}
+              {this.renderLoading(locale)}
+            </div>
+          );
         }}
       </LocaleReceiver>
     );
@@ -1608,6 +1607,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         />
         <Scrollbar
           vertical
+          tableId={id}
           length={height - headerHeight}
           scrollLength={contentHeight}
           onScroll={this.handleScrollY}
