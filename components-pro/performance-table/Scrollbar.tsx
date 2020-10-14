@@ -22,6 +22,7 @@ type State = {
 class Scrollbar extends React.PureComponent<ScrollbarProps, State> {
   static contextType = TableContext;
   static propTypes = {
+    tableId: PropTypes.string,
     vertical: PropTypes.bool,
     length: PropTypes.number,
     scrollLength: PropTypes.number,
@@ -61,12 +62,12 @@ class Scrollbar extends React.PureComponent<ScrollbarProps, State> {
   componentDidUpdate(prevProps) {
     if (this.props.vertical && this.props.scrollLength !== prevProps.scrollLength) {
       this.initBarOffset();
-    } else if (!this.props.vertical && this.props.scrollLength !== prevProps.scrollLength){
+    } else if (!this.props.vertical && this.props.scrollLength !== prevProps.scrollLength) {
       this.initBarOffset();
     }
   }
 
-    componentWillUnmount() {
+  componentWillUnmount() {
     this.releaseMouseMoves();
   }
 
@@ -188,31 +189,37 @@ class Scrollbar extends React.PureComponent<ScrollbarProps, State> {
   };
 
   render() {
-    const { vertical, length, scrollLength, classPrefix, className, ...rest } = this.props;
+    const { vertical, length, scrollLength, classPrefix, className, tableId, ...rest } = this.props;
     const { handlePressed } = this.state;
     // @ts-ignore
     const addPrefix = prefix(classPrefix);
 
     const classes = classNames(classPrefix, className, {
-      [addPrefix('vertical') as unknown as string]: vertical,
-      [addPrefix('horizontal')as unknown as string]: !vertical,
-      [addPrefix('hide')as unknown as string]: scrollLength <= length,
-      [addPrefix('pressed') as unknown as string]: handlePressed,
+      [addPrefix('vertical')]: vertical,
+      [addPrefix('horizontal')]: !vertical,
+      [addPrefix('hide')]: scrollLength <= length,
+      [addPrefix('pressed')]: handlePressed,
     });
-
+    const width = (length / scrollLength) * 100;
     const styles: React.CSSProperties = {
-      [vertical ? 'height' : 'width' ]: `${(length / scrollLength) * 100}%`,
+      [vertical ? 'height' : 'width']: `${width}%`,
       [vertical ? 'minHeight' : 'minWidth']: SCROLLBAR_MIN_WIDTH,
     };
     const unhandled = getUnhandledProps(Scrollbar, rest);
+    const valuenow = (this.scrollOffset / length) * 100 + width;
 
     return (
       <div
+        role="scrollbar"
+        aria-controls={tableId}
+        aria-valuemax="100"
+        aria-valuemin="0"
+        aria-valuenow={valuenow}
+        aria-orientation={vertical ? 'vertical' : 'horizontal'}
         {...unhandled}
         ref={this.barRef}
         className={classes}
         onClick={this.handleClick}
-        role="toolbar"
       >
         <div
           ref={this.handleRef}

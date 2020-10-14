@@ -65,7 +65,7 @@ function getPropsFromLovConfig(lovCode, propsName) {
 }
 
 export type Fields = ObservableMap<string, Field>;
-export type DynamicPropsArguments = { dataSet: DataSet; record: Record; name: string };
+export type DynamicPropsArguments = { dataSet: DataSet; record: Record; name: string; };
 
 export type FieldProps = {
   /**
@@ -216,14 +216,14 @@ export type FieldProps = {
    * LOV查询请求地址
    */
   lovQueryUrl?:
-    | string
-    | ((code: string, config: LovConfig | undefined, props: TransportHookProps) => string);
+  | string
+  | ((code: string, config: LovConfig | undefined, props: TransportHookProps) => string);
   /**
    * 值列表请求的axiosConfig
    */
   lookupAxiosConfig?:
-    | AxiosRequestConfig
-    | ((props: {
+  | AxiosRequestConfig
+  | ((props: {
     params?: any;
     dataSet?: DataSet;
     record?: Record;
@@ -237,8 +237,8 @@ export type FieldProps = {
    * LOV查询请求的钩子
    */
   lovQueryAxiosConfig?:
-    | AxiosRequestConfig
-    | ((code: string, lovConfig?: LovConfig) => AxiosRequestConfig);
+  | AxiosRequestConfig
+  | ((code: string, lovConfig?: LovConfig) => AxiosRequestConfig);
   /**
    * 内部字段别名绑定
    */
@@ -247,8 +247,8 @@ export type FieldProps = {
    * 动态属性
    */
   dynamicProps?:
-    | ((props: DynamicPropsArguments) => FieldProps | undefined)
-    | { [key: string]: (DynamicPropsArguments) => any };
+  | ((props: DynamicPropsArguments) => FieldProps | undefined)
+  | { [key: string]: (DynamicPropsArguments) => any; };
   /**
    * 快码和LOV查询时的级联参数映射
    * @example
@@ -317,7 +317,7 @@ export default class Field {
 
   isDynamicPropsComputing: boolean = false;
 
-  @observable props: FieldProps & { [key: string]: any };
+  @observable props: FieldProps & { [key: string]: any; };
 
   @computed
   get lookup(): object[] | undefined {
@@ -440,7 +440,7 @@ export default class Field {
    * 获取所有属性
    * @return 属性对象
    */
-  getProps(): FieldProps & { [key: string]: any } {
+  getProps(): FieldProps & { [key: string]: any; } {
     const dsField = this.findDataSetField();
     const lovCode = this.get('lovCode');
     return merge(
@@ -732,7 +732,7 @@ export default class Field {
       const format = this.get('format') || getDateFormatByField(this, this.type);
       const pattern = this.get('pattern');
       const step = this.get('step');
-      const nonStrictStep = this.get('nonStrictStep') || getConfig('numberFieldNonStrictStep');
+      const nonStrictStep = this.get('nonStrictStep') === undefined ? getConfig('numberFieldNonStrictStep') : this.get('nonStrictStep');
       const minLength = this.get('minLength');
       const maxLength = this.get('maxLength');
       const label = this.get('label');
