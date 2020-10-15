@@ -2,8 +2,9 @@ import React, { useState, useCallback, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import { Table } from 'choerodon-ui';
 import { DndProvider, useDrag, useDrop, createDndContext } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
 import update from 'immutability-helper';
+
+// import { HTML5Backend } from 'react-dnd-html5-backend';
 
 const RNDContext = createDndContext(HTML5Backend);
 

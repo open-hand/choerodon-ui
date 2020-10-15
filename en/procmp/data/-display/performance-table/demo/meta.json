@@ -18,7 +18,8 @@
       "screenshot": "",
       "height": 580,
       "category": "pro"
-    }, {
+    },
+    {
       "filename": "resizable-column.js",
       "title": {
         "zh": "调整列宽",
@@ -32,7 +33,8 @@
       "screenshot": "",
       "height": 580,
       "category": "pro"
-    }, {
+    },
+    {
       "filename": "fluid-column.js",
       "title": {
         "zh": "流体列宽",
@@ -46,7 +48,8 @@
       "screenshot": "",
       "height": 580,
       "category": "pro"
-    }, {
+    },
+    {
       "filename": "fixed-column.js",
       "title": {
         "zh": "锁定列",
@@ -60,7 +63,8 @@
       "screenshot": "",
       "height": 580,
       "category": "pro"
-    }, {
+    },
+    {
       "filename": "word-wrap.js",
       "title": {
         "zh": "自动换行",
@@ -74,7 +78,8 @@
       "screenshot": "",
       "height": 580,
       "category": "pro"
-    }, {
+    },
+    {
       "filename": "custom-column.js",
       "title": {
         "zh": "自定义单元格",
@@ -88,7 +93,8 @@
       "screenshot": "",
       "height": 580,
       "category": "pro"
-    }, {
+    },
+    {
       "filename": "sort.js",
       "title": {
         "zh": "排序",
@@ -102,7 +108,8 @@
       "screenshot": "",
       "height": 440,
       "category": "pro"
-    }, {
+    },
+    {
       "filename": "tree.js",
       "title": {
         "zh": "树形",
@@ -116,7 +123,8 @@
       "screenshot": "",
       "height": 580,
       "category": "pro"
-    }, {
+    },
+    {
       "filename": "expanded.js",
       "title": {
         "zh": "可展开",
@@ -130,7 +138,8 @@
       "screenshot": "",
       "height": 580,
       "category": "pro"
-    }, {
+    },
+    {
       "filename": "edit.js",
       "title": {
         "zh": "可编辑",
@@ -144,7 +153,8 @@
       "screenshot": "",
       "height": 580,
       "category": "pro"
-    }, {
+    },
+    {
       "filename": "column-group.js",
       "title": {
         "zh": "组合列",
@@ -158,7 +168,8 @@
       "screenshot": "",
       "height": 580,
       "category": "pro"
-    }, {
+    },
+    {
       "filename": "auto-height.js",
       "title": {
         "zh": "自动高度",
@@ -172,7 +183,8 @@
       "screenshot": "",
       "height": 580,
       "category": "pro"
-    }, {
+    },
+    {
       "filename": "large-lists.js",
       "title": {
         "zh": "虚拟滚动",
@@ -186,7 +198,8 @@
       "screenshot": "",
       "height": 580,
       "category": "pro"
-    }, {
+    },
+    {
       "filename": "affix-horizontal-scrollbar.js",
       "title": {
         "zh": "固定横向滚动条页面底部",
@@ -200,7 +213,8 @@
       "screenshot": "",
       "height": 580,
       "category": "pro"
-    }, {
+    },
+    {
       "filename": "colspan.js",
       "title": {
         "zh": "合并单元格",
@@ -214,7 +228,8 @@
       "screenshot": "",
       "height": 580,
       "category": "pro"
-    }, {
+    },
+    {
       "filename": "empty.js",
       "title": {
         "zh": "空表格",
@@ -228,8 +243,8 @@
       "screenshot": "",
       "height": 580,
       "category": "pro"
-    }
-    , {
+    },
+    {
       "filename": "drag.js",
       "title": {
         "zh": "拖拽",
@@ -246,4 +261,3 @@
     }
   ]
 }
-

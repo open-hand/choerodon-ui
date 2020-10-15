@@ -2,7 +2,7 @@ import { PerformanceTable, Icon } from 'choerodon-ui/pro';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { useDrag, useDrop, DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+// import { HTML5Backend } from 'react-dnd-html5-backend';
 
 const { Column, Cell, HeaderCell } = PerformanceTable;
 
