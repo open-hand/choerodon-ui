@@ -1229,7 +1229,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
           wordWrap,
           renderTreeToggle,
           height: props.height,
-          rowIndex: props.key,
+          rowIndex: props.rowIndex,
           depth: props.depth,
           onTreeToggle: this.handleTreeToggle,
           rowKey: nextRowKey,
@@ -1524,6 +1524,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
           const rowData = data[index];
           const rowProps = {
             key: keyIndex,
+            rowIndex: index,
             top: index * nextRowHeight,
             width: rowWidth,
             height: nextRowHeight,
