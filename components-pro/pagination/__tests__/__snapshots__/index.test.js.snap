@@ -80,6 +80,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
       onFocus={[Function]}
     >
       <span
+        className="undefined-perpage"
         key="size-info"
       >
         每页行数：

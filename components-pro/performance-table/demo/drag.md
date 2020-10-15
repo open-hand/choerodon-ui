@@ -1,9 +1,8 @@
 ---
-order: 0
+order: 2
 title:
   zh-CN: 拖拽
   en-US: drag
-only: true
 ---
 
 ## zh-CN
@@ -15,12 +14,14 @@ only: true
 drag.
 
 ````jsx
-import '../../../components-pro/performance-table/style/index.less';
-import fakeData from '../../../site/theme/mock/performance-data/users';
-import { PerformanceTable, Icon } from 'choerodon-ui/pro';
+
 import React from 'react';
 import { useDrag, useDrop, DndProvider } from 'react-dnd';
+import { PerformanceTable, Icon } from 'choerodon-ui/pro';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+
+import '../../../components-pro/performance-table/style/index.less';
+import fakeData from '../../../site/theme/mock/performance-data/users';
 
 const { Column, Cell, HeaderCell  } = PerformanceTable;
 

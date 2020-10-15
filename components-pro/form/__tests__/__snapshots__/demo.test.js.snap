@@ -7023,11 +7023,503 @@ exports[`renders ./components-pro/form/demo/responsive.md correctly 1`] = `
 </form>
 `;
 
+exports[`renders ./components-pro/form/demo/separate-spacing.md correctly 1`] = `
+<form
+  class="c7n-pro-form c7n-pro-form-wrapper"
+  name="form-14"
+  novalidate=""
+>
+  <table
+    style="border-collapse:separate;border-spacing:0rem 0.3rem"
+  >
+    <colgroup>
+      <col
+        style="width:0.75rem"
+      />
+      <col />
+      <col
+        style="width:0.85rem"
+      />
+      <col />
+      <col
+        style="width:0.65rem"
+      />
+      <col />
+    </colgroup>
+    <tbody>
+      <tr>
+        <td
+          class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
+          rowspan="1"
+          style="padding-left:0.2rem"
+        >
+          <label
+            title="手机号"
+          >
+            <span>
+              手机号
+            </span>
+          </label>
+        </td>
+        <td
+          colspan="5"
+          rowspan="1"
+          style="padding-right:0.2rem"
+        >
+          <div
+            class="c7n-pro-field-wrapper"
+          >
+            <span
+              class="c7n-pro-input-wrapper c7n-pro-field c7n-pro-input-required c7n-pro-input-empty"
+            >
+              <label>
+                <input
+                  autocomplete="off"
+                  class="c7n-pro-input"
+                  label="手机号"
+                  name="phone"
+                  pattern="1[3-9]\\\\d{9}"
+                  required=""
+                  type="text"
+                  value=""
+                />
+              </label>
+            </span>
+            <span />
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td
+          class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
+          rowspan="1"
+          style="padding-left:0.2rem"
+        >
+          <label
+            title="密码"
+          >
+            <span>
+              密码
+            </span>
+          </label>
+        </td>
+        <td
+          colspan="1"
+          rowspan="1"
+          style="padding-right:0.2rem"
+        >
+          <div
+            class="c7n-pro-field-wrapper"
+          >
+            <span
+              class="c7n-pro-password-wrapper c7n-pro-field c7n-pro-password-required c7n-pro-password-empty"
+            >
+              <input
+                class="c7n-pro-password-fix-autofill"
+                tabindex="-1"
+              />
+              <label>
+                <input
+                  autocomplete="off"
+                  class="c7n-pro-password"
+                  label="密码"
+                  name="password"
+                  required=""
+                  type="password"
+                  value=""
+                />
+                <div
+                  class="c7n-pro-password-inner-button"
+                >
+                  <i
+                    class="icon icon-visibility_off"
+                  />
+                </div>
+              </label>
+            </span>
+            <span />
+          </div>
+        </td>
+        <td
+          class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
+          rowspan="2"
+          style="padding-left:0.2rem"
+        >
+          <label
+            title="年龄"
+          >
+            <span>
+              年龄
+            </span>
+          </label>
+        </td>
+        <td
+          colspan="1"
+          rowspan="2"
+          style="padding-right:0.2rem"
+        >
+          <div
+            class="c7n-pro-field-wrapper"
+          >
+            <div
+              class="c7n-pro-input-number-group-wrapper"
+            >
+              <div
+                class="c7n-pro-input-number-group"
+              >
+                <div
+                  class="c7n-pro-input-number-group-input"
+                >
+                  <span
+                    class="c7n-pro-input-number-wrapper c7n-pro-field c7n-pro-input-number-required c7n-pro-input-number-empty"
+                  >
+                    <label>
+                      <input
+                        autocomplete="off"
+                        class="c7n-pro-input-number"
+                        label="年龄"
+                        min="18"
+                        name="age"
+                        required=""
+                        step="1"
+                        type="text"
+                        value=""
+                      />
+                      <div
+                        class="c7n-pro-input-number-inner-button"
+                      >
+                        <div>
+                          <i
+                            class="icon icon-keyboard_arrow_up c7n-pro-input-number-plus"
+                          />
+                          <i
+                            class="icon icon-keyboard_arrow_down c7n-pro-input-number-minus"
+                          />
+                        </div>
+                      </div>
+                    </label>
+                  </span>
+                </div>
+                <div
+                  class="c7n-pro-input-number-group-after"
+                >
+                  周岁
+                </div>
+              </div>
+            </div>
+            <span />
+          </div>
+        </td>
+        <td
+          class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
+          rowspan="1"
+          style="padding-left:0.2rem"
+        >
+          <label
+            title="确认密码"
+          >
+            <span>
+              确认密码
+            </span>
+          </label>
+        </td>
+        <td
+          colspan="1"
+          rowspan="1"
+          style="padding-right:0.2rem"
+        >
+          <div
+            class="c7n-pro-field-wrapper"
+          >
+            <span
+              class="c7n-pro-password-wrapper c7n-pro-field c7n-pro-password-required c7n-pro-password-empty"
+            >
+              <input
+                class="c7n-pro-password-fix-autofill"
+                tabindex="-1"
+              />
+              <label>
+                <input
+                  autocomplete="off"
+                  class="c7n-pro-password"
+                  label="确认密码"
+                  name="confirmPassword"
+                  required=""
+                  type="password"
+                  value=""
+                />
+                <div
+                  class="c7n-pro-password-inner-button"
+                >
+                  <i
+                    class="icon icon-visibility_off"
+                  />
+                </div>
+              </label>
+            </span>
+            <span />
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td
+          class="c7n-pro-field-label c7n-pro-field-label-right"
+          rowspan="1"
+          style="padding-left:0.2rem"
+        >
+          <label
+            title="邮箱"
+          >
+            <span>
+              邮箱
+            </span>
+          </label>
+        </td>
+        <td
+          colspan="1"
+          rowspan="1"
+          style="padding-right:0.2rem"
+        >
+          <div
+            class="c7n-pro-field-wrapper"
+          >
+            <span
+              class="c7n-pro-input-wrapper c7n-pro-field c7n-pro-input-empty"
+            >
+              <label>
+                <input
+                  autocomplete="off"
+                  class="c7n-pro-input"
+                  label="邮箱"
+                  name="email"
+                  type="email"
+                  value=""
+                />
+              </label>
+            </span>
+            <span />
+          </div>
+        </td>
+        <td
+          class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
+          rowspan="2"
+          style="padding-left:0.2rem"
+        >
+          <label
+            title="简介"
+          >
+            <span>
+              简介
+            </span>
+          </label>
+        </td>
+        <td
+          colspan="1"
+          rowspan="2"
+          style="padding-right:0.2rem"
+        >
+          <div
+            class="c7n-pro-field-wrapper"
+          >
+            <div
+              class="c7n-pro-textarea-wrapper c7n-pro-field c7n-pro-textarea-required c7n-pro-textarea-empty"
+            >
+              <label>
+                <textarea
+                  autocomplete="off"
+                  class="c7n-pro-textarea"
+                  label="简介"
+                  name="description"
+                  required=""
+                  rows="4"
+                  style="height:80px;resize:none"
+                  type="text"
+                />
+              </label>
+            </div>
+            <div
+              class="c7n-pro-field-help"
+            >
+              请输入100~300个字符请输入100~300个字符请输入100~300个字符
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td
+          class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
+          rowspan="1"
+          style="padding-left:0.2rem"
+        >
+          <label
+            title=""
+          >
+            <span>
+              <span>
+                个人主页
+              </span>
+            </span>
+          </label>
+        </td>
+        <td
+          colspan="1"
+          rowspan="1"
+          style="padding-right:0.2rem"
+        >
+          <div
+            class="c7n-pro-field-wrapper"
+          >
+            <div
+              class="c7n-pro-input-group-wrapper"
+            >
+              <div
+                class="c7n-pro-input-group"
+              >
+                <div
+                  class="c7n-pro-input-group-input"
+                >
+                  <span
+                    class="c7n-pro-input-wrapper c7n-pro-field c7n-pro-input-required c7n-pro-input-empty"
+                  >
+                    <label>
+                      <input
+                        autocomplete="off"
+                        class="c7n-pro-input"
+                        label="[object Object]"
+                        name="homepage"
+                        required=""
+                        type="url"
+                        value=""
+                      />
+                    </label>
+                  </span>
+                </div>
+                <div
+                  class="c7n-pro-input-group-help"
+                >
+                  <i
+                    class="icon icon-help"
+                  />
+                </div>
+              </div>
+            </div>
+            <span />
+          </div>
+        </td>
+        <td
+          class="c7n-pro-field-label c7n-pro-field-label-right c7n-pro-field-required"
+          rowspan="1"
+          style="padding-left:0.2rem"
+        >
+          <label
+            title="生日"
+          >
+            <span>
+              生日
+            </span>
+          </label>
+        </td>
+        <td
+          colspan="1"
+          rowspan="1"
+          style="padding-right:0.2rem"
+        >
+          <div
+            class="c7n-pro-field-wrapper"
+          >
+            <span
+              class="c7n-pro-calendar-picker-wrapper c7n-pro-field c7n-pro-calendar-picker-required c7n-pro-calendar-picker-empty c7n-pro-calendar-picker-suffix-button"
+            >
+              <label>
+                <input
+                  autocomplete="off"
+                  class="c7n-pro-calendar-picker"
+                  label="生日"
+                  name="birth"
+                  required=""
+                  type="text"
+                  value=""
+                />
+                <div
+                  class="c7n-pro-calendar-picker-inner-button c7n-pro-calendar-picker-clear-button"
+                >
+                  <i
+                    class="icon icon-close"
+                  />
+                </div>
+                <div
+                  class="c7n-pro-calendar-picker-suffix"
+                >
+                  <i
+                    class="icon icon-date_range c7n-pro-calendar-picker-trigger"
+                  />
+                </div>
+              </label>
+            </span>
+            <span />
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td
+          class="c7n-pro-field-label c7n-pro-field-label-right"
+          rowspan="1"
+          style="padding-left:0.2rem"
+        >
+          <label
+            title=""
+          >
+            <span />
+          </label>
+        </td>
+        <td
+          colspan="5"
+          rowspan="1"
+          style="padding-right:0.2rem"
+        >
+          <div
+            class="c7n-pro-field-wrapper"
+          >
+            <div
+              class="c7n-pro-field"
+            >
+              <button
+                class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+                type="submit"
+              >
+                <span>
+                  注册
+                </span>
+                <div
+                  class="c7n-ripple-wrapper"
+                />
+              </button>
+              <button
+                class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+                style="margin-left:8px"
+                type="reset"
+              >
+                <span>
+                  重置
+                </span>
+                <div
+                  class="c7n-ripple-wrapper"
+                />
+              </button>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</form>
+`;
+
 exports[`renders ./components-pro/form/demo/use-colon.md correctly 1`] = `
 <form
   class="c7n-pro-form c7n-pro-form-wrapper"
   id="basic"
-  name="form-14"
+  name="form-15"
   novalidate=""
   style="width:4rem"
 >
@@ -7669,7 +8161,7 @@ exports[`renders ./components-pro/form/demo/virtualGroup.md correctly 1`] = `
 <form
   class="c7n-pro-form c7n-pro-form-wrapper"
   id="basic"
-  name="form-15"
+  name="form-16"
   novalidate=""
   style="width:4rem"
 >

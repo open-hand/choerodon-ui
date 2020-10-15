@@ -64,5 +64,6 @@ Array [
   "getConfig",
   "Result",
   "ImageCrop",
+  "Statistic",
 ]
 `;

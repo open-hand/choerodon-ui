@@ -58,6 +58,7 @@ Array [
   "Cascader",
   "PerformanceTable",
   "RichText",
+  "Screening",
 ]
 `;
 
@@ -125,5 +126,6 @@ Array [
   "getConfig",
   "Result",
   "ImageCrop",
+  "Statistic",
 ]
 `;

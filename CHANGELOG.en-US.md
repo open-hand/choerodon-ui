@@ -15,15 +15,21 @@ timeline: true
 
 ---
 
+## 0.8.74
+
+`2020-10-14`
+
 - 🌟 `Statistic`: Added `Statistic` to display statistic data with description.
 - 🌟 `TreeSelect`: Added `maxTagCount`,`maxTagPlaceholder`, `maxTagTextLength` properties.
 - 🌟 `<pro>Field`: Added the `multiLine` attribute to support multi-line display and editing of Table cells.
 - 🌟 `<pro>Screening`: Added `Screening` component.
 - 🌟 `<pro>Field`: Added the `nonStrictStep` attribute.
 - 💄 `<pro>Form`: Optimized Form Layout interval configuration.
+- 💄 `<pro>Dropdown`: Optimized `getPopupContainer` attribute.
+- 💄 `Table`: Modify the drag and drop demo and upgrade `react-dnd ^11`.
+- 🐞 `<pro>Skeleton`: Rename `skeletonTitle` property.
 - 🐞 `<pro>Select`: Fixed the flashing problem of Select under ie.
 - 🐞 `<pro>Upload`: Fixed that Upload and Button cannot be aligned under ie.
-- 🐞 `<pro>Skeleton`: Rename `skeletonTitle` property.
 - 🐞 `<pro>Table`: Fixed the problem of lateral scroll misalignment under `autoHeight` property.
 - 🐞 `<pro>Pagination`: Fixed when change the page, the quickJumpInput don't change.
 - 🐞 `<pro>TextField`: Fixed when multiple in Modal, the lower model input would be displayed.

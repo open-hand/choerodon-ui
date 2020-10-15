@@ -1518,16 +1518,19 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         topHideHeight = startIndex * nextRowHeight;
         bottomHideHeight = (data.length - endIndex) * nextRowHeight;
 
+        // temp test
+        let keyIndex = 0;
         for (let index = startIndex; index < endIndex; index++) {
           const rowData = data[index];
           const rowProps = {
-            key: index,
+            key: keyIndex,
             top: index * nextRowHeight,
             width: rowWidth,
             height: nextRowHeight,
           };
           // @ts-ignore
           this._visibleRows.push(this.renderRowData(bodyCells, rowData, rowProps, false));
+          keyIndex++;
         }
       }
     }
@@ -1537,7 +1540,6 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       height: contentHeight,
       minHeight: height,
       pointerEvents: isScrolling ? 'none' : undefined,
-      width: '100%',
     };
     const topRowStyles = { height: topHideHeight };
     const bottomRowStyles = { height: bottomHideHeight };

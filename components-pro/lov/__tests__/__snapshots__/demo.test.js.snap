@@ -184,7 +184,6 @@ exports[`renders ./components-pro/lov/demo/dataset.md correctly 1`] = `
         <input
           autocomplete="off"
           class="c7n-pro-select"
-          placeholder="请选择快码"
           readonly=""
           type="text"
           value=""
@@ -212,7 +211,7 @@ exports[`renders ./components-pro/lov/demo/dataset.md correctly 1`] = `
     style="padding-left:5px;padding-right:5px"
   >
     <span
-      class="c7n-pro-select-wrapper c7n-pro-select-required c7n-pro-select-empty c7n-pro-select-suffix-button"
+      class="c7n-pro-select-wrapper c7n-pro-select-required c7n-pro-select-empty c7n-pro-select-suffix-button c7n-pro-select-not-editable"
     >
       <input
         name="code_string"
@@ -223,7 +222,7 @@ exports[`renders ./components-pro/lov/demo/dataset.md correctly 1`] = `
         <input
           autocomplete="off"
           class="c7n-pro-select"
-          placeholder="请选择快码"
+          readonly=""
           type="text"
           value=""
         />
