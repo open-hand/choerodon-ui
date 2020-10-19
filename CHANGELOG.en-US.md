@@ -19,6 +19,7 @@ timeline: true
 - 💄 `<pro>TextField`: Optimized that the input box under IE contains the readOnly attribute, causing the keyboard BackSpace page to fall back.
 - 🐞 `<pro>Table`: Fixed `autoHeight` type:maxHeight height problem.
 - 🐞 `<pro>Table`: Fixed the problem with tree table auto folding when the row is expanded in scrollbar appeared.
+- 🐞 `<pro>Table`: Fixed the problem of invalid automatic positioning of new rows in table header processing.
 - 🐞 `<pro>PerformanceTable`: Fixed the problem of the lock column misalignment when the horizontal scroll bar appears.
 
 ## 0.8.74

@@ -263,12 +263,10 @@ export default class TableRow extends Component<TableRowProps, any> {
 
   componentDidMount() {
     const { lock, record } = this.props;
-    if (record.isCurrent) {
-      if (record.status === RecordStatus.add) {
-        const cell = this.node && lock !== ColumnLock.right ? findFirstFocusableElement(this.node) : null;
-        if (cell) {
-          cell.focus();
-        }
+    if (record.status === RecordStatus.add) {
+      const cell = this.node && lock !== ColumnLock.right ? findFirstFocusableElement(this.node) : null;
+      if (cell) {
+        cell.focus();
       }
     }
   }
