@@ -688,6 +688,13 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           default:
         }
       }
+    }else if(isIE()){
+      /**
+       * 修复ie出现点击backSpace的页面回到上一页问题
+       */
+      if(e.keyCode === KeyCode.BACKSPACE){
+        e.preventDefault();
+      }
     }
     super.handleKeyDown(e);
   }

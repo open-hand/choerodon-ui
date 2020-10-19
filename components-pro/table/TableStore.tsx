@@ -759,13 +759,15 @@ export default class TableStore {
     this.props = props;
   }
 
-  isRowExpanded(record: Record): boolean {
+  isRowExpanded(record: Record,tableStore?: TableStore): boolean {
     const { parent } = record;
     // 如果 存在expandFiled 然后这个 record 被标记为展开 或者 能在存储的已经展开列中找到 那么它为已经展开
     // 所以逻辑错误的地方就是当这个列没有从tree expand删除那么它会一直在。
     // 最后的方法表示当父亲节点为不展开它也不展开返回false
-    const expanded = this.dataSet.props.expandField ? record.isExpanded : this.expandedRows.indexOf(record.key) !== -1;
-    return expanded && (!this.isTree || !parent || this.isRowExpanded(parent));
+    // 从tableRow触发时候由于生命周期为componentWillUnmount 所以会导致 this为空，所以替换为row作用域的tableStore
+    const that = this || tableStore
+    const expanded = that.dataSet.props.expandField ? record.isExpanded : that.expandedRows.indexOf(record.key) !== -1;
+    return expanded && (!that.isTree || !parent || that.isRowExpanded(parent));
   }
 
   @action
