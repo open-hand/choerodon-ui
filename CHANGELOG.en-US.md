@@ -15,6 +15,9 @@ timeline: true
 
 ---
 
+- 💄 `<pro>TextField`: Optimized that the input box under IE contains the readOnly attribute, causing the keyboard BackSpace page to fall back.
+- 🐞 `<pro>Table`: Fixed the problem with tree table auto folding when the row is expanded in scrollbar appeared.
+
 ## 0.8.74
 
 `2020-10-14`

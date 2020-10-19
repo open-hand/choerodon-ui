@@ -283,7 +283,13 @@ export default class TableRow extends Component<TableRowProps, any> {
   componentWillUnmount() {
     const { record } = this.props;
     const { tableStore } = this.context;
-    tableStore.setRowExpanded(record, false);
+    const { isRowExpanded } = tableStore;
+    /**
+     * Fixed the when row resize has scrollbar the expanded row would be collapseed
+     */
+    if(!isRowExpanded(record, tableStore)){
+      tableStore.setRowExpanded(record, false);
+    }
     remove(tableStore.lockColumnsBodyRowsHeight, this.rowKey);
   }
 
