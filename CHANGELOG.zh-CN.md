@@ -16,6 +16,10 @@ timeline: true
 ---
 
 
+
+- 🐞 `<pro>Table`: 修复 autoHeight type:maxHeight 高度问题。
+
+
 ## 0.8.74
 
 `2020-10-14`

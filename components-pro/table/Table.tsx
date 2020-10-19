@@ -1439,15 +1439,18 @@ export default class Table extends DataSetComponent<TableProps> {
         tableFootRef = node => (this.tableFootWrap = node);
         tableBodyRef = node => (this.tableBodyWrap = node);
       } else if (lock === 'right') {
+        tableBodyRef = node => (this.fixedColumnsBodyRight = node);
         if (dragColumnAlign === DragColumnAlign.right) {
           tableBodyRef = node => (this.dragColumnsBodyRight = node);
         }
-        tableBodyRef = node => (this.fixedColumnsBodyRight = node);
       } else {
+        tableBodyRef = node => (this.fixedColumnsBodyLeft = node);
         if (dragColumnAlign === DragColumnAlign.left) {
           tableBodyRef = node => (this.dragColumnsBodyLeft = node);
         }
-        tableBodyRef = node => (this.fixedColumnsBodyLeft = node);
+      }
+      if (isObject(autoHeight) && autoHeight.type === TableAutoHeightType.maxHeight) {
+        bodyHeight = undefined;
       }
       if (bodyHeight !== undefined) {
         bodyHeight = Math.max(
