@@ -193,6 +193,7 @@ export default class TableRow extends Component<TableRowProps, any> {
         record={record}
         indentSize={indentSize}
         isDragging={isDragging}
+        lock={lock}
         style={dragColumnAlign && column.key === DRAG_KEY ? { cursor: 'move' } : {}}
       >
         {this.hasExpandIcon(columnIndex) && this.renderExpandIcon()}

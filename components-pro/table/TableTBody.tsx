@@ -20,7 +20,7 @@ import { ElementProps } from '../core/ViewComponent';
 import TableContext from './TableContext';
 import TableRow from './TableRow';
 import Record from '../data-set/Record';
-import { ColumnLock , DragColumnAlign} from './enum';
+import { ColumnLock, DragColumnAlign } from './enum';
 import ExpandedRow from './ExpandedRow';
 import { DataSetStatus } from '../data-set/enum';
 import autobind from '../_util/autobind';
@@ -30,7 +30,7 @@ import { findFirstFocusableInvalidElement } from './utils';
 export interface TableTBodyProps extends ElementProps {
   lock?: ColumnLock | boolean;
   indentSize: number;
-  dragColumnAlign?:DragColumnAlign;
+  dragColumnAlign?: DragColumnAlign;
 }
 
 @observer
@@ -100,12 +100,12 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
   }
 
   render() {
-    const { prefixCls, lock , indentSize, dragColumnAlign} = this.props;
+    const { prefixCls, lock, indentSize, dragColumnAlign } = this.props;
     const { leafColumns, leafColumnsBody } = this;
     const {
-      tableStore: { data, dragColumnAlign: propsDragColumnAlign, props: { virtual,rowDragRender={}},dataSet, height, dragRow },
+      tableStore: { data, dragColumnAlign: propsDragColumnAlign, props: { virtual, rowDragRender = {} }, dataSet, height, dragRow },
     } = this.context;
-    const {droppableProps,renderClone} = rowDragRender
+    const { droppableProps, renderClone } = rowDragRender;
     const rowData = virtual && height ? this.processData() : data;
     const rows = data.length
       ? this.getRows(rowData, leafColumns, true, lock)
@@ -120,22 +120,22 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
           snapshot: DraggableStateSnapshot,
           rubric: DraggableRubric,
         ) => {
-          const record = dataSet.get(rubric.source.index)
-          if(renderClone && isFunction(renderClone)){
+          const record = dataSet.get(rubric.source.index);
+          if (renderClone && isFunction(renderClone)) {
             return renderClone({
               provided,
               snapshot,
-              key:record.id,
-              hidden:false,
-              lock:false,
+              key: record.id,
+              hidden: false,
+              lock: false,
               indentSize,
               prefixCls,
-              columns:leafColumnsBody,
+              columns: leafColumnsBody,
               record,
-              index:record.id,
+              index: record.id,
               dragColumnAlign,
               rubric,
-            })
+            });
           }
           return (
             <TableRow
@@ -149,36 +149,36 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
               columns={leafColumnsBody}
               record={record}
               index={record.id}
-              dragColumnAlign = {dragColumnAlign}
+              dragColumnAlign={dragColumnAlign}
             />
           );
         }}
         getContainerForClone={() => instance().tbody}
         {...droppableProps}
       >
-      {(droppableProvided: DroppableProvided) => (
-        <tbody
-          ref={(ref: HTMLTableSectionElement | null) => {
-          if(ref){
-            this.saveRef(ref)
-            droppableProvided.innerRef(ref);
-          }
-        }}
-        {...droppableProvided.droppableProps}
-        className={`${prefixCls}-tbody`}>
-        {rows}
-        {droppableProvided.placeholder}
-      </tbody>
-      )}
-     </Droppable>
+        {(droppableProvided: DroppableProvided) => (
+          <tbody
+            ref={(ref: HTMLTableSectionElement | null) => {
+              if (ref) {
+                this.saveRef(ref);
+                droppableProvided.innerRef(ref);
+              }
+            }}
+            {...droppableProvided.droppableProps}
+            className={`${prefixCls}-tbody`}>
+          {rows}
+          {droppableProvided.placeholder}
+          </tbody>
+        )}
+      </Droppable>
     );
     return lock ? (
       body
     ) : (
-        <ReactResizeObserver onResize={this.handleResize} resizeProp="height">
-          {body}
-        </ReactResizeObserver>
-      );
+      <ReactResizeObserver onResize={this.handleResize} resizeProp="height">
+        {body}
+      </ReactResizeObserver>
+    );
   }
 
   componentWillMount() {
@@ -274,9 +274,9 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
   ): ReactNode {
     const { prefixCls, indentSize, dragColumnAlign } = this.props;
     const {
-      tableStore: { isTree, dragColumnAlign:propsDragColumnAlign, props:{ rowDragRender = {}},dragRow },
+      tableStore: { isTree, dragColumnAlign: propsDragColumnAlign, props: { rowDragRender = {} }, dragRow },
     } = this.context;
-    const {draggableProps} = rowDragRender
+    const { draggableProps } = rowDragRender;
     const children = isTree && (
       <ExpandedRow record={record} columns={columns} lock={lock}>
         {this.renderExpandedRows}
@@ -293,23 +293,23 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
           provided: DraggableProvided,
           snapshot: DraggableStateSnapshot,
         ) => (
-            <TableRow
-              provided={provided}
-              snapshot={snapshot}
-              key={record.key}
-              hidden={!expanded}
-              lock={lock}
-              indentSize={indentSize}
-              prefixCls={prefixCls}
-              columns={columns}
-              record={record}
-              index={index}
-              dragColumnAlign={dragColumnAlign}
-              {...draggableProps}
-            >
-              {children}
-            </TableRow>
-          )}
+          <TableRow
+            provided={provided}
+            snapshot={snapshot}
+            key={record.key}
+            hidden={!expanded}
+            lock={lock}
+            indentSize={indentSize}
+            prefixCls={prefixCls}
+            columns={columns}
+            record={record}
+            index={index}
+            dragColumnAlign={dragColumnAlign}
+            {...draggableProps}
+          >
+            {children}
+          </TableRow>
+        )}
       </Draggable>
     );
   }

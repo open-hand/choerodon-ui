@@ -50,7 +50,7 @@ export default class TableEditor extends Component<TableEditorProps> {
   @autobind
   onWindowClick(e) {
     const { prefixCls } = this.props;
-    if (e.target.className !== `${prefixCls}-content`) {
+    if (e.target.className !== `${prefixCls}-content` && e.target.className !== `${prefixCls}-body`) {
       this.handleEditorBlur(e);
     }
   }

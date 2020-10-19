@@ -247,7 +247,8 @@ export default class TableStore {
 
   @observable columnDeep: number;
 
-  
+  @observable multiLineHeight?: number;
+
   @computed
   get dataSet(): DataSet {
     return this.props.dataSet;
@@ -473,14 +474,14 @@ export default class TableStore {
   get columns(): ColumnProps[] {
     const { columnsMergeCoverage } = this.props;
     let { columns, children } = this.props;
-    if (this.headersOderable) {
+    if (this.headersOrderable) {
       if (columnsMergeCoverage && columns) {
         columns = reorderingColumns(columnsMergeCoverage, columns)
       } else {
         children = reorderingColumns(columnsMergeCoverage, children)
       }
     }
-    // 分开处理可以满足于只修改表头信息场景不改变顺序 
+    // 分开处理可以满足于只修改表头信息场景不改变顺序
     return observable.array(
       this.addExpandColumn(
         this.addDragColumn(this.addSelectionColumn(columns
@@ -504,7 +505,7 @@ export default class TableStore {
   /**
    * 表头支持编辑
    */
-  @computed 
+  @computed
   get headersEditable (){
     return (this.props.columnsEditType === ColumnsEditType.header || this.props.columnsEditType === ColumnsEditType.all) && !!this.props.columnsMergeCoverage
   }
@@ -512,8 +513,8 @@ export default class TableStore {
   /**
    * 表头支持排序
    */
-  @computed 
-  get headersOderable (){
+  @computed
+  get headersOrderable (){
     return (this.props.columnsEditType === ColumnsEditType.order || this.props.columnsEditType === ColumnsEditType.all) && !!this.props.columnsMergeCoverage
   }
 
@@ -759,13 +760,13 @@ export default class TableStore {
     this.props = props;
   }
 
-  isRowExpanded(record: Record,tableStore?: TableStore): boolean {
+  isRowExpanded(record: Record, tableStore?: TableStore): boolean {
     const { parent } = record;
     // 如果 存在expandFiled 然后这个 record 被标记为展开 或者 能在存储的已经展开列中找到 那么它为已经展开
     // 所以逻辑错误的地方就是当这个列没有从tree expand删除那么它会一直在。
     // 最后的方法表示当父亲节点为不展开它也不展开返回false
     // 从tableRow触发时候由于生命周期为componentWillUnmount 所以会导致 this为空，所以替换为row作用域的tableStore
-    const that = this || tableStore
+    const that = this || tableStore;
     const expanded = that.dataSet.props.expandField ? record.isExpanded : that.expandedRows.indexOf(record.key) !== -1;
     return expanded && (!that.isTree || !parent || that.isRowExpanded(parent));
   }
@@ -796,6 +797,11 @@ export default class TableStore {
   @action
   setRowHover(record: Record, hover: boolean) {
     this.hoverRow = hover ? record : undefined;
+  }
+
+  @action
+  setMultiLineHeight(multiLineHeight: number) {
+    this.multiLineHeight = multiLineHeight;
   }
 
   @action
@@ -867,7 +873,7 @@ export default class TableStore {
     return columns;
   }
 
-  renderDrageBox({ record }) {
+  renderDragBox({ record }) {
     const { rowDragRender } = this.props;
     if (rowDragRender && isFunction(rowDragRender.renderIcon)) {
       return rowDragRender.renderIcon({ record });
@@ -882,7 +888,7 @@ export default class TableStore {
         key: DRAG_KEY,
         resizable: false,
         className: `${getProPrefixCls(suffixCls!, prefixCls)}-drag-column`,
-        renderer: ({ record }) => this.renderDrageBox({ record }),
+        renderer: ({ record }) => this.renderDragBox({ record }),
         align: ColumnAlign.center,
         width: 50,
       };

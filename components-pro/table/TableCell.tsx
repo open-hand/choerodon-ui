@@ -52,6 +52,7 @@ export interface TableCellProps extends ElementProps {
   record: Record;
   indentSize: number;
   isDragging: boolean;
+  lock?: ColumnLock | boolean;
 }
 
 let inTab: boolean = false;
@@ -445,21 +446,36 @@ export default class TableCell extends Component<TableCellProps> {
     return renderer;
   }
 
+  @action
   getInnerNode(prefixCls, command?: Commands[]) {
     const {
       context: {
-        tableStore: { dataSet, rowHeight, expandIconAsCell, hasCheckFieldColumn, pristine, props: { autoMaxWidth } },
+        tableStore: {
+          dataSet,
+          rowHeight,
+          expandIconAsCell,
+          hasCheckFieldColumn,
+          pristine,
+          props: { autoMaxWidth },
+        },
+        tableStore,
       },
       props: { children },
     } = this;
     if (expandIconAsCell && children) {
       return children;
     }
-    const { column, record, indentSize } = this.props;
+    const { column, record, indentSize, lock } = this.props;
     const { name, tooltip } = column;
     const { hasEditor } = this;
     // 计算多行编辑单元格高度
     const field = record.getField(name);
+    const innerProps: any = {
+      className: `${prefixCls}-inner`,
+      tabIndex: hasEditor && !isDisabledRow(record) ? 0 : -1,
+      onFocus: this.handleFocus,
+      pristine,
+    };
     let rows = 0;
     if (field?.get('multiLine')) {
       rows = dataSet.props.fields?.map(fields => {
@@ -467,13 +483,9 @@ export default class TableCell extends Component<TableCellProps> {
           return record.getField(fields.name) || dataSet.getField(fields.name);
         }
       }).filter(f => f).length;
+      tableStore.multiLineHeight = rows > 0 ? rowHeight * rows + 5 : rowHeight;
     }
-    const innerProps: any = {
-      className: `${prefixCls}-inner`,
-      tabIndex: hasEditor && !isDisabledRow(record) ? 0 : -1,
-      onFocus: this.handleFocus,
-      pristine,
-    };
+
     if (!hasEditor) {
       innerProps.onKeyDown = this.handleEditorKeyDown;
     }
@@ -481,6 +493,13 @@ export default class TableCell extends Component<TableCellProps> {
       innerProps.style = {
         height: pxToRem(rows > 0 ? rowHeight * rows + 5 : rowHeight),
       };
+      // 处理多行横向滚动lock列高度
+      if (tableStore.multiLineHeight && lock) {
+        innerProps.style = {
+          height: pxToRem(tableStore.multiLineHeight),
+          lineHeight: pxToRem(tableStore.multiLineHeight),
+        };
+      }
       if (autoMaxWidth || (tooltip && tooltip !== TableColumnTooltip.none)) {
         innerProps.ref = this.saveOutput;
       }
