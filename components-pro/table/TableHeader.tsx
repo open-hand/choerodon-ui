@@ -177,7 +177,6 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
                 }}
                 ref={(ref: HTMLTableRowElement | null) => {
                   if (ref) {
-                    this.saveRef(ref);
                     droppableProvided.innerRef(ref);
                   }
                 }}
