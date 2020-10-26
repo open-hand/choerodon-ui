@@ -69,9 +69,11 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
   }
 
   getMoreFieldsButton(fields) {
+    const { prefixCls } = this.props;
     if (fields.length) {
       return (
         <Button
+          className={`${prefixCls}-professional-query-more`}
           funcType={FuncType.raised}
           onClick={() => this.openMore(fields)}
         >
