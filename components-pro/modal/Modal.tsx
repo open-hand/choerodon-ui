@@ -293,6 +293,7 @@ export default class Modal extends ViewComponent<ModalProps> {
       const headerProps: any = {
         className: classNames(`${prefixCls}-header`, {
           [`${prefixCls}-movable`]: movable && !fullScreen && !drawer,
+          [`${prefixCls}-title-none`]: !title,
         }),
       };
       if (movable && !fullScreen && !drawer) {

@@ -16,6 +16,7 @@ timeline: true
 ---
 
 
+- 💄 `<pro>Modal`: Optimized `header` style.
 - 💄 `<pro>TextField`: Optimized that the input box under IE contains the readOnly attribute, causing the keyboard BackSpace page to fall back.
 - 🐞 `<pro>Table`: Fixed `autoHeight` type:maxHeight height problem.
 - 🐞 `<pro>Table`: Fixed the problem that clicking clearButton directly after table filterBar input fails.
