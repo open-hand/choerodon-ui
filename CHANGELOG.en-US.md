@@ -17,6 +17,7 @@ timeline: true
 
 
 - 💄 `<pro>TextField`: Optimized that the input box under IE contains the readOnly attribute, causing the keyboard BackSpace page to fall back.
+- 🐞 `<pro>Button`: Fixed button link style promblem.
 - 🐞 `<pro>Table`: Fixed `autoHeight` type:maxHeight height problem.
 - 🐞 `<pro>Table`: Fixed the problem that clicking clearButton directly after table filterBar input fails.
 - 🐞 `<pro>Table`: Fixed the problem of invalid automatic positioning of new rows in table header processing.

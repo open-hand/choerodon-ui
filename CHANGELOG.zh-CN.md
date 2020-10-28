@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 💄 `<pro>TextField`: 优化IE下输入框包含readOnly属性导致键盘BackSpace页面后退。
+- 🐞 `<pro>Button`: 修复 button link 链接样式问题。
 - 🐞 `<pro>Table`: 修复 table 头行处理新增行自动定位失效问题。
 - 🐞 `<pro>Table`: 修复 autoHeight type:maxHeight 高度问题。
 - 🐞 `<pro>Table`: 修复 table 出现滚动条 tree 模式下展开行自动收起的问题。
