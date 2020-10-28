@@ -1012,12 +1012,17 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     }
   }
 
+  /**
+   * 该方法会被onChange和onCompositionend触发
+   * @param e 改变事件
+   */
   @autobind
   @action
   handleChange(e) {
     const {
       target,
       target: { value },
+      type,
     } = e;
     const restricted = this.restrictInput(value);
     if (restricted !== value) {
@@ -1027,7 +1032,9 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     }
     this.setText(restricted);
     if (this.observableProps.combo) {
-      this.generateComboOption(restricted, text => this.setText(text));
+      if (type !== 'compositionend') {
+        this.generateComboOption(restricted, text => this.setText(text));
+      }
     }
     if (!this.popup) {
       this.expand();
