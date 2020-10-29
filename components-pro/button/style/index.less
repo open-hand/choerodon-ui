@@ -25,6 +25,10 @@
     box-shadow: @btn-focus-box-shadow;
   }
 
+  &[href] {
+    line-height: @btn-height-base;
+  }
+
   &:enabled:active {
     box-shadow: @btn-active-box-shadow;
   }
@@ -47,12 +51,18 @@
     .@{c7n-pro-prefix}-icon {
       font-size: @font-size-lg;
     }
+    &[href] {
+      line-height: @btn-height-lg;
+    }
   }
 
   &-sm {
     height: @btn-height-sm;
     padding: @btn-padding-sm;
     font-size: @font-size-sm;
+    &[href] {
+      line-height:  @btn-height-sm;
+    }
 
     .@{c7n-pro-prefix}-icon {
       font-size: @font-size-sm;

@@ -95,8 +95,20 @@
 
     // >>> Checkbox
     & &-checkbox {
-      top: initial;
-      margin: ((@tree-title-height - @checkbox-size) / 4) 8px 0 0;
+      top: 0;
+      flex: none;
+      width: @tree-title-height;
+      height: @tree-title-height;
+      margin: 0;
+      line-height: @tree-title-height;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    & &-checkbox &-checkbox-inner {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
     }
 
     // >>> Title
