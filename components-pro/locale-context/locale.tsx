@@ -18,6 +18,7 @@ export interface Locale {
     expand_button;
     collapse_button;
     export_button;
+    more_button;
     advanced_search;
     dirty_info;
     restore;

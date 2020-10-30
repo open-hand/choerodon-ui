@@ -24,6 +24,7 @@ export interface TableProfessionalBarProps extends ElementProps {
   queryFieldsLimit?: number;
   buttons: ReactElement<ButtonProps>[];
   queryBarProps?: FormProps;
+  summaryBar?: ReactElement<any>;
 }
 
 @observer
@@ -131,11 +132,13 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
   }
 
   render() {
-    const { prefixCls, buttons } = this.props;
+    const { prefixCls, buttons, summaryBar } = this.props;
     const queryBar = this.getQueryBar();
     const tableButtons = buttons.length ? (
       <div key="professional_toolbar" className={`${prefixCls}-professional-toolbar`}>
-        <TableButtons key="toolbar" prefixCls={prefixCls} buttons={buttons} />
+        <TableButtons key="toolbar" prefixCls={prefixCls} buttons={buttons} >
+          {summaryBar}
+        </TableButtons>
       </div>
     ) : null;
 

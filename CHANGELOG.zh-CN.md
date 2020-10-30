@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Table`: 新增 summaryBar，summaryFieldsLimit 属性，支持头部汇总条。
 - 💄 `<pro>Modal`: 优化 header 样式。
 - 💄 `<pro>TextField`: 优化IE下输入框包含readOnly属性导致键盘BackSpace页面后退。
 - 🐞 `<pro>Tree`: 修复 Tree 文字不对齐问题。

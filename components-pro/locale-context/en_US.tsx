@@ -17,6 +17,7 @@ const locale: Locale = {
     expand_button: 'Expand',
     collapse_button: 'Collapse',
     export_button: 'Export',
+    more_button: 'Others',
     advanced_search: 'Advanced Search',
     dirty_info: 'Display condition has changed.',
     restore: 'Restore',

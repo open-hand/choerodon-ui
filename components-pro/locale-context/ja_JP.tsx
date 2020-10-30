@@ -17,6 +17,7 @@ const locale: Locale = {
     expand_button: '展開',
     collapse_button: '折り畳み',
     export_button: '書き出す',
+    more_button: 'その他操作',
     advanced_search: '高度な検索',
     dirty_info: '表示条件が変更されました',
     restore: '復元',

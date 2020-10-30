@@ -31,6 +31,7 @@ import TableRow, { TableRowProps } from './TableRow';
 import TableHeaderCell, { TableHeaderCellProps } from './TableHeaderCell';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
+import Field from '../data-set/Field';
 import TableStore, { DRAG_KEY } from './TableStore';
 import TableHeader from './TableHeader';
 import autobind from '../_util/autobind';
@@ -69,10 +70,25 @@ import TableBody from './TableBody';
 
 export type TableButtonProps = ButtonProps & { afterClick?: MouseEventHandler<any>; children?: ReactNode; };
 
+/**
+ * 表头汇总栏hook
+ */
+export type SummaryBarHook = (props: SummaryBarProps) => { label: ReactNode | string, value: ReactNode | string };
+
 export type Buttons =
   | TableButtonType
   | [TableButtonType, TableButtonProps]
   | ReactElement<TableButtonProps>;
+
+
+export type SummaryBar =
+  | Field
+  | SummaryBarHook;
+
+export interface SummaryBarProps {
+  dataSet: DataSet;
+  summaryFieldsLimit: number;
+}
 
 export interface TableQueryBarHookProps {
   dataSet: DataSet;
@@ -80,7 +96,9 @@ export interface TableQueryBarHookProps {
   buttons: ReactElement<ButtonProps>[];
   queryFields: ReactElement<any>[];
   queryFieldsLimit: number;
+  summaryFieldsLimit: number;
   pagination?: ReactElement<PaginationProps>;
+  summaryBar?: ReactElement<any>;
 }
 
 export interface expandedRowRendererProps {
@@ -278,6 +296,17 @@ export interface TableProps extends DataSetComponentProps {
    * @default 'normal'
    */
   queryBar?: TableQueryBarType | TableQueryBarHook;
+  /**
+   * 显示汇总条
+   * 可选值: `advancedBar` `normal` `bar` `none` `professionalBar`
+   * @default 'normal'
+   */
+  summaryBar?: SummaryBar[];
+  /**
+   * 头部显示的汇总字段的数量，超出限制的查询字段放入弹出窗口
+   * @default 3
+   */
+  summaryFieldsLimit?: number;
   /**
    * 是否使用拖拽选择
    * @default false
@@ -497,6 +526,11 @@ export default class Table extends DataSetComponent<TableProps> {
      */
     queryFieldsLimit: PropTypes.number,
     /**
+     * 头部显示的汇总字段的数量，超出限制的查询字段放入弹出窗口
+     * @default 3
+     */
+    summaryFieldsLimit: PropTypes.number,
+    /**
      * 显示查询条
      * @default true
      */
@@ -557,6 +591,7 @@ export default class Table extends DataSetComponent<TableProps> {
     defaultRowExpanded: false,
     expandRowByClick: false,
     indentSize: 15,
+    summaryFieldsLimit: 3,
     filterBarFieldName: 'params',
     virtual: false,
     virtualSpin: false,
@@ -807,7 +842,9 @@ export default class Table extends DataSetComponent<TableProps> {
       'rowHeight',
       'queryFields',
       'queryFieldsLimit',
+      'summaryFieldsLimit',
       'queryBar',
+      'summaryBar',
       'defaultRowExpanded',
       'expandRowByClick',
       'expandedRowRenderer',
@@ -966,8 +1003,10 @@ export default class Table extends DataSetComponent<TableProps> {
         buttons,
         queryFields,
         queryFieldsLimit,
+        summaryFieldsLimit,
         filterBarFieldName,
         filterBarPlaceholder,
+        summaryBar,
       },
     } = this;
     const content = this.getTable();
@@ -986,7 +1025,9 @@ export default class Table extends DataSetComponent<TableProps> {
               buttons={buttons}
               pagination={pagination}
               queryFields={queryFields}
+              summaryBar={summaryBar}
               queryFieldsLimit={queryFieldsLimit}
+              summaryFieldsLimit={summaryFieldsLimit}
               filterBarFieldName={filterBarFieldName}
               filterBarPlaceholder={filterBarPlaceholder}
             />

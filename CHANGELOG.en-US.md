@@ -16,6 +16,7 @@ timeline: true
 ---
 
 
+- 🌟 `<pro>Table`: Added `summaryBar`, `summaryFieldsLimit` properties, and support header summary bars.
 - 💄 `<pro>Modal`: Optimized `header` style.
 - 💄 `<pro>TextField`: Optimized that the input box under IE contains the readOnly attribute, causing the keyboard BackSpace page to fall back.
 - 🐞 `<pro>Tree`: Fixed the problem of misalignment of Tree text.
