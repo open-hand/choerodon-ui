@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-
+- 🌟 `<pro>IconPicker`: Added `customFontName` props and related configuration.
 - 💄 `<pro>TextField`: Optimized that the input box under IE contains the readOnly attribute, causing the keyboard BackSpace page to fall back.
 - 🐞 `<pro>Tree`: Fixed the problem of misalignment of Tree text.
 - 🐞 `<pro>Button`: Fixed button link style promblem.

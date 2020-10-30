@@ -8,6 +8,7 @@ export interface IconItemProps {
   type: string;
   active: boolean;
   onSelect: (type: string) => void;
+  customFontName?: string;
 }
 
 export default class IconItem extends PureComponent<IconItemProps> {
@@ -18,6 +19,7 @@ export default class IconItem extends PureComponent<IconItemProps> {
     active: PropTypes.bool.isRequired,
     type: PropTypes.string.isRequired,
     onSelect: PropTypes.func.isRequired,
+    customFontName: PropTypes.string,
   };
 
   handleClick = () => {
@@ -26,11 +28,11 @@ export default class IconItem extends PureComponent<IconItemProps> {
   };
 
   render() {
-    const { prefixCls, type, active } = this.props;
+    const { prefixCls, type, active, customFontName } = this.props;
     return (
       <li className={classNames({ [`${prefixCls}-item-selected`]: active })}>
         <div onClick={this.handleClick}>
-          <Icon type={type} />
+          <Icon customFontName={customFontName} type={type} />
           <p>{type}</p>
         </div>
       </li>

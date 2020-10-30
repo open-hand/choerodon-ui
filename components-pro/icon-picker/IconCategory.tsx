@@ -17,6 +17,7 @@ export interface IconItemProps {
   page?: number;
   pageSize?: number;
   onSelect: (type: string) => void;
+  customFontName?: string;
   onPageChange?: (page: number, category?: string) => void;
 }
 
@@ -33,6 +34,7 @@ export default class IconCategory extends Component<IconItemProps> {
     pageSize: PropTypes.number,
     page: PropTypes.number,
     paging: PropTypes.bool,
+    customFontName: PropTypes.string,
   };
 
   static defaultProps = {
@@ -129,10 +131,11 @@ export default class IconCategory extends Component<IconItemProps> {
   }
 
   renderIcons() {
-    const { value, prefixCls } = this.props;
+    const { value, prefixCls, customFontName } = this.props;
     return this.getIcons().map(icon => (
       <IconItem
         key={icon}
+        customFontName={customFontName}
         prefixCls={prefixCls}
         type={icon}
         onSelect={this.handleItemSelect}

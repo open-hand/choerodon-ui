@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>IconPicker`: 新增 customFontName 属性以及相关配置。
 - 💄 `<pro>TextField`: 优化IE下输入框包含readOnly属性导致键盘BackSpace页面后退。
 - 🐞 `<pro>Tree`: 修复 Tree 文字不对齐问题。
 - 🐞 `<pro>Button`: 修复 button link 链接样式问题。
