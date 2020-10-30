@@ -891,6 +891,8 @@ export default class Field {
         action(() => {
           if (propsName in this.validator.props || propsName === 'validator') {
             this.validator.reset();
+            // validator && DynamicProps 存在 reset 后需要重新校验该条 record 对应字段校验
+            if (this.record) this.record.validate();
             // this.checkValidity();
           }
           this.handlePropChange(propsName, newProp, oldProp);
