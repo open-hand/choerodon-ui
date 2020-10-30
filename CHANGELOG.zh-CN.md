@@ -19,6 +19,7 @@ timeline: true
 - 💄 `<pro>Modal`: 优化 header 样式。
 - 💄 `<pro>TextField`: 优化 IE 下输入框包含 readOnly 属性导致键盘 BackSpace 页面后退。
 - 🐞 `<pro>Tree`: 修复 Tree 文字不对齐问题。
+- 🐞 `<pro>DataSet`: 修复缓存数据无法删除问题。
 - 🐞 `<pro>Button`: 修复 button link 链接样式问题。
 - 🐞 `<pro>Table`: 修复 table 头行处理新增行自动定位失效问题。
 - 🐞 `<pro>Table`: 修复 autoHeight type:maxHeight 高度问题。
