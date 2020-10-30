@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>IconPicker`: 新增 customFontName 属性以及相关配置。
 - 🌟 `<pro>Table`: 新增 summaryBar，summaryFieldsLimit 属性，支持头部汇总条。
 - 💄 `<pro>Modal`: 优化 header 样式。
 - 💄 `<pro>TextField`: 优化 IE 下输入框包含 readOnly 属性导致键盘 BackSpace 页面后退。

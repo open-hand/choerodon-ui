@@ -9,6 +9,7 @@ Array [
       <input
         autocomplete="off"
         class="c7n-pro-icon-picker"
+        icons="clubs"
         type="text"
         value=""
       />

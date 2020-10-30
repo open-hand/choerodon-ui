@@ -18,6 +18,8 @@ const COLUMNS = 5;
 
 export interface IconPickerProps extends TriggerFieldProps {
   pageSize?: number;
+  customFontName?: string;
+  icons?: { [key: string]: string[]; } | string[];
 }
 
 @observer
@@ -27,6 +29,10 @@ export default class IconPicker extends TriggerField<IconPickerProps> {
   static propTypes = {
     ...TriggerField.propTypes,
     pageSize: PropTypes.number,
+    customFontName: PropTypes.string,
+    icons: PropTypes.oneOfType([PropTypes.object,
+      PropTypes.array,
+    ]),
   };
 
   static defaultProps = {
@@ -43,7 +49,8 @@ export default class IconPicker extends TriggerField<IconPickerProps> {
 
   @computed
   get categories(): { [key: string]: string[] } {
-    const icons = getConfig('icons');
+    const { icons: propsIcon } = this.props;
+    const icons = propsIcon || getConfig('icons');
     return isArrayLike(icons) ? { default: icons } : icons;
   }
 
@@ -85,7 +92,7 @@ export default class IconPicker extends TriggerField<IconPickerProps> {
   }
 
   getOtherProps() {
-    return omit(super.getOtherProps(), ['pageSize']);
+    return omit(super.getOtherProps(), ['pageSize','customFontName']);
   }
 
   @action
@@ -365,18 +372,21 @@ export default class IconPicker extends TriggerField<IconPickerProps> {
   }
 
   getPrefix() {
+    const { customFontName } = this.props;
     const value = this.getValue();
     if (value) {
-      return this.wrapperPrefix(<Icon type={value} />);
+      return this.wrapperPrefix(<Icon customFontName={customFontName} type={value} />);
     }
   }
 
   renderFilteredIcons(): ReactNode {
     const { prefixCls } = this;
+    const { customFontName } = this.props;
     return (
       <div className={`${prefixCls}-single-tab`}>
         <IconCategory
           paging={false}
+          customFontName={customFontName}
           value={this.selectedIcon}
           icons={this.filteredIcons}
           prefixCls={prefixCls}
@@ -390,7 +400,7 @@ export default class IconPicker extends TriggerField<IconPickerProps> {
     const {
       activeCategory,
       prefixCls,
-      props: { pageSize },
+      props: { pageSize, customFontName },
       categories,
       categoryKeys,
       categoryPages,
@@ -403,6 +413,7 @@ export default class IconPicker extends TriggerField<IconPickerProps> {
             page={categoryPages[category]}
             pageSize={pageSize}
             category={category}
+            customFontName={customFontName}
             value={category === activeCategory ? this.selectedIcon : undefined}
             icons={categories[category]}
             prefixCls={prefixCls}
@@ -426,6 +437,7 @@ export default class IconPicker extends TriggerField<IconPickerProps> {
           page={categoryPages[category]}
           pageSize={pageSize}
           category={category}
+          customFontName={customFontName}
           value={category === activeCategory ? this.selectedIcon : undefined}
           icons={categories[category]}
           prefixCls={prefixCls}

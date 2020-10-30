@@ -114,4 +114,18 @@ describe('Icon-Picker-pro', () => {
         .prop('value'),
     ).toBe('cancel');
   });
+
+  it('should has custom font name ' , () => {
+    const wrapper = mount(<IconPicker icons={['clubs']} customFontName="c7ntest1" onChange={() => {}} />);
+    wrapper.find('input').simulate('click');
+    jest.runAllTimers();
+    wrapper.update();
+    simulateCode(wrapper, 9);
+    wrapper.update();
+    wrapper.find('input').simulate('click');
+    jest.runAllTimers();
+    simulateCode(wrapper, 27);
+    wrapper.update();
+    expect(wrapper.find('IconPicker').props().customFontName).toEqual('c7ntest1');
+  })
 });

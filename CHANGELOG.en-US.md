@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-
+- 🌟 `<pro>IconPicker`: Added `customFontName` props and related configuration.
 - 🌟 `<pro>Table`: Added `summaryBar`, `summaryFieldsLimit` properties, and support header summary bars.
 - 💄 `<pro>Modal`: Optimized `header` style.
 - 💄 `<pro>TextField`: Optimized that the input box under IE contains the `readOnly` attribute, causing the keyboard BackSpace page to fall back.
