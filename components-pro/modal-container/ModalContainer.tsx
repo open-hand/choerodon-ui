@@ -262,6 +262,8 @@ export default class ModalContainer extends Component<ModalContainerProps> {
         <Animate
           key={props.key}
           component="div"
+          // UED 用类名判断
+          className={props.drawer ? `${getProPrefixCls(suffixCls)}-container-drawer` : `${getProPrefixCls(suffixCls)}-container-pristine`}
           transitionAppear
           transitionName={props.drawer ? drawerTransitionName : 'zoom'}
           hiddenProp="hidden"

@@ -16,14 +16,17 @@ timeline: true
 ---
 
 - 🌟 `<pro>IconPicker`: Added `customFontName` props and related configuration.
-- 💄 `<pro>TextField`: Optimized that the input box under IE contains the readOnly attribute, causing the keyboard BackSpace page to fall back.
+- 🌟 `<pro>Table`: Added `summaryBar`, `summaryFieldsLimit` properties, and support header summary bars.
+- 💄 `<pro>Modal`: Optimized `header` style.
+- 💄 `<pro>TextField`: Optimized that the input box under IE contains the `readOnly` attribute, causing the keyboard BackSpace page to fall back.
 - 🐞 `<pro>Tree`: Fixed the problem of misalignment of Tree text.
-- 🐞 `<pro>Button`: Fixed button link style promblem.
+- 🐞 `<pro>Button`: Fixed button link style problem.
+- 🐞 `<pro>DataSet`: Fixed the problem that cached data cannot be deleted.
 - 🐞 `<pro>Table`: Fixed `autoHeight` type:maxHeight height problem.
 - 🐞 `<pro>Table`: Fixed the problem that clicking clearButton directly after table filterBar input fails.
 - 🐞 `<pro>Table`: Fixed the problem of invalid automatic positioning of new rows in table header processing.
 - 🐞 `<pro>Table`: Fixed the problem with tree table auto folding when the row is expanded in scrollbar appeared.
-- 🐞 `<pro>Select`: Fixed the Select in combo mode can't create options when use chinese input method.
+- 🐞 `<pro>Select`: Fixed the Select in `combo` mode can't create options when use chinese input method.
 - 🐞 `<pro>Table`: Fixed table grouped columns resize, if resize the single column after grouped columns, would has wrong width.
 - 🐞 `<pro>PerformanceTable`: Fixed the problem of the lock column misalignment when the horizontal scroll bar appears.
 

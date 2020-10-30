@@ -414,7 +414,8 @@ export function findBindFields(myField: Field, fields: Fields, excludeSelf?: boo
   return [...fields.values()].filter(field => {
     if (field !== myField) {
       const bind = field.get('bind');
-      return isString(bind) && bind.startsWith(`${name}.`);
+      // 处理 addField 后校验问题
+      return isString(bind) ? bind.startsWith(`${name}.`) : !excludeSelf;
     }
     return !excludeSelf;
   });

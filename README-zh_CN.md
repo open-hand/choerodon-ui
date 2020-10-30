@@ -38,29 +38,29 @@ import 'choerodon-ui/dist/choerodon-ui.css'; // or 'choerodon-ui/dist/choerodon-
 import 'choerodon-ui/dist/choerodon-ui-pro.css'; // or 'choerodon-ui/dist/choerodon-ui-pro.less'
 ```
 
-你也可以[按需加载组件](https://choerodon.github.io/choerodon-ui/zh/docs/other/introduce#%E6%8C%89%E9%9C%80%E5%8A%A0%E8%BD%BD)。
+你也可以[按需加载组件](https://open-hand.github.io/choerodon-ui/zh/docs/other/introduce#%E6%8C%89%E9%9C%80%E5%8A%A0%E8%BD%BD)。
 
 ## TypeScript
 
-参考 [在 TypeScript 中使用](https://choerodon.github.io/choerodon-ui/zh/docs/other/use-in-typescript)
+参考 [在 TypeScript 中使用](https://open-hand.github.io/choerodon-ui/zh/docs/other/use-in-typescript)
 
 ## 国际化
 
-参考 [国际化文档](https://choerodon.github.io/choerodon-ui/zh/docs/other/i18n)。
+参考 [国际化文档](https://open-hand.github.io/choerodon-ui/zh/docs/other/i18n)。
 
 ## 链接
 
 - [首页]
-- [组件库](https://choerodon.github.io/choerodon-ui/)
+- [组件库](https://open-hand.github.io/choerodon-ui/)
 - [更新日志](CHANGELOG.en-US.md)
 - [脚手架市场](http://scaffold.ant.design)
 - [React 底层基础组件](http://react-component.github.io/)
-- [定制主题](https://choerodon.github.io/choerodon-ui/docs/react/customize-theme-cn)
+- [定制主题](https://open-hand.github.io/choerodon-ui/docs/react/customize-theme-cn)
 
 ## 本地开发
 
 ```bash
-$ git clone https://github.com/choerodon/choerodon-ui.git
+$ git clone https://github.com/open-hand/choerodon-ui.git
 $ cd choerodon-ui
 $ npm install
 $ npm start
@@ -78,4 +78,4 @@ $ npm run deploy
 $ npm run pub
 ```
 
-打开浏览器访问 http://127.0.0.1:8001 ，更多本地开发文档参见: https://choerodon.github.io/choerodon-ui/zh/tutorials/introduction 。
+打开浏览器访问 http://127.0.0.1:8001 ，更多本地开发文档参见: https://open-hand.github.io/choerodon-ui/zh/tutorials/introduction 。

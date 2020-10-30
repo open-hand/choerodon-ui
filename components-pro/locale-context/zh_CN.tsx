@@ -17,6 +17,7 @@ const locale: Locale = {
     expand_button: '展开',
     collapse_button: '合并',
     export_button: '导出',
+    more_button: '其他操作',
     advanced_search: '高级搜索',
     dirty_info: '显示条件已更改',
     restore: '还原',

@@ -501,7 +501,7 @@ export default class DataSet extends EventManager {
     const created: Record[] = [];
     const updated: Record[] = [];
     const destroyed: Record[] = [];
-    this.records.forEach(record => {
+    this.all.forEach(record => {
       switch (record.status) {
         case RecordStatus.add:
           created.push(record);
@@ -1818,14 +1818,14 @@ Then the query method will be auto invoke.`,
   // 查询在所有页面的对应位置
   private findInAllPage(index: number): Record | undefined {
     const { paging } = this;
-    let indexRecord
+    let indexRecord;
     if (paging === true) {
       indexRecord = this.data[this.getIndexInCurrentPage(index)];
     } else if (paging === 'server') {
       indexRecord = this.treeData[this.getIndexInCurrentPage(index)];
     } else {
-      indexRecord = this.data[index]
-    };
+      indexRecord = this.data[index];
+    }
     return indexRecord;
   }
 
@@ -2208,7 +2208,7 @@ Then the query method will be auto invoke.`,
   /**
    * 返回configure 配置的值
    * @param page 在那个页面
-   * @param pageSizeInner 页面大小 
+   * @param pageSizeInner 页面大小
    */
   private generateQueryString(page: number,pageSizeInner?: number) {
     const order = this.generateOrderQueryString();
