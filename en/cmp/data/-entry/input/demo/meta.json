@@ -30,6 +30,7 @@
       },
       "order": 1,
       "height": 249,
+      "ignores": ["theme1", "theme3"],
       "screenshot": ""
     },
     {

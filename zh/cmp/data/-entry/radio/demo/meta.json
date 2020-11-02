@@ -112,6 +112,7 @@
         "zh": "大中小三种组合，可以和表单输入框进行对应配合。\n",
         "en": "There are three sizes available: large, medium, and small. It can coordinate with input box.\n"
       },
+      "ignores": ["theme1", "theme3"],
       "order": 5,
       "height": 219,
       "screenshot": ""

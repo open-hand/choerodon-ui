@@ -122,6 +122,7 @@
       "order": 6,
       "screenshot": "",
       "height": 430,
+      "ignores": ["theme1", "theme3"],
       "category": "pro"
     },
     {
@@ -137,6 +138,7 @@
       "order": 7,
       "screenshot": "",
       "height": 478,
+      "ignores": ["theme1", "theme3"],
       "category": "pro"
     },
     {
@@ -347,6 +349,51 @@
       "order": 21,
       "screenshot": "",
       "height": 485,
+      "category": "pro"
+    },
+    {
+      "filename": "summary-bars.js",
+      "title": {
+        "zh": "汇总条",
+        "en": "Summary Bar"
+      },
+      "description": {
+        "zh": "头部汇总条。\n",
+        "en": "Summary Bar.\n"
+      },
+      "order": 22,
+      "screenshot": "",
+      "height": 400,
+      "category": "pro"
+    },
+    {
+      "filename": "professional-bar.js",
+      "title": {
+        "zh": "专业搜索条",
+        "en": "Professional Search Bar"
+      },
+      "description": {
+        "zh": "专业搜索条。\n",
+        "en": "Professional Search Bar.\n"
+      },
+      "order": 23,
+      "screenshot": "",
+      "height": 430,
+      "category": "pro"
+    },
+    {
+      "filename": "multiple-line.js",
+      "title": {
+        "zh": "单列多行编辑",
+        "en": "Multiple Line Editor"
+      },
+      "description": {
+        "zh": "单列一行多字段编辑。\n",
+        "en": "Multiple Line Editor\n"
+      },
+      "order": 23,
+      "screenshot": "",
+      "height": 520,
       "category": "pro"
     }
   ]

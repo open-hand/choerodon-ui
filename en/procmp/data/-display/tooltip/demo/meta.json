@@ -77,6 +77,7 @@
       "order": 5,
       "screenshot": "",
       "height": 131,
+      "ignores": ["theme1", "theme3"],
       "category": "pro"
     }
   ]

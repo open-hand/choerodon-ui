@@ -86,6 +86,7 @@
       },
       "order": 5,
       "height": 210,
+      "ignores": ["theme1", "theme3"],
       "screenshot": ""
     },
     {
