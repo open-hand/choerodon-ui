@@ -1891,7 +1891,6 @@ exports[`renders ./components/table/demo/drag-sorting.md correctly 1`] = `
               >
                 <tr
                   class="c7n-table-row  c7n-table-row-level-0"
-                  index="0"
                   style="cursor:move"
                 >
                   <td
@@ -1919,7 +1918,6 @@ exports[`renders ./components/table/demo/drag-sorting.md correctly 1`] = `
                 </tr>
                 <tr
                   class="c7n-table-row  c7n-table-row-level-0"
-                  index="1"
                   style="cursor:move"
                 >
                   <td
@@ -1947,7 +1945,6 @@ exports[`renders ./components/table/demo/drag-sorting.md correctly 1`] = `
                 </tr>
                 <tr
                   class="c7n-table-row  c7n-table-row-level-0"
-                  index="2"
                   style="cursor:move"
                 >
                   <td

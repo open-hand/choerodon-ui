@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.75
+
+`2020-11-01`
+
 - 🌟 `<pro>IconPicker`: 新增 customFontName 属性以及相关配置。
 - 🌟 `<pro>Table`: 新增 summaryBar，summaryFieldsLimit 属性，支持头部汇总条。
 - 💄 `<pro>Modal`: 优化 header 样式。

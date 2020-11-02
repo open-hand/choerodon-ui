@@ -9,7 +9,7 @@ exports[`modal-pro render close correctly 1`] = `
     class="c7n-pro-modal-content"
   >
     <div
-      class="c7n-pro-modal-header c7n-pro-modal-movable"
+      class="c7n-pro-modal-header c7n-pro-modal-movable c7n-pro-modal-title-none"
     >
       <div
         class="c7n-pro-modal-header-buttons"
@@ -65,7 +65,7 @@ exports[`modal-pro render correctly without footer 1`] = `
     class="c7n-pro-modal-content"
   >
     <div
-      class="c7n-pro-modal-header c7n-pro-modal-movable"
+      class="c7n-pro-modal-header c7n-pro-modal-movable c7n-pro-modal-title-none"
     />
   </div>
 </div>
@@ -97,7 +97,7 @@ exports[`modal-pro renders modal-pro correctly 1`] = `
       className="c7n-pro-modal-content"
     >
       <div
-        className="c7n-pro-modal-header c7n-pro-modal-movable"
+        className="c7n-pro-modal-header c7n-pro-modal-movable c7n-pro-modal-title-none"
         onMouseDown={[Function]}
       />
       <div

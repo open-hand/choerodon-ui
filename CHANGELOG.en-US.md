@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.75
+
+`2020-11-01`
+
 - 🌟 `<pro>IconPicker`: Added `customFontName` props and related configuration.
 - 🌟 `<pro>Table`: Added `summaryBar`, `summaryFieldsLimit` properties, and support header summary bars.
 - 💄 `<pro>Modal`: Optimized `header` style.

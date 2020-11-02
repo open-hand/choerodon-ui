@@ -512,6 +512,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
                         >
                           <Connect(MenuItem)
                             disabled={false}
+                            style={Object {}}
                             value={
                               Record {
                                 "cascadeRecordsMap": Object {},
@@ -3331,6 +3332,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
                           </Connect(MenuItem)>
                           <Connect(MenuItem)
                             disabled={false}
+                            style={Object {}}
                             value={
                               Record {
                                 "cascadeRecordsMap": Object {},
@@ -6150,6 +6152,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
                           </Connect(MenuItem)>
                           <Connect(MenuItem)
                             disabled={false}
+                            style={Object {}}
                             value={
                               Record {
                                 "cascadeRecordsMap": Object {},
@@ -8969,6 +8972,7 @@ exports[`Tree-pro set showQuickJumper and click handle  1`] = `
                           </Connect(MenuItem)>
                           <Connect(MenuItem)
                             disabled={false}
+                            style={Object {}}
                             value={
                               Record {
                                 "cascadeRecordsMap": Object {},

@@ -40,6 +40,7 @@ exports[`Tree-pro should have a Tooltip inside 1`] = `
 >
   <div
     className="c7n-pro-upload"
+    style={Object {}}
   >
     <div
       className="flex-wrapper"
