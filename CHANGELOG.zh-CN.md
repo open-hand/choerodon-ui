@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>PerformanceTable`: 新增 showScrollArrow，clickScrollLength 属性，控制滚动条是否显示箭头点击。
+
 ## 0.8.75
 
 `2020-11-01`

@@ -7,6 +7,12 @@ export interface TableLocale {
   loading?: string;
 }
 
+
+export interface TableScrollLength {
+  horizontal?: number;
+  vertical?: number;
+}
+
 export interface TableProps extends StandardProps {
   columns?: ColumnProps[];
   autoHeight?: boolean;
@@ -28,6 +34,7 @@ export interface TableProps extends StandardProps {
   hover: boolean;
   headerHeight: number;
   locale: TableLocale;
+  clickScrollLength: TableScrollLength,
   loading?: boolean;
   loadAnimation?: boolean;
   minHeight: number;
@@ -37,6 +44,7 @@ export interface TableProps extends StandardProps {
   rowExpandedHeight?: number;
   rowClassName?: string | ((rowData: object) => string);
   showHeader?: boolean;
+  showScrollArrow?: boolean;
   style?: React.CSSProperties;
   sortColumn?: string;
   sortType?: SortType;

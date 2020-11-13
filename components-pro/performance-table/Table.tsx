@@ -116,6 +116,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     classPrefix: PropTypes.string,
     children: PropTypes.any,
     cellBordered: PropTypes.bool,
+    clickScrollLength: PropTypes.object,
     data: PropTypes.arrayOf(PropTypes.object),
     defaultExpandAllRows: PropTypes.bool,
     defaultExpandedRowKeys: PropTypes.arrayOf(
@@ -144,6 +145,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     sortColumn: PropTypes.string,
     sortType: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
     showHeader: PropTypes.bool,
+    showScrollArrow: PropTypes.bool,
     shouldUpdateScroll: PropTypes.bool,
     translate3d: PropTypes.bool,
     wordWrap: PropTypes.bool,
@@ -170,6 +172,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     rowExpandedHeight: 100,
     hover: true,
     showHeader: true,
+    showScrollArrow: false,
     bordered: true,
     rowKey: 'key',
     translate3d: true,
@@ -177,6 +180,10 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     locale: {
       emptyMessage: 'No data found',
       loading: 'Loading...',
+    },
+    clickScrollLength: {
+      horizontal: 100,
+      vertical: 30,
     },
   };
 
@@ -329,6 +336,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   }
 
   shouldComponentUpdate(nextProps: TableProps, nextState: TableState) {
+    console.log('shouldComponentUpdate', this.props.columns !== nextProps.columns)
     const _cacheChildrenSize = flatten((nextProps.children as any[] || nextProps.columns) || []).length;
 
     /**
@@ -1446,6 +1454,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
        则需要循环遍历 data, 获取每一行的高度。
        */
       if ((isUncertainHeight && virtualized) || !virtualized) {
+        // temp test
+        let keyIndex = 0;
         for (let index = 0; index < data.length; index++) {
           const rowData = data[index];
           const maxHeight = tableRowsMaxHeight[index];
@@ -1481,7 +1491,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
           contentHeight += nextRowHeight;
 
           const rowProps = {
-            key: index,
+            key: keyIndex,
+            rowIndex: index,
             top,
             width: rowWidth,
             depth,
@@ -1504,6 +1515,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
             // @ts-ignore
             this.renderRowData(bodyCells, rowData, rowProps, shouldRenderExpandedRow),
           );
+          keyIndex++;
         }
       } else {
         /**
@@ -1586,7 +1598,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   }
 
   renderScrollbar() {
-    const { disabledScroll, affixHorizontalScrollbar, id } = this.props;
+    const { disabledScroll, affixHorizontalScrollbar, id, showScrollArrow, clickScrollLength } = this.props;
     const { contentWidth, contentHeight, width, fixedHorizontalScrollbar } = this.state;
     const bottom = typeof affixHorizontalScrollbar === 'number' ? affixHorizontalScrollbar : 0;
 
@@ -1597,24 +1609,33 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       return null;
     }
 
+    const scrollBarOffset = (contentWidth <= this.state.width) || contentHeight <= (height - headerHeight) ? 40 : 60;
+    const decScrollBarOffset = showScrollArrow ? scrollBarOffset : 0;
+
     return (
       <div>
         <Scrollbar
           tableId={id}
+          showScrollArrow={showScrollArrow}
+          clickScrollLength={clickScrollLength}
           className={classNames({ fixed: fixedHorizontalScrollbar })}
           style={{ width, bottom: fixedHorizontalScrollbar ? bottom : undefined }}
-          length={this.state.width}
+          length={this.state.width - decScrollBarOffset}
           onScroll={this.handleScrollX}
-          scrollLength={contentWidth}
+          scrollLength={contentWidth - decScrollBarOffset}
           ref={this.scrollbarXRef}
+          scrollBarOffset={showScrollArrow ? scrollBarOffset : 0}
         />
         <Scrollbar
           vertical
           tableId={id}
-          length={height - headerHeight}
-          scrollLength={contentHeight}
+          showScrollArrow={showScrollArrow}
+          clickScrollLength={clickScrollLength}
+          length={height - headerHeight - decScrollBarOffset}
+          scrollLength={contentHeight - decScrollBarOffset}
           onScroll={this.handleScrollY}
           ref={this.scrollbarYRef}
+          scrollBarOffset={showScrollArrow ? scrollBarOffset : 0}
         />
       </div>
     );

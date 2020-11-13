@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>PerformanceTable`: Added `showScrollArrow` and `clickScrollLength` properties to control whether the scroll bar displays arrow clicks.
+
 ## 0.8.75
 
 `2020-11-01`

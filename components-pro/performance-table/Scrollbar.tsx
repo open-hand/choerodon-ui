@@ -2,6 +2,8 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { DOMMouseMoveTracker, addStyle, getOffset } from 'dom-lib';
+import isNumber from 'lodash/isNumber'
+import Icon from 'choerodon-ui/lib/icon';
 import { SCROLLBAR_MIN_WIDTH } from './constants';
 import { defaultClassPrefix, getUnhandledProps, prefix } from './utils';
 import TableContext from './TableContext';
@@ -26,6 +28,9 @@ class Scrollbar extends React.PureComponent<ScrollbarProps, State> {
     vertical: PropTypes.bool,
     length: PropTypes.number,
     scrollLength: PropTypes.number,
+    scrollBarOffset: PropTypes.number,
+    clickScrollLength: PropTypes.object,
+    showScrollArrow: PropTypes.bool,
     className: PropTypes.string,
     classPrefix: PropTypes.string,
     onScroll: PropTypes.func,
@@ -188,8 +193,30 @@ class Scrollbar extends React.PureComponent<ScrollbarProps, State> {
     this.handleScroll(nextDelta, event);
   };
 
+
+  /**
+   *
+   * @param e
+   * @param sort
+   */
+  handleArrowClick = (e, sort) => {
+    e.stopPropagation();
+    const { vertical, clickScrollLength, scrollLength, length } = this.props;
+    if (vertical) {
+      if(isNumber(clickScrollLength.vertical)) {
+        const handleLength = (length / scrollLength) * clickScrollLength.vertical;
+        this.handleScroll(sort === 'fir' ? -handleLength : handleLength, e);
+      }
+    } else {
+      if(isNumber(clickScrollLength.horizontal)) {
+        const handleLength = (length / scrollLength) * clickScrollLength.horizontal;
+        this.handleScroll(sort === 'fir' ? -handleLength : handleLength, e);
+      }
+    }
+  };
+
   render() {
-    const { vertical, length, scrollLength, classPrefix, className, tableId, ...rest } = this.props;
+    const { vertical, length, scrollLength, classPrefix, className, tableId, style, showScrollArrow, scrollBarOffset, ...rest } = this.props;
     const { handlePressed } = this.state;
     // @ts-ignore
     const addPrefix = prefix(classPrefix);
@@ -205,7 +232,14 @@ class Scrollbar extends React.PureComponent<ScrollbarProps, State> {
       [vertical ? 'height' : 'width']: `${width}%`,
       [vertical ? 'minHeight' : 'minWidth']: SCROLLBAR_MIN_WIDTH,
     };
+    const IEstyles: React.CSSProperties = {
+      [vertical ? 'top' : 'left']: showScrollArrow ? 20 : 0,
+      [vertical ? 'bottom' : 'right']: showScrollArrow ? 20 : 0,
+      [vertical ? 'height' : 'width']: style ? style[vertical ? 'height' : 'width'] - scrollBarOffset : `calc(100% - ${scrollBarOffset}px)`,
+      [vertical ? 'width' : 'height']: showScrollArrow ? 20 : 10,
+    };
     const unhandled = getUnhandledProps(Scrollbar, rest);
+    const scrollbarStyle = { ...style, ...IEstyles };
     const valuenow = (this.scrollOffset / length) * 100 + width;
 
     return (
@@ -217,18 +251,29 @@ class Scrollbar extends React.PureComponent<ScrollbarProps, State> {
         aria-valuenow={valuenow}
         aria-orientation={vertical ? 'vertical' : 'horizontal'}
         {...unhandled}
+        style={scrollbarStyle}
         ref={this.barRef}
         className={classes}
         onClick={this.handleClick}
       >
+        {showScrollArrow && (
+          <div className={addPrefix(`handle-${vertical ? 'vertical' : 'horizontal'}-fir`)} onClick={(e) => this.handleArrowClick(e, 'fir')}>
+            <Icon type="baseline-arrow_drop_up" />
+          </div>
+        )}
         <div
           ref={this.handleRef}
-          className={addPrefix('handle')}
+          className={addPrefix(`handle ${showScrollArrow ? 'has-arrow' : ''}`)}
           style={styles}
           onMouseDown={this.handleMouseDown}
           role="button"
           tabIndex={-1}
         />
+        {showScrollArrow && (
+          <div className={addPrefix(`handle-${vertical ? 'vertical' : 'horizontal'}-sec`)} onClick={(e) => this.handleArrowClick(e, 'sec')}>
+            <Icon type="baseline-arrow_drop_up" />
+          </div>
+        )}
       </div>
     );
   }
