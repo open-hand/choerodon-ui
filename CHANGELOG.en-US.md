@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `<pro>PerformanceTable`: Added `showScrollArrow` and `clickScrollLength` properties to control whether the scroll bar displays arrow clicks.
+- 🐞 `Collapse`: Fixed `collapseExpandIcon` global attribute support.
 
 ## 0.8.75
 

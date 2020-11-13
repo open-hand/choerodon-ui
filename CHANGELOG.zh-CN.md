@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `<pro>PerformanceTable`: 新增 showScrollArrow，clickScrollLength 属性，控制滚动条是否显示箭头点击。
+- 🐞 `Collapse`: 修复 collapseExpandIcon 全局属性支持。
 
 ## 0.8.75
 
