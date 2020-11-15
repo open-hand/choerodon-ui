@@ -58,6 +58,7 @@ const prefixCls = getConfig('prefixCls');
 | tableDragRow | Table是否开启行拖拽 | boolean | false |
 | tableDragColumn | Table是否开启列拖拽 | boolean | false |
 | tableDragColumnAlign | Table列拖拽的模式 | 'left'\|'right' | - |
+| tableAutoFocus | Table 新增行自动聚焦至第一个可编辑字段 | boolean | false |
 | dropdownMatchSelectWidth | 默认下拉框匹配输入框宽度 | boolean | true |
 | modalSectionBorder | Default if Modal header and foot have a border line | boolean | true |
 | modalOkFirst | Default the ok button of Modal is ranked first | boolean | true |

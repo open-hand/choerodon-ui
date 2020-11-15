@@ -242,6 +242,11 @@ export interface TableProps extends DataSetComponentProps {
    */
   border?: boolean;
   /**
+   * 是否自动聚焦
+   * @default true
+   */
+  autoFocus?: boolean;
+  /**
    * 数据源
    */
   dataSet: DataSet;
@@ -580,6 +585,10 @@ export default class Table extends DataSetComponent<TableProps> {
     rowDragRender: PropTypes.object,
     columnsEditType: PropTypes.oneOf([ColumnsEditType.all, ColumnsEditType.header, ColumnsEditType.order]),
     onDragEndBefore: PropTypes.func,
+    /**
+     * 开启新建自动定位
+     */
+    autoFocus: PropTypes.bool,
     ...DataSetComponent.propTypes,
   };
 
@@ -844,6 +853,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'queryFieldsLimit',
       'summaryFieldsLimit',
       'queryBar',
+      'autoFocus',
       'summaryBar',
       'defaultRowExpanded',
       'expandRowByClick',

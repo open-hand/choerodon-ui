@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: 新增 `tableAutoFocus` 全局属性。
+- 🌟 `<pro>Table`: 新增 autoFocus 属性控制是否新增行自动获焦至第一个可编辑字段。
 - 🌟 `<pro>PerformanceTable`: 新增 showScrollArrow，clickScrollLength 属性，控制滚动条是否显示箭头点击。
 - 🐞 `Collapse`: 修复 collapseExpandIcon 全局属性支持。
 

@@ -22,6 +22,7 @@ subtitle: 表格
 | header | 表头 | ReactNode \| (records) => ReactNode |  |
 | footer | 表脚 | ReactNode \| (records) => ReactNode |  |
 | border | 是否显示边框 | boolean | true |
+| autoFocus | 是否新增行自动获焦至第一个可编辑字段 | boolean | false |
 | selectionMode | 选择记录的模式, 可选值: `rowbox` `click` `dblclick` `mousedown` `none` | string | 'rowbox' |
 | alwaysShowRowBox | 是否一直显示rowbox,开启后在其他模式下也会显示rowbox | boolean | false |
 | onRow | 设置行属性 | ({ dataSet, record, index, expandedRow }) => object |  |
@@ -54,6 +55,7 @@ subtitle: 表格
 | virtualSpin | 是否开启虚拟滚动Spin | boolean | false |
 | autoHeight | 是否开启高度自适应 | boolean \| { type: 'minHeight' \| 'maxHeight', diff: number(80) } | false |
 | autoMaxWidth | 是否开启双击侧边栏宽度最大自适应,初次双击为最大值再次双击为`minWidth` | boolean | false |
+| editorNextKeyEnterDown            | 是否开启回车跳转下一行编辑                                                                                                                                                                                                             | boolean                                     | true    |
 | dragColumnAlign | 增加一个可拖拽列，实现行拖拽 | 'left'\|'right' |  |
 | dragColumn | 打开列拖拽,组合列无法使用 | boolean | false |
 | dragRow | 行拖拽，实现行的拖拽，会导致拖拽列的一些事件失效，可以用dragColumnAlign来避免，树形数据无法使用 | boolean | false |

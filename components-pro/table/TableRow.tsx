@@ -263,7 +263,10 @@ export default class TableRow extends Component<TableRowProps, any> {
 
   componentDidMount() {
     const { lock, record } = this.props;
-    if (record.status === RecordStatus.add) {
+    const {
+      tableStore: { autoFocus },
+    } = this.context;
+    if (record.status === RecordStatus.add && autoFocus) {
       const cell = this.node && lock !== ColumnLock.right ? findFirstFocusableElement(this.node) : null;
       if (cell) {
         cell.focus();

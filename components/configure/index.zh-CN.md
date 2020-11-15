@@ -61,6 +61,7 @@ const prefixCls = getConfig('prefixCls');
 | tableDragRow | Table是否开启行拖拽 | boolean | false |
 | tableDragColumn | Table是否开启列拖拽 | boolean | false |
 | tableDragColumnAlign | Table列拖拽的模式 | 'left'\|'right' | - |
+| tableAutoFocus | Table 新增行自动聚焦至第一个可编辑字段 | boolean | false |
 | pagination | 默认 pagination 的属性 | TablePaginationConfig \| false | 详见[Pagination](/components-pro/pagination/#Pagination) |
 | dropdownMatchSelectWidth | 默认下拉框匹配输入框宽度 | boolean | true |
 | modalSectionBorder | 默认 Modal 的头和脚有边框线 | boolean | true |

@@ -351,6 +351,17 @@ export default class TableStore {
   }
 
   @computed
+  get autoFocus(): boolean {
+    if ('autoFocus' in this.props) {
+      return this.props.autoFocus;
+    }
+    if (getConfig('tableAutoFocus') === false) {
+      return false;
+    }
+    return true;
+  }
+
+  @computed
   get selectedHighLightRow(): boolean {
     if ('selectedHighLightRow' in this.props) {
       return this.props.selectedHighLightRow;

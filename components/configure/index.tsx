@@ -106,6 +106,7 @@ export type Config = {
   tableAlwaysShowRowBox?: boolean;
   tableUseMouseBatchChoose?: boolean;
   tableEditorNextKeyEnterDown?: boolean;
+  tableAutoFocus?: boolean;
   pagination?: TablePaginationConfig | false;
   modalSectionBorder?: boolean;
   modalOkFirst?: boolean;
@@ -204,6 +205,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['tableAlwaysShowRowBox', false],
   ['tableUseMouseBatchChoose', false],
   ['tableEditorNextKeyEnterDown', true],
+  ['tableAutoFocus', false],
   ['modalSectionBorder', true],
   ['modalOkFirst', true],
   ['drawerOkFirst', undefined],
