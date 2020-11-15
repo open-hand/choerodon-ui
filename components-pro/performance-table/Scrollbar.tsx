@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { DOMMouseMoveTracker, addStyle, getOffset } from 'dom-lib';
 import isNumber from 'lodash/isNumber'
 import Icon from 'choerodon-ui/lib/icon';
+import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { SCROLLBAR_MIN_WIDTH } from './constants';
 import { defaultClassPrefix, getUnhandledProps, prefix } from './utils';
 import TableContext from './TableContext';
@@ -226,6 +227,7 @@ class Scrollbar extends React.PureComponent<ScrollbarProps, State> {
       [addPrefix('horizontal')]: !vertical,
       [addPrefix('hide')]: scrollLength <= length,
       [addPrefix('pressed')]: handlePressed,
+      [addPrefix('arrow')]: showScrollArrow,
     });
     const width = (length / scrollLength) * 100;
     const styles: React.CSSProperties = {
@@ -233,10 +235,10 @@ class Scrollbar extends React.PureComponent<ScrollbarProps, State> {
       [vertical ? 'minHeight' : 'minWidth']: SCROLLBAR_MIN_WIDTH,
     };
     const IEstyles: React.CSSProperties = {
-      [vertical ? 'top' : 'left']: showScrollArrow ? 20 : 0,
-      [vertical ? 'bottom' : 'right']: showScrollArrow ? 20 : 0,
-      [vertical ? 'height' : 'width']: style ? style[vertical ? 'height' : 'width'] - scrollBarOffset : `calc(100% - ${scrollBarOffset}px)`,
-      [vertical ? 'width' : 'height']: showScrollArrow ? 20 : 10,
+      [vertical ? 'top' : 'left']: showScrollArrow ? '0.2rem' : 0,
+      [vertical ? 'bottom' : 'right']: showScrollArrow ? '0.2rem' : 0,
+      [vertical ? 'height' : 'width']: style ? style[vertical ? 'height' : 'width'] - scrollBarOffset : `calc(100% - ${pxToRem(scrollBarOffset)}rem)`,
+      [vertical ? 'width' : 'height']: showScrollArrow ? '0.2rem' : '0.1rem',
     };
     const unhandled = getUnhandledProps(Scrollbar, rest);
     const scrollbarStyle = { ...style, ...IEstyles };

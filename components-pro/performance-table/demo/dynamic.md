@@ -3,6 +3,7 @@ order: 1
 title:
   zh-CN: 动态处理
   en-US: Basic usage
+only: true  
 ---
 
 ## zh-CN
@@ -113,6 +114,7 @@ class DynamicTable extends React.Component {
         <hr />
         <br />
         <PerformanceTable
+          showScrollArrow
           height={400}
           data={this.state.data}
           ref={ref => {
