@@ -86,7 +86,7 @@
         "en": "Custom"
       },
       "description": {
-        "zh": "根据不同的业务场景，单元格中可以自己定义显示的内容。\n",
+        "zh": "根据不同的业务场景，单元格中可以自己定义显示的内容。如果有相关单元格需要key唯一，获取rowIndex处理。\n",
         "en": "The most basic usage.\n"
       },
       "order": 5,

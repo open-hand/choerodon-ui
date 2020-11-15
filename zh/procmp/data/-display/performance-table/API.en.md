@@ -39,8 +39,10 @@ title: API
 | rowKey                   | string `('key')`                                                                  | Each row corresponds to the unique `key` in `data`                                            |
 | shouldUpdateScroll       | boolean`(true)`                                                                   | Whether to update the scroll bar after data update                                            |
 | showHeader               | boolean `(true)`                                                                  | Display header                                                                                |
+| showScrollArrow          | boolean `(false)`                                                                 | Display ScrollBar arrow                                             |
 | sortColumn               | string                                                                            | Sort column name                                                                              |
 | sortType                 | enum: 'desc', 'asc'                                                               | Sort type (Controlled)                                                                        |
+| clickScrollLength        | object `({horizontal?: 100;vertical?: 30;})`                                      | 滚动条箭头点击滚动距离                                        |
 | virtualized              | boolean                                                                           | Effectively render large tabular data                                                         |
 | width                    | number                                                                            | Table width                                                                                   |
 | wordWrap                 | boolean                                                                           | The cell wraps automatically                                                                  |

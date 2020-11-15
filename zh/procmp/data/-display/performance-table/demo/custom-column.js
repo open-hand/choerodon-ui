@@ -5,22 +5,25 @@ import { Popover } from 'choerodon-ui';
 
 const NameCell = ({ rowData, dataIndex }) => {
   return (
-    <Popover title="Description" content={(
-      <>
-        <p>
-          <b>Name:</b> {`${rowData.firstName} ${rowData.lastName}`}{' '}
-        </p>
-        <p>
-          <b>Email:</b> {rowData.email}{' '}
-        </p>
-        <p>
-          <b>Company:</b> {rowData.companyName}{' '}
-        </p>
-        <p>
-          <b>Sentence:</b> {rowData.sentence}{' '}
-        </p>
-      </>
-    )}>
+    <Popover
+      title="Description"
+      content={
+        <>
+          <p>
+            <b>Name:</b> {`${rowData.firstName} ${rowData.lastName}`}{' '}
+          </p>
+          <p>
+            <b>Email:</b> {rowData.email}{' '}
+          </p>
+          <p>
+            <b>Company:</b> {rowData.companyName}{' '}
+          </p>
+          <p>
+            <b>Sentence:</b> {rowData.sentence}{' '}
+          </p>
+        </>
+      }
+    >
       {rowData[dataIndex].toLocaleString()}
     </Popover>
   );
@@ -34,11 +37,11 @@ const ActionCell = ({ rowData, dataIndex }) => {
 
   return (
     <span>
-      <a onClick={handleAction}> Edit </a>|<a onClick={handleAction}> Remove </a>
+      <a onClick={handleAction}> Edit </a>|
+      <a onClick={handleAction}> Remove </a>
     </span>
   );
 };
-
 
 class CustomColumnTable extends React.Component {
   constructor(props) {
@@ -67,7 +70,7 @@ class CustomColumnTable extends React.Component {
     const { data } = this.state;
     if (value) {
       this.setState({
-        checkValues: data.map(i => i.id),
+        checkValues: data.map((i) => i.id),
       });
     } else {
       this.setState({
@@ -76,11 +79,11 @@ class CustomColumnTable extends React.Component {
     }
   };
 
-
-  CheckCell = ({ rowData }) => {
+  CheckCell = ({ rowData, rowIndex }) => {
     const { checkValues } = this.state;
     return (
       <CheckBox
+        key={rowIndex}
         name="controlled"
         value={rowData.id}
         checked={checkValues.indexOf(rowData.id) !== -1}
@@ -105,7 +108,8 @@ class CustomColumnTable extends React.Component {
         width: 80,
         align: 'center',
         fixed: true,
-        render: ({ rowData, dataIndex }) => this.CheckCell({ rowData, dataIndex }),
+        render: ({ rowData, dataIndex, rowIndex }) =>
+          this.CheckCell({ rowData, dataIndex, rowIndex }),
       },
       {
         title: 'firstName',
@@ -124,7 +128,9 @@ class CustomColumnTable extends React.Component {
         title: '邮箱',
         key: 'email',
         width: 300,
-        render: ({ rowData }) => <a href={`mailto:${rowData.email}`}>{rowData.email}</a>,
+        render: ({ rowData }) => (
+          <a href={`mailto:${rowData.email}`}>{rowData.email}</a>
+        ),
       },
       {
         title: 'Date',
@@ -142,13 +148,7 @@ class CustomColumnTable extends React.Component {
         render: ({ rowData, dataIndex }) => ActionCell({ rowData, dataIndex }),
       },
     ];
-    return (
-      <PerformanceTable
-        height={400}
-        data={data}
-        columns={columns}
-      />
-    );
+    return <PerformanceTable height={400} data={data} columns={columns} />;
   }
 }
 

@@ -40,8 +40,10 @@ title: API
 | rowKey                   | string `('key')`                                                                  | 每一个行对应的 `data` 中的唯一 `key`                         |
 | shouldUpdateScroll       | boolean`(true)`                                                                   | 数据更新后更新滚动条位置                                     |
 | showHeader               | boolean `(true)`                                                                  | 显示表头                                                     |
+| showScrollArrow          | boolean `(false)`                                                                 | 显示滚动条箭头                                             |
 | sortColumn               | string                                                                            | 排序列名称                                                   |
 | sortType                 | enum: 'desc', 'asc'                                                               | 排序类型（受控）                                             |
+| clickScrollLength        | object `({horizontal?: 100;vertical?: 30;})`                                      | 滚动条箭头点击滚动距离                                        |
 | virtualized              | boolean                                                                           | 呈现大表格数据                                               |
 | width                    | number                                                                            | 宽度                                                         |
 | wordWrap                 | boolean                                                                           | 单元格自动换行                                               |

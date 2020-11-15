@@ -19,7 +19,14 @@ const EditButton = (props) => {
     onClick(record, e);
   };
 
-  return <Button funcType="flat" icon="mode_edit" onClick={handleClick} size="small" />;
+  return (
+    <Button
+      funcType="flat"
+      icon="mode_edit"
+      onClick={handleClick}
+      size="small"
+    />
+  );
 };
 
 class App extends React.Component {
@@ -56,7 +63,12 @@ class App extends React.Component {
         maxLength: 11,
         required: true,
       },
-      { name: 'code_description', bind: 'code.code_description', type: 'string', label: '代码描述' },
+      {
+        name: 'code_description',
+        bind: 'code.code_description',
+        type: 'string',
+        label: '代码描述',
+      },
       {
         name: 'age',
         type: 'number',
@@ -104,7 +116,7 @@ class App extends React.Component {
     });
   };
 
-  editUser = record => {
+  editUser = (record) => {
     this.openModal(record);
   };
 
@@ -122,7 +134,16 @@ class App extends React.Component {
     const buttons = ['add', 'save', 'delete', 'reset'];
     return (
       <>
-        <Button icon="xxx" onClick={()=> console.log(this.userDs.toJSONData(), this.userDs.current.get('code'))} key="this.userDs">
+        <Button
+          icon="xxx"
+          onClick={() =>
+            console.log(
+              this.userDs.toJSONData(),
+              this.userDs.current.get('code'),
+            )
+          }
+          key="this.userDs"
+        >
           toJSONData
         </Button>
         <Table key="user" buttons={buttons} dataSet={this.userDs}>
