@@ -96,6 +96,7 @@ export interface Locale {
     value_missing_no_label;
     no_matching_results;
     select_all;
+    select_re;
     unselect_all;
     common_item;
   };

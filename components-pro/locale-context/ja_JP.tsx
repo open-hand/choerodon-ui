@@ -96,6 +96,7 @@ const locale: Locale = {
     value_missing: '{label}を選択してください。',
     no_matching_results: '一致結果はありません。',
     select_all: 'すべて選択',
+    select_re: '逆選択',
     unselect_all: 'いや',
     common_item: '共通アイテム',
   },

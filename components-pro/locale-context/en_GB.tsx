@@ -95,6 +95,7 @@ const locale: Locale = {
     value_missing: 'Please select {label}.',
     no_matching_results: 'No matching results.',
     select_all: 'Select All',
+    select_re: 'Re Select',
     unselect_all: 'None',
     common_item: 'Common Items',
   },

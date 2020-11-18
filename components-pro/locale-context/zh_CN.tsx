@@ -95,6 +95,7 @@ const locale: Locale = {
     value_missing: '请选择{label}。',
     no_matching_results: '无匹配结果。',
     select_all: '全选',
+    select_re: '反选',
     unselect_all: '无',
     common_item: '常用项',
   },

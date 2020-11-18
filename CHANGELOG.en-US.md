@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `configure`: Added `tableAutoFocus` global configuration.
+- 🌟 `<pro>Select`: The multi-select mode adds the inverse selection function.
 - 🌟 `<pro>Table`: Added new `autoFocus` attribute controls whether the new line automatically gets focus to the first editable field.
 - 🌟 `<pro>PerformanceTable`: Added `showScrollArrow` and `clickScrollLength` properties to control whether the scroll bar displays arrow clicks.
 - 🐞 `Collapse`: Fixed `collapseExpandIcon` global attribute support.

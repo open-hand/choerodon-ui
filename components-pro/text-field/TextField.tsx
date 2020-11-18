@@ -229,7 +229,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     }
 
     // 修复ie下出现多层model导致的输入框遮盖问题
-    // fixed the input would shadow each other in ie brower 
+    // fixed the input would shadow each other in ie brower
     const  ZIndexOfIEProps:{style:CSSProperties}|{}  = isIE() ? {style:{zIndex:'auto'}}:{};
 
     const element = (
@@ -446,7 +446,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
               style:
                 height && height !== 'auto' ? { height: pxToRem(toPx(height)! - 2) } : undefined,
             }}
-            transitionName="zoom"
+            // transitionName="zoom"
             exclusive
             onEnd={this.handleTagAnimateEnd}
             onEnter={this.handleTagAnimateEnter}

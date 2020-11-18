@@ -593,8 +593,8 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     /**
      * fixed when ie the scroll width would cover the item width
      */
-    const IeMenuStyle = !dropdownMatchSelectWidth && isIE() ? {padding: '.08rem'} : {} ; 
-    const IeItemStyle = !dropdownMatchSelectWidth && isIE() ? {overflow:'visible'} : {} ; 
+    const IeMenuStyle = !dropdownMatchSelectWidth && isIE() ? {padding: '.08rem'} : {} ;
+    const IeItemStyle = !dropdownMatchSelectWidth && isIE() ? {overflow:'visible'} : {} ;
     this.filteredOptions.forEach(record => {
       let previousGroup: ReactElement<any> | undefined;
       groups.every(field => {
@@ -700,6 +700,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
       return [
         <div key="check-all" className={`${this.prefixCls}-select-all-none`}>
           <span onClick={this.chooseAll}>{$l('Select', 'select_all')}</span>
+          <span onClick={this.chooseRe}>{$l('Select', 'select_re')}</span>
           <span onClick={this.unChooseAll}>{$l('Select', 'unselect_all')}</span>
         </div>,
         menu,
@@ -1125,6 +1126,27 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
       const optionProps = onOption({ dataSet: options, record });
       const optionDisabled = (optionProps && optionProps.disabled);
       return !optionDisabled;
+    });
+    this.setValue(selectedOptions.map(this.processRecordToObject, this));
+  }
+
+  /**
+   * 反选
+   */
+  @autobind
+  chooseRe() {
+    const {
+      options,
+      valueField,
+      props: { onOption },
+    } = this;
+    const values = this.getValues();
+    const selectedOptions = this.filteredOptions.filter((record) => {
+      const optionProps = onOption({ dataSet: options, record });
+      const value = record.get(valueField);
+      const optionDisabled = (optionProps && optionProps.disabled);
+      const optionIsSelect = values.includes(value);
+      return !optionDisabled && !optionIsSelect;
     });
     this.setValue(selectedOptions.map(this.processRecordToObject, this));
   }
