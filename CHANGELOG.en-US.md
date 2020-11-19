@@ -21,6 +21,7 @@ timeline: true
 - 🌟 `<pro>PerformanceTable`: Added `showScrollArrow` and `clickScrollLength` properties to control whether the scroll bar displays arrow clicks.
 - 🐞 `Collapse`: Fixed `collapseExpandIcon` global attribute support.
 - 🐞 `TreeSelect`: Fixed TreeSelect the value is undefined the console log error.
+- 🐞 `Modal`: Fixed Modal close icon aligin problem.
 
 ## 0.8.75
 
