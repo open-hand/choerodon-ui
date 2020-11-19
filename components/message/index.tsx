@@ -39,7 +39,7 @@ function getCustomizePrefixCls() {
   return getPrefixCls('message', customizePrefixCls);
 }
 
-function getMessageInstance(placement: Placement, callback: (i: any) => void) {
+function getMessageInstance(placement: Placement, callback: (i: any) => void ,contentClassName:string) {
   if (messageInstance) {
     callback(messageInstance);
     return;
@@ -50,6 +50,7 @@ function getMessageInstance(placement: Placement, callback: (i: any) => void) {
       style: getPlacementStyle(placement, defaultTop, defaultBottom),
       transitionName: getPlacementTransitionName(placement, transitionName),
       getContainer,
+      contentClassName,
     },
     (instance: any) => {
       if (messageInstance) {
@@ -104,7 +105,7 @@ function notice(
       ),
       onClose,
     });
-  });
+  },`${prefixCls}-${type}`);
   return () => {
     if (messageInstance) {
       messageInstance.removeNotice(target);
