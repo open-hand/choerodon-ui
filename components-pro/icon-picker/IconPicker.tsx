@@ -92,7 +92,7 @@ export default class IconPicker extends TriggerField<IconPickerProps> {
   }
 
   getOtherProps() {
-    return omit(super.getOtherProps(), ['pageSize','customFontName']);
+    return omit(super.getOtherProps(), ['pageSize','customFontName','icons']);
   }
 
   @action

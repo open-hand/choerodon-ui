@@ -28,7 +28,7 @@ import { SHOW_ALL, SHOW_CHILD, SHOW_PARENT } from './strategies';
 import { SelectPropTypes } from './PropTypes';
 import Button from '../../button/Button';
 import { getLabelFromPropsValue, getMapKey } from '../select/util';
-import isEmpty from 'lodash/isEmpty';
+import { isEmpty } from './util';
 
 function filterFn(input, child) {
   return (
@@ -684,7 +684,10 @@ export default class Select extends Component {
   }
 
   clearSearchInput() {
-    this.getInputDOMNode().focus();
+    const input = this.getInputDOMNode();
+    if (input && document.activeElement !== input) {
+      input.focus();
+    }
     if (!('inputValue' in this.props)) {
       this.setState({ inputValue: isEmpty(this.props.searchValue)? '' : isEmpty(this.props.searchValue) });
     }

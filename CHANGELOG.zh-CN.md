@@ -20,6 +20,8 @@ timeline: true
 - 🌟 `<pro>Table`: 新增 autoFocus 属性控制是否新增行自动获焦至第一个可编辑字段。
 - 🌟 `<pro>PerformanceTable`: 新增 showScrollArrow，clickScrollLength 属性，控制滚动条是否显示箭头点击。
 - 🐞 `Collapse`: 修复 collapseExpandIcon 全局属性支持。
+- 🐞 `TreeSelect`: 修复 TreeSelect 值为 undefined 导致的控制台报错。
+- 🐞 `Modal`: 修复 Modal 关闭按钮位置错位问题。
 
 ## 0.8.75
 

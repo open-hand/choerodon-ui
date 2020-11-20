@@ -8,6 +8,7 @@ export default class Notice extends Component {
     onClose: PropTypes.func,
     children: PropTypes.any,
     closeIcon: PropTypes.node,
+    contentClassName: PropTypes.string,
   };
 
   static defaultProps = {
@@ -49,6 +50,7 @@ export default class Notice extends Component {
 
   render() {
     const props = this.props;
+    const { contentClassName } = props;
     const componentClass = `${props.prefixCls}-notice`;
     const className = {
       [`${componentClass}`]: 1,
@@ -62,7 +64,7 @@ export default class Notice extends Component {
         onMouseEnter={this.clearCloseTimer}
         onMouseLeave={this.startCloseTimer}
       >
-        <div className={`${componentClass}-content`}>{props.children}</div>
+        <div className={`${componentClass}-content ${contentClassName}`}>{props.children}</div>
         {props.closable ? (
           <a tabIndex="0" onClick={this.close} className={`${componentClass}-close`}>
             {props.closeIcon || <span className={`${componentClass}-close-x`}></span>}
