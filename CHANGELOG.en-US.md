@@ -22,6 +22,7 @@ timeline: true
 - 🐞 `Collapse`: Fixed `collapseExpandIcon` global attribute support.
 - 🐞 `TreeSelect`: Fixed TreeSelect the value is undefined the console log error.
 - 🐞 `Modal`: Fixed Modal close icon aligin problem.
+- 🐞 `<pro>Table`: Fixed Table setting `autoHeight` maxHeight and the fixed cloumn dislocation.
 
 ## 0.8.75
 

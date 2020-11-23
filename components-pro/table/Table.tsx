@@ -1627,7 +1627,7 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   getContentHeight() {
-    const { wrapper, element, prefixCls, props: { autoHeight } } = this;
+    const { wrapper, element, props: { autoHeight }, tableBodyWrap, fixedColumnsBodyLeft, fixedColumnsBodyRight } = this;
     if (autoHeight) {
       const { top: parentTop, height: parentHeight } = wrapper.parentNode.getBoundingClientRect();
       const { top: tableTop } = element.getBoundingClientRect();
@@ -1641,11 +1641,12 @@ export default class Table extends DataSetComponent<TableProps> {
         if (type === TableAutoHeightType.minHeight) {
           return parentHeight - (tableTop - parentTop) - diff;
         }
-        const tableBody: HTMLDivElement[] | null = element.querySelectorAll(`.${prefixCls}-body`);
-        if (tableBody) {
-          tableBody.forEach(tbody => {
-            tbody.style.maxHeight = pxToRem(parentHeight - (tableTop - parentTop) - diff) || '';
-          });
+        if (tableBodyWrap && fixedColumnsBodyLeft && fixedColumnsBodyRight) {
+          let maxHeight = parentHeight - (tableTop - parentTop) - diff; 
+          tableBodyWrap.style.maxHeight =  pxToRem(maxHeight) || '';
+          maxHeight -= measureScrollbar();
+          fixedColumnsBodyLeft.style.maxHeight =  pxToRem(maxHeight) || '';
+          fixedColumnsBodyRight.style.maxHeight =  pxToRem(maxHeight) || '';
           return parentHeight - (tableTop - parentTop) - diff || 0;
         }
       }
