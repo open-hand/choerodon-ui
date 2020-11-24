@@ -77,10 +77,17 @@ export default class LovView extends Component<LovViewProps> {
     }
   };
 
-  handleRow = () => {
-    const { onDoubleClick } = this.props;
+  /**
+   * 单选 onRow 处理
+   * @param props
+   */
+  handleRow = (props) => {
+    const { onDoubleClick, tableProps } = this.props;
+    let tablePropsOnRow;
+    if (tableProps?.onRow) tablePropsOnRow = tableProps.onRow(props);
     return {
       onDoubleClick,
+      ...tablePropsOnRow,
     };
   };
 

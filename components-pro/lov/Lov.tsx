@@ -30,6 +30,8 @@ import { getLovPara } from '../stores/utils';
 import { TableQueryBarHook, TableProps } from '../table/Table';
 import { FieldProps } from '../data-set/Field';
 
+export type Events = { [key: string]: Function };
+
 export type LovConfigItem = {
   display?: string;
   conditionField?: string;
@@ -74,6 +76,7 @@ export interface LovProps extends SelectProps, ButtonProps {
   noCache?: boolean;
   mode?: ViewMode;
   triggerMode?: TriggerMode;
+  lovEvents?: Events;
 }
 
 @observer
@@ -159,7 +162,7 @@ export default class Lov extends Select<LovProps> {
   private openModal = action(() => {
     const config = this.getConfig();
     const { options, multiple, primitive, valueField } = this;
-    const { tableProps } = this.props;
+    const { tableProps, lovEvents } = this.props;
     const modalProps = this.getModalProps();
     const noCache = this.getProp('noCache');
     if (!this.modal && config && options) {
@@ -174,6 +177,9 @@ export default class Lov extends Select<LovProps> {
             return selected;
           }),
         );
+      }
+      if (lovEvents) {
+        Object.keys(lovEvents).forEach(event => options.addEventListener(event, lovEvents[event]));
       }
       this.modal = open({
         title,
@@ -241,13 +247,13 @@ export default class Lov extends Select<LovProps> {
   };
 
   handleLovViewOk = async () => {
-    const { options, multiple } = this;
+    const { options, multiple, props: { tableProps } } = this;
 
     // 根据 mode 进行区分 假如 存在 rowbox 这些 不应该以 current 作为基准
     let selectionMode = {
       selectionMode: multiple ? SelectionMode.rowbox : SelectionMode.none,
       ...getConfig('lovTableProps'),
-      ...this.props.tableProps,
+      ...tableProps,
     }.selectionMode;
 
     if ({
