@@ -1017,6 +1017,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
    */
   renderMultiLine(readOnly?: boolean): ReactNode {
     const {
+      name,
       record,
       field,
       dataSet,
@@ -1062,16 +1063,19 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
                     {validationMessage}
                   </Tooltip>
                 );
+                const label = fieldItem.get('label');
                 return (
                   <Row key={`${record?.index}-multi-${fieldItem.get('name')}`} className={`${prefixCls}-multi`}>
+                    {label && (
+                      <Col
+                        span={8}
+                        className={required ? `${prefixCls}-multi-label ${prefixCls}-multi-label-required` : `${prefixCls}-multi-label`}
+                      >
+                        {fieldItem.get('label')}
+                      </Col>
+                    )}
                     <Col
-                      span={8}
-                      className={required ? `${prefixCls}-multi-label ${prefixCls}-multi-label-required` : `${prefixCls}-multi-label`}
-                    >
-                      {fieldItem.get('label')}
-                    </Col>
-                    <Col
-                      span={16}
+                      span={label ? 16 : 24}
                       className={
                         validationHidden ?
                           `${prefixCls}-multi-value` :
