@@ -635,7 +635,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
         selectedKeys.push(key);
       }
       const itemContent = optionRenderer
-        ? optionRenderer({ dataSet: this.options, record, text, value })
+        ? optionRenderer({ dataSet: options, record, text, value })
         : text;
       const option: ReactElement = (
         <Item style={IeItemStyle} {...optionProps}   key={key} value={record} disabled={optionDisabled}>
@@ -1158,7 +1158,10 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
 
   @autobind
   async handlePopupHiddenChange(hidden: boolean) {
+    // TODO 缓存优化
+    // const { field } = this;
     if (!hidden) {
+      // await field?.fetchLookup();
       this.forcePopupAlign();
     }
     super.handlePopupHiddenChange(hidden);

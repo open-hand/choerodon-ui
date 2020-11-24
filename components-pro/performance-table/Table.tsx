@@ -336,7 +336,6 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   }
 
   shouldComponentUpdate(nextProps: TableProps, nextState: TableState) {
-    console.log('shouldComponentUpdate', this.props.columns !== nextProps.columns)
     const _cacheChildrenSize = flatten((nextProps.children as any[] || nextProps.columns) || []).length;
 
     /**
