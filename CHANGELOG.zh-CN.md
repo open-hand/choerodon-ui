@@ -19,9 +19,11 @@ timeline: true
 - 🌟 `<pro>Select`: 多选模式新增反选功能。
 - 🌟 `<pro>Table`: 新增 autoFocus 属性控制是否新增行自动获焦至第一个可编辑字段。
 - 🌟 `<pro>PerformanceTable`: 新增 showScrollArrow，clickScrollLength 属性，控制滚动条是否显示箭头点击。
+- 💄 `<pro>FormField`: 优化当值为多选时候 validator 配置后也可以展示错误信息。
 - 🐞 `Collapse`: 修复 collapseExpandIcon 全局属性支持。
 - 🐞 `TreeSelect`: 修复 TreeSelect 值为 undefined 导致的控制台报错。
 - 🐞 `Modal`: 修复 Modal 关闭按钮位置错位问题。
+- 🐞 `<pro>Table`: 修复 Table 设置自动高度为 maxHeight 出现的列表错位问题。
 
 ## 0.8.75
 
