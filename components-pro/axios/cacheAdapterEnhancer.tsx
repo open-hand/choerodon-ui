@@ -1,4 +1,5 @@
 import { AxiosAdapter, AxiosPromise } from 'axios';
+import { toJS } from 'mobx';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import Cache, { refreshCacheOptions } from '../_util/Cache';
 import { buildURLWithAxiosConfig, isCacheLike } from './utils';
@@ -18,7 +19,8 @@ export type Options = {
 };
 
 function getDefaultCache() {
-  const cache = new Cache<string, AxiosPromise>(getConfig('lookupCache'));
+  const lookupCache = toJS(getConfig('lookupCache'));
+  const cache = new Cache<string, AxiosPromise>(lookupCache);
   refreshCacheOptions(cache);
   return cache;
 }

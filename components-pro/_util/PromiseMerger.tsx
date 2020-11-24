@@ -1,4 +1,4 @@
-import { action, IReactionDisposer } from 'mobx';
+import { action, IReactionDisposer, toJS } from 'mobx';
 import Cache, { refreshCacheOptions } from './Cache';
 
 export default class PromiseMerger<V> {
@@ -16,7 +16,8 @@ export default class PromiseMerger<V> {
 
   constructor(callback: (codes) => Promise<{ [key: string]: V }>, config, timeout: number = 200) {
     this.timeout = timeout;
-    this.cache = new Cache<string, V>(config);
+    const lookupCache = toJS(config);
+    this.cache = new Cache<string, V>(lookupCache);
     this.callback = callback;
     this.reaction = refreshCacheOptions(this.cache);
   }
