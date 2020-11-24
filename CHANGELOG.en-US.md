@@ -16,14 +16,20 @@ timeline: true
 ---
 
 - 🌟 `configure`: Added `tableAutoFocus` global configuration.
+- 🌟 `<pro>Lov`: Added `lovEvents` property to handle lov `DataSet` events.
 - 🌟 `<pro>Select`: The multi-select mode adds the inverse selection function.
+- 🌟 `<pro>Table`: Added `expandIconAsCell` property to control whether the expanded icon occupies a column.
 - 🌟 `<pro>Table`: Added new `autoFocus` attribute controls whether the new line automatically gets focus to the first editable field.
 - 🌟 `<pro>PerformanceTable`: Added `showScrollArrow` and `clickScrollLength` properties to control whether the scroll bar displays arrow clicks.
-- 💄 `<pro>FormField`: Optimized the value is mutiple it could show custom `validator`.
+- 💄 `<pro>TextField`: Optimize the display of `placeholder` beyond the width.
+- 💄 `<pro>Lov`: Optimized the lov `tableProps` property to be compatible with `onRow`.
+- 💄 `<pro>PerformanceTable`: Optimized rendering occupancy issue when `label` does not exist.
+- 💄 `<pro>FormField`: Optimized when the value is multi-selection, error messages can also be displayed after `validator` is configured.
 - 🐞 `Collapse`: Fixed `collapseExpandIcon` global attribute support.
-- 🐞 `TreeSelect`: Fixed TreeSelect the value is undefined the console log error.
-- 🐞 `Modal`: Fixed Modal close icon aligin problem.
-- 🐞 `<pro>Table`: Fixed Table setting `autoHeight` maxHeight and the fixed cloumn dislocation.
+- 🐞 `TreeSelect`: Fixed the console error caused by the TreeSelect value being undefined.
+- 🐞 `Modal`: Fixed the wrong position of the Modal close button.
+- 🐞 `<Pro>Field`: Fixed `fetchLookup` lookupData update error.
+- 🐞 `<pro>Table`: Fixed the list misalignment problem when the automatic height of Table is set to `maxHeight`.
 
 ## 0.8.75
 
