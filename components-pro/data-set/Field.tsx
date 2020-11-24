@@ -825,9 +825,10 @@ export default class Field {
         const value = this.getValue();
         const valueField = this.get('valueField');
         if (value && valueField && lookup) {
+          const values = this.get('multiple') ? [].concat(...value) : [].concat(value);
           this.set(
             'lookupData',
-            [].concat(value).reduce<object[]>((lookupData, v) => {
+            values.reduce<object[]>((lookupData, v) => {
               const found = lookup.find(item => isSameLike(item[valueField], v));
               if (found) {
                 lookupData.push(found);
