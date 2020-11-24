@@ -1641,14 +1641,18 @@ export default class Table extends DataSetComponent<TableProps> {
         if (type === TableAutoHeightType.minHeight) {
           return parentHeight - (tableTop - parentTop) - diff;
         }
-        if (tableBodyWrap && fixedColumnsBodyLeft && fixedColumnsBodyRight) {
-          let maxHeight = parentHeight - (tableTop - parentTop) - diff; 
+        let maxHeight = parentHeight - (tableTop - parentTop) - diff; 
+        if(tableBodyWrap) {
           tableBodyWrap.style.maxHeight =  pxToRem(maxHeight) || '';
-          maxHeight -= measureScrollbar();
-          fixedColumnsBodyLeft.style.maxHeight =  pxToRem(maxHeight) || '';
-          fixedColumnsBodyRight.style.maxHeight =  pxToRem(maxHeight) || '';
-          return parentHeight - (tableTop - parentTop) - diff || 0;
         }
+        maxHeight -= measureScrollbar();
+        if(fixedColumnsBodyLeft){
+          fixedColumnsBodyLeft.style.maxHeight =  pxToRem(maxHeight) || '';
+        }
+        if(fixedColumnsBodyRight) {
+          fixedColumnsBodyRight.style.maxHeight =  pxToRem(maxHeight) || '';
+        }
+        return parentHeight - (tableTop - parentTop) - diff || 0;
       }
     }
     return this.getStyleHeight();

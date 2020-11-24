@@ -1266,6 +1266,11 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     const wrapper = this.renderWrapper();
     const help = this.renderHelpMessage();
     const { _inTable } = this.props;
+    /**
+     * 用户自定义校验存在的话说明用户保证校验情况那么多选这些应该存在校验信息
+     * if user has custom validator , the develop shuould to controll the validationMessage for all 
+     */
+    const customValidator = this.getProp('validator');
     return this.hasFloatLabel ? (
         [
           isValidElement(wrapper) && cloneElement(wrapper, { key: 'wrapper' }),
@@ -1284,7 +1289,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
           <Tooltip
             suffixCls={`form-tooltip ${getConfig('proPrefixCls')}-tooltip`}
             title={
-              !!(this.multiple && this.getValues().length) ||
+              (!!(this.multiple && this.getValues().length) && !customValidator) ||
               this.isValidationMessageHidden(validationMessage)
                 ? null
                 : validationMessage

@@ -19,6 +19,7 @@ timeline: true
 - 🌟 `<pro>Select`: The multi-select mode adds the inverse selection function.
 - 🌟 `<pro>Table`: Added new `autoFocus` attribute controls whether the new line automatically gets focus to the first editable field.
 - 🌟 `<pro>PerformanceTable`: Added `showScrollArrow` and `clickScrollLength` properties to control whether the scroll bar displays arrow clicks.
+- 💄 `<pro>FormField`: Optimized the value is mutiple it could show custom `validator`.
 - 🐞 `Collapse`: Fixed `collapseExpandIcon` global attribute support.
 - 🐞 `TreeSelect`: Fixed TreeSelect the value is undefined the console log error.
 - 🐞 `Modal`: Fixed Modal close icon aligin problem.
