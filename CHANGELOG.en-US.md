@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.76
+
+`2020-11-24`
+
 - 🌟 `configure`: Added `tableAutoFocus` global configuration.
 - 🌟 `<pro>Lov`: Added `lovEvents` property to handle lov `DataSet` events.
 - 🌟 `<pro>Select`: The multi-select mode adds the inverse selection function.
@@ -23,7 +27,7 @@ timeline: true
 - 🌟 `<pro>PerformanceTable`: Added `showScrollArrow` and `clickScrollLength` properties to control whether the scroll bar displays arrow clicks.
 - 💄 `<pro>TextField`: Optimize the display of `placeholder` beyond the width.
 - 💄 `<pro>Lov`: Optimized the lov `tableProps` property to be compatible with `onRow`.
-- 💄 `<pro>PerformanceTable`: Optimized rendering occupancy issue when `label` does not exist.
+- 💄 `<pro>Table`: Optimized rendering occupancy issue when `label` does not exist.
 - 💄 `<pro>FormField`: Optimized when the value is multi-selection, error messages can also be displayed after `validator` is configured.
 - 🐞 `Collapse`: Fixed `collapseExpandIcon` global attribute support.
 - 🐞 `TreeSelect`: Fixed the console error caused by the TreeSelect value being undefined.

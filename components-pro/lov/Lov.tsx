@@ -366,7 +366,7 @@ export default class Lov extends Select<LovProps> {
   }
 
   getOtherProps() {
-    const otherProps = omit(super.getOtherProps(), ['modalProps', 'noCache', 'tableProps', 'triggerMode']);
+    const otherProps = omit(super.getOtherProps(), ['modalProps', 'noCache', 'tableProps', 'triggerMode', 'lovEvents']);
     const triggerMode = this.getTriggerMode();
     if (triggerMode === TriggerMode.input) otherProps.onClick = this.onClick;
     return otherProps;

@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.76
+
+`2020-11-24`
+
 - 🌟 `configure`: 新增 tableAutoFocus 全局属性。
 - 🌟 `<pro>Select`: 多选模式新增反选功能。
 - 🌟 `<pro>Lov`: 新增 lovEvents 属性处理 lov 数据源事件。
@@ -24,7 +28,7 @@ timeline: true
 - 💄 `<pro>FormField`: 优化当值为多选时候 validator 配置后也可以展示错误信息。
 - 💄 `<pro>Lov`: 优化 lov tableProps 属性兼容 onRow。
 - 💄 `<pro>TextField`: 优化 placeholder 超出宽度显示。
-- 💄 `<pro>PerformanceTable`: 优化 label 不存在时渲染占位问题。
+- 💄 `<pro>Table`: 优化多行 label 不存在时渲染占位问题。
 - 🐞 `Collapse`: 修复 collapseExpandIcon 全局属性支持。
 - 🐞 `TreeSelect`: 修复 TreeSelect 值为 undefined 导致的控制台报错。
 - 🐞 `Modal`: 修复 Modal 关闭按钮位置错位问题。

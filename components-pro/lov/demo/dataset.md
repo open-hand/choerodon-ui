@@ -3,6 +3,7 @@ order: 0
 title:
   zh-CN: 数据源
   en-US: DataSet
+only: true  
 ---
 
 ## zh-CN
@@ -25,6 +26,14 @@ function handleDataSetChange({ record, name, value, oldValue }) {
     `[record.get('${name}')]`,
     record.get(name),
   );
+}
+
+function handleUserDSLoad({ dataSet }) {
+  console.log(dataSet, 'handleUserDSLoad')
+  const first = dataSet.get(0);
+  if (first) {
+    first.selectable = false;
+  }
 }
 
 class App extends React.Component {
@@ -57,7 +66,13 @@ class App extends React.Component {
     return (
       <Row gutter={10}>
         <Col span={12}>
-          <Lov dataSet={this.ds} name="code" noCache triggerMode='input' tableProps={{ selectionMode: 'rowbox' }} />
+          <Lov dataSet={this.ds} name="code" noCache triggerMode='input' tableProps={{ selectionMode: 'rowbox',  onRow:({ dataSet, record, index, expandedRow }) => {
+                                                                                                                          if (index === 2) {
+                                                                                                                            return {
+                                                                                                                              style: { height: 50 },
+                                                                                                                            };
+                                                                                                                          }
+                                                                                                                        } }} lovEvents={{ load: handleUserDSLoad }} />
         </Col>
         <Col span={12}>
           <Lov dataSet={this.ds} name="code_string" />
