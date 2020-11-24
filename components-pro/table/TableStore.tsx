@@ -672,7 +672,10 @@ export default class TableStore {
 
   @computed
   get expandIconAsCell(): boolean {
-    const { expandedRowRenderer } = this.props;
+    const { expandedRowRenderer, expandIconAsCell } = this.props;
+    if (expandIconAsCell !== undefined) {
+      return expandIconAsCell;
+    }
     return !!expandedRowRenderer && !this.isTree;
   }
 

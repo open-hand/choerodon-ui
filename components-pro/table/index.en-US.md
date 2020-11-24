@@ -39,6 +39,7 @@ subtitle: 表格
 | expandedRowRenderer | 展开行渲染器 | ({ dataSet, record }) => ReactNode |  |
 | expandIcon | 自定义展开图标 | ({ prefixCls, expanded, expandable, needIndentSpaced, record, onExpand }) => ReactNode |  |
 | expandIconColumnIndex | 展开图标所在列索引 | number |  |
+| expandIconAsCell | 展开图标是否单独单元格展示 | boolean | （非Tree mode）true \| false |
 | indentSize | 展示树形数据时，每层缩进的宽度 | number | 15 |
 | filter | 数据过滤， 返回值 true - 显示 false - 不显示 | (record) => boolean |  |
 | mode | 表格展示的模式, tree 需要配合 dataSet 的`idField`和`parentField`来展示，可选值: `list` `tree` | string | 'list' |

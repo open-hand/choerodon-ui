@@ -210,10 +210,11 @@ export default class TableEditor extends Component<TableEditorProps> {
                 // 目前测试inline时候需要放开限制
                 _inTable: !inlineEdit,
               };
+              const label = fields.get('label');
               return (
                 <Row key={`${record?.index}-multi-${fields.get('name')}`} className={`${prefixCls}-multi`}>
-                  <Col span={8} className={`${prefixCls}-multi-label`}>{fields.get('label')}</Col>
-                  <Col span={16} className={`${prefixCls}-multi-value`}>{cloneElement<FormFieldProps>(editor, newEditorProps)}</Col>
+                  {label && <Col span={8} className={`${prefixCls}-multi-label`}>{label}</Col>}
+                  <Col span={label ? 16 : 24} className={`${prefixCls}-multi-value`}>{cloneElement<FormFieldProps>(editor, newEditorProps)}</Col>
                 </Row>
               );
             }
