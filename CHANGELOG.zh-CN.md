@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>NumberField`: 新增 longPressPuls 属性控制 NumberField 长按累加。
+
 ## 0.8.76
 
 `2020-11-24`

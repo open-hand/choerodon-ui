@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>NumberField`: Added `longPressPuls` to control NumberField long press accumulation.
+
 ## 0.8.76
 
 `2020-11-24`
