@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 💄 Optimized interface export type and enum.
 - 🌟 `<pro>NumberField`: Added `longPressPuls` to control NumberField long press accumulation.
 
 ## 0.8.76

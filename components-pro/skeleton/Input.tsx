@@ -3,7 +3,7 @@ import {observer} from 'mobx-react';
 import C7nSkeletonInput,{SkeletonInputProps as C7nSkeletonInpputProps } from 'choerodon-ui/lib/skeleton/Input'
 import DataSetComponent, {DataSetComponentProps} from '../data-set/DataSetComponent';
 
-interface SkeletonInputProps extends DataSetComponentProps, Omit<C7nSkeletonInpputProps,'size'>{}
+export interface SkeletonInputProps extends DataSetComponentProps, Omit<C7nSkeletonInpputProps,'size'>{}
 
 @observer
 export default class SkeletonInput extends DataSetComponent<SkeletonInputProps> {

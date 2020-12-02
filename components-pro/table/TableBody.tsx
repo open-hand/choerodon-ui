@@ -3,8 +3,8 @@ import { observer } from 'mobx-react';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import autobind from '../_util/autobind';
-import { ColumnLock } from './enum';
 import TableContext from './TableContext';
+import { ColumnLock, DragColumnAlign } from './enum';
 
 export interface TableBodyProps {
   prefixCls?: string;
@@ -12,6 +12,7 @@ export interface TableBodyProps {
   height?: number;
   getRef?: (node: HTMLDivElement | null) => void;
   onScroll?: (e) => void;
+  dragColumnAlign?: DragColumnAlign;
 }
 
 @observer
@@ -29,7 +30,7 @@ export default class TableBody extends Component<TableBodyProps> {
   }
 
   render() {
-    const { children, lock, prefixCls, height, onScroll } = this.props;
+    const { children, lock, prefixCls, height, onScroll, dragColumnAlign } = this.props;
     const {
       tableStore: { leftLeafColumnsWidth, hasFooter },
     } = this.context;
@@ -45,13 +46,18 @@ export default class TableBody extends Component<TableBodyProps> {
             hasFooterAndNotLock && height !== undefined ? height + scrollbar : height,
           ),
           marginBottom: hasFooterAndNotLock ? pxToRem(-scrollbar) : undefined,
-          width: fixedLeft ? pxToRem(leftLeafColumnsWidth + (scrollbar || 20)) : undefined,
+          width: dragColumnAlign ? pxToRem(50 + (scrollbar || 20)) : fixedLeft ? pxToRem(leftLeafColumnsWidth + (scrollbar || 20)) : undefined,
         }}
         onScroll={onScroll}
       >
         {children}
       </div>
     );
+    if(dragColumnAlign === DragColumnAlign.left) {
+      return (
+        <div style={{ width: pxToRem(50), overflow: 'hidden' }}>{tableBody}</div>
+      );
+    }
     if (fixedLeft) {
       return (
         <div style={{ width: pxToRem(leftLeafColumnsWidth), overflow: 'hidden' }}>{tableBody}</div>

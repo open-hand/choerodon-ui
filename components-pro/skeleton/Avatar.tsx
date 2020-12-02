@@ -3,7 +3,7 @@ import C7nAvatar,{AvatarProps as C7nAvatarProps} from 'choerodon-ui/lib/skeleton
 import { observer } from 'mobx-react';
 import DataSetComponent,{ DataSetComponentProps } from '../data-set/DataSetComponent';
 
-interface AvatarProps extends Omit<C7nAvatarProps,'size'>,DataSetComponentProps{
+export interface AvatarProps extends Omit<C7nAvatarProps,'size'>,DataSetComponentProps{
 }
 
 @observer

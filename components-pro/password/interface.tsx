@@ -1,0 +1,3 @@
+export {
+    PasswordProps,
+} from './Password';
