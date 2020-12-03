@@ -15,11 +15,10 @@ timeline: true
 
 ---
 
-## 0.8.76
-
-
 - 🌟 `<pro>Table`: 新增 autoFootHeight 属性控制单独处理 column footer。
+- 🐞 `<pro>Table`: 修复 Table tooltip 无法自动弹出问题。
 
+## 0.8.76
 
 `2020-11-24`
 
@@ -56,7 +55,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复 table filterBar 输入后直接点击 clearButton 失效问题。
 - 🐞 `<pro>Select`: 修复复合模式下中文输入法无法生成选项问题。
 - 🐞 `<pro>Table`: 修复 table 组合列宽度调整，如果拖动多列后的单列会出现下一列表宽度异常。
-- 🐞 `<pro>PerformanceTable`: 修复出现横向滚动条时 lock 列错位问题。
+- 🐞 `<pro>Table`: 修复出现横向滚动条时多行模式 lock 列错位问题。
 
 
 ## 0.8.74

@@ -10,7 +10,7 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
-import { action, computed, isArrayLike, observable, set } from 'mobx';
+import { action, computed, isArrayLike, observable, runInAction, set } from 'mobx';
 import classNames from 'classnames';
 import raf from 'raf';
 import omit from 'lodash/omit';
@@ -446,7 +446,6 @@ export default class TableCell extends Component<TableCellProps> {
     return renderer;
   }
 
-  @action
   getInnerNode(prefixCls, command?: Commands[]) {
     const {
       context: {
@@ -483,7 +482,9 @@ export default class TableCell extends Component<TableCellProps> {
           return record.getField(fields.name) || dataSet.getField(fields.name);
         }
       }).filter(f => f).length;
-      tableStore.multiLineHeight = rows > 0 ? rowHeight * rows + 5 : rowHeight;
+      runInAction(() => {
+        tableStore.multiLineHeight = rows > 0 ? rowHeight * rows + 5 : rowHeight;
+      });
     }
 
     if (!hasEditor) {

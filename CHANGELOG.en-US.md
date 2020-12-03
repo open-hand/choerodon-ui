@@ -15,9 +15,10 @@ timeline: true
 
 ---
 
-## 0.8.76
-
 - 🌟 `<pro>Table`: Added `autoFootHeight` property to control separate processing of column footer.
+- 🐞 `<pro>Table`: Fixed the problem that Table `tooltip` cannot pop up automatically.
+
+## 0.8.76
 
 `2020-11-24`
 
@@ -54,7 +55,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the problem with tree table auto folding when the row is expanded in scrollbar appeared.
 - 🐞 `<pro>Select`: Fixed the Select in `combo` mode can't create options when use chinese input method.
 - 🐞 `<pro>Table`: Fixed table grouped columns resize, if resize the single column after grouped columns, would has wrong width.
-- 🐞 `<pro>PerformanceTable`: Fixed the problem of the lock column misalignment when the horizontal scroll bar appears.
+- 🐞 `<pro>Table`: Fixed the problem of the lock column misalignment when the horizontal scroll bar appears.
 
 ## 0.8.74
 
