@@ -3,7 +3,6 @@ order: 0
 title:
   zh-CN: 数据源
   en-US: DataSet
-only: true  
 ---
 
 ## zh-CN

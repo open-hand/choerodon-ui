@@ -97,8 +97,8 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
 
   @autobind
   handleResizeEnd() {
-    const { tableStore } = this.context;
-    if (tableStore.rowHeight === 'auto') {
+    const { tableStore: { autoFootHeight, rowHeight } } = this.context;
+    if (rowHeight === 'auto' || autoFootHeight) {
       this.syncFixedTableRowHeight();
     }
   }
@@ -174,7 +174,7 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
         return columnItem.key === DRAG_KEY
       })
       if(dragColumns.length > 0){
-        return dragColumns[0].width 
+        return dragColumns[0].width
       }
     }
     if (overflowX) {

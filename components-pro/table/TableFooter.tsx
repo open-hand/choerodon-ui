@@ -35,6 +35,7 @@ export default class TableFooter extends Component<TableFooterProps, any> {
 
   render() {
     const { prefixCls, lock, dataSet } = this.props;
+    const { tableStore: { autoFootHeight } } = this.context;
     const {
       tableStore: { lockColumnsFootRowsHeight, overflowY, rowHeight },
     } = this.context;
@@ -60,7 +61,7 @@ export default class TableFooter extends Component<TableFooterProps, any> {
         <tr
           style={{
             height:
-              lock && rowHeight === 'auto' ? pxToRem(get(lockColumnsFootRowsHeight, 0)) : undefined,
+              lock && (rowHeight === 'auto' || autoFootHeight) ? pxToRem(get(lockColumnsFootRowsHeight, 0)) : undefined,
           }}
         >
           {tds}

@@ -42,14 +42,14 @@ export default class TableFooterCell extends Component<TableFooterCellProps, any
   render() {
     const { column, prefixCls, dataSet } = this.props;
     const {
-      tableStore: { rowHeight },
+      tableStore: { rowHeight, autoFootHeight },
     } = this.context;
     const { footer, footerClassName, footerStyle = {}, align, name, command } = column;
     const classString = classNames(`${prefixCls}-cell`, footerClassName);
     const innerProps: any = {
       className: `${prefixCls}-cell-inner`,
     };
-    if (rowHeight !== 'auto') {
+    if (rowHeight !== 'auto' && !autoFootHeight) {
       innerProps.style = {
         height: pxToRem(rowHeight),
       };

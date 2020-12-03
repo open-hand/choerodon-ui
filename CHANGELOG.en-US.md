@@ -17,6 +17,8 @@ timeline: true
 
 ## 0.8.76
 
+- 🌟 `<pro>Table`: Added `autoFootHeight` property to control separate processing of column footer.
+
 `2020-11-24`
 
 - 🌟 `configure`: Added `tableAutoFocus` global configuration.

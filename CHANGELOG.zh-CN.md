@@ -17,6 +17,10 @@ timeline: true
 
 ## 0.8.76
 
+
+- 🌟 `<pro>Table`: 新增 autoFootHeight 属性控制单独处理 column footer。
+
+
 `2020-11-24`
 
 - 🌟 `configure`: 新增 tableAutoFocus 全局属性。
