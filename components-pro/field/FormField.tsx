@@ -42,6 +42,7 @@ import CloseButton from './CloseButton';
 import { fromRangeValue, getDateFormatByField, toMultipleValue, toRangeValue } from './utils';
 import isSame from '../_util/isSame';
 import formatString from '../formatter/formatString';
+import formatCurrency from '../formatter/formatCurrency';
 
 const map: { [key: string]: FormField<FormFieldProps>[]; } = {};
 
@@ -458,6 +459,14 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
   @computed
   get multiLine(): boolean {
     return this.getProp('multiLine');
+  }
+
+  /**
+   * 获取字段货币属性
+   */
+  @computed
+  get currency(): string {
+    return this.getProp('currency');
   }
 
   @computed
@@ -1011,6 +1020,29 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     }
   }
 
+
+  /**
+   * 渲染货币格式化
+   * @param readOnly
+   */
+  renderCurrency(readOnly?: boolean): ReactNode {
+    const {
+      currency,
+      lang,
+      props: { renderer },
+    } = this;
+    if (renderer) {
+      return this.getTextNode();
+    }
+    if (readOnly) {
+      const formatOptions = {
+        currency,
+      };
+      const value = this.getValue();
+      return formatCurrency(value, lang, formatOptions)
+    }
+  }
+
   /**
    * 只读模式下多行单元格渲染
    * @param readOnly
@@ -1272,7 +1304,8 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     const { _inTable } = this.props;
     /**
      * 用户自定义校验存在的话说明用户保证校验情况那么多选这些应该存在校验信息
-     * if user has custom validator , the develop shuould to controll the validationMessage for all 
+     * If the user-defined verification exists, it means that the user guarantees
+     * that the verification situation is so many. These should have verification information
      */
     const customValidator = this.getProp('validator');
     return this.hasFloatLabel ? (

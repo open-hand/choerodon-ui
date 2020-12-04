@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Output`: Added `currency` property.
 - 🌟 `<pro>Table`: Added `autoFootHeight` property to control separate processing of column footer.
 - 🐞 `<pro>Table`: Fixed the problem that Table `tooltip` cannot pop up automatically.
 
