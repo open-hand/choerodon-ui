@@ -63,7 +63,7 @@ export default class Output extends FormField<OutputProps> {
   }
 
   getRenderedValue(): ReactNode {
-    const { multiple, range, multiLine } = this;
+    const { multiple, range, multiLine, currency } = this;
     if (multiple) {
       return this.renderMultipleValues(true);
     }
@@ -75,6 +75,12 @@ export default class Output extends FormField<OutputProps> {
      */
     if (multiLine) {
       return this.renderMultiLine(true);
+    }
+    /**
+     * 货币渲染
+     */
+    if (currency) {
+      return this.renderCurrency(true);
     }
     return this.getTextNode() || getConfig('tableDefaultRenderer');
   }

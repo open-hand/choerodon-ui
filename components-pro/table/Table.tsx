@@ -424,6 +424,10 @@ export interface TableProps extends DataSetComponentProps {
    */
   autoMaxWidth?: boolean;
   /**
+   * 是否单独处理column footer
+   */
+  autoFootHeight?: boolean;
+  /**
    * 设置drag框体位置
    */
   dragColumnAlign?: DragColumnAlign;
@@ -589,6 +593,10 @@ export default class Table extends DataSetComponent<TableProps> {
      * 开启新建自动定位
      */
     autoFocus: PropTypes.bool,
+    /**
+     * 是否单独处理column footer
+     */
+    autoFootHeight: PropTypes.bool,
     ...DataSetComponent.propTypes,
   };
 
@@ -606,6 +614,7 @@ export default class Table extends DataSetComponent<TableProps> {
     virtualSpin: false,
     autoHeight: false,
     autoMaxWidth: false,
+    autoFootHeight: false,
     columnsMergeCoverage:[],
   };
 
@@ -875,6 +884,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'virtual',
       'virtualSpin',
       'autoHeight',
+      'autoFootHeight',
       'useMouseBatchChoose',
       'autoMaxWidth',
       'dragColumnAlign',
@@ -1642,7 +1652,7 @@ export default class Table extends DataSetComponent<TableProps> {
         if (type === TableAutoHeightType.minHeight) {
           return parentHeight - (tableTop - parentTop) - diff;
         }
-        let maxHeight = parentHeight - (tableTop - parentTop) - diff; 
+        let maxHeight = parentHeight - (tableTop - parentTop) - diff;
         if(tableBodyWrap) {
           tableBodyWrap.style.maxHeight =  pxToRem(maxHeight) || '';
         }

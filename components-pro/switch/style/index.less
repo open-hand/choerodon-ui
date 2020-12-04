@@ -83,10 +83,14 @@
     padding: 0;
   }
 
-  &-sm &-label::after {
-    left: 0.01rem;
-    width: @switch-sm-height;
-    height: @switch-sm-height;
+  &-sm &-label {
+    min-width: 0.3rem;
+    height: @switch-sm-height - 0.04rem;
+    &::after {
+      left: 0.01rem;
+      width: @switch-sm-height;
+      height: @switch-sm-height;
+    }
   }
 
   &-sm &:checked + &-label::after {
@@ -99,9 +103,11 @@
 
   &-lg &-label {
     min-width: 0.4rem;
-    height: @switch-lg-height;
+    height: @switch-lg-height - 0.04rem;
     &::after {
       left: 0.01rem;
+      width: @switch-lg-height;
+      height: @switch-lg-height;
     }
   }
   &-lg &:checked + &-label::after {

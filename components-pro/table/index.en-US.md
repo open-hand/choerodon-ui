@@ -55,6 +55,7 @@ subtitle: 表格
 | virtual | 是否开启虚拟滚动,当设置表格高度 `style={{ height: xxx }}` 时有效 | boolean | false |
 | virtualSpin | 是否开启虚拟滚动Spin | boolean | false |
 | autoHeight | 是否开启高度自适应 | boolean \| { type: 'minHeight' \| 'maxHeight', diff: number } | false |
+| autoFootHeight | 是否开启是否单独处理 column footer | boolean | false |
 | editorNextKeyEnterDown            | 是否开启回车跳转下一行编辑                                                                                                                                                                                                             | boolean                                     | true    |
 | autoMaxWidth | 是否开启双击侧边栏宽度最大自适应,初次双击为最大值再次双击为`minWidth` | boolean | false |
 | dragColumnAlign | 增加一个可拖拽列，实现行拖拽 | 'left'\|'right' |  |

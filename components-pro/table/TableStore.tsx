@@ -335,6 +335,14 @@ export default class TableStore {
   }
 
   @computed
+  get autoFootHeight(): boolean {
+    if ('autoFootHeight' in this.props) {
+      return this.props.autoFootHeight;
+    }
+    return false;
+  }
+
+  @computed
   get emptyText(): ReactNode {
     return getConfig('renderEmpty')('Table');
   }
