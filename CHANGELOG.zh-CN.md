@@ -16,7 +16,7 @@ timeline: true
 ---
 
 - 💄 优化导出类型和枚举类型。
-- 🌟 `<pro>NumberField`: 新增 longPressPuls 属性控制 NumberField 长按累加。
+- 🌟 `<pro>NumberField`: 新增 longPressPlus 属性控制 NumberField 长按累加。
 
 ## 0.8.76
 
