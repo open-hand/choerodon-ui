@@ -18,6 +18,7 @@ timeline: true
 - 🌟 `<pro>Output`: 新增 currency 属性处理货币类型渲染。
 - 🌟 `<pro>Table`: 新增 autoFootHeight 属性控制单独处理 column footer。
 - 🐞 `<pro>Table`: 修复 Table tooltip 无法自动弹出问题。
+- 🐞 `<pro>SelectBox`: 修复 optionRenderer 属性无效问题。
 
 ## 0.8.76
 

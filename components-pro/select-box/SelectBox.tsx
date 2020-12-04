@@ -85,9 +85,14 @@ export default class SelectBox extends Select<SelectBoxProps> {
 
   renderWrapper(): ReactNode {
     const { options, textField, valueField } = this;
-    const { autoFocus, mode, onOption } = this.props;
+    const { autoFocus, mode, onOption, optionRenderer } = this.props;
     const items = options.data.map((record, index) => {
       const optionProps = onOption({ dataSet: options, record });
+      const text = record.get(textField);
+      const value = record.get(valueField);
+      const children = optionRenderer
+        ? optionRenderer({ dataSet: options, record, text, value })
+        : text;
       return this.renderItem({
         ...optionProps,
         key: index,
@@ -97,7 +102,7 @@ export default class SelectBox extends Select<SelectBoxProps> {
         checked: this.isChecked(this.getValue(), record.get(valueField)),
         name: this.name,
         onChange: this.handleItemChange,
-        children: record.get(textField),
+        children,
         autoFocus: autoFocus && index === 0,
         readOnly: this.isReadOnly(),
         disabled: this.isDisabled() || (optionProps && optionProps.disabled),
