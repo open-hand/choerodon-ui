@@ -66,7 +66,7 @@ export interface NumberFieldProps extends TextFieldProps {
   /**
    *是否长按按钮按步距增加 
   */
-  longPressPuls: boolean;
+  longPressPlus: boolean;
 }
 
 export class NumberField<T extends NumberFieldProps> extends TextField<T & NumberFieldProps> {
@@ -96,7 +96,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     /**
      * 格式器参数
      */
-    longPressPuls: PropTypes.bool,
+    longPressPlus: PropTypes.bool,
     /**
      * 是否开启长按步距增加
     */
@@ -107,7 +107,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
   static defaultProps = {
     ...TextField.defaultProps,
     suffixCls: 'input-number',
-    longPressPuls: true,
+    longPressPlus: true,
   };
 
   static format = defaultFormatNumber;
@@ -223,20 +223,20 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
 
   getInnerSpanButton(): ReactNode {
     const { prefixCls, range } = this;
-    const { longPressPuls } = this.props;
+    const { longPressPlus } = this.props;
     const step = this.getProp('step');
     if (step && !range && !this.isReadOnly()) {
       const plusIconProps = {
         key:"plus",
         type:"keyboard_arrow_up",
         className:`${prefixCls}-plus`,
-        onMouseDown: longPressPuls ? this.handlePlus : this.handleOncePlus,
+        onMouseDown: longPressPlus ? this.handlePlus : this.handleOncePlus,
       }
       const minIconProps = {
         key:"minus",
         type:"keyboard_arrow_down",
         className:`${prefixCls}-minus`,
-        onMouseDown: longPressPuls ? this.handleMinus : this.handleOnceMinus,
+        onMouseDown: longPressPlus ? this.handleMinus : this.handleOnceMinus,
       }
       return this.wrapperInnerSpanButton(
         <div>
@@ -318,7 +318,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
       'nonStrictStep',
       'formatter',
       'formatterOptions',
-      'longPressPuls',
+      'longPressPlus',
     ]);
     return otherProps;
   }

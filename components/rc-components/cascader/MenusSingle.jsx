@@ -16,6 +16,7 @@ export default class Menus extends Component {
     prefixCls: 'rc-cascader-menus',
     visible: false,
     expandTrigger: 'click',
+    selectedValues: [],
     isTabSelected: false,
     locale: Locale,
     singleMenuStyle: { width:'3rem'},
@@ -41,6 +42,7 @@ export default class Menus extends Component {
     dropdownMenuColumnStyle: PropTypes.object,
     // 标识是由于tab select 触发的事件
     isTabSelected: PropTypes.bool,
+    selectedValues: PropTypes.array,
     locale: PropTypes.object,
     singleMenuStyle: PropTypes.object,
     singleMenuItemStyle: PropTypes.object,
@@ -70,7 +72,7 @@ export default class Menus extends Component {
    * @param {*} menuIndex
    */
   getOption(option, menuIndex) {
-    const { prefixCls, expandTrigger, singleMenuItemStyle } = this.props;
+    const { prefixCls, expandTrigger, singleMenuItemStyle,selectedValues } = this.props;
     const onSelect = this.props.onSelect.bind(this, option, menuIndex, false);
     let expandProps = {
       onClick: onSelect,
@@ -84,6 +86,9 @@ export default class Menus extends Component {
         onMouseLeave: this.delayOnSelect.bind(this),
         onClick: onSelect,
       };
+    }
+    if ( selectedValues.findIndex((item) => item === option.value) > -1) {
+      menuItemCls += ` ${prefixCls}-menu-item-selected`;
     }
     if (this.isActiveOption(option, menuIndex)) {
       menuItemCls += ` ${prefixCls}-menu-item-active`;
