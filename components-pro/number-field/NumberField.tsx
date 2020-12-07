@@ -63,6 +63,10 @@ export interface NumberFieldProps extends TextFieldProps {
    * 值变化回调
    */
   onChange?: (value: number, oldValue: number, form?: ReactInstance) => void;
+  /**
+   *是否长按按钮按步距增加 
+  */
+  longPressPlus: boolean;
 }
 
 export class NumberField<T extends NumberFieldProps> extends TextField<T & NumberFieldProps> {
@@ -92,6 +96,10 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     /**
      * 格式器参数
      */
+    longPressPlus: PropTypes.bool,
+    /**
+     * 是否开启长按步距增加
+    */
     formatterOptions: PropTypes.object,
     ...TextField.propTypes,
   };
@@ -99,6 +107,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
   static defaultProps = {
     ...TextField.defaultProps,
     suffixCls: 'input-number',
+    longPressPlus: true,
   };
 
   static format = defaultFormatNumber;
@@ -214,21 +223,28 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
 
   getInnerSpanButton(): ReactNode {
     const { prefixCls, range } = this;
+    const { longPressPlus } = this.props;
     const step = this.getProp('step');
     if (step && !range && !this.isReadOnly()) {
+      const plusIconProps = {
+        key:"plus",
+        type:"keyboard_arrow_up",
+        className:`${prefixCls}-plus`,
+        onMouseDown: longPressPlus ? this.handlePlus : this.handleOncePlus,
+      }
+      const minIconProps = {
+        key:"minus",
+        type:"keyboard_arrow_down",
+        className:`${prefixCls}-minus`,
+        onMouseDown: longPressPlus ? this.handleMinus : this.handleOnceMinus,
+      }
       return this.wrapperInnerSpanButton(
         <div>
           <Icon
-            key="plus"
-            type="keyboard_arrow_up"
-            className={`${prefixCls}-plus`}
-            onMouseDown={this.handlePlus}
+           {...plusIconProps}
           />
           <Icon
-            key="minus"
-            type="keyboard_arrow_down"
-            className={`${prefixCls}-minus`}
-            onMouseDown={this.handleMinus}
+          {...minIconProps}
           />
         </div>,
       );
@@ -287,11 +303,22 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     this.step(false);
   }
 
+  @autobind
+  handleOncePlus() {
+    this.step(true);
+  }
+
+  @autobind
+  handleOnceMinus() {
+    this.step(false);
+  }
+
   getOtherProps() {
     const otherProps = omit(super.getOtherProps(), [
       'nonStrictStep',
       'formatter',
       'formatterOptions',
+      'longPressPlus',
     ]);
     return otherProps;
   }

@@ -1,0 +1,3 @@
+export {
+    OutputProps,
+} from './Output';

@@ -1537,6 +1537,7 @@ export default class Table extends DataSetComponent<TableProps> {
           lock={lock}
           height={bodyHeight}
           onScroll={this.handleBodyScroll}
+          dragColumnAlign = {dragColumnAlign}
         >
           {this.renderTable(false, true, false, lock, dragColumnAlign)}
         </TableBody>

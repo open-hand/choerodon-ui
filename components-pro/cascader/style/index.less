@@ -180,9 +180,17 @@
         background: transparent;
       }
     }
+    &-selected:not(&-disabled) {
+      &,
+      &:hover {
+        font-weight: 600;
+        background: @background-color-base;
+      }
+    }
     &-active:not(&-disabled) {
       &,
       &:hover {
+        color: @primary-color;
         font-weight: 600;
         background: @background-color-base;
       }

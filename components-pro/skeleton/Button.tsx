@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import C7nSkeletonButton,{SkeletonButtonProps as C7nSkeletonBUttonProps} from 'choerodon-ui/lib/skeleton/Button';
 import DataSetComponent,{DataSetComponentProps} from '../data-set/DataSetComponent';
 
-interface SkeletonButtonProps extends Omit<C7nSkeletonBUttonProps,'size'>,DataSetComponentProps{}
+export interface SkeletonButtonProps extends Omit<C7nSkeletonBUttonProps,'size'>,DataSetComponentProps{}
 
 @observer
 export default class SkeletonButton extends DataSetComponent<SkeletonButtonProps>{

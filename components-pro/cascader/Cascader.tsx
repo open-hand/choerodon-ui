@@ -601,7 +601,17 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     } else {
       optGroups = [];
     }
-
+    const getInputSelectedValue = (inputValue) => {
+        let activeInputValue = [];
+        if (isArrayLike(options)) {
+          activeInputValue = this.findParentRecodTree(this.findActiveRecord(inputValue, this.options));
+        } else if (options instanceof DataSet) {
+          activeInputValue = this.findParentRecodTree(this.findActiveRecord(inputValue, this.options.treeData));
+        } else {
+          activeInputValue = [];
+        }
+        return activeInputValue
+    }
     /**
      * 获取当前激活的menueItem
      * 以及value 展示激活状态的判断
@@ -616,13 +626,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
         if (inputValue && arraySameLike(this.treeValueToArray(this.activeValue), inputValue) || this.activeValue.children) {
           activeValue = this.findParentRecodTree(this.activeValue);
         } else if (this.activeValue) {
-          if (isArrayLike(options)) {
-            activeValue = this.findParentRecodTree(this.findActiveRecord(inputValue, this.options));
-          } else if (options instanceof DataSet) {
-            activeValue = this.findParentRecodTree(this.findActiveRecord(inputValue, this.options.treeData));
-          } else {
-            activeValue = [];
-          }
+          activeValue = getInputSelectedValue(inputValue)
         }
       } else if (inputValue) {
         activeValue = this.findParentRecodTree(this.activeValue);
@@ -647,9 +651,19 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     if ((this.itemMenuWidth > 0)) {
       dropdownMenuStyleMerge = { ...dropdownMenuStyle, width: pxToRem(this.itemMenuWidth) };
     }
+    // 由于想让多选出现不同展现这边增加一个selected属性来解决但是会造成一定的性能损耗
+    
+    let selectedValueMutiple
+    if(this.multiple) {
+      const selectedMutiple= this.getValues()
+                                .map(item => getInputSelectedValue(item))
+                                .filter((recordItem) => recordItem !== undefined && recordItem !== null)
+      selectedValueMutiple = Array.from(new Set(selectedMutiple.reduce((accumulator, currentValue) => [...accumulator, ...currentValue],[])))
+    }
+    
     // 渲染成单项选择还是多项选择组件以及空组件
     if(options && options.length){
-      if(!this.multiple && menuMode === MenuMode.single ){
+      if( menuMode === MenuMode.single ){
         return (
           <SingleMenu
           {...menuProps}
@@ -659,7 +673,8 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
           singleMenuItemRender ={singleMenuItemRender}
           prefixCls={this.prefixCls}
           expandTrigger={expandTrigger}
-          activeValue={toJS(selectedValues)}
+          activeValue={selectedValues}
+          selectedValues={selectedValueMutiple}
           options={optGroups}
           locale={{pleaseSelect:$l('Cascader', 'please_select')}}
           onSelect={this.handleMenuClick}
@@ -674,6 +689,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
           prefixCls={this.prefixCls}
           expandTrigger={expandTrigger}
           activeValue={selectedValues}
+          selectedValues={selectedValueMutiple}
           options={optGroups}
           onSelect={this.handleMenuClick}
           dropdownMenuColumnStyle={dropdownMenuStyleMerge}

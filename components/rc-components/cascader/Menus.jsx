@@ -13,6 +13,7 @@ export default class Menus extends Component {
     },
     prefixCls: 'rc-cascader-menus',
     visible: false,
+    selectedValues: [],
     expandTrigger: 'click',
     expandIcon: <Icon type="navigate_next" />,
   };
@@ -20,6 +21,7 @@ export default class Menus extends Component {
   static propTypes = {
     value: PropTypes.array,
     activeValue: PropTypes.array,
+    selectedValues: PropTypes.array,
     options: PropTypes.array.isRequired,
     prefixCls: PropTypes.string,
     expandTrigger: PropTypes.string,
@@ -46,7 +48,7 @@ export default class Menus extends Component {
   }
 
   getOption(option, menuIndex) {
-    const { prefixCls, expandTrigger, expandIcon } = this.props;
+    const { prefixCls, expandTrigger, expandIcon, selectedValues } = this.props;
     const onSelect = this.props.onSelect.bind(this, option, menuIndex,false);
     let expandProps = {
       onClick: onSelect,
@@ -61,6 +63,9 @@ export default class Menus extends Component {
           {expandIcon}
         </span>
       );
+    }
+    if (selectedValues.findIndex((item) => item === option.value) > -1) {
+      menuItemCls += ` ${prefixCls}-menu-item-selected`;
     }
     if (expandTrigger === 'hover' && hasChildren) {
       expandProps = {

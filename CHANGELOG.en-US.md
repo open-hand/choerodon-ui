@@ -15,8 +15,12 @@ timeline: true
 
 ---
 
+
+- 🌟 `<pro>NumberField`: Added `longPressPuls` to control NumberField long press accumulation.
 - 🌟 `<pro>Output`: Added `currency` property.
 - 🌟 `<pro>Table`: Added `autoFootHeight` property to control separate processing of column footer.
+- 💄 `<pro>Cascader`: Optimized cascader multiple selected.
+- 💄 Optimized interface export type and enum.
 - 🐞 `<pro>Table`: Fixed the problem that Table `tooltip` cannot pop up automatically.
 - 🐞 `<pro>SelectBox`: Fixed the invalid problem of `optionRenderer` attribute.
 

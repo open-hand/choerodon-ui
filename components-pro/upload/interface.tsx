@@ -16,3 +16,11 @@ export interface UploadFile {
   type: string;
   msClose?: boolean;
 }
+
+export {
+  UploadProps,
+} from './Upload';
+
+export {
+  UploadListProps,
+} from './UploadList';

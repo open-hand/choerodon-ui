@@ -17,10 +17,10 @@ import { getKey, getTreeNodes, NodeRenderer, TreeNodeRenderer} from './util';
 import { BooleanValue, DataSetSelection } from '../data-set/enum';
 import Spin from '../spin';
 
-interface C7nNodeEvent extends EventDataNode {
+export interface C7nNodeEvent extends EventDataNode {
   eventKey:string
 }
-interface TreeNodeCheckedEvent {
+export interface TreeNodeCheckedEvent {
   event: 'check';
   node: C7nNodeEvent;
   checked: boolean;
@@ -30,14 +30,14 @@ interface TreeNodeCheckedEvent {
   halfCheckedKeys?: string[];
 }
 
-interface C7nTreeNodeSelectedEvent {
+export interface C7nTreeNodeSelectedEvent {
   event: "select";
   selected: boolean;
   node: C7nNodeEvent;
   selectedNodes: DataNode[];
   nativeEvent:MouseEvent;
 }
-interface C7nTreeNodeExpandedEvent {
+export interface C7nTreeNodeExpandedEvent {
   expanded:boolean;
   nativeEvent:MouseEvent;
   node:C7nNodeEvent;
