@@ -1,4 +1,4 @@
-import React, { Component, ReactElement, ReactNode } from 'react';
+import React, { cloneElement, Component, ReactElement, ReactNode } from 'react';
 import { observer } from 'mobx-react';
 import { action, observable } from 'mobx';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure';
@@ -85,6 +85,19 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
     }
   }
 
+  /**
+   * 注入 onEnterDown 事件
+   * @param elements
+   */
+  createFields(elements): ReactElement[] {
+    return elements.map(element => {
+      const props: any = {
+        onEnterDown: this.handleFieldEnter,
+      };
+      return cloneElement(element, props);
+    });
+  }
+
   getQueryBar(): ReactNode {
     const { prefixCls, queryFieldsLimit, queryFields, queryDataSet, queryBarProps } = this.props;
     if (queryDataSet && queryFields.length) {
@@ -95,12 +108,12 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
           labelLayout={LabelLayout.horizontal}
           {...queryBarProps}
         >
-          {queryFields.slice(0, queryFieldsLimit)}
+          {this.createFields(queryFields.slice(0, queryFieldsLimit))}
           {this.moreFields}
         </Form>
       );
 
-      const moreFields = queryFields.slice(queryFieldsLimit);
+      const moreFields = this.createFields(queryFields.slice(queryFieldsLimit));
       const moreFieldsButton: ReactElement | undefined = this.getMoreFieldsButton(moreFields);
 
       return (
