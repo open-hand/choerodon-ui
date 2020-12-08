@@ -1641,6 +1641,7 @@ export default class Table extends DataSetComponent<TableProps> {
     const { wrapper, element, props: { autoHeight }, tableBodyWrap, fixedColumnsBodyLeft, fixedColumnsBodyRight } = this;
     if (autoHeight) {
       const { top: parentTop, height: parentHeight } = wrapper.parentNode.getBoundingClientRect();
+      const { paddingBottom } = wrapper.parentNode.style;
       const { top: tableTop } = element.getBoundingClientRect();
       let type = TableAutoHeightType.minHeight;
       let diff = 80;
@@ -1648,11 +1649,12 @@ export default class Table extends DataSetComponent<TableProps> {
         type = autoHeight.type || TableAutoHeightType.minHeight;
         diff = autoHeight.diff || 80;
       }
+      const paddingBottomPx = toPx(paddingBottom) || 0;
       if (wrapper) {
         if (type === TableAutoHeightType.minHeight) {
-          return parentHeight - (tableTop - parentTop) - diff;
+          return parentHeight - (tableTop - parentTop) - diff - paddingBottomPx;
         }
-        let maxHeight = parentHeight - (tableTop - parentTop) - diff;
+        let maxHeight = parentHeight - (tableTop - parentTop) - diff - paddingBottomPx;
         if(tableBodyWrap) {
           tableBodyWrap.style.maxHeight =  pxToRem(maxHeight) || '';
         }

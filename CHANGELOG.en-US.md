@@ -22,6 +22,7 @@ timeline: true
 - 💄 `<pro>Cascader`: Optimized cascader multiple selected.
 - 💄 Optimized interface export type and enum.
 - 🐞 `<pro>Table`: Fixed the problem that Table `tooltip` cannot pop up automatically.
+- 🐞 `<pro>Table`: Fixed Table setting `autoHeight` to `maxHeight` height calculation problem.
 - 🐞 `<pro>SelectBox`: Fixed the invalid problem of `optionRenderer` attribute.
 
 ## 0.8.76

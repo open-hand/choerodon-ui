@@ -22,6 +22,7 @@ timeline: true
 - 💄 `<pro>Cascader`: 优化 Cascader 多选。
 - 💄 优化导出类型和枚举类型。
 - 🐞 `<pro>Table`: 修复 Table tooltip 无法自动弹出问题。
+- 🐞 `<pro>Table`: 修复 Table 设置自动高度为 maxHeight 高度计算问题。
 - 🐞 `<pro>SelectBox`: 修复 optionRenderer 属性无效问题。
 
 ## 0.8.76

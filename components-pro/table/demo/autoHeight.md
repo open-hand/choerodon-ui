@@ -70,6 +70,27 @@ class App extends React.Component {
       },
       { name: 'enable', type: 'boolean', label: '是否开启' },
     ],
+        queryFields: [
+      { name: 'name', type: 'string', label: '姓名' },
+      { name: 'age', type: 'number', label: '年龄' },
+      {
+        name: 'sex.text',
+        type: 'string',
+        label: '性别',
+        textField: 'text',
+        valueField: 'value',
+        options: this.optionDs, // 下拉框组件的菜单数据集
+        defaultValue: 'F',
+      },
+      { name: 'date.startDate', type: 'date', label: '开始日期' },
+      {
+        name: 'sexMultiple',
+        type: 'string',
+        label: '性别（多值）',
+        lookupCode: 'HR.EMPLOYEE_GENDER',
+        multiple: true,
+      },
+    ],
   });
 
  demoDs = new DataSet({
@@ -82,8 +103,19 @@ class App extends React.Component {
   render() {
     return (
       <div style={{ height: '500px' }}>
-        <div style={{ height: '100%' }}>
-          <Table autoHeight key="user" dataSet={this.userDs} pristine>
+        <div style={{ 
+            margin: "8px 16px 16px",
+				    padding: "16px",
+				    height: "calc(100% - 16px - 16px)",
+    				overflow: "auto"
+          }}>
+          <Table 
+            autoHeight={{ type: "maxHeight" }}
+            key="user" 
+            dataSet={this.userDs} 
+            pristine
+		        queryBar="professionalBar"
+           >
             <Column name="userid" />
             <Column name="age" />
             <Column name="enable" />
