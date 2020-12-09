@@ -15,16 +15,19 @@ timeline: true
 
 ---
 
+## 0.8.77
+
+`2020-12-09`
 
 - 🌟 `<pro>NumberField`: Added `longPressPuls` to control NumberField long press accumulation.
 - 🌟 `<pro>Output`: Added `currency` property.
 - 🌟 `<pro>Lov`: Added `popupContent` callback property to handle custom query drop-down event interaction.
 - 🌟 `<pro>Table`: Added `autoFootHeight` property to control separate processing of column footer.
-- 💄 `<pro>Cascader`: Optimized Cascader Single-select and repeat-select logic.
 - 💄 Optimized interface export type and enum.
-- 💄 `<pro>Cascader`: Optimized Cascader multiple selected.
+- 💄 `<pro>Cascader`: Optimized multiple selection style
+- 💄 `<pro>Cascader`: Optimized Single-select and repeat-select logic.
 - 💄 `<pro>Table`: Optimized `ProfessionalBar` query input conditions and press Enter to trigger the query.
-- 🐞 `<pro>Tooltip`: Fixed cant't copy the content.
+- 🐞 `<pro>Tooltip`: Fixed an issue where content could not be copied.
 - 🐞 `<pro>Table`: Fixed the problem that Table `tooltip` cannot pop up automatically.
 - 🐞 `<pro>Table`: Fixed Table setting `autoHeight` to `maxHeight` height calculation problem.
 - 🐞 `<pro>SelectBox`: Fixed the invalid problem of `optionRenderer` attribute.

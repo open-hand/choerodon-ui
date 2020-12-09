@@ -15,17 +15,21 @@ timeline: true
 
 ---
 
-- 🌟 `<pro>NumberField`: 新增 longPressPlus 属性控制 NumberField 长按累加。
+## 0.8.77
+
+`2020-12-09`
+
+- 🌟 `<pro>NumberField`: 新增 longPressPlus 属性控制长按累加。
 - 🌟 `<pro>Output`: 新增 currency 属性处理货币类型渲染。
 - 🌟 `<pro>Lov`: 新增 popupContent 回调属性处理自定义查询下拉事件交互。
 - 🌟 `<pro>Table`: 新增 autoFootHeight 属性控制单独处理 column footer。
-- 💄 `<pro>Cascader`: 优化 Cascader 单选重复选择逻辑。
 - 💄 优化导出类型和枚举类型。
-- 💄 `<pro>Cascader`: 优化 Cascader 多选。
+- 💄 `<pro>Cascader`: 优化多选选中样式。
+- 💄 `<pro>Cascader`: 优化单选重复选择逻辑。
 - 💄 `<pro>Table`: 优化 ProfessionalBar 查询输入条件回车触发查询。
 - 🐞 `<pro>Tooltip`: 修复无法复制内容问题。
 - 🐞 `<pro>Table`: 修复 Table tooltip 无法自动弹出问题。
-- 🐞 `<pro>Table`: 修复 Table 设置自动高度为 maxHeight 高度计算问题。
+- 🐞 `<pro>Table`: 修复 Table 设置自动高度为 maxHeight 高度计算和滚动异步问题。
 - 🐞 `<pro>SelectBox`: 修复 optionRenderer 属性无效问题。
 
 ## 0.8.76

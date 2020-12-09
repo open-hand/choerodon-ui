@@ -571,6 +571,7 @@ export default class TableCell extends Component<TableCellProps> {
         [`${cellPrefix}-dirty`]: field && !pristine && field.dirty,
         [`${cellPrefix}-required`]: field && !inlineEdit && field.required,
         [`${cellPrefix}-editable`]: !inlineEdit && this.hasEditor,
+        [`${cellPrefix}-multiLine`]: field && field.get('multiLine'),
       },
       className,
       cellExternalProps.className,

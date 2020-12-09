@@ -1490,7 +1490,6 @@ export default class Table extends DataSetComponent<TableProps> {
     let tableBody: ReactNode;
     let tableFooter: ReactNode;
     if ((!dragColumnAlign && overflowX) || height !== undefined || autoHeight) {
-      if (autoHeight) this.syncSize();
       const { lockColumnsBodyRowsHeight, rowHeight } = this.tableStore;
       let bodyHeight = height;
       let tableHeadRef;
@@ -1501,12 +1500,22 @@ export default class Table extends DataSetComponent<TableProps> {
         tableFootRef = node => (this.tableFootWrap = node);
         tableBodyRef = node => (this.tableBodyWrap = node);
       } else if (lock === 'right') {
-        tableBodyRef = node => (this.fixedColumnsBodyRight = node);
+        tableBodyRef = (node) => {
+          this.fixedColumnsBodyRight = node;
+          if (node) {
+            this.syncSize();
+          }
+        };
         if (dragColumnAlign === DragColumnAlign.right) {
           tableBodyRef = node => (this.dragColumnsBodyRight = node);
         }
       } else {
-        tableBodyRef = node => (this.fixedColumnsBodyLeft = node);
+        tableBodyRef = (node) => {
+          this.fixedColumnsBodyLeft = node;
+          if (node) {
+            this.syncSize();
+          }
+        };
         if (dragColumnAlign === DragColumnAlign.left) {
           tableBodyRef = node => (this.dragColumnsBodyLeft = node);
         }
