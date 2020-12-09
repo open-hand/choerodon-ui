@@ -49,6 +49,7 @@
   },
   "dependencies": {
     "@babel/runtime": "7.x",
+    "@ctrl/tinycolor": "^3.2.0",
     "@types/react-beautiful-dnd": "^13.0.0",
     "add-dom-event-listener": "1.x",
     "array-tree-filter": "^2.0.0",
@@ -68,6 +69,7 @@
     "element-resize-event": "^3.0.2",
     "enquire.js": "^2.1.6",
     "htmlhint": "0.10.x",
+    "insert-css": "^2.0.0",
     "is-negative-zero": "^2.0.0",
     "js-yaml": "^3.12.2",
     "jshint": "^2.10.1",

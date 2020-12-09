@@ -108,6 +108,38 @@ ReactDOM.render(<IconSet className="icons" />, mountNode);
 type | 图标类型 | string | -
 customFontName | 自定义字体库 | string | -
 
+新增功能支持svgIcon: 必须配置scriptUrl属性才能增加这个功能
+
+属性 | 说明 | 类型 | 默认值
+-----|-----|-----|------
+type | 图标类型 | string | -
+width | svg 宽度 | string /| number | -
+height | svg 高度 | string /| number | -
+scriptUrl | iconfont 生成链接配置 | string /| string[] | -
+
+同时也支持生成自定义icon的方法
+
+```js
+import { Icon } from 'choerodon-ui';
+
+const {createFromIconfontCN} = Icon;
+
+const MyIcon = createFromIconfontCN({
+  scriptUrl: '//at.alicdn.com/t/font_2066932_o2wp0dratpi.js', // 在 iconfont.cn 上生成
+});
+
+class App extends React.PureComponent {
+  render() {
+    return (
+      <div>
+        <MyIcon width={32} height={32} type="icon-maozi" />
+      </div>
+    );
+  }
+}
+
+```
+
 
 <style>
 .c7n-icon-block {

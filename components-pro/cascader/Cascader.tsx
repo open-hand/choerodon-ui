@@ -906,7 +906,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
   handleKeyDownEnter(e) {
     if (this.popup && !this.editable) {
       const value = this.activeValue;
-      if (this.isSelected(value)) {
+      if (this.isSelected(value) && this.multiple) {
         this.unChoose(value);
       } else if (value.children) {
         this.setPopup(true);
@@ -1084,7 +1084,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     if (!targetOption || targetOption.disabled) {
       return;
     }
-    if (!this.isSelected(targetOption.value) || isClickTab) {
+    if (!this.isSelected(targetOption.value) || isClickTab || !this.multiple) {
       if (targetOption.children) {
         this.setPopup(true);
         this.setActiveValue(targetOption.value);
