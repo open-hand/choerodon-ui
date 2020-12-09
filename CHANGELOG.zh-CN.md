@@ -19,7 +19,7 @@ timeline: true
 - 🌟 `<pro>Output`: 新增 currency 属性处理货币类型渲染。
 - 🌟 `<pro>Lov`: 新增 popupContent 回调属性处理自定义查询下拉事件交互。
 - 🌟 `<pro>Table`: 新增 autoFootHeight 属性控制单独处理 column footer。
-- 💄 `<pro>Cacader`: 优化 Cacader 单选重复选择逻辑。
+- 💄 `<pro>Cascader`: 优化 Cascader 单选重复选择逻辑。
 - 💄 优化导出类型和枚举类型。
 - 💄 `<pro>Cascader`: 优化 Cascader 多选。
 - 💄 `<pro>Table`: 优化 ProfessionalBar 查询输入条件回车触发查询。

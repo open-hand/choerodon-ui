@@ -77,7 +77,7 @@ export interface TriggerProps extends ElementProps {
   transitionName?: string;
   defaultPopupHidden?: boolean;
   popupClassName?: string;
-  onMouseDown?:((event: React.MouseEvent<any, MouseEvent>) => void);
+  onMouseDown?:(event: React.MouseEvent<any, MouseEvent>) => void ;
 }
 
 @observer
