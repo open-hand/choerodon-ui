@@ -684,6 +684,7 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   @autobind
+  @action
   handleResize(width: number) {
     const { element, tableStore } = this;
     if (!element.offsetParent) {

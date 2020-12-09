@@ -18,6 +18,7 @@ timeline: true
 
 - 🌟 `<pro>NumberField`: Added `longPressPuls` to control NumberField long press accumulation.
 - 🌟 `<pro>Output`: Added `currency` property.
+- 🌟 `<pro>Lov`: Added `popupContent` callback property to handle custom query drop-down event interaction.
 - 🌟 `<pro>Table`: Added `autoFootHeight` property to control separate processing of column footer.
 - 💄 Optimized interface export type and enum.
 - 💄 `<pro>Cascader`: Optimized cascader multiple selected.

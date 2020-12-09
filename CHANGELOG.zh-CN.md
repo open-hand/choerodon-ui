@@ -18,6 +18,7 @@ timeline: true
 
 - 🌟 `<pro>NumberField`: 新增 longPressPlus 属性控制 NumberField 长按累加。
 - 🌟 `<pro>Output`: 新增 currency 属性处理货币类型渲染。
+- 🌟 `<pro>Lov`: 新增 popupContent 回调属性处理自定义查询下拉事件交互。
 - 🌟 `<pro>Table`: 新增 autoFootHeight 属性控制单独处理 column footer。
 - 💄 优化导出类型和枚举类型。
 - 💄 `<pro>Cascader`: 优化 Cascader 多选。
