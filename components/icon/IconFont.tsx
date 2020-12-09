@@ -15,8 +15,8 @@ export interface IconFontProps extends IconBaseProps {
 function isValidCustomScriptUrl(scriptUrl: string): boolean {
   return Boolean(
     typeof scriptUrl === 'string'
-      && scriptUrl.length
-      && !customCache.has(scriptUrl),
+    && scriptUrl.length
+    && !customCache.has(scriptUrl),
   );
 }
 

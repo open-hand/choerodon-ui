@@ -14,7 +14,7 @@ export interface IconProps {
   onMouseUp?: MouseEventHandler<any>;
   onMouseLeave?: MouseEventHandler<any>;
   style?: CSSProperties;
-  tabIndex?: number; 
+  tabIndex?: number;
   width?: number | string;
   height?: number | string;
   scriptUrl?: string;
@@ -22,7 +22,7 @@ export interface IconProps {
 
 const Icon = function Icon(props: IconProps) {
   const iconfontPrefix = getConfig('iconfontPrefix');
-  const { type, customFontName, height, width, className = '', scriptUrl , ...otherProps } = props;
+  const { type, customFontName, height, width, className = '', scriptUrl, ...otherProps } = props;
   const classString = classNames(iconfontPrefix, customFontName, `${iconfontPrefix}-${type}`, className);
   if (
     scriptUrl &&
@@ -30,9 +30,9 @@ const Icon = function Icon(props: IconProps) {
     typeof window !== 'undefined' &&
     typeof document.createElement === 'function'
   ) {
-    const SvgIcon = createFromIconfontCN({scriptUrl})
-    if(SvgIcon) {
-      return <SvgIcon type={type} width={width} height={height}/>
+    const SvgIcon = createFromIconfontCN({ scriptUrl })
+    if (SvgIcon) {
+      return <SvgIcon type={type} width={width} height={height} />
     }
   }
   return <i {...otherProps} className={classString} />;

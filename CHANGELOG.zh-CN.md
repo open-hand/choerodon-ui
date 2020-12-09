@@ -15,12 +15,12 @@ timeline: true
 
 ---
 
-
 - 🌟 `<pro>NumberField`: 新增 longPressPlus 属性控制 NumberField 长按累加。
 - 🌟 `<pro>Output`: 新增 currency 属性处理货币类型渲染。
 - 🌟 `<pro>Table`: 新增 autoFootHeight 属性控制单独处理 column footer。
 - 💄 `<pro>Cascader`: 优化 Cascader 多选。
 - 💄 优化导出类型和枚举类型。
+- 🐞 `<pro>Tooltip`: 修复无法复制内容问题。
 - 🐞 `<pro>Table`: 修复 Table tooltip 无法自动弹出问题。
 - 🐞 `<pro>Table`: 修复 Table 设置自动高度为 maxHeight 高度计算问题。
 - 🐞 `<pro>SelectBox`: 修复 optionRenderer 属性无效问题。

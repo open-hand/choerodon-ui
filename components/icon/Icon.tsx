@@ -41,7 +41,7 @@ const Icon = React.forwardRef<HTMLSpanElement, IconComponentProps>((props, ref) 
     ...restProps
   } = props;
 
-  const {height, width} = restProps;
+  const { height, width } = restProps;
 
   warning(
     Boolean(Component || children),
@@ -61,19 +61,19 @@ const Icon = React.forwardRef<HTMLSpanElement, IconComponentProps>((props, ref) 
 
   const svgStyle = rotate
     ? {
-        msTransform: `rotate(${rotate}deg)`,
-        transform: `rotate(${rotate}deg)`,
-      }
+      msTransform: `rotate(${rotate}deg)`,
+      transform: `rotate(${rotate}deg)`,
+    }
     : undefined;
 
-  
+
 
   const innerSvgProps: CustomIconComponentProps = {
     ...svgBaseProps,
     className: svgClassString,
     style: svgStyle,
     viewBox,
-    height: height || svgBaseProps.height, 
+    height: height || svgBaseProps.height,
     width: width || svgBaseProps.width,
   };
 
@@ -90,9 +90,9 @@ const Icon = React.forwardRef<HTMLSpanElement, IconComponentProps>((props, ref) 
     if (children) {
       warning(
         Boolean(viewBox) ||
-          (React.Children.count(children) === 1 &&
-            React.isValidElement(children) &&
-            React.Children.only(children).type === 'use'),
+        (React.Children.count(children) === 1 &&
+          React.isValidElement(children) &&
+          React.Children.only(children).type === 'use'),
         'Make sure that you provide correct `viewBox`' +
         ' prop (default `0 0 1024 1024`) to the icon.',
       );

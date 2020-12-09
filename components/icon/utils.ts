@@ -5,7 +5,7 @@ import generateColor from './generate';
 import { AbstractNode, IconDefinition } from './interface';
 
 export function warning(valid: boolean, message: string) {
-  warn(valid, `[@ant-design/icons] ${message}`);
+  warn(valid, `[@c7n/icons] ${message}`);
 }
 
 export function isIconDefinition(target: any): target is IconDefinition {

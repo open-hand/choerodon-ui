@@ -21,6 +21,7 @@ timeline: true
 - 🌟 `<pro>Table`: Added `autoFootHeight` property to control separate processing of column footer.
 - 💄 `<pro>Cascader`: Optimized cascader multiple selected.
 - 💄 Optimized interface export type and enum.
+- 🐞 `<pro>Tooltip`: Fixed cant't copy the content.
 - 🐞 `<pro>Table`: Fixed the problem that Table `tooltip` cannot pop up automatically.
 - 🐞 `<pro>Table`: Fixed Table setting `autoHeight` to `maxHeight` height calculation problem.
 - 🐞 `<pro>SelectBox`: Fixed the invalid problem of `optionRenderer` attribute.
