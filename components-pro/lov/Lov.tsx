@@ -141,6 +141,22 @@ export default class Lov extends Select<LovProps> {
     return !this.filterText || this.modal ? false : this.statePopup;
   }
 
+  /**
+   * 增加lov popupContent 回调参数 用于控制对应交互
+   */
+  @autobind
+  getPopupProps() {
+    const { options, textField, field, valueField } = this;
+    return {
+      dataSet: options,
+      textField,
+      valueField,
+      field,
+      setValue: (value) => this.setValue(value),
+      setPopup: (hidden) => this.setPopup(hidden),
+    };
+  }
+
   @computed
   get options(): DataSet {
     const { field, lovCode } = this;

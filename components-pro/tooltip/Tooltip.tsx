@@ -2,7 +2,7 @@ import React, { Children, Component, isValidElement } from 'react';
 import PropTypes from 'prop-types';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure';
 import Button from 'choerodon-ui/lib/button';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 import Trigger, { TriggerProps } from '../trigger/Trigger';
 import { Action } from '../trigger/enum';
 import getPlacements, { AdjustOverflow } from './placements';

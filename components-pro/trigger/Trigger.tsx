@@ -77,7 +77,7 @@ export interface TriggerProps extends ElementProps {
   transitionName?: string;
   defaultPopupHidden?: boolean;
   popupClassName?: string;
-  onMouseDown?:((event: React.MouseEvent<any, MouseEvent>) => void) | null;
+  onMouseDown?:((event: React.MouseEvent<any, MouseEvent>) => void);
 }
 
 @observer
@@ -336,7 +336,7 @@ export default class Trigger extends Component<TriggerProps> {
       getRootDomNode = this.getRootDomNode,
       transitionName,
       getPopupContainer,
-      onMouseDown,
+      onMouseDown = this.handlePopupMouseDown,
     } = this.props;
     const visible = !this.popupHidden && popupContent;
     const mouseProps: any = {};
@@ -356,7 +356,7 @@ export default class Trigger extends Component<TriggerProps> {
         hidden={!visible}
         align={this.getPopupAlign()}
         onAlign={onPopupAlign}
-        onMouseDown={onMouseDown || this.handlePopupMouseDown}
+        onMouseDown={onMouseDown}
         onMouseUp={this.handlePopupMouseUp}
         getRootDomNode={getRootDomNode}
         onAnimateAppear={onPopupAnimateAppear}
