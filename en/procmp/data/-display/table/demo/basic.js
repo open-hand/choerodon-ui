@@ -8,7 +8,6 @@ import {
   SelectBox,
   Modal,
   Button,
-  notification,
   AutoComplete,
 } from 'choerodon-ui/pro';
 
@@ -138,7 +137,6 @@ class App extends React.Component {
     feedback: {
       loadSuccess(resp) {
         //  DataSet 查询成功的反馈 可以return 一个resp 来修改响应结果
-        notification.success({ message: 'query success!' });
         console.log('resp', resp);
       },
     },

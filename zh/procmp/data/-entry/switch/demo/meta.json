@@ -82,12 +82,12 @@
     {
       "filename": "size.js",
       "title": {
-        "zh": "两种大小",
+        "zh": "三种大小",
         "en": "Two sizes"
       },
       "description": {
-        "zh": "`size=\"large\"` 表示大号开关。`size=\"small\"` 表示小号开关。\n",
-        "en": "`size=\"large\"` represents a large sized switch.`size=\"small\"` represents a small sized switch.\n"
+        "zh": "`size=\"large\"` 表示大号开关。`size=\"small\"` 表示小号开关, 默认为defalut。\n",
+        "en": "`size=\"large\"` represents a large sized switch.`size=\"small\"` represents a small sized switch.\n , defalut size is `default`\n"
       },
       "order": 5,
       "screenshot": "",

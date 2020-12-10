@@ -88,7 +88,6 @@ class App extends React.Component {
         summaryBar={[
           'age',
           ({ dataSet }) => {
-            console.log('dataSet', dataSet);
             return { label: '测试是', value: 123123 };
           },
         ]}

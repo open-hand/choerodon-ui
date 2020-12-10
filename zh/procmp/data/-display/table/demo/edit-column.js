@@ -225,7 +225,7 @@ class App extends React.Component {
         pristine
       >
         <Column name="userid" />
-        <Column sortable name="age" header="年龄fucker" />
+        <Column sortable name="age" header="age" />
         <Column name="enable" />
         <Column name="name" />
         <Column

@@ -4,8 +4,8 @@ subtitle: 富文本编辑器
 order: 0
 ---
 
-富文本编辑器。
+Rich text editor.
 
-## 何时使用
+## When to use
 
-需要富文本编辑时。
+When rich text editing is required.

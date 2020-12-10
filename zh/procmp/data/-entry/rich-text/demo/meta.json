@@ -65,7 +65,7 @@
       "category": "pro"
     },
     {
-      "filename": "button.js",
+      "filename": "custom-toolbar.js",
       "title": {
         "zh": "自定义工具栏",
         "en": "Custom toolbar"
