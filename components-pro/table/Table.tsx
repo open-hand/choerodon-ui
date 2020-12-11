@@ -1352,9 +1352,9 @@ export default class Table extends DataSetComponent<TableProps> {
             prefixCls={prefixCls}
             key="tableWrapper-header"
             lock={lock}
-            hasBody={false}
+            hasBody={hasBody}
             hasHeader={hasHeader}
-            hasFooter={false}
+            hasFooter={hasFooter}
             dragColumnAlign={dragColumnAlign}
           >
             {hasHeader && this.getTableHeader(lock, dragColumnAlign)}
@@ -1371,8 +1371,8 @@ export default class Table extends DataSetComponent<TableProps> {
               key="tableWrapper-body"
               lock={lock}
               hasBody={hasBody}
-              hasHeader={false}
-              hasFooter={false}
+              hasHeader={hasHeader}
+              hasFooter={hasFooter}
               dragColumnAlign={dragColumnAlign}
             >
               {hasBody && this.getTableBody(lock, dragColumnAlign)}
@@ -1383,8 +1383,8 @@ export default class Table extends DataSetComponent<TableProps> {
             prefixCls={prefixCls}
             key="tableWrapper-footer"
             lock={lock}
-            hasBody={false}
-            hasHeader={false}
+            hasBody={hasBody}
+            hasHeader={hasFooter}
             hasFooter={hasFooter}
             dragColumnAlign={dragColumnAlign}
           >

@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 💄 `<pro>Table`: Optimized the width and style of virtual scroll fixed column.
+
 ## 0.8.77
 
 `2020-12-09`

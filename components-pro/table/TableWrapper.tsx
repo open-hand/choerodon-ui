@@ -125,13 +125,13 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
     } = this.context;
     let hasEmptyWidth = false;
 
-    const filterDrag = (columnItem:ColumnProps) => {
-      const {dragColumnAlign} = this.props
-      if(dragColumnAlign){
-        return columnItem.key === DRAG_KEY
+    const filterDrag = (columnItem: ColumnProps) => {
+      const { dragColumnAlign } = this.props;
+      if (dragColumnAlign) {
+        return columnItem.key === DRAG_KEY;
       }
-      return true
-    }
+      return true;
+    };
 
     const cols = this.leafColumns.filter(filterDrag).map((column, index, array) => {
       let width = get(column, 'width');
@@ -166,23 +166,21 @@ export default class TableWrapper extends Component<TableWrapperProps, any> {
   get tableWidth() {
     const { lock, hasBody, dragColumnAlign } = this.props;
     const {
-      tableStore: { overflowY, overflowX,props: { virtual }, columns },
+      tableStore: { overflowY, overflowX, columns },
     } = this.context;
 
-    if(dragColumnAlign && columns && columns.length > 0){
-     const dragColumns = columns.filter((columnItem) => {
-        return columnItem.key === DRAG_KEY
-      })
-      if(dragColumns.length > 0){
-        return dragColumns[0].width
+    if (dragColumnAlign && columns && columns.length > 0) {
+      const dragColumns = columns.filter((columnItem) => {
+        return columnItem.key === DRAG_KEY;
+      });
+      if (dragColumns.length > 0) {
+        return dragColumns[0].width;
       }
     }
     if (overflowX) {
       let tableWidth = this.leafColumnsWidth;
-      if (tableWidth !== undefined && overflowY && lock !== ColumnLock.left && !hasBody ) {
-        if(!(virtual && lock === ColumnLock.right)){
-          tableWidth += measureScrollbar();
-        }
+      if (tableWidth !== undefined && overflowY && lock !== ColumnLock.left && !hasBody) {
+        tableWidth += measureScrollbar();
       }
       return pxToRem(tableWidth);
     }

@@ -12,7 +12,7 @@ import {
   DraggableRubric,
 } from 'react-beautiful-dnd';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
-import { isFunction } from 'lodash';
+import isFunction from 'lodash/isFunction';
 import { ColumnProps } from './Column';
 import { ElementProps } from '../core/ViewComponent';
 import TableHeaderCell, { TableHeaderCellProps } from './TableHeaderCell';

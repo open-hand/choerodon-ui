@@ -14,7 +14,7 @@ import {
 } from 'react-beautiful-dnd';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import ReactResizeObserver from 'choerodon-ui/lib/_util/resizeObserver';
-import { isFunction } from 'lodash';
+import isFunction from 'lodash/isFunction';
 import { ColumnProps } from './Column';
 import { ElementProps } from '../core/ViewComponent';
 import TableContext from './TableContext';

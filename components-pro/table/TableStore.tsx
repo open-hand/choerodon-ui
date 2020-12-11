@@ -6,7 +6,7 @@ import defer from 'lodash/defer';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
 import Icon from 'choerodon-ui/lib/icon';
-import { isFunction } from 'lodash';
+import isFunction from 'lodash/isFunction';
 import Column, { ColumnProps, columnWidth } from './Column';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
