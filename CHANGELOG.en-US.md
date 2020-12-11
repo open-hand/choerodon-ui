@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 💄 `<pro>Table`: Optimized the width and style of virtual scroll fixed column.
+- 🐞 `Tabs`: Fixed Tab can't scroll when in min width screen.
 
 ## 0.8.77
 

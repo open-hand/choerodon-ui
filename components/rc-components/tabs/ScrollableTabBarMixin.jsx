@@ -62,7 +62,9 @@ export default {
     const containerWH = this.getOffsetWH(this.container);
     const navWrapNodeWH = this.getOffsetWH(this.navWrap);
     let { offset } = this;
-    const minOffset = containerWH - navNodeWH;
+    // 当容器小于tab的时候使用最小值才可以防止回弹问题。
+    const navNodeWHValue = Math.min(containerWH,navWrapNodeWH)
+    const minOffset = navNodeWHValue - navNodeWH; // -165
     let { next, prev } = this.state;
     if (minOffset >= 0) {
       next = false;
