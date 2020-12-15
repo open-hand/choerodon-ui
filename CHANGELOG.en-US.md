@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Select`: Added `noCache` property.
+- 💄 `configure`: Optimized `lookupCache` property.
 - 💄 `<pro>Table`: Optimized the width and style of virtual scroll fixed column.
 
 ## 0.8.77
