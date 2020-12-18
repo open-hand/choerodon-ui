@@ -64,7 +64,7 @@ import FilterBar from './query-bar/TableFilterBar';
 import AdvancedQueryBar from './query-bar/TableAdvancedQueryBar';
 import ProfessionalBar from './query-bar/TableProfessionalBar';
 import ToolBar from './query-bar/TableToolBar';
-import { findIndexedSibling, getHeight, getPaginationPosition } from './utils';
+import { findIndexedSibling, getHeight, getPaginationPosition, isCanEdictingRow } from './utils';
 import { ButtonProps } from '../button/Button';
 import TableBody from './TableBody';
 
@@ -720,12 +720,23 @@ export default class Table extends DataSetComponent<TableProps> {
     if (!tableStore.editing) {
       try {
         const { dataSet } = this.props;
+        const ctrlKey = e.ctrlKey || e.metaKey;
+        const altKey = e.altKey ;
+        const shiftKey = e.shiftKey;
         switch (e.keyCode) {
           case KeyCode.UP:
-            this.handleKeyDownUp(e);
+            if(shiftKey){
+              this.handleKeyDownUpShift(e)
+            }else{
+              this.handleKeyDownUp(e);
+            }
             break;
           case KeyCode.DOWN:
-            this.handleKeyDownDown(e);
+            if(shiftKey){
+              this.handleKeyDownDownShift(e)
+            }else{
+              this.handleKeyDownDown(e);
+            }
             break;
           case KeyCode.RIGHT:
             this.handleKeyDownRight(e);
@@ -747,6 +758,18 @@ export default class Table extends DataSetComponent<TableProps> {
           case KeyCode.END:
             this.handleKeyDownEnd(e);
             break;
+          case KeyCode.S:
+            if (ctrlKey === true) { this.handleKeyDownCTRLS(e); };
+            break;
+          case KeyCode.N:
+            if (altKey === true) { this.handleKeyDownCTRLN(e); };
+            break;
+          case KeyCode.D:
+            if(ctrlKey === true) { this.handleKeyDownCTRLD(e); };
+            break;
+          case KeyCode.DELETE:
+            if(altKey === true) { this.handleKeyDownCTRLDELETE(e); };
+            break;
           default:
         }
       } catch (error) {
@@ -757,7 +780,7 @@ export default class Table extends DataSetComponent<TableProps> {
     onKeyDown(e);
   }
 
-  focusRow(row: HTMLTableRowElement | null) {
+  focusRow(row: HTMLTableRowElement | null): Record | void {
     if (row) {
       const { index } = row.dataset;
       if (index) {
@@ -765,6 +788,7 @@ export default class Table extends DataSetComponent<TableProps> {
         const record = dataSet.findRecordById(index);
         if (record) {
           dataSet.current = record;
+          return record;
         }
       }
     }
@@ -788,33 +812,174 @@ export default class Table extends DataSetComponent<TableProps> {
     this.focusRow(this.lastRow);
   }
 
-  async handleKeyDownUp(e) {
+  async handleKeyDownCTRLS(e) {
     e.preventDefault();
-    const { currentRow } = this;
-    if (currentRow) {
-      const previousElementSibling = findIndexedSibling(currentRow, -1);
+    const {
+      tableStore: { dataSet },
+    } = this;
+    dataSet.submit();
+  }
+
+  async handleKeyDownCTRLN(e) {
+    e.preventDefault();
+    const {
+      tableStore: { dataSet },
+    } = this;
+    dataSet.create({}, 0);
+  }
+
+  async handleKeyDownCTRLD(e) {
+    e.preventDefault();
+    const { currentRow, tableStore } = this;
+    const { dataSet } = tableStore;
+    let currentElementSibling: HTMLTableRowElement | null = null;
+    // to justice it can be change or standards compliant
+    if (
+      isCanEdictingRow(currentRow)
+    ) {
+      currentElementSibling = currentRow;
+    }
+    if (currentElementSibling && tableStore && dataSet) {
+      const previousElementSibling = findIndexedSibling(currentElementSibling, -1);
       if (previousElementSibling) {
-        this.focusRow(previousElementSibling);
-      } else {
-        const { dataSet } = this.props;
-        await dataSet.prePage();
-        this.focusRow(this.lastRow);
+        const { index } = previousElementSibling.dataset;
+        const { index: currentIndex } = currentElementSibling.dataset;
+        if (index && currentIndex) {
+          const record = dataSet.findRecordById(index);
+          const currentRecord = dataSet.findRecordById(currentIndex);
+          // exculde the primery key and merge has columns which has edictor
+          if (record && currentRecord && tableStore) {
+            const cloneRecodData = record.clone().toData() || {};
+            const dealCloneRecodData = {};
+            const editeColumn = tableStore.columns
+              .filter((column) => !!column.editor)
+              .reduce((accumulator, nowValue) => [...accumulator, nowValue.name], [])
+              .filter((v) => !(v === null || v === undefined || v === ''))
+            if (editeColumn && editeColumn.length > 0) {
+              editeColumn.forEach(element => {
+                if (element) {
+                  dealCloneRecodData[element] = cloneRecodData[element];
+                }
+              });
+            }
+            // remove the unique name of fields 
+            const uniqueFieldIterator = new Map([...dataSet.fields.entries()]
+              .filter(([_key, field]) => !!field.get('unique'))).keys();
+            const uniqueFieldNames = Array.from(uniqueFieldIterator)
+            if (uniqueFieldNames && uniqueFieldNames.length > 0) {
+              uniqueFieldNames.forEach(element => {
+                if (element) {
+                  delete dealCloneRecodData[element];
+                }
+              });
+            }
+            currentRecord.set(dealCloneRecodData);
+          }
+        }
       }
     }
   }
 
-  async handleKeyDownDown(e) {
+
+
+
+  async handleKeyDownCTRLDELETE(e) {
+    e.preventDefault();
+    const {
+      tableStore: { dataSet },
+    } = this;
+    dataSet.delete(dataSet.selected)
+  }
+
+  async handleKeyDownUp(e): Promise<void | Record> {
     e.preventDefault();
     const { currentRow } = this;
+    let returnRecod: void | Record;
+    if (currentRow) {
+      const previousElementSibling = findIndexedSibling(currentRow, -1);
+      if (previousElementSibling) {
+        returnRecod = this.focusRow(previousElementSibling);
+      } else {
+        const { dataSet } = this.props;
+        await dataSet.prePage();
+        returnRecod = this.focusRow(this.lastRow);
+      }
+      if (returnRecod) {
+        return Promise.resolve(returnRecod)
+      }
+    }
+    return Promise.reject();
+  }
+
+  async handleKeyDownDown(e): Promise<void | Record> {
+    e.preventDefault();
+    const { currentRow } = this;
+    let returnRecod: void | Record;
     if (currentRow) {
       const nextElementSibling = findIndexedSibling(currentRow, 1);
       if (nextElementSibling) {
-        this.focusRow(nextElementSibling);
+        returnRecod = this.focusRow(nextElementSibling);
       } else {
         const { dataSet } = this.props;
         await dataSet.nextPage();
-        this.focusRow(this.firstRow);
+        returnRecod = this.focusRow(this.firstRow);
       }
+      if (returnRecod) {
+        return Promise.resolve(returnRecod)
+      }
+    }
+    return Promise.reject();
+  }
+
+  async handleKeyDownDownShift(e) {
+    e.preventDefault();
+    const { dataSet } = this.tableStore;
+    const { currentRow } = this;
+    if (currentRow && isCanEdictingRow(currentRow)) {
+      const { index } = currentRow.dataset;
+      if (index) {
+        const record = dataSet.findRecordById(index);
+        if (record) {
+          if (!record.selectable) {
+            this.handleKeyDownDown(e);
+          } else if (!record.isSelected) {
+            dataSet.select(record);
+          } else {
+            const currentRecord = await this.handleKeyDownDown(e);
+            if (currentRecord && dataSet) {
+              dataSet.select(currentRecord);
+            }
+          }
+        }
+      }
+    } else {
+      this.handleKeyDownDown(e);
+    }
+  }
+
+  async handleKeyDownUpShift(e) {
+    e.preventDefault();
+    const { dataSet } = this.tableStore;
+    const { currentRow } = this;
+    if (currentRow && isCanEdictingRow(currentRow)) {
+      const { index } = currentRow.dataset;
+      if (index) {
+        const record = dataSet.findRecordById(index);
+        if (record) {
+          if (!record.selectable) {
+            this.handleKeyDownUp(e);
+          } else if (!record.isSelected) {
+            dataSet.select(record);
+          } else {
+            const currentRecord = await this.handleKeyDownUp(e);
+            if (currentRecord) {
+              dataSet.select(currentRecord);
+            }
+          }
+        }
+      }
+    } else {
+      this.handleKeyDownUp(e);
     }
   }
 

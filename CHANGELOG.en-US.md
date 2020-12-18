@@ -16,8 +16,11 @@ timeline: true
 ---
 
 - 🌟 `<pro>Select`: Added `noCache` property.
+- 🌟 `<pro>Table`: Added more keyboard shortcuts.
 - 💄 `configure`: Optimized `lookupCache` property.
+- 💄 `<pro>Cascader`: Optimized the not found display of results.
 - 💄 `<pro>Table`: Optimized the width and style of virtual scroll fixed column.
+- 🐞 `Tabs`: Fixed Tab can't scroll when in min width screen.
 
 ## 0.8.77
 

@@ -192,14 +192,24 @@ export function findFirstFocusableInvalidElement(node: HTMLElement): HTMLElement
   }
 }
 
-export function findIndexedSibling(element, direction): HTMLTableRowElement | null {
-  const sibling: HTMLTableRowElement | null =
-    direction > 0 ? element.nextElementSibling : element.previousElementSibling;
+export function isCanEdictingRow(element): boolean {
+  const sibling: HTMLTableRowElement | null = element
   if (
     !sibling ||
     ('index' in sibling.dataset &&
       !sibling.getAttributeNodeNS('', 'disabled') &&
       (!document.defaultView || document.defaultView.getComputedStyle(sibling).display !== 'none'))
+  ) {
+    return true;
+  }
+  return false;
+}
+
+export function findIndexedSibling(element, direction): HTMLTableRowElement | null {
+  const sibling: HTMLTableRowElement | null =
+    direction > 0 ? element.nextElementSibling : element.previousElementSibling;
+  if (
+    isCanEdictingRow(element)
   ) {
     return sibling;
   }

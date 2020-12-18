@@ -420,7 +420,6 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
       'onOption',
       'expandTrigger',
       'dropdownMatchSelectWidth',
-      'dropdownMenuStyle',
       'menuMode',
       'singleMenuStyle',
       'singleMenuItemStyle',
@@ -699,7 +698,13 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     }
     return (
       <div key="no_data">
-        {this.loading ? ' ' : this.getNotFoundContent()}
+          <ul className={`${this.prefixCls}-menu`} style={{...{height: 'auto'},...dropdownMenuStyleMerge}}>
+            <li
+             className={`${this.prefixCls}-menu-item ${this.prefixCls}-menu-item-disabled`}
+            >
+               {this.loading ? ' ' : this.getNotFoundContent()}
+          </li>
+          </ul>
       </div>
     )
   }

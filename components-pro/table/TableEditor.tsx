@@ -11,7 +11,7 @@ import { ColumnProps } from './Column';
 import { ElementProps } from '../core/ViewComponent';
 import { FormField, FormFieldProps } from '../field/FormField';
 import TableContext from './TableContext';
-import { findCell, getColumnKey, getEditorByColumnAndRecord, getEditorByField, isRadio } from './utils';
+import { findCell, findIndexedSibling, getColumnKey, getEditorByColumnAndRecord, getEditorByField, isRadio } from './utils';
 import { stopEvent } from '../_util/EventManager';
 import { ShowHelp } from '../field/enum';
 import autobind from '../_util/autobind';
@@ -33,6 +33,9 @@ export default class TableEditor extends Component<TableEditorProps> {
   editorProps?: any;
 
   editor: FormField<FormFieldProps> | null;
+
+  // find this parent tr node 
+  parentTrNode?: (Node & ParentNode ) | null | undefined;
 
   editing: boolean = false;
 
@@ -87,8 +90,37 @@ export default class TableEditor extends Component<TableEditorProps> {
     }
   }
 
+  // copy the previous tr value to to this cell value
+  @autobind
+  handleKeyDownCTRLD(e) {
+    e.preventDefault();
+    const { parentTrNode: currentElementSibling, context: { tableStore } } = this;
+    const { column: { name } } = this.props;
+    const { dataSet } = tableStore;
+    if (currentElementSibling && tableStore && dataSet) {
+      const previousElementSibling = findIndexedSibling(currentElementSibling, -1);
+      if (previousElementSibling) {
+        const { index } = previousElementSibling.dataset;
+        const { index: currentIndex } = (currentElementSibling as HTMLTableRowElement).dataset;
+        if (index && currentIndex) {
+          const record = dataSet.findRecordById(index);
+          const currentRecord = dataSet.findRecordById(currentIndex);
+          if (record && currentRecord && tableStore) {
+            const cloneRecodData = record.clone().toData() || {};
+            const dealCloneRecodData = {};
+            if (name) {
+              dealCloneRecodData[name] = cloneRecodData[name];
+              currentRecord.set(dealCloneRecodData);
+            }
+          }
+        }
+      }
+    }
+  }
+
   @autobind
   handleEditorKeyDown(e) {
+    const ctrlKey = e.ctrlKey || e.metaKey;
     if (e.keyCode !== KeyCode.ESC || !e.isDefaultPrevented()) {
       const { tableStore } = this.context;
       switch (e.keyCode) {
@@ -105,6 +137,9 @@ export default class TableEditor extends Component<TableEditorProps> {
         case KeyCode.PAGE_UP:
         case KeyCode.PAGE_DOWN:
           stopEvent(e);
+          break;
+        case KeyCode.D:
+          if(ctrlKey === true) { this.handleKeyDownCTRLD(e); }
           break;
         default:
       }
@@ -279,6 +314,7 @@ export default class TableEditor extends Component<TableEditorProps> {
         const cell = findCell(tableStore, prefixCls, getColumnKey(column), lock);
         if (cell) {
           this.editing = true;
+          this.parentTrNode = cell.parentNode?.parentNode;
           const { offsetLeft, offsetTop, offsetWidth, offsetHeight } = cell;
           props.style = {
             left: pxToRem(offsetLeft),
