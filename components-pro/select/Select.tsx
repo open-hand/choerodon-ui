@@ -173,6 +173,10 @@ export interface SelectProps extends TriggerFieldProps {
    * 设置选项属性，如 disabled;
    */
   onOption: (props: onOptionProps) => OptionProps;
+  /**
+   * 下拉时自动重新查询
+   */
+  noCache?: boolean;
 }
 
 export class Select<T extends SelectProps> extends TriggerField<T> {
@@ -239,6 +243,10 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
      * 设置选项属性，如 disabled;
      */
     onOption: PropTypes.func,
+    /**
+     * 下拉时自动重新查询
+     */
+    noCache: PropTypes.bool,
     ...TriggerField.propTypes,
   };
 
@@ -471,6 +479,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
       'optionRenderer',
       'notFoundContent',
       'onOption',
+      'noCache',
     ]);
     return otherProps;
   }
@@ -1157,11 +1166,13 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   }
 
   @autobind
-  async handlePopupHiddenChange(hidden: boolean) {
-    // TODO 缓存优化
-    // const { field } = this;
+  handlePopupHiddenChange(hidden: boolean) {
+    const { field } = this;
+    const noCache = this.getProp('noCache');
     if (!hidden) {
-      // await field?.fetchLookup();
+      if (field) {
+        field.fetchLookup(noCache);
+      }
       this.forcePopupAlign();
     }
     super.handlePopupHiddenChange(hidden);

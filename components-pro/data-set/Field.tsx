@@ -783,9 +783,10 @@ export default class Field {
 
   /**
    * 请求lookup值, 如有缓存值直接获得。
+   * @param noCache default: undefined
    * @return Promise<object[]>
    */
-  async fetchLookup(): Promise<object[] | undefined> {
+  async fetchLookup(noCache = undefined): Promise<object[] | undefined> {
     const batch = getConfig('lookupBatchAxiosConfig');
     const lookupCode = this.get('lookupCode');
     const lovPara = getLovPara(this, this.record);
@@ -801,8 +802,8 @@ export default class Field {
         lookupStore.fetchLookupDataInBatch(lookupCode),
       );
     } else {
-      const axiosConfig = lookupStore.getAxiosConfig(this);
-      if (dsField) {
+      const axiosConfig = lookupStore.getAxiosConfig(this, noCache);
+      if (dsField && noCache === false) {
         const dsConfig = lookupStore.getAxiosConfig(dsField);
         if (
           dsConfig.url &&
