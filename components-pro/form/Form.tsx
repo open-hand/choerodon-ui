@@ -629,6 +629,7 @@ export default class Form extends DataSetComponent<FormProps> {
         colSpan = 1,
         newLine,
         className,
+        fieldClassName,
         placeholder,
         ...otherProps
       } = props as any;
@@ -666,7 +667,7 @@ export default class Form extends DataSetComponent<FormProps> {
       }
       const isOutput =
         labelLayout === LabelLayout.horizontal && (type as any).displayName === 'Output';
-      const labelClassName = classNames(`${prefixCls}-label`, `${prefixCls}-label-${labelAlign}`, {
+      const labelClassName = classNames(`${prefixCls}-label`, `${prefixCls}-label-${labelAlign}`, fieldClassName, {
         [`${prefixCls}-required`]: required,
         [`${prefixCls}-readonly`]: readOnly,
         [`${prefixCls}-label-vertical`]: labelLayout === LabelLayout.vertical,
@@ -712,6 +713,7 @@ export default class Form extends DataSetComponent<FormProps> {
           key={`row-${rowIndex}-col-${colIndex}-field`}
           colSpan={noLabel ? newColSpan : newColSpan * 2 - 1}
           rowSpan={rowSpan}
+          className={fieldClassName}
           style={this.labelLayout === LabelLayout.horizontal
             && separateSpacingWidth
             ? { paddingRight: pxToRem(separateSpacingWidth + 5) } : undefined}
