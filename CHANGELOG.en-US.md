@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `<pro>Cascader`: Add `onChoose`, `onUnChoose` property.
 - 🌟 `<pro>Table`: Added more keyboard shortcuts.
+- 💄 `<pro>DataSet`: Optimized getText property.
 - 💄 `<pro>Table`: Optimized the width and style of virtual scroll fixed column.
 - 💄 `<pro>Cascader`: Optimized the not found display of results.
 - 🐞 `Tabs`: Fixed Tab can't scroll when in min width screen.

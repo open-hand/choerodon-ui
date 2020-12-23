@@ -591,6 +591,50 @@ export default class Field {
   }
 
   /**
+   * 可以根据lookup值获取含义
+   * @param value lookup值
+   * @param boolean showValueIfNotFound
+   * @return {string}
+   */
+  getLookupText(value: any = this.getValue(), showValueIfNotFound?: boolean): string | undefined {
+    const textField = this.get('textField');
+    const valueField = this.get('valueField');
+    const { lookup } = this;
+    if (lookup) {
+      const found = lookup.find(obj => isSameLike(get(obj, valueField), value));
+      if (found) {
+        return get(found, textField);
+      }
+      if (showValueIfNotFound) {
+        return value;
+      }
+      return undefined;
+    }
+  }
+
+  /**
+   * 可以根据options值获取含义
+   * @param value opions值
+   * @param boolean showValueIfNotFound
+   * @return {string}
+   */
+  getOptionsText(value: any = this.getValue(), showValueIfNotFound?: boolean): string | undefined {
+    const textField = this.get('textField');
+    const valueField = this.get('valueField');
+    const { options } = this;
+    if (options) {
+      const found = options.find(record => isSameLike(record.get(valueField), value));
+      if (found) {
+        return found.get(textField);
+      }
+      if (showValueIfNotFound) {
+        return value;
+      }
+      return undefined;
+    }
+  }
+
+  /**
    * 根据lookup值获取lookup含义
    * @param value lookup值
    * @param boolean showValueIfNotFound
@@ -601,14 +645,7 @@ export default class Field {
     const valueField = this.get('valueField');
     const { lookup, options } = this;
     if (lookup) {
-      const found = lookup.find(obj => isSameLike(get(obj, valueField), value));
-      if (found) {
-        return get(found, textField);
-      }
-      if (showValueIfNotFound) {
-        return value;
-      }
-      return undefined;
+      return this.getLookupText(value,showValueIfNotFound)
     }
     if (options) {
       const found = options.find(record => isSameLike(record.get(valueField), value));
