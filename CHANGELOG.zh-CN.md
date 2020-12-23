@@ -21,6 +21,7 @@ timeline: true
 - 💄 `<pro>Table`: 优化虚拟滚动固定列宽度及样式。
 - 💄 `<pro>Cascader`: 优化 Cascader 无选项的展示效果。
 - 🐞 `Tabs`: 修复 Tab 在小屏幕上无法滚动问题。
+- 🐞 `<pro>FormField`: 修复多选出现多个校验提示问题。
 
 ## 0.8.77
 
