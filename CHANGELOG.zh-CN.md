@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Cascader`: 增加 onChoose, onUnChoose 属性。
 - 🌟 `<pro>Table`: 新增更多的表单快捷键。
 - 💄 `<pro>Table`: 优化虚拟滚动固定列宽度及样式。
 - 💄 `<pro>Cascader`: 优化 Cascader 无选项的展示效果。
