@@ -66,7 +66,7 @@ export class LookupCodeStore {
     return this.merger.add(code);
   }
 
-  getAxiosConfig(field: Field): AxiosRequestConfig {
+  getAxiosConfig(field: Field, noCache?: boolean): AxiosRequestConfig {
     const lookupAxiosConfig = field.get('lookupAxiosConfig') || getConfig('lookupAxiosConfig');
     const { record } = field;
     const params = getLovPara(field, record);
@@ -76,8 +76,9 @@ export class LookupCodeStore {
       params,
       lookupCode: field.get('lookupCode'),
     });
+    const noCacheAdapter = throttleAdapterEnhancer(cacheAdapterEnhancer(axios.defaults.adapter!, { enabledByDefault: !noCache }));
     return {
-      adapter,
+      adapter: noCache ? noCacheAdapter : adapter,
       ...config,
       url: config.url || this.getUrl(field),
       method: config.method || getConfig('lookupAxiosMethod') || 'post',

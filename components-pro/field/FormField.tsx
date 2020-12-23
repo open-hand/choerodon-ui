@@ -214,6 +214,10 @@ export interface FormFieldProps extends DataSetComponentProps {
    * 值清空回调
    */
   onClear?: () => void;
+  /**
+   * 字段 td 类名传递 支持个性化隐藏字段
+   */
+  fieldClassName?: string;
 }
 
 export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
@@ -329,6 +333,10 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
      * 键盘回车回调
      */
     onEnterDown: PropTypes.func,
+    /**
+     * 键盘回车回调
+     */
+    fieldClassName: PropTypes.string,
     ...DataSetComponent.propTypes,
   };
 
@@ -560,6 +568,8 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       'pristine',
       'range',
       'trim',
+      'newLine',
+      'fieldClassName',
     ]);
     otherProps.onChange = !this.isDisabled() && !this.isReadOnly() ? this.handleChange : noop;
     otherProps.onKeyDown = this.handleKeyDown;

@@ -17,8 +17,10 @@ timeline: true
 
 - 🌟 `<pro>Cascader`: Added `onChoose`, `onUnChoose` property.
 - 🌟 `<pro>Table`: Added more keyboard shortcuts.
+- 🌟 `<pro>Select`: Added `noCache` property.
 - 💄 `<pro>DataSet`: Optimized getText property.
 - 💄 `<pro>Table`: Optimized the width and style of virtual scroll fixed column.
+- 💄 `configure`: Optimized `lookupCache` property.
 - 💄 `<pro>Cascader`: Optimized the not found display of results.
 - 🐞 `Tabs`: Fixed Tab can't scroll when in min width screen.
 - 🐞 `<pro>FormField`: Fixed the problem of multiple verification prompts in multiple selections.

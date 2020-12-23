@@ -35,6 +35,7 @@ title: Select
 | maxCommonTagPlaceholder | 设置常用项标签超出最大数量时的占位描述 | ReactNode \| (restValues) => ReactNode |  |
 | maxCommonTagCount | 设置常用项标签最大数量 | number |  |
 | maxCommonTagTextLength | 设置常用项标签文案最大长度 | number |  |
+| noCache    | 下拉时自动重新查询，不缓存下拉数据源                                   | boolean |   |
 
 更多属性请参考 [TriggerField](/components-pro/trigger-field/#TriggerField)。
 
