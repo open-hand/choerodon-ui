@@ -1669,7 +1669,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       className,
       width = 0,
       style,
-      isTree,
+      isTree = false,
       hover,
       bordered,
       cellBordered,
@@ -1708,6 +1708,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
           // @ts-ignore
           translateDOMPositionXY: this.translateDOMPositionXY,
           rtl: this.isRTL(),
+          isTree,
           hasCustomTreeCol,
         }}
       >

@@ -3,7 +3,6 @@ order: 1
 title:
   zh-CN: 动态处理
   en-US: Basic usage
-only: true  
 ---
 
 ## zh-CN

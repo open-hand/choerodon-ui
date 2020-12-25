@@ -55,13 +55,13 @@ class Cell extends React.PureComponent<CellProps> {
 
   isTreeCol() {
     const { treeCol, firstColumn } = this.props;
-    const { hasCustomTreeCol } = this.context;
+    const { hasCustomTreeCol, isTree } = this.context;
 
     if (treeCol) {
       return true;
     }
 
-    if (!hasCustomTreeCol && firstColumn) {
+    if (!hasCustomTreeCol && firstColumn && isTree) {
       return true;
     }
 
