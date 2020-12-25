@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
-import moment from 'moment';
+import moment, { Moment } from 'moment';
+import noop from 'lodash/noop';
 import { DatePickerKeyboardEvent } from './DatePicker';
 import DaysView from './DaysView';
 import TimesView from './TimesView';
@@ -39,6 +40,11 @@ export default class DateTimesView extends DaysView implements DatePickerKeyboar
     return firstDay;
   }
 
+  choose(date: Moment, expand: boolean = true) {
+    const { onSelect = noop } = this.props;
+    onSelect(date, expand);
+  }
+
   renderFooter(): ReactNode {
     const {
       prefixCls,
@@ -46,7 +52,7 @@ export default class DateTimesView extends DaysView implements DatePickerKeyboar
     } = this;
     return (
       <div className={`${prefixCls}-footer`}>
-        <a className={`${prefixCls}-footer-now-btn`} onClick={this.choose.bind(this, moment())}>
+        <a className={`${prefixCls}-footer-now-btn`} onClick={this.choose.bind(this, moment(), false)}>
           {$l('DatePicker', 'now')}
         </a>
         <a className={`${prefixCls}-footer-view-select`} onClick={this.handleTimeSelect}>

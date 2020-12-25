@@ -183,12 +183,12 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
      * 设置选项属性，如 disabled;
      */
       /**
-   * 选择一个值的时候触发
-   */
-  onChoose: PropTypes.func,
-  /**
-   * 取消选中一个值的时候触发多选时候生效
-   */
+     * 选择一个值的时候触发
+     */
+    onChoose: PropTypes.func,
+    /**
+     * 取消选中一个值的时候触发多选时候生效
+     */
     onUnChoose: PropTypes.func,
     onOption: PropTypes.func,
     singleMenuStyle: PropTypes.object,

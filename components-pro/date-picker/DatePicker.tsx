@@ -357,11 +357,11 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   }
 
   @autobind
-  handleSelect(date: Moment) {
+  handleSelect(date: Moment, expand?: boolean) {
     if (this.multiple && this.isSelected(date)) {
       this.unChoose(date);
     } else {
-      this.choose(date);
+      this.choose(date, expand);
     }
   }
 
@@ -535,14 +535,21 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     this.removeValue(date, -1);
   }
 
-  choose(date: Moment) {
+  /**
+   * 
+   * @param date 返回的时间
+   * @param expand 是否保持时间选择器的展开
+   */
+  choose(date: Moment, expand?: boolean) {
     date = this.getValidDate(date);
     this.prepareSetValue(date);
     this.changeSelectedDate(date);
     if (this.range ? this.rangeTarget === 1 : !this.multiple) {
-      this.collapse();
+      if(!expand) {
+        this.collapse();
+      }
     }
-    if (this.range && this.rangeTarget === 0 && this.popup) {
+    if (this.range && this.rangeTarget === 0 && this.popup && !expand) {
       this.setRangeTarget(1);
     }
   }

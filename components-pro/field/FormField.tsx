@@ -352,7 +352,8 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
 
   lock: boolean = false;
 
-  mutipleValidateMessageLenght: number = 0;
+  // 多选中出现了校验值的数量大于一那么输入框不需要存在校验信息展示
+  mutipleValidateMessageLength: number = 0;
 
   @observable rangeTarget?: 0 | 1;
 
@@ -1079,7 +1080,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     }
     if (readOnly) {
       if (multiLineFields.length) {
-        this.mutipleValidateMessageLenght = 0
+        this.mutipleValidateMessageLength = 0
         return (
           <>
             {multiLineFields.map(fieldItem => {
@@ -1094,7 +1095,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
                 const repeat = repeats.get(key) || 0;
                 const validationHidden = this.isValidationMessageHidden(validationMessage);
                 const text = this.processText(this.getText(record?.get(fieldItem.get('name'))));
-                this.mutipleValidateMessageLenght++
+                this.mutipleValidateMessageLength++
                 const inner = record?.status === RecordStatus.add ? '' :
                   <span className={`${prefixCls}-multi-value-invalid`}>{text}</span>;
                 const validationInner = validationHidden ? inner : (
@@ -1177,7 +1178,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       },
       `${prefixCls}-multiple-block`,
     );
-    this.mutipleValidateMessageLenght = 0
+    this.mutipleValidateMessageLength = 0
     const tags = values.slice(0, maxTagCount).map(v => {
       const key = this.getValueKey(v);
       const repeat = repeats.get(key) || 0;
@@ -1194,7 +1195,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
         const validationMessage =
           validationResult && this.renderValidationMessage(validationResult);
         if(validationMessage){
-            this.mutipleValidateMessageLenght++
+            this.mutipleValidateMessageLength++
         }
         const closeBtn = !this.isDisabled() && !this.isReadOnly() && (
           <CloseButton onClose={this.handleMutipleValueRemove} value={v} index={repeat} />
@@ -1344,7 +1345,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
           <Tooltip
             suffixCls={`form-tooltip ${getConfig('proPrefixCls')}-tooltip`}
             title={
-              (!!(this.multiple && this.getValues().length) && !customValidator) ||
+              (!!(this.multiple && this.getValues().length) && !customValidator || this.mutipleValidateMessageLength  > 0) ||
               this.isValidationMessageHidden(validationMessage)
                 ? null
                 : validationMessage

@@ -44,9 +44,8 @@ class App extends React.Component {
     fields: [
       {
         name: 'date',
-        type: 'date',
+        type: 'dateTime',
         range: ['start', 'end'],
-        defaultValue: { start: '1984-11-22', end: new Date() },
         required: true,
         validator: rangeValidator,
       },
@@ -79,7 +78,7 @@ class App extends React.Component {
     return (
       <Row gutter={10}>
         <Col span={24}>
-          <DatePicker dataSet={this.ds} name="date" placeholder={['Start Date', 'End Date']} />
+          <DateTimePicker dataSet={this.ds} name="date" placeholder={['Start Date', 'End Date']} />
         </Col>
         <Col span={24}>
           <DatePicker dataSet={this.ds} name="date2" placeholder={['Start Date', 'End Date']} />
