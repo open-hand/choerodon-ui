@@ -32,6 +32,8 @@ subtitle: 级联选择
 | notFoundContent | 当下拉列表为空时显示的内容 | ReactNode |  |
 | onOption | 设置选项属性，如 disabled | ({ dataSet, record })) => object \| ({ options, item })) => object |  |
 | menuMode | Single box pop-up form switch| `single` \| `multiple` | - |
+| onChoose | 选择一个值的时候触发| (value,record) => void | - |
+| onUnChoose | 取消选中一个值的时候触发多选时候生效|  (value,record) => void | - |
 
 更多属性请参考 [TriggerField](/components-pro/trigger-field/#TriggerField)。
 

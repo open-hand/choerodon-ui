@@ -23,6 +23,7 @@ timeline: true
 - 💄 `configure`: Optimized `lookupCache` property.
 - 💄 `<pro>Cascader`: Optimized the not found display of results.
 - 🐞 `Tabs`: Fixed Tab can't scroll when in min width screen.
+- 🐞 `<pro>Table`: Fixed the misalignment problem of the low resolution of Table head under autoHeight.
 - 🐞 `<pro>FormField`: Fixed the problem of multiple verification prompts in multiple selections.
 
 
