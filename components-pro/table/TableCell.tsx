@@ -16,6 +16,7 @@ import raf from 'raf';
 import omit from 'lodash/omit';
 import isObject from 'lodash/isObject';
 import isString from 'lodash/isString';
+import max from 'lodash/max';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
@@ -482,9 +483,12 @@ export default class TableCell extends Component<TableCellProps> {
           return record.getField(fields.name) || dataSet.getField(fields.name);
         }
       }).filter(f => f).length;
-      runInAction(() => {
-        tableStore.multiLineHeight = rows > 0 ? rowHeight * rows + 5 : rowHeight;
-      });
+      const multiLineHeight = rows > 0 ? (rowHeight + 2) * rows + 1 : rowHeight;
+      if (multiLineHeight > Number((max(tableStore.multiLineHeight) || 0))) {
+        runInAction(() => {
+          tableStore.setMultiLineHeight(multiLineHeight);
+        });
+      }
     }
 
     if (!hasEditor) {
@@ -492,13 +496,13 @@ export default class TableCell extends Component<TableCellProps> {
     }
     if (rowHeight !== 'auto') {
       innerProps.style = {
-        height: pxToRem(rows > 0 ? rowHeight * rows + 5 : rowHeight),
+        height: pxToRem(rows > 0 ? (rowHeight + 2) * rows + 1 : rowHeight),
       };
       // 处理多行横向滚动lock列高度
-      if (tableStore.multiLineHeight && lock) {
+      if (tableStore.multiLineHeight.length && lock) {
         innerProps.style = {
-          height: pxToRem(tableStore.multiLineHeight),
-          lineHeight: pxToRem(tableStore.multiLineHeight),
+          height: pxToRem(max(tableStore.multiLineHeight) || 0),
+          lineHeight: pxToRem(max(tableStore.multiLineHeight) || 0),
         };
       }
       if (autoMaxWidth || (tooltip && tooltip !== TableColumnTooltip.none)) {

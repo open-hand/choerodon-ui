@@ -247,7 +247,7 @@ export default class TableStore {
 
   @observable columnDeep: number;
 
-  @observable multiLineHeight?: number;
+  @observable multiLineHeight: number[];
 
   @computed
   get dataSet(): DataSet {
@@ -739,6 +739,7 @@ export default class TableStore {
       this.node = node;
       this.expandedRows = [];
       this.columnDeep = 0;
+      this.multiLineHeight = [];
     });
     this.setProps(node.props);
   }
@@ -823,7 +824,7 @@ export default class TableStore {
 
   @action
   setMultiLineHeight(multiLineHeight: number) {
-    this.multiLineHeight = multiLineHeight;
+    this.multiLineHeight.push(multiLineHeight);
   }
 
   @action
