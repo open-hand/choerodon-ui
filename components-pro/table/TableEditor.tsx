@@ -119,6 +119,15 @@ export default class TableEditor extends Component<TableEditorProps> {
   }
 
   @autobind
+  handleKeyDownCTRLS(e) {
+    e.preventDefault();
+    const {
+      tableStore: { dataSet },
+    } = this.context;
+    dataSet.submit();
+  }
+
+  @autobind
   handleEditorKeyDown(e) {
     const ctrlKey = e.ctrlKey || e.metaKey;
     if (e.keyCode !== KeyCode.ESC || !e.isDefaultPrevented()) {
@@ -140,6 +149,9 @@ export default class TableEditor extends Component<TableEditorProps> {
           break;
         case KeyCode.D:
           if(ctrlKey === true) { this.handleKeyDownCTRLD(e); }
+          break;
+        case KeyCode.S:
+          if (ctrlKey === true) { this.handleKeyDownCTRLS(e); };
           break;
         default:
       }

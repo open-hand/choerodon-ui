@@ -122,6 +122,14 @@ export interface CascaderProps extends TriggerFieldProps {
    * 设置选项属性，如 disabled;
    */
   onOption: (props: onOptionProps) => OptionProps;
+  /**
+   * 选择一个值的时候触发
+   */
+  onChoose: (value,record) => void;
+  /**
+   * 取消选中一个值的时候触发多选时候生效
+   */
+  onUnChoose: (value,record) => void;
   /** 单框弹出形式切换 */
   menuMode?: MenuMode;
   /** 由于渲染在body下可以方便按照业务配置弹出框的大小 */
@@ -174,6 +182,14 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     /**
      * 设置选项属性，如 disabled;
      */
+      /**
+     * 选择一个值的时候触发
+     */
+    onChoose: PropTypes.func,
+    /**
+     * 取消选中一个值的时候触发多选时候生效
+     */
+    onUnChoose: PropTypes.func,
     onOption: PropTypes.func,
     singleMenuStyle: PropTypes.object,
     singleMenuItemStyle: PropTypes.object,
@@ -425,6 +441,8 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
       'singleMenuItemStyle',
       'singlePleaseRender',
       'singleMenuItemRender', 
+      'onChoose',
+      'onUnChoose',
     ]);
     return otherProps;
   }
@@ -1086,6 +1104,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
   // 触发下拉框的点击事件
   @autobind
   handleMenuClick(targetOption, _menuIndex, isClickTab) {
+    const { onChoose, onUnChoose } = this.props;
     if (!targetOption || targetOption.disabled) {
       return;
     }
@@ -1094,10 +1113,22 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
         this.setPopup(true);
         this.setActiveValue(targetOption.value);
         this.setIsClickTab(isClickTab);
+        if(onChoose){
+          onChoose(
+            this.processRecordToObject(targetOption.value),
+            targetOption.value,
+          )
+        }
       } else {
         if(!isClickTab){
           this.setActiveValue(targetOption.value);
           this.choose(targetOption.value);
+          if(onChoose){
+            onChoose(
+              this.processRecordToObject(targetOption.value),
+              targetOption.value,
+            )
+          }
         }else{
           this.setPopup(true);
         }
@@ -1106,6 +1137,12 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     } else {
       this.setactiveEmpty()
       this.unChoose(targetOption.value);
+      if(onUnChoose){
+        onUnChoose(
+          this.processRecordToObject(targetOption.value),
+          targetOption.value,
+        )
+      }
     }
   }
 

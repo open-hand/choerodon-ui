@@ -389,10 +389,10 @@ export default class TimesView extends DaysView {
 
   choose(date: Moment) {
     const { mode } = this.props;
+    super.choose(date);
     if (mode !== ViewMode.time) {
       this.changeSelectedDate(date);
       this.changeViewMode(mode);
     }
-    super.choose(date);
   }
 }
