@@ -62,6 +62,7 @@ const prefixCls = getConfig('prefixCls');
 | dropdownMatchSelectWidth | 默认下拉框匹配输入框宽度 | boolean | true |
 | modalSectionBorder | Default if Modal header and foot have a border line | boolean | true |
 | modalOkFirst | Default the ok button of Modal is ranked first | boolean | true |
+| modalKeyboard | Does Modal support keyboard esc off | boolean | true |
 | drawerOkFirst | The ok button of the default Modal drawer is ranked first, and has a higher priority than modalOkFirst | boolean \| undefined | undefined |
 | buttonFuncType | Default Button function type | string | raised |
 | buttonColor | Default Button color | string | default |

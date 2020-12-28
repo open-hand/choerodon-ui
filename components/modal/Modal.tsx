@@ -7,7 +7,7 @@ import { getConfirmLocale } from './locale';
 import Dialog from '../rc-components/dialog';
 import addEventListener from '../_util/addEventListener';
 import Sidebar from './Sidebar';
-import { getPrefixCls } from '../configure';
+import { getPrefixCls, getConfig } from '../configure';
 
 let mousePosition: { x: number; y: number } | null;
 let mousePositionEventBinded: boolean;
@@ -130,6 +130,7 @@ export default class Modal extends Component<ModalProps, {}> {
     visible: false,
     okType: 'primary',
     center: false,
+    keyboard: getConfig('modalKeyboard'),
   };
 
   static propTypes = {
@@ -150,6 +151,7 @@ export default class Modal extends Component<ModalProps, {}> {
     center: PropTypes.bool,
     disableOk: PropTypes.bool,
     disableCancel: PropTypes.bool,
+    keyboard: PropTypes.bool,
     okType: PropTypes.string,
     maskTransitionName: PropTypes.string,
     okButtonProps: PropTypes.object,

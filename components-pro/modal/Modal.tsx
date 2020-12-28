@@ -52,6 +52,7 @@ export interface ModalProps extends ViewComponentProps {
   key?: Key;
   border?: boolean;
   okFirst?: boolean;
+  keyboard?: boolean;
 }
 
 export default class Modal extends ViewComponent<ModalProps> {
@@ -85,6 +86,7 @@ export default class Modal extends ViewComponent<ModalProps> {
     // TODO: 添加modalTitle属性替代此处的title
     title: PropTypes.string,
     okFirst: PropTypes.bool,
+    keyboard: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -128,8 +130,8 @@ export default class Modal extends ViewComponent<ModalProps> {
   saveCancelRef = node => (this.cancelButton = node);
 
   handleKeyDown = e => {
-    const { cancelButton } = this;
-    if (cancelButton && !cancelButton.isDisabled() && e.keyCode === KeyCode.ESC) {
+    const { cancelButton, props: { keyboard = getConfig('modalKeyboard')} } = this;
+    if (cancelButton && !cancelButton.isDisabled() && e.keyCode === KeyCode.ESC && keyboard) {
       cancelButton.handleClickWait(e);
     }
   };
@@ -162,6 +164,7 @@ export default class Modal extends ViewComponent<ModalProps> {
       'border',
       'okFirst',
       'drawerTransitionName',
+      'keyboard',
     ]);
     if (this.props.keyboardClosable) {
       otherProps.autoFocus = true;

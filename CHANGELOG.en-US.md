@@ -15,14 +15,16 @@ timeline: true
 
 ---
 
-- 🌟 `<pro>Cascader`: Added `onChoose`, `onUnChoose` property.
-- 🌟 `<pro>Table`: Added more keyboard shortcuts.
+- 🌟 `configure`: Added `modalKeyboard` global configuration.
 - 🌟 `<pro>Select`: Added `noCache` property.
+- 🌟 `<pro>Table`: Added more keyboard shortcuts.
+- 🌟 `<pro>Cascader`: Added `onChoose`, `onUnChoose` property.
+- 🌟 `<pro>Modal`: Added `keyboard` attribute to control keyboard esc to close.
 - 💄 `configure`: Optimized `lookupCache` property.
 - 💄 `<pro>DataSet`: Optimized getText property.
-- 💄 `<pro>DatePicker`: Optimized the time selection operation of DateTimePicker in DatePicker.
-- 💄 `<pro>Table`: Optimized the width and style of virtual scroll fixed column.
 - 💄 `<pro>Cascader`: Optimized the not found display of results.
+- 💄 `<pro>Table`: Optimized the width and style of virtual scroll fixed column.
+- 💄 `<pro>DatePicker`: Optimized the time selection operation of DateTimePicker in DatePicker.
 - 🐞 `Tabs`: Fixed Tab can't scroll when in min width screen.
 - 🐞 `<pro>Table`: Fixed the problem of multi-field conflict in multipleLine mode.
 - 🐞 `<pro>Table`: Fixed the misalignment problem of the low resolution of Table head under autoHeight.

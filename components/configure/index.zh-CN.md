@@ -66,6 +66,7 @@ const prefixCls = getConfig('prefixCls');
 | dropdownMatchSelectWidth | 默认下拉框匹配输入框宽度 | boolean | true |
 | modalSectionBorder | 默认 Modal 的头和脚有边框线 | boolean | true |
 | modalOkFirst | 默认 Modal 的 ok 按钮排在第一个 | boolean | true |
+| modalKeyboard | Modal 是否支持键盘 esc 关闭 | boolean | true |
 | drawerOkFirst | 默认 Modal drawer 的 ok 按钮排在第一个，优先级高于 modalOkFirst | boolean \| undefined | undefined |
 | buttonFuncType | 默认 Button 的功能类型 | string | raised |
 | buttonColor | 默认 Button 的颜色 | string | default |
