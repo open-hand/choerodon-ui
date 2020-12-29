@@ -27,6 +27,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimized the width and style of virtual scroll fixed column.
 - 💄 `<pro>DatePicker`: Optimized the time selection operation of DateTimePicker in DatePicker.
 - 🐞 `Tabs`: Fixed Tab can't scroll when in min width screen.
+- 🐞 `message`: Fixed the error node insertion error of Pro Feedback component request error caused by message.
 - 🐞 `<pro>Table`: Fixed the problem of multi-field conflict in multipleLine mode.
 - 🐞 `<pro>Table`: Fixed the misalignment problem of the low resolution of Table head under autoHeight.
 - 🐞 `<pro>FormField`: Fixed the problem of multiple verification prompts in multiple selections.

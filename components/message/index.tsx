@@ -97,6 +97,7 @@ function notice(
       key: target,
       duration,
       style: {},
+      contentClassName:`${prefixCls}-content-${type}`,
       content: (
         <div className={`${prefixCls}-custom-content ${prefixCls}-${type}`}>
           <Icon type={iconType} />
@@ -105,7 +106,7 @@ function notice(
       ),
       onClose,
     });
-  },`${prefixCls}-${type}`);
+  },`${prefixCls}-content-${type}`);
   return () => {
     if (messageInstance) {
       messageInstance.removeNotice(target);

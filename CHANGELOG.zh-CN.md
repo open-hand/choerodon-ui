@@ -27,6 +27,7 @@ timeline: true
 - 💄 `<pro>Cascader`: 优化 Cascader 无选项的展示效果。
 - 💄 `<pro>DatePicker`: 优化 DatePicker 中 DateTimePicker 的时间选择操作。
 - 🐞 `Tabs`: 修复 Tab 在小屏幕上无法滚动问题。
+- 🐞 `message`: 修复 message 导致的 Pro Feedback 组件请求报错节点插入错误。
 - 🐞 `<pro>FormField`: 修复多选出现多个校验提示问题。
 - 🐞 `<pro>Table`: 修复 multipleLine 模式下多字段冲突问题。
 - 🐞 `<pro>Table`: 修复 Table 头部低分辨率在 autoHeight 下面出现的错位问题。

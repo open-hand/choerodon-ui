@@ -107,10 +107,10 @@ export default class Notification extends Component {
       return (
         <Notice
           prefixCls={props.prefixCls}
+          contentClassName={contentClassName}
           {...notice}
           onClose={onClose}
           closeIcon={props.closeIcon}
-          contentClassName={contentClassName}
         >
           {notice.content}
         </Notice>
