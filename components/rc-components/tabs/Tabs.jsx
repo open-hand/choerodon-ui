@@ -37,6 +37,7 @@ export default class Tabs extends Component {
     style: PropTypes.object,
     activeKey: PropTypes.string,
     defaultActiveKey: PropTypes.string,
+    closeShortcut: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -144,6 +145,7 @@ export default class Tabs extends Component {
       renderTabContent,
       renderTabBar,
       destroyInactiveTabPane,
+      closeShortcut,
       ...restProps
     } = props;
     const cls = classnames({
@@ -152,12 +154,14 @@ export default class Tabs extends Component {
       [className]: !!className,
     });
 
+    const onKeyDown = closeShortcut === true ? noop : this.onNavKeyDown;
+
     this.tabBar = renderTabBar();
     const contents = [
       cloneElement(this.tabBar, {
         prefixCls,
         key: 'tabBar',
-        onKeyDown: this.onNavKeyDown,
+        onKeyDown,
         tabBarPosition,
         onTabClick: this.onTabClick,
         panels: props.children,

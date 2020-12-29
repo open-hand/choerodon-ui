@@ -39,6 +39,7 @@ Choerodon UI 依次提供了三级选项卡，分别用于不同的场景。
 | onPrevClick | prev 按钮被点击的回调 | (e) => void | 无 |
 | onTabClick | tab 被点击的回调 | (tabKey) => void | 无 |
 | tabBarGutter | tabs 之间的间隙 | number | 无 |
+| closeShortcut| 关闭tabs的键盘事件| boolean | 无 |
 
 ### Tabs.TabPane
 

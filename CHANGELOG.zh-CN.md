@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `configure`: 新增 modalKeyboard 全局属性。
+- 🌟 `Tabs`: 新增 closeShortcut 属性。
 - 🌟 `<pro>Select`: 新增 noCache 属性。
 - 🌟 `<pro>Table`: 新增更多的表单快捷键。
 - 🌟 `<pro>Cascader`: 新增 onChoose, onUnChoose 属性。
