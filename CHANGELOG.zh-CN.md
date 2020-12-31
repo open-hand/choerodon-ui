@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `<pro>Table`: 新增更多的表单快捷键。
 - 🌟 `<pro>Cascader`: 新增 onChoose, onUnChoose 属性。
 - 🌟 `<pro>Modal`: 新增 keyboard 属性控制键盘 esc 关闭。
+- 🌟 `<pro>DatePicker`: 新增 renderExtraFooter extraFooterPlacement 属性。
 - 💄 `configure`: 优化 lookupCache 全局配置。
 - 💄 `<pro>DataSet`: 优化 getText 属性。
 - 💄 `<pro>Table`: 优化虚拟滚动固定列宽度及样式。
@@ -29,6 +30,7 @@ timeline: true
 - 🐞 `<pro>FormField`: 修复多选出现多个校验提示问题。
 - 🐞 `<pro>Table`: 修复 multipleLine 模式下多字段冲突问题。
 - 🐞 `<pro>Table`: 修复 Table 头部低分辨率在 autoHeight 下面出现的错位问题。
+
 
 ## 0.8.77
 

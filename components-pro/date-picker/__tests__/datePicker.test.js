@@ -189,4 +189,21 @@ describe('date-picker-pro', () => {
     jest.runAllTimers();
     wrapper.update();
   });
+
+  it('the renderExtraFooter is correct rendered ', () => {
+    const wrapper = mount(
+      <DatePicker renderExtraFooter={() => 'extra footer'} />,
+    );
+    wrapper
+      .find('input')
+      .at(0)
+      .simulate('click');
+    jest.runAllTimers();
+    wrapper.update();
+    expect(
+      wrapper
+      .find('.c7n-pro-calendar-footer-extra')
+      .length,
+    ).toBe(1);
+  });
 });

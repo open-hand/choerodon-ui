@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `<pro>Table`: Added more keyboard shortcuts.
 - 🌟 `<pro>Cascader`: Added `onChoose`, `onUnChoose` property.
 - 🌟 `<pro>Modal`: Added `keyboard` attribute to control keyboard esc to close.
+- 🌟 `<pro>DatePicker`:Added `renderExtraFooter`, `extraFooterPlacement` property.
 - 💄 `configure`: Optimized `lookupCache` property.
 - 💄 `<pro>DataSet`: Optimized getText property.
 - 💄 `<pro>Cascader`: Optimized the not found display of results.
