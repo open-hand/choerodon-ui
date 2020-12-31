@@ -29,7 +29,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the problem of multi-field conflict in multipleLine mode.
 - 🐞 `<pro>Table`: Fixed the misalignment problem of the low resolution of Table head under autoHeight.
 - 🐞 `<pro>FormField`: Fixed the problem of multiple verification prompts in multiple selections.
-
+- 🐞 `<pro>Table`: Fix the problem that a small part of the label position is misaligned in the case of useColon.
 
 ## 0.8.77
 

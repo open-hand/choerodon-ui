@@ -29,6 +29,7 @@ timeline: true
 - 🐞 `<pro>FormField`: 修复多选出现多个校验提示问题。
 - 🐞 `<pro>Table`: 修复 multipleLine 模式下多字段冲突问题。
 - 🐞 `<pro>Table`: 修复 Table 头部低分辨率在 autoHeight 下面出现的错位问题。
+- 🐞 `<pro>Table`: 修复在 useColon 的情况下,label位置出现小部分错位的问题
 
 ## 0.8.77
 
