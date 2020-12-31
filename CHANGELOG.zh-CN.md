@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `<pro>Select`: 新增 noCache 属性。
 - 🌟 `<pro>Table`: 新增更多的表单快捷键。
 - 🌟 `<pro>Cascader`: 新增 onChoose, onUnChoose 属性。
+- 🌟 `<pro>Modal`: 新增 autoCenter 属性控制 Modal 居中显示。
 - 🌟 `<pro>Modal`: 新增 keyboard 属性控制键盘 esc 关闭。
 - 💄 `configure`: 优化 lookupCache 全局配置。
 - 💄 `<pro>DataSet`: 优化 getText 属性。

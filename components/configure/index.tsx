@@ -29,7 +29,7 @@ import { ButtonColor, FuncType } from 'choerodon-ui/pro/lib/button/enum';
 import { defaultExcludeUseColonTag } from 'choerodon-ui/pro/lib/form/utils';
 import { Renderer } from 'choerodon-ui/pro/lib/field/FormField';
 import { FormatNumberFunc, FormatNumberFuncOptions } from 'choerodon-ui/pro/lib/number-field/NumberField';
-import { ModalProps } from 'choerodon-ui/pro/lib/modal/Modal';
+import { ModalProps } from 'choerodon-ui/pro/lib/modal/interface';
 
 export type Status = {
   [RecordStatus.add]: string;
@@ -109,6 +109,7 @@ export type Config = {
   tableAutoFocus?: boolean;
   pagination?: TablePaginationConfig | false;
   modalSectionBorder?: boolean;
+  modalAutoCenter?: boolean;
   modalOkFirst?: boolean;
   drawerOkFirst?: boolean;
   modalButtonProps?: ButtonProps;
@@ -209,6 +210,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['tableAutoFocus', false],
   ['modalSectionBorder', true],
   ['modalOkFirst', true],
+  ['modalAutoCenter', false],
   ['drawerOkFirst', undefined],
   ['modalKeyboard', true],
   ['buttonColor', ButtonColor.default],

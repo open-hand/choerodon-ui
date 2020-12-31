@@ -20,12 +20,13 @@ timeline: true
 - 🌟 `<pro>Select`: Added `noCache` property.
 - 🌟 `<pro>Table`: Added more keyboard shortcuts.
 - 🌟 `<pro>Cascader`: Added `onChoose`, `onUnChoose` property.
+- 🌟 `<pro>Modal`: Added `autoCenter` property to control the center display of modal.
 - 🌟 `<pro>Modal`: Added `keyboard` attribute to control keyboard esc to close.
 - 💄 `configure`: Optimized `lookupCache` property.
 - 💄 `<pro>DataSet`: Optimized getText property.
 - 💄 `<pro>Cascader`: Optimized the not found display of results.
 - 💄 `<pro>Table`: Optimized the width and style of virtual scroll fixed column.
-- 💄 `<pro>DatePicker`: Optimized the time selection operation of DateTimePicker in DatePicker.
+- 💄 `<pro>DatePicker`: Optimized the time selection operation of dateTimePicker in datePicker.
 - 🐞 `Tabs`: Fixed Tab can't scroll when in min width screen.
 - 🐞 `message`: Fixed the error node insertion error of Pro Feedback component request error caused by message.
 - 🐞 `<pro>Table`: Fixed the problem of multi-field conflict in multipleLine mode.
