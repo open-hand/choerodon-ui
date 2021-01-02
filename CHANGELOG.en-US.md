@@ -22,6 +22,7 @@ timeline: true
 - 🌟 `<pro>Cascader`: Added `onChoose`, `onUnChoose` property.
 - 🌟 `<pro>Modal`: Added `autoCenter` property to control the center display of modal.
 - 🌟 `<pro>Modal`: Added `keyboard` attribute to control keyboard esc to close.
+- 🌟 `<pro>Cascader`: Added `changeOnSelect` property could select parent node.
 - 💄 `configure`: Optimized `lookupCache` property.
 - 💄 `<pro>DataSet`: Optimized getText property.
 - 💄 `<pro>Cascader`: Optimized the not found display of results.

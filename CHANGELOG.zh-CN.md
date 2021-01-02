@@ -22,6 +22,7 @@ timeline: true
 - 🌟 `<pro>Cascader`: 新增 onChoose, onUnChoose 属性。
 - 🌟 `<pro>Modal`: 新增 autoCenter 属性控制 Modal 居中显示。
 - 🌟 `<pro>Modal`: 新增 keyboard 属性控制键盘 esc 关闭。
+- 🌟 `<pro>Cascader`: 新增 changeOnSelect 属性控制可以满足父亲节点选择。
 - 💄 `configure`: 优化 lookupCache 全局配置。
 - 💄 `<pro>DataSet`: 优化 getText 属性。
 - 💄 `<pro>Table`: 优化虚拟滚动固定列宽度及样式。

@@ -34,6 +34,7 @@ subtitle: 级联选择
 | menuMode | Single box pop-up form switch| `single` \| `multiple` | - |
 | onChoose | 选择一个值的时候触发| (value,record) => void | - |
 | onUnChoose | 取消选中一个值的时候触发多选时候生效|  (value,record) => void | - |
+| changeOnSelect | 所选既所得 | boolean | - |
 
 更多属性请参考 [TriggerField](/components-pro/trigger-field/#TriggerField)。
 
