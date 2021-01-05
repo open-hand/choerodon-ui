@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `configure`: Added `modalKeyboard` global configuration.
+- 🌟 `configure`: Added `tableKeyboard` to control keyboard shortcuts.
 - 🌟 `Tabs`: Added `closeShortcut` property.
 - 🌟 `<pro>Select`: Added `noCache` property.
 - 🌟 `<pro>Table`: Added more keyboard shortcuts.

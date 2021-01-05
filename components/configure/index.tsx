@@ -107,6 +107,7 @@ export type Config = {
   tableUseMouseBatchChoose?: boolean;
   tableEditorNextKeyEnterDown?: boolean;
   tableAutoFocus?: boolean;
+  tableKeyboard?: boolean;
   pagination?: TablePaginationConfig | false;
   modalSectionBorder?: boolean;
   modalAutoCenter?: boolean;
@@ -208,6 +209,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['tableUseMouseBatchChoose', false],
   ['tableEditorNextKeyEnterDown', true],
   ['tableAutoFocus', false],
+  ['tableKeyboard', false],
   ['modalSectionBorder', true],
   ['modalOkFirst', true],
   ['modalAutoCenter', false],
