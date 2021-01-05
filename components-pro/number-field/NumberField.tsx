@@ -64,8 +64,8 @@ export interface NumberFieldProps extends TextFieldProps {
    */
   onChange?: (value: number, oldValue: number, form?: ReactInstance) => void;
   /**
-   *是否长按按钮按步距增加 
-  */
+   *是否长按按钮按步距增加
+   */
   longPressPlus: boolean;
 }
 
@@ -227,25 +227,21 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     const step = this.getProp('step');
     if (step && !range && !this.isReadOnly()) {
       const plusIconProps = {
-        key:"plus",
-        type:"keyboard_arrow_up",
-        className:`${prefixCls}-plus`,
+        key: 'plus',
+        type: 'keyboard_arrow_up',
+        className: `${prefixCls}-plus`,
         onMouseDown: longPressPlus ? this.handlePlus : this.handleOncePlus,
-      }
+      };
       const minIconProps = {
-        key:"minus",
-        type:"keyboard_arrow_down",
-        className:`${prefixCls}-minus`,
+        key: 'minus',
+        type: 'keyboard_arrow_down',
+        className: `${prefixCls}-minus`,
         onMouseDown: longPressPlus ? this.handleMinus : this.handleOnceMinus,
-      }
+      };
       return this.wrapperInnerSpanButton(
         <div>
-          <Icon
-           {...plusIconProps}
-          />
-          <Icon
-          {...minIconProps}
-          />
+          <Icon {...plusIconProps} />
+          <Icon {...minIconProps} />
         </div>,
       );
     }

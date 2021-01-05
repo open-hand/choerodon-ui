@@ -31,21 +31,23 @@ import DataSet from '../data-set/DataSet';
 import TableStore from './TableStore';
 import { TablePaginationConfig } from './Table';
 
-export function getEditorByField(field: Field): ReactElement<FormFieldProps> {
+export function getEditorByField(field: Field, isFlat?: boolean ): ReactElement<FormFieldProps> {
   const lookupCode = field.get('lookupCode');
   const lookupUrl = field.get('lookupUrl');
   const lovCode = field.get('lovCode');
   const multiLine = field.get('multiLine');
   const { type, name } = field;
+  const flatProps = isFlat ? { isFlat, maxTagCount: 2, maxTagTextLength: 4 } : {};
+
   if (
     lookupCode ||
     isString(lookupUrl) ||
     (type !== FieldType.object && (lovCode || field.options))
   ) {
-    return <ObserverSelect />;
+    return <ObserverSelect {...flatProps} />;
   }
   if (lovCode) {
-    return <Lov />;
+    return <Lov {...flatProps} />;
   }
   if (multiLine) {
     return <Output />;
@@ -54,37 +56,37 @@ export function getEditorByField(field: Field): ReactElement<FormFieldProps> {
     case FieldType.boolean:
       return <ObserverCheckBox />;
     case FieldType.number:
-      return <ObserverNumberField />;
+      return <ObserverNumberField  {...flatProps} />;
     case FieldType.currency:
-      return <Currency />;
+      return <Currency isFlat={isFlat} />;
     case FieldType.date:
-      return <DatePicker />;
+      return <DatePicker isFlat={isFlat} />;
     case FieldType.dateTime:
-      return <DateTimePicker />;
+      return <DateTimePicker isFlat={isFlat} />;
     case FieldType.time:
-      return <TimePicker />;
+      return <TimePicker isFlat={isFlat} />;
     case FieldType.week:
-      return <WeekPicker />;
+      return <WeekPicker isFlat={isFlat} />;
     case FieldType.month:
-      return <MonthPicker />;
+      return <MonthPicker isFlat={isFlat} />;
     case FieldType.year:
-      return <YearPicker />;
+      return <YearPicker isFlat={isFlat} />;
     case FieldType.intl:
-      return <IntlField />;
+      return <IntlField isFlat={isFlat} />;
     case FieldType.email:
-      return <EmailField />;
+      return <EmailField isFlat={isFlat} />;
     case FieldType.url:
-      return <UrlField />;
+      return <UrlField isFlat={isFlat} />;
     case FieldType.color:
-      return <ColorPicker />;
+      return <ColorPicker isFlat={isFlat} />;
     case FieldType.string:
-      return <ObserverTextField />;
+      return <ObserverTextField isFlat={isFlat} />;
     default:
       warning(
         false,
         `Table auto editor: No editor exists on the field<${name}>'s type<${type}>, so use the TextField as default editor`,
       );
-      return <ObserverTextField />;
+      return <ObserverTextField isFlat={isFlat} />;
   }
 }
 

@@ -62,6 +62,7 @@ export const enum TableQueryBarType {
   none = 'none',
   advancedBar = 'advancedBar',
   professionalBar = 'professionalBar',
+  filterBar = 'filterBar',
 }
 
 export const enum TablePaginationPosition {

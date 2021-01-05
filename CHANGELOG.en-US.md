@@ -15,9 +15,10 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `modalKeyboard` global configuration.
+- 🌟 `configure`: Added `modalKeyboard`, `tableFilterAdapter`, `tableFilterSuffix`, `tableFilterSearchText` global configuration.
 - 🌟 `<pro>Select`: Added `noCache` property.
 - 🌟 `<pro>Table`: Added more keyboard shortcuts.
+- 🌟 `<pro>Table`: Added `filterBar`.
 - 🌟 `<pro>Cascader`: Added `onChoose`, `onUnChoose` property.
 - 🌟 `<pro>Modal`: Added `keyboard` attribute to control keyboard esc to close.
 - 💄 `configure`: Optimized `lookupCache` property.
@@ -28,8 +29,8 @@ timeline: true
 - 🐞 `Tabs`: Fixed Tab can't scroll when in min width screen.
 - 🐞 `<pro>Table`: Fixed the problem of multi-field conflict in multipleLine mode.
 - 🐞 `<pro>Table`: Fixed the misalignment problem of the low resolution of Table head under autoHeight.
+- 🐞 `<pro>FormField`: Fixed the problem of verifying label rendering.
 - 🐞 `<pro>FormField`: Fixed the problem of multiple verification prompts in multiple selections.
-
 
 ## 0.8.77
 
