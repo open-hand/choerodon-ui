@@ -21,6 +21,7 @@ timeline: true
 - 🌟 `<pro>Table`: 新增 filterBar 筛选条。
 - 🌟 `<pro>Cascader`: 新增 onChoose, onUnChoose 属性。
 - 🌟 `<pro>Modal`: 新增 keyboard 属性控制键盘 esc 关闭。
+- 🌟 `<pro>DatePicker`: 新增 renderExtraFooter extraFooterPlacement 属性。
 - 💄 `configure`: 优化 lookupCache 全局配置。
 - 💄 `<pro>DataSet`: 优化 getText 属性。
 - 💄 `<pro>Table`: 优化虚拟滚动固定列宽度及样式。
@@ -33,6 +34,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复在 useColon 的情况下，label 位置出现小部分错位的问题
 - 🐞 `<pro>Table`: 修复 Table 头部低分辨率在 autoHeight 下面出现的错位问题。
 - 🐞 `<pro>Tooltip`: 修复在 bottom top 情况下，可能出现箭头不与目标中心对其的情况的问题。
+
 
 ## 0.8.77
 

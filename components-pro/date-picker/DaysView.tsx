@@ -28,6 +28,8 @@ export interface DateViewProps extends ViewComponentProps {
   onSelect?: (selectedDate: Moment, expand?: boolean) => void;
   onSelectedDateChange?: (selectedDate: Moment, mode?: ViewMode) => void;
   onViewModeChange?: (mode: ViewMode) => void;
+  renderExtraFooter?: () => ReactNode;
+  extraFooterPlacement?: 'top' | 'bottom';
 }
 
 export default class DaysView extends ViewComponent<DateViewProps>
@@ -46,6 +48,7 @@ export default class DaysView extends ViewComponent<DateViewProps>
 
   static defaultProps = {
     suffixCls: 'calendar',
+    extraFooterPlacement: 'bottom',
   };
 
   static type = FieldType.date;
@@ -53,14 +56,16 @@ export default class DaysView extends ViewComponent<DateViewProps>
   render() {
     const {
       prefixCls,
-      props: { className },
+      props: { className, extraFooterPlacement },
     } = this;
     const classString = classNames(`${prefixCls}-view`, className);
     return (
       <div className={classString}>
         {this.renderHeader()}
         {this.renderBody()}
+        {extraFooterPlacement === 'top' && this.customFooter}
         {this.renderFooter()}
+        {extraFooterPlacement === 'bottom' && this.customFooter}
       </div>
     );
   }
@@ -215,8 +220,22 @@ export default class DaysView extends ViewComponent<DateViewProps>
     );
   }
 
+  get customFooter() {
+    const {
+      prefixCls,
+      props: { renderExtraFooter },
+    } = this;
+    return renderExtraFooter ? (
+      <div className={`${prefixCls}-footer-extra`}>
+        {renderExtraFooter()}
+      </div>
+    ) : null;
+  }
+
   renderFooter(): ReactNode {
-    const { prefixCls } = this;
+    const {
+      prefixCls,
+    } = this;
     return (
       <div className={`${prefixCls}-footer`}>
         <a onClick={this.choose.bind(this, moment().startOf('d'))}>{$l('DatePicker', 'today')}</a>
