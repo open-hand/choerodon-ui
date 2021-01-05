@@ -4,6 +4,7 @@
 @import '../../trigger-field/style/mixin';
 @import '../../select/style/mixin';
 @import 'filter-select';
+@import 'field-list';
 
 @table-prefix-cls: ~'@{c7n-pro-prefix}-table';
 @output-prefix-cls: ~'@{c7n-pro-prefix}-output';
@@ -603,6 +604,321 @@
         line-height: 1.5;
         text-align: left;
       }
+    }
+  }
+
+  &-dynamic-filter-bar {
+    input::-webkit-input-placeholder{   // 谷歌
+      color: #6A6A6A;
+    }
+
+    input:-moz-placeholder{   //火狐
+      color: #6A6A6A;
+    }
+
+    input::-moz-placeholder{
+      color: #6A6A6A;
+    }
+    input:-ms-input-placeholder{   //微软
+      color: #6A6A6A;
+    }
+    .@{c7n-pro-prefix}-input-number-placeholder, .@{c7n-pro-prefix}-select-placeholder {
+      color: #6A6A6A;
+    }
+  }
+
+  &-dynamic-filter-bar-suffix {
+    display: inline-block;
+    border-left: @table-border;
+  }
+
+  &-dynamic-filter-toolbar {
+    padding-top: 0.1rem;
+    text-align: right;
+
+    .@{table-prefix-cls}-toolbar {
+      padding-top: 0.1rem;
+      text-align: right;
+    }
+
+    .@{table-prefix-cls}-columns-chooser {
+      display: inline-block;
+      width: auto;
+      margin-left: 0.15rem;
+      border-left: none;
+
+      button {
+        margin: 0 0.05rem;
+      }
+
+      button:not(:last-child) {
+        margin-right: 0.05rem;
+      }
+    }
+  }
+
+  &-filter-menu {
+    margin: 0 0 0.16rem 0;
+
+    .@{c7n-pro-prefix}-select {
+      //width: 0.9rem;
+      min-width: 0.9rem;
+      max-width: 2rem;
+      margin: 0;
+      border: none;
+    }
+
+    &-expand {
+      color: @primary-color;
+      cursor: pointer;
+    }
+  }
+
+  &-filter-content {
+    display: flex;
+    flex-shrink: 0;
+  }
+
+
+  &-filter-wrapper {
+    display: inline-flex;
+    flex-wrap: wrap;
+    width: calc(100% - 2.3rem);
+  }
+
+  &-add-fields {
+    display: flex;
+    align-items: center;
+    color: @primary-color;
+    cursor: pointer;
+  }
+
+  &-filter-rest-buttons {
+    display: inline-flex;
+    align-items: center;
+    float: right;
+    height: 0.3rem;
+
+    button {
+      margin-right: 0.08rem;
+    }
+  }
+
+  &-filter-buttons {
+    position: relative;
+    top: 0.46rem;
+    float: right;
+    width: 2.3rem;
+    vertical-align: top;
+
+    button {
+      float: right;
+      margin: 0 0 0 0.08rem;
+    }
+  }
+
+  &-filter-modal-item {
+    font-size: 12px;
+
+    &:not(:last-child) {
+      margin-bottom: 0.2rem;
+    }
+
+    &-label {
+      margin-left: 0.06rem;
+      vertical-align: middle;
+    }
+  }
+
+  &-filter-menu-option {
+    display: flex;
+
+    &:hover {
+      i {
+        display: inline-block;
+      }
+    }
+
+    &-icons {
+      margin-left: auto;
+
+      i {
+        display: none;
+        margin-left: 0.08rem;
+        font-size: 0.15rem;
+      }
+
+      .icon-delete_forever-o {
+        color: @error-color;
+      }
+
+      .icon-check_circle {
+        color: @primary-color;
+      }
+    }
+  }
+
+  &-filter-label {
+    display: flex;
+    align-items: center;
+    height: @input-height-base;
+    margin-right: 0.02rem;
+    padding-top: 0.005rem;
+    color: #6A6A6A;
+    font-size: 0.12rem;
+  }
+
+  &-filter-search {
+    display: flex;
+    width: 2rem;
+    font-size: 0.12rem;
+
+    i {
+      height: 0.2rem;
+      font-size: 0.15rem;
+      line-height: 0.2rem;
+    }
+  }
+
+  &-filter-item {
+    display: flex;
+    margin-right: 0.32rem;
+    font-size: 0.12rem;
+
+    &-label {
+      input::-webkit-input-placeholder{   // 谷歌
+        color: transparent;
+      }
+
+      input:-moz-placeholder{   //火狐
+        color: transparent;
+      }
+
+      input::-moz-placeholder{
+        color: transparent;
+      }
+      input:-ms-input-placeholder{   //微软
+        color: transparent;
+      }
+      .@{c7n-pro-prefix}-input-number-placeholder, .@{c7n-pro-prefix}-select-placeholder {
+        color: transparent;
+      }
+    }
+
+    //&:hover {
+    //  background-color: @background-color-light;
+    //}
+
+    i {
+      //height: 0.2rem;
+      font-size: 0.15rem;
+      line-height: 0.2rem;
+    }
+
+    &-close {
+      display: flex;
+      align-items: center;
+      color: #D5DAE0;
+      cursor: pointer;
+
+      &:hover {
+        color: #6A6A6A;
+      }
+    }
+
+    .@{c7n-pro-prefix}-input-number-plus, .@{c7n-pro-prefix}-input-number-minus {
+      height: 0.14rem;
+      line-height: 0.14rem;
+    }
+
+    .@{c7n-pro-prefix}-checkbox-inner {
+      top: 0.08rem;
+      width: 0.12rem;
+      height: 0.12rem;
+
+      &::after {
+        width: 0.05rem;
+        height: 0.1rem;
+      }
+    }
+
+    .@{c7n-pro-prefix}-select-trigger {
+      font-size: 0.15rem;
+    }
+
+    .@{c7n-pro-prefix}-select, .@{c7n-pro-prefix}-input, .@{c7n-pro-prefix}-input-number, .@{c7n-pro-prefix}-calendar-picker {
+      width: auto;
+      min-width: unset;
+      //max-width: 2rem;
+      margin: 0;
+      padding: 0.02rem;
+      border: none;
+
+      &-required {
+        background-color: #fff;
+
+        & > label::before{   // 谷歌
+          display: inline-block;
+          width: .08rem;
+          margin-left: .04rem;
+          color: #d50000;
+          font-family: SimSun,sans-serif;
+          //line-height: 1;
+          vertical-align: middle;
+          content: "*";
+        }
+
+        .@{c7n-pro-prefix}-input-number-placeholder, .@{c7n-pro-prefix}-select-placeholder {
+          &::before{
+            display: inline-block;
+            width: .08rem;
+            margin-left: .04rem;
+            color: #d50000;
+            font-family: SimSun,sans-serif;
+            //line-height: 1;
+            vertical-align: middle;
+            content: "*";
+          }
+        }
+      }
+
+      &-multiple {
+        & > label::before{   // 谷歌
+          content: "";
+        }
+      }
+
+      &-invalid {
+        input::-webkit-input-placeholder{   // 谷歌
+          color: @error-color;
+        }
+
+        input:-moz-placeholder{   //火狐
+          color: @error-color;
+        }
+
+        input::-moz-placeholder{
+          color: @error-color;
+        }
+        input:-ms-input-placeholder{   //微软
+          color: @error-color;
+        }
+        .@{c7n-pro-prefix}-input-number-placeholder, .@{c7n-pro-prefix}-select-placeholder {
+          color: @error-color;
+        }
+      }
+    }
+
+    .@{c7n-pro-prefix}-select-suffix-button .@{c7n-pro-prefix}-select-inner-button {
+      right: 0.18rem;
+    }
+
+    .@{c7n-pro-prefix}-select-multiple-block > div:not(:last-child) {
+      max-width: calc(100% - 0.2rem);
+    }
+
+    .@{c7n-pro-prefix}-input-number-multiple-block > div:not(:last-child) {
+      max-width: calc(100% - 0.2rem);
     }
   }
 

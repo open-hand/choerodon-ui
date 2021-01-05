@@ -32,6 +32,7 @@ import TableHeaderCell, { TableHeaderCellProps } from './TableHeaderCell';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import Field from '../data-set/Field';
+import { TransportProps } from '../data-set/Transport';
 import TableStore, { DRAG_KEY } from './TableStore';
 import TableHeader from './TableHeader';
 import autobind from '../_util/autobind';
@@ -149,6 +150,13 @@ export type SpinIndicator = ReactElement<any>;
 export interface TableSpinConfig extends SpinProps {
   spinning?: boolean;
   indicator?: SpinIndicator;
+}
+
+export interface DynamicFilterBarConfig {
+  searchCode: string;
+  searchText?: string;
+  suffix?: React.ReactElement;
+  tableFilterAdapter?: TransportProps;
 }
 
 export interface Instance {
@@ -475,6 +483,10 @@ export interface TableProps extends DataSetComponentProps {
    * 是否开启关闭快捷键（只关闭新加组合快捷键）
   */
   keyboard?:boolean,
+  /*
+   * 筛选条属性配置
+   */
+  dynamicFilterBar?: DynamicFilterBarConfig,
 }
 
 @observer
@@ -871,7 +883,7 @@ export default class Table extends DataSetComponent<TableProps> {
                 }
               });
             }
-            // remove the unique name of fields 
+            // remove the unique name of fields
             const uniqueFieldIterator = new Map([...dataSet.fields.entries()]
               .filter(([_key, field]) => !!field.get('unique'))).keys();
             const uniqueFieldNames = Array.from(uniqueFieldIterator)
@@ -1073,6 +1085,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'columnsDragRender',
       'onDragEndBefore',
       'keyboard',
+      'dynamicFilterBar',
     ]);
     otherProps.onKeyDown = this.handleKeyDown;
     const { rowHeight } = this.tableStore;
@@ -1203,6 +1216,7 @@ export default class Table extends DataSetComponent<TableProps> {
         filterBarFieldName,
         filterBarPlaceholder,
         summaryBar,
+        dynamicFilterBar,
       },
     } = this;
     const content = this.getTable();
@@ -1222,6 +1236,7 @@ export default class Table extends DataSetComponent<TableProps> {
               pagination={pagination}
               queryFields={queryFields}
               summaryBar={summaryBar}
+              dynamicFilterBar={dynamicFilterBar}
               queryFieldsLimit={queryFieldsLimit}
               summaryFieldsLimit={summaryFieldsLimit}
               filterBarFieldName={filterBarFieldName}

@@ -40,6 +40,7 @@ export interface TabsProps {
   animated?: boolean | { inkBar: boolean; tabPane: boolean };
   tabBarGutter?: number;
   closeShortcut?: boolean;
+  keyboard?: boolean;
 }
 
 // Tabs

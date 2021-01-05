@@ -1,6 +1,7 @@
 import { createElement, Fragment, isValidElement, ReactNode } from 'react';
 import format from 'string-template';
 import isString from 'lodash/isString';
+import isObject from 'lodash/isObject';
 import isNil from 'lodash/isNil';
 import flatMap from 'lodash/flatMap';
 
@@ -16,7 +17,10 @@ export default function formatReactTemplate(
         if (isString(text)) {
           let stringText = text;
           if (isValidElement(node)) {
-            const placeholder = `{${key}}`;
+            let placeholder = `{${key}}`;
+            if (isObject(node)) {
+              placeholder = '[object Object]';
+            }
             const { length } = placeholder;
             const textArr: ReactNode[] = [];
             let index = stringText.indexOf(placeholder);

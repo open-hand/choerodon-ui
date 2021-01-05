@@ -15,15 +15,16 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `modalKeyboard` global configuration.
-- 🌟 `configure`: Added `tableKeyboard` to control keyboard shortcuts.
-- 🌟 `Tabs`: Added `closeShortcut` property.
+- 🌟 `Tabs`: Added `keyboard` property.
+- 🌟 `configure`: Added `modalAutoCenter`,`modalKeyboard`,`tableKeyboard`, `tableFilterAdapter`, `tableFilterSuffix`, `tableFilterSearchText` global configuration.
 - 🌟 `<pro>Select`: Added `noCache` property.
 - 🌟 `<pro>Table`: Added more keyboard shortcuts.
+- 🌟 `<pro>Table`: Added `filterBar`.
 - 🌟 `<pro>Cascader`: Added `onChoose`, `onUnChoose` property.
 - 🌟 `<pro>Modal`: Added `autoCenter` property to control the center display of modal.
 - 🌟 `<pro>Modal`: Added `keyboard` attribute to control keyboard esc to close.
 - 🌟 `<pro>Cascader`: Added `changeOnSelect` property could select parent node.
+- 🌟 `<pro>DatePicker`:Added `renderExtraFooter`, `extraFooterPlacement` property.
 - 💄 `configure`: Optimized `lookupCache` property.
 - 💄 `<pro>DataSet`: Optimized getText property.
 - 💄 `<pro>Cascader`: Optimized the not found display of results.
@@ -33,9 +34,11 @@ timeline: true
 - 🐞 `message`: Fixed the error node insertion error of Pro Feedback component request error caused by message.
 - 🐞 `<pro>Table`: Fixed the problem of multi-field conflict in multipleLine mode.
 - 🐞 `<pro>Table`: Fixed the misalignment problem of the low resolution of Table head under autoHeight.
+- 🐞 `<pro>Table`: Fixed the problem that a small part of the label position is misaligned in the case of `useColon`.
+- 🐞 `<pro>FormField`: Fixed the problem of verifying label rendering.
 - 🐞 `<pro>FormField`: Fixed the problem of multiple verification prompts in multiple selections.
 - 🐞 `<pro>CheckBox`: Fixed CheckBox controlled usage problem.
-
+- 🐞 `<pro>Tooltip`: Fixed the problem that the arrow may not be aligned with the center of the target in the bottom top case.
 
 ## 0.8.77
 

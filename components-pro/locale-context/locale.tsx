@@ -30,6 +30,23 @@ export interface Locale {
     advanced_query_conditions;
     max_export;
     more;
+    enter_text_filter;
+    clear_filter;
+    save_filter;
+    collapse;
+    predefined_fields;
+    add_filter;
+    enter_search_content;
+    save_as;
+    fast_filter;
+    rename;
+    set_default;
+    cancel_default;
+    filter_rename;
+    save_filter_as;
+    whether_delete_filter;
+    filter_name;
+    please_enter;
   };
   Pagination: {
     page;

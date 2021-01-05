@@ -7,7 +7,7 @@ import isNil from 'lodash/isNil';
 import omit from 'lodash/omit';
 import noop from 'lodash/noop';
 import { observer } from 'mobx-react';
-import { action, computed, isArrayLike, observable, runInAction,toJS } from 'mobx';
+import { action, computed, isArrayLike, observable, runInAction, toJS } from 'mobx';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import warning from 'choerodon-ui/lib/_util/warning';
 import TriggerField, { TriggerFieldProps } from '../trigger-field/TriggerField';
@@ -39,9 +39,9 @@ export type TimeStep = {
   hour?: number;
   minute?: number;
   second?: number;
-}
+};
 
-const viewComponents: { [x: string]: typeof DaysView } = {
+const viewComponents: { [x: string]: typeof DaysView; } = {
   [ViewMode.decade]: DecadeYearsView,
   [ViewMode.year]: YearsView,
   [ViewMode.month]: MonthsView,
@@ -64,6 +64,9 @@ export interface DatePickerProps extends TriggerFieldProps {
   min?: MomentInput | null;
   max?: MomentInput | null;
   step?: TimeStep;
+  renderExtraFooter?: () => ReactNode;
+  extraFooterPlacement?: 'top' | 'bottom';
+
 }
 
 export interface DatePickerKeyboardEvent {
@@ -212,6 +215,8 @@ export default class DatePicker extends TriggerField<DatePickerProps>
       isValidDate: this.isValidDate,
       format: this.getDateFormat(),
       step: this.getProp('step') || {},
+      renderExtraFooter: this.getProp('renderExtraFooter'),
+      extraFooterPlacement: this.getProp('extraFooterPlacement') || 'bottom',
     } as DateViewProps);
   }
 
@@ -245,7 +250,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     return item;
   }
 
- // 避免出现影响过多组件使用继承覆盖原有方法 Fix onchange moment use ValueOf to get the Timestamp compare
+  // 避免出现影响过多组件使用继承覆盖原有方法 Fix onchange moment use ValueOf to get the Timestamp compare
   @action
   setValue(value: any): void {
     if (!this.isReadOnly()) {
@@ -284,11 +289,11 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     this.setText(undefined);
   }
 
-  momentToTimestamp(value){
-    if(isMoment(value)) {
-      return moment(value).valueOf()
+  momentToTimestamp(value) {
+    if (isMoment(value)) {
+      return moment(value).valueOf();
     }
-    return value
+    return value;
   }
 
   // processValue(value: any): ReactNode {
@@ -545,7 +550,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     this.prepareSetValue(date);
     this.changeSelectedDate(date);
     if (this.range ? this.rangeTarget === 1 : !this.multiple) {
-      if(!expand) {
+      if (!expand) {
         this.collapse();
       }
     }

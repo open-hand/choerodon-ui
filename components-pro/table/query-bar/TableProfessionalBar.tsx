@@ -1,9 +1,8 @@
 import React, { cloneElement, Component, ReactElement, ReactNode } from 'react';
 import { observer } from 'mobx-react';
-import { action, observable } from 'mobx';
+import { action, observable, runInAction } from 'mobx';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure';
 import Icon from 'choerodon-ui/lib/icon';
-import Field from '../../data-set/Field';
 import DataSet from '../../data-set';
 import Button from '../../button';
 import TableContext from '../TableContext';
@@ -36,7 +35,39 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
     queryFieldsLimit: 3,
   };
 
-  @observable moreFields: Field[];
+  @observable moreFields: ReactElement[];
+
+  componentDidMount(): void {
+    this.processDataSetListener(true);
+  }
+
+  componentWillUnmount(): void {
+    this.processDataSetListener(false);
+  }
+
+  processDataSetListener(flag: boolean) {
+    const { queryDataSet } = this.props;
+    if (queryDataSet) {
+      const handler = flag ? queryDataSet.addEventListener : queryDataSet.removeEventListener;
+      handler.call(queryDataSet, 'validate', this.handleDataSetValidate);
+    }
+  }
+
+  /**
+   * queryDataSet 查询前校验事件 触发展开动态字段
+   * @param dataSet 查询DS
+   * @param result
+   */
+  @autobind
+  async handleDataSetValidate({ result }) {
+    const { queryFieldsLimit, queryFields } = this.props;
+    const moreFields = this.createFields(queryFields.slice(queryFieldsLimit));
+    if (!await result) {
+      runInAction(() => {
+        this.moreFields = moreFields;
+      });
+    }
+  }
 
   @autobind
   handleFieldEnter() {
@@ -52,7 +83,7 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
   }
 
   @action
-  openMore = (fields: Field[]) => {
+  openMore = (fields: ReactElement[]) => {
     if (this.moreFields && this.moreFields.length) {
       this.moreFields = [];
     } else {

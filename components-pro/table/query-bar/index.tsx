@@ -27,6 +27,7 @@ import Table, {
   TableButtonProps,
   TableQueryBarHook,
   TableQueryBarHookProps,
+  DynamicFilterBarConfig,
 } from '../Table';
 import Button, { ButtonProps } from '../../button/Button';
 import { ButtonType } from '../../button/enum';
@@ -42,6 +43,7 @@ import TableToolBar from './TableToolBar';
 import TableFilterBar from './TableFilterBar';
 import TableAdvancedQueryBar from './TableAdvancedQueryBar';
 import TableProfessionalBar from './TableProfessionalBar';
+import TableDynamicFilterBar from './TableDynamicFilterBar';
 import { PaginationProps } from '../../pagination/Pagination';
 import { findBindFieldBy } from '../../data-set/utils';
 import NumberField from '../../number-field';
@@ -57,6 +59,7 @@ export interface TableQueryBarProps {
   showQueryBar?: boolean;
   pagination?: ReactElement<PaginationProps>;
   summaryBar?: SummaryBar[];
+  dynamicFilterBar?: DynamicFilterBarConfig;
   filterBarFieldName?: string;
   filterBarPlaceholder?: string;
 }
@@ -566,7 +569,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
   getQueryFields(): ReactElement<any>[] {
     const {
       context: {
-        tableStore: { dataSet },
+        tableStore: { dataSet, queryBar },
       },
       props: { queryFields },
     } = this;
@@ -576,16 +579,23 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
       const { fields } = queryDataSet;
       return [...fields.entries()].reduce((list, [name, field]) => {
         if (!field.get('bind')) {
+          let filterBarProps = {};
+          if (queryBar === TableQueryBarType.filterBar) {
+            filterBarProps = {
+              placeholder: field.get('label'),
+            };
+          }
           const props: any = {
             key: name,
             name,
             dataSet: queryDataSet,
+            ...filterBarProps,
           };
           const element = queryFields![name];
           list.push(
             isValidElement(element)
               ? cloneElement(element, props)
-              : cloneElement(getEditorByField(field), {
+              : cloneElement(getEditorByField(field, queryBar === TableQueryBarType.filterBar), {
                 ...props,
                 ...(isObject(element) ? element : {}),
               }),
@@ -627,6 +637,11 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     return <TableProfessionalBar key="toolbar" prefixCls={prefixCls} {...props} />;
   }
 
+  renderDynamicFilterBar(props: TableQueryBarHookProps) {
+    const { prefixCls, dynamicFilterBar } = this.props;
+    return <TableDynamicFilterBar key="toolbar" dynamicFilterBar={dynamicFilterBar} prefixCls={prefixCls} {...props} />;
+  }
+
   render() {
     const buttons = this.getButtons();
     const summaryBar = this.getSummaryBar();
@@ -662,6 +677,8 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
           return this.renderAdvancedQueryBar(props);
         case TableQueryBarType.professionalBar:
           return this.renderProfessionalBar(props);
+        case TableQueryBarType.filterBar:
+          return this.renderDynamicFilterBar(props);
         default:
       }
     }

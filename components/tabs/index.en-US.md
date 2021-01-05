@@ -36,7 +36,7 @@ Choerodon UI has 3 types of Tabs for different situations.
 | onPrevClick | Callback executed when prev button is clicked | (e) => void | - |
 | onTabClick | Callback executed when tab is clicked | (tabKey) => void | - |
 | tabBarGutter | The gap between tabs | number | - |
-| closeShortcut| close tabs the keyboard events| boolean | - |
+| keyboard|  keyboard events| boolean | true |
 
 ### Tabs.TabPane
 

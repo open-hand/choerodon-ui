@@ -721,9 +721,9 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
 
   @autobind
   getPopupStyleFromAlign(target): CSSProperties | undefined {
-    const { dropdownMatchSelectWidth = getConfig('dropdownMatchSelectWidth') } = this.props;
+    const { dropdownMatchSelectWidth = getConfig('dropdownMatchSelectWidth'), isFlat } = this.props;
     if (target) {
-      if (dropdownMatchSelectWidth) {
+      if (dropdownMatchSelectWidth && !isFlat) {
         return {
           width: pxToRem(target.getBoundingClientRect().width),
         };

@@ -15,15 +15,16 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 modalKeyboard 全局属性。
-- 🌟 `configure`: 新增 tableKeyboard 控制开关表格快捷键盘属性。
-- 🌟 `Tabs`: 新增 closeShortcut 属性。
+- 🌟 `Tabs`: 新增 keyboard 属性。
+- 🌟 `configure`: 新增 modalAutoCenter， modalKeyboard，tableKeyboard，tableFilterAdapter，tableFilterSuffix，tableFilterSearchText 全局属性。
 - 🌟 `<pro>Select`: 新增 noCache 属性。
 - 🌟 `<pro>Table`: 新增更多的表单快捷键。
+- 🌟 `<pro>Table`: 新增 filterBar 筛选条。
 - 🌟 `<pro>Cascader`: 新增 onChoose, onUnChoose 属性。
 - 🌟 `<pro>Modal`: 新增 autoCenter 属性控制 Modal 居中显示。
 - 🌟 `<pro>Modal`: 新增 keyboard 属性控制键盘 esc 关闭。
 - 🌟 `<pro>Cascader`: 新增 changeOnSelect 属性控制可以满足父亲节点选择。
+- 🌟 `<pro>DatePicker`: 新增 renderExtraFooter extraFooterPlacement 属性。
 - 💄 `configure`: 优化 lookupCache 全局配置。
 - 💄 `<pro>DataSet`: 优化 getText 属性。
 - 💄 `<pro>Table`: 优化虚拟滚动固定列宽度及样式。
@@ -31,10 +32,14 @@ timeline: true
 - 💄 `<pro>DatePicker`: 优化 DatePicker 中 DateTimePicker 的时间选择操作。
 - 🐞 `Tabs`: 修复 Tab 在小屏幕上无法滚动问题。
 - 🐞 `message`: 修复 message 导致的 Pro Feedback 组件请求报错节点插入错误。
+- 🐞 `<pro>FormField`: 修复校验 label 渲染问题。
 - 🐞 `<pro>FormField`: 修复多选出现多个校验提示问题。
 - 🐞 `<pro>Table`: 修复 multipleLine 模式下多字段冲突问题。
+- 🐞 `<pro>Table`: 修复在 useColon 的情况下，label 位置出现小部分错位的问题
 - 🐞 `<pro>Table`: 修复 Table 头部低分辨率在 autoHeight 下面出现的错位问题。
 - 🐞 `<pro>CheckBox`: 修复 CheckBox 受控使用方式问题。
+- 🐞 `<pro>Tooltip`: 修复在 bottom top 情况下，可能出现箭头不与目标中心对其的情况的问题。
+
 
 ## 0.8.77
 
