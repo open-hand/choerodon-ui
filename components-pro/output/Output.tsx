@@ -82,7 +82,7 @@ export default class Output extends FormField<OutputProps> {
     if (currency) {
       return this.renderCurrency(true);
     }
-    return this.getTextNode() || getConfig('tableDefaultRenderer');
+    return this.getTextNode() === '' ? getConfig('tableDefaultRenderer') : this.getTextNode();
   }
 
   renderWrapper(): ReactNode {
