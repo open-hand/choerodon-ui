@@ -29,9 +29,10 @@ timeline: true
 - 🐞 `Tabs`: Fixed Tab can't scroll when in min width screen.
 - 🐞 `<pro>Table`: Fixed the problem of multi-field conflict in multipleLine mode.
 - 🐞 `<pro>Table`: Fixed the misalignment problem of the low resolution of Table head under autoHeight.
+- 🐞 `<pro>Table`: Fixed the problem that a small part of the label position is misaligned in the case of `useColon`.
 - 🐞 `<pro>FormField`: Fixed the problem of verifying label rendering.
 - 🐞 `<pro>FormField`: Fixed the problem of multiple verification prompts in multiple selections.
-- 🐞 `<pro>Tooltip`: Fix the problem that the arrow may not be aligned with the center of the target in the bottom top case.
+- 🐞 `<pro>Tooltip`: Fixed the problem that the arrow may not be aligned with the center of the target in the bottom top case.
 
 ## 0.8.77
 
