@@ -15,9 +15,10 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 modalKeyboard 全局属性。
+- 🌟 `configure`: 新增 modalKeyboard，tableFilterAdapter，tableFilterSuffix，tableFilterSearchText 全局属性。
 - 🌟 `<pro>Select`: 新增 noCache 属性。
 - 🌟 `<pro>Table`: 新增更多的表单快捷键。
+- 🌟 `<pro>Table`: 新增 filterBar 筛选条。
 - 🌟 `<pro>Cascader`: 新增 onChoose, onUnChoose 属性。
 - 🌟 `<pro>Modal`: 新增 keyboard 属性控制键盘 esc 关闭。
 - 💄 `configure`: 优化 lookupCache 全局配置。
@@ -26,10 +27,12 @@ timeline: true
 - 💄 `<pro>Cascader`: 优化 Cascader 无选项的展示效果。
 - 💄 `<pro>DatePicker`: 优化 DatePicker 中 DateTimePicker 的时间选择操作。
 - 🐞 `Tabs`: 修复 Tab 在小屏幕上无法滚动问题。
+- 🐞 `<pro>FormField`: 修复校验 label 渲染问题。
 - 🐞 `<pro>FormField`: 修复多选出现多个校验提示问题。
 - 🐞 `<pro>Table`: 修复 multipleLine 模式下多字段冲突问题。
+- 🐞 `<pro>Table`: 修复在 useColon 的情况下，label 位置出现小部分错位的问题
 - 🐞 `<pro>Table`: 修复 Table 头部低分辨率在 autoHeight 下面出现的错位问题。
-- 🐞 `<pro>Table`: 修复在 useColon 的情况下,label位置出现小部分错位的问题
+- 🐞 `<pro>Tooltip`: 修复在 bottom top 情况下，可能出现箭头不与目标中心对其的情况的问题。
 
 ## 0.8.77
 

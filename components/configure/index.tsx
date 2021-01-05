@@ -107,6 +107,9 @@ export type Config = {
   tableUseMouseBatchChoose?: boolean;
   tableEditorNextKeyEnterDown?: boolean;
   tableAutoFocus?: boolean;
+  tableFilterAdapter?: TransportProps;
+  tableFilterSuffix?: Renderer;
+  tableFilterSearchText?: string;
   pagination?: TablePaginationConfig | false;
   modalSectionBorder?: boolean;
   modalOkFirst?: boolean;
@@ -207,6 +210,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['tableUseMouseBatchChoose', false],
   ['tableEditorNextKeyEnterDown', true],
   ['tableAutoFocus', false],
+  ['tableFilterSearchText', 'params'],
   ['modalSectionBorder', true],
   ['modalOkFirst', true],
   ['drawerOkFirst', undefined],
@@ -259,7 +263,7 @@ export function getProPrefixCls(suffixCls: string, customizePrefixCls?: string):
   return `${getConfig('proPrefixCls')}-${suffixCls}`;
 }
 
-const mergeProps = ['transport', 'feedback', 'formatter'];
+const mergeProps = ['transport', 'feedback', 'formatter', 'tableFilterAdapter'];
 
 export default function configure(config: Config) {
   runInAction(() => {

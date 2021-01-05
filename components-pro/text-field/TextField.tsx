@@ -3,6 +3,7 @@ import omit from 'lodash/omit';
 import defer from 'lodash/defer';
 import isArray from 'lodash/isArray';
 import isString from 'lodash/isString';
+import isNil from 'lodash/isNil';
 import noop from 'lodash/noop';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
@@ -82,6 +83,10 @@ export interface TextFieldProps extends FormFieldProps {
    * 限制可输入的字符
    */
   restrict?: string;
+  /**
+   * 是否是筛选条 flat 模式
+   */
+  isFlat?: boolean;
 }
 
 export class TextField<T extends TextFieldProps> extends FormField<T> {
@@ -132,6 +137,10 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
      * 限制可输入的字符
      */
     restrict: PropTypes.string,
+    /**
+     * 是否是筛选条 flat 模式
+     */
+    isFlat: PropTypes.bool,
     ...FormField.propTypes,
   };
 
@@ -169,6 +178,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       'placeHolder',
       'maxLengths',
       'autoComplete',
+      'isFlat',
     ]);
     otherProps.type = this.type;
     otherProps.maxLength = this.getProp('maxLength');
@@ -426,16 +436,64 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     );
   }
 
+  /**
+   * 处理 flat 多选tooltip text
+   */
+  getMultipleText() {
+    const values = this.getValues();
+    const repeats: Map<any, number> = new Map<any, number>();
+    const texts = values.map((v) => {
+      const key = this.getValueKey(v);
+      const repeat = repeats.get(key) || 0;
+      const text = this.processText(this.getText(v));
+      repeats.set(key, repeat + 1);
+      if (!isNil(text)) {
+        return text;
+      }
+      return undefined;
+    });
+    return texts.join('、');
+  }
+
   getEditor(): ReactNode {
     const {
       prefixCls,
       multiple,
       range,
-      props: { style },
+      props: { style, isFlat, clearButton },
     } = this;
     const otherProps = this.getOtherProps();
     const { height } = (style || {}) as CSSProperties;
     if (multiple) {
+      if (isFlat) {
+        return (
+          <div key="text" className={otherProps.className}>
+            <Tooltip title={this.getMultipleText()}>
+              <Animate
+                component="ul"
+                componentProps={{
+                  ref: this.saveTagContainer,
+                  onScroll: stopPropagation,
+                  style:
+                    height && height !== 'auto' ? { height: pxToRem(toPx(height)! - 2) } : undefined,
+                }}
+                // transitionName="zoom"
+                exclusive
+                onEnd={this.handleTagAnimateEnd}
+                onEnter={this.handleTagAnimateEnter}
+              >
+                {this.renderMultipleValues()}
+                {range
+                  ? this.renderRangeEditor(otherProps)
+                  : this.renderMultipleEditor({
+                    ...otherProps,
+                    className: `${prefixCls}-multiple-input`,
+                  } as T)}
+              </Animate>
+            </Tooltip>
+          </div>
+        );
+      }
       return (
         <div key="text" className={otherProps.className}>
           <Animate
@@ -471,15 +529,27 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     }
     const text = this.getTextNode();
 
+    // 筛选条默认宽度处理
+    const finalText = isString(text) ? text : this.getText(this.getValue());
+    const hasValue = this.getValue() !== undefined && this.getValue() !== null;
+    const placeholder = this.hasFloatLabel ? undefined : this.getPlaceholders()[0];
+    const width = hasValue ? measureTextWidth(finalText) + (clearButton ? 37 : 21) : measureTextWidth(placeholder || '') + 24;
+
     if (isValidElement(text)) {
-      otherProps.style = { ...otherProps.style, textIndent: -1000 };
+      otherProps.style = {
+        ...otherProps.style,
+        textIndent: -1000,
+        width: isFlat ? width : 'auto',
+      };
+    } else if (isFlat) {
+      otherProps.style = { width, ...otherProps.style };
     }
     return (
       <input
         key="text"
         {...otherProps}
-        placeholder={this.hasFloatLabel ? undefined : this.getPlaceholders()[0]}
-        value={isString(text) ? text : this.getText(this.getValue())}
+        placeholder={placeholder}
+        value={finalText}
         readOnly={!this.editable}
       />
     );
@@ -529,7 +599,10 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   renderMultipleHolder() {
-    const { name, multiple } = this;
+    const { name, multiple, props: { isFlat } } = this;
+    const hasValue = !this.isEmpty();
+    const placeholder = this.hasFloatLabel ? undefined : this.getPlaceholders()[0];
+    const width = hasValue ? 'auto' : measureTextWidth(placeholder || '') + 22;
     if (multiple) {
       return (
         <input
@@ -538,6 +611,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           value={this.toValueString(this.getValue()) || ''}
           name={name}
           onChange={noop}
+          style={{ width: isFlat ? width : 'auto' }}
         />
       );
     }
