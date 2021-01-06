@@ -32,8 +32,9 @@ timeline: true
 - 🐞 `<pro>FormField`: 修复校验 label 渲染问题。
 - 🐞 `<pro>FormField`: 修复多选出现多个校验提示问题。
 - 🐞 `<pro>Table`: 修复 multipleLine 模式下多字段冲突问题。
-- 🐞 `<pro>Table`: 修复在 useColon 的情况下，label 位置出现小部分错位的问题
 - 🐞 `<pro>Table`: 修复 Table 头部低分辨率在 autoHeight 下面出现的错位问题。
+- 🐞 `<pro>Table`: 修复在 useColon 的情况下，label 位置出现小部分错位的问题
+- 🐞 `<pro>PerformanceTable`: 修复在 Modal 中滚动高度计算错误问题。
 - 🐞 `<pro>Tooltip`: 修复在 bottom top 情况下，可能出现箭头不与目标中心对其的情况的问题。
 
 
