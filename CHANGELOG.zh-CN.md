@@ -29,6 +29,7 @@ timeline: true
 - 💄 `<pro>DatePicker`: 优化 DatePicker 中 DateTimePicker 的时间选择操作。
 - 🐞 `Tabs`: 修复 Tab 在小屏幕上无法滚动问题。
 - 🐞 `<pro>Output`: 修复值为 0 渲染为空的问题。
+- 🐞 `<pro>Output`: 修复字段类型为 number 时值集渲染问题。
 - 🐞 `<pro>FormField`: 修复校验 label 渲染问题。
 - 🐞 `<pro>FormField`: 修复多选出现多个校验提示问题。
 - 🐞 `<pro>Table`: 修复 multipleLine 模式下多字段冲突问题。

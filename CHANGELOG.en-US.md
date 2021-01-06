@@ -29,6 +29,7 @@ timeline: true
 - 💄 `<pro>DatePicker`: Optimized the time selection operation of DateTimePicker in DatePicker.
 - 🐞 `Tabs`: Fixed Tab can't scroll when in min width screen.
 - 🐞 `<pro>Output`: Fixed the problem that the value 0 renders empty.
+- 🐞 `<pro>Output`: Fixed the value set rendering problem when the field type is `number`.
 - 🐞 `<pro>Table`: Fixed the problem of multi-field conflict in multipleLine mode.
 - 🐞 `<pro>Table`: Fixed the misalignment problem of the low resolution of Table head under autoHeight.
 - 🐞 `<pro>Table`: Fixed the problem that a small part of the label position is misaligned in the case of `useColon`.
