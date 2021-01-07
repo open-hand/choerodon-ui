@@ -806,8 +806,14 @@ export default class TableStore {
     return expanded && (!that.isTree || !parent || that.isRowExpanded(parent));
   }
 
+  /**
+   * 
+   * @param record 想修改的record
+   * @param expanded 设置是否展开
+   * @param disHandler 设置是否需要触发展开事件
+   */
   @action
-  setRowExpanded(record: Record, expanded: boolean) {
+  setRowExpanded(record: Record, expanded: boolean, disHandler?: boolean) {
     if (this.dataSet.props.expandField) {
       record.isExpanded = expanded;
     }
@@ -820,7 +826,7 @@ export default class TableStore {
       this.expandedRows.splice(index, 1);
     }
     const { onExpand } = this.props;
-    if (onExpand) {
+    if (onExpand && !disHandler ) {
       onExpand(expanded, record);
     }
   }
