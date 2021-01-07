@@ -61,10 +61,11 @@ import Switch from '../switch/Switch';
 import Tooltip from '../tooltip/Tooltip';
 import { $l } from '../locale-context';
 import TableQueryBar from './query-bar';
+import ToolBar from './query-bar/TableToolBar';
 import FilterBar from './query-bar/TableFilterBar';
 import AdvancedQueryBar from './query-bar/TableAdvancedQueryBar';
 import ProfessionalBar from './query-bar/TableProfessionalBar';
-import ToolBar from './query-bar/TableToolBar';
+import DynamicFilterBar from './query-bar/TableDynamicFilterBar';
 import { findIndexedSibling, getHeight, getPaginationPosition, isCanEdictingRow } from './utils';
 import { ButtonProps } from '../button/Button';
 import TableBody from './TableBody';
@@ -305,13 +306,12 @@ export interface TableProps extends DataSetComponentProps {
   queryFieldsLimit?: number;
   /**
    * 显示查询条
-   * 可选值: `advancedBar` `normal` `bar` `none` `professionalBar`
+   * 可选值: `advancedBar` `normal` `bar` `none` `professionalBar` `filterBar`
    * @default 'normal'
    */
   queryBar?: TableQueryBarType | TableQueryBarHook;
   /**
    * 显示汇总条
-   * 可选值: `advancedBar` `normal` `bar` `none` `professionalBar`
    * @default 'normal'
    */
   summaryBar?: SummaryBar[];
@@ -501,6 +501,8 @@ export default class Table extends DataSetComponent<TableProps> {
 
   static ProfessionalBar = ProfessionalBar;
 
+  static DynamicFilterBar = DynamicFilterBar;
+
   static ToolBar = ToolBar;
 
   static TableRow = TableRow;
@@ -566,6 +568,7 @@ export default class Table extends DataSetComponent<TableProps> {
         TableQueryBarType.bar,
         TableQueryBarType.none,
         TableQueryBarType.professionalBar,
+        TableQueryBarType.filterBar,
       ]),
       PropTypes.func,
     ]),

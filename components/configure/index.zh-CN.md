@@ -63,11 +63,15 @@ const prefixCls = getConfig('prefixCls');
 | tableDragColumnAlign | Table列拖拽的模式 | 'left'\|'right' | - |
 | tableAutoFocus | Table 新增行自动聚焦至第一个可编辑字段 | boolean | false |
 | tableKeyboard | Table 开启或关闭新增的快捷按钮事件 | boolean | false |
+| tableFilterAdapter | Table 筛选条请求适配器 | AxiosRequestConfig | |
+| tableFilterSuffix | Table 筛选条按钮预留区 | ReactNode | |
+| tableFilterSearchText | Table 筛选条快速搜索参数名 | string | 'params' |
 | pagination | 默认 pagination 的属性 | TablePaginationConfig \| false | 详见[Pagination](/components-pro/pagination/#Pagination) |
 | dropdownMatchSelectWidth | 默认下拉框匹配输入框宽度 | boolean | true |
 | modalSectionBorder | 默认 Modal 的头和脚有边框线 | boolean | true |
 | modalOkFirst | 默认 Modal 的 ok 按钮排在第一个 | boolean | true |
 | modalKeyboard | Modal 是否支持键盘 esc 关闭 | boolean | true |
+| modalAutoCenter | Modal 是否默认居中 | boolean | false |
 | drawerOkFirst | 默认 Modal drawer 的 ok 按钮排在第一个，优先级高于 modalOkFirst | boolean \| undefined | undefined |
 | buttonFuncType | 默认 Button 的功能类型 | string | raised |
 | buttonColor | 默认 Button 的颜色 | string | default |

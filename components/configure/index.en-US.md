@@ -60,10 +60,14 @@ const prefixCls = getConfig('prefixCls');
 | tableDragColumnAlign | Table列拖拽的模式 | 'left'\|'right' | - |
 | tableAutoFocus | Table 新增行自动聚焦至第一个可编辑字段 | boolean | false |
 | tableKeyboard | Table 开启或关闭新增的快捷按钮事件 | boolean | false |
+| tableFilterAdapter | Table 筛选条请求适配器 | AxiosRequestConfig | |
+| tableFilterSuffix | Table 筛选条按钮预留区 | ReactNode | |
+| tableFilterSearchText | Table 筛选条快速搜索参数名 | string | 'params' |
 | dropdownMatchSelectWidth | 默认下拉框匹配输入框宽度 | boolean | true |
 | modalSectionBorder | Default if Modal header and foot have a border line | boolean | true |
 | modalOkFirst | Default the ok button of Modal is ranked first | boolean | true |
 | modalKeyboard | Does Modal support keyboard esc off | boolean | true |
+| modalAutoCenter | Whether Modal is centered by default | boolean | false |
 | drawerOkFirst | The ok button of the default Modal drawer is ranked first, and has a higher priority than modalOkFirst | boolean \| undefined | undefined |
 | buttonFuncType | Default Button function type | string | raised |
 | buttonColor | Default Button color | string | default |

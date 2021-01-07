@@ -15,13 +15,13 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 modalAutoCenter， modalKeyboard，tableKeyboard，tableFilterAdapter，tableFilterSuffix，tableFilterSearchText 全局属性。
+- 🌟 `configure`: 新增 modalAutoCenter，modalKeyboard，tableKeyboard，tableFilterAdapter，tableFilterSuffix，tableFilterSearchText 全局属性。
 - 🌟 `Tabs`: 新增 keyboard 属性。
 - 🌟 `<pro>Select`: 新增 noCache 属性。
 - 🌟 `<pro>Table`: 新增更多的表单快捷键。
-- 🌟 `<pro>Table`: 新增 filterBar 筛选条。
+- 🌟 `<pro>Table`: 新增 `queryBar` 类型 `filterBar` 筛选条。
 - 🌟 `<pro>Cascader`: 新增 onChoose, onUnChoose 属性。
-- 🌟 `<pro>Modal`: 新增 autoCenter 属性控制 Modal 居中显示。
+- 🌟 `<pro>Modal`: 新增 autoCenter 属性控制居中显示。
 - 🌟 `<pro>Modal`: 新增 keyboard 属性控制键盘 esc 关闭。
 - 🌟 `<pro>Cascader`: 新增 changeOnSelect 属性控制可以满足父亲节点选择。
 - 🌟 `<pro>DatePicker`: 新增 renderExtraFooter extraFooterPlacement 属性。

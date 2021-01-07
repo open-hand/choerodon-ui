@@ -8,7 +8,6 @@ import map from 'lodash/map';
 import classNames from 'classnames';
 
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
-import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import Icon from 'choerodon-ui/lib/icon';
 
 import Field from '../../data-set/Field';
@@ -231,15 +230,17 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         className={`${prefixCls}-filter-menu-expand`}
         onClick={() => {
           const { height } = this.refFilterWrapper!.getBoundingClientRect();
-          const { height: childHeight } = this.refFilterWrapper!.children[0].getBoundingClientRect();
           runInAction(() => {
-            this.expand = height <= childHeight + 2;
+            this.expand = height <= 0;
           });
-          if (height > childHeight) {
+          if (height) {
             // 收起留一行高度
-            this.refFilterWrapper!.style.height = pxToRem(childHeight) || '';
-            this.refFilterWrapper!.style.overflow = 'hidden';
+            // this.refFilterWrapper!.style.height = pxToRem(childHeight) || '';
+            // this.refFilterWrapper!.style.overflow = 'hidden';
+            // 收起全部
+            this.refFilterWrapper!.style.display = 'none';
           } else {
+            this.refFilterWrapper!.style.display = 'inline-flex';
             this.refFilterWrapper!.style.height = '';
             this.refFilterWrapper!.style.overflow = '';
           }
@@ -268,6 +269,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         <div className={`${prefixCls}-filter-menu`}>
           <QuickFilterMenu
             prefixCls={prefixCls}
+            expand={this.expand}
             dynamicFilterBar={dynamicFilterBar}
             dataSet={dataSet}
             queryDataSet={queryDataSet}

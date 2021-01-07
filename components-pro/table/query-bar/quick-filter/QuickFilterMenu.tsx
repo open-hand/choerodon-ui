@@ -113,6 +113,7 @@ const QuickFilterMenu = observer(() => {
     queryDataSet,
     filterMenuDS,
     onChange,
+    expand,
   } = useContext(Store);
 
   const optionDs = filterMenuDS.getField('filterName').get('options');
@@ -381,7 +382,7 @@ const QuickFilterMenu = observer(() => {
         onChange={handleChange}
       />
       {queryDataSet.current?.dirty && (
-        <div className={`${prefixCls}-filter-buttons`}>
+        <div className={`${prefixCls}-filter-buttons`} style={expand ? {} : { display: 'none' }}>
           <Button color={ButtonColor.primary} onClick={handleSave}>
             {$l('Table', 'save_filter')}
           </Button>

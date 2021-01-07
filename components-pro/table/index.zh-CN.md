@@ -29,7 +29,7 @@ subtitle: 表格
 | buttons | 功能按钮，内置按钮可添加 `afterClick` 钩子，用于执行除了默认行为外的动作，可选值：`add` `delete` `remove` `save` `query` `reset` `expandAll` `collapseAll` `export` 或 数组 或 自定义按钮，数组为可选值字符串+按钮配置属性对象 | string \| \[string, object\] \| ReactNode \| object |  |
 | queryFields | 自定义查询字段组件或默认组件属性，默认会根据 queryDataSet 中定义的 field 类型自动匹配组件 | ReactNode[] \| object |  |
 | queryFieldsLimit | 头部显示的查询字段的数量，超出限制的查询字段放入弹出窗口 | number |  |
-| queryBar | 查询条, 可选值为钩子或者内置类型：`professionalBar` `advancedBar` `normal` `bar` `none` | string \| ({ dataSet, queryDataSet, buttons, pagination, queryFields, queryFieldsLimit }) => ReactNode | 'normal' |
+| queryBar | 查询条, 可选值为钩子或者内置类型：`filterBar` `professionalBar` `advancedBar` `normal` `bar` `none` | string \| ({ dataSet, queryDataSet, buttons, pagination, queryFields, queryFieldsLimit }) => ReactNode | 'normal' |
 | summaryBar | 汇总条, 可选值为钩子或者字段 name | string \| ({ dataSet, summaryFieldsLimit }) => ReactNode |  |
 | summaryFieldsLimit | 头部显示的汇总字段的数量，超出限制的查询字段收起 | number |  |
 | useMouseBatchChoose | 是否使用鼠标批量选择,开启后在rowbox的情况下可以进行鼠标拖动批量选择,在起始的rowbox处按下,在结束位置松开 | boolean | false |
@@ -69,6 +69,7 @@ subtitle: 表格
 | columnsEditType | 合并列信息选择，目前可以选择表头文字或者表的位置进行合并 | `order`  `all`  `header` | `all` |
 | onDragEndBefore |完成拖拽后,切换位置之前的触发事件，可以通过 resultDrag.destination.droppableId === 'table' or ‘tableHeader’ 来判断是行拖拽还是列拖拽,返回false阻止拖拽换位置 | (dataSet:DataSet,columns:ColumnProps[],resultDrag: DropResult, provided: ResponderProvided) => false \| void \|resultDrag   | - |
 | keyboard | 开启关闭新增的快捷按钮事件 | boolean | false |
+| dynamicFilterBar | `queryBar`为`filterBar`时筛选条属性配置 | DynamicFilterBarConfig | |
 
 更多属性请参考 [DataSetComponent](/components-pro/core/#DataSetComponent)。
 
@@ -123,6 +124,15 @@ subtitle: 表格
 | --- | --- | --- | --- |
 | queryFieldsLimit | 头部显示的查询字段的数量，超出限制的查询字段放入弹出窗口 | number | 1 |
 | pagination | 分页器，参考[pagination](/components-pro/pagination/) | PaginationComponent | null |
+
+更多属性请参考 `Table` `queryBar` 属性的钩子参数。
+
+
+### Table.DynamicFilterBar
+
+| 参数        | 说明                   | 类型   | 默认值   |
+| ----------- | ---------------------- | ------ | -------- |
+| queryFieldsLimit | 头部显示的查询字段的数量，超出限制的查询字段放入弹出窗口 | number | 2 |
 
 更多属性请参考 `Table` `queryBar` 属性的钩子参数。
 
