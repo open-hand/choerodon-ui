@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `<pro>Select`: 新增 noCache 属性。
 - 🌟 `<pro>Table`: 新增更多的表单快捷键。
 - 🌟 `<pro>Table`: 新增 `queryBar` 类型 `filterBar` 筛选条。
+- 🌟 `<pro>CodeArea`: 新增 editorDidMount 属性。
 - 🌟 `<pro>Cascader`: 新增 onChoose, onUnChoose 属性。
 - 🌟 `<pro>Modal`: 新增 autoCenter 属性控制居中显示。
 - 🌟 `<pro>Modal`: 新增 keyboard 属性控制键盘 esc 关闭。
@@ -39,9 +40,9 @@ timeline: true
 - 🐞 `<pro>FormField`: 修复校验 label 渲染问题。
 - 🐞 `<pro>FormField`: 修复多选出现多个校验提示问题。
 - 🐞 `<pro>Table`: 修复 multipleLine 模式下多字段冲突问题。
-- 🐞 `<pro>Table`: 修复 tree 模式下点击查询出现自动触发 OnExpand 问题。
+- 🐞 `<pro>Table`: 修复 tree 模式下点击查询出现自动触发 onExpand 问题。
 - 🐞 `<pro>Table`: 修复 Table 头部低分辨率在 autoHeight 下面出现的错位问题。
-- 🐞 `<pro>Table`: 修复在 useColon 的情况下，label 位置出现小部分错位的问题
+- 🐞 `<pro>Table`: 修复在 useColon 的情况下，label 位置出现小部分错位的问题。
 - 🐞 `<pro>PerformanceTable`: 修复在 Modal 中滚动高度计算错误问题。
 - 🐞 `<pro>Tooltip`: 修复在 bottom top 情况下，可能出现箭头不与目标中心对其的情况的问题。
 

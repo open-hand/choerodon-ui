@@ -18,8 +18,9 @@ timeline: true
 - 🌟 `configure`: Added `modalAutoCenter`, `modalKeyboard`, `tableKeyboard`, `tableFilterAdapter`, `tableFilterSuffix`, `tableFilterSearchText` global configuration.
 - 🌟 `Tabs`: Added `keyboard` property.
 - 🌟 `<pro>Select`: Added `noCache` property.
-- 🌟 `<pro>Table`: Added more keyboard shortcuts.
 - 🌟 `<pro>Table`: Added `filterBar`.
+- 🌟 `<pro>Table`: Added more keyboard shortcuts.
+- 🌟 `<pro>CodeArea`: Added `editorDidMount` property.
 - 🌟 `<pro>Cascader`: Added `onChoose`, `onUnChoose` property.
 - 🌟 `<pro>Modal`: Added `autoCenter` property to control the center display of modal.
 - 🌟 `<pro>Modal`: Added `keyboard` attribute to control keyboard esc to close.

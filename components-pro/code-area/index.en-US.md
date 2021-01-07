@@ -22,6 +22,7 @@ subtitle: 代码域
 | formatHotKey | 格式化快捷键 | string | `Alt+F` |
 | unFormatHotKey | 清除格式化快捷键 | string | `Alt+R` |
 | formatter | `CodeAreaFormatter`类的实例，用于格式化 | CodeAreaFormatter | `new JSONFormatter()` |
+| editorDidMount | 在实例挂载前回调函数 | (editor: IInstance, value: string, cb: () => void) => void; |  |
 
 更多属性请参考 [FormField](/components-pro/field/#FormField)。
 

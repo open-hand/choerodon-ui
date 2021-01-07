@@ -26,6 +26,7 @@ export interface CodeAreaProps extends FormFieldProps {
   formatHotKey?: string;
   unFormatHotKey?: string;
   formatter?: CodeAreaFormatter;
+  editorDidMount?: (editor: IInstance, value: string, cb: () => void) => void;
 }
 
 const defaultCodeMirrorOptions: EditorConfiguration = {
@@ -44,6 +45,7 @@ export default class CodeArea extends ObserverFormField<CodeAreaProps> {
     formatHotKey: PropTypes.string,
     unFormatHotKey: PropTypes.string,
     formatter: PropTypes.object,
+    editorDidMount: PropTypes.func,
     ...ObserverFormField.propTypes,
   };
 
@@ -175,8 +177,8 @@ export default class CodeArea extends ObserverFormField<CodeAreaProps> {
    *
    * @memberof CodeArea
    */
-  handleCodeMirrorDidMount = (editor: any) => {
-    const { formatter, style, formatHotKey, unFormatHotKey } = this.props;
+  handleCodeMirrorDidMount = (editor: IInstance, value: string, cb: () => void) => {
+    const { formatter, style, formatHotKey, unFormatHotKey, editorDidMount } = this.props;
     const { width = '100%', height = 100 } = style || {};
     const options = {
       Tab(cm) {
@@ -201,5 +203,8 @@ export default class CodeArea extends ObserverFormField<CodeAreaProps> {
     }
     editor.setSize(width, height); // default size: ('100%', 100)
     editor.setOption('extraKeys', options);
+    if (editorDidMount) {
+      editorDidMount(editor, value, cb);
+    }
   };
 }
