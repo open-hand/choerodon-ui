@@ -780,16 +780,16 @@ export default class Table extends DataSetComponent<TableProps> {
             this.handleKeyDownEnd(e);
             break;
           case KeyCode.S:
-            if (ctrlKey === true && keyboard) { this.handleKeyDownCTRLS(e); };
+            if (ctrlKey === true && keyboard) this.handleKeyDownCTRLS(e);
             break;
           case KeyCode.N:
-            if (altKey === true && keyboard) { this.handleKeyDownCTRLN(e); };
+            if (altKey === true && keyboard) this.handleKeyDownCTRLN(e);
             break;
           case KeyCode.D:
-            if(ctrlKey === true && keyboard) { this.handleKeyDownCTRLD(e); };
+            if(ctrlKey === true && keyboard) this.handleKeyDownCTRLD(e);
             break;
           case KeyCode.DELETE:
-            if(altKey === true && keyboard) { this.handleKeyDownCTRLDELETE(e); };
+            if(altKey === true && keyboard) this.handleKeyDownCTRLDELETE(e);
             break;
           default:
         }

@@ -218,7 +218,6 @@
     position: absolute;
     top: 0;
     z-index: 1;
-    background-color: #fff;
 
     .@{table-prefix-cls}-head,
     .@{table-prefix-cls}-body {
@@ -226,11 +225,16 @@
       overflow-y: auto;
     }
 
+    .@{table-prefix-cls}-body {
+      background-color: #fff;
+    }
+
     .@{table-prefix-cls}-foot {
       overflow-x: hidden;
     }
 
     table {
+      background-color: #fff;
       transition: width 0.3s;
     }
   }

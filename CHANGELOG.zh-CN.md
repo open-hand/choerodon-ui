@@ -15,8 +15,8 @@ timeline: true
 
 ---
 
-- 🌟 `Tabs`: 新增 keyboard 属性。
 - 🌟 `configure`: 新增 modalAutoCenter， modalKeyboard，tableKeyboard，tableFilterAdapter，tableFilterSuffix，tableFilterSearchText 全局属性。
+- 🌟 `Tabs`: 新增 keyboard 属性。
 - 🌟 `<pro>Select`: 新增 noCache 属性。
 - 🌟 `<pro>Table`: 新增更多的表单快捷键。
 - 🌟 `<pro>Table`: 新增 filterBar 筛选条。
@@ -32,12 +32,16 @@ timeline: true
 - 💄 `<pro>DatePicker`: 优化 DatePicker 中 DateTimePicker 的时间选择操作。
 - 🐞 `Tabs`: 修复 Tab 在小屏幕上无法滚动问题。
 - 🐞 `message`: 修复 message 导致的 Pro Feedback 组件请求报错节点插入错误。
+- 🐞 `<pro>Lov`: 修复 bind 字段前置无法赋值问题。
+- 🐞 `<pro>CheckBox`: 修复 CheckBox 受控使用方式问题。
+- 🐞 `<pro>Output`: 修复值为 0 渲染为空的问题。
+- 🐞 `<pro>Output`: 修复字段类型为 number 时值集渲染问题。
 - 🐞 `<pro>FormField`: 修复校验 label 渲染问题。
 - 🐞 `<pro>FormField`: 修复多选出现多个校验提示问题。
 - 🐞 `<pro>Table`: 修复 multipleLine 模式下多字段冲突问题。
-- 🐞 `<pro>Table`: 修复在 useColon 的情况下，label 位置出现小部分错位的问题
 - 🐞 `<pro>Table`: 修复 Table 头部低分辨率在 autoHeight 下面出现的错位问题。
-- 🐞 `<pro>CheckBox`: 修复 CheckBox 受控使用方式问题。
+- 🐞 `<pro>Table`: 修复在 useColon 的情况下，label 位置出现小部分错位的问题
+- 🐞 `<pro>PerformanceTable`: 修复在 Modal 中滚动高度计算错误问题。
 - 🐞 `<pro>Tooltip`: 修复在 bottom top 情况下，可能出现箭头不与目标中心对其的情况的问题。
 
 

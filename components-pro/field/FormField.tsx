@@ -849,11 +849,12 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
 
   processRenderer(value?: any, repeat?: number): ReactNode {
     const {
+      field,
       record,
       dataSet,
       props: { renderer = this.defaultRenderer, name, maxTagTextLength },
     } = this;
-    const text = this.processText(this.getText(value));
+    const text = this.processText(field && (field.lookup || field.options) ? field.getText(value) as string : this.getText(value));
     return renderer
       ? renderer({
         value,
