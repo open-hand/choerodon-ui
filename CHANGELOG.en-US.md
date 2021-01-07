@@ -28,6 +28,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimized the width and style of virtual scroll fixed column.
 - 💄 `<pro>DatePicker`: Optimized the time selection operation of DateTimePicker in DatePicker.
 - 🐞 `Tabs`: Fixed Tab can't scroll when in min width screen.
+- 🐞 `<pro>Lov`: Fixed the problem that the bind field cannot be assigned beforehand.
 - 🐞 `<pro>Output`: Fixed the problem that the value 0 renders empty.
 - 🐞 `<pro>Output`: Fixed the value set rendering problem when the field type is `number`.
 - 🐞 `<pro>Table`: Fixed the problem of multi-field conflict in multipleLine mode.
