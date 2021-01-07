@@ -1,31 +1,20 @@
 ---
-order: 2
+order: 7
 title:
-  zh-CN: 多选
-  en-US: mutiple
+  zh-CN: 所选既所得
+  en-US: changeOnSelect
 ---
 
 ## zh-CN
 
-多选
+所选既所得。
 
 ## en-US
 
-mutiple
+change on select
 
 ```jsx
 import { DataSet, Cascader} from 'choerodon-ui/pro';
-
-function handleDataSetChange({ record, name, value, oldValue }) {
-  console.log(
-    '[dataset newValue]',
-    value,
-    '[oldValue]',
-    oldValue,
-    `[record.get('${name}')]`,
-    record.get(name),
-  );
-}
 
 class App extends React.Component {
   optionDs = new DataSet({
@@ -48,22 +37,18 @@ class App extends React.Component {
         name: 'id',
         type: 'string',
         textField: 'text',
-        defaultValue:[["2", "7"]],
+        defaultValue:["2", "7"],
         valueField: 'id',
         label: '部门',
         options: this.optionDs,
       },
     ],
-    events: {
-      update: handleDataSetChange,
-    },
   });
 
   render() {
     return (
       <Cascader
-          multiple
-          expandTrigger="hover"
+          changeOnSelect
           dataSet={this.ds}
           name="id"
       />

@@ -37,12 +37,14 @@ export default class Tabs extends Component {
     style: PropTypes.object,
     activeKey: PropTypes.string,
     defaultActiveKey: PropTypes.string,
+    keyboard: PropTypes.bool,
   };
 
   static defaultProps = {
     prefixCls: 'rc-tabs',
     destroyInactiveTabPane: false,
     onChange: noop,
+    keyboard: true,
     tabBarPosition: 'top',
     style: {},
   };
@@ -144,6 +146,7 @@ export default class Tabs extends Component {
       renderTabContent,
       renderTabBar,
       destroyInactiveTabPane,
+      keyboard,
       ...restProps
     } = props;
     const cls = classnames({
@@ -152,12 +155,14 @@ export default class Tabs extends Component {
       [className]: !!className,
     });
 
+    const onKeyDown = keyboard === false ? noop : this.onNavKeyDown;
+
     this.tabBar = renderTabBar();
     const contents = [
       cloneElement(this.tabBar, {
         prefixCls,
         key: 'tabBar',
-        onKeyDown: this.onNavKeyDown,
+        onKeyDown,
         tabBarPosition,
         onTabClick: this.onTabClick,
         panels: props.children,

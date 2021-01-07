@@ -32,7 +32,7 @@ export type ScreeningOptionProps = Omit<ElementProps, "lang" | "spellCheck"> & C
   onMouseDown?: (info: Info) => void;
   disabled?: boolean;
   children?: React.ReactElement<any> | string;
-  active?: boolean; CSSProperties
+  active?: boolean;
   multiple?: boolean;
   isSelected?: boolean;
   value?: any | Record;

@@ -15,12 +15,15 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 modalKeyboard，tableFilterAdapter，tableFilterSuffix，tableFilterSearchText 全局属性。
+- 🌟 `configure`: 新增 modalAutoCenter， modalKeyboard，tableKeyboard，tableFilterAdapter，tableFilterSuffix，tableFilterSearchText 全局属性。
+- 🌟 `Tabs`: 新增 keyboard 属性。
 - 🌟 `<pro>Select`: 新增 noCache 属性。
 - 🌟 `<pro>Table`: 新增更多的表单快捷键。
 - 🌟 `<pro>Table`: 新增 filterBar 筛选条。
 - 🌟 `<pro>Cascader`: 新增 onChoose, onUnChoose 属性。
+- 🌟 `<pro>Modal`: 新增 autoCenter 属性控制 Modal 居中显示。
 - 🌟 `<pro>Modal`: 新增 keyboard 属性控制键盘 esc 关闭。
+- 🌟 `<pro>Cascader`: 新增 changeOnSelect 属性控制可以满足父亲节点选择。
 - 🌟 `<pro>DatePicker`: 新增 renderExtraFooter extraFooterPlacement 属性。
 - 💄 `configure`: 优化 lookupCache 全局配置。
 - 💄 `<pro>DataSet`: 优化 getText 属性。
@@ -28,7 +31,9 @@ timeline: true
 - 💄 `<pro>Cascader`: 优化 Cascader 无选项的展示效果。
 - 💄 `<pro>DatePicker`: 优化 DatePicker 中 DateTimePicker 的时间选择操作。
 - 🐞 `Tabs`: 修复 Tab 在小屏幕上无法滚动问题。
+- 🐞 `message`: 修复 message 导致的 Pro Feedback 组件请求报错节点插入错误。
 - 🐞 `<pro>Lov`: 修复 bind 字段前置无法赋值问题。
+- 🐞 `<pro>CheckBox`: 修复 CheckBox 受控使用方式问题。
 - 🐞 `<pro>Output`: 修复值为 0 渲染为空的问题。
 - 🐞 `<pro>Output`: 修复字段类型为 number 时值集渲染问题。
 - 🐞 `<pro>FormField`: 修复校验 label 渲染问题。

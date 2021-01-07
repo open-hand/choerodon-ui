@@ -271,6 +271,18 @@ export default class TableStore {
   }
 
   @computed
+  get keyboard(): boolean {
+    if ('keyboard' in this.props) {
+      return this.props.keyboard;
+    }
+    const keyboard = getConfig('tableKeyboard');
+    if (typeof keyboard !== 'undefined') {
+      return keyboard;
+    }
+    return false;
+  }
+
+  @computed
   get columnResizable(): boolean {
     if (this.currentEditRecord) {
       return false;

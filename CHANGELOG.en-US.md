@@ -15,19 +15,24 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `modalKeyboard`, `tableFilterAdapter`, `tableFilterSuffix`, `tableFilterSearchText` global configuration.
+- 🌟 `configure`: Added `modalAutoCenter`,`modalKeyboard`,`tableKeyboard`, `tableFilterAdapter`, `tableFilterSuffix`, `tableFilterSearchText` global configuration.
+- 🌟 `Tabs`: Added `keyboard` property.
 - 🌟 `<pro>Select`: Added `noCache` property.
 - 🌟 `<pro>Table`: Added more keyboard shortcuts.
 - 🌟 `<pro>Table`: Added `filterBar`.
 - 🌟 `<pro>Cascader`: Added `onChoose`, `onUnChoose` property.
+- 🌟 `<pro>Modal`: Added `autoCenter` property to control the center display of modal.
 - 🌟 `<pro>Modal`: Added `keyboard` attribute to control keyboard esc to close.
+- 🌟 `<pro>Cascader`: Added `changeOnSelect` property could select parent node.
 - 🌟 `<pro>DatePicker`:Added `renderExtraFooter`, `extraFooterPlacement` property.
 - 💄 `configure`: Optimized `lookupCache` property.
 - 💄 `<pro>DataSet`: Optimized getText property.
 - 💄 `<pro>Cascader`: Optimized the not found display of results.
 - 💄 `<pro>Table`: Optimized the width and style of virtual scroll fixed column.
-- 💄 `<pro>DatePicker`: Optimized the time selection operation of DateTimePicker in DatePicker.
+- 💄 `<pro>DatePicker`: Optimized the time selection operation of dateTimePicker in datePicker.
 - 🐞 `Tabs`: Fixed Tab can't scroll when in min width screen.
+- 🐞 `message`: Fixed the error node insertion error of Pro Feedback component request error caused by message.
+- 🐞 `<pro>CheckBox`: Fixed CheckBox controlled usage problem.
 - 🐞 `<pro>Lov`: Fixed the problem that the bind field cannot be assigned beforehand.
 - 🐞 `<pro>Output`: Fixed the problem that the value 0 renders empty.
 - 🐞 `<pro>Output`: Fixed the value set rendering problem when the field type is `number`.

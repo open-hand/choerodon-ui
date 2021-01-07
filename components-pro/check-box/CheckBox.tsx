@@ -38,7 +38,6 @@ export class CheckBox<T extends CheckBoxProps> extends Radio<T & CheckBoxProps> 
      * 未选中时的内容
      */
     unCheckedChildren: PropTypes.node,
-    defaultChecked: PropTypes.bool,
     ...Radio.propTypes,
   };
 
@@ -121,7 +120,7 @@ export class CheckBox<T extends CheckBoxProps> extends Radio<T & CheckBoxProps> 
       return false;
     }
     const { name, dataSet, checkedValue } = this;
-    if (dataSet && name) {
+    if (!this.isControlled && dataSet && name) {
       return this.getValues().indexOf(checkedValue) !== -1;
     }
     if (checked !== undefined) {

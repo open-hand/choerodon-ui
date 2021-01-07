@@ -140,6 +140,8 @@ export interface CascaderProps extends TriggerFieldProps {
   singlePleaseRender?: ({key,className,text}:{key: string,className: string,text: string}) => ReactElement<any>,
   /** 头部可以渲染出想要的tab样子 */
   singleMenuItemRender?: (title:string) => ReactElement<any>,
+  /** 选择及改变 */
+  changeOnSelect?: boolean,
 }
 
 export class Cascader<T extends CascaderProps> extends TriggerField<T> {
@@ -180,9 +182,6 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
      */
     notFoundContent: PropTypes.node,
     /**
-     * 设置选项属性，如 disabled;
-     */
-      /**
      * 选择一个值的时候触发
      */
     onChoose: PropTypes.func,
@@ -190,6 +189,11 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
      * 取消选中一个值的时候触发多选时候生效
      */
     onUnChoose: PropTypes.func,
+    /** 选择及改变 */
+    changeOnSelect: PropTypes.bool,
+    /**
+     * 设置选项属性，如 disabled;
+     */
     onOption: PropTypes.func,
     singleMenuStyle: PropTypes.object,
     singleMenuItemStyle: PropTypes.object,
@@ -443,6 +447,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
       'singleMenuItemRender', 
       'onChoose',
       'onUnChoose',
+      'changeOnSelect',
     ]);
     return otherProps;
   }
@@ -535,18 +540,20 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
       valueField,
       props: {
         dropdownMenuStyle, 
-        expandTrigger, 
+        expandTrigger : expandTriggerProps, 
         onOption, 
         menuMode,
         singleMenuStyle,
         singleMenuItemStyle,
         singlePleaseRender,
+        changeOnSelect,
         singleMenuItemRender,
       },
     } = this;
     if (!options) {
       return null;
     }
+    const expandTrigger = changeOnSelect && menuMode !== MenuMode.single ? ExpandTrigger.hover : expandTriggerProps;
     const menuDisabled = this.isDisabled();
     let optGroups: any[] = [];
     let selectedValues: any[] = [];
@@ -1004,7 +1011,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
   }
 
   findByText(text): Record | undefined {
-    const { textField } = this;
+    const { textField, props: { changeOnSelect } } = this;
     const findTreeItem = (options, valueItem, index) => {
       let sameItemTreeNode;
       if (valueItem.length > 0) {
@@ -1012,7 +1019,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
           return isSameLike(this.getRecordOrObjValue(ele, textField), isPlainObject(valueItem[index]) ? ObjectChainValue.get(valueItem[index], textField) : valueItem[index]);
         });
         if (sameItemTreeNode) {
-          if (sameItemTreeNode.children) {
+          if (sameItemTreeNode.children && !(changeOnSelect && index === (valueItem.length - 1))) {
             return findTreeItem(sameItemTreeNode.children, valueItem, ++index);
           }
           return sameItemTreeNode;
@@ -1030,7 +1037,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
 
 
   findByValue(value): Record | undefined {
-    const { valueField } = this;
+    const { valueField,props: { changeOnSelect } } = this;
     const findTreeItem = (options, valueItem, index) => {
       let sameItemTreeNode;
       if (valueItem.length > 0) {
@@ -1038,7 +1045,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
           return isSameLike(this.getRecordOrObjValue(ele, valueField), isPlainObject(valueItem[index]) ? ObjectChainValue.get(valueItem[index], valueField) : valueItem[index]);
         });
         if (sameItemTreeNode) {
-          if (sameItemTreeNode.children) {
+          if (sameItemTreeNode.children && !(changeOnSelect && index === (valueItem.length - 1))) {
             return findTreeItem(sameItemTreeNode.children, valueItem, ++index);
           }
           return sameItemTreeNode;
@@ -1047,7 +1054,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     };
     value = getSimpleValue(value, valueField);
     if (this.options instanceof DataSet) {
-      return findTreeItem(this.options.treeData, value, 0);
+      return findTreeItem(toJS(this.options.treeData), toJS(value), 0);
     }
     return findTreeItem(this.options, value, 0);
   }
@@ -1101,10 +1108,10 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
   handlePopupAnimateEnd(_key, _exists) {
   }
 
-  // 触发下拉框的点击事件
+  // 触发下拉框的点击事件,增加了触发方式判断优化trigger类型
   @autobind
-  handleMenuClick(targetOption, _menuIndex, isClickTab) {
-    const { onChoose, onUnChoose } = this.props;
+  handleMenuClick(targetOption, _menuIndex, isClickTab, trigger) {
+    const { onChoose, onUnChoose, changeOnSelect } = this.props;
     if (!targetOption || targetOption.disabled) {
       return;
     }
@@ -1113,6 +1120,9 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
         this.setPopup(true);
         this.setActiveValue(targetOption.value);
         this.setIsClickTab(isClickTab);
+        if( changeOnSelect && ExpandTrigger.click === trigger) {
+          this.choose(targetOption.value);
+        }
         if(onChoose){
           onChoose(
             this.processRecordToObject(targetOption.value),

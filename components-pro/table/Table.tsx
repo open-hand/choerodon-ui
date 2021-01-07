@@ -480,6 +480,10 @@ export interface TableProps extends DataSetComponentProps {
    */
   onDragEndBefore?:(dataSet: DataSet, columns: ColumnProps[], resultDrag: DropResult, provided: ResponderProvided) => DropResult | boolean | void,
   /**
+   * 是否开启关闭快捷键（只关闭新加组合快捷键）
+  */
+  keyboard?:boolean,
+  /*
    * 筛选条属性配置
    */
   dynamicFilterBar?: DynamicFilterBarConfig,
@@ -606,6 +610,10 @@ export default class Table extends DataSetComponent<TableProps> {
      */
     autoFocus: PropTypes.bool,
     /**
+     * 新增的组合键开关闭
+     */
+    keyboard: PropTypes.bool,
+    /**
      * 是否单独处理column footer
      */
     autoFootHeight: PropTypes.bool,
@@ -729,6 +737,7 @@ export default class Table extends DataSetComponent<TableProps> {
   @autobind
   handleKeyDown(e) {
     const { tableStore } = this;
+    const { keyboard } = tableStore;
     if (!tableStore.editing) {
       try {
         const { dataSet } = this.props;
@@ -737,15 +746,15 @@ export default class Table extends DataSetComponent<TableProps> {
         const shiftKey = e.shiftKey;
         switch (e.keyCode) {
           case KeyCode.UP:
-            if(shiftKey){
-              this.handleKeyDownUpShift(e)
+            if(shiftKey && keyboard){
+              this.handleKeyDownUpShift(e);
             }else{
               this.handleKeyDownUp(e);
             }
             break;
           case KeyCode.DOWN:
-            if(shiftKey){
-              this.handleKeyDownDownShift(e)
+            if(shiftKey && keyboard){
+              this.handleKeyDownDownShift(e);
             }else{
               this.handleKeyDownDown(e);
             }
@@ -771,16 +780,16 @@ export default class Table extends DataSetComponent<TableProps> {
             this.handleKeyDownEnd(e);
             break;
           case KeyCode.S:
-            if (ctrlKey === true) this.handleKeyDownCTRLS(e);
+            if (ctrlKey === true && keyboard) this.handleKeyDownCTRLS(e);
             break;
           case KeyCode.N:
-            if (altKey === true) this.handleKeyDownCTRLN(e);
+            if (altKey === true && keyboard) this.handleKeyDownCTRLN(e);
             break;
           case KeyCode.D:
-            if(ctrlKey === true) this.handleKeyDownCTRLD(e);
+            if(ctrlKey === true && keyboard) this.handleKeyDownCTRLD(e);
             break;
           case KeyCode.DELETE:
-            if(altKey === true) this.handleKeyDownCTRLDELETE(e);
+            if(altKey === true && keyboard) this.handleKeyDownCTRLDELETE(e);
             break;
           default:
         }
@@ -1075,6 +1084,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'rowDragRender',
       'columnsDragRender',
       'onDragEndBefore',
+      'keyboard',
       'dynamicFilterBar',
     ]);
     otherProps.onKeyDown = this.handleKeyDown;

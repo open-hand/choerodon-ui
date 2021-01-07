@@ -51,7 +51,9 @@ export default class Menus extends Component {
     const { prefixCls, expandTrigger, expandIcon, selectedValues } = this.props;
     const onSelect = this.props.onSelect.bind(this, option, menuIndex,false);
     let expandProps = {
-      onClick: onSelect,
+      onClick: () => {
+        return onSelect('click');
+      }
     };
     let menuItemCls = `${prefixCls}-menu-item`;
     let expandIconNode = null;
@@ -71,7 +73,9 @@ export default class Menus extends Component {
       expandProps = {
         onMouseEnter: this.delayOnSelect.bind(this, onSelect),
         onMouseLeave: this.delayOnSelect.bind(this),
-        onClick: onSelect,
+        onClick: () => {
+          return onSelect('click');
+        },
       };
     }
     if (this.isActiveOption(option, menuIndex)) {
@@ -125,7 +129,7 @@ export default class Menus extends Component {
     }
     if (typeof onSelect === 'function') {
       this.delayTimer = setTimeout(() => {
-        onSelect(args);
+        onSelect('hover',args);
         this.delayTimer = null;
       }, 150);
     }

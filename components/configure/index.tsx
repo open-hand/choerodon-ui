@@ -29,7 +29,7 @@ import { ButtonColor, FuncType } from 'choerodon-ui/pro/lib/button/enum';
 import { defaultExcludeUseColonTag } from 'choerodon-ui/pro/lib/form/utils';
 import { Renderer } from 'choerodon-ui/pro/lib/field/FormField';
 import { FormatNumberFunc, FormatNumberFuncOptions } from 'choerodon-ui/pro/lib/number-field/NumberField';
-import { ModalProps } from 'choerodon-ui/pro/lib/modal/Modal';
+import { ModalProps } from 'choerodon-ui/pro/lib/modal/interface';
 
 export type Status = {
   [RecordStatus.add]: string;
@@ -107,11 +107,13 @@ export type Config = {
   tableUseMouseBatchChoose?: boolean;
   tableEditorNextKeyEnterDown?: boolean;
   tableAutoFocus?: boolean;
+  tableKeyboard?: boolean;
   tableFilterAdapter?: TransportProps;
   tableFilterSuffix?: Renderer;
   tableFilterSearchText?: string;
   pagination?: TablePaginationConfig | false;
   modalSectionBorder?: boolean;
+  modalAutoCenter?: boolean;
   modalOkFirst?: boolean;
   drawerOkFirst?: boolean;
   modalButtonProps?: ButtonProps;
@@ -210,9 +212,11 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['tableUseMouseBatchChoose', false],
   ['tableEditorNextKeyEnterDown', true],
   ['tableAutoFocus', false],
+  ['tableKeyboard', false],
   ['tableFilterSearchText', 'params'],
   ['modalSectionBorder', true],
   ['modalOkFirst', true],
+  ['modalAutoCenter', false],
   ['drawerOkFirst', undefined],
   ['modalKeyboard', true],
   ['buttonColor', ButtonColor.default],

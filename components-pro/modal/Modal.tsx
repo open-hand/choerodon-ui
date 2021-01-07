@@ -31,6 +31,7 @@ export interface ModalProps extends ViewComponentProps {
   fullScreen?: boolean;
   maskClosable?: boolean;
   maskStyle?: CSSProperties;
+  autoCenter?: boolean;
   mask?: boolean,
   maskClassName?: string,
   keyboardClosable?: boolean;
@@ -73,6 +74,7 @@ export default class Modal extends ViewComponent<ModalProps> {
     okText: PropTypes.node,
     cancelText: PropTypes.node,
     okProps: PropTypes.object,
+    autoCenter: PropTypes.bool,
     cancelProps: PropTypes.object,
     onClose: PropTypes.func,
     onOk: PropTypes.func,
@@ -127,6 +129,8 @@ export default class Modal extends ViewComponent<ModalProps> {
 
   cancelButton: Button | null;
 
+  contentNode: HTMLElement;
+
   saveCancelRef = node => (this.cancelButton = node);
 
   handleKeyDown = e => {
@@ -164,6 +168,7 @@ export default class Modal extends ViewComponent<ModalProps> {
       'border',
       'okFirst',
       'drawerTransitionName',
+      'autoCenter',
       'keyboard',
     ]);
     if (this.props.keyboardClosable) {
@@ -175,10 +180,21 @@ export default class Modal extends ViewComponent<ModalProps> {
     return otherProps;
   }
 
+  @autobind
+  contentReference(node) {
+    this.contentNode = node;
+  }
+
   getClassName(): string | undefined {
     const {
       prefixCls,
-      props: { style = {}, fullScreen, drawer, border = getConfig('modalSectionBorder') },
+      props: { 
+        style = {}, 
+        fullScreen, 
+        drawer, 
+        border = getConfig('modalSectionBorder'),
+        autoCenter = getConfig('modalAutoCenter'),
+       },
     } = this;
 
     return super.getClassName({
@@ -186,6 +202,7 @@ export default class Modal extends ViewComponent<ModalProps> {
       [`${prefixCls}-fullscreen`]: fullScreen,
       [`${prefixCls}-drawer`]: drawer,
       [`${prefixCls}-border`]: border,
+      [`${prefixCls}-auto-center`]: autoCenter,
     });
   }
 
@@ -196,7 +213,7 @@ export default class Modal extends ViewComponent<ModalProps> {
     const footer = this.getFooter();
     return (
       <div {...this.getMergedProps()}>
-        <div className={`${prefixCls}-content`}>
+        <div ref={this.contentReference}  className={`${prefixCls}-content`}>
           {header}
           {body}
           {footer}
@@ -218,22 +235,33 @@ export default class Modal extends ViewComponent<ModalProps> {
 
   @autobind
   handleHeaderMouseDown(downEvent: MouseEvent) {
-    const { element } = this;
-    if (element) {
+    const { element, contentNode, props:{ autoCenter = getConfig('modalAutoCenter') } } = this;
+    if (element && contentNode) {
       const { prefixCls } = this;
       const { clientX, clientY } = downEvent;
       const { offsetLeft, offsetTop } = element;
+      const heightW = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+      let autoMove = 0;
       this.moveEvent
         .addEventListener('mousemove', (moveEvent: MouseEvent) => {
           const { clientX: moveX, clientY: moveY } = moveEvent;
           classes(element).remove(`${prefixCls}-center`);
           const left = pxToRem(Math.max(offsetLeft + moveX - clientX, 0));
-          const top = pxToRem(Math.max(offsetTop + moveY - clientY, 0));
+          const top = pxToRem(Math.max(offsetTop + autoMove + moveY - clientY, 0));
           this.offset = [left, top];
-          Object.assign(element.style, {
-            left,
-            top,
-          });
+          if( autoCenter && classes(element).has(`${prefixCls}-auto-center`)) {
+            classes(element).remove(`${prefixCls}-auto-center`);
+            autoMove = Math.max((heightW - contentNode.clientHeight)/2,0)
+            Object.assign(element.style, {
+              left, 
+              top:pxToRem(autoMove),
+            });
+          } else {
+            Object.assign(element.style, {
+              left,
+              top,
+            });
+          }
         })
         .addEventListener('mouseup', () => {
           this.moveEvent.clear();

@@ -132,6 +132,7 @@ export default class TableEditor extends Component<TableEditorProps> {
     const ctrlKey = e.ctrlKey || e.metaKey;
     if (e.keyCode !== KeyCode.ESC || !e.isDefaultPrevented()) {
       const { tableStore } = this.context;
+      const { keyboard } = tableStore;
       switch (e.keyCode) {
         case KeyCode.ESC:
         case KeyCode.TAB: {
@@ -148,10 +149,10 @@ export default class TableEditor extends Component<TableEditorProps> {
           stopEvent(e);
           break;
         case KeyCode.D:
-          if(ctrlKey === true) { this.handleKeyDownCTRLD(e); }
+          if(ctrlKey === true && keyboard) { this.handleKeyDownCTRLD(e); };
           break;
         case KeyCode.S:
-          if (ctrlKey === true) { this.handleKeyDownCTRLS(e); };
+          if (ctrlKey === true && keyboard) { this.handleKeyDownCTRLS(e); };
           break;
         default:
       }
