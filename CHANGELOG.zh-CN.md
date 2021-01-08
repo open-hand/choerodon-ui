@@ -45,6 +45,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复在 useColon 的情况下，label 位置出现小部分错位的问题。
 - 🐞 `<pro>PerformanceTable`: 修复在 Modal 中滚动高度计算错误问题。
 - 🐞 `<pro>Tooltip`: 修复在 bottom top 情况下，可能出现箭头不与目标中心对其的情况的问题。
+- 🐞 `<pro>DatePicker`: 修复在 range 情况下，清除设置不正常的情况。
 
 
 ## 0.8.77

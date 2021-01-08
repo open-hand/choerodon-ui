@@ -45,6 +45,7 @@ timeline: true
 - 🐞 `<pro>FormField`: Fixed the problem of multiple verification prompts in multiple selections.
 - 🐞 `<pro>PerformanceTable`: Fixed the problem of incorrect calculation of scroll height in `Modal`.
 - 🐞 `<pro>Tooltip`: Fixed the problem that the arrow may not be aligned with the center of the target in the bottom top case.
+- 🐞 `<pro>DatePicker`: In the case of range, it is fixed to clear the abnormal setting.
 
 ## 0.8.77
 

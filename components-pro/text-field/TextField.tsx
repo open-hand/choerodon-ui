@@ -5,6 +5,7 @@ import isArray from 'lodash/isArray';
 import isString from 'lodash/isString';
 import isNil from 'lodash/isNil';
 import noop from 'lodash/noop';
+import isArrayLike from 'lodash/isArrayLike';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { action, observable } from 'mobx';
@@ -163,7 +164,22 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   isEmpty() {
-    return isEmpty(this.text) && super.isEmpty();
+    const result = isEmpty(this.text) && super.isEmpty();
+    if (this.range === true) {
+      if (this.value && isArrayLike(this.value) && !this.value.find(v => v)) {
+        return true;
+      }
+      return result;
+    }
+
+    if (isArrayLike(this.range)) {
+      if (this.value && !Object.values(this.value).find(v => v)) {
+        return true;
+      }
+      return result;
+    }
+    
+    return result;
   }
 
   getOtherProps() {
