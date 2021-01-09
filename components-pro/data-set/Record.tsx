@@ -689,7 +689,7 @@ export default class Record {
     const { fields } = this;
     const newData = { ...data };
     [...fields.entries()].forEach(([fieldName, field]) => {
-      let value = ObjectChainValue.get(data, fieldName);
+      let value = ObjectChainValue.get(newData, fieldName);
       const bind = field.get('bind');
       const type = field.get('type');
       const transformResponse = field.get('transformResponse');

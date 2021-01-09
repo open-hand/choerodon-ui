@@ -290,7 +290,7 @@ export default class TableRow extends Component<TableRowProps, any> {
      * Fixed the when row resize has scrollbar the expanded row would be collapsed
      */
     if(!isRowExpanded(record, tableStore)){
-      tableStore.setRowExpanded(record, false);
+      tableStore.setRowExpanded(record, false, true);
     }
     remove(tableStore.lockColumnsBodyRowsHeight, this.rowKey);
   }

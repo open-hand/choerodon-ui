@@ -1087,7 +1087,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     const headerHeight = this.getTableHeaderHeight();
     const contentHeight = rows.length
       ? Array.from(rows)
-        .map(row => getHeight(row) || rowHeight)
+        .map((row: HTMLElement) => getHeight(row) || toPx(row.style.height) || rowHeight)
         .reduce((x, y) => x + y)
       : 0;
 
@@ -1610,6 +1610,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
     const scrollBarOffset = (contentWidth <= this.state.width) || contentHeight <= (height - headerHeight) ? 40 : 60;
     const decScrollBarOffset = showScrollArrow ? scrollBarOffset : 0;
+
+    console.log('contentWidth - decScrollBarOffset', contentHeight, decScrollBarOffset)
 
     return (
       <div>

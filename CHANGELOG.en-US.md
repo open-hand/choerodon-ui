@@ -15,8 +15,8 @@ timeline: true
 
 ---
 
-- 🌟 `Tabs`: Added `keyboard` property.
 - 🌟 `configure`: Added `modalAutoCenter`,`modalKeyboard`,`tableKeyboard`, `tableFilterAdapter`, `tableFilterSuffix`, `tableFilterSearchText` global configuration.
+- 🌟 `Tabs`: Added `keyboard` property.
 - 🌟 `<pro>Select`: Added `noCache` property.
 - 🌟 `<pro>Table`: Added more keyboard shortcuts.
 - 🌟 `<pro>Table`: Added `filterBar`.
@@ -33,12 +33,17 @@ timeline: true
 - 💄 `<pro>DatePicker`: Optimized the time selection operation of dateTimePicker in datePicker.
 - 🐞 `Tabs`: Fixed Tab can't scroll when in min width screen.
 - 🐞 `message`: Fixed the error node insertion error of Pro Feedback component request error caused by message.
+- 🐞 `<pro>CheckBox`: Fixed CheckBox controlled usage problem.
+- 🐞 `<pro>Lov`: Fixed the problem that the bind field cannot be assigned beforehand.
+- 🐞 `<pro>Output`: Fixed the problem that the value 0 renders empty.
+- 🐞 `<pro>Output`: Fixed the value set rendering problem when the field type is `number`.
 - 🐞 `<pro>Table`: Fixed the problem of multi-field conflict in multipleLine mode.
+- 🐞 `<pro>Table`: Fixed the problem of automatically triggering OnExpand when clicking query in tree mode.
 - 🐞 `<pro>Table`: Fixed the misalignment problem of the low resolution of Table head under autoHeight.
 - 🐞 `<pro>Table`: Fixed the problem that a small part of the label position is misaligned in the case of `useColon`.
 - 🐞 `<pro>FormField`: Fixed the problem of verifying label rendering.
 - 🐞 `<pro>FormField`: Fixed the problem of multiple verification prompts in multiple selections.
-- 🐞 `<pro>CheckBox`: Fixed CheckBox controlled usage problem.
+- 🐞 `<pro>PerformanceTable`: Fixed the problem of incorrect calculation of scroll height in `Modal`.
 - 🐞 `<pro>Tooltip`: Fixed the problem that the arrow may not be aligned with the center of the target in the bottom top case.
 
 ## 0.8.77
