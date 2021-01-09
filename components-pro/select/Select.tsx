@@ -14,6 +14,7 @@ import Tag from 'choerodon-ui/lib/tag';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { getConfig } from 'choerodon-ui/lib/configure';
+import classNames from 'classnames';
 import TriggerField, { TriggerFieldProps } from '../trigger-field/TriggerField';
 import autobind from '../_util/autobind';
 import { ValidationMessages } from '../validator/Validator';
@@ -32,6 +33,8 @@ import isSame from '../_util/isSame';
 import isSameLike from '../_util/isSameLike';
 import { Renderer } from '../field/FormField';
 import isIE from '../_util/isIE';
+import CloseButton from '../field/CloseButton';
+import Tooltip from '../tooltip';
 
 function updateActiveKey(menu: Menu, activeKey: string) {
   const store = menu.getStore();
@@ -786,6 +789,94 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     super.handleKeyDown(e);
   }
 
+  renderMultipleValues(readOnly?: boolean) {
+    const values = this.getValues();
+    const valueLength = values.length;
+    const {
+      prefixCls,
+      range,
+      props: { maxTagCount = valueLength, maxTagPlaceholder },
+    } = this;
+    const { validationResults } = this.validator;
+    const repeats: Map<any, number> = new Map<any, number>();
+    const blockClassName = classNames(
+      {
+        [`${prefixCls}-multiple-block-disabled`]: this.isDisabled(),
+      },
+      `${prefixCls}-multiple-block`,
+    );
+    this.mutipleValidateMessageLength = 0
+    const tags = values.slice(0, maxTagCount).map(v => {
+      const key = this.getValueKey(v);
+      const repeat = repeats.get(key) || 0;
+      const text = range ? this.renderRangeValue(true, v, repeat) : this.processRenderer(v, repeat);
+      const itemDisabled = this.findByValue(v)?.toData().__disabled === true || this.isDisabled();
+      const itemBlockClassName = classNames(
+        {
+          [`${prefixCls}-multiple-block-disabled`]: itemDisabled,
+        },
+        `${prefixCls}-multiple-block`,
+      );
+      repeats.set(key, repeat + 1);
+      if (!isNil(text)) {
+        const validationResult = validationResults.find(error => error.value === v);
+        const className = classNames(
+          {
+            [`${prefixCls}-multiple-block-invalid`]: validationResult,
+          },
+          itemBlockClassName,
+        );
+        const validationMessage =
+          validationResult && this.renderValidationMessage(validationResult);
+        if(validationMessage){
+            this.mutipleValidateMessageLength++
+        }
+        const closeBtn = !itemDisabled && !this.isReadOnly() && (
+          <CloseButton onClose={this.handleMutipleValueRemove} value={v} index={repeat} />
+        );
+        const inner = readOnly ? (
+          <span className={className}>{text}</span>
+        ) : (
+          <li className={className}>
+            <div>{text}</div>
+            {closeBtn}
+          </li>
+        );
+        return (
+          <Tooltip
+            suffixCls={`form-tooltip ${getConfig('proPrefixCls')}-tooltip`}
+            key={`${key}-${repeat}`}
+            title={validationMessage}
+            theme="light"
+            placement="bottomLeft"
+            hidden={this.isValidationMessageHidden(validationMessage)}
+          >
+            {inner}
+          </Tooltip>
+        );
+      }
+      return undefined;
+    });
+
+    if (valueLength > maxTagCount) {
+      let content: ReactNode = `+ ${valueLength - maxTagCount} ...`;
+      if (maxTagPlaceholder) {
+        const omittedValues = values.slice(maxTagCount, valueLength);
+        content =
+          typeof maxTagPlaceholder === 'function'
+            ? maxTagPlaceholder(omittedValues)
+            : maxTagPlaceholder;
+      }
+      tags.push(
+        <li key="maxTagPlaceholder" className={blockClassName}>
+          <div>{content}</div>
+        </li>,
+      );
+    }
+
+    return tags;
+  }
+
   handleKeyDownFirstLast(e, menu: Menu, direction: number) {
     stopEvent(e);
     const children = menu.getFlatInstanceArray();
@@ -1093,8 +1184,24 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
 
   @action
   clear() {
+    const values = this.getValues();
+    const valueLength = values.length;
+    const {
+      props: { maxTagCount = valueLength, onClear = noop },
+    } = this;
     this.setText(undefined);
-    super.clear();
+    if(this.multiple) {
+      const valuesDisabled = values.slice(0, maxTagCount).filter(v => {
+        const recodItem = this.findByValue(v);
+        return recodItem?.toData().__disabled === true;
+      })
+      const multipleValue = valuesDisabled.length > 0 ? valuesDisabled : this.emptyValue;
+      this.setValue(multipleValue);
+    } else {
+      this.setValue(this.emptyValue);
+    }
+    this.rangeValue = this.isFocused ? [undefined, undefined] : undefined;
+    onClear();
     this.removeComboOptions();
   }
 
