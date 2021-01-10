@@ -1081,7 +1081,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
     }
     if (readOnly) {
       if (multiLineFields.length) {
-        this.mutipleValidateMessageLength = 0
+        this.mutipleValidateMessageLength = 0;
         return (
           <>
             {multiLineFields.map(fieldItem => {

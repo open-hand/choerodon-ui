@@ -30,7 +30,7 @@ class App extends React.Component {
     if (value) {
       values.push(value);
     } else {
-      values.splice(values.indexOf(value), 1);
+      values.splice(values.indexOf(oldValue), 1);
     }
     this.setState({
       values,

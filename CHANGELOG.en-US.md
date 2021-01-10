@@ -43,9 +43,9 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the problem that a small part of the label position is misaligned in the case of `useColon`.
 - 🐞 `<pro>FormField`: Fixed the problem of verifying label rendering.
 - 🐞 `<pro>FormField`: Fixed the problem of multiple verification prompts in multiple selections.
+- 🐞 `<pro>DatePicker`: In the case of range, it is fixed to clear the abnormal setting.
 - 🐞 `<pro>PerformanceTable`: Fixed the problem of incorrect calculation of scroll height in `Modal`.
 - 🐞 `<pro>Tooltip`: Fixed the problem that the arrow may not be aligned with the center of the target in the bottom top case.
-- 🐞 `<pro>DatePicker`: In the case of range, it is fixed to clear the abnormal setting.
 
 ## 0.8.77
 

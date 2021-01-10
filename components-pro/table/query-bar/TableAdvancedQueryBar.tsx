@@ -1,5 +1,6 @@
 import React, { cloneElement, Component, CSSProperties, ReactElement, ReactNode } from 'react';
 import { observer } from 'mobx-react';
+import isFunction from 'lodash/isFunction';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure';
 import Field from '../../data-set/Field';
@@ -126,14 +127,14 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
 
   createFields(elements: ReactElement<any>[], dataSet: DataSet, isMore: boolean): ReactElement[] {
     return elements.map(element => {
-      const { name, style } = element.props;
+      const { name, style, onEnterDown } = element.props;
       const newStyle: CSSProperties = {};
       if (!isMore) {
         newStyle.width = pxToRem(260);
         newStyle.marginRight = pxToRem(10);
       }
       const props: any = {
-        onEnterDown: this.handleFieldEnter,
+        onEnterDown: isFunction(onEnterDown) ? onEnterDown : this.handleFieldEnter,
         labelLayout: LabelLayout.float,
         style: {
           marginRight: !isMore ? pxToRem(10) : 0,

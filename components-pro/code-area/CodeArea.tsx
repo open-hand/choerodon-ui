@@ -108,7 +108,7 @@ export default class CodeArea extends ObserverFormField<CodeAreaProps> {
   }
 
   getOtherProps() {
-    const otherProps = omit(super.getOtherProps(), ['onChange', 'formatHotKey', 'unFormatHotKey']);
+    const otherProps = omit(super.getOtherProps(), ['onChange', 'formatHotKey', 'unFormatHotKey', 'editorDidMount']);
     otherProps.onKeyDown = this.handleCodeMirrorKeyDown;
     return otherProps;
   }

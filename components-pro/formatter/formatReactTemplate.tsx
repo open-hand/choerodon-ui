@@ -18,7 +18,7 @@ export default function formatReactTemplate(
           let stringText = text;
           if (isValidElement(node)) {
             let placeholder = `{${key}}`;
-            if (isObject(node)) {
+            if (isObject(node) && stringText.indexOf('[object Object]') > -1) {
               placeholder = '[object Object]';
             }
             const { length } = placeholder;

@@ -2,6 +2,9 @@ import React, { useContext, useEffect } from 'react';
 import { isArrayLike, runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import map from 'lodash/map';
+import isObject from 'lodash/isObject';
+import isEnumEmpty from 'lodash/isEmpty';
+import isArray from 'lodash/isArray';
 import Icon from 'choerodon-ui/lib/icon';
 import { getConfig } from 'choerodon-ui/lib/configure';
 
@@ -15,6 +18,7 @@ import CheckBox from '../../../check-box';
 import TextField from '../../../text-field';
 import Tooltip from '../../../tooltip';
 import Record from '../../../data-set/Record';
+import { RecordStatus } from '../../../data-set/enum';
 
 import Store from './QuickFilterDataSet';
 
@@ -26,8 +30,42 @@ const modalKey = Modal.key();
  * @param value
  */
 function isEmpty(value) {
-  return isArrayLike(value) ? !value.length : isSampleEmpty(value);
+  return isArray(value) ? !value.length : isSampleEmpty(value);
 }
+
+/**
+ * 根据数据查找需要处理的字段对象
+ * @param queryDataSet
+ * @param data
+ */
+function findFieldObj(queryDataSet, data) {
+  const keys = [...queryDataSet.fields.keys()];
+  let name = data[0];
+  let value = data[1];
+  if (!keys.includes(data[0]) &&
+    isObject(data[1]) &&
+    !isEnumEmpty(data[1]) &&
+    !isArray(data[1])) {
+    name = `${data[0]}.${Object.keys(data[1])[0]}`;
+    value = Object.values(data[1])[0];
+  }
+  if (queryDataSet.getField(name) && queryDataSet.getField(name).get('ignore') !== 'always') {
+    return { name, value };
+  }
+}
+
+
+/**
+ * 当前数据是否有值并需要选中
+ * @param data
+ */
+function isSelect(data) {
+  if (isObject(data[1])) {
+    return !isEnumEmpty(data[1]);
+  }
+  return data[0] !== '__dirty' && !isEmpty(data[1]);
+}
+
 /**
  * 编辑/新建筛选弹窗
  * @param prefixCls
@@ -40,23 +78,33 @@ function isEmpty(value) {
 const ModalContent: React.FC<any> = ({ prefixCls, modal, menuDataSet, queryDataSet, onLoadData, type }) => {
   modal.handleOk(async () => {
     const putData:any[] = [];
+    const statusKey = getConfig('statusKey');
+    const statusAdd = getConfig('status').add;
+    const status = {};
+    status[statusKey] = statusAdd;
     if (type !== 'edit') {
       const conditionData = Object.entries(queryDataSet.current.toData());
       map(conditionData, data => {
-        if (data[0] !== '__dirty' && !isEmpty(data[1])) {
-          putData.push({
-            comparator: 'EQUAL',
-            fieldName: data[0],
-            value: data[1],
-          });
+        if (isSelect(data)) {
+          const fieldObj = findFieldObj(queryDataSet, data);
+          if (fieldObj?.name) {
+            putData.push({
+              comparator: 'EQUAL',
+              fieldName: fieldObj.name,
+              value: fieldObj.value,
+              ...status,
+            });
+          }
         }
       });
     }
+    // 另存为
     if (type === 'save') {
       const otherRecord = menuDataSet.current.clone();
       otherRecord.set('conditionList', putData);
       menuDataSet.current.reset();
       menuDataSet.create({ ...otherRecord.toData(), searchId: undefined });
+    // 新建
     } else if (type === 'create') {
       menuDataSet.current.set('conditionList', putData);
     }
@@ -112,8 +160,11 @@ const QuickFilterMenu = observer(() => {
     prefixCls,
     queryDataSet,
     filterMenuDS,
+    conditionDataSet,
     onChange,
     expand,
+    conditionStatus,
+    onStatusChange,
   } = useContext(Store);
 
   const optionDs = filterMenuDS.getField('filterName').get('options');
@@ -133,6 +184,7 @@ const QuickFilterMenu = observer(() => {
         if (condition.comparator === 'EQUAL') {
           const { fieldName, value } = condition;
           queryDataSet.current.set(fieldName, value);
+          onStatusChange(RecordStatus.sync);
           if (isArrayLike(value) ? value.length : !isEmpty(value)) {
             onChange(fieldName);
           }
@@ -150,6 +202,7 @@ const QuickFilterMenu = observer(() => {
   const locateData = (searchId?: number) => {
     if (searchId) {
       menuDataSet.locate(menuDataSet.findIndex((menu) => menu.get('searchId') === searchId));
+      conditionDataSet.loadData(menuDataSet.current.get('conditionList'));
       if (filterMenuDS.current) filterMenuDS.current.set('filterName', searchId);
       conditionAssign();
     } else if (searchId === null) {
@@ -159,6 +212,7 @@ const QuickFilterMenu = observer(() => {
       const defaultMenu = menuDataSet.findIndex((menu) => menu.get('defaultFlag'));
       if (defaultMenu !== -1) {
         menuDataSet.locate(defaultMenu);
+        conditionDataSet.loadData(menuDataSet.current.get('conditionList'));
         if (filterMenuDS.current) filterMenuDS.current.set('filterName', menuDataSet.current.get('searchId'));
         conditionAssign();
       } else {
@@ -176,6 +230,7 @@ const QuickFilterMenu = observer(() => {
   const loadData = async (searchId?: number) => {
     const result = await menuDataSet.query();
     optionDs.loadData(result);
+    conditionDataSet.loadData(menuDataSet.current.get('conditionList'));
     if (result && result.length) {
       locateData(searchId);
     } else {
@@ -214,18 +269,15 @@ const QuickFilterMenu = observer(() => {
     } else {
       current.reset();
       const conditionData = Object.entries(current.toData());
-      const keys = [...queryDataSet.fields.keys()];
       map(conditionData, data => {
-        const isSelect = data[0] !== '__dirty' && !isEmpty(data[1]);
-        if (!keys.includes(data[0]) && isSelect ) {
-          onChange(keys.filter(k => k.includes(`${data[0]}.`)));
-        }
-        if (isSelect) {
-          onChange(data[0]);
+        const fieldObj = findFieldObj(queryDataSet, data);
+        if (fieldObj?.name && isSelect(data)) {
+          onChange(fieldObj.name);
         }
       });
       dataSet.query();
     }
+    onStatusChange(RecordStatus.sync);
   }
 
   function getTitle(type) {
@@ -242,12 +294,13 @@ const QuickFilterMenu = observer(() => {
   function openModal(type, searchId?: String) {
     if (searchId) {
       menuDataSet.locate(menuDataSet.findIndex((menu) => menu.get('searchId') === searchId));
+      conditionDataSet.loadData(menuDataSet.current.get('conditionList'));
     }
     Modal.open({
       key: modalKey,
       closable: true,
       title: getTitle(type),
-      children: <ModalContent prefixCls={prefixCls} type={type} menuDataSet={menuDataSet} onLoadData={loadData} queryDataSet={queryDataSet} />,
+      children: <ModalContent prefixCls={prefixCls} type={type} menuDataSet={menuDataSet} conditionDataSet={conditionDataSet} onLoadData={loadData} queryDataSet={queryDataSet} />,
       okFirst: false,
       destroyOnClose: true,
     });
@@ -259,17 +312,26 @@ const QuickFilterMenu = observer(() => {
       openModal('create')
     } else {
       const conditionData = Object.entries(queryDataSet.current.toData());
-      const putData: any[] = [];
+      conditionDataSet.reset();
       map(conditionData, data => {
-        if (data[0] !== '__dirty' && !isEmpty(data[1])) {
-          putData.push({
-            comparator: 'EQUAL',
-            fieldName: data[0],
-            value: data[1],
-          });
+        const fieldObj = findFieldObj(queryDataSet, data);
+        if (fieldObj?.name) {
+          const currentRecord = conditionDataSet.find(record => record.get('fieldName') === fieldObj.name);
+          if (currentRecord) {
+            if (isEmpty(fieldObj.value) || (isObject(fieldObj.value) && isEnumEmpty(fieldObj.value))) {
+              conditionDataSet.remove(currentRecord);
+            } else {
+              currentRecord.set('value', fieldObj.value);
+            }
+          } else if (isSelect(data)){
+            conditionDataSet.create({
+              fieldName: fieldObj.name,
+              value: fieldObj.value,
+            })
+          }
         }
       });
-      menuDataSet.current.set('conditionList', putData);
+      menuDataSet.current.set('conditionList', conditionDataSet.toJSONData());
       const res = await menuDataSet.submit();
       if (res && res.success) {
         loadData(res.content ? res.content[0].searchId : undefined);
@@ -323,7 +385,7 @@ const QuickFilterMenu = observer(() => {
           <Tooltip title={record?.get('defaultFlag') ? $l('Table', 'cancel_default') : $l('Table', 'set_default')}>
             {record?.get('defaultFlag') ? (
                 <Icon
-                  type="check_circle"
+                  type="star"
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
@@ -333,7 +395,7 @@ const QuickFilterMenu = observer(() => {
               ) :
               (
                 <Icon
-                  type="finished"
+                  type="grade-o"
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
@@ -381,7 +443,7 @@ const QuickFilterMenu = observer(() => {
         optionRenderer={optionRenderer}
         onChange={handleChange}
       />
-      {queryDataSet.current?.dirty && (
+      {conditionStatus === RecordStatus.update && (
         <div className={`${prefixCls}-filter-buttons`} style={expand ? {} : { display: 'none' }}>
           <Button color={ButtonColor.primary} onClick={handleSave}>
             {$l('Table', 'save_filter')}

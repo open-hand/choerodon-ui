@@ -85,7 +85,7 @@ class App extends React.Component {
         type: 'string',
         label: '代码',
         maxLength: 20,
-        required: true,
+        // required: true,
         dynamicProps: codeCodeDynamicProps,
       },
       {
@@ -99,7 +99,7 @@ class App extends React.Component {
         type: 'string',
         label: '代码描述(下拉)',
         lovCode: 'LOV_CODE',
-        required: true,
+        // required: true,
       },
       {
         name: 'codeMultiple',

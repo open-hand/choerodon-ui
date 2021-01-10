@@ -1,6 +1,7 @@
 import React, { cloneElement, Component, ReactElement, ReactNode } from 'react';
 import { observer } from 'mobx-react';
 import { action, observable, runInAction } from 'mobx';
+import isFunction from 'lodash/isFunction';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure';
 import Icon from 'choerodon-ui/lib/icon';
 import DataSet from '../../data-set';
@@ -122,6 +123,10 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
    */
   createFields(elements): ReactElement[] {
     return elements.map(element => {
+      const { onEnterDown } = element.props;
+      if (onEnterDown && isFunction(onEnterDown)) {
+        return element;
+      }
       const props: any = {
         onEnterDown: this.handleFieldEnter,
       };

@@ -19,6 +19,32 @@ function getTransportConfig(props) {
   return processAxiosConfig(tableFilterAdapter, { type, config, searchCode, queryDataSet });
 }
 
+const ConditionDataSet = () => ({
+  paging: false,
+  fields: [
+    {
+      name: 'fieldName',
+      type: 'string',
+    },
+    {
+      name: 'comparator',
+      type: 'string',
+      defaultValue: 'EQUAL',
+    },
+    {
+      name: 'value',
+    },
+    {
+      name: 'searchConditionId',
+      type: 'number',
+    },
+  ],
+  dataToJSON: 'all',
+  events: {
+    update: () => {},
+  },
+});
+
 const QuickFilterDataSet = ({ searchCode, queryDataSet, tableFilterAdapter }) => ({
   paging: false,
   autoQuery: false,
@@ -67,6 +93,10 @@ export const StoreProvider = props => {
     ],
   }), []);
 
+
+  // @ts-ignore
+  const conditionDataSet = useMemo(() =>  new DataSet(ConditionDataSet()), []);
+
   // @ts-ignore
   const menuDataSet = useMemo(() => new DataSet(QuickFilterDataSet({
     searchCode,
@@ -78,6 +108,7 @@ export const StoreProvider = props => {
     ...props,
     menuDataSet,
     filterMenuDS,
+    conditionDataSet,
   };
   return <Store.Provider value={value}>{children}</Store.Provider>;
 };

@@ -5,6 +5,10 @@ import uniq from 'lodash/uniq';
 import pull from 'lodash/pull';
 import noop from 'lodash/noop';
 import map from 'lodash/map';
+import isObject from 'lodash/isObject';
+import isEnumEmpty from 'lodash/isEmpty';
+import isFunction from 'lodash/isFunction';
+import isArray from 'lodash/isArray';
 import classNames from 'classnames';
 
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
@@ -12,6 +16,7 @@ import Icon from 'choerodon-ui/lib/icon';
 
 import Field from '../../data-set/Field';
 import DataSet from '../../data-set';
+import { RecordStatus } from '../../data-set/enum';
 import Button from '../../button';
 import Dropdown from '../../dropdown';
 import TextField from '../../text-field';
@@ -28,6 +33,17 @@ import FieldList from './FieldList';
 import TableButtons from './TableButtons';
 import ColumnFilter from './ColumnFilter';
 import QuickFilterMenu from './quick-filter';
+
+/**
+ * 当前数据是否有值并需要选中
+ * @param data
+ */
+function isSelect(data) {
+  if (isObject(data[1])) {
+    return !isEnumEmpty(data[1]);
+  }
+  return data[0] !== '__dirty' && !isEmpty(data[1]);
+}
 
 export interface TableDynamicFilterBarProps extends ElementProps {
   dataSet: DataSet;
@@ -70,6 +86,11 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * 搜索值
    */
   @observable searchText: string;
+
+  /**
+   * 条件状态
+   */
+  @observable conditionStatus: RecordStatus;
 
   refDropdown: HTMLDivElement | null = null;
 
@@ -133,12 +154,18 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     }
   }
 
+  @autobind
+  setConditionStatus(value) {
+    runInAction(() => this.conditionStatus = value);
+  }
+
   /**
    * 筛选条件更新 触发表格查询
    */
   @autobind
   handleDataSetUpdate() {
     const { dataSet } = this.props;
+    this.setConditionStatus(RecordStatus.update);
     dataSet.query();
   }
 
@@ -150,12 +177,15 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     const conditionData = Object.entries(record.toData());
     const keys = [...dataSet.fields.keys()];
     map(conditionData, data => {
-      const isSelect = data[0] !== '__dirty' && !this.isEmpty(data[1]);
-      if (!keys.includes(data[0]) && isSelect ) {
-        this.handleSelect(keys.filter(k => k.includes(`${data[0]}.`)));
+      let name = data[0];
+      if (!keys.includes(data[0]) &&
+        isObject(data[1]) &&
+        !isEnumEmpty(data[1]) &&
+        !isArray(data[1])) {
+        name = `${data[0]}.${Object.keys(data[1])[0]}`;
       }
-      if (isSelect) {
-        this.handleSelect(data[0]);
+      if (isSelect(data) && !dataSet.getField(name).get('bind')) {
+        this.handleSelect(name);
       }
     });
   }
@@ -177,6 +207,10 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * @param element
    */
   createFields(element): ReactElement {
+    const { onEnterDown } = element.props;
+    if (onEnterDown && isFunction(onEnterDown)) {
+      return element;
+    }
     const props: any = {
       onEnterDown: this.handleQuery,
     };
@@ -274,6 +308,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
             dataSet={dataSet}
             queryDataSet={queryDataSet}
             onChange={this.handleSelect}
+            conditionStatus={this.conditionStatus}
+            onStatusChange={this.setConditionStatus}
           />
           {this.getExpandNode()}
         </div>
@@ -402,6 +438,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                     this.searchText = '';
                   });
                   dataSet.setQueryParameter(searchText, undefined);
+                  this.setConditionStatus(RecordStatus.sync);
                   this.handleQuery();
                 }}
                 onInput={(e) => {
