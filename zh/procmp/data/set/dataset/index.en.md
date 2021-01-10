@@ -3,7 +3,7 @@ title: DataSet
 abstract: true
 ---
 
-数据源。
+DataSet.
 
 **Precautions**
 
@@ -13,7 +13,7 @@ abstract: true
 
 ### DataSet Props
 
-| 参数 | 说明 | 类型 | 默认值 |
+| Property | Description | Type | Default |
 | --- | --- | --- | --- |
 | name | 对应后台 ds 的 name，自动生成约定的 submitUrl, queryUrl, tlsUrl, validateUrl | Array&lt;string&gt; |  |
 | data | 初始化数据 | Array&lt;object&gt; |  |

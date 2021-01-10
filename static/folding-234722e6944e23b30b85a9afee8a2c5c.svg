@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="932px" height="184px" viewBox="0 0 932 184" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 59 (86127) - https://sketch.com -->
+    <title>16-Table-style7</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <polygon id="path-1" points="5 8.68048012 0.123236337 3.89238489 0.908910539 3.12099568 5.00284025 7.13491308 9.05160734 3.15975994 9.83728155 3.93114915"></polygon>
+        <polygon id="path-3" points="5 8.68048012 0.123236337 3.89238489 0.908910539 3.12099568 5.00284025 7.13491308 9.05160734 3.15975994 9.83728155 3.93114915"></polygon>
+        <polygon id="path-5" points="5 8.68048012 0.123236337 3.89238489 0.908910539 3.12099568 5.00284025 7.13491308 9.05160734 3.15975994 9.83728155 3.93114915"></polygon>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="列表样式" transform="translate(-130.000000, -2025.000000)">
+            <rect fill="#FFFFFF" x="0" y="0" width="2323" height="2300"></rect>
+            <g id="编组-8" transform="translate(78.000000, 1973.000000)">
+                <rect id="矩形" fill-opacity="0.01" fill="#FFFFFF" x="0" y="0" width="1000" height="290"></rect>
+                <rect id="Rectangle" fill="#F7F7F7" x="52" y="52" width="932" height="37" rx="2"></rect>
+                <text id="标题" font-family="PingFangSC-Medium, PingFang SC" font-size="12" font-weight="400" fill="#5A6677">
+                    <tspan x="92" y="75">标题</tspan>
+                </text>
+                <text id="类型名称" font-family="PingFangSC-Medium, PingFang SC" font-size="12" font-weight="400" fill="#333333">
+                    <tspan x="92" y="111">类型名称</tspan>
+                </text>
+                <g id="Group" transform="translate(68.000000, 99.000000)" stroke="#D5DAE0">
+                    <rect id="Rectangle" x="0.5" y="0.5" width="15" height="15" rx="2"></rect>
+                </g>
+                <g id="arrow-down备份-2" transform="translate(71.000000, 102.000000)">
+                    <rect id="Rectangle" fill="#D8D8D8" opacity="0.01" x="0" y="0" width="10" height="10"></rect>
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <use id="Path-2" fill="#333333" fill-rule="nonzero" xlink:href="#path-1"></use>
+                </g>
+                <text id="2020005201655" font-family="PingFangSC-Medium, PingFang SC" font-size="12" font-weight="400" fill="#333333">
+                    <tspan x="219" y="111">2020005201655</tspan>
+                </text>
+                <text id="便利贴（大中小一套）" font-family="PingFangSC-Medium, PingFang SC" font-size="12" font-weight="400" fill="#333333">
+                    <tspan x="360" y="111">便利贴（大中小一套）</tspan>
+                </text>
+                <text id="说明文案说明文案说明文案说明文…" font-family="PingFangSC-Medium, PingFang SC" font-size="12" font-weight="400" fill="#333333">
+                    <tspan x="512" y="111">说明文案说明文案说明文案说明文…</tspan>
+                </text>
+                <text id="XX" font-family="PingFangSC-Medium, PingFang SC" font-size="12" font-weight="400" fill="#333333">
+                    <tspan x="799" y="111">XX</tspan>
+                </text>
+                <text id="物料编码" font-family="PingFangSC-Medium, PingFang SC" font-size="12" font-weight="400" fill="#5A6677">
+                    <tspan x="219" y="75">物料编码</tspan>
+                </text>
+                <path d="M330.714286,70 L330.714286,73.7423703 L328.060692,75.4896965 C327.830059,75.6415623 327.519983,75.5777093 327.368117,75.3470767 C327.314363,75.2654422 327.285714,75.1698425 327.285714,75.0720993 L327.285714,70 L330.714286,70 Z M323.68341,64.8200922 C323.506628,64.6079538 323.53529,64.2926714 323.747429,64.1158894 C323.837286,64.0410081 323.950553,64 324.067521,64 L333.932479,64 C334.208622,64 334.432479,64.2238576 334.432479,64.5 C334.432479,64.6169683 334.391471,64.7302347 334.31659,64.8200922 L330.714286,69.1428571 L327.285714,69.1428571 L323.68341,64.8200922 Z" id="Rectangle-2" fill="#5A6677" opacity="0.5"></path>
+                <path d="M481.714286,70 L481.714286,73.7423703 L479.060692,75.4896965 C478.830059,75.6415623 478.519983,75.5777093 478.368117,75.3470767 C478.314363,75.2654422 478.285714,75.1698425 478.285714,75.0720993 L478.285714,70 L481.714286,70 Z M474.68341,64.8200922 C474.506628,64.6079538 474.53529,64.2926714 474.747429,64.1158894 C474.837286,64.0410081 474.950553,64 475.067521,64 L484.932479,64 C485.208622,64 485.432479,64.2238576 485.432479,64.5 C485.432479,64.6169683 485.391471,64.7302347 485.31659,64.8200922 L481.714286,69.1428571 L478.285714,69.1428571 L474.68341,64.8200922 Z" id="Rectangle-2备份" fill="#5A6677" opacity="0.5"></path>
+                <text id="物料名称" font-family="PingFangSC-Medium, PingFang SC" font-size="12" font-weight="400" fill="#5A6677">
+                    <tspan x="360" y="75">物料名称</tspan>
+                </text>
+                <text id="单位" font-family="PingFangSC-Medium, PingFang SC" font-size="12" font-weight="400" fill="#5A6677">
+                    <tspan x="799" y="75">单位</tspan>
+                </text>
+                <text id="编辑" font-family="PingFangSC-Medium, PingFang SC" font-size="12" font-weight="400" fill="#3889FF">
+                    <tspan x="896" y="111">编辑</tspan>
+                </text>
+                <text id="删除" font-family="PingFangSC-Medium, PingFang SC" font-size="12" font-weight="400" fill="#FF5656">
+                    <tspan x="944" y="111">删除</tspan>
+                </text>
+                <text id="编辑" font-family="PingFangSC-Medium, PingFang SC" font-size="12" font-weight="400" fill="#3889FF">
+                    <tspan x="896" y="148">编辑</tspan>
+                </text>
+                <text id="删除" font-family="PingFangSC-Medium, PingFang SC" font-size="12" font-weight="400" fill="#FF5656">
+                    <tspan x="944" y="148">删除</tspan>
+                </text>
+                <text id="编辑备份-2" font-family="PingFangSC-Medium, PingFang SC" font-size="12" font-weight="400" fill="#3889FF">
+                    <tspan x="896" y="185">编辑</tspan>
+                </text>
+                <text id="删除备份-2" font-family="PingFangSC-Medium, PingFang SC" font-size="12" font-weight="400" fill="#FF5656">
+                    <tspan x="944" y="185">删除</tspan>
+                </text>
+                <text id="编辑备份-3" font-family="PingFangSC-Medium, PingFang SC" font-size="12" font-weight="400" fill="#3889FF">
+                    <tspan x="896" y="222">编辑</tspan>
+                </text>
+                <text id="删除备份-3" font-family="PingFangSC-Medium, PingFang SC" font-size="12" font-weight="400" fill="#FF5656">
+                    <tspan x="944" y="222">删除</tspan>
+                </text>
+                <text id="操作" font-family="PingFangSC-Medium, PingFang SC" font-size="12" font-weight="400" fill="#5A6677">
+                    <tspan x="896" y="75">操作</tspan>
+                </text>
+                <text id="物料描述" font-family="PingFangSC-Medium, PingFang SC" font-size="12" font-weight="400" fill="#5A6677">
+                    <tspan x="511" y="75">物料描述</tspan>
+                </text>
+                <rect id="Rectangle" stroke="#D5DAE0" x="52.5" y="52.5" width="931" height="183" rx="2"></rect>
+                <rect id="Rectangle" fill="#D5DAE0" x="52" y="88" width="932" height="1"></rect>
+                <rect id="Rectangle备份-6" fill="#D5DAE0" x="52" y="125" width="932" height="1"></rect>
+                <rect id="Rectangle备份-7" fill="#D5DAE0" x="52" y="162" width="932" height="1"></rect>
+                <rect id="Rectangle" fill="#D5DAE0" x="343" y="52" width="1" height="184"></rect>
+                <rect id="Rectangle备份-3" fill="#D5DAE0" x="202" y="52" width="1" height="184"></rect>
+                <rect id="Rectangle备份-2" fill="#D5DAE0" x="494" y="52" width="1" height="184"></rect>
+                <rect id="Rectangle" fill="#D5DAE0" x="782" y="52" width="1" height="184"></rect>
+                <rect id="Rectangle备份-4" fill="#D5DAE0" x="879" y="52" width="1" height="184"></rect>
+                <text id="采购管理" font-family="PingFangSC-Medium, PingFang SC" font-size="12" font-weight="400" fill="#333333">
+                    <tspan x="104" y="148">采购管理</tspan>
+                </text>
+                <text id="2020005201655备份" font-family="PingFangSC-Medium, PingFang SC" font-size="12" font-weight="400" fill="#333333">
+                    <tspan x="219" y="148">2020005201655</tspan>
+                </text>
+                <text id="便利贴（大中小一套）备份-3" font-family="PingFangSC-Medium, PingFang SC" font-size="12" font-weight="400" fill="#333333">
+                    <tspan x="360" y="148">便利贴（大中小一套）</tspan>
+                </text>
+                <text id="说明文案说明文案说明文案说明文…" font-family="PingFangSC-Medium, PingFang SC" font-size="12" font-weight="400" fill="#333333">
+                    <tspan x="512" y="148">说明文案说明文案说明文案说明文…</tspan>
+                </text>
+                <text id="XX备份-5" font-family="PingFangSC-Medium, PingFang SC" font-size="12" font-weight="400" fill="#333333">
+                    <tspan x="799" y="148">XX</tspan>
+                </text>
+                <rect id="Rectangle备份-8" fill="#D5DAE0" x="52" y="199" width="932" height="1"></rect>
+                <text id="类型名称" font-family="PingFangSC-Medium, PingFang SC" font-size="12" font-weight="400" fill="#333333">
+                    <tspan x="92" y="185">类型名称</tspan>
+                </text>
+                <g id="Group" transform="translate(68.000000, 173.000000)">
+                    <rect id="Rectangle" stroke="#D5DAE0" x="0.5" y="0.5" width="15" height="15" rx="2"></rect>
+                    <g id="arrow-down" transform="translate(8.000000, 8.000000) rotate(-90.000000) translate(-8.000000, -8.000000) translate(3.000000, 3.000000)">
+                        <rect id="Rectangle" fill="#D8D8D8" opacity="0.01" x="0" y="0" width="10" height="10"></rect>
+                        <mask id="mask-4" fill="white">
+                            <use xlink:href="#path-3"></use>
+                        </mask>
+                        <use id="Path-2" fill="#333333" fill-rule="nonzero" xlink:href="#path-3"></use>
+                    </g>
+                </g>
+                <text id="类型名称备份" font-family="PingFangSC-Medium, PingFang SC" font-size="12" font-weight="400" fill="#333333">
+                    <tspan x="92" y="222">类型名称</tspan>
+                </text>
+                <g id="Group备份" transform="translate(68.000000, 210.000000)">
+                    <rect id="Rectangle" stroke="#D5DAE0" x="0.5" y="0.5" width="15" height="15" rx="2"></rect>
+                    <g id="arrow-down备份" transform="translate(8.000000, 8.000000) rotate(-90.000000) translate(-8.000000, -8.000000) translate(3.000000, 3.000000)">
+                        <rect id="Rectangle" fill="#D8D8D8" opacity="0.01" x="0" y="0" width="10" height="10"></rect>
+                        <mask id="mask-6" fill="white">
+                            <use xlink:href="#path-5"></use>
+                        </mask>
+                        <use id="Path-2" fill="#333333" fill-rule="nonzero" xlink:href="#path-5"></use>
+                    </g>
+                </g>
+                <text id="2020005201655备份-2" font-family="PingFangSC-Medium, PingFang SC" font-size="12" font-weight="400" fill="#333333">
+                    <tspan x="219" y="185">2020005201655</tspan>
+                </text>
+                <text id="便利贴（大中小一套）备份-4" font-family="PingFangSC-Medium, PingFang SC" font-size="12" font-weight="400" fill="#333333">
+                    <tspan x="360" y="185">便利贴（大中小一套）</tspan>
+                </text>
+                <text id="说明文案说明文案说明文案说明文…备份" font-family="PingFangSC-Medium, PingFang SC" font-size="12" font-weight="400" fill="#333333">
+                    <tspan x="512" y="185">说明文案说明文案说明文案说明文…</tspan>
+                </text>
+                <text id="XX备份-8" font-family="PingFangSC-Medium, PingFang SC" font-size="12" font-weight="400" fill="#333333">
+                    <tspan x="799" y="185">XX</tspan>
+                </text>
+                <text id="2020005201655备份-3" font-family="PingFangSC-Medium, PingFang SC" font-size="12" font-weight="400" fill="#333333">
+                    <tspan x="219" y="222">2020005201655</tspan>
+                </text>
+                <text id="便利贴（大中小一套）备份-5" font-family="PingFangSC-Medium, PingFang SC" font-size="12" font-weight="400" fill="#333333">
+                    <tspan x="360" y="222">便利贴（大中小一套）</tspan>
+                </text>
+                <text id="说明文案说明文案说明文案说明文…备份-2" font-family="PingFangSC-Medium, PingFang SC" font-size="12" font-weight="400" fill="#333333">
+                    <tspan x="512" y="222">说明文案说明文案说明文案说明文…</tspan>
+                </text>
+                <text id="XX备份-11" font-family="PingFangSC-Medium, PingFang SC" font-size="12" font-weight="400" fill="#333333">
+                    <tspan x="799" y="222">XX</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>

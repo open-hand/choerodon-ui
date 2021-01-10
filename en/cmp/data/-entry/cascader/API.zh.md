@@ -14,10 +14,10 @@ title: API
 | className | 自定义类名 | string | - |
 | defaultValue | 默认的选中项 | string\[] | \[] |
 | disabled | 禁用 | boolean | false |
-| displayRender | 选择后展示的渲染函数 | `(label, selectedOptions) => ReactNode` | `label => label.join(' / ')` |
+| displayRender | 选择后展示的渲染函数 | (label, selectedOptions) => ReactNode | label => string |
 | expandTrigger | 次级菜单的展开方式，可选 'click' 和 'hover' | string | 'click' |
 | getPopupContainer | 菜单渲染父节点。默认渲染到 body 上，如果你遇到菜单滚动定位问题，试试修改为滚动的区域，并相对其定位。[示例](https://codepen.io/afc163/pen/zEjNOy?editors=0010) | Function(triggerNode) | () => document.body |
-| loadData | 用于动态加载选项，无法与 `showSearch` 一起使用 | `(selectedOptions) => void` | - |
+| loadData | 用于动态加载选项，无法与 `showSearch` 一起使用 | (selectedOptions) => void | - |
 | notFoundContent | 当下拉列表为空时显示的内容 | string | 'Not Found' |
 | options | 可选项数据源 | object | - |
 | placeholder | 输入框占位文本 | string | '请选择' |
@@ -36,19 +36,19 @@ title: API
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| filter | 接收 `inputValue` `path` 两个参数，当 `path` 符合筛选条件时，应返回 true，反之则返回 false。 | `function(inputValue, path): boolean` |  |
+| filter | 接收 `inputValue` `path` 两个参数，当 `path` 符合筛选条件时，应返回 true，反之则返回 false。 | (inputValue, path) => boolean |  |
 | matchInputWidth | 搜索结果列表是否与输入框同宽 | boolean |  |
-| render | 用于渲染 filter 后的选项 | `function(inputValue, path): ReactNode` |  |
-| sort | 用于排序 filter 后的选项 | `function(a, b, inputValue)` |  |
+| render | 用于渲染 filter 后的选项 | (inputValue, path) => ReactNode |  |
+| sort | 用于排序 filter 后的选项 | (a, b, inputValue) =>  |  |
 
 `menuMode` 为 `single`，其中可以添加的配置：
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| singleMenuStyle | 由于渲染在body下可以方便按照业务配置弹出框的大小 | `CSSProperties` |  |
-| singleMenuItemStyle | 由于渲染在body下可以方便按照业务配置超出大小样式和最小宽度等 | `CSSProperties` |  |
-| singlePleaseRender | 设置需要的提示配置 | `({key,className,text}:{key: string,className: string,text: string}) => ReactElement<any>` |  |
-| singleMenuItemRender | 头部可以渲染出想要的tab样子 | ` (title:string) => ReactElement<any>` |  |
+| singleMenuStyle | 由于渲染在body下可以方便按照业务配置弹出框的大小 | CSSProperties |  |
+| singleMenuItemStyle | 由于渲染在body下可以方便按照业务配置超出大小样式和最小宽度等 | CSSProperties |  |
+| singlePleaseRender | 设置需要的提示配置 | ({key,className,text}) => ReactElement |  |
+| singleMenuItemRender | 头部可以渲染出想要的tab样子 | (title) => ReactElement |  |
 
 
 ## 方法

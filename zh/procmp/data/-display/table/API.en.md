@@ -237,4 +237,15 @@ const tableDs = new DataSet({
 });
 ```
 
+### table 新增快捷键
+
+ 1. Alt+N，焦点在Table单元格内（非querybar区）时，新增行（代码可配置是首行还是末行新建）
+ 2. Ctrl+s，焦点在table单元格，则保存当前table
+ 3. Ctrl+D（或Control+D）：
+    1. 焦点在table单元格，则复制上一行的单元格内容。
+    2. 焦点在table某行， 则复制上一行的所有单元格内容。
+ 4. Delete，当前焦点元素内时，删除1个字符
+ 5. Alt+delete，焦点在table单元格内，删除当前行，弹出二次提示框
+ 6. Shift+方向键，焦点在table某行，当前table可多选的情况，可选择多行
+
 局部的使用 demo 方法参见[table](/zh/procmp/data-display/table#components-pro-table-demo-basic);

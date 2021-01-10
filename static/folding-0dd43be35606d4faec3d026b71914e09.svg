@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="932px" height="218px" viewBox="0 0 932 218" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>style4/folding</title>
+    <desc>Created with Sketch.</desc>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="表格" transform="translate(-3044.000000, -1463.000000)">
+            <g id="style4/folding" transform="translate(3044.000000, 1463.000000)">
+                <rect id="Rectangle" fill-opacity="0.01" fill="#FFFFFF" x="0" y="0" width="932" height="32" rx="2"></rect>
+                <text id="Title" font-family="Arial-BoldMT, Arial" font-size="12" font-weight="bold" fill="#4F7DE7">
+                    <tspan x="24" y="20">Title</tspan>
+                </text>
+                <text id="采购管理" font-family="ArialMT, Arial" font-size="12" font-weight="normal" fill="#5A6677">
+                    <tspan x="24" y="55">Purchase</tspan>
+                </text>
+                <text id="销售管理" font-family="ArialMT, Arial" font-size="12" font-weight="normal" fill="#5A6677">
+                    <tspan x="24" y="129">Sale</tspan>
+                </text>
+                <text id="售后管理" font-family="ArialMT, Arial" font-size="12" font-weight="normal" fill="#5A6677">
+                    <tspan x="24" y="166">after-sales</tspan>
+                </text>
+                <text id="退货管理" font-family="ArialMT, Arial" font-size="12" font-weight="normal" fill="#5A6677">
+                    <tspan x="24" y="203">refund</tspan>
+                </text>
+                <g id="编组-7" transform="translate(8.000000, 45.000000)">
+                    <rect id="矩形" stroke="#AAADBA" fill="#FFFFFF" x="0.5" y="0.5" width="11" height="11" rx="1"></rect>
+                    <rect id="矩形" fill="#AAADBA" x="3" y="5.5" width="6" height="1" rx="0.5"></rect>
+                </g>
+                <g id="编组-7" transform="translate(8.000000, 119.000000)">
+                    <rect id="矩形" stroke="#AAADBA" fill="#FFFFFF" x="0.5" y="0.5" width="11" height="11" rx="1"></rect>
+                    <path d="M6,3 C6.27614237,3 6.5,3.22385763 6.5,3.5 L6.5,5.5 L8.5,5.5 C8.77614237,5.5 9,5.72385763 9,6 C9,6.27614237 8.77614237,6.5 8.5,6.5 L6.499,6.5 L6.5,8.5 C6.5,8.77614237 6.27614237,9 6,9 C5.72385763,9 5.5,8.77614237 5.5,8.5 L5.499,6.5 L3.5,6.5 C3.22385763,6.5 3,6.27614237 3,6 C3,5.72385763 3.22385763,5.5 3.5,5.5 L5.5,5.5 L5.5,3.5 C5.5,3.22385763 5.72385763,3 6,3 Z" id="矩形-3" fill="#AAADBA"></path>
+                </g>
+                <g id="编组-7" transform="translate(8.000000, 157.000000)">
+                    <rect id="矩形" stroke="#AAADBA" fill="#FFFFFF" x="0.5" y="0.5" width="11" height="11" rx="1"></rect>
+                    <path d="M6,3 C6.27614237,3 6.5,3.22385763 6.5,3.5 L6.5,5.5 L8.5,5.5 C8.77614237,5.5 9,5.72385763 9,6 C9,6.27614237 8.77614237,6.5 8.5,6.5 L6.499,6.5 L6.5,8.5 C6.5,8.77614237 6.27614237,9 6,9 C5.72385763,9 5.5,8.77614237 5.5,8.5 L5.499,6.5 L3.5,6.5 C3.22385763,6.5 3,6.27614237 3,6 C3,5.72385763 3.22385763,5.5 3.5,5.5 L5.5,5.5 L5.5,3.5 C5.5,3.22385763 5.72385763,3 6,3 Z" id="矩形-3" fill="#AAADBA"></path>
+                </g>
+                <g id="编组-7" transform="translate(8.000000, 193.000000)">
+                    <rect id="矩形" stroke="#AAADBA" fill="#FFFFFF" x="0.5" y="0.5" width="11" height="11" rx="1"></rect>
+                    <path d="M6,3 C6.27614237,3 6.5,3.22385763 6.5,3.5 L6.5,5.5 L8.5,5.5 C8.77614237,5.5 9,5.72385763 9,6 C9,6.27614237 8.77614237,6.5 8.5,6.5 L6.499,6.5 L6.5,8.5 C6.5,8.77614237 6.27614237,9 6,9 C5.72385763,9 5.5,8.77614237 5.5,8.5 L5.499,6.5 L3.5,6.5 C3.22385763,6.5 3,6.27614237 3,6 C3,5.72385763 3.22385763,5.5 3.5,5.5 L5.5,5.5 L5.5,3.5 C5.5,3.22385763 5.72385763,3 6,3 Z" id="矩形-3" fill="#AAADBA"></path>
+                </g>
+                <text id="说明文案说明文案说明文案…" font-family="ArialMT, Arial" font-size="12" font-weight="normal" fill="#5A6677">
+                    <tspan x="204" y="55">Describe text.Describe text…</tspan>
+                </text>
+                <text id="说明文案说明文案说明文案…" font-family="ArialMT, Arial" font-size="12" font-weight="normal" fill="#5A6677">
+                    <tspan x="204" y="129">Describe text.Describe text…</tspan>
+                </text>
+                <text id="说明文案说明文案说明文案…" font-family="ArialMT, Arial" font-size="12" font-weight="normal" fill="#5A6677">
+                    <tspan x="204" y="166">Describe text.Describe text…</tspan>
+                </text>
+                <text id="说明文案说明文案说明文案…" font-family="ArialMT, Arial" font-size="12" font-weight="normal" fill="#5A6677">
+                    <tspan x="204" y="203">Describe text.Describe text…</tspan>
+                </text>
+                <text id="Description" font-family="Arial-BoldMT, Arial" font-size="12" font-weight="bold" fill="#4F7DE7">
+                    <tspan x="204" y="20">Description</tspan>
+                </text>
+                <text id="管理员" font-family="ArialMT, Arial" font-size="12" font-weight="normal" fill="#5A6677">
+                    <tspan x="505" y="55">Administrators</tspan>
+                </text>
+                <text id="管理员" font-family="ArialMT, Arial" font-size="12" font-weight="normal" fill="#5A6677">
+                    <tspan x="505" y="129">Administrators</tspan>
+                </text>
+                <text id="管理员" font-family="ArialMT, Arial" font-size="12" font-weight="normal" fill="#5A6677">
+                    <tspan x="505" y="166">Administrators</tspan>
+                </text>
+                <text id="管理员" font-family="ArialMT, Arial" font-size="12" font-weight="normal" fill="#5A6677">
+                    <tspan x="505" y="203">Administrators</tspan>
+                </text>
+                <text id="发布人" font-family="Arial-BoldMT, Arial" font-size="12" font-weight="bold" fill="#4F7DE7">
+                    <tspan x="505" y="20">Issuer</tspan>
+                </text>
+                <text id="备注文案" font-family="ArialMT, Arial" font-size="12" font-weight="normal" fill="#5A6677">
+                    <tspan x="695" y="55">Remark text</tspan>
+                </text>
+                <text id="备注文案" font-family="ArialMT, Arial" font-size="12" font-weight="normal" fill="#5A6677">
+                    <tspan x="695" y="129">Remark text</tspan>
+                </text>
+                <text id="备注文案" font-family="ArialMT, Arial" font-size="12" font-weight="normal" fill="#5A6677">
+                    <tspan x="695" y="166">Remark text</tspan>
+                </text>
+                <text id="备注文案" font-family="ArialMT, Arial" font-size="12" font-weight="normal" fill="#5A6677">
+                    <tspan x="695" y="203">Remark text</tspan>
+                </text>
+                <text id="备注" font-family="Arial-BoldMT, Arial" font-size="12" font-weight="bold" fill="#4F7DE7">
+                    <tspan x="695" y="20">Remark</tspan>
+                </text>
+                <g id="编组-10" transform="translate(892.000000, 117.000000)">
+                    <rect id="矩形" fill="#D8D8D8" opacity="0.01" x="0" y="0" width="16" height="16"></rect>
+                    <path d="M8.5,12 C9.05228475,12 9.5,12.4477153 9.5,13 L9.5,14 C9.5,14.5522847 9.05228475,15 8.5,15 L7.5,15 C6.94771525,15 6.5,14.5522847 6.5,14 L6.5,13 C6.5,12.4477153 6.94771525,12 7.5,12 L8.5,12 Z M8.5,6.5 C9.05228475,6.5 9.5,6.94771525 9.5,7.5 L9.5,8.5 C9.5,9.05228475 9.05228475,9.5 8.5,9.5 L7.5,9.5 C6.94771525,9.5 6.5,9.05228475 6.5,8.5 L6.5,7.5 C6.5,6.94771525 6.94771525,6.5 7.5,6.5 L8.5,6.5 Z M8.5,1 C9.05228475,1 9.5,1.44771525 9.5,2 L9.5,3 C9.5,3.55228475 9.05228475,4 8.5,4 L7.5,4 C6.94771525,4 6.5,3.55228475 6.5,3 L6.5,2 C6.5,1.44771525 6.94771525,1 7.5,1 L8.5,1 Z" id="矩形-5" fill="#5A6677"></path>
+                </g>
+                <g id="编组-10" transform="translate(892.000000, 43.000000)">
+                    <rect id="矩形" fill="#D8D8D8" opacity="0.01" x="0" y="0" width="16" height="16"></rect>
+                    <path d="M8.5,12 C9.05228475,12 9.5,12.4477153 9.5,13 L9.5,14 C9.5,14.5522847 9.05228475,15 8.5,15 L7.5,15 C6.94771525,15 6.5,14.5522847 6.5,14 L6.5,13 C6.5,12.4477153 6.94771525,12 7.5,12 L8.5,12 Z M8.5,6.5 C9.05228475,6.5 9.5,6.94771525 9.5,7.5 L9.5,8.5 C9.5,9.05228475 9.05228475,9.5 8.5,9.5 L7.5,9.5 C6.94771525,9.5 6.5,9.05228475 6.5,8.5 L6.5,7.5 C6.5,6.94771525 6.94771525,6.5 7.5,6.5 L8.5,6.5 Z M8.5,1 C9.05228475,1 9.5,1.44771525 9.5,2 L9.5,3 C9.5,3.55228475 9.05228475,4 8.5,4 L7.5,4 C6.94771525,4 6.5,3.55228475 6.5,3 L6.5,2 C6.5,1.44771525 6.94771525,1 7.5,1 L8.5,1 Z" id="矩形-5" fill="#5A6677"></path>
+                </g>
+                <g id="编组-10" transform="translate(892.000000, 154.000000)">
+                    <rect id="矩形" fill="#D8D8D8" opacity="0.01" x="0" y="0" width="16" height="16"></rect>
+                    <path d="M8.5,12 C9.05228475,12 9.5,12.4477153 9.5,13 L9.5,14 C9.5,14.5522847 9.05228475,15 8.5,15 L7.5,15 C6.94771525,15 6.5,14.5522847 6.5,14 L6.5,13 C6.5,12.4477153 6.94771525,12 7.5,12 L8.5,12 Z M8.5,6.5 C9.05228475,6.5 9.5,6.94771525 9.5,7.5 L9.5,8.5 C9.5,9.05228475 9.05228475,9.5 8.5,9.5 L7.5,9.5 C6.94771525,9.5 6.5,9.05228475 6.5,8.5 L6.5,7.5 C6.5,6.94771525 6.94771525,6.5 7.5,6.5 L8.5,6.5 Z M8.5,1 C9.05228475,1 9.5,1.44771525 9.5,2 L9.5,3 C9.5,3.55228475 9.05228475,4 8.5,4 L7.5,4 C6.94771525,4 6.5,3.55228475 6.5,3 L6.5,2 C6.5,1.44771525 6.94771525,1 7.5,1 L8.5,1 Z" id="矩形-5" fill="#5A6677"></path>
+                </g>
+                <g id="编组-10" transform="translate(892.000000, 191.000000)">
+                    <rect id="矩形" fill="#D8D8D8" opacity="0.01" x="0" y="0" width="16" height="16"></rect>
+                    <path d="M8.5,12 C9.05228475,12 9.5,12.4477153 9.5,13 L9.5,14 C9.5,14.5522847 9.05228475,15 8.5,15 L7.5,15 C6.94771525,15 6.5,14.5522847 6.5,14 L6.5,13 C6.5,12.4477153 6.94771525,12 7.5,12 L8.5,12 Z M8.5,6.5 C9.05228475,6.5 9.5,6.94771525 9.5,7.5 L9.5,8.5 C9.5,9.05228475 9.05228475,9.5 8.5,9.5 L7.5,9.5 C6.94771525,9.5 6.5,9.05228475 6.5,8.5 L6.5,7.5 C6.5,6.94771525 6.94771525,6.5 7.5,6.5 L8.5,6.5 Z M8.5,1 C9.05228475,1 9.5,1.44771525 9.5,2 L9.5,3 C9.5,3.55228475 9.05228475,4 8.5,4 L7.5,4 C6.94771525,4 6.5,3.55228475 6.5,3 L6.5,2 C6.5,1.44771525 6.94771525,1 7.5,1 L8.5,1 Z" id="矩形-5" fill="#5A6677"></path>
+                </g>
+                <rect id="Rectangle" fill="#F1F1F1" x="0" y="106" width="932" height="1"></rect>
+                <rect id="Rectangle" fill="#F1F1F1" x="0" y="69" width="932" height="1"></rect>
+                <rect id="矩形" fill="#F8F8F8" x="0" y="70" width="932" height="36"></rect>
+                <text id="Describe-text.Descri" font-family="ArialMT, Arial" font-size="12" font-weight="normal" fill="#5A6677">
+                    <tspan x="24" y="92">Describe text.Describe text.Describe text.Describe text…</tspan>
+                </text>
+                <rect id="Rectangle" fill="#F1F1F1" x="0" y="143" width="932" height="1"></rect>
+                <rect id="Rectangle" fill="#F1F1F1" x="0" y="180" width="932" height="1"></rect>
+                <rect id="Rectangle" fill="#F1F1F1" x="0" y="217" width="932" height="1"></rect>
+                <rect id="Rectangle" fill="#4F7DE7" x="0" y="32" width="932" height="1"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

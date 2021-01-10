@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="934px" height="222px" viewBox="0 0 934 222" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>style3/form+paging</title>
+    <desc>Created with Sketch.</desc>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="表格" transform="translate(-2046.000000, -73.000000)">
+            <g id="style3/form+paging" transform="translate(2046.000000, 73.000000)">
+                <g id="编组-4备份-9">
+                    <rect id="Rectangle" fill="#FAFAFA" x="1" y="1" width="932" height="32" rx="2"></rect>
+                    <g id="编组-3" transform="translate(25.000000, 10.000000)" font-size="12">
+                        <text id="Title" font-family="Arial-BoldMT, Arial" font-weight="bold" fill="#AAADBA">
+                            <tspan x="0" y="11">Title</tspan>
+                        </text>
+                        <text id="采购管理" font-family="ArialMT, Arial" font-weight="normal" fill="#5A6677">
+                            <tspan x="0" y="46">Purchase</tspan>
+                        </text>
+                        <text id="销售管理" font-family="ArialMT, Arial" font-weight="normal" fill="#5A6677">
+                            <tspan x="0" y="83">Sale</tspan>
+                        </text>
+                        <text id="售后管理" font-family="ArialMT, Arial" font-weight="normal" fill="#5A6677">
+                            <tspan x="0" y="120">after-sales</tspan>
+                        </text>
+                        <text id="退货管理" font-family="ArialMT, Arial" font-weight="normal" fill="#5A6677">
+                            <tspan x="0" y="157">refund</tspan>
+                        </text>
+                    </g>
+                    <g id="编组-5" transform="translate(205.000000, 10.000000)" font-size="12">
+                        <text id="Describe-text.Descri" font-family="ArialMT, Arial" font-weight="normal" fill="#5A6677">
+                            <tspan x="0" y="46">Describe text.Describe text…</tspan>
+                        </text>
+                        <text id="Describe-text.Descri" font-family="ArialMT, Arial" font-weight="normal" fill="#5A6677">
+                            <tspan x="0" y="83">Describe text.Describe text…</tspan>
+                        </text>
+                        <text id="Describe-text.Descri" font-family="ArialMT, Arial" font-weight="normal" fill="#5A6677">
+                            <tspan x="0" y="120">Describe text.Describe text…</tspan>
+                        </text>
+                        <text id="Describe-text.Descri" font-family="ArialMT, Arial" font-weight="normal" fill="#5A6677">
+                            <tspan x="0" y="157">Describe text.Describe text…</tspan>
+                        </text>
+                        <text id="Description" font-family="Arial-BoldMT, Arial" font-weight="bold" fill="#AAADBA">
+                            <tspan x="0" y="11">Description</tspan>
+                        </text>
+                    </g>
+                    <g id="编组-6" transform="translate(536.000000, 10.000000)" font-size="12">
+                        <text id="管理员" font-family="ArialMT, Arial" font-weight="normal" fill="#5A6677">
+                            <tspan x="0" y="46">Administrators</tspan>
+                        </text>
+                        <text id="管理员" font-family="ArialMT, Arial" font-weight="normal" fill="#5A6677">
+                            <tspan x="0" y="83">Administrators</tspan>
+                        </text>
+                        <text id="管理员" font-family="ArialMT, Arial" font-weight="normal" fill="#5A6677">
+                            <tspan x="0" y="120">Administrators</tspan>
+                        </text>
+                        <text id="管理员" font-family="ArialMT, Arial" font-weight="normal" fill="#5A6677">
+                            <tspan x="0" y="157">Administrators</tspan>
+                        </text>
+                        <text id="发布人" font-family="Arial-BoldMT, Arial" font-weight="bold" fill="#AAADBA">
+                            <tspan x="0" y="11">Issuer</tspan>
+                        </text>
+                    </g>
+                    <g id="编组-6" transform="translate(726.000000, 10.000000)" font-size="12">
+                        <text id="备注文案" font-family="ArialMT, Arial" font-weight="normal" fill="#5A6677">
+                            <tspan x="0" y="46">Remark text</tspan>
+                        </text>
+                        <text id="备注文案" font-family="ArialMT, Arial" font-weight="normal" fill="#5A6677">
+                            <tspan x="0" y="83">Remark text</tspan>
+                        </text>
+                        <text id="备注文案" font-family="ArialMT, Arial" font-weight="normal" fill="#5A6677">
+                            <tspan x="0" y="120">Remark text</tspan>
+                        </text>
+                        <text id="备注文案" font-family="ArialMT, Arial" font-weight="normal" fill="#5A6677">
+                            <tspan x="0" y="157">Remark text</tspan>
+                        </text>
+                        <text id="备注" font-family="Arial-BoldMT, Arial" font-weight="bold" fill="#AAADBA">
+                            <tspan x="0" y="11">Remark</tspan>
+                        </text>
+                    </g>
+                    <rect id="矩形" stroke="#F1F1F1" x="0.5" y="0.5" width="933" height="181"></rect>
+                    <rect id="矩形" fill="#F1F1F1" x="188" y="1" width="1" height="181"></rect>
+                    <rect id="矩形" fill="#F1F1F1" x="519" y="1" width="1" height="181"></rect>
+                    <rect id="矩形" fill="#F1F1F1" x="709" y="1" width="1" height="181"></rect>
+                    <rect id="Rectangle" fill="#F1F1F1" x="1" y="70" width="932" height="1"></rect>
+                    <rect id="Rectangle" fill="#F1F1F1" x="1" y="107" width="932" height="1"></rect>
+                    <rect id="Rectangle" fill="#F1F1F1" x="1" y="144" width="932" height="1"></rect>
+                    <rect id="Rectangle" fill="#F1F1F1" x="1" y="181" width="932" height="1"></rect>
+                    <rect id="Rectangle" fill="#F1F1F1" x="1" y="33" width="932" height="1"></rect>
+                    <rect id="Rectangle" fill="#F1F1F1" x="1" y="0" width="932" height="1"></rect>
+                </g>
+                <g id="page" transform="translate(507.000000, 198.000000)">
+                    <g id="turnpage-left-no" transform="translate(39.000000, 8.000000)" stroke="#B7B7B7">
+                        <polyline id="路径" points="5.11904982 0 0 4.5251749 5.11904982 8.69994188"></polyline>
+                    </g>
+                    <g id="turnpage-right" transform="translate(291.000000, 8.000000)" stroke="#666666">
+                        <polyline id="路径" transform="translate(2.559525, 4.349971) rotate(180.000000) translate(-2.559525, -4.349971) " points="5.11904982 0 0 4.5251749 5.11904982 8.69994188"></polyline>
+                    </g>
+                    <g id="turnpage-right" transform="translate(325.000000, 8.000000)" stroke="#666666">
+                        <polyline id="路径" transform="translate(2.559525, 4.349971) rotate(180.000000) translate(-2.559525, -4.349971) " points="5.11904982 0 0 4.5251749 5.11904982 8.69994188"></polyline>
+                        <polyline id="路径" transform="translate(7.559525, 4.349971) rotate(180.000000) translate(-7.559525, -4.349971) " points="10.1190498 0 5 4.5251749 10.1190498 8.69994188"></polyline>
+                    </g>
+                    <g id="turnpage-right" transform="translate(5.500000, 12.500000) scale(-1, 1) translate(-5.500000, -12.500000) translate(0.000000, 8.000000)" stroke="#B7B7B7">
+                        <polyline id="路径" transform="translate(2.559525, 4.349971) rotate(180.000000) translate(-2.559525, -4.349971) " points="5.11904982 0 0 4.5251749 5.11904982 8.69994188"></polyline>
+                        <polyline id="路径" transform="translate(7.559525, 4.349971) rotate(180.000000) translate(-7.559525, -4.349971) " points="10.1190498 0 5 4.5251749 10.1190498 8.69994188"></polyline>
+                    </g>
+                    <g id="分组-3-copy-2" transform="translate(366.000000, 5.000000)">
+                        <g id="路径-2" transform="translate(50.000000, 4.000000)">
+                            <polyline id="路径" stroke="#666666" transform="translate(4.959525, 3.349971) rotate(270.000000) translate(-4.959525, -3.349971) " points="7.51904985 -1 2.40000003 3.5251749 7.51904985 7.69994188"></polyline>
+                            <rect id="矩形" x="0" y="0" width="10" height="6"></rect>
+                        </g>
+                        <text id="10/page" font-family="ArialMT, Arial" font-size="12" font-weight="normal" fill="#666666">
+                            <tspan x="0" y="11">10/page</tspan>
+                        </text>
+                    </g>
+                    <g id="分组-3-copy" transform="translate(66.000000, 0.000000)">
+                        <circle id="椭圆形" fill="#E4EFFF" cx="12" cy="12" r="12"></circle>
+                        <text id="1" font-family="ArialMT, Arial" font-size="12" font-weight="normal" fill="#4F7DE7">
+                            <tspan x="8.66308594" y="16">1</tspan>
+                        </text>
+                    </g>
+                    <g id="分组-3-copy" transform="translate(110.000000, 5.000000)" fill="#666666" font-family="ArialMT, Arial" font-size="12" font-weight="normal">
+                        <text id="2">
+                            <tspan x="0.663085938" y="11">2</tspan>
+                        </text>
+                    </g>
+                    <g id="分组-3-copy" transform="translate(146.000000, 5.000000)" fill="#666666" font-family="ArialMT, Arial" font-size="12" font-weight="normal">
+                        <text id="3">
+                            <tspan x="0.663085938" y="11">3</tspan>
+                        </text>
+                    </g>
+                    <g id="分组-3-copy备份" transform="translate(182.000000, 5.000000)" fill="#666666" font-family="ArialMT, Arial" font-size="12" font-weight="normal">
+                        <text id="4">
+                            <tspan x="0.663085938" y="11">4</tspan>
+                        </text>
+                    </g>
+                    <g id="分组-3-copy备份-2" transform="translate(251.000000, 5.000000)" fill="#666666" font-family="ArialMT, Arial" font-size="12" font-weight="normal">
+                        <text id="20">
+                            <tspan x="0.326171875" y="11">20</tspan>
+                        </text>
+                    </g>
+                    <g id="分组-3-copy备份-3" transform="translate(215.000000, 11.000000)" fill="#666666">
+                        <path d="M1.5,0 C2.32842712,0 3,0.671572875 3,1.5 C3,2.32842712 2.32842712,3 1.5,3 C0.671572875,3 0,2.32842712 0,1.5 C0,0.671572875 0.671572875,0 1.5,0 Z M7.5,0 C8.32842712,0 9,0.671572875 9,1.5 C9,2.32842712 8.32842712,3 7.5,3 C6.67157288,3 6,2.32842712 6,1.5 C6,0.671572875 6.67157288,0 7.5,0 Z M13.5,0 C14.3284271,0 15,0.671572875 15,1.5 C15,2.32842712 14.3284271,3 13.5,3 C12.6715729,3 12,2.32842712 12,1.5 C12,0.671572875 12.6715729,0 13.5,0 Z" id="椭圆形-2"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

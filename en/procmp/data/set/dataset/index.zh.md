@@ -23,11 +23,11 @@ abstract: true
 | autoLocateFirst | 数据加载后自动定位到第一条记录 | boolean | true |
 | autoLocateAfterCreate | 自动定位到新建记录 | boolean | true |
 | autoLocateAfterRemove | 当前数据被删除后自动定位到其他记录 | boolean | true |
-| selection | 选择的模式, 可选值: `false` `'multiple'` `'single'` | boolean \| string | 'multiple' |
+| selection | 选择的模式, 可选值: false 'multiple' 'single' | boolean \| string | multiple |
 | modifiedCheck | 查询前，当有记录更改过时，是否警告提示。 | boolean | false |
 | modifiedCheckMessage | 查询前，当有记录更改过时，警告提示。 | ReactNode \| ModalProps |  |
 | pageSize | 分页大小 | number | 10 |
-| paging | 是否分页, `server` 主要为table的tree服务,约定total为根节点数目,index的定位都是基于根节点, 为`server`时候保证同时存在idField 和parentField(根节点为空或者undefind) 不然表现和原有版本一致 | boolean \| `server`| true |
+| paging | 是否分页，`server` 主要为 Table 的 Tree 模式服务，约定 total 为根节点数目，index 的定位都是基于根节点，为 `server` 时候保证同时存在 idField 和 parentField (根节点为空或者 undefined) 不然表现和原有版本一致 | boolean \| 'server'| true |
 | dataKey | 查询返回的 json 中对应的数据的 key, 当为 null 时对应整个 json 数据, json 不是数组时自动作为新数组的第一条数据 | string \| null | rows |
 | totalKey | 查询返回的 json 中对应的总数的 key | string | total |
 | queryDataSet | 查询条件数据源 | DataSet |  |
@@ -51,7 +51,7 @@ abstract: true
 | axios | 覆盖默认 axios | AxiosInstance |  |
 | dataToJSON | 数据转为 json 的方式，详见[DataToJSON](#dataToJSON) | DataToJSON | dirty |
 | cascadeParams | 级联查询参数 | (record, primaryKey) => object | (record, primaryKey) => primaryKey ? record.get(primaryKey) : record.toData() |
-| exportMode | 导出模式选择：前端导出，后端导出 | `client|server` | ‘client’ |
+| exportMode | 导出模式选择：前端导出，后端导出 | client \| server | client |
 
 ### DataSet Values
 
@@ -64,8 +64,8 @@ abstract: true
 | totalPage | 总页数 | readonly observable&lt;number&gt; |
 | pageSize | 分页大小 | observable&lt;number&gt; |
 | paging | 是否分页 | observable&lt;boolean&gt; |
-| status | 状态，`loading` `submitting` `ready` | observable&lt;string&gt; |
-| selection | 选择的模式, 可选值: `false` `'multiple'` `'single'` | observable&lt;string\|boolean&gt; |
+| status | 状态，loading submitting ready | observable&lt;string&gt; |
+| selection | 选择的模式, 可选值: false 'multiple' 'single' | observable&lt;string\|boolean&gt; |
 | records | 所有记录 | observable&lt;Record[]&gt; |
 | all | 所有记录, 包括缓存的选择记录 | observable&lt;Record[]&gt; |
 | data | 数据, 不包括删除状态的 Record | observable&lt;Record[]&gt; |
@@ -171,13 +171,13 @@ abstract: true
 | selectable     | 可选                                            | observable&lt;boolean&gt; |
 | isSelected     | 是否选中                                        | observable&lt;boolean&gt; |
 | isCurrent      | 是否当前记录                                    | observable&lt;boolean&gt; |
-| children       | 树形子数据集                                    | Record[]\| undefined      |
-| parent         | 树形父数据                                      | Record\| undefined        |
-| previousRecord | 树形中前一条数据                                | Record\| undefined        |
-| nextRecord     | 树形中后一条数据                                | Record\| undefined        |
+| children       | 树形子数据集                                    | Record[] \| undefined      |
+| parent         | 树形父数据                                      | Record \| undefined        |
+| previousRecord | 树形中前一条数据                                | Record \| undefined        |
+| nextRecord     | 树形中后一条数据                                | Record \| undefined        |
 | level          | 树形层级                                        | number                    |
 | dirty          | 数据是否发生变更， 包含级联数据源是否变更       | boolean                   |
-| cascadeParent  | 级联父数据                                      | Record\| undefined        |
+| cascadeParent  | 级联父数据                                      | Record \| undefined        |
 | index          | 在数据源中的索引                                | number                    |
 
 ### Record Methods
@@ -211,7 +211,7 @@ abstract: true
 | order | 排序类型，只支持单 field 排序， 如果多个 field 设置了 order，取第一个有 order 的 field，可选值: `asc` `desc` | string |  |
 | label | 字段标签 | string |  |
 | labelWidth | 字段标签宽度 | number |  |
-| format | 字符串类型和日期类型字段值格式化。 字符串类型格式化可选值: `'uppercase'` `'lowercase'` `'capitalize'` | string |  |
+| format | 字符串类型和日期类型字段值格式化。 字符串类型格式化可选值: 'uppercase' 'lowercase' 'capitalize' | string |  |
 | pattern | 正则校验 | string \| RegExp |  |
 | maxLength | 最大长度 | number |  |
 | minLength | 最小长度 | number |  |
@@ -224,14 +224,14 @@ abstract: true
 | disabled | 是否禁用 | boolean | false |
 | textField | 值列表的文本字段 | string | meaning |
 | valueField | 值列表的值字段 | string | value |
-| trueValue | 类型为 boolean 时，true 对应的值 | boolean\|string\|number | true |
-| falseValue | 类型为 boolean 时，false 对应的值 | boolean\|string\|number | false |
+| trueValue | 类型为 boolean 时，true 对应的值 | boolean \|string \|number | true |
+| falseValue | 类型为 boolean 时，false 对应的值 | boolean |string \|number | false |
 | options | 下拉框组件的菜单数据集 | DataSet |  |
-| group | 是否分组，如果是 number，则为分组的顺序(暂无实装) | boolean\|number |  |
+| group | 是否分组，如果是 number，则为分组的顺序(暂无实装) | boolean \|number |  |
 | defaultValue | 默认值 | any |  |
-| multiple | 是否为值数组。 当为字符串时，作为数据分隔符，查询时会将字符串分割成数组，提交时会将数组拼接成字符串 | boolean\| string | false |
-| range | 是否为范围值。 当为 true 时，则值为\[startValue, endValue\]；当为数组时，例如\['start', 'end'\]时，则值为{ start: startValue, end: endValue } | boolean\| \[string, string\] | false |
-| unique | 唯一索引或联合唯一索引组名。multiple 和 range 字段不适用。当 column 的 editor 设为 true 时，编辑器只会在新增的记录显示，如果要对已有数据进行编辑，请自定义 editor | boolean\| string | false |
+| multiple | 是否为值数组。 当为字符串时，作为数据分隔符，查询时会将字符串分割成数组，提交时会将数组拼接成字符串 | boolean \| string | false |
+| range | 是否为范围值。 当为 true 时，则值为\[startValue, endValue\]；当为数组时，例如\['start', 'end'\]时，则值为{ start: startValue, end: endValue } | boolean \| \[string, string\] | false |
+| unique | 唯一索引或联合唯一索引组名。multiple 和 range 字段不适用。当 column 的 editor 设为 true 时，编辑器只会在新增的记录显示，如果要对已有数据进行编辑，请自定义 editor | boolean \| string | false |
 | lovCode | LOV 配置代码 | string |  |
 | lovPara | LOV 或 Lookup 查询参数对象 | object |  |
 | lookupCode | 值列表代码 | string |  |
@@ -245,10 +245,10 @@ abstract: true
 | dynamicProps | 动态属性对象。对象为字段属性和返回该字段值的钩子的键值对。原对象属性钩子将在 v1.0 版本中废弃。 | { fieldProp: ({ dataSet, record, name }) => value } |  |
 | cascadeMap | 快码和 LOV 查询时的级联参数映射。 例如：cascadeMap: { parentCodeValue: 'city' }，其中'city'是当前所在数据源的其他字段名，parentCodeValue 是快码和 LOV 的查询参数 | object |  |
 | currency | 货币代码，详见[Current currency & funds code list.](https://www.currency-iso.org/en/home/tables/table-a1.html) | string |  |
-| ignore | 忽略提交, 可选值: `always` - 总是忽略 `clean` - 值未变化时忽略 `never` - 从不忽略 | string | `never` |
+| ignore | 忽略提交, 可选值: `always` - 总是忽略 `clean` - 值未变化时忽略 `never` - 从不忽略 | string | never |
 | transformRequest | 在发送请求之前对数据进行处理 | (value: any, record: Record) => any |  |
 | transformResponse | 在获得响应之后对数据进行处理 | (value: any, object: any) => any |  |
-| trim | 字符串值是否去掉首尾空格，可选值: `both` `left` `right` `none` | string | `both` |
+| trim | 字符串值是否去掉首尾空格，可选值: both \| left \| right \| none | string | both |
 | defaultValidationMessages | 默认校验信息，详见[ValidationMessages](/zh/procmp/configure/configure/#ValidationMessages) | ValidationMessages |  |
 
 ### Field Values

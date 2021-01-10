@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="494px" height="479px" viewBox="0 0 494 479" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>notification-prompt/style3</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M53,134.991753 C53,133.891738 53.8861449,133 54.9956263,133 L402.004374,133 C403.106528,133 404,133.897309 404,134.991753 L404,233.008247 C404,234.108262 403.113855,235 402.004374,235 L54.9956263,235 C53.8934723,235 53,234.102691 53,233.008247 L53,134.991753 Z" id="path-1"></path>
+        <filter x="-5.7%" y="-15.7%" width="111.4%" height="139.2%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="4" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="6" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.15 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <path d="M10,4 C6.6916,4 4,6.6916 4,10 C4,13.3084 6.6916,16 10,16 C13.3084,16 16,13.3084 16,10 C16,6.6916 13.3084,4 10,4 M10,14.8 C7.3534,14.8 5.2,12.6466 5.2,10 C5.2,7.3534 7.3534,5.2 10,5.2 C12.6466,5.2 14.8,7.3534 14.8,10 C14.8,12.6466 12.6466,14.8 10,14.8 M11.3758,8.3758 L9.4,10.3516 L8.6242,9.5758 C8.3896,9.3412 8.0104,9.3412 7.7758,9.5758 C7.5412,9.8104 7.5412,10.1896 7.7758,10.4242 L8.9758,11.6242 C9.0928,11.7412 9.2464,11.8 9.4,11.8 C9.5536,11.8 9.7072,11.7412 9.8242,11.6242 L12.2242,9.2242 C12.4588,8.9896 12.4588,8.6104 12.2242,8.3758 C11.9896,8.1412 11.6104,8.1412 11.3758,8.3758" id="path-3"></path>
+        <path d="M53,248.991753 C53,247.891738 53.8861449,247 54.9956263,247 L402.004374,247 C403.106528,247 404,247.897309 404,248.991753 L404,347.008247 C404,348.108262 403.113855,349 402.004374,349 L54.9956263,349 C53.8934723,349 53,348.102691 53,347.008247 L53,248.991753 Z" id="path-5"></path>
+        <filter x="-5.7%" y="-15.7%" width="111.4%" height="139.2%" filterUnits="objectBoundingBox" id="filter-6">
+            <feOffset dx="0" dy="4" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="6" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.15 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <path d="M6,0 C2.6916,0 0,2.6916 0,6 C0,9.3084 2.6916,12 6,12 C9.3084,12 12,9.3084 12,6 C12,2.6916 9.3084,0 6,0 M6,10.8 C3.3534,10.8 1.2,8.6466 1.2,6 C1.2,3.3534 3.3534,1.2 6,1.2 C8.6466,1.2 10.8,3.3534 10.8,6 C10.8,8.6466 8.6466,10.8 6,10.8 M6,6.6 C6.3318,6.6 6.6,6.3318 6.6,6 L6.6,3.6 C6.6,3.2682 6.3318,3 6,3 C5.6682,3 5.4,3.2682 5.4,3.6 L5.4,6 C5.4,6.3318 5.6682,6.6 6,6.6 M6,7.74024 C5.6358,7.74024 5.34,8.03544 5.34,8.40024 C5.34,8.76444 5.6358,9.05964 6,9.05964 C6.3642,9.05964 6.66,8.76444 6.66,8.40024 C6.66,8.03544 6.3642,7.74024 6,7.74024" id="path-7"></path>
+        <path d="M53,20.9917534 C53,19.8917384 53.8861449,19 54.9956263,19 L402.004374,19 C403.106528,19 404,19.8973093 404,20.9917534 L404,119.008247 C404,120.108262 403.113855,121 402.004374,121 L54.9956263,121 C53.8934723,121 53,120.102691 53,119.008247 L53,20.9917534 Z" id="path-9"></path>
+        <filter x="-5.7%" y="-15.7%" width="111.4%" height="139.2%" filterUnits="objectBoundingBox" id="filter-10">
+            <feOffset dx="0" dy="4" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="6" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.15 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <path d="M6,0 C2.6916,0 0,2.6916 0,6 C0,9.3084 2.6916,12 6,12 C9.3084,12 12,9.3084 12,6 C12,2.6916 9.3084,0 6,0 M6,10.8 C3.3534,10.8 1.2,8.6466 1.2,6 C1.2,3.3534 3.3534,1.2 6,1.2 C8.6466,1.2 10.8,3.3534 10.8,6 C10.8,8.6466 8.6466,10.8 6,10.8 M6.6,7.8 L6.6,6 C6.6,5.6682 6.3312,5.4 6,5.4 L5.4,5.4 C5.0688,5.4 4.8,5.6682 4.8,6 C4.8,6.3318 5.0688,6.6 5.4,6.6 L5.4,8.4 C5.4,8.7318 5.6688,9 6,9 L6.6,9 C6.9312,9 7.2,8.7318 7.2,8.4 C7.2,8.0682 6.9312,7.8 6.6,7.8 M6,4.25976 C6.3642,4.25976 6.66,3.96456 6.66,3.59976 C6.66,3.23556 6.3642,2.94036 6,2.94036 C5.6358,2.94036 5.34,3.23556 5.34,3.59976 C5.34,3.96456 5.6358,4.25976 6,4.25976" id="path-11"></path>
+        <path d="M53,362.991753 C53,361.891738 53.8861449,361 54.9956263,361 L402.004374,361 C403.106528,361 404,361.897309 404,362.991753 L404,461.008247 C404,462.108262 403.113855,463 402.004374,463 L54.9956263,463 C53.8934723,463 53,462.102691 53,461.008247 L53,362.991753 Z" id="path-13"></path>
+        <filter x="-5.7%" y="-15.7%" width="111.4%" height="139.2%" filterUnits="objectBoundingBox" id="filter-14">
+            <feOffset dx="0" dy="4" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="6" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.15 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <path d="M1.2,6 C1.2,4.8924 1.581,3.8742 2.2128,3.0618 L8.9382,9.7872 C8.1252,10.419 7.1076,10.8 6,10.8 C3.3534,10.8 1.2,8.6466 1.2,6 M9.7872,8.9382 L3.0618,2.2128 C3.8748,1.581 4.8924,1.2 6,1.2 C8.6466,1.2 10.8,3.3534 10.8,6 C10.8,7.1076 10.419,8.1258 9.7872,8.9382 M0,6 C0,9.3084 2.6916,12 6,12 C9.3084,12 12,9.3084 12,6 C12,2.6916 9.3084,0 6,0 C2.6916,0 0,2.6916 0,6" id="path-15"></path>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="配置组件V10分页3" transform="translate(-224.000000, -3035.000000)">
+            <g id="编组-35" transform="translate(224.000000, 2235.000000)">
+                <g id="notification-prompt/style3" transform="translate(0.000000, 800.000000)">
+                    <rect id="矩形" fill-opacity="0.01" fill="#FAFAFA" x="0" y="0" width="494" height="479"></rect>
+                    <g id="Rectangle-166-Copy-13">
+                        <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                        <use fill="#39C878" fill-rule="evenodd" xlink:href="#path-1"></use>
+                    </g>
+                    <text id="↳-Description" font-family="ArialMT, Arial" font-size="12" font-weight="normal" line-spacing="20" fill="#FFFFFF">
+                        <tspan x="97" y="188">Content of prompt. Content of prompt. Content of </tspan>
+                        <tspan x="97" y="208">prompt. Content of prompt.</tspan>
+                    </text>
+                    <text id="Title" font-family="ArialMT, Arial" font-size="12" font-weight="normal" line-spacing="22" fill="#FFFFFF">
+                        <tspan x="97" y="160">A success prompt</tspan>
+                    </text>
+                    <g id="success-2" transform="translate(69.000000, 150.000000)">
+                        <circle id="Icon-BG" fill="#D1FFD1" cx="10" cy="10" r="10"></circle>
+                        <circle id="Icon-BG" fill="#FFFFFF" cx="10" cy="10" r="6"></circle>
+                        <mask id="mask-4" fill="white">
+                            <use xlink:href="#path-3"></use>
+                        </mask>
+                        <use id="Mask" fill="#39C878" xlink:href="#path-3"></use>
+                    </g>
+                    <g id="Group-Copy-19" transform="translate(374.000000, 149.000000)">
+                        <rect id="Rectangle" x="0" y="0" width="14" height="14"></rect>
+                        <path d="M1.93424283,1.93424283 C2.1478108,1.72067485 2.4940729,1.72067485 2.70764087,1.93424283 L2.70764087,1.93424283 L7.00006685,6.22706685 L11.2923591,1.93424283 C11.5059271,1.72067485 11.8521892,1.72067485 12.0657572,1.93424283 C12.2793251,2.1478108 12.2793251,2.4940729 12.0657572,2.70764087 L7.77306685,7.00006685 L12.0657572,11.2923591 C12.2555954,11.4821973 12.2766885,11.7768803 12.1290366,11.9900173 L12.0657572,12.0657572 C11.8521892,12.2793251 11.5059271,12.2793251 11.2923591,12.0657572 L11.2923591,12.0657572 L7.00006685,7.77306685 L2.70764087,12.0657572 C2.4940729,12.2793251 2.1478108,12.2793251 1.93424283,12.0657572 C1.72067485,11.8521892 1.72067485,11.5059271 1.93424283,11.2923591 L6.22706685,7.00006685 L1.93424283,2.70764087 C1.74440463,2.51780267 1.72331149,2.22311973 1.87096343,2.0099827 Z" id="Combined-Shape" fill="#FFFFFF"></path>
+                    </g>
+                    <g id="Rectangle-166-Copy-13">
+                        <use fill="black" fill-opacity="1" filter="url(#filter-6)" xlink:href="#path-5"></use>
+                        <use fill="#F8B303" fill-rule="evenodd" xlink:href="#path-5"></use>
+                    </g>
+                    <text id="↳-Description" font-family="ArialMT, Arial" font-size="12" font-weight="normal" line-spacing="20" fill="#FFFFFF">
+                        <tspan x="97" y="302">Content of prompt. Content of prompt. Content of </tspan>
+                        <tspan x="97" y="322">prompt. Content of prompt.</tspan>
+                    </text>
+                    <text id="Title" font-family="ArialMT, Arial" font-size="12" font-weight="normal" line-spacing="22" fill="#FFFFFF">
+                        <tspan x="97" y="274">A warning prompt</tspan>
+                    </text>
+                    <g id="warning-2" transform="translate(69.000000, 264.000000)">
+                        <circle id="Icon-BG" fill="#FFF2CC" cx="10" cy="10" r="10"></circle>
+                        <circle id="Fill" fill="#FFFFFF" cx="10" cy="10" r="5"></circle>
+                        <g id="Icon" transform="translate(4.000000, 4.000000)">
+                            <mask id="mask-8" fill="white">
+                                <use xlink:href="#path-7"></use>
+                            </mask>
+                            <use id="Mask" fill="#F8B303" xlink:href="#path-7"></use>
+                        </g>
+                    </g>
+                    <g id="Group-Copy-19" transform="translate(374.000000, 263.000000)">
+                        <rect id="Rectangle" x="0" y="0" width="14" height="14"></rect>
+                        <path d="M1.93424283,1.93424283 C2.1478108,1.72067485 2.4940729,1.72067485 2.70764087,1.93424283 L2.70764087,1.93424283 L7.00006685,6.22706685 L11.2923591,1.93424283 C11.5059271,1.72067485 11.8521892,1.72067485 12.0657572,1.93424283 C12.2793251,2.1478108 12.2793251,2.4940729 12.0657572,2.70764087 L7.77306685,7.00006685 L12.0657572,11.2923591 C12.2555954,11.4821973 12.2766885,11.7768803 12.1290366,11.9900173 L12.0657572,12.0657572 C11.8521892,12.2793251 11.5059271,12.2793251 11.2923591,12.0657572 L11.2923591,12.0657572 L7.00006685,7.77306685 L2.70764087,12.0657572 C2.4940729,12.2793251 2.1478108,12.2793251 1.93424283,12.0657572 C1.72067485,11.8521892 1.72067485,11.5059271 1.93424283,11.2923591 L6.22706685,7.00006685 L1.93424283,2.70764087 C1.74440463,2.51780267 1.72331149,2.22311973 1.87096343,2.0099827 Z" id="Combined-Shape" fill="#FFFFFF"></path>
+                    </g>
+                    <g id="Rectangle-166-Copy-13">
+                        <use fill="black" fill-opacity="1" filter="url(#filter-10)" xlink:href="#path-9"></use>
+                        <use fill="#4F7DE7" fill-rule="evenodd" xlink:href="#path-9"></use>
+                    </g>
+                    <text id="↳-Description" font-family="ArialMT, Arial" font-size="12" font-weight="normal" line-spacing="20" fill="#FFFFFF">
+                        <tspan x="97" y="74">Content of prompt. Content of prompt. Content of </tspan>
+                        <tspan x="97" y="94">prompt. Content of prompt.</tspan>
+                    </text>
+                    <text id="Title" font-family="ArialMT, Arial" font-size="12" font-weight="normal" line-spacing="22" fill="#FFFFFF">
+                        <tspan x="97" y="46">An info prompt</tspan>
+                    </text>
+                    <g id="info-2" transform="translate(69.000000, 36.000000)">
+                        <circle id="Icon-BG" fill="#CDE7FF" cx="10" cy="10" r="10"></circle>
+                        <circle id="Icon-BG" fill="#FFFFFF" cx="10" cy="10" r="6"></circle>
+                        <g id="Icon" transform="translate(4.000000, 4.000000)">
+                            <mask id="mask-12" fill="white">
+                                <use xlink:href="#path-11"></use>
+                            </mask>
+                            <use id="Mask" fill="#0687FF" xlink:href="#path-11"></use>
+                        </g>
+                    </g>
+                    <g id="Group-Copy-19" transform="translate(374.000000, 35.000000)">
+                        <rect id="Rectangle" x="0" y="0" width="14" height="14"></rect>
+                        <path d="M1.93424283,1.93424283 C2.1478108,1.72067485 2.4940729,1.72067485 2.70764087,1.93424283 L2.70764087,1.93424283 L7.00006685,6.22706685 L11.2923591,1.93424283 C11.5059271,1.72067485 11.8521892,1.72067485 12.0657572,1.93424283 C12.2793251,2.1478108 12.2793251,2.4940729 12.0657572,2.70764087 L7.77306685,7.00006685 L12.0657572,11.2923591 C12.2555954,11.4821973 12.2766885,11.7768803 12.1290366,11.9900173 L12.0657572,12.0657572 C11.8521892,12.2793251 11.5059271,12.2793251 11.2923591,12.0657572 L11.2923591,12.0657572 L7.00006685,7.77306685 L2.70764087,12.0657572 C2.4940729,12.2793251 2.1478108,12.2793251 1.93424283,12.0657572 C1.72067485,11.8521892 1.72067485,11.5059271 1.93424283,11.2923591 L6.22706685,7.00006685 L1.93424283,2.70764087 C1.74440463,2.51780267 1.72331149,2.22311973 1.87096343,2.0099827 Z" id="Combined-Shape" fill="#FFFFFF"></path>
+                    </g>
+                    <g id="Rectangle-166-Copy-13">
+                        <use fill="black" fill-opacity="1" filter="url(#filter-14)" xlink:href="#path-13"></use>
+                        <use fill="#FD6868" fill-rule="evenodd" xlink:href="#path-13"></use>
+                    </g>
+                    <text id="↳-Description" font-family="ArialMT, Arial" font-size="12" font-weight="normal" line-spacing="20" fill="#FFFFFF">
+                        <tspan x="97" y="416">Custom error description copywriting. Custom error </tspan>
+                        <tspan x="97" y="436">description copywriting. </tspan>
+                    </text>
+                    <text id="Title" font-family="ArialMT, Arial" font-size="12" font-weight="normal" line-spacing="22" fill="#FFFFFF">
+                        <tspan x="97" y="388">An error prompt</tspan>
+                    </text>
+                    <g id="error-2" transform="translate(69.000000, 378.000000)">
+                        <circle id="Icon-BG" fill="#FCD5D5" cx="10" cy="10" r="10"></circle>
+                        <circle id="Fill" fill="#FFFFFF" cx="10" cy="10" r="5"></circle>
+                        <g id="Icon" transform="translate(4.000000, 4.000000)">
+                            <mask id="mask-16" fill="white">
+                                <use xlink:href="#path-15"></use>
+                            </mask>
+                            <use id="Mask" fill="#FD6868" xlink:href="#path-15"></use>
+                        </g>
+                    </g>
+                    <g id="Group-Copy-19" transform="translate(374.000000, 377.000000)">
+                        <rect id="Rectangle" x="0" y="0" width="14" height="14"></rect>
+                        <path d="M1.93424283,1.93424283 C2.1478108,1.72067485 2.4940729,1.72067485 2.70764087,1.93424283 L2.70764087,1.93424283 L7.00006685,6.22706685 L11.2923591,1.93424283 C11.5059271,1.72067485 11.8521892,1.72067485 12.0657572,1.93424283 C12.2793251,2.1478108 12.2793251,2.4940729 12.0657572,2.70764087 L7.77306685,7.00006685 L12.0657572,11.2923591 C12.2555954,11.4821973 12.2766885,11.7768803 12.1290366,11.9900173 L12.0657572,12.0657572 C11.8521892,12.2793251 11.5059271,12.2793251 11.2923591,12.0657572 L11.2923591,12.0657572 L7.00006685,7.77306685 L2.70764087,12.0657572 C2.4940729,12.2793251 2.1478108,12.2793251 1.93424283,12.0657572 C1.72067485,11.8521892 1.72067485,11.5059271 1.93424283,11.2923591 L6.22706685,7.00006685 L1.93424283,2.70764087 C1.74440463,2.51780267 1.72331149,2.22311973 1.87096343,2.0099827 Z" id="Combined-Shape" fill="#FFFFFF"></path>
+                    </g>
+                    <g id="style3" transform="translate(12.000000, 14.000000)" fill="#525A6E" font-family="ArialMT, Arial" font-size="12" font-weight="normal">
+                        <text>
+                            <tspan x="0.65234375" y="15">style3</tspan>
+                        </text>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -31,14 +31,14 @@
       "screenshot": ""
     },
     {
-      "filename": "text.js",
+      "filename": "avatar.js",
       "title": {
-        "zh": "文案展现",
-        "en": "Show copywriting"
+        "zh": "头像展示",
+        "en": "Show avatar"
       },
       "description": {
-        "zh": "给评分组件加上文案展示。\n",
-        "en": "Add copywriting in rate components.\n"
+        "zh": "头像编辑。\n",
+        "en": "picture editing.\n"
       },
       "order": 2,
       "screenshot": ""

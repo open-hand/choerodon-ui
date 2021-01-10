@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="494px" height="479px" viewBox="0 0 494 479" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>notification-prompt/style1</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="350" height="106" rx="2"></rect>
+        <filter x="-5.7%" y="-15.1%" width="111.4%" height="137.7%" filterUnits="objectBoundingBox" id="filter-3">
+            <feOffset dx="0" dy="4" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="6" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.15 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <rect id="path-4" x="0" y="0" width="350" height="102" rx="2"></rect>
+        <filter x="-5.7%" y="-15.7%" width="111.4%" height="139.2%" filterUnits="objectBoundingBox" id="filter-6">
+            <feOffset dx="0" dy="4" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="6" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.15 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <rect id="path-7" x="0" y="0" width="350" height="102" rx="2"></rect>
+        <filter x="-5.7%" y="-15.7%" width="111.4%" height="139.2%" filterUnits="objectBoundingBox" id="filter-9">
+            <feOffset dx="0" dy="4" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="6" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.15 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <rect id="path-10" x="0" y="0" width="350" height="102" rx="2"></rect>
+        <filter x="-5.7%" y="-15.7%" width="111.4%" height="139.2%" filterUnits="objectBoundingBox" id="filter-12">
+            <feOffset dx="0" dy="4" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="6" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.15 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="配置组件V10分页3" transform="translate(-224.000000, -2524.000000)">
+            <g id="编组-35" transform="translate(224.000000, 2235.000000)">
+                <g id="notification-prompt/style1" transform="translate(0.000000, 289.000000)">
+                    <rect id="矩形" fill-opacity="0.01" fill="#FAFAFA" x="0" y="0" width="494" height="479"></rect>
+                    <g id="编组-18" transform="translate(52.000000, 15.000000)">
+                        <mask id="mask-2" fill="white">
+                            <use xlink:href="#path-1"></use>
+                        </mask>
+                        <g id="矩形">
+                            <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-1"></use>
+                            <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+                        </g>
+                        <g id="编组-13" mask="url(#mask-2)">
+                            <g transform="translate(320.000000, 16.000000)">
+                                <rect id="矩形" fill="#D8D8D8" opacity="0.01" x="0" y="0" width="14" height="14"></rect>
+                                <path d="M7.70710678,7 L11.9497475,11.2426407 C12.1450096,11.4379028 12.1450096,11.7544853 11.9497475,11.9497475 C11.7544853,12.1450096 11.4379028,12.1450096 11.2426407,11.9497475 L7,7.70710678 L2.75735931,11.9497475 C2.56209717,12.1450096 2.24551468,12.1450096 2.05025253,11.9497475 C1.85499039,11.7544853 1.85499039,11.4379028 2.05025253,11.2426407 L6.29289322,7 L2.05025253,2.75735931 C1.85499039,2.56209717 1.85499039,2.24551468 2.05025253,2.05025253 C2.24551468,1.85499039 2.56209717,1.85499039 2.75735931,2.05025253 L7,6.29289322 L11.2426407,2.05025253 C11.4379028,1.85499039 11.7544853,1.85499039 11.9497475,2.05025253 C12.1450096,2.24551468 12.1450096,2.56209717 11.9497475,2.75735931 L7.70710678,7 Z" id="路径" fill="#AAADBA"></path>
+                            </g>
+                        </g>
+                        <text id="Notification-title" mask="url(#mask-2)" font-family="ArialMT, Arial" font-size="14" font-weight="normal" line-spacing="22" fill="#333333">
+                            <tspan x="16" y="29">Notification title</tspan>
+                        </text>
+                        <rect id="矩形" fill="#4F7DE7" mask="url(#mask-2)" x="0" y="0" width="4" height="106"></rect>
+                        <text id="Here-is-the-notifica" mask="url(#mask-2)" font-family="ArialMT, Arial" font-size="12" font-weight="normal" line-spacing="20" fill="#5A6677">
+                            <tspan x="16" y="55">Here is the notification description. Here is the notification </tspan>
+                            <tspan x="16" y="75">description.</tspan>
+                        </text>
+                    </g>
+                    <g id="编组-18" transform="translate(52.000000, 133.000000)">
+                        <mask id="mask-5" fill="white">
+                            <use xlink:href="#path-4"></use>
+                        </mask>
+                        <g id="矩形">
+                            <use fill="black" fill-opacity="1" filter="url(#filter-6)" xlink:href="#path-4"></use>
+                            <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-4"></use>
+                        </g>
+                        <g id="编组-13" mask="url(#mask-5)">
+                            <g transform="translate(320.000000, 16.000000)">
+                                <rect id="矩形" fill="#D8D8D8" opacity="0.01" x="0" y="0" width="14" height="14"></rect>
+                                <path d="M7.70710678,7 L11.9497475,11.2426407 C12.1450096,11.4379028 12.1450096,11.7544853 11.9497475,11.9497475 C11.7544853,12.1450096 11.4379028,12.1450096 11.2426407,11.9497475 L7,7.70710678 L2.75735931,11.9497475 C2.56209717,12.1450096 2.24551468,12.1450096 2.05025253,11.9497475 C1.85499039,11.7544853 1.85499039,11.4379028 2.05025253,11.2426407 L6.29289322,7 L2.05025253,2.75735931 C1.85499039,2.56209717 1.85499039,2.24551468 2.05025253,2.05025253 C2.24551468,1.85499039 2.56209717,1.85499039 2.75735931,2.05025253 L7,6.29289322 L11.2426407,2.05025253 C11.4379028,1.85499039 11.7544853,1.85499039 11.9497475,2.05025253 C12.1450096,2.24551468 12.1450096,2.56209717 11.9497475,2.75735931 L7.70710678,7 Z" id="路径" fill="#AAADBA"></path>
+                            </g>
+                        </g>
+                        <text id="Notification-title" mask="url(#mask-5)" font-family="ArialMT, Arial" font-size="14" font-weight="normal" line-spacing="22" fill="#333333">
+                            <tspan x="16" y="29">Notification title</tspan>
+                        </text>
+                        <rect id="矩形" fill="#39C878" mask="url(#mask-5)" x="0" y="0" width="4" height="102"></rect>
+                        <text id="Here-is-the-notifica" mask="url(#mask-5)" font-family="ArialMT, Arial" font-size="12" font-weight="normal" line-spacing="20" fill="#5A6677">
+                            <tspan x="16" y="55">Here is the notification description. Here is the notification </tspan>
+                            <tspan x="16" y="75">description.</tspan>
+                        </text>
+                    </g>
+                    <g id="编组-18" transform="translate(52.000000, 247.000000)">
+                        <mask id="mask-8" fill="white">
+                            <use xlink:href="#path-7"></use>
+                        </mask>
+                        <g id="矩形">
+                            <use fill="black" fill-opacity="1" filter="url(#filter-9)" xlink:href="#path-7"></use>
+                            <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-7"></use>
+                        </g>
+                        <g id="编组-13" mask="url(#mask-8)">
+                            <g transform="translate(320.000000, 16.000000)">
+                                <rect id="矩形" fill="#D8D8D8" opacity="0.01" x="0" y="0" width="14" height="14"></rect>
+                                <path d="M7.70710678,7 L11.9497475,11.2426407 C12.1450096,11.4379028 12.1450096,11.7544853 11.9497475,11.9497475 C11.7544853,12.1450096 11.4379028,12.1450096 11.2426407,11.9497475 L7,7.70710678 L2.75735931,11.9497475 C2.56209717,12.1450096 2.24551468,12.1450096 2.05025253,11.9497475 C1.85499039,11.7544853 1.85499039,11.4379028 2.05025253,11.2426407 L6.29289322,7 L2.05025253,2.75735931 C1.85499039,2.56209717 1.85499039,2.24551468 2.05025253,2.05025253 C2.24551468,1.85499039 2.56209717,1.85499039 2.75735931,2.05025253 L7,6.29289322 L11.2426407,2.05025253 C11.4379028,1.85499039 11.7544853,1.85499039 11.9497475,2.05025253 C12.1450096,2.24551468 12.1450096,2.56209717 11.9497475,2.75735931 L7.70710678,7 Z" id="路径" fill="#AAADBA"></path>
+                            </g>
+                        </g>
+                        <text id="Notification-title" mask="url(#mask-8)" font-family="ArialMT, Arial" font-size="14" font-weight="normal" line-spacing="22" fill="#333333">
+                            <tspan x="16" y="29">Notification title</tspan>
+                        </text>
+                        <rect id="矩形" fill="#F8B303" mask="url(#mask-8)" x="0" y="0" width="4" height="102"></rect>
+                        <text id="Here-is-the-notifica" mask="url(#mask-8)" font-family="ArialMT, Arial" font-size="12" font-weight="normal" line-spacing="20" fill="#5A6677">
+                            <tspan x="16" y="55">Here is the notification description. Here is the notification </tspan>
+                            <tspan x="16" y="75">description.</tspan>
+                        </text>
+                    </g>
+                    <g id="编组-18" transform="translate(52.000000, 361.000000)">
+                        <mask id="mask-11" fill="white">
+                            <use xlink:href="#path-10"></use>
+                        </mask>
+                        <g id="矩形">
+                            <use fill="black" fill-opacity="1" filter="url(#filter-12)" xlink:href="#path-10"></use>
+                            <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-10"></use>
+                        </g>
+                        <g id="编组-13" mask="url(#mask-11)">
+                            <g transform="translate(320.000000, 16.000000)">
+                                <rect id="矩形" fill="#D8D8D8" opacity="0.01" x="0" y="0" width="14" height="14"></rect>
+                                <path d="M7.70710678,7 L11.9497475,11.2426407 C12.1450096,11.4379028 12.1450096,11.7544853 11.9497475,11.9497475 C11.7544853,12.1450096 11.4379028,12.1450096 11.2426407,11.9497475 L7,7.70710678 L2.75735931,11.9497475 C2.56209717,12.1450096 2.24551468,12.1450096 2.05025253,11.9497475 C1.85499039,11.7544853 1.85499039,11.4379028 2.05025253,11.2426407 L6.29289322,7 L2.05025253,2.75735931 C1.85499039,2.56209717 1.85499039,2.24551468 2.05025253,2.05025253 C2.24551468,1.85499039 2.56209717,1.85499039 2.75735931,2.05025253 L7,6.29289322 L11.2426407,2.05025253 C11.4379028,1.85499039 11.7544853,1.85499039 11.9497475,2.05025253 C12.1450096,2.24551468 12.1450096,2.56209717 11.9497475,2.75735931 L7.70710678,7 Z" id="路径" fill="#AAADBA"></path>
+                            </g>
+                        </g>
+                        <text id="Notification-title" mask="url(#mask-11)" font-family="ArialMT, Arial" font-size="14" font-weight="normal" line-spacing="22" fill="#333333">
+                            <tspan x="16" y="29">Notification title</tspan>
+                        </text>
+                        <rect id="矩形" fill="#FD6868" mask="url(#mask-11)" x="0" y="0" width="4" height="102"></rect>
+                        <text id="Here-is-the-notifica" mask="url(#mask-11)" font-family="ArialMT, Arial" font-size="12" font-weight="normal" line-spacing="20" fill="#5A6677">
+                            <tspan x="16" y="55">Here is the notification description. Here is the notification </tspan>
+                            <tspan x="16" y="75">description.</tspan>
+                        </text>
+                    </g>
+                    <g id="style1" transform="translate(12.000000, 14.000000)" fill="#525A6E" font-family="ArialMT, Arial" font-size="12" font-weight="normal">
+                        <text>
+                            <tspan x="0.65234375" y="15">style1</tspan>
+                        </text>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

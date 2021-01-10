@@ -395,6 +395,21 @@
       "screenshot": "",
       "height": 520,
       "category": "pro"
+    },
+    {
+      "filename": "dyfilter-bar.js",
+      "title": {
+        "zh": "动态筛选条",
+        "en": "Dynamic filter bar"
+      },
+      "description": {
+        "zh": "无边框可动态筛选条，结合后端标准接口可实现筛选列表保存。\n",
+        "en": "There is no border to dynamically filter the bar, combined with the back-end standard interface to realize the preservation of the filter list.\n"
+      },
+      "order": 24,
+      "screenshot": "",
+      "height": 520,
+      "category": "pro"
     }
   ]
 }

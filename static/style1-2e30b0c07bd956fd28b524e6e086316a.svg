@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="494px" height="446px" viewBox="0 0 494 446" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 59 (86127) - https://sketch.com -->
+    <title>12-Prompt-style2</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="350" height="96" rx="2"></rect>
+        <filter x="-5.7%" y="-16.7%" width="111.4%" height="141.7%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="4" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="6" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.263781416   0 0 0 0 0.34026736   0 0 0 0 0.682942708  0 0 0 0.2 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <rect id="path-3" x="0" y="0" width="350" height="96" rx="2"></rect>
+        <filter x="-5.7%" y="-16.7%" width="111.4%" height="141.7%" filterUnits="objectBoundingBox" id="filter-4">
+            <feOffset dx="0" dy="4" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="6" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.263781416   0 0 0 0 0.34026736   0 0 0 0 0.682942708  0 0 0 0.2 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <filter x="-8.9%" y="-32.3%" width="117.7%" height="164.6%" filterUnits="objectBoundingBox" id="filter-5">
+            <feOffset dx="0" dy="4" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="6" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.263781416   0 0 0 0 0.34026736   0 0 0 0 0.682942708  0 0 0 0.2 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <rect id="path-6" x="0" y="0" width="350" height="96" rx="2"></rect>
+        <filter x="-5.7%" y="-16.7%" width="111.4%" height="141.7%" filterUnits="objectBoundingBox" id="filter-7">
+            <feOffset dx="0" dy="4" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="6" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.263781416   0 0 0 0 0.34026736   0 0 0 0 0.682942708  0 0 0 0.2 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="一诺合同-配置组件-英文" transform="translate(-224.000000, -5403.000000)">
+            <rect fill="#F6F6F6" x="0" y="0" width="1440" height="9290"></rect>
+            <path d="M210,149 L1430,149 C1431.10457,149 1432,149.895431 1432,151 L1432,8635.15678 L1432,8635.15678 L1432,9272 C1432,9273.10457 1431.10457,9274 1430,9274 L210,9274 C208.895431,9274 208,9273.10457 208,9272 L208,151 C208,149.895431 208.895431,149 210,149 Z" id="Rectangle" fill="#FFFFFF"></path>
+            <g id="notification-prompt/style2" transform="translate(224.000000, 5403.000000)">
+                <rect id="矩形" fill-opacity="0.01" fill="#FAFAFA" x="0" y="0" width="494" height="446"></rect>
+                <g id="编组-18" transform="translate(52.000000, 20.000000)">
+                    <g id="矩形">
+                        <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                        <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+                    </g>
+                    <g id="编组-13" transform="translate(320.000000, 19.000000)">
+                        <rect id="矩形" fill="#D8D8D8" opacity="0.01" x="0" y="0" width="14" height="14"></rect>
+                        <path d="M7.70710678,7 L11.9497475,11.2426407 C12.1450096,11.4379028 12.1450096,11.7544853 11.9497475,11.9497475 C11.7544853,12.1450096 11.4379028,12.1450096 11.2426407,11.9497475 L7,7.70710678 L2.75735931,11.9497475 C2.56209717,12.1450096 2.24551468,12.1450096 2.05025253,11.9497475 C1.85499039,11.7544853 1.85499039,11.4379028 2.05025253,11.2426407 L6.29289322,7 L2.05025253,2.75735931 C1.85499039,2.56209717 1.85499039,2.24551468 2.05025253,2.05025253 C2.24551468,1.85499039 2.56209717,1.85499039 2.75735931,2.05025253 L7,6.29289322 L11.2426407,2.05025253 C11.4379028,1.85499039 11.7544853,1.85499039 11.9497475,2.05025253 C12.1450096,2.24551468 12.1450096,2.56209717 11.9497475,2.75735931 L7.70710678,7 Z" id="路径" fill="#AAADBA"></path>
+                    </g>
+                    <text id="Notification-title" font-family="PingFangSC-Medium, PingFang SC" font-size="14" font-weight="400" fill="#333333">
+                        <tspan x="42" y="31">Notification title</tspan>
+                    </text>
+                    <g id="info" transform="translate(16.000000, 17.000000)">
+                        <circle id="椭圆形" fill="#3889FF" cx="9" cy="9" r="9"></circle>
+                        <rect id="矩形" fill="#FFFFFF" x="8.1" y="7.2" width="1.8" height="7.2"></rect>
+                        <polygon id="矩形" fill="#FFFFFF" points="7.65 3.6 10.35 3.6 9.9 6.3 8.1 6.3"></polygon>
+                    </g>
+                    <text id="Here-is-the-notifica" font-family="PingFangSC-Regular, PingFang SC" font-size="12" font-weight="normal" line-spacing="18" fill="#5A6677">
+                        <tspan x="42" y="57">Here is the notification description. Here is the </tspan>
+                        <tspan x="42" y="75">notification description.</tspan>
+                    </text>
+                </g>
+                <g id="编组-18备份" transform="translate(52.000000, 124.000000)">
+                    <g id="矩形">
+                        <use fill="black" fill-opacity="1" filter="url(#filter-4)" xlink:href="#path-3"></use>
+                        <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-3"></use>
+                    </g>
+                    <g id="编组-13" transform="translate(320.000000, 19.000000)">
+                        <rect id="矩形" fill="#D8D8D8" opacity="0.01" x="0" y="0" width="14" height="14"></rect>
+                        <path d="M7.70710678,7 L11.9497475,11.2426407 C12.1450096,11.4379028 12.1450096,11.7544853 11.9497475,11.9497475 C11.7544853,12.1450096 11.4379028,12.1450096 11.2426407,11.9497475 L7,7.70710678 L2.75735931,11.9497475 C2.56209717,12.1450096 2.24551468,12.1450096 2.05025253,11.9497475 C1.85499039,11.7544853 1.85499039,11.4379028 2.05025253,11.2426407 L6.29289322,7 L2.05025253,2.75735931 C1.85499039,2.56209717 1.85499039,2.24551468 2.05025253,2.05025253 C2.24551468,1.85499039 2.56209717,1.85499039 2.75735931,2.05025253 L7,6.29289322 L11.2426407,2.05025253 C11.4379028,1.85499039 11.7544853,1.85499039 11.9497475,2.05025253 C12.1450096,2.24551468 12.1450096,2.56209717 11.9497475,2.75735931 L7.70710678,7 Z" id="路径" fill="#AAADBA"></path>
+                    </g>
+                    <text id="Notification-title" font-family="PingFangSC-Medium, PingFang SC" font-size="14" font-weight="400" fill="#333333">
+                        <tspan x="42" y="31">Notification title</tspan>
+                    </text>
+                    <g id="success" transform="translate(16.000000, 17.000000)">
+                        <circle id="椭圆形" fill="#39C878" cx="9" cy="9" r="9"></circle>
+                        <path d="M4.5,5.4 L6.3,5.4 L6.3,9 L14.4,9 L14.4,10.8 L4.5,10.8 L4.5,5.4 Z" id="矩形-3" fill="#FFFFFF" transform="translate(9.450000, 8.100000) rotate(-45.000000) translate(-9.450000, -8.100000) "></path>
+                    </g>
+                    <text id="Here-is-the-notifica" font-family="PingFangSC-Regular, PingFang SC" font-size="12" font-weight="normal" line-spacing="18" fill="#5A6677">
+                        <tspan x="42" y="57">Here is the notification description. Here is the </tspan>
+                        <tspan x="42" y="75">notification description.</tspan>
+                    </text>
+                </g>
+                <g id="编组-18备份-2" filter="url(#filter-5)" transform="translate(52.000000, 228.000000)">
+                    <rect id="矩形" fill="#FFFFFF" x="0" y="0" width="350" height="96" rx="2"></rect>
+                    <g id="编组-13" transform="translate(320.000000, 19.000000)">
+                        <rect id="矩形" fill="#D8D8D8" opacity="0.01" x="0" y="0" width="14" height="14"></rect>
+                        <path d="M7.70710678,7 L11.9497475,11.2426407 C12.1450096,11.4379028 12.1450096,11.7544853 11.9497475,11.9497475 C11.7544853,12.1450096 11.4379028,12.1450096 11.2426407,11.9497475 L7,7.70710678 L2.75735931,11.9497475 C2.56209717,12.1450096 2.24551468,12.1450096 2.05025253,11.9497475 C1.85499039,11.7544853 1.85499039,11.4379028 2.05025253,11.2426407 L6.29289322,7 L2.05025253,2.75735931 C1.85499039,2.56209717 1.85499039,2.24551468 2.05025253,2.05025253 C2.24551468,1.85499039 2.56209717,1.85499039 2.75735931,2.05025253 L7,6.29289322 L11.2426407,2.05025253 C11.4379028,1.85499039 11.7544853,1.85499039 11.9497475,2.05025253 C12.1450096,2.24551468 12.1450096,2.56209717 11.9497475,2.75735931 L7.70710678,7 Z" id="路径" fill="#AAADBA"></path>
+                    </g>
+                    <text id="Notification-title" font-family="PingFangSC-Medium, PingFang SC" font-size="14" font-weight="400" fill="#333333">
+                        <tspan x="42" y="31">Notification title</tspan>
+                    </text>
+                    <g id="编组-35" transform="translate(16.000000, 17.000000)">
+                        <circle id="椭圆形" fill="#F8B303" cx="9" cy="9" r="9"></circle>
+                        <polygon id="矩形" fill="#FFFFFF" points="7.65 4.5 10.35 4.5 9.9 10.8 8.1 10.8"></polygon>
+                        <rect id="矩形" fill="#FFFFFF" x="8.1" y="11.7" width="1.8" height="1.8"></rect>
+                    </g>
+                    <text id="Here-is-the-notifica" font-family="PingFangSC-Regular, PingFang SC" font-size="12" font-weight="normal" line-spacing="18" fill="#5A6677">
+                        <tspan x="42" y="57">Here is the notification description. Here is the </tspan>
+                        <tspan x="42" y="75">notification description.</tspan>
+                    </text>
+                </g>
+                <g id="编组-18备份-3" transform="translate(52.000000, 332.000000)">
+                    <g id="矩形">
+                        <use fill="black" fill-opacity="1" filter="url(#filter-7)" xlink:href="#path-6"></use>
+                        <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-6"></use>
+                    </g>
+                    <g id="编组-13" transform="translate(320.000000, 19.000000)">
+                        <rect id="矩形" fill="#D8D8D8" opacity="0.01" x="0" y="0" width="14" height="14"></rect>
+                        <path d="M7.70710678,7 L11.9497475,11.2426407 C12.1450096,11.4379028 12.1450096,11.7544853 11.9497475,11.9497475 C11.7544853,12.1450096 11.4379028,12.1450096 11.2426407,11.9497475 L7,7.70710678 L2.75735931,11.9497475 C2.56209717,12.1450096 2.24551468,12.1450096 2.05025253,11.9497475 C1.85499039,11.7544853 1.85499039,11.4379028 2.05025253,11.2426407 L6.29289322,7 L2.05025253,2.75735931 C1.85499039,2.56209717 1.85499039,2.24551468 2.05025253,2.05025253 C2.24551468,1.85499039 2.56209717,1.85499039 2.75735931,2.05025253 L7,6.29289322 L11.2426407,2.05025253 C11.4379028,1.85499039 11.7544853,1.85499039 11.9497475,2.05025253 C12.1450096,2.24551468 12.1450096,2.56209717 11.9497475,2.75735931 L7.70710678,7 Z" id="路径" fill="#AAADBA"></path>
+                    </g>
+                    <text id="Notification-title" font-family="PingFangSC-Medium, PingFang SC" font-size="14" font-weight="400" fill="#333333">
+                        <tspan x="42" y="31">Notification title</tspan>
+                    </text>
+                    <g id="error备份" transform="translate(16.000000, 17.000000)">
+                        <circle id="椭圆形" fill="#FD6868" cx="9" cy="9" r="9"></circle>
+                        <path d="M9.9,3.6 L9.9,8.1 L14.4,8.1 L14.4,9.9 L9.9,9.9 L9.9,14.4 L8.1,14.4 L8.1,9.9 L3.6,9.9 L3.6,8.1 L8.1,8.1 L8.1,3.6 L9.9,3.6 Z" id="矩形-5" fill="#FFFFFF" transform="translate(9.000000, 9.000000) rotate(-315.000000) translate(-9.000000, -9.000000) "></path>
+                    </g>
+                    <text id="Here-is-the-notifica" font-family="PingFangSC-Regular, PingFang SC" font-size="12" font-weight="normal" line-spacing="18" fill="#5A6677">
+                        <tspan x="42" y="57">Here is the notification description. Here is the </tspan>
+                        <tspan x="42" y="75">notification description.</tspan>
+                    </text>
+                </g>
+                <text id="style" font-family="MicrosoftYaHei, Microsoft YaHei" font-size="12" font-weight="normal" line-spacing="22" fill="#525A6E">
+                    <tspan x="8" y="27">style</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>

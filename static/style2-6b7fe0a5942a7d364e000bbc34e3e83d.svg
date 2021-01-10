@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="494px" height="300px" viewBox="0 0 494 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>transfer/style2</title>
+    <desc>Created with Sketch.</desc>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="配置组件V10分页2" transform="translate(-730.000000, -1299.000000)">
+            <g id="编组-33" transform="translate(224.000000, 1245.000000)">
+                <g id="transfer/style2" transform="translate(506.000000, 54.000000)">
+                    <rect id="矩形备份-31" fill-opacity="0.01" fill="#FFFFFF" x="0" y="0" width="494" height="300"></rect>
+                    <g id="编组-10" transform="translate(54.000000, 14.000000)">
+                        <rect id="outline备份-6" stroke="#DBDFE6" fill-rule="nonzero" x="0.5" y="0.5" width="427" height="269" rx="2"></rect>
+                        <g id="9.Box/2.Row/1.Border.bottom备份-2" fill-rule="nonzero">
+                            <rect id="BG/fill" opacity="0" x="0" y="0" width="240" height="32"></rect>
+                            <rect id="divider/fill" fill="#DBDFE6" x="1" y="31" width="426" height="1"></rect>
+                        </g>
+                        <text id="✏️Text备份-13" font-family="ArialMT, Arial" font-size="12" font-weight="normal" fill="#525A6E">
+                            <tspan x="137.978516" y="20">Source</tspan>
+                        </text>
+                        <text id="✏️Text备份-14" font-family="ArialMT, Arial" font-size="12" font-weight="normal" fill="#525A6E">
+                            <tspan x="381.648438" y="20">Target</tspan>
+                        </text>
+                        <text id="✏️Text备份-15" font-family="ArialMT, Arial" font-size="12" font-weight="normal" fill="#525A6E">
+                            <tspan x="34" y="20">2/13 items</tspan>
+                        </text>
+                        <text id="✏️Text备份-16" font-family="ArialMT, Arial" font-size="12" font-weight="normal" fill="#525A6E">
+                            <tspan x="263" y="20">2/13 items</tspan>
+                        </text>
+                        <g id="icon/z/checkboxDisable备份-2" transform="translate(12.000000, 9.000000)" fill-rule="nonzero">
+                            <rect id="fill" fill="#FFFFFF" x="0.325581395" y="0.325581395" width="13.3488372" height="13.3488372" rx="2"></rect>
+                            <rect id="outline" stroke="#DBDFE6" x="0.662790698" y="0.662790698" width="12.6744186" height="12.6744186" rx="2"></rect>
+                        </g>
+                        <g id="icon/z/checkboxDisable备份-3" transform="translate(241.000000, 9.000000)" fill-rule="nonzero">
+                            <rect id="fill" fill="#FFFFFF" x="0.325581395" y="0.325581395" width="13.3488372" height="13.3488372" rx="2"></rect>
+                            <rect id="outline" stroke="#DBDFE6" x="0.662790698" y="0.662790698" width="12.6744186" height="12.6744186" rx="2"></rect>
+                        </g>
+                        <rect id="fill备份-2" fill="#FFFFFF" fill-rule="nonzero" x="15.5" y="15.5" width="7" height="1"></rect>
+                        <rect id="fill备份-3" fill="#618FE8" fill-rule="nonzero" x="245" y="13" width="6" height="6"></rect>
+                        <text id="✏️Text备份-17" font-family="ArialMT, Arial" font-size="12" font-weight="normal" fill="#4588F4">
+                            <tspan x="34" y="95">content1</tspan>
+                        </text>
+                        <text id="✏️Text备份-18" font-family="ArialMT, Arial" font-size="12" font-weight="normal" fill="#4588F4">
+                            <tspan x="263" y="55">content1</tspan>
+                        </text>
+                        <g id="7.Icon/control/checkbox/Checked-备份" transform="translate(12.000000, 84.000000)">
+                            <g id="icon/z/checkboxChecked-Copy" fill="#618FE8" fill-rule="nonzero">
+                                <rect id="box" x="0" y="0" width="14" height="14" rx="2"></rect>
+                            </g>
+                            <g id="check" transform="translate(2.625000, 2.625000)" fill="#FFFFFF">
+                                <rect id="Rectangle" opacity="0.01" x="0" y="0" width="8.75" height="8.75"></rect>
+                                <path d="M8.28125,1.23046875 L7.59863281,1.23046875 C7.50292969,1.23046875 7.41210938,1.27441406 7.35351563,1.34960938 L3.32714844,6.45019531 L1.39648438,4.00390625 C1.33691406,3.92871094 1.24707031,3.88476562 1.15136719,3.88476562 L0.46875,3.88476562 C0.403320313,3.88476562 0.3671875,3.95996094 0.407226563,4.01074219 L3.08203125,7.39941406 C3.20703125,7.55761719 3.44726563,7.55761719 3.57324219,7.39941406 L8.34277344,1.35546875 C8.3828125,1.30566406 8.34667969,1.23046875 8.28125,1.23046875 Z" id="Path" stroke="#FFFFFF" stroke-width="0.833333333"></path>
+                            </g>
+                        </g>
+                        <g id="7.Icon/control/checkbox/Checked-备份-11" transform="translate(241.000000, 44.000000)">
+                            <g id="icon/z/checkboxChecked-Copy" fill="#618FE8" fill-rule="nonzero">
+                                <rect id="box" x="0" y="0" width="14" height="14" rx="2"></rect>
+                            </g>
+                            <g id="check" transform="translate(2.625000, 2.625000)">
+                                <rect id="Rectangle" fill="#000000" opacity="0" x="0" y="0" width="8.75" height="8.75"></rect>
+                                <path d="M8.28125,1.23046875 L7.59863281,1.23046875 C7.50292969,1.23046875 7.41210938,1.27441406 7.35351563,1.34960938 L3.32714844,6.45019531 L1.39648438,4.00390625 C1.33691406,3.92871094 1.24707031,3.88476562 1.15136719,3.88476562 L0.46875,3.88476562 C0.403320313,3.88476562 0.3671875,3.95996094 0.407226563,4.01074219 L3.08203125,7.39941406 C3.20703125,7.55761719 3.44726563,7.55761719 3.57324219,7.39941406 L8.34277344,1.35546875 C8.3828125,1.30566406 8.34667969,1.23046875 8.28125,1.23046875 Z" id="Path" stroke="#FFFFFF" stroke-width="0.833333333" fill="#FFFFFF"></path>
+                            </g>
+                        </g>
+                        <text id="✏️Text备份-19" font-family="ArialMT, Arial" font-size="12" font-weight="normal" fill="#525A6E">
+                            <tspan x="34" y="155">content3</tspan>
+                        </text>
+                        <text id="✏️Text备份-20" font-family="ArialMT, Arial" font-size="12" font-weight="normal" fill="#525A6E">
+                            <tspan x="263" y="115">content3</tspan>
+                        </text>
+                        <text id="✏️Text备份-21" font-family="ArialMT, Arial" font-size="12" font-weight="normal" fill="#525A6E">
+                            <tspan x="34" y="185">content4</tspan>
+                        </text>
+                        <text id="✏️Text备份-22" font-family="ArialMT, Arial" font-size="12" font-weight="normal" fill="#525A6E">
+                            <tspan x="263" y="145">content4</tspan>
+                        </text>
+                        <text id="✏️Text备份-23" font-family="ArialMT, Arial" font-size="12" font-weight="normal" fill="#525A6E">
+                            <tspan x="34" y="215">content5</tspan>
+                        </text>
+                        <text id="✏️Text备份-24" font-family="ArialMT, Arial" font-size="12" font-weight="normal" fill="#525A6E">
+                            <tspan x="263" y="175">content5</tspan>
+                        </text>
+                        <text id="✏️Text备份-25" font-family="ArialMT, Arial" font-size="12" font-weight="normal" fill="#525A6E">
+                            <tspan x="34" y="245">content6</tspan>
+                        </text>
+                        <text id="✏️Text备份-26" font-family="ArialMT, Arial" font-size="12" font-weight="normal" fill="#525A6E">
+                            <tspan x="263" y="205">content6</tspan>
+                        </text>
+                        <text id="✏️Text备份-27" font-family="ArialMT, Arial" font-size="12" font-weight="normal" fill="#525A6E">
+                            <tspan x="263" y="235">content7</tspan>
+                        </text>
+                        <rect id="outline备份-7" stroke="#DBDFE6" fill-rule="nonzero" x="12.5" y="144.5" width="13" height="13" rx="2"></rect>
+                        <rect id="outline备份-8" stroke="#DBDFE6" fill-rule="nonzero" x="12.5" y="174.5" width="13" height="13" rx="2"></rect>
+                        <rect id="outline备份-9" stroke="#DBDFE6" fill-rule="nonzero" x="12.5" y="204.5" width="13" height="13" rx="2"></rect>
+                        <rect id="outline备份-10" stroke="#DBDFE6" fill-rule="nonzero" x="12.5" y="234.5" width="13" height="13" rx="2"></rect>
+                        <g id="7.Icon/control/checkbox/Checked-备份-12" transform="translate(241.000000, 104.000000)">
+                            <rect id="Rectangle" x="2.625" y="2.625" width="8.75" height="8.75"></rect>
+                            <rect id="outline" stroke="#DBDFE6" fill-rule="nonzero" x="0.662790698" y="0.662790698" width="12.6744186" height="12.6744186" rx="2"></rect>
+                            <path d="M10.6968028,4.08719224 C10.8651422,4.23876574 10.8787337,4.49810641 10.7271602,4.66644584 L5.83553904,10.0991415 C5.78577241,10.1544129 5.72438818,10.1930021 5.6584218,10.2145403 C5.65272956,10.2154927 5.64702545,10.21746 5.64129056,10.2192971 C5.63394035,10.2217714 5.62658665,10.2236029 5.61919451,10.225229 C5.47596411,10.2629265 5.31715493,10.2208997 5.21110269,10.1031168 L5.21110269,10.1031168 L3.27891589,7.95720595 C3.12734239,7.78886652 3.14093386,7.52952585 3.30927329,7.37795235 C3.47761271,7.22637885 3.73695338,7.23997032 3.88852688,7.40830974 L3.88852688,7.40830974 L5.52156164,9.22183799 L10.1175492,4.11754964 C10.2691227,3.94921021 10.5284633,3.93561874 10.6968028,4.08719224 Z" id="Combined-Shape" fill="#999999" fill-rule="nonzero"></path>
+                        </g>
+                        <g id="7.Icon/control/checkbox/Checked-备份-13" transform="translate(241.000000, 134.000000)">
+                            <rect id="Rectangle" x="2.625" y="2.625" width="8.75" height="8.75"></rect>
+                            <rect id="outline" stroke="#DBDFE6" fill-rule="nonzero" x="0.662790698" y="0.662790698" width="12.6744186" height="12.6744186" rx="2"></rect>
+                            <path d="M10.6968028,4.08719224 C10.8651422,4.23876574 10.8787337,4.49810641 10.7271602,4.66644584 L5.83553904,10.0991415 C5.78577241,10.1544129 5.72438818,10.1930021 5.6584218,10.2145403 C5.65272956,10.2154927 5.64702545,10.21746 5.64129056,10.2192971 C5.63394035,10.2217714 5.62658665,10.2236029 5.61919451,10.225229 C5.47596411,10.2629265 5.31715493,10.2208997 5.21110269,10.1031168 L5.21110269,10.1031168 L3.27891589,7.95720595 C3.12734239,7.78886652 3.14093386,7.52952585 3.30927329,7.37795235 C3.47761271,7.22637885 3.73695338,7.23997032 3.88852688,7.40830974 L3.88852688,7.40830974 L5.52156164,9.22183799 L10.1175492,4.11754964 C10.2691227,3.94921021 10.5284633,3.93561874 10.6968028,4.08719224 Z" id="Combined-Shape" fill="#999999" fill-rule="nonzero"></path>
+                        </g>
+                        <g id="7.Icon/control/checkbox/Checked-备份-14" transform="translate(241.000000, 164.000000)">
+                            <rect id="Rectangle" x="2.625" y="2.625" width="8.75" height="8.75"></rect>
+                            <rect id="outline" stroke="#DBDFE6" fill-rule="nonzero" x="0.662790698" y="0.662790698" width="12.6744186" height="12.6744186" rx="2"></rect>
+                            <path d="M10.6968028,4.08719224 C10.8651422,4.23876574 10.8787337,4.49810641 10.7271602,4.66644584 L5.83553904,10.0991415 C5.78577241,10.1544129 5.72438818,10.1930021 5.6584218,10.2145403 C5.65272956,10.2154927 5.64702545,10.21746 5.64129056,10.2192971 C5.63394035,10.2217714 5.62658665,10.2236029 5.61919451,10.225229 C5.47596411,10.2629265 5.31715493,10.2208997 5.21110269,10.1031168 L5.21110269,10.1031168 L3.27891589,7.95720595 C3.12734239,7.78886652 3.14093386,7.52952585 3.30927329,7.37795235 C3.47761271,7.22637885 3.73695338,7.23997032 3.88852688,7.40830974 L3.88852688,7.40830974 L5.52156164,9.22183799 L10.1175492,4.11754964 C10.2691227,3.94921021 10.5284633,3.93561874 10.6968028,4.08719224 Z" id="Combined-Shape" fill="#999999" fill-rule="nonzero"></path>
+                        </g>
+                        <g id="7.Icon/control/checkbox/Checked-备份-15" transform="translate(241.000000, 194.000000)">
+                            <rect id="Rectangle" x="2.625" y="2.625" width="8.75" height="8.75"></rect>
+                            <rect id="outline" stroke="#DBDFE6" fill-rule="nonzero" x="0.662790698" y="0.662790698" width="12.6744186" height="12.6744186" rx="2"></rect>
+                        </g>
+                        <g id="7.Icon/control/checkbox/Checked-备份-16" transform="translate(241.000000, 224.000000)">
+                            <rect id="Rectangle" x="2.625" y="2.625" width="8.75" height="8.75"></rect>
+                            <rect id="outline" stroke="#DBDFE6" fill-rule="nonzero" x="0.662790698" y="0.662790698" width="12.6744186" height="12.6744186" rx="2"></rect>
+                        </g>
+                        <text id="✏️Text备份-28" font-family="ArialMT, Arial" font-size="12" font-weight="normal" fill="#4588F4">
+                            <tspan x="34" y="125">content2</tspan>
+                        </text>
+                        <text id="✏️Text备份-29" font-family="ArialMT, Arial" font-size="12" font-weight="normal" fill="#4588F4">
+                            <tspan x="263" y="85">content2</tspan>
+                        </text>
+                        <g id="7.Icon/control/checkbox/Checked-备份-2" transform="translate(12.000000, 114.000000)">
+                            <g id="icon/z/checkboxChecked-Copy" fill="#618FE8" fill-rule="nonzero">
+                                <rect id="box" x="0" y="0" width="14" height="14" rx="2"></rect>
+                            </g>
+                            <g id="check" transform="translate(2.625000, 2.625000)">
+                                <rect id="Rectangle" fill="#618FE8" opacity="0" x="0" y="0" width="8.75" height="8.75"></rect>
+                                <path d="M8.28125,1.23046875 L7.59863281,1.23046875 C7.50292969,1.23046875 7.41210938,1.27441406 7.35351563,1.34960938 L3.32714844,6.45019531 L1.39648438,4.00390625 C1.33691406,3.92871094 1.24707031,3.88476562 1.15136719,3.88476562 L0.46875,3.88476562 C0.403320313,3.88476562 0.3671875,3.95996094 0.407226563,4.01074219 L3.08203125,7.39941406 C3.20703125,7.55761719 3.44726563,7.55761719 3.57324219,7.39941406 L8.34277344,1.35546875 C8.3828125,1.30566406 8.34667969,1.23046875 8.28125,1.23046875 Z" id="Path" stroke="#FFFFFF" stroke-width="0.833333333" fill="#FFFFFF"></path>
+                            </g>
+                        </g>
+                        <g id="7.Icon/control/checkbox/Checked-备份-17" transform="translate(241.000000, 74.000000)">
+                            <g id="icon/z/checkboxChecked-Copy" fill="#618FE8" fill-rule="nonzero">
+                                <rect id="box" x="0" y="0" width="14" height="14" rx="2"></rect>
+                            </g>
+                            <g id="check" transform="translate(2.625000, 2.625000)">
+                                <rect id="Rectangle" fill="#618FE8" opacity="0" x="0" y="0" width="8.75" height="8.75"></rect>
+                                <path d="M8.28125,1.23046875 L7.59863281,1.23046875 C7.50292969,1.23046875 7.41210938,1.27441406 7.35351563,1.34960938 L3.32714844,6.45019531 L1.39648438,4.00390625 C1.33691406,3.92871094 1.24707031,3.88476562 1.15136719,3.88476562 L0.46875,3.88476562 C0.403320313,3.88476562 0.3671875,3.95996094 0.407226563,4.01074219 L3.08203125,7.39941406 C3.20703125,7.55761719 3.44726563,7.55761719 3.57324219,7.39941406 L8.34277344,1.35546875 C8.3828125,1.30566406 8.34667969,1.23046875 8.28125,1.23046875 Z" id="Path" stroke="#FFFFFF" stroke-width="0.833333333" fill="#FFFFFF"></path>
+                            </g>
+                        </g>
+                        <g id="编组备份" transform="translate(12.000000, 40.000000)">
+                            <g id="9.Box/1.Cards/4.Border" fill-rule="nonzero">
+                                <rect id="BG/fill" fill="#FFFFFF" x="1" y="1" width="163" height="30" rx="3"></rect>
+                                <rect id="outline" stroke="#DBDFE6" x="0.5" y="0.5" width="163" height="31" rx="4"></rect>
+                            </g>
+                            <text id="✏️Text" font-family="ArialMT, Arial" font-size="12" font-weight="normal" fill="#999999">
+                                <tspan x="12" y="20">Search here</tspan>
+                            </text>
+                            <path d="M151.060154,10 C148.331865,10 146.120309,12.2115559 146.120309,14.9398456 C146.120309,16.0821849 146.508672,17.1335271 147.158651,17.9703759 L143.03778,22.0912471 C142.987407,22.1416206 142.987407,22.224493 143.03778,22.2748664 L143.725134,22.9622199 C143.775507,23.0125934 143.858379,23.0125934 143.908753,22.9622199 L148.029624,18.8413487 C148.866473,19.4913284 149.917815,19.8796913 151.060154,19.8796913 C153.788444,19.8796913 156,17.6681354 156,14.9398456 C156,12.2115559 153.788444,10 151.060154,10 Z M153.679573,17.5592638 C152.980844,18.2596169 152.049748,18.6447299 151.060154,18.6447299 C150.07056,18.6447299 149.139464,18.2596169 148.440736,17.5592638 C147.740383,16.8605356 147.35527,15.9294397 147.35527,14.9398456 C147.35527,13.9502516 147.740383,13.0191557 148.440736,12.3204275 C149.139464,11.6200744 150.07056,11.2349614 151.060154,11.2349614 C152.049748,11.2349614 152.980844,11.6200744 153.679573,12.3204275 C154.379926,13.0191557 154.765039,13.9502516 154.765039,14.9398456 C154.765039,15.9294397 154.379926,16.8605356 153.679573,17.5592638 Z" id="fill" fill="#000000" fill-rule="nonzero" opacity="0.25"></path>
+                        </g>
+                        <rect id="矩形备份-15" fill="#DBDFE6" x="208" y="1" width="1" height="270"></rect>
+                        <g id="编组-8" transform="translate(196.000000, 126.000000)" fill-rule="nonzero">
+                            <g id="9.Box/1.Cards/8.Primary备份-2" fill="#618FE8">
+                                <g id="Z/Shape/RectangleRC/4px/RC-A">
+                                    <rect id="outline" x="0" y="0" width="24" height="24" rx="2"></rect>
+                                </g>
+                            </g>
+                            <g id="9.Box/1.Cards/8.Primary备份-3" transform="translate(0.000000, 24.000000)" fill="#FFFFFF" stroke="#DBDFE6">
+                                <g id="Z/Shape/RectangleRC/4px/RC-A">
+                                    <rect id="outline" x="0.5" y="0.5" width="23" height="23" rx="2"></rect>
+                                </g>
+                            </g>
+                            <g id="箭头_右备份-10" transform="translate(4.000000, 4.000000)">
+                                <rect id="矩形" fill="#000000" opacity="0" x="0" y="0" width="16" height="16"></rect>
+                                <path d="M10.4935781,7.99548438 L9.87610937,7.37801562 L6.27154687,3.77345313 L6.27121875,3.77378125 C6.26709823,3.76926145 6.26288377,3.76482819 6.25857812,3.76048437 C6.08771875,3.589625 5.81071875,3.589625 5.63985937,3.76048437 C5.469,3.93134375 5.469,4.20834375 5.63985937,4.37920313 C5.64420312,4.38354688 5.64867187,4.38771875 5.65315625,4.39184375 L5.65282812,4.39217188 L9.257375,7.99671875 L5.6333125,11.6207813 C5.46245312,11.7916406 5.46245312,12.0686406 5.6333125,12.2395 C5.80417187,12.4103594 6.08117187,12.4103594 6.25203125,12.2395 L10.4948125,7.99671875 L10.4935781,7.99548438 Z" id="路径" fill="#FFFFFF"></path>
+                            </g>
+                            <g id="箭头_右备份-11" transform="translate(12.000000, 36.000000) scale(-1, 1) translate(-12.000000, -36.000000) translate(4.000000, 28.000000)">
+                                <rect id="矩形" fill="#000000" opacity="0" x="0" y="0" width="16" height="16"></rect>
+                                <path d="M10.4935781,7.99548438 L9.87610937,7.37801562 L6.27154687,3.77345313 L6.27121875,3.77378125 C6.26709823,3.76926145 6.26288377,3.76482819 6.25857812,3.76048437 C6.08771875,3.589625 5.81071875,3.589625 5.63985937,3.76048437 C5.469,3.93134375 5.469,4.20834375 5.63985937,4.37920313 C5.64420312,4.38354688 5.64867187,4.38771875 5.65315625,4.39184375 L5.65282812,4.39217188 L9.257375,7.99671875 L5.6333125,11.6207813 C5.46245312,11.7916406 5.46245312,12.0686406 5.6333125,12.2395 C5.80417187,12.4103594 6.08117187,12.4103594 6.25203125,12.2395 L10.4948125,7.99671875 L10.4935781,7.99548438 Z" id="路径" fill="#525A6E"></path>
+                            </g>
+                        </g>
+                    </g>
+                    <g id="style2" transform="translate(12.000000, 14.000000)" fill="#525A6E" font-family="ArialMT, Arial" font-size="12" font-weight="normal">
+                        <text>
+                            <tspan x="0.65234375" y="15">style2</tspan>
+                        </text>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

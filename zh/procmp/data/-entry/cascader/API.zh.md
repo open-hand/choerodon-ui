@@ -24,10 +24,10 @@ title: API
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| singleMenuStyle | 由于渲染在body下可以方便按照业务配置弹出框的大小 | `CSSProperties` |  |
-| singleMenuItemStyle | 由于渲染在body下可以方便按照业务配置超出大小样式和最小宽度等 | `CSSProperties` |  |
-| singlePleaseRender | 设置需要的提示配置 | `({key,className,text}:{key: string,className: string,text: string}) => ReactElement<any>` |  |
-| singleMenuItemRender | 头部可以渲染出想要的tab样子 | ` (title:string) => ReactElement<any>` |  |
+| singleMenuStyle | 由于渲染在body下可以方便按照业务配置弹出框的大小 | CSSProperties |  |
+| singleMenuItemStyle | 由于渲染在body下可以方便按照业务配置超出大小样式和最小宽度等 | CSSProperties |  |
+| singlePleaseRender | 设置需要的提示配置 | ({key,className,text}) => ReactElement |  |
+| singleMenuItemRender | 头部可以渲染出想要的tab样子 | (title:string) => ReactElement |  |
 
 无法配置的参数 `expandIcon`，
 

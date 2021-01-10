@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="932px" height="182px" viewBox="0 0 932 182" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>style1/editor</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="100%" y1="50%" x2="0%" y2="50%" id="linearGradient-1">
+            <stop stop-color="#F8FBFF" offset="0%"></stop>
+            <stop stop-color="#FCFDFF" offset="49.4462022%"></stop>
+            <stop stop-color="#F8FBFF" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="画板备份" transform="translate(-52.000000, -1183.000000)">
+            <g id="style1/editor" transform="translate(52.000000, 1183.000000)">
+                <rect id="Rectangle" fill="#FAFAFA" x="0" y="1" width="932" height="32" rx="2"></rect>
+                <rect id="矩形" fill="url(#linearGradient-1)" x="0" y="71" width="932" height="36"></rect>
+                <rect id="矩形" fill="url(#linearGradient-1)" x="0" y="145" width="932" height="36"></rect>
+                <rect id="矩形" stroke="#B8D7FF" fill="#EFF6FF" x="16.5" y="38.5" width="163" height="27" rx="2"></rect>
+                <g id="编组-2" transform="translate(162.000000, 47.000000)">
+                    <rect id="矩形" fill="#D8D8D8" opacity="0.01" x="0" y="0" width="10" height="10"></rect>
+                    <path d="M3.07437422,1.34394406 C3.3505166,1.34394406 3.57437422,1.56780169 3.57437422,1.84394406 L3.57437422,5.34394406 L7.07437422,5.34394406 C7.3505166,5.34394406 7.57437422,5.56780169 7.57437422,5.84394406 C7.57437422,6.12008644 7.3505166,6.34394406 7.07437422,6.34394406 L3.07437422,6.34394406 L3.07437422,6.34394406 C2.79823185,6.34394406 2.57437422,6.12008644 2.57437422,5.84394406 L2.57437422,1.84394406 C2.57437422,1.56780169 2.79823185,1.34394406 3.07437422,1.34394406 Z" id="矩形-2" fill="#666666" transform="translate(5.074374, 3.843944) rotate(-45.000000) translate(-5.074374, -3.843944) "></path>
+                </g>
+                <rect id="矩形" stroke="#B8D7FF" fill="#EFF6FF" x="196.5" y="38.5" width="284" height="27" rx="2"></rect>
+                <rect id="矩形" stroke="#B8D7FF" fill="#EFF6FF" x="497.5" y="38.5" width="173" height="27" rx="2"></rect>
+                <rect id="矩形" stroke="#B8D7FF" fill="#EFF6FF" x="687.5" y="38.5" width="140" height="27" rx="2"></rect>
+                <g id="编组-3" transform="translate(24.000000, 10.000000)" font-family="Arial-BoldMT, Arial" font-size="12" font-weight="bold">
+                    <text id="Title" fill="#AAADBA">
+                        <tspan x="0" y="11">Title</tspan>
+                    </text>
+                    <text id="采购管理" fill="#5A6677">
+                        <tspan x="0" y="46">Purchase</tspan>
+                    </text>
+                    <text id="销售管理" fill="#5A6677">
+                        <tspan x="0" y="83">Sale</tspan>
+                    </text>
+                    <text id="售后管理" fill="#5A6677">
+                        <tspan x="0" y="120">after-sales</tspan>
+                    </text>
+                    <text id="退货管理" fill="#5A6677">
+                        <tspan x="0" y="157">refund</tspan>
+                    </text>
+                </g>
+                <g id="编组-5" transform="translate(204.000000, 8.000000)">
+                    <text id="Describe-text.Descri" font-family="Arial-BoldMT, Arial" font-size="12" font-weight="bold" fill="#5A6677">
+                        <tspan x="0" y="48">Describe text.Describe text…</tspan>
+                    </text>
+                    <text id="Describe-text.Descri" font-family="Arial-BoldMT, Arial" font-size="12" font-weight="bold" fill="#5A6677">
+                        <tspan x="0" y="85">Describe text.Describe text…</tspan>
+                    </text>
+                    <text id="Describe-text.Descri" font-family="Arial-BoldMT, Arial" font-size="12" font-weight="bold" fill="#5A6677">
+                        <tspan x="0" y="122">Describe text.Describe text…</tspan>
+                    </text>
+                    <text id="Describe-text.Descri" font-family="Arial-BoldMT, Arial" font-size="12" font-weight="bold" fill="#5A6677">
+                        <tspan x="0" y="159">Describe text.Describe text…</tspan>
+                    </text>
+                    <text id="Description" font-family="Arial-BoldMT, Arial" font-size="12" font-weight="bold" fill="#AAADBA">
+                        <tspan x="0" y="13">Description</tspan>
+                    </text>
+                    <g id="编组" transform="translate(73.000000, 0.000000)">
+                        <rect id="矩形" fill-opacity="0.01" fill="#F0F0F0" x="0" y="0" width="20" height="20" rx="4"></rect>
+                        <path d="M11.7142857,10 L11.7142857,13.7423703 L8.28571429,16 L8.28571429,10 L11.7142857,10 Z M4,4 L16,4 L11.7142857,9.14285714 L8.28571429,9.14285714 L4,4 Z" id="screen-s" fill="#AAADBA"></path>
+                    </g>
+                </g>
+                <g id="编组-6" transform="translate(505.000000, 10.000000)" font-family="Arial-BoldMT, Arial" font-size="12" font-weight="bold">
+                    <text id="管理员" fill="#5A6677">
+                        <tspan x="0" y="46">Administrators</tspan>
+                    </text>
+                    <text id="管理员" fill="#5A6677">
+                        <tspan x="0" y="83">Administrators</tspan>
+                    </text>
+                    <text id="管理员" fill="#5A6677">
+                        <tspan x="0" y="120">Administrators</tspan>
+                    </text>
+                    <text id="管理员" fill="#5A6677">
+                        <tspan x="0" y="157">Administrators</tspan>
+                    </text>
+                    <text id="发布人" fill="#AAADBA">
+                        <tspan x="0" y="11">Issuer</tspan>
+                    </text>
+                </g>
+                <g id="编组-6" transform="translate(695.000000, 10.000000)" font-family="Arial-BoldMT, Arial" font-size="12" font-weight="bold">
+                    <text id="备注文案" fill="#5A6677">
+                        <tspan x="0" y="46">Remark text</tspan>
+                    </text>
+                    <text id="备注文案" fill="#5A6677">
+                        <tspan x="0" y="83">Remark text</tspan>
+                    </text>
+                    <text id="备注文案" fill="#5A6677">
+                        <tspan x="0" y="120">Remark text</tspan>
+                    </text>
+                    <text id="备注文案" fill="#5A6677">
+                        <tspan x="0" y="157">Remark text</tspan>
+                    </text>
+                    <text id="备注" fill="#AAADBA">
+                        <tspan x="0" y="11">Remark</tspan>
+                    </text>
+                </g>
+                <g id="编组-6" transform="translate(892.000000, 81.000000)">
+                    <g id="编组-10">
+                        <rect id="矩形" fill="#D8D8D8" opacity="0.01" x="0" y="0" width="16" height="16"></rect>
+                        <path d="M8.5,12 C9.05228475,12 9.5,12.4477153 9.5,13 L9.5,14 C9.5,14.5522847 9.05228475,15 8.5,15 L7.5,15 C6.94771525,15 6.5,14.5522847 6.5,14 L6.5,13 C6.5,12.4477153 6.94771525,12 7.5,12 L8.5,12 Z M8.5,6.5 C9.05228475,6.5 9.5,6.94771525 9.5,7.5 L9.5,8.5 C9.5,9.05228475 9.05228475,9.5 8.5,9.5 L7.5,9.5 C6.94771525,9.5 6.5,9.05228475 6.5,8.5 L6.5,7.5 C6.5,6.94771525 6.94771525,6.5 7.5,6.5 L8.5,6.5 Z M8.5,1 C9.05228475,1 9.5,1.44771525 9.5,2 L9.5,3 C9.5,3.55228475 9.05228475,4 8.5,4 L7.5,4 C6.94771525,4 6.5,3.55228475 6.5,3 L6.5,2 C6.5,1.44771525 6.94771525,1 7.5,1 L8.5,1 Z" id="矩形-5" fill="#5A6677"></path>
+                    </g>
+                    <g id="编组-10" transform="translate(0.000000, 37.000000)">
+                        <rect id="矩形" fill="#D8D8D8" opacity="0.01" x="0" y="0" width="16" height="16"></rect>
+                        <path d="M8.5,12 C9.05228475,12 9.5,12.4477153 9.5,13 L9.5,14 C9.5,14.5522847 9.05228475,15 8.5,15 L7.5,15 C6.94771525,15 6.5,14.5522847 6.5,14 L6.5,13 C6.5,12.4477153 6.94771525,12 7.5,12 L8.5,12 Z M8.5,6.5 C9.05228475,6.5 9.5,6.94771525 9.5,7.5 L9.5,8.5 C9.5,9.05228475 9.05228475,9.5 8.5,9.5 L7.5,9.5 C6.94771525,9.5 6.5,9.05228475 6.5,8.5 L6.5,7.5 C6.5,6.94771525 6.94771525,6.5 7.5,6.5 L8.5,6.5 Z M8.5,1 C9.05228475,1 9.5,1.44771525 9.5,2 L9.5,3 C9.5,3.55228475 9.05228475,4 8.5,4 L7.5,4 C6.94771525,4 6.5,3.55228475 6.5,3 L6.5,2 C6.5,1.44771525 6.94771525,1 7.5,1 L8.5,1 Z" id="矩形-5" fill="#5A6677"></path>
+                    </g>
+                    <g id="编组-10" transform="translate(0.000000, 74.000000)">
+                        <rect id="矩形" fill="#D8D8D8" opacity="0.01" x="0" y="0" width="16" height="16"></rect>
+                        <path d="M8.5,12 C9.05228475,12 9.5,12.4477153 9.5,13 L9.5,14 C9.5,14.5522847 9.05228475,15 8.5,15 L7.5,15 C6.94771525,15 6.5,14.5522847 6.5,14 L6.5,13 C6.5,12.4477153 6.94771525,12 7.5,12 L8.5,12 Z M8.5,6.5 C9.05228475,6.5 9.5,6.94771525 9.5,7.5 L9.5,8.5 C9.5,9.05228475 9.05228475,9.5 8.5,9.5 L7.5,9.5 C6.94771525,9.5 6.5,9.05228475 6.5,8.5 L6.5,7.5 C6.5,6.94771525 6.94771525,6.5 7.5,6.5 L8.5,6.5 Z M8.5,1 C9.05228475,1 9.5,1.44771525 9.5,2 L9.5,3 C9.5,3.55228475 9.05228475,4 8.5,4 L7.5,4 C6.94771525,4 6.5,3.55228475 6.5,3 L6.5,2 C6.5,1.44771525 6.94771525,1 7.5,1 L8.5,1 Z" id="矩形-5" fill="#5A6677"></path>
+                    </g>
+                </g>
+                <text id="Save" font-family="Arial-BoldMT, Arial" font-size="12" font-weight="bold" fill="#4F7DE7">
+                    <tspan x="852" y="56">Save</tspan>
+                </text>
+                <text id="Cancel" font-family="ArialMT, Arial" font-size="12" font-weight="normal" fill="#AAADBA">
+                    <tspan x="884" y="56">Cancel</tspan>
+                </text>
+                <rect id="Rectangle" fill="#F1F1F1" x="0" y="70" width="932" height="1"></rect>
+                <rect id="Rectangle" fill="#F1F1F1" x="0" y="107" width="932" height="1"></rect>
+                <rect id="Rectangle" fill="#F1F1F1" x="0" y="144" width="932" height="1"></rect>
+                <rect id="Rectangle" fill="#F1F1F1" x="0" y="181" width="932" height="1"></rect>
+                <rect id="Rectangle" fill="#F1F1F1" x="0" y="33" width="932" height="1"></rect>
+                <rect id="Rectangle" fill="#F1F1F1" x="0" y="0" width="932" height="1"></rect>
+                <g id="编组" transform="translate(57.000000, 7.000000)">
+                    <rect id="矩形" fill-opacity="0.01" fill="#F0F0F0" x="0" y="0" width="20" height="20" rx="4"></rect>
+                    <path d="M11.7142857,10 L11.7142857,13.7423703 L8.28571429,16 L8.28571429,10 L11.7142857,10 Z M4,4 L16,4 L11.7142857,9.14285714 L8.28571429,9.14285714 L4,4 Z" id="screen-s" fill="#AAADBA"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

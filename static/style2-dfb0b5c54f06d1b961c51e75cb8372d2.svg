@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="494px" height="210px" viewBox="0 0 494 210" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>cascader/style2</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M52,21.9912443 C52,20.8915104 52.8916855,20 53.9956621,20 L250.004338,20 C251.106512,20 252,20.8998975 252,21.9912443 L252,46.0087557 C252,47.1084896 251.108315,48 250.004338,48 L53.9956621,48 C52.8934884,48 52,47.1001025 52,46.0087557 L52,21.9912443 Z" id="path-1"></path>
+        <filter x="-3.0%" y="-21.4%" width="106.0%" height="142.9%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0.309803922   0 0 0 0 0.490196078   0 0 0 0 0.905882353  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <path d="M52,53.9965863 C52,52.8939022 52.8950515,52 53.9975379,52 L150.002462,52 C151.105672,52 152,52.8970774 152,53.9965863 L152,135.003414 C152,136.106098 151.104949,137 150.002462,137 L53.9975379,137 C52.8943282,137 52,136.102923 52,135.003414 L52,53.9965863 Z" id="path-3"></path>
+        <filter x="-5.0%" y="-4.7%" width="110.0%" height="111.8%" filterUnits="objectBoundingBox" id="filter-4">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="1.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.2 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <path d="M158,53.9930696 C158,52.8923277 158.895051,52 159.997538,52 L256.002462,52 C257.105672,52 258,52.9023082 258,53.9930696 L258,106.00693 C258,107.107672 257.104949,108 256.002462,108 L159.997538,108 C158.894328,108 158,107.097692 158,106.00693 L158,53.9930696 Z" id="path-5"></path>
+        <filter x="-5.0%" y="-7.1%" width="110.0%" height="117.9%" filterUnits="objectBoundingBox" id="filter-6">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="1.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.2 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <path d="M264,53.9912443 C264,52.8915104 264.895051,52 265.997538,52 L362.002462,52 C363.105672,52 364,52.8998975 364,53.9912443 L364,78.0087557 C364,79.1084896 363.104949,80 362.002462,80 L265.997538,80 C264.894328,80 264,79.1001025 264,78.0087557 L264,53.9912443 Z" id="path-7"></path>
+        <filter x="-5.0%" y="-14.3%" width="110.0%" height="135.7%" filterUnits="objectBoundingBox" id="filter-8">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="1.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.2 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="组件补充-中文" transform="translate(-730.000000, -1717.000000)">
+            <g id="cascader/style2" transform="translate(730.000000, 1717.000000)">
+                <rect id="矩形备份-3" fill-opacity="0.01" fill="#FAFAFA" x="0" y="0" width="494" height="210"></rect>
+                <g id="Rectangle-26-Copy-23备份-7">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                    <path stroke="#4F7DE7" stroke-width="1" d="M52.5,21.9912443 L52.5,46.0087557 C52.5,46.8269339 53.1726026,47.5 53.9956621,47.5 L250.004338,47.5 C250.831728,47.5 251.5,46.8327905 251.5,46.0087557 L251.5,21.9912443 C251.5,21.1730661 250.827397,20.5 250.004338,20.5 L53.9956621,20.5 C53.1682725,20.5 52.5,21.1672095 52.5,21.9912443 Z" stroke-linejoin="square" fill="#FFFFFF" fill-rule="evenodd"></path>
+                </g>
+                <g id="Rectangle-26-Copy-23备份-9">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-4)" xlink:href="#path-3"></use>
+                    <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-3"></use>
+                </g>
+                <g id="Rectangle-26-Copy-23备份-10">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-6)" xlink:href="#path-5"></use>
+                    <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-5"></use>
+                </g>
+                <g id="Rectangle-26-Copy-23备份-11">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-8)" xlink:href="#path-7"></use>
+                    <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-7"></use>
+                </g>
+                <rect id="矩形备份-9" fill="#EFF6FF" x="52" y="81" width="100" height="28"></rect>
+                <rect id="矩形备份-5" fill="#EFF6FF" x="158" y="52" width="100" height="28"></rect>
+                <rect id="矩形备份-6" fill="#EFF6FF" x="264" y="52" width="100" height="28"></rect>
+                <text id="层级1/层级2/层级3" font-family="MicrosoftYaHei, Microsoft YaHei" font-size="12" font-weight="normal" line-spacing="20" fill="#333333">
+                    <tspan x="60" y="37">层级1/层级2/层级3</tspan>
+                </text>
+                <text id="层级1" font-family="MicrosoftYaHei, Microsoft YaHei" font-size="12" font-weight="normal" line-spacing="20" fill="#333333">
+                    <tspan x="60" y="69">层级1</tspan>
+                </text>
+                <text id="层级1备份" font-family="MicrosoftYaHei, Microsoft YaHei" font-size="12" font-weight="normal" line-spacing="20" fill="#333333">
+                    <tspan x="60" y="97">层级1</tspan>
+                </text>
+                <text id="层级1备份-2" font-family="MicrosoftYaHei, Microsoft YaHei" font-size="12" font-weight="normal" line-spacing="20" fill="#AAADBA">
+                    <tspan x="60" y="125">层级1</tspan>
+                </text>
+                <text id="层级2" font-family="MicrosoftYaHei, Microsoft YaHei" font-size="12" font-weight="normal" line-spacing="20" fill="#333333">
+                    <tspan x="166" y="69">层级2</tspan>
+                </text>
+                <text id="层级2备份" font-family="MicrosoftYaHei, Microsoft YaHei" font-size="12" font-weight="normal" line-spacing="20" fill="#333333">
+                    <tspan x="166" y="97">层级2</tspan>
+                </text>
+                <text id="层级3" font-family="MicrosoftYaHei, Microsoft YaHei" font-size="12" font-weight="normal" line-spacing="20" fill="#333333">
+                    <tspan x="272" y="69">层级3</tspan>
+                </text>
+                <g id="delete" transform="translate(236.000000, 29.000000)">
+                    <rect id="矩形" fill="#D8D8D8" opacity="0.01" x="0" y="0" width="10" height="10"></rect>
+                    <path d="M7.82842712,2.17157288 C8.02368927,2.36683502 8.02368927,2.68341751 7.82842712,2.87867966 L5.70710678,5 L7.82842712,7.12132034 C8.02368927,7.31658249 8.02368927,7.63316498 7.82842712,7.82842712 C7.63316498,8.02368927 7.31658249,8.02368927 7.12132034,7.82842712 L5,5.70710678 L2.87867966,7.82842712 C2.68341751,8.02368927 2.36683502,8.02368927 2.17157288,7.82842712 C1.97631073,7.63316498 1.97631073,7.31658249 2.17157288,7.12132034 L4.29289322,5 L2.17157288,2.87867966 C1.97631073,2.68341751 1.97631073,2.36683502 2.17157288,2.17157288 C2.36683502,1.97631073 2.68341751,1.97631073 2.87867966,2.17157288 L5,4.29289322 L7.12132034,2.17157288 C7.31658249,1.97631073 7.63316498,1.97631073 7.82842712,2.17157288 Z" id="路径" fill="#666666"></path>
+                </g>
+                <g id="arrow-down备份" transform="translate(141.000000, 66.000000) rotate(-90.000000) translate(-141.000000, -66.000000) translate(136.000000, 61.000000)">
+                    <rect id="矩形" fill="#D8D8D8" opacity="0.01" x="0" y="0" width="10" height="10"></rect>
+                    <path d="M3.07437422,1.34394406 C3.3505166,1.34394406 3.57437422,1.56780169 3.57437422,1.84394406 L3.57437422,5.34394406 L7.07437422,5.34394406 C7.3505166,5.34394406 7.57437422,5.56780169 7.57437422,5.84394406 C7.57437422,6.12008644 7.3505166,6.34394406 7.07437422,6.34394406 L3.07437422,6.34394406 L3.07437422,6.34394406 C2.79823185,6.34394406 2.57437422,6.12008644 2.57437422,5.84394406 L2.57437422,1.84394406 C2.57437422,1.56780169 2.79823185,1.34394406 3.07437422,1.34394406 Z" id="矩形-2" fill="#666666" transform="translate(5.074374, 3.843944) rotate(-45.000000) translate(-5.074374, -3.843944) "></path>
+                </g>
+                <g id="arrow-down备份-3" transform="translate(141.000000, 94.000000) rotate(-90.000000) translate(-141.000000, -94.000000) translate(136.000000, 89.000000)">
+                    <rect id="矩形" fill="#D8D8D8" opacity="0.01" x="0" y="0" width="10" height="10"></rect>
+                    <path d="M3.07437422,1.34394406 C3.3505166,1.34394406 3.57437422,1.56780169 3.57437422,1.84394406 L3.57437422,5.34394406 L7.07437422,5.34394406 C7.3505166,5.34394406 7.57437422,5.56780169 7.57437422,5.84394406 C7.57437422,6.12008644 7.3505166,6.34394406 7.07437422,6.34394406 L3.07437422,6.34394406 L3.07437422,6.34394406 C2.79823185,6.34394406 2.57437422,6.12008644 2.57437422,5.84394406 L2.57437422,1.84394406 C2.57437422,1.56780169 2.79823185,1.34394406 3.07437422,1.34394406 Z" id="矩形-2" fill="#666666" transform="translate(5.074374, 3.843944) rotate(-45.000000) translate(-5.074374, -3.843944) "></path>
+                </g>
+                <g id="arrow-down备份-5" transform="translate(141.000000, 122.000000) rotate(-90.000000) translate(-141.000000, -122.000000) translate(136.000000, 117.000000)">
+                    <rect id="矩形" fill="#D8D8D8" opacity="0.01" x="0" y="0" width="10" height="10"></rect>
+                    <path d="M3.07437422,1.34394406 C3.3505166,1.34394406 3.57437422,1.56780169 3.57437422,1.84394406 L3.57437422,5.34394406 L7.07437422,5.34394406 C7.3505166,5.34394406 7.57437422,5.56780169 7.57437422,5.84394406 C7.57437422,6.12008644 7.3505166,6.34394406 7.07437422,6.34394406 L3.07437422,6.34394406 L3.07437422,6.34394406 C2.79823185,6.34394406 2.57437422,6.12008644 2.57437422,5.84394406 L2.57437422,1.84394406 C2.57437422,1.56780169 2.79823185,1.34394406 3.07437422,1.34394406 Z" id="矩形-2" fill="#AAADBA" transform="translate(5.074374, 3.843944) rotate(-45.000000) translate(-5.074374, -3.843944) "></path>
+                </g>
+                <g id="arrow-down备份-2" transform="translate(247.000000, 66.000000) rotate(-90.000000) translate(-247.000000, -66.000000) translate(242.000000, 61.000000)">
+                    <rect id="矩形" fill="#D8D8D8" opacity="0.01" x="0" y="0" width="10" height="10"></rect>
+                    <path d="M3.07437422,1.34394406 C3.3505166,1.34394406 3.57437422,1.56780169 3.57437422,1.84394406 L3.57437422,5.34394406 L7.07437422,5.34394406 C7.3505166,5.34394406 7.57437422,5.56780169 7.57437422,5.84394406 C7.57437422,6.12008644 7.3505166,6.34394406 7.07437422,6.34394406 L3.07437422,6.34394406 L3.07437422,6.34394406 C2.79823185,6.34394406 2.57437422,6.12008644 2.57437422,5.84394406 L2.57437422,1.84394406 C2.57437422,1.56780169 2.79823185,1.34394406 3.07437422,1.34394406 Z" id="矩形-2" fill="#666666" transform="translate(5.074374, 3.843944) rotate(-45.000000) translate(-5.074374, -3.843944) "></path>
+                </g>
+                <g id="arrow-down备份-4" transform="translate(247.000000, 94.000000) rotate(-90.000000) translate(-247.000000, -94.000000) translate(242.000000, 89.000000)">
+                    <rect id="矩形" fill="#D8D8D8" opacity="0.01" x="0" y="0" width="10" height="10"></rect>
+                    <path d="M3.07437422,1.34394406 C3.3505166,1.34394406 3.57437422,1.56780169 3.57437422,1.84394406 L3.57437422,5.34394406 L7.07437422,5.34394406 C7.3505166,5.34394406 7.57437422,5.56780169 7.57437422,5.84394406 C7.57437422,6.12008644 7.3505166,6.34394406 7.07437422,6.34394406 L3.07437422,6.34394406 L3.07437422,6.34394406 C2.79823185,6.34394406 2.57437422,6.12008644 2.57437422,5.84394406 L2.57437422,1.84394406 C2.57437422,1.56780169 2.79823185,1.34394406 3.07437422,1.34394406 Z" id="矩形-2" fill="#666666" transform="translate(5.074374, 3.843944) rotate(-45.000000) translate(-5.074374, -3.843944) "></path>
+                </g>
+                <text id="样式二" font-family="MicrosoftYaHei, Microsoft YaHei" font-size="12" font-weight="normal" line-spacing="22" fill="#525A6E">
+                    <tspan x="8" y="35">样式二</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>
