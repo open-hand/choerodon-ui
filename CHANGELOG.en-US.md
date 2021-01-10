@@ -30,6 +30,7 @@ timeline: true
 - 💄 `<pro>DataSet`: Optimized getText property.
 - 💄 `<pro>Cascader`: Optimized the not found display of results.
 - 💄 `<pro>Table`: Optimized the width and style of virtual scroll fixed column.
+- 💄 `<pro>Select`: Optimized the multiple selection of Select cannot select option rendering.
 - 💄 `<pro>DatePicker`: Optimized the time selection operation of dateTimePicker in datePicker.
 - 🐞 `Tabs`: Fixed Tab can't scroll when in min width screen.
 - 🐞 `message`: Fixed the error node insertion error of Pro Feedback component request error caused by message.
