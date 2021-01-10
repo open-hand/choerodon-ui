@@ -1179,7 +1179,7 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       },
       `${prefixCls}-multiple-block`,
     );
-    this.mutipleValidateMessageLength = 0
+    this.mutipleValidateMessageLength = 0;
     const tags = values.slice(0, maxTagCount).map(v => {
       const key = this.getValueKey(v);
       const repeat = repeats.get(key) || 0;

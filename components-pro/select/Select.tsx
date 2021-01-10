@@ -805,7 +805,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
       },
       `${prefixCls}-multiple-block`,
     );
-    this.mutipleValidateMessageLength = 0
+    this.mutipleValidateMessageLength = 0;
     const tags = values.slice(0, maxTagCount).map(v => {
       const key = this.getValueKey(v);
       const repeat = repeats.get(key) || 0;
@@ -864,6 +864,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
         const omittedValues = values.slice(maxTagCount, valueLength);
         content =
           typeof maxTagPlaceholder === 'function'
+            // @ts-ignore
             ? maxTagPlaceholder(omittedValues)
             : maxTagPlaceholder;
       }

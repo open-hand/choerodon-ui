@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.78
+
+`2020-01-10`
+
 - 🌟 `configure`: 新增 modalAutoCenter，modalKeyboard，tableKeyboard，tableFilterAdapter，tableFilterSuffix，tableFilterSearchText 全局属性。
 - 🌟 `Tabs`: 新增 keyboard 属性。
 - 🌟 `<pro>Select`: 新增 noCache 属性。
@@ -29,8 +33,8 @@ timeline: true
 - 💄 `configure`: 优化 lookupCache 全局配置。
 - 💄 `<pro>DataSet`: 优化 getText 属性。
 - 💄 `<pro>Table`: 优化虚拟滚动固定列宽度及样式。
+- 💄 `<pro>Select`: 优化选项 disabled 状态渲染问题。
 - 💄 `<pro>Cascader`: 优化 Cascader 无选项的展示效果。
-- 💄 `<pro>Select`: 优化 Select 的多选不可以选择选项渲染。
 - 💄 `<pro>DatePicker`: 优化 DatePicker 中 DateTimePicker 的时间选择操作。
 - 🐞 `Tabs`: 修复 Tab 在小屏幕上无法滚动问题。
 - 🐞 `message`: 修复 message 导致的 Pro Feedback 组件请求报错节点插入错误。

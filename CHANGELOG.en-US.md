@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 0.8.78
+
+`2020-01-10`
+
 - 🌟 `configure`: Added `modalAutoCenter`, `modalKeyboard`, `tableKeyboard`, `tableFilterAdapter`, `tableFilterSuffix`, `tableFilterSearchText` global configuration.
 - 🌟 `Tabs`: Added `keyboard` property.
 - 🌟 `<pro>Select`: Added `noCache` property.
@@ -29,8 +33,8 @@ timeline: true
 - 💄 `configure`: Optimized `lookupCache` property.
 - 💄 `<pro>DataSet`: Optimized getText property.
 - 💄 `<pro>Cascader`: Optimized the not found display of results.
+- 💄 `<pro>Select`: Optimization option disabled state rendering problem.
 - 💄 `<pro>Table`: Optimized the width and style of virtual scroll fixed column.
-- 💄 `<pro>Select`: Optimized the multiple selection of Select cannot select option rendering.
 - 💄 `<pro>DatePicker`: Optimized the time selection operation of dateTimePicker in datePicker.
 - 🐞 `Tabs`: Fixed Tab can't scroll when in min width screen.
 - 🐞 `message`: Fixed the error node insertion error of Pro Feedback component request error caused by message.
