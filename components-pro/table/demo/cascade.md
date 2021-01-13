@@ -53,7 +53,7 @@ class App extends React.Component {
     },
     fields: [
       { name: 'name', type: 'string', label: '姓名', required: true },
-      { name: 'age', type: 'number', label: '年龄' },
+      { name: 'age', type: 'number', label: '年龄', step: 1 },
       {
         name: 'sex',
         type: 'string',
@@ -72,7 +72,7 @@ class App extends React.Component {
     selection: 'single',
     fields: [
       { name: 'name', type: 'string', label: '姓名', required: true },
-      { name: 'age', type: 'number', label: '年龄' },
+      { name: 'age', type: 'number', label: '年龄', step: 1 },
       {
         name: 'sex',
         type: 'string',
@@ -92,7 +92,7 @@ class App extends React.Component {
     autoCreate: true,
     fields: [
       { name: 'name', type: 'intl', label: '姓名', required: true },
-      { name: 'age', type: 'number', label: '年龄' },
+      { name: 'age', type: 'number', label: '年龄', step: 1 },
       {
         name: 'sex',
         type: 'string',
