@@ -82,6 +82,10 @@ export type Buttons =
   | [TableButtonType, TableButtonProps]
   | ReactElement<TableButtonProps>;
 
+export type Suffixes =
+  | 'filter'
+  | ReactElement;
+
 
 export type SummaryBar =
   | Field
@@ -156,7 +160,7 @@ export interface TableSpinConfig extends SpinProps {
 export interface DynamicFilterBarConfig {
   searchCode: string;
   searchText?: string;
-  suffix?: React.ReactElement;
+  suffixes?: Suffixes[];
   tableFilterAdapter?: TransportProps;
 }
 

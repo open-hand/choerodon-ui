@@ -208,6 +208,7 @@ const QuickFilterMenu = observer(() => {
     } else if (searchId === null) {
       queryDataSet.reset();
       queryDataSet.create({});
+      dataSet.query();
     } else {
       const defaultMenu = menuDataSet.findIndex((menu) => menu.get('defaultFlag'));
       if (defaultMenu !== -1) {

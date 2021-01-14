@@ -94,8 +94,9 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
   };
 
   getResetButton() {
+    const { prefixCls } = this.props;
     return (
-      <Button funcType={FuncType.raised} onClick={this.handleQueryReset}>
+      <Button key='lov_reset_btn' className={`${prefixCls}-professional-reset-btn`} funcType={FuncType.raised} onClick={this.handleQueryReset}>
         {$l('Table', 'reset_button')}
       </Button>
     );
@@ -189,7 +190,11 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
           {summaryBar}
         </TableButtons>
       </div>
-    ) : null;
+    ) : (
+      <div className={`${prefixCls}-toolbar`}>
+        {summaryBar}
+      </div>
+    );
 
     return [queryBar, tableButtons];
   }

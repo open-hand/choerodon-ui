@@ -1,4 +1,4 @@
-import React, { cloneElement, Component, ReactElement, ReactNode } from 'react';
+import React, { cloneElement, Component, isValidElement, ReactElement, ReactNode } from 'react';
 import { observer } from 'mobx-react';
 import { action, isArrayLike, observable, runInAction } from 'mobx';
 import uniq from 'lodash/uniq';
@@ -7,11 +7,15 @@ import noop from 'lodash/noop';
 import map from 'lodash/map';
 import isObject from 'lodash/isObject';
 import isEnumEmpty from 'lodash/isEmpty';
+import isNumber from 'lodash/isNumber';
 import isFunction from 'lodash/isFunction';
+import isEqual from 'lodash/isEqual';
 import isArray from 'lodash/isArray';
+import isString from 'lodash/isString';
 import classNames from 'classnames';
 
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
+import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import Icon from 'choerodon-ui/lib/icon';
 
 import Field from '../../data-set/Field';
@@ -43,6 +47,28 @@ function isSelect(data) {
     return !isEnumEmpty(data[1]);
   }
   return data[0] !== '__dirty' && !isEmpty(data[1]);
+}
+
+function isEqualDynamicProps(originalValue, newValue) {
+  if (isEqual(newValue, originalValue)) {
+    return true;
+  }
+  if (isObject(newValue) && isObject(originalValue) && Object.keys(newValue).length) {
+    return Object.keys(newValue).every(key => {
+      const value = newValue[key];
+      const oldValue = originalValue[key];
+      if (oldValue === value) {
+        return true;
+      }
+      const oEp = isNumber(oldValue) ? isEmpty(oldValue) : isEnumEmpty(oldValue);
+      const nEp = isNumber(value) ? isEmpty(value) : isEnumEmpty(value);
+      if (oEp && nEp) {
+        return true;
+      }
+      return isEqual(oldValue, value);
+    });
+  }
+  return isEqual(newValue, originalValue);
 }
 
 export interface TableDynamicFilterBarProps extends ElementProps {
@@ -95,6 +121,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   refDropdown: HTMLDivElement | null = null;
 
   refFilterWrapper: HTMLDivElement | null = null;
+
+  originalValue: object;
 
   constructor(props, context) {
     super(props, context);
@@ -163,9 +191,13 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * 筛选条件更新 触发表格查询
    */
   @autobind
-  handleDataSetUpdate() {
+  handleDataSetUpdate({ record }) {
     const { dataSet } = this.props;
-    this.setConditionStatus(RecordStatus.update);
+    let status = RecordStatus.update;
+    if (record) {
+      status = isEqualDynamicProps(this.originalValue, record.toData()) ? RecordStatus.sync : RecordStatus.update;
+    }
+    this.setConditionStatus(status);
     dataSet.query();
   }
 
@@ -175,6 +207,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   @autobind
   handleDataSetCreate({ dataSet, record }) {
     const conditionData = Object.entries(record.toData());
+    this.originalValue = record.toData();
     const keys = [...dataSet.fields.keys()];
     map(conditionData, data => {
       let name = data[0];
@@ -194,11 +227,22 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * tableFilterSuffix 预留自定义区域
    */
   renderSuffix() {
-    const { prefixCls, dynamicFilterBar } = this.props;
-    const suffix = dynamicFilterBar?.suffix || getConfig('tableFilterSuffix') || '';
+    const { prefixCls, dynamicFilterBar, queryDataSet, dataSet } = this.props;
+    const suffixes = dynamicFilterBar?.suffixes || getConfig('tableFilterSuffix') || undefined;
+    const children: ReactElement[] = [];
+    if (suffixes && suffixes.length) {
+      suffixes.forEach(suffix => {
+        if (isString(suffix) && suffix === 'filter') {
+          children.push(<ColumnFilter prefixCls={prefixCls} />);
+        } else if (isValidElement(suffix)) {
+          children.push(suffix);
+        } else if (isFunction(suffix)) {
+          children.push(suffix({ queryDataSet, dataSet }));
+        }
+      })
+    }
     return (<div className={`${prefixCls}-dynamic-filter-bar-suffix`}>
-      {suffix}
-      <ColumnFilter prefixCls={prefixCls} />
+      {children}
     </div>);
   }
 
@@ -256,25 +300,32 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
 
   /**
    * 渲染展开逻辑
+   * @param hidden 是否隐藏全部
    */
-  getExpandNode(): ReactNode {
+  getExpandNode(hidden): ReactNode {
     const { prefixCls } = this.props;
     return (
       <span
         className={`${prefixCls}-filter-menu-expand`}
         onClick={() => {
           const { height } = this.refFilterWrapper!.getBoundingClientRect();
+          const { height: childHeight } = this.refFilterWrapper!.children[0].getBoundingClientRect();
           runInAction(() => {
-            this.expand = height <= 0;
+            this.expand = hidden ? height <= 0 : height <= (childHeight + 2);
           });
-          if (height) {
+          if (hidden && height) {
+              // 收起全部
+              this.refFilterWrapper!.style.display = 'none';
+            } else {
+              this.refFilterWrapper!.style.display = 'inline-flex';
+              this.refFilterWrapper!.style.height = '';
+              this.refFilterWrapper!.style.overflow = '';
+          }
+          if (height > childHeight && !hidden) {
             // 收起留一行高度
-            // this.refFilterWrapper!.style.height = pxToRem(childHeight) || '';
-            // this.refFilterWrapper!.style.overflow = 'hidden';
-            // 收起全部
-            this.refFilterWrapper!.style.display = 'none';
+            this.refFilterWrapper!.style.height = pxToRem(childHeight) || '';
+            this.refFilterWrapper!.style.overflow = 'hidden';
           } else {
-            this.refFilterWrapper!.style.display = 'inline-flex';
             this.refFilterWrapper!.style.height = '';
             this.refFilterWrapper!.style.overflow = '';
           }
@@ -311,26 +362,27 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
             conditionStatus={this.conditionStatus}
             onStatusChange={this.setConditionStatus}
           />
-          {this.getExpandNode()}
+          {this.getExpandNode(true)}
         </div>
       );
     }
     if (queryDataSet && queryDataSet.current) {
       return (
         <div className={`${prefixCls}-filter-rest-buttons`}>
-          {queryDataSet.current.dirty && <Button
+          {this.conditionStatus === RecordStatus.update && <Button
             onClick={() => {
               if (queryDataSet && queryDataSet.current) {
                 queryDataSet.current.reset();
               }
               this.handleDataSetCreate({ dataSet: queryDataSet, record: queryDataSet.current });
+              this.setConditionStatus(RecordStatus.sync);
               dataSet.query();
             }}
             color={ButtonColor.primary}
           >
             {$l('Table', 'reset_button')}
           </Button>}
-          {this.getExpandNode()}
+          {this.getExpandNode(false)}
         </div>
       );
     }
@@ -438,7 +490,6 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                     this.searchText = '';
                   });
                   dataSet.setQueryParameter(searchText, undefined);
-                  this.setConditionStatus(RecordStatus.sync);
                   this.handleQuery();
                 }}
                 onInput={(e) => {
@@ -475,7 +526,11 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
           {this.renderSuffix()}
         </TableButtons>
       </div>
-    ) : null;
+    ) : (
+      <div className={`${prefixCls}-toolbar`}>
+        {summaryBar}
+      </div>
+    );
 
     return [queryBar, tableButtons];
   }

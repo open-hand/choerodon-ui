@@ -418,6 +418,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
   getSummaryBar(): ReactElement<any> | undefined {
     const {
       props: {
+        buttons,
         summaryBar,
         prefixCls,
         summaryFieldsLimit,
@@ -432,10 +433,11 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
       const moreSummary = summaryBar.slice(summaryFieldsLimit);
       const moreSummaryButton: ReactElement | undefined = this.getMoreSummaryButton(moreSummary);
       const width = 170 * Math.min(summaryBar.length, summaryFieldsLimit!) + Math.min(summaryBar.length, summaryFieldsLimit!);
+      const position = queryBar === TableQueryBarType.professionalBar && buttons ? 'left' : 'right';
       return (
         <div
           className={`${prefixCls}-summary-group`}
-          style={{ float: queryBar === TableQueryBarType.professionalBar ? 'left' : 'right' }}
+          style={{ float: position }}
         >
           <div className={`${prefixCls}-summary-group`} style={{ width }}>
             {currentSummaryBar}

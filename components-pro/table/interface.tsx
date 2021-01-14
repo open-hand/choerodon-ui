@@ -53,7 +53,9 @@ export {
   DragRender,
   ChangeColumns,
   TableProps,
+  TableSpinConfig,
   DynamicFilterBarConfig,
+  Suffixes,
 } from './Table';
 
 export {

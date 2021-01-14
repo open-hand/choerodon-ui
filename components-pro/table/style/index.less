@@ -641,14 +641,17 @@
     text-align: right;
 
     .@{table-prefix-cls}-toolbar {
-      padding-top: 0.1rem;
       text-align: right;
+
+      .@{table-prefix-cls}-dynamic-filter-bar-suffix {
+        margin-left: 0.16rem;
+      }
     }
 
     .@{table-prefix-cls}-columns-chooser {
       display: inline-block;
       width: auto;
-      margin-left: 0.15rem;
+      margin-left: 0.16rem;
       border-left: none;
 
       button {
@@ -662,14 +665,17 @@
   }
 
   &-filter-menu {
-    margin: 0 0 0.16rem 0;
-
     .@{c7n-pro-prefix}-select {
       //width: 0.9rem;
       min-width: 0.9rem;
       max-width: 2rem;
       margin: 0;
       border: none;
+
+      &-clear-button-flat {
+        right: 0;
+        background: #fff;
+      }
     }
 
     &-expand {
@@ -688,6 +694,7 @@
     display: inline-flex;
     flex-wrap: wrap;
     width: calc(100% - 2.3rem);
+    margin: 0.06rem 0 0;
   }
 
   &-add-fields {
@@ -701,7 +708,7 @@
     display: inline-flex;
     align-items: center;
     float: right;
-    height: 0.3rem;
+    height: 0.36rem;
 
     button {
       margin-right: 0.08rem;
@@ -710,7 +717,7 @@
 
   &-filter-buttons {
     position: relative;
-    top: 0.46rem;
+    top: 0.36rem;
     float: right;
     width: 2.3rem;
     vertical-align: top;

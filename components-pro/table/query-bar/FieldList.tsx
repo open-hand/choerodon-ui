@@ -12,6 +12,11 @@ interface Group {
   fields: Field[],
 }
 
+/**
+ * value 勾选字段 + 已有非弹窗内有值的字段
+ *
+ * groups.fields 弹窗内字段
+ */
 type Props = {
   closeMenu: () => void,
   value: string[]
@@ -25,7 +30,7 @@ const FieldList: React.FC<Props> = ({ closeMenu, value, onSelect, onUnSelect, gr
   const [searchText, setSearchText] = useState('');
   const codes = useMemo(() => groups.reduce((res, current) => [...res, ...current.fields.map((o) => o.get('name'))], []), [groups]);
   const hasSelect = useMemo(() => value.length > 0, [value.length]);
-  const hasSelectAll = useMemo(() => value.length === codes.length, [codes.length, value.length]);
+  const hasSelectAll = useMemo(() => value.length >= codes.length, [codes.length, value.length]);
   const isChecked = useCallback((code: string) => value.includes(code), [value]);
   const handleChange = useCallback((code: string | string[], select: boolean) => {
     if (select) {
