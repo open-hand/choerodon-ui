@@ -91,15 +91,31 @@ export default class LovView extends Component<LovViewProps> {
     };
   };
 
+  getQueryBar() {
+    const {
+      config: { queryBar },
+      tableProps,
+    } = this.props;
+    const lovTablePropsConf = getConfig('lovTableProps');
+    if (queryBar) {
+      return queryBar;
+    }
+    if (tableProps && tableProps.queryBar) {
+      return tableProps.queryBar;
+    }
+    return lovTablePropsConf.queryBar;
+  };
+
   render() {
     const {
       dataSet,
-      config: { height, treeFlag, queryColumns, queryBar },
+      config: { height, treeFlag, queryColumns },
       multiple,
       tableProps,
     } = this.props;
+    const lovTablePropsConf = getConfig('lovTableProps');
     const lovTableProps: TableProps = {
-      ...getConfig('lovTableProps'),
+      ...lovTablePropsConf,
       ...tableProps,
       autoFocus: true,
       mode: treeFlag === 'Y' ? TableMode.tree : TableMode.list,
@@ -107,8 +123,9 @@ export default class LovView extends Component<LovViewProps> {
       dataSet,
       columns: this.getColumns(),
       queryFieldsLimit: queryColumns,
-      queryBar,
+      queryBar: this.getQueryBar(),
     };
+
     if (multiple) {
       lovTableProps.selectionMode = SelectionMode.rowbox;
     } else {
@@ -127,7 +144,7 @@ export default class LovView extends Component<LovViewProps> {
 
     // 优化优先级 让 部分tableProps属性 的优先级大于dataSet的设置
     // 目前需要处理 selectionMode
-    Object.assign(lovTableProps, pick({ ...getConfig('lovTableProps'), ...tableProps }, [
+    Object.assign(lovTableProps, pick({ ...lovTablePropsConf, ...tableProps }, [
       'selectionMode',
     ]));
 

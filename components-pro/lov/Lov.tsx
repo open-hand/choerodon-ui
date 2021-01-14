@@ -375,10 +375,7 @@ export default class Lov extends Select<LovProps> {
 
   getModalProps() {
     const { modalProps } = this.props;
-    if (modalProps !== undefined) {
-      return modalProps;
-    }
-    return getConfig('lovModalProps');
+    return { ...getConfig('lovModalProps'), ...modalProps };
   }
 
   getOtherProps() {
