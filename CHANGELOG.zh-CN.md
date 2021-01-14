@@ -15,6 +15,15 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: 新增 selectReverse 全局属性。
+- 🌟 `<pro>Select`: 新增 reverse 属性控制多选是否可反选。
+- 💄 `<pro>DataSet`: 优化 placeholder 优先级。
+- 💄 `<pro>Select`: 优化在数据源中找不到对应值时直接显示空的情况，现在显示返回值。
+- 🐞 `<pro>Table`: 修复 filterBar 存在的交互问题。
+- 🐞 `<pro>Lov`: 修复弹窗 modalProps 属性优先级问题。
+- 🐞 `<pro>Lov`: 修复弹窗内 table queryBar 属性优先级问题。
+- 🐞 `<pro>Table`: 修复 buttons 不存在时 summaryBar 不渲染的问题。
+
 ## 0.8.78
 
 `2020-01-10`
@@ -23,7 +32,7 @@ timeline: true
 - 🌟 `Tabs`: 新增 keyboard 属性。
 - 🌟 `<pro>Select`: 新增 noCache 属性。
 - 🌟 `<pro>Table`: 新增更多的表单快捷键。
-- 🌟 `<pro>Table`: 新增 `queryBar` 类型 `filterBar` 筛选条。
+- 🌟 `<pro>Table`: 新增 queryBar 类型 filterBar 筛选条。
 - 🌟 `<pro>CodeArea`: 新增 editorDidMount 属性。
 - 🌟 `<pro>Cascader`: 新增 onChoose, onUnChoose 属性。
 - 🌟 `<pro>Modal`: 新增 autoCenter 属性控制居中显示。
