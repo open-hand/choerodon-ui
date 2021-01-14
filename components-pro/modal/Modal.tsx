@@ -22,6 +22,7 @@ import exception from '../_util/exception';
 import { $l } from '../locale-context';
 import DataSetRequestError from '../data-set/DataSetRequestError';
 import { suffixCls } from './utils';
+import { modalChildrenProps } from './interface';
 
 export const destroyFns: Array<() => void> = [];
 
@@ -375,7 +376,7 @@ export default class Modal extends ViewComponent<ModalProps> {
     if (children) {
       const { prefixCls, props } = this;
       const { close = noop, update = noop } = props;
-      const modal = {
+      const modal:modalChildrenProps = {
         close,
         update,
         props,
