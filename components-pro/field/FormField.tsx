@@ -854,7 +854,12 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
       dataSet,
       props: { renderer = this.defaultRenderer, name, maxTagTextLength },
     } = this;
-    const text = this.processText(field && (field.lookup || field.options) ? field.getText(value) as string : this.getText(value));
+    let processValue = '';
+    if (field && (field.lookup || field.options)) {
+      processValue = field.getText(value) as string;
+    }
+    // 值集中不存在 再去取直接返回的值
+    const text = this.processText(processValue || this.getText(value));
     return renderer
       ? renderer({
         value,
