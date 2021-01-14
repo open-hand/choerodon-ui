@@ -144,6 +144,11 @@ export interface SelectProps extends TriggerFieldProps {
    */
   dropdownMatchSelectWidth?: boolean;
   /**
+   * 多选是否开启反选
+   * @default true
+   */
+  reverse?: boolean;
+  /**
    * 下拉框菜单样式名
    */
   dropdownMenuStyle?: CSSProperties;
@@ -593,7 +598,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
       options,
       textField,
       valueField,
-      props: { dropdownMenuStyle, optionRenderer, onOption, dropdownMatchSelectWidth = getConfig('dropdownMatchSelectWidth') },
+      props: { dropdownMenuStyle, optionRenderer, onOption },
     } = this;
     if (!options) {
       return null;
@@ -605,8 +610,8 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     /**
      * fixed when ie the scroll width would cover the item width
      */
-    const IeMenuStyle = !dropdownMatchSelectWidth && isIE() ? {padding: '.08rem'} : {} ;
-    const IeItemStyle = !dropdownMatchSelectWidth && isIE() ? {overflow:'visible'} : {} ;
+    const IeMenuStyle = !this.dropdownMatchSelectWidth && isIE() ? {padding: '.08rem'} : {} ;
+    const IeItemStyle = !this.dropdownMatchSelectWidth && isIE() ? {overflow:'visible'} : {} ;
     this.filteredOptions.forEach(record => {
       let previousGroup: ReactElement<any> | undefined;
       groups.every(field => {
@@ -697,6 +702,30 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
   }
 
   @computed
+  get dropdownMatchSelectWidth(): boolean | undefined {
+    if ('dropdownMatchSelectWidth' in this.props) {
+      return this.props.dropdownMatchSelectWidth;
+    }
+    const dropdownMatchSelectWidth = getConfig('dropdownMatchSelectWidth');
+    if (dropdownMatchSelectWidth === false) {
+      return false;
+    }
+    return true;
+  }
+
+  @computed
+  get selectReverse(): boolean | undefined {
+    if ('reverse' in this.props) {
+      return this.props.reverse;
+    }
+    const selectReverse = getConfig('selectReverse');
+    if (selectReverse === false) {
+      return false;
+    }
+    return true;
+  }
+
+  @computed
   get loading(): boolean {
     const { field, options } = this;
     return options.status === DataSetStatus.loading || (!!field && field.pending.length > 0);
@@ -712,7 +741,7 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
       return [
         <div key="check-all" className={`${this.prefixCls}-select-all-none`}>
           <span onClick={this.chooseAll}>{$l('Select', 'select_all')}</span>
-          <span onClick={this.chooseRe}>{$l('Select', 'select_re')}</span>
+          {this.selectReverse && <span onClick={this.chooseRe}>{$l('Select', 'select_re')}</span>}
           <span onClick={this.unChooseAll}>{$l('Select', 'unselect_all')}</span>
         </div>,
         menu,
@@ -724,9 +753,9 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
 
   @autobind
   getPopupStyleFromAlign(target): CSSProperties | undefined {
-    const { dropdownMatchSelectWidth = getConfig('dropdownMatchSelectWidth'), isFlat } = this.props;
+    const { isFlat } = this.props;
     if (target) {
-      if (dropdownMatchSelectWidth && !isFlat) {
+      if (this.dropdownMatchSelectWidth && !isFlat) {
         return {
           width: pxToRem(target.getBoundingClientRect().width),
         };
@@ -1191,11 +1220,11 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
       props: { maxTagCount = valueLength, onClear = noop },
     } = this;
     this.setText(undefined);
-    if(this.multiple) {
+    if (this.multiple) {
       const valuesDisabled = values.slice(0, maxTagCount).filter(v => {
-        const recodItem = this.findByValue(v);
-        return recodItem?.toData().__disabled === true;
-      })
+        const recordItem = this.findByValue(v);
+        return recordItem?.toData().__disabled === true;
+      });
       const multipleValue = valuesDisabled.length > 0 ? valuesDisabled : this.emptyValue;
       this.setValue(multipleValue);
     } else {

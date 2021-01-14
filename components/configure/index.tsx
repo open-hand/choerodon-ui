@@ -11,6 +11,7 @@ import {
   TablePaginationConfig,
   TableQueryBarHook,
   TableProps,
+  Suffixes,
 } from 'choerodon-ui/pro/lib/table/Table';
 import { ValidationMessages } from 'choerodon-ui/pro/lib/validator/Validator';
 import { ButtonProps } from 'choerodon-ui/pro/lib/button/Button';
@@ -109,7 +110,7 @@ export type Config = {
   tableAutoFocus?: boolean;
   tableKeyboard?: boolean;
   tableFilterAdapter?: TransportProps;
-  tableFilterSuffix?: Renderer;
+  tableFilterSuffix?: Suffixes[];
   tableFilterSearchText?: string;
   pagination?: TablePaginationConfig | false;
   modalSectionBorder?: boolean;
@@ -132,6 +133,7 @@ export type Config = {
   }) => object;
   formatter?: Formatter;
   dropdownMatchSelectWidth?: boolean;
+  selectReverse?: boolean;
   useColon?: boolean;
   excludeUseColonTagList?: string[];
   lovTableProps?: TableProps;
@@ -237,6 +239,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
     },
   ],
   ['dropdownMatchSelectWidth', true],
+  ['selectReverse', true],
   ['useColon', false],
   ['excludeUseColonTagList', defaultExcludeUseColonTag],
   ['textFieldAutoComplete', undefined],
