@@ -178,7 +178,6 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       }
       return result;
     }
-    
     return result;
   }
 
@@ -323,7 +322,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   getPlaceholders(): string[] {
-    const { placeholder } = this.props;
+    const placeholder = this.getProp('placeholder');
     const holders: string[] = [];
     return placeholder ? holders.concat(placeholder!) : holders;
   }
@@ -671,14 +670,14 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   getInnerSpanButton(): ReactNode {
     const {
-      props: { clearButton },
+      props: { clearButton, isFlat },
       prefixCls,
     } = this;
     if (clearButton && !this.isReadOnly()) {
       return this.wrapperInnerSpanButton(
         <Icon type="close" onClick={this.handleClearButtonClick} />,
         {
-          className: `${prefixCls}-clear-button`,
+          className: isFlat ? `${prefixCls}-clear-button ${prefixCls}-clear-button-flat` : `${prefixCls}-clear-button`,
         },
       );
     }
