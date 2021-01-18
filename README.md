@@ -40,9 +40,6 @@ import 'choerodon-ui/dist/choerodon-ui-pro.css'; // or 'choerodon-ui/dist/choero
 
 Or [import components on demand](https://open-hand.github.io/choerodon-ui/en/docs/other/introduce#%E6%8C%89%E9%9C%80%E5%8A%A0%E8%BD%BD)
 
-### TypeScript
-
-See [Used in TypeScript](https://open-hand.github.io/choerodon-ui/en/docs/other/use-in-typescript)
 
 ## Internationalization
 

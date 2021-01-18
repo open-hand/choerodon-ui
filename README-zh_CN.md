@@ -40,9 +40,6 @@ import 'choerodon-ui/dist/choerodon-ui-pro.css'; // or 'choerodon-ui/dist/choero
 
 你也可以[按需加载组件](https://open-hand.github.io/choerodon-ui/zh/docs/other/introduce#%E6%8C%89%E9%9C%80%E5%8A%A0%E8%BD%BD)。
 
-## TypeScript
-
-参考 [在 TypeScript 中使用](https://open-hand.github.io/choerodon-ui/zh/docs/other/use-in-typescript)
 
 ## 国际化
 

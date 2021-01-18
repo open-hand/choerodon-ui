@@ -17,6 +17,10 @@ $ yarn create react-app choerodon-ui-demo
 # or
 
 $ npx create-react-app choerodon-ui-demo
+
+# or use in typescript
+
+$ yarn create react-app choerodon-ui-demo-ts --template typescript
 ```
 
 The tool will create and initialize environment and dependencies automatically,
