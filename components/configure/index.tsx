@@ -112,6 +112,7 @@ export type Config = {
   tableFilterAdapter?: TransportProps;
   tableFilterSuffix?: Suffixes[];
   tableFilterSearchText?: string;
+  tableAutoHeightDiff?: number;
   pagination?: TablePaginationConfig | false;
   modalSectionBorder?: boolean;
   modalAutoCenter?: boolean;
@@ -216,6 +217,7 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
   ['tableAutoFocus', false],
   ['tableKeyboard', false],
   ['tableFilterSearchText', 'params'],
+  ['tableAutoHeightDiff', 80],
   ['modalSectionBorder', true],
   ['modalOkFirst', true],
   ['modalAutoCenter', false],

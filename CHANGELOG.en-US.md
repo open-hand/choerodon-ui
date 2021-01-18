@@ -15,11 +15,10 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `selectReverse` global configuration.
+- 🌟 `configure`: Added `selectReverse` `tableAutoHeightDiff` global configuration.
 - 🌟 `<pro>Select`: Added `reverse` attribute to control whether multiple selection can be reversed.
 - 💄 `<pro>DataSet`: Optimized placeholder priority.
 - 💄 `<pro>Select`: Optimized the situation where the corresponding value is not found in the data source, and it is directly displayed empty. Now the return value is displayed.
-- 💄 Adjust the documentation used in typescript.
 - 🐞 `<pro>Table`: Fixed the interaction problem of filterBar.
 - 🐞 `<pro>Lov`: Fixed the priority of the `modalProps` property of the pop-up window.
 - 🐞 `<pro>Lov`: Fixed the priority of table `queryBar` attribute in the pop-up window.

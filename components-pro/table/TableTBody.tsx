@@ -12,7 +12,7 @@ import {
   DroppableProvided,
   DraggableRubric,
 } from 'react-beautiful-dnd';
-import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
+import { pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import ReactResizeObserver from 'choerodon-ui/lib/_util/resizeObserver';
 import isFunction from 'lodash/isFunction';
 import { ColumnProps } from './Column';
@@ -236,20 +236,24 @@ export default class TableTBody extends Component<TableTBodyProps, any> {
     const {
       tableStore: { dataSet, emptyText, width },
     } = this.context;
-    const { prefixCls } = this.props;
-    const style: CSSProperties = width
+    const { prefixCls, style } = this.props;
+    let tableWidth = width;
+    if (style && style.width) {
+      tableWidth = toPx(style?.width) || width;
+    }
+    const styles: CSSProperties = tableWidth
       ? {
-        marginLeft: pxToRem(width / 2),
+        marginLeft: pxToRem(tableWidth / 2),
       }
       : {
         transform: 'none',
         display: 'inline-block',
       };
-    const tdStyle: CSSProperties = width ? {} : { textAlign: 'center' };
+    const tdStyle: CSSProperties = tableWidth ? {} : { textAlign: 'center' };
     return (
       <tr className={`${prefixCls}-empty-row`}>
         <td colSpan={columns.length} style={tdStyle}>
-          <div style={style}>{!lock && dataSet.status === DataSetStatus.ready && emptyText}</div>
+          <div style={styles}>{!lock && dataSet.status === DataSetStatus.ready && emptyText}</div>
         </td>
       </tr>
     );

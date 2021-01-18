@@ -183,8 +183,11 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   }
 
   @autobind
-  setConditionStatus(value) {
+  setConditionStatus(value, orglValue?: object) {
     runInAction(() => this.conditionStatus = value);
+    if (value === RecordStatus.sync && orglValue) {
+      this.originalValue = orglValue;
+    }
   }
 
   /**
@@ -239,11 +242,12 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         } else if (isFunction(suffix)) {
           children.push(suffix({ queryDataSet, dataSet }));
         }
-      })
+      });
+      return (<div className={`${prefixCls}-dynamic-filter-bar-suffix`}>
+        {children}
+      </div>);
     }
-    return (<div className={`${prefixCls}-dynamic-filter-bar-suffix`}>
-      {children}
-    </div>);
+    return null;
   }
 
   /**

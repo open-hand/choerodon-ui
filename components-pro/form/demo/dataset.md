@@ -3,6 +3,7 @@ order: 1
 title:
   zh-CN: 数据源
   en-US: DataSet
+only: true    
 ---
 
 ## zh-CN
@@ -88,7 +89,7 @@ class App extends React.Component {
       { name: 'email', type: 'email', label: '邮箱', required: true },
       { name: 'homepage', type: 'url', label: '个人主页', required: true },
       { name: 'birth', type: 'date', label: '生日', required: true },
-      { name: 'code', type: 'object', label: '代码描述', lovCode: 'LOV_CODE' },
+      { name: 'code', type: 'object', label: '代码描述', lovCode: 'LOV_CODE', placeholder:"d1" },
       { name: 'frozen', type: 'boolean', label: '是否冻结' },
     ],
   });
@@ -99,7 +100,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <Form dataSet={this.ds} style={{ width: '4.5rem' }}>
+      <Form dataSet={this.ds} labelLayout="float" style={{ width: '4.5rem' }}>
         <TextField name="phone" />
         <Password name="password" />
         <Password name="confirmPassword" />
@@ -116,7 +117,7 @@ class App extends React.Component {
         <EmailField name="email" />
         <UrlField name="homepage" />
         <DatePicker name="birth" />
-        <Lov name="code" />
+        <Lov name="code" placeholder="d2" />
         <Switch name="frozen" />
         <div>
           <Button type="submit">注册</Button>

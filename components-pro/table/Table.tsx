@@ -1801,11 +1801,11 @@ export default class Table extends DataSetComponent<TableProps> {
   getTableBody(lock?: ColumnLock | boolean, dragColumnAlign?: DragColumnAlign): ReactNode {
     const {
       prefixCls,
-      props: { indentSize },
+      props: { indentSize, style },
     } = this;
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
-        <TableTBody key="tbody" prefixCls={prefixCls} lock={lock} indentSize={indentSize!} dragColumnAlign={dragColumnAlign} />
+        <TableTBody key="tbody" prefixCls={prefixCls} lock={lock} indentSize={indentSize!} style={style} dragColumnAlign={dragColumnAlign} />
       </DragDropContext>
     );
   }
@@ -1850,11 +1850,11 @@ export default class Table extends DataSetComponent<TableProps> {
       const { top: parentTop, height: parentHeight } = wrapper.parentNode.getBoundingClientRect();
       const { paddingBottom, paddingTop } = wrapper.parentNode.style;
       const { top: tableTop } = element.getBoundingClientRect();
+      let diff = getConfig('tableAutoHeightDiff') || 80;
       let type = TableAutoHeightType.minHeight;
-      let diff = 80;
       if (isObject(autoHeight)) {
         type = autoHeight.type || TableAutoHeightType.minHeight;
-        diff = autoHeight.diff || 80;
+        diff = autoHeight.diff || diff;
       }
       const paddingBottomPx = toPx(paddingBottom) || 0;
       const paddingTopPx = toPx(paddingTop) || 0;

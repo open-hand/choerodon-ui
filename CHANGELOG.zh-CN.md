@@ -15,11 +15,10 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 selectReverse 全局属性。
+- 🌟 `configure`: 新增 selectReverse，tableAutoHeightDiff 全局属性。
 - 🌟 `<pro>Select`: 新增 reverse 属性控制多选是否可反选。
 - 💄 `<pro>DataSet`: 优化 placeholder 优先级。
 - 💄 `<pro>Select`: 优化在数据源中找不到对应值时直接显示空的情况，现在显示返回值。
-- 💄 调整在typescript中使用的文档。
 - 🐞 `<pro>Table`: 修复 filterBar 存在的交互问题。
 - 🐞 `<pro>Lov`: 修复弹窗 modalProps 属性优先级问题。
 - 🐞 `<pro>Lov`: 修复弹窗内 table queryBar 属性优先级问题。

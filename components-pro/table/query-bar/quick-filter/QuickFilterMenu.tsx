@@ -184,13 +184,14 @@ const QuickFilterMenu = observer(() => {
         if (condition.comparator === 'EQUAL') {
           const { fieldName, value } = condition;
           queryDataSet.current.set(fieldName, value);
-          onStatusChange(RecordStatus.sync);
           if (isArrayLike(value) ? value.length : !isEmpty(value)) {
             onChange(fieldName);
           }
         }
       });
+      onStatusChange(RecordStatus.sync, queryDataSet.current.toData());
     } else {
+      onStatusChange(RecordStatus.sync);
       dataSet.query();
     }
   };
@@ -208,6 +209,7 @@ const QuickFilterMenu = observer(() => {
     } else if (searchId === null) {
       queryDataSet.reset();
       queryDataSet.create({});
+      onStatusChange(RecordStatus.sync);
       dataSet.query();
     } else {
       const defaultMenu = menuDataSet.findIndex((menu) => menu.get('defaultFlag'));
