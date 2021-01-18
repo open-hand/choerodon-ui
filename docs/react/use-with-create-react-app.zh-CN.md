@@ -17,6 +17,10 @@ $ yarn create react-app choerodon-ui-demo
 # or
 
 $ npx create-react-app choerodon-ui-demo
+
+# or use in typescript
+
+$ yarn create react-app choerodon-ui-demo-ts --template typescript
 ```
 
 工具会自动初始化一个脚手架并安装 React 项目的各种必要依赖，如果在过程中出现网络问题，请尝试配置代理或使用其他 npm registry。
