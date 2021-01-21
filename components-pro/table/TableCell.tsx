@@ -47,6 +47,7 @@ import { DataSetEvents, RecordStatus } from '../data-set/enum';
 import { LabelLayout } from '../form/enum';
 import { Commands, TableButtonProps } from './Table';
 import autobind from '../_util/autobind';
+import { DRAG_KEY } from './TableStore';
 
 export interface TableCellProps extends ElementProps {
   column: ColumnProps;
@@ -466,7 +467,7 @@ export default class TableCell extends Component<TableCellProps> {
       return children;
     }
     const { column, record, indentSize, lock } = this.props;
-    const { name, tooltip } = column;
+    const { name, tooltip, key } = column;
     const { hasEditor } = this;
     // 计算多行编辑单元格高度
     const field = record.getField(name);
@@ -505,8 +506,16 @@ export default class TableCell extends Component<TableCellProps> {
           lineHeight: pxToRem(max(tableStore.multiLineHeight) || 0),
         };
       }
-      if (autoMaxWidth || (tooltip && tooltip !== TableColumnTooltip.none)) {
+      if (autoMaxWidth || (tooltip && tooltip !== TableColumnTooltip.none) || ( key === DRAG_KEY)) {
         innerProps.ref = this.saveOutput;
+      }
+      // 如果为拖拽结点强制给予焦点
+      if(key === DRAG_KEY) {
+        innerProps.onMouseDown = () => {
+          if(this.element) {
+            this.element.focus();
+          }
+        }
       }
     }
     const indentText = children && (
