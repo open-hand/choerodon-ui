@@ -21,6 +21,7 @@ timeline: true
 - 💄 `<pro>DataSet`: Optimized placeholder priority.
 - 💄 `<pro>Select`: Optimized the situation where the corresponding value is not found in the data source, and it is directly displayed empty. Now the return value is displayed.
 - 🐞 `<pro>Table`: Fixed the interaction problem of filterBar.
+- 🐞 `<pro>Table`: Fixed the drag bar cannot be out of focus.
 - 🐞 `<pro>Lov`: Fixed the priority of the `modalProps` property of the pop-up window.
 - 🐞 `<pro>Lov`: Fixed the priority of table `queryBar` attribute in the pop-up window.
 - 🐞 `<pro>Table`: Fixed the problem that `summaryBar` does not render when buttons do not exist.
