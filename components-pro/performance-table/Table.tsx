@@ -1611,8 +1611,6 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     const scrollBarOffset = (contentWidth <= this.state.width) || contentHeight <= (height - headerHeight) ? 40 : 60;
     const decScrollBarOffset = showScrollArrow ? scrollBarOffset : 0;
 
-    console.log('contentWidth - decScrollBarOffset', contentHeight, decScrollBarOffset)
-
     return (
       <div>
         <Scrollbar

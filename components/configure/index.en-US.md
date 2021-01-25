@@ -34,6 +34,7 @@ const prefixCls = getConfig('prefixCls');
 | lovTriggerMode | Lov Trigger Mode. | string | icon |
 | lovModalProps | Lov 弹窗属性，详见[ModalProps](/components/modal/#Modal) | ModalProps |  |
 | lookupBatchAxiosConfig | hook for batch lookup query, more info:[AxiosRequestConfig](#AxiosRequestConfig)。 | (codes: string[]) => AxiosRequestConfig | - |
+| selectReverse | Whether to enable the pull-down multi-select reverse function. | boolean | true |
 | axios | Replace the built-in axios instance | AxiosInstance |  |
 | dataKey | default DataSet's dataKey | string | rows |
 | totalKey | default DataSet's totalKey | string | total |
@@ -63,6 +64,7 @@ const prefixCls = getConfig('prefixCls');
 | tableFilterAdapter | Table 筛选条请求适配器 | AxiosRequestConfig | |
 | tableFilterSuffix | Table 筛选条按钮预留区 | ReactNode | |
 | tableFilterSearchText | Table 筛选条快速搜索参数名 | string | 'params' |
+| tableAutoHeightDiff | Table 自动高度误差值配置 | number | 80 |
 | dropdownMatchSelectWidth | 默认下拉框匹配输入框宽度 | boolean | true |
 | modalSectionBorder | Default if Modal header and foot have a border line | boolean | true |
 | modalOkFirst | Default the ok button of Modal is ranked first | boolean | true |

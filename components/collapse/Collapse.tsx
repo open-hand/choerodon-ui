@@ -56,7 +56,7 @@ export default class Collapse extends Component<CollapseProps, any> {
     return expandIcon ? expandIcon(panelProps) : null;
   };
 
-  renderExpandTextContent = (panelProps: PanelProps = {}, locale) => {
+  renderExpandTextContent = (panelProps: PanelProps = {}, locale, localeCode, expandIconPositionCof) => {
     const {
       prefixCls: customizePrefixCls,
     } = this.props;
@@ -72,9 +72,10 @@ export default class Collapse extends Component<CollapseProps, any> {
 
     return (
       <>
-        {panelProps.isActive ? <span className={`${prefixCls}-expand-text`}>{locale.fold}</span> :
-          <span className={`${prefixCls}-expand-text`}>{locale.unfold}</span>}
-        {icon}
+        {expandIconPositionCof === 'left' && icon}
+        {panelProps.isActive ? <span className={`${prefixCls}-expand-text`} style={{ minWidth: localeCode === 'zh-cn' ? '0.38rem' : '0.52rem'}}>{locale.fold}</span> :
+          <span className={`${prefixCls}-expand-text`} style={{ minWidth: localeCode === 'zh-cn' ? '0.38rem' : '0.52rem'}}>{locale.unfold}</span>}
+        {expandIconPositionCof === 'right' && icon}
       </>
     );
   };
@@ -111,7 +112,7 @@ export default class Collapse extends Component<CollapseProps, any> {
       expandIconContent = (panelProps: PanelProps) => {
         return (
           <LocaleReceiver componentName="Collapse" defaultLocale={defaultLocale.Collapse}>
-           {locale => this.renderExpandTextContent(panelProps, locale)}
+           {(locale, localeCode) => this.renderExpandTextContent(panelProps, locale, localeCode, expandIconPositionCof)}
          </LocaleReceiver>)
       };
     }

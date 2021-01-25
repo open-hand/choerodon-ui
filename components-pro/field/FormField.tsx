@@ -13,6 +13,7 @@ import defaultTo from 'lodash/defaultTo';
 import { isMoment, Moment } from 'moment';
 import { observer } from 'mobx-react';
 import noop from 'lodash/noop';
+import isPlainObject from 'lodash/isPlainObject';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import warning from 'choerodon-ui/lib/_util/warning';
 import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure';
@@ -31,6 +32,7 @@ import Icon from '../icon';
 import Tooltip from '../tooltip';
 import Form from '../form/Form';
 import isEmpty from '../_util/isEmpty';
+import * as ObjectChainValue from '../_util/ObjectChainValue';
 import { FieldFormat, FieldTrim, FieldType, RecordStatus } from '../data-set/enum';
 import ValidationResult from '../validator/ValidationResult';
 import { ShowHelp } from './enum';
@@ -1100,8 +1102,17 @@ export class FormField<T extends FormFieldProps> extends DataSetComponent<T> {
                 const key = this.getValueKey(record?.get(fieldItem.get('name')));
                 const repeat = repeats.get(key) || 0;
                 const validationHidden = this.isValidationMessageHidden(validationMessage);
-                const text = this.processText(this.getText(record?.get(fieldItem.get('name'))));
-                this.mutipleValidateMessageLength++
+                let processValue = '';
+                if (fieldItem && fieldItem.get('lovCode')) {
+                  if (!isNil(fieldItem.getValue())) {
+                    if (isPlainObject(fieldItem.getValue())) {
+                      processValue = ObjectChainValue.get(fieldItem.getValue(), fieldItem.get('textField') || 'meaning');
+                    }
+                  }
+                }
+                // 值集中不存在 再去取直接返回的值
+                const text = this.processText(processValue || this.getText(record?.get(fieldItem.get('name'))));
+                this.mutipleValidateMessageLength++;
                 const inner = record?.status === RecordStatus.add ? '' :
                   <span className={`${prefixCls}-multi-value-invalid`}>{text}</span>;
                 const validationInner = validationHidden ? inner : (

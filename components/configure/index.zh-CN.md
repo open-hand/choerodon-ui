@@ -37,6 +37,7 @@ const prefixCls = getConfig('prefixCls');
 | lovTriggerMode | Lov 触发弹窗模式，可选 `icon` `input`。 | string | icon |
 | lovModalProps | Lov 弹窗属性，详见[ModalProps](/components/modal/#Modal) | ModalProps |  |
 | lookupBatchAxiosConfig | 返回 lookup 批量查询配置的钩子，详见[AxiosRequestConfig](#AxiosRequestConfig)。 | (codes: string[]) => AxiosRequestConfig | - |
+| selectReverse | 是否开启下拉多选反向功能。 | boolean | true |
 | axios | 替换内置的 axios 实例 | AxiosInstance |  |
 | dataKey | 默认 DataSet 的 dataKey | string | rows |
 | totalKey | 默认 DataSet 的 totalKey | string | total |
@@ -66,6 +67,7 @@ const prefixCls = getConfig('prefixCls');
 | tableFilterAdapter | Table 筛选条请求适配器 | AxiosRequestConfig | |
 | tableFilterSuffix | Table 筛选条按钮预留区 | ReactNode | |
 | tableFilterSearchText | Table 筛选条快速搜索参数名 | string | 'params' |
+| tableAutoHeightDiff | Table 自动高度误差值配置 | number | 80 |
 | pagination | 默认 pagination 的属性 | TablePaginationConfig \| false | 详见[Pagination](/components-pro/pagination/#Pagination) |
 | dropdownMatchSelectWidth | 默认下拉框匹配输入框宽度 | boolean | true |
 | modalSectionBorder | 默认 Modal 的头和脚有边框线 | boolean | true |

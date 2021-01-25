@@ -39,7 +39,6 @@
     > .@{collapse-prefix-cls}-header {
       position: relative;
       padding: @collapse-header-padding;
-      padding-left: @collapse-header-padding-extra;
       color: @heading-color;
       line-height: 0.22rem;
       transition: all 0.3s;
@@ -52,17 +51,8 @@
         outline: none;
       }
 
-      .@{collapse-prefix-cls}-expand-icon-wrapper {
-        position: absolute;
-        left: 0;
-        vertical-align: top;
-      }
-
       .@{collapse-prefix-cls}-expand-icon {
         .iconfont-font('\e5c5', 0.22rem);
-        position: absolute;
-        left: @collapse-content-padding;
-        width: 0.22rem;
         height: 0.22rem;
         line-height: 1;
         vertical-align: top;
@@ -75,9 +65,8 @@
       }
 
       .@{collapse-prefix-cls}-expand-text {
-        position: absolute;
-        left: 0.38rem;
-        width: 0.5rem;
+        display: inline-block;
+        padding-right: 0.1rem;
         cursor: pointer;
       }
     }
@@ -87,40 +76,21 @@
   &-icon-position-right {
     & > .@{collapse-prefix-cls}-item {
       > .@{collapse-prefix-cls}-header {
-        padding: @collapse-header-padding;
-        padding-right: @collapse-header-padding-extra;
-
-        .@{collapse-prefix-cls}-extra {
-          padding-right: 0.35rem;
-        }
 
         .@{collapse-prefix-cls}-expand-icon-wrapper {
-          position: absolute;
-          right: 0;
-          left: auto;
-          vertical-align: top;
+          float: right;
         }
 
         .@{collapse-prefix-cls}-expand-icon {
-          right: @collapse-content-padding;
-          left: auto;
           transform: rotate(90deg);
         }
 
         .@{collapse-prefix-cls}-expand-text {
-          position: absolute;
-          right: @collapse-content-padding;
-          left: auto;
-          width: 0.5rem;
+          padding-right: 0;
+          text-align: right;
           cursor: pointer;
         }
       }
-    }
-  }
-
-  &-text-action {
-    .@{collapse-prefix-cls}-header {
-      padding-left: 0.7rem !important;
     }
   }
 

@@ -67,6 +67,7 @@ export default class CollapsePanel extends Component {
     } = this.props;
     const headerCls = classNames(`${prefixCls}-header`, {
       [headerClass]: headerClass,
+      [`${prefixCls}-item-expand-renderer`]: showArrow && typeof expandIcon === 'function',
     });
     const itemCls = classNames({
       [`${prefixCls}-item`]: true,

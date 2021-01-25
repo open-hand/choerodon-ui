@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `configure`: 新增 selectReverse，tableAutoHeightDiff 全局属性。
 - 🌟 `<pro>Select`: 新增 reverse 属性控制多选是否可反选。
+- 💄 `Collapse`: 优化 Collapse 自定义 icon 样式。
 - 💄 `<pro>DataSet`: 优化 placeholder 优先级。
 - 💄 `<pro>Select`: 优化在数据源中找不到对应值时直接显示空的情况，现在显示返回值。
 - 🐞 `<pro>Table`: 修复 filterBar 存在的交互问题。
@@ -26,7 +27,7 @@ timeline: true
 
 ## 0.8.78
 
-`2020-01-10`
+`2021-01-10`
 
 - 🌟 `configure`: 新增 modalAutoCenter，modalKeyboard，tableKeyboard，tableFilterAdapter，tableFilterSuffix，tableFilterSearchText 全局属性。
 - 🌟 `Tabs`: 新增 keyboard 属性。
