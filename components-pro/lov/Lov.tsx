@@ -283,7 +283,7 @@ export default class Lov extends Select<LovProps> {
     const records = selectionMode === SelectionMode.rowbox ? options.selected : result.concat(options.current || []);
     const values = records.map(record => this.processRecordToObject(record));
 
-    if (values[0]) {
+    if (values[0] || multiple) {
       this.setValue(multiple ? values : values[0] || this.emptyValue);
     }
   };

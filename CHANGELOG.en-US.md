@@ -24,6 +24,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the drag bar cannot be out of focus.
 - 🐞 `<pro>Lov`: Fixed the priority of the `modalProps` property of the pop-up window.
 - 🐞 `<pro>Lov`: Fixed the priority of table `queryBar` attribute in the pop-up window.
+- 🐞 `<pro>Lov`: Fixed the issue that confirming the change is invalid after unchecking the value.
 - 🐞 `<pro>Table`: Fixed the problem that `summaryBar` does not render when buttons do not exist.
 
 ## 0.8.78
