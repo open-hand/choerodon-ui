@@ -26,6 +26,7 @@ timeline: true
 - 🐞 `<pro>Lov`: Fixed the priority of table `queryBar` attribute in the pop-up window.
 - 🐞 `<pro>Lov`: Fixed the issue that confirming the change is invalid after unchecking the value.
 - 🐞 `<pro>Table`: Fixed the problem that `summaryBar` does not render when buttons do not exist.
+- 🐞 `<pro>Pagination`: Fixed the issue that `modifiedCheckMessage` is invalid when the page number is switched.
 
 ## 0.8.78
 

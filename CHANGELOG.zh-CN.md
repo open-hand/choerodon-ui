@@ -26,6 +26,7 @@ timeline: true
 - 🐞 `<pro>Lov`: 修复弹窗内 table queryBar 属性优先级问题。
 - 🐞 `<pro>Lov`: 修复多选弹窗列表取消勾选值后确认选值更改无效问题。
 - 🐞 `<pro>Table`: 修复 buttons 不存在时 summaryBar 不渲染的问题。
+- 🐞 `<pro>Pagination`: 修复页码切换时 modifiedCheckMessage 无效问题。
 
 ## 0.8.78
 
