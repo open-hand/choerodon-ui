@@ -810,6 +810,11 @@ export default class DataSet extends EventManager {
     return generateData(this).data;
   }
 
+  /**
+   * 对应参数后续会废弃
+   * @param isSelected
+   * @param noCascade
+   */
   toJSONData(isSelected?: boolean, noCascade?: boolean): object[] {
     const dataToJSON = adapterDataToJSON(isSelected, noCascade);
     if (dataToJSON) {
@@ -1556,7 +1561,7 @@ export default class DataSet extends EventManager {
   }
 
   /**
-   * 校验数据记录是否有效
+   * 校验数据记录是否有效 对应参数后续会废弃
    * @param isSelected 是否只校验选中记录
    * @param noCascade 是否级联校验
    * @return true | false

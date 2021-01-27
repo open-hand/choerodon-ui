@@ -24,6 +24,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复 filterBar 存在的交互问题。
 - 🐞 `<pro>Lov`: 修复弹窗 modalProps 属性优先级问题。
 - 🐞 `<pro>Lov`: 修复弹窗内 table queryBar 属性优先级问题。
+- 🐞 `<pro>Record`: 修复 validate 错误的传参导致提交数据错误。
 - 🐞 `<pro>Lov`: 修复多选弹窗列表取消勾选值后确认选值更改无效问题。
 - 🐞 `<pro>Table`: 修复 buttons 不存在时 summaryBar 不渲染的问题。
 - 🐞 `<pro>Pagination`: 修复页码切换时 modifiedCheckMessage 无效问题。

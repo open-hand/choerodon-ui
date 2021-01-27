@@ -357,7 +357,7 @@ export default class Record {
             (isCurrent && dataSet
               ? dataSet.children[key]
               : new DataSet().restore(dataSetSnapshot[key])
-            ).validate(all),
+            ).validate(),
           )),
     ]).then(results => results.every(result => result));
   }
