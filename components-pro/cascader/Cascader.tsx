@@ -121,15 +121,15 @@ export interface CascaderProps extends TriggerFieldProps {
   /**
    * 设置选项属性，如 disabled;
    */
-  onOption: (props: onOptionProps) => OptionProps;
+  onOption?: (props: onOptionProps) => OptionProps;
   /**
    * 选择一个值的时候触发
    */
-  onChoose: (value,record) => void;
+  onChoose?: (value,record) => void;
   /**
    * 取消选中一个值的时候触发多选时候生效
    */
-  onUnChoose: (value,record) => void;
+  onUnChoose?: (value,record) => void;
   /** 单框弹出形式切换 */
   menuMode?: MenuMode;
   /** 由于渲染在body下可以方便按照业务配置弹出框的大小 */
