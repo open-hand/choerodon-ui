@@ -166,12 +166,10 @@ export default class TableCell extends Component<TableCellProps> {
       } = this.props;
       const { innerMaxWidth } = column;
       if (column) {
-        const { width } = element.getBoundingClientRect();
-        if (width !== 0) {
-          element.style.position = 'absolute';
-          let { width: measureWidth } = element.getBoundingClientRect();
-          element.style.position = '';
-          measureWidth = 20 + measureWidth;
+        const { clientWidth, scrollWidth } = element;
+        if (clientWidth !== 0) {
+          const { offsetWidth } = element.parentNode;
+          const measureWidth = scrollWidth + offsetWidth - clientWidth;
           const newWidth = Math.max(measureWidth, minColumnWidth(column), column.width ? column.width : 0);
           if (!innerMaxWidth || newWidth > innerMaxWidth) {
             set(column, 'innerMaxWidth', newWidth);
@@ -191,13 +189,8 @@ export default class TableCell extends Component<TableCellProps> {
         return true;
       }
       if (tooltip === TableColumnTooltip.overflow) {
-        const { width } = element.getBoundingClientRect();
-        if (width !== 0) {
-          element.style.position = 'absolute';
-          const { width: measureWidth } = element.getBoundingClientRect();
-          element.style.position = '';
-          return measureWidth > width;
-        }
+        const { clientWidth, scrollWidth } = element;
+        return scrollWidth > clientWidth;
       }
     }
     return false;
@@ -392,7 +385,7 @@ export default class TableCell extends Component<TableCellProps> {
         disabled: isDisabledRow(record) || (inlineEdit && !record.editing),
         indeterminate: checkField && checkField === name && record.isIndeterminate,
         labelLayout: LabelLayout.none,
-        _inTable:true,
+        _inTable: true,
       };
       /**
        * 渲染多行编辑器
@@ -506,16 +499,16 @@ export default class TableCell extends Component<TableCellProps> {
           lineHeight: pxToRem(max(tableStore.multiLineHeight) || 0),
         };
       }
-      if (autoMaxWidth || (tooltip && tooltip !== TableColumnTooltip.none) || ( key === DRAG_KEY)) {
+      if (autoMaxWidth || (tooltip && tooltip !== TableColumnTooltip.none) || (key === DRAG_KEY)) {
         innerProps.ref = this.saveOutput;
       }
       // 如果为拖拽结点强制给予焦点
-      if(key === DRAG_KEY) {
+      if (key === DRAG_KEY) {
         innerProps.onMouseDown = () => {
-          if(this.element) {
+          if (this.element) {
             this.element.focus();
           }
-        }
+        };
       }
     }
     const indentText = children && (
@@ -589,18 +582,18 @@ export default class TableCell extends Component<TableCellProps> {
       className,
       cellExternalProps.className,
     );
-    const widthDraggingStyle = ():React.CSSProperties =>{
-      const draggingStyle:React.CSSProperties = {};
+    const widthDraggingStyle = (): React.CSSProperties => {
+      const draggingStyle: React.CSSProperties = {};
       if (isDragging) {
         if (column.width) {
-          draggingStyle.width = pxToRem(column.width)
+          draggingStyle.width = pxToRem(column.width);
         }
         if (column.minWidth) {
-          draggingStyle.minWidth = pxToRem(column.minWidth)
+          draggingStyle.minWidth = pxToRem(column.minWidth);
         }
-        draggingStyle.whiteSpace = "nowrap"
+        draggingStyle.whiteSpace = 'nowrap';
       }
-      return draggingStyle
+      return draggingStyle;
     };
     const td = (
       <td
