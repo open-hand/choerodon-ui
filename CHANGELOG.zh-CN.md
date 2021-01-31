@@ -23,6 +23,7 @@ timeline: true
 - 💄 `<pro>Table.Column`: 优化 tooltip 为 overflow 时的性能。
 - 🐞 `<pro>Table`: 修复拖拽列无法失焦。
 - 🐞 `<pro>Table`: 修复 filterBar 存在的交互问题。
+- 🐞 `<pro>DataSet`: 修复仅删除提交后的修改数据状态。
 - 🐞 `<pro>Lov`: 修复弹窗 modalProps 属性优先级问题。
 - 🐞 `<pro>Lov`: 修复弹窗内 table queryBar 属性优先级问题。
 - 🐞 `<pro>Record`: 修复 validate 错误的传参导致提交数据错误。

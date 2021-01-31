@@ -853,6 +853,7 @@ export default class DataSet extends EventManager {
   }
 
   /**
+   * TODO 参数废弃
    * 将数据集中的增删改的记录进行远程提交
    * @param isSelect 如果为true，则只提交选中记录
    * @param noCascade 如果为true，则不提交级联数据
@@ -1119,7 +1120,7 @@ export default class DataSet extends EventManager {
         (await confirm(confirmMessage || $l('DataSet', 'delete_selected_row_confirm'))) !== 'cancel'
       ) {
         this.remove(records);
-        return this.pending.add(this.write(this.destroyed));
+        return this.pending.add(this.write(this.destroyed, true));
       }
     }
   }
@@ -1178,7 +1179,7 @@ export default class DataSet extends EventManager {
       (await confirm(confirmMessage || $l('DataSet', 'delete_all_row_confirm'))) !== 'cancel'
     ) {
       this.removeAll();
-      return this.pending.add(this.write(this.destroyed));
+      return this.pending.add(this.write(this.destroyed, true));
     }
   }
 
@@ -1648,7 +1649,7 @@ export default class DataSet extends EventManager {
   }
 
   @action
-  commitData(allData: any[], total?: number): DataSet {
+  commitData(allData: any[], total?: number, onlyDelete?: boolean): DataSet {
     const { autoQueryAfterSubmit, primaryKey } = this.props;
     if (this.dataToJSON === DataToJSON.normal) {
       flatMap(this.dirtyRecords).forEach(record =>
@@ -1688,9 +1689,11 @@ export default class DataSet extends EventManager {
       // 剩下未回写的非新增数据使用原数据进行回写
       if (restUpdatedData.length === updated.length) {
         updated.forEach((r, index) => r.commit(restUpdatedData[index], this));
+      } else if (onlyDelete) {
+        updated.forEach(r => r.commit(r.toData(), this));
       } else {
         updated.forEach(r => r.commit(omit(r.toData(), ['__dirty']), this));
-      }
+    }
       destroyed.forEach(r => r.commit(undefined, this));
       if (isNumber(total)) {
         this.totalCount = total;
@@ -1916,7 +1919,7 @@ Then the query method will be auto invoke.`,
   //     ), allData);
   // }
 
-  private async write(records: Record[]): Promise<any> {
+  private async write(records: Record[], onlyDelete?: boolean): Promise<any> {
     if (records.length) {
       const [created, updated, destroyed] = prepareSubmitData(records, this.dataToJSON);
       const axiosConfigs: AxiosRequestConfig[] = [];
@@ -1937,7 +1940,7 @@ Then the query method will be auto invoke.`,
             const result: any[] = await axiosStatic.all(
               axiosConfigs.map(config => this.axios(config)),
             );
-            return this.handleSubmitSuccess(result);
+            return this.handleSubmitSuccess(result, onlyDelete);
           }
         } catch (e) {
           this.handleSubmitFail(e);
@@ -2049,7 +2052,7 @@ Then the query method will be auto invoke.`,
     loadFailed(e);
   }
 
-  private handleSubmitSuccess(resp: any[]) {
+  private handleSubmitSuccess(resp: any[], onlyDelete?: boolean) {
     const { dataKey, totalKey } = this;
     const { submitSuccess = defaultFeedback.submitSuccess } = this.feedback;
     const data: {
@@ -2076,7 +2079,7 @@ Then the query method will be auto invoke.`,
     // 针对 204 的情况进行特殊处理
     // 不然在设置了 primaryKey 的情况 下,在先新增一条再使用delete的情况下，会将204这个请求内容填入到record中
     if (!(data[0] && data[0].status === 204 && data[0].statusText === "No Content")) {
-      this.commitData(data, total);
+      this.commitData(data, total, onlyDelete);
     } else {
       this.commitData([], total);
     }

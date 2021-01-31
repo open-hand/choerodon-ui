@@ -23,6 +23,7 @@ timeline: true
 - 💄 `<pro>Table.Column`: Optimize the performance when the tooltip is overflow.
 - 🐞 `<pro>Table`: Fixed the interaction problem of filterBar.
 - 🐞 `<pro>Table`: Fixed the drag bar cannot be out of focus.
+- 🐞 `<pro>DataSet`: Fixed to delete only the modified data status after submission.
 - 🐞 `<pro>Lov`: Fixed the priority of the `modalProps` property of the pop-up window.
 - 🐞 `<pro>Lov`: Fixed the priority of table `queryBar` attribute in the pop-up window.
 - 🐞 `<pro>Lov`: Fixed the issue that confirming the change is invalid after unchecking the value.
