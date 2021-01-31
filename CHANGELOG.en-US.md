@@ -20,6 +20,7 @@ timeline: true
 - 💄 `Collapse`: Optimized icon style.
 - 💄 `<pro>DataSet`: Optimized placeholder priority.
 - 💄 `<pro>Select`: Optimized the situation where the corresponding value is not found in the data source, and it is directly displayed empty. Now the return value is displayed.
+- 💄 `<pro>Select`: Optimized the display of multi-choice value for onOption disabled configuration.
 - 💄 `<pro>Table.Column`: Optimize the performance when the tooltip is overflow.
 - 🐞 `<pro>Table`: Fixed the interaction problem of filterBar.
 - 🐞 `<pro>Table`: Fixed the drag bar cannot be out of focus.

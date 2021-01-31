@@ -824,7 +824,8 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     const {
       prefixCls,
       range,
-      props: { maxTagCount = valueLength, maxTagPlaceholder },
+      options,
+      props: { maxTagCount = valueLength, maxTagPlaceholder, onOption },
     } = this;
     const { validationResults } = this.validator;
     const repeats: Map<any, number> = new Map<any, number>();
@@ -839,7 +840,10 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
       const key = this.getValueKey(v);
       const repeat = repeats.get(key) || 0;
       const text = range ? this.renderRangeValue(true, v, repeat) : this.processRenderer(v, repeat);
-      const itemDisabled = this.findByValue(v)?.toData().__disabled === true || this.isDisabled();
+      const findRecord = this.findByValue(v);
+      const optionProps = findRecord ? onOption({ dataSet: options, record:findRecord }): undefined;
+      const optionDisabled = (optionProps && optionProps.disabled);
+      const itemDisabled = findRecord?.toData().__disabled === true || optionDisabled || this.isDisabled();
       const itemBlockClassName = classNames(
         {
           [`${prefixCls}-multiple-block-disabled`]: itemDisabled,
@@ -1217,13 +1221,17 @@ export class Select<T extends SelectProps> extends TriggerField<T> {
     const values = this.getValues();
     const valueLength = values.length;
     const {
-      props: { maxTagCount = valueLength, onClear = noop },
+      props: { maxTagCount = valueLength, onClear = noop, onOption = noop },
+      options,
     } = this;
     this.setText(undefined);
     if (this.multiple) {
       const valuesDisabled = values.slice(0, maxTagCount).filter(v => {
         const recordItem = this.findByValue(v);
-        return recordItem?.toData().__disabled === true;
+        const findRecord = this.findByValue(v);
+        const optionProps = findRecord ? onOption({ dataSet: options, record:findRecord }): undefined;
+        const optionDisabled = (optionProps && optionProps.disabled);
+        return recordItem?.toData().__disabled === true || optionDisabled;
       });
       const multipleValue = valuesDisabled.length > 0 ? valuesDisabled : this.emptyValue;
       this.setValue(multipleValue);
