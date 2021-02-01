@@ -543,12 +543,15 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       );
     }
     const text = this.getTextNode();
-
-    // 筛选条默认宽度处理
-    const finalText = isString(text) ? text : this.getText(this.getValue());
-    const hasValue = this.getValue() !== undefined && this.getValue() !== null;
     const placeholder = this.hasFloatLabel ? undefined : this.getPlaceholders()[0];
-    const width = hasValue ? measureTextWidth(finalText) + (clearButton ? 37 : 21) : measureTextWidth(placeholder || '') + 24;
+    const finalText = isString(text) ? text : this.getText(this.getValue());
+
+    let width = 0;
+    // 筛选条默认宽度处理
+    if (isFlat) {
+      const hasValue = this.getValue() !== undefined && this.getValue() !== null;
+      width = hasValue ? measureTextWidth(finalText) + (clearButton ? 37 : 21) : measureTextWidth(placeholder || '') + 24;
+    }
 
     if (isValidElement(text)) {
       otherProps.style = {
@@ -615,9 +618,12 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   renderMultipleHolder() {
     const { name, multiple, props: { isFlat } } = this;
-    const hasValue = !this.isEmpty();
-    const placeholder = this.hasFloatLabel ? undefined : this.getPlaceholders()[0];
-    const width = hasValue ? 'auto' : measureTextWidth(placeholder || '') + 22;
+    let width: string | number = 'auto';
+    if (isFlat) {
+      const hasValue = !this.isEmpty();
+      const placeholder = this.hasFloatLabel ? undefined : this.getPlaceholders()[0];
+      width = hasValue ? 'auto' : measureTextWidth(placeholder || '') + 22;
+    }
     if (multiple) {
       return (
         <input
