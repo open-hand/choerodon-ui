@@ -21,8 +21,10 @@ timeline: true
 - 💄 `Collapse`: 优化 Collapse 自定义 icon 样式。
 - 💄 `<pro>DataSet`: 优化 placeholder 优先级。
 - 💄 `<pro>Select`: 优化在数据源中找不到对应值时直接显示空的情况，现在显示返回值。
+- 💄 `<pro>Select`: 优化 onOption disabled 配置的多选值显示。
 - 💄 `<pro>Table.Column`: 优化 tooltip 为 overflow 时的性能。
 - 💄 `<pro>Modal`: 优化关闭按钮与取消按钮的行为保持一致。
+- 💄 `<pro>Table`: 优化 autoMaxWidth 的性能。
 - 🐞 `<pro>Table`: 修复拖拽列无法失焦。
 - 🐞 `<pro>Table`: 修复 filterBar 存在的交互问题。
 - 🐞 `<pro>DataSet`: 修复仅删除提交后的修改数据状态。
@@ -33,6 +35,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复 buttons 不存在时 summaryBar 不渲染的问题。
 - 🐞 `<pro>Pagination`: 修复页码切换时 modifiedCheckMessage 无效问题。
 - 🐞 `<pro>Modal`: 修复在多个 ModalProvider 中分别同时打开多个 Modal 时显示问题。
+- 🐞 `<pro>Form`: 修复清空数据源时表单控件值未清空的问题。
 
 ## 0.8.78
 
@@ -446,7 +449,7 @@ timeline: true
 
 - 🌟 `<pro>Lov`: 添加 queryBar, fieldProps 配置。
 - 🌟 `<pro>DataSet`: 新增 cascadeParams 属性。
-- 🌟 `<pro>Filed`: 添加 Form 下 Tooltip 特有样式名称。
+- 🌟 `<pro>Field`: 添加 Form 下 Tooltip 特有样式名称。
 - 💄 `<pro>DataSet`: 优化 ready 方法的性能。
 - 💄 `<pro>DataSet.Record`: 使用 merge 方法来回写 object 类型字段。
 - 🐞 `<pro>DatePicker`: 修复 DatePicker 设置默认值时，最大值日期无法选择最小默认值问题。

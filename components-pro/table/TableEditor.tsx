@@ -34,7 +34,7 @@ export default class TableEditor extends Component<TableEditorProps> {
 
   editor: FormField<FormFieldProps> | null;
 
-  // find this parent tr node 
+  // find this parent tr node
   parentTrNode?: (Node & ParentNode ) | null | undefined;
 
   editing: boolean = false;
@@ -106,11 +106,11 @@ export default class TableEditor extends Component<TableEditorProps> {
           const record = dataSet.findRecordById(index);
           const currentRecord = dataSet.findRecordById(currentIndex);
           if (record && currentRecord && tableStore) {
-            const cloneRecodData = record.clone().toData() || {};
-            const dealCloneRecodData = {};
+            const cloneRecordData = record.clone().toData() || {};
+            const dealCloneRecordData = {};
             if (name) {
-              dealCloneRecodData[name] = cloneRecodData[name];
-              currentRecord.set(dealCloneRecodData);
+              dealCloneRecordData[name] = cloneRecordData[name];
+              currentRecord.set(dealCloneRecordData);
             }
           }
         }
@@ -149,10 +149,10 @@ export default class TableEditor extends Component<TableEditorProps> {
           stopEvent(e);
           break;
         case KeyCode.D:
-          if(ctrlKey === true && keyboard) { this.handleKeyDownCTRLD(e); };
+          if(ctrlKey === true && keyboard) this.handleKeyDownCTRLD(e);
           break;
         case KeyCode.S:
-          if (ctrlKey === true && keyboard) { this.handleKeyDownCTRLS(e); };
+          if (ctrlKey === true && keyboard) this.handleKeyDownCTRLS(e);
           break;
         default:
       }

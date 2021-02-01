@@ -1,21 +1,12 @@
-import {
-  Component,
-  CSSProperties,
-  FocusEventHandler,
-  Key,
-  KeyboardEventHandler,
-  MouseEventHandler,
-} from 'react';
+import { Component, CSSProperties, FocusEventHandler, Key, KeyboardEventHandler, MouseEventHandler } from 'react';
 import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { action, observable } from 'mobx';
 import omit from 'lodash/omit';
-import omitBy from 'lodash/omitBy';
 import defer from 'lodash/defer';
 import merge from 'lodash/merge';
 import noop from 'lodash/noop';
-import isUndefined from 'lodash/isUndefined';
 import classes from 'component-classes';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure';
 import autobind from '../_util/autobind';
@@ -337,8 +328,7 @@ export default class ViewComponent<P extends ViewComponentProps> extends Compone
   updateObservableProps(props, context: any) {
     Object.assign(
       this.observableProps,
-      omitBy(this.getObservableProps(props, context), isUndefined),
-      true,
+      this.getObservableProps(props, context),
     );
   }
 
