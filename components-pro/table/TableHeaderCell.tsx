@@ -140,10 +140,18 @@ export default class TableHeaderCell extends Component<TableHeaderCellProps, any
   @action
   resizeDoubleClick(): void {
     const column = this.resizeColumn;
-    const { tableStore: { props: { autoMaxWidth } } } = this.context;
-    if (autoMaxWidth && column && column.innerMaxWidth) {
-      if (column.innerMaxWidth !== column.width) {
-        set(column, 'width', column.innerMaxWidth);
+    const { prefixCls } = this.props;
+    const { tableStore: { props: { autoMaxWidth }, node: { element } } } = this.context;
+    if (autoMaxWidth && column) {
+      const maxWidth = Math.max(
+        ...[
+          ...element.querySelectorAll(`td[data-index=${getColumnKey(column)}] > .${prefixCls}-cell-inner`),
+        ].map(({ clientWidth, scrollWidth, parentNode: { offsetWidth } }) => offsetWidth + scrollWidth - clientWidth),
+        minColumnWidth(column),
+        column.width ? column.width : 0,
+      );
+      if (maxWidth !== column.width) {
+        set(column, 'width', maxWidth);
       } else if (column.minWidth) {
         set(column, 'width', column.minWidth);
       }
