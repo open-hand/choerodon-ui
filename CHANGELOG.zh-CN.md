@@ -24,6 +24,7 @@ timeline: true
 - 💄 `<pro>Select`: 优化 onOption disabled 配置的多选值显示。
 - 💄 `<pro>Table.Column`: 优化 tooltip 为 overflow 时的性能。
 - 💄 `<pro>Modal`: 优化关闭按钮与取消按钮的行为保持一致。
+- 💄 `<pro>Table`: 优化 autoMaxWidth 的性能。
 - 🐞 `<pro>Table`: 修复拖拽列无法失焦。
 - 🐞 `<pro>Table`: 修复 filterBar 存在的交互问题。
 - 🐞 `<pro>DataSet`: 修复仅删除提交后的修改数据状态。

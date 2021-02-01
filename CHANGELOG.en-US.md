@@ -24,6 +24,7 @@ timeline: true
 - 💄 `<pro>Select`: Optimized the display of multi-choice value for onOption disabled configuration.
 - 💄 `<pro>Table.Column`: Optimize the performance when the tooltip is overflow.
 - 💄 `<pro>Modal`: Optimize the behavior of close button and cancel button to be consistent.
+- 💄 `<pro>Table`: Optimize the performance of `autoMaxWidth`.
 - 🐞 `<pro>Table`: Fixed the interaction problem of filterBar.
 - 🐞 `<pro>Table`: Fixed the drag bar cannot be out of focus.
 - 🐞 `<pro>DataSet`: Fixed to delete only the modified data status after submission.
