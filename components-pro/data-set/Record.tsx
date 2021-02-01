@@ -471,12 +471,13 @@ export default class Record {
     if (isString(item)) {
       let fieldName: string = item;
       const field = this.getField(fieldName) || this.addField(fieldName);
+      const newValue = processValue(value, field);
       const bind = field.get('bind');
       if (bind) {
         fieldName = bind;
       }
-      ObjectChainValue.set(pristineData, fieldName, value, fields);
-      ObjectChainValue.set(data, fieldName, value, fields);
+      ObjectChainValue.set(pristineData, fieldName, newValue, fields);
+      ObjectChainValue.set(data, fieldName, newValue, fields);
       field.commit();
     } else if (isPlainObject(item)) {
       Object.keys(item).forEach(key => this.init(key, item[key]));

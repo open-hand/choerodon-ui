@@ -36,6 +36,7 @@ timeline: true
 - 🐞 `<pro>Pagination`: 修复页码切换时 modifiedCheckMessage 无效问题。
 - 🐞 `<pro>Modal`: 修复在多个 ModalProvider 中分别同时打开多个 Modal 时显示问题。
 - 🐞 `<pro>Form`: 修复清空数据源时表单控件值未清空的问题。
+- 🐞 `<pro>DataSet.Field`: 修复 dynamicProps 的 defaultValue 属性不生效的问题。
 
 ## 0.8.78
 

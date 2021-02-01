@@ -1078,18 +1078,19 @@ export default class DataSet extends EventManager {
    * @param dataIndex 记录所在的索引
    * @return 新建的记录
    */
+  @action
   create(data: object = {}, dataIndex?: number): Record {
     if (data === null) {
       data = {};
     }
-    [...this.fields.entries()].forEach(([name, field]) => {
+    const record = new Record(data, this);
+    [...record.fields.entries()].forEach(([name, field]) => {
       const defaultValue = field.get('defaultValue');
       const value = ObjectChainValue.get(data, name);
       if (value === undefined && defaultValue !== undefined) {
-        ObjectChainValue.set(data, name, toJS(defaultValue));
+        record.init(name, toJS(defaultValue));
       }
     });
-    const record = new Record(data, this);
     if (isNumber(dataIndex)) {
       this.splice(dataIndex, 0, record);
     } else {
