@@ -34,6 +34,7 @@ timeline: true
 - 🐞 `<pro>Record`: Fixed the error of submitting data caused by incorrect `validate` parameter passing.
 - 🐞 `<pro>Pagination`: Fixed the issue that `modifiedCheckMessage` is invalid when the page number is switched.
 - 🐞 `<pro>Modal`: Fix the display problem when multiple Modal are opened simultaneously in multiple ModalProviders.
+- 🐞 `<pro>Form`: Fix the problem that the form control values are not cleared when clearing the dataset.
 
 ## 0.8.78
 
