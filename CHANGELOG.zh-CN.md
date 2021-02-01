@@ -33,6 +33,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复 buttons 不存在时 summaryBar 不渲染的问题。
 - 🐞 `<pro>Pagination`: 修复页码切换时 modifiedCheckMessage 无效问题。
 - 🐞 `<pro>Modal`: 修复在多个 ModalProvider 中分别同时打开多个 Modal 时显示问题。
+- 🐞 `<pro>Form`: 修复清空数据源时表单控件值未清空的问题。
 
 ## 0.8.78
 
@@ -446,7 +447,7 @@ timeline: true
 
 - 🌟 `<pro>Lov`: 添加 queryBar, fieldProps 配置。
 - 🌟 `<pro>DataSet`: 新增 cascadeParams 属性。
-- 🌟 `<pro>Filed`: 添加 Form 下 Tooltip 特有样式名称。
+- 🌟 `<pro>Field`: 添加 Form 下 Tooltip 特有样式名称。
 - 💄 `<pro>DataSet`: 优化 ready 方法的性能。
 - 💄 `<pro>DataSet.Record`: 使用 merge 方法来回写 object 类型字段。
 - 🐞 `<pro>DatePicker`: 修复 DatePicker 设置默认值时，最大值日期无法选择最小默认值问题。
