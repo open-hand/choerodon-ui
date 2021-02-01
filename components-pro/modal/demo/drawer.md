@@ -14,76 +14,70 @@ title:
 Drawer.
 
 ```jsx
-import { Modal, Button } from 'choerodon-ui/pro';
+import { useModal, Button } from 'choerodon-ui/pro';
 
-const key1 = Modal.key();
-const key2 = Modal.key();
-const key3 = Modal.key();
+const App = () => {
+  const Modal = useModal();
 
-function openSubModal2() {
-  return new Promise(resolve => {
+  const openSubModal2 = React.useCallback(() => {
+    return new Promise(resolve => {
+      Modal.open({
+        title: 'Sub Mode 2',
+        size: 'large',
+        drawer: true,
+        drawerTransitionName: 'slide-left',
+        children: (
+          <div>
+            <p>Open Sub Modal2...</p>
+            <p>Open Sub Modal2...</p>
+          </div>
+        ),
+        onOk: resolve,
+      });
+    });
+  }, [Modal]);
+
+  const openSubModal1 = React.useCallback(() => {
+    return new Promise(resolve => {
+      Modal.open({
+        title: 'Sub Mode 1',
+        drawer: true,
+        children: (
+          <div>
+            <Button onClick={openSubModal2}>Open Sub Modal2...</Button>
+            <p>Open Sub Modal1...</p>
+            <p>Open Sub Modal1...</p>
+          </div>
+        ),
+        onOk: resolve,
+        onCancel: resolve,
+      });
+    });
+  }, [Modal, openSubModal2]);
+
+  const openModal = React.useCallback(() => {
     Modal.open({
-      key: key3,
-      title: 'Sub Mode 2',
-      style: {
-        width: 600,
-      },
+      closable: true,
+      title: 'Multilayer',
       drawer: true,
-      drawerTransitionName: 'slide-left',
+      size: 'small',
       children: (
         <div>
-          <p>Open Sub Modal2...</p>
-          <p>Open Sub Modal2...</p>
+          <Button onClick={openSubModal1}>Open Sub Modal1...</Button>
+          <p>Modal...</p>
+          <p>Modal...</p>
         </div>
       ),
-      onOk: resolve,
-    });
-  });
-}
-
-function openSubModal1() {
-  return new Promise(resolve => {
-    Modal.open({
-      key: key2,
-      title: 'Sub Mode 1',
-      drawer: true,
-      style: {
-        width: 600,
+      afterClose: () => {
+        window.console.log('after close');
       },
-      children: (
-        <div>
-          <Button onClick={openSubModal2}>Open Sub Modal2...</Button>
-          <p>Open Sub Modal1...</p>
-          <p>Open Sub Modal1...</p>
-        </div>
-      ),
-      onOk: resolve,
-      onCancel: resolve,
     });
-  });
+  }, [Modal, openSubModal1]);
+
+  return (
+    <Button onClick={openModal}>Drawer</Button>
+  );
 }
 
-function openModal() {
-  Modal.open({
-    closable: true,
-    key: key1,
-    title: 'Multilayer',
-    drawer: true,
-    style: {
-      width: 300,
-    },
-    children: (
-      <div>
-        <Button onClick={openSubModal1}>Open Sub Modal1...</Button>
-        <p>Modal...</p>
-        <p>Modal...</p>
-      </div>
-    ),
-    afterClose: () => {
-      window.console.log('after close');
-    },
-  });
-}
-
-ReactDOM.render(<Button onClick={openModal}>Drawer</Button>, mountNode);
+ReactDOM.render(<App />, mountNode);
 ```

@@ -14,9 +14,7 @@ title:
 Basic usage example.
 
 ```jsx
-import { Modal, Button } from 'choerodon-ui/pro';
-
-const modalKey = Modal.key();
+import { useModal, Button } from 'choerodon-ui/pro';
 
 const ModalContent = ({ modal }) => {
   modal.handleOk(() => {
@@ -27,12 +25,12 @@ const ModalContent = ({ modal }) => {
     console.log('do Cancel');
     modal.close();
   });
-  function toggleOkDisabled() {
+  const toggleOkDisabled = React.useCallback(() => {
     modal.update({
       okProps: { disabled: !modal.props.okProps.disabled },
       okText: "保存",
     });
-  }
+  },[]);
   console.log('modal', modal);
 
   return (
@@ -50,17 +48,22 @@ const ModalContent = ({ modal }) => {
   );
 };
 
-let modalNew;
+const App = () => {
+  const Modal = useModal();
 
-function openModal() {
-  Modal.open({
-    key: modalKey,
-    title: 'Basic',
-    children: <ModalContent />,
-    okText: '确定',
-    okProps: { disabled: true },
-  });
+  const openModal = React.useCallback(() => {
+    Modal.open({
+      title: 'Basic',
+      children: <ModalContent />,
+      okText: '确定',
+      okProps: { disabled: true },
+    });
+  }, [Modal]);
+
+  return (
+    <Button onClick={openModal}>Open</Button>
+  );
 }
 
-ReactDOM.render(<Button onClick={openModal}>Open</Button>, mountNode);
+ReactDOM.render(<App />, mountNode);
 ```

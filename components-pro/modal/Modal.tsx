@@ -1,14 +1,16 @@
-import React, { cloneElement, isValidElement, Key, ReactNode, CSSProperties } from 'react';
+import React, { cloneElement, CSSProperties, isValidElement, Key, ReactElement, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import omit from 'lodash/omit';
 import defer from 'lodash/defer';
 import noop from 'lodash/noop';
 import isNil from 'lodash/isNil';
+import isNumber from 'lodash/isNumber';
 import classNames from 'classnames';
 import classes from 'component-classes';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { getConfig } from 'choerodon-ui/lib/configure';
+import { MousePosition } from '../modal-manager';
 import ViewComponent, { ViewComponentProps } from '../core/ViewComponent';
 import Icon from '../icon';
 import autobind from '../_util/autobind';
@@ -24,7 +26,26 @@ import DataSetRequestError from '../data-set/DataSetRequestError';
 import { suffixCls } from './utils';
 import { modalChildrenProps } from './interface';
 
-export const destroyFns: Array<() => void> = [];
+function fixUnit(n) {
+  if (isNumber(n)) {
+    return `${n}px`;
+  }
+  return n;
+}
+
+function getTransformOrigin(position: MousePosition, style: CSSProperties) {
+  const { offsetWidth = 0, scrollTop = 0, scrollLeft = 0 } =
+    typeof window === 'undefined' ? {} : document.documentElement;
+  const { width = 520, left, top = 100 } = style;
+  const { x, y } = position;
+  const originX = `calc(${x}px - ${
+    isNil(left) ? `(${offsetWidth}px - ${fixUnit(width)}) / 2` : `${fixUnit(left)}`
+  } - ${scrollLeft}px)`;
+  // const originX = isNil(left) ? `calc(${x}px - (${offsetWidth}px - ${width}px) / 2)` : `${x - (toPx(left) || 0)}px`;
+  const originY = `calc(${y}px - ${fixUnit(top)} - ${scrollTop}px)`;
+  // const originY = `${y - (toPx(top) || 0) - scrollTop}px`;
+  return `${originX} ${originY}`;
+}
 
 export interface ModalProps extends ViewComponentProps {
   closable?: boolean;
@@ -36,7 +57,8 @@ export interface ModalProps extends ViewComponentProps {
   mask?: boolean,
   maskClassName?: string,
   keyboardClosable?: boolean;
-  footer?: ((okBtn: ReactNode, cancelBtn: ReactNode) => ReactNode) | ReactNode | boolean;
+  header?: ((title: ReactNode, closeBtn: ReactNode, okBtn: ReactElement<Button>, cancelBtn: ReactElement<Button>) => ReactNode) | ReactNode | boolean;
+  footer?: ((okBtn: ReactElement<Button>, cancelBtn: ReactElement<Button>) => ReactNode) | ReactNode | boolean;
   destroyOnClose?: boolean;
   okText?: ReactNode;
   cancelText?: ReactNode;
@@ -48,13 +70,23 @@ export interface ModalProps extends ViewComponentProps {
   afterClose?: () => void;
   close?: () => void;
   update?: (props?: ModalProps) => void;
+  okButton?: boolean;
+  cancelButton?: boolean;
+  /**
+   * @deprecated
+   */
   okCancel?: boolean;
   drawer?: boolean;
-  drawerTransitionName?: string;
+  drawerOffset?: number;
+  drawerTransitionName?: 'slide-up' | 'slide-right' | 'slide-down' | 'slide-left';
   key?: Key;
   border?: boolean;
   okFirst?: boolean;
   keyboard?: boolean;
+  active?: boolean;
+  mousePosition?: MousePosition | null;
+  contentStyle?: CSSProperties;
+  bodyStyle?: CSSProperties;
 }
 
 export default class Modal extends ViewComponent<ModalProps> {
@@ -81,8 +113,12 @@ export default class Modal extends ViewComponent<ModalProps> {
     onOk: PropTypes.func,
     onCancel: PropTypes.func,
     afterClose: PropTypes.func,
+    okButton: PropTypes.bool,
+    cancelButton: PropTypes.bool,
     okCancel: PropTypes.bool,
     drawer: PropTypes.bool,
+    drawerOffset: PropTypes.number,
+    drawerTransitionName: PropTypes.oneOf(['slide-up', 'slide-right', 'slide-down', 'slide-up']),
     // title: PropTypes.node,
     // 此处原本允许title传入node，但是类型为PropTypes.node时无法正确继承ViewComponent
     // 父类中的title指的是HTML元素的title属性，此处title指modal标题，产生歧义，暂时设置为string
@@ -90,6 +126,9 @@ export default class Modal extends ViewComponent<ModalProps> {
     title: PropTypes.string,
     okFirst: PropTypes.bool,
     keyboard: PropTypes.bool,
+    mousePosition: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
+    contentStyle: PropTypes.object,
+    bodyStyle: PropTypes.object,
   };
 
   static defaultProps = {
@@ -99,10 +138,13 @@ export default class Modal extends ViewComponent<ModalProps> {
     maskClosable: false,
     mask: true,
     keyboardClosable: true,
+    okButton: true,
     okCancel: true,
     destroyOnClose: true,
     fullScreen: false,
     drawer: false,
+    drawerOffset: 150,
+    drawerTransitionName: 'slide-right',
     autoFocus: true,
   };
 
@@ -122,6 +164,8 @@ export default class Modal extends ViewComponent<ModalProps> {
 
   static destroyAll: () => void;
 
+  mousePosition?: MousePosition | null;
+
   moveEvent: EventManager = new EventManager(typeof window === 'undefined' ? undefined : document);
 
   okCancelEvent: EventManager = new EventManager();
@@ -130,12 +174,61 @@ export default class Modal extends ViewComponent<ModalProps> {
 
   cancelButton: Button | null;
 
+  get okBtn(): ReactElement<Button> {
+    const {
+      okProps,
+      okText = $l('Modal', 'ok'),
+      drawer,
+    } = this.props;
+    const modalButtonProps = getConfig('modalButtonProps');
+    const funcType: FuncType | undefined = drawer
+      ? FuncType.raised
+      : (getConfig('buttonFuncType') as FuncType);
+    return (
+      <Button
+        key="ok"
+        funcType={funcType}
+        color={ButtonColor.primary}
+        onClick={this.handleOk}
+        {...modalButtonProps}
+        {...okProps}
+      >
+        {okText}
+      </Button>
+    );
+  }
+
+  get cancelBtn(): ReactElement<Button> {
+    const {
+      cancelProps,
+      cancelText = $l('Modal', 'cancel'),
+      drawer,
+    } = this.props;
+    const modalButtonProps = getConfig('modalButtonProps');
+    const funcType: FuncType | undefined = drawer
+      ? FuncType.raised
+      : (getConfig('buttonFuncType') as FuncType);
+
+    return (
+      <Button
+        key="cancel"
+        ref={this.saveCancelRef}
+        funcType={funcType}
+        onClick={this.handleCancel}
+        {...modalButtonProps}
+        {...cancelProps}
+      >
+        {cancelText}
+      </Button>
+    );
+  };
+
   contentNode: HTMLElement;
 
   saveCancelRef = node => (this.cancelButton = node);
 
   handleKeyDown = e => {
-    const { cancelButton, props: { keyboard = getConfig('modalKeyboard')} } = this;
+    const { cancelButton, props: { keyboard = getConfig('modalKeyboard') } } = this;
     if (cancelButton && !cancelButton.isDisabled() && e.keyCode === KeyCode.ESC && keyboard) {
       cancelButton.handleClickWait(e);
     }
@@ -157,12 +250,16 @@ export default class Modal extends ViewComponent<ModalProps> {
       'update',
       'okText',
       'cancelText',
+      'okButton',
+      'cancelButton',
       'okCancel',
       'onClose',
       'onOk',
       'onCancel',
       'destroyOnClose',
       'drawer',
+      'drawerOffset',
+      'drawerTransitionName',
       'afterClose',
       'okProps',
       'cancelProps',
@@ -171,11 +268,27 @@ export default class Modal extends ViewComponent<ModalProps> {
       'drawerTransitionName',
       'autoCenter',
       'keyboard',
+      'mousePosition',
+      'active',
     ]);
-    if (this.props.keyboardClosable) {
+    const { hidden, mousePosition, keyboardClosable, style = {}, drawer } = this.props;
+    if (keyboardClosable) {
       otherProps.autoFocus = true;
       otherProps.tabIndex = -1;
       otherProps.onKeyDown = this.handleKeyDown;
+    }
+    if (!drawer) {
+      const position = this.mousePosition || mousePosition;
+      if (position) {
+        this.mousePosition = position;
+        otherProps.style = {
+          ...style,
+          transformOrigin: getTransformOrigin(position, style),
+        };
+      }
+      if (hidden) {
+        this.mousePosition = undefined;
+      }
     }
 
     return otherProps;
@@ -189,13 +302,16 @@ export default class Modal extends ViewComponent<ModalProps> {
   getClassName(): string | undefined {
     const {
       prefixCls,
-      props: { 
-        style = {}, 
-        fullScreen, 
-        drawer, 
+      props: {
+        style = {},
+        fullScreen,
+        drawer,
+        drawerTransitionName,
+        size,
+        active,
         border = getConfig('modalSectionBorder'),
         autoCenter = getConfig('modalAutoCenter'),
-       },
+      },
     } = this;
 
     return super.getClassName({
@@ -203,18 +319,21 @@ export default class Modal extends ViewComponent<ModalProps> {
       [`${prefixCls}-fullscreen`]: fullScreen,
       [`${prefixCls}-drawer`]: drawer,
       [`${prefixCls}-border`]: border,
+      [`${prefixCls}-drawer-${drawerTransitionName}`]: drawer,
       [`${prefixCls}-auto-center`]: autoCenter,
+      [`${prefixCls}-${size}`]: size,
+      [`${prefixCls}-active`]: active,
     });
   }
 
   render() {
-    const { prefixCls } = this;
+    const { prefixCls, props: { contentStyle } } = this;
     const header = this.getHeader();
     const body = this.getBody();
     const footer = this.getFooter();
     return (
       <div {...this.getMergedProps()}>
-        <div ref={this.contentReference}  className={`${prefixCls}-content`}>
+        <div ref={this.contentReference} className={`${prefixCls}-content`} style={contentStyle}>
           {header}
           {body}
           {footer}
@@ -236,7 +355,7 @@ export default class Modal extends ViewComponent<ModalProps> {
 
   @autobind
   handleHeaderMouseDown(downEvent: MouseEvent) {
-    const { element, contentNode, props:{ autoCenter = getConfig('modalAutoCenter') } } = this;
+    const { element, contentNode, props: { autoCenter = getConfig('modalAutoCenter') } } = this;
     if (element && contentNode) {
       const { prefixCls } = this;
       const { clientX, clientY } = downEvent;
@@ -250,12 +369,12 @@ export default class Modal extends ViewComponent<ModalProps> {
           const left = pxToRem(Math.max(offsetLeft + moveX - clientX, 0));
           const top = pxToRem(Math.max(offsetTop + autoMove + moveY - clientY, 0));
           this.offset = [left, top];
-          if( autoCenter && classes(element).has(`${prefixCls}-auto-center`)) {
+          if (autoCenter && classes(element).has(`${prefixCls}-auto-center`)) {
             classes(element).remove(`${prefixCls}-auto-center`);
-            autoMove = Math.max((heightW - contentNode.clientHeight)/2,0)
+            autoMove = Math.max((heightW - contentNode.clientHeight) / 2, 0);
             Object.assign(element.style, {
-              left, 
-              top:pxToRem(autoMove),
+              left,
+              top: pxToRem(autoMove),
             });
           } else {
             Object.assign(element.style, {
@@ -304,24 +423,28 @@ export default class Modal extends ViewComponent<ModalProps> {
     }
   }
 
-  getTitle(): ReactNode {
+  getHeader(): ReactNode {
     const {
-      props: { title },
-      prefixCls,
-    } = this;
-    if (title) {
-      return <div className={`${prefixCls}-title`}>{title}</div>;
+      header = this.getDefaultHeader,
+      title,
+    } = this.props;
+
+    if (typeof header === 'function') {
+      const closeButton = this.getCloseButton();
+      return this.getWrappedHeader(header(title, closeButton, this.okBtn, this.cancelBtn));
+    }
+
+    if (!isEmpty(header, true)) {
+      return this.getWrappedHeader(header);
     }
   }
 
-  getHeader(): ReactNode {
+  getWrappedHeader(header: ReactNode): ReactNode {
     const {
       prefixCls,
-      props: { closable, movable, fullScreen, drawer },
+      props: { title, closable, movable, fullScreen, drawer },
     } = this;
-    const title = this.getTitle();
-    const buttons = this.getHeaderButtons();
-    if (title || closable || movable) {
+    if (title || closable || movable || header) {
       const headerProps: any = {
         className: classNames(`${prefixCls}-header`, {
           [`${prefixCls}-movable`]: movable && !fullScreen && !drawer,
@@ -333,18 +456,9 @@ export default class Modal extends ViewComponent<ModalProps> {
       }
       return (
         <div {...headerProps}>
-          {title}
-          {buttons}
+          {header}
         </div>
       );
-    }
-  }
-
-  getHeaderButtons(): ReactNode {
-    const { prefixCls } = this;
-    const closeButton = this.getCloseButton();
-    if (closeButton) {
-      return <div className={`${prefixCls}-header-buttons`}>{closeButton}</div>;
     }
   }
 
@@ -355,38 +469,9 @@ export default class Modal extends ViewComponent<ModalProps> {
     } = this;
     if (closable) {
       return (
-        <button type="button" className={`${prefixCls}-header-button`} onClick={this.close}>
+        <button type="button" className={`${prefixCls}-header-button`} onClick={this.handleCancel}>
           <Icon type="close" />
         </button>
-      );
-    }
-  }
-
-  registerOk = ok => {
-    this.okCancelEvent.removeEventListener('ok');
-    this.okCancelEvent.addEventListener('ok', ok);
-  };
-
-  registerCancel = cancel => {
-    this.okCancelEvent.removeEventListener('cancel');
-    this.okCancelEvent.addEventListener('cancel', cancel);
-  };
-
-  renderChildren(children: ReactNode): ReactNode {
-    if (children) {
-      const { prefixCls, props } = this;
-      const { close = noop, update = noop } = props;
-      const modal:modalChildrenProps = {
-        close,
-        update,
-        props,
-        handleOk: this.registerOk,
-        handleCancel: this.registerCancel,
-      };
-      return (
-        <div className={`${prefixCls}-body`}>
-          {isValidElement(children) ? cloneElement<any>(children, { modal }) : children}
-        </div>
       );
     }
   }
@@ -402,42 +487,11 @@ export default class Modal extends ViewComponent<ModalProps> {
 
   getFooter(): ReactNode {
     const {
-      okProps,
-      cancelProps,
-      drawer,
-      okText = $l('Modal', 'ok'),
-      cancelText = $l('Modal', 'cancel'),
       footer = this.getDefaultFooter,
     } = this.props;
-    const funcType: FuncType | undefined = drawer
-      ? FuncType.raised
-      : (getConfig('buttonFuncType') as FuncType);
-
-    const okBtn = (
-      <Button
-        key="ok"
-        funcType={funcType}
-        color={ButtonColor.primary}
-        onClick={this.handleOk}
-        {...okProps}
-      >
-        {okText}
-      </Button>
-    );
-    const cancelBtn = (
-      <Button
-        key="cancel"
-        ref={this.saveCancelRef}
-        funcType={funcType}
-        onClick={this.handleCancel}
-        {...cancelProps}
-      >
-        {cancelText}
-      </Button>
-    );
 
     if (typeof footer === 'function') {
-      return this.getWrappedFooter(footer(okBtn, cancelBtn));
+      return this.getWrappedFooter(footer(this.okBtn, this.cancelBtn));
     }
 
     if (!isEmpty(footer, true)) {
@@ -456,26 +510,71 @@ export default class Modal extends ViewComponent<ModalProps> {
     return <div className={className}>{footer}</div>;
   }
 
-  getDefaultFooter = (okBtn: ReactNode, cancelBtn: ReactNode) => {
-    const { okCancel, drawer, okFirst = getConfig('modalOkFirst') } = this.props;
-    let buttons = [okBtn];
-    const drawerOkFirst = getConfig('drawerOkFirst');
-    if (okCancel) {
-      if (okFirst) {
+  getDefaultHeader = (title, closeButton: ReactNode, _okBtn: ReactElement<Button>, _cancelBtn: ReactElement<Button>) => {
+    const { prefixCls } = this;
+    if (title || closeButton) {
+      return (
+        <>
+          <div className={`${prefixCls}-title`}>{title}</div>
+          <div className={`${prefixCls}-header-buttons`}>
+            {closeButton}
+          </div>
+        </>
+      );
+    }
+  };
+
+  getDefaultFooter = (okBtn: ReactElement<Button>, cancelBtn: ReactElement<Button>) => {
+    const { okCancel, okButton, cancelButton, okFirst = getConfig('modalOkFirst'), drawer } = this.props;
+    const buttons: ReactNode[] = [];
+    if (okButton !== false) {
+      buttons.push(okBtn);
+    }
+    if (okCancel || cancelButton) {
+      const drawerOkFirst = getConfig('drawerOkFirst');
+      if (drawer && !isNil(drawerOkFirst)) {
+        if (drawerOkFirst) {
+          buttons.push(cancelBtn);
+        } else {
+          buttons.unshift(cancelBtn);
+        }
+      } else if (okFirst) {
         buttons.push(cancelBtn);
       } else {
         buttons.unshift(cancelBtn);
       }
-      if (drawer && !isNil(drawerOkFirst)) {
-        if (drawerOkFirst) {
-          buttons = [okBtn, cancelBtn];
-        } else {
-          buttons = [cancelBtn, okBtn];
-        }
-      }
     }
     return <div>{buttons}</div>;
   };
+
+  registerOk = ok => {
+    this.okCancelEvent.removeEventListener('ok');
+    this.okCancelEvent.addEventListener('ok', ok);
+  };
+
+  registerCancel = cancel => {
+    this.okCancelEvent.removeEventListener('cancel');
+    this.okCancelEvent.addEventListener('cancel', cancel);
+  };
+
+  renderChildren(children: ReactNode): ReactNode {
+    if (children) {
+      const { prefixCls, props } = this;
+      const { close = noop, update = noop, bodyStyle } = props;
+      const modal: modalChildrenProps = {
+        close,
+        update,
+        props,
+        handleOk: this.registerOk,
+        handleCancel: this.registerCancel,
+      };
+      return (
+        <div className={`${prefixCls}-body`} style={bodyStyle}>
+          {isValidElement(children) ? cloneElement<any>(children, { modal }) : children}
+        </div>
+      );
+    }
+  }
 
   @autobind
   close() {

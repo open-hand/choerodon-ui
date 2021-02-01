@@ -14,10 +14,7 @@ title:
 Update rendering example.
 
 ```jsx
-import { Modal, Button } from 'choerodon-ui/pro';
-
-let _modal;
-const modalKey = Modal.key();
+import { useModal, Button } from 'choerodon-ui/pro';
 
 const ModalContent = ({ modal }) => {
   modal.handleOk(() => {
@@ -28,8 +25,8 @@ const ModalContent = ({ modal }) => {
     console.log('do Cancel');
     modal.close();
   });
-  function handleUpdate() {
-    _modal.update({
+  const handleUpdate = React.useCallback(() => {
+    modal.update({
       title: 'update',
       children: (
         <div>
@@ -38,9 +35,9 @@ const ModalContent = ({ modal }) => {
       ),
       okText: '保存',
       cancelText: '退出',
-      onOk: () => _modal.close(),
+      onOk: () => modal.close(),
     });
-  }
+  }, [modal]);
 
   return (
     <div>
@@ -54,13 +51,20 @@ const ModalContent = ({ modal }) => {
   );
 };
 
-function openModal() {
-  _modal = Modal.open({
-    key: modalKey,
-    title: 'Basic',
-    children: <ModalContent />,
-  });
+const App = () => {
+  const Modal = useModal();
+
+  const openModal = React.useCallback(() => {
+    Modal.open({
+      title: 'Basic',
+      children: <ModalContent />,
+    });
+  }, [Modal]);
+
+  return (
+    <Button onClick={openModal}>Open</Button>
+  );
 }
 
-ReactDOM.render(<Button onClick={openModal}>Open</Button>, mountNode);
+ReactDOM.render(<App />, mountNode);
 ```

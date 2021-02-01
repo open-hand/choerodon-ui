@@ -14,36 +14,41 @@ title:
 Synchronize Close.
 
 ````jsx
-import { Modal, Button } from 'choerodon-ui/pro';
+import { useModal, Button } from 'choerodon-ui/pro';
 
-const modalKey = Modal.key();
+const App = () => {
+  const Modal = useModal();
 
-function openModal() {
-  Modal.open({
-    key: modalKey,
-    title: 'Synchronize',
-    children: (
-      <div>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-      </div>
-    ),
-    onOk: () => new Promise((resolve) => {
-      setTimeout(() => {
-        resolve();
-      }, 1000);
-    }),
-    onCancel: () => new Promise((resolve, reject) => {
-      setTimeout(() => {
-        reject(new Error('error'));
-      }, 1000);
-    }),
-  });
+  const openModal = React.useCallback(() => {
+    Modal.open({
+      title: 'Synchronize',
+      children: (
+        <div>
+          <p>Some contents...</p>
+          <p>Some contents...</p>
+          <p>Some contents...</p>
+        </div>
+      ),
+      onOk: () => new Promise((resolve) => {
+        setTimeout(() => {
+          resolve();
+        }, 1000);
+      }),
+      onCancel: () => new Promise((resolve, reject) => {
+        setTimeout(() => {
+          reject(new Error('error'));
+        }, 1000);
+      }),
+    });
+  }, [Modal]);
+
+  return (
+    <Button onClick={openModal}>Open</Button>
+  );
 }
 
 ReactDOM.render(
-  <Button onClick={openModal}>Open</Button>,
+  <App />,
   mountNode,
 );
 ````

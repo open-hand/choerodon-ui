@@ -1,5 +1,6 @@
 @import '../../../components/style/themes/default';
 @import '../../../components/style/mixins/index';
+@import 'mixin';
 
 @modal-prefix-cls: ~'@{c7n-pro-prefix}-modal';
 
@@ -13,21 +14,6 @@
   &-center {
     right: 0;
     left: 0;
-  }
-
-  &-fullscreen {
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    width: auto;
-
-    .@{modal-prefix-cls}-footer {
-      position: absolute;
-      right: 0;
-      bottom: 0;
-      left: 0;
-    }
   }
 
   &-content {
@@ -95,30 +81,11 @@
     z-index: @zindex-modal-container;
   }
 
-  &-active {
-    z-index: 3;
-  }
-
-  &-drawer {
-    top: 0;
-    right: 0;
-    left: unset;
-    height: 100vh;
-    transition: margin-right @animation-duration-slow @ease-in-out;
-  }
-
-  &-drawer &-header,
-  &-border &-header {
-    border-bottom: @border-width-base @border-style-base @border-color-base;
-  }
+  .active;
+  .border;
 
   &-title-none {
     border-bottom: none !important;
-  }
-
-  &-drawer &-footer,
-  &-border &-footer {
-    border-top: @border-width-base @border-style-base @border-color-base;
   }
 
   &-header-buttons {
@@ -153,6 +120,23 @@
     cursor: move;
     user-select: none;
   }
+
+  &-fullscreen {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+
+    .@{modal-prefix-cls}-footer {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
+  }
+
+  .drawer(@modal-prefix-cls);
 
   &-auto-center {
     top: 0;
