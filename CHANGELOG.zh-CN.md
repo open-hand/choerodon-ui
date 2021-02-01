@@ -17,11 +17,13 @@ timeline: true
 
 - 🌟 `configure`: 新增 selectReverse，tableAutoHeightDiff 全局属性。
 - 🌟 `<pro>Select`: 新增 reverse 属性控制多选是否可反选。
+- 🌟 `<pro>Modal`: 新增 header，drawerOffset，okButton，cancelButton，contentStyle，bodyStyle属性。
 - 💄 `Collapse`: 优化 Collapse 自定义 icon 样式。
 - 💄 `<pro>DataSet`: 优化 placeholder 优先级。
 - 💄 `<pro>Select`: 优化在数据源中找不到对应值时直接显示空的情况，现在显示返回值。
 - 💄 `<pro>Select`: 优化 onOption disabled 配置的多选值显示。
 - 💄 `<pro>Table.Column`: 优化 tooltip 为 overflow 时的性能。
+- 💄 `<pro>Modal`: 优化关闭按钮与取消按钮的行为保持一致。
 - 🐞 `<pro>Table`: 修复拖拽列无法失焦。
 - 🐞 `<pro>Table`: 修复 filterBar 存在的交互问题。
 - 🐞 `<pro>DataSet`: 修复仅删除提交后的修改数据状态。
@@ -31,6 +33,7 @@ timeline: true
 - 🐞 `<pro>Lov`: 修复多选弹窗列表取消勾选值后确认选值更改无效问题。
 - 🐞 `<pro>Table`: 修复 buttons 不存在时 summaryBar 不渲染的问题。
 - 🐞 `<pro>Pagination`: 修复页码切换时 modifiedCheckMessage 无效问题。
+- 🐞 `<pro>Modal`: 修复在多个 ModalProvider 中分别同时打开多个 Modal 时显示问题。
 
 ## 0.8.78
 

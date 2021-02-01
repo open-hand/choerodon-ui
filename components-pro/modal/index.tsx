@@ -1,19 +1,20 @@
-import Modal, { destroyFns } from './Modal';
-import { getKey, open } from '../modal-container/ModalContainer';
+import ModalManager from '../modal-manager';
+import Modal from './Modal';
+import { open } from '../modal-container/ModalContainer';
 import confirm from './confirm';
 import { normalizeProps } from './utils';
 
-Modal.key = getKey;
+Modal.key = ModalManager.getKey;
 Modal.open = open;
 Modal.confirm = confirm;
-Modal.info = function(props) {
+Modal.info = function (props) {
   return confirm({
     type: 'info',
     okCancel: false,
     ...normalizeProps(props),
   });
 };
-Modal.success = function(props) {
+Modal.success = function (props) {
   return confirm({
     type: 'success',
     iconType: 'check_circle',
@@ -21,7 +22,7 @@ Modal.success = function(props) {
     ...normalizeProps(props),
   });
 };
-Modal.error = function(props) {
+Modal.error = function (props) {
   return confirm({
     type: 'error',
     iconType: 'cancel',
@@ -29,7 +30,7 @@ Modal.error = function(props) {
     ...normalizeProps(props),
   });
 };
-Modal.warning = function(props) {
+Modal.warning = function (props) {
   return confirm({
     type: 'warning',
     iconType: 'warning',
@@ -38,12 +39,7 @@ Modal.warning = function(props) {
   });
 };
 Modal.destroyAll = function destroyAllFn() {
-  while (destroyFns.length) {
-    const close = destroyFns.pop();
-    if (close) {
-      close();
-    }
-  }
+  ModalManager.containerInstances.forEach(instance => instance.clear());
 };
 
 export default Modal;

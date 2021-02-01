@@ -1,8 +1,9 @@
 import React, { ReactNode } from 'react';
 import noop from 'lodash/noop';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure';
+import ModalManager from '../modal-manager';
 import { ModalProps } from './Modal';
-import { getKey, open } from '../modal-container/ModalContainer';
+import { open } from '../modal-container/ModalContainer';
 import Icon from '../icon';
 import { confirmProps, normalizeProps } from './utils';
 
@@ -30,7 +31,7 @@ export default function confirm(props: ModalProps & confirmProps | ReactNode) {
   );
   return new Promise(resolve => {
     open({
-      key: getKey(),
+      key: ModalManager.getKey(),
       border,
       destroyOnClose: true,
       okCancel,

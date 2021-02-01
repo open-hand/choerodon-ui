@@ -1,47 +1,32 @@
-import React, { Component } from 'react';
+import React, { Component, CSSProperties, MouseEvent } from 'react';
 import { createPortal, render } from 'react-dom';
-import classNames from 'classnames';
-import findLast from 'lodash/findLast.js';
+import { action, computed, observable, runInAction } from 'mobx';
+import { observer } from 'mobx-react';
+import findLast from 'lodash/findLast';
 import noop from 'lodash/noop';
+import EventManager from 'choerodon-ui/lib/_util/EventManager';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import warning from 'choerodon-ui/lib/_util/warning';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure';
-import Modal, { ModalProps, destroyFns } from '../modal/Modal';
+import ModalManager, { DrawerOffsets, IModalContainer } from '../modal-manager';
+import Modal, { ModalProps } from '../modal/Modal';
 import Animate from '../animate';
 import Mask from './Mask';
 import { stopEvent } from '../_util/EventManager';
 import { suffixCls } from '../modal/utils';
 
-const KeyGen = (function* (id) {
-  while (true) {
-    yield `${getProPrefixCls(suffixCls)}-${id}`;
-    id += 1;
+const { containerInstances } = ModalManager;
+
+function getArrayIndex(array, index) {
+  if (array.length > index) {
+    return array[index];
   }
-})(1);
-
-const containerInstanses: ModalContainer[] = [];
-
-function removeInstanse(instanse: ModalContainer) {
-  const index = containerInstanses.indexOf(instanse);
-  if (index > -1) {
-    containerInstanses.splice(index, 1);
-  }
+  return 0;
 }
 
-function addInstanse(instanse: ModalContainer) {
-  removeInstanse(instanse);
-  containerInstanses.push(instanse);
-}
-
-export function getKey(): string {
-  return KeyGen.next().value;
-}
-
-let root;
-let defaultBodyStyle: { overflow; paddingRight; } | undefined;
-
-function getRoot() {
+function getRoot(): HTMLDivElement | undefined {
+  let { root } = ModalManager;
   if (typeof window !== 'undefined') {
     const doc = window.document;
     if (root) {
@@ -52,6 +37,7 @@ function getRoot() {
       root = doc.createElement('div');
       root.className = `${getProPrefixCls(suffixCls)}-container`;
       doc.body.appendChild(root);
+      ModalManager.root = root;
     }
   }
   return root;
@@ -62,53 +48,132 @@ function getRoot() {
  *
  * @returns {boolean}
  */
-function hasScrollBar(): boolean {
-  const { scrollHeight, clientHeight } = document.body;
+function hasScrollBar(body: HTMLElement): boolean {
+  const { scrollHeight, clientHeight } = body;
   return scrollHeight > clientHeight;
 }
 
-function hideBodyScrollBar() {
-  const { style } = document.body;
-  if (!defaultBodyStyle) {
-    defaultBodyStyle = {
+function hideBodyScrollBar(body: HTMLElement) {
+  const { style } = body;
+  if (!ModalManager.defaultBodyStyle) {
+    ModalManager.defaultBodyStyle = {
       overflow: style.overflow,
       paddingRight: style.paddingRight,
     };
     style.overflow = 'hidden';
-    if (hasScrollBar()) {
+    if (hasScrollBar(body)) {
       style.paddingRight = pxToRem(measureScrollbar()) || '';
     }
   }
 }
 
-function showBodyScrollBar() {
-  const { style } = document.body;
-  if (defaultBodyStyle) {
-    const { overflow, paddingRight } = defaultBodyStyle;
-    defaultBodyStyle = undefined;
+function showBodyScrollBar(body: HTMLElement) {
+  const { style } = body;
+  if (ModalManager.defaultBodyStyle) {
+    const { overflow, paddingRight } = ModalManager.defaultBodyStyle;
+    ModalManager.defaultBodyStyle = undefined;
     style.overflow = overflow;
     style.paddingRight = paddingRight;
   }
 }
 
 export interface ModalContainerProps {
-  location?: { pathname: string; };
+  location?: { pathname: string };
+  getContainer?: HTMLElement | (() => HTMLElement) | false;
 }
 
 export interface ModalContainerState {
   modals: ModalProps[];
+  mount?: HTMLElement;
 }
 
-export default class ModalContainer extends Component<ModalContainerProps> {
+@observer
+export default class ModalContainer extends Component<ModalContainerProps> implements IModalContainer {
   static displayName = 'ModalContainer';
+
+  static defaultProps = {
+    getContainer: getRoot,
+  };
 
   state: ModalContainerState = {
     modals: [],
   };
 
+  saveMount = (mount) => {
+    if (mount) {
+      this.setState({
+        mount,
+      });
+    }
+  };
+
+  @observable maskHidden: boolean;
+
+  @observable drawerOffsets: DrawerOffsets;
+
+  @computed
+  get baseOffsets() {
+    const offsets = {
+      'slide-up': 0, 'slide-right': 0, 'slide-down': 0, 'slide-left': 0,
+    };
+    containerInstances.some((instance) => {
+      if (instance === this) {
+        return true;
+      }
+      const { drawerOffsets, maskHidden } = instance;
+      if (!maskHidden) {
+        offsets['slide-up'] += getArrayIndex(drawerOffsets['slide-up'], 0);
+        offsets['slide-right'] += getArrayIndex(drawerOffsets['slide-right'], 0);
+        offsets['slide-down'] += getArrayIndex(drawerOffsets['slide-down'], 0);
+        offsets['slide-left'] += getArrayIndex(drawerOffsets['slide-left'], 0);
+      }
+      return false;
+    });
+    return offsets;
+  }
+
+  @computed
+  get isTop(): boolean {
+    let is = true;
+    containerInstances.some(instance => {
+      if (instance !== this && !instance.maskHidden) {
+        is = false;
+        return true;
+      }
+      if (instance === this) {
+        return true;
+      }
+      return false;
+    });
+    return is;
+  }
+
   constructor(props, context) {
     super(props, context);
-    this.top();
+    runInAction(() => {
+      this.maskHidden = true;
+      this.drawerOffsets = { 'slide-up': [], 'slide-right': [], 'slide-down': [], 'slide-left': [] };
+      this.top();
+      if (!ModalManager.mousePositionEventBound) {
+        new EventManager(
+          typeof window === 'undefined' ? undefined : document,
+        ).addEventListener(
+          'click',
+          (e: MouseEvent<any>) => {
+            ModalManager.mousePosition = {
+              x: e.pageX,
+              y: e.pageY,
+            };
+            // 100ms 内发生过点击事件，则从点击位置动画展示
+            // 否则直接 zoom 展示
+            // 这样可以兼容非点击方式展开
+            setTimeout(() => (ModalManager.mousePosition = undefined), 100);
+          },
+          true,
+        );
+        ModalManager.mousePositionEventBound = true;
+      }
+    });
   }
 
   handleAnimationEnd = (modalKey, isEnter) => {
@@ -124,7 +189,7 @@ export default class ModalContainer extends Component<ModalContainerProps> {
         if (props.afterClose) {
           props.afterClose();
         }
-        this.setState({ modals });
+        this.updateModals(modals);
       }
     }
   };
@@ -143,8 +208,9 @@ export default class ModalContainer extends Component<ModalContainerProps> {
     }
   };
 
-  top(): ModalContainer {
-    addInstanse(this);
+  @action
+  top(): IModalContainer {
+    ModalManager.addInstance(this);
     return this;
   }
 
@@ -154,11 +220,30 @@ export default class ModalContainer extends Component<ModalContainerProps> {
     if (location && currentLocation && location.pathname !== currentLocation.pathname) {
       this.clear();
     }
-    this.top();
   }
 
   componentWillUnmount() {
-    removeInstanse(this);
+    ModalManager.removeInstance(this);
+  }
+
+  @action
+  updateModals(modals) {
+    this.top();
+    let maskHidden = true;
+    const drawerOffsets: DrawerOffsets = { 'slide-up': [], 'slide-right': [], 'slide-down': [], 'slide-left': [] };
+    modals.slice().reverse().forEach(({ hidden, drawer, drawerOffset, drawerTransitionName }) => {
+      if (!hidden) {
+        maskHidden = false;
+        if (drawer && drawerTransitionName) {
+          const offsets = drawerOffsets[drawerTransitionName];
+          const offset = offsets[0] || 0;
+          offsets.unshift(offset + (drawerOffset || 0));
+        }
+      }
+    });
+    this.drawerOffsets = drawerOffsets;
+    this.maskHidden = maskHidden; // modals.every(({ hidden }) => hidden);
+    this.setState({ modals });
   }
 
   findIndex(modalKey) {
@@ -169,7 +254,7 @@ export default class ModalContainer extends Component<ModalContainerProps> {
   open(props: ModalProps) {
     const { modals } = this.state;
     if (!props.key) {
-      props.key = getKey();
+      props.key = ModalManager.getKey();
       warning(
         !!props.destroyOnClose,
         `The modal which opened has no key, please provide a key or set the \`destroyOnClose\` as true.`,
@@ -181,7 +266,7 @@ export default class ModalContainer extends Component<ModalContainerProps> {
       }
     }
     modals.push({ ...props, hidden: false });
-    this.setState({ modals });
+    this.updateModals(modals);
   }
 
   close(props: ModalProps) {
@@ -189,7 +274,7 @@ export default class ModalContainer extends Component<ModalContainerProps> {
     const target = modals.find(({ key }) => key === props.key);
     if (target) {
       Object.assign(target, props, { hidden: true });
-      this.setState({ modals });
+      this.updateModals(modals);
     }
   }
 
@@ -199,8 +284,8 @@ export default class ModalContainer extends Component<ModalContainerProps> {
     if (props.key) {
       const index = this.findIndex(props.key);
       if (index !== -1) {
-        modals[index] = props;
-        this.setState({ modals });
+        modals[index] = { ...modals[index], ...props };
+        this.updateModals(modals);
       }
     }
   }
@@ -210,80 +295,68 @@ export default class ModalContainer extends Component<ModalContainerProps> {
     modals.forEach(modal => this.close({ ...modal, destroyOnClose: true }));
   }
 
-  getOffset(modals, idx) {
-    const MARGIN_RIGHT_ARRAY: any = [];
-    const DEFAULT = 150;
-    const drawers = modals.filter(modal => modal.drawer && !modal.hidden);
-    const indexInDrawers = drawers.findIndex(drawer => drawer.key === modals[idx].key);
-    if (indexInDrawers === -1) {
-      return 0;
-    }
-    for (let i = drawers.length - 1; i >= indexInDrawers; i--) {
-      if (i === drawers.length - 1) {
-        MARGIN_RIGHT_ARRAY.push(0);
-      } else {
-        const CURRENT_WIDTH = this.getModalWidth(drawers[i]);
-        const NEXT_WIDTH = this.getModalWidth(drawers[i + 1]);
-        const NEXT_MARGIN = MARGIN_RIGHT_ARRAY[drawers.length - i - 2];
-        if (CURRENT_WIDTH >= NEXT_MARGIN + NEXT_WIDTH + DEFAULT) {
-          MARGIN_RIGHT_ARRAY.push(0);
-        } else {
-          MARGIN_RIGHT_ARRAY.push(NEXT_MARGIN + NEXT_WIDTH + DEFAULT - CURRENT_WIDTH);
-        }
-      }
-    }
-    return MARGIN_RIGHT_ARRAY[MARGIN_RIGHT_ARRAY.length - 1];
-  }
-
   getModalWidth(modal) {
     return (modal && modal.style && modal.style.width) || 520;
   }
 
-  getComponent() {
-    let hidden = true;
+  getComponent(mount?: HTMLElement) {
+    const { maskHidden: hidden, isTop, drawerOffsets, baseOffsets } = this;
     const { modals } = this.state;
+    const indexes = { 'slide-up': 1, 'slide-right': 1, 'slide-down': 1, 'slide-left': 1 };
+    let activeModal: ModalProps | undefined;
     const items = modals.map((props, index) => {
-      const thisHidden = props.hidden;
-      const { drawerTransitionName = 'slide-right' } = props;
-      if (hidden && !thisHidden) {
-        hidden = false;
+      const { drawerTransitionName, drawer, key } = props;
+      const style: CSSProperties = {
+        ...props.style,
+      };
+      if (drawer && drawerTransitionName) {
+        const i = indexes[drawerTransitionName];
+        indexes[drawerTransitionName] += 1;
+        const offset = getArrayIndex(drawerOffsets[drawerTransitionName], i) + baseOffsets[drawerTransitionName];
+        if (offset) {
+          switch (drawerTransitionName) {
+            case 'slide-up':
+              style.marginTop = offset;
+              break;
+            case 'slide-down':
+              style.marginBottom = offset;
+              break;
+            case 'slide-left':
+              style.marginLeft = offset;
+              break;
+            default:
+              style.marginRight = offset;
+          }
+        }
       }
-      const newProps: any = {};
-      if (props.drawer) {
-        newProps.style = {
-          marginRight: this.getOffset(modals, index),
-          ...props.style,
-        };
-      }
-      if (index === modals.length - 1) {
-        newProps.className = classNames(props.className, `${getProPrefixCls(suffixCls)}-active`);
+      const active = isTop && index === modals.length - 1;
+      if (active) {
+        activeModal = props;
       }
       return (
         <Animate
-          key={props.key}
+          key={key}
           component="div"
           // UED 用类名判断
           className={props.drawer ? `${getProPrefixCls(suffixCls)}-container-drawer` : `${getProPrefixCls(suffixCls)}-container-pristine`}
           transitionAppear
-          transitionName={props.drawer ? drawerTransitionName : 'zoom'}
+          transitionName={drawer ? drawerTransitionName : 'zoom'}
           hiddenProp="hidden"
           onEnd={this.handleAnimationEnd}
         >
-          <Modal key={props.key} {...props} {...newProps} />
+          <Modal key={key} mousePosition={ModalManager.mousePosition} {...props} style={style} active={active} />
         </Animate>
       );
     });
     const animationProps: any = {};
-    if (typeof window !== 'undefined') {
-      if (hidden) {
-        animationProps.onEnd = showBodyScrollBar;
+    if (mount && mount.ownerDocument) {
+      const { body } = mount.ownerDocument;
+      if (containerInstances.every(instance => instance.maskHidden)) {
+        animationProps.onEnd = () => showBodyScrollBar(body);
       } else {
-        hideBodyScrollBar();
+        hideBodyScrollBar(body);
       }
     }
-
-    const modal = findLast(modals, ({ hidden: modalHidden }) => !modalHidden);
-    const { maskStyle, mask, maskClassName } = modal || {};
     return (
       <>
         <Animate
@@ -294,37 +367,54 @@ export default class ModalContainer extends Component<ModalContainerProps> {
           {...animationProps}
         >
           {
-            mask ? (
-              <Mask style={maskStyle} className={maskClassName} hidden={hidden} onClick={this.handleMaskClick} onMouseDown={stopEvent} />
+            activeModal && activeModal.mask ? (
+              <Mask style={activeModal.maskStyle} className={activeModal.maskClassName} hidden={hidden} onClick={this.handleMaskClick} onMouseDown={stopEvent} />
             ) : <div hidden={hidden} />
           }
         </Animate>
         {items}
+        {!mount && <span ref={this.saveMount} />}
       </>
     );
   }
 
+  getContainer() {
+    const { getContainer: getModalContainer } = this.props;
+    if (typeof getModalContainer === 'function') {
+      return getModalContainer();
+    }
+    return getModalContainer;
+  }
+
   render() {
-    const mount = getRoot();
+    const { getContainer: getModalContainer } = this.props;
+    if (getModalContainer === false) {
+      const { mount } = this.state;
+      return this.getComponent(mount);
+    }
+    const mount = this.getContainer();
     if (mount) {
-      return createPortal(this.getComponent(), mount);
+      return createPortal(this.getComponent(mount), mount);
     }
     return null;
   }
 }
 
 export function getContainer(loop?: boolean) {
-  const { length } = containerInstanses;
+  const { length } = containerInstances;
   if (length) {
-    return containerInstanses[length - 1];
+    return containerInstances[0];
   }
   if (loop !== true) {
-    render(<ModalContainer />, getRoot());
+    const root = getRoot();
+    if (root) {
+      render(<ModalContainer />, root);
+    }
     return getContainer(true);
   }
 }
 
-export function open(props: ModalProps & { children; }) {
+export function open(props: ModalProps & { children? }) {
   const container = getContainer();
 
   async function close(destroy?: boolean) {
@@ -339,18 +429,16 @@ export function open(props: ModalProps & { children; }) {
   }
 
   function update(newProps) {
-    container.update({ ...props, ...newProps });
+    container.update({ ...newProps, key: props.key });
   }
 
   props = {
     close,
     update,
-    ...Modal.defaultProps,
+    ...Modal.defaultProps as ModalProps,
     ...props,
   };
   container.open(props);
-
-  destroyFns.push(close);
 
   function show(newProps) {
     container.open({ ...props, ...newProps });

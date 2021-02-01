@@ -26,6 +26,7 @@ title: Modal
 | maskClassName | 蒙层自定义样式名 | string |  |
 | keyboardClosable | 按 esc 键是否允许关闭 | boolean | true |
 | destroyOnClose | 关闭时是否销毁 | boolean | true |
+| header | 头部内容 | ReactNode 或`(title: ReactNode, closeBtn: ReactNode, okBtn: ReactNode, cancelBtn: ReactNode) => ReactNode` |  |
 | footer | 底部内容 | ReactNode 或`(okBtn: ReactNode, cancelBtn: ReactNode) => ReactNode` |  |
 | okText | 确认按钮文字 | ReactNode | 确定 |
 | cancelText | 取消按钮文字 | ReactNode | 取消 |
@@ -34,13 +35,18 @@ title: Modal
 | onCancel | 点击取消回调，返回`false` `Promise.resolve(false)`或`Promise.reject()`不会关闭， 其他自动关闭 | () => Promise&lt;boolean&gt; |  |
 | afterClose | 关闭后回调 | () => void |  |
 | drawer | 抽屉模式 | boolean | false |
-| drawerTransitionName | 抽屉模式使用的动画 | string | 'slide-right' |
-| okCancel | 同时显示 ok 和 cancel 按钮，false 的时候只显示 ok 按钮 | boolean | true |
+| drawerTransitionName | 抽屉模式使用的动画， 可选值： 'slide-right' 'slide-left' 'slide-up' 'slide-down' | string | 'slide-right' |
+| drawerOffset | 抽屉之间的位移距离 | number | 150 |
+| okButton | 显示 ok 按钮 | boolean | true |
+| cancelButton | 显示 cancel 按钮 | boolean | |
+| okCancel | \<deprecated\> 同时显示 ok 和 cancel 按钮，false 的时候只显示 ok 按钮 | boolean | true |
 | okFirst | ok 按钮是否排在第一个 | boolean | true |
 | okProps | ok 按钮属性 | object |  |
 | cancelProps | cancel 按钮属性 | object |  |
 | keyboard	| 是否支持键盘 esc 关闭	| boolean	| true |
 | autoCenter	| 是否居中显示	| boolean	| false |
+| contentStyle | 内容样式 | object |  |
+| bodyStyle | 内容体样式 | object |  |
 
 <style>
 .code-box-demo .c7n-pro-btn {

@@ -1,0 +1,84 @@
+@import '../../../components/style/themes/default';
+@import '../../../components/style/mixins/index';
+
+.drawer(@modal-prefix-cls) {
+  &-drawer {
+    top: 0;
+    margin: 0;
+    transition: margin-right @animation-duration-slow @ease-in-out;
+
+    &-slide-right,
+    &-slide-left {
+      width: 5.2rem;
+      height: 100vh;
+
+      &.@{modal-prefix-cls}-large {
+        width: ~'calc(100% - 3.5rem)';
+      }
+
+      &.@{modal-prefix-cls}-small {
+        width: 3.8rem;
+      }
+    }
+
+    &-slide-up,
+    &-slide-down {
+      width: 100%;
+      height: 60%;
+
+      &.@{modal-prefix-cls}-large {
+        height: 80%;
+      }
+
+      &.@{modal-prefix-cls}-small {
+        height: 30%;
+      }
+    }
+
+    &-slide-up {
+      top: 0;
+      bottom: unset;
+    }
+
+    &-slide-right {
+      right: 0;
+      left: unset;
+    }
+
+    &-slide-down {
+      top: unset;
+      bottom: 0;
+    }
+
+    &-slide-left {
+      right: unset;
+      left: 0;
+    }
+  }
+  &-drawer &-content {
+    border-radius: @border-radius-base;
+  }
+}
+
+.active() {
+  &-active {
+    z-index: 2;
+  }
+}
+
+.border-header() {
+  &-border &-header {
+    border-bottom: @border-width-base @border-style-base @border-color-base;
+  }
+}
+
+.border-footer() {
+  &-border &-footer {
+    border-top: @border-width-base @border-style-base @border-color-base;
+  }
+}
+
+.border() {
+  .border-header;
+  .border-footer;
+}
