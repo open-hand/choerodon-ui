@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.0.0
+
+`2021-02-02`
+
 - 🌟 `configure`: Added `selectReverse` `tableAutoHeightDiff` global configuration.
 - 🌟 `<pro>Select`: Added `reverse` attribute to control whether multiple selection can be reversed.
 - 🌟 `<pro>Modal`: Added `header`, `drawerOffset`, `okButton`, `cancelButton`, `contentStyle`, `bodyStyle` attributes.
@@ -53,7 +57,7 @@ timeline: true
 
 ## 0.8.78
 
-`2020-01-10`
+`2021-01-10`
 
 - 🌟 `configure`: Added `modalAutoCenter`, `modalKeyboard`, `tableKeyboard`, `tableFilterAdapter`, `tableFilterSuffix`, `tableFilterSearchText` global configuration.
 - 🌟 `Tabs`: Added `keyboard` property.

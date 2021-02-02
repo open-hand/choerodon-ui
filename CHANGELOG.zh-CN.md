@@ -15,9 +15,13 @@ timeline: true
 
 ---
 
+## 1.0.0
+
+`2021-02-02`
+
 - 🌟 `configure`: 新增 selectReverse，tableAutoHeightDiff 全局属性。
 - 🌟 `<pro>Select`: 新增 reverse 属性控制多选是否可反选。
-- 🌟 `<pro>Modal`: 新增 header，drawerOffset，okButton，cancelButton，contentStyle，bodyStyle属性。
+- 🌟 `<pro>Modal`: 新增 header，drawerOffset，okButton，cancelButton，contentStyle，bodyStyle 属性。
 - 🌟 `<pro>DataSet`: 新增 beforeRemove 事件。
 - 🌟 `<pro>DataSet`: 新增 validateBeforeQuery 属性。
 - 🌟 `<pro>DataSet`: query 方法新增 params 参数。
