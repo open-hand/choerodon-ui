@@ -240,6 +240,10 @@ export type FieldProps = {
   | AxiosRequestConfig
   | ((code: string, lovConfig?: LovConfig) => AxiosRequestConfig);
   /**
+   * 批量值列表请求的axiosConfig
+   */
+  lookupBatchAxiosConfig?: (codes: string[]) => AxiosRequestConfig;
+  /**
    * 内部字段别名绑定
    */
   bind?: string;
@@ -824,7 +828,7 @@ export default class Field {
    * @return Promise<object[]>
    */
   async fetchLookup(noCache = undefined): Promise<object[] | undefined> {
-    const batch = getConfig('lookupBatchAxiosConfig');
+    const batch = this.get('lookupBatchAxiosConfig') || getConfig('lookupBatchAxiosConfig');
     const lookupCode = this.get('lookupCode');
     const lovPara = getLovPara(this, this.record);
     const dsField = this.findDataSetField();
@@ -836,7 +840,7 @@ export default class Field {
       }
 
       result = await this.pending.add<object[] | undefined>(
-        lookupStore.fetchLookupDataInBatch(lookupCode),
+        lookupStore.fetchLookupDataInBatch(lookupCode, batch),
       );
     } else {
       const axiosConfig = lookupStore.getAxiosConfig(this, noCache);

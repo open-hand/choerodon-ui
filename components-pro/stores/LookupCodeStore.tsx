@@ -22,8 +22,7 @@ export class LookupCodeStore {
     return getConfig('axios') || axios;
   }
 
-  batchCallback = (codes): Promise<{ [key: string]: responseData }> => {
-    const lookupBatchAxiosConfig = getConfig('lookupBatchAxiosConfig');
+  batchCallback = (codes: string[], lookupBatchAxiosConfig: (codes: string[]) => AxiosRequestConfig): Promise<{ [key: string]: responseData }> => {
     if (lookupBatchAxiosConfig) {
       return this.axios(lookupBatchAxiosConfig(codes)) as any;
     }
@@ -62,8 +61,8 @@ export class LookupCodeStore {
     }
   }
 
-  async fetchLookupDataInBatch(code: string): Promise<responseType> {
-    return this.merger.add(code);
+  async fetchLookupDataInBatch(code: string, lookupBatchAxiosConfig: (codes: string[]) => AxiosRequestConfig): Promise<responseType> {
+    return this.merger.add(code, lookupBatchAxiosConfig);
   }
 
   getAxiosConfig(field: Field, noCache?: boolean): AxiosRequestConfig {
@@ -104,7 +103,8 @@ export class LookupCodeStore {
 
   // @deprecate
   @action
-  clearCache() {}
+  clearCache() {
+  }
 }
 
 export default new LookupCodeStore();
