@@ -470,7 +470,7 @@ export function getFieldSorter(field: Field) {
 export function generateRecordJSONData(array: object[], record: Record, dataToJSON: DataToJSON) {
   const normal = useNormal(dataToJSON);
   const json = normal
-    ? record.status !== RecordStatus.delete && record.toData()
+    ? !record.isRemoved && record.toData()
     : record.toJSONData();
   if (json && (normal || useAll(dataToJSON) || !useDirty(dataToJSON) || json.__dirty)) {
     delete json.__dirty;
@@ -737,16 +737,21 @@ export function adapterDataToJSON(
   return undefined;
 }
 
-export function generateData(ds: DataSet): { dirty: boolean; data: object[] } {
-  let dirty = ds.destroyed.length > 0;
-  const data: object[] = ds.data.map(record => {
-    const d = record.toData();
-    if (d.__dirty) {
+export function generateData(records: Record[]): { dirty: boolean; data: object[] } {
+  let dirty = false;
+  const data: object[] = records.reduce<object[]>((list, record) => {
+    if (record.isRemoved) {
       dirty = true;
+    } else {
+      const d = record.toData();
+      if (d.__dirty) {
+        dirty = true;
+      }
+      delete d.__dirty;
+      list.push(d);
     }
-    delete d.__dirty;
-    return d;
-  });
+    return list;
+  }, []);
   return {
     dirty,
     data,
@@ -755,13 +760,11 @@ export function generateData(ds: DataSet): { dirty: boolean; data: object[] } {
 
 export function generateJSONData(
   ds: DataSet,
-  isSelect?: boolean,
+  records: Record[],
 ): { dirty: boolean; data: object[] } {
   const { dataToJSON } = ds;
   const data: object[] = [];
-  (isSelect || useSelected(dataToJSON) ? ds.selected : ds.records).forEach(record =>
-    generateRecordJSONData(data, record, dataToJSON),
-  );
+  records.forEach(record => generateRecordJSONData(data, record, dataToJSON));
   return {
     dirty: data.length > 0,
     data,

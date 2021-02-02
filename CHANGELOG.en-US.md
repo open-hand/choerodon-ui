@@ -41,6 +41,7 @@ timeline: true
 - 🐞 `<pro>Form`: Fix the problem that the form control values are not cleared when clearing the dataset.
 - 🐞 `<pro>DataSet.Field`: Fix the problem that the defaultValue property of dynamicProps does not take effect.
 - 🐞 `<pro>DataSet`: Fix the problem in splice method.
+- 🐞 `<pro>DataSet`: Fix the problem of querying parent cascade records for deep cascade records.
 
 ## 0.8.78
 

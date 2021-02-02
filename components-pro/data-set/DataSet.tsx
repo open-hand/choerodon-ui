@@ -346,6 +346,15 @@ export default class DataSet extends EventManager {
   @observable dataToJSON: DataToJSON;
 
   @computed
+  get cascadeRecords(): Record[] {
+    const { parent, parentName } = this;
+    if (parent && parentName) {
+      return parent.cascadeRecords.reduce<Record[]>((array, record) => array.concat(...(record.getCascadeRecordsIncludeDelete(parentName) || [])), []);
+    }
+    return this.records;
+  }
+
+  @computed
   get axios(): AxiosInstance {
     return this.props.axios || getConfig('axios') || axios;
   }
@@ -822,7 +831,7 @@ export default class DataSet extends EventManager {
   }
 
   toData(): object[] {
-    return generateData(this).data;
+    return generateData(this.records).data;
   }
 
   /**
@@ -831,11 +840,9 @@ export default class DataSet extends EventManager {
    * @param noCascade
    */
   toJSONData(isSelected?: boolean, noCascade?: boolean): object[] {
-    const dataToJSON = adapterDataToJSON(isSelected, noCascade);
-    if (dataToJSON) {
-      this.dataToJSON = dataToJSON;
-    }
-    return generateJSONData(this).data;
+    const dataToJSON = adapterDataToJSON(isSelected, noCascade) || this.dataToJSON;
+    const records = useSelected(dataToJSON) ? this.selected : this.records;
+    return generateJSONData(this, records).data;
   }
 
   /**
@@ -876,14 +883,11 @@ export default class DataSet extends EventManager {
    * @return Promise
    */
   async submit(isSelect?: boolean, noCascade?: boolean): Promise<any> {
-    const dataToJSON = adapterDataToJSON(isSelect, noCascade);
-    if (dataToJSON) {
-      this.dataToJSON = dataToJSON;
-    }
+    const dataToJSON = adapterDataToJSON(isSelect, noCascade) || this.dataToJSON;
     await this.ready();
     if (await this.validate()) {
       return this.pending.add(
-        this.write(useSelected(this.dataToJSON) ? this.selected : this.records),
+        this.write(useSelected(dataToJSON) ? this.selected : this.records),
       );
     }
     return false;
@@ -1586,14 +1590,11 @@ export default class DataSet extends EventManager {
    * @return true | false
    */
   validate(isSelected?: boolean, noCascade?: boolean): Promise<boolean> {
-    const dataToJSON = adapterDataToJSON(isSelected, noCascade);
-    if (dataToJSON) {
-      this.dataToJSON = dataToJSON;
-    }
+    const dataToJSON = adapterDataToJSON(isSelected, noCascade) || this.dataToJSON;
     const cascade =
-      noCascade === undefined && this.dataToJSON ? useCascade(this.dataToJSON) : !noCascade;
+      noCascade === undefined && dataToJSON ? useCascade(dataToJSON) : !noCascade;
     const validateResult = Promise.all(
-      (useSelected(this.dataToJSON) ? this.selected : this.data).map(record =>
+      (useSelected(dataToJSON) ? this.selected : this.data).map(record =>
         record.validate(false, !cascade),
       ),
     ).then(results => results.every(result => result));
@@ -1813,8 +1814,14 @@ Then the query method will be auto invoke.`,
   @action
   processData(allData: any[]): Record[] {
     return allData.map(data => {
-      const record =
-        data instanceof Record ? ((data.dataSet = this), data) : new Record(data, this);
+      if (data instanceof Record) {
+        if (data.dataSet !== this) {
+          data.dataSet = this;
+          data.status = RecordStatus.sync;
+        }
+        return data;
+      }
+      const record = new Record(data, this);
       record.status = RecordStatus.sync;
       return record;
     });
@@ -1829,12 +1836,12 @@ Then the query method will be auto invoke.`,
       if (selectedIndex !== -1) {
         selected.splice(selectedIndex, 1);
       }
-      if (record.status === RecordStatus.add) {
+      if (record.isNew) {
         const index = records.indexOf(record);
         if (index !== -1) {
           records.splice(index, 1);
         }
-      } else if (record.status !== RecordStatus.delete) {
+      } else if (!record.isRemoved) {
         record.status = RecordStatus.delete;
       }
     }
@@ -2160,13 +2167,13 @@ Then the query method will be auto invoke.`,
   ): boolean {
     const cascadeRecords = currentRecord.cascadeRecordsMap[childName];
     const childRecords = cascadeRecords || currentRecord.get(childName);
-    if (currentRecord.status === RecordStatus.add || isArrayLike(childRecords)) {
+    if (currentRecord.isNew || isArrayLike(childRecords)) {
       if (cascadeRecords) {
         delete currentRecord.cascadeRecordsMap[childName];
       }
       ds.clearCachedSelected();
       ds.loadData(childRecords ? childRecords.slice() : []);
-      if (currentRecord.status === RecordStatus.add) {
+      if (currentRecord.isNew) {
         if (ds.length) {
           ds.forEach(record => (record.status = RecordStatus.add));
         } else if (ds.props.autoCreate) {
@@ -2193,7 +2200,7 @@ Then the query method will be auto invoke.`,
   private checkReadable(parent) {
     if (parent) {
       const { current } = parent;
-      if (!current || current.status === RecordStatus.add) {
+      if (!current || current.isNew) {
         return false;
       }
     }
