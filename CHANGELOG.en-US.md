@@ -37,6 +37,7 @@ timeline: true
 - 🐞 `<pro>Modal`: Fix the display problem when multiple Modal are opened simultaneously in multiple ModalProviders.
 - 🐞 `<pro>Form`: Fix the problem that the form control values are not cleared when clearing the dataset.
 - 🐞 `<pro>DataSet.Field`: Fix the problem that the defaultValue property of dynamicProps does not take effect.
+- 🐞 `<pro>DataSet`: Fix the problem in splice method.
 
 ## 0.8.78
 

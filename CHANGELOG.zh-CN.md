@@ -37,6 +37,7 @@ timeline: true
 - 🐞 `<pro>Modal`: 修复在多个 ModalProvider 中分别同时打开多个 Modal 时显示问题。
 - 🐞 `<pro>Form`: 修复清空数据源时表单控件值未清空的问题。
 - 🐞 `<pro>DataSet.Field`: 修复 dynamicProps 的 defaultValue 属性不生效的问题。
+- 🐞 `<pro>DataSet`: 修复 splice 方法的问题。
 
 ## 0.8.78
 
@@ -74,7 +75,6 @@ timeline: true
 - 🐞 `<pro>DatePicker`: 修复在 range 情况下，清除设置不正常的情况。
 - 🐞 `<pro>PerformanceTable`: 修复在 Modal 中滚动高度计算错误问题。
 - 🐞 `<pro>Tooltip`: 修复在 bottom top 情况下，可能出现箭头不与目标中心对其的情况的问题。
-
 
 ## 0.8.77
 

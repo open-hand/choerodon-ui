@@ -73,6 +73,15 @@ import { confirmProps } from '../modal/utils';
 import DataSetRequestError from './DataSetRequestError';
 import defaultFeedback, { FeedBack } from './FeedBack';
 
+function getSpliceRecord(records: Record[], inserts: Record[], fromRecord?: Record): Record | undefined {
+  if (fromRecord) {
+    if (inserts.includes(fromRecord)) {
+      return getSpliceRecord(records, inserts, records[records.indexOf(fromRecord) + 1]);
+    }
+    return fromRecord;
+  }
+}
+
 export type DataSetChildren = { [key: string]: DataSet };
 
 export type Events = { [key: string]: Function };
@@ -1240,9 +1249,10 @@ export default class DataSet extends EventManager {
     if (items.length) {
       checkParentByInsert(this);
       const { records } = this;
+      const spliceRecord = getSpliceRecord(records, items, fromRecord);
       const transformedRecords = this.transferRecords(items);
-      if (fromRecord) {
-        records.splice(records.indexOf(fromRecord), 0, ...transformedRecords);
+      if (spliceRecord) {
+        records.splice(records.indexOf(spliceRecord), 0, ...transformedRecords);
       } else {
         records.push(...transformedRecords);
       }
