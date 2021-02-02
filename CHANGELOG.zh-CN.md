@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `<pro>Modal`: 新增 header，drawerOffset，okButton，cancelButton，contentStyle，bodyStyle属性。
 - 🌟 `<pro>DataSet`: 新增 beforeRemove 事件。
 - 🌟 `<pro>DataSet`: 新增 validateBeforeQuery 属性。
+- 🌟 `<pro>DataSet`: query 方法新增 params 参数。
 - 💄 `Collapse`: 优化 Collapse 自定义 icon 样式。
 - 💄 `<pro>DataSet`: 优化 placeholder 优先级。
 - 💄 `<pro>Select`: 优化在数据源中找不到对应值时直接显示空的情况，现在显示返回值。

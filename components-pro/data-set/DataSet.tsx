@@ -855,14 +855,15 @@ export default class DataSet extends EventManager {
   /**
    * 查询记录
    * @param page 页码
+   * @param params 查询参数
    * @return Promise
    */
-  query(page?: number): Promise<any> {
-    return this.pending.add(this.doQuery(page));
+  query(page?: number, params?: object): Promise<any> {
+    return this.pending.add(this.doQuery(page, params));
   }
 
-  async doQuery(page): Promise<any> {
-    const data = await this.read(page);
+  async doQuery(page, params?: object): Promise<any> {
+    const data = await this.read(page, params);
     this.loadDataFromResponse(data);
     return data;
   }
@@ -1959,6 +1960,7 @@ Then the query method will be auto invoke.`,
             );
             return this.handleSubmitSuccess(result, onlyDelete);
           }
+          return submitEventResult;
         } catch (e) {
           this.handleSubmitFail(e);
           throw new DataSetRequestError(e);
@@ -1969,10 +1971,10 @@ Then the query method will be auto invoke.`,
     }
   }
 
-  private async read(page: number = 1): Promise<any> {
+  private async read(page: number = 1, params?: object): Promise<any> {
     if (this.checkReadable(this.parent)) {
       try {
-        const data = await this.generateQueryParameter();
+        const data = await this.generateQueryParameter(params);
         this.changeStatus(DataSetStatus.loading);
         const newConfig = axiosConfigAdapter('read', this, data, this.generateQueryString(page));
         if (newConfig.url) {
@@ -2267,7 +2269,7 @@ Then the query method will be auto invoke.`,
     return {};
   }
 
-  private async generateQueryParameter(): Promise<any> {
+  private async generateQueryParameter(params?: object): Promise<any> {
     const { queryDataSet, props: { validateBeforeQuery } } = this;
     const parentParams = this.getParentParams();
     if (queryDataSet) {
@@ -2287,6 +2289,7 @@ Then the query method will be auto invoke.`,
       ...data,
       ...this.queryParameter,
       ...parentParams,
+      ...params,
     };
     return Object.keys(data).reduce((p, key) => {
       const value = data[key];

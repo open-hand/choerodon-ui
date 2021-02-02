@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `<pro>Modal`: Added `header`, `drawerOffset`, `okButton`, `cancelButton`, `contentStyle`, `bodyStyle` attributes.
 - 🌟 `<pro>DataSet`: Added `beforeRemove` event.
 - 🌟 `<pro>DataSet`: Added `validateBeforeQuery` property.
+- 🌟 `<pro>DataSet`: Added `params` parameter to `query` method.
 - 💄 `Collapse`: Optimized icon style.
 - 💄 `<pro>DataSet`: Optimized placeholder priority.
 - 💄 `<pro>Select`: Optimized the situation where the corresponding value is not found in the data source, and it is directly displayed empty. Now the return value is displayed.
