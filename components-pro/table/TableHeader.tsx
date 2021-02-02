@@ -193,6 +193,7 @@ export default class TableHeader extends Component<TableHeaderProps, any> {
     });
     const classString = classNames(`${prefixCls}-thead`, {
       [`${prefixCls}-column-resizable`]: columnResizable,
+      [`${prefixCls}-column-group`]:rows && rows.length > 1,
     });
     return (
       <thead ref={this.saveRef} className={classString}>
