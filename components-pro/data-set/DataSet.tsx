@@ -152,6 +152,11 @@ export interface DataSetProps {
    */
   autoLocateAfterRemove?: boolean;
   /**
+   * 查询时是否校验查询字段或查询数据集
+   * @default false;
+   */
+  validateBeforeQuery?: boolean;
+  /**
    * 选择的模式
    * @default "multiple"
    */
@@ -286,6 +291,7 @@ export default class DataSet extends EventManager {
     autoLocateFirst: true,
     autoLocateAfterCreate: true,
     autoLocateAfterRemove: true,
+    validateBeforeQuery: true,
     selection: DataSetSelection.multiple,
     modifiedCheck: true,
     pageSize: 10,
@@ -2262,11 +2268,11 @@ Then the query method will be auto invoke.`,
   }
 
   private async generateQueryParameter(): Promise<any> {
-    const { queryDataSet } = this;
+    const { queryDataSet, props: { validateBeforeQuery } } = this;
     const parentParams = this.getParentParams();
     if (queryDataSet) {
       await queryDataSet.ready();
-      if (!(await queryDataSet.validate())) {
+      if (validateBeforeQuery && !(await queryDataSet.validate())) {
         throw new Error($l('DataSet', 'invalid_query_dataset'));
       }
     }

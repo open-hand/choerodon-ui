@@ -70,7 +70,7 @@ const locale: Locale = {
   },
   DataSet: {
     unsaved_data_confirm: '未保存のデータがあります。続行しますか？ ',
-    invalid_query_dataset: 'クエリ条件セットがパスしません',
+    invalid_query_dataset: 'クエリ条件データセットの検証に失敗しました',
     delete_selected_row_confirm: '選択した行を削除してもよろしいですか？ ',
     delete_all_row_confirm: '本当にすべての行を削除しますか？ ',
     query_failure: 'クエリに失敗しました',

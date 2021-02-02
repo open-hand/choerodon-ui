@@ -20,6 +20,7 @@ title: DataSet
 | autoLocateFirst | 数据加载后自动定位到第一条记录 | boolean | true |
 | autoLocateAfterCreate | 自动定位到新建记录 | boolean | true |
 | autoLocateAfterRemove | 当前数据被删除后自动定位到其他记录 | boolean | true |
+| validateBeforeQuery | 查询时是否校验查询字段或查询数据集 | boolean | true |
 | selection | 选择的模式, 可选值：`false` `'multiple'` `'single'` | boolean \| string | 'multiple' |
 | modifiedCheck | 查询前，当有记录更改过时，是否警告提示。 | boolean | false |
 | modifiedCheckMessage | 查询前，当有记录更改过时，警告提示。 | ReactNode \| ModalProps |  |

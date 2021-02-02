@@ -70,7 +70,7 @@ const locale: Locale = {
   },
   DataSet: {
     unsaved_data_confirm: `There's unsaved data, continue?`,
-    invalid_query_dataset: 'Invalid query DataSet.',
+    invalid_query_dataset: 'Query condition dataSet verification failed.',
     delete_selected_row_confirm: 'Are you sure to delete the selected row?',
     delete_all_row_confirm: 'Are you sure to delete all rows?',
     query_failure: 'Fail to query data.',
