@@ -1948,7 +1948,6 @@ Then the query method will be auto invoke.`,
             );
             return this.handleSubmitSuccess(result, onlyDelete);
           }
-          return submitEventResult;
         } catch (e) {
           this.handleSubmitFail(e);
           throw new DataSetRequestError(e);
@@ -1962,8 +1961,8 @@ Then the query method will be auto invoke.`,
   private async read(page: number = 1, params?: object): Promise<any> {
     if (this.checkReadable(this.parent)) {
       try {
-        const data = await this.generateQueryParameter(params);
         this.changeStatus(DataSetStatus.loading);
+        const data = await this.generateQueryParameter(params);
         const newConfig = axiosConfigAdapter('read', this, data, this.generateQueryString(page));
         if (newConfig.url) {
           const queryEventResult = await this.fireEvent(DataSetEvents.query, {

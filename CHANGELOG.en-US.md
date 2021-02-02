@@ -47,6 +47,7 @@ timeline: true
 - 🐞 `<pro>DataSet`: When the Boolean value type is not set, it will be set to false by default.
 - 🐞 `<pro>DataSet.Record`: Optimize isExpanded attribute controlled.
 - 🐞 `<pro>Validator`: Fix the problem of passing value by combining unique validation object type fields.
+- 🐞 `<pro>DataSet.Record`: Fix the problem that the `getCascadeRecords` method may have an endless loop.
 
 ## 0.8.78
 

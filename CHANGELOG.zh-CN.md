@@ -47,6 +47,7 @@ timeline: true
 - 🐞 `<pro>DataSet`: 修复布尔值类型未设置值时默认会设成false。
 - 🐞 `<pro>DataSet.Record`: 优化 isExpanded 属性受控。
 - 🐞 `<pro>Validator`: 修复 object 类型字段在组合唯一校验时传值的问题。
+- 🐞 `<pro>DataSet.Record`: 修复 getCascadeRecords 方法可能会死循环的问题。
 
 ## 0.8.78
 
