@@ -32,7 +32,7 @@ import { $l } from '../../locale-context';
 import autobind from '../../_util/autobind';
 import isEmpty from '../../_util/isEmpty';
 import { Action } from '../../trigger/enum';
-import { DynamicFilterBarConfig } from '../table';
+import { DynamicFilterBarConfig } from '../Table';
 import FieldList from './FieldList';
 import TableButtons from './TableButtons';
 import ColumnFilter from './ColumnFilter';

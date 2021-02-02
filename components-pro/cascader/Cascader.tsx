@@ -121,7 +121,7 @@ export interface CascaderProps extends TriggerFieldProps {
   /**
    * 设置选项属性，如 disabled;
    */
-  onOption?: (props: onOptionProps) => OptionProps;
+  onOption?: (props: onOptionProps) => OptionProps ;
   /**
    * 选择一个值的时候触发
    */
@@ -567,8 +567,8 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
           deepindex++
           const value = this.getRecordOrObjValue(recordItem, valueField);
           const text = this.getRecordOrObjValue(recordItem, textField);
-          if (recordItem instanceof Record) {
-            const optionProps = onOption({ dataSet: options, record: recordItem });
+          if (recordItem instanceof Record ) {
+            const optionProps = onOption ? onOption({ dataSet: options, record: recordItem }) : undefined;
             const optionDisabled = menuDisabled || (optionProps && optionProps.disabled);
             const key: Key = getItemKey(recordItem, text, value);
             let children;
@@ -593,7 +593,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
               value: recordItem,
             });
           }
-          const optionProps = onOption({ dataSet: options, record: recordItem });
+          const optionProps = onOption ? onOption({ dataSet: options, record: recordItem }) : undefined;
           const optionDisabled = recordItem.disabled || optionProps;
           const key: Key = `${deepindex}-${index}`;
           let children: any;

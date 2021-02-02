@@ -168,7 +168,7 @@ export default class TableCell extends Component<TableCellProps> {
       if (column) {
         const { clientWidth, scrollWidth } = element;
         if (clientWidth !== 0) {
-          const { offsetWidth } = element.parentNode;
+          const { offsetWidth } = element.parentNode as HTMLElement;
           const measureWidth = scrollWidth + offsetWidth - clientWidth;
           const newWidth = Math.max(measureWidth, minColumnWidth(column), column.width ? column.width : 0);
           if (!innerMaxWidth || newWidth > innerMaxWidth) {
