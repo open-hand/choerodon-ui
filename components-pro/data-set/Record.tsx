@@ -56,6 +56,8 @@ export default class Record {
 
   cascadeRecordsMap: { [key: string]: Record[] } = {};
 
+  cascading = {};
+
   @observable pristineData: object;
 
   @observable data: object;
@@ -260,17 +262,13 @@ export default class Record {
 
   @computed
   get dirty(): boolean {
-    const { fields, status, dataSet, isCurrent, dataSetSnapshot } = this;
+    const { fields, status, dataSet } = this;
     if (status === RecordStatus.update || [...fields.values()].some(({ dirty }) => dirty)) {
       return true;
     }
     if (dataSet) {
       const { children } = dataSet;
-      return Object.keys(children).some(key => {
-        return isCurrent
-          ? children[key].dirty
-          : !!dataSetSnapshot[key] && dataSetSnapshot[key].records.some(isDirtyRecord);
-      });
+      return Object.keys(children).some(key => (this.getCascadeRecordsIncludeDelete(key) || []).some(isDirtyRecord));
     }
     return false;
   }
@@ -281,8 +279,8 @@ export default class Record {
     if (dataSet) {
       const { parent, parentName } = dataSet;
       if (parent && parentName) {
-        return parent.records.find(
-          record => (record.getCascadeRecords(parentName) || []).indexOf(this) !== -1,
+        return parent.cascadeRecords.find(
+          record => (record.getCascadeRecordsIncludeDelete(parentName) || []).indexOf(this) !== -1,
         );
       }
     }
@@ -347,19 +345,25 @@ export default class Record {
   }
 
   validate(all?: boolean, noCascade?: boolean): Promise<boolean> {
-    const { dataSetSnapshot, isCurrent, dataSet, status, fields } = this;
+    const { dataSetSnapshot, dataSet, status, fields } = this;
     return Promise.all([
       ...[...fields.values()].map(field =>
         all || status !== RecordStatus.sync ? field.checkValidity() : true,
       ),
-      ...(noCascade
-        ? []
-        : Object.keys(dataSetSnapshot).map(key =>
-          (isCurrent && dataSet
-              ? dataSet.children[key]
-              : new DataSet().restore(dataSetSnapshot[key])
-          ).validate(),
-        )),
+      ...(!noCascade && dataSet ? Object.keys(dataSet.children).map((key) => {
+        const { children } = dataSet;
+        const snapshot = dataSetSnapshot[key];
+        const ds = children[key];
+        const child = dataSet.current === this ? ds : snapshot && new DataSet().restore(snapshot);
+        if (child) {
+          return child.validate();
+        }
+        const { dataToJSON } = ds;
+        const cascade = noCascade === undefined && dataToJSON ? useCascade(dataToJSON) : !noCascade;
+        return ((useSelected(dataToJSON) ? this.getCascadeSelectedRecords(key) : this.getCascadeRecords(key)) || []).map(record =>
+          record.validate(false, !cascade),
+        );
+      }) : []),
     ]).then(results => results.every(result => result));
   }
 
@@ -386,8 +390,10 @@ export default class Record {
           return cascadeRecords;
         }
         const data = this.get(fieldName);
-        if (isObservableArray(data)) {
+        if (!this.cascading[fieldName] && isObservableArray(data)) {
+          this.cascading[fieldName] = true;
           const records = childDataSet.processData(data);
+          this.cascading[fieldName] = false;
           this.cascadeRecordsMap[fieldName] = records;
           return records;
         }
