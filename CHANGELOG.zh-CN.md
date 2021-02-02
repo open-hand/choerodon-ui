@@ -18,6 +18,10 @@ timeline: true
 - 🌟 `configure`: 新增 selectReverse，tableAutoHeightDiff 全局属性。
 - 🌟 `<pro>Select`: 新增 reverse 属性控制多选是否可反选。
 - 🌟 `<pro>Modal`: 新增 header，drawerOffset，okButton，cancelButton，contentStyle，bodyStyle属性。
+- 🌟 `<pro>DataSet`: 新增 beforeRemove 事件。
+- 🌟 `<pro>DataSet`: 新增 validateBeforeQuery 属性。
+- 🌟 `<pro>DataSet`: query 方法新增 params 参数。
+- 🌟 `<pro>DataSet.Field`: 新增 lookupBatchAxiosConfig 属性。
 - 💄 `Collapse`: 优化 Collapse 自定义 icon 样式。
 - 💄 `<pro>DataSet`: 优化 placeholder 优先级。
 - 💄 `<pro>Select`: 优化在数据源中找不到对应值时直接显示空的情况，现在显示返回值。
@@ -25,6 +29,7 @@ timeline: true
 - 💄 `<pro>Table.Column`: 优化 tooltip 为 overflow 时的性能。
 - 💄 `<pro>Modal`: 优化关闭按钮与取消按钮的行为保持一致。
 - 💄 `<pro>Table`: 优化 autoMaxWidth 的性能。
+- 💄 `<pro>DataSet`: delete 和 deleteAll 的 confirmMessage 参数可以通过设置false禁止显示提示框。
 - 🐞 `<pro>Table`: 修复拖拽列无法失焦。
 - 🐞 `<pro>Table`: 修复 filterBar 存在的交互问题。
 - 🐞 `<pro>DataSet`: 修复仅删除提交后的修改数据状态。
@@ -36,6 +41,12 @@ timeline: true
 - 🐞 `<pro>Pagination`: 修复页码切换时 modifiedCheckMessage 无效问题。
 - 🐞 `<pro>Modal`: 修复在多个 ModalProvider 中分别同时打开多个 Modal 时显示问题。
 - 🐞 `<pro>Form`: 修复清空数据源时表单控件值未清空的问题。
+- 🐞 `<pro>DataSet.Field`: 修复 dynamicProps 的 defaultValue 属性不生效的问题。
+- 🐞 `<pro>DataSet`: 修复 splice 方法的问题。
+- 🐞 `<pro>DataSet`: 修复在父级联记录中查找深级联记录的问题。
+- 🐞 `<pro>DataSet`: 修复布尔值类型未设置值时默认会设成false。
+- 🐞 `<pro>DataSet.Record`: 优化 isExpanded 属性受控。
+- 🐞 `<pro>Validator`: 修复 object 类型字段在组合唯一校验时传值的问题。
 
 ## 0.8.78
 
@@ -73,7 +84,6 @@ timeline: true
 - 🐞 `<pro>DatePicker`: 修复在 range 情况下，清除设置不正常的情况。
 - 🐞 `<pro>PerformanceTable`: 修复在 Modal 中滚动高度计算错误问题。
 - 🐞 `<pro>Tooltip`: 修复在 bottom top 情况下，可能出现箭头不与目标中心对其的情况的问题。
-
 
 ## 0.8.77
 

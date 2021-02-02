@@ -1,23 +1,26 @@
 import { action, IReactionDisposer, toJS } from 'mobx';
+import { AxiosRequestConfig } from 'axios';
 import Cache, { refreshCacheOptions } from './Cache';
+
+const KEY = Symbol('KEY');
 
 export default class PromiseMerger<V> {
   timeout: number;
 
   cache: Cache<string, V>;
 
-  promiseList: { [key: string]: { resolves: Function[]; rejects: Function[] } } = {};
+  promiseMap: Map<string | Symbol, Map<string, { resolves: Function[]; rejects: Function[] }>>;
 
   waitID;
 
-  callback: (codes) => Promise<{ [key: string]: V }>;
+  callback: (codes: string[], lookupBatchAxiosConfig: (codes: string[]) => AxiosRequestConfig) => Promise<{ [key: string]: V }>;
 
   reaction: IReactionDisposer;
 
-  constructor(callback: (codes) => Promise<{ [key: string]: V }>, config, timeout: number = 200) {
+  constructor(callback: (codes: string[], lookupBatchAxiosConfig: (codes: string[]) => AxiosRequestConfig) => Promise<{ [key: string]: V }>, config, timeout: number = 200) {
     this.timeout = timeout;
-    const lookupCache = toJS(config);
-    this.cache = new Cache<string, V>(lookupCache);
+    this.promiseMap = new Map<string | Symbol, Map<string, { resolves: Function[]; rejects: Function[] }>>();
+    this.cache = new Cache<string, V>(toJS(config));
     this.callback = callback;
     this.reaction = refreshCacheOptions(this.cache);
   }
@@ -27,53 +30,56 @@ export default class PromiseMerger<V> {
   }
 
   @action
-  add(code: string): Promise<V> {
-    const { cache, promiseList } = this;
+  add(code: string, lookupBatchAxiosConfig: (codes: string[]) => AxiosRequestConfig): Promise<V> {
+    const { cache, promiseMap } = this;
     const item = cache.get(code);
     if (item) {
       return Promise.resolve(item);
     }
+    const { url } = lookupBatchAxiosConfig([code]);
+    const batchKey = url ? url.split('?')[0] : KEY;
     return new Promise<V>((resolve, reject) => {
-      let promise = promiseList[code];
+      const promiseList = promiseMap.get(batchKey) || new Map();
+      promiseMap.set(batchKey, promiseList);
+      let promise = promiseList.get(code);
       const resolveCallback = () => {
         resolve(cache.get(code));
       };
-      const rejectCallback = () => {
-        reject();
-      };
       if (promise) {
         promise.resolves.push(resolveCallback);
-        promise.rejects.push(rejectCallback);
+        promise.rejects.push(reject);
       } else {
         if (this.waitID) {
           clearTimeout(this.waitID);
         }
         promise = {
           resolves: [resolveCallback],
-          rejects: [rejectCallback],
+          rejects: [reject],
         };
-        this.promiseList[code] = promise;
+        promiseList.set(code, promise);
         this.waitID = setTimeout(() => {
-          const codeList: string[] = Object.keys(promiseList);
-          const memo = { ...promiseList };
-          this.promiseList = {};
+          const codeList: string[] = [...promiseList.keys()];
 
           if (process.env.LOGGER_LEVEL === 'info') {
             // eslint-disable-next-line no-console
             console.info(`batch request: ${codeList}`);
           }
-          this.callback(codeList)
+          this.callback(codeList, lookupBatchAxiosConfig)
             .then(res => {
-              codeList.forEach(key => {
+              codeList.forEach((key) => {
+                const value = promiseList.get(key);
                 const data = res[key];
-                const { resolves = [] } = memo[key] || {};
                 this.cache.set(key, data);
+                promiseList.delete(key);
+                const { resolves = [] } = value || {};
                 resolves.forEach(r => r(data));
               });
             })
             .catch(error => {
               codeList.forEach(key => {
-                const { rejects = [] } = memo[key] || {};
+                const value = promiseList.get(key);
+                promiseList.delete(key);
+                const { rejects = [] } = value || {};
                 rejects.forEach(r => r(error));
               });
             });

@@ -1,19 +1,10 @@
-import {
-  action,
-  computed,
-  get,
-  isArrayLike,
-  isObservableArray,
-  observable,
-  runInAction,
-  set,
-  toJS,
-} from 'mobx';
+import { action, computed, isArrayLike, isObservableArray, observable, ObservableMap, runInAction, set, toJS } from 'mobx';
 import merge from 'lodash/merge';
 import isObject from 'lodash/isObject';
 import isNil from 'lodash/isNil';
 import isString from 'lodash/isString';
 import isNumber from 'lodash/isNumber';
+import omit from 'lodash/omit';
 import isPlainObject from 'lodash/isPlainObject';
 import { getConfig } from 'choerodon-ui/lib/configure';
 import DataSet from './DataSet';
@@ -33,6 +24,7 @@ import {
   processValue,
   useCascade,
   useNormal,
+  useSelected,
 } from './utils';
 import * as ObjectChainValue from '../_util/ObjectChainValue';
 import DataSetSnapshot from './DataSetSnapshot';
@@ -43,11 +35,13 @@ import isSame from '../_util/isSame';
 /**
  * 记录ID生成器
  */
-const IDGen: IterableIterator<number> = (function*(start: number) {
+const IDGen: IterableIterator<number> = (function* (start: number) {
   while (true) {
     yield ++start;
   }
 })(1000);
+
+const EXPANDED_KEY = '__EXPANDED_KEY__';
 
 export default class Record {
   id: number;
@@ -78,11 +72,11 @@ export default class Record {
 
   @observable editing?: boolean;
 
-  @observable state: { [key: string]: any };
+  @observable state: ObservableMap<string, any>;
 
   @computed
   get key(): string | number {
-    if (this.status !== RecordStatus.add) {
+    if (!this.isNew) {
       const { dataSet } = this;
       if (dataSet) {
         const { primaryKey } = dataSet.props;
@@ -109,6 +103,11 @@ export default class Record {
   @computed
   get isRemoved(): boolean {
     return this.status === RecordStatus.delete;
+  }
+
+  @computed
+  get isNew(): boolean {
+    return this.status === RecordStatus.add;
   }
 
   @computed
@@ -151,7 +150,7 @@ export default class Record {
         return expanded === (field ? field.get(BooleanValue.trueValue) : true);
       }
     }
-    return false;
+    return this.getState(EXPANDED_KEY);
   }
 
   set isExpanded(expand: boolean) {
@@ -164,10 +163,12 @@ export default class Record {
           expandField,
           field
             ? expand
-              ? field.get(BooleanValue.trueValue)
-              : field.get(BooleanValue.falseValue)
+            ? field.get(BooleanValue.trueValue)
+            : field.get(BooleanValue.falseValue)
             : expand,
         );
+      } else {
+        this.setState(EXPANDED_KEY, expand);
       }
     }
   }
@@ -208,7 +209,7 @@ export default class Record {
     if (dataSet) {
       const { cascadeParent } = this;
       if (cascadeParent && !cascadeParent.isCurrent) {
-        return cascadeParent.getCascadeRecords(dataSet.parentName) || [];
+        return cascadeParent.getCascadeRecordsIncludeDelete(dataSet.parentName) || [];
       }
       return dataSet.records;
     }
@@ -280,7 +281,7 @@ export default class Record {
     if (dataSet) {
       const { parent, parentName } = dataSet;
       if (parent && parentName) {
-        return parent.find(
+        return parent.records.find(
           record => (record.getCascadeRecords(parentName) || []).indexOf(this) !== -1,
         );
       }
@@ -291,7 +292,7 @@ export default class Record {
   constructor(data: object = {}, dataSet?: DataSet) {
     runInAction(() => {
       const initData = toJS(data);
-      this.state = {};
+      this.state = observable.map<string, any>();
       this.fields = observable.map<string, Field>();
       this.status = RecordStatus.add;
       this.selectable = true;
@@ -341,7 +342,7 @@ export default class Record {
       __id: this.id,
       [getConfig('statusKey')]: getConfig('status')[
         status === RecordStatus.sync ? RecordStatus.update : status
-      ],
+        ],
     };
   }
 
@@ -354,11 +355,11 @@ export default class Record {
       ...(noCascade
         ? []
         : Object.keys(dataSetSnapshot).map(key =>
-            (isCurrent && dataSet
+          (isCurrent && dataSet
               ? dataSet.children[key]
               : new DataSet().restore(dataSetSnapshot[key])
-            ).validate(),
-          )),
+          ).validate(),
+        )),
     ]).then(results => results.every(result => result));
   }
 
@@ -368,17 +369,17 @@ export default class Record {
     }
   }
 
-  getCascadeRecords(fieldName?: string): Record[] | undefined {
+  getCascadeRecordsIncludeDelete(fieldName?: string): Record[] | undefined {
     const { dataSet } = this;
     if (fieldName && dataSet) {
       const childDataSet = dataSet.children[fieldName];
       if (childDataSet) {
         if (dataSet.current === this) {
-          return childDataSet.slice();
+          return childDataSet.records.slice();
         }
         const snapshot = this.dataSetSnapshot[fieldName];
         if (snapshot) {
-          return snapshot.records.filter(r => r.status !== RecordStatus.delete);
+          return snapshot.records;
         }
         const cascadeRecords = this.cascadeRecordsMap[fieldName];
         if (cascadeRecords) {
@@ -391,6 +392,27 @@ export default class Record {
           return records;
         }
       }
+    }
+  }
+
+  getCascadeRecords(fieldName?: string): Record[] | undefined {
+    const records = this.getCascadeRecordsIncludeDelete(fieldName);
+    if (records) {
+      return records.filter(r => !r.isRemoved);
+    }
+  }
+
+  getCascadeSelectedRecordsIncludeDelete(fieldName?: string): Record[] | undefined {
+    const records = this.getCascadeRecordsIncludeDelete(fieldName);
+    if (records) {
+      return records.filter(r => r.isSelected);
+    }
+  }
+
+  getCascadeSelectedRecords(fieldName?: string): Record[] | undefined {
+    const records = this.getCascadeRecordsIncludeDelete(fieldName);
+    if (records) {
+      return records.filter(r => !r.isRemoved && r.isSelected);
     }
   }
 
@@ -471,12 +493,13 @@ export default class Record {
     if (isString(item)) {
       let fieldName: string = item;
       const field = this.getField(fieldName) || this.addField(fieldName);
+      const newValue = processValue(value, field);
       const bind = field.get('bind');
       if (bind) {
         fieldName = bind;
       }
-      ObjectChainValue.set(pristineData, fieldName, value, fields);
-      ObjectChainValue.set(data, fieldName, value, fields);
+      ObjectChainValue.set(pristineData, fieldName, newValue, fields);
+      ObjectChainValue.set(data, fieldName, newValue, fields);
       field.commit();
     } else if (isPlainObject(item)) {
       Object.keys(item).forEach(key => this.init(key, item[key]));
@@ -517,7 +540,7 @@ export default class Record {
           primaryKey && { key: this.get(primaryKey) },
           { name, record: this },
         );
-        if (newConfig.url && this.status !== RecordStatus.add) {
+        if (newConfig.url && !this.isNew) {
           const result = await axios(newConfig);
           if (result) {
             const dataKey = getConfig('dataKey');
@@ -542,12 +565,12 @@ export default class Record {
 
   @action
   reset(): Record {
-    const { status, fields, dataSet, dirty } = this;
+    const { status, fields, dataSet, dirty, isRemoved } = this;
     [...fields.values()].forEach(field => field.commit());
-    if (status === RecordStatus.update || status === RecordStatus.delete) {
+    if (status === RecordStatus.update || isRemoved) {
       this.status = RecordStatus.sync;
     }
-    if (status === RecordStatus.delete || dirty) {
+    if (isRemoved || dirty) {
       this.data = toJS(this.pristineData);
       this.memo = undefined;
       if (dataSet && !dataSet.resetInBatch) {
@@ -585,20 +608,21 @@ export default class Record {
 
   @action
   commit(data?: object, dataSet?: DataSet): Record {
-    const { dataSetSnapshot, fields, status } = this;
+    const { dataSetSnapshot, fields, isRemoved, records, isNew } = this;
     if (dataSet) {
-      const { records } = dataSet;
-      if (status === RecordStatus.delete) {
+      if (isRemoved) {
         const index = records.indexOf(this);
         if (index !== -1) {
-          dataSet.totalCount -= 1;
+          if (dataSet.records === records) {
+            dataSet.totalCount -= 1;
+          }
           records.splice(index, 1);
         }
         return this;
       }
-      if (status === RecordStatus.add) {
+      if (isNew) {
         const index = records.indexOf(this);
-        if (index !== -1) {
+        if (index !== -1 && dataSet.records === records) {
           dataSet.totalCount += 1;
         }
       }
@@ -611,19 +635,26 @@ export default class Record {
             set(this.data, key, newData[key]);
           }
         });
-        const snapShorts = Object.keys(dataSetSnapshot);
-        if (snapShorts.length) {
+        const { children } = dataSet;
+        const keys = Object.keys(children);
+        if (keys.length) {
           const isCurrent = dataSet.current === this;
-          const ds = new DataSet();
-          snapShorts.forEach(
-            key =>
-              (dataSetSnapshot[key] = (isCurrent
-                ? dataSet.children[key]
-                : ds.restore(dataSetSnapshot[key])
-              )
-                .commitData(data[key] || [])
-                .snapshot()),
-          );
+          const tmpDs = new DataSet();
+          keys.forEach(key => {
+            const snapshot = dataSetSnapshot[key];
+            const ds = children[key];
+            const child = isCurrent
+              ? ds
+              : snapshot && tmpDs.restore(snapshot);
+            if (child) {
+              dataSetSnapshot[key] = child.commitData(data[key] || []).snapshot();
+            } else {
+              const cascadeRecords = this.getCascadeRecordsIncludeDelete(key);
+              if (cascadeRecords) {
+                cascadeRecords.forEach(r => r.commit(omit(r.toData(), ['__dirty']), ds));
+              }
+            }
+          });
         }
       }
     }
@@ -635,15 +666,15 @@ export default class Record {
   @action
   setState(item: string | object, value?: any) {
     if (isString(item)) {
-      set(this.state, item, value);
+      this.state.set(item, value);
     } else if (isPlainObject(item)) {
-      set(this.state, item);
+      this.state.merge(item);
     }
     return this;
   }
 
   getState(key: string) {
-    return get(this.state, key);
+    return this.state.get(key);
   }
 
   @action
@@ -691,7 +722,6 @@ export default class Record {
     [...fields.entries()].forEach(([fieldName, field]) => {
       let value = ObjectChainValue.get(newData, fieldName);
       const bind = field.get('bind');
-      const type = field.get('type');
       const transformResponse = field.get('transformResponse');
       if (bind) {
         fieldName = bind;
@@ -699,9 +729,6 @@ export default class Record {
         if (isNil(value) && !isNil(bindValue)) {
           value = bindValue;
         }
-      }
-      if (value === undefined && type === FieldType.boolean) {
-        value = false;
       }
       if (transformResponse) {
         value = transformResponse(value, data);
@@ -781,31 +808,32 @@ export default class Record {
     normal?: boolean,
     isSelect?: boolean,
   ): boolean | undefined {
-    const { dataSetSnapshot, dataSet, isCurrent, status, fields } = this;
-    const isDelete = status === RecordStatus.delete;
+    const { dataSetSnapshot, dataSet, fields, isRemoved } = this;
     if (dataSet) {
       let dirty = false;
       const { children } = dataSet;
-      if (isDelete) {
+      if (isRemoved) {
         childrenInfoForDelete(json, children);
       } else {
-        const keys = Object.keys(children);
-        if (keys) {
-          keys.forEach(name => {
-            const snapshot = dataSetSnapshot[name];
-            const child = isCurrent ? children[name] : snapshot && new DataSet().restore(snapshot);
-            if (child) {
-              const jsonArray =
-                normal || useNormal(child.dataToJSON)
-                  ? generateData(child)
-                  : generateJSONData(child, isSelect);
+        const isCurrent = dataSet.current === this;
+        Object.keys(children).forEach(name => {
+          const snapshot = dataSetSnapshot[name];
+          const child = (!isCurrent && snapshot && new DataSet().restore(snapshot)) || children[name];
+          if (child) {
+            const { dataToJSON } = child;
+            const records = this.getCascadeRecordsIncludeDelete(name);
+            const selected = isSelect || useSelected(dataToJSON) ? this.getCascadeSelectedRecordsIncludeDelete(name) : records;
+            const jsonArray = normal || useNormal(dataToJSON)
+              ? records && generateData(records)
+              : selected && generateJSONData(child, selected);
+            if (jsonArray) {
               if (jsonArray.dirty) {
                 dirty = true;
               }
               ObjectChainValue.set(json, name, jsonArray.data, fields);
             }
-          });
-        }
+          }
+        });
       }
       return dirty;
     }

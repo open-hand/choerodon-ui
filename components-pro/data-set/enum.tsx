@@ -15,6 +15,7 @@ export const enum DataSetEvents {
   fieldChange = 'fieldChange',
   export = 'export',
   create = 'create',
+  beforeRemove = 'beforeRemove',
   remove = 'remove',
   beforeDelete = 'beforeDelete',
   reset = 'reset',

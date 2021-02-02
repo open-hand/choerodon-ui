@@ -18,6 +18,10 @@ timeline: true
 - 🌟 `configure`: Added `selectReverse` `tableAutoHeightDiff` global configuration.
 - 🌟 `<pro>Select`: Added `reverse` attribute to control whether multiple selection can be reversed.
 - 🌟 `<pro>Modal`: Added `header`, `drawerOffset`, `okButton`, `cancelButton`, `contentStyle`, `bodyStyle` attributes.
+- 🌟 `<pro>DataSet`: Added `beforeRemove` event.
+- 🌟 `<pro>DataSet`: Added `validateBeforeQuery` property.
+- 🌟 `<pro>DataSet`: Added `params` parameter to `query` method.
+- 🌟 `<pro>DataSet.Field`: Added `lookupBatchAxiosConfig` property.
 - 💄 `Collapse`: Optimized icon style.
 - 💄 `<pro>DataSet`: Optimized placeholder priority.
 - 💄 `<pro>Select`: Optimized the situation where the corresponding value is not found in the data source, and it is directly displayed empty. Now the return value is displayed.
@@ -25,6 +29,7 @@ timeline: true
 - 💄 `<pro>Table.Column`: Optimize the performance when the tooltip is overflow.
 - 💄 `<pro>Modal`: Optimize the behavior of close button and cancel button to be consistent.
 - 💄 `<pro>Table`: Optimize the performance of `autoMaxWidth`.
+- 💄 `<pro>DataSet`: The `confirmMessage` parameter of `delete` and `deleteAll` can be set to false to suppress the prompt box.
 - 🐞 `<pro>Table`: Fixed the interaction problem of filterBar.
 - 🐞 `<pro>Table`: Fixed the drag bar cannot be out of focus.
 - 🐞 `<pro>DataSet`: Fixed to delete only the modified data status after submission.
@@ -36,6 +41,12 @@ timeline: true
 - 🐞 `<pro>Pagination`: Fixed the issue that `modifiedCheckMessage` is invalid when the page number is switched.
 - 🐞 `<pro>Modal`: Fix the display problem when multiple Modal are opened simultaneously in multiple ModalProviders.
 - 🐞 `<pro>Form`: Fix the problem that the form control values are not cleared when clearing the dataset.
+- 🐞 `<pro>DataSet.Field`: Fix the problem that the defaultValue property of dynamicProps does not take effect.
+- 🐞 `<pro>DataSet`: Fix the problem in splice method.
+- 🐞 `<pro>DataSet`: Fix the problem of querying parent cascade records for deep cascade records.
+- 🐞 `<pro>DataSet`: When the Boolean value type is not set, it will be set to false by default.
+- 🐞 `<pro>DataSet.Record`: Optimize isExpanded attribute controlled.
+- 🐞 `<pro>Validator`: Fix the problem of passing value by combining unique validation object type fields.
 
 ## 0.8.78
 

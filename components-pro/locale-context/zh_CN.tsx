@@ -70,7 +70,7 @@ const locale: Locale = {
   },
   DataSet: {
     unsaved_data_confirm: '有未保存的数据，是否继续？',
-    invalid_query_dataset: '查询条件数集不通过',
+    invalid_query_dataset: '查询条件数据集校验不通过',
     delete_selected_row_confirm: '确认删除选中行？',
     delete_all_row_confirm: '确认删除所有行？',
     query_failure: '查询失败',

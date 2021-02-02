@@ -15,6 +15,9 @@ export default async function uniqueError(
     const myField = record.getField(name);
     if (myField && myField.get('type') === FieldType.object) {
       value = value[myField.get('valueField')];
+      if (isEmpty(value)) {
+        return true;
+      }
     }
     if (myField) {
       let { dirty } = myField;
@@ -36,7 +39,15 @@ export default async function uniqueError(
             if (!dirty && field.dirty) {
               dirty = true;
             }
-            fields[fieldName] = otherValue;
+            if (field && field.get('type') === FieldType.object) {
+              const otherObjectValue = otherValue[field.get('valueField')];
+              if (isEmpty(otherObjectValue)) {
+                return true;
+              }
+              fields[fieldName] = otherObjectValue;
+            } else {
+              fields[fieldName] = otherValue;
+            }
           }
           return false;
         })

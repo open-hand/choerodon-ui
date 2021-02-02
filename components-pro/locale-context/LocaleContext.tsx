@@ -26,6 +26,7 @@ export class LocaleContext {
     this.locale = locale;
   }
 
+  @action
   setSupports(supports: Supports) {
     this.supports = supports;
   }

@@ -1,3 +1,5 @@
+import { action } from 'mobx';
+
 function on(eventName: string, fn: Function, el?: any, useCapture?: boolean): void {
   if (el) {
     if (el.addEventListener) {
@@ -63,6 +65,13 @@ export default class EventManager {
     return this;
   }
 
+  @action
+  fireEventSync(eventName: string, ...rest: any[]): boolean {
+    const events: handler[] = this.events[eventName.toLowerCase()];
+    return events ? events.every(([fn]) => fn(...rest) !== false) : true;
+  }
+
+  @action
   fireEvent(eventName: string, ...rest: any[]): Promise<boolean> {
     const events: handler[] = this.events[eventName.toLowerCase()];
     return events
