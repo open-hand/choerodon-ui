@@ -43,6 +43,7 @@ timeline: true
 - 🐞 `<pro>DataSet`: Fix the problem in splice method.
 - 🐞 `<pro>DataSet`: Fix the problem of querying parent cascade records for deep cascade records.
 - 🐞 `<pro>DataSet`: When the Boolean value type is not set, it will be set to false by default.
+- 🐞 `<pro>DataSet.Record`: Optimize isExpanded attribute controlled.
 
 ## 0.8.78
 

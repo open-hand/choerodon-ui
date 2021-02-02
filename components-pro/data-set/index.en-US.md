@@ -158,6 +158,7 @@ title: DataSet
 | beforeRemove | 数据临时删除前的事件， 返回值为 false 将阻止临时删除 | ({ dataSet, records }) =&gt; boolean | `dataSet` - 数据集 `records` - 记录集 | 否 |
 | beforeDelete | 数据删除前的事件， 返回值为 false 将阻止删除 | ({ dataSet, records }) =&gt; boolean | `dataSet` - 数据集 `records` - 记录集 | 是 |
 | reset | 数据重置事件 | ({ dataSet, records }) =&gt; void | `dataSet` - 数据集 `records` - 记录集 | 是 |
+| validate | 校验事件 | ({ dataSet, result }) =&gt; void | `dataSet` - 数据集 `result` - 校验结果集 | 是 |
 
 ### Record Values
 
