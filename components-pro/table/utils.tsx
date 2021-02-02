@@ -10,7 +10,6 @@ import { FieldType, RecordStatus } from '../data-set/enum';
 import Field from '../data-set/Field';
 import ObserverSelect from '../select/Select';
 import SelectBox from '../select-box/SelectBox';
-import Upload from '../upload/Upload';
 import Lov from '../lov/Lov';
 import ObserverNumberField from '../number-field/NumberField';
 import Currency from '../currency/Currency';
@@ -140,7 +139,6 @@ export function isRadio(element?: ReactElement<FormFieldProps>): boolean {
       case ObserverRadio:
       case Switch:
       case SelectBox:
-      case Upload:
         return true;
       default:
     }

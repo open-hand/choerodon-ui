@@ -39,6 +39,7 @@ timeline: true
 - 🐞 `<pro>Record`: 修复 validate 错误的传参导致提交数据错误。
 - 🐞 `<pro>Lov`: 修复多选弹窗列表取消勾选值后确认选值更改无效问题。
 - 🐞 `<pro>Table`: 修复 buttons 不存在时 summaryBar 不渲染的问题。
+- 🐞 `<pro>Pagination`: 修复页码 undefined 快速跳转报错问题。
 - 🐞 `<pro>Pagination`: 修复页码切换时 modifiedCheckMessage 无效问题。
 - 🐞 `<pro>Modal`: 修复在多个 ModalProvider 中分别同时打开多个 Modal 时显示问题。
 - 🐞 `<pro>Form`: 修复清空数据源时表单控件值未清空的问题。
