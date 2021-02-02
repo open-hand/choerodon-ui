@@ -42,7 +42,6 @@ export default class PromiseMerger<V> {
       const promiseList = promiseMap.get(batchKey) || new Map();
       promiseMap.set(batchKey, promiseList);
       let promise = promiseList.get(code);
-
       const resolveCallback = () => {
         resolve(cache.get(code));
       };
@@ -60,8 +59,6 @@ export default class PromiseMerger<V> {
         promiseList.set(code, promise);
         this.waitID = setTimeout(() => {
           const codeList: string[] = [...promiseList.keys()];
-          const memo = [...promiseList.entries()];
-          promiseList.clear();
 
           if (process.env.LOGGER_LEVEL === 'info') {
             // eslint-disable-next-line no-console
@@ -69,16 +66,20 @@ export default class PromiseMerger<V> {
           }
           this.callback(codeList, lookupBatchAxiosConfig)
             .then(res => {
-              memo.forEach(([key, value]) => {
+              codeList.forEach((key) => {
+                const value = promiseList.get(key);
                 const data = res[key];
-                const { resolves = [] } = value || {};
                 this.cache.set(key, data);
+                promiseList.delete(key);
+                const { resolves = [] } = value || {};
                 resolves.forEach(r => r(data));
               });
             })
             .catch(error => {
               codeList.forEach(key => {
-                const { rejects = [] } = memo[key] || {};
+                const value = promiseList.get(key);
+                promiseList.delete(key);
+                const { rejects = [] } = value || {};
                 rejects.forEach(r => r(error));
               });
             });
